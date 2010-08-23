@@ -1,0 +1,753 @@
+macro "macro"
+	elem 
+		name = "CENTER+REP"
+		command = ".center"
+		is-disabled = false
+	elem 
+		name = "NORTHEAST+REP"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "SOUTHEAST+REP"
+		command = ".southeast"
+		is-disabled = false
+	elem 
+		name = "SOUTHWEST+REP"
+		command = ".southwest"
+		is-disabled = false
+	elem 
+		name = "NORTHWEST+REP"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "WEST+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "NORTH+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "EAST+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "SOUTH+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "F1"
+		command = "adminhelp"
+		is-disabled = false
+	elem 
+		name = "CTRL+SHIFT+F1+REP"
+		command = ".options"
+		is-disabled = false
+	elem 
+		name = "F2+REP"
+		command = ".screenshot auto"
+		is-disabled = false
+	elem 
+		name = "SHIFT+F2+REP"
+		command = ".screenshot"
+		is-disabled = false
+
+
+menu "menu"
+	elem 
+		name = "&File"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Quick screenshot\tF2"
+		command = ".screenshot auto"
+		category = "&File"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Save screenshot as...\tShift+F2"
+		command = ".screenshot"
+		category = "&File"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = ""
+		command = ""
+		category = "&File"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Quit"
+		command = ".quit"
+		category = "&File"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Icons"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "stretch"
+		name = "&Stretch to fit"
+		command = ".winset \"mapwindow.map.icon-size=0\""
+		category = "&Icons"
+		is-checked = true
+		can-check = true
+		group = "size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "icon32"
+		name = "&32x32"
+		command = ".winset \"mapwindow.map.icon-size=32\""
+		category = "&Icons"
+		is-checked = false
+		can-check = true
+		group = "size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "icon16"
+		name = "&16x16"
+		command = ".winset \"mapwindow.map.icon-size=16\""
+		category = "&Icons"
+		is-checked = false
+		can-check = true
+		group = "size"
+		is-disabled = true
+		saved-params = "is-checked"
+	elem 
+		name = ""
+		command = ""
+		category = "&Icons"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem "textmode"
+		name = "&Text"
+		command = ".winset \"menu.textmode.is-checked=true?mapwindow.map.text-mode=true:mapwindow.map.text-mode=false\""
+		category = "&Icons"
+		is-checked = false
+		can-check = true
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Help"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Admin help\tF1"
+		command = "adminhelp"
+		category = "&Help"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+
+
+window "mainwindow"
+	elem "mainwindow"
+		type = MAIN
+		pos = 281,0
+		size = 640x440
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Space Station 13"
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = false
+		is-minimized = false
+		is-maximized = true
+		can-scroll = none
+		icon = 'icons\\ss13_64.png'
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = "macro"
+		menu = "menu"
+		on-close = ""
+	elem "mainvsplit"
+		type = CHILD
+		pos = 3,0
+		size = 634x400
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "splitter"
+		left = ""
+		right = "rpane"
+		is-vert = true
+		splitter = 50
+		show-splitter = true
+		lock = none
+	elem "input"
+		type = INPUT
+		pos = 3,420
+		size = 517x20
+		anchor1 = 0,100
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #d3b5b5
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = sunken
+		drop-zone = false
+		right-click = false
+		saved-params = "command"
+		command = ""
+		multi-line = false
+		is-password = false
+		no-command = false
+	elem "saybutton"
+		type = BUTTON
+		pos = 520,420
+		size = 40x20
+		anchor1 = 100,100
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		text = "Chat"
+		image = ""
+		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbox
+	elem "macrobutton"
+		type = BUTTON
+		pos = 560,420
+		size = 30x20
+		anchor1 = 100,100
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = true
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		text = "Alt"
+		image = ""
+		command = ".winset \"macrobutton.is-checked=true?input.command=\"!.alt \" saybutton.is-checked=false:input.command=\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbox
+	elem "hostb"
+		type = BUTTON
+		pos = 590,420
+		size = 47x20
+		anchor1 = 100,100
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = true
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		text = "Host..."
+		image = ""
+		command = ".host"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+
+window "mapwindow"
+	elem "mapwindow"
+		type = MAIN
+		pos = none
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = ""
+		titlebar = false
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "map"
+		type = MAP
+		pos = 0,0
+		size = 0x0
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = true
+		right-click = false
+		saved-params = "icon-size"
+		icon-size = 0
+		text-mode = false
+		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
+		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
+
+window "outputwindow"
+	elem "outputwindow"
+		type = MAIN
+		pos = none
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = ""
+		titlebar = false
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "output"
+		type = OUTPUT
+		pos = 0,0
+		size = 0x0
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "max-lines"
+		link-color = #0000ff
+		visited-color = #ff00ff
+		style = ".system {color:#ff0000;}"
+		enable-http-images = false
+		max-lines = 1000
+		image = ""
+
+window "rpane"
+	elem "rpane"
+		type = MAIN
+		pos = none
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = ""
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "rpanewindow"
+		type = CHILD
+		pos = 0,0
+		size = 0x0
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "splitter"
+		left = ""
+		right = "outputwindow"
+		is-vert = false
+		splitter = 50
+		show-splitter = true
+		lock = none
+	elem "textb"
+		type = BUTTON
+		pos = 0,0
+		size = 60x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = none
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		text = "Text"
+		image = ""
+		command = ".winset \"rpanewindow.left=;\""
+		is-flat = false
+		stretch = false
+		is-checked = true
+		group = "rpanemode"
+		button-type = pushbox
+	elem "browseb"
+		type = BUTTON
+		pos = 65,0
+		size = 60x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = none
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		text = "Browser"
+		image = ""
+		command = ".winset \"rpanewindow.left=browserwindow\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbox
+	elem "infob"
+		type = BUTTON
+		pos = 130,0
+		size = 60x20
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = none
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		text = "Info"
+		image = ""
+		command = ".winset \"rpanewindow.left=infowindow\""
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbox
+
+window "browserwindow"
+	elem "browserwindow"
+		type = MAIN
+		pos = none
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Browser"
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "browser"
+		type = BROWSER
+		pos = 0,0
+		size = 0x0
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		show-history = true
+		show-url = false
+		auto-format = true
+		use-title = false
+		on-show = ".winset\"rpane.infob.is-visible=true?rpane.infob.pos=130,0;rpane.textb.is-visible=true;rpane.browseb.is-visible=true;rpane.browseb.is-checked=true;rpane.rpanewindow.pos=0,30;rpane.rpanewindow.size=0x0;rpane.rpanewindow.left=browserwindow\""
+		on-hide = ".winset\"rpane.browseb.is-visible=false;rpane.infob.is-visible=true?rpane.infob.is-checked=true rpane.infob.pos=65,0 rpane.rpanewindow.left=infowindow:rpane.rpanewindow.left=textwindow rpane.textb.is-visible=false rpane.rpanewindow.pos=0,0 rpane.rpanewindow.size=0x0\""
+
+window "infowindow"
+	elem "infowindow"
+		type = MAIN
+		pos = none
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Info"
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "info"
+		type = INFO
+		pos = 0,0
+		size = 0x0
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = true
+		right-click = false
+		saved-params = ""
+		highlight-color = #00aa00
+		tab-text-color = #000000
+		tab-background-color = none
+		tab-font-family = ""
+		tab-font-size = 0
+		tab-font-style = ""
+		allow-html = false
+		multi-line = true
+		on-show = ".winset\"rpane.infob.is-visible=true;rpane.browseb.is-visible=true?rpane.infob.pos=130,0:rpane.infob.pos=65,0 rpane.textb.is-visible=true rpane.infob.is-checked=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=infowindow\""
+		on-hide = ".winset\"rpane.infob.is-visible=false;rpane.browseb.is-visible=true?rpane.browseb.is-checked=true rpane.rpanewindow.left=browserwindow:rpane.textb.is-visible=false rpane.rpanewindow.pos=0,0 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=\""
+		on-tab = ""
+

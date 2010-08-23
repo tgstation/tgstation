@@ -1,0 +1,65 @@
+# log OOC channel
+LOG_OOC
+
+# log client Say 
+LOG_SAY
+
+# log admin actions
+LOG_ADMIN
+
+# log client access (logon/logoff)
+LOG_ACCESS
+
+# log game actions (start of round, results, etc.)
+LOG_GAME
+
+# log player votes
+LOG_VOTE
+
+# log client Whisper
+LOG_WHISPER
+
+# probablities for game modes chosen in "secret" and "random" modes
+# 
+# default probablity is 1, increase to make that mode more likely to be picked
+# set to 0 to disable that mode
+PROBABILITY EXTENDED 0
+PROBABILITY TRAITOR 8
+PROBABILITY METEOR 0
+PROBABILITY MALFUNCTION 2
+PROBABILITY BLOB 0
+PROBABILITY NUCLEAR 5
+PROBABILITY SANDBOX 0
+PROBABILITY WIZARD 3
+PROBABILITY RESTRUCTURING 0
+PROBABILITY REVOLUTION 5
+
+# allow players to initiate a restart vote
+ALLOW_VOTE_RESTART
+
+# allow players to initate a mode-change start
+ALLOW_VOTE_MODE
+
+# min delay (seconds) between voting sessions (default 10 minutes)
+VOTE_DELAY 600
+
+# time period (seconds) which voting session will last (default 1 minute)
+VOTE_PERIOD 60
+
+# prevents dead players from voting or starting votes
+# NO_DEAD_VOTE
+
+# players' votes default to "No vote" (otherwise,  default to "No change")
+# DEFAULT_NO_VOTE
+
+# allow AI job
+ALLOW_AI
+
+# goon authentication
+#AUTHENTICATION
+
+# disable abandon mob
+NORESPAWN
+
+# set a hosted by name for unix platforms
+HOSTEDBY Stuntwaffle

@@ -1,0 +1,1 @@
+mob/living/carbon/beast

@@ -1,0 +1,8 @@
+O Things that need to be resprited:
+	* Put stuff here
+
+O Things with sprites that are ready to be coded:
+	* Bins, secure bins
+
+O Things that are coded that need sprites:
+	* Put stuff here too
