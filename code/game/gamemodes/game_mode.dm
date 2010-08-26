@@ -55,6 +55,9 @@
 	if (!istype(traitor_mob))
 		return
 
+	if (traitor_mob.mind.assigned_role == "Clown")
+		traitor_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
+		traitor_mob.mutations &= ~16
 	// generate list of radio freqs
 	var/freq = 1441
 	var/list/freqlist = list()

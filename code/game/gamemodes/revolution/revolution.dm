@@ -68,7 +68,9 @@
 /datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
 	if(!istype(rev_mob))
 		return
-
+	if (rev_mob.mind.assigned_role == "Clown")
+		rev_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
+		rev_mob.mutations &= ~16
 	spawn (100)
 		var/freq = 1441
 		var/list/freqlist = list()
