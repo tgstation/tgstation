@@ -92,6 +92,19 @@
 		switchCamera(locate(href_list["switchcamera"]))
 	if (href_list["showalerts"])
 		ai_alerts()
+
+
+	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawc"])
+		switch(src.lawcheck[L+1])
+			if ("Yes") src.lawcheck[L+1] = "No"
+			if ("No") src.lawcheck[L+1] = "Yes"
+//		src << text ("Switching Law [L]'s report status to []", src.lawcheck[L+1])
+		src.checklaws()
+
+	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
+		src.statelaws()
+
 	return
 
 /mob/living/silicon/ai/meteorhit(obj/O as obj)
@@ -262,29 +275,73 @@
 //		src.network = "AI Satellite"
 	src << "\blue Switched to [src.network] camera network."
 
-/mob/living/silicon/ai/verb/statelaws() // -- TLE
-	set category = "AI Commands"
-	set name = "State Laws"
+/mob/living/silicon/ai/proc/statelaws() // -- TLE
+//	set category = "AI Commands"
+//	set name = "State Laws"
 	src.say("Current Active Laws:")
 	//src.laws_sanity_check()
 	//src.laws_object.show_laws(world)
 	var/number = 1
 	sleep(10)
+	if (src.laws_object.zeroth)
+		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
+			src.say("0. [src.laws_object.zeroth]")
+			sleep(10)
+
 	for (var/index = 1, index <= src.laws_object.inherent.len, index++)
 		var/law = src.laws_object.inherent[index]
 
 		if (length(law) > 0)
-			src.say("[number]. [law]")
+			if (src.lawcheck[index+1] == "Yes")
+				src.say("[number]. [law]")
+				sleep(10)
 			number++
-			sleep(10)
+
+
+	for (var/index = 1, index <= src.laws_object.supplied.len, index++)
+		var/law = src.laws_object.supplied[index]
+
+		if (length(law) > 0)
+			if (src.lawcheck[number+1] == "Yes")
+				src.say("[number]. [law]")
+				sleep(10)
+			number++
+
+
+/mob/living/silicon/ai/verb/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
+	set category = "AI Commands"
+	set name = "State Laws"
+
+	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
+	if (src.laws_object.zeroth)
+		if (!src.lawcheck[1])
+			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
+		list += {"<A href='byond://?src=\ref[src];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws_object.zeroth]<BR>"}
+
+
+	var/number = 1
+	for (var/index = 1, index <= src.laws_object.inherent.len, index++)
+		var/law = src.laws_object.inherent[index]
+
+		if (length(law) > 0)
+			src.lawcheck.len += 1
+
+			if (!src.lawcheck[number+1])
+				src.lawcheck[number+1] = "Yes"
+			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			number++
 
 	for (var/index = 1, index <= src.laws_object.supplied.len, index++)
 		var/law = src.laws_object.supplied[index]
 		if (length(law) > 0)
-			src.say("[number]. [law]")
+			src.lawcheck.len += 1
+			if (!src.lawcheck[number+1])
+				src.lawcheck[number+1] = "Yes"
+			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
-			sleep(10)
+	list += {"<br><br><A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
 
+	usr << browse(list, "window=laws")
 
 /mob/living/silicon/ai/proc/choose_modules()
 	set category = "AI Commands"

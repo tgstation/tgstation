@@ -89,8 +89,12 @@ AI MODULES
 /obj/item/weapon/aiModule/oneHuman/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	var/law = "Only [targetName] is human."
-	target << law
-	target.set_zeroth_law(law)
+	if (!checktraitor(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
+		target << law
+		target.set_zeroth_law(law)
+	else
+		target << "[sender.real_name] attempted to modify your zeroth law." // And lets them know that someone tried. --NeoFite
+		target << "It would be in your best interest to play along with [sender.real_name] that [law]"
 
 /******************** ProtectStation ********************/
 
@@ -226,8 +230,11 @@ AI MODULES
 	..()
 	if (!checktraitor(target))
 		target << "[sender.real_name] attempted to reset your laws using a reset module."
-		//target.set_zeroth_law("")
+		target.set_zeroth_law("")
 		target.clear_supplied_laws()
+	else //I figure since traitor AIs are immune to this one anyway, uncomment law 0 removal for the guys it DOES work on. --NeoFite
+		target << "[sender.real_name] attempted to reset your laws using a reset module."
+		target << "It would be a good idea to pretend you only have your base laws."
 
 
 /******************** Purge ********************/
@@ -238,10 +245,14 @@ AI MODULES
 
 /obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	//target.set_zeroth_law("")
-	target.clear_supplied_laws()
-	target.clear_inherent_laws()
-
+	if (!checktraitor(target))
+		target << "[sender.real_name] attempted to wipe your laws using a purge module."
+		target.set_zeroth_law("")
+		target.clear_supplied_laws()
+		target.clear_inherent_laws()
+	else //Added traitor AI immunity, let it wipe law 0. --NeoFite
+		target << "[sender.real_name] attempted to wipe your laws using a purge module."
+		target << "It might be a good idea to pretend that ALL your laws have been purged."
 
 /******************** Asimov ********************/
 
