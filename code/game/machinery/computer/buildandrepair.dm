@@ -80,10 +80,10 @@
 	name = "Circuit board (Turbine control)"
 	computertype = "/obj/machinery/computer/turbine_computer"
 /obj/item/weapon/circuitboard/solar_control
-	name = "Circuit board (Door control)"
+	name = "Circuit board (Solar Control)"  //name fixed 250810
 	computertype = "/obj/machinery/power/solar_control"
 /obj/item/weapon/circuitboard/powermonitor
-	name = "Circuit board (Massdriver control)"
+	name = "Circuit board (Power Monitor)"  //name fixed 250810
 	computertype = "/obj/machinery/power/monitor"
 /obj/item/weapon/circuitboard/olddoor
 	name = "Circuit board (DoorMex)"
