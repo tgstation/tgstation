@@ -477,7 +477,7 @@
 				if (!isnull(src.cartridge) && src.cartridge.access_engine)
 					dat += "<h4>Engineering Functions</h4>"
 					dat += "<ul>"
-					dat += "<li><a href='byond://?src=\ref[src];em=1'>Engine Monitor</a></li>"
+					dat += "<li><a href='byond://?src=\ref[src];em=1'>Power Monitor</a></li>"
 					dat += "</ul>"
 
 				if (!isnull(src.cartridge) && src.cartridge.access_medical)
@@ -530,7 +530,39 @@
 
 			if (2)
 
-				//TO-DO: Engine monitor for whatever engine is used I guess
+				//muskets 250810
+				//experimental PDA power monitoring code
+				//mostly ripped off from the power monitor computer
+				//powerreport, powerreportnodes, powerreportavail and powerreportviewload are new globals updated by the
+				//power monitor computer
+				//
+				//only the first power computer to come online will update, if that breaks you can build another and it'll take over
+				//an existing second power monitor should take over fine too
+				//see changes to /game/machinery/computer/power.dm
+				if(!powerreport)
+					dat += "\red No connection"
+				else
+					var/list/L = list()
+					for(var/obj/machinery/power/terminal/term in powerreportnodes)
+						if(istype(term.master, /obj/machinery/power/apc))
+							var/obj/machinery/power/apc/A = term.master
+							L += A
+
+					dat += "<PRE>Total power: [powerreportavail] W<BR>Total load:  [num2text(powerreportviewload,10)] W<BR>"
+
+					dat += "<FONT SIZE=-1>"
+
+					if(L.len > 0)
+						dat += "Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
+
+						var/list/S = list(" Off","AOff","  On", " AOn")
+						var/list/chg = list("N","C","F")
+
+						for(var/obj/machinery/power/apc/A in L)
+							dat += copytext(add_tspace(A.area.name, 30), 1, 30)
+							dat += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+
+					dat += "</FONT></PRE>"
 
 			if (3)
 

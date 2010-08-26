@@ -1,6 +1,9 @@
 // the power monitoring computer
 // for the moment, just report the status of all APCs in the same powernet
 
+
+var/reportingpower = 0  //this tracks whether this power monitoring computer is the one reporting to engi PDAs - muskets
+
 /obj/machinery/power/monitor/attack_ai(mob/user)
 	add_fingerprint(user)
 
@@ -74,6 +77,21 @@
 	if(!(stat & (NOPOWER|BROKEN)) )
 		use_power(250)
 
+		//muskets 250810
+		//this handles updating the remote power monitoring globals
+
+		if(!powerreport) //if no computer is updating the PDA power monitor
+			reportingpower = 1  //take over updating them
+
+		if(reportingpower)  //if this computer is updating the PDA power monitor
+			if(!powernet)  //if it's not connected to a powernet, don't do anything
+				return
+			else
+				powerreport = powernet  //update the globals from the current powernet - this is a bit of a hack, might need improving
+				powerreportnodes = powernet.nodes
+				powerreportavail = powernet.avail
+				powerreportviewload = powernet.viewload
+
 	src.updateDialog()
 
 
@@ -81,6 +99,12 @@
 
 	if(stat & BROKEN)
 		icon_state = "broken"
+		// the following four lines reset the pda power monitoring globals if the computer breaks
+		// this is to stop PDAs reporting incorrect information and to allow another computer to easily take over -- muskets
+		powerreport = null
+		powerreportnodes = null
+		powerreportavail = null
+		powerreportviewload = null
 	else
 		if( powered() )
 			icon_state = initial(icon_state)
