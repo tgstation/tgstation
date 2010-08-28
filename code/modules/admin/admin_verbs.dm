@@ -26,6 +26,7 @@
 		if ("Host")
 			src.deadchat = 1
 			src.holder.level = 6
+			src.verbs += /client/proc/stealthadmin
 			src.verbs += /client/proc/cmd_admin_delete
 			src.verbs += /proc/possess
 			src.verbs += /client/proc/cmd_admin_add_random_ai_law
@@ -114,6 +115,7 @@
 		if ("Coder")
 			src.deadchat = 1
 			src.holder.level = 5
+			src.verbs += /client/proc/stealthadmin
 			src.verbs += /client/proc/cmd_admin_delete
 			src.verbs += /proc/possess
 			src.verbs += /client/proc/cmd_admin_add_random_ai_law
@@ -201,6 +203,7 @@
 		if ("Shit Guy")
 			src.deadchat = 1
 			src.holder.level = 4
+			src.verbs += /client/proc/stealthadmin
 			src.verbs += /obj/admins/proc/togglegoonsay
 			src.verbs += /client/proc/debug_variables
 			src.verbs += /proc/possess
@@ -271,6 +274,7 @@
 
 			src.deadchat = 1
 			src.holder.level = 3
+			src.verbs += /client/proc/stealthadmin
 
 			if(src.holder.state == 2) //observing
 
@@ -339,6 +343,7 @@
 		if ("Administrator")
 
 			src.holder.level = 2
+			src.verbs += /client/proc/stealthadmin
 
 			if(src.holder.state == 2) //observing
 				src.deadchat = 1
@@ -383,6 +388,7 @@
 
 		if ("Secondary Administrator")
 			src.holder.level = 1
+			src.verbs += /client/proc/stealthadmin
 
 			if(src.holder.state == 2) //observing
 				src.verbs += /obj/admins/proc/toggleaban			//abandon mob
@@ -418,6 +424,7 @@
 
 		if ("Moderator")
 			src.holder.level = 0
+			src.verbs += /client/proc/stealthadmin
 			src.verbs += /obj/admins/proc/togglegoonsay
 			src.verbs += /client/proc/cmd_admin_pm
 			src.verbs += /client/proc/cmd_admin_say
@@ -447,6 +454,7 @@
 
 		if ("Goat Fart")
 			src.holder.level = -1
+			src.verbs += /client/proc/stealthadmin
 			src.verbs += /client/proc/cmd_admin_say
 			src.verbs += /client/proc/cmd_admin_gib_self
 
@@ -776,3 +784,789 @@
 	else
 		kill_air = 1
 		usr << "<b>Disabled air processing.</b>"
+
+/client/proc/unstealthadmin()
+	set name = "Toggle admin verb visibility"
+	set category = "Admin"
+	src << "Here's your rightclick admin verbs back"
+	src.verbs += /client/proc/stealthadmin
+	src.verbs -= /client/proc/unstealthadmin
+	switch (src.holder.rank)
+		if ("Host")
+			src.verbs += /client/proc/cmd_admin_delete
+			src.verbs += /proc/possess
+			src.verbs += /client/proc/cmd_admin_add_random_ai_law
+			src.verbs += /proc/release
+			src.verbs += /proc/givetestverbs
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs += /client/proc/debug_variables
+			src.verbs += /client/proc/cmd_modify_object_variables
+			src.verbs += /client/proc/cmd_modify_ticker_variables
+			src.verbs += /client/proc/cmd_admin_pm
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs += /client/proc/cmd_admin_check_contents
+			src.verbs += /client/proc/cmd_debug_del_all
+			src.verbs += /client/proc/play_sound
+			src.verbs += /client/proc/modifytemperature
+			src.verbs += /client/proc/cmd_admin_gib
+			src.verbs += /client/proc/cmd_admin_gib_self
+			src.verbs += /proc/toggle_adminmsg
+//				src.verbs += /client/proc/grillify
+			src.verbs += /client/proc/jumptomob
+			src.verbs += /client/proc/Jump
+			src.verbs += /client/proc/jumptoturf
+			src.verbs += /client/proc/cmd_admin_rejuvenate
+			src.verbs += /client/proc/cmd_admin_robotize
+			src.verbs += /client/proc/cmd_admin_alienize
+			src.verbs += /client/proc/cmd_admin_changelinginize
+			src.verbs += /client/proc/Cell
+			src.verbs += /client/proc/ticklag
+			src.verbs += /client/proc/cmd_admin_mute
+			src.verbs += /client/proc/cmd_admin_drop_everything
+			src.verbs += /client/proc/cmd_admin_godmode
+			src.verbs += /client/proc/get_admin_state
+			src.verbs += /client/proc/cmd_admin_add_freeform_ai_law
+//			src.verbs += /client/proc/getmobs
+//			src.verbs += /client/proc/cmd_admin_list_admins
+			src.verbs += /client/proc/cmd_admin_list_occ
+			src.verbs += /proc/togglebuildmode
+			src.verbs += /client/proc/jumptokey
+			src.verbs += /client/proc/Getmob
+			src.verbs += /client/proc/jobbans
+			src.verbs += /client/proc/sendmob
+			src.verbs += /client/proc/Debug2					//debug toggle switch
+			src.verbs += /client/proc/callproc
+			src.verbs += /client/proc/funbutton
+			src.verbs += /client/proc/cmd_admin_prison
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
+			src.verbs += /obj/admins/proc/delay					//game start delay
+			src.verbs += /client/proc/deadchat					//toggles deadchat
+			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+
+			src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs += /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs += /client/proc/cmd_admin_subtle_message
+			src.verbs += /client/proc/cmd_admin_remove_plasma
+
+			src.verbs += /client/proc/general_report
+			src.verbs += /client/proc/air_report
+			src.verbs += /client/proc/air_status
+			src.verbs += /client/proc/fix_next_move
+
+			src.verbs += /client/proc/toggle_view_range
+			src.verbs += /obj/admins/proc/toggle_aliens
+			src.verbs += /client/proc/warn
+		if ("Coder")
+			src.verbs += /client/proc/cmd_admin_delete
+			src.verbs += /proc/possess
+			src.verbs += /client/proc/cmd_admin_add_random_ai_law
+			src.verbs += /proc/release
+			src.verbs += /proc/givetestverbs
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs += /client/proc/debug_variables
+			src.verbs += /client/proc/cmd_debug_tog_aliens
+			src.verbs += /client/proc/cmd_modify_object_variables
+			src.verbs += /client/proc/cmd_modify_ticker_variables
+			src.verbs += /client/proc/cmd_admin_pm
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs += /client/proc/cmd_admin_check_contents
+			src.verbs += /client/proc/cmd_debug_del_all
+			src.verbs += /client/proc/play_sound
+			src.verbs += /client/proc/modifytemperature
+			src.verbs += /client/proc/cmd_admin_gib
+			src.verbs += /client/proc/cmd_admin_gib_self
+//			src.verbs += /proc/toggleai
+			src.verbs += /proc/toggle_adminmsg
+			src.verbs += /proc/togglebuildmode
+//				src.verbs += /client/proc/grillify
+			src.verbs += /client/proc/jumptomob
+			src.verbs += /client/proc/Jump
+			src.verbs += /client/proc/jumptoturf
+			src.verbs += /client/proc/cmd_admin_rejuvenate
+			src.verbs += /client/proc/cmd_admin_robotize
+			src.verbs += /client/proc/cmd_admin_alienize
+			src.verbs += /client/proc/cmd_admin_changelinginize
+			src.verbs += /client/proc/Cell
+			src.verbs += /client/proc/ticklag
+			src.verbs += /client/proc/cmd_admin_mute
+			src.verbs += /client/proc/cmd_admin_drop_everything
+			src.verbs += /client/proc/cmd_admin_godmode
+			src.verbs += /client/proc/get_admin_state
+			src.verbs += /client/proc/cmd_admin_add_freeform_ai_law
+//			src.verbs += /client/proc/getmobs
+//			src.verbs += /client/proc/cmd_admin_list_admins
+			src.verbs += /client/proc/cmd_admin_list_occ
+			src.verbs += /client/proc/jumptokey
+			src.verbs += /client/proc/Getmob
+			src.verbs += /client/proc/jobbans
+			src.verbs += /client/proc/sendmob
+			src.verbs += /client/proc/Debug2					//debug toggle switch
+			src.verbs += /client/proc/callproc
+			src.verbs += /client/proc/funbutton
+			src.verbs += /client/proc/cmd_admin_prison
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/toggletraitorscaling
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
+			src.verbs += /obj/admins/proc/delay					//game start delay
+			src.verbs += /client/proc/deadchat					//toggles deadchat
+			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+
+			src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs += /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs += /client/proc/cmd_admin_subtle_message
+			src.verbs += /client/proc/cmd_admin_remove_plasma
+
+			src.verbs += /client/proc/general_report
+			src.verbs += /client/proc/air_report
+			src.verbs += /client/proc/air_status
+			src.verbs += /client/proc/fix_next_move
+			src.verbs += /obj/admins/proc/spawn_atom
+
+			src.verbs += /client/proc/toggle_view_range
+			src.verbs += /obj/admins/proc/toggle_aliens
+			src.verbs += /client/proc/warn
+
+		if ("Shit Guy")
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs += /client/proc/debug_variables
+			src.verbs += /proc/possess
+			src.verbs += /client/proc/cmd_admin_add_random_ai_law
+			src.verbs += /client/proc/cmd_modify_object_variables
+			src.verbs += /client/proc/cmd_modify_ticker_variables
+			src.verbs += /client/proc/cmd_admin_pm
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs += /client/proc/play_sound
+			src.verbs += /client/proc/cmd_admin_gib
+			src.verbs += /client/proc/cmd_admin_gib_self
+			src.verbs += /client/proc/jumptomob
+			src.verbs += /client/proc/modifytemperature
+			src.verbs += /proc/toggle_adminmsg
+//				src.verbs += /client/proc/grillify
+			src.verbs += /client/proc/cmd_admin_check_contents
+			src.verbs += /proc/togglebuildmode
+			src.verbs += /client/proc/Jump
+			src.verbs += /client/proc/jumptoturf
+			src.verbs += /client/proc/cmd_admin_rejuvenate
+			src.verbs += /client/proc/cmd_admin_delete
+			src.verbs += /client/proc/cmd_admin_mute
+			src.verbs += /client/proc/cmd_admin_drop_everything
+			src.verbs += /client/proc/cmd_admin_robotize
+			src.verbs += /client/proc/cmd_admin_godmode
+			src.verbs += /client/proc/cmd_admin_add_freeform_ai_law
+			src.verbs += /client/proc/funbutton
+			src.verbs += /client/proc/jumptokey
+//			src.verbs += /client/proc/cmd_admin_list_admins
+			src.verbs += /client/proc/Getmob
+			src.verbs += /client/proc/sendmob
+			src.verbs += /client/proc/cmd_admin_prison
+			src.verbs += /client/proc/Debug2
+			src.verbs += /client/proc/jobbans
+			src.verbs += /client/proc/deadchat					//toggles deadchat
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/toggletraitorscaling
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
+			src.verbs += /obj/admins/proc/delay					//game start delay
+			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+			src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs += /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_remove_plasma
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs += /client/proc/cmd_admin_subtle_message
+
+			src.verbs += /client/proc/general_report
+			src.verbs += /client/proc/air_report
+			src.verbs += /client/proc/air_status
+			src.verbs += /client/proc/fix_next_move
+
+			src.verbs += /client/proc/toggle_view_range
+			src.verbs += /client/proc/warn
+
+		if ("Primary Administrator")
+
+			if(src.holder.state == 2) //observing
+
+				src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+				src.verbs += /obj/admins/proc/toggletraitorscaling
+				src.verbs += /client/proc/cmd_admin_drop_everything
+				src.verbs += /obj/admins/proc/togglegoonsay
+				src.verbs += /client/proc/debug_variables
+				src.verbs += /client/proc/cmd_modify_object_variables
+				src.verbs += /client/proc/cmd_modify_ticker_variables
+//				src.verbs += /client/proc/cmd_admin_gib
+				src.verbs += /client/proc/jumptokey
+				src.verbs += /client/proc/jumptomob
+				src.verbs += /client/proc/Jump
+				src.verbs += /client/proc/jumptoturf
+				src.verbs += /client/proc/Getmob
+				src.verbs += /client/proc/sendmob
+				src.verbs += /client/proc/cmd_admin_add_freeform_ai_law
+				src.verbs += /client/proc/cmd_admin_rejuvenate
+				src.verbs += /obj/admins/proc/toggleaban			//abandon mob
+				src.verbs += /client/proc/toggle_view_range
+
+			src.verbs += /client/proc/debug_variables
+			src.verbs += /proc/togglebuildmode
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/toggletraitorscaling
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs += /client/proc/cmd_admin_add_random_ai_law
+			src.verbs += /client/proc/play_sound
+//			src.verbs += /client/proc/cmd_admin_list_admins
+			src.verbs += /client/proc/cmd_admin_pm
+			src.verbs += /client/proc/cmd_admin_mute
+			src.verbs += /client/proc/cmd_admin_check_contents
+			src.verbs += /client/proc/cmd_admin_gib_self
+			src.verbs += /client/proc/cmd_admin_remove_plasma
+
+//				src.verbs += /client/proc/modifytemperature
+//				src.verbs += /client/proc/grillify
+
+			src.verbs += /client/proc/cmd_admin_prison
+
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+
+			src.verbs += /obj/admins/proc/delay					//game start delay
+			src.verbs += /client/proc/deadchat					//toggles deadchat
+//				src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+
+//				src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+//				src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs += /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs += /client/proc/cmd_admin_subtle_message
+			src.verbs += /client/proc/warn
+
+		if ("Administrator")
+
+
+			if(src.holder.state == 2) //observing
+				src.verbs += /client/proc/Jump
+				src.verbs += /client/proc/cmd_admin_check_contents
+				src.verbs += /client/proc/jumptomob
+				src.verbs += /client/proc/jumptokey
+				src.verbs += /obj/admins/proc/toggleaban			//abandon mob
+				src.verbs += /client/proc/deadchat					//toggles deadchat
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs += /client/proc/cmd_admin_pm
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs += /client/proc/cmd_admin_gib_self
+//				src.verbs += /client/proc/play_sound
+			src.verbs += /client/proc/cmd_admin_mute
+			src.verbs += /client/proc/cmd_admin_prison
+			src.verbs += /client/proc/cmd_admin_add_random_ai_law
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/toggletraitorscaling
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+
+			src.verbs += /obj/admins/proc/delay					//game start delay
+
+//				src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+//				src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+//				src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs += /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs += /client/proc/cmd_admin_subtle_message
+			src.verbs += /client/proc/warn
+
+		if ("Secondary Administrator")
+
+			if(src.holder.state == 2) //observing
+				src.verbs += /obj/admins/proc/toggleaban			//abandon mob
+				src.verbs += /client/proc/cmd_admin_check_contents
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs += /client/proc/cmd_admin_pm
+
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs += /client/proc/cmd_admin_prison
+			src.verbs += /client/proc/cmd_admin_gib_self
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+
+			src.verbs += /obj/admins/proc/delay					//game start delay
+//				src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+//				src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+//				src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs += /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs += /client/proc/cmd_admin_subtle_message
+			src.verbs += /client/proc/warn
+
+		if ("Moderator")
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs += /client/proc/cmd_admin_pm
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs += /client/proc/cmd_admin_prison
+			src.verbs += /client/proc/cmd_admin_gib_self
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+//				src.verbs += /obj/admins/proc/restart				//restart
+//				src.verbs += /obj/admins/proc/boot					//boot someone
+//				src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/startnow				//start now
+//				src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+//				src.verbs += /obj/admins/proc/toggleaban			//abandon mob
+			src.verbs += /obj/admins/proc/delay					//game start delay
+//				src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+//				src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+//				src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs += /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_subtle_message
+			src.verbs += /client/proc/warn
+
+		if ("Goat Fart")
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/cmd_admin_gib_self
+
+	if (src.holder)
+		src.holder.owner = src
+		if (src.holder.level > -1)
+			src.verbs += /client/proc/admin_play
+			src.verbs += /client/proc/admin_observe
+			src.verbs += /client/proc/voting
+			src.verbs += /client/proc/game_panel
+			src.verbs += /client/proc/unban_panel
+			src.verbs += /client/proc/player_panel
+
+		if(src.holder.level > 1)
+			src.verbs += /client/proc/stealth
+
+		if(( src.holder.state == 2 ) || ( src.holder.level > 3 ))
+			src.verbs += /client/proc/secrets
+			src.verbs += /client/proc/goons
+			src.verbs += /client/proc/beta_testers
+
+/client/proc/stealthadmin()
+	set name = "Toggle admin verb visibility"
+	set category = "Admin"
+	src << "Hiding your rightclick admin verbs so you can play without 'accidentally' gibbing someone"
+	src.verbs -= /client/proc/stealthadmin
+	src.verbs += /client/proc/unstealthadmin
+	switch (src.holder.rank)
+		if ("Host")
+			src.verbs -= /client/proc/cmd_admin_delete
+			src.verbs -= /proc/possess
+			src.verbs -= /proc/release
+			src.verbs -= /proc/givetestverbs
+			src.verbs -= /client/proc/debug_variables
+			src.verbs -= /client/proc/cmd_modify_object_variables
+			src.verbs -= /client/proc/cmd_modify_ticker_variables
+			src.verbs -= /client/proc/cmd_admin_check_contents
+			src.verbs -= /client/proc/cmd_admin_gib
+			src.verbs -= /client/proc/cmd_admin_pm
+			src.verbs += /client/proc/cmd_admin_gib_self
+			src.verbs += /proc/toggle_adminmsg
+//				src.verbs += /client/proc/grillify
+			src.verbs -= /client/proc/jumptomob
+			src.verbs -= /client/proc/Jump
+			src.verbs -= /client/proc/jumptoturf
+			src.verbs -= /client/proc/cmd_admin_rejuvenate
+			src.verbs -= /client/proc/cmd_admin_robotize
+			src.verbs -= /client/proc/cmd_admin_alienize
+			src.verbs -= /client/proc/cmd_admin_changelinginize
+			src.verbs += /client/proc/Cell
+			src.verbs += /client/proc/ticklag
+			src.verbs -= /client/proc/cmd_admin_mute
+			src.verbs -= /client/proc/cmd_admin_drop_everything
+			src.verbs -= /client/proc/cmd_admin_godmode
+			src.verbs += /client/proc/get_admin_state
+			src.verbs += /client/proc/cmd_admin_add_freeform_ai_law
+//			src.verbs += /client/proc/getmobs
+//			src.verbs += /client/proc/cmd_admin_list_admins
+			src.verbs += /client/proc/cmd_admin_list_occ
+			src.verbs -= /proc/togglebuildmode
+			src.verbs -= /client/proc/jumptokey
+			src.verbs -= /client/proc/Getmob
+			src.verbs += /client/proc/jobbans
+			src.verbs -= /client/proc/sendmob
+			src.verbs += /client/proc/Debug2					//debug toggle switch
+			src.verbs += /client/proc/callproc
+			src.verbs += /client/proc/funbutton
+			src.verbs -= /client/proc/cmd_admin_prison
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
+			src.verbs += /obj/admins/proc/delay					//game start delay
+			src.verbs += /client/proc/deadchat					//toggles deadchat
+			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+
+			src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs -= /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs -= /client/proc/cmd_admin_subtle_message
+			src.verbs += /client/proc/cmd_admin_remove_plasma
+
+			src.verbs -= /client/proc/general_report
+			src.verbs -= /client/proc/air_report
+			src.verbs -= /client/proc/air_status
+			src.verbs += /client/proc/fix_next_move
+
+			src.verbs += /client/proc/toggle_view_range
+			src.verbs += /obj/admins/proc/toggle_aliens
+			src.verbs -= /client/proc/warn
+		if ("Coder")
+			src.verbs -= /client/proc/cmd_admin_delete
+			src.verbs -= /proc/possess
+			src.verbs += /client/proc/cmd_admin_add_random_ai_law
+			src.verbs -= /proc/release
+			src.verbs -= /proc/givetestverbs
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs -= /client/proc/debug_variables
+			src.verbs += /client/proc/cmd_debug_tog_aliens
+			src.verbs -= /client/proc/cmd_modify_object_variables
+			src.verbs += /client/proc/cmd_modify_ticker_variables
+			src.verbs -= /client/proc/cmd_admin_pm
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs -= /client/proc/cmd_admin_check_contents
+			src.verbs += /client/proc/cmd_debug_del_all
+			src.verbs += /client/proc/play_sound
+			src.verbs += /client/proc/modifytemperature
+			src.verbs -= /client/proc/cmd_admin_gib
+			src.verbs += /client/proc/cmd_admin_gib_self
+//			src.verbs += /proc/toggleai
+			src.verbs += /proc/toggle_adminmsg
+			src.verbs -= /proc/togglebuildmode
+//				src.verbs += /client/proc/grillify
+			src.verbs -= /client/proc/jumptomob
+			src.verbs -= /client/proc/Jump
+			src.verbs -= /client/proc/jumptoturf
+			src.verbs -= /client/proc/cmd_admin_rejuvenate
+			src.verbs -= /client/proc/cmd_admin_robotize
+			src.verbs -= /client/proc/cmd_admin_alienize
+			src.verbs -= /client/proc/cmd_admin_changelinginize
+			src.verbs += /client/proc/Cell
+			src.verbs += /client/proc/ticklag
+			src.verbs -= /client/proc/cmd_admin_mute
+			src.verbs -= /client/proc/cmd_admin_drop_everything
+			src.verbs -= /client/proc/cmd_admin_godmode
+			src.verbs += /client/proc/get_admin_state
+			src.verbs += /client/proc/cmd_admin_add_freeform_ai_law
+//			src.verbs += /client/proc/getmobs
+//			src.verbs += /client/proc/cmd_admin_list_admins
+			src.verbs += /client/proc/cmd_admin_list_occ
+			src.verbs -= /client/proc/jumptokey
+			src.verbs -= /client/proc/Getmob
+			src.verbs += /client/proc/jobbans
+			src.verbs -= /client/proc/sendmob
+			src.verbs += /client/proc/Debug2					//debug toggle switch
+			src.verbs += /client/proc/callproc
+			src.verbs += /client/proc/funbutton
+			src.verbs -= /client/proc/cmd_admin_prison
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/toggletraitorscaling
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
+			src.verbs += /obj/admins/proc/delay					//game start delay
+			src.verbs += /client/proc/deadchat					//toggles deadchat
+			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+
+			src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs -= /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs -= /client/proc/cmd_admin_subtle_message
+			src.verbs += /client/proc/cmd_admin_remove_plasma
+
+			src.verbs -= /client/proc/general_report
+			src.verbs -= /client/proc/air_report
+			src.verbs -= /client/proc/air_status
+			src.verbs += /client/proc/fix_next_move
+			src.verbs += /obj/admins/proc/spawn_atom
+
+			src.verbs += /client/proc/toggle_view_range
+			src.verbs += /obj/admins/proc/toggle_aliens
+			src.verbs -= /client/proc/warn
+
+		if ("Shit Guy")
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs -= /client/proc/debug_variables
+			src.verbs -= /proc/possess
+			src.verbs += /client/proc/cmd_admin_add_random_ai_law
+			src.verbs -= /client/proc/cmd_modify_object_variables
+			src.verbs += /client/proc/cmd_modify_ticker_variables
+			src.verbs -= /client/proc/cmd_admin_pm
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs += /client/proc/play_sound
+			src.verbs -= /client/proc/cmd_admin_gib
+			src.verbs += /client/proc/cmd_admin_gib_self
+			src.verbs -= /client/proc/jumptomob
+			src.verbs += /client/proc/modifytemperature
+			src.verbs += /proc/toggle_adminmsg
+//				src.verbs += /client/proc/grillify
+			src.verbs -= /client/proc/cmd_admin_check_contents
+			src.verbs -= /proc/togglebuildmode
+			src.verbs -= /client/proc/Jump
+			src.verbs -= /client/proc/jumptoturf
+			src.verbs -= /client/proc/cmd_admin_rejuvenate
+			src.verbs -= /client/proc/cmd_admin_delete
+			src.verbs -= /client/proc/cmd_admin_mute
+			src.verbs -= /client/proc/cmd_admin_drop_everything
+			src.verbs -= /client/proc/cmd_admin_robotize
+			src.verbs -= /client/proc/cmd_admin_godmode
+			src.verbs -= /client/proc/cmd_admin_add_freeform_ai_law
+			src.verbs += /client/proc/funbutton
+			src.verbs -= /client/proc/jumptokey
+//			src.verbs += /client/proc/cmd_admin_list_admins
+			src.verbs -= /client/proc/Getmob
+			src.verbs -= /client/proc/sendmob
+			src.verbs -= /client/proc/cmd_admin_prison
+			src.verbs += /client/proc/Debug2
+			src.verbs += /client/proc/jobbans
+			src.verbs += /client/proc/deadchat					//toggles deadchat
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/toggletraitorscaling
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
+			src.verbs += /obj/admins/proc/delay					//game start delay
+			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+			src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs -= /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_remove_plasma
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs -= /client/proc/cmd_admin_subtle_message
+
+			src.verbs -= /client/proc/general_report
+			src.verbs -= /client/proc/air_report
+			src.verbs -= /client/proc/air_status
+			src.verbs -= /client/proc/fix_next_move
+
+			src.verbs += /client/proc/toggle_view_range
+			src.verbs -= /client/proc/warn
+
+		if ("Primary Administrator")
+
+
+			src.verbs -= /client/proc/debug_variables
+			src.verbs -= /proc/togglebuildmode
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/toggletraitorscaling
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs += /client/proc/cmd_admin_add_random_ai_law
+			src.verbs += /client/proc/play_sound
+//			src.verbs += /client/proc/cmd_admin_list_admins
+			src.verbs -= /client/proc/cmd_admin_pm
+			src.verbs -= /client/proc/cmd_admin_mute
+			src.verbs -= /client/proc/cmd_admin_check_contents
+			src.verbs += /client/proc/cmd_admin_gib_self
+			src.verbs += /client/proc/cmd_admin_remove_plasma
+
+//				src.verbs += /client/proc/modifytemperature
+//				src.verbs += /client/proc/grillify
+
+			src.verbs -= /client/proc/cmd_admin_prison
+
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+
+			src.verbs += /obj/admins/proc/delay					//game start delay
+			src.verbs += /client/proc/deadchat					//toggles deadchat
+//				src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+
+//				src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+//				src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs -= /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs -= /client/proc/cmd_admin_subtle_message
+			src.verbs -= /client/proc/warn
+
+		if ("Administrator")
+
+
+				//toggles deadchat
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs -= /client/proc/cmd_admin_pm
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs += /client/proc/cmd_admin_gib_self
+//				src.verbs += /client/proc/play_sound
+			src.verbs -= /client/proc/cmd_admin_mute
+			src.verbs -= /client/proc/cmd_admin_prison
+			src.verbs += /client/proc/cmd_admin_add_random_ai_law
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/toggletraitorscaling
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+
+			src.verbs += /obj/admins/proc/delay					//game start delay
+
+//				src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+//				src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+//				src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs -= /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs -= /client/proc/cmd_admin_subtle_message
+			src.verbs -= /client/proc/warn
+
+		if ("Secondary Administrator")
+
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs -= /client/proc/cmd_admin_pm
+
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs -= /client/proc/cmd_admin_prison
+			src.verbs += /client/proc/cmd_admin_gib_self
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+			src.verbs += /obj/admins/proc/restart				//restart
+			src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/startnow				//start now bitch
+			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+
+			src.verbs += /obj/admins/proc/delay					//game start delay
+//				src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+//				src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+//				src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs -= /obj/admins/proc/unprison
+			src.verbs += /client/proc/cmd_admin_create_centcom_report
+			src.verbs -= /client/proc/cmd_admin_subtle_message
+			src.verbs -= /client/proc/warn
+
+		if ("Moderator")
+			src.verbs += /obj/admins/proc/togglegoonsay
+			src.verbs -= /client/proc/cmd_admin_pm
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/dsay
+			src.verbs -= /client/proc/cmd_admin_prison
+			src.verbs += /client/proc/cmd_admin_gib_self
+			src.verbs += /obj/admins/proc/vmode   				//start vote
+			src.verbs += /obj/admins/proc/votekill 				//abort vote
+			src.verbs += /obj/admins/proc/voteres 				//toggle votes
+//				src.verbs += /obj/admins/proc/restart				//restart
+//				src.verbs += /obj/admins/proc/boot					//boot someone
+//				src.verbs += /obj/admins/proc/immreboot				//immediate reboot
+			src.verbs += /obj/admins/proc/announce				//global announce
+			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+			src.verbs += /obj/admins/proc/startnow				//start now
+//				src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
+//				src.verbs += /obj/admins/proc/toggleaban			//abandon mob
+			src.verbs += /obj/admins/proc/delay					//game start delay
+//				src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+//				src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+//				src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs -= /obj/admins/proc/unprison
+			src.verbs -= /client/proc/cmd_admin_subtle_message
+			src.verbs -= /client/proc/warn
+
+		if ("Goat Fart")
+			src.verbs += /client/proc/cmd_admin_say
+			src.verbs += /client/proc/cmd_admin_gib_self
