@@ -95,8 +95,10 @@
 					if ((!loc.power_equip) || istype(T, /turf/space))
 						if (src:aiRestorePowerRoutine==0)
 							src:aiRestorePowerRoutine = 1
+
 							src << "You've lost power!"
-							src.set_zeroth_law("")
+							if (!checktraitor(src))
+								src.set_zeroth_law("")
 							src.clear_supplied_laws()
 							spawn(50)
 								while ((src:aiRestorePowerRoutine!=0) && stat!=2)
