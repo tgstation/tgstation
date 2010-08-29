@@ -1134,6 +1134,9 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	m_amt = 700
 	var/rigged = 0		// true if rigged to explode
 
+/obj/item/weapon/cell/robotcrate
+	maxcharge = 10000
+
 
 /obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
 	var/list/cameras = new/list()

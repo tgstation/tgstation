@@ -263,16 +263,29 @@ var/supply_shuttle_points = 50
 	containername = "Clown Gear"
 */
 
-/datum/supply_packs/robot
-	name = "Robotics Crate"
-	contains = list("/obj/machinery/bot/secbot",
-	"/obj/machinery/bot/floorbot",
-	"/obj/machinery/bot/cleanbot",
-	"/obj/machinery/bot/medbot",
-	"/obj/machinery/bot/mulebot")
+/datum/supply_packs/mule
+	name = "MULEbot Crate"
+	contains = list("/obj/machinery/bot/mulebot")
 	cost = 20
 	containertype = "/obj/crate"
-	containername = "Robotics Crate"
+	containername = "MULEbot Crate"
+
+/datum/supply_packs/robotics
+	name = "Robotics Assembly Crate"
+	contains = list("/obj/item/device/prox_sensor",
+	"/obj/item/device/prox_sensor",
+	"/obj/item/device/prox_sensor",
+	"/obj/item/weapon/storage/toolbox/electrical",
+	"/obj/item/device/flash",
+	"/obj/item/device/flash",
+	"/obj/item/device/flash",
+	"/obj/item/device/flash",
+	"/obj/item/weapon/cell/robotcrate",
+	"/obj/item/weapon/cell/robotcrate")
+	cost = 10
+	containertype = /obj/crate/secure/gear
+	containername = "Robotics Assembly"
+	access = access_robotics
 
 
 //SUPPLY PACKS
