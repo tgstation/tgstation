@@ -18,14 +18,15 @@
 		var/list/temp_paths = dd_text2List(src.product_paths, ";")
 		var/list/temp_amounts = dd_text2List(src.product_amounts, ";")
 		var/list/temp_hidden = dd_text2List(src.product_hidden, ";")
+		var/list/temp_hideamt = dd_text2List(src.product_hideamt, ";")
 		//Little sanity check here
-		if ((isnull(temp_paths)) || (isnull(temp_amounts)) || (temp_paths.len != temp_amounts.len))
+		if ((isnull(temp_paths)) || (isnull(temp_amounts)) || (temp_paths.len != temp_amounts.len) || (temp_hidden.len != temp_hideamt.len))
 			stat |= BROKEN
 			return
 
 		src.build_inventory(temp_paths,temp_amounts)
 		 //Add hidden inventory
-		src.build_inventory(temp_hidden,null,1)
+		src.build_inventory(temp_hidden,temp_hideamt, 1)
 		return
 
 	return
@@ -68,14 +69,8 @@
 		R.product_name = capitalize(temp.name)
 		R.product_path = path_list[p]
 		R.display_color = pick("red","blue","green")
-
-		if(hidden)
-			R.amount = rand(1,6)
-			src.hidden_records += R
-
-		else
-			R.amount = text2num(amt_list[p])
-			src.product_records += R
+		R.amount = text2num(amt_list[p])
+		src.product_records += R
 
 		del(temp)
 

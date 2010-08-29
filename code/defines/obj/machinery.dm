@@ -533,6 +533,7 @@
 	var/product_amounts = "" //String of product amounts separated by semicolons, must have amount for every path in product_paths
 	var/product_slogans = "" //String of slogans separated by semicolons, optional
 	var/product_hidden = "" //String of products that are hidden unless hacked.
+	var/product_hideamt = "" //String of hidden product amounts, separated by semicolons. Exact same as amounts. Must be left blank if hidden is.
 	var/list/product_records = list()
 	var/list/hidden_records = list()
 	var/list/slogan_list = list()
@@ -549,6 +550,12 @@
 	var/panel_open = 0 //Hacking that vending machine. Gonna get a free candy bar.
 	var/wires = 15
 
+/obj/machinery/vending/assist
+	product_amounts = "5;3;4;1"
+	product_hidden = "/obj/item/device/flashlight;obj/item/device/timer"
+	product_paths = "/obj/item/device/prox_sensor;/obj/item/device/igniter;/obj/item/device/radio/signaler;/obj/item/weapon/wirecutters"
+	product_hideamt = "5;2"
+
 /obj/machinery/vending/coffee
 	name = "coffee machine"
 	desc = "A Robust Coffee vending machine."
@@ -558,6 +565,7 @@
 	product_amounts = "25"
 	vend_delay = 34
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/cola"
+	product_hideamt = "5"
 
 /obj/machinery/vending/snack
 	name = "snack machine"
@@ -567,6 +575,7 @@
 	product_amounts = "10;10"
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_hidden = "/obj/item/weapon/reagent_containers/food/snacks/donut"
+	product_hideamt = "6"
 
 /obj/machinery/vending/cigarette
 	name = "cigarette machine"
@@ -577,6 +586,7 @@
 	product_slogans = "Space cigs taste good like a cigarette should.;I'd rather toolbox than switch.;Smoke!;Don't believe the reports - smoke today!"
 	vend_delay = 34
 	product_hidden = "/obj/item/weapon/zippo"
+	product_hideamt = "3"
 
 /obj/machinery/vending/medical
 	name = "NanoMed Plus"
@@ -587,6 +597,7 @@
 	product_paths = "/obj/item/weapon/reagent_containers/glass/bottle/antitoxin;/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline;/obj/item/weapon/reagent_containers/glass/bottle/stoxin;/obj/item/weapon/reagent_containers/glass/bottle/toxin;/obj/item/weapon/reagent_containers/syringe/antiviral;/obj/item/weapon/reagent_containers/syringe"
 	product_amounts = "4;4;4;4;8;12"
 	product_hidden = "/obj/item/weapon/reagent_containers/pill/tox;/obj/item/device/healthanalyzer"
+	product_hideamt = "3;10"
 
 /obj/machinery/vending/security
 	name = "SecTech"
@@ -598,6 +609,7 @@
 	product_amounts = "8;2;5"
 	//product_amounts = "8;5;4" Old totals
 	product_hidden = "/obj/item/clothing/head/helmet"
+	product_hideamt = "2"
 
 /obj/machinery/vending/hydronutrients
 	name = "NutriMax"

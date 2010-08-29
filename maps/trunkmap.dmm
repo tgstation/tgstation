@@ -1819,7 +1819,7 @@
 "aIY" = (/obj/grille,/obj/window/reinforced/north,/obj/window/reinforced/west,/obj/window/reinforced/east,/turf/simulated/floor/plating,/area/hallway/primary/central)
 "aIZ" = (/obj/table{icon_state = "tabledir"; dir = 4},/obj/item/weapon/cable_coil{pixel_x = 2; pixel_y = -2},/obj/item/weapon/cable_coil,/obj/item/weapon/screwdriver,/obj/item/weapon/cell{charge = 100; maxcharge = 15000},/turf/simulated/floor,/area/storage/primary)
 "aJa" = (/turf/simulated/floor,/area/storage/primary)
-"aJb" = (/obj/machinery/vending{desc = "A standard vending machine."; product_amounts = "5;3;4;1"; product_hidden = "/obj/item/device/flashlight;/obj/item/device/timer"; product_paths = "/obj/item/device/prox_sensor;/obj/item/device/igniter;/obj/item/device/radio/signaler;/obj/item/weapon/wirecutters"; product_slogans = "Please make your selection."},/turf/simulated/floor,/area/storage/primary)
+"aJb" = (/obj/machinery/vending/assist,/turf/simulated/floor,/area/storage/primary)
 "aJc" = (/obj/item/weapon/crowbar,/obj/table{icon_state = "tabledir"; dir = 10},/obj/item/device/prox_sensor,/turf/simulated/floor,/area/storage/primary)
 "aJd" = (/obj/table{icon_state = "tabledir"; dir = 6},/obj/machinery/camera{network = "SS13"; c_tag = "Secure Storage"},/obj/item/weapon/storage/utilitybelt,/turf/simulated/floor,/area/storage/primary)
 "aJe" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=4"; location = "Tool Storage"},/turf/simulated/floor{icon_state = "bot"},/area/storage/primary)
