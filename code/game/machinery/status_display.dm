@@ -248,7 +248,7 @@
 	icon_state = "frame"
 	name = "AI display"
 	anchored = 1
-	density = 1
+	density = 0
 
 	var/mode = 0	// 0 = Blank
 					// 1 = AI emoticon

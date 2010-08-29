@@ -865,6 +865,9 @@
 	icon = 'janitor.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
+	m_amt = 200
+	g_amt = 0
+
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | OPENCONTAINER
 	New()
