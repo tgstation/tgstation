@@ -62,4 +62,4 @@ ALLOW_AI
 NORESPAWN
 
 # set a hosted by name for unix platforms
-HOSTEDBY Stuntwaffle
+HOSTEDBY Yournamehere

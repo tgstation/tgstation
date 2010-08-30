@@ -178,7 +178,7 @@ var/list/karma_spenders = list()
 	set name = "Spend Karma"
 	set desc = "Let the gods know whether someone's been naughty or nice. <One use only>"
 	if(!istype(M, /mob))
-		usr << "\red That's not a mob. You shouldn't have even been able to specify that. Please inform TLE post haste."
+		usr << "\red That's not a mob. You shouldn't have even been able to specify that. Please inform your server administrator post haste."
 		return
 
 	if(!M.client)
