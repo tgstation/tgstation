@@ -38,6 +38,37 @@ mob/new_player
 		if(!preferences.savefile_load(src, 0))
 			preferences.ShowChoices(src)
 
+		//PDA Resource Initialisation =======================================================>
+
+
+		if (client) //load the PDA iconset into the client
+			src << browse_rsc('pda_atmos.png')
+			src << browse_rsc('pda_back.png')
+			src << browse_rsc('pda_bell.png')
+			src << browse_rsc('pda_blank.png')
+			src << browse_rsc('pda_boom.png')
+			src << browse_rsc('pda_bucket.png')
+			src << browse_rsc('pda_crate.png')
+			src << browse_rsc('pda_cuffs.png')
+			src << browse_rsc('pda_eject.png')
+			src << browse_rsc('pda_exit.png')
+			src << browse_rsc('pda_flashlight.png')
+			src << browse_rsc('pda_honk.png')
+			src << browse_rsc('pda_mail.png')
+			src << browse_rsc('pda_medical.png')
+			src << browse_rsc('pda_menu.png')
+			src << browse_rsc('pda_mule.png')
+			src << browse_rsc('pda_notes.png')
+			src << browse_rsc('pda_power.png')
+			src << browse_rsc('pda_rdoor.png')
+			src << browse_rsc('pda_reagent.png')
+			src << browse_rsc('pda_refresh.png')
+			src << browse_rsc('pda_scanner.png')
+			src << browse_rsc('pda_signaler.png')
+			src << browse_rsc('pda_status.png')
+
+		//End PDA Resource Initialisation =====================================================>
+
 
 	Logout()
 		ready = 0

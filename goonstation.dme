@@ -105,6 +105,7 @@
 #define FILE_DIR "icons/obj/doors"
 #define FILE_DIR "icons/obj/machines"
 #define FILE_DIR "icons/obj/pipes"
+#define FILE_DIR "icons/pda_icons"
 #define FILE_DIR "icons/Testing"
 #define FILE_DIR "icons/turf"
 #define FILE_DIR "interface"
