@@ -21,7 +21,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	name = "chili"
 	desc = "Spicy!"
-	icon_state = "chillipepper"
+	icon_state = "chilipepper"
 	amount = 1
 	heal_amt = 5
 
