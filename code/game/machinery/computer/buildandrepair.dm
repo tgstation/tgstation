@@ -29,7 +29,7 @@
 	name = "Circuit board (AI Upload)"
 	computertype = "/obj/machinery/computer/aiupload"
 /obj/item/weapon/circuitboard/med_data
-	name = "Circuit board (Medical)"
+	name = "Circuit board (Medical Records)"
 	computertype = "/obj/machinery/computer/med_data"
 /obj/item/weapon/circuitboard/scan_consolenew
 	name = "Circuit board (DNA Machine)"
@@ -47,7 +47,7 @@
 	name = "Circuit board (Teleporter)"
 	computertype = "/obj/machinery/computer/teleporter"
 /obj/item/weapon/circuitboard/secure_data
-	name = "Circuit board (Secure Data)"
+	name = "Circuit board (Security Records)"
 	computertype = "/obj/machinery/computer/secure_data"
 /obj/item/weapon/circuitboard/atmospherealerts
 	name = "Circuit board (Atmosphere alerts)"
