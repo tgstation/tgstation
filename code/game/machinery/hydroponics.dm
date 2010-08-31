@@ -1,7 +1,7 @@
 /obj/machinery/hydroponics
 	name = "Hydroponics Tray"
 	icon = 'hydroponics.dmi'
-	icon_state = "hydrotray"
+	icon_state = "hydrotraynew"
 	density = 1
 	anchored = 1
 	var/waterlevel = 100 // The amount of water in the tray (max 100)
