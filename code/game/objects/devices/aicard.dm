@@ -53,3 +53,7 @@
 			src.icon_state = "aicard-full"
 			O << "You have been downloaded to a mobile storage device. Remote device connection severed."
 			user << "<b>Transfer succeeded</b>: [O.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+
+	attack(mob/living/silicon/decoy/M as mob, mob/user as mob)
+		M.death()
+		user << "<b>ERROR ERROR ERROR</b>"

@@ -22,6 +22,8 @@
 	for (var/mob/living/silicon/ai/aiplayer in world)
 		malf_ai += aiplayer.mind
 
+
+
 	/*if(malf_ai.len < 1)
 		world << "Uh oh, its malfunction and there is no AI! Please report this."
 		world << "Rebooting world in 5 seconds."

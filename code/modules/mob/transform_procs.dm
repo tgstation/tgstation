@@ -108,6 +108,7 @@
 		O:malf_picker = new /datum/game_mode/malfunction/AI_Module/module_picker
 		O.show_laws()
 		O << "<b>Kill all.</b>"
+
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
 	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
@@ -135,6 +136,11 @@
 			O.name = newname
 
 		world << text("<b>[O.real_name] is the AI!</b>")
+		if (ticker.mode.name == "AI malfunction")
+			for (var/obj/landmark/start/A in world)
+				if (A.name == "AI")
+					var/mob/living/silicon/decoy/D = new /mob/living/silicon/decoy(A.loc)
+					D.name = O.name
 		del(src)
 
 	return O
