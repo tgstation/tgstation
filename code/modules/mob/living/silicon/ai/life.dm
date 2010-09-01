@@ -48,7 +48,7 @@
 					loc = T.loc
 					if (istype(loc, /area))
 						//stage = 4
-						if (!loc.power_equip)
+						if (!loc.master.power_equip)
 							//stage = 5
 							blind = 1
 
@@ -92,11 +92,12 @@
 					src.see_in_dark = 0
 					src.see_invisible = 0
 
-					if ((!loc.power_equip) || istype(T, /turf/space))
+					if ((!loc.master.power_equip) || istype(T, /turf/space))
 						if (src:aiRestorePowerRoutine==0)
 							src:aiRestorePowerRoutine = 1
 
 							src << "You've lost power!"
+							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
 							if (!checktraitor(src))
 								src.set_zeroth_law("")
 							src.clear_supplied_laws()
@@ -108,7 +109,7 @@
 							spawn(20)
 								src << "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection."
 								sleep(50)
-								if (loc.power_equip)
+								if (loc.master.power_equip)
 									if (!istype(T, /turf/space))
 										src << "Alert cancelled. Power has been restored without our assistance."
 										src:aiRestorePowerRoutine = 0
@@ -133,7 +134,7 @@
 									src << "Unable to locate APC!"
 									src:aiRestorePowerRoutine = 2
 									return
-								if (loc.power_equip)
+								if (loc.master.power_equip)
 									if (!istype(T, /turf/space))
 										src << "Alert cancelled. Power has been restored without our assistance."
 										src:aiRestorePowerRoutine = 0
@@ -150,7 +151,7 @@
 									src << "APC connection lost!"
 									src:aiRestorePowerRoutine = 2
 									return
-								if (loc.power_equip)
+								if (loc.master.power_equip)
 									if (!istype(T, /turf/space))
 										src << "Alert cancelled. Power has been restored without our assistance."
 										src:aiRestorePowerRoutine = 0
@@ -167,7 +168,7 @@
 									src << "APC connection lost!"
 									src:aiRestorePowerRoutine = 2
 									return
-								if (loc.power_equip)
+								if (loc.master.power_equip)
 									if (!istype(T, /turf/space))
 										src << "Alert cancelled. Power has been restored without our assistance."
 										src:aiRestorePowerRoutine = 0
@@ -184,7 +185,7 @@
 									src << "APC connection lost!"
 									src:aiRestorePowerRoutine = 2
 									return
-								if (loc.power_equip)
+								if (loc.master.power_equip)
 									if (!istype(T, /turf/space))
 										src << "Alert cancelled. Power has been restored without our assistance."
 										src:aiRestorePowerRoutine = 0
