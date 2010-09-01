@@ -261,7 +261,19 @@
 	name = "space cleaner"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY|OPENCONTAINER
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 3
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 10
+
+/obj/item/weapon/weedbgone
+	desc = "Weed-B-Gone! Kill those pesky weeds!"
+	icon = 'hydroponics.dmi'
+	name = "Weed-B-Gone"
+	icon_state = "weedbgone"
+	item_state = "weedbgone"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
 	throwforce = 3
 	w_class = 2.0
 	throw_speed = 2

@@ -598,6 +598,37 @@ datum
 							C:head.clean_blood()
 
 
+		weedbgone
+			name = "Weed-B-Gone"
+			id = "weedbgone"
+			description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
+			reagent_state = LIQUID
+			/* Don't know if this is necessary.
+			on_mob_life(var/mob/living/carbon/M)
+				if(!M) M = holder.my_atom
+				M:toxloss += 3.0
+				..()
+				return
+			*/
+			reaction_obj(var/obj/O, var/volume)
+				if(istype(O,/obj/plant/vine/))
+					O:life -= 25 // Kills vines nicely // Not tested as vines don't work in R41
+				else if(istype(O,/obj/alien/weeds/))
+					O:health -= 25 // Kills alien weeds pretty fast
+					O:healthcheck()
+				// Damage that is done to growing plants is separately
+				// at code/game/machinery/hydroponics at obj/item/hydroponics
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				src = null
+				if(istype(M, /mob/living/carbon))
+					if(!M.wear_mask) // If not wearing a mask
+						M:toxloss += 2 // 4 toxic damage per application, doubled for some reason
+						//if(prob(10))
+							//M.make_dizzy(1) doesn't seem to do anything
+
+
+
 		space_cola
 			name = "Cola"
 			id = "cola"

@@ -10,7 +10,7 @@
 	var/mutmod = 1 //Modifier to mutation chance
 	var/age = 0 // Current age
 	var/dead = 0 // Is it dead?
-	var/health = 0 // It's health.
+	var/health = 0 // Its health.
 	var/lastproduce = 0 // Last time it was harvested
 	var/lastcycle = 0 //Used for timing of cycles.
 	var/cycledelay = 200 // About 10 seconds / cycle
@@ -167,6 +167,14 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				user << "--<B>Plant Potency:</B> [src.myseed.potency]"
 		else
 			user << "<B>No plant found.</B>"
+	else if (istype(O, /obj/item/weapon/weedbgone))
+		if(src.planted && src.myseed)
+			src.health -= rand(5,50)
+			src.visible_message("\red <B>\The [src] has been sprayed with \the [O][(user ? " by [user]." : ".")]")
+			playsound(src.loc, 'spray3.ogg', 50, 1, -6)
+		else
+			user << "\red Nothing is planted in the hydrotray!"
+
 
 	return
 

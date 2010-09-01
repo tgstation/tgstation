@@ -109,6 +109,21 @@
 	var/broken = 0
 	locked = 1
 
+/obj/crate/hydroponics
+	name = "Gardening crate"
+	desc = "All you need to destroy those pesky weeds and pests."
+	icon = 'storage.dmi'
+	icon_state = "hydrocrate"
+	openicon = "hydrocrateopen"
+	closedicon = "hydrocrate"
+	density = 1
+	New()
+		..()
+		new /obj/item/weapon/weedbgone(src)
+		new /obj/item/weapon/weedbgone(src)
+		new /obj/item/weapon/weedbgone(src)
+		new /obj/item/weapon/weedbgone(src)
+	// Four bottles should be enough for everybody.
 
 /obj/crate/New()
 	..()

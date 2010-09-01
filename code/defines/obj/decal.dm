@@ -134,3 +134,9 @@
 	layer = 3
 	icon = 'old_or_unused.dmi'
 	icon_state = "cobweb2"
+
+// Used for spray that you spray at walls, tables, hydrovats etc
+/obj/decal/spraystill
+	density = 0
+	anchored = 1
+	layer = 50

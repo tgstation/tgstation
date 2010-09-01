@@ -388,3 +388,10 @@ datum
 			result = "cleaner"
 			required_reagents = list("ammonia" = 1, "water" = 1)
 			result_amount = 1
+
+		weedbgone
+			name = "Weed-B-Gone"
+			id = "weedbgone"
+			result = "weedbgone"
+			required_reagents = list("toxin" = 1, "water" = 4)
+			result_amount = 5

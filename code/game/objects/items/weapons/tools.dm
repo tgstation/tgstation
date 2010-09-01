@@ -142,7 +142,7 @@ WELDINGTOOOL
 	if (istype(O, /obj/reagent_dispensers/fueltank) && get_dist(src,O) <= 1)
 		O.reagents.trans_to(src, 20)
 		user << "\blue Welder refueled"
-		playsound(src.loc, 'zzzt.ogg', 50, 1, -6)
+		playsound(src.loc, 'refill.ogg', 50, 1, -6)
 
 	else if (src.welding)
 		use_fuel(1)
