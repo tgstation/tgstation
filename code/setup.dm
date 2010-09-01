@@ -13,14 +13,13 @@
 #define MOLES_PLASMA_VISIBLE	0.5 //Moles in a standard cell after which plasma is visible
 
 #define BREATH_VOLUME 0.5	//liters in a normal breath
-//#define BREATH_VOLUME 500 // Buffing to increase the rate at which air is consumed. Used to be 0.5 -- TLE
 #define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
 	//Amount of air to take a from a tile
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
 	//Amount of air needed before pass out/suffocation commences
 
 
-#define MINIMUM_AIR_RATIO_TO_SUSPEND 0.1 // Was 0.05 -- TLE
+#define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
 	//Minimum ratio of air that must move to/from a tile to suspend group processing
 #define MINIMUM_AIR_TO_SUSPEND MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND
 	//Minimum amount of air that has to move before a group processing can be suspended
@@ -28,7 +27,7 @@
 #define MINIMUM_MOLES_DELTA_TO_MOVE MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND //Either this must be active
 #define MINIMUM_TEMPERATURE_TO_MOVE	T20C+100 		  //or this (or both, obviously)
 
-#define MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND 0.1 // Was 0.012 -- TLE
+#define MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND 0.012
 #define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND 4
 	//Minimum temperature difference before group processing is suspended
 #define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER 0.5

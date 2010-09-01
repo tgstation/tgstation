@@ -731,6 +731,9 @@
 /client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
 	set category = "Special Verbs"
 	set name = "Drop Bomb"
+	set desc = "Cause an explosion of varying strength at your location."
+	// Old code - mostly leaving in for legacy reasons. Remove it if you like.
+	/*
 	set desc = "Spawn a plasma tank with overloaded pressure. Will trigger explosion on next air cycle."
 	var/bomb_strength = input("Enter a value greater than 299:", "Blowing Shit Up", 300) as num
 	if(bomb_strength < 300)
@@ -740,6 +743,28 @@
 	message_admins("\blue [src.ckey] dropping a plasma bomb at [bomb_strength] strength.")
 	var/obj/item/weapon/tank/plasma/P = new(src.mob.loc)
 	P.air_contents.toxins = bomb_strength
+	*/
+	var/turf/epicenter = src.mob.loc
+	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb")
+	var/choice = input("What size explosion would you like to produce?") in choices
+	switch(choice)
+		if(null)
+			return 0
+		if("Small Bomb")
+			explosion(epicenter, 1, 2, 3, 3)
+		if("Medium Bomb")
+			explosion(epicenter, 2, 3, 4, 4)
+		if("Big Bomb")
+			explosion(epicenter, 3, 5, 7, 5)
+		if("Custom Bomb")
+			var/devastation_range = input("Devastation range (in tiles):") as num
+			var/heavy_impact_range = input("Heavy impact range (in tiles):") as num
+			var/light_impact_range = input("Light impact range (in tiles):") as num
+			var/flash_range = input("Flash range (in tiles):") as num
+			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+	message_admins("\blue [src.ckey] creating an admin explosion at [epicenter.loc].")
+
+
 
 
 /client/proc/make_cultist(var/mob/M in world) // -- TLE
