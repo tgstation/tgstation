@@ -123,6 +123,13 @@ About the new airlock wires panel:
 *		one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds. Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted. (Currently it is also STAYING electrified until someone mends the wire)
 */
 
+/obj/machinery/door/airlock/bumpopen(mob/user as mob) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
+	if (!istype(usr, /mob/living/silicon))
+		if (src.isElectrified())
+			if(src.shock(user, 100))
+				return
+	..(user)
+
 
 /obj/machinery/door/airlock/proc/pulse(var/wireColor)
 	//var/wireFlag = airlockWireColorToFlag[wireColor] //not used in this function
@@ -174,7 +181,7 @@ About the new airlock wires panel:
 						src.secondsElectrified-=1
 						if (src.secondsElectrified<0)
 							src.secondsElectrified = 0
-						src.updateUsrDialog()
+//						src.updateUsrDialog()  //Commented this line out to keep the airlock from clusterfucking you with electricity. --NeoFite
 						sleep(10)
 		if(AIRLOCK_WIRE_OPEN_DOOR)
 			//tries to open the door without ID
@@ -250,7 +257,7 @@ About the new airlock wires panel:
 				src.secondsElectrified = 0
 
 /obj/machinery/door/airlock/proc/isElectrified()
-	if(src.secondsElectrified > 0)
+	if(src.secondsElectrified != 0)
 		return 1
 	else return 0
 
