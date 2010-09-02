@@ -1018,7 +1018,7 @@
 	step_towards(src, src.current)
 	// make it able to hit lying-down folk
 	var/list/dudes = list()
-	for(var/mob/M in src.loc)
+	for(var/mob/living/M in src.loc)
 		dudes += M
 	if(dudes.len)
 		src.Bump(pick(dudes))
