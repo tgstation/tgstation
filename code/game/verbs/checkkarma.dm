@@ -6,7 +6,7 @@ mob/verb/check_karma()
 	var/DBConnection/dbcon = new()
 	dbcon.Connect("dbi:mysql:[SQL_DB]:[SQL_ADDRESS]:[SQL_PORT]","[SQL_LOGIN]","[SQL_PASS]")
 	if(!dbcon.IsConnected())
-		usr << "\red Unable to connect to karma database. This is very bad and you should report it to TLE soon!<br>"
+		usr << "\red Unable to connect to karma database. This error can occur if your host has failed to set up an SQL database or improperly configured its login credentials.<br>"
 		return
 	else
 		var/DBQuery/query = dbcon.NewQuery("SELECT karma FROM karmatotals WHERE byondkey='[src.key]'")
