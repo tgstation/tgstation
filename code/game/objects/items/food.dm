@@ -24,13 +24,15 @@ YOUR MUMS BOX
 	src.icon_state = text("donutbox[]", src.amount)
 	return
 
+/*
 /obj/item/kitchen/donut_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/donut))
+	if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/donut) && (amount < 6))
 		user.drop_item()
 		W.loc = src
 		usr << "You place a donut back into the box."
 	src.update()
 	return
+*/
 
 /obj/item/kitchen/donut_box/MouseDrop(mob/user as mob)
 	if ((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
