@@ -97,7 +97,7 @@
 							src:aiRestorePowerRoutine = 1
 
 							src << "You've lost power!"
-							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
+//							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
 							if (!checktraitor(src))
 								src.set_zeroth_law("")
 							src.clear_supplied_laws()
