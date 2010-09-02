@@ -36,7 +36,7 @@
 		if("Standard")
 			src.module = new /obj/item/weapon/robot_module/standard(src)
 			src.hands.icon_state = "standard"
-//			src.icon_state = "robot"
+			src.icon_state = "robot"
 			src.modtype = "Stand"
 /*
 		if("Medical")
@@ -52,7 +52,7 @@
 			if(icontype == "Armored")
 				src.icon_state = "Security"
 			else
-				src.icon_state = "standard"
+				src.icon_state = "robot"
 			src.modtype = "Sec"
 
 		if("Engineering")
@@ -61,7 +61,7 @@
 
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Engineer", "Engiseer")
 			if(icontype == "Standard")
-				src.icon_state = "standard"
+				src.icon_state = "robot"
 			else if(icontype == "Engineer")
 				src.icon_state = "Engineering"
 			else
@@ -81,7 +81,7 @@
 			if(icontype == "Bro")
 				src.icon_state = "Brobot"
 			else
-				src.icon_state = "standard"
+				src.icon_state = "robot"
 			src.modtype = "Bro"
 	src.overlays -= "eyes" //Takes off the eyes that it started with
 	updateicon()
