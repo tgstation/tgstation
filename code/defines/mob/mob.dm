@@ -168,6 +168,7 @@
 	var/obj/control_object // Hacking in to control objects -- TLE
 
 	var/robot_talk_understand = 0
+	var/alien_talk_understand = 0
 
 // Ruby mode
 	var/incorporeal_move = 0

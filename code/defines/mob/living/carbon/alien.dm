@@ -7,3 +7,5 @@
 	toxloss = 250
 	var/alien_invis = 0.0
 	var/max_plasma = 500
+
+	alien_talk_understand = 1
