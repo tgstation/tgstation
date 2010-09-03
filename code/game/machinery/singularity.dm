@@ -88,7 +88,7 @@ However people seem to like it for some reason.
 		if(energy <= 0)//slowly dies over time
 			del(src)
 		else
-			energy -= 15
+			energy -= 5
 
 	if(prob(15))//Chance for it to run a special event
 		event()
