@@ -551,7 +551,7 @@
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
 	name = ".38 revolver"
 	icon_state = "detective"
-	var/bullets = 5.0
+	var/bullets = 7.0
 	w_class = 3.0
 	throw_speed = 2
 	throw_range = 10
