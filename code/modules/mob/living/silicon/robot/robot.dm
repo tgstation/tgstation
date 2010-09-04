@@ -71,7 +71,11 @@
 		if("Janitor")
 			src.module = new /obj/item/weapon/robot_module/janitor(src)
 			src.hands.icon_state = "janitor"
-//			src.icon_state = "JanBot"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Chryssalid")
+			if(icontype == "Standard")
+				src.icon_state = "robot"
+			else
+				src.icon_state = "Janbot"
 			src.modtype = "Jan"
 
 		if("Brobot")
