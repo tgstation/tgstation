@@ -64,6 +64,7 @@
 /world/proc/load_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")
+	config.loadsql("config/dbconfig.txt")
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 

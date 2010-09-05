@@ -35,10 +35,12 @@
 #define BLOB 14
 // TODO: Investigate more recent type additions and see if I can handle them. - Nadrew
 
-
+// Deprecated! See global.dm for new configuration vars
+/*
 var
 	DB_SERVER = "" // This is the location of your MySQL server (localhost is USUALLY fine)
 	DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is the default)
+*/
 
 DBConnection
 	New(dbi_handler,username,password_handler,cursor_handler)
@@ -63,7 +65,8 @@ DBConnection
 		ErrorMsg() return _dm_db_error_msg(_db_con)
 		SelectDB(database_name,dbi)
 			if(IsConnected()) Disconnect()
-			return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]",user,password)
+			//return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]",user,password)
+			return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[sqladdress]:[sqlport]"]",user,password)
 		NewQuery(sql_query,cursor_handler=src.default_cursor) return new/DBQuery(sql_query,src,cursor_handler)
 
 	var

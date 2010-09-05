@@ -41,7 +41,7 @@ var
 
 	diary = null
 	station_name = null
-	game_version = "Goon Dev Station 13"
+	game_version = "/tg/ Station 13"
 
 	datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 	going = 1.0
@@ -163,3 +163,15 @@ var
 
 	const/shuttle_time_in_station = 1800 // 3 minutes in the station
 	const/shuttle_time_to_arrive = 6000 // 10 minutes to arrive
+
+
+
+	// MySQL configuration
+
+	sqladdress = "localhost"
+	sqlport = "3306"
+	sqldb = "tgstation"
+	sqllogin = "root"
+	sqlpass = ""
+
+	sqllogging = 0 // Should we log deaths, population stats, etc?

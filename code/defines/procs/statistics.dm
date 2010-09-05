@@ -1,21 +1,12 @@
-#define SQL_ADDRESS "yourserver.com"
-#define SQL_DB "yourdbname"
-#define SQL_PORT "3306" // 3306 is default
-#define SQL_LOGIN "yourlogin"
-#define SQL_PASS "yourpassword"
-
-
-#define STATLOGGING 0 // Should use #ifdef here
-
 proc/sql_poll_players()
-	if(!STATLOGGING)
+	if(!sqllogging)
 		return
 	var/playercount = 0
 	for(var/mob/M in world)
 		if(M.client)
 			playercount += 1
 	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[SQL_DB]:[SQL_ADDRESS]:[SQL_PORT]","[SQL_LOGIN]","[SQL_PASS]")
+	dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 	if(!dbcon.IsConnected())
 		log_game("SQL ERROR during player polling. Failed to connect.")
 	else
@@ -28,14 +19,14 @@ proc/sql_poll_players()
 
 
 proc/sql_poll_admins()
-	if(!STATLOGGING)
+	if(!sqllogging)
 		return
 	var/admincount = 0
 	for (var/mob/M in world)
 		if(M && M.client && M.client.holder && M.client.authenticated)
 			admincount += 1
 	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[SQL_DB]:[SQL_ADDRESS]:[SQL_PORT]","[SQL_LOGIN]","[SQL_PASS]")
+	dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 	if(!dbcon.IsConnected())
 		log_game("SQL ERROR during admin polling. Failed to connect.")
 	else
@@ -47,14 +38,16 @@ proc/sql_poll_admins()
 	dbcon.Disconnect()
 
 proc/sql_report_round_start()
-	if(!STATLOGGING)
+	// TODO
+	if(!sqllogging)
 		return
 proc/sql_report_round_end()
-	if(!STATLOGGING)
+	// TODO
+	if(!sqllogging)
 		return
 
 proc/sql_report_karma(var/mob/spender, var/mob/receiver, var/isnegative = 1)
-	if(!STATLOGGING)
+	if(!sqllogging)
 		return
 	var/sqlspendername = spender.name
 	var/sqlspenderkey = spender.key
@@ -78,7 +71,7 @@ proc/sql_report_karma(var/mob/spender, var/mob/receiver, var/isnegative = 1)
 			sqlreceiverrole = receiver.mind.assigned_role
 
 	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[SQL_DB]:[SQL_ADDRESS]:[SQL_PORT]","[SQL_LOGIN]","[SQL_PASS]")
+	dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 	if(!dbcon.IsConnected())
 		log_game("SQL ERROR during karma logging. Failed to connect.")
 	else
@@ -123,7 +116,7 @@ proc/sql_report_karma(var/mob/spender, var/mob/receiver, var/isnegative = 1)
 
 
 proc/sql_report_death(var/mob/living/carbon/human/H)
-	if(!STATLOGGING)
+	if(!sqllogging)
 		return
 	if(!H)
 		return
@@ -148,7 +141,7 @@ proc/sql_report_death(var/mob/living/carbon/human/H)
 	var/coord = "[H.x], [H.y], [H.z]"
 	//world << "INSERT INTO death (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.bruteloss], [H.fireloss], [H.brainloss], [H.oxyloss])"
 	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[SQL_DB]:[SQL_ADDRESS]:[SQL_PORT]","[SQL_LOGIN]","[SQL_PASS]")
+	dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 	if(!dbcon.IsConnected())
 		log_game("SQL ERROR during death reporting. Failed to connect.")
 	else
@@ -160,7 +153,7 @@ proc/sql_report_death(var/mob/living/carbon/human/H)
 
 
 proc/sql_report_cyborg_death(var/mob/living/silicon/robot/H)
-	if(!STATLOGGING)
+	if(!sqllogging)
 		return
 	if(!H)
 		return
@@ -185,7 +178,7 @@ proc/sql_report_cyborg_death(var/mob/living/silicon/robot/H)
 	var/coord = "[H.x], [H.y], [H.z]"
 	//world << "INSERT INTO death (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.bruteloss], [H.fireloss], [H.brainloss], [H.oxyloss])"
 	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[SQL_DB]:[SQL_ADDRESS]:[SQL_PORT]","[SQL_LOGIN]","[SQL_PASS]")
+	dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 	if(!dbcon.IsConnected())
 		log_game("SQL ERROR during death reporting. Failed to connect.")
 	else
@@ -197,7 +190,7 @@ proc/sql_report_cyborg_death(var/mob/living/silicon/robot/H)
 
 
 proc/statistic_cycle()
-	if(!STATLOGGING)
+	if(!sqllogging)
 		return
 	while(1)
 		sql_poll_players()

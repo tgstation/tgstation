@@ -241,7 +241,9 @@ obj/machinery/smelter/Topic(href, href_list)
 
 	var
 		gameticker
+		gameworld
 
 	New()
 		..()
 		gameticker = ticker
+		gameworld = world

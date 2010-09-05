@@ -4,11 +4,14 @@
 //
 //*******************************
 
+// Deprecated! See global.dm for new SQL config vars -- TLE
+/*
 #define SQL_ADDRESS ""
 #define SQL_DB ""
 #define SQL_PORT "3306"
 #define SQL_LOGIN ""
 #define SQL_PASS ""
+*/
 
 //*******************************
 // Requires Dantom.DB library ( http://www.byond.com/developer/Dantom/DB )
@@ -285,7 +288,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];search=1'>\[Start Search\]</A><BR>"
 		if(1)
 			var/DBConnection/dbcon = new()
-			dbcon.Connect("dbi:mysql:[SQL_DB]:[SQL_ADDRESS]:[SQL_PORT]","[SQL_LOGIN]","[SQL_PASS]")
+			dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 			if(!dbcon.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else if(!SQLquery)
@@ -416,7 +419,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		if(4)
 			dat += "<h3>External Archive</h3>"
 			var/DBConnection/dbcon = new()
-			dbcon.Connect("dbi:mysql:[SQL_DB]:[SQL_ADDRESS]:[SQL_PORT]","[SQL_LOGIN]","[SQL_PASS]")
+			dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 			if(!dbcon.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
@@ -522,7 +525,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					var/DBConnection/dbcon = new()
-					dbcon.Connect("dbi:mysql:[SQL_DB]:[SQL_ADDRESS]:[SQL_PORT]","[SQL_LOGIN]","[SQL_PASS]")
+					dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 					if(!dbcon.IsConnected())
 						alert("Connection to Archive has been severed. Aborting.")
 					else
@@ -546,7 +549,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["targetid"])
 		var/sqlid = href_list["targetid"]
 		var/DBConnection/dbcon = new()
-		dbcon.Connect("dbi:mysql:[SQL_DB]:[SQL_ADDRESS]:[SQL_PORT]","[SQL_LOGIN]","[SQL_PASS]")
+		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 		if(!dbcon.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
 		else

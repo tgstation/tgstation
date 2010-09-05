@@ -4,7 +4,7 @@ mob/verb/check_karma()
 	set desc = "Reports how much karma you have accrued"
 
 	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[SQL_DB]:[SQL_ADDRESS]:[SQL_PORT]","[SQL_LOGIN]","[SQL_PASS]")
+	dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 	if(!dbcon.IsConnected())
 		usr << "\red Unable to connect to karma database. This error can occur if your host has failed to set up an SQL database or improperly configured its login credentials.<br>"
 		return
