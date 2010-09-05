@@ -1179,6 +1179,85 @@
 	amount = 5
 	heal_amt = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/meatbread
+	name = "meatbread loaf"
+	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
+	icon_state = "meatbread"
+	amount = 30
+	heal_amt = 5
+/*	New()
+		var/datum/reagents/R = new/datum/reagents(20)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("cholesterol", 20)*/
+	heal(var/mob/M)
+		..()
+
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
+	name = "meatbread slice"
+	desc = "A slice of delicious meatbread."
+	icon_state = "meatbreadslice"
+	amount = 5
+	heal_amt = 6
+	New()
+/*		var/datum/reagents/R = new/datum/reagents(10)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("cholesterol", 10)*/
+	heal(var/mob/M)
+		..()
+
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesewheel
+	name = "Cheese wheel"
+	desc = "A big wheel of delcious Cheddar."
+	icon_state = "cheesewheel"
+	amount = 25
+	heal_amt = 3
+	heal(var/mob/M)
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesewedge
+	name = "Cheese wedge"
+	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
+	icon_state = "cheesewedge"
+	amount = 4
+	heal_amt = 4
+	heal(var/mob/M)
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/omelette
+	name = "Omelette Du Fromage"
+	desc = "That's all you can say!"
+	icon_state = "omelette"
+	amount = 15
+	heal_amt = 3
+	heal(var/mob/M)
+		..()
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
+			W.icon = 'kitchen.dmi'
+			W.icon_state = "forkloaded"
+			world << "[user] takes a piece of omelette with his fork!"
+
+/obj/item/weapon/reagent_containers/food/snacks/omeletteforkload
+	name = "Omelette Du Fromage"
+	desc = "That's all you can say!"
+	amount = 1
+	heal_amt = 4
+	heal(var/mob/M)
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/muffin
+	name = "Muffin"
+	desc = "A delicious and spongy little cake"
+	icon_state = "muffin"
+	amount = 4
+	heal_amt = 6
+	heal(var/mob/M)
+		..()
+
 /obj/item/weapon/reagent_containers/food/snacks/roburger
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
@@ -1257,6 +1336,17 @@
 		reagents = R
 		R.my_atom = src
 		R.add_reagent("beer", 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/milk
+	name = "Space Milk"
+	desc = "Milk. By Cows. Cows in space."
+	icon_state = "milk"
+	heal_amt = 1
+	New()
+		var/datum/reagents/R = new/datum/reagents(50)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("milk", 50)
 
 //Pills
 /obj/item/weapon/reagent_containers/pill/antitox
@@ -1348,5 +1438,29 @@
 		..()
 		reagents.add_reagent("beer",1000)
 
+///////////////////////////////////////////////////////////////////////////////////////////////////// Meatbread slicing RIGHT BELOW*************
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbread/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+		world << "[usr] slices the meatbread!"
+		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+		del(src)
+		return
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesewheel/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/kitchenknife /* || /obj/item/weapon/scalpel*/))
+		world << "[usr] slices the cheese wheel!"
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		del(src)
+		return

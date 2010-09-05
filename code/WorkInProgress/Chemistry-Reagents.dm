@@ -150,6 +150,8 @@ datum
 					holder.remove_reagent("toxin", 2)
 				if(holder.has_reagent("stoxin"))
 					holder.remove_reagent("stoxin", 2)
+				if(holder.has_reagent("cholesterol"))
+					holder.remove_reagent("cholesterol", 4)
 				if(holder.has_reagent("plasma"))
 					holder.remove_reagent("plasma", 1)
 				if(holder.has_reagent("acid"))
@@ -204,6 +206,32 @@ datum
 				data++
 				..()
 				return
+
+			/*cholesterol              /////////////////////////////////It's cholesterol. IN SPACE. Remains out till it's fucking fixed ///////////////////
+			name = "Cholesterol"
+			id = "cholesterol"
+			description = "A certain steroid fat that is known to cause trouble to humans in large doses. Obtained through fatty diets."
+			reagent_state = LIQUID
+
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				switch(data)
+					if(30 to 30)
+						M << "\red Your blood feels... sluggish..."
+					if(75 to 99)
+						for(M in viewers(src, null))
+							M.show_message(text("\red Oh no! [M.name] seems to be having a minor cardiac arrest!"), 1)
+						M:toxloss += 35
+						M:drowsyness  = max(M:drowsyness, 25)
+					if(120 to INFINITY)
+						usr << "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNGGGGGGGGGGGGGGGGGGGGGG"
+						for(M in viewers(src, null))
+							M.show_message("\red <B>[M.name] 's face turns blue as he suffers a major cardiac arrest! He's not walking out of this one for sure...</B>", 1)
+						M:toxloss +=200
+				data++
+				..()
+				return*/
 
 		inaprovaline
 			name = "Inaprovaline"

@@ -1240,6 +1240,32 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 7
 	w_class = 3.0
 
+/obj/item/weapon/kitchenknife
+	name = "Kitchen knife"
+	icon = 'kitchen.dmi'
+	icon_state = "knife"
+	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 10.0
+	w_class = 3.0
+	throwforce = 6.0
+	throw_speed = 3
+	throw_range = 6
+	m_amt = 12000
+
+/obj/item/weapon/tray
+	name = "Tray"
+	icon = 'food.dmi'
+	icon_state = "tray"
+	desc = "A metal tray to lay food on."
+	throwforce = 12.0
+	throwforce = 10.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = 3.0
+	flags = FPRINT | TABLEPASS | CONDUCT
+	m_amt = 3000
+
 /obj/item/weapon/kitchen/utensil
 	force = 5.0
 	w_class = 1.0
@@ -1247,7 +1273,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 3
 	throw_range = 5
 	flags = FPRINT | TABLEPASS | CONDUCT
-
 
 /obj/item/weapon/kitchen/utensil/fork
 	name = "fork"
