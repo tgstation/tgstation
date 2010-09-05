@@ -55,5 +55,8 @@
 			user << "<b>Transfer succeeded</b>: [O.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 
 	attack(mob/living/silicon/decoy/M as mob, mob/user as mob)
-		M.death()
-		user << "<b>ERROR ERROR ERROR</b>"
+		if (!istype (M, /mob/living/silicon/decoy))
+			return ..()
+		else
+			M.death()
+			user << "<b>ERROR ERROR ERROR</b>"
