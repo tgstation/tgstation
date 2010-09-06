@@ -156,10 +156,10 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.flour_amount++
 			del(O)
 	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/cheesewedge)) // If cheese is used, add it
-		if(src.flour_amount < 5)
+		if(src.cheese_amount < 5)
 			for(var/mob/V in viewers(src, null))
 				V.show_message(text("\blue [user] adds some cheese to the microwave."))
-			src.flour_amount++
+			src.cheese_amount++
 			del(O)
 	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeymeat))
 		if(src.monkeymeat_amount < 5)
