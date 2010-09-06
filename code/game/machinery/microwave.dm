@@ -232,6 +232,7 @@ Please clean it before use!</TT><BR>
 		dat = {"
 <B>Eggs:</B>[src.egg_amount] eggs<BR>
 <B>Flour:</B>[src.flour_amount] cups of flour<BR>
+<B>Cheese:</B>[src.cheese_amount] cheese wedges<BR>
 <B>Monkey Meat:</B>[src.monkeymeat_amount] slabs of meat<BR>
 <B>Meat Turnovers:</B>[src.donkpocket_amount] turnovers<BR>
 <B>Other Meat:</B>[src.humanmeat_amount] slabs of meat<BR>
@@ -275,6 +276,7 @@ Please clean it before use!</TT><BR>
 							src.egg_amount = 0 // If so remove all the eggs
 							src.flour_amount = 0 // And the flour
 							src.water_amount = 0 //And the water
+							src.cheese_amount = 0 //And the cheese
 							src.monkeymeat_amount = 0
 							src.humanmeat_amount = 0
 							src.donkpocket_amount = 0
@@ -288,6 +290,7 @@ Please clean it before use!</TT><BR>
 						src.updateUsrDialog()
 						src.egg_amount = 0 //Clear all the values as this crap is what makes the mess inside!!
 						src.flour_amount = 0
+						src.cheese_amount = 0
 						src.water_amount = 0
 						src.humanmeat_amount = 0
 						src.monkeymeat_amount = 0
@@ -311,6 +314,7 @@ Please clean it before use!</TT><BR>
 						src.updateUsrDialog()
 						src.egg_amount = 0 //Clear all the values as this crap is gone when it breaks!!
 						src.flour_amount = 0
+						src.cheese_amount = 0
 						src.water_amount = 0
 						src.humanmeat_amount = 0
 						src.monkeymeat_amount = 0
@@ -339,6 +343,7 @@ Please clean it before use!</TT><BR>
 			if(operation == 2) // If dispose was pressed, empty the microwave
 				src.egg_amount = 0
 				src.flour_amount = 0
+				src.cheese_amount = 0
 				src.water_amount = 0
 				src.humanmeat_amount = 0
 				src.monkeymeat_amount = 0

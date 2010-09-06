@@ -630,6 +630,7 @@
 	var/flour_amount = 0 //Current amount of flour inside
 	var/water_amount = 0 //Current amount of water inside
 	var/monkeymeat_amount = 0
+	var/cheese_amount = 0 //cheese inside, yo
 	var/humanmeat_amount = 0
 	var/donkpocket_amount = 0
 	var/xenomeat_amount = 0

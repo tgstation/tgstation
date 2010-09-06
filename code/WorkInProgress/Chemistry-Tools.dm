@@ -224,39 +224,42 @@
 
 	proc
 		fire_syringe(atom/target, mob/user)
-			var/turf/trg = get_turf(target)
-			var/obj/syringe_gun_dummy/D = new/obj/syringe_gun_dummy(get_turf(src))
-			var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
-			S.reagents.trans_to(D, S.reagents.total_volume)
-			syringes -= S
-			del(S)
-			D.icon_state = "syringeproj"
-			D.name = "syringe"
-			playsound(user.loc, 'syringeproj.ogg', 50, 1)
+			if (locate (/obj/table, src.loc))
+				return
+			else
+				var/turf/trg = get_turf(target)
+				var/obj/syringe_gun_dummy/D = new/obj/syringe_gun_dummy(get_turf(src))
+				var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
+				S.reagents.trans_to(D, S.reagents.total_volume)
+				syringes -= S
+				del(S)
+				D.icon_state = "syringeproj"
+				D.name = "syringe"
+				playsound(user.loc, 'syringeproj.ogg', 50, 1)
 
-			for(var/i=0, i<6, i++)
-				if(D.loc == trg) break
-				step_towards(D,trg)
+				for(var/i=0, i<6, i++)
+					if(D.loc == trg) break
+					step_towards(D,trg)
 
-				for(var/mob/living/carbon/M in D.loc)
-					if(!istype(M,/mob/living/carbon)) continue
-					if(M == user) continue
-					D.reagents.trans_to(M, 15)
-					M.bruteloss += 5
-					for(var/mob/O in viewers(world.view, D))
-						O.show_message(text("\red [] was hit by the syringe!", M), 1)
+					for(var/mob/living/carbon/M in D.loc)
+						if(!istype(M,/mob/living/carbon)) continue
+						if(M == user) continue
+						D.reagents.trans_to(M, 15)
+						M.bruteloss += 5
+						for(var/mob/O in viewers(world.view, D))
+							O.show_message(text("\red [] was hit by the syringe!", M), 1)
 
-					del(D)
+						del(D)
 
-				for(var/atom/A in D.loc)
-					if(A == user) continue
-					if(A.density) del(D)
+					for(var/atom/A in D.loc)
+						if(A == user) continue
+						if(A.density) del(D)
 
-				sleep(1)
+					sleep(1)
 
-			spawn(10) del(D)
+				spawn(10) del(D)
 
-			return
+				return
 
 
 
