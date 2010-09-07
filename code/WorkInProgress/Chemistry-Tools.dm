@@ -1450,6 +1450,13 @@
 		R.my_atom = src
 		R.add_reagent("beer", 30)
 
+/obj/item/weapon/reagent_containers/food/drinks/milk
+	name = "Space Milk"
+	desc = "It's milk. White and nutritious goodness!"
+	icon_state = "milk"
+	heal_amt = 2
+
+
 //Pills
 /obj/item/weapon/reagent_containers/pill/antitox
 	name = "Anti-toxins pill"
@@ -1541,31 +1548,3 @@
 		reagents.add_reagent("beer",1000)
 
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//Meatbread slicing RIGHT BELOW*************
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-/obj/item/weapon/reagent_containers/food/snacks/meatbread/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
-		W.visible_message(" <B>[usr] slices the meatbread! </B>", 1)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		del(src)
-		return
-
-
-/obj/item/weapon/reagent_containers/food/snacks/cheesewheel/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/kitchenknife /* || /obj/item/weapon/scalpel*/))
-		W.visible_message(" <B>[usr] slices the cheese! </B>", 1)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		del(src)
-		return
