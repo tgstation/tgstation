@@ -95,6 +95,8 @@ obj/machinery/hydroponics/process()
 				while(m_count < src.mutmod)
 					if(prob(90))
 						src.mutate()
+					else if(prob(30))
+						src.hardmutate()
 					else
 						src.mutatespecie() // Just testing this here until mutagens are in place
 					m_count++;

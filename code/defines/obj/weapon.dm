@@ -1410,6 +1410,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 1
+	seed = "/obj/item/seeds/nettleseed"
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
@@ -1424,6 +1425,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 1
+	seed = "/obj/item/seeds/deathnettleseed"
 
 /obj/item/weapon/plantbgone // -- Skie
 	desc = "Plant-B-Gone! Kill those pesky weeds!"

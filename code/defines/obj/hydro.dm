@@ -384,6 +384,7 @@
 	var/plant_type = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
+	seed = "/obj/item/seeds/berryseed"
 	name = "Berries"
 	desc = "Nutritious!"
 	icon_state = "berrypile"
@@ -391,6 +392,7 @@
 	heal_amt = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
+	seed = "/obj/item/seeds/chiliseed"
 	name = "Chili"
 	desc = "Spicy!"
 	icon_state = "chilipepper"
@@ -400,6 +402,7 @@
 	potency = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
+	seed = "/obj/item/seeds/eggplantseed"
 	name = "Eggplant"
 	desc = "Yum!"
 	icon_state = "eggplant"
@@ -407,6 +410,7 @@
 	heal_amt = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
+	seed = "/obj/item/seeds/soyaseed"
 	name = "Soybeans"
 	desc = "Pretty bland, but the possibilities..."
 	icon_state = "soybeans"
@@ -414,6 +418,7 @@
 	heal_amt = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
+	seed = "/obj/item/seeds/tomatoseed"
 	name = "Tomato"
 	desc = "Tom-mae-to or to-mah-to? You decide."
 	icon_state = "tomato"
@@ -421,6 +426,7 @@
 	heal_amt = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
+	seed = "/obj/item/seeds/wheatseed"
 	name = "Wheat"
 	desc = "I wouldn't eat this, unless you're one of those health freaks.."
 	icon_state = "wheat"
@@ -428,6 +434,7 @@
 	heal_amt = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
+	seed = "/obj/item/seeds/icepepperseed"
 	name = "Icepepper"
 	desc = "A mutant strain of chile"
 	icon_state = "icepepper"
@@ -437,6 +444,7 @@
 	potency = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
+	seed = "/obj/item/seeds/carrotseed"
 	name = "Carrot"
 	desc = "Good for the eyes!"
 	icon_state = "carrot"
@@ -444,6 +452,7 @@
 	heal_amt = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/amanita
+	seed = "/obj/item/seeds/amanitamycelium"
 	name = "Fly amanita"
 	desc = "<I>Amanita Muscaria</I>: Learn poisonous mushrooms by heart. Only pick mushrooms you know."
 	icon_state = "amanita"
@@ -453,6 +462,7 @@
 	potency = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/angel
+	seed = "/obj/item/seeds/angelmycelium"
 	name = "Destroying angel"
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
@@ -462,6 +472,7 @@
 	potency = 35
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/libertycap
+	seed = "/obj/item/seeds/libertymycelium"
 	name = "Liberty cap"
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
 	icon_state = "libertycap"
@@ -471,6 +482,7 @@
 	potency = 15
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/plumphelmet
+	seed = "/obj/item/seeds/plumpmycelium"
 	name = "Plump Helmet"
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
@@ -478,6 +490,7 @@
 	heal_amt = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chanterelle
+	seed = "/obj/item/seeds/chantermycelium"
 	name = "Chanterelle"
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty! There's a lot!"
 	icon_state = "chanterelle"
