@@ -1446,7 +1446,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbread/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
-		world << "[usr] slices the meatbread!"
+		W.visible_message(" <B>[usr] slices the meatbread! </B>", 1)
 		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
 		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
 		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
@@ -1457,9 +1457,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewheel/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/kitchenknife /* || /obj/item/weapon/scalpel*/))
-		world << "[usr] slices the cheese wheel!"
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		W.visible_message(" <B>[usr] slices the cheese! </B>", 1)
 		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
 		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
 		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
