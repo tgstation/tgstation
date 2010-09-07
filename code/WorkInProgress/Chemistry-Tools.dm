@@ -224,39 +224,42 @@
 
 	proc
 		fire_syringe(atom/target, mob/user)
-			var/turf/trg = get_turf(target)
-			var/obj/syringe_gun_dummy/D = new/obj/syringe_gun_dummy(get_turf(src))
-			var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
-			S.reagents.trans_to(D, S.reagents.total_volume)
-			syringes -= S
-			del(S)
-			D.icon_state = "syringeproj"
-			D.name = "syringe"
-			playsound(user.loc, 'syringeproj.ogg', 50, 1)
+			if (locate (/obj/table, src.loc))
+				return
+			else
+				var/turf/trg = get_turf(target)
+				var/obj/syringe_gun_dummy/D = new/obj/syringe_gun_dummy(get_turf(src))
+				var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
+				S.reagents.trans_to(D, S.reagents.total_volume)
+				syringes -= S
+				del(S)
+				D.icon_state = "syringeproj"
+				D.name = "syringe"
+				playsound(user.loc, 'syringeproj.ogg', 50, 1)
 
-			for(var/i=0, i<6, i++)
-				if(D.loc == trg) break
-				step_towards(D,trg)
+				for(var/i=0, i<6, i++)
+					if(D.loc == trg) break
+					step_towards(D,trg)
 
-				for(var/mob/living/carbon/M in D.loc)
-					if(!istype(M,/mob/living/carbon)) continue
-					if(M == user) continue
-					D.reagents.trans_to(M, 15)
-					M.bruteloss += 5
-					for(var/mob/O in viewers(world.view, D))
-						O.show_message(text("\red [] was hit by the syringe!", M), 1)
+					for(var/mob/living/carbon/M in D.loc)
+						if(!istype(M,/mob/living/carbon)) continue
+						if(M == user) continue
+						D.reagents.trans_to(M, 15)
+						M.bruteloss += 5
+						for(var/mob/O in viewers(world.view, D))
+							O.show_message(text("\red [] was hit by the syringe!", M), 1)
 
-					del(D)
+						del(D)
 
-				for(var/atom/A in D.loc)
-					if(A == user) continue
-					if(A.density) del(D)
+					for(var/atom/A in D.loc)
+						if(A == user) continue
+						if(A.density) del(D)
 
-				sleep(1)
+					sleep(1)
 
-			spawn(10) del(D)
+				spawn(10) del(D)
 
-			return
+				return
 
 
 
@@ -1289,6 +1292,85 @@
 	amount = 5
 	heal_amt = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/meatbread
+	name = "meatbread loaf"
+	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
+	icon_state = "meatbread"
+	amount = 30
+	heal_amt = 5
+/*	New()
+		var/datum/reagents/R = new/datum/reagents(20)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("cholesterol", 20)*/
+	heal(var/mob/M)
+		..()
+
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
+	name = "meatbread slice"
+	desc = "A slice of delicious meatbread."
+	icon_state = "meatbreadslice"
+	amount = 5
+	heal_amt = 6
+	New()
+/*		var/datum/reagents/R = new/datum/reagents(10)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("cholesterol", 10)*/
+	heal(var/mob/M)
+		..()
+
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesewheel
+	name = "Cheese wheel"
+	desc = "A big wheel of delcious Cheddar."
+	icon_state = "cheesewheel"
+	amount = 25
+	heal_amt = 3
+	heal(var/mob/M)
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesewedge
+	name = "Cheese wedge"
+	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
+	icon_state = "cheesewedge"
+	amount = 4
+	heal_amt = 4
+	heal(var/mob/M)
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/omelette
+	name = "Omelette Du Fromage"
+	desc = "That's all you can say!"
+	icon_state = "omelette"
+	amount = 15
+	heal_amt = 3
+	heal(var/mob/M)
+		..()
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
+			W.icon = 'kitchen.dmi'
+			W.icon_state = "forkloaded"
+			world << "[user] takes a piece of omelette with his fork!"
+
+/obj/item/weapon/reagent_containers/food/snacks/omeletteforkload
+	name = "Omelette Du Fromage"
+	desc = "That's all you can say!"
+	amount = 1
+	heal_amt = 4
+	heal(var/mob/M)
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/muffin
+	name = "Muffin"
+	desc = "A delicious and spongy little cake"
+	icon_state = "muffin"
+	amount = 4
+	heal_amt = 6
+	heal(var/mob/M)
+		..()
+
 /obj/item/weapon/reagent_containers/food/snacks/roburger
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
@@ -1458,5 +1540,32 @@
 		..()
 		reagents.add_reagent("beer",1000)
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//Meatbread slicing RIGHT BELOW*************
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbread/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+		W.visible_message(" <B>[usr] slices the meatbread! </B>", 1)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+		del(src)
+		return
+
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesewheel/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/kitchenknife /* || /obj/item/weapon/scalpel*/))
+		W.visible_message(" <B>[usr] slices the cheese! </B>", 1)
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+		del(src)
+		return
