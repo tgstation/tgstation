@@ -69,8 +69,15 @@
 		R.product_name = capitalize(temp.name)
 		R.product_path = path_list[p]
 		R.display_color = pick("red","blue","green")
-		R.amount = text2num(amt_list[p])
-		src.product_records += R
+//		R.amount = text2num(amt_list[p])
+//		src.product_records += R
+
+		if(hidden)
+			R.amount = text2num(amt_list[p])
+			src.hidden_records += R
+		else
+			R.amount = text2num(amt_list[p])
+			src.product_records += R
 
 		del(temp)
 

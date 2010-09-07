@@ -2,7 +2,6 @@
 	var/egg_amount = 0
 	var/flour_amount = 0
 	var/water_amount = 0
-	var/cheese_amount = 0
 	var/monkeymeat_amount = 0
 	var/xenomeat_amount = 0
 	var/humanmeat_amount = 0
@@ -66,30 +65,6 @@
 	xenomeat_amount = 1
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/xenoburger"
 
-/datum/recipe/meatbread
-	flour_amount = 3
-	monkeymeat_amount = 3
-	cheese_amount = 3
-	creates = "/obj/item/weapon/reagent_containers/food/snacks/meatbread"
-
-/datum/recipe/meatbreadhuman
-	flour_amount = 3
-	humanmeat_amount = 3
-	cheese_amount = 3
-	creates = "/obj/item/weapon/reagent_containers/food/snacks/meatbread"
-
-/datum/recipe/omelette
-	egg_amount = 2
-	cheese_amount = 2
-	creates = "/obj/item/weapon/reagent_containers/food/snacks/omelette"
-
-/datum/recipe/muffin
-	egg_amount = 1
-	flour_amount = 1
-	extra_item = /obj/item/weapon/reagent_containers/food/drinks/milk
-	creates = "/obj/item/weapon/reagent_containers/food/snacks/muffin"
-
-
 /obj/machinery/microwave/New() // *** After making the recipe in defines\obj\food.dmi, add it in here! ***
 	..()
 	src.available_recipes += new /datum/recipe/donut(src)
@@ -103,10 +78,6 @@
 	src.available_recipes += new /datum/recipe/donkpocket_warm(src)
 	src.available_recipes += new /datum/recipe/pie(src)
 	src.available_recipes += new /datum/recipe/xenoburger(src)
-	src.available_recipes += new /datum/recipe/meatbread(src)
-	src.available_recipes += new /datum/recipe/meatbreadhuman(src)
-	src.available_recipes += new /datum/recipe/omelette (src)
-	src.available_recipes += new /datum/recipe/muffin (src)
 
 
 /*******************
@@ -154,12 +125,6 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			for(var/mob/V in viewers(src, null))
 				V.show_message(text("\blue [user] adds some flour to the microwave."))
 			src.flour_amount++
-			del(O)
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/cheesewedge)) // If cheese is used, add it
-		if(src.cheese_amount < 5)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] adds some cheese to the microwave."))
-			src.cheese_amount++
 			del(O)
 	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeymeat))
 		if(src.monkeymeat_amount < 5)
@@ -232,7 +197,6 @@ Please clean it before use!</TT><BR>
 		dat = {"
 <B>Eggs:</B>[src.egg_amount] eggs<BR>
 <B>Flour:</B>[src.flour_amount] cups of flour<BR>
-<B>Cheese:</B>[src.cheese_amount] cheese wedges<BR>
 <B>Monkey Meat:</B>[src.monkeymeat_amount] slabs of meat<BR>
 <B>Meat Turnovers:</B>[src.donkpocket_amount] turnovers<BR>
 <B>Other Meat:</B>[src.humanmeat_amount] slabs of meat<BR>
@@ -276,7 +240,6 @@ Please clean it before use!</TT><BR>
 							src.egg_amount = 0 // If so remove all the eggs
 							src.flour_amount = 0 // And the flour
 							src.water_amount = 0 //And the water
-							src.cheese_amount = 0 //And the cheese
 							src.monkeymeat_amount = 0
 							src.humanmeat_amount = 0
 							src.donkpocket_amount = 0
@@ -290,7 +253,6 @@ Please clean it before use!</TT><BR>
 						src.updateUsrDialog()
 						src.egg_amount = 0 //Clear all the values as this crap is what makes the mess inside!!
 						src.flour_amount = 0
-						src.cheese_amount = 0
 						src.water_amount = 0
 						src.humanmeat_amount = 0
 						src.monkeymeat_amount = 0
@@ -314,7 +276,6 @@ Please clean it before use!</TT><BR>
 						src.updateUsrDialog()
 						src.egg_amount = 0 //Clear all the values as this crap is gone when it breaks!!
 						src.flour_amount = 0
-						src.cheese_amount = 0
 						src.water_amount = 0
 						src.humanmeat_amount = 0
 						src.monkeymeat_amount = 0
@@ -343,7 +304,6 @@ Please clean it before use!</TT><BR>
 			if(operation == 2) // If dispose was pressed, empty the microwave
 				src.egg_amount = 0
 				src.flour_amount = 0
-				src.cheese_amount = 0
 				src.water_amount = 0
 				src.humanmeat_amount = 0
 				src.monkeymeat_amount = 0

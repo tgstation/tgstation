@@ -267,18 +267,6 @@
 	throw_speed = 2
 	throw_range = 10
 
-/obj/item/weapon/weedbgone
-	desc = "Weed-B-Gone! Kill those pesky weeds!"
-	icon = 'hydroponics.dmi'
-	name = "Weed-B-Gone"
-	icon_state = "weedbgone"
-	item_state = "weedbgone"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
-	throwforce = 3
-	w_class = 2.0
-	throw_speed = 2
-	throw_range = 10
-
 /obj/item/weapon/clipboard
 	name = "clipboard"
 	icon = 'items.dmi'
@@ -551,7 +539,7 @@
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
 	name = ".38 revolver"
 	icon_state = "detective"
-	var/bullets = 7.0
+	var/bullets = 5.0
 	w_class = 3.0
 	throw_speed = 2
 	throw_range = 10
@@ -749,6 +737,10 @@ ASC: Aux. Solar Control<BR>
 /obj/item/weapon/paper/courtroom
 	name = "paper- 'A Crash Course in Legal SOP on SS13'"
 	info = "<B>Roles:</B><BR>\nThe Detective is basically the investigator and prosecutor.<BR>\nThe Staff Assistant can perform these functions with written authority from the Detective.<BR>\nThe Captain/HoP/Warden is ct as the judicial authority.<BR>\nThe Security Officers are responsible for executing warrants, security during trial, and prisoner transport.<BR>\n<BR>\n<B>Investigative Phase:</B><BR>\nAfter the crime has been committed the Detective's job is to gather evidence and try to ascertain not only who did it but what happened. He must take special care to catalogue everything and don't leave anything out. Write out all the evidence on paper. Make sure you take an appropriate number of fingerprints. IF he must ask someone questions he has permission to confront them. If the person refuses he can ask a judicial authority to write a subpoena for questioning. If again he fails to respond then that person is to be jailed as insubordinate and obstructing justice. Said person will be released after he cooperates.<BR>\n<BR>\nONCE the FT has a clear idea as to who the criminal is he is to write an arrest warrant on the piece of paper. IT MUST LIST THE CHARGES. The FT is to then go to the judicial authority and explain a small version of his case. If the case is moderately acceptable the authority should sign it. Security must then execute said warrant.<BR>\n<BR>\n<B>Pre-Pre-Trial Phase:</B><BR>\nNow a legal representative must be presented to the defendant if said defendant requests one. That person and the defendant are then to be given time to meet (in the jail IS ACCEPTABLE). The defendant and his lawyer are then to be given a copy of all the evidence that will be presented at trial (rewriting it all on paper is fine). THIS IS CALLED THE DISCOVERY PACK. With a few exceptions, THIS IS THE ONLY EVIDENCE BOTH SIDES MAY USE AT TRIAL. IF the prosecution will be seeking the death penalty it MUST be stated at this time. ALSO if the defense will be seeking not guilty by mental defect it must state this at this time to allow ample time for examination.<BR>\nNow at this time each side is to compile a list of witnesses. By default, the defendant is on both lists regardless of anything else. Also the defense and prosecution can compile more evidence beforehand BUT in order for it to be used the evidence MUST also be given to the other side.\nThe defense has time to compile motions against some evidence here.<BR>\n<B>Possible Motions:</B><BR>\n1. <U>Invalidate Evidence-</U> Something with the evidence is wrong and the evidence is to be thrown out. This includes irrelevance or corrupt security.<BR>\n2. <U>Free Movement-</U> Basically the defendant is to be kept uncuffed before and during the trial.<BR>\n3. <U>Subpoena Witness-</U> If the defense presents god reasons for needing a witness but said person fails to cooperate then a subpoena is issued.<BR>\n4. <U>Drop the Charges-</U> Not enough evidence is there for a trial so the charges are to be dropped. The FT CAN RETRY but the judicial authority must carefully reexamine the new evidence.<BR>\n5. <U>Declare Incompetent-</U> Basically the defendant is insane. Once this is granted a medical official is to examine the patient. If he is indeed insane he is to be placed under care of the medical staff until he is deemed competent to stand trial.<BR>\n<BR>\nALL SIDES MOVE TO A COURTROOM<BR>\n<B>Pre-Trial Hearings:</B><BR>\nA judicial authority and the 2 sides are to meet in the trial room. NO ONE ELSE BESIDES A SECURITY DETAIL IS TO BE PRESENT. The defense submits a plea. If the plea is guilty then proceed directly to sentencing phase. Now the sides each present their motions to the judicial authority. He rules on them. Each side can debate each motion. Then the judicial authority gets a list of crew members. He first gets a chance to look at them all and pick out acceptable and available jurors. Those jurors are then called over. Each side can ask a few questions and dismiss jurors they find too biased. HOWEVER before dismissal the judicial authority MUST agree to the reasoning.<BR>\n<BR>\n<B>The Trial:</B><BR>\nThe trial has three phases.<BR>\n1. <B>Opening Arguments</B>- Each side can give a short speech. They may not present ANY evidence.<BR>\n2. <B>Witness Calling/Evidence Presentation</B>- The prosecution goes first and is able to call the witnesses on his approved list in any order. He can recall them if necessary. During the questioning the lawyer may use the evidence in the questions to help prove a point. After every witness the other side has a chance to cross-examine. After both sides are done questioning a witness the prosecution can present another or recall one (even the EXACT same one again!). After prosecution is done the defense can call witnesses. After the initial cases are presented both sides are free to call witnesses on either list.<BR>\nFINALLY once both sides are done calling witnesses we move onto the next phase.<BR>\n3. <B>Closing Arguments</B>- Same as opening.<BR>\nThe jury then deliberates IN PRIVATE. THEY MUST ALL AGREE on a verdict. REMEMBER: They mix between some charges being guilty and others not guilty (IE if you supposedly killed someone with a gun and you unfortunately picked up a gun without authorization then you CAN be found not guilty of murder BUT guilty of possession of illegal weaponry.). Once they have agreed they present their verdict. If unable to reach a verdict and feel they will never they call a deadlocked jury and we restart at Pre-Trial phase with an entirely new set of jurors.<BR>\n<BR>\n<B>Sentencing Phase:</B><BR>\nIf the death penalty was sought (you MUST have gone through a trial for death penalty) then skip to the second part. <BR>\nI. Each side can present more evidence/witnesses in any order. There is NO ban on emotional aspects or anything. The prosecution is to submit a suggested penalty. After all the sides are done then the judicial authority is to give a sentence.<BR>\nII. The jury stays and does the same thing as I. Their sole job is to determine if the death penalty is applicable. If NOT then the judge selects a sentence.<BR>\n<BR>\nTADA you're done. Security then executes the sentence and adds the applicable convictions to the person's record.<BR>\n"
+
+/obj/item/weapon/paper/hydroponics
+	name = "paper- 'Greetings from Billy Bob'"
+	info = "<B>Hey fellow botanist!</B><BR>\n<BR>\nI didn't trust the station folk so I left<BR>\na couple of weeks ago. But here's some<BR>\ninstructions on how to operate things here.<BR>\nYou can grow plants and each iteration they become<BR>\nstronger, more potent and have better yield, if you<BR>\nknow which ones to pick. Use your botanist's analyzer<BR>\nfor that. You can turn harvested plants into seeds<BR>\nat the seed extractor, and replant them for better stuff!<BR>\nSometimes if the weed level gets high in the tray<BR>\nmutations into different mushroom or weed species have<BR>\nbeen witnessed. On the rare occassion even weeds mutate!<BR>\n<BR>\nEither way, have fun!<BR>\n<BR>\nBest regards,<BR>\nBilly Bob Johnson."
 
 /obj/item/weapon/paper/flag
 	icon_state = "flag_neutral"
@@ -1240,32 +1232,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 7
 	w_class = 3.0
 
-/obj/item/weapon/kitchenknife
-	name = "Kitchen knife"
-	icon = 'kitchen.dmi'
-	icon_state = "knife"
-	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
-	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 10.0
-	w_class = 3.0
-	throwforce = 6.0
-	throw_speed = 3
-	throw_range = 6
-	m_amt = 12000
-
-/obj/item/weapon/tray
-	name = "Tray"
-	icon = 'food.dmi'
-	icon_state = "tray"
-	desc = "A metal tray to lay food on."
-	throwforce = 12.0
-	throwforce = 10.0
-	throw_speed = 1
-	throw_range = 5
-	w_class = 3.0
-	flags = FPRINT | TABLEPASS | CONDUCT
-	m_amt = 3000
-
 /obj/item/weapon/kitchen/utensil
 	force = 5.0
 	w_class = 1.0
@@ -1273,6 +1239,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 3
 	throw_range = 5
 	flags = FPRINT | TABLEPASS | CONDUCT
+
 
 /obj/item/weapon/kitchen/utensil/fork
 	name = "fork"
@@ -1386,3 +1353,87 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	sides = 20
 	icon_state = "d20"
 	item_state = "dice"
+
+/obj/item/weapon/grown // Grown weapons
+	name = "grown_weapon"
+	icon = 'weapons.dmi'
+	var/seed = ""
+	var/plantname = ""
+	var/productname = ""
+	var/species = ""
+	var/lifespan = 20
+	var/endurance = 15
+	var/maturation = 7
+	var/production = 7
+	var/yield = 2
+	var/potency = -1
+	var/plant_type = 0
+
+
+/obj/item/weapon/grown/nettle // -- Skie
+	desc = "This is a nettle. It's probably <B>not</B> wise to touch it with bare hands..."
+	icon = 'weapons.dmi'
+	name = "Nettle"
+	icon_state = "nettle"
+	damtype = "fire"
+	force = 15
+	flags = TABLEPASS
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	plant_type = 1
+
+/obj/item/weapon/grown/deathnettle // -- Skie
+	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
+	icon = 'weapons.dmi'
+	name = "Deathnettle"
+	icon_state = "deathnettle"
+	damtype = "fire"
+	force = 30
+	flags = TABLEPASS
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	plant_type = 1
+
+/obj/item/weapon/plantbgone // -- Skie
+	desc = "Plant-B-Gone! Kill those pesky weeds!"
+	icon = 'hydroponics.dmi'
+	name = "Plant-B-Gone"
+	icon_state = "plantbgone"
+	item_state = "plantbgone"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 3
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 10
+
+/obj/item/weapon/weedspray // -- Skie
+	desc = "Toxic mixture in spray form to kill small weeds."
+	icon = 'hydroponics.dmi'
+	name = "Weed Spray"
+	icon_state = "weedspray"
+	item_state = "weedspray"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 4
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 10
+	var/toxicity = 4
+	var/WeedKillStr = 2
+
+/obj/item/weapon/pestspray // -- Skie
+	desc = "Pest eliminator spray! Do not inhale!"
+	icon = 'hydroponics.dmi'
+	name = "Pest Spray"
+	icon_state = "pestspray"
+	item_state = "pestspray"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 4
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 10
+	var/toxicity = 4
+	var/PestKillStr = 2

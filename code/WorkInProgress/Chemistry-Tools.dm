@@ -224,42 +224,39 @@
 
 	proc
 		fire_syringe(atom/target, mob/user)
-			if (locate (/obj/table, src.loc))
-				return
-			else
-				var/turf/trg = get_turf(target)
-				var/obj/syringe_gun_dummy/D = new/obj/syringe_gun_dummy(get_turf(src))
-				var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
-				S.reagents.trans_to(D, S.reagents.total_volume)
-				syringes -= S
-				del(S)
-				D.icon_state = "syringeproj"
-				D.name = "syringe"
-				playsound(user.loc, 'syringeproj.ogg', 50, 1)
+			var/turf/trg = get_turf(target)
+			var/obj/syringe_gun_dummy/D = new/obj/syringe_gun_dummy(get_turf(src))
+			var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
+			S.reagents.trans_to(D, S.reagents.total_volume)
+			syringes -= S
+			del(S)
+			D.icon_state = "syringeproj"
+			D.name = "syringe"
+			playsound(user.loc, 'syringeproj.ogg', 50, 1)
 
-				for(var/i=0, i<6, i++)
-					if(D.loc == trg) break
-					step_towards(D,trg)
+			for(var/i=0, i<6, i++)
+				if(D.loc == trg) break
+				step_towards(D,trg)
 
-					for(var/mob/living/carbon/M in D.loc)
-						if(!istype(M,/mob/living/carbon)) continue
-						if(M == user) continue
-						D.reagents.trans_to(M, 15)
-						M.bruteloss += 5
-						for(var/mob/O in viewers(world.view, D))
-							O.show_message(text("\red [] was hit by the syringe!", M), 1)
+				for(var/mob/living/carbon/M in D.loc)
+					if(!istype(M,/mob/living/carbon)) continue
+					if(M == user) continue
+					D.reagents.trans_to(M, 15)
+					M.bruteloss += 5
+					for(var/mob/O in viewers(world.view, D))
+						O.show_message(text("\red [] was hit by the syringe!", M), 1)
 
-						del(D)
+					del(D)
 
-					for(var/atom/A in D.loc)
-						if(A == user) continue
-						if(A.density) del(D)
+				for(var/atom/A in D.loc)
+					if(A == user) continue
+					if(A.density) del(D)
 
-					sleep(1)
+				sleep(1)
 
-				spawn(10) del(D)
+			spawn(10) del(D)
 
-				return
+			return
 
 
 
@@ -587,10 +584,24 @@
 /// Syringes. END
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Snacks.
+/// Food.
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/food
+
 	var/heal_amt = 0
+
+	// -- Skie - Mushrooms & poisoned foor
+	// 0 = no poison, 25 = some poison, >50 = LOTS of poison
+	var/poison_amt = 0
+
+	// -- Skie - Psilocybin
+	// 0 = no trip, 25 = medium trip, 50 large trip, >75 = WTF
+	var/drug_amt = 0
+
+	// -- Skie - Hot foods
+	// 0 = no heat, 25 = cayenne, 50 = habanero, >75 = jolokia
+	var/heat_amt = 0
+
 	proc
 		heal(var/mob/M)
 			if(istype(M, /mob/living/carbon/human))
@@ -608,6 +619,88 @@
 				M.bruteloss = max(0, M.bruteloss - src.heal_amt)
 				M.fireloss = max(0, M.fireloss - src.heal_amt)
 			M.updatehealth()
+
+
+	proc
+		poison(var/mob/M)
+			var/poison_temp = src.poison_amt
+			src = null
+			spawn(200)
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/C = M
+				if(poison_temp > 0)
+					C.toxloss += rand(0,poison_temp/2) // Some initial damage
+					C.fireloss += rand(0,poison_temp/4) // Some initial damage
+					C.UpdateDamageIcon()
+					C.weakened += poison_temp/(rand(1,4))
+					if(poison_temp > 20 && poison_temp < 50)
+						C << "\red You feel absolutely horrible."
+						C.emote(pick("blink", "blink_r", "twitch_s", "frown", "blush", "shrug", "pale", "sniff", "whimper", "flap", "drool", "moan", "twitch"))
+					else if(poison_temp > 49)
+						C << "<B>\red You feel like your liver is being disintegrated by an infernal poison.</B>"
+						C.emote(pick("groan", "frown", "moan", "whimper", "drool", "pale"))
+
+
+					C.eye_blurry += poison_temp
+					C.make_dizzy(10*poison_temp)
+					spawn()
+					for(poison_temp, poison_temp>0, 1) // Poison does 10 damage per tick
+						sleep(100) // Every 10 seconds
+						C.toxloss += min(poison_temp, 10)
+						poison_temp -= 10 // Until poison amount is depleted
+
+
+	proc
+		drug(var/mob/M)
+			var/drug_temp = src.drug_amt
+			src = null // Detach proc
+			spawn(200) // In 20 seconds...
+			if(istype(M, /mob/living/carbon/human))
+
+				var/mob/living/carbon/human/C = M
+				C.druggy += (drug_temp*(drug_temp/15)+10) // Have a trip
+				if(drug_temp > 25)
+					C.make_dizzy(5*drug_temp) // Dizzify
+					C.stuttering = drug_temp // Speech impediments
+					spawn(3000) // 5 minutes
+					C << "\red You feel a craving for a trip..."
+
+				if(drug_temp > 50)
+					C.make_jittery(5*drug_temp) // Jitter
+					spawn(-1)
+					for(var/i=1, i == 1, 1)
+						C.see_invisible = 15
+						sleep(300)
+						C.emote(pick("blink", "blink_r", "twitch_s", "frown", "blush", "shrug", "pale", "sniff", "whimper", "flap", "drool", "moan", "twitch"))
+						if(prob(20))
+							C.see_invisible = 0
+							i = 0
+				if(drug_temp > 75)
+					C.confused += drug_temp // Hard to move where you want
+					C.weakened += rand(0, drug_temp/4) // Fall on your back
+					// Add cool stuff here later, like everything starting to look different etc.
+
+	proc
+		burn(var/mob/M)
+			var/temp_heat = src.heat_amt
+			var/temp_name = src.name
+			src = null
+			spawn(50)
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/C = M
+
+				// BRING ON THE HEAT/FROST
+				spawn()
+				while(temp_heat > 5) // Until chili pepper's potency is depleted
+					sleep(20) // Every 2 seconds
+					C.fireloss += 3 // Do some burn damage because body temperature itself doesn't do anything :(
+					if (temp_heat > 0 && temp_name == "Chili")
+						C.bodytemperature += min(temp_heat*5, 25)
+						temp_heat -= 5 // Until heat amount is depleted
+					else if (temp_heat > 0 && temp_name == "Icepepper") // Herp derp, bad way to do it but herp derp
+						C.bodytemperature -= min(temp_heat*5, 25)
+						temp_heat -= 5 // Until heat amount is depleted
+
 
 /obj/item/weapon/reagent_containers/food/snacks
 	name = "snack"
@@ -639,10 +732,17 @@
 					spawn(5)
 						reagents.trans_to(M, reagents.total_volume)
 				src.amount--
+				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				M.nutrition += src.heal_amt * 10
 				M.poo += 0.1
-				src.heal(M)
-				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
+				if(src.heal_amt > 0)
+					src.heal(M)
+				if(src.poison_amt > 0)
+					src.poison(M)
+				if(src.drug_amt > 0)
+					src.drug(M)
+				if(src.heat_amt > 0)
+					src.burn(M)
 				if(!src.amount)
 					user << "\red You finish eating [src]."
 					del(src)
@@ -659,10 +759,17 @@
 					spawn(5)
 						reagents.trans_to(M, reagents.total_volume)
 				src.amount--
+				playsound(M.loc, 'eatfood.ogg', rand(10,50), 1)
 				M.nutrition += src.heal_amt * 10
 				M.poo += 0.1
-				src.heal(M)
-				playsound(M.loc, 'eatfood.ogg', rand(10,50), 1)
+				if(src.heal_amt > 0)
+					src.heal(M)
+				if(src.poison_amt > 0)
+					src.poison(M)
+				if(src.drug_amt > 0)
+					src.drug(M)
+				if(src.heat_amt > 0)
+					src.burn(M)
 				if(!src.amount)
 					user << "\red [M] finishes eating [src]."
 					del(src)
@@ -1182,85 +1289,6 @@
 	amount = 5
 	heal_amt = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/meatbread
-	name = "meatbread loaf"
-	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
-	icon_state = "meatbread"
-	amount = 30
-	heal_amt = 5
-/*	New()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cholesterol", 20)*/
-	heal(var/mob/M)
-		..()
-
-
-/obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
-	name = "meatbread slice"
-	desc = "A slice of delicious meatbread."
-	icon_state = "meatbreadslice"
-	amount = 5
-	heal_amt = 6
-	New()
-/*		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cholesterol", 10)*/
-	heal(var/mob/M)
-		..()
-
-
-/obj/item/weapon/reagent_containers/food/snacks/cheesewheel
-	name = "Cheese wheel"
-	desc = "A big wheel of delcious Cheddar."
-	icon_state = "cheesewheel"
-	amount = 25
-	heal_amt = 3
-	heal(var/mob/M)
-		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/cheesewedge
-	name = "Cheese wedge"
-	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
-	icon_state = "cheesewedge"
-	amount = 4
-	heal_amt = 4
-	heal(var/mob/M)
-		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/omelette
-	name = "Omelette Du Fromage"
-	desc = "That's all you can say!"
-	icon_state = "omelette"
-	amount = 15
-	heal_amt = 3
-	heal(var/mob/M)
-		..()
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
-			W.icon = 'kitchen.dmi'
-			W.icon_state = "forkloaded"
-			world << "[user] takes a piece of omelette with his fork!"
-
-/obj/item/weapon/reagent_containers/food/snacks/omeletteforkload
-	name = "Omelette Du Fromage"
-	desc = "That's all you can say!"
-	amount = 1
-	heal_amt = 4
-	heal(var/mob/M)
-		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/muffin
-	name = "Muffin"
-	desc = "A delicious and spongy little cake"
-	icon_state = "muffin"
-	amount = 4
-	heal_amt = 6
-	heal(var/mob/M)
-		..()
-
 /obj/item/weapon/reagent_containers/food/snacks/roburger
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
@@ -1339,17 +1367,6 @@
 		reagents = R
 		R.my_atom = src
 		R.add_reagent("beer", 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/milk
-	name = "Space Milk"
-	desc = "Milk. By Cows. Cows in space."
-	icon_state = "milk"
-	heal_amt = 1
-	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("milk", 50)
 
 //Pills
 /obj/item/weapon/reagent_containers/pill/antitox
@@ -1441,27 +1458,5 @@
 		..()
 		reagents.add_reagent("beer",1000)
 
-///////////////////////////////////////////////////////////////////////////////////////////////////// Meatbread slicing RIGHT BELOW*************
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/obj/item/weapon/reagent_containers/food/snacks/meatbread/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
-		W.visible_message(" <B>[usr] slices the meatbread! </B>", 1)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		del(src)
-		return
-
-/obj/item/weapon/reagent_containers/food/snacks/cheesewheel/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/kitchenknife /* || /obj/item/weapon/scalpel*/))
-		W.visible_message(" <B>[usr] slices the cheese! </B>", 1)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		del(src)
-		return
+/////////////////////////////////////////////////////////////////////////////////////////////////////

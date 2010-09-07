@@ -160,12 +160,6 @@
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	item_state = "caphat"
 
-/obj/item/clothing/head/wardhat
-	name = "Warden's hat"
-	icon_state = "warden"
-	flags = FPRINT|TABLEPASS|SUITSPACE
-	item_state = "warden"
-
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"

@@ -103,7 +103,7 @@
 		if("Medical Doctor")
 			return list(access_medical, access_morgue)
 		if("Botanist")	// -- TLE
-			return list(access_medical, access_chemistry, access_hydroponics)
+			return list(access_medical, access_chemistry, access_hydroponics, access_tox) // Added tox access because there's chem access -- Skie
 		if("Librarian") // -- TLE
 			return list(access_library)
 		if("Captain")
@@ -143,10 +143,10 @@
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_ai_upload, access_construction)
-		if("Research Director")
+		if("Research Director") // added hydroponics access -- Skie
 			return list(access_medical, access_morgue, access_medlab, access_robotics,
 			            access_tech_storage, access_maint_tunnels, access_heads, access_tox,
-			            access_tox_storage, access_chemistry, access_teleporter)
+			            access_tox_storage, access_chemistry, access_teleporter, access_hydroponics)
 		else
 			return list()
 

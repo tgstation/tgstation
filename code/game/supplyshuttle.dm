@@ -287,6 +287,23 @@ var/supply_shuttle_points = 50
 	containername = "Robotics Assembly"
 	access = access_robotics
 
+/datum/supply_packs/hydroponics // -- Skie
+	name = "Hydroponics Supply Crate"
+	contains = list("/obj/item/weapon/plantbgone",
+	"/obj/item/weapon/plantbgone",
+	"/obj/item/weapon/plantbgone",
+	"/obj/item/weapon/weedspray",
+	"/obj/item/weapon/weedspray",
+	"/obj/item/weapon/weedspray",
+	"/obj/item/weapon/pestspray",
+	"/obj/item/weapon/pestspray",
+	"/obj/item/weapon/pestspray",
+	"/obj/item/clothing/gloves/latex",
+	"/obj/item/clothing/gloves/latex") // For handling nettles etc
+	cost = 10
+	containertype = /obj/crate/hydroponics
+	containername = "Hydroponics crate"
+	access = access_hydroponics
 
 //SUPPLY PACKS
 

@@ -150,8 +150,6 @@ datum
 					holder.remove_reagent("toxin", 2)
 				if(holder.has_reagent("stoxin"))
 					holder.remove_reagent("stoxin", 2)
-				if(holder.has_reagent("cholesterol"))
-					holder.remove_reagent("cholesterol", 4)
 				if(holder.has_reagent("plasma"))
 					holder.remove_reagent("plasma", 1)
 				if(holder.has_reagent("acid"))
@@ -206,32 +204,6 @@ datum
 				data++
 				..()
 				return
-
-			/*cholesterol              /////////////////////////////////It's cholesterol. IN SPACE. Remains out till it's fucking fixed ///////////////////
-			name = "Cholesterol"
-			id = "cholesterol"
-			description = "A certain steroid fat that is known to cause trouble to humans in large doses. Obtained through fatty diets."
-			reagent_state = LIQUID
-
-			on_mob_life(var/mob/M)
-				if(!M) M = holder.my_atom
-				if(!data) data = 1
-				switch(data)
-					if(30 to 30)
-						M << "\red Your blood feels... sluggish..."
-					if(75 to 99)
-						for(M in viewers(src, null))
-							M.show_message(text("\red Oh no! [M.name] seems to be having a minor cardiac arrest!"), 1)
-						M:toxloss += 35
-						M:drowsyness  = max(M:drowsyness, 25)
-					if(120 to INFINITY)
-						usr << "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNGGGGGGGGGGGGGGGGGGGGGG"
-						for(M in viewers(src, null))
-							M.show_message("\red <B>[M.name] 's face turns blue as he suffers a major cardiac arrest! He's not walking out of this one for sure...</B>", 1)
-						M:toxloss +=200
-				data++
-				..()
-				return*/
 
 		inaprovaline
 			name = "Inaprovaline"
@@ -626,9 +598,9 @@ datum
 							C:head.clean_blood()
 
 
-		weedbgone
-			name = "Weed-B-Gone"
-			id = "weedbgone"
+		plantbgone
+			name = "Plant-B-Gone"
+			id = "plantbgone"
 			description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 			reagent_state = LIQUID
 			/* Don't know if this is necessary.
@@ -640,9 +612,9 @@ datum
 			*/
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/plant/vine/))
-					O:life -= 25 // Kills vines nicely // Not tested as vines don't work in R41
+					O:life -= rand(5,30) // Kills vines nicely // Not tested as vines don't work in R41
 				else if(istype(O,/obj/alien/weeds/))
-					O:health -= 25 // Kills alien weeds pretty fast
+					O:health -= rand(5,25) // Kills alien weeds pretty fast
 					O:healthcheck()
 				// Damage that is done to growing plants is separately
 				// at code/game/machinery/hydroponics at obj/item/hydroponics
@@ -654,7 +626,6 @@ datum
 						M:toxloss += 2 // 4 toxic damage per application, doubled for some reason
 						//if(prob(10))
 							//M.make_dizzy(1) doesn't seem to do anything
-
 
 
 		space_cola

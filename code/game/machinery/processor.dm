@@ -3,7 +3,7 @@ obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		user << "Something is already in the processing chamber."
 		return 0
 	else
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/chili) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/tomato) || istype(O, /obj/item/weapon/reagent_containers/food/drinks/milk))
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/chili) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/tomato))
 			user.drop_item()
 			O.loc = src
 		else
@@ -37,22 +37,6 @@ obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				V.show_message(text("\blue [user] turns on \a [src]."))
 			del(O)
 			new /obj/item/weapon/reagent_containers/food/snacks/ketchup(src.loc)
-			return
-		if(istype(O, /obj/item/weapon/reagent_containers/food/drinks/milk))
-			sleep(40)
-			playsound(src.loc, 'blender.ogg', 50, 1)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] turns on \a [src]."))
-			del(O)
-			new /obj/item/weapon/reagent_containers/food/snacks/cheesewheel(src.loc)
-			return
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans))
-			sleep(40)
-			playsound(src.loc, 'blender.ogg', 50, 1)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] turns on \a [src]."))
-			del(O)
-			new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src.loc)
 			return
 	user << "There doesn't appear to be anything in the processing chamber."
 

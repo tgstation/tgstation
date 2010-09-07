@@ -529,7 +529,7 @@
 	var/active = 1 //No sales pitches if off!
 	var/vend_ready = 1 //Are we ready to vend?? Is it time??
 	var/vend_delay = 10 //How long does it take to vend?
-	var/product_paths = "" //String of product paths separated by semicolons.
+	var/product_paths = "" //String of product paths separated by semicolons. No spaces!
 	var/product_amounts = "" //String of product amounts separated by semicolons, must have amount for every path in product_paths
 	var/product_slogans = "" //String of slogans separated by semicolons, optional
 	var/product_hidden = "" //String of products that are hidden unless hacked.
@@ -605,7 +605,7 @@
 	icon_state = "sec"
 	icon_deny = "sec-deny"
 	req_access_txt = "1"
-	product_paths = "/obj/item/weapon/handcuffs;/obj/item/weapon/flashbang; /obj/item/device/flash"
+	product_paths = "/obj/item/weapon/handcuffs;/obj/item/weapon/flashbang;/obj/item/device/flash"
 	product_amounts = "8;2;5"
 	//product_amounts = "8;5;4" Old totals
 	product_hidden = "/obj/item/clothing/head/helmet"
@@ -620,6 +620,16 @@
 	product_amounts = "25;15;15"
 	product_slogans = "Aren't you glad you don't have to fertilize the natural way?;Now with 50% less stink!;Plants are people too!"
 
+/obj/machinery/vending/hydroseeds
+	name = "MegaSeed Servitor"
+	desc = "When you need seeds fast!"
+	icon_state = "seeds"
+	product_paths = "/obj/item/seeds/chiliseed;/obj/item/seeds/berryseed;/obj/item/seeds/eggplantseed;/obj/item/seeds/tomatoseed;/obj/item/seeds/wheatseed;/obj/item/seeds/soyaseed;/obj/item/seeds/carrotseed;/obj/item/seeds/chantermycelium;/obj/item/seeds/nettleseed"
+	product_amounts = "2;2;2;2;2;2;2;2;1"
+	product_slogans = "THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!;Hands down the best seed selection on the station!;Also certain mushroom varieties available, more for experts! Get certified today!"
+	product_hidden = "/obj/item/seeds/amanitamycelium;/obj/item/seeds/libertymycelium;/obj/item/seeds/nettleseed;/obj/item/seeds/plumpmycelium;/obj/item/seeds/towermycelium"
+	product_hideamt = "1;2;2;2;2"
+
 /obj/machinery/microwave
 	name = "Microwave"
 	icon = 'kitchen.dmi'
@@ -630,7 +640,6 @@
 	var/flour_amount = 0 //Current amount of flour inside
 	var/water_amount = 0 //Current amount of water inside
 	var/monkeymeat_amount = 0
-	var/cheese_amount = 0 //cheese inside, yo
 	var/humanmeat_amount = 0
 	var/donkpocket_amount = 0
 	var/xenomeat_amount = 0

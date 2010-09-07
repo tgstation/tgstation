@@ -389,9 +389,9 @@ datum
 			required_reagents = list("ammonia" = 1, "water" = 1)
 			result_amount = 1
 
-		weedbgone
-			name = "Weed-B-Gone"
-			id = "weedbgone"
-			result = "weedbgone"
+		plantbgone
+			name = "Plant-B-Gone"
+			id = "plantbgone"
+			result = "plantbgone"
 			required_reagents = list("toxin" = 1, "water" = 4)
 			result_amount = 5

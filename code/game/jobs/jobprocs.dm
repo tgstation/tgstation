@@ -269,8 +269,8 @@
 			src.equip_if_possible(new /obj/item/device/pda/chaplain(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chaplain(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
-			if(prob(15))
-				src.see_invisible = 15
+			//if(prob(15))
+			//	src.see_invisible = 15 -- Doesn't work as see_invisible is reset every world cycle. -- Skie
 
 		if ("Geneticist")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears) // -- TLE

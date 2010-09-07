@@ -14,9 +14,7 @@ MOP
 	return
 
 /obj/item/weapon/cleaner/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (istype(A, /obj/item/weapon/storage/backpack ))
-		return
-	else if (src.reagents.total_volume < 1)
+	if (src.reagents.total_volume < 1)
 		user << "\blue Add more cleaner!"
 		return
 
