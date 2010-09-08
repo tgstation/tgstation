@@ -10,6 +10,12 @@
 	attack(mob/living/silicon/ai/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/silicon/ai))
 			return ..()
+												 // ** Bugfix for r74 **
+		if(istype(M, /mob/living/silicon/decoy)) // Don't branch this out into a separate attack(), it overwrites the first definition.
+			M.death()							 // We typecast in the function's arguments, but it doesn't actually typecheck
+			user << "<b>ERROR ERROR ERROR</b>"	 // (beyond, I suspect, the big four ATOMs), typechecking for subtypes of one of the ATOMs needs
+			return 0							 // to occur in the function itself. -- TLE
+
 		if(src.contents.len > 0)
 			// Already have an AI
 			if(M.client)
@@ -35,7 +41,6 @@
 					return
 		else
 			var/mob/living/silicon/ai/O = new /mob/living/silicon/ai( src )
-
 			O.invisibility = 0
 			O.canmove = 0
 			O.name = M.name
@@ -53,7 +58,3 @@
 			src.icon_state = "aicard-full"
 			O << "You have been downloaded to a mobile storage device. Remote device connection severed."
 			user << "<b>Transfer succeeded</b>: [O.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
-
-	attack(mob/living/silicon/decoy/M as mob, mob/user as mob)
-		M.death()
-		user << "<b>ERROR ERROR ERROR</b>"
