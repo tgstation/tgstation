@@ -614,13 +614,13 @@
 					if(!H.organs[A])	continue
 					affecting = H.organs[A]
 					if(!istype(affecting, /datum/organ/external))	continue
-					if(affecting.heal_damage(src.heal_amt, src.heal_amt))
+					if(affecting.heal_damage(src.heal_amt/2.0, src.heal_amt/2.0))
 						H.UpdateDamageIcon()
 					else
 						H.UpdateDamage()
 			else
-				M.bruteloss = max(0, M.bruteloss - src.heal_amt)
-				M.fireloss = max(0, M.fireloss - src.heal_amt)
+				M.bruteloss = max(0, M.bruteloss - src.heal_amt/2.0)
+				M.fireloss = max(0, M.fireloss - src.heal_amt/2.0)
 			M.updatehealth()
 
 
@@ -675,13 +675,16 @@
 						C.see_invisible = 15
 						sleep(300)
 						C.emote(pick("blink", "blink_r", "twitch_s", "frown", "blush", "shrug", "pale", "sniff", "whimper", "flap", "drool", "moan", "twitch"))
-						if(prob(20))
+						if(prob(15))
 							C.see_invisible = 0
 							i = 0
+							C.client.view = world.view // Return view range back to normal
 				if(drug_temp > 75)
 					C.confused += drug_temp // Hard to move where you want
 					C.weakened += rand(0, drug_temp/4) // Fall on your back
 					// Add cool stuff here later, like everything starting to look different etc.
+
+					C.client.view = min(C.client.view + rand(0,4), 14) // FUCK YE
 
 	proc
 		burn(var/mob/M)

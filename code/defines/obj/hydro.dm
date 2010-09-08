@@ -1,3 +1,14 @@
+// Plant analyzer
+
+/obj/item/device/analyzer/plant_analyzer
+	name = "Plant Analyzer"
+	icon = 'device.dmi'
+	icon_state = "hydro"
+	item_state = "analyzer"
+
+	attack_self(mob/user as mob)
+		return 0
+
 // ********************************************************
 // Here's all the seeds (=plants) that can be used in hydro
 // ********************************************************
@@ -20,6 +31,7 @@
 	var/potency = -1
 	var/growthstages = 0
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
+
 
 /obj/item/seeds/chiliseed
 	name = "Chili plant seeds"
@@ -368,6 +380,48 @@
 // Data from the seeds carry over to these grown foods
 // ***********************************************************
 
+
+obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "This is a \blue [name]"
+		switch(plant_type)
+			if(0)
+				user << "- Plant type: \blue Normal plant"
+			if(1)
+				user << "- Plant type: \blue Weed"
+			if(2)
+				user << "- Plant type: \blue Mushroom"
+		user << "- Potency: \blue [potency]"
+		user << "- Yield: \blue [yield]"
+		user << "- Maturation speed: \blue [maturation]"
+		user << "- Production speed: \blue [production]"
+		user << "- Endurance: \blue [endurance]"
+		user << "- Healing properties: \blue [heal_amt]"
+		user << "- Amatoxins: \blue [poison_amt]%"
+		user << "- Psilocybin: \blue [drug_amt]%"
+		user << "- Capsaicin: \blue [heat_amt]%"
+		user << ""
+
+		return
+
+obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "This is a \blue [name]"
+		switch(plant_type)
+			if(0)
+				user << "- Plant type: \blue Normal plant"
+			if(1)
+				user << "- Plant type: \blue Weed"
+			if(2)
+				user << "- Plant type: \blue Mushroom"
+		user << "- Acid strength: \blue [potency]"
+		user << "- Yield: \blue [yield]"
+		user << "- Maturation speed: \blue [maturation]"
+		user << "- Production speed: \blue [production]"
+		user << "- Endurance: \blue [endurance]"
+		user << ""
+
+		return
 
 //Grown foods
 /obj/item/weapon/reagent_containers/food/snacks/grown/ //New subclass so we can pass on values

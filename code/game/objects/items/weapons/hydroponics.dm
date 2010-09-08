@@ -19,24 +19,29 @@ Deathnettle
 	return
 
 /obj/item/weapon/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (src.reagents.total_volume < 1)
+
+	if (istype(A, /obj/item/weapon/storage/backpack ))
+		return
+
+	else if (locate (/obj/table, src.loc))
+		return
+
+	else if (src.reagents.total_volume < 1)
 		src.empty = 1
 		user << "\blue Add more Plant-B-Gone mixture!"
 		return
-	else if (istype(A, /obj/item/weapon/storage/backpack ))
-		return
-
-	else if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
-		return
-
-	else if (istype(A, /obj/blob)) // blob damage in blob code
-		return
 
 	else
-		var/obj/decal/D = new/obj/decal/(get_turf(src)) // Targeting elsewhere
-		if (locate (/obj/table, src.loc))
+		src.empty = 0
+
+		if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
 			return
+
+		else if (istype(A, /obj/blob)) // blob damage in blob code
+			return
+
 		else
+			var/obj/decal/D = new/obj/decal/(get_turf(src)) // Targeting elsewhere
 			D.name = "chemicals"
 			D.icon = 'chemical.dmi'
 			D.icon_state = "weedpuff"
@@ -71,7 +76,7 @@ Deathnettle
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (force > 0)
-		force -= rand(0,(force/10)+1) // When you whack someone with it, leaves fall off
+		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 	else
 		usr << "All the leaves have fallen off the nettle from violent whacking."
 		del(src)
@@ -90,14 +95,15 @@ Deathnettle
 	if(istype(M, /mob/living/carbon/human))
 		M << "\red You are stunned by the powerful acid of the Deathnettle!"
 		M.eye_blurry += 4
-		M.paralysis += 5
-		M.weakened += 2
+		if(prob(20))
+			M.paralysis += 5
+			M.weakened += 2
 		M.drop_item()
 	..()
 
 /obj/item/weapon/grown/deathnettle/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (force > 0)
-		force -= rand(0,(force/10)+1) // When you whack someone with it, leaves fall off
+		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 
 	else
 		usr << "All the leaves have fallen off the deathnettle from violent whacking."

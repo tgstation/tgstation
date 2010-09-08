@@ -396,13 +396,13 @@
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon_state = "black"
 	mymob.blind.name = " "
-	mymob.blind.screen_loc = "1,1 to 15,15"
+	mymob.blind.screen_loc = "WEST,SOUTH-1 to EAST,SOUTH-1"
 	mymob.blind.layer = 0
 
 	mymob.flash = new /obj/screen( null )
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = "WEST,SOUTH-1 to EAST,SOUTH-1"
 	mymob.flash.layer = 17
 
 	mymob.hands = new /obj/screen( null )

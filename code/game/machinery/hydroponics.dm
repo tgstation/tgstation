@@ -97,7 +97,7 @@ obj/machinery/hydroponics/process()
 						src.mutate()
 					else if(prob(30))
 						src.hardmutate()
-					else if(prob(20))
+					else if(prob(10))
 						src.mutatespecie() // Just testing this here until mutagens are in place
 					m_count++;
 				if(src.yieldmod > 0 && src.myseed.yield != -1) // Unharvestable shouldn't be harvested
@@ -234,6 +234,8 @@ obj/machinery/hydroponics/proc/mutate() // Mutates the current seed
 			src.myseed.yield = 0
 		else if(src.myseed.yield > 10)
 			src.myseed.yield = 10
+		if(src.myseed.yield == 0 && src.myseed.plant_type == 2)
+			src.myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
 
 	if(src.myseed.potency != -1) //Not all plants have a potency
 		src.myseed.potency += rand(-10,10)
@@ -271,6 +273,8 @@ obj/machinery/hydroponics/proc/hardmutate() // Strongly mutates the current seed
 			src.myseed.yield = 0
 		else if(src.myseed.yield > 10)
 			src.myseed.yield = 10
+		if(src.myseed.yield == 0 && src.myseed.plant_type == 2)
+			src.myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
 
 	if(src.myseed.potency != -1) //Not all plants have a potency
 		src.myseed.potency += rand(-20,20)
@@ -463,30 +467,39 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		if(src.planted && src.myseed)
 			user << "*** <B>[src.myseed.name]</B> ***"
-			user << "-<B>Plant Age:</B> [src.age]"
-			user << "--<B>Plant Endurance:</B> [src.myseed.endurance]"
-			user << "--<B>Plant Lifespan:</B> [src.myseed.lifespan]"
+			user << "-Plant Age: \blue [src.age]"
+			user << "-Plant Endurance: \blue [src.myseed.endurance]"
+			user << "-Plant Lifespan: \blue [src.myseed.lifespan]"
 			if(src.myseed.yield != -1)
-				user << "--<B>Plant Yield:</B> [src.myseed.yield]"
-			user << "--<B>Plant Production:</B> [src.myseed.production]"
+				user << "-Plant Yield: \blue [src.myseed.yield]"
+			user << "-Plant Production: \blue [src.myseed.production]"
 			if(src.myseed.potency != -1)
-				user << "--<B>Plant Potency:</B> [src.myseed.potency]"
-			user << "--<B>Weed level:</B> [src.weedlevel]/10"
-			user << "--<B>Pest level:</B> [src.pestlevel]/10"
-			user << "--<B>Toxicity level:</B> [src.toxic]/100"
+				user << "-Plant Potency: \blue [src.myseed.potency]"
+			user << "-Weed level: \blue [src.weedlevel]/10"
+			user << "-Pest level: \blue [src.pestlevel]/10"
+			user << "-Toxicity level: \blue [src.toxic]/100"
 			user << ""
 		else
 			user << "<B>No plant found.</B>"
-			user << "--<B>Weed level:</B> [src.weedlevel]/10"
-			user << "--<B>Pest level:</B> [src.pestlevel]/10"
-			user << "--<B>Toxicity level:</B> [src.toxic]/100"
+			user << "-Weed level: \blue [src.weedlevel]/10"
+			user << "-Pest level: \blue [src.pestlevel]/10"
+			user << "-Toxicity level: \blue [src.toxic]/100"
 			user << ""
 
 	else if (istype(O, /obj/item/weapon/plantbgone))
 		if(src.planted && src.myseed)
 			src.health -= rand(5,20)
-			src.pestlevel -= 1 // Kill kill kill
-			src.weedlevel -= 2 // Kill kill kill
+
+			if(src.pestlevel > 0)
+				src.pestlevel -= 1 // Kill kill kill
+			else
+				src.pestlevel = 0
+
+			if(src.weedlevel > 1)
+				src.weedlevel -= 2 // Kill kill kill
+			else
+				src.weedlevel = 0
+
 			src.toxic += 5 // Oops
 			src.visible_message("\red <B>\The [src] has been sprayed with \the [O][(user ? " by [user]." : ".")]")
 			playsound(src.loc, 'spray3.ogg', 50, 1, -6)
@@ -570,14 +583,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			usr << text("The tray is filled with tiny worms!")
 		usr << text ("") // Empty line for readability.
 
-
-
-/obj/item/device/analyzer/plant_analyzer
-	name = "Plant Analyzer"
-	icon_state = "hydro"
-
-	attack_self(mob/user as mob)
-		return 0
 
 
 // BROKEN!!!!!!
