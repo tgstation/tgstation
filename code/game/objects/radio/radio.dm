@@ -193,9 +193,7 @@ Frequency:
 		var/part_c = "</span></span>"
 
 		if(findtext(part_b, "135.3") || findtext(part_b, "135.5") || findtext(part_b, "135.7") || findtext(part_b, "135.9"))
-			part_b = "<font color=#800080>" + part_b
-			part_c = part_c + "</font>"
-
+			part_a = "<span class='deptradio'><span class='name'>"
 
 		if (length(heard_masked))
 			var/rendered = "[part_a][M.name][part_b][M.say_quote(message)][part_c]"
