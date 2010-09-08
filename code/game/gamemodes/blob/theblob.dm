@@ -124,6 +124,12 @@
 			damage = 15
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 
+	else if(istype(W, /obj/item/weapon/plantbgone))
+		var/obj/item/weapon/plantbgone/PBG = W
+		if (!PBG.empty)
+			damage = rand(10,20)
+			playsound(src.loc, 'spray3.ogg', 50, 1, -6)
+
 	src.health -= damage
 	src.update()
 

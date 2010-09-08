@@ -57,7 +57,7 @@ obj/machinery/hydroponics/process()
 			if(src.toxic >= 40 && src.toxic < 80)
 				src.health -= 1
 				src.toxic -= rand(1,10)
-			if(src.toxic >= 80)
+			if(src.toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
 				src.health -= 3
 				src.toxic -= rand(1,10)
 
@@ -97,7 +97,7 @@ obj/machinery/hydroponics/process()
 						src.mutate()
 					else if(prob(30))
 						src.hardmutate()
-					else
+					else if(prob(20))
 						src.mutatespecie() // Just testing this here until mutagens are in place
 					m_count++;
 				if(src.yieldmod > 0 && src.myseed.yield != -1) // Unharvestable shouldn't be harvested
@@ -201,9 +201,9 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 	spawn(5) // Wait a while
 	src.updateicon()
 	src.visible_message("\red[src] has been overtaken by \blue [src.myseed.plantname]!")
-	var/P = new /obj/decal/point(src)
-	spawn (20)
-	del(P)
+	//var/P = new /obj/decal/point(src) Doesn't work :(
+	//spawn (20)
+	//del(P)
 
 	return
 
@@ -317,26 +317,25 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 
 
 obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
-	if ( src.weedlevel > 5 && src.myseed.plant_type == 1 )
-		//user << "Weeds have overtaken the spot! The weeds mutate!"
-		del(src.myseed)
-		switch(rand(100))
-			if(1 to 33)		src.myseed = new /obj/item/seeds/libertymycelium
-			if(34 to 66)	src.myseed = new /obj/item/seeds/angelmycelium
-			else			src.myseed = new /obj/item/seeds/deathnettleseed
 
-		src.dead = 0
-		src.hardmutate()
-		src.planted = 1
-		src.age = 0
-		src.health = src.myseed.endurance
-		src.lastcycle = world.time
-		src.harvest = 0
-		src.weedlevel = 0 // Reset
+	del(src.myseed)
+	switch(rand(100))
+		if(1 to 33)		src.myseed = new /obj/item/seeds/libertymycelium
+		if(34 to 66)	src.myseed = new /obj/item/seeds/angelmycelium
+		else			src.myseed = new /obj/item/seeds/deathnettleseed
 
-		spawn(5) // Wait a while
-		src.updateicon()
-		src.visible_message("\red The mutated weeds in [src] spawned a \blue [src.myseed.plantname]!")
+	src.dead = 0
+	src.hardmutate()
+	src.planted = 1
+	src.age = 0
+	src.health = src.myseed.endurance
+	src.lastcycle = world.time
+	src.harvest = 0
+	src.weedlevel = 0 // Reset
+
+	spawn(5) // Wait a while
+	src.updateicon()
+	src.visible_message("\red The mutated weeds in [src] spawned a \blue [src.myseed.plantname]!")
 
 	return
 
@@ -375,10 +374,12 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.waterlevel += b_amount
 			playsound(src.loc, 'slosh.ogg', 25, 1)
 			user << "You fill the tray with [b_amount] units of water."
-	// 		Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
-	//		src.toxic -= round(b_amount/2)
-	//		if (src.toxic < 0 ) // Make sure it won't go overoboard
-	//			src.toxic = 0
+
+	//		Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
+			src.toxic -= round(b_amount/4)
+			if (src.toxic < 0 ) // Make sure it won't go overoboard
+				src.toxic = 0
+
 		else if(src.waterlevel >= 100)
 			user << "\red The hydroponics tray is already full."
 		else

@@ -20,14 +20,18 @@ Deathnettle
 
 /obj/item/weapon/plantbgone/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (src.reagents.total_volume < 1)
+		src.empty = 1
 		user << "\blue Add more Plant-B-Gone mixture!"
 		return
 	else if (istype(A, /obj/item/weapon/storage/backpack ))
 		return
 
 	else if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
-
 		return
+
+	else if (istype(A, /obj/blob)) // blob damage in blob code
+		return
+
 	else
 		var/obj/decal/D = new/obj/decal/(get_turf(src)) // Targeting elsewhere
 		if (locate (/obj/table, src.loc))
