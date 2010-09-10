@@ -37,4 +37,8 @@
 	src.logged_in = 1
 	if (!src.client.changes)
 		src.changes()
+	if(ticker)
+		if(ticker.mode.name == "revolution")
+			if ((src.mind in ticker.mode:revolutionaries) || (src.mind in ticker.mode:head_revolutionaries))
+				ticker.mode:update_rev_icons_added(src.mind)
 	..()

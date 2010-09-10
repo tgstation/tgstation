@@ -44,7 +44,7 @@
 						if (prob(M.eye_stat - 20 + 1))
 							M << "\red You go blind!"
 							M.sdisabilities |= 1
-					if(ticker.mode.name == "revolution")
+					if(ticker.mode.name == "revolution" && istype(M, /mob/living/carbon))
 						if(user.mind in ticker.mode:head_revolutionaries)
 							ticker.mode:add_revolutionary(M.mind)
 
