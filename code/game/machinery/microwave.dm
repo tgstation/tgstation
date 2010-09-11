@@ -277,6 +277,7 @@ Please clean it before use!</TT><BR>
 							src.flour_amount = 0 // And the flour
 							src.water_amount = 0 //And the water
 							src.cheese_amount = 0 //And the cheese
+							src.xenomeat_amount = 0
 							src.monkeymeat_amount = 0
 							src.humanmeat_amount = 0
 							src.donkpocket_amount = 0
@@ -291,6 +292,7 @@ Please clean it before use!</TT><BR>
 						src.egg_amount = 0 //Clear all the values as this crap is what makes the mess inside!!
 						src.flour_amount = 0
 						src.cheese_amount = 0
+						src.xenomeat_amount = 0
 						src.water_amount = 0
 						src.humanmeat_amount = 0
 						src.monkeymeat_amount = 0
@@ -314,6 +316,7 @@ Please clean it before use!</TT><BR>
 						src.updateUsrDialog()
 						src.egg_amount = 0 //Clear all the values as this crap is gone when it breaks!!
 						src.flour_amount = 0
+						src.xenomeat_amount = 0
 						src.cheese_amount = 0
 						src.water_amount = 0
 						src.humanmeat_amount = 0
@@ -343,6 +346,7 @@ Please clean it before use!</TT><BR>
 			if(operation == 2) // If dispose was pressed, empty the microwave
 				src.egg_amount = 0
 				src.flour_amount = 0
+				src.xenomeat_amount = 0
 				src.cheese_amount = 0
 				src.water_amount = 0
 				src.humanmeat_amount = 0
@@ -389,7 +393,7 @@ Please clean it before use!</TT><BR>
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbread/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
-		W.visible_message(" <B>[usr] slices the meatbread! </B>", 1)
+		W.visible_message(" \red <B>You slice the meatbread! </B>", 1)
 		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
 		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
 		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
@@ -401,7 +405,7 @@ Please clean it before use!</TT><BR>
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewheel/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/kitchenknife /* || /obj/item/weapon/scalpel*/))
-		W.visible_message(" <B>[usr] slices the cheese! </B>", 1)
+		W.visible_message(" \red <B> You slice the cheese! </B>", 1)
 		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
 		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
 		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
