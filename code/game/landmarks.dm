@@ -42,6 +42,10 @@
 		tdome1	+= src.loc
 	if (name == "tdome2")
 		tdome2 += src.loc
+	if (name == "tdomeadmin")
+		tdomeadmin	+= src.loc
+	if (name == "tdomeobserve")
+		tdomeobserve += src.loc
 	//not prisoners
 	if (name == "prisonsecuritywarp")
 		prisonsecuritywarp += src.loc

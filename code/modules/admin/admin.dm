@@ -413,38 +413,99 @@ var/showadminmessages = 1
 	if (href_list["tdome1"])
 		if ((src.rank in list( "Administrator", "Secondary Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
 			var/mob/M = locate(href_list["tdome1"])
-			for(var/obj/item/W in M)
-				if (istype(W,/obj/item))
-					M.u_equip(W)
-					if (M.client)
-						M.client.screen -= W
-					if (W)
-						W.loc = M.loc
-						W.dropped(M)
-						W.layer = initial(W.layer)
-			// M.revive()
-			M.loc = pick(tdome1)
-			log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 1)")
-			message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 1)", 1)
-			M << "\blue You have been sent to the Thunderdome."
+			if (ismob(M))
+				if(istype(M, /mob/living/silicon/ai))
+					alert("The AI can't be sent to the thunderdome you jerk!", null, null, null, null, null)
+					return
+				for(var/obj/item/W in M)
+					if (istype(W,/obj/item))
+						if(istype(W, /datum/organ/external))
+							continue
+						M.u_equip(W)
+						if (M.client)
+							M.client.screen -= W
+						if (W)
+							W.loc = M.loc
+							W.dropped(M)
+							W.layer = initial(W.layer)
+				M.paralysis += 5
+				sleep(5)
+				M.loc = pick(tdome1)
+				spawn(50)
+					M << "\blue You have been sent to the Thunderdome."
+				log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 1)")
+				message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 1)", 1)
 
 	if (href_list["tdome2"])
 		if ((src.rank in list( "Administrator", "Secondary Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
 			var/mob/M = locate(href_list["tdome2"])
-			for(var/obj/item/W in M)
-				if (istype(W,/obj/item))
-					M.u_equip(W)
-					if (M.client)
-						M.client.screen -= W
-					if (W)
-						W.loc = M.loc
-						W.dropped(M)
-						W.layer = initial(W.layer)
-			// M.revive()
-			M.loc = pick(tdome2)
-			log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 2)")
-			message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 2)", 1)
-			M << "\blue You have been sent to the Thunderdome."
+			if (ismob(M))
+				if(istype(M, /mob/living/silicon/ai))
+					alert("The AI can't be sent to the thunderdome you jerk!", null, null, null, null, null)
+					return
+				for(var/obj/item/W in M)
+					if (istype(W,/obj/item))
+						if(istype(W, /datum/organ/external))
+							continue
+						M.u_equip(W)
+						if (M.client)
+							M.client.screen -= W
+						if (W)
+							W.loc = M.loc
+							W.dropped(M)
+							W.layer = initial(W.layer)
+				M.paralysis += 5
+				sleep(5)
+				M.loc = pick(tdome2)
+				spawn(50)
+					M << "\blue You have been sent to the Thunderdome."
+				log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 2)")
+				message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 2)", 1)
+
+	if (href_list["tdomeadmin"])
+		if ((src.rank in list( "Administrator", "Secondary Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
+			var/mob/M = locate(href_list["tdomeadmin"])
+			if (ismob(M))
+				if(istype(M, /mob/living/silicon/ai))
+					alert("The AI can't be sent to the thunderdome you jerk!", null, null, null, null, null)
+					return
+				M.paralysis += 5
+				sleep(5)
+				M.loc = pick(tdomeadmin)
+				spawn(50)
+					M << "\blue You have been sent to the Thunderdome."
+				log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Admin.)")
+				message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Admin.)", 1)
+
+	if (href_list["tdomeobserve"])
+		if ((src.rank in list( "Administrator", "Secondary Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
+			var/mob/M = locate(href_list["tdomeobserve"])
+			if (ismob(M))
+				if(istype(M, /mob/living/silicon/ai))
+					alert("The AI can't be sent to the thunderdome you jerk!", null, null, null, null, null)
+					return
+				for(var/obj/item/W in M)
+					if (istype(W,/obj/item))
+						if(istype(W, /datum/organ/external))
+							continue
+						M.u_equip(W)
+						if (M.client)
+							M.client.screen -= W
+						if (W)
+							W.loc = M.loc
+							W.dropped(M)
+							W.layer = initial(W.layer)
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/observer = M
+					observer.equip_if_possible(new /obj/item/clothing/under/suit_jacket(observer), observer.slot_w_uniform)
+					observer.equip_if_possible(new /obj/item/clothing/shoes/black(observer), observer.slot_shoes)
+				M.paralysis += 5
+				sleep(5)
+				M.loc = pick(tdomeobserve)
+				spawn(50)
+					M << "\blue You have been sent to the Thunderdome."
+				log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Observer.)")
+				message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Observer.)", 1)
 
 	if (href_list["adminauth"])
 		if ((src.rank in list( "Administrator", "Secondary Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
@@ -560,6 +621,8 @@ var/showadminmessages = 1
 					foo += text("<A HREF='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | ")
 				foo += text("<A HREF='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> | ")
 				foo += text("<A HREF='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | ")
+				foo += text("<A HREF='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | ")
+				foo += text("<A HREF='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | ")
 				foo += text("<A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | ")
 				foo += text("<A HREF='?src=\ref[src];sendtomaze=\ref[M]'>Maze</A> | ")
 

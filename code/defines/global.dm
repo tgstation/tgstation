@@ -107,6 +107,8 @@ var
 	list/mazewarp = list()
 	list/tdome1 = list()
 	list/tdome2 = list()
+	list/tdomeobserve = list()
+	list/tdomeadmin = list()
 	list/prisonsecuritywarp = list()	//prison security goes to these
 	list/prisonwarped = list()	//list of players already warped
 	list/blobstart = list()

@@ -420,8 +420,12 @@
 	name = "Thunderdome (Team 2)"
 	icon_state = "yellow"
 
-/area/tdome/tdomea
+/area/tdome/tdomeadmin
 	name = "Thunderdome (Admin.)"
+	icon_state = "purple"
+
+/area/tdome/tdomeobserve
+	name = "Thunderdome (Observer.)"
 	icon_state = "purple"
 
 /area/medical/medbay
