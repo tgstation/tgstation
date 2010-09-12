@@ -413,6 +413,15 @@ var/showadminmessages = 1
 	if (href_list["tdome1"])
 		if ((src.rank in list( "Administrator", "Secondary Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
 			var/mob/M = locate(href_list["tdome1"])
+			for(var/obj/item/W in M)
+				if (istype(W,/obj/item))
+					M.u_equip(W)
+					if (M.client)
+						M.client.screen -= W
+					if (W)
+						W.loc = M.loc
+						W.dropped(M)
+						W.layer = initial(W.layer)
 			// M.revive()
 			M.loc = pick(tdome1)
 			log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 1)")
@@ -422,6 +431,15 @@ var/showadminmessages = 1
 	if (href_list["tdome2"])
 		if ((src.rank in list( "Administrator", "Secondary Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
 			var/mob/M = locate(href_list["tdome2"])
+			for(var/obj/item/W in M)
+				if (istype(W,/obj/item))
+					M.u_equip(W)
+					if (M.client)
+						M.client.screen -= W
+					if (W)
+						W.loc = M.loc
+						W.dropped(M)
+						W.layer = initial(W.layer)
 			// M.revive()
 			M.loc = pick(tdome2)
 			log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Team 2)")
