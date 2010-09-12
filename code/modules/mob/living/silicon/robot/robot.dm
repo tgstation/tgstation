@@ -2,6 +2,7 @@
 
 	spawn (1)
 		src << "\blue Your icons have been generated!"
+		playsound(src.loc, 'liveagain.ogg', 50, 1, -3)
 		src.modtype = "robot"
 		updateicon()
 		src.syndicate = syndie

@@ -12,6 +12,7 @@
 		if(1)
 			event = 1
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
+			world << sound('meteors.ogg')
 			spawn(100)
 				meteor_wave()
 				meteor_wave()
@@ -22,6 +23,7 @@
 		if(2)
 			event = 1
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
+			world << sound('granomalies.ogg')
 			var/turf/T = pick(blobstart)
 			var/obj/bhole/bh = new /obj/bhole( T.loc, 30 )
 			spawn(rand(50, 300))
@@ -30,6 +32,7 @@
 		if(3)
 			event = 1
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
+			world << sound('spanomalies.ogg')
 			var/list/turfs = list(	)
 			var/turf/picked
 			for(var/turf/T in world)
@@ -51,6 +54,7 @@
 		if(4)
 			event = 1
 			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+			world << sound('outbreak5.ogg')
 			var/turf/T = pick(blobstart)
 			var/obj/blob/bl = new /obj/blob( T.loc, 30 )
 			spawn(0)
@@ -68,6 +72,7 @@
 		if(5)
 			event = 1
 			command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
+			world << sound('radiation.ogg')
 			for(var/mob/living/carbon/human/H in world)
 				H.radiation += rand(5,25)
 				if (prob(5))
@@ -185,6 +190,7 @@
 
 /proc/power_failure()
 	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure")
+	world << sound('poweroff.ogg')
 	for(var/obj/machinery/power/apc/C in world)
 		if(C.cell && C.z == 1)
 			C.cell.charge = 0
@@ -205,6 +211,7 @@
 
 /proc/power_restore()
 	command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal")
+	world << sound('poweron.ogg')
 	for(var/obj/machinery/power/apc/C in world)
 		if(C.cell && C.z == 1)
 			C.cell.charge = C.cell.maxcharge
@@ -225,6 +232,7 @@
 
 /proc/viral_outbreak()
 	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+	world << sound('outbreak7.ogg')
 	var/virus_type = pick(/datum/disease/dnaspread,/datum/disease/cold)
 	for(var/mob/living/carbon/human/H in world)
 		if((H.virus) || (H.stat == 2))
@@ -248,6 +256,7 @@
 
 /proc/alien_infestation() // -- TLE
 	command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
+	world << sound('aliens.ogg')
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
 		if(temp_vent.loc.z == 1 && !temp_vent.welded)

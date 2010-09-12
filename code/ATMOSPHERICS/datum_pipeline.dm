@@ -161,8 +161,8 @@ datum/pipeline
 			if(target.air)
 				if(target.air.check_tile_graphic())
 					target.update_visuals(target.air)
-
-		network.update = 1
+		if(network)
+			network.update = 1
 
 	proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 		var/total_heat_capacity = air.heat_capacity()
@@ -227,5 +227,5 @@ datum/pipeline
 					(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
 
 				air.temperature -= heat/total_heat_capacity
-
-		network.update = 1
+		if(network)
+			network.update = 1

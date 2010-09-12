@@ -114,6 +114,7 @@
 #define FILE_DIR "maps/backup"
 #define FILE_DIR "sound"
 #define FILE_DIR "sound/ambience"
+#define FILE_DIR "sound/announcer"
 #define FILE_DIR "sound/effects"
 #define FILE_DIR "sound/items"
 #define FILE_DIR "sound/machines"

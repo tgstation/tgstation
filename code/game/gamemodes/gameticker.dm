@@ -91,6 +91,9 @@ var/global/datum/controller/gameticker/ticker
 
 		//Start master_controller.process()
 		world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
+		spawn(50)
+			world << sound('welcome.ogg') // Skie
+
 
 	spawn (3000)
 		start_events()

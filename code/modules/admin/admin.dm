@@ -983,17 +983,21 @@ var/showadminmessages = 1
 					if ((src.rank in list("Primary Administrator", "Shit Guy", "Coder", "Host"  )))
 						meteor_wave()
 						message_admins("[key_name_admin(usr)] has spawned meteors", 1)
+						command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
+						world << sound('meteors.ogg')
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 						return
 				if("gravanomalies")
 					command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
+					world << sound('granomalies.ogg')
 					var/turf/T = pick(blobstart)
 					var/obj/bhole/bh = new /obj/bhole( T.loc, 30 )
 					spawn(rand(50, 300))
 						del(bh)
 				if("timeanomalies")
 					command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
+					world << sound('spanomalies.ogg')
 					var/list/turfs = list(	)
 					var/turf/picked
 					for(var/turf/T in world)
@@ -1014,6 +1018,7 @@ var/showadminmessages = 1
 									del(P)
 				if("goblob")
 					command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+					world << sound('outbreak5.ogg')
 					var/turf/T = pick(blobstart)
 					var/obj/blob/bl = new /obj/blob( T.loc, 30 )
 					spawn(0)
@@ -1059,6 +1064,7 @@ var/showadminmessages = 1
 							W.item_state = "w_suit"
 							W.color = "schoolgirl"
 						message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
+						world << sound('animes.ogg')
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
 						return

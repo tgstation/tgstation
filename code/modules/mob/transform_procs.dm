@@ -136,6 +136,7 @@
 			O.name = newname
 
 		world << text("<b>[O.real_name] is the AI!</b>")
+		world << sound('newAI.ogg')
 		if (ticker.mode.name == "AI malfunction")
 			for (var/obj/landmark/start/A in world)
 				if (A.name == "AI")

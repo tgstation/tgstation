@@ -390,6 +390,7 @@
 
 	emergency_shuttle.incall()
 	world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
+	world << sound('shuttlecalled.ogg')
 
 	return
 
@@ -400,6 +401,7 @@
 		return
 
 	world << "\blue <B>Alert: The shuttle is going back!</B>" //marker4
+	world << sound('shuttlerecalled.ogg')
 
 	emergency_shuttle.recall()
 
