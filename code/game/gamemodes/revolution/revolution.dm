@@ -81,12 +81,7 @@
 			if ((freq % 2) == 0)
 				freq += 1
 		freq = freqlist[rand(1, freqlist.len)]
-		var/obj/item/device/R = null //Hide the uplink in a PDA if available, otherwise radio
-		var/pda_pass = "[rand(100,999)] [pick("Freedom","Revolution","Alpha","Theta")]"
-
-	if (!R && istype(rev_mob.belt, /obj/item/device/pda))
-		R = rev_mob.belt
-		loc = "on your belt"
+		var/loc = ""
 		var/obj/item/device/radio/R = null
 		if (!R && istype(rev_mob.l_hand, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = rev_mob.l_hand
@@ -118,26 +113,18 @@
 		if (!R)
 			rev_mob << "Unfortunately, the Syndicate wasn't able to get you a radio."
 		else
-			if (istype(R, /obj/item/device/radio))
-				var/obj/item/weapon/syndicate_uplink/T = new /obj/item/weapon/syndicate_uplink(R)
-				R.traitorradio = T
-				R.traitor_frequency = freq
-				T.name = R.name
-				T.icon_state = R.icon_state
-				T.origradio = R
-				rev_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock it's hidden features."
-				rev_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).", 0, 0)
-			if (rev_mob.r_store)
-				rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_l_store)
-			if (rev_mob.l_store)
-				rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_r_store)
-			else if (istype(R, /obj/item/device/pda))
-			var/obj/item/weapon/integrated_uplink/SWF/T = new /obj/item/weapon/integrated_uplink/SWF(R)
-			R:uplink = T
-			T.lock_code = pda_pass
-			T.hostpda = R
-			rev_mob << "The Syndicate have cunningly hidden a Syndicate Uplink in your PDA [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
-			rev_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
+			var/obj/item/weapon/syndicate_uplink/T = new /obj/item/weapon/syndicate_uplink(R)
+			R.traitorradio = T
+			R.traitor_frequency = freq
+			T.name = R.name
+			T.icon_state = R.icon_state
+			T.origradio = R
+			rev_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock it's hidden features."
+			rev_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).", 0, 0)
+		if (rev_mob.r_store)
+			rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_l_store)
+		if (rev_mob.l_store)
+			rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_r_store)
 
 /datum/game_mode/revolution/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
