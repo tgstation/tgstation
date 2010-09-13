@@ -18,6 +18,7 @@
 	icon = 'hydroponics.dmi'
 	icon_state = "seed" // unknown plant seed - these shouldn't exist in-game
 	flags = FPRINT | TABLEPASS
+	w_class = 1.0 // Makes them pocketable
 	var/mypath = "/obj/item/seeds"
 	var/plantname = ""
 	var/productname = ""
@@ -638,3 +639,48 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	flags = FPRINT |  TABLEPASS
 	toxicity = 8
 	WeedKillStr = 7
+
+
+
+
+
+
+
+// *************************************
+// Nutrient defines for hydroponics
+// *************************************
+
+
+
+/obj/item/nutrient
+	name = ""
+	icon = 'chemical.dmi'
+	icon_state = "bottle16"
+	flags = FPRINT |  TABLEPASS
+	w_class = 1.0
+	var/mutmod = 0
+	var/yieldmod = 0
+
+/obj/item/nutrient/ez
+	name = "E-Z-Nutrient"
+	icon = 'chemical.dmi'
+	icon_state = "bottle16"
+	flags = FPRINT |  TABLEPASS
+	mutmod = 1
+	yieldmod = 1
+
+/obj/item/nutrient/l4z
+	name = "Left 4 Zed"
+	icon = 'chemical.dmi'
+	icon_state = "bottle18"
+	flags = FPRINT |  TABLEPASS
+	mutmod = 2
+	yieldmod = 0
+
+/obj/item/nutrient/rh
+	name = "Robust Harvest"
+	icon = 'chemical.dmi'
+	icon_state = "bottle15"
+	flags = FPRINT |  TABLEPASS
+	mutmod = 0
+	yieldmod = 2

@@ -101,7 +101,7 @@
 
 		if (!success)
 			src.verbs += /client/proc/goonauth
-			src << "Failed"
+			//src << "Failed"
 			src << "\blue[no_auth_motd]"
 
 		src.authenticating = 0

@@ -153,6 +153,7 @@
 			comm.messagetext.Add(intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
+	world << sound('intercept.ogg')
 
 
 /datum/game_mode/revolution/check_win()

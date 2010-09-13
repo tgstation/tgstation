@@ -209,7 +209,6 @@
 #include "code\defines\obj\hydro.dm"
 #include "code\defines\obj\injector.dm"
 #include "code\defines\obj\machinery.dm"
-#include "code\defines\obj\nutrient.dm"
 #include "code\defines\obj\radio.dm"
 #include "code\defines\obj\spawner.dm"
 #include "code\defines\obj\storage.dm"

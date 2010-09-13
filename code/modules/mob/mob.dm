@@ -1746,8 +1746,8 @@
 		src << "<div class=\"motd\">[join_motd]</div>"
 
 	src.authorize()
-	src.goonauth()
-	src.beta_tester_auth()
+	//src.goonauth() -- Skie, commented out because not goons anymore.
+	///src.beta_tester_auth()
 
 	src.update_world()
 

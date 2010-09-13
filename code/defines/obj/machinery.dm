@@ -617,18 +617,18 @@
 	icon_state = "nutri"
 	icon_deny = "nutri-deny"
 	product_paths = "/obj/item/nutrient/ez;/obj/item/nutrient/l4z;/obj/item/nutrient/rh"
-	product_amounts = "25;15;15"
+	product_amounts = "35;25;15"
 	product_slogans = "Aren't you glad you don't have to fertilize the natural way?;Now with 50% less stink!;Plants are people too!"
 
 /obj/machinery/vending/hydroseeds
 	name = "MegaSeed Servitor"
 	desc = "When you need seeds fast!"
 	icon_state = "seeds"
-	product_paths = "/obj/item/seeds/chiliseed;/obj/item/seeds/berryseed;/obj/item/seeds/eggplantseed;/obj/item/seeds/tomatoseed;/obj/item/seeds/wheatseed;/obj/item/seeds/soyaseed;/obj/item/seeds/carrotseed;/obj/item/seeds/chantermycelium;/obj/item/seeds/nettleseed"
-	product_amounts = "2;2;2;2;2;2;2;2;1"
+	product_paths = "/obj/item/seeds/chiliseed;/obj/item/seeds/berryseed;/obj/item/seeds/eggplantseed;/obj/item/seeds/tomatoseed;/obj/item/seeds/wheatseed;/obj/item/seeds/soyaseed;/obj/item/seeds/carrotseed;/obj/item/seeds/chantermycelium"
+	product_amounts = "2;2;2;2;2;2;2;2"
 	product_slogans = "THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!;Hands down the best seed selection on the station!;Also certain mushroom varieties available, more for experts! Get certified today!"
-	product_hidden = "/obj/item/seeds/amanitamycelium;/obj/item/seeds/libertymycelium;/obj/item/seeds/nettleseed;/obj/item/seeds/plumpmycelium;/obj/item/seeds/towermycelium"
-	product_hideamt = "1;2;2;2;2"
+	product_hidden = "/obj/item/seeds/amanitamycelium;/obj/item/seeds/libertymycelium;/obj/item/seeds/nettleseed;/obj/item/seeds/plumpmycelium"
+	product_hideamt = "1;2;2;2"
 
 /obj/machinery/microwave
 	name = "Microwave"

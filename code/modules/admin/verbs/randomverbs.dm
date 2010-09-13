@@ -220,6 +220,8 @@
 					M.add_supplied_law(10,"[area] [area2] [amount] of [who]")
 
 	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
+	world << sound('ionstorm.ogg')
+
 
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Debug"
@@ -305,6 +307,7 @@
 
 	command_alert(input);
 
+	world << sound('commandreport.ogg')
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report", 1)
 

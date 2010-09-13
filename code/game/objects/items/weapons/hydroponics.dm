@@ -50,7 +50,7 @@ Deathnettle
 			playsound(src.loc, 'spray3.ogg', 50, 1, -6)
 
 			spawn(0)
-				for(var/i=0, i<2, i++) // Max range = 2 tiles
+				for(var/i=0, i<3, i++) // Max range = 3 tiles
 					step_towards(D,A) // Moves towards target as normally (not thru walls)
 					D.reagents.reaction(get_turf(D))
 					for(var/atom/T in get_turf(D))
