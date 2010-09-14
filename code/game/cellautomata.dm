@@ -128,7 +128,10 @@
 		//			M << sound('NewRound.ogg')
 
 	for(var/client/C)
-		C << link("byond://[world.address]:[world.port]")
+		if (config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+			C <<link("byond://[config.server]")
+		else
+			C << link("byond://[world.address]:[world.port]")
 
 //	sleep(10) // wait for sound to play
 	..(reason)

@@ -63,3 +63,6 @@ NORESPAWN
 
 # set a hosted by name for unix platforms
 HOSTEDBY Yournamehere
+
+# set a server location for world reboot. Don't include the byond://, just give the addresss and port.
+# SERVER ss13.jdarksun.doesntexist.org:2506

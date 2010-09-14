@@ -5,5 +5,5 @@
 
 	for(var/obj/machinery/ai_status_display/O in world) //change status
 		spawn( 0 )
-		O.mode = 2
+			O.mode = 2
 	return ..(gibbed)

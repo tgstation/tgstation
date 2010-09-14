@@ -31,6 +31,8 @@
 	var/hostedby = null
 	var/respawn = 1
 
+	var/server
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -155,6 +157,9 @@
 
 			if ("hostedby")
 				config.hostedby = value
+
+			if ("server")
+				config.server = value
 
 			if ("probability")
 				var/prob_pos = findtext(value, " ")
