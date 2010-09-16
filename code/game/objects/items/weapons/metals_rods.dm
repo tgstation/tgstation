@@ -161,6 +161,7 @@ LATTICE
 	L["reinforced"] = "reinforced sheet (2 metal)<BR>"
 	L["computer"] = "computer frame (5 metal)<BR>"
 	L["construct"] = "construct wall girders (2 metal)"
+	L["airlock"] = "construct airlock assembly (4 metal)"
 
 	for(var/t in L)
 		counter++
@@ -312,6 +313,18 @@ LATTICE
 
 					src.amount -= 2
 					new /obj/structure/girder(location)
+			if("airlock")
+				if (src.amount < 4)
+					usr << text("\red You haven't got enough metal to construct the airlock assembly!")
+					return
+				usr << "\blue Building airlock assembly ..."
+				var/turf/location = usr.loc
+				sleep(50)
+				if ((usr.loc == location))
+					if (!istype(location, /turf/simulated/floor))
+						return
+					src.amount -= 4
+					new /obj/door_assembly(location)
 
 		if (src.amount <= 0)
 			usr << browse(null, "window=met_sheet")

@@ -75,41 +75,47 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/list/signalers[9]
 	var/lockdownbyai = 0
 	autoclose = 1
-
+	var/doortype = 0
 /obj/machinery/door/airlock/command
 	name = "Airlock"
 	icon = 'Doorcom.dmi'
 	req_access = list(access_heads)
+	doortype = 1
 
 /obj/machinery/door/airlock/security
 	name = "Airlock"
 	icon = 'Doorsec.dmi'
 	req_access = list(access_security)
-
+	doortype = 2
 
 /obj/machinery/door/airlock/engineering
 	name = "Airlock"
 	icon = 'Dooreng.dmi'
 	req_access = list(access_engine)
+	doortype = 3
 
 /obj/machinery/door/airlock/medical
 	name = "Airlock"
 	icon = 'Doormed.dmi'
 	req_access = list(access_medical)
+	doortype = 4
 
 /obj/machinery/door/airlock/maintenance
 	name = "Maintenance Access"
 	icon = 'Doormaint.dmi'
 	req_access = list(access_maint_tunnels)
+	doortype = 5
 
 /obj/machinery/door/airlock/external
 	name = "External Airlock"
 	icon = 'Doorext.dmi'
+	doortype = 6
 
 /obj/machinery/door/airlock/glass
 	name = "Glass Airlock"
 	icon = 'Doorglass.dmi'
 	opacity = 0
+	doortype = 7
 
 /*
 About the new airlock wires panel:
@@ -841,6 +847,7 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/attackby(C as obj, mob/user as mob)
 	//world << text("airlock attackby src [] obj [] mob []", src, C, user)
+	var/turf/T = get_turf(user)
 	if (!istype(usr, /mob/living/silicon))
 		if (src.isElectrified())
 			if(src.shock(user, 75))
@@ -872,6 +879,24 @@ About the new airlock wires panel:
 	else if (istype(C, /obj/item/device/radio/signaler))
 		return src.attack_hand(user)
 	else if (istype(C, /obj/item/weapon/crowbar))
+		if ((src.density) && ( src.welded ) && !( src.operating ) && src.p_open )
+			playsound(src.loc, 'Crowbar.ogg', 100, 1)
+			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics into the airlock assembly.")
+			sleep(40)
+			if(get_turf(user) == T)
+				user << "\blue You removed the airlock electronics!"
+				switch(src.doortype)
+					if(0) new/obj/door_assembly/door_assembly_0( src.loc )
+					if(1) new/obj/door_assembly/door_assembly_com( src.loc )
+					if(2) new/obj/door_assembly/door_assembly_sec( src.loc )
+					if(3) new/obj/door_assembly/door_assembly_eng( src.loc )
+					if(4) new/obj/door_assembly/door_assembly_med( src.loc )
+					if(5) new/obj/door_assembly/door_assembly_mai( src.loc )
+					if(6) new/obj/door_assembly/door_assembly_ext( src.loc )
+					if(7) new/obj/door_assembly/door_assembly_g( src.loc )
+				new/obj/item/device/multitool( src.loc )
+				del(src)
+				return
 		if ((src.density) && (!( src.welded ) && !( src.operating ) && ((!src.arePowerSystemsOn()) || (stat & NOPOWER)) && !( src.locked )))
 			spawn( 0 )
 				src.operating = 1
