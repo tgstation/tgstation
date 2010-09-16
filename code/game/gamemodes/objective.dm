@@ -46,7 +46,7 @@ datum
 
 			check_completion()
 				if(target && target.current)
-					if(target.current.stat == 2)
+					if(target.current.stat == 2 || istype(target.current.loc.loc, /area/tdome)) //Assuming this works, people in the thunderdome now count as dead for traitor objectives. --NeoFite
 						return 1
 					else
 						return 0
