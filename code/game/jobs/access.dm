@@ -106,6 +106,8 @@
 			return list(access_medical, access_chemistry, access_hydroponics, access_tox) // Added tox access because there's chem access -- Skie
 		if("Librarian") // -- TLE
 			return list(access_library)
+		if("Lawyer") //Muskets 160910
+			return list(access_maint_tunnels)
 		if("Captain")
 			return get_all_accesses()
 		if("Security Officer")

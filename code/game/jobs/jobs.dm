@@ -20,7 +20,8 @@ var/list/occupations = list(
 	"Chemist",
 	"Quartermaster","Quartermaster","Quartermaster",
 	"Botanist", "Botanist",
-	"Librarian")
+	"Librarian",
+	"Lawyer")
 
 var/list/assistant_occupations = list(
 	"Assistant")

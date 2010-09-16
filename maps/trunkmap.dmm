@@ -488,7 +488,7 @@
 "ajt" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/wall/r_wall,/area/turret_protected/ai)
 "aju" = (/obj/machinery/atmospherics/unary/vent_scrubber,/obj/machinery/flasher/portable,/turf/simulated/floor,/area/security/brig)
 "ajv" = (/obj/table{icon_state = "tabledir"; dir = 8},/obj/item/weapon/storage/handcuff_kit,/turf/simulated/floor,/area/security/brig)
-"ajw" = (/obj/stool/chair{dir = 4},/turf/simulated/floor,/area/crew_quarters/courtroom)
+"ajw" = (/obj/stool/chair{dir = 4},/obj/landmark/start{name = "Lawyer"},/turf/simulated/floor,/area/crew_quarters/courtroom)
 "ajx" = (/obj/table/woodentable{dir = 5},/turf/simulated/floor,/area/crew_quarters/courtroom)
 "ajy" = (/obj/stool/chair{dir = 8},/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor,/area/crew_quarters/courtroom)
 "ajz" = (/obj/grille,/obj/window/reinforced/east,/obj/window/reinforced/west,/obj/window/reinforced/south,/obj/window/reinforced/north,/obj/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating,/area/crew_quarters/courtroom)
