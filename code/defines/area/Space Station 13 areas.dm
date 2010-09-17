@@ -553,6 +553,11 @@
 	icon_state = "toxtest"
 
 
+/area/toxins/mixing
+	name = "Toxin Mixing Room"
+	icon_state = "toxmix"
+
+
 /area/chapel/main
 	name = "Chapel"
 	icon_state = "chapel"
@@ -737,3 +742,7 @@
 /area/library
  	name = "Library"
  	icon_state = "library"
+
+/area/lawoffice
+	name = "Law Office"
+	icon_state = "law"

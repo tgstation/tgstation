@@ -35,6 +35,7 @@
 	access_hydroponics = 35
 	access_manufacturing = 36
 	access_library = 37
+	access_lawyer = 38
 
 
 /obj/var/list/req_access = null
@@ -107,7 +108,7 @@
 		if("Librarian") // -- TLE
 			return list(access_library)
 		if("Lawyer") //Muskets 160910
-			return list(access_maint_tunnels)
+			return list(access_maint_tunnels, access_lawyer)
 		if("Captain")
 			return get_all_accesses()
 		if("Security Officer")
@@ -123,7 +124,7 @@
 			            access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab, access_engine,
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics)
+			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer)
 		if("Atmospheric Technician")
 			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage)
 		if("Barman")
@@ -160,7 +161,7 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
-	            access_hydroponics, access_library, access_manufacturing)
+	            access_hydroponics, access_library, access_manufacturing, access_lawyer)
 
 /proc/get_access_desc(A)
 	switch(A)
@@ -232,10 +233,14 @@
 			return "Hydroponics"
 		if(access_library)
 			return "Library"
+		if(access_lawyer)
+			return "Law Office"
+		if(access_robotics)
+			return "Robotics"
 
 /proc/get_all_jobs()
 	return list("Assistant", "Station Engineer", "Detective", "Medical Doctor", "Captain", "Security Officer",
 				"Geneticist", "Scientist", "Head of Security", "Head of Personnel", "Atmospheric Technician",
 				"Chaplain", "Barman", "Chemist", "Janitor", "Clown", "Chef", "Roboticist", "Quartermaster",
-				"Chief Engineer", "Research Director", "Botanist", "Librarian")
+				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer")
 
