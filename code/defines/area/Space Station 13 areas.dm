@@ -96,6 +96,32 @@
 /area/shuttle/prison/prison
 	icon_state = "shuttle2"
 
+/area/shuttle/thunderdome
+	name = "honk"
+
+/area/shuttle/thunderdome/grnshuttle
+	name = "Thunderdome GRN Shuttle"
+	icon_state = "green"
+
+/area/shuttle/thunderdome/grnshuttle/dome
+	name = "GRN Shuttle"
+	icon_state = "shuttlegrn"
+
+/area/shuttle/thunderdome/grnshuttle/station
+	name = "GRN Station"
+	icon_state = "shuttlegrn2"
+
+/area/shuttle/thunderdome/redshuttle
+	name = "Thunderdome RED Shuttle"
+	icon_state = "red"
+
+/area/shuttle/thunderdome/redshuttle/dome
+	name = "RED Shuttle"
+	icon_state = "shuttlered"
+
+/area/shuttle/thunderdome/redshuttle/station
+	name = "RED Station"
+	icon_state = "shuttlered2"
 // === Trying to remove these areas:
 
 /area/airtunnel1/      // referenced in airtunnel.dm:759
