@@ -202,10 +202,6 @@
 		possible_modes.Remove(pick(possible_modes))
 	possible_modes.Insert(rand(possible_modes.len), "nuke")
 
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(head_revolutionaries))
-
 	for (var/obj/machinery/computer/communications/comm in world)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
