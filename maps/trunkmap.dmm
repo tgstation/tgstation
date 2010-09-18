@@ -2489,7 +2489,7 @@
 "aVS" = (/obj/crate,/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor,/area/quartermaster/office)
 "aVT" = (/obj/machinery/atmospherics/pipe/simple,/obj/disposalpipe/segment,/turf/simulated/wall,/area/maintenance/apmaint)
 "aVU" = (/obj/machinery/atmospherics/pipe/simple,/turf/simulated/floor/plating,/area/maintenance/apmaint)
-"aVV" = (/turf/simulated/floor{icon_state = "dark"},/area/hydroponics)
+"aVV" = (/obj/machinery/hydroponics,/turf/simulated/floor{icon_state = "dark"},/area/hydroponics)
 "aVW" = (/turf/simulated/floor{tag = "icon-green (WEST)"; icon_state = "green"; dir = 8},/area/hydroponics)
 "aVX" = (/obj/item/weapon/reagent_containers/glass/bucket{pixel_y = 6},/turf/simulated/floor,/area/hydroponics)
 "aVY" = (/obj/table{dir = 8; icon_state = "table_horizontal"; pixel_y = 0},/turf/simulated/floor,/area/hydroponics)
