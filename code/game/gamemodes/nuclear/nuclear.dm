@@ -189,7 +189,7 @@
 	else
 		return candidates
 
-/datum/game_mode/revolution/send_intercept()
+/datum/game_mode/nuclear/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
 	intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
 
