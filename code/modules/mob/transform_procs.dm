@@ -140,9 +140,12 @@
 		spawn(50)
 			world << sound('newAI.ogg')
 
+		log_admin("DEBUG TIME: Approaching the part of the code where a decoy AI gets spawned if the mode is Malf.")
 		if (ticker.mode.name == "AI malfunction")
+			log_admin("DEBUG TIME: Game ticker says the mode is malfunction, proceeding with locating spawn point for decoy.")
 			for (var/obj/landmark/start/A in world)
 				if (A.name == "AI")
+					log_admin("DEBUG TIME: Found the spawn point, spawning a decoy AI.")
 					var/mob/living/silicon/decoy/D = new /mob/living/silicon/decoy(A.loc)
 					D.name = O.name
 		del(src)
