@@ -363,8 +363,8 @@
 	return
 
 /obj/item/weapon/grab/proc/s_dbclick(obj/screen/S as obj)
-	if ((src.assailant.next_move > world.time && !( src.last_suffocate < world.time + 2 )))
-		return
+	//if ((src.assailant.next_move > world.time && !( src.last_suffocate < world.time + 2 )))
+	//	return
 	if ((!( src.assailant.canmove ) || src.assailant.lying))
 		del(src)
 		return
