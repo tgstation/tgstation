@@ -452,14 +452,16 @@ to clean it up, or just beat the shit out of it (which takes ages).
 		src.zone_sel.overlays += image("icon" = 'zone_sel.dmi', "icon_state" = text("[]", src.zone_sel.selecting))
 
 	if (src.lying)
-		src.icon = src.lying_icon
+		if(src.update_icon)
+			src.icon = src.lying_icon
 
 		src.overlays += src.body_lying
 
 		if (src.face_lying)
 			src.overlays += src.face_lying
 	else
-		src.icon = src.stand_icon
+		if(src.update_icon)
+			src.icon = src.stand_icon
 
 		src.overlays += src.body_standing
 

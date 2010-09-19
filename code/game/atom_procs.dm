@@ -116,6 +116,22 @@
 		src.blood_DNA = list2params(L)
 	return
 
+
+// Only adds blood on the floor -- Skie
+/atom/proc/add_blood_floor(mob/living/carbon/M as mob)
+	if( istype(M, /mob/living/carbon/monkey) )
+		if( istype(src, /turf/simulated) )
+			var/turf/simulated/source1 = src
+			var/obj/decal/cleanable/blood/this = new /obj/decal/cleanable/blood(source1)
+			this.blood_DNA = M.dna.unique_enzymes
+			this.virus = M.virus
+
+	else if( istype(M, /mob/living/carbon/alien ))
+		if( istype(src, /turf/simulated) )
+			var/turf/simulated/source2 = src
+			var/obj/decal/cleanable/xenoblood/this = new /obj/decal/cleanable/xenoblood(source2)
+			this.virus = M.virus
+
 /atom/proc/clean_blood()
 
 	if (!( src.flags ) & 256)

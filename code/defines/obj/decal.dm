@@ -16,7 +16,7 @@
 	var/list/random_icon_states = list()
 
 /obj/decal/cleanable/blood
-	name = "blood"
+	name = "Blood"
 	desc = "It's red."
 	density = 0
 	anchored = 1
@@ -27,6 +27,17 @@
 	var/datum/disease/virus = null
 	blood_DNA = null
 	blood_type = null
+
+/obj/decal/cleanable/xenoblood
+	name = "Xeno blood"
+	desc = "It's green."
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'blood.dmi'
+	icon_state = "xfloor1"
+	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
+	var/datum/disease/virus = null
 
 /obj/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")

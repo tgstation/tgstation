@@ -151,16 +151,29 @@
 					playsound(src, "clownstep", 20, 1)
 		switch (src.wet)
 			if(1)
-				if ((M.m_intent == "run") && (!istype(M:shoes, /obj/item/clothing/shoes/galoshes)))
-					M.pulling = null
-					step(M, M.dir)
-					M << "\blue You slipped on the wet floor!"
-					playsound(src.loc, 'slip.ogg', 50, 1, -3)
-					M.stunned = 8
-					M.weakened = 5
+				if (istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
+					if ((M.m_intent == "run") && (!istype(M:shoes, /obj/item/clothing/shoes/galoshes)))
+						M.pulling = null
+						step(M, M.dir)
+						M << "\blue You slipped on the wet floor!"
+						playsound(src.loc, 'slip.ogg', 50, 1, -3)
+						M.stunned = 8
+						M.weakened = 5
+					else
+						M.inertia_dir = 0
+						return
 				else
-					M.inertia_dir = 0
-					return
+					if (M.m_intent == "run")
+						M.pulling = null
+						step(M, M.dir)
+						M << "\blue You slipped on the wet floor!"
+						playsound(src.loc, 'slip.ogg', 50, 1, -3)
+						M.stunned = 8
+						M.weakened = 5
+					else
+						M.inertia_dir = 0
+						return
+
 			if(2) //lube
 				M.pulling = null
 				step(M, M.dir)

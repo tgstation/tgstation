@@ -792,11 +792,11 @@
 						var/t = M.pulling
 						M.pulling = null
 
-//this is the gay blood on floor shit
-//						if (M.lying && (prob(M.bruteloss / 6)))
-//							var/turf/location = M.loc
-//							if (istype(location, /turf/simulated))
-//								location.add_blood(M)
+						//this is the gay blood on floor shit -- Added back -- Skie
+						if (M.lying && (prob(M.bruteloss / 6)))
+							var/turf/location = M.loc
+							if (istype(location, /turf/simulated))
+								location.add_blood(M)
 
 
 						step(src.pulling, get_dir(src.pulling.loc, T))
@@ -2315,11 +2315,6 @@
 	user << browse(dat, text("window=mob[src.name];size=340x480"))
 	onclose(user, "mob[src.name]")
 	return
-
-/mob/living/carbon/human/verb/fuck()
-	set hidden = 1
-	alert("Go play HellMOO if you wanna do that.")
-
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot

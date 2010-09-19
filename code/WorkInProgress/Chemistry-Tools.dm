@@ -607,6 +607,7 @@
 
 	proc
 		heal(var/mob/M)
+			var/healing = min(src.heal_amt/2, 1.0) // Should prevent taking damage from healing
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				for(var/A in H.organs)
@@ -614,13 +615,13 @@
 					if(!H.organs[A])	continue
 					affecting = H.organs[A]
 					if(!istype(affecting, /datum/organ/external))	continue
-					if(affecting.heal_damage(src.heal_amt/2.0, src.heal_amt/2.0))
+					if(affecting.heal_damage(healing, healing))
 						H.UpdateDamageIcon()
 					else
 						H.UpdateDamage()
 			else
-				M.bruteloss = max(0, M.bruteloss - src.heal_amt/2.0)
-				M.fireloss = max(0, M.fireloss - src.heal_amt/2.0)
+				M.bruteloss = max(0, M.bruteloss - healing)
+				M.fireloss = max(0, M.fireloss - healing)
 			M.updatehealth()
 
 
@@ -740,7 +741,6 @@
 				src.amount--
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				M.nutrition += src.heal_amt * 10
-				M.poo += 0.1
 				if(src.heal_amt > 0)
 					src.heal(M)
 				if(src.poison_amt > 0)
@@ -767,7 +767,6 @@
 				src.amount--
 				playsound(M.loc, 'eatfood.ogg', rand(10,50), 1)
 				M.nutrition += src.heal_amt * 10
-				M.poo += 0.1
 				if(src.heal_amt > 0)
 					src.heal(M)
 				if(src.poison_amt > 0)
@@ -837,7 +836,6 @@
 					reagents.trans_to(M, gulp_size)
 
 			playsound(M.loc,'drink.ogg', rand(10,50), 1)
-			M.urine += 0.1
 			return 1
 
 		else if( istype(M, /mob/living/carbon/human) )
@@ -854,7 +852,6 @@
 					reagents.trans_to(M, gulp_size)
 
 			playsound(M.loc,'drink.ogg', rand(10,50), 1)
-			M.urine += 0.1
 			return 1
 
 		return 0

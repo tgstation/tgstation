@@ -251,47 +251,55 @@
 	return
 
 /mob/living/carbon/monkey/update_clothing()
-	..()
-	for(var/i in src.overlays)
-		src.overlays -= i
-
 	if(src.buckled)
 		if(istype(src.buckled, /obj/stool/bed))
 			src.lying = 1
 		else
 			src.lying = 0
 
-	if (!( src.lying ))
-		src.icon_state = "monkey1"
-	else
-		src.icon_state = "monkey0"
+	if(src.update_icon) // Skie
+		..()
+		for(var/i in src.overlays)
+			src.overlays -= i
+
+		if (!( src.lying ))
+			src.icon_state = "monkey1"
+		else
+			src.icon_state = "monkey0"
+
 	if (src.wear_mask)
-		if (istype(src.wear_mask, /obj/item/clothing/mask))
+		if (istype(src.wear_mask, /obj/item/clothing/mask) && src.update_icon)
 			var/t1 = src.wear_mask.item_state
 			if (!( t1 ))
 				t1 = src.wear_mask.icon_state
 			src.overlays += image("icon" = 'monkey.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = src.layer)
 		src.wear_mask.screen_loc = ui_mask
+
 	if (src.r_hand)
-		src.overlays += image("icon" = 'items_righthand.dmi', "icon_state" = src.r_hand.item_state ? src.r_hand.item_state : src.r_hand.icon_state, "layer" = src.layer)
+		if(src.update_icon)
+			src.overlays += image("icon" = 'items_righthand.dmi', "icon_state" = src.r_hand.item_state ? src.r_hand.item_state : src.r_hand.icon_state, "layer" = src.layer)
 		src.r_hand.screen_loc = ui_rhand
 
 	if (src.l_hand)
-		src.overlays += image("icon" = 'items_lefthand.dmi', "icon_state" = src.l_hand.item_state ? src.l_hand.item_state : src.l_hand.icon_state, "layer" = src.layer)
+		if(src.update_icon)
+			src.overlays += image("icon" = 'items_lefthand.dmi', "icon_state" = src.l_hand.item_state ? src.l_hand.item_state : src.l_hand.icon_state, "layer" = src.layer)
 		src.l_hand.screen_loc = ui_lhand
 
 	if (src.back)
-		if (!( src.lying ))
-			src.overlays += image("icon" = 'monkey.dmi', "icon_state" = "back", "layer" = src.layer)
-		else
-			src.overlays += image("icon" = 'monkey.dmi', "icon_state" = "back2", "layer" = src.layer)
+		if(src.update_icon)
+			if (!( src.lying ))
+				src.overlays += image("icon" = 'monkey.dmi', "icon_state" = "back", "layer" = src.layer)
+			else
+				src.overlays += image("icon" = 'monkey.dmi', "icon_state" = "back2", "layer" = src.layer)
 		src.back.screen_loc = ui_back
-	if (src.handcuffed)
+
+	if (src.handcuffed && src.update_icon)
 		src.pulling = null
 		if (!( src.lying ))
 			src.overlays += image("icon" = 'monkey.dmi', "icon_state" = "handcuff1", "layer" = src.layer)
 		else
 			src.overlays += image("icon" = 'monkey.dmi', "icon_state" = "handcuff2", "layer" = src.layer)
+
 	if (src.client)
 		src.client.screen -= src.contents
 		src.client.screen += src.contents

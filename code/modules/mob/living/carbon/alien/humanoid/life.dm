@@ -297,6 +297,12 @@
 								if(B.virus.type in src.resistances)
 									continue
 								src.contract_disease(new B.virus.type)
+					for(var/obj/decal/cleanable/xenoblood/X in range(4, src))
+						if(X.virus && X.virus.spread == "Airborne")
+							if(X.virus.affected_species.Find("Alien"))
+								if(X.virus.type in src.resistances)
+									continue
+								src.contract_disease(new X.virus.type)
 			else
 				src.virus.stage_act()
 /*

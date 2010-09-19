@@ -154,7 +154,7 @@
 	var/power = src.force
 	if (istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		if (ishuman(user) || isrobot(user) || ishivebot(user))
+		if (ishuman(user) || isrobot(user) || ishivebot(user) || ismonkey(user) || isalien(user))
 			if (!( def_zone ))
 				var/mob/user2 = user
 				var/t = user2:zone_sel.selecting
@@ -321,10 +321,14 @@
 		switch(src.damtype)
 			if("brute")
 				M.bruteloss += power
+				if (prob(33)) // Added blood for whacking non-humans too
+					var/turf/location = M.loc
+					if (istype(location, /turf/simulated))
+						location.add_blood_floor(M)
 			if("fire")
 				if (!(M.mutations & 2))
 					M.fireloss += power
-					M << "heres ur burn notice"
+					M << "Aargh it burns!"
 		M.updatehealth()
 	src.add_fingerprint(user)
 	return

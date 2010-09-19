@@ -22,12 +22,10 @@
 	var/obj/screen/healths = null
 	var/obj/screen/throw_icon = null
 
-	var/list/obj/hallucination/hallucinations = list()
+	// var/list/obj/hallucination/hallucinations = list() - Not used at all - Skie
 
 	var/alien_egg_flag = 0
-
 	var/last_special = 0
-
 	var/obj/screen/zone_sel/zone_sel = null
 
 	var/emote_allowed = 1
@@ -79,8 +77,6 @@
 	var/is_jittery = 0
 	var/jitteriness = 0
 	var/charges = 0.0
-	var/urine = 0.0
-	var/poo = 0.0
 	var/nutrition = 0.0
 	var/paralysis = 0.0
 	var/stunned = 0.0
@@ -172,3 +168,7 @@
 
 // Ruby mode
 	var/incorporeal_move = 0
+
+
+	var/update_icon = 1 // Set to 0 if you want that the mob's icon doesn't update when it moves -- Skie
+						// This can be used if you want to change the icon on the fly and want it to stay

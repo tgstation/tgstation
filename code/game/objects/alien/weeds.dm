@@ -45,7 +45,7 @@ Alien plants should do something if theres a lot of poison
 
 		if(T.Enter(B,src) && !(locate(/obj/alien/weeds) in T))
 			B.loc = T
-			spawn(80)
+			spawn(200)
 				if(B)
 					B.Life()
 			// open cell, so expand

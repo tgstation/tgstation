@@ -475,6 +475,14 @@
 								var/datum/disease/D = new B.virus.type
 								D.strain_data = B.virus.strain_data
 								src.contract_disease(D)
+					for(var/obj/decal/cleanable/xenoblood/X in view(4, src))
+						if(X.virus && X.virus.spread == "Airborne")
+							if(X.virus.affected_species.Find("Alien"))
+								if(src.resistances.Find(X.virus.type))
+									continue
+								var/datum/disease/D = new X.virus.type
+								D.strain_data = X.virus.strain_data
+								src.contract_disease(D)
 			else
 				src.virus.stage_act()
 

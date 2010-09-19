@@ -24,8 +24,9 @@
 				if(src.client && src.stat == 2)
 					src.verbs += /mob/proc/ghostize
 
-	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
-	mind.store_memory("Time of death: [tod]", 0)
+	if(mind) // Skie - Added check that there's someone controlling the alien
+		var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
+		mind.store_memory("Time of death: [tod]", 0)
 
 	var/cancel
 	for (var/mob/M in world)

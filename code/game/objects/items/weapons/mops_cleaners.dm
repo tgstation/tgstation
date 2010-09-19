@@ -63,7 +63,7 @@ MOP
 		src.reagents.reaction(A,1,10)
 		A.clean_blood()
 		mopcount++
-	else if (istype(A, /obj/decal/cleanable/blood) || istype(A, /obj/overlay))
+	else if (istype(A, /obj/decal/cleanable/blood) || istype(A, /obj/overlay) || istype(A, /obj/decal/cleanable/xenoblood) )
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red <B>[user] begins to clean [A]</B>"), 1)
 		sleep(20)

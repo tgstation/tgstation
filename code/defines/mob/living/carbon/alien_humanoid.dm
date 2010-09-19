@@ -23,3 +23,6 @@
 
 	health = 250
 	icon_state = "queen_s"
+
+/mob/living/carbon/alien/humanoid/rpbody
+	update_icon = 0

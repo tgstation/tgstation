@@ -196,6 +196,7 @@
 #include "code\defines\mob\living\carbon\human.dm"
 #include "code\defines\mob\living\carbon\monkey.dm"
 #include "code\defines\mob\living\silicon\ai.dm"
+#include "code\defines\mob\living\silicon\decoy.dm"
 #include "code\defines\mob\living\silicon\hivebot.dm"
 #include "code\defines\mob\living\silicon\robot.dm"
 #include "code\defines\mob\living\silicon\silicon.dm"
