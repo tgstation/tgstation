@@ -49,11 +49,11 @@
 	fire_resist = T0C+5200
 
 
-/obj/item/clothing/under/nazi1
+/*/obj/item/clothing/under/nazi1
 	name = "Nazi uniform"
 	desc = "SIEG HEIL!"
-	icon_state = "nazi1"
-	color = "nazi"
+	icon_state = "nazi"
+	color = "nazi1"*/ //no direction sprites
 
 /obj/item/clothing/suit/greatcoat
 	name = "great coat"
@@ -86,13 +86,13 @@
 	name = "cloud"
 	desc = "cloud"
 	icon_state = "cloud"
-	color = "aqua"
+	color = "cloud"
 
 /obj/item/clothing/under/yay
 	name = "yay"
 	desc = "Yay!"
 	icon_state = "yay"
-	color = "yellow"
+	color = "yay"
 
 // UNUSED COLORS
 
@@ -250,3 +250,59 @@
 	item_state = "classic_baton"
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 10
+
+/obj/item/clothing/under/pirate
+	name = "Pirate Outfit"
+	desc = "Yarr."
+	icon_state = "pirate"
+	item_state = "pirate"
+	color = "pirate"
+
+/obj/item/clothing/head/pirate
+	name = "pirate hat"
+	desc = "Yarr."
+	icon_state = "pirate"
+	item_state = "pirate"
+
+/obj/item/clothing/suit/pirate
+	name = "pirate coat"
+	desc = "Yarr."
+	icon_state = "pirate"
+	item_state = "pirate"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/glasses/eyepatch
+	name = "eyepatch"
+	desc = "Yarr."
+	icon_state = "eyepatch"
+	item_state = "eyepatch"
+
+/obj/item/clothing/head/bandana
+	name = "pirate bandana"
+	desc = "Yarr."
+	icon_state = "bandana"
+	item_state = "bandana"
+
+/obj/item/clothing/under/schoolgirl
+	name = "schoolgirl uniform"
+	desc = "It's just like one of my Japanese animes!"
+	icon_state = "schoolgirl"
+	item_state = "schoolgirl"
+	color = "schoolgirl"
+
+/* no left/right sprites
+/obj/item/clothing/under/mario
+	name = "Mario costume"
+	desc = "Worn by Italian plumbers everywhere.  Probably."
+	icon_state = "mario"
+	item_state = "mario"
+	color = "mario"
+
+/obj/item/clothing/under/luigi
+	name = "Mario costume"
+	desc = "Player two.  Couldn't you get the first controller?"
+	icon_state = "luigi"
+	item_state = "luigi"
+	color = "luigi"
+*/
+

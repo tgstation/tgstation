@@ -441,6 +441,7 @@
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/gloves/latex(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/device/analyzer/plant_analyzer(src), slot_l_hand)
+			src.equip_if_possible(new /obj/item/clothing/suit/apron(src), slot_wear_suit)
 
 		if ("Librarian")
 

@@ -463,6 +463,12 @@
 	item_state = "wcoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
+/obj/item/clothing/suit/apron
+	name = "apron"
+	icon_state = "apron"
+	item_state = "apron"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
 /obj/item/clothing/suit/wizrobe
 	name = "robe"
 	desc = "A magnificant blue robe that seems to radiate power"
@@ -633,7 +639,7 @@
 	color = "orange"
 
 /obj/item/clothing/under/color/pink
-	name = "Pink Jumpsuit (F)"
+	name = "Pink Jumpsuit"
 	icon_state = "pink"
 	item_state = "p_suit"
 	color = "pink"
