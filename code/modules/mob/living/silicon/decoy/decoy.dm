@@ -1,3 +1,3 @@
 /mob/living/silicon/decoy/New()
-	src.icon = 'mob.dm'
+	src.icon = 'mob.dmi'
 	src.icon_state = "ai"
