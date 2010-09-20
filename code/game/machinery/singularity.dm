@@ -138,18 +138,23 @@ However people seem to like it for some reason.
 	var/direction_go = pick(1,2,4,8)
 	if(locate(/obj/machinery/containment_field) in get_step(src,NORTH))
 		if(direction_go == 1)
+			icon_state = "Singularity"
 			return
 	if(locate(/obj/machinery/containment_field) in get_step(src,SOUTH))
 		if(direction_go == 2)
+			icon_state = "Singularity"
 			return
 	if(locate(/obj/machinery/containment_field) in get_step(src,EAST))
 		if(direction_go == 4)
+			icon_state = "Singularity"
 			return
 	if(locate(/obj/machinery/containment_field) in get_step(src,WEST))
 		if(direction_go == 8)
+			icon_state = "Singularity"
 			return
 	if(selfmove)
 		spawn(0)
+			icon_state = "Singularity2"
 			step(src, direction_go)
 
 
