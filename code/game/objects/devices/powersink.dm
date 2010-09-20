@@ -41,6 +41,8 @@
 					user << "Device must be placed over an exposed cable to attach to it."
 					return
 			else
+				if (mode == 2)
+					processing_items.Remove(src) // Now the power sink actually stops draining the station's power if you unhook it. --NeoFite
 				anchored = 0
 				mode = 0
 				user << "You detach	the device from the cable."
@@ -49,6 +51,7 @@
 					M << "[user] detaches the power sink from the cable."
 				sd_SetLuminosity(0)
 				icon_state = "powersink0"
+
 				return
 		else
 			..()
@@ -74,6 +77,16 @@
 				mode = 2
 				icon_state = "powersink1"
 				processing_items.Add(src)
+
+			if(2)  //This switch option wasn't originally included. It exists now. --NeoFite
+				user << "You deactivate the device!"
+				for(var/mob/M in viewers(user))
+					if(M == user) continue
+					M << "[user] deactivates the power sink!"
+				mode = 1
+				sd_SetLuminosity(0)
+				icon_state = "powersink0"
+				processing_items.Remove(src)
 
 	process()
 		if(attached)
