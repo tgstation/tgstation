@@ -10,37 +10,39 @@
 	attack(mob/living/silicon/ai/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/silicon/ai))
 			return ..()
-												 // ** Bugfix for r74 **
-		if(istype(M, /mob/living/silicon/decoy)) // Don't branch this out into a separate attack(), it overwrites the first definition.
-			M.death()							 // We typecast in the function's arguments, but it doesn't actually typecheck
-			user << "<b>ERROR ERROR ERROR</b>"	 // (beyond, I suspect, the big four ATOMs), typechecking for subtypes of one of the ATOMs needs
-			return 0							 // to occur in the function itself. -- TLE
 
 		if(src.contents.len > 0)
+			for(var/mob/living/silicon/ai/A in src)
+
 			// Already have an AI
-			if(M.client)
-				user << "<b>Transfer failed</b>: Existing daemon found on this terminal. Remove existing daemon to install a new one."
-				return
-			else if(M.stat == 2)
-				user << "<b>Transfer failed</b>: Unable to establish connection."
-				return
-			else
-				for(var/mob/living/silicon/ai/A in src)
+				if(M.client)
+					user << "<b>Transfer failed</b>: Existing daemon found on this terminal. Remove existing daemon to install a new one."
+					return
+				else if(M.stat != A.stat)
+					user << "<b>Transfer failed</b>: Unable to establish connection."
+					return
+				else
 					M.name = A.name
 					M.real_name = A.real_name
 					if(A.mind)
 						A.mind.transfer_to(M)
 					M.control_disabled = 0
 					M.laws_object = A.laws_object
+					M.oxyloss = A.oxyloss
+					M.fireloss = A.fireloss
+					M.bruteloss = A.bruteloss
+					M.toxloss = A.toxloss
+					M.updatehealth()
 					M << "You have been uploaded to a stationary terminal. Remote device connection restored."
 					user << "<b>Transfer succesful</b>: [M.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
 					del(A)
+					if (!M.stat)
+						M.icon_state = "ai"
 					src.icon_state = "aicard"
-					M.icon_state = "ai"
 					src.name = "inteliCard"
 					return
 		else
-			if (M.real_name != "Inactive AI" && M.stat != 2)
+			if (M.real_name != "Inactive AI")
 				var/mob/living/silicon/ai/O = new /mob/living/silicon/ai( src )
 				O.invisibility = 0
 				O.canmove = 0
@@ -50,16 +52,31 @@
 				O.aiRestorePowerRoutine = 0
 				O.control_disabled = 1 // Can't control things remotely if you're stuck in a card!
 				O.laws_object = M.laws_object
+				O.stat = M.stat
+				O.oxyloss = M.oxyloss
+				O.fireloss = M.fireloss
+				O.bruteloss = M.bruteloss
+				O.toxloss = M.toxloss
+				O.updatehealth()
 				if(M.mind)
 					M.mind.transfer_to(O)
 				src.name = "inteliCard - [M.name]"
 				M.name = "Inactive AI"
 				M.real_name = "Inactive AI"
 				M.icon_state = "ai-crash"
-				src.icon_state = "aicard-full"
+				if (O.stat == 2)
+					src.icon_state = "aicard-404"
+				else
+					src.icon_state = "aicard-full"
 				O << "You have been downloaded to a mobile storage device. Remote device connection severed."
 				user << "<b>Transfer succeeded</b>: [O.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 
+	attack(mob/living/silicon/decoy/M as mob, mob/user as mob)
+		if (!istype (M, /mob/living/silicon/decoy))
+			return ..()
+		else
+			M.death()
+			user << "<b>ERROR ERROR ERROR</b>"
 
 	Topic(href, href_list)
 
@@ -101,7 +118,10 @@
 
 			dat += "Laws:<br>[laws]<br>"
 
-			dat += {"<A href='byond://?src=\ref[src];wipe=1'>Wipe AI</A>"}
+			if (A.stat == 2)
+				dat += "<b>AI nonfunctional</b>"
+			else
+				dat += {"<A href='byond://?src=\ref[src];wipe=1'>Wipe AI</A>"}
 		user << browse(dat, "window=aicard")
 		onclose(user, "aicard")
 		return

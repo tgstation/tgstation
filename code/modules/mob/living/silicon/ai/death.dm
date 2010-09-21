@@ -19,9 +19,7 @@
 		spawn( 0 )
 		O.mode = 2
 		if (istype(src.loc, /obj/item/device/aicard))
-			src.loc.icon_state = "aicard"
-			src.loc.name = "inteliCard"
-			src.loc = O
+			src.loc.icon_state = "aicard-404"
 
 	if(ticker.mode.name == "AI malfunction")
 		world << "<FONT size = 3><B>Human Victory</B></FONT>"
