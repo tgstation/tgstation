@@ -132,6 +132,13 @@
 			var/obj/decal/cleanable/xenoblood/this = new /obj/decal/cleanable/xenoblood(source2)
 			this.virus = M.virus
 
+	else if( istype(M, /mob/living/silicon/robot ))
+		if( istype(src, /turf/simulated) )
+			var/turf/simulated/source2 = src
+			var/obj/decal/cleanable/oil/this = new /obj/decal/cleanable/oil(source2)
+			this.virus = M.virus
+
+
 /atom/proc/clean_blood()
 
 	if (!( src.flags ) & 256)

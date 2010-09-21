@@ -1868,11 +1868,17 @@
 		src.mind.transfer_to(newmob)
 
 		var/virus = src.virus
-		gibs(src.loc, virus)
+		if (istype(src, /mob/living/silicon))
+			robogibs(src.loc, virus)
+		else
+			gibs(src.loc, virus)
 
 	else if (!src.client)
 		var/virus = src.virus
-		gibs(src.loc, virus)
+		if (istype(src, /mob/living/silicon))
+			robogibs(src.loc, virus)
+		else
+			gibs(src.loc, virus)
 
 	sleep(15)
 	del(src)
