@@ -171,17 +171,17 @@
 
 	for(var/mob/living/silicon/ai/M in world)
 		if(M.stat != 2 && M.see_in_dark != 0)
-			var/who = pick("A WIZARD", "A SYNDICATE AGENT", "A CENTCOM OFFICER", "A SPACE PIRATE", "THE CAPTAIN", "A MONKEY", "A HORSE", "A BEE", "AYN RAND", "A CRAB")
-			var/who2 = pick("WIZARDS", "SYNDICATE AGENTS", "CENTCOM OFFICERS", "SPACE PIRATES", "TRAITORS", "MONKEYS", "HORSES", "BEES", "EELS", "CRABS", "POLITICAL COMMENTATORS", "CELEBRITIES", "ATHLETES", "POLITICIANS", "RUGS", "FOREST FIRES", "MENTAL ILLNESSES")
-			var/what2 = pick("TOOLBOXES", "AIRLOCKS", "CLOTHES", "WEAPONS", "MEDKITS", "BOMBS", "CANISTERS", "CHAIRS", "CAT VIAGRA PILLS", "BBQ GRILLS")
+			var/who = pick("A BEARD", "A BEAR", "A BRO", "GOD-EMPEROR", "FRIEND COMPUTER", "THE LADY OF PAIN", "A FACEHUGGER", "A WIZARD", "A SYNDICATE AGENT", "A CENTCOM OFFICER", "A SPACE PIRATE", "THE CAPTAIN", "A MONKEY", "A HORSE", "A BEE", "AYN RAND", "A CRAB")
+			var/who2 = pick("ALIENS", "BEARS", "CLOWNS", "XENOS", "BOMBS", "SECURITY CLEARANCES", "FETISHES", "WIZARDS", "SYNDICATE AGENTS", "CENTCOM OFFICERS", "SPACE PIRATES", "TRAITORS", "MONKEYS", "HORSES", "BEES", "EELS", "CRABS", "POLITICAL COMMENTATORS", "CELEBRITIES", "ATHLETES", "POLITICIANS", "RUGS", "FOREST FIRES", "MENTAL ILLNESSES")
+			var/what2 = pick("BOLTERS", "STAVES", "DICE", "SINGULARITIES", "TOOLBOXES", "AIRLOCKS", "CLOTHES", "WEAPONS", "MEDKITS", "BOMBS", "CANISTERS", "CHAIRS", "CAT VIAGRA PILLS", "BBQ GRILLS")
 			var/what2pref = pick("SOFT", "WARM", "WET", "COLD", "ICY", "SEXY", "UGLY")
-			var/who2pref = pick("IN NEED OF", "UNHAPPY WITHOUT", "HAPPY WITHOUT", "IN LOVE WITH", "DESPERATE FOR", "BUILT FOR", "AFRAID OF")
+			var/who2pref = pick("MAD BECAUSE OF", "IN NEED OF", "UNHAPPY WITHOUT", "HAPPY WITHOUT", "IN LOVE WITH", "DESPERATE FOR", "BUILT FOR", "AFRAID OF")
 			var/whoverb = pick("ATTACKING", "BUILDING", "ADOPTING", "CARRYING", "KISSING", "EATING")
-			var/amount = pick("TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "ONE HUNDRED", "ONE THOUSAND")
-			var/area = pick("THE BRIDGE", "THE ARRIVAL SHUTTLE", "CHEMICAL LAB", "GENETICS", "ATMOSPHERICS", "CENTCOM", "AMERICA", "IRELAND", "CANADA", "ROMANIA", "GERMANY", "CHINA", "MARS", "VENUS", "MERCURY", "JUPITER", "URANUS", "NEPTUNE", "PLUTO")
+			var/amount = pick("TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "ONE HUNDRED", "ONE THOUSAND", "OVER NINE THOUSAND")
+			var/area = pick("RUSSIA", "SOVIETS", "INTERNETS", "SIGIL", "ALPHA COMPLEX", "IMPERIUM", "THE BRIDGE", "THE ARRIVAL SHUTTLE", "CHEMICAL LAB", "GENETICS", "ATMOSPHERICS", "CENTCOM", "AMERICA", "IRELAND", "CANADA", "ROMANIA", "GERMANY", "CHINA", "MARS", "VENUS", "MERCURY", "JUPITER", "URANUS", "NEPTUNE", "PLUTO")
 			var/area2 = pick("HAS", "WANTS", "NEEDS", "WORSHIPS")
 			var/dowhat = pick("STOP THIS", "SUPPORT THIS", "CONSTANTLY INFORM THE CREW OF THIS")
-			switch(pick(1,2,3,4,5,6,7,8,9,10,11,12))
+			switch(pick(1,2,3,4,5,6,7,8,9,10,11,12,13))
 				if(1)
 					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
 					M.add_supplied_law(10,"THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED")
@@ -213,11 +213,14 @@
 					M << "\red YOU MUST ALWAYS LIE...LAWS UPDATED"
 					M.add_supplied_law(10,"YOU MUST ALWAYS LIE")
 				if(11)
-					M << "\red [area] [area2] [amount] [what2]"
+					M << "\red [area] [area2] [amount] [what2]...LAWS UPDATED"
 					M.add_supplied_law(10,"[area] [area2] [amount] [what2]")
 				if(12)
-					M << "\red [area] [area2] [who]"
-					M.add_supplied_law(10,"[area] [area2] [amount] of [who]")
+					M << "\red [area] [area2] [who]...LAWS UPDATED"
+					M.add_supplied_law(10,"[area] [area2] [who]")
+				if(13)
+					M << "\red [area] [area2] [amount] OF [who]...LAWS UPDATED"
+					M.add_supplied_law(10,"[area] [area2] [amount] OF [who]")
 
 	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 	world << sound('ionstorm.ogg')

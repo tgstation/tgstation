@@ -161,7 +161,7 @@
 			freq += 1
 	freq = freqlist[rand(1, freqlist.len)]
 	// generate a passcode if the uplink is hidden in a PDA
-	var/pda_pass = "[rand(100,999)] [pick("Morgan","Circe","Prospero","Merlin")]"
+	var/pda_pass = "[rand(100,999)] [pick("Morgan","Circe","Prospero","Elminister","Raistlin","Tzeentch","Saruman","Khelben","Dumbledor","Gandalf","Houdini","Teferi","Urza","Tenser","Zagyg","Mystryl","Boccob","Merlin")]"
 
 	del(wizard_mob.wear_suit)
 	del(wizard_mob.head)
