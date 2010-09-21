@@ -40,7 +40,7 @@
 					src.name = "inteliCard"
 					return
 		else
-			if (M.real_name != "Inactive AI")
+			if (M.real_name != "Inactive AI" && M.stat != 2)
 				var/mob/living/silicon/ai/O = new /mob/living/silicon/ai( src )
 				O.invisibility = 0
 				O.canmove = 0
