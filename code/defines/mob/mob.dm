@@ -132,7 +132,6 @@
 	var/const/muteness = 4
 	var/brainloss = 0
 
-
 	var/datum/dna/dna = null
 	var/radiation = 0.0
 
@@ -172,3 +171,5 @@
 
 	var/update_icon = 1 // Set to 0 if you want that the mob's icon doesn't update when it moves -- Skie
 						// This can be used if you want to change the icon on the fly and want it to stay
+
+	var/UI = 'screen1_old.dmi' // For changing the UI from preferences

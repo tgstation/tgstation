@@ -92,7 +92,7 @@ mob/new_player
 
 			output += "<BR><a href='byond://?src=\ref[src];observe=1'>Observe</A><BR>"
 
-			src << browse(output,"window=playersetup;size=250x200;can_close=0")
+			src << browse(output,"window=playersetup;size=250x210;can_close=0")
 
 	Stat()
 		..()

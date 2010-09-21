@@ -28,6 +28,8 @@ datum/preferences
 	var/g_eyes = 0.0
 	var/b_eyes = 0.0
 
+	var/UI = 'screen1_old.dmi' // Skie
+
 	var/icon/preview_icon = null
 
 	New()
@@ -150,6 +152,9 @@ datum/preferences
 		dat += "<b>Gender:</b> <a href=\"byond://?src=\ref[user];preferences=1;gender=input\"><b>[src.gender == MALE ? "Male" : "Female"]</b></a><br>"
 		dat += "<b>Age:</b> <a href='byond://?src=\ref[user];preferences=1;age=input'>[src.age]</a>"
 
+		dat += "<br>"
+		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[src.UI == 'screen1.dmi' ? "New" : "Old"]</b></a><br>"
+
 		dat += "<hr><b>Occupation Choices</b><br>"
 		if (destructive.Find(src.occupation1))
 			dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>[occupation1]</b></a><br>"
@@ -225,7 +230,7 @@ datum/preferences
 		dat += "<a href='byond://?src=\ref[user];preferences=1;reset_all=1'>Reset Setup</a><br>"
 		dat += "</body></html>"
 
-		user << browse(dat, "window=preferences;size=300x640")
+		user << browse(dat, "window=preferences;size=300x710")
 
 	proc/SetChoices(mob/user, occ=1)
 		var/HTML = "<body>"
@@ -250,7 +255,7 @@ datum/preferences
 		HTML += "</center></tt>"
 
 		user << browse(null, "window=preferences")
-		user << browse(HTML, "window=mob_occupation;size=320x500")
+		user << browse(HTML, "window=mob_occupation;size=320x600")
 		return
 
 	proc/SetJob(mob/user, occ=1, job="Captain")
@@ -487,6 +492,12 @@ datum/preferences
 			else
 				src.gender = MALE
 
+		if (link_tags["UI"])
+			if (src.UI == 'screen1.dmi')
+				src.UI = 'screen1_old.dmi'
+			else
+				src.UI = 'screen1.dmi'
+
 		if (link_tags["underwear"])
 			if(!IsGuestKey(user.key))
 				if (src.underwear == 1)
@@ -532,6 +543,7 @@ datum/preferences
 			b_eyes = 0.0
 			s_tone = 0.0
 			b_type = "A+"
+			UI = 'screen1_old.dmi'
 
 
 		src.ShowChoices(user)
@@ -562,6 +574,8 @@ datum/preferences
 
 		character.h_style = h_style
 		character.f_style = f_style
+
+		character.UI = UI
 
 		switch(h_style)
 			if("Short Hair")

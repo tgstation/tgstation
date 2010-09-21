@@ -34,6 +34,7 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["be_syndicate"] << src.be_syndicate
 	F["underwear"] << src.underwear
 	F["name_is_always_random"] << src.be_random_name
+	F["UI"] << src.UI // Skie
 
 	return 1
 
@@ -86,6 +87,7 @@ datum/preferences/proc/savefile_load(mob/user, var/silent = 1)
 	F["be_syndicate"] >> src.be_syndicate
 	F["underwear"] >> src.underwear
 	F["name_is_always_random"] >> src.be_random_name
+	F["UI"] >> src.UI // Skie
 	return 1
 
 #undef SAVEFILE_VERSION_MAX

@@ -74,12 +74,12 @@ obj/hud/New(var/type = 0)
 	ASSERT(istype(mymob, /mob))
 
 	if(istype(mymob, /mob/living/carbon/human))
-		src.human_hud()
+		src.human_hud(mymob.UI) // Pass the player the UI style chosen in preferences
 
 		return
 
 	if(istype(mymob, /mob/living/carbon/monkey))
-		src.monkey_hud()
+		src.monkey_hud(mymob.UI)
 		return
 
 	//aliens
