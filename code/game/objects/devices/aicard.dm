@@ -40,6 +40,7 @@
 						M.icon_state = "ai"
 					src.icon_state = "aicard"
 					src.name = "inteliCard"
+					src.overlays = null
 					return
 		else
 			if (M.real_name != "Inactive AI")
@@ -92,6 +93,16 @@
 						src.attack_self(usr)
 						sleep(10)
 
+		if (href_list["wireless"])
+			for(var/mob/living/silicon/ai/A in src)
+				A.control_disabled = !A.control_disabled
+				A << "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!"
+				if (A.control_disabled)
+					src.overlays -= image('pda.dmi', "aicard-on")
+				else
+					src.overlays += image('pda.dmi', "aicard-on")
+				src.attack_self(usr)
+
 
 	attack_self(mob/user)
 		user.machine = src
@@ -121,7 +132,7 @@
 			if (A.stat == 2)
 				dat += "<b>AI nonfunctional</b>"
 			else
-				dat += {"<A href='byond://?src=\ref[src];wipe=1'>Wipe AI</A>"}
+				dat += {"<A href='byond://?src=\ref[src];wipe=1'>Wipe AI</A> <A href='byond://?src=\ref[src];wireless=1'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</A>"}
 		user << browse(dat, "window=aicard")
 		onclose(user, "aicard")
 		return

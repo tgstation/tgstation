@@ -76,8 +76,8 @@
 
 /datum/game_mode/malfunction/process()
 	AI_win_timeleft--
-	if(AI_win_timeleft == 1200) // Was 1790
-		malf_mode_declared = 1
+//	if(AI_win_timeleft == 1200) // Was 1790
+//		malf_mode_declared = 1
 	check_win()
 
 /datum/game_mode/malfunction/check_win()

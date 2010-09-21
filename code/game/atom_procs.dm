@@ -174,13 +174,17 @@
 	return DblClick()
 
 /atom/DblClick() //TODO: DEFERRED: REWRITE
+//	world << "checking if this shit gets called at all"
 	if (world.time <= usr:lastDblClick+2)
-		//world << "BLOCKED atom.DblClick() on [src] by [usr] : src.type is [src.type]"
+//		world << "BLOCKED atom.DblClick() on [src] by [usr] : src.type is [src.type]"
 		return
 	else
-		//world << "atom.DblClick() on [src] by [usr] : src.type is [src.type]"
+//		world << "atom.DblClick() on [src] by [usr] : src.type is [src.type]"
 		usr:lastDblClick = world.time
-
+	if (istype(usr, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/ai = usr
+		if (ai.control_disabled)
+			return
 	..()
 
 
@@ -205,7 +209,12 @@
 		return
 
 	if ((!( src in usr.contents ) && (((!( isturf(src) ) && (!( isturf(src.loc) ) && (src.loc && !( isturf(src.loc.loc) )))) || !( isturf(usr.loc) )) && (src.loc != usr.loc && (!( istype(src, /obj/screen) ) && !( usr.contents.Find(src.loc) ))))))
-		return
+		if (istype(usr, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/ai = usr
+			if (ai.control_disabled)
+				return
+		else
+			return
 
 	var/t5 = in_range(src, usr) || src.loc == usr
 
@@ -218,6 +227,7 @@
 	if (istype(src, /datum/organ) && src in usr.contents)
 		return
 
+//	world << "according to dblclick(), t5 is [t5]"
 	if (((t5 || (W && (W.flags & 16))) && !( istype(src, /obj/screen) )))
 		if (usr.next_move < world.time)
 			usr.prev_move = usr.next_move
