@@ -121,8 +121,11 @@
 		..()
 		new /obj/item/weapon/plantbgone(src)
 		new /obj/item/weapon/plantbgone(src)
+		new /obj/item/weapon/plantbgone(src)
+		new /obj/item/weapon/minihoe(src)
 		new /obj/item/weapon/weedspray(src)
 		new /obj/item/weapon/weedspray(src)
+		new /obj/item/weapon/pestspray(src)
 		new /obj/item/weapon/pestspray(src)
 		new /obj/item/weapon/pestspray(src)
 

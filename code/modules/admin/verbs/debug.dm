@@ -18,6 +18,17 @@
 		alert("Coders only baby")
 		return
 
+
+
+/* 21st Sept 2010
+Updated by Skie -- Still not perfect but better!
+Stuff you can't do:
+Call proc /mob/proc/make_dizzy() for some player
+Because if you select a player mob as owner it tries to do the proc for
+/mob/living/carbon/human/ instead. And that gives a run-time error.
+But you can call procs that are of type /mob/living/carbon/human/proc/ for that player.
+*/
+
 /client/proc/callproc()
 	set category = "Debug"
 	set name = "Advanced ProcCall"
@@ -25,69 +36,85 @@
 		src << "Only administrators may use this command."
 		return
 	var/target = null
-	var/arguments = null
+	var/lst[] // List reference
+	lst = new/list() // Make the list
 	var/returnval = null
-	//var/class = null
+	var/class = null
 
-	switch(alert("Proc owned by obj?",,"Yes","No"))
+	switch(alert("Proc owned by something?",,"Yes","No"))
 		if("Yes")
-			target = input("Enter target:","Target",null) as obj|mob|area|turf in world
+			class = input("Proc owned by...","Owner") in list("Obj","Mob","Area or Turf","Client","CANCEL ABORT STOP")
+			switch(class)
+				if("CANCEL ABORT STOP")
+					return
+				if("Obj")
+					target = input("Enter target:","Target",usr) as obj in world
+				if("Mob")
+					target = input("Enter target:","Target",usr) as mob in world
+				if("Area or Turf")
+					target = input("Enter target:","Target",usr.loc) as area|turf in world
+				if("Client")
+					var/list/keys = list()
+					for(var/mob/M in world)
+						keys += M.client
+					target = input("Please, select a player!", "Selection", null, null) as null|anything in keys
 		if("No")
 			target = null
 
-	var/procname = input("Procpath","path:", null)
+	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null)
 
-	if (target)
-		arguments = input("Arguments","Arguments:", null)
-		usr << "\blue Calling '[procname]' with arguments '[arguments]' on '[target]'"
-		returnval = call(target,procname)(arguments)
-	else
-		arguments = input("Arguments","Arguments:", null)
-		usr << "\blue Calling '[procname]' with arguments '[arguments]'"
-		returnval = call(procname)(arguments)
+	var/argnum = input("Number of arguments","Number:",0) as num
 
-	usr << "\blue Proc returned: [returnval ? returnval : "null"]"
-/*
-	var/argnum = input("Number of arguments:","Number",null) as num
-
+	lst.len = argnum // Expand to right length
 
 	var/i
-	for(i=0, i<argnum, i++)
+	for(i=1, i<argnum+1, i++) // Lists indexed from 1 forwards in byond
 
-		class = input("Type of Argument #[i]","Variable Type", default) in list("text","num","type","reference","mob reference", "icon","file","cancel")
+		// Make a list with each index containing one variable, to be given to the proc
+		class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
 		switch(class)
-			if("cancel")
+			if("CANCEL")
 				return
 
 			if("text")
-				var/"argu"+i = input("Enter new text:","Text",null) as text
+				lst[i] = input("Enter new text:","Text",null) as text
 
 			if("num")
-				O.vars[variable] = input("Enter new number:","Num",\
-					O.vars[variable]) as num
+				lst[i] = input("Enter new number:","Num",0) as num
 
 			if("type")
-				O.vars[variable] = input("Enter type:","Type",O.vars[variable]) \
-					in typesof(/obj,/mob,/area,/turf)
+				lst[i] = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
 
 			if("reference")
-				O.vars[variable] = input("Select reference:","Reference",\
-					O.vars[variable]) as mob|obj|turf|area in world
+				lst[i] = input("Select reference:","Reference",src) as mob|obj|turf|area in world
 
 			if("mob reference")
-				O.vars[variable] = input("Select reference:","Reference",\
-					O.vars[variable]) as mob in world
+				lst[i] = input("Select reference:","Reference",usr) as mob in world
 
 			if("file")
-				O.vars[variable] = input("Pick file:","File",O.vars[variable]) \
-					as file
+				lst[i] = input("Pick file:","File") as file
 
 			if("icon")
-				O.vars[variable] = input("Pick icon:","Icon",O.vars[variable]) \
-					as icon
-		spawn(0)
-			call(T,wproc)(warg)
-*/
+				lst[i] = input("Pick icon:","Icon") as icon
+
+			if("client")
+				var/list/keys = list()
+				for(var/mob/M in world)
+					keys += M.client
+				lst[i] = input("Please, select a player!", "Selection", null, null) as null|anything in keys
+
+			if("mob's area")
+				var/mob/temp = input("Select mob", "Selection", usr) as mob in world
+				lst[i] = temp.loc
+
+	spawn(0)
+		if(target)
+			returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
+		else
+			returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
+	usr << "\blue Proc returned: [returnval ? returnval : "null"]"
+
+
 
 
 

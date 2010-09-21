@@ -97,8 +97,6 @@ obj/machinery/hydroponics/process()
 						src.mutate()
 					else if(prob(30))
 						src.hardmutate()
-					else if(prob(10))
-						src.mutatespecie() // Just testing this here until mutagens are in place
 					m_count++;
 				if(src.yieldmod > 0 && src.myseed.yield != -1) // Unharvestable shouldn't be harvested
 					src.harvest = 1
@@ -127,8 +125,6 @@ obj/machinery/hydroponics/process()
 			if(src.planted)
 				if(src.myseed.plant_type == 0) // If a normal plant
 					src.weedinvasion()
-				else
-					src.mutateweed() // Just testing this out okay
 			else
 				src.weedinvasion() // Weed invasion into empty tray
 		src.updateicon()
@@ -201,9 +197,6 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 	spawn(5) // Wait a while
 	src.updateicon()
 	src.visible_message("\red[src] has been overtaken by \blue [src.myseed.plantname]!")
-	//var/P = new /obj/decal/point(src) Doesn't work :(
-	//spawn (20)
-	//del(P)
 
 	return
 
@@ -321,26 +314,24 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 
 
 obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
+	if ( src.weedlevel > 5 )
+		del(src.myseed)
+		switch(rand(100))
+			if(1 to 33)		src.myseed = new /obj/item/seeds/libertymycelium
+			if(34 to 66)	src.myseed = new /obj/item/seeds/angelmycelium
+			else			src.myseed = new /obj/item/seeds/deathnettleseed
+		src.dead = 0
+		src.hardmutate()
+		src.planted = 1
+		src.age = 0
+		src.health = src.myseed.endurance
+		src.lastcycle = world.time
+		src.harvest = 0
+		src.weedlevel = 0 // Reset
 
-	del(src.myseed)
-	switch(rand(100))
-		if(1 to 33)		src.myseed = new /obj/item/seeds/libertymycelium
-		if(34 to 66)	src.myseed = new /obj/item/seeds/angelmycelium
-		else			src.myseed = new /obj/item/seeds/deathnettleseed
-
-	src.dead = 0
-	src.hardmutate()
-	src.planted = 1
-	src.age = 0
-	src.health = src.myseed.endurance
-	src.lastcycle = world.time
-	src.harvest = 0
-	src.weedlevel = 0 // Reset
-
-	spawn(5) // Wait a while
-	src.updateicon()
-	src.visible_message("\red The mutated weeds in [src] spawned a \blue [src.myseed.plantname]!")
-
+		spawn(5) // Wait a while
+		src.updateicon()
+		src.visible_message("\red The mutated weeds in [src] spawned a \blue [src.myseed.plantname]!")
 	return
 
 
@@ -350,7 +341,7 @@ obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one
 	src.dead = 1
 	src.harvest = 0
 	src.updateicon()
-	//user << "The plant whiters and dies." Fix this
+	src.visible_message("\red[src] is looking very unhealthy!")
 	return
 
 
@@ -427,24 +418,155 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		playsound(src.loc, 'spray3.ogg', 50, 1, -6)
 		del(O)
 		src.updateicon()
-	// else if ( istype(O, /obj/item/weapon/reagent_containers/glass/bucket))  If injected with vitamins... it should make the health regenerate
-	//	if(src.planted)
-	//		src.health += 5
-	//      src.endurance += 1
-	//		if( src.health > src.myspeed.endurance )
-	//			src.health = src.myseed.endurance
-	// else if ( istype(O, /obj/item/weapon/reagent_containers/glass/bucket))  If injected with mutagen... not sure how to make the syringe injection work
-	//	if (src.planted)
-	//		switch(rand(100))
-	//			if (100 to 91)	src.plantdies()
-	//			if (90  to 81)  src.mutatespecie()
-	//			if (80	to 66)	src.hardmutate()
-	//			if (65  to 41)  src.mutate()
-	//			if (40  to 31)  user << "Nothing happens..."
-	//			if (30	to 21)  src.mutateweed()
-	//			if (20  to 11)  src.mutatepest()
-	//			if (10  to  1)  src.plantdies()
-	//			else 			user << "Nothing happens..."
+
+	else if ( istype(O, /obj/item/weapon/reagent_containers/syringe))  // Syringe stuff
+		var/obj/item/weapon/reagent_containers/syringe/S = O
+		if (src.planted)
+			if (S.mode == "i")
+				user << "\red You inject the [src.myseed.plantname] with a chemical solution."
+
+				// There needs to be a good amount of mutagen to actually work
+
+				if(S.reagents.has_reagent("mutagen", 5))
+					switch(rand(100))
+						if (91  to 100)	src.plantdies()
+						if (81  to 90)  src.mutatespecie()
+						if (66	to 80)	src.hardmutate()
+						if (41  to 65)  src.mutate()
+						if (21  to 41)  user << "Nothing happens..."
+						if (11	to 20)  src.mutateweed()
+						if (1   to 10)  src.mutatepest()
+						else 			user << "Nothing happens..."
+
+				// Antitoxin binds shit pretty well. So the tox goes significantly down
+
+				if(S.reagents.has_reagent("anti_toxin", 1))
+					src.toxic -= round(S.reagents.get_reagent_amount("anti_toxin")*1.25)
+
+				// NIGGA, YOU JUST WENT ON FULL RETARD.
+
+				if(S.reagents.has_reagent("toxin", 1))
+					src.toxic += round(S.reagents.get_reagent_amount("toxin")*2.5)
+
+				// Milk contains some sugars as well as water. Makes for shitty nutrient, but hey
+
+				if(S.reagents.has_reagent("milk", 1))
+					src.health += round(S.reagents.get_reagent_amount("milk")*0.1)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("milk")*0.04)
+					src.waterlevel += round(S.reagents.get_reagent_amount("milk")*0.8)
+
+				// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
+
+				if(S.reagents.has_reagent("beer", 1))
+					src.health =- round(S.reagents.get_reagent_amount("beer")*0.05)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("beer")*0.04)
+					src.waterlevel += round(S.reagents.get_reagent_amount("beer")*0.7)
+
+				// You're an idiot of thinking that one of the most corrosive and deadly gasses would be beneficial
+
+				if(S.reagents.has_reagent("fluorine", 1))
+					src.health -= round(S.reagents.get_reagent_amount("fluorine")*2)
+					src.toxic += round(S.reagents.get_reagent_amount("flourine")*2.5)
+					src.waterlevel -= round(S.reagents.get_reagent_amount("flourine")*0.5)
+					src.weedlevel -= rand(1,4)
+
+				// You're an idiot of thinking that one of the most corrosive and deadly gasses would be beneficial
+
+				if(S.reagents.has_reagent("chlorine", 1))
+					src.health -= round(S.reagents.get_reagent_amount("chlorine")*1)
+					src.toxic += round(S.reagents.get_reagent_amount("chlorine")*1.5)
+					src.waterlevel -= round(S.reagents.get_reagent_amount("chlorine")*0.5)
+					src.weedlevel -= rand(1,3)
+
+				// White Phosphorous + water -> phosphoric acid. That's not a good thing really. Phosphoric salts are beneficial though. And even if the plan suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
+
+				if(S.reagents.has_reagent("phosphorus", 1))
+					src.health -= round(S.reagents.get_reagent_amount("phosphorus")*0.75)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("phosphorus")*0.08)
+					src.waterlevel -= round(S.reagents.get_reagent_amount("phosphorus")*0.5)
+					src.weedlevel -= rand(1,2)
+
+				// Eh whatever. It shouldn't be possible, but still
+
+				if(S.reagents.has_reagent("sugar", 1))
+					src.nutrilevel += round(S.reagents.get_reagent_amount("sugar")*0.09)
+
+
+
+				if(S.reagents.has_reagent("water", 1))
+					src.waterlevel += round(S.reagents.get_reagent_amount("water")*0.5)
+
+				// Man, you guys are retards
+
+				if(S.reagents.has_reagent("acid", 1))
+					src.health -= round(S.reagents.get_reagent_amount("acid")*1)
+					src.toxic += round(S.reagents.get_reagent_amount("acid")*1.5)
+					src.weedlevel -= rand(1,2)
+
+				// SERIOUSLY
+
+				if(S.reagents.has_reagent("pacid", 1))
+					src.health -= round(S.reagents.get_reagent_amount("pacid")*2)
+					src.toxic += round(S.reagents.get_reagent_amount("pacid")*3)
+					src.weedlevel -= rand(1,4)
+
+				// Plant-B-Gone is just as bad
+
+				if(S.reagents.has_reagent("plantbgone", 1))
+					src.health -= round(S.reagents.get_reagent_amount("plantbgone")*2)
+					src.toxic -= round(S.reagents.get_reagent_amount("plantbgone")*3)
+					src.weedlevel -= rand(4,8)
+
+				// Healing
+
+				if(S.reagents.has_reagent("cryoxadone", 1))
+					src.health += round(S.reagents.get_reagent_amount("cryoxadone")*0.5)
+
+				// FINALLY IMPLEMENTED
+
+				if(S.reagents.has_reagent("ammonia", 1))
+					src.health += round(S.reagents.get_reagent_amount("ammonia")*0.1)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("ammonia")*0.05)
+
+				// FINALLY IMPLEMENTED
+
+				if(S.reagents.has_reagent("diethylamine", 1))
+					src.health += round(S.reagents.get_reagent_amount("diethylamine")*0.2)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("diethylamine")*0.1)
+
+				// Poor man's mutagen.
+
+				if(S.reagents.has_reagent("radium", 1))
+					src.health -= round(S.reagents.get_reagent_amount("radium")*1.5)
+					src.toxic -= round(S.reagents.get_reagent_amount("radium")*2)
+				if(S.reagents.has_reagent("radium", 10))
+					switch(rand(100))
+						if (91  to 100)	src.plantdies()
+						if (81  to 90)  src.mutatespecie()
+						if (66	to 80)	src.hardmutate()
+						if (41  to 65)  src.mutate()
+						if (21  to 41)  user << "Nothing happens..."
+						if (11	to 20)  src.mutateweed()
+						if (1   to 10)  src.mutatepest()
+						else 			user << "Nothing happens..."
+
+				S.reagents.clear_reagents()
+				if (src.weedlevel < 0 ) // Make sure it won't go overoboard
+					src.weedlevel = 0
+				if (src.health < 0 ) // Make sure it won't go overoboard
+					src.health = 0
+				if (src.waterlevel > 100 )	// Make sure it won't go overoboard
+					src.waterlevel = 100
+				if (src.waterlevel < 0 )	// Make sure it won't go overoboard
+					src.waterlevel = 0
+				if (src.toxic < 0 ) // Make sure it won't go overoboard
+					src.toxic = 0
+				if (src.toxic > 100 ) // Make sure it won't go overoboard
+					src.toxic = 100
+			else
+				user << "You can't get any extract out of this plant."
+		else
+			user << "There's nothing to apply the solution into."
 
 	else if ( istype(O, /obj/item/seeds/) )
 		if(!src.planted)
@@ -461,6 +583,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				user.client.screen -= O
 			O.dropped(user)
 			src.updateicon()
+
 		else
 			user << "\red The tray already has a seed in it!"
 
@@ -503,9 +626,19 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.toxic += 5 // Oops
 			src.visible_message("\red <B>\The [src] has been sprayed with \the [O][(user ? " by [user]." : ".")]")
 			playsound(src.loc, 'spray3.ogg', 50, 1, -6)
-		else
-			user << "\red Nothing is planted in the hydrotray!"
 
+	else if (istype(O, /obj/item/weapon/minihoe))  // The minihoe
+		//var/deweeding
+		if(src.weedlevel > 0)
+			user.visible_message("\red [user] starts uprooting the weeds.", "\red You start removing some weeds from the tray.")
+			sleep(10)
+			if(src.weedlevel > 1)
+				src.weedlevel -= rand(1,2) // Kill kill kill
+			else
+				src.weedlevel = 0
+			user << "Success!"
+		else
+			user << "\red This plot is completely devoid of weeds. It doesn't need uprooting."
 	return
 
 

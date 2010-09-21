@@ -52,7 +52,7 @@
 		return
 
 	for(var/dirn in cardinal)
-		sleep(10) // -- Skie
+		sleep(3) // -- Skie
 		var/turf/T = get_step(src, dirn)
 
 		if (istype(T.loc, /area/arrival))

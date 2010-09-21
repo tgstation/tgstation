@@ -1445,7 +1445,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	icon = 'hydroponics.dmi'
 	name = "Weed Spray"
 	icon_state = "weedspray"
-	item_state = "weedspray"
+	item_state = "spray"
 	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
 	throwforce = 4
 	w_class = 2.0
@@ -1459,7 +1459,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	icon = 'hydroponics.dmi'
 	name = "Pest Spray"
 	icon_state = "pestspray"
-	item_state = "pestspray"
+	item_state = "spray"
 	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
 	throwforce = 4
 	w_class = 2.0
@@ -1467,3 +1467,16 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 10
 	var/toxicity = 4
 	var/PestKillStr = 2
+
+/obj/item/weapon/minihoe // -- Numbers
+	name = "Mini hoe"
+	desc = "Use for removing weeds or scratching your back."
+	icon = 'weapons.dmi'
+	icon_state = "hoe"
+	item_state = "hoe"
+	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	force = 5.0
+	throwforce = 7.0
+	w_class = 2.0
+	m_amt = 50
+
