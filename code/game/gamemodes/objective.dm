@@ -108,20 +108,20 @@ datum
 			var/obj/item/steal_target
 			var/target_name
 			proc/find_target()
-				var/list/items = list(/*"captain's antique laser gun", "hand teleporter", "RCD", "jetpack", "captains jumpsuit", */"functional ai")
+				var/list/items = list("captain's antique laser gun", "hand teleporter", "RCD", "jetpack", "captains jumpsuit", "functional ai")
 
 				target_name = pick(items)
 				switch(target_name)
-//					if("captain's antique laser gun")
-//						steal_target = /obj/item/weapon/gun/energy/laser_gun/captain
-//					if("hand teleporter")
-//						steal_target = /obj/item/weapon/hand_tele
-//					if("RCD")
-//						steal_target = /obj/item/weapon/rcd
-//					if("jetpack")
-//						steal_target = /obj/item/weapon/tank/jetpack
-//					if("captains jumpsuit")
-//						steal_target = /obj/item/clothing/under/rank/captain
+					if("captain's antique laser gun")
+						steal_target = /obj/item/weapon/gun/energy/laser_gun/captain
+					if("hand teleporter")
+						steal_target = /obj/item/weapon/hand_tele
+					if("RCD")
+						steal_target = /obj/item/weapon/rcd
+					if("jetpack")
+						steal_target = /obj/item/weapon/tank/jetpack
+					if("captains jumpsuit")
+						steal_target = /obj/item/clothing/under/rank/captain
 					if("functional ai")
 						steal_target = /obj/item/device/aicard
 
