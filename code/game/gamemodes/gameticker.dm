@@ -178,12 +178,13 @@ var/global/datum/controller/gameticker/ticker
 /datum/controller/gameticker/proc/declare_completion()
 
 	for (var/mob/living/silicon/ai/aiPlayer in world)
-		if (aiPlayer.stat != 2)
-			world << "<b>The AI's laws at the end of the game were:</b>"
-		else
-			world << "<b>The AI's laws when it was deactivated were:</b>"
+		if (aiPlayer.name != "Inactive AI")
+			if (aiPlayer.stat != 2)
+				world << "<b>The AI's laws at the end of the game were:</b>"
+			else
+				world << "<b>The AI's laws when it was deactivated were:</b>"
 
-		aiPlayer.show_laws(1)
+			aiPlayer.show_laws(1)
 
 	mode.declare_completion()
 

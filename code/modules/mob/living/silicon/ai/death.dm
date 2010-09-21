@@ -12,9 +12,16 @@
 	src.lying = 1
 	src.icon_state = "ai-crash"
 
+
+
+
 	for(var/obj/machinery/ai_status_display/O in world) //change status
 		spawn( 0 )
 		O.mode = 2
+		if (istype(src.loc, /obj/item/device/aicard))
+			src.loc.icon_state = "aicard"
+			src.loc.name = "inteliCard"
+			src.loc = O
 
 	if(ticker.mode.name == "AI malfunction")
 		world << "<FONT size = 3><B>Human Victory</B></FONT>"

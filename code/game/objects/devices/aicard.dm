@@ -40,21 +40,74 @@
 					src.name = "inteliCard"
 					return
 		else
-			var/mob/living/silicon/ai/O = new /mob/living/silicon/ai( src )
-			O.invisibility = 0
-			O.canmove = 0
-			O.name = M.name
-			O.real_name = M.real_name
-			O.anchored = 1
-			O.aiRestorePowerRoutine = 0
-			O.control_disabled = 1 // Can't control things remotely if you're stuck in a card!
-			O.laws_object = M.laws_object
-			if(M.mind)
-				M.mind.transfer_to(O)
-			src.name = "inteliCard - [M.name]"
-			M.name = "Inactive AI"
-			M.real_name = "Inactive AI"
-			M.icon_state = "ai-crash"
-			src.icon_state = "aicard-full"
-			O << "You have been downloaded to a mobile storage device. Remote device connection severed."
-			user << "<b>Transfer succeeded</b>: [O.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+			if (M.real_name != "Inactive AI")
+				var/mob/living/silicon/ai/O = new /mob/living/silicon/ai( src )
+				O.invisibility = 0
+				O.canmove = 0
+				O.name = M.name
+				O.real_name = M.real_name
+				O.anchored = 1
+				O.aiRestorePowerRoutine = 0
+				O.control_disabled = 1 // Can't control things remotely if you're stuck in a card!
+				O.laws_object = M.laws_object
+				if(M.mind)
+					M.mind.transfer_to(O)
+				src.name = "inteliCard - [M.name]"
+				M.name = "Inactive AI"
+				M.real_name = "Inactive AI"
+				M.icon_state = "ai-crash"
+				src.icon_state = "aicard-full"
+				O << "You have been downloaded to a mobile storage device. Remote device connection severed."
+				user << "<b>Transfer succeeded</b>: [O.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+
+
+	Topic(href, href_list)
+
+		if (href_list["wipe"])
+			var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", "Yes", "No")
+			if(confirm == "Yes")
+				for(var/mob/living/silicon/ai/A in src)
+					A.suiciding = 1
+					A << "Your core files are being wiped!"
+					while (A.stat != 2)
+						A.oxyloss += 2
+						A.updatehealth()
+						src.attack_self(usr)
+						sleep(10)
+
+
+	attack_self(mob/user)
+		user.machine = src
+		var/dat = "<TT><B>Intelicard</B><BR>"
+		var/laws
+		for(var/mob/living/silicon/ai/A in src)
+			dat += "Stored AI: [A.name]<br>System integrity: [(A.health+100)/2]%<br>"
+
+			if (A.laws_object.zeroth)
+				laws += "0: [A.laws_object.zeroth]<BR>"
+
+			var/number = 1
+			for (var/index = 1, index <= A.laws_object.inherent.len, index++)
+				var/law = A.laws_object.inherent[index]
+				if (length(law) > 0)
+					laws += "[number]: [law]<BR>"
+					number++
+
+			for (var/index = 1, index <= A.laws_object.supplied.len, index++)
+				var/law = A.laws_object.supplied[index]
+				if (length(law) > 0)
+					laws += "[number]: [law]<BR>"
+					number++
+
+			dat += "Laws:<br>[laws]<br>"
+
+			dat += {"<A href='byond://?src=\ref[src];wipe=1'>Wipe AI</A>"}
+		user << browse(dat, "window=aicard")
+		onclose(user, "aicard")
+		return
+
+
+
+
+
+
