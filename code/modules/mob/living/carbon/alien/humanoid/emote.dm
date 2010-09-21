@@ -18,6 +18,9 @@
 			if (!muzzled)
 				message = "<B>[src]</B> burps."
 				m_type = 2
+		if ("deathgasp")
+			message = "<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw..."
+			m_type = 1
 		if("scratch")
 			if (!src.restrained())
 				message = "<B>The [src.name]</B> scratches."

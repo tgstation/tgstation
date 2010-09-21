@@ -7,6 +7,8 @@
 
 	if (!gibbed)
 
+		emote("deathgasp") // Dead -- Skie
+
 		src.canmove = 0
 		if(src.client)
 			src.blind.layer = 0
