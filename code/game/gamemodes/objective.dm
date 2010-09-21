@@ -108,20 +108,20 @@ datum
 			var/obj/item/steal_target
 			var/target_name
 			proc/find_target()
-				var/list/items = list("captain's antique laser gun", "hand teleporter", "RCD", "jetpack", "captains jumpsuit", "functional ai")
+				var/list/items = list(/*"captain's antique laser gun", "hand teleporter", "RCD", "jetpack", "captains jumpsuit", */"functional ai")
 
 				target_name = pick(items)
 				switch(target_name)
-					if("captain's antique laser gun")
-						steal_target = /obj/item/weapon/gun/energy/laser_gun/captain
-					if("hand teleporter")
-						steal_target = /obj/item/weapon/hand_tele
-					if("RCD")
-						steal_target = /obj/item/weapon/rcd
-					if("jetpack")
-						steal_target = /obj/item/weapon/tank/jetpack
-					if("captains jumpsuit")
-						steal_target = /obj/item/clothing/under/rank/captain
+//					if("captain's antique laser gun")
+//						steal_target = /obj/item/weapon/gun/energy/laser_gun/captain
+//					if("hand teleporter")
+//						steal_target = /obj/item/weapon/hand_tele
+//					if("RCD")
+//						steal_target = /obj/item/weapon/rcd
+//					if("jetpack")
+//						steal_target = /obj/item/weapon/tank/jetpack
+//					if("captains jumpsuit")
+//						steal_target = /obj/item/clothing/under/rank/captain
 					if("functional ai")
 						steal_target = /obj/item/device/aicard
 
@@ -134,10 +134,16 @@ datum
 				if(steal_target)
 					if(owner.current.check_contents_for(steal_target))
 						if(target_name == "functional ai")
-							for(var/mob/living/silicon/ai/M in steal_target)
-								if(istype(M, /mob/living/silicon/ai) && M.stat != 2)
-									return 1
-							return 0
+//							world << "dude's after an AI, time to check for one."
+							for(var/obj/item/device/aicard/C in owner.current.contents)
+//								world << "Found an intelicard, checking it for an AI"
+								for(var/mob/living/silicon/ai/M in C)
+//									world << "Found an AI, checking if it's alive"
+									if(istype(M, /mob/living/silicon/ai) && M.stat != 2)
+//										world << "yay, you win!"
+										return 1
+//								world << "didn't find a living AI on the card"
+								return 0
 						else
 							return 1
 					else
