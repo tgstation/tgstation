@@ -52,6 +52,7 @@
 				C.overlays = null
 				A.loc = src
 				src.occupant = A
+				A.control_disabled = 1
 				if (A.stat == 2)
 					src.overlays += image('AIcore.dmi', "ai-fixer-404")
 				else
@@ -75,7 +76,7 @@
 
 
 
-	src.attack_hand(user)
+	//src.attack_hand(user)
 	return
 
 

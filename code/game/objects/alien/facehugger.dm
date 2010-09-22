@@ -40,7 +40,7 @@
 	var/alive = 1 //1 alive, 0 dead
 	var/health = 25
 	var/maxhealth = 25
-
+	var/lamarr = 0
 	flags = 258.0
 
 
@@ -64,6 +64,8 @@
 			usr << text("\red <B>the alien looks fresh, just out of the egg</B>")
 		else
 			usr << text("\red <B>the alien looks pretty beat up</B>")
+		if (lamarr)
+			usr << text("\red <B>it looks like the proboscis has been removed</B>")
 		return
 
 
@@ -228,17 +230,21 @@
 			if(can_see(src,target,viewrange))
 				if(distance <= 1)
 					for(var/mob/O in viewers(world.view,src))
-						O.show_message("\red <B>[src.target] has been leapt on by the alien!</B>", 1, "\red You hear someone fall", 2)
-					target:bruteloss += 10
-					target:paralysis = max(target:paralysis, 10)
+						O.show_message("\red <B>[src.target] has been leapt on by [lamarr ? src.name : "the alien"]!</B>", 1, "\red You hear someone fall", 2)
+					if (!lamarr)
+						target:bruteloss += 10
+						target:paralysis = max(target:paralysis, 10)
 					src.loc = target.loc
 
 					if(!target.alien_egg_flag && ( ishuman(target) || ismonkey(target) ) )
-						target.alien_egg_flag = 1
-						var/mob/trg = target
-						src.death()
-						trg.contract_disease(new /datum/disease/alien_embryo, 1)
-						return
+						if (!lamarr)
+							target.alien_egg_flag = 1
+							var/mob/trg = target
+							src.death()
+							trg.contract_disease(new /datum/disease/alien_embryo, 1)
+							return
+						else
+							sleep(50)
 					else
 						set_null()
 						spawn(cycle_pause) src.process()
