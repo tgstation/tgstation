@@ -144,12 +144,6 @@
 	if(..())
 		return
 	if (href_list["fix"])
-		src.active = !src.active
-		if (src.occupant.stat == 2)
-			src.occupant.stat = 0
-			src.overlays -= image('AIcore.dmi', "ai-fixer-404")
-			src.overlays += image('AIcore.dmi', "ai-fixer-full")
-
 		src.overlays += image('AIcore.dmi', "ai-fixer-on")
 		while (src.occupant.health < 100)
 			src.occupant.oxyloss = max (src.occupant.oxyloss-1, 0)

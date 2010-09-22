@@ -5,6 +5,7 @@
 	item_state = "electronic"
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | ONBELT
+	var/flush = null
 
 
 	attack(mob/living/silicon/ai/M as mob, mob/user as mob)
@@ -86,6 +87,7 @@
 		if (href_list["wipe"])
 			var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", "Yes", "No")
 			if(confirm == "Yes")
+				src.flush = 1
 				for(var/mob/living/silicon/ai/A in src)
 					A.suiciding = 1
 					A << "Your core files are being wiped!"
@@ -94,6 +96,7 @@
 						A.updatehealth()
 						src.attack_self(usr)
 						sleep(10)
+					src.flush = 0
 
 		if (href_list["wireless"])
 			for(var/mob/living/silicon/ai/A in src)
@@ -134,7 +137,11 @@
 			if (A.stat == 2)
 				dat += "<b>AI nonfunctional</b>"
 			else
-				dat += {"<A href='byond://?src=\ref[src];wipe=1'>Wipe AI</A> <A href='byond://?src=\ref[src];wireless=1'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</A>"}
+				if (!src.flush)
+					dat += {"<A href='byond://?src=\ref[src];wipe=1'>Wipe AI</A>"}
+				else
+					dat += "<b>Wipe in progress</b>"
+				dat += {" <A href='byond://?src=\ref[src];wireless=1'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</A>"}
 		user << browse(dat, "window=aicard")
 		onclose(user, "aicard")
 		return
