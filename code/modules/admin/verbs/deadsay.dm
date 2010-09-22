@@ -1,6 +1,6 @@
 /client/proc/dsay(msg as text)
 	set category = "Special Verbs"
-	set name = "Dead Say"
+	set name = "Dsay" //Gave this shit a shorter name so you only have to time out "dsay" rather than "dead say" to use it --NeoFite
 	set hidden = 1
 	//	All admins should be authenticated, but... what if?
 	if(!src.authenticated || !src.holder)

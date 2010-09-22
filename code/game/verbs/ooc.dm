@@ -9,7 +9,7 @@
 			src << "\blue You are no longer listening to messages on the OOC channel."
 
 /mob/verb/ooc(msg as text)
-	set name = "OOC Message"
+	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	if (!src.client.authenticated || IsGuestKey(src.key))
 		src << "You are not authorized to communicate over these channels."
 		return
