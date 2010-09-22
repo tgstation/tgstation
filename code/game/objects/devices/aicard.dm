@@ -38,6 +38,8 @@
 					del(A)
 					if (!M.stat)
 						M.icon_state = "ai"
+					else
+						M.icon_state = "ai-crash"
 					src.icon_state = "aicard"
 					src.name = "inteliCard"
 					src.overlays = null
@@ -64,7 +66,7 @@
 				src.name = "inteliCard - [M.name]"
 				M.name = "Inactive AI"
 				M.real_name = "Inactive AI"
-				M.icon_state = "ai-crash"
+				M.icon_state = "ai-empty"
 				if (O.stat == 2)
 					src.icon_state = "aicard-404"
 				else
