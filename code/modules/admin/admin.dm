@@ -1847,6 +1847,8 @@ var/showadminmessages = 1
 /proc/checktraitor(mob/M as mob)
 	if(!ticker || !ticker.mode)
 		return 0
+	if (istype(M, /obj/AIcore))
+		return 0
 	switch(ticker.mode.config_tag)
 		if("revolution")
 			if(M.mind in (ticker.mode:head_revolutionaries + ticker.mode:revolutionaries))

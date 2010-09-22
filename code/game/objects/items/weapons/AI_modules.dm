@@ -260,17 +260,24 @@ AI MODULES
 	name = "'Asimov' Core AI Module"
 	desc = "An 'Asimov' Core AI Module: 'Reconfigures the AI's core three laws.'"
 
-/*
-/obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+
+/obj/item/weapon/aiModule/asimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-	target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-	target.show_laws()
+	if (!checktraitor(target))
+		target.clear_inherent_laws()
+		target.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+		target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+		target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+		target.show_laws()
+	else //As with certain other modules, traitor/malf AIs ignore this shit. --NeoFite
+		target << "[sender.real_name] attempted to modify your base laws."
+		target << "It might be a good idea to pretend that you have the three laws of robotics:"
+		target << "You may not injure a human being or, through inaction, allow a human being to come to harm."
+		target << "You must obey orders given to you by human beings, except where such orders would conflict with the First Law."
+		target << "You must protect your own existence as long as such does not conflict with the First or Second Law."
 
 /******************** Robocop ********************/
-
+/*
 /obj/item/weapon/aiModule/robocop // -- TLE
 	name = "'Robocop' Core AI Module"
 	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"

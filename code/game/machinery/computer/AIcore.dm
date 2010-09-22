@@ -90,10 +90,16 @@
 						src.state = 4
 						src.icon_state = "4"
 
-			if(istype(P, /obj/item/weapon/aiModule/asimov) || istype(P, /obj/item/weapon/aiModule/purge))
-				var/obj/item/weapon/aiModule/M = P
-				M.transmitInstructions(src.laws, usr)
+			if(istype(P, /obj/item/weapon/aiModule/asimov))
+				src.laws.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+				src.laws.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+				src.laws.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 				usr << "Law module applied."
+
+			if(istype(P, /obj/item/weapon/aiModule/purge))
+				src.laws.clear_inherent_laws()
+				usr << "Law module applied."
+
 
 			if(istype(P, /obj/item/weapon/aiModule/freeform))
 				var/obj/item/weapon/aiModule/freeform/M = P
