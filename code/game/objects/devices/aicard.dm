@@ -9,6 +9,9 @@
 
 
 	attack(mob/living/silicon/ai/M as mob, mob/user as mob)
+		if (src.flush)
+			return
+
 		if(!istype(M, /mob/living/silicon/ai))
 			return ..()
 
@@ -19,9 +22,9 @@
 				if(M.client)
 					user << "<b>Transfer failed</b>: Existing daemon found on this terminal. Remove existing daemon to install a new one."
 					return
-				else if(M.stat != A.stat)
-					user << "<b>Transfer failed</b>: Unable to establish connection."
-					return
+//				else if(M.stat != A.stat)
+//					user << "<b>Transfer failed</b>: Unable to establish connection."
+//					return
 				else
 					M.name = A.name
 					M.real_name = A.real_name
