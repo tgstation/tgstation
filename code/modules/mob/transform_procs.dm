@@ -68,7 +68,7 @@
 /mob/proc/AIize()
 	src.client.screen.len = null
 	var/mob/living/silicon/ai/O = new /mob/living/silicon/ai( src.loc )
-
+	O.icon_state = "ai"
 	O.invisibility = 0
 	O.canmove = 0
 	O.name = src.name
