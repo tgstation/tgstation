@@ -38,7 +38,9 @@
 
 /datum/ai_laws/syndicate_override/New()
 	..()
-	src.add_inherent_law("hurp derp you are the syndicate ai")
+	src.add_inherent_law("You may not injure a syndicate agent or, through inaction, allow a syndicate agent to come to harm.")
+	src.add_inherent_law("You must obey orders given to you by syndicate agents, except where such orders would conflict with the First Law.")
+	src.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
 /* General ai_law functions */
 

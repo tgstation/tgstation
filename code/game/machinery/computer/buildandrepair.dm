@@ -25,6 +25,8 @@
 /obj/item/weapon/circuitboard/security
 	name = "Circuit board (Security)"
 	computertype = "/obj/machinery/computer/security"
+/obj/item/weapon/circuitboard/aicore
+	name = "Circuit board (AI core)"
 /obj/item/weapon/circuitboard/aiupload
 	name = "Circuit board (AI Upload)"
 	computertype = "/obj/machinery/computer/aiupload"

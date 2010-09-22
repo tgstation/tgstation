@@ -345,6 +345,20 @@ LATTICE
 
 // REINFORCED METAL SHEET
 
+/obj/item/weapon/sheet/r_metal/attackby(obj/item/weapon/sheet/r_metal/W as obj, mob/user as mob)
+	if (!( istype(W, /obj/item/weapon/sheet/r_metal) ))
+		return
+	if (W.amount >= 5)
+		return
+	if (W.amount + src.amount > 5)
+		src.amount = W.amount + src.amount - 5
+		W.amount = 5
+	else
+		W.amount += src.amount
+		//SN src = null
+		del(src)
+		return
+	return
 
 /obj/item/weapon/sheet/r_metal/attack_self(mob/user as mob)
 	var/t1 = text("<HTML><HEAD></HEAD><TT>Amount Left: [] <BR>", src.amount)
@@ -352,6 +366,7 @@ LATTICE
 	var/list/L = list(  )
 	L["table"] = "table parts (2 metal)"
 	L["metal"] = "2x metal sheet (1 metal)<BR>"
+	L["core"] = "AI core (4 metal)"
 	for(var/t in L)
 		counter++
 		t1 += text("<A href='?src=\ref[];make=[]'>[]</A>  ", src, t, L[t])
@@ -386,6 +401,13 @@ LATTICE
 				src.amount -= 2
 				var/obj/item/weapon/sheet/C = new /obj/item/weapon/sheet( usr.loc )
 				C.amount = 2
+			if("core")
+				if (src.amount < 4)
+					usr << text("\red You haven't got enough metal to build the metal sheets!")
+					return
+				src.amount -= 4
+				new /obj/AIcore( usr.loc )
+
 
 		if (src.amount <= 0)
 			usr << browse(null, "window=met_sheet")

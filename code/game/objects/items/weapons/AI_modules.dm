@@ -260,6 +260,7 @@ AI MODULES
 	name = "'Asimov' Core AI Module"
 	desc = "An 'Asimov' Core AI Module: 'Reconfigures the AI's core three laws.'"
 
+/*
 /obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	target.clear_inherent_laws()
@@ -269,7 +270,7 @@ AI MODULES
 	target.show_laws()
 
 /******************** Robocop ********************/
-/*
+
 /obj/item/weapon/aiModule/robocop // -- TLE
 	name = "'Robocop' Core AI Module"
 	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"

@@ -362,7 +362,7 @@
 "agX" = (/obj/table{icon_state = "tabledir"; dir = 10},/obj/item/device/flash,/turf/simulated/floor/plating,/area/storage/tech)
 "agY" = (/obj/machinery/light{dir = 1},/obj/table{icon_state = "tabledir"; dir = 2},/obj/item/device/flash,/turf/simulated/floor/plating,/area/storage/tech)
 "agZ" = (/obj/table{icon_state = "tabledir"; dir = 2},/obj/item/weapon/aiModule/reset,/turf/simulated/floor/plating,/area/storage/tech)
-"aha" = (/obj/table{icon_state = "tabledir"; dir = 2},/obj/item/weapon/cell{charge = 100; maxcharge = 15000},/turf/simulated/floor/plating,/area/storage/tech)
+"aha" = (/obj/table{icon_state = "tabledir"; dir = 2},/obj/item/weapon/cell{charge = 100; maxcharge = 15000},/obj/item/weapon/circuitboard/aicore,/turf/simulated/floor/plating,/area/storage/tech)
 "ahb" = (/obj/table{icon_state = "tabledir"; dir = 2},/obj/machinery/cell_charger{pixel_y = 5},/turf/simulated/floor/plating,/area/storage/tech)
 "ahc" = (/obj/machinery/light{dir = 1},/obj/table{icon_state = "tabledir"; dir = 2},/obj/item/device/aicard,/obj/item/weapon/cell{charge = 100; maxcharge = 15000},/turf/simulated/floor/plating,/area/storage/tech)
 "ahd" = (/obj/table{icon_state = "tabledir"; dir = 6},/obj/item/weapon/circuitboard/olddoor,/turf/simulated/floor/plating,/area/storage/tech)

@@ -1,3 +1,53 @@
+/mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/brain/B)
+	src.loc = loc
+	if(L)
+		if (istype(L, /datum/ai_laws))
+			src.laws_object = L
+	else
+		src.laws_object = new /datum/ai_laws/asimov
+
+	src.verbs += /mob/living/silicon/ai/proc/show_laws_verb
+
+	if (istype(loc, /turf))
+		src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
+		src.verbs += /mob/living/silicon/ai/proc/ai_camera_track
+		src.verbs += /mob/living/silicon/ai/proc/ai_camera_list
+		src.verbs += /mob/living/silicon/ai/proc/lockdown
+		src.verbs += /mob/living/silicon/ai/proc/disablelockdown
+		src.verbs += /mob/living/silicon/ai/proc/ai_statuschange
+	if (!B)
+		src.name = "Inactive AI"
+		src.real_name = "Inactive AI"
+		src.icon_state = "ai-empty"
+	else
+		if (B.owner.client)
+			B.owner.client.mob = src
+
+		src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
+		src << "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>"
+		src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
+		src << "To use something, simply double-click it."
+		src << "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI."
+
+		src.show_laws()
+		src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+
+		src.job = "AI"
+
+		spawn(0)
+			var/randomname = pick(ai_names)
+			var/newname = input(src,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)
+
+			if (length(newname) == 0)
+				newname = randomname
+
+			if (newname)
+				if (length(newname) >= 26)
+					newname = copytext(newname, 1, 26)
+				newname = dd_replacetext(newname, ">", "'")
+				src.real_name = newname
+				src.name = newname
+
 /mob/living/silicon/ai/proc/ai_alerts()
 	set category = "AI Commands"
 	set name = "Show Alerts"
