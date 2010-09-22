@@ -1277,6 +1277,7 @@
 		src.client.changes = 1
 
 /mob/verb/succumb()
+	set name = "Succumb"
 	set hidden = 1
 
 	if ((src.health < 0 && src.health > -95.0))
@@ -1525,6 +1526,7 @@
 	return
 
 /atom/movable/verb/pull()
+	set name = "Pull"
 	set src in oview(1)
 
 	if (!( usr ))
@@ -1534,6 +1536,7 @@
 	return
 
 /atom/verb/examine()
+	set name = "Examine"
 	set src in oview(12)	//make it work from farther away
 
 	if (!( usr ))

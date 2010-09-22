@@ -138,7 +138,7 @@
 
 	verb/follow()
 		set src in view()
-		set name = "follow me"
+		set name = "Follow Me"
 		if(!alive) return
 		if(!isalien(usr))
 			usr << text("\red <B>The alien ignores you.</B>")
@@ -153,7 +153,7 @@
 
 	verb/stop()
 		set src in view()
-		set name = "stop following"
+		set name = "Stop Following"
 		if(!alive) return
 		if(!isalien(usr))
 			usr << text("\red <B>The alien ignores you.</B>")

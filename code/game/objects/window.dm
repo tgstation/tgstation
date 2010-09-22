@@ -175,6 +175,7 @@
 
 
 /obj/window/verb/rotate()
+	set name = "Rotate Window"
 	set src in oview(1)
 
 	if (src.anchored)

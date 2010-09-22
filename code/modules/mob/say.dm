@@ -2,10 +2,11 @@
 	return
 
 /mob/verb/whisper()
+	set name = "Whisper"
 	return
 
 /mob/verb/say_verb(message as text)
-	set name = "say"
+	set name = "Say"
 	usr.say(message)
 
 /mob/proc/say_dead(var/message)

@@ -18,7 +18,7 @@
 	message_admins("[key_name_admin(usr)] made [key_name_admin(M)] drop everything!", 1)
 
 /client/proc/cmd_admin_prison(mob/M as mob in world)
-	set category = "Special Verbs"
+	set category = "Admin"
 	set name = "Prison"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
@@ -97,7 +97,7 @@
 	message_admins("\blue \bold DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]<BR>", 1)
 
 /client/proc/cmd_admin_pm(mob/M as mob in world)
-	set category = "Special Verbs"
+	set category = "Admin"
 	set name = "Admin PM"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
@@ -131,7 +131,7 @@
 
 /client/proc/cmd_admin_godmode(mob/M as mob in world)
 	set category = "Special Verbs"
-	set name = "Toggle Godmode"
+	set name = "Godmode"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
@@ -146,8 +146,8 @@
 	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]", 1)
 
 /client/proc/cmd_admin_mute(mob/M as mob in world)
-	set category = null
-	set name = "Toggle Mute"
+	set category = "Special Verbs"
+	set name = "Admin Mute"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
@@ -163,7 +163,7 @@
 
 
 /client/proc/cmd_admin_add_random_ai_law()
-	set category = "Debug"
+	set category = "Admin"
 	set name = "Add Random AI Law"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
@@ -227,8 +227,8 @@
 
 
 /client/proc/cmd_admin_add_freeform_ai_law()
-	set category = "Debug"
-	set name = "Add AI law"
+	set category = "Admin"
+	set name = "Add Custom AI law"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
@@ -315,7 +315,7 @@
 	message_admins("[key_name_admin(src)] has created a command report", 1)
 
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
-	set category = "Debug"
+	set category = "Admin"
 	set name = "Delete"
 
 	if (!src.authenticated || !src.holder)
@@ -328,7 +328,7 @@
 		del(O)
 
 /client/proc/cmd_admin_list_occ()
-	set category = "Debug"
+	set category = "Admin"
 	set name = "List OOC"
 
 	if (!src.authenticated || !src.holder)
@@ -358,7 +358,7 @@
 	M.gib()
 
 /client/proc/cmd_admin_gib_self()
-	set name = "gibself"
+	set name = "Gibself"
 	set category = "Special Verbs"
 	if (istype(src.mob, /mob/dead/observer)) // so they don't spam gibs everywhere
 		return
@@ -468,10 +468,50 @@
 
 /client/proc/toggle_view_range()
 	set category = "Special Verbs"
-	set name = "Toggle View Range"
+	set name = "Change View Range"
 	set desc = "switches between 1x and custom views"
 
 	if(src.view == world.view)
 		src.view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14)
 	else
 		src.view = world.view
+
+
+
+
+/client/proc/admin_call_shuttle()
+
+	set category = "Admin"
+	set name = "Call Shuttle"
+
+	if ((!( ticker ) || emergency_shuttle.location))
+		return
+
+	if (!src.authenticated || !src.holder)
+		src << "Only administrators may use this command."
+		return
+
+	emergency_shuttle.incall()
+	world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
+	world << sound('shuttlecalled.ogg')
+
+	return
+
+/client/proc/admin_cancel_shuttle()
+
+	set category = "Admin"
+	set name = "Cancel Shuttle"
+
+	if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0))
+		return
+
+	if (!src.authenticated || !src.holder)
+		src << "Only administrators may use this command."
+		return
+
+	world << "\blue <B>Alert: The shuttle is going back!</B>"
+	world << sound('shuttlerecalled.ogg')
+
+	emergency_shuttle.recall()
+
+	return

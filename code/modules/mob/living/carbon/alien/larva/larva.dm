@@ -389,7 +389,7 @@ to clean it up, or just beat the shit out of it (which takes ages).
 		if (src.stunned >= 3) src.stunned -= 3
 		if (src.weakened >= 3) src.weakened -= 3
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\blue The monkey shakes [src] trying to wake him up!", ), 1)
+			O.show_message(text("\blue [M.name] shakes [src] trying to wake him up!", ), 1)
 	else
 		if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 			return

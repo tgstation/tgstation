@@ -1,6 +1,6 @@
 /client/proc/cmd_admin_say(msg as text)
 	set category = "Special Verbs"
-	set name = "asay"
+	set name = "Admin Say"
 	set hidden = 1
 
 	//	All admins should be authenticated, but... what if?

@@ -18,7 +18,7 @@
 /mob/living/carbon/alien/say_quote(var/text)
 //	var/ending = copytext(text, length(text))
 
-	return "hisses, \"[text]\"";
+	return "[src.say_message], \"[text]\"";
 
 /mob/living/proc/alien_talk(var/message)
 

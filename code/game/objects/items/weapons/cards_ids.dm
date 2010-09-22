@@ -35,6 +35,7 @@ FINGERPRINT CARD
 	return
 
 /obj/item/weapon/card/id/verb/read()
+	set name = "Read ID Card"
 	set src in usr
 
 	usr << text("\icon[] []: The current assignment on the card is [].", src, src.name, src.assignment)

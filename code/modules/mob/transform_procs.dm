@@ -37,12 +37,7 @@
 	O.loc = src.loc
 	O.a_intent = "hurt"
 	O << "<B>You are now a monkey.</B>"
-	/*
-	if (ticker.mode.name == "monkey")
-		O << "<B>Don't be angry at the source as now you are just like him so deal with it.</B>"
-		O << "<B>Follow your objective.</B>"
-	//SN src = null
-	*/
+
 	del(src)
 	return
 

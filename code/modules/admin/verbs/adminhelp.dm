@@ -1,6 +1,6 @@
 /mob/verb/adminhelp(msg as text)
 	set category = "Commands"
-	set name = "adminhelp"
+	set name = "-Adminhelp"
 	if(!usr.client.authenticated)
 		src << "Please authorize before sending these messages."
 		return

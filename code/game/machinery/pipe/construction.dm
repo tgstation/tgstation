@@ -54,6 +54,7 @@ Buildable meters
 // rotate the pipe item clockwise
 
 /obj/item/weapon/pipe/verb/rotate()
+	set name = "Rotate Pipe"
 	set src in view(1)
 
 	if ( usr.stat || usr.restrained() )

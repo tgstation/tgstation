@@ -59,6 +59,7 @@
 	return
 
 /obj/item/verb/move_to_top()
+	set name = "Move To Top"
 	set src in oview(1)
 
 	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )

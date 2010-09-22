@@ -517,7 +517,7 @@ Doing this because FindTurfs() isn't even used
 		message_admins("[src.key] set the random event chance to [eventchance]%")
 
 /mob/verb/funbutton()
-	set category = "Debug"
+	set category = "Admin"
 	set name = "Random Expl.(REMOVE ME)"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."

@@ -267,6 +267,7 @@
 	//step(src, direction)
 
 /proc/possess(obj/O as obj in world)
+	set name = "Possess Obj"
 	usr.loc = O
 	usr.real_name = O.name
 	usr.name = O.name
@@ -274,14 +275,17 @@
 	usr.control_object = O
 
 /proc/release(obj/O as obj in world)
+	set name = "Release Obj"
 	//usr.loc = get_turf(usr)
 	usr.loc = O.loc // Appear where the object you were controlling is -- TLE
 	usr.client.eye = usr
 	usr.control_object = null
 
 /proc/givetestverbs(mob/M as mob in world)
+	set desc = "Give this guy possess/release verbs"
+	set category = "Debug"
+	set name = "Give Possessing Verbs"
 	M.verbs += /proc/possess
 	M.verbs += /proc/release
-
 
 /////////////////////////////////////////////////////blue

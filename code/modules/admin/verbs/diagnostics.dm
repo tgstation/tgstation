@@ -1,6 +1,7 @@
 /client/proc
 	general_report()
-		set category = "Diagnostics"
+		set category = "Debug"
+		set name = "Show General Report"
 
 		if(!master_controller)
 			usr << alert("Master_controller not found.")
@@ -21,7 +22,8 @@
 		usr << browse(output,"window=generalreport")
 
 	air_report()
-		set category = "Diagnostics"
+		set category = "Debug"
+		set name = "Show Air Report"
 
 		if(!master_controller || !air_master)
 			alert(usr,"Master_controller or air_master not found.","Air Report")
@@ -62,7 +64,8 @@
 		usr << browse(output,"window=airreport")
 
 	air_status(turf/target as turf)
-		set category = "Diagnostics"
+		set category = "Debug"
+		set name = "Display Air Status"
 
 		if(!isturf(target))
 			return
@@ -79,8 +82,8 @@
 			usr << "[trace_gas.type]: [trace_gas.moles]"
 
 	fix_next_move()
-		set category = "Diagnostics"
-		set name = "Press this if everybody freezes up"
+		set category = "Debug"
+		set name = "Unfreeze Everyone"
 		var/largest_move_time = 0
 		var/largest_click_time = 0
 		var/mob/largest_move_mob = null

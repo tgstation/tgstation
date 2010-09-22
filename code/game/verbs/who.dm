@@ -1,5 +1,5 @@
 /mob/verb/who()
-	set name = "Who"
+	set name = "Who is Online"
 
 	usr << "<b>Current Players:</b>"
 
@@ -18,7 +18,7 @@
 		for (var/mob/M in world)
 			if (!M.client)
 				continue
-			
+
 			if (M.client.stealth && !usr.client.holder)
 				peeps += "\t[M.client.fakekey]"
 			else if (M.client.goon)				//everyone is authed
@@ -35,6 +35,7 @@
 
 /client/verb/adminwho()
 	set category = "Commands"
+	set name = "Admins Online"
 
 	usr << "<b>Current Admins:</b>"
 

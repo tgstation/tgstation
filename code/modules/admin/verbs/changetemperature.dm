@@ -1,7 +1,7 @@
 //debug proc for testing body temperature
 /client/proc/modifytemperature(newtemp as num)
 	set category = "Debug"
-	set name = "mass edit temperature"
+	set name = "Mass Edit Temperature"
 	set desc="edit temperature of all turfs in view"
 /*
 	if(Debug2)

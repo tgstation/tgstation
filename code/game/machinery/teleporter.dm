@@ -278,6 +278,7 @@
 	return
 
 /obj/machinery/computer/data/verb/read(topic as text)
+	set name = "Read"
 	set src in oview(1)
 
 	if (src.topics[text("[]", topic)])

@@ -120,6 +120,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 /client/proc/Cell()
 	set category = "Debug"
+	set name = "Air Status in Location"
 	if(!src.mob)
 		return
 	var/turf/T = src.mob.loc
@@ -138,8 +139,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	usr.show_message(t, 1)
 
 /client/proc/cmd_admin_robotize(var/mob/M in world)
-	set category = "Debug"
-	set name = "Robotize"
+	set category = "Admin"
+	set name = "Make Robot"
 
 	if(!ticker)
 		alert("Wait until the game starts")
@@ -154,8 +155,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 
 /client/proc/cmd_admin_alienize(var/mob/M in world)
-	set category = "Debug"
-	set name = "Alienize"
+	set category = "Admin"
+	set name = "Make Alien"
 
 	if(!ticker)
 		alert("Wait until the game starts")
@@ -167,8 +168,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
+/client/proc/cmd_admin_monkeyize(var/mob/M in world)
+	set category = "Admin"
+	set name = "Make Monkey"
+
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/target = M
+		log_admin("[key_name(src)] is attempting to monkeyize [M.key].")
+		spawn(10)
+			target.monkeyize()
+	else
+		alert("Invalid mob")
+
 /client/proc/cmd_admin_changelinginize(var/mob/M in world)
-	set category = "Debug"
+	set category = "Admin"
 	set name = "Make Changeling"
 
 	if(!ticker)
@@ -183,7 +199,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Invalid mob")
 
 /client/proc/cmd_admin_abominize(var/mob/M in world)
-	set category = "Debug"
+	set category = "Admin"
 	set name = "Make Abomination"
 
 	usr << "Ruby Mode disabled. Command aborted."
@@ -213,7 +229,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		message_admins("[key_name_admin(src)] has deleted all instances of [hsbitem].", 0)
 
 /client/proc/cmd_debug_tog_aliens()
-	set category = "Debug"
+	set category = "Special Verbs"
 	set name = "Toggle Aliens"
 
 	aliens_allowed = !aliens_allowed

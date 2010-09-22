@@ -41,7 +41,7 @@
 	return
 
 /obj/machinery/nuclearbomb/verb/make_deployable()
-	set name = "make deployable"
+	set name = "Make Deployable"
 	set src in oview(1)
 
 	if (src.deployable)

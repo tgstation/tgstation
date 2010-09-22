@@ -271,6 +271,7 @@
 	return
 
 /obj/item/weapon/tank/jetpack/verb/toggle()
+	set name = "Toggle Jetpack"
 	src.on = !( src.on )
 	src.icon_state = text("jetpack[]", src.on)
 	if(src.on)

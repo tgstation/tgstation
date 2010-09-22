@@ -41,6 +41,7 @@
 		updateicon()
 
 	verb/rotate()
+		set name = "Rotate"
 		set src in view(1)
 		turn_off()
 		dir = turn(dir, -90)

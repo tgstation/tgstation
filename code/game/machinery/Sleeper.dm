@@ -256,6 +256,7 @@
 	return
 
 /obj/machinery/sleeper/verb/eject()
+	set name = "Eject"
 	set src in oview(1)
 
 	if (usr.stat != 0)
@@ -265,6 +266,7 @@
 	return
 
 /obj/machinery/sleeper/verb/move_inside()
+	set name = "Move Inside"
 	set src in oview(1)
 
 	if (usr.stat != 0)

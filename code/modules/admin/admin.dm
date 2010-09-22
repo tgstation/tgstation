@@ -11,6 +11,8 @@ var/showadminmessages = 1
 				M << rendered
 
 /proc/toggle_adminmsg()
+	set name = "Toggle Admin Messages"
+	set category = "Server"
 	showadminmessages = !showadminmessages
 
 /obj/admins/Topic(href, href_list)
@@ -1536,7 +1538,7 @@ var/showadminmessages = 1
 
 
 /obj/admins/proc/vmode()
-	set category = "Special Verbs"
+	set category = "Server"
 	set name = "Start Vote"
 	set desc="Starts vote"
 	var/confirm = alert("What vote would you like to start?", "Vote", "Restart", "Change Game Mode", "Cancel")
@@ -1577,7 +1579,7 @@ var/showadminmessages = 1
 				CM.client.vote = "default"
 
 /obj/admins/proc/votekill()
-	set category = "Special Verbs"
+	set category = "Server"
 	set name = "Abort Vote"
 	set desc="Aborts a vote"
 	if(vote.voting == 0)
@@ -1597,7 +1599,7 @@ var/showadminmessages = 1
 			M.client.showvote = 0
 
 /obj/admins/proc/voteres()
-	set category = "Special Verbs"
+	set category = "Server"
 	set name = "Toggle Voting"
 	set desc="Toggles Votes"
 	var/confirm = alert("What vote would you like to toggle?", "Vote", "Restart [config.allow_vote_restart ? "Off" : "On"]", "Change Game Mode [config.allow_vote_mode ? "Off" : "On"]", "Cancel")
@@ -1619,7 +1621,7 @@ var/showadminmessages = 1
 			vote.nextvotetime = world.timeofday
 
 /obj/admins/proc/restart()
-	set category = "Special Verbs"
+	set category = "Server"
 	set name = "Restart"
 	set desc="Restarts the world"
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
@@ -1643,7 +1645,7 @@ var/showadminmessages = 1
 		world << "\blue <b>[usr.client.stealth ? "Administrator" : usr.key] Announces:</b>\n \t [message]"
 		log_admin("Announce: [key_name(usr)] : [message]")
 /obj/admins/proc/toggleooc()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Toggle dis bitch"
 	set name="Toggle OOC"
 	ooc_allowed = !( ooc_allowed )
@@ -1655,7 +1657,7 @@ var/showadminmessages = 1
 	message_admins("[key_name_admin(usr)] toggled OOC.", 1)
 
 /obj/admins/proc/toggleoocdead()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Toggle dis bitch"
 	set name="Toggle Dead OOC"
 	dooc_allowed = !( dooc_allowed )
@@ -1664,7 +1666,7 @@ var/showadminmessages = 1
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.", 1)
 
 /obj/admins/proc/toggletraitorscaling()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Toggle traitor scaling"
 	set name="Toggle Traitor Scaling"
 	traitor_scaling = !traitor_scaling
@@ -1672,7 +1674,7 @@ var/showadminmessages = 1
 	message_admins("[key_name_admin(usr)] toggled Traitor Scaling [traitor_scaling ? "on" : "off"].", 1)
 
 /obj/admins/proc/togglegoonsay()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc = "Toggle dis bitch"
 	set name = "Toggle Goonsay"
 	goonsay_allowed = !( goonsay_allowed )
@@ -1684,7 +1686,7 @@ var/showadminmessages = 1
 	message_admins("[key_name_admin(usr)] toggled GOONSAY [goonsay_allowed ? "on" : "off"]", 1)
 
 /obj/admins/proc/startnow()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
 	if(!ticker)
@@ -1700,7 +1702,7 @@ var/showadminmessages = 1
 		return 0
 
 /obj/admins/proc/toggleenter()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="People can't enter"
 	set name="Toggle Entering"
 	enter_allowed = !( enter_allowed )
@@ -1713,7 +1715,7 @@ var/showadminmessages = 1
 	world.update_status()
 
 /obj/admins/proc/toggleAI()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="People can't be AI"
 	set name="Toggle AI"
 	config.allow_ai = !( config.allow_ai )
@@ -1725,7 +1727,7 @@ var/showadminmessages = 1
 	world.update_status()
 
 /obj/admins/proc/toggleaban()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Respawn basically"
 	set name="Toggle Respawn"
 	abandon_allowed = !( abandon_allowed )
@@ -1738,7 +1740,7 @@ var/showadminmessages = 1
 	world.update_status()
 
 /obj/admins/proc/toggle_aliens()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Toggle alien mobs"
 	set name="Toggle Aliens"
 	aliens_allowed = !aliens_allowed
@@ -1746,7 +1748,7 @@ var/showadminmessages = 1
 	message_admins("[key_name_admin(usr)] toggled Aliens [aliens_allowed ? "on" : "off"].", 1)
 
 /obj/admins/proc/delay()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Delay the game start"
 	set name="Delay"
 	if (ticker)
@@ -1760,28 +1762,28 @@ var/showadminmessages = 1
 		log_admin("[key_name(usr)] removed the delay.")
 
 /obj/admins/proc/adjump()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Toggle admin jumping"
 	set name="Toggle Jump"
 	config.allow_admin_jump = !(config.allow_admin_jump)
 	message_admins("\blue Toggled admin jumping to [config.allow_admin_jump].")
 
 /obj/admins/proc/adspawn()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Toggle admin spawning"
 	set name="Toggle Spawn"
 	config.allow_admin_spawning = !(config.allow_admin_spawning)
 	message_admins("\blue Toggled admin item spawning to [config.allow_admin_spawning].")
 
 /obj/admins/proc/adrev()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Toggle admin revives"
 	set name="Toggle Revive"
 	config.allow_admin_rev = !(config.allow_admin_rev)
 	message_admins("\blue Toggled reviving to [config.allow_admin_rev].")
 
 /obj/admins/proc/immreboot()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Reboots the server post haste"
 	set name="Immediate Reboot"
 	if( alert("Reboot server?",,"Yes","No") == "No")
@@ -1791,7 +1793,7 @@ var/showadminmessages = 1
 	world.Reboot()
 
 /client/proc/deadchat()
-	set category = "Special Verbs"
+	set category = "Server"
 	set desc="Toggles Deadchat"
 	set name="Deadchat"
 	if(deadchat == 0)
@@ -1802,7 +1804,7 @@ var/showadminmessages = 1
 		usr << "Deadchat turned off"
 
 /obj/admins/proc/unprison(var/mob/M in world)
-	set category = "Special Verbs"
+	set category = "Admin"
 	set name = "Unprison"
 	if (M.z == 2)
 		if (config.allow_admin_jump)

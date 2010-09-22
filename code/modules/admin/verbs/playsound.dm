@@ -1,6 +1,6 @@
 /client/proc/play_sound(S as sound)
 	set category = "Special Verbs"
-	set name = "play sound"
+	set name = "Play Global Sound"
 
 	//if(Debug2)
 	if(!src.authenticated || !src.holder)

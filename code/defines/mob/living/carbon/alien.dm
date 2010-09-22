@@ -2,6 +2,7 @@
 	name = "alien"
 	voice_name = "alien"
 	voice_message = "hisses"
+	say_message = "hisses"
 	icon = 'alien.dmi'
 
 	toxloss = 250

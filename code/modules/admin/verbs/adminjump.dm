@@ -1,6 +1,7 @@
 /client/proc/Jump(var/area/A in world)
+	set name = "Jump to Area"
 	set desc = "Area to jump to"
-	set category = "Special Verbs"
+	set category = "Admin"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
@@ -14,6 +15,7 @@
 		alert("Admin jumping disabled")
 
 /client/proc/jumptoturf(var/turf/T in world)
+	set name = "Jump to Turf"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
@@ -26,7 +28,7 @@
 	return
 
 /client/proc/jumptomob(var/mob/M in world)
-	set category = "Special Verbs"
+	set category = "Admin"
 	set name = "Jump to Mob"
 
 	if(!src.authenticated || !src.holder)
@@ -41,7 +43,7 @@
 		alert("Admin jumping disabled")
 
 /client/proc/jumptokey()
-	set category = "Special Verbs"
+	set category = "Admin"
 	set name = "Jump to Key"
 
 	if(!src.authenticated || !src.holder)
@@ -63,7 +65,7 @@
 		alert("Admin jumping disabled")
 
 /client/proc/Getmob(var/mob/M in world)
-	set category = "Special Verbs"
+	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
 	if(!src.authenticated || !src.holder)
@@ -77,7 +79,7 @@
 		alert("Admin jumping disabled")
 
 /client/proc/sendmob(var/mob/M in world, var/area/A in world)
-	set category = "Special Verbs"
+	set category = "Admin"
 	set name = "Send Mob"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
