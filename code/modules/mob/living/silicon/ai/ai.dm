@@ -20,8 +20,8 @@
 		src.real_name = "Inactive AI"
 		src.icon_state = "ai-empty"
 	else
-		if (B.owner.client)
-			B.owner.client.mob = src
+		if (B.owner.mind)
+			B.owner.mind.transfer_to(src)
 
 		src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
 		src << "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>"
