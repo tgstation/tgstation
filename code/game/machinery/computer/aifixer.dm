@@ -157,6 +157,10 @@
 			src.occupant.toxloss = max (src.occupant.toxloss-1, 0)
 			src.occupant.bruteloss = max (src.occupant.bruteloss-1, 0)
 			sleep(10)
+			if (src.occupant.health <= 0 && src.occupant.stat == 2)
+				src.occupant.stat = 0
+				src.overlays -= image('AIcore.dmi', "ai-fixer-404")
+				src.overlays += image('AIcore.dmi', "ai-fixer-full")
 		src.active = 0
 		src.overlays -= image('AIcore.dmi', "ai-fixer-on")
 
