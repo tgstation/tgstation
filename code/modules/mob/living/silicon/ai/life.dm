@@ -26,10 +26,10 @@
 				src.fire.icon_state = "fire0"
 		*/ //TODO: DEFERRED
 
-		if (src.health <= -100.0)
+		if (src.health <= -100.0 && !istype(src.loc, /obj/machinery/computer/aifixer))
 			death()
 			return
-		else if (src.health < 0)
+		else if (src.health < 0 && !istype(src.loc, /obj/machinery/computer/aifixer))
 			src.oxyloss++
 
 		if (src.machine)
