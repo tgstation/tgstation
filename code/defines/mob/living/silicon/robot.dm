@@ -45,3 +45,5 @@
 	var/killswitch_time = 60
 	var/weapon_lock = 0
 	var/weaponlock_time = 120
+	var/datum/ai_laws/laws = null //Making it so borgs can have laws when there isn't an AI.
+	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default

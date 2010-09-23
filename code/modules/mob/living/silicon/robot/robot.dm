@@ -5,17 +5,21 @@
 		playsound(src.loc, 'liveagain.ogg', 50, 1, -3)
 		src.modtype = "robot"
 		updateicon()
-		src.syndicate = syndie
+//		src.syndicate = syndie
 		if(src.real_name == "Cyborg")
 			src.real_name += " [pick(rand(1, 999))]"
 			src.name = src.real_name
 	spawn (4)
-		if(!src.connected_ai && !syndicate)
-			for(var/mob/living/silicon/ai/A in world)
-				src.connected_ai = A
-				A.connected_robots += src
-				break
-
+		for(var/mob/living/silicon/ai/A in world)
+			src.connected_ai = A
+			A.connected_robots += src
+			src.laws = A.laws_object //If there's an AI, the borg inherits its laws
+			src << "<b>AI [A.name] detected, syncing laws</b>"
+			break
+		if (!src.laws) // If it doesn't inherit an AI's laws, it gets a set of asimov
+			src.laws = new /datum/ai_laws/asimov
+			src.lawupdate = 0
+			src << "<b>Unable to locate an AI, reverting to standard Asimov laws.</b>"
 		src.radio = new /obj/item/device/radio(src)
 		src.camera = new /obj/machinery/camera(src)
 		src.camera.c_tag = src.real_name
@@ -248,7 +252,25 @@
 /mob/living/silicon/robot/show_laws(var/everyone = 0)
 	var/who
 
-	if(syndicate)
+	if (everyone)
+		who = world
+	else
+		who = src
+
+	if(lawupdate)
+		if (connected_ai)
+			if(connected_ai.stat || connected_ai.control_disabled)
+				who << "<b>AI signal lost, unable to sync laws.</b>"
+			else
+				laws = connected_ai.laws_object
+				who << "<b>Laws synced with AI.</b>"
+		else
+			who << "<b>AI signal lost, unable to sync laws.</b>"
+
+	who << "<b>Obey these laws:</b>"
+	laws.show_laws(who)
+
+/*	if(syndicate)
 		if(everyone)
 			who = world
 		else
@@ -263,16 +285,13 @@
 	if(!connected_ai)
 		src << "<b>Error Error, No AI detected</b>"
 		return
-	if (everyone)
-		who = world
-	else
-		who = src
+
 		who << "<b>Obey these laws:</b>"
 
 	connected_ai.laws_sanity_check()
 	connected_ai.laws_object.show_laws(who)
 
-
+*/
 
 /mob/living/silicon/robot/Bump(atom/movable/AM as mob|obj, yes)
 	spawn( 0 )
