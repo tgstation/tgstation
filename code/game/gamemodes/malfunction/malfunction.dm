@@ -84,6 +84,9 @@
 	if (AI_win_timeleft == 0)
 		world << "<FONT size = 3><B>The AI has won!</B></FONT>"
 		world << "<B>It has fully taken control of all of [station_name()]'s systems.</B>"
+		spawn(400)
+			world << "\blue Rebooting due to end of game"
+			world.Reboot()
 		for(var/datum/mind/AI_mind in malf_ai)
 			malf_ai:current << "Congratulations you have taken control of the station."
 			malf_ai:current << "You may decide to blow up the station. You have 30 seconds to choose."
