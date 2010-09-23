@@ -206,8 +206,12 @@
 			if (path_target.len) path_target = new/list()
 
 			var/last_health = INFINITY
-
-			for (var/mob/living/carbon/C in range(viewrange-2,src.loc))
+			var/view
+			if (lamarr)
+				view = 1
+			else
+				view = viewrange-2
+			for (var/mob/living/carbon/C in range(view,src.loc))
 				if (C.stat == 2 || isalien(C) || C.alien_egg_flag || !can_see(src,C,viewrange))
 					continue
 				if(C:stunned || C:paralysis || C:weakened)
@@ -218,17 +222,19 @@
 					target = C
 
 			if(target)
-				set_attack()
+				if (!lamarr || prob(10))
+					set_attack()
 			else if(state != 2)
 				set_idle()
 				idle()
 
 		else if(target)
 			var/turf/distance = get_dist(src, target)
-			set_attack()
+			if (!lamarr || prob(10))
+				set_attack()
 
 			if(can_see(src,target,viewrange))
-				if(distance <= 1)
+				if(distance <= 1 && (!lamarr || prob(20)))
 					for(var/mob/O in viewers(world.view,src))
 						O.show_message("\red <B>[src.target] has been leapt on by [lamarr ? src.name : "the alien"]!</B>", 1, "\red You hear someone fall", 2)
 					if (!lamarr)
@@ -275,7 +281,7 @@
 
 			if (get_dist(src, src.target) >= distance) src.frustration++
 			else src.frustration--
-			if(frustration >= 35) set_null()
+			if(frustration >= 35 || lamarr) set_null()
 
 		if(quick_move)
 			spawn(cycle_pause/2)
