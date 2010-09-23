@@ -195,6 +195,11 @@
 	item_state = "chef"
 	flags = FPRINT | TABLEPASS | HEADSPACE
 
+/obj/item/clothing/head/plaguedoctorhat
+	name = "Plague doctor's hat"
+	icon_state = "plaguedoctor"
+	flags = FPRINT | TABLEPASS | HEADSPACE
+
 
 // CHUMP HELMETS: COOKING THEM DESTROYS THE CHUMP HELMET SPAWN.
 
@@ -276,6 +281,18 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 
+/obj/item/clothing/mask/plaguedoctor
+	name = "Plague doctor mask"
+	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
+	icon_state = "plaguedoctor"
+	flags = FPRINT|TABLEPASS|SUITSPACE|MASKCOVERSMOUTH|MASKCOVERSEYES
+	w_class = 3.0
+	see_face = 0.0
+	item_state = "gas_mask"
+	protective_temperature = 500
+	heat_transfer_coefficient = 0.01
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
 
 /obj/item/clothing/mask/gas/emergency
 	name = "emergency gas mask"
@@ -426,6 +443,17 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 0.30
+
+/obj/item/clothing/suit/plaguedoctorsuit
+	name = "Plague doctor suit"
+	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."
+	icon_state = "plaguedoctor"
+	item_state = "bio_suit"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	heat_transfer_coefficient = 0.30
+
 
 /obj/item/clothing/suit/det_suit
 	name = "coat"
