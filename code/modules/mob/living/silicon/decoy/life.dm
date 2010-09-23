@@ -2,9 +2,10 @@
 	if (src.stat == 2)
 		return
 	else
-		if (src.health <= -100.0)
+		if (src.health <= -100.0 && src.stat != 2)
 			death()
 			return
+
 
 /mob/living/silicon/decoy/updatehealth()
 	if (src.nodamage == 0)
