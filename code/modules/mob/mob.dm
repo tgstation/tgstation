@@ -390,11 +390,14 @@
 						if(H.mutations & 32)
 							src.assailant << "\blue You can't strangle [src.affecting] through all that fat!"
 							return
+
+						/*
+						//we should be able to strangle the Captain if he is wearing a hat
 						for(var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
 							if(C.body_parts_covered & HEAD)
 								src.assailant << "\blue You have to take off [src.affecting]'s [C.name] first!"
 								return
-						/*
+
 						if(istype(H.wear_suit, /obj/item/clothing/suit/space) || istype(H.wear_suit, /obj/item/clothing/suit/armor) || istype(H.wear_suit, /obj/item/clothing/suit/bio_suit) || istype(H.wear_suit, /obj/item/clothing/suit/swat_suit))
 							src.assailant << "\blue You can't strangle [src.affecting] through their suit collar!"
 							return
@@ -1277,7 +1280,6 @@
 		src.client.changes = 1
 
 /mob/verb/succumb()
-	set name = "Succumb"
 	set hidden = 1
 
 	if ((src.health < 0 && src.health > -95.0))
@@ -1526,7 +1528,6 @@
 	return
 
 /atom/movable/verb/pull()
-	set name = "Pull"
 	set src in oview(1)
 
 	if (!( usr ))
@@ -1536,7 +1537,6 @@
 	return
 
 /atom/verb/examine()
-	set name = "Examine"
 	set src in oview(12)	//make it work from farther away
 
 	if (!( usr ))
@@ -1871,17 +1871,11 @@
 		src.mind.transfer_to(newmob)
 
 		var/virus = src.virus
-		if (istype(src, /mob/living/silicon))
-			robogibs(src.loc, virus)
-		else
-			gibs(src.loc, virus)
+		gibs(src.loc, virus)
 
 	else if (!src.client)
 		var/virus = src.virus
-		if (istype(src, /mob/living/silicon))
-			robogibs(src.loc, virus)
-		else
-			gibs(src.loc, virus)
+		gibs(src.loc, virus)
 
 	sleep(15)
 	del(src)
@@ -2004,11 +1998,11 @@
 			switch(ticker.mode.name)
 				if("nuclear emergency")
 					flick("start_nuke", boom)
-				else if("AI malfunction")
+				if("AI malfunction")
 					flick("start_malf", boom)
 				else
 					boom.icon_state = "start"
-		sleep(100)
+		sleep(40)
 		M << sound('explosionfar.ogg')
 		boom.icon_state = "end"
 		flick("explode", boom)
