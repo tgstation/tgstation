@@ -142,12 +142,12 @@ var/global/datum/controller/gameticker/ticker
 
 			spawn
 				declare_completion()
+			if(ticker.mode.name != "nuclear emergency")
+				spawn(50)
+					world << "\blue <B>Restarting in 25 seconds</B>"
 
-			spawn(50)
-				world << "\blue <B>Restarting in 25 seconds</B>"
-
-				sleep(250)
-				world.Reboot()
+					sleep(250)
+					world.Reboot()
 
 		return 1
 

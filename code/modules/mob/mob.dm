@@ -2004,11 +2004,11 @@
 			switch(ticker.mode.name)
 				if("nuclear emergency")
 					flick("start_nuke", boom)
-				if("AI malfunction")
+				else if("AI malfunction")
 					flick("start_malf", boom)
 				else
 					boom.icon_state = "start"
-		sleep(40)
+		sleep(100)
 		M << sound('explosionfar.ogg')
 		boom.icon_state = "end"
 		flick("explode", boom)

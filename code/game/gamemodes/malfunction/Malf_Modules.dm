@@ -108,6 +108,7 @@ rcd light flash thingy on matter drain
 	ticker.mode:hack_intercept()
 
 /datum/game_mode/malfunction/AI_Module/small/reactivate_camera
+	module_name = "Reactivate camera"
 	mod_pick_name = "recam"
 	uses = 10
 

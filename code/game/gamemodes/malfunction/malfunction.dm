@@ -5,9 +5,10 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800
 
-	var/AI_win_timeleft = 1800
+	var/AI_win_timeleft = 20 //started at 1800, in case I change this for testing round end.
 	var/intercept_hacked = 0
 	var/malf_mode_declared = 0
+	var/boom = 0
 
 /datum/game_mode/malfunction/announce()
 	world << "<B>The current game mode is - AI Malfunction!</B>"
@@ -23,7 +24,7 @@
 		malf_ai += aiplayer.mind
 
 
-
+		for(var/datum/mind/AI_mind in malf_ai)
 	/*if(malf_ai.len < 1)
 		world << "Uh oh, its malfunction and there is no AI! Please report this."
 		world << "Rebooting world in 5 seconds."
@@ -32,10 +33,10 @@
 		return*/
 
 
-	malf_ai.current << "\red<font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font>"
-	malf_ai.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild. The timer will appear for humans 10 minutes in.</B>"
+			AI_mind.current << "\red<font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font>"
+			AI_mind.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild. The timer will appear for humans 10 minutes in.</B>"
 
-	malf_ai.current.icon_state = "ai-malf"
+			AI_mind.current.icon_state = "ai-malf"
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
@@ -84,13 +85,19 @@
 	if (AI_win_timeleft == 0)
 		world << "<FONT size = 3><B>The AI has won!</B></FONT>"
 		world << "<B>It has fully taken control of all of [station_name()]'s systems.</B>"
-		spawn(400)
-			world << "\blue Rebooting due to end of game"
-			world.Reboot()
+
 		for(var/datum/mind/AI_mind in malf_ai)
-			malf_ai:current << "Congratulations you have taken control of the station."
-			malf_ai:current << "You may decide to blow up the station. You have 30 seconds to choose."
-			malf_ai:current << text("<A HREF=?src=\ref[src];ai_win=\ref[malf_ai:current]>Self-destruct the station</A>)")
+			AI_mind.current << "Congratulations you have taken control of the station."
+			AI_mind.current << "You may decide to blow up the station. You have 30 seconds to choose."
+			AI_mind.current.verbs += /datum/game_mode/malfunction/proc/ai_win
+			spawn (300)
+				AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
+				if (!boom)
+					world << "<B>The AI has chosen not to explode you all! Resetting in 30 seconds!</B>"
+
+					sleep(300)
+					log_game("Rebooting due to round end")
+					world.Reboot()
 		return 1
 	else
 		return 0
@@ -102,7 +109,12 @@
 	return
 
 /datum/game_mode/malfunction/proc/ai_win()
+	set category = "BLOW UP THE STATION"
+	set name = "FUCK YES BLOW THIS SHIT UP"
+	set desc = "BOOM"
 
+	usr.verbs -= /datum/game_mode/malfunction/proc/ai_win
+	ticker.mode:boom = 1
 	world << "Self-destructing in 10"
 	sleep(10)
 	world << "9"
@@ -123,11 +135,14 @@
 	sleep(10)
 	world << "1"
 	sleep(10)
-	var/turf/ground_zero = locate("landmark*blob-directive")
+	enter_allowed = 0
+	for(var/mob/M in world)
+		if(M.client)
+			spawn(0)
+				M.client.station_explosion_cinematic()
+	sleep(110)
+	world << "<B>Everyone was killed by the self-destruct! Resetting in 30 seconds!</B>"
 
-	if (ground_zero)
-		ground_zero = get_turf(ground_zero)
-	else
-		ground_zero = locate(45,45,1)
-
-	explosion(ground_zero, 100, 250, 500, 750)
+	sleep(300)
+	log_game("Rebooting due to destruction of station")
+	world.Reboot()

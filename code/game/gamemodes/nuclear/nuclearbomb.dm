@@ -129,6 +129,7 @@
 		return
 	src.timing = -1.0
 	src.yes_code = 0
+	src.safety = 1
 	src.icon_state = "nuclearbomb3"
 	sleep(20)
 
@@ -146,13 +147,13 @@
 	if(ticker.mode.name == "nuclear emergency")
 		ticker.mode:nuke_detonated = 1
 		ticker.mode.check_win()
-	else
-		sleep(10)
-		world << "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>"
 
-		sleep(300)
-		log_game("Rebooting due to nuclear destruction of station")
-		world.Reboot()
+	sleep(110)
+	world << "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>"
+
+	sleep(300)
+	log_game("Rebooting due to nuclear destruction of station")
+	world.Reboot()
 	return
 
 /obj/item/weapon/disk/nuclear/Del()
