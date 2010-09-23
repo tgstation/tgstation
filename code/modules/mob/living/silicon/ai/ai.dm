@@ -48,6 +48,24 @@
 				src.real_name = newname
 				src.name = newname
 
+/mob/living/silicon/ai/Stat()
+	..()
+	statpanel("Status")
+	if (src.client.statpanel == "Status")
+		if(emergency_shuttle.online && emergency_shuttle.location < 2)
+			var/timeleft = emergency_shuttle.timeleft()
+			if (timeleft)
+				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
+		if(ticker.mode.name == "AI malfunction")
+			var/datum/game_mode/malfunction/malf = ticker.mode
+			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft, 0)] seconds")
+
+		if(!src.stat)
+			stat(null, text("System integrity: [(src.health+100)/2]%"))
+		else
+			stat(null, text("Systems nonfunctional"))
+
 /mob/living/silicon/ai/proc/ai_alerts()
 	set category = "AI Commands"
 	set name = "Show Alerts"

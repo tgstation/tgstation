@@ -3,7 +3,7 @@
 	config_tag = "malfunction"
 	var/list/datum/mind/malf_ai = list()
 	var/const/waittime_l = 600
-	var/const/waittime_h = 1800
+	var/const/waittime_h = 1800 // started at 1800
 
 	var/AI_win_timeleft = 1800 //started at 1800, in case I change this for testing round end.
 	var/intercept_hacked = 0
