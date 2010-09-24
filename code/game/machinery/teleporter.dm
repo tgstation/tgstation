@@ -103,6 +103,35 @@
 	if(istype(M, /obj/effects))
 		del(M)
 		return
+	if (istype(M, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
+		for(var/mob/O in viewers(M, null))
+			O.show_message(text("\red <B>The [] bounces off of the portal!</B>", M.name), 1)
+		return
+	if (istype(M, /mob))
+		var/mob/MM = M
+		if(MM.check_contents_for(/obj/item/weapon/disk/nuclear))
+			MM << "\red Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through."
+			return
+	var/disky = 0
+	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
+		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
+			for (var/obj/OO in O.contents)
+				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))
+					for (var/obj/OOO in OO.contents)
+						if (istype(OOO, /obj/item/weapon/disk/nuclear))
+							disky = 1
+				if (istype(OO, /obj/item/weapon/disk/nuclear))
+					disky = 1
+		if (istype(O, /obj/item/weapon/disk/nuclear))
+			disky = 1
+		if (istype(O, /mob))
+			var/mob/MM = O
+			if(MM.check_contents_for(/obj/item/weapon/disk/nuclear))
+				disky = 1
+	if (disky)
+		for(var/mob/P in viewers(M, null))
+			P.show_message(text("\red <B>The [] bounces off of the portal!</B>", M.name), 1)
+		return
 
 	var/turf/destturf = get_turf(destination)
 
