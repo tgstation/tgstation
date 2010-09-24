@@ -19,8 +19,8 @@
 			for(var/mob/living/silicon/ai/A in src)
 
 			// Already have an AI
-				if(M.client)
-					user << "<b>Transfer failed</b>: Existing daemon found on this terminal. Remove existing daemon to install a new one."
+				if(M.real_name != "Inactive AI")
+					user << "<b>Transfer failed</b>: Existing AI found on this terminal. Remove existing AI to install a new one."
 					return
 //				else if(M.stat != A.stat)
 //					user << "<b>Transfer failed</b>: Unable to establish connection."
@@ -77,6 +77,8 @@
 					src.icon_state = "aicard-full"
 				O << "You have been downloaded to a mobile storage device. Remote device connection severed."
 				user << "<b>Transfer succeeded</b>: [O.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+			else
+				user << "There isn't an AI on this terminal."
 
 	attack(mob/living/silicon/decoy/M as mob, mob/user as mob)
 		if (!istype (M, /mob/living/silicon/decoy))

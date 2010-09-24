@@ -44,7 +44,9 @@
 	if(istype(I, /obj/item/device/aicard))
 		var/obj/item/device/aicard/C = I
 		if(src.contents.len == 0)
-			for(var/mob/living/silicon/ai/A in C)
+			if (C.contents.len == 0)
+				user << "No AI to copy over!"
+			else for(var/mob/living/silicon/ai/A in C)
 				A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
 				user << "<b>Transfer succesful</b>: [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
 				C.icon_state = "aicard"
@@ -59,6 +61,7 @@
 					src.overlays += image('AIcore.dmi', "ai-fixer-full")
 				src.overlays -= image('AIcore.dmi', "ai-fixer-empty")
 
+
 		else
 			if(C.contents.len == 0 && src.occupant && !src.active)
 				C.name = "inteliCard - [src.occupant.name]"
@@ -69,12 +72,16 @@
 				else
 					C.icon_state = "aicard-full"
 					src.overlays -= image('AIcore.dmi', "ai-fixer-full")
-				src.occupant << "You have been downloaded to a mobile storage device. Remote device connection severed."
+				src.occupant << "You have been downloaded to a mobile storage device. Still no remote access."
 				user << "<b>Transfer succeeded</b>: [src.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 				src.occupant.loc = C
 				src.occupant = null
-
-
+			else if (C.contents.len)
+				user << "There's already an AI in the reconstructer!"
+			else if (src.active)
+				user << "Can't remove an AI during reconstruction!"
+			else if (!src.occupant)
+				user << "No AI to remove!"
 
 	//src.attack_hand(user)
 	return
@@ -135,8 +142,6 @@
 		src.overlays = null
 		return
 	use_power(500)
-	if (src.overlays == null)
-		src.overlays += image('AIcore.dmi', "ai-fixer-empty")
 
 	src.updateDialog()
 	return
@@ -145,17 +150,20 @@
 	if(..())
 		return
 	if (href_list["fix"])
+		src.active = 1
 		src.overlays += image('AIcore.dmi', "ai-fixer-on")
 		while (src.occupant.health < 100)
 			src.occupant.oxyloss = max (src.occupant.oxyloss-1, 0)
 			src.occupant.fireloss = max (src.occupant.fireloss-1, 0)
 			src.occupant.toxloss = max (src.occupant.toxloss-1, 0)
 			src.occupant.bruteloss = max (src.occupant.bruteloss-1, 0)
-			sleep(10)
-			if (src.occupant.health <= 0 && src.occupant.stat == 2)
+			src.occupant.updatehealth()
+			if (src.occupant.health >= 0 && src.occupant.stat == 2)
 				src.occupant.stat = 0
 				src.overlays -= image('AIcore.dmi', "ai-fixer-404")
 				src.overlays += image('AIcore.dmi', "ai-fixer-full")
+			src.updateUsrDialog()
+			sleep(10)
 		src.active = 0
 		src.overlays -= image('AIcore.dmi', "ai-fixer-on")
 
