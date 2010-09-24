@@ -1,13 +1,13 @@
 /obj/machinery/computer/aifixer
 	name = "AI System Integrity Restorer"
-	icon = 'AIcore.dmi'
+	icon = 'computer.dmi'
 	icon_state = "ai-fixer"
 	req_access = list(access_captain, access_robotics, access_heads)
 	var/mob/living/silicon/ai/occupant = null
 	var/active = 0
 
 /obj/machinery/computer/aifixer/New()
-	src.overlays += image('AIcore.dmi', "ai-fixer-empty")
+	src.overlays += image('computer.dmi', "ai-fixer-empty")
 
 
 /obj/machinery/computer/aifixer/attackby(I as obj, user as mob)
@@ -42,6 +42,9 @@
 				del(src)
 */
 	if(istype(I, /obj/item/device/aicard))
+		if(stat & (NOPOWER|BROKEN))
+			user << "This terminal isn't functioning right now, get it working!"
+			return
 		var/obj/item/device/aicard/C = I
 		if(src.contents.len == 0)
 			if (C.contents.len == 0)
@@ -56,22 +59,22 @@
 				src.occupant = A
 				A.control_disabled = 1
 				if (A.stat == 2)
-					src.overlays += image('AIcore.dmi', "ai-fixer-404")
+					src.overlays += image('computer.dmi', "ai-fixer-404")
 				else
-					src.overlays += image('AIcore.dmi', "ai-fixer-full")
-				src.overlays -= image('AIcore.dmi', "ai-fixer-empty")
+					src.overlays += image('computer.dmi', "ai-fixer-full")
+				src.overlays -= image('computer.dmi', "ai-fixer-empty")
 
 
 		else
 			if(C.contents.len == 0 && src.occupant && !src.active)
 				C.name = "inteliCard - [src.occupant.name]"
-				src.overlays += image('AIcore.dmi', "ai-fixer-empty")
+				src.overlays += image('computer.dmi', "ai-fixer-empty")
 				if (src.occupant.stat == 2)
 					C.icon_state = "aicard-404"
-					src.overlays -= image('AIcore.dmi', "ai-fixer-404")
+					src.overlays -= image('computer.dmi', "ai-fixer-404")
 				else
 					C.icon_state = "aicard-full"
-					src.overlays -= image('AIcore.dmi', "ai-fixer-full")
+					src.overlays -= image('computer.dmi', "ai-fixer-full")
 				src.occupant << "You have been downloaded to a mobile storage device. Still no remote access."
 				user << "<b>Transfer succeeded</b>: [src.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 				src.occupant.loc = C
@@ -139,7 +142,6 @@
 
 /obj/machinery/computer/aifixer/process()
 	if(stat & (NOPOWER|BROKEN))
-		src.overlays = null
 		return
 	use_power(500)
 
@@ -151,7 +153,7 @@
 		return
 	if (href_list["fix"])
 		src.active = 1
-		src.overlays += image('AIcore.dmi', "ai-fixer-on")
+		src.overlays += image('computer.dmi', "ai-fixer-on")
 		while (src.occupant.health < 100)
 			src.occupant.oxyloss = max (src.occupant.oxyloss-1, 0)
 			src.occupant.fireloss = max (src.occupant.fireloss-1, 0)
@@ -160,12 +162,12 @@
 			src.occupant.updatehealth()
 			if (src.occupant.health >= 0 && src.occupant.stat == 2)
 				src.occupant.stat = 0
-				src.overlays -= image('AIcore.dmi', "ai-fixer-404")
-				src.overlays += image('AIcore.dmi', "ai-fixer-full")
+				src.overlays -= image('computer.dmi', "ai-fixer-404")
+				src.overlays += image('computer.dmi', "ai-fixer-full")
 			src.updateUsrDialog()
 			sleep(10)
 		src.active = 0
-		src.overlays -= image('AIcore.dmi', "ai-fixer-on")
+		src.overlays -= image('computer.dmi', "ai-fixer-on")
 
 
 		src.add_fingerprint(usr)

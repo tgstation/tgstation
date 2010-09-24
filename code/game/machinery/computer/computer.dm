@@ -89,16 +89,30 @@ Pod/Blast Doors computer
 		if(stat & BROKEN)
 			icon_state = initial(icon_state)
 			src.icon_state += "b"
+			if (istype(src,/obj/machinery/computer/aifixer))
+				src.overlays = null
 
 		else if(powered())
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
+			if (istype(src,/obj/machinery/computer/aifixer))
+				var/obj/machinery/computer/aifixer/O = src
+				if (O.occupant)
+					switch (O.occupant.stat)
+						if (0)
+							src.overlays += image('computer.dmi', "ai-fixer-full")
+						if (2)
+							src.overlays += image('computer.dmi', "ai-fixer-404")
+				else
+					src.overlays += image('computer.dmi', "ai-fixer-empty")
 		else
 			spawn(rand(0, 15))
 				//src.icon_state = "c_unpowered"
 				icon_state = initial(icon_state)
 				src.icon_state += "0"
 				stat |= NOPOWER
+				if (istype(src,/obj/machinery/computer/aifixer))
+					src.overlays = null
 
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))

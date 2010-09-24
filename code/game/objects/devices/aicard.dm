@@ -10,6 +10,7 @@
 
 	attack(mob/living/silicon/ai/M as mob, mob/user as mob)
 		if (src.flush)
+			user << "<b>Transfer failed</b>: Cannot transfer while wipe in progress."
 			return
 
 		if(!istype(M, /mob/living/silicon/ai))
@@ -22,9 +23,7 @@
 				if(M.real_name != "Inactive AI")
 					user << "<b>Transfer failed</b>: Existing AI found on this terminal. Remove existing AI to install a new one."
 					return
-//				else if(M.stat != A.stat)
-//					user << "<b>Transfer failed</b>: Unable to establish connection."
-//					return
+
 				else
 					M.name = A.name
 					M.real_name = A.real_name
