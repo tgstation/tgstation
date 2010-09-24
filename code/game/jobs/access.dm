@@ -138,7 +138,7 @@
 		if("Chef")
 			return list(access_kitchen)
 		if("Roboticist")
-			return list(access_robotics, access_tech_storage, access_medical, access_morgue, access_engine,
+			return list(access_robotics, access_tech_storage, access_medical, access_morgue,
 			            access_maint_tunnels)
 		if("Quartermaster")
 			return list(access_maint_tunnels, access_cargo, access_cargo_bot)
