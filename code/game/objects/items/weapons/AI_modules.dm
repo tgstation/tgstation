@@ -33,28 +33,12 @@ AI MODULES
 		usr << "The upload computer is broken!"
 		return
 
-	var/select = null
-	var/list/names = list()
-	var/list/ais = list()
-	var/list/namecounts = list()
-	for (var/mob/living/silicon/ai/A in world)
-		var/name = A.real_name
-		if (A.real_name == "Inactive AI")
-			continue
-		if (A.stat == 2)
-			continue
-		if (A.control_disabled == 1)
-			continue
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		ais[name] = A
+	src.current = activeais()
 
-	if (ais.len)
-		select = input("Select an AI to upload laws to.", "AI selection", null, null) as null|anything in ais
-		src.current = ais[select]
-	else
+	if (!src.current)
 		usr << "No active AIs detected."
+	else
+		usr << "[src.current.name] selected for law changes."
 
 
 /obj/item/weapon/aiModule/proc/install(var/obj/machinery/computer/aiupload/comp)

@@ -1,5 +1,6 @@
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/brain/B)
 	src.anchored = 1
+	src.canmove = 0
 	src.loc = loc
 	if(L)
 		if (istype(L, /datum/ai_laws))
@@ -48,6 +49,8 @@
 				newname = dd_replacetext(newname, ">", "'")
 				src.real_name = newname
 				src.name = newname
+
+
 
 /mob/living/silicon/ai/Stat()
 	..()

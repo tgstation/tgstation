@@ -10,32 +10,17 @@
 			src.real_name += " [pick(rand(1, 999))]"
 			src.name = src.real_name
 	spawn (4)
-		var/select = null
-		var/list/names = list()
-		var/list/ais = list()
-		var/list/namecounts = list()
-		for (var/mob/living/silicon/ai/A in world)
-			var/name = A.real_name
-			if (A.real_name == "Inactive AI")
-				continue
-			if (A.stat == 2)
-				continue
-			if (A.control_disabled == 1)
-				continue
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			ais[name] = A
-
-		if (ais.len)
-			select = input("Select an AI to sync with.", "AI selection", null, null) as null|anything in ais
-			src.connected_ai = ais[select]
+		src.connected_ai = activeais()
+		if (src.connected_ai)
 			src.connected_ai.connected_robots += src
-			src.laws = src.connected_ai.laws_object //The borg inherits its AI's laws
-			src << "<b>Laws synced with [src.connected_ai.name].</b>"
+//			src.laws = src.connected_ai.laws_object //The borg inherits its AI's laws
+			src.laws = new /datum/ai_laws
+			src.laws.zeroth = src.connected_ai.laws_object.zeroth
+			src.laws.inherent = src.connected_ai.laws_object.inherent
+			src.laws.supplied = src.connected_ai.laws_object.supplied
+			src << "<b>Unit slaved to [src.connected_ai.name], downloading laws.</b>"
 			src.lawupdate = 1
 		else
-			usr << "No active AIs detected."
 			src.laws = new /datum/ai_laws/asimov
 			src.lawupdate = 0
 			src << "<b>Unable to locate an AI, reverting to standard Asimov laws.</b>"
@@ -276,14 +261,24 @@
 		who = world
 	else
 		who = src
-
+	var/change = 0
 	if(lawupdate)
 		if (connected_ai)
 			if(connected_ai.stat || connected_ai.control_disabled)
 				who << "<b>AI signal lost, unable to sync laws.</b>"
+
 			else
-				laws = connected_ai.laws_object
-				who << "<b>Laws synced with AI.</b>"
+				if (src.laws.zeroth != src.connected_ai.laws_object.zeroth)
+					src.laws.zeroth = src.connected_ai.laws_object.zeroth
+					change = 1
+				if (src.laws.inherent != src.connected_ai.laws_object.inherent)
+					src.laws.inherent = src.connected_ai.laws_object.inherent
+					change = 1
+				if (src.laws.supplied != src.connected_ai.laws_object.supplied)
+					src.laws.supplied = src.connected_ai.laws_object.supplied
+					change = 1
+			if (change)
+				who << "<b>Laws out of sync with AI, resyncing.</b>"
 		else
 			who << "<b>No AI selected to sync laws with.</b>"
 

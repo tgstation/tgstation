@@ -512,6 +512,28 @@
 /proc/format_frequency(var/f)
 	return "[round(f / 10)].[f % 10]"
 
+/proc/activeais()
+	var/select = null
+	var/list/names = list()
+	var/list/ais = list()
+	var/list/namecounts = list()
+	for (var/mob/living/silicon/ai/A in world)
+		var/name = A.real_name
+		if (A.real_name == "Inactive AI")
+			continue
+		if (A.stat == 2)
+			continue
+		if (A.control_disabled == 1)
+			continue
+		else
+			names.Add(name)
+			namecounts[name] = 1
+		ais[name] = A
+
+	if (ais.len)
+		select = input("AI signals detected:", "AI selection", null, null) as null|anything in ais
+		return ais[select]
+
 /proc/getmobs()
 
 	var/list/mobs = sortmobs()
