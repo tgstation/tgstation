@@ -1,4 +1,5 @@
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/brain/B)
+	src.anchored = 1
 	src.loc = loc
 	if(L)
 		if (istype(L, /datum/ai_laws))

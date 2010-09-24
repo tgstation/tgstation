@@ -10,16 +10,36 @@
 			src.real_name += " [pick(rand(1, 999))]"
 			src.name = src.real_name
 	spawn (4)
-		for(var/mob/living/silicon/ai/A in world)
-			src.connected_ai = A
-			A.connected_robots += src
-			src.laws = A.laws_object //If there's an AI, the borg inherits its laws
-			src << "<b>AI [A.name] detected, syncing laws</b>"
-			break
-		if (!src.laws) // If it doesn't inherit an AI's laws, it gets a set of asimov
+		var/select = null
+		var/list/names = list()
+		var/list/ais = list()
+		var/list/namecounts = list()
+		for (var/mob/living/silicon/ai/A in world)
+			var/name = A.real_name
+			if (A.real_name == "Inactive AI")
+				continue
+			if (A.stat == 2)
+				continue
+			if (A.control_disabled == 1)
+				continue
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			ais[name] = A
+
+		if (ais.len)
+			select = input("Select an AI to sync with.", "AI selection", null, null) as null|anything in ais
+			src.connected_ai = ais[select]
+			src.connected_ai.connected_robots += src
+			src.laws = src.connected_ai.laws_object //The borg inherits its AI's laws
+			src << "<b>Laws synced with [src.connected_ai.name].</b>"
+			src.lawupdate = 1
+		else
+			usr << "No active AIs detected."
 			src.laws = new /datum/ai_laws/asimov
 			src.lawupdate = 0
 			src << "<b>Unable to locate an AI, reverting to standard Asimov laws.</b>"
+
 		src.radio = new /obj/item/device/radio(src)
 		src.camera = new /obj/machinery/camera(src)
 		src.camera.c_tag = src.real_name
@@ -265,10 +285,14 @@
 				laws = connected_ai.laws_object
 				who << "<b>Laws synced with AI.</b>"
 		else
-			who << "<b>AI signal lost, unable to sync laws.</b>"
+			who << "<b>No AI selected to sync laws with.</b>"
 
 	who << "<b>Obey these laws:</b>"
 	laws.show_laws(who)
+	if (connected_ai)
+		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>"
+	else
+		who << "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>"
 
 /*	if(syndicate)
 		if(everyone)

@@ -42,6 +42,7 @@
 /obj/machinery/computer/aiupload
 	name = "AI Upload"
 	icon_state = "aiupload"
+	var/mob/living/silicon/ai/current = null
 
 /obj/machinery/computer/atmosphere
 	name = "atmos"

@@ -25,6 +25,38 @@ AI MODULES
 	else
 		return ..()
 
+/obj/machinery/computer/aiupload/attack_hand(var/mob/user as mob)
+	if(src.stat & NOPOWER)
+		usr << "The upload computer has no power!"
+		return
+	if(src.stat & BROKEN)
+		usr << "The upload computer is broken!"
+		return
+
+	var/select = null
+	var/list/names = list()
+	var/list/ais = list()
+	var/list/namecounts = list()
+	for (var/mob/living/silicon/ai/A in world)
+		var/name = A.real_name
+		if (A.real_name == "Inactive AI")
+			continue
+		if (A.stat == 2)
+			continue
+		if (A.control_disabled == 1)
+			continue
+		else
+			names.Add(name)
+			namecounts[name] = 1
+		ais[name] = A
+
+	if (ais.len)
+		select = input("Select an AI to upload laws to.", "AI selection", null, null) as null|anything in ais
+		src.current = ais[select]
+	else
+		usr << "No active AIs detected."
+
+
 /obj/item/weapon/aiModule/proc/install(var/obj/machinery/computer/aiupload/comp)
 	if(comp.stat & NOPOWER)
 		usr << "The upload computer has no power!"
@@ -32,19 +64,23 @@ AI MODULES
 	if(comp.stat & BROKEN)
 		usr << "The upload computer is broken!"
 		return
+	if (!comp.current)
+		usr << "You haven't selected an AI to transmit laws to!"
+		return
 
 	var/found=0
-	for(var/mob/living/silicon/ai/M in world)
-		if (M.stat == 2)
-			usr << "Upload failed. No signal is being detected from the AI."
-		else if (M.see_in_dark == 0)
-			usr << "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power."
-		else
-			src.transmitInstructions(M, usr)
-			M << "These are your laws now:"
-			M.show_laws()
-			usr << "Upload complete. The AI's laws have been modified."
-		found=1
+
+
+	if (comp.current.stat == 2 || comp.current.control_disabled == 1)
+		usr << "Upload failed. No signal is being detected from the AI."
+	else if (comp.current.see_in_dark == 0)
+		usr << "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power."
+	else
+		src.transmitInstructions(comp.current, usr)
+		comp.current << "These are your laws now:"
+		comp.current.show_laws()
+		usr << "Upload complete. The AI's laws have been modified."
+	found=1
 	if (!found)
 		usr << "Upload failed. No signal is being detected from the AI."
 
