@@ -1313,8 +1313,8 @@
 	icon_state = "meatbreadslice"
 	amount = 5
 	heal_amt = 6
-	New()
-/*		var/datum/reagents/R = new/datum/reagents(10)
+/*	New()
+		var/datum/reagents/R = new/datum/reagents(10)
 		reagents = R
 		R.my_atom = src
 		R.add_reagent("cholesterol", 10)*/
