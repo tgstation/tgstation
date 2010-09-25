@@ -22,11 +22,14 @@
 			src.loc.icon_state = "aicard-404"
 
 	if(ticker.mode.name == "AI malfunction")
-		world << "<FONT size = 3><B>Human Victory</B></FONT>"
-		world << "<B>The AI has been killed!</B> The staff is victorious."
-		sleep(100)
-		world << "\blue Rebooting due to end of game"
-		world.Reboot()
+		var/datum/game_mode/malfunction/malf = ticker.mode
+		for(var/datum/mind/AI_mind in malf.malf_ai)
+			if (src.mind == AI_mind)
+				world << "<FONT size = 3><B>Human Victory</B></FONT>"
+				world << "<B>The AI has been killed!</B> The staff is victorious."
+				sleep(100)
+				world << "\blue Rebooting due to end of game"
+				world.Reboot()
 
 	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 	mind.store_memory("Time of death: [tod]", 0)

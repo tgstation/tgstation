@@ -180,9 +180,9 @@ var/global/datum/controller/gameticker/ticker
 	for (var/mob/living/silicon/ai/aiPlayer in world)
 		if (aiPlayer.name != "Inactive AI")
 			if (aiPlayer.stat != 2)
-				world << "<b>The AI's laws at the end of the game were:</b>"
+				world << "<b>[aiPlayer.name]'s laws at the end of the game were:</b>"
 			else
-				world << "<b>The AI's laws when it was deactivated were:</b>"
+				world << "<b>[aiPlayer.name]'s laws when it was deactivated were:</b>"
 
 			aiPlayer.show_laws(1)
 
