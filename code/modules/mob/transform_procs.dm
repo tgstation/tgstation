@@ -117,7 +117,8 @@
 	O.job = "AI"
 
 	spawn(0)
-		var/randomname = pick(ai_names)
+		ainame(O)
+/*		var/randomname = pick(ai_names)
 		var/newname = input(O,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)
 
 		if (length(newname) == 0)
@@ -129,7 +130,7 @@
 			newname = dd_replacetext(newname, ">", "'")
 			O.real_name = newname
 			O.name = newname
-
+*/
 		world << text("<b>[O.real_name] is the AI!</b>")
 
 		spawn(50)

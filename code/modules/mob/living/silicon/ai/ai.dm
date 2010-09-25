@@ -37,18 +37,7 @@
 		src.job = "AI"
 
 		spawn(0)
-			var/randomname = pick(ai_names)
-			var/newname = input(src,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)
-
-			if (length(newname) == 0)
-				newname = randomname
-
-			if (newname)
-				if (length(newname) >= 26)
-					newname = copytext(newname, 1, 26)
-				newname = dd_replacetext(newname, ">", "'")
-				src.real_name = newname
-				src.name = newname
+			ainame(src)
 
 
 

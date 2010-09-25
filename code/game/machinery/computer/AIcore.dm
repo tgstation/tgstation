@@ -5,7 +5,7 @@
 	icon = 'AIcore.dmi'
 	icon_state = "0"
 	var/state = 0
-	var/datum/ai_laws/laws = new /datum/ai_laws
+	var/datum/ai_laws/laws = new /datum/ai_laws/asimov
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/brain/brain = null
 
@@ -78,7 +78,6 @@
 					src.icon_state = "2"
 					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
 					A.amount = 5
-					src.laws.clear_inherent_laws()
 
 			if(istype(P, /obj/item/weapon/sheet/rglass))
 				if(P:amount >= 2)
@@ -125,7 +124,10 @@
 				playsound(src.loc, 'Crowbar.ogg', 50, 1)
 				user << "\blue You remove the glass panel."
 				src.state = 3
-				src.icon_state = "3"
+				if (src.brain)
+					src.icon_state = "3b"
+				else
+					src.icon_state = "3"
 				var/obj/item/weapon/sheet/rglass/A = new /obj/item/weapon/sheet/rglass( src.loc )
 				A.amount = 2
 			if(istype(P, /obj/item/weapon/screwdriver))

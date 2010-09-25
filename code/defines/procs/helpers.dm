@@ -512,6 +512,27 @@
 /proc/format_frequency(var/f)
 	return "[round(f / 10)].[f % 10]"
 
+/proc/ainame(var/mob/M as mob)
+	var/randomname = pick(ai_names)
+	var/newname = input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)
+
+	if (length(newname) == 0)
+		newname = randomname
+
+	if (newname)
+		if (newname == "Inactive AI")
+			M << "That name is reserved."
+			return ainame(M)
+		for (var/mob/living/silicon/ai/A in world)
+			if (A.real_name == newname)
+				M << "There's already an AI with that name."
+				return ainame(M)
+		if (length(newname) >= 26)
+			newname = copytext(newname, 1, 26)
+		newname = dd_replacetext(newname, ">", "'")
+		M.real_name = newname
+		M.name = newname
+
 /proc/activeais()
 	var/select = null
 	var/list/names = list()
