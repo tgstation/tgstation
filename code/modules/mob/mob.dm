@@ -1323,7 +1323,7 @@
 			names.Add(name)
 			namecounts[name] = 1
 		creatures[name] = B
-
+/*
 	for (var/mob/living/silicon/decoy/D in world)
 		var/name = "[D.name]"
 		if (name in names)
@@ -1333,7 +1333,7 @@
 			names.Add(name)
 			namecounts[name] = 1
 		creatures[name] = D
-
+*/
 
 
 
@@ -1365,6 +1365,16 @@
 			src.reset_view(null)
 			client.adminobs = 0
 	else
+		if(ticker)
+//		 world << "there's a ticker"
+			if(ticker.mode.name == "AI malfunction")
+//				world << "ticker says its malf"
+				var/datum/game_mode/malfunction/malf = ticker.mode
+				for (var/datum/mind/B in malf.malf_ai)
+//					world << "comparing [B.current] to [eye]"
+					if (B.current == eye)
+						for (var/mob/living/silicon/decoy/D in world)
+							eye = D
 		if (eye)
 			src.client.eye = eye
 		else
