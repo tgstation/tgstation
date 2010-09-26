@@ -162,7 +162,8 @@
 			if(R)
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
-					R.self_destruct()
+					if(R)
+						R.self_destruct()
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()

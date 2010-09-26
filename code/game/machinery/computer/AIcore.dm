@@ -8,6 +8,7 @@
 	var/datum/ai_laws/laws = new /datum/ai_laws/asimov
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/brain/brain = null
+	var/throwforce = 0
 
 
 /obj/AIcore/attackby(obj/item/weapon/P as obj, mob/user as mob)
@@ -83,11 +84,12 @@
 				if(P:amount >= 2)
 					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						P:amount -= 2
-						if(!P:amount) del(P)
-						user << "\blue You put in the glass panel."
-						src.state = 4
-						src.icon_state = "4"
+						if (P)
+							P:amount -= 2
+							if(!P:amount) del(P)
+							user << "\blue You put in the glass panel."
+							src.state = 4
+							src.icon_state = "4"
 
 			if(istype(P, /obj/item/weapon/aiModule/asimov))
 				src.laws.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")

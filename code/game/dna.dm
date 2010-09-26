@@ -867,13 +867,14 @@
 			var/newblock
 			var/tstructure2
 			var/oldblock
-			block = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),src.subblock,1)
-			src.delete = 1
-			src.temphtml = text("Working ... Please wait ([] Seconds)", src.radduration)
-			usr << browse(temphtml, "window=scannernew;size=550x650")
-			onclose(usr, "scannernew")
-			sleep(10*src.radduration)
-			if (!src.connected.occupant)
+			if (src.connected.occupant)
+				block = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),src.subblock,1)
+				src.delete = 1
+				src.temphtml = text("Working ... Please wait ([] Seconds)", src.radduration)
+				usr << browse(temphtml, "window=scannernew;size=550x650")
+				onclose(usr, "scannernew")
+				sleep(10*src.radduration)
+			else
 				temphtml = null
 				delete = 0
 				return null

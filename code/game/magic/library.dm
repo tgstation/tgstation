@@ -660,7 +660,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			var/obj/item/weapon/book/b = new(src.loc)
 			b.dat = O:info
 			b.name = "Print Job #" + "[rand(100, 999)]"
-			b.icon_state = "book" + rand(1,7)
+			b.icon_state = "book[rand(1,7)]"
 			del(O)
 		else
 			..()

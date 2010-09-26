@@ -13,18 +13,19 @@
 		if (src.metal_amount < 150000.0)
 			var/count = 0
 			spawn(15)
-				if(!O:amount)
-					return
-				while(metal_amount < 150000 && O:amount)
-					src.metal_amount += O:height * O:width * O:length * 100000.0
-					O:amount--
-					count++
+				if(O)
+					if(!O:amount)
+						return
+					while(metal_amount < 150000 && O:amount)
+						src.metal_amount += O:height * O:width * O:length * 100000.0
+						O:amount--
+						count++
 
-				if (O:amount < 1)
-					del(O)
+					if (O:amount < 1)
+						del(O)
 
-				user << "You insert [count] metal sheet\s into the fabricator."
-				updateDialog()
+					user << "You insert [count] metal sheet\s into the fabricator."
+					updateDialog()
 		else
 			user << "The robot part maker is full. Please remove metal from the robot part maker in order to insert more."
 

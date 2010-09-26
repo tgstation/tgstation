@@ -130,7 +130,8 @@
 		user.show_message("\blue The timer is now secured!", 1)
 	else
 		user.show_message("\blue The timer is now unsecured!", 1)
-	src.part2.status = src.status
+	if (src.part2)
+		src.part2.status = src.status
 	src.add_fingerprint(user)
 	return
 

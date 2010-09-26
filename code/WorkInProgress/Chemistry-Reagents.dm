@@ -569,7 +569,8 @@ datum
 				if(istype(O,/obj/decal/cleanable))
 					del(O)
 				else
-					O.clean_blood()
+					if (O)
+						O.clean_blood()
 			reaction_turf(var/turf/T, var/volume)
 				T.overlays = null
 				T.clean_blood()

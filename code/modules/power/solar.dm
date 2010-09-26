@@ -11,10 +11,11 @@
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
 	..()
-	src.add_fingerprint(user)
-	src.health -= W.force
-	src.healthcheck()
-	return
+	if (W)
+		src.add_fingerprint(user)
+		src.health -= W.force
+		src.healthcheck()
+		return
 
 /obj/machinery/power/solar/blob_act()
 	src.health--

@@ -44,11 +44,12 @@
 	else if (O.g_amt || O.m_amt)
 		spawn(16) {
 			flick("autolathe_c",src)
-			if(O.g_amt)					// Added null checks to avoid runtime errors when an item doesn't have an expected variable -- TLE
-				src.g_amount += O.g_amt
-			if(O.m_amt)
-				src.m_amount += O.m_amt
-			del O
+			if(O)
+				if(O.g_amt)					// Added null checks to avoid runtime errors when an item doesn't have an expected variable -- TLE
+					src.g_amount += O.g_amt
+				if(O.m_amt)
+					src.m_amount += O.m_amt
+				del O
 		}
 	else
 		user << "This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials."

@@ -168,9 +168,10 @@
 					break
 			if(clear)
 				L+=T
-
-	usr.loc = pick(L)
-
+	if (L.len)
+		usr.loc = pick(L)
+	else
+		usr << "Teleporting to that area doesn't seem to be working currently. But at least now it tells you that."
 
 var/list/karma_spenders = list()
 

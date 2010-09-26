@@ -1004,15 +1004,16 @@
 		if (istype(src.wear_suit, /obj/item/clothing/suit))
 			var/t1 = src.wear_suit.icon_state
 			src.overlays += image("icon" = 'suit.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = MOB_LAYER)
-		if (src.wear_suit.blood_DNA)
-			var/icon/stain_icon = null
-			if (istype(src.wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/wcoat || /obj/item/clothing/suit/armor/a_i_a_ptank))
-				stain_icon = icon('blood.dmi', "armorblood[!src.lying ? "" : "2"]")
-			else if (istype(src.wear_suit, /obj/item/clothing/suit/det_suit || /obj/item/clothing/suit/labcoat))
-				stain_icon = icon('blood.dmi', "coatblood[!src.lying ? "" : "2"]")
-			else
-				stain_icon = icon('blood.dmi', "suitblood[!src.lying ? "" : "2"]")
-			src.overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
+		if (src.wear_suit)
+			if (src.wear_suit.blood_DNA)
+				var/icon/stain_icon = null
+				if (istype(src.wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/wcoat || /obj/item/clothing/suit/armor/a_i_a_ptank))
+					stain_icon = icon('blood.dmi', "armorblood[!src.lying ? "" : "2"]")
+				else if (istype(src.wear_suit, /obj/item/clothing/suit/det_suit || /obj/item/clothing/suit/labcoat))
+					stain_icon = icon('blood.dmi', "coatblood[!src.lying ? "" : "2"]")
+				else
+					stain_icon = icon('blood.dmi', "suitblood[!src.lying ? "" : "2"]")
+				src.overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 		src.wear_suit.screen_loc = ui_oclothing
 		if (istype(src.wear_suit, /obj/item/clothing/suit/straight_jacket))
 			if (src.handcuffed)

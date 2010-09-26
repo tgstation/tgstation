@@ -1403,11 +1403,12 @@
 				M << "\red Admin PM from-<b>[key_name(usr, M, 0)]</b>: [t]"
 				usr << "\blue Admin PM to-<b>[key_name(M, usr, 1)]</b>: [t]"
 			else
-				if (M.client && M.client.holder)
-					M << "\blue Reply PM from-<b>[key_name(usr, M, 1)]</b>: [t]"
-				else
-					M << "\red Reply PM from-<b>[key_name(usr, M, 0)]</b>: [t]"
-				usr << "\blue Reply PM to-<b>[key_name(M, usr, 0)]</b>: [t]"
+				if (M)
+					if (M.client && M.client.holder)
+						M << "\blue Reply PM from-<b>[key_name(usr, M, 1)]</b>: [t]"
+					else
+						M << "\red Reply PM from-<b>[key_name(usr, M, 0)]</b>: [t]"
+					usr << "\blue Reply PM to-<b>[key_name(M, usr, 0)]</b>: [t]"
 
 			log_admin("PM: [key_name(usr)]->[key_name(M)] : [t]")
 
@@ -1868,7 +1869,8 @@
 
 		newmob = new/mob/dead/observer(src)
 		src:client:mob = newmob
-		src.mind.transfer_to(newmob)
+		if (src.mind)
+			src.mind.transfer_to(newmob)
 
 		var/virus = src.virus
 		if (istype(src, /mob/living/silicon))

@@ -605,10 +605,11 @@ turf/simulated/floor/proc/update_icon()
 			if (C:amount >= 2)
 				user << "\blue Reinforcing the floor..."
 				if(do_after(user, 30))
-					ReplaceWithEngineFloor()
-					C:amount -= 2
-					if (C:amount <= 0) del(C) //wtf
-					playsound(src.loc, 'Deconstruct.ogg', 80, 1)
+					if (C)
+						ReplaceWithEngineFloor()
+						C:amount -= 2
+						if (C:amount <= 0) del(C) //wtf
+						playsound(src.loc, 'Deconstruct.ogg', 80, 1)
 			else
 				user << "\red You need more rods."
 		else

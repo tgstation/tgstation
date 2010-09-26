@@ -128,8 +128,9 @@
 			O.invisibility = 0
 			O.name = "Cyborg"
 			O.real_name = "Cyborg"
-			O.lastKnownIP = src.brain.owner.client.address
+
 			if (src.brain.owner.client)
+				O.lastKnownIP = src.brain.owner.client.address
 				src.brain.owner.client.mob = O
 			else
 				for(var/mob/dead/observer/G in world)

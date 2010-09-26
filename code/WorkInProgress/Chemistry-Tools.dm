@@ -250,6 +250,7 @@
 							O.show_message(text("\red [] was hit by the syringe!", M), 1)
 
 						del(D)
+						return
 
 					for(var/atom/A in D.loc)
 						if(A == user) continue
