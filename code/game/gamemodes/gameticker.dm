@@ -142,7 +142,13 @@ var/global/datum/controller/gameticker/ticker
 
 			spawn
 				declare_completion()
-			if(ticker.mode.name != "nuclear emergency")
+			var/noboom = 0
+			if(ticker.mode.name == "nuclear emergency")
+				var/datum/game_mode/nuclear/bam = ticker.mode
+				if (bam.nuke_detonated == 0)
+					noboom = 1
+
+			if(ticker.mode.name != "nuclear emergency" || noboom)
 				spawn(50)
 					world << "\blue <B>Restarting in 25 seconds</B>"
 
