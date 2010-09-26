@@ -584,7 +584,12 @@
 
 	var/list/mob_list = list()
 	for(var/mob/living/silicon/ai/M in world)
-		mob_list.Add(M)
+		if(ticker)
+			if(ticker.mode == "AI malfunction")
+				var/datum/game_mode/malfunction/malf = ticker.mode
+				for (var/datum/mind/B in malf.malf_ai)
+					if (M.mind == B)
+					else mob_list.Add(M)
 	for(var/mob/living/silicon/robot/M in world)
 		mob_list.Add(M)
 	for(var/mob/living/carbon/human/M in world)

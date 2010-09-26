@@ -1324,6 +1324,17 @@
 			namecounts[name] = 1
 		creatures[name] = B
 
+	for (var/mob/living/silicon/decoy/D in world)
+		var/name = "[D.name]"
+		if (name in names)
+			namecounts[name]++
+			name = "[name] ([namecounts[name]])"
+		else
+			names.Add(name)
+			namecounts[name] = 1
+		creatures[name] = D
+
+
 
 
 //THIS IS HOW YOU ADD OBJECTS TO BE OBSERVED
