@@ -590,6 +590,7 @@
 				for (var/datum/mind/B in malf.malf_ai)
 					if (M.mind == B)
 					else mob_list.Add(M)
+			else mob_list.Add(M)
 	for(var/mob/living/silicon/robot/M in world)
 		mob_list.Add(M)
 	for(var/mob/living/carbon/human/M in world)
