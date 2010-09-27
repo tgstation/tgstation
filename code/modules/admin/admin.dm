@@ -1793,9 +1793,9 @@ var/showadminmessages = 1
 	world.Reboot()
 
 /client/proc/deadchat()
-	set category = "Server"
-	set desc="Toggles Deadchat"
-	set name="Deadchat"
+	set category = "Admin"
+	set desc="Toggles Deadchat Visibility"
+	set name="Deadchat Visibility"
 	if(deadchat == 0)
 		deadchat = 1
 		usr << "Deadchat turned on"
