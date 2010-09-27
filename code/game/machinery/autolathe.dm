@@ -172,6 +172,7 @@
 	src.L += new /obj/item/weapon/rcd_ammo(src)
 	src.L += new /obj/item/weapon/scalpel(src)
 	src.L += new /obj/item/weapon/circular_saw(src)
+	src.L += new /obj/item/weapon/shield/riot(src)
 	src.L += new /obj/item/device/t_scanner(src)
 	src.L += new /obj/item/weapon/reagent_containers/glass/bucket(src)
 	src.LL += new /obj/item/weapon/flamethrower(src)

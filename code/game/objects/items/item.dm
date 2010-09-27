@@ -222,6 +222,12 @@
 				if (b_dam && ((istype(H.wear_suit, /obj/item/clothing/suit/armor/)) && H.wear_suit.body_parts_covered & UPPER_TORSO) && prob(90 - src.force))
 					H.show_message("\red You have been protected from a hit to the chest.")
 					return
+				if (b_dam && ((istype(H.r_hand, /obj/item/weapon/shield/riot))) && prob(90 - src.force))
+					H.show_message("\red You have been protected from a hit to the chest.")
+					return
+				if (b_dam && ((istype(H.l_hand, /obj/item/weapon/shield/riot))) && prob(90 - src.force))
+					H.show_message("\red You have been protected from a hit to the chest.")
+					return
 				if ((b_dam && prob(src.force + affecting.brute_dam + affecting.burn_dam)))
 					if (prob(50))
 						if (H.weakened < 5)
@@ -258,6 +264,12 @@
 				affecting.take_damage(b_dam, f_dam)
 			else if (def_zone == "groin")
 				if (b_dam && (istype(H.wear_suit, /obj/item/clothing/suit/armor/) && H.wear_suit.body_parts_covered & LOWER_TORSO) && prob(90 - src.force))
+					H.show_message("\red You have been protected from a hit to the groin (phew).")
+					return
+				if (b_dam && ((istype(H.r_hand, /obj/item/weapon/shield/riot))) && prob(90 - src.force))
+					H.show_message("\red You have been protected from a hit to the groin (phew).")
+					return
+				if (b_dam && ((istype(H.l_hand, /obj/item/weapon/shield/riot))) && prob(90 - src.force))
 					H.show_message("\red You have been protected from a hit to the groin (phew).")
 					return
 				if ((b_dam && prob(src.force + affecting.brute_dam + affecting.burn_dam)))

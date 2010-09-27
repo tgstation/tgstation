@@ -195,26 +195,21 @@ var/supply_shuttle_points = 50
 	containertype = "/obj/crate/secure/weapon"
 	containername = "Experimental weapons crate"
 	access = access_heads
-/*
+
 /datum/supply_packs/riot
 	name = "Riot crate"
 	contains = list("/obj/item/weapon/baton",
 					"/obj/item/weapon/baton",
-					"/obj/item/weapon/baton",
 					"/obj/item/weapon/shield/riot",
 					"/obj/item/weapon/shield/riot",
-					"/obj/item/weapon/shield/riot",
-					"/obj/item/weapon/smokebomb",
-					"/obj/item/weapon/smokebomb",
-					"/obj/item/weapon/smokebomb",
-					"/obj/item/weapon/handcuffs",
+					"/obj/item/weapon/storage/flashbang_kit",
+					"/obj/item/weapon/storage/flashbang_kit",
 					"/obj/item/weapon/handcuffs",
 					"/obj/item/weapon/handcuffs")
-	cost = 20
+	cost = 30
 	containertype = "/obj/crate/secure/gear"
 	containername = "Riot crate"
 	access = access_security
-*/
 
 /datum/supply_packs/evacuation
 	name = "Emergency equipment"

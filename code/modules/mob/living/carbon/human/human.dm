@@ -222,6 +222,27 @@
 						if (prob(60))
 							d = d / 2
 						d = d / 5
+		if (istype(src.r_hand, /obj/item/weapon/shield/riot))
+			if (prob(70))
+				show_message("\red Your shield absorbs the blow!", 4)
+				return
+			else
+				if (prob(40))
+					show_message("\red Your shield only softens the blow!", 4)
+					if (prob(60))
+						d = d / 2
+					d = d / 5
+		else
+			if (istype(src.l_hand, /obj/item/weapon/shield/riot))
+				if (prob(70))
+					show_message("\red Your shield absorbs the blow!", 4)
+					return
+				else
+					if (prob(40))
+						show_message("\red Your shield only softens the blow!", 4)
+						if (prob(60))
+							d = d / 2
+						d = d / 5
 		if (src.stat != 2)
 			var/organ = src.organs[ran_zone("chest")]
 			if (istype(organ, /datum/organ/external))

@@ -3,7 +3,8 @@
 	sleep(2)
 	//new /obj/item/weapon/storage/flashbang_kit(src)
 	// Seriously gimping the number of flashes security get, will probably change later -- TLE
-	new /obj/item/weapon/flashbang
+	new /obj/item/weapon/flashbang(src)
+	new /obj/item/weapon/shield/riot(src)
 	new /obj/item/weapon/handcuffs(src)
 	new /obj/item/weapon/gun/energy/taser_gun(src)
 	new /obj/item/device/flash(src)
@@ -39,6 +40,7 @@
 /obj/secure_closet/highsec/New()
 	..()
 	sleep(2)
+	new /obj/item/weapon/shield/riot(src)
 	new /obj/item/weapon/gun/energy/general( src )
 	new /obj/item/device/flash( src )
 	new /obj/item/weapon/storage/id_kit( src )
@@ -52,6 +54,7 @@
 /obj/secure_closet/hos/New()
 	..()
 	sleep(2)
+	new /obj/item/weapon/shield/riot(src)
 	new /obj/item/weapon/gun/energy/general( src )
 	new /obj/item/device/flash( src )
 	new /obj/item/weapon/storage/id_kit( src )
