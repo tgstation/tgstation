@@ -24,6 +24,7 @@ TELEPORT GUN
 
 
 
+
 // PULSE RIFLE
 
 /obj/item/weapon/gun/energy/pulse_rifle

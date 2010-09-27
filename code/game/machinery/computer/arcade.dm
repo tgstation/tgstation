@@ -133,7 +133,7 @@
 		src.gameover = 1
 		src.temp = "[src.enemy_name] has fallen! Rejoice!"
 		var/obj/item/prize
-		var/prizeselect = pick(1,2,4)
+		var/prizeselect = pick(1,2,4,5)
 		switch(prizeselect)
 			if(1)
 				prize = new /obj/item/weapon/spacecash(src.loc)
@@ -153,6 +153,9 @@
 				prize.icon = 'weapons.dmi'
 				prize.icon_state = "sword1"
 				prize.desc = "A sword made of cheap plastic."
+			if(5)
+				prize = new /obj/item/toy/ammo/gun(src.loc)
+				prize = new /obj/item/toy/gun(src.loc)
 
 	else if ((src.enemy_mp <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
