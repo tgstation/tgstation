@@ -97,6 +97,14 @@ STUN BATON
 		return
 	if (status == 0 || (status == 1 && charges ==0))
 		if(user.a_intent == "hurt")
+			if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(40))
+				for(var/mob/O in viewers(M, null))
+					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
+				return
+			if (!istype(H:l_hand, /obj/item/weapon/shield/riot) && prob(40))
+				for(var/mob/O in viewers(M, null))
+					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
+				return
 			if (M.weakened < 5 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.weakened = 5
 				..()
@@ -114,6 +122,14 @@ STUN BATON
 	if((charges > 0 && status == 1) && (istype(H, /mob/living/carbon/human)))
 		flick("baton_active", src)
 		if (user.a_intent == "hurt")
+			if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(40))
+				for(var/mob/O in viewers(M, null))
+					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
+				return
+			if (!istype(H:l_hand, /obj/item/weapon/shield/riot) && prob(40))
+				for(var/mob/O in viewers(M, null))
+					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
+				return
 			playsound(src.loc, 'Genhit.ogg', 50, 1, -1)
 			if(isrobot(user))
 				var/mob/living/silicon/robot/R = user
@@ -128,6 +144,14 @@ STUN BATON
 			if (M.stunned < 1 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stunned = 1
 		else
+			if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(40))
+				for(var/mob/O in viewers(M, null))
+					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
+				return
+			if (!istype(H:l_hand, /obj/item/weapon/shield/riot) && prob(40))
+				for(var/mob/O in viewers(M, null))
+					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
+				return
 			playsound(src.loc, 'Egloves.ogg', 50, 1, -1)
 			if(isrobot(user))
 				var/mob/living/silicon/robot/R = user
