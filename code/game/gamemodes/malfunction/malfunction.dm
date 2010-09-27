@@ -9,6 +9,7 @@
 	var/intercept_hacked = 0
 	var/malf_mode_declared = 0
 	var/boom = 0
+	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
 
 /datum/game_mode/malfunction/announce()
 	world << "<B>The current game mode is - AI Malfunction!</B>"
@@ -35,6 +36,8 @@
 
 			AI_mind.current << "\red<font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font>"
 			AI_mind.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
+			AI_mind.current << "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>"
+			AI_mind.current << "The process takes one minute per APC, during which you cannot interface with any other station objects."
 
 			AI_mind.current.icon_state = "ai-malf"
 
@@ -76,13 +79,13 @@
 
 
 /datum/game_mode/malfunction/process()
-	AI_win_timeleft--
+	AI_win_timeleft = AI_win_timeleft - apcs //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
 //	if(AI_win_timeleft == 1200) // Was 1790
 //		malf_mode_declared = 1
 	check_win()
 
 /datum/game_mode/malfunction/check_win()
-	if (AI_win_timeleft == 0)
+	if (AI_win_timeleft <= 0)
 		world << "<FONT size = 3><B>The AI has won!</B></FONT>"
 		world << "<B>It has fully taken control of all of [station_name()]'s systems.</B>"
 

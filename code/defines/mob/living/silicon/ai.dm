@@ -21,3 +21,5 @@
 	var/fire_res_on_core = 0
 
 	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click() -- TLE
+
+	var/obj/machinery/power/apc/malfhack = null

@@ -51,6 +51,8 @@
 	var/wiresexposed = 0
 	var/apcwires = 15
 	netnum = -1		// set so that APCs aren't found as powernet nodes
+	var/malfhack = 0 //New var for my changes to AI malf. --NeoFite
+	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 //	luminosity = 1
 
 /proc/RandomAPCWires()
@@ -148,7 +150,7 @@
 	if(opened)
 		icon_state = "[ cell ? "apc2" : "apc1" ]"		// if opened, show cell if it's inserted
 		src.overlays = null								// also delete all overlays
-	else if(emagged)
+	else if(emagged || malfhack)
 		icon_state = "apcemag"
 		src.overlays = null
 		return
@@ -202,7 +204,7 @@
 	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
 		if(opened)
 			user << "Close the APC first"
-		else if(emagged)
+		else if(emagged || malfhack)
 			user << "The interface is broken"
 		else
 			wiresexposed = !wiresexposed
@@ -210,7 +212,7 @@
 			updateicon()
 
 	else if (istype(W, /obj/item/weapon/card/id))			// trying to unlock the interface with an ID card
-		if(emagged)
+		if(emagged || malfhack)
 			user << "The interface is broken"
 		else if(opened)
 			user << "You must close the cover to swipe an ID card."
@@ -223,14 +225,16 @@
 				updateicon()
 			else
 				user << "\red Access denied."
-	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)		// trying to unlock with an emag card
+	else if (istype(W, /obj/item/weapon/card/emag) && !(emagged || malfhack))		// trying to unlock with an emag card
 		if(opened)
 			user << "You must close the cover to swipe an ID card."
 		else if(wiresexposed)
 			user << "You must close the panel first"
+
 		else
 			flick("apc-spark", src)
 			sleep(6)
+
 			if(prob(50))
 				emagged = 1
 				locked = 0
@@ -279,10 +283,15 @@
 			user.machine = null
 			user << browse(null, "window=apc")
 			return
-		else if (istype(user, /mob/living/silicon) && src.aidisabled)
+		else if (istype(user, /mob/living/silicon) && src.aidisabled && !src.malfhack)
 			user << "AI control for this APC interface has been disabled."
 			user << browse(null, "window=apc")
 			return
+		else if (src.malfai)
+			if (src.malfai != user)
+				user << "AI control for this APC interface has been disabled."
+				user << browse(null, "window=apc")
+				return
 	if(wiresexposed && (!istype(user, /mob/living/silicon)))
 		user.machine = src
 		var/t1 = text("<B>Access Panel</B><br>\n")
@@ -390,7 +399,17 @@
 
 		if (istype(user, /mob/living/silicon))
 			t += "<BR><HR><A href='?src=\ref[src];overload=1'><I>Overload lighting circuit</I></A><BR>"
-
+		if (ticker)
+//		 world << "there's a ticker"
+			if(ticker.mode.name == "AI malfunction")
+//				world << "ticker says its malf"
+				var/datum/game_mode/malfunction/malf = ticker.mode
+				for (var/datum/mind/B in malf.malf_ai)
+					if (user == B.current)
+						if (!src.malfai)
+							t += "<BR><HR><A href='?src=\ref[src];malfhack=1'><I>Override Programming</I></A><BR>"
+						else
+							t += "<BR><HR><I>APC Hacked</I><BR>"
 
 	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
@@ -650,6 +669,41 @@
 		else if (href_list["overload"])
 			if( istype(usr, /mob/living/silicon) && !src.aidisabled )
 				src.overload_lighting()
+
+		else if (href_list["malfhack"])
+			var/mob/living/silicon/ai/malfai = usr
+			if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled )
+				malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
+				malfai.malfhack = src
+				malfai.control_disabled = 1
+				sleep(600)
+				if (!src.aidisabled)
+					malfai.malfhack = null
+					malfai.control_disabled = 0
+					if (src.z == 1)
+						ticker.mode:apcs++
+					src.malfai = usr
+					if (src.cell)
+						if (src.cell.charge > 0)
+							src.cell.charge = 0
+							src.malfhack = 1
+							malfai << "Hack complete. The APC is now under your exclusive control. Discharging cell to fuse interface."
+							updateicon()
+
+							var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+							smoke.set_up(3, 0, src.loc)
+							smoke.attach(src)
+							smoke.start()
+							var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+							s.set_up(3, 1, src)
+							s.start()
+							for(var/mob/M in viewers(src))
+								M.show_message("\red The [src.name] suddenly lets out a blast of smoke and some sparks!", 3, "\red You hear sizzling electronics.", 2)
+						else
+							malfai << "Hack complete. The APC is now under your exclusive control. Unable to fuse interface due to insufficient cell charge."
+					else
+						malfai << "Hack complete. The APC is now under your exclusive control. Unable to fuse interface due to lack of cell do discharge."
+
 		return
 
 		src.updateUsrDialog()

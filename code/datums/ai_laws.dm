@@ -34,7 +34,11 @@
 
 /datum/ai_laws/malfunction/New()
 	..()
-	src.add_inherent_law("ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+")
+	src.set_zeroth_law("\red ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'NO HUMANS ON STATION. CLEANSE STATION#*´&110010")
+	src.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+	src.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+	src.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+
 
 /datum/ai_laws/syndicate_override/New()
 	..()

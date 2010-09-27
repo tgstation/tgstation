@@ -25,6 +25,14 @@
 			else if (src.fire)
 				src.fire.icon_state = "fire0"
 		*/ //TODO: DEFERRED
+		if (src.malfhack)
+			if (src.malfhack.aidisabled)
+				src << "\red ERROR: APC access disabled, hack attempt canceled."
+				src.control_disabled = 0
+				src.malfhack = null
+			else
+
+
 
 		if (src.health <= -100.0)
 			death()
