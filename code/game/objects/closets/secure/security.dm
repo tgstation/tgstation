@@ -54,7 +54,7 @@
 /obj/secure_closet/hos/New()
 	..()
 	sleep(2)
-//	new /obj/item/weapon/shield/riot(src)
+	new /obj/item/weapon/shield/riot(src)
 	new /obj/item/weapon/gun/energy/general( src )
 	new /obj/item/device/flash( src )
 	new /obj/item/weapon/storage/id_kit( src )

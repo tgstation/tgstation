@@ -200,8 +200,8 @@ var/supply_shuttle_points = 50
 	name = "Riot crate"
 	contains = list("/obj/item/weapon/baton",
 					"/obj/item/weapon/baton",
-//					"/obj/item/weapon/shield/riot",
-//					"/obj/item/weapon/shield/riot",
+					"/obj/item/weapon/shield/riot",
+					"/obj/item/weapon/shield/riot",
 					"/obj/item/weapon/storage/flashbang_kit",
 					"/obj/item/weapon/storage/flashbang_kit",
 					"/obj/item/weapon/handcuffs",

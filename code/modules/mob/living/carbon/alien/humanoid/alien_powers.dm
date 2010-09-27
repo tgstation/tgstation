@@ -66,6 +66,12 @@ Also perhaps only queens can do that?
 				if (get_dist(A,M) == 0)
 					for(var/mob/O in viewers(src, null))
 						O.show_message(text("\green <B>[src] has spat at [M.name]!</B>"), 1)
+					if (!istype(M:l_hand, /obj/item/weapon/shield/riot) && prob(50))
+						del(A)
+						return
+					if (!istype(M:r_hand, /obj/item/weapon/shield/riot) && prob(50))
+						del(A)
+						return
 					M.weakened += 5
 					M.fireloss += 10
 					del(A)

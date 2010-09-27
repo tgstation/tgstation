@@ -223,7 +223,7 @@
 							d = d / 2
 						d = d / 5
 		if (istype(src.r_hand, /obj/item/weapon/shield/riot))
-			if (prob(70))
+			if (prob(90))
 				show_message("\red Your shield absorbs the blow!", 4)
 				return
 			else
@@ -234,7 +234,7 @@
 					d = d / 5
 		else
 			if (istype(src.l_hand, /obj/item/weapon/shield/riot))
-				if (prob(70))
+				if (prob(90))
 					show_message("\red Your shield absorbs the blow!", 4)
 					return
 				else

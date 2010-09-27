@@ -213,7 +213,16 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
 		M << "\red The helmet protects you from being hit hard in the head!"
 		return
+
 	if ((user.a_intent == "hurt" && src.bullets > 0))
+		if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(20))
+			for(var/mob/O in viewers(M, null))
+				if (O.client)	O.show_message(text("\red <B>[] has blocked []'s point-blank shot with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
+			return
+		if (!istype(H:l_hand, /obj/item/weapon/shield/riot) && prob(20))
+			for(var/mob/O in viewers(M, null))
+				if (O.client)	O.show_message(text("\red <B>[] has blocked []'s point-blank shot with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
+			return
 		if (prob(20))
 			if (M.paralysis < 10)
 				M.paralysis = 10
@@ -228,6 +237,14 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		for(var/mob/O in viewers(M, null))
 			if(O.client)	O.show_message(text("\red <B>[] has been shot point-blank by []!</B>", M, user), 1, "\red You hear someone fall", 2)
 	else
+		if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(40))
+			for(var/mob/O in viewers(M, null))
+				if (O.client)	O.show_message(text("\red <B>[] has blocked []'s pistolwhip with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
+			return
+		if (!istype(H:l_hand, /obj/item/weapon/shield/riot) && prob(40))
+			for(var/mob/O in viewers(M, null))
+				if (O.client)	O.show_message(text("\red <B>[] has blocked []'s pistolwhip with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
+			return
 		if (prob(50))
 			if (M.paralysis < 60)
 				M.paralysis = 60
