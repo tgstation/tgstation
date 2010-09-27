@@ -40,6 +40,7 @@
 	throw_range = 10
 	desc = "There are 0 caps left. Looks just like the real thing!"
 	icon_state = "revolver"
+	item_state = "gun"
 	var/bullets = 7.0
 	w_class = 3.0
 	force = 0.0
