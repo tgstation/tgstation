@@ -269,6 +269,7 @@ var/showadminmessages = 1
 			<A href='?src=\ref[src];c_mode2=deathmatch'>Death Commando Deathmatch</A><br>
 			<A href='?src=\ref[src];c_mode2=confliction'>Confliction (TESTING)</A><br>
 			<A href='?src=\ref[src];c_mode2=ctf'>Capture The Flag (Beta)</A><br><br>
+			<A href='?src=\ref[src];c_mode2=changeling'>Changeling</A><br><br>
 			Now: [master_mode]\n"})
 			usr << browse(dat, "window=c_mode")
 
@@ -309,6 +310,8 @@ var/showadminmessages = 1
 					master_mode = "confliction"
 				if("ctf")
 					master_mode = "ctf"
+				if("changeling")
+					master_mode = "changeling"
 				else
 			log_admin("[key_name(usr)] set the mode as [master_mode].")
 			message_admins("\blue [key_name_admin(usr)] set the mode as [master_mode].", 1)
