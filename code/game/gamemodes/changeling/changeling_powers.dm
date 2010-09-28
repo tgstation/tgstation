@@ -356,7 +356,7 @@
 	usr << "\blue We stealthily sting [T]."
 
 	spawn(50) //Give the changeling a chance to calmly walk away before the target FREAKS THE FUCK OUT
-		T.reagents.add_reagent("space_drugs", 30)
+		T.reagents.add_reagent("space_drugs", 5)
 
 	usr.verbs -= /client/proc/changeling_hallucinogenic_sting
 

@@ -12,6 +12,7 @@
 	var/list/org_names_2 = list()
 	var/list/anomalies = list()
 	var/list/SWF_names = list()
+	var/list/changeling_names = list()
 
 /datum/intercept_text/New()
 	..()
@@ -19,6 +20,7 @@
 	src.org_names_2.Add("Reapers", "Swarm", "Rogues", "Menace", "Jeff Worshippers", "Drunks", "Strikers", "Creed")
 	src.anomalies.Add("Huge electrical storm", "Photon emitter", "Meson generator", "Blue swirly thing")
 	src.SWF_names.Add("Grand Wizard", "His Most Unholy Master", "The Most Angry", "Bighands", "Tall Hat", "Deadly Sandals")
+	src.changeling_names.Add("Odo", "The Thing", "Booga", "The Goatee of Wrath", "Tam Lin", "Species 3157")
 
 /datum/intercept_text/proc/build(var/mode_type, correct_mob)
 	switch(mode_type)
@@ -41,6 +43,10 @@
 		if("malf")
 			src.text = ""
 			src.build_malf(correct_mob)
+			return src.text
+		if("changeling")
+			src.text = ""
+			src.build_changeling(correct_mob)
 			return src.text
 		else
 			return null
@@ -124,3 +130,27 @@
 	src.text += "<BR><BR>A [a_name] was recently picked up by a nearby stations sensors in your sector. If it came into contact with your ship or "
 	src.text += "electrical equipment, it may have had hazardarous and unpredictable effects. Closely observe any non carbon based life forms "
 	src.text += "for signs of unusual behaviour, but keep this information discreet at all times due to this possibly dangerous scenario."
+
+/datum/intercept_text/proc/build_changeling(correct_mob)
+	var/cname = pick(src.changeling_names)
+	var/orgname1 = pick(src.org_names_1)
+	var/orgname2 = pick(src.org_names_2)
+	var/changeling_name
+	var/changeling_job
+	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
+	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
+	if(prob(prob_right_job))
+		changeling_job = correct_mob:assigned_role
+	else
+		var/list/job_tmp = get_all_jobs()
+		changeling_job = pick(job_tmp)
+	if(prob(prob_right_dude) && ticker.mode == "changeling")
+		changeling_name = correct_mob:current
+	else
+		changeling_name = src.pick_mob()
+
+	src.text += "<BR><BR>We have received a report that a dangerous alien lifeform known only as \"[cname]\" may have infiltrated your crew.  "
+	src.text += "Our intelligence suggests a [prob_right_job]% chance that a [changeling_job] on board your station has been replaced by the alien.  "
+	src.text += "Additionally, the report indicates a [prob_right_dude]% chance that [changeling_name] may have been in contact with the lifeform at a recent social gathering.  "
+	src.text += "These lifeforms are assosciated with the [orgname1] [orgname2] and may be attempting to acquire sensitive materials on their behalf.  "
+	src.text += "Please take care not to alarm the crew, as [cname] may take advantage of a panic situation."

@@ -125,8 +125,8 @@
 		changeling.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 
-//	spawn (rand(waittime_l, waittime_h))
-//		send_intercept()
+	spawn (rand(waittime_l, waittime_h))
+		send_intercept()
 
 /datum/game_mode/changeling/proc/get_possible_changelings()
 	var/list/candidates = list()
@@ -142,14 +142,14 @@
 
 	return candidates
 
-//Centcom Update - needs fixing, copied from Traitor.
-/*
+//Centcom Update - in testing, copied mostly from Wizard.
+
 /datum/game_mode/changeling/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
 	intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
 
 	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf")
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling")
 	possible_modes -= "[ticker.mode]"
 	var/number = pick(2, 3)
 	var/i = 0
@@ -159,7 +159,7 @@
 
 	var/datum/intercept_text/i_text = new /datum/intercept_text
 	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(traitors))
+		intercepttext += i_text.build(A, changeling)
 
 	for (var/obj/machinery/computer/communications/comm in world)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
@@ -172,7 +172,7 @@
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	world << sound('intercept.ogg')
-*/
+
 
 /datum/game_mode/changeling/declare_completion()
 	for(var/datum/mind/changeling in changelings)
