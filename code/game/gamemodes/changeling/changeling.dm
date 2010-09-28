@@ -178,6 +178,8 @@
 	for(var/datum/mind/changeling in changelings)
 		var/changelingwin = 1
 		var/changeling_name
+		var/totalabsorbed = 0
+		totalabsorbed = changeling.current.absorbed_dna.len
 
 		if(changeling.current)
 			changeling_name = "[changeling.current.real_name] (played by [changeling.key])"
@@ -185,6 +187,8 @@
 			changeling_name = "[changeling.key] (character destroyed)"
 
 		world << "<B>The changeling was [changeling_name]</B>"
+		world << "<B>Genomes absorbed: [totalabsorbed]</B>"
+
 		var/count = 1
 		for(var/datum/objective/objective in changeling.objectives)
 			if(objective.check_completion())
