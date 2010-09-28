@@ -117,6 +117,11 @@ obj/item/toy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/user as 
 			del(D)
 
 		return
+	else if (bullets == 0)
+		user.weakened += 5
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message(text("\red [] realized they were out of ammo and starting scrounging for some!", user), 1)
+
 
 obj/item/toy/crossbow/attack(mob/M as mob, mob/user as mob)
 	src.add_fingerprint(user)
@@ -128,13 +133,14 @@ obj/item/toy/crossbow/attack(mob/M as mob, mob/user as mob)
 		for(var/mob/O in viewers(M, null))
 			if(O.client)
 				O.show_message(text("\red <B>[] casually lines up a shot with []'s head and pulls the trigger!</B>", user, M), 1, "\red You hear the sound of foam against skull", 2)
-				playsound(user.loc, 'syringeproj.ogg', 50, 1)
 				O.show_message(text("\red [] was hit in the head by the foam dart!", M), 1)
-				new /obj/item/toy/ammo/crossbow(M.loc)
-				src.bullets--
-	else if (M.lying && !src.bullets)
+		playsound(user.loc, 'syringeproj.ogg', 50, 1)
+		new /obj/item/toy/ammo/crossbow(M.loc)
+		src.bullets--
+	else if (M.lying && src.bullets == 0)
 		for(var/mob/O in viewers(M, null))
-			if (O.client)	O.show_message(text("\red <B>[] casually lines up a shot with []'s head, then realizes they are out of ammo!</B>", user, M), 1, "\red You hear nothing", 2)
+			if (O.client)	O.show_message(text("\red <B>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</B>", user, M), 1, "\red You hear someone fall", 2)
+		user.weakened += 5
 	return
 
 /obj/item/toy/ammo/gun/proc/update_icon()
