@@ -1865,6 +1865,9 @@ var/showadminmessages = 1
 		if("wizard")
 			if(M.mind == ticker.mode:wizard)
 				return 1
+		if("changeling")
+			if(M.mind in ticker.mode:changelings)
+				return 1
 	if(M.mind in ticker.mode.traitors)
 		return 1
 

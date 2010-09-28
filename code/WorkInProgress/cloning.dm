@@ -483,6 +483,9 @@
 			if ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries))
 				ticker.mode:add_revolutionary(src.occupant.mind)
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
+		if ("changeling")
+			if (src.occupant.mind in ticker.mode:changelings)
+				src.occupant.make_changeling()
 
 	// -- End mode specific stuff
 
