@@ -164,7 +164,7 @@ datum
 			explanation_text = "Absorb 5 compatible genomes."
 
 			check_completion()
-				if(owner.current.absorbed_dna.len > num_to_eat)
+				if(owner.current.absorbed_dna.len >= num_to_eat)
 					return 1
 				else
 					return 0
