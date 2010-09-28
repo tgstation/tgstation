@@ -98,6 +98,16 @@
 	icon_state = "357-7"
 	amount_left = 7.0
 
+/obj/item/weapon/ammo/bshell
+	desc = "A weak beanbag shell."
+	name = "beanbag shell"
+	icon_state = "bshell"
+
+/obj/item/weapon/ammo/gshell
+	desc = "A 12gauge shell."
+	name = "12 gauge shell"
+	icon_state = "gshell"
+
 /obj/item/weapon/ammo/a38
 	desc = "A speedloader that contains 7 .38 Special rounds."
 	name = "38-Special ammo"
@@ -482,6 +492,15 @@
 	w_class = 2.0
 	throw_speed = 4
 	throw_range = 10
+
+/obj/item/weapon/gun/shotgun
+	name = "shotgun"
+	icon_state = "shotgun"
+	w_class = 4.0
+	force = 7.0
+	var/pumped = 0.0
+	var/s1 = 0.0
+	var/s2 = 0.0
 
 /obj/item/weapon/gun/energy
 	name = "energy"

@@ -182,7 +182,9 @@
 	src.LL += new /obj/item/device/infra_sensor(src)
 	src.LL += new /obj/item/weapon/handcuffs(src)
 	src.LL += new /obj/item/weapon/ammo/a357(src)
+	src.LL += new /obj/item/weapon/ammo/gshell(src)
 	src.LL += new /obj/item/weapon/ammo/a38(src)
+	src.LL += new /obj/item/weapon/ammo/bshell(src)
 //	src.LL += new /obj/item/weapon/shield/riot(src)
 	src.wires["Light Red"] = 0
 	src.wires["Dark Red"] = 0

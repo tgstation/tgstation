@@ -417,6 +417,10 @@
 			src.equip_if_possible(new /obj/item/clothing/under/bartender(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
+			src.equip_if_possible(new /obj/item/weapon/ammo/bshell(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/ammo/bshell(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/ammo/bshell(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/ammo/bshell(src), slot_in_backpack)
 
 		if ("Chef")
 			src.equip_if_possible(new /obj/item/clothing/under/chef(src), slot_w_uniform)

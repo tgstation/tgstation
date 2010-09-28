@@ -4,6 +4,8 @@ PROJECTILE DEFINES
 PULSE RIFLE
 357 AMMO
 38 AMMO
+SHOTGUN SHELLS
+SHOTGUN
 REVOLVER
 DETECTIVES REVOLVER
 LASER GUN
@@ -134,8 +136,6 @@ TELEPORT GUN
 
 
 
-
-
 // REVOLVER
 
 /obj/item/weapon/gun/revolver/examine()
@@ -213,16 +213,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
 		M << "\red The helmet protects you from being hit hard in the head!"
 		return
-
 	if ((user.a_intent == "hurt" && src.bullets > 0))
-		if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(20))
-			for(var/mob/O in viewers(M, null))
-				if (O.client)	O.show_message(text("\red <B>[] has blocked []'s point-blank shot with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
-			return
-		if (!istype(H:l_hand, /obj/item/weapon/shield/riot) && prob(20))
-			for(var/mob/O in viewers(M, null))
-				if (O.client)	O.show_message(text("\red <B>[] has blocked []'s point-blank shot with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
-			return
 		if (prob(20))
 			if (M.paralysis < 10)
 				M.paralysis = 10
@@ -237,14 +228,6 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		for(var/mob/O in viewers(M, null))
 			if(O.client)	O.show_message(text("\red <B>[] has been shot point-blank by []!</B>", M, user), 1, "\red You hear someone fall", 2)
 	else
-		if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(40))
-			for(var/mob/O in viewers(M, null))
-				if (O.client)	O.show_message(text("\red <B>[] has blocked []'s pistolwhip with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
-			return
-		if (!istype(H:l_hand, /obj/item/weapon/shield/riot) && prob(40))
-			for(var/mob/O in viewers(M, null))
-				if (O.client)	O.show_message(text("\red <B>[] has blocked []'s pistolwhip with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
-			return
 		if (prob(50))
 			if (M.paralysis < 60)
 				M.paralysis = 60
@@ -259,6 +242,126 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	return
 
 
+
+
+// SHOTGUN
+
+/obj/item/weapon/gun/shotgun/examine()
+	set src in usr
+
+	if (src.s1 >= 1 && src.s2 >= 1)
+		src.desc = "There are 2 shells left!"
+	if (src.s1 >= 1 && src.s2 == 0)
+		src.desc = "There are 1 shells left!"
+	if (src.s1 == 0 && src.s2 == 0)
+		src.desc = "There are 0 shells left!"
+	..()
+	return
+
+// if s1 is 0, not loaded. 1 is beanbag, 2 is 12gauge. same as s2.
+
+/obj/item/weapon/gun/shotgun/attackby(obj/item/weapon/A as obj, mob/user as mob)
+
+	if (istype(A, /obj/item/weapon/ammo/bshell))
+		//var/obj/item/weapon/ammo/bshell/A = B
+		if ((src.s1 + src.s2) >= 2)
+			user << "\blue It's already fully loaded!"
+			return 1
+		else
+			user << "\blue You load the shell into the shotgun."
+			if (src.s1 == 0)
+				del(A)
+				src.s1 = 1
+				return 1
+			else if (src.s2 == 0)
+				del(A)
+				src.s2 = 1
+				return 1
+			return 1
+		return 1
+
+	else if (istype(A, /obj/item/weapon/ammo/gshell))
+		//var/obj/item/weapon/ammo/gshell/A = B
+		if ((src.s1 + src.s2) >= 2)
+			user << "\blue It's already fully loaded!"
+			return 1
+		else
+			user << "\blue You load the shell into the shotgun."
+			if (src.s1 == 0)
+				del(A)
+				src.s1 = 2
+				return 1
+			else if (src.s2 == 0)
+				del(A)
+				src.s2 = 2
+				return 1
+			return 1
+		return 1
+	return 1
+
+
+/obj/item/weapon/gun/shotgun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+	if (flag)
+		return
+	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		usr << "\red You don't have the dexterity to do this!"
+		return
+	if (src.pumped == 0)
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red <B>[] pumps the shotgun!</B>", user), 1, "\red You hear pumping", 2)
+			playsound(user, 'shotgunpump.ogg', 100, 1)
+			src.pumped++
+			return
+	src.add_fingerprint(user)
+	if ((src.s1 + src.s2) < 1)
+		user.show_message("\red *click* *click*", 2)
+		return
+	playsound(user, 'Gunshot.ogg', 100, 1)
+	for(var/mob/O in viewers(user, null))
+		O.show_message(text("\red <B>[] fires a shotgun at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+	var/turf/T = user.loc
+	var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+	if ((!( U ) || !( T )))
+		return
+	while(!( istype(U, /turf) ))
+		U = U.loc
+	if (!( istype(T, /turf) ))
+		return
+	if (U == T)
+		if (src.s1 == 1)
+			user.bullet_act(PROJECTILE_WEAKBULLET)
+		else if (src.s1 == 2)
+			user.bullet_act(PROJECTILE_BULLET)
+		return
+	if (src.s1 == 1)
+		var/obj/bullet/A = new /obj/bullet/weakbullet( user.loc )
+		src.pumped--
+		src.s1 = src.s2
+		src.s2 = 0
+		A.current = U
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+		user.next_move = world.time + 4
+		spawn( 0 )
+			A.process()
+		if (!istype(U, /turf))
+			del(A)
+			return
+	else if (src.s1 == 2)
+		var/obj/bullet/A = new /obj/bullet( user.loc )
+		src.pumped--
+		src.s1 = src.s2
+		src.s2 = 0
+		A.current = U
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+		user.next_move = world.time + 4
+		spawn( 0 )
+			A.process()
+		if (!istype(U, /turf))
+			del(A)
+			return
+	return
 
 
 

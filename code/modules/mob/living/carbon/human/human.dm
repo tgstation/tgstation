@@ -343,6 +343,59 @@
 		src.updatehealth()
 		src.stuttering += 5
 		src.drowsyness += 5
+	else if(flag == PROJECTILE_WEAKBULLET)
+		var/d = 14
+		if (istype(src.wear_suit, /obj/item/clothing/suit/armor))
+			if (prob(70))
+				show_message("\red Your armor absorbs the hit!", 4)
+				return
+			else
+				if (prob(40))
+					show_message("\red Your armor only softens the hit!", 4)
+					if (prob(20))
+						d = d / 2
+					d = d / 4
+		else
+			if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
+				if (prob(90))
+					show_message("\red Your armor absorbs the blow!", 4)
+					return
+				else
+					if (prob(90))
+						show_message("\red Your armor only softens the blow!", 4)
+						if (prob(60))
+							d = d / 2
+						d = d / 5
+		if (istype(src.r_hand, /obj/item/weapon/shield/riot))
+			if (prob(90))
+				show_message("\red Your shield absorbs the blow!", 4)
+				return
+			else
+				if (prob(40))
+					show_message("\red Your shield only softens the blow!", 4)
+					if (prob(60))
+						d = d / 2
+					d = d / 5
+		else
+			if (istype(src.l_hand, /obj/item/weapon/shield/riot))
+				if (prob(90))
+					show_message("\red Your shield absorbs the blow!", 4)
+					return
+				else
+					if (prob(40))
+						show_message("\red Your shield only softens the blow!", 4)
+						if (prob(60))
+							d = d / 2
+						d = d / 5
+		if (src.stat != 2)
+			var/organ = src.organs[ran_zone("chest")]
+			if (istype(organ, /datum/organ/external))
+				var/datum/organ/external/temp = organ
+				temp.take_damage(d, 0)
+			src.UpdateDamageIcon()
+			src.updatehealth()
+			if(src.weakened <= 5)	src.weakened = 5
+		return
 	return
 
 /mob/living/carbon/human/ex_act(severity)
