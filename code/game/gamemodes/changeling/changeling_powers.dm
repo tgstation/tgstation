@@ -4,7 +4,7 @@
 
 	spawn(600)
 		src.verbs += /client/proc/changeling_neurotoxic_sting
-		usr.verbs += /client/proc/changeling_hallucinogenic_sting
+		src.verbs += /client/proc/changeling_hallucinogenic_sting
 
 	src.changeling_level = 1
 	return
@@ -17,7 +17,7 @@
 
 	spawn(600)
 		src.verbs += /client/proc/changeling_neurotoxic_sting
-		usr.verbs += /client/proc/changeling_hallucinogenic_sting
+		src.verbs += /client/proc/changeling_hallucinogenic_sting
 
 	src.changeling_level = 2
 	return
@@ -29,14 +29,14 @@
 	src.verbs -= /client/proc/changeling_lesser_transform
 	src.verbs -= /client/proc/changeling_fakedeath
 	src.verbs -= /client/proc/changeling_neurotoxic_sting
-	usr.verbs -= /client/proc/changeling_hallucinogenic_sting
+	src.verbs -= /client/proc/changeling_hallucinogenic_sting
 
 /client/proc/changeling_absorb_dna()
 	set category = "Changeling"
 	set name = "Absorb DNA"
 
 	if(usr.stat)
-		usr << "\red Not when we are incapicated."
+		usr << "\red Not when we are incapacitated."
 		return
 
 	if (!istype(usr.equipped(), /obj/item/weapon/grab))
@@ -95,7 +95,7 @@
 	set category = "Changeling"
 	set name = "Transform"
 	if(usr.stat)
-		usr << "\red Not when we are incapicated."
+		usr << "\red Not when we are incapacitated."
 		return
 
 	if (usr.absorbed_dna.len <= 0)
@@ -120,7 +120,7 @@
 	set name = "Lesser Form"
 
 	if(usr.stat)
-		usr << "\red Not when we are incapicated."
+		usr << "\red Not when we are incapacitated."
 		return
 
 	usr.remove_changeling_powers()
@@ -191,7 +191,7 @@
 	set name = "Transform"
 
 	if(usr.stat)
-		usr << "\red Not when we are incapicated."
+		usr << "\red Not when we are incapacitated."
 		return
 
 	if (usr.absorbed_dna.len <= 0)
@@ -285,7 +285,7 @@
 	usr.changeling_fakedeath = 1
 	usr.remove_changeling_powers()
 
-	usr.emote("deathgasp")
+	usr.emote("gasp")
 
 	spawn(600)
 		if (usr.stat != 2)
@@ -328,7 +328,7 @@
 	set desc="Sting target:"
 
 	if(usr.stat)
-		usr << "\red Not when we are incapicated."
+		usr << "\red Not when we are incapacitated."
 		return
 
 	usr << "\blue We stealthily sting [T]."
@@ -350,13 +350,13 @@
 	set desc="Sting target:"
 
 	if(usr.stat)
-		usr << "\red Not when we are incapicated."
+		usr << "\red Not when we are incapacitated."
 		return
 
 	usr << "\blue We stealthily sting [T]."
 
 	spawn(50) //Give the changeling a chance to calmly walk away before the target FREAKS THE FUCK OUT
-		T.reagents.add_reagent("LSD", 30)
+		T.reagents.add_reagent("space_drugs", 30)
 
 	usr.verbs -= /client/proc/changeling_hallucinogenic_sting
 
