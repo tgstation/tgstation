@@ -54,8 +54,8 @@
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
 				if (src.mind == malfai)
-					if (malf.apcs > 0)
-						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
+					if (malf.apcs >= 3)
+						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
 
 		if(!src.stat)
 			stat(null, text("System integrity: [(src.health+100)/2]%"))

@@ -10,6 +10,7 @@
 	var/malf_mode_declared = 0
 	var/boom = 0
 	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
+	var/win = 0
 
 /datum/game_mode/malfunction/announce()
 	world << "<B>The current game mode is - AI Malfunction!</B>"
@@ -79,13 +80,15 @@
 
 
 /datum/game_mode/malfunction/process()
-	AI_win_timeleft = AI_win_timeleft - apcs //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
+	if (apcs >= 3)
+		AI_win_timeleft = AI_win_timeleft - (apcs/3) //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
 //	if(AI_win_timeleft == 1200) // Was 1790
 //		malf_mode_declared = 1
 	check_win()
 
 /datum/game_mode/malfunction/check_win()
-	if (AI_win_timeleft <= 0)
+	if (AI_win_timeleft <= 0 && !win)
+		win = 1
 		world << "<FONT size = 3><B>The AI has won!</B></FONT>"
 		world << "<B>It has fully taken control of all of [station_name()]'s systems.</B>"
 
