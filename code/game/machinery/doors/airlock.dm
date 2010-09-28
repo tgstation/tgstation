@@ -76,6 +76,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/lockdownbyai = 0
 	autoclose = 1
 	var/doortype = 0
+	var/justzap = 0
+
 /obj/machinery/door/airlock/command
 	name = "Airlock"
 	icon = 'Doorcom.dmi'
@@ -132,7 +134,13 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/bumpopen(mob/user as mob) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if (!istype(usr, /mob/living/silicon))
 		if (src.isElectrified())
-			if(src.shock(user, 100))
+			if (!src.justzap)
+				if(src.shock(user, 100))
+					src.justzap = 1
+					spawn (10)
+						src.justzap = 0
+					return
+			else if (src.justzap)
 				return
 	..(user)
 
