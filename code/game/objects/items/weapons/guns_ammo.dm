@@ -265,7 +265,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 	if (istype(A, /obj/item/weapon/ammo/bshell))
 		//var/obj/item/weapon/ammo/bshell/A = B
-		if ((src.s1 + src.s2) >= 2)
+		if ((src.s1 > 0 && src.s2 > 0))
 			user << "\blue It's already fully loaded!"
 			return 1
 		else
@@ -283,7 +283,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 	else if (istype(A, /obj/item/weapon/ammo/gshell))
 		//var/obj/item/weapon/ammo/gshell/A = B
-		if ((src.s1 + src.s2) >= 2)
+		if ((src.s1 > 0 && src.s2 > 0))
 			user << "\blue It's already fully loaded!"
 			return 1
 		else
