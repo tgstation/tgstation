@@ -12,8 +12,8 @@
 	var/amount_left = 7.0
 
 /obj/item/toy/ammo/crossbow
-	icon = 'chemical.dmi'
-	flags = FPRINT | TABLEPASS| CONDUCT
+	icon = 'toy.dmi'
+	flags = FPRINT | TABLEPASS
 	m_amt = 100
 	throwforce = 2
 	w_class = 1.0
@@ -21,12 +21,12 @@
 	throw_range = 20
 	desc = "its nerf or nothing!"
 	name = "foam dart"
-	icon_state = "syringeproj"
+	icon_state = "foamdart"
 
 /obj/foam_dart_dummy
 	name = ""
 	desc = ""
-	icon = 'chemical.dmi'
+	icon = 'toy.dmi'
 	icon_state = "null"
 	anchored = 1
 	density = 0
@@ -51,6 +51,7 @@
 	icon = 'gun.dmi'
 	desc = "A weapon favored by many overactive children."
 	icon_state = "crossbow"
+	flags = FPRINT | TABLEPASS | USEDELAY
 	w_class = 2.0
 	item_state = "crossbow"
 	force = 0.0
@@ -76,10 +77,9 @@
 				usr << "\red It's already fully loaded."
 
 
-// This crossbow is pissing me the fuck off, it uses the same damn code as the syringe gun (originally, at least)
-// but it doesn't fucking fire foam darts unless you're standing right next to the target.. --NeoFite
 obj/item/toy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if(!isturf(target.loc) || target == user) return
+	if(flag) return
 
 	if (locate (/obj/table, src.loc))
 		return
@@ -87,7 +87,7 @@ obj/item/toy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/user as 
 		var/turf/trg = get_turf(target)
 		var/obj/foam_dart_dummy/D = new/obj/foam_dart_dummy(get_turf(src))
 		bullets--
-		D.icon_state = "syringeproj"
+		D.icon_state = "foamdart"
 		D.name = "foam dart"
 		playsound(user.loc, 'syringeproj.ogg', 50, 1)
 
@@ -117,6 +117,25 @@ obj/item/toy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/user as 
 			del(D)
 
 		return
+
+obj/item/toy/crossbow/attack(mob/M as mob, mob/user as mob)
+	src.add_fingerprint(user)
+
+// ******* Check
+
+	if (src.bullets > 0 && M.lying)
+
+		for(var/mob/O in viewers(M, null))
+			if(O.client)
+				O.show_message(text("\red <B>[] casually lines up a shot with []'s head and pulls the trigger!</B>", user, M), 1, "\red You hear the sound of foam against skull", 2)
+				playsound(user.loc, 'syringeproj.ogg', 50, 1)
+				O.show_message(text("\red [] was hit in the head by the foam dart!", M), 1)
+				new /obj/item/toy/ammo/crossbow(M.loc)
+				src.bullets--
+	else if (M.lying && !src.bullets)
+		for(var/mob/O in viewers(M, null))
+			if (O.client)	O.show_message(text("\red <B>[] casually lines up a shot with []'s head, then realizes they are out of ammo!</B>", user, M), 1, "\red You hear nothing", 2)
+	return
 
 /obj/item/toy/ammo/gun/proc/update_icon()
 	src.icon_state = text("357-[]", src.amount_left)
