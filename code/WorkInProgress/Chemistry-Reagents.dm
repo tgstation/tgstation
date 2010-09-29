@@ -1251,7 +1251,7 @@ datum
 					M.confused += 2
 				..()
 
-		cube_libre
+		cuba_libre
 			name = "Cuba Libre"
 			id = "cubalibre"
 			description = "Rum, mixed with cola. Viva la revolution."

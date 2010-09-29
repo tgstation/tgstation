@@ -1492,7 +1492,7 @@
 		R.add_reagent("gin", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/whiskey
-	name = "Ungle Git's Special Reserve"
+	name = "Uncle Git's Special Reserve"
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
 	heal_amt = 1
@@ -1885,11 +1885,11 @@
 						icon_state = "manlydorfglass"
 						name = "The Manly Dorf"
 						desc = "A manly concotion made from Ale and Beer. Intended for true men only."
-					if("Irish cream")
+					if("irishcream")
 						icon_state = "irishcreamglass"
 						name = "Irish Cream"
 						desc = "It's cream, mixed with whiskey. What else would you expect from the Irish?"
-					if("Cuba Libre")
+					if("cubalibre")
 						icon_state = "cubalibreglass"
 						name = "Cuba Libre"
 						desc = "A classic mix of rum and cola."
