@@ -1,5 +1,4 @@
 /*
-test
 CONTAINS:
 PROJECTILE DEFINES
 PULSE RIFLE
@@ -253,9 +252,9 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if (src.s1 >= 1 && src.s2 >= 1)
 		src.desc = "There are 2 shells left!"
 	if (src.s1 >= 1 && src.s2 == 0)
-		src.desc = "There are 1 shells left!"
+		src.desc = "There is 1 shell left!"
 	if (src.s1 == 0 && src.s2 == 0)
-		src.desc = "There are 0 shells left!"
+		src.desc = "There are no shells left!"
 	..()
 	return
 
@@ -386,6 +385,222 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		spawn( 0 )
 		return
 
+/obj/item/weapon/gun/combatshotgun/attackby(obj/item/weapon/A as obj, mob/user as mob)
+
+	if (istype(A, /obj/item/weapon/ammo/bshell))
+		//var/obj/item/weapon/ammo/bshell/A = B
+		if ((src.s1 > 0 && src.s2 > 0 && src.s3 > 0 && src.s4 > 0 && src.s5 > 0 && src.s6 > 0 && src.s7 > 0 && src.s8 > 0))
+			user << "\blue It's already fully loaded!"
+			return 1
+		else
+			user << "\blue You load the shell into the shotgun."
+			if (src.s1 == 0)
+				del(A)
+				src.s1 = 1
+				return 1
+			else if (src.s2 == 0)
+				del(A)
+				src.s2 = 1
+				return 1
+			else if (src.s3 == 0)
+				del(A)
+				src.s2 = 1
+				return 1
+			else if (src.s4 == 0)
+				del(A)
+				src.s2 = 1
+				return 1
+			else if (src.s5 == 0)
+				del(A)
+				src.s2 = 1
+				return 1
+			else if (src.s6 == 0)
+				del(A)
+				src.s2 = 1
+				return 1
+			else if (src.s7 == 0)
+				del(A)
+				src.s2 = 1
+				return 1
+			else if (src.s8 == 0)
+				del(A)
+				src.s2 = 1
+				return 1
+			return 1
+		return 1
+
+	else if (istype(A, /obj/item/weapon/ammo/gshell))
+		//var/obj/item/weapon/ammo/gshell/A = B
+		if ((src.s1 > 0 && src.s2 > 0 && src.s3 > 0 && src.s4 > 0 && src.s5 > 0 && src.s6 > 0 && src.s7 > 0 && src.s8 > 0))
+			user << "\blue It's already fully loaded!"
+			return 1
+		else
+			user << "\blue You load the shell into the shotgun."
+			if (src.s1 == 0)
+				del(A)
+				src.s1 = 2
+				return 1
+			else if (src.s2 == 0)
+				del(A)
+				src.s2 = 2
+				return 1
+			else if (src.s3 == 0)
+				del(A)
+				src.s2 = 2
+				return 1
+			else if (src.s4 == 0)
+				del(A)
+				src.s2 = 2
+				return 1
+			else if (src.s5 == 0)
+				del(A)
+				src.s2 = 2
+				return 1
+			else if (src.s6 == 0)
+				del(A)
+				src.s2 = 2
+				return 1
+			else if (src.s7 == 0)
+				del(A)
+				src.s2 = 2
+				return 1
+			else if (src.s8 == 0)
+				del(A)
+				src.s2 = 2
+				return 1
+			return 1
+		return 1
+
+	else if (istype(A, /obj/item/weapon/ammo/blshell))
+		//var/obj/item/weapon/ammo/gshell/A = B
+		if ((src.s1 > 0 && src.s2 > 0 && src.s3 > 0 && src.s4 > 0 && src.s5 > 0 && src.s6 > 0 && src.s7 > 0 && src.s8 > 0))
+			user << "\blue It's already fully loaded!"
+			return 1
+		else
+			user << "\blue You load the shell into the shotgun."
+			if (src.s1 == 0)
+				del(A)
+				src.s1 = 3
+				return 1
+			else if (src.s2 == 0)
+				del(A)
+				src.s2 = 3
+				return 1
+			else if (src.s3 == 0)
+				del(A)
+				src.s2 = 3
+				return 1
+			else if (src.s4 == 0)
+				del(A)
+				src.s2 = 3
+				return 1
+			else if (src.s5 == 0)
+				del(A)
+				src.s2 = 3
+				return 1
+			else if (src.s6 == 0)
+				del(A)
+				src.s2 = 3
+				return 1
+			else if (src.s7 == 0)
+				del(A)
+				src.s2 = 3
+				return 1
+			else if (src.s8 == 0)
+				del(A)
+				src.s2 = 3
+				return 1
+			return 1
+		return 1
+	return 1
+
+	//there is DEFINITELY a better way to do this, but I am a lazy fuck
+
+/obj/item/weapon/gun/combatshotgun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+	if (flag)
+		return
+	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		usr << "\red You don't have the dexterity to do this!"
+		return
+	if (src.pumped == 0)
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red <B>[] pumps the shotgun!</B>", user), 1, "\red You hear pumping", 2)
+			playsound(user, 'shotgunpump.ogg', 100, 1)
+			src.pumped++
+			return
+	src.add_fingerprint(user)
+	if ((src.s1 + src.s2) < 1)
+		user.show_message("\red *click* *click*", 2)
+		return
+	playsound(user, 'Gunshot.ogg', 100, 1)
+	for(var/mob/O in viewers(user, null))
+		O.show_message(text("\red <B>[] fires a shotgun at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+	var/turf/T = user.loc
+	var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+	if ((!( U ) || !( T )))
+		return
+	while(!( istype(U, /turf) ))
+		U = U.loc
+	if (!( istype(T, /turf) ))
+		return
+	if (U == T)
+		if (src.s1 == 1)
+			user.bullet_act(PROJECTILE_WEAKBULLET)
+		else if (src.s1 == 2)
+			user.bullet_act(PROJECTILE_BULLET)
+		return
+	if (src.s1 == 1)
+		var/obj/bullet/A = new /obj/bullet/weakbullet( user.loc )
+		src.pumped--
+		src.s1 = src.s2
+		src.s2 = src.s3
+		src.s3 = src.s4
+		src.s4 = src.s5
+		src.s5 = src.s6
+		src.s6 = src.s7
+		src.s7 = src.s8
+		src.s8 = 0
+		A.current = U
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+		user.next_move = world.time + 4
+		spawn( 0 )
+			A.process()
+		if (!istype(U, /turf))
+			del(A)
+			return
+	else if (src.s1 == 2)
+		var/obj/bullet/A = new /obj/bullet( user.loc )
+		src.pumped--
+		src.s1 = src.s2
+		src.s2 = src.s3
+		src.s3 = src.s4
+		src.s4 = src.s5
+		src.s5 = src.s6
+		src.s6 = src.s7
+		src.s7 = src.s8
+		src.s8 = 0
+		A.current = U
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+		user.next_move = world.time + 4
+		spawn( 0 )
+			A.process()
+		if (!istype(U, /turf))
+			del(A)
+			return
+	else if (src.s1 == 3)
+		src.pumped--
+		src.s1 = src.s2
+		src.s2 = src.s3
+		src.s3 = src.s4
+		src.s4 = src.s5
+		src.s5 = src.s6
+		src.s6 = src.s7
+		src.s7 = src.s8
+		src.s8 = 0
+		spawn( 0 )
+		return
 
 
 
