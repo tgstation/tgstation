@@ -140,19 +140,13 @@
 				prize.name = "space ticket"
 				prize.desc = "It's almost like actual currency!"
 			if(2)
-				prize = new /obj/item/device/radio/beacon(src.loc)
-				prize.name = "electronic blink toy game"
-				prize.desc = "Blink.  Blink.  Blink."
+				prize = new /obj/item/toy/blink(src.loc)
 //			if(3)
 //				prize = new /obj/item/weapon/zippo(src.loc)
 //				prize.name = "Burno Lighter"
 //				prize.desc = "Almost like a decent lighter!"
 			if(4)
-				prize = new /obj/item/weapon/c_tube(src.loc)
-				prize.name = "toy sword"
-				prize.icon = 'weapons.dmi'
-				prize.icon_state = "sword1"
-				prize.desc = "A sword made of cheap plastic."
+				prize = new /obj/item/toy/sword(src.loc)
 			if(5)
 				prize = new /obj/item/toy/ammo/gun(src.loc)
 				prize = new /obj/item/toy/gun(src.loc)
