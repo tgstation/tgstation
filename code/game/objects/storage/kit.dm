@@ -10,6 +10,18 @@
 	..()
 	return
 
+/obj/item/weapon/storage/blankbox/New()
+
+	new /obj/item/weapon/ammo/blshell( src )
+	new /obj/item/weapon/ammo/blshell( src )
+	new /obj/item/weapon/ammo/blshell( src )
+	new /obj/item/weapon/ammo/blshell( src )
+	new /obj/item/weapon/ammo/blshell( src )
+	new /obj/item/weapon/ammo/blshell( src )
+	new /obj/item/weapon/ammo/blshell( src )
+	..()
+	return
+
 /obj/item/weapon/storage/flashbang_kit/New()
 
 	new /obj/item/weapon/flashbang( src )

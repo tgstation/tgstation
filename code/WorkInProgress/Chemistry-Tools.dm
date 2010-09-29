@@ -1439,6 +1439,8 @@
 		reagents = R
 		R.my_atom = src
 		R.add_reagent("cola", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/beer
 	name = "Space Beer"
@@ -1450,6 +1452,8 @@
 		reagents = R
 		R.my_atom = src
 		R.add_reagent("beer", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/milk
 	name = "Space Milk"

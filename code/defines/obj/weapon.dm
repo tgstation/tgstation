@@ -102,17 +102,35 @@
 	desc = "A weak beanbag shell."
 	name = "beanbag shell"
 	icon_state = "bshell"
+	m_amt = 10000
+	New()
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/ammo/gshell
 	desc = "A 12gauge shell."
 	name = "12 gauge shell"
 	icon_state = "gshell"
+	m_amt = 25000
+	New()
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/ammo/blshell
+	desc = "A blank shell."
+	name = "blank shell"
+	icon_state = "blshell"
+	m_amt = 500
+	New()
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/ammo/a38
 	desc = "A speedloader that contains 7 .38 Special rounds."
 	name = "38-Special ammo"
 	icon_state = "38-7"
 	amount_left = 7.0
+	m_amt = 10000
 
 /obj/item/device/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels."
@@ -149,6 +167,9 @@
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 20
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/bananapeel
 	name = "Banana Peel"
@@ -1371,11 +1392,30 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	var/cigcount = 6
 	flags = ONBELT | TABLEPASS
 
+/obj/item/weapon/cigarpacket
+	name = "Pete's Cuban Cigars"
+	desc = "The most robust cigars on the planet."
+	icon = 'cigarettes.dmi'
+	icon_state = "cigarpacket"
+	item_state = "cigarpacket"
+	w_class = 1
+	throwforce = 2
+	var/cigarcount = 6
+	flags = ONBELT | TABLEPASS
+
 /obj/item/weapon/cigbutt
 	name = "Cigarette butt"
 	desc = "A manky old cigarette butt."
 	icon = 'cigarettes.dmi'
 	icon_state = "cigbutt"
+	w_class = 1
+	throwforce = 1
+
+/obj/item/weapon/cigarbutt
+	name = "Cigar butt"
+	desc = "A manky old cigar butt."
+	icon = 'cigarettes.dmi'
+	icon_state = "cigarbutt"
 	w_class = 1
 	throwforce = 1
 

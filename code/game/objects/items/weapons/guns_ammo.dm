@@ -298,8 +298,25 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				return 1
 			return 1
 		return 1
-	return 1
 
+	else if (istype(A, /obj/item/weapon/ammo/blshell))
+		//var/obj/item/weapon/ammo/gshell/A = B
+		if ((src.s1 > 0 && src.s2 > 0))
+			user << "\blue It's already fully loaded!"
+			return 1
+		else
+			user << "\blue You load the shell into the shotgun."
+			if (src.s1 == 0)
+				del(A)
+				src.s1 = 3
+				return 1
+			else if (src.s2 == 0)
+				del(A)
+				src.s2 = 3
+				return 1
+			return 1
+		return 1
+	return 1
 
 /obj/item/weapon/gun/shotgun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (flag)
@@ -362,7 +379,12 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		if (!istype(U, /turf))
 			del(A)
 			return
-	return
+	else if (src.s1 == 3)
+		src.pumped--
+		src.s1 = src.s2
+		src.s2 = 0
+		spawn( 0 )
+		return
 
 
 

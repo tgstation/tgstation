@@ -33,6 +33,11 @@
 	icon_state = "box"
 	item_state = "syringe_kit"
 
+/obj/item/weapon/storage/blankbox
+	name = "Blank Shells"
+	icon_state = "box"
+	item_state = "syringe_kit"
+
 /obj/item/weapon/storage/briefcase
 	name = "briefcase"
 	icon_state = "briefcase"

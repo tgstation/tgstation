@@ -445,6 +445,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon_state = "berrypile"
 	amount = 2
 	heal_amt = 3
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = "/obj/item/seeds/chiliseed"
@@ -455,6 +458,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	heal_amt = 2
 	heat_amt = 20
 	potency = 20
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	seed = "/obj/item/seeds/eggplantseed"
@@ -463,6 +469,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon_state = "eggplant"
 	amount = 1
 	heal_amt = 5
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	seed = "/obj/item/seeds/soyaseed"
@@ -471,6 +480,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon_state = "soybeans"
 	amount = 2
 	heal_amt = 2
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	seed = "/obj/item/seeds/tomatoseed"
@@ -479,6 +491,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon_state = "tomato"
 	amount = 2
 	heal_amt = 5
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed = "/obj/item/seeds/wheatseed"
@@ -487,6 +502,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon_state = "wheat"
 	amount = 1
 	heal_amt = 2
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = "/obj/item/seeds/icepepperseed"
@@ -497,6 +515,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	heal_amt = 3
 	heat_amt = 20
 	potency = 20
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
 	seed = "/obj/item/seeds/carrotseed"
@@ -505,6 +526,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon_state = "carrot"
 	amount = 3
 	heal_amt = 1
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/amanita
 	seed = "/obj/item/seeds/amanitamycelium"
@@ -515,6 +539,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	heal_amt = 0
 	poison_amt = 25
 	potency = 10
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/angel
 	seed = "/obj/item/seeds/angelmycelium"
@@ -525,6 +552,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	heal_amt = 0
 	poison_amt = 75
 	potency = 35
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/libertycap
 	seed = "/obj/item/seeds/libertymycelium"
@@ -535,6 +565,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	heal_amt = 3
 	drug_amt = 15
 	potency = 15
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/plumphelmet
 	seed = "/obj/item/seeds/plumpmycelium"
@@ -543,6 +576,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon_state = "plumphelmet"
 	amount = 2
 	heal_amt = 5
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chanterelle
 	seed = "/obj/item/seeds/chantermycelium"
@@ -551,7 +587,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	icon_state = "chanterelle"
 	amount = 3
 	heal_amt = 2
-
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 
 
@@ -571,6 +609,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	flags = FPRINT |  TABLEPASS
 	var/toxicity = 0
 	var/PestKillStr = 0
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/pestkiller/carbaryl
 	name = "Carbaryl"
@@ -579,6 +620,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	flags = FPRINT |  TABLEPASS
 	toxicity = 4
 	PestKillStr = 2
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/pestkiller/lindane
 	name = "Lindane"
@@ -587,6 +631,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	flags = FPRINT |  TABLEPASS
 	toxicity = 6
 	PestKillStr = 4
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/pestkiller/phosmet
 	name = "Phosmet"
@@ -595,6 +642,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	flags = FPRINT |  TABLEPASS
 	toxicity = 8
 	PestKillStr = 7
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 
 
@@ -660,6 +710,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	w_class = 1.0
 	var/mutmod = 0
 	var/yieldmod = 0
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/nutrient/ez
 	name = "E-Z-Nutrient"
@@ -668,6 +721,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	flags = FPRINT |  TABLEPASS
 	mutmod = 1
 	yieldmod = 1
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/nutrient/l4z
 	name = "Left 4 Zed"
@@ -676,6 +732,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	flags = FPRINT |  TABLEPASS
 	mutmod = 2
 	yieldmod = 0
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/nutrient/rh
 	name = "Robust Harvest"
@@ -684,3 +743,6 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	flags = FPRINT |  TABLEPASS
 	mutmod = 0
 	yieldmod = 2
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
