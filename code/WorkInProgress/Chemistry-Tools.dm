@@ -1776,6 +1776,10 @@
 						icon_state  = "glass_white"
 						name = "Glass of cream"
 						desc = "Ewwww..."
+					if("cola")
+						icon_state  = "glass_brown"
+						name = "Glass of Space Cola"
+						desc = "A glass of refreshing Space Cola"
 					if("orangejuice")
 						icon_state = "glass_orange"
 						name = "Glass of Orange juice"
