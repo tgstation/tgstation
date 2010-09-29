@@ -1305,6 +1305,24 @@ datum
 					M.confused += 2
 				..()
 
+		vodkamartini
+			name = "Vodka Martini"
+			id = "vodkamartini"
+			description = "Vodka with Gin. Not quite how 007 enjoyed it, but still delicious."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M.jitteriness = max(M.jitteriness-3,0)
+				if(data >= 30)
+					if (!M:stuttering) M.stuttering = 1
+					M.stuttering += 3
+				if(data >= 50 && prob(33))
+					if (!M.confused) M.confused = 1
+					M.confused += 2
+				..()
+
 		white_russian
 			name = "White Russian"
 			id = "whiterussian"
