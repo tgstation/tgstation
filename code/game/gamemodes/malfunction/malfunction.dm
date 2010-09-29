@@ -95,6 +95,7 @@
 		for(var/datum/mind/AI_mind in malf_ai)
 			AI_mind.current << "Congratulations you have taken control of the station."
 			AI_mind.current << "You may decide to blow up the station. You have 30 seconds to choose."
+			AI_mind.current << "You should have a new verb tab labeled 'EXPLODE?'"
 			AI_mind.current.verbs += /datum/game_mode/malfunction/proc/ai_win
 			spawn (300)
 				AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
@@ -115,8 +116,8 @@
 	return
 
 /datum/game_mode/malfunction/proc/ai_win()
-	set category = "BLOW UP THE STATION"
-	set name = "FUCK YES BLOW THIS SHIT UP"
+	set category = "EXPLODE?"
+	set name = "EXPLODE!"
 	set desc = "BOOM"
 
 	usr.verbs -= /datum/game_mode/malfunction/proc/ai_win
