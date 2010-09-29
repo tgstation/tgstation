@@ -838,7 +838,6 @@
 
 			playsound(M.loc,'drink.ogg', rand(10,50), 1)
 			return 1
-
 		else if( istype(M, /mob/living/carbon/human) )
 
 			for(var/mob/O in viewers(world.view, user))
@@ -1117,6 +1116,7 @@
 			icon_state = "beaker1"
 		else
 			icon_state = "beaker0"
+
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 	name = "beaker"
@@ -1455,11 +1455,187 @@
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
+/obj/item/weapon/reagent_containers/food/drinks/ale
+	name = "Magm-Ale"
+	desc = "A true dorf's drink of choice."
+	icon_state = "alebottle"
+	heal_amt = 1
+	New()
+		var/datum/reagents/R = new/datum/reagents(50)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("ale", 30)
+
 /obj/item/weapon/reagent_containers/food/drinks/milk
 	name = "Space Milk"
 	desc = "It's milk. White and nutritious goodness!"
 	icon_state = "milk"
 	heal_amt = 2
+	New()
+		var/datum/reagents/R = new/datum/reagents(50)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("milk", 50)
+
+///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
+
+/obj/item/weapon/reagent_containers/food/drinks/gin
+	name = "Griffeater Gin"
+	desc = "A bottle of high quality gin, produced in the New London Space Station."
+	icon_state = "ginbottle"
+	heal_amt = 1
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("gin", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/whiskey
+	name = "Ungle Git's Special Reserve"
+	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
+	icon_state = "whiskeybottle"
+	heal_amt = 1
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("whiskey", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/vodka
+	name = "Tunguska Triple Distilled"
+	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
+	icon_state = "vodkabottle"
+	heal_amt = 1
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("vodka", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/tequilla
+	name = "Caccavo Guaranteed Quality Tequilla"
+	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
+	icon_state = "tequillabottle"
+	heal_amt = 1
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("tequilla", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/rum
+	name = "Captain Pete's Cuban Spiced Rum"
+	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
+	icon_state = "rumbottle"
+	heal_amt = 1
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("rum", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/vermouth
+	name = "Goldeneye Vermouth"
+	desc = "Sweet, sweet dryness~"
+	icon_state = "vermouthbottle"
+	heal_amt = 1
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("vermouth", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/kahlua
+	name = "Robert Robust's Coffee Liqueur"
+	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK"
+	icon_state = "kahluabottle"
+	heal_amt = 1
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("kahlua", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/cognac
+	name = "Chateau De Baton Premium Cognac"
+	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time."
+	icon_state = "cognacbottle"
+	heal_amt = 1
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("cognac", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/wine
+	name = "Doublebeard Bearded Special Wine"
+	desc = "A faint aura of unease and asspainery surrounds the bottle."
+	icon_state = "winebottle"
+	heal_amt = 1
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("wine", 100)
+
+//////////////////////////JUICES AND STUFF ///////////////////////
+
+/obj/item/weapon/reagent_containers/food/drinks/orangejuice
+	name = "Orange Juice"
+	desc = "Full of vitamins and deliciousness!"
+	icon_state = "orangejuice"
+	heal_amt = 2
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("orangejuice", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/cream
+	name = "Milk Cream"
+	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
+	icon_state = "cream"
+	heal_amt = 2
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("cream", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/tomatojuice
+	name = "Tomato Juice"
+	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
+	icon_state = "tomatojuice"
+	heal_amt = 2
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("tomatojuice", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/limejuice
+	name = "Lime Juice"
+	desc = "Sweet-sour goodness."
+	icon_state = "limejuice"
+	heal_amt = 2
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("limejuice", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/tonic
+	name = "T-Borg's Tonic Water"
+	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
+	icon_state = "tonic"
+	heal_amt = 2
+	New()
+		var/datum/reagents/R = new/datum/reagents(50)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("tonic", 50)
+
+
 
 
 //Pills
@@ -1553,3 +1729,163 @@
 		reagents.add_reagent("beer",1000)
 
 
+//////////////////////////drinkingglass and shaker//
+
+/obj/item/weapon/reagent_containers/food/drinks/shaker
+	name = "Shaker"
+	desc = "A metal shaker to mix drinks in."
+	icon = 'food.dmi'
+	icon_state = "shaker"
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass
+	name = "glass"
+	desc = "Your standard drinking glass."
+	icon = 'food.dmi'
+	icon_state = "glass_empty"
+	New()
+		var/datum/reagents/R = new/datum/reagents(50)
+		reagents = R
+		R.my_atom = src
+
+	on_reagent_change()
+		if(reagents.reagent_list.len > 1 )
+			icon_state = "glass_brown"
+			name = "Glass of Hooch"
+			desc = "Two or more drinks, mixed together."
+		else if(reagents.reagent_list.len == 1)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				switch(R.id)
+					if("beer")
+						icon_state = "beerglass"
+						name = "Beer glass"
+						desc = "A freezing pint of beer"
+					if("ale")
+						icon_state = "aleglass"
+						name = "Ale glass"
+						desc = "A freezing pint of delicious Ale"
+					if("milk")
+						icon_state = "glass_white"
+						name = "Glass of milk"
+						desc = "White and nutritious goodness!"
+					if("cream")
+						icon_state  = "glass_white"
+						name = "Glass of cream"
+						desc = "Ewwww..."
+					if("orangejuice")
+						icon_state = "glass_orange"
+						name = "Glass of Orange juice"
+						desc = "Vitamins! Yay!"
+					if("tomatojuice")
+						icon_state = "glass_red"
+						name = "Glass of Tomato juice"
+						desc = "Are you sure this is tomato juice?"
+					if("limejuice")
+						icon_state = "glass_green"
+						name = "Glass of Lime juice"
+						desc = "A glass of sweet-sour lime juice."
+					if("whiskey")
+						icon_state = "whiskeyglass"
+						name = "Glass of whiskey"
+						desc = "The silky, smokey whiskey goodness inside the glass makes the drink look very classy."
+					if("gin")
+						icon_state = "ginvodkaglass"
+						name = "Glass of gin"
+						desc = "A crystal clear glass of Griffeater gin."
+					if("vodka")
+						icon_state = "ginvodkaglass"
+						name = "Glass of vodka"
+						desc = "The glass contain wodka. Xynta."
+					if("wine")
+						icon_state = "wineglass"
+						name = "Glass of wine"
+						desc = "A very classy looking drink."
+					if("cognac")
+						icon_state = "cognacglass"
+						name = "Glass of cognac"
+						desc = "Damn, you feel like some kind of French aristocrat just by holding this."
+					if ("kahlua")
+						icon_state = "kahluaglass"
+						name = "Glass of RR coffee Liquor"
+						desc = "DAMN, THIS THING LOOKS ROBUST"
+					if("vermouth")
+						icon_state = "vermouthglass"
+						name = "Glass of Vermouth"
+						desc = "You wonder why you're even drinking this straight."
+					if("tequilla")
+						icon_state = "tequillaglass"
+						name = "Glass of Tequilla"
+						desc = "Now all that's missing is the weird colored shades!"
+					if("rum")
+						icon_state = "rumglass"
+						name = "Glass of Rum"
+						desc = "Now you want to Pray for a pirate suit, don't you?"
+					if("gintonic")
+						icon_state = "gintonicglass"
+						name = "Gin and Tonic"
+						desc = "A mild but still great cocktail. Drink up, like a true Englishman."
+					if("whiskeycola")
+						icon_state = "whiskeycolaglass"
+						name = "Whiskey Cola"
+						desc = "An innocent-looking mixture of cola and Whiskey. Delicious."
+					if("whiterussian")
+						icon_state = "whiterussianglass"
+						name = "White Russian"
+						desc = "A very nice looking drink. But that's just, like, your opinion, man."
+					if("screwdriver")
+						icon_state = "screwdriverglass"
+						name = "Screwdriver"
+						desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."
+					if("bloodymary")
+						icon_state = "bloodymaryglass"
+						name = "Bloody Mary"
+						desc = "Tomato juice, mixed with Vodka and a lil' bit of lime. Tastes like liquid murder."
+					if("martini")
+						icon_state = "martiniglass"
+						name = "Classic Martini"
+						desc = "Damn, the barman even stirred it, not shook it."
+					if("vodkamartini")
+						icon_state = "martiniglass"
+						name = "Vodka martini"
+						desc ="A bastardisation of the classic martini. Still great."
+					if("gargleblaster")
+						icon_state = "gargleblasterglass"
+						name = "Pan-Galactic Gargle Blaster"
+						desc = "Does... does this mean that Arthur and Ford are on the station? Oh joy."
+					if("bravebull")
+						icon_state = "bravebullglass"
+						name = "Brave Bull"
+						desc = "Tequilla and Coffee liquor, brought together in a mouthwatering mixture. Drink up."
+					if("tequillasunrise")
+						icon_state = "tequillasunriseglass"
+						name = "Tequilla Sunrise"
+						desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
+					if("toxinsspecial")
+						icon_state = "toxinsspecialglass"
+						name = "Toxins Special"
+						desc = "Whoah, this thing is on FIRE"
+					if("beepskysmash")
+						icon_state = "beepskysmashglass"
+						name = "Beepsky Smash"
+						desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
+					if("doctorsdelight")
+						icon_state = "doctorsdelightglass"
+						name = "Doctor's Delight"
+						desc = "A healthy mixture of juices, guaranteed to keep you healthy until the next toolboxing takes place."
+					if("manlydorf")
+						icon_state = "manlydorfglass"
+						name = "The Manly Dorf"
+						desc = "A manly concotion made from Ale and Beer. Intended for true men only."
+					if("Irish cream")
+						icon_state = "irishcreamglass"
+						name = "Irish Cream"
+						desc = "It's cream, mixed with whiskey. What else would you expect from the Irish?"
+		else
+			icon_state = "glass_empty"
+			name = "Drinking glass"
+			desc = "Your standard drinking glass"
+			return

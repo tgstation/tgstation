@@ -1082,6 +1082,23 @@ datum
 					M:confused += 3
 				..()
 
+		wine
+			name = "Wine"
+			id = "wine"
+			description = "An premium alchoholic beverage made from distilled grape juice."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(5)
+				M:jitteriness = max(M:jitteriness-5,0)
+				if(data >= 35)
+					if (!M:stuttering) M:stuttering = 1
+					M:stuttering += 4
+				if(data >= 60 && prob(33))
+					if (!M:confused) M:confused = 1
+					M:confused += 3
+				..()
 
 		tonic
 			name = "Tonic Water"
@@ -1248,6 +1265,24 @@ datum
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
 				if(data >= 55 && prob(33))
+					if (!M.confused) M.confused = 1
+					M:confused += 2
+				..()
+
+		whiskey_cola
+			name = "Whiskey Cola"
+			id = "whiskeycola"
+			description = "Whiskey, mixed with cola. Surprisingly refreshing."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M.jitteriness = max(M.jitteriness-3,0)
+				if(data >= 35)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				if(data >= 65 && prob(33))
 					if (!M.confused) M.confused = 1
 					M:confused += 2
 				..()

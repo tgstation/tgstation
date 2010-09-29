@@ -405,90 +405,112 @@ datum
 			name = "Gin and Tonic"
 			id = "gintonic"
 			result = "gintonic"
-			required_reagents = list("gin" = 3, "tonic" = 2)
+			required_reagents = list("gin" = 2, "tonic" = 1)
 			result_amount = 5
 
 
 		cuba_libre
 			name = "Cuba Libre"
 			id = "cubalibre"
-			required_reagents = list("rum" = 1, "cola" = 2)
+			result = "cubalibre"
+			required_reagents = list("rum" = 2, "cola" = 1)
 			result_amount = 5
 
 		martini
 			name = "Classic Martini"
 			id = "martini"
-			required_reagents = list("gin" = 4, "vermouth" = 1)
+			result = "martini"
+			required_reagents = list("gin" = 2, "vermouth" = 1)
 			result_amount = 5
+
+		vodkamartini
+			name = "Vodka Martini"
+			id = "vodkamartini"
+			result = "vodkamartini"
+			required_reagents = list("vodka" = 2, "vermouth" = 1)
+			result_amount = 5
+
 
 		white_russian
 			name = "White Russian"
 			id = "whiterussian"
+			result = "whiterussian"
 			required_reagents = list("vodka" = 3, "cream" = 1, "kahlua" = 1)
 			result_amount = 5
 
 		whiskey_cola
 			name = "Whiskey Cola"
 			id = "whiskeycola"
-			required_reagents = list("whiskey" = 1, "cola" = 3)
+			result = "whiskeycola"
+			required_reagents = list("whiskey" = 2, "cola" = 1)
 			result_amount = 5
 
 		screwdriver
 			name = "Screwdriver"
 			id = "screwdrivercocktail"
-			required_reagents = list("vodka" = 2, "orangejuice" = 3)
+			result = "screwdriver"
+			required_reagents = list("vodka" = 2, "orangejuice" = 1)
 			result_amount = 5
 
 		bloody_mary
 			name = "Bloody Mary"
 			id = "bloodymary"
+			result = "bloodymary"
 			required_reagents = list("vodka" = 1, "tomatojuice" = 2, "limejuice" = 1)
 			result_amount = 5
 
 		gargle_blaster
 			name = "Pan-Galactic Gargle Blaster"
 			id = "gargleblaster"
+			result = "gargleblaster"
 			required_reagents = list("vodka" = 1, "gin" = 1, "whiskey" = 1, "cognac" = 1, "limejuice" = 1)
 			result_amount = 5
 
 		brave_bull
 			name = "Brave Bull"
 			id = "bravebull"
-			required_reagents = list("tequilla" = 3, "kahlua" = 2)
+			result = "bravebull"
+			required_reagents = list("tequilla" = 2, "kahlua" = 1)
 			result_amount = 5
 
 		tequilla_sunrise
 			name = "Tequilla Sunrise"
 			id = "tequillasunrise"
-			required_reagents = list("tequilla" = 1, "orangejuice" = 2)
+			result = "tequillasunrise"
+			required_reagents = list("tequilla" = 2, "orangejuice" = 1)
 			result_amount = 5
 
 		toxins_special
 			name = "Toxins Special"
 			id = "toxinsspecial"
-			required_reagents = list("rum" = 1, "vermouth" = 1, "plasma" = 2)
+			result = "toxinsspecial"
+			required_reagents = list("rum" = 2, "vermouth" = 1, "plasma" = 2)
 			result_amount = 5
 
 		beepsky_smash
 			name = "Beepksy Smash"
 			id = "beepksysmash"
-			required_reagents = list("limejuice" = 2, "whiskey" = 1, "iron" = 1)
+			result = "beepskysmash"
+			required_reagents = list("limejuice" = 2, "whiskey" = 2, "iron" = 1)
 			result_amount = 5
 
 		doctor_delight
 			name = "The Doctor's Delight"
 			id = "doctordelight"
+			result = "doctorsdelight"
 			required_reagents = list("limejuice" = 1, "tomatojuice" = 1, "orangejuice" = 1, "cream" = 1)
 			result_amount = 5
 
 		irish_cream
 			name = "Irish Cream"
 			id = "irishcream"
-			required_reagents = list("whiskey" = 2, "cream" = 1, "kahlua" = 1)
+			result = "irishcream"
+			required_reagents = list("whiskey" = 2, "cream" = 1)
 			result_amount = 5
 
 		manly_dorf
 			name = "The Manly Dorf"
 			id = "manlydorf"
-			required_reagents = list ("beer" = 2, "ale" = 2)
+			result = "manlydorf"
+			required_reagents = list ("beer" = 1, "ale" = 2)
 			result_amount = 5
