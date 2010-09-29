@@ -187,14 +187,15 @@
 		user.machine = null
 		return 0
 
-	if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.status )) && (!istype(user, /mob/living/silicon/ai)))
-		return 0
-	else
-		src.current = C
-		use_power(50)
+	if (C)
+		if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.status )) && (!istype(user, /mob/living/silicon/ai)))
+			return 0
+		else
+			src.current = C
+			use_power(50)
 
-		spawn( 5 )
-			attack_hand(user)
+			spawn( 5 )
+				attack_hand(user)
 
 /mob/living/silicon/ai/attack_ai(var/mob/user as mob)
 	if (user != src)

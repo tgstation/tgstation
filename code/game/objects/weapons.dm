@@ -94,7 +94,8 @@
 	..()
 
 /obj/item/assembly/time_ignite/attack_self(mob/user as mob)
-	src.part1.attack_self(user, src.status)
+	if (src.part1)
+		src.part1.attack_self(user, src.status)
 	src.add_fingerprint(user)
 	return
 

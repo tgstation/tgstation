@@ -324,7 +324,8 @@
 							for(var/atom/A in get_turf(weed))
 								if(A.density) continue find_weeds
 							the_weeds += weed
-					W = pick(the_weeds)
+					if(the_weeds.len)
+						W = pick(the_weeds)
 
 				if(W)
 					path_idle(W)

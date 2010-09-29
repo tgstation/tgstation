@@ -21,11 +21,12 @@
 	if (istype(O, /obj/item/weapon/sheet/metal))
 		if (src.m_amount < 150000.0)
 			spawn(16) {
-				flick("autolathe_c",src)
-				src.m_amount += O:height * O:width * O:length * 100000.0
-				O:amount--
-				if (O:amount < 1)
-					del(O)
+				if (O)
+					flick("autolathe_c",src)
+					src.m_amount += O:height * O:width * O:length * 100000.0
+					O:amount--
+					if (O:amount < 1)
+						del(O)
 			}
 		else
 			user << "The autolathe is full. Please remove metal from the autolathe in order to insert more."

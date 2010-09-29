@@ -1276,8 +1276,9 @@ var/showadminmessages = 1
 				if("showgm")
 					if(!ticker)
 						alert("The game hasn't started yet!")
-					else
+					else if (ticker.mode)
 						alert("The game mode is [ticker.mode.name]")
+					else alert("For some reason there's a ticker, but not a game mode")
 				if("manifest")
 					var/dat = "<B>Showing Crew Manifest.</B><HR>"
 					dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"

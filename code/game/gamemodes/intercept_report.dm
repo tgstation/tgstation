@@ -93,7 +93,8 @@
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
 	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
 	if(prob(prob_right_job))
-		traitor_job = correct_mob:assigned_role
+		if (correct_mob)
+			traitor_job = correct_mob:assigned_role
 	else
 		var/list/job_tmp = get_all_jobs()
 		job_tmp.Remove("Captain", "Security Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director")

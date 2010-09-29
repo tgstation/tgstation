@@ -1196,8 +1196,10 @@
 
 /mob/verb/memory()
 	set name = "Notes"
-
-	mind.show_memory(src)
+	if(mind)
+		mind.show_memory(src)
+	else
+		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
@@ -1374,7 +1376,8 @@
 //					world << "comparing [B.current] to [eye]"
 					if (B.current == eye)
 						for (var/mob/living/silicon/decoy/D in world)
-							eye = D
+							if (eye)
+								eye = D
 		if (eye)
 			src.client.eye = eye
 		else

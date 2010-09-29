@@ -251,16 +251,16 @@
 
 						del(D)
 						return
+					if(D)
+						for(var/atom/A in D.loc)
+							if(A == user) continue
+							if(A.density) del(D)
 
-					for(var/atom/A in D.loc)
-						if(A == user) continue
-						if(A.density) del(D)
+						sleep(1)
+					if(D)
+						spawn(10) del(D)
 
-					sleep(1)
-
-				spawn(10) del(D)
-
-				return
+					return
 
 
 
@@ -735,10 +735,11 @@
 		if(istype(M, /mob/living/carbon/human))
 			if(M == user)
 				M << "\blue You take a bite of [src]."
-				if(reagents.total_volume)
-					reagents.reaction(M, INGEST)
-					spawn(5)
-						reagents.trans_to(M, reagents.total_volume)
+				if(reagents)
+					if(reagents.total_volume)
+						reagents.reaction(M, INGEST)
+						spawn(5)
+							reagents.trans_to(M, reagents.total_volume)
 				src.amount--
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				M.nutrition += src.heal_amt * 10
@@ -760,11 +761,11 @@
 				if(!do_mob(user, M)) return
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("\red [user] feeds [M] [src].", 1)
-
-				if(reagents.total_volume)
-					reagents.reaction(M, INGEST)
-					spawn(5)
-						reagents.trans_to(M, reagents.total_volume)
+				if(reagents)
+					if(reagents.total_volume)
+						reagents.reaction(M, INGEST)
+						spawn(5)
+							reagents.trans_to(M, reagents.total_volume)
 				src.amount--
 				playsound(M.loc, 'eatfood.ogg', rand(10,50), 1)
 				M.nutrition += src.heal_amt * 10

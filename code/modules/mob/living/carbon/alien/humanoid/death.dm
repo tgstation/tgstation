@@ -33,7 +33,8 @@
 					src.verbs += /mob/proc/ghostize
 
 	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
-	mind.store_memory("Time of death: [tod]", 0)
+	if (mind) mind.store_memory("Time of death: [tod]", 0)
+	else src << "We seem to have misplaced your mind datum, so we can't add this to your memory, but you died at [tod]"
 
 	var/cancel
 	for (var/mob/M in world)
