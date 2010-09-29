@@ -1889,6 +1889,14 @@
 						icon_state = "irishcreamglass"
 						name = "Irish Cream"
 						desc = "It's cream, mixed with whiskey. What else would you expect from the Irish?"
+					if("Cuba Libre")
+						icon_state = "cubalibreglass"
+						name = "Cuba Libre"
+						desc = "A classic mix of rum and cola."
+					else
+						icon_state ="glass_brown"
+						name = "Glass of ..what?"
+						desc = "You can't really tell what this is."
 		else
 			icon_state = "glass_empty"
 			name = "Drinking glass"
