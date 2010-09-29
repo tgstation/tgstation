@@ -219,11 +219,4 @@
 	world << sound('intercept.ogg')
 
 /datum/game_mode/nuclear/proc/random_radio_frequency()
-	var/f = 0
-
-	do
-		f = rand(1441, 1489)
-		f = sanitize_frequency(f)
-	while (f == 0 || f == 1459)
-
-	return f
+	return 1337
