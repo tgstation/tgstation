@@ -104,7 +104,7 @@
 		if("Medical Doctor")
 			return list(access_medical, access_morgue)
 		if("Botanist")	// -- TLE
-			return list(access_medical, access_chemistry, access_hydroponics, access_tox) // Added tox access because there's chem access -- Skie
+			return list(access_medical, access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS
 		if("Librarian") // -- TLE
 			return list(access_library)
 		if("Lawyer") //Muskets 160910
