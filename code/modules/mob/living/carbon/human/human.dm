@@ -150,9 +150,9 @@
 
 	stat(null, "Intent: [src.a_intent]")
 	stat(null, "Move Mode: [src.m_intent]")
-//	if(ticker.mode.name == "AI malfunction")
-//		if(ticker.mode:malf_mode_declared)
-//			stat(null, "Time left: [ ticker.mode:AI_win_timeleft]")
+	if(ticker.mode.name == "AI malfunction")
+		if(ticker.mode:malf_mode_declared)
+			stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
 	if(emergency_shuttle)
 		if(emergency_shuttle.online && emergency_shuttle.location < 2)
 			var/timeleft = emergency_shuttle.timeleft()

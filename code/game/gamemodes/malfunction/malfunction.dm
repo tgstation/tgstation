@@ -39,7 +39,9 @@
 			AI_mind.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
 			AI_mind.current << "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>"
 			AI_mind.current << "The process takes one minute per APC, during which you cannot interface with any other station objects."
-
+			AI_mind.current << "Remember that only APCs that are on the station can help you take over the station."
+			AI_mind.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
+			AI_mind.current.verbs += /datum/game_mode/malfunction/proc/takeover
 			AI_mind.current.icon_state = "ai-malf"
 
 	spawn (rand(waittime_l, waittime_h))
@@ -80,10 +82,8 @@
 
 
 /datum/game_mode/malfunction/process()
-	if (apcs >= 3)
+	if (apcs >= 3 && malf_mode_declared)
 		AI_win_timeleft = AI_win_timeleft - (apcs/3) //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
-//	if(AI_win_timeleft == 1200) // Was 1790
-//		malf_mode_declared = 1
 	check_win()
 
 /datum/game_mode/malfunction/check_win()
@@ -95,7 +95,7 @@
 		for(var/datum/mind/AI_mind in malf_ai)
 			AI_mind.current << "Congratulations you have taken control of the station."
 			AI_mind.current << "You may decide to blow up the station. You have 30 seconds to choose."
-			AI_mind.current << "You should have a new verb tab labeled 'EXPLODE?'"
+			AI_mind.current << "You should have a new verb in the Malfunction tab."
 			AI_mind.current.verbs += /datum/game_mode/malfunction/proc/ai_win
 			spawn (300)
 				AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/ai_win
@@ -115,10 +115,23 @@
 		ai_win()
 	return
 
+/datum/game_mode/malfunction/proc/takeover()
+	set category = "Malfunction"
+	set name = "System Override"
+	set desc = "Start the victory timer"
+	if (ticker.mode:malf_mode_declared)
+		usr << "You've already begun your takeover."
+		return
+	if (ticker.mode:apcs >= 3)
+		command_alert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert")
+		ticker.mode:malf_mode_declared = 1
+	else
+		usr << "You don't have enough hacked APCs to take over the station yet."
+
 /datum/game_mode/malfunction/proc/ai_win()
-	set category = "EXPLODE?"
-	set name = "EXPLODE!"
-	set desc = "BOOM"
+	set category = "Malfunction"
+	set name = "Explode"
+	set desc = "Station go boom"
 
 	usr.verbs -= /datum/game_mode/malfunction/proc/ai_win
 	ticker.mode:boom = 1
