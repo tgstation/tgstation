@@ -1341,7 +1341,7 @@ datum
 					M.confused += 2
 				..()
 
-		screwdriver
+		screwdrivercocktail
 			name = "Screwdriver"
 			id = "screwdrivercocktail"
 			description = "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."

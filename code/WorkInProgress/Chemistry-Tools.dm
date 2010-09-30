@@ -1841,7 +1841,7 @@
 						icon_state = "whiterussianglass"
 						name = "White Russian"
 						desc = "A very nice looking drink. But that's just, like, your opinion, man."
-					if("screwdriver")
+					if("screwdrivercocktail")
 						icon_state = "screwdriverglass"
 						name = "Screwdriver"
 						desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."

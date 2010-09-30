@@ -448,7 +448,7 @@ datum
 		screwdriver
 			name = "Screwdriver"
 			id = "screwdrivercocktail"
-			result = "screwdriver"
+			result = "screwdrivercocktail"
 			required_reagents = list("vodka" = 2, "orangejuice" = 1)
 			result_amount = 5
 
