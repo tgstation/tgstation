@@ -110,3 +110,7 @@ obj/structure
 			return
 	else
 		..()
+
+/obj/structure/girder/blob_act()
+	if(prob(10))
+		del(src)

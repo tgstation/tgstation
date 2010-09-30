@@ -12,7 +12,7 @@
 	return
 
 /obj/securearea/blob_act()
-	if (prob(50))
+	if (prob(75))
 		del(src)
 		return
 	return

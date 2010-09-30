@@ -224,16 +224,16 @@ to clean it up, or just beat the shit out of it (which takes ages).
 
 	var/damage = null
 	if (src.stat != 2)
-		damage = rand(1,20)
+		damage = rand(10,30)
 
 	if(shielded)
 		damage /= 4
 
 		//src.paralysis += 1
 
-	src.show_message("\red The blob attacks you!")
+	src.show_message("\red The magma splashes on you!")
 
-	src.bruteloss += damage
+	src.fireloss += damage
 
 	src.updatehealth()
 	return

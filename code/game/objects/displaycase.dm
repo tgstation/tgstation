@@ -32,7 +32,7 @@
 
 
 /obj/displaycase/blob_act()
-	if (prob(50))
+	if (prob(75))
 		new /obj/item/weapon/shard( src.loc )
 		if (occupied)
 			new /obj/item/weapon/gun/energy/laser_gun/captain( src.loc )

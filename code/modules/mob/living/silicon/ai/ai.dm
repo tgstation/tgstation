@@ -114,7 +114,7 @@
 
 /mob/living/silicon/ai/blob_act()
 	if (src.stat != 2)
-		src.bruteloss += 30
+		src.bruteloss += 60
 		src.updatehealth()
 		return 1
 	return 0

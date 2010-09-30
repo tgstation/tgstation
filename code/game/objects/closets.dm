@@ -124,7 +124,7 @@
 
 // this should probably use dump_contents()
 /obj/closet/blob_act()
-	if (prob(50))
+	if (prob(75))
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		del(src)

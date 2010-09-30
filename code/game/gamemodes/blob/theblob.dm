@@ -66,7 +66,7 @@
 		if(T.Enter(B,src) && !(locate(/obj/blob) in T))
 			B.loc = T							// open cell, so expand
 		else
-			if(prob(50))						// closed cell, 50% chance to not expand
+			if(prob(70))						// closed cell, 50% chance to not expand
 				if(!locate(/obj/blob) in T)
 					for(var/atom/A in T)			// otherwise explode contents of turf
 						A.blob_act()
@@ -114,16 +114,13 @@
 /obj/blob/attackby(var/obj/item/weapon/W, var/mob/user)
 	playsound(src.loc, 'attackblob.ogg', 50, 1)
 
-	src.visible_message("\red <B>The blob has been attacked with \the [W][(user ? " by [user]." : ".")]")
+	src.visible_message("\red <B>The magma has been attacked with \the [W][(user ? " by [user]." : ".")]")
 
 	var/damage = W.force / 4.0
 
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-
-		if(WT.welding)
-			damage = 15
-			playsound(src.loc, 'Welder.ogg', 100, 1)
+	if(istype(W, /obj/item/weapon/extinguisher))
+		damage = 25
+		playsound(src.loc, 'extinguish.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/plantbgone))
 		var/obj/item/weapon/plantbgone/PBG = W
@@ -136,7 +133,7 @@
 
 /obj/blob/examine()
 	set src in oview(1)
-	usr << "A mysterious alien blob-like organism."
+	usr << "Mysterious magma."
 
 /datum/station_state/proc/count()
 	for(var/turf/T in world)

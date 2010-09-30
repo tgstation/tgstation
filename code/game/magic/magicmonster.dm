@@ -97,7 +97,7 @@
 		return
 
 	blob_act()
-		if(prob(25))
+		if(prob(50))
 			src.death()
 		return
 

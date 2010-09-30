@@ -21,7 +21,7 @@
 	return
 
 /obj/machinery/dispenser/blob_act()
-	if (prob(25))
+	if (prob(50))
 		while(src.o2tanks > 0)
 			new /obj/item/weapon/tank/oxygen( src.loc )
 			src.o2tanks--

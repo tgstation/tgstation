@@ -924,7 +924,7 @@
 	return
 
 /obj/machinery/power/apc/blob_act()
-	if (prob(50))
+	if (prob(75))
 		set_broken()
 
 

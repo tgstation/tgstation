@@ -1103,7 +1103,7 @@ var/showadminmessages = 1
 								spawn(rand(300,600))
 									del(P)
 				if("goblob")
-					command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+					command_alert("Confirmed anomaly type SPC-MGM-152 aboard [station_name()]. All personnel must destroy the anomaly.", "Anomaly Alert")
 					world << sound('outbreak5.ogg')
 					var/turf/T = pick(blobstart)
 					var/obj/blob/bl = new /obj/blob( T.loc, 30 )
@@ -1479,7 +1479,7 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors</A><BR>
 <A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes (Untested)</A><BR>
-<A href='?src=\ref[src];secretsfun=goblob'>Spawn the bob(Untested)</A><BR>
+<A href='?src=\ref[src];secretsfun=goblob'>Spawn magma(Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 <A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
 <A href='?src=\ref[src];secretsfun=cleanexcrement'>Remove all urine/poo from station</A><BR>

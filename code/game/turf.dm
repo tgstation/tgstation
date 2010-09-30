@@ -270,7 +270,7 @@
 	return
 
 /turf/simulated/wall/blob_act()
-	if(prob(20))
+	if(prob(50))
 		dismantle_wall()
 
 /turf/simulated/wall/attack_paw(mob/user as mob)

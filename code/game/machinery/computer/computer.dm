@@ -78,7 +78,7 @@ Pod/Blast Doors computer
 	return
 
 /obj/machinery/computer/blob_act()
-	if (prob(50))
+	if (prob(75))
 		for(var/x in src.verbs)
 			src.verbs -= x
 		set_broken()

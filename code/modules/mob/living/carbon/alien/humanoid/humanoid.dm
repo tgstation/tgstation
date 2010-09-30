@@ -261,15 +261,15 @@ to clean it up, or just beat the shit out of it (which takes ages).
 			shielded = 1
 	var/damage = null
 	if (src.stat != 2)
-		damage = rand(1,20)
+		damage = rand(10,30)
 
 	if(shielded)
 		damage /= 4
 
 
-	src.show_message("\red The blob attacks you!")
+	src.show_message("\red The magma splashes on you!")
 
-	src.bruteloss += damage
+	src.fireloss += damage
 
 	return
 

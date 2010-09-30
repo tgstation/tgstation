@@ -30,9 +30,8 @@
 	return
 
 /obj/grille/blob_act()
-	src.health--
-	src.healthcheck()
-
+	if (prob(70))
+		del(src)
 
 /obj/grille/meteorhit(var/obj/M)
 	if (M.icon_state == "flaming")

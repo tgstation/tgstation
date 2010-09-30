@@ -25,7 +25,7 @@
 	return
 
 /obj/machinery/optable/blob_act()
-	if(prob(50))
+	if(prob(75))
 		del(src)
 
 /obj/machinery/optable/hand_p(mob/user as mob)

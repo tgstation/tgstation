@@ -45,7 +45,7 @@
 
 
 /obj/lamarr/blob_act()
-	if (prob(50))
+	if (prob(75))
 		new /obj/item/weapon/shard( src.loc )
 		if (occupied)
 			var/obj/alien/facehugger/A = new /obj/alien/facehugger( src.loc )

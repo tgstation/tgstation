@@ -403,7 +403,7 @@
 
 /mob/living/carbon/monkey/blob_act()
 	if (src.stat != 2)
-		src.bruteloss += 30
+		src.fireloss += 60
 		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
 	if (prob(50))
 		src.paralysis += 10

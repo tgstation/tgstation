@@ -18,7 +18,7 @@
 
 /obj/table/blob_act()
 
-	if(prob(50))
+	if(prob(75))
 		new /obj/item/weapon/table_parts( src.loc )
 		del(src)
 
@@ -173,7 +173,7 @@
 	return
 
 /obj/rack/blob_act()
-	if(prob(50))
+	if(prob(75))
 		del(src)
 		return
 	else if(prob(50))

@@ -135,7 +135,7 @@
 	return
 
 /obj/machinery/door/blob_act()
-	if(prob(20))
+	if(prob(40))
 		del(src)
 
 /obj/machinery/door/ex_act(severity)

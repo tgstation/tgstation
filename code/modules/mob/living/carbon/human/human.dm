@@ -482,14 +482,14 @@
 			shielded = 1
 	var/damage = null
 	if (src.stat != 2)
-		damage = rand(1,20)
+		damage = rand(10,30)
 
 	if(shielded)
 		damage /= 4
 
 		//src.paralysis += 1
 
-	src.show_message("\red The blob attacks you!")
+	src.show_message("\red The magma splashes on you!")
 
 	var/list/zones = list("head","chest","chest", "groin", "l_arm", "r_arm", "l_hand", "r_hand", "l_leg", "r_leg", "l_foot", "r_foot")
 
@@ -509,7 +509,7 @@
 				if (src.weakened < 10)
 					src.weakened = rand(10, 15)
 				for(var/mob/O in viewers(src, null))
-					O.show_message(text("\red <B>The blob has weakened []!</B>", src), 1, "\red You hear someone fall.", 2)
+					O.show_message(text("\red <B>The magma has weakened []!</B>", src), 1, "\red You hear someone fall.", 2)
 			temp.take_damage(damage)
 		if ("chest")
 			if ((((src.wear_suit && src.wear_suit.body_parts_covered & UPPER_TORSO) || (src.w_uniform && src.w_uniform.body_parts_covered & UPPER_TORSO)) && prob(85)))
@@ -520,12 +520,12 @@
 					if (src.weakened < 5)
 						src.weakened = 5
 					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>The blob has knocked down []!</B>", src), 1, "\red You hear someone fall.", 2)
+						O.show_message(text("\red <B>The magma has knocked down []!</B>", src), 1, "\red You hear someone fall.", 2)
 				else
 					if (src.stunned < 5)
 						src.stunned = 5
 					for(var/mob/O in viewers(src, null))
-						if(O.client)	O.show_message(text("\red <B>The blob has stunned []!</B>", src), 1)
+						if(O.client)	O.show_message(text("\red <B>The magma has stunned []!</B>", src), 1)
 				if(src.stat != 2)	src.stat = 1
 			temp.take_damage(damage)
 		if ("groin")

@@ -19,7 +19,7 @@
 	return
 
 /obj/stool/blob_act()
-	if(prob(50))
+	if(prob(75))
 		new /obj/item/weapon/sheet/metal( src.loc )
 		del(src)
 
@@ -194,7 +194,7 @@
 	return
 
 /obj/stool/chair/blob_act()
-	if(prob(50))
+	if(prob(75))
 		for(var/mob/M in src.loc)
 			if(M.buckled == src)
 				M.buckled = null

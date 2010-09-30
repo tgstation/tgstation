@@ -27,8 +27,8 @@
 		anchored = 1
 
 /obj/blob/idle
-		name = "blob"
-		desc = "it looks... frightened"
+		name = "magma"
+		desc = "it looks... calm"
 		icon_state = "blobidle0"
 
 /obj/mark

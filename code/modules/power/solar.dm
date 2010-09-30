@@ -103,7 +103,7 @@
 	return
 
 /obj/machinery/power/solar/blob_act()
-	if(prob(50))
+	if(prob(75))
 		broken()
 		src.density = 0
 
@@ -289,6 +289,6 @@
 	return
 
 /obj/machinery/power/solar_control/blob_act()
-	if (prob(50))
+	if (prob(75))
 		broken()
 		src.density = 0

@@ -53,7 +53,7 @@
 							del(P)
 		if(4)
 			event = 1
-			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+			command_alert("Confirmed anomaly type SPC-MGM-152 aboard [station_name()]. All personnel must destroy the anomaly.", "Anomaly Alert")
 			world << sound('outbreak5.ogg')
 			var/turf/T = pick(blobstart)
 			var/obj/blob/bl = new /obj/blob( T.loc, 30 )
