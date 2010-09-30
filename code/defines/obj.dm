@@ -19,6 +19,7 @@
 		initialize()
 
 /obj/blob
+		name = "magma"
 		icon = 'blob.dmi'
 		icon_state = "bloba0"
 		var/health = 30

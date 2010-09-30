@@ -261,7 +261,7 @@ to clean it up, or just beat the shit out of it (which takes ages).
 			shielded = 1
 	var/damage = null
 	if (src.stat != 2)
-		damage = rand(10,30)
+		damage = rand(30,40)
 
 	if(shielded)
 		damage /= 4

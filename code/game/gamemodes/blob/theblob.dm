@@ -119,7 +119,7 @@
 	var/damage = W.force / 4.0
 
 	if(istype(W, /obj/item/weapon/extinguisher))
-		damage = 25
+		damage = 10
 		playsound(src.loc, 'extinguish.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/plantbgone))
