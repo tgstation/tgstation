@@ -115,12 +115,14 @@
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
-		src.part1.loc = T
-		src.part2.loc = T
-		src.part1.master = null
-		src.part2.master = null
-		src.part1 = null
-		src.part2 = null
+		if (src.part1)
+			src.part1.loc = T
+			src.part1.master = null
+			src.part1 = null
+		if (src.part2)
+			src.part2.loc = T
+			src.part2.master = null
+			src.part2 = null
 
 		del(src)
 		return

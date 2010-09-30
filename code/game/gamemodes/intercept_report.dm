@@ -141,7 +141,8 @@
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
 	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
 	if(prob(prob_right_job))
-		changeling_job = correct_mob:assigned_role
+		if(correct_mob)
+			changeling_job = correct_mob:assigned_role
 	else
 		var/list/job_tmp = get_all_jobs()
 		changeling_job = pick(job_tmp)

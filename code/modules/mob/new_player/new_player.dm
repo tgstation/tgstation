@@ -222,24 +222,24 @@ mob/new_player
 	proc/AttemptLateSpawn(rank, maxAllowed)
 		if(IsJobAvailable(rank, maxAllowed))
 			var/mob/living/carbon/human/character = create_character()
-
-			character.Equip_Rank(rank, joined_late=1)
+			if (character)
+				character.Equip_Rank(rank, joined_late=1)
 
 			//add to manifest -- Commented out in favor of ManifestLateSpawn() -- TLE
 			//for(var/datum/data/record/t in data_core.general)
 			//	if((t.fields["name"] == character.real_name) && (t.fields["rank"] == "Unassigned"))
 			//		t.fields["rank"] = rank
 
-			ManifestLateSpawn(character)
+				ManifestLateSpawn(character)
+				if(ticker)
+					if (ticker.current_state == GAME_STATE_PLAYING)
+						for (var/mob/living/silicon/ai/A in world)
+							if (!A.stat)
+								A.say("[character.real_name] has signed up as [rank].")
 
-			if (ticker.current_state == GAME_STATE_PLAYING)
-				for (var/mob/living/silicon/ai/A in world)
-					if (!A.stat)
-						A.say("[character.real_name] has signed up as [rank].")
-
-			var/starting_loc = pick(latejoin)
-			character.loc = starting_loc
-			del(src)
+					var/starting_loc = pick(latejoin)
+					character.loc = starting_loc
+					del(src)
 
 		else
 			src << alert("[rank] is not available. Please try another.")
@@ -371,8 +371,8 @@ mob/new_player
 
 		preferences.copy_to(new_character)
 		new_character.dna.ready_dna(new_character)
-
-		mind.transfer_to(new_character)
+		if(mind)
+			mind.transfer_to(new_character)
 
 
 		return new_character

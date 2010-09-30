@@ -1438,8 +1438,9 @@
 
 			//we don't use message_admins here because the sender/receiver might get it too
 			for (var/mob/K in world)
-				if(K && K.client && K.client.holder && K.key != usr.key && K.key != M.key)
-					K << "<b><font color='blue'>PM: [key_name(usr, K)]->[key_name(M, K)]:</b> \blue [t]</font>"
+				if(K)
+					if(K.client && K.client.holder && K.key != usr.key && K.key != M.key)
+						K << "<b><font color='blue'>PM: [key_name(usr, K)]->[key_name(M, K)]:</b> \blue [t]</font>"
 	..()
 	return
 
@@ -2024,26 +2025,28 @@
 	if(src.mob)
 		var/mob/M = src.mob
 		M.loc = null // HACK, but whatever, this works
+
 		var/obj/screen/boom = M.hud_used.station_explosion
-		M.client.screen += boom
-		if(ticker)
-			switch(ticker.mode.name)
-				if("nuclear emergency")
-					flick("start_nuke", boom)
-				if("AI malfunction")
-					flick("start_malf", boom)
-				else
-					boom.icon_state = "start"
-		sleep(40)
-		M << sound('explosionfar.ogg')
-		boom.icon_state = "end"
-		flick("explode", boom)
-		sleep(40)
-		if(ticker)
-			switch(ticker.mode.name)
-				if("nuclear emergency")
-					boom.icon_state = "loss_nuke"
-				if("AI malfunction")
-					boom.icon_state = "loss_malf"
-				else
-					boom.icon_state = "loss_general"
+		if (M.client)
+			M.client.screen += boom
+			if(ticker)
+				switch(ticker.mode.name)
+					if("nuclear emergency")
+						flick("start_nuke", boom)
+					if("AI malfunction")
+						flick("start_malf", boom)
+					else
+						boom.icon_state = "start"
+			sleep(40)
+			M << sound('explosionfar.ogg')
+			boom.icon_state = "end"
+			flick("explode", boom)
+			sleep(40)
+			if(ticker)
+				switch(ticker.mode.name)
+					if("nuclear emergency")
+						boom.icon_state = "loss_nuke"
+					if("AI malfunction")
+						boom.icon_state = "loss_malf"
+					else
+						boom.icon_state = "loss_general"

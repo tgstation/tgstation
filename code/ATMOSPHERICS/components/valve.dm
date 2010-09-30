@@ -48,9 +48,11 @@ obj/machinery/atmospherics/valve
 
 		if(open)
 			if(reference == node1)
-				return node2.network_expand(new_network, src)
+				if(node2)
+					return node2.network_expand(new_network, src)
 			else if(reference == node2)
-				return node1.network_expand(new_network, src)
+				if(node1)
+					return node1.network_expand(new_network, src)
 
 		return null
 

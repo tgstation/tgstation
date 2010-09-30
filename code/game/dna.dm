@@ -830,10 +830,11 @@
 		////////////////////////////////////////////////////////
 		if (href_list["rejuv"])
 			var/mob/living/carbon/human/H = src.connected.occupant
-			if (H.reagents.get_reagent_amount("inaprovaline") < 60)
-				H.reagents.add_reagent("inaprovaline", 30)
-			usr << text("Occupant now has [] units of rejuvenation in his/her bloodstream.", H.reagents.get_reagent_amount("inaprovaline"))
-			src.delete = 0
+			if(H)
+				if (H.reagents.get_reagent_amount("inaprovaline") < 60)
+					H.reagents.add_reagent("inaprovaline", 30)
+				usr << text("Occupant now has [] units of rejuvenation in his/her bloodstream.", H.reagents.get_reagent_amount("inaprovaline"))
+				src.delete = 0
 		////////////////////////////////////////////////////////
 		if (href_list["strucmenu"])
 			if(src.connected.occupant)

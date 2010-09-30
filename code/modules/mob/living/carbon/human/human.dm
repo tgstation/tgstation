@@ -153,10 +153,11 @@
 //	if(ticker.mode.name == "AI malfunction")
 //		if(ticker.mode:malf_mode_declared)
 //			stat(null, "Time left: [ ticker.mode:AI_win_timeleft]")
-	if(emergency_shuttle.online && emergency_shuttle.location < 2)
-		var/timeleft = emergency_shuttle.timeleft()
-		if (timeleft)
-			stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+	if(emergency_shuttle)
+		if(emergency_shuttle.online && emergency_shuttle.location < 2)
+			var/timeleft = emergency_shuttle.timeleft()
+			if (timeleft)
+				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 	if (src.client.statpanel == "Status")
 		if (src.internal)
@@ -1088,7 +1089,7 @@
 				else
 					stain_icon = icon('blood.dmi', "suitblood[!src.lying ? "" : "2"]")
 				src.overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
-		src.wear_suit.screen_loc = ui_oclothing
+			src.wear_suit.screen_loc = ui_oclothing
 		if (istype(src.wear_suit, /obj/item/clothing/suit/straight_jacket))
 			if (src.handcuffed)
 				src.handcuffed.loc = src.loc

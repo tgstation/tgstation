@@ -123,7 +123,8 @@
 			W.loc = src
 			src.brain = W
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(src.loc))
-			O.gender = src.brain.owner.gender
+			if (src.brain.owner)
+				O.gender = src.brain.owner.gender
 			//O.start = 1
 			O.invisibility = 0
 			O.name = "Cyborg"

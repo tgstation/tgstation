@@ -29,8 +29,8 @@
 
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = 0
-
-	if(src.reagents.has_reagent("hyperzine")) return -1
+	if(src.reagents)
+		if(src.reagents.has_reagent("hyperzine")) return -1
 
 	var/health_deficiency = (100 - src.health)
 	if(health_deficiency >= 45) tally += (health_deficiency / 25)

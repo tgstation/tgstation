@@ -132,22 +132,23 @@ datum
 
 			check_completion()
 				if(steal_target)
-					if(owner.current.check_contents_for(steal_target))
-						if(target_name == "functional ai")
-//							world << "dude's after an AI, time to check for one."
-							for(var/obj/item/device/aicard/C in owner.current.contents)
-//								world << "Found an intelicard, checking it for an AI"
-								for(var/mob/living/silicon/ai/M in C)
-//									world << "Found an AI, checking if it's alive"
-									if(istype(M, /mob/living/silicon/ai) && M.stat != 2)
-//										world << "yay, you win!"
-										return 1
+					if(owner.current)
+						if(owner.current.check_contents_for(steal_target))
+							if(target_name == "functional ai")
+//								world << "dude's after an AI, time to check for one."
+								for(var/obj/item/device/aicard/C in owner.current.contents)
+//									world << "Found an intelicard, checking it for an AI"
+									for(var/mob/living/silicon/ai/M in C)
+//										world << "Found an AI, checking if it's alive"
+										if(istype(M, /mob/living/silicon/ai) && M.stat != 2)
+//											world << "yay, you win!"
+											return 1
 //								world << "didn't find a living AI on the card"
-								return 0
+									return 0
+							else
+								return 1
 						else
-							return 1
-					else
-						return 0
+							return 0
 
 		nuclear
 			explanation_text = "Destroy the station with a nuclear device."

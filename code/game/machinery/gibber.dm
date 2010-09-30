@@ -22,11 +22,11 @@
 	if(src.occupant)
 		user << "\red The gibber is full, empty it first!"
 		return
-	if(G.affecting.abiotic())
-		user << "\red Subject may not have abiotic items on."
-		return
 	if (!( istype(G, /obj/item/weapon/grab)) || !(istype(G.affecting, /mob/living/carbon/human)))
 		user << "\red This item is not suitable for the gibber!"
+		return
+	if(G.affecting.abiotic())
+		user << "\red Subject may not have abiotic items on."
 		return
 
 	user.visible_message("\red [user] starts to put [G.affecting] into the gibber!")

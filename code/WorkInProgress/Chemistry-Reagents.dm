@@ -120,16 +120,17 @@ datum
 			reagent_state = LIQUID
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
-				if(T:wet >= 2) return
-				T:wet = 2
-				spawn(800)
-					T:wet = 0
-					if(T:wet_overlay)
-						T:overlays -= T:wet_overlay
-						T:wet_overlay = null
+				if (!istype(T, /turf/space))
+					src = null
+					if(T:wet >= 2) return
+					T:wet = 2
+					spawn(800)
+						T:wet = 0
+						if(T:wet_overlay)
+							T:overlays -= T:wet_overlay
+							T:wet_overlay = null
 
-				return
+					return
 
 		bilk
 			name = "Bilk"

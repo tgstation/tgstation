@@ -214,5 +214,6 @@
 /obj/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opened)
 		user.drop_item()
-		W.loc = src.loc
+		if(W)
+			W.loc = src.loc
 	else return attack_hand(user)
