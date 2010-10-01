@@ -211,7 +211,7 @@
 	if ((!( src in usr.contents ) && (((!( isturf(src) ) && (!( isturf(src.loc) ) && (src.loc && !( isturf(src.loc.loc) )))) || !( isturf(usr.loc) )) && (src.loc != usr.loc && (!( istype(src, /obj/screen) ) && !( usr.contents.Find(src.loc) ))))))
 		if (istype(usr, /mob/living/silicon/ai))
 			var/mob/living/silicon/ai/ai = usr
-			if (ai.control_disabled)
+			if (ai.control_disabled || ai.malfhacking)
 				return
 		else
 			return

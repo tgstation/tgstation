@@ -28,7 +28,7 @@
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)
 				src << "\red ERROR: APC access disabled, hack attempt canceled."
-				src.control_disabled = 0
+				src.malfhacking = 0
 				src.malfhack = null
 			else
 

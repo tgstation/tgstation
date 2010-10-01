@@ -675,11 +675,11 @@
 			if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled )
 				malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 				malfai.malfhack = src
-				malfai.control_disabled = 1
+				malfai.malfhacking = 1
 				sleep(600)
 				if (!src.aidisabled)
 					malfai.malfhack = null
-					malfai.control_disabled = 0
+					malfai.malfhacking = 0
 					if (src.z == 1)
 						ticker.mode:apcs++
 					src.malfai = usr
