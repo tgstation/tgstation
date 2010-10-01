@@ -67,6 +67,9 @@
 			dat += "<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"
 		if(screen == 1)
 			for(var/mob/living/silicon/robot/R in world)
+				if(istype(user, /mob/living/silicon/ai))
+					if (R.connected_ai != user)
+						continue
 				dat += "[R.name] |"
 				if(R.stat)
 					dat += " Not Responding |"
@@ -80,6 +83,10 @@
 					dat += " Module Installed ([R.module.name]) |"
 				else
 					dat += " No Module Installed |"
+				if(R.connected_ai)
+					dat += " Slaved to [R.connected_ai.name] |"
+				else
+					dat += " Independent from AI |"
 				dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
 				dat += "<BR>"
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
@@ -128,9 +135,11 @@
 			if (istype(I))
 				if(src.check_access(I))
 					if (!status)
+						message_admins("\blue [key_name_admin(usr)] has initiated the global cyborg killswitch!")
 						src.status = 1
 						src.start_sequence()
 						src.temp = null
+
 				else
 					usr << "\red Access Denied."
 
@@ -143,6 +152,7 @@
 		else if (href_list["stop2"])
 			src.stop = 1
 			src.temp = null
+			src.status = 0
 
 		else if (href_list["reset"])
 			src.timeleft = 60
@@ -163,6 +173,7 @@
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					if(R)
+						message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
 						R.self_destruct()
 
 		src.add_fingerprint(usr)
