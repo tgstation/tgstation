@@ -22,14 +22,15 @@
 		name = "magma"
 		icon = 'blob.dmi'
 		icon_state = "bloba0"
-		var/health = 30
+		var/health = 60
 		density = 1
 		opacity = 0
+		luminosity = 3
 		anchored = 1
 
 /obj/blob/idle
 		name = "magma"
-		desc = "it looks... calm"
+		desc = "it looks... tasty"
 		icon_state = "blobidle0"
 
 /obj/mark

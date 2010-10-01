@@ -314,7 +314,7 @@
 		return
 
 	blob_act()
-		if(prob(25))
+		if(prob(50))
 			new /obj/effects/water(src.loc)
 			del(src)
 
@@ -1718,6 +1718,10 @@
 		..()
 		reagents.add_reagent("fuel",1000)
 
+/obj/reagent_dispensers/fueltank/blob_act()
+	explosion(src.loc,0,1,5,7,10)
+	del(src)
+
 /obj/reagent_dispensers/beerkeg
 	name = "beer keg"
 	desc = "A beer keg"
@@ -1728,6 +1732,10 @@
 	New()
 		..()
 		reagents.add_reagent("beer",1000)
+
+/obj/reagent_dispensers/beerkeg/blob_act()
+	explosion(src.loc,0,3,5,7,10)
+	del(src)
 
 
 //////////////////////////drinkingglass and shaker//

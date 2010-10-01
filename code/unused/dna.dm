@@ -324,7 +324,7 @@
 
 
 /obj/machinery/dna_scanner/blob_act()
-	if(prob(50))
+	if(prob(75))
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		del(src)
@@ -346,7 +346,7 @@
 
 /obj/machinery/scan_console/blob_act()
 
-	if(prob(50))
+	if(prob(75))
 		del(src)
 
 /obj/machinery/scan_console/power_change()
@@ -946,7 +946,7 @@
 	return
 
 /obj/machinery/restruct/blob_act()
-	if(prob(50))
+	if(prob(75))
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		del(src)

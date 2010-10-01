@@ -112,5 +112,5 @@ obj/structure
 		..()
 
 /obj/structure/girder/blob_act()
-	if(prob(10))
+	if(prob(40))
 		del(src)

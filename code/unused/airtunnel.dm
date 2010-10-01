@@ -103,7 +103,7 @@
 	return
 
 /obj/machinery/at_indicator/blob_act()
-	if (prob(50))
+	if (prob(75))
 		for(var/x in src.verbs)
 			src.verbs -= x
 		src.icon_state = "reader_broken"

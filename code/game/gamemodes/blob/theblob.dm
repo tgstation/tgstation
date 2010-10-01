@@ -66,7 +66,7 @@
 		if(T.Enter(B,src) && !(locate(/obj/blob) in T))
 			B.loc = T							// open cell, so expand
 		else
-			if(prob(70))						// closed cell, 50% chance to not expand
+			if(prob(60))						// closed cell, 40% chance to not expand
 				if(!locate(/obj/blob) in T)
 					for(var/atom/A in T)			// otherwise explode contents of turf
 						A.blob_act()
@@ -79,10 +79,10 @@
 		if(1)
 			del(src)
 		if(2)
-			src.health -= rand(20,30)
+			src.health -= rand(60,90)
 			src.update()
 		if(3)
-			src.health -= rand(15,25)
+			src.health -= rand(30,40)
 			src.update()
 
 
@@ -118,22 +118,23 @@
 
 	var/damage = W.force / 4.0
 
-	if(istype(W, /obj/item/weapon/extinguisher))
-		damage = 10
-		playsound(src.loc, 'extinguish.ogg', 100, 1)
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.welding)
+			damage = -5
+			playsound(src.loc, 'Welder.ogg', 100, 1)
 
-	else if(istype(W, /obj/item/weapon/plantbgone))
-		var/obj/item/weapon/plantbgone/PBG = W
-		if (!PBG.empty)
-			damage = rand(10,20)
-			playsound(src.loc, 'spray3.ogg', 50, 1, -6)
+	else if(istype(W, /obj/item/weapon/extinguisher))
+		var/obj/item/weapon/extinguisher/WT = W
+		if (!WT.safety && !WT.reagents.total_volume < 1 && !world.time < WT.last_use + 20)
+			damage = 10
 
 	src.health -= damage
 	src.update()
 
 /obj/blob/examine()
 	set src in oview(1)
-	usr << "Mysterious magma."
+	usr << "Delicious magma."
 
 /datum/station_state/proc/count()
 	for(var/turf/T in world)

@@ -34,7 +34,7 @@
 					return
 
 	blob_act()
-		if (prob(25))
+		if (prob(50))
 			del(src)
 
 	meteorhit()
@@ -118,7 +118,7 @@
 					return
 
 	blob_act()
-		if (prob(25))
+		if (prob(50))
 			del(src)
 
 	meteorhit()

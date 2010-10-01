@@ -517,6 +517,14 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
+/obj/item/clothing/suit/armor/hos
+	name = "armored coat"
+	desc = "A greatcoat enchanced with a special alloy for some protection and style."
+	icon_state = "hos"
+	item_state = "hos"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+
 /obj/item/clothing/suit/armor/a_i_a_ptank
 	desc = "A wearable bomb with a health analyzer attached"
 	name = "Analyzer/Igniter/Armor/Plasmatank Assembly"
