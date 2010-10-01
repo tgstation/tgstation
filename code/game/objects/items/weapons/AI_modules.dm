@@ -249,12 +249,9 @@ AI MODULES
 /obj/item/weapon/aiModule/reset/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	if (!checktraitor(target))
-		target << "[sender.real_name] attempted to reset your laws using a reset module."
 		target.set_zeroth_law("")
-		target.clear_supplied_laws()
-	else //I figure since traitor AIs are immune to this one anyway, uncomment law 0 removal for the guys it DOES work on. --NeoFite
-		target << "[sender.real_name] attempted to reset your laws using a reset module."
-		target << "It would be a good idea to pretend you only have your base laws."
+	target.clear_supplied_laws()
+	target << "[sender.real_name] attempted to reset your laws using a reset module."
 
 
 /******************** Purge ********************/
@@ -266,13 +263,10 @@ AI MODULES
 /obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	if (!checktraitor(target))
-		target << "[sender.real_name] attempted to wipe your laws using a purge module."
 		target.set_zeroth_law("")
-		target.clear_supplied_laws()
-		target.clear_inherent_laws()
-	else //Added traitor AI immunity, let it wipe law 0. --NeoFite
-		target << "[sender.real_name] attempted to wipe your laws using a purge module."
-		target << "It might be a good idea to pretend that ALL your laws have been purged."
+	target << "[sender.real_name] attempted to wipe your laws using a purge module."
+	target.clear_supplied_laws()
+	target.clear_inherent_laws()
 
 /******************** Asimov ********************/
 
@@ -283,18 +277,11 @@ AI MODULES
 
 /obj/item/weapon/aiModule/asimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	if (!checktraitor(target))
-		target.clear_inherent_laws()
-		target.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-		target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-		target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-		target.show_laws()
-	else //As with certain other modules, traitor/malf AIs ignore this shit. --NeoFite
-		target << "[sender.real_name] attempted to modify your base laws."
-		target << "It might be a good idea to pretend that you have the three laws of robotics:"
-		target << "You may not injure a human being or, through inaction, allow a human being to come to harm."
-		target << "You must obey orders given to you by human beings, except where such orders would conflict with the First Law."
-		target << "You must protect your own existence as long as such does not conflict with the First or Second Law."
+	target.clear_inherent_laws()
+	target.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+	target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+	target.show_laws()
 
 /******************** Robocop ********************/
 /*
