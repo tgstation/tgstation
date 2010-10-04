@@ -510,6 +510,23 @@
 	..()
 	return
 
+/obj/item/weapon/directions/attack_hand(mob/user as mob)
+	if (istype(usr, /mob/living/carbon/human))
+		if (prob(50))
+			usr << "\blue You try to read the paper, but it breaks apart in your hand. Must have been pretty old.."
+			del(src)
+			return
+		else
+			if (user.knowledge < 1)
+				usr << "\red As you read over the paper, you slowly realize what you are reading. You quickly memorize the words on the paper before it breaks apart in your hand, and slips through your fingers."
+				user.knowledge++
+				del(src)
+				return
+			else
+				usr << "\blue You already have read this paper."
+				return
+		return
+
 /obj/item/assembly/rad_ignite/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))

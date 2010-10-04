@@ -21,6 +21,8 @@ datum/controller/game_controller
 
 		setupgenetics()
 
+		setupcorpses()
+
 		emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
 
 		if(!ticker)

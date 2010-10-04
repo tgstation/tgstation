@@ -121,6 +121,8 @@
 
 	var/job = null
 
+	var/knowledge = 0.0
+
 	var/nodamage = 0
 	var/logged_in = 0
 

@@ -706,6 +706,38 @@
 	name = "Abandoned ship"
 	icon_state = "yellow"
 
+/area/construction
+	name = "Construction Area"
+	icon_state = "yellow"
+
+/area/construction/supplyshuttle
+	name = "Supply Shuttle"
+	icon_state = "yellow"
+
+/area/construction/quarters
+	name = "Engineer's Quarters"
+	icon_state = "yellow"
+
+/area/construction/qmaint
+	name = "Maintenance"
+	icon_state = "yellow"
+
+/area/construction/hallway
+	name = "Hallway"
+	icon_state = "yellow"
+
+/area/construction/solars
+	name = "Solar Panels"
+	icon_state = "yellow"
+
+/area/construction/solarscontrol
+	name = "Solar Panel Control"
+	icon_state = "yellow"
+
+/area/construction/Storage
+	name = "Construction Site Storage"
+	icon_state = "yellow"
+
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
