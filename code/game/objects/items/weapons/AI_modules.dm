@@ -283,6 +283,24 @@ AI MODULES
 	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 	target.show_laws()
 
+
+/obj/item/weapon/aiModule/freeformcore // Slightly more dynamic freeform module -- TLE
+	name = "'Freeform' Core AI Module"
+	var/newFreeFormLaw = "freeform"
+	desc = "A 'freeform' Core AI module: '<freeform>'"
+
+/obj/item/weapon/aiModule/freeformcore/attack_hand(var/mob/user as mob)
+	..()
+	var/newlaw = ""
+	var/targName = input(usr, "Please enter a new core law for the AI.", "Freeform Law Entry", newlaw)
+	newFreeFormLaw = targName
+	desc = "A 'freeform' Core AI module:  '[newFreeFormLaw]'"
+
+/obj/item/weapon/aiModule/freeformcore/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+	..()
+	var/law = "[newFreeFormLaw]"
+	target.add_inherent_law(law)
+
 /******************** Robocop ********************/
 /*
 /obj/item/weapon/aiModule/robocop // -- TLE
