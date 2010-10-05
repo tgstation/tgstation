@@ -194,6 +194,17 @@ DEATH COMMANDO GAS MASK
 		var/obj/item/clothing/under/V = new U
 		src.clothing_choices += V
 
+	for(var/U in typesof(/obj/item/clothing/under/rank)-(/obj/item/clothing/under/rank))
+
+		var/obj/item/clothing/under/V = new U
+		src.clothing_choices += V
+
+	src.clothing_choices += new /obj/item/clothing/under/bartender
+	src.clothing_choices += new /obj/item/clothing/under/cargo
+	src.clothing_choices += new /obj/item/clothing/under/chef
+	src.clothing_choices += new /obj/item/clothing/under/clown
+	src.clothing_choices += new /obj/item/clothing/under/det
+	src.clothing_choices += new /obj/item/clothing/under/librarian
 
 	return
 

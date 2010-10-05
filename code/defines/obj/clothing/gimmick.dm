@@ -188,14 +188,14 @@
 	icon_state = "monocle"
 	item_state = "headset" // lol
 
-/obj/item/clothing/under/rank/captain/suit
+/obj/item/clothing/under/gimmick/rank/captain/suit
 	name = "Captain's Suit"
 	desc = "A green suit and yellow necktie. Exemplifies authority."
 	icon_state = "green_suit"
 	item_state = "dg_suit"
 	color = "green_suit"
 
-/obj/item/clothing/under/rank/head_of_personnel/suit
+/obj/item/clothing/under/gimmick/rank/head_of_personnel/suit
 	name = "Head of Personnel's Suit"
 	desc = "A teal suit and yellow necktie. An authoritative yet tacky ensemble."
 	icon_state = "teal_suit"
@@ -216,7 +216,7 @@
 	item_state = "r_suit"
 	color = "red_suit"
 
-/obj/item/clothing/under/rank/police
+/obj/item/clothing/under/gimmick/rank/police
 	name = "Police Uniform"
 	desc = "Move along, nothing to see here."
 	icon_state = "police"
