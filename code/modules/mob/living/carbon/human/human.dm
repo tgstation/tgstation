@@ -1312,7 +1312,7 @@
 
 	if (M.a_intent == "help")
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\blue [M] caresses [src] with its sythe like arm."), 1)
+			O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 	else
 		//This will be changed to skin, where we can skin a dead human corpse
 		if (M.a_intent == "grab")

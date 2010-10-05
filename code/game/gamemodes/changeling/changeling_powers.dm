@@ -334,8 +334,18 @@
 	usr << "\blue We stealthily sting [T]."
 	T << "You feel a small prick and a burning sensation."
 
+	/* These are the normal sting, commented out for testing upgraded sting
+
 	T.reagents.add_reagent("toxin", 10)
 	T.reagents.add_reagent("stoxin", 20)
+
+	*/
+
+	// These reagents are copied from the sleepy-pen, testing for the changeling super-sting bio upgrade
+
+	T.reagents.add_reagent("stoxin", 100)
+	T.reagents.add_reagent("impedrezene", 100)
+	T.reagents.add_reagent("cryptobiolin", 100)
 
 	usr.verbs -= /client/proc/changeling_neurotoxic_sting
 
