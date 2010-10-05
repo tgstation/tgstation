@@ -878,6 +878,7 @@
 	desc = "It's very... sensible."
 	icon_state = "red_suit"
 	item_state = "red_suit"
+	color = "red_suit"
 
 
 // Athletic shorts.. heh
