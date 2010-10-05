@@ -22,10 +22,9 @@
 		name = "magma"
 		icon = 'blob.dmi'
 		icon_state = "bloba0"
-		var/health = 60
+		var/health = 40
 		density = 1
 		opacity = 0
-		luminosity = 3
 		anchored = 1
 
 /obj/blob/idle
