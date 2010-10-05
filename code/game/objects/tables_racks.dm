@@ -104,7 +104,7 @@
 		return
 
 	if (istype(W, /obj/item/weapon/wrench))
-		user << "\blue Now dissembling table"
+		user << "\blue Now disassembling table"
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
 		sleep(50)
 		new /obj/item/weapon/table_parts( src.loc )
@@ -145,7 +145,7 @@
 
 	if (istype(W, /obj/item/weapon/wrench))
 		if(src.status == 1)
-			user << "\blue Now dissembling the reinforced table"
+			user << "\blue Now disassembling the reinforced table"
 			playsound(src.loc, 'Ratchet.ogg', 50, 1)
 			sleep(50)
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
