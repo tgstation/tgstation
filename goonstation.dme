@@ -214,6 +214,7 @@
 #include "code\defines\obj\clothing\gimmick.dm"
 #include "code\defines\obj\spawner\bomb.dm"
 #include "code\defines\procs\AStar.dm"
+#include "code\defines\procs\captain_announce.dm"
 #include "code\defines\procs\church_name.dm"
 #include "code\defines\procs\command_alert.dm"
 #include "code\defines\procs\command_name.dm"

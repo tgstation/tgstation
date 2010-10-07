@@ -22,11 +22,21 @@
 			if (I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
+				if(20 in I.access)
+					authenticated = 2
 		if("logout")
 			authenticated = 0
 		if("nolockdown")
 			disablelockdown(usr)
 			post_status("alert", "default")
+		if("announce")
+			if(src.authenticated==2)
+				var/input = input(usr, "Please choose a message to announce to the station crew.", "What?", "")
+				if(!input)
+					return
+				captain_announce(input)
+				log_admin("[key_name(usr)] has made a captain announcement: [input]")
+				message_admins("[key_name_admin(usr)] has made a captain announcement.", 1)
 		if("call-prison")
 			call_prison_shuttle(usr)
 		if("callshuttle")
@@ -204,6 +214,8 @@
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=call-prison'>Send Prison Shutle</A> \]"
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nolockdown'>Disable Lockdown</A> \]"
+				if (src.authenticated==2)
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make An Announcement</A> \]"
 				if(emergency_shuttle.location==0)
 					if (emergency_shuttle.online)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"

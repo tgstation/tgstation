@@ -685,7 +685,7 @@
 		src.holder.Voting()
 
 /client/proc/funbutton()
-	set category = "Admin"
+	set category = "Boom Boom"
 	set name = "Boom Boom Boom Shake The Room"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
