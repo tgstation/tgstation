@@ -167,6 +167,10 @@
 	flags = FPRINT | TABLEPASS
 	var/mob/affecting = null
 
+/obj/item/weapon/storage/bible/booze
+	name = "bible"
+	icon_state ="bible"
+
 /obj/item/weapon/storage/mousetraps
 	name = "Pest-B-Gon Mousetraps"
 	desc = "WARNING: Keep out of reach of children."

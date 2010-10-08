@@ -394,11 +394,9 @@
 	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
 		user << "Centcom will not allow the shuttle to be called."
 		return
-	/*
 	if(ticker.mode.name == "nuclear emergency" && world.time < 6000)
 		user << "Centcom will not allow the shuttle to be called."
 		return
-	*/
 
 	emergency_shuttle.incall()
 	world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"

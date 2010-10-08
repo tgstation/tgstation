@@ -15,6 +15,11 @@
 
 	var/message
 	switch(act)
+		if ("airguitar")
+			if (!src.restrained())
+				message = "<B>[src]</B> is strumming the air and headbanging like a safari chimp."
+				m_type = 1
+
 		if ("blink")
 			message = "<B>[src]</B> blinks."
 			m_type = 1
