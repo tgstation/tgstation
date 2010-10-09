@@ -177,6 +177,17 @@
 	..()
 	return
 
+/obj/item/weapon/storage/pillbottlebox/New()
+	new /obj/item/weapon/storage/pill_bottle( src )
+	new /obj/item/weapon/storage/pill_bottle( src )
+	new /obj/item/weapon/storage/pill_bottle( src )
+	new /obj/item/weapon/storage/pill_bottle( src )
+	new /obj/item/weapon/storage/pill_bottle( src )
+	new /obj/item/weapon/storage/pill_bottle( src )
+	new /obj/item/weapon/storage/pill_bottle( src )
+	..()
+	return
+
 ////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/weapon/storage/utilitybelt/proc/can_use()
