@@ -43,6 +43,7 @@
 
 	while(rev_number > 0)
 		head_revolutionaries += pick(revs_possible)
+		revs_possible -= head_revolutionaries
 		rev_number--
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)

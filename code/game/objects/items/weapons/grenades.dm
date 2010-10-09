@@ -219,14 +219,19 @@ FLASHBANG
 
 /obj/item/weapon/flashbang/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/screwdriver))
-		if (src.det_time == 100)
-			src.det_time = 30
-			user.show_message("\blue You set the flashbang for 3 second detonation time.")
-			src.desc = "It is set to detonate in 3 seconds."
-		else
-			src.det_time = 100
-			user.show_message("\blue You set the flashbang for 10 second detonation time.")
-			src.desc = "It is set to detonate in 10 seconds."
+		switch(src.det_time)
+			if ("1")
+				src.det_time = 30
+				user.show_message("\blue You set the flashbang for 3 second detonation time.")
+				src.desc = "It is set to detonate in 3 seconds."
+			if ("30")
+				src.det_time = 100
+				user.show_message("\blue You set the flashbang for 10 second detonation time.")
+				src.desc = "It is set to detonate in 10 seconds."
+			if ("100")
+				src.det_time = 1
+				user.show_message("\blue You set the flashbang for instant detonation.")
+				src.desc = "It is set to detonate instantly."
 		src.add_fingerprint(user)
 	return
 

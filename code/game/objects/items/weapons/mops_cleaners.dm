@@ -64,8 +64,10 @@ MOP
 		user << "\blue You have finished mopping!"
 		src.reagents.reaction(A,1,10)
 		A.clean_blood()
+		for(var/obj/rune/R in A)
+			del(R)
 		mopcount++
-	else if (istype(A, /obj/decal/cleanable/blood) || istype(A, /obj/overlay) || istype(A, /obj/decal/cleanable/xenoblood) )
+	else if (istype(A, /obj/decal/cleanable/blood) || istype(A, /obj/overlay) || istype(A, /obj/decal/cleanable/xenoblood) || istype(A, /obj/rune) )
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red <B>[user] begins to clean [A]</B>"), 1)
 		sleep(20)
