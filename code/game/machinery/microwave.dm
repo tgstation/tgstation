@@ -272,7 +272,10 @@ Please clean it before use!</TT><BR>
 					V.show_message(text("\blue The microwave turns on."))
 				for(var/datum/recipe/R in src.available_recipes) //Look through the recipe list we made above
 					if(src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount && src.xenomeat_amount == R.xenomeat_amount) // Check if it's an accepted recipe
-						if(R.extra_item == null || src.extra_item.type == R.extra_item) // Just in case the recipe doesn't have an extra item in it
+						var/thing
+						if(src.extra_item)
+							if (src.extra_item.type == R.extra_item) thing = 1
+						if(R.extra_item == null || thing) // Just in case the recipe doesn't have an extra item in it
 							src.egg_amount = 0 // If so remove all the eggs
 							src.flour_amount = 0 // And the flour
 							src.water_amount = 0 //And the water

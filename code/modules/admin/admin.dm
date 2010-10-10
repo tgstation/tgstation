@@ -685,12 +685,13 @@ var/showadminmessages = 1
 		if(M.mind in current_mode.traitors)
 			var/datum/mind/antagonist = M.mind
 			var/t = ""
-			for(var/datum/objective/OB in antagonist.objectives)
-				t += "[OB.explanation_text]\n"
-			if(antagonist.objectives.len == 0)
-				t = "None defined."
-			alert("Is a Traitor. Objective(s):\n[t]", "[M.key]")
-			return
+			if(antagonist)
+				for(var/datum/objective/OB in antagonist.objectives)
+					t += "[OB.explanation_text]\n"
+				if(antagonist.objectives.len == 0)
+					t = "None defined."
+				alert("Is a Traitor. Objective(s):\n[t]", "[M.key]")
+				return
 
 		//they're nothing so turn them into a traitor!
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/silicon/ai))
@@ -1888,31 +1889,35 @@ var/showadminmessages = 1
 		if(!objective)
 			return
 		if (istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/N = M
-			ticker.mode.equip_traitor(N)
+			if(M.mind)
+				var/mob/living/carbon/human/N = M
+				ticker.mode.equip_traitor(N)
 
-			ticker.mode.traitors += M.mind
-			M.mind.special_role = "traitor"
+				ticker.mode.traitors += M.mind
 
-			var/datum/objective/custom_objective = new(objective)
-			custom_objective.owner = M.mind
-			M.mind.objectives += custom_objective
+				M.mind.special_role = "traitor"
 
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = M.mind
-			M.mind.objectives += escape_objective
+				var/datum/objective/custom_objective = new(objective)
+				custom_objective.owner = M.mind
+				M.mind.objectives += custom_objective
 
-			M << "<B>You are the traitor.</B>"
+				var/datum/objective/escape/escape_objective = new
+				escape_objective.owner = M.mind
+				M.mind.objectives += escape_objective
 
-			var/obj_count = 1
-			for(var/datum/objective/OBJ in M.mind.objectives)
-				M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-				obj_count++
+				M << "<B>You are the traitor.</B>"
+
+				var/obj_count = 1
+				for(var/datum/objective/OBJ in M.mind.objectives)
+					M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+					obj_count++
 
 			//to stop spamming during traitor all secret
-			if(mode)
-				log_admin("[key_name(usr)] has made [key_name(M)] a traitor.")
-				message_admins("\blue [key_name_admin(usr)] has made [key_name_admin(M)] a traitor. Objective is: [objective]", 1)
+				if(mode)
+					log_admin("[key_name(usr)] has made [key_name(M)] a traitor.")
+					message_admins("\blue [key_name_admin(usr)] has made [key_name_admin(M)] a traitor. Objective is: [objective]", 1)
+			else
+				usr << "This guy doesn't have a mind datum, traitoring him doesn't work right."
 		else if (istype(M, /mob/living/silicon/ai))
 			ticker.mode.traitors += M.mind
 			M.mind.special_role = "traitor"

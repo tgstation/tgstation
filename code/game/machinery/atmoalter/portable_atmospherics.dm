@@ -7,7 +7,6 @@
 
 	var/volume = 0
 	var/destroyed = 0
-	var/throwforce = 0
 
 	var/maximum_pressure = 90*ONE_ATMOSPHERE
 

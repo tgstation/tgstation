@@ -4,7 +4,7 @@
 	var/g_amt = 0	// glass
 	var/w_amt = 0	// waster amounts
 	animate_movement = 2
-
+	var/throwforce = 0
 	proc
 		handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 			//Return: (NONSTANDARD)
@@ -243,7 +243,6 @@
 	var/force = null
 	var/item_state = null
 	var/damtype = "brute"
-	var/throwforce = 10
 	var/r_speed = 1.0
 	var/health = null
 	var/burn_point = null

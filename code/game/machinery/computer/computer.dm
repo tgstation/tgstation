@@ -288,7 +288,8 @@ Pod/Blast Doors computer
 				t1 = input("Enter a custom job assignment.","Assignment")
 			else
 				src.modify.access = get_access(t1)
-			src.modify.assignment = t1
+			if (src.modify)
+				src.modify.assignment = t1
 	if (href_list["reg"])
 		if (src.authenticated)
 			var/t2 = src.modify

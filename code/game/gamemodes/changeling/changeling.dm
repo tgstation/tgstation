@@ -179,7 +179,8 @@
 		var/changelingwin = 1
 		var/changeling_name
 		var/totalabsorbed = 0
-		totalabsorbed = changeling.current.absorbed_dna.len
+		if (changeling.current)
+			totalabsorbed = changeling.current.absorbed_dna.len
 
 		if(changeling.current)
 			changeling_name = "[changeling.current.real_name] (played by [changeling.key])"

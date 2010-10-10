@@ -32,15 +32,16 @@
 	user.visible_message("\red [user] starts to put [G.affecting] into the gibber!")
 	src.add_fingerprint(user)
 	sleep(30)
-	if(G.affecting)
-		user.visible_message("\red [user] stuffs [G.affecting] into the gibber!")
-		var/mob/M = G.affecting
-		if(M.client)
-			M.client.perspective = EYE_PERSPECTIVE
-			M.client.eye = src
-		M.loc = src
-		src.occupant = M
-		del(G)
+	if(G)
+		if(G.affecting)
+			user.visible_message("\red [user] stuffs [G.affecting] into the gibber!")
+			var/mob/M = G.affecting
+			if(M.client)
+				M.client.perspective = EYE_PERSPECTIVE
+				M.client.eye = src
+			M.loc = src
+			src.occupant = M
+			del(G)
 
 /obj/machinery/gibber/verb/eject()
 	set src in oview(1)

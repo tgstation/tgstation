@@ -79,8 +79,9 @@
 			if(href_list["open"])
 				toggle_valve()
 			if(href_list["rem_device"])
-				attached_device.loc = get_turf(src)
-				attached_device = null
+				if(attached_device)
+					attached_device.loc = get_turf(src)
+					attached_device = null
 				update_icon()
 			if(href_list["device"])
 				attached_device.attack_self(usr)

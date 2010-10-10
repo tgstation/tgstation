@@ -280,16 +280,17 @@
 					del(M)
 			else if (istype(M,/mob/living) && !(M:client)) //
 				spawn(0)
-					var/i
-					M:stunned = 100
-					for(i=0, i<10, i++)
-						sleep(10)
-						M:fireloss += 50
-					new /obj/decal/ash(M:loc)
-					for (var/obj/item/weapon/W in M)
-						if (prob(10))
-							W.loc = M:loc
-					del(M)
+					if(M)
+						var/i
+						M:stunned = 100
+						for(i=0, i<10, i++)
+							sleep(10)
+							M:fireloss += 50
+						new /obj/decal/ash(M:loc)
+						for (var/obj/item/weapon/W in M)
+							if (prob(10))
+								W.loc = M:loc
+						del(M)
 		for (var/mob/M in viewers(user))
 			M.show_message("\red You hear a roar as the crematorium activates.", 1)
 		spawn(100)

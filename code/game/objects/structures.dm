@@ -92,15 +92,16 @@ obj/structure
 		if (src.icon_state == "reinforced") //Time to finalize!
 			user << "\blue Now finalising reinforced wall."
 			sleep(50)
-			if(get_turf(user) == T)
-				user << "\blue Wall fully reinforced!"
-				var/turf/Tsrc = get_turf(src)
-				Tsrc.ReplaceWithRWall()
-				W:amount--
-				if (W:amount <= 0)
-					del(W)
-				del(src)
-				return
+			if(W)
+				if(get_turf(user) == T)
+					user << "\blue Wall fully reinforced!"
+					var/turf/Tsrc = get_turf(src)
+					Tsrc.ReplaceWithRWall()
+					W:amount--
+					if (W:amount <= 0)
+						del(W)
+					del(src)
+					return
 		else
 			user << "\blue Now reinforcing girders"
 			sleep(60)

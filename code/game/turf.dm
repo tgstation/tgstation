@@ -337,10 +337,10 @@
 		playsound(src.loc, 'Welder.ogg', 100, 1)
 
 		sleep(100)
-
-		if ((user.loc == T && user.equipped() == W))
-			user << "\blue You disassembled the outer wall plating."
-			dismantle_wall()
+		if (istype(src, /turf/simulated/wall))
+			if ((user.loc == T && user.equipped() == W))
+				user << "\blue You disassembled the outer wall plating."
+				dismantle_wall()
 
 	else
 		return attack_hand(user)

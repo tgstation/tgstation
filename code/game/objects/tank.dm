@@ -434,11 +434,13 @@
 			return
 		var/obj/item/assembly/t_i_ptank/R = new /obj/item/assembly/t_i_ptank( user )
 		R.part1 = S.part1
-		S.part1.loc = R
-		S.part1.master = R
+		if (S.part1)
+			S.part1.loc = R
+			S.part1.master = R
 		R.part2 = S.part2
-		S.part2.loc = R
-		S.part2.master = R
+		if (S.part2)
+			S.part2.loc = R
+			S.part2.master = R
 		S.layer = initial(S.layer)
 		if (user.client)
 			user.client.screen -= S

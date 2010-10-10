@@ -342,10 +342,12 @@
 	*/
 
 	// These reagents are copied from the sleepy-pen, testing for the changeling super-sting bio upgrade
-
-	T.reagents.add_reagent("stoxin", 100)
-	T.reagents.add_reagent("impedrezene", 100)
-	T.reagents.add_reagent("cryptobiolin", 100)
+	if (T.reagents)
+		T.reagents.add_reagent("stoxin", 100)
+		T.reagents.add_reagent("impedrezene", 100)
+		T.reagents.add_reagent("cryptobiolin", 100)
+	else
+		usr << "This is a debug message you are getting because you have attempted to sting something that lacks a reagent container. Bug the guy that did the changeling code until he fixes it."
 
 	usr.verbs -= /client/proc/changeling_neurotoxic_sting
 
@@ -366,7 +368,11 @@
 	usr << "\blue We stealthily sting [T]."
 
 	spawn(50) //Give the changeling a chance to calmly walk away before the target FREAKS THE FUCK OUT
+	if (T.reagents)
 		T.reagents.add_reagent("space_drugs", 5)
+	else
+		usr << "This is a debug message you are getting because you have attempted to sting something that lacks a reagent container. Bug the guy that did the changeling code until he fixes it."
+
 
 	usr.verbs -= /client/proc/changeling_hallucinogenic_sting
 

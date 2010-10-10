@@ -164,8 +164,9 @@
 
 
 		breathe()
+			if(src.reagents)
 
-			if(src.reagents.has_reagent("lexorin")) return
+				if(src.reagents.has_reagent("lexorin")) return
 
 			var/datum/gas_mixture/environment = loc.return_air()
 			var/datum/air_group/breath

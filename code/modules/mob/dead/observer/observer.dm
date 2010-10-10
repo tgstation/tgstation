@@ -77,7 +77,7 @@
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
 	spawn(50)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
-	A = input("Area to jump to", "BOOYEA", A) in list("Engine","Hallways","Toxins","Storage","Maintenance","Crew Quarters","Medical","Security","Chapel","Bridge","Prison","AI Satellite","Thunderdome")
+	A = input("Area to jump to", "BOOYEA", A) in list("Engine","Hallways","Toxins","Storage","Maintenance","Crew Quarters","Medical","Security","Chapel","Bridge","AI Satellite","Thunderdome")
 
 	switch (A)
 		if ("Engine")
@@ -144,12 +144,6 @@
 			var/list/L = list()
 			for(var/area/B in world)
 				if(istype(B, /area/turret_protected/aisat))
-					L += B
-			A = pick(L)
-		if ("Prison")
-			var/list/L = list()
-			for(var/area/B in world)
-				if(istype(B, /area/prison/control))
 					L += B
 			A = pick(L)
 		if ("Thunderdome")

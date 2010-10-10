@@ -8,10 +8,11 @@ var
 	jobban_savebanfile()
 
 /proc/jobban_isbanned(mob/M, rank)
-	if (jobban_keylist.Find(text("[M.ckey] - [rank]")))
-		return 1
-	else
-		return 0
+	if(M)
+		if (jobban_keylist.Find(text("[M.ckey] - [rank]")))
+			return 1
+		else
+			return 0
 
 /proc/jobban_loadbanfile()
 	var/savefile/S=new("data/job_full.ban")

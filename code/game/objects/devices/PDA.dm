@@ -1206,30 +1206,31 @@ Code:
 
 		else if (href_list["detonate"] && istype(src.cartridge, /obj/item/weapon/cartridge/syndicate))
 			var/obj/item/device/pda/P = locate(href_list["detonate"])
-			if (!P.toff && src.cartridge:shock_charges > 0)
-				src.cartridge:shock_charges--
+			if(P)
+				if (!P.toff && src.cartridge:shock_charges > 0)
+					src.cartridge:shock_charges--
 
-				var/difficulty = 0
+					var/difficulty = 0
 
-				if (!isnull(P.cartridge))
-					difficulty += P.cartridge.access_medical
-					difficulty += P.cartridge.access_security
-					difficulty += P.cartridge.access_engine
-					difficulty += P.cartridge.access_clown
-					difficulty += P.cartridge.access_janitor
-					difficulty += P.cartridge.access_manifest * 2
-				else
-					difficulty += 2
+					if (!isnull(P.cartridge))
+						difficulty += P.cartridge.access_medical
+						difficulty += P.cartridge.access_security
+						difficulty += P.cartridge.access_engine
+						difficulty += P.cartridge.access_clown
+						difficulty += P.cartridge.access_janitor
+						difficulty += P.cartridge.access_manifest * 2
+					else
+						difficulty += 2
 
-				if ((prob(difficulty * 12)) || (P.uplink))
-					usr.show_message("\red An error flashes on your [src].", 1)
-				else if (prob(difficulty * 3))
-					usr.show_message("\red Energy feeds back into your [src]!", 1)
-					src.explode()
-				else
-					usr.show_message("\blue Success!", 1)
-					P.explode()
-			src.updateUsrDialog()
+					if ((prob(difficulty * 12)) || (P.uplink))
+						usr.show_message("\red An error flashes on your [src].", 1)
+					else if (prob(difficulty * 3))
+						usr.show_message("\red Energy feeds back into your [src]!", 1)
+						src.explode()
+					else
+						usr.show_message("\blue Success!", 1)
+						P.explode()
+				src.updateUsrDialog()
 
 		else if (href_list["sendhonk"] && istype(src.cartridge, /obj/item/weapon/cartridge/clown))
 			var/obj/item/device/pda/P = locate(href_list["sendhonk"])

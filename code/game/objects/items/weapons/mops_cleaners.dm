@@ -71,9 +71,10 @@ MOP
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red <B>[user] begins to clean [A]</B>"), 1)
 		sleep(20)
-		user << "\blue You have finished mopping!"
-		var/turf/U = A.loc
-		src.reagents.reaction(U)
+		if(A)
+			user << "\blue You have finished mopping!"
+			var/turf/U = A.loc
+			src.reagents.reaction(U)
 		if(A) del(A)
 		mopcount++
 

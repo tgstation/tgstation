@@ -2078,10 +2078,11 @@
 				if (istype(src.item, /obj/item))
 					src.source.drop_item()
 					src.loc = src.target
-					src.item.layer = 20
-					src.target.r_hand = src.item
-					src.item.loc = src.target
-					src.item.add_fingerprint(src.target)
+					if (src.item)
+						src.item.layer = 20
+						src.target.r_hand = src.item
+						src.item.loc = src.target
+						src.item.add_fingerprint(src.target)
 		if("uniform")
 			if (src.target.w_uniform)
 				var/obj/item/W = src.target.w_uniform
@@ -2232,19 +2233,20 @@
 			S.injest(src.target)
 		if("dnainjector")
 			var/obj/item/weapon/dnainjector/S = src.item
-			src.item.add_fingerprint(src.source)
-			src.item:inject(src.target, null)
-			if (!( istype(S, /obj/item/weapon/dnainjector) ))
-				//SN src = null
-				del(src)
-				return
-			if (S.s_time >= world.time + 30)
-				//SN src = null
-				del(src)
-				return
-			S.s_time = world.time
-			for(var/mob/O in viewers(src.source, null))
-				O.show_message(text("\red [] injects [] with the DNA Injector!", src.source, src.target), 1)
+			if(src.item)
+				src.item.add_fingerprint(src.source)
+				src.item:inject(src.target, null)
+				if (!( istype(S, /obj/item/weapon/dnainjector) ))
+					//SN src = null
+					del(src)
+					return
+				if (S.s_time >= world.time + 30)
+					//SN src = null
+					del(src)
+					return
+				S.s_time = world.time
+				for(var/mob/O in viewers(src.source, null))
+					O.show_message(text("\red [] injects [] with the DNA Injector!", src.source, src.target), 1)
 		if("pockets")
 			if (src.target.l_store)
 				var/obj/item/W = src.target.l_store

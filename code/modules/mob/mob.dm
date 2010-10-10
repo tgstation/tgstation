@@ -1091,7 +1091,8 @@
 			if (W)
 				W.layer = initial(W.layer)
 		var/turf/T = get_turf(src.loc)
-		T.Entered(W)
+		if (T)
+			T.Entered(W)
 	return
 
 /mob/proc/reset_view(atom/A)
@@ -1438,7 +1439,7 @@
 
 			//we don't use message_admins here because the sender/receiver might get it too
 			for (var/mob/K in world)
-				if(K)
+				if(K && usr)
 					if(K.client && K.client.holder && K.key != usr.key && K.key != M.key)
 						K << "<b><font color='blue'>PM: [key_name(usr, K)]->[key_name(M, K)]:</b> \blue [t]</font>"
 	..()

@@ -57,11 +57,12 @@ obj/hud/New(var/type = 0)
 //		if(mymob:w_radio) mymob:w_radio:screen_loc = ui_headset
 		if(mymob:glasses) mymob:glasses:screen_loc = ui_glasses
 	else
-		if(mymob:shoes) mymob:shoes:screen_loc = null
-		if(mymob:gloves) mymob:gloves:screen_loc = null
-		if(mymob:ears) mymob:ears:screen_loc = null
+		if(istype(mymob, /mob/living/carbon/human))
+			if(mymob:shoes) mymob:shoes:screen_loc = null
+			if(mymob:gloves) mymob:gloves:screen_loc = null
+			if(mymob:ears) mymob:ears:screen_loc = null
 //		if(mymob:w_radio) mymob:w_radio:screen_loc = null
-		if(mymob:glasses) mymob:glasses:screen_loc = null
+			if(mymob:glasses) mymob:glasses:screen_loc = null
 
 
 /obj/hud/var/show_otherinventory = 1

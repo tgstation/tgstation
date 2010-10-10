@@ -880,42 +880,44 @@
 				delete = 0
 				return null
 			///
-			if (prob((80 + (src.radduration / 2))))
-				if ((src.strucblock != 2 || src.strucblock != 12 || src.strucblock != 8 || src.strucblock || 10) && prob (20))
-					oldblock = src.strucblock
-					block = miniscramble(block, src.radstrength, src.radduration)
-					newblock = null
-					if (src.strucblock > 1 && src.strucblock < 5)
-						src.strucblock++
-					else if (src.strucblock > 5 && src.strucblock < 14)
-						src.strucblock--
-					if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
-					if (src.subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1) + block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
-					if (src.subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1) + block
-					tstructure2 = setblock(src.connected.occupant.dna.struc_enzymes, src.strucblock, newblock,3)
-					src.connected.occupant.dna.struc_enzymes = tstructure2
-					domutcheck(src.connected.occupant,src.connected)
-					src.connected.occupant.radiation += (src.radstrength+src.radduration)
-					src.strucblock = oldblock
-				else
+			if(src.connected.occupant)
+				if (prob((80 + (src.radduration / 2))))
+					if ((src.strucblock != 2 || src.strucblock != 12 || src.strucblock != 8 || src.strucblock || 10) && prob (20))
+						oldblock = src.strucblock
+						block = miniscramble(block, src.radstrength, src.radduration)
+						newblock = null
+						if (src.strucblock > 1 && src.strucblock < 5)
+							src.strucblock++
+						else if (src.strucblock > 5 && src.strucblock < 14)
+							src.strucblock--
+						if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
+						if (src.subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1) + block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
+						if (src.subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1) + block
+						tstructure2 = setblock(src.connected.occupant.dna.struc_enzymes, src.strucblock, newblock,3)
+						src.connected.occupant.dna.struc_enzymes = tstructure2
+						domutcheck(src.connected.occupant,src.connected)
+						src.connected.occupant.radiation += (src.radstrength+src.radduration)
+						src.strucblock = oldblock
+					else
 					//
-					block = miniscramble(block, src.radstrength, src.radduration)
-					newblock = null
-					if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
-					if (src.subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1) + block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
-					if (src.subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1) + block
-					tstructure2 = setblock(src.connected.occupant.dna.struc_enzymes, src.strucblock, newblock,3)
-					src.connected.occupant.dna.struc_enzymes = tstructure2
-					domutcheck(src.connected.occupant,src.connected)
-					src.connected.occupant.radiation += (src.radstrength+src.radduration)
-			else
-				if	(prob(80-src.radduration))
-					randmutb(src.connected.occupant)
-					domutcheck(src.connected.occupant,src.connected)
+						block = miniscramble(block, src.radstrength, src.radduration)
+						newblock = null
+						if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
+						if (src.subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1) + block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
+						if (src.subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1) + block
+						tstructure2 = setblock(src.connected.occupant.dna.struc_enzymes, src.strucblock, newblock,3)
+						src.connected.occupant.dna.struc_enzymes = tstructure2
+						domutcheck(src.connected.occupant,src.connected)
+						src.connected.occupant.radiation += (src.radstrength+src.radduration)
 				else
-					randmuti(src.connected.occupant)
-					updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
-				src.connected.occupant.radiation += ((src.radstrength*2)+src.radduration)
+					if	(prob(80-src.radduration))
+						randmutb(src.connected.occupant)
+						domutcheck(src.connected.occupant,src.connected)
+					else
+						randmuti(src.connected.occupant)
+						updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+					src.connected.occupant.radiation += ((src.radstrength*2)+src.radduration)
+
 			///
 			dopage(src,"strucmenu")
 			src.delete = 0

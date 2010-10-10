@@ -308,10 +308,11 @@
 	var/turf/T = M.loc
 	var/holding = M.equipped()
 	sleep(time)
-	if ((M.loc == T && M.equipped() == holding && !( M.stat )))
-		return 1
-	else
-		return 0
+	if(M)
+		if ((M.loc == T && M.equipped() == holding && !( M.stat )))
+			return 1
+		else
+			return 0
 
 /proc/hasvar(var/datum/A, var/varname)
 	//Takes: Anything that could possibly have variables and a varname to check.

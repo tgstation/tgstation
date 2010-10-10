@@ -8,7 +8,6 @@
 	var/datum/ai_laws/laws = new /datum/ai_laws/asimov
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/brain/brain = null
-	var/throwforce = 0
 
 
 /obj/AIcore/attackby(obj/item/weapon/P as obj, mob/user as mob)
