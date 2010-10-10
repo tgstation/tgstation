@@ -52,7 +52,9 @@ DNA INJECTOR
 			M.dna.struc_enzymes = setblock(M.dna.struc_enzymes,block,dna,3)
 			domutcheck(M, null,1)
 			uses--
-	del(src)
+
+	spawn(0)//this prevents the collapse of space-time continuum
+		del(src)
 	return uses
 
 /obj/item/weapon/dnainjector/attack(mob/M as mob, mob/user as mob)
@@ -78,7 +80,7 @@ DNA INJECTOR
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red [] has been injected with [] by [].", M, src, user), 1)
 				//Foreach goto(192)
-			if (!istype(M, /mob/living/carbon/human) || !istype(M, /mob/living/carbon/monkey))
+			if (!(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey)))
 				user << "\red Apparently it didn't work."
 				return
 			inject(M)
