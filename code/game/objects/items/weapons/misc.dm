@@ -78,6 +78,9 @@ DNA INJECTOR
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red [] has been injected with [] by [].", M, src, user), 1)
 				//Foreach goto(192)
+			if (!istype(M, /mob/living/carbon/human) || !istype(M, /mob/living/carbon/monkey))
+				user << "\red Apparently it didn't work."
+				return
 			inject(M)
 			user.show_message(text("\red You inject [M]"))
 	return
