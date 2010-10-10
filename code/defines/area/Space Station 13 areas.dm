@@ -666,6 +666,10 @@
 	name = "Control Room"
 	icon_state = "bridge"
 
+/area/derelict/secret
+	name = "Secret Room"
+	icon_state = "library"
+
 /area/derelict/bridge/access
 	name = "Control Room Access"
 	icon_state = "auxstorage"
