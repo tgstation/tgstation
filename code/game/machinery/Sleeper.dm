@@ -49,17 +49,19 @@
 				if(0)
 					t1 = "Conscious"
 				if(1)
-					t1 = "Unconscious"
+					t1 = "<font color='blue'>Unconscious</font>"
 				if(2)
-					t1 = "*dead*"
+					t1 = "<font color='red'>*dead*</font>"
 				else
 			dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
 			dat += text("[]\t-Brute Damage %: []</FONT><BR>", (occupant.bruteloss < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.bruteloss)
 			dat += text("[]\t-Respiratory Damage %: []</FONT><BR>", (occupant.oxyloss < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.oxyloss)
 			dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.toxloss < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.toxloss)
 			dat += text("[]\t-Burn Severity %: []</FONT><BR>", (occupant.fireloss < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.fireloss)
-			dat += text("<BR>Paralysis Summary %: [] ([] seconds left!)</FONT><BR>", occupant.paralysis, round(occupant.paralysis / 4))
-			dat += text("<HR><A href='?src=\ref[];refresh=1'>Refresh</A><BR><A href='?src=\ref[];rejuv=1'>Inject Rejuvenators</A>", src, src)
+			dat += text("<HR>Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
+			dat += text("Rejuvenation chemicals: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
+			dat += text("Soporific: [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
+			dat += text("<HR><A href='?src=\ref[];refresh=1'>Refresh meter readings each second</A><BR><A href='?src=\ref[];rejuv=1'>Inject Rejuvenators</A><BR><A href='?src=\ref[];stox=1'>Inject Soporific</A>", src, src, src)
 		else
 			dat += "The sleeper is empty."
 		dat += text("<BR><BR><A href='?src=\ref[];mach_close=sleeper'>Close</A>", user)
@@ -72,9 +74,11 @@
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
 		usr.machine = src
-		if (href_list["rejuv"])
-			if (src.connected)
+		if (src.connected)
+			if (href_list["rejuv"])
 				src.connected.inject(usr)
+			if (href_list["stox"])
+				src.connected.inject_stox(usr)
 		if (href_list["refresh"])
 			src.updateUsrDialog()
 		src.add_fingerprint(usr)
@@ -224,12 +228,22 @@
 
 /obj/machinery/sleeper/proc/inject(mob/user as mob)
 	if (src.occupant)
-		if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 60)
+		if (src.occupant.reagents.get_reagent_amount("inaprovaline") + 30 < 60)
 			src.occupant.reagents.add_reagent("inaprovaline", 30)
 		user << text("Occupant now has [] units of rejuvenation in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("inaprovaline"))
 	else
 		user << "No occupant!"
 	return
+
+/obj/machinery/sleeper/proc/inject_stox(mob/user as mob)
+	if (src.occupant)
+		if (src.occupant.reagents.get_reagent_amount("stoxin") + 20 < 40)
+			src.occupant.reagents.add_reagent("stoxin", 20)
+		user << text("Occupant now has [] units of soporific in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("stoxin"))
+	else
+		user << "No occupant!"
+	return
+
 
 /obj/machinery/sleeper/proc/check(mob/user as mob)
 	if (src.occupant)

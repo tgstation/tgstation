@@ -1,3 +1,158 @@
+/obj/machinery/alarm
+
+	var/frequency = 1439
+	var/list/sensors = list()
+	var/list/sensor_information = list()
+	var/datum/radio_frequency/radio_connection
+	var/alarm_area //unused atm. Maybe do something if emmaged or hacked...Like change the area to security, syphon air out, ..., profit.
+	var/locked = 1
+	var/panic = 0 //is this alarm panicked?
+
+	req_access = list(access_atmospherics)
+
+	attack_hand(mob/user)
+		if(!(istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/carbon/human)))
+			user << "\red You don't have the dexterity to do this"
+			return
+		if(stat & (NOPOWER|BROKEN))
+			return
+		else if(!(istype(usr, /mob/living/silicon/ai)) && locked)
+			user << "\red You must unlock the Air Alarm interface first"
+			return
+		src.add_fingerprint(user)
+		user << browse(return_text(),"window=air_alarm")
+		user.machine = src
+		onclose(user, "air_alarm")
+		return
+
+
+	receive_signal(datum/signal/signal)
+		if(!signal || signal.encryption) return
+
+		var/id_tag = signal.data["tag"]
+		if(!id_tag || !sensors.Find(id_tag)) return
+
+		sensor_information[id_tag] = signal.data
+
+	proc
+		set_frequency(new_frequency)
+			radio_controller.remove_object(src, "[frequency]")
+			frequency = new_frequency
+			radio_connection = radio_controller.add_object(src, "[frequency]")
+
+/* //moved to vent_scrubber.dm
+
+		find_scrubbers()//finds vent_scrubbers in area, sets corresponding frequency, name and id_tags, fills sensor list with id_tags and names
+			var/area/A = get_area(loc)
+			var/area/M = A.master
+			if(!alarm_area)
+				alarm_area = M
+
+			//world << "\red Processing [M.name]"
+
+			var/uniq_id = md5(M.name)//hash works like a charm
+
+			if(M.related && M.related.len)//if has relatives
+				var/i = 0
+				for(var/area/Rel in M.related)//check all relatives
+					if(Rel == M) continue //same parent area
+					if(Rel.contents && Rel.contents.len)
+						for(var/obj/machinery/atmospherics/unary/vent_scrubber/V in Rel.contents)
+							if(V.id_tag)//id_tag assigned, probably already connected to alarm somewhere
+								//world << "[V.id_tag] passed"
+								continue
+							V.id_tag = "[uniq_id]_[i++]"//unique ID of the scrubber
+							V.frequency = frequency
+							var/name = "[M.name] Air Scrubber #[i]" //displayed name
+							sensors[V.id_tag] = name
+							V.name = name
+							//world << "[V.name] in [M.name] is set to [frequency] with ID [V.id_tag] and named [sensors[V.id_tag]]"
+*/
+
+		send_signal(var/target, var/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+			if(!radio_connection)
+				return 0
+
+			var/datum/signal/signal = new
+			signal.transmission_method = 1 //radio signal
+			signal.source = src
+
+			signal.data["tag"] = target
+			signal.data["command"] = command
+
+			radio_connection.post_signal(src, signal)
+			//world << text("Signal [] Broadcasted to []", command, target)
+
+			return 1
+
+		return_text()
+			var/sensor_data
+			if(sensors.len)
+				for(var/id_tag in sensors)
+					var/long_name = sensors[id_tag]
+					var/list/data = sensor_information[id_tag]
+					var/sensor_part = "<B>[long_name]</B>:<BR>"
+
+					if(data)
+						sensor_part += "<B>Operating:</B> <A href='?src=\ref[src];toggle_power=[id_tag]'>[data["on"]?"on":"off"]</A><BR>"
+						sensor_part += "<B>Type:</B> <A href='?src=\ref[src];toggle_scrubbing=[id_tag]'>[data["scrubbing"]?"scrubbing":"syphoning"]</A><BR>"
+						if(data["scrubbing"])
+							sensor_part += "<B>Filtering:</B> Carbon Dioxide <A href='?src=\ref[src];toggle_co2_scrub=[id_tag]'>([data["filter_co2"]?"on":"off"])</A>; Toxins <A href='?src=\ref[src];toggle_tox_scrub=[id_tag]'>([data["filter_toxins"]?"on":"off"])</A><BR>"
+						sensor_part += "<A href='?src=\ref[src];toggle_panic_siphon=[id_tag]'><font color='[data["panic"]?"blue'>Dea":"red'>A"]ctivate panic syphon</A></font><BR>"
+						if(data["panic"])
+							sensor_part += "<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>"
+						sensor_part += "<HR>"
+					else
+						sensor_part = "<FONT color='red'>[long_name] can not be found!</FONT><BR>"
+
+					sensor_data += sensor_part
+				sensor_data += "<A href='?src=\ref[src];toggle_panic_siphon_global=1'><font color='red'><B>TOGGLE PANIC SYPHON IN AREA</B></font></A>"
+
+			else
+				sensor_data = "No scrubbers connected."
+
+			var/output = {"<B>[alarm_zone] Air [name]</B><HR>[sensor_data]"}
+
+			return output
+
+
+
+	initialize()
+		set_frequency(frequency)
+		/*if(!(sensors.len))//if there's something in the list, do not search the area
+			find_scrubbers()*/
+
+
+	Topic(href, href_list)
+		//if(..())
+		//	return
+
+		if(href_list["toggle_power"])
+			send_signal(href_list["toggle_power"], "toggle_power")
+
+		if(href_list["toggle_scrubbing"])
+			send_signal(href_list["toggle_scrubbing"], "toggle_scrubbing")
+
+		if(href_list["toggle_co2_scrub"])
+			send_signal(href_list["toggle_co2_scrub"], "toggle_co2_scrub")
+
+		if(href_list["toggle_tox_scrub"])
+			send_signal(href_list["toggle_tox_scrub"], "toggle_tox_scrub")
+
+		if(href_list["toggle_panic_siphon"])
+			send_signal(href_list["toggle_panic_siphon"], "toggle_panic_siphon")
+
+		if(href_list["toggle_panic_siphon_global"])
+			for(var/V in sensors)
+				send_signal(V, "toggle_panic_siphon")
+			panic = !panic
+
+
+		spawn(5)
+			attack_hand(usr)
+		return ..()
+
+
 /obj/machinery/alarm/New()
 	..()
 
@@ -93,6 +248,17 @@
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [] has []activated []!", user, (stat&BROKEN) ? "de" : "re", src), 1)
 		return
+
+	else if (istype(W, /obj/item/weapon/card/id))// trying to unlock the interface with an ID card
+		if(stat & (NOPOWER|BROKEN))
+			user << "It does nothing"
+		else
+			if(src.allowed(usr))
+				locked = !locked
+				user << "You [ locked ? "lock" : "unlock"] the Air Alarm interface."
+			else
+				user << "\red Access denied."
+		return
 	return ..()
 
 /obj/machinery/alarm/power_change()
@@ -101,10 +267,10 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/alarm/Click()
+/*/obj/machinery/alarm/Click()
 	if(istype(usr, /mob/living/silicon/ai))
 		return examine()
-	return ..()
+	return ..()*/
 
 /obj/machinery/alarm/examine()
 	set src in oview(1)

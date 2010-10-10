@@ -746,34 +746,42 @@ However people seem to like it for some reason.
 	..()
 
 /obj/machinery/power/collector_array/attack_hand(mob/user as mob)
-	if(src.active==1)
-		src.active = 0
-		icon_state = "ca_deactive"
-		CU.updatecons()
-		user << "You turn off the collector array."
-		return
+	if(src.anchored == 1)
+		if(src.active==1)
+			src.active = 0
+			icon_state = "ca_deactive"
+			CU.updatecons()
+			user << "You turn off the collector array."
+			return
 
-	if(src.active==0)
-		src.active = 1
-		icon_state = "ca_active"
-		CU.updatecons()
-		user << "You turn on the collector array."
+		if(src.active==0)
+			src.active = 1
+			icon_state = "ca_active"
+			CU.updatecons()
+			user << "You turn on the collector array."
+			return
+	else
+		src.add_fingerprint(user)
+		user << "\red The collector needs to be secured to the floor first."
 		return
-
 
 /obj/machinery/power/collector_array/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/tank/plasma))
-		if(src.P)
-			user << "\red There appears to already be a plasma tank loaded!"
+		if(src.anchored == 1)
+			if(src.P)
+				user << "\red There appears to already be a plasma tank loaded!"
+				return
+			src.P = W
+			W.loc = src
+			if (user.client)
+				user.client.screen -= W
+			user.u_equip(W)
+			CU.updatecons()
+			updateicon()
 			return
-		src.P = W
-		W.loc = src
-		if (user.client)
-			user.client.screen -= W
-		user.u_equip(W)
-		CU.updatecons()
-		updateicon()
-		return
+		else
+			user << "The collector needs to be secured to the floor first."
+			return
 
 	if(istype(W, /obj/item/weapon/crowbar))
 		if(!P)
@@ -785,6 +793,23 @@ However people seem to like it for some reason.
 		CU.updatecons()
 		updateicon()
 		return
+
+	if(istype(W, /obj/item/weapon/wrench))
+		if(active)
+			user << "\red Turn off the collector first."
+			return
+
+		else if(src.anchored == 0)
+			playsound(src.loc, 'Ratchet.ogg', 75, 1)
+			user << "You secure the collector reinforcing bolts to the floor."
+			src.anchored = 1
+			return
+
+		else if(src.anchored == 1)
+			playsound(src.loc, 'Ratchet.ogg', 75, 1)
+			user << "You undo the external reinforcing bolts."
+			src.anchored = 0
+			return
 
 	else
 		src.add_fingerprint(user)
@@ -931,23 +956,45 @@ However people seem to like it for some reason.
 
 
 /obj/machinery/power/collector_control/attack_hand(mob/user as mob)
-	if(src.active==1)
-		src.active = 0
-		user << "You turn off the collector control."
-		src.lastpower = 0
-		updateicon()
-		return
+	if(src.anchored==1)
+		if(src.active==1)
+			src.active = 0
+			user << "You turn off the collector control."
+			src.lastpower = 0
+			updateicon()
+			return
 
-	if(src.active==0)
-		src.active = 1
-		user << "You turn on the collector control."
-		updatecons()
+		if(src.active==0)
+			src.active = 1
+			user << "You turn on the collector control."
+			updatecons()
+			return
+	else
+		src.add_fingerprint(user)
+		user << "\red The collector control needs to be secured to the floor first."
 		return
 
 
 /obj/machinery/power/collector_control/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
 		user << "\blue The analyzer detects that [lastpower]W are being produced."
+
+	if(istype(W, /obj/item/weapon/wrench))
+		if(active)
+			user << "\red Turn off the collector control first."
+			return
+
+		else if(src.anchored == 0)
+			playsound(src.loc, 'Ratchet.ogg', 75, 1)
+			user << "You secure the collector control to the floor."
+			src.anchored = 1
+			return
+
+		else if(src.anchored == 1)
+			playsound(src.loc, 'Ratchet.ogg', 75, 1)
+			user << "You undo the collector control securing bolts."
+			src.anchored = 0
+			return
 
 	else
 		src.add_fingerprint(user)

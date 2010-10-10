@@ -4,6 +4,7 @@ obj/machinery/air_sensor
 	name = "Gas Sensor"
 
 	anchored = 1
+	var/state = 0
 
 	var/id_tag
 	var/frequency = 1439
@@ -13,8 +14,11 @@ obj/machinery/air_sensor
 	//Flags:
 	// 1 for pressure
 	// 2 for temperature
+	// Output >= 4 includes gas composition
 	// 4 for oxygen concentration
 	// 8 for toxins concentration
+	// 16 for nitrogen concentration
+	// 32 for carbon dioxide concentration
 
 	var/datum/radio_frequency/radio_connection
 
@@ -35,12 +39,16 @@ obj/machinery/air_sensor
 			if(output&2)
 				signal.data["temperature"] = round(air_sample.temperature,0.1)
 
-			if(output&12)
+			if(output>4)
 				var/total_moles = air_sample.total_moles()
 				if(output&4)
 					signal.data["oxygen"] = round(100*air_sample.oxygen/total_moles)
 				if(output&8)
 					signal.data["toxins"] = round(100*air_sample.toxins/total_moles)
+				if(output&16)
+					signal.data["nitrogen"] = round(100*air_sample.nitrogen/total_moles)
+				if(output&32)
+					signal.data["carbon_dioxide"] = round(100*air_sample.carbon_dioxide/total_moles)
 
 			radio_connection.post_signal(src, signal)
 
@@ -129,26 +137,24 @@ obj/machinery/computer/general_air_control
 			for(var/id_tag in sensors)
 				var/long_name = sensors[id_tag]
 				var/list/data = sensor_information[id_tag]
-				var/sensor_part = "<B>[long_name]</B>: "
+				var/sensor_part = "<B>[long_name]</B>:<BR>"
 
 				if(data)
 					if(data["pressure"])
-						sensor_part += "[data["pressure"]] kPa"
-						if(data["temperature"])
-							sensor_part += ", [data["temperature"]] K"
-						sensor_part += "<BR>"
-					else if(data["temperature"])
-						sensor_part += "[data["temperature"]] K<BR>"
-
-					if(data["oxygen"]||data["toxins"])
-						sensor_part += "<B>[long_name] Composition</B>: "
+						sensor_part += "   <B>Pressure:</B> [data["pressure"]] kPa<BR>"
+					if(data["temperature"])
+						sensor_part += "   <B>Temperature:</B> [data["temperature"]] K<BR>"
+					if(data["oxygen"]||data["toxins"]||data["nitrogen"]||data["carbon_dioxide"])
+						sensor_part += "   <B>Gas Composition :</B>"
 						if(data["oxygen"])
-							sensor_part += "[data["oxygen"]] %O2"
-							if(data["toxins"])
-								sensor_part += ", [data["toxins"]] %TX"
-							sensor_part += "<BR>"
-						else if(data["toxins"])
-							sensor_part += "[data["toxins"]] %TX<BR>"
+							sensor_part += "[data["oxygen"]]% O2; "
+						if(data["nitrogen"])
+							sensor_part += "[data["nitrogen"]]% N; "
+						if(data["carbon_dioxide"])
+							sensor_part += "[data["carbon_dioxide"]]% CO2; "
+						if(data["toxins"])
+							sensor_part += "[data["toxins"]]% TX; "
+					sensor_part += "<HR>"
 
 				else
 					sensor_part = "<FONT color='red'>[long_name] can not be found!</FONT><BR>"
@@ -159,8 +165,7 @@ obj/machinery/computer/general_air_control
 			sensor_data = "No sensors connected."
 
 		var/output = {"<B>[name]</B><HR>
-<B>Sensor Data: <BR></B>
-[sensor_data]<HR>"}
+<B>Sensor Data:</B><HR><HR>[sensor_data]"}
 
 		return output
 
