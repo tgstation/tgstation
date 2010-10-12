@@ -1,5 +1,31 @@
 var/list/cultists = list()
+var/wordtravel = null
+var/wordself = null
+var/wordsee = null
+var/wordhell = null
+var/wordblood = null
+var/wordjoin = null
+var/wordtech = null
+var/worddestr = null
 
+/proc/runerandom() //randomizes word meaning
+	var/list/runewords=list("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq")
+	wordtravel=pick(runewords)
+	runewords-=wordtravel
+	wordself=pick(runewords)
+	runewords-=wordself
+	wordsee=pick(runewords)
+	runewords-=wordsee
+	wordhell=pick(runewords)
+	runewords-=wordhell
+	wordblood=pick(runewords)
+	runewords-=wordblood
+	wordjoin=pick(runewords)
+	runewords-=wordjoin
+	wordtech=pick(runewords)
+	runewords-=wordtech
+	worddestr=pick(runewords)
+	runewords-=worddestr
 
 /obj/rune
 	anchored = 1
@@ -12,24 +38,14 @@ var/list/cultists = list()
 		word2
 		word3
 
-// ire - travel
-// ego - self
-// nahlizet - see
-// certum - Hell
-// veri - blood
-// jatkaa - join
-// mgar - technology
-// balaq - destroy
-
-
-// ire ego [word] - Teleport to [rune with word destination matching] (works in pairs)
-// nahlizet veri certum - Create a new tome
-// jatkaa veri ego - Incorporate person over the rune into the group
-// certum jatkaa ego - Summon TERROR
-// balaq nahlizet mgar - EMP rune
-// ire veri ego - Drain blood
-// nahlizet certum jatkaa - See invisible
-// veri jatkaa certum - Raise dead
+// travel self [word] - Teleport to [rune with word destination matching] (works in pairs)
+// see blood Hell - Create a new tome
+// join blood self - Incorporate person over the rune into the group
+// Hell join self - Summon TERROR
+// destroy see technology - EMP rune
+// travel blood self - Drain blood
+// see Hell join - See invisible
+// blood join Hell - Raise dead
 
 	examine()
 		set src in usr
@@ -58,9 +74,9 @@ var/list/cultists = list()
 		if(!word1 || !word2 || !word3 || prob(usr.brainloss))
 			return fizzle()
 
-		if(word1 == "ire" && word2 == "ego")
+		if(word1 == wordtravel && word2 == wordself)
 			return teleport(src.word3)
-		if(word1 == "nahlizet" && word2 == "veri" && word3 == "certum")
+		if(word1 == wordsee && word2 == wordblood && word3 == wordhell)
 			return tomesummon()
 /*
 		if(word1 == "ire" && word2 == "certum" && word3 == "jatkaa")
@@ -81,17 +97,17 @@ var/list/cultists = list()
 			user:current = chosenrune
 			user.reset_view(chosenrune)
 */
-		if(word1 == "jatkaa" && word2 == "veri" && word3 == "ego")
+		if(word1 == wordjoin && word2 == wordblood && word3 == wordself)
 			return convert()
-		if(word1 == "certum" && word2 == "jatkaa" && word3 == "ego")
+		if(word1 == wordhell && word2 == wordjoin && word3 == wordself)
 			return tearreality()
-		if(word1 == "balaq" && word2 == "nahlizet" && word3 == "mgar")
+		if(word1 == worddestr && word2 == wordsee && word3 == wordtech)
 			return emp()
-		if(word1 == "ire" && word2 == "veri" && word3 == "ego")
+		if(word1 == wordtravel && word2 == wordblood && word3 == wordself)
 			return drain()
-		if(word1 == "nahlizet" && word2 == "certum" && word3 == "jatkaa")
+		if(word1 == wordsee && word2 == wordhell && word3 == wordjoin)
 			return seer()
-		if(word1 == "veri" && word2 == "jatkaa" && word3 == "certum")
+		if(word1 == wordblood && word2 == wordjoin && word3 == wordhell)
 			return raise()
 		else
 			return fizzle()
@@ -105,22 +121,37 @@ var/list/cultists = list()
 			return
 
 		check_icon()
-			if(word1 == "ire" && word2 == "ego")
+			if(word1 == wordtravel && word2 == wordself)
 				icon_state = "2"
 				return
-			if(word1 == "jatkaa" && word2 == "veri" && word3 == "ego")
+			if(word1 == wordjoin && word2 == wordblood && word3 == wordself)
 				icon_state = "3"
 				return
-			if(word1 == "certum" && word2 == "jatkaa" && word3 == "ego")
+			if(word1 == wordhell && word2 == wordjoin && word3 == wordself)
 				icon_state = "3"
 				src.icon += rgb(100, 0 , 150)
 				return
-			if(word1 == "nahlizet" && word2 == "ire" && word3 == "certum")
+			if(word1 == wordsee && word2 == wordblood && word3 == wordhell)
+				icon_state = "3"
+				src.icon -= rgb(255, 255 , 255)
+				return
+			if(word1 == worddestr && word2 == wordsee && word3 == wordtech)
 				icon_state = "2"
 				src.icon += rgb(0, 50 , 0)
 				return
+			if(word1 == wordtravel && word2 == wordblood && word3 == wordself)
+				icon_state = "2"
+				src.icon -= rgb(255, 255 , 255)
+				return
+			if(word1 == wordsee && word2 == wordhell && word3 == wordjoin)
+				icon_state = "2"
+				src.icon += rgb(0, 0 , 200)
+				return
+			if(word1 == wordblood && word2 == wordjoin && word3 == wordhell)
+				icon_state = "3"
+				src.icon += rgb(255, 255 , 255)
+				return
 			icon_state = "1"
-
 
 /obj/item/weapon/tome
 	name = "arcane tome"
@@ -131,14 +162,16 @@ var/list/cultists = list()
 	flags = FPRINT | TABLEPASS
 
 	attack_self(mob/user as mob)
+		if(!wordtravel)
+			runerandom()
 		if(cultists.Find(user))
 			var/C = 0
 			for(var/obj/rune/N in world)
 				C++
-			if (C>=25)
+			if (C>=26) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 				switch(alert("The cloth of reality can't take that much of a strain. By creating another rune, you risk locally tearing reality apart, which would prove fatal to you. Do you still wish to scribe the rune?",,"Yes","No"))
 					if("Yes")
-						if(prob(C*5-100))
+						if(prob(C*5-105)) //including the useless rune at the secret room, shouldn't count against the limit - Urist
 							usr.emote("scream")
 							user << "\red A tear momentarily appears in reality. Before it closes, you catch a glimpse of that which lies beyond. That proves to be too much for your mind."
 							usr.gib(1)
@@ -181,6 +214,68 @@ var/list/cultists = list()
 		else
 			usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
 
+/obj/item/weapon/tome/imbued //admin tome, spawns working runes without waiting
+
+	attack_self(mob/user as mob)
+		if(!wordtravel)
+			runerandom()
+		if(user)
+			var/r
+			var/list/runes = list("teleport", "tome", "convert", "tear in reality", "emp", "drain", "seer", "raise")
+			r = input("Choose a rune to scribe", "Rune Scribing") in runes
+			switch(r)
+				if("teleport")
+					var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar")
+					var/beacon
+					if(usr)
+						beacon = input("Select the last rune", "Rune Scribing") in words
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordtravel
+					R.word2=wordself
+					R.word3=beacon
+					R.check_icon()
+				if("tome")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordsee
+					R.word2=wordblood
+					R.word3=wordhell
+					R.check_icon()
+				if("convert")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordjoin
+					R.word2=wordblood
+					R.word3=wordself
+					R.check_icon()
+				if("tear in reality")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordhell
+					R.word2=wordjoin
+					R.word3=wordself
+					R.check_icon()
+				if("emp")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=worddestr
+					R.word2=wordsee
+					R.word3=wordtech
+					R.check_icon()
+				if("drain")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordtravel
+					R.word2=wordblood
+					R.word3=wordself
+					R.check_icon()
+				if("seer")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordsee
+					R.word2=wordhell
+					R.word3=wordjoin
+					R.check_icon()
+				if("raise")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordblood
+					R.word2=wordjoin
+					R.word3=wordhell
+					R.check_icon()
 
 /obj/item/weapon/paperscrap
 	name = "scrap of paper"

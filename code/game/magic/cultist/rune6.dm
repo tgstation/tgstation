@@ -1,11 +1,12 @@
 /obj/rune/proc/drain()
 	var/drain = 0
 	for(var/obj/rune/R in world)
-		for(var/mob/living/carbon/D in R.loc)
-			if(D.health>=-100)
-				var/bdrain = rand(1,25)
-				D.bruteloss += bdrain
-				drain += bdrain
+		if(R.word1==wordtravel && R.word2==wordblood && R.word3==wordself)
+			for(var/mob/living/carbon/D in R.loc)
+				if(D.health>=-100)
+					var/bdrain = rand(1,25)
+					D.bruteloss += bdrain
+					drain += bdrain
 	if(!drain)
 		return fizzle()
 	usr.say ("Yu'gular faras desdae. Havas mithum javara. Umathar uf'kal thenar!")
