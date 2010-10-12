@@ -48,13 +48,10 @@ var/worddestr = null
 // blood join Hell - Raise dead
 
 	examine()
-		set src in usr
 		if(!cultists.Find(usr))
-			src.desc = text("A strange collection of symbols drawn in blood.")
+			usr << "A strange collection of symbols drawn in blood."
 		else
-			src.desc = "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
-		..()
-		return
+			usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
 
 	attackby(I as obj, user as mob)
 		if(istype(I, /obj/item/weapon/tome) && cultists.Find(user))

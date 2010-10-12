@@ -706,7 +706,7 @@
 					src.see_in_dark = 2
 					var/seer = 0
 					for(var/obj/rune/R in world)
-						if(src.loc==R.loc && R.word1=="nahlizet" && R.word2=="certum" && R.word3=="jatkaa")
+						if(src.loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
 							seer = 1
 					if(!seer)
 						src.see_invisible = 0
