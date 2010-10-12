@@ -872,6 +872,7 @@
 	icon_state = "syndicate"
 	item_state = "bl_suit"
 	color = "syndicate"
+	mode = 0
 
 /obj/item/clothing/under/librarian
 	name = "Sensible Suit"
