@@ -1,7 +1,6 @@
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	spawn(0)
-		if(devastation_range > 1)
-			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
+		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
 
 		defer_powernet_rebuild = 1
 		if (!istype(epicenter, /turf))
