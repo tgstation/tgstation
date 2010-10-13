@@ -638,6 +638,8 @@ datum
 			on_mob_life(var/mob/M)
 				M:drowsyness = max(0,M:drowsyness-5)
 				M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
+				..()
+				return
 
 		plasma
 			name = "Plasma"
@@ -850,7 +852,7 @@ datum
 					if(M:bruteloss) M:bruteloss = max(0, M:bruteloss-3)
 					if(M:fireloss) M:fireloss = max(0, M:fireloss-3)
 					if(M:toxloss) M:toxloss = max(0, M:toxloss-3)
-
+				..()
 				return
 
 		spaceacillin
@@ -1168,6 +1170,8 @@ datum
 				M:sleeping = 0
 				M.bodytemperature = min(310, M.bodytemperature+5) //Copy-paste from Coffee, derp
 				M.make_jittery(5)
+				..()
+				return
 
 
 		cognac
@@ -1505,6 +1509,8 @@ datum
 				if(data >= 50 && prob(33))
 					if (!M.confused) M:confused = 1
 					M.confused += 2
+				..()
+				return
 
 		manly_dorf
 			name = "The Manly Dorf"
@@ -1522,3 +1528,5 @@ datum
 				if(data >= 50 && prob(33))
 					if (!M.confused) M:confused = 1
 					M.confused += 3
+				..()
+				return

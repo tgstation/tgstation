@@ -7,7 +7,7 @@
 
 	level = 1
 
-	var/id_tag
+	var/id_tag = null
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
 
@@ -104,7 +104,10 @@
 
 	process()
 		..()
-		broadcast_status()
+		if(!(stat & (NOPOWER|BROKEN)))
+			broadcast_status()
+		else
+			return 0
 
 		if(!on)
 			return 0
@@ -184,7 +187,7 @@
 				if(panic)
 					on = 1
 					scrubbing = 0
-					volume_rate = 500
+					volume_rate = 2000
 				else
 					scrubbing = 1
 					volume_rate = 120

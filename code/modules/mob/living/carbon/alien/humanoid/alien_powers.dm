@@ -235,7 +235,8 @@ Also perhaps only queens can do that?
 	var/vent_found = 0
 	for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
 		if(!v.welded)
-			vent_found = 1
+			vent_found = v
+
 	if(!vent_found)
 		src << "You must be standing on or beside an open air vent to enter it."
 		return
@@ -260,7 +261,7 @@ Also perhaps only queens can do that?
 	if(src.loc != startloc)
 		src << "You need to remain still while entering a vent."
 		return
-	var/obj/target_vent = vents[selection_position]
+	var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection_position]
 	if(target_vent)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] scrambles into the ventillation ducts!</B>"), 1)
@@ -268,9 +269,24 @@ Also perhaps only queens can do that?
 		for(var/obj/alien/facehugger/F in view(3, src))
 			if(istype(F, /obj/alien/facehugger))
 				huggers.Add(F)
-		src.loc = target_vent.loc
+
+		src.loc = vent_found
 		for(var/obj/alien/facehugger/F in huggers)
-			F.loc = src.loc
+			F.loc = vent_found
+		var/travel_time = get_dist(src.loc, target_vent.loc)
+
+		spawn(round(travel_time/2))//give sound warning to anyone near the target vent
+			if(!target_vent.welded)
+				for(var/mob/O in hearers(target_vent, null))
+					O.show_message("You hear something crawling trough the ventilation pipes.")
+
+		spawn(travel_time)
+			if(target_vent.welded)//the went can be welded while alien scrolled through the list or travelled.
+				target_vent = vent_found //travel back. No additional time required.
+				src << "\red The vent you were heading to appears to be welded."
+			src.loc = target_vent.loc
+			for(var/obj/alien/facehugger/F in huggers)
+				F.loc = src.loc
 
 /mob/living/carbon/alien/humanoid/verb/corrode(obj/O as obj in view(1)) // -- TLE
 	set name = "Spit Corrosive Acid (200)"

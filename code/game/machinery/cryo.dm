@@ -73,9 +73,9 @@
 			if(src.occupant.health <= -100)
 				health_text = "<FONT color=red>Dead</FONT>"
 			else if(src.occupant.health < 0)
-				health_text = "<FONT color=red>[src.occupant.health]</FONT>"
+				health_text = "<FONT color=red>[round(src.occupant.health,0.1)]</FONT>"
 			else
-				health_text = "[src.occupant.health]"
+				health_text = "[round(src.occupant.health,0.1)]"
 		if(air_contents.temperature > T0C)
 			temp_text = "<FONT color=red>[air_contents.temperature]</FONT>"
 		else if(air_contents.temperature > 225)
@@ -90,7 +90,7 @@
 			<B>Current cell temperature:</B> [temp_text]K<BR>
 			<B>Cryo status:</B> [ src.on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
 			[beaker_text]<BR><BR>
-			<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [src.occupant.oxyloss]<BR>Brute damage: [src.occupant.bruteloss]<BR>Fire damage: [src.occupant.fireloss]<BR>Toxin damage: [src.occupant.toxloss]<BR>Body temperature: [src.occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
+			<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [round(src.occupant.oxyloss,0.1)]<BR>Brute damage: [round(src.occupant.bruteloss,0.1)]<BR>Fire damage: [round(src.occupant.fireloss,0.1)]<BR>Toxin damage: [round(src.occupant.toxloss,0.1)]<BR>Body temperature: [src.occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
 
 		"}
 
@@ -181,10 +181,11 @@
 						if(occupant.oxyloss) occupant.oxyloss = max(0, occupant.oxyloss - 1)
 					else
 						occupant.oxyloss -= 1
+					//severe damage should heal waaay slower without proper chemicals
 					if(occupant.bodytemperature < 225)
-						if(occupant.bruteloss) occupant.bruteloss = max(0, occupant.bruteloss - 1)
-						if(occupant.fireloss) occupant.fireloss = max(0, occupant.fireloss - 1)
-						if(occupant.toxloss) occupant.toxloss = max(0, occupant.toxloss - 1)
+						if(occupant.bruteloss) occupant.bruteloss = max(0, occupant.bruteloss - min(1, 20/occupant.bruteloss))
+						if(occupant.fireloss) occupant.fireloss = max(0, occupant.fireloss - min(1, 20/occupant.fireloss))
+						if(occupant.toxloss) occupant.toxloss = max(0, occupant.toxloss - min(1, 20/occupant.toxloss))
 				if(beaker && (next_trans == 0))
 					beaker:reagents.trans_to(occupant, 1, 10)
 					beaker:reagents.reaction(occupant)
@@ -225,6 +226,7 @@
 
 	verb
 		move_eject()
+			set name = "Eject occupant"
 			set src in oview(1)
 			if (usr.stat != 0)
 				return
@@ -233,6 +235,7 @@
 			return
 
 		move_inside()
+			set name = "Move Inside"
 			set src in oview(1)
 			if (usr.stat != 0 || stat & (NOPOWER|BROKEN))
 				return
