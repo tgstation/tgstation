@@ -63,6 +63,16 @@
 		src.client.clear_admin_verbs()
 		src.client.holder.state = 1
 		src.client.update_admins(rank)
+	if(cultists.Find(corpse) && corpse.ajourn==1 && corpse.health>-100) //checks if it's an astral-journeying cultistm if it is and he's not on an astral journey rune, re-entering won't work
+		var/S=0
+		for(var/obj/rune/R in world)
+			if(corpse.loc==R.loc && R.word1 == wordhell && R.word2 == wordjoin && R.word3 == wordblood)
+				S=1
+		if(!S)
+			usr << "\red The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you."
+			return
+	if(corpse.ajourn)
+		corpse.ajourn=0
 	src.client.mob = corpse
 	del(src)
 

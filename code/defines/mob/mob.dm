@@ -54,6 +54,7 @@
 	var/real_name = null
 	var/blinded = null
 	var/bhunger = 0
+	var/ajourn = 0
 	var/rejuv = null
 	var/druggy = 0
 	var/confused = 0

@@ -31,6 +31,7 @@ var/worddestr = null
 	anchored = 1
 	icon = 'magic.dmi'
 	icon_state = "1"
+	var/visibility = 0
 
 
 	var
@@ -46,6 +47,9 @@ var/worddestr = null
 // travel blood self - Drain blood
 // see Hell join - See invisible
 // blood join Hell - Raise dead
+// blood see destroy - Hide nearby runes
+// Hell join blood - Leave your body and ghost around
+// blood see travel - Manifest a ghost into a mortal body
 
 	examine()
 		if(!cultists.Find(usr))
@@ -70,7 +74,8 @@ var/worddestr = null
 			return
 		if(!word1 || !word2 || !word3 || prob(usr.brainloss))
 			return fizzle()
-
+		if(!src.visibility)
+			src.visibility=1
 		if(word1 == wordtravel && word2 == wordself)
 			return teleport(src.word3)
 		if(word1 == wordsee && word2 == wordblood && word3 == wordhell)
@@ -106,6 +111,14 @@ var/worddestr = null
 			return seer()
 		if(word1 == wordblood && word2 == wordjoin && word3 == wordhell)
 			return raise()
+		if(word1 == wordblood && word2 == wordsee && word3 == worddestr)
+			return obscure(4)
+		if(word1 == wordhell && word2 == wordjoin && word3 == wordblood)
+			return ajourney()
+		if(word1 == wordblood && word2 == wordsee && word3 == wordtravel)
+			return manifest()
+		/*if(word1 == wordtech && word2 == wordhell && word3 == wordjoin)
+			return egenerate(5000)*/
 		else
 			return fizzle()
 
@@ -147,6 +160,18 @@ var/worddestr = null
 			if(word1 == wordblood && word2 == wordjoin && word3 == wordhell)
 				icon_state = "3"
 				src.icon += rgb(255, 255 , 255)
+				return
+			if(word1 == wordblood && word2 == wordsee && word3 == worddestr)
+				icon_state = "3"
+				src.icon += rgb(-255, 255 , -255)
+				return
+			if(word1 == wordhell && word2 == wordjoin && word3 == wordblood)
+				icon_state = "2"
+				src.icon += rgb(-255, 255 , -255)
+				return
+			if(word1 == wordblood && word2 == wordsee && word3 == wordtravel)
+				icon_state = "2"
+				src.icon += rgb(-255, -255 , 255)
 				return
 			icon_state = "1"
 
@@ -218,7 +243,7 @@ var/worddestr = null
 			runerandom()
 		if(user)
 			var/r
-			var/list/runes = list("teleport", "tome", "convert", "tear in reality", "emp", "drain", "seer", "raise")
+			var/list/runes = list("teleport", "tome", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "astral journey", "manifest"/*, "generate energy"*/)
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes
 			switch(r)
 				if("teleport")
@@ -273,6 +298,30 @@ var/worddestr = null
 					R.word2=wordjoin
 					R.word3=wordhell
 					R.check_icon()
+				if("obscure")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordblood
+					R.word2=wordsee
+					R.word3=worddestr
+					R.check_icon()
+				if("astral journey")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordhell
+					R.word2=wordjoin
+					R.word3=wordblood
+					R.check_icon()
+				if("manifest")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordblood
+					R.word2=wordsee
+					R.word3=wordtravel
+					R.check_icon()
+				/*if("generate energy")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordtech
+					R.word2=wordhell
+					R.word3=wordjoin
+					R.check_icon()*/
 
 /obj/item/weapon/paperscrap
 	name = "scrap of paper"
