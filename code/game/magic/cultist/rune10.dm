@@ -5,8 +5,7 @@
 		usr.ghostize()
 		usr << "\red The shadow that is your spirit separates itself from your body. You are now in the realm beyond. While this it's a great sight, being here strains your mind and body. Hurry."
 		for (var/mob/V in viewers(src))
-			if(V!=usr)
-				V.show_message("\red [usr]'s eyes glow blue as \he freezes in place, absolutely motionless.", 3, "\red You hear only complete silence for a moment.", 2)
+			V.show_message("\red [usr]'s eyes glow blue as \he freezes in place, absolutely motionless.", 3, "\red You hear only complete silence for a moment.", 2)
 		for(L.ajourn=1,L.ajourn)
 			sleep(10)
 			if(L.key)

@@ -16,4 +16,8 @@
 			V.show_message("\red [usr] disappears in a flash of red light!", 3, "\red You hear a sickening crunch and sloshing of viscera.", 2)
 		usr.loc = allrunesloc[rand(1,index)]
 		return
-	return	fizzle() //Use friggin manuals, Dorf, your list was of zero length.
+	if(istype(src,/obj/rune))
+		return	fizzle() //Use friggin manuals, Dorf, your list was of zero length.
+	else
+		call(/obj/rune/proc/fizzle)()
+		return

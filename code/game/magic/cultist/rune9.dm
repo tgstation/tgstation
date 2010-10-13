@@ -7,4 +7,8 @@
 	if(S)
 		usr.say("Kla'atu barada nikt'o!")
 		return
-	return fizzle()
+	if(istype(src,/obj/rune))
+		return	fizzle()
+	else
+		call(/obj/rune/proc/fizzle)()
+		return

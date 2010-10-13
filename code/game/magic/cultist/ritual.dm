@@ -50,6 +50,7 @@ var/worddestr = null
 // blood see destroy - Hide nearby runes
 // Hell join blood - Leave your body and ghost around
 // blood see travel - Manifest a ghost into a mortal body
+// Hell tech join - Imbue a rune into a talisman
 
 	examine()
 		if(!cultists.Find(usr))
@@ -117,8 +118,8 @@ var/worddestr = null
 			return ajourney()
 		if(word1 == wordblood && word2 == wordsee && word3 == wordtravel)
 			return manifest()
-		/*if(word1 == wordtech && word2 == wordhell && word3 == wordjoin)
-			return egenerate(5000)*/
+		if(word1 == wordhell && word2 == wordtech && word3 == wordjoin)
+			return sigil()
 		else
 			return fizzle()
 
@@ -171,7 +172,13 @@ var/worddestr = null
 				return
 			if(word1 == wordblood && word2 == wordsee && word3 == wordtravel)
 				icon_state = "2"
-				src.icon += rgb(-255, -255 , 255)
+				src.icon -= rgb(255, 255 , 255)
+				src.icon += rgb(0, 0 , 255)
+				return
+			if(word1 == wordhell && word2 == wordtech && word3 == wordjoin)
+				icon_state = "3"
+				src.icon -= rgb(255, 255 , 255)
+				src.icon += rgb(0, 0 , 255)
 				return
 			icon_state = "1"
 
@@ -243,7 +250,7 @@ var/worddestr = null
 			runerandom()
 		if(user)
 			var/r
-			var/list/runes = list("teleport", "tome", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "astral journey", "manifest"/*, "generate energy"*/)
+			var/list/runes = list("teleport", "tome", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "astral journey", "manifest", "imbue talisman")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes
 			switch(r)
 				if("teleport")
@@ -316,12 +323,12 @@ var/worddestr = null
 					R.word2=wordsee
 					R.word3=wordtravel
 					R.check_icon()
-				/*if("generate energy")
+				if("imbue talisman")
 					var/obj/rune/R = new /obj/rune(user.loc)
-					R.word1=wordtech
-					R.word2=wordhell
+					R.word1=wordhell
+					R.word2=wordtech
 					R.word3=wordjoin
-					R.check_icon()*/
+					R.check_icon()
 
 /obj/item/weapon/paperscrap
 	name = "scrap of paper"
@@ -343,3 +350,24 @@ var/worddestr = null
 
 	proc/view_scrap(var/viewer)
 		viewer << browse(data)
+
+/obj/item/weapon/paper/talisman
+	icon_state = "papertalisman"
+	var/imbue = null
+
+	attack_self(mob/user as mob)
+		switch(imbue)
+			if("newtome")
+				call(/obj/rune/proc/tomesummon)()
+				return
+			if("emp")
+				call(/obj/rune/proc/emp)()
+				return
+			if("conceal")
+				call(/obj/rune/proc/obscure)(2)
+				del(src)
+				return
+		if(imbue)
+			call(/obj/rune/proc/teleport)(imbue)
+			del(src)
+			return
