@@ -1762,149 +1762,152 @@
 		R.my_atom = src
 
 	on_reagent_change()
-		if(reagents.reagent_list.len > 1 )
+/*		if(reagents.reagent_list.len > 1 )
 			icon_state = "glass_brown"
 			name = "Glass of Hooch"
 			desc = "Two or more drinks, mixed together."
 		else if(reagents.reagent_list.len == 1)
 			for(var/datum/reagent/R in reagents.reagent_list)
-				switch(R.id)
-					if("beer")
-						icon_state = "beerglass"
-						name = "Beer glass"
-						desc = "A freezing pint of beer"
-					if("ale")
-						icon_state = "aleglass"
-						name = "Ale glass"
-						desc = "A freezing pint of delicious Ale"
-					if("milk")
-						icon_state = "glass_white"
-						name = "Glass of milk"
-						desc = "White and nutritious goodness!"
-					if("cream")
-						icon_state  = "glass_white"
-						name = "Glass of cream"
-						desc = "Ewwww..."
-					if("cola")
-						icon_state  = "glass_brown"
-						name = "Glass of Space Cola"
-						desc = "A glass of refreshing Space Cola"
-					if("orangejuice")
-						icon_state = "glass_orange"
-						name = "Glass of Orange juice"
-						desc = "Vitamins! Yay!"
-					if("tomatojuice")
-						icon_state = "glass_red"
-						name = "Glass of Tomato juice"
-						desc = "Are you sure this is tomato juice?"
-					if("limejuice")
-						icon_state = "glass_green"
-						name = "Glass of Lime juice"
-						desc = "A glass of sweet-sour lime juice."
-					if("whiskey")
-						icon_state = "whiskeyglass"
-						name = "Glass of whiskey"
-						desc = "The silky, smokey whiskey goodness inside the glass makes the drink look very classy."
-					if("gin")
-						icon_state = "ginvodkaglass"
-						name = "Glass of gin"
-						desc = "A crystal clear glass of Griffeater gin."
-					if("vodka")
-						icon_state = "ginvodkaglass"
-						name = "Glass of vodka"
-						desc = "The glass contain wodka. Xynta."
-					if("wine")
-						icon_state = "wineglass"
-						name = "Glass of wine"
-						desc = "A very classy looking drink."
-					if("cognac")
-						icon_state = "cognacglass"
-						name = "Glass of cognac"
-						desc = "Damn, you feel like some kind of French aristocrat just by holding this."
-					if ("kahlua")
-						icon_state = "kahluaglass"
-						name = "Glass of RR coffee Liquor"
-						desc = "DAMN, THIS THING LOOKS ROBUST"
-					if("vermouth")
-						icon_state = "vermouthglass"
-						name = "Glass of Vermouth"
-						desc = "You wonder why you're even drinking this straight."
-					if("tequilla")
-						icon_state = "tequillaglass"
-						name = "Glass of Tequilla"
-						desc = "Now all that's missing is the weird colored shades!"
-					if("rum")
-						icon_state = "rumglass"
-						name = "Glass of Rum"
-						desc = "Now you want to Pray for a pirate suit, don't you?"
-					if("gintonic")
-						icon_state = "gintonicglass"
-						name = "Gin and Tonic"
-						desc = "A mild but still great cocktail. Drink up, like a true Englishman."
-					if("whiskeycola")
-						icon_state = "whiskeycolaglass"
-						name = "Whiskey Cola"
-						desc = "An innocent-looking mixture of cola and Whiskey. Delicious."
-					if("whiterussian")
-						icon_state = "whiterussianglass"
-						name = "White Russian"
-						desc = "A very nice looking drink. But that's just, like, your opinion, man."
-					if("screwdrivercocktail")
-						icon_state = "screwdriverglass"
-						name = "Screwdriver"
-						desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."
-					if("bloodymary")
-						icon_state = "bloodymaryglass"
-						name = "Bloody Mary"
-						desc = "Tomato juice, mixed with Vodka and a lil' bit of lime. Tastes like liquid murder."
-					if("martini")
-						icon_state = "martiniglass"
-						name = "Classic Martini"
-						desc = "Damn, the barman even stirred it, not shook it."
-					if("vodkamartini")
-						icon_state = "martiniglass"
-						name = "Vodka martini"
-						desc ="A bastardisation of the classic martini. Still great."
-					if("gargleblaster")
-						icon_state = "gargleblasterglass"
-						name = "Pan-Galactic Gargle Blaster"
-						desc = "Does... does this mean that Arthur and Ford are on the station? Oh joy."
-					if("bravebull")
-						icon_state = "bravebullglass"
-						name = "Brave Bull"
-						desc = "Tequilla and Coffee liquor, brought together in a mouthwatering mixture. Drink up."
-					if("tequillasunrise")
-						icon_state = "tequillasunriseglass"
-						name = "Tequilla Sunrise"
-						desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
-					if("toxinsspecial")
-						icon_state = "toxinsspecialglass"
-						name = "Toxins Special"
-						desc = "Whoah, this thing is on FIRE"
-					if("beepskysmash")
-						icon_state = "beepskysmashglass"
-						name = "Beepsky Smash"
-						desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
-					if("doctorsdelight")
-						icon_state = "doctorsdelightglass"
-						name = "Doctor's Delight"
-						desc = "A healthy mixture of juices, guaranteed to keep you healthy until the next toolboxing takes place."
-					if("manlydorf")
-						icon_state = "manlydorfglass"
-						name = "The Manly Dorf"
-						desc = "A manly concotion made from Ale and Beer. Intended for true men only."
-					if("irishcream")
-						icon_state = "irishcreamglass"
-						name = "Irish Cream"
-						desc = "It's cream, mixed with whiskey. What else would you expect from the Irish?"
-					if("cubalibre")
-						icon_state = "cubalibreglass"
-						name = "Cuba Libre"
-						desc = "A classic mix of rum and cola."
-					else
-						icon_state ="glass_brown"
-						name = "Glass of ..what?"
-						desc = "You can't really tell what this is."
+				switch(R.id)*/
+		if (reagents.reagent_list.len > 0)
+			//mrid = R.get_master_reagent_id()
+			switch(reagents.get_master_reagent_id())
+				if("beer")
+					icon_state = "beerglass"
+					name = "Beer glass"
+					desc = "A freezing pint of beer"
+				if("ale")
+					icon_state = "aleglass"
+					name = "Ale glass"
+					desc = "A freezing pint of delicious Ale"
+				if("milk")
+					icon_state = "glass_white"
+					name = "Glass of milk"
+					desc = "White and nutritious goodness!"
+				if("cream")
+					icon_state  = "glass_white"
+					name = "Glass of cream"
+					desc = "Ewwww..."
+				if("cola")
+					icon_state  = "glass_brown"
+					name = "Glass of Space Cola"
+					desc = "A glass of refreshing Space Cola"
+				if("orangejuice")
+					icon_state = "glass_orange"
+					name = "Glass of Orange juice"
+					desc = "Vitamins! Yay!"
+				if("tomatojuice")
+					icon_state = "glass_red"
+					name = "Glass of Tomato juice"
+					desc = "Are you sure this is tomato juice?"
+				if("limejuice")
+					icon_state = "glass_green"
+					name = "Glass of Lime juice"
+					desc = "A glass of sweet-sour lime juice."
+				if("whiskey")
+					icon_state = "whiskeyglass"
+					name = "Glass of whiskey"
+					desc = "The silky, smokey whiskey goodness inside the glass makes the drink look very classy."
+				if("gin")
+					icon_state = "ginvodkaglass"
+					name = "Glass of gin"
+					desc = "A crystal clear glass of Griffeater gin."
+				if("vodka")
+					icon_state = "ginvodkaglass"
+					name = "Glass of vodka"
+					desc = "The glass contain wodka. Xynta."
+				if("wine")
+					icon_state = "wineglass"
+					name = "Glass of wine"
+					desc = "A very classy looking drink."
+				if("cognac")
+					icon_state = "cognacglass"
+					name = "Glass of cognac"
+					desc = "Damn, you feel like some kind of French aristocrat just by holding this."
+				if ("kahlua")
+					icon_state = "kahluaglass"
+					name = "Glass of RR coffee Liquor"
+					desc = "DAMN, THIS THING LOOKS ROBUST"
+				if("vermouth")
+					icon_state = "vermouthglass"
+					name = "Glass of Vermouth"
+					desc = "You wonder why you're even drinking this straight."
+				if("tequilla")
+					icon_state = "tequillaglass"
+					name = "Glass of Tequilla"
+					desc = "Now all that's missing is the weird colored shades!"
+				if("rum")
+					icon_state = "rumglass"
+					name = "Glass of Rum"
+					desc = "Now you want to Pray for a pirate suit, don't you?"
+				if("gintonic")
+					icon_state = "gintonicglass"
+					name = "Gin and Tonic"
+					desc = "A mild but still great cocktail. Drink up, like a true Englishman."
+				if("whiskeycola")
+					icon_state = "whiskeycolaglass"
+					name = "Whiskey Cola"
+					desc = "An innocent-looking mixture of cola and Whiskey. Delicious."
+				if("whiterussian")
+					icon_state = "whiterussianglass"
+					name = "White Russian"
+					desc = "A very nice looking drink. But that's just, like, your opinion, man."
+				if("screwdrivercocktail")
+					icon_state = "screwdriverglass"
+					name = "Screwdriver"
+					desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."
+				if("bloodymary")
+					icon_state = "bloodymaryglass"
+					name = "Bloody Mary"
+					desc = "Tomato juice, mixed with Vodka and a lil' bit of lime. Tastes like liquid murder."
+				if("martini")
+					icon_state = "martiniglass"
+					name = "Classic Martini"
+					desc = "Damn, the barman even stirred it, not shook it."
+				if("vodkamartini")
+					icon_state = "martiniglass"
+					name = "Vodka martini"
+					desc ="A bastardisation of the classic martini. Still great."
+				if("gargleblaster")
+					icon_state = "gargleblasterglass"
+					name = "Pan-Galactic Gargle Blaster"
+					desc = "Does... does this mean that Arthur and Ford are on the station? Oh joy."
+				if("bravebull")
+					icon_state = "bravebullglass"
+					name = "Brave Bull"
+					desc = "Tequilla and Coffee liquor, brought together in a mouthwatering mixture. Drink up."
+				if("tequillasunrise")
+					icon_state = "tequillasunriseglass"
+					name = "Tequilla Sunrise"
+					desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
+				if("toxinsspecial")
+					icon_state = "toxinsspecialglass"
+					name = "Toxins Special"
+					desc = "Whoah, this thing is on FIRE"
+				if("beepskysmash")
+					icon_state = "beepskysmashglass"
+					name = "Beepsky Smash"
+					desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
+				if("doctorsdelight")
+					icon_state = "doctorsdelightglass"
+					name = "Doctor's Delight"
+					desc = "A healthy mixture of juices, guaranteed to keep you healthy until the next toolboxing takes place."
+				if("manlydorf")
+					icon_state = "manlydorfglass"
+					name = "The Manly Dorf"
+					desc = "A manly concotion made from Ale and Beer. Intended for true men only."
+				if("irishcream")
+					icon_state = "irishcreamglass"
+					name = "Irish Cream"
+					desc = "It's cream, mixed with whiskey. What else would you expect from the Irish?"
+				if("cubalibre")
+					icon_state = "cubalibreglass"
+					name = "Cuba Libre"
+					desc = "A classic mix of rum and cola."
+				else
+					icon_state ="glass_brown"
+					name = "Glass of ..what?"
+					desc = "You can't really tell what this is."
 		else
 			icon_state = "glass_empty"
 			name = "Drinking glass"

@@ -47,6 +47,16 @@ datum
 
 				return the_name
 
+			get_master_reagent_id()
+				var/the_id = null
+				var/the_volume = 0
+				for(var/datum/reagent/A in reagent_list)
+					if(A.volume > the_volume)
+						the_volume = A.volume
+						the_id = A.id
+
+				return the_id
+
 			trans_to(var/obj/target, var/amount=1, var/multiplier=1)
 				var/total_transfered = 0
 				var/current_list_element = 1
