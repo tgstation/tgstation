@@ -673,6 +673,9 @@
 		else if (href_list["malfhack"])
 			var/mob/living/silicon/ai/malfai = usr
 			if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled )
+				if (malfai.malfhacking)
+					malfai << "You are already hacking an APC."
+					return
 				malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 				malfai.malfhack = src
 				malfai.malfhacking = 1
