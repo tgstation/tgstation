@@ -834,6 +834,30 @@ Frequency:
 /mob/living/silicon/robot/proc/self_destruct()
 	src.gib(1)
 
+/mob/living/silicon/robot/proc/laws_sanity_check()
+	if (!src.laws)
+		src.laws = new /datum/ai_laws/asimov
+
+/mob/living/silicon/robot/proc/set_zeroth_law(var/law)
+	src.laws_sanity_check()
+	src.laws.set_zeroth_law(law)
+
+/mob/living/silicon/robot/proc/add_inherent_law(var/number, var/law)
+	src.laws_sanity_check()
+	src.laws.add_inherent_law(number, law)
+
+/mob/living/silicon/robot/proc/add_supplied_law(var/number, var/law)
+	src.laws_sanity_check()
+	src.laws.add_supplied_law(number, law)
+
+/mob/living/silicon/robot/proc/clear_supplied_laws()
+	src.laws_sanity_check()
+	src.laws.clear_supplied_laws()
+
+/mob/living/silicon/robot/proc/clear_inherent_laws()
+	src.laws_sanity_check()
+	src.laws.clear_inherent_laws()
+
 
 ///mob/living/silicon/robot/proc/eyecheck()
 //	return

@@ -44,6 +44,11 @@
 	icon_state = "aiupload"
 	var/mob/living/silicon/ai/current = null
 
+/obj/machinery/computer/borgupload
+	name = "Cyborg Upload"
+	icon_state = "aiupload"
+	var/mob/living/silicon/robot/current = null
+
 /obj/machinery/computer/atmosphere
 	name = "atmos"
 

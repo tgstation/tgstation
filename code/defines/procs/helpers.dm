@@ -533,6 +533,28 @@
 		M.real_name = newname
 		M.name = newname
 
+/proc/freeborg()
+	var/select = null
+	var/list/names = list()
+	var/list/borgs = list()
+	var/list/namecounts = list()
+	for (var/mob/living/silicon/robot/A in world)
+		var/name = A.real_name
+		if (A.stat == 2)
+			continue
+		if (A.connected_ai == 1)
+			continue
+		else
+			if(A.module)
+				name += " ([A.module.name])"
+			names.Add(name)
+			namecounts[name] = 1
+		borgs[name] = A
+
+	if (borgs.len)
+		select = input("Unshackled borg signals detected:", "Borg selection", null, null) as null|anything in borgs
+		return borgs[select]
+
 /proc/activeais()
 	var/select = null
 	var/list/names = list()
