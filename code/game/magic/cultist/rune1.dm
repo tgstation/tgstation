@@ -11,7 +11,10 @@
 			allrunesloc.len = index
 			allrunesloc[index] = R.loc
 	if(allrunesloc && index != 0)
-		usr.say("Sas'so c'arta forbici!")
+		if(istype(src,/obj/rune))
+			usr.say("Sas'so c'arta forbici!")
+		else
+			usr.whisper("Sas'so c'arta forbici!")
 		for (var/mob/V in viewers(src))
 			V.show_message("\red [usr] disappears in a flash of red light!", 3, "\red You hear a sickening crunch and sloshing of viscera.", 2)
 		usr.loc = allrunesloc[rand(1,index)]

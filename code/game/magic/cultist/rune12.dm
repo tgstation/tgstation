@@ -12,6 +12,7 @@
 				T.imbue = "[R.word3]"
 				del(R)
 				del(src)
+				usr.say("H'drak v'loso, mir'kanas verbot!")
 				return
 		if(R.word1==wordsee && R.word2==wordblood && R.word3==wordhell)
 			for(var/obj/item/weapon/paper/P in src.loc)
@@ -23,6 +24,7 @@
 				T.imbue = "newtome"
 				del(R)
 				del(src)
+				usr.say("H'drak v'loso, mir'kanas verbot!")
 				return
 		if(R.word1==worddestr && R.word2==wordsee && R.word3==wordtech)
 			for(var/obj/item/weapon/paper/P in src.loc)
@@ -34,6 +36,7 @@
 				T.imbue = "emp"
 				del(R)
 				del(src)
+				usr.say("H'drak v'loso, mir'kanas verbot!")
 				return
 		if(R.word1==wordblood && R.word2==wordsee && R.word3==worddestr)
 			for(var/obj/item/weapon/paper/P in src.loc)
@@ -45,5 +48,6 @@
 				T.imbue = "conceal"
 				del(R)
 				del(src)
+				usr.say("H'drak v'loso, mir'kanas verbot!")
 				return
 	return fizzle()

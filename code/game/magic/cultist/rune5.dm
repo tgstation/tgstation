@@ -1,7 +1,10 @@
-/obj/rune/proc/emp()
-	usr.say("Ta'gh fara'qha fel d'amar det!")
-	playsound(src.loc, 'Welder2.ogg', 25, 1)
-	var/turf/T = get_turf(src)
+/obj/rune/proc/emp(var/U,var/range_red) //range_red - var which determines by which number to reduce the default emp range, U is the source loc, needed because of talisman emps which are held in hand at the moment of using and that apparently messes things up -- Urist
+	if(istype(src,/obj/rune))
+		usr.say("Ta'gh fara'qha fel d'amar det!")
+	else
+		usr.whisper("Ta'gh fara'qha fel d'amar det!")
+	playsound(U, 'Welder2.ogg', 25, 1)
+	var/turf/T = get_turf(U)
 	if(T)
 		T.hotspot_expose(700,125)
 
@@ -16,7 +19,7 @@
 	spawn(20)
 		del(pulse)
 
-	for(var/obj/item/weapon/W in range(world.view-1, T))
+	for(var/obj/item/weapon/W in range(world.view-range_red, T))
 
 		if (istype(W, /obj/item/assembly/m_i_ptank) || istype(W, /obj/item/assembly/r_i_ptank) || istype(W, /obj/item/assembly/t_i_ptank))
 
@@ -32,7 +35,7 @@
 				fuckthis:ignite()
 
 
-	for(var/mob/living/M in viewers(world.view-1, T))
+	for(var/mob/living/M in viewers(world.view-range_red, T))
 
 		if(!istype(M, /mob/living)) continue
 
@@ -103,7 +106,7 @@
 		M << "\red <B>BZZZT</B>"
 
 
-	for(var/obj/machinery/A in range(world.view-1, T))
+	for(var/obj/machinery/A in range(world.view-range_red, T))
 		A.use_power(7500)
 
 		var/obj/overlay/pulse2 = new/obj/overlay ( A.loc )

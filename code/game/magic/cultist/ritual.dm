@@ -7,6 +7,7 @@ var/wordblood = null
 var/wordjoin = null
 var/wordtech = null
 var/worddestr = null
+var/runedec = 0
 
 /proc/runerandom() //randomizes word meaning
 	var/list/runewords=list("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq")
@@ -105,7 +106,7 @@ var/worddestr = null
 		if(word1 == wordhell && word2 == wordjoin && word3 == wordself)
 			return tearreality()
 		if(word1 == worddestr && word2 == wordsee && word3 == wordtech)
-			return emp()
+			return emp(src.loc,1)
 		if(word1 == wordtravel && word2 == wordblood && word3 == wordself)
 			return drain()
 		if(word1 == wordsee && word2 == wordhell && word3 == wordjoin)
@@ -197,10 +198,10 @@ var/worddestr = null
 			var/C = 0
 			for(var/obj/rune/N in world)
 				C++
-			if (C>=26) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
+			if (C>=26+runedec) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 				switch(alert("The cloth of reality can't take that much of a strain. By creating another rune, you risk locally tearing reality apart, which would prove fatal to you. Do you still wish to scribe the rune?",,"Yes","No"))
 					if("Yes")
-						if(prob(C*5-105)) //including the useless rune at the secret room, shouldn't count against the limit - Urist
+						if(prob(C*5-105-runedec*5)) //including the useless rune at the secret room, shouldn't count against the limit - Urist
 							usr.emote("scream")
 							user << "\red A tear momentarily appears in reality. Before it closes, you catch a glimpse of that which lies beyond. That proves to be too much for your mind."
 							usr.gib(1)
@@ -356,18 +357,16 @@ var/worddestr = null
 	var/imbue = null
 
 	attack_self(mob/user as mob)
+		usr.bruteloss+=20
 		switch(imbue)
 			if("newtome")
 				call(/obj/rune/proc/tomesummon)()
-				return
 			if("emp")
-				call(/obj/rune/proc/emp)()
-				return
+				call(/obj/rune/proc/emp)(usr.loc,4)
 			if("conceal")
 				call(/obj/rune/proc/obscure)(2)
-				del(src)
-				return
-		if(imbue)
-			call(/obj/rune/proc/teleport)(imbue)
+			if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar")
+				call(/obj/rune/proc/teleport)(imbue)
+		if(src)
 			del(src)
-			return
+		return
