@@ -430,6 +430,7 @@
 #include "code\game\objects\closets\secure\bar.dm"
 #include "code\game\objects\closets\secure\brig.dm"
 #include "code\game\objects\closets\secure\captain.dm"
+#include "code\game\objects\closets\secure\chemlocker.dm"
 #include "code\game\objects\closets\secure\courtroom.dm"
 #include "code\game\objects\closets\secure\engineering.dm"
 #include "code\game\objects\closets\secure\medical.dm"
