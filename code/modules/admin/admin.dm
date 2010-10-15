@@ -743,7 +743,7 @@ var/showadminmessages = 1
 				<A href='?src=\ref[src];chgadlvl=Administrator;client4ad=\ref[C]'>A</A><BR>
 				<A href='?src=\ref[src];chgadlvl=Secondary Administrator;client4ad=\ref[C]'>SA</A><BR>
 				<A href='?src=\ref[src];chgadlvl=Moderator;client4ad=\ref[C]'>M</A><BR>
-				<A href='?src=\ref[src];chgadlvl=Goat Fart;client4ad=\ref[C]'>Goat Fart</A><BR>
+				<A href='?src=\ref[src];chgadlvl=Filthy Xeno;client4ad=\ref[C]'>Filthy Xeno</A><BR>
 				<A href='?src=\ref[src];chgadlvl=Remove;client4ad=\ref[C]'>Remove Admin</A><BR>"}
 			else if(src.level == 5)
 			//coder
@@ -752,7 +752,7 @@ var/showadminmessages = 1
 				<A href='?src=\ref[src];chgadlvl=Administrator;client4ad=\ref[C]'>A</A><BR>
 				<A href='?src=\ref[src];chgadlvl=Secondary Administrator;client4ad=\ref[C]'>SA</A><BR>
 				<A href='?src=\ref[src];chgadlvl=Moderator;client4ad=\ref[C]'>M</A><BR>
-				<A href='?src=\ref[src];chgadlvl=Goat Fart;client4ad=\ref[C]'>Goat Fart</A><BR>
+				<A href='?src=\ref[src];chgadlvl=Filthy Xeno;client4ad=\ref[C]'>Filthy Xeno</A><BR>
 				<A href='?src=\ref[src];chgadlvl=Remove;client4ad=\ref[C]'>Remove Admin</A><BR>"}
 			else if(src.level == 4)
 			//shitguy
@@ -760,14 +760,14 @@ var/showadminmessages = 1
 				<A href='?src=\ref[src];chgadlvl=Primary Administrator;client4ad=\ref[C]'>PA</A><BR>				<A href='?src=\ref[src];chgadlvl=Administrator;client4ad=\ref[C]'>A</A><BR>
 				<A href='?src=\ref[src];chgadlvl=Secondary Administrator;client4ad=\ref[C]'>SA</A><BR>
 				<A href='?src=\ref[src];chgadlvl=Moderator;client4ad=\ref[C]'>M</A><BR>
-				<A href='?src=\ref[src];chgadlvl=Goat Fart;client4ad=\ref[C]'>Goat Fart</A><BR>
+				<A href='?src=\ref[src];chgadlvl=Filthy Xeno;client4ad=\ref[C]'>Filthy Xeno</A><BR>
 				<A href='?src=\ref[src];chgadlvl=Remove;client4ad=\ref[C]'>Remove Admin</A><BR>"}
 			else if(src.level == 3)
 			//PA
 				dat += {"
 				<A href='?src=\ref[src];chgadlvl=Administrator;client4ad=\ref[C]'>A</A><BR>				<A href='?src=\ref[src];chgadlvl=Secondary Administrator;client4ad=\ref[C]'>SA</A><BR>
 				<A href='?src=\ref[src];chgadlvl=Moderator;client4ad=\ref[C]'>M</A><BR>
-				<A href='?src=\ref[src];chgadlvl=Goat Fart;client4ad=\ref[C]'>Goat Fart</A><BR>
+				<A href='?src=\ref[src];chgadlvl=Filthy Xeno;client4ad=\ref[C]'>Filthy Xeno</A><BR>
 				<A href='?src=\ref[src];chgadlvl=Remove;client4ad=\ref[C]'>Remove Admin</A><BR>"}
 			else
 				alert("This cannot happen")

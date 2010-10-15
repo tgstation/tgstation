@@ -36,7 +36,7 @@
 	for (var/client/C)
 		if (src.client.holder && (!src.client.stealth || C.holder))
 //			C << "<span class=\"adminooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[src.key]:</span> <span class=\"message\">[msg]</span></span>"
-			if (src.client.holder.rank == "Goat Fart")
+			if (src.client.holder.rank == "Filthy Xeno")
 				C << "<span class=\"gfartooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</span> <span class=\"message\">[msg]</span></span>"
 			else
 				C << "<span class=\"adminooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</span> <span class=\"message\">[msg]</span></span>"
@@ -65,7 +65,7 @@
 	for (var/client/C)
 		if (C.goon)
 			if(src.client.holder && (!src.client.stealth || C.holder))
-				if (src.client.holder.rank == "Goat Fart")
+				if (src.client.holder.rank == "Filthy Xeno")
 					C << "<span class=\"gfartgoonsay\"><span class=\"prefix\">GOONSAY:</span> <span class=\"name\">[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</span> <span class=\"message\">[msg]</span></span>"
 				else
 					C << "<span class=\"admingoonsay\"><span class=\"prefix\">GOONSAY:</span> <span class=\"name\">[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</span> <span class=\"message\">[msg]</span></span>"

@@ -1,4 +1,4 @@
-/obj/rune/proc/sigil()//only hide, emp, teleport and tome runes can be imbued atm
+/obj/rune/proc/talisman()//only hide, emp, teleport and tome runes can be imbued atm
 	for(var/obj/rune/R in orange(1,src))
 		if(R==src)
 			continue

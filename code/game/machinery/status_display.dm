@@ -31,6 +31,8 @@
 	var/supply_display = 0		// true if a supply shuttle display
 	var/repeat_update = 0		// true if we are going to update again this ptick
 
+	var/friendc = 0      // track if Friend Computer mode
+
 	// new display
 	// register for radio system
 	New()
@@ -55,6 +57,10 @@
 	// set what is displayed
 
 	proc/update()
+
+		if(friendc && mode!=4) //Makes all status displays except supply shuttle timer display the eye -- Urist
+			set_picture("ai_friend")
+			return
 
 		if(mode==0)
 			overlays = null
@@ -292,6 +298,10 @@
 					set_picture("ai_bsod")
 				if("Blank")
 					set_picture("ai_off")
+				if("Problems?")
+					set_picture("ai_trollface")
+				if("Friend Computer")
+					set_picture("ai_friend")
 
 			return
 

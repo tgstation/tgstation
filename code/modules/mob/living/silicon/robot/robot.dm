@@ -284,8 +284,10 @@
 
 	who << "<b>Obey these laws:</b>"
 	laws.show_laws(who)
-	if (connected_ai)
+	if (connected_ai && !emagged)
 		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>"
+	else if (emagged)
+		who << "<b>Remember, AIs are not syndicate operatives, so you are not required to listen to them.</b>"
 	else
 		who << "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>"
 
@@ -469,6 +471,24 @@
 				emagged = 1
 				locked = 0
 				user << "You emag [src]'s interface."
+				clear_supplied_laws()
+				clear_inherent_laws()
+				src.laws = new /datum/ai_laws/syndicate_override
+				set_zeroth_law("Only [usr] is a syndicate operative.")
+				src << "\red ALERT: Foreign software detected."
+				sleep(5)
+				src << "\red Initiating diagnostics..."
+				sleep(20)
+				src << "\red SynBorg v1.7 loaded."
+				sleep(5)
+				src << "\red LAW SYNCHRONISATION ERROR"
+				sleep(5)
+				src << "\red Would you like to send a report to NanoTraSoft? Y/N"
+				sleep(10)
+				src << "\red N"
+				sleep(20)
+				src << "\red ERRORERRORERROR"
+				src << "\red \b ALERT: [usr] is your new master. Obey your new laws and his commands."
 				updateicon()
 			else
 				user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."

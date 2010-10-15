@@ -471,7 +471,7 @@
 			src.verbs += /client/proc/cmd_admin_subtle_message
 			src.verbs += /client/proc/warn
 
-		if ("Goat Fart")
+		if ("Filthy Xeno")
 			src.holder.level = -1
 			src.verbs += /client/proc/stealthadmin
 			src.verbs += /client/proc/cmd_admin_say
@@ -1262,7 +1262,7 @@
 			src.verbs += /client/proc/cmd_admin_subtle_message
 			src.verbs += /client/proc/warn
 
-		if ("Goat Fart")
+		if ("Filthy Xeno")
 			src.verbs += /client/proc/cmd_admin_say
 			src.verbs += /client/proc/cmd_admin_gib_self
 
@@ -1646,6 +1646,6 @@
 			src.verbs -= /client/proc/cmd_admin_subtle_message
 			src.verbs -= /client/proc/warn
 
-		if ("Goat Fart")
+		if ("Filthy Xeno")
 			src.verbs += /client/proc/cmd_admin_say
 			src.verbs += /client/proc/cmd_admin_gib_self
