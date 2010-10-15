@@ -20,6 +20,13 @@
 		src.verbs += /client/proc/changeling_hallucinogenic_sting
 
 	src.changeling_level = 2
+	if (src.absorbed_dna.len <= 0)
+		src.absorbed_dna[src.real_name] = src.dna
+	return
+
+/mob/proc/make_greater_changeling()
+	src.make_changeling()
+	//This is a test function for the new changeling powers.  Grants all of them.
 	return
 
 /mob/proc/remove_changeling_powers()
