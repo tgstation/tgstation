@@ -44,6 +44,7 @@
 #define FILE_DIR "code/game/gamemodes/traitor"
 #define FILE_DIR "code/game/gamemodes/wizard"
 #define FILE_DIR "code/game/jobs"
+#define FILE_DIR "code/game/jobs/.svn/tmp"
 #define FILE_DIR "code/game/machinery"
 #define FILE_DIR "code/game/machinery/atmoalter"
 #define FILE_DIR "code/game/machinery/bots"
