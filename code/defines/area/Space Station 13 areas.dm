@@ -474,6 +474,9 @@
 	name = "Security"
 	icon_state = "security"
 
+/area/security/nuke_storage
+	name = "Nuke Storage"
+	icon_state = "nuke_storage"
 
 /area/security/checkpoint
 	name = "Security Checkpoint"

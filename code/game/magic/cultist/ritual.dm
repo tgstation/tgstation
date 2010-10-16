@@ -149,7 +149,6 @@ var/runedec = 0
 				return
 			if(word1 == worddestr && word2 == wordsee && word3 == wordtech)
 				icon_state = "5"
-				src.icon += rgb(0, 0 , 255)
 				return
 			if(word1 == wordtravel && word2 == wordblood && word3 == wordself)
 				icon_state = "2"

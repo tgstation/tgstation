@@ -130,7 +130,7 @@
 		if("Barman")
 			return list(access_bar)
 		if("Chemist")
-			return list(access_medical, access_tox, access_chemistry)
+			return list(access_medical, access_chemistry)
 		if("Janitor")
 			return list(access_janitor, access_maint_tunnels)
 		if("Clown")
