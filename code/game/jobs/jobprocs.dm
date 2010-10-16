@@ -174,6 +174,13 @@
 	return 1
 
 /mob/living/carbon/human/proc/Equip_Rank(rank, joined_late)
+
+	/*
+	if(rank=="Clown")
+		if(alert("Do you want to be a clown or a mime?",,"Clown","Mime")=="Mime")
+			rank="Mime" //Why no work -- Urist
+	*/
+
 	/*if(joined_late && ticker.mode.name == "ctf")
 		var/red_team
 		var/green_team
@@ -300,6 +307,18 @@
 			src.equip_if_possible(new /obj/item/weapon/banana(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/bikehorn(src), slot_in_backpack)
 			src.mutations |= 16
+
+		if ("Mime")
+			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
+			src.equip_if_possible(new /obj/item/device/pda/mime(src), slot_belt)
+			src.equip_if_possible(new /obj/item/clothing/under/mime(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
+			src.equip_if_possible(new /obj/item/clothing/gloves/latex(src), slot_gloves)
+			src.equip_if_possible(new /obj/item/clothing/mask/mime(src), slot_wear_mask)
+			src.equip_if_possible(new /obj/item/clothing/head/beret(src), slot_head)
+			src.verbs += /client/proc/mimespeak
+			src.verbs += /client/proc/mimewall
+			src.miming = 1
 
 		if ("Station Engineer")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_eng (src), slot_ears) // -- TLE
@@ -551,3 +570,38 @@
 	if (istype(src.belt, /obj/item/device/pda))
 		src.belt:owner = src.real_name
 		src.belt.name = "PDA-[src.real_name]"
+
+/client/proc/mimewall()
+	set category = "Mime"
+	set name = "Invisible wall"
+	set desc = "Create an invisible wall on your location."
+	if(usr.stat)
+		usr << "Not when you're incapicated."
+		return
+	if(!usr.miming)
+		usr << "You still haven't atoned for your speaking transgression. Wait."
+		return
+	usr.verbs -= /client/proc/mimewall
+	spawn(100)
+		usr.verbs += /client/proc/mimewall
+	for (var/mob/V in viewers(usr))
+		if(V!=usr)
+			V.show_message("[usr] looks as if a wall is in front of him.", 3, "", 2)
+	usr << "You form a wall in front of yourself."
+	var/obj/forcefield/F =  new /obj/forcefield(locate(usr.x,usr.y,usr.z))
+	F.icon_state = "empty"
+	spawn (300)
+		del (F)
+	return
+
+/client/proc/mimespeak()
+	set category = "Mime"
+	set name = "Speech"
+	set desc = "Toggle your speech."
+	if(usr.miming)
+		usr.miming = 0
+	else
+		usr << "You'll have to wait if you want to atone for your sins."
+		spawn(3000)
+			usr.miming = 1
+	return

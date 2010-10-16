@@ -200,6 +200,12 @@
 	icon_state = "plaguedoctor"
 	flags = FPRINT | TABLEPASS | HEADSPACE
 
+/obj/item/clothing/head/beret
+	name = "beret"
+	desc = "A mime's beret"
+	icon_state = "beret"
+	flags = FPRINT | TABLEPASS | HEADSPACE
+
 
 // CHUMP HELMETS: COOKING THEM DESTROYS THE CHUMP HELMET SPAWN.
 
@@ -362,6 +368,15 @@
 	var/lit = 0
 	throw_speed = 0.5
 	item_state = "cigoff"
+	var/lastHolder = null
+	var/smoketime = 300
+	w_class = 1
+
+/obj/item/clothing/mask/mime
+	name = "mime mask"
+	desc = "It looks a little creepy"
+	icon_state = "mime"
+	throw_speed = 0.5
 	var/lastHolder = null
 	var/smoketime = 300
 	w_class = 1
@@ -880,6 +895,13 @@
 	icon_state = "red_suit"
 	item_state = "red_suit"
 	color = "red_suit"
+
+/obj/item/clothing/under/mime
+	name = "Mime Outfit"
+	desc = "It's not very colourful."
+	icon_state = "mime"
+	item_state = "mime"
+	color = "mime"
 
 
 // Athletic shorts.. heh

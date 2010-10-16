@@ -81,6 +81,7 @@
 			src.verbs += /client/proc/modifytemperature
 			src.verbs += /client/proc/object_talk // -- TLE
 			src.verbs += /client/proc/play_sound
+			src.verbs += /client/proc/cuban_pete // -- Urist
 			src.verbs += /client/proc/sendmob
 			src.verbs += /client/proc/stealthadmin
 			src.verbs += /client/proc/ticklag
@@ -173,6 +174,7 @@
 			src.verbs += /client/proc/make_sound // -- Skie
 			src.verbs += /client/proc/modifytemperature
 			src.verbs += /client/proc/play_sound
+			src.verbs += /client/proc/cuban_pete // -- Urist
 			src.verbs += /client/proc/sendmob
 			src.verbs += /client/proc/stealthadmin
 			src.verbs += /client/proc/ticklag
@@ -687,7 +689,7 @@
 		src.holder.Voting()
 
 /client/proc/funbutton()
-	set category = "Boom Boom"
+	set category = "Fun"
 	set name = "Boom Boom Boom Shake The Room"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."

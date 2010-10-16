@@ -5,6 +5,8 @@
 		return
 
 	log_say("[src.name]/[src.key] : [message]")
+	if (src.miming)
+		return
 
 	if (src.muted)
 		return

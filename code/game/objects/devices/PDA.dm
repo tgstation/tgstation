@@ -26,6 +26,7 @@
 	var/last_honk //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
 	var/honkamt = 0 //How many honks left when infected with honk.exe
+	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!" //Current note in the notepad function.
 	var/datum/data/record/active1 = null //General
 	var/datum/data/record/active2 = null //Medical
@@ -60,6 +61,12 @@
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
+
+/obj/item/device/pda/mime
+	default_cartridge = /obj/item/weapon/cartridge/mime
+	icon_state = "pda-mime"
+	silent = 1
+	ttone = "silence"
 
 /obj/item/device/pda/heads
 	default_cartridge = /obj/item/weapon/cartridge/head
@@ -97,6 +104,7 @@
 	var/access_medical = 0
 	var/access_manifest = 0
 	var/access_clown = 0
+	var/access_mime = 0
 	var/access_janitor = 0
 	var/access_reagent_scanner = 0
 	var/access_remote_door = 0 //Control some blast doors remotely!!
@@ -221,6 +229,12 @@
 	icon_state = "cart-clown"
 	access_clown = 1
 	var/honk_charges = 5
+
+/obj/item/weapon/cartridge/mime
+	name = "Gestur-O 1000"
+	icon_state = "cart-mi"
+	access_mime = 1
+	var/mime_charges = 5
 
 //Radio cart - Essentially a "one-way" signaler, does nothing with received signals.
 /obj/item/weapon/cartridge/signal
@@ -748,6 +762,9 @@
 					if (istype(src.cartridge, /obj/item/weapon/cartridge/clown))
 						dat+= "<b>[src.cartridge:honk_charges] viral files left.</b><HR>"
 
+					if (istype(src.cartridge, /obj/item/weapon/cartridge/mime))
+						dat+= "<b>[src.cartridge:mime_charges] viral files left.</b><HR>"
+
 					dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
 
 					dat += "<ul>"
@@ -770,6 +787,8 @@
 								//Honk.exe is the poor man's detomatix
 							if (istype(src.cartridge, /obj/item/weapon/cartridge/clown) && (src.cartridge:honk_charges > 0) && P.honkamt < 5)
 								dat += " (<a href='byond://?src=\ref[src];sendhonk=\ref[P]'><img src=pda_honk.png> *Send Virus*</a>)"
+							if (istype(src.cartridge, /obj/item/weapon/cartridge/mime) && (src.cartridge:mime_charges > 0) && P.mimeamt < 5)
+								dat += " (<a href='byond://?src=\ref[src];sendmime=\ref[P]'> *Send Virus*</a>)"
 
 
 							dat += "</li>"
@@ -1239,6 +1258,16 @@ Code:
 				usr.show_message("\blue Virus sent!", 1)
 
 				P.honkamt = (rand(15,20))
+			src.updateUsrDialog()
+
+		else if (href_list["sendmime"] && istype(src.cartridge, /obj/item/weapon/cartridge/mime))
+			var/obj/item/device/pda/P = locate(href_list["sendmime"])
+			if (!P.toff && src.cartridge:mime_charges > 0)
+				src.cartridge:mime_charges--
+				usr.show_message("\blue Virus sent!", 1)
+
+				P.silent = 1
+				P.ttone = "silence"
 			src.updateUsrDialog()
 
 		else if (href_list["remotedoor"] && !isnull(src.cartridge) && src.cartridge.access_remote_door)

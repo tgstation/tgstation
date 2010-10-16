@@ -104,6 +104,8 @@
 	var/r_ch_cou = 0
 	var/r_Tourette = 0
 
+	var/miming = null //checks if the guy is a mime
+
 	var/obj/hud/hud_used = null
 
 	var/list/organs = list(  )
