@@ -333,7 +333,21 @@
 	if(src.network == "AI Satellite")
 		src.network = "SS13"
 	else if (src.network == "Prison")
-		src.network = "AI Satellite"
+		if (ticker.mode.name == "AI malfunction")
+//			world << "It's malf, checking if this dude is malfunctioning"
+			var/datum/game_mode/malfunction/malf = ticker.mode
+			for (var/datum/mind/M in malf.malf_ai)
+//				world << "There's a malf ai, he belongs to [M.key], while the AI tryign to poke around is [src.mind.key]"
+				if (src.mind == M)
+//					world <<"They match"
+					src.network = "AI Satellite"
+					src << "\blue Switched to [src.network] camera network."
+					return
+				else
+//					world <<"They don't match"
+					src.network = "SS13"
+		else
+			src.network = "SS13"
 	else //(src.network == "SS13")
 		src.network = "Prison"
 //		src.network = "AI Satellite"

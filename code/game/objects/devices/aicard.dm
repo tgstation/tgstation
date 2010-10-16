@@ -49,6 +49,12 @@
 					return
 		else
 			if (M.real_name != "Inactive AI")
+				if (ticker.mode.name == "AI malfunction")
+					var/datum/game_mode/malfunction/malf = ticker.mode
+					for (var/datum/mind/malfai in malf.malf_ai)
+						if (M.mind == malfai)
+							user << "This AI's download interface has been disabled."
+							return
 				var/mob/living/silicon/ai/O = new /mob/living/silicon/ai( src )
 				O.invisibility = 0
 				O.canmove = 0
@@ -87,6 +93,10 @@
 			user << "<b>ERROR ERROR ERROR</b>"
 
 	Topic(href, href_list)
+
+		if (href_list["close"])
+			usr << browse(null, "window=aicard")
+			usr.machine = null
 
 		if (href_list["wipe"])
 			var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", "Yes", "No")
@@ -146,6 +156,7 @@
 				else
 					dat += "<b>Wipe in progress</b>"
 				dat += {" <A href='byond://?src=\ref[src];wireless=1'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</A>"}
+				dat += {"<a href='byond://?src=\ref[src];close=1'> Close</a>"}
 		user << browse(dat, "window=aicard")
 		onclose(user, "aicard")
 		return
