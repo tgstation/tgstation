@@ -888,6 +888,13 @@
 	item_state = "bl_suit"
 	color = "syndicate"
 	mode = 0
+/obj/item/clothing/under/syndicate/notreally
+	name = "Tacticool Turtleneck"
+	desc = "Non-descript, slightly suspicious civilian clothing, wearing this makes you feel like buying an SKS, going into the woods, and operating."
+	icon_state = "syndicate"
+	item_state = "bl_suit"
+	color = "syndicate"
+	mode = 0
 
 /obj/item/clothing/under/librarian
 	name = "Sensible Suit"
