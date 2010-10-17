@@ -97,8 +97,9 @@
 				spawn(10)
 					del(src)
 					return
-			//grow!!
-			src.amount_grown++
+			//grow!! but not if metroid or dead
+			if(!istype(src,/mob/living/carbon/alien/larva/metroid) && src.health>-100)
+				src.amount_grown++
 
 			if (src.radiation)
 				if (src.radiation > 100)

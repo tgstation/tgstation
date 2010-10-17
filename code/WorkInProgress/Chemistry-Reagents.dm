@@ -44,7 +44,20 @@ datum
 			on_mob_life(var/mob/M)
 				holder.remove_reagent(src.id, 0.4) //By default it slowly disappears.
 				return
-
+/*
+		metroid
+			name = "Metroid Jelly"
+			id = "metroid"
+			description = "A green liquid produced from one of the deadliest lifeforms in existence."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(prob(10))
+					M << "You don't feel too good."
+					M.toxloss+=20
+				else if(prob(40))
+					M.bruteloss-=5
+				..() //Code no work :< -- Urist
+*/
 		milk
 			name = "Milk"
 			id = "milk"

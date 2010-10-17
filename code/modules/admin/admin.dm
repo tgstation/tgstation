@@ -1155,6 +1155,15 @@ var/showadminmessages = 1
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
 						return
+				if("dorf")
+					if (src.rank in list("Shit Guy","Coder", "Host"))
+						for(var/mob/living/carbon/human/B in world)
+							B.face_icon_state = "facial_longbeard"
+							B.update_face()
+						message_admins("[key_name_admin(usr)] activated dorf mode")
+					else
+						alert("You cannot perform this action. You must be of a higher administrative rank!")
+						return
 			if (usr)
 				log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 				if (ok)
@@ -1486,7 +1495,8 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=cleanexcrement'>Remove all urine/poo from station</A><BR>
 <A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 <A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
-<A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR><BR>"}
+<A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
+<A href='?src=\ref[src];secretsfun=dorf'>Dorf Mode</A><BR><BR>"}
 //<A href='?src=\ref[src];secretsfun=shockwave'>Station Shockwave</A><BR>
 
 	if(lvl >= 5)

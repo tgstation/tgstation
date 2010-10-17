@@ -165,7 +165,7 @@
 
 
 /client/proc/cmd_admin_add_random_ai_law()
-	set category = "Admin"
+	set category = "Fun"
 	set name = "Add Random AI Law"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
@@ -229,7 +229,7 @@
 
 
 /client/proc/cmd_admin_add_freeform_ai_law()
-	set category = "Admin"
+	set category = "Fun"
 	set name = "Add Custom AI law"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
@@ -361,7 +361,7 @@
 
 /client/proc/cmd_admin_gib_self()
 	set name = "Gibself"
-	set category = "Special Verbs"
+	set category = "Fun"
 	if (istype(src.mob, /mob/dead/observer)) // so they don't spam gibs everywhere
 		return
 	else

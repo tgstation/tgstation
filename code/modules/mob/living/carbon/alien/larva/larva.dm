@@ -63,7 +63,7 @@ to clean it up, or just beat the shit out of it (which takes ages).
 		src << "\blue Your icons have been generated!"
 
 		update_clothing()
-	spawn(1200) grow() // Grow after 120 seconds -- TLE
+//	spawn(1200) grow()  Grow after 120 seconds -- TLE Commented out because life.dm has better version -- Urist
 	..()
 
 
@@ -544,11 +544,11 @@ to clean it up, or just beat the shit out of it (which takes ages).
 		src.stat = 0
 
 
-
+/* Commented out because it's duplicated in life.dm
 /mob/living/carbon/alien/larva/proc/grow() // Larvae can grow into full fledged Xenos if they survive long enough -- TLE
 	if(src.icon_state == "larva_l" && !src.canmove) // This is a shit death check. It is made of shit and death. Fix later.
 		return
 	else
 		var/mob/living/carbon/alien/humanoid/A = new(src.loc)
 		A.key = src.key
-		del(src)
+		del(src) */

@@ -5,6 +5,7 @@ datum/preferences
 	var/b_type = "A+"
 
 	var/be_syndicate
+	var/midis = 1
 	var/be_random_name = 0
 	var/underwear = 1
 
@@ -154,6 +155,7 @@ datum/preferences
 
 		dat += "<br>"
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[src.UI == 'screen1.dmi' ? "New" : "Old"]</b></a><br>"
+		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[src.midis == 1 ? "Yes" : "No"]</b></a><br>"
 
 		dat += "<hr><b>Occupation Choices</b><br>"
 		if (destructive.Find(src.occupation1))
@@ -498,6 +500,12 @@ datum/preferences
 			else
 				src.UI = 'screen1.dmi'
 
+		if (link_tags["midis"])
+			if (src.midis)
+				src.midis = 0
+			else
+				src.midis = 1
+
 		if (link_tags["underwear"])
 			if(!IsGuestKey(user.key))
 				if (src.underwear == 1)
@@ -544,6 +552,7 @@ datum/preferences
 			s_tone = 0.0
 			b_type = "A+"
 			UI = 'screen1_old.dmi'
+			midis = 1
 
 
 		src.ShowChoices(user)
@@ -576,6 +585,7 @@ datum/preferences
 		character.f_style = f_style
 
 		character.UI = UI
+		character.midis = midis
 
 		switch(h_style)
 			if("Short Hair")

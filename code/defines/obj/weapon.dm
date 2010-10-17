@@ -517,7 +517,7 @@
 /obj/item/weapon/gun/shotgun
 	name = "shotgun"
 	icon_state = "shotgun"
-	w_class = 4.0
+	w_class = 3.0 //should go on back now, has no sprite for that atm because I can't sprite for shit -- Urist
 	force = 7.0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	var/pumped = 0.0
