@@ -14,6 +14,7 @@
 			I.trigger(act, src)
 
 	var/message
+
 	switch(act)
 		if ("airguitar")
 			if (!src.restrained())
@@ -51,6 +52,8 @@
 			if (input2 == "Visible")
 				m_type = 1
 			else if (input2 == "Hearable")
+				if (src.miming)
+					return
 				m_type = 2
 			else
 				alert("Unable to use this emote, must be either hearable or visible.")
