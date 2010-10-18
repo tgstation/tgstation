@@ -505,6 +505,13 @@
 			src.equip_if_possible(new /obj/item/weapon/pen(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/weapon/clipboard(src), slot_r_hand)
 
+		if ("Virologist")
+			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears) // -- TLE
+			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
+			src.equip_if_possible(new /obj/item/clothing/under/rank/medical(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
+			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
+
 		else
 			src << "RUH ROH! Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
 

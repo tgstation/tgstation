@@ -1,9 +1,10 @@
 /datum/disease/dnaspread
-	name = "Space Rhinovirus"
+	name = "Space Retrovirus"
 	max_stages = 4
 	spread = "Airborne"
 	cure = "Spaceacillin"
 	curable = 0
+	agent = "S4E1 retrovirus"
 	affected_species = list("Human")
 	var/list/original_dna = list()
 	var/transformed = 0

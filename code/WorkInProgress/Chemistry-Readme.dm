@@ -73,7 +73,7 @@ About the Holder:
 			contact with the reagents of a holder. (in the 'splash' part of a beaker i.e.)
 			More on the reaction in the reagent part of this readme.
 
-		add_reagent(var/reagent, var/amount)
+		add_reagent(var/reagent, var/amount, var/data)
 			Attempts to add X of the matching reagent to the holder.
 			You wont use this much. Mostly in new procs for pre-filled
 			objects.

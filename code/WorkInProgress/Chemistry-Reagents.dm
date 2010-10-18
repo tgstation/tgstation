@@ -58,6 +58,72 @@ datum
 					M.bruteloss-=5
 				..() //Code no work :< -- Urist
 */
+
+
+		blood
+			data = new/list("donor"=null,"virus"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null)
+			name = "Blood"
+			id = "blood"
+			reagent_state = LIQUID
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				if(M.virus) return //to prevent the healing of some serious shit with common cold injection.
+				var/datum/reagent/blood/self = src
+				src = null
+				if(self.data["virus"])
+					var/datum/disease/V = self.data["virus"]
+					if(M.resistances.Find(V.type)) return
+					if(method == TOUCH)//respect all protective clothing...
+						M.contract_disease(new V.type)
+					else //injected
+						M.contract_disease(new V.type, 1)
+				return
+
+
+			reaction_turf(var/turf/T, var/volume)//splash the blood all over the place
+				var/datum/reagent/blood/self = src
+				src = null
+				if(!istype(T, /turf/simulated/)) return
+				if(istype(self.data["donor"], /mob/living/carbon/human) || !self.data["donor"])
+					var/turf/simulated/source2 = T
+					var/list/objsonturf = range(0,T)
+					var/i
+					for(i=1, i<=objsonturf.len, i++)
+						if(istype(objsonturf[i],/obj/decal/cleanable/blood))
+							return
+					var/obj/decal/cleanable/blood/blood_prop = new /obj/decal/cleanable/blood(source2)
+					blood_prop.blood_DNA = self.data["blood_DNA"]
+					blood_prop.blood_type = self.data["blood_type"]
+					blood_prop.virus = self.data["virus"]
+
+				else if(istype(self.data["donor"], /mob/living/carbon/monkey))
+					var/turf/simulated/source1 = T
+					var/obj/decal/cleanable/blood/blood_prop = new /obj/decal/cleanable/blood(source1)
+					blood_prop.blood_DNA = self.data["blood_DNA"]
+					blood_prop.virus = self.data["virus"]
+
+				else if(istype(self.data["donor"], /mob/living/carbon/alien))
+					var/turf/simulated/source2 = T
+					var/obj/decal/cleanable/xenoblood/blood_prop = new /obj/decal/cleanable/xenoblood(source2)
+					blood_prop.virus = self.data["virus"]
+
+				return
+
+		vaccine
+			//data must contain virus type
+			name = "Vaccine"
+			id = "vaccine"
+			reagent_state = LIQUID
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				var/datum/reagent/vaccine/self = src
+				src = null
+				if(self.data&&method == INGEST)
+					if(M.resistances.Find(self.data)) return
+					M.resistances += self.data
+				return
+
+
 		milk
 			name = "Milk"
 			id = "milk"

@@ -3,6 +3,7 @@
 	max_stages = 5
 	spread = "Airborne"
 	cure = "Epilepsy Pills"
+	agent = "Gravitokinetic Bipotential SADS-"
 	affected_species = list("Human")
 
 /datum/disease/fake_gbs/stage_act()

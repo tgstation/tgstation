@@ -5,6 +5,7 @@
 	max_stages = 5
 	spread = "Syringe"
 	cure = "None"
+	agent = "R2D2 Nanomachines"
 	affected_species = list("Human")
 
 /datum/disease/robotic_transformation/stage_act()

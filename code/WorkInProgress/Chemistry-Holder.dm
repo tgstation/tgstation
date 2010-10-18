@@ -57,10 +57,11 @@ datum
 
 				return the_id
 
-			trans_to(var/obj/target, var/amount=1, var/multiplier=1)
+			trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 				var/total_transfered = 0
 				var/current_list_element = 1
 				var/datum/reagents/R = target.reagents
+				var/trans_data = null
 				//if(R.total_volume + amount > R.maximum_volume) return 0
 
 				current_list_element = rand(1,reagent_list.len) //Eh, bandaid fix.
@@ -72,8 +73,9 @@ datum
 
 					if(current_list_element > reagent_list.len) current_list_element = 1
 					var/datum/reagent/current_reagent = reagent_list[current_list_element]
-
-					R.add_reagent(current_reagent.id, (1 * multiplier) )
+					if(preserve_data)
+						trans_data = current_reagent.data
+					R.add_reagent(current_reagent.id, (1 * multiplier), trans_data)
 					src.remove_reagent(current_reagent.id, 1)
 
 					current_list_element++
@@ -175,7 +177,7 @@ datum
 							if(isobj(A)) spawn(0) R.reaction_obj(A, R.volume+volume_modifier)
 				return
 
-			add_reagent(var/reagent, var/amount)
+			add_reagent(var/reagent, var/amount, var/data=null)
 				if(!isnum(amount)) return 1
 				update_total()
 				if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
@@ -194,6 +196,12 @@ datum
 						reagent_list += R
 						R.holder = src
 						R.volume = amount
+						R.data = data
+						//debug
+						//world << "Adding data"
+						//for(var/D in R.data)
+						//	world << "Container data: [D] = [R.data[D]]"
+						//debug
 						update_total()
 						my_atom.on_reagent_change()
 						return 0

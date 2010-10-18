@@ -244,6 +244,7 @@
 					for(var/mob/living/carbon/M in D.loc)
 						if(!istype(M,/mob/living/carbon)) continue
 						if(M == user) continue
+						D.reagents.reaction(M, INGEST)
 						D.reagents.trans_to(M, 15)
 						M.bruteloss += 5
 						for(var/mob/O in viewers(world.view, D))
@@ -406,7 +407,7 @@
 			var/trans = src.reagents.trans_to(target, 10)
 			user << "\blue You transfer [trans] units of the solution to [target]."
 
-		else if(reagents.total_volume  && !istype(target,/obj/machinery/chem_master/) && !istype(target,/obj/table) && !istype(target,/obj/secure_closet) && !istype(target,/obj/closet) && !istype(target,/obj/item/weapon/storage) && !istype(target, /obj/machinery/atmospherics/unary/cryo_cell) && !istype(target, /obj/item/weapon/chem_grenade) && !istype(target, /obj/machinery/bot/medbot))
+		else if(reagents.total_volume  && !istype(target,/obj/machinery/chem_master/) && !istype(target,/obj/table) && !istype(target,/obj/secure_closet) && !istype(target,/obj/closet) && !istype(target,/obj/item/weapon/storage) && !istype(target, /obj/machinery/atmospherics/unary/cryo_cell) && !istype(target, /obj/item/weapon/chem_grenade) && !istype(target, /obj/machinery/bot/medbot) &&!istype(target, /obj/machinery/pandemic))
 			user << "\blue You splash the solution onto [target]."
 			src.reagents.reaction(target, TOUCH)
 			spawn(5) src.reagents.clear_reagents()
@@ -529,15 +530,49 @@
 
 		switch(mode)
 			if("d")
-				if(ismob(target)) return //Blood?
+
+				if(reagents.total_volume >= reagents.maximum_volume)
+					user << "\red The syringe is full."
+					return
+
+				if(ismob(target))//Blood!
+					if(src.reagents.has_reagent("blood"))
+						user << "\red There is already a blood sample in this syringe"
+						return
+					if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
+						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
+						var/mob/living/carbon/T = target
+						var/datum/reagent/B = new /datum/reagent/blood
+						B.holder = src
+						B.volume = amount
+						//set reagent data
+						B.data["donor"] = T
+						if(T.virus)
+							B.data["virus"] = new T.virus.type
+						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
+						if(T.resistances&&T.resistances.len)
+							B.data["resistances"] = T.resistances.Copy()
+						if(istype(target, /mob/living/carbon/human))//I wish there was some hasproperty operation...
+							var/mob/living/carbon/human/HT = target
+							B.data["blood_type"] = copytext(HT.b_type,1,0)
+						//debug
+						//for(var/D in B.data)
+						//	world << "Data [D] = [B.data[D]]"
+						//debug
+						src.reagents.reagent_list += B
+						src.reagents.update_total()
+						src.on_reagent_change()
+						src.reagents.handle_reactions()
+						user << "\blue You take a blood sample from [target]"
+						for(var/mob/O in viewers(4, user))
+							O.show_message("\red [user] takes a blood sample from [target].", 1)
+					return
+
 
 				if(!target.reagents.total_volume)
 					user << "\red [target] is empty."
 					return
 
-				if(reagents.total_volume >= reagents.maximum_volume)
-					user << "\red The syringe is full."
-					return
 
 				if(!target.is_open_container() && !istype(target,/obj/reagent_dispensers))
 					user << "\red You cannot directly remove reagents from this object."
@@ -1103,6 +1138,84 @@
 		R.my_atom = src
 		R.add_reagent("anti_toxin", 30)
 
+
+/obj/item/weapon/reagent_containers/glass/bottle/flu_virion
+	name = "Flu virion culture bottle"
+	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."
+	icon = 'chemical.dmi'
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 5
+
+	New()
+		var/datum/reagents/R = new/datum/reagents(20)
+		reagents = R
+		R.my_atom = src
+		var/datum/disease/F = new /datum/disease/flu
+		var/list/data = list("virus"= F)
+		R.add_reagent("blood", 20, data)
+
+
+/obj/item/weapon/reagent_containers/glass/bottle/cold
+	name = "Rhinovirus culture bottle"
+	desc = "A small bottle. Contains XY-rhinovirus culture in synthblood medium."
+	icon = 'chemical.dmi'
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 5
+
+	New()
+		var/datum/reagents/R = new/datum/reagents(20)
+		reagents = R
+		R.my_atom = src
+		var/datum/disease/F = new /datum/disease/cold
+		var/list/data = list("virus"= F)
+		R.add_reagent("blood", 20, data)
+
+
+/obj/item/weapon/reagent_containers/glass/bottle/gbs
+	name = "GBS culture bottle"
+	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS+ culture in synthblood medium."//Or simply - General BullShit
+	icon = 'chemical.dmi'
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 5
+
+	New()
+		var/datum/reagents/R = new/datum/reagents(20)
+		reagents = R
+		R.my_atom = src
+		var/datum/disease/F = new /datum/disease/gbs
+		var/list/data = list("virus"= F)
+		R.add_reagent("blood", 20, data)
+
+/obj/item/weapon/reagent_containers/glass/bottle/fake_gbs
+	name = "GBS culture bottle"
+	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS- culture in synthblood medium."//Or simply - General BullShit
+	icon = 'chemical.dmi'
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 5
+
+	New()
+		var/datum/reagents/R = new/datum/reagents(20)
+		reagents = R
+		R.my_atom = src
+		var/datum/disease/F = new /datum/disease/fake_gbs
+		var/list/data = list("virus"= F)
+		R.add_reagent("blood", 20, data)
+
+
+/obj/item/weapon/reagent_containers/glass/bottle/brainrot
+	name = "Brainrot culture bottle"
+	desc = "A small bottle. Contains Cryptococcus Cosmosis culture in synthblood medium."
+	icon = 'chemical.dmi'
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 5
+
+	New()
+		var/datum/reagents/R = new/datum/reagents(30)
+		reagents = R
+		R.my_atom = src
+		var/datum/disease/F = new /datum/disease/brainrot
+		var/list/data = list("virus"= F)
+		R.add_reagent("blood", 20, data)
 
 
 /obj/item/weapon/reagent_containers/glass/beaker

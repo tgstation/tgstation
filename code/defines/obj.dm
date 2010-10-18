@@ -216,6 +216,65 @@
 	opacity = 0
 	density = 0
 
+/obj/sign/biohazard
+	desc = "A warning sign which reads 'BIOHAZARD'"
+	name = "BIOHAZARD"
+	icon = 'decals.dmi'
+	icon_state = "bio"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+/obj/sign/electricshock
+	desc = "A warning sign which reads 'HIGH VOLTAGE'"
+	name = "HIGH VOLTAGE"
+	icon = 'decals.dmi'
+	icon_state = "shock"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+/obj/sign/vacuum
+	desc = "A warning sign which reads 'HARD VACUUM AHEAD'"
+	name = "HARD VACUUM AHEAD"
+	icon = 'decals.dmi'
+	icon_state = "space"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+	pixel_x = -1
+	pixel_y = -1
+
+/obj/sign/fire
+	desc = "A warning sign which reads 'HOT! HOT! AAAH! I'M BURNING!'"
+	name = "HOT! HOT! AAAH! I'M BURNING!"
+	icon = 'decals.dmi'
+	icon_state = "fire"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+
+/obj/sign/nosmoking_1
+	desc = "A warning sign which reads 'NO SMOKING'"
+	name = "NO SMOKING"
+	icon = 'decals.dmi'
+	icon_state = "nosmoking"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+
+/obj/sign/nosmoking_2
+	desc = "A warning sign which reads 'NO SMOKING'"
+	name = "NO SMOKING"
+	icon = 'decals.dmi'
+	icon_state = "nosmoking2"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+
 /obj/hud
 	name = "hud"
 	var/mob/mymob = null

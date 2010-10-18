@@ -2,7 +2,10 @@
 	name = "The Flu"
 	max_stages = 3
 	spread = "Airborne"
-	cure = "Rest"
+	cure = "Spaceacillin"
+	agent = "H13N1 flu virion"
+	affected_species = list("Human")
+	curable = 0
 
 /datum/disease/flu/stage_act()
 	..()
@@ -10,8 +13,7 @@
 		if(2)
 			if(affected_mob.sleeping && prob(20))
 				affected_mob << "\blue You feel better."
-				affected_mob.resistances += affected_mob.virus.type
-				affected_mob.virus = null
+				stage--
 				return
 			if(prob(1))
 				affected_mob.emote("sneeze")
@@ -31,8 +33,7 @@
 		if(3)
 			if(affected_mob.sleeping && prob(15))
 				affected_mob << "\blue You feel better."
-				affected_mob.resistances += affected_mob.virus.type
-				affected_mob.virus = null
+				stage--
 				return
 			if(prob(1))
 				affected_mob.emote("sneeze")
@@ -48,3 +49,4 @@
 				if(prob(20))
 					affected_mob.toxloss += 1
 					affected_mob.updatehealth()
+	return

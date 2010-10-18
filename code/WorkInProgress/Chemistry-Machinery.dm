@@ -229,3 +229,177 @@
 		user << browse("<TITLE>Chemmaster 3000</TITLE>Chemmaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400")
 		onclose(user, "chem_master")
 		return
+
+
+
+
+
+/obj/machinery/pandemic/
+	name = "PanD.E.M.I.C 2200"
+	density = 1
+	anchored = 1
+	icon = 'chemical.dmi'
+	icon_state = "mixer0"
+	var/temphtml = ""
+	var/wait = null
+	var/obj/item/weapon/reagent_containers/glass/beaker = null
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				del(src)
+				return
+			if(2.0)
+				if (prob(50))
+					del(src)
+					return
+
+	blob_act()
+		if (prob(50))
+			del(src)
+
+	meteorhit()
+		del(src)
+		return
+
+	power_change()
+		if(powered())
+			icon_state = (src.beaker?"mixer1":"mixer0")
+			stat &= ~NOPOWER
+		else
+			spawn(rand(0, 15))
+				src.icon_state = (src.beaker?"mixer1_nopower":"mixer0_nopower")
+				stat |= NOPOWER
+
+
+	attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
+		if(!istype(B, /obj/item/weapon/reagent_containers/glass))
+			return
+
+		if(src.beaker)
+			user << "A beaker is already loaded into the machine."
+			return
+
+		src.beaker =  B
+		user.drop_item()
+		B.loc = src
+		user << "You add the beaker to the machine!"
+		src.updateUsrDialog()
+		icon_state = "mixer1"
+
+	Topic(href, href_list)
+		if(stat & (NOPOWER|BROKEN)) return
+		if(usr.stat || usr.restrained()) return
+		if(!in_range(src, usr)) return
+
+		usr.machine = src
+		if(!beaker) return
+
+		if (href_list["create_vaccine"])
+			if(!src.wait)
+				var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+				var/vaccine_type = href_list["create_vaccine"]
+				var/datum/disease/D = new vaccine_type
+				var/name = input(usr,"Name:","Name the vaccine",D.name)
+				if(!name || name == " ") name = D.name
+				B.name = "[name] vaccine bottle"
+				B.reagents.add_reagent("vaccine",10,vaccine_type)
+				del(D)
+				wait = 1
+				spawn(1200)
+					src.wait = null
+			else
+				src.temphtml = "The replicator is not ready yet."
+			src.updateUsrDialog()
+			return
+		else if (href_list["create_virus_culture"])
+			if(!wait)
+				var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+				B.icon_state = "bottle3"
+				var/type = href_list["create_virus_culture"]
+				var/datum/disease/D = new type
+				var/list/data = list("virus"=D)
+				var/name = input(usr,"Name:","Name the culture",D.name)
+				if(!name || name == " ") name = D.name
+				B.name = "[name] culture bottle"
+				B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
+				B.reagents.add_reagent("blood",20,data)
+				src.updateUsrDialog()
+				wait = 1
+				spawn(3000)
+					src.wait = null
+			else
+				src.temphtml = "The replicator is not ready yet."
+			src.updateUsrDialog()
+			return
+		else if (href_list["eject"])
+			beaker:loc = src.loc
+			beaker = null
+			icon_state = "mixer0"
+			src.updateUsrDialog()
+			return
+		else if(href_list["clear"])
+			src.temphtml = ""
+			src.updateUsrDialog()
+			return
+		else
+			usr << browse(null, "window=pandemic")
+			src.updateUsrDialog()
+			return
+
+		src.add_fingerprint(usr)
+		return
+
+	attack_ai(mob/user as mob)
+		return src.attack_hand(user)
+
+	attack_paw(mob/user as mob)
+		return src.attack_hand(user)
+
+	attack_hand(mob/user as mob)
+		if(stat & (NOPOWER|BROKEN))
+			return
+		user.machine = src
+		var/dat = ""
+		if(src.temphtml)
+			dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
+		else if(!beaker)
+			dat += "Please insert beaker.<BR>"
+			dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
+		else
+			var/datum/reagents/R = beaker.reagents
+			var/datum/reagent/blood/Blood = null
+			for(var/datum/reagent/blood/B in R.reagent_list)
+				if(B)
+					Blood = B
+					break
+			if(!R.total_volume||!R.reagent_list.len)
+				dat += "The beaker is empty<BR>"
+			else if(!Blood)
+				dat += "No blood sample found in beaker"
+			else
+				dat += "<h3>Blood sample data:</h3>"
+				dat += "<b>Blood DNA:</b> [(Blood.data["blood_DNA"]||"none")]<BR>"
+				dat += "<b>Blood Type:</b> [(Blood.data["blood_type"]||"none")]<BR>"
+				var/datum/disease/D = Blood.data["virus"]
+				dat += "<b>Agent of disease:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[D.type]'>Create virus culture bottle</A>":"none"]<BR>"
+				dat += "<b>Contains antibodies to:</b> "
+				if(Blood.data["resistances"])
+					var/list/res = Blood.data["resistances"]
+					if(res.len)
+						dat += "<ul>"
+						for(var/type in Blood.data["resistances"])
+							var/datum/disease/DR = new type
+							dat += "<li>[DR.name] - <A href='?src=\ref[src];create_vaccine=[type]'>Create vaccine bottle</A></li>"
+							del(DR)
+						dat += "</ul><BR>"
+					else
+						dat += "nothing<BR>"
+				else
+					dat += "nothing<BR>"
+			dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A><BR>"
+			dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
+
+		user << browse("<TITLE>PanD.E.M.I.C 2200</TITLE><BR>[dat]", "window=pandemic;size=575x400")
+		onclose(user, "pandemic")
+		return

@@ -36,6 +36,7 @@
 	access_manufacturing = 36
 	access_library = 37
 	access_lawyer = 38
+	access_virology = 39
 
 
 /obj/var/list/req_access = null
@@ -124,7 +125,7 @@
 			            access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab, access_engine,
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer)
+			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer, access_virology)
 		if("Atmospheric Technician")
 			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage)
 		if("Barman")
@@ -151,7 +152,9 @@
 		if("Research Director") // added hydroponics access -- Skie
 			return list(access_medical, access_morgue, access_medlab, access_robotics,
 			            access_tech_storage, access_maint_tunnels, access_heads, access_tox,
-			            access_tox_storage, access_chemistry, access_teleporter, access_hydroponics)
+			            access_tox_storage, access_chemistry, access_teleporter, access_hydroponics, access_virology)
+		if("Virologist")
+			return list(access_medical, access_morgue, access_virology)
 		else
 			return list()
 
@@ -163,7 +166,7 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
-	            access_hydroponics, access_library, access_manufacturing, access_lawyer)
+	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology)
 
 /proc/get_access_desc(A)
 	switch(A)
@@ -239,10 +242,12 @@
 			return "Law Office"
 		if(access_robotics)
 			return "Robotics"
+		if(access_virology)
+			return "Virology"
 
 /proc/get_all_jobs()
 	return list("Assistant", "Station Engineer", "Detective", "Medical Doctor", "Captain", "Security Officer",
 				"Geneticist", "Scientist", "Head of Security", "Head of Personnel", "Atmospheric Technician",
 				"Chaplain", "Barman", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster",
-				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer")
+				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer", "Virologist")
 

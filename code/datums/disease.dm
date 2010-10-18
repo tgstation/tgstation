@@ -7,9 +7,10 @@
 	var/list/affected_species = list()
 	var/mob/affected_mob = null
 	var/carrier = 0.0 //there will be a small chance that the person will be a carrier
-	var/curable = 1 //can this disease be cured?
+	var/curable = 1 //can this disease be cured? (By itself...)
 	var/list/strain_data = list() //This is passed on to infectees
 	var/stage_prob = 5		// probability of advancing to next stage, default 5% per check
+	var/agent = "some microbes"//name of the disease agent
 
 /datum/disease/proc/stage_act()
 	if(carrier)
@@ -28,16 +29,19 @@
 
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0)
 
+	var/index = src.resistances.Find(virus.type)
+	if(index)
+		if(prob(99)) return
+		src.resistances[index] = null//the resistance is futile
+
 	//For alien egg and stuff
-	/*
 	if(skip_this == 1)
 		src.virus = virus
 		src.virus.affected_mob = src
+		if(prob(5))
+			src.virus.carrier = 1
 		return
-	*/
 
-	if(src.resistances.Find(virus.type))
-		return
 	var/score
 	if(istype(src, /mob/living/carbon/human))
 		if(src:gloves)

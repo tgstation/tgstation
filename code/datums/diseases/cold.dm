@@ -3,7 +3,8 @@
 	max_stages = 3
 	spread = "Airborne"
 	cure = "Rest"
-	affected_species = list("Human")
+	agent = "XY-rhinovirus"
+	affected_species = list("Human", "Monkey")
 
 /datum/disease/cold/stage_act()
 	..()

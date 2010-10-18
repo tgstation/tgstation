@@ -723,6 +723,8 @@
 			src.temphtml = text("Working ... Please wait ([] Seconds)", src.radduration)
 			usr << browse(temphtml, "window=scannernew;size=550x650")
 			onclose(usr, "scannernew")
+			var/lock_state = src.connected.locked
+			src.connected.locked = 1//lock it
 			sleep(10*src.radduration)
 			if (!src.connected.occupant)
 				temphtml = null
@@ -739,6 +741,7 @@
 				else
 					randmuti(src.connected.occupant)
 			src.connected.occupant.radiation += ((src.radstrength*3)+src.radduration*3)
+			src.connected.locked = lock_state
 			temphtml = null
 			delete = 0
 		if (href_list["radset"])
@@ -801,6 +804,8 @@
 			src.temphtml = text("Working ... Please wait ([] Seconds)", src.radduration)
 			usr << browse(temphtml, "window=scannernew;size=550x650")
 			onclose(usr, "scannernew")
+			var/lock_state = src.connected.locked
+			src.connected.locked = 1//lock it
 			sleep(10*src.radduration)
 			if (!src.connected.occupant)
 				temphtml = null
@@ -825,6 +830,7 @@
 					randmuti(src.connected.occupant)
 					updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
 				src.connected.occupant.radiation += ((src.radstrength*2)+src.radduration)
+			src.connected.locked = lock_state
 			dopage(src,"unimenu")
 			src.delete = 0
 		////////////////////////////////////////////////////////
@@ -868,6 +874,8 @@
 			var/newblock
 			var/tstructure2
 			var/oldblock
+			var/lock_state = src.connected.locked
+			src.connected.locked = 1//lock it
 			if (src.connected.occupant)
 				block = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),src.subblock,1)
 				src.delete = 1
@@ -917,7 +925,7 @@
 						randmuti(src.connected.occupant)
 						updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
 					src.connected.occupant.radiation += ((src.radstrength*2)+src.radduration)
-
+			src.connected.locked = lock_state
 			///
 			dopage(src,"strucmenu")
 			src.delete = 0
