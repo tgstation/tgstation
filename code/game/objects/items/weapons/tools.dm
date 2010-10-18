@@ -146,7 +146,8 @@ WELDINGTOOOL
 
 	else if (istype(O, /obj/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
 		user << "\red That was stupid of you."
-		explosion(O.loc,2,4,8)
+		explosion(O.loc,-1,3,6)
+		usr.gib(1)
 
 	else if (src.welding)
 		use_fuel(1)
