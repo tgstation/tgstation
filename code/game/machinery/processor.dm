@@ -47,7 +47,7 @@ obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			new /obj/item/weapon/reagent_containers/food/snacks/ketchup(src.loc)
 			return
 	user << "There doesn't appear to be anything in the processing chamber."
-/*
+
 /obj/machinery/processor/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
 	if(istype(G.affecting, /mob/living/carbon/alien/larva/metroid))
 		sleep(40)
@@ -61,9 +61,7 @@ obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			newmob:client:eye = newmob
 		del(G.affecting)
 		del(G)
-		var/obj/item/weapon/reagent_containers/food/drinks/jar/J = new /obj/item/weapon/reagent_containers/food/drinks/jar(src.loc)
-		J.add_reagent("metroid",50) //Code no work :< -- Urist
-*/
+		new /obj/item/weapon/reagent_containers/food/drinks/jar(src.loc)
 /*
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 

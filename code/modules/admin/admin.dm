@@ -1122,6 +1122,9 @@ var/showadminmessages = 1
 					if(aliens_allowed)
 						alien_infestation()
 						message_admins("[key_name_admin(usr)] has spawned aliens", 1)
+				if("virus")
+					viral_outbreak()
+					message_admins("[key_name_admin(usr)] has spawned a virus outbreak", 1)
 				if("retardify")
 					if (src.rank in list("Shit Guy", "Coder", "Host"))
 						for(var/mob/living/carbon/human/H in world)
@@ -1491,6 +1494,7 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes (Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=goblob'>Spawn magma(Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
+<A href='?src=\ref[src];secretsfun=virus'>Trigger an Virus Outbreak</A><BR>
 <A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
 <A href='?src=\ref[src];secretsfun=cleanexcrement'>Remove all urine/poo from station</A><BR>
 <A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>

@@ -44,11 +44,11 @@ datum
 			on_mob_life(var/mob/M)
 				holder.remove_reagent(src.id, 0.4) //By default it slowly disappears.
 				return
-/*
+
 		metroid
-			name = "Metroid Jelly"
+			name = "Metroid Jam"
 			id = "metroid"
-			description = "A green liquid produced from one of the deadliest lifeforms in existence."
+			description = "A green semi-liquid produced from one of the deadliest lifeforms in existence."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(prob(10))
@@ -56,8 +56,8 @@ datum
 					M.toxloss+=20
 				else if(prob(40))
 					M.bruteloss-=5
-				..() //Code no work :< -- Urist
-*/
+				..()
+
 
 
 		blood
@@ -593,6 +593,18 @@ datum
 			description = "Pure iron is a metal."
 			reagent_state = SOLID
 
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				if((M.virus) && (prob(8) && (M.virus.name=="Magnitis")))
+					if(M.virus.spread == "Airborne")
+						M.virus.spread = "Remissive"
+					M.virus.stage--
+					if(M.virus.stage <= 0)
+						M.resistances += M.virus.type
+						M.virus = null
+				holder.remove_reagent(src.id, 0.2)
+				return
+
 		aluminium
 			name = "Aluminium"
 			id = "aluminium"
@@ -942,7 +954,7 @@ datum
 
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if((M.virus) && (prob(8)))
+				if((M.virus) && (prob(8) && (M.virus.name!="Magnitis")))
 					if(M.virus.spread == "Airborne")
 						M.virus.spread = "Remissive"
 					M.virus.stage--

@@ -139,10 +139,14 @@ WELDINGTOOOL
 
 /obj/item/weapon/weldingtool/afterattack(obj/O as obj, mob/user as mob)
 
-	if (istype(O, /obj/reagent_dispensers/fueltank) && get_dist(src,O) <= 1)
+	if (istype(O, /obj/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
 		O.reagents.trans_to(src, 20)
 		user << "\blue Welder refueled"
 		playsound(src.loc, 'refill.ogg', 50, 1, -6)
+
+	else if (istype(O, /obj/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
+		user << "\red That was stupid of you."
+		explosion(O.loc,2,4,8)
 
 	else if (src.welding)
 		use_fuel(1)

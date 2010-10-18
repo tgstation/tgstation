@@ -92,6 +92,7 @@
 					<br><a href='?src=\ref[src];vir=p'>Plasmatoid</a>
 					<br><a href='?src=\ref[src];vir=dna'>Space Rhinovirus</a>
 					<br><a href='?src=\ref[src];vir=bot'>Robot Transformation</a>
+					<br><a href='?src=\ref[src];vir=mgn'>Magnitis</A>
 					<br><a href='?src=\ref[src];screen=1'>Back</a>"}
 				if(6.0)
 					dat += "<center><b>Medical Robot Monitor</b></center>"
@@ -250,6 +251,16 @@
 <BR><b>Notes:</b> This disease, actually acute nanomachine infection, converts the victim into a cyborg.
 <BR>
 <BR><b>Severity:</b> Major"}
+					if("mgn")
+						src.temp = {"<b>Name:</b> Magnitis
+<BR><b>Number of stages:</b> 4
+<BR><b>Spread:</b> Airborne
+<BR><b>Possible Cure:</b> Iron
+<BR><b>Affected Species:</b> Human
+<BR>
+<BR><b>Notes:</b> This disease disrupts the magnetic field of your body, making it act as if a powerful magnet. Injections of iron help stabilize the field.
+<BR>
+<BR><b>Severity:</b> Medium"}
 
 			if (href_list["del_all"])
 				src.temp = text("Are you sure you wish to delete all records?<br>\n\t<A href='?src=\ref[];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='?src=\ref[];temp=1'>No</A><br>", src, src)

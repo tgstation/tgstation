@@ -40,6 +40,8 @@
 	set category = "Fun"
 	set name = "Cuban Pete Time"
 
+	message_admins("[key_name_admin(usr)] has declared Cuban Pete Time!", 1)
+
 	for(var/mob/M in world)
 		if(M.midis)
 			M << 'cubanpetetime.ogg'

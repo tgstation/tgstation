@@ -1170,7 +1170,7 @@
 		var/list/data = list("virus"= F)
 		R.add_reagent("blood", 20, data)
 
-
+/*
 /obj/item/weapon/reagent_containers/glass/bottle/gbs
 	name = "GBS culture bottle"
 	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS+ culture in synthblood medium."//Or simply - General BullShit
@@ -1184,8 +1184,8 @@
 		R.my_atom = src
 		var/datum/disease/F = new /datum/disease/gbs
 		var/list/data = list("virus"= F)
-		R.add_reagent("blood", 20, data)
-
+		R.add_reagent("blood", 20, data) -- No.
+*/
 /obj/item/weapon/reagent_containers/glass/bottle/fake_gbs
 	name = "GBS culture bottle"
 	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS- culture in synthblood medium."//Or simply - General BullShit
@@ -1214,6 +1214,21 @@
 		reagents = R
 		R.my_atom = src
 		var/datum/disease/F = new /datum/disease/brainrot
+		var/list/data = list("virus"= F)
+		R.add_reagent("blood", 20, data)
+
+/obj/item/weapon/reagent_containers/glass/bottle/magnitis
+	name = "GBS culture bottle"
+	desc = "A small bottle. Contains a small dosage of Fukkos Miracos."
+	icon = 'chemical.dmi'
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 5
+
+	New()
+		var/datum/reagents/R = new/datum/reagents(20)
+		reagents = R
+		R.my_atom = src
+		var/datum/disease/F = new /datum/disease/magnitis
 		var/list/data = list("virus"= F)
 		R.add_reagent("blood", 20, data)
 
@@ -2029,7 +2044,6 @@
 
 ///jar
 
-/*
 /obj/item/weapon/reagent_containers/food/drinks/jar
 	name = "empty jar"
 	desc = "A jar. You're not sure what it's supposed to hold."
@@ -2040,6 +2054,7 @@
 		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R
 		R.my_atom = src
+		R.add_reagent("metroid", 50)
 
 	on_reagent_change()
 		if (reagents.reagent_list.len > 0)
@@ -2056,5 +2071,4 @@
 			icon_state = "jar"
 			name = "empty jar"
 			desc = "A jar. You're not sure what it's supposed to hold."
-			return //Code no work :< -- Urist
-			*/
+			return

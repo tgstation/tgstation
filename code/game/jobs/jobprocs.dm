@@ -597,6 +597,8 @@
 	usr << "You form a wall in front of yourself."
 	var/obj/forcefield/F =  new /obj/forcefield(locate(usr.x,usr.y,usr.z))
 	F.icon_state = "empty"
+	F.name = "invisible wall"
+	F.desc = "You have a bad feeling about this."
 	spawn (300)
 		del (F)
 	return
