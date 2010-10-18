@@ -1873,6 +1873,7 @@
 	return temperature
 
 /mob/proc/gib(give_medal)
+
 	if (istype(src, /mob/dead/observer))
 		var/virus = src.virus
 		gibs(src.loc, virus)
@@ -1910,9 +1911,10 @@
 			robogibs(src.loc, virus)
 		else
 			gibs(src.loc, virus)
-
+	CRASH("Generating error messages to attempt to fix random gibbins.")
 	sleep(15)
 	del(src)
+
 
 /mob/proc/get_contents()
 	var/list/L = list()
