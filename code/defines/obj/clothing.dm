@@ -133,7 +133,7 @@
 	heat_transfer_coefficient = 0.01
 
 /obj/item/clothing/gloves/botanic_leather
-	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmfull objects of floral origin."
+	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
 	name = "botanic leather gloves"
 	icon_state = "leather"
 	item_state = "ggloves"
@@ -617,7 +617,7 @@
 	desc = "A suit that protects against fire and heat."
 	icon_state = "fire"
 	item_state = "fire_suit"
-	w_class = 4//bulky item
+	//w_class = 4//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
@@ -630,7 +630,7 @@
 	desc = "A suit that protects against extreme fire and heat."
 	icon_state = "thermal"
 	item_state = "ro_suit"
-	w_class = 4//bulky item
+	//w_class = 4//bulky item
 	protective_temperature = 10000
 	heat_transfer_coefficient = 0.01
 
