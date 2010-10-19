@@ -98,6 +98,15 @@
 		if(!src.stuttering && prob(15))
 			message = stutter(message)
 
+	if(src.virus)
+		if(src.virus.name=="beesease" && src.virus.stage>=2)
+			if(prob(src.virus.stage*10))
+				var/bzz = length(message)
+				message = "B"
+				for(var/i=0,i<bzz,i++)
+					message += "Z"
+
+
 	switch (message_mode)
 		if ("headset")
 			if (src:ears)

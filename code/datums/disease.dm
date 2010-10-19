@@ -28,7 +28,7 @@
 
 	if(stage > max_stages)
 		stage = max_stages
-	if(prob(stage_prob) && stage != max_stages)
+	if(prob(stage_prob) && stage != max_stages && !cure_present) //now the disease shouldn't get back up to stage 4 in no time
 		stage++
 	if(stage != 1 && (prob(1) || (cure_present && prob(cure_chance))))
 		stage--

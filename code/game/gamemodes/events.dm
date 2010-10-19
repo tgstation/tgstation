@@ -233,7 +233,7 @@
 /proc/viral_outbreak()
 	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 	world << sound('outbreak7.ogg')
-	var/virus_type = pick(/datum/disease/dnaspread,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis)
+	var/virus_type = pick(/datum/disease/dnaspread,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/wizarditis)
 	for(var/mob/living/carbon/human/H in world)
 		if((H.virus) || (H.stat == 2))
 			continue

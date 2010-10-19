@@ -166,6 +166,7 @@
 #include "code\datums\sun.dm"
 #include "code\datums\vote.dm"
 #include "code\datums\diseases\alien_embryo.dm"
+#include "code\datums\diseases\beesease.dm"
 #include "code\datums\diseases\brainrot.dm"
 #include "code\datums\diseases\cold.dm"
 #include "code\datums\diseases\dna_spread.dm"
