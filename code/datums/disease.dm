@@ -48,7 +48,7 @@
 			score += 5
 		if(istype(src:wear_suit, /obj/item/clothing/suit/space)) score += 10
 		if(istype(src:wear_suit, /obj/item/clothing/suit/bio_suit)) score += 10
-		if(istype(src:wear_suit, /obj/item/clothing/head/helmet/space)) score += 5
+		if(istype(src:head, /obj/item/clothing/head/helmet/space)) score += 5
 		if(istype(src:head, /obj/item/clothing/head/bio_hood)) score += 5
 	if(src.wear_mask)
 		score += 5
