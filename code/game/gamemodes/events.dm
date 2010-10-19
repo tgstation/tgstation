@@ -230,10 +230,30 @@
 			A.power_environ = 1
 			A.power_change()
 
-/proc/viral_outbreak()
+/proc/viral_outbreak(var/virus = null)
 	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 	world << sound('outbreak7.ogg')
-	var/virus_type = pick(/datum/disease/dnaspread,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/wizarditis)
+	var/virus_type
+	if(!virus)
+		virus_type = pick(/datum/disease/dnaspread,/datum/disease/flu,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/wizarditis)
+	else
+		switch(virus)
+			if("fake gbs")
+				virus_type = /datum/disease/fake_gbs
+			if("gbs")
+				virus_type = /datum/disease/gbs
+			if("magnitis")
+				virus_type = /datum/disease/magnitis
+			if("wizarditis")
+				virus_type = /datum/disease/wizarditis
+			if("brain rot")
+				virus_type = /datum/disease/brainrot
+			if("cold")
+				virus_type = /datum/disease/cold
+			if("rhinovirus")
+				virus_type = /datum/disease/dnaspread
+			if("flu")
+				virus_type = /datum/disease/flu
 	for(var/mob/living/carbon/human/H in world)
 		if((H.virus) || (H.stat == 2))
 			continue

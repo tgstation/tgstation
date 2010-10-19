@@ -303,19 +303,20 @@
 			src.equip_if_possible(new /obj/item/device/pda/clown(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/clown(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/clown_shoes(src), slot_shoes)
-			src.equip_if_possible(new /obj/item/clothing/mask/clown_hat(src), slot_wear_mask)
+			src.equip_if_possible(new /obj/item/clothing/mask/gas/clown_hat(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/weapon/banana(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/bikehorn(src), slot_in_backpack)
 			src.mutations |= 16
 
 		if ("Mime")
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/device/pda/mime(src), slot_belt)
+			src.equip_if_possible(new /obj/item/device/pda/mime(src), slot_r_store)
 			src.equip_if_possible(new /obj/item/clothing/under/mime(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/gloves/latex(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/mask/mime(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/head/beret(src), slot_head)
+			src.equip_if_possible(new /obj/item/clothing/belt/suspenders(src), slot_belt)
 			src.verbs += /client/proc/mimespeak
 			src.verbs += /client/proc/mimewall
 			src.miming = 1

@@ -1123,8 +1123,14 @@ var/showadminmessages = 1
 						alien_infestation()
 						message_admins("[key_name_admin(usr)] has spawned aliens", 1)
 				if("virus")
-					viral_outbreak()
-					message_admins("[key_name_admin(usr)] has spawned a virus outbreak", 1)
+					if(alert("Do you want this to be a random disease or do you have something in mind?",,"Random","Choose")=="Random")
+						viral_outbreak()
+						message_admins("[key_name_admin(usr)] has triggered a virus outbreak", 1)
+					else
+						var/list/viruses = list("fake gbs","gbs","magnitis","wizarditis",/*"beesease",*/"brain rot","cold","rhinovirus","flu")
+						var/V = input("Choose the virus to spread", "BIOHAZARD") in viruses
+						viral_outbreak(V)
+						message_admins("[key_name_admin(usr)] has triggered a virus outbreak of [V]", 1)
 				if("retardify")
 					if (src.rank in list("Shit Guy", "Coder", "Host"))
 						for(var/mob/living/carbon/human/H in world)
@@ -1161,7 +1167,7 @@ var/showadminmessages = 1
 				if("dorf")
 					if (src.rank in list("Shit Guy","Coder", "Host"))
 						for(var/mob/living/carbon/human/B in world)
-							B.face_icon_state = "facial_longbeard"
+							B.face_icon_state = "facial_wise"
 							B.update_face()
 						message_admins("[key_name_admin(usr)] activated dorf mode")
 					else
@@ -1494,7 +1500,7 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes (Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=goblob'>Spawn magma(Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
-<A href='?src=\ref[src];secretsfun=virus'>Trigger an Virus Outbreak</A><BR>
+<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
 <A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
 <A href='?src=\ref[src];secretsfun=cleanexcrement'>Remove all urine/poo from station</A><BR>
 <A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>

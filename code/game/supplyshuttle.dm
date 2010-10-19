@@ -153,8 +153,9 @@ var/supply_shuttle_points = 50
 					"/obj/item/weapon/storage/firstaid/syringes",
 					"/obj/item/weapon/storage/beakerbox")
 	cost = 20
-	containertype = "/obj/crate/freezer"
+	containertype = "/obj/crate/secure/weapon"
 	containername = "Virus crate"
+	access = access_heads
 
 
 /datum/supply_packs/janitor

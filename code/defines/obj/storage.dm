@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/utilitybelt
 	name = "utility belt"
 	desc = "Can hold various tools."
-	icon = 'old_or_unused.dmi'
+	icon = 'belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	can_hold = list("/obj/item/weapon/crowbar","/obj/item/weapon/screwdriver","/obj/item/weapon/weldingtool","/obj/item/weapon/wirecutters","/obj/item/weapon/wrench","/obj/item/device/multitool","/obj/item/device/flashlight","/obj/item/weapon/cable_coil")

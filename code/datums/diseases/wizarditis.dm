@@ -43,7 +43,7 @@ STI KALY - blind
 				return
 			if(prob(2))
 				affected_mob << "\red You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")]."
-			if(prob(5))
+		/*	if(prob(5))
 
 				var/list/theareas = new/list()
 				for(var/area/AR in world)
@@ -73,8 +73,8 @@ STI KALY - blind
 
 				affected_mob.loc = pick(L)
 				smoke.start()
-
-				return
+//Apparently it created a lagspike every time it was called -- Urist
+				return */
 	return
 
 

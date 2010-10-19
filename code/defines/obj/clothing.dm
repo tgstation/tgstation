@@ -340,7 +340,7 @@
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 
-/obj/item/clothing/mask/clown_hat
+/obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "You're gay for even considering wearing this."
 	icon_state = "clown"
@@ -955,3 +955,14 @@
 /obj/item/clothing/under/shorts/grey
 	icon_state = "greyshorts"
 	color = "greyshorts"
+
+// Belt slot clothing (only suspenders for now, because utility belt is a storage item)
+/obj/item/clothing/belt
+	name = "belt"
+	icon = 'belts.dmi'
+	flags = FPRINT | TABLEPASS | ONBELT
+
+/obj/item/clothing/belt/suspenders
+	name = "suspenders"
+	desc = "They suspend the illusion of the mime's play." //Meh -- Urist
+	icon_state = "suspenders"
