@@ -671,6 +671,7 @@
 	density = 1
 	anchored = 1
 	var/broken = 0
+	var/processing = 0
 
 /obj/machinery/gibber
 	name = "Gibber"
