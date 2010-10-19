@@ -463,7 +463,7 @@
 //			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/hydroponics(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
-			src.equip_if_possible(new /obj/item/clothing/gloves/latex(src), slot_gloves)
+			src.equip_if_possible(new /obj/item/clothing/gloves/botanic_leather(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/device/analyzer/plant_analyzer(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/clothing/suit/apron(src), slot_wear_suit)
 

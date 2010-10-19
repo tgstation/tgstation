@@ -3,8 +3,10 @@
 	max_stages = 3
 	spread = "Airborne"
 	cure = "Rest"
+	cure = "spaceacillin"
 	agent = "XY-rhinovirus"
 	affected_species = list("Human", "Monkey")
+	permeability_mod = -10
 
 /datum/disease/cold/stage_act()
 	..()

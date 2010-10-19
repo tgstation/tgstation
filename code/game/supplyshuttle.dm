@@ -147,6 +147,7 @@ var/supply_shuttle_points = 50
 					"/obj/item/weapon/reagent_containers/glass/bottle/cold",
 					"/obj/item/weapon/reagent_containers/glass/bottle/fake_gbs",
 					"/obj/item/weapon/reagent_containers/glass/bottle/magnitis",
+					"/obj/item/weapon/reagent_containers/glass/bottle/wizarditis",
 //					"/obj/item/weapon/reagent_containers/glass/bottle/gbs", No. Just no.
 					"/obj/item/weapon/reagent_containers/glass/bottle/brainrot",
 					"/obj/item/weapon/storage/firstaid/syringes",

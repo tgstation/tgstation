@@ -11,6 +11,8 @@
 	max_stages = 5
 	spread = "None"
 	cure = "Unknown"
+	cure_id = list("lexorin","toxin","gargleblaster")
+	cure_chance = 20
 	affected_species = list("Human", "Monkey")
 
 /datum/disease/alien_embryo/stage_act()

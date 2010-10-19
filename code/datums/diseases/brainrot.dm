@@ -3,9 +3,11 @@
 	max_stages = 4
 	spread = "Airborne"
 	cure = "Spaceacillin & Alkysine"
+	cure_id = list("alkysine","spaceacillin")
 	agent = "Cryptococcus Cosmosis"
 	affected_species = list("Human")
 	curable = 0
+	cure_chance = 10
 
 /datum/disease/brainrot/stage_act()
 	..()

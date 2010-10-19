@@ -3,6 +3,7 @@
 	max_stages = 4
 	spread = "Airborne"
 	cure = "Iron"
+	cure_id = "iron"
 	agent = "Fukkos Miracos"
 	affected_species = list("Human")
 	curable = 0
@@ -17,6 +18,9 @@
 				for(var/obj/M in orange(2,affected_mob))
 					if(!M.anchored && (M.flags & CONDUCT))
 						step_towards(M,affected_mob)
+				for(var/mob/living/silicon/S in orange(2,affected_mob))
+					if(istype(S, /mob/living/silicon/ai)) continue
+					step_towards(S,affected_mob)
 						/*
 						if(M.x > affected_mob.x)
 							M.x--
@@ -39,6 +43,12 @@
 						var/iter = rand(1,2)
 						for(i=0,i<iter,i++)
 							step_towards(M,affected_mob)
+				for(var/mob/living/silicon/S in orange(4,affected_mob))
+					if(istype(S, /mob/living/silicon/ai)) continue
+					var/i
+					var/iter = rand(1,2)
+					for(i=0,i<iter,i++)
+						step_towards(S,affected_mob)
 						/*
 						if(M.x > affected_mob.x)
 							M.x-=rand(1,min(3,M.x-affected_mob.x))
@@ -61,6 +71,12 @@
 						var/iter = rand(1,3)
 						for(i=0,i<iter,i++)
 							step_towards(M,affected_mob)
+				for(var/mob/living/silicon/S in orange(6,affected_mob))
+					if(istype(S, /mob/living/silicon/ai)) continue
+					var/i
+					var/iter = rand(1,3)
+					for(i=0,i<iter,i++)
+						step_towards(S,affected_mob)
 						/*
 						if(M.x > affected_mob.x)
 							M.x-=rand(1,min(5,M.x-affected_mob.x))

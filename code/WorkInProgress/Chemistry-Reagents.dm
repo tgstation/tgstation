@@ -592,7 +592,7 @@ datum
 			id = "iron"
 			description = "Pure iron is a metal."
 			reagent_state = SOLID
-
+/*
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				if((M.virus) && (prob(8) && (M.virus.name=="Magnitis")))
@@ -604,6 +604,7 @@ datum
 						M.virus = null
 				holder.remove_reagent(src.id, 0.2)
 				return
+*/
 
 		aluminium
 			name = "Aluminium"
@@ -952,15 +953,7 @@ datum
 			description = "An all-purpose antiviral agent."
 			reagent_state = LIQUID
 
-			on_mob_life(var/mob/M)
-				if(!M) M = holder.my_atom
-				if((M.virus) && (prob(8) && (M.virus.name!="Magnitis")))
-					if(M.virus.spread == "Airborne")
-						M.virus.spread = "Remissive"
-					M.virus.stage--
-					if(M.virus.stage <= 0)
-						M.resistances += M.virus.type
-						M.virus = null
+			on_mob_life(var/mob/M)//no more mr. panacea
 				holder.remove_reagent(src.id, 0.2)
 				return
 
@@ -1255,7 +1248,6 @@ datum
 			description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
-				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0

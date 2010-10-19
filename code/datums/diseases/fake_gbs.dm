@@ -2,7 +2,8 @@
 	name = "GBS"
 	max_stages = 5
 	spread = "Airborne"
-	cure = "Epilepsy Pills"
+	cure = "Synaptizine & Sulfur"
+	cure_id = list("synaptizine","sulfur")
 	agent = "Gravitokinetic Bipotential SADS-"
 	affected_species = list("Human")
 

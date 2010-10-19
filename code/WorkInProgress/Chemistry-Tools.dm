@@ -1218,7 +1218,7 @@
 		R.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/magnitis
-	name = "GBS culture bottle"
+	name = "Magnitis culture bottle"
 	desc = "A small bottle. Contains a small dosage of Fukkos Miracos."
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
@@ -1231,6 +1231,23 @@
 		var/datum/disease/F = new /datum/disease/magnitis
 		var/list/data = list("virus"= F)
 		R.add_reagent("blood", 20, data)
+
+
+/obj/item/weapon/reagent_containers/glass/bottle/wizarditis
+	name = "Wizarditis culture bottle"
+	desc = "A small bottle. Contains a sample of Rincewindus Vulgaris."
+	icon = 'chemical.dmi'
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 5
+
+	New()
+		var/datum/reagents/R = new/datum/reagents(20)
+		reagents = R
+		R.my_atom = src
+		var/datum/disease/F = new /datum/disease/wizarditis
+		var/list/data = list("virus"= F)
+		R.add_reagent("blood", 20, data)
+
 
 
 /obj/item/weapon/reagent_containers/glass/beaker

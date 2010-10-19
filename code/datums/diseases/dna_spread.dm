@@ -2,7 +2,8 @@
 	name = "Space Retrovirus"
 	max_stages = 4
 	spread = "Airborne"
-	cure = "Spaceacillin"
+	cure = "Ryetalin"
+	cure = "ryetalyn"
 	curable = 0
 	agent = "S4E1 retrovirus"
 	affected_species = list("Human")

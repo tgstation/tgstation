@@ -332,6 +332,10 @@
 				src.temphtml = "The replicator is not ready yet."
 			src.updateUsrDialog()
 			return
+		else if (href_list["empty_beaker"])
+			beaker.reagents.clear_reagents()
+			src.updateUsrDialog()
+			return
 		else if (href_list["eject"])
 			beaker:loc = src.loc
 			beaker = null
@@ -397,7 +401,7 @@
 						dat += "nothing<BR>"
 				else
 					dat += "nothing<BR>"
-			dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A><BR>"
+			dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
 			dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
 
 		user << browse("<TITLE>PanD.E.M.I.C 2200</TITLE><BR>[dat]", "window=pandemic;size=575x400")

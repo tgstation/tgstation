@@ -4,3 +4,4 @@
 	cure = "None"
 	spread = "Airborne"
 	affected_species = list("Monkey")
+	curable = 0

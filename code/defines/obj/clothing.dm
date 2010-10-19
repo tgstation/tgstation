@@ -99,7 +99,7 @@
 	icon_state = "latex"
 	item_state = "lgloves"
 	siemens_coefficient = 0.30
-
+	permeability_coefficient = 0.01
 	protective_temperature = 310
 	heat_transfer_coefficient = 0.90
 
@@ -128,9 +128,19 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 	siemens_coefficient = 0
-
+	permeability_coefficient = 0.05
 	protective_temperature = 1000
 	heat_transfer_coefficient = 0.01
+
+/obj/item/clothing/gloves/botanic_leather
+	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmfull objects of floral origin."
+	name = "botanic leather gloves"
+	icon_state = "leather"
+	item_state = "ggloves"
+	siemens_coefficient = 0.50
+	permeability_coefficient = 0.9
+	protective_temperature = 400
+	heat_transfer_coefficient = 0.70
 
 // HATS. OH MY WHAT A FINE CHAPEAU, GOOD SIR.
 
@@ -199,6 +209,7 @@
 	name = "Plague doctor's hat"
 	icon_state = "plaguedoctor"
 	flags = FPRINT | TABLEPASS | HEADSPACE
+	permeability_coefficient = 0.01
 
 /obj/item/clothing/head/beret
 	name = "beret"
@@ -224,6 +235,7 @@
 	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES | HEADCOVERSMOUTH
 	see_face = 0.0
 	item_state = "space"
+	permeability_coefficient = 0.01
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
@@ -343,6 +355,7 @@
 	w_class = 3
 	protective_temperature = 420
 	gas_transfer_coefficient = 0.10
+	permeability_coefficient = 0.10
 
 /obj/item/clothing/mask/muzzle
 	name = "muzzle"
@@ -454,6 +467,7 @@
 	desc = "A suit that protects against biological contamination."
 	icon_state = "bio"
 	item_state = "bio_suit"
+	w_class = 4//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -557,6 +571,7 @@
 	name = "Captain's armor"
 	icon_state = "caparmor"
 	item_state = "caparmor"
+	w_class = 4//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 
 /obj/item/clothing/suit/armor/centcomm
@@ -564,6 +579,7 @@
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
 	item_state = "centcom"
+	w_class = 4//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 
 /obj/item/clothing/suit/armor/heavy
@@ -571,6 +587,7 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "swat_suit"
+	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 
@@ -600,6 +617,7 @@
 	desc = "A suit that protects against fire and heat."
 	icon_state = "fire"
 	item_state = "fire_suit"
+	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
@@ -612,7 +630,7 @@
 	desc = "A suit that protects against extreme fire and heat."
 	icon_state = "thermal"
 	item_state = "ro_suit"
-
+	w_class = 4//bulky item
 	protective_temperature = 10000
 	heat_transfer_coefficient = 0.01
 
@@ -624,6 +642,7 @@
 	icon_state = "space"
 	gas_transfer_coefficient = 0.01
 	item_state = "s_suit"
+	w_class = 4//bulky item
 	flags = FPRINT | TABLEPASS | SUITSPACE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	permeability_coefficient = 0.02
