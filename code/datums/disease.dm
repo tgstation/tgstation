@@ -16,12 +16,13 @@
 	var/permeability_mod = 0//permeability modifier. Positive gives better chance, negative - worse.
 
 /datum/disease/proc/stage_act()
-	if(carrier)
-		//world << "[affected_mob] is carrier"
-		return
 
 	var/cure_present = has_cure()
 	//world << "[cure_present]"
+
+	if(carrier&&!cure_present)
+		//world << "[affected_mob] is carrier"
+		return
 
 	spread = (cure_present?"Remissive":initial(spread))
 
