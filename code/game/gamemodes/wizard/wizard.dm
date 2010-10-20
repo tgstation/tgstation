@@ -3,6 +3,7 @@
 	config_tag = "wizard"
 
 	var/datum/mind/wizard
+	var/list/datum/mind/wizards = list()
 	var/finished = 0
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
@@ -120,6 +121,8 @@
 
 
 	equip_wizard(wizard.current)
+
+	wizards += wizard.current
 
 	wizard.current << "<B>\red You are the Space Wizard!</B>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"

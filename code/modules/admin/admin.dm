@@ -1277,6 +1277,39 @@ var/showadminmessages = 1
 										var/turf/mob_loc = get_turf_loc(M)
 										dat += "<td>[mob_loc.loc]</td></tr>"
 								dat += "</table>"
+
+							if("changeling")
+								if(ticker.mode:changelings.len > 0)
+									dat += "<br><table cellspacing=5><tr><td><B>Changelings</B></td><td></td><td></td></tr>"
+									for(var/datum/mind/changeling in ticker.mode:changelings)
+										var/mob/M = changeling.current
+										if(M)
+											dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+											dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
+											dat += "<td><A HREF='?src=\ref[src];traitor=\ref[M]'>Show Objective</A></td></tr>"
+										else
+											dat += "<tr><td><i>Changeling not found!</i></td></tr>"
+									dat += "</table>"
+								else
+									dat += "There are no changelings."
+
+							/* this doesn't work
+							if("wizard")
+								if(ticker.mode:wizards.len > 0)
+									dat += "<br><table cellspacing=5><tr><td><B>Wizards</B></td><td></td><td></td></tr>"
+									for(var/datum/mind/wizard in ticker.mode:wizards)
+										var/mob/M = wizard.current
+										if(M)
+											dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+											dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
+											dat += "<td><A HREF='?src=\ref[src];traitor=\ref[M]'>Show Objective</A></td></tr>"
+										else
+											dat += "<tr><td><i>Wizard not found!</i></td></tr>"
+									dat += "</table>"
+								else
+									dat += "There are no wizards."
+							*/
+
 							else // i'll finish this later
 								if(ticker.mode.traitors.len > 0)
 									dat += "<br><table cellspacing=5><tr><td><B>Traitors</B></td><td></td><td></td></tr>"
