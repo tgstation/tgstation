@@ -673,6 +673,16 @@ var/showadminmessages = 1
 						t = "None defined."
 					alert("Is a WIZARD. Objective(s):\n[t]", "[M.key]")
 					return
+			if("changeling")
+				if(M.mind in current_mode:changelings)
+					var/datum/mind/antagonist = M.mind
+					var/t = ""
+					for(var/datum/objective/OB in antagonist.objectives)
+						t += "[OB.explanation_text]\n"
+					if(antagonist.objectives.len == 0)
+						t = "None defined."
+					alert("Is a CHANGELING. Objective(s):\n[t]", "[M.key]")
+					return
 			if("malfunction")
 				if(M.mind in current_mode:malf_ai)
 					alert("Is malfunctioning!")
@@ -1390,7 +1400,7 @@ var/showadminmessages = 1
 		for(var/mob/M in mobs)
 			if(M.ckey)
 
-				var/DBQuery/query = dbcon.NewQuery("SELECT karma FROM karmatotals WHERE byondkey='[M.ckey]'")
+				var/DBQuery/query = dbcon.NewQuery("SELECT karma FROM karmatotals WHERE byondkey='[M.key]'")
 				query.Execute()
 
 				var/currentkarma
