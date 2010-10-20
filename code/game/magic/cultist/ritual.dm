@@ -351,6 +351,7 @@ var/runedec = 0
 /obj/item/weapon/paper/talisman
 	icon_state = "papertalisman"
 	var/imbue = null
+	var/uses = 0
 
 	attack_self(mob/user as mob)
 		usr.bruteloss+=20
@@ -363,6 +364,14 @@ var/runedec = 0
 				call(/obj/rune/proc/obscure)(2)
 			if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar")
 				call(/obj/rune/proc/teleport)(imbue)
-		if(src)
+			if("communicate")
+				call(/obj/rune/proc/communicate)()
+			if("supply")
+				supply()
+		if(src && src.imbue!="supply")
 			del(src)
 		return
+
+/obj/item/weapon/paper/talisman/supply
+	imbue = "supply"
+	uses = 3

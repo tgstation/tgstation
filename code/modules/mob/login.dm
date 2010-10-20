@@ -42,4 +42,7 @@
 			if(ticker.mode.name == "revolution")
 				if ((src.mind in ticker.mode:revolutionaries) || (src.mind in ticker.mode:head_revolutionaries))
 					ticker.mode:update_rev_icons_added(src.mind)
+			if(ticker.mode.name == "cult")
+				if (src.mind in ticker.mode:cult)
+					ticker.mode:update_cult_icons_added(src.mind)
 	..()

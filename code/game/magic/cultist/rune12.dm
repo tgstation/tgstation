@@ -10,6 +10,7 @@
 				del(P)
 				var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(src.loc)
 				T.imbue = "[R.word3]"
+				T.info = "[R.word3]"
 				del(R)
 				del(src)
 				usr.say("H'drak v'loso, mir'kanas verbot!")

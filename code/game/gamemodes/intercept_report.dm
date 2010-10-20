@@ -28,6 +28,10 @@
 			src.text = ""
 			src.build_rev(correct_mob)
 			return src.text
+		if("cult")
+			src.text = ""
+			src.build_cult(correct_mob)
+			return src.text
 		if("wizard")
 			src.text = ""
 			src.build_wizard(correct_mob)
@@ -84,6 +88,33 @@
 	else
 		src.text += "discovered the following set of fingerprints ([fingerprints]) on sensitive materials, and their owner should be closely observed."
 		src.text += "However, these could also belong to a current Cent. Com employee, so do not act on this without reason."
+
+/datum/intercept_text/proc/build_cult(correct_mob)
+	var/name_1 = pick(src.org_names_1)
+	var/name_2 = pick(src.org_names_2)
+	var/traitor_name
+	var/traitor_job
+	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
+	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
+	if(prob(prob_right_job))
+		if (correct_mob)
+			traitor_job = correct_mob:assigned_role
+	else
+		var/list/job_tmp = get_all_jobs()
+		job_tmp.Remove("Captain", "Chaplain", "Security Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director")
+		traitor_job = pick(job_tmp)
+	if(prob(prob_right_dude) && ticker.mode == "cult")
+		traitor_name = correct_mob:current
+	else
+		traitor_name = src.pick_mob()
+
+	src.text += "<BR><BR>It has been brought to our attention that the [name_1] [name_2] have stumbled upon some dark secrets. They apparently want to spread the dangerous knowledge on as many stations as they can.<BR>"
+	src.text += "Based on our intelligence, we are [prob_right_job]% sure that if true, someone doing the job of [traitor_job] on your station may have been converted "
+	src.text += "and instilled with the idea of the flimsiness of the real world, seeking to destroy it. "
+	if(prob(prob_right_dude))
+		src.text += "<BR> In addition, we are [prob_right_dude]% sure that [traitor_name] may have also some in to contact with this "
+		src.text += "organisation."
+	src.text += "<BR>However, if this information is acted on without substantial evidence, those responsible will face severe repercussions."
 
 /datum/intercept_text/proc/build_rev(correct_mob)
 	var/name_1 = pick(src.org_names_1)

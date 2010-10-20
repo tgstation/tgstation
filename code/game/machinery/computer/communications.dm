@@ -391,7 +391,7 @@
 	if(ticker.mode.name == "blob" || ticker.mode.name == "Corporate Restructuring" || ticker.mode.name == "sandbox")
 		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
 		return
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
+	if(ticker.mode.name == "revolution" || ticker.mode.name == "cult" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
 		user << "Centcom will not allow the shuttle to be called."
 		return
 	if(ticker.mode.name == "nuclear emergency" && world.time < 6000)

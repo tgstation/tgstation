@@ -265,7 +265,7 @@ var/showadminmessages = 1
 			<A href='?src=\ref[src];c_mode2=blob'>Blob</A><br>
 			<A href='?src=\ref[src];c_mode2=sandbox'>Sandbox</A><br>
 			<A href='?src=\ref[src];c_mode2=revolution'>Revolution</A><br>
-			<A href='?src=\ref[src];c_mode2=malfunction'>AI Malfunction</A><br>
+			<A href='?src=\ref[src];c_mode2=cult'>Cult</A><br>			<A href='?src=\ref[src];c_mode2=malfunction'>AI Malfunction</A><br>
 			<A href='?src=\ref[src];c_mode2=deathmatch'>Death Commando Deathmatch</A><br>
 			<A href='?src=\ref[src];c_mode2=confliction'>Confliction (TESTING)</A><br>
 			<A href='?src=\ref[src];c_mode2=ctf'>Capture The Flag (Beta)</A><br><br>
@@ -302,6 +302,8 @@ var/showadminmessages = 1
 					master_mode = "wizard"
 				if("revolution")
 					master_mode = "revolution"
+				if("cult")
+					master_mode = "cult"
 				if("malfunction")
 					master_mode = "malfunction"
 				if("deathmatch")
@@ -663,6 +665,10 @@ var/showadminmessages = 1
 				else if(M.mind in current_mode:revolutionaries)
 					alert("Is a Revolutionary!")
 				return
+			if("cult")
+				if(M.mind in current_mode:cult)
+					alert("Is a Cultist!")
+					return
 			if("wizard")
 				if(current_mode:wizard && M.mind == current_mode:wizard)
 					var/datum/mind/antagonist = M.mind
@@ -1309,6 +1315,23 @@ var/showadminmessages = 1
 								else
 									dat += "There are no wizards."
 							*/
+
+							if("cult")
+								dat += "<br><table cellspacing=5><tr><td><B>Cultists</B></td><td></td></tr>"
+								for(var/datum/mind/N in ticker.mode:cult)
+									var/mob/M = N.current
+									if(M)
+										dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+										dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
+								dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
+								for(var/datum/mind/N in ticker.mode:get_living_heads())
+									var/mob/M = N.current
+									if(M)
+										dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+										dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
+										var/turf/mob_loc = get_turf_loc(M)
+										dat += "<td>[mob_loc.loc]</td></tr>"
+								dat += "</table>"
 
 							else // i'll finish this later
 								if(ticker.mode.traitors.len > 0)
@@ -1962,6 +1985,9 @@ var/showadminmessages = 1
 	switch(ticker.mode.config_tag)
 		if("revolution")
 			if(M.mind in (ticker.mode:head_revolutionaries + ticker.mode:revolutionaries))
+				return 1
+		if("cult")
+			if(M.mind in ticker.mode:cult)
 				return 1
 		if("malfunction")
 			if(M.mind in ticker.mode:malf_ai)
