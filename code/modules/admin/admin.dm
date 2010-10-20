@@ -13,7 +13,7 @@ var/showadminmessages = 1
 /proc/toggle_adminmsg()
 	set name = "Toggle Admin Messages"
 	set category = "Server"
-	showadminmessages = !showadminmessages
+	//showadminmessages = !showadminmessages
 
 /obj/admins/Topic(href, href_list)
 	..()
@@ -1352,33 +1352,75 @@ var/showadminmessages = 1
 
 /obj/admins/proc/player()
 	var/dat = "<html><head><title>Player Menu</title></head>"
-	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th></tr></B>"
+	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th><th>Karma</th></tr></B>"
 	//add <th>IP:</th> to this if wanting to add back in IP checking
 	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
 	var/list/mobs = sortmobs()
+	var/DBConnection/dbcon = new()
+	dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
+	if(!dbcon.IsConnected())
+		usr << "\red Unable to connect to karma database. This error can occur if your host has failed to set up an SQL database or improperly configured its login credentials.<br>"
 
-	for(var/mob/M in mobs)
-		if(M.ckey)
-			dat += "<tr><td>[M.name]</td>"
-			if(istype(M, /mob/living/silicon/ai))
-				dat += "<td>AI</td>"
-			if(istype(M, /mob/living/silicon/robot))
-				dat += "<td>Cyborg</td>"
-			if(istype(M, /mob/living/carbon/human))
-				dat += "<td>[M.real_name]</td>"
-			if(istype(M, /mob/new_player))
-				dat += "<td>New Player</td>"
-			if(istype(M, /mob/dead/observer))
-				dat += "<td>Ghost</td>"
-			if(istype(M, /mob/living/carbon/monkey))
-				dat += "<td>Monkey</td>"
-			if(istype(M, /mob/living/carbon/alien))
-				dat += "<td>Alien</td>"
-			dat += {"<td>[(M.client ? "[(M.client.goon ? "<font color=red>" : "<font>")][M.client]</font>" : "No client")]</td>
-			<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
-			<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
-			<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>[checktraitor(M) ? "<font color=red>" : "<font>"]Traitor?</font></A></td></tr>
-			"}
+		for(var/mob/M in mobs)
+			if(M.ckey)
+				dat += "<tr><td>[M.name]</td>"
+				if(istype(M, /mob/living/silicon/ai))
+					dat += "<td>AI</td>"
+				if(istype(M, /mob/living/silicon/robot))
+					dat += "<td>Cyborg</td>"
+				if(istype(M, /mob/living/carbon/human))
+					dat += "<td>[M.real_name]</td>"
+				if(istype(M, /mob/new_player))
+					dat += "<td>New Player</td>"
+				if(istype(M, /mob/dead/observer))
+					dat += "<td>Ghost</td>"
+				if(istype(M, /mob/living/carbon/monkey))
+					dat += "<td>Monkey</td>"
+				if(istype(M, /mob/living/carbon/alien))
+					dat += "<td>Alien</td>"
+				dat += {"<td>[(M.client ? "[(M.client.goon ? "<font color=red>" : "<font>")][M.client]</font>" : "No client")]</td>
+				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
+				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
+				<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>[checktraitor(M) ? "<font color=red>" : "<font>"]Traitor?</font></A></td>
+				"}
+				dat += "<td><font color=red>NOT CONNECTED</font></td></tr>"
+
+	else
+
+		for(var/mob/M in mobs)
+			if(M.ckey)
+
+				var/DBQuery/query = dbcon.NewQuery("SELECT karma FROM karmatotals WHERE byondkey='[M.ckey]'")
+				query.Execute()
+
+				var/currentkarma
+				while(query.NextRow())
+					currentkarma = query.item[1]
+
+				dat += "<tr><td>[M.name]</td>"
+				if(istype(M, /mob/living/silicon/ai))
+					dat += "<td>AI</td>"
+				if(istype(M, /mob/living/silicon/robot))
+					dat += "<td>Cyborg</td>"
+				if(istype(M, /mob/living/carbon/human))
+					dat += "<td>[M.real_name]</td>"
+				if(istype(M, /mob/new_player))
+					dat += "<td>New Player</td>"
+				if(istype(M, /mob/dead/observer))
+					dat += "<td>Ghost</td>"
+				if(istype(M, /mob/living/carbon/monkey))
+					dat += "<td>Monkey</td>"
+				if(istype(M, /mob/living/carbon/alien))
+					dat += "<td>Alien</td>"
+				dat += {"<td>[(M.client ? "[(M.client.goon ? "<font color=red>" : "<font>")][M.client]</font>" : "No client")]</td>
+				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
+				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
+				<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>[checktraitor(M) ? "<font color=red>" : "<font>"]Traitor?</font></A></td>
+				"}
+				if(currentkarma)
+					dat += "<td>[currentkarma]</td></tr>"
+				else
+					dat += "<td>0</td></tr>"
 
 	dat += "</table></body></html>"
 
