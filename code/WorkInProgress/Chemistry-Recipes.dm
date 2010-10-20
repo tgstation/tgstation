@@ -514,3 +514,73 @@ datum
 			result = "manlydorf"
 			required_reagents = list ("beer" = 1, "ale" = 2)
 			result_amount = 5
+
+		hooch
+			name = "Hooch"
+			id = "hooch"
+			result = "hooch"
+			required_reagents = list ("sugar" = 1, "ethanol" = 2, "fuel" = 1)
+			result_amount = 5
+
+		irish_coffee
+			name = "Irish Coffee"
+			id = "irishcoffee"
+			result = "irishcoffee"
+			required_reagents = list("irishcream" = 2, "coffee" = 2)
+			result_amount = 5
+
+		b52
+			name = "B-52"
+			id = "b52"
+			result = "b52"
+			required_reagents = list("irishcream" = 1, "kahlua" = 1, "cognac" = 1)
+			result_amount = 5
+
+		margarita
+			name = "Margarita"
+			id = "margarita"
+			result = "margarita"
+			required_reagents = list("tequilla" = 2, "limejuice" = 1)
+			result_amount = 5
+
+		longislandicedtea
+			name = "Long Island Iced Tea"
+			id = "longislandicedtea"
+			result = "longislandicedtea"
+			required_reagents = list("vodka" = 1, "gin" = 1, "tequilla" = 1, "cubalibre" = 1)
+			result_amount = 5
+
+		whiskeysoda
+			name = "Whiskey Soda"
+			id = "whiskeysoda"
+			result = "whiskeysoda"
+			required_reagents = list("whiskey" = 2, "sodawater" = 1)
+			result_amount = 5
+
+		black_russian
+			name = "Black Russian"
+			id = "blackrussian"
+			result = "blackrussian"
+			required_reagents = list("vodka" = 3, "kahlua" = 2)
+			result_amount = 5
+
+		manhattan
+			name = "Manhattan	"
+			id = "manhattan"
+			result = "manhattan"
+			required_reagents = list("whiskey" = 2, "vermouth" = 1)
+			result_amount = 5
+
+		vodka_tonic
+			name = "Vodka and Tonic"
+			id = "vodkatonic"
+			result = "vodkatonic"
+			required_reagents = list("vodka" = 2, "tonic" = 1)
+			result_amount = 5
+
+		gin_fizz
+			name = "Gin Fizz"
+			id = "ginfizz"
+			result = "ginfizz"
+			required_reagents = list("gin" = 2, "sodawater" = 1, "limejuice" = 1)
+			result_amount = 5

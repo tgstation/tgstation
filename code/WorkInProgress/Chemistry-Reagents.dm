@@ -1317,7 +1317,17 @@ datum
 					M:confused += 2
 				..()
 
-
+		sodawater
+			name = "Soda Water"
+			id = "sodawater"
+			description = "A can of club soda. Why not make a scotch and soda?"
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				..()
+				M.dizziness = max(0,M.dizziness-5)
+				M:drowsyness = max(0,M:drowsyness-3)
+				M:sleeping = 0
+				M.bodytemperature = min(310, M.bodytemperature-5)
 /////////////////////////////////////////////////////////////////cocktail entities//////////////////////////////////////////////
 
 
@@ -1613,3 +1623,185 @@ datum
 					M.confused += 3
 				..()
 				return
+
+		longislandicedtea
+			name = "Long Island Iced Tea"
+			id = "longislandicedtea"
+			description = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(4)
+				M.jitteriness = max(M:jitteriness-5,0)
+				if(data >= 30)
+					if (!M.stuttering) M:stuttering = 1
+					M.stuttering += 4
+				if(data >= 50 && prob(33))
+					if (!M.confused) M:confused = 1
+					M.confused += 3
+					M.confused += 3
+				..()
+				return
+
+		hooch
+			name = "Hooch"
+			id = "hooch"
+			description = "You've really hit rock bottom now... your liver packed its bags and left last night."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(4)
+				M.jitteriness = max(M:jitteriness-5,0)
+				if(data >= 30)
+					if (!M.stuttering) M:stuttering = 1
+					M.stuttering += 4
+				if(data >= 50 && prob(33))
+					if (!M.confused) M:confused = 1
+					M.confused += 3
+					M.confused += 3
+				..()
+				return
+
+		b52
+			name = "B-52"
+			id = "b52"
+			description = "Coffee, Irish Cream, and congac. You will get bombed."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M.jitteriness = max(M:jitteriness-4,0)
+				if(data >= 30)
+					if (!M.stuttering) M:stuttering = 1
+					M.stuttering += 3
+				if(data >= 50 && prob(33))
+					if (!M.confused) M:confused = 1
+					M.confused += 2
+
+		irishcoffee
+			name = "Irish Coffee"
+			id = "irishcoffee"
+			description = "Coffee, and alcohol. More fun than a Mimosa to drink in the morning."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M.jitteriness = max(M:jitteriness-4,0)
+				if(data >= 30)
+					if (!M.stuttering) M:stuttering = 1
+					M.stuttering += 3
+				if(data >= 50 && prob(33))
+					if (!M.confused) M:confused = 1
+					M.confused += 2
+
+		margarita
+			name = "Margarita"
+			id = "margarita"
+			description = "On the rocks with salt on the rim. Arriba~!"
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M.jitteriness = max(M:jitteriness-4,0)
+				if(data >= 30)
+					if (!M.stuttering) M:stuttering = 1
+					M.stuttering += 3
+				if(data >= 50 && prob(33))
+					if (!M.confused) M:confused = 1
+					M.confused += 2
+				..()
+
+		black_russian
+			name = "Black Russian"
+			id = "blackrussian"
+			description = "For the lactose-intolerant. Still as classy as a White Russian."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M.jitteriness = max(M.jitteriness-3,0)
+				if(data >= 35)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				if(data >= 60 && prob(33))
+					if (!M:confused) M.confused = 1
+					M.confused += 2
+				..()
+
+		manhattan
+			name = "Manhattan"
+			id = "manhattan"
+			description = "The Detective's undercover drink of choice. He never could stomach gin..."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M.jitteriness = max(M.jitteriness-3,0)
+				if(data >= 30)
+					if (!M:stuttering) M.stuttering = 1
+					M.stuttering += 3
+				if(data >= 50 && prob(33))
+					if (!M.confused) M.confused = 1
+					M.confused += 2
+				..()
+
+		whiskeysoda
+			name = "Whiskey Soda"
+			id = "whiskeysoda"
+			description = "Ultimate refreshment."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M.jitteriness = max(M.jitteriness-3,0)
+				if(data >= 35)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				if(data >= 65 && prob(33))
+					if (!M.confused) M.confused = 1
+					M:confused += 2
+				..()
+
+		vodkatonic
+			name = "Vodka and Tonic"
+			id = "vodkatonic"
+			description = "For when a gin and tonic isn't russian enough."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M.jitteriness = max(M.jitteriness-3,0)
+				if(data >= 35)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				if(data >= 55 && prob(33))
+					if (!M.confused) M.confused = 1
+					M.confused += 2
+				..()
+
+		ginfizz
+			name = "Gin Fizz"
+			id = "ginfizz"
+			description = "Refreshingly lemony, deliciously dry."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M.jitteriness = max(M.jitteriness-3,0)
+				if(data >= 35)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				if(data >= 55 && prob(33))
+					if (!M.confused) M.confused = 1
+					M.confused += 2
+				..()

@@ -1781,7 +1781,16 @@
 		R.my_atom = src
 		R.add_reagent("tonic", 50)
 
-
+/obj/item/weapon/reagent_containers/food/drinks/sodawater
+	name = "Soda Water"
+	desc = "A can of soda water. Why not make a scotch and soda?"
+	icon_state = "sodawater"
+	heal_amt = 2
+	New()
+		var/datum/reagents/R = new/datum/reagents(50)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("sodawater", 50)
 
 
 //Pills
@@ -2049,6 +2058,66 @@
 					icon_state = "cubalibreglass"
 					name = "Cuba Libre"
 					desc = "A classic mix of rum and cola."
+				if("irishcream")
+					icon_state = "irishcreamglass"
+					name = "Irish Cream"
+					desc = "It's cream, mixed with whiskey. What else would you expect from the Irish?"
+				if("cubalibre")
+					icon_state = "cubalibreglass"
+					name = "Cuba Libre"
+					desc = "A classic mix of rum and cola."
+				if("b52")
+					icon_state = "b52glass"
+					name = "B-52"
+					desc = "Kahlua, Irish Cream, and congac. You will get bombed."
+				if("longislandicedtea")
+					icon_state = "longislandicedteaglass"
+					name = "Long Island Iced Tea"
+					desc = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
+				if("margarita")
+					icon_state = "margaritaglass"
+					name = "Margarita"
+					desc = "On the rocks with salt on the rim. Arriba~!"
+				if("blackrussian")
+					icon_state = "blackrussianglass"
+					name = "Black Russian"
+					desc = "For the lactose-intolerant. Still as classy as a White Russian."
+				if("vodkatonic")
+					icon_state = "vodkatonicglass"
+					name = "Vodka and Tonic"
+					desc = "For when a gin and tonic isn't russian enough."
+				if("manhattan")
+					icon_state = "manhattanglass"
+					name = "Manhattan"
+					desc = "The Detective's undercover drink of choice. He never could stomach gin..."
+				if("ginfizz")
+					icon_state = "ginfizzglass"
+					name = "Gin Fizz"
+					desc = "Refreshingly lemony, deliciously dry."
+				if("irishcoffee")
+					icon_state = "irishcoffeeglass"
+					name = "Irish Coffee"
+					desc = "Coffee and alcohol. More fun than a Mimosa to drink in the morning."
+				if("hooch")
+					icon_state = "glass_brown2"
+					name = "Hooch"
+					desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
+				if("whiskeysoda")
+					icon_state = "whiskeysodaglass2"
+					name = "Whiskey Soda"
+					desc = "Ultimate refreshment."
+				if("tonic")
+					icon_state = "glass_clear"
+					name = "Glass of Tonic Water"
+					desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
+				if("sodawater")
+					icon_state = "glass_clear"
+					name = "Glass of Soda Water"
+					desc = "Soda water. Why not make a scotch and soda?"
+				if("water")
+					icon_state = "glass_clear"
+					name = "Glass of Water"
+					desc = "Are you really that boring?"
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"

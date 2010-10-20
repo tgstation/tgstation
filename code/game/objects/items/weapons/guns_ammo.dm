@@ -404,27 +404,27 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				return 1
 			else if (src.s3 == 0)
 				del(A)
-				src.s2 = 1
+				src.s3 = 1
 				return 1
 			else if (src.s4 == 0)
 				del(A)
-				src.s2 = 1
+				src.s4 = 1
 				return 1
 			else if (src.s5 == 0)
 				del(A)
-				src.s2 = 1
+				src.s5 = 1
 				return 1
 			else if (src.s6 == 0)
 				del(A)
-				src.s2 = 1
+				src.s6 = 1
 				return 1
 			else if (src.s7 == 0)
 				del(A)
-				src.s2 = 1
+				src.s7 = 1
 				return 1
 			else if (src.s8 == 0)
 				del(A)
-				src.s2 = 1
+				src.s8 = 1
 				return 1
 			return 1
 		return 1
@@ -446,27 +446,27 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				return 1
 			else if (src.s3 == 0)
 				del(A)
-				src.s2 = 2
+				src.s3 = 2
 				return 1
 			else if (src.s4 == 0)
 				del(A)
-				src.s2 = 2
+				src.s4 = 2
 				return 1
 			else if (src.s5 == 0)
 				del(A)
-				src.s2 = 2
+				src.s5 = 2
 				return 1
 			else if (src.s6 == 0)
 				del(A)
-				src.s2 = 2
+				src.s6 = 2
 				return 1
 			else if (src.s7 == 0)
 				del(A)
-				src.s2 = 2
+				src.s7 = 2
 				return 1
 			else if (src.s8 == 0)
 				del(A)
-				src.s2 = 2
+				src.s8 = 2
 				return 1
 			return 1
 		return 1
@@ -488,27 +488,27 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				return 1
 			else if (src.s3 == 0)
 				del(A)
-				src.s2 = 3
+				src.s3 = 3
 				return 1
 			else if (src.s4 == 0)
 				del(A)
-				src.s2 = 3
+				src.s4 = 3
 				return 1
 			else if (src.s5 == 0)
 				del(A)
-				src.s2 = 3
+				src.s5 = 3
 				return 1
 			else if (src.s6 == 0)
 				del(A)
-				src.s2 = 3
+				src.s6 = 3
 				return 1
 			else if (src.s7 == 0)
 				del(A)
-				src.s2 = 3
+				src.s7 = 3
 				return 1
 			else if (src.s8 == 0)
 				del(A)
-				src.s2 = 3
+				src.s8 = 3
 				return 1
 			return 1
 		return 1
