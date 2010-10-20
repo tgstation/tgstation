@@ -101,6 +101,7 @@
 				cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordself] is self..."
 			if("8")
 				cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordsee] is see..."
+		cultists.Add(cult_mob)
 
 /datum/game_mode/cult/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
