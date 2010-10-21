@@ -70,7 +70,7 @@ to null does not delete the object itself. Thank you.
 
 
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0)
-	world << "Contract_disease called by [src] with virus [virus]"
+	//world << "Contract_disease called by [src] with virus [virus]"
 
 	if(skip_this == 1)
 		if(src.virus)
