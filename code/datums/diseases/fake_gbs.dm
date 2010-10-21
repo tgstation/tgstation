@@ -1,11 +1,14 @@
 /datum/disease/fake_gbs
 	name = "GBS"
 	max_stages = 5
-	spread = "Airborne"
+	spread = "On contact"
+	spread_type = CONTACT_GENERAL
 	cure = "Synaptizine & Sulfur"
 	cure_id = list("synaptizine","sulfur")
 	agent = "Gravitokinetic Bipotential SADS-"
 	affected_species = list("Human")
+	desc = "If left untreated death will occur."
+	severity = "Major"
 
 /datum/disease/fake_gbs/stage_act()
 	..()

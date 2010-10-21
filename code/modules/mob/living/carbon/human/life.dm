@@ -801,39 +801,9 @@
 
 		handle_virus_updates()
 			if(src.bodytemperature > 406)
-				src.resistances += src.virus
-				src.virus = null
+				src.virus.cure()
+			return
 
-			if(!src.virus)
-				if(prob(40))
-					for(var/mob/living/carbon/M in oviewers(4, src))
-						if(M.virus && M.virus.spread == "Airborne")
-							if(M.virus.affected_species.Find("Human"))
-								if(src.resistances.Find(M.virus.type))
-									continue
-								var/datum/disease/D = new M.virus.type //Making sure strain_data is preserved
-								D.strain_data = M.virus.strain_data
-								src.contract_disease(D)
-
-					for(var/obj/decal/cleanable/blood/B in view(4, src))
-						if(B.virus && B.virus.spread == "Airborne")
-							if(B.virus.affected_species.Find("Human"))
-								if(src.resistances.Find(B.virus.type))
-									continue
-								var/datum/disease/D = new B.virus.type
-								D.strain_data = B.virus.strain_data
-								src.contract_disease(D)
-
-					for(var/obj/decal/cleanable/xenoblood/X in view(4, src))
-						if(X.virus && X.virus.spread == "Airborne")
-							if(X.virus.affected_species.Find("Human"))
-								if(src.resistances.Find(X.virus.type))
-									continue
-								var/datum/disease/D = new X.virus.type
-								D.strain_data = X.virus.strain_data
-								src.contract_disease(D)
-			else
-				src.virus.stage_act()
 
 		check_if_buckled()
 			if (src.buckled)

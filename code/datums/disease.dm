@@ -1,3 +1,18 @@
+#define SPECIAL 0
+#define CONTACT_GENERAL 1
+#define CONTACT_HANDS 2
+#define CONTACT_FEET 3
+#define AIRBORNE 4
+
+/*
+
+IMPORTANT NOTE: Please delete the diseases by using cure() proc or del() instruction.
+Diseases are referenced in global list, so simply setting mob or obj vars
+to null does not delete the object itself. Thank you.
+
+*/
+
+
 /datum/disease
 	var/name = "No disease"
 	var/stage = 1 //all diseases start at stage 1
@@ -6,14 +21,19 @@
 	var/cure_id = null// reagent.id or list containing them
 	var/cure_chance = 8//chance for the cure to do its job
 	var/spread = null
+	var/spread_type = AIRBORNE
+	var/contagious_period = 0//the disease stage when it can be spread
 	var/list/affected_species = list()
 	var/mob/affected_mob = null
+	var/holder = null
 	var/carrier = 0.0 //there will be a small chance that the person will be a carrier
 	var/curable = 1 //can this disease be cured? (By itself...)
 	var/list/strain_data = list() //This is passed on to infectees
 	var/stage_prob = 5		// probability of advancing to next stage, default 5% per check
 	var/agent = "some microbes"//name of the disease agent
-	var/permeability_mod = 0//permeability modifier. Positive gives better chance, negative - worse.
+	var/permeability_mod = 1//permeability modifier coefficient.
+	var/desc = null//description. Leave it null and this disease won't show in med records.
+	var/severity = null//severity descr
 
 /datum/disease/proc/stage_act()
 
@@ -32,9 +52,8 @@
 		stage++
 	if(stage != 1 && (prob(1) || (cure_present && prob(cure_chance))))
 		stage--
-	else if(stage == 1 && ((prob(1) && affected_mob.virus.curable) || (cure_present && prob(cure_chance))))
-		affected_mob.resistances += affected_mob.virus.type
-		affected_mob.virus = null
+	else if(stage <= 1 && ((prob(1) && src.curable) || (cure_present && prob(cure_chance))))
+		src.cure()
 		return
 	return
 
@@ -51,18 +70,25 @@
 
 
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0)
+	world << "Contract_disease called by [src] with virus [virus]"
 
-	if(src.resistances.Find(virus.type))
-		if(prob(99)) return
-		src.resistances.Remove(virus.type)//the resistance is futile
-
-	//For alien egg and stuff
 	if(skip_this == 1)
-		src.virus = virus
+		if(src.virus)
+			src.virus.cure(0)
+		src.virus = new virus.type
 		src.virus.affected_mob = src
+		src.virus.strain_data = virus.strain_data.Copy()
+		src.virus.holder = src
 		if(prob(5))
 			src.virus.carrier = 1
 		return
+
+	if(src.virus) return
+
+	if(src.resistances.Find(virus.type))
+		if(prob(99.9)) return
+		src.resistances.Remove(virus.type)//the resistance is futile
+
 /*
 	var/list/clothing_areas	= list()
 	var/list/covers = list(UPPER_TORSO,LOWER_TORSO,LEGS,FEET,ARMS,HANDS)
@@ -76,11 +102,36 @@
 					clothing_areas[Covers] += Clothing
 
 */
-	if(prob(15)) return
+	if(prob(15/virus.permeability_mod)) return
 
 	var/obj/item/clothing/Cl = null
 	var/passed = 1
-	var/target_zone = pick(1,2,50;3,50;4)//1 - head, 2 - body, 3 - hands, 4- feet
+
+	//chances to target this zone
+	var/head_ch
+	var/body_ch
+	var/hands_ch
+	var/feet_ch
+
+	switch(virus.spread_type)
+		if(CONTACT_HANDS)
+			head_ch = 0
+			body_ch = 0
+			hands_ch = 100
+			feet_ch = 0
+		if(CONTACT_FEET)
+			head_ch = 0
+			body_ch = 0
+			hands_ch = 0
+			feet_ch = 100
+		else
+			head_ch = 100
+			body_ch = 100
+			hands_ch = 25
+			feet_ch = 25
+
+
+	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)//1 - head, 2 - body, 3 - hands, 4- feet
 
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
@@ -89,38 +140,38 @@
 			if(1)
 				if(H.head)
 					Cl = H.head
-					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
+					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 					//world << "Head pass [passed]"
 				if(passed && H.wear_mask)
 					Cl = H.wear_mask
-					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
+					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 					//world << "Mask pass [passed]"
 			if(2)//arms and legs included
 				if(H.wear_suit)
 					Cl = H.wear_suit
-					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
+					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 					//world << "Suit pass [passed]"
 				if(passed && H.slot_w_uniform)
 					Cl = H.slot_w_uniform
-					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
+					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 					//world << "Uniform pass [passed]"
 			if(3)
 				if(H.wear_suit && H.wear_suit.body_parts_covered&HANDS)
 					Cl = H.wear_suit
-					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
+					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 
 				if(passed && H.gloves)
 					Cl = H.gloves
-					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
+					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 					//world << "Gloves pass [passed]"
 			if(4)
 				if(H.wear_suit && H.wear_suit.body_parts_covered&FEET)
 					Cl = H.wear_suit
-					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
+					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 
 				if(passed && H.shoes)
 					Cl = H.shoes
-					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
+					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 					//world << "Shoes pass [passed]"
 			else
 				src << "Something strange's going on, something's wrong."
@@ -141,8 +192,8 @@
 					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
 					//world << "Mask pass [passed]"
 
-	if(passed && virus.spread=="Airborne" && src.internals)
-		passed = prob(60)
+	if(passed && virus.spread_type == AIRBORNE && src.internals)
+		passed = (prob(50*virus.permeability_mod))
 
 	if(passed)
 //		world << "Infection in the mob [src]. YAY"
@@ -175,9 +226,64 @@
 	else if(prob(15))
 		return
 	else*/
-		src.virus = virus
+		src.virus = new virus.type
+		src.virus.strain_data = virus.strain_data.Copy()
 		src.virus.affected_mob = src
+		src.virus.holder = src
 		if(prob(5))
 			src.virus.carrier = 1
 		return
 	return
+
+
+/datum/disease/proc/spread(var/source=null)
+	//world << "Disease [src] proc spread was called from holder [source]"
+	if(src.spread_type == SPECIAL)//does not spread
+		return
+
+	if(src.stage < src.contagious_period) //the disease is not contagious at this stage
+		return
+
+	if(!source)//no holder specified
+		if(src.affected_mob)//no mob affected holder
+			source = src.affected_mob
+		else //no source and no mob affected. Rogue disease. Break
+			return
+
+
+	var/check_range = AIRBORNE//defaults to airborne - range 4
+	if(src.spread_type != AIRBORNE)
+		check_range = 1
+
+	for(var/mob/living/carbon/M in oviewers(check_range, source))
+		for(var/name in src.affected_species)
+			var/mob_type = text2path("/mob/living/carbon/[lowertext(name)]")
+			if(mob_type && istype(M, mob_type))
+				M.contract_disease(src)
+				break
+	return
+
+
+/datum/disease/proc/process()
+	if(!src.holder) return
+	if(prob(40))
+		src.spread(holder)
+	if(src.holder == src.affected_mob)
+		src.stage_act()
+	return
+
+/datum/disease/proc/cure(var/resistance=1)
+	var/datum/disease/D = src
+	src = null
+	if(resistance && src.affected_mob && !affected_mob.resistances.Find(D.type))
+		affected_mob.resistances += D.type
+	del(D)
+
+
+/datum/disease/New()
+	active_diseases += src
+
+/*
+/datum/disease/Del()
+	active_diseases.Remove(src)
+*/

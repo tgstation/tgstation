@@ -74,9 +74,9 @@ datum
 					var/datum/disease/V = self.data["virus"]
 					if(M.resistances.Find(V.type)) return
 					if(method == TOUCH)//respect all protective clothing...
-						M.contract_disease(new V.type)
+						M.contract_disease(V)
 					else //injected
-						M.contract_disease(new V.type, 1)
+						M.contract_disease(V, 1)
 				return
 
 
@@ -84,6 +84,7 @@ datum
 				var/datum/reagent/blood/self = src
 				src = null
 				if(!istype(T, /turf/simulated/)) return
+				var/datum/disease/D = self.data["virus"]
 				if(istype(self.data["donor"], /mob/living/carbon/human) || !self.data["donor"])
 					var/turf/simulated/source2 = T
 					var/list/objsonturf = range(0,T)
@@ -94,19 +95,36 @@ datum
 					var/obj/decal/cleanable/blood/blood_prop = new /obj/decal/cleanable/blood(source2)
 					blood_prop.blood_DNA = self.data["blood_DNA"]
 					blood_prop.blood_type = self.data["blood_type"]
-					blood_prop.virus = self.data["virus"]
+					if(D)
+						blood_prop.virus = new D.type
+						blood_prop.virus.holder = blood_prop
+					if(istype(T, /turf/simulated/floor))
+						blood_prop.virus.spread_type = CONTACT_FEET
+					else
+						blood_prop.virus.spread_type = CONTACT_HANDS
 
 				else if(istype(self.data["donor"], /mob/living/carbon/monkey))
 					var/turf/simulated/source1 = T
 					var/obj/decal/cleanable/blood/blood_prop = new /obj/decal/cleanable/blood(source1)
 					blood_prop.blood_DNA = self.data["blood_DNA"]
-					blood_prop.virus = self.data["virus"]
+					if(D)
+						blood_prop.virus = new D.type
+						blood_prop.virus.holder = blood_prop
+					if(istype(T, /turf/simulated/floor))
+						blood_prop.virus.spread_type = CONTACT_FEET
+					else
+						blood_prop.virus.spread_type = CONTACT_HANDS
 
 				else if(istype(self.data["donor"], /mob/living/carbon/alien))
 					var/turf/simulated/source2 = T
 					var/obj/decal/cleanable/xenoblood/blood_prop = new /obj/decal/cleanable/xenoblood(source2)
-					blood_prop.virus = self.data["virus"]
-
+					if(D)
+						blood_prop.virus = new D.type
+						blood_prop.virus.holder = blood_prop
+					if(istype(T, /turf/simulated/floor))
+						blood_prop.virus.spread_type = CONTACT_FEET
+					else
+						blood_prop.virus.spread_type = CONTACT_HANDS
 				return
 
 		vaccine
@@ -119,8 +137,8 @@ datum
 				var/datum/reagent/vaccine/self = src
 				src = null
 				if(self.data&&method == INGEST)
-					if(M.resistances.Find(self.data)) return
-					M.resistances += self.data
+					if(M.virus&&M.virus.type == self.data)
+						M.virus.cure()
 				return
 
 
@@ -967,9 +985,9 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					if(!M.virus)
-						M.virus = new /datum/disease/robotic_transformation
-						M.virus.affected_mob = M
+					var/datum/disease/D = new /datum/disease/robotic_transformation
+					M.contract_disease(D,1)
+					del(D)
 
 		xenomicrobes
 			name = "Xenomicrobes"
@@ -979,9 +997,9 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					if(!M.virus)
-						M.virus = new /datum/disease/xeno_transformation
-						M.virus.affected_mob = M
+					var/datum/disease/D = new /datum/disease/xeno_transformation
+					M.contract_disease(D,1)
+					del(D)
 
 //foam precursor
 

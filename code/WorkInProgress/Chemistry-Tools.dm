@@ -357,6 +357,18 @@
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
+	var/list/can_be_placed_into = list(
+	/obj/machinery/chem_master/,
+	/obj/table,
+	/obj/secure_closet,
+	/obj/closet,
+	/obj/item/weapon/storage,
+	/obj/machinery/atmospherics/unary/cryo_cell,
+	/obj/item/weapon/chem_grenade,
+	/obj/machinery/bot/medbot,
+	/obj/machinery/pandemic,
+	/obj/item/weapon/secstorage/ssafe)
+
 	examine()
 		set src in view(2)
 		..()
@@ -374,7 +386,8 @@
 		R.my_atom = src
 
 	afterattack(obj/target, mob/user , flag)
-
+		if(src.can_be_placed_into.Find(target.type))
+			return
 		if(ismob(target) && target.reagents && reagents.total_volume)
 			user << "\blue You splash the solution onto [target]."
 			for(var/mob/O in viewers(world.view, user))
@@ -407,7 +420,7 @@
 			var/trans = src.reagents.trans_to(target, 10)
 			user << "\blue You transfer [trans] units of the solution to [target]."
 
-		else if(reagents.total_volume  && !istype(target,/obj/machinery/chem_master/) && !istype(target,/obj/table) && !istype(target,/obj/secure_closet) && !istype(target,/obj/closet) && !istype(target,/obj/item/weapon/storage) && !istype(target, /obj/machinery/atmospherics/unary/cryo_cell) && !istype(target, /obj/item/weapon/chem_grenade) && !istype(target, /obj/machinery/bot/medbot) &&!istype(target, /obj/machinery/pandemic))
+		else if(reagents.total_volume)
 			user << "\blue You splash the solution onto [target]."
 			src.reagents.reaction(target, TOUCH)
 			spawn(5) src.reagents.clear_reagents()
@@ -547,7 +560,7 @@
 						B.volume = amount
 						//set reagent data
 						B.data["donor"] = T
-						if(T.virus)
+						if(T.virus && T.virus.spread_type != SPECIAL)
 							B.data["virus"] = new T.virus.type
 						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
 						if(T.resistances&&T.resistances.len)

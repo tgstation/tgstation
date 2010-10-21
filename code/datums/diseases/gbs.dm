@@ -1,7 +1,8 @@
 /datum/disease/gbs
 	name = "GBS"
 	max_stages = 5
-	spread = "Airborne"
+	spread = "On contact"
+	spread_type = CONTACT_GENERAL
 	cure = "Synaptizine & Sulfur"
 	cure_id = list("synaptizine","sulfur")
 	agent = "Gravitokinetic Bipotential SADS+"

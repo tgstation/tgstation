@@ -4,10 +4,12 @@
 	spread = "Airborne"
 	cure = "Spaceacillin"
 	cure_id = "spaceacillin"
+	cure_chance = 10
 	agent = "H13N1 flu virion"
 	affected_species = list("Human")
-	curable = 0
-	permeability_mod = -5
+	permeability_mod = 0.75
+	desc = "If left untreated the subject will feel quite unwell."
+	severity = "Medium"
 
 /datum/disease/flu/stage_act()
 	..()

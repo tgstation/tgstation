@@ -4,9 +4,12 @@
 	name = "Robotic Transformation"
 	max_stages = 5
 	spread = "Syringe"
+	spread_type = SPECIAL
 	cure = "None"
 	agent = "R2D2 Nanomachines"
 	affected_species = list("Human")
+	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
+	severity = "Major"
 
 /datum/disease/robotic_transformation/stage_act()
 	..()

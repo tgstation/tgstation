@@ -7,6 +7,7 @@ var/global
 
 	list/machines = list()
 	list/processing_items = list()
+	list/active_diseases = list()
 		//items that ask to be called every cycle
 
 	defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event

@@ -28,6 +28,11 @@
 	blood_DNA = null
 	blood_type = null
 
+	Del()
+		if(virus)
+			virus.cure(0)
+		..()
+
 /obj/decal/cleanable/xenoblood
 	name = "Xeno blood"
 	desc = "It's green."
@@ -38,6 +43,11 @@
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	var/datum/disease/virus = null
+
+	Del()
+		if(virus)
+			virus.cure(0)
+		..()
 
 /obj/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
@@ -88,6 +98,11 @@
 	icon_state = "floor1"
 	var/datum/disease/virus = null
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+
+	Del()
+		if(virus)
+			virus.cure(0)
+		..()
 
 /obj/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")

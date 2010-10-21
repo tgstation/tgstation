@@ -68,6 +68,9 @@ datum/controller/game_controller
 
 		sleep(-1)
 
+		for(var/datum/disease/D in active_diseases)
+			D.process()
+
 		for(var/obj/machinery/machine in machines)
 			machine.process()
 

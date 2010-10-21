@@ -1,7 +1,8 @@
 /datum/disease/dnaspread
 	name = "Space Retrovirus"
 	max_stages = 4
-	spread = "Airborne"
+	spread = "On contact"
+	spread_type = CONTACT_GENERAL
 	cure = "Ryetalin"
 	cure = "ryetalyn"
 	curable = 0
@@ -9,6 +10,8 @@
 	affected_species = list("Human")
 	var/list/original_dna = list()
 	var/transformed = 0
+	desc = "This disease transplants the genetic code of the intial vector into new hosts."
+	severity = "Medium"
 
 
 /datum/disease/dnaspread/stage_act()
@@ -32,7 +35,7 @@
 		if(4)
 			if(!src.transformed)
 				if ((!strain_data["name"]) || (!strain_data["UI"]) || (!strain_data["SE"]))
-					affected_mob.virus = null
+					del(affected_mob.virus)
 					return
 
 				//Save original dna for when the disease is cured.

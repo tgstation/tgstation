@@ -456,7 +456,7 @@
 		handle_virus_updates()
 			if(src.bodytemperature > 406)
 				src.resistances += src.virus
-				src.virus = null
+				del(src.virus)
 
 			if(!src.virus)
 				if(prob(40))

@@ -10,10 +10,12 @@
 	name = "Unidentified Foreign Body"
 	max_stages = 5
 	spread = "None"
+	spread_type = SPECIAL
 	cure = "Unknown"
 	cure_id = list("lexorin","toxin","gargleblaster")
 	cure_chance = 20
 	affected_species = list("Human", "Monkey")
+	permeability_mod = 3//likely to infect
 
 /datum/disease/alien_embryo/stage_act()
 	..()

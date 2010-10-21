@@ -280,8 +280,8 @@
 		//This is fine for the alien
 		handle_virus_updates()
 			if(src.bodytemperature > 406)
-				src.resistances += src.virus
-				src.virus = null
+				src.virus.cure()
+			return
 
 			if(!src.virus)
 				if(prob(40))

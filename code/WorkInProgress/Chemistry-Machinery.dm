@@ -387,6 +387,9 @@
 				dat += "<b>Blood Type:</b> [(Blood.data["blood_type"]||"none")]<BR>"
 				var/datum/disease/D = Blood.data["virus"]
 				dat += "<b>Agent of disease:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[D.type]'>Create virus culture bottle</A>":"none"]<BR>"
+				if(D)
+					dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
+					dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR>"
 				dat += "<b>Contains antibodies to:</b> "
 				if(Blood.data["resistances"])
 					var/list/res = Blood.data["resistances"]
