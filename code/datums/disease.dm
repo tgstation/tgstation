@@ -53,6 +53,7 @@ to null does not delete the object itself. Thank you.
 	if(stage != 1 && (prob(1) || (cure_present && prob(cure_chance))))
 		stage--
 	else if(stage <= 1 && ((prob(1) && src.curable) || (cure_present && prob(cure_chance))))
+//		world << "Cured as stage act"
 		src.cure()
 		return
 	return
@@ -72,7 +73,7 @@ to null does not delete the object itself. Thank you.
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0)
 	//world << "Contract_disease called by [src] with virus [virus]"
 
-	if(skip_this == 1)
+	if(skip_this == 1)//be wary, it replaces the current disease...
 		if(src.virus)
 			src.virus.cure(0)
 		src.virus = new virus.type
@@ -102,7 +103,7 @@ to null does not delete the object itself. Thank you.
 					clothing_areas[Covers] += Clothing
 
 */
-	if(prob(15/virus.permeability_mod)) return
+	if(prob(15/virus.permeability_mod)) return //the power of immunity compels this disease!
 
 	var/obj/item/clothing/Cl = null
 	var/passed = 1
@@ -273,11 +274,14 @@ to null does not delete the object itself. Thank you.
 	return
 
 /datum/disease/proc/cure(var/resistance=1)
-	var/datum/disease/D = src
-	src = null
-	if(resistance && src.affected_mob && !affected_mob.resistances.Find(D.type))
-		affected_mob.resistances += D.type
-	del(D)
+	if(resistance && src.affected_mob && !affected_mob.resistances.Find(src.type))
+//		world << "Setting res to [src]"
+		var/type = "[src.type]"//copy the value, not create the reference to it, so when the object is deleted, the value remains.
+		affected_mob.resistances += text2path(type)
+//	world << "Removing [src]"
+	spawn(0)
+		del(src)
+	return
 
 
 /datum/disease/New()

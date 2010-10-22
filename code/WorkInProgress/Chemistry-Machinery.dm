@@ -298,7 +298,7 @@
 		if (href_list["create_vaccine"])
 			if(!src.wait)
 				var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-				var/vaccine_type = href_list["create_vaccine"]
+				var/vaccine_type = text2path(href_list["create_vaccine"])//the path is received as string - converting
 				var/datum/disease/D = new vaccine_type
 				var/name = input(usr,"Name:","Name the vaccine",D.name)
 				if(!name || name == " ") name = D.name
@@ -316,7 +316,7 @@
 			if(!wait)
 				var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 				B.icon_state = "bottle3"
-				var/type = href_list["create_virus_culture"]
+				var/type = text2path(href_list["create_virus_culture"])//the path is received as string - converting
 				var/datum/disease/D = new type
 				var/list/data = list("virus"=D)
 				var/name = input(usr,"Name:","Name the culture",D.name)

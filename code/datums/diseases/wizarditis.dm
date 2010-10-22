@@ -103,7 +103,7 @@ STI KALY - blind
 
 	var/list/theareas = new/list()
 	for(var/area/AR in orange(80, affected_mob))
-		if(theareas.Find(AR)) continue
+		if(theareas.Find(AR) || AR.name == "Space") continue
 		theareas += AR
 
 	var/area/thearea = pick(theareas)

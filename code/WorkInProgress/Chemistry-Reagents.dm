@@ -127,6 +127,14 @@ datum
 						blood_prop.virus.spread_type = CONTACT_HANDS
 				return
 
+/* Must check the transfering of reagents and their data first. They all can point to one disease datum.
+
+			Del()
+				if(src.data["virus"])
+					var/datum/disease/D = src.data["virus"]
+					D.cure(0)
+				..()
+*/
 		vaccine
 			//data must contain virus type
 			name = "Vaccine"
@@ -137,7 +145,7 @@ datum
 				var/datum/reagent/vaccine/self = src
 				src = null
 				if(self.data&&method == INGEST)
-					if(M.virus&&M.virus.type == self.data)
+					if(M.virus && M.virus.type == self.data)
 						M.virus.cure()
 				return
 
