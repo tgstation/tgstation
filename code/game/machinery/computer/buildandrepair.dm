@@ -33,6 +33,9 @@
 /obj/item/weapon/circuitboard/med_data
 	name = "Circuit board (Medical Records)"
 	computertype = "/obj/machinery/computer/med_data"
+/obj/item/weapon/circuitboard/pandemic
+	name = "Circuit board (PanD.E.M.I.C. 2200)"
+	computertype = "/obj/machinery/computer/pandemic"
 /obj/item/weapon/circuitboard/scan_consolenew
 	name = "Circuit board (DNA Machine)"
 	computertype = "/obj/machinery/scan_consolenew"

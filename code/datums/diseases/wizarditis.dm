@@ -45,7 +45,7 @@ STI KALY - blind
 				return
 			if(prob(2))
 				affected_mob << "\red You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")]."
-			if(prob(5))
+			if(prob(2))
 				teleport()
 
 	return

@@ -30,9 +30,8 @@
 				affected_mob.emote("stare")
 			if(prob(2))
 				affected_mob.emote("drool")
-			if(prob(10))
-				if(affected_mob.brainloss<=98) //shouldn't retard you to death now
-					affected_mob.brainloss += 2
+			if(prob(10) && affected_mob.brainloss<=98)//shouldn't retard you to death now
+				affected_mob.brainloss += 2
 				affected_mob.updatehealth()
 				if(prob(2))
 					affected_mob << "\red Your try to remember something important...but can't."
@@ -51,7 +50,7 @@
 				affected_mob.updatehealth()
 				if(prob(2))
 					affected_mob << "\red Your head hurts." */
-			if(prob(15))
+			if(prob(15) && affected_mob.brainloss<=98) //shouldn't retard you to death now
 				affected_mob.brainloss +=3
 				affected_mob.updatehealth()
 				if(prob(2))

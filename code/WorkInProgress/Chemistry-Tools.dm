@@ -366,7 +366,7 @@
 	/obj/machinery/atmospherics/unary/cryo_cell,
 	/obj/item/weapon/chem_grenade,
 	/obj/machinery/bot/medbot,
-	/obj/machinery/pandemic,
+	/obj/machinery/computer/pandemic,
 	/obj/item/weapon/secstorage/ssafe)
 
 	examine()

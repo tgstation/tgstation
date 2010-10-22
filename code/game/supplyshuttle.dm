@@ -176,6 +176,24 @@ var/supply_shuttle_points = 50
 	containertype = "/obj/crate"
 	containername = "Janitorial supplies"
 
+/obj/item/weapon/storage/lightbox/tubes
+
+/datum/supply_packs/lightbulbs
+	name = "Replacement lights"
+	contains = list("/obj/item/weapon/storage/lightbox/tubes",
+					"/obj/item/weapon/storage/lightbox/tubes",
+					"/obj/item/weapon/storage/lightbox/tubes",
+					"/obj/item/weapon/storage/lightbox/tubes",
+					"/obj/item/weapon/storage/lightbox",
+					"/obj/item/weapon/storage/lightbox",
+					"/obj/item/weapon/storage/lightbox",
+					"/obj/item/weapon/storage/lightbox")
+	cost = 10
+	containertype = "/obj/crate"
+	containername = "Replacement lights"
+
+
+
 /datum/supply_packs/plasma
 	name = "Plasma assembly crate"
 	contains = list("/obj/item/weapon/tank/plasma",

@@ -5,6 +5,7 @@
 	spread_type = CONTACT_GENERAL
 	cure = "Synaptizine & Sulfur"
 	cure_id = list("synaptizine","sulfur")
+	cure_chance = 15//higher chance to cure, since two reagents are required
 	agent = "Gravitokinetic Bipotential SADS+"
 	affected_species = list("Human")
 	curable = 0
