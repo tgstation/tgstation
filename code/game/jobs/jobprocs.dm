@@ -578,6 +578,9 @@
 	if (istype(src.belt, /obj/item/device/pda))
 		src.belt:owner = src.real_name
 		src.belt.name = "PDA-[src.real_name]"
+	if (istype(src.r_store, /obj/item/device/pda))  //damned mime PDAs not starting in belt slot
+		src.r_store:owner = src.real_name
+		src.r_store.name = "PDA-[src.real_name]"
 
 /client/proc/mimewall()
 	set category = "Mime"
