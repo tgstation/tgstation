@@ -386,8 +386,10 @@
 		R.my_atom = src
 
 	afterattack(obj/target, mob/user , flag)
-		if(src.can_be_placed_into.Find(target.type))
-			return
+		for(var/type in src.can_be_placed_into)
+			if(istype(target, type))
+				return
+
 		if(ismob(target) && target.reagents && reagents.total_volume)
 			user << "\blue You splash the solution onto [target]."
 			for(var/mob/O in viewers(world.view, user))

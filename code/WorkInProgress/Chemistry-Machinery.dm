@@ -281,7 +281,7 @@
 				var/name = input(usr,"Name:","Name the vaccine",D.name)
 				if(!name || name == " ") name = D.name
 				B.name = "[name] vaccine bottle"
-				B.reagents.add_reagent("vaccine",10,vaccine_type)
+				B.reagents.add_reagent("vaccine",15,vaccine_type)
 				del(D)
 				wait = 1
 				spawn(1200)
