@@ -122,10 +122,20 @@
 			T.origradio = R
 			rev_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock it's hidden features."
 			rev_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).", 0, 0)
-		if (rev_mob.r_store)
+
+		var/flashspawned = 0
+
+		if (rev_mob.r_store && !flashspawned)
 			rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_l_store)
-		if (rev_mob.l_store)
+			flashspawned = 1
+		if (rev_mob.l_store && !flashspawned)
 			rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_r_store)
+			flashspawned = 1
+		if (istype(rev_mob.back, /obj/item/weapon/storage) && !flashspawned)
+			rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_in_backpack)
+			flashspawned = 1
+		if (!flashspawned)
+			rev_mob << "The Syndicate were unfortunately unable to get you a flash."
 
 /datum/game_mode/revolution/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
