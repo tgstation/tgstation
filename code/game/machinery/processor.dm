@@ -3,7 +3,7 @@ obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		user << "Something is already in the processing chamber."
 		return 0
 	else
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/chili) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/tomato) || istype(O, /obj/item/weapon/reagent_containers/food/drinks/milk))
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/chili) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/tomato) || istype(O, /obj/item/weapon/reagent_containers/food/drinks/milk) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/berries) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/humanmeat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper))
 			user.drop_item()
 			O.loc = src
 		else if(istype(O,/obj/item/weapon/grab))
@@ -62,6 +62,51 @@ obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			new /obj/item/weapon/reagent_containers/food/snacks/ketchup(src.loc)
 			src.processing = 0
 			return
+
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/berries))
+			src.processing = 1
+			sleep(40)
+			playsound(src.loc, 'blender.ogg', 50, 1)
+			for(var/mob/V in viewers(src, null))
+				V.show_message(text("\blue [user] turns on \a [src]."))
+			del(O)
+			new /obj/item/weapon/reagent_containers/food/snacks/grown/berryjam(src.loc)
+			src.processing = 0
+			return
+
+		if (istype(O, /obj/item/weapon/reagent_containers/food/snacks/humanmeat))
+			src.processing = 1
+			sleep(40)
+			playsound(src.loc, 'blender.ogg', 50, 1)
+			for(var/mob/V in viewers(src, null))
+				V.show_message(text("\blue [user] turns on \a [src]."))
+			del(O)
+			new /obj/item/weapon/reagent_containers/food/snacks/soylentgreen(src.loc)
+			processing = 0
+			return
+
+		if (istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans))
+			src.processing = 1
+			sleep(40)
+			playsound(src.loc, 'blender.ogg', 50, 1)
+			for(var/mob/V in viewers(src, null))
+				V.show_message(text("\blue [user] turns on \a [src]."))
+			del(O)
+			new /obj/item/weapon/reagent_containers/food/snacks/soysauce(src.loc)
+			src.processing = 0
+			return
+
+		if (istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper))
+			src.processing = 1
+			sleep(40)
+			playsound(src.loc, 'blender.ogg', 50, 1)
+			for(var/mob/V in viewers(src, null))
+				V.show_message(text("\blue [user] turns on \a [src]."))
+			del(O)
+			new /obj/item/weapon/reagent_containers/food/snacks/coldsauce(src.loc)
+			src.processing = 0
+			return
+
 	for(var/mob/O in src.contents)
 		if(istype(O, /mob/living/carbon/alien/larva/metroid))
 			src.processing = 1
@@ -112,14 +157,3 @@ obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 */
 
 
-/obj/item/weapon/reagent_containers/food/snacks/ketchup
-	name = "ketchup"
-	desc = "You feel more American already."
-	icon_state = "ketchup"
-	amount = 1
-
-/obj/item/weapon/reagent_containers/food/snacks/hotsauce
-	name = "hotsauce"
-	desc = "You can almost TASTE the stomach ulcers now!"
-	icon_state = "hotsauce"
-	amount = 1

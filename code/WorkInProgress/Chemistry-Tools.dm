@@ -1340,7 +1340,11 @@
 		R.add_reagent("spaceacillin", 15)
 		update_icon()
 
-//Snacks
+
+//////////////////////////////////////////////////
+////////////////////////////////////////////Snacks
+//////////////////////////////////////////////////
+
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Man, that shit looks good. I bet it's got nougat. Fuck."
@@ -1637,6 +1641,86 @@
 		reagents = R
 		R.my_atom = src
 		R.add_reagent("milk", 50)
+
+/obj/item/weapon/reagent_containers/food/snacks/ketchup
+	name = "Ketchup"
+	desc = "You feel more American already."
+	icon_state = "ketchup"
+	amount = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/hotsauce
+	name = "Hotsauce"
+	desc = "You can almost TASTE the stomach ulcers now!"
+	icon_state = "hotsauce"
+	amount = 1
+
+// Work in Process by Darem. Sorry for the mess.
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/berryjam
+	name = "Berry Jam"
+	desc = "A delightfully sweat flavor of some indescernible berry... you think."
+	icon_state = "berryjam"
+	amount = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/eggplantparm
+	name = "Eggplant Parmigiana"
+	desc = "The only good recipe for eggplant."
+	icon_state = "eggplantparm"
+	amount = 5
+	heal_amt = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/jellydonut
+	name = "Jelly Donut"
+	desc = "Oh so gooey on the inside."
+	icon_state = "donut1" //Placeholder until I stop being lazy. ie. Never. -- Darem
+	heal_amt = 2
+	New()
+		..()
+		if(rand(1,3) == 1)
+			src.icon_state = "donut2"
+			src.name = "Frosted Jelly Donut"
+			src.heal_amt = 3
+	heal(var/mob/M)
+		if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective"))
+			src.heal_amt *= 2
+			..()
+			src.heal_amt /= 2
+
+/obj/item/weapon/reagent_containers/food/snacks/soylentgreen
+	name = "Soylent Green"
+	desc = "Not made of people. Honest." //Totally people.
+	icon_state = "soylent"
+	amount = 5
+	heal_amt = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/soysauce
+	name = "Soy Sauce"
+	desc = "A salty soy-based flavoring."
+	icon_state = "soysauce"
+	amount = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/soylenviridians
+	name = "Soylen Virdians"
+	desc = "Not made of people. Honest." //Actually honest for once.
+	icon_state = "soylent"
+	amount = 5
+	heal_amt = 1
+
+
+/obj/item/weapon/reagent_containers/food/snacks/coldsauce
+	name = "Coldsauce"
+	desc = "Leaves the tongue numb in it's passage."
+	icon_state = "coldsauce"
+	amount = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/carrotcake
+	name = "Carrot Cake"
+	desc = "A favorite desert of a certain wascally wabbit. Also not a lie."
+	icon_state = "carrotcake"
+	amount = 5
+	heal_amt = 2
+
+//End new stuff by Darem
 
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
 

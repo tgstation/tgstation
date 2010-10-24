@@ -655,6 +655,11 @@
 	var/humanmeat_amount = 0
 	var/donkpocket_amount = 0
 	var/xenomeat_amount = 0
+	var/hotsauce_amount = 0
+	var/coldsauce_amount = 0
+	var/soysauce_amount = 0
+	var/ketchup_amount = 0
+	var/sauce_amount = 0		//This is so that I can lump all the sauces together in the microwave menu.
 	var/humanmeat_name = ""
 	var/humanmeat_job = ""
 	var/operating = 0 // Is it on?
@@ -662,7 +667,7 @@
 	var/broken = 0 // How broken is it???
 	var/list/available_recipes = list() // List of the recipes you can use
 	var/obj/item/weapon/reagent_containers/food/snacks/being_cooked = null // The item being cooked
-	var/obj/item/extra_item // One non food item that can be added
+	var/obj/item/extra_item = null// One non food item that can be added
 
 /obj/machinery/processor
 	name = "Food Processor"
