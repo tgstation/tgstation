@@ -840,6 +840,9 @@
 	afterattack(obj/target, mob/user , flag)
 		return
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/
+	icon = 'harvest.dmi'
+
 ////////////////////////////////////////////////////////////////////////////////
 /// FOOD END
 ////////////////////////////////////////////////////////////////////////////////
@@ -850,7 +853,7 @@
 /obj/item/weapon/reagent_containers/food/drinks
 	name = "drink"
 	desc = "yummy"
-	icon = 'food.dmi'
+	icon = 'drinks.dmi'
 	icon_state = null
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
@@ -1395,13 +1398,14 @@
 	var/subjectjob = null
 	amount = 1
 
-
+/* Commented out due to being completly useless. Goddamn goon humor.
 /obj/item/weapon/reagent_containers/food/snacks/assburger
 	name = "assburger"
 	desc = "This burger gives off an air of awkwardness."
 	icon_state = "assburger"
 	amount = 5
 	heal_amt = 2
+*/
 
 /obj/item/weapon/reagent_containers/food/snacks/brainburger
 	name = "brainburger"
@@ -1454,7 +1458,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 	name = "monkeyburger"
 	desc = "The cornerstone of every nutritious breakfast."
-	icon_state = "mburger"
+	icon_state = "burger"
 	amount = 5
 	heal_amt = 2
 
@@ -1654,9 +1658,7 @@
 	icon_state = "hotsauce"
 	amount = 1
 
-// Work in Process by Darem. Sorry for the mess.
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/berryjam
+/obj/item/weapon/reagent_containers/food/snacks/berryjam
 	name = "Berry Jam"
 	desc = "A delightfully sweat flavor of some indescernible berry... you think."
 	icon_state = "berryjam"
@@ -1720,7 +1722,82 @@
 	amount = 5
 	heal_amt = 2
 
-//End new stuff by Darem
+/obj/item/weapon/reagent_containers/food/snacks/cheesecake
+	name = "Cheese Cake"
+	desc = "DANGEROUSLY cheesy."
+	icon_state = "cheesecake"
+	amount = 5
+	heal_amt = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/plaincake
+	name = "Vanilla Cake"
+	desc = "A plain cake, not a lie."
+	icon_state = "plaincake"
+	amount = 5
+	heal_amt = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/humeatpie
+	name = "-pie"
+	var/hname = ""
+	var/job = null
+	icon_state = "pie" //placeholder
+	desc = "A delicious meatpie."
+	amount = 3
+	heal_amt = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/momeatpie
+	name = "Monkey-pie"
+	icon_state = "pie"
+	desc = "A delicious meatpie."
+	amount = 3
+	heal_amt = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/xemeatpie
+	name = "Xeno-pie"
+	icon_state = "pie" //placeholder
+	desc = "A delicious meatpie. Probably heretical."
+	New()
+		var/datum/reagents/R = new/datum/reagents(5)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("xenomicrobes", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/wingfangchu
+	name = "Wing Fang Chu"
+	desc = "A savory dish of alien wing wang in soy."
+	icon_state = "wingfangchu"
+	New()
+		var/datum/reagents/R = new/datum/reagents(5)
+		reagents = R
+		R.my_atom = src
+		R.add_reagent("xenomicrobes", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/chaosdonut
+	name = "Chaos Donut"
+	desc = "Like life, it never quite tastes the same."
+	icon_state = "donut1"
+	heat_amt = 25
+	New()
+		..()
+		if(rand(1,3) == 1)
+			src.icon_state = "donut2"
+			src.name = "Frosted Chaos Donut"
+			heat_amt = 0
+			drug_amt = 25
+
+/obj/item/weapon/reagent_containers/food/snacks/humankabob
+	name = "-kabob"
+	var/hname = ""
+	var/job = null
+	icon_state = "kabob"
+	amount = 3
+	heal_amt = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/monkeykabob
+	name = "Monkey-kabob"
+	icon_state = "kabob"
+	amount = 3
+	heal_amt = 2
 
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
 
@@ -1996,7 +2073,6 @@
 /obj/item/weapon/reagent_containers/food/drinks/shaker
 	name = "Shaker"
 	desc = "A metal shaker to mix drinks in."
-	icon = 'food.dmi'
 	icon_state = "shaker"
 	New()
 		var/datum/reagents/R = new/datum/reagents(100)
@@ -2007,7 +2083,6 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
 	name = "glass"
 	desc = "Your standard drinking glass."
-	icon = 'food.dmi'
 	icon_state = "glass_empty"
 	New()
 		var/datum/reagents/R = new/datum/reagents(50)
@@ -2232,7 +2307,6 @@
 /obj/item/weapon/reagent_containers/food/drinks/jar
 	name = "empty jar"
 	desc = "A jar. You're not sure what it's supposed to hold."
-	icon = 'food.dmi'
 	icon_state = "jar"
 	item_state = "beaker"
 	New()

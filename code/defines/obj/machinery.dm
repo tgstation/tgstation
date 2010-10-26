@@ -655,6 +655,7 @@
 	var/humanmeat_amount = 0
 	var/donkpocket_amount = 0
 	var/xenomeat_amount = 0
+	var/milk_amount = 0
 	var/hotsauce_amount = 0
 	var/coldsauce_amount = 0
 	var/soysauce_amount = 0

@@ -70,7 +70,7 @@ obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			for(var/mob/V in viewers(src, null))
 				V.show_message(text("\blue [user] turns on \a [src]."))
 			del(O)
-			new /obj/item/weapon/reagent_containers/food/snacks/grown/berryjam(src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/berryjam(src.loc)
 			src.processing = 0
 			return
 
