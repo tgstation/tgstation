@@ -563,7 +563,7 @@
 						//set reagent data
 						B.data["donor"] = T
 						if(T.virus && T.virus.spread_type != SPECIAL)
-							B.data["virus"] = new T.virus.type
+							B.data["virus"] = new T.virus.type(0)
 						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
 						if(T.resistances&&T.resistances.len)
 							B.data["resistances"] = T.resistances.Copy()
@@ -1168,7 +1168,7 @@
 		var/datum/reagents/R = new/datum/reagents(20)
 		reagents = R
 		R.my_atom = src
-		var/datum/disease/F = new /datum/disease/flu
+		var/datum/disease/F = new /datum/disease/flu(0)
 		var/list/data = list("virus"= F)
 		R.add_reagent("blood", 20, data)
 
@@ -1184,7 +1184,7 @@
 		var/datum/reagents/R = new/datum/reagents(20)
 		reagents = R
 		R.my_atom = src
-		var/datum/disease/F = new /datum/disease/cold
+		var/datum/disease/F = new /datum/disease/cold(0)
 		var/list/data = list("virus"= F)
 		R.add_reagent("blood", 20, data)
 
@@ -1215,7 +1215,7 @@
 		var/datum/reagents/R = new/datum/reagents(20)
 		reagents = R
 		R.my_atom = src
-		var/datum/disease/F = new /datum/disease/fake_gbs
+		var/datum/disease/F = new /datum/disease/fake_gbs(0)
 		var/list/data = list("virus"= F)
 		R.add_reagent("blood", 20, data)
 
@@ -1231,7 +1231,7 @@
 		var/datum/reagents/R = new/datum/reagents(30)
 		reagents = R
 		R.my_atom = src
-		var/datum/disease/F = new /datum/disease/brainrot
+		var/datum/disease/F = new /datum/disease/brainrot(0)
 		var/list/data = list("virus"= F)
 		R.add_reagent("blood", 20, data)
 
@@ -1246,7 +1246,7 @@
 		var/datum/reagents/R = new/datum/reagents(20)
 		reagents = R
 		R.my_atom = src
-		var/datum/disease/F = new /datum/disease/magnitis
+		var/datum/disease/F = new /datum/disease/magnitis(0)
 		var/list/data = list("virus"= F)
 		R.add_reagent("blood", 20, data)
 
@@ -1262,7 +1262,7 @@
 		var/datum/reagents/R = new/datum/reagents(20)
 		reagents = R
 		R.my_atom = src
-		var/datum/disease/F = new /datum/disease/wizarditis
+		var/datum/disease/F = new /datum/disease/wizarditis(0)
 		var/list/data = list("virus"= F)
 		R.add_reagent("blood", 20, data)
 

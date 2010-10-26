@@ -76,7 +76,7 @@ datum
 					if(method == TOUCH)//respect all protective clothing...
 						M.contract_disease(V)
 					else //injected
-						M.contract_disease(V, 1)
+						M.contract_disease(V, 1, 0)
 				return
 
 
@@ -993,9 +993,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					var/datum/disease/D = new /datum/disease/robotic_transformation
-					M.contract_disease(D,1)
-					del(D)
+					M.contract_disease(new /datum/disease/robotic_transformation(0),1)
 
 		xenomicrobes
 			name = "Xenomicrobes"
@@ -1005,9 +1003,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
-					var/datum/disease/D = new /datum/disease/xeno_transformation
-					M.contract_disease(D,1)
-					del(D)
+					M.contract_disease(new /datum/disease/xeno_transformation(0),1)
 
 //foam precursor
 

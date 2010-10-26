@@ -48,6 +48,5 @@
 				affected_mob << "\red Mucous runs down the back of your throat."
 			if(prob(1) && prob(50))
 				if(!affected_mob.resistances.Find(/datum/disease/flu))
-					var/datum/disease/Flu = new /datum/disease/flu
+					var/datum/disease/Flu = new /datum/disease/flu(0)
 					affected_mob.contract_disease(Flu,1)
-					del(Flu)

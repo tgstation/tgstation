@@ -247,7 +247,7 @@
 							target.alien_egg_flag = 1
 							var/mob/trg = target
 							src.death()
-							trg.contract_disease(new /datum/disease/alien_embryo)
+							trg.contract_disease(new /datum/disease/alien_embryo(0))
 							return
 						else
 							sleep(50)

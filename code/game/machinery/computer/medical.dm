@@ -85,12 +85,10 @@
 				if(5.0)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					for(var/Dt in typesof(/datum/disease/))
-						var/datum/disease/Dis = new Dt
+						var/datum/disease/Dis = new Dt(0)
 						if(!Dis.desc)
-							del(Dis)
 							continue
 						dat += "<br><a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a>"
-						del(Dis)
 					dat += "<br><a href='?src=\ref[src];screen=1'>Back</a>"
 				if(6.0)
 					dat += "<center><b>Medical Robot Monitor</b></center>"
@@ -169,7 +167,7 @@
 
 			if(href_list["vir"])
 				var/type = href_list["vir"]
-				var/datum/disease/Dis = new type
+				var/datum/disease/Dis = new type(0)
 				var/AfS = ""
 				for(var/Str in Dis.affected_species)
 					AfS += " [Str];"
@@ -182,7 +180,6 @@
 <BR><b>Notes:</b> [Dis.desc]
 <BR>
 <BR><b>Severity:</b> [Dis.severity]"}
-				del(Dis)
 
 			if (href_list["del_all"])
 				src.temp = text("Are you sure you wish to delete all records?<br>\n\t<A href='?src=\ref[];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='?src=\ref[];temp=1'>No</A><br>", src, src)

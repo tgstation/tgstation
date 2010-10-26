@@ -26,7 +26,7 @@
 				amount--
 
 		for (var/mob/living/carbon/monkey/rabid_monkey in world)
-			rabid_monkey.contract_disease(new /datum/disease/jungle_fever)
+			rabid_monkey.contract_disease(new /datum/disease/jungle_fever,0,0)
 
 /datum/game_mode/monkey/check_finished()
 	if(emergency_shuttle.location==2)

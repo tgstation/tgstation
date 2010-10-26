@@ -71,8 +71,8 @@
 				else
 					if(affected_mob.client)
 						affected_mob.client.mob = new/mob/living/carbon/alien/larva(affected_mob.loc)
-				src.cure(0)
 				affected_mob.gib()
+				src.cure(0)
 				gibbed = 1
 
 			/*

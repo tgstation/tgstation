@@ -36,7 +36,6 @@ to null does not delete the object itself. Thank you.
 	var/severity = null//severity descr
 
 /datum/disease/proc/stage_act()
-
 	var/cure_present = has_cure()
 	//world << "[cure_present]"
 
@@ -70,8 +69,17 @@ to null does not delete the object itself. Thank you.
 	return result
 
 
-/mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0)
-	//world << "Contract_disease called by [src] with virus [virus]"
+/mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)
+//	world << "Contract_disease called by [src] with virus [virus]"
+
+	if(force_species_check)
+		var/fail = 1
+		for(var/name in virus.affected_species)
+			var/mob_type = text2path("/mob/living/carbon/[lowertext(name)]")
+			if(mob_type && istype(src, mob_type))
+				fail = 0
+				break
+		if(fail) return
 
 	if(skip_this == 1)//be wary, it replaces the current disease...
 		if(src.virus)
@@ -139,41 +147,43 @@ to null does not delete the object itself. Thank you.
 
 		switch(target_zone)
 			if(1)
-				if(H.head)
+				if(H.head && isobj(H.head))
 					Cl = H.head
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-					//world << "Head pass [passed]"
-				if(passed && H.wear_mask)
+//					world << "Head pass [passed]"
+				if(passed && H.wear_mask && isobj(H.wear_mask))
 					Cl = H.wear_mask
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-					//world << "Mask pass [passed]"
+//					world << "Mask pass [passed]"
 			if(2)//arms and legs included
-				if(H.wear_suit)
+				if(H.wear_suit && isobj(H.wear_suit))
 					Cl = H.wear_suit
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-					//world << "Suit pass [passed]"
-				if(passed && H.slot_w_uniform)
+//					world << "Suit pass [passed]"
+				if(passed && H.slot_w_uniform && isobj(H.slot_w_uniform))
 					Cl = H.slot_w_uniform
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-					//world << "Uniform pass [passed]"
+//					world << "Uniform pass [passed]"
 			if(3)
-				if(H.wear_suit && H.wear_suit.body_parts_covered&HANDS)
+				if(H.wear_suit && isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
 					Cl = H.wear_suit
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
+//					world << "Suit pass [passed]"
 
-				if(passed && H.gloves)
+				if(passed && H.gloves && isobj(H.gloves))
 					Cl = H.gloves
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-					//world << "Gloves pass [passed]"
+//					world << "Gloves pass [passed]"
 			if(4)
-				if(H.wear_suit && H.wear_suit.body_parts_covered&FEET)
+				if(H.wear_suit && isobj(H.wear_suit) && H.wear_suit.body_parts_covered&FEET)
 					Cl = H.wear_suit
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
+//					world << "Suit pass [passed]"
 
-				if(passed && H.shoes)
+				if(passed && H.shoes && isobj(H.shoes))
 					Cl = H.shoes
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
-					//world << "Shoes pass [passed]"
+//					world << "Shoes pass [passed]"
 			else
 				src << "Something strange's going on, something's wrong."
 
@@ -188,7 +198,7 @@ to null does not delete the object itself. Thank you.
 		var/mob/living/carbon/monkey/M = src
 		switch(target_zone)
 			if(1)
-				if(M.wear_mask)
+				if(M.wear_mask && isobj(M.wear_mask))
 					Cl = M.wear_mask
 					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
 					//world << "Mask pass [passed]"
@@ -257,11 +267,8 @@ to null does not delete the object itself. Thank you.
 		check_range = 1
 
 	for(var/mob/living/carbon/M in oviewers(check_range, source))
-		for(var/name in src.affected_species)
-			var/mob_type = text2path("/mob/living/carbon/[lowertext(name)]")
-			if(mob_type && istype(M, mob_type))//check if mob can be infected
-				M.contract_disease(src)
-				break
+		M.contract_disease(src)
+
 	return
 
 
@@ -269,7 +276,7 @@ to null does not delete the object itself. Thank you.
 	if(!src.holder) return
 	if(prob(40))
 		src.spread(holder)
-	if(src.holder == src.affected_mob)
+	if(src.holder == src.affected_mob && affected_mob.stat < 2)
 		src.stage_act()
 	return
 
@@ -284,8 +291,9 @@ to null does not delete the object itself. Thank you.
 	return
 
 
-/datum/disease/New()//adding the object to global list. List is processed by master controller.
-	active_diseases += src
+/datum/disease/New(var/process=1)//adding the object to global list. List is processed by master controller.
+	if(process)
+		active_diseases += src
 
 /*
 /datum/disease/Del()
