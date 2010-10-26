@@ -135,6 +135,7 @@
 #include "code\ATMOSPHERICS\atmospherics.dm"
 #include "code\ATMOSPHERICS\datum_pipe_network.dm"
 #include "code\ATMOSPHERICS\datum_pipeline.dm"
+#include "code\ATMOSPHERICS\init_S_V_A.dm"
 #include "code\ATMOSPHERICS\pipes.dm"
 #include "code\ATMOSPHERICS\components\filter.dm"
 #include "code\ATMOSPHERICS\components\mixer.dm"

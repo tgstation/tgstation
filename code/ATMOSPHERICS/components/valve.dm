@@ -28,6 +28,7 @@ obj/machinery/atmospherics/valve
 				initialize_directions = NORTH|SOUTH
 			if(EAST || WEST)
 				initialize_directions = EAST|WEST
+		..()
 
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 
@@ -212,6 +213,12 @@ obj/machinery/atmospherics/valve
 
 		attack_ai(mob/user as mob)
 			return src.attack_hand(user)
+
+		attack_hand(mob/user as mob)
+			if(!src.allowed(user))
+				user << "\red Access denied."
+				return
+			..()
 
 		//Radio remote control
 

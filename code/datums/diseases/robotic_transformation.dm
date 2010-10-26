@@ -10,6 +10,7 @@
 	affected_species = list("Human")
 	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
 	severity = "Major"
+	var/gibbed = 0
 
 /datum/disease/robotic_transformation/stage_act()
 	..()
@@ -53,6 +54,10 @@
 			affected_mob.toxloss += 10
 			affected_mob.updatehealth()
 			if(prob(40)) //So everyone can feel like robot Seth Brundle
+				ASSERT(src.gibbed == 0)
 				var/turf/T = find_loc(affected_mob)
 				gibs(T)
+				src.cure(0)
+				gibbed = 1
 				affected_mob:Robotize()
+

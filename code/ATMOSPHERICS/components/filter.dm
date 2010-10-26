@@ -7,6 +7,7 @@ obj/machinery/atmospherics/filter
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
+	req_access = list(access_atmospherics)
 
 	var/on = 0
 	var/temp = null // -- TLE
@@ -116,9 +117,6 @@ Filter types:
 					filtered_out.toxins = removed.toxins
 					removed.toxins = 0
 
-					filtered_out.carbon_dioxide = removed.carbon_dioxide
-					removed.carbon_dioxide = 0
-
 					if(removed.trace_gases.len>0)
 						for(var/datum/gas/trace_gas in removed.trace_gases)
 							if(istype(trace_gas, /datum/gas/oxygen_agent_b))
@@ -133,15 +131,19 @@ Filter types:
 					filtered_out.nitrogen = removed.nitrogen
 					removed.nitrogen = 0
 
+				if(3) //removing CO2
+					filtered_out.carbon_dioxide = removed.carbon_dioxide
+					removed.carbon_dioxide = 0
+
+				if(4)//removing N2O
 					if(removed.trace_gases.len>0)
 						for(var/datum/gas/trace_gas in removed.trace_gases)
 							if(istype(trace_gas, /datum/gas/sleeping_agent))
 								removed.trace_gases -= trace_gas
 								filtered_out.trace_gases += trace_gas
 
-				if(3) //removing CO2
-					filtered_out.carbon_dioxide = removed.carbon_dioxide
-					removed.carbon_dioxide = 0
+				else
+					filtered_out = null
 
 
 			air_out1.merge(filtered_out)
@@ -298,10 +300,12 @@ Filter types:
 
 
 obj/machinery/atmospherics/filter/attack_hand(user as mob) // -- TLE
-	var/dat
 	if(..())
 		return
-	if (1 == 1)
+
+	if(!src.allowed(user))
+		user << "\red Access denied."
+		return
 /*
 		dat += "Autolathe Wires:<BR>"
 		var/wire
@@ -312,34 +316,49 @@ obj/machinery/atmospherics/filter/attack_hand(user as mob) // -- TLE
 		dat += text("The green light is [src.shocked ? "off" : "on"].<BR>")
 		dat += text("The blue light is [src.hacked ? "off" : "on"].<BR>")
 */
-		var/current_filter_type
-		switch(filter_type)
-			if(0)
-				current_filter_type = "Carbon Molecules"
-			if(1)
-				current_filter_type = "Oxygen"
-			if(2)
-				current_filter_type = "Nitrogen"
-			if(3)
-				current_filter_type = "Carbon Dioxide"
-			else
-				current_filter_type = "ERROR - Report this bug to the admin, please!"
+	var/dat
+	var/current_filter_type
+	switch(filter_type)
+		if(0)
+			current_filter_type = "Carbon Molecules"
+		if(1)
+			current_filter_type = "Oxygen"
+		if(2)
+			current_filter_type = "Nitrogen"
+		if(3)
+			current_filter_type = "Carbon Dioxide"
+		if(4)
+			current_filter_type = "Nitrous Oxide"
+		if(-1)
+			current_filter_type = "Nothing"
+		else
+			current_filter_type = "ERROR - Report this bug to the admin, please!"
 
-		dat += "<b>Filtering: </b>[current_filter_type]<br><br>"
-		dat += "<h3>Set Filter Type:</h3><BR>"
-		dat += "<A href='?src=\ref[src];filterset=0'>Carbon Molecules</A><BR>"
-		dat += "<A href='?src=\ref[src];filterset=1'>Oxygen</A><BR>"
-		dat += "<A href='?src=\ref[src];filterset=2'>Nitrogen</A><BR>"
-		dat += "<A href='?src=\ref[src];filterset=3'>Carbon Dioxide</A><BR>"
-
-		user << browse("<HEAD><TITLE>Atmospherics Filter</TITLE></HEAD>[dat]","window=atmo_filter")
+	dat += {"<b>Filtering: </b>[current_filter_type]<br><HR>
+			<h4>Set Filter Type:</h4>
+			<A href='?src=\ref[src];filterset=0'>Carbon Molecules</A><BR>
+			<A href='?src=\ref[src];filterset=1'>Oxygen</A><BR>
+			<A href='?src=\ref[src];filterset=2'>Nitrogen</A><BR>
+			<A href='?src=\ref[src];filterset=3'>Carbon Dioxide</A><BR>
+			<A href='?src=\ref[src];filterset=4'>Nitrous Oxide</A><BR>
+			<A href='?src=\ref[src];filterset=-1'>Nothing</A><BR>
+			<HR><B>Desirible output pressure:</B>
+			<a href='?src=\ref[src];out_press=-10'><b>-</b></a>
+			<a href='?src=\ref[src];out_press=-1'>-</a>
+			[src.target_pressure]
+			<a href='?src=\ref[src];out_press=1'>+</a>
+			<a href='?src=\ref[src];out_press=10'><b>+</b></a>"}
+/*
+		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD>[dat]","window=atmo_filter")
 		onclose(user, "atmo_filter")
 		return
+
 	if (src.temp)
 		dat = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];temp=1'>Clear Screen</A>", src.temp, src)
 	//else
 	//	src.on != src.on
-	user << browse("<HEAD><TITLE>Autolathe Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_filter")
+*/
+	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_filter")
 	onclose(user, "atmo_filter")
 	return
 
@@ -349,16 +368,11 @@ obj/machinery/atmospherics/filter/Topic(href, href_list) // -- TLE
 	usr.machine = src
 	src.add_fingerprint(usr)
 	if(href_list["filterset"])
-		if(href_list["filterset"] == "0")
-			src.filter_type = 0
-		if(href_list["filterset"] == "1")
-			src.filter_type = 1
-		if(href_list["filterset"] == "2")
-			src.filter_type = 2
-		if(href_list["filterset"] == "3")
-			src.filter_type = 3
+		src.filter_type = text2num(href_list["filterset"])
 	if (href_list["temp"])
 		src.temp = null
+	if(href_list["out_press"])
+		src.target_pressure = max(0, min(4000, src.target_pressure + text2num(href_list["out_press"])))
 
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))

@@ -8,6 +8,7 @@
 	cure = "None"
 	agent = "Rip-LEY Alien Microbes"
 	affected_species = list("Human")
+	var/gibbed = 0
 
 /datum/disease/xeno_transformation/stage_act()
 	..()
@@ -53,6 +54,10 @@
 			affected_mob.toxloss += 10
 			affected_mob.updatehealth()
 			if(prob(40))
+				ASSERT(gibbed == 0)
 				var/turf/T = find_loc(affected_mob)
 				gibs(T)
+				src.cure(0)
+				gibbed = 1
 				affected_mob:Alienize()
+

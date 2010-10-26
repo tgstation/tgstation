@@ -42,6 +42,8 @@
 
 	process()
 		..()
+		broadcast_status()
+
 		if(!on)
 			return 0
 		if(welded)
@@ -143,6 +145,10 @@
 			if("power_toggle")
 				on = !on
 
+			if("toggle_checks")
+				pressure_checks = (pressure_checks?0:3)
+
+
 			if("set_direction")
 				var/number = text2num(signal.data["parameter"])
 				if(number > 0.5)
@@ -175,7 +181,10 @@
 				external_pressure_bound = number
 
 		if(signal.data["tag"])
-			spawn(5) broadcast_status()
+			spawn(2)
+				broadcast_status()
+				update_icon()
+		return
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.
 		if(on&&node)

@@ -20,7 +20,7 @@ to null does not delete the object itself. Thank you.
 	var/cure = null
 	var/cure_id = null// reagent.id or list containing them
 	var/cure_chance = 8//chance for the cure to do its job
-	var/spread = null
+	var/spread = null //spread type description
 	var/spread_type = AIRBORNE
 	var/contagious_period = 0//the disease stage when it can be spread
 	var/list/affected_species = list()
@@ -58,7 +58,7 @@ to null does not delete the object itself. Thank you.
 		return
 	return
 
-/datum/disease/proc/has_cure()
+/datum/disease/proc/has_cure()//check if affected_mob has required reagents.
 	if(!cure_id) return 0
 	var/result = 1
 	if(istype(cure_id, /list))
@@ -86,7 +86,7 @@ to null does not delete the object itself. Thank you.
 
 	if(src.virus) return
 
-	if(src.resistances.Find(virus.type))
+	if(virus.type in src.resistances)
 		if(prob(99.9)) return
 		src.resistances.Remove(virus.type)//the resistance is futile
 
@@ -259,7 +259,7 @@ to null does not delete the object itself. Thank you.
 	for(var/mob/living/carbon/M in oviewers(check_range, source))
 		for(var/name in src.affected_species)
 			var/mob_type = text2path("/mob/living/carbon/[lowertext(name)]")
-			if(mob_type && istype(M, mob_type))
+			if(mob_type && istype(M, mob_type))//check if mob can be infected
 				M.contract_disease(src)
 				break
 	return
@@ -273,8 +273,8 @@ to null does not delete the object itself. Thank you.
 		src.stage_act()
 	return
 
-/datum/disease/proc/cure(var/resistance=1)
-	if(resistance && src.affected_mob && !affected_mob.resistances.Find(src.type))
+/datum/disease/proc/cure(var/resistance=1)//if resistance = 0, the mob won't develop resistance to disease
+	if(resistance && src.affected_mob && !(src.type in affected_mob.resistances))
 //		world << "Setting res to [src]"
 		var/type = "[src.type]"//copy the value, not create the reference to it, so when the object is deleted, the value remains.
 		affected_mob.resistances += text2path(type)
@@ -284,7 +284,7 @@ to null does not delete the object itself. Thank you.
 	return
 
 
-/datum/disease/New()
+/datum/disease/New()//adding the object to global list. List is processed by master controller.
 	active_diseases += src
 
 /*

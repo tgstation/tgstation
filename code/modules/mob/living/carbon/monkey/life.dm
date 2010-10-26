@@ -553,7 +553,7 @@
 					return
 
 		handle_virus_updates()
-			if(src.bodytemperature > 406)
+			if(src.bodytemperature > 406 && src.virus)
 				src.virus.cure()
 			return
 

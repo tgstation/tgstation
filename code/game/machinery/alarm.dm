@@ -2,11 +2,14 @@
 
 	var/frequency = 1439
 	var/list/sensors = list()
+	var/list/vents = list()
 	var/list/sensor_information = list()
+	var/list/vent_information = list()
 	var/datum/radio_frequency/radio_connection
 	var/alarm_area //unused atm. Maybe do something if emmaged or hacked...Like change the area to security, syphon air out, ..., profit.
 	var/locked = 1
 	var/panic = 0 //is this alarm panicked?
+	var/device = null
 
 	req_access = list(access_atmospherics)
 
@@ -30,9 +33,11 @@
 		if(!signal || signal.encryption) return
 
 		var/id_tag = signal.data["tag"]
-		if(!id_tag || !sensors.Find(id_tag)) return
-
-		sensor_information[id_tag] = signal.data
+		if(!id_tag || (!sensors.Find(id_tag) && !vents.Find(id_tag))) return
+		if(signal.data["device"] == "AScr")
+			sensor_information[id_tag] = signal.data
+		else if(signal.data["device"] == "AVP")
+			vent_information[id_tag] = signal.data
 
 	proc
 		set_frequency(new_frequency)
@@ -40,34 +45,6 @@
 			frequency = new_frequency
 			radio_connection = radio_controller.add_object(src, "[frequency]")
 
-/* //moved to vent_scrubber.dm
-
-		find_scrubbers()//finds vent_scrubbers in area, sets corresponding frequency, name and id_tags, fills sensor list with id_tags and names
-			var/area/A = get_area(loc)
-			var/area/M = A.master
-			if(!alarm_area)
-				alarm_area = M
-
-			//world << "\red Processing [M.name]"
-
-			var/uniq_id = md5(M.name)//hash works like a charm
-
-			if(M.related && M.related.len)//if has relatives
-				var/i = 0
-				for(var/area/Rel in M.related)//check all relatives
-					if(Rel == M) continue //same parent area
-					if(Rel.contents && Rel.contents.len)
-						for(var/obj/machinery/atmospherics/unary/vent_scrubber/V in Rel.contents)
-							if(V.id_tag)//id_tag assigned, probably already connected to alarm somewhere
-								//world << "[V.id_tag] passed"
-								continue
-							V.id_tag = "[uniq_id]_[i++]"//unique ID of the scrubber
-							V.frequency = frequency
-							var/name = "[M.name] Air Scrubber #[i]" //displayed name
-							sensors[V.id_tag] = name
-							V.name = name
-							//world << "[V.name] in [M.name] is set to [frequency] with ID [V.id_tag] and named [sensors[V.id_tag]]"
-*/
 
 		send_signal(var/target, var/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 			if(!radio_connection)
@@ -81,76 +58,111 @@
 			signal.data["command"] = command
 
 			radio_connection.post_signal(src, signal)
-			//world << text("Signal [] Broadcasted to []", command, target)
+//			world << text("Signal [] Broadcasted to []", command, target)
 
 			return 1
 
 		return_text()
-			var/sensor_data
-			if(sensors.len)
-				for(var/id_tag in sensors)
-					var/long_name = sensors[id_tag]
-					var/list/data = sensor_information[id_tag]
-					var/sensor_part = "<B>[long_name]</B>:<BR>"
+			var/output = "<B>[alarm_zone] Air [name]</B><HR>"
+			if(!src.device)
+				output += {"<a href='?src=\ref[src];scrubbers_control=1'>Scrubbers Control</a><br>
+						<a href='?src=\ref[src];vents_control=1'>Vents Control</a><br>
+						<HR>
+						"}
 
-					if(data)
-						sensor_part += "<B>Operating:</B> <A href='?src=\ref[src];toggle_power=[id_tag]'>[data["on"]?"on":"off"]</A><BR>"
-						sensor_part += "<B>Type:</B> <A href='?src=\ref[src];toggle_scrubbing=[id_tag]'>[data["scrubbing"]?"scrubbing":"syphoning"]</A><BR>"
-						if(data["scrubbing"])
-							sensor_part += "<B>Filtering:</B> Carbon Dioxide <A href='?src=\ref[src];toggle_co2_scrub=[id_tag]'>([data["filter_co2"]?"on":"off"])</A>; Toxins <A href='?src=\ref[src];toggle_tox_scrub=[id_tag]'>([data["filter_toxins"]?"on":"off"])</A><BR>"
-						sensor_part += "<A href='?src=\ref[src];toggle_panic_siphon=[id_tag]'><font color='[data["panic"]?"blue'>Dea":"red'>A"]ctivate panic syphon</A></font><BR>"
-						if(data["panic"])
-							sensor_part += "<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>"
-						sensor_part += "<HR>"
-					else
-						sensor_part = "<FONT color='red'>[long_name] can not be found!</FONT><BR>"
-
-					sensor_data += sensor_part
-				sensor_data += "<A href='?src=\ref[src];toggle_panic_siphon_global=1'><font color='red'><B>TOGGLE PANIC SYPHON IN AREA</B></font></A>"
-
+				output += "<A href='?src=\ref[src];toggle_panic_siphon_global=1'><font color='red'><B>TOGGLE PANIC SYPHON IN AREA</B></font></A>"
 			else
-				sensor_data = "No scrubbers connected."
+				var/sensor_data
+				if(src.device == "Scrubbers")
+					if(sensors.len)
+						for(var/id_tag in sensors)
+							var/long_name = sensors[id_tag]
+							var/list/data = sensor_information[id_tag]
+							var/sensor_part = "<B>[long_name]</B>:<BR>"
 
-			var/output = {"<B>[alarm_zone] Air [name]</B><HR>[sensor_data]"}
+							if(data)
+								sensor_part += {"<B>Operating:</B> <A href='?src=\ref[src];scr_toggle_power=[id_tag]'>[(data["on"]?"on":"off")]</A><BR>
+												<B>Type:</B> <A href='?src=\ref[src];scr_toggle_scrubbing=[id_tag]'>[(data["scrubbing"]?"scrubbing":"syphoning")]</A><BR>"}
+								if(data["scrubbing"])
+									sensor_part += "<B>Filtering:</B> Carbon Dioxide <A href='?src=\ref[src];scr_toggle_co2_scrub=[id_tag]'>([(data["filter_co2"]?"on":"off")])</A>; Toxins <A href='?src=\ref[src];scr_toggle_tox_scrub=[id_tag]'>([data["filter_toxins"]?"on":"off"])</A><BR>"
+								sensor_part += "<A href='?src=\ref[src];scr_toggle_panic_siphon=[id_tag]'><font color='[(data["panic"]?"blue'>Dea":"red'>A")]ctivate panic syphon</A></font><BR>"
+								if(data["panic"])
+									sensor_part += "<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>"
+								sensor_part += "<HR>"
+							else
+								sensor_part = "<FONT color='red'>[long_name] can not be found!</FONT><BR><HR>"
+
+							sensor_data += sensor_part
+					else
+						sensor_data = "No scrubbers connected.<BR>"
+
+				else if(src.device == "Vents")
+					if(vents.len)
+						for(var/id_tag in vents)
+							var/long_name = vents[id_tag]
+							var/list/data = vent_information[id_tag]
+							var/sensor_part = "<B>[long_name]</B>:<BR>"
+
+							if(data)
+								sensor_part += {"<B>Operating:</B> <A href='?src=\ref[src];v_toggle_power=[id_tag]'>[data["power"]]</A><BR>
+												<B>Pressure checks:</B> <A href='?src=\ref[src];v_toggle_checks=[id_tag]'>[data["checks"]?"on":"off"]</A><BR>
+												<HR>"}
+							else
+								sensor_part = "<FONT color='red'>[long_name] can not be found!</FONT><HR>"
+
+							sensor_data += sensor_part
+					else
+						sensor_data = "No scrubbers connected.<BR>"
+
+				output = {"[sensor_data]<a href='?src=\ref[src];main=1'>Main menu</a><br>"}
 
 			return output
 
-
-
 	initialize()
 		set_frequency(frequency)
-		/*if(!(sensors.len))//if there's something in the list, do not search the area
-			find_scrubbers()*/
 
 
 	Topic(href, href_list)
 		//if(..())
 		//	return
+		if(href_list["scrubbers_control"])
+			src.device = "Scrubbers"
+		if(href_list["vents_control"])
+			src.device = "Vents"
+		if(href_list["main"])
+			src.device = null
+		if(href_list["scr_toggle_power"])
+			send_signal(href_list["scr_toggle_power"], "toggle_power")
 
-		if(href_list["toggle_power"])
-			send_signal(href_list["toggle_power"], "toggle_power")
+		if(href_list["scr_toggle_scrubbing"])
+			send_signal(href_list["scr_toggle_scrubbing"], "toggle_scrubbing")
 
-		if(href_list["toggle_scrubbing"])
-			send_signal(href_list["toggle_scrubbing"], "toggle_scrubbing")
+		if(href_list["scr_toggle_co2_scrub"])
+			send_signal(href_list["scr_toggle_co2_scrub"], "toggle_co2_scrub")
 
-		if(href_list["toggle_co2_scrub"])
-			send_signal(href_list["toggle_co2_scrub"], "toggle_co2_scrub")
+		if(href_list["scr_toggle_tox_scrub"])
+			send_signal(href_list["scr_toggle_tox_scrub"], "toggle_tox_scrub")
 
-		if(href_list["toggle_tox_scrub"])
-			send_signal(href_list["toggle_tox_scrub"], "toggle_tox_scrub")
+		if(href_list["scr_toggle_panic_siphon"])
+			send_signal(href_list["scr_toggle_panic_siphon"], "toggle_panic_siphon")
 
-		if(href_list["toggle_panic_siphon"])
-			send_signal(href_list["toggle_panic_siphon"], "toggle_panic_siphon")
+		if(href_list["v_toggle_power"])
+			send_signal(href_list["v_toggle_power"], "power_toggle")
+		if(href_list["v_toggle_checks"])
+			send_signal(href_list["v_toggle_checks"], "toggle_checks")
 
 		if(href_list["toggle_panic_siphon_global"])
 			for(var/V in sensors)
 				send_signal(V, "toggle_panic_siphon")
+			for(var/P in vents)
+				send_signal(P, "power_off")
 			panic = !panic
 
 
 		spawn(5)
-			attack_hand(usr)
-		return ..()
+//			attack_hand(usr)
+			src.updateUsrDialog()
+		return
 
 
 /obj/machinery/alarm/New()

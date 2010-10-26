@@ -16,6 +16,7 @@
 	cure_chance = 20
 	affected_species = list("Human", "Monkey")
 	permeability_mod = 3//likely to infect
+	var/gibbed = 0
 
 /datum/disease/alien_embryo/stage_act()
 	..()
@@ -58,6 +59,7 @@
 			affected_mob.toxloss += 10
 			affected_mob.updatehealth()
 			if(prob(40))
+				ASSERT(gibbed == 0)
 				var/list/candidates = list() // Picks a random ghost in the world to shove in the larva -- TLE
 				for(var/mob/dead/observer/G in world)
 					if(G.client)
@@ -69,7 +71,9 @@
 				else
 					if(affected_mob.client)
 						affected_mob.client.mob = new/mob/living/carbon/alien/larva(affected_mob.loc)
+				src.cure(0)
 				affected_mob.gib()
+				gibbed = 1
 
 			/*
 				if(affected_mob.client)
