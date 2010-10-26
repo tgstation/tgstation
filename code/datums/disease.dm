@@ -147,40 +147,40 @@ to null does not delete the object itself. Thank you.
 
 		switch(target_zone)
 			if(1)
-				if(H.head && isobj(H.head))
+				if(isobj(H.head))
 					Cl = H.head
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Head pass [passed]"
-				if(passed && H.wear_mask && isobj(H.wear_mask))
+				if(passed && isobj(H.wear_mask))
 					Cl = H.wear_mask
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Mask pass [passed]"
 			if(2)//arms and legs included
-				if(H.wear_suit && isobj(H.wear_suit))
+				if(isobj(H.wear_suit))
 					Cl = H.wear_suit
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Suit pass [passed]"
-				if(passed && H.slot_w_uniform && isobj(H.slot_w_uniform))
+				if(passed && isobj(H.slot_w_uniform))
 					Cl = H.slot_w_uniform
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Uniform pass [passed]"
 			if(3)
-				if(H.wear_suit && isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
+				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
 					Cl = H.wear_suit
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Suit pass [passed]"
 
-				if(passed && H.gloves && isobj(H.gloves))
+				if(passed && isobj(H.gloves))
 					Cl = H.gloves
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Gloves pass [passed]"
 			if(4)
-				if(H.wear_suit && isobj(H.wear_suit) && H.wear_suit.body_parts_covered&FEET)
+				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&FEET)
 					Cl = H.wear_suit
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Suit pass [passed]"
 
-				if(passed && H.shoes && isobj(H.shoes))
+				if(passed && isobj(H.shoes))
 					Cl = H.shoes
 					passed = prob(Cl.permeability_coefficient*100*virus.permeability_mod)
 //					world << "Shoes pass [passed]"
