@@ -340,6 +340,8 @@ var/supply_shuttle_points = 50
 	"/obj/item/weapon/pestspray",
 	"/obj/item/weapon/pestspray",
 	"/obj/item/weapon/pestspray",
+	"/obj/item/weapon/minihoe",
+	"/obj/item/device/analyzer/plant_analyzer",
 	"/obj/item/clothing/gloves/latex",
 	"/obj/item/clothing/gloves/latex") // For handling nettles etc
 	cost = 10

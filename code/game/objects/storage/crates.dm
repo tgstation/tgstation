@@ -117,7 +117,7 @@
 	openicon = "hydrocrateopen"
 	closedicon = "hydrocrate"
 	density = 1
-	New()
+/*	New() // This stuff shouldn't be here, it should be in /datum/supply_packs/hydroponics
 		..()
 		new /obj/item/weapon/plantbgone(src)
 		new /obj/item/weapon/plantbgone(src)
@@ -127,7 +127,7 @@
 		new /obj/item/weapon/weedspray(src)
 		new /obj/item/weapon/pestspray(src)
 		new /obj/item/weapon/pestspray(src)
-		new /obj/item/weapon/pestspray(src)
+		new /obj/item/weapon/pestspray(src) */
 
 /obj/crate/New()
 	..()
