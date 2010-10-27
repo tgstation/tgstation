@@ -94,7 +94,22 @@ CLIPBOARDS
 			if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
 				return
 			src.info += text("<BR><i>This paper has been stamped with the [].</i><BR>", P.name)
-			src.icon_state = "paper_stamped"
+			switch(P.type)
+				if(/obj/item/weapon/stamp/captain)
+					src.icon_state = "paper_stamped_cap"
+				if(/obj/item/weapon/stamp/hop)
+					src.icon_state = "paper_stamped_hop"
+				if(/obj/item/weapon/stamp/hos)
+					src.icon_state = "paper_stamped_hos"
+				if(/obj/item/weapon/stamp/ce)
+					src.icon_state = "paper_stamped_ce"
+				if(/obj/item/weapon/stamp/rd)
+					src.icon_state = "paper_stamped_rd"
+				else
+					src.icon_state = "paper_stamped"
+			if(!stamped)
+				stamped = new
+			stamped += P.type
 
 			user << "\blue You stamp the paper with your rubber stamp."
 	/*

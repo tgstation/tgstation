@@ -759,6 +759,7 @@
 	throw_speed = 3
 	throw_range = 15
 	layer = 4
+	var/list/stamped
 	var/see_face = 1
 	var/body_parts_covered = HEAD
 	var/protective_temperature = T0C + 10
@@ -1408,6 +1409,27 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
+
+/obj/item/weapon/stamp/captain
+	name = "captain's rubber stamp"
+	icon_state = "stamp-cap"
+
+/obj/item/weapon/stamp/hop
+	name = "head of personnel's rubber stamp"
+	icon_state = "stamp-hop"
+
+/obj/item/weapon/stamp/hos
+	name = "head of security's rubber stamp"
+	icon_state = "stamp-hos"
+
+/obj/item/weapon/stamp/ce
+	name = "chief engineer's rubber stamp"
+	icon_state = "stamp-ce"
+
+/obj/item/weapon/stamp/rd
+	name = "research director's rubber stamp"
+	icon_state = "stamp-rd"
+
 
 /obj/item/weapon/cigpacket
 	name = "Cigarette packet"
