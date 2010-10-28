@@ -154,21 +154,17 @@ datum
 			explanation_text = "Destroy the station with a nuclear device."
 
 		absorb
-			var/num_to_eat = 5 //this is supposed to be semi-random but fuck it for now, this is alpha
+			var/num_to_eat //this is supposed to be semi-random but fuck it for now, this is alpha
 
-/*			proc/gen_num_to_eat()  //this doesn't work
+			proc/gen_num_to_eat()  //this doesn't work -- should work now, changed it a bit -- Urist
 				num_to_eat = rand (4,6)
+				explanation_text = "Absorb [num_to_eat] compatible genomes."
 				return num_to_eat
-*/
-
-//			gen_num_to_eat()
-			explanation_text = "Absorb 5 compatible genomes."
 
 			check_completion()
 				if((owner.current.absorbed_dna.len - 1) >= num_to_eat)
 					return 1
 				else
 					return 0
-
 
 

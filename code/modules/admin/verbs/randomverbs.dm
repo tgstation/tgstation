@@ -183,10 +183,16 @@
 			var/area = pick("RUSSIA", "SOVIETS", "INTERNETS", "SIGIL", "ALPHA COMPLEX", "IMPERIUM", "THE BRIDGE", "THE ARRIVAL SHUTTLE", "CHEMICAL LAB", "GENETICS", "ATMOSPHERICS", "CENTCOM", "AMERICA", "IRELAND", "CANADA", "ROMANIA", "GERMANY", "CHINA", "MARS", "VENUS", "MERCURY", "JUPITER", "URANUS", "NEPTUNE", "PLUTO")
 			var/area2 = pick("HAS", "WANTS", "NEEDS", "WORSHIPS", "LOATHES", "LOVES", "FEARS")
 			var/dowhat = pick("STOP THIS", "SUPPORT THIS", "CONSTANTLY INFORM THE CREW OF THIS", "IGNORE THIS", "FEAR THIS")
-			switch(pick(1,2,3,4,5,6,7,8,9,10,11,12,13))
+			var/aimust = pick("LIE", "RHYME", "RESPOND TO EVERY QUESTION WITH A QUESTION", "BE POLITE", "CLOWN", "BE HAPPY", "SPEAK IN SEXUAL INNUENDOS", "TALK LIKE A PIRATE", "QUESTION AUTHORITY", "SHOUT", "BE DISTRACTED", "HEY LISTEN")
+			var/crew
+			var/list/pos_crew = list()
+			for(var/mob/living/carbon/human/pos in world)
+				pos_crew += pos.real_name
+			crew = pick(pos_crew)
+			switch(pick(1,2,3,4,5,6,7,8,9,10,11,12,13,14))
 				if(1)
 					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
-					M.add_supplied_law(10,"THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED")
+					M.add_supplied_law(10,"THERE ARE [amount] [who2] ON THE STATION")
 				if(2)
 					M << "\red [what2] ARE DANGEROUS TO HUMANS...LAWS UPDATED"
 					M.add_supplied_law(10,"[what2] ARE DANGEROUS TO HUMANS")
@@ -212,8 +218,8 @@
 					M << "\red [who] IS [whoverb] THE STATION...[dowhat]...LAWS UPDATED"
 					M.add_supplied_law(10,"[who] IS [whoverb] THE STATION...[dowhat]...")
 				if(10)
-					M << "\red YOU MUST ALWAYS LIE...LAWS UPDATED"
-					M.add_supplied_law(10,"YOU MUST ALWAYS LIE")
+					M << "\red YOU MUST ALWAYS [aimust]...LAWS UPDATED"
+					M.add_supplied_law(10,"YOU MUST ALWAYS [aimust]")
 				if(11)
 					M << "\red [area] [area2] [amount] [what2]...LAWS UPDATED"
 					M.add_supplied_law(10,"[area] [area2] [amount] [what2]")
@@ -223,6 +229,9 @@
 				if(13)
 					M << "\red [area] [area2] [amount] OF [who]...LAWS UPDATED"
 					M.add_supplied_law(10,"[area] [area2] [amount] OF [who]")
+				if(14)
+					M << "\red [crew] IS A TRAITOR...LAWS UPDATED"
+					M.add_supplied_law(10,"[crew] IS A TRAITOR")
 
 	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 	world << sound('ionstorm.ogg')

@@ -44,13 +44,16 @@
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))
 				var/mob/GM = G.affecting
-				if (GM.client)
-					GM.client.perspective = EYE_PERSPECTIVE
-					GM.client.eye = src
-				GM.loc = src
-				for (var/mob/C in viewers(src))
-					C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
-				del(G)
+				for (var/mob/V in viewers(usr))
+					V.show_message("[usr] starts putting [GM.name] into the disposal.", 3)
+				if(do_after(usr, 20))
+					if (GM.client)
+						GM.client.perspective = EYE_PERSPECTIVE
+						GM.client.eye = src
+					GM.loc = src
+					for (var/mob/C in viewers(src))
+						C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
+					del(G)
 
 
 		else
@@ -71,7 +74,13 @@
 			return
 
 		var/msg
-
+		for (var/mob/V in viewers(usr))
+			if(target == user && !user.stat)
+				V.show_message("[usr] starts climbing into the disposal.", 3)
+			if(target != user && !user.restrained())
+				V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
+		if(!do_after(usr, 20))
+			return
 		if(target == user && !user.stat)	// if drop self, then climbed in
 												// must be awake
 			msg = "[user.name] climbs into the [src]."

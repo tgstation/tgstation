@@ -154,17 +154,21 @@
 /*	if (G.affecting.abiotic())
 		user << "Subject may not have abiotic items on."
 		return */
-	var/mob/M = G.affecting
-	if (M.client)
-		M.client.perspective = EYE_PERSPECTIVE
-		M.client.eye = src
-	M.loc = src
-	src.occupant = M
-	src.icon_state = "sleeper_1"
-	for(var/obj/O in src)
-		O.loc = src.loc
-	src.add_fingerprint(user)
-	del(G)
+	for (var/mob/V in viewers(user))
+		V.show_message("[user] starts putting [G.affecting.name] into the sleeper.", 3)
+	if(do_after(user, 20))
+		var/mob/M = G.affecting
+		if (M.client)
+			M.client.perspective = EYE_PERSPECTIVE
+			M.client.eye = src
+		M.loc = src
+		src.occupant = M
+		src.icon_state = "sleeper_1"
+		for(var/obj/O in src)
+			O.loc = src.loc
+		src.add_fingerprint(user)
+		del(G)
+		return
 	return
 
 /obj/machinery/sleeper/ex_act(severity)
@@ -291,13 +295,17 @@
 /*	if (usr.abiotic())									// Removing the requirement for user to be naked -- TLE
 		usr << "Subject may not have abiotic items on."
 		return*/
-	usr.pulling = null
-	usr.client.perspective = EYE_PERSPECTIVE
-	usr.client.eye = src
-	usr.loc = src
-	src.occupant = usr
-	src.icon_state = "sleeper_1"
-	for(var/obj/O in src)
-		del(O)
-	src.add_fingerprint(usr)
+	for (var/mob/V in viewers(usr))
+		V.show_message("[usr] starts climbing into the sleeper.", 3)
+	if(do_after(usr, 20))
+		usr.pulling = null
+		usr.client.perspective = EYE_PERSPECTIVE
+		usr.client.eye = src
+		usr.loc = src
+		src.occupant = usr
+		src.icon_state = "sleeper_1"
+		for(var/obj/O in src)
+			del(O)
+		src.add_fingerprint(usr)
+		return
 	return

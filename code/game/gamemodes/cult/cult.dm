@@ -70,15 +70,17 @@
 		return
 	spawn (0)
 		var/obj/item/weapon/paper/talisman/supply/T = null
-		cult_mob.equip_if_possible(new /obj/item/weapon/paper/talisman/supply(cult_mob), cult_mob.slot_l_store)
-		if (!T && istype(cult_mob.l_store, /obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = cult_mob.l_store
+		cult_mob.equip_if_possible(new /obj/item/weapon/storage/backpack(cult_mob), cult_mob.slot_back)
+		cult_mob.equip_if_possible(new /obj/item/weapon/paper/talisman/supply(cult_mob), cult_mob.slot_in_backpack)
+		sleep(10)
+		if (!T && istype(cult_mob.back, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = cult_mob.back
 			var/list/L = S.return_inv()
 			for (var/obj/item/weapon/paper/talisman/supply/foo in L)
 				T = foo
 				break
 		if (!T)
-			cult_mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately."
+			cult_mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately. (still, check your backpack. it may have been a mere bug. if you have a piece of bloody paper, all is well"
 		else
 			cult_mob << "You have a talisman in your backpack, one that will help you start the cult on this station. Use it well and remember - there are others."
 		if(!wordtravel)
