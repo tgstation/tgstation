@@ -23,6 +23,7 @@ LOG_WHISPER
 # 
 # default probablity is 1, increase to make that mode more likely to be picked
 # set to 0 to disable that mode
+# Cult mode is in alpha test, enable at your own risk
 PROBABILITY EXTENDED 0
 PROBABILITY TRAITOR 8
 PROBABILITY METEOR 0
@@ -34,6 +35,8 @@ PROBABILITY WIZARD 3
 PROBABILITY RESTRUCTURING 0
 PROBABILITY REVOLUTION 5
 PROBABILITY CHANGELING 2
+PROBABILITY CULT 0
+PROBABILITY MONKEY 0
 
 # allow players to initiate a restart vote
 ALLOW_VOTE_RESTART
