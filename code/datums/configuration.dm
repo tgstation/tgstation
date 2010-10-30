@@ -32,6 +32,7 @@
 	var/respawn = 1
 
 	var/server
+	var/banappeals
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -160,6 +161,9 @@
 
 			if ("server")
 				config.server = value
+
+			if ("banappeals")
+				config.banappeals = value
 
 			if ("probability")
 				var/prob_pos = findtext(value, " ")
