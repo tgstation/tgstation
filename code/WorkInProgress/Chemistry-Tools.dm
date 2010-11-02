@@ -1458,7 +1458,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 	name = "monkeyburger"
 	desc = "The cornerstone of every nutritious breakfast."
-	icon_state = "burger"
+	icon_state = "hburger"
 	amount = 5
 	heal_amt = 2
 
@@ -2050,7 +2050,13 @@
 
 /obj/reagent_dispensers/fueltank/blob_act()
 	explosion(src.loc,0,1,5,7,10)
-	del(src)
+	if(src)
+		del(src)
+
+/obj/reagent_dispensers/fueltank/ex_act()
+	explosion(src.loc,-1,0,2)
+	if(src)
+		del(src)
 
 /obj/reagent_dispensers/beerkeg
 	name = "beer keg"

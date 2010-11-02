@@ -657,6 +657,20 @@
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 
+//Themed space suits for different nuke rounds (WIP)
+
+/obj/item/clothing/head/helmet/space/pirate
+	name = "pirate hat"
+	desc = "Yarr."
+	icon_state = "pirate"
+	item_state = "pirate"
+
+/obj/item/clothing/suit/space/pirate
+	name = "pirate coat"
+	desc = "Yarr."
+	icon_state = "pirate"
+	item_state = "pirate"
+
 // UNDERS AND BY THAT, NATURALLY I MEAN UNIFORMS/JUMPSUITS
 
 /obj/item/clothing/under

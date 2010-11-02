@@ -167,4 +167,59 @@ datum
 				else
 					return 0
 
+/* Isn't suited for global objectives
+/*---------CULTIST----------*/
 
+		eldergod
+			explanation_text = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
+
+			check_completion()
+				if(eldergod) //global var, defined in rune4.dm
+					return 1
+				return 0
+
+		survivecult
+			var/num_cult
+
+			explanation_text = "Our knowledge must live on. Make sure at least 5 acolytes escape on the shuttle to spread their work on an another station."
+
+			check_completion()
+				if(emergency_shuttle.location<2)
+					return 0
+
+				var/cultists_escaped = 0
+
+				var/area/shuttle/escape/centcom/C = /area/shuttle/escape/centcom
+				for(var/turf/T in	get_area_turfs(C.type))
+					for(var/mob/living/carbon/human/H in T)
+						if(cultists.Find(H))
+							cultists_escaped++
+
+				if(cultists_escaped>=5)
+					return 1
+
+				return 0
+
+		sacrifice //stolen from traitor target objective
+
+			proc/find_target() //I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
+				var/list/possible_targets = call(/datum/game_mode/cult/proc/get_unconvertables)()
+
+				if(possible_targets.len > 0)
+					sacrifice_target = pick(possible_targets)
+
+				if(sacrifice_target && sacrifice_target.current)
+					explanation_text = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell join blood) and three acolytes to do so."
+				else
+					explanation_text = "Free Objective"
+
+				return sacrifice_target
+
+			check_completion() //again, calling on a global list defined in rune15.dm
+				if(sacrifice_target.current in sacrificed)
+					return 1
+				else
+					return 0
+
+/*-------ENDOF CULTIST------*/
+*/

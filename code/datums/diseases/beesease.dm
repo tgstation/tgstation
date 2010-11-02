@@ -15,7 +15,7 @@
 		if(1)
 			if(prob(2))
 				affected_mob << "\red You feel like something is moving inside of you"
-		if(2) //also changes say, see the say.dm
+		if(2) //also changes say, see say.dm
 			if(prob(2))
 				affected_mob << "\red You feel like something is moving inside of you"
 			if(prob(2))

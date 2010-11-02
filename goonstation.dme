@@ -385,6 +385,7 @@
 #include "code\game\magic\cultist\rune12.dm"
 #include "code\game\magic\cultist\rune13.dm"
 #include "code\game\magic\cultist\rune14.dm"
+#include "code\game\magic\cultist\rune15.dm"
 #include "code\game\magic\cultist\rune2.dm"
 #include "code\game\magic\cultist\rune3.dm"
 #include "code\game\magic\cultist\rune4.dm"

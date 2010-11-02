@@ -250,7 +250,7 @@
 				virus_type = /datum/disease/brainrot
 			if("cold")
 				virus_type = /datum/disease/cold
-			if("rhinovirus")
+			if("retrovirus")
 				virus_type = /datum/disease/dnaspread
 			if("flu")
 				virus_type = /datum/disease/flu

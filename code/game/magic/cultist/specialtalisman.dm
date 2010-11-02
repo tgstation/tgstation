@@ -1,4 +1,8 @@
 /obj/item/weapon/paper/talisman/proc/supply(var/key)
+	if (!src.uses)
+		del(src)
+		return
+
 	var/dat = "<B>There are [src.uses] bloody runes on the parchment.</B><BR>"
 	dat += "Please choose the chant to be imbued into the fabric of reality.<BR>"
 	dat += "<HR>"
@@ -15,10 +19,6 @@
 		return
 
 	if (usr.stat || usr.restrained() || !in_range(src, usr))
-		return
-
-	if (!src.uses)
-		del(src)
 		return
 
 	if (href_list["rune"])

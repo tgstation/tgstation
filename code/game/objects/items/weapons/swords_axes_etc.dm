@@ -18,19 +18,25 @@ STUN BATON
 
 /obj/item/weapon/sword/attack_self(mob/user as mob)
 	if ((user.mutations & 16) && prob(50))
-		user << "\red You accidentally cut yourself with the Sword."
+		user << "\red You accidentally cut yourself with [src]."
 		user.bruteloss += 5
 		user.fireloss +=5
 	src.active = !( src.active )
 	if (src.active)
-		user << "\blue The sword is now active."
+		user << "\blue [src] is now active."
 		src.force = 30
-		src.icon_state = "sword1"
+		if(istype(src,/obj/item/weapon/sword/pirate))
+			src.icon_state = "cutlass1"
+		else
+			src.icon_state = "sword1"
 		src.w_class = 4
 	else
-		user << "\blue The sword can now be concealed."
+		user << "\blue [src] can now be concealed."
 		src.force = 3
-		src.icon_state = "sword0"
+		if(istype(src,/obj/item/weapon/sword/pirate))
+			src.icon_state = "cutlass0"
+		else
+			src.icon_state = "sword0"
 		src.w_class = 2
 	src.add_fingerprint(user)
 	return

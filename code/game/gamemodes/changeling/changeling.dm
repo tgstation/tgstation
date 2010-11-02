@@ -41,6 +41,8 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
+	var/changelingdeathticker = 0
+
 /datum/game_mode/changeling/announce()
 	world << "<B>The current game mode is - Changeling!</B>"
 	world << "<B>There is an alien changeling on the station. Do not let the changeling succeed!</B>"
@@ -152,7 +154,7 @@
 	intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
 
 	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling")
+	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
 	possible_modes -= "[ticker.mode]"
 	var/number = pick(2, 3)
 	var/i = 0
@@ -176,6 +178,17 @@
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	world << sound('intercept.ogg')
 
+/datum/game_mode/changeling/check_finished()
+	if(changeling.current.stat==2)
+		if(changelingdeathticker>=900)
+			return 1
+		changelingdeathticker++
+
+	if(changeling.current.stat!=2)
+		if(changelingdeathticker)
+			changelingdeathticker = 0
+
+	return ..()
 
 /datum/game_mode/changeling/declare_completion()
 	for(var/datum/mind/changeling in changelings)

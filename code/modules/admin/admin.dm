@@ -271,7 +271,8 @@ var/showadminmessages = 1
 			<A href='?src=\ref[src];c_mode2=blob'>Blob</A><br>
 			<A href='?src=\ref[src];c_mode2=sandbox'>Sandbox</A><br>
 			<A href='?src=\ref[src];c_mode2=revolution'>Revolution</A><br>
-			<A href='?src=\ref[src];c_mode2=cult'>Cult</A><br>			<A href='?src=\ref[src];c_mode2=malfunction'>AI Malfunction</A><br>
+			<A href='?src=\ref[src];c_mode2=cult'>Cult</A><br>
+			<A href='?src=\ref[src];c_mode2=malfunction'>AI Malfunction</A><br>
 			<A href='?src=\ref[src];c_mode2=deathmatch'>Death Commando Deathmatch</A><br>
 			<A href='?src=\ref[src];c_mode2=confliction'>Confliction (TESTING)</A><br>
 			<A href='?src=\ref[src];c_mode2=ctf'>Capture The Flag (Beta)</A><br><br>
@@ -1149,7 +1150,7 @@ var/showadminmessages = 1
 						viral_outbreak()
 						message_admins("[key_name_admin(usr)] has triggered a virus outbreak", 1)
 					else
-						var/list/viruses = list("fake gbs","gbs","magnitis","wizarditis",/*"beesease",*/"brain rot","cold","rhinovirus","flu")
+						var/list/viruses = list("fake gbs","gbs","magnitis","wizarditis",/*"beesease",*/"brain rot","cold","retrovirus","flu")
 						var/V = input("Choose the virus to spread", "BIOHAZARD") in viruses
 						viral_outbreak(V)
 						message_admins("[key_name_admin(usr)] has triggered a virus outbreak of [V]", 1)
@@ -1329,14 +1330,6 @@ var/showadminmessages = 1
 									if(M)
 										dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 										dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
-								dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
-								for(var/datum/mind/N in ticker.mode:get_living_heads())
-									var/mob/M = N.current
-									if(M)
-										dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-										dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
-										var/turf/mob_loc = get_turf_loc(M)
-										dat += "<td>[mob_loc.loc]</td></tr>"
 								dat += "</table>"
 
 							else // i'll finish this later

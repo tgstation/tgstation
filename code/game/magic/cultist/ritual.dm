@@ -49,9 +49,10 @@ var/runedec = 0
 // see Hell join - See invisible
 // blood join Hell - Raise dead
 // blood see destroy - Hide nearby runes
-// Hell join blood - Leave your body and ghost around
+// Hell travel self - Leave your body and ghost around
 // blood see travel - Manifest a ghost into a mortal body
 // Hell tech join - Imbue a rune into a talisman
+// Hell blood join - Sacrifice rune
 
 	examine()
 		if(!cultists.Find(usr))
@@ -115,12 +116,14 @@ var/runedec = 0
 			return raise()
 		if(word1 == wordblood && word2 == wordsee && word3 == worddestr)
 			return obscure(4)
-		if(word1 == wordhell && word2 == wordjoin && word3 == wordblood)
+		if(word1 == wordhell && word2 == wordtravel && word3 == wordself)
 			return ajourney()
 		if(word1 == wordblood && word2 == wordsee && word3 == wordtravel)
 			return manifest()
 		if(word1 == wordhell && word2 == wordtech && word3 == wordjoin)
 			return talisman()
+		if(word1 == wordhell && word2 == wordblood && word3 == wordjoin)
+			return sacrifice()
 		else
 			return fizzle()
 
@@ -167,7 +170,7 @@ var/runedec = 0
 				icon_state = "1"
 				src.icon += rgb(0, 0 , 255)
 				return
-			if(word1 == wordhell && word2 == wordjoin && word3 == wordblood)
+			if(word1 == wordhell && word2 == wordtravel && word3 == wordself)
 				icon_state = "6"
 				src.icon += rgb(0, 0 , 255)
 				return
@@ -177,6 +180,10 @@ var/runedec = 0
 			if(word1 == wordhell && word2 == wordtech && word3 == wordjoin)
 				icon_state = "3"
 				src.icon += rgb(0, 0 , 255)
+				return
+			if(word1 == wordhell && word2 == wordblood && word3 == wordjoin)
+				icon_state = "[rand(1,6)]"
+				src.icon += rgb(255, 255, 255)
 				return
 			icon_state="[rand(1,6)]" //random shape and color for dummy runes
 			src.icon -= rgb(255,255,255)
@@ -197,6 +204,9 @@ var/runedec = 0
 			var/C = 0
 			for(var/obj/rune/N in world)
 				C++
+			if (!istype(user.loc,/turf))
+				user << "\red You do not have enough space to write a proper rune."
+				return
 			if (C>=26+runedec) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 				switch(alert("The cloth of reality can't take that much of a strain. By creating another rune, you risk locally tearing reality apart, which would prove fatal to you. Do you still wish to scribe the rune?",,"Yes","No"))
 					if("Yes")
@@ -250,7 +260,9 @@ var/runedec = 0
 			runerandom()
 		if(user)
 			var/r
-			var/list/runes = list("teleport", "tome", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "astral journey", "manifest", "imbue talisman")
+			if (!istype(user.loc,/turf))
+				user << "\red You do not have enough space to write a proper rune."
+			var/list/runes = list("teleport", "tome", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "astral journey", "manifest", "imbue talisman", "sacrifice")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes
 			switch(r)
 				if("teleport")
@@ -314,8 +326,8 @@ var/runedec = 0
 				if("astral journey")
 					var/obj/rune/R = new /obj/rune(user.loc)
 					R.word1=wordhell
-					R.word2=wordjoin
-					R.word3=wordblood
+					R.word2=wordtravel
+					R.word3=wordself
 					R.check_icon()
 				if("manifest")
 					var/obj/rune/R = new /obj/rune(user.loc)
@@ -327,6 +339,12 @@ var/runedec = 0
 					var/obj/rune/R = new /obj/rune(user.loc)
 					R.word1=wordhell
 					R.word2=wordtech
+					R.word3=wordjoin
+					R.check_icon()
+				if("sacrifice")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=wordhell
+					R.word2=wordblood
 					R.word3=wordjoin
 					R.check_icon()
 
@@ -357,7 +375,7 @@ var/runedec = 0
 	var/uses = 0
 
 	attack_self(mob/user as mob)
-		usr.bruteloss+=20
+		usr.bruteloss+=10
 		switch(imbue)
 			if("newtome")
 				call(/obj/rune/proc/tomesummon)()

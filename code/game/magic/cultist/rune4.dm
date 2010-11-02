@@ -11,7 +11,8 @@
 		S.desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
 		S.pixel_x = -89
 		S.pixel_y = -85
-		message_admins("<h1><font color=\"purple\"><b><u>[key_name_admin(usr)] has summoned a Tear in the Fabric of Reality!", 1)
+		if(ticker.mode.name == "cult")
+			ticker.mode:eldergod = 0
 		return
 	else
 		return fizzle()

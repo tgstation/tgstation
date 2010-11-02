@@ -106,6 +106,9 @@ STI KALY - blind
 		if(theareas.Find(AR) || AR.name == "Space") continue
 		theareas += AR
 
+	if(!theareas)
+		return
+
 	var/area/thearea = pick(theareas)
 
 	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -116,6 +119,7 @@ STI KALY - blind
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
 		if(T.z != affected_mob.z) continue
+		if(T.name == "space") continue
 		if(!T.density)
 			var/clear = 1
 			for(var/obj/O in T)
@@ -124,6 +128,9 @@ STI KALY - blind
 					break
 			if(clear)
 				L+=T
+
+	if(!L)
+		return
 
 	affected_mob.say("SCYAR NILA [uppertext(thearea.name)]!")
 	affected_mob.loc = pick(L)

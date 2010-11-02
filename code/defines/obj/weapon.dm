@@ -1072,6 +1072,9 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
 
+/obj/item/weapon/sword/pirate
+	name = "energy cutlass"
+	icon_state = "cutlass0"
 
 /obj/item/weapon/table_parts
 	name = "table parts"

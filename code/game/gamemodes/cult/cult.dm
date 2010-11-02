@@ -1,35 +1,36 @@
-// To add a rev to the list of revolutionaries, make sure it's rev (with if(ticker.mode.name == "revolution)),
-// then call ticker.mode:add_revolutionary(_THE_PLAYERS_MIND_)
-// nothing else needs to be done, as that proc will check if they are a valid target.
-// Just make sure the converter is a head before you call it!
-// To remove a rev (from brainwashing or w/e), call ticker.mode:remove_revolutionary(_THE_PLAYERS_MIND_),
-// this will also check they're not a head, so it can just be called freely
-// If the rev icons start going wrong for some reason, ticker.mode:update_all_rev_icons() can be called to correct them.
-// If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
-
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
 
+	var/datum/mind/sacrifice_target = null
 	var/list/datum/mind/cult = list()
 	var/finished = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
+	var/list/objectives = list()
+	var/eldergod = 1 //for the summon god objective
+	var/const/acolytes_needed = 5 //for the survive objective
 
 /datum/game_mode/cult/announce()
 	world << "<B>The current game mode is - Cult!</B>"
-	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - Kill the Captain, HoP, RD, CE and HoS. Convert other crewmembers (excluding the heads, security officers and chaplain) to your cause by using the convert rune. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Protect the heads. Destroy the cult either via killing the cultists or brainwashing them with the chaplain's bible.</B>"
+	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - complete your objectives. Convert crewmembers to your cause by using the convert rune. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Brainwashing them with the chaplain's bible reverts them to whatever CentCom-allowed faith they had.</B>"
+
+/datum/game_mode/cult/pre_setup()
+	if(prob(50))
+		objectives += "survive"
+		objectives += "sacrifice"
+	else
+		objectives += "eldergod"
+		objectives += "sacrifice"
+	return 1
 
 /datum/game_mode/cult/post_setup()
 
 	var/list/cultists_possible = list()
 	cultists_possible = get_possible_cultists()
-	var/list/heads = list()
-	heads = get_living_heads()
 	var/cultists_number = 0
 
-	if(!cultists_possible || !heads)
+	if(!cultists_possible)
 		world << "<B> \red Not enough players for cult game mode. Restarting world in 5 seconds."
 		sleep(50)
 		world.Reboot()
@@ -45,22 +46,37 @@
 		cultists_possible -= cult
 		cultists_number--
 
-	for(var/datum/mind/cult_mind in cult)
-		for(var/datum/mind/head_mind in heads)
-			var/datum/objective/assassinate/cult_obj = new
-			cult_obj.owner = cult_mind
-			cult_obj.find_target_by_role(head_mind.assigned_role)
-			cult_mind.objectives += cult_obj
+	if("sacrifice" in objectives)
+		var/list/possible_targets = get_unconvertables()
 
+		if(!possible_targets.len)
+			for(var/mob/living/carbon/human/player in world)
+				if(player.mind && !cult.Find(player.mind))
+					possible_targets += player.mind
+
+		if(possible_targets.len > 0)
+			sacrifice_target = pick(possible_targets)
+
+	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
 		update_cult_icons_added(cult_mind)
-
-	for(var/datum/mind/cult_mind in cult)
-		var/obj_count = 1
 		cult_mind.current << "\blue You are a member of the cult!"
-		for(var/datum/objective/objective in cult_mind.objectives)
-			cult_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			obj_count++
+		for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
+			var/explanation
+			switch(objectives[obj_count])
+				if("survive")
+					explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
+				if("sacrifice")
+					if(sacrifice_target)
+						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell join blood) and three acolytes to do so."
+					else
+						explanation = "Free objective."
+				if("eldergod")
+					explanation = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
+			cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
+			cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+		cult_mind.current << "The convert rune is join blood self"
+		cult_mind.memory += "The convert rune is join blood self<BR>"
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
@@ -80,29 +96,32 @@
 				T = foo
 				break
 		if (!T)
-			cult_mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately. (still, check your backpack. it may have been a mere bug. if you have a piece of bloody paper, all is well"
+			cult_mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately. (still, check your backpack. it may have been a mere bug. if you have a piece of bloody paper, all is well)"
 		else
 			cult_mob << "You have a talisman in your backpack, one that will help you start the cult on this station. Use it well and remember - there are others."
 		if(!wordtravel)
 			runerandom()
 		var/word=pick("1","2","3","4","5","6","7","8")
+		var/wordexp
 		switch(word)
 			if("1")
-				cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordtravel] is travel..."
+				wordexp = "[wordtravel] is travel..."
 			if("2")
-				cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordblood] is blood..."
+				wordexp = "[wordblood] is blood..."
 			if("3")
-				cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordjoin] is join..."
+				wordexp = "[wordjoin] is join..."
 			if("4")
-				cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordhell] is Hell..."
+				wordexp = "[wordhell] is Hell..."
 			if("5")
-				cult_mob << "\red You remembered one thing from the dark teachings of your master... [worddestr] is destroy..."
+				wordexp = "[worddestr] is destroy..."
 			if("6")
-				cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordtech] is technology..."
+				wordexp = "[wordtech] is technology..."
 			if("7")
-				cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordself] is self..."
+				wordexp = "[wordself] is self..."
 			if("8")
-				cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordsee] is see..."
+				wordexp = "[wordsee] is see..."
+		cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordexp]"
+		cult_mob.mind.store_memory("<B>You remember one thing</B>: [wordexp]", 0, 0)
 		cultists.Add(cult_mob)
 
 /datum/game_mode/cult/send_intercept()
@@ -133,20 +152,6 @@
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	world << sound('intercept.ogg')
-
-
-/datum/game_mode/cult/check_win()
-	if(check_cult_victory())
-		finished = 1
-	else if(check_heads_victory())
-		finished = 2
-	return
-
-/datum/game_mode/cult/check_finished()
-	if(finished != 0)
-		return 1
-	else
-		return 0
 
 /datum/game_mode/cult/proc/add_cultist(datum/mind/cult_mind)
 	var/list/uncons = get_unconvertables()
@@ -228,29 +233,6 @@
 	else
 		return candidates
 
-/datum/game_mode/cult/proc/get_living_heads()
-	var/list/heads = list()
-
-	for(var/mob/living/carbon/human/player in world)
-		if(player.mind)
-			var/role = player.mind.assigned_role
-			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
-				heads += player.mind
-
-	return heads
-
-
-/datum/game_mode/cult/proc/get_all_heads()
-	var/list/heads = list()
-
-	for(var/mob/player in world)
-		if(player.mind)
-			var/role = player.mind.assigned_role
-			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
-				heads += player.mind
-
-	return heads
-
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in world)
@@ -262,29 +244,38 @@
 	return ucs
 
 /datum/game_mode/cult/proc/check_cult_victory()
-	for(var/datum/mind/cult_mind in cult)
-		for(var/datum/objective/objective in cult_mind.objectives)
-			if(!(objective.check_completion()))
-				return 0
+	var/cult_fail = 0
+	if(objectives.Find("survive"))
+		cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
+	if(objectives.Find("eldergod"))
+		cult_fail += eldergod //1 by default, 0 if the elder god has been summoned at least once
+	if(objectives.Find("sacrifice"))
+		if(!sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
+			cult_fail++
 
+	return cult_fail //if any objectives aren't met, failure
+
+/datum/game_mode/cult/proc/check_survive()
+	var/acolytes_survived = 0
+	var/area/shuttle = locate(/area/shuttle/escape/centcom)
+	for(var/mob/living/carbon/human/C in world)
+		if(get_turf(C) in shuttle && C.stat!=2 && cult.Find(C.mind))
+			acolytes_survived++
+	if(acolytes_survived>=acolytes_needed)
+		return 0
+	else
 		return 1
-
-/datum/game_mode/cult/proc/check_heads_victory()
-	for(var/datum/mind/cult_mind in cult)
-		if(cult_mind.current.stat != 2)
-			return 0
-	return 1
 
 /datum/game_mode/cult/declare_completion()
 
 	var/text = ""
-	if(finished == 1)
-		world << "\red <FONT size = 3><B> The heads of staff were killed! The cult win!</B></FONT>"
-	else if(finished == 2)
-		world << "\red <FONT size = 3><B> The heads of staff managed to stop the cult!</B></FONT>"
+	if(!check_cult_victory())
+		world << "\red <FONT size = 3><B> The cult wins! It has succeeded in serving its dark masters!</B></FONT>"
+	else
+		world << "\red <FONT size = 3><B> The staff managed to stop the cult!</B></FONT>"
 
 	world << "<FONT size = 2><B>The cultists were: </B></FONT>"
-	for(var/datum/mind/cult_nh_mind in cultists)
+	for(var/datum/mind/cult_nh_mind in cult)
 		if(cult_nh_mind.current)
 			text += "[cult_nh_mind.current.real_name]"
 			if(cult_nh_mind.current.stat == 2)
@@ -297,20 +288,29 @@
 
 	world << text
 
-	world << "<FONT size = 2><B>The heads of staff were: </B></FONT>"
-	var/list/heads = list()
-	heads = get_all_heads()
-	for(var/datum/mind/head_mind in heads)
-		text = ""
-		if(head_mind.current)
-			text += "[head_mind.current.real_name]"
-			if(head_mind.current.stat == 2)
-				text += " (Dead)"
-			else
-				text += " (Survived!)"
-		else
-			text += "[head_mind.key] (character destroyed)"
+	world << "The cultists' objectives were:"
 
-		world << text
+	for(var/obj_count=1,obj_count <= objectives.len,obj_count++)
+		var/explanation
+		switch(objectives[obj_count])
+			if("survive")
+				if(!check_survive())
+					explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. \green <b>Success!</b>"
+				else
+					explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. \red Failed."
+			if("sacrifice")
+				if(!sacrifice_target)
+					explanation = "Free objective"
+				else
+					if(sacrificed.Find(sacrifice_target))
+						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. \green <b>Success!</b>"
+					else
+						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. \red Failed."
+			if("eldergod")
+				if(!eldergod)
+					explanation = "Summon Nar-Sie. \green <b>Success!</b>"
+				else
+					explanation = "Summon Nar-Sie. \red Failed."
+		world << "<B>Objective #[obj_count]</B>: [explanation]"
 
 	return 1
