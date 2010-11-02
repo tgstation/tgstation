@@ -29,10 +29,12 @@ obj/machinery/atmospherics/filter
 	var/filter_type = 0
 /*
 Filter types:
-0: Carbon Molecules: Plasma Toxin, Carbon Dioxide, Oxygen Agent B
-1: Oxygen: Oxygen ONLY
-2: Nitrogen: Nitrogen and Sleeping Agent
-3: Carbon Dioxide: Carbon Dioxide ONLY
+-1: Nothing
+ 0: Carbon Molecules: Plasma Toxin, Oxygen Agent B
+ 1: Oxygen: Oxygen ONLY
+ 2: Nitrogen: Nitrogen ONLY
+ 3: Carbon Dioxide: Carbon Dioxide ONLY
+ 4: Sleeping Agent (N2O)
 */
 
 	var/frequency = 0

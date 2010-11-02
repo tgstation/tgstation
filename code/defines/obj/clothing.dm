@@ -440,12 +440,15 @@
 	name = "galoshes"
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
+	flags = NOSLIP
 
 /obj/item/clothing/shoes/magboots
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
 	name = "magboots"
-	icon_state = "magboots"
+	icon_state = "magboots0"
 	protective_temperature = 800
+	heat_transfer_coefficient = 0.01
+//	flags = NOSLIP //disabled by default
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "Damn, thems some big shoes."

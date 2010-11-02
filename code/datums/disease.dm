@@ -24,8 +24,8 @@ to null does not delete the object itself. Thank you.
 	var/spread_type = AIRBORNE
 	var/contagious_period = 0//the disease stage when it can be spread
 	var/list/affected_species = list()
-	var/mob/affected_mob = null
-	var/holder = null
+	var/mob/affected_mob = null //the mob which is affected by disease.
+	var/holder = null //the atom containing the disease (mob or obj)
 	var/carrier = 0.0 //there will be a small chance that the person will be a carrier
 	var/curable = 1 //can this disease be cured? (By itself...)
 	var/list/strain_data = list() //This is passed on to infectees
@@ -34,6 +34,7 @@ to null does not delete the object itself. Thank you.
 	var/permeability_mod = 1//permeability modifier coefficient.
 	var/desc = null//description. Leave it null and this disease won't show in med records.
 	var/severity = null//severity descr
+	var/longevity = 250//time in "ticks" the virus stays in inanimate object (blood stains, corpses, etc). In syringes, bottles and beakers it stays infinitely.
 
 /datum/disease/proc/stage_act()
 	var/cure_present = has_cure()
@@ -71,6 +72,8 @@ to null does not delete the object itself. Thank you.
 
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)
 //	world << "Contract_disease called by [src] with virus [virus]"
+	if(src.stat >=2) return
+
 
 	if(force_species_check)
 		var/fail = 1
@@ -97,6 +100,7 @@ to null does not delete the object itself. Thank you.
 	if(virus.type in src.resistances)
 		if(prob(99.9)) return
 		src.resistances.Remove(virus.type)//the resistance is futile
+
 
 /*
 	var/list/clothing_areas	= list()
@@ -276,8 +280,17 @@ to null does not delete the object itself. Thank you.
 	if(!src.holder) return
 	if(prob(40))
 		src.spread(holder)
-	if(src.holder == src.affected_mob && affected_mob.stat < 2)
-		src.stage_act()
+	if(src.holder == src.affected_mob)
+		if(affected_mob.stat < 2) //he's alive
+			src.stage_act()
+		else //he's dead.
+			if(src.spread_type!=SPECIAL)
+				src.spread_type = CONTACT_GENERAL
+			src.affected_mob = null
+	if(!src.affected_mob) //the virus is in inanimate obj
+//		world << "[src] longevity = [src.longevity]"
+		if(--src.longevity<=0)
+			src.cure(0)
 	return
 
 /datum/disease/proc/cure(var/resistance=1)//if resistance = 0, the mob won't develop resistance to disease
@@ -291,8 +304,8 @@ to null does not delete the object itself. Thank you.
 	return
 
 
-/datum/disease/New(var/process=1)//adding the object to global list. List is processed by master controller.
-	if(process)
+/datum/disease/New(var/process=1)//process = 1 - adding the object to global list. List is processed by master controller.
+	if(process)					 // Viruses in list are considered active.
 		active_diseases += src
 
 /*

@@ -152,7 +152,7 @@
 		switch (src.wet)
 			if(1)
 				if (istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
-					if ((M.m_intent == "run") && (!istype(M:shoes, /obj/item/clothing/shoes/galoshes)))
+					if ((M.m_intent == "run") && !(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP))
 						M.pulling = null
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
@@ -718,32 +718,44 @@ turf/simulated/floor/proc/update_icon()
 //	if (locate(/obj/movable, src))
 //		return 1
 
-	if ((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1)))
+	if ((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1)))
 		var/mob/M = A
 		if ((!( M.handcuffed) && M.canmove))
 			var/prob_slip = 5
+			var/mag_eq = 0
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if(istype(H.shoes, /obj/item/clothing/shoes/magboots) && H.shoes.flags&NOSLIP)
+					mag_eq = 1
 
 			if (locate(/obj/grille, oview(1, M)) || locate(/obj/lattice, oview(1, M)) )
-				if (!( M.l_hand ))
-					prob_slip -= 2
-				else if (M.l_hand.w_class <= 2)
-					prob_slip -= 1
+				if(mag_eq)
+					prob_slip = 0
+				else
+					if (!( M.l_hand ))
+						prob_slip -= 2
+					else if (M.l_hand.w_class <= 2)
+						prob_slip -= 1
 
-				if (!( M.r_hand ))
-					prob_slip -= 2
-				else if (M.r_hand.w_class <= 2)
-					prob_slip -= 1
+					if (!( M.r_hand ))
+						prob_slip -= 2
+					else if (M.r_hand.w_class <= 2)
+						prob_slip -= 1
 			else if (locate(/turf/unsimulated, oview(1, M)) || locate(/turf/simulated, oview(1, M)))
-				if (!( M.l_hand ))
-					prob_slip -= 1
-				else if (M.l_hand.w_class <= 2)
-					prob_slip -= 0.5
+				if(mag_eq)
+					prob_slip = 0
+				else
+					if (!( M.l_hand ))
+						prob_slip -= 1
+					else if (M.l_hand.w_class <= 2)
+						prob_slip -= 0.5
 
-				if (!( M.r_hand ))
-					prob_slip -= 1
-				else if (M.r_hand.w_class <= 2)
-					prob_slip -= 0.5
+					if (!( M.r_hand ))
+						prob_slip -= 1
+					else if (M.r_hand.w_class <= 2)
+						prob_slip -= 0.5
 			prob_slip = round(prob_slip)
+
 			if (prob_slip < 5) //next to something, but they might slip off
 				if (prob(prob_slip) )
 					M << "\blue <B>You slipped!</B>"

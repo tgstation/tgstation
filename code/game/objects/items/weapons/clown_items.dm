@@ -21,7 +21,7 @@ BIKE HORN
 /obj/item/weapon/bananapeel/HasEntered(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
-		if ((istype(M, /mob/living/carbon/human) && istype(M:shoes, /obj/item/clothing/shoes/galoshes)))
+		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
 			return
 
 		M.pulling = null

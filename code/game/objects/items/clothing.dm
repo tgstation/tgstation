@@ -307,3 +307,21 @@ DEATH COMMANDO GAS MASK
 /obj/item/clothing/under/color/orange/mode = 3
 /obj/item/clothing/under/color/orange/attack_self(mob/user as mob)
 	user << "There are no controls for the sensing equipment woven into the fabric."
+
+
+/obj/item/clothing/shoes/magboots/attack_self(mob/user as mob)
+	if(src.flags&NOSLIP)
+		src.flags &= ~NOSLIP
+		icon_state = "magboots0"
+		user << "You disable the mag-pulse traction system."
+	else
+		src.flags |= NOSLIP
+		icon_state = "magboots1"
+		user << "You enable the mag-pulse traction system."
+
+/obj/item/clothing/shoes/magboots/examine()
+	..()
+	var/state = "disabled"
+	if(src.flags&NOSLIP)
+		state = "enabled"
+	usr << "Its mag-pulse traction system appears to be [state]."
