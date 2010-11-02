@@ -179,8 +179,11 @@
 	world << sound('intercept.ogg')
 
 /datum/game_mode/changeling/check_finished()
+	if(!changeling.current)
+		return 1
+
 	if(changeling.current.stat==2)
-		if(changelingdeathticker>=900)
+		if(changelingdeathticker>=600)
 			return 1
 		changelingdeathticker++
 
