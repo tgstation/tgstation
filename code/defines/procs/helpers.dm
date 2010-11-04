@@ -574,7 +574,7 @@
 		ais[name] = A
 
 	if (ais.len)
-		select = input("AI signals detected:", "AI selection", null, null) as null|anything in ais
+		select = input("AI signals detected:", "AI selection") in ais
 		return ais[select]
 
 /proc/getmobs()

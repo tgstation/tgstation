@@ -45,7 +45,10 @@
 
 	if (M.stat !=2)
 		if (ticker.mode.name == "cult" && prob(10))
-			ticker.mode:remove_cultist(M.mind)
+			if(ticker.mode:cult.Find(M.mind))
+				ticker.mode:remove_cultist(M.mind)
+		if (cultists.Find(M) && prob(10))
+			cultists -= M
 		if ((istype(M, /mob/living/carbon/human) && prob(60)))
 			bless(M)
 			for(var/mob/O in viewers(M, null))

@@ -158,11 +158,26 @@
 	if(!(cult_mind in cult) && !(cult_mind in uncons))
 		cult += cult_mind
 		update_cult_icons_added(cult_mind)
+		for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
+			var/explanation
+			switch(objectives[obj_count])
+				if("survive")
+					explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
+				if("sacrifice")
+					if(sacrifice_target)
+						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell join blood) and three acolytes to do so."
+					else
+						explanation = "Free objective."
+				if("eldergod")
+					explanation = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
+			cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
+			cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 
 /datum/game_mode/cult/proc/remove_cultist(datum/mind/cult_mind)
 	if(cult_mind in cult)
 		cult -= cult_mind
 		cult_mind.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT>"
+		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
 		for(var/mob/living/M in view(cult_mind.current))
 			M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"

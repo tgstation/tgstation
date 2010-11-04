@@ -825,6 +825,8 @@
 					M << "\red You remembered one thing from the glimpse... [wordsee] is see..."
 			cultists.Add(M)
 			src << "Made [M] a cultist."
+			if(ticker.mode.name == "cult")
+				ticker.mode:cult += M.mind
 
 /client/proc/check_words() // -- Urist
 	set category = "Special Verbs"

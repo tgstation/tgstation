@@ -704,6 +704,11 @@ var/showadminmessages = 1
 				if(M.mind in current_mode:syndicates)
 					alert("Is a Syndicate operative!", "[M.key]")
 					return
+		if(istype(M,/mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = M
+			if(R.emagged)
+				alert("Is emagged!\n0th law: [R.laws.zeroth]", "[R.key]")
+				return
 		// traitor, or other modes where traitors/counteroperatives would be.
 		if(M.mind in current_mode.traitors)
 			var/datum/mind/antagonist = M.mind
@@ -2000,6 +2005,10 @@ var/showadminmessages = 1
 		if("changeling")
 			if(M.mind in ticker.mode:changelings)
 				return 1
+	if(istype(M,/mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = M
+		if(R.emagged)
+			return 1
 	if(M.mind in ticker.mode.traitors)
 		return 1
 

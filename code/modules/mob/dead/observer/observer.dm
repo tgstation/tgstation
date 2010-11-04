@@ -10,6 +10,7 @@
 		src.loc = get_turf(corpse.loc)
 		src.real_name = corpse.real_name
 		src.name = corpse.real_name
+		src.midis = corpse.midis
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
 
 /mob/proc/ghostize()

@@ -119,12 +119,16 @@
 
 	if(istype(W, /obj/item/brain))
 		if(src.check_completion())
+			if(!istype(src.loc,/turf))
+				user << "\red You can't put the brain in, it has to be standing on the ground to be perfectly precise."
+				return
 			user.drop_item()
 			W.loc = src
 			src.brain = W
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(src.loc))
 			if (src.brain.owner)
 				O.gender = src.brain.owner.gender
+				O.midis = src.brain.owner.midis
 			//O.start = 1
 			O.invisibility = 0
 			O.name = "Cyborg"
