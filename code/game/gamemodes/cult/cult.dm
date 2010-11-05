@@ -7,9 +7,13 @@
 	var/finished = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+
 	var/list/objectives = list()
+
 	var/eldergod = 1 //for the summon god objective
+
 	var/const/acolytes_needed = 5 //for the survive objective
+	var/acolytes_survived = 0
 
 /datum/game_mode/cult/announce()
 	world << "<B>The current game mode is - Cult!</B>"
@@ -271,10 +275,9 @@
 	return cult_fail //if any objectives aren't met, failure
 
 /datum/game_mode/cult/proc/check_survive()
-	var/acolytes_survived = 0
 	var/area/shuttle = locate(/area/shuttle/escape/centcom)
-	for(var/mob/living/carbon/human/C in world)
-		if(get_turf(C) in shuttle && C.stat!=2 && cult.Find(C.mind))
+	for(var/mob/living/carbon/human/C in shuttle)
+		if(C.stat!=2 && cult.Find(C.mind))
 			acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0
@@ -288,6 +291,8 @@
 		world << "\red <FONT size = 3><B> The cult wins! It has succeeded in serving its dark masters!</B></FONT>"
 	else
 		world << "\red <FONT size = 3><B> The staff managed to stop the cult!</B></FONT>"
+
+	world << "\b Cultists escaped: [acolytes_survived]"
 
 	world << "<FONT size = 2><B>The cultists were: </B></FONT>"
 	for(var/datum/mind/cult_nh_mind in cult)
