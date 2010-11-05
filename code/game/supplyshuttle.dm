@@ -17,6 +17,7 @@ var/supply_shuttle_can_send = 1
 var/supply_shuttle_time = 0
 var/supply_shuttle_timeleft = 0
 var/supply_shuttle_points = 50
+var/ordernum=0
 
 /area/supply/station //DO NOT TURN THE SD_LIGHTING STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	name = "supply shuttle"
@@ -461,6 +462,9 @@ var/supply_shuttle_points = 50
 			del(crate)
 			supply_shuttle_points += SUPPLY_POINTSPERCRATE
 
+/obj/item/weapon/paper/manifest
+	name = "Supply Manifest"
+
 /proc/process_supply_order()
 	var/shuttleat = supply_shuttle_at_station ? SUPPLY_STATION_AREATYPE : SUPPLY_DOCK_AREATYPE
 
@@ -485,6 +489,23 @@ var/supply_shuttle_points = 50
 
 		var/atom/A = new SP.containertype ( pickedloc )
 		A.name = "[SP.containername] [SO.comment ? "([SO.comment])":"" ]"
+
+		//supply manifest generation begin
+
+		if(ordernum)
+			ordernum++
+		else
+			ordernum = rand(500,5000) //pick a random number to start with
+
+		var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest (A)
+		slip.info = ""
+		slip.info +="<h3>[command_name()] Shipping Manifest</h3><hr><br>"
+		slip.info +="Order #: [ordernum]<br>"
+		slip.info +="Destination: [station_name]<br>"
+		slip.info +="[supply_shuttle_shoppinglist.len] PACKAGES IN THIS SHIPMENT<br>"
+		slip.info +="CONTENTS:<br><ul>"
+
+		//spawn the stuff, finish generating the manifest while you're at it
 		if(SP.access)
 			A:req_access = new/list()
 			A:req_access += text2num(SP.access)
@@ -492,6 +513,11 @@ var/supply_shuttle_points = 50
 			var/thepath = text2path(B)
 			var/atom/B2 = new thepath (A)
 			if(SP.amount && B2:amount) B2:amount = SP.amount
+			slip.info += "<li>[B2.name]</li>" //add the item to the manifest
+
+		//manifest finalisation
+		slip.info += "</ul><br>"
+		slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
 
 	return
 
@@ -553,8 +579,9 @@ var/supply_shuttle_points = 50
 		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs) )
 			var/datum/supply_packs/N = new S()
 			if(N.hidden) continue																	//Have to send the type instead of a reference to
-			src.temp += "<A href='?src=\ref[src];doorder=[N.type]'>[N.name]</A> Cost: [N.cost]<BR>" //the obj because it would get caught by the garbage
-		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"								//collector. oh well.
+			src.temp += "<A href='?src=\ref[src];doorder=[N.type]'>[N.name]</A> Cost: [N.cost] "    //the obj because it would get caught by the garbage
+			src.temp += "<A href='?src=\ref[src];printform=[N.type]'>Print Requisition</A><br>"     //collector. oh well.
+		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
 	else if (href_list["doorder"])
 		var/datum/supply_order/O = new/datum/supply_order ()
@@ -565,6 +592,38 @@ var/supply_shuttle_points = 50
 		supply_shuttle_requestlist += O
 		src.temp = "Thanks for your request. The cargo team will process it as soon as possible.<BR>"
 		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+
+	else if (href_list["printform"])
+		var/supplytype = href_list["printform"]
+		var/datum/supply_packs/P = new supplytype ()
+		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(src.loc)
+		var/idname = "Unknown"
+		var/idrank = "Unknown"
+		var/reason = input(usr,"Reason:","Why do you require this item?","")
+
+		reqform.name = "Requisition Form - [P.name]"
+		reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
+
+		if (istype(usr:wear_id, /obj/item/weapon/card/id))
+			if(usr:wear_id.registered)
+				idname = usr:wear_id.registered
+			if(usr:wear_id.assignment)
+				idrank = usr:wear_id.assignment
+		else
+			idname = usr.name
+
+		reqform.info += "REQUESTED BY: [idname]<br>"
+		reqform.info += "RANK: [idrank]<br>"
+		reqform.info += "REASON: [reason]<br>"
+		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
+		reqform.info += "Contents:<br><ul>"
+
+		for(var/B in P.contains)
+			var/thepath = text2path(B)
+			var/atom/B2 = new thepath ()
+			reqform.info += "<li>[B2.name]</li>"
+		reqform.info += "</ul><hr>"
+		reqform.info += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
 
 	else if (href_list["vieworders"])
 		src.temp = "Current approved orders: <BR><BR>"
