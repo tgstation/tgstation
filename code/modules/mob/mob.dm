@@ -1911,7 +1911,7 @@
 			robogibs(src.loc, virus)
 		else
 			gibs(src.loc, virus)
-	CRASH("Generating error messages to attempt to fix random gibbins.")
+	//CRASH("Generating error messages to attempt to fix random gibbins.") //no longer necessary
 	sleep(15)
 	del(src)
 

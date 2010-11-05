@@ -145,6 +145,7 @@ WELDINGTOOOL
 		playsound(src.loc, 'refill.ogg', 50, 1, -6)
 
 	else if (istype(O, /obj/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
+		message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 		user << "\red That was stupid of you."
 		explosion(O.loc,-1,0,2)
 		if(O)
