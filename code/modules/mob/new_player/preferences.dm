@@ -157,9 +157,12 @@ datum/preferences
 		dat += "<br>"
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[src.UI == 'screen1.dmi' ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[src.midis == 1 ? "Yes" : "No"]</b></a><br>"
-		if(user.client.holder.rank == "Host")
-			dat += "<hr><b>OOC</b><br>"
-			dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table bgcolor=\"[ooccolor]\"><tr><td>IM</td></tr></table></font>"
+
+		if(user.client.holder)
+			if(user.client.holder.rank)
+				if(user.client.holder.rank == "Host")
+					dat += "<hr><b>OOC</b><br>"
+					dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table bgcolor=\"[ooccolor]\"><tr><td>IM</td></tr></table></font>"
 
 		dat += "<hr><b>Occupation Choices</b><br>"
 		if (destructive.Find(src.occupation1))
