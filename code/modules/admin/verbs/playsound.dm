@@ -15,16 +15,18 @@
 		log_admin("[key_name(src)] played sound [S]")
 		message_admins("[key_name_admin(src)] played sound [S]", 1)
 		for(var/mob/M in world)
-			if(M.client.midis)
-				M << uploaded_sound
+			if(M.client)
+				if(M.client.midis)
+					M << uploaded_sound
 	else
 		if(usr.client.canplaysound)
 			usr.client.canplaysound = 0
 			log_admin("[key_name(src)] played sound [S]")
 			message_admins("[key_name_admin(src)] played sound [S]", 1)
 			for(var/mob/M in world)
-				if(M.client.midis)
-					M << uploaded_sound
+				if(M.client)
+					if(M.client.midis)
+						M << uploaded_sound
 		else
 			usr << "You already used up your jukebox monies this round!"
 			del(uploaded_sound)
@@ -43,8 +45,9 @@
 	message_admins("[key_name_admin(usr)] has declared Cuban Pete Time!", 1)
 
 	for(var/mob/M in world)
-		if(M.client.midis)
-			M << 'cubanpetetime.ogg'
+		if(M.client)
+			if(M.client.midis)
+				M << 'cubanpetetime.ogg'
 
 	for(var/mob/living/carbon/human/CP in world)
 		if(CP.real_name=="Cuban Pete" && CP.key!="Rosham")
