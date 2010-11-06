@@ -695,16 +695,16 @@
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
+	if(alert("BLOW EVERYTHING UP?",,"Yes","No")=="Yes")
+		for(var/turf/simulated/floor/T in world)
+			if(prob(4) && T.z == 1 && istype(T))
+				spawn(50+rand(0,3000))
+					explosion(T, rand(1,5), rand(1,6), rand(3,10), 0)
 
-	for(var/turf/simulated/floor/T in world)
-		if(prob(4) && T.z == 1 && istype(T))
-			spawn(50+rand(0,3000))
-				explosion(T, rand(1,5), rand(1,6), rand(3,10), 0)
+		usr << "\blue Blowing up station ..."
 
-	usr << "\blue Blowing up station ..."
-
-	log_admin("[key_name(usr)] has used boom boom boom shake the room")
-	message_admins("[key_name_admin(usr)] has used boom boom boom shake the room", 1)
+		log_admin("[key_name(usr)] has used boom boom boom shake the room")
+		message_admins("[key_name_admin(usr)] has used boom boom boom shake the room", 1)
 
 /client/proc/colorooc()
 	set category = "Fun"
