@@ -76,7 +76,7 @@
 					else
 						explanation = "Free objective."
 				if("eldergod")
-					explanation = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
+					explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 			cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 			cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 		cult_mind.current << "The convert rune is join blood self"
@@ -173,7 +173,7 @@
 					else
 						explanation = "Free objective."
 				if("eldergod")
-					explanation = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
+					explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 			cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 			cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 

@@ -6,6 +6,7 @@ datum/preferences
 
 	var/be_syndicate
 	var/midis = 1
+	var/ooccolor = "#b82e00"
 	var/be_random_name = 0
 	var/underwear = 1
 
@@ -156,6 +157,9 @@ datum/preferences
 		dat += "<br>"
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[src.UI == 'screen1.dmi' ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[src.midis == 1 ? "Yes" : "No"]</b></a><br>"
+		if(user.client.holder.rank == "Host")
+			dat += "<hr><b>OOC</b><br>"
+			dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table bgcolor=\"[ooccolor]\"><tr><td>IM</td></tr></table></font>"
 
 		dat += "<hr><b>Occupation Choices</b><br>"
 		if (destructive.Find(src.occupation1))
@@ -482,6 +486,12 @@ datum/preferences
 			if (new_style)
 				src.h_style = new_style
 
+		if (link_tags["ooccolor"])
+			var/ooccolor = input(user, "Please select OOC colour.", "OOC colour") as color
+
+			if(ooccolor)
+				src.ooccolor = ooccolor
+
 		if (link_tags["f_style"])
 			var/new_style = input(user, "Please select facial style", "Character Generation")  as null|anything in list("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Hogan", "Shaved")
 
@@ -585,7 +595,6 @@ datum/preferences
 		character.f_style = f_style
 
 		character.UI = UI
-		character.midis = midis
 
 		switch(h_style)
 			if("Short Hair")
@@ -644,6 +653,10 @@ datum/preferences
 
 		character.update_face()
 		character.update_body()
+
+		spawn(10)
+			character.client.midis = midis
+			character.client.ooccolor = ooccolor
 
 /*
 

@@ -39,6 +39,7 @@
 			src.verbs += /client/proc/cmd_admin_abominize // -- TLE
 			src.verbs += /client/proc/make_cultist // -- TLE
 			src.verbs += /client/proc/check_words // -- Urist
+			src.verbs += /client/proc/colorooc // -- Urist
 			src.verbs += /client/proc/cmd_admin_monkeyize
 			src.verbs += /client/proc/cmd_admin_robotize
 			src.verbs += /client/proc/cmd_admin_add_freeform_ai_law
@@ -704,6 +705,12 @@
 
 	log_admin("[key_name(usr)] has used boom boom boom shake the room")
 	message_admins("[key_name_admin(usr)] has used boom boom boom shake the room", 1)
+
+/client/proc/colorooc()
+	set category = "Fun"
+	set name = "OOC Text Color"
+	src.ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color
+	return
 
 /client/proc/stealth()
 	set category = "Admin"

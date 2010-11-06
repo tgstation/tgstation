@@ -39,7 +39,6 @@
 	var/poll_answer = 0.0
 	var/sdisabilities = 0
 	var/disabilities = 0
-	var/midis = 1 //Check if midis should be played for someone -- Urist
 	var/atom/movable/pulling = null
 	var/stat = 0.0
 	var/next_move = null

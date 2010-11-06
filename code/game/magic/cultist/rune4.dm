@@ -1,6 +1,6 @@
 /obj/rune/proc/tearreality()
 	var/cultist_count = 0
-	for(var/mob/M in orange(1,src))
+	for(var/mob/M in range(1,src))
 		if(cultists.Find(M))
 			M.say("Tok-lyr rqa'nap g'lt-ulotf!")
 			cultist_count += 1

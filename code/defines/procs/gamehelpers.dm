@@ -29,7 +29,7 @@
 		return 1
 	else
 		if (istype(user, /mob/living/carbon))
-			if (user:mutations & 1)
+			if (user:mutations & 1 && get_dist(source, user) <= 7)
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z
