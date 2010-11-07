@@ -461,6 +461,7 @@
 #include "code\game\objects\devices\proxy_sensor.dm"
 #include "code\game\objects\devices\scanners.dm"
 #include "code\game\objects\devices\shields.dm"
+#include "code\game\objects\devices\taperecorder.dm"
 #include "code\game\objects\devices\timer.dm"
 #include "code\game\objects\items\assemblies.dm"
 #include "code\game\objects\items\clothing.dm"
