@@ -51,7 +51,7 @@
 		M.show_message("\red The [src] explodes!", 1)
 	if(T)
 		T.hotspot_expose(700,125)
-		explosion(T, -1, -1, 2, 3)
+		explosion(T, -1, -1, 0, 4)
 	del(src)
 	return
 
