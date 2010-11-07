@@ -57,6 +57,9 @@
 
 /obj/item/device/taperecorder/verb/record()
 	set name = "record"
+	if(usr.stat)
+		usr << "Not when you're incapicated."
+		return
 	if(src.emagged == 1)
 		usr << "\red The tape recorder makes a scratchy noise."
 		return
@@ -78,6 +81,9 @@
 /obj/item/device/taperecorder/verb/stop_recording()
 	set name = "stop"
 
+	if(usr.stat)
+		usr << "Not when you're incapicated."
+		return
 	if (src.recording == 1 || src.playing == 1)
 		src.recording = 0
 		src.playing = 0
@@ -92,6 +98,9 @@
 /obj/item/device/taperecorder/verb/clear_memory()
 	set name = "clear memory"
 
+	if(usr.stat)
+		usr << "Not when you're incapicated."
+		return
 	if(src.emagged == 1)
 		usr << "\red The tape recorder makes a scratchy noise."
 		return
@@ -108,6 +117,9 @@
 /obj/item/device/taperecorder/verb/playback_memory()
 	set name = "playback memory"
 
+	if(usr.stat)
+		usr << "Not when you're incapicated."
+		return
 	if (src.recording == 1)
 		usr << "\red You can't playback when recording!"
 		return
