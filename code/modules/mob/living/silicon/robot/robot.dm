@@ -470,6 +470,7 @@
 			if(prob(50))
 				emagged = 1
 				locked = 0
+				lawupdate = 0
 				user << "You emag [src]'s interface."
 				clear_supplied_laws()
 				clear_inherent_laws()
