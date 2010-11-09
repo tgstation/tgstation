@@ -448,8 +448,10 @@ var/ordernum=0
 
 	for(var/turf/T in get_area_turfs(shuttleat) )
 		if((locate(/mob/living) in T) && (!locate(/mob/living/carbon/monkey) in T)) return 0
+		if((locate(/obj/item/device/radio/beacon) in T)) return 0
 		for(var/atom/ATM in T)
 			if((locate(/mob/living) in ATM) && (!locate(/mob/living/carbon/monkey) in ATM)) return 0
+			if((locate(/obj/item/device/radio/beacon) in ATM)) return 0
 
 	return 1
 
@@ -683,7 +685,7 @@ var/ordernum=0
 		if(!supply_shuttle_at_station || supply_shuttle_moving) return
 
 		if (!supply_can_move())
-			usr << "\red The supply shuttle can not transport station employees."
+			usr << "\red The supply shuttle can not transport station employees or homing beacons."
 			return
 
 		src.temp = "Shuttle sent.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
@@ -700,7 +702,7 @@ var/ordernum=0
 		if(supply_shuttle_at_station || supply_shuttle_moving) return
 
 		if (!supply_can_move())
-			usr << "\red The supply shuttle can not transport station employees."
+			usr << "\red The supply shuttle can not transport station employees or homing beacons."
 			return
 
 		post_signal("supply")
@@ -815,7 +817,7 @@ var/ordernum=0
 	if (supply_shuttle_moving) return
 
 	if (!supply_can_move())
-		usr << "\red The supply shuttle can not transport station employees."
+		usr << "\red The supply shuttle can not transport station employees or homing beacons."
 		return
 
 	var/shuttleat = supply_shuttle_at_station ? SUPPLY_STATION_AREATYPE : SUPPLY_DOCK_AREATYPE
