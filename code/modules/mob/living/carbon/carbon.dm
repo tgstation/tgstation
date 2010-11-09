@@ -29,7 +29,7 @@
 					if(M.client)
 						M.show_message(text("\red <B>[user] attacks [src]'s stomach wall with the [I.name]!"), 2)
 				playsound(user.loc, 'attackblob.ogg', 50, 1)
-				
+
 				if(prob(src.bruteloss - 50))
 					src.gib()
 
@@ -42,3 +42,39 @@
 			if(N.client)
 				N.show_message(text("\red <B>[M] bursts out of [src]!</B>"), 2)
 	. = ..(give_medal)
+
+
+/mob/living/carbon/attack_hand(mob/M as mob)
+	if(!istype(M, /mob/living/carbon)) return
+	if(src.virus || M.virus)
+		var/s_spread_type
+		if(src.virus && src.virus.spread_type!=SPECIAL && src.virus.spread_type!=AIRBORNE)
+			s_spread_type = src.virus.spread_type
+			src.virus.spread_type = CONTACT_HANDS
+			M.contract_disease(src.virus)
+			src.virus.spread_type = s_spread_type
+
+		if(M.virus && M.virus.spread_type!=SPECIAL && M.virus.spread_type!=AIRBORNE)
+			s_spread_type = M.virus.spread_type
+			M.virus.spread_type = CONTACT_GENERAL
+			src.contract_disease(M.virus)
+			M.virus.spread_type = s_spread_type
+	return
+
+
+/mob/living/carbon/attack_paw(mob/M as mob)
+	if(!istype(M, /mob/living/carbon)) return
+	if(src.virus || M.virus)
+		var/s_spread_type
+		if(src.virus && src.virus.spread_type!=SPECIAL && src.virus.spread_type!=AIRBORNE)
+			s_spread_type = src.virus.spread_type
+			src.virus.spread_type = CONTACT_HANDS
+			M.contract_disease(src.virus)
+			src.virus.spread_type = s_spread_type
+
+		if(M.virus && M.virus.spread_type!=SPECIAL && M.virus.spread_type!=AIRBORNE)
+			s_spread_type = M.virus.spread_type
+			M.virus.spread_type = CONTACT_GENERAL
+			src.contract_disease(M.virus)
+			M.virus.spread_type = s_spread_type
+	return

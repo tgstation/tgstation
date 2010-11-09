@@ -17,6 +17,17 @@ var/global
 	powerreportavail = null
 	powerreportviewload = null
 
+	list/global_map = null
+	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
+	//Resulting sector map looks like
+	//|_1_|_4_|
+	//|_5_|_3_|
+	//
+	//1 - SS13
+	//4 - Derelict
+	//3 - AI satellite
+	//5 - empty space
+
 var
 
 	//////////////

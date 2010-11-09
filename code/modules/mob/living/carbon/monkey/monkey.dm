@@ -150,6 +150,7 @@
 	return
 
 /mob/living/carbon/monkey/attack_paw(mob/M as mob)
+	..()
 
 	if (M.a_intent == "help")
 		src.sleeping = 0
@@ -173,6 +174,7 @@
 	return
 
 /mob/living/carbon/monkey/attack_hand(mob/M as mob)
+	..()
 
 	if (M.a_intent == "help")
 		src.sleeping = 0

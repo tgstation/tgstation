@@ -377,3 +377,20 @@
 						if (istype(usr, /mob/living/carbon/alien/humanoid))
 							src.hand_al(usr, usr.hand)
 	return
+
+
+/atom/proc/get_global_map_pos()
+	if(!global_map.len) return
+	var/cur_x = null
+	var/cur_y = null
+	var/list/y_arr = null
+	for(cur_x=1,cur_x<=global_map.len,cur_x++)
+		y_arr = global_map[cur_x]
+		cur_y = y_arr.Find(src.z)
+		if(cur_y)
+			break
+//	world << "X = [cur_x]; Y = [cur_y]"
+	if(cur_x && cur_y)
+		return list("x"=cur_x,"y"=cur_y)
+	else
+		return 0

@@ -780,178 +780,293 @@ turf/simulated/floor/proc/update_icon()
 					else
 						M.inertia_dir = M.last_move
 						step(M, M.inertia_dir) //TODO: DEFERRED
-	if(ticker && ticker.mode && ticker.mode.name == "nuclear emergency")
-		return
-	if (src.x <= 2)
-		if(prob(50))
-			if(istype(A, /obj/meteor))
-				del(A)
-				return
-			if(istype(A,/mob/living/carbon/human))
-				if(A:knowledge)
-					if(A:knowledge > 0)
-						if(prob(50))
-							A.z = 8
-						else
-							A.z = 3
-					else
-						A.z = 3
-				else
-					A.z = 3
-			else
-				A.z = 3
-			A.x = world.maxx - 2
-			spawn (0)
-				if ((A && A.loc))
-					A.loc.Entered(A)
-		else
-			if(istype(A, /obj/meteor))
-				del(A)
-				return
-			if(istype(A,/mob/living/carbon/human))
-				if(A:knowledge)
-					if(A:knowledge > 0)
-						if(prob(50))
-							A.z = 8
-						else
-							A.z = 4
-					else
-						A.z = 4
-				else
-					A.z = 4
-			else
-				A.z = 4
-			A.x = world.maxx - 2
-			spawn (0)
-				if ((A && A.loc))
-					A.loc.Entered(A)
-	else if (A.x >= (world.maxx - 1))
-		if(prob(50))
-			if(istype(A, /obj/meteor))
-				del(A)
-				return
-			if(istype(A,/mob/living/carbon/human))
-				if(A:knowledge)
-					if(A:knowledge > 0)
-						if(prob(50))
-							A.z = 8
-						else
-							A.z = 3
-					else
-						A.z = 3
-				else
-					A.z = 3
-			else
-				A.z = 3
-			A.x = 3
-			spawn (0)
-				if ((A && A.loc))
-					A.loc.Entered(A)
-		else
-			if(istype(A, /obj/meteor))
-				del(A)
-				return
-			if(istype(A,/mob/living/carbon/human))
-				if(A:knowledge)
-					if(A:knowledge > 0)
-						if(prob(50))
-							A.z = 8
-						else
-							A.z = 4
-					else
-						A.z = 4
-				else
-					A.z = 4
-			else
-				A.z = 4
-			A.x = 3
-			spawn (0)
-				if ((A && A.loc))
-					A.loc.Entered(A)
-	else if (src.y <= 2)
-		if(prob(50))
-			if(istype(A, /obj/meteor))
-				del(A)
-				return
-			if(istype(A,/mob/living/carbon/human))
-				if(A:knowledge)
-					if(A:knowledge > 0)
-						if(prob(50))
-							A.z = 8
-						else
-							A.z = 3
-					else
-						A.z = 3
-				else
-					A.z = 3
-			else
-				A.z = 3
-			A.y = world.maxy - 2
-			spawn (0)
-				if ((A && A.loc))
-					A.loc.Entered(A)
-		else
-			if(istype(A, /obj/meteor))
-				del(A)
-				return
-			if(istype(A,/mob/living/carbon/human))
-				if(A:knowledge > 0)
-					if(A:knowledge > 0)
-						if(prob(50))
-							A.z = 8
-						else
-							A.z = 4
-					else
-						A.z = 4
-				else
-					A.z = 4
-			else
-				A.z = 4
-			A.y = world.maxy - 2
-			spawn (0)
-				if ((A && A.loc))
-					A.loc.Entered(A)
+	if(ticker && ticker.mode)
+		if(ticker.mode.name == "nuclear emergency")
+			return
 
-	else if (A.y >= (world.maxy - 1))
-		if(prob(50))
-			if(istype(A, /obj/meteor))
-				del(A)
-				return
-			if(istype(A,/mob/living/carbon/human))
-				if(A:knowledge)
-					if(A:knowledge > 0)
-						if(prob(50))
-							A.z = 8
-						else
-							A.z = 3
-					else
-						A.z = 3
-				else
-					A.z = 3
-			else
-				A.z = 3
-			A.y = 3
-			spawn (0)
-				if ((A && A.loc))
-					A.loc.Entered(A)
+		else if(ticker.mode.name == "extended"||ticker.mode.name == "sandbox")
+
+			var/cur_x
+			var/cur_y
+			var/next_x
+			var/next_y
+			var/target_z
+			var/list/y_arr
+
+			if(src.x <= 1)
+				if(istype(A, /obj/meteor))
+					del(A)
+					return
+
+				var/list/cur_pos = src.get_global_map_pos()
+				if(!cur_pos) return
+				cur_x = cur_pos["x"]
+				cur_y = cur_pos["y"]
+				next_x = (--cur_x||global_map.len)
+				y_arr = global_map[next_x]
+				target_z = y_arr[cur_y]
+/*
+				//debug
+				world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
+				world << "Target Z = [target_z]"
+				world << "Next X = [next_x]"
+				//debug
+*/
+				if(target_z)
+					A.z = target_z
+					A.x = world.maxx - 2
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)
+			else if (src.x >= world.maxx)
+				if(istype(A, /obj/meteor))
+					del(A)
+					return
+
+				var/list/cur_pos = src.get_global_map_pos()
+				if(!cur_pos) return
+				cur_x = cur_pos["x"]
+				cur_y = cur_pos["y"]
+				next_x = (++cur_x > global_map.len ? 1 : cur_x)
+				y_arr = global_map[next_x]
+				target_z = y_arr[cur_y]
+/*
+				//debug
+				world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
+				world << "Target Z = [target_z]"
+				world << "Next X = [next_x]"
+				//debug
+*/
+				if(target_z)
+					A.z = target_z
+					A.x = 3
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)
+			else if (src.y <= 1)
+				if(istype(A, /obj/meteor))
+					del(A)
+					return
+				var/list/cur_pos = src.get_global_map_pos()
+				if(!cur_pos) return
+				cur_x = cur_pos["x"]
+				cur_y = cur_pos["y"]
+				y_arr = global_map[cur_x]
+				next_y = (--cur_y||y_arr.len)
+				target_z = y_arr[next_y]
+/*
+				//debug
+				world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
+				world << "Next Y = [next_y]"
+				world << "Target Z = [target_z]"
+				//debug
+*/
+				if(target_z)
+					A.z = target_z
+					A.y = world.maxy - 2
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)
+
+			else if (src.y >= world.maxy)
+				if(istype(A, /obj/meteor))
+					del(A)
+					return
+				var/list/cur_pos = src.get_global_map_pos()
+				if(!cur_pos) return
+				cur_x = cur_pos["x"]
+				cur_y = cur_pos["y"]
+				y_arr = global_map[cur_x]
+				next_y = (++cur_y > y_arr.len ? 1 : cur_y)
+				target_z = y_arr[next_y]
+/*
+				//debug
+				world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
+				world << "Next Y = [next_y]"
+				world << "Target Z = [target_z]"
+				//debug
+*/
+				if(target_z)
+					A.z = target_z
+					A.y = 3
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)
+			return
+
+
 		else
-			if(istype(A, /obj/meteor))
-				del(A)
-				return
-			if(istype(A,/mob/living/carbon/human))
-				if(A:knowledge)
-					if(A:knowledge > 0)
-						if(prob(50))
-							A.z = 8
+
+			if (src.x <= 2)
+				if(prob(50))
+					if(istype(A, /obj/meteor))
+						del(A)
+						return
+					if(istype(A,/mob/living/carbon/human))
+						if(A:knowledge)
+							if(A:knowledge > 0)
+								if(prob(50))
+									A.z = 8
+								else
+									A.z = 3
+							else
+								A.z = 3
 						else
 							A.z = 3
 					else
 						A.z = 3
+					A.x = world.maxx - 2
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)
 				else
-					A.z = 3
-			else
-				A.z = 3
-			A.y = 3
-			spawn (0)
-				if ((A && A.loc))
-					A.loc.Entered(A)
+					if(istype(A, /obj/meteor))
+						del(A)
+						return
+					if(istype(A,/mob/living/carbon/human))
+						if(A:knowledge)
+							if(A:knowledge > 0)
+								if(prob(50))
+									A.z = 8
+								else
+									A.z = 4
+							else
+								A.z = 4
+						else
+							A.z = 4
+					else
+						A.z = 4
+					A.x = world.maxx - 2
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)
+			else if (A.x >= (world.maxx - 1))
+				if(prob(50))
+					if(istype(A, /obj/meteor))
+						del(A)
+						return
+					if(istype(A,/mob/living/carbon/human))
+						if(A:knowledge)
+							if(A:knowledge > 0)
+								if(prob(50))
+									A.z = 8
+								else
+									A.z = 3
+							else
+								A.z = 3
+						else
+							A.z = 3
+					else
+						A.z = 3
+					A.x = 3
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)
+				else
+					if(istype(A, /obj/meteor))
+						del(A)
+						return
+					if(istype(A,/mob/living/carbon/human))
+						if(A:knowledge)
+							if(A:knowledge > 0)
+								if(prob(50))
+									A.z = 8
+								else
+									A.z = 4
+							else
+								A.z = 4
+						else
+							A.z = 4
+					else
+						A.z = 4
+					A.x = 3
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)
+			else if (src.y <= 2)
+				if(prob(50))
+					if(istype(A, /obj/meteor))
+						del(A)
+						return
+					if(istype(A,/mob/living/carbon/human))
+						if(A:knowledge)
+							if(A:knowledge > 0)
+								if(prob(50))
+									A.z = 8
+								else
+									A.z = 3
+							else
+								A.z = 3
+						else
+							A.z = 3
+					else
+						A.z = 3
+					A.y = world.maxy - 2
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)
+				else
+					if(istype(A, /obj/meteor))
+						del(A)
+						return
+					if(istype(A,/mob/living/carbon/human))
+						if(A:knowledge > 0)
+							if(A:knowledge > 0)
+								if(prob(50))
+									A.z = 8
+								else
+									A.z = 4
+							else
+								A.z = 4
+						else
+							A.z = 4
+					else
+						A.z = 4
+					A.y = world.maxy - 2
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)
+
+			else if (A.y >= (world.maxy - 1))
+				if(prob(50))
+					if(istype(A, /obj/meteor))
+						del(A)
+						return
+					if(istype(A,/mob/living/carbon/human))
+						if(A:knowledge)
+							if(A:knowledge > 0)
+								if(prob(50))
+									A.z = 8
+								else
+									A.z = 3
+							else
+								A.z = 3
+						else
+							A.z = 3
+					else
+						A.z = 3
+					A.y = 3
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)
+				else
+					if(istype(A, /obj/meteor))
+						del(A)
+						return
+					if(istype(A,/mob/living/carbon/human))
+						if(A:knowledge)
+							if(A:knowledge > 0)
+								if(prob(50))
+									A.z = 8
+								else
+									A.z = 3
+							else
+								A.z = 3
+						else
+							A.z = 3
+					else
+						A.z = 3
+					A.y = 3
+					spawn (0)
+						if ((A && A.loc))
+							A.loc.Entered(A)

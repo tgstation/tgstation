@@ -600,6 +600,7 @@ to clean it up, or just beat the shit out of it (which takes ages).
 	return
 
 /mob/living/carbon/alien/humanoid/attack_paw(mob/M as mob)
+	..()
 	if (M.a_intent == "help")
 		src.sleeping = 0
 		src.resting = 0
@@ -627,6 +628,8 @@ to clean it up, or just beat the shit out of it (which takes ages).
 	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
+
+	..()
 
 	if ((M.gloves && M.gloves.elecgen == 1 && M.a_intent == "hurt") /*&& (!istype(src:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 		if(M.gloves.uses > 0)

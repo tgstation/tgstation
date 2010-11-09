@@ -1248,6 +1248,7 @@
 	return
 
 /mob/living/carbon/human/attack_paw(mob/M as mob)
+	..()
 	if (M.a_intent == "help")
 		src.sleeping = 0
 		src.resting = 0
@@ -1437,6 +1438,8 @@
 	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
+
+	..()
 
 	if ((M.gloves && M.gloves.elecgen == 1 && M.a_intent == "hurt") /*&& (!istype(src:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 		if(M.gloves.uses > 0)

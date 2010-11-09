@@ -268,7 +268,7 @@ to null does not delete the object itself. Thank you.
 
 	var/check_range = AIRBORNE//defaults to airborne - range 4
 	if(src.spread_type != AIRBORNE)
-		check_range = 1
+		check_range = 0
 
 	for(var/mob/living/carbon/M in oviewers(check_range, source))
 		M.contract_disease(src)

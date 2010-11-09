@@ -14,12 +14,12 @@
 	req_access = list(access_atmospherics)
 
 	attack_hand(mob/user)
-		if(!(istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/carbon/human)))
+		if(!(istype(usr, /mob/living/silicon) || istype(usr, /mob/living/carbon/human)))
 			user << "\red You don't have the dexterity to do this"
 			return
 		if(stat & (NOPOWER|BROKEN))
 			return
-		else if(!(istype(usr, /mob/living/silicon/ai)) && locked)
+		else if(!(istype(usr, /mob/living/silicon)) && locked)
 			user << "\red You must unlock the Air Alarm interface first"
 			return
 		src.add_fingerprint(user)

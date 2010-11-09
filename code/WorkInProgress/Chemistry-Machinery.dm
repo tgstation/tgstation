@@ -297,7 +297,7 @@
 				var/type = text2path(href_list["create_virus_culture"])//the path is received as string - converting
 				var/datum/disease/D = new type
 				var/list/data = list("virus"=D)
-				var/name = input(usr,"Name:","Name the culture",D.name)
+				var/name = sanitize(input(usr,"Name:","Name the culture",D.name))
 				if(!name || name == " ") name = D.name
 				B.name = "[name] culture bottle"
 				B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
