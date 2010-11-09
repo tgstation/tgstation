@@ -3275,7 +3275,7 @@
 "bkY" = (/obj/lattice,/obj/machinery/atmospherics/pipe/simple{dir = 4; icon_state = "intact-y"; layer = 3; level = 2},/obj/machinery/meter,/turf/space,/area)
 "bkZ" = (/obj/grille,/obj/window/reinforced/east,/obj/window/reinforced/west,/obj/machinery/atmospherics/pipe/simple{dir = 4; icon_state = "intact-y"; layer = 3; level = 2},/obj/machinery/atmospherics/pipe/simple{icon_state = "intact-b"; level = 2},/turf/simulated/floor/plating,/area/atmos)
 "bla" = (/obj/machinery/light{tag = "icon-tube1 (WEST)"; icon_state = "tube1"; dir = 8},/obj/machinery/atmospherics/pipe/simple{dir = 4; icon_state = "intact-y"; layer = 3; level = 2},/obj/machinery/atmospherics/pipe/simple{icon_state = "intact-r"; level = 2},/turf/simulated/floor,/area/atmos)
-"blb" = (/obj/machinery/atmospherics/valve/digital{dir = 4; name = "Waste Gas Outlet valve"},/turf/simulated/floor,/area/atmos)
+"blb" = (/obj/machinery/atmospherics/valve/digital{dir = 4; name = "Gas Mix Outlet Valve"},/turf/simulated/floor,/area/atmos)
 "blc" = (/obj/machinery/atmospherics/binary/pump{dir = 4; icon_state = "intact_off"; name = "Gas Mix Distribution Loop Pump"; on = 0},/turf/simulated/floor,/area/atmos)
 "bld" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/machinery/atmospherics/pipe/simple{dir = 9; icon_state = "intact-b"; layer = 3; level = 2},/turf/simulated/floor,/area/atmos)
 "ble" = (/obj/machinery/atmospherics/pipe/simple{dir = 6; icon_state = "intact-g"; initialize_directions = 6; layer = 3; level = 2},/turf/simulated/floor,/area/atmos)
