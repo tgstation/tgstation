@@ -178,13 +178,14 @@
 
 
 		else
-			icon_state = ""
+			icon_state = "wall"
 			flick("fwall_closing", src)
 			sleep(15)
 			src.density = 1
 			src.sd_SetOpacity(1)
 			var/turf/T = src.loc
 			T.sd_LumUpdate()
+			src.relativewall()
 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
