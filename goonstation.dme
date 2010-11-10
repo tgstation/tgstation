@@ -381,6 +381,7 @@
 #include "code\game\machinery\embedded_controller\access_controller.dm"
 #include "code\game\machinery\embedded_controller\airlock_controller.dm"
 #include "code\game\machinery\embedded_controller\embedded_controller_base.dm"
+#include "code\game\machinery\pipe\construction.dm"
 #include "code\game\magic\library.dm"
 #include "code\game\magic\magicmonster.dm"
 #include "code\game\magic\musician.dm"
