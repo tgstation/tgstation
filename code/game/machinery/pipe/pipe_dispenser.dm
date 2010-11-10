@@ -15,15 +15,12 @@
 	var/dat = {"
 <A href='?src=\ref[src];make=0'>Pipe<BR>
 <A href='?src=\ref[src];make=1'>Bent Pipe<BR>
-<A href='?src=\ref[src];make=2'>Heat Exchange Pipe<BR>
-<A href='?src=\ref[src];make=3'>Heat Exchange Bent Pipe<BR>
 <A href='?src=\ref[src];make=4'>Connector<BR>
 <A href='?src=\ref[src];make=5'>Manifold<BR>
-<A href='?src=\ref[src];make=6'>Junction<BR>
-<A href='?src=\ref[src];make=7'>Vent<BR>
-<A href='?src=\ref[src];make=8'>Valve<BR>
-<A href='?src=\ref[src];make=9'>Pipe-Pump<BR>"}
-//<A href='?src=\ref[src];make=10'>Filter Inlet<BR>
+<A href='?src=\ref[src];make=7'>Unary Vent<BR>
+<A href='?src=\ref[src];make=8'>Manual Valve<BR>
+<A href='?src=\ref[src];make=9'>Gas Pump<BR>
+<A href='?src=\ref[src];make=10'>Scrubber<BR>"}
 
 
 	user << browse("<HEAD><TITLE>Pipe Dispenser</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")

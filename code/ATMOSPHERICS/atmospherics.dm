@@ -14,6 +14,7 @@ obj/machinery/atmospherics
 	anchored = 1
 
 	var/initialize_directions = 0
+	var/color
 
 	process()
 		build_network()

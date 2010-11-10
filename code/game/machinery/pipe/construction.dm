@@ -22,7 +22,7 @@ Buildable meters
 //update the name and icon of the pipe item depending on the type
 
 /obj/item/weapon/pipe/proc/update()
-	var/list/nlist = list("pipe", "bent pipe", "h/e pipe", "bent h/e pipe", "connector", "manifold", "junction", "vent", "valve", "pump", "filter")
+	var/list/nlist = list("pipe", "bent pipe", "h/e pipe", "bent h/e pipe", "connector", "manifold", "junction", "uvent", "mvalve", "pump", "scrubber")
 	name = nlist[pipe_type+1] + " fitting"
 	updateicon()
 
@@ -30,7 +30,7 @@ Buildable meters
 
 /obj/item/weapon/pipe/proc/updateicon()
 
-	var/list/islist = list("straight", "bend", "he-straight", "he-bend", "connector", "manifold", "junction", "vent", "valve", "pump", "filter")
+	var/list/islist = list("straight", "bend", "he-straight", "he-bend", "connector", "manifold", "junction", "uvent", "mvalve", "pump", "scrubber")
 
 	icon_state = islist[pipe_type + 1]
 
@@ -179,7 +179,7 @@ Buildable meters
 
 
 		switch(pipe_type)
-			if(0,1)		// straight or bent pipe
+			if(0)		// straight pipe
 				var/obj/machinery/atmospherics/pipe/simple/P = new /obj/machinery/atmospherics/pipe/simple( src.loc )
 				P.dir = dir
 				P.New()
@@ -188,10 +188,47 @@ Buildable meters
 				P.pipeline_expansion()
 				if (P.node1)
 					P.node1:initialize()
-					P.node1:pipeline_expansion()
+					if (istype (P.node1, /obj/machinery/atmospherics/pipe))
+						P.node1:pipeline_expansion()
+					else
+						P.node1:network_expand()
 				if (P.node2)
 					P.node2:initialize()
-					P.node2:pipeline_expansion()
+					if (istype (P.node2, /obj/machinery/atmospherics/pipe))
+						P.node2:pipeline_expansion()
+					else
+						P.node2:network_expand()
+
+			if(1)		// bent pipe
+				var/obj/machinery/atmospherics/pipe/simple/P = new /obj/machinery/atmospherics/pipe/simple( src.loc )
+				switch (icon_state)
+					if("bend")
+						P.dir = SOUTHWEST
+						P.initialize_directions = SOUTH|WEST
+					if("bend6")
+						P.dir = SOUTHEAST
+						P.initialize_directions = SOUTH|EAST
+					if("bend5")
+						P.dir = NORTHEAST
+						P.initialize_directions = NORTH|EAST
+					if("bend9")
+						P.dir = NORTHWEST
+						P.initialize_directions = NORTH|WEST
+				P.level = level
+				P.initialize()
+				P.pipeline_expansion()
+				if (P.node1)
+					P.node1:initialize()
+					if (istype (P.node1, /obj/machinery/atmospherics/pipe))
+						P.node1:pipeline_expansion()
+					else
+						P.node1:network_expand()
+				if (P.node2)
+					P.node2:initialize()
+					if (istype (P.node2, /obj/machinery/atmospherics/pipe))
+						P.node2:pipeline_expansion()
+					else
+						P.node2:network_expand()
 
 /*
 			if(2,3)		// straight or bent h/e pipe
@@ -202,59 +239,127 @@ Buildable meters
 				P.update()
 
 				var/list/dirs = P.get_dirs()
-
+*/
 
 			if(4)		// connector
-				var/obj/machinery/connector/C = new( src.loc )
-				C.dir = src.dir
-				C.p_dir = src.dir
+				var/obj/machinery/atmospherics/portables_connector/C = new( src.loc )
+				C.dir = dir
+				C.New()
 				C.level = level
+				C.initialize()
+				C.network_expand()
+				if (C.node)
+					C.node:initialize()
+					if (istype (C.node, /obj/machinery/atmospherics/pipe))
+						C.node:pipeline_expansion()
+					else
+						C.node:network_expand()
 
 
 			if(5)		//manifold
-				var/obj/machinery/manifold/M = new( src.loc )
+				var/obj/machinery/atmospherics/pipe/manifold/M = new( src.loc )
 				M.dir = dir
-				M.p_dir = pipedir
+				M.New()
 				M.level = level
-
+				M.initialize()
+				M.pipeline_expansion()
+				if (M.node1)
+					M.node1:initialize()
+					if (istype (M.node1, /obj/machinery/atmospherics/pipe))
+						M.node1:pipeline_expansion()
+					else
+						M.node1:network_expand()
+				if (M.node2)
+					M.node2:initialize()
+					if (istype (M.node2, /obj/machinery/atmospherics/pipe))
+						M.node2:pipeline_expansion()
+					else
+						M.node2:network_expand()
+				if (M.node3)
+					M.node3:initialize()
+					if (istype (M.node3, /obj/machinery/atmospherics/pipe))
+						M.node3:pipeline_expansion()
+					else
+						M.node3:network_expand()
+/*
 			if(6)		//junctions
 				var/obj/machinery/junction/J = new( src.loc )
 				J.dir = dir
 				J.p_dir = src.get_pdir()
 				J.h_dir = src.get_hdir()
 				J.level = 2
-
-			if(7)		// vent
-				var/obj/machinery/vent/V = new( src.loc )
-				V.dir = src.dir
-				V.p_dir = src.dir
-				V.level = level
-
-
-			if(8)		//valve
-				var/obj/machinery/valve/mvalve/V = new( src.loc)
-				V.dir = src.dir
-				switch(dir)
-					if(1, 2)
-						V.p_dir = 3
-					if(4,8)
-						V.p_dir = 12
-
-			if(9)		//Pipe pump
-				var/obj/machinery/oneway/pipepump/PP = new(src.loc)
-
-				PP.dir = src.dir
-				PP.p_dir = dir|turn(dir, 180)
-
-
-			if(10)		//filter inlet
-				var/obj/machinery/inlet/filter/F = new(src.loc)
-				F.dir = src.dir
-				F.p_dir = src.dir
-				F.level = level
-
-		// for pipe objects, now do updating of pipelines if needed
 */
+			if(7)		//unary vent
+				var/obj/machinery/atmospherics/unary/vent_pump/V = new( src.loc )
+				V.dir = dir
+				V.New()
+				V.level = level
+				V.initialize()
+				V.network_expand()
+				if (V.node)
+					V.node:initialize()
+					if (istype (V.node, /obj/machinery/atmospherics/pipe))
+						V.node:pipeline_expansion()
+					else
+						V.node:network_expand()
+
+
+			if(8)		//manual valve
+				var/obj/machinery/atmospherics/valve/V = new( src.loc)
+				V.dir = dir
+				V.New()
+				V.level = level
+				V.initialize()
+				V.network_expand()
+				if (V.node1)
+					V.node1:initialize()
+					if (istype (V.node1, /obj/machinery/atmospherics/pipe))
+						V.node1:pipeline_expansion()
+					else
+						V.node1:network_expand()
+				if (V.node2)
+					V.node2:initialize()
+					if (istype (V.node2, /obj/machinery/atmospherics/pipe))
+						V.node2:pipeline_expansion()
+					else
+						V.node2:network_expand()
+
+			if(9)		//gas pump
+				var/obj/machinery/atmospherics/binary/pump/P = new(src.loc)
+				P.dir = dir
+				P.New()
+				P.level = level
+				P.initialize()
+				P.network_expand()
+				if (P.node1)
+					P.node1:initialize()
+					if (istype (P.node1, /obj/machinery/atmospherics/pipe))
+						P.node1:pipeline_expansion()
+					else
+						P.node1:network_expand()
+				if (P.node2)
+					P.node2:initialize()
+					if (istype (P.node2, /obj/machinery/atmospherics/pipe))
+						P.node2:pipeline_expansion()
+					else
+						P.node2:network_expand()
+
+
+			if(10)		//scrubber
+				var/obj/machinery/atmospherics/unary/vent_scrubber/S = new(src.loc)
+				S.dir = dir
+				S.New()
+				S.level = level
+				S.initialize()
+				S.network_expand()
+				if (S.node)
+					S.node:initialize()
+					if (istype (S.node, /obj/machinery/atmospherics/pipe))
+						S.node:pipeline_expansion()
+					else
+						S.node:network_expand()
+
+
 
 
 		user << "You have fastened the pipe"
