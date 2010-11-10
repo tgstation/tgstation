@@ -6,6 +6,8 @@ obj/machinery/atmospherics/pipe
 	var/volume = 0
 	var/nodealert = 0
 
+	var/color
+
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called
 
@@ -162,7 +164,14 @@ obj/machinery/atmospherics/pipe
 
 		update_icon()
 			if(node1&&node2)
-				icon_state = "intact[invisibility ? "-f" : "" ]"
+				var/C = ""
+				switch(color)
+					if ("red") C = "-r"
+					if ("blue") C = "-b"
+					if ("cyan") C = "-c"
+					if ("green") C = "-g"
+					if ("yellow") C = "-y"
+				icon_state = "intact[C][invisibility ? "-f" : "" ]"
 
 				var/node1_direction = get_dir(src, node1)
 				var/node2_direction = get_dir(src, node2)
@@ -618,7 +627,14 @@ obj/machinery/atmospherics/pipe
 
 		update_icon()
 			if(node1&&node2&&node3)
-				icon_state = "manifold[invisibility ? "-f" : ""]"
+				var/C = ""
+				switch(color)
+					if ("red") C = "-r"
+					if ("blue") C = "-b"
+					if ("cyan") C = "-c"
+					if ("green") C = "-g"
+					if ("yellow") C = "-y"
+				icon_state = "manifold[C][invisibility ? "-f" : ""]"
 
 			else
 				var/connected = 0
