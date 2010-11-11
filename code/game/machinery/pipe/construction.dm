@@ -200,7 +200,7 @@ Buildable meters
 						P.node2.build_network()
 				else
 					usr << "There's nothing to connect this pipe section to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
-
+					return
 
 			if(1)		// bent pipe
 				var/obj/machinery/atmospherics/pipe/simple/P = new /obj/machinery/atmospherics/pipe/simple( src.loc )
@@ -229,7 +229,7 @@ Buildable meters
 						P.node2.build_network()
 				else
 					usr << "There's nothing to connect this pipe section to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
-
+					return
 
 /*
 			if(2,3)		// straight or bent h/e pipe
