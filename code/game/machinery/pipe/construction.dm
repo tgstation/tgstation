@@ -190,13 +190,16 @@ Buildable meters
 						P.initialize_directions = EAST|WEST
 				P.level = level
 				P.initialize()
-				P.build_network()
-				if (P.node1)
-					P.node1.initialize()
-					P.node1.build_network()
-				if (P.node2)
-					P.node2:initialize()
-					P.node2.build_network()
+				if (P)
+					P.build_network()
+					if (P.node1)
+						P.node1.initialize()
+						P.node1.build_network()
+					if (P.node2)
+						P.node2:initialize()
+						P.node2.build_network()
+				else
+					usr << "There's nothing to connect this pipe section to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
 
 
 			if(1)		// bent pipe
@@ -216,13 +219,17 @@ Buildable meters
 						P.initialize_directions = NORTH|WEST
 				P.level = level
 				P.initialize()
-				P.build_network()
-				if (P.node1)
-					P.node1.initialize()
-					P.node1.build_network()
-				if (P.node2)
-					P.node2:initialize()
-					P.node2.build_network()
+				if (P)
+					P.build_network()
+					if (P.node1)
+						P.node1.initialize()
+						P.node1.build_network()
+					if (P.node2)
+						P.node2:initialize()
+						P.node2.build_network()
+				else
+					usr << "There's nothing to connect this pipe section to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
+
 
 /*
 			if(2,3)		// straight or bent h/e pipe
