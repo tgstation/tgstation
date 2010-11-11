@@ -272,16 +272,20 @@ Buildable meters
 					if(1) M.level = 2
 					if(0) M.level = 1
 				M.initialize()
-				M.build_network()
-				if (M.node1)
-					M.node1.initialize()
-					M.node1.build_network()
-				if (M.node2)
-					M.node2.initialize()
-					M.node2.build_network()
-				if (M.node3)
-					M.node3.initialize()
-					M.node3.build_network()
+				if (M)
+					M.build_network()
+					if (M.node1)
+						M.node1.initialize()
+						M.node1.build_network()
+					if (M.node2)
+						M.node2.initialize()
+						M.node2.build_network()
+					if (M.node3)
+						M.node3.initialize()
+						M.node3.build_network()
+				else
+					usr << "There's nothing to connect this manifold to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
+					return
 /*
 			if(6)		//junctions
 				var/obj/machinery/junction/J = new( src.loc )
