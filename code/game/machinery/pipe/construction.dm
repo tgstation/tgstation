@@ -258,6 +258,9 @@ Buildable meters
 					if(0) C.level = 1
 				C.initialize()
 				C.build_network()
+				if (C.node)
+					C.node.initialize()
+					C.node.build_network()
 
 
 			if(5)		//manifold
@@ -270,6 +273,15 @@ Buildable meters
 					if(0) M.level = 1
 				M.initialize()
 				M.build_network()
+				if (M.node1)
+					M.node1.initialize()
+					M.node1.build_network()
+				if (M.node2)
+					M.node2.initialize()
+					M.node2.build_network()
+				if (M.node3)
+					M.node3.initialize()
+					M.node3.build_network()
 /*
 			if(6)		//junctions
 				var/obj/machinery/junction/J = new( src.loc )
@@ -288,6 +300,9 @@ Buildable meters
 					if(0) V.level = 1
 				V.initialize()
 				V.build_network()
+				if (V.node)
+					V.node.initialize()
+					V.node.build_network()
 
 
 			if(8)		//manual valve
@@ -300,6 +315,12 @@ Buildable meters
 					if(0) V.level = 1
 				V.initialize()
 				V.build_network()
+				if (V.node1)
+					V.node1.initialize()
+					V.node1.build_network()
+				if (V.node2)
+					V.node2.initialize()
+					V.node2.build_network()
 
 			if(9)		//gas pump
 				var/obj/machinery/atmospherics/binary/pump/P = new(src.loc)
@@ -311,6 +332,12 @@ Buildable meters
 					if(0) P.level = 1
 				P.initialize()
 				P.build_network()
+				if (P.node1)
+					P.node1.initialize()
+					P.node1.build_network()
+				if (P.node2)
+					P.node2.initialize()
+					P.node2.build_network()
 
 
 			if(10)		//scrubber
@@ -323,6 +350,9 @@ Buildable meters
 					if(0) S.level = 1
 				S.initialize()
 				S.build_network()
+				if (S.node)
+					S.node.initialize()
+					S.node.build_network()
 
 
 
