@@ -111,6 +111,11 @@
 	extra_item = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/soylenviridians"
 
+/datum/recipe/soylentgreen
+	flour_amount = 3
+	humanmeat_amount = 2
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/soylentgreen"
+
 /datum/recipe/carrotcake
 	flour_amount = 3
 	egg_amount = 3
@@ -194,6 +199,7 @@
 	src.available_recipes += new /datum/recipe/muffin (src)
 	src.available_recipes += new /datum/recipe/eggplantparm(src)
 	src.available_recipes += new /datum/recipe/soylenviridians(src)
+	src.available_recipes += new /datum/recipe/soylentgreen(src)
 	src.available_recipes += new /datum/recipe/carrotcake(src)
 	src.available_recipes += new /datum/recipe/cheesecake(src)
 	src.available_recipes += new /datum/recipe/plaincake(src)
