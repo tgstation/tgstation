@@ -67,3 +67,7 @@
 
 /turf/simulated/wall/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)//TODO
 	return attack_hand(user)
+
+
+/turf/simulated/wall/asteroid/relativewall()//TODO.
+	return
