@@ -52,6 +52,7 @@
 
 /obj/mecha/combat/click_action(target)
 	if(state || !cell || cell.charge<=0) return
+	if(src == target) return
 	if(get_dist(src,target)<=1)
 		src.mega_punch(target)
 
@@ -94,7 +95,6 @@
 
 	playsound(src, 'Laser.ogg', 50, 1)
 	if (targloc == curloc)
-		src.bullet_act(PROJECTILE_PULSE)
 		return
 
 	var/obj/beam/a_laser/A = new weapon_type(src.loc)

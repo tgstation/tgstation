@@ -69,21 +69,14 @@
 		return 0
 	if(state || !cell || cell.charge<=0) return 0
 	if(can_move)
-		if(istype(src.loc, /turf/space))
-			var/new_pos = get_step(src,direction)
-/*			world << "Next pos = [new_pos]"
-
-			var/turf = locate(new_pos)
-			world << "Turf is [turf]"*/
-			if(istype(new_pos, /turf/space))
-				if(!src.check_for_support())
-					src.inertia_dir = direction
-					src.inertial_movement()
-					return 0
 		if(step(src,direction))
 			can_move = 0
 			spawn(step_in) can_move = 1
 			cell.use(src.step_energy_drain)
+			if(istype(src.loc, /turf/space))
+				if(!src.check_for_support())
+					src.inertia_dir = direction
+					src.inertial_movement()
 			return 1
 	return 0
 
@@ -91,9 +84,11 @@
 	if(check_for_support())
 		src.inertia_dir = null
 	if(src.inertia_dir)
-		step(src, src.inertia_dir)
-		spawn(5)
-			.()
+		if(step(src, src.inertia_dir))
+			spawn(5)
+				.()
+		else
+			src.inertia_dir = null
 	return
 
 /obj/mecha/proc/check_for_support()
@@ -103,14 +98,14 @@
 		return 0
 
 /obj/mecha/Bump(var/atom/obstacle)
-	src.inertia_dir = null
+//	src.inertia_dir = null
 	if(src.occupant)
 		if(istype(obstacle , /obj/machinery/door))
 			var/obj/machinery/door/D = obstacle
 			D.Bumped(src.occupant)
 			return
-		else
-			obstacle.Bumped(src)
+//		else
+//			obstacle.Bumped(src)
 	return
 
 

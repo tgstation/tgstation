@@ -1,17 +1,20 @@
-proc/spawn_asteroid(var/atom/start_loc,var/type,var/size)//type: 0 or null - random, 1 - nothing,  2 - iron, 3 - silicon
+proc/spawn_asteroid(var/atom/start_loc,var/type,var/size,var/richness)//type: 0 or null - random, 1 - nothing,  2 - iron, 3 - silicon
+	if(start_loc.x - size < 3 || start_loc.x + size >= world.maxx - 3 || start_loc.y - size < 3 || start_loc.y + size > world.maxy -3)
+		return 0
 	if(!size)
 		size = pick(100;2,50;3,35;4,25;6,10;12)
 	if(!type)
 		type = pick(50;1,2,3)
+	if(!richness)
+		richness = rand(10,40)
 //	world << "Asteroid size: [size]; Asteroid type: [type]"
-	if(start_loc.x - size < 3 || start_loc.x + size >= world.maxx - 3 || start_loc.y - size < 3 || start_loc.y + size > world.maxy -3)
-		return 0
 	var/list/turfs = circlerange(start_loc,size)
+	var/area/asteroid/AstAr = new
 	for(var/turf/T in turfs)
 		var/dist = get_dist(start_loc,T)
-		if(prob(100-(dist*rand(2,4))))//I'm terrible at generating random things.
+		if(abs(GaussRand(dist))<size) //prob(100-(dist*rand(2,4))))//I'm terrible at generating random things.
 			var/turf/simulated/wall/asteroid/A
-			if(type > 1 && prob(25))
+			if(type > 1 && prob(richness))
 				switch(type)
 					if(2)
 						A = new /turf/simulated/wall/asteroid/iron(T)
@@ -21,6 +24,7 @@ proc/spawn_asteroid(var/atom/start_loc,var/type,var/size)//type: 0 or null - ran
 				A = new /turf/simulated/wall/asteroid(T)
 			A.opacity = 0
 			A.sd_NewOpacity(1)
+			AstAr.contents += A
 /*
 	if(max_secret_rooms && size == 12)
 		var/x_len = rand(4,12)
@@ -112,5 +116,15 @@ proc/spawn_room(var/atom/start_loc,var/x_size,var/y_size,var/wall,var/floor)
 
 
 var/global/max_secret_rooms = 3
+
+
+proc/GaussRand(var/sigma)
+  var/x,y,rsq
+  do
+    x=2*rand()-1
+    y=2*rand()-1
+    rsq=x*x+y*y
+  while(rsq>1 || !rsq)
+  return sigma*y*sqrt((-2*log(rsq))/rsq)
 
 

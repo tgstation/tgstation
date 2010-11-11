@@ -84,7 +84,7 @@
 								sensor_part += {"<B>Operating:</B> <A href='?src=\ref[src];scr_toggle_power=[id_tag]'>[(data["on"]?"on":"off")]</A><BR>
 												<B>Type:</B> <A href='?src=\ref[src];scr_toggle_scrubbing=[id_tag]'>[(data["scrubbing"]?"scrubbing":"syphoning")]</A><BR>"}
 								if(data["scrubbing"])
-									sensor_part += "<B>Filtering:</B> Carbon Dioxide <A href='?src=\ref[src];scr_toggle_co2_scrub=[id_tag]'>([(data["filter_co2"]?"on":"off")])</A>; Toxins <A href='?src=\ref[src];scr_toggle_tox_scrub=[id_tag]'>([data["filter_toxins"]?"on":"off"])</A><BR>"
+									sensor_part += "<B>Filtering:</B> Carbon Dioxide <A href='?src=\ref[src];scr_toggle_co2_scrub=[id_tag]'>([(data["filter_co2"]?"on":"off")])</A>; Toxins <A href='?src=\ref[src];scr_toggle_tox_scrub=[id_tag]'>([data["filter_toxins"]?"on":"off"])</A>; Nitrous Oxide <A href='?src=\ref[src];scr_toggle_n2o_scrub=[id_tag]'>([data["filter_n2o"]?"on":"off"])</A><BR>"
 								sensor_part += "<A href='?src=\ref[src];scr_toggle_panic_siphon=[id_tag]'><font color='[(data["panic"]?"blue'>Dea":"red'>A")]ctivate panic syphon</A></font><BR>"
 								if(data["panic"])
 									sensor_part += "<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>"
@@ -142,6 +142,9 @@
 
 		if(href_list["scr_toggle_tox_scrub"])
 			send_signal(href_list["scr_toggle_tox_scrub"], "toggle_tox_scrub")
+
+		if(href_list["scr_toggle_n2o_scrub"])
+			send_signal(href_list["scr_toggle_n2o_scrub"], "toggle_n2o_scrub")
 
 		if(href_list["scr_toggle_panic_siphon"])
 			send_signal(href_list["scr_toggle_panic_siphon"], "toggle_panic_siphon")

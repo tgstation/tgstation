@@ -15,6 +15,7 @@
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
 	var/scrub_CO2 = 1
 	var/scrub_Toxins = 0
+	var/scrub_N2O = 0
 
 	var/volume_rate = 120
 	var/panic = 0 //is this scrubber panicked?
@@ -52,6 +53,7 @@
 			signal.data["panic"] = panic
 			signal.data["filter_co2"] = scrub_CO2
 			signal.data["filter_toxins"] = scrub_Toxins
+			signal.data["filter_n2o"] = scrub_N2O
 			radio_connection.post_signal(src, signal)
 
 			return 1
@@ -92,6 +94,10 @@
 						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
 							removed.trace_gases -= trace_gas
 							filtered_out.trace_gases += trace_gas
+						else if(istype(trace_gas, /datum/gas/sleeping_agent) && scrub_N2O)
+							removed.trace_gases -= trace_gas
+							filtered_out.trace_gases += trace_gas
+
 
 				//Remix the resulting gases
 				air_contents.merge(filtered_out)
@@ -138,6 +144,8 @@
 				scrub_CO2 = !scrub_CO2
 			if("toggle_tox_scrub")
 				scrub_Toxins = !scrub_Toxins
+			if("toggle_n2o_scrub")
+				scrub_N2O = !scrub_N2O
 			if("toggle_panic_siphon")
 				panic = !panic
 				if(panic)
