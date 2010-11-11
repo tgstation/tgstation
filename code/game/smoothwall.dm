@@ -15,7 +15,7 @@
 
 	if(istype(src,/turf/simulated/wall/r_wall))
 		src.icon_state = "rwall[junction]"
-	else
+	else if(istype(src,/turf/simulated/wall) || istype(src,/obj/falsewall))
 		src.icon_state = "wall[junction]"
 
 /* When we have animations for different directions of falsewalls, then it'd be needed. Not now.

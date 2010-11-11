@@ -344,6 +344,7 @@
 #include "code\game\machinery\spaceheater.dm"
 #include "code\game\machinery\status_display.dm"
 #include "code\game\machinery\teleporter.dm"
+#include "code\game\machinery\travel.dm"
 #include "code\game\machinery\turrets.dm"
 #include "code\game\machinery\vending.dm"
 #include "code\game\machinery\atmoalter\canister.dm"
