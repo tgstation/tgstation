@@ -153,6 +153,9 @@
 	if (!istype(wizard_mob))
 		return
 	wizard_mob.verbs += /client/proc/invisibility
+	if (wizard_mob.mind.assigned_role == "Clown")
+		wizard_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
+		wizard_mob.mutations &= ~16
 
 	var/freq = 1441
 	var/list/freqlist = list()
