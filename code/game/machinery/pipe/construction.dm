@@ -165,10 +165,9 @@ Buildable meters
 		var/pipedir = src.get_pdir()|src.get_hdir()		// all possible pipe dirs including h/e#
 
 		for(var/obj/machinery/atmospherics/M in src.loc)
-			if(M.level == src.level)		// only on same level
-				if( (M.initialize_directions & pipedir) || (M.initialize_directions & pipedir) )	// matches at least one direction on either type of pipe
-					user << "There is already a pipe at that location."
-					return
+			if( (M.initialize_directions & pipedir) || (M.initialize_directions & pipedir) )	// matches at least one direction on either type of pipe
+				user << "There is already a pipe at that location."
+				return
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
 
 		// no conflicts found
