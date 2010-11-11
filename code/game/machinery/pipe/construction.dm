@@ -181,23 +181,23 @@ Buildable meters
 		switch(pipe_type)
 			if(0)		// straight pipe
 				var/obj/machinery/atmospherics/pipe/simple/P = new /obj/machinery/atmospherics/pipe/simple( src.loc )
-				P.dir = dir
-				P.New()
+				switch (icon_state)
+					if("straight")
+						P.dir = NORTH
+						P.initialize_directions = NORTH|SOUTH
+					if("straight12")
+						P.dir = EAST
+						P.initialize_directions = EAST|WEST
 				P.level = level
 				P.initialize()
-				P.pipeline_expansion()
+				P.build_network()
 				if (P.node1)
-					P.node1:initialize()
-					if (istype (P.node1, /obj/machinery/atmospherics/pipe))
-						P.node1:pipeline_expansion()
-					else
-						P.node1:network_expand()
+					P.node1.initialize()
+					P.node1.build_network()
 				if (P.node2)
 					P.node2:initialize()
-					if (istype (P.node2, /obj/machinery/atmospherics/pipe))
-						P.node2:pipeline_expansion()
-					else
-						P.node2:network_expand()
+					P.node2.build_network()
+
 
 			if(1)		// bent pipe
 				var/obj/machinery/atmospherics/pipe/simple/P = new /obj/machinery/atmospherics/pipe/simple( src.loc )
@@ -216,19 +216,13 @@ Buildable meters
 						P.initialize_directions = NORTH|WEST
 				P.level = level
 				P.initialize()
-				P.pipeline_expansion()
+				P.build_network()
 				if (P.node1)
-					P.node1:initialize()
-					if (istype (P.node1, /obj/machinery/atmospherics/pipe))
-						P.node1:pipeline_expansion()
-					else
-						P.node1:network_expand()
+					P.node1.initialize()
+					P.node1.build_network()
 				if (P.node2)
 					P.node2:initialize()
-					if (istype (P.node2, /obj/machinery/atmospherics/pipe))
-						P.node2:pipeline_expansion()
-					else
-						P.node2:network_expand()
+					P.node2.build_network()
 
 /*
 			if(2,3)		// straight or bent h/e pipe
@@ -247,13 +241,7 @@ Buildable meters
 				C.New()
 				C.level = level
 				C.initialize()
-				C.network_expand()
-				if (C.node)
-					C.node:initialize()
-					if (istype (C.node, /obj/machinery/atmospherics/pipe))
-						C.node:pipeline_expansion()
-					else
-						C.node:network_expand()
+				C.build_network()
 
 
 			if(5)		//manifold
@@ -262,25 +250,7 @@ Buildable meters
 				M.New()
 				M.level = level
 				M.initialize()
-				M.pipeline_expansion()
-				if (M.node1)
-					M.node1:initialize()
-					if (istype (M.node1, /obj/machinery/atmospherics/pipe))
-						M.node1:pipeline_expansion()
-					else
-						M.node1:network_expand()
-				if (M.node2)
-					M.node2:initialize()
-					if (istype (M.node2, /obj/machinery/atmospherics/pipe))
-						M.node2:pipeline_expansion()
-					else
-						M.node2:network_expand()
-				if (M.node3)
-					M.node3:initialize()
-					if (istype (M.node3, /obj/machinery/atmospherics/pipe))
-						M.node3:pipeline_expansion()
-					else
-						M.node3:network_expand()
+				M.build_network()
 /*
 			if(6)		//junctions
 				var/obj/machinery/junction/J = new( src.loc )
@@ -295,13 +265,7 @@ Buildable meters
 				V.New()
 				V.level = level
 				V.initialize()
-				V.network_expand()
-				if (V.node)
-					V.node:initialize()
-					if (istype (V.node, /obj/machinery/atmospherics/pipe))
-						V.node:pipeline_expansion()
-					else
-						V.node:network_expand()
+				V.build_network()
 
 
 			if(8)		//manual valve
@@ -310,19 +274,7 @@ Buildable meters
 				V.New()
 				V.level = level
 				V.initialize()
-				V.network_expand()
-				if (V.node1)
-					V.node1:initialize()
-					if (istype (V.node1, /obj/machinery/atmospherics/pipe))
-						V.node1:pipeline_expansion()
-					else
-						V.node1:network_expand()
-				if (V.node2)
-					V.node2:initialize()
-					if (istype (V.node2, /obj/machinery/atmospherics/pipe))
-						V.node2:pipeline_expansion()
-					else
-						V.node2:network_expand()
+				V.build_network()
 
 			if(9)		//gas pump
 				var/obj/machinery/atmospherics/binary/pump/P = new(src.loc)
@@ -330,19 +282,7 @@ Buildable meters
 				P.New()
 				P.level = level
 				P.initialize()
-				P.network_expand()
-				if (P.node1)
-					P.node1:initialize()
-					if (istype (P.node1, /obj/machinery/atmospherics/pipe))
-						P.node1:pipeline_expansion()
-					else
-						P.node1:network_expand()
-				if (P.node2)
-					P.node2:initialize()
-					if (istype (P.node2, /obj/machinery/atmospherics/pipe))
-						P.node2:pipeline_expansion()
-					else
-						P.node2:network_expand()
+				P.build_network()
 
 
 			if(10)		//scrubber
@@ -351,13 +291,7 @@ Buildable meters
 				S.New()
 				S.level = level
 				S.initialize()
-				S.network_expand()
-				if (S.node)
-					S.node:initialize()
-					if (istype (S.node, /obj/machinery/atmospherics/pipe))
-						S.node:pipeline_expansion()
-					else
-						S.node:network_expand()
+				S.build_network()
 
 
 

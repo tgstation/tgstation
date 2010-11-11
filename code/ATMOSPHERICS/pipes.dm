@@ -193,9 +193,9 @@ obj/machinery/atmospherics/pipe
 					del(src)
 
 		initialize()
-			var/connect_directions
+			var/connect_directions = initialize_directions
 
-			switch(dir)
+/*			switch(dir)
 				if(NORTH)
 					connect_directions = NORTH|SOUTH
 				if(SOUTH)
@@ -206,7 +206,7 @@ obj/machinery/atmospherics/pipe
 					connect_directions = EAST|WEST
 				else
 					connect_directions = dir
-
+*/
 			for(var/direction in cardinal)
 				if(direction&connect_directions)
 					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
