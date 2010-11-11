@@ -188,7 +188,10 @@ Buildable meters
 					if("straight12")
 						P.dir = EAST
 						P.initialize_directions = EAST|WEST
-				P.level = level
+				var/turf/T = P.loc
+				switch (T.intact)
+					if(1) P.level = 2
+					if(0) P.level = 1
 				P.initialize()
 				if (P)
 					P.build_network()
@@ -217,7 +220,10 @@ Buildable meters
 					if("bend9")
 						P.dir = NORTHWEST
 						P.initialize_directions = NORTH|WEST
-				P.level = level
+				var/turf/T = P.loc
+				switch (T.intact)
+					if(1) P.level = 2
+					if(0) P.level = 1
 				P.initialize()
 				if (P)
 					P.build_network()
@@ -246,7 +252,10 @@ Buildable meters
 				var/obj/machinery/atmospherics/portables_connector/C = new( src.loc )
 				C.dir = dir
 				C.New()
-				C.level = level
+				var/turf/T = C.loc
+				switch (T.intact)
+					if(1) C.level = 2
+					if(0) C.level = 1
 				C.initialize()
 				C.build_network()
 
@@ -255,7 +264,10 @@ Buildable meters
 				var/obj/machinery/atmospherics/pipe/manifold/M = new( src.loc )
 				M.dir = dir
 				M.New()
-				M.level = level
+				var/turf/T = M.loc
+				switch (T.intact)
+					if(1) M.level = 2
+					if(0) M.level = 1
 				M.initialize()
 				M.build_network()
 /*
@@ -270,7 +282,10 @@ Buildable meters
 				var/obj/machinery/atmospherics/unary/vent_pump/V = new( src.loc )
 				V.dir = dir
 				V.New()
-				V.level = level
+				var/turf/T = V.loc
+				switch (T.intact)
+					if(1) V.level = 2
+					if(0) V.level = 1
 				V.initialize()
 				V.build_network()
 
@@ -279,7 +294,10 @@ Buildable meters
 				var/obj/machinery/atmospherics/valve/V = new( src.loc)
 				V.dir = dir
 				V.New()
-				V.level = level
+				var/turf/T = V.loc
+				switch (T.intact)
+					if(1) V.level = 2
+					if(0) V.level = 1
 				V.initialize()
 				V.build_network()
 
@@ -287,7 +305,10 @@ Buildable meters
 				var/obj/machinery/atmospherics/binary/pump/P = new(src.loc)
 				P.dir = dir
 				P.New()
-				P.level = level
+				var/turf/T = P.loc
+				switch (T.intact)
+					if(1) P.level = 2
+					if(0) P.level = 1
 				P.initialize()
 				P.build_network()
 
@@ -296,7 +317,10 @@ Buildable meters
 				var/obj/machinery/atmospherics/unary/vent_scrubber/S = new(src.loc)
 				S.dir = dir
 				S.New()
-				S.level = level
+				var/turf/T = S.loc
+				switch (T.intact)
+					if(1) S.level = 2
+					if(0) S.level = 1
 				S.initialize()
 				S.build_network()
 
