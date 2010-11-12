@@ -1589,9 +1589,9 @@ datum
 					M.confused = max(M:confused+2,0)
 				return
 
-		hooch
-			name = "Hooch"
-			id = "hooch"
+		moonshine
+			name = "Moonshine"
+			id = "moonshine"
 			description = "You've really hit rock bottom now... your liver packed its bags and left last night."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
