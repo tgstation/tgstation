@@ -59,6 +59,7 @@
 			return 1
 
 	initialize()
+		..()
 		set_frequency(frequency)
 		update_icon()
 
