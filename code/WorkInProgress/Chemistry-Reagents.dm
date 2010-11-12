@@ -1072,15 +1072,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(5)
-				M:jitteriness = max(M:jitteriness-5,0)
-				if(data >= 30)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 4
-				if(data >= 100 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 3
-				..()
+				M.dizziness +=4
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		specialwhiskey
 			name = "Special Blend Whiskey"
@@ -1088,18 +1085,14 @@ datum
 			description = "Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
-				if(M:bruteloss && prob(40)) M:bruteloss--
 				if(!data) data = 1
 				data++
-				M.make_dizzy(5)
-				M:jitteriness = max(M:jitteriness-5,0)
-				if(data >= 40)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 4
-				if(data >= 100 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 3
-				..()
+				M.dizziness +=3
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		gin
 			name = "Gin"
@@ -1109,15 +1102,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(5)
-				M:jitteriness = max(M:jitteriness-5,0)
-				if(data >= 60)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 4
-				if(data >= 120 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 3
-				..()
+				M.dizziness +=3
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		rum
 			name = "Rum"
@@ -1127,33 +1117,27 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(5)
-				M:jitteriness = max(M:jitteriness-5,0)
-				if(data >= 25)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 4
-				if(data >= 50 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 3
-				..()
+				M.dizziness +=3
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		vodka
 			name = "Vodka"
 			id = "vodka"
-			description = "Number one fueling choice for Russians worldwide."
+			description = "Number one drink AND fueling choice for Russians worldwide."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(5)
-				M:jitteriness = max(M:jitteriness-5,0)
-				if(data >= 25)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 4
-				if(data >= 50 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 3
-				..()
+				M.dizziness +=3
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		tequilla
 			name = "Tequila"
@@ -1163,15 +1147,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(5)
-				M:jitteriness = max(M:jitteriness-5,0)
-				if(data >= 25)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 4
-				if(data >= 60 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 3
-				..()
+				M.dizziness +=3
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		vermouth
 			name = "Vermouth"
@@ -1181,16 +1162,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(5)
-				M:jitteriness = max(M:jitteriness-5,0)
-				if(data >= 25)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 4
-				if(data >= 60 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 3
-				..()
-
+				M.dizziness +=3
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
 		wine
 			name = "Wine"
 			id = "wine"
@@ -1199,15 +1176,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(5)
-				M:jitteriness = max(M:jitteriness-5,0)
-				if(data >= 35)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 4
-				if(data >= 60 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 3
-				..()
+				M.dizziness +=2
+				if(data >= 65 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 145 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		tonic
 			name = "Tonic Water"
@@ -1272,8 +1246,7 @@ datum
 			on_mob_life(var/mob/M)
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
-				M:sleeping = 0
-				M.bodytemperature = min(310, M.bodytemperature+5) //Copy-paste from Coffee, derp
+				M:sleeping = 0//Copy-paste from Coffee, derp
 				M.make_jittery(5)
 				..()
 				return
@@ -1282,20 +1255,17 @@ datum
 		cognac
 			name = "Cognac"
 			id = "cognac"
-			description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Drink up."
+			description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(5)
-				M:jitteriness = max(M:jitteriness-5,0)
-				if(data >= 25)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 4
-				if(data >= 50 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 3
-				..()
+				M.dizziness +=4
+				if(data >= 45 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		cream
 			name = "Cream"
@@ -1303,23 +1273,20 @@ datum
 			description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
 			reagent_state = LIQUID
 
-		moonshine
-			name = "Moonshine"
-			id = "moonshine"
+		hooch
+			name = "Hooch"
+			id = "hooch"
 			description = "Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?"
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(10)
-				M:jitteriness = max(M:jitteriness-10,0)
-				if(data >= 25)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 4
-				if(data >= 50 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 6
-				..()
+				M.dizziness +=6
+				if(data >= 35 && data <90)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 5
+				else if(data >= 90 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		ale
 			name = "Ale"
@@ -1329,15 +1296,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M:jitteriness = max(M:jitteriness-3,0)
-				if(data >= 25)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 3
-				if(data >= 45 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 2
-				..()
+				M.dizziness +=3
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		sodawater
 			name = "Soda Water"
@@ -1361,14 +1325,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 35)
+				M.dizziness +=3
+				if(data >= 45 && data <135)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 55 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
+				else if(data >= 135 && prob(33))
+					M.confused = max(M:confused+2,0)
 				..()
 
 		cuba_libre
@@ -1379,14 +1341,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 35)
+				M.dizziness +=3
+				if(data >= 45 && data <135)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 55 && prob(33))
-					if (!M.confused) M.confused = 1
-					M:confused += 2
+				else if(data >= 135 && prob(33))
+					M.confused = max(M:confused+2,0)
 				..()
 
 		whiskey_cola
@@ -1397,14 +1357,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 35)
+				M.dizziness +=3
+				if(data >= 55 && data <125)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 65 && prob(33))
-					if (!M.confused) M.confused = 1
-					M:confused += 2
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
 				..()
 
 		martini
@@ -1415,14 +1373,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 30)
-					if (!M:stuttering) M.stuttering = 1
+				M.dizziness +=3
+				if(data >= 45 && data <165)
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 50 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
+				else if(data >= 135 && prob(33))
+					M.confused = max(M:confused+2,0)
 				..()
 
 		vodkamartini
@@ -1433,14 +1389,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 30)
-					if (!M:stuttering) M.stuttering = 1
+				M.dizziness +=3
+				if(data >= 45 && data <165)
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 50 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
+				else if(data >= 135 && prob(33))
+					M.confused = max(M:confused+2,0)
 				..()
 
 		white_russian
@@ -1451,14 +1405,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 35)
+				M.dizziness +=3
+				if(data >= 55 && data <165)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 60 && prob(33))
-					if (!M:confused) M.confused = 1
-					M.confused += 2
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+2,0)
 				..()
 
 		screwdrivercocktail
@@ -1469,14 +1421,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M:jitteriness = max(M:jitteriness-3,0)
-				if(data >= 35)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 3
-				if(data >= 60 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 2
+				M.dizziness +=3
+				if(data >= 55 && data <165)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+2,0)
 				..()
 
 		bloody_mary
@@ -1487,16 +1437,13 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 30)
+				M.dizziness +=3
+				if(data >= 55 && data <165)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 60 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+2,0)
 				..()
-
 		gargle_blaster
 			name = "Pan-Galactic Gargle Blaster"
 			id = "gargleblaster"
@@ -1505,17 +1452,13 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(9)
-				M.jitteriness = max(M.jitteriness-5,0)
-				if(data >= 10)
+				M.dizziness +=6
+				if(data >= 15 && data <45)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 20 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
-				if(data >=30)
-					M.make_dizzy(120)
-				if(data >=45)
+				else if(data >= 45 && prob(50) && data <55)
+					M.confused = max(M:confused+3,0)
+				else if(data >=55)
 					M.druggy = max(M.druggy, 55)
 				..()
 
@@ -1527,15 +1470,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M:jitteriness-3,0)
-				if(data >= 30)
-					if (!M.stuttering) M:stuttering = 1
+				M.dizziness +=3
+				if(data >= 45 && data <145)
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 60 && prob(33))
-					if (!M.confused) M:confused = 1
-					M.confused += 2
-				..()
+				else if(data >= 145 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		tequilla_sunrise
 			name = "Tequilla Sunrise"
@@ -1545,15 +1485,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M:jitteriness-4,0)
-				if(data >= 30)
-					if (!M.stuttering) M:stuttering = 1
+				M.dizziness +=3
+				if(data >= 55 && data <165)
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 50 && prob(33))
-					if (!M.confused) M:confused = 1
-					M.confused += 2
-				..()
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		toxins_special
 			name = "Toxins Special"
@@ -1561,18 +1498,15 @@ datum
 			description = "This thing is FLAMING!. CALL THE DAMN SHUTTLE!"
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
-				M.bodytemperature = min(340, M.bodytemperature+30) //310 is the normal bodytemp. 310.055
+				M.bodytemperature = min(330, M.bodytemperature+15) //310 is the normal bodytemp. 310.055
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M:jitteriness-3,0)
-				if(data >= 30)
-					if (!M.stuttering) M:stuttering = 1
+				M.dizziness +=3
+				if(data >= 55 && data <165)
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 60 && prob(33))
-					if (!M.confused) M:confused = 1
-					M.confused += 2
-				..()
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		beepsky_smash
 			name = "Beepsky Smash"
@@ -1581,18 +1515,15 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				spawn(5)
-				M.stunned = 10
+				M.stunned = 2
 				if(!data) data = 1
 				data++
-				M.make_dizzy(4)
-				M.jitteriness = max(M:jitteriness-4,0)
-				if(data >= 30)
-					if (!M.stuttering) M:stuttering = 1
+				M.dizziness +=3
+				if(data >= 55 && data <165)
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 50 && prob(33))
-					if (!M.confused) M:confused = 1
-					M.confused += 2
-				..()
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		doctor_delight
 			name = "The Doctor's Delight"
@@ -1605,6 +1536,8 @@ datum
 				if(M:bruteloss && prob(60)) M:bruteloss -= 2
 				if(M:fireloss && prob(50)) M:fireloss -= 2
 				if(M:toxloss && prob(50)) M:toxloss -= 2
+				if(M.dizziness !=0) M.dizziness = max(0,M.dizziness-15)
+				if(M.confused !=0) M.confused = max(0,M.confused - 5)
 				..()
 				return
 
@@ -1616,15 +1549,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M:jitteriness-4,0)
-				if(data >= 30)
-					if (!M.stuttering) M:stuttering = 1
+				M.dizziness +=3
+				if(data >= 45 && data <145)
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 50 && prob(33))
-					if (!M.confused) M:confused = 1
-					M.confused += 2
-				..()
+				else if(data >= 145 && prob(33))
+					M.confused = max(M:confused+2,0)
 				return
 
 		manly_dorf
@@ -1635,15 +1565,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(4)
-				M.jitteriness = max(M:jitteriness-5,0)
-				if(data >= 30)
-					if (!M.stuttering) M:stuttering = 1
-					M.stuttering += 4
-				if(data >= 50 && prob(33))
-					if (!M.confused) M:confused = 1
-					M.confused += 3
-				..()
+				M.dizziness +=5
+				if(data >= 35 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+2,0)
 				return
 
 		longislandicedtea
@@ -1654,16 +1581,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(4)
-				M.jitteriness = max(M:jitteriness-5,0)
-				if(data >= 30)
-					if (!M.stuttering) M:stuttering = 1
-					M.stuttering += 4
-				if(data >= 50 && prob(33))
-					if (!M.confused) M:confused = 1
-					M.confused += 3
-					M.confused += 3
-				..()
+				M.dizziness +=3
+				if(data >= 55 && data <165)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+2,0)
 				return
 
 		hooch
@@ -1674,16 +1597,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(4)
-				M.jitteriness = max(M:jitteriness-5,0)
-				if(data >= 30)
+				M.dizziness +=5
+				if(data >= 30 && data <60)
 					if (!M.stuttering) M:stuttering = 1
 					M.stuttering += 4
-				if(data >= 50 && prob(33))
-					if (!M.confused) M:confused = 1
-					M.confused += 3
-					M.confused += 3
-				..()
+				else if(data >= 60 && prob(40))
+					M.confused = max(M:confused+5,0)
 				return
 
 		b52
@@ -1694,14 +1613,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M:jitteriness-4,0)
-				if(data >= 30)
-					if (!M.stuttering) M:stuttering = 1
+				M.dizziness +=3
+				if(data >= 25 && data <90)
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 50 && prob(33))
-					if (!M.confused) M:confused = 1
-					M.confused += 2
+				else if(data >= 90 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		irishcoffee
 			name = "Irish Coffee"
@@ -1711,14 +1628,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M:jitteriness-4,0)
-				if(data >= 30)
-					if (!M.stuttering) M:stuttering = 1
+				M.dizziness +=3
+				if(data >= 55 && data <150)
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 50 && prob(33))
-					if (!M.confused) M:confused = 1
-					M.confused += 2
+				else if(data >= 150 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		margarita
 			name = "Margarita"
@@ -1728,15 +1643,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M:jitteriness-4,0)
-				if(data >= 30)
-					if (!M.stuttering) M:stuttering = 1
+				M.dizziness +=4
+				if(data >= 55 && data <150)
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 50 && prob(33))
-					if (!M.confused) M:confused = 1
-					M.confused += 2
-				..()
+				else if(data >= 150 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		black_russian
 			name = "Black Russian"
@@ -1746,15 +1658,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 35)
+				M.dizziness +=4
+				if(data >= 55 && data <115)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 60 && prob(33))
-					if (!M:confused) M.confused = 1
-					M.confused += 2
-				..()
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		manhattan
 			name = "Manhattan"
@@ -1764,15 +1673,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 30)
-					if (!M:stuttering) M.stuttering = 1
+				M.dizziness +=4
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 50 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
-				..()
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		whiskeysoda
 			name = "Whiskey Soda"
@@ -1782,15 +1688,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 35)
+				M.dizziness +=4
+				if(data >= 55 && data <115)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 65 && prob(33))
-					if (!M.confused) M.confused = 1
-					M:confused += 2
-				..()
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		vodkatonic
 			name = "Vodka and Tonic"
@@ -1800,15 +1703,12 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 35)
+				M.dizziness +=4
+				if(data >= 55 && data <115)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 55 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
-				..()
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+2,0)
 
 		ginfizz
 			name = "Gin Fizz"
@@ -1818,12 +1718,9 @@ datum
 			on_mob_life(var/mob/M)
 				if(!data) data = 1
 				data++
-				M.make_dizzy(3)
-				M.jitteriness = max(M.jitteriness-3,0)
-				if(data >= 35)
+				M.dizziness +=4
+				if(data >= 45 && data <125)
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 3
-				if(data >= 55 && prob(33))
-					if (!M.confused) M.confused = 1
-					M.confused += 2
-				..()
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)

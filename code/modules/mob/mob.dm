@@ -1993,9 +1993,7 @@
 			jittery_process()
 
 
-// dizzy process - wiggles the client's pixel offset over time
-// spawned from make_dizzy(), will terminate automatically when dizziness gets <100
-// note dizziness decrements automatically in the mob's Life() proc.
+// Typo from the oriignal coder here, below lies the jitteriness process. So make of his code what you will, the previous comment here was just a copypaste of the above.
 /mob/proc/jittery_process()
 	var/old_x = pixel_x
 	var/old_y = pixel_y
