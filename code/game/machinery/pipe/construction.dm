@@ -250,11 +250,11 @@ Buildable meters
 			if(4)		// connector
 				var/obj/machinery/atmospherics/portables_connector/C = new( src.loc )
 				C.dir = dir
-				C.New()
-				var/turf/T = C.loc
+				C.initialize_directions = dir
+/*				var/turf/T = C.loc
 				switch (T.intact)
-					if(1) C.level = 2
-					if(0) C.level = 1
+					if(1) V.level = 2
+					if(0) V.level = 1*/
 				C.initialize()
 				C.build_network()
 				if (C.node)
@@ -296,11 +296,11 @@ Buildable meters
 			if(7)		//unary vent
 				var/obj/machinery/atmospherics/unary/vent_pump/V = new( src.loc )
 				V.dir = dir
-				V.New()
-				var/turf/T = V.loc
+				V.initialize_directions = dir
+/*				var/turf/T = V.loc
 				switch (T.intact)
 					if(1) V.level = 2
-					if(0) V.level = 1
+					if(0) V.level = 1*/
 				V.initialize()
 				V.build_network()
 				if (V.node)
@@ -311,17 +311,27 @@ Buildable meters
 			if(8)		//manual valve
 				var/obj/machinery/atmospherics/valve/V = new( src.loc)
 				V.dir = dir
-				V.New()
-				var/turf/T = V.loc
+				switch(dir)
+					if(NORTH)
+						V.initialize_directions = NORTH|SOUTH
+					if(SOUTH)
+						V.initialize_directions = NORTH|SOUTH
+					if(EAST)
+						V.initialize_directions = EAST|WEST
+					if(WEST)
+						V.initialize_directions = EAST|WEST
+/*				var/turf/T = V.loc
 				switch (T.intact)
 					if(1) V.level = 2
-					if(0) V.level = 1
+					if(0) V.level = 1*/
 				V.initialize()
 				V.build_network()
 				if (V.node1)
+//					world << "[V.node1.name] is connected to valve, forcing it to update its nodes."
 					V.node1.initialize()
 					V.node1.build_network()
 				if (V.node2)
+//					world << "[V.node2.name] is connected to valve, forcing it to update its nodes."
 					V.node2.initialize()
 					V.node2.build_network()
 
@@ -329,10 +339,10 @@ Buildable meters
 				var/obj/machinery/atmospherics/binary/pump/P = new(src.loc)
 				P.dir = dir
 				P.New()
-				var/turf/T = P.loc
+/*				var/turf/T = P.loc
 				switch (T.intact)
 					if(1) P.level = 2
-					if(0) P.level = 1
+					if(0) P.level = 1*/
 				P.initialize()
 				P.build_network()
 				if (P.node1)
@@ -346,11 +356,11 @@ Buildable meters
 			if(10)		//scrubber
 				var/obj/machinery/atmospherics/unary/vent_scrubber/S = new(src.loc)
 				S.dir = dir
-				S.New()
-				var/turf/T = S.loc
+				S.initialize_directions = dir
+/*				var/turf/T = S.loc
 				switch (T.intact)
-					if(1) S.level = 2
-					if(0) S.level = 1
+					if(1) V.level = 2
+					if(0) V.level = 1*/
 				S.initialize()
 				S.build_network()
 				if (S.node)
