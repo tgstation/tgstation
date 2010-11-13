@@ -91,9 +91,13 @@ var
 	clownMax = 1
 	chefMax = 1
 	roboticsMax = 3
-	cargoMax = 3
+	cargoMax = 1
+	cargotechMax = 2
 	hydroponicsMax = 3
 	librarianMax = 1
+	lawyerMax = 1
+	viroMax = 1
+	cmoMax = 1
 
 	list/bombers = list(  )
 	list/admin_log = list (  )

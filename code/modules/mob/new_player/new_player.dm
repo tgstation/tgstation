@@ -207,6 +207,14 @@ mob/new_player
 					AttemptLateSpawn("Botanist", hydroponicsMax)
 				if ("23")
 					AttemptLateSpawn("Librarian", librarianMax)
+				if ("24")
+					AttemptLateSpawn("Virologist", viroMax)
+				if ("25")
+					AttemptLateSpawn("Lawyer", lawyerMax)
+				if ("26")
+					AttemptLateSpawn("Cargo Technician", cargotechMax)
+				if ("27")
+					AttemptLateSpawn("Chief Medical Officer", cmoMax)
 
 		if(!ready && href_list["preferences"])
 			preferences.process_link(src, href_list)
@@ -359,6 +367,14 @@ mob/new_player
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=22'>Botanist</a><br>"
 		if (IsJobAvailable("Librarian",librarianMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=23'>Librarian</a><br>"
+		if (IsJobAvailable("Virologist",viroMax))
+			dat += "<a href='byond://?src=\ref[src];SelectedJob=24'>Virologist</a><br>"
+		if (IsJobAvailable("Lawyer",lawyerMax))
+			dat += "<a href='byond://?src=\ref[src];SelectedJob=25'>Lawyer</a><br>"
+		if (IsJobAvailable("Cargo Technician",cargotechMax))
+			dat += "<a href='byond://?src=\ref[src];SelectedJob=26'>Cargo Technician</a><br>"
+		if (IsJobAvailable("Chief Medical Officer",cmoMax))
+			dat += "<a href='byond://?src=\ref[src];SelectedJob=27'>Chief Medical Officer</a><br>"
 		if (!jobban_isbanned(src,"Assistant"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=18'>Assistant</a><br>"
 
