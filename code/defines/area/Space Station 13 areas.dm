@@ -544,17 +544,21 @@
 
 
 /area/quartermaster/office
-	name = "Quartermaster's Office"
+	name = "Cargo Office"
 	icon_state = "quartoffice"
 
 
 /area/quartermaster/storage
-	name = "Quartermaster's Storage"
+	name = "Cargo Bay"
 	icon_state = "quartstorage"
 
 
 /area/quartermaster/
 	name = "Quartermasters"
+	icon_state = "quart"
+
+/area/quartermaster/qm
+	name = "Quartermaster's Office"
 	icon_state = "quart"
 
 /area/janitor/
@@ -814,3 +818,7 @@
 /area/lawoffice
 	name = "Law Office"
 	icon_state = "law"
+
+/area/cmo
+	name = "Chief Medical Officer's office"
+	icon_state = "CMO"

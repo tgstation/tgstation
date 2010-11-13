@@ -37,6 +37,8 @@
 	access_library = 37
 	access_lawyer = 38
 	access_virology = 39
+	access_cmo = 40
+	access_qm = 41
 
 
 /obj/var/list/req_access = null
@@ -143,8 +145,10 @@
 		if("Roboticist")
 			return list(access_robotics, access_tech_storage, access_medical, access_morgue,
 			            access_maint_tunnels)
-		if("Quartermaster")
+		if("Cargo Technician")
 			return list(access_maint_tunnels, access_cargo, access_cargo_bot)
+		if("Quartermaster")
+			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm)
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
@@ -155,6 +159,8 @@
 			            access_tox_storage, access_chemistry, access_teleporter, access_hydroponics, access_virology)
 		if("Virologist")
 			return list(access_medical, access_morgue, access_virology)
+		if("Chief Medical Officer")
+			return list(access_medical, access_morgue, access_medlab, access_robotics, access_heads, access_chemistry, access_virology, access_cmo)
 		else
 			return list()
 
@@ -166,7 +172,7 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
-	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology)
+	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm)
 
 /proc/get_access_desc(A)
 	switch(A)
@@ -244,10 +250,14 @@
 			return "Robotics"
 		if(access_virology)
 			return "Virology"
+		if(access_cmo)
+			return "Chief Medical Officer's office"
+		if(access_qm)
+			return "Quartermaster's Office"
 
 /proc/get_all_jobs()
 	return list("Assistant", "Station Engineer", "Detective", "Medical Doctor", "Captain", "Security Officer",
 				"Geneticist", "Scientist", "Head of Security", "Head of Personnel", "Atmospheric Technician",
 				"Chaplain", "Barman", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster",
-				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer", "Virologist")
+				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer", "Virologist", "Cargo Technician", "Chief Medical Officer")
 

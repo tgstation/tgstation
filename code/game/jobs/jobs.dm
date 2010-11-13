@@ -19,11 +19,13 @@ var/list/occupations = list(
 	"Janitor",
 	"Clown", "Mime",
 	"Chemist",
-	"Quartermaster","Quartermaster","Quartermaster",
+	"Quartermaster",
+	"Cargo Technician","Cargo Technician",
 	"Botanist", "Botanist",
 	"Librarian",
 	"Lawyer",
-	"Virologist")
+	"Virologist",
+	"Chief Medical Officer")
 
 var/list/assistant_occupations = list(
 	"Assistant")
