@@ -887,7 +887,7 @@ About the new airlock wires panel:
 	else if (istype(C, /obj/item/device/radio/signaler))
 		return src.attack_hand(user)
 	else if (istype(C, /obj/item/weapon/crowbar))
-		if ((src.density) && ( src.welded ) && !( src.operating ) && src.p_open )
+		if ((src.density) && ( src.welded ) && !( src.operating ) && src.p_open && (!src.arePowerSystemsOn() || (stat & NOPOWER)) && !src.locked)
 			playsound(src.loc, 'Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics into the airlock assembly.")
 			sleep(40)
@@ -905,6 +905,10 @@ About the new airlock wires panel:
 				new/obj/item/device/multitool( src.loc )
 				del(src)
 				return
+		else if (src.arePowerSystemsOn() || !(stat & NOPOWER))
+			user << "\blue The airlock's motors resist your efforts to pry it open."
+		else if (src.locked)
+			user << "\blue The airlock's bolts prevent it from being pried open."
 		if ((src.density) && (!( src.welded ) && !( src.operating ) && ((!src.arePowerSystemsOn()) || (stat & NOPOWER)) && !( src.locked )))
 			spawn( 0 )
 				src.operating = 1
