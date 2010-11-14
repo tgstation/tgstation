@@ -21,14 +21,14 @@
 	var/panic = 0 //is this scrubber panicked?
 
 	update_icon()
-		if(on)//&&node)//seems to be broken
+		if(on&&node)
 			if(scrubbing)
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
 			else
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
 		else
 			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-			//on = 0
+			on = 0
 
 		return
 
@@ -155,7 +155,7 @@
 					volume_rate = 2000
 				else
 					scrubbing = 1
-					volume_rate = 120
+					volume_rate = initial(volume_rate)
 		if(signal.data["tag"])
 			spawn(2)
 				broadcast_status()

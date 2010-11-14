@@ -71,6 +71,7 @@
 						"}
 
 				output += "<A href='?src=\ref[src];toggle_panic_siphon_global=1'><font color='red'><B>TOGGLE PANIC SYPHON IN AREA</B></font></A>"
+				output += "<HR><A href='?src=\ref[src];reinit_atmos_machinery=1'>Reinitialize atmospheric machinery in area</A>"
 			else
 				var/sensor_data
 				if(src.device == "Scrubbers")
@@ -160,6 +161,9 @@
 			for(var/P in vents)
 				send_signal(P, "power_off")
 			panic = !panic
+		if(href_list["reinit_atmos_machinery"])
+			var/A = get_area(loc)
+			connect_area_atmos_machinery(A)
 
 
 		spawn(5)
