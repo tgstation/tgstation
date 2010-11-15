@@ -116,6 +116,8 @@
 			return get_all_accesses()
 		if("Security Officer")
 			return list(access_security, access_brig)
+		if("Warden")
+			return list(access_security, access_brig, access_armory)
 		if("Scientist")
 			return list(access_tox, access_tox_storage)
 		if("Head of Security")
@@ -256,7 +258,7 @@
 			return "Quartermaster's Office"
 
 /proc/get_all_jobs()
-	return list("Assistant", "Station Engineer", "Detective", "Medical Doctor", "Captain", "Security Officer",
+	return list("Assistant", "Station Engineer", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",
 				"Geneticist", "Scientist", "Head of Security", "Head of Personnel", "Atmospheric Technician",
 				"Chaplain", "Barman", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster",
 				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer", "Virologist", "Cargo Technician", "Chief Medical Officer")

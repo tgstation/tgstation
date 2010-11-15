@@ -267,6 +267,9 @@
 	name = "Aft Maintenance"
 	icon_state = "amaint"
 
+/area/maintenance/auxsolar
+	name = "Auxiliary Solar Maintenance"
+	icon_state = "SolarcontrolA"
 
 /area/maintenance/starboardsolar
 	name = "Starboard Solar Maintenance"
@@ -331,6 +334,17 @@
 	icon_state = "bridge"
 	music = "signal"
 
+/area/crew_quarters/sleep_male
+	name = "Male Dorm"
+	icon_state = "Sleep"
+
+/area/crew_quarters/sleep_female
+	name = "Female Dorm"
+	icon_state = "Sleep"
+
+/area/crew_quarters/toilet
+	name = "Toilets"
+	icon_state = "toilet"
 
 /area/crew_quarters/locker
 	name = "Locker Room"
@@ -495,6 +509,9 @@
 	name = "Brig"
 	icon_state = "brig"
 
+/area/security/warden
+	name = "Warden"
+	icon_state = "Warden"
 
 /area/security/detectives_office
 	name = "Detectives Office"
@@ -504,6 +521,10 @@
 	requires_power = 0
 	luminosity = 1
 	sd_lighting = 0
+
+/area/solar/aux
+	name = "Auxiliary Solar Array"
+	icon_state = "panelsA"
 
 /area/solar/fore
 	name = "Fore Solar Array"

@@ -387,6 +387,20 @@
 //			src.equip_if_possible(new /obj/item/weapon/baton(src), slot_belt)
 //			src.equip_if_possible(new /obj/item/device/flash(src), slot_l_store)
 
+		if ("Warden")
+			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sec (src), slot_ears) // -- TLE
+			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
+			src.equip_if_possible(new /obj/item/device/pda/security(src), slot_belt)
+			src.equip_if_possible(new /obj/item/clothing/under/color/blue(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
+			src.equip_if_possible(new /obj/item/clothing/head/helmet(src), slot_head)
+			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
+			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
+			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
+			src.equip_if_possible(new /obj/item/clothing/mask/gas/emergency(src), slot_wear_mask)
+			src.equip_if_possible(new /obj/item/weapon/gun/energy/general(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/flashbang_kit(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/device/flash(src), slot_l_store)
 
 		if ("Scientist")
 			src.equip_if_possible(new /obj/item/device/pda/toxins(src), slot_belt)
