@@ -155,6 +155,9 @@ datum
 			id = "milk"
 			description = "An opaque white liquid produced by the mammary glands of mammals."
 			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				if(M:bruteloss && prob(10)) M:bruteloss--
 
 		beer
 			name = "Beer"
@@ -262,6 +265,8 @@ datum
 					holder.remove_reagent("acid", 1)
 				if(holder.has_reagent("cyanide"))
 					holder.remove_reagent("cyanide", 1)
+				if(holder.has_reagent("amatoxin"))
+					holder.remove_reagent("amatoxin", 2)
 				M:toxloss = max(M:toxloss-2,0)
 				..()
 				return
@@ -983,6 +988,7 @@ datum
 				holder.remove_reagent(src.id, 0.2)
 				return
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		nanites
@@ -1058,6 +1064,128 @@ datum
 			id = "diethylamine"
 			description = "A secondary amine, mildly corrosive."
 			reagent_state = LIQUID
+
+		ethylredoxrazine						// FUCK YOU, ALCOHOL
+			name = "Ethylredoxrazine"
+			id = "ethylredoxrazine"
+			description = "A powerfuld oxidizer that reacts with ethanol."
+			reagent_state = SOLID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M.dizziness = 0
+				M:drowsyness = 0
+				M:stuttering = 0
+				M:confused = 0
+				..()
+
+
+/////////////////////////Food Reagents////////////////////////////
+// Part of the food code. It is used instead of the old "heal_amt" code. Also is where all the food
+// 	condiments, additives, and such go.
+		nutriment
+			name = "Nutrition"
+			id = "nutriment"
+			description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
+			reagent_state = SOLID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:bruteloss--
+				M:nutrition += 20	//This is the bit that makes you fat.
+				..()
+				return
+
+		berryjam
+			name = "Berry Jam"
+			id = "berryjam"
+			description = "A delightfully sweat flavor of some indescernible berry... you think."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:nutrition++
+				..()
+
+		soysauce
+			name = "Soysauce"
+			id = "soysauce"
+			description = "A salty sauce made from the soy plant."
+			reagent_state = LIQUID
+
+		ketchup
+			name = "Ketchup"
+			id = "ketchup"
+			description = "Ketchup, catsup, whatever. It's tomato paste."
+			reagent_state = LIQUID
+
+		capsaicin
+			name = "Capsaicin Oil"
+			id = "capsaicin"
+			description = "This is what makes chilis hot."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:bodytemperature += 5
+				if(prob(40)) M:fireloss++
+				..()
+				return
+
+		frostoil
+			name = "Frost Oil"
+			id = "frostoil"
+			description = "A special oil that noticably chills the body. Extraced from Icepeppers."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:bodytemperature -= 5
+				if(prob(40)) M:fireloss++
+				..()
+				return
+
+		tablesalt
+			name = "Table Salt"
+			id = "tablesalt"
+			description = "A salt made of sodium chloride. Commonly used to season food."
+			reagent_state = SOLID
+
+		blackpepper
+			name = "Black Pepper"
+			id = "blackpepper"
+			description = "A power ground from peppercorns. *AAAACHOOO*"
+			reagent_state = SOLID
+
+		amatoxin
+			name = "Amatoxin"
+			id = "amatoxin"
+			description = "A powerful poison derived from certain species of mushroom."
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:toxloss++
+				..()
+				return
+
+		psilocybin
+			name = "Psilocybin"
+			id = "psilocybin"
+			description = "A strong psycotropic derived from certain species of mushroom."
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M.druggy = max(M.druggy, 30)
+				if(M.canmove) step(M, pick(cardinal))
+				if(prob(14)) M:emote(pick("twitch","drool","moan","giggle"))
+				holder.remove_reagent(src.id, 0.2)
+				..()
+				return
+
+		sprinkles
+			name = "Sprinkles"
+			id = "sprinkles"
+			description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
+			on_mob_life(var/mob/M)
+				if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective"))
+					if(!M) M = holder.my_atom
+					M:bruteloss--
+					M:fireloss--
+					..()
+					return
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

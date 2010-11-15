@@ -33,6 +33,14 @@
 	proc/is_open_container()
 		return flags & OPENCONTAINER
 
+/*//Convenience proc to see whether a container can be accessed in a certain way.
+
+	proc/can_subract_container()
+		return flags & EXTRACT_CONTAINER
+
+	proc/can_add_container()
+		return flags & INSERT_CONTAINER
+*/
 
 obj
 	assume_air(datum/air_group/giver)

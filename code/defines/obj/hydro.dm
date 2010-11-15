@@ -381,8 +381,25 @@
 // Data from the seeds carry over to these grown foods
 // ***********************************************************
 
+//Grown foods
+/obj/item/weapon/reagent_containers/food/snacks/grown/ //New subclass so we can pass on values
+	var/seed = ""
+	var/plantname = ""
+	var/productname = ""
+	var/species = ""
+	var/lifespan = 0
+	var/endurance = 0
+	var/maturation = 0
+	var/production = 0
+	var/yield = 0
+	var/potency = -1
+	var/plant_type = 0
+	icon = 'harvest.dmi'
+	var/poison_amt = 0
+	var/drug_amt = 0
+	var/heat_amt = 0
 
-obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "This is a \blue [name]"
 		switch(plant_type)
@@ -397,7 +414,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as 
 		user << "- Maturation speed: \blue [maturation]"
 		user << "- Production speed: \blue [production]"
 		user << "- Endurance: \blue [endurance]"
-		user << "- Healing properties: \blue [heal_amt]"
+		user << "- Healing properties: \blue [reagents.get_reagent_amount("nutriment")]"
 		user << "- Amatoxins: \blue [poison_amt]%"
 		user << "- Psilocybin: \blue [drug_amt]%"
 		user << "- Capsaicin: \blue [heat_amt]%"
@@ -405,7 +422,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as 
 
 		return
 
-obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "This is a \blue [name]"
 		switch(plant_type)
@@ -424,28 +441,15 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 		return
 
-//Grown foods
-/obj/item/weapon/reagent_containers/food/snacks/grown/ //New subclass so we can pass on values
-	var/seed = ""
-	var/plantname = ""
-	var/productname = ""
-	var/species = ""
-	var/lifespan = 0
-	var/endurance = 0
-	var/maturation = 0
-	var/production = 0
-	var/yield = 0
-	var/potency = -1
-	var/plant_type = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 	seed = "/obj/item/seeds/berryseed"
 	name = "Berries"
 	desc = "Nutritious!"
 	icon_state = "berrypile"
-	amount = 2
-	heal_amt = 3
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -454,11 +458,11 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Chili"
 	desc = "Spicy!"
 	icon_state = "chilipepper"
-	amount = 1
-	heal_amt = 2
-	heat_amt = 20
-	potency = 20
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("capsaicin", max(round(heat_amt / 5, 1), 4))
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -467,9 +471,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Eggplant"
 	desc = "Yum!"
 	icon_state = "eggplant"
-	amount = 1
-	heal_amt = 5
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -478,9 +482,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Soybeans"
 	desc = "Pretty bland, but the possibilities..."
 	icon_state = "soybeans"
-	amount = 2
-	heal_amt = 2
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -489,9 +493,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Tomato"
 	desc = "Tom-mae-to or to-mah-to? You decide."
 	icon_state = "tomato"
-	amount = 2
-	heal_amt = 5
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -500,9 +504,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Wheat"
 	desc = "I wouldn't eat this, unless you're one of those health freaks.."
 	icon_state = "wheat"
-	amount = 1
-	heal_amt = 2
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -511,11 +515,12 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Icepepper"
 	desc = "A mutant strain of chile"
 	icon_state = "icepepper"
-	amount = 1
-	heal_amt = 3
-	heat_amt = 20
 	potency = 20
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("frostoil", max(round(heat_amt / 5, 1), 4))
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -524,9 +529,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Carrot"
 	desc = "Good for the eyes!"
 	icon_state = "carrot"
-	amount = 3
-	heal_amt = 1
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -535,11 +540,13 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Fly amanita"
 	desc = "<I>Amanita Muscaria</I>: Learn poisonous mushrooms by heart. Only pick mushrooms you know."
 	icon_state = "amanita"
-	amount = 1
-	heal_amt = 0
-	poison_amt = 25
 	potency = 10
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("amatoxin", max(poison_amt, 4))
+		reagents.add_reagent("psilocybin", max(drug_amt, 1))
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -548,11 +555,13 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Destroying angel"
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
-	amount = 1
-	heal_amt = 0
-	poison_amt = 75
 	potency = 35
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("amatoxin", max(poison_amt, 14))
+		reagents.add_reagent("psilocybin", max(drug_amt, 1))
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -561,11 +570,12 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Liberty cap"
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
 	icon_state = "libertycap"
-	amount = 1
-	heal_amt = 3
-	drug_amt = 15
 	potency = 15
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("psilocybin", max(drug_amt, 4))
+		bitesize = max(round(reagents.total_volume / 2), 1)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -574,9 +584,10 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Plump Helmet"
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
-	amount = 2
-	heal_amt = 5
 	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		bitesize = 2
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
@@ -585,9 +596,9 @@ obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	name = "Chanterelle"
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty! There's a lot!"
 	icon_state = "chanterelle"
-	amount = 3
-	heal_amt = 2
 	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 

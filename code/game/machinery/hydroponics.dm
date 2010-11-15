@@ -678,10 +678,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				t_prod.potency = src.myseed.potency
 				t_prod.plant_type = src.myseed.plant_type
 				if(src.myseed.species == "amanita" || src.myseed.species == "angel")
-					t_prod.poison_amt = src.myseed.potency * 2 // Potency translates to poison amount
-					t_prod.drug_amt = src.myseed.potency / 5 // Small trip
+					t_prod.poison_amt = round(src.myseed.potency * 0.4, 1) // Potency translates to poison amount
+					t_prod.drug_amt = round(src.myseed.potency / 25, 1) // Small trip
 				else if(src.myseed.species == "liberty")
-					t_prod.drug_amt = src.myseed.potency // TRIP TIME
+					t_prod.drug_amt = round(src.myseed.potency / 5, 1) // TRIP TIME
 				else if(src.myseed.species == "chili" || src.myseed.species == "chiliice")
 					t_prod.heat_amt = src.myseed.potency // BRING ON THE HEAT
 				t_amount++

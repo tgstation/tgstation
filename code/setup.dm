@@ -102,6 +102,8 @@
 
 #define NOSLIP 1024 //prevents from slipping on wet floors, in space etc
 
+//#define	EXTRACT_CONTAINER	4095	//Container may have reagents removed from it.
+//#define	INSERT_CONTAINER	4096	//Container may have reagents added to it.
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 
 #define ONESIZEFITSALL	8192	// can be worn by fatties (or children? ugh)

@@ -19,7 +19,7 @@
 /datum/recipe/jellydonut
 	egg_amount = 1
 	flour_amount = 1
-	extra_item = /obj/item/weapon/reagent_containers/food/snacks/berryjam
+	extra_item = /obj/item/weapon/reagent_containers/food/condiment/berryjam
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/jellydonut"
 
 /datum/recipe/donut
@@ -207,7 +207,7 @@
 	src.available_recipes += new /datum/recipe/momeatpie(src)
 	src.available_recipes += new /datum/recipe/xemeatpie(src)
 	src.available_recipes += new /datum/recipe/wingfangchu(src)
-	//src.available_recipes += new /datum/recipe/chaosdonut(src) // Commented out until I come up with a better idea.
+	src.available_recipes += new /datum/recipe/chaosdonut(src)
 
 
 
@@ -297,15 +297,15 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.donkpocket_amount++
 			del(O)
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/hotsauce))
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/condiment/hotsauce))
 		if(src.hotsauce_amount < 5)
 			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] adds some meat to the microwave."))
+				V.show_message(text("\blue [user] adds some hot sauce to the microwave."))
 			src.hotsauce_amount++
 			src.sauce_amount++
 			del(O)
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/coldsauce))
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/condiment/coldsauce))
 		if(src.coldsauce_amount < 5)
 			for(var/mob/V in viewers(src, null))
 				V.show_message(text("\blue [user] adds some coldsauce to the microwave."))
@@ -313,7 +313,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.sauce_amount++
 			del(O)
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/soysauce))
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/condiment/soysauce))
 		if(src.soysauce_amount < 5)
 			for(var/mob/V in viewers(src, null))
 				V.show_message(text("\blue [user] adds some soysauce to the microwave."))
@@ -321,7 +321,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.sauce_amount++
 			del(O)
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/ketchup))
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/condiment/ketchup))
 		if(src.ketchup_amount < 5)
 			for(var/mob/V in viewers(src, null))
 				V.show_message(text("\blue [user] adds some ketchup to the microwave."))
@@ -537,7 +537,7 @@ Please clean it before use!</TT><BR>
 					src.extra_item = null
 				usr << "You dispose of the microwave contents."
 
-			var/cooking = cooked_item // Get the item that needs to be spanwed
+			var/cooking = cooked_item // Get the item that needs to be spawned
 			if(!isnull(cooking))
 				src.operating = 1 // Turn it on so it can't be used again while it's cooking
 				src.icon_state = "mw1" //Make it look on too
@@ -557,7 +557,9 @@ Please clean it before use!</TT><BR>
 							src.being_cooked:job = humanmeat_job
 						if(istype(src.being_cooked, /obj/item/weapon/reagent_containers/food/snacks/donkpocket))
 							src.being_cooked:warm = 1
-							src.being_cooked.name = "warm " + src.being_cooked.name
+							src.being_cooked:reagents.add_reagent("tricordrazine", 5)
+							src.being_cooked:bitesize = 6
+							src.being_cooked.name = "Warm " + src.being_cooked.name
 							src.being_cooked:cooltime()
 						src.being_cooked.loc = get_turf(src) // Create the new item
 						src.being_cooked = null // We're done!

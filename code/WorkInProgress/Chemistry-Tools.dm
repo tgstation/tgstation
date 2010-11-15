@@ -329,10 +329,10 @@
 	w_class = 1
 	var/amount_per_transfer_from_this = 5
 
-	New()
+/*	New()
 		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R
-		R.my_atom = src
+		R.my_atom = src	*/
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
@@ -384,6 +384,7 @@
 		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R
 		R.my_atom = src
+
 
 	afterattack(obj/target, mob/user , flag)
 		for(var/type in src.can_be_placed_into)
@@ -642,196 +643,56 @@
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/food
 
-	var/heal_amt = 0
+	New()												//Sets the default container amount for all food items.
+		var/datum/reagents/R = new/datum/reagents(50)	//	if you want a food item with a different capacity
+		reagents = R									//	then just redefine it in the code for the specific food item.
+		R.my_atom = src
 
-	// -- Skie - Mushrooms & poisoned foor
-	// 0 = no poison, 25 = some poison, >50 = LOTS of poison
-	var/poison_amt = 0
+/obj/item/weapon/reagent_containers/food/condiment	//Food items that aren't eaten normally and leave an empty container behind.
+	name = "condiment"
+	desc = "yummy"
+	icon = 'food.dmi'
+	icon_state = null
 
-	// -- Skie - Psilocybin
-	// 0 = no trip, 25 = medium trip, 50 large trip, >75 = WTF
-	var/drug_amt = 0
-
-	// -- Skie - Hot foods
-	// 0 = no heat, 25 = cayenne, 50 = habanero, >75 = jolokia
-	var/heat_amt = 0
-
-	proc
-		heal(var/mob/M)
-			var/healing = min(src.heal_amt/2, 1.0) // Should prevent taking damage from healing
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				for(var/A in H.organs)
-					var/datum/organ/external/affecting = null
-					if(!H.organs[A])	continue
-					affecting = H.organs[A]
-					if(!istype(affecting, /datum/organ/external))	continue
-					if(affecting.heal_damage(healing, healing))
-						H.UpdateDamageIcon()
-					else
-						H.UpdateDamage()
-			else
-				M.bruteloss = max(0, M.bruteloss - healing)
-				M.fireloss = max(0, M.fireloss - healing)
-			M.updatehealth()
-
-
-	proc
-		poison(var/mob/M)
-			var/poison_temp = src.poison_amt
-			src = null
-			spawn(200)
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/C = M
-				if(poison_temp > 0)
-					C.toxloss += rand(0,poison_temp/2) // Some initial damage
-					C.fireloss += rand(0,poison_temp/4) // Some initial damage
-					C.UpdateDamageIcon()
-					C.weakened += poison_temp/(rand(1,4))
-					if(poison_temp > 20 && poison_temp < 50)
-						C << "\red You feel absolutely horrible."
-						C.emote(pick("blink", "blink_r", "twitch_s", "frown", "blush", "shrug", "pale", "sniff", "whimper", "flap", "drool", "moan", "twitch"))
-					else if(poison_temp > 49)
-						C << "<B>\red You feel like your liver is being disintegrated by an infernal poison.</B>"
-						C.emote(pick("groan", "frown", "moan", "whimper", "drool", "pale"))
-
-
-					C.eye_blurry += poison_temp
-					C.make_dizzy(5*poison_temp)
-					spawn()
-					for(poison_temp, poison_temp>0, 1) // Poison does 10 damage per tick
-						sleep(100) // Every 10 seconds
-						C.toxloss += min(poison_temp, 10)
-						poison_temp -= 10 // Until poison amount is depleted
-
-
-	proc
-		drug(var/mob/M)
-			var/drug_temp = src.drug_amt
-			src = null // Detach proc
-			spawn(200) // In 20 seconds...
-			if(istype(M, /mob/living/carbon/human))
-
-				var/mob/living/carbon/human/C = M
-				C.druggy += (drug_temp*(drug_temp/15)+10) // Have a trip
-				if(drug_temp > 25)
-					C.make_dizzy(5*drug_temp) // Dizzify
-					C.stuttering = drug_temp // Speech impediments
-					spawn(3000) // 5 minutes
-					C << "\red You feel a craving for a trip..."
-
-				if(drug_temp > 50)
-					C.make_jittery(5*drug_temp) // Jitter
-					spawn(-1)
-					for(var/i=1, i == 1, 1)
-						C.see_invisible = 15
-						sleep(300)
-						C.emote(pick("blink", "blink_r", "twitch_s", "frown", "blush", "shrug", "pale", "sniff", "whimper", "flap", "drool", "moan", "twitch"))
-						if(prob(15))
-							C.see_invisible = 0
-							i = 0
-							C.client.view = world.view // Return view range back to normal
-				if(drug_temp > 75)
-					C.confused += drug_temp // Hard to move where you want
-					C.weakened += rand(0, drug_temp/4) // Fall on your back
-					// Add cool stuff here later, like everything starting to look different etc.
-
-					C.client.view = min(C.client.view + rand(0,4), 14) // FUCK YE
-
-	proc
-		burn(var/mob/M)
-			var/temp_heat = src.heat_amt
-			var/temp_name = src.name
-			src = null
-			spawn(50)
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/C = M
-
-				// BRING ON THE HEAT/FROST
-				spawn()
-				while(temp_heat > 5) // Until chili pepper's potency is depleted
-					sleep(20) // Every 2 seconds
-					C.fireloss += 3 // Do some burn damage because body temperature itself doesn't do anything :(
-					if (temp_heat > 0 && temp_name == "Chili")
-						C.bodytemperature += min(temp_heat*5, 25)
-						temp_heat -= 5 // Until heat amount is depleted
-					else if (temp_heat > 0 && temp_name == "Icepepper") // Herp derp, bad way to do it but herp derp
-						C.bodytemperature -= min(temp_heat*5, 25)
-						temp_heat -= 5 // Until heat amount is depleted
-
-
-/obj/item/weapon/reagent_containers/food/snacks
+/obj/item/weapon/reagent_containers/food/snacks		//Food items that are eaten normally and don't leave anything behind.
 	name = "snack"
 	desc = "yummy"
 	icon = 'food.dmi'
 	icon_state = null
-	var/amount = 3
-	heal_amt = 1
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
+	var/bitesize = 1
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
 	attack_self(mob/user as mob)
 		return
 	attack(mob/M as mob, mob/user as mob, def_zone)
-		if(!src.amount)
+		if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 			user << "\red None of [src] left, oh no!"
 			del(src)
 			return 0
 		if(istype(M, /mob/living/carbon/human))
-			if(M == user)
+			if(M == user)								//If you're eating it yourself.
 				M << "\blue You take a bite of [src]."
-				if(reagents)
-					if(reagents.total_volume)
-						reagents.reaction(M, INGEST)
-						spawn(5)
-							reagents.trans_to(M, reagents.total_volume)
-				src.amount--
-				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
-				M.nutrition += src.heal_amt * 10
-				if(src.heal_amt > 0)
-					src.heal(M)
-				if(src.poison_amt > 0)
-					src.poison(M)
-				if(src.drug_amt > 0)
-					src.drug(M)
-				if(src.heat_amt > 0)
-					src.burn(M)
-				if(!src.amount)
-					user << "\red You finish eating [src]."
-					del(src)
-				return 1
-			else
+			else										//If you're feeding it to someone else.
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("\red [user] attempts to feed [M] [src].", 1)
 				if(!do_mob(user, M)) return
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("\red [user] feeds [M] [src].", 1)
-				if(reagents)
-					if(reagents.total_volume)
-						reagents.reaction(M, INGEST)
-						spawn(5)
+			if(reagents)								//Handle ingestion of the reagent.
+				if(reagents.total_volume)
+					reagents.reaction(M, INGEST)
+					spawn(5)
+						if(reagents.total_volume > bitesize)
+							reagents.trans_to(M, bitesize)
+						else
 							reagents.trans_to(M, reagents.total_volume)
-				src.amount--
-				playsound(M.loc, 'eatfood.ogg', rand(10,50), 1)
-				M.nutrition += src.heal_amt * 10
-				if(src.heal_amt > 0)
-					src.heal(M)
-				if(src.poison_amt > 0)
-					src.poison(M)
-				if(src.drug_amt > 0)
-					src.drug(M)
-				if(src.heat_amt > 0)
-					src.burn(M)
-				if(!src.amount)
-					user << "\red [M] finishes eating [src]."
-					del(src)
+						if(!reagents.total_volume)
+							if(M == user) user << "\red You finish eating [src]."
+							else user << "\red [M] finishes eating [src]."
+							del(src)
+				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1
-
 
 		return 0
 
@@ -840,8 +701,7 @@
 	afterattack(obj/target, mob/user , flag)
 		return
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/
-	icon = 'harvest.dmi'
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// FOOD END
@@ -862,15 +722,11 @@
 		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R
 		R.my_atom = src
-		update_gulp_size()
-
-	proc
-		update_gulp_size()
-			gulp_size = round(reagents.total_volume / 5)
-			if (gulp_size < 5) gulp_size = 5
 
 	on_reagent_change()
-		update_gulp_size()
+		if (gulp_size < 5) gulp_size = 5
+		else gulp_size = max(round(reagents.total_volume / 5), 5)
+
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
@@ -956,7 +812,7 @@
 	item_state = "pill"
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
+		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R
 		R.my_atom = src
 		icon_state = "pill[rand(1,20)]"
@@ -1074,6 +930,18 @@
 		..()
 		reagents.add_reagent("fluorosurfactant", 20)
 
+/obj/item/weapon/reagent_containers/glass/beaker
+	name = "beaker"
+	desc = "A beaker. Can hold up to 50 units."
+	icon = 'chemical.dmi'
+	icon_state = "beaker0"
+	item_state = "beaker"
+
+	on_reagent_change()
+		if(reagents.total_volume)
+			icon_state = "beaker1"
+		else
+			icon_state = "beaker0"
 
 /obj/item/weapon/reagent_containers/glass/large
 	name = "large reagent glass"
@@ -1083,11 +951,6 @@
 	item_state = "beaker"
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
 
 /obj/item/weapon/reagent_containers/glass/bottle/
 	name = "bottle"
@@ -1112,10 +975,8 @@
 	amount_per_transfer_from_this = 10
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("inaprovaline", 30)
+		..()
+		reagents.add_reagent("inaprovaline", 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"
@@ -1125,10 +986,8 @@
 	amount_per_transfer_from_this = 5
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("toxin", 30)
+		..()
+		reagents.add_reagent("toxin", 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin
 	name = "sleep-toxin bottle"
@@ -1138,10 +997,8 @@
 	amount_per_transfer_from_this = 5
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("stoxin", 30)
+		..()
+		reagents.add_reagent("stoxin", 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/antitoxin
 	name = "anti-toxin bottle"
@@ -1151,10 +1008,8 @@
 	amount_per_transfer_from_this = 5
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("anti_toxin", 30)
+		..()
+		reagents.add_reagent("anti_toxin", 30)
 
 
 /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
@@ -1163,14 +1018,11 @@
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 5
-
 	New()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
+		..()
 		var/datum/disease/F = new /datum/disease/flu(0)
 		var/list/data = list("virus"= F)
-		R.add_reagent("blood", 20, data)
+		reagents.add_reagent("blood", 20, data)
 
 
 /obj/item/weapon/reagent_containers/glass/bottle/cold
@@ -1179,14 +1031,11 @@
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 5
-
 	New()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
+		..()
 		var/datum/disease/F = new /datum/disease/cold(0)
 		var/list/data = list("virus"= F)
-		R.add_reagent("blood", 20, data)
+		reagents.add_reagent("blood", 20, data)
 
 /*
 /obj/item/weapon/reagent_containers/glass/bottle/gbs
@@ -1210,14 +1059,11 @@
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 5
-
 	New()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
+		..()
 		var/datum/disease/F = new /datum/disease/fake_gbs(0)
 		var/list/data = list("virus"= F)
-		R.add_reagent("blood", 20, data)
+		reagents.add_reagent("blood", 20, data)
 
 
 /obj/item/weapon/reagent_containers/glass/bottle/brainrot
@@ -1226,14 +1072,11 @@
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 5
-
 	New()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
+		..()
 		var/datum/disease/F = new /datum/disease/brainrot(0)
 		var/list/data = list("virus"= F)
-		R.add_reagent("blood", 20, data)
+		reagents.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/magnitis
 	name = "Magnitis culture bottle"
@@ -1241,14 +1084,11 @@
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 5
-
 	New()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
+		..()
 		var/datum/disease/F = new /datum/disease/magnitis(0)
 		var/list/data = list("virus"= F)
-		R.add_reagent("blood", 20, data)
+		reagents.add_reagent("blood", 20, data)
 
 
 /obj/item/weapon/reagent_containers/glass/bottle/wizarditis
@@ -1257,29 +1097,11 @@
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 5
-
 	New()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
+		..()
 		var/datum/disease/F = new /datum/disease/wizarditis(0)
 		var/list/data = list("virus"= F)
-		R.add_reagent("blood", 20, data)
-
-
-
-/obj/item/weapon/reagent_containers/glass/beaker
-	name = "beaker"
-	desc = "A beaker. Can hold up to 30 units."
-	icon = 'chemical.dmi'
-	icon_state = "beaker0"
-	item_state = "beaker"
-
-	on_reagent_change()
-		if(reagents.total_volume)
-			icon_state = "beaker1"
-		else
-			icon_state = "beaker0"
+		reagents.add_reagent("blood", 20, data)
 
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
@@ -1290,10 +1112,8 @@
 	item_state = "beaker"
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cryoxadone", 30)
+		..()
+		reagents.add_reagent("cryoxadone", 30)
 
 
 //Syringes
@@ -1301,12 +1121,9 @@
 	name = "Syringe (mixed)"
 	desc = "Contains inaprovaline & anti-toxins."
 	New()
-		var/datum/reagents/R = new/datum/reagents(15)
-		reagents = R
-		R.maximum_volume = 15
-		R.my_atom = src
-		R.add_reagent("inaprovaline", 7)
-		R.add_reagent("anti_toxin", 8)
+		..()
+		reagents.add_reagent("inaprovaline", 7)
+		reagents.add_reagent("anti_toxin", 8)
 		mode = "i"
 		update_icon()
 
@@ -1314,81 +1131,100 @@
 	name = "Syringe (inaprovaline)"
 	desc = "Contains inaprovaline - used to stabilize patients."
 	New()
-		var/datum/reagents/R = new/datum/reagents(15)
-		reagents = R
-		R.maximum_volume = 15
-		R.my_atom = src
-		R.add_reagent("inaprovaline", 15)
+		..()
+		reagents.add_reagent("inaprovaline", 15)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/antitoxin
 	name = "Syringe (anti-toxin)"
 	desc = "Contains anti-toxins."
 	New()
-		var/datum/reagents/R = new/datum/reagents(15)
-		reagents = R
-		R.maximum_volume = 15
-		R.my_atom = src
-		R.add_reagent("anti_toxin", 15)
+		..()
+		reagents.add_reagent("anti_toxin", 15)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/antiviral
 	name = "Syringe (spaceacillin)"
 	desc = "Contains antiviral agents."
 	New()
-		var/datum/reagents/R = new/datum/reagents(15)
-		reagents = R
-		R.maximum_volume = 15
-		R.my_atom = src
-		R.add_reagent("spaceacillin", 15)
+		..()
+		reagents.add_reagent("spaceacillin", 15)
 		update_icon()
 
 
 //////////////////////////////////////////////////
 ////////////////////////////////////////////Snacks
 //////////////////////////////////////////////////
+//Items in the "Snacks" subcategory are food items that people actually eat. The key points are that they are created
+//	already filled with reagents and are destroyed when empty. Additionally, they make a "munching" noise when eaten.
+
+//Notes by Darem: Food in the "snacks" subtype can hold a maximum of 50 units Generally speaking, you don't want to go over 40
+//	total for the item because you want to leave space for extra condiments. If you want effects besides healing, add a reagent for
+//	it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use Tricordrazine). On use
+//	effects (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).
+
+//The nutriment reagent and bitesize variable replace the old heal_amt and amount variables. Each unit of nutriment is equal to
+//	2 of the old heal_amt variable. Bitesize is the rate at which the reagents are consumed. So if you have 6 nutriment and a
+//	bitesize of 2, then it'll take 3 bites to eat. Unlike the old system, the contained reagents are evenly spread among all
+//	the bites. No more contained reagents = no more bites.
+
+//Here is an example of the new formatting for anyone who wants to add more food items.
+///obj/item/weapon/reagent_containers/food/snacks/xenoburger			//Identification path for the object.
+//	name = "Xenoburger"													//Name that displays in the UI.
+//	desc = "Smells caustic. Tastes like heresy."						//Duh
+//	icon_state = "xburger"												//Refers to an icon in food.dmi
+//	New()																//Don't mess with this.
+//		..()															//Same here.
+//		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
+//		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
+//		bitesize = 3													//This is the amount each bite consumes.
 
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Man, that shit looks good. I bet it's got nougat. Fuck."
 	icon_state = "candy"
-	heal_amt = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/chips
 	name = "chips"
 	desc = "Commander Riker's What-The-Crisps"
 	icon_state = "chips"
-	heal_amt = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/donut
 	name = "donut"
 	desc = "Goes great with Robust Coffee."
 	icon_state = "donut1"
-	heal_amt = 1
 	New()
 		..()
-		if(rand(1,3) == 1)
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("sprinkles", 1)
+		if(prob(30))
 			src.icon_state = "donut2"
 			src.name = "frosted donut"
-			src.heal_amt = 2
-	heal(var/mob/M)
-		if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective"))
-			src.heal_amt *= 2
-			..()
-			src.heal_amt /= 2
+			src.bitesize = 2
+			reagents.add_reagent("nutriment", 2)
+			reagents.add_reagent("sprinkles", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
-	amount = 1
-	heal_amt = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/flour
 	name = "flour"
 	desc = "Some flour"
 	icon_state = "flour"
-	amount = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/humanmeat
 	name = "-meat"
@@ -1396,51 +1232,41 @@
 	icon_state = "meat"
 	var/subjectname = ""
 	var/subjectjob = null
-	amount = 1
-
-/* Commented out due to being completly useless. Goddamn goon humor.
-/obj/item/weapon/reagent_containers/food/snacks/assburger
-	name = "assburger"
-	desc = "This burger gives off an air of awkwardness."
-	icon_state = "assburger"
-	amount = 5
-	heal_amt = 2
-*/
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/brainburger
 	name = "brainburger"
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
-	amount = 5
-	heal_amt = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/faggot
-	name = "faggot"
-	desc = "A great meal all round."
+	name = "Faggot"
+	desc = "A great meal all round. Not a cord of wood."
 	icon_state = "faggot"
-	amount = 1
-	heal_amt = 2
-	heal(var/mob/M)
+	New()
 		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket
-	name = "donk-pocket"
+	name = "Donk-pocket"
 	desc = "The food of choice for the seasoned traitor."
 	icon_state = "donkpocket"
-	heal_amt = 1
-	amount = 1
-	var/warm = 0
-	heal(var/mob/M)
-		if(src.warm && M.reagents)
-			M.reagents.add_reagent("tricordrazine",15)
-		else
-			M << "\red It's just not good enough cold.."
+	New()
 		..()
-
-	proc/cooltime()
+		reagents.add_reagent("nutriment", 1)
+	var/warm = 0
+	proc/cooltime() //Not working, derp?
 		if (src.warm)
 			spawn( 4200 )
 				src.warm = 0
+				src.reagents.del_reagent("tricordrazine")
 				src.name = "donk-pocket"
 		return
 
@@ -1450,74 +1276,65 @@
 	var/job = null
 	desc = "A bloody burger."
 	icon_state = "hburger"
-	amount = 5
-	heal_amt = 2
-	heal(var/mob/M)
+	New()
 		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 	name = "monkeyburger"
 	desc = "The cornerstone of every nutritious breakfast."
 	icon_state = "hburger"
-	amount = 5
-	heal_amt = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbread
 	name = "meatbread loaf"
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
 	icon_state = "meatbread"
-	amount = 30
-	heal_amt = 5
-/*	New()
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cholesterol", 20)*/
-	heal(var/mob/M)
+	New()
 		..()
-
+		reagents.add_reagent("nutriment", 40)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
 	name = "meatbread slice"
 	desc = "A slice of delicious meatbread."
 	icon_state = "meatbreadslice"
-	amount = 5
-	heal_amt = 6
-/*	New()
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cholesterol", 10)*/
-	heal(var/mob/M)
+	New()
 		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewheel
 	name = "Cheese wheel"
 	desc = "A big wheel of delcious Cheddar."
 	icon_state = "cheesewheel"
-	amount = 25
-	heal_amt = 3
-	heal(var/mob/M)
+	New()
 		..()
+		reagents.add_reagent("nutriment", 20)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	name = "Cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
-	amount = 4
-	heal_amt = 4
-	heal(var/mob/M)
+	New()
 		..()
+		reagents.add_reagent("nutriment", 4)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette
 	name = "Omelette Du Fromage"
 	desc = "That's all you can say!"
 	icon_state = "omelette"
-	amount = 15
-	heal_amt = 3
-	heal(var/mob/M)
+	New()
 		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 1
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
 			W.icon = 'kitchen.dmi'
@@ -1527,214 +1344,138 @@
 /obj/item/weapon/reagent_containers/food/snacks/omeletteforkload
 	name = "Omelette Du Fromage"
 	desc = "That's all you can say!"
-	amount = 1
-	heal_amt = 4
-	heal(var/mob/M)
+	New()
 		..()
+		reagents.add_reagent("nutriment", 1)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin
 	name = "Muffin"
 	desc = "A delicious and spongy little cake"
 	icon_state = "muffin"
-	amount = 4
-	heal_amt = 6
-	heal(var/mob/M)
+	New()
 		..()
+		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/roburger
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
 	New()
-		var/datum/reagents/R = new/datum/reagents(5)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("nanites", 5)
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("nanites", 10)
+		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/xenoburger
 	name = "xenoburger"
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"
 	New()
-		var/datum/reagents/R = new/datum/reagents(5)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("xenomicrobes", 5)
+		..()
+		reagents.add_reagent("xenomicrobes", 10)
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeymeat
 	name = "meat"
 	desc = "A slab of meat"
 	icon_state = "meat"
-	amount = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	name = "meat"
 	desc = "A slab of meat"
 	icon_state = "xenomeat"
-	amount = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	name = "custard pie"
 	desc = "It smells delicious. You just want to plant your face in it."
 	icon_state = "pie"
-	amount = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/waffles
 	name = "waffles"
 	desc = "Mmm, waffles"
 	icon_state = "waffles"
-	amount = 5
-	heal_amt = 2
-
-//Drinks
-/obj/item/weapon/reagent_containers/food/drinks/coffee
-	name = "Robust Coffee"
-	desc = "Careful, the beverage you're about to enjoy is extremely hot."
-	icon_state = "coffee"
-	heal_amt = 1
 	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("coffee", 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/cola
-	name = "space cola"
-	desc = "Cola. in space."
-	icon_state = "cola"
-	heal_amt = 1
-	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cola", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
-
-/obj/item/weapon/reagent_containers/food/drinks/beer
-	name = "Space Beer"
-	desc = "Beer. in space."
-	icon_state = "beer"
-	heal_amt = 1
-	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("beer", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
-
-/obj/item/weapon/reagent_containers/food/drinks/ale
-	name = "Magm-Ale"
-	desc = "A true dorf's drink of choice."
-	icon_state = "alebottle"
-	heal_amt = 1
-	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("ale", 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/milk
-	name = "Space Milk"
-	desc = "It's milk. White and nutritious goodness!"
-	icon_state = "milk"
-	heal_amt = 2
-	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("milk", 50)
-
-/obj/item/weapon/reagent_containers/food/snacks/ketchup
-	name = "Ketchup"
-	desc = "You feel more American already."
-	icon_state = "ketchup"
-	amount = 1
-
-/obj/item/weapon/reagent_containers/food/snacks/hotsauce
-	name = "Hotsauce"
-	desc = "You can almost TASTE the stomach ulcers now!"
-	icon_state = "hotsauce"
-	amount = 1
-
-/obj/item/weapon/reagent_containers/food/snacks/berryjam
-	name = "Berry Jam"
-	desc = "A delightfully sweat flavor of some indescernible berry... you think."
-	icon_state = "berryjam"
-	amount = 1
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm
 	name = "Eggplant Parmigiana"
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
-	amount = 5
-	heal_amt = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/jellydonut
 	name = "Jelly Donut"
 	desc = "Oh so gooey on the inside."
 	icon_state = "donut1" //Placeholder until I stop being lazy. ie. Never. -- Darem
-	heal_amt = 2
 	New()
 		..()
-		if(rand(1,3) == 1)
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("sprinkles", 3)
+		bitesize = 2
+		if(prob(30))
 			src.icon_state = "donut2"
 			src.name = "Frosted Jelly Donut"
-			src.heal_amt = 3
-	heal(var/mob/M)
-		if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective"))
-			src.heal_amt *= 2
-			..()
-			src.heal_amt /= 2
+			reagents.add_reagent("nutriment", 3)
+			reagents.add_reagent("sprinkles", 3)
+			bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
 	name = "Soylent Green"
 	desc = "Not made of people. Honest." //Totally people.
 	icon_state = "soylent"
-	amount = 5
-	heal_amt = 1
-
-/obj/item/weapon/reagent_containers/food/snacks/soysauce
-	name = "Soy Sauce"
-	desc = "A salty soy-based flavoring."
-	icon_state = "soysauce"
-	amount = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
 	name = "Soylen Virdians"
 	desc = "Not made of people. Honest." //Actually honest for once.
 	icon_state = "soylent"
-	amount = 5
-	heal_amt = 1
-
-
-/obj/item/weapon/reagent_containers/food/snacks/coldsauce
-	name = "Coldsauce"
-	desc = "Leaves the tongue numb in it's passage."
-	icon_state = "coldsauce"
-	amount = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotcake
 	name = "Carrot Cake"
 	desc = "A favorite desert of a certain wascally wabbit. Also not a lie."
 	icon_state = "carrotcake"
-	amount = 5
-	heal_amt = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesecake
 	name = "Cheese Cake"
 	desc = "DANGEROUSLY cheesy."
 	icon_state = "cheesecake"
-	amount = 5
-	heal_amt = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/plaincake
 	name = "Vanilla Cake"
 	desc = "A plain cake, not a lie."
 	icon_state = "plaincake"
-	amount = 5
-	heal_amt = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/humeatpie
 	name = "-pie"
@@ -1742,231 +1483,300 @@
 	var/job = null
 	icon_state = "pie" //placeholder
 	desc = "A delicious meatpie."
-	amount = 3
-	heal_amt = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/momeatpie
 	name = "Monkey-pie"
 	icon_state = "pie"
 	desc = "A delicious meatpie."
-	amount = 3
-	heal_amt = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/xemeatpie
 	name = "Xeno-pie"
 	icon_state = "pie" //placeholder
 	desc = "A delicious meatpie. Probably heretical."
 	New()
-		var/datum/reagents/R = new/datum/reagents(5)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("xenomicrobes", 5)
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 4
+		reagents.add_reagent("xenomicrobes", 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
 	name = "Wing Fang Chu"
 	desc = "A savory dish of alien wing wang in soy."
 	icon_state = "wingfangchu"
 	New()
-		var/datum/reagents/R = new/datum/reagents(5)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("xenomicrobes", 5)
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("xenomicrobes", 5)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/chaosdonut
 	name = "Chaos Donut"
 	desc = "Like life, it never quite tastes the same."
 	icon_state = "donut1"
-	heat_amt = 25
 	New()
 		..()
-		if(rand(1,3) == 1)
+		reagents.add_reagent("nutriment", 3)
+		bitesize = 2
+		if(prob(30))
 			src.icon_state = "donut2"
 			src.name = "Frosted Chaos Donut"
-			heat_amt = 0
-			drug_amt = 25
+		var/temp_chaos = pick(1, 2, 3)
+		if(temp_chaos == 1)
+			reagents.add_reagent("capsaicin", 3)
+		else if(temp_chaos == 2)
+			reagents.add_reagent("frostoil", 3)
+		else if(temp_chaos == 3)
+			reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/humankabob
 	name = "-kabob"
 	var/hname = ""
 	var/job = null
 	icon_state = "kabob"
-	amount = 3
-	heal_amt = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeykabob
 	name = "Monkey-kabob"
 	icon_state = "kabob"
-	amount = 3
-	heal_amt = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+///////////////////////////////////////////////Condiments
+//Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all
+//	leave empty containers when used up and can be filled/re-filled with other items. However, they start already full with
+//	whatever substance they are designed for. Formatting almost identical to snacks except you don't have to worry about bite size.
+//	and such. Condiments should be either Liquids or Solids.
+
+/obj/item/weapon/reagent_containers/food/condiment/ketchup
+	name = "Ketchup"
+	desc = "You feel more American already."
+	icon_state = "ketchup"
+	New()
+		..()
+		reagents.add_reagent("ketchup", 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/hotsauce
+	name = "Hotsauce"
+	desc = "You can almost TASTE the stomach ulcers now!"
+	icon_state = "hotsauce"
+	New()
+		..()
+		reagents.add_reagent("capsaicin", 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/berryjam
+	name = "Berry Jam"
+	desc = "A delightfully sweat flavor of some indescernible berry... you think."
+	icon_state = "berryjam"
+	New()
+		..()
+		reagents.add_reagent("berryjam", 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/soysauce
+	name = "Soy Sauce"
+	desc = "A salty soy-based flavoring."
+	icon_state = "soysauce"
+	New()
+		..()
+		reagents.add_reagent("soysauce", 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/coldsauce
+	name = "Coldsauce"
+	desc = "Leaves the tongue numb in it's passage."
+	icon_state = "coldsauce"
+	New()
+		..()
+		reagents.add_reagent("frostoil", 50)
+
+///////////////////////////////////////////////Drinks
+//Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
+//	rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
+//	Formatting is the same as condiments.
+/obj/item/weapon/reagent_containers/food/drinks/milk
+	name = "Space Milk"
+	desc = "It's milk. White and nutritious goodness!"
+	icon_state = "milk"
+	New()
+		..()
+		reagents.add_reagent("milk", 50)
+
+/obj/item/weapon/reagent_containers/food/drinks/coffee
+	name = "Robust Coffee"
+	desc = "Careful, the beverage you're about to enjoy is extremely hot."
+	icon_state = "coffee"
+	New()
+		..()
+		reagents.add_reagent("coffee", 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/cola
+	name = "Space Cola"
+	desc = "Cola. in space."
+	icon_state = "cola"
+	New()
+		..()
+		reagents.add_reagent("cola", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/beer
+	name = "Space Beer"
+	desc = "Beer. In space."
+	icon_state = "beer"
+	New()
+		..()
+		reagents.add_reagent("beer", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/ale
+	name = "Magm-Ale"
+	desc = "A true dorf's drink of choice."
+	icon_state = "alebottle"
+	New()
+		..()
+		reagents.add_reagent("ale", 30)
 
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
+//Notes by Darem: Functionally identical to regular drinks. The only difference is that the default bottle size is 100.
+/obj/item/weapon/reagent_containers/food/drinks/bottle
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
 
-/obj/item/weapon/reagent_containers/food/drinks/gin
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater Gin"
 	desc = "A bottle of high quality gin, produced in the New London Space Station."
 	icon_state = "ginbottle"
-	heal_amt = 1
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("gin", 100)
+		..()
+		reagents.add_reagent("gin", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/whiskey
+/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey
 	name = "Uncle Git's Special Reserve"
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
-	heal_amt = 1
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("whiskey", 100)
+		..()
+		reagents.add_reagent("whiskey", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/vodka
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka
 	name = "Tunguska Triple Distilled"
 	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
 	icon_state = "vodkabottle"
-	heal_amt = 1
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("vodka", 100)
+		..()
+		reagents.add_reagent("vodka", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/tequilla
+/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla
 	name = "Caccavo Guaranteed Quality Tequilla"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
 	icon_state = "tequillabottle"
-	heal_amt = 1
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("tequilla", 100)
+		..()
+		reagents.add_reagent("tequilla", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/rum
+/obj/item/weapon/reagent_containers/food/drinks/bottle/rum
 	name = "Captain Pete's Cuban Spiced Rum"
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
-	heal_amt = 1
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("rum", 100)
+		..()
+		reagents.add_reagent("rum", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/vermouth
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
 	desc = "Sweet, sweet dryness~"
 	icon_state = "vermouthbottle"
-	heal_amt = 1
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("vermouth", 100)
+		..()
+		reagents.add_reagent("vermouth", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/kahlua
+/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua
 	name = "Robert Robust's Coffee Liqueur"
 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK"
 	icon_state = "kahluabottle"
-	heal_amt = 1
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("kahlua", 100)
+		..()
+		reagents.add_reagent("kahlua", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/cognac
+/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac
 	name = "Chateau De Baton Premium Cognac"
 	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time."
 	icon_state = "cognacbottle"
-	heal_amt = 1
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cognac", 100)
+		..()
+		reagents.add_reagent("cognac", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/wine
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine
 	name = "Doublebeard Bearded Special Wine"
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
-	heal_amt = 1
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("wine", 100)
+		..()
+		reagents.add_reagent("wine", 100)
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
-/obj/item/weapon/reagent_containers/food/drinks/orangejuice
+/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice
 	name = "Orange Juice"
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
-	heal_amt = 2
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("orangejuice", 100)
+		..()
+		reagents.add_reagent("orangejuice", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/cream
+/obj/item/weapon/reagent_containers/food/drinks/bottle/cream
 	name = "Milk Cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
 	icon_state = "cream"
-	heal_amt = 2
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("cream", 100)
+		..()
+		reagents.add_reagent("cream", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/tomatojuice
+/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "Tomato Juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
 	icon_state = "tomatojuice"
-	heal_amt = 2
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("tomatojuice", 100)
+		..()
+		reagents.add_reagent("tomatojuice", 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/limejuice
+/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice
 	name = "Lime Juice"
 	desc = "Sweet-sour goodness."
 	icon_state = "limejuice"
-	heal_amt = 2
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("limejuice", 100)
+		..()
+		reagents.add_reagent("limejuice", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/tonic
 	name = "T-Borg's Tonic Water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
-	heal_amt = 2
 	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("tonic", 50)
+		..()
+		reagents.add_reagent("tonic", 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/sodawater
 	name = "Soda Water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
 	icon_state = "sodawater"
-	heal_amt = 2
 	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("sodawater", 50)
+		..()
+		reagents.add_reagent("sodawater", 50)
 
 
 //Pills
@@ -1974,23 +1784,17 @@
 	name = "Anti-toxins pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
-
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("anti_toxin", 50)
+		..()
+		reagents.add_reagent("anti_toxin", 50)
 
 /obj/item/weapon/reagent_containers/pill/tox
 	name = "Toxins pill"
 	desc = "Highly toxic."
 	icon_state = "pill5"
-
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("toxin", 50)
+		..()
+		reagents.add_reagent("toxin", 50)
 
 /obj/item/weapon/reagent_containers/pill/stox
 	name = "Sleeping pill"
@@ -1998,10 +1802,8 @@
 	icon_state = "pill8"
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("stoxin", 30)
+		..()
+		reagents.add_reagent("stoxin", 30)
 
 /obj/item/weapon/reagent_containers/pill/kelotane
 	name = "Kelotane pill"
@@ -2009,10 +1811,8 @@
 	icon_state = "pill11"
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("kelotane", 30)
+		..()
+		reagents.add_reagent("kelotane", 30)
 
 /obj/item/weapon/reagent_containers/pill/inaprovaline
 	name = "Inaprovaline pill"
@@ -2020,10 +1820,8 @@
 	icon_state = "pill20"
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("inaprovaline", 30)
+		..()
+		reagents.add_reagent("inaprovaline", 30)
 
 //Dispensers
 /obj/reagent_dispensers/watertank
@@ -2075,6 +1873,9 @@
 
 
 //////////////////////////drinkingglass and shaker//
+//Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
+//	itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
+//	icon states.
 
 /obj/item/weapon/reagent_containers/food/drinks/shaker
 	name = "Shaker"
@@ -2316,10 +2117,8 @@
 	icon_state = "jar"
 	item_state = "beaker"
 	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("metroid", 50)
+		..()
+		reagents.add_reagent("metroid", 50)
 
 	on_reagent_change()
 		if (reagents.reagent_list.len > 0)
