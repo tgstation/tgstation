@@ -519,7 +519,7 @@
 			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/medical(src), slot_w_uniform)
-			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
+			src.equip_if_possible(new /obj/item/clothing/suit/labcoat/cmo(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_l_hand)
 
 		if ("Virologist")

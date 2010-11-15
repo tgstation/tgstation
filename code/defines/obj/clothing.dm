@@ -510,6 +510,12 @@
 	permeability_coefficient = 0.25
 	heat_transfer_coefficient = 0.75
 
+/obj/item/clothing/suit/labcoat/cmo
+	name = "chief medical officer's labcoat"
+	desc = "Bluer than the standard model."
+	icon_state = "labcoat_cmo"
+	item_state = "labcoat_cmo"
+
 /obj/item/clothing/suit/straight_jacket
 	name = "straight jacket"
 	desc = "A suit that totally restrains an individual"
