@@ -325,3 +325,13 @@ DEATH COMMANDO GAS MASK
 	if(src.flags&NOSLIP)
 		state = "enabled"
 	usr << "Its mag-pulse traction system appears to be [state]."
+
+/obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
+	if(src.icon_state == "ushankadown")
+		src.icon_state = "ushankaup"
+		src.item_state = "ushankaup"
+		user << "You raise the ear flaps on the ushanka."
+	else
+		src.icon_state = "ushankadown"
+		src.item_state = "ushankadown"
+		user << "You lower the ear flaps on the ushanka."

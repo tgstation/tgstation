@@ -290,6 +290,19 @@
 	item_state = "schoolgirl"
 	color = "schoolgirl"
 
+/obj/item/clothing/under/soviet
+	name = "soviet uniform"
+	desc = "For the Motherland!"
+	icon_state = "soviet"
+	item_state = "soviet"
+	color = "soviet"
+
+/obj/item/clothing/head/ushanka
+	name = "ushanka"
+	desc = "Perfect for winter in Siberia, da?"
+	icon_state = "ushankadown"
+	item_state = "ushankadown"
+
 /* no left/right sprites
 /obj/item/clothing/under/mario
 	name = "Mario costume"
