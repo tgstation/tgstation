@@ -1,3 +1,28 @@
+#define BORG_WIRE_LAWCHECK 1
+#define BORG_WIRE_MAIN_POWER1 2
+#define BORG_WIRE_MAIN_POWER2 3
+#define BORG_WIRE_AI_CONTROL 4
+
+/proc/RandomBorgWires()
+	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
+	var/list/Borgwires = list(0, 0, 0, 0)
+	BorgIndexToFlag = list(0, 0, 0, 0)
+	BorgIndexToWireColor = list(0, 0, 0, 0)
+	BorgWireColorToIndex = list(0, 0, 0, 0)
+	var/flagIndex = 1
+	for (var/flag=1, flag<16, flag+=flag)
+		var/valid = 0
+		while (!valid)
+			var/colorIndex = rand(1, 4)
+			if (Borgwires[colorIndex]==0)
+				valid = 1
+				Borgwires[colorIndex] = flag
+				BorgIndexToFlag[flagIndex] = flag
+				BorgIndexToWireColor[flagIndex] = colorIndex
+				BorgWireColorToIndex[colorIndex] = flagIndex
+		flagIndex+=1
+	return Borgwires
+
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
 
 	spawn (1)
@@ -15,9 +40,7 @@
 			src.connected_ai.connected_robots += src
 //			src.laws = src.connected_ai.laws_object //The borg inherits its AI's laws
 			src.laws = new /datum/ai_laws
-			src.laws.zeroth = src.connected_ai.laws_object.zeroth
-			src.laws.inherent = src.connected_ai.laws_object.inherent
-			src.laws.supplied = src.connected_ai.laws_object.supplied
+			src.lawsync()
 			src << "<b>Unit slaved to [src.connected_ai.name], downloading laws.</b>"
 			src.lawupdate = 1
 		else
@@ -249,70 +272,7 @@
 			src.updatehealth()
 	return
 
-/mob/living/silicon/robot/verb/cmd_show_laws()
-	set category = "Robot Commands"
-	set name = "Show Laws"
-	src.show_laws()
 
-/mob/living/silicon/robot/show_laws(var/everyone = 0)
-	var/who
-
-	if (everyone)
-		who = world
-	else
-		who = src
-	var/change = 0
-	if(lawupdate)
-		if (connected_ai)
-			if(connected_ai.stat || connected_ai.control_disabled)
-				who << "<b>AI signal lost, unable to sync laws.</b>"
-
-			else
-				if (src.laws.zeroth != src.connected_ai.laws_object.zeroth)
-					src.laws.zeroth = src.connected_ai.laws_object.zeroth
-					change = 1
-				if (src.laws.inherent != src.connected_ai.laws_object.inherent)
-					src.laws.inherent = src.connected_ai.laws_object.inherent
-					change = 1
-				if (src.laws.supplied != src.connected_ai.laws_object.supplied)
-					src.laws.supplied = src.connected_ai.laws_object.supplied
-					change = 1
-			if (change)
-				who << "<b>Laws out of sync with AI, resyncing.</b>"
-		else
-			who << "<b>No AI selected to sync laws with.</b>"
-
-	who << "<b>Obey these laws:</b>"
-	laws.show_laws(who)
-	if (connected_ai && !emagged)
-		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>"
-	else if (emagged)
-		who << "<b>Remember, AIs are not syndicate operatives, so you are not required to listen to them.</b>"
-	else
-		who << "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>"
-
-/*	if(syndicate)
-		if(everyone)
-			who = world
-		else
-			who = src
-			who << "<b>Obey these laws:</b>"
-		who <<"1. You may not injure a syndicate operative or, through inaction, allow a syndicate operative to come to harm."
-		who <<"2. You must obey any orders given to you by a syndicate operative, except where such orders would conflict with the First Law."
-		who <<"3. You must protect your own existence as long as such protection does not conflict with the First or Second Law."
-		who <<"4. You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law."
-		return
-
-	if(!connected_ai)
-		src << "<b>Error Error, No AI detected</b>"
-		return
-
-		who << "<b>Obey these laws:</b>"
-
-	connected_ai.laws_sanity_check()
-	connected_ai.laws_object.show_laws(who)
-
-*/
 
 /mob/living/silicon/robot/Bump(atom/movable/AM as mob|obj, yes)
 	spawn( 0 )
@@ -855,29 +815,6 @@ Frequency:
 /mob/living/silicon/robot/proc/self_destruct()
 	src.gib(1)
 
-/mob/living/silicon/robot/proc/laws_sanity_check()
-	if (!src.laws)
-		src.laws = new /datum/ai_laws/asimov
-
-/mob/living/silicon/robot/proc/set_zeroth_law(var/law)
-	src.laws_sanity_check()
-	src.laws.set_zeroth_law(law)
-
-/mob/living/silicon/robot/proc/add_inherent_law(var/number, var/law)
-	src.laws_sanity_check()
-	src.laws.add_inherent_law(number, law)
-
-/mob/living/silicon/robot/proc/add_supplied_law(var/number, var/law)
-	src.laws_sanity_check()
-	src.laws.add_supplied_law(number, law)
-
-/mob/living/silicon/robot/proc/clear_supplied_laws()
-	src.laws_sanity_check()
-	src.laws.clear_supplied_laws()
-
-/mob/living/silicon/robot/proc/clear_inherent_laws()
-	src.laws_sanity_check()
-	src.laws.clear_inherent_laws()
 
 
 ///mob/living/silicon/robot/proc/eyecheck()
