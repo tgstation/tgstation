@@ -253,6 +253,7 @@
 #include "code\game\hud.dm"
 #include "code\game\landmarks.dm"
 #include "code\game\master_controller.dm"
+#include "code\game\prisonshuttle.dm"
 #include "code\game\smoothwall.dm"
 #include "code\game\sound.dm"
 #include "code\game\status.dm"
