@@ -3555,7 +3555,7 @@
 "bqs" = (/obj/machinery/atmospherics/pipe/simple{color = "blue"; dir = 4; icon_state = "intact-b"; layer = 3; level = 2},/turf/simulated/floor,/area/atmos)
 "bqt" = (/obj/machinery/atmospherics/pipe/simple{color = "blue"; dir = 4; icon_state = "intact-b"; layer = 3; level = 2},/obj/machinery/atmospherics/pipe/simple{color = "green"; icon_state = "intact-g"; level = 2},/turf/simulated/floor,/area/atmos)
 "bqu" = (/obj/machinery/atmospherics/pipe/simple{color = "blue"; dir = 4; icon_state = "intact-b"; layer = 3; level = 2},/obj/machinery/atmospherics/pipe/simple{color = "red"; icon_state = "intact-r"; level = 2},/turf/simulated/floor,/area/atmos)
-"bqv" = (/obj/machinery/atmospherics/pipe/manifold{color = "blue"; dir = 1; icon_state = "manifold-b"; level = 2},/obj/machinery/meter,/turf/simulated/floor,/area/atmos)
+"bqv" = (/obj/machinery/atmospherics/pipe/manifold{color = "blue"; dir = 1; icon_state = "manifold-b"; level = 2},/obj/machinery/meter{frequency = 1443; id = "dloop_atm_meter"},/turf/simulated/floor,/area/atmos)
 "bqw" = (/obj/machinery/atmospherics/pipe/simple{color = "blue"; dir = 4; icon_state = "intact-b"; initialize_directions = 12; layer = 3; level = 1},/obj/grille,/obj/window/reinforced/west,/obj/window/reinforced/west{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/turf/simulated/floor/plating,/area/atmos)
 "bqx" = (/obj/lattice,/obj/machinery/atmospherics/pipe/simple{color = "blue"; dir = 9; icon_state = "intact-b"; layer = 3; level = 2},/turf/space,/area)
 "bqy" = (/mob/living/carbon/monkey{name = "Dave"},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
