@@ -40,7 +40,7 @@
 	var/jetpack = 0
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
 	var/jeton = 0
-
+	var/borgwires = 15
 	var/killswitch = 0
 	var/killswitch_time = 60
 	var/weapon_lock = 0
