@@ -237,3 +237,9 @@
 	icon_state = "teleport"
 	var/obj/item/locked = null
 	var/id = null
+
+/obj/machinery/computer/teleporter/security
+	name = "Teleporter"
+	icon_state = "teleport"
+	locked = null
+	id = null

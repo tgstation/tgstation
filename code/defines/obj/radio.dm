@@ -30,6 +30,12 @@
 	item_state = "signaler"
 	var/code = "electronic"
 
+/obj/item/device/radio/courtroom_beacon
+	name = "Tracking Beacon"
+	icon_state = "beacon"
+	item_state = "signaler"
+	var/code = "electronic"
+
 /obj/item/device/radio/electropack
 	name = "Electropack"
 	icon_state = "electropack0"

@@ -3,10 +3,17 @@
 	..()
 	return
 
+
 /obj/machinery/computer/teleporter/attackby(obj/item/weapon/W)
 	src.attack_hand()
 
 /obj/machinery/computer/teleporter/attack_paw()
+	src.attack_hand()
+
+/obj/machinery/computer/teleporter/security/attackby(obj/item/weapon/W)
+	src.attack_hand()
+
+/obj/machinery/computer/teleporter/security/attack_paw()
 	src.attack_hand()
 
 /obj/machinery/teleport/station/attack_ai()
@@ -69,6 +76,30 @@
 		if(!T || istype(T, /area))	return null
 	return T
 
+/obj/machinery/computer/teleporter/security/attack_hand()
+	if(stat & (NOPOWER|BROKEN))
+		return
+
+	var/list/L = list()
+	var/list/areaindex = list()
+
+	for(var/obj/item/device/radio/courtroom_beacon/R in world)
+		var/turf/T = find_loc(R)
+		if (!T)	continue
+		var/tmpname = T.loc.name
+		if(areaindex[tmpname])
+			tmpname = "[tmpname] ([++areaindex[tmpname]])"
+		else
+			areaindex[tmpname] = 1
+		L[tmpname] = R
+
+	var/desc = input("Please select a location to lock in.", "Locking Computer") in L
+	src.locked = L[desc]
+	for(var/mob/O in hearers(src, null))
+		O.show_message("\blue Locked In", 2)
+	src.add_fingerprint(usr)
+	return
+
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn( 0 )
 		if (src.icon_state == "tele1")
@@ -87,7 +118,7 @@
 			O.show_message("\red Failure: Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.")
 		return
 	if (istype(M, /atom/movable))
-		if(prob(5)) //oh dear a problem, put em in deep space
+		if(prob(5) && !accurate) //oh dear a problem, put em in deep space
 			do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy - 5), 3), 2)
 		else
 			do_teleport(M, com.locked, 0) //dead-on precision

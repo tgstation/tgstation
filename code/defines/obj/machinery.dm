@@ -353,10 +353,12 @@
 	icon = 'stationobjs.dmi'
 	density = 1
 	anchored = 1.0
+	var/lockeddown = 0
 
 /obj/machinery/teleport/hub
 	name = "hub"
 	icon_state = "tele0"
+	var/accurate = 0
 
 /obj/machinery/teleport/station
 	name = "station"
