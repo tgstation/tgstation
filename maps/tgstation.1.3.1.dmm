@@ -2125,7 +2125,7 @@
 "aOS" = (/obj/machinery/portable_atmospherics/scrubber,/turf/simulated/floor,/area/crew_quarters/locker)
 "aOT" = (/obj/machinery/portable_atmospherics/scrubber,/obj/machinery/light/small{dir = 1},/turf/simulated/floor,/area/crew_quarters/locker)
 "aOU" = (/obj/table/woodentable{dir = 9},/obj/item/weapon/camera_test{desc = "A one use - polaroid camera. 30 photos left."; name = "detectives camera"; pictures_left = 30},/obj/machinery/camera{c_tag = "Detective Office"; c_tag_order = 999; dir = 4},/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
-"aOV" = (/obj/table/woodentable{dir = 5},/obj/item/weapon/ammo/a38,/obj/item/weapon/ammo/a38,/obj/item/weapon/gun/detectiverevolver,/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
+"aOV" = (/obj/table/woodentable{dir = 5},/obj/item/weapon/ammo/a38,/obj/item/weapon/ammo/a38,/obj/item/weapon/gun/detectiverevolver{bullets = 7},/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
 "aOW" = (/obj/machinery/atmospherics/unary/vent_scrubber{on = 1; scrub_N2O = 1; scrub_Toxins = 1},/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
 "aOX" = (/obj/machinery/light/small,/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
 "aOY" = (/obj/machinery/firealarm{dir = 1; pixel_y = -24},/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
