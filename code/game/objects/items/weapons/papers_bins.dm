@@ -105,6 +105,8 @@ CLIPBOARDS
 					src.icon_state = "paper_stamped_ce"
 				if(/obj/item/weapon/stamp/rd)
 					src.icon_state = "paper_stamped_rd"
+				if(/obj/item/weapon/stamp/clown)
+					src.icon_state = "paper_stamped_clown"
 				else
 					src.icon_state = "paper_stamped"
 			if(!stamped)

@@ -1,7 +1,7 @@
 /obj/machinery/ai_slipper
 	name = "AI Liquid Dispenser"
-	icon = 'monitors.dmi'
-	icon_state = "fire0"
+	icon = 'device.dmi'
+	icon_state = "motion3"
 	layer = 3
 	anchored = 1.0
 	var/uses = 20
@@ -13,13 +13,14 @@
 	var/cooldown_on = 0
 	req_access = list(access_ai_upload)
 
-/obj/machinery/turret/power_change()
+/obj/machinery/ai_slipper/power_change()
 	if(stat & BROKEN)
 		return
 	else
 		if( powered() )
 			stat &= ~NOPOWER
 		else
+			icon_state = "motion0"
 			stat |= NOPOWER
 
 
@@ -53,6 +54,8 @@
 	return attack_hand(user)
 
 /obj/machinery/ai_slipper/attack_hand(mob/user as mob)
+	if(stat & (NOPOWER|BROKEN))
+		return
 	if ( (get_dist(src, user) > 1 ))
 		if (!istype(user, /mob/living/silicon))
 			user << text("Too far away.")
@@ -73,7 +76,7 @@
 	if(src.locked && (!istype(user, /mob/living/silicon)))
 		t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 	else
-		t += text("Dispenser [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.disabled?"activated":"deactivated", src, src.disabled?"Disable":"Enable")
+		t += text("Dispenser [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.disabled?"deactivated":"activated", src, src.disabled?"Enable":"Disable")
 		t += text("Uses Left: [uses]. <A href='?src=\ref[src];toggleUse=1'>Activate the dispenser?</A><br>\n")
 
 	user << browse(t, "window=computer;size=575x450")
@@ -88,6 +91,7 @@
 			return
 	if (href_list["toggleOn"])
 		src.disabled = !src.disabled
+		icon_state = src.disabled? "motion0":"motion3"
 	if (href_list["toggleUse"])
 		if(cooldown_on || disabled)
 			return
@@ -116,4 +120,5 @@
 		return
 	if (uses >= 0)
 		cooldown_on = 0
+	src.power_change()
 	return
