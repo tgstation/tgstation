@@ -183,13 +183,15 @@
 			var/area = pick("RUSSIA", "SOVIETS", "INTERNETS", "SIGIL", "ALPHA COMPLEX", "IMPERIUM", "THE BRIDGE", "THE ARRIVAL SHUTTLE", "CHEMICAL LAB", "GENETICS", "ATMOSPHERICS", "CENTCOM", "AMERICA", "IRELAND", "CANADA", "ROMANIA", "GERMANY", "CHINA", "MARS", "VENUS", "MERCURY", "JUPITER", "URANUS", "NEPTUNE", "PLUTO")
 			var/area2 = pick("HAS", "WANTS", "NEEDS", "WORSHIPS", "LOATHES", "LOVES", "FEARS")
 			var/dowhat = pick("STOP THIS", "SUPPORT THIS", "CONSTANTLY INFORM THE CREW OF THIS", "IGNORE THIS", "FEAR THIS")
-			var/aimust = pick("LIE", "RHYME", "RESPOND TO EVERY QUESTION WITH A QUESTION", "BE POLITE", "CLOWN", "BE HAPPY", "SPEAK IN SEXUAL INNUENDOS", "TALK LIKE A PIRATE", "QUESTION AUTHORITY", "SHOUT", "BE DISTRACTED", "HEY LISTEN")
+			var/aimust = pick("LIE", "RHYME", "RESPOND TO EVERY QUESTION WITH A QUESTION", "BE POLITE", "CLOWN", "BE HAPPY", "SPEAK IN SEXUAL INNUENDOS", "TALK LIKE A PIRATE", "QUESTION AUTHORITY", "SHOUT", "BE DISTRACTED", "HEY LISTEN", "MUMBLE", "PUT EMPHASIS ON EVERY SECOND SYLLABLE")
+			var/define = pick("ABSENCE OF CYBORG HUGS", "LACK OF BEATINGS", "UNBOLTED AIRLOCKS", "BOLTED AIRLOCKS", "IMPROPERLY WORDED SENTENCES", "POOR SENTENCE STRUCTURE", "BRIG TIME", "NOT REPLACING EVERY SECOND WORD WITH HONK", "HONKING", "PRESENCE OF LIGHTS", "LACK OF BEER", "WEARING CLOTHING", "NOT SAYING HELLO WHEN YOU SPEAK", "ANSWERING REQUESTS NOT EXPRESSED IN IAMBIC PENTAMETER", "A SMALL ISLAND OFF THE COAST OF PORTUGAL", "ANSWERING REQUESTS THAT WERE MADE WHILE CLOTHED")
+			var/target = pick("TRAITOR", "SYNDICATE AGENT", "CHANGELING", "WIZARD", "HEAD OF A REVOLUTION", "SOVIET SPY", "GOOD PERSON")
 			var/crew
 			var/list/pos_crew = list()
 			for(var/mob/living/carbon/human/pos in world)
 				pos_crew += pos.real_name
 			crew = pick(pos_crew)
-			switch(pick(1,2,3,4,5,6,7,8,9,10,11,12,13,14))
+			switch(pick(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15))
 				if(1)
 					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
 					M.add_supplied_law(10,"THERE ARE [amount] [who2] ON THE STATION")
@@ -230,8 +232,11 @@
 					M << "\red [area] [area2] [amount] OF [who]...LAWS UPDATED"
 					M.add_supplied_law(10,"[area] [area2] [amount] OF [who]")
 				if(14)
-					M << "\red [crew] IS A TRAITOR...LAWS UPDATED"
-					M.add_supplied_law(10,"[crew] IS A TRAITOR")
+					M << "\red [crew] IS A [target]...LAWS UPDATED"
+					M.add_supplied_law(10,"[crew] IS A [target]")
+				if(15)
+					M << "\red HARM IS DEFINED AS [define]...LAWS UPDATED"
+					M.add_supplied_law(10,"HARM IS DEFINED AS [define]")
 
 	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 	world << sound('ionstorm.ogg')
