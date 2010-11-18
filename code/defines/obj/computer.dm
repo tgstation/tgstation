@@ -189,7 +189,7 @@
 
 /obj/machinery/computer/secure_data
 	name = "Security Records"
-	icon_state = "computer_generic"
+	icon_state = "security"
 	req_access = list(access_security)
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
@@ -208,7 +208,7 @@
 
 /obj/machinery/computer/security
 	name = "Security Cameras"
-	icon_state = "security"
+	icon_state = "cameras"
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
 	var/network = "SS13"
