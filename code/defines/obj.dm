@@ -274,6 +274,15 @@
 	opacity = 0
 	density = 0
 
+/obj/sign/redcross
+	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here.'"
+	name = "Med-Bay"
+	icon = 'decals.dmi'
+	icon_state = "redcross"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
 
 /obj/hud
 	name = "hud"

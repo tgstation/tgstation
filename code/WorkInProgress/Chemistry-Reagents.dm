@@ -1206,6 +1206,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		specialwhiskey
 			name = "Special Blend Whiskey"
@@ -1221,6 +1222,8 @@ datum
 					M.stuttering += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
+
 
 		gin
 			name = "Gin"
@@ -1236,6 +1239,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		rum
 			name = "Rum"
@@ -1251,6 +1255,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		vodka
 			name = "Vodka"
@@ -1266,6 +1271,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		tequilla
 			name = "Tequila"
@@ -1281,6 +1287,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		vermouth
 			name = "Vermouth"
@@ -1296,6 +1303,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 		wine
 			name = "Wine"
 			id = "wine"
@@ -1310,6 +1318,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 145 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		tonic
 			name = "Tonic Water"
@@ -1394,6 +1403,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		cream
 			name = "Cream"
@@ -1415,6 +1425,7 @@ datum
 					M.stuttering += 5
 				else if(data >= 90 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		ale
 			name = "Ale"
@@ -1430,6 +1441,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		sodawater
 			name = "Soda Water"
@@ -1604,6 +1616,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 145 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		tequilla_sunrise
 			name = "Tequilla Sunrise"
@@ -1619,6 +1632,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		toxins_special
 			name = "Toxins Special"
@@ -1635,6 +1649,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		beepsky_smash
 			name = "Beepsky Smash"
@@ -1652,6 +1667,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		doctor_delight
 			name = "The Doctor's Delight"
@@ -1683,6 +1699,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 145 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 				return
 
 		manly_dorf
@@ -1699,6 +1716,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 				return
 
 		longislandicedtea
@@ -1715,6 +1733,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 				return
 
 		moonshine
@@ -1731,6 +1750,7 @@ datum
 					M.stuttering += 4
 				else if(data >= 60 && prob(40))
 					M.confused = max(M:confused+5,0)
+				..()
 				return
 
 		b52
@@ -1747,6 +1767,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 90 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		irishcoffee
 			name = "Irish Coffee"
@@ -1762,6 +1783,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 150 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		margarita
 			name = "Margarita"
@@ -1777,6 +1799,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 150 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		black_russian
 			name = "Black Russian"
@@ -1792,6 +1815,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		manhattan
 			name = "Manhattan"
@@ -1807,6 +1831,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		whiskeysoda
 			name = "Whiskey Soda"
@@ -1822,6 +1847,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		vodkatonic
 			name = "Vodka and Tonic"
@@ -1837,6 +1863,7 @@ datum
 					M.stuttering += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
 
 		ginfizz
 			name = "Gin Fizz"
@@ -1852,3 +1879,4 @@ datum
 					M.stuttering += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
