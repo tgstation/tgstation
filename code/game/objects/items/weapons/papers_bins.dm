@@ -108,6 +108,10 @@ CLIPBOARDS
 					src.icon_state = "paper_stamped_ce"
 				if(/obj/item/weapon/stamp/rd)
 					src.icon_state = "paper_stamped_rd"
+				if(/obj/item/weapon/stamp/cmo)
+					src.icon_state = "paper_stamped_cmo"
+				if(/obj/item/weapon/stamp/denied)
+					src.icon_state = "paper_stamped_denied"
 				if(/obj/item/weapon/stamp/clown)
 					if (!clown)
 						usr << "\red You are totally unable to use the stamp. HONK!"

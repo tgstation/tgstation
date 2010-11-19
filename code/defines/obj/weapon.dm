@@ -1441,6 +1441,14 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "research director's rubber stamp"
 	icon_state = "stamp-rd"
 
+/obj/item/weapon/stamp/cmo
+	name = "chief medical officer's rubber stamp"
+	icon_state = "stamp-cmo"
+
+/obj/item/weapon/stamp/denied
+	name = "DENIED rubber stamp"
+	icon_state = "stamp-qm"
+
 /obj/item/weapon/stamp/clown
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
