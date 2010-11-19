@@ -5,7 +5,24 @@
 
 
 /obj/machinery/computer/teleporter/attackby(obj/item/weapon/W)
-	src.attack_hand()
+	if (istype(W, /obj/item/weapon/card/data/))
+		if(stat & (NOPOWER|BROKEN))
+			src.attack_hand()
+
+		var/obj/S = null
+		for(var/obj/landmark/sloc in world)
+			if (sloc.name != "Clown Land")
+				continue
+			if (locate(/mob) in sloc.loc)
+				continue
+			S = sloc
+			break
+		if (!S)
+			S = locate("landmark*["Clown Land"]") // use old stype
+		if (istype(S, /obj/landmark/) && istype(S.loc, /turf))
+			usr.loc = S.loc
+	else
+		src.attack_hand()
 
 /obj/machinery/computer/teleporter/attack_paw()
 	src.attack_hand()

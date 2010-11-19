@@ -270,6 +270,14 @@
 	var/special = null
 	item_state = "card-id"
 
+/obj/item/weapon/card/data/clown
+	name = "Coordinates to Clown Planet"
+	icon_state = "data"
+	item_state = "card-id"
+	layer = 3
+	level = 2
+	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
+
 /obj/item/weapon/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
