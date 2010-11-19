@@ -186,6 +186,14 @@
 			R.trans_to(P,R.total_volume)
 			src.updateUsrDialog()
 			return
+		else if (href_list["create5pill"])
+			var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
+			var/name = input(usr,"Name:","Name your pill!",R.get_master_reagent_name())
+			if(!name || name == " ") name = R.get_master_reagent_name()
+			P.name = "[name] pill"
+			R.trans_to(P,5)
+			src.updateUsrDialog()
+			return
 		else if (href_list["createbottle"])
 			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			var/name = input(usr,"Name:","Name your bottle!",R.get_master_reagent_name())
@@ -224,7 +232,8 @@
 				dat += "Contained reagents:<BR>"
 				for(var/datum/reagent/G in R.reagent_list)
 					dat += "[G.name] , [G.volume] Units - <A href='?src=\ref[src];isolate=[G.id]'>(Isolate)</A> <A href='?src=\ref[src];remove=[G.id]'>(Remove all)</A> <A href='?src=\ref[src];remove5=[G.id]'>(Remove 5)</A> <A href='?src=\ref[src];remove1=[G.id]'>(Remove 1)</A> <A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>(Analyze)</A><BR>"
-				dat += "<BR><A href='?src=\ref[src];createpill=1'>Create pill</A><BR>"
+				dat += "<BR><A href='?src=\ref[src];createpill=1'>Create pill</A>"
+				dat += "<BR><A href='?src=\ref[src];create5pill=1'>Create 5-unit pill</A><BR>"
 				dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A>"
 		user << browse("<TITLE>Chemmaster 3000</TITLE>Chemmaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400")
 		onclose(user, "chem_master")
