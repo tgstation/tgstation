@@ -71,6 +71,9 @@ CLIPBOARDS
 	return
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)
+	var/clown = 0
+	if(user.mind && (user.mind.assigned_role == "Clown"))
+		clown = 1
 
 	if (istype(P, /obj/item/weapon/pen))
 		var/t = input(user, "What text do you wish to add?", text("[]", src.name), null)  as message
@@ -106,7 +109,11 @@ CLIPBOARDS
 				if(/obj/item/weapon/stamp/rd)
 					src.icon_state = "paper_stamped_rd"
 				if(/obj/item/weapon/stamp/clown)
-					src.icon_state = "paper_stamped_clown"
+					if (!clown)
+						usr << "\red You are totally unable to use the stamp. HONK!"
+						return
+					else
+						src.icon_state = "paper_stamped_clown"
 				else
 					src.icon_state = "paper_stamped"
 			if(!stamped)
