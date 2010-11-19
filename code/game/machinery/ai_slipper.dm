@@ -5,7 +5,7 @@
 	layer = 3
 	anchored = 1.0
 	var/uses = 20
-	var/disabled = 0
+	var/disabled = 1
 	var/lethal = 0
 	var/locked = 1
 	var/cooldown_time = 0
