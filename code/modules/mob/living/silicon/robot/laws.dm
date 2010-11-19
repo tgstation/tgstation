@@ -17,7 +17,7 @@
 
 			else
 				src.lawsync()
-				src << "<b>Resyncing laws, be sure to note any changes.</b>"
+				src << "<b>Laws synced with AI, be sure to note any changes.</b>"
 		else
 			src << "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>"
 			src.lawupdate = 0

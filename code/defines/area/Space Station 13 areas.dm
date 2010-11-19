@@ -229,6 +229,9 @@
 	name = "Fore Port Maintenance"
 	icon_state = "fpmaint"
 
+/area/maintenance/fpmaint2
+	name = "Secondary Fore Port Maintenance"
+	icon_state = "fpmaint"
 
 /area/maintenance/fsmaint
 	name = "Fore Starboard Maintenance"
@@ -239,6 +242,9 @@
 	name = "Aft Starboard Maintenance"
 	icon_state = "asmaint"
 
+/area/maintenance/asmaint2
+	name = "Secondary Aft Starboard Maintenance"
+	icon_state = "asmaint"
 
 /area/maintenance/apmaint
 	name = "Aft Port Maintenance"
@@ -257,7 +263,6 @@
 /area/maintenance/starboard
 	name = "Starboard Maintenance"
 	icon_state = "smaint"
-
 
 /area/maintenance/port
 	name = "Port Maintenance"
