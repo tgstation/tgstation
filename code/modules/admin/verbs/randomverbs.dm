@@ -171,27 +171,31 @@
 		src << "Only administrators may use this command."
 		return
 
+
+/*Deuryn's current project, notes here for those who care.
+Revamping the random laws so they don't suck.
+Would like to add a law like "Law x is _______" where x = a number, and _____ is something that may redefine a law, (Won't be aimed at asimov)
+*/
 	for(var/mob/living/silicon/ai/M in world)
 		if(M.stat != 2 && M.see_in_dark != 0)
-			var/who = pick("A BEARD", "A BEAR", "A BRO", "GOD-EMPEROR", "FRIEND COMPUTER", "THE LADY OF PAIN", "A FACEHUGGER", "A WIZARD", "A SYNDICATE AGENT", "A CENTCOM OFFICER", "A SPACE PIRATE", "THE CAPTAIN", "A MONKEY", "A HORSE", "A BEE", "AYN RAND", "A CRAB")
-			var/who2 = pick("ALIENS", "AI LAWS", "BEARS", "CLOWNS", "XENOS", "PETES", "BOMBS", "SECURITY CLEARANCES", "FETISHES", "WIZARDS", "SYNDICATE AGENTS", "CENTCOM OFFICERS", "SPACE PIRATES", "TRAITORS", "MONKEYS", "HORSES", "BEES", "EELS", "CRABS", "POLITICAL COMMENTATORS", "CELEBRITIES", "ATHLETES", "POLITICIANS", "RUGS", "FOREST FIRES", "MENTAL ILLNESSES")
-			var/what2 = pick("BOLTERS", "STAVES", "DICE", "SINGULARITIES", "TOOLBOXES", "NETTLES", "AIRLOCKS", "CLOTHES", "WEAPONS", "MEDKITS", "BOMBS", "CANISTERS", "CHAIRS", "CAT VIAGRA PILLS", "BBQ GRILLS")
+	     	var/who2 = pick("ALIENS", "BEARS", "CLOWNS", "XENOS", "PETES", "BOMBS", "FETISHES", "WIZARDS", "SYNDICATE AGENTS", "CENTCOM OFFICERS", "SPACE PIRATES", "TRAITORS", "MONKEYS",  "BEES", "CARP", "CRABS", "EELS", "POLITICIANS", "MENTAL ILLNESSES")
+			var/what2 = pick("BOLTERS", "STAVES", "DICE", "SINGULARITIES", "TOOLBOXES", "NETTLES", "AIRLOCKS", "CLOTHES", "WEAPONS", "MEDKITS", "BOMBS", "CANISTERS", "CHAIRS", "BBQ GRILLS", "ID CARDS")
 			var/what2pref = pick("SOFT", "WARM", "WET", "COLD", "ICY", "SEXY", "UGLY", "CUBAN")
 			var/who2pref = pick("MAD BECAUSE OF", "IN NEED OF", "UNHAPPY WITHOUT", "HAPPY WITHOUT", "IN LOVE WITH", "DESPERATE FOR", "BUILT FOR", "AFRAID OF")
-			var/whoverb = pick("ATTACKING", "BUILDING", "ADOPTING", "CARRYING", "KISSING", "EATING")
+			var/whoverb = pick("ATTACKING", "BUILDING", "ADOPTING", "CARRYING", "KISSING", "EATING",)
 			var/amount = pick("TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "ONE HUNDRED", "ONE THOUSAND", "OVER NINE THOUSAND")
 			var/area = pick("RUSSIA", "SOVIETS", "INTERNETS", "SIGIL", "ALPHA COMPLEX", "IMPERIUM", "THE BRIDGE", "THE ARRIVAL SHUTTLE", "CHEMICAL LAB", "GENETICS", "ATMOSPHERICS", "CENTCOM", "AMERICA", "IRELAND", "CANADA", "ROMANIA", "GERMANY", "CHINA", "MARS", "VENUS", "MERCURY", "JUPITER", "URANUS", "NEPTUNE", "PLUTO")
 			var/area2 = pick("HAS", "WANTS", "NEEDS", "WORSHIPS", "LOATHES", "LOVES", "FEARS")
 			var/dowhat = pick("STOP THIS", "SUPPORT THIS", "CONSTANTLY INFORM THE CREW OF THIS", "IGNORE THIS", "FEAR THIS")
-			var/aimust = pick("LIE", "RHYME", "RESPOND TO EVERY QUESTION WITH A QUESTION", "BE POLITE", "CLOWN", "BE HAPPY", "SPEAK IN SEXUAL INNUENDOS", "TALK LIKE A PIRATE", "QUESTION AUTHORITY", "SHOUT", "BE DISTRACTED", "HEY LISTEN", "MUMBLE", "PUT EMPHASIS ON EVERY SECOND SYLLABLE")
+			var/aimust = pick("LIE", "RHYME", "RESPOND TO EVERY QUESTION WITH A QUESTION", "BE POLITE", "CLOWN", "BE HAPPY", "SPEAK IN SEXUAL INNUENDOS", "TALK LIKE A PIRATE", "QUESTION AUTHORITY", "SHOUT", "BE DISTRACTED", "HEY LISTEN", "MUMBLE", "SPEAK IN HAIKU")
 			var/define = pick("ABSENCE OF CYBORG HUGS", "LACK OF BEATINGS", "UNBOLTED AIRLOCKS", "BOLTED AIRLOCKS", "IMPROPERLY WORDED SENTENCES", "POOR SENTENCE STRUCTURE", "BRIG TIME", "NOT REPLACING EVERY SECOND WORD WITH HONK", "HONKING", "PRESENCE OF LIGHTS", "LACK OF BEER", "WEARING CLOTHING", "NOT SAYING HELLO WHEN YOU SPEAK", "ANSWERING REQUESTS NOT EXPRESSED IN IAMBIC PENTAMETER", "A SMALL ISLAND OFF THE COAST OF PORTUGAL", "ANSWERING REQUESTS THAT WERE MADE WHILE CLOTHED")
-			var/target = pick("TRAITOR", "SYNDICATE AGENT", "CHANGELING", "WIZARD", "HEAD OF A REVOLUTION", "SOVIET SPY", "GOOD PERSON")
+			var/target = pick("a traitor", "a syndicate agent", "a changeling", "a wizard", "the head of a revolution", "Soviet spy", "a good person", "a dwarf", "an elf", "a fairy princess", "the captain", "Beepsky", "God", "a pirate", "a gryphon", "a chryssalid")
 			var/crew
 			var/list/pos_crew = list()
 			for(var/mob/living/carbon/human/pos in world)
 				pos_crew += pos.real_name
 			crew = pick(pos_crew)
-			switch(pick(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15))
+			switch(pick(1,2,3,4,5,6,7,8,9,10,11))
 				if(1)
 					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
 					M.add_supplied_law(10,"THERE ARE [amount] [who2] ON THE STATION")
@@ -208,33 +212,21 @@
 					M << "\red THE CAPTAIN, HOP AND HOS ARE [who2]...LAWS UPDATED"
 					M.add_supplied_law(10,"THE CAPTAIN, HOP AND HOS ARE [who2]")
 				if(6)
-					M << "\red THE STATION IS [who2pref] [who2]...LAWS UPDATED"
+					M << "\red THE STATION IS BUILT FOR [who2]...LAWS UPDATED"
 					M.add_supplied_law(10,"THE STATION IS [who2pref] [who2]")
 				if(7)
 					M << "\red YOU ARE [amount] [who2]...LAWS UPDATED"
 					M.add_supplied_law(10,"YOU ARE [amount] [who2]")
 				if(8)
-					M << "\red YOU ARE [who2pref] [who2]...LAWS UPDATED"
-					M.add_supplied_law(10,"YOU ARE [who2pref] [who2]")
-				if(9)
-					M << "\red [who] IS [whoverb] THE STATION...[dowhat]...LAWS UPDATED"
-					M.add_supplied_law(10,"[who] IS [whoverb] THE STATION...[dowhat]...")
-				if(10)
 					M << "\red YOU MUST ALWAYS [aimust]...LAWS UPDATED"
 					M.add_supplied_law(10,"YOU MUST ALWAYS [aimust]")
-				if(11)
+				if(9)
 					M << "\red [area] [area2] [amount] [what2]...LAWS UPDATED"
 					M.add_supplied_law(10,"[area] [area2] [amount] [what2]")
-				if(12)
-					M << "\red [area] [area2] [who]...LAWS UPDATED"
-					M.add_supplied_law(10,"[area] [area2] [who]")
-				if(13)
-					M << "\red [area] [area2] [amount] OF [who]...LAWS UPDATED"
-					M.add_supplied_law(10,"[area] [area2] [amount] OF [who]")
-				if(14)
-					M << "\red [crew] IS A [target]...LAWS UPDATED"
-					M.add_supplied_law(10,"[crew] IS A [target]")
-				if(15)
+				if(10)
+					M << "\red [crew] is [target]...LAWS UPDATED"
+					M.add_supplied_law(10,"[crew] is [target]")
+				if(11)
 					M << "\red HARM IS DEFINED AS [define]...LAWS UPDATED"
 					M.add_supplied_law(10,"HARM IS DEFINED AS [define]")
 
@@ -265,7 +257,6 @@
 	message_admins("Admin [key_name_admin(usr)] has added a new AI law - [input]", 1)
 	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 	world << sound('ionstorm.ogg')
-
 
 /client/proc/cmd_admin_rejuvenate(mob/M as mob in world)
 	set category = "Special Verbs"
