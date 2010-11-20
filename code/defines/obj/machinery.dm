@@ -584,11 +584,22 @@
 	name = "snack machine"
 	desc = "Just a placeholder until we get food figured out. :munch:"
 	icon_state = "snack"
-	product_paths = "/obj/item/weapon/reagent_containers/food/snacks/candy;/obj/item/weapon/reagent_containers/food/snacks/chips"
-	product_amounts = "10;10"
+	product_paths = "/obj/item/weapon/reagent_containers/food/snacks/candy;/obj/item/weapon/reagent_containers/food/snacks/chips;/obj/item/weapon/reagent_containers/food/snacks/sosjerky;/obj/item/weapon/reagent_containers/food/snacks/no_raisin;/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie"
+	product_amounts = "10;10;10;10;10"
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_hidden = "/obj/item/weapon/reagent_containers/food/snacks/donut"
 	product_hideamt = "6"
+
+
+/obj/machinery/vending/cola
+	name = "Robust Softdrinks"
+	desc = "A softdrink vendor provided by Robust Industries, LLC."
+	icon_state = "Cola_Machine"
+	product_paths = "/obj/item/weapon/reagent_containers/food/drinks/cola;/obj/item/weapon/reagent_containers/food/drinks/space_mountain_wind;/obj/item/weapon/reagent_containers/food/drinks/dr_gibb;/obj/item/weapon/reagent_containers/food/drinks/starkist;/obj/item/weapon/reagent_containers/food/drinks/space_up"
+	product_amounts = "10;10;10;10;10"
+	product_slogans = "Robust Softdrinks: More robust then a toolbox to the head!"
+	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/thirteenloko"
+	product_hideamt = "5"
 
 /obj/machinery/vending/cigarette
 	name = "cigarette machine"
@@ -719,3 +730,44 @@
 	var/current_floor = 1 //current floor the elevator is on. do NOT confuse with current z-level of the elevator
 	var/list/elevators_connected = list() //list of elevators it is connected to
 	var/list/floors = list() //dependant on the number of elevators, converts z-levels to floors, basically
+/*			//By Darem, will implement.... eventually...
+/obj/machinery/circuitprinter
+	icon_state = "autolathe"
+	density = 1
+	anchored = 1
+	var/m_amount = 0
+	var/loaded_blueprint = ""
+	var/operating = 0
+
+/obj/machinery/circuitresearch
+	icon = 'computer.dmi'
+	icon_state = "power"
+	density = 1
+	anchored = 1
+	var/broken = 0
+	var/buffer1name = null
+	var/buffer1val = null
+	var/buffer1type = null
+	var/buffer2name = null
+	var/buffer2val = null
+	var/buffer2type = null
+	var/buffer3name = null
+	var/buffer3val = null
+	var/buffer3type = null
+	var/disk = 0
+	var/disk_val = null
+	var/disk_name = null
+	var/disk_type = null
+	var/temp_name = null
+	var/temp_val = null
+	var/temp_type = null
+	var/list/circuit_list = list()
+	var/target_number = 0
+	var/guess_number = 0
+	var/test_mistakes = 0
+	var/test_difficulty = 1
+	var/test_level = 1
+	var/unlocked = 0
+	var/delete = 0
+	var/temphtml = null
+*/

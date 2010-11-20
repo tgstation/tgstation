@@ -422,7 +422,7 @@ Please clean it before use!</TT><BR>
 				for(var/mob/V in viewers(src, null))
 					V.show_message(text("\blue The microwave turns on."))
 				for(var/datum/recipe/R in src.available_recipes) //Look through the recipe list we made above
-					if(src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount && src.xenomeat_amount == R.xenomeat_amount && src.hotsauce_amount == R.hotsauce_amount && src.coldsauce_amount == R.coldsauce_amount && src.soysauce_amount == R.soysauce_amount && src.ketchup_amount == R.ketchup_amount && src.milk_amount == R.milk_amount) // Check if it's an accepted recipe
+					if(src.cheese_amount == R.cheese_amount && src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount && src.xenomeat_amount == R.xenomeat_amount && src.hotsauce_amount == R.hotsauce_amount && src.coldsauce_amount == R.coldsauce_amount && src.soysauce_amount == R.soysauce_amount && src.ketchup_amount == R.ketchup_amount && src.milk_amount == R.milk_amount) // Check if it's an accepted recipe
 						var/thing
 						if(src.extra_item)
 							if (src.extra_item.type == R.extra_item) thing = 1

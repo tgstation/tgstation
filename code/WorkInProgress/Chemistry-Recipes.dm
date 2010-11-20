@@ -220,6 +220,13 @@ datum
 			required_reagents = list("ethylredoxrazine" = 1, "ethanol" = 1)
 			result_amount = 2
 
+		sodiumchloride
+			name = "Sodium Chloride"
+			id = "sodiumchloride"
+			result = "sodiumchloride"
+			required_reagents = list("sodium" = 1, "chlorine" = 1)
+			result_amount = 2
+
 		flash_powder
 			name = "Flash powder"
 			id = "flash_powder"

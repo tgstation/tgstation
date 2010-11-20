@@ -150,33 +150,6 @@ datum
 				return
 
 
-		milk
-			name = "Milk"
-			id = "milk"
-			description = "An opaque white liquid produced by the mammary glands of mammals."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
-				if(!M) M = holder.my_atom
-				if(M:bruteloss && prob(10)) M:bruteloss--
-
-		beer
-			name = "Beer"
-			id = "beer"
-			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
-				if(!data) data = 1
-				data++
-				M.make_dizzy(3)
-				M:jitteriness = max(M:jitteriness-3,0)
-				if(data >= 25)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 3
-				if(data >= 40 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 2
-				..()
-
 		water
 			name = "Water"
 			id = "water"
@@ -432,6 +405,12 @@ datum
 				..()
 				return
 
+		sodium
+			name = "Sodium"
+			id = "sodium"
+			description = "A chemical element."
+			reagent_state = SOLID
+
 		phosphorus
 			name = "Phosphorus"
 			id = "phosphorus"
@@ -671,19 +650,6 @@ datum
 				T.assume_air(napalm)
 				return
 
-		coffee
-			name = "Coffee"
-			id = "coffee"
-			description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
-				..()
-				M.dizziness = max(0,M.dizziness-5)
-				M:drowsyness = max(0,M:drowsyness-3)
-				M:sleeping = 0
-				M.bodytemperature = min(310, M.bodytemperature+5) //310 is the normal bodytemp. 310.055
-				M.make_jittery(5)
-
 		space_cleaner
 			name = "Space cleaner"
 			id = "cleaner"
@@ -752,17 +718,6 @@ datum
 						//if(prob(10))
 							//M.make_dizzy(1) doesn't seem to do anything
 
-
-		space_cola
-			name = "Cola"
-			id = "cola"
-			description = "A refreshing beverage."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
-				M:drowsyness = max(0,M:drowsyness-5)
-				M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
-				..()
-				return
 
 		plasma
 			name = "Plasma"
@@ -1052,6 +1007,7 @@ datum
 					if (!M:confused) M:confused = 1
 					M:confused += 3
 				..()
+				return
 
 		ammonia
 			name = "Ammonia"
@@ -1077,6 +1033,7 @@ datum
 				M:stuttering = 0
 				M:confused = 0
 				..()
+				return
 
 
 /////////////////////////Food Reagents////////////////////////////
@@ -1140,9 +1097,9 @@ datum
 				..()
 				return
 
-		tablesalt
+		sodiumchloride
 			name = "Table Salt"
-			id = "tablesalt"
+			id = "sodiumchloride"
 			description = "A salt made of sodium chloride. Commonly used to season food."
 			reagent_state = SOLID
 
@@ -1189,8 +1146,119 @@ datum
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////// ALCHOHOLIC DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
+/////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+		milk
+			name = "Milk"
+			id = "milk"
+			description = "An opaque white liquid produced by the mammary glands of mammals."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				if(M:bruteloss && prob(10)) M:bruteloss--
+				..()
+				return
+
+		coffee
+			name = "Coffee"
+			id = "coffee"
+			description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				..()
+				M.dizziness = max(0,M.dizziness-5)
+				M:drowsyness = max(0,M:drowsyness-3)
+				M:sleeping = 0
+				M.bodytemperature = min(310, M.bodytemperature+5) //310 is the normal bodytemp. 310.055
+				M.make_jittery(5)
+				..()
+				return
+
+
+		space_cola
+			name = "Cola"
+			id = "cola"
+			description = "A refreshing beverage."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				M:drowsyness = max(0,M:drowsyness-5)
+				M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
+				..()
+				return
+
+		spacemountainwind
+			name = "Space Mountain Wind"
+			id = "spacemountainwind"
+			description = "Blows right through you like a space wind."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				M:drowsyness = max(0,M:drowsyness-7)
+				M:sleeping = 0
+				M.bodytemperature = max(310, M.bodytemperature-5)
+				M.make_jittery(5)
+				..()
+				return
+
+		thirteenloko
+			name = "Thirteen Loko"
+			id = "thirteenloko"
+			description = "A potent mixture of caffeine and alcohol."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				M:drowsyness = max(0,M:drowsyness-7)
+				M:sleeping = 0
+				M.bodytemperature = max(310, M.bodytemperature-5)
+				M.make_jittery(5)
+				if(!data) data = 1
+				data++
+				M.dizziness +=4
+				if(data >= 45 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
+				..()
+				return
+
+		dr_gibb
+			name = "Dr. Gibb"
+			id = "dr_gibb"
+			description = "A delicious blend of 42 different flavours"
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				M:drowsyness = max(0,M:drowsyness-6)
+				M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
+				..()
+				return
+
+		space_up
+			name = "Space-Up"
+			id = "space_up"
+			description = "Tastes like a hull breach in your mouth."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
+				..()
+				return
+
+		beer
+			name = "Beer"
+			id = "beer"
+			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M:jitteriness = max(M:jitteriness-3,0)
+				if(data >= 25)
+					if (!M:stuttering) M:stuttering = 1
+					M:stuttering += 3
+				if(data >= 40 && prob(33))
+					if (!M:confused) M:confused = 1
+					M:confused += 2
+				..()
+				return
 
 		whiskey
 			name = "Whiskey"
@@ -1207,6 +1275,7 @@ datum
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		specialwhiskey
 			name = "Special Blend Whiskey"
@@ -1223,6 +1292,7 @@ datum
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 
 		gin
@@ -1240,6 +1310,7 @@ datum
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		rum
 			name = "Rum"
@@ -1256,6 +1327,7 @@ datum
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		vodka
 			name = "Vodka"
@@ -1272,6 +1344,7 @@ datum
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		tequilla
 			name = "Tequila"
@@ -1288,6 +1361,7 @@ datum
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		vermouth
 			name = "Vermouth"
@@ -1304,6 +1378,8 @@ datum
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
+
 		wine
 			name = "Wine"
 			id = "wine"
@@ -1319,6 +1395,7 @@ datum
 				else if(data >= 145 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		tonic
 			name = "Tonic Water"
@@ -1326,11 +1403,12 @@ datum
 			description = "It tastes strange but at least the quinine keeps the Space Malaria at bay."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
-				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0
 				M.bodytemperature = min(310, M.bodytemperature-5)
+				..()
+				return
 
 		orangejuice
 			name = "Orange juice"
@@ -1404,6 +1482,7 @@ datum
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		cream
 			name = "Cream"
@@ -1426,6 +1505,7 @@ datum
 				else if(data >= 90 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		ale
 			name = "Ale"
@@ -1442,6 +1522,7 @@ datum
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		sodawater
 			name = "Soda Water"
@@ -1449,11 +1530,13 @@ datum
 			description = "A can of club soda. Why not make a scotch and soda?"
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
-				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0
 				M.bodytemperature = min(310, M.bodytemperature-5)
+				..()
+				return
+
 /////////////////////////////////////////////////////////////////cocktail entities//////////////////////////////////////////////
 
 
@@ -1472,6 +1555,7 @@ datum
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		cuba_libre
 			name = "Cuba Libre"
@@ -1488,6 +1572,7 @@ datum
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		whiskey_cola
 			name = "Whiskey Cola"
@@ -1504,6 +1589,7 @@ datum
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		martini
 			name = "Classic Martini"
@@ -1520,6 +1606,7 @@ datum
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		vodkamartini
 			name = "Vodka Martini"
@@ -1536,6 +1623,7 @@ datum
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		white_russian
 			name = "White Russian"
@@ -1552,6 +1640,7 @@ datum
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		screwdrivercocktail
 			name = "Screwdriver"
@@ -1568,6 +1657,7 @@ datum
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		bloody_mary
 			name = "Bloody Mary"
@@ -1584,6 +1674,8 @@ datum
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
+
 		gargle_blaster
 			name = "Pan-Galactic Gargle Blaster"
 			id = "gargleblaster"
@@ -1601,6 +1693,7 @@ datum
 				else if(data >=55)
 					M.druggy = max(M.druggy, 55)
 				..()
+				return
 
 		brave_bull
 			name = "Brave Bull"
@@ -1617,6 +1710,7 @@ datum
 				else if(data >= 145 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		tequilla_sunrise
 			name = "Tequilla Sunrise"
@@ -1633,6 +1727,7 @@ datum
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		toxins_special
 			name = "Toxins Special"
@@ -1650,6 +1745,7 @@ datum
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		beepsky_smash
 			name = "Beepsky Smash"
@@ -1668,6 +1764,7 @@ datum
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		doctor_delight
 			name = "The Doctor's Delight"
@@ -1768,6 +1865,7 @@ datum
 				else if(data >= 90 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		irishcoffee
 			name = "Irish Coffee"
@@ -1784,6 +1882,7 @@ datum
 				else if(data >= 150 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		margarita
 			name = "Margarita"
@@ -1800,6 +1899,7 @@ datum
 				else if(data >= 150 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		black_russian
 			name = "Black Russian"
@@ -1816,6 +1916,7 @@ datum
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		manhattan
 			name = "Manhattan"
@@ -1832,6 +1933,7 @@ datum
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		whiskeysoda
 			name = "Whiskey Soda"
@@ -1848,6 +1950,7 @@ datum
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		vodkatonic
 			name = "Vodka and Tonic"
@@ -1864,6 +1967,7 @@ datum
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return
 
 		ginfizz
 			name = "Gin Fizz"
@@ -1880,3 +1984,4 @@ datum
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
+				return

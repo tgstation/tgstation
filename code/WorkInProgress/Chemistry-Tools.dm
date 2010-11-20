@@ -332,7 +332,7 @@
 /*	New()
 		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R
-		R.my_atom = src	*/
+		R.my_atom = src */
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
@@ -607,7 +607,7 @@
 					user << "\red [target] is full."
 					return
 
-				if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food))
+				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food))
 					user << "\red You cannot directly fill this object."
 					return
 
@@ -620,7 +620,6 @@
 					src.reagents.reaction(target, INGEST)
 				if(ismob(target) && target == user)
 					src.reagents.reaction(target, INGEST)
-
 				spawn(5)
 					src.reagents.trans_to(target, 5)
 					user << "\blue You inject 5 units of the solution. The syringe now contains [src.reagents.total_volume] units."
@@ -653,6 +652,77 @@
 	desc = "yummy"
 	icon = 'food.dmi'
 	icon_state = null
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		return
+	attack_self(mob/user as mob)
+		return
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		var/datum/reagents/R = src.reagents
+
+		if(!R.total_volume || !R)
+			user << "\red None of [src] left, oh no!"
+			return 0
+
+		if(M == user)
+			M << "\blue You swallow some of contents of the [src]."
+			if(reagents.total_volume)
+				reagents.reaction(M, INGEST)
+				spawn(5)
+					reagents.trans_to(M, 10)
+
+			playsound(M.loc,'drink.ogg', rand(10,50), 1)
+			return 1
+		else if( istype(M, /mob/living/carbon/human) )
+
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message("\red [user] attempts to feed [M] [src].", 1)
+			if(!do_mob(user, M)) return
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message("\red [user] feeds [M] [src].", 1)
+
+			if(reagents.total_volume)
+				reagents.reaction(M, INGEST)
+				spawn(5)
+					reagents.trans_to(M, 10)
+
+			playsound(M.loc,'drink.ogg', rand(10,50), 1)
+			return 1
+
+		return 0
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		return
+
+	afterattack(obj/target, mob/user , flag)
+		if(istype(target, /obj/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+
+			if(!target.reagents.total_volume)
+				user << "\red [target] is empty."
+				return
+
+			if(reagents.total_volume >= reagents.maximum_volume)
+				user << "\red [src] is full."
+				return
+
+			var/trans = target.reagents.trans_to(src, 5)
+			user << "\blue You fill [src] with [trans] units of the contents of [target]."
+
+		//Something like a glass or a food item. Player probably wants to transfer TO it.
+		else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
+			if(!reagents.total_volume)
+				user << "\red [src] is empty."
+				return
+
+			if(target.reagents.total_volume >= target.reagents.maximum_volume)
+				user << "\red you can't add anymore to [target]."
+				return
+
+			var/trans = src.reagents.trans_to(target, 2)
+			user << "\blue You transfer [trans] units of the condiment to [target]."
+
+
 
 /obj/item/weapon/reagent_containers/food/snacks		//Food items that are eaten normally and don't leave anything behind.
 	name = "snack"
@@ -684,7 +754,8 @@
 					reagents.reaction(M, INGEST)
 					spawn(5)
 						if(reagents.total_volume > bitesize)
-							reagents.trans_to(M, bitesize)
+							var/temp_bitesize =  max(reagents.total_volume /2, 1)
+							reagents.trans_to(M, temp_bitesize)
 						else
 							reagents.trans_to(M, reagents.total_volume)
 						if(!reagents.total_volume)
@@ -1541,6 +1612,7 @@
 	var/hname = ""
 	var/job = null
 	icon_state = "kabob"
+	desc = "A delicious kabob"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -1549,9 +1621,36 @@
 /obj/item/weapon/reagent_containers/food/snacks/monkeykabob
 	name = "Monkey-kabob"
 	icon_state = "kabob"
+	desc = "A delicious kabob"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sosjerky
+	name = "Scardy's Private Reserve Beef Jerky"
+	icon_state = "sosjerky"
+	desc = "Beef jerky made from the finest space cows."
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/no_raisin
+	name = "4no Raisins"
+	icon_state = "4no_raisins"
+	desc = "Best raisins in the universe. Not sure why."
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
+	name = "Space Twinkie"
+	icon_state = "space_twinkie"
+	desc = "Will probably survive longer then you will."
+	New()
+		..()
+		reagents.add_reagent("sugar", 4)
 		bitesize = 2
 
 ///////////////////////////////////////////////Condiments
@@ -1575,6 +1674,8 @@
 	New()
 		..()
 		reagents.add_reagent("capsaicin", 50)
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/condiment/berryjam
 	name = "Berry Jam"
@@ -1583,6 +1684,8 @@
 	New()
 		..()
 		reagents.add_reagent("berryjam", 50)
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/condiment/soysauce
 	name = "Soy Sauce"
@@ -1591,6 +1694,8 @@
 	New()
 		..()
 		reagents.add_reagent("soysauce", 50)
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/condiment/coldsauce
 	name = "Coldsauce"
@@ -1599,6 +1704,33 @@
 	New()
 		..()
 		reagents.add_reagent("frostoil", 50)
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker
+	name = "Salt Shaker"
+	desc = "Salt. From space oceans, presumably."
+	icon_state = "saltshakersmall"
+	New()
+		var/datum/reagents/R = new/datum/reagents(20)
+		reagents = R
+		R.my_atom = src
+		reagents.add_reagent("sodiumchloride", 20)
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/reagent_containers/food/condiment/peppermill
+	name = "Pepper Mill"
+	desc = "Often used to flavor food or make people sneeze."
+	icon_state = "peppermillsmall"
+	New()
+		var/datum/reagents/R = new/datum/reagents(20)
+		reagents = R
+		R.my_atom = src
+		reagents.add_reagent("blackpepper", 20)
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
+
 
 ///////////////////////////////////////////////Drinks
 //Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
@@ -1611,6 +1743,8 @@
 	New()
 		..()
 		reagents.add_reagent("milk", 50)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
@@ -1619,6 +1753,8 @@
 	New()
 		..()
 		reagents.add_reagent("coffee", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/cola
 	name = "Space Cola"
@@ -1647,6 +1783,75 @@
 	New()
 		..()
 		reagents.add_reagent("ale", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/space_mountain_wind
+	name = "Space Mountain Wind"
+	desc = "Blows right through you like a space wind."
+	icon_state = "space_mountain_wind"
+	New()
+		..()
+		reagents.add_reagent("spacemountainwind", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/thirteenloko
+	name = "Thirteen Loko"
+	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsably."
+	icon_state = "thirteen_loko"
+	New()
+		..()
+		reagents.add_reagent("thirteenloko", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/dr_gibb
+	name = "Dr. Gibb"
+	desc = "A delicious mixture of 42 different flavors."
+	icon_state = "dr_gibb"
+	New()
+		..()
+		reagents.add_reagent("dr_gibb", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/starkist
+	name = "Star-kist"
+	desc = "The taste of a star in liquid form."
+	icon_state = "starkist"
+	New()
+		..()
+		reagents.add_reagent("cola", 15)
+		reagents.add_reagent("orangejuice", 15)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/space_up
+	name = "Space-Up"
+	desc = "Tastes like a hull breach in your mouth."
+	icon_state = "space-up"
+	New()
+		..()
+		reagents.add_reagent("space_up", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/sillycup
+	name = "Paper Cup"
+	desc = "A paper water cup."
+	icon_state = "water_cup_e"
+	New()
+		var/datum/reagents/R = new/datum/reagents(10)
+		reagents = R
+		R.my_atom = src
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+	on_reagent_change()
+		if(reagents.total_volume)
+			icon_state = "water_cup"
+		else
+			icon_state = "water_cup_e"
 
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
 //Notes by Darem: Functionally identical to regular drinks. The only difference is that the default bottle size is 100.
@@ -1855,6 +2060,18 @@
 	explosion(src.loc,-1,0,2)
 	if(src)
 		del(src)
+
+/obj/reagent_dispensers/water_cooler
+	name = "Water-Cooler"
+	desc = "A machine that dispenses water to drink"
+	amount_per_transfer_from_this = 5
+	icon = 'vending.dmi'
+	icon_state = "water_cooler"
+	New()
+		..()
+		anchored = 1
+		reagents.add_reagent("water",500)
+
 
 /obj/reagent_dispensers/beerkeg
 	name = "beer keg"

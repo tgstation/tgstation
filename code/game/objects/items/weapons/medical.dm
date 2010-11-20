@@ -98,7 +98,7 @@ MEDICAL
 			H.UpdateDamage()
 	else
 		M.bruteloss = max(0, M.bruteloss - (src.heal_brute/2))
-		M.fireloss = max(0, M.bruteloss - (src.heal_burn/2))
+		M.fireloss = max(0, M.fireloss - (src.heal_burn/2))
 
 	M.updatehealth()
 
