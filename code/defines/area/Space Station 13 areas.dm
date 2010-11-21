@@ -220,6 +220,31 @@
 	icon_state = "purple"
 	requires_power = 0
 
+/area/centcom/evac
+	name = "Centcom Emergency Shuttle"
+	icon_state = "purple"
+	requires_power = 0
+
+/area/centcom/suppy
+	name = "Centcom Supply Shuttle"
+	icon_state = "purple"
+	requires_power = 0
+
+/area/centcom/ferry
+	name = "Centcom Transport Shuttle"
+	icon_state = "purple"
+	requires_power = 0
+
+/area/centcom/shuttle
+	name = "Centcom Administration Shuttle"
+	icon_state = "purple"
+	requires_power = 0
+
+/area/centcom/test
+	name = "Centcom Testing Facility"
+	icon_state = "purple"
+	requires_power = 0
+
 /area/atmos
  	name = "Atmospherics"
  	icon_state = "atmos"
@@ -343,22 +368,29 @@
 	name = "Male Dorm"
 	icon_state = "Sleep"
 
+/area/crew_quarters/sleep_male/toilet_male
+	name = "Male Toilets"
+	icon_state = "Sleep"
+
 /area/crew_quarters/sleep_female
 	name = "Female Dorm"
 	icon_state = "Sleep"
 
-/area/crew_quarters/toilet
-	name = "Toilets"
+/area/crew_quarters/sleep_female/toilet_female
+	name = "Female Toilets"
 	icon_state = "toilet"
 
 /area/crew_quarters/locker
 	name = "Locker Room"
 	icon_state = "locker"
 
+/area/crew_quarters/locker/locker_toilet
+	name = "Locker Toilets"
+	icon_state = "toilet"
+
 /area/crew_quarters/fitness
 	name = "Fitness Room"
 	icon_state = "fitness"
-
 
 /area/crew_quarters/captain
 	name = "Captain's Quarters"
@@ -512,6 +544,14 @@
 
 /area/security/brig
 	name = "Brig"
+	icon_state = "brig"
+
+/area/security/brig/west
+	name = "Brig West"
+	icon_state = "brig"
+
+/area/security/brig/east
+	name = "Brig East"
 	icon_state = "brig"
 
 /area/security/warden
