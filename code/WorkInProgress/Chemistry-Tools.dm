@@ -1628,7 +1628,7 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky
-	name = "Scardy's Private Reserve Beef Jerky"
+	name = "Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
 	desc = "Beef jerky made from the finest space cows."
 	New()
@@ -1647,10 +1647,19 @@
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "Space Twinkie"
 	icon_state = "space_twinkie"
-	desc = "Will probably survive longer then you will."
+	desc = "Guaranteed to survive longer then you will."
 	New()
 		..()
 		reagents.add_reagent("sugar", 4)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers
+	name = "Cheesie Honkers"
+	icon_state = "cheesie_honkers"
+	desc = "Bite sized cheesie snacks that will honk all over your mouth"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
 ///////////////////////////////////////////////Condiments
