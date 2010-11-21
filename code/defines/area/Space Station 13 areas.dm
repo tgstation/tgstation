@@ -518,6 +518,10 @@
 	name = "Warden"
 	icon_state = "Warden"
 
+/area/security/hos
+	name = "Head of Security"
+	icon_state = "security"
+
 /area/security/detectives_office
 	name = "Detectives Office"
 	icon_state = "detective"

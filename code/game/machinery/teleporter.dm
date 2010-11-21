@@ -21,6 +21,7 @@
 			S = locate("landmark*["Clown Land"]") // use old stype
 		if (istype(S, /obj/landmark/) && istype(S.loc, /turf))
 			usr.loc = S.loc
+			del(W)
 	else
 		src.attack_hand()
 
