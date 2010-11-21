@@ -10,6 +10,7 @@
 		M.clean_blood()
 		if(istype(M, /mob/living/carbon))
 			var/mob/living/carbon/C = M
+			C.clean_blood()
 			if(C.r_hand)
 				C.r_hand.clean_blood()
 			if(C.l_hand)

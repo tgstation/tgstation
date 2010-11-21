@@ -148,12 +148,17 @@
 	if (!( src.flags ) & 256)
 		return
 	if ( src.blood_DNA )
+		if (istype (src, /mob/living/carbon))
+			var/obj/item/source2 = src
+			source2.blood_DNA = null
+			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
+			source2.icon = I
 		if (istype (src, /obj/item))
 			var/obj/item/source2 = src
 			source2.blood_DNA = null
 			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
 			source2.icon = I
-		else if (istype(src, /turf/simulated))
+		if (istype(src, /turf/simulated))
 			var/obj/item/source2 = src
 			source2.blood_DNA = null
 			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
