@@ -297,8 +297,8 @@
 	name = "Aft Maintenance"
 	icon_state = "amaint"
 
-/area/maintenance/auxsolar
-	name = "West Auxiliary Solar Maintenance"
+/area/maintenance/auxsolarport
+	name = "Port Auxiliary Solar Maintenance"
 	icon_state = "SolarcontrolA"
 
 /area/maintenance/starboardsolar
@@ -309,8 +309,8 @@
 	name = "Port Solar Maintenance"
 	icon_state = "SolarcontrolP"
 
-/area/maintenance/auxsolareast
-	name = "East Auxiliary Solar Maintenance"
+/area/maintenance/auxsolarstarboard
+	name = "Starboard Auxiliary Solar Maintenance"
 	icon_state = "SolarcontrolA"
 
 /area/maintenance/storage
@@ -544,17 +544,8 @@
 	name = "Security Checkpoint"
 	icon_state = "security"
 
-
 /area/security/brig
 	name = "Brig"
-	icon_state = "brig"
-
-/area/security/brig/west
-	name = "Brig West"
-	icon_state = "brig"
-
-/area/security/brig/east
-	name = "Brig East"
 	icon_state = "brig"
 
 /area/security/warden
@@ -574,12 +565,12 @@
 	luminosity = 1
 	sd_lighting = 0
 
-/area/solar/auxeast
-	name = "East Auxiliary Solar Array"
+/area/solar/auxport
+	name = "Port Auxiliary Solar Array"
 	icon_state = "panelsA"
 
-/area/solar/aux
-	name = "West Auxiliary Solar Array"
+/area/solar/auxstarboard
+	name = "Starboard Auxiliary Solar Array"
 	icon_state = "panelsA"
 
 /area/solar/fore
