@@ -17,7 +17,7 @@ datum/controller/game_controller
 			air_master = new /datum/controller/air_system()
 			air_master.setup()
 
-		world.tick_lag = 0.6
+		//world.tick_lag = 0.6
 
 		setup_objects()
 
