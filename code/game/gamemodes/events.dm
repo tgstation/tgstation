@@ -8,7 +8,7 @@
 		start_events()
 
 /proc/event()
-	switch(rand(1,7))
+	switch(rand(1,8))
 		if(1)
 			event = 1
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
@@ -92,6 +92,9 @@
 		if(7)
 			event = 1
 			alien_infestation()
+		if(8)
+			event = 1
+			prison_break()
 
 /proc/dotheblobbaby()
 	if (blobevent)
@@ -292,3 +295,21 @@
 			new /obj/alien/egg (vent.loc)
 		vents.Remove(vent)
 		spawncount -= 1
+
+/proc/prison_break() // -- Callagan
+	for (var/obj/machinery/power/apc/temp_apc in world)
+		if(istype(get_area(temp_apc), /area/prison))
+			temp_apc.overload_lighting()
+	for (var/obj/machinery/computer/prison_shuttle/temp_shuttle in world)
+		temp_shuttle.prison_break()
+	for (var/obj/secure_closet/security1/temp_closet in world)
+		if(istype(get_area(temp_closet), /area/prison))
+			temp_closet.prison_break()
+	for (var/obj/machinery/door/airlock/security/temp_airlock in world)
+		if(istype(get_area(temp_airlock), /area/prison))
+			temp_airlock.prison_open()
+	sleep(150)
+	command_alert("Prison station VI is not accepting commands. Recommend station AI involvement.", "VI Alert")
+
+
+

@@ -951,7 +951,7 @@ About the new airlock wires panel:
 	return ..()
 
 /obj/machinery/door/airlock/close()
-	if (src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+	if (src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 		return
 	use_power(50)
 	playsound(src.loc, 'airlock.ogg', 30, 1)
@@ -966,3 +966,10 @@ About the new airlock wires panel:
 				if (A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break
+
+
+/obj/machinery/door/airlock/proc/prison_open()
+	src.locked = 0
+	src.open()
+	src.locked = 1
+	return

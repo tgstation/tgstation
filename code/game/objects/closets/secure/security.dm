@@ -16,6 +16,10 @@
 	new /obj/item/weapon/baton(src)
 	return
 
+/obj/secure_closet/security1/proc/prison_break()
+	src.locked = 0
+	src.icon_state = src.icon_closed
+
 /obj/secure_closet/security2/New()
 	..()
 	sleep(2)

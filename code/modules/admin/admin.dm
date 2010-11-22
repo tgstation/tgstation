@@ -1150,6 +1150,9 @@ var/showadminmessages = 1
 					if(aliens_allowed)
 						alien_infestation()
 						message_admins("[key_name_admin(usr)] has spawned aliens", 1)
+				if("prison_break")
+					message_admins("[key_name_admin(usr)] has allowed a prison break", 1)
+					prison_break()
 				if("virus")
 					if(alert("Do you want this to be a random disease or do you have something in mind?",,"Random","Choose")=="Random")
 						viral_outbreak()
@@ -1612,6 +1615,7 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes (Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=goblob'>Spawn magma(Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
+<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
 <A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
 <A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
 <A href='?src=\ref[src];secretsfun=cleanexcrement'>Remove all urine/poo from station</A><BR>

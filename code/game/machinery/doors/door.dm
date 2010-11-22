@@ -226,8 +226,28 @@
 
 /////////////////////////////////////////////////// Unpowered doors
 
+/obj/machinery/door/unpowered/Bumped(atom/AM)
+	if(p_open || operating) return
+	if (src.locked)
+		return
+	if(ismob(AM))
+		var/mob/M = AM
+		if(world.timeofday - AM.last_bumped <= 60) return
+		if(M.client && !M:handcuffed)
+			bumpopen(M)
+	else if(istype(AM, /obj/machinery/bot))
+		var/obj/machinery/bot/bot = AM
+		if(src.check_access(bot.botcard))
+			if(density)
+				open()
+	else if(istype(AM, /obj/alien/facehugger))
+		if(src.check_access(null))
+			if(density)
+				open()
+
 /obj/machinery/door/unpowered
 	autoclose = 0
+	var/locked = 0
 
 /obj/machinery/door/unpowered/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
@@ -240,6 +260,8 @@
 
 /obj/machinery/door/unpowered/attackby(obj/item/I as obj, mob/user as mob)
 	if (src.operating)
+		return
+	if (src.locked)
 		return
 	src.add_fingerprint(user)
 	if (src.allowed(user))

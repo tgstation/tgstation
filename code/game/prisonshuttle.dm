@@ -3,12 +3,23 @@
 #define PRISON_STATION_AREATYPE "/area/shuttle/prison/station" //Type of the prison shuttle area for station
 #define PRISON_DOCK_AREATYPE "/area/shuttle/prison/prison"	//Type of the prison shuttle area for dock
 
-var/prison_shuttle_moving = 0
+var/prison_shuttle_moving_to_station = 0
+var/prison_shuttle_moving_to_prison = 0
 var/prison_shuttle_at_station = 0
 var/prison_shuttle_can_send = 1
 var/prison_shuttle_time = 0
 var/prison_shuttle_timeleft = 0
 var/prison_shuttle_points = 50
+
+/obj/machinery/computer/prison_shuttle
+	name = "Prison Shuttle Console"
+	icon = 'computer.dmi'
+	icon_state = "shuttle"
+	req_access = list(access_security)
+	var/temp = null
+	var/hacked = 0
+	var/allowedtocall = 0
+	var/prison_break = 0
 
 /proc/prison_process()
 	while(prison_shuttle_time - world.timeofday > 0)
@@ -20,13 +31,14 @@ var/prison_shuttle_points = 50
 
 		prison_shuttle_timeleft = (ticksleft / 10)
 		sleep(5)
-	prison_shuttle_moving = 0
+	prison_shuttle_moving_to_station = 0
+	prison_shuttle_moving_to_prison = 0
 
 	switch(prison_shuttle_at_station)
 
 		if(0)
 			prison_shuttle_at_station = 1
-			if (prison_shuttle_moving) return
+			if (prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison) return
 
 			if (!prison_can_move())
 				usr << "\red The prison shuttle is unable to leave."
@@ -58,7 +70,7 @@ var/prison_shuttle_points = 50
 
 		if(1)
 			prison_shuttle_at_station = 0
-			if (prison_shuttle_moving) return
+			if (prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison) return
 
 			if (!prison_can_move())
 				usr << "\red The prison shuttle is unable to leave."
@@ -89,7 +101,7 @@ var/prison_shuttle_points = 50
 
 
 /proc/prison_can_move()
-	if(prison_shuttle_moving) return 0
+	if(prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison) return 0
 
 	else return 1
 
@@ -113,6 +125,10 @@ var/prison_shuttle_points = 50
 		user << "\red Access Denied."
 		return
 
+	if(prison_break)
+		user << "\red Unable to locate shuttle."
+		return
+
 	if(..())
 		return
 	user.machine = src
@@ -122,8 +138,8 @@ var/prison_shuttle_points = 50
 		dat = src.temp
 	else
 		dat += {"<BR><B>Prison Shuttle</B><HR>
-		\nLocation: [prison_shuttle_moving ? "Moving to station ([prison_shuttle_timeleft] Secs.)":prison_shuttle_at_station ? "Station":"Dock"]<BR>
-		[prison_shuttle_moving ? "\n*Shuttle already called*<BR>\n<BR>":prison_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Send to Dock</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Send to station</A><BR>\n<BR>"]
+		\nLocation: [prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison ? "Moving to station ([prison_shuttle_timeleft] Secs.)":prison_shuttle_at_station ? "Station":"Dock"]<BR>
+		[prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison ? "\n*Shuttle already called*<BR>\n<BR>":prison_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Send to Dock</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Send to station</A><BR>\n<BR>"]
 		\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
 	user << browse(dat, "window=computer;size=575x450")
@@ -138,7 +154,7 @@ var/prison_shuttle_points = 50
 		usr.machine = src
 
 	if (href_list["sendtodock"])
-		if(!prison_shuttle_at_station || prison_shuttle_moving) return
+		if(!prison_shuttle_at_station|| prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison) return
 
 		if (!prison_can_move())
 			usr << "\red The prison shuttle is unable to leave."
@@ -150,14 +166,14 @@ var/prison_shuttle_points = 50
 		src.temp += "Shuttle sent.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		src.updateUsrDialog()
 
-		prison_shuttle_moving = 1
+		prison_shuttle_moving_to_prison = 1
 
 		prison_shuttle_time = world.timeofday + PRISON_MOVETIME
 		spawn(0)
 			prison_process()
 
 	else if (href_list["sendtostation"])
-		if(prison_shuttle_at_station || prison_shuttle_moving) return
+		if(prison_shuttle_at_station || prison_shuttle_moving_to_station || prison_shuttle_moving_to_prison) return
 
 		if (!prison_can_move())
 			usr << "\red The prison shuttle is unable to leave."
@@ -169,7 +185,7 @@ var/prison_shuttle_points = 50
 		src.temp += "Shuttle sent.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		src.updateUsrDialog()
 
-		prison_shuttle_moving = 1
+		prison_shuttle_moving_to_station = 1
 
 		prison_shuttle_time = world.timeofday + PRISON_MOVETIME
 		spawn(0)
@@ -181,6 +197,22 @@ var/prison_shuttle_points = 50
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+/obj/machinery/computer/prison_shuttle/proc/prison_break()
+	switch(prison_break)
+		if (0)
+			if(!prison_shuttle_at_station || prison_shuttle_moving_to_prison) return
+
+			prison_shuttle_moving_to_prison = 1
+			prison_shuttle_at_station = prison_shuttle_at_station
+
+			if (!prison_shuttle_moving_to_prison || !prison_shuttle_moving_to_station)
+				prison_shuttle_time = world.timeofday + PRISON_MOVETIME
+			spawn(0)
+				prison_process()
+			prison_break = 1
+		if(1)
+			prison_break = 0
 
 /obj/machinery/computer/prison_shuttle/proc/post_signal(var/command)
 
