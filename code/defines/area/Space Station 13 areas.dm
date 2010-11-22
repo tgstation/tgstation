@@ -298,7 +298,7 @@
 	icon_state = "amaint"
 
 /area/maintenance/auxsolar
-	name = "Auxiliary Solar Maintenance"
+	name = "West Auxiliary Solar Maintenance"
 	icon_state = "SolarcontrolA"
 
 /area/maintenance/starboardsolar
@@ -309,6 +309,9 @@
 	name = "Port Solar Maintenance"
 	icon_state = "SolarcontrolP"
 
+/area/maintenance/auxsolareast
+	name = "East Auxiliary Solar Maintenance"
+	icon_state = "SolarcontrolA"
 
 /area/maintenance/storage
 	name = "Atmospherics"
@@ -571,8 +574,12 @@
 	luminosity = 1
 	sd_lighting = 0
 
+/area/solar/auxeast
+	name = "East Auxiliary Solar Array"
+	icon_state = "panelsA"
+
 /area/solar/aux
-	name = "Auxiliary Solar Array"
+	name = "West Auxiliary Solar Array"
 	icon_state = "panelsA"
 
 /area/solar/fore
