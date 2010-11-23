@@ -195,7 +195,7 @@
 
 /obj/secure_closet/courtroom
 	name = "Courtroom Locker"
-	req_access = list(access_heads)
+	req_access = list(access_court)
 
 /obj/secure_closet/animal
 	name = "Animal Control"

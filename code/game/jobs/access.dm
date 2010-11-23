@@ -28,6 +28,7 @@
 	access_crematorium = 27
 	access_kitchen = 28
 	access_robotics = 29
+	access_rd = 30
 	access_cargo = 31
 	access_construction = 32
 	access_chemistry = 33
@@ -39,6 +40,7 @@
 	access_virology = 39
 	access_cmo = 40
 	access_qm = 41
+	access_court = 42
 
 
 /obj/var/list/req_access = null
@@ -103,7 +105,7 @@
 		if("Chaplain")
 			return list(access_morgue, access_chapel_office, access_crematorium)
 		if("Detective")
-			return list(access_security, access_forensics_lockers, access_morgue, access_maint_tunnels)
+			return list(access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 		if("Medical Doctor")
 			return list(access_medical, access_morgue)
 		if("Botanist")	// -- TLE
@@ -111,22 +113,22 @@
 		if("Librarian") // -- TLE
 			return list(access_library)
 		if("Lawyer") //Muskets 160910
-			return list(access_maint_tunnels, access_lawyer)
+			return list(access_maint_tunnels, access_lawyer, access_court)
 		if("Captain")
 			return get_all_accesses()
 		if("Security Officer")
-			return list(access_security, access_brig)
+			return list(access_security, access_brig, access_court)
 		if("Warden")
-			return list(access_security, access_brig, access_armory)
+			return list(access_security, access_brig, access_armory, access_court)
 		if("Scientist")
 			return list(access_tox, access_tox_storage)
 		if("Head of Security")
-			return list(access_medical, access_morgue, access_tox, access_tox_storage, access_chemistry, access_medlab,
+			return list(access_medical, access_morgue, access_tox, access_tox_storage, access_chemistry, access_medlab, access_court,
 			            access_teleporter, access_heads, access_tech_storage, access_security, access_brig, access_atmospherics,
 			            access_maint_tunnels, access_bar, access_janitor, access_kitchen, access_robotics, access_armory, access_hydroponics)
 		if("Head of Personnel")
-			return list(access_security, access_brig, access_forensics_lockers,
-			            access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab, access_engine,
+			return list(access_security, access_brig, access_court, access_forensics_lockers,
+			            access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab, access_engine, access_rd,
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer, access_virology)
@@ -156,7 +158,7 @@
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_ai_upload, access_construction)
 		if("Research Director") // added hydroponics access -- Skie
-			return list(access_medical, access_morgue, access_medlab, access_robotics,
+			return list(access_medical, access_morgue, access_medlab, access_robotics, access_rd,
 			            access_tech_storage, access_maint_tunnels, access_heads, access_tox,
 			            access_tox_storage, access_chemistry, access_teleporter, access_hydroponics, access_virology)
 		if("Virologist")
@@ -167,8 +169,8 @@
 			return list()
 
 /proc/get_all_accesses()
-	return list(access_security, access_brig, access_armory, access_forensics_lockers,
-	            access_medical, access_medlab, access_morgue,
+	return list(access_security, access_brig, access_armory, access_forensics_lockers, access_court,
+	            access_medical, access_medlab, access_morgue, access_rd,
 	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
@@ -186,6 +188,8 @@
 			return "Security"
 		if(access_brig)
 			return "Brig"
+		if(access_court)
+			return "Courtroom"
 		if(access_forensics_lockers)
 			return "Forensics"
 		if(access_medical)
@@ -200,6 +204,8 @@
 			return "Toxins Storage"
 		if(access_chemistry)
 			return "Toxins Chemical Lab"
+		if(access_rd)
+			return "Research Director Office"
 		if(access_bar)
 			return "Bar"
 		if(access_janitor)
