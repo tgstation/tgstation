@@ -714,6 +714,14 @@
 	name = "Test Room"
 	icon_state = "storage"
 
+/area/djstation
+	name = "Ruskie DJ Station"
+	icon_state = "DJ"
+
+/area/djstation/solars
+	name = "DJ Station Solars"
+	icon_state = "DJ"
+
 /area/derelict
 	name = "Derelict Station"
 	icon_state = "storage"
