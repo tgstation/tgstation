@@ -1,9 +1,9 @@
-obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(src.contents.len > 0)
 		user << "Something is already in the processing chamber."
 		return 0
 	else
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/chili) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/tomato) || istype(O, /obj/item/weapon/reagent_containers/food/drinks/milk) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/berries) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/humanmeat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeymeat))
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/humanmeat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeymeat))
 			user.drop_item()
 			O.loc = src
 		else if(istype(O,/obj/item/weapon/grab))
@@ -30,69 +30,6 @@ obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				V.show_message(text("\blue [user] turns on \a [src]."))
 			del(O)
 			new /obj/item/weapon/reagent_containers/food/snacks/flour(src.loc)
-			src.processing = 0
-			return
-		if(istype(O, /obj/item/weapon/reagent_containers/food/drinks/milk))
-			src.processing = 1
-			sleep(40)
-			playsound(src.loc, 'blender.ogg', 50, 1)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] turns on \a [src]."))
-			del(O)
-			new /obj/item/weapon/reagent_containers/food/snacks/cheesewheel(src.loc)
-			src.processing = 0
-			return
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/chili))
-			src.processing = 1
-			sleep(40)
-			playsound(src.loc, 'blender.ogg', 50, 1)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] turns on \a [src]."))
-			del(O)
-			new /obj/item/weapon/reagent_containers/food/condiment/hotsauce(src.loc)
-			src.processing = 0
-			return
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/tomato))
-			src.processing = 1
-			sleep(40)
-			playsound(src.loc, 'blender.ogg', 50, 1)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] turns on \a [src]."))
-			del(O)
-			new /obj/item/weapon/reagent_containers/food/condiment/ketchup(src.loc)
-			src.processing = 0
-			return
-
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/berries))
-			src.processing = 1
-			sleep(40)
-			playsound(src.loc, 'blender.ogg', 50, 1)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] turns on \a [src]."))
-			del(O)
-			new /obj/item/weapon/reagent_containers/food/condiment/berryjam(src.loc)
-			src.processing = 0
-			return
-
-		if (istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans))
-			src.processing = 1
-			sleep(40)
-			playsound(src.loc, 'blender.ogg', 50, 1)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] turns on \a [src]."))
-			del(O)
-			new /obj/item/weapon/reagent_containers/food/condiment/soysauce(src.loc)
-			src.processing = 0
-			return
-
-		if (istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper))
-			src.processing = 1
-			sleep(40)
-			playsound(src.loc, 'blender.ogg', 50, 1)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] turns on \a [src]."))
-			del(O)
-			new /obj/item/weapon/reagent_containers/food/condiment/coldsauce(src.loc)
 			src.processing = 0
 			return
 
@@ -151,20 +88,6 @@ obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		del(G)
 		new /obj/item/weapon/reagent_containers/food/drinks/jar(src.loc)
 */
-/*
-/obj/item/weapon/reagent_containers/food/snacks/grown/berries
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/chili
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
-*/
 
 

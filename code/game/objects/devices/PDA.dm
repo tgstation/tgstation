@@ -1626,7 +1626,7 @@ Code:
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=card'>Syndicate Card</A> (3)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=emag'>Electromagnet Card</A> (3)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_freedom'>Freedom Implant (with injector)</A> (3)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (4)<BR>"
+	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=cloak'>Cloaking Device</A> (4)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=sword'>Energy Sword</A> (4)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=bomb'>Low-Yield Bomb</A> (4)<BR>"
@@ -1696,8 +1696,8 @@ Code:
 					var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(src.hostpda))
 					O.imp = new /obj/item/weapon/implant/freedom(O)
 			if("sleepypen")
-				if (src.uses >= 4)
-					src.uses -= 4
+				if (src.uses >= 5)
+					src.uses -= 5
 					new /obj/item/weapon/pen/sleepypen(get_turf(src.hostpda))
 			if("projector")
 				if (src.uses >= 4)

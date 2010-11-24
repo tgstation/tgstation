@@ -1,5 +1,5 @@
 // Bottles transfer 50 units
-// Beakers transfer 30 units
+// Beakers transfer 50 units
 // Syringes transfer 15 units
 // Droppers transfer 5 units
 
@@ -646,12 +646,14 @@
 		var/datum/reagents/R = new/datum/reagents(50)	//	if you want a food item with a different capacity
 		reagents = R									//	then just redefine it in the code for the specific food item.
 		R.my_atom = src
+		src.pixel_x = rand(-5.0, 5)						//Randomizes postion slightly.
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/condiment	//Food items that aren't eaten normally and leave an empty container behind.
-	name = "condiment"
-	desc = "yummy"
+	name = "Condiment Container"
+	desc = "Just your average condiment container."
 	icon = 'food.dmi'
-	icon_state = null
+	icon_state = "emptycondiment"
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -719,7 +721,7 @@
 				user << "\red you can't add anymore to [target]."
 				return
 
-			var/trans = src.reagents.trans_to(target, 2)
+			var/trans = src.reagents.trans_to(target, 1)
 			user << "\blue You transfer [trans] units of the condiment to [target]."
 
 
@@ -754,7 +756,7 @@
 					reagents.reaction(M, INGEST)
 					spawn(5)
 						if(reagents.total_volume > bitesize)
-							var/temp_bitesize =  max(reagents.total_volume /2, 1)
+							var/temp_bitesize =  max(reagents.total_volume /2, bitesize)
 							reagents.trans_to(M, temp_bitesize)
 						else
 							reagents.trans_to(M, reagents.total_volume)
@@ -1014,6 +1016,26 @@
 		else
 			icon_state = "beaker0"
 
+/obj/item/weapon/reagent_containers/glass/blender_jug
+	name = "Blender Jug"
+	desc = "A blender jug, part of a blender."
+	icon = 'kitchen.dmi'
+	icon_state = "blender_jug_e"
+
+	New()
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
+
+	on_reagent_change()
+		switch(src.reagents.total_volume)
+			if(0)
+				icon_state = "blender_jug_e"
+			if(1 to 75)
+				icon_state = "blender_jug_h"
+			if(76 to 100)
+				icon_state = "blender_jug_f"
+
 /obj/item/weapon/reagent_containers/glass/large
 	name = "large reagent glass"
 	desc = "A large reagent glass."
@@ -1070,6 +1092,17 @@
 	New()
 		..()
 		reagents.add_reagent("stoxin", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate
+	name = "Chloral Hydrate Bottle"
+	desc = "A small bottle."
+	icon = 'chemical.dmi'
+	icon_state = "bottle20"
+	amount_per_transfer_from_this = 5
+
+	New()
+		..()
+		reagents.add_reagent("chloralhydrate", 15)		//Intentionally low since it is so strong. Still enough to knock someone out.
 
 /obj/item/weapon/reagent_containers/glass/bottle/antitoxin
 	name = "anti-toxin bottle"
@@ -1653,6 +1686,15 @@
 		reagents.add_reagent("sugar", 4)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/tofu
+	name = "Tofu"
+	icon_state = "tofu"
+	desc = "We all love tofu."
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 3
+
 /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers
 	name = "Cheesie Honkers"
 	icon_state = "cheesie_honkers"
@@ -1662,62 +1704,88 @@
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/tofubread
+	name = "Tofubread"
+	icon_state = "Like meatbread but for vegans. Not guaranteed to give superpowers."
+	icon_state = "tofubread"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 40)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
+	name = "Tofubread slice"
+	desc = "A slice of delicious tofubread."
+	icon_state = "tofubreadslice"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
+
 ///////////////////////////////////////////////Condiments
 //Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all
-//	leave empty containers when used up and can be filled/re-filled with other items. However, they start already full with
-//	whatever substance they are designed for. Formatting almost identical to snacks except you don't have to worry about bite size.
-//	and such. Condiments should be either Liquids or Solids.
+//	leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
+//	to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
 
-/obj/item/weapon/reagent_containers/food/condiment/ketchup
-	name = "Ketchup"
-	desc = "You feel more American already."
-	icon_state = "ketchup"
+/obj/item/weapon/reagent_containers/food/condiment
+	on_reagent_change()
+		if(icon_state == "saltshakersmall" || icon_state == "peppermillsmall")
+			return
+		if(reagents.reagent_list.len > 0)
+			switch(reagents.get_master_reagent_id())
+				if("ketchup")
+					name = "Ketchup"
+					desc = "You feel more American already."
+					icon_state = "ketchup"
+				if("capsaicin")
+					name = "Hotsauce"
+					desc = "You can almost TASTE the stomach ulcers now!"
+					icon_state = "hotsauce"
+				if("enzyme")
+					name = "Universal Enzyme"
+					desc = "Used in cooking various dishes."
+					icon_state = "enzyme"
+				if("soysauce")
+					name = "Soy Sauce"
+					desc = "A salty soy-based flavoring."
+					icon_state = "soysauce"
+				if("frostoil")
+					name = "Coldsauce"
+					desc = "Leaves the tongue numb in it's passage."
+					icon_state = "coldsauce"
+				if("sodiumchloride")
+					name = "Salt Shaker"
+					desc = "Salt. From space oceans, presumably."
+					icon_state = "saltshaker"
+				if("blackpepper")
+					name = "Pepper Mill"
+					desc = "Often used to flavor food or make people sneeze."
+					icon_state = "peppermillsmall"
+				if("oliveoil")
+					name = "Olive Oil"
+					desc = "A delicious oil used in cooking. Possibly made from space olives."
+					icon_state = "oliveoil"
+				else
+					name = "Misc Condiment Bottle"
+					desc = "A mixture of various condiments"
+					icon_state = "mixedcondiments"
+		else
+			icon_state = "emptycondiment"
+			name = "Condiment Bottle"
+			desc = "An empty condiment bottle."
+			return
+
+/obj/item/weapon/reagent_containers/food/condiment/enzyme
+	name = "Universal Enzyme"
+	desc = "Used in cooking various dishes."
+	icon_state = "enzyme"
 	New()
 		..()
-		reagents.add_reagent("ketchup", 50)
+		reagents.add_reagent("enzyme", 50)
 
-/obj/item/weapon/reagent_containers/food/condiment/hotsauce
-	name = "Hotsauce"
-	desc = "You can almost TASTE the stomach ulcers now!"
-	icon_state = "hotsauce"
-	New()
-		..()
-		reagents.add_reagent("capsaicin", 50)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
-/obj/item/weapon/reagent_containers/food/condiment/berryjam
-	name = "Berry Jam"
-	desc = "A delightfully sweat flavor of some indescernible berry... you think."
-	icon_state = "berryjam"
-	New()
-		..()
-		reagents.add_reagent("berryjam", 50)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
-/obj/item/weapon/reagent_containers/food/condiment/soysauce
-	name = "Soy Sauce"
-	desc = "A salty soy-based flavoring."
-	icon_state = "soysauce"
-	New()
-		..()
-		reagents.add_reagent("soysauce", 50)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
-/obj/item/weapon/reagent_containers/food/condiment/coldsauce
-	name = "Coldsauce"
-	desc = "Leaves the tongue numb in it's passage."
-	icon_state = "coldsauce"
-	New()
-		..()
-		reagents.add_reagent("frostoil", 50)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker
-	name = "Salt Shaker"
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
+	name = "Salt Shaker"											//	a large one.
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
 	New()
@@ -1725,8 +1793,6 @@
 		reagents = R
 		R.my_atom = src
 		reagents.add_reagent("sodiumchloride", 20)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "Pepper Mill"
@@ -1737,14 +1803,21 @@
 		reagents = R
 		R.my_atom = src
 		reagents.add_reagent("blackpepper", 20)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/reagent_containers/food/condiment/oliveoil			//Will remove this as soon as there is a way to make olive oil.
+	name = "Olive Oil"
+	desc = "A delicious oil used in cooking. Possibly made from space olives."
+	icon_state = "oliveoil"		//redundant but added so it looks nicer on the map.
+	New()
+		..()
+		reagents.add_reagent("oliveoil", 50)
 
 
 ///////////////////////////////////////////////Drinks
 //Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
 //	rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
-//	Formatting is the same as condiments.
+//	Formatting is the same as food.
+
 /obj/item/weapon/reagent_containers/food/drinks/milk
 	name = "Space Milk"
 	desc = "It's milk. White and nutritious goodness!"
@@ -1752,6 +1825,16 @@
 	New()
 		..()
 		reagents.add_reagent("milk", 50)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/soymilk
+	name = "SoyMilk"
+	desc = "It's soy milk. White and nutritious goodness!"
+	icon_state = "soymilk"
+	New()
+		..()
+		reagents.add_reagent("soymilk", 50)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
@@ -2325,6 +2408,10 @@
 					icon_state = "glass_clear"
 					name = "Glass of Water"
 					desc = "Are you really that boring?"
+				if("moonshine")
+					icon_state = "glass_clear"
+					name = "Moonshine"
+					desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"

@@ -304,6 +304,13 @@ datum
 					S.start()
 				return
 
+		chloralhydrate
+			name = "Chloral Hydrate"
+			id = "chloralhydrate"
+			result = "chloralhydrate"
+			required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
+			result_amount = 1
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 // foam and foam precursor
@@ -418,9 +425,52 @@ datum
 			result_amount = 5
 
 
+//////////////////////////////////////////FOOD MIXTURES////////////////////////////////////
 
+		tofu
+			name = "Tofu"
+			id = "tofu"
+			result = null
+			required_reagents = list("soymilk" = 10, "enzyme" = 2)
+			result_amount = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+				new /obj/item/weapon/reagent_containers/food/snacks/tofu(location)
+				return
+
+		soysauce
+			name = "Soy Sauce"
+			id = "soysauce"
+			result = "soysauce"
+			required_reagents = list("soymilk" = 1, "acid" = 1)
+			result_amount = 2
+
+		cheesewheel
+			name = "Cheesewheel"
+			id = "cheesewheel"
+			result = null
+			required_reagents = list("milk" = 40, "enzyme" = 2)
+			result_amount = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+				new /obj/item/weapon/reagent_containers/food/snacks/cheesewheel(location)
+				return
 
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////
+
+		moonshine
+			name = "Moonshine"
+			id = "moonshine"
+			result = "moonshine"
+			required_reagents = list("nutriment" = 10, "enzyme" = 2)
+			result_amount = 5
+
+		wine
+			name = "Wine"
+			id = "wine"
+			result = "wine"
+			required_reagents = list("berryjuice" = 10, "enzyme" = 2)
+			result_amount = 5
 
 		gin_tonic
 			name = "Gin and Tonic"

@@ -240,6 +240,8 @@ datum
 					holder.remove_reagent("cyanide", 1)
 				if(holder.has_reagent("amatoxin"))
 					holder.remove_reagent("amatoxin", 2)
+				if(holder.has_reagent("chloralhydrate"))
+					holder.remove_reagent("chloralhydrate", 5)
 				M:toxloss = max(M:toxloss-2,0)
 				..()
 				return
@@ -1035,12 +1037,30 @@ datum
 				..()
 				return
 
+		chloralhydrate							//Otherwise known as a "Mickey Finn"
+			name = "Chloral Hydrate"
+			id = "chloralhydrate"
+			description = "A powerful sedative."
+			reagent_state = SOLID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				switch(data)
+					if(1 to 50)
+						M:sleeping += 1
+					if(51 to INFINITY)
+						M:sleeping += 1
+						M:toxloss += (data - 50)
+				data++
+				..()
+				return
+
 
 /////////////////////////Food Reagents////////////////////////////
 // Part of the food code. It is used instead of the old "heal_amt" code. Also is where all the food
 // 	condiments, additives, and such go.
 		nutriment
-			name = "Nutrition"
+			name = "Nutriment"
 			id = "nutriment"
 			description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 			reagent_state = SOLID
@@ -1050,16 +1070,6 @@ datum
 				M:nutrition += 20	//This is the bit that makes you fat.
 				..()
 				return
-
-		berryjam
-			name = "Berry Jam"
-			id = "berryjam"
-			description = "A delightfully sweat flavor of some indescernible berry... you think."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
-				if(!M) M = holder.my_atom
-				M:nutrition++
-				..()
 
 		soysauce
 			name = "Soysauce"
@@ -1141,8 +1151,60 @@ datum
 					if(!M) M = holder.my_atom
 					M:bruteloss--
 					M:fireloss--
+					M:nutrition++
 					..()
 					return
+
+		oliveoil
+			name = "Olive Oil"
+			id = "oliveoil"
+			description = "An oil derived from various types of olives. A famous export of Space Italy."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				M:nutrition += 20
+				..()
+				return
+			reaction_turf(var/turf/T, var/volume)
+				src = null
+				if(volume >= 3)
+					if(T:wet >= 1) return
+					T:wet = 1
+					if(T:wet_overlay)
+						T:overlays -= T:wet_overlay
+						T:wet_overlay = null
+					T:wet_overlay = image('water.dmi',T,"wet_floor")
+					T:overlays += T:wet_overlay
+
+					spawn(800)
+						if(T:wet >= 2) return
+						T:wet = 0
+						if(T:wet_overlay)
+							T:overlays -= T:wet_overlay
+							T:wet_overlay = null
+				var/hotspot = (locate(/obj/hotspot) in T)
+				if(hotspot)
+					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+					lowertemp.react()
+					T.assume_air(lowertemp)
+					del(hotspot)
+
+		enzyme
+			name = "Universal Enzyme"
+			id = "enzyme"
+			description = "A universal enzyme used in the preperation of certain chemicals and foods."
+			reagent_state = LIQUID
+
+		berryjuice
+			name = "Berry Juice"
+			id = "berryjuice"
+			description = "A delicious blend of several different kinds of berries."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:nutrition++
+				..()
+				return
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1156,6 +1218,19 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				if(M:bruteloss && prob(10)) M:bruteloss--
+				M:nutrition++
+				..()
+				return
+
+		soymilk
+			name = "Soy Milk"
+			id = "soymilk"
+			description = "An opaque white liquid made from soybeans."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				if(M:bruteloss && prob(10)) M:bruteloss--
+				M:nutrition++
 				..()
 				return
 
@@ -1183,6 +1258,7 @@ datum
 			on_mob_life(var/mob/M)
 				M:drowsyness = max(0,M:drowsyness-5)
 				M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
+				M:nutrition += 5
 				..()
 				return
 
@@ -1196,6 +1272,7 @@ datum
 				M:sleeping = 0
 				M.bodytemperature = max(310, M.bodytemperature-5)
 				M.make_jittery(5)
+				M:nutrition += 3
 				..()
 				return
 
@@ -1209,6 +1286,7 @@ datum
 				M:sleeping = 0
 				M.bodytemperature = max(310, M.bodytemperature-5)
 				M.make_jittery(5)
+				M:nutrition += 2
 				if(!data) data = 1
 				data++
 				M.dizziness +=4
@@ -1228,6 +1306,7 @@ datum
 			on_mob_life(var/mob/M)
 				M:drowsyness = max(0,M:drowsyness-6)
 				M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
+				M:nutrition += 5
 				..()
 				return
 
@@ -1238,6 +1317,7 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
+				M:nutrition += 2
 				..()
 				return
 
@@ -1257,6 +1337,7 @@ datum
 				if(data >= 40 && prob(33))
 					if (!M:confused) M:confused = 1
 					M:confused += 2
+					M:nutrition += 2
 				..()
 				return
 
@@ -1421,6 +1502,7 @@ datum
 				if(M:bruteloss && prob(30)) M:bruteloss--
 				if(M:fireloss && prob(30)) M:fireloss--
 				if(M:toxloss && prob(30)) M:toxloss--
+				M:nutrition++
 				..()
 				return
 
@@ -1435,6 +1517,7 @@ datum
 				if(M:bruteloss && prob(20)) M:bruteloss--
 				if(M:fireloss && prob(20)) M:fireloss--
 				if(M:toxloss && prob(20)) M:toxloss--
+				M:nutrition++
 				..()
 				return
 
@@ -1449,6 +1532,7 @@ datum
 				if(M:bruteloss && prob(20)) M:bruteloss--
 				if(M:fireloss && prob(20)) M:fireloss--
 				if(M:toxloss && prob(20)) M:toxloss--
+				M:nutrition++
 				..()
 				return
 

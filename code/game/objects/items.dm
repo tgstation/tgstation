@@ -151,12 +151,12 @@
 	return
 
 /obj/item/weapon/pen/sleepypen/New()
-	var/datum/reagents/R = new/datum/reagents(300)
+	var/datum/reagents/R = new/datum/reagents(50) //Used to be 300
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("stoxin", 100)
-	R.add_reagent("impedrezene", 100)
-	R.add_reagent("cryptobiolin", 100)
+	R.add_reagent("chloralhydrate", 50)	//Used to be 100 sleep toxin
+//	R.add_reagent("impedrezene", 100)
+//	R.add_reagent("cryptobiolin", 100)
 	..()
 	return
 
@@ -168,7 +168,7 @@
 		//	O.show_message(text("\red [] has been stabbed with [] by [].", M, src, user), 1)
 		user << "\red You stab [M] with the pen."
 		M << "\red You feel a tiny prick!"
-		if(M.reagents) reagents.trans_to(M, 150)
+		if(M.reagents) reagents.trans_to(M, 50) //used to be 150
 	return
 
 /obj/item/weapon/Bump(mob/M as mob)

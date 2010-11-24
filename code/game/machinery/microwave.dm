@@ -12,14 +12,15 @@
 	var/coldsauce_amount = 0
 	var/soysauce_amount = 0
 	var/ketchup_amount = 0
-	var/sauce_amount = 0		//This is so that I can lump all the sauces together in the microwave menu rather then clutter it up.
+	var/tofu_amount = 0
+	var/berryjuice_amount = 0
 	var/obj/extra_item = null // This is if an extra item is needed, eg a butte for an assburger
 	var/creates = "" // The item that is spawned when the recipe is made
 
 /datum/recipe/jellydonut
 	egg_amount = 1
 	flour_amount = 1
-	extra_item = /obj/item/weapon/reagent_containers/food/condiment/berryjam
+	berryjuice_amount = 1
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/jellydonut"
 
 /datum/recipe/donut
@@ -101,8 +102,8 @@
 	milk_amount = 1
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/muffin"
 
-/datum/recipe/eggplantparm	// Doesn't work EXACTLY right. The recipe works but it also works if you don't put in any cheese at all.
-	cheese_amount = 2		// I'm not sure why this is the case. -- Darem
+/datum/recipe/eggplantparm
+	cheese_amount = 2
 	extra_item = /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/eggplantparm"
 
@@ -173,6 +174,14 @@
 	extra_item = /obj/item/weapon/rods
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/monkeykabob"
 
+/datum/recipe/tofubread
+	tofu_amount = 3
+	cheese_amount = 3
+	flour_amount = 3
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/tofubread"
+
+
+
 // *** After making the recipe above, add it in here! ***
 // Special Note: When adding recipes to the list, make sure to list recipes with extra_item before similar recipes without
 //					one. The reason being that sometimes the FOR loop that searchs through the recipes will just stop
@@ -208,6 +217,7 @@
 	src.available_recipes += new /datum/recipe/xemeatpie(src)
 	src.available_recipes += new /datum/recipe/wingfangchu(src)
 	src.available_recipes += new /datum/recipe/chaosdonut(src)
+	src.available_recipes += new /datum/recipe/tofubread(src)
 
 
 
@@ -232,6 +242,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				V.show_message(text("\blue [user] fixes the microwave!"))
 			src.icon_state = "mw"
 			src.broken = 0 // Fix it!
+			src.flags = OPENCONTAINER
 		else
 			user << "It's broken!"
 	else if(src.dirty) // The microwave is all dirty so can't be used!
@@ -243,6 +254,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				V.show_message(text("\blue [user] has cleaned the microwave!"))
 			src.dirty = 0 // It's cleaned!
 			src.icon_state = "mw"
+			src.flags = OPENCONTAINER
 		else //Otherwise bad luck!!
 			return
 
@@ -251,6 +263,13 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			for(var/mob/V in viewers(src, null))
 				V.show_message(text("\blue [user] adds an egg to the microwave."))
 			src.egg_amount++
+			del(O)
+
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/tofu)) // If tofu is used, add it
+		if(src.tofu_amount < 5)
+			for(var/mob/V in viewers(src, null))
+				V.show_message(text("\blue [user] adds tofu to the microwave."))
+			src.tofu_amount++
 			del(O)
 
 	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/flour)) // If flour is used, add it
@@ -297,45 +316,14 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.donkpocket_amount++
 			del(O)
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/condiment/hotsauce))
-		if(src.hotsauce_amount < 5)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] adds some hot sauce to the microwave."))
-			src.hotsauce_amount++
-			src.sauce_amount++
-			del(O)
-
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/condiment/coldsauce))
-		if(src.coldsauce_amount < 5)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] adds some coldsauce to the microwave."))
-			src.coldsauce_amount++
-			src.sauce_amount++
-			del(O)
-
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/condiment/soysauce))
-		if(src.soysauce_amount < 5)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] adds some soysauce to the microwave."))
-			src.soysauce_amount++
-			src.sauce_amount++
-			del(O)
-
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/condiment/ketchup))
-		if(src.ketchup_amount < 5)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] adds some ketchup to the microwave."))
-			src.ketchup_amount++
-			src.sauce_amount++
-			del(O)
-
 	else if(istype(O, /obj/item/weapon/reagent_containers/food/drinks/milk))
 		if(src.milk_amount < 5)
 			for(var/mob/V in viewers(src, null))
 				V.show_message(text("\blue [user] adds some milk to the microwave."))
 			src.milk_amount++
 			del(O)
-
+	else if(O.is_open_container())
+		return
 	else
 		if(!istype(extra_item, /obj/item)) //Allow one non food item to be added!
 			user.u_equip(O)
@@ -360,6 +348,32 @@ obj/machinery/microwave/attack_paw(user as mob)
 /obj/machinery/microwave/attack_hand(user as mob) // The microwave Menu
 	var/dat
 	var/xenodisplay
+	var/sauces
+	while(src.reagents.total_volume)		//A series of while loops to count up how much of the relevant reagents there are.
+		while(src.reagents.get_reagent_amount("capsaicin") > 4)	//	And convert them into other variables. Ugly but it works for now.
+			src.reagents.remove_reagent("capsaicin", 5)
+			src.hotsauce_amount++
+		while(src.reagents.get_reagent_amount("frostoil") > 4)
+			src.reagents.remove_reagent("frostoil", 5)
+			src.coldsauce_amount++
+		while(src.reagents.get_reagent_amount("soysauce") > 4)
+			src.reagents.remove_reagent("soysauce", 5)
+			src.soysauce_amount++
+		while(src.reagents.get_reagent_amount("milk") > 4)
+			src.reagents.remove_reagent("milk", 5)
+			src.milk_amount++
+		while(src.reagents.get_reagent_amount("ketchup") > 4)
+			src.reagents.remove_reagent("ketchup", 5)
+			src.ketchup_amount++
+		while(src.reagents.get_reagent_amount("berryjuice") > 4)
+			src.reagents.remove_reagent("berryjuice", 5)
+			src.berryjuice_amount++
+		src.reagents.clear_reagents()
+	if(src.hotsauce_amount) sauces = sauces + "<B>Hotsauce:</B>[src.hotsauce_amount] units.<BR>"
+	if(src.coldsauce_amount) sauces = sauces + "<B>Coldsauce:</B>[src.coldsauce_amount] units.<BR>"
+	if(src.soysauce_amount) sauces = sauces + "<B>Soysauce:</B>[src.soysauce_amount] units.<BR>"
+	if(src.berryjuice_amount) sauces = sauces + "<B>Berry Juice:</B>[src.berryjuice_amount] units.<BR>"
+	if(src.ketchup_amount) sauces = sauces + "<B>Ketchup:</B>[src.ketchup_amount] units.<BR>"
 	if(src.xenomeat_amount) xenodisplay = "<B>Alien Meat: </B>[src.xenomeat_amount]<BR>"
 	if(src.broken > 0)
 		dat = {"
@@ -382,10 +396,11 @@ Please clean it before use!</TT><BR>
 <B>Eggs:</B>[src.egg_amount] eggs<BR>
 <B>Flour:</B>[src.flour_amount] cups of flour<BR>
 <B>Cheese:</B>[src.cheese_amount] cheese wedges<BR>
+<B>Tofu:</B>[src.tofu_amount] tofu chunks<BR>
 <B>Monkey Meat:</B>[src.monkeymeat_amount] slabs of meat<BR>
 <B>Meat Turnovers:</B>[src.donkpocket_amount] turnovers<BR>
-<B>Various Sauces:</B>[src.sauce_amount] servings.<BR>
 <B>Milk:</B>[src.milk_amount] cups of milk.<BR>
+[sauces]
 <B>Other Meat:</B>[src.humanmeat_amount] slabs of meat<BR>
 [xenodisplay]
 <HR>
@@ -422,7 +437,7 @@ Please clean it before use!</TT><BR>
 				for(var/mob/V in viewers(src, null))
 					V.show_message(text("\blue The microwave turns on."))
 				for(var/datum/recipe/R in src.available_recipes) //Look through the recipe list we made above
-					if(src.cheese_amount == R.cheese_amount && src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount && src.xenomeat_amount == R.xenomeat_amount && src.hotsauce_amount == R.hotsauce_amount && src.coldsauce_amount == R.coldsauce_amount && src.soysauce_amount == R.soysauce_amount && src.ketchup_amount == R.ketchup_amount && src.milk_amount == R.milk_amount) // Check if it's an accepted recipe
+					if(src.berryjuice_amount >= R.berryjuice_amount && src.cheese_amount == R.cheese_amount && src.tofu_amount == R.tofu_amount && src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount && src.xenomeat_amount == R.xenomeat_amount && src.hotsauce_amount >= R.hotsauce_amount && src.coldsauce_amount >= R.coldsauce_amount && src.soysauce_amount >= R.soysauce_amount && src.ketchup_amount >= R.ketchup_amount && src.milk_amount >= R.milk_amount) // Check if it's an accepted recipe
 						var/thing
 						if(src.extra_item)
 							if (src.extra_item.type == R.extra_item) thing = 1
@@ -436,18 +451,17 @@ Please clean it before use!</TT><BR>
 							src.humanmeat_amount = 0
 							src.donkpocket_amount = 0
 							src.milk_amount = 0
+							src.tofu_amount = 0
 							src.hotsauce_amount = 0
 							src.coldsauce_amount = 0
 							src.soysauce_amount = 0
 							src.ketchup_amount = 0
-							src.sauce_amount = 0
+							src.berryjuice_amount = 0
 							src.extra_item = null // And the extra item
 							cooked_item = R.creates // Store the item that will be created
 
-
-
 				if(cooked_item == null) //Oops that wasn't a recipe dummy!!!
-					if(src.egg_amount > 0 || src.flour_amount > 0 || src.water_amount > 0 || src.monkeymeat_amount > 0 || src.humanmeat_amount > 0 || src.donkpocket_amount > 0 || src.hotsauce_amount > 0 ||src.coldsauce_amount > 0 || src.soysauce_amount > 0 || src.ketchup_amount > 0 || src.milk_amount > 0 && src.extra_item == null) //Make sure there's something inside though to dirty it
+					if(src.egg_amount > 0 || src.tofu_amount > 0 || src.flour_amount > 0 || src.water_amount > 0 || src.monkeymeat_amount > 0 || src.humanmeat_amount > 0 || src.donkpocket_amount > 0 || src.hotsauce_amount > 0 ||src.coldsauce_amount > 0 || src.soysauce_amount > 0 || src.ketchup_amount > 0 || src.milk_amount > 0 && src.extra_item == null) //Make sure there's something inside though to dirty it
 						src.operating = 1 // Turn it on
 						src.icon_state = "mw1"
 						src.updateUsrDialog()
@@ -460,11 +474,12 @@ Please clean it before use!</TT><BR>
 						src.monkeymeat_amount = 0
 						src.donkpocket_amount = 0
 						src.milk_amount = 0
+						src.tofu_amount = 0
 						src.hotsauce_amount = 0
 						src.coldsauce_amount = 0
 						src.soysauce_amount = 0
 						src.ketchup_amount = 0
-						src.sauce_amount = 0
+						src.berryjuice_amount = 0
 						sleep(40) // Half way through
 						playsound(src.loc, 'splat.ogg', 50, 1) // Play a splat sound
 						icon_state = "mwbloody1" // Make it look dirty!!
@@ -473,6 +488,7 @@ Please clean it before use!</TT><BR>
 						for(var/mob/V in viewers(src, null))
 							V.show_message(text("\red The microwave gets covered in muck!"))
 						src.dirty = 1 // Make it dirty so it can't be used util cleaned
+						src.flags = null //So you can't add condiments
 						src.icon_state = "mwbloody" // Make it look dirty too
 						src.operating = 0 // Turn it off again aferwards
 						// Don't clear the extra item though so important stuff can't be deleted this way and
@@ -490,12 +506,13 @@ Please clean it before use!</TT><BR>
 						src.humanmeat_amount = 0
 						src.monkeymeat_amount = 0
 						src.donkpocket_amount = 0
+						src.tofu_amount = 0
 						src.milk_amount = 0
 						src.hotsauce_amount = 0
 						src.coldsauce_amount = 0
 						src.soysauce_amount = 0
 						src.ketchup_amount = 0
-						src.sauce_amount = 0
+						src.berryjuice_amount = 0
 						sleep(60) // Wait a while
 						var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 						s.set_up(2, 1, src)
@@ -505,6 +522,7 @@ Please clean it before use!</TT><BR>
 							V.show_message(text("\red The microwave breaks!")) //Let them know they're stupid
 						src.broken = 2 // Make it broken so it can't be used util fixed
 						src.operating = 0 // Turn it off again aferwards
+						src.flags = null //So you can't add condiments
 						src.extra_item.loc = get_turf(src) // Eject the extra item so important shit like the disk can't be destroyed in there
 						src.extra_item = null
 
@@ -530,8 +548,9 @@ Please clean it before use!</TT><BR>
 				src.hotsauce_amount = 0
 				src.coldsauce_amount = 0
 				src.soysauce_amount = 0
+				src.tofu_amount = 0
 				src.ketchup_amount = 0
-				src.sauce_amount = 0
+				src.berryjuice_amount = 0
 				if(src.extra_item != null)
 					src.extra_item.loc = get_turf(src) // Eject the extra item so important shit like the disk can't be destroyed in there
 					src.extra_item = null
@@ -587,6 +606,16 @@ Please clean it before use!</TT><BR>
 		del(src)
 		return
 
+/obj/item/weapon/reagent_containers/food/snacks/tofubread/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+		W.visible_message(" \red <B>You slice the tofubread! </B>", 1)
+		new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+		del(src)
+		return
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewheel/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/kitchenknife /* || /obj/item/weapon/scalpel*/))

@@ -596,7 +596,7 @@
 	desc = "A softdrink vendor provided by Robust Industries, LLC."
 	icon_state = "Cola_Machine"
 	product_paths = "/obj/item/weapon/reagent_containers/food/drinks/cola;/obj/item/weapon/reagent_containers/food/drinks/space_mountain_wind;/obj/item/weapon/reagent_containers/food/drinks/dr_gibb;/obj/item/weapon/reagent_containers/food/drinks/starkist;/obj/item/weapon/reagent_containers/food/drinks/space_up"
-	product_amounts = "10;10;10;0;10"
+	product_amounts = "10;10;10;10;10"
 	product_slogans = "Robust Softdrinks: More robust then a toolbox to the head!"
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/thirteenloko"
 	product_hideamt = "5"
@@ -673,7 +673,8 @@
 	var/coldsauce_amount = 0
 	var/soysauce_amount = 0
 	var/ketchup_amount = 0
-	var/sauce_amount = 0		//This is so that I can lump all the sauces together in the microwave menu.
+	var/tofu_amount = 0
+	var/berryjuice_amount = 0
 	var/humanmeat_name = ""
 	var/humanmeat_job = ""
 	var/operating = 0 // Is it on?
@@ -682,6 +683,11 @@
 	var/list/available_recipes = list() // List of the recipes you can use
 	var/obj/item/weapon/reagent_containers/food/snacks/being_cooked = null // The item being cooked
 	var/obj/item/extra_item = null// One non food item that can be added
+	flags = OPENCONTAINER									//Temporary holder while it counts what's in it.
+	New()													//	Stuff can be added but not removed without destroying it.
+		var/datum/reagents/R = new/datum/reagents(100)
+		reagents = R
+		R.my_atom = src
 
 /obj/machinery/processor
 	name = "Food Processor"
@@ -730,6 +736,7 @@
 	var/current_floor = 1 //current floor the elevator is on. do NOT confuse with current z-level of the elevator
 	var/list/elevators_connected = list() //list of elevators it is connected to
 	var/list/floors = list() //dependant on the number of elevators, converts z-levels to floors, basically
+
 /*			//By Darem, will implement.... eventually...
 /obj/machinery/circuitprinter
 	icon_state = "autolathe"

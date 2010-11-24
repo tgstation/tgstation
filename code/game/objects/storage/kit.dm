@@ -138,6 +138,18 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/donkpocket( src )
 	..()
 	return
+
+/obj/item/weapon/storage/condimentbottles/New()
+
+	new /obj/item/weapon/reagent_containers/food/condiment( src )
+	new /obj/item/weapon/reagent_containers/food/condiment( src )
+	new /obj/item/weapon/reagent_containers/food/condiment( src )
+	new /obj/item/weapon/reagent_containers/food/condiment( src )
+	new /obj/item/weapon/reagent_containers/food/condiment( src )
+	new /obj/item/weapon/reagent_containers/food/condiment( src )
+	..()
+	return
+
 /*
 /obj/item/weapon/storage/disk_kit/disks/New()
 

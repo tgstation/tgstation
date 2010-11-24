@@ -97,6 +97,7 @@ var/ordernum=0
 					"/obj/item/weapon/reagent_containers/food/snacks/faggot",
 					"/obj/item/weapon/reagent_containers/food/snacks/faggot",
 					"/obj/item/kitchen/egg_box",
+					"/obj/item/weapon/storage/condimentbottles",
 					"/obj/item/weapon/banana",
 					"/obj/item/weapon/banana",
 					"/obj/item/weapon/banana")

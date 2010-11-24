@@ -187,3 +187,9 @@
 	desc = "Remember to fully heat prior to serving.  Product will cool if not eaten within seven minutes."
 	icon_state = "donk_kit"
 	item_state = "syringe_kit"
+
+/obj/item/weapon/storage/condimentbottles
+	name = "Condiment Bottles"
+	desc = "A box of empty condiment bottles."
+	icon_state = "box"
+	item_state = "syringe_kit"

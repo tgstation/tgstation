@@ -10,7 +10,7 @@
 	icon_state = "dispenser"
 	var/energy = 25
 	var/max_energy = 25
-	var/list/dispensable_reagents = list("water","oxygen","nitrogen","hydrogen","potassium","mercury","sulfur","carbon","chlorine","fluorine","phosphorus","lithium","acid","radium","iron","aluminium","silicon","plasma","sugar","ethanol")
+	var/list/dispensable_reagents = list("water","oxygen","nitrogen","hydrogen","potassium","sodium","mercury","sulfur","carbon","chlorine","fluorine","phosphorus","lithium","acid","radium","iron","aluminium","silicon","plasma","sugar","ethanol")
 
 	proc
 		recharge()
