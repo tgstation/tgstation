@@ -179,8 +179,8 @@
 	wizard_mob.head.layer = 20
 	wizard_mob.shoes = new /obj/item/clothing/shoes/sandal(wizard_mob)
 	wizard_mob.shoes.layer = 20
-	wizard_mob.r_hand = new /obj/item/weapon/staff(wizard_mob)
-	wizard_mob.r_hand.layer = 20
+	//wizard_mob.r_hand = new /obj/item/weapon/staff(wizard_mob) //Wizards don't need the staff or use it. N
+	//wizard_mob.r_hand.layer = 20 //Wizards don't need the staff or use it. N
 
 	var/loc = ""
 	var/obj/item/device/R = null //Hide the uplink in a PDA if available, otherwise radio

@@ -196,8 +196,13 @@
 
 /obj/item/clothing/head/wizard
 	name = "wizard hat"
-	desc = "It has WIZZARD written across it in sequins"
+	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
 	icon_state = "wizard"
+
+/obj/item/clothing/head/wizard_fake
+	name = "wizard hat"
+	desc = "It has WIZZARD written across it in sequins. Comes with a cool beard."
+	icon_state = "wizard-fake"
 
 /obj/item/clothing/head/chefhat
 	name = "Chef's hat"
@@ -432,6 +437,7 @@
 	permeability_coefficient = 0.25
 
 /obj/item/clothing/shoes/sandal
+	desc = "A pair of rather plain sandals, wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
 
@@ -489,14 +495,14 @@
 
 /obj/item/clothing/suit/det_suit
 	name = "coat"
-	desc = "Someone who wears this means business"
+	desc = "Someone who wears this means business."
 	icon_state = "detective"
 	item_state = "det_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
-	desc = "This robe commands authority"
+	desc = "This robe commands authority."
 	icon_state = "judge"
 	item_state = "judge"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -536,14 +542,20 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/suit/wizrobe
-	name = "robe"
-	desc = "A magnificant blue robe that seems to radiate power"
+	name = "wizard robe"
+	desc = "A magnificant, gem-lined robe that seems to radiate power."
 	icon_state = "wizard"
 	item_state = "wizrobe"
 	gas_transfer_coefficient = 0.01 // IT'S MAGICAL OKAY JEEZ +1 TO NOT DIE
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 0.01
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/wizrobe_fake
+	name = "wizard robe"
+	desc = "A rather dull, blue robe one could probably find in Space-Walmart."
+	icon_state = "wizard-fake"
+	item_state = "wizrobe"
 
 // ARMOR
 
