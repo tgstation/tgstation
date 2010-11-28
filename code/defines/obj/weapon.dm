@@ -1544,6 +1544,10 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	var/yield = 2
 	var/potency = -1
 	var/plant_type = 0
+	New()
+		var/datum/reagents/R = new/datum/reagents(50)
+		reagents = R
+		R.my_atom = src
 
 
 /obj/item/weapon/grown/nettle // -- Skie
@@ -1560,6 +1564,10 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 3
 	plant_type = 1
 	seed = "/obj/item/seeds/nettleseed"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("acid", round(potency, 1))
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
@@ -1575,6 +1583,10 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 3
 	plant_type = 1
 	seed = "/obj/item/seeds/deathnettleseed"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("pacid", round(potency, 1))
 
 /obj/item/weapon/plantbgone // -- Skie
 	desc = "Plant-B-Gone! Kill those pesky weeds!"
@@ -1589,6 +1601,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 10
 	var/empty = 0
 
+/*			Commented out due to being redundant. - Darem
 /obj/item/weapon/weedspray // -- Skie
 	desc = "Toxic mixture in spray form to kill small weeds."
 	icon = 'hydroponics.dmi'
@@ -1616,6 +1629,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 10
 	var/toxicity = 4
 	var/PestKillStr = 2
+*/
 
 /obj/item/weapon/minihoe // -- Numbers
 	name = "Mini hoe"

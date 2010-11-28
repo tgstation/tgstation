@@ -1722,6 +1722,34 @@
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
+	name = "Loaded Baked Potato"
+	desc = "Totally baked."
+	icon_state = "loadedbakedpotato"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/fries
+	name = "Space Fries"
+	desc = "AKA: French Fries, Freedom Fries, etc"
+	icon_state = "fries"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesyfries
+	name = "Cheesy Fries"
+	desc = "Fries. Covered in cheese. Duh."
+	icon_state = "cheesyfries"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+
+
 
 ///////////////////////////////////////////////Condiments
 //Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all

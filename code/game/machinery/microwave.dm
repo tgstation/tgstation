@@ -180,6 +180,16 @@
 	flour_amount = 3
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/tofubread"
 
+/datum/recipe/loadedbakedpotato
+	extra_item = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
+	cheese_amount = 1
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato"
+
+/datum/recipe/cheesyfries
+	extra_item = /obj/item/weapon/reagent_containers/food/snacks/fries
+	cheese_amount = 1
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/cheesyfries"
+
 
 
 // *** After making the recipe above, add it in here! ***
@@ -218,6 +228,8 @@
 	src.available_recipes += new /datum/recipe/wingfangchu(src)
 	src.available_recipes += new /datum/recipe/chaosdonut(src)
 	src.available_recipes += new /datum/recipe/tofubread(src)
+	src.available_recipes += new /datum/recipe/loadedbakedpotato(src)
+	src.available_recipes += new /datum/recipe/cheesyfries(src)
 
 
 

@@ -3,7 +3,7 @@
 		user << "Something is already in the processing chamber."
 		return 0
 	else
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/humanmeat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeymeat))
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/potato) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/humanmeat) || istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeymeat))
 			user.drop_item()
 			O.loc = src
 		else if(istype(O,/obj/item/weapon/grab))
@@ -54,6 +54,18 @@
 			new /obj/item/weapon/reagent_containers/food/snacks/faggot(src.loc)
 			processing = 0
 			return
+
+		if (istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/potato))
+			src.processing = 1
+			sleep(40)
+			playsound(src.loc, 'blender.ogg', 50, 1)
+			for(var/mob/V in viewers(src, null))
+				V.show_message(text("\blue [user] turns on \a [src]."))
+			del(O)
+			new /obj/item/weapon/reagent_containers/food/snacks/fries(src.loc)
+			processing = 0
+			return
+
 
 	for(var/mob/O in src.contents)
 		if(istype(O, /mob/living/carbon/alien/larva/metroid))

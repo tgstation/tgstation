@@ -15,7 +15,7 @@
 
 /obj/item/seeds
 	name = "seed"
-	icon = 'hydroponics.dmi'
+	icon = 'seeds.dmi'
 	icon_state = "seed" // unknown plant seed - these shouldn't exist in-game
 	flags = FPRINT | TABLEPASS
 	w_class = 1.0 // Makes them pocketable
@@ -80,6 +80,21 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/eggyseed
+	name = "Egg Plant seeds"
+	icon_state = "seed-eggy"
+	mypath = "/obj/item/seeds/eggy"
+	species = "eggy"
+	plantname = "Egg Plant plant"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/egg"
+	lifespan = 75
+	endurance = 15
+	maturation = 6
+	production = 6
+	yield = 2
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/tomatoseed
 	name = "Tomato seeds"
 	icon_state = "seed-tomato"
@@ -94,6 +109,23 @@
 	yield = 2
 	plant_type = 0
 	growthstages = 6
+
+/obj/item/seeds/potatoseed
+	name = "Potato Seeds"
+	icon_state = "seed-potato"
+	mypath = "/obj/item/seeds/potatoseed"
+	species = "potato"
+	plantname = "Potato Plant"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/potato"
+	lifespan = 30
+	endurance = 15
+	maturation = 10
+	production = 1
+	yield = 2
+	plant_type = 0
+	oneharvest = 1
+	potency = 10
+	growthstages = 4
 
 /obj/item/seeds/icepepperseed
 	name = "Ice pepper seeds"
@@ -398,6 +430,10 @@
 	var/poison_amt = 0
 	var/drug_amt = 0
 	var/heat_amt = 0
+	New()
+		..()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
@@ -441,6 +477,14 @@
 
 		return
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/potato
+	seed = "/obj/item/seeds/potatoseed"
+	name = "Potato"
+	desc = "Starchy!"
+	icon_state = "potato"
+	New()
+		..()
+		reagents.add_reagent("nutriment", max(round((potency / 5), 1), 2))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 	seed = "/obj/item/seeds/berryseed"
@@ -450,8 +494,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = "/obj/item/seeds/chiliseed"
@@ -463,8 +505,6 @@
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("capsaicin", max(round(heat_amt / 5, 1), 4))
 		bitesize = max(round(reagents.total_volume / 2, 1), 1)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	seed = "/obj/item/seeds/eggplantseed"
@@ -474,8 +514,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	seed = "/obj/item/seeds/soyaseed"
@@ -485,8 +523,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	seed = "/obj/item/seeds/tomatoseed"
@@ -496,8 +532,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed = "/obj/item/seeds/wheatseed"
@@ -507,8 +541,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = "/obj/item/seeds/icepepperseed"
@@ -521,8 +553,6 @@
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("frostoil", max(round(heat_amt / 5, 1), 4))
 		bitesize = max(round(reagents.total_volume / 2, 1), 1)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
 	seed = "/obj/item/seeds/carrotseed"
@@ -532,8 +562,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/amanita
 	seed = "/obj/item/seeds/amanitamycelium"
@@ -547,8 +575,6 @@
 		reagents.add_reagent("amatoxin", max(poison_amt, 4))
 		reagents.add_reagent("psilocybin", max(drug_amt, 1))
 		bitesize = max(round(reagents.total_volume / 2, 1), 1)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/angel
 	seed = "/obj/item/seeds/angelmycelium"
@@ -562,8 +588,6 @@
 		reagents.add_reagent("amatoxin", max(poison_amt, 14))
 		reagents.add_reagent("psilocybin", max(drug_amt, 1))
 		bitesize = max(round(reagents.total_volume / 2, 1), 1)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/libertycap
 	seed = "/obj/item/seeds/libertymycelium"
@@ -576,8 +600,6 @@
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("psilocybin", max(drug_amt, 4))
 		bitesize = max(round(reagents.total_volume / 2), 1)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/plumphelmet
 	seed = "/obj/item/seeds/plumpmycelium"
@@ -588,8 +610,6 @@
 		..()
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chanterelle
 	seed = "/obj/item/seeds/chantermycelium"
@@ -599,8 +619,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 
 

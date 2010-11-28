@@ -104,8 +104,8 @@ obj/machinery/hydroponics/process()
 					src.lastproduce = src.age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
 				src.pestlevel += 1
-			if(prob(5) && src.waterlevel > 10 && src.nutrilevel > 0)  // On each tick, there's a 5 percent chance the weed population will increase, but there needs to be water/nuts for that!
-				src.weedlevel += 1
+			if(prob(5) && src.waterlevel > 10 && src.nutrilevel > 0)  // On each tick, there's a 5 percent chance the weed
+				src.weedlevel += 1					//population will increase, but there needs to be water/nuts for that!
 		else
 			if(prob(10) && src.waterlevel > 10 && src.nutrilevel > 0)  // If there's no plant, the percentage chance is 10%
 				src.weedlevel += 1
@@ -293,6 +293,10 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 		del(src.myseed)
 		src.myseed = new /obj/item/seeds/icepepperseed
 
+	else if ( istype(src.myseed, /obj/item/seeds/eggplantseed ))
+		del(src.myseed)
+		src.myseed = new /obj/item/seeds/eggyseed
+
 	else
 		return
 
@@ -391,33 +395,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		del(O)
 		src.updateicon()
 
-	else if ( istype(O, /obj/item/weapon/weedspray) )
-		var/obj/item/weedkiller/myWKiller = O
-		user.u_equip(O)
-		src.toxic += myWKiller.toxicity
-		src.weedlevel -= myWKiller.WeedKillStr
-		if (src.weedlevel < 0 ) // Make sure it won't go overoboard
-			src.weedlevel = 0
-		if (src.toxic > 100 ) // Make sure it won't go overoboard
-			src.toxic = 100
-		user << "You apply the weedkiller solution into the tray"
-		playsound(src.loc, 'spray3.ogg', 50, 1, -6)
-		del(O)
-		src.updateicon()
 
-	else if ( istype(O, /obj/item/weapon/pestspray) )
-		var/obj/item/pestkiller/myPKiller = O
-		user.u_equip(O)
-		src.toxic += myPKiller.toxicity
-		src.pestlevel -= myPKiller.PestKillStr
-		if (src.pestlevel < 0 ) // Make sure it won't go overoboard
-			src.pestlevel = 0
-		if (src.toxic > 100 ) // Make sure it won't go overoboard
-			src.toxic = 100
-		user << "You apply the pestkiller solution into the tray"
-		playsound(src.loc, 'spray3.ogg', 50, 1, -6)
-		del(O)
-		src.updateicon()
 
 	else if ( istype(O, /obj/item/weapon/reagent_containers/syringe))  // Syringe stuff
 		var/obj/item/weapon/reagent_containers/syringe/S = O
@@ -614,16 +592,15 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.health -= rand(5,20)
 
 			if(src.pestlevel > 0)
-				src.pestlevel -= 1 // Kill kill kill
+				src.pestlevel -= 2 // Kill kill kill
 			else
 				src.pestlevel = 0
 
-			if(src.weedlevel > 1)
-				src.weedlevel -= 2 // Kill kill kill
+			if(src.weedlevel > 0)
+				src.weedlevel -= 3 // Kill kill kill
 			else
 				src.weedlevel = 0
-
-			src.toxic += 5 // Oops
+			src.toxic += 4 // Oops
 			src.visible_message("\red <B>\The [src] has been sprayed with \the [O][(user ? " by [user]." : ".")]")
 			playsound(src.loc, 'spray3.ogg', 50, 1, -6)
 
@@ -639,19 +616,50 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "Success!"
 		else
 			user << "\red This plot is completely devoid of weeds. It doesn't need uprooting."
-	return
 
+/*				Commented out due to being redundant -Darem
+	else if ( istype(O, /obj/item/weapon/weedspray) )
+		var/obj/item/weedkiller/myWKiller = O
+		user.u_equip(O)
+		src.toxic += myWKiller.toxicity
+		src.weedlevel -= myWKiller.WeedKillStr
+		if (src.weedlevel < 0 ) // Make sure it won't go overoboard
+			src.weedlevel = 0
+		if (src.toxic > 100 ) // Make sure it won't go overoboard
+			src.toxic = 100
+		user << "You apply the weedkiller solution into the tray"
+		playsound(src.loc, 'spray3.ogg', 50, 1, -6)
+		del(O)
+		src.updateicon()
+
+	else if ( istype(O, /obj/item/weapon/pestspray) )
+		var/obj/item/pestkiller/myPKiller = O
+		user.u_equip(O)
+		src.toxic += myPKiller.toxicity
+		src.pestlevel -= myPKiller.PestKillStr
+		if (src.pestlevel < 0 ) // Make sure it won't go overoboard
+			src.pestlevel = 0
+		if (src.toxic > 100 ) // Make sure it won't go overoboard
+			src.toxic = 100
+		user << "You apply the pestkiller solution into the tray"
+		playsound(src.loc, 'spray3.ogg', 50, 1, -6)
+		del(O)
+		src.updateicon()
+	return
+*/
 
 
 /obj/machinery/hydroponics/attack_hand(mob/user as mob)
+	if(istype(usr,/mob/living/silicon))		//How does AI know what plant is?
+		return
 	if(src.harvest)
 		if(!user in range(1,src))
 			return
 		var/item = text2path(src.myseed.productname)
 		var/t_amount = 0
 
-		while ( t_amount < (src.myseed.yield * src.yieldmod ))
-			if(src.myseed.species == "nettle" || src.myseed.species == "deathnettle") // User gets a WEPON
+		while ( t_amount < (src.myseed.yield * src.yieldmod ))		//Yay for egg plants who need their own handling!
+			if(src.myseed.species == "nettle" || src.myseed.species == "deathnettle") // User gets a WEAPON
 				var/obj/item/weapon/grown/t_prod = new item(user.loc)
 				t_prod.seed = src.myseed.mypath
 				t_prod.species = src.myseed.species
@@ -666,6 +674,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				t_amount++
 			//else if(src.myseed.species == "towercap")
 				//var/obj/item/wood/t_prod = new item(user.loc) - User gets wood (heh) - not implemented yet
+			else if(src.myseed.species == "eggy")		//User gets an item that can't be re-planted.
+				new item(user.loc)
+				t_amount++
 			else
 				var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new item(user.loc) // User gets a consumable
 				t_prod.seed = src.myseed.mypath
@@ -691,9 +702,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			usr << text("\red You fail to harvest anything useful")
 		else
 			usr << text("You harvest from the [src.myseed.plantname]")
-			if(src.myseed.oneharvest)
-				src.planted = 0
-				src.dead = 0
+		if(src.myseed.oneharvest)
+			src.planted = 0
+			src.dead = 0
 		src.updateicon()
 	else if(src.dead)
 		src.planted = 0

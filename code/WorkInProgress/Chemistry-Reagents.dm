@@ -1057,7 +1057,7 @@ datum
 
 
 /////////////////////////Food Reagents////////////////////////////
-// Part of the food code. It is used instead of the old "heal_amt" code. Also is where all the food
+// Part of the food code. Nutriment is used instead of the old "heal_amt" code. Also is where all the food
 // 	condiments, additives, and such go.
 		nutriment
 			name = "Nutriment"

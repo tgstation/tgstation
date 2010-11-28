@@ -337,12 +337,11 @@ var/ordernum=0
 	contains = list("/obj/item/weapon/plantbgone",
 	"/obj/item/weapon/plantbgone",
 	"/obj/item/weapon/plantbgone",
-	"/obj/item/weapon/weedspray",
-	"/obj/item/weapon/weedspray",
-	"/obj/item/weapon/weedspray",
-	"/obj/item/weapon/pestspray",
-	"/obj/item/weapon/pestspray",
-	"/obj/item/weapon/pestspray",
+	"/obj/item/weapon/plantbgone",
+//	"/obj/item/weapon/weedspray",
+//	"/obj/item/weapon/weedspray",
+//	"/obj/item/weapon/pestspray",
+//	"/obj/item/weapon/pestspray",
 	"/obj/item/weapon/minihoe",
 	"/obj/item/device/analyzer/plant_analyzer",
 	"/obj/item/clothing/gloves/latex",
@@ -351,6 +350,36 @@ var/ordernum=0
 	containertype = /obj/crate/hydroponics
 	containername = "Hydroponics crate"
 	access = access_hydroponics
+
+/datum/supply_packs/seeds
+	name = "Seeds Crate"
+	contains = list("/obj/item/seeds/chiliseed",
+	"/obj/item/seeds/berryseed",
+	"/obj/item/seeds/eggplantseed",
+	"/obj/item/seeds/tomatoseed",
+	"/obj/item/seeds/soyaseed",
+	"/obj/item/seeds/wheatseed",
+	"/obj/item/seeds/carrotseed",
+	"/obj/item/seeds/chantermycelium",
+	"/obj/item/seeds/potatoseed")
+	cost = 10
+	containertype = /obj/crate/hydroponics
+	containername = "Seeds crate"
+	access = access_hydroponics
+
+
+/datum/supply_packs/exoticseeds
+	name = "Exotic Seeds Crate"
+	contains = list("/obj/item/seeds/nettleseed",
+	"/obj/item/seeds/plumpmycelium",
+	"/obj/item/seeds/libertymycelium",
+	"/obj/item/seeds/amanitamycelium",
+	"/obj/item/seeds/eggyseed")
+	cost = 15
+	containertype = /obj/crate/hydroponics
+	containername = "Exotic Seeds crate"
+	access = access_hydroponics
+
 
 //SUPPLY PACKS
 
