@@ -530,7 +530,7 @@
 			src.equip_if_possible(new /obj/item/weapon/clipboard(src), slot_r_hand)
 
 		if ("Chief Medical Officer")
-			src.equip_if_possible(new /obj/item/device/radio/headset/headset_com (src), slot_ears) // -- TLE
+			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/medical(src), slot_w_uniform)
