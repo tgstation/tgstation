@@ -590,7 +590,7 @@ datum
 						randmutb(M)
 					else
 						randmutg(M)
-					domutcheck(M, null, 1)
+					domutcheck(M, null)
 					updateappearance(M,M.dna.uni_identity)
 				return
 			on_mob_life(var/mob/M)
