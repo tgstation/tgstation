@@ -172,18 +172,14 @@
 					L += B
 			A = pick(L)
 
-	var/list/L = list()
+	var/list/Q = list()
 	for(var/turf/T in A)
-		if(!T.density)
-			var/clear = 1
-			for(var/obj/O in T)
-				if(O.density)
-					clear = 0
-					break
-			if(clear)
-				L+=T
-	if (L.len)
-		usr.loc = pick(L)
+		var/clear = 1
+		if(clear)
+			Q+=T
+//	A = pick(Q)
+	if (Q.len)
+		usr.loc = pick(Q)
 	else
 		usr << "Teleporting to that area doesn't seem to be working currently. But at least now it tells you that."
 
