@@ -2223,6 +2223,14 @@
 		reagents = R
 		R.my_atom = src
 
+/obj/item/weapon/reagent_containers/food/drinks/flask
+	name = "Captain's Flask"
+	desc = "A metal flask belonging to the captain"
+	icon_state = "flask"
+	New()
+		var/datum/reagents/R = new/datum/reagents(30)
+		reagents = R
+		R.my_atom = src
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
 	name = "glass"
@@ -2436,6 +2444,22 @@
 					icon_state = "glass_clear"
 					name = "Glass of Water"
 					desc = "Are you really that boring?"
+				if("spacemountainwind")
+					icon_state = "Space_mountain_wind_glass"
+					name = "Glass of Space Mountain Wind"
+					desc = "Space Mountain Wind. As you know, there are no mountains in space, only wind."
+				if("thirteenloko")
+					icon_state = "thirteen_loko_glass"
+					name = "Glass of Thirteen Loko"
+					desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass"
+				if("dr_gibb")
+					icon_state = "dr_gibb_glass"
+					name = "Glass of Dr. Gibb"
+					desc = "Dr. Gibb. Not as dangerous as the name might imply."
+				if("space_up")
+					icon_state = "space-up_glass"
+					name = "Glass of Space-up"
+					desc = "Space-up. It helps keep your cool."
 				if("moonshine")
 					icon_state = "glass_clear"
 					name = "Moonshine"
