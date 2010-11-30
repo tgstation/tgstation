@@ -110,6 +110,39 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/cornseed
+	name = "Corn seeds"
+	icon_state = "seed-corn"
+	mypath = "/obj/item/seeds/cornseed"
+	species = "corn"
+	plantname = "Corn plant"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/corn"
+	lifespan = 25
+	endurance = 15
+	maturation = 8
+	production = 6
+	yield = 3
+	plant_type = 0
+	oneharvest = 1
+	growthstages = 3
+/*
+/obj/item/seeds/poppyseed
+	name = "Poppy seeds"
+	icon_state = "seed-poppy"
+	mypath = "/obj/item/seeds/poppyseed"
+	species = "poppy"
+	plantname = "Poppy plant"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/poppy"
+	lifespan = 25
+	endurance = 10
+	potency = 20
+	maturation = 8
+	production = 6
+	yield = 3
+	plant_type = 0
+	oneharvest = 1
+	growthstages = 3
+*/
 /obj/item/seeds/potatoseed
 	name = "Potato Seeds"
 	icon_state = "seed-potato"
@@ -476,6 +509,24 @@
 		user << ""
 
 		return
+/obj/item/weapon/reagent_containers/food/snacks/grown/corn
+	seed = "/obj/item/seeds/cornseed"
+	name = "Corn"
+	icon_state = "corn"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+/*
+/obj/item/weapon/reagent_containers/food/snacks/grown/poppy
+	seed = "/obj/item/seeds/poppyseed"
+	name = "Poppy"
+	icon_state = "poppy"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("opium", max(round((potency / 5), 1), 2))
+		bitesize = reagents.total_volume
+*/
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	seed = "/obj/item/seeds/potatoseed"

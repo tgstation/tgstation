@@ -311,6 +311,13 @@ datum
 			required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
 			result_amount = 1
 
+		morphine
+			name = "Morphine"
+			id = "morphine"
+			result = "morphine"
+			required_reagents = list("opium" = 10, "enzyme" = 2)
+			result_amount = 5
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 // foam and foam precursor
