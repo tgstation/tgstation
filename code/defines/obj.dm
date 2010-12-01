@@ -821,3 +821,11 @@ obj/item/brain
 	density = 1
 	opacity = 1
 	anchored = 1
+
+/obj/falserwall
+	name = "r wall"
+	icon = 'walls.dmi'
+	icon_state = "r_wall"
+	density = 1
+	opacity = 1
+	anchored = 1

@@ -13,9 +13,9 @@
 		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
 			junction |= get_dir(src,W)
 
-	if(istype(src,/turf/simulated/wall/r_wall))
+	if(istype(src,/turf/simulated/wall/r_wall) || istype(src,/obj/falserwall))
 		src.icon_state = "rwall[junction]"
-	else if(istype(src,/turf/simulated/wall) || istype(src,/obj/falsewall))
+	else if(istype(src,/turf/simulated/wall) || istype(src,/obj/falsewall) || istype(src,/obj/falserwall))
 		src.icon_state = "wall[junction]"
 
 /* When we have animations for different directions of falsewalls, then it'd be needed. Not now.

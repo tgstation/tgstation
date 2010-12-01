@@ -26,12 +26,20 @@ obj/structure
 			new /obj/item/weapon/sheet/metal(get_turf(src))
 			del(src)
 
-	else if(istype(W, /obj/item/weapon/sheet/metal) && istype(src,/obj/structure/girder/displaced))
-		W:amount -= 1
+	else if((istype(W, /obj/item/weapon/sheet/metal)) && (W:amount >= 2) && istype(src,/obj/structure/girder/displaced))
+		W:amount -= 2
 		if(W:amount <= 0)
 			del(W)
 		user << "\blue You create a false wall! Push on it to open or close the passage."
 		new /obj/falsewall (src.loc)
+		del(src)
+
+	else if(istype(W, /obj/item/weapon/sheet/r_metal) && istype(src,/obj/structure/girder/displaced))
+		W:amount -= 1
+		if(W:amount <= 0)
+			del(W)
+		user << "\blue You create a false r wall! Push on it to open or close the passage."
+		new /obj/falserwall (src.loc)
 		del(src)
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
@@ -106,6 +114,9 @@ obj/structure
 			user << "\blue Now reinforcing girders"
 			sleep(60)
 			user << "\blue Girders reinforced!"
+			W:amount--
+			if (W:amount <= 0)
+				del(W)
 			new/obj/structure/girder/reinforced( src.loc )
 			del(src)
 			return
