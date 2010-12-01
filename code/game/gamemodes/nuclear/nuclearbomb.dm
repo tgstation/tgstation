@@ -164,6 +164,7 @@
 
 	if(ticker.mode.name == "nuclear emergency")
 		ticker.mode:nuke_detonated = 1
+		if (derp) ticker.mode:derp = 1
 		ticker.mode.check_win()
 		ticker.mode.declare_completion()
 
