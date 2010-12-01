@@ -139,22 +139,50 @@
 
 */
 	enter_allowed = 0
+	var/derp = 0
+	var/area/A = src.loc.loc
+	if (istype( A, /area))
+		if (A.name == "Space")
+			derp = 1
+		if (A.name == "Syndicate Station")
+			derp = 1
+		if (A.name == "Wizard's Den")
+			derp = 1
+	if (!derp)
+		for(var/direction in cardinal)
+			for(var/area/target in get_step(src,direction))
+				if (target.name == "Space")
+					derp = 1
+				if (target.name == "Syndicate Station")
+					derp = 1
+				if (target.name == "Wizard's Den")
+					derp = 1
 	for(var/mob/M in world)
 		if(M.client)
 			spawn(0)
-				M.client.station_explosion_cinematic()
+				M.client.station_explosion_cinematic(derp)
 
 	if(ticker.mode.name == "nuclear emergency")
 		ticker.mode:nuke_detonated = 1
 		ticker.mode.check_win()
+		ticker.mode.declare_completion()
 
 	sleep(110)
-	world << "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>"
+	if (ticker.mode.name != "nuclear emergency" || !derp)
+		world << "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>"
 
-	sleep(300)
-	log_game("Rebooting due to nuclear destruction of station")
-	world.Reboot()
-	return
+		sleep(300)
+		log_game("Rebooting due to nuclear destruction of station")
+		world.Reboot()
+		return
+
+	else if (ticker.mode.name == "nuclear emergency" && derp)
+		world << "<B>Resetting in 30 seconds!</B>"
+
+		sleep(300)
+		log_game("Rebooting due to nuclear detonation")
+		world.Reboot()
+		return
 
 /obj/item/weapon/disk/nuclear/Del()
 	if (ticker.mode && ticker.mode.name == "nuclear emergency")

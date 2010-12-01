@@ -10,6 +10,8 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
+	var/derp = 0 //Used for tracking if the syndies actually haul the nuke to the station
+
 /datum/game_mode/nuclear/announce()
 	world << "<B>The current game mode is - Nuclear Emergency!</B>"
 	world << "<B>A [syndicate_name()] Strike Force is approaching [station_name()]!</B>"
@@ -124,6 +126,9 @@
 
 /datum/game_mode/nuclear/check_win()
 	if (src.nuke_detonated)
+		if(src.derp)
+			finished = 3
+			return
 		finished = 1
 		return
 
@@ -169,6 +174,14 @@
 				if ((M.current.client) && !(locate(M) in syndicates))
 					world << text("<B>[M.current.key] was [M.current.real_name]</B> [M.current.stat == 2 ? "(DEAD)" : ""]")
 
+		if(3)
+			world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
+			world << "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't lose the disk!"
+			for(var/datum/mind/M in syndicates)
+				if(!M.current)
+					continue
+				if(M.current.client)
+					world << text("<B>[M.current.key] was [M.current.real_name]</B> [M.current.stat == 2 ? "(DEAD)" : ""]")
 	return 1
 
 /datum/game_mode/nuclear/proc/get_possible_syndicates()

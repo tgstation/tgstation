@@ -2022,7 +2022,7 @@
 		stat(null, "([x], [y], [z])")
 		stat(null, "CPU: [world.cpu]")
 
-/client/proc/station_explosion_cinematic()
+/client/proc/station_explosion_cinematic(var/derp)
 	if(src.mob)
 		var/mob/M = src.mob
 		M.loc = null // HACK, but whatever, this works
@@ -2041,12 +2041,14 @@
 			sleep(40)
 			M << sound('explosionfar.ogg')
 			boom.icon_state = "end"
-			flick("explode", boom)
+			if(!derp) flick("explode", boom)
+			else flick("explode2", boom)
 			sleep(40)
 			if(ticker)
 				switch(ticker.mode.name)
 					if("nuclear emergency")
-						boom.icon_state = "loss_nuke"
+						if (!derp) boom.icon_state = "loss_nuke"
+						else boom.icon_state = "loss_nuke2"
 					if("AI malfunction")
 						boom.icon_state = "loss_malf"
 					else
