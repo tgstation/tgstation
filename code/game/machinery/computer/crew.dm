@@ -1,6 +1,6 @@
 /obj/machinery/computer/crew
 	name = "crew monitoring computer"
-	icon_state = "comm"
+	icon_state = "crew"
 
 
 /obj/machinery/computer/crew/attack_ai(mob/user)

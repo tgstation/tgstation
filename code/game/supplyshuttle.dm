@@ -418,7 +418,7 @@ var/ordernum=0
 /obj/machinery/computer/supplycomp
 	name = "Supply shuttle console"
 	icon = 'computer.dmi'
-	icon_state = "comm"
+	icon_state = "supply"
 	req_access = list(access_cargo)
 	var/temp = null
 	var/hacked = 0
@@ -426,7 +426,7 @@ var/ordernum=0
 /obj/machinery/computer/ordercomp
 	name = "Supply ordering console"
 	icon = 'computer.dmi'
-	icon_state = "comm"
+	icon_state = "request"
 	var/temp = null
 
 /obj/marker/supplymarker
