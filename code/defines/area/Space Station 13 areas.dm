@@ -373,7 +373,7 @@
 
 /area/crew_quarters/sleep_male/toilet_male
 	name = "Male Toilets"
-	icon_state = "Sleep"
+	icon_state = "toilet"
 
 /area/crew_quarters/sleep_female
 	name = "Female Dorm"

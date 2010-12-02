@@ -182,7 +182,7 @@
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
 	flags = FPRINT|TABLEPASS|SUITSPACE
-	item_state = "centcom"
+	item_state = "centhat"
 
 /obj/item/clothing/head/det_hat
 	name = "hat"
@@ -496,16 +496,11 @@
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 0.30
 
-/obj/item/clothing/suit/plaguedoctorsuit
+/obj/item/clothing/suit/bio_suit/plaguedoctorsuit
 	name = "Plague doctor suit"
 	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."
 	icon_state = "plaguedoctor"
 	item_state = "bio_suit"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	gas_transfer_coefficient = 0.01
-	permeability_coefficient = 0.01
-	heat_transfer_coefficient = 0.30
-
 
 /obj/item/clothing/suit/det_suit
 	name = "coat"
@@ -604,6 +599,7 @@
 
 /obj/item/clothing/suit/armor/captain
 	name = "Captain's armor"
+	desc = "Wearing this armor exemplifies who is in charge. You are in charge."
 	icon_state = "caparmor"
 	item_state = "caparmor"
 	w_class = 4//bulky item
@@ -809,8 +805,7 @@
 	desc = "It has a Captains rank stripe on it."
 	name = "Captain Jumpsuit"
 	icon_state = "captain"
-	item_state = "dg_suit"
-
+	item_state = "caparmor"
 	color = "captain"
 
 /obj/item/clothing/under/rank/chaplain
@@ -834,6 +829,13 @@
 	item_state = "r_suit"
 	color = "forensicsred"
 
+/obj/item/clothing/under/rank/warden
+	desc = "It has a Warden rank stripe on it."
+	name = "Warden Jumpsuit"
+	icon_state = "darkred"
+	item_state = "r_suit"
+	color = "darkred"
+
 /obj/item/clothing/under/rank/geneticist
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a genetics rank stripe on it."
 	name = "Genetics Jumpsuit"
@@ -846,8 +848,8 @@
 	desc = "It has a Head of Personnel rank stripe on it."
 	name = "Head of Personnel Jumpsuit"
 	icon_state = "hop"
-	item_state = "g_suit"
-	color = "hopgreen"
+	item_state = "b_suit"
+	color = "hop"
 
 /obj/item/clothing/under/rank/head_of_security
 	desc = "It has a Head of Security rank stripe on it."
@@ -923,7 +925,7 @@
 
 /obj/item/clothing/under/det
 	name = "Hard worn suit"
-	desc = "Someone who wears this means business"
+	desc = "Someone who wears this means business."
 	icon_state = "detective"
 	item_state = "det"
 	color = "detective"
@@ -950,7 +952,7 @@
 
 
 /obj/item/clothing/under/sl_suit
-	desc = "A very amish looking suit"
+	desc = "A very amish looking suit."
 	name = "Amish Suit"
 	icon_state = "sl_suit"
 	color = "sl_suit"
@@ -969,9 +971,10 @@
 	item_state = "bl_suit"
 	color = "syndicate"
 	mode = 0
-/obj/item/clothing/under/syndicate/notreally
+
+/obj/item/clothing/under/syndicate/tacticool
 	name = "Tacticool Turtleneck"
-	desc = "Non-descript, slightly suspicious civilian clothing, wearing this makes you feel like buying an SKS, going into the woods, and operating."
+	desc = "Non-descript, slightly suspicious civilian clothing. Wearing this makes you feel like buying an SKS, going into the woods, and operating."
 	icon_state = "syndicate"
 	item_state = "bl_suit"
 	color = "syndicate"
