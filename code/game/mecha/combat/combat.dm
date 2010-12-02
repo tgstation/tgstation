@@ -1,121 +1,110 @@
 /obj/mecha/combat
-	deflect_chance = 20
+	deflect_chance = 10
 	health = 500
 
-	var/weapon_1 = null
-	var/weapon_1_cooldown = 0
-	var/weapon_1_ready = 1
-	var/weapon_1_name = "some weapon"
-	var/weapon_1_energy_drain = 0
-	var/weapon_2 = null
-	var/weapon_2_cooldown = 0
-	var/weapon_2_ready = 1
-	var/weapon_2_name = "another weapon"
-	var/weapon_2_energy_drain = 0
-	var/selected_weapon = 1
-	var/overload = 0
-	var/melee_damage = 20
+	var/datum/mecha_weapon/selected_weapon
+	var/datum/mecha_weapon/weapon_1
+	var/datum/mecha_weapon/weapon_2
 	req_access = access_heads
+	var/force = 25
+	var/damtype = "brute"
+	var/melee_cooldown = 10
+	var/melee_can_hit = 1
+	var/list/destroyable_obj = list(/obj/mecha, /obj/window, /obj/grille, /turf/simulated/wall)
 
 /obj/mecha/combat/verb/switch_weapon()
 	set category = "Exosuit Interface"
 	set name = "Switch weapon"
 	set src in view(0)
-	if(state || !cell || cell.charge<=0) return
 	if(usr!=src.occupant)
 		return
-	if(selected_weapon == 1)
-		selected_weapon = 2
-		src.occupant << "You switch to [weapon_2_name]"
-		for (var/mob/M in oviewers(src))
-			M.show_message("[src.name] raises [weapon_2_name]")
-	else if(selected_weapon == 2)
-		selected_weapon = 1
-		src.occupant << "You switch to [weapon_1_name]"
-		for (var/mob/M in oviewers(src))
-			M.show_message("[src.name] raises [weapon_1_name]")
-	return
-
-/obj/mecha/combat/verb/overload()
-	set category = "Exosuit Interface"
-	set name = "Toggle leg actuators overload"
-	set src in view(0)
-	if(overload)
-		overload = 0
-		step_in = initial(step_in)
-		src.occupant << "\blue You disable leg actuators overload."
-	else
-		overload = 1
-		step_in = min(1, round(step_in/2))
-		src.occupant << "\red You enable leg actuators overload."
-
-
-/obj/mecha/combat/click_action(target)
 	if(state || !cell || cell.charge<=0) return
-	if(src == target) return
-	if(get_dist(src,target)<=1)
-		src.mega_punch(target)
 
-/*
-		if(src.occupant.a_intent == "hurt")
-			src.mega_punch(target)
-		else if(src.occupant.a_intent == "help")
-			src.mega_shake(target)
-*/
-	else
-		src.fire(src.selected_weapon,target)
+	if(selected_weapon == weapon_1)
+		selected_weapon = weapon_2
+	else if(selected_weapon == weapon_2)
+		selected_weapon = weapon_1
+
+	src.occupant << "You switch to [selected_weapon.name]"
+	for (var/mob/M in oviewers(src))
+		M.show_message("[src.name] raises [selected_weapon.name]")
 	return
 
 
-/obj/mecha/combat/proc/fire(weapon_num,target)
-	var/turf/curloc = src.loc
-	var/atom/targloc = get_turf(target)
-	if (!targloc || !istype(targloc, /turf) || !curloc)
-		return
-	var/weapon_type
-	switch(weapon_num)
-		if(1)
-			if(weapon_1_ready)
-				weapon_type = weapon_1
-				weapon_1_ready = 0
-				spawn(weapon_1_cooldown)
-					cell.use(weapon_1_energy_drain)
-					weapon_1_ready = 1
-		if(2)
-			if(weapon_2_ready)
-				weapon_type = weapon_2
-				weapon_2_ready = 0
-				spawn(weapon_2_cooldown)
-					cell.use(weapon_2_energy_drain)
-					weapon_2_ready = 1
-
-
-	if(!weapon_type) return
-
-
-	playsound(src, 'Laser.ogg', 50, 1)
-	if (targloc == curloc)
-		return
-
-	var/obj/beam/a_laser/A = new weapon_type(src.loc)
-	A.current = curloc
-	A.yo = targloc.y - curloc.y
-	A.xo = targloc.x - curloc.x
-	spawn()
-		A.process()
-
+/obj/mecha/combat/range_action(target)
+	if(selected_weapon)
+		selected_weapon.fire(target)
 	return
 
-/obj/mecha/combat/proc/mega_punch(target)
-	if(!istype(target, /obj) && !istype(target, /mob)) return
+/obj/mecha/combat/melee_action(target)
+	if(!melee_can_hit || (!istype(target, /obj) && !istype(target, /mob) && !istype(target, /turf))) return
 	if(istype(target, /mob))
 		var/mob/M = target
-		M.bruteloss += rand(melee_damage/2, melee_damage)
-		M.paralysis += 1
-		M.updatehealth()
-		step_away(M,src,15)
+		if(damtype == "brute")
+			step_away(M,src,15)
+		if(M.stat>1)
+			M.gib()
+			return
+		if(istype(target, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = target
+//			if (M.health <= 0) return
+
+			var/dam_zone = pick("chest", "chest", "chest", "head", "groin")
+			if (istype(H.organs[dam_zone], /datum/organ/external))
+				var/datum/organ/external/temp = H.organs[dam_zone]
+				switch(damtype)
+					if("brute")
+						H.paralysis += 1
+						temp.take_damage(rand(force/2, force), 0)
+					if("fire")
+						temp.take_damage(0, rand(force/2, force))
+					if("tox")
+						H.toxloss += rand(force/2, force)
+					else
+						return
+				H.UpdateDamageIcon()
+			H.updatehealth()
+
+		else
+			switch(damtype)
+				if("brute")
+					M.paralysis += 1
+					M.bruteloss += rand(force/2, force)
+				if("fire")
+					M.fireloss += rand(force/2, force)
+				if("tox")
+					M.toxloss += rand(force/2, force)
+				else
+					return
+			M.updatehealth()
+
+		src.occupant.show_message("[src.name] hits [target].", 1)
 		for (var/mob/V in viewers(src))
-			V.show_message("[src.name] sends [M] flying.")
+			if(V.client && !(V.blinded))
+				V.show_message("[src.name] hits [target].", 1)
+
+		melee_can_hit = 0
+		spawn(melee_cooldown)
+			melee_can_hit = 1
+		return
+
+	else
+		if(damtype == "brute")
+			for(var/target_type in src.destroyable_obj)
+				if(istype(target, target_type) && hascall(target, "attackby"))
+					src.occupant.show_message("[src.name] hits [target].", 1)
+					for (var/mob/V in viewers(src))
+						if(V.client && !(V.blinded))
+							V.show_message("[src.name] hits [target].", 1)
+					if(!istype(target, /turf/simulated/wall))
+						target:attackby(src,src.occupant)
+					else if(prob(2))
+						target:dismantle_wall(1)
+						src.occupant << text("\blue You smash through the wall.")
+					melee_can_hit = 0
+					spawn(melee_cooldown)
+						melee_can_hit = 1
+					break
 	return
 
 /*
@@ -131,16 +120,6 @@
 	return
 */
 
-/obj/mecha/combat/relaymove(mob/user,direction)
-	if(!..()) return
-	if(overload)
-		cell.use(step_energy_drain)
-		health--
-		if(health < initial(health) - initial(health)/3)
-			overload = 0
-			src.occupant << "\red Leg actuators damage treshold exceded. Disabling overload."
-
-
 /*
 	if(energy>0 && can_move)
 		if(step(src,direction))
@@ -155,3 +134,11 @@
 
 	return 0
 */
+
+/obj/mecha/combat/Del()
+	if(weapon_1)
+		del weapon_1
+	if(weapon_2)
+		del weapon_2
+	..()
+	return

@@ -1,5 +1,6 @@
 /obj/mecha
 	name = "Mecha"
+	desc = "Exosuit"
 	icon = 'mecha.dmi'
 	density = 1 //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
@@ -9,10 +10,10 @@
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/step_energy_drain = 10
 	var/health = 300 //health is health
-	var/deflect_chance = 5 //chance to deflect the incoming projectiles, or lesser the effect of ex_act.
+	var/deflect_chance = 5 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	var/obj/item/weapon/cell/cell = new
 	var/state = 0
-
+	var/update_stats = null //used to auto-update stats window
 
 	var/datum/effects/system/spark_spread/spark_system = new
 	var/lights = 0
@@ -23,23 +24,27 @@
 	var/datum/gas_mixture/air_contents = new
 	var/obj/machinery/atmospherics/portables_connector/connected_port = null //filling the air tanks
 	var/filled = 0.5
-	var/gas_tank_volume = 80
+	var/gas_tank_volume = 500
 	var/maximum_pressure = 30*ONE_ATMOSPHERE
 
 	req_access = access_engine
 	var/operating_access = null
+	var/max_temperature = 2500
 
 /obj/mecha/New()
 	..()
 	src.air_contents.volume = gas_tank_volume //liters
 	src.air_contents.temperature = T20C
 	src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-	src.spark_system.set_up(5, 0, src)
+	src.spark_system.set_up(2, 0, src)
 	src.spark_system.attach(src)
 	src.cell.charge = 15000
 	src.cell.maxcharge = 15000
 	preserve_temp()
+	check_location_temp()
 	src.verbs -= /obj/mecha/verb/disconnect_from_port
+	src.verbs -= /atom/movable/verb/pull
+	return
 
 
 /client/Click(object,location,control,params)
@@ -53,34 +58,56 @@
 
 
 /obj/mecha/proc/click_action(target)
+	if(!src.occupant) return
+	if(state || !cell || cell.charge<=0) return
+	if(src == target) return
+	if(get_dist(src,target)<=1)
+		src.melee_action(target)
+	else
+		src.range_action(target)
 	return
 
 
+/obj/mecha/proc/melee_action(target)
+	return
+
+/obj/mecha/proc/range_action(target)
+	return
 
 //////////////////////////////////
 ////////  Movement procs  ////////
 //////////////////////////////////
 
 /obj/mecha/relaymove(mob/user,direction)
+	if(!can_move)
+		return 0
 	if(connected_port)
 		src.occupant << "Unable to move while connected to the air system port"
 		return 0
 	if(src.inertia_dir)
 		return 0
-	if(state || !cell || cell.charge<=0) return 0
-	if(can_move)
-		if(step(src,direction))
-			can_move = 0
-			spawn(step_in) can_move = 1
-			cell.use(src.step_energy_drain)
-			if(istype(src.loc, /turf/space))
-				if(!src.check_for_support())
-					src.inertia_dir = direction
-					src.inertial_movement()
-			return 1
+	if(state || !cell || cell.charge<=0)
+		return 0
+	if(step(src,direction))
+		can_move = 0
+		spawn(step_in) can_move = 1
+		cell.use(src.step_energy_drain)
+		if(istype(src.loc, /turf/space))
+			if(!src.check_for_support())
+				src.inertia_dir = direction
+				src.inertial_movement()
+		return 1
 	return 0
 
+
 /obj/mecha/proc/inertial_movement()
+//	set background = 1
+	spawn while(src && src.inertia_dir)
+		if(!step(src, src.inertia_dir)||check_for_support())
+			src.inertia_dir = null
+		sleep(7)
+
+/*
 	if(check_for_support())
 		src.inertia_dir = null
 	if(src.inertia_dir)
@@ -90,7 +117,7 @@
 		else
 			src.inertia_dir = null
 	return
-
+*/
 /obj/mecha/proc/check_for_support()
 	if(locate(/obj/grille, orange(1, src)) || locate(/obj/lattice, orange(1, src)) || locate(/turf/simulated, orange(1, src)) || locate(/turf/unsimulated, orange(1, src)))
 		return 1
@@ -113,11 +140,60 @@
 ////////  Health related procs  ////////
 ////////////////////////////////////////
 
+/obj/mecha/proc/update_health()
+	if(src.health > 0)
+		src.spark_system.start()
+	else
+		src.destroy()
+	return
+
+/obj/mecha/attack_hand(mob/user as mob)
+	if (user.mutations & 8 && !prob(src.deflect_chance))
+		src.health -= 15
+		src.update_health()
+		user << "\red You hit [src.name] with all your might. The metal creaks and bends."
+		for (var/mob/V in viewers(src))
+			if(V.client && V != user && !(V.blinded))
+				V.show_message("[user] hits [src.name], doing some damage.", 1)
+	else
+		user << "\red You hit [src.name] with no visible effect."
+		for (var/mob/V in viewers(src))
+			if(V.client && V != user && !(V.blinded))
+				V.show_message("[user] hits [src.name]. Nothing happens", 1)
+	return
+
+/obj/mecha/attack_paw(mob/user as mob)
+	return src.attack_hand()
+
+
+/obj/mecha/hitby(A as mob|obj)
+	if(prob(src.deflect_chance) || istype(A, /mob))
+		if(src.occupant && src.occupant.client)
+			src.occupant << "\blue The [A] bounces off the armor."
+		for (var/mob/V in viewers(src))
+			if(V.client && !(V.blinded))
+				V.show_message("The [A] bounces off the [src.name] armor", 1)
+		if(istype(A, /mob))
+			var/mob/M = A
+			M.bruteloss += 10
+			M.updatehealth()
+		return
+
+	else if(istype(A, /obj))
+		var/obj/O = A
+		if(O.throwforce)
+			src.health -= O.throwforce
+			src.update_health()
+		return
+
+
 /obj/mecha/bullet_act(flag)
 	if(prob(src.deflect_chance))
 		if(src.occupant && src.occupant.client)
 			src.occupant << "\blue The armor deflects the incoming projectile."
-		return
+		for (var/mob/V in viewers(src))
+			if(V.client && !(V.blinded))
+				V.show_message("The [src.name] armor deflects the projectile", 1)
 	else
 		switch(flag)
 			if(PROJECTILE_PULSE)
@@ -126,22 +202,19 @@
 				src.health -= 20
 			else
 				src.health -= 10
-	if(src.health > 0)
-		src.spark_system.start()
-	else
-		src.destroy()
+		src.update_health()
+	return
 
 /obj/mecha/proc/destroy()
 	if(src.occupant)
-		var/mob/M = src.occupant
 		src.go_out()
 		if(prob(20))
-			M.bruteloss += rand(10,20)
-			M.updatehealth()
+			src.occupant.bruteloss += rand(10,20)
+			src.occupant.updatehealth()
 		else
-			M.gib()
-	explosion(src.loc, 1, 0, 2, 4)
+			src.occupant.gib()
 	spawn()
+		explosion(src.loc, 0, 0, 1, 3)
 		del(src)
 	return
 
@@ -167,6 +240,17 @@
 				src.spark_system.start()
 			return
 
+/obj/mecha/proc/check_location_temp()
+	spawn while(src)
+		if(istype(src.loc, /turf/simulated/))
+			var/turf/simulated/T = src.loc
+			if(T.air)
+				if(T.air.temperature > src.max_temperature)
+					src.health -= 10
+					src.update_health()
+		sleep(10)
+	return
+
 
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////
@@ -188,13 +272,14 @@
 	return src.air_contents.return_pressure()
 
 /obj/mecha/proc/preserve_temp()
-	if(!cell || cell.charge<=0) return
-	if(src.occupant)
-		if(src.occupant.bodytemperature > 320 || src.occupant.bodytemperature < 300)
-			src.occupant.bodytemperature += src.occupant.adjust_body_temperature(src.occupant.bodytemperature, 310.15, 10)
-			cell.charge--
-	spawn(10)
-		.()
+//	set background = 1
+	spawn while(src)
+		if(cell && cell.charge>0)
+			if(src.occupant)
+				if(src.occupant.bodytemperature > 320 || src.occupant.bodytemperature < 300)
+					src.occupant.bodytemperature += src.occupant.adjust_body_temperature(src.occupant.bodytemperature, 310.15, 10)
+					cell.charge--
+		sleep(10)
 
 /obj/mecha/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)
 	//Make sure not already connected to something else
@@ -239,6 +324,8 @@
 	set category = "Exosuit Interface"
 	set src in view(0)
 	if(!src.occupant) return
+	if(usr!=src.occupant)
+		return
 	var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 	if(possible_port)
 		if(connect(possible_port))
@@ -258,6 +345,8 @@
 	set category = "Exosuit Interface"
 	set src in view(0)
 	if(!src.occupant) return
+	if(usr!=src.occupant)
+		return
 	if(disconnect())
 		src.occupant << "\blue [name] disconnects from the port."
 		src.verbs -= /obj/mecha/verb/disconnect_from_port
@@ -270,6 +359,8 @@
 	set name = "Toggle Lights"
 	set category = "Exosuit Interface"
 	set src in view(0)
+	if(usr!=src.occupant)
+		return
 	lights = !lights
 	if(lights)
 		src.sd_SetLuminosity(src.luminosity + src.lights_power)
@@ -300,6 +391,20 @@
 			src.add_fingerprint(usr)
 	return
 
+
+/obj/mecha/verb/view_stats()
+	set name = "View Stats"
+	set category = "Exosuit Interface"
+	set src in view(0)
+	if(usr!=src.occupant)
+		return
+	src.update_stats = 1
+	spawn while(src && src.occupant && src.update_stats)
+		src.occupant << browse(get_stats_html(), "window=exosuit")
+		onclose(src.occupant, "exosuit", src)
+		sleep(10)
+	return
+
 /obj/mecha/verb/eject()
 	set name = "Eject"
 	set category = "Exosuit Interface"
@@ -316,6 +421,7 @@
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
+	src.occupant << browse(null, "window=exosuit")
 	src.occupant.loc = src.loc
 	src.occupant = null
 	return
@@ -375,9 +481,76 @@
 				user << "There's already a powercell installed."
 		return
 
-
-	..()
+	else
+		..()
+		if(prob(src.deflect_chance))
+			user << "\red The [W] bounces off [src.name] armor."
+/*
+			for (var/mob/V in viewers(src))
+				if(V.client && !(V.blinded))
+					V.show_message("The [W] bounces off [src.name] armor.", 1)
+*/
+		else
+			if(W.damtype == "brute")
+				src.health -= W.force
+			else if(W.damtype == "fire")
+				src.health -= W.force*1.5
+			src.update_health()
 	return
+
+
+/obj/mecha/proc/get_stats_html()
+	var/output = {"<html>
+						<head><title>[src.name] data</title><meta HTTP-EQUIV='Refresh' content='10'></head>
+						<body style="color: #00ff00; background: #000000; font: 13px 'Courier', monospace;">
+						[src.get_stats_part()]
+						<hr>
+						[src.get_commands()]
+						</body>
+						</html>
+					 "}
+	return output
+
+/obj/mecha/proc/get_stats_part()
+	var/output = {"<b>Integrity: </b> [health/initial(health)*100]%<br>
+						<b>Powercell charge: </b>[cell.charge/cell.maxcharge*100]%<br>
+						<b>Airtank pressure: </b>[src.return_pressure()]<br>
+						<b>Lights: </b>[lights?"on":"off"]<br>
+					"}
+	return output
+
+/obj/mecha/proc/get_commands()
+	var/output = {"<a href='?src=\ref[src];toggle_lights=1'>Toggle Lights</a><br>
+						[(/obj/mecha/verb/disconnect_from_port in src.verbs)?"<a href='?src=\ref[src];port_disconnect=1'>Disconnect from port</a><br>":null]
+						[(/obj/mecha/verb/connect_to_port in src.verbs)?"<a href='?src=\ref[src];port_connect=1'>Connect to port</a><br>":null]
+						<a href='?src=\ref[src];eject=1'>Eject</a><br>
+					"}
+	return output
+
+/obj/mecha/Topic(href, href_list)
+	..()
+	if (href_list["close"])
+		src.update_stats = null
+		return
+	if (href_list["toggle_lights"])
+		src.toggle_lights()
+		return
+	if (href_list["port_disconnect"])
+		src.disconnect_from_port()
+		return
+	if (href_list["port_connect"])
+		src.connect_to_port()
+		return
+	if (href_list["eject"])
+		src.eject()
+		return
+	return
+
+
+
+/obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
+	return
+
 
 
 

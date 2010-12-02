@@ -1027,32 +1027,30 @@
 		del(src)
 
 /obj/beam/a_laser/proc/process()
-	//world << text("laser at [] []:[], target is [] []:[]", src.loc, src.x, src.y, src:current, src.current:x, src.current:y)
-	if ((!( src.current ) || src.loc == src.current))
-		src.current = locate(min(max(src.x + src.xo, 1), world.maxx), min(max(src.y + src.yo, 1), world.maxy), src.z)
-		//world << text("current changed: target is now []. location was [],[], added [],[]", src.current, src.x, src.y, src.xo, src.yo)
-	if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
-		//world << text("off-world, deleting")
-		//SN src = null
-		del(src)
-		return
-	step_towards(src, src.current)
-	// make it able to hit lying-down folk
-	var/list/dudes = list()
-	for(var/mob/living/M in src.loc)
-		dudes += M
-	if(dudes.len)
-		src.Bump(pick(dudes))
-	//world << text("laser stepped, now [] []:[], target is [] []:[]", src.loc, src.x, src.y, src.current, src.current:x, src.current:y)
-	src.life--
-	if (src.life <= 0)
-		//SN src = null
-		del(src)
-		return
-
-	spawn(1)
-		src.process()
-		return
+	spawn while(src)
+		//world << text("laser at [] []:[], target is [] []:[]", src.loc, src.x, src.y, src:current, src.current:x, src.current:y)
+		if ((!( src.current ) || src.loc == src.current))
+			src.current = locate(min(max(src.x + src.xo, 1), world.maxx), min(max(src.y + src.yo, 1), world.maxy), src.z)
+			//world << text("current changed: target is now []. location was [],[], added [],[]", src.current, src.x, src.y, src.xo, src.yo)
+		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
+			//world << text("off-world, deleting")
+			//SN src = null
+			del(src)
+			return
+		step_towards(src, src.current)
+		// make it able to hit lying-down folk
+		var/list/dudes = list()
+		for(var/mob/living/M in src.loc)
+			dudes += M
+		if(dudes.len)
+			src.Bump(pick(dudes))
+		//world << text("laser stepped, now [] []:[], target is [] []:[]", src.loc, src.x, src.y, src.current, src.current:x, src.current:y)
+		src.life--
+		if (src.life <= 0)
+			//SN src = null
+			del(src)
+			return
+		sleep(1)
 	return
 
 /obj/beam/i_beam/proc/hit()
