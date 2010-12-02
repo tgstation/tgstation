@@ -4550,7 +4550,7 @@
 "bJz" = (/obj/machinery/atmospherics/pipe/simple,/turf/simulated/wall/r_wall,/area/engine/engine_smes)
 "bJA" = (/obj/table{icon_state = "tabledir"; dir = 1},/obj/machinery/cell_charger,/obj/machinery/camera{c_tag = "Engineering SMES Room"; dir = 4; network = "SS13"},/turf/simulated/floor,/area/engine/engine_smes)
 "bJB" = (/obj/table{icon_state = "tabledir"; dir = 5},/obj/item/weapon/cell{charge = 100; maxcharge = 15000},/obj/item/weapon/cell{charge = 100; maxcharge = 15000},/turf/simulated/floor,/area/engine/engine_smes)
-"bJC" = (/obj/rack{dir = 8},/obj/item/clothing/mask/medical,/obj/item/clothing/suit/space/rig,/obj/item/clothing/head/helmet/space/rig,/turf/simulated/floor,/area/engine/engine_smes)
+"bJC" = (/obj/rack{dir = 8},/obj/item/clothing/mask/medical,/obj/item/clothing/suit/space,/obj/item/clothing/head/helmet/space,/turf/simulated/floor,/area/engine/engine_smes)
 "bJD" = (/obj/closet/wardrobe/engineering_yellow,/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor,/area/engine/engine_smes)
 "bJE" = (/obj/machinery/atmospherics/pipe/simple,/turf/simulated/floor,/area/engine/engine_smes)
 "bJF" = (/obj/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor,/area/engine/engine_smes)
