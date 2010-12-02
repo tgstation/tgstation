@@ -34,7 +34,7 @@
 /mob/living/silicon/hive_mainframe
 	name = "Robot Mainframe"
 	voice_name = "synthesized voice"
-	icon = 'hivebot.dmi'
+
 	icon_state = "hive_main"
 	health = 200
 	var/health_max = 200

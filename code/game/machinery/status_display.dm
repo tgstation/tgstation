@@ -300,6 +300,10 @@
 					set_picture("ai_off")
 				if("Problems?")
 					set_picture("ai_trollface")
+				if("Awesome")
+					set_picture("ai_awesome")
+				if("Facepalm")
+					set_picture("ai_facepalm")
 				if("Friend Computer")
 					set_picture("ai_friend")
 

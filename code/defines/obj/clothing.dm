@@ -109,7 +109,15 @@
 	icon_state = "black"
 	item_state = "swat_gl"
 	siemens_coefficient = 0.30
+	protective_temperature = 1100
+	heat_transfer_coefficient = 0.05
 
+/obj/item/clothing/gloves/space_ninja
+	desc = "These nano-enhanced gloves insulate from electricity and provide fire resistance."
+	name = "ninja gloves"
+	icon_state = "s-ninja"
+	item_state = "swat_gl"
+	siemens_coefficient = 0
 	protective_temperature = 1100
 	heat_transfer_coefficient = 0.05
 
@@ -242,6 +250,12 @@
 	item_state = "space"
 	permeability_coefficient = 0.01
 
+/obj/item/clothing/head/helmet/space/rig
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
+	name = "rig helmet"
+	icon_state = "rig"
+	item_state = "rig_helm"
+
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
 	icon_state = "syndicate"
@@ -304,18 +318,11 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 
-/obj/item/clothing/mask/plaguedoctor
+/obj/item/clothing/mask/gas/plaguedoctor
 	name = "Plague doctor mask"
 	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
-	flags = FPRINT|TABLEPASS|SUITSPACE|MASKCOVERSMOUTH|MASKCOVERSEYES
-	w_class = 3.0
-	see_face = 0.0
 	item_state = "gas_mask"
-	protective_temperature = 500
-	heat_transfer_coefficient = 0.01
-	gas_transfer_coefficient = 0.01
-	permeability_coefficient = 0.01
 
 /obj/item/clothing/mask/gas/emergency
 	name = "emergency gas mask"
@@ -326,6 +333,13 @@
 	name = "SWAT Mask"
 	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "swat"
+
+/obj/item/clothing/mask/gas/space_ninja
+	name = "ninja mask"
+	desc = "A close-fitting mask that acts both as an air filter and a post-modern fashion statement."
+	icon_state = "s-ninja"
+	item_state = "s-ninja_mask"
+	vchange = 1
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
@@ -670,10 +684,23 @@
 	protective_temperature = 1000
 	heat_transfer_coefficient = 0.02
 
+/obj/item/clothing/suit/space/rig
+	name = "rig suit"
+	desc = "A special suit that protects against hazardous, low pressure environments."
+	icon_state = "rig"
+	item_state = "rig_suit"
+	w_class = 4//bulky item
+
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
+
+/obj/item/clothing/suit/space/space_ninja
+	name = "ninja suit"
+	desc = "A unique suit of nano-enhanced armor designed specifically for Spider-Clan assassins."
+	icon_state = "s-ninja"
+	item_state = "s-ninja_suit"
 
 //Themed space suits for different nuke rounds (WIP)
 

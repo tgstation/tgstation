@@ -57,9 +57,13 @@
 		if("Security")
 			src.module = new /obj/item/weapon/robot_module/security(src)
 			src.hands.icon_state = "security"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Armored")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Armored", "Robocop", "Robocop Red")
 			if(icontype == "Armored")
 				src.icon_state = "Security"
+			else if(icontype == "Robocop")
+				src.icon_state = "Security2"
+			else if(icontype == "Robocop Red")
+				src.icon_state = "Security3"
 			else
 				src.icon_state = "robot"
 			src.modtype = "Sec"
