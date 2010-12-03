@@ -21,6 +21,7 @@
 	var/obj/screen/bodytemp = null
 	var/obj/screen/healths = null
 	var/obj/screen/throw_icon = null
+	var/obj/screen/nutrition_icon = null
 
 	// var/list/obj/hallucination/hallucinations = list() - Not used at all - Skie
 
@@ -32,6 +33,7 @@
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null
+	var/attack_log = list( )
 	var/already_placed = 0.0
 	var/obj/machinery/machine = null
 	var/other_mobs = null
@@ -79,11 +81,13 @@
 	var/is_jittery = 0
 	var/jitteriness = 0
 	var/charges = 0.0
-	var/nutrition = 0.0
+	var/nutrition = 400.0
+	var/overeatduration = 0		// How long this guy is overeating
 	var/paralysis = 0.0
 	var/stunned = 0.0
 	var/weakened = 0.0
 	var/losebreath = 0.0
+	var/metabslow = 0	// Metabolism slowed
 	var/muted = null
 	var/intent = null
 	var/shakecamera = 0

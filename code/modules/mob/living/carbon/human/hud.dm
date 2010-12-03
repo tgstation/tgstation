@@ -426,6 +426,12 @@
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_health
 
+	mymob.nutrition_icon = new /obj/screen( null )
+	mymob.nutrition_icon.icon = 'fullness.dmi'
+	mymob.nutrition_icon.icon_state = "fullness0"
+	mymob.nutrition_icon.name = "fullness"
+	mymob.nutrition_icon.screen_loc = ui_nutrition
+
 	mymob.pullin = new /obj/screen( null )
 	mymob.pullin.icon = ui_style
 	mymob.pullin.icon_state = "pull0"

@@ -101,6 +101,14 @@
 			else
 				usr << "\red <B>[src.name] looks severely burned!</B>"
 
+		if (src.nutrition < 100)
+			usr << "\red [src.name] looks like flesh and bones."
+		else if (src.nutrition >= 600)
+			if (usr.nutrition < 100)
+				usr << "\red [src.name] looks very round and delicious. Like a little piggy. A tasty piggy."
+			else
+				usr << "\blue [src.name] looks quite chubby."
+
 		if (src.stat == 1)
 			usr << "\red [src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep."
 		else if (src.brainloss >= 60)

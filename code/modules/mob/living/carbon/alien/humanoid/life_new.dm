@@ -352,7 +352,7 @@
 					src.mutations &= ~32
 //					update_body()
 			if (src.nutrition > 0)
-				src.nutrition--
+				src.nutrition -= HUNGER_FACTOR
 
 			if (src.drowsyness)
 				src.drowsyness--

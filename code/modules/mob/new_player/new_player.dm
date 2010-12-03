@@ -215,6 +215,8 @@ mob/new_player
 					AttemptLateSpawn("Cargo Technician", cargotechMax)
 				if ("27")
 					AttemptLateSpawn("Chief Medical Officer", cmoMax)
+				if ("28")
+					AttemptLateSpawn("Warden", wardenMax)
 
 		if(!ready && href_list["preferences"])
 			preferences.process_link(src, href_list)
@@ -375,6 +377,8 @@ mob/new_player
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=26'>Cargo Technician</a><br>"
 		if (IsJobAvailable("Chief Medical Officer",cmoMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=27'>Chief Medical Officer</a><br>"
+		if (IsJobAvailable("Warden", wardenMax))
+			dat += "<a href='byond://?src=\ref[src];SelectedJob=28'>Warden</a><br>"
 		if (!jobban_isbanned(src,"Assistant"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=18'>Assistant</a><br>"
 

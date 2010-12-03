@@ -258,7 +258,7 @@
 
 			if(reagents) reagents.metabolize(src)
 
-			if(src.nutrition > 400 && !(src.mutations & 32))
+			if(src.nutrition > 500 && !(src.mutations & 32))
 				if(prob(5 + round((src.nutrition - 200) / 2)))
 					src << "\red You suddenly feel blubbery!"
 					src.mutations |= 32
@@ -269,7 +269,7 @@
 					src.mutations &= ~32
 //					update_body()
 			if (src.nutrition > 0)
-				src.nutrition--
+				src.nutrition-= HUNGER_FACTOR
 
 			if (src.drowsyness)
 				src.drowsyness--

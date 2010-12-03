@@ -8,6 +8,7 @@ obj/door_assembly
 	var/doortype = 0
 	var/state = 0
 	var/glass = 0
+	var/obj/item/weapon/airlock_electronics/electronics = null
 
 	door_assembly_0
 		name = "Airlock Assembly"
@@ -156,10 +157,12 @@ obj/door_assembly
 				if(6) src.icon_state = "door_as0_ext"
 				if(7) src.icon_state = "door_as0_g"
 			src.name = "Secured Airlock Assembly"
-	else if(istype(W, /obj/item/device/multitool) && state == 1 )
+	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == 1 )
 		playsound(src.loc, 'Screwdriver.ogg', 100, 1)
 		var/turf/T = get_turf(user)
 		user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
+		user.drop_item()
+		W.loc = src
 		sleep(40)
 		if(get_turf(user) == T)
 			user << "\blue You installed the airlock electronics!"
@@ -174,7 +177,11 @@ obj/door_assembly
 				if(6) src.icon_state = "door_as2_ext"
 				if(7) src.icon_state = "door_as2_g"
 			src.name = "Near finished Airlock Assembly"
-			del(W)
+			src.electronics = W
+		else
+			W.loc = src.loc
+
+			//del(W)
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
 		playsound(src.loc, 'Crowbar.ogg', 100, 1)
 		var/turf/T = get_turf(user)
@@ -193,7 +200,13 @@ obj/door_assembly
 				if(6) src.icon_state = "door_as1_ext"
 				if(7) src.icon_state = "door_as1_g"
 			src.name = "Wired Airlock Assembly"
-			new/obj/item/device/multitool( src.loc )
+			var/obj/item/weapon/airlock_electronics/ae
+			if (!electronics)
+				ae = new/obj/item/weapon/airlock_electronics( src.loc )
+			else
+				ae = electronics
+				electronics = null
+				ae.loc = src.loc
 	else if(istype(W, /obj/item/weapon/sheet/rglass) && glass == 0)
 		playsound(src.loc, 'Crowbar.ogg', 100, 1)
 		var/turf/T = get_turf(user)
@@ -216,17 +229,22 @@ obj/door_assembly
 		sleep(40)
 		if(get_turf(user) == T)
 			user << "\blue You finish the airlock!"
+			var/obj/machinery/door/airlock/door
 			if (!src.glass)
 				switch(src.doortype)
-					if(0) new/obj/machinery/door/airlock( src.loc )
-					if(1) new/obj/machinery/door/airlock/command( src.loc )
-					if(2) new/obj/machinery/door/airlock/security( src.loc )
-					if(3) new/obj/machinery/door/airlock/engineering( src.loc )
-					if(4) new/obj/machinery/door/airlock/medical( src.loc )
-					if(5) new/obj/machinery/door/airlock/maintenance( src.loc )
-					if(6) new/obj/machinery/door/airlock/external( src.loc )
+					if(0) door = new/obj/machinery/door/airlock( src.loc )
+					if(1) door = new/obj/machinery/door/airlock/command( src.loc )
+					if(2) door = new/obj/machinery/door/airlock/security( src.loc )
+					if(3) door = new/obj/machinery/door/airlock/engineering( src.loc )
+					if(4) door = new/obj/machinery/door/airlock/medical( src.loc )
+					if(5) door = new/obj/machinery/door/airlock/maintenance( src.loc )
+					if(6) door = new/obj/machinery/door/airlock/external( src.loc )
 			else
-				new/obj/machinery/door/airlock/glass( src.loc )
+				door = new/obj/machinery/door/airlock/glass( src.loc )
+			//door.req_access = src.req_access
+			door.electronics = src.electronics
+			door.req_access = src.electronics.conf_access
+			src.electronics.loc = door
 			del(src)
 	else
 		..()

@@ -158,11 +158,14 @@ var/showadminmessages = 1
 				return
 			if (jobban_isbanned(M, job))
 				log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
+				M << "\red<BIG><B>You have been un-jobbanned by [usr.client.ckey] from [job].</B></BIG>"
 				message_admins("\blue [key_name_admin(usr)] unbanned [key_name_admin(M)] from [job]", 1)
 				jobban_unban(M, job)
 				href_list["jobban2"] = 1
 			else
 				log_admin("[key_name(usr)] banned [key_name(M)] from [job]")
+				M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from [job].</B></BIG>"
+				M << "\red Jooban can be lifted only on demand."
 				message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [job]", 1)
 				jobban_fullban(M, job)
 				href_list["jobban2"] = 1 // lets it fall through and refresh
@@ -196,7 +199,7 @@ var/showadminmessages = 1
 			if ((M.client && M.client.holder && (M.client.holder.level >= src.level)))
 				alert("You cannot perform this action. You must be of a higher administrative rank!")
 				return
-			switch(alert("Temporary Ban?",,"Yes","No"))
+			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 				if("Yes")
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num
 					if(!mins)
@@ -645,10 +648,10 @@ var/showadminmessages = 1
 				foo += text("<B>Hasn't Entered Game</B> | ")
 			foo += text("<A HREF='?src=\ref[src];forcespeech=\ref[M]'>Say</A> | ")
 			foo += text("<A href='?src=\ref[src];mute2=\ref[M]'>Mute: [(M.muted ? "Muted" : "Voiced")]</A> | ")
-			foo += text("<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> | ")
 			foo += text("<A href='?src=\ref[src];boot2=\ref[M]'>Boot</A> | ")
 		foo += text("<A href='?src=\ref[src];jumpto=\ref[M]'>Jump to</A> | ")
 		foo += text("<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> \]")
+		foo += text("<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> | ")
 		dat += text("<body>[foo]</body></html>")
 		usr << browse(dat, "window=adminplayeropts;size=480x100")
 

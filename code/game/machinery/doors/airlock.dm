@@ -77,6 +77,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	autoclose = 1
 	var/doortype = 0
 	var/justzap = 0
+	var/obj/item/weapon/airlock_electronics/electronics = null
 
 /obj/machinery/door/airlock/command
 	name = "Airlock"
@@ -902,7 +903,15 @@ About the new airlock wires panel:
 					if(5) new/obj/door_assembly/door_assembly_mai( src.loc )
 					if(6) new/obj/door_assembly/door_assembly_ext( src.loc )
 					if(7) new/obj/door_assembly/door_assembly_g( src.loc )
-				new/obj/item/device/multitool( src.loc )
+				var/obj/item/weapon/airlock_electronics/ae
+				if (!electronics)
+					ae = new/obj/item/weapon/airlock_electronics( src.loc )
+					ae.conf_access = src.req_access
+				else
+					ae = electronics
+					electronics = null
+					ae.loc = src.loc
+
 				del(src)
 				return
 		else if (src.arePowerSystemsOn() || !(stat & NOPOWER))

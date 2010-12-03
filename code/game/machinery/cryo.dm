@@ -124,7 +124,7 @@
 			if(!ismob(G:affecting))
 				return
 			if (src.occupant)
-				user << "\blue <B>The sleeper is already occupied!</B>"
+				user << "\blue <B>The cryo cell is already occupied!</B>"
 				return
 			if (G:affecting.abiotic())
 				user << "Subject may not have abiotic items on."
@@ -220,6 +220,7 @@
 				src.occupant.client.eye = src.occupant.client.mob
 				src.occupant.client.perspective = MOB_PERSPECTIVE
 			src.occupant.loc = src.loc
+			src.occupant.metabslow = 0
 			src.occupant = null
 			build_icon()
 			return
@@ -252,6 +253,7 @@
 			usr.client.perspective = EYE_PERSPECTIVE
 			usr.client.eye = src
 			usr.loc = src
+			usr.metabslow = 1
 			src.occupant = usr
 			/*for(var/obj/O in src)
 				O.loc = src.loc*/

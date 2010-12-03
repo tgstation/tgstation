@@ -94,8 +94,17 @@ datum
 					R.on_mob_life(M)
 				update_total()
 
-			handle_reactions()
+			conditional_update_move(var/atom/A, var/Running = 0)
+				for(var/datum/reagent/R in reagent_list)
+					R.on_move (A, Running)
+				update_total()
 
+			conditional_update(var/atom/A, )
+				for(var/datum/reagent/R in reagent_list)
+					R.on_update (A)
+				update_total()
+
+			handle_reactions()
 				if(ismob(my_atom)) return //No reactions inside mobs :I
 
 				for(var/A in typesof(/datum/chemical_reaction) - /datum/chemical_reaction)
@@ -242,6 +251,14 @@ datum
 						return R.volume
 
 				return 0
+
+			get_reagents()
+				var/res = ""
+				for(var/datum/reagent/A in reagent_list)
+					if (res != "") res += ","
+					res += A.name
+
+				return res
 
 ///////////////////////////////////////////////////////////////////////////////////
 

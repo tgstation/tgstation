@@ -71,7 +71,19 @@
 	return 0
 
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
-
+	if(istype(W, /obj/item/weapon/sheet/metal))
+		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
+		B.loc = user
+		if (user.r_hand == W)
+			user.u_equip(W)
+			user.r_hand = B
+		else
+			user.u_equip(W)
+			user.l_hand = B
+		B.layer = 20
+		user << "You armed the robot frame"
+		del(W)
+		del(src)
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		user.drop_item()
 		W.loc = src

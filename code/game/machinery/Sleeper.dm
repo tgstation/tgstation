@@ -109,6 +109,7 @@
 	icon = 'Cryogenic2.dmi'
 	icon_state = "sleeper_0"
 	density = 1
+	var/occupied = 0 // So there won't be multiple persons trying to get into one sleeper
 	var/mob/occupant = null
 	anchored = 1
 
@@ -226,6 +227,7 @@
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
 	src.occupant.loc = src.loc
+	src.occupant.metabslow = 0
 	src.occupant = null
 	src.icon_state = "sleeper_0"
 	return
@@ -281,6 +283,8 @@
 		return
 	src.go_out()
 	add_fingerprint(usr)
+
+	occupied = 0
 	return
 
 /obj/machinery/sleeper/verb/move_inside()
@@ -289,23 +293,27 @@
 
 	if (usr.stat != 0)
 		return
-	if (src.occupant)
+	if (occupied)
 		usr << "\blue <B>The sleeper is already occupied!</B>"
 		return
 /*	if (usr.abiotic())									// Removing the requirement for user to be naked -- TLE
 		usr << "Subject may not have abiotic items on."
 		return*/
 	for (var/mob/V in viewers(usr))
+		occupied = 1
 		V.show_message("[usr] starts climbing into the sleeper.", 3)
 	if(do_after(usr, 20))
 		usr.pulling = null
 		usr.client.perspective = EYE_PERSPECTIVE
 		usr.client.eye = src
 		usr.loc = src
+		usr.metabslow = 1
 		src.occupant = usr
 		src.icon_state = "sleeper_1"
 		for(var/obj/O in src)
 			del(O)
 		src.add_fingerprint(usr)
 		return
+	else
+		occupied = 0
 	return

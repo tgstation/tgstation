@@ -25,17 +25,14 @@ datum
 			id = "explosion_potassium"
 			result = null
 			required_reagents = list("water" = 1, "potassium" = 1)
-			result_amount = null
+			result_amount = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-				s.set_up(2, 1, location)
-				s.start()
-				for(var/mob/M in viewers(5, location))
-					M << "\red The solution violently explodes."
-				for(var/mob/M in viewers(1, location))
-					M << "\red The explosion knocks you down."
-					M:weakened += 3
+				var/datum/effects/system/reagents_explosion/e = new()
+				e.set_up(round (created_volume/10, 1), location, 0, 0)
+				e.start()
+
+				holder.clear_reagents()
 				return
 
 		silicate
@@ -206,6 +203,13 @@ datum
 			required_reagents = list("cryptobiolin" = 1, "inaprovaline" = 1)
 			result_amount = 2
 
+		imidazoline
+			name = "imidazoline"
+			id = "imidazoline"
+			result = "imidazoline"
+			required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
+			result_amount = 2
+
 		ethylredoxrazine
 			name = "Ethylredoxrazine"
 			id = "ethylredoxrazine"
@@ -219,6 +223,28 @@ datum
 			result = "water"
 			required_reagents = list("ethylredoxrazine" = 1, "ethanol" = 1)
 			result_amount = 2
+
+		glycerol
+			name = "Glycerol"
+			id = "glycerol"
+			result = "glycerol"
+			required_reagents = list("oliveoil" = 3, "acid" = 1)
+			result_amount = 1
+
+		nitroglycerin
+			name = "Nitroglycerin"
+			id = "nitroglycerin"
+			result = "nitroglycerin"
+			required_reagents = list("glycerol" = 1, "pacid" = 1, "acid" = 1)
+			result_amount = 2
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+				var/datum/effects/system/reagents_explosion/e = new()
+				e.set_up(round (created_volume/2, 1), location, 0, 0)
+				e.start()
+
+				holder.clear_reagents()
+				return
 
 		sodiumchloride
 			name = "Sodium Chloride"

@@ -1,8 +1,10 @@
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
-		if(src.nutrition)
-			src.nutrition--
+		if(src.nutrition && src.stat != 2)
+			src.nutrition -= HUNGER_FACTOR/2
+			if(src.m_intent == "run")
+				src.nutrition -= HUNGER_FACTOR/2
 		if(src.mutations & 32 && src.m_intent == "run")
 			src.bodytemperature += 2
 

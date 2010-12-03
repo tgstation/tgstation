@@ -163,6 +163,7 @@
 	src.L += new /obj/item/weapon/weldingtool(src)
 	src.L += new /obj/item/clothing/head/helmet/welding(src)
 	src.L += new /obj/item/device/multitool(src)
+	src.L += new /obj/item/weapon/airlock_electronics(src)
 	src.L += new /obj/item/device/flashlight(src)
 	src.L += new /obj/item/weapon/extinguisher(src)
 	src.L += new /obj/item/weapon/sheet/metal(src)

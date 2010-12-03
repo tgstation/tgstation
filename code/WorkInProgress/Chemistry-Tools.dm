@@ -781,11 +781,30 @@
 			return 0
 		if(istype(M, /mob/living/carbon/human))
 			if(M == user)								//If you're eating it yourself.
-				M << "\blue You take a bite of [src]."
+				if (M.nutrition <= 50)
+					M << "\red You hungrily chew out a piece of [src] and gobble it!"
+				if (M.nutrition > 50 && M.nutrition <= 150)
+					M << "\blue You hungrily begin to eat [src]."
+				if (M.nutrition > 150 && M.nutrition <= 350)
+					M << "\blue You take a bite of [src]."
+				if (M.nutrition > 350 && M.nutrition <= 550)
+					M << "\blue You unwillingly chew a bit of [src]."
+				if (M.nutrition > (550 * (1 + M.overeatduration / 1000)))	// The more he eats - the more he can eat
+					M << "\red You cannot force any more of [src] to go down your throat."
+					return 0
 			else										//If you're feeding it to someone else.
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("\red [user] attempts to feed [M] [src].", 1)
+					if (M.nutrition <= (550 * (1 + M.overeatduration / 1000)))
+						O.show_message("\red [user] attempts to feed [M] [src].", 1)
+					else
+						O.show_message("\red [user] cannot force anymore of [src] down [M] throat.", 1)
+						return 0
+
 				if(!do_mob(user, M)) return
+
+				M.attack_log += text("[] <b>[]/[]</b> feeds <b>[]/[]</b> with <b>[]</b>", world.time, user, user.client, M, M.client, src)
+				user.attack_log += text("[] <b>[]/[]</b> feeds <b>[]/[]</b> with <b>[]</b>", world.time, user, user.client, M, M.client, src)
+
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("\red [user] feeds [M] [src].", 1)
 			if(reagents)								//Handle ingestion of the reagent.
@@ -1001,10 +1020,10 @@
 	m_amt = 200
 	g_amt = 0
 
-	amount_per_transfer_from_this = 10
+	amount_per_transfer_from_this = 20
 	flags = FPRINT | OPENCONTAINER
 	New()
-		var/datum/reagents/R = new/datum/reagents(30)
+		var/datum/reagents/R = new/datum/reagents(90)
 		reagents = R
 		R.my_atom = src
 

@@ -45,6 +45,12 @@ datum
 				holder.remove_reagent(src.id, 0.4) //By default it slowly disappears.
 				return
 
+			on_move(var/mob/M)
+				return
+
+			on_update(var/atom/A)
+				return
+
 		metroid
 			name = "Metroid Jam"
 			id = "metroid"
@@ -533,6 +539,18 @@ datum
 						M << "\red \the [O] melts."
 					del(O)
 
+		glycerol
+			name = "Glycerol"
+			id = "glycerol"
+			description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
+			reagent_state = LIQUID
+
+		nitroglycerin
+			name = "Nitroglycerin"
+			id = "nitroglycerin"
+			description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
+			reagent_state = LIQUID
+
 		radium
 			name = "Radium"
 			id = "radium"
@@ -885,6 +903,18 @@ datum
 				..()
 				return
 
+		imidazoline
+			name = "imidazoline"
+			id = "imidazoline"
+			description = "Heals eye damage"
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:eye_blurry = max(M:eye_blurry-5 , 0)
+				M:eye_blind = max(M:eye_blind-5 , 0)
+				..()
+				return
+
 		arithrazine
 			name = "Arithrazine"
 			id = "arithrazine"
@@ -1057,7 +1087,7 @@ datum
 				data++
 				..()
 				return
-/*
+		/*
 		addiction					//Is a generic "addiction" reagent that is produced by any chemical that is addictive.
 			name = "Addiction"		//	It should never be seen by the player since it only exists inside the body.
 			id = "addiction"
@@ -1115,6 +1145,7 @@ datum
 				..()
 				return
 */
+
 /////////////////////////Food Reagents////////////////////////////
 // Part of the food code. Nutriment is used instead of the old "heal_amt" code. Also is where all the food
 // 	condiments, additives, and such go.
@@ -1125,8 +1156,8 @@ datum
 			reagent_state = SOLID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(prob(50))M:bruteloss--
-				M:nutrition += 20	//This is the bit that makes you fat.
+				if(prob(50)) M:bruteloss--
+				M:nutrition += 10	// For hunger and fatness
 				..()
 				return
 

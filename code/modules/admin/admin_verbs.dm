@@ -49,6 +49,7 @@
 			src.verbs += /client/proc/cmd_admin_delete
 			src.verbs += /client/proc/cmd_admin_direct_narrate // -- TLE
 			src.verbs += /client/proc/cmd_admin_drop_everything
+			src.verbs += /client/proc/cmd_admin_explosion
 			src.verbs += /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 			src.verbs += /client/proc/cmd_admin_godmode
@@ -63,6 +64,7 @@
 			src.verbs += /client/proc/cmd_admin_world_narrate // -- TLE
 			src.verbs += /client/proc/cmd_debug_del_all
 			src.verbs += /client/proc/cmd_modify_ticker_variables
+			src.verbs += /client/proc/cmd_admin_grantfullaccess
 			src.verbs += /client/proc/deadchat					//toggles deadchat
 			src.verbs += /client/proc/Debug2					//debug toggle switch
 			src.verbs += /client/proc/drop_bomb // -- TLE
@@ -144,6 +146,7 @@
 			src.verbs += /client/proc/cmd_admin_delete
 			src.verbs += /client/proc/cmd_admin_direct_narrate // -- TLE
 			src.verbs += /client/proc/cmd_admin_drop_everything
+			src.verbs += /client/proc/cmd_admin_explosion
 			src.verbs += /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 			src.verbs += /client/proc/cmd_admin_godmode
@@ -159,6 +162,7 @@
 			src.verbs += /client/proc/cmd_debug_del_all
 			src.verbs += /client/proc/cmd_debug_tog_aliens
 			src.verbs += /client/proc/cmd_modify_ticker_variables
+			src.verbs += /client/proc/cmd_admin_grantfullaccess
 			src.verbs += /client/proc/deadchat					//toggles deadchat
 			src.verbs += /client/proc/Debug2					//debug toggle switch
 			src.verbs += /client/proc/dsay
@@ -516,6 +520,7 @@
 	src.verbs -= /client/proc/cmd_admin_say
 	src.verbs -= /client/proc/dsay
 	src.verbs -= /client/proc/play_sound
+	src.verbs -= /client/proc/cmd_admin_explosion
 	src.verbs -= /client/proc/cmd_admin_gib
 	src.verbs -= /client/proc/cmd_admin_gib_self
 //				src.verbs -= /client/proc/modifytemperature
@@ -534,6 +539,7 @@
 	src.verbs -= /client/proc/jumptokey
 	src.verbs -= /client/proc/cmd_admin_alienize
 	src.verbs -= /client/proc/cmd_admin_changelinginize
+	src.verbs -= /client/proc/cmd_admin_grantfullaccess
 //	src.verbs -= /client/proc/cmd_admin_list_admins
 	src.verbs -= /client/proc/Getmob
 	src.verbs -= /client/proc/sendmob
@@ -899,6 +905,7 @@
 			src.verbs += /client/proc/cmd_debug_del_all
 			src.verbs += /client/proc/play_sound
 			src.verbs += /client/proc/modifytemperature
+			src.verbs += /client/proc/cmd_admin_explosion
 			src.verbs += /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 			src.verbs += /proc/toggle_adminmsg
@@ -920,6 +927,7 @@
 //			src.verbs += /client/proc/getmobs
 //			src.verbs += /client/proc/cmd_admin_list_admins
 			src.verbs += /client/proc/cmd_admin_list_occ
+			src.verbs += /client/proc/cmd_admin_grantfullaccess
 			src.verbs += /proc/togglebuildmode
 			src.verbs += /client/proc/jumptokey
 			src.verbs += /client/proc/Getmob
@@ -978,6 +986,7 @@
 			src.verbs += /client/proc/cmd_debug_del_all
 			src.verbs += /client/proc/play_sound
 			src.verbs += /client/proc/modifytemperature
+			src.verbs += /client/proc/cmd_admin_explosion
 			src.verbs += /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 //			src.verbs += /proc/toggleai
@@ -1001,6 +1010,7 @@
 //			src.verbs += /client/proc/getmobs
 //			src.verbs += /client/proc/cmd_admin_list_admins
 			src.verbs += /client/proc/cmd_admin_list_occ
+			src.verbs += /client/proc/cmd_admin_grantfullaccess
 			src.verbs += /client/proc/jumptokey
 			src.verbs += /client/proc/Getmob
 			src.verbs += /client/proc/jobbans
@@ -1311,6 +1321,7 @@
 			src.verbs -= /client/proc/cmd_modify_object_variables
 			src.verbs -= /client/proc/cmd_modify_ticker_variables
 			src.verbs -= /client/proc/cmd_admin_check_contents
+			src.verbs -= /client/proc/cmd_admin_explosion
 			src.verbs -= /client/proc/cmd_admin_gib
 			src.verbs -= /client/proc/cmd_admin_pm
 			src.verbs += /client/proc/cmd_admin_gib_self
@@ -1333,6 +1344,7 @@
 //			src.verbs += /client/proc/getmobs
 //			src.verbs += /client/proc/cmd_admin_list_admins
 			src.verbs += /client/proc/cmd_admin_list_occ
+			src.verbs += /client/proc/cmd_admin_grantfullaccess
 			src.verbs -= /proc/togglebuildmode
 			src.verbs -= /client/proc/jumptokey
 			src.verbs -= /client/proc/Getmob
@@ -1391,6 +1403,7 @@
 			src.verbs += /client/proc/cmd_debug_del_all
 			src.verbs += /client/proc/play_sound
 			src.verbs += /client/proc/modifytemperature
+			src.verbs -= /client/proc/cmd_admin_explosion
 			src.verbs -= /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 //			src.verbs += /proc/toggleai
@@ -1414,6 +1427,7 @@
 //			src.verbs += /client/proc/getmobs
 //			src.verbs += /client/proc/cmd_admin_list_admins
 			src.verbs += /client/proc/cmd_admin_list_occ
+			src.verbs += /client/proc/cmd_admin_grantfullaccess
 			src.verbs -= /client/proc/jumptokey
 			src.verbs -= /client/proc/Getmob
 			src.verbs += /client/proc/jobbans

@@ -454,21 +454,7 @@ Please clean it before use!</TT><BR>
 						if(src.extra_item)
 							if (src.extra_item.type == R.extra_item) thing = 1
 						if(R.extra_item == null || thing) // Just in case the recipe doesn't have an extra item in it
-							src.egg_amount = 0 // If so remove all the eggs
-							src.flour_amount = 0 // And the flour
-							src.water_amount = 0 //And the water
-							src.cheese_amount = 0 //And the cheese
-							src.xenomeat_amount = 0
-							src.monkeymeat_amount = 0
-							src.humanmeat_amount = 0
-							src.donkpocket_amount = 0
-							src.milk_amount = 0
-							src.tofu_amount = 0
-							src.hotsauce_amount = 0
-							src.coldsauce_amount = 0
-							src.soysauce_amount = 0
-							src.ketchup_amount = 0
-							src.berryjuice_amount = 0
+							src.clear()
 							src.extra_item = null // And the extra item
 							cooked_item = R.creates // Store the item that will be created
 
@@ -477,21 +463,7 @@ Please clean it before use!</TT><BR>
 						src.operating = 1 // Turn it on
 						src.icon_state = "mw1"
 						src.updateUsrDialog()
-						src.egg_amount = 0 //Clear all the values as this crap is what makes the mess inside!!
-						src.flour_amount = 0
-						src.cheese_amount = 0
-						src.xenomeat_amount = 0
-						src.water_amount = 0
-						src.humanmeat_amount = 0
-						src.monkeymeat_amount = 0
-						src.donkpocket_amount = 0
-						src.milk_amount = 0
-						src.tofu_amount = 0
-						src.hotsauce_amount = 0
-						src.coldsauce_amount = 0
-						src.soysauce_amount = 0
-						src.ketchup_amount = 0
-						src.berryjuice_amount = 0
+						src.clear()
 						sleep(40) // Half way through
 						playsound(src.loc, 'splat.ogg', 50, 1) // Play a splat sound
 						icon_state = "mwbloody1" // Make it look dirty!!
@@ -510,21 +482,7 @@ Please clean it before use!</TT><BR>
 						src.operating = 1 // Turn it on
 						src.icon_state = "mw1"
 						src.updateUsrDialog()
-						src.egg_amount = 0 //Clear all the values as this crap is gone when it breaks!!
-						src.flour_amount = 0
-						src.xenomeat_amount = 0
-						src.cheese_amount = 0
-						src.water_amount = 0
-						src.humanmeat_amount = 0
-						src.monkeymeat_amount = 0
-						src.donkpocket_amount = 0
-						src.tofu_amount = 0
-						src.milk_amount = 0
-						src.hotsauce_amount = 0
-						src.coldsauce_amount = 0
-						src.soysauce_amount = 0
-						src.ketchup_amount = 0
-						src.berryjuice_amount = 0
+						src.clear()
 						sleep(60) // Wait a while
 						var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 						s.set_up(2, 1, src)
@@ -548,21 +506,7 @@ Please clean it before use!</TT><BR>
 						src.operating = 0
 
 			if(operation == 2) // If dispose was pressed, empty the microwave
-				src.egg_amount = 0
-				src.flour_amount = 0
-				src.xenomeat_amount = 0
-				src.cheese_amount = 0
-				src.water_amount = 0
-				src.humanmeat_amount = 0
-				src.monkeymeat_amount = 0
-				src.donkpocket_amount = 0
-				src.milk_amount = 0
-				src.hotsauce_amount = 0
-				src.coldsauce_amount = 0
-				src.soysauce_amount = 0
-				src.tofu_amount = 0
-				src.ketchup_amount = 0
-				src.berryjuice_amount = 0
+				src.clear()
 				if(src.extra_item != null)
 					src.extra_item.loc = get_turf(src) // Eject the extra item so important shit like the disk can't be destroyed in there
 					src.extra_item = null
@@ -600,6 +544,24 @@ Please clean it before use!</TT><BR>
 			else
 				return
 
+/obj/machinery/microwave/proc/clear()
+	src.egg_amount = 0
+	src.flour_amount = 0
+	src.xenomeat_amount = 0
+	src.cheese_amount = 0
+	src.water_amount = 0
+	src.humanmeat_amount = 0
+	src.monkeymeat_amount = 0
+	src.donkpocket_amount = 0
+	src.milk_amount = 0
+	src.hotsauce_amount = 0
+	src.coldsauce_amount = 0
+	src.soysauce_amount = 0
+	src.tofu_amount = 0
+	src.ketchup_amount = 0
+	src.berryjuice_amount = 0
+	//src.temp.reagents.clear_reagents()
+	return
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

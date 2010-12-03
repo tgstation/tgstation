@@ -24,6 +24,7 @@
 #define ui_fire "EAST+1, NORTH-8"
 #define ui_temp "EAST+1, NORTH-10"
 #define ui_health "EAST+1, NORTH-11"
+#define ui_nutrition "EAST+1, NORTH-12"
 #define ui_pull "SOUTH-1,10"
 #define ui_hand "SOUTH-1,6"
 #define ui_sleep "EAST+1, NORTH-13"

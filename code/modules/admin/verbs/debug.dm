@@ -235,3 +235,21 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	aliens_allowed = !aliens_allowed
 	log_admin("[key_name(src)] has turned aliens [aliens_allowed ? "on" : "off"].")
 	message_admins("[key_name_admin(src)] has turned aliens [aliens_allowed ? "on" : "off"].", 0)
+
+/client/proc/cmd_admin_grantfullaccess(var/mob/M in world)
+	set category = "Admin"
+	set name = "Grant Full Access"
+
+	if (!ticker)
+		alert("Wait until the game starts")
+		return
+	if (istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		if (H.wear_id)
+			log_admin("[key_name(src)] has granted [M.key] full access.")
+			H.wear_id.icon_state = "gold"
+			H.wear_id.access = get_all_accesses()
+		else
+			alert("Invalid ID card")
+	else
+		alert("Invalid mob")

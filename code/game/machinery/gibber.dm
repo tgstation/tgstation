@@ -1,5 +1,3 @@
-
-
 /obj/machinery/gibber/New()
 	..()
 	src.overlays += image('kitchen.dmi', "grindnotinuse")
@@ -79,18 +77,29 @@
 		src.dirty += 1
 		var/sourcename = src.occupant.real_name
 		var/sourcejob = src.occupant.job
+		var/sourcenutriment = src.occupant.nutrition / 15
+		var/sourcetotalreagents = src.occupant.reagents.total_volume
+		var/totalslabs = 3
+
 		var/obj/item/weapon/reagent_containers/food/snacks/humanmeat/newmeat1 = new /obj/item/weapon/reagent_containers/food/snacks/humanmeat
 		var/obj/item/weapon/reagent_containers/food/snacks/humanmeat/newmeat2 = new /obj/item/weapon/reagent_containers/food/snacks/humanmeat
 		var/obj/item/weapon/reagent_containers/food/snacks/humanmeat/newmeat3 = new /obj/item/weapon/reagent_containers/food/snacks/humanmeat
+
 		newmeat1.name = sourcename + newmeat1.name
 		newmeat1.subjectname = sourcename
 		newmeat1.subjectjob = sourcejob
+		newmeat1.reagents.add_reagent ("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
+		src.occupant.reagents.trans_to (newmeat1, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the body to meat
 		newmeat2.name = sourcename + newmeat2.name
 		newmeat2.subjectname = sourcename
 		newmeat2.subjectjob = sourcejob
+		newmeat2.reagents.add_reagent ("nutriment", sourcenutriment / totalslabs)
+		src.occupant.reagents.trans_to (newmeat2, round (sourcetotalreagents / totalslabs, 1))
 		newmeat3.name = sourcename + newmeat3.name
 		newmeat3.subjectname = sourcename
 		newmeat3.subjectjob = sourcejob
+		newmeat3.reagents.add_reagent ("nutriment", sourcenutriment / totalslabs)
+		src.occupant.reagents.trans_to (newmeat3, round (sourcetotalreagents / totalslabs, 1))
 		if(src.occupant.client)
 			var/mob/dead/observer/newmob
 			newmob = new/mob/dead/observer(src.occupant)

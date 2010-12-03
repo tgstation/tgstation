@@ -289,6 +289,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		M.weakened = 0
 		M.radiation = 0
 		M.health = 100
+		M.nutrition = 400
 		M.updatehealth()
 		M.buckled = initial(M.buckled)
 		M.handcuffed = initial(M.handcuffed)
@@ -347,6 +348,32 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 
 	for(var/t in occupations)
 		src << "[t]<br>"
+
+/client/proc/cmd_admin_explosion(atom/O as obj|mob|turf in world)
+	set category = "Special Verbs"
+	set name = "Explosion"
+
+	if (!src.authenticated || !src.holder)
+		src << "Only administrators may use this command."
+		return
+
+	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num
+	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num
+	var/light = input("Range of light impact. -1 to none", text("Input"))  as num
+	var/flash = input("Range of flash. -1 to none", text("Input"))  as num
+
+	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1))
+		if ((devastation > 20) || (heavy > 20) || (light > 20))
+			if (alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", "Yes", "No") == "No")
+				return
+
+		explosion (O, devastation, heavy, light, flash)
+		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at ([O.x],[O.y],[O.z])")
+		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at ([O.x],[O.y],[O.z])", 1)
+
+		return
+	else
+		return
 
 /client/proc/cmd_admin_gib(mob/M as mob in world)
 	set category = "Special Verbs"
@@ -525,3 +552,12 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 	emergency_shuttle.recall()
 
 	return
+
+/client/proc/cmd_admin_attack_log(mob/M as mob in world)
+	set category = "Special Verbs"
+	set name = "Attack Log"
+
+	//var/list/L = M.get_contents()
+	usr << text("\red <b>Attack Log для []</b>", mob)
+	for(var/t in M.attack_log)
+		usr << "[t]"

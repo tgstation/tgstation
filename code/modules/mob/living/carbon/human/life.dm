@@ -553,21 +553,26 @@
 					TakeDamage("r_hand", 0, 0.25*discomfort)
 
 		handle_chemicals_in_body()
-
 			if(reagents) reagents.metabolize(src)
-
-			if(src.nutrition > 400 && !(src.mutations & 32))
+			if(overeatduration > 200 && !(src.mutations & 32))
 				if(prob(5 + round((src.nutrition - 200) / 2)))
 					src << "\red You suddenly feel blubbery!"
 					src.mutations |= 32
 					update_body()
-			if (src.nutrition < 100 && src.mutations & 32)
+			if (overeatduration < 50 && src.mutations & 32)
 				if(prob(round((50 - src.nutrition) / 100)))
 					src << "\blue You feel fit again!"
 					src.mutations &= ~32
 					update_body()
-			if (src.nutrition > 0)
-				src.nutrition--
+
+			// nutrition decrease
+			if (nutrition > 0 && src.stat != 2)
+				nutrition = max (0, nutrition - HUNGER_FACTOR)
+
+			if (nutrition > 400)
+				overeatduration++
+			else
+				overeatduration = max (0, overeatduration - 1)
 
 			if (src.drowsyness)
 				src.drowsyness--
@@ -734,7 +739,22 @@
 				else
 					src.healths.icon_state = "health7"
 
+			if (src.nutrition_icon)
+				switch(nutrition)
+					if(450 to INFINITY)
+						src.nutrition_icon.icon_state = "fullness0"
+					if(350 to 450)
+						src.nutrition_icon.icon_state = "fullness1"
+					if(250 to 350)
+						src.nutrition_icon.icon_state = "fullness2"
+					if(150 to 250)
+						src.nutrition_icon.icon_state = "fullness3"
+					else
+						src.nutrition_icon.icon_state = "fullness4"
+
 			if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"
+
+			if(src.resting || src.lying || src.sleeping)	src.rest.icon_state = "rest[(src.resting || src.lying || src.sleeping) ? 1 : 0]"
 
 
 			if (src.toxin)	src.toxin.icon_state = "tox[src.toxins_alert ? 1 : 0]"
@@ -835,6 +855,15 @@
 							if(!M.nodamage)
 								M.bruteloss += 5
 							src.nutrition += 10
+/*
+			// Commented out so hunger system won't be such shock
+			// Damage and effects from not eating
+			if(src.nutrition <= 50)
+				src.bruteloss++
+				if (prob (10))
+					src << "You feel very weak"
+					src.weakened += rand(2, 3)
+*/
 /*
 snippets
 

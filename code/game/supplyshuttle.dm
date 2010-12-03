@@ -195,8 +195,6 @@ var/ordernum=0
 	containertype = "/obj/crate"
 	containername = "Replacement lights"
 
-
-
 /datum/supply_packs/plasma
 	name = "Plasma assembly crate"
 	contains = list("/obj/item/weapon/tank/plasma",

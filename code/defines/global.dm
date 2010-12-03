@@ -78,7 +78,7 @@ var
 	scientistMax = 3
 	chemistMax = 1
 	geneticistMax = 2
-	securityMax = 7
+	securityMax = 6
 	hopMax = 1
 	hosMax = 1
 	directorMax = 1
@@ -97,6 +97,7 @@ var
 	librarianMax = 1
 	lawyerMax = 1
 	viroMax = 1
+	wardenMax = 1
 	cmoMax = 1
 
 	list/bombers = list(  )
