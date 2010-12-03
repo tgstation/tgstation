@@ -195,7 +195,6 @@
 	icon_state = "pwig"
 	item_state = "pwig"
 
-
 /obj/item/clothing/head/that
 	name = "hat"
 	desc = "An amish looking hat"
@@ -208,7 +207,7 @@
 	icon_state = "wizard"
 
 /obj/item/clothing/head/wizard/red
-	name = "wizard hat"
+	name = "red wizard hat"
 	desc = "Strange-looking, red, hat-wear that most certainly belongs to a real magic user."
 	icon_state = "redwizard"
 
@@ -566,14 +565,10 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/wizrobe/red
-	name = "wizard robe"
+	name = "red wizard robe"
 	desc = "A magnificant, red, gem-lined robe that seems to radiate power."
 	icon_state = "redwizard"
 	item_state = "redwizrobe"
-	gas_transfer_coefficient = 0.01 // IT'S MAGICAL OKAY JEEZ +1 TO NOT DIE
-	permeability_coefficient = 0.01
-	heat_transfer_coefficient = 0.01
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/wizrobe_fake
 	name = "wizard robe"
@@ -700,7 +695,6 @@
 	desc = "A special suit that protects against hazardous, low pressure environments."
 	icon_state = "rig"
 	item_state = "rig_suit"
-	w_class = 4//bulky item
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"

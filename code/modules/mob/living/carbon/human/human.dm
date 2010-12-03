@@ -131,9 +131,16 @@
 				tally += 1.3
 			if(/obj/item/clothing/suit/fire/heavy)	//	firesuits slow you down a bit
 				tally += 1.7
+			if(/obj/item/clothing/suit/bio_suit)	//	biosuits slow you down a bit
+				tally += 1.3
+			if(/obj/item/clothing/suit/bio_suit/plaguedoctorsuit)	//	biosuits slow you down a bit
+				tally += 1.3
 			if(/obj/item/clothing/suit/space)
 				if(!istype(src.loc, /turf/space))		//	space suits slow you down a bit unless in space
 					tally += 3
+			if(/obj/item/clothing/suit/space/rig)
+				if(!istype(src.loc, /turf/space))		//	space suits slow you down a bit unless in space
+					tally += 2
 
 	if (istype(src.shoes, /obj/item/clothing/shoes))
 		if (src.shoes.chained)
