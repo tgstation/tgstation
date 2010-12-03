@@ -669,8 +669,9 @@
 	if (reagents.total_volume)
 		user << "\red You inject [M] with the hypospray."
 		M << "\red You feel a tiny prick!"
+		src.reagents.reaction(M, INGEST)
 		if(M.reagents) reagents.trans_to(M, 10)
-		user << "\red [reagents.total_volume] units remaining in the hypospray."
+		user << "\red 10 units injected.  [reagents.total_volume] units remaining in the hypospray."
 	return
 
 
