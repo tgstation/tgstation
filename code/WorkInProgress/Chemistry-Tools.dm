@@ -637,6 +637,43 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Syringes. END
 ////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+/// HYPOSPRAY
+////////////////////////////////////////////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/hypospray
+	name = "hypospray"
+	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
+	icon = 'syringe.dmi'
+	item_state = "hypo"
+	icon_state = "hypo"
+	amount_per_transfer_from_this = 10
+	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
+
+/obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/New()
+	var/datum/reagents/R = new/datum/reagents(30)
+	reagents = R
+	R.my_atom = src
+	//R.add_reagent("tricordrazine", 30) //uncomment this to make it start with stuff in
+	..()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/attack(mob/M as mob, mob/user as mob)
+	if (!( istype(M, /mob) ))
+		return
+	if (reagents.total_volume)
+		user << "\red You inject [M] with the hypospray."
+		M << "\red You feel a tiny prick!"
+		if(M.reagents) reagents.trans_to(M, 10)
+		user << "\red [reagents.total_volume] units remaining in the hypospray."
+	return
+
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Food.
 ////////////////////////////////////////////////////////////////////////////////
