@@ -207,6 +207,11 @@
 	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
 	icon_state = "wizard"
 
+/obj/item/clothing/head/wizard/red
+	name = "wizard hat"
+	desc = "Strange-looking, red, hat-wear that most certainly belongs to a real magic user."
+	icon_state = "redwizard"
+
 /obj/item/clothing/head/wizard_fake
 	name = "wizard hat"
 	desc = "It has WIZZARD written across it in sequins. Comes with a cool beard."
@@ -555,6 +560,16 @@
 	desc = "A magnificant, gem-lined robe that seems to radiate power."
 	icon_state = "wizard"
 	item_state = "wizrobe"
+	gas_transfer_coefficient = 0.01 // IT'S MAGICAL OKAY JEEZ +1 TO NOT DIE
+	permeability_coefficient = 0.01
+	heat_transfer_coefficient = 0.01
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/wizrobe/red
+	name = "wizard robe"
+	desc = "A magnificant, red, gem-lined robe that seems to radiate power."
+	icon_state = "redwizard"
+	item_state = "redwizrobe"
 	gas_transfer_coefficient = 0.01 // IT'S MAGICAL OKAY JEEZ +1 TO NOT DIE
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 0.01

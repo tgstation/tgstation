@@ -654,6 +654,18 @@
 	product_hidden = "/obj/item/seeds/amanitamycelium;/obj/item/seeds/libertymycelium;/obj/item/seeds/nettleseed;/obj/item/seeds/plumpmycelium"
 	product_hideamt = "1;2;2;2"
 
+/obj/machinery/vending/magivend
+	name = "MagiVend"
+	desc = "A magic vending machine."
+	icon_state = "MagiVend"
+	product_amounts = "1;1;1;2"
+	product_slogans = "Sling spells the proper way with MagiVend!;Be your own Houdini! Use MagiVend!"
+	product_paths = "/obj/item/clothing/head/wizard;/obj/item/clothing/suit/wizrobe;/obj/item/clothing/shoes/sandal;/obj/item/weapon/staff"
+	vend_delay = 15
+	vend_reply = "Have an enchanted evening!"
+	product_hidden = "/obj/item/clothing/head/wizard/red;/obj/item/clothing/suit/wizrobe/red"
+	product_hideamt = "1;1"
+
 /obj/machinery/microwave
 	name = "Microwave"
 	icon = 'kitchen.dmi'

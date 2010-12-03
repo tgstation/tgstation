@@ -9,7 +9,7 @@
 "aai" = (/turf/simulated/shuttle/floor{icon_state = "floor5"},/area/wizard_station)
 "aaj" = (/obj/machinery/atmospherics/pipe/simple,/turf/simulated/shuttle/floor{icon_state = "floor5"},/area/wizard_station)
 "aak" = (/obj/table,/obj/machinery/light/lamp{pixel_y = 6},/turf/simulated/shuttle/floor{icon_state = "floor5"},/area/wizard_station)
-"aal" = (/obj/machinery/vending{desc = "A magic vending machine."; name = "MagiVend"; product_amounts = "1;1;1;2"; product_paths = "/obj/item/clothing/head/wizard;/obj/item/clothing/suit/wizrobe;/obj/item/clothing/shoes/sandal;/obj/item/weapon/staff"; product_slogans = "Sling spells the proper way with MagiVend!;Be your own Houdini! Use MagiVend!"; vend_delay = 15; vend_reply = "Have an enchanted evening!"},/turf/simulated/shuttle/floor{icon_state = "floor5"},/area/wizard_station)
+"aal" = (/obj/machinery/vending/magivend,/turf/simulated/shuttle/floor{icon_state = "floor5"},/area/wizard_station)
 "aam" = (/obj/crate,/turf/simulated/shuttle/floor{icon_state = "floor5"},/area/wizard_station)
 "aan" = (/obj/grille,/turf/simulated/floor/plating/airless,/area)
 "aao" = (/obj/machinery/shuttle/engine/propulsion{tag = "icon-propulsion (EAST)"; icon_state = "propulsion_r"; dir = 4; pixel_y = -1},/turf/space,/area/wizard_station)
