@@ -71,7 +71,11 @@ datum/controller/game_controller
 		sleep(-1)
 
 		for(var/mob/M in world)
-			M.Life()
+			if (M.metabslow)
+				if (air_master.current_cycle%5==1) // For everyone who has their metabolism slowed, make updates not so frequently
+					M.Life()
+			else
+				M.Life()
 
 		sleep(-1)
 
