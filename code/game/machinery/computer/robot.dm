@@ -2,7 +2,7 @@
 	name = "Robotics Control"
 	icon = 'computer.dmi'
 	icon_state = "robot"
-	req_access = list(access_captain, access_robotics)
+	req_access = list(access_robotics)
 
 	var/id = 0.0
 	var/temp = null
@@ -168,13 +168,16 @@
 				if("2")
 					screen = 2
 		else if (href_list["killbot"])
-			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
-			if(R)
-				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
-				if(choice == "Confirm")
-					if(R)
-						message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
-						R.self_destruct()
+			if(src.allowed(usr))
+				var/mob/living/silicon/robot/R = locate(href_list["killbot"])
+				if(R)
+					var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
+					if(choice == "Confirm")
+						if(R)
+							message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
+							R.self_destruct()
+			else
+				usr << "\red Access Denied."
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
