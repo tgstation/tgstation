@@ -77,7 +77,7 @@ AI MODULES
 			usr << "You haven't selected a cyborg to transmit laws to!"
 			return
 
-		if (comp.current.stat == 2)
+		if (comp.current.stat == 2 || comp.current.emagged)
 			usr << "Upload failed. No signal is being detected from the cyborg."
 		else if (comp.current.connected_ai)
 			usr << "Upload failed. The cyborg is slaved to an AI."
