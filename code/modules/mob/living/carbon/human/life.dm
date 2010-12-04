@@ -742,15 +742,15 @@
 			if (src.nutrition_icon)
 				switch(nutrition)
 					if(450 to INFINITY)
-						src.nutrition_icon.icon_state = "fullness0"
+						src.nutrition_icon.icon_state = "nutrition0"
 					if(350 to 450)
-						src.nutrition_icon.icon_state = "fullness1"
+						src.nutrition_icon.icon_state = "nutrition1"
 					if(250 to 350)
-						src.nutrition_icon.icon_state = "fullness2"
+						src.nutrition_icon.icon_state = "nutrition2"
 					if(150 to 250)
-						src.nutrition_icon.icon_state = "fullness3"
+						src.nutrition_icon.icon_state = "nutrition3"
 					else
-						src.nutrition_icon.icon_state = "fullness4"
+						src.nutrition_icon.icon_state = "nutrition4"
 
 			if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"
 

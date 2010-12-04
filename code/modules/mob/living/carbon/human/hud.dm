@@ -427,9 +427,9 @@
 	mymob.healths.screen_loc = ui_health
 
 	mymob.nutrition_icon = new /obj/screen( null )
-	mymob.nutrition_icon.icon = 'fullness.dmi'
-	mymob.nutrition_icon.icon_state = "fullness0"
-	mymob.nutrition_icon.name = "fullness"
+	mymob.nutrition_icon.icon = ui_style
+	mymob.nutrition_icon.icon_state = "nutrition0"
+	mymob.nutrition_icon.name = "nutrition"
 	mymob.nutrition_icon.screen_loc = ui_nutrition
 
 	mymob.pullin = new /obj/screen( null )
@@ -566,7 +566,7 @@
 	mymob.client.screen = null
 
 	//, mymob.i_select, mymob.m_select
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.hands, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.hands, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
 	//if(istype(mymob,/mob/living/carbon/monkey)) mymob.client.screen += src.mon_blo

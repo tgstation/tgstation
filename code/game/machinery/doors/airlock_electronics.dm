@@ -21,19 +21,19 @@
 		if(H.brainloss >= 60)
 			return
 
-		var/t1 = text("<B>Настройка доступа</B><br>\n")
+		var/t1 = text("<B>Access control</B><br>\n")
 
 
 		if (last_configurator)
-			t1 += "Настройщик: [last_configurator]<br>"
+			t1 += "Operator: [last_configurator]<br>"
 
 		if (locked)
-			t1 += "<a href='?src=\ref[src];login=1'>Вставьте ID</a><hr>"
+			t1 += "<a href='?src=\ref[src];login=1'>Swipe ID</a><hr>"
 		else
-			t1 += "<a href='?src=\ref[src];logout=1'>Заблокировать</a><hr>"
+			t1 += "<a href='?src=\ref[src];logout=1'>Block</a><hr>"
 
 
-			t1 += conf_access == null ? "<font color=red>Все</font><br>" : "<a href='?src=\ref[src];access=all'>Все</a><br>"
+			t1 += conf_access == null ? "<font color=red>All</font><br>" : "<a href='?src=\ref[src];access=all'>All</a><br>"
 
 			t1 += "<br>"
 
@@ -46,7 +46,7 @@
 				else
 					t1 += "<font color=red>[aname]</font><br>"
 
-		t1 += text("<p><a href='?src=\ref[];close=1'>Закрыть</a></p>\n", src)
+		t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
 
 		user << browse(t1, "window=airlock_electronics")
 		onclose(user, "airlock")

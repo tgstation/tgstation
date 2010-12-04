@@ -103,7 +103,7 @@
 
 		if (src.nutrition < 100)
 			usr << "\red [src.name] looks like flesh and bones."
-		else if (src.nutrition >= 600)
+		else if (src.nutrition >= 500)
 			if (usr.nutrition < 100)
 				usr << "\red [src.name] looks very round and delicious. Like a little piggy. A tasty piggy."
 			else

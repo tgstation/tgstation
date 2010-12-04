@@ -19,7 +19,7 @@
 	//Amount of air needed before pass out/suffocation commences
 
 // Factor of how fast mob nutriment decreases
-#define	HUNGER_FACTOR 0.15
+#define	HUNGER_FACTOR 0.1
 
 
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
