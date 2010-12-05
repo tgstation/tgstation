@@ -61,7 +61,7 @@
 				src.stat = 1
 
 		update_canmove()
-			if(paralysis || stunned || weakened || buckled) canmove = 0
+			if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
 			else canmove = 1
 
 

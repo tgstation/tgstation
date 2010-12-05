@@ -47,3 +47,4 @@
 	var/weaponlock_time = 120
 	var/datum/ai_laws/laws = null //Making it so borgs can have laws when there isn't an AI.
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
+	var/lockcharge //Used when locking down a borg to preserve cell charge

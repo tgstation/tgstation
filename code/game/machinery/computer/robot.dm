@@ -68,14 +68,18 @@
 		if(screen == 1)
 			for(var/mob/living/silicon/robot/R in world)
 				if(istype(user, /mob/living/silicon/ai))
-					if (R.connected_ai != user)
-						continue
+					if (R.connected_ai != user) continue
+				if(istype(user, /mob/living/silicon/robot))
+					if (R != user) continue
 				dat += "[R.name] |"
 				if(R.stat)
 					dat += " Not Responding |"
+				else if (!R.canmove)
+					dat += " Locked Down |"
 				else
 					dat += " Operating Normally |"
-				if(R.cell)
+				if (!R.canmove)
+				else if(R.cell)
 					dat += " Battery Installed ([R.cell.charge]/[R.cell.maxcharge]) |"
 				else
 					dat += " No Cell Installed |"
@@ -87,6 +91,7 @@
 					dat += " Slaved to [R.connected_ai.name] |"
 				else
 					dat += " Independent from AI |"
+				dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
 				dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
 				dat += "<BR>"
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
@@ -176,6 +181,27 @@
 						if(R)
 							message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
 							R.self_destruct()
+			else
+				usr << "\red Access Denied."
+
+		else if (href_list["stopbot"])
+			if(src.allowed(usr))
+				var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
+				if(R)
+					var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
+					if(choice == "Confirm")
+						if(R)
+//							message_admins("\blue [key_name_admin(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
+							R.canmove = !R.canmove
+							if (R.lockcharge)
+								R.cell.charge = R.lockcharge
+								R.lockcharge = null
+								R << "Your lockdown has been removed!"
+							else
+								R.lockcharge = R.cell.charge
+								R.cell.charge = 0
+								R << "You have been locked down!"
+
 			else
 				usr << "\red Access Denied."
 
