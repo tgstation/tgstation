@@ -315,7 +315,7 @@
 
 
 /mob/living/silicon/ai/proc/choose_modules()
-	set category = "AI Commands"
+	set category = "Malfunction"
 	set name = "Choose Module"
 
 	src.malf_picker.use(src)

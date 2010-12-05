@@ -75,14 +75,16 @@ rcd light flash thingy on matter drain
 /client/proc/overload_machine(obj/machinery/M as obj in world)
 	set name = "Overload Machine"
 	set category = "Malfunction"
-	for(var/datum/game_mode/malfunction/AI_Module/small/overload_machine/overload in usr:current_modules)
-		if(overload.uses > 0)
-			overload.uses --
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue You hear a loud electrical buzzing sound!"))
-			spawn(50)
-				explosion(get_turf(M), 0,1,1,0)
-		else usr << "Out of uses."
+	if (istype(M, /obj/machinery))
+		for(var/datum/game_mode/malfunction/AI_Module/small/overload_machine/overload in usr:current_modules)
+			if(overload.uses > 0)
+				overload.uses --
+				for(var/mob/V in viewers(src, null))
+					V.show_message(text("\blue You hear a loud electrical buzzing sound!"))
+				spawn(50)
+					explosion(get_turf(M), 0,1,1,0)
+			else usr << "Out of uses."
+	else usr << "That's not a machine."
 
 /datum/game_mode/malfunction/AI_Module/small/blackout
 	module_name = "Blackout"
@@ -96,8 +98,9 @@ rcd light flash thingy on matter drain
 		if(blackout.uses > 0)
 			blackout.uses --
 			for(var/obj/machinery/power/apc/apc in world)
-				if(prob(30))
-				 apc.overload_lighting()
+				if(prob(30*apc.overload))
+					apc.overload_lighting()
+				else apc.overload++
 		else usr << "Out of uses."
 
 /datum/game_mode/malfunction/AI_Module/small/interhack
@@ -118,16 +121,18 @@ rcd light flash thingy on matter drain
 /client/proc/reactivate_camera(obj/machinery/camera/C as obj in world)
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
-	for(var/datum/game_mode/malfunction/AI_Module/small/reactivate_camera/camera in usr:current_modules)
-		if(camera.uses > 0)
-			if(!C.status)
-				C.status = !C.status
-				camera.uses --
-				for(var/mob/V in viewers(src, null))
-					V.show_message(text("\blue You hear a quiet click."))
-			else
-				usr << "This camera is either active, or not repairable."
-		else usr << "Out of uses."
+	if (istype (C, /obj/machinery/camera))
+		for(var/datum/game_mode/malfunction/AI_Module/small/reactivate_camera/camera in usr:current_modules)
+			if(camera.uses > 0)
+				if(!C.status)
+					C.status = !C.status
+					camera.uses --
+					for(var/mob/V in viewers(src, null))
+						V.show_message(text("\blue You hear a quiet click."))
+				else
+					usr << "This camera is either active, or not repairable."
+			else usr << "Out of uses."
+	else usr << "That's not a camera."
 
 
 /datum/game_mode/malfunction/AI_Module/module_picker
