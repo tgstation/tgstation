@@ -29,6 +29,13 @@
 	icon_closed = "emergency"
 	icon_opened = "emergencyopen"
 
+/obj/closet/firecloset
+	desc = "A bulky (yet mobile) closet. Comes with supplies to fight fire."
+	name = "Fire Closet"
+	icon_state = "firecloset"
+	icon_closed = "firecloset"
+	icon_opened = "fireclosetopen"
+
 /obj/closet/jcloset
 	desc = "A bulky (yet mobile) closet. Comes with janitor's clothes and biohazard gear."
 	name = "Custodial Closet"

@@ -18,8 +18,8 @@
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
 	//Amount of air needed before pass out/suffocation commences
 
-// Factor of how fast mob nutriment decreases
-#define	HUNGER_FACTOR 0.1
+// Factor of how fast mob nutrition decreases
+#define	HUNGER_FACTOR 0.07
 
 
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05

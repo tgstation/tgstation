@@ -235,7 +235,9 @@ var/showadminmessages = 1
 					message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 
 					del(M.client)
-					del(M)
+					//del(M)
+				if("Cancel")
+					return
 
 	if (href_list["remove"])
 		if ((src.rank in list( "Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))

@@ -554,22 +554,20 @@
 
 		handle_chemicals_in_body()
 			if(reagents) reagents.metabolize(src)
-			if(overeatduration > 200 && !(src.mutations & 32))
-				if(prob(5 + round((src.nutrition - 200) / 2)))
-					src << "\red You suddenly feel blubbery!"
-					src.mutations |= 32
-					update_body()
-			if (overeatduration < 50 && src.mutations & 32)
-				if(prob(round((50 - src.nutrition) / 100)))
-					src << "\blue You feel fit again!"
-					src.mutations &= ~32
-					update_body()
+			if(overeatduration > 500 && !(src.mutations & 32))
+				src << "\red You suddenly feel blubbery!"
+				src.mutations |= 32
+				update_body()
+			if (overeatduration < 100 && src.mutations & 32)
+				src << "\blue You feel fit again!"
+				src.mutations &= ~32
+				update_body()
 
 			// nutrition decrease
 			if (nutrition > 0 && src.stat != 2)
 				nutrition = max (0, nutrition - HUNGER_FACTOR)
 
-			if (nutrition > 400)
+			if (nutrition > 450)
 				overeatduration++
 			else
 				overeatduration = max (0, overeatduration - 1)

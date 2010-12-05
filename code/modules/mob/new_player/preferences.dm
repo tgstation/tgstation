@@ -8,6 +8,7 @@ datum/preferences
 	var/midis = 1
 	var/ooccolor = "#b82e00"
 	var/be_random_name = 0
+	var/be_random_look = 0
 	var/underwear = 1
 
 	var/occupation1 = "No Preference"
@@ -44,6 +45,112 @@ datum/preferences
 			real_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
 		else
 			real_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
+
+	proc/randomize_hair_color(var/target = "hair")
+		var/red
+		var/green
+		var/blue
+
+		var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
+		switch (col)
+			if ("blonde")
+				red = 226
+				green = 209
+				blue = 140
+			if ("black")
+				red = 0
+				green = 0
+				blue = 0
+			if ("chestnut")
+				red = 98
+				green = 77
+				blue = 60
+			if ("copper")
+				red = 152
+				green = 81
+				blue = 63
+			if ("brown")
+				red = 73
+				green = 52
+				blue = 39
+			if ("wheat")
+				red = 210
+				green = 191
+				blue = 158
+			if ("old")
+				red = rand (100, 255)
+				green = red
+				blue = red
+			if ("punk")
+				red = rand (0, 255)
+				green = rand (0, 255)
+				blue = rand (0, 255)
+
+		red = max(min(red + rand (-10, 10), 255), 0)
+		green = max(min(green + rand (-10, 10), 255), 0)
+		blue = max(min(blue + rand (-10, 10), 255), 0)
+
+		switch (target)
+			if ("hair")
+				r_hair = red
+				g_hair = green
+				b_hair = blue
+			if ("facial")
+				r_facial = red
+				g_facial = green
+				b_facial = blue
+
+	proc/randomize_eyes_color()
+		var/red
+		var/green
+		var/blue
+
+		var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino", "weird")
+		switch (col)
+			if ("black")
+				red = 0
+				green = 0
+				blue = 0
+			if ("grey")
+				red = rand (100, 200)
+				green = red
+				blue = red
+			if ("brown")
+				red = 60
+				green = 30
+				blue = 19
+			if ("chestnut")
+				red = 127
+				green = 79
+				blue = 31
+			if ("blue")
+				red = 53
+				green = 51
+				blue = 64
+			if ("lightblue")
+				red = 94
+				green = 101
+				blue = 115
+			if ("green")
+				red = 115
+				green = 114
+				blue = 84
+			if ("albino")
+				red = rand (100, 255)
+				green = rand (0, 70)
+				blue = rand (0, 70)
+			if ("weird")
+				red = rand (0, 255)
+				green = rand (0, 255)
+				blue = rand (0, 255)
+
+		red = max(min(red + rand (-10, 10), 255), 0)
+		green = max(min(green + rand (-10, 10), 255), 0)
+		blue = max(min(blue + rand (-10, 10), 255), 0)
+
+		r_eyes = red
+		g_eyes = green
+		b_eyes = blue
 
 	proc/update_preview_icon()
 		del(src.preview_icon)
@@ -190,9 +297,11 @@ datum/preferences
 			else
 				dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\">No Preference</a><br>"
 
-		dat += "<hr><table><tr><td><b>Body</b><br>"
+		dat += "<hr><table><tr><td><b>Body</b>"
+		dat += " (<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)<br>" // Random look
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preferences=1;b_type=input'>[src.b_type]</a><br>"
-		dat += "Skin Tone: <a href='byond://?src=\ref[user];preferences=1;s_tone=input'>[-src.s_tone + 35]/220</a><br>"
+		dat += "Skin Tone: <a href='byond://?src=\ref[user];preferences=1;s_tone=input'>[-src.s_tone + 35]/220<br></a>"
+
 		if (!IsGuestKey(user.key))
 			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=1\"><b>[src.underwear == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64></td></tr></table>"
@@ -379,33 +488,43 @@ datum/preferences
 						return
 
 				if("random")
-					if (src.gender == MALE)
-						new_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
-					else
-						new_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
+					src.randomize_name()
+
 			if(new_name)
 				if(length(new_name) >= 26)
 					new_name = copytext(new_name, 1, 26)
 				src.real_name = new_name
 
 		if (link_tags["age"])
-			var/new_age = input(user, "Please select type in age: 20-45", "Character Generation")  as num
-
-			if(new_age)
-				src.age = max(min(round(text2num(new_age)), 45), 20)
+			switch(link_tags["age"])
+				if ("input")
+					var/new_age = input(user, "Please select type in age: 20-45", "Character Generation")  as num
+					if(new_age)
+						src.age = max(min(round(text2num(new_age)), 45), 20)
+				if ("random")
+					src.age = rand (20, 45)
 
 		if (link_tags["b_type"])
-			var/new_b_type = input(user, "Please select a blood type:", "Character Generation")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+			switch(link_tags["b_type"])
+				if ("input")
+					var/new_b_type = input(user, "Please select a blood type:", "Character Generation")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+					if (new_b_type)
+						src.b_type = new_b_type
+				if ("random")
+					src.b_type = pick ("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
 
-			if (new_b_type)
-				src.b_type = new_b_type
 
 		if (link_tags["hair"])
-			var/new_hair = input(user, "Please select hair color.", "Character Generation") as color
-			if(new_hair)
-				src.r_hair = hex2num(copytext(new_hair, 2, 4))
-				src.g_hair = hex2num(copytext(new_hair, 4, 6))
-				src.b_hair = hex2num(copytext(new_hair, 6, 8))
+			switch(link_tags["hair"])
+				if ("input")
+					var/new_hair = input(user, "Please select hair color.", "Character Generation") as color
+					if(new_hair)
+						src.r_hair = hex2num(copytext(new_hair, 2, 4))
+						src.g_hair = hex2num(copytext(new_hair, 4, 6))
+						src.b_hair = hex2num(copytext(new_hair, 6, 8))
+				if ("random")
+					randomize_hair_color("hair")
+
 /*
 		if (link_tags["r_hair"])
 			var/new_component = input(user, "Please select red hair component: 1-255", "Character Generation")  as text
@@ -427,11 +546,16 @@ datum/preferences
 */
 
 		if (link_tags["facial"])
-			var/new_facial = input(user, "Please select facial hair color.", "Character Generation") as color
-			if(new_facial)
-				src.r_facial = hex2num(copytext(new_facial, 2, 4))
-				src.g_facial = hex2num(copytext(new_facial, 4, 6))
-				src.b_facial = hex2num(copytext(new_facial, 6, 8))
+			switch(link_tags["facial"])
+				if ("input")
+					var/new_facial = input(user, "Please select facial hair color.", "Character Generation") as color
+					if(new_facial)
+						src.r_facial = hex2num(copytext(new_facial, 2, 4))
+						src.g_facial = hex2num(copytext(new_facial, 4, 6))
+						src.b_facial = hex2num(copytext(new_facial, 6, 8))
+				if ("random")
+					randomize_hair_color("facial")
+
 /*
 		if (link_tags["r_facial"])
 			var/new_component = input(user, "Please select red facial component: 1-255", "Character Generation")  as text
@@ -452,11 +576,16 @@ datum/preferences
 				src.b_facial = max(min(round(text2num(new_component)), 255), 1)
 */
 		if (link_tags["eyes"])
-			var/new_eyes = input(user, "Please select eye color.", "Character Generation") as color
-			if(new_eyes)
-				src.r_eyes = hex2num(copytext(new_eyes, 2, 4))
-				src.g_eyes = hex2num(copytext(new_eyes, 4, 6))
-				src.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+			switch(link_tags["eyes"])
+				if ("input")
+					var/new_eyes = input(user, "Please select eye color.", "Character Generation") as color
+					if(new_eyes)
+						src.r_eyes = hex2num(copytext(new_eyes, 2, 4))
+						src.g_eyes = hex2num(copytext(new_eyes, 4, 6))
+						src.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+				if ("random")
+					randomize_eyes_color()
+
 /*
 		if (link_tags["r_eyes"])
 			var/new_component = input(user, "Please select red eyes component: 1-255", "Character Generation")  as text
@@ -477,17 +606,23 @@ datum/preferences
 				src.b_eyes = max(min(round(text2num(new_component)), 255), 1)
 */
 		if (link_tags["s_tone"])
-			var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
-
-			if (new_tone)
-				src.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-				src.s_tone =  -src.s_tone + 35
+			switch(link_tags["s_tone"])
+				if ("random")
+					src.s_tone = -(rand (1, 220))
+				if("input")
+					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+					if (new_tone)
+						src.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+						src.s_tone = -src.s_tone + 35
 
 		if (link_tags["h_style"])
-			var/new_style = input(user, "Please select hair style", "Character Generation")  as null|anything in list( "Cut Hair", "Short Hair", "Long Hair", "Mohawk", "Balding", "Fag", "Bedhead", "Dreadlocks", "Bald" )
-
-			if (new_style)
-				src.h_style = new_style
+			switch(link_tags["h_style"])
+				if ("random")
+					src.h_style = pick ("Cut Hair", "Short Hair", "Long Hair", "Mohawk", "Balding", "Fag", "Bedhead", "Dreadlocks", "Bald")
+				if("input")
+					var/new_style = input(user, "Please select hair style", "Character Generation")  as null|anything in list( "Cut Hair", "Short Hair", "Long Hair", "Mohawk", "Balding", "Fag", "Bedhead", "Dreadlocks", "Bald" )
+					if (new_style)
+						src.h_style = new_style
 
 		if (link_tags["ooccolor"])
 			var/ooccolor = input(user, "Please select OOC colour.", "OOC colour") as color
@@ -496,10 +631,13 @@ datum/preferences
 				src.ooccolor = ooccolor
 
 		if (link_tags["f_style"])
-			var/new_style = input(user, "Please select facial style", "Character Generation")  as null|anything in list("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Hogan", "Shaved")
-
-			if (new_style)
-				src.f_style = new_style
+			switch(link_tags["f_style"])
+				if ("random")
+					src.f_style = pick ("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Hogan", "Shaved")
+				if("input")
+					var/new_style = input(user, "Please select facial style", "Character Generation")  as null|anything in list("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Hogan", "Shaved")
+					if (new_style)
+						src.f_style = new_style
 
 		if (link_tags["gender"])
 			if (src.gender == MALE)
@@ -521,10 +659,14 @@ datum/preferences
 
 		if (link_tags["underwear"])
 			if(!IsGuestKey(user.key))
-				if (src.underwear == 1)
-					src.underwear = 0
-				else
-					src.underwear = 1
+				switch(link_tags["underwear"])
+					if ("random")
+						src.underwear = rand (0, 1)
+					if("input")
+						if (src.underwear == 1)
+							src.underwear = 0
+						else
+							src.underwear = 1
 
 		if (link_tags["b_syndicate"])
 			src.be_syndicate = !( src.be_syndicate )
