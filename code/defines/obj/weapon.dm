@@ -30,6 +30,7 @@
 	var/matter = 0
 	var/working = 0
 	var/mode = 1
+	var/disabled = 0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 10.0
 	throwforce = 10.0
@@ -39,20 +40,6 @@
 	m_amt = 50000
 	var/datum/effects/system/spark_spread/spark_system
 
-/obj/item/weapon/rcd_fake
-	name = "rapid-construction-device (RCD)"
-	desc = "A device used to rapidly build walls/floor."
-	icon = 'items.dmi'
-	icon_state = "rcd"
-	opacity = 0
-	density = 0
-	anchored = 0.0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 10.0
-	throwforce = 10.0
-	throw_speed = 1
-	throw_range = 5
-	w_class = 3.0
 
 /obj/item/weapon/rcd_ammo
 	name = "Compressed matter cartridge"

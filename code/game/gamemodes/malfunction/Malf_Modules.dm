@@ -64,7 +64,8 @@ rcd light flash thingy on matter drain
 		if(rcdmod.uses > 0)
 			rcdmod.uses --
 			for(var/obj/item/weapon/rcd/rcd in world)
-				rcd = new /obj/item/weapon/rcd_fake(rcd)
+				rcd.disabled = 1
+			usr << "RCD-disabling pulse emitted."
 		else usr << "Out of uses."
 
 /datum/game_mode/malfunction/AI_Module/small/overload_machine
