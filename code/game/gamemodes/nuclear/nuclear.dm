@@ -157,6 +157,11 @@
 		if(0)
 			world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 			world << "<B>[syndicate_name()] operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</B> Next time, don't lose the disk!"
+			for(var/datum/mind/M in syndicates)
+				if(!M.current)
+					continue
+				if(M.current.client)
+					world << text("<B>[M.current.key] was [M.current.real_name]</B> [M.current.stat == 2 ? "(DEAD)" : ""]")
 
 		if(1)
 			world << "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>"
