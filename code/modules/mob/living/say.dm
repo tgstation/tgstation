@@ -74,6 +74,12 @@
 		else if (copytext(message, 1, 3) == ":i")
 			message_mode = "intercom"
 			message = copytext(message, 3)
+
+		else if (copytext(message, 1, 3) == ":s" && src.robot_talk_understand)
+			message = copytext(message, 3)
+			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			src.robot_talk(message)
+			return
 	//
 
 	message = trim(message)
