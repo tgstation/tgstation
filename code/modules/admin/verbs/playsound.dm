@@ -54,6 +54,23 @@
 			CP << "Your body can't contain the rhumba beat"
 			CP.gib(1)
 
+
+
+
+
+client/proc/space_asshole()
+	set category = "Fun"
+	set name = "Space Asshole"
+
+	message_admins("[key_name_admin(usr)] has played the Space Asshole Hymn.", 1)
+
+	for(var/mob/M in world)
+		if(M.client)
+			if(M.client.midis)
+				M << 'space_asshole.ogg'
+
+
+
 	/*if(Debug2)
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."

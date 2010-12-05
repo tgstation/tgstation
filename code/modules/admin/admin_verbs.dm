@@ -85,6 +85,7 @@
 			src.verbs += /client/proc/object_talk // -- TLE
 			src.verbs += /client/proc/play_sound
 			src.verbs += /client/proc/cuban_pete // -- Urist
+			src.verbs += /client/proc/space_asshole // --Agouri :3
 			src.verbs += /client/proc/sendmob
 			src.verbs += /client/proc/stealthadmin
 			src.verbs += /client/proc/ticklag
@@ -180,6 +181,7 @@
 			src.verbs += /client/proc/modifytemperature
 			src.verbs += /client/proc/play_sound
 			src.verbs += /client/proc/cuban_pete // -- Urist
+			src.verbs += /client/proc/space_asshole // -- Agouri :3
 			src.verbs += /client/proc/sendmob
 			src.verbs += /client/proc/stealthadmin
 			src.verbs += /client/proc/ticklag
