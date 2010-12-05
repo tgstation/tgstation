@@ -574,6 +574,7 @@
 #include "code\modules\mob\dead\observer\login.dm"
 #include "code\modules\mob\dead\observer\observer.dm"
 #include "code\modules\mob\dead\observer\say.dm"
+#include "code\modules\mob\living\say.dm"
 #include "code\modules\mob\living\carbon\carbon.dm"
 #include "code\modules\mob\living\carbon\alien\say.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\alien_powers.dm"

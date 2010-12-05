@@ -219,7 +219,7 @@ var/showadminmessages = 1
 					message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
 					del(M.client)
-					del(M)
+					//del(M)	// See not reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 				if("No")
 					var/reason = input(usr,"Reason?","reason","Griefer") as text
 					if(!reason)

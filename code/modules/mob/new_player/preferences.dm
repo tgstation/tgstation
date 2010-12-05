@@ -47,6 +47,12 @@ datum/preferences
 			real_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
 
 	proc/randomize_hair_color(var/target = "hair")
+		if (prob (50) && target == "facial") // Chance to inherit head color
+			r_facial = r_hair
+			g_facial = g_hair
+			b_facial = b_hair
+			return
+
 		var/red
 		var/green
 		var/blue
@@ -608,7 +614,7 @@ datum/preferences
 		if (link_tags["s_tone"])
 			switch(link_tags["s_tone"])
 				if ("random")
-					src.s_tone = -(rand (1, 220))
+					src.s_tone = (-(rand (1, 220))) -35
 				if("input")
 					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 					if (new_tone)
@@ -633,7 +639,10 @@ datum/preferences
 		if (link_tags["f_style"])
 			switch(link_tags["f_style"])
 				if ("random")
-					src.f_style = pick ("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Hogan", "Shaved")
+					if (src.gender == FEMALE && !prob (1))
+						src.f_style = "Shaved"
+					else
+						src.f_style = pick ("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Hogan")
 				if("input")
 					var/new_style = input(user, "Please select facial style", "Character Generation")  as null|anything in list("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Hogan", "Shaved")
 					if (new_style)
@@ -661,7 +670,10 @@ datum/preferences
 			if(!IsGuestKey(user.key))
 				switch(link_tags["underwear"])
 					if ("random")
-						src.underwear = rand (0, 1)
+						if (prob (65))
+							src.underwear = 1
+						else
+							src.underwear = 0
 					if("input")
 						if (src.underwear == 1)
 							src.underwear = 0
