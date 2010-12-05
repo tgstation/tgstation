@@ -194,12 +194,12 @@
 //							message_admins("\blue [key_name_admin(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 							R.canmove = !R.canmove
 							if (R.lockcharge)
-								R.cell.charge = R.lockcharge
-								R.lockcharge = null
-								R << "Your lockdown has been removed!"
+							//	R.cell.charge = R.lockcharge
+								R.lockcharge = !R.lockcharge
+								R << "Your lockdown has been lifted!"
 							else
-								R.lockcharge = R.cell.charge
-								R.cell.charge = 0
+								R.lockcharge = !R.lockcharge
+						//		R.cell.charge = 0
 								R << "You have been locked down!"
 
 			else

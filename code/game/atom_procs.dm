@@ -194,6 +194,7 @@
 		var/mob/living/silicon/ai/ai = usr
 		if (ai.control_disabled)
 			return
+	if (usr:lockcharge) return
 	..()
 
 
