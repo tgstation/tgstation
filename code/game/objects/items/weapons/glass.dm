@@ -30,11 +30,11 @@ SHARDS
 /obj/item/weapon/sheet/glass/attackby(obj/item/weapon/W, mob/user)
 	if ( istype(W, /obj/item/weapon/sheet/glass) )
 		var/obj/item/weapon/sheet/glass/G = W
-		if (G.amount >= 5)
+		if (G.amount >= 50)
 			return
-		if (G.amount + src.amount > 5)
-			src.amount = G.amount + src.amount - 5
-			G.amount = 5
+		if (G.amount + src.amount > 50)
+			src.amount = G.amount + src.amount - 50
+			G.amount = 50
 		else
 			G.amount += src.amount
 			//SN src = null
@@ -140,11 +140,11 @@ SHARDS
 /obj/item/weapon/sheet/rglass/attackby(obj/item/weapon/sheet/rglass/W as obj, mob/user as mob)
 	if (!( istype(W, /obj/item/weapon/sheet/rglass) ))
 		return
-	if (W.amount >= 5)
+	if (W.amount >= 50)
 		return
-	if (W.amount + src.amount > 5)
-		src.amount = W.amount + src.amount - 5
-		W.amount = 5
+	if (W.amount + src.amount > 50)
+		src.amount = W.amount + src.amount - 50
+		W.amount = 50
 	else
 		W.amount += src.amount
 		del(src)

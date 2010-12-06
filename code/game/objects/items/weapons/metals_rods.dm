@@ -57,11 +57,11 @@ LATTICE
 			del(src)
 		return
 	if (istype(W, /obj/item/weapon/rods))
-		if (W:amount == 6)
+		if (W:amount == 60)
 			return
-		if (W:amount + src:amount > 6)
-			src.amount = W:amount + src:amount - 6
-			W:amount = 6
+		if (W:amount + src:amount > 60)
+			src.amount = W:amount + src:amount - 60
+			W:amount = 60
 		else
 			W:amount += src:amount
 			//SN src = null
@@ -125,11 +125,11 @@ LATTICE
 /obj/item/weapon/sheet/metal/attackby(obj/item/weapon/sheet/metal/W as obj, mob/user as mob)
 	if (!( istype(W, /obj/item/weapon/sheet/metal) ))
 		return
-	if (W.amount >= 5)
+	if (W.amount >= 50)
 		return
-	if (W.amount + src.amount > 5)
-		src.amount = W.amount + src.amount - 5
-		W.amount = 5
+	if (W.amount + src.amount > 50)
+		src.amount = W.amount + src.amount - 50
+		W.amount = 50
 	else
 		W.amount += src.amount
 		//SN src = null
@@ -348,11 +348,11 @@ LATTICE
 /obj/item/weapon/sheet/r_metal/attackby(obj/item/weapon/sheet/r_metal/W as obj, mob/user as mob)
 	if (!( istype(W, /obj/item/weapon/sheet/r_metal) ))
 		return
-	if (W.amount >= 5)
+	if (W.amount >= 50)
 		return
-	if (W.amount + src.amount > 5)
-		src.amount = W.amount + src.amount - 5
-		W.amount = 5
+	if (W.amount + src.amount > 50)
+		src.amount = W.amount + src.amount - 50
+		W.amount = 50
 	else
 		W.amount += src.amount
 		//SN src = null
@@ -395,10 +395,10 @@ LATTICE
 				src.amount -= 2
 				new /obj/item/weapon/table_parts/reinforced( usr.loc )
 			if("metal")
-				if (src.amount < 2)
+				if (src.amount < 1)
 					usr << text("\red You haven't got enough metal to build the metal sheets!")
 					return
-				src.amount -= 2
+				src.amount -= 1
 				var/obj/item/weapon/sheet/C = new /obj/item/weapon/sheet( usr.loc )
 				C.amount = 2
 			if("core")
