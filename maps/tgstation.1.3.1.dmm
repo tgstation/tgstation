@@ -2055,7 +2055,7 @@
 "aNA" = (/obj/machinery/door/firedoor/border_only,/turf/simulated/floor{tag = "icon-blue (SOUTHWEST)"; icon_state = "blue"; dir = 10},/area/hallway/primary/central)
 "aNB" = (/obj/machinery/power/apc{dir = 2; name = "Central Hall APC"; pixel_y = -24},/obj/cable,/turf/simulated/floor{dir = 0; icon_state = "blue"},/area/hallway/primary/central)
 "aNC" = (/obj/cable{icon_state = "4-8"; pixel_y = 0; d1 = 4; d2 = 8},/turf/simulated/wall,/area/crew_quarters/kitchen)
-"aND" = (/obj/machinery/chem_master,/obj/cable{d2 = 8; icon_state = "0-8"},/obj/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor{tag = "icon-freezerfloor"; icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
+"aND" = (/obj/cable{d2 = 8; icon_state = "0-8"},/obj/cable{icon_state = "0-2"; d2 = 2},/obj/machinery/chem_master{name = "CondiMaster Neo"},/turf/simulated/floor{tag = "icon-freezerfloor"; icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "aNE" = (/obj/kitchenspike,/turf/simulated/floor{tag = "icon-freezerfloor"; icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "aNF" = (/obj/machinery/light/small{dir = 1},/obj/kitchenspike,/turf/simulated/floor{tag = "icon-freezerfloor"; icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "aNG" = (/obj/machinery/alarm{pixel_y = 24},/turf/simulated/floor{tag = "icon-freezerfloor"; icon_state = "freezerfloor"},/area/crew_quarters/kitchen)

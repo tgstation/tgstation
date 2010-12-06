@@ -3044,7 +3044,7 @@
 "bgB" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/machinery/door/firedoor/border_only,/obj/machinery/door/airlock/glass{name = "Central Access"},/turf/simulated/floor,/area/hallway/primary/aft)
 "bgC" = (/obj/kitchenspike,/turf/simulated/floor{tag = "icon-freezerfloor"; icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "bgD" = (/obj/item/weapon/storage/condimentbottles,/turf/simulated/floor{tag = "icon-freezerfloor"; icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
-"bgE" = (/obj/machinery/chem_master,/obj/disposalpipe/segment,/turf/simulated/floor{tag = "icon-freezerfloor"; icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
+"bgE" = (/obj/machinery/chem_master{name = "CondiMaster Neo"},/obj/disposalpipe/segment,/turf/simulated/floor{tag = "icon-freezerfloor"; icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "bgF" = (/obj/table{icon_state = "tabledir"; dir = 6},/obj/item/weapon/reagent_containers/food/drinks/cola,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
 "bgG" = (/obj/table{icon_state = "tabledir"; dir = 10},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
 "bgH" = (/obj/table{icon_state = "tabledir"; dir = 6},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
