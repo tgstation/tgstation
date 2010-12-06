@@ -166,6 +166,11 @@
 	icon_state = "purple"
 	requires_power = 0
 
+/area/centcom/specops
+	name = "Centcom Special Ops"
+	icon_state = "purple"
+	requires_power = 0
+
 //EXTRA
 
 /area/asteroid					// -- TLE
