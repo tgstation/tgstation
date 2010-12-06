@@ -19,8 +19,8 @@
 	//Amount of air needed before pass out/suffocation commences
 
 // Factor of how fast mob nutrition decreases
-#define	HUNGER_FACTOR 0.07
-
+#define	HUNGER_FACTOR 0.1
+#define	REAGENTS_METABOLISM 0.4
 
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
 	//Minimum ratio of air that must move to/from a tile to suspend group processing

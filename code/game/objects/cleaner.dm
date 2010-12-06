@@ -1,5 +1,5 @@
 /obj/mopbucket/New()
-	var/datum/reagents/R = new/datum/reagents(50)
+	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
 

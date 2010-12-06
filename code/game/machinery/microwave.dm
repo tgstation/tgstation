@@ -601,4 +601,3 @@ Please clean it before use!</TT><BR>
 		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
 		del(src)
 		return
-

@@ -32,6 +32,7 @@
 			src.verbs += /client/proc/admin_cancel_shuttle // -- Skie
 			src.verbs += /client/proc/air_report
 			src.verbs += /client/proc/air_status
+			src.verbs += /client/proc/radio_report
 			src.verbs += /client/proc/callproc
 			src.verbs += /client/proc/Cell
 			src.verbs += /client/proc/cmd_admin_alienize
@@ -131,6 +132,7 @@
 			src.verbs += /client/proc/admin_cancel_shuttle // -- Skie
 			src.verbs += /client/proc/air_report
 			src.verbs += /client/proc/air_status
+			src.verbs += /client/proc/radio_report
 			src.verbs += /client/proc/callproc
 			src.verbs += /client/proc/Cell
 			src.verbs += /client/proc/cmd_admin_alienize
@@ -287,6 +289,7 @@
 			src.verbs += /client/proc/general_report
 			src.verbs += /client/proc/air_report
 			src.verbs += /client/proc/air_status
+			src.verbs += /client/proc/radio_report
 			src.verbs += /client/proc/fix_next_move
 
 			src.verbs += /client/proc/toggle_view_range
@@ -581,6 +584,7 @@
 	src.verbs -= /client/proc/general_report
 	src.verbs -= /client/proc/air_report
 	src.verbs -= /client/proc/air_status
+	src.verbs -= /client/proc/radio_report
 
 	src.verbs -= /client/proc/toggle_view_range
 	src.verbs -= /obj/admins/proc/toggle_aliens
@@ -764,7 +768,7 @@
 		message_admins("\blue [src.ckey] warned [M.ckey], resulting in a 10 minute autoban.")
 
 		del(M.client)
-		del(M)
+		//del(M)
 
 /client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
 	set category = "Special Verbs"
@@ -965,6 +969,7 @@
 			src.verbs += /client/proc/general_report
 			src.verbs += /client/proc/air_report
 			src.verbs += /client/proc/air_status
+			src.verbs += /client/proc/radio_report
 			src.verbs += /client/proc/fix_next_move
 
 			src.verbs += /client/proc/toggle_view_range
@@ -1047,6 +1052,7 @@
 			src.verbs += /client/proc/general_report
 			src.verbs += /client/proc/air_report
 			src.verbs += /client/proc/air_status
+			src.verbs += /client/proc/radio_report
 			src.verbs += /client/proc/fix_next_move
 			src.verbs += /obj/admins/proc/spawn_atom
 
@@ -1115,6 +1121,7 @@
 			src.verbs += /client/proc/general_report
 			src.verbs += /client/proc/air_report
 			src.verbs += /client/proc/air_status
+			src.verbs += /client/proc/radio_report
 			src.verbs += /client/proc/fix_next_move
 
 			src.verbs += /client/proc/toggle_view_range
@@ -1382,6 +1389,7 @@
 			src.verbs -= /client/proc/general_report
 			src.verbs -= /client/proc/air_report
 			src.verbs -= /client/proc/air_status
+			src.verbs -= /client/proc/radio_report
 			src.verbs += /client/proc/fix_next_move
 
 			src.verbs += /client/proc/toggle_view_range
@@ -1464,6 +1472,7 @@
 			src.verbs -= /client/proc/general_report
 			src.verbs -= /client/proc/air_report
 			src.verbs -= /client/proc/air_status
+			src.verbs -= /client/proc/radio_report
 			src.verbs += /client/proc/fix_next_move
 			src.verbs += /obj/admins/proc/spawn_atom
 
@@ -1532,6 +1541,7 @@
 			src.verbs -= /client/proc/general_report
 			src.verbs -= /client/proc/air_report
 			src.verbs -= /client/proc/air_status
+			src.verbs -= /client/proc/radio_report
 			src.verbs -= /client/proc/fix_next_move
 
 			src.verbs += /client/proc/toggle_view_range

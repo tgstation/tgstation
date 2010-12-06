@@ -857,9 +857,12 @@
 			// Commented out so hunger system won't be such shock
 			// Damage and effects from not eating
 			if(src.nutrition <= 50)
-				src.bruteloss++
+				if (prob (0.1))
+					src << "\red Your stomach rumbles."
 				if (prob (10))
-					src << "You feel very weak"
+					src.bruteloss++
+				if (prob (5))
+					src << "You feel very weak."
 					src.weakened += rand(2, 3)
 */
 /*

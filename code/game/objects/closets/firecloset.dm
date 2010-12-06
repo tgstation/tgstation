@@ -5,7 +5,7 @@
 		del(src)
 		return
 
-	switch (pickweight(list("extinguisher" = 50, "toolbox" = 30, "nothing" = 20)))
+	switch (pickweight(list("extinguisher" = 40, "toolbox" = 40, "nothing" = 20)))
 		if ("extinguisher")
 			new /obj/item/weapon/extinguisher(src)
 		if ("toolbox")

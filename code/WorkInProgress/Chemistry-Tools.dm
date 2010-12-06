@@ -729,7 +729,6 @@
 
 			playsound(M.loc,'drink.ogg', rand(10,50), 1)
 			return 1
-
 		return 0
 
 	attackby(obj/item/I as obj, mob/user as mob)
@@ -754,7 +753,6 @@
 			if(!reagents.total_volume)
 				user << "\red [src] is empty."
 				return
-
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
 				user << "\red you can't add anymore to [target]."
 				return
@@ -782,23 +780,26 @@
 			return 0
 		if(istype(M, /mob/living/carbon/human))
 			if(M == user)								//If you're eating it yourself.
-				if (M.nutrition <= 50)
+				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
+				if (fullness <= 50)
 					M << "\red You hungrily chew out a piece of [src] and gobble it!"
-				if (M.nutrition > 50 && M.nutrition <= 150)
+				if (fullness > 50 && fullness <= 150)
 					M << "\blue You hungrily begin to eat [src]."
-				if (M.nutrition > 150 && M.nutrition <= 350)
+				if (fullness > 150 && fullness <= 350)
 					M << "\blue You take a bite of [src]."
-				if (M.nutrition > 350 && M.nutrition <= 550)
+				if (fullness > 350 && fullness <= 550)
 					M << "\blue You unwillingly chew a bit of [src]."
-				if (M.nutrition > (550 * (1 + M.overeatduration / 1000)))	// The more he eats - the more he can eat
+				if (fullness > (550 * (1 + M.overeatduration / 1000)))	// The more he eats - the more he can eat
 					M << "\red You cannot force any more of [src] to go down your throat."
 					return 0
 			else										//If you're feeding it to someone else.
-				for(var/mob/O in viewers(world.view, user))
-					if (M.nutrition <= (550 * (1 + M.overeatduration / 1000)))
+				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 10)
+				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
+					for(var/mob/O in viewers(world.view, user))
 						O.show_message("\red [user] attempts to feed [M] [src].", 1)
-					else
-						O.show_message("\red [user] cannot force anymore of [src] down [M] throat.", 1)
+				else
+					for(var/mob/O in viewers(world.view, user))
+						O.show_message("\red [user] cannot force anymore of [src] down [M]'s throat.", 1)
 						return 0
 
 				if(!do_mob(user, M)) return
@@ -1024,7 +1025,7 @@
 	amount_per_transfer_from_this = 20
 	flags = FPRINT | OPENCONTAINER
 	New()
-		var/datum/reagents/R = new/datum/reagents(90)
+		var/datum/reagents/R = new/datum/reagents(70)
 		reagents = R
 		R.my_atom = src
 
@@ -1050,7 +1051,6 @@
 	icon_state = "beaker"
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
-
 
 /obj/item/weapon/reagent_containers/glass/dispenser/surfactant
 	name = "reagent glass (surfactant)"
@@ -1362,7 +1362,7 @@
 	icon_state = "donut1"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("sprinkles", 1)
 		if(prob(30))
 			src.icon_state = "donut2"

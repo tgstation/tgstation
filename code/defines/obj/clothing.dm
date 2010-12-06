@@ -259,6 +259,9 @@
 	name = "rig helmet"
 	icon_state = "rig"
 	item_state = "rig_helm"
+	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES | HEADCOVERSMOUTH
+	see_face = 0.0
+	permeability_coefficient = 0.01
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
@@ -695,6 +698,13 @@
 	desc = "A special suit that protects against hazardous, low pressure environments."
 	icon_state = "rig"
 	item_state = "rig_suit"
+	gas_transfer_coefficient = 0.01
+	w_class = 4//bulky item
+	flags = FPRINT | TABLEPASS | SUITSPACE
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	permeability_coefficient = 0.02
+	protective_temperature = 1000
+	heat_transfer_coefficient = 0.02
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"

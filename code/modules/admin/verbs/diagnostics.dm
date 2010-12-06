@@ -110,3 +110,23 @@
 		message_admins("[key_name_admin(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!", 1)
 		message_admins("world.time = [world.time]", 1)
 		return
+
+	radio_report()
+		set category = "Debug"
+		set name = "Radio report"
+
+		var/output = "<b>Radio Report</b><hr>"/*
+		for (var/fq in radio_controller.frequencies)
+			output += "<b>Freq: [fq]</b><br>"
+			var/list/datum/radio_frequency/fqs = radio_controller.frequencies[fq]
+			output += "&nbsp;&nbsp;Voice: [fqs.voice.len]<br>"
+			output += "&nbsp;&nbsp;Broadcast: [fqs.broadcast.len]<br>"
+			output += "&nbsp;&nbsp;Tags: <br>"
+			for (var/tag in fqs.tags)
+				var/list/ctag = fqs.tags[tag]
+				output += "&nbsp;&nbsp;&nbsp;&nbsp;[tag]: [ctag.len]<br>"
+			output += "&nbsp;&nbsp;Groups: <br>"
+			for (var/group in fqs.groups)
+				var/list/cgroup = fqs.groups[group]
+				output += "&nbsp;&nbsp;&nbsp;&nbsp;[group]: [cgroup.len]<br>"*/
+		usr << browse(output,"window=radioreport")

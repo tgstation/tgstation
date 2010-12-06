@@ -14,6 +14,7 @@ datum
 		var/reagent_state = SOLID
 		var/data = null
 		var/volume = 0
+		var/nutriment_factor = 0
 
 		proc
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
@@ -42,7 +43,7 @@ datum
 				return
 
 			on_mob_life(var/mob/M)
-				holder.remove_reagent(src.id, 0.4) //By default it slowly disappears.
+				holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
 				return
 
 			on_move(var/mob/M)
@@ -1154,10 +1155,24 @@ datum
 			id = "nutriment"
 			description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 			reagent_state = SOLID
+			nutriment_factor = 25 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				if(prob(50)) M:bruteloss--
-				M:nutrition += 10	// For hunger and fatness
+				M:nutrition += nutriment_factor	// For hunger and fatness
+/*
+				// If overeaten - vomit and fall down
+				// Makes you feel bad but removes reagents and some effects
+				// from your body
+				if (M.nutrition > 650)
+					M.nutrition = rand (250, 400)
+					M.weakened += rand(2, 10)
+					M.jitteriness += rand(0, 5)
+					M.dizziness = max (0, (M.dizziness - rand(0, 15)))
+					M.druggy = max (0, (M.druggy - rand(0, 15)))
+					M.toxloss = max (0, (M.toxloss - rand(5, 15)))
+					M.updatehealth()
+*/
 				..()
 				return
 
@@ -1166,18 +1181,21 @@ datum
 			id = "soysauce"
 			description = "A salty sauce made from the soy plant."
 			reagent_state = LIQUID
+			nutriment_factor = 2 * REAGENTS_METABOLISM
 
 		ketchup
 			name = "Ketchup"
 			id = "ketchup"
 			description = "Ketchup, catsup, whatever. It's tomato paste."
 			reagent_state = LIQUID
+			nutriment_factor = 5 * REAGENTS_METABOLISM
 
 		capsaicin
 			name = "Capsaicin Oil"
 			id = "capsaicin"
 			description = "This is what makes chilis hot."
 			reagent_state = LIQUID
+			nutriment_factor = 5 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				M:bodytemperature += 5
@@ -1190,6 +1208,7 @@ datum
 			id = "frostoil"
 			description = "A special oil that noticably chills the body. Extraced from Icepeppers."
 			reagent_state = LIQUID
+			nutriment_factor = 5 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				M:bodytemperature -= 5
@@ -1202,12 +1221,14 @@ datum
 			id = "sodiumchloride"
 			description = "A salt made of sodium chloride. Commonly used to season food."
 			reagent_state = SOLID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 
 		blackpepper
 			name = "Black Pepper"
 			id = "blackpepper"
 			description = "A power ground from peppercorns. *AAAACHOOO*"
 			reagent_state = SOLID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 
 		amatoxin
 			name = "Amatoxin"
@@ -1236,22 +1257,26 @@ datum
 			name = "Sprinkles"
 			id = "sprinkles"
 			description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/M)
+				M:nutrition += nutriment_factor
 				if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective"))
 					if(!M) M = holder.my_atom
 					M:bruteloss--
 					M:fireloss--
-					M:nutrition++
+					M:nutrition += nutriment_factor
 					..()
 					return
+				..()
 
 		oliveoil
 			name = "Olive Oil"
 			id = "oliveoil"
 			description = "An oil derived from various types of olives. A famous export of Space Italy."
 			reagent_state = LIQUID
+			nutriment_factor = 20 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/M)
-				M:nutrition += 20
+				M:nutrition += nutriment_factor
 				..()
 				return
 			reaction_turf(var/turf/T, var/volume)
@@ -1290,9 +1315,10 @@ datum
 			id = "berryjuice"
 			description = "A delicious blend of several different kinds of berries."
 			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				M:nutrition++
+				M:nutrition += nutriment_factor
 				..()
 				return
 
