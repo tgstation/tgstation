@@ -34,17 +34,13 @@
 	cultists_possible = get_possible_cultists()
 	var/cultists_number = 0
 
-	if(!cultists_possible)
+	if(cultists_possible.len < 3)
 		world << "<B> \red Not enough players for cult game mode. Restarting world in 5 seconds."
 		sleep(50)
 		world.Reboot()
 		return
 
-	if(cultists_possible.len >= 3)
-		cultists_number = 3
-	else
-		cultists_number = cultists_possible.len
-
+	cultists_number = 3
 	while(cultists_number > 0)
 		cult += pick(cultists_possible)
 		cultists_possible -= cult
@@ -105,7 +101,7 @@
 			cult_mob << "You have a talisman in your backpack, one that will help you start the cult on this station. Use it well and remember - there are others."
 		if(!wordtravel)
 			runerandom()
-		var/word=pick("1","2","3","4","5","6","7","8")
+		var/word=pick("1","2","3","4","5","6")
 		var/wordexp
 		switch(word)
 			if("1")
@@ -117,12 +113,8 @@
 			if("4")
 				wordexp = "[wordhell] is Hell..."
 			if("5")
-				wordexp = "[worddestr] is destroy..."
-			if("6")
-				wordexp = "[wordtech] is technology..."
-			if("7")
 				wordexp = "[wordself] is self..."
-			if("8")
+			if("6")
 				wordexp = "[wordsee] is see..."
 		cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordexp]"
 		cult_mob.mind.store_memory("<B>You remember one thing</B>: [wordexp]", 0, 0)
@@ -257,7 +249,7 @@
 	for(var/mob/living/carbon/human/player in world)
 		if(player.mind)
 			var/role = player.mind.assigned_role
-			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Security Officer", "Detective", "AI", "Chaplain"))
+			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Security Officer", "Detective", "AI", "Chaplain", "Warden", "Chief Medical Officer"))
 				ucs += player.mind
 
 	return ucs

@@ -127,11 +127,6 @@
 #define FILE_DIR "sound/spells"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/weapons"
-#define FILE_DIR "SS13 Hosting"
-#define FILE_DIR "SS13 Hosting/SSadmindickery files"
-#define FILE_DIR "SS13 Hosting/SSadmindickery files/maps"
-#define FILE_DIR "SS13 Hosting/SSadmindickery files/maps/backup"
-#define FILE_DIR "SS13 Hosting/Thunderdome"
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES
@@ -407,6 +402,7 @@
 #include "code\game\magic\cultist\rune13.dm"
 #include "code\game\magic\cultist\rune14.dm"
 #include "code\game\magic\cultist\rune15.dm"
+#include "code\game\magic\cultist\rune16.dm"
 #include "code\game\magic\cultist\rune2.dm"
 #include "code\game\magic\cultist\rune3.dm"
 #include "code\game\magic\cultist\rune4.dm"

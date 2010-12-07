@@ -68,6 +68,12 @@
 			playsound(src.loc, "punch", 25, 1, -1)
 	return
 
+/obj/item/weapon/storage/bible/afterattack(atom/A, mob/user as mob)
+	if (istype(A, /turf/simulated/floor))
+		user << "\blue You hit the floor with the bible."
+		if(user.mind && (user.mind.assigned_role == "Chaplain"))
+			call(/obj/rune/proc/revealrunes)(src)
+
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (src.contents.len >= 7)

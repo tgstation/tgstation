@@ -49,6 +49,7 @@ var/runedec = 0
 // see Hell join - See invisible
 // blood join Hell - Raise dead
 // blood see destroy - Hide nearby runes
+// destroy see blood - Reveal nearby runes
 // Hell travel self - Leave your body and ghost around
 // blood see travel - Manifest a ghost into a mortal body
 // Hell tech join - Imbue a rune into a talisman
@@ -124,6 +125,8 @@ var/runedec = 0
 			return talisman()
 		if(word1 == wordhell && word2 == wordblood && word3 == wordjoin)
 			return sacrifice()
+		if(word1 == worddestr && word2 == wordsee && word3 == wordblood)
+			return revealrunes(src)
 		else
 			return fizzle()
 
@@ -184,6 +187,10 @@ var/runedec = 0
 			if(word1 == wordhell && word2 == wordblood && word3 == wordjoin)
 				icon_state = "[rand(1,6)]"
 				src.icon += rgb(255, 255, 255)
+			if(word1 == worddestr && word2 == wordsee && word3 == wordblood)
+				icon_state = "4"
+				src.icon += rgb(255, 255, 255)
+
 				return
 			icon_state="[rand(1,6)]" //random shape and color for dummy runes
 			src.icon -= rgb(255,255,255)
@@ -347,6 +354,12 @@ var/runedec = 0
 					R.word2=wordblood
 					R.word3=wordjoin
 					R.check_icon()
+				if("revealrunes")
+					var/obj/rune/R = new /obj/rune(user.loc)
+					R.word1=worddestr
+					R.word2=wordsee
+					R.word3=wordblood
+					R.check_icon()
 
 /obj/item/weapon/paperscrap
 	name = "scrap of paper"
@@ -383,6 +396,8 @@ var/runedec = 0
 				call(/obj/rune/proc/emp)(usr.loc,4)
 			if("conceal")
 				call(/obj/rune/proc/obscure)(2)
+			if("revealrunes")
+				call(/obj/rune/proc/revealrunes)(src)
 			if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar")
 				call(/obj/rune/proc/teleport)(imbue)
 			if("communicate")
