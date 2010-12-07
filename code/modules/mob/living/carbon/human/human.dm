@@ -1161,6 +1161,13 @@
 		src.overlays += image("icon" = 'belt.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = MOB_LAYER)
 		src.belt.screen_loc = ui_belt
 
+	if (src.s_store)
+		var/t1 = src.s_store.item_state
+		if (!t1)
+			t1 = src.s_store.icon_state
+		src.overlays += image("icon" = 'belt_mirror.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = MOB_LAYER)
+		src.s_store.screen_loc = ui_sstore1
+
 	if ((src.wear_mask && !(src.wear_mask.see_face)) || (src.head && !(src.head.see_face))) // can't see the face
 		if (src.wear_id && src.wear_id.registered)
 			src.name = src.wear_id.registered
@@ -1181,8 +1188,6 @@
 	if (src.r_store)
 		src.r_store.screen_loc = ui_storage2
 
-	if (src.s_store)
-		src.s_store.screen_loc = ui_sstore1
 
 	if (src.back)
 		var/t1 = src.back.icon_state
