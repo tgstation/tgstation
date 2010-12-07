@@ -127,6 +127,11 @@
 #define FILE_DIR "sound/spells"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/weapons"
+#define FILE_DIR "SS13 Hosting"
+#define FILE_DIR "SS13 Hosting/SSadmindickery files"
+#define FILE_DIR "SS13 Hosting/SSadmindickery files/maps"
+#define FILE_DIR "SS13 Hosting/SSadmindickery files/maps/backup"
+#define FILE_DIR "SS13 Hosting/Thunderdome"
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES
@@ -451,6 +456,7 @@
 #include "code\game\objects\alien\weeds.dm"
 #include "code\game\objects\closets\emergency.dm"
 #include "code\game\objects\closets\firecloset.dm"
+#include "code\game\objects\closets\gimmick.dm"
 #include "code\game\objects\closets\gmcloset.dm"
 #include "code\game\objects\closets\janitor.dm"
 #include "code\game\objects\closets\kitchen.dm"

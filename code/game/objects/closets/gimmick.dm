@@ -16,7 +16,7 @@
 	new /obj/item/clothing/under/soviet(src)
 	new /obj/item/clothing/under/soviet(src)
 
-/obj/closet/thunderdome/tacticool/New()
+/obj/closet/gimmick/tacticool/New()
 	..()
 	sleep(2)
 	new /obj/item/clothing/glasses/eyepatch(src)
