@@ -826,7 +826,7 @@
 			if (src.wear_suit)
 				for(var/i=1, i<=src.wear_suit.allowed.len, i++)
 		//			world << "[src.wear_suit.allowed[i]] and [W.type]"
-					if (findtext("[W.type]","[src.wear_suit.allowed[i]]"))
+					if (findtext("[W.type]","[src.wear_suit.allowed[i]]") || istype(W, /obj/item/device/pda) || istype(W, /obj/item/weapon/pen))
 						confirm = 1
 						break
 			if (!confirm) return

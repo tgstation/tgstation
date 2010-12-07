@@ -531,7 +531,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	permeability_coefficient = 0.25
 	heat_transfer_coefficient = 0.75
-	allowed = list(/obj/item/weapon/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer)
+	allowed = list(/obj/item/device/analyzer,/obj/item/weapon/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer)
 
 /obj/item/clothing/suit/labcoat/cmo
 	name = "chief medical officer's labcoat"
@@ -545,12 +545,14 @@
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	allowed = null
 
 /obj/item/clothing/suit/wcoat
 	name = "waistcoat"
 	icon_state = "vest"
 	item_state = "wcoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	allowed = null
 
 /obj/item/clothing/suit/apron
 	name = "apron"
@@ -713,6 +715,7 @@
 	name = "red space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
+	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
