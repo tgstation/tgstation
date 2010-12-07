@@ -129,18 +129,22 @@
 		return
 
 	if (istype(W, /obj/item/weapon/weldingtool))
-		if(src.status == 2)
-			user << "\blue Now weakening the reinforced table"
-			playsound(src.loc, 'Welder.ogg', 50, 1)
-			sleep(50)
-			user << "\blue Table weakened"
-			src.status = 1
-		else
-			user << "\blue Now strengthening the reinforced table"
-			playsound(src.loc, 'Welder.ogg', 50, 1)
-			sleep(50)
-			user << "\blue Table strengthened"
-			src.status = 2
+		if(W:welding == 1)
+			if(src.status == 2)
+				user << "\blue Now weakening the reinforced table"
+				playsound(src.loc, 'Welder.ogg', 50, 1)
+				sleep(50)
+				user << "\blue Table weakened"
+				src.status = 1
+			else
+				user << "\blue Now strengthening the reinforced table"
+				playsound(src.loc, 'Welder.ogg', 50, 1)
+				sleep(50)
+				user << "\blue Table strengthened"
+				src.status = 2
+			return
+		user.drop_item()
+		if(W && W.loc)	W.loc = src.loc
 		return
 
 	if (istype(W, /obj/item/weapon/wrench))
