@@ -571,6 +571,15 @@
 
 /mob/living/carbon/human/u_equip(obj/item/W as obj)
 	if (W == src.wear_suit)
+		W = src.s_store
+		if (W)
+			u_equip(W)
+			if (src.client)
+				src.client.screen -= W
+			if (W)
+				W.loc = src.loc
+				W.dropped(src)
+				W.layer = initial(W.layer)
 		src.wear_suit = null
 	else if (W == src.w_uniform)
 		W = src.r_store
@@ -634,6 +643,8 @@
 		src.r_store = null
 	else if (W == src.l_store)
 		src.l_store = null
+	else if (W == src.s_store)
+		src.s_store = null
 	else if (W == src.back)
 		src.back = null
 	else if (W == src.handcuffed)
@@ -806,6 +817,22 @@
 				return
 			src.u_equip(W)
 			src.r_store = W
+		if("suit storage")
+			if (src.s_store)
+				if (emptyHand)
+					src.s_store.DblClick()
+				return
+			var/confirm
+			if (src.wear_suit)
+				for(var/i=1, i<=src.wear_suit.allowed.len, i++)
+		//			world << "[src.wear_suit.allowed[i]] and [W.type]"
+					if (findtext("[W.type]","[src.wear_suit.allowed[i]]"))
+						confirm = 1
+						break
+			if (!confirm) return
+			else
+				src.u_equip(W)
+				src.s_store = W
 
 	update_clothing()
 
@@ -1153,6 +1180,9 @@
 
 	if (src.r_store)
 		src.r_store.screen_loc = ui_storage2
+
+	if (src.s_store)
+		src.s_store.screen_loc = ui_sstore1
 
 	if (src.back)
 		var/t1 = src.back.icon_state

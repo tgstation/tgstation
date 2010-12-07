@@ -487,6 +487,7 @@
 	name = "suit"
 	var/fire_resist = T0C+100
 	flags = FPRINT | TABLEPASS
+	var/list/allowed = list(/obj/item/weapon/tank/emergency_oxygen)
 
 
 /obj/item/clothing/suit/bio_suit
@@ -512,6 +513,7 @@
 	icon_state = "detective"
 	item_state = "det_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	allowed = list(/obj/item/weapon/gun/detectiverevolver,/obj/item/weapon/ammo/a38,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
@@ -519,6 +521,7 @@
 	icon_state = "judge"
 	item_state = "judge"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	allowed = list(/obj/item/weapon/cigpacket,/obj/item/weapon/spacecash)
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
@@ -528,6 +531,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	permeability_coefficient = 0.25
 	heat_transfer_coefficient = 0.75
+	allowed = list(/obj/item/weapon/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer)
 
 /obj/item/clothing/suit/labcoat/cmo
 	name = "chief medical officer's labcoat"
@@ -553,6 +557,7 @@
 	icon_state = "apron"
 	item_state = "apron"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	allowed = list (/obj/item/weapon/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
 
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
@@ -563,6 +568,7 @@
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 0.01
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	allowed = list(/obj/item/weapon/teleportation_scroll)
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -577,6 +583,9 @@
 	item_state = "wizrobe"
 
 // ARMOR
+
+/obj/item/clothing/suit/armor
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/baton,/obj/item/weapon/handcuffs)
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -614,6 +623,7 @@
 	item_state = "caparmor"
 	w_class = 4//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 
 /obj/item/clothing/suit/armor/centcomm
 	name = "Cent. Com. armor"
@@ -622,6 +632,7 @@
 	item_state = "centcom"
 	w_class = 4//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
@@ -665,6 +676,7 @@
 
 	protective_temperature = 4500
 	heat_transfer_coefficient = 0.01
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 
 /obj/item/clothing/suit/fire/heavy
 	name = "firesuit"
@@ -689,6 +701,7 @@
 	permeability_coefficient = 0.02
 	protective_temperature = 1000
 	heat_transfer_coefficient = 0.02
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 
 /obj/item/clothing/suit/space/rig
 	name = "rig suit"

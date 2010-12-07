@@ -75,13 +75,16 @@ proc/countJob(rank)
 	slot_w_uniform = 14
 	slot_l_store = 15
 	slot_r_store = 16
-//	slot_w_radio = 17
+	slot_s_store = 17
 	slot_in_backpack = 18
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/weapon/W, slot) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
 	//warning: icky code
 	var/equipped = 0
 	if((slot == l_store || slot == r_store || slot == belt || slot == wear_id) && !src.w_uniform)
+		del(W)
+		return
+	if(slot == s_store && !src.wear_suit)
 		del(W)
 		return
 	switch(slot)
@@ -149,10 +152,10 @@ proc/countJob(rank)
 			if(!src.r_store)
 				src.r_store = W
 				equipped = 1
-//		if(slot_w_radio)
-//			if(!src.w_radio)
-//				src.w_radio = W
-//				equipped = 1
+		if(slot_s_store)
+			if(!src.s_store)
+				src.s_store = W
+				equipped = 1
 		if(slot_in_backpack)
 			if (src.back && istype(src.back, /obj/item/weapon/storage/backpack))
 				var/obj/item/weapon/storage/backpack/B = src.back
