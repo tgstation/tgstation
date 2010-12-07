@@ -617,6 +617,10 @@
 	name = "Security Checkpoint"
 	icon_state = "security"
 
+/area/security/vacantoffice
+	name = "Vacant Office"
+	icon_state = "security"
+
 //Solars
 
 /area/solar
