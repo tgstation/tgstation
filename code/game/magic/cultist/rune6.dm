@@ -5,7 +5,7 @@
 			for(var/mob/living/carbon/D in R.loc)
 				if(D.health>=-100)
 					var/bdrain = rand(1,25)
-					D << "\red You feel wakened."
+					D << "\red You feel weakened."
 					D.bruteloss += bdrain
 					drain += bdrain
 	if(!drain)

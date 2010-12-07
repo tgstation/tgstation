@@ -13,7 +13,7 @@
 		else
 			usr.whisper("Kla'atu barada nikt'o!")
 			usr << "\red Your talisman turns into gray dust, veiling the surrounding runes."
-			for (var/mob/V in viewers(src))
+			for (var/mob/V in orange(1,src))
 				if(V!=usr)
 					V.show_message("\red Dust emanates from [usr]'s hands for a moment.", 3)
 
