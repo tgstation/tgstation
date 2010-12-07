@@ -79,7 +79,7 @@
 	icon_closed = "syndicate1"
 	icon_opened = "syndicate1open"
 	desc = "Closet of things that have no right being here."
-	anchored = 1
+	anchored = 0
 
 /obj/closet/gimmick/russian
 	desc = "Russian Surplus"
