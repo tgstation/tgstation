@@ -71,6 +71,32 @@
 /obj/closet/syndicate/nuclear
 	desc = "Nuclear preperations closet."
 
+	// Inserting the gimmick clothing stuff here for generic items, IE Tacticool stuff
+
+/obj/closet/gimmick
+	desc = "Administrative Supply Closet"
+	icon_state = "syndicate1"
+	icon_closed = "syndicate1"
+	icon_opened = "syndicate1open"
+	desc = "Closet of things that have no right being here."
+	anchored = 1
+
+/obj/closet/gimmick/russian
+	desc = "Russian Surplus"
+	icon_state = "syndicate1"
+	icon_closed = "syndicate1"
+	icon_opened = "syndicate1open"
+	desc = "Russian Surplus Closet"
+
+/obj/closet/gimmick/tacticool
+	desc = "Tacticool Gear"
+	icon_state = "syndicate1"
+	icon_closed = "syndicate1"
+	icon_opened = "syndicate1open"
+	desc = "Tacticool Gear Closet"
+
+	// Ending of my edit. ~Sillazi
+
 /obj/closet/thunderdome
 	desc = "Everything you need!"
 	icon_state = "syndicate"
