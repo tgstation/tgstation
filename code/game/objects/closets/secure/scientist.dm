@@ -10,3 +10,17 @@
 	new /obj/item/clothing/head/bio_hood( src )
 	new /obj/item/clothing/suit/labcoat(src)
 	return
+
+/obj/secure_closet/RD/New()
+	..()
+	sleep(2)
+	new /obj/item/device/radio/headset/headset_com( src )
+	new /obj/item/clothing/under/rank/research_director( src )
+	new /obj/item/weapon/tank/air( src )
+	new /obj/item/clothing/mask/gas( src )
+	new /obj/item/clothing/suit/bio_suit( src )
+	new /obj/item/clothing/shoes/white( src )
+	new /obj/item/clothing/gloves/latex( src )
+	new /obj/item/clothing/head/bio_hood( src )
+	new /obj/item/clothing/suit/labcoat(src)
+	return

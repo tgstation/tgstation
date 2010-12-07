@@ -281,6 +281,26 @@
 	icon_off = "medical1"
 	req_access = list(access_medical)
 
+/obj/secure_closet/RD
+	name = "Research Director"
+	icon_state = "medical1"
+	icon_closed = "medical"
+	icon_locked = "medical1"
+	icon_opened = "medicalopen"
+	icon_broken = "medicalbroken"
+	icon_off = "medical1"
+	req_access = list(access_rd)
+
+/obj/secure_closet/CMO
+	name = "Chief Medical Officer"
+	icon_state = "medical1"
+	icon_closed = "medical"
+	icon_locked = "medical1"
+	icon_opened = "medicalopen"
+	icon_broken = "medicalbroken"
+	icon_off = "medical1"
+	req_access = list(access_cmo)
+
 /obj/secure_closet/personal
 	desc = "The first card swiped gains control."
 	name = "Personal Closet"

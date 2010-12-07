@@ -141,6 +141,9 @@
 			if(/obj/item/clothing/suit/space/rig)
 				if(!istype(src.loc, /turf/space))		//	space suits slow you down a bit unless in space
 					tally += 2
+			if(/obj/item/clothing/suit/space/syndicate)
+				if(!istype(src.loc, /turf/space))		//	space suits slow you down a bit unless in space
+					tally += 1
 
 	if (istype(src.shoes, /obj/item/clothing/shoes))
 		if (src.shoes.chained)

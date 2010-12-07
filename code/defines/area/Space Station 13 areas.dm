@@ -171,6 +171,11 @@
 	icon_state = "purple"
 	requires_power = 0
 
+/area/centcom/creed
+	name = "Creed's Office"
+	icon_state = "purple"
+	requires_power = 0
+
 //EXTRA
 
 /area/asteroid					// -- TLE

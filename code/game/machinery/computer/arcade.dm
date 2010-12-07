@@ -133,7 +133,7 @@
 		src.gameover = 1
 		src.temp = "[src.enemy_name] has fallen! Rejoice!"
 		var/obj/item/prize
-		var/prizeselect = pick(1,2,4,5,6)
+		var/prizeselect = pick(1,2,3,4,5,6)
 		switch(prizeselect)
 			if(1)
 				prize = new /obj/item/weapon/spacecash(src.loc)
@@ -141,10 +141,8 @@
 				prize.desc = "It's almost like actual currency!"
 			if(2)
 				prize = new /obj/item/toy/blink(src.loc)
-//			if(3)
-//				prize = new /obj/item/weapon/zippo(src.loc)
-//				prize.name = "Burno Lighter"
-//				prize.desc = "Almost like a decent lighter!"
+			if(3)
+				prize = new /obj/item/clothing/under/syndicate/tacticool(src.loc)
 			if(4)
 				prize = new /obj/item/toy/sword(src.loc)
 			if(5)
@@ -152,6 +150,7 @@
 				prize = new /obj/item/toy/gun(src.loc)
 			if(6)
 				prize = new /obj/item/toy/crossbow(src.loc)
+
 
 	else if ((src.enemy_mp <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)

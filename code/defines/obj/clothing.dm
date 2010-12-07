@@ -983,7 +983,7 @@
 
 /obj/item/clothing/under/syndicate/tacticool
 	name = "Tacticool Turtleneck"
-	desc = "Non-descript, slightly suspicious civilian clothing. Wearing this makes you feel like buying an SKS, going into the woods, and operating."
+	desc = "Wearing this makes you feel like buying an SKS, going into the woods, and operating."
 	icon_state = "syndicate"
 	item_state = "bl_suit"
 	color = "syndicate"
