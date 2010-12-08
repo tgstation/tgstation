@@ -2521,10 +2521,15 @@
 					icon_state = "glass_clear"
 					name = "Moonshine"
 					desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
+				if("soymilk")
+					icon_state = "glass_white"
+					name = "Glass of soy milk"
+					desc = "White and nutritious soy goodness!"
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"
 					desc = "You can't really tell what this is."
+
 		else
 			icon_state = "glass_empty"
 			name = "Drinking glass"
