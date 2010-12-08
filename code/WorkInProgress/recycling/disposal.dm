@@ -815,10 +815,13 @@
 		var/obj/machinery/disposal/D = locate() in src.loc
 		if(D)
 			linked = D
+			if (!D.trunk)
+				D.trunk = src
 
 		var/obj/disposaloutlet/O = locate() in src.loc
 		if(O)
 			linked = O
+
 
 		update()
 		return
