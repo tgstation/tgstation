@@ -57,11 +57,11 @@ LATTICE
 			del(src)
 		return
 	if (istype(W, /obj/item/weapon/rods))
-		if (W:amount == 60)
+		if (W:amount == MAX_STACK_AMOUNT_RODS)
 			return
-		if (W:amount + src:amount > 60)
-			src.amount = W:amount + src:amount - 60
-			W:amount = 60
+		if (W:amount + src:amount > MAX_STACK_AMOUNT_RODS)
+			src.amount = W:amount + src:amount - MAX_STACK_AMOUNT_RODS
+			W:amount = MAX_STACK_AMOUNT_RODS
 		else
 			W:amount += src:amount
 			//SN src = null
@@ -125,11 +125,11 @@ LATTICE
 /obj/item/weapon/sheet/metal/attackby(obj/item/weapon/sheet/metal/W as obj, mob/user as mob)
 	if (!( istype(W, /obj/item/weapon/sheet/metal) ))
 		return
-	if (W.amount >= 50)
+	if (W.amount >= MAX_STACK_AMOUNT_METAL)
 		return
-	if (W.amount + src.amount > 50)
-		src.amount = W.amount + src.amount - 50
-		W.amount = 50
+	if (W.amount + src.amount > MAX_STACK_AMOUNT_METAL)
+		src.amount = W.amount + src.amount - MAX_STACK_AMOUNT_METAL
+		W.amount = MAX_STACK_AMOUNT_METAL
 	else
 		W.amount += src.amount
 		//SN src = null
@@ -348,11 +348,11 @@ LATTICE
 /obj/item/weapon/sheet/r_metal/attackby(obj/item/weapon/sheet/r_metal/W as obj, mob/user as mob)
 	if (!( istype(W, /obj/item/weapon/sheet/r_metal) ))
 		return
-	if (W.amount >= 50)
+	if (W.amount >= MAX_STACK_AMOUNT_METAL)
 		return
-	if (W.amount + src.amount > 50)
-		src.amount = W.amount + src.amount - 50
-		W.amount = 50
+	if (W.amount + src.amount > MAX_STACK_AMOUNT_METAL)
+		src.amount = W.amount + src.amount - MAX_STACK_AMOUNT_METAL
+		W.amount = MAX_STACK_AMOUNT_METAL
 	else
 		W.amount += src.amount
 		//SN src = null

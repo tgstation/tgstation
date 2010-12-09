@@ -30,11 +30,11 @@ SHARDS
 /obj/item/weapon/sheet/glass/attackby(obj/item/weapon/W, mob/user)
 	if ( istype(W, /obj/item/weapon/sheet/glass) )
 		var/obj/item/weapon/sheet/glass/G = W
-		if (G.amount >= 50)
+		if (G.amount >= MAX_STACK_AMOUNT_GLASS)
 			return
-		if (G.amount + src.amount > 50)
-			src.amount = G.amount + src.amount - 50
-			G.amount = 50
+		if (G.amount + src.amount > MAX_STACK_AMOUNT_GLASS)
+			src.amount = G.amount + src.amount - MAX_STACK_AMOUNT_GLASS
+			G.amount = MAX_STACK_AMOUNT_GLASS
 		else
 			G.amount += src.amount
 			//SN src = null
@@ -152,11 +152,11 @@ SHARDS
 /obj/item/weapon/sheet/rglass/attackby(obj/item/weapon/sheet/rglass/W as obj, mob/user as mob)
 	if (!( istype(W, /obj/item/weapon/sheet/rglass) ))
 		return
-	if (W.amount >= 50)
+	if (W.amount >= MAX_STACK_AMOUNT_GLASS)
 		return
-	if (W.amount + src.amount > 50)
-		src.amount = W.amount + src.amount - 50
-		W.amount = 50
+	if (W.amount + src.amount > MAX_STACK_AMOUNT_GLASS)
+		src.amount = W.amount + src.amount - MAX_STACK_AMOUNT_GLASS
+		W.amount = MAX_STACK_AMOUNT_GLASS
 	else
 		W.amount += src.amount
 		del(src)

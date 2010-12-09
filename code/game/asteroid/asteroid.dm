@@ -115,6 +115,35 @@ proc/spawn_room(var/atom/start_loc,var/x_size,var/y_size,var/wall,var/floor)
 	return room_turfs
 
 
+proc/admin_spawn_room_at_pos()
+	var/wall
+	var/floor
+	var/x = input("X position","X pos",1)
+	var/y = input("Y position","Y pos",1)
+	var/z = input("Z position","Z pos",1)
+	var/x_len = input("Desired length.","Length",5)
+	var/y_len = input("Desired width.","Width",5)
+	switch(alert("Wall type",null,"Reinforced wall","Regular wall","Asteroid wall","Resin wall"))
+		if("Reinforced wall")
+			wall=/turf/simulated/wall/r_wall
+		if("Regular wall")
+			wall=/turf/simulated/wall
+		if("Asteroid wall")
+			wall=/turf/simulated/wall/asteroid
+		if("Resin wall")
+			wall=/obj/alien/resin
+	switch(alert("Floor type",null,"Regular floor","Reinforced floor"))
+		if("Regular floor")
+			floor=/turf/simulated/floor
+		if("Reinforced floor")
+			floor=/turf/simulated/floor/engine
+	if(x && y && z && wall && floor && x_len && y_len)
+		spawn_room(locate(x,y,z),x_len,y_len,wall,floor)
+	return
+
+
+
+
 var/global/max_secret_rooms = 3
 
 

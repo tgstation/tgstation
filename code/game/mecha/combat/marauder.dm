@@ -11,13 +11,15 @@
 	var/smoke_ready = 1
 	var/smoke_cooldown = 100
 	var/datum/effects/system/harmless_smoke_spread/smoke_system = new
+	operation_req_access = list(access_heads)
+
 
 
 /obj/mecha/combat/marauder/New()
 	..()
-	weapon_1 = new /datum/mecha_weapon/pulse(src)
-	weapon_2 = new /datum/mecha_weapon/missile_rack(src)
-	selected_weapon = weapon_1
+	weapons += new /datum/mecha_weapon/pulse(src)
+	weapons += new /datum/mecha_weapon/missile_rack(src)
+	selected_weapon = weapons[1]
 	src.smoke_system.set_up(3, 0, src)
 	src.smoke_system.attach(src)
 	return
@@ -77,23 +79,23 @@
 
 /obj/mecha/combat/marauder/get_stats_part()
 	var/output = ..()
-	output += {"<b>Weapon systems:</b>
-					<div style="margin-left: 15px;">
-					[selected_weapon==weapon_1?"<b>":""][weapon_1.name][selected_weapon==weapon_1?"</b>":""]
-					</div>
-					<div style="margin-left: 15px;">
-					[selected_weapon==weapon_2?"<b>":""][weapon_2.name] ([weapon_2:missiles])[selected_weapon==weapon_2?"</b>":""]
-					</div>
-					<b>Smoke:</b> [smoke]
+	output += "<b>Weapon systems:</b><div style=\"margin-left: 15px;\">"
+	if(weapons.len)
+		for(var/datum/mecha_weapon/W in weapons)
+			output += "[selected_weapon==W?"<b>":"<a href='?src=\ref[src];select_weapon=\ref[W]'>"][W][istype(W, /datum/mecha_weapon/missile_rack)?" - [W:missiles]":null][selected_weapon==W?"</b>":"</a>"]<br>"
+	else
+		output += "None"
+	output += "</div>"
+	output += {"<b>Smoke:</b> [smoke]
 					<br>
 					<b>Thrusters:</b> [thrusters?"on":"off"]
-				"}
+					"}
 	return output
 
 
 /obj/mecha/combat/marauder/get_commands()
 	var/output = ..()
-	var/datum/mecha_weapon/missile_rack/MR = weapon_2
+	var/datum/mecha_weapon/missile_rack/MR = weapons[2]
 	output += {"<a href='?src=\ref[src];toggle_thrusters=1'>Toggle thrusters</a><br>
 					<a href='?src=\ref[src];smoke=1'>Smoke</a><br>
 					[(MR.missiles < initial(MR.missiles))?"<a href='?src=\ref[src];rearm_srm=1'>Rearm missile rack</a><br>":null]
@@ -109,6 +111,6 @@
 		src.smoke()
 		return
 	if (href_list["rearm_srm"])
-		var/datum/mecha_weapon/missile_rack/MR = weapon_2
+		var/datum/mecha_weapon/missile_rack/MR = weapons[2]
 		MR.rearm()
 	return

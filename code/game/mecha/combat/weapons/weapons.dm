@@ -3,7 +3,7 @@
 	var/weapon_cooldown = 0
 	var/weapon_ready = 1
 	var/energy_drain = 0
-	var/obj/mecha/chassis = null
+	var/obj/mecha/combat/chassis = null
 
 
 /datum/mecha_weapon/New(mecha)
@@ -83,7 +83,7 @@
 		if (targloc == curloc)
 			return
 
-		playsound(src, 'Laser.ogg', 50, 1)
+		playsound(chassis, 'Laser.ogg', 50, 1)
 		var/obj/beam/a_laser/A = new /obj/beam/a_laser(curloc)
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
@@ -114,7 +114,7 @@
 		if (targloc == curloc)
 			return
 
-		playsound(src, 'Laser.ogg', 50, 1)
+		playsound(chassis, 'Laser.ogg', 50, 1)
 		var/obj/beam/a_laser/A = new /obj/beam/a_laser/pulse_laser(curloc)
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
@@ -127,3 +127,33 @@
 			weapon_ready = 1
 
 		return
+
+/*
+/datum/mecha_weapon/scattershot
+	name = "Scuttershot"
+	var/missiles = 8
+	var/missile_speed = 2
+	var/missile_range = 30
+	var/missile_energy_cost = 1000
+	weapon_cooldown = 60
+
+	fire(target)
+		if(!..() || missiles <=0) return
+		var/obj/item/missile/M = new /obj/item/missile(chassis.loc)
+		M.primed = 1
+		M.throw_at(target, missile_range, missile_speed)
+		weapon_ready = 0
+		missiles--
+		spawn(weapon_cooldown)
+			weapon_ready = 1
+		return
+
+	proc/rearm()
+		if(missiles < initial(missiles))
+			var/missiles_to_add = initial(missiles) - missiles
+			while(chassis.cell.charge >= missile_energy_cost && missiles_to_add)
+				missiles++
+				missiles_to_add--
+				chassis.cell.charge -= missile_energy_cost
+		return
+*/

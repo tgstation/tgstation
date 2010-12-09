@@ -359,7 +359,7 @@
 	if((C.toxloss >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_tox)))
 		return 1
 
-	if(C.virus && ((C.virus.stage > 1) || (C.virus.spread == "Airborne")))
+	if(C.virus && ((C.virus.stage > 1) || (C.virus.spread_type == AIRBORNE)))
 		if (!C.reagents.has_reagent(src.treatment_virus))
 			return 1 //STOP DISEASE FOREVER
 

@@ -213,6 +213,11 @@ FLASHBANG
 		if(istype(A, /obj/machinery/clonepod))
 			A:malfunction()
 
+	for(var/obj/mecha/M in range(world.view-1, T))
+		M.cell.charge = 0
+		M.health -= 100
+		M.update_health()
+
 	del(grenade)
 
 	return

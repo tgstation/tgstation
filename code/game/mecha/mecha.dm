@@ -5,12 +5,13 @@
 	density = 1 //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
 	anchored = 1 //no pulling around.
+	layer = MOB_LAYER
 	var/can_move = 1
 	var/mob/living/carbon/human/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/step_energy_drain = 10
 	var/health = 300 //health is health
-	var/deflect_chance = 5 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
+	var/deflect_chance = 2 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	var/obj/item/weapon/cell/cell = new
 	var/state = 0
 	var/update_stats = null //used to auto-update stats window
@@ -26,10 +27,11 @@
 	var/filled = 0.5
 	var/gas_tank_volume = 500
 	var/maximum_pressure = 30*ONE_ATMOSPHERE
-
-	req_access = access_engine
 	var/operating_access = null
 	var/max_temperature = 2500
+
+	var/list/operation_req_access = list(access_engine)//required access level for mecha operation
+	var/list/internals_req_access = list(access_engine)//required access level to open cell compartment
 
 /obj/mecha/New()
 	..()
@@ -68,10 +70,10 @@
 	return
 
 
-/obj/mecha/proc/melee_action(target)
+/obj/mecha/proc/melee_action(atom/target)
 	return
 
-/obj/mecha/proc/range_action(target)
+/obj/mecha/proc/range_action(atom/target)
 	return
 
 //////////////////////////////////
@@ -140,6 +142,16 @@
 ////////  Health related procs  ////////
 ////////////////////////////////////////
 
+/obj/mecha/proc/take_damage(amount, type="brute")
+	switch(type)
+		if("brute")
+			src.health -= amount
+		if("fire")
+			src.health -= amount*1.5
+	src.update_health()
+	return
+
+
 /obj/mecha/proc/update_health()
 	if(src.health > 0)
 		src.spark_system.start()
@@ -149,8 +161,7 @@
 
 /obj/mecha/attack_hand(mob/user as mob)
 	if (user.mutations & 8 && !prob(src.deflect_chance))
-		src.health -= 15
-		src.update_health()
+		src.take_damage(15)
 		user << "\red You hit [src.name] with all your might. The metal creaks and bends."
 		for (var/mob/V in viewers(src))
 			if(V.client && V != user && !(V.blinded))
@@ -164,6 +175,15 @@
 
 /obj/mecha/attack_paw(mob/user as mob)
 	return src.attack_hand()
+
+
+/obj/mecha/attack_alien(mob/user as mob)
+	if(!prob(src.deflect_chance))
+		src.take_damage(10)
+	//TODO: Add text
+	else
+		user << "No effect"
+	return
 
 
 /obj/mecha/hitby(A as mob|obj)
@@ -182,8 +202,7 @@
 	else if(istype(A, /obj))
 		var/obj/O = A
 		if(O.throwforce)
-			src.health -= O.throwforce
-			src.update_health()
+			src.take_damage(O.throwforce)
 		return
 
 
@@ -195,14 +214,15 @@
 			if(V.client && !(V.blinded))
 				V.show_message("The [src.name] armor deflects the projectile", 1)
 	else
+		var/damage
 		switch(flag)
 			if(PROJECTILE_PULSE)
-				src.health -= 40
+				damage = 40
 			if(PROJECTILE_LASER)
-				src.health -= 20
+				damage = 20
 			else
-				src.health -= 10
-		src.update_health()
+				damage = 10
+		src.take_damage(damage)
 	return
 
 /obj/mecha/proc/destroy()
@@ -229,15 +249,13 @@
 			if (prob(30))
 				destroy(src)
 			else
-				src.health = src.health/2
-				src.spark_system.start()
+				src.take_damage(src.health/2)
 			return
 		if(3.0)
 			if (prob(5))
 				destroy(src)
 			else
-				src.health = src.health - src.health/4
-				src.spark_system.start()
+				src.take_damage(src.health/4)
 			return
 
 /obj/mecha/proc/check_location_temp()
@@ -246,8 +264,7 @@
 			var/turf/simulated/T = src.loc
 			if(T.air)
 				if(T.air.temperature > src.max_temperature)
-					src.health -= 10
-					src.update_health()
+					src.take_damage(10)
 		sleep(10)
 	return
 
@@ -381,6 +398,9 @@
 		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
 */
+	if(!src.operation_allowed(usr))
+		usr << "\red Access denied"
+		return
 	usr << "You start climbing into [src.name]"
 	spawn(20)
 		if(usr in range(1))
@@ -428,9 +448,55 @@
 
 ////// Misc
 
+/obj/mecha/proc/operation_allowed(mob/living/carbon/human/H)
+	//check if it doesn't require any access at all
+	if(src.check_operational_access(null))
+		return 1
+	if(src.check_operational_access(H.equipped()) || src.check_operational_access(H.wear_id))
+		return 1
+	return 0
+
+
+/obj/mecha/proc/internals_access_allowed(mob/living/carbon/human/H)
+	//check if it doesn't require any access at all
+	if(src.check_internals_access(null))
+		return 1
+	if(src.check_internals_access(H.equipped()) || src.check_internals_access(H.wear_id))
+		return 1
+	return 0
+
+
+/obj/mecha/proc/check_operational_access(obj/item/weapon/card/id/I)
+	if(!istype(operation_req_access, /list)) //something's very wrong
+		return 1
+//	var/list/L = src.operation_req_access
+	if(!operation_req_access.len) //no requirements
+		return 1
+	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
+		return 0
+	for(var/req in src.operation_req_access)
+		if(!(req in I.access)) //doesn't have this access
+			return 0
+	return 1
+
+/obj/mecha/proc/check_internals_access(obj/item/weapon/card/id/I)
+	if(!istype(src.internals_req_access, /list)) //something's very wrong
+		return 1
+
+//	var/list/L = src.internals_req_access
+	if(!internals_req_access.len) //no requirements
+		return 1
+	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
+		return 0
+	for(var/req in src.internals_req_access)
+		if(!(req in I.access)) //doesn't have this access
+			return 0
+	return 1
+
+
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id))
-		if(src.allowed(usr))
+		if(src.internals_access_allowed(usr))
 			if(state==0)
 				state = 1
 				user << "The securing bolts are now exposed."
@@ -481,6 +547,17 @@
 				user << "There's already a powercell installed."
 		return
 
+	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+		if (W:get_fuel() < 2)
+			user << "\blue You need more welding fuel to complete this task."
+			return
+		if(src.health>=initial(src.health))
+			user << "\blue The [src.name] is at full integrity."
+			return
+		W:use_fuel(1)
+		src.health += 20
+		return
+
 	else
 		..()
 		if(prob(src.deflect_chance))
@@ -491,11 +568,7 @@
 					V.show_message("The [W] bounces off [src.name] armor.", 1)
 */
 		else
-			if(W.damtype == "brute")
-				src.health -= W.force
-			else if(W.damtype == "fire")
-				src.health -= W.force*1.5
-			src.update_health()
+			src.take_damage(W.force,W.damtype)
 	return
 
 

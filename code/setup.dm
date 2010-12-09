@@ -136,6 +136,11 @@
 
 #define ENGINE_EJECT_Z 3
 
+//metal, glass, rod stacks
+#define MAX_STACK_AMOUNT_METAL 50
+#define MAX_STACK_AMOUNT_GLASS 50
+#define MAX_STACK_AMOUNT_RODS 60
+
 var/const
 	GAS_O2 = 1 << 0
 	GAS_N2 = 1 << 1

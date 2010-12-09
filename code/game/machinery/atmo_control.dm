@@ -203,7 +203,7 @@ obj/machinery/computer/general_air_control
 
 			output += "<B>Tank Control System</B><BR>"
 			if(input_info)
-				var/power = (input_info["power"] == "on")
+				var/power = (input_info["power"])
 				var/volume_rate = input_info["volume_rate"]
 				output += {"<B>Input</B>: [power?("Injecting"):("On Hold")] <A href='?src=\ref[src];in_refresh_status=1'>Refresh</A><BR>
 Rate: [volume_rate] L/sec<BR>"}
