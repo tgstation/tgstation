@@ -1,6 +1,6 @@
-/client/proc/invisibility()
+/client/proc/jaunt()
 	set category = "Spells"
-	set name = "Invisibility"
+	set name = "Ethereal Jaunt"
 	if(usr.stat)
 		usr << "Not when you're incapicated."
 		return
@@ -14,19 +14,19 @@
 		usr << "I don't feel strong enough without my hat."
 		return
 
-	usr.verbs -= /client/proc/invisibility
+	usr.verbs -= /client/proc/jaunt
 	spawn(300)
-		usr.verbs += /client/proc/invisibility
+		usr.verbs += /client/proc/jaunt
 
-	spell_invisibility(usr)
+	spell_jaunt(usr)
 
 
 
-/proc/spell_invisibility(var/mob/H, time = 50)
+/proc/spell_jaunt(var/mob/H, time = 50)
 	if(H.stat) return
 	spawn(0)
 		var/mobloc = get_turf(H.loc)
-		var/obj/dummy/spell_invis/holder = new /obj/dummy/spell_invis( mobloc )
+		var/obj/dummy/spell_jaunt/holder = new /obj/dummy/spell_jaunt( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 		animation.name = "water"
 		animation.density = 0
@@ -56,16 +56,15 @@
 		del(animation)
 		del(holder)
 
-/obj/dummy/spell_invis
+/obj/dummy/spell_jaunt
 	name = "water"
 	icon = 'effects.dmi'
 	icon_state = "nothing"
-	invisibility = 101
 	var/canmove = 1
 	density = 0
 	anchored = 1
 
-/obj/dummy/spell_invis/relaymove(var/mob/user, direction)
+/obj/dummy/spell_jaunt/relaymove(var/mob/user, direction)
 	if (!src.canmove) return
 	switch(direction)
 		if(NORTH)
@@ -91,7 +90,7 @@
 	src.canmove = 0
 	spawn(2) src.canmove = 1
 
-/obj/dummy/spell_invis/ex_act(blah)
+/obj/dummy/spell_jaunt/ex_act(blah)
 	return
-/obj/dummy/spell_invis/bullet_act(blah,blah)
+/obj/dummy/spell_jaunt/bullet_act(blah,blah)
 	return

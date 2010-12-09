@@ -14,8 +14,8 @@ obj/item/toy/blink
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
 	desc = "There are 7 caps left!"
-	icon = 'ammo.dmi'
-	icon_state = "357-7"
+	icon = 'toy.dmi'
+	icon_state = "caps-7"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = 1.0
 	var/amount_left = 7.0
@@ -45,8 +45,8 @@ obj/item/toy/blink
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "There are 0 caps left. Looks just like the real thing!"
-	icon = 'gun.dmi'
-	icon_state = "revolver"
+	icon = 'toy.dmi'
+	icon_state = "capgun"
 	item_state = "gun"
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY
 	w_class = 3.0
@@ -98,7 +98,7 @@ obj/item/toy/blink
 /obj/item/toy/sword
 	name = "toy sword"
 	desc = "a cheap plastic replica of an energy sword."
-	icon = 'weapons.dmi'
+	icon = 'toy.dmi'
 	icon_state = "sword0"
 	var/active = 0.0
 	w_class = 2.0
@@ -120,8 +120,8 @@ obj/item/toy/blink
 /obj/item/toy/crossbow
 	name = "foam dart crossbow"
 	desc = "A weapon favored by many overactive children."
-	icon = 'gun.dmi'
-	icon_state = "crossbow"
+	icon = 'toy.dmi'
+	icon_state = "foamcrossbow"
 	item_state = "crossbow"
 	flags = FPRINT | TABLEPASS | USEDELAY
 	w_class = 2.0

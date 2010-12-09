@@ -152,7 +152,7 @@
 /datum/game_mode/wizard/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
 	if (!istype(wizard_mob))
 		return
-	wizard_mob.verbs += /client/proc/invisibility
+	wizard_mob.verbs += /client/proc/jaunt
 	if (wizard_mob.mind.assigned_role == "Clown")
 		wizard_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 		wizard_mob.mutations &= ~16
@@ -351,7 +351,7 @@
 			dat += "<A href='byond://?src=\ref[src];spell_blink=1'>Blink</A> (2)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A> (30)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_mutate=1'>Mutate</A> (60)<BR>"
-			dat += "<A href='byond://?src=\ref[src];spell_invis=1'>Invisibility</A> (60)<BR>"
+			dat += "<A href='byond://?src=\ref[src];spell_jaunt=1'>Ethereal Jaunt</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_knock=1'>Knock</A> (10)<BR>"
 			dat += "<HR>"
 			if (src.origradio)
@@ -421,10 +421,10 @@
 				src.uses -= 1
 				usr.verbs += /client/proc/mutate
 				src.temp = "This spell causes you to turn into a hulk, and gain telekinesis for a short while."
-		else if (href_list["spell_invis"])
+		else if (href_list["spell_jaunt"])
 			if (src.uses >= 1)
 				src.uses -= 1
-				usr.verbs += /client/proc/invisibility
+				usr.verbs += /client/proc/jaunt
 				src.temp = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
 		else if (href_list["spell_knock"])
 			if (src.uses >= 1)
@@ -498,7 +498,7 @@
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=blink'>Blink</A> (2)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=teleport'>Teleport</A> (30)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=mutate'>Mutate</A> (60)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=invis'>Invisibility</A> (60)<BR>"
+	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=jaunt'>Ethereal Jaunt</A> (60)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=knock'>Knock</A> (10)<BR>"
 	src.menu_message += "<HR>"
 	return
@@ -562,10 +562,10 @@
 					src.uses -= 1
 					usr.verbs += /client/proc/mutate
 					src.temp = "This spell causes you to turn into a hulk, and gain telekinesis for a short while."
-			if("invis")
+			if("jaunt")
 				if (src.uses >= 1)
 					src.uses -= 1
-					usr.verbs += /client/proc/invisibility
+					usr.verbs += /client/proc/jaunt
 					src.temp = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
 			if("knock")
 				if (src.uses >= 1)

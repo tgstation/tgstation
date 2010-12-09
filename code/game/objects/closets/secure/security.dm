@@ -3,8 +3,8 @@
 	sleep(2)
 	//new /obj/item/weapon/storage/flashbang_kit(src)
 	// Seriously gimping the number of flashes security get, will probably change later -- TLE
+	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/weapon/flashbang(src)
-//	new /obj/item/weapon/shield/riot(src)
 	new /obj/item/weapon/handcuffs(src)
 	new /obj/item/weapon/gun/energy/taser_gun(src)
 	new /obj/item/device/flash(src)
@@ -23,6 +23,7 @@
 /obj/secure_closet/security2/New()
 	..()
 	sleep(2)
+	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/clothing/under/det( src )
 	new /obj/item/clothing/shoes/brown( src )
 	new /obj/item/clothing/head/det_hat( src )

@@ -32,6 +32,23 @@
 	new /obj/item/clothing/mask/medical( src )
 	return
 
+/obj/secure_closet/medical3/New()
+	..()
+	sleep(2)
+	new /obj/item/device/radio/headset/headset_med( src )
+	new /obj/item/device/radio/headset/headset_med( src )
+	new /obj/item/device/radio/headset/headset_med( src )
+	new /obj/item/clothing/under/rank/medical( src )
+	new /obj/item/clothing/under/rank/medical( src )
+	new /obj/item/clothing/under/rank/medical( src )
+	new /obj/item/clothing/suit/labcoat( src )
+	new /obj/item/clothing/suit/labcoat( src )
+	new /obj/item/clothing/suit/labcoat( src )
+	new /obj/item/clothing/mask/medical( src )
+	new /obj/item/clothing/mask/medical( src )
+	new /obj/item/clothing/mask/medical( src )
+	return
+
 /obj/secure_closet/CMO/New()
 	..()
 	sleep(2)
