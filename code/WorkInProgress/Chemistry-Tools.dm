@@ -1761,6 +1761,15 @@
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/syndicake
+	name = "Syndi-Cakes"
+	icon_state = "syndi_cakes"
+	desc = "An extremely moist snack cake that tastes just as good after being nuked."
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/tofubread
 	name = "Tofubread"
 	icon_state = "Like meatbread but for vegans. Not guaranteed to give superpowers."
