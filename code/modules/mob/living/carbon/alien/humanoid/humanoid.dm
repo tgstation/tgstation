@@ -94,6 +94,10 @@ to clean it up, or just beat the shit out of it (which takes ages).
 			src.now_pushing = 1
 			if (!AM.anchored)
 				var/t = get_dir(src, AM)
+				if (istype(AM, /obj/window))
+					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+						for(var/obj/window/win in get_step(AM,t))
+							return
 				step(AM, t)
 			src.now_pushing = null
 		return
@@ -422,6 +426,11 @@ to clean it up, or just beat the shit out of it (which takes ages).
 						step(src.pulling, get_dir(src.pulling.loc, T))
 						M.pulling = t
 				else
+					if (src.pulling)
+						if (istype(src.pulling, /obj/window))
+							if(src.pulling:ini_dir == NORTHWEST || src.pulling:ini_dir == NORTHEAST || src.pulling:ini_dir == SOUTHWEST || src.pulling:ini_dir == SOUTHEAST)
+								for(var/obj/window/win in get_step(src.pulling,get_dir(src.pulling.loc, T)))
+									src.pulling = null
 					if (src.pulling)
 						step(src.pulling, get_dir(src.pulling.loc, T))
 	else

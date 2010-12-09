@@ -89,19 +89,31 @@ SHARDS
 		return
 	switch(alert("Sheet-Glass", "Would you like full tile glass or one direction?", "one direct", "full (2 sheets)", "cancel", null))
 		if("one direct")
-			var/obj/window/W = new /obj/window( usr.loc )
-			W.anchored = 0
-			if (src.amount < 1)
-				return
-			src.amount--
+			var/go = 1
+			for (var/obj/window/win in usr.loc)
+				if(win.ini_dir == NORTHWEST || win.ini_dir == NORTHEAST || win.ini_dir == SOUTHWEST || win.ini_dir == SOUTHEAST)
+					go = 0
+			if(go)
+				var/obj/window/W = new /obj/window( usr.loc )
+				W.anchored = 0
+				if (src.amount < 1)
+					return
+				src.amount--
+			else usr << "Can't let you do that."
 		if("full (2 sheets)")
-			if (src.amount < 2)
-				return
-			src.amount -= 2
-			var/obj/window/W = new /obj/window( usr.loc )
-			W.dir = SOUTHWEST
-			W.ini_dir = SOUTHWEST
-			W.anchored = 0
+			var/go = 1
+			for (var/obj/window/win in usr.loc)
+				if(win)
+					go = 0
+			if (go)
+				if (src.amount < 2)
+					return
+				src.amount -= 2
+				var/obj/window/W = new /obj/window( usr.loc )
+				W.dir = SOUTHWEST
+				W.ini_dir = SOUTHWEST
+				W.anchored = 0
+			else usr << "Can't let you do that."
 		else
 	if (src.amount <= 0)
 		user.u_equip(src)
@@ -166,21 +178,33 @@ SHARDS
 		return
 	switch(alert("Sheet Reinf. Glass", "Would you like full tile glass or one direction?", "one direct", "full (2 sheets)", "cancel", null))
 		if("one direct")
-			var/obj/window/W = new /obj/window( usr.loc, 1 )
-			W.anchored = 0
-			W.state = 0
-			if (src.amount < 1)
-				return
-			src.amount--
+			var/go = 1
+			for (var/obj/window/win in usr.loc)
+				if(win.ini_dir == NORTHWEST || win.ini_dir == NORTHEAST || win.ini_dir == SOUTHWEST || win.ini_dir == SOUTHEAST)
+					go = 0
+			if(go)
+				var/obj/window/W = new /obj/window( usr.loc, 1 )
+				W.anchored = 0
+				W.state = 0
+				if (src.amount < 1)
+					return
+				src.amount--
+			else usr << "Can't let you do that."
 		if("full (2 sheets)")
-			if (src.amount < 2)
-				return
-			src.amount -= 2
-			var/obj/window/W = new /obj/window( usr.loc, 1 )
-			W.dir = SOUTHWEST
-			W.ini_dir = SOUTHWEST
-			W.anchored = 0
-			W.state = 0
+			var/go = 1
+			for (var/obj/window/win in usr.loc)
+				if(win)
+					go = 0
+			if(go)
+				if (src.amount < 2)
+					return
+				src.amount -= 2
+				var/obj/window/W = new /obj/window( usr.loc, 1 )
+				W.dir = SOUTHWEST
+				W.ini_dir = SOUTHWEST
+				W.anchored = 0
+				W.state = 0
+			else usr << "Can't let you do that."
 		else
 	if (src.amount <= 0)
 		user.u_equip(src)
