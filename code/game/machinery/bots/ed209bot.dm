@@ -789,14 +789,14 @@ Auto Patrol: []"},
 	else if (istype(W, /obj/item/device/prox_sensor) && (src.build_step == 5))
 		src.build_step++
 		user << "You add the prox sensor to [src]!"
-		src.name = "prox/covered and armed frame assembly"
+		src.name = "prox/covered and armed the frame assembly"
 		src.item_state = "ed209_prox"
 		src.icon_state = "ed209_prox"
 		del(W)
 	else if(istype(W, /obj/item/weapon/cable_coil) && (src.build_step == 6) )
 		var/obj/item/weapon/cable_coil/coil = W
 		var/turf/T = get_turf(user)
-		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
+		user.visible_message("[user] wires killbot.", "You start to wire the killbot.")
 		sleep(40)
 		if(get_turf(user) == T)
 			coil.use(1)
