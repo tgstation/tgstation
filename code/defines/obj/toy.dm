@@ -6,7 +6,7 @@
 
 obj/item/toy/blink
 	name = "electronic blink toy game"
-	desc = "Blink.  Blink.  Blink."
+	desc = "Blink.  Blink.  Blink. Ages 8 and up."
 	icon = 'device.dmi'
 	icon_state = "beacon"
 	item_state = "signaler"
@@ -28,7 +28,7 @@ obj/item/toy/blink
 
 /obj/item/toy/ammo/crossbow
 	name = "foam dart"
-	desc = "its nerf or nothing!"
+	desc = "Its nerf or nothing! Ages 8 and up."
 	icon = 'toy.dmi'
 	icon_state = "foamdart"
 	flags = FPRINT | TABLEPASS
@@ -44,7 +44,7 @@ obj/item/toy/blink
 
 /obj/item/toy/gun
 	name = "cap gun"
-	desc = "There are 0 caps left. Looks just like the real thing!"
+	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up."
 	icon = 'toy.dmi'
 	icon_state = "capgun"
 	item_state = "gun"
@@ -55,7 +55,7 @@ obj/item/toy/blink
 	examine()
 		set src in usr
 
-		src.desc = text("There are [] caps\s left. Looks just like the real thing!", src.bullets)
+		src.desc = text("There are [] caps\s left. Looks almost like the real thing! Ages 8 and up.", src.bullets)
 		..()
 		return
 
@@ -97,9 +97,10 @@ obj/item/toy/blink
 
 /obj/item/toy/sword
 	name = "toy sword"
-	desc = "a cheap plastic replica of an energy sword."
+	desc = "A cheap, plastic replica of an energy sword. Ages 8 and up."
 	icon = 'toy.dmi'
-	icon_state = "sword0"
+	icon_state = "toysword0"
+	item_state = "toysword0"
 	var/active = 0.0
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
@@ -119,10 +120,10 @@ obj/item/toy/blink
 
 /obj/item/toy/crossbow
 	name = "foam dart crossbow"
-	desc = "A weapon favored by many overactive children."
+	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon = 'toy.dmi'
 	icon_state = "foamcrossbow"
-	item_state = "crossbow"
+	item_state = "foamcrossbow"
 	flags = FPRINT | TABLEPASS | USEDELAY
 	w_class = 2.0
 	var/bullets = 5
