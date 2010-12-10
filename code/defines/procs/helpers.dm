@@ -542,7 +542,7 @@
 		var/name = A.real_name
 		if (A.stat == 2)
 			continue
-		if (A.connected_ai == 1)
+		if (A.connected_ai)
 			continue
 		else
 			if(A.module)
