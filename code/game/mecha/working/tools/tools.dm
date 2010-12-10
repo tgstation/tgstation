@@ -56,15 +56,15 @@
 			if(!O.anchored)
 				if(chassis.cargo.len < chassis.cargo_capacity)
 					chassis.occupant << "You lift [target] and start to load it into cargo compartment."
-					chassis.visible_message("[chassis] lifts [target] and start to load it into cargo compartment.")
+					chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
 					tool_ready = 0
 					chassis.cell.use(energy_drain)
 					O.anchored = 1
 					var/T = chassis.loc
 					spawn(tool_cooldown)
 						if(T == chassis.loc && src == chassis.selected_tool)
-							O.loc = chassis
 							chassis.cargo += O
+							O.loc = chassis
 							O.anchored = 0
 							chassis.occupant << "\blue [target] succesfully loaded."
 						else
@@ -105,8 +105,8 @@
 		if(!..()) return
 		tool_ready = 0
 		chassis.cell.use(energy_drain)
-		chassis.visible_message("\red [chassis] starts to drill [target]", "You hear the drill.")
-		chassis.occupant << "\red You start to drill [target]"
+		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]</b></font>", "You hear the drill.")
+		chassis.occupant << "<font color='red'><b>You start to drill [target]</b></font>"
 		var/T = chassis.loc
 		spawn(tool_cooldown)
 			if(T == chassis.loc && src == chassis.selected_tool)

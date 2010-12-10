@@ -11,14 +11,13 @@
 	internals_req_access = list(access_engine)
 
 
-/obj/mecha/working/melee_action(atom/target)
+/obj/mecha/working/melee_action(atom/target as obj|mob|turf)
 	if(selected_tool)
 		selected_tool.action(target)
 	return
 
-/obj/mecha/working/range_action(atom/target)
+/obj/mecha/working/range_action(atom/target as obj|mob|turf)
 	return
-
 
 /obj/mecha/working/Topic(href, href_list)
 	..()

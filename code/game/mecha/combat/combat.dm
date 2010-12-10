@@ -170,8 +170,8 @@
 		if(usr in range(1))
 			usr.pulling = null
 	//		usr.client.eye = src
-			usr.loc = src
 			src.occupant = usr
+			usr.loc = src
 			src.add_fingerprint(usr)
 			if(usr.client)
 				usr.client.mouse_pointer_icon = file("icons/misc/mecha_mouse.dmi")

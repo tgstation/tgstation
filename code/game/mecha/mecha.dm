@@ -53,13 +53,15 @@
 	..()
 	var/mob/M = src.mob
 	if(M && istype(M.loc, /obj/mecha))
+		if(!location) return
 		if(M.stat>0) return
 		if(!istype(object,/atom)) return
 		var/obj/mecha/Mech = M.loc
 		Mech.click_action(object)
 
 
-/obj/mecha/proc/click_action(target)
+/obj/mecha/proc/click_action(atom/target)
+	if(!istype(target,/turf) && !istype(target.loc,/turf)) return
 	if(!src.occupant) return
 	if(state || !cell || cell.charge<=0) return
 	if(src == target) return
@@ -406,8 +408,8 @@
 		if(usr in range(1))
 			usr.pulling = null
 	//		usr.client.eye = src
-			usr.loc = src
 			src.occupant = usr
+			usr.loc = src
 			src.add_fingerprint(usr)
 	return
 
@@ -623,7 +625,6 @@
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
-
 
 
 
