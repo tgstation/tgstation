@@ -1872,7 +1872,9 @@
 //		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 
-/mob/proc/gib(give_medal)
+//This is the proc for gibbing a mob. Cannot gib ghosts. Removed the medal reference,
+//added different sort of gibs and animations. N
+/mob/proc/gib()
 
 	if (istype(src, /mob/dead/observer))
 		var/virus = src.virus
@@ -1884,12 +1886,19 @@
 	src.canmove = 0
 	src.icon = null
 	src.invisibility = 101
+
+	animation = new(src.loc)
+	animation.icon_state = "blank"
+	animation.icon = 'mob.dmi'
+	animation.master = src
 	if(ishuman(src))
-		animation = new(src.loc)
-		animation.icon_state = "blank"
-		animation.icon = 'mob.dmi'
-		animation.master = src
-		flick("gibbed", animation)
+		flick("gibbed-h", animation)
+	else if(ismonkey(src))
+		flick("gibbed-m", animation)
+	else if(isalien(src))
+		flick("gibbed-a", animation)
+	else
+		flick("gibbed-r", animation)
 
 	if (src.client)
 		var/mob/dead/observer/newmob
@@ -1902,6 +1911,8 @@
 		var/virus = src.virus
 		if (istype(src, /mob/living/silicon))
 			robogibs(src.loc, virus)
+		else if (istype(src, /mob/living/carbon/alien))
+			xgibs(src.loc, virus)
 		else
 			gibs(src.loc, virus)
 
@@ -1909,12 +1920,53 @@
 		var/virus = src.virus
 		if (istype(src, /mob/living/silicon))
 			robogibs(src.loc, virus)
+		else if (istype(src, /mob/living/carbon/alien))
+			xgibs(src.loc, virus)
 		else
 			gibs(src.loc, virus)
 	//CRASH("Generating error messages to attempt to fix random gibbins.") //no longer necessary
 	sleep(15)
 	del(src)
 
+/*
+This is the proc for turning a mob into ash. Mostly a copy of gib code (above).
+Originally created for wizard disintegrate. I've removed the virus code since it's irrelevant here. N
+*/
+/mob/proc/dust()
+
+	if (istype(src, /mob/dead/observer))
+		return
+	src.death(1)
+	var/atom/movable/overlay/animation = null
+	src.monkeyizing = 1
+	src.canmove = 0
+	src.icon = null
+	src.invisibility = 101
+
+	animation = new(src.loc)
+	animation.icon_state = "blank"
+	animation.icon = 'mob.dmi'
+	animation.master = src
+	if(ishuman(src))
+		flick("dust-h", animation)
+	else if(ismonkey(src))
+		flick("dust-m", animation)
+	else if(isalien(src))
+		flick("dust-a", animation)
+	else
+		flick("dust-r", animation)
+	new /obj/decal/ash(src.loc)
+
+	if (src.client)
+		var/mob/dead/observer/newmob
+
+		newmob = new/mob/dead/observer(src)
+		src:client:mob = newmob
+		if (src.mind)
+			src.mind.transfer_to(newmob)
+
+	sleep(15)
+	del(src)
 
 /mob/proc/get_contents()
 	var/list/L = list()
@@ -1943,14 +1995,15 @@
 	return 0
 
 
-// adds a dizziness amount to a mob
-// use this rather than directly changing var/dizziness
-// since this ensures that the dizzy_process proc is started
-// currently only humans get dizzy
+/*
+adds a dizziness amount to a mob
+use this rather than directly changing var/dizziness
+since this ensures that the dizzy_process proc is started
+currently only humans get dizzy
 
-// value of dizziness ranges from 0 to 1000
-// below 100 is not dizzy
-
+value of dizziness ranges from 0 to 1000
+below 100 is not dizzy
+*/
 /mob/proc/make_dizzy(var/amount)
 	if(!istype(src, /mob/living/carbon/human)) // for the moment, only humans get dizzy
 		return
@@ -1962,9 +2015,11 @@
 			dizzy_process()
 
 
-// dizzy process - wiggles the client's pixel offset over time
-// spawned from make_dizzy(), will terminate automatically when dizziness gets <100
-// note dizziness decrements automatically in the mob's Life() proc.
+/*
+dizzy process - wiggles the client's pixel offset over time
+spawned from make_dizzy(), will terminate automatically when dizziness gets <100
+note dizziness decrements automatically in the mob's Life() proc.
+*/
 /mob/proc/dizzy_process()
 	is_dizzy = 1
 	while(dizziness > 100)

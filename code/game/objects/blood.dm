@@ -11,6 +11,8 @@
 	return
 */
 
+//Gibs.spread proc in gibs.dm
+
 /obj/decal/cleanable/blood/gibs/proc/streak(var/list/directions)
 	spawn (0)
 		var/direction = pick(directions)
@@ -18,6 +20,18 @@
 			sleep(3)
 			if (i > 0)
 				var/obj/decal/cleanable/blood/b = new /obj/decal/cleanable/blood/splatter(src.loc)
+				if (src.virus)
+					b.virus = src.virus
+			if (step_to(src, get_step(src, direction), 0))
+				break
+
+/obj/decal/cleanable/xenoblood/xgibs/proc/streak(var/list/directions)
+	spawn (0)
+		var/direction = pick(directions)
+		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
+			sleep(3)
+			if (i > 0)
+				var/obj/decal/cleanable/xenoblood/b = new /obj/decal/cleanable/xenoblood/xsplatter(src.loc)
 				if (src.virus)
 					b.virus = src.virus
 			if (step_to(src, get_step(src, direction), 0))

@@ -343,7 +343,7 @@
 			dat += "<I>Each item costs 1 telecrystal. The number afterwards is the cooldown time.</I><BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_magicmissile=1'>Magic Missile</A> (10)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_fireball=1'>Fireball</A> (10)<BR>"
-			dat += "<A href='byond://?src=\ref[src];spell_shock=1'>Shocking Grasp</A> (60)<BR>"
+			dat += "<A href='byond://?src=\ref[src];spell_disintegrate=1'>Disintegrate</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_emp=1'>Disable Technology</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_smoke=1'>Smoke</A> (10)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_blind=1'>Blind</A> (30)<BR>"
@@ -381,7 +381,7 @@
 				src.uses -= 1
 				usr.verbs += /client/proc/fireball
 				src.temp = "This spell fires a fireball at a target. Be careful not to fire it at people that are standing next to you."
-		else if (href_list["spell_shock"])
+		else if (href_list["spell_disintegrate"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /mob/proc/kill
@@ -490,7 +490,7 @@
 	src.menu_message += "<I>Each item costs 1 telecrystal. The number afterwards is the cooldown time.</I><BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=magicmissile'>Magic Missile</A> (10)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=fireball'>Fireball</A> (10)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=shock'>Shocking Grasp</A> (60)<BR>"
+	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=disintegrate'>Disintegrate</A> (60)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=emp'>Disable Technology</A> (60)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=smoke'>Smoke</A> (10)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_spell=blind'>Blind</A> (30)<BR>"
@@ -522,11 +522,11 @@
 					src.uses -= 1
 					usr.verbs += /client/proc/fireball
 					src.temp = "This spell fires a fireball at a target. Be careful not to fire it at people that are standing next to you."
-			if("shock")
+			if("disintegrate")
 				if (src.uses >= 1)
 					src.uses -= 1
 					usr.verbs += /mob/proc/kill
-					src.temp = "This spell instantly kills somebody standing next to you. It has a long cooldown."
+					src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
 			if("emp")
 				if (src.uses >= 1)
 					src.uses -= 1

@@ -1,6 +1,6 @@
 /mob/proc/kill(mob/M as mob in oview(1))
 	set category = "Spells"
-	set name = "Shocking Grasp"
+	set name = "Disintegrate"
 	if(usr.stat)
 		usr << "Not when you're incapicated."
 		return
@@ -26,4 +26,4 @@
 	s.set_up(4, 1, M)
 	s.start()
 
-	M.gib(1)
+	M.dust()

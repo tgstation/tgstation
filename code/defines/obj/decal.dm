@@ -15,6 +15,8 @@
 /obj/decal/cleanable
 	var/list/random_icon_states = list()
 
+//HUMANS
+
 /obj/decal/cleanable/blood
 	name = "Blood"
 	desc = "It's red."
@@ -27,22 +29,6 @@
 	var/datum/disease/virus = null
 	blood_DNA = null
 	blood_type = null
-
-	Del()
-		if(virus)
-			virus.cure(0)
-		..()
-
-/obj/decal/cleanable/xenoblood
-	name = "Xeno blood"
-	desc = "It's green."
-	density = 0
-	anchored = 1
-	layer = 2
-	icon = 'blood.dmi'
-	icon_state = "xfloor1"
-	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	var/datum/disease/virus = null
 
 	Del()
 		if(virus)
@@ -75,6 +61,49 @@
 /obj/decal/cleanable/blood/gibs/core
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
 
+//ALIENS
+
+/obj/decal/cleanable/xenoblood
+	name = "xeno blood"
+	desc = "It's green."
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'blood.dmi'
+	icon_state = "xfloor1"
+	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
+	var/datum/disease/virus = null
+
+	Del()
+		if(virus)
+			virus.cure(0)
+		..()
+
+/obj/decal/cleanable/xenoblood/xsplatter
+	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")
+
+/obj/decal/cleanable/xenoblood/xgibs
+	name = "xeno gibs"
+	desc = "Gnarly..."
+	icon = 'blood.dmi'
+	icon_state = "xgib1"
+	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
+
+/obj/decal/cleanable/xenoblood/xgibs/body
+	random_icon_states = list("xgibhead", "xgibtorso")
+
+/obj/decal/cleanable/xenoblood/xgibs/limb
+	random_icon_states = list("xgibleg", "xgibarm")
+
+/obj/decal/cleanable/xenoblood/xgibs/core
+	random_icon_states = list("xgibmid1", "xgibmid2", "xgibmid3")
+
+/obj/decal/cleanable/blood/xtracks
+	icon_state = "xtracks"
+	random_icon_states = null
+
+//ROBOTS
+
 /obj/decal/cleanable/robot_debris
 	name = "robot debris"
 	desc = "Useless heap of junk."
@@ -94,7 +123,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'oil.dmi'
+	icon = 'robots.dmi'
 	icon_state = "floor1"
 	var/datum/disease/virus = null
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
@@ -106,6 +135,8 @@
 
 /obj/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
+
+//OTHER
 
 /obj/decal/cleanable/generic
 	name = "clutter"
