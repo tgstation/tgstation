@@ -1044,6 +1044,23 @@
 			del(D)
 			del(src)
 
+/obj/item/weapon/reagent_containers/glass/cantister
+	desc = "It's a canister. Mainly used for transporting fuel."
+	name = "canister"
+	icon = 'tank.dmi'
+	icon_state = "canister"
+	item_state = "canister"
+	m_amt = 300
+	g_amt = 0
+	w_class = 5.0
+
+	amount_per_transfer_from_this = 20
+	flags = FPRINT
+	New()
+		var/datum/reagents/R = new/datum/reagents(120)
+		reagents = R
+		R.my_atom = src
+
 /obj/item/weapon/reagent_containers/glass/dispenser
 	name = "reagent glass"
 	desc = "A reagent glass."
@@ -2538,7 +2555,6 @@
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"
 					desc = "You can't really tell what this is."
-
 		else
 			icon_state = "glass_empty"
 			name = "Drinking glass"

@@ -1197,7 +1197,6 @@
 	if (src.r_store)
 		src.r_store.screen_loc = ui_storage2
 
-
 	if (src.back)
 		var/t1 = src.back.icon_state
 		src.overlays += image("icon" = 'back.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = MOB_LAYER)

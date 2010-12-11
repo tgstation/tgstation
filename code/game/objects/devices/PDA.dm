@@ -176,7 +176,7 @@
 		for(var/d in signal.data)
 			world << "- [d] = [signal.data[d]]"
 		*/
-		if(signal.data["type"] == "secbot")
+		if (signal.data["type"] == "secbot")
 			if(!botlist)
 				botlist = new()
 
@@ -187,7 +187,7 @@
 				var/list/b = signal.data
 				botstatus = b.Copy()
 
-		if(istype(P)) P.updateSelfDialog()
+		if (istype(P)) P.updateSelfDialog()
 
 
 

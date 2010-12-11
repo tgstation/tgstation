@@ -219,7 +219,7 @@ var/showadminmessages = 1
 					message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
 					del(M.client)
-					//del(M)	// See not reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
+					//del(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 				if("No")
 					var/reason = input(usr,"Reason?","reason","Griefer") as text
 					if(!reason)
@@ -670,6 +670,11 @@ var/showadminmessages = 1
 			return
 		var/mob/M = locate(href_list["traitor"])
 		var/datum/game_mode/current_mode = ticker.mode
+
+		if (istype(M, /mob/living/carbon/human) && M:mind)
+			M:mind.edit_memory()
+			return
+
 		switch(current_mode.config_tag)
 			if("revolution")
 				if(M.mind in current_mode:head_revolutionaries)
@@ -2169,6 +2174,16 @@ var/showadminmessages = 1
 	else
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
+
+
+/obj/admins/proc/edit_memory(var/mob/M in world)
+	set category = "Special Verbs"
+	set desc = "Edit traitor's objectives"
+	set name = "Traitor Objectives"
+
+	if (!M.mind)
+		usr << "Sorry, this mob have no mind!"
+	M.mind.edit_memory()
 
 //
 //

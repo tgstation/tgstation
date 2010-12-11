@@ -149,7 +149,7 @@
 
 	return candidates
 
-/datum/game_mode/wizard/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
+/datum/game_mode/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
 	if (!istype(wizard_mob))
 		return
 	wizard_mob.verbs += /client/proc/jaunt

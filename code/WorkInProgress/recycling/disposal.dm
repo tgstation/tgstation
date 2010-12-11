@@ -822,7 +822,6 @@
 		if(O)
 			linked = O
 
-
 		update()
 		return
 

@@ -5,7 +5,7 @@
 			src.nutrition -= HUNGER_FACTOR/2
 			if(src.m_intent == "run")
 				src.nutrition -= HUNGER_FACTOR/2
-		if(src.mutations & 32 && src.m_intent == "run")
+		if(src.mutations & 32 && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
 
 /mob/living/carbon/relaymove(var/mob/user, direction)

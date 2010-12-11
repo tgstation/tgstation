@@ -116,6 +116,7 @@
 			src.verbs += /proc/release
 			src.verbs += /proc/togglebuildmode
 			src.verbs += /proc/toggle_adminmsg
+			src.verbs += /obj/admins/proc/edit_memory
 
 //			src.verbs += /client/proc/grillify
 //			src.verbs += /client/proc/cmd_admin_list_admins
@@ -214,6 +215,7 @@
 			src.verbs += /proc/release
 			src.verbs += /proc/togglebuildmode
 			src.verbs += /proc/toggle_adminmsg
+			src.verbs += /obj/admins/proc/edit_memory
 
 //			src.verbs += /obj/admins/proc/togglegoonsay
 //			src.verbs += /client/proc/grillify
@@ -367,6 +369,7 @@
 			src.verbs += /client/proc/cmd_admin_create_centcom_report
 			src.verbs += /client/proc/cmd_admin_subtle_message
 			src.verbs += /client/proc/warn
+			src.verbs += /obj/admins/proc/edit_memory
 
 		if ("Administrator")
 
@@ -416,6 +419,7 @@
 
 			src.verbs += /client/proc/admin_call_shuttle // -- Skie
 			src.verbs += /client/proc/admin_cancel_shuttle // -- Skie
+			src.verbs += /obj/admins/proc/edit_memory
 
 		if ("Secondary Administrator")
 			src.holder.level = 1
@@ -452,6 +456,7 @@
 			src.verbs += /client/proc/cmd_admin_create_centcom_report
 			src.verbs += /client/proc/cmd_admin_subtle_message
 			src.verbs += /client/proc/warn
+			src.verbs += /obj/admins/proc/edit_memory
 
 		if ("Moderator")
 			src.holder.level = 0
@@ -588,6 +593,7 @@
 
 	src.verbs -= /client/proc/toggle_view_range
 	src.verbs -= /obj/admins/proc/toggle_aliens
+	src.verbs -= /obj/admins/proc/edit_memory
 
 	if(src.holder)
 		src.holder.level = 0
