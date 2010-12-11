@@ -2,19 +2,7 @@
 	set category = "Spells"
 	set name = "Fireball"
 	set desc="Fireball target:"
-	if(usr.stat)
-		usr << "Not when you're incapicated."
-		return
-
-	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
-		usr << "I don't feel strong enough without my robe."
-		return
-	if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
-		usr << "I don't feel strong enough without my sandals."
-		return
-	if(!istype(usr:head, /obj/item/clothing/head/wizard))
-		usr << "I don't feel strong enough without my hat."
-		return
+	if(!usr.casting()) return
 	usr.verbs -= /client/proc/fireball
 	spawn(200)
 		usr.verbs += /client/proc/fireball

@@ -385,7 +385,7 @@
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /mob/proc/kill
-				src.temp = "This spell instantly kills somebody standing next to you. It has a long cooldown."
+				src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
 		else if (href_list["spell_emp"])
 			if (src.uses >= 1)
 				src.uses -= 1
@@ -577,3 +577,31 @@
 		return
 
 	return
+
+/*Checks if the wizard can cast spells.
+Made a proc so this is not repeated 14 (or more) times.*/
+/mob/proc/casting()
+	if(usr.stat)
+		usr << "Not when you're incapicated."
+		return 0
+	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
+		usr << "I don't feel strong enough without my robe."
+		return 0
+	if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
+		usr << "I don't feel strong enough without my sandals."
+		return 0
+	if(!istype(usr:head, /obj/item/clothing/head/wizard))
+		usr << "I don't feel strong enough without my hat."
+		return 0
+	else
+		return 1
+
+/*Checks if the wizard is a mime and male/female.
+Outputs the appropriate voice if the user is not a mime.
+Made a proc here so it's not repeated several times.*/
+/mob/proc/spellvoice()
+	if(!usr.miming)
+		if(usr.gender=="male")
+			playsound(usr.loc, pick('vs_chant_conj_hm.wav','vs_chant_conj_lm.wav','vs_chant_ench_hm.wav','vs_chant_ench_lm.wav','vs_chant_evoc_hm.wav','vs_chant_evoc_lm.wav','vs_chant_illu_hm.wav','vs_chant_illu_lm.wav','vs_chant_necr_hm.wav','vs_chant_necr_lm.wav'), 100, 1)
+		else
+			playsound(usr.loc, pick('vs_chant_conj_hf.wav','vs_chant_conj_lf.wav','vs_chant_ench_hf.wav','vs_chant_ench_lf.wav','vs_chant_evoc_hf.wav','vs_chant_evoc_lf.wav','vs_chant_illu_hf.wav','vs_chant_illu_lf.wav','vs_chant_necr_hf.wav','vs_chant_necr_lf.wav'), 100, 1)

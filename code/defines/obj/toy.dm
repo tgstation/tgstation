@@ -109,11 +109,13 @@ obj/item/toy/blink
 		src.active = !( src.active )
 		if (src.active)
 			user << "\blue You extend the plastic blade with a quick flick of your wrist."
-			src.icon_state = "sword1"
+			src.icon_state = "toysword1"
+			src.item_state = "toysword1"
 			src.w_class = 4
 		else
 			user << "\blue You push the plastic blade back down into the handle."
-			src.icon_state = "sword0"
+			src.icon_state = "toysword0"
+			src.item_state = "toysword0"
 			src.w_class = 2
 		src.add_fingerprint(user)
 		return

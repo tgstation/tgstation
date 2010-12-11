@@ -211,7 +211,7 @@
 	desc = "Strange-looking, red, hat-wear that most certainly belongs to a real magic user."
 	icon_state = "redwizard"
 
-/obj/item/clothing/head/wizard_fake
+/obj/item/clothing/head/wizard/fake
 	name = "wizard hat"
 	desc = "It has WIZZARD written across it in sequins. Comes with a cool beard."
 	icon_state = "wizard-fake"
@@ -578,7 +578,7 @@
 	icon_state = "redwizard"
 	item_state = "redwizrobe"
 
-/obj/item/clothing/suit/wizrobe_fake
+/obj/item/clothing/suit/wizrobe/fake
 	name = "wizard robe"
 	desc = "A rather dull, blue robe one could probably find in Space-Walmart."
 	icon_state = "wizard-fake"
@@ -1001,9 +1001,9 @@
 /obj/item/clothing/under/syndicate/tacticool
 	name = "Tacticool Turtleneck"
 	desc = "Wearing this makes you feel like buying an SKS, going into the woods, and operating."
-	icon_state = "syndicate"
+	icon_state = "tactifool"
 	item_state = "bl_suit"
-	color = "syndicate"
+	color = "tactifool"
 	mode = 0
 
 /obj/item/clothing/under/librarian

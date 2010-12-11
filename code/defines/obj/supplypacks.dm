@@ -18,9 +18,9 @@
 /datum/supply_packs/wizard
 	name = "Wizard costume"
 	contains = list("/obj/item/weapon/staff",
-					"/obj/item/clothing/suit/wizrobe_fake",
+					"/obj/item/clothing/suit/wizrobe/fake",
 					"/obj/item/clothing/shoes/sandal",
-					"/obj/item/clothing/head/wizard_fake")
+					"/obj/item/clothing/head/wizard/fake")
 	cost = 20
 	containertype = "/obj/crate"
 	containername = "Wizard costume crate"
