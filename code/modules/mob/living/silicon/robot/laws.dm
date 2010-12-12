@@ -59,9 +59,8 @@
 	var/temp
 	if (master)
 
-		if (master.zeroth)
-			temp = master.zeroth
-			src.laws.zeroth = temp
+		temp = master.zeroth
+		src.laws.zeroth = temp
 
 		src.laws.inherent.len = master.inherent.len
 		for (var/index = 1, index <= master.inherent.len, index++)
