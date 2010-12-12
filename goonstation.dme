@@ -569,6 +569,7 @@
 #include "code\modules\admin\verbs\diagnostics.dm"
 #include "code\modules\admin\verbs\grillify.dm"
 #include "code\modules\admin\verbs\modifyvariables.dm"
+#include "code\modules\admin\verbs\onlyone.dm"
 #include "code\modules\admin\verbs\playsound.dm"
 #include "code\modules\admin\verbs\pray.dm"
 #include "code\modules\admin\verbs\randomverbs.dm"

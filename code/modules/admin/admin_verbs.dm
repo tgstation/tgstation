@@ -92,6 +92,7 @@
 			src.verbs += /client/proc/ticklag
 			src.verbs += /client/proc/toggle_view_range
 			src.verbs += /client/proc/warn
+			src.verbs += /client/proc/only_one  // muskets
 			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
 			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
 			src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
