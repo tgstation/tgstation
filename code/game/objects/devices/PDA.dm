@@ -1063,7 +1063,9 @@ Code:
 
 					if(emptyHand)
 						src.id.DblClick()
-						src.id = null
+						if(!istype(src.id.loc, /obj/item/device/pda))
+
+							src.id = null
 			//			src.id.loc = src.loc
 //				else if (istype(src.loc, /turf)) src.id.loc = src.loc
 				else
