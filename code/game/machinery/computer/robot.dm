@@ -137,6 +137,9 @@
 
 		else if (href_list["eject2"])
 			var/obj/item/weapon/card/id/I = usr.equipped()
+			if (istype(I, /obj/item/device/pda))
+				var/obj/item/device/pda/pda = I
+				I = pda.id
 			if (istype(I))
 				if(src.check_access(I))
 					if (!status)

@@ -18,8 +18,12 @@
 
 	var/alt_name = ""
 	if (istype(src, /mob/living/carbon/human) && src.name != src.real_name)
-		if (src:wear_id && src:wear_id:registered)
-			alt_name = " (as [src:wear_id:registered])"
+		if (src.wear_id)
+			var/obj/item/weapon/card/id/id = src:wear_id
+			if(istype(src:wear_id, /obj/item/device/pda))
+				var/obj/item/device/pda/pda = src:wear_id
+				id = pda.id
+			alt_name = " (as [id:registered])"
 		else
 			alt_name = " (as Unknown)"
 

@@ -989,7 +989,11 @@ var/showadminmessages = 1
 							continue
 						H.paralysis += 5
 						if(H.wear_id)
-							for(var/A in H.wear_id.access)
+							var/obj/item/weapon/card/id/id = H.wear_id
+							if (istype (H.wear_id, /obj/item/device/pda))
+								var/obj/item/device/pda/pda = H.wear_id
+								id = pda.id
+							for(var/A in id.access)
 								if(A == access_security)
 									security++
 						if(!security)

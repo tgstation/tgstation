@@ -182,7 +182,7 @@
 		src.on = 1
 		src.icon_state = "medibot[src.on]"
 
-	else if (istype(W, /obj/item/weapon/card/id))
+	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"

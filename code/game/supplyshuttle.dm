@@ -293,6 +293,12 @@ var/ordernum=0
 				idname = usr:wear_id.registered
 			if(usr:wear_id.assignment)
 				idrank = usr:wear_id.assignment
+		if (istype(usr:wear_id, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = usr:wear_id
+			if(pda.owner)
+				idname = pda.owner
+			if(pda.ownjob)
+				idrank = pda.ownjob
 		else
 			idname = usr.name
 

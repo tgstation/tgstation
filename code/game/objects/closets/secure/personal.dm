@@ -16,7 +16,10 @@
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
 		user.drop_item()
 		if (W) W.loc = src.loc
-	else if (istype(W, /obj/item/weapon/card/id))
+	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if(istype(W, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = W
+			W = pda.id
 		if(src.broken)
 			user << "\red It appears to be broken."
 			return

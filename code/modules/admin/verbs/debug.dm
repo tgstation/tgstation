@@ -246,9 +246,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if (istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if (H.wear_id)
+			var/obj/item/weapon/card/id/id = H.wear_id
+			if(istype(H.wear_id, /obj/item/device/pda))
+				var/obj/item/device/pda/pda = H.wear_id
+				id = pda.id
 			log_admin("[key_name(src)] has granted [M.key] full access.")
-			H.wear_id.icon_state = "gold"
-			H.wear_id.access = get_all_accesses()
+			id.icon_state = "gold"
+			id:access = get_all_accesses()
 		else
 			alert("Invalid ID card")
 	else

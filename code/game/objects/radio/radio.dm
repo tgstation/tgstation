@@ -147,7 +147,13 @@ Frequency:
 
 	if (istype(M, /mob/living/carbon))
 		if (M:wear_id)
-			eqjobname = M:wear_id:assignment
+			var/obj/item/weapon/card/id/id
+			if (istype(M:wear_id, /obj/item/device/pda))
+				var/obj/item/device/pda/pda = M:wear_id
+				id = pda.id
+			else id = M:wear_id
+			if (id.assignment) eqjobname = M:wear_id:assignment
+			else eqjobname = "No job"
 		else
 			eqjobname = "No id"
 	else if (istype(M,/mob/living/silicon/ai))

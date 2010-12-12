@@ -34,6 +34,8 @@
 	var/obj/item/weapon/integrated_uplink/uplink = null
 	var/message1	// used for status_displays
 	var/message2
+	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
+	var/ownjob = null //related to above
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -494,7 +496,9 @@
 		switch (src.mode)
 			if (0)
 				dat += "<h2>PERSONAL DATA ASSISTANT</h2>"
-				dat += "Owner: [src.owner]<br><br>"
+				dat += "Owner: [src.owner], [src.ownjob]<br>"
+				dat += text("ID: <A href='?src=\ref[];auth=1'>[]</A>", src, (src.id ? "[src.id.registered], [src.id.assignment]" : "----------"))
+				dat += "<br><br>"
 
 				dat += "<h4>General Functions</h4>"
 				dat += "<ul>"
@@ -1051,6 +1055,25 @@ Code:
 		src.add_fingerprint(usr)
 		usr.machine = src
 
+		if (href_list["auth"])
+			if (src.id)
+				if (istype(src.loc, /mob))
+					var/obj/item/W = src.loc:equipped()
+					var/emptyHand = (W == null)
+
+					if(emptyHand)
+						src.id.DblClick()
+			//			src.id.loc = src.loc
+//				else if (istype(src.loc, /turf)) src.id.loc = src.loc
+				else src.id.loc = src.loc
+				src.id = null
+			else
+				var/obj/item/I = usr.equipped()
+				if (istype(I, /obj/item/weapon/card/id))
+					usr.drop_item()
+					I.loc = src
+					src.id = I
+
 		if (href_list["mm"])
 			src.mode = 0
 
@@ -1396,6 +1419,7 @@ Code:
 
 	else if (istype(C, /obj/item/weapon/card/id) && !src.owner && C:registered)
 		src.owner = C:registered
+		src.ownjob = C:assignment
 		src.name = "PDA-[src.owner]"
 		user << "\blue Card scanned."
 		src.updateUsrDialog()
@@ -1473,6 +1497,13 @@ Code:
 
 	del(src)
 	return
+
+/obj/item/device/pda/Del()
+	if (src.id)
+		if(istype(src.loc, /mob))
+			src.id.loc = src.loc.loc
+		else src.id.loc = src.loc
+	..()
 
 /obj/item/device/pda/clown/HasEntered(AM as mob|obj) //Clown PDA is slippery.
 	if (istype(AM, /mob/living/carbon))

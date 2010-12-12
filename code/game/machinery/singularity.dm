@@ -674,7 +674,7 @@ However people seem to like it for some reason.
 				user << "You cut the emitter free from the floor."
 			return
 
-	if(istype(W, /obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
@@ -1218,7 +1218,7 @@ However people seem to like it for some reason.
 				user << "You cut the field generator free from the floor."
 			return
 
-	if(istype(W, /obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"

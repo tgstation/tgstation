@@ -63,9 +63,12 @@
 			return
 
 		if (href_list["login"])
-			var/obj/item/I
-			if (istype(usr.l_hand, /obj/item/weapon/card/id)) I = usr.l_hand
-			if (istype(usr.r_hand, /obj/item/weapon/card/id)) I = usr.r_hand
+			var/obj/item/I = usr.equipped()
+			if (istype(I, /obj/item/device/pda))
+				var/obj/item/device/pda/pda = I
+				I = pda.id
+//			if (istype(usr.l_hand, /obj/item/weapon/card/id)) I = usr.l_hand
+//			if (istype(usr.r_hand, /obj/item/weapon/card/id)) I = usr.r_hand
 			if (I && src.check_access(I))
 				src.locked = 0
 				src.last_configurator = I:registered

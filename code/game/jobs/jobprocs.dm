@@ -607,11 +607,15 @@
 	//src.equip_if_possible(new /obj/item/device/radio/signaler(src), slot_belt)
 	src.equip_if_possible(new /obj/item/device/pda(src), slot_belt)
 	if (istype(src.belt, /obj/item/device/pda))
-		src.belt:owner = src.real_name
-		src.belt.name = "PDA-[src.real_name]"
+		var/obj/item/device/pda/pda = src.belt
+		pda.owner = src.real_name
+		pda.ownjob = src.wear_id.assignment
+		pda.name = "PDA-[src.real_name]"
 	if (istype(src.r_store, /obj/item/device/pda))  //damned mime PDAs not starting in belt slot
-		src.r_store:owner = src.real_name
-		src.r_store.name = "PDA-[src.real_name]"
+		var/obj/item/device/pda/pda = src.r_store
+		pda.owner = src.real_name
+		pda.ownjob = src.wear_id.assignment
+		pda.name = "PDA-[src.real_name]"
 
 /client/proc/mimewall()
 	set category = "Mime"

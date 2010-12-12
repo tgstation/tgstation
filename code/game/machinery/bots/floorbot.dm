@@ -91,7 +91,7 @@
 			del(T)
 		user << "\red You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!"
 		src.updateicon()
-	if(istype(W, /obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr))
 			src.locked = !src.locked
 			user << "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls."

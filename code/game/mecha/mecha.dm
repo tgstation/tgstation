@@ -497,7 +497,7 @@
 
 
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card/id))
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.internals_access_allowed(usr))
 			if(state==0)
 				state = 1

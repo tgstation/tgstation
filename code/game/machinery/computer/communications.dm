@@ -19,6 +19,9 @@
 		if("login")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.equipped()
+			if (istype(I, /obj/item/device/pda))
+				var/obj/item/device/pda/pda = I
+				I = pda.id
 			if (I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1

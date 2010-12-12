@@ -172,7 +172,7 @@ Auto Patrol: []"},
 			src.on = 1
 			src.icon_state = "ed209[src.on]"
 			mode = SECBOT_IDLE
-		else if (istype(W, /obj/item/weapon/card/id))
+		else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 			if (src.allowed(user))
 				src.locked = !src.locked
 				user << "Controls are now [src.locked ? "locked." : "unlocked."]"
@@ -649,8 +649,16 @@ Auto Patrol: []"},
 		if (src.check_records)
 			for (var/datum/data/record/E in data_core.general)
 				var/perpname = perp.name
-				if (perp:wear_id && perp:wear_id.registered)
-					perpname = perp.wear_id.registered
+				if (perp:wear_id)
+					var/obj/item/weapon/card/id/id = perp:wear_id
+					if(istype(perp:wear_id, /obj/item/device/pda))
+						var/obj/item/device/pda/pda = perp:wear_id
+						id = pda.id
+					if (id)
+						perpname = id.registered
+					else
+						var/obj/item/device/pda/pda = perp:wear_id
+						perpname = pda.owner
 				if (E.fields["name"] == perpname)
 					for (var/datum/data/record/R in data_core.security)
 						if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
