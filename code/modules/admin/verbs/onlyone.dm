@@ -5,6 +5,8 @@
 	if(!ticker)
 		alert("The game hasn't started yet!")
 		return
+	if(alert("BEGIN THE TOURNAMENT?",,"Yes","No")=="No")
+		return
 	for(var/mob/living/carbon/human/H in world)
 		if(H.stat == 2 || !(H.client)) continue
 		if(checktraitor(H)) continue
