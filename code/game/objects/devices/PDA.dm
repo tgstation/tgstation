@@ -1063,10 +1063,13 @@ Code:
 
 					if(emptyHand)
 						src.id.DblClick()
+						src.id = null
 			//			src.id.loc = src.loc
 //				else if (istype(src.loc, /turf)) src.id.loc = src.loc
-				else src.id.loc = src.loc
-				src.id = null
+				else
+					src.id.loc = src.loc
+					src.id = null
+
 			else
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/weapon/card/id))
