@@ -146,11 +146,16 @@
 			var/timeleft = emergency_shuttle.timeleft()
 			if (timeleft)
 				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-/*
+
 		if(ticker.mode.name == "AI malfunction")
-			if(ticker.mode:malf_mode_declared)
-				stat(null, "Points left until the AI takes over: [AI_points]/[AI_points_win]")
-*/
+			var/datum/game_mode/malfunction/malf = ticker.mode
+			for (var/datum/mind/malfai in malf.malf_ai)
+				if (src.connected_ai.mind == malfai)
+					if (malf.apcs >= 3)
+						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
+				else if(ticker.mode:malf_mode_declared)
+					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+
 		if(src.cell)
 			stat(null, text("Charge Left: [src.cell.charge]/[src.cell.maxcharge]"))
 		else

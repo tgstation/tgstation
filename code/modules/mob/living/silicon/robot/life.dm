@@ -189,14 +189,15 @@
 
 			if (src.cells)
 				if (src.cell)
-					switch(src.cell.charge)
-						if(src.cell.maxcharge*0.75 to INFINITY)
+					var/cellcharge = src.cell.charge/src.cell.maxcharge
+					switch(cellcharge)
+						if(0.75 to INFINITY)
 							src.cells.icon_state = "charge4"
-						if(0.5*src.cell.maxcharge to 0.75*src.cell.maxcharge)
+						if(0.5 to 0.75)
 							src.cells.icon_state = "charge3"
-						if(0.25*src.cell.maxcharge to 0.5*src.cell.maxcharge)
+						if(0.25 to 0.5)
 							src.cells.icon_state = "charge2"
-						if(0 to 0.25*src.cell.maxcharge)
+						if(0.01 to 0.25)
 							src.cells.icon_state = "charge1"
 						else
 							src.cells.icon_state = "charge0"
