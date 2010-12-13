@@ -1358,7 +1358,7 @@
 		if(!msg)
 			return
 		for (var/mob/V in hearers(src.mob.control_object))
-			V.show_message("<b>[src.mob.control_object.name]</b> говорит: \"" + msg + "\"", 2)
+			V.show_message("<b>[src.mob.control_object.name]</b> says: \"" + msg + "\"", 2)
 
 /client/proc/kill_air() // -- TLE
 	set category = "Debug"
@@ -1379,7 +1379,6 @@
 	src.verbs -= /client/proc/unstealthadmin
 	src.update_admins(src.holder.rank)
 
-// Don't add or remove (un)stealth admin because it's the state changing verb
 /client/proc/stealthadmin()
 	set name = "Toggle admin verb visibility"
 	set category = "Admin"
