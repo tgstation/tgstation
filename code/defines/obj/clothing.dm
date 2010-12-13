@@ -489,7 +489,6 @@
 	flags = FPRINT | TABLEPASS
 	var/list/allowed = list(/obj/item/weapon/tank/emergency_oxygen)
 
-
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
 	desc = "A suit that protects against biological contamination."
@@ -583,6 +582,12 @@
 	desc = "A rather dull, blue robe one could probably find in Space-Walmart."
 	icon_state = "wizard-fake"
 	item_state = "wizrobe"
+
+/obj/item/clothing/suit/hazardvest
+	name = "hazard vest"
+	desc = "A vest designed to make one more noticable. It's not very good at it though"
+	icon_state = "hazard"
+	item_state = "hazard"
 
 // ARMOR
 
