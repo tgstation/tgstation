@@ -605,6 +605,11 @@
 	force = 24.0
 	m_amt = 2000
 
+/obj/item/weapon/gun/revolver/mateba
+	desc = "There are 0 bullets left. Uses 357"
+	name = "revolver"
+	icon_state = "mateba"
+
 /obj/item/weapon/gun/detectiverevolver
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
 	name = ".38 revolver"
