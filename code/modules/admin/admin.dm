@@ -2146,11 +2146,11 @@ var/showadminmessages = 1
 
 
 /obj/admins/proc/spawn_atom(var/object as text)
-	set category = "Special Verbs"
-	set desc="(atom path) Spawn an atom"
-	set name="Spawn"
+	set category = "Debug"
+	set desc= "(atom path) Spawn an atom"
+	set name= "Spawn Atom"
 
-	if(usr.client.holder.rank == "Coder")
+	if(usr.client.holder.level >= 5)
 		var/list/types = typesof(/atom)
 
 		var/list/matches = new()

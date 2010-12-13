@@ -2,9 +2,9 @@
 	. = ..()
 	if(.)
 		if(src.nutrition && src.stat != 2)
-			src.nutrition -= HUNGER_FACTOR/2
+			src.nutrition -= HUNGER_FACTOR/10
 			if(src.m_intent == "run")
-				src.nutrition -= HUNGER_FACTOR/2
+				src.nutrition -= HUNGER_FACTOR/10
 		if(src.mutations & 32 && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
 

@@ -229,7 +229,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		message_admins("[key_name_admin(src)] has deleted all instances of [hsbitem].", 0)
 
 /client/proc/cmd_debug_tog_aliens()
-	set category = "Special Verbs"
+	set category = "Server"
 	set name = "Toggle Aliens"
 
 	aliens_allowed = !aliens_allowed
