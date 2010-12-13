@@ -601,7 +601,7 @@
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-	allowed = null
+//	allowed = null
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"
