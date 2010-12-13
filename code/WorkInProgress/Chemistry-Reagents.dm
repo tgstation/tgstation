@@ -723,9 +723,9 @@ datum
 				return
 			*/
 			reaction_obj(var/obj/O, var/volume)
-				if(istype(O,/obj/plant/vine/))
-					O:life -= rand(15,35) // Kills vines nicely // Not tested as vines don't work in R41
-				else if(istype(O,/obj/alien/weeds/))
+		//		if(istype(O,/obj/plant/vine/))
+		//			O:life -= rand(15,35) // Kills vines nicely // Not tested as vines don't work in R41
+				if(istype(O,/obj/alien/weeds/))
 					O:health -= rand(15,35) // Kills alien weeds pretty fast
 					O:healthcheck()
 				// Damage that is done to growing plants is separately

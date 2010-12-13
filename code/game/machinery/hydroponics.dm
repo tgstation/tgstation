@@ -730,7 +730,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 
 // BROKEN!!!!!!
-
+/*
 /datum/vinetracker
 	var/list/vines = list()
 
@@ -790,13 +790,13 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						spawn(3000) del(V)
 			sleep(600)
 
-
+*/
 
 obj/plant
 	anchored = 1
 	var/stage = 1
 	var/health = 10
-
+/*
 obj/plant/vine
 	name = "space vine"
 	icon = 'hydroponics.dmi'
@@ -837,4 +837,4 @@ obj/plant/vine
 	if(exposed_temperature > 350)
 		health -= 15
 		if(health <= 0)
-			del(src)
+			del(src) */
