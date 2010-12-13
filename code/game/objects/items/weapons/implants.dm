@@ -55,6 +55,12 @@ IMPLANTER
 	..()
 	return
 
+/obj/item/weapon/implantcase/explosive/New()
+
+	src.imp = new /obj/item/weapon/implant/explosive( src )
+	..()
+	return
+
 /obj/item/weapon/implantpad/proc/update()
 
 	if (src.case)
@@ -135,9 +141,8 @@ ID (1-100):
 <A href='byond://?src=\ref[src];id=-1'>-</A> [T.id]
 <A href='byond://?src=\ref[src];id=1'>+</A>
 <A href='byond://?src=\ref[src];id=10'>+</A><BR>"}
-			else
-				if (istype(src.case.imp, /obj/item/weapon/implant/freedom))
-					dat += {"
+			else if (istype(src.case.imp, /obj/item/weapon/implant/freedom))
+				dat += {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Freedom Beacon<BR>
 <b>Zone:</b> Right Hand> Near wrist<BR>
@@ -154,8 +159,23 @@ mechanisms<BR>
 <b>Integrity:</b> The battery is extremely weak and commonly after injection its
 life can drive down to only 1 use.<HR>
 No Implant Specifics"}
-				else
-					dat += "Implant ID not in database"
+			else if (istype(src.case.imp, /obj/item/weapon/implant/explosive))
+				dat += {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Robust Corp RX-78 Prisoner Management Implant<BR>
+<b>Zone:</b> Spinal Column>Atlantis Vertebrae<BR>
+<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<BR>
+<b>Life:</b> Deactivates upon death but remains within the body.<BR>
+<b>Important Notes:</b><BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal.<BR>
+<b>Special Features:</b><BR>
+<i>Direct-Interface</i>- You can use the prisoner management system to transmit short messages directly into the brain of the implanted subject.<BR>
+<i>Safe-break</i>- Can be safely deactivated remotely.<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+			else
+				dat += "Implant ID not in database"
 		else
 			dat += "The implant casing is empty."
 	else
@@ -238,14 +258,14 @@ No Implant Specifics"}
 	return
 
 /obj/item/weapon/implanter/attack(mob/M as mob, mob/user as mob)
-	if (!istype(M, /mob))
+	if (!istype(M, /mob/living/carbon))
 		return
 
 	if (user && src.imp)
 		for (var/mob/O in viewers(M, null))
 			O.show_message("\red [M] has been implanted by [user].", 1)
-
 		src.imp.loc = M
+		src.imp.imp_in = M
 		src.imp.implanted = 1
 		src.imp.implanted(M)
 		src.imp = null

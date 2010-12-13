@@ -216,6 +216,7 @@
 					continue
 				if(C:stunned || C:paralysis || C:weakened)
 					target = C
+
 					break
 				if(C:health < last_health)
 					last_health = C:health

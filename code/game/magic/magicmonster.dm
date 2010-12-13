@@ -1,6 +1,5 @@
 // BLATANTLY ripped from the facehugger.dm alien code. -- TLE
 
-#define cycle_pause 5 //min 1
 #define viewrange 7 //min 2
 
 // Returns the surrounding cardinal turfs with open links
@@ -32,6 +31,7 @@
 	var/alive = 1 //1 alive, 0 dead
 	var/health = 25
 	var/maxhealth = 25
+	var/cycle_pause = 5
 
 	flags = 258.0
 

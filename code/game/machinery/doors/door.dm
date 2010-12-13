@@ -10,6 +10,11 @@
 		if(src.check_access(bot.botcard))
 			if(density)
 				open()
+	else if(istype(AM, /obj/livestock))
+		var/obj/livestock/ani =AM
+		if(src.check_access(ani.anicard))
+			if(density)
+				open()
 	else if(istype(AM, /obj/alien/facehugger))
 		if(src.check_access(null))
 			if(density)
@@ -238,6 +243,11 @@
 	else if(istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/bot = AM
 		if(src.check_access(bot.botcard))
+			if(density)
+				open()
+	else if(istype(AM, /obj/livestock))
+		var/obj/livestock/ani =AM
+		if(src.check_access(ani.anicard))
 			if(density)
 				open()
 	else if(istype(AM, /obj/alien/facehugger))

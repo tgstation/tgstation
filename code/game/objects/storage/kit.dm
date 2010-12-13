@@ -80,6 +80,18 @@
 	..()
 	return
 
+/obj/item/weapon/storage/explosiveimp_kit/New()
+
+	new /obj/item/weapon/implantcase/explosive( src )
+	new /obj/item/weapon/implantcase/explosive( src )
+	new /obj/item/weapon/implantcase/explosive( src )
+	new /obj/item/weapon/implantcase/explosive( src )
+	new /obj/item/weapon/implantcase/explosive( src )
+	new /obj/item/weapon/implanter( src )
+	new /obj/item/weapon/implantpad( src )
+	..()
+	return
+
 /obj/item/weapon/storage/injectbox/New()
 
 	new /obj/item/weapon/dnainjector/h2m( src )

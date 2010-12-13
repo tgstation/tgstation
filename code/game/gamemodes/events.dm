@@ -8,7 +8,7 @@
 		start_events()
 
 /proc/event()
-	switch(rand(1,8))
+	switch(rand(1,9))
 		if(1)
 			event = 1
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
@@ -95,6 +95,9 @@
 		if(8)
 			event = 1
 			prison_break()
+		if(9)
+			event = 1
+			carp_migration()
 
 /proc/dotheblobbaby()
 	if (blobevent)
@@ -311,5 +314,13 @@
 	sleep(150)
 	command_alert("Prison station VI is not accepting commands. Recommend station AI involvement.", "VI Alert")
 
-
-
+/proc/carp_migration() // -- Darem
+	for(var/obj/landmark/C in world)
+		if(C.name == "carpspawn")
+			if(prob(95))
+				new /obj/livestock/spesscarp(C.loc)
+			else
+				new /obj/livestock/spesscarp/elite(C.loc)
+	sleep(100)
+	command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
+	world << sound('commandreport.ogg')

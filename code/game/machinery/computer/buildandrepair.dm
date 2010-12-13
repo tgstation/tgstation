@@ -99,6 +99,9 @@
 /obj/item/weapon/circuitboard/swfdoor
 	name = "Circuit board (Magix)"
 	computertype = "/obj/machinery/computer/pod/old/swf"
+/obj/item/weapon/circuitboard/explosive
+	name = "Circuit board (ExImplant)"
+	computertype = "/obj/machinery/computer/explosive"
 
 
 

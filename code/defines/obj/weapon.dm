@@ -642,6 +642,7 @@
 /obj/item/weapon/implant
 	name = "implant"
 	var/implanted = null
+	var/mob/imp_in = null
 	var/color = "b"
 
 /obj/item/weapon/implant/freedom
@@ -654,6 +655,9 @@
 	name = "tracking"
 	var/frequency = 1451
 	var/id = 1.0
+
+/obj/item/weapon/implant/explosive
+	name = "explosive"
 
 /obj/item/weapon/implantcase
 	name = "Glass Case"
@@ -668,6 +672,11 @@
 	name = "Glass Case- 'Tracking'"
 	icon = 'items.dmi'
 	icon_state = "implantcase-b"
+
+/obj/item/weapon/implantcase/explosive
+	name = "Glass Case- 'Explosive'"
+	icon = 'items.dmi'
+	icon_state = "implantcase-r"
 
 /obj/item/weapon/implanter
 	name = "implanter"
