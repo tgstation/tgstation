@@ -380,7 +380,7 @@
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/fireball
-				src.temp = "This spell fires a fireball at a target. Be careful not to fire it at people that are standing next to you."
+				src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
 		else if (href_list["spell_disintegrate"])
 			if (src.uses >= 1)
 				src.uses -= 1
@@ -395,17 +395,17 @@
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/smokecloud
-				src.temp = "This spell spawns a cloud of choking smoke at your location."
+				src.temp = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
 		else if (href_list["spell_blind"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/blind
-				src.temp = "This spell temporarly blinds a single person."
+				src.temp = "This spell temporarly blinds a single person and does not require wizard garb."
 		else if (href_list["spell_forcewall"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/forcewall
-				src.temp = "This spell creates an unbreakable wall that lasts for 30 seconds."
+				src.temp = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
 		else if (href_list["spell_blink"])
 			if (src.uses >= 1)
 				src.uses -= 1
@@ -420,7 +420,7 @@
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/mutate
-				src.temp = "This spell causes you to turn into a hulk, and gain telekinesis for a short while."
+				src.temp = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
 		else if (href_list["spell_jaunt"])
 			if (src.uses >= 1)
 				src.uses -= 1
@@ -430,7 +430,7 @@
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/knock
-				src.temp = "This spell opens nearby doors."
+				src.temp = "This spell opens nearby doors and does not require wizard garb."
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
 			usr.machine = null
@@ -521,7 +521,7 @@
 				if (src.uses >= 1)
 					src.uses -= 1
 					usr.verbs += /client/proc/fireball
-					src.temp = "This spell fires a fireball at a target. Be careful not to fire it at people that are standing next to you."
+					src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
 			if("disintegrate")
 				if (src.uses >= 1)
 					src.uses -= 1
@@ -536,17 +536,17 @@
 				if (src.uses >= 1)
 					src.uses -= 1
 					usr.verbs += /client/proc/smokecloud
-					src.temp = "This spell spawns a cloud of choking smoke at your location."
+					src.temp = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
 			if("blind")
 				if (src.uses >= 1)
 					src.uses -= 1
 					usr.verbs += /client/proc/blind
-					src.temp = "This spell temporarly blinds a single person."
+					src.temp = "This spell temporarly blinds a single person and does not require wizard garb."
 			if("forcewall")
 				if (src.uses >= 1)
 					src.uses -= 1
 					usr.verbs += /client/proc/forcewall
-					src.temp = "This spell creates an unbreakable wall that lasts for 30 seconds."
+					src.temp = "This spell creates an unbreakable wall that lasts for 30 seconds and does not require wizard garb."
 			if("blink")
 				if (src.uses >= 1)
 					src.uses -= 1
@@ -571,7 +571,7 @@
 				if (src.uses >= 1)
 					src.uses -= 1
 					usr.verbs += /client/proc/knock
-					src.temp = "This spell opens nearby doors."
+					src.temp = "This spell opens nearby doors and does not require wizard garb."
 		src.generate_menu()
 		src.print_to_host(src.menu_message)
 		return

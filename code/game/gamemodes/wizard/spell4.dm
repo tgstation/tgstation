@@ -2,10 +2,15 @@
 	set category = "Spells"
 	set name = "Fireball"
 	set desc="Fireball target:"
-	if(!usr.casting()) return
+//	if(!usr.casting()) return
+
 	usr.verbs -= /client/proc/fireball
 	spawn(200)
 		usr.verbs += /client/proc/fireball
+
+	usr.say("ONI SOMA")
+//	usr.spellvoice()
+
 	var/obj/overlay/A = new /obj/overlay( usr.loc )
 	A.icon_state = "fireball"
 	A.icon = 'wizard.dmi'

@@ -4,6 +4,9 @@
 	set desc="Whom"
 	if(!usr.casting()) return
 
+	usr.say("FORTI GY AMA")
+	usr.spellvoice()
+
 	for (var/mob/M as mob in oview())
 		spawn(0)
 			var/obj/overlay/A = new /obj/overlay( usr.loc )

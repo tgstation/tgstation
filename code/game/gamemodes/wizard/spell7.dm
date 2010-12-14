@@ -3,7 +3,7 @@
 	set category = "Spells"
 	set name = "Smoke"
 	set desc = "Creates a cloud of smoke"
-	if(!usr.casting()) return
+//	if(!usr.casting()) return
 	usr.verbs -= /client/proc/smokecloud
 	spawn(120)
 		usr.verbs += /client/proc/smokecloud

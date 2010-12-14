@@ -1,13 +1,13 @@
 /client/proc/blind(mob/M as mob in oview())
 	set category = "Spells"
 	set name = "Blind"
-	if(!usr.casting()) return
+//	if(!usr.casting()) return
 	usr.verbs -= /client/proc/blind
 	spawn(300)
 		usr.verbs += /client/proc/blind
 
-	usr.say("STI KALY!")
-	usr.spellvoice()
+	usr.whisper("STI KALY")
+//	usr.spellvoice()
 
 	var/obj/overlay/B = new /obj/overlay( M.loc )
 	B.icon_state = "blspell"

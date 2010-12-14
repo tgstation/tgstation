@@ -12,15 +12,16 @@
 	set category = "Spells"
 	set name = "Forcewall"
 	set desc = "Create a forcewall on your location."
-	if(!usr.casting()) return
+
+//	if(!usr.casting()) return
+
 	usr.verbs -= /client/proc/forcewall
 	spawn(100)
 		usr.verbs += /client/proc/forcewall
 	var/forcefield
-	var/mob/living/carbon/human/G = usr
 
-	G.say("TARCOL MINTI ZHERI")
-	usr.spellvoice()
+	usr.whisper("TARCOL MINTI ZHERI")
+//	usr.spellvoice()
 
 	forcefield =  new /obj/forcefield(locate(usr.x,usr.y,usr.z))
 	spawn (300)
