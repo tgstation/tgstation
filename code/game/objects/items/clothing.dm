@@ -276,19 +276,25 @@ DEATH COMMANDO GAS MASK
 
 
 /obj/item/clothing/under/var/mode = 1 // 0 - Off, 1 - Binary Lifesigns, 2 - Vitals, 3 - Positioning and Vitals
-/obj/item/clothing/under/attack_self(mob/user as mob)
+
+/obj/item/clothing/under/verb/toggle()
+	set name = "Toggle Suit Sensors"
+	if (istype (src, /obj/item/clothing/under/color/orange/))
+		mode = 3
+		usr << "There are no controls for the sensing equipment woven into the fabric."
+		return
 	mode += 1
 	if(mode > 3)
 		mode = 0
 	switch(mode)
 		if(0)
-			user << "You disable your suit's remote sensing equipment."
+			usr << "You disable your suit's remote sensing equipment."
 		if(1)
-			user << "You enable your suit's remote sensing equipment. It will now report whether you are live or dead."
+			usr << "You enable your suit's remote sensing equipment. It will now report whether you are live or dead."
 		if(2)
-			user << "You enable more complicated sensors in your suit. It will now report your vital lifesigns."
+			usr << "You enable more complicated sensors in your suit. It will now report your vital lifesigns."
 		if(3)
-			user << "You activate the full suite of sensors in your suit. It will now report your vital lifesigns as well as your coordinate position."
+			usr << "You activate the full suite of sensors in your suit. It will now report your vital lifesigns as well as your coordinate position."
 	..()
 
 /obj/item/clothing/under/examine()
@@ -301,13 +307,10 @@ DEATH COMMANDO GAS MASK
 		if(2)
 			usr << "Its vital tracker appears to be enabled."
 		if(3)
-			usr << "It vital tracker and tracking beacon appear to be enabled."
+			usr << "Its vital tracker and tracking beacon appear to be enabled."
 
 
 /obj/item/clothing/under/color/orange/mode = 3
-/obj/item/clothing/under/color/orange/attack_self(mob/user as mob)
-	user << "There are no controls for the sensing equipment woven into the fabric."
-
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user as mob)
 	if(src.flags&NOSLIP)
