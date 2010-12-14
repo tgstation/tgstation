@@ -546,9 +546,6 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		src << "Only administrators may use this command."
 		return
 
-	world << "\blue <B>Alert: The shuttle is going back!</B>"
-	world << sound('shuttlerecalled.ogg')
-
 	emergency_shuttle.recall()
 
 	return

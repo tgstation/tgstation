@@ -31,6 +31,12 @@ datum/shuttle_controller
 
 	proc/recall()
 		if(direction == 1)
+			var/timeleft = timeleft()
+			if(timeleft >= 600)
+				world << "\blue <B>Shuttle is at Centcom. Unable to recall.</B>"
+				return
+			world << "\blue <B>Alert: The shuttle is going back!</B>"
+			world << sound('shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
 

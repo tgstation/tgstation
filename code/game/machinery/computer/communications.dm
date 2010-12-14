@@ -413,9 +413,6 @@
 	if( ticker.mode.name == "blob" )
 		return
 
-	world << "\blue <B>Alert: The shuttle is going back!</B>" //marker4
-	world << sound('shuttlerecalled.ogg')
-
 	emergency_shuttle.recall()
 
 	return

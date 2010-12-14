@@ -42,6 +42,7 @@
 	access_qm = 41
 	access_court = 42
 	access_clown = 43
+	access_mime = 44
 
 
 /obj/var/list/req_access = null
@@ -149,7 +150,7 @@
 		if("Clown")
 			return list(access_maint_tunnels, access_clown)
 		if("Mime")
-			return list(access_maint_tunnels)
+			return list(access_maint_tunnels, access_mime)
 		if("Chef")
 			return list(access_kitchen, access_morgue)
 		if("Roboticist")
@@ -182,7 +183,7 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
-	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown)
+	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime)
 
 /proc/get_access_desc(A)
 	switch(A)
@@ -270,6 +271,8 @@
 			return "Quartermaster's Office"
 		if(access_clown)
 			return "HONK! Access"
+		if(access_mime)
+			return "Silent Access"
 
 /proc/get_all_jobs()
 	return list("Assistant", "Station Engineer", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",
