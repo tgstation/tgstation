@@ -30,6 +30,7 @@
 	var/view_range = 7				//How far it can see.
 	var/obj/item/weapon/card/id/anicard		//By default, animals can open doors but not any with access restrictions.
 	var/intelligence = null					// the intelligence var allows for additional access (by job).
+	var/hardness = 0					// determines the prob of a stun
 
 	New()			//Initializes the livestock's AI and access
 		..()
@@ -177,7 +178,7 @@
 					for(var/mob/O in viewers(world.view,src))
 						O.show_message("\red <B>[src.target] has been attacked by [src.name]!</B>", 1, "\red You hear someone fall.", 2)
 					target:bruteloss += strength
-					if (prob(20))
+					if (prob(hardness))
 						target:stunned = max(target:stunned, (strength / 2))
 					src.loc = target.loc
 					set_null()  //Break off the attack for a sec.
@@ -286,10 +287,12 @@
 	cycle_pause = 10
 	patience = 25
 	view_range = 8
+	hardness = 20
 
 /obj/livestock/spesscarp/elite
 	desc = "Oh shit, you're really fucked now. It has an evil gleam in it's eye."
 	health = 50
 	maxhealth = 50
 	view_range = 14
+	hardness = 100
 	intelligence = "Assistant"
