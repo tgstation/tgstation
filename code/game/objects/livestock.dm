@@ -175,9 +175,10 @@
 			if(can_see(src,target,view_range ))	//Can I see it?
 				if(distance <= 1)  				//Am I close enough to attack it?
 					for(var/mob/O in viewers(world.view,src))
-						O.show_message("\red <B>[src.target] has been leapt on by [src.name]!</B>", 1, "\red You hear someone fall", 2)
+						O.show_message("\red <B>[src.target] has been attacked by [src.name]!</B>", 1, "\red You hear someone fall.", 2)
 					target:bruteloss += strength
-					target:stunned = max(target:stunned, (strength / 2))
+					if (prob(20))
+						target:stunned = max(target:stunned, (strength / 2))
 					src.loc = target.loc
 					set_null()  //Break off the attack for a sec.
 				step_towards(src,get_step_towards2(src , target)) // Move towards the target.
@@ -258,7 +259,7 @@
 		icon_state = "[initial(icon_state)]_d"
 		set_null()
 		for(var/mob/O in hearers(src, null))
-			O.show_message("\red <B>[src] curls up into a ball!</B>", 1)
+			O.show_message("\red <B>[src]'s eyes glass over!</B>", 1)
 
 	proc/healthcheck()
 		if (src.health <= 0)
@@ -279,12 +280,12 @@
 	desc = "Oh shit, you're really fucked now."
 	icon_state = "spesscarp"
 	aggressive = 1
-	health = 40
-	maxhealth = 40
-	strength = 15
+	health = 25
+	maxhealth = 25
+	strength = 10
 	cycle_pause = 10
-	patience = 50
-	view_range = 10
+	patience = 25
+	view_range = 8
 
 /obj/livestock/spesscarp/elite
 	desc = "Oh shit, you're really fucked now. It has an evil gleam in it's eye."
