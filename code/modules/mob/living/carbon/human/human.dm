@@ -1108,6 +1108,16 @@
 /*	if (src.w_radio)
 		src.overlays += image("icon" = 'ears.dmi', "icon_state" = "headset[!src.lying ? "" : "2"]", "layer" = MOB_LAYER) */
 
+	if (src.s_store)
+		var/t1 = src.s_store.item_state
+		if (!t1)
+			t1 = src.s_store.icon_state
+		src.overlays += image("icon" = 'belt_mirror.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = MOB_LAYER)
+		src.s_store.screen_loc = ui_sstore1
+
+	if (src.h_store)
+		src.h_store.screen_loc = ui_hstore1
+
 	if(src.client) src.hud_used.other_update() //Update the screenloc of the items on the 'other' inventory bar
 											   //to hide / show them.
 
@@ -1199,13 +1209,6 @@
 		src.overlays += image("icon" = 'belt.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = MOB_LAYER)
 		src.belt.screen_loc = ui_belt
 
-	if (src.s_store)
-		var/t1 = src.s_store.item_state
-		if (!t1)
-			t1 = src.s_store.icon_state
-		src.overlays += image("icon" = 'belt_mirror.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = MOB_LAYER)
-		src.s_store.screen_loc = ui_sstore1
-
 	if ((src.wear_mask && !(src.wear_mask.see_face)) || (src.head && !(src.head.see_face))) // can't see the face
 		if (src.wear_id)
 			if (istype(src.wear_id, /obj/item/weapon/card/id))
@@ -1246,9 +1249,6 @@
 
 	if (src.r_store)
 		src.r_store.screen_loc = ui_storage2
-
-	if (src.h_store)
-		src.h_store.screen_loc = ui_hstore1
 
 	if (src.back)
 		var/t1 = src.back.icon_state
