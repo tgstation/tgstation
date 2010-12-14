@@ -215,6 +215,14 @@
 	src.other += using
 
 	using = new src.h_type( src )
+	using.name = "hat storage"
+	using.icon = ui_style
+	using.icon_state = "hair"
+	using.screen_loc = ui_hstore1
+	using.layer = 19
+	src.other += using
+
+	using = new src.h_type( src )
 	using.name = "resist"
 	using.icon = ui_style
 	using.icon_state = "act_resist"

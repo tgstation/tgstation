@@ -156,6 +156,7 @@
 	name = "head"
 	icon = 'hats.dmi'
 	body_parts_covered = HEAD
+	var/list/allowed = list()
 
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
@@ -188,6 +189,7 @@
 	name = "hat"
 	desc = "Someone who wears this will look very smart"
 	icon_state = "detective"
+	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn)
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -601,7 +603,7 @@
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-//	allowed = null
+	allowed = null
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"

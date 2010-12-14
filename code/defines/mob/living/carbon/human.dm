@@ -34,6 +34,7 @@
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
 	var/obj/item/weapon/s_store = null
+	var/obj/item/weapon/h_store = null
 
 	var/icon/stand_icon = null
 	var/icon/lying_icon = null

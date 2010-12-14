@@ -628,6 +628,15 @@
 	else if (W == src.glasses)
 		src.glasses = null
 	else if (W == src.head)
+		W = src.h_store
+		if (W)
+			u_equip(W)
+			if (src.client)
+				src.client.screen -= W
+			if (W)
+				W.loc = src.loc
+				W.dropped(src)
+				W.layer = initial(W.layer)
 		src.head = null
 	else if (W == src.ears)
 		src.ears = null
@@ -649,6 +658,8 @@
 		src.l_store = null
 	else if (W == src.s_store)
 		src.s_store = null
+	else if (W == src.h_store)
+		src.h_store = null
 	else if (W == src.back)
 		src.back = null
 	else if (W == src.handcuffed)
@@ -657,6 +668,7 @@
 		src.r_hand = null
 	else if (W == src.l_hand)
 		src.l_hand = null
+
 
 	update_clothing()
 
@@ -837,6 +849,23 @@
 			else
 				src.u_equip(W)
 				src.s_store = W
+
+		if("hat storage")
+			if (src.h_store)
+				if (emptyHand)
+					src.h_store.DblClick()
+				return
+			var/confirm
+			if (src.head)
+				for(var/i=1, i<=src.head.allowed.len, i++)
+			//		world << "[src.head.allowed[i]] and [W.type]"
+					if (findtext("[W.type]","[src.head.allowed[i]]"))
+						confirm = 1
+						break
+			if (!confirm) return
+			else
+				src.u_equip(W)
+				src.h_store = W
 
 	update_clothing()
 
@@ -1217,6 +1246,9 @@
 
 	if (src.r_store)
 		src.r_store.screen_loc = ui_storage2
+
+	if (src.h_store)
+		src.h_store.screen_loc = ui_hstore1
 
 	if (src.back)
 		var/t1 = src.back.icon_state
@@ -1922,6 +1954,10 @@
 									message = text("\red <B>[] is trying to unhandcuff []!</B>", src.source, src.target)
 								if("uniform")
 									message = text("\red <B>[] is trying to take off \a [] from []'s body!</B>", src.source, src.target.w_uniform, src.target)
+								if("s_store")
+									message = text("\red <B>[] is trying to take off \a [] from []'s suit!</B>", src.source, src.target.s_store, src.target)
+								if("h_store")
+									message = text("\red <B>[] is trying to empty []'s hat!</B>", src.source, src.target)
 								if("pockets")
 									for(var/obj/item/weapon/mousetrap/MT in  list(src.target.l_store, src.target.r_store))
 										if(MT.armed)
@@ -2056,6 +2092,32 @@
 					src.item.layer = 20
 					src.target.belt = src.item
 					src.item.loc = src.target
+		if("s_store")
+			if (src.target.s_store)
+				var/obj/item/W = src.target.s_store
+				src.target.u_equip(W)
+				if (src.target.client)
+					src.target.client.screen -= W
+				if (W)
+					W.loc = src.target.loc
+					W.dropped(src.target)
+					W.layer = initial(W.layer)
+				W.add_fingerprint(src.source)
+			else
+				if (istype(src.item, /obj) && src.target.wear_suit)
+					var/confirm
+					for(var/i=1, i<=src.target.wear_suit.allowed.len, i++)
+		//				world << "[src.target.wear_suit.allowed[i]] and [W.type]"
+						if (findtext("[src.item.type]","[src.target.wear_suit.allowed[i]]") || istype(src.item, /obj/item/device/pda) || istype(src.item, /obj/item/weapon/pen))
+							confirm = 1
+							break
+					if (!confirm) return
+					else
+						src.source.drop_item()
+						src.loc = src.target
+						src.item.layer = 20
+						src.target.s_store = src.item
+						src.item.loc = src.target
 		if("head")
 			if (src.target.head)
 				var/obj/item/W = src.target.head
@@ -2262,6 +2324,17 @@
 					src.item.layer = 20
 					src.target.back = src.item
 					src.item.loc = src.target
+		if("h_store")
+			if (src.target.h_store)
+				var/obj/item/W = src.target.h_store
+				src.target.u_equip(W)
+				if (src.target.client)
+					src.target.client.screen -= W
+				if (W)
+					W.loc = src.target.loc
+					W.dropped(src.target)
+					W.layer = initial(W.layer)
+				W.add_fingerprint(src.source)
 		if("handcuff")
 			if (src.target.handcuffed)
 				var/obj/item/W = src.target.handcuffed
@@ -2465,9 +2538,11 @@
 	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=suit'>[(src.wear_suit ? src.wear_suit : "Nothing")]</A>
 	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(src.back ? src.back : "Nothing")]</A> [((istype(src.wear_mask, /obj/item/clothing/mask) && istype(src.back, /obj/item/weapon/tank) && !( src.internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
 	<BR><B>ID:</B> <A href='?src=\ref[src];item=id'>[(src.wear_id ? src.wear_id : "Nothing")]</A>
+	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(src.s_store ? src.s_store : "Nothing")]</A>
 	<BR>[(src.handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(src.internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
+	<BR><A href='?src=\ref[src];item=h_store'>Empty Hat</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[src.name]'>Close</A>
 	<BR>"}
 	user << browse(dat, text("window=mob[src.name];size=340x480"))

@@ -349,6 +349,7 @@
 			src.equip_if_possible(new /obj/item/clothing/suit/det_suit(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/device/detective_scanner(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/zippo(src), slot_l_store)
+			src.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(src), slot_h_store)
 
 		if ("Medical Doctor")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears) // -- TLE

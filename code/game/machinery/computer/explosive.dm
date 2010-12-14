@@ -2,7 +2,7 @@
 	name = "Prisoner Management"
 	icon = 'computer.dmi'
 	icon_state = "explosive"
-	req_access = list(access_captain, access_armory)
+	req_access = list(access_armory)
 
 	var/id = 0.0
 	var/temp = null
