@@ -56,6 +56,11 @@
 			usr << "\red [src.name] has a[src.belt.blood_DNA ? " bloody " : " "] \icon[src.belt] [src.belt.name] on [t_his] belt!"
 		else
 			usr << "\blue [src.name] has a \icon[src.belt] [src.belt.name] on [t_his] belt."
+	if(src.s_store)
+		if(src.s_store.blood_DNA)
+			usr << "\red [src.name] has a[src.s_store.blood_DNA ? " bloody " : " "] \icon[src.s_store] [src.s_store.name] on [t_his][src.wear_suit.blood_DNA ? " bloody " : " "] \icon[src.wear_suit] [src.wear_suit.name]!"
+		else
+			usr << "\blue [src.name] has a \icon[src.s_store] [src.s_store.name] on [t_his][src.wear_suit.blood_DNA ? " bloody " : " "] \icon[src.wear_suit] [src.wear_suit.name]."
 	if (src.shoes)
 		usr << "[src.shoes.blood_DNA ? "\red" : "\blue"] [src.name] has a[src.shoes.blood_DNA ? " bloody " : " "] \icon[src.shoes] [src.shoes.name] on [t_his] feet."
 
