@@ -8,6 +8,8 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
+	var/list/startwords = list("travel","blood","join","hell","self","see")
+
 	var/list/objectives = list()
 
 	var/eldergod = 1 //for the summon god objective
@@ -101,21 +103,22 @@
 			cult_mob << "You have a talisman in your backpack, one that will help you start the cult on this station. Use it well and remember - there are others."
 		if(!wordtravel)
 			runerandom()
-		var/word=pick("1","2","3","4","5","6")
+		var/word=pick(startwords)
 		var/wordexp
 		switch(word)
-			if("1")
+			if("travel")
 				wordexp = "[wordtravel] is travel..."
-			if("2")
+			if("blood")
 				wordexp = "[wordblood] is blood..."
-			if("3")
+			if("join")
 				wordexp = "[wordjoin] is join..."
-			if("4")
+			if("hell")
 				wordexp = "[wordhell] is Hell..."
-			if("5")
+			if("self")
 				wordexp = "[wordself] is self..."
-			if("6")
+			if("see")
 				wordexp = "[wordsee] is see..."
+		startwords -= word
 		cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordexp]"
 		cult_mob.mind.store_memory("<B>You remember one thing</B>: [wordexp]", 0, 0)
 		cultists.Add(cult_mob)
