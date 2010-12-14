@@ -5,6 +5,13 @@
 	icon_state = "ash"
 	anchored = 1
 
+/obj/decal/disintegrated
+	name = "remains"
+	desc = "These remains have a strange sense about them.."
+	icon = 'blood.dmi'
+	icon_state = "disintegrated"
+	anchored = 1
+
 /obj/decal/point
 	name = "point"
 	icon = 'screen1.dmi'

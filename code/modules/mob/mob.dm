@@ -1955,7 +1955,7 @@ Originally created for wizard disintegrate. I've removed the virus code since it
 		flick("dust-a", animation)
 	else
 		flick("dust-r", animation)
-	new /obj/decal/ash(src.loc)
+	new /obj/decal/disintegrated(src.loc)
 
 	if (src.client)
 		var/mob/dead/observer/newmob
