@@ -859,7 +859,7 @@
 			if (src.head)
 				for(var/i=1, i<=src.head.allowed.len, i++)
 			//		world << "[src.head.allowed[i]] and [W.type]"
-					if (findtext("[W.type]","[src.head.allowed[i]]"))
+					if (findtext("[W.type]","[src.head.allowed[i]]") || istype(W, /obj/item/weapon/pen))
 						confirm = 1
 						break
 			if (!confirm) return
