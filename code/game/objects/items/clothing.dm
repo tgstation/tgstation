@@ -36,6 +36,7 @@ DEATH COMMANDO GAS MASK
 /obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
 	if (src.chained)
 		src.chained = null
+		src.slowdown = SHOES_SLOWDOWN
 		new /obj/item/weapon/handcuffs( user.loc )
 		src.icon_state = "orange"
 	return
@@ -45,6 +46,7 @@ DEATH COMMANDO GAS MASK
 		//H = null
 		del(H)
 		src.chained = 1
+		src.slowdown = 15
 		src.icon_state = "orange1"
 	return
 

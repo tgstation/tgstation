@@ -128,32 +128,11 @@
 	if (hungry >= 70) tally += hungry/50
 
 	if(src.wear_suit)
-		switch(src.wear_suit.type)
-			if(/obj/item/clothing/suit/straight_jacket)
-				tally += 15
-			if(/obj/item/clothing/suit/fire)	//	firesuits slow you down a bit
-				tally += 1.3
-			if(/obj/item/clothing/suit/fire/heavy)	//	firesuits slow you down a bit
-				tally += 1.7
-			if(/obj/item/clothing/suit/bio_suit)	//	biosuits slow you down a bit
-				tally += 1.3
-			if(/obj/item/clothing/suit/bio_suit/plaguedoctorsuit)	//	biosuits slow you down a bit
-				tally += 1.3
-			if(/obj/item/clothing/suit/space)
-				if(!istype(src.loc, /turf/space))		//	space suits slow you down a bit unless in space
-					tally += 3
-			if(/obj/item/clothing/suit/space/rig)
-				if(!istype(src.loc, /turf/space))		//	space suits slow you down a bit unless in space
-					tally += 2
-			if(/obj/item/clothing/suit/space/syndicate)
-				if(!istype(src.loc, /turf/space))		//	space suits slow you down a bit unless in space
-					tally += 1
+		tally += src.wear_suit.slowdown
 
 	if (istype(src.shoes, /obj/item/clothing/shoes))
-		if (src.shoes.chained)
-			tally += 15
-		else
-			tally += -1.0
+		tally += src.shoes.slowdown
+
 	if(src.mutations & 32)
 		tally += 1.5
 	if (src.bodytemperature < 283.222)
@@ -668,7 +647,6 @@
 		src.r_hand = null
 	else if (W == src.l_hand)
 		src.l_hand = null
-
 
 	update_clothing()
 

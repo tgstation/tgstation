@@ -79,6 +79,8 @@
 
 #define FLOWFRAC 0.99				// fraction of gas transfered per process
 
+#define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
+
 
 //FLAGS BITMASK
 #define ONBACK 1			// can be put in back slot

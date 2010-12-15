@@ -134,6 +134,7 @@
 			src.verbs += /client/proc/play_sound
 			src.verbs += /client/proc/cuban_pete 				// -- Urist
 			src.verbs += /client/proc/only_one  				// muskets
+			src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			src.verbs += /proc/possess
 			src.verbs += /proc/release
 
@@ -253,6 +254,7 @@
 			src.verbs += /client/proc/play_sound
 			src.verbs += /client/proc/cuban_pete 				// -- Urist
 			src.verbs += /client/proc/only_one  				// muskets
+			src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			src.verbs += /proc/possess
 			src.verbs += /proc/release
 
@@ -268,7 +270,6 @@
 
 			// Settings
 			//src.verbs += /client/proc/colorooc 				// -- Urist
-			src.verbs += /client/proc/only_one  // muskets
 			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
 			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
 			src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
@@ -373,6 +374,7 @@
 			//src.verbs += /client/proc/object_talk 			// -- TLE
 			src.verbs += /client/proc/play_sound
 			//src.verbs += /client/proc/cuban_pete 				// -- Urist
+			//src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			src.verbs += /proc/possess
 			src.verbs += /proc/release
 
@@ -521,6 +523,7 @@
 			//src.verbs += /client/proc/object_talk 			// -- TLE
 			src.verbs += /client/proc/play_sound
 			//src.verbs += /client/proc/cuban_pete 				// -- Urist
+			//src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			src.verbs += /proc/possess
 			src.verbs += /proc/release
 
@@ -659,6 +662,7 @@
 			//src.verbs += /client/proc/object_talk 			// -- TLE
 			src.verbs += /client/proc/play_sound
 			//src.verbs += /client/proc/cuban_pete 				// -- Urist
+			//src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			//src.verbs += /proc/possess
 			//src.verbs += /proc/release
 
@@ -793,6 +797,7 @@
 			//src.verbs += /client/proc/object_talk 			// -- TLE
 			//src.verbs += /client/proc/play_sound
 			//src.verbs += /client/proc/cuban_pete 				// -- Urist
+			//src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			//src.verbs += /proc/possess
 			//src.verbs += /proc/release
 
@@ -1060,6 +1065,7 @@
 	src.verbs -= /client/proc/object_talk 				// -- TLE
 	src.verbs -= /client/proc/play_sound
 	src.verbs -= /client/proc/cuban_pete 				// -- Urist
+	src.verbs -= /client/proc/space_asshole 			// --Agouri :3
 	src.verbs -= /proc/possess
 	src.verbs -= /proc/release
 

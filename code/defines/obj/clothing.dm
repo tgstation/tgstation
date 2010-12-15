@@ -14,6 +14,7 @@
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
+	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 
 // EARS
 
@@ -424,13 +425,13 @@
 /obj/item/clothing/shoes
 	name = "shoes"
 	icon = 'shoes.dmi'
-	var/chained = 0
 
 	body_parts_covered = FEET
 
 	protective_temperature = 500
 	heat_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
+	slowdown = SHOES_SLOWDOWN
 
 /obj/item/clothing/shoes/black
 	name = "Black Shoes"
@@ -446,10 +447,12 @@
 /obj/item/clothing/shoes/orange
 	name = "Orange Shoes"
 	icon_state = "orange"
+	var/chained = 0
 
 /obj/item/clothing/shoes/swat
 	name = "SWAT shoes"
 	icon_state = "swat"
+	slowdown = 0
 
 /obj/item/clothing/shoes/white
 	name = "White Shoes"
@@ -467,6 +470,7 @@
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
+	slowdown = 0
 
 /obj/item/clothing/shoes/magboots
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
@@ -481,6 +485,7 @@
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
+	slowdown = 0
 
 // SUITS
 
@@ -501,6 +506,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 0.30
+	slowdown = 1.3
 
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
 	name = "Plague doctor suit"
@@ -651,6 +657,7 @@
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	slowdown = 3
 
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
@@ -670,6 +677,7 @@
 	icon_state = "heavy"
 	item_state = "heavy"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	slowdown = 2
 
 // FIRE SUITS
 
@@ -682,6 +690,7 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	slowdown = 1.3
 
 	protective_temperature = 4500
 	heat_transfer_coefficient = 0.01
@@ -695,6 +704,7 @@
 	//w_class = 4//bulky item
 	protective_temperature = 10000
 	heat_transfer_coefficient = 0.01
+	slowdown = 1.7
 
 // SPACE SUITS
 
@@ -711,18 +721,21 @@
 	protective_temperature = 1000
 	heat_transfer_coefficient = 0.02
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
+	slowdown = 3
 
 /obj/item/clothing/suit/space/rig
 	name = "rig suit"
 	desc = "A special suit that protects against hazardous, low pressure environments."
 	icon_state = "rig"
 	item_state = "rig_suit"
+	slowdown = 2
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	slowdown = 1
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
