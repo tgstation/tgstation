@@ -39,7 +39,7 @@
 		return
 	if (W.w_class > 3 || src.loc == W)
 		if(W.w_class > 3)
-			user << "The [W] is too big to fit into the backpack."
+			user << "[W] is too big to fit into the backpack."
 		return
 	var/t
 	for(var/obj/item/weapon/O in src)
