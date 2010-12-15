@@ -1949,13 +1949,16 @@ Originally created for wizard disintegrate. I've removed the virus code since it
 	animation.master = src
 	if(ishuman(src))
 		flick("dust-h", animation)
+		new /obj/decal/remains/human(src.loc)
 	else if(ismonkey(src))
 		flick("dust-m", animation)
+		new /obj/decal/remains/human(src.loc)
 	else if(isalien(src))
 		flick("dust-a", animation)
+		new /obj/decal/remains/xeno(src.loc)
 	else
 		flick("dust-r", animation)
-	new /obj/decal/disintegrated(src.loc)
+		new /obj/decal/remains/robot(src.loc)
 
 	if (src.client)
 		var/mob/dead/observer/newmob

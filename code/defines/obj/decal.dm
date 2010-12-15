@@ -5,11 +5,25 @@
 	icon_state = "ash"
 	anchored = 1
 
-/obj/decal/disintegrated
+/obj/decal/remains/human
 	name = "remains"
-	desc = "These remains have a strange sense about them.."
+	desc = "These remains have a strange sense about them..."
 	icon = 'blood.dmi'
-	icon_state = "disintegrated"
+	icon_state = "remains"
+	anchored = 1
+
+/obj/decal/remains/xeno
+	name = "remains"
+	desc = "These remains have a strange sense about them..."
+	icon = 'blood.dmi'
+	icon_state = "remainsxeno"
+	anchored = 1
+
+/obj/decal/remains/robot
+	name = "remains"
+	desc = "These remains have a strange sense about them..."
+	icon = 'robots.dmi'
+	icon_state = "remainsrobot"
 	anchored = 1
 
 /obj/decal/point

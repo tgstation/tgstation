@@ -96,6 +96,14 @@
 /area/shuttle/prison/prison
 	icon_state = "shuttle2"
 
+/area/shuttle/specialops/centcom
+	name = "Special Ops Shuttle"
+	icon_state = "shuttlered"
+
+/area/shuttle/specialops/station
+	name = "Special Ops Shuttle"
+	icon_state = "shuttlered2"
+
 /area/shuttle/thunderdome
 	name = "honk"
 
