@@ -566,8 +566,7 @@
 
 	src.overlays = null
 
-	if(emagged)
-		src.overlays += "emag"
+
 
 	if(src.stat == 0)
 		src.overlays += "eyes"

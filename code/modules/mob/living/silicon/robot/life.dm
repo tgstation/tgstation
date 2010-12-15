@@ -82,6 +82,11 @@
 			if(src.resting)
 				src.weakened = max(src.weakened, 5)
 
+			if(emagged && prob(10))
+				src.overlays += "emag"
+			else
+				src.overlays -= "emag"
+
 			if(health < 0)
 				death()
 
