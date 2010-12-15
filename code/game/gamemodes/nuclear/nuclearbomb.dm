@@ -140,6 +140,7 @@
 */
 	enter_allowed = 0
 	var/derp = 0
+	var/herp = 0
 	var/area/A = src.loc.loc
 	if (istype( A, /area))
 		if (A.name == "Space")
@@ -148,6 +149,8 @@
 			derp = 1
 		if (A.name == "Wizard's Den")
 			derp = 1
+	if (syndicate_station_at_station)
+		herp = 1
 	if (!derp)
 		for(var/direction in cardinal)
 			for(var/area/target in get_step(src,direction))

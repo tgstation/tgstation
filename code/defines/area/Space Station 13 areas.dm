@@ -221,6 +221,26 @@
 	icon_state = "yellow"
 	requires_power = 0
 
+/area/syndicate_station/start
+	name = "Syndicate Station Start"
+	icon_state = "yellow"
+
+/area/syndicate_station/one
+	name = "Syndicate Station Location 1"
+	icon_state = "green"
+
+/area/syndicate_station/two
+	name = "Syndicate Station Location 2"
+	icon_state = "green"
+
+/area/syndicate_station/three
+	name = "Syndicate Station Location 3"
+	icon_state = "green"
+
+/area/syndicate_station/four
+	name = "Syndicate Station Location 4"
+	icon_state = "green"
+
 /area/wizard_station
 	name = "Wizard's Den"
 	icon_state = "yellow"

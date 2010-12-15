@@ -264,6 +264,7 @@
 #include "code\game\sound.dm"
 #include "code\game\status.dm"
 #include "code\game\supplyshuttle.dm"
+#include "code\game\syndicate_shuttle.dm"
 #include "code\game\throwing.dm"
 #include "code\game\topic.dm"
 #include "code\game\turf.dm"

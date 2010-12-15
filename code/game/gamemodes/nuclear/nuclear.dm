@@ -11,6 +11,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/derp = 0 //Used for tracking if the syndies actually haul the nuke to the station
+	var/herp = 0 //Used for tracking if the syndies got the shuttle off of the z-level
 
 /datum/game_mode/nuclear/announce()
 	world << "<B>The current game mode is - Nuclear Emergency!</B>"
@@ -22,6 +23,8 @@
 	var/list/possible_syndicates = list()
 	possible_syndicates = get_possible_syndicates()
 	var/agent_number = 0
+
+	syndicate_begin()
 
 	if(possible_syndicates.len < 1)
 		return 0
@@ -129,6 +132,9 @@
 		if(src.derp)
 			finished = 3
 			return
+		if(src.herp)
+			finished = 4
+			return
 		finished = 1
 		return
 
@@ -182,6 +188,14 @@
 		if(3)
 			world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 			world << "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't lose the disk!"
+			for(var/datum/mind/M in syndicates)
+				if(!M.current)
+					continue
+				if(M.current.client)
+					world << text("<B>[M.current.key] was [M.current.real_name]</B> [M.current.stat == 2 ? "(DEAD)" : ""]")
+		if(4)
+			world << "<FONT size = 3><B>Total Annihilation</B></FONT>"
+			world << "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 			for(var/datum/mind/M in syndicates)
 				if(!M.current)
 					continue
