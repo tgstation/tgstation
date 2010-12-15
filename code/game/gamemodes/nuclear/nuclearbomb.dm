@@ -38,6 +38,7 @@
 		flick("nuclearbombc", src)
 		src.icon_state = "nuclearbomb1"
 		src.extended = 1
+		bomb_set = 1
 	return
 
 /obj/machinery/nuclearbomb/verb/make_deployable()
@@ -149,8 +150,6 @@
 			derp = 1
 		if (A.name == "Wizard's Den")
 			derp = 1
-	if (syndicate_station_at_station)
-		herp = 1
 	if (!derp)
 		for(var/direction in cardinal)
 			for(var/area/target in get_step(src,direction))
@@ -160,6 +159,8 @@
 					derp = 1
 				if (target.name == "Wizard's Den")
 					derp = 1
+	if (syndicate_station_at_station)
+		herp = 1
 	for(var/mob/M in world)
 		if(M.client)
 			spawn(0)

@@ -10,7 +10,7 @@
 
 	var/list/theareas = new/list()
 	for(var/area/AR in world)
-		if(istype(AR, /area/shuttle)) continue
+		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station)) continue
 		if(theareas.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if (picked.z == src.z)
@@ -51,7 +51,7 @@
 
 	var/list/theareas = new/list()
 	for(var/area/AR in world)
-		if(istype(AR, /area/shuttle)) continue
+		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station)) continue
 		if(theareas.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if (picked.z == src.z)

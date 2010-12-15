@@ -13,6 +13,7 @@ var/syndicate_station_time = 0
 var/syndicate_station_timeleft = 0
 var/area/syndicate_loc = null
 var/syndicate_out_of_moves = 0
+var/bomb_set = 1
 
 /obj/machinery/computer/syndicate_station
 	name = "Syndicate Station Terminal"
@@ -79,6 +80,7 @@ var/syndicate_out_of_moves = 0
 					del(T)
 
 			start_location.move_contents_to(end_location)
+			bomb_set = 0
 
 
 
@@ -117,6 +119,7 @@ var/syndicate_out_of_moves = 0
 /proc/syndicate_can_move()
 	if(syndicate_station_moving_to_station || syndicate_station_moving_to_space) return 0
 	if(syndicate_out_of_moves) return 0
+	if(!bomb_set) return 0
 	else return 1
 
 /obj/machinery/computer/syndicate_station/attackby(I as obj, user as mob)
