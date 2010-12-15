@@ -512,28 +512,22 @@
 /obj/item/weapon/gun/shotgun
 	name = "shotgun"
 	icon_state = "shotgun"
+	var/shellsmax
+	var/index
+	var/list/shells = list() //At least, it's better than two/eight vars, Uhangi! -- Barhandar
 	w_class = 3.0 //should go on back now, has no sprite for that atm because I can't sprite for shit -- Urist
 	force = 7.0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	var/pumped = 0.0
-	var/s1 = 0.0
-	var/s2 = 0.0
+	var/pumped = 0
+	shellsmax = 2
 
-/obj/item/weapon/gun/combatshotgun
+/obj/item/weapon/gun/shotgun/combat
 	name = "combat shotgun"
 	icon_state = "cshotgun"
 	w_class = 4.0
 	force = 12.0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	var/pumped = 0.0
-	var/s1 = 0.0 // this can probably done in a much more efficient way, but who gives a fuck
-	var/s2 = 0.0
-	var/s3 = 0.0
-	var/s4 = 0.0
-	var/s5 = 0.0
-	var/s6 = 0.0
-	var/s7 = 0.0
-	var/s8 = 0.0
+	shellsmax = 8
 
 /obj/item/weapon/gun/energy
 	name = "energy"
