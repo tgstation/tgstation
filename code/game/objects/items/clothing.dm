@@ -317,10 +317,12 @@ DEATH COMMANDO GAS MASK
 /obj/item/clothing/shoes/magboots/attack_self(mob/user as mob)
 	if(src.flags&NOSLIP)
 		src.flags &= ~NOSLIP
+		src.slowdown = SHOES_SLOWDOWN
 		icon_state = "magboots0"
 		user << "You disable the mag-pulse traction system."
 	else
 		src.flags |= NOSLIP
+		src.slowdown = 2
 		icon_state = "magboots1"
 		user << "You enable the mag-pulse traction system."
 

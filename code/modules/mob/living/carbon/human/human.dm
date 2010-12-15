@@ -127,7 +127,7 @@
 	var/hungry = (500 - src.nutrition)/5 // So overeat would be 100 and default level would be 80
 	if (hungry >= 70) tally += hungry/50
 
-	if(src.wear_suit)
+	if(src.wear_suit && !istype(src.loc, /turf/space))
 		tally += src.wear_suit.slowdown
 
 	if (istype(src.shoes, /obj/item/clothing/shoes))
