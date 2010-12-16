@@ -258,7 +258,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 /obj/item/weapon/gun/shotgun/attackby(obj/item/weapon/A as obj, mob/user as mob)
 	if (istype(A, /obj/item/weapon/ammo/bshell))
 		//var/obj/item/weapon/ammo/bshell/A = B
-		if (index == src.shellsmax) //...than sorry.
+		if (index == src.shellsmax || shellsunlimited >= 1) //...than sorry.
 			user << "\blue It's already fully loaded!"
 			return 1
 		else
@@ -272,7 +272,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 	else if (istype(A, /obj/item/weapon/ammo/gshell))
 		//var/obj/item/weapon/ammo/gshell/A = B
-		if (index == src.shellsmax)
+		if (index == src.shellsmax || shellsunlimited >= 1)
 			user << "\blue It's already fully loaded!"
 			return 1
 		else
@@ -286,7 +286,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 	else if (istype(A, /obj/item/weapon/ammo/blshell))
 		//var/obj/item/weapon/ammo/gshell/A = B
-		if (index == src.shellsmax)
+		if (index == src.shellsmax || shellsunlimited >= 1)
 			user << "\blue It's already fully loaded!"
 			return 1
 		else
@@ -312,7 +312,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			src.pumped = 1
 			return
 	src.add_fingerprint(user)
-	if (!index)
+	if (!index && !shellsunlimited)
 		user.show_message("\red *click* *click*", 2)
 		return
 	playsound(user, 'Gunshot.ogg', 100, 1)
@@ -327,12 +327,12 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if (!( istype(T, /turf) ))
 		return
 	if (U == T)
-		if (src.shells[index] == 1)
+		if (src.shells[index] == 1 || shellsunlimited == 1)
 			user.bullet_act(PROJECTILE_WEAKBULLET)
-		else if (src.shells[index] == 2)
+		else if (src.shells[index] == 2 || shellsunlimited == 2)
 			user.bullet_act(PROJECTILE_BULLET)
 		return
-	if (src.shells[index] == 1)
+	if (src.shells[index] == 1 && !shellsunlimited)
 		var/obj/bullet/A = new /obj/bullet/weakbullet( user.loc )
 		src.pumped = 0
 		src.shells[index] = 0
@@ -346,7 +346,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		if (!istype(U, /turf))
 			del(A)
 			return
-	else if (src.shells[index] == 2)
+	else if (src.shells[index] == 2 && !shellsunlimited)
 		var/obj/bullet/A = new /obj/bullet( user.loc )
 		src.pumped = 0
 		src.shells[index] = 0
@@ -360,10 +360,39 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		if (!istype(U, /turf))
 			del(A)
 			return
-	else if (src.shells[index] == 3)
+	else if (src.shells[index] == 3 && !shellsunlimited)
 		src.pumped = 0
 		src.shells[index] = 0
 		index--
+		spawn( 0 )
+		return
+	//following code definitely can be made in a more efficient way, I just don't know it -- Barhandar
+	else if (shellsunlimited == 1)
+		var/obj/bullet/A = new /obj/bullet/weakbullet( user.loc )
+		src.pumped = 0
+		A.current = U
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+		user.next_move = world.time + 4
+		spawn( 0 )
+			A.process()
+		if (!istype(U, /turf))
+			del(A)
+			return
+	else if (shellsunlimited == 2)
+		var/obj/bullet/A = new /obj/bullet( user.loc )
+		src.pumped = 0
+		A.current = U
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+		user.next_move = world.time + 4
+		spawn( 0 )
+			A.process()
+		if (!istype(U, /turf))
+			del(A)
+			return
+	else if (shellsunlimited == 3) //I don't know why the fuck you'll need unlimited blank shells. Just to be sure. -- Barhandar
+		src.pumped = 0
 		spawn( 0 )
 		return
 

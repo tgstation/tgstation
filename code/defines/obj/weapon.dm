@@ -513,8 +513,9 @@
 	name = "shotgun"
 	icon_state = "shotgun"
 	var/shellsmax
+	var/shellsunlimited = 0
 	var/index
-	var/list/shells = list() //At least, it's better than two/eight vars, Uhangi! -- Barhandar
+	var/list/shells = list() //this is a list. All craftsmanship is of good quality. At least, it's better than two/eight vars, Uhangi! -- Barhandar
 	w_class = 3.0 //should go on back now, has no sprite for that atm because I can't sprite for shit -- Urist
 	force = 7.0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
