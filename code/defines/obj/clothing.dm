@@ -157,7 +157,7 @@
 	name = "head"
 	icon = 'hats.dmi'
 	body_parts_covered = HEAD
-	var/list/allowed = list()
+	var/list/allowed = list(/obj/item/weapon/pen)
 
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
@@ -190,7 +190,7 @@
 	name = "hat"
 	desc = "Someone who wears this will look very smart"
 	icon_state = "detective"
-	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn)
+	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
