@@ -936,6 +936,13 @@
 			var/trans = src.reagents.trans_to(target, 10)
 			user << "\blue You transfer [trans] units of the solution to [target]."
 
+			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+				var/mob/living/silicon/robot/bro = user
+				bro.cell.charge -= 30
+				var/refill = reagents.get_master_reagent_id()
+				spawn(600)
+					reagents.add_reagent(refill, trans)
+
 		return
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
@@ -2354,6 +2361,10 @@
 			//mrid = R.get_master_reagent_id()
 			switch(reagents.get_master_reagent_id())
 				if("beer")
+					icon_state = "beerglass"
+					name = "Beer glass"
+					desc = "A freezing pint of beer"
+				if("beer2")
 					icon_state = "beerglass"
 					name = "Beer glass"
 					desc = "A freezing pint of beer"

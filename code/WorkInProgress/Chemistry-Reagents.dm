@@ -1089,6 +1089,27 @@ datum
 				data++
 				..()
 				return
+
+		beer2							//copypasta of chloral hydrate, disguised as normal beer for use by emagged brobots
+			name = "Beer"
+			id = "beer2"
+			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				switch(data)
+					if(1)
+						M:confused += 2
+						M:drowsyness += 2
+					if(2 to 50)
+						M:sleeping += 1
+					if(51 to INFINITY)
+						M:sleeping += 1
+						M:toxloss += (data - 50)
+				data++
+				..()
+				return
 		/*
 		addiction					//Is a generic "addiction" reagent that is produced by any chemical that is addictive.
 			name = "Addiction"		//	It should never be seen by the player since it only exists inside the body.

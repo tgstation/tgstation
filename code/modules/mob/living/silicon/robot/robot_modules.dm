@@ -113,7 +113,7 @@
 	var/datum/reagents/R = new/datum/reagents(50)
 	src.emag.reagents = R
 	R.my_atom = src.emag
-	R.add_reagent("chloralhydrate", 50)
+	R.add_reagent("beer2", 50)
 	src.emag.name = "Mickey Finn's Special Brew"
 
 /obj/item/weapon/borg/stun
