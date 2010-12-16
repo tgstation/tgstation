@@ -10,6 +10,7 @@
 	flags = FPRINT | TABLEPASS | ONBELT
 
 	var/owner = null
+	var/rank = null
 	var/default_cartridge = 0 // Access level defined by cartridge
 	var/obj/item/weapon/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //0-10, Main menu, Crew manifest, Engine monitor, Atmos scanner, med records, notes, sec records, messenger, mop locator, signaler, status display.
@@ -1422,12 +1423,28 @@ Code:
 		src.cartridge = C
 		src.updateUsrDialog()
 
-	else if (istype(C, /obj/item/weapon/card/id) && !src.owner && C:registered)
-		src.owner = C:registered
-		src.ownjob = C:assignment
-		src.name = "PDA-[src.owner]"
-		user << "\blue Card scanned."
-		src.updateUsrDialog()
+	else if (istype(C, /obj/item/weapon/card/id) && C:registered)
+		if(!src.owner)
+			src.owner = C:registered
+			src.rank = C:assignment
+			src.name = "PDA-[src.owner]([src.rank])"
+			user << "\blue Card scanned."
+			src.updateSelfDialog()
+			return
+		if(!(src.owner == C:registered))
+			user << "\blue Name on card does not match registered name. Please try again."
+			src.updateSelfDialog()
+			return
+		if((src.owner == C:registered) && (src.rank == C:assignment))
+			user << "\blue Rank is up to date."
+			src.updateSelfDialog()
+			return
+		if((src.owner == C:registered) && (src.rank != C:assignment))
+			src.rank = C:assignment
+			src.name = "PDA-[src.owner]([src.rank])"
+			user << "\blue Rank updated."
+			src.updateSelfDialog()
+			return
 
 
 /obj/item/device/pda/attack(mob/C as mob, mob/user as mob)

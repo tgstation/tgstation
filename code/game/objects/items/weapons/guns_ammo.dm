@@ -367,34 +367,70 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		spawn( 0 )
 		return
 	//following code definitely can be made in a more efficient way, I just don't know it -- Barhandar
-	else if (shellsunlimited == 1)
-		var/obj/bullet/A = new /obj/bullet/weakbullet( user.loc )
-		src.pumped = 0
-		A.current = U
-		A.yo = U.y - T.y
-		A.xo = U.x - T.x
-		user.next_move = world.time + 4
-		spawn( 0 )
-			A.process()
-		if (!istype(U, /turf))
-			del(A)
+	switch(shellsunlimited)
+		if (1)
+			var/obj/bullet/A = new /obj/bullet/weakbullet( user.loc )
+			src.pumped = 0
+			A.current = U
+			A.yo = U.y - T.y
+			A.xo = U.x - T.x
+			user.next_move = world.time + 4
+			spawn( 0 )
+				A.process()
+			if (!istype(U, /turf))
+				del(A)
+				return
+		if (2)
+			var/obj/bullet/A = new /obj/bullet( user.loc )
+			src.pumped = 0
+			A.current = U
+			A.yo = U.y - T.y
+			A.xo = U.x - T.x
+			user.next_move = world.time + 4
+			spawn( 0 )
+				A.process()
+			if (!istype(U, /turf))
+				del(A)
+				return
+		if (3) //I don't know why the fuck you'll need unlimited blank shells. Just to be sure. -- Barhandar
+			src.pumped = 0
+			spawn( 0 )
 			return
-	else if (shellsunlimited == 2)
-		var/obj/bullet/A = new /obj/bullet( user.loc )
-		src.pumped = 0
-		A.current = U
-		A.yo = U.y - T.y
-		A.xo = U.x - T.x
-		user.next_move = world.time + 4
-		spawn( 0 )
-			A.process()
-		if (!istype(U, /turf))
-			del(A)
-			return
-	else if (shellsunlimited == 3) //I don't know why the fuck you'll need unlimited blank shells. Just to be sure. -- Barhandar
-		src.pumped = 0
-		spawn( 0 )
-		return
+		else switch(src.shells[index])
+			if (1)
+				var/obj/bullet/A = new /obj/bullet/weakbullet( user.loc )
+				src.pumped = 0
+				src.shells[index] = 0
+				index--
+				A.current = U
+				A.yo = U.y - T.y
+				A.xo = U.x - T.x
+				user.next_move = world.time + 4
+				spawn( 0 )
+					A.process()
+				if (!istype(U, /turf))
+					del(A)
+					return
+			if (2)
+				var/obj/bullet/A = new /obj/bullet( user.loc )
+				src.pumped = 0
+				src.shells[index] = 0
+				index--
+				A.current = U
+				A.yo = U.y - T.y
+				A.xo = U.x - T.x
+				user.next_move = world.time + 4
+				spawn( 0 )
+					A.process()
+				if (!istype(U, /turf))
+					del(A)
+					return
+			if (3)
+				src.pumped = 0
+				src.shells[index] = 0
+				index--
+				spawn( 0 )
+				return
 
 
 
