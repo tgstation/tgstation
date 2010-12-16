@@ -1006,7 +1006,7 @@
 "atr" = (/turf/simulated/floor{tag = "icon-corner_west"; icon_state = "corner_west"},/area/hallway/secondary/entry)
 "ats" = (/obj/machinery/light{tag = "icon-tube1 (EAST)"; icon_state = "tube1"; dir = 4},/turf/simulated/floor,/area/hallway/secondary/entry)
 "att" = (/obj/securearea{tag = "icon-space"; name = "EXTERNAL AIRLOCK"; desc = "A warning sign which reads 'EXTERNAL AIRLOCK'"; icon_state = "space"},/turf/simulated/wall/r_wall,/area/maintenance/auxsolarport)
-"atu" = (/obj/machinery/power/solar_control{id = "auxsolareast"; name = "Port Auxiliary Solar Control"; track = 2},/obj/cable{icon_state = "0-2"; d2 = 2},/obj/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/maintenance/auxsolarport)
+"atu" = (/obj/machinery/power/solar_control{id = "auxsolareast"; name = "Port Auxiliary Solar Control"; track = 2},/obj/cable{icon_state = "0-2"; d2 = 2},/obj/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating,/area/maintenance/auxsolarport)
 "atv" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/turf/simulated/floor/plating,/area/maintenance/auxsolarport)
 "atw" = (/obj/cable{icon_state = "2-8"; d1 = 2; d2 = 8},/turf/simulated/floor/plating,/area/maintenance/auxsolarport)
 "atx" = (/turf/simulated/wall/r_wall,/area/maintenance/auxsolarport)
