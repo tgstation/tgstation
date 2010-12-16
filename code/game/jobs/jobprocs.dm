@@ -611,12 +611,12 @@
 		var/obj/item/device/pda/pda = src.belt
 		pda.owner = src.real_name
 		pda.ownjob = src.wear_id.assignment
-		pda.name = "PDA-[src.real_name] ([rank])"
+		pda.name = "PDA-[src.real_name] ([pda.ownjob])"
 	if (istype(src.r_store, /obj/item/device/pda))  //damned mime PDAs not starting in belt slot
 		var/obj/item/device/pda/pda = src.r_store
 		pda.owner = src.real_name
 		pda.ownjob = src.wear_id.assignment
-		pda.name = "PDA-[src.real_name] ([rank])"
+		pda.name = "PDA-[src.real_name] ([pda.ownjob])"
 
 /client/proc/mimewall()
 	set category = "Mime"
