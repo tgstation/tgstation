@@ -173,11 +173,19 @@
 		ticker.mode.declare_completion()
 
 	sleep(110)
-	if (ticker.mode.name != "nuclear emergency" || !derp)
-		world << "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>"
+	if (ticker.mode.name != "nuclear emergency" || !derp || !herp)
+		world << "<B>The station was destoyed by the nuclear blast! Resetting in 30 seconds!</B>"
 
 		sleep(300)
 		log_game("Rebooting due to nuclear destruction of station")
+		world.Reboot()
+		return
+
+	else if (ticker.mode.name == "nuclear emergency" && herp)
+		world << "<B>Everyone died in the blast, including the Syndicate Agents. Resetting in 30 seconds!</B>"
+
+		sleep(300)
+		log_game("Rebooting due to nuclear detonation")
 		world.Reboot()
 		return
 
