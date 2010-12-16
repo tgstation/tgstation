@@ -37,6 +37,13 @@ MOP
 			sleep(3)
 		del(D)
 
+	if(isrobot(user)) //Cyborgs can clean forever if they keep charged
+		var/mob/living/silicon/robot/janitor = user
+		janitor.cell.charge -= 20
+		var/refill = src.reagents.get_master_reagent_id()
+		spawn(600)
+			src.reagents.add_reagent(refill, 10)
+
 	return
 
 /obj/item/weapon/cleaner/examine()

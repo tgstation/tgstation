@@ -179,6 +179,23 @@
 
 /mob/living/carbon/monkey/attack_hand(mob/M as mob)
 	..()
+	if (istype(M, /mob/living/carbon/human))
+		if ((M:gloves && M:gloves.elecgen == 1 && M.a_intent == "hurt") /*&& (!istype(src:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+			if(M:gloves.uses > 0)
+				M:gloves.uses--
+				if (src.weakened < 5)
+					src.weakened = 5
+				if (src.stuttering < 5)
+					src.stuttering = 5
+				if (src.stunned < 5)
+					src.stunned = 5
+				for(var/mob/O in viewers(src, null))
+					if (O.client)
+						O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
+			else
+				M:gloves.elecgen = 0
+				M << "\red Not enough charge! "
+				return
 
 	if (M.a_intent == "help")
 		src.sleeping = 0

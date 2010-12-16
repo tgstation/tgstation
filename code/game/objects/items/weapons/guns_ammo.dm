@@ -597,7 +597,11 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return
 
 	playsound(user, 'Laser.ogg', 50, 1)
-	src.charges--
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		R.cell.charge -= 30
+	else
+		src.charges--
 	update_icon()
 
 	var/turf/T = user.loc

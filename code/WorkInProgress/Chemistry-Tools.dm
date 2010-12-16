@@ -865,6 +865,7 @@
 		return
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		var/datum/reagents/R = src.reagents
+		var/fillevel = gulp_size
 
 		if(!R.total_volume || !R)
 			user << "\red None of [src] left, oh no!"
@@ -891,6 +892,14 @@
 				reagents.reaction(M, INGEST)
 				spawn(5)
 					reagents.trans_to(M, gulp_size)
+
+			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+				var/mob/living/silicon/robot/bro = user
+				bro.cell.charge -= 30
+				var/refill = R.get_master_reagent_id()
+				spawn(600)
+					R.add_reagent(refill, fillevel)
+
 
 			playsound(M.loc,'drink.ogg', rand(10,50), 1)
 			return 1

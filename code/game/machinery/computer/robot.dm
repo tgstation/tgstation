@@ -91,6 +91,9 @@
 					dat += " Slaved to [R.connected_ai.name] |"
 				else
 					dat += " Independent from AI |"
+				if (istype(user, /mob/living/silicon/ai))
+					if(user.mind.special_role && !R.emagged)
+						dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 				dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
 				dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
 				dat += "<BR>"
@@ -207,6 +210,15 @@
 
 			else
 				usr << "\red Access Denied."
+
+		else if (href_list["magbot"])
+			if(src.allowed(usr))
+				var/mob/living/silicon/robot/R = locate(href_list["magbot"])
+				if(R)
+					var/choice = input("Are you certain you wish to hack [R.name]?") in list("Confirm", "Abort")
+					if(choice == "Confirm")
+						if(R)
+							R.emagged = 1
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()

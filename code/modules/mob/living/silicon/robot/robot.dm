@@ -627,6 +627,11 @@
 			dat += text("[obj]: <B>Activated</B><BR>")
 		else
 			dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Activate</A><BR>")
+	if (emagged)
+		if(src.activated(src.module.emag))
+			dat += text("[src.module.emag]: <B>Activated</B><BR>")
+		else
+			dat += text("[src.module.emag]: <A HREF=?src=\ref[src];act=\ref[src.module.emag]>Activate</A><BR>")
 /*
 		if(src.activated(obj))
 			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")

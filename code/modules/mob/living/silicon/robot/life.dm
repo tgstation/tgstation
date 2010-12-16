@@ -202,7 +202,7 @@
 							src.cells.icon_state = "charge3"
 						if(0.25 to 0.5)
 							src.cells.icon_state = "charge2"
-						if(0.01 to 0.25)
+						if(0 to 0.25)
 							src.cells.icon_state = "charge1"
 						else
 							src.cells.icon_state = "charge0"

@@ -33,7 +33,7 @@
 		sleep(50)
 		world.Reboot()
 		return*/
-
+			AI_mind.special_role = "malfunction"
 
 			AI_mind.current << "\red<font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font>"
 			AI_mind.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
