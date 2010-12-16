@@ -107,6 +107,9 @@ obj/machinery/atmospherics/valve
 
 		return 1
 
+	attack_ai(mob/user as mob)
+		return
+
 	attack_paw(mob/user as mob)
 		return attack_hand(user)
 
