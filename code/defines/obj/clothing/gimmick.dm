@@ -12,6 +12,7 @@
 	desc = "Festive!"
 	icon_state = "santa"
 	item_state = "santa"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 
 /obj/item/clothing/mask/owl_mask
