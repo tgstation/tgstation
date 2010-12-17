@@ -515,8 +515,8 @@
 	var/shellsmax
 	var/shellsunlimited = 0
 	var/index
-	var/list/shells = list() //this is a list. All craftsmanship is of good quality. At least, it's better than two/eight vars, Uhangi! -- Barhandar
-	w_class = 3.0 //should go on back now, has no sprite for that atm because I can't sprite for shit -- Urist
+	var/list/shells = list() //this is a list. All craftsmanship is of good quality. At least, it's better than two/eight vars, Uhangi! -- Barhandar //it is, thanks bro --uhangi
+	w_class = 4.0 //dammit urist no
 	force = 7.0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 	var/pumped = 0
@@ -527,7 +527,7 @@
 	icon_state = "cshotgun"
 	w_class = 4.0
 	force = 12.0
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 	shellsmax = 8
 
 /obj/item/weapon/gun/energy
