@@ -527,7 +527,7 @@
 	icon_state = "cshotgun"
 	w_class = 4.0
 	force = 12.0
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY // THERE IS NO COMBAT SHOTGUN BACK SPRITE. DON'T ADD ONBACK -- Callagan
 	shellsmax = 8
 
 /obj/item/weapon/gun/energy
