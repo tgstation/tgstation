@@ -674,10 +674,12 @@
 
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
+	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
 	icon_state = "heavy"
 	item_state = "heavy"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	slowdown = 2
+	slowdown = 1.5
+	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 
 // FIRE SUITS
 
@@ -739,9 +741,11 @@
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
-	desc = "A unique suit of nano-enhanced armor designed specifically for Spider-Clan assassins."
+	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider-Clan assassins."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
+	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	slowdown = -1
 
 //Themed space suits for different nuke rounds (WIP)
 
@@ -895,6 +899,13 @@
 	icon_state = "hop"
 	item_state = "b_suit"
 	color = "hop"
+
+/obj/item/clothing/under/rank/centcom_officer
+	desc = "It has a CentCom officer rank stripe on it."
+	name = "CentCom Officer Jumpsuit"
+	icon_state = "hop"
+	item_state = "b_suit"
+	color = "officer"
 
 /obj/item/clothing/under/rank/head_of_security
 	desc = "It has a Head of Security rank stripe on it."

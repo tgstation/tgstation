@@ -388,18 +388,21 @@
 /proc/call_shuttle_proc(var/mob/user)
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
-
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
 		user << "Centcomm will not allow the shuttle to be called."
-	if(ticker.mode.name == "blob" || ticker.mode.name == "Corporate Restructuring" || ticker.mode.name == "sandbox")
-		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
 		return
 	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
 		user << "Centcom will not allow the shuttle to be called."
+		if(sent_strike_team == 1)
+			user << "Consider all contracts terminated."
 		return
-	if(ticker.mode.name == "nuclear emergency" && world.time < 6000)
-		user << "Centcom will not allow the shuttle to be called."
+	if(sent_strike_team == 1 && ticker.mode.name != "revolution" || ticker.mode.name != "AI malfunction")
+		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
 		return
+//	if(ticker.mode.name == "blob" || ticker.mode.name == "Corporate Restructuring" || ticker.mode.name == "sandbox")
+//		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
+//		return
+//	These modes are no longer used so I am commenting them out. N
 
 	emergency_shuttle.incall()
 	world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"

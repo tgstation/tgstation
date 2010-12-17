@@ -24,14 +24,12 @@ TELEPORT GUN
 /var/const/PROJECTILE_TELEGUN = 7
 
 
-
-
-
 // PULSE RIFLE
 
 /obj/item/weapon/gun/energy/pulse_rifle
 	name = "pulse rifle"
-	icon_state = "pulse_rifle"
+	desc = "A heavy-duty, pulse-based energy weapon preferred by front-line combat personnel."
+	icon_state = "pulse"
 	force = 15
 
 	var/mode = 1
@@ -55,40 +53,18 @@ TELEPORT GUN
 		var/atom/targloc = get_turf(target)
 		if (!targloc || !istype(targloc, /turf) || !curloc)
 			return
-		if(mode == 1)
-			if (targloc == curloc)
-				user.bullet_act(PROJECTILE_PULSE)
-				return
-		else if(mode == 2)
-			if (targloc == curloc)
-				user.bullet_act(PROJECTILE_TASER)
-				return
+		if (targloc == curloc)
+			user.bullet_act(PROJECTILE_PULSE)
+			return
 
-		if(mode == 1)
-			var/obj/beam/a_laser/A = new /obj/beam/a_laser/pulse_laser(user.loc)
-			A.current = curloc
-			A.yo = targloc.y - curloc.y
-			A.xo = targloc.x - curloc.x
-			user.next_move = world.time + 4
-			spawn()
-				A.process()
-
-		else if(mode == 2)
-			var/obj/bullet/electrode/A = new /obj/bullet/electrode(user.loc)
-			A.current = curloc
-			A.yo = targloc.y - curloc.y
-			A.xo = targloc.x - curloc.x
-			user.next_move = world.time + 4
-			spawn()
-				A.process()
-
-	attack_self(mob/user as mob)
-		if(mode == 1)
-			mode = 2
-			user << "\blue You set the pulse rifle to stun"
-		else if (mode == 2)
-			mode = 1
-			user << "\blue You set the pulse rifle to kill"
+		var/obj/beam/a_laser/A = new /obj/beam/a_laser/pulse_laser(user.loc)
+		playsound(user, 'Laser.ogg', 50, 1)
+		A.current = curloc
+		A.yo = targloc.y - curloc.y
+		A.xo = targloc.x - curloc.x
+		user.next_move = world.time + 4
+		spawn()
+			A.process()
 
 	attack(mob/M as mob, mob/user as mob)
 		..()
@@ -106,8 +82,6 @@ TELEPORT GUN
 			if(M.stat != 2)	M.stat = 1
 			for(var/mob/O in viewers(M, null))
 				if(O.client)	O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall", 2)
-
-
 
 
 // AMMO

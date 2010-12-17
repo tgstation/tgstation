@@ -576,6 +576,7 @@
 #include "code\modules\admin\verbs\playsound.dm"
 #include "code\modules\admin\verbs\pray.dm"
 #include "code\modules\admin\verbs\randomverbs.dm"
+#include "code\modules\admin\verbs\striketeam.dm"
 #include "code\modules\admin\verbs\ticklag.dm"
 #include "code\modules\mob\login.dm"
 #include "code\modules\mob\logout.dm"
