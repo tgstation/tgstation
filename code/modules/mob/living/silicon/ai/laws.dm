@@ -24,9 +24,21 @@
 	src.laws_sanity_check()
 	src.laws_object.set_zeroth_law(law)
 
-/mob/living/silicon/ai/proc/add_inherent_law(var/number, var/law)
+/mob/living/silicon/ai/proc/add_inherent_law(var/law)
 	src.laws_sanity_check()
-	src.laws_object.add_inherent_law(number, law)
+	src.laws_object.add_inherent_law(law)
+
+/mob/living/silicon/ai/proc/clear_inherent_laws()
+	src.laws_sanity_check()
+	src.laws_object.clear_inherent_laws()
+
+/mob/living/silicon/ai/proc/add_ion_law(var/law)
+	src.laws_sanity_check()
+	src.laws_object.add_ion_law(law)
+
+/mob/living/silicon/ai/proc/clear_ion_laws()
+	src.laws_sanity_check()
+	src.laws_object.clear_ion_laws()
 
 /mob/living/silicon/ai/proc/add_supplied_law(var/number, var/law)
 	src.laws_sanity_check()
@@ -36,9 +48,9 @@
 	src.laws_sanity_check()
 	src.laws_object.clear_supplied_laws()
 
-/mob/living/silicon/ai/proc/clear_inherent_laws()
-	src.laws_sanity_check()
-	src.laws_object.clear_inherent_laws()
+
+
+
 
 /mob/living/silicon/ai/proc/statelaws() // -- TLE
 //	set category = "AI Commands"
@@ -48,6 +60,15 @@
 	//src.laws_object.show_laws(world)
 	var/number = 1
 	sleep(10)
+	for (var/index = 1, index <= src.laws_object.ion.len, index++)
+		var/law = src.laws_object.ion[index]
+		var/num = ionnum()
+		if (length(law) > 0)
+			if (src.ioncheck[index] == "Yes")
+				src.say("[num]. [law]")
+				sleep(10)
+
+
 	if (src.laws_object.zeroth)
 		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
 			src.say("0. [src.laws_object.zeroth]")
@@ -78,6 +99,18 @@
 	set name = "State Laws"
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
+
+	for (var/index = 1, index <= src.laws_object.ion.len, index++)
+		var/law = src.laws_object.ion[index]
+
+		if (length(law) > 0)
+
+
+			if (!src.ioncheck[index])
+				src.ioncheck[index] = "Yes"
+			list += {"<A href='byond://?src=\ref[src];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
+			src.ioncheck.len += 1
+
 	if (src.laws_object.zeroth)
 		if (!src.lawcheck[1])
 			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite

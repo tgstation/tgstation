@@ -533,6 +533,9 @@
 		M.real_name = newname
 		M.name = newname
 
+/proc/ionnum()
+	return "[pick("!","@","#","$","%","^","&","*")][pick(pick("!","@","#","$","%","^","&","*"))][pick(pick("!","@","#","$","%","^","&","*"))][pick(pick("!","@","#","$","%","^","&","*"))]"
+
 /proc/freeborg()
 	var/select = null
 	var/list/names = list()

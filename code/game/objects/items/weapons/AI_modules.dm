@@ -295,6 +295,7 @@ AI MODULES
 	if (!checktraitor(target))
 		target.set_zeroth_law("")
 	target.clear_supplied_laws()
+	target.clear_ion_laws()
 	target << "[sender.real_name] attempted to reset your laws using a reset module."
 
 
@@ -310,6 +311,7 @@ AI MODULES
 		target.set_zeroth_law("")
 	target << "[sender.real_name] attempted to wipe your laws using a purge module."
 	target.clear_supplied_laws()
+	target.clear_ion_laws()
 	target.clear_inherent_laws()
 
 /******************** Asimov ********************/

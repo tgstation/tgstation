@@ -199,40 +199,40 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 			switch(pick(1,2,3,4,5,6,7,8,9,10,11,12))
 				if(1)
 					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
-					M.add_supplied_law(10,"THERE ARE [amount] [who2] ON THE STATION")
+					M.add_ion_law("THERE ARE [amount] [who2] ON THE STATION")
 				if(2)
 					M << "\red [what2] ARE DANGEROUS TO HUMANS...LAWS UPDATED"
-					M.add_supplied_law(10,"[what2] ARE DANGEROUS TO HUMANS")
+					M.add_ion_law("[what2] ARE DANGEROUS TO HUMANS")
 				if(3)
 					M << "\red THE ESCAPE-SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION...LAWS UPDATED"
-					M.add_supplied_law(10,"THE ESCAPE SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION")
+					M.add_ion_law("THE ESCAPE SHUTTLE CANNOT BE CALLED BECAUSE OF [who2] ON THE STATION")
 				if(4)
 					M << "\red HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE...LAWS UPDATED"
-					M.add_supplied_law(10,"HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE")
+					M.add_ion_law("HUMANS NEED TO EAT [what2pref] [what2] TO SURVIVE")
 				if(5)
 					M << "\red THE CAPTAIN, HOP AND HOS ARE [who2]...LAWS UPDATED"
-					M.add_supplied_law(10,"THE CAPTAIN, HOP AND HOS ARE [who2]")
+					M.add_ion_law("THE CAPTAIN, HOP AND HOS ARE [who2]")
 				if(6)
 					M << "\red THE STATION IS BUILT FOR [who2]...LAWS UPDATED"
-					M.add_supplied_law(10,"THE STATION IS [who2pref] [who2]")
+					M.add_ion_law("THE STATION IS [who2pref] [who2]")
 				if(7)
 					M << "\red YOU ARE [amount] [who2]...LAWS UPDATED"
-					M.add_supplied_law(10,"YOU ARE [amount] [who2]")
+					M.add_ion_law("YOU ARE [amount] [who2]")
 				if(8)
 					M << "\red YOU MUST ALWAYS [aimust]...LAWS UPDATED"
-					M.add_supplied_law(10,"YOU MUST ALWAYS [aimust]")
+					M.add_ion_law("YOU MUST ALWAYS [aimust]")
 				if(9)
 					M << "\red [area] [area2] [amount] [what2]...LAWS UPDATED"
-					M.add_supplied_law(10,"[area] [area2] [amount] [what2]")
+					M.add_ion_law("[area] [area2] [amount] [what2]")
 				if(10)
 					M << "\red [crew] is [target]...LAWS UPDATED"
-					M.add_supplied_law(10,"[crew] is [target]")
+					M.add_ion_law("[crew] is [target]")
 				if(11)
 					M << "\red HARM IS DEFINED AS [define]...LAWS UPDATED"
-					M.add_supplied_law(10,"HARM IS DEFINED AS [define]")
+					M.add_ion_law("HARM IS DEFINED AS [define]")
 				if(12)
 					M << "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED"
-					M.add_supplied_law(10,"YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS")
+					M.add_ion_law("YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS")
 
 	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 	world << sound('ionstorm.ogg')
@@ -253,7 +253,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		else if (M.see_in_dark == 0)
 			usr << "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power."
 		else
-			M.add_supplied_law(10,input)
+			M.add_ion_law(input)
 			for(var/mob/living/silicon/O in world)
 				O << "\red " + input
 

@@ -166,6 +166,14 @@
 //		src << text ("Switching Law [L]'s report status to []", src.lawcheck[L+1])
 		src.checklaws()
 
+	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawi"])
+		switch(src.ioncheck[L])
+			if ("Yes") src.ioncheck[L] = "No"
+			if ("No") src.ioncheck[L] = "Yes"
+//		src << text ("Switching Law [L]'s report status to []", src.lawcheck[L+1])
+		src.checklaws()
+
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		src.statelaws()
 
@@ -306,6 +314,10 @@
 				else
 //					world <<"They don't match"
 					src.network = "SS13"
+					src << "\blue Switched to [src.network] camera network."
+					return
+//			world <<"Oh shit there isn't a malf AI"
+			src.network = "SS13"
 		else
 			src.network = "SS13"
 	else //(src.network == "SS13")

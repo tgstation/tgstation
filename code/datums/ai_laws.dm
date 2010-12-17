@@ -5,6 +5,7 @@
 	var/zeroth = null
 	var/list/inherent = list()
 	var/list/supplied = list()
+	var/list/ion = list()
 
 /datum/ai_laws/asimov
 	name = "Three Laws of Robotics"
@@ -56,6 +57,9 @@
 	if (!(law in src.inherent))
 		src.inherent += law
 
+/datum/ai_laws/proc/add_ion_law(var/law)
+	src.ion += law
+
 /datum/ai_laws/proc/clear_inherent_laws()
 	del(src.inherent)
 	src.inherent = list()
@@ -69,7 +73,15 @@
 /datum/ai_laws/proc/clear_supplied_laws()
 	src.supplied = list()
 
+/datum/ai_laws/proc/clear_ion_laws()
+	src.ion = list()
+
 /datum/ai_laws/proc/show_laws(var/who)
+	for (var/index = 1, index <= src.ion.len, index++)
+		var/law = src.ion[index]
+		var/num = ionnum()
+		who << "[num]. [law]"
+
 	if (src.zeroth)
 		who << "0. [src.zeroth]"
 

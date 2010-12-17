@@ -58,6 +58,11 @@
 	var/datum/ai_laws/master = src.connected_ai.laws_object
 	var/temp
 	if (master)
+		src.laws.ion.len = master.ion.len
+		for (var/index = 1, index <= master.ion.len, index++)
+			temp = master.ion[index]
+			if (length(temp) > 0)
+				src.laws.ion[index] = temp
 
 		temp = master.zeroth
 		src.laws.zeroth = temp
@@ -82,9 +87,13 @@
 	src.laws_sanity_check()
 	src.laws.set_zeroth_law(law)
 
-/mob/living/silicon/robot/proc/add_inherent_law(var/number, var/law)
+/mob/living/silicon/robot/proc/add_inherent_law(var/law)
 	src.laws_sanity_check()
-	src.laws.add_inherent_law(number, law)
+	src.laws.add_inherent_law(law)
+
+/mob/living/silicon/robot/proc/clear_inherent_laws()
+	src.laws_sanity_check()
+	src.laws.clear_inherent_laws()
 
 /mob/living/silicon/robot/proc/add_supplied_law(var/number, var/law)
 	src.laws_sanity_check()
@@ -94,6 +103,10 @@
 	src.laws_sanity_check()
 	src.laws.clear_supplied_laws()
 
-/mob/living/silicon/robot/proc/clear_inherent_laws()
+/mob/living/silicon/robot/proc/add_ion_law(var/law)
 	src.laws_sanity_check()
-	src.laws.clear_inherent_laws()
+	src.laws.add_ion_law(law)
+
+/mob/living/silicon/robot/proc/clear_ion_laws()
+	src.laws_sanity_check()
+	src.laws.clear_ion_laws()

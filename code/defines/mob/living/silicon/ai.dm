@@ -13,6 +13,7 @@
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/lawcheck[1]
+	var/ioncheck[1]
 
 
 	var/datum/game_mode/malfunction/AI_Module/module_picker/malf_picker
