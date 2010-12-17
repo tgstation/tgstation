@@ -281,6 +281,9 @@ DEATH COMMANDO GAS MASK
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
+	var/mob/M = usr
+	if (istype (M, /mob/dead/)) return
+	if (M.health <= -100) return
 	if (istype (src, /obj/item/clothing/under/color/orange/))
 		mode = 3
 		usr << "There are no controls for the sensing equipment woven into the fabric."
