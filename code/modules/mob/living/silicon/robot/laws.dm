@@ -24,7 +24,7 @@
 
 	who << "<b>Obey these laws:</b>"
 	laws.show_laws(who)
-	if (connected_ai && !emagged)
+	if (connected_ai)
 		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>"
 	else if (emagged)
 		who << "<b>Remember, AIs are not syndicate operatives, so you are not required to listen to them.</b>"
