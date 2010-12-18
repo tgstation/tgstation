@@ -10,10 +10,12 @@ var/global/sent_strike_team = 0
 	if(world.time < 6000)
 		alert("Not so fast, buddy. Wait a few (10) minutes until the game gets going.")
 		return
+	if(sent_strike_team == 1)
+		alert("CentCom is already sending a team, Mr. Dumbass.")
+		return
 	if(alert("Do you want to send in the CentCom death squad? Once enabled, this is irreversible.",,"Yes","No")=="No")
 		return
 	alert("This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned commandos have internals cameras which are viewable through a monitor inside the Spec. Ops. Office. Assigning the team's task is recommended from there.")
-	src.verbs -= /client/proc/strike_team
 	sent_strike_team = 1
 
 	if (emergency_shuttle.direction == 1 && emergency_shuttle.online == 1)
