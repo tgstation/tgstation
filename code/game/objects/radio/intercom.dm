@@ -15,3 +15,8 @@
 /obj/item/device/radio/intercom/send_hear()
 	if (src.listening)
 		return hearers(7, src.loc)
+
+/obj/item/device/radio/intercom/hear_talk(mob/M as mob, msg)
+	if((istype(M, /mob/living/silicon/ai) && !src.anyai) && !(M in src.ai))
+		return
+	..()

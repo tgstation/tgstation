@@ -44,6 +44,8 @@
 			src.verbs += /client/proc/deadchat					//toggles deadchat
 			src.verbs += /proc/toggle_adminmsg
 
+			src.verbs += /client/proc/triple_ai					//triple AIs~ --NEO
+
 			// Admin "must have"
 			src.verbs += /client/proc/cmd_admin_list_occ
 			src.verbs += /client/proc/cmd_admin_mute

@@ -83,9 +83,27 @@
 	if (ticker.mode.name  == "AI malfunction")
 		loc_landmark = locate("landmark*ai")
 	else
-		loc_landmark = locate(text("start*AI"))
+		for(var/obj/landmark/start/sloc in world)
+			if (sloc.name != "AI")
+				continue
+			if (locate(/mob) in sloc.loc)
+				continue
+			loc_landmark = sloc
+		if (!loc_landmark)
+			for(var/obj/landmark/tripai in world)
+				if (tripai.name == "tripai")
+					if(locate(/mob) in tripai.loc)
+						continue
+					loc_landmark = tripai
+		if (!loc_landmark)
+			O << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
+			for(var/obj/landmark/start/sloc in world)
+				if (sloc.name == "AI")
+					loc_landmark = sloc
 
 	O.loc = loc_landmark.loc
+	for (var/obj/item/device/radio/intercom/comm in O.loc)
+		comm.ai += O
 
 	O << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
 	O << "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>"

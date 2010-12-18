@@ -243,9 +243,13 @@ mob/new_player
 				ManifestLateSpawn(character)
 				if(ticker)
 					if (ticker.current_state == GAME_STATE_PLAYING)
+						var/list/mob/living/silicon/ai/ailist = list()
 						for (var/mob/living/silicon/ai/A in world)
-							if (!A.stat)
-								A.say("[character.real_name] has signed up as [rank].")
+							if (!A.stat && A.name != "Inactive AI")
+								ailist += A
+						if (ailist.len)
+							var/mob/living/silicon/ai/announcer = pick(ailist)
+							announcer.say("[character.real_name] has signed up as [rank].")
 
 					var/starting_loc = pick(latejoin)
 					character.loc = starting_loc

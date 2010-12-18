@@ -82,6 +82,8 @@
 	icon_state = "intercom"
 	anchored = 1.0
 	var/number = 0
+	var/anyai = 1
+	var/mob/living/silicon/ai/ai = list()
 
 /obj/item/device/radio/signaler
 	name = "Remote Signaling Device"
