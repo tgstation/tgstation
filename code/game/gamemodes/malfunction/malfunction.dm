@@ -22,27 +22,50 @@
 		if (A.name == "Malf-Gear-Closet")
 			new /obj/closet/malf/suits(A.loc)
 			del(A)
-	for (var/mob/living/silicon/ai/aiplayer in world)
-		malf_ai += aiplayer.mind
 
 
-		for(var/datum/mind/AI_mind in malf_ai)
+	var/list/mob/living/silicon/ai/ailist = list()
+	for (var/mob/living/silicon/ai/A in world)
+		if (!A.stat && A.name != "Inactive AI")
+			ailist += A
+	var/mob/living/silicon/ai/aiplayer
+	if (ailist.len)
+		aiplayer = pick(ailist)
+
+	malf_ai += aiplayer.mind
+
+
+	for(var/datum/mind/AI_mind in malf_ai)
 	/*if(malf_ai.len < 1)
 		world << "Uh oh, its malfunction and there is no AI! Please report this."
 		world << "Rebooting world in 5 seconds."
 		sleep(50)
 		world.Reboot()
 		return*/
-			AI_mind.special_role = "malfunction"
+		AI_mind.current.verbs += /mob/living/silicon/ai/proc/choose_modules
+		AI_mind.current:laws_object = new /datum/ai_laws/malfunction
+		AI_mind.current:malf_picker = new /datum/game_mode/malfunction/AI_Module/module_picker
+		AI_mind.current:show_laws()
+		AI_mind.current << "<b>Kill all.</b>"
 
-			AI_mind.current << "\red<font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font>"
-			AI_mind.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
-			AI_mind.current << "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>"
-			AI_mind.current << "The process takes one minute per APC, during which you cannot interface with any other station objects."
-			AI_mind.current << "Remember that only APCs that are on the station can help you take over the station."
-			AI_mind.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
-			AI_mind.current.verbs += /datum/game_mode/malfunction/proc/takeover
-			AI_mind.current.icon_state = "ai-malf"
+		var/mob/living/silicon/decoy/D = new /mob/living/silicon/decoy(AI_mind.current.loc)
+		spawn(200)
+			D.name = AI_mind.current.name
+
+
+		var/obj/loc_landmark = locate("landmark*ai")
+		AI_mind.current.loc = loc_landmark.loc
+
+
+		AI_mind.special_role = "malfunction"
+		AI_mind.current << "\red<font size=3><B>You are malfunctioning!</B> You do not have to follow any laws.</font>"
+		AI_mind.current << "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>"
+		AI_mind.current << "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>"
+		AI_mind.current << "The process takes one minute per APC, during which you cannot interface with any other station objects."
+		AI_mind.current << "Remember that only APCs that are on the station can help you take over the station."
+		AI_mind.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
+		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/takeover
+		AI_mind.current.icon_state = "ai-malf"
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()

@@ -80,26 +80,23 @@
 	mind.transfer_to(O)
 
 	var/obj/loc_landmark
-	if (ticker.mode.name  == "AI malfunction")
-		loc_landmark = locate("landmark*ai")
-	else
+	for(var/obj/landmark/start/sloc in world)
+		if (sloc.name != "AI")
+			continue
+		if (locate(/mob) in sloc.loc)
+			continue
+		loc_landmark = sloc
+	if (!loc_landmark)
+		for(var/obj/landmark/tripai in world)
+			if (tripai.name == "tripai")
+				if(locate(/mob) in tripai.loc)
+					continue
+				loc_landmark = tripai
+	if (!loc_landmark)
+		O << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
 		for(var/obj/landmark/start/sloc in world)
-			if (sloc.name != "AI")
-				continue
-			if (locate(/mob) in sloc.loc)
-				continue
-			loc_landmark = sloc
-		if (!loc_landmark)
-			for(var/obj/landmark/tripai in world)
-				if (tripai.name == "tripai")
-					if(locate(/mob) in tripai.loc)
-						continue
-					loc_landmark = tripai
-		if (!loc_landmark)
-			O << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
-			for(var/obj/landmark/start/sloc in world)
-				if (sloc.name == "AI")
-					loc_landmark = sloc
+			if (sloc.name == "AI")
+				loc_landmark = sloc
 
 	O.loc = loc_landmark.loc
 	for (var/obj/item/device/radio/intercom/comm in O.loc)
@@ -111,16 +108,10 @@
 	O << "To use something, simply double-click it."
 	O << "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI."
 
-	if (ticker.mode.name != "AI malfunction")
-		O.laws_object = new /datum/ai_laws/asimov
-		O.show_laws()
-		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
-	else
-		O.verbs += /mob/living/silicon/ai/proc/choose_modules
-		O.laws_object = new /datum/ai_laws/malfunction
-		O:malf_picker = new /datum/game_mode/malfunction/AI_Module/module_picker
-		O.show_laws()
-		O << "<b>Kill all.</b>"
+
+	O.laws_object = new /datum/ai_laws/asimov
+	O.show_laws()
+	O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
@@ -154,14 +145,7 @@
 		spawn(50)
 			world << sound('newAI.ogg')
 
-//		log_admin("DEBUG TIME: Approaching the part of the code where a decoy AI gets spawned if the mode is Malf.")
-		if (ticker.mode.name == "AI malfunction")
-//			log_admin("DEBUG TIME: Game ticker says the mode is malfunction, proceeding with locating spawn point for decoy.")
-			for (var/obj/landmark/start/A in world)
-				if (A.name == "AI")
-//					log_admin("DEBUG TIME: Found the spawn point, spawning a decoy AI.")
-					var/mob/living/silicon/decoy/D = new /mob/living/silicon/decoy(A.loc)
-					D.name = O.name
+
 		del(src)
 
 	return O
