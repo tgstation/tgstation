@@ -40,49 +40,6 @@
 		layer = 99
 		mouse_opacity = 0
 
-/obj/shieldgen
-		name = "shield generator"
-		desc = "Used to seal minor hull breaches."
-		icon = 'objects.dmi'
-		icon_state = "shieldoff"
-		var/active = 0
-		var/health = 100
-		var/malfunction = 0
-		density = 1
-		opacity = 0
-		anchored = 0
-		pressure_resistance = 2*ONE_ATMOSPHERE
-
-/obj/shieldwallgen
-		name = "shieldwall thing"
-		desc = "dont know"
-		icon = 'wizard.dmi'
-		icon_state = "dontknow"
-		var/active = 0
-		var/range = 1
-		density = 0
-		opacity = 0
-		anchored = 0
-		pressure_resistance = 2*ONE_ATMOSPHERE
-
-/obj/shield
-		name = "shield"
-		desc = "An energy shield."
-		icon = 'effects.dmi'
-		icon_state = "shieldsparkles"
-		density = 1
-		opacity = 0
-		anchored = 1
-
-/obj/shieldwall
-		name = "shield"
-		desc = "An energy shield."
-		icon = 'effects.dmi'
-		icon_state = "test"
-		density = 1
-		opacity = 0
-		anchored = 1
-
 /obj/admins
 	name = "admins"
 	var/rank = null
