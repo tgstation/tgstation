@@ -7,9 +7,9 @@ var/global/sent_strike_team = 0
 	if(!ticker)
 		alert("The game hasn't started yet!")
 		return
-	if(world.time < 6000)
-		alert("Not so fast, buddy. Wait a few (10) minutes until the game gets going.")
-		return
+//	if(world.time < 6000)
+//		alert("Not so fast, buddy. Wait a few (10) minutes until the game gets going.")
+//		return
 	if(sent_strike_team == 1)
 		alert("CentCom is already sending a team, Mr. Dumbass.")
 		return
@@ -99,7 +99,7 @@ var/global/sent_strike_team = 0
 			if(candidates.len)
 				var/mob/dead/observer/G = pick(candidates)
 				new_commando.key = G.client.key
-				del.(G)
+				del(G)
 			else
 				new_commando.key = "null"
 
