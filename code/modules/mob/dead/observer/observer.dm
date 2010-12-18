@@ -13,6 +13,7 @@
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
 
 /mob/proc/ghostize()
+	set category = "Special Verbs"
 	set name = "Ghost"
 	set desc = "You cannot be revived as a ghost"
 	if(src.client)
