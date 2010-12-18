@@ -6,7 +6,7 @@
 	var/list/sensor_information = list()
 	var/list/vent_information = list()
 	var/datum/radio_frequency/radio_connection
-	var/alarm_area //unused atm. Maybe do something if emmaged or hacked...Like change the area to security, syphon air out, ..., profit.
+	var/alarm_area //Currently unused. Maybe do something if emmaged or hacked...Like change the area to security, syphon air out, ..., profit.
 	var/locked = 1
 	var/panic = 0 //is this alarm panicked?
 	var/device = null
@@ -19,10 +19,13 @@
 			return
 		if(stat & (NOPOWER|BROKEN))
 			return
-		else if(!(istype(usr, /mob/living/silicon)) && locked)
+
+		//Following is no longer needed, as all human/silicon mobs will be able to view air info.
+		/*else if(!(istype(usr, /mob/living/silicon)) && locked)
 			user << "\red You must unlock the Air Alarm interface first"
-			return
+			return*/
 		src.add_fingerprint(user)
+
 		user << browse(return_text(),"window=air_alarm")
 		user.machine = src
 		onclose(user, "air_alarm")
@@ -63,8 +66,101 @@
 			return 1
 
 		return_text()
-			var/output = "<B>[alarm_zone] Air [name]</B><HR>"
+			if(!(istype(usr, /mob/living/silicon)) && locked)
+				return "<html><head><title>[alarm_zone] Air Alarm</title></head><body>[return_status()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
+			else
+				return "<html><head><title>[alarm_zone] Air Alarm</title></head><body>[return_status()]<hr>[return_controls()]</body></html>"
+
+		return_status()
+			var/turf/location = src.loc
+			var/datum/gas_mixture/environment = location.return_air()
+			var/environment_pressure = environment.return_pressure()
+			var/total = environment.oxygen + environment.carbon_dioxide + environment.toxins + environment.nitrogen
+			var/safe = 2
+			var/percent
+			var/output = "<b>Air Status:</b><br>"
+
+			if(total == 0)
+				output +={"<font color='red'><b>Warning: Cannot obtain air sample for analysis.</b></font>"}
+				return output
+
+			output += {"Pressure: "}
+			//Pressure sensor
+			if((environment_pressure < ONE_ATMOSPHERE*0.90) || (environment_pressure > ONE_ATMOSPHERE*1.10))
+				if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))
+					output += {"<font color='red'><b>[environment_pressure]</b></font>kPa<br>"}
+					safe = 0
+				else
+					output += {"<font color='orange'>[environment_pressure]</font>kPa<br>"}
+					if(safe != 0) safe = 1
+			else
+				output+= {"<font color='green'>[environment_pressure]</font>kPa<br>"}
+
+			output += {"Oxygen: "}
+			//Oxygen Levels Sensor
+			percent = round(environment.oxygen / total * 100, 2)
+			if((environment.oxygen < MOLES_O2STANDARD*0.90) || (environment.oxygen > MOLES_O2STANDARD*1.10))
+				if(environment.oxygen < MOLES_O2STANDARD*0.80)
+					output += {"<font color='red'><b>[percent]</b></font>%<br>"}
+					safe = 0
+				else
+					output += {"<font color='orange'>[percent]</font>%<br>"}
+					if(safe != 0) safe = 1
+			else	output += {"<font color='green'>[percent]</font>%<br>"}
+
+			output += {"Carbon: "}
+			percent = round(environment.carbon_dioxide / total * 100, 2)
+			//CO2 Levels Sensor
+			if(environment.carbon_dioxide > 0.05)
+				if(environment.carbon_dioxide > 0.1)
+					output += {"<font color='red'><b>[percent]</b></font>%<br>"}
+					safe = 0
+				else
+					output+= {"<font color='orange'>[percent]</font>%<br>"}
+					if(safe != 0) safe = 1
+			else output += {"<font color='green'>[percent]</font>%<br>"}
+
+			output += {"Toxins: "}
+			//Plasma Levels Sensor
+			percent = round(environment.toxins / total * 100, 2)
+			if(safe && (environment.toxins > 1))
+				if(environment.toxins > 2)
+					output += {"<font color='red'><b>[percent]</b></font>%<br>"}
+					safe = 0
+				else
+					output += {"<font color='orange'>[percent]</font>%<br>"}
+					if(safe != 0) safe = 1
+			else output += {"<font color='green'>[percent]</font>%<br>"}
+
+			output += {"Temperature: "}
+			//Temperature Levels Sensor
+			if((environment.temperature < (T20C-10)) || (environment.temperature > (T20C+10)))
+				if((environment.temperature < (T20C-20)) || (environment.temperature > (T20C+10)))
+					output += {"<font color='red'><b>[environment.temperature]</b></font>K<br>"}
+					safe = 0
+				else
+					output +={"<font color='orange'>[environment.temperature]</font>K<br>"}
+			else output += {"<font color='green'>[environment.temperature]</font>K<br>"}
+
+			//Overall status
+			output += {"Environment Status: "}
+			if(safe == 0) output += {"<font color='red'><b>DANGER</b></font>"}
+			else if(safe == 1) output += {"<font color='orange'>Caution</font>"}
+			else output += {"<font color='green'>Optimal</font>"}
+
+			return output
+
+
+		return_controls()
+			var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
 			if(!src.device)
+				var/area/A = src.loc
+				A = A.loc
+				if(A.atmosalm)
+					output += {"<a href='?src=\ref[src];atmos_reset=1'>Reset - Atmospheric Alarm</a><hr>"}
+				else
+					output += {"<a href='?src=\ref[src];atmos_alarm=1'>Activate - Atmospheric Alarm</a><hr>"}
+
 				output += {"<a href='?src=\ref[src];scrubbers_control=1'>Scrubbers Control</a><br>
 						<a href='?src=\ref[src];vents_control=1'>Vents Control</a><br>
 						<HR>
@@ -119,6 +215,23 @@
 
 			return output
 
+		alarm()
+			var/area/A = src.loc
+			A = A.loc
+			if (!( istype(A, /area) ))
+				return
+			for(var/area/RA in A.related)
+				RA.atmosalert()
+			return
+		reset()
+			var/area/A = src.loc
+			A = A.loc
+			if (!( istype(A, /area) ))
+				return
+			for(var/area/RA in A.related)
+				RA.atmosreset()
+			return
+
 	initialize()
 		set_frequency(frequency)
 
@@ -126,6 +239,10 @@
 	Topic(href, href_list)
 		//if(..())
 		//	return
+		if(href_list["atmos_alarm"])
+			src.alarm()
+		if(href_list["atmos_reset"])
+			src.reset()
 		if(href_list["scrubbers_control"])
 			src.device = "Scrubbers"
 		if(href_list["vents_control"])
@@ -238,6 +355,13 @@
 	if(safe == 2) src.skipprocess = 1
 	else if(alarm_frequency)
 		post_alert(safe)
+
+	if(!safe)
+		var/area/A = src.loc
+		A = A.loc
+		if (!( istype(A, /area) ))
+			return
+		A.atmosalert()
 
 	return
 
@@ -418,7 +542,7 @@
 	var/area/A = src.loc
 	var/d1
 	var/d2
-	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
+	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon))
 		A = A.loc
 
 		if (A.fire)
@@ -455,7 +579,7 @@
 	..()
 	if (usr.stat || stat & (BROKEN|NOPOWER))
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.machine = src
 		if (href_list["reset"])
 			src.reset()

@@ -15,6 +15,7 @@
 /area
 	var/fire = null
 	var/atmos = 1
+	var/atmosalm = null
 	var/poweralm = 1
 	var/party = null
 	level = null
