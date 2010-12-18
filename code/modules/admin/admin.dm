@@ -1165,8 +1165,13 @@ var/showadminmessages = 1
 						alien_infestation()
 						message_admins("[key_name_admin(usr)] has spawned aliens", 1)
 				if("carp")
-					message_admins("[key_name_admin(usr)] has spawned carp", 1)
-					carp_migration()
+					var/choice = input("You sure you want to spawn carp?") in list("Badmin", "Cancel")
+					if(choice == "Badmin")
+						message_admins("[key_name_admin(usr)] has spawned carp.", 1)
+						carp_migration()
+				if("radiation")
+					message_admins("[key_name_admin(usr)] has has irradiated the station", 1)
+					high_radiation_event()
 				if("prison_break")
 					message_admins("[key_name_admin(usr)] has allowed a prison break", 1)
 					prison_break()
@@ -1613,6 +1618,18 @@ var/showadminmessages = 1
 <BR>"}
 	if(lvl > 2)
 		dat += {"
+<B>'Random' Events</B><BR>
+<BR>
+<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors</A><BR>
+<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (Untested)</A><BR>
+<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes (Untested)</A><BR>
+<A href='?src=\ref[src];secretsfun=goblob'>Spawn magma(Untested)</A><BR>
+<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
+<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
+<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
+<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
+<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
+<BR>
 <B>Fun Secrets</B><BR>
 <BR>
 <A href='?src=\ref[src];secretsfun=sec_clothes'>Remove 'internal' clothing</A><BR>
@@ -1627,14 +1644,6 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=deactivateprison'>Return Prison Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=prisonwarp'>Warp all Players to Prison</A><BR>
 <A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
-<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors</A><BR>
-<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (Untested)</A><BR>
-<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes (Untested)</A><BR>
-<A href='?src=\ref[src];secretsfun=goblob'>Spawn magma(Untested)</A><BR>
-<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
-<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
-<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
-<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
 <A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
 <A href='?src=\ref[src];secretsfun=cleanexcrement'>Remove all urine/poo from station</A><BR>
 <A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
@@ -2152,7 +2161,7 @@ var/showadminmessages = 1
 /obj/admins/proc/spawn_atom(var/object as text)
 	set category = "Debug"
 	set desc= "(atom path) Spawn an atom"
-	set name= "Spawn Atom"
+	set name= "Spawn"
 
 	if(usr.client.holder.level >= 5)
 		var/list/types = typesof(/atom)

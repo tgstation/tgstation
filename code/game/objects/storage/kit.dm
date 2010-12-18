@@ -80,13 +80,13 @@
 	..()
 	return
 
-/obj/item/weapon/storage/explosiveimp_kit/New()
+/obj/item/weapon/storage/chemimp_kit/New()
 
-	new /obj/item/weapon/implantcase/explosive( src )
-	new /obj/item/weapon/implantcase/explosive( src )
-	new /obj/item/weapon/implantcase/explosive( src )
-	new /obj/item/weapon/implantcase/explosive( src )
-	new /obj/item/weapon/implantcase/explosive( src )
+	new /obj/item/weapon/implantcase/chem( src )
+	new /obj/item/weapon/implantcase/chem( src )
+	new /obj/item/weapon/implantcase/chem( src )
+	new /obj/item/weapon/implantcase/chem( src )
+	new /obj/item/weapon/implantcase/chem( src )
 	new /obj/item/weapon/implanter( src )
 	new /obj/item/weapon/implantpad( src )
 	..()

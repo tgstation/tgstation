@@ -602,11 +602,11 @@
 				if(!reagents.total_volume)
 					user << "\red The Syringe is empty."
 					return
-
+				if(istype(target, /obj/item/weapon/implantcase/chem))
+					return
 				if(target.reagents.total_volume >= target.reagents.maximum_volume)
 					user << "\red [target] is full."
 					return
-
 				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food))
 					user << "\red You cannot directly fill this object."
 					return
@@ -756,7 +756,6 @@
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
 				user << "\red you can't add anymore to [target]."
 				return
-
 			var/trans = src.reagents.trans_to(target, 1)
 			user << "\blue You transfer [trans] units of the condiment to [target]."
 
@@ -1485,49 +1484,12 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
-	name = "monkeyburger"
+	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."
 	icon_state = "hburger"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/meatbread
-	name = "meatbread loaf"
-	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
-	icon_state = "meatbread"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 40)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
-	name = "meatbread slice"
-	desc = "A slice of delicious meatbread."
-	icon_state = "meatbreadslice"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 8)
-		bitesize = 2
-
-
-/obj/item/weapon/reagent_containers/food/snacks/cheesewheel
-	name = "Cheese wheel"
-	desc = "A big wheel of delcious Cheddar."
-	icon_state = "cheesewheel"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 20)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/cheesewedge
-	name = "Cheese wedge"
-	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
-	icon_state = "cheesewedge"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette
@@ -1550,7 +1512,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
-
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin
 	name = "Muffin"
@@ -1692,7 +1653,7 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/momeatpie
-	name = "Monkey-pie"
+	name = "Meat-pie"
 	icon_state = "pie"
 	desc = "A delicious meatpie."
 	New()
@@ -1751,7 +1712,7 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeykabob
-	name = "Monkey-kabob"
+	name = "Meat-kabob"
 	icon_state = "kabob"
 	desc = "A delicious kabob"
 	New()
@@ -1812,24 +1773,6 @@
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/tofubread
-	name = "Tofubread"
-	icon_state = "Like meatbread but for vegans. Not guaranteed to give superpowers."
-	icon_state = "tofubread"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 40)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
-	name = "Tofubread slice"
-	desc = "A slice of delicious tofubread."
-	icon_state = "tofubreadslice"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 8)
-		bitesize = 2
-
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
 	name = "Loaded Baked Potato"
 	desc = "Totally baked."
@@ -1856,6 +1799,127 @@
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
+/////////////////////////////////////////////////Sliceable////////////////////////////////////////
+// All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbread
+	name = "meatbread loaf"
+	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
+	icon_state = "meatbread"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 40)
+		bitesize = 2
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+			W.visible_message(" \red <B>You slice the meatbread! </B>", 1)
+			new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
+	name = "meatbread slice"
+	desc = "A slice of delicious meatbread."
+	icon_state = "meatbreadslice"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/xenomeatbread
+	name = "xenomeatbread loaf"
+	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
+	icon_state = "xenomeatbread"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("xenomicrobes", 35)
+		bitesize = 2
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+			W.visible_message(" \red <B>You slice the xenomeatbread! </B>", 1)
+			new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice
+	name = "xenomeatbread slice"
+	desc = "A slice of delicious meatbread. Extra Heretical."
+	icon_state = "xenobreadslice"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("xenomicrobes", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/tofubread
+	name = "Tofubread"
+	icon_state = "Like meatbread but for vegans. Not guaranteed to give superpowers."
+	icon_state = "tofubread"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 40)
+		bitesize = 2
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+			W.visible_message(" \red <B>You slice the tofubread! </B>", 1)
+			new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
+	name = "Tofubread slice"
+	desc = "A slice of delicious tofubread."
+	icon_state = "tofubreadslice"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesewheel
+	name = "Cheese wheel"
+	desc = "A big wheel of delcious Cheddar."
+	icon_state = "cheesewheel"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 20)
+		bitesize = 2
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/kitchenknife /* || /obj/item/weapon/scalpel*/))
+			W.visible_message(" \red <B> You slice the cheese! </B>", 1)
+			new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesewedge
+	name = "Cheese wedge"
+	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
+	icon_state = "cheesewedge"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		bitesize = 2
 
 
 

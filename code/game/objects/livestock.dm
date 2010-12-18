@@ -30,7 +30,6 @@
 	var/view_range = 7				//How far it can see.
 	var/obj/item/weapon/card/id/anicard		//By default, animals can open doors but not any with access restrictions.
 	var/intelligence = null					// the intelligence var allows for additional access (by job).
-	var/hardness = 0					// determines the prob of a stun
 
 	New()			//Initializes the livestock's AI and access
 		..()
@@ -74,18 +73,27 @@
 		..()
 
 	bullet_act(flag, A as obj)
-		if (flag == PROJECTILE_BULLET)
-			src.health -= 20
-		else if (flag == PROJECTILE_WEAKBULLET)
-			src.health -= 4
-		else if (flag == PROJECTILE_LASER)
-			src.health -= 10
+		switch(flag)
+			if(PROJECTILE_BULLET)
+				src.health -= 15
+			if(PROJECTILE_TASER)
+				src.health -= 5
+			if(PROJECTILE_WEAKBULLET)
+				src.health -= 8
+			if(PROJECTILE_LASER)
+				src.health -= 10
+			if(PROJECTILE_PULSE)
+				src.health -= 25
+				if(prob(30))
+					src.ex_act(1)
+			if(PROJECTILE_BOLT)
+				src.health -= 5
 		healthcheck()
 
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				src.death()
+				src.death(1)
 			if(2.0)
 				src.health -= 15
 				healthcheck()
@@ -141,6 +149,24 @@
 		trg_idle = null
 		frustration = 0
 
+	proc/special_extra()	//Placeholder for animal specific effects such as cow milk or spess carp breathing.
+
+	proc/special_attack()	//Placeholder for extra effects from the attack such as the carp's stun.
+
+	proc/special_target()	//Placeholder for extra targeting protocol
+
+	proc/random_movement()						//Unlike pick(cardinal), it has a bias towards continuing on in it's
+		var/temp_move = null					//	original direction.
+		switch(roll(1,20))  //50% => Foreward, 20% turn left, 20% turn right, 10% don't move.
+			if(1 to 10)
+				temp_move = src.dir
+			if(11 to 14)
+				temp_move = turn(src.dir, -90)
+			if(15 to 18)
+				temp_move = turn(src.dir, 90)
+		if(!isnull(temp_move))
+			step(src,temp_move)
+
 	proc/process()				//Master AI proc.
 		set background = 1
 		if (!alive)				//If it isn't alive, it shouldn't be doing anything.
@@ -178,8 +204,7 @@
 					for(var/mob/O in viewers(world.view,src))
 						O.show_message("\red <B>[src.target] has been attacked by [src.name]!</B>", 1, "\red You hear someone fall.", 2)
 					target:bruteloss += strength
-					if (prob(hardness))
-						target:stunned = max(target:stunned, (strength / 2))
+					special_attack()
 					src.loc = target.loc
 					set_null()  //Break off the attack for a sec.
 				step_towards(src,get_step_towards2(src , target)) // Move towards the target.
@@ -213,13 +238,14 @@
 		if(state != 2 || !alive || target) return  //If you arne't idling, aren't alive, or have a target, you shouldn't be here.
 		if(prob(5) && health < maxhealth)			//5% chance of healing every cycle.
 			health++
+		special_extra()
 		if(isnull(trg_idle))						//No one to follow? Find one.
 			for(var/mob/living/O in viewers(world.view,src))
 				if(O.mutations == (0 || 16))		//Hates mutants and fatties.
 					trg_idle = O
 					break
 		if(isnull(trg_idle))						//Still no one to follow? Step in a random direction.
-			step(src,pick(cardinal))
+			random_movement()
 		else if(!path_idle.len)						//Has a target but no path?
 			if(can_see(src,trg_idle,view_range))	//Can see it? Then move towards it.
 				step_towards(src,get_step_towards2(src , trg_idle))
@@ -227,7 +253,7 @@
 				path_idle(trg_idle)		//Can't see it? Find a path.
 				if(!path_idle.len)		//Still no path? Stop trying to follow it.
 					trg_idle = null
-				step(src,pick(cardinal))
+				random_movement()
 		else
 			if(can_see(src,trg_idle,view_range))	//Has a path and can see the target?
 				if(get_dist(src, trg_idle) >= 2)		//If 2 or more squares away, re-find path and move towards it.
@@ -253,14 +279,17 @@
 		path_target = AStar(src.loc, trg.loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 250, anicard, null)
 		path_target = reverselist(path_target)
 
-	proc/death()
+	proc/death(var/messy = 0)
 		if(!alive) return
 		src.alive = 0
 		density = 0
 		icon_state = "[initial(icon_state)]_d"
 		set_null()
-		for(var/mob/O in hearers(src, null))
-			O.show_message("\red <B>[src]'s eyes glass over!</B>", 1)
+		if(!messy)
+			for(var/mob/O in hearers(src, null))
+				O.show_message("\red <B>[src]'s eyes glass over!</B>", 1)
+		else
+			del(src)
 
 	proc/healthcheck()
 		if (src.health <= 0)
@@ -275,6 +304,18 @@
 	strength = 5
 	cycle_pause = 15
 	patience = 25
+	var/obj/item/weapon/reagent_containers/food/snacks/egg_holder
+	special_extra()
+		if(prob(5))
+			for(var/mob/O in hearers(src, null))
+				O << "\green Chick: Cluck."
+			src.egg_holder = new /obj/item/weapon/reagent_containers/food/snacks/egg(src)
+			src.egg_holder.loc = src.loc
+			src.egg_holder = null
+		for(var/mob/living/carbon/human/V in viewers(world.view,src))
+			if(V.mind.special_role == "wizard")
+				for(var/mob/H in hearers(src, null))
+					H << "\green Chick clucks in an angry manner at [V.name]."
 
 /obj/livestock/spesscarp
 	name = "Spess Carp"
@@ -287,12 +328,63 @@
 	cycle_pause = 10
 	patience = 25
 	view_range = 8
-	hardness = 20
+	var/stun_chance = 20					// determines the prob of a stun
+	special_attack()
+		if (prob(stun_chance))
+			target:stunned = max(target:stunned, (strength / 2))
 
 /obj/livestock/spesscarp/elite
 	desc = "Oh shit, you're really fucked now. It has an evil gleam in it's eye."
 	health = 50
 	maxhealth = 50
 	view_range = 14
-	hardness = 100
+	stun_chance = 100
 	intelligence = "Assistant"
+
+/obj/livestock/cow
+	name = "Pigmy Cow"
+	desc = "That's not my cow!"
+	icon_state = "cow"
+	health = 100
+	maxhealth = 100
+	strength = 20
+	cycle_pause = 20
+	patience = 50
+	view_range = 10
+	special_extra()
+		if(prob(20))
+			for(var/mob/O in hearers(src, null))
+				O << "\green Cow: Moo."
+			src.reagents.add_reagent("milk", 1)
+		if(src.reagents.get_reagent_amount("milk") >= 100)
+			gib()
+
+	examine()
+		..()
+		switch(src.reagents.get_reagent_amount("milk"))
+			if(0 to 10)
+				usr << text("\red The cow looks content.")
+			if(11 to 80)
+				usr << text("\red The cow looks uncomfortable.")
+			if(81 to INFINITY)
+				usr << text("\red The cow looks as if it could burst at any minute!")
+
+	proc/gib()			//Will move this to a generic livestock proc once I get some gib animations for the others -- Darem.
+		var/atom/movable/overlay/animation = null
+		src.icon = null
+		src.invisibility = 101
+		animation = new(src.loc)
+		animation.icon = 'livestock.dmi'
+		animation.icon_state = "blank"
+		animation.master = src
+		flick("cow_g", animation)
+		new /obj/decal/cleanable/blood(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
+		for (var/obj/I in src)		//Not the best way to do this but it allows for pinata style animals as well.
+			I.loc = src.loc
+		sleep(11)
+		src.death(1)
+		del(animation)
+		return

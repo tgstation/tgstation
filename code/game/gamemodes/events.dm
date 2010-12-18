@@ -71,21 +71,7 @@
 
 		if(5)
 			event = 1
-			command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
-			world << sound('radiation.ogg')
-			for(var/mob/living/carbon/human/H in world)
-				H.radiation += rand(5,25)
-				if (prob(5))
-					H.radiation += rand(30,50)
-				if (prob(25))
-					if (prob(75))
-						randmutb(H)
-						domutcheck(H,null,1)
-					else
-						randmutg(H)
-						domutcheck(H,null,1)
-			for(var/mob/living/carbon/monkey/M in world)
-				M.radiation += rand(5,25)
+			high_radiation_event()
 		if(6)
 			event = 1
 			viral_outbreak()
@@ -124,6 +110,7 @@
 		del(A)
 	else
 		A:ex_act(1.0)
+
 
 
 /obj/bhole/proc/life() //Oh man , this will LAG
@@ -298,6 +285,23 @@
 			new /obj/alien/egg (vent.loc)
 		vents.Remove(vent)
 		spawncount -= 1
+
+/proc/high_radiation_event()
+	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
+	world << sound('radiation.ogg')
+	for(var/mob/living/carbon/human/H in world)
+		H.radiation += rand(5,25)
+		if (prob(5))
+			H.radiation += rand(30,50)
+		if (prob(25))
+			if (prob(75))
+				randmutb(H)
+				domutcheck(H,null,1)
+			else
+				randmutg(H)
+				domutcheck(H,null,1)
+	for(var/mob/living/carbon/monkey/M in world)
+		M.radiation += rand(5,25)
 
 /proc/prison_break() // -- Callagan
 	for (var/obj/machinery/power/apc/temp_apc in world)

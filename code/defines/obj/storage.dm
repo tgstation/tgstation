@@ -135,8 +135,8 @@
 	icon_state = "implant"
 	item_state = "syringe_kit"
 
-/obj/item/weapon/storage/explosiveimp_kit
-	name = "Explosive Implant Kit"
+/obj/item/weapon/storage/chemimp_kit
+	name = "Chemical Implant Kit"
 	icon_state = "implant"
 	item_state = "syringe_kit"
 

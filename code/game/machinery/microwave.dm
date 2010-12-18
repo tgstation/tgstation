@@ -91,6 +91,12 @@
 	cheese_amount = 3
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/meatbread"
 
+/datum/recipe/xenomeatbread
+	flour_amount = 3
+	xenomeat_amount = 3
+	cheese_amount = 3
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/xenomeatbread"
+
 /datum/recipe/omelette
 	egg_amount = 2
 	cheese_amount = 2
@@ -230,6 +236,7 @@
 	src.available_recipes += new /datum/recipe/tofubread(src)
 	src.available_recipes += new /datum/recipe/loadedbakedpotato(src)
 	src.available_recipes += new /datum/recipe/cheesyfries(src)
+	src.available_recipes += new /datum/recipe/xenomeatbread(src)
 
 
 
@@ -328,14 +335,9 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.donkpocket_amount++
 			del(O)
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/drinks/milk))
-		if(src.milk_amount < 5)
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] adds some milk to the microwave."))
-			src.milk_amount++
-			del(O)
 	else if(O.is_open_container())
 		return
+
 	else
 		if(!istype(extra_item, /obj/item)) //Allow one non food item to be added!
 			user.u_equip(O)
@@ -374,6 +376,9 @@ obj/machinery/microwave/attack_paw(user as mob)
 		while(src.reagents.get_reagent_amount("milk") > 4)
 			src.reagents.remove_reagent("milk", 5)
 			src.milk_amount++
+		while(src.reagents.get_reagent_amount("soymilk") > 4)
+			src.reagents.remove_reagent("soymilk", 5)
+			src.milk_amount++
 		while(src.reagents.get_reagent_amount("ketchup") > 4)
 			src.reagents.remove_reagent("ketchup", 5)
 			src.ketchup_amount++
@@ -410,7 +415,7 @@ Please clean it before use!</TT><BR>
 <B>Cheese:</B>[src.cheese_amount] cheese wedges<BR>
 <B>Tofu:</B>[src.tofu_amount] tofu chunks<BR>
 <B>Monkey Meat:</B>[src.monkeymeat_amount] slabs of meat<BR>
-<B>Meat Turnovers:</B>[src.donkpocket_amount] turnovers<BR>
+<B>Turnovers:</B>[src.donkpocket_amount] turnovers<BR>
 <B>Milk:</B>[src.milk_amount] cups of milk.<BR>
 [sauces]
 <B>Other Meat:</B>[src.humanmeat_amount] slabs of meat<BR>
@@ -507,6 +512,7 @@ Please clean it before use!</TT><BR>
 
 			if(operation == 2) // If dispose was pressed, empty the microwave
 				src.clear()
+				src.reagents.clear_reagents()
 				if(src.extra_item != null)
 					src.extra_item.loc = get_turf(src) // Eject the extra item so important shit like the disk can't be destroyed in there
 					src.extra_item = null
@@ -560,44 +566,6 @@ Please clean it before use!</TT><BR>
 	src.tofu_amount = 0
 	src.ketchup_amount = 0
 	src.berryjuice_amount = 0
+	src.updateUsrDialog()
 	//src.temp.reagents.clear_reagents()
 	return
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//Food slicing RIGHT BELOW*************
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-/obj/item/weapon/reagent_containers/food/snacks/meatbread/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
-		W.visible_message(" \red <B>You slice the meatbread! </B>", 1)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-		del(src)
-		return
-
-/obj/item/weapon/reagent_containers/food/snacks/tofubread/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
-		W.visible_message(" \red <B>You slice the tofubread! </B>", 1)
-		new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
-		del(src)
-		return
-
-/obj/item/weapon/reagent_containers/food/snacks/cheesewheel/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/kitchenknife /* || /obj/item/weapon/scalpel*/))
-		W.visible_message(" \red <B> You slice the cheese! </B>", 1)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-		del(src)
-		return

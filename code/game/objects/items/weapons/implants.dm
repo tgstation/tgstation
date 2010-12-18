@@ -27,25 +27,31 @@ IMPLANTER
 			src.name = text("Glass Case- '[]'", t)
 		else
 			src.name = "Glass Case"
-	else
-		if (!( istype(I, /obj/item/weapon/implanter) ))
-			return
-	if (I:imp)
-		if ((src.imp || I:imp.implanted))
-			return
-		I:imp.loc = src
-		src.imp = I:imp
-		I:imp = null
-		src.update()
-		I:update()
-	else
-		if (src.imp)
-			if (I:imp)
+
+	else if(istype(I, /obj/item/weapon/reagent_containers/syringe))
+		if(src.imp.reagents.total_volume >= 10)
+			user << "\red [src] is full."
+		else
+			spawn(5)
+				I.reagents.trans_to(src.imp, 5)
+				user << "\blue You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units."
+	else if (istype(I, /obj/item/weapon/implanter))
+		if (I:imp)
+			if ((src.imp || I:imp.implanted))
 				return
-			src.imp.loc = I
-			I:imp = src.imp
-			src.imp = null
-			update()
+			I:imp.loc = src
+			src.imp = I:imp
+			I:imp = null
+			src.update()
+			I:update()
+		else
+			if (src.imp)
+				if (I:imp)
+					return
+				src.imp.loc = I
+				I:imp = src.imp
+				src.imp = null
+				update()
 			I:update()
 	return
 
@@ -58,6 +64,18 @@ IMPLANTER
 /obj/item/weapon/implantcase/explosive/New()
 
 	src.imp = new /obj/item/weapon/implant/explosive( src )
+	..()
+	return
+
+/obj/item/weapon/implant/chem/New()
+	..()
+	var/datum/reagents/R = new/datum/reagents(10)
+	reagents = R
+	R.my_atom = src
+
+/obj/item/weapon/implantcase/chem/New()
+
+	src.imp = new /obj/item/weapon/implant/chem( src )
 	..()
 	return
 
@@ -174,6 +192,24 @@ No Implant Specifics"}
 <i>Direct-Interface</i>- You can use the prisoner management system to transmit short messages directly into the brain of the implanted subject.<BR>
 <i>Safe-break</i>- Can be safely deactivated remotely.<BR>
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+			else if (istype(src.case.imp, /obj/item/weapon/implant/chem))
+				dat += {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Robust Corp MJ-420 Prisoner Management Implant<BR>
+<b>Zone:</b> Abdominal Cavity>Abdominal Aorta<BR>
+<b>Power Source:</b> Techno-organtic Metabolization System<BR>
+<b>Life:</b> Deactivates upon death but remains within the body.<BR>
+<b>Important Notes: Due to the system functioning off of nutrients in the implanted subject's body, the subject<BR>
+will suffer from an increased appetite.</B><BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a small capsule that can contain various chemicals. Upon receiving a specially encoded signal<BR>
+the implant releases the chemicals directly into the blood stream.<BR>
+<b>Special Features:</b><BR>
+<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 25 units.<BR>
+Can only be loaded while still in it's original case.<BR>
+<b>Integrity:</b> Implant will last so long as the subject is alive. However, if the subject suffers from malnutrition,<BR>
+the implant may become unstable and either pre-maturely inject the subject or simply break."}
 			else
 				dat += "Implant ID not in database"
 		else

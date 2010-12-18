@@ -1,4 +1,4 @@
-/obj/machinery/computer/explosive
+/obj/machinery/computer/prisoner
 	name = "Prisoner Management"
 	icon = 'computer.dmi'
 	icon_state = "explosive"
@@ -10,8 +10,9 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
+	var/malf_access = 0
 
-/obj/machinery/computer/explosive/attackby(I as obj, user as mob)
+/obj/machinery/computer/prisoner/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
@@ -19,7 +20,7 @@
 				user << "\blue The broken glass falls out."
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
 				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/explosive/M = new /obj/item/weapon/circuitboard/explosive( A )
+				var/obj/item/weapon/circuitboard/prisoner/M = new /obj/item/weapon/circuitboard/prisoner( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				M.id = src.id
@@ -31,7 +32,7 @@
 			else
 				user << "\blue You disconnect the monitor."
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/explosive/M = new /obj/item/weapon/circuitboard/explosive( A )
+				var/obj/item/weapon/circuitboard/prisoner/M = new /obj/item/weapon/circuitboard/prisoner( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				M.id = src.id
@@ -45,15 +46,24 @@
 	src.attack_hand(user)
 	return
 
-/obj/machinery/computer/explosive/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+/obj/machinery/computer/prisoner/attack_ai(var/mob/user as mob)
+	user << "\red Access Denied"
+	if(user.icon_state == "ai-malf" && malf_access == 0)
+		user << "\red BZZZZZZ..."
+		spawn(20)
+			user << "\red ...ZZZZZZ *BEEP*"
+			sleep(10)
+			user << "\red You now have access to Prisoner Management console"
+			malf_access = 1
+	if(malf_access == 1)
+		return src.attack_hand(user)
+	else
+		return
 
-/obj/machinery/computer/explosive/attack_paw(var/mob/user as mob)
-
-	return src.attack_hand(user)
+/obj/machinery/computer/prisoner/attack_paw(var/mob/user as mob)
 	return
 
-/obj/machinery/computer/explosive/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/prisoner/attack_hand(var/mob/user as mob)
 	if(..())
 		return
 	user.machine = src
@@ -62,12 +72,22 @@
 	if(screen == 0)
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Unlock Console</A>"
 	else if(screen == 1)
-		for(var/obj/item/weapon/implant/explosive/E in world)
-			if(!E.implanted) continue
-			dat += "[E.imp_in.name] | "
-			dat += "<A href='?src=\ref[src];killimplant=\ref[E]'>(<font color=red><i>Detonate</i></font>)</A> | "
-			dat += "<A href='?src=\ref[src];disable=\ref[E]'>(<font color=red><i>Deactivate</i></font>)</A> | "
-			dat += "<A href='?src=\ref[src];warn=\ref[E]'>(<font color=red><i>Warn</i></font>)</A> |<BR>"
+		dat += "<HR>Chemical Implants<BR>"
+		for(var/obj/item/weapon/implant/chem/C in world)
+			if(!C.implanted) continue
+			dat += "[C.imp_in.name] | Remaining Units: [C.reagents.total_volume] | Inject: "
+			dat += "<A href='?src=\ref[src];inject1=\ref[C]'>(<font color=red>(1)</font>)</A>"
+			dat += "<A href='?src=\ref[src];inject5=\ref[C]'>(<font color=red>(5)</font>)</A>"
+			dat += "<A href='?src=\ref[src];inject10=\ref[C]'>(<font color=red>(10)</font>)</A><BR>"
+		dat += "<HR>Tracking Implants<BR>"
+		for(var/obj/item/weapon/implant/tracking/T in world)
+			if(!T.implanted) continue
+			var/loc_display = "Unknown"
+			var/mob/living/carbon/M = T.imp_in
+			if(M.z == 1 && !istype(M.loc, /turf/space))
+				var/turf/mob_loc = get_turf_loc(M)
+				loc_display = mob_loc.loc
+			dat += "ID: [T.id] | Location: [loc_display]<BR>"
 		dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
 
 	user << browse(dat, "window=computer;size=400x500")
@@ -81,7 +101,7 @@
 	src.updateDialog()
 	return
 
-/obj/machinery/computer/explosive/Topic(href, href_list)
+/obj/machinery/computer/prisoner/Topic(href, href_list)
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
@@ -90,7 +110,11 @@
 			var/obj/item/weapon/implant/I = locate(href_list["killimplant"])
 			var/mob/living/carbon/R = I.imp_in
 			if(R)
-				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
+				var/choice = null
+				if(istype(usr, /mob/living/silicon))
+					choice = input("Using this command is in violation of default laws.") in list("Continue", "Abort")
+				if(choice != "Abort")
+					choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					R << "You hear quiet beep from the base of your skull."
 					message_admins("\blue [key_name_admin(usr)] gibbed [R.name]")
@@ -111,6 +135,30 @@
 				else
 					R << "\blue you hear a click as the implant disintegrates."
 					del(I)
+
+		else if (href_list["inject1"])
+			var/obj/item/weapon/implant/I = locate(href_list["inject1"])
+			var/mob/living/carbon/R = I.imp_in
+			I.reagents.trans_to(R, 1)
+			if(!I.reagents.total_volume)
+				R << "You hear a faint click from your chest."
+				del(I)
+
+		else if (href_list["inject5"])
+			var/obj/item/weapon/implant/I = locate(href_list["inject5"])
+			var/mob/living/carbon/R = I.imp_in
+			I.reagents.trans_to(R, 5)
+			if(!I.reagents.total_volume)
+				R << "You hear a faint click from your chest."
+				del(I)
+
+		else if (href_list["inject10"])
+			var/obj/item/weapon/implant/I = locate(href_list["inject10"])
+			var/mob/living/carbon/R = I.imp_in
+			I.reagents.trans_to(R, 10)
+			if(!I.reagents.total_volume)
+				R << "You hear a faint click from your chest."
+				del(I)
 
 		else if (href_list["lock"])
 			if(src.allowed(usr))

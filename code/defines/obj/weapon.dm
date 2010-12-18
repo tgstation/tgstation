@@ -659,6 +659,9 @@
 /obj/item/weapon/implant/explosive
 	name = "explosive"
 
+/obj/item/weapon/implant/chem
+	name = "chem"
+
 /obj/item/weapon/implantcase
 	name = "Glass Case"
 	icon_state = "implantcase-0"
@@ -677,6 +680,11 @@
 	name = "Glass Case- 'Explosive'"
 	icon = 'items.dmi'
 	icon_state = "implantcase-r"
+
+/obj/item/weapon/implantcase/chem
+	name = "Glass Case- 'Chem'"
+	icon = 'items.dmi'
+	icon_state = "implantcase-b"
 
 /obj/item/weapon/implanter
 	name = "implanter"
