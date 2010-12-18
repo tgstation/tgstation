@@ -40,7 +40,7 @@
 			if ((O.client && !( O.blinded )))
 				O << text("\red [src] has been scanned by [user] with the [W]")
 	else
-		if (!( istype(W, /obj/item/weapon/grab) ) || !(istype(W, /obj/item/weapon/cleaner)) || !(istype(W, /obj/item/weapon/plantbgone)) )
+		if (!( istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) &&!(istype(W, /obj/item/weapon/cleaner)) && !(istype(W, /obj/item/weapon/plantbgone)) )
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O << text("\red <B>[] has been hit by [] with []</B>", src, user, W)

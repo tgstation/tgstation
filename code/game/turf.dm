@@ -265,7 +265,13 @@
 			else
 				dismantle_wall(devastated=1)
 		if(3.0)
-			dismantle_wall()
+			var/proba
+			if (istype(src, /turf/simulated/wall/r_wall))
+				proba = 15
+			else
+				proba = 40
+			if (prob(proba))
+				dismantle_wall()
 		else
 	return
 

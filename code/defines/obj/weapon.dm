@@ -1647,3 +1647,13 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	w_class = 2.0
 	m_amt = 50
 
+/obj/item/weapon/plastique
+	name = "Plastic Explosives"
+	desc = "Used to put holes in specific areas without too much extra hole."
+	icon = 'assemblies.dmi'
+	icon_state = "timer-igniter-tank0"
+	item_state = "plasma-c"
+	flags = FPRINT | TABLEPASS | USEDELAY
+	w_class = 2.0
+	var/timer = 10
+	var/atom/target = null

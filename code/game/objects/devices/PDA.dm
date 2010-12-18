@@ -1681,7 +1681,7 @@ Code:
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=cloak'>Cloaking Device</A> (4)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=sword'>Energy Sword</A> (4)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=bomb'>Low-Yield Bomb</A> (4)<BR>"
+	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=bomb'>Plastic Explosives</A> (4)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=powersink'>Power Sink</A> (5)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=detomatix'>Detomatix Cartridge</A> (3)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=space'>Syndicate-made Space Suit (inludes a helmet)</A> (3)<BR>"
@@ -1766,7 +1766,8 @@ Code:
 			if("bomb")
 				if (src.uses >= 4)
 					src.uses -= 4
-					new /obj/spawner/newbomb/timer/syndicate(get_turf(src.hostpda))
+					new /obj/item/weapon/plastique(get_turf(src.hostpda))
+					new /obj/item/weapon/plastique(get_turf(src.hostpda))
 			if("powersink")
 				if (src.uses >= 5)
 					src.uses -= 5
