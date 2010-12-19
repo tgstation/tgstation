@@ -14,8 +14,8 @@
 /obj/machinery/shieldwallgen
 		name = "Shield Generator"
 		desc = "A shield generator."
-		icon = 'wizard.dmi'
-		icon_state = "dontknow"
+		icon = 'stationobjs.dmi'
+		icon_state = "Shield_Gen"
 		anchored = 0
 		density = 1
 		req_access = list(access_security)
@@ -191,7 +191,7 @@
 
 	var/net = get_connection()		// find the powernet of the connected cable
 
-	var/datum/powernet/PN			// find the powernet
+	var/datum/powernet/PN			// find the powernet. Magic code, voodoo code.
 	if(net)
 		PN = powernets[net]
 	var/shieldload = rand(50,200)
@@ -213,12 +213,12 @@
 			if(power == 1)
 				if(src.active >= 1)
 					src.active = 0
-		//			icon_state = "Field_Gen"
+					icon_state = "Shield_Gen"
 					user << "You turn off the shield generator."
 					src.cleanup()
 				else
 					src.active = 1
-		//			icon_state = "Field_Gen +a"
+					icon_state = "Shield_Gen +a"
 					user << "You turn on the shield generator."
 			else
 				user << "The shield generator needs to be powered by wire underneath."
@@ -233,10 +233,11 @@
 		if(power == 1)
 			if(src.active >= 1)
 				user << "You turn off the field generator."
+				icon_state = "Shield_Gen"
 				src.active = 0
 			else
 				src.active = 1
-	//			icon_state = "Field_Gen +a"
+				icon_state = "Shield_Gen +a"
 				user << "You turn on the field generator."
 		else
 			user << "The shield generator needs to be powered by wire underneath."
@@ -267,7 +268,7 @@
 			src.state = 1
 //			src.power = 1
 			src.anchored = 1
-//			icon_state = "Field_Gen +a"
+			icon_state = "Shield_Gen +a"
 		Varedit_start = 0
 
 	if(src.active == 1)
@@ -288,7 +289,7 @@
 			if(src.power == 0)
 				for(var/mob/M in viewers(src))
 					M.show_message("\red The [src.name] shuts down due to lack of power!")
-	//			icon_state = "Field_Gen"
+				icon_state = "Shield_Gen"
 				src.active = 0
 				spawn(1)
 					src.cleanup(1)
