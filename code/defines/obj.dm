@@ -636,12 +636,14 @@
 	name = "bed"
 	icon_state = "bed"
 	anchored = 1.0
+	var/list/buckled_mobs = list(  )
 
 /obj/stool/chair
 	name = "chair"
 	icon_state = "chair"
 	var/status = 0.0
 	anchored = 1.0
+	var/list/buckled_mobs = list(  )
 
 /obj/stool/chair/e_chair
 	name = "electrified chair"
