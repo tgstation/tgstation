@@ -85,32 +85,40 @@
 	icon_state = "357-7"
 	amount_left = 7.0
 
-/obj/item/weapon/ammo/bshell
+
+/obj/item/weapon/ammo/shell //easier to add new shell types. Like badmin laser/taser/pulse shells.
+	desc = "Generic shell description."
+	name = "Generic shell."
+	icon_state = "blshell"
+	m_amt = 9000
+	New()
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/ammo/shell/beanbag
 	desc = "A weak beanbag shell."
 	name = "beanbag shell"
 	icon_state = "bshell"
 	m_amt = 10000
-	New()
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
 
-/obj/item/weapon/ammo/gshell
+/obj/item/weapon/ammo/shell/gauge
 	desc = "A 12gauge shell."
 	name = "12 gauge shell"
 	icon_state = "gshell"
 	m_amt = 25000
-	New()
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
 
-/obj/item/weapon/ammo/blshell
+/obj/item/weapon/ammo/shell/blank
 	desc = "A blank shell."
 	name = "blank shell"
 	icon_state = "blshell"
 	m_amt = 500
-	New()
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/ammo/shell/dart
+	desc = "A dart for use in shotguns.."
+	name = "shotgun dart"
+	icon_state = "blshell" //someone, draw the icon, please.
+	m_amt = 50000 //because it's like, instakill.
+
 
 /obj/item/weapon/ammo/a38
 	desc = "A speedloader that contains 7 .38 Special rounds."

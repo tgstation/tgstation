@@ -19,8 +19,6 @@
 		anchored = 0
 		density = 1
 		req_access = list(access_security)
-		var/Varedit_start = 0
-		var/Varpower = 0
 		var/active = 0
 		var/power = 0
 		var/state = 0
@@ -232,13 +230,13 @@
 	if(state == 1)
 		if(power == 1)
 			if(src.active >= 1)
-				user << "You turn off the field generator."
+				user << "You turn off the shield generator."
 				icon_state = "Shield_Gen"
 				src.active = 0
 			else
 				src.active = 1
 				icon_state = "Shield_Gen +a"
-				user << "You turn on the field generator."
+				user << "You turn on the shield generator."
 		else
 			user << "The shield generator needs to be powered by wire underneath."
 	else
@@ -262,15 +260,6 @@
 //	if(shieldload >= maxshieldload) //there was a loop caused by specifics of process(), so this was needed.
 //		shieldload = maxshieldload
 
-	if(src.Varedit_start == 1)
-		if(src.active == 0)
-			src.active = 1
-			src.state = 1
-//			src.power = 1
-			src.anchored = 1
-			icon_state = "Shield_Gen +a"
-		Varedit_start = 0
-
 	if(src.active == 1)
 		if(!src.state == 1)
 			src.active = 0
@@ -285,20 +274,19 @@
 			setup_field(8)
 		src.active = 2
 	if(src.active >= 1)
-		if(Varpower == 0)
-			if(src.power == 0)
-				for(var/mob/M in viewers(src))
-					M.show_message("\red The [src.name] shuts down due to lack of power!")
-				icon_state = "Shield_Gen"
-				src.active = 0
-				spawn(1)
-					src.cleanup(1)
-				spawn(1)
-					src.cleanup(2)
-				spawn(1)
-					src.cleanup(4)
-				spawn(1)
-					src.cleanup(8)
+		if(src.power == 0)
+			for(var/mob/M in viewers(src))
+				M.show_message("\red The [src.name] shuts down due to lack of power!")
+			icon_state = "Shield_Gen"
+			src.active = 0
+			spawn(1)
+				src.cleanup(1)
+			spawn(1)
+				src.cleanup(2)
+			spawn(1)
+				src.cleanup(4)
+			spawn(1)
+				src.cleanup(8)
 
 /obj/machinery/shieldwallgen/proc/setup_field(var/NSEW = 0)
 	var/turf/T = src.loc

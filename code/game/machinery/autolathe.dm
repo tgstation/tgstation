@@ -176,7 +176,7 @@
 	src.L += new /obj/item/weapon/circular_saw(src)
 	src.L += new /obj/item/device/t_scanner(src)
 	src.L += new /obj/item/weapon/reagent_containers/glass/bucket(src)
-	src.L += new /obj/item/weapon/ammo/blshell(src)
+	src.L += new /obj/item/weapon/ammo/shell/blank(src)
 	src.L += new /obj/item/device/taperecorder(src)
 	src.LL += new /obj/item/weapon/flamethrower(src)
 	src.LL += new /obj/item/device/igniter(src)
@@ -186,9 +186,10 @@
 	src.LL += new /obj/item/device/infra_sensor(src)
 	src.LL += new /obj/item/weapon/handcuffs(src)
 	src.LL += new /obj/item/weapon/ammo/a357(src)
-	src.LL += new /obj/item/weapon/ammo/gshell(src)
+	src.LL += new /obj/item/weapon/ammo/shell/gauge(src)
 	src.LL += new /obj/item/weapon/ammo/a38(src)
-	src.LL += new /obj/item/weapon/ammo/bshell(src)
+	src.LL += new /obj/item/weapon/ammo/shell/beanbag(src)
+	src.LL += new /obj/item/weapon/ammo/shell/dart(src)
 //	src.LL += new /obj/item/weapon/shield/riot(src)
 	src.wires["Light Red"] = 0
 	src.wires["Dark Red"] = 0

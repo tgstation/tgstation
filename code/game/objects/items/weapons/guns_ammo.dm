@@ -221,17 +221,19 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 // SHOTGUN
 
 /obj/item/weapon/gun/shotgun/examine()
-	set src in usr // Maybe this is a reason for comment lower. -- Barhandar
+	set src in usr
 
-	src.desc = text("There are [src.index] shell\s left! Uses 12 gauge and beanbag.") //Doesn't shows the desc for some reason. -- Barhandar
+	if(src.name == "shotgun" || src.name == "combat shotgun")
+		src.desc = text("There are [src.index] shell\s left!") //no need to mention what shells are used, we have only one type of them
+
 	..()
+
 	return
 
-//0, not loaded. 1, beanbag, 2, 12gauge, 3, blank.
+//0, not loaded. 1, beanbag, 2, 12gauge, 3, blank, 4, dart.
 
 /obj/item/weapon/gun/shotgun/attackby(obj/item/weapon/A as obj, mob/user as mob)
-	if (istype(A, /obj/item/weapon/ammo/bshell))
-		//var/obj/item/weapon/ammo/bshell/A = B
+	if (istype(A, /obj/item/weapon/ammo/shell/beanbag))
 		if (index == src.shellsmax || shellsunlimited >= 1) //...than sorry.
 			user << "\blue It's already fully loaded!"
 			return 1
@@ -244,8 +246,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			return 1
 		return 1
 
-	else if (istype(A, /obj/item/weapon/ammo/gshell))
-		//var/obj/item/weapon/ammo/gshell/A = B
+	else if (istype(A, /obj/item/weapon/ammo/shell/gauge))
 		if (index == src.shellsmax || shellsunlimited >= 1)
 			user << "\blue It's already fully loaded!"
 			return 1
@@ -258,8 +259,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			return 1
 		return 1
 
-	else if (istype(A, /obj/item/weapon/ammo/blshell))
-		//var/obj/item/weapon/ammo/gshell/A = B
+	else if (istype(A, /obj/item/weapon/ammo/shell/blank))
 		if (index == src.shellsmax || shellsunlimited >= 1)
 			user << "\blue It's already fully loaded!"
 			return 1
@@ -269,6 +269,18 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			src.shells.len = index
 			del(A)
 			src.shells[index] = 3
+			return 1
+		return 1
+	else if (istype(A, /obj/item/weapon/ammo/shell/dart))
+		if (index == src.shellsmax || shellsunlimited >= 1)
+			user << "\blue It's already fully loaded!"
+			return 1
+		else
+			user << "\blue You load the dart into the shotgun."
+			index++
+			src.shells.len = index
+			del(A)
+			src.shells[index] = 4
 			return 1
 		return 1
 	return 1
@@ -281,7 +293,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return
 	if (src.pumped == 0)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red <B>[] pumps the shotgun!</B>", user), 1, "\red You hear pumping", 2)
+			O.show_message(text("\red <B>[] pumps the [src.name]!</B>", user), 1, "\red You hear pumping", 2)
 			playsound(user, 'shotgunpump.ogg', 100, 1)
 			src.pumped = 1
 			return
@@ -290,8 +302,10 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		user.show_message("\red *click* *click*", 2)
 		return
 	playsound(user, 'Gunshot.ogg', 100, 1)
+	if (user.ckey == "barhandar" && src.name == "adjudicator")
+		src.name = "Barhandar's Boomstick"
 	for(var/mob/O in viewers(user, null))
-		O.show_message(text("\red <B>[] fires a shotgun at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+		O.show_message(text("\red <B>[] fires the [src.name] at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
 	var/turf/T = user.loc
 	var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 	if ((!( U ) || !( T )))
@@ -305,42 +319,9 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			user.bullet_act(PROJECTILE_WEAKBULLET)
 		else if (src.shells[index] == 2 || shellsunlimited == 2)
 			user.bullet_act(PROJECTILE_BULLET)
+		else if (src.shells[index] == 4 || shellsunlimited == 4)
+			user.bullet_act(PROJECTILE_BOLT)
 		return
-	if (src.shells[index] == 1 && !shellsunlimited)
-		var/obj/bullet/A = new /obj/bullet/weakbullet( user.loc )
-		src.pumped = 0
-		src.shells[index] = 0
-		index--
-		A.current = U
-		A.yo = U.y - T.y
-		A.xo = U.x - T.x
-		user.next_move = world.time + 4
-		spawn( 0 )
-			A.process()
-		if (!istype(U, /turf))
-			del(A)
-			return
-	else if (src.shells[index] == 2 && !shellsunlimited)
-		var/obj/bullet/A = new /obj/bullet( user.loc )
-		src.pumped = 0
-		src.shells[index] = 0
-		index--
-		A.current = U
-		A.yo = U.y - T.y
-		A.xo = U.x - T.x
-		user.next_move = world.time + 4
-		spawn( 0 )
-			A.process()
-		if (!istype(U, /turf))
-			del(A)
-			return
-	else if (src.shells[index] == 3 && !shellsunlimited)
-		src.pumped = 0
-		src.shells[index] = 0
-		index--
-		spawn( 0 )
-		return
-	//following code definitely can be made in a more efficient way, I just don't know it -- Barhandar
 	switch(shellsunlimited)
 		if (1)
 			var/obj/bullet/A = new /obj/bullet/weakbullet( user.loc )
@@ -370,6 +351,18 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			src.pumped = 0
 			spawn( 0 )
 			return
+		if (4)
+			var/obj/bullet/A = new /obj/bullet/cbbolt( user.loc )
+			src.pumped = 0
+			A.current = U
+			A.yo = U.y - T.y
+			A.xo = U.x - T.x
+			user.next_move = world.time + 4
+			spawn( 0 )
+				A.process()
+			if (!istype(U, /turf))
+				del(A)
+				return
 		else switch(src.shells[index])
 			if (1)
 				var/obj/bullet/A = new /obj/bullet/weakbullet( user.loc )
@@ -405,6 +398,20 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				index--
 				spawn( 0 )
 				return
+			if (4)
+				var/obj/bullet/A = new /obj/bullet/cbbolt( user.loc )
+				src.pumped = 0
+				src.shells[index] = 0
+				index--
+				A.current = U
+				A.yo = U.y - T.y
+				A.xo = U.x - T.x
+				user.next_move = world.time + 4
+				spawn( 0 )
+					A.process()
+				if (!istype(U, /turf))
+					del(A)
+					return
 
 
 
