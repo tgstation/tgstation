@@ -111,8 +111,8 @@
 			output += {"Carbon: "}
 			percent = round(environment.carbon_dioxide / total * 100, 2)
 			//CO2 Levels Sensor
-			if(environment.carbon_dioxide > 0.05)
-				if(environment.carbon_dioxide > 0.1)
+			if(environment.carbon_dioxide > 5)
+				if(environment.carbon_dioxide > 10)
 					output += {"<font color='red'><b>[percent]</b></font>%<br>"}
 					safe = 0
 				else
@@ -131,6 +131,18 @@
 					output += {"<font color='orange'>[percent]</font>%<br>"}
 					if(safe != 0) safe = 1
 			else output += {"<font color='green'>[percent]</font>%<br>"}
+
+			//Trace Gas Sensor
+			if(safe && environment.trace_gases.len)
+				for(var/datum/gas/sleeping_agent/SA in environment.trace_gases)
+					var/SA_pp = (SA.moles/environment.total_moles())*environment_pressure
+					if(SA_pp > 0.01)
+						if(SA_pp > 1)
+							output += {"<font color='red'>High Concentration of Unknown Particles Detected</font><br>"}
+							safe = 0
+						else
+							output += {"<font color='orange'>Low Concentration of Unknown Particles Detected</font><br>"}
+							safe = 1
 
 			output += {"Temperature: "}
 			//Temperature Levels Sensor
@@ -338,9 +350,9 @@
 			safe = 0
 		else safe = 1
 
-	if(safe && (environment.carbon_dioxide > 0.05))
+	if(safe && (environment.carbon_dioxide > 5))
 		//CO2 Levels Sensor
-		if(environment.carbon_dioxide > 0.1)
+		if(environment.carbon_dioxide > 10)
 			safe = 0
 		else safe = 1
 
@@ -349,6 +361,14 @@
 		if(environment.toxins > 2)
 			safe = 0
 		else safe = 1
+
+	if(safe && environment.trace_gases.len)
+		for(var/datum/gas/sleeping_agent/SA in environment.trace_gases)
+			var/SA_pp = (SA.moles/environment.total_moles())*environment_pressure
+			if(SA_pp > 0.01)
+				if(SA_pp > 1)
+					safe = 0
+				else safe = 1
 
 	src.icon_state = "alarm[!safe]"
 
