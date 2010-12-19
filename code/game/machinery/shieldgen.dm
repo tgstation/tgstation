@@ -22,7 +22,7 @@
 		var/Varedit_start = 0
 		var/Varpower = 0
 		var/active = 0
-		var/power = 1 //fuck that, powered forever for now
+		var/power = 0
 		var/state = 0
 		var/steps = 0
 		var/last_check = 0
@@ -30,6 +30,11 @@
 		var/recalc = 0
 		var/locked = 0
 		var/destroyed = 0
+		var/directwired = 1
+//		var/maxshieldload = 200
+		var/obj/cable/attached		// the attached cable
+		var/storedpower = 0
+		var/maxstoredpower = 500
 		flags = FPRINT | CONDUCT
 
 /obj/machinery/shield
@@ -165,10 +170,9 @@
 		shields_up()
 
 
-////FIELD GEN START //shameless copypasta from fieldgen, yes
+////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
 
 
-/* doesn't works for some reason.
 /obj/machinery/shieldwallgen/proc/get_connection()
 	var/turf/T = src.loc
 	if(!istype(T, /turf/simulated/floor))
@@ -179,7 +183,29 @@
 			return C.netnum
 
 	return 0
-*/
+
+
+/obj/machinery/shieldwallgen/proc/power()
+	if(!anchored)
+		return 0
+
+	var/net = get_connection()		// find the powernet of the connected cable
+
+	var/datum/powernet/PN			// find the powernet
+	if(net)
+		PN = powernets[net]
+	var/shieldload = rand(50,200)
+
+	if((!PN || !PN.avail) && !storedpower)		// no cable or no power, and no power stored
+		power = 0
+		return 0
+	else
+		power = 1	// IVE GOT THE POWER!
+		if(PN) //runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stored power.
+			storedpower += shieldload
+			PN.newload += shieldload //uses powernet power.
+//		message_admins("[PN.load]", 1)
+//		use_power(250) //uses APC power
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
 	if(state == 1)
@@ -189,7 +215,7 @@
 					src.active = 0
 		//			icon_state = "Field_Gen"
 					user << "You turn off the shield generator."
-		//			src.cleanup()
+					src.cleanup()
 				else
 					src.active = 1
 		//			icon_state = "Field_Gen +a"
@@ -222,7 +248,18 @@
 	..()
 	return
 
+
 /obj/machinery/shieldwallgen/process()
+	spawn(100)
+		power()
+		if(power == 1)
+			storedpower -= 50 //this way it can survive longer and survive at all
+	if(storedpower >= maxstoredpower)
+		storedpower = maxstoredpower
+	if(storedpower <= 0)
+		storedpower = 0
+//	if(shieldload >= maxshieldload) //there was a loop caused by specifics of process(), so this was needed.
+//		shieldload = maxshieldload
 
 	if(src.Varedit_start == 1)
 		if(src.active == 0)
@@ -439,11 +476,21 @@
 	src.gen_primary = A
 	src.gen_secondary = B
 	spawn(1)
-		src.sd_SetLuminosity(5)
+		src.sd_SetLuminosity(3)
+
+/*	for(var/mob/M as mob in src.loc) //does not work for some reason.
+	 	if(istype(M,/mob/living/carbon))
+			M.bruteloss += 100
+	 		M.updatehealth()
+			M << "\red <B>You feel as the very atoms of your body divide!</B>"
+		else
+			M.bruteloss += 50
+	 		M.updatehealth()
+			M << "\red <B>Strong energy field detected. Damage from field dampened.</B>"
+*/
 
 /obj/machinery/shieldwall/attack_hand(mob/user as mob)
 	return
-
 
 /obj/machinery/shieldwall/process()
 	if(isnull(gen_primary)||isnull(gen_secondary))
@@ -453,3 +500,8 @@
 	if(!(gen_primary.active)||!(gen_secondary.active))
 		del(src)
 		return
+//
+	if(prob(50))
+		gen_primary.storedpower -= 10
+	else
+		gen_secondary.storedpower -=10

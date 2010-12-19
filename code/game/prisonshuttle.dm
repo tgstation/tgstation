@@ -9,7 +9,6 @@ var/prison_shuttle_at_station = 0
 var/prison_shuttle_can_send = 1
 var/prison_shuttle_time = 0
 var/prison_shuttle_timeleft = 0
-var/prison_shuttle_points = 50
 
 /obj/machinery/computer/prison_shuttle
 	name = "Prison Shuttle Console"

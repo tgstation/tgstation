@@ -388,9 +388,9 @@
 /proc/call_shuttle_proc(var/mob/user)
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
-//	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
-//		user << "Centcomm will not allow the shuttle to be called."
-//		return
+	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
+		user << "The emergency shuttle is refueling. Please wait another [(6000-world.time)/10] seconds before trying again."
+		return
 	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
 		user << "Centcom will not allow the shuttle to be called."
 		if(sent_strike_team == 1)

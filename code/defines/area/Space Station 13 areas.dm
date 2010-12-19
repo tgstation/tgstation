@@ -97,11 +97,11 @@
 /area/shuttle/prison/prison
 	icon_state = "shuttle2"
 
-/area/shuttle/specialops/centcom
+/area/shuttle/specops/centcom
 	name = "Special Ops Shuttle"
 	icon_state = "shuttlered"
 
-/area/shuttle/specialops/station
+/area/shuttle/specops/station
 	name = "Special Ops Shuttle"
 	icon_state = "shuttlered2"
 
@@ -709,6 +709,10 @@
 
 /area/toxins/lab
 	name = "Toxin Lab"
+	icon_state = "toxlab"
+
+/area/toxins/xenobiology
+	name = "Xenobiology Lab"
 	icon_state = "toxlab"
 
 /area/toxins/storage

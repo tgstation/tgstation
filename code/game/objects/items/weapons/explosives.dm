@@ -12,7 +12,7 @@
 		var/location
 		if (isturf(target)) location = target
 		if (isobj(target)) location = target.loc
-		target.overlays += image('assemblies.dmi', "timer-igniter-tank2")
+		target.overlays += image('assemblies.dmi', "plastic-explosive2")
 		user << "Bomb has been planted. Timer counting down from [src.timer]."
 		spawn(src.timer*10)
 			explosion(location, -1, -1, 2, 3)

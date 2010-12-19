@@ -262,6 +262,7 @@
 #include "code\game\prisonshuttle.dm"
 #include "code\game\smoothwall.dm"
 #include "code\game\sound.dm"
+#include "code\game\specops_shuttle.dm"
 #include "code\game\status.dm"
 #include "code\game\supplyshuttle.dm"
 #include "code\game\syndicate_shuttle.dm"
