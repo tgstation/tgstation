@@ -421,6 +421,18 @@
 	w_class = 2.0
 	m_amt = 100
 
+/obj/item/blueprints
+	name = "station blueprints"
+	desc = "Blueprints of space station 13. It have stamp \"Classified\" and several coffee stains."
+	icon = 'blueprints.dmi'
+	icon_state = "blueprints"
+ 
+/obj/item/apc_frame
+	name = "APC frame"
+	desc = "Use for repairing or building APCs"
+	icon = 'apc_repair.dmi'
+	icon_state = "apc_frame"
+	flags = FPRINT | TABLEPASS| CONDUCT
 
 /obj/landmark
 	name = "landmark"

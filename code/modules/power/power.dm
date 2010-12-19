@@ -356,9 +356,17 @@
 		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
 
+/obj/machinery/power/proc/connect_to_network()
+	var/turf/T = src.loc
+	var/obj/cable/C = T.get_cable_node()
+	if (!C.netnum)
+		return
+	makepowernets() //TODO: find fast way
 
-
-
-
-
-
+/turf/proc/get_cable_node()
+	if(!istype(src, /turf/simulated/floor))
+		return
+	for(var/obj/cable/C in src)
+		if(C.d1 == 0)
+			return C
+	return null

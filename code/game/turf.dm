@@ -347,7 +347,9 @@
 			if ((user.loc == T && user.equipped() == W))
 				user << "\blue You disassembled the outer wall plating."
 				dismantle_wall()
-
+	else if(istype(W,/obj/item/apc_frame))
+		var/obj/item/apc_frame/AH = W
+		AH.try_build(src)
 	else
 		return attack_hand(user)
 	return
@@ -457,6 +459,10 @@
 				W:amount--
 			else
 				del(W)
+	if(istype(W,/obj/item/apc_frame))
+		var/obj/item/apc_frame/AH = W
+		AH.try_build(src)
+		return
 
 	if(src.d_state > 0)
 		src.icon_state = "r_wall-[d_state]"

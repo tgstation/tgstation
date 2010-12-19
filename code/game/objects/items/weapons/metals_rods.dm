@@ -141,7 +141,6 @@ LATTICE
 
 /obj/item/weapon/sheet/metal/attack_self(mob/user as mob)
 	var/t1 = text("<HTML><HEAD></HEAD><TT>Amount Left: [] <BR>", src.amount)
-	var/counter = 1
 	var/list/L = list(  )
 	L["stool"] = "stool"
 	L["chair"] = "chair"
@@ -162,12 +161,10 @@ LATTICE
 	L["computer"] = "computer frame (5 metal)<BR>"
 	L["construct"] = "construct wall girders (2 metal)"
 	L["airlock"] = "construct airlock assembly (4 metal)"
+	L["apc_frame"] = "construct apc frame (2 metal)"
 
 	for(var/t in L)
-		counter++
 		t1 += text("<A href='?src=\ref[];make=[]'>[]</A>  ", src, t, L[t])
-		if (counter > 2)
-			counter = 1
 		t1 += "<BR>"
 	t1 += "</TT></HTML>"
 	user << browse(t1, "window=met_sheet")
@@ -325,6 +322,12 @@ LATTICE
 						return
 					src.amount -= 4
 					new /obj/door_assembly(location)
+			if("apc_frame")
+				if (src.amount < 2)
+					usr << text("\red You haven't got enough metal to build the APC frame!")		
+					return
+				src.amount -= 2
+				new /obj/item/apc_frame(usr.loc)
 
 		if (src.amount <= 0)
 			usr << browse(null, "window=met_sheet")
@@ -362,16 +365,12 @@ LATTICE
 
 /obj/item/weapon/sheet/r_metal/attack_self(mob/user as mob)
 	var/t1 = text("<HTML><HEAD></HEAD><TT>Amount Left: [] <BR>", src.amount)
-	var/counter = 1
 	var/list/L = list(  )
 	L["table"] = "table parts (2 metal)"
 	L["metal"] = "2x metal sheet (1 metal)<BR>"
 	L["core"] = "AI core (4 metal)"
 	for(var/t in L)
-		counter++
 		t1 += text("<A href='?src=\ref[];make=[]'>[]</A>  ", src, t, L[t])
-		if (counter > 2)
-			counter = 1
 		t1 += "<BR>"
 	t1 += "</TT></HTML>"
 	user << browse(t1, "window=met_sheet")
@@ -399,7 +398,7 @@ LATTICE
 					usr << text("\red You haven't got enough metal to build the metal sheets!")
 					return
 				src.amount -= 1
-				var/obj/item/weapon/sheet/C = new /obj/item/weapon/sheet( usr.loc )
+				var/obj/item/weapon/sheet/metal/C = new /obj/item/weapon/sheet/metal( usr.loc )
 				C.amount = 2
 			if("core")
 				if (src.amount < 4)

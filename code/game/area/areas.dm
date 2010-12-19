@@ -20,9 +20,9 @@
 			requires_power = 0
 
 		if(!requires_power)
-			power_light = 1
-			power_equip = 1
-			power_environ = 1
+			power_light = 0//rastaf0
+			power_equip = 0//rastaf0
+			power_environ = 0//rastaf0
 			luminosity = 1
 			sd_lighting = 0			// *DAL*
 		else
