@@ -53,23 +53,45 @@
 			usr << text("\red <B>Looks fierce!</B>")
 		return
 
+	proc/gib()			//Will move this to a generic livestock proc once I get some gib animations for the others -- Darem.
+		var/atom/movable/overlay/animation = null
+		src.icon = null
+		src.invisibility = 101
+		animation = new(src.loc)
+		animation.icon = 'livestock.dmi'
+		animation.icon_state = "blank"
+		animation.master = src
+		if(istype(src, /obj/livestock/spesscarp)) flick("spesscarp_g", animation)
+		sleep(11)
+		src.death(1)
+		del(animation)
+		return
+
 
 	attack_hand(user as mob)
 		return
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		switch(W.damtype)
-			if("fire")
-				src.health -= W.force * 0.75
-			if("brute")
-				src.health -= W.force * 0.5
-			else
-		if (src.health <= 0)
-			src.death()
-		else if (W.force)
-			if(src.aggressive && (ishuman(user) || ismonkey(user) || isrobot(user)))
-				src.target = user
-				src.state = 1
+		if(src.alive)
+			switch(W.damtype)
+				if("fire")
+					src.health -= W.force * 0.75
+				if("brute")
+					src.health -= W.force * 0.5
+				else
+			if (src.health <= 0)
+				src.death()
+			else if (W.force)
+				if(src.aggressive && (ishuman(user) || ismonkey(user) || isrobot(user)))
+					src.target = user
+					src.state = 1
+				if(prob(10)) new /obj/decal/cleanable/blood(src.loc)
+		else if(istype(W, /obj/item/weapon/kitchenknife))
+			user << "\red You slice open the [src.name]!"
+			for (var/obj/item/I in src)
+				I.loc = src.loc
+			del(src)
+			return
 		..()
 
 	bullet_act(flag, A as obj)
@@ -85,9 +107,10 @@
 			if(PROJECTILE_PULSE)
 				src.health -= 25
 				if(prob(30))
-					src.ex_act(1)
+					src.gib()
 			if(PROJECTILE_BOLT)
 				src.health -= 5
+		if(prob(10)) new /obj/decal/cleanable/blood(src.loc)
 		healthcheck()
 
 	ex_act(severity)
@@ -100,7 +123,7 @@
 		return
 
 	meteorhit()
-		src.death()
+		src.gib()
 		return
 
 	blob_act()
@@ -178,9 +201,9 @@
 			for (var/mob/living/carbon/C in range(view,src.loc))	//Checks all carbon creatures in range.
 				if (!aggressive)									//Is this animal angry? If not, what the fuck are you doing?
 					break
-				if (C.stat == 2 || !can_see(src,C,view_range))		//Can it see it at all or is the target a ghost?
+				if (C.stat == 2 || !can_see(src,C,view_range) || (!can_see(src,C,(view_range / 2)) && C.invisibility >= 1))
 					continue
-				if(C:stunned || C:paralysis || C:weakened)			//An easy target, bwahaha!
+				if(C:stunned || C:paralysis || C:weakened)
 					target = C
 					break
 				if(C:health < last_health)				//Selects the target but does NOT break the FOR loop.
@@ -281,7 +304,7 @@
 
 	proc/death(var/messy = 0)
 		if(!alive) return
-		src.alive = 0
+		alive = 0
 		density = 0
 		icon_state = "[initial(icon_state)]_d"
 		set_null()
@@ -289,13 +312,20 @@
 			for(var/mob/O in hearers(src, null))
 				O.show_message("\red <B>[src]'s eyes glass over!</B>", 1)
 		else
+			for (var/obj/item/I in src)
+				if(!istype(I, /obj/item/weapon/card)) I.loc = src.loc
 			del(src)
 
 	proc/healthcheck()
 		if (src.health <= 0)
 			src.death()
 
-/obj/livestock/chick
+
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////////Specific Creature Entries////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/*/obj/livestock/chick
 	name = "Chick"
 	desc = "A harmless little baby chicken, it's so cute!"
 	icon_state = "chick"
@@ -316,6 +346,7 @@
 			if(V.mind.special_role == "wizard")
 				for(var/mob/H in hearers(src, null))
 					H << "\green Chick clucks in an angry manner at [V.name]."
+*/
 
 /obj/livestock/spesscarp
 	name = "Spess Carp"
@@ -329,6 +360,11 @@
 	patience = 25
 	view_range = 8
 	var/stun_chance = 5					// determines the prob of a stun
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
 	special_attack()
 		if (prob(stun_chance))
 			target:stunned = max(target:stunned, (strength / 2))
@@ -341,6 +377,7 @@
 	stun_chance = 40
 	intelligence = "Assistant"
 
+/* 		Commented out because of filthy xeno-lovers.
 /obj/livestock/cow
 	name = "Pigmy Cow"
 	desc = "That's not my cow!"
@@ -351,6 +388,11 @@
 	cycle_pause = 20
 	patience = 50
 	view_range = 10
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
 	special_extra()
 		if(prob(20))
 			for(var/mob/O in hearers(src, null))
@@ -368,23 +410,4 @@
 				usr << text("\red The cow looks uncomfortable.")
 			if(81 to INFINITY)
 				usr << text("\red The cow looks as if it could burst at any minute!")
-
-	proc/gib()			//Will move this to a generic livestock proc once I get some gib animations for the others -- Darem.
-		var/atom/movable/overlay/animation = null
-		src.icon = null
-		src.invisibility = 101
-		animation = new(src.loc)
-		animation.icon = 'livestock.dmi'
-		animation.icon_state = "blank"
-		animation.master = src
-		flick("cow_g", animation)
-		new /obj/decal/cleanable/blood(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
-		for (var/obj/I in src)		//Not the best way to do this but it allows for pinata style animals as well.
-			I.loc = src.loc
-		sleep(11)
-		src.death(1)
-		del(animation)
-		return
+			*/

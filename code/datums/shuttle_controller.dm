@@ -16,6 +16,7 @@ datum/shuttle_controller
 
 		endtime			// timeofday that shuttle arrives
 		//timeleft = 360 //600
+		fake_recall = 0 //Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
 
 
 	// call the shuttle
@@ -82,6 +83,11 @@ datum/shuttle_controller
 						online = 0
 						direction = 1
 						endtime = null
+
+						return 0
+
+					else if((fake_recall != 0) && (timeleft <= fake_recall))
+						recall()
 
 						return 0
 

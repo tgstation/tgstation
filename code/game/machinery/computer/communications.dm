@@ -388,18 +388,32 @@
 /proc/call_shuttle_proc(var/mob/user)
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
+
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
 		user << "The emergency shuttle is refueling. Please wait another [(6000-world.time)/10] seconds before trying again."
 		return
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
-		user << "Centcom will not allow the shuttle to be called."
-		if(sent_strike_team == 1)
-			user << "Consider all contracts terminated."
+
+	if(emergency_shuttle.direction == -1)
+		user << "Shuttle may not be called while returning to CentCom."
 		return
+
+	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
+		//user << "Centcom will not allow the shuttle to be called." //Old code
+		//if(sent_strike_team == 1)
+		//	user << "Consider all contracts terminated."
+		//return
+
+		if(sent_strike_team == 1)
+			user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
+			return
+		//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
+		emergency_shuttle.fake_recall = rand(300,500)
+
 	if(sent_strike_team == 1)
 		if(ticker.mode.name != "revolution" || ticker.mode.name != "AI malfunction")
 			user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
 			return
+
 //	if(ticker.mode.name == "blob" || ticker.mode.name == "Corporate Restructuring" || ticker.mode.name == "sandbox")
 //		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
 //		return

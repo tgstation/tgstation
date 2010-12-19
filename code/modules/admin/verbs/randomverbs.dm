@@ -566,10 +566,16 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		src << "Only administrators may use this command."
 		return
 
+	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
+		var/choice = input("The shuttle will just return if you call it. Call anyway?") in list("Confirm", "Cancel")
+		if(choice == "Confirm")
+			emergency_shuttle.fake_recall = rand(300,500)
+		else
+			return
+
 	emergency_shuttle.incall()
 	world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
 	world << sound('shuttlecalled.ogg')
-
 	return
 
 /client/proc/admin_cancel_shuttle()
