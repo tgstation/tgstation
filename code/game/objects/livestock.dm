@@ -67,7 +67,7 @@
 		if (src.health <= 0)
 			src.death()
 		else if (W.force)
-			if(src.aggressive && (ishuman(user) || ismonkey(user)))
+			if(src.aggressive && (ishuman(user) || ismonkey(user) || isrobot(user)))
 				src.target = user
 				src.state = 1
 		..()
@@ -206,7 +206,7 @@
 					target:bruteloss += strength
 					special_attack()
 					src.loc = target.loc
-					set_null()  //Break off the attack for a sec.
+					set_null()
 				step_towards(src,get_step_towards2(src , target)) // Move towards the target.
 			else
 				if( !path_target.len )		//Don't have a path yet but do have a target?
@@ -227,7 +227,7 @@
 			else src.frustration--			//It reached the target! Get less angry.
 			if(frustration >= patience) set_null()		//If too angry? Fuck this shit.
 		if(target)
-			spawn(3)
+			spawn(cycle_pause / 3)
 				src.process()
 		else
 			spawn(cycle_pause)
@@ -328,7 +328,7 @@
 	cycle_pause = 10
 	patience = 25
 	view_range = 8
-	var/stun_chance = 20					// determines the prob of a stun
+	var/stun_chance = 5					// determines the prob of a stun
 	special_attack()
 		if (prob(stun_chance))
 			target:stunned = max(target:stunned, (strength / 2))
@@ -338,7 +338,7 @@
 	health = 50
 	maxhealth = 50
 	view_range = 14
-	stun_chance = 100
+	stun_chance = 40
 	intelligence = "Assistant"
 
 /obj/livestock/cow

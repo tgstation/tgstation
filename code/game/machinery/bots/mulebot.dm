@@ -170,7 +170,7 @@
 		return
 
 	bullet_act()
-		if(prob(50))
+		if(prob(50) && !isnull(load))
 			load.bullet_act()
 			unload(0)
 		if(prob(25))

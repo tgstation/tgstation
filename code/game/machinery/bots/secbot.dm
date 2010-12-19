@@ -659,16 +659,15 @@ Auto Patrol: []"},
 			M:loc = T
 
 	bullet_act(flag, A as obj)
-		if (flag == PROJECTILE_BULLET)
-			src.health -= 20
-
-	//	else if (flag == PROJECTILE_WEAKBULLET || PROJECTILE_BEANBAG) //Detective's revolver fires marshmallows
-	//		src.health -= 2
-
-		else if (flag == PROJECTILE_LASER)
-			src.health -= 10
-
-
+		switch(flag)
+			if (PROJECTILE_BULLET)
+				src.health -= 20
+			//if (PROJECTILE_WEAKBULLET || PROJECTILE_BEANBAG) //Detective's revolver fires marshmallows
+			//	src.health -= 2
+			if (PROJECTILE_LASER)
+				src.health -= 10
+			if (PROJECTILE_PULSE)
+				src.health -=40
 		if (src.health <= 0)
 			src.explode()
 

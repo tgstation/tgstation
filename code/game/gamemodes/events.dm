@@ -321,7 +321,7 @@
 /proc/carp_migration() // -- Darem
 	for(var/obj/landmark/C in world)
 		if(C.name == "carpspawn")
-			if(prob(95))
+			if(prob(99))
 				new /obj/livestock/spesscarp(C.loc)
 			else
 				new /obj/livestock/spesscarp/elite(C.loc)
