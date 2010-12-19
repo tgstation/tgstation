@@ -502,6 +502,7 @@
 #include "code\game\objects\items\weapons\cards_ids.dm"
 #include "code\game\objects\items\weapons\cigs_lighters.dm"
 #include "code\game\objects\items\weapons\clown_items.dm"
+#include "code\game\objects\items\weapons\explosives.dm"
 #include "code\game\objects\items\weapons\flamethrower.dm"
 #include "code\game\objects\items\weapons\game_kit.dm"
 #include "code\game\objects\items\weapons\glass.dm"
