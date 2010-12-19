@@ -71,7 +71,7 @@
 		return
 	if(!(src.atmosalm))
 		src.atmosalm = 1
-		src.updateicon()
+		//src.updateicon()
 		src.mouse_opacity = 0
 		var/list/cameras = list()
 		for(var/obj/machinery/camera/C in src)
@@ -86,7 +86,7 @@
 	if(src.atmosalm)
 		src.atmosalm = 0
 		src.mouse_opacity = 0
-		src.updateicon()
+		//src.updateicon()
 		for(var/mob/living/silicon/aiPlayer in world)
 			aiPlayer.cancelAlarm("Atmosphere", src, src)
 		for(var/obj/machinery/computer/atmosphere/alerts/a in world)
@@ -159,14 +159,14 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party || atmosalm) && power_environ)
-		if(fire && !eject && !party && !atmosalm)
+	if ((fire || eject || party) && power_environ)
+		if(fire && !eject && !party)
 			icon_state = "blue"
-		else if(atmosalm && !fire && !eject && !party)
-			icon_state = "bluenew"
-		else if(!fire && eject && !party && !atmosalm)
+		/*else if(atmosalm && !fire && !eject && !party)
+			icon_state = "bluenew"*/
+		else if(!fire && eject && !party)
 			icon_state = "red"
-		else if(party && !fire && !eject && !atmosalm)
+		else if(party && !fire && !eject)
 			icon_state = "party"
 		else
 			icon_state = "blue-red"
