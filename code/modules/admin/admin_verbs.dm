@@ -138,6 +138,7 @@
 			src.verbs += /client/proc/only_one  				// muskets
 			src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			src.verbs += /client/proc/strike_team				//N
+			src.verbs += /client/proc/spawn_xeno				//N
 			src.verbs += /proc/possess
 			src.verbs += /proc/release
 
@@ -259,6 +260,7 @@
 			src.verbs += /client/proc/only_one  				// muskets
 			src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			src.verbs += /client/proc/strike_team				//N
+			src.verbs += /client/proc/spawn_xeno				//N
 			src.verbs += /proc/possess
 			src.verbs += /proc/release
 
@@ -380,6 +382,7 @@
 			//src.verbs += /client/proc/cuban_pete 				// -- Urist
 			//src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			//src.verbs += /client/proc/strike_team				//N
+			src.verbs += /client/proc/spawn_xeno				//N
 			src.verbs += /proc/possess
 			src.verbs += /proc/release
 
@@ -530,6 +533,7 @@
 			//src.verbs += /client/proc/cuban_pete 				// -- Urist
 			//src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			//src.verbs += /client/proc/strike_team				//N
+			src.verbs += /client/proc/spawn_xeno				//N
 			src.verbs += /proc/possess
 			src.verbs += /proc/release
 
@@ -670,6 +674,7 @@
 			//src.verbs += /client/proc/cuban_pete 				// -- Urist
 			//src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			//src.verbs += /client/proc/strike_team				//N
+			//src.verbs += /client/proc/spawn_xeno				//N
 			//src.verbs += /proc/possess
 			//src.verbs += /proc/release
 
@@ -806,6 +811,7 @@
 			//src.verbs += /client/proc/cuban_pete 				// -- Urist
 			//src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			//src.verbs += /client/proc/strike_team				//N
+			//src.verbs += /client/proc/spawn_xeno				//N
 			//src.verbs += /proc/possess
 			//src.verbs += /proc/release
 
@@ -926,6 +932,7 @@
 			//src.verbs += /client/proc/cuban_pete 				// -- Urist
 			//src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			//src.verbs += /client/proc/strike_team				//N
+			//src.verbs += /client/proc/spawn_xeno				//N
 			//src.verbs += /proc/possess
 			//src.verbs += /proc/release
 
@@ -1076,7 +1083,8 @@
 	src.verbs -= /client/proc/play_sound
 	src.verbs -= /client/proc/cuban_pete 				// -- Urist
 	src.verbs -= /client/proc/space_asshole 			// --Agouri :3
-	src.verbs += /client/proc/strike_team				//N
+	src.verbs -= /client/proc/strike_team				//N
+	src.verbs -= /client/proc/spawn_xeno				//N
 	src.verbs -= /proc/possess
 	src.verbs -= /proc/release
 

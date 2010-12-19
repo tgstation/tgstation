@@ -28,7 +28,7 @@
 		var/last_check = 0
 		var/check_delay = 10
 		var/recalc = 0
-		var/locked = 0
+		var/locked = 1
 		var/destroyed = 0
 		var/directwired = 1
 //		var/maxshieldload = 200

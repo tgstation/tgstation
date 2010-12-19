@@ -22,7 +22,7 @@ However people seem to like it for some reason.
 /obj/machinery/the_singularitygen/process()
 	var/checkpointC = 0
 	for (var/obj/X in orange(3,src))
-		if(istype(X, /obj/machinery/containment_field))
+		if(istype(X, /obj/machinery/containment_field) || istype(X, /obj/machinery/shieldwall))
 			checkpointC ++
 	if(checkpointC >= 20)
 		var/turf/T = src.loc
@@ -99,7 +99,7 @@ However people seem to like it for some reason.
 	else
 		var/checkpointC = 0
 		for (var/obj/X in orange(3,src))
-			if(istype(X, /obj/machinery/containment_field))
+			if(istype(X, /obj/machinery/containment_field) || istype(X, /obj/machinery/shieldwall))
 				checkpointC ++
 		if(checkpointC < 18)
 			src.active = 1
@@ -119,6 +119,12 @@ However people seem to like it for some reason.
 				continue
 		if(istype(X,/turf/space))
 			continue
+		if(istype(X,/obj/machinery/shieldwall))
+			continue
+		if(istype(X,/obj/machinery/shieldwallgen))
+			var/obj/machinery/shieldwallgen/S = X
+			if(S.active)
+				continue
 		if(!active)
 			if(isturf(X,/turf/simulated/floor/engine))
 				continue
@@ -136,19 +142,19 @@ However people seem to like it for some reason.
 
 /obj/machinery/the_singularity/proc/move()
 	var/direction_go = pick(1,2,4,8)
-	if(locate(/obj/machinery/containment_field) in get_step(src,NORTH))
+	if(locate(/obj/machinery/containment_field) || locate(/obj/machinery/shieldwall) in get_step(src,NORTH))
 		if(direction_go == 1)
 			icon_state = "Singularity"
 			return
-	if(locate(/obj/machinery/containment_field) in get_step(src,SOUTH))
+	if(locate(/obj/machinery/containment_field) || locate(/obj/machinery/shieldwall) in get_step(src,SOUTH))
 		if(direction_go == 2)
 			icon_state = "Singularity"
 			return
-	if(locate(/obj/machinery/containment_field) in get_step(src,EAST))
+	if(locate(/obj/machinery/containment_field) || locate(/obj/machinery/shieldwall) in get_step(src,EAST))
 		if(direction_go == 4)
 			icon_state = "Singularity"
 			return
-	if(locate(/obj/machinery/containment_field) in get_step(src,WEST))
+	if(locate(/obj/machinery/containment_field) || locate(/obj/machinery/shieldwall) in get_step(src,WEST))
 		if(direction_go == 8)
 			icon_state = "Singularity"
 			return
@@ -170,12 +176,14 @@ However people seem to like it for some reason.
 		gain = 20
 		if(istype(A,/mob/living/carbon/human))
 			if(A:mind)
-				if(A:mind:assigned_role == "Station Engineer")
+				if((A:mind:assigned_role == "Station Engineer") || (A:mind:assigned_role == "Cief Engineer") )
 					gain = 100
 		A:gib()
 
 	else if(istype(A,/obj/))
 		if(istype(A,/obj/machinery/containment_field))
+			return
+		if(istype(A,/obj/machinery/shieldwall))
 			return
 		A:ex_act(1.0)
 		if(A) del(A)

@@ -237,6 +237,40 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 	world << sound('ionstorm.ogg')
 
+/client/proc/spawn_xeno()
+	set category = "Fun"
+	set name = "Spawn Xeno"
+	if(!src.authenticated || !src.holder)
+		src << "Only administrators may use this command."
+		return
+	var/list/xeno_list = list()
+	for(var/obj/landmark/X in world)
+		if (X.name == "xeno_spawn")
+			xeno_list+=(X)
+	if(xeno_list.len) goto NEXT
+	else
+		alert("There are no available spots to spawn the xeno. Aborting command.")
+		return
+
+	NEXT
+	var/obj/spawn_here = pick(xeno_list)
+	var/mob/living/carbon/alien/humanoid/new_xeno = new /mob/living/carbon/alien/humanoid(spawn_here.loc)
+	new_xeno.plasma = 250
+
+	var/list/candidates = list() // Picks a random ghost for the role. Mostly a copy of alien burst code.
+	for(var/mob/dead/observer/G in world)
+		if(G.client)
+			if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5)
+				candidates.Add(G)
+	if(candidates.len)
+		var/mob/dead/observer/G = pick(candidates)
+		new_xeno.key = G.client.key
+		del(G)
+	else
+		alert("There are no available ghosts to throw into the xeno. Aborting command.")
+		del(new_xeno)
+		return
+	message_admins("\blue [key_name_admin(usr)] has spawned a filthy xeno at [new_xeno.loc].", 1)
 
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Fun"

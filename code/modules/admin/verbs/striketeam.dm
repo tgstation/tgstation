@@ -3,7 +3,9 @@ var/global/sent_strike_team = 0
 /client/proc/strike_team()
 	set category = "Fun"
 	set name = "Spawn Death Squad"
-
+	if(!src.authenticated || !src.holder)
+		src << "Only administrators may use this command."
+		return
 	if(!ticker)
 		alert("The game hasn't started yet!")
 		return
