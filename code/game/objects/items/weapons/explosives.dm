@@ -3,9 +3,13 @@
 	src.timer = newtime
 	user << "Timer set for [src.timer] seconds."
 
-/obj/item/weapon/plastique/afterattack(atom/target as obj|turf, mob/user as mob)
+/obj/item/weapon/plastique/afterattack(atom/target as obj|turf, mob/user as mob, flag)
+	if (!flag)
+		return
+	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle))
+		return
 	user << "Planting explosives..."
-	if(do_after(user, 50))
+	if(do_after(user, 50) && get_dist(user, target) <= 1)
 		user.drop_item()
 		src.target = target
 		src.loc = null
