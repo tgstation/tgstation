@@ -1,7 +1,7 @@
 /client/proc/only_one()
 	set category = "Fun"
 	set name = "THERE CAN BE ONLY ONE"
-
+	set desc = "Makes everyone into a traitor and has them fight for the nuke auth. disk."
 	if(!ticker)
 		alert("The game hasn't started yet!")
 		return

@@ -237,24 +237,23 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 	world << sound('ionstorm.ogg')
 
-/client/proc/spawn_xeno()
+/client/proc/spawn_xeno() //Stealth spawns xenos /N
 	set category = "Fun"
 	set name = "Spawn Xeno"
+	set desc = "Spawns a xenomorph for all those boring rounds, without having you to do so manually."
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
 	var/list/xeno_list = list()
 	for(var/obj/landmark/X in world)
 		if (X.name == "xeno_spawn")
-			xeno_list+=(X)
-	if(xeno_list.len) goto NEXT
-	else
+			xeno_list.Add(X)
+	if(!xeno_list.len)
 		alert("There are no available spots to spawn the xeno. Aborting command.")
 		return
 
-	NEXT
-	var/obj/spawn_here = pick(xeno_list)
-	var/mob/living/carbon/alien/humanoid/new_xeno = new /mob/living/carbon/alien/humanoid(spawn_here.loc)
+	var/obj/landmark/spawn_here = pick(xeno_list)
+	var/mob/living/carbon/alien/humanoid/new_xeno = new(spawn_here.loc)
 	new_xeno.plasma = 250
 
 	var/list/candidates = list() // Picks a random ghost for the role. Mostly a copy of alien burst code.
@@ -270,7 +269,40 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		alert("There are no available ghosts to throw into the xeno. Aborting command.")
 		del(new_xeno)
 		return
-	message_admins("\blue [key_name_admin(usr)] has spawned a filthy xeno at [new_xeno.loc].", 1)
+	message_admins("\blue [key_name_admin(usr)] has spawned a filthy xeno at [spawn_here.loc].", 1)
+
+
+//If a guy was gibbed and you want to revive him, this is a good way to do so.
+//Works much like entering the game with a new character. Doesn't retain mind. /N
+/client/proc/respawn_character()
+	set category = "Special Verbs"
+	set name = "Respawn Character"
+	set desc = "Re-spawn a person that has been gibbed/deleted. They must be a ghost for this to work."
+	if(!src.authenticated || !src.holder)
+		src << "Only administrators may use this command."
+		return
+	var/input = input(usr, "Please specify which key/client will be respawned. That person will not retain their traitor/other status when respawned.", "What?", "")
+	if(!input)
+		return
+
+	var/GKEY = input
+	var/mob/dead/observer/GDEL //to properly delete the mob later on.
+	for(var/mob/dead/observer/G in world)
+		if(G.key==input)
+			GDEL = G
+		else
+			alert("There is no such key in the game or the person is not currently a ghost. Aborting command.")
+			return
+
+	var/spawn_here = pick(latejoin)//"JoinLate" is a landmark which is deleted on round start. So, latejoin has to be used instead.
+	var/mob/living/carbon/human/new_character = new(src)
+	new_character.loc = spawn_here
+//	preferences.copy_to(new_character)
+	new_character.dna.ready_dna(new_character)
+	new_character.Equip_Rank("Assistant", joined_late=1)
+	message_admins("\blue [key_name_admin(usr)] has respawned [GKEY] at [new_character.loc].", 1) //Here so it doesn't null name if an admin re-spawns themselves.
+	new_character.key = GKEY
+	del(GDEL)
 
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Fun"

@@ -424,9 +424,9 @@
 /obj/item/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of space station 13. It have stamp \"Classified\" and several coffee stains."
-	icon = 'blueprints.dmi'
+	icon = 'items.dmi'
 	icon_state = "blueprints"
- 
+
 /obj/item/apc_frame
 	name = "APC frame"
 	desc = "Use for repairing or building APCs"

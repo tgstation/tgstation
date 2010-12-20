@@ -392,7 +392,21 @@
 	src.cleanup(8)
 	..()
 
+/obj/machinery/shieldwallgen/bullet_act(flag)
 
+	if (flag == PROJECTILE_BULLET)
+		src.storedpower -= 10
+	else if (flag == PROJECTILE_WEAKBULLET)
+		src.storedpower -= 1
+	else if (flag == PROJECTILE_LASER)
+		src.storedpower +=20
+	else if (flag == PROJECTILE_TASER)
+		src.storedpower +=3
+	else if (flag == PROJECTILE_PULSE)
+		src.storedpower +=50
+	else
+		src.storedpower -=2
+	return
 
 
 /obj/machinery/shield
@@ -494,3 +508,51 @@
 		gen_primary.storedpower -= 10
 	else
 		gen_secondary.storedpower -=10
+
+
+/obj/machinery/shieldwall/bullet_act(flag)
+
+	if (flag == PROJECTILE_BULLET)
+		if(prob(50))
+			gen_primary.storedpower -= 10
+		else
+			gen_secondary.storedpower -=10
+	else if (flag == PROJECTILE_WEAKBULLET)
+		if(prob(50))
+			gen_primary.storedpower -= 1
+		else
+			gen_secondary.storedpower -=1
+	else if (flag == PROJECTILE_LASER)
+		if(prob(50))
+			gen_primary.storedpower += 20
+		else
+			gen_secondary.storedpower +=20
+	else if (flag == PROJECTILE_TASER)
+		if(prob(50))
+			gen_primary.storedpower += 3
+		else
+			gen_secondary.storedpower +=3
+	else if (flag == PROJECTILE_PULSE)
+		if(prob(50))
+			gen_primary.storedpower += 50
+		else
+			gen_secondary.storedpower +=50
+	else
+		if(prob(50))
+			gen_primary.storedpower -= 2
+		else
+			gen_secondary.storedpower -=2
+	return
+
+
+
+/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(air_group || (height==0)) return 1
+
+	if ((istype(mover, /obj/item/weapon/dummy) || istype(mover, /obj/beam)))
+		return prob(20)
+	else
+		if (istype(mover, /obj/bullet))
+			return prob(10)
+		else
+			return !src.density

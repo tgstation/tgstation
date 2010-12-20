@@ -2,6 +2,7 @@
 	..()
 	sleep(2)
 	new /obj/item/weapon/storage/toolbox/mechanical( src )
+	new /obj/item/blueprints( src )
 	new /obj/item/device/radio/headset/headset_eng( src )
 	new /obj/item/clothing/under/rank/chief_engineer( src )
 	new /obj/item/clothing/gloves/yellow( src )

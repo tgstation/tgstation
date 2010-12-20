@@ -459,6 +459,7 @@
 #include "code\game\objects\alien\resin.dm"
 #include "code\game\objects\alien\weeds.dm"
 #include "code\game\objects\closets\emergency.dm"
+#include "code\game\objects\closets\gimmick.dm"
 #include "code\game\objects\closets\gmcloset.dm"
 #include "code\game\objects\closets\janitor.dm"
 #include "code\game\objects\closets\kitchen.dm"
