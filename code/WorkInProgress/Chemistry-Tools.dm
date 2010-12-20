@@ -43,7 +43,7 @@
 				stage = 2
 			else
 				user << "\red You need to add at least one beaker before locking the assembly."
-		else if (istype(W,/obj/item/weapon/reagent_containers/glass) && stage == 1)
+		else if (istype(W,/obj/item/weapon/reagent_containers/glass/beaker) && stage == 1)
 			if(beakers.len == 2)
 				user << "\red The grenade can not hold more containers."
 				return
@@ -788,11 +788,11 @@
 					M << "\blue You take a bite of [src]."
 				if (fullness > 350 && fullness <= 550)
 					M << "\blue You unwillingly chew a bit of [src]."
-				if (fullness > (550 * (1 + M.overeatduration / 1000)))	// The more he eats - the more he can eat
+				if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 					M << "\red You cannot force any more of [src] to go down your throat."
 					return 0
 			else										//If you're feeding it to someone else.
-				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 10)
+				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
 					for(var/mob/O in viewers(world.view, user))
 						O.show_message("\red [user] attempts to feed [M] [src].", 1)
@@ -1036,6 +1036,7 @@
 	item_state = "bucket"
 	m_amt = 200
 	g_amt = 0
+	w_class = 3.0
 
 	amount_per_transfer_from_this = 20
 	flags = FPRINT | OPENCONTAINER
@@ -1067,7 +1068,7 @@
 	item_state = "canister"
 	m_amt = 300
 	g_amt = 0
-	w_class = 5.0
+	w_class = 4.0
 
 	amount_per_transfer_from_this = 20
 	flags = FPRINT

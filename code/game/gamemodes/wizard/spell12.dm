@@ -5,8 +5,6 @@
 	if(!usr.casting()) return
 	var/A
 	usr.verbs -= /mob/proc/teleport
-	spawn(450)
-		usr.verbs += /mob/proc/teleport
 
 	var/list/theareas = new/list()
 	for(var/area/AR in world)
@@ -18,6 +16,11 @@
 			theareas[AR.name] = AR
 
 	A = input("Area to jump to", "BOOYEA", A) in theareas
+
+	spawn(450)
+		usr.verbs += /mob/proc/teleport
+
+
 	var/area/thearea = theareas[A]
 
 	usr.say("SCYAR NILA [uppertext(A)]")

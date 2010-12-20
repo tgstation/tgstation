@@ -44,7 +44,7 @@
 				if (!conf_access || !conf_access.len || !(acc in conf_access))
 					t1 += "<a href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
 				else
-					t1 += "<font color=red>[aname]</font><br>"
+					t1 += "<a style='color: red' href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
 
 		t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
 
@@ -67,8 +67,6 @@
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
-//			if (istype(usr.l_hand, /obj/item/weapon/card/id)) I = usr.l_hand
-//			if (istype(usr.r_hand, /obj/item/weapon/card/id)) I = usr.r_hand
 			if (I && src.check_access(I))
 				src.locked = 0
 				src.last_configurator = I:registered
@@ -91,8 +89,6 @@
 			else
 				var/req = text2num(acc)
 
-				conf_access = list(req)
-				/*
 				if (conf_access == null)
 					conf_access = list()
 
@@ -100,4 +96,6 @@
 					conf_access += req
 				else
 					conf_access -= req
-				*/
+					if (!conf_access.len)
+						conf_access = null
+
