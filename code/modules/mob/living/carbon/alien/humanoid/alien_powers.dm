@@ -294,9 +294,8 @@ Also perhaps only queens can do that?
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this"
+		src << "You must be concious to do this."
 		return
-
 	if(!istype(O, /obj))
 		return
 	/*if(range(O, src) > 1)
@@ -304,6 +303,9 @@ Also perhaps only queens can do that?
 		return*/
 	if(src.toxloss < 200)
 		src << "You don't have enough plasma."
+		return
+	if(istype(O, /obj/hud)||istype(O, /obj/machinery/shield)||istype(O, /obj/machinery/shieldwall)||istype(O, /obj/machinery/the_singularity)||istype(O, /obj/portal)||istype(O, /obj/rune)||istype(O, /obj/marker)||istype(O, /obj/bhole)||istype(O, /obj/livestock)||istype(O, /obj/creature)||istype(O, /obj/alien)||istype(O, /obj/machinery/containment_field))
+		src << "Can't destroy that object." //So you're not destroying black holes while you sizzle acid, dawg /N
 	else
 		src.toxloss -= 200
 		var/obj/alien/acid/A = new(O.loc)

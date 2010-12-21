@@ -3327,7 +3327,7 @@
 "blY" = (/obj/disposalpipe/junction,/turf/simulated/wall/r_wall,/area/quartermaster/qm)
 "blZ" = (/obj/machinery/atmospherics/pipe/manifold{dir = 8},/turf/simulated/wall/r_wall,/area/quartermaster/qm)
 "bma" = (/obj/machinery/atmospherics/pipe/simple{dir = 4; icon_state = "intact-f"; layer = 3},/turf/simulated/wall,/area/maintenance/apmaint)
-"bmb" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/machinery/atmospherics/pipe/simple{dir = 4; icon_state = "intact-f"; layer = 3},/turf/simulated/floor/plating,/area/maintenance/apmaint)
+"bmb" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/machinery/atmospherics/pipe/simple{dir = 4; icon_state = "intact-f"; layer = 3},/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/simulated/floor/plating,/area/maintenance/apmaint)
 "bmc" = (/obj/machinery/atmospherics/pipe/simple{dir = 4; icon_state = "intact-f"; layer = 3},/turf/simulated/wall/r_wall,/area/toxins/xenobiology)
 "bmd" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/machinery/door/airlock/medical{frequency = 1450; icon_state = "door_locked"; id_tag = "xeno_access_exterior"; locked = 1; name = "Xenobiology Access"; req_access_txt = "7"},/obj/machinery/atmospherics/pipe/simple{dir = 4; icon_state = "intact-f"; layer = 3},/turf/simulated/floor{icon_state = "white"},/area/toxins/xenobiology)
 "bme" = (/obj/securearea,/obj/machinery/atmospherics/pipe/simple{dir = 4; icon_state = "intact-f"; layer = 3},/turf/simulated/wall/r_wall,/area/toxins/xenobiology)

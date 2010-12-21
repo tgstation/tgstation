@@ -402,6 +402,7 @@ Pod/Blast Doors computer
 	if (!( src.connected ))
 		viewers(null, null) << "Cannot locate mass driver connector. Cancelling firing sequence!"
 		return
+
 	for(var/obj/machinery/door/poddoor/M in machines)
 		if (M.id == src.id)
 			spawn( 0 )
@@ -562,6 +563,10 @@ Pod/Blast Doors computer
 						src.time = min(max(round(src.time), 0), 120)
 					else
 						if (href_list["door"])
+							if(istype(src, /obj/machinery/computer/pod/old/syndicate))//Added here so Nuke ops don't go running naked into space before moving the shuttle.
+								if(syndicate_station_at_station == 0)
+									usr << "\red You need to launch the Syndicate Shuttle via the computer terminal at the head of the ship before departing."
+									return
 							for(var/obj/machinery/door/poddoor/M in machines)
 								if (M.id == src.id)
 									if (M.density)
