@@ -8,14 +8,26 @@
 	nitrogen = 0
 	temperature = TCMB
 	var/contains = null
+	var/max_amount = 1
+	var/min_amount = 0
 
 /turf/simulated/wall/asteroid/iron
 	icon_state = "asteroid_i"
 	contains = /obj/item/weapon/sheet/metal
+	max_amount = 3
+	min_amount = 1
 
 /turf/simulated/wall/asteroid/silicon
 	icon_state = "asteroid_i"
 	contains = /obj/item/weapon/sheet/glass
+	max_amount = 3
+	min_amount = 1
+
+/turf/simulated/wall/asteroid/facehugger
+	icon_state = "asteroid_i"
+	contains = /obj/alien/facehugger
+	max_amount = 1
+	min_amount = 0
 
 /*
 /turf/simulated/wall/asteroid/frozen_gas
@@ -55,13 +67,13 @@
 
 /turf/simulated/wall/asteroid/dismantle_wall(devastated=0)
 	if(contains && ispath(contains))
+		var/iterations = 0
 		if(!devastated)
-			new contains(src)
-			new contains(src)
-			new contains(src)
+			iterations = max_amount
 		else
+			iterations = min_amount
+		for(var/i=0 to iterations)
 			new contains(src)
-
 	ReplaceWithSpace()
 
 

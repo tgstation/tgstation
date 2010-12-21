@@ -1,3 +1,9 @@
+#define MECHA_INT_FIRE 1
+#define MECHA_INT_TEMP_CONTROL 2
+#define MECHA_INT_SHORT_CIRCUIT 4
+#define MECHA_INT_TANK_BREACH 8
+
+
 /obj/mecha
 	name = "Mecha"
 	desc = "Exosuit"
@@ -5,7 +11,7 @@
 	density = 1 //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
 	anchored = 1 //no pulling around.
-	layer = MOB_LAYER
+	layer = MOB_LAYER //icon draw layer
 	var/can_move = 1
 	var/mob/living/carbon/human/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
@@ -14,7 +20,6 @@
 	var/deflect_chance = 2 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	var/obj/item/weapon/cell/cell = new
 	var/state = 0
-	var/update_stats = null //used to auto-update stats window
 
 	var/datum/effects/system/spark_spread/spark_system = new
 	var/lights = 0
@@ -27,11 +32,19 @@
 	var/filled = 0.5
 	var/gas_tank_volume = 500
 	var/maximum_pressure = 30*ONE_ATMOSPHERE
-	var/operating_access = null
 	var/max_temperature = 2500
+	var/internal_damage_treshhold = 50 //health percentage below which internal damage is possible
+	var/internal_damage = 0 //contains bitflags
+
 
 	var/list/operation_req_access = list(access_engine)//required access level for mecha operation
 	var/list/internals_req_access = list(access_engine)//required access level to open cell compartment
+
+	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
+	var/datum/global_iterator/pr_update_stats //used to auto-update stats window
+	var/datum/global_iterator/pr_inertial_movement //controls intertial movement in spesss
+	var/datum/global_iterator/pr_location_temp_check //processes location temperature damage
+	var/datum/global_iterator/pr_internal_damage //processes internal damage
 
 /obj/mecha/New()
 	..()
@@ -42,12 +55,20 @@
 	src.spark_system.attach(src)
 	src.cell.charge = 15000
 	src.cell.maxcharge = 15000
-	preserve_temp()
-	check_location_temp()
+
+//misc global_iteration datums
+	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
+	pr_update_stats = new /datum/global_iterator/mecha_view_stats(list(src),0)
+	pr_inertial_movement = new /datum/global_iterator/mecha_intertial_movement(null,0)
+	pr_location_temp_check = new /datum/global_iterator/mecha_location_temp_check(list(src))
+	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
 	src.verbs -= /obj/mecha/verb/disconnect_from_port
 	src.verbs -= /atom/movable/verb/pull
 	return
 
+/obj/mecha/Del()
+	src.go_out()
+	..()
 
 /client/Click(object,location,control,params)
 	..()
@@ -86,9 +107,9 @@
 	if(!can_move)
 		return 0
 	if(connected_port)
-		src.occupant << "Unable to move while connected to the air system port"
+		src.occupant_message("Unable to move while connected to the air system port")
 		return 0
-	if(src.inertia_dir)
+	if(src.pr_inertial_movement.active())
 		return 0
 	if(state || !cell || cell.charge<=0)
 		return 0
@@ -98,19 +119,19 @@
 		cell.use(src.step_energy_drain)
 		if(istype(src.loc, /turf/space))
 			if(!src.check_for_support())
-				src.inertia_dir = direction
-				src.inertial_movement()
+				src.pr_inertial_movement.start(list(src,direction))
 		return 1
 	return 0
 
-
-/obj/mecha/proc/inertial_movement()
-//	set background = 1
+/*
+/obj/mecha/proc/inertial_movement(direction)
+	src.inertia_dir = direction
 	spawn while(src && src.inertia_dir)
 		if(!step(src, src.inertia_dir)||check_for_support())
 			src.inertia_dir = null
 		sleep(7)
-
+	return
+*/
 /*
 	if(check_for_support())
 		src.inertia_dir = null
@@ -149,8 +170,21 @@
 		if("brute")
 			src.health -= amount
 		if("fire")
-			src.health -= amount*1.5
+			src.health -= amount*1.2
 	src.update_health()
+	return
+
+/obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage)//TODO
+	if(!src) return
+	if(prob(40) && (src.health*100/initial(src.health))<src.internal_damage_treshhold)
+		for(var/T in possible_int_damage)
+			if(internal_damage & T)
+				possible_int_damage -= T
+		if(possible_int_damage.len)
+			var/int_dam_flag = pick(possible_int_damage)
+			if(int_dam_flag)
+				internal_damage |= int_dam_flag
+				pr_internal_damage.start()
 	return
 
 
@@ -164,15 +198,11 @@
 /obj/mecha/attack_hand(mob/user as mob)
 	if (user.mutations & 8 && !prob(src.deflect_chance))
 		src.take_damage(15)
-		user << "\red You hit [src.name] with all your might. The metal creaks and bends."
-		for (var/mob/V in viewers(src))
-			if(V.client && V != user && !(V.blinded))
-				V.show_message("[user] hits [src.name], doing some damage.", 1)
+		src.visible_message("<font color='red'><b>[user] hits [src.name], doing some damage.</b></font>")
+		user << "<font color='red'><b>You hit [src.name] with all your might. The metal creaks and bends.</b></font>"
 	else
-		user << "\red You hit [src.name] with no visible effect."
-		for (var/mob/V in viewers(src))
-			if(V.client && V != user && !(V.blinded))
-				V.show_message("[user] hits [src.name]. Nothing happens", 1)
+		src.visible_message("<font color='red'><b>[user] hits [src.name]. Nothing happens</b></font>")
+		user << "<font color='red'><b>You hit [src.name] with no visible effect.</b></font>"
 	return
 
 /obj/mecha/attack_paw(mob/user as mob)
@@ -190,8 +220,7 @@
 
 /obj/mecha/hitby(A as mob|obj)
 	if(prob(src.deflect_chance) || istype(A, /mob))
-		if(src.occupant && src.occupant.client)
-			src.occupant << "\blue The [A] bounces off the armor."
+		src.occupant_message("\blue The [A] bounces off the armor.")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
 				V.show_message("The [A] bounces off the [src.name] armor", 1)
@@ -210,8 +239,7 @@
 
 /obj/mecha/bullet_act(flag)
 	if(prob(src.deflect_chance))
-		if(src.occupant && src.occupant.client)
-			src.occupant << "\blue The armor deflects the incoming projectile."
+		src.occupant_message("\blue The armor deflects the incoming projectile.")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
 				V.show_message("The [src.name] armor deflects the projectile", 1)
@@ -222,19 +250,24 @@
 				damage = 40
 			if(PROJECTILE_LASER)
 				damage = 20
+			if(PROJECTILE_TASER)
+				damage = 5
+				src.cell.use(500)
 			else
 				damage = 10
 		src.take_damage(damage)
+		src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH))
 	return
 
 /obj/mecha/proc/destroy()
 	if(src.occupant)
+		var/mob/M = src.occupant
 		src.go_out()
 		if(prob(20))
-			src.occupant.bruteloss += rand(10,20)
-			src.occupant.updatehealth()
+			M.bruteloss += rand(10,20)
+			M.updatehealth()
 		else
-			src.occupant.gib()
+			M.gib()
 	spawn()
 		explosion(src.loc, 0, 0, 1, 3)
 		del(src)
@@ -246,19 +279,19 @@
 	switch(severity)
 		if(1.0)
 			destroy(src)
-			return
 		if(2.0)
 			if (prob(30))
 				destroy(src)
 			else
-				src.take_damage(src.health/2)
-			return
+				src.take_damage(initial(src.health)/2)
+				src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH))
 		if(3.0)
 			if (prob(5))
 				destroy(src)
 			else
-				src.take_damage(src.health/4)
-			return
+				src.take_damage(initial(src.health)/4)
+				src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH))
+	return
 
 /obj/mecha/proc/check_location_temp()
 	spawn while(src)
@@ -290,6 +323,7 @@
 /obj/mecha/proc/return_pressure()
 	return src.air_contents.return_pressure()
 
+/*
 /obj/mecha/proc/preserve_temp()
 //	set background = 1
 	spawn while(src)
@@ -299,6 +333,7 @@
 					src.occupant.bodytemperature += src.occupant.adjust_body_temperature(src.occupant.bodytemperature, 310.15, 10)
 					cell.charge--
 		sleep(10)
+*/
 
 /obj/mecha/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)
 	//Make sure not already connected to something else
@@ -353,10 +388,10 @@
 			src.verbs -= /obj/mecha/verb/connect_to_port
 			return
 		else
-			src.occupant << "\red [name] failed to connect to the port."
+			src.occupant_message("\red [name] failed to connect to the port.")
 			return
 	else
-		src.occupant << "Nothing happens"
+		src.occupant_message("Nothing happens")
 
 
 /obj/mecha/verb/disconnect_from_port()
@@ -371,7 +406,7 @@
 		src.verbs -= /obj/mecha/verb/disconnect_from_port
 		src.verbs += /obj/mecha/verb/connect_to_port
 	else
-		src.occupant << "\red [name] is not connected to the port at the moment."
+		src.occupant_message("\red [name] is not connected to the port at the moment.")
 
 
 /obj/mecha/verb/toggle_lights()
@@ -411,6 +446,8 @@
 			src.occupant = usr
 			usr.loc = src
 			src.add_fingerprint(usr)
+			src.Entered(usr)
+			src.Move(src.loc)
 	return
 
 
@@ -420,11 +457,7 @@
 	set src in view(0)
 	if(usr!=src.occupant)
 		return
-	src.update_stats = 1
-	spawn while(src && src.occupant && src.update_stats)
-		src.occupant << browse(get_stats_html(), "window=exosuit")
-		onclose(src.occupant, "exosuit", src)
-		sleep(10)
+	pr_update_stats.start()
 	return
 
 /obj/mecha/verb/eject()
@@ -440,15 +473,23 @@
 
 /obj/mecha/proc/go_out()
 	if(!src.occupant) return
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant << browse(null, "window=exosuit")
-	src.occupant.loc = src.loc
-	src.occupant = null
+	if(src.occupant.Move(src.loc))
+		src.Exited(src.occupant)
+		if (src.occupant.client)
+			src.occupant.client.eye = src.occupant.client.mob
+			src.occupant.client.perspective = MOB_PERSPECTIVE
+		src.occupant << browse(null, "window=exosuit")
+		src.occupant = null
+		src.pr_update_stats.stop()
 	return
 
 ////// Misc
+
+/obj/mecha/proc/occupant_message(message as text)
+	if(message)
+		if(src.occupant && src.occupant.client)
+			src.occupant << "[message]"
+	return
 
 /obj/mecha/proc/operation_allowed(mob/living/carbon/human/H)
 	//check if it doesn't require any access at all
@@ -553,15 +594,19 @@
 		if (W:get_fuel() < 2)
 			user << "\blue You need more welding fuel to complete this task."
 			return
-		if(src.health>=initial(src.health))
-			user << "\blue The [src.name] is at full integrity."
-			return
-		W:use_fuel(1)
-		src.health += 20
+		if (src.internal_damage & MECHA_INT_TANK_BREACH)
+			src.internal_damage &= ~MECHA_INT_TANK_BREACH
+			user << "\blue You seal the breached gas tank."
+			W:use_fuel(1)
+		if(src.health<initial(src.health))
+			user << "\blue You repair some damage to [src.name]."
+			src.health += min(20, initial(src.health)-src.health)
+			W:use_fuel(1)
+		else
+			user << "The [src.name] is at full integrity"
 		return
 
 	else
-		..()
 		if(prob(src.deflect_chance))
 			user << "\red The [W] bounces off [src.name] armor."
 /*
@@ -571,6 +616,7 @@
 */
 		else
 			src.take_damage(W.force,W.damtype)
+			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH))
 	return
 
 
@@ -587,9 +633,13 @@
 	return output
 
 /obj/mecha/proc/get_stats_part()
-	var/output = {"<b>Integrity: </b> [health/initial(health)*100]%<br>
+	var/output = {"[internal_damage&MECHA_INT_FIRE?"<font color='red'><b>INTERNAL FIRE</b></font><br>":null]
+						[internal_damage&MECHA_INT_TEMP_CONTROL?"<font color='red'><b>LIFE SUPPORT SYSTEM MALFUNCTION</b></font><br>":null]
+						[internal_damage&MECHA_INT_TANK_BREACH?"<font color='red'><b>GAS TANK BREACH</b></font><br>":null]
+						<b>Integrity: </b> [health/initial(health)*100]%<br>
 						<b>Powercell charge: </b>[cell.charge/cell.maxcharge*100]%<br>
 						<b>Airtank pressure: </b>[src.return_pressure()]<br>
+						<b>Internal temperature: </b> [src.air_contents.temperature]&deg;K|[src.air_contents.temperature - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
 					"}
 	return output
@@ -605,7 +655,7 @@
 /obj/mecha/Topic(href, href_list)
 	..()
 	if (href_list["close"])
-		src.update_stats = null
+		src.pr_update_stats.stop()
 		return
 	if (href_list["toggle_lights"])
 		src.toggle_lights()
@@ -627,4 +677,76 @@
 	return
 
 
+//////////////////////////////////////////
+////////  Mecha global iterators  ////////
+//////////////////////////////////////////
 
+
+/datum/global_iterator/mecha_preserve_temp  //normalizing air contents temperature to 20 degrees celsium
+	delay = 20
+
+	process(var/obj/mecha/mecha)
+		if(mecha.air_contents && mecha.air_contents.volume > 0)
+			var/delta = mecha.air_contents.temperature - T20C
+			mecha.air_contents.temperature -= max(-10, min(10, round(delta/4,0.1)))
+		return
+
+/datum/global_iterator/mecha_view_stats // open and update stats window
+
+	process(var/obj/mecha/mecha)
+		if(mecha.occupant)
+			mecha.occupant << browse(mecha.get_stats_html(), "window=exosuit")
+			onclose(mecha.occupant, "exosuit", mecha)
+		return
+
+/datum/global_iterator/mecha_intertial_movement //inertial movement in space
+	delay = 7
+
+	process(var/obj/mecha/mecha,direction)
+		if(direction)
+			if(!step(mecha, direction)||mecha.check_for_support())
+				src.stop()
+		else
+			src.stop()
+		return
+
+/datum/global_iterator/mecha_location_temp_check //mecha location temperature checks
+
+	process(var/obj/mecha/mecha)
+		if(istype(mecha.loc, /turf/simulated))
+			var/turf/simulated/T = mecha.loc
+			if(T.air)
+				if(T.air.temperature > mecha.max_temperature)
+					mecha.take_damage(5,"fire")
+					mecha.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
+		return
+
+/datum/global_iterator/mecha_internal_damage // processing internal damage
+
+	process(var/obj/mecha/mecha)
+		if(!mecha.internal_damage)
+			src.stop()
+			return
+		if(mecha.internal_damage & MECHA_INT_FIRE)
+			if(mecha.return_pressure()>mecha.maximum_pressure*1.5 && !(mecha.internal_damage&MECHA_INT_TANK_BREACH))
+				mecha.internal_damage |= MECHA_INT_TANK_BREACH
+			if(prob(5))
+				mecha.internal_damage &= ~MECHA_INT_FIRE
+				mecha.occupant_message("<font color='blue'><b>Internal fire extinquished.</b></font>")
+				return
+			if(mecha.air_contents && mecha.air_contents.volume > 0) //heat the air_contents
+				mecha.air_contents.temperature = min(1500+T0C, mecha.air_contents.temperature+rand(10,15))
+				if(mecha.air_contents.temperature>mecha.max_temperature/2)
+					mecha.take_damage(1,"fire")
+		if(mecha.internal_damage & MECHA_INT_TEMP_CONTROL) //stop the mecha_preserve_temp loop datum
+			mecha.pr_int_temp_processor.stop()
+		if(mecha.internal_damage & MECHA_INT_TANK_BREACH) //remove some air from internal tank
+			var/datum/gas_mixture/environment = mecha.loc.return_air()
+			var/env_pressure = environment.return_pressure()
+			var/pressure_delta = min(115 - env_pressure, (mecha.air_contents.return_pressure() - env_pressure)/2)
+			var/transfer_moles = 0
+			if(mecha.air_contents.temperature > 0 && pressure_delta > 0)
+				transfer_moles = pressure_delta*environment.volume/(mecha.air_contents.temperature * R_IDEAL_GAS_EQUATION)
+				mecha.loc.assume_air(mecha.air_contents.remove(transfer_moles))
+
+		return

@@ -11,6 +11,7 @@
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
 	var/list/destroyable_obj = list(/obj/mecha, /obj/window, /obj/grille, /turf/simulated/wall)
+	internal_damage_treshhold = 30
 
 /*
 /obj/mecha/combat/verb/switch_weapon()
@@ -103,7 +104,7 @@
 						target:attackby(src,src.occupant)
 					else if(prob(2))
 						target:dismantle_wall(1)
-						src.occupant << text("\blue You smash through the wall.")
+						src.occupant_message("\blue You smash through the wall.")
 						src.visible_message("<b>[src.name] smashes through the wall</b>")
 						playsound(src, 'smash.ogg', 50, 1)
 					melee_can_hit = 0
@@ -173,6 +174,8 @@
 			src.occupant = usr
 			usr.loc = src
 			src.add_fingerprint(usr)
+			src.Entered(usr)
+			src.Move(src.loc)
 			if(usr.client)
 				usr.client.mouse_pointer_icon = file("icons/misc/mecha_mouse.dmi")
 	return
@@ -184,8 +187,10 @@
 	return
 
 
+/* //the garbage collector should handle this
 /obj/mecha/combat/Del()
 	for(var/weapon in weapons)
 		del weapon
 	..()
 	return
+*/

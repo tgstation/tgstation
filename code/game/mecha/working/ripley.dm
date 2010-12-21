@@ -3,7 +3,7 @@
 	name = "APLU \"Ripley\""
 	icon_state = "ripley"
 	step_in = 8
-	max_temperature = 500
+	max_temperature = 1000
 	health = 200
 	cargo_capacity = 15
 

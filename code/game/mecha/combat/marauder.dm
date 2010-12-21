@@ -30,7 +30,7 @@
 	if(connected_port)
 		src.occupant << "Unable to move while connected to the air system port"
 		return 0
-	if(!thrusters && src.inertia_dir)
+	if(!thrusters && src.pr_inertial_movement.active())
 		return 0
 	if(state || !cell || cell.charge<=0)
 		return 0
@@ -39,8 +39,7 @@
 	if(step(src,direction))
 		if(istype(src.loc, /turf/space))
 			if(!src.check_for_support())
-				src.inertia_dir = direction
-				src.inertial_movement()
+				src.pr_inertial_movement.start(list(src,direction))
 				if(thrusters)
 					tmp_step_energy_drain = step_energy_drain*2
 

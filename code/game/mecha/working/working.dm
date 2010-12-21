@@ -9,6 +9,7 @@
 	var/occupant_telekinesis = null
 	operation_req_access = list(access_engine)
 	internals_req_access = list(access_engine)
+	internal_damage_treshhold = 60
 
 
 /obj/mecha/working/melee_action(atom/target as obj|mob|turf)

@@ -16,6 +16,11 @@
 		if (!istype(O, /mob/living/silicon))
 			if (!(O in turretTargets))
 				turretTargets += O
+	else if (istype(O, /obj/mecha))
+		var/obj/mecha/M = O
+		if (M.occupant)
+			if (!(M in turretTargets))
+				turretTargets += M
 	return 1
 
 /area/turret_protected/Exited(O)
@@ -26,8 +31,13 @@
 				turretTargets -= O
 			//else
 				//O << "You aren't in our target list!"
-			if (turretTargets.len == 0)
-				popDownTurrets()
+
+	else if (istype(O, /obj/mecha))
+		if (O in turretTargets)
+			turretTargets -= O
+
+	if (turretTargets.len == 0)
+		popDownTurrets()
 
 	return 1
 
@@ -113,14 +123,26 @@
 					if (isDown())
 						popUp()
 					else
-						var/mob/target = pick(tarea.turretTargets)
-						src.dir = get_dir(src, target)
-						if (src.enabled)
-							if (istype(target, /mob/living))
-								if (target.stat!=2)
-									src.shootAt(target)
-								else
-									tarea.subjectDied(target)
+						var/mob/target
+						do
+							target = pick(tarea.turretTargets)
+							src.dir = get_dir(src, target)
+							if (src.enabled)
+								if (istype(target, /mob/living))
+									if (target.stat!=2)
+										src.shootAt(target)
+									else
+										tarea.subjectDied(target)
+										target = null
+								else if (istype(target, /obj/mecha))
+									var/obj/mecha/mecha = target
+									if(!mecha.occupant)
+										if (mecha in tarea.turretTargets)
+											tarea.turretTargets -= mecha
+											target = null
+									else
+										src.shootAt(target)
+						while(!target && tarea.turretTargets.len>0)
 
 		else
 			if (src.wasvalid)

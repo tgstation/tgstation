@@ -55,38 +55,40 @@
 			var/obj/O = target
 			if(!O.anchored)
 				if(chassis.cargo.len < chassis.cargo_capacity)
-					chassis.occupant << "You lift [target] and start to load it into cargo compartment."
+					chassis.occupant_message("You lift [target] and start to load it into cargo compartment.")
 					chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
 					tool_ready = 0
 					chassis.cell.use(energy_drain)
 					O.anchored = 1
 					var/T = chassis.loc
 					spawn(tool_cooldown)
-						if(T == chassis.loc && src == chassis.selected_tool)
-							chassis.cargo += O
-							O.loc = chassis
-							O.anchored = 0
-							chassis.occupant << "\blue [target] succesfully loaded."
-						else
-							chassis.occupant << "\red You must hold still while handling objects."
-						tool_ready = 1
+						if(chassis)
+							if(T == chassis.loc && src == chassis.selected_tool)
+								chassis.cargo += O
+								O.loc = chassis
+								O.anchored = 0
+								chassis.occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
+							else
+								chassis.occupant_message("<font color='red'>You must hold still while handling objects.</font>")
+							tool_ready = 1
 
 				else
-					chassis.occupant << "\red Not enough room in cargo compartment."
+					chassis.occupant << "<font color='red'>Not enough room in cargo compartment.</font>"
 			else
-				chassis.occupant << "\red [target] is firmly secured."
+				chassis.occupant << "<font color='red'>[target] is firmly secured.</font>"
 
 		else if(istype(target,/mob))
 			var/mob/M = target
+			if(M.stat>1) return
 			if(chassis.occupant.a_intent == "hurt")
 				M.bruteloss += force
 				M.oxyloss += round(force/2)
 				M.updatehealth()
-				chassis.occupant << "\red You squeese [target] with [src.name]. Something cracks."
+				chassis.occupant_message("\red You squeese [target] with [src.name]. Something cracks.")
 				chassis.visible_message("\red [chassis] squeeses [target].")
 			else
 				step_away(M,chassis)
-				chassis.occupant << "You push [target] out of the way."
+				chassis.occupant_message("You push [target] out of the way.")
 				chassis.visible_message("[chassis] pushes [target] out of the way.")
 			tool_ready = 0
 			chassis.cell.use(energy_drain)
@@ -106,12 +108,13 @@
 		tool_ready = 0
 		chassis.cell.use(energy_drain)
 		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]</b></font>", "You hear the drill.")
-		chassis.occupant << "<font color='red'><b>You start to drill [target]</b></font>"
+		chassis.occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
 		var/T = chassis.loc
 		spawn(tool_cooldown)
-			if(T == chassis.loc && src == chassis.selected_tool)
-				target.ex_act(2)
-			tool_ready = 1
+			if(chassis)
+				if(T == chassis.loc && src == chassis.selected_tool)
+					target.ex_act(2)
+				tool_ready = 1
 
 
 
