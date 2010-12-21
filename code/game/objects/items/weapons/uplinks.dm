@@ -45,6 +45,7 @@ SYNDICATE UPLINK
 			dat += "<A href='byond://?src=\ref[src];item_powersink=1'>Power Sink</A> (5)<BR>"
 			dat += "<A href='byond://?src=\ref[src];item_cartridge=1'>Detomatix Cartridge</A> (3)"
 			dat += "<A href='byond://?src=\ref[src];item_space=1'>Syndicate-made Space Suit (inludes a helmet)</A> (3)<BR>"
+			dat += "<A href='byond://?src=\ref[src];item_botchat=1'>Binary Translator</A> (5)<BR>"
 			dat += "<HR>"
 			if (src.origradio)
 				dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</A><BR>"
@@ -132,6 +133,10 @@ SYNDICATE UPLINK
 				src.uses -= 3
 				new /obj/item/clothing/suit/space/syndicate(H.loc)
 				new /obj/item/clothing/head/helmet/space/syndicate(H.loc)
+		else if(href_list["item_botchat"])
+			if (src.uses >= 5)
+				src.uses -= 5
+				new /obj/item/device/radio/headset/traitor(H.loc)
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
 			usr.machine = null
