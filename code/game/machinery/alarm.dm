@@ -73,6 +73,8 @@
 
 		return_status()
 			var/turf/location = src.loc
+			var/area/A = src.loc
+			A = A.loc
 			var/datum/gas_mixture/environment = location.return_air()
 			var/environment_pressure = environment.return_pressure()
 			var/total = environment.oxygen + environment.carbon_dioxide + environment.toxins + environment.nitrogen
@@ -138,10 +140,10 @@
 					var/SA_pp = (SA.moles/environment.total_moles())*environment_pressure
 					if(SA_pp > 0.01)
 						if(SA_pp > 1)
-							output += {"<font color='red'>High Concentration of Unknown Particles Detected</font><br>"}
+							output += {"Notice: <font color='red'>High Concentration of Unknown Particles Detected</font><br>"}
 							safe = 0
 						else
-							output += {"<font color='orange'>Low Concentration of Unknown Particles Detected</font><br>"}
+							output += {"Notice: <font color='orange'>Low Concentration of Unknown Particles Detected</font><br>"}
 							safe = 1
 
 			output += {"Temperature: "}
@@ -155,9 +157,10 @@
 			else output += {"<font color='green'>[environment.temperature]</font>K<br>"}
 
 			//Overall status
-			output += {"Environment Status: "}
-			if(safe == 0) output += {"<font color='red'><b>DANGER</b></font>"}
+			output += {"Local Status: "}
+			if(safe == 0) output += {"<font color='red'><b>DANGER: Internals Required</b></font>"}
 			else if(safe == 1) output += {"<font color='orange'>Caution</font>"}
+			else if (A.atmosalm == 1) output += {"<font color='orange'>Caution: Atmos alert in area</font>"}
 			else output += {"<font color='green'>Optimal</font>"}
 
 			return output
@@ -317,6 +320,8 @@
 		return
 
 	var/turf/location = src.loc
+	var/area/A = src.loc
+	A = A.loc
 	var/safe = 2
 
 	if(stat & (NOPOWER|BROKEN))
@@ -370,15 +375,23 @@
 					safe = 0
 				else safe = 1
 
-	src.icon_state = "alarm[!safe]"
+
+	if(safe && A.atmosalm)
+		safe = 1
+
+	if(!safe)
+		src.icon_state = "alarm1"
+	else if(safe == 1)
+		src.icon_state = "alarm2"
+	else
+		src.icon_state = "alarm0"
+
 
 	if(safe == 2) src.skipprocess = 1
 	else if(alarm_frequency)
 		post_alert(safe)
 
 	if(!safe)
-		var/area/A = src.loc
-		A = A.loc
 		if (!( istype(A, /area) ))
 			return
 		A.atmosalert()
@@ -534,6 +547,14 @@
 		return
 
 	use_power(10, ENVIRON)
+
+	var/area/A = src.loc
+	A = A.loc
+
+	if(A.fire)
+		src.icon_state = "fire1"
+	else
+		src.icon_state = "fire0"
 
 	if (src.timing)
 		if (src.time > 0)
