@@ -146,7 +146,7 @@
 					else
 						src.name = title
 				else if("Contents")
-					var/content = input("Write your book's contents (HTML allowed):") as message|null
+					var/content = strip_html(input("Write your book's contents (HTML NOT allowed):"),8192) as message|null
 					if(!content)
 						return
 					else

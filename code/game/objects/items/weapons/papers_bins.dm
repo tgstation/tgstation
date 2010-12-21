@@ -76,7 +76,7 @@ CLIPBOARDS
 		clown = 1
 
 	if (istype(P, /obj/item/weapon/pen))
-		var/t = input(user, "What text do you wish to add?", text("[]", src.name), null)  as message
+		var/t = strip_html(input(user, "What text do you wish to add?", text("[]", src.name), null),8192)  as message
 		if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
 			return
 		/*
