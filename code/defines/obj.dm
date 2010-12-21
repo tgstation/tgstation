@@ -3,6 +3,7 @@
 	var/m_amt = 0	// metal
 	var/g_amt = 0	// glass
 	var/w_amt = 0	// waster amounts
+	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
 	var/throwforce = 0
 	proc
@@ -39,6 +40,7 @@
 		anchored = 1
 		layer = 99
 		mouse_opacity = 0
+		unacidable = 1
 
 /obj/admins
 	name = "admins"
@@ -54,6 +56,7 @@
 	desc = "FUCK FUCK FUCK AAAHHH"
 	icon_state = "bhole2"
 	opacity = 0
+	unacidable = 1 //well, if you got that close, you're fucked anyway, but...
 	density = 0
 	anchored = 1
 	var/datum/effects/system/harmless_smoke_spread/smoke
@@ -101,6 +104,7 @@
 	icon = 'stationobjs.dmi'
 	icon_state = "begin"
 	anchored = 1.0
+	unacidable = 1
 
 /obj/bullet
 	name = "bullet"
@@ -243,6 +247,7 @@
 
 /obj/hud
 	name = "hud"
+	unacidable = 1
 	var/mob/mymob = null
 	var/list/adding = null
 	var/list/other = null
@@ -423,13 +428,13 @@
 
 /obj/item/blueprints
 	name = "station blueprints"
-	desc = "Blueprints of space station 13. It have stamp \"Classified\" and several coffee stains."
+	desc = "Blueprints of the station. There's stamp \"Classified\" and several coffee stains on it."
 	icon = 'items.dmi'
 	icon_state = "blueprints"
 
 /obj/item/apc_frame
 	name = "APC frame"
-	desc = "Use for repairing or building APCs"
+	desc = "Used for repairing or building APCs"
 	icon = 'apc_repair.dmi'
 	icon_state = "apc_frame"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -439,6 +444,7 @@
 	icon = 'screen1.dmi'
 	icon_state = "x2"
 	anchored = 1.0
+	unacidable = 1
 
 /obj/landmark/alterations
 	name = "alterations"
@@ -565,12 +571,14 @@
 
 /obj/overlay
 	name = "overlay"
+	unacidable = 1
 
 /obj/portal
 	name = "portal"
 	icon = 'stationobjs.dmi'
 	icon_state = "portal"
 	density = 1
+	unacidable = 1
 	var/failchance = 5
 	var/obj/item/target = null
 	var/creator = null
@@ -592,6 +600,7 @@
 	name = "screen"
 	icon = 'screen1.dmi'
 	layer = 20.0
+	unacidable = 1
 	var/id = 0.0
 	var/obj/master
 

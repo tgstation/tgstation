@@ -43,6 +43,7 @@
 		density = 1
 		opacity = 1
 		anchored = 1
+		unacidable = 1
 
 /obj/machinery/shieldwall
 		name = "Shield"
@@ -51,6 +52,7 @@
 		icon_state = "shieldwall"
 		anchored = 1
 		density = 1
+		unacidable = 1
 		var/active = 1
 //		var/power = 10
 		var/delay = 5

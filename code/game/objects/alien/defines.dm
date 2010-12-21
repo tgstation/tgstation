@@ -2,6 +2,7 @@
 	name = "alien thing"
 	desc = "theres something alien about this"
 	icon = 'alien.dmi'
+	unacidable = 1 //alien acid don't melts alien things...
 
 /obj/alien/egg
 	desc = "It looks like a weird egg"
@@ -38,6 +39,7 @@
 	density = 1
 	opacity = 1
 	anchored = 1
+	unacidable = 0 //...except for resin "wall" since it can block way.
 
 	var/health = 20
 

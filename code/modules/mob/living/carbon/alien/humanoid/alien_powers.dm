@@ -281,7 +281,7 @@ Also perhaps only queens can do that?
 					O.show_message("You hear something crawling trough the ventilation pipes.")
 
 		spawn(travel_time)
-			if(target_vent.welded)//the went can be welded while alien scrolled through the list or travelled.
+			if(target_vent.welded)//the vent can be welded while alien scrolled through the list or travelled.
 				target_vent = vent_found //travel back. No additional time required.
 				src << "\red The vent you were heading to appears to be welded."
 			src.loc = target_vent.loc
@@ -294,18 +294,21 @@ Also perhaps only queens can do that?
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this."
+		src << "You must be concious to do this"
 		return
+
 	if(!istype(O, /obj))
 		return
+
+	if(O.unacidable) //noize, don't fucking touch this and learn, why algorithms must be universal when possible (here it IS possible)
+		src << "You cannot spit acid over this."
+		return //also, if you want list of unacidables - search("unacidable = 1". all files), key_press(F3).
+
 	/*if(range(O, src) > 1)
 		src << "That's too far away!"
 		return*/
 	if(src.toxloss < 200)
 		src << "You don't have enough plasma."
-		return
-	if(istype(O, /obj/hud)||istype(O, /obj/machinery/shield)||istype(O, /obj/machinery/shieldwall)||istype(O, /obj/machinery/the_singularity)||istype(O, /obj/portal)||istype(O, /obj/rune)||istype(O, /obj/marker)||istype(O, /obj/bhole)||istype(O, /obj/livestock)||istype(O, /obj/creature)||istype(O, /obj/alien)||istype(O, /obj/machinery/containment_field))
-		src << "Can't destroy that object." //So you're not destroying black holes while you sizzle acid, dawg /N
 	else
 		src.toxloss -= 200
 		var/obj/alien/acid/A = new(O.loc)
