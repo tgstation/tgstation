@@ -19,6 +19,12 @@ var/global/sent_strike_team = 0
 	if(alert("Do you want to send in the CentCom death squad? Once enabled, this is irreversible.",,"Yes","No")=="No")
 		return
 	alert("This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned commandos have internals cameras which are viewable through a monitor inside the Spec. Ops. Office. Assigning the team's task is recommended from there.")
+
+	TRYAGAIN
+
+	var/input = input(usr, "Please specify which mission the death commando squad shall undertake.", "Specify Mission", "")
+	if(!input)
+		goto TRYAGAIN
 	sent_strike_team = 1
 
 	if (emergency_shuttle.direction == 1 && emergency_shuttle.online == 1)
@@ -29,6 +35,9 @@ var/global/sent_strike_team = 0
 	var/leader_selected = 0 //when the leader is chosen. The last person spawned.
 	var/commando_leader_rank = pick("Lieutenant", "Captain", "Major")
 	var/list/commando_names = dd_file2list("config/names/last.txt")
+
+//Code for spawning a nuke auth code.
+	var/nuke_code = "[rand(10000, 99999.0)]"
 
 //Spawns commandos and equips them.
 
@@ -49,9 +58,15 @@ var/global/sent_strike_team = 0
 			else
 				new_commando.age = rand(35,45)
 			new_commando.b_type = pick("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
-			new_commando.dna.ready_dna(new_commando)
-			del(STARTLOC)
+			new_commando.dna.ready_dna(new_commando) //creates DNA
+			//Creates mind stuff.
+			new_commando.mind = new
+			new_commando.mind.current = new_commando
+			new_commando.mind.assigned_role = "Death Commando"
+			new_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
+			new_commando.mind.store_memory("<B>Mission:</B> \red [input].")
 
+			del(STARTLOC)
 
 			var/obj/machinery/camera/cam = new /obj/machinery/camera(new_commando) //Gives all the commandos internals cameras.
 			cam.network = "CREED"
@@ -93,6 +108,7 @@ var/global/sent_strike_team = 0
 			new_commando.equip_if_possible(GUN, new_commando.slot_s_store)
 //			new_commando.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle(new_commando), new_commando.slot_l_hand)
 //Commented out because Commandos now have their rifles spawn in front of them, along with operation manuals.
+//Useful for copy pasta since I'm lazy.
 
 			var/obj/item/weapon/card/id/W = new(new_commando)
 			W.name = "[new_commando.real_name]'s ID Card"
@@ -104,21 +120,26 @@ var/global/sent_strike_team = 0
 			var/list/candidates = list() // Picks a random ghost for the role. Mostly a copy of alien burst code.
 			for(var/mob/dead/observer/G in world)
 				if(G.client)
-					if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5)
+				//	if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5) //!G.client.holder means that whoever called/has the proc won't be added to the list.
+					if(((G.client.inactivity/10)/60) <= 5) //Removing it allows even the caller to jump in.
 						candidates.Add(G)
 			if(candidates.len)
 				var/mob/dead/observer/G = pick(candidates)
-				new_commando.key = G.client.key
+				new_commando.mind.key = G.key//For mind stuff.
+				new_commando.client = G.client
 				del(G)
 			else
 				new_commando.key = "null"
 
 			commando_number = commando_number-1
 
-//Code for spawning a nuke auth code and bombs. Targets any nukes in the world and changes their auth code as needed.
-//Bad news for Nuke operatives--or great news.
+			if (leader_selected == 0)
+				new_commando << "\blue \nYou are a Special Ops. commando in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: \red<B>[input]</B>"
+			else
+				new_commando << "\blue \nYou are a Special Ops. <B>LEADER</B> in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: \red<B>[input]</B>"
 
-	var/nuke_code = "[rand(10000, 99999.0)]"
+//Targets any nukes in the world and changes their auth code as needed.
+//Bad news for Nuke operatives--or great news.
 	for(var/obj/machinery/nuclearbomb/NUAK in world)
 		if (NUAK.name == "Nuclear Fission Explosive")
 			NUAK.r_code = nuke_code

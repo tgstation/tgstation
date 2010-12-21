@@ -256,24 +256,27 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 	var/mob/living/carbon/alien/humanoid/new_xeno = new(spawn_here.loc)
 	new_xeno.plasma = 250
 
-	var/list/candidates = list() // Picks a random ghost for the role. Mostly a copy of alien burst code.
+	var/list/candidates = list() // Picks a random ghost for the role. Mostly a copy of alien burst code. Doesn't spawn the one using the command.
 	for(var/mob/dead/observer/G in world)
 		if(G.client)
 			if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5)
 				candidates.Add(G)
 	if(candidates.len)
 		var/mob/dead/observer/G = pick(candidates)
-		new_xeno.key = G.client.key
+		message_admins("\blue [key_name_admin(usr)] has spawned [G.key] as a filthy xeno.", 1)
+		new_xeno.client = G.client
 		del(G)
 	else
 		alert("There are no available ghosts to throw into the xeno. Aborting command.")
 		del(new_xeno)
 		return
-	message_admins("\blue [key_name_admin(usr)] has spawned a filthy xeno at [spawn_here.loc].", 1)
 
-
-//If a guy was gibbed and you want to revive him, this is a good way to do so.
-//Works much like entering the game with a new character. Doesn't retain mind. /N
+/*Current project. Currently trying to get preferences save to work for characteristics. That and randomized characteristics.
+Will probably check for admin status at some point or with possible other spawn options other than Assistant.
+Re-spawning traitors or traitor targets is more tricky.
+If a guy was gibbed and you want to revive him, this is a good way to do so.
+Works kind of like entering the game with a new character. Character receives a new mind.
+They spawn as an assistant but there is no announcement. /N  */
 /client/proc/respawn_character()
 	set category = "Special Verbs"
 	set name = "Respawn Character"
@@ -286,22 +289,48 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		return
 
 	var/GKEY = input
+	var/GNAME = "none"
 	var/mob/dead/observer/GDEL //to properly delete the mob later on.
 	for(var/mob/dead/observer/G in world)
 		if(G.key==input)
 			GDEL = G
+			GNAME = G.real_name
 		else
 			alert("There is no such key in the game or the person is not currently a ghost. Aborting command.")
 			return
 
+	var/new_character_gender = MALE //to determine character's gender for few of the other procs.
+	if(alert("Please specify the character's gender.",,"Male","Female")=="Female")
+		new_character_gender = FEMALE
+
 	var/spawn_here = pick(latejoin)//"JoinLate" is a landmark which is deleted on round start. So, latejoin has to be used instead.
 	var/mob/living/carbon/human/new_character = new(src)
+	new_character.gender = new_character_gender
+
+//	var/datum/preferences/preferences
+//	new_character.preferences.randomize_name(new_character)
+//	new_character.preferences = new
+//	new_character.preferences.randomize_name = new_character
+//	new_character.name = preferences.real_name
+//	new_character.real_name = new_character.name
+//	randomize_name(new_character)
+//	randomize_skin_tone()
+//	new_character.preferences.randomize_hair_color(var/target = "hair")
+//	new_character.preferences.randomize_eyes_color(new_character)
+//	new_character.preferences.update_preview_icon(new_character)
+
 	new_character.loc = spawn_here
+	new_character.real_name = GNAME
+	message_admins("\blue [key_name_admin(usr)] has respawned [GKEY] as [new_character.name].", 1) //Here so it doesn't null name if an admin re-spawns themselves.
+	new_character.key = GKEY
 //	preferences.copy_to(new_character)
 	new_character.dna.ready_dna(new_character)
+//	new_character:ManifestLateSpawn()
+	new_character.mind = new
+	new_character.mind.key = GKEY
+	new_character.mind.current = new_character
+	new_character.mind.assigned_role = "Assistant"
 	new_character.Equip_Rank("Assistant", joined_late=1)
-	message_admins("\blue [key_name_admin(usr)] has respawned [GKEY] at [new_character.loc].", 1) //Here so it doesn't null name if an admin re-spawns themselves.
-	new_character.key = GKEY
 	del(GDEL)
 
 /client/proc/cmd_admin_add_freeform_ai_law()
