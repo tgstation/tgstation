@@ -244,24 +244,23 @@
 					for(var/mob/living/carbon/M in D.loc)
 						if(!istype(M,/mob/living/carbon)) continue
 						if(M == user) continue
-						D.reagents.reaction(M, INGEST)
 						D.reagents.trans_to(M, 15)
 						M.bruteloss += 5
 						for(var/mob/O in viewers(world.view, D))
 							O.show_message(text("\red [] was hit by the syringe!", M), 1)
 
 						del(D)
-						return
-					if(D)
-						for(var/atom/A in D.loc)
-							if(A == user) continue
-							if(A.density) del(D)
 
-						sleep(1)
-					if(D)
-						spawn(10) del(D)
+					for(var/atom/A in D.loc)
+						if(A == user) continue
+						if(A.density) del(D)
 
-					return
+					sleep(1)
+
+				spawn(10) del(D)
+
+				return
+
 
 
 
