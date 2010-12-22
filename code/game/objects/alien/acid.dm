@@ -1,8 +1,5 @@
 /obj/alien/acid/proc/tick()
 	ticks += 1
-	if(target.unacidable)
-		del(src)
-		return
 	for(var/mob/O in hearers(src, null))
 		O.show_message("\green <B>[src.target] sizzles and begins to melt under the bubbling mess of acid!</B>", 1)
 	if(prob(ticks*10))

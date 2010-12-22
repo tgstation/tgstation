@@ -1,15 +1,16 @@
-/*NOTE:
+/*NOTES:
 
-Put in power that will lay a facehugger egg but cost a lot of plasma, 250 or something?
-
-Also perhaps only queens can do that?
-
+There are several problems with alien powers right now. I am currently trying to fix the dissolve verb so it makes a lot more sense.
+Alien spit is ridiculous and needs to be toned down. It homes in on targets when it should probably work
+more like a taser shot but with continuous toxin damage to the target if they are hit.
+Invisibility works well but 30 seconds is too long. 15 would be good considering it doesn't cost much and makes the alien a lot more
+robust (can't be canceled by anything short of thermals or a superpower).
+Vent crawl shouldn't transport the alien to the Prison Station or back. The list should also be in some order since right now it's
+often difficult to pick the right destination.
+Resin wall should also apply to mobs so that aliens can envelope them in resin (effectively paralyze them) to successfully hatch more
+aliens. Perhaps it should also prevent the target from suiciding.
+All I can think of right now./N
 */
-
-
-
-
-
 
 /mob/living/carbon/alien/humanoid/verb/invis()
 	set name = "Invisibility (50)"
@@ -38,7 +39,7 @@ Also perhaps only queens can do that?
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this"
+		src << "You must be concious to do this."
 		return
 	if(src.toxloss >= 25)
 		src.toxloss -= 25
@@ -88,7 +89,7 @@ Also perhaps only queens can do that?
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this"
+		src << "You must be concious to do this."
 		return
 	if(src.toxloss >= 100)
 		src.toxloss -= 100
@@ -103,11 +104,11 @@ Also perhaps only queens can do that?
 
 /mob/living/carbon/alien/humanoid/verb/call_to()
 	set name = "Call facehuggers (5)"
-	set desc = "Makes all nearby facehuggers follow you."
+	set desc = "Makes all nearby facehuggers follow you"
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this"
+		src << "You must be concious to do this."
 		return
 
 	if(src.toxloss >= 5)
@@ -180,11 +181,11 @@ Also perhaps only queens can do that?
 
 /mob/living/carbon/alien/humanoid/verb/evolve() // -- TLE
 	set name = "Evolve (500)"
-	set desc = "Produce an interal egg sac capable of spawning children."
+	set desc = "Produce an interal egg sac capable of spawning children"
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this"
+		src << "You must be concious to do this."
 		return
 
 	if(!src.toxloss)
@@ -203,7 +204,7 @@ Also perhaps only queens can do that?
 
 /mob/living/carbon/alien/humanoid/verb/resinwall() // -- TLE
 	set name = "Shape Resin Wall (200)"
-	set desc = "Produce a wall of resin that blocks entry and line of sight."
+	set desc = "Produce a wall of resin that blocks entry and line of sight"
 	set category = "Alien"
 
 	if(src.stat)
@@ -224,13 +225,13 @@ Also perhaps only queens can do that?
 
 /mob/living/carbon/alien/humanoid/proc/ventcrawl() // -- TLE
 	set name = "Crawl through Vent"
-	set desc = "Enter an air vent and appear at a random one."
+	set desc = "Enter an air vent and appear at a random one"
 	set category = "Alien"
 //	if(!istype(V,/obj/machinery/atmoalter/siphs/fullairsiphon/air_vent))
 //		return
 
 	if(src.stat)
-		src << "You must be concious to do this"
+		src << "You must be concious to do this."
 		return
 	var/vent_found = 0
 	for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
@@ -288,31 +289,59 @@ Also perhaps only queens can do that?
 			for(var/obj/alien/facehugger/F in huggers)
 				F.loc = src.loc
 
-/mob/living/carbon/alien/humanoid/verb/corrode(obj/O as obj in view(1)) // -- TLE
+
+/*Xenos now have a proc and a verb for drenching stuff in acid. I couldn't get them to work right when combined so this was the next best solution.
+The first proc defines the acid throw function while the other two work in the game itself. Probably a good idea to revise this later.
+I kind of like the right click only--the window version can get a little confusing. Perhaps something telling the alien they need to right click?
+/N*/
+/obj/proc/acid()
+	usr.toxloss -= 200
+	var/obj/alien/acid/A = new(src.loc)
+	A.target = src
+	for(var/mob/M in viewers(src, null))
+		M.show_message(text("\green <B>[src] vomits globs of vile stuff all over [src]!</B>"), 1)
+	A.tick()
+
+/mob/living/carbon/alien/humanoid/proc/corrode_target() //Aliens only see items on the list of objects that they can actually spit on./N
 	set name = "Spit Corrosive Acid (200)"
 	set desc = "Drench an object in acid, destroying it over time."
 	set category = "Alien"
 
+	var/obj/A
 	if(src.stat)
-		src << "You must be concious to do this"
+		src << "You must be concious to do this."
 		return
+	var/list/xeno_target
+	xeno_target = list("ABORT COMMAND")
+	for(var/obj/O in view(1))
+		if(!O.unacidable)
+			xeno_target.Add(O)
+	A = input("Corrode which target?", "Targets", A) in xeno_target
+	if(A == "ABORT COMMAND")
+		return
+	if(src.toxloss < 200)
+		src << "Not enough plasma."
+		return
+	if(A in view(1))//Another check to see if the item is in range. So the alien does not run off with the window open.
+		A.acid()
+	else
+		src << "Target is too far away."
+		return
+
+/mob/living/carbon/alien/humanoid/verb/corrode(obj/O as anything in view(1)) //If they right click to corrode, an error will flash if its an invalid target./N
+	set name = "Spit Corrosive Acid (200)"
+	set desc = "Drench an object in acid, destroying it over time."
 
 	if(!istype(O, /obj))
 		return
-
-	if(O.unacidable) //noize, don't fucking touch this and learn, why algorithms must be universal when possible (here it IS possible)
-		src << "You cannot spit acid over this."
-		return //also, if you want list of unacidables - search("unacidable = 1". all files), key_press(F3).
-
-	/*if(range(O, src) > 1)
-		src << "That's too far away!"
-		return*/
+	if(src.stat)
+		src << "You must be concious to do this."
+		return
 	if(src.toxloss < 200)
-		src << "You don't have enough plasma."
+		src << "Not enough plasma."
+		return
+	if(O.unacidable) //So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
+		src << "Cannot destroy this object."
+		return
 	else
-		src.toxloss -= 200
-		var/obj/alien/acid/A = new(O.loc)
-		A.target = O
-		for(var/mob/M in viewers(src, null))
-			M.show_message(text("\green <B>[src] vomits globs of vile stuff all over [O]!</B>"), 1)
-		A.tick()
+		O.acid()

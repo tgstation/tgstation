@@ -58,12 +58,12 @@ var/global/sent_strike_team = 0
 			else
 				new_commando.age = rand(35,45)
 			new_commando.b_type = pick("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
-			new_commando.dna.ready_dna(new_commando) //creates DNA
+			new_commando.dna.ready_dna(new_commando) //Creates DNA
 			//Creates mind stuff.
 			new_commando.mind = new
 			new_commando.mind.current = new_commando
 			new_commando.mind.assigned_role = "Death Commando"
-			new_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
+			new_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")//So they don't forget their code or mission.
 			new_commando.mind.store_memory("<B>Mission:</B> \red [input].")
 
 			del(STARTLOC)
@@ -107,8 +107,8 @@ var/global/sent_strike_team = 0
 			GUN.bullets = 7
 			new_commando.equip_if_possible(GUN, new_commando.slot_s_store)
 //			new_commando.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle(new_commando), new_commando.slot_l_hand)
-//Commented out because Commandos now have their rifles spawn in front of them, along with operation manuals.
-//Useful for copy pasta since I'm lazy.
+/*Commented out because Commandos now have their rifles spawn in front of them, along with operation manuals.
+Useful for copy pasta since I'm lazy.*/
 
 			var/obj/item/weapon/card/id/W = new(new_commando)
 			W.name = "[new_commando.real_name]'s ID Card"
@@ -120,8 +120,8 @@ var/global/sent_strike_team = 0
 			var/list/candidates = list() // Picks a random ghost for the role. Mostly a copy of alien burst code.
 			for(var/mob/dead/observer/G in world)
 				if(G.client)
-				//	if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5) //!G.client.holder means that whoever called/has the proc won't be added to the list.
-					if(((G.client.inactivity/10)/60) <= 5) //Removing it allows even the caller to jump in.
+					if(!G.client.holder && ((G.client.inactivity/10)/60) <= 5) //Whoever called/has the proc won't be added to the list.
+//					if(((G.client.inactivity/10)/60) <= 5) //Removing it allows even the caller to jump in. Good for testing.
 						candidates.Add(G)
 			if(candidates.len)
 				var/mob/dead/observer/G = pick(candidates)

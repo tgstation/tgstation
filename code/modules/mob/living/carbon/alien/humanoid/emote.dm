@@ -34,7 +34,7 @@
 				message = "<B>The [src.name]</B> roars."
 				m_type = 2
 		if("tail")
-			message = "<B>The [src.name]</B> waves his tail."
+			message = "<B>The [src.name]</B> waves its tail."
 			m_type = 1
 		if("gasp")
 			message = "<B>The [src.name]</B> gasps."
@@ -56,7 +56,7 @@
 			message = "<B>The [src.name]</B> moans!"
 			m_type = 2
 		if("nod")
-			message = "<B>The [src.name]</B> nods his head."
+			message = "<B>The [src.name]</B> nods its head."
 			m_type = 1
 		if("sit")
 			message = "<B>The [src.name]</B> sits down."
@@ -79,11 +79,11 @@
 				message = "<B>The [src.name]</B> rolls."
 				m_type = 1
 		if("shake")
-			message = "<B>The [src.name]</B> shakes his head."
+			message = "<B>The [src.name]</B> shakes its head."
 			m_type = 1
 		if("gnarl")
 			if (!muzzled)
-				message = "<B>The [src.name]</B> gnarls and shows his teeth.."
+				message = "<B>The [src.name]</B> gnarls and shows its teeth.."
 				m_type = 2
 		if("jump")
 			message = "<B>The [src.name]</B> jumps!"

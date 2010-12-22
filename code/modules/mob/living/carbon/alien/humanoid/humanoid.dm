@@ -55,6 +55,7 @@ to clean it up, or just beat the shit out of it (which takes ages).
 /mob/living/carbon/alien/humanoid/New()
 	spawn (1)
 		src.verbs += /mob/living/carbon/alien/humanoid/proc/ventcrawl // Give only normal aliens ventcrawling -- TLE
+		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target //So aliens propely get two acid verbs. /N
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
 		R.my_atom = src

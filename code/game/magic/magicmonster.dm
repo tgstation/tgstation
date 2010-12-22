@@ -16,6 +16,7 @@
 	layer = 5.0
 	density = 1
 	anchored = 0
+	unacidable = 1 //Creature is not harmed by acid.
 
 	var/state = 0
 

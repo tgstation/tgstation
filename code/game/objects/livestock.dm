@@ -7,7 +7,7 @@
 	layer = 5.0
 	density = 1
 	anchored = 0
-	unacidable = 1
+	unacidable = 1//While not technically mobs, these objects should not be affected by alien acid.
 
 	var/state = 0		//0 = null, 1 = attack, 2 = idle
 

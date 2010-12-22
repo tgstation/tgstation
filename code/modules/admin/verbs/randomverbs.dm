@@ -290,9 +290,9 @@ They spawn as an assistant but there is no announcement. /N  */
 
 	var/GKEY = input
 	var/GNAME = "none"
-	var/mob/dead/observer/GDEL //to properly delete the mob later on.
+	var/mob/dead/observer/GDEL //To properly delete the mob later on.
 	for(var/mob/dead/observer/G in world)
-		if(G.key==input)
+		if(G.key==input||GKEY)
 			GDEL = G
 			GNAME = G.real_name
 		else
@@ -321,7 +321,7 @@ They spawn as an assistant but there is no announcement. /N  */
 
 	new_character.loc = spawn_here
 	new_character.real_name = GNAME
-	message_admins("\blue [key_name_admin(usr)] has respawned [GKEY] as [new_character.name].", 1) //Here so it doesn't null name if an admin re-spawns themselves.
+	message_admins("\blue [key_name_admin(usr)] has respawned [GKEY] as [new_character.name].", 1) //Here so it doesn't null client if an admin re-spawns themselves.
 	new_character.key = GKEY
 //	preferences.copy_to(new_character)
 	new_character.dna.ready_dna(new_character)

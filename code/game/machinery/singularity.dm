@@ -53,7 +53,7 @@ However people seem to like it for some reason.
 	icon_state = "Singularity"
 	anchored = 1
 	density = 1
-//	unacidable = 1 //oh the hilarity.
+	unacidable = 1 //Don't comment this out.
 	var/active = 0
 	var/energy = 10
 	var/Dtime = null

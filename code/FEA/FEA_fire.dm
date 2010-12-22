@@ -46,8 +46,8 @@ obj
 		//Icon for fire on turfs, also helps for nurturing small fires until they are full tile
 
 		anchored = 1
-
 		mouse_opacity = 0
+		unacidable = 1//So you can't melt fire with acid.
 
 		//luminosity = 3
 

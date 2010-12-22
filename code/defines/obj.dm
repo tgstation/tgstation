@@ -40,7 +40,7 @@
 		anchored = 1
 		layer = 99
 		mouse_opacity = 0
-		unacidable = 1
+		unacidable = 1//Just to be sure.
 
 /obj/admins
 	name = "admins"
@@ -56,7 +56,7 @@
 	desc = "FUCK FUCK FUCK AAAHHH"
 	icon_state = "bhole2"
 	opacity = 0
-	unacidable = 1 //well, if you got that close, you're fucked anyway, but...
+	unacidable = 1
 	density = 0
 	anchored = 1
 	var/datum/effects/system/harmless_smoke_spread/smoke
@@ -66,6 +66,7 @@
 
 /obj/beam
 	name = "beam"
+	unacidable = 1//Just to be sure.
 
 /obj/beam/a_laser
 	name = "a laser"
@@ -111,6 +112,7 @@
 	icon = 'projectiles.dmi'
 	icon_state = "bullet"
 	density = 1
+	unacidable = 1//Just to be sure.
 	var/yo = null
 	var/xo = null
 	var/current = null
@@ -512,6 +514,7 @@
 	name = "manifest"
 	icon = 'screen1.dmi'
 	icon_state = "x"
+	unacidable = 1//Just to be sure.
 
 /obj/morgue
 	name = "morgue"
@@ -578,7 +581,7 @@
 	icon = 'stationobjs.dmi'
 	icon_state = "portal"
 	density = 1
-	unacidable = 1
+	unacidable = 1//Can't destroy energy portals.
 	var/failchance = 5
 	var/obj/item/target = null
 	var/creator = null
@@ -706,6 +709,7 @@
 	desc = "A display case for prized possessions."
 	density = 1
 	anchored = 1
+	unacidable = 1//Dissolving the case would also delete the gun.
 	var/health = 30
 	var/occupied = 1
 	var/destroyed = 0

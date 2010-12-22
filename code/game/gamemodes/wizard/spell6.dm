@@ -6,6 +6,7 @@
 	anchored = 1.0
 	opacity = 0
 	density = 1
+	unacidable = 1
 
 /client/proc/forcewall()
 
