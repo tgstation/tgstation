@@ -669,7 +669,7 @@ datum
 			result_amount = 5
 
 		manhattan
-			name = "Manhattan	"
+			name = "Manhattan"
 			id = "manhattan"
 			result = "manhattan"
 			required_reagents = list("whiskey" = 2, "vermouth" = 1)

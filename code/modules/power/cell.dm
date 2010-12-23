@@ -38,9 +38,11 @@
 
 // recharge the cell
 /obj/item/weapon/cell/proc/give(var/amount)
-	charge = min(maxcharge, charge+amount)
+	var/power_used = min(maxcharge-charge,amount)
+	charge += power_used
 	if(rigged && amount > 0)
 		explode()
+	return power_used
 
 
 /obj/item/weapon/cell/examine()
@@ -50,9 +52,6 @@
 			usr << "[desc]\nThe manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.\nThe charge meter reads [round(src.percent() )]%."
 		else
 			usr << "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!!!\nThe charge meter reads [round(src.percent() )]%."
-
-
-
 
 
 /obj/item/weapon/cell/attackby(obj/item/W, mob/user)
@@ -82,7 +81,7 @@
 /obj/item/weapon/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
 
-	explosion(T, 0, 1, 2, 2)
+	explosion(T, 0, 1, 2, 2) //TODO: involve charge
 
 	spawn(1)
 		del(src)

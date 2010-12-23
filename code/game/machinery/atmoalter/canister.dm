@@ -93,16 +93,14 @@
 
 	..()
 
-	var/datum/gas_mixture/environment
-
-	if(holding)
-		environment = holding.air_contents
-	else
-		environment = loc.return_air()
-
-	var/env_pressure = environment.return_pressure()
-
 	if(valve_open)
+		var/datum/gas_mixture/environment
+		if(holding)
+			environment = holding.air_contents
+		else
+			environment = loc.return_air()
+
+		var/env_pressure = environment.return_pressure()
 		var/pressure_delta = min(release_pressure - env_pressure, (air_contents.return_pressure() - env_pressure)/2)
 		//Can not have a pressure delta that would cause environment pressure > tank pressure
 
@@ -117,9 +115,9 @@
 				environment.merge(removed)
 			else
 				loc.assume_air(removed)
+			src.update_icon()
 
 	src.updateDialog()
-	src.update_icon()
 	return
 
 /obj/machinery/portable_atmospherics/canister/return_air()
@@ -166,7 +164,7 @@ Port Status: [(connected_port)?("Connected"):("Disconnected")]
 [holding_text]
 <BR>
 Release Valve: <A href='?src=\ref[src];toggle=1'>[valve_open?("Open"):("Closed")]</A><BR>
-Release Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=\ref[src];pressure_adj=-10'>-</A> [release_pressure] <A href='?src=\ref[src];pressure_adj=10'>+</A> <A href='?src=\ref[src];pressure_adj=100'>+</A><BR>
+Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=\ref[src];pressure_adj=-10'>-</A> <A href='?src=\ref[src];pressure_adj=-1'>-</A> [release_pressure] <A href='?src=\ref[src];pressure_adj=1'>+</A> <A href='?src=\ref[src];pressure_adj=10'>+</A> <A href='?src=\ref[src];pressure_adj=100'>+</A> <A href='?src=\ref[src];pressure_adj=1000'>+</A><BR>
 <HR>
 <A href='?src=\ref[user];mach_close=canister'>Close</A><BR>
 "}

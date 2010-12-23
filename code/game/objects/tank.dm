@@ -220,27 +220,27 @@
 	var/obj/item/weapon/icon = src
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
-		if (!in_range(src, usr))
-			if (icon == src) usr << "\blue It's a \icon[icon]! If you want any more information you'll need to get closer."
-			return
+	if (!in_range(src, usr))
+		if (icon == src) usr << "\blue It's a \icon[icon][src]! If you want any more information you'll need to get closer."
+		return
 
-		var/celsius_temperature = src.air_contents.temperature-T0C
-		var/descriptive
+	var/celsius_temperature = src.air_contents.temperature-T0C
+	var/descriptive
 
-		if (celsius_temperature < 20)
-			descriptive = "cold"
-		else if (celsius_temperature < 40)
-			descriptive = "room temperature"
-		else if (celsius_temperature < 80)
-			descriptive = "lukewarm"
-		else if (celsius_temperature < 100)
-			descriptive = "warm"
-		else if (celsius_temperature < 300)
-			descriptive = "hot"
-		else
-			descriptive = "furiously hot"
+	if (celsius_temperature < 20)
+		descriptive = "cold"
+	else if (celsius_temperature < 40)
+		descriptive = "room temperature"
+	else if (celsius_temperature < 80)
+		descriptive = "lukewarm"
+	else if (celsius_temperature < 100)
+		descriptive = "warm"
+	else if (celsius_temperature < 300)
+		descriptive = "hot"
+	else
+		descriptive = "furiously hot"
 
-		usr << text("\blue The \icon[] feels []", icon, descriptive)
+	usr << text("\blue The \icon[][src] feels []", icon, descriptive)
 
 	return
 

@@ -22,6 +22,8 @@
 		if(!connected_port) //only react when pipe_network will ont it do it for you
 			//Allow for reactions
 			air_contents.react()
+		else
+			update_icon()
 
 	Del()
 		del(air_contents)

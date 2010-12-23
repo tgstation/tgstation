@@ -436,7 +436,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
 
 				if(S.reagents.has_reagent("beer", 1))
-					src.health =- round(S.reagents.get_reagent_amount("beer")*0.05)
+					src.health -= round(S.reagents.get_reagent_amount("beer")*0.05)
 					src.nutrilevel += round(S.reagents.get_reagent_amount("beer")*0.04)
 					src.waterlevel += round(S.reagents.get_reagent_amount("beer")*0.7)
 
@@ -694,7 +694,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				else if(src.myseed.species == "liberty")
 					t_prod.drug_amt = round(src.myseed.potency / 5, 1) // TRIP TIME
 				else if(src.myseed.species == "chili" || src.myseed.species == "chiliice")
-					t_prod.heat_amt = src.myseed.potency // BRING ON THE HEAT
+					t_prod.heat_amt = src.myseed.potency // BRING ON THE HEAT //BUG: heat_amt not used at all
 				t_amount++
 		src.harvest = 0
 		src.lastproduce = src.age

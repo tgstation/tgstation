@@ -2,7 +2,7 @@
 	if(p_open || operating) return
 	if(ismob(AM))
 		var/mob/M = AM
-		if(world.timeofday - AM.last_bumped <= 60) return
+		if(world.time - AM.last_bumped <= 60) return //NOTE do we really need that?
 		if(M.client && !M:handcuffed)
 			bumpopen(M)
 	else if(istype(AM, /obj/machinery/bot))
@@ -237,7 +237,7 @@
 		return
 	if(ismob(AM))
 		var/mob/M = AM
-		if(world.timeofday - AM.last_bumped <= 60) return
+		if(world.time - AM.last_bumped <= 60) return
 		if(M.client && !M:handcuffed)
 			bumpopen(M)
 	else if(istype(AM, /obj/machinery/bot))

@@ -19,27 +19,41 @@
 	var/timing = 1    		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/childproof = 0		// boolean, when activating the door controls, locks door for 1 minute
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
+	var/obj/machinery/door/window/brigdoor/targetdoor
+	var/list/obj/machinery/flasher/targetflashers
+
+/obj/machinery/door_timer/New()
+	..()
+	for(var/obj/machinery/door/window/brigdoor/M in world)
+		if (M.id == src.id)
+			targetdoor = M
+			break
+	if (isnull(targetdoor))
+		stat |= BROKEN
+	targetflashers = list()
+	for(var/obj/machinery/flasher/F in world)
+		if(F.id == src.id)
+			targetflashers += F
 
 //Main door timer loop, if it's timing and time is >0 reduce time by 1.
 // if it's less than 0, open door, reset timer
 // update the door_timer window and the icon
 /obj/machinery/door_timer/process()
-	..()
+	if (stat & (NOPOWER|BROKEN))
+		return
 	if (src.timing)
 		if (src.time > 0)
-			src.time = round(src.time) - 1
+			src.time--
 		else
 			src.opendoor() // open doors, reset timer, clear status screen
 			src.time = 0
 			src.timing = 0
 		src.updateDialog()
 		src.update_icon()
-	else // keep door open may cause lag as it's checking every second if someone closed door
-		for(var/obj/machinery/door/window/brigdoor/M in world)
-			if (M.id == src.id)
-				if(M.density)
-					spawn( 0 )
-						M.open()
+	else
+		if(targetdoor && targetdoor.density) //door searching cicle moved to New()
+			spawn( 0 )
+				targetdoor.open()
 	return
 
 // has the door power sitatuation changed, if so update icon.
@@ -51,11 +65,9 @@
 /obj/machinery/door_timer/proc/opendoor()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	for(var/obj/machinery/door/window/brigdoor/M in world)
-		if (M.id == src.id)
-			if(M.density)
-				spawn( 0 )
-					M.open()
+		if(targetdoor.density)
+			spawn( 0 )
+				targetdoor.open()
 	src.updateUsrDialog()
 	src.update_icon()
 	return
@@ -63,11 +75,9 @@
 /obj/machinery/door_timer/proc/closedoor()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	for(var/obj/machinery/door/window/brigdoor/M in world)
-		if (M.id == src.id)
-			if(!M.density)
-				spawn( 0 )
-					M.close()
+	if(!targetdoor.density)
+		spawn( 0 )
+			targetdoor.close()
 	src.updateUsrDialog()
 	src.update_icon()
 	return
@@ -100,12 +110,13 @@
 	var/second = src.time % 60
 	var/minute = (src.time - second) / 60
 	dat += text("<br><HR>\nTimer System: [d2]\nTime Left: [(minute ? text("[minute]:") : null)][second] <A href='?src=\ref[src];tp=-60'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=60'>+</A>")
-	for(var/obj/machinery/flasher/F in world)
-		if(F.id == src.id)
-			if(F.last_flash && world.time < F.last_flash + 150)
-				dat += text("<BR><BR><A href='?src=\ref[];fc=1'>Flash Cell (Charging)</A>", src)
-			else
-				dat += text("<BR><BR><A href='?src=\ref[];fc=1'>Flash Cell</A>", src)
+	if (targetflashers.len)
+		dat += "<BR>"
+	for(var/obj/machinery/flasher/F in targetflashers)
+		if(F.last_flash && world.time < F.last_flash + 150)
+			dat += text("<BR><A href='?src=\ref[];fc=1'>Flash Cell (Charging)</A>", src)
+		else
+			dat += text("<BR><A href='?src=\ref[];fc=1'>Flash Cell</A>", src)
 	dat += text("<BR><BR><A href='?src=\ref[];mach_close=computer'>Close</A></TT></BODY></HTML>", user)
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
@@ -136,9 +147,8 @@
 					src.closedoor()
 			if (href_list["fc"])
 				if(src.allowed(usr))
-					for (var/obj/machinery/flasher/F in world)
-						if (F.id == src.id)
-							F.flash()
+					for (var/obj/machinery/flasher/F in targetflashers)
+						F.flash()
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		src.update_icon()
@@ -151,10 +161,6 @@
 // if BROKEN, display blue screen of death icon AI uses
 // if timing=true, run update display function
 /obj/machinery/door_timer/proc/update_icon()
-	var/disp1
-	var/disp2
-	disp1 = uppertext(id)
-	disp2 = "[add_zero(num2text((time / 60) % 60),2)]~[add_zero(num2text(time % 60), 2)]"
 	if(stat & (NOPOWER))
 		icon_state = "frame"
 		return
@@ -164,6 +170,8 @@
 			return
 		else
 			if(src.timing)
+				var/disp1 = uppertext(id)
+				var/disp2 = "[add_zero(num2text((time / 60) % 60),2)]~[add_zero(num2text(time % 60), 2)]"
 				spawn( 5 )
 					update_display(disp1, disp2)
 

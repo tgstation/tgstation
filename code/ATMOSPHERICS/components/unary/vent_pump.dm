@@ -29,19 +29,21 @@
 	var/welded = 0 // Added for aliens -- TLE
 
 	update_icon()
-		if(on&&node)
+		if(on && !(stat & (NOPOWER|BROKEN)))
 			if(pump_direction)
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
 			else
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
 		else
 			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-			on = 0
 
 		return
-
 	process()
 		..()
+		if(stat & (NOPOWER|BROKEN))
+			return
+		if (!node)
+			on = 0
 		broadcast_status()
 
 		if(!on)
@@ -66,6 +68,7 @@
 
 					var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
+					use_power(10, ENVIRON)
 					loc.assume_air(removed)
 
 					if(network)
@@ -84,7 +87,9 @@
 					var/transfer_moles = pressure_delta*air_contents.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
 
 					var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
-
+					if (isnull(removed)) //in space
+						return
+					use_power(10, ENVIRON)
 					air_contents.merge(removed)
 
 					if(network)
@@ -204,14 +209,13 @@
 				user << "\blue You need more welding fuel to complete this task."
 				return
 			W:use_fuel(1)
+			playsound(src.loc, 'Welder2.ogg', 50, 1)
 
 			if(!welded)
-				user.visible_message("[user] welds the vent shut.", "You weld the vent shut.")
-				playsound(src.loc, 'Welder2.ogg', 50, 1)
+				user.visible_message("[user] welds the vent shut.", "You weld the vent shut.", "You hear welding.")
 				welded = 1
 			else
-				user.visible_message("[user] unwelds the vent.", "You unweld the vent.")
-				playsound(src.loc, 'Welder2.ogg', 50, 1)
+				user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
 				welded = 0
 
 	examine()
@@ -219,3 +223,10 @@
 		..()
 		if(welded)
 			usr << "It seems welded shut."
+
+	power_change()
+		if(powered(ENVIRON))
+			stat &= ~NOPOWER
+		else
+			stat |= NOPOWER
+		update_icon()

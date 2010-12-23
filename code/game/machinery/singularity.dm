@@ -20,30 +20,31 @@ However people seem to like it for some reason.
 	..()
 
 /obj/machinery/the_singularitygen/process()
-	var/checkpointC = 0
-	for (var/obj/X in orange(3,src))
-		if(istype(X, /obj/machinery/containment_field) || istype(X, /obj/machinery/shieldwall))
-			checkpointC ++
-	if(checkpointC >= 20)
-		var/turf/T = src.loc
+	var/turf/T = get_turf(src)
+	if (singularity_is_surrounded(T))
 		new /obj/machinery/the_singularity/(T, 100)
 		del(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
-		if(!anchored)
-			anchored = 1
-			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user << "You secure the [src.name] to the floor."
-			src.anchored = 1
-			return
-		else if(anchored)
-			anchored = 0
-			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user << "You unsecure the [src.name]."
-			src.anchored = 0
-			return
+		anchored = !anchored 
+		playsound(src.loc, 'Ratchet.ogg', 75, 1)
+		if(anchored)
+			user.visible_message("[user.name] secure [src.name] to the floor.", \
+				"You secure the [src.name] to the floor.", \
+				"You hear ratchet")
+		else
+			user.visible_message("[user.name] unsecure [src.name] from the floor.", \
+				"You unsecure the [src.name] to the floor.", \
+				"You hear ratchet")
+	return ..()
 
+/proc/singularity_is_surrounded(turf/T)
+	var/checkpointC = 0
+	for (var/obj/X in orange(3,T)) //TODO: do we need requirement to singularity be actually _surrounded_ by field?
+		if(istype(X, /obj/machinery/containment_field) || istype(X, /obj/machinery/shieldwall))
+			checkpointC ++
+	return checkpointC >= 20
 
 /////SINGULARITY
 /obj/machinery/the_singularity/
@@ -73,6 +74,20 @@ However people seem to like it for some reason.
 		src.Dtime = Ti
 	..()
 
+/obj/machinery/the_singularity/attack_hand(mob/user as mob)
+	return 1
+
+/obj/machinery/the_singularity/blob_act(severity)
+	return
+
+/obj/machinery/the_singularity/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			del(src) //TODO: some animation
+			return
+		if(2.0 to 3.0) //no way
+			return 
+	return
 
 /obj/machinery/the_singularity/process()
 	eat()
@@ -93,72 +108,71 @@ However people seem to like it for some reason.
 
 	if(prob(15))//Chance for it to run a special event
 		event()
+	var/turf/T = get_turf(src)
+	var/is_surrounded = singularity_is_surrounded(T)
+	if ( is_surrounded && active )
+		src.active = 0
+		src.dieot = 0
+		spawn(50)
+			if (!active)
+				grav_pull = 6
+				icon_state = "Singularity"
+	else if  ( is_surrounded==0 && active==0 )
+		src.active = 1
+		src.dieot = 1
+		grav_pull = 8
 	if(active == 1)
 		move()
 		spawn(5)
 			move()
-	else
-		var/checkpointC = 0
-		for (var/obj/X in orange(3,src))
-			if(istype(X, /obj/machinery/containment_field) || istype(X, /obj/machinery/shieldwall))
-				checkpointC ++
-		if(checkpointC < 18)
-			src.active = 1
-			src.dieot = 1
-			grav_pull = 8
+	
 
+
+/obj/machinery/the_singularity
+	var/global/list/uneatable = list(\
+		/obj/machinery/the_singularity, \
+		/obj/machinery/containment_field, \
+		/obj/machinery/shieldwall, \
+		/turf/space, \
+		/obj/effects, \
+		/obj/beam, /* not sure*/ \
+		/obj/overlay 
+	)
+
+/obj/machinery/the_singularity/proc/is_eatable(atom/X)
+	for (var/Type in uneatable)
+		if (istype(X, Type))
+			return 0
+	return 1
 
 /obj/machinery/the_singularity/proc/eat()
 	for (var/atom/X in orange(grav_pull,src))
-		if(istype(X,/obj/machinery/the_singularity))
+		if(isarea(X))
 			continue
-		if(istype(X,/obj/machinery/containment_field))
+		if (!is_eatable(X))
 			continue
+				
 		if(istype(X,/obj/machinery/field_generator))
 			var/obj/machinery/field_generator/F = X
 			if(F.active)
 				continue
-		if(istype(X,/turf/space))
-			continue
-		if(istype(X,/obj/machinery/shieldwall))
-			continue
 		if(istype(X,/obj/machinery/shieldwallgen))
 			var/obj/machinery/shieldwallgen/S = X
 			if(S.active)
 				continue
-		if(!active)
-			if(isturf(X,/turf/simulated/floor/engine))
-				continue
-		if(!isarea(X))
-			switch(get_dist(src,X))
-				if(2)
-					src.Bumped(X)
-				if(1)
-					src.Bumped(X)
-				if(0)
-					src.Bumped(X)
-				else if(!isturf(X))
-					if(!X:anchored)
-						step_towards(X,src)
+		switch(get_dist(src,X))
+			if(0 to 2)
+				src.Bumped(X)
+			else if(!isturf(X))
+				if(!X:anchored)
+					step_towards(X,src)
 
 /obj/machinery/the_singularity/proc/move()
-	var/direction_go = pick(1,2,4,8)
-	if(locate(/obj/machinery/containment_field) || locate(/obj/machinery/shieldwall) in get_step(src,NORTH))
-		if(direction_go == 1)
-			icon_state = "Singularity"
-			return
-	if(locate(/obj/machinery/containment_field) || locate(/obj/machinery/shieldwall) in get_step(src,SOUTH))
-		if(direction_go == 2)
-			icon_state = "Singularity"
-			return
-	if(locate(/obj/machinery/containment_field) || locate(/obj/machinery/shieldwall) in get_step(src,EAST))
-		if(direction_go == 4)
-			icon_state = "Singularity"
-			return
-	if(locate(/obj/machinery/containment_field) || locate(/obj/machinery/shieldwall) in get_step(src,WEST))
-		if(direction_go == 8)
-			icon_state = "Singularity"
-			return
+	var/direction_go = pick(cardinal)
+	if(locate(/obj/machinery/containment_field) in get_step(src,direction_go) || \
+			locate(/obj/machinery/shieldwall) in get_step(src,direction_go))
+		icon_state = "Singularity"
+		return
 	if(selfmove)
 		spawn(0)
 			icon_state = "Singularity2"
@@ -167,41 +181,34 @@ However people seem to like it for some reason.
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	var/gain = 0
-
-	if(istype(A,/obj/machinery/the_singularity))
-		return
-
-	if(istype(A,/obj/machinery/the_singularity))//Dont eat other sings
+	if (!is_eatable(A))
 		return
 	if (istype(A,/mob/living))//if its a mob
 		gain = 20
 		if(istype(A,/mob/living/carbon/human))
 			if(A:mind)
-				if((A:mind:assigned_role == "Station Engineer") || (A:mind:assigned_role == "Cief Engineer") )
+				if((A:mind:assigned_role == "Station Engineer") || (A:mind:assigned_role == "Chief Engineer") )
 					gain = 100
 		A:gib()
 
 	else if(istype(A,/obj/))
-		if(istype(A,/obj/machinery/containment_field))
-			return
-		if(istype(A,/obj/machinery/shieldwall))
-			return
 		A:ex_act(1.0)
 		if(A) del(A)
 		gain = 2
 
 	else if(isturf(A))
-		if(isturf(/turf/space))
+		if(istype(A, /turf/space))
+			world << "DEBUG: the_singularity tryes to eat space!!!11"
 			return
-		if(!active)
-			if(isturf(A,/turf/simulated/floor/engine))
-				return
+		/*if(!active)
+			if(isturf(A,/turf/simulated/floor/engine)) //here was a bug. But now it's a feature. -rasta0
+				return*/
 
-		if(!istype(A,/turf/simulated/floor)&& (!isturf(/turf/space)))
-			A:ReplaceWithFloor()
-		if(istype(A,/turf/simulated/floor) && (!isturf(/turf/space)))
+		if(istype(A,/turf/simulated/floor))
 			A:ReplaceWithSpace()
 			gain = 2
+		else
+			A:ReplaceWithFloor()
 	src.energy += gain
 
 /////////////////////////////////////////////Controls which "event" is called
@@ -210,30 +217,32 @@ However people seem to like it for some reason.
 	switch(numb)
 		if(1)//EMP
 			Zzzzap()
-			return
 		if(2)//Eats the turfs around it
 			if(prob(60))
 				BHolerip()
 			else
 				event()
-			return
 		if(3)//tox damage all carbon mobs in area
 			Toxmob()
-			return
 		if(4)//Stun mobs who lack optic scanners
 			Mezzer()
-			return
 		else
+			//do nothing
 			return
 
 
 /obj/machinery/the_singularity/proc/Toxmob()
-	for(var/mob/living/carbon/M in orange(7, src))
+	for(var/mob/living/carbon/M in view(7, src.loc))
 		if(istype(M,/mob/living/carbon/human))
 			if(M:wear_suit)
 				return
 		M.toxloss += 3
 		M.radiation += 10
+		if (src.energy>150)
+			M.toxloss += ((src.energy-150)/50)*3
+			M.radiation += ((src.energy-150)/50)*10
+		if (src.energy>300)
+			M.fireloss += ((src.energy-300)/50)*3
 		M.updatehealth()
 		M << "\red You feel odd."
 
@@ -241,7 +250,7 @@ However people seem to like it for some reason.
 	for(var/mob/living/carbon/M in oviewers(8, src))
 		if(istype(M,/mob/living/carbon/human))
 			if(istype(M:glasses,/obj/item/clothing/glasses/meson))
-				M << "\red You look directly into The [src.name], good thing you had your protective eyewear on!"
+				M << "\blue You look directly into The [src.name], good thing you had your protective eyewear on!"
 				return
 		M << "\red You look directly into The [src.name] and feel weak."
 		if (M:stunned < 3)
@@ -249,28 +258,48 @@ However people seem to like it for some reason.
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] stares blankly at The []!</B>", M, src), 1)
 
-/obj/machinery/the_singularity/proc/BHolerip()
-	for (var/atom/X in orange(6,src))
-		if(isturf(X))
-			if(!istype(X,/turf/space))
-				switch(get_dist(src,X))
-					if(4 to 5)
-						if(prob(30))
-							if(istype(X,/turf/simulated/floor) && !istype(X,/turf/simulated/floor/plating))
-								if(!X:broken)
-									if(prob(80))
-										new/obj/item/weapon/tile (X)
-										X:break_tile_to_plating()
-									else
-										X:break_tile()
-							else if(istype(X,/turf/simulated/wall))
-								new /obj/structure/girder/reinforced( X )
-								new /obj/item/weapon/sheet/r_metal( X )
-								X:ReplaceWithFloor()
-							else
-								X:ReplaceWithFloor()
-	return
+/obj/machinery/the_singularity
+	var/global/list/turf/simulated/unstrippable = list(\
+		/turf/simulated/floor/engine, \
+		/turf/simulated/floor/grid, \
+		/turf/simulated/shuttle, \
+		/turf/simulated/wall/asteroid
+	)
 
+//looks like I need new function istypefromlist
+/obj/machinery/the_singularity/proc/is_strippable(turf/simulated/X) 
+	for(var/Type in unstrippable)
+		if (istype(X,Type))
+			return 0
+	return 1
+
+/obj/machinery/the_singularity/proc/BHolerip()
+	for (var/turf/simulated/X in orange(5,src))
+		if (!is_strippable(X))
+			continue
+		if (!prob(30))
+			continue
+		var/dist = get_dist(src,X)
+		if ( (dist>=3 && dist<=5) )
+			if (istype(X,/turf/simulated/floor) && !istype(X,/turf/simulated/floor/plating))
+				if(!X:broken)
+					if(prob(80))
+						new/obj/item/weapon/tile (X)
+						X:break_tile_to_plating()
+					else
+						X:break_tile()
+			else if(istype(X,/turf/simulated/wall))
+				if (istype(X,/turf/simulated/wall/r_wall))
+					new /obj/structure/girder/reinforced( X )
+					new /obj/item/weapon/sheet/r_metal( X )
+				else
+					new /obj/structure/girder( X )
+					new /obj/item/weapon/sheet/metal( X )
+				X:ReplaceWithFloor()
+			else
+				X:ReplaceWithFloor()
+
+/* NOTE: someone said he has plan to redo EMP so I dont touch anything except excluding pipes - rastaf0 */
 /obj/machinery/the_singularity/proc/Zzzzap()///Pulled from wizard spells might edit later
 	var/turf/myturf = get_turf(src)
 
@@ -282,10 +311,9 @@ However people seem to like it for some reason.
 	spawn(20)
 		del(pulse)
 
-	for(var/mob/M in viewers(world.view-1, myturf))
+	for(var/mob/living/M in viewers(world.view-1, myturf))
 
-		if(!istype(M, /mob/living)) continue
-		if(M == usr) continue
+		//if(M == usr) continue
 
 		if (istype(M, /mob/living/silicon))
 			M.fireloss += 25
@@ -361,6 +389,18 @@ However people seem to like it for some reason.
 
 
 	for(var/obj/machinery/A in range(world.view-1, myturf))
+		var/unpowered = 0
+		for (var/Type in list(\
+			/obj/machinery/atmospherics/pipe, \
+			/obj/machinery/the_singularity, \
+			/obj/machinery/containment_field, \
+			/obj/machinery/shieldwall, \
+			/obj/machinery/field_generator )) //field generators arent connected to apc
+			if (istype(A,Type))
+				unpowered = 1
+				break
+		if (unpowered)
+			continue
 		A.use_power(7500)
 
 		var/obj/overlay/pulse2 = new/obj/overlay ( A.loc )
@@ -389,9 +429,7 @@ However people seem to like it for some reason.
 
 		if(istype(A, /obj/machinery/power/apc))
 			if(A:cell)
-				A:cell:charge -= 1000
-				if (A:cell:charge < 0)
-					A:cell:charge = 0
+				A:cell.use(1000)
 			A:lighting = 0
 			A:equipment = 0
 			A:environ = 0
@@ -407,8 +445,6 @@ However people seem to like it for some reason.
 		if(istype(A, /obj/machinery/clonepod))
 			A:malfunction()
 
-
-
 ////////CONTAINMENT FIELD
 
 /obj/machinery/containment_field
@@ -419,18 +455,15 @@ However people seem to like it for some reason.
 	anchored = 1
 	density = 0
 	unacidable = 1
-	var/active = 1
-	var/power = 10
-	var/delay = 5
-	var/last_active
-	var/mob/U
+	//var/active = 1
+	//var/power = 10
+	//var/delay = 5
+	//var/last_active
+	//var/mob/U
 	var/obj/machinery/field_generator/gen_primary
 	var/obj/machinery/field_generator/gen_secondary
 
-
-
 //////////////Contaiment Field START
-
 
 /obj/machinery/containment_field/New(var/obj/machinery/field_generator/A, var/obj/machinery/field_generator/B)
 	..()
@@ -440,18 +473,15 @@ However people seem to like it for some reason.
 		src.sd_SetLuminosity(5)
 
 /obj/machinery/containment_field/attack_hand(mob/user as mob)
+	return 1
+
+/obj/machinery/containment_field/blob_act()
 	return
 
+/obj/machinery/containment_field/ex_act(severity)
+	return
 
 /obj/machinery/containment_field/process()
-	if(isnull(gen_primary)||isnull(gen_secondary))
-		del(src)
-		return
-
-	if(!(gen_primary.active)||!(gen_secondary.active))
-		del(src)
-		return
-
 	if(prob(50))
 		gen_primary.power -= 1
 	else
@@ -469,33 +499,32 @@ However people seem to like it for some reason.
 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 	s.set_up(5, 1, user.loc)
 	s.start()
-	src.power = max(gen_primary.power,gen_secondary.power)
+	var/power = max(gen_primary.power,gen_secondary.power)
 	var/prot = 1
 	var/shock_damage = 0
-	if(src.power > 200)
+	if(power > 200)
 		shock_damage = min(rand(40,100),rand(40,100))*prot
-	else if(src.power > 120)
+	else if(power > 120)
 		shock_damage = min(rand(30,90),rand(30,90))*prot
-	else if(src.power > 80)
+	else if(power > 80)
 		shock_damage = min(rand(20,40),rand(20,40))*prot
-	else if(src.power > 60)
+	else if(power > 60)
 		shock_damage = min(rand(20,30),rand(20,30))*prot
 	else
 		shock_damage = min(rand(10,20),rand(10,20))*prot
 
 	user.burn_skin(shock_damage)
-	user.fireloss += shock_damage
+	//user.fireloss += shock_damage
 	user.updatehealth()
-	user << "\red <B>You feel a powerful shock course through your body sending you flying!</B>"
+	user.visible_message("\red [user.name] was shocked by the [src.name]!", \
+		"\red <B>You feel a powerful shock course through your body sending you flying!</B>", \
+		"\red You hear a heavy electrical crack")
 	//user.unlock_medal("High Voltage", 1)
 
 	if(user.stunned < shock_damage)	user.stunned = shock_damage
 	if(user.weakened < 10*prot)	user.weakened = 10*prot
 	var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
 	user.throw_at(target, 200, 4)
-	for(var/mob/M in viewers(src))
-		if(M == user)	continue
-		M.show_message("\red [user.name] was shocked by the [src.name]!", 3, "\red You hear a heavy electrical crack", 2)
 	src.gen_primary.power -= 3
 	src.gen_secondary.power -= 3
 	return
@@ -505,8 +534,6 @@ However people seem to like it for some reason.
 	if(istype(AM,/mob/living/carbon) && prob(50))
 		shock(AM)
 		return
-
-
 
 /////EMITTER
 /obj/machinery/emitter
@@ -518,9 +545,9 @@ However people seem to like it for some reason.
 	density = 1
 	req_access = list(access_engine)
 	var/active = 0
-	var/power = 20
+//	var/power = 20
 	var/fire_delay = 100
-	var/HP = 20
+//	var/HP = 20
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
@@ -532,42 +559,50 @@ However people seem to like it for some reason.
 	..()
 	return
 
+/obj/machinery/emitter/proc/update_icon()
+	if (active && !(stat & (NOPOWER|BROKEN)))
+		icon_state = "Emitter +a"
+	else
+		icon_state = "Emitter"
+
 /obj/machinery/emitter/attack_hand(mob/user as mob)
+	if (..())
+		return
 	if(state == 3)
 		if(!src.locked)
+			src.add_fingerprint(user)
 			if(src.active==1)
 				src.active = 0
-				icon_state = "Emitter"
 				user << "You turn off the emitter."
 			else
 				src.active = 1
-				icon_state = "Emitter +a"
 				user << "You turn on the emitter."
 				src.shot_number = 0
 				src.fire_delay = 100
+			update_icon()
 		else
 			user << "The controls are locked!"
 	else
 		user << "The emitter needs to be firmly secured to the floor first."
-	src.add_fingerprint(user)
-	..()
+		return 1
 
 
 /obj/machinery/emitter/attack_ai(mob/user as mob)
+	if (..())
+		return
 	if(state == 3)
+		src.add_fingerprint(user)
 		if(src.active==1)
 			src.active = 0
-			icon_state = "Emitter"
 			user << "You turn off the emitter."
 		else
 			src.active = 1
-			icon_state = "Emitter +a"
 			user << "You turn on the emitter."
 			src.shot_number = 0
 			src.fire_delay = 100
+		update_icon()
 	else
 		user << "The emitter needs to be firmly secured to the floor first."
-	src.add_fingerprint(user)
 
 
 /obj/machinery/emitter/process()
@@ -588,6 +623,7 @@ However people seem to like it for some reason.
 			src.fire_delay = rand(20,100)
 			src.shot_number = 0
 
+		use_power(1000)
 		var/obj/beam/a_laser/A = new /obj/beam/a_laser( src.loc )
 		A.icon_state = "u_laser"
 		playsound(src.loc, 'Laser.ogg', 75, 1)
@@ -625,82 +661,77 @@ However people seem to like it for some reason.
 /obj/machinery/emitter/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
-			user << "Turn off the emitter first."
-			return
+			user << "\red Turn off the emitter first."
+			return 1
 
 		else if(state == 0)
 			state = 1
 			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user << "You secure the external reinforcing bolts to the floor."
+			user.visible_message("[user.name] secure [src.name] to the floor.", \
+				"You secure the external reinforcing bolts to the floor.", \
+				"You hear ratchet")
 			src.anchored = 1
-			return
 
 		else if(state == 1)
 			state = 0
 			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user << "You undo the external reinforcing bolts."
+			user.visible_message("[user.name] unsecure [src.name] to the floor.", \
+				"You undo the external reinforcing bolts to the floor.", \
+				"You hear ratchet")
 			src.anchored = 0
-			return
-
-	if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
-
-		var/turf/T = user.loc
+		else
+			user << "\red [src] is welded to the floor!"
+			return 1
+			
+	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+		if (state == 0)
+			user << "\red The emitter needs to be wrenched to the floor first."
+			return 1
 
 		if (W:get_fuel() < 1)
 			user << "\blue You need more welding fuel to complete this task."
-			return
+			return 1
 		W:use_fuel(1)
+		W:eyecheck(user)
+		playsound(src.loc, 'Welder2.ogg', 50, 1)
 
 		if(state == 1)
-			W:eyecheck(user)
-			user << "You start to weld the emitter to the floor."
-			playsound(src.loc, 'Welder2.ogg', 50, 1)
-			sleep(20)
-
-			if ((user.loc == T && user.equipped() == W))
-				state = 3
-
-				user << "You weld the emitter to the floor."
-			else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
+			user.visible_message("[user.name] start to weld [src.name] to the floor.", \
+				"You start to weld the emitter to the floor.", \
+				"You hear welding")
+			if (do_after(user,20))
 				state = 3
 				user << "You weld the emitter to the floor."
-			return
+			else
+				return 1
 
-		if(state == 3)
-			user << "You start to cut the emitter free from the floor."
-			playsound(src.loc, 'Welder2.ogg', 50, 1)
-			sleep(20)
-			if ((user.loc == T && user.equipped() == W))
+		else if(state == 3)
+			user.visible_message("[user.name] start to cut [src.name] to the floor.", \
+				"You start to cut the emitter free from the floor.", \
+				"You hear welding")
+			if (do_after(user,20))
 				state = 1
-/*				if(src.link) //Time to clear our link.
-					src.link.master = null
-					src.link = null*/
 				user << "You cut the emitter free from the floor."
-			else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
-				state = 1
-/*				if(src.link)
-					src.link.master = null
-					src.link = null*/
-				user << "You cut the emitter free from the floor."
-			return
+			else
+				return 1
 
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 		else
 			user << "\red Access denied."
-
+			return 1
 	else
-		src.add_fingerprint(user)
-		user << "\red You hit the [src.name] with your [W.name]!"
-		for(var/mob/M in viewers(src))
-			if(M == user)	continue
-			M.show_message("\red The [src.name] has been hit with the [W.name] by [user.name]!")
+		user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
+			"\red You hit the [src.name] with your [W.name]!", \
+			"You hear bang")
+	src.add_fingerprint(user)
 
 
-
-
+/obj/machinery/emitter/power_change()
+	..()
+	update_icon()
 //////////////ARRAY
 
 
@@ -711,6 +742,7 @@ However people seem to like it for some reason.
 	icon_state = "ca"
 	anchored = 1
 	density = 1
+	req_access = list(access_engine)
 	directwired = 1
 	var/active = 0
 	var/obj/item/weapon/tank/plasma/P = null
@@ -726,109 +758,131 @@ However people seem to like it for some reason.
 
 
 /obj/machinery/power/collector_array/proc/updateicon()
-
+	overlays = null
+	if(P)
+		overlays += image('singularity.dmi', "ptank")
 	if(stat & (NOPOWER|BROKEN))
-		overlays = null
-	if(P)
-		overlays += image('singularity.dmi', "ptank")
-	else
-		overlays = null
-	overlays += image('singularity.dmi', "on")
-	if(P)
-		overlays += image('singularity.dmi', "ptank")
+		return
+	if(active)
+		overlays += image('singularity.dmi', "on")
+
+/obj/machinery/power/collector_array/proc/updateicon_on()
+	icon_state = "ca_on"
+	flick("ca_active", src)
+	updateicon()
+
+/obj/machinery/power/collector_array/proc/updateicon_off()
+	updateicon()
+	icon_state = "ca"
+	flick("ca_deactive", src)
 
 /obj/machinery/power/collector_array/power_change()
-	updateicon()
 	..()
-
+	updateicon()
 
 /obj/machinery/power/collector_array/process()
 
 	if(P)
 		if(P.air_contents.toxins <= 0)
 			src.active = 0
-			icon_state = "ca_deactive"
-			updateicon()
+			updateicon_off()
 	else if(src.active == 1)
 		src.active = 0
-		icon_state = "ca_deactive"
-		updateicon()
+		updateicon_off()
 	..()
 
 /obj/machinery/power/collector_array/attack_hand(mob/user as mob)
-	if(src.anchored == 1)
-		if(src.active==1)
-			src.active = 0
-			icon_state = "ca_deactive"
-			CU.updatecons()
-			user << "You turn off the collector array."
-			return
-
-		if(src.active==0)
-			src.active = 1
-			icon_state = "ca_active"
-			CU.updatecons()
-			user << "You turn on the collector array."
-			return
-	else
-		src.add_fingerprint(user)
-		user << "\red The collector needs to be secured to the floor first."
+	if (..())
 		return
+	if(src.anchored != 1)
+		user << "\red The [src] needs to be secured to the floor first."
+		return 1
+	if (!src.allowed(user))
+		user << "\red Access denied."
+		return 1
+	if (!P)
+		user << "\red The [src] cannot be turned on without plasma."
+		return 1
+	if (!CU)
+		user << "\red The [src] is not connected with The Radiation Collector Control."
+		return 1
+	src.active = !src.active
+	if(src.active)
+		updateicon_on()
+		user.visible_message("[user.name] turn on the collector array.", \
+			"You turn on the collector array.")
+	else
+		updateicon_off()
+		user.visible_message("[user.name] turn off the collector array.", \
+			"You turn off the collector array.")
+	CU.updatecons()
 
 /obj/machinery/power/collector_array/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/tank/plasma))
 		if(src.anchored == 1)
 			if(src.P)
 				user << "\red There appears to already be a plasma tank loaded!"
-				return
+				return 1
 			src.P = W
 			W.loc = src
 			if (user.client)
 				user.client.screen -= W
 			user.u_equip(W)
-			CU.updatecons()
 			updateicon()
-			return
+			if (CU)
+				CU.updatecons()
 		else
 			user << "The collector needs to be secured to the floor first."
-			return
+			return 1
 
-	if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/weapon/crowbar))
 		if(!P)
-			return
+			return 1
 		var/obj/item/weapon/tank/plasma/Z = src.P
 		Z.loc = get_turf(src)
 		Z.layer = initial(Z.layer)
 		src.P = null
-		CU.updatecons()
-		updateicon()
-		return
+		if (src.active)
+			src.active = 0
+			updateicon_off()
+		else
+			updateicon()
+		if (CU)
+			CU.updatecons()
 
-	if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/weapon/wrench))
 		if(active)
 			user << "\red Turn off the collector first."
-			return
+			return 1
 
-		else if(src.anchored == 0)
+		else
 			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user << "You secure the collector reinforcing bolts to the floor."
-			src.anchored = 1
-			return
-
-		else if(src.anchored == 1)
-			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user << "You undo the external reinforcing bolts."
-			src.anchored = 0
-			return
+			src.anchored = !src.anchored
+			if(src.anchored == 1)
+				user.visible_message("[user.name] secure [src.name] reinforcing bolts to the floor.", \
+					"You secure the collector reinforcing bolts to the floor.", \
+					"You hear ratchet")
+			else
+				user.visible_message("[user.name] unsecure [src.name] reinforcing bolts to the floor.", \
+					"You undo the external reinforcing bolts.", \
+					"You hear ratchet")
+				if (CU)
+					CU.updatecons()
 
 	else
-		src.add_fingerprint(user)
-		user << "\red You hit the [src.name] with your [W.name]!"
-		for(var/mob/M in viewers(src))
-			if(M == user)	continue
-			M.show_message("\red The [src.name] has been hit with the [W.name] by [user.name]!")
+		user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
+			"\red You hit the [src.name] with your [W.name]!", \
+			"You hear bang")
+	src.add_fingerprint(user)
 
-
+/obj/machinery/power/collector_array/ex_act(severity)
+	switch(severity)
+		if(2.0 to 3.0)
+			var/obj/item/weapon/tank/plasma/Z = src.P
+			Z.loc = get_turf(src)
+			Z.layer = initial(Z.layer)
+			src.P = null
+	return ..()
 ////////////CONTROL UNIT
 
 /obj/machinery/power/collector_control
@@ -838,184 +892,162 @@ However people seem to like it for some reason.
 	icon_state = "cu"
 	anchored = 1
 	density = 1
+	req_access = list(access_engine)
 	directwired = 1
 	var/active = 0
 	var/lastpower = 0
-	var/obj/item/weapon/tank/plasma/P1 = null
-	var/obj/item/weapon/tank/plasma/P2 = null
-	var/obj/item/weapon/tank/plasma/P3 = null
-	var/obj/item/weapon/tank/plasma/P4 = null
-	var/obj/machinery/power/collector_array/CA1 = null
-	var/obj/machinery/power/collector_array/CA2 = null
-	var/obj/machinery/power/collector_array/CA3 = null
-	var/obj/machinery/power/collector_array/CA4 = null
-	var/obj/machinery/power/collector_array/CAN = null
-	var/obj/machinery/power/collector_array/CAS = null
-	var/obj/machinery/power/collector_array/CAE = null
-	var/obj/machinery/power/collector_array/CAW = null
-	var/obj/machinery/the_singularity/S1 = null
+	var/obj/machinery/power/collector_array/CA[4]
+	var/list/obj/machinery/the_singularity/S
 
 ////////////CONTROL UNIT START
 
 /obj/machinery/power/collector_control/New()
 	..()
 	spawn(10)
-		updatecons()
+		while(1)
+			updatecons()
+			sleep(600)
+
+/obj/machinery/power/collector_control/proc/add_ca(var/obj/machinery/power/collector_array/newCA)
+	if (newCA in CA)
+		return 1
+	for (var/i = 1, i<= CA.len, i++)
+		var/obj/machinery/power/collector_array/nextCA = CA[i]
+		if (isnull(nextCA))
+			CA[i] = newCA
+			return 1
+	//CA += newCA
+	return 0
 
 /obj/machinery/power/collector_control/proc/updatecons()
-
-	CAN = locate(/obj/machinery/power/collector_array) in get_step(src,NORTH)
-	CAS = locate(/obj/machinery/power/collector_array) in get_step(src,SOUTH)
-	CAE = locate(/obj/machinery/power/collector_array) in get_step(src,EAST)
-	CAW = locate(/obj/machinery/power/collector_array) in get_step(src,WEST)
-	for(var/obj/machinery/the_singularity/S in orange(12,src))
-		S1 = S
-
-	if(!isnull(CAN))
-		CA1 = CAN
-		CAN.CU = src
-		if(CA1.P)
-			P1 = CA1.P
-	else
-		CAN = null
-	if(!isnull(CAS))
-		CA3 = CAS
-		CAS.CU = src
-		if(CA3.P)
-			P3 = CA3.P
-	else
-		CAS = null
-	if(!isnull(CAW))
-		CA4 = CAW
-		CAW.CU = src
-		if(CA4.P)
-			P4 = CA4.P
-	else
-		CAW = null
-	if(!isnull(CAE))
-		CA2 = CAE
-		CAE.CU = src
-		if(CA2.P)
-			P2 = CA2.P
-	else
-		CAE = null
-	if(isnull(S1))
-		S1 = null
-
+	S = list()
+	for(var/obj/machinery/the_singularity/myS in orange(12,src))
+		S += myS
+		
+	for (var/ca_dir in cardinal)
+		var/obj/machinery/power/collector_array/newCA = locate() in get_step(src,ca_dir)
+		if (isnull(newCA))
+			continue
+		if (!newCA.anchored)
+			var/n = CA.Find(newCA)
+			if (n)
+				CA[n] = null
+				newCA.CU = null
+			continue
+		if (add_ca(newCA))
+			newCA.CU = src
 	updateicon()
-	spawn(600)
-		updatecons()
-
+	//is not recursive now, because can be called several times. See New(). - rastaf0
 
 /obj/machinery/power/collector_control/proc/updateicon()
-
+	overlays = null
 	if(stat & (NOPOWER|BROKEN))
-		overlays = null
-	else
-		overlays = null
+		return
 	if(src.active == 0)
 		return
 	overlays += image('singularity.dmi', "cu on")
-	if((P1)&&(CA1.active != 0))
-		overlays += image('singularity.dmi', "cu 1 on")
-	if((P2)&&(CA2.active != 0))
-		overlays += image('singularity.dmi', "cu 2 on")
-	if((P3)&&(CA3.active != 0))
-		overlays += image('singularity.dmi', "cu 3 on")
-	if((!P1)||(!P2)||(!P3))
+	var/err = 0
+	for (var/i = 1, ((i<= CA.len) && (i<=4)), i++)
+		var/obj/machinery/power/collector_array/myCA = CA[i]
+		if(myCA)
+			if (myCA.P)
+				if(myCA.active)
+					overlays += image('singularity.dmi', "cu [i] on")
+			else
+				err = 1
+	if(err)
 		overlays += image('singularity.dmi', "cu n error")
-	if(S1)
-		overlays += image('singularity.dmi', "cu sing")
-		if(!S1.active)
+	for (var/obj/machinery/the_singularity/myS in S)
+		if(myS)
+			overlays += image('singularity.dmi', "cu sing")
+			break
+	for (var/obj/machinery/the_singularity/myS in S)
+		if(myS && !myS.active)
 			overlays += image('singularity.dmi', "cu conterr")
+			break
 
 
 /obj/machinery/power/collector_control/power_change()
-	updateicon()
-	..()
+	..() //this set NOPOWER
+	if (stat & (NOPOWER|BROKEN))
+		lastpower = 0
+	updateicon() //this checks NOPOWER
 
 
 /obj/machinery/power/collector_control/process()
+	if(stat & (NOPOWER|BROKEN))
+		return
 	if(src.active == 1)
 		var/power_a = 0
 		var/power_s = 0
 		var/power_p = 0
 
-		if(!isnull(S1))
-			power_s += S1.energy
-		if(!isnull(P1))
-			if(CA1.active != 0)
-				power_p += P1.air_contents.toxins
-				P1.air_contents.toxins -= 0.001
-		if(!isnull(P2))
-			if(CA2.active != 0)
-				power_p += P2.air_contents.toxins
-				P2.air_contents.toxins -= 0.001
-		if(!isnull(P3))
-			if(CA3.active != 0)
-				power_p += P3.air_contents.toxins
-				P3.air_contents.toxins -= 0.001
-		if(!isnull(P4))
-			if(CA4.active != 0)
-				power_p += P4.air_contents.toxins
-				P4.air_contents.toxins -= 0.001
+		for (var/obj/machinery/the_singularity/myS in S)
+			if(!isnull(myS))
+				power_s += myS.energy
+
+		for (var/i = 1, i<= CA.len, i++)
+			var/obj/machinery/power/collector_array/myCA = CA[i]
+			if (!myCA)
+				continue
+			var/obj/item/weapon/tank/plasma/myP = myCA.P
+			if(myP)
+				if (myCA.active)
+					myCA.use_power(250)
+					power_p += myP.air_contents.toxins
+					myP.air_contents.toxins -= 0.001
+
 		power_a = power_p*power_s*50
 		src.lastpower = power_a
 		add_avail(power_a)
+		use_power(250)
 	..()
 
 
 /obj/machinery/power/collector_control/attack_hand(mob/user as mob)
+	if (..())
+		return
 	if(src.anchored==1)
-		if(src.active==1)
-			src.active = 0
+		if (!src.allowed(user))
+			user << "\red Access denied."
+			return 1
+		src.active = !src.active
+		if(!src.active)
 			user << "You turn off the collector control."
 			src.lastpower = 0
 			updateicon()
-			return
-
-		if(src.active==0)
-			src.active = 1
+		if(src.active)
 			user << "You turn on the collector control."
 			updatecons()
-			return
 	else
-		src.add_fingerprint(user)
 		user << "\red The collector control needs to be secured to the floor first."
-		return
-
+		return 1
 
 /obj/machinery/power/collector_control/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
 		user << "\blue The analyzer detects that [lastpower]W are being produced."
-
-	if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/weapon/wrench))
 		if(active)
 			user << "\red Turn off the collector control first."
-			return
+			return 1
 
-		else if(src.anchored == 0)
-			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user << "You secure the collector control to the floor."
-			src.anchored = 1
-			return
-
-		else if(src.anchored == 1)
-			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user << "You undo the collector control securing bolts."
-			src.anchored = 0
-			return
-
+		playsound(src.loc, 'Ratchet.ogg', 75, 1)
+		src.anchored = !src.anchored 
+		if(src.anchored == 1)
+			user.visible_message("[user.name] secure [src.name] to the floor.", \
+				"You secure the [src.name] to the floor.", \
+				"You hear ratchet")
+			connect_to_network()
+		else
+			user.visible_message("[user.name] unsecure [src.name] to the floor.", \
+				"You undo the collector control securing bolts.", \
+				"You hear ratchet")
+			disconnect_from_network()
 	else
-		src.add_fingerprint(user)
-		user << "\red You hit the [src.name] with your [W.name]!"
-		for(var/mob/M in viewers(src))
-			if(M == user)	continue
-			M.show_message("\red The [src.name] has been hit with the [W.name] by [user.name]!")
-
-
-
-
+		user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
+			"\red You hit the [src.name] with your [W.name]!", \
+			"You hear bang")
+	src.add_fingerprint(user)
 
 /////FIELD GEN
 
@@ -1033,13 +1065,42 @@ However people seem to like it for some reason.
 	var/power = 20
 	var/max_power = 250
 	var/state = 0
-	var/steps = 0
-	var/last_check = 0
-	var/check_delay = 10
-	var/recalc = 0
+	//var/steps = 0
+	//var/last_check = 0
+	//var/check_delay = 10
+	//var/recalc = 0
 	var/locked = 0
-
+	var/warming_up = 0
+	var/powerlevel = 0
+	var/list/obj/machinery/containment_field/fields
 ////FIELD GEN START
+
+/obj/machinery/field_generator/proc/update_icon()
+	if (!active)
+		icon_state = "Field_Gen"
+		return
+	var/level = 3
+	switch (power)
+		if(0 to 40)
+			level = 1
+		if(41 to 220)
+			level = 2
+		if(221 to INFINITY)
+			level = 3
+	level = min(level,warming_up)
+	if (powerlevel!=level)
+		powerlevel = level
+		icon_state = "Field_Gen +a[powerlevel]"
+
+/obj/machinery/field_generator/proc/turn_on()
+	src.active = 1
+	warming_up = 1
+	spawn(1)
+		while (warming_up<3 && active)
+			sleep(50)
+			warming_up++
+			update_icon()
+	update_icon()
 
 /obj/machinery/field_generator/attack_hand(mob/user as mob)
 	if(state == 3)
@@ -1049,30 +1110,34 @@ However people seem to like it for some reason.
 	//			icon_state = "Field_Gen"
 				user << "You are unable to turn off the field generator, wait till it powers down."
 	//			src.cleanup()
+				return 1
 			else
-				src.active = 1
-				icon_state = "Field_Gen +a"
-				user << "You turn on the field generator."
+				user.visible_message("[user.name] turn on [src.name]", \
+					"You turn on the field generator.", \
+					"You hear heavy droning")
+				turn_on()
+				src.add_fingerprint(user)
 		else
 			user << "The controls are locked!"
 	else
 		user << "The field generator needs to be firmly secured to the floor first."
-	src.add_fingerprint(user)
 
 /obj/machinery/field_generator/attack_ai(mob/user as mob)
 	if(state == 3)
 		if(src.active >= 1)
 			user << "You are unable to turn off the field generator, wait till it powers down."
 		else
-			src.active = 1
-			icon_state = "Field_Gen +a"
-			user << "You turn on the field generator."
+			user.visible_message("[user.name] turn on [src.name]", \
+				"You turn on the field generator.", \
+				"You hear heavy droning")
+			turn_on()
+			src.add_fingerprint(user)
 	else
 		user << "The field generator needs to be firmly secured to the floor first."
-	src.add_fingerprint(user)
 
 /obj/machinery/field_generator/New()
 	..()
+	fields = list()
 	return
 
 /obj/machinery/field_generator/process()
@@ -1083,7 +1148,6 @@ However people seem to like it for some reason.
 			src.state = 3
 			src.power = 250
 			src.anchored = 1
-			icon_state = "Field_Gen +a"
 		Varedit_start = 0
 
 	if(src.active == 1)
@@ -1109,138 +1173,110 @@ However people seem to like it for some reason.
 			if(src.power <= 0)
 				for(var/mob/M in viewers(src))
 					M.show_message("\red The [src.name] shuts down due to lack of power!")
-				icon_state = "Field_Gen"
 				src.active = 0
 				spawn(1)
-					src.cleanup(1)
-				spawn(1)
-					src.cleanup(2)
-				spawn(1)
-					src.cleanup(4)
-				spawn(1)
-					src.cleanup(8)
+					src.cleanup()
+		update_icon()
 
-/obj/machinery/field_generator/proc/setup_field(var/NSEW = 0)
+/obj/machinery/field_generator/proc/setup_field(var/NSEW)
 	var/turf/T = src.loc
-	var/turf/T2 = src.loc
 	var/obj/machinery/field_generator/G
 	var/steps = 0
-	var/oNSEW = 0
 
 	if(!NSEW)//Make sure its ran right
 		return
 
-	if(NSEW == 1)
-		oNSEW = 2
-	else if(NSEW == 2)
-		oNSEW = 1
-	else if(NSEW == 4)
-		oNSEW = 8
-	else if(NSEW == 8)
-		oNSEW = 4
-
 	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for another generator
-		T = get_step(T2, NSEW)
-		T2 = T
+		T = get_step(T, NSEW)
 		steps += 1
-		if(locate(/obj/machinery/field_generator) in T)
-			G = (locate(/obj/machinery/field_generator) in T)
+		G = locate(/obj/machinery/field_generator) in T
+		if(!isnull(G))
 			steps -= 1
 			if(!G.active)
 				return
-			G.cleanup(oNSEW)
 			break
 
 	if(isnull(G))
 		return
 
-	T2 = src.loc
+	T = src.loc
 
 	for(var/dist = 0, dist < steps, dist += 1) // creates each field tile
-		var/field_dir = get_dir(T2,get_step(T2, NSEW))
-		T = get_step(T2, NSEW)
-		T2 = T
+		var/field_dir = get_dir(T,get_step(G.loc, NSEW))
+		T = get_step(T, NSEW)
 		var/obj/machinery/containment_field/CF = new/obj/machinery/containment_field/(src, G) //(ref to this gen, ref to connected gen)
+		fields += CF
+		G.fields += CF
 		CF.loc = T
 		CF.dir = field_dir
 
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench) && state!=3)
 		if(active)
 			user << "Turn off the field generator first."
-			return
+			return 1
 
-		else if(state == 0)
+		if(state == 0)
 			state = 1
 			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user << "You secure the external reinforcing bolts to the floor."
+			user.visible_message("[user.name] secure [src.name] to the floor.", \
+				"You secure the external reinforcing bolts to the floor.", \
+				"You hear ratchet")
 			src.anchored = 1
-			return
 
 		else if(state == 1)
 			state = 0
 			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user << "You undo the external reinforcing bolts."
+			user.visible_message("[user.name] unsecure [src.name] reinforcing bolts to the floor.", \
+				"You undo the external reinforcing bolts.", \
+				"You hear ratchet")
 			src.anchored = 0
-			return
 
-	if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
-
-		var/turf/T = user.loc
-
+	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+		if(state == 0)
+			user << "\red The [src.name] needs to be wrenched to the floor first."
+			return 1
 		if (W:get_fuel() < 1)
 			user << "\blue You need more welding fuel to complete this task."
-			return
+			return 1
 		W:use_fuel(1)
+		W:eyecheck(user)
+		playsound(src.loc, 'Welder2.ogg', 50, 1)
 
 		if(state == 1)
-			user << "You start to weld the field generator to the floor."
-			playsound(src.loc, 'Welder2.ogg', 50, 1)
-			sleep(20)
-
-			if ((user.loc == T && user.equipped() == W))
-				state = 3
-				W:eyecheck(user)
-				user << "You weld the field generator to the floor."
-			else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
+			user.visible_message("[user.name] start to weld [src.name] to the floor.", \
+				"You start to weld the field generator to the floor.", \
+				"You hear welding")
+			if (do_after(user,20))
 				state = 3
 				user << "You weld the field generator to the floor."
-			return
+			else
+				return 1
 
-		if(state == 3)
-			user << "You start to cut the field generator free from the floor."
-			playsound(src.loc, 'Welder2.ogg', 50, 1)
-			sleep(20)
-
-			if ((user.loc == T && user.equipped() == W))
+		else if(state == 3)
+			user.visible_message("[user.name] start to cut [src.name] free from the floor.", \
+				"You start to cut the field generator free from the floor.", \
+				"You hear welding")
+			if (do_after(user,20))
 				state = 1
-/*				if(src.link) //Clear active link.
-					src.link.master = null
-					src.link = null*/
-				W:eyecheck(user)
 				user << "You cut the field generator free from the floor."
-			else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
-				state = 1
-/*				if(src.link) //Clear active link.
-					src.link.master = null
-					src.link = null*/
-				user << "You cut the field generator free from the floor."
-			return
+			else
+				return 1
 
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 		else
 			user << "\red Access denied."
+			return 1
 
 	else
-		src.add_fingerprint(user)
-		user << "\red You hit the [src.name] with your [W.name]!"
-		for(var/mob/M in viewers(src))
-			if(M == user)	continue
-			M.show_message("\red The [src.name] has been hit with the [W.name] by [user.name]!")
+		user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
+			"\red You hit the [src.name] with your [W.name]!", \
+			"You hear bang")
+	src.add_fingerprint(user)
 
 
 /obj/machinery/field_generator/bullet_act(flag)
@@ -1257,32 +1293,20 @@ However people seem to like it for some reason.
 		src.power += 3
 	else
 		src.power -= 2
+	update_icon()
 	return
 
-
-/obj/machinery/field_generator/proc/cleanup(var/NSEW)
-	var/obj/machinery/containment_field/F
+/obj/machinery/field_generator/proc/cleanup()
 	var/obj/machinery/field_generator/G
-	var/turf/T = src.loc
-	var/turf/T2 = src.loc
-
-	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for fields
-		T = get_step(T2, NSEW)
-		T2 = T
-		if(locate(/obj/machinery/containment_field) in T)
-			F = (locate(/obj/machinery/containment_field) in T)
-			del(F)
-
-		if(locate(/obj/machinery/field_generator) in T)
-			G = (locate(/obj/machinery/field_generator) in T)
-			if(!G.active)
-				break
+	for (var/obj/machinery/containment_field/F in fields)
+		if (isnull(F))
+			continue
+		G = (F.gen_primary == src) ? F.gen_secondary : F.gen_primary
+		G.fields -= F
+		del(F)
+	fields = list()
 
 /obj/machinery/field_generator/Del()
-	src.cleanup(1)
-	src.cleanup(2)
-	src.cleanup(4)
-	src.cleanup(8)
+	src.cleanup()
 	..()
-
 

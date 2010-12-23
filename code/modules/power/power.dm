@@ -363,6 +363,11 @@
 		return
 	makepowernets() //TODO: find fast way
 
+
+/obj/machinery/power/proc/disconnect_from_network()
+	//TODO: dunno how to do that
+	return
+	
 /turf/proc/get_cable_node()
 	if(!istype(src, /turf/simulated/floor))
 		return

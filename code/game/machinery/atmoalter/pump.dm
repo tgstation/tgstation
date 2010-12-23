@@ -23,15 +23,12 @@
 
 /obj/machinery/portable_atmospherics/pump/process()
 	..()
-
-	var/datum/gas_mixture/environment
-	if(holding)
-		environment = holding.air_contents
-	else
-		environment = loc.return_air()
-
-
 	if(on)
+		var/datum/gas_mixture/environment
+		if(holding)
+			environment = holding.air_contents
+		else
+			environment = loc.return_air()
 		if(direction_out)
 			var/pressure_delta = target_pressure - environment.return_pressure()
 			//Can not have a pressure delta that would cause environment pressure > tank pressure
@@ -63,9 +60,9 @@
 					removed = loc.remove_air(transfer_moles)
 
 				air_contents.merge(removed)
+		//src.update_icon()
 
 	src.updateDialog()
-	src.update_icon()
 	return
 
 /obj/machinery/portable_atmospherics/pump/return_air()
@@ -93,7 +90,7 @@ Port Status: [(connected_port)?("Connected"):("Disconnected")]
 <BR>
 Power Switch: <A href='?src=\ref[src];power=1'>[on?("On"):("Off")]</A><BR>
 Pump Direction: <A href='?src=\ref[src];direction=1'>[direction_out?("Out"):("In")]</A><BR>
-Target Pressure: <A href='?src=\ref[src];pressure_adj=-10'>-</A> <A href='?src=\ref[src];pressure_adj=-1'>-</A> [target_pressure] <A href='?src=\ref[src];pressure_adj=1'>+</A> <A href='?src=\ref[src];pressure_adj=10'>+</A><BR>
+Target Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=\ref[src];pressure_adj=-10'>-</A> <A href='?src=\ref[src];pressure_adj=-1'>-</A> [target_pressure] <A href='?src=\ref[src];pressure_adj=1'>+</A> <A href='?src=\ref[src];pressure_adj=10'>+</A> <A href='?src=\ref[src];pressure_adj=100'>+</A> <A href='?src=\ref[src];pressure_adj=1000'>+</A><BR>
 <HR>
 <A href='?src=\ref[user];mach_close=pump'>Close</A><BR>
 "}

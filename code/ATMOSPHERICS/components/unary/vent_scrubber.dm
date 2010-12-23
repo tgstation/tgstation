@@ -21,17 +21,14 @@
 	var/panic = 0 //is this scrubber panicked?
 
 	update_icon()
-		if(on&&node)
+		if(node && on && !(stat & (NOPOWER|BROKEN)))
 			if(scrubbing)
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
 			else
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
 		else
 			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-			on = 0
-
 		return
-
 
 	proc
 		set_frequency(new_frequency)
@@ -66,11 +63,15 @@
 
 	process()
 		..()
+		if(stat & (NOPOWER|BROKEN))
+			return
+		if (!node)
+			on = 0
 		broadcast_status()
-
 		if(!on)
 			return 0
 
+			
 		var/datum/gas_mixture/environment = loc.return_air()
 
 		if(scrubbing)
@@ -79,7 +80,9 @@
 
 				//Take a gas sample
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
-
+				if (isnull(removed)) //in space
+					return
+				use_power(30, ENVIRON)
 				//Filter it
 				var/datum/gas_mixture/filtered_out = new
 				filtered_out.temperature = removed.temperature
@@ -109,6 +112,7 @@
 					network.update = 1
 
 		else //Just siphoning all air
+			use_power(volume_rate/12, ENVIRON)
 			var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -161,3 +165,10 @@
 				broadcast_status()
 				update_icon()
 		return
+
+	power_change()
+		if(powered(ENVIRON))
+			stat &= ~NOPOWER
+		else
+			stat |= NOPOWER
+		update_icon()
