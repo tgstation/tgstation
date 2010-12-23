@@ -17,11 +17,16 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-
+///////////////////////////
+//Announces the game type//
+///////////////////////////
 /datum/game_mode/revolution/announce()
 	world << "<B>The current game mode is - Revolution!</B>"
-	world << "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, and HoS. Convert other crewmembers (excluding the Captain, HoP, HoR, and security officers) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the Captain, HoP, and HoR. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>"
+	world << "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, HoS, CE, RD and CMO. Convert other crewmembers (excluding the heads of staff, and security officers) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>"
 
+///////////////////////////////////////////////////////////////////////////////
+//Gets the round setup, cancelling if there's not enough players at the start//
+///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/post_setup()
 
 	var/list/revs_possible = list()
@@ -66,6 +71,9 @@
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
 
+/////////////////////////////////////////////////////////////////////////////////
+//This are equips the rev heads with their gear, and makes the clown not clumsy//
+/////////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
 	if(!istype(rev_mob))
 		return
@@ -137,6 +145,9 @@
 		if (!flashspawned)
 			rev_mob << "The Syndicate were unfortunately unable to get you a flash."
 
+//////////////////////////////////////////
+//Deals with the communication intercept//
+//////////////////////////////////////////
 /datum/game_mode/revolution/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
 	intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
@@ -167,6 +178,9 @@
 	world << sound('intercept.ogg')
 
 
+//////////////////////////////////////
+//Checks if the revs have won or not//
+//////////////////////////////////////
 /datum/game_mode/revolution/check_win()
 	if(check_rev_victory())
 		finished = 1
@@ -174,19 +188,28 @@
 		finished = 2
 	return
 
+///////////////////////////////
+//Checks if the round is over//
+///////////////////////////////
 /datum/game_mode/revolution/check_finished()
 	if(finished != 0)
 		return 1
 	else
 		return 0
 
+///////////////////////////////////////////////////
+//Deals with converting players to the revolution//
+///////////////////////////////////////////////////
 /datum/game_mode/revolution/proc/add_revolutionary(datum/mind/rev_mind)
 	var/list/uncons = get_unconvertables()
 	if(!(rev_mind in revolutionaries) && !(rev_mind in head_revolutionaries) && !(rev_mind in uncons))
 		revolutionaries += rev_mind
-		rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the game!</FONT>"
+		rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
 		update_rev_icons_added(rev_mind)
 
+//////////////////////////////////////////////////////////////////////////////
+//Deals with players being converted from the revolution (Not a rev anymore)//
+//////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/proc/remove_revolutionary(datum/mind/rev_mind)
 	if(rev_mind in revolutionaries)
 		revolutionaries -= rev_mind
@@ -195,6 +218,13 @@
 		for(var/mob/living/M in view(rev_mind.current))
 			M << "[rev_mind.current] looks like they just remembered their real allegiance!"
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//Keeps track of players having the correct icons////////////////////////////////////////////////
+//CURRENTLY CONTAINS BUGS:///////////////////////////////////////////////////////////////////////
+//-PLAYERS THAT HAVE BEEN REVS FOR AWHILE OBTAIN THE BLUE ICON WHILE STILL NOT BEING A REV HEAD//
+// -Possibly caused by cloning of a standard rev/////////////////////////////////////////////////
+//-UNCONFIRMED: DECONVERTED REVS NOT LOSING THEIR ICON PROPERLY//////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/proc/update_all_rev_icons()
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
@@ -235,6 +265,10 @@
 							var/I = image('mob.dmi', loc = rev_1.current, icon_state = "rev_head")
 							rev.current.client.images += I
 
+////////////////////////////////////////////////////
+//Keeps track of converted revs icons///////////////
+//Refer to above bugs. They may apply here as well//
+////////////////////////////////////////////////////
 /datum/game_mode/revolution/proc/update_rev_icons_added(datum/mind/rev_mind)
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
@@ -257,6 +291,9 @@
 					var/image/J = image('mob.dmi', loc = rev_mind_1.current, icon_state = "rev")
 					rev_mind.current.client.images += J
 
+///////////////////////////////////
+//Keeps track of deconverted revs//
+///////////////////////////////////
 /datum/game_mode/revolution/proc/update_rev_icons_removed(datum/mind/rev_mind)
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
@@ -278,6 +315,9 @@
 					if(I.icon_state == "rev" || I.icon_state == "rev_head")
 						del(I)
 
+//////////////////////////////////////////////////
+//Creates a list of anyone that can be converted//
+//////////////////////////////////////////////////
 /datum/game_mode/revolution/proc/get_possible_revolutionaries()
 	var/list/candidates = list()
 
@@ -300,6 +340,9 @@
 	else
 		return candidates
 
+///////////////////////////////////
+//Keeps track of all living heads//
+///////////////////////////////////
 /datum/game_mode/revolution/proc/get_living_heads()
 	var/list/heads = list()
 
@@ -312,6 +355,9 @@
 	return heads
 
 
+////////////////////////////
+//Keeps track of all heads//
+////////////////////////////
 /datum/game_mode/revolution/proc/get_all_heads()
 	var/list/heads = list()
 
@@ -323,6 +369,9 @@
 
 	return heads
 
+/////////////////////////////////////////////////////
+//Defines the list of jobs that cannot be converted//
+/////////////////////////////////////////////////////
 /datum/game_mode/revolution/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in world)
@@ -333,6 +382,9 @@
 
 	return ucs
 
+//////////////////////////
+//Checks for rev victory//
+//////////////////////////
 /datum/game_mode/revolution/proc/check_rev_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/objective/objective in rev_mind.objectives)
@@ -341,12 +393,18 @@
 
 		return 1
 
+/////////////////////////////
+//Checks for a head victory//
+/////////////////////////////
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		if(rev_mind.current.stat != 2)
 			return 0
 	return 1
 
+//////////////////////////////////////////////////////////////////////
+//Announces the end of the game with all relavent information stated//
+//////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
 
 	var/text = ""
