@@ -34,10 +34,10 @@ TELEPORT GUN
 	icon_state = "pulse"
 	force = 15
 
-	var/mode = 1
+	var/mode = 1//I guess I'll leave this here in case another mode to the weapon is added./N
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-		if ((usr.mutations & 16) && prob(50))
+		if ((user.mutations & 16) && prob(50))
 			usr << "\red The pulse rifle blows up in your face."
 			usr.fireloss += 20
 			usr.drop_item()
@@ -45,7 +45,7 @@ TELEPORT GUN
 			return
 		if (flag)
 			return
-		if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 			usr << "\red You don't have the dexterity to do this!"
 			return
 
@@ -85,6 +85,26 @@ TELEPORT GUN
 			for(var/mob/O in viewers(M, null))
 				if(O.client)	O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall", 2)
 
+
+/obj/item/weapon/gun/energy/pulse_rifle/attack(mob/M as mob, mob/user as mob)
+	src.add_fingerprint(user)
+
+	if ((istype(M, /mob/living/carbon/human) && istype(M, /obj/item/clothing/head) && M.flags & 8 && prob(80)))
+		M << "\blue The helmet protects you from being hit hard in the head!"
+		return
+	if (prob(50))
+		if (M.paralysis < 60)
+			M.paralysis = 60
+	else
+		if (M.weakened < 60)
+			M.weakened = 60
+	src.force = 35
+	..()
+	if(M.stat != 2)	M.stat = 1
+	for(var/mob/O in viewers(M, null))
+		if (O.client)
+			O.show_message(text("\red <B>[] has been rifle butted by []!</B>", M, user), 1, "\red You hear someone fall", 2)
+	return
 
 // AMMO
 
@@ -187,7 +207,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 // ******* Check
 
 	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-		M << "\red The helmet protects you from being hit hard in the head!"
+		M << "\blue The helmet protects you from being hit hard in the head!"
 		return
 	if ((user.a_intent == "hurt" && src.bullets > 0))
 		if (prob(20))
@@ -634,12 +654,6 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			if(O.client)	O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall", 2)
 
 	return
-
-
-
-
-
-
 
 // TASER GUN
 

@@ -49,6 +49,9 @@ to clean it up, or just beat the shit out of it (which takes ages).
 [11:35] <&Rick> so if the alien loses it
 [11:35] <&Rick> they lose being able to communicate
 [11:35] <&Nannek> kk
+
+
+This is all very silly and I will probably remove it in the future. /N
 */
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
@@ -611,8 +614,8 @@ to clean it up, or just beat the shit out of it (which takes ages).
 			src.updatehealth()
 	return
 
-/mob/living/carbon/alien/humanoid/attack_paw(mob/M as mob)
-	..()
+/mob/living/carbon/alien/humanoid/attack_paw(mob/living/carbon/monkey/M as mob)
+	if(istype(M, /mob/living/carbon/alien))	return//Quick fix since these display double for aliens when they interact with aliens.
 	if (M.a_intent == "help")
 		src.sleeping = 0
 		src.resting = 0
@@ -620,7 +623,7 @@ to clean it up, or just beat the shit out of it (which takes ages).
 		if (src.stunned >= 3) src.stunned -= 3
 		if (src.weakened >= 3) src.weakened -= 3
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\blue [M.name] shakes [src] trying to wake him up!", ), 1)
+			O.show_message(text("\blue [M.name] shakes [src] trying to wake it up!", ), 1)
 	else
 		if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 			return
@@ -753,7 +756,7 @@ As such, they can either help or harm other aliens. Help works like the human he
 In all, this is a lot like the monkey code. /N
 */
 
-/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M as mob)
+/mob/living/carbon/alien/humanoid/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return

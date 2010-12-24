@@ -1,8 +1,9 @@
 /*
 CONTAINS:
 THAT STUPID GAME KIT
-
+Which I am commenting out /N
 */
+/*
 /obj/item/weapon/game_kit/New()
 	src.board_stat = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 	src.selected = "CR"
@@ -134,3 +135,4 @@ THAT STUPID GAME KIT
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
 				src.attack_hand(M)
+*/
