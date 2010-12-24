@@ -98,6 +98,18 @@
 	src.viewalerts = 1
 	src << browse(dat, "window=aialerts&can_close=0")
 
+/mob/living/silicon/ai/proc/ai_roster()
+	set category = "AI Commands"
+	set name = "Show Crew Manifest"
+
+	var/dat = "<head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
+
+	for (var/datum/data/record/t in data_core.general)
+		dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+
+	src << browse(dat, "window=airoster")
+	onclose(src, "airoster")
+
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "AI Commands"
 	if(usr.stat == 2)

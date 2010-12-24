@@ -121,6 +121,7 @@
 	O.verbs += /mob/living/silicon/ai/proc/lockdown
 	O.verbs += /mob/living/silicon/ai/proc/disablelockdown
 	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
+	O.verbs += /mob/living/silicon/ai/proc/ai_roster
 
 //	O.verbs += /mob/living/silicon/ai/proc/ai_cancel_call
 	O.job = "AI"
