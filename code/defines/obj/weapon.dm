@@ -469,7 +469,7 @@
 	icon_state = "plasma-c"
 	plasma = 500.0
 
-
+/*
 /obj/item/weapon/game_kit
 	name = "Gaming Kit"
 	icon = 'items.dmi'
@@ -480,6 +480,7 @@
 	var/base_url = "http://svn.slurm.us/public/spacestation13/misc/game_kit"
 	item_state = "sheet-metal"
 	w_class = 5.0
+*/
 
 /obj/item/weapon/gift
 	name = "gift"
