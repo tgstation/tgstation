@@ -268,6 +268,13 @@
 			src.weakened = 10
 		if (src.stuttering < 10)
 			src.stuttering = 10
+	else if (flag == PROJECTILE_DART)
+		if (istype(src.l_hand, /obj/item/weapon/shield/riot)||istype(src.r_hand, /obj/item/weapon/shield/riot))
+			if (prob(50))
+				show_message("\red Your shield absorbs the hit!", 4)
+		else
+			src.weakened += 5
+			src.toxloss += 10
 	else if(flag == PROJECTILE_LASER)
 		var/d = 20
 		if (istype(src.wear_suit, /obj/item/clothing/suit/armor))
@@ -1404,7 +1411,7 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 	else
-		//This will be changed to skin, where we can skin a dead human corpse
+		//This will be changed to skin, where we can skin a dead human corpse//Actually, that sounds kind of impractical./N
 		if (M.a_intent == "grab")
 			if (M == src)
 				return
@@ -1428,6 +1435,7 @@
 				if (src.w_uniform)
 					src.w_uniform.add_fingerprint(M)
 				var/damage = rand(15, 30) // How much damage aliens do to humans? Increasing -- TLE
+										  // I've decreased the chance of humans being protected by uniforms. Now aliens can actually damage them.
 				var/datum/organ/external/affecting = src.organs["chest"]
 				var/t = M.zone_sel.selecting
 				if ((t in list( "eyes", "mouth" )))
@@ -1435,12 +1443,12 @@
 				var/def_zone = ran_zone(t)
 				if (src.organs[def_zone])
 					affecting = src.organs[def_zone]
-				if ((istype(affecting, /datum/organ/external) && prob(90)))
+				if ((istype(affecting, /datum/organ/external) && prob(95)))
 					playsound(src.loc, "punch", 25, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 					if (def_zone == "head")
-						if ((((src.head && src.head.body_parts_covered & HEAD) || (src.wear_mask && src.wear_mask.body_parts_covered & HEAD)) && prob(99)))
+						if ((((src.head && src.head.body_parts_covered & HEAD) || (src.wear_mask && src.wear_mask.body_parts_covered & HEAD)) && prob(5)))
 							if (prob(20))
 								affecting.take_damage(damage, 0)
 							else
@@ -1450,12 +1458,12 @@
 							if (src.weakened < 10)
 								src.weakened = rand(10, 15)
 							for(var/mob/O in viewers(M, null))
-								O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
+								O.show_message(text("\red <B>[] has wounded []!</B>", M, src), 1, "\red You hear someone fall.", 2)
 						affecting.take_damage(damage)
 					else
 						if (def_zone == "chest")
-							if ((((src.wear_suit && src.wear_suit.body_parts_covered & UPPER_TORSO) || (src.w_uniform && src.w_uniform.body_parts_covered & LOWER_TORSO)) && prob(85)))
-								src.show_message("\red You have been protected from a hit to the chest.")
+							if ((((src.wear_suit && src.wear_suit.body_parts_covered & UPPER_TORSO) || (src.w_uniform && src.w_uniform.body_parts_covered & LOWER_TORSO)) && prob(10)))
+								src.show_message("\blue You have been protected from a hit to the chest.")
 								return
 							if (damage > 4.9)
 								if (prob(50))
@@ -1463,7 +1471,7 @@
 										src.weakened = 5
 									playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
 									for(var/mob/O in viewers(src, null))
-										O.show_message(text("\red <B>[] has knocked down []!</B>", M, src), 1, "\red You hear someone fall.", 2)
+										O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1, "\red You hear someone fall.", 2)
 								else
 									if (src.stunned < 5)
 										src.stunned = 5
@@ -1473,15 +1481,15 @@
 							affecting.take_damage(damage)
 						else
 							if (def_zone == "groin")
-								if ((((src.wear_suit && src.wear_suit.body_parts_covered & LOWER_TORSO) || (src.w_uniform && src.w_uniform.body_parts_covered & LOWER_TORSO)) && prob(75)))
-									src.show_message("\red You have been protected from a hit to the lower chest.")
+								if ((((src.wear_suit && src.wear_suit.body_parts_covered & LOWER_TORSO) || (src.w_uniform && src.w_uniform.body_parts_covered & LOWER_TORSO)) && prob(1)))
+									src.show_message("\blue You have been protected from a hit to the lower chest.")
 									return
 								if (damage > 4.9)
 									if (prob(50))
 										if (src.weakened < 3)
 											src.weakened = 3
 										for(var/mob/O in viewers(src, null))
-											O.show_message(text("\red <B>[] has knocked down []!</B>", M, src), 1, "\red You hear someone fall.", 2)
+											O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1, "\red You hear someone fall.", 2)
 									else
 										if (src.stunned < 3)
 											src.stunned = 3
@@ -1508,7 +1516,7 @@
 					if (randn <= 25)
 						src.weakened = 2
 						for(var/mob/O in viewers(src, null))
-							O.show_message(text("\red <B>[] has knocked over []!</B>", M, src), 1)
+							O.show_message(text("\red <B>[] has tackled over []!</B>", M, src), 1)
 					else
 						if (randn <= 60)
 							src.drop_item()

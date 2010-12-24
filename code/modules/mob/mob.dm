@@ -451,7 +451,7 @@
 			for(var/mob/N in viewers(user, null))
 				if(N.client)
 					N.show_message(text("\red <B>[user] is attempting to devour [src.affecting]!</B>"), 1)
-			if(!do_mob(user, src.affecting)) return
+			if(!do_mob(user, src.affecting)||!do_after(user, 100)) return
 			for(var/mob/N in viewers(user, null))
 				if(N.client)
 					N.show_message(text("\red <B>[user] devours [src.affecting]!</B>"), 1)
@@ -1478,6 +1478,9 @@
 			src.stunned = 10
 		else
 			src.weakened = 10
+	else if (flag == PROJECTILE_DART)
+		src.weakened += 5
+		src.toxloss += 10
 	else if(flag == PROJECTILE_LASER)
 		if (istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src

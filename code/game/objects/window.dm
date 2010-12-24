@@ -104,7 +104,7 @@
 		usr << text("\blue You smash through the window.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes through the window.", usr)
+				O << text("\red [] smashes through the window!", usr)
 		src.health = 0
 		new /obj/item/weapon/shard( src.loc )
 		if(reinf) new /obj/item/weapon/rods( src.loc)
@@ -117,12 +117,34 @@
 		usr << text("\blue You smash through the window.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes through the window.", usr)
+				O << text("\red [] smashes through the window!", usr)
 		src.health = 0
 		new /obj/item/weapon/shard( src.loc )
 		if(reinf) new /obj/item/weapon/rods( src.loc)
 		src.density = 0
 		del(src)
+	return
+
+/obj/window/attack_alien()
+	if (istype(usr, /mob/living/carbon/alien/larva))//Safety check for larva. /N
+		return
+	usr << text("\green You smash against the window.")
+	for(var/mob/O in oviewers())
+		if ((O.client && !( O.blinded )))
+			O << text("\red [] smashes against the window.", usr)
+	src.health -= 15
+	if(src.health <= 0)
+		usr << text("\green You smash through the window.")
+		for(var/mob/O in oviewers())
+			if ((O.client && !( O.blinded )))
+				O << text("\red [] smashes through the window!", usr)
+		src.health = 0
+		new /obj/item/weapon/shard(src.loc)
+		if(reinf)
+			new /obj/item/weapon/rods(src.loc)
+		src.density = 0
+		del(src)
+		return
 	return
 
 /obj/window/attackby(obj/item/weapon/W as obj, mob/user as mob)

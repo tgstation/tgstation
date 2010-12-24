@@ -212,7 +212,7 @@
 
 /obj/mecha/attack_alien(mob/user as mob)
 	if(!prob(src.deflect_chance))
-		src.take_damage(10)
+		src.take_damage(15)
 	//TODO: Add text
 	else
 		user << "No effect"

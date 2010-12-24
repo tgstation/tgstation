@@ -101,6 +101,8 @@
 				src.health -= 15
 			if(PROJECTILE_TASER)
 				src.health -= 5
+			if(PROJECTILE_DART)
+				src.health -= 10
 			if(PROJECTILE_WEAKBULLET)
 				src.health -= 8
 			if(PROJECTILE_LASER)

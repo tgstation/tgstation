@@ -14,73 +14,65 @@ All I can think of right now./N
 
 /mob/living/carbon/alien/humanoid/verb/invis()
 	set name = "Invisibility (50)"
-	set desc = "Makes you invisible for 30 seconds"
+	set desc = "Makes you invisible for 15 seconds"
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this"
+		src << "\green You must be conscious to do this"
 		return
 	if(src.toxloss >= 50)
 		src.toxloss -= 50
 		src.alien_invis = 1.0
-		src << "\green You are now invisible"
+		src << "\green You are now invisible."
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] fades into the surroundings!</B>"), 1)
-		spawn(300)
+		spawn(150)
 			src.alien_invis = 0.0
-			src << "\green You are no longer invisible"
+			src << "\green You are no longer invisible."
 	else
 		src << "\green Not enough plasma stored"
 	return
 
-/mob/living/carbon/alien/humanoid/verb/spit(mob/M as mob in oview())
-	set name = "Spit (25)"
-	set desc = "Spits acid at someone"
+/*Alien spit now works like a taser shot. It won't home in on the target but will act the same once it does hit.
+Doesn't work on silicon mobs or other aliens.*/
+/mob/living/carbon/alien/humanoid/verb/spit(mob/target as mob in oview())
+	set name = "Spit Neurotoxin (50)"
+	set desc = "Spits neurotoxin at someone, paralyzing them for a short time."
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this."
+		src << "\green You must be conscious to do this."
 		return
-	if(src.toxloss >= 25)
-		src.toxloss -= 25
+	if(istype(target, /mob/living/carbon/alien))
+		src << "\green Your allies are not a valid target."
+		return
+	if(src.toxloss >= 50)
+		src.toxloss -= 50
+		var/turf/T = usr.loc
+		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 
-		spawn(0)
-			var/obj/overlay/A = new /obj/overlay( usr.loc )
-			A.icon_state = "cbbolt"
-			A.icon = 'projectiles.dmi'
-			A.name = "acid"
-			A.anchored = 0
-			A.density = 0
-			A.layer = 4
-			var/i
-			for(i=0, i<20, i++)
-				var/obj/overlay/B = new /obj/overlay( A.loc )
-				B.icon_state = "cbbolt"
-				B.icon = 'projectiles.dmi'
-				B.name = "acid"
-				B.anchored = 1
-				B.density = 0
-				B.layer = 3
-				spawn(5)
-					del(B)
-				step_to(A,M,0)
-				if (get_dist(A,M) == 0)
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\green <B>[src] has spat at [M.name]!</B>"), 1)
-					if (istype(M:l_hand, /obj/item/weapon/shield/riot) && prob(50))
-						del(A)
-						return
-					if (istype(M:r_hand, /obj/item/weapon/shield/riot) && prob(50))
-						del(A)
-						return
-					M.weakened += 5
-					M.fireloss += 10
-					del(A)
-					return
-				sleep(5)
-			del(A)
+		if(!U || !T)
+			return
+		while(U && !istype(U,/turf))
+			U = U.loc
+		if(!istype(T, /turf))
+			return
+		if (U == T)
+			usr.bullet_act(PROJECTILE_DART)
+			return
+		if(!istype(U, /turf))
+			return
+
+		var/obj/bullet/neurodart/A = new /obj/bullet/neurodart(usr.loc)
+
+		A.current = U
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+
+		A.process()
+
 	else
-		src << "\green Not enough plasma stored"
+		src << "\green Not enough plasma stored."
 	return
 
 /mob/living/carbon/alien/humanoid/verb/plant()
@@ -89,7 +81,7 @@ All I can think of right now./N
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this."
+		src << "\green You must be conscious to do this."
 		return
 	if(src.toxloss >= 100)
 		src.toxloss -= 100
@@ -99,7 +91,7 @@ All I can think of right now./N
 		W.Life()
 
 	else
-		src << "\green Not enough plasma stored"
+		src << "\green Not enough plasma stored."
 	return
 
 /mob/living/carbon/alien/humanoid/verb/call_to()
@@ -108,7 +100,7 @@ All I can think of right now./N
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this."
+		src << "\green You must be conscious to do this."
 		return
 
 	if(src.toxloss >= 5)
@@ -117,7 +109,7 @@ All I can think of right now./N
 			F.call_to(src)
 		emote("roar")
 	else
-		src << "\green Not enough plasma stored"
+		src << "\green Not enough plasma stored."
 	return
 
 /mob/living/carbon/alien/humanoid/verb/whisp(mob/M as mob in oview())
@@ -126,7 +118,7 @@ All I can think of right now./N
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this"
+		src << "\green You must be conscious to do this."
 		return
 
 	var/msg = input("Message:", "Alien Whisper") as text
@@ -140,7 +132,7 @@ All I can think of right now./N
 		M << "\green You hear a strange alien voice in your head... \italic [msg]"
 		src << {"\green You said: "[msg]" to [M]"}
 	else
-		src << "\green Not enough plasma stored"
+		src << "\green Not enough plasma stored."
 	return
 
 /mob/living/carbon/alien/humanoid/verb/transfer_plasma(mob/living/carbon/alien/M as mob in oview())
@@ -152,11 +144,11 @@ All I can think of right now./N
 		return
 
 	if(src.stat)
-		src << "You must be concious to do this."
+		src << "\green You must be conscious to do this."
 		return
 
 	if(!src.toxloss)
-		src << "You don't have any plasma."
+		src << "\green You don't have any plasma."
 		return
 
 	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
@@ -169,7 +161,7 @@ All I can think of right now./N
 			M.toxloss += amount
 			src.toxloss -= amount
 		else
-			src << "You don't have enough plasma."
+			src << "\green Not enough plasma."
 			return
 
 		M << "\green [src] has transfered [amount] plasma to you."
@@ -185,43 +177,43 @@ All I can think of right now./N
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this."
+		src << "\green You must be conscious to do this."
 		return
 
 	if(!src.toxloss)
-		src << "You don't have any plasma."
+		src << "\green You don't have any plasma."
 		return
 	if(src.toxloss >= 500)
 		src.toxloss -= 500
-		src << "You begin to evolve."
+		src << "\green You begin to evolve."
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
 		var/mob/living/carbon/alien/humanoid/queen/Q = new (src.loc)
 		Q.key = src.key
 		del(src)
 	else
-		src << "You don't have enough plasma."
+		src << "\green Not enough plasma."
 
 /mob/living/carbon/alien/humanoid/verb/resinwall() // -- TLE
-	set name = "Shape Resin Wall (200)"
+	set name = "Shape Resin Wall (100)"
 	set desc = "Produce a wall of resin that blocks entry and line of sight"
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this"
+		src << "\green You must be conscious to do this."
 		return
 
 	if(!src.toxloss)
-		src << "You don't have any plasma."
-	if(src.toxloss >= 200)
-		src.toxloss -= 200
-		src << "You begin to shape a wall of resin."
+		src << "\green You don't have any plasma."
+	if(src.toxloss >= 100)
+		src.toxloss -= 100
+		src << "\green You begin to shape a wall of resin."
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
 		//var/obj/alien/resin/R = new(src.loc)
 		new /obj/alien/resin(src.loc)
 	else
-		src << "You don't have enough plasma."
+		src << "\green Not enough plasma."
 
 /mob/living/carbon/alien/humanoid/proc/ventcrawl() // -- TLE
 	set name = "Crawl through Vent"
@@ -231,7 +223,7 @@ All I can think of right now./N
 //		return
 
 	if(src.stat)
-		src << "You must be concious to do this."
+		src << "\green You must be conscious to do this."
 		return
 	var/vent_found = 0
 	for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
@@ -239,7 +231,7 @@ All I can think of right now./N
 			vent_found = v
 
 	if(!vent_found)
-		src << "You must be standing on or beside an open air vent to enter it."
+		src << "\green You must be standing on or beside an open air vent to enter it."
 		return
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
@@ -260,12 +252,12 @@ All I can think of right now./N
 	var/obj/selection = input("Select a destination.", "Duct System") in choices
 	var/selection_position = choices.Find(selection)
 	if(src.loc != startloc)
-		src << "You need to remain still while entering a vent."
+		src << "\green You need to remain still while entering a vent."
 		return
 	var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection_position]
 	if(target_vent)
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] scrambles into the ventillation ducts!</B>"), 1)
+			O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
 		var/list/huggers = list()
 		for(var/obj/alien/facehugger/F in view(3, src))
 			if(istype(F, /obj/alien/facehugger))
@@ -309,7 +301,7 @@ I kind of like the right click only--the window version can get a little confusi
 
 	var/obj/A
 	if(src.stat)
-		src << "You must be concious to do this."
+		src << "\green You must be conscious to do this."
 		return
 	var/list/xeno_target
 	xeno_target = list("ABORT COMMAND")
@@ -320,28 +312,28 @@ I kind of like the right click only--the window version can get a little confusi
 	if(A == "ABORT COMMAND")
 		return
 	if(src.toxloss < 200)
-		src << "Not enough plasma."
+		src << "\green Not enough plasma."
 		return
 	if(A in view(1))//Another check to see if the item is in range. So the alien does not run off with the window open.
 		A.acid()
 	else
-		src << "Target is too far away."
+		src << "\green Target is too far away."
 		return
 
-/mob/living/carbon/alien/humanoid/verb/corrode(obj/O as anything in view(1)) //If they right click to corrode, an error will flash if its an invalid target./N
-	set name = "Spit Corrosive Acid (200)"
+/mob/living/carbon/alien/humanoid/verb/corrode(obj/O as anything in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
+	set name = "Corrose with Acid (200)"
 	set desc = "Drench an object in acid, destroying it over time."
 
 	if(!istype(O, /obj))
 		return
 	if(src.stat)
-		src << "You must be concious to do this."
+		src << "\green You must be conscious to do this."
 		return
 	if(src.toxloss < 200)
-		src << "Not enough plasma."
+		src << "\green Not enough plasma."
 		return
 	if(O.unacidable) //So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
-		src << "Cannot destroy this object."
+		src << "\green Cannot destroy this object."
 		return
 	else
 		O.acid()

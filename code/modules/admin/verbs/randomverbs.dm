@@ -287,7 +287,6 @@ They spawn as an assistant but there is no announcement. /N  */
 	var/input = input(usr, "Please specify which key/client will be respawned. That person will not retain their traitor/other status when respawned.", "What?", "")
 	if(!input)
 		return
-
 	var/GKEY = input
 	var/GNAME = "none"
 	var/mob/dead/observer/GDEL //To properly delete the mob later on.

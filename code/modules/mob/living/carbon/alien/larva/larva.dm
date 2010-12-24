@@ -144,6 +144,8 @@ to clean it up, or just beat the shit out of it (which takes ages).
 			src.weakened = 10
 		if (src.stuttering < 10)
 			src.stuttering = 10
+	else if (flag == PROJECTILE_DART)
+		return
 	else if(flag == PROJECTILE_LASER)
 		var/d = 20
 
@@ -500,20 +502,10 @@ to clean it up, or just beat the shit out of it (which takes ages).
 				return
 	return
 
-/*
-/mob/living/carbon/alien/larva/attack_alien()
-//todo, put code here
-	return
-*/
-
-
-
-
+//Aliens attacking each other is defined in the humanoid.dm file.
 
 /mob/living/carbon/alien/larva/restrained()
 	return 0
-
-
 
 /mob/living/carbon/alien/larva/var/co2overloadtime = null
 /mob/living/carbon/alien/larva/var/temperature_resistance = T0C+75

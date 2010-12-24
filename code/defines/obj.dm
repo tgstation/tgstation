@@ -121,7 +121,6 @@
 
 /obj/bullet/weakbullet
 
-
 /obj/bullet/electrode
 	name = "electrode"
 	icon_state = "spark"
@@ -135,6 +134,10 @@
 /obj/bullet/cbbolt
 	name = "crossbow bolt"
 	icon_state = "cbbolt"
+
+/obj/bullet/neurodart
+	name = "acid"
+	icon_state = "toxin"
 
 /obj/datacore
 	name = "datacore"

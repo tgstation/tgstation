@@ -31,7 +31,7 @@
 				message = "<B>The [src.name]</B> roars."
 				m_type = 2
 		if("tail")
-			message = "<B>The [src.name]</B> waves his tail."
+			message = "<B>The [src.name]</B> waves its tail."
 			m_type = 1
 		if("gasp")
 			message = "<B>The [src.name]</B> gasps."
@@ -53,11 +53,11 @@
 			message = "<B>The [src.name]</B> moans!"
 			m_type = 2
 		if("nod")
-			message = "<B>The [src.name]</B> nods his head."
+			message = "<B>The [src.name]</B> nods its head."
 			m_type = 1
-		if("sit")
-			message = "<B>The [src.name]</B> sits down."
-			m_type = 1
+//		if("sit")
+//			message = "<B>The [src.name]</B> sits down." //Larvan can't sit down, /N
+//			m_type = 1
 		if("sway")
 			message = "<B>The [src.name]</B> sways around dizzily."
 			m_type = 1
@@ -76,11 +76,11 @@
 				message = "<B>The [src.name]</B> rolls."
 				m_type = 1
 		if("shake")
-			message = "<B>The [src.name]</B> shakes his head."
+			message = "<B>The [src.name]</B> shakes its head."
 			m_type = 1
 		if("gnarl")
 			if (!muzzled)
-				message = "<B>The [src.name]</B> gnarls and shows his teeth.."
+				message = "<B>The [src.name]</B> gnarls and shows its teeth.."
 				m_type = 2
 		if("jump")
 			message = "<B>The [src.name]</B> jumps!"
@@ -90,7 +90,7 @@
 			message = text("<B>[]</B> collapses!", src)
 			m_type = 2
 		if("help")
-			src << "choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
+			src << "choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sulk, sway, tail, twitch, whimper"
 		else
 			src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))

@@ -976,6 +976,16 @@
 		del(src)
 	return
 
+/obj/bullet/neurodart/Bump(atom/A as mob|obj|turf|area)
+	spawn(0)
+		if(A)
+			A.bullet_act(PROJECTILE_DART)
+			if(istype(A,/turf))
+				for(var/obj/O in A)
+					O.bullet_act(PROJECTILE_DART, src)
+		del(src)
+	return
+
 /obj/bullet/teleshot/Bump(atom/A as mob|obj|turf|area)
 	if (src.target == null)
 		var/list/turfs = list(	)

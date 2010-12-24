@@ -38,8 +38,8 @@
 	var/list/path_idle = new/list()
 
 	var/alive = 1 //1 alive, 0 dead
-	var/health = 25
-	var/maxhealth = 25
+	var/health = 10
+	var/maxhealth = 10
 	var/lamarr = 0
 	flags = 258.0
 
@@ -59,13 +59,13 @@
 		set src in view()
 		..()
 		if(!alive)
-			usr << text("\red <B>the alien is not moving</B>")
-		else if (src.health > 15)
-			usr << text("\red <B>the alien looks fresh, just out of the egg</B>")
+			usr << text("\red <B>The alien is not moving.</B>")
+		else if (src.health > 5)
+			usr << text("\red <B>The alien looks fresh, just out of the egg.</B>")
 		else
-			usr << text("\red <B>the alien looks pretty beat up</B>")
+			usr << text("\red <B>The alien looks injured.</B>")
 		if (lamarr)
-			usr << text("\red <B>it looks like the proboscis has been removed</B>")
+			usr << text("\red <B>It looks like the proboscis has been removed.</B>")
 		return
 
 
@@ -240,7 +240,8 @@
 						O.show_message("\red <B>[src.target] has been leapt on by [lamarr ? src.name : "the alien"]!</B>", 1, "\red You hear someone fall", 2)
 					if (!lamarr)
 						target:bruteloss += 10
-						target:paralysis = max(target:paralysis, 10)
+						if(prob(70))
+							target:paralysis = max(target:paralysis, 5)
 					src.loc = target.loc
 
 					if(!target.alien_egg_flag && ( ishuman(target) || ismonkey(target) ) )

@@ -44,7 +44,7 @@
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
 				O << text("\red [] kicks the grille.", usr)
-		src.health -= 2
+		src.health -= 5
 		healthcheck()
 		return
 	else if(!shock(usr, 70))
@@ -53,7 +53,7 @@
 			if ((O.client && !( O.blinded )))
 				O << text("\red [] kicks the grille.", usr)
 		playsound(src.loc, 'grillehit.ogg', 80, 1)
-		src.health -= 1
+		src.health -= 3
 
 /obj/grille/attack_paw(var/obj/M)
 	if ((usr.mutations & 8))
@@ -61,7 +61,7 @@
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
 				O << text("\red [] kicks the grille.", usr)
-		src.health -= 2
+		src.health -= 5
 		healthcheck()
 		return
 	else if(!shock(usr, 70))
@@ -70,7 +70,19 @@
 			if ((O.client && !( O.blinded )))
 				O << text("\red [] kicks the grille.", usr)
 		playsound(src.loc, 'grillehit.ogg', 80, 1)
-		src.health -= 1
+		src.health -= 3
+
+/obj/grille/attack_alien(var/obj/M)
+	if (istype(usr, /mob/living/carbon/alien/larva))//Safety check for larva, in case they get attack_alien in the future. /N
+		return
+	if (!shock(usr, 70))
+		usr << text("\green You mangle the grille.")
+		for(var/mob/O in oviewers())
+			if ((O.client && !( O.blinded )))
+				O << text("\red [] mangles the grille.", usr)
+		src.health -= 3
+		healthcheck()
+		return
 
 /obj/grille/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1

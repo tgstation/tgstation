@@ -50,7 +50,10 @@
 
 		for(var/mob/O in viewers(user, null))
 			if(status == 1)
-				O.show_message(text("\red [] blinds [] with the flash!", user, M))
+				if(!istype(M, /mob/living/carbon/alien)) //So aliens don't show up as being blinded when it has no effect on them./N
+					O.show_message(text("\red [] blinds [] with the flash!", user, M))
+				else
+					O.show_message(text("\red [] fails to blind [] with the flash!", user, M))
 	src.attack_self(user, 1)
 	return
 

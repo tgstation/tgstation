@@ -240,6 +240,12 @@
 
 	else if (flag == PROJECTILE_TASER)
 		return
+	else if (flag == PROJECTILE_DART)
+		if (src.stat != 2)
+			src.stunned += 5
+			src.fireloss += 10
+			src.updatehealth()
+		return
 /*
 	else if (flag == PROJECTILE_WAVE)
 		if (src.stat != 2)
@@ -454,7 +460,11 @@
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 
-	if (M.a_intent == "grab")
+	if (M.a_intent == "help")
+		for(var/mob/O in viewers(src, null))
+			O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
+
+	else if (M.a_intent == "grab")
 		if (M == src)
 			return
 		var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
@@ -472,7 +482,7 @@
 			O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
 	else if (M.a_intent == "hurt")
-		var/damage = rand(5, 10)
+		var/damage = rand(10, 20)
 		if (prob(90))
 			/*
 			if (M.class == "combat")

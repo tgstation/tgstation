@@ -201,6 +201,8 @@
 			src.stunned = 15
 		else
 			src.weakened = 15
+	else if (flag == PROJECTILE_DART)
+		return
 	else if(flag == PROJECTILE_LASER)
 		if (src.stat != 2)
 			src.bruteloss += 20

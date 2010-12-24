@@ -25,6 +25,25 @@
 	var/selection_position = choices.Find(selection)
 	var/obj/target_vent = vents[selection_position]
 	if(target_vent)
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] scrambles into the ventillation ducts!</B>"), 1)
+		for(var/mob/O in oviewers())
+			if ((O.client && !( O.blinded )))
+				O << text("<B>[] scrambles into the ventillation ducts!</B>", src)
 		src.loc = target_vent.loc
+
+/mob/living/carbon/alien/larva/verb/hide()
+	set name = "Hide"
+	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
+	set category = "Alien"
+
+	if (src.layer != TURF_LAYER)
+		src.layer = TURF_LAYER
+		src << text("\green You are now hiding.")
+		for(var/mob/O in oviewers())
+			if ((O.client && !( O.blinded )))
+				O << text("<B>[] scurries to the ground!</B>", src)
+	else
+		src.layer = MOB_LAYER
+		src << text("\green You have stopped hiding.")
+		for(var/mob/O in oviewers())
+			if ((O.client && !( O.blinded )))
+				O << text("[] slowly peaks up from the ground...", src)

@@ -1,7 +1,6 @@
 /*
 CONTAINS:
 SYNDICATE UPLINK
-
 */
 
 /obj/item/weapon/syndicate_uplink/proc/explode()

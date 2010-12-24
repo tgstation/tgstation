@@ -32,7 +32,7 @@
 		usr << text("\blue You destroy the table.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] destroys the table.", usr)
+				O << text("\red [] smashes the table apart!", usr)
 		if(istype(src, /obj/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else
@@ -43,19 +43,23 @@
 		step(user, get_dir(user, src))
 		if (user.loc == src.loc)
 			user.layer = TURF_LAYER
-			for(var/mob/M in viewers(user, null))
-				M.show_message("The monkey hides under the table!", 1)
+			for(var/mob/O in oviewers())
+				if ((O.client && !( O.blinded )))
+					O << text("[] hides under the table!", user)
 				//Foreach goto(69)
 	return
 
-/obj/table/attack_alien(mob/user as mob)
-	if(istype(user, /mob/living/carbon/alien/larva))
-		if (!( locate(/obj/table, user.loc) ))
-			step(user, get_dir(user, src))
-			if (user.loc == src.loc)
-				user.layer = TURF_LAYER
-				for(var/mob/M in viewers(user, null))
-					M.show_message("The alien larva hides under the table!", 1)
+/obj/table/attack_alien(mob/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
+	usr << text("\green You destroy the table.")
+	for(var/mob/O in oviewers())
+		if ((O.client && !( O.blinded )))
+			O << text("\red [] slices the table apart!", user)
+	if(istype(src, /obj/table/reinforced))
+		new /obj/item/weapon/table_parts/reinforced( src.loc )
+	else
+		new /obj/item/weapon/table_parts( src.loc )
+	src.density = 0
+	del(src)
 	return
 
 /obj/table/attack_hand(mob/user as mob)
@@ -63,7 +67,7 @@
 		usr << text("\blue You destroy the table.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] destroys the table.", usr)
+				O << text("\red [] smashes the table apart!", usr)
 		if(istype(src, /obj/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else

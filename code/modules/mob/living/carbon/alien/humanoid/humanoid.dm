@@ -182,6 +182,8 @@ to clean it up, or just beat the shit out of it (which takes ages).
 			src.weakened = 10
 		if (src.stuttering < 10)
 			src.stuttering = 10
+	else if (flag == PROJECTILE_DART)
+		return
 	else if(flag == PROJECTILE_LASER)
 		var/d = 20
 
@@ -720,8 +722,6 @@ to clean it up, or just beat the shit out of it (which takes ages).
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
 					src.bruteloss += damage
-
-
 					src.updatehealth()
 				else
 					playsound(src.loc, 'punchmiss.ogg', 25, 1, -1)
@@ -748,14 +748,41 @@ to clean it up, or just beat the shit out of it (which takes ages).
 								O.show_message(text("\red <B>[] has attempted to disarm []!</B>", M, src), 1)
 	return
 
-/* aliens attacking each other!!
-/mob/living/carbon/alien/humanoid/attack_alien()
-//todo, put code here
-	return
+/*Code for aliens attacking aliens. Because aliens act on a hivemind, I don't see them as very aggressive with each other.
+As such, they can either help or harm other aliens. Help works like the human help command while harm is a simple nibble.
+In all, this is a lot like the monkey code. /N
 */
 
+/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
 
+	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return
 
+	..()
+
+	if (M.a_intent == "help")
+		src.sleeping = 0
+		src.resting = 0
+		if (src.paralysis >= 3) src.paralysis -= 3
+		if (src.stunned >= 3) src.stunned -= 3
+		if (src.weakened >= 3) src.weakened -= 3
+		for(var/mob/O in viewers(src, null))
+			O.show_message(text("\blue [M.name] nuzzles [] trying to wake it up!", src), 1)
+
+	else
+		if (src.health > 0)
+			var/damage = rand(1, 3)
+			for(var/mob/O in viewers(src, null))
+				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
+			src.bruteloss += damage
+			src.updatehealth()
+		else
+			M << "\green <B>[src.name] is too injured for that.</B>"
+	return
 
 
 /mob/living/carbon/alien/humanoid/restrained()

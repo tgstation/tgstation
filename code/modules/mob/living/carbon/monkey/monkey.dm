@@ -119,6 +119,9 @@
 			src.stunned = 15
 		else
 			src.weakened = 15
+	else if (flag == PROJECTILE_DART)
+		src.weakened += 5
+		src.toxloss += 10
 	else if(flag == PROJECTILE_LASER)
 		if (src.stat != 2)
 			src.bruteloss += 20
@@ -177,25 +180,30 @@
 					O.show_message("\red <B>[M.name] has attempted to bite [src.name]!</B>", 1)
 	return
 
-/mob/living/carbon/monkey/attack_hand(mob/M as mob)
-	..()
-	if (istype(M, /mob/living/carbon/human))
-		if ((M:gloves && M:gloves.elecgen == 1 && M.a_intent == "hurt") /*&& (!istype(src:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
-			if(M:gloves.uses > 0)
-				M:gloves.uses--
-				if (src.weakened < 5)
-					src.weakened = 5
-				if (src.stuttering < 5)
-					src.stuttering = 5
-				if (src.stunned < 5)
-					src.stunned = 5
-				for(var/mob/O in viewers(src, null))
-					if (O.client)
-						O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
-			else
-				M:gloves.elecgen = 0
-				M << "\red Not enough charge! "
-				return
+/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
+
+	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return
+	if ((M:gloves && M:gloves.elecgen == 1 && M.a_intent == "hurt") /*&& (!istype(src:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+		if(M:gloves.uses > 0)
+			M:gloves.uses--
+			if (src.weakened < 5)
+				src.weakened = 5
+			if (src.stuttering < 5)
+				src.stuttering = 5
+			if (src.stunned < 5)
+				src.stunned = 5
+			for(var/mob/O in viewers(src, null))
+				if (O.client)
+					O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
+		else
+			M:gloves.elecgen = 0
+			M << "\red Not enough charge! "
+			return
 
 	if (M.a_intent == "help")
 		src.sleeping = 0
@@ -265,6 +273,75 @@
 								O.show_message(text("\red <B>[] has disarmed [src.name]!</B>", M), 1)
 	return
 
+/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
+
+	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return
+
+	if (M.a_intent == "help")
+		for(var/mob/O in viewers(src, null))
+			O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+	else
+		if (M.a_intent == "hurt")
+			if ((prob(95) && src.health > 0))
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has slashed [src.name]!</B>", M), 1)
+
+				playsound(src.loc, "punch", 25, 1, -1)
+				var/damage = rand(5, 10)
+				if (prob(40))
+					damage = rand(20, 40)
+					if (src.paralysis < 5)
+						src.paralysis = rand(10, 15)
+						spawn( 0 )
+							for(var/mob/O in viewers(src, null))
+								if ((O.client && !( O.blinded )))
+									O.show_message(text("\red <B>[] has wounded [src.name]!</B>", M), 1)
+							return
+				src.bruteloss += damage
+				src.updatehealth()
+			else
+				playsound(src.loc, 'punchmiss.ogg', 25, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has attempted to lunge at [src.name]!</B>", M), 1)
+		else
+			if (M.a_intent == "grab")
+				if (M == src)
+					return
+				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
+				G.assailant = M
+				if (M.hand)
+					M.l_hand = G
+				else
+					M.r_hand = G
+				G.layer = 20
+				G.affecting = src
+				src.grabbed_by += G
+				G.synch()
+				playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					O.show_message(text("\red [] has grabbed [src.name] passively!", M), 1)
+			else
+				if (!( src.paralysis ))
+					if (prob(25))
+						src.paralysis = 2
+						playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
+						for(var/mob/O in viewers(src, null))
+							if ((O.client && !( O.blinded )))
+								O.show_message(text("\red <B>[] has tackled down [src.name]!</B>", M), 1)
+					else
+						drop_item()
+						playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
+						for(var/mob/O in viewers(src, null))
+							if ((O.client && !( O.blinded )))
+								O.show_message(text("\red <B>[] has disarmed [src.name]!</B>", M), 1)
+	return
 
 /mob/living/carbon/monkey/Stat()
 	..()
