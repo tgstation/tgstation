@@ -434,6 +434,7 @@
 				lawupdate = 0
 				connected_ai = null
 				user << "You emag [src]'s interface."
+				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
 				clear_supplied_laws()
 				clear_inherent_laws()
 				src.laws = new /datum/ai_laws/syndicate_override
