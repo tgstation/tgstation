@@ -497,7 +497,9 @@
 			if (0)
 				dat += "<h2>PERSONAL DATA ASSISTANT</h2>"
 				dat += "Owner: [src.owner], [src.ownjob]<br>"
-				dat += text("ID: <A href='?src=\ref[];auth=1'>[]</A>", src, (src.id ? "[src.id.registered], [src.id.assignment]" : "----------"))
+				dat += text("ID: <A href='?src=\ref[];auth=1'>[]</A><br>", src, (src.id ? "[src.id.registered], [src.id.assignment]" : "----------"))
+				dat += "Station Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"//:[world.time / 100 % 6][world.time / 100 % 10]"
+
 				dat += "<br><br>"
 
 				dat += "<h4>General Functions</h4>"
