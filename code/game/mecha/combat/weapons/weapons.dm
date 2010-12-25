@@ -115,7 +115,7 @@
 		if (targloc == curloc)
 			return
 
-		playsound(chassis, 'Laser.ogg', 50, 1)
+		playsound(chassis, 'marauder.ogg', 50, 1)
 		var/obj/beam/a_laser/A = new /obj/beam/a_laser/pulse_laser(curloc)
 		A.current = curloc
 		A.yo = targloc.y - curloc.y

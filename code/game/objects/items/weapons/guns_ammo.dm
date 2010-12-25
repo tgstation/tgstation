@@ -60,7 +60,7 @@ TELEPORT GUN
 			return
 
 		var/obj/beam/a_laser/A = new /obj/beam/a_laser/pulse_laser(user.loc)
-		playsound(user, 'Laser.ogg', 50, 1)
+		playsound(user, 'pulse.ogg', 50, 1)
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -990,7 +990,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			user << "\red *click* *click*";
 			return
 
-		playsound(user, 'Taser.ogg', 50, 1)
+		playsound(user, 'laser3.ogg', 50, 1)
 		src.charges--
 		update_icon()
 

@@ -213,9 +213,17 @@
 /obj/mecha/attack_alien(mob/user as mob)
 	if(!prob(src.deflect_chance))
 		src.take_damage(15)
-	//TODO: Add text
+		playsound(src.loc, 'slash.ogg', 50, 1, -1)
+		user << "\red You slash at the armored suit!"
+		for (var/mob/V in viewers(src))
+			if(V.client && !(V.blinded))
+				V.show_message("The [user] slashes at [src.name]'s armor!", 1)
 	else
-		user << "No effect"
+		user << "\green Your claws had no effect!"
+		src.occupant_message("\blue The [user]'s claws are stopped by the armor.")
+		for (var/mob/V in viewers(src))
+			if(V.client && !(V.blinded))
+				V.show_message("The [user] rebounds off the [src.name] armor!", 1)
 	return
 
 

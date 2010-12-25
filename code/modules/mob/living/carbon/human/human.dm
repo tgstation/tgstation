@@ -1444,7 +1444,7 @@
 				if (src.organs[def_zone])
 					affecting = src.organs[def_zone]
 				if ((istype(affecting, /datum/organ/external) && prob(95)))
-					playsound(src.loc, "punch", 25, 1, -1)
+					playsound(src.loc, 'slice.ogg', 25, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 					if (def_zone == "head")
@@ -1469,7 +1469,7 @@
 								if (prob(50))
 									if (src.weakened < 5)
 										src.weakened = 5
-									playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
+									playsound(src.loc, 'slashmiss.ogg', 50, 1, -1)
 									for(var/mob/O in viewers(src, null))
 										O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1, "\red You hear someone fall.", 2)
 								else
@@ -1504,6 +1504,7 @@
 
 					src.updatehealth()
 				else
+					playsound(src.loc, 'slashmiss.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						O.show_message(text("\red <B>[M] has lunged at [src] but missed!</B>"), 1)
 					return
@@ -1514,15 +1515,18 @@
 						src.w_uniform.add_fingerprint(M)
 					var/randn = rand(1, 100)
 					if (randn <= 25)
+						playsound(src.loc, 'pierce.ogg', 25, 1, -1)
 						src.weakened = 2
 						for(var/mob/O in viewers(src, null))
 							O.show_message(text("\red <B>[] has tackled over []!</B>", M, src), 1)
 					else
 						if (randn <= 60)
+							playsound(src.loc, 'slash.ogg', 25, 1, -1)
 							src.drop_item()
 							for(var/mob/O in viewers(src, null))
 								O.show_message(text("\red <B>[] has knocked the item out of []'s hand!</B>", M, src), 1)
 						else
+							playsound(src.loc, 'slashmiss.ogg', 50, 1, -1)
 							for(var/mob/O in viewers(src, null))
 								O.show_message(text("\red <B>[] has tried to knock the item out of []'s hand!</B>", M, src), 1)
 	return

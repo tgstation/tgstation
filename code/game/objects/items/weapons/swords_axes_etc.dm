@@ -30,6 +30,7 @@ STUN BATON
 		else
 			src.icon_state = "sword1"
 		src.w_class = 4
+		playsound(user, 'saberon.ogg', 50, 1)
 	else
 		user << "\blue [src] can now be concealed."
 		src.force = 3
@@ -38,6 +39,7 @@ STUN BATON
 		else
 			src.icon_state = "sword0"
 		src.w_class = 2
+		playsound(user, 'saberoff.ogg', 50, 1)
 	src.add_fingerprint(user)
 	return
 

@@ -292,7 +292,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has slashed [src.name]!</B>", M), 1)
 
-				playsound(src.loc, "punch", 25, 1, -1)
+				playsound(src.loc, 'slice.ogg', 25, 1, -1)
 				var/damage = rand(5, 10)
 				if (prob(40))
 					damage = rand(20, 40)
@@ -306,7 +306,7 @@
 				src.bruteloss += damage
 				src.updatehealth()
 			else
-				playsound(src.loc, 'punchmiss.ogg', 25, 1, -1)
+				playsound(src.loc, 'slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to lunge at [src.name]!</B>", M), 1)
@@ -329,15 +329,14 @@
 					O.show_message(text("\red [] has grabbed [src.name] passively!", M), 1)
 			else
 				if (!( src.paralysis ))
-					if (prob(25))
+					playsound(src.loc, 'pierce.ogg', 25, 1, -1)
+					if(prob(25))
 						src.paralysis = 2
-						playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has tackled down [src.name]!</B>", M), 1)
 					else
 						drop_item()
-						playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has disarmed [src.name]!</B>", M), 1)

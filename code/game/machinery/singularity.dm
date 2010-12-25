@@ -27,7 +27,7 @@ However people seem to like it for some reason.
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
-		anchored = !anchored 
+		anchored = !anchored
 		playsound(src.loc, 'Ratchet.ogg', 75, 1)
 		if(anchored)
 			user.visible_message("[user.name] secure [src.name] to the floor.", \
@@ -86,7 +86,7 @@ However people seem to like it for some reason.
 			del(src) //TODO: some animation
 			return
 		if(2.0 to 3.0) //no way
-			return 
+			return
 	return
 
 /obj/machinery/the_singularity/process()
@@ -125,7 +125,7 @@ However people seem to like it for some reason.
 		move()
 		spawn(5)
 			move()
-	
+
 
 
 /obj/machinery/the_singularity
@@ -136,7 +136,7 @@ However people seem to like it for some reason.
 		/turf/space, \
 		/obj/effects, \
 		/obj/beam, /* not sure*/ \
-		/obj/overlay 
+		/obj/overlay
 	)
 
 /obj/machinery/the_singularity/proc/is_eatable(atom/X)
@@ -151,7 +151,7 @@ However people seem to like it for some reason.
 			continue
 		if (!is_eatable(X))
 			continue
-				
+
 		if(istype(X,/obj/machinery/field_generator))
 			var/obj/machinery/field_generator/F = X
 			if(F.active)
@@ -267,7 +267,7 @@ However people seem to like it for some reason.
 	)
 
 //looks like I need new function istypefromlist
-/obj/machinery/the_singularity/proc/is_strippable(turf/simulated/X) 
+/obj/machinery/the_singularity/proc/is_strippable(turf/simulated/X)
 	for(var/Type in unstrippable)
 		if (istype(X,Type))
 			return 0
@@ -626,7 +626,7 @@ However people seem to like it for some reason.
 		use_power(1000)
 		var/obj/beam/a_laser/A = new /obj/beam/a_laser( src.loc )
 		A.icon_state = "u_laser"
-		playsound(src.loc, 'Laser.ogg', 75, 1)
+		playsound(src.loc, 'emitter.ogg', 75, 1)
 
 		if(prob(35))
 			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
@@ -682,7 +682,7 @@ However people seem to like it for some reason.
 		else
 			user << "\red [src] is welded to the floor!"
 			return 1
-			
+
 	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		if (state == 0)
 			user << "\red The emitter needs to be wrenched to the floor first."
@@ -923,7 +923,7 @@ However people seem to like it for some reason.
 	S = list()
 	for(var/obj/machinery/the_singularity/myS in orange(12,src))
 		S += myS
-		
+
 	for (var/ca_dir in cardinal)
 		var/obj/machinery/power/collector_array/newCA = locate() in get_step(src,ca_dir)
 		if (isnull(newCA))
@@ -1032,7 +1032,7 @@ However people seem to like it for some reason.
 			return 1
 
 		playsound(src.loc, 'Ratchet.ogg', 75, 1)
-		src.anchored = !src.anchored 
+		src.anchored = !src.anchored
 		if(src.anchored == 1)
 			user.visible_message("[user.name] secure [src.name] to the floor.", \
 				"You secure the [src.name] to the floor.", \
