@@ -11,7 +11,7 @@
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
 	var/list/destroyable_obj = list(/obj/mecha, /obj/window, /obj/grille, /turf/simulated/wall)
-	internal_damage_treshhold = 30
+	internal_damage_threshold = 50
 
 /*
 /obj/mecha/combat/verb/switch_weapon()
@@ -34,57 +34,70 @@
 */
 
 /obj/mecha/combat/range_action(target)
+	if(internal_damage&MECHA_INT_CONTROL_LOST)
+		target = pick(view(10,target))
 	if(selected_weapon)
 		selected_weapon.fire(target)
 	return
 
 /obj/mecha/combat/melee_action(target)
+	if(internal_damage&MECHA_INT_CONTROL_LOST)
+		target = pick(oview(1,src))
 	if(!melee_can_hit || (!istype(target, /obj) && !istype(target, /mob) && !istype(target, /turf))) return
 	if(istype(target, /mob))
-		playsound(src, 'punch4.ogg', 50, 1)
 		var/mob/M = target
-		if(damtype == "brute")
-			step_away(M,src,15)
-		if(M.stat>1)
-			M.gib()
-			return
-		if(istype(target, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = target
-//			if (M.health <= 0) return
+		if(src.occupant.a_intent == "hurt")
+			playsound(src, 'punch4.ogg', 50, 1)
+			if(damtype == "brute")
+				step_away(M,src,15)
+			if(M.stat>1)
+				M.gib()
+				melee_can_hit = 0
+				spawn(melee_cooldown)
+					melee_can_hit = 1
+				return
+			if(istype(target, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = target
+	//			if (M.health <= 0) return
 
-			var/dam_zone = pick("chest", "chest", "chest", "head", "groin")
-			if (istype(H.organs[dam_zone], /datum/organ/external))
-				var/datum/organ/external/temp = H.organs[dam_zone]
+				var/dam_zone = pick("chest", "chest", "chest", "head", "groin")
+				if (istype(H.organs[dam_zone], /datum/organ/external))
+					var/datum/organ/external/temp = H.organs[dam_zone]
+					switch(damtype)
+						if("brute")
+							H.paralysis += 1
+							temp.take_damage(rand(force/2, force), 0)
+						if("fire")
+							temp.take_damage(0, rand(force/2, force))
+						if("tox")
+							H.toxloss += rand(force/2, force)
+						else
+							return
+					H.UpdateDamageIcon()
+				H.updatehealth()
+
+			else
 				switch(damtype)
 					if("brute")
-						H.paralysis += 1
-						temp.take_damage(rand(force/2, force), 0)
+						M.paralysis += 1
+						M.bruteloss += rand(force/2, force)
 					if("fire")
-						temp.take_damage(0, rand(force/2, force))
+						M.fireloss += rand(force/2, force)
 					if("tox")
-						H.toxloss += rand(force/2, force)
+						M.toxloss += rand(force/2, force)
 					else
 						return
-				H.UpdateDamageIcon()
-			H.updatehealth()
+				M.updatehealth()
+
+			src.occupant.show_message("[src.name] hits [target].", 1)
+			for (var/mob/V in viewers(src))
+				if(V.client && !(V.blinded))
+					V.show_message("[src.name] hits [target].", 1)
 
 		else
-			switch(damtype)
-				if("brute")
-					M.paralysis += 1
-					M.bruteloss += rand(force/2, force)
-				if("fire")
-					M.fireloss += rand(force/2, force)
-				if("tox")
-					M.toxloss += rand(force/2, force)
-				else
-					return
-			M.updatehealth()
-
-		src.occupant.show_message("[src.name] hits [target].", 1)
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.show_message("[src.name] hits [target].", 1)
+			step_away(M,src)
+			src.occupant_message("You push [target] out of the way.")
+			src.visible_message("[src] pushes [target] out of the way.")
 
 		melee_can_hit = 0
 		spawn(melee_cooldown)
@@ -184,6 +197,18 @@
 	if(src.occupant && src.occupant.client)
 		src.occupant.client.mouse_pointer_icon = initial(src.occupant.client.mouse_pointer_icon)
 	..()
+	return
+
+
+/obj/mecha/combat/check_for_internal_damage(var/list/possible_int_damage)
+	..(possible_int_damage)
+	if(prob(5) && (src.health*100/initial(src.health))<src.internal_damage_threshold)
+		if(weapons.len)
+			var/datum/mecha_weapon/destr_weapon = pick(weapons)
+			if(destr_weapon)
+				weapons -= destr_weapon
+				destr_weapon.destroy()
+				src.occupant_message("<font color='red'>The [destr_weapon] is destroyed!</font>")
 	return
 
 

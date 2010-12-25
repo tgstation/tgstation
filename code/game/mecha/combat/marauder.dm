@@ -36,7 +36,12 @@
 		return 0
 	var/tmp_step_in = step_in
 	var/tmp_step_energy_drain = step_energy_drain
-	if(step(src,direction))
+	var/move_result = 0
+	if(internal_damage&MECHA_INT_CONTROL_LOST)
+		move_result = step_rand(src)
+	else
+		move_result	= step(src,direction)
+	if(move_result)
 		if(istype(src.loc, /turf/space))
 			if(!src.check_for_support())
 				src.pr_inertial_movement.start(list(src,direction))
@@ -81,7 +86,7 @@
 	output += "<b>Weapon systems:</b><div style=\"margin-left: 15px;\">"
 	if(weapons.len)
 		for(var/datum/mecha_weapon/W in weapons)
-			output += "[selected_weapon==W?"<b>":"<a href='?src=\ref[src];select_weapon=\ref[W]'>"][W][istype(W, /datum/mecha_weapon/missile_rack)?" - [W:missiles]":null][selected_weapon==W?"</b>":"</a>"]<br>"
+			output += "[selected_weapon==W?"<b>":"<a href='?src=\ref[src];select_weapon=\ref[W]'>"][W.get_weapon_info()][selected_weapon==W?"</b>":"</a>"]<br>"
 	else
 		output += "None"
 	output += "</div>"
@@ -94,10 +99,8 @@
 
 /obj/mecha/combat/marauder/get_commands()
 	var/output = ..()
-	var/datum/mecha_weapon/missile_rack/MR = weapons[2]
 	output += {"<a href='?src=\ref[src];toggle_thrusters=1'>Toggle thrusters</a><br>
 					<a href='?src=\ref[src];smoke=1'>Smoke</a><br>
-					[(MR.missiles < initial(MR.missiles))?"<a href='?src=\ref[src];rearm_srm=1'>Rearm missile rack</a><br>":null]
 					"}
 	return output
 

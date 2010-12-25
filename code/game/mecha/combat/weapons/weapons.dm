@@ -12,7 +12,17 @@
 	src.chassis = mecha
 	return
 
-/datum/mecha_weapon/proc/fire(target) //general checks.
+/datum/mecha_weapon/proc/destroy()
+	spawn
+		del src
+	return
+
+
+/datum/mecha_weapon/proc/get_weapon_info()
+	return src.name
+
+
+/datum/mecha_weapon/proc/fire_checks(target) //general checks.
 	if(!target)
 		return 0
 	if(!chassis)
@@ -22,6 +32,9 @@
 	if(!weapon_ready)
 		return 0
 	return 1
+
+/datum/mecha_weapon/proc/fire(target)
+	return fire_checks(target)
 
 
 
@@ -34,7 +47,7 @@
 	weapon_cooldown = 60
 
 	fire(target)
-		if(!..() || missiles <=0) return
+		if(!fire_checks(target) || missiles <=0) return
 		var/obj/item/missile/M = new /obj/item/missile(chassis.loc)
 		M.primed = 1
 		M.throw_at(target, missile_range, missile_speed)
@@ -53,6 +66,15 @@
 				chassis.cell.charge -= missile_energy_cost
 		return
 
+	get_weapon_info()
+		return "[src.name]\[[src.missiles]\][(src.missiles < initial(src.missiles))?" - <a href='?src=\ref[src];rearm=1'>Rearm</a>":null]"
+
+	Topic(href, href_list)
+		if (href_list["rearm"])
+			src.rearm()
+		return
+
+
 
 /obj/item/missile
 	icon = 'grenade.dmi'
@@ -68,14 +90,33 @@
 			..()
 		return
 
+/datum/mecha_weapon/missile_rack/flashbang
+	name = "SGL-6 Grenade Launcher"
+	missiles = 6
+	missile_speed = 1.5
+	missile_energy_cost = 800
+	weapon_cooldown = 60
+	var/det_time = 20
+
+	fire(target)
+		if(!fire_checks(target) || missiles <=0) return
+		var/obj/item/weapon/flashbang/F = new /obj/item/weapon/flashbang(chassis.loc)
+		F.throw_at(target, missile_range, missile_speed)
+		weapon_ready = 0
+		missiles--
+		spawn(det_time)
+			F.prime()
+		spawn(weapon_cooldown)
+			weapon_ready = 1
+		return
 
 /datum/mecha_weapon/laser
 	weapon_cooldown = 10
 	name = "CH-PS \"Immolator\" Laser"
-	energy_drain = 20
+	energy_drain = 30
 
 	fire(target)
-		if(!..()) return
+		if(!fire_checks(target)) return
 
 		var/turf/curloc = chassis.loc
 		var/atom/targloc = get_turf(target)
@@ -99,14 +140,13 @@
 		return
 
 
-
 /datum/mecha_weapon/pulse
 	weapon_cooldown = 50
 	name = "eZ-13 mk2 Heavy pulse rifle"
-	energy_drain = 50
+	energy_drain = 60
 
 	fire(target)
-		if(!..()) return
+		if(!fire_checks(target)) return
 
 		var/turf/curloc = chassis.loc
 		var/atom/targloc = get_turf(target)
@@ -128,6 +168,39 @@
 			weapon_ready = 1
 
 		return
+
+
+/datum/mecha_weapon/taser
+	weapon_cooldown = 10
+	name = "PBT \"Pacifier\" Mounted Taser"
+	energy_drain = 20
+
+	fire(target)
+		if(!fire_checks(target)) return
+
+		var/turf/curloc = chassis.loc
+		var/atom/targloc = get_turf(target)
+		if (!targloc || !istype(targloc, /turf) || !curloc)
+			return
+		if (targloc == curloc)
+			return
+
+		playsound(chassis, 'Laser.ogg', 50, 1)
+		var/obj/bullet/electrode/A = new /obj/bullet/electrode(curloc)
+		A.current = curloc
+		A.yo = targloc.y - curloc.y
+		A.xo = targloc.x - curloc.x
+		weapon_ready = 0
+		chassis.cell.use(energy_drain)
+		spawn()
+			A.process()
+		spawn(weapon_cooldown)
+			weapon_ready = 1
+
+		return
+
+
+
 
 /*
 /datum/mecha_weapon/scattershot

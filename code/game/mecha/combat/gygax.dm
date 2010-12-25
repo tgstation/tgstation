@@ -11,9 +11,9 @@
 
 /obj/mecha/combat/gygax/New()
 	..()
-
-	weapons += new /datum/mecha_weapon/pulse(src)
+	weapons += new /datum/mecha_weapon/taser(src)
 	weapons += new /datum/mecha_weapon/laser(src)
+	weapons += new /datum/mecha_weapon/missile_rack/flashbang(src)
 	selected_weapon = weapons[1]
 	return
 
@@ -43,7 +43,7 @@
 		if(health < initial(health) - initial(health)/3)
 			overload = 0
 			step_in = initial(step_in)
-			src.occupant << "\red Leg actuators damage treshold exceded. Disabling overload."
+			src.occupant << "\red Leg actuators damage threshold exceded. Disabling overload."
 	return
 
 
@@ -52,7 +52,7 @@
 	output += "<b>Weapon systems:</b><div style=\"margin-left: 15px;\">"
 	if(weapons.len)
 		for(var/datum/mecha_weapon/W in weapons)
-			output += "[selected_weapon==W?"<b>":"<a href='?src=\ref[src];select_weapon=\ref[W]'>"][W][selected_weapon==W?"</b>":"</a>"]<br>"
+			output += "[selected_weapon==W?"<b>":"<a href='?src=\ref[src];select_weapon=\ref[W]'>"][W.get_weapon_info()][selected_weapon==W?"</b>":"</a>"]<br>"
 	else
 		output += "None"
 	output += "</div>"

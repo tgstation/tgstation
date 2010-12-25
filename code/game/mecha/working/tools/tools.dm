@@ -12,6 +12,13 @@
 	src.chassis = mecha
 	return
 
+
+/datum/mecha_tool/proc/destroy()
+	spawn
+		del src
+	return
+
+
 /datum/mecha_tool/proc/action(atom/target)
 	if(!target)
 		return 0
@@ -113,8 +120,12 @@
 		spawn(tool_cooldown)
 			if(chassis)
 				if(T == chassis.loc && src == chassis.selected_tool)
-					target.ex_act(2)
+					if(istype(target, /turf/simulated/wall/r_wall))
+						chassis.occupant_message("\red The [target] is too durable to drill through.")
+					else
+						target.ex_act(2)
 				tool_ready = 1
+		return
 
 
 

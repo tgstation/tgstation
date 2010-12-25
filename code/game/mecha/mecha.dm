@@ -2,6 +2,7 @@
 #define MECHA_INT_TEMP_CONTROL 2
 #define MECHA_INT_SHORT_CIRCUIT 4
 #define MECHA_INT_TANK_BREACH 8
+#define MECHA_INT_CONTROL_LOST 16
 
 
 /obj/mecha
@@ -34,7 +35,7 @@
 	var/gas_tank_volume = 500
 	var/maximum_pressure = 30*ONE_ATMOSPHERE
 	var/max_temperature = 2500
-	var/internal_damage_treshhold = 50 //health percentage below which internal damage is possible
+	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
 	var/internal_damage = 0 //contains bitflags
 
 
@@ -70,6 +71,7 @@
 /obj/mecha/Del()
 	src.go_out()
 	..()
+	return
 
 /client/Click(object,location,control,params)
 	..()
@@ -99,6 +101,18 @@
 
 /obj/mecha/proc/range_action(atom/target)
 	return
+/*
+/obj/mecha/verb/test_int_damage()
+	set name = "Test internal damage"
+	set category = "Exosuit Interface"
+	set src in view(0)
+	if(!src.occupant) return
+	if(usr!=src.occupant)
+		return
+	src.health = initial(src.health)/2.2
+	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+	return
+*/
 
 //////////////////////////////////
 ////////  Movement procs  ////////
@@ -114,7 +128,12 @@
 		return 0
 	if(state || !cell || cell.charge<=0)
 		return 0
-	if(step(src,direction))
+	var/move_result = 0
+	if(internal_damage&MECHA_INT_CONTROL_LOST)
+		move_result = step_rand(src)
+	else
+		move_result	= step(src,direction)
+	if(move_result)
 		can_move = 0
 		spawn(step_in) can_move = 1
 		cell.use(src.step_energy_drain)
@@ -175,17 +194,18 @@
 	src.update_health()
 	return
 
-/obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage)//TODO
+/obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)//TODO
 	if(!src) return
-	if(prob(40) && (src.health*100/initial(src.health))<src.internal_damage_treshhold)
-		for(var/T in possible_int_damage)
-			if(internal_damage & T)
-				possible_int_damage -= T
-		if(possible_int_damage.len)
-			var/int_dam_flag = pick(possible_int_damage)
-			if(int_dam_flag)
-				internal_damage |= int_dam_flag
-				pr_internal_damage.start()
+	if(prob(40))
+		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
+			for(var/T in possible_int_damage)
+				if(internal_damage & T)
+					possible_int_damage -= T
+			if(possible_int_damage.len)
+				var/int_dam_flag = pick(possible_int_damage)
+				if(int_dam_flag)
+					internal_damage |= int_dam_flag
+					pr_internal_damage.start()
 	return
 
 
@@ -199,6 +219,7 @@
 /obj/mecha/attack_hand(mob/user as mob)
 	if (user.mutations & 8 && !prob(src.deflect_chance))
 		src.take_damage(15)
+		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		src.visible_message("<font color='red'><b>[user] hits [src.name], doing some damage.</b></font>")
 		user << "<font color='red'><b>You hit [src.name] with all your might. The metal creaks and bends.</b></font>"
 	else
@@ -207,12 +228,13 @@
 	return
 
 /obj/mecha/attack_paw(mob/user as mob)
-	return src.attack_hand()
+	return src.attack_hand(user)
 
 
 /obj/mecha/attack_alien(mob/user as mob)
 	if(!prob(src.deflect_chance))
 		src.take_damage(15)
+		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src.loc, 'slash.ogg', 50, 1, -1)
 		user << "\red You slash at the armored suit!"
 		for (var/mob/V in viewers(src))
@@ -243,6 +265,7 @@
 		var/obj/O = A
 		if(O.throwforce)
 			src.take_damage(O.throwforce)
+			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		return
 
 
@@ -254,9 +277,11 @@
 				V.show_message("The [src.name] armor deflects the projectile", 1)
 	else
 		var/damage
+		var/ignore_threshold
 		switch(flag)
 			if(PROJECTILE_PULSE)
 				damage = 40
+				ignore_threshold = 1
 			if(PROJECTILE_LASER)
 				damage = 20
 			if(PROJECTILE_TASER)
@@ -265,7 +290,7 @@
 			else
 				damage = 10
 		src.take_damage(damage)
-		src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH))
+		src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),ignore_threshold)
 	return
 
 /obj/mecha/proc/destroy()
@@ -287,19 +312,19 @@
 		severity++
 	switch(severity)
 		if(1.0)
-			destroy(src)
+			src.destroy()
 		if(2.0)
 			if (prob(30))
-				destroy(src)
+				src.destroy()
 			else
 				src.take_damage(initial(src.health)/2)
-				src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH))
+				src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),1)
 		if(3.0)
 			if (prob(5))
-				destroy(src)
+				src.destroy()
 			else
 				src.take_damage(initial(src.health)/4)
-				src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH))
+				src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),1)
 	return
 
 /obj/mecha/proc/check_location_temp()
@@ -451,7 +476,7 @@
 	spawn(20)
 		if(usr in range(1))
 			usr.pulling = null
-	//		usr.client.eye = src
+			usr.client.eye = src
 			src.occupant = usr
 			usr.loc = src
 			src.add_fingerprint(usr)
@@ -486,7 +511,7 @@
 		src.Exited(src.occupant)
 		if (src.occupant.client)
 			src.occupant.client.eye = src.occupant.client.mob
-			src.occupant.client.perspective = MOB_PERSPECTIVE
+//			src.occupant.client.perspective = MOB_PERSPECTIVE
 		src.occupant << browse(null, "window=exosuit")
 		src.occupant = null
 		src.pr_update_stats.stop()
@@ -625,7 +650,7 @@
 */
 		else
 			src.take_damage(W.force,W.damtype)
-			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH))
+			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 	return
 
 
@@ -645,6 +670,7 @@
 	var/output = {"[internal_damage&MECHA_INT_FIRE?"<font color='red'><b>INTERNAL FIRE</b></font><br>":null]
 						[internal_damage&MECHA_INT_TEMP_CONTROL?"<font color='red'><b>LIFE SUPPORT SYSTEM MALFUNCTION</b></font><br>":null]
 						[internal_damage&MECHA_INT_TANK_BREACH?"<font color='red'><b>GAS TANK BREACH</b></font><br>":null]
+						[internal_damage&MECHA_INT_CONTROL_LOST?"<font color='red'><b>COORDINATION SYSTEM CALIBRATION FAILURE</b></font> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a><br>":null]
 						<b>Integrity: </b> [health/initial(health)*100]%<br>
 						<b>Powercell charge: </b>[cell.charge/cell.maxcharge*100]%<br>
 						<b>Airtank pressure: </b>[src.return_pressure()]<br>
@@ -678,6 +704,15 @@
 	if (href_list["eject"])
 		src.eject()
 		return
+	if (href_list["repair_int_control_lost"])
+		src.occupant_message("Recalibrating coordination system.")
+		var/T = src.loc
+		spawn(100)
+			if(T == src.loc)
+				src.internal_damage &= ~MECHA_INT_CONTROL_LOST
+				src.occupant_message("<font color='blue'>Recalibration successful.</font>")
+			else
+				src.occupant_message("<font color='red'>Recalibration failed.</font>")
 	return
 
 
@@ -739,7 +774,7 @@
 		if(mecha.internal_damage & MECHA_INT_FIRE)
 			if(mecha.return_pressure()>mecha.maximum_pressure*1.5 && !(mecha.internal_damage&MECHA_INT_TANK_BREACH))
 				mecha.internal_damage |= MECHA_INT_TANK_BREACH
-			if(prob(5))
+			if(!(mecha.internal_damage & MECHA_INT_TEMP_CONTROL) && prob(5))
 				mecha.internal_damage &= ~MECHA_INT_FIRE
 				mecha.occupant_message("<font color='blue'><b>Internal fire extinquished.</b></font>")
 				return
@@ -757,5 +792,4 @@
 			if(mecha.air_contents.temperature > 0 && pressure_delta > 0)
 				transfer_moles = pressure_delta*environment.volume/(mecha.air_contents.temperature * R_IDEAL_GAS_EQUATION)
 				mecha.loc.assume_air(mecha.air_contents.remove(transfer_moles))
-
 		return

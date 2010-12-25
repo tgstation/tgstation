@@ -9,10 +9,12 @@
 	var/occupant_telekinesis = null
 	operation_req_access = list(access_engine)
 	internals_req_access = list(access_engine)
-	internal_damage_treshhold = 60
+	internal_damage_threshold = 70
 
 
 /obj/mecha/working/melee_action(atom/target as obj|mob|turf)
+	if(internal_damage&MECHA_INT_CONTROL_LOST)
+		target = pick(oview(1,src))
 	if(selected_tool)
 		selected_tool.action(target)
 	return
@@ -57,3 +59,15 @@
 		output += "None"
 	output += "</div>"
 	return output
+
+
+/obj/mecha/working/check_for_internal_damage(var/list/possible_int_damage)
+	..(possible_int_damage)
+	if(prob(5) && (src.health*100/initial(src.health))<src.internal_damage_threshold)
+		if(tools.len)
+			var/datum/mecha_tool/destr_tool = pick(tools)
+			if(destr_tool)
+				tools -= destr_tool
+				destr_tool.destroy()
+				src.occupant_message("<font color='red'>The [destr_tool] is destroyed!</font>")
+	return
