@@ -199,10 +199,11 @@
 	item_state = "pwig"
 
 /obj/item/clothing/head/that
-	name = "hat"
+	name = "Top hat"
 	desc = "An amish looking hat"
 	icon_state = "tophat"
 	item_state = "that"
+	flags = FPRINT|TABLEPASS|HEADSPACE
 
 /obj/item/clothing/head/wizard
 	name = "wizard hat"

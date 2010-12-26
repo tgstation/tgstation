@@ -260,7 +260,7 @@
 /obj/item/weapon/tank/emergency_oxygen/New()
 	..()
 
-	src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
+	src.air_contents.oxygen = (1*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
 /obj/item/weapon/tank/jetpack/New()
