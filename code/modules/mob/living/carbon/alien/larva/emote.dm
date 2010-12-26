@@ -26,10 +26,10 @@
 			if (!muzzled)
 				message = "<B>The [src.name]</B> whimpers."
 				m_type = 2
-		if("roar")
-			if (!muzzled)
-				message = "<B>The [src.name]</B> roars."
-				m_type = 2
+//		if("roar")
+//			if (!muzzled)
+//				message = "<B>The [src.name]</B> roars." Commenting out since larva shouldn't roar /N
+//				m_type = 2
 		if("tail")
 			message = "<B>The [src.name]</B> waves its tail."
 			m_type = 1
@@ -90,7 +90,7 @@
 			message = text("<B>[]</B> collapses!", src)
 			m_type = 2
 		if("help")
-			src << "choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sulk, sway, tail, twitch, whimper"
+			src << "choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roll, scratch,\nscretch, shake, sign-#, sulk, sway, tail, twitch, whimper"
 		else
 			src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))

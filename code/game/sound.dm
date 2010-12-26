@@ -9,6 +9,7 @@
 		if ("punch") soundin = pick('punch1.ogg','punch2.ogg','punch3.ogg','punch4.ogg')
 		if ("clownstep") soundin = pick('clownstep1.ogg','clownstep2.ogg')
 		if ("swing_hit") soundin = pick('genhit1.ogg', 'genhit2.ogg', 'genhit3.ogg')
+		if ("hiss") soundin = pick('hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg')
 
 	var/sound/S = sound(soundin)
 	S.wait = 0 //No queue
@@ -35,6 +36,7 @@
 		if ("punch") soundin = pick('punch1.ogg','punch2.ogg','punch3.ogg','punch4.ogg')
 		if ("clownstep") soundin = pick('clownstep1.ogg','clownstep2.ogg')
 		if ("swing_hit") soundin = pick('genhit1.ogg', 'genhit2.ogg', 'genhit3.ogg')
+		if ("hiss") soundin = pick('hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg')
 
 	var/sound/S = sound(soundin)
 	S.wait = 0 //No queue
@@ -76,7 +78,8 @@ client/verb/Toggle_Soundscape()
 		switch(src.name)
 			if ("Chapel") sound = pick('ambicha1.ogg','ambicha2.ogg','ambicha3.ogg','ambicha4.ogg')
 			if ("Morgue") sound = pick('ambimo1.ogg','ambimo2.ogg')
-			if ("Engine Control") sound = pick('ambieng1.ogg')
+//			if ("Engine Control") sound = pick('ambieng1.ogg') Commenting out in favor of a new, more applicable sound./N
+			if ("Engine Control") sound = pick('ambisin1.ogg','ambisin2.ogg','ambisin3.ogg','ambisin4.ogg')
 			if ("Atmospherics") sound = pick('ambiatm1.ogg')
 			else sound = pick('ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg')
 

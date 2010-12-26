@@ -344,7 +344,7 @@
 		if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 			return
 		if (src.health > 0)
-
+			playsound(src.loc, 'bite.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
 			var/damage = rand(1, 3)
@@ -472,6 +472,7 @@
 
 	else
 		if (src.health > 0)
+			playsound(src.loc, 'bite.ogg', 50, 1, -1)
 			var/damage = rand(1, 3)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)

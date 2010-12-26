@@ -170,6 +170,7 @@
 	else
 		if ((M.a_intent == "hurt" && !( istype(src.wear_mask, /obj/item/clothing/mask/muzzle) )))
 			if ((prob(75) && src.health > 0))
+				playsound(src.loc, 'bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					O.show_message("\red <B>[M.name] has bit [src.name]!</B>", 1)
 				var/damage = rand(1, 5)

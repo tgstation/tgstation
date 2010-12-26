@@ -45,7 +45,7 @@ TELEPORT GUN
 			return
 		if (flag)
 			return
-		if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
 			usr << "\red You don't have the dexterity to do this!"
 			return
 
@@ -67,44 +67,31 @@ TELEPORT GUN
 		user.next_move = world.time + 4
 		spawn()
 			A.process()
-
+		return
 	attack(mob/M as mob, mob/user as mob)
 		..()
 		src.add_fingerprint(user)
 		if ((prob(50) && M.stat < 2))
 			var/mob/living/carbon/human/H = M
-			if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(70)))
-				M << "\red The helmet protects you from being hit hard in the head!"
+			if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
+				M << "\blue The helmet protects you from being hit hard in the head!"
+				for(var/mob/O in viewers(M, null))
+					if(O.client)
+						O.show_message(text("\red <B>[] blocked a hit from []!</B>", M, user), 1)
 				return
-			var/time = rand(50, 170)
+			var/time = rand(20, 60)
 			if (prob(90))
-				M.paralysis = min(time, M.paralysis)
+				M.paralysis = max(time, M.paralysis)
 			else
-				M.weakened = min(time, M.weakened)
+				M.weakened = max(time, M.weakened)
+			src.force = 35
+			..()
 			if(M.stat != 2)	M.stat = 1
 			for(var/mob/O in viewers(M, null))
-				if(O.client)	O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall", 2)
-
-
-/obj/item/weapon/gun/energy/pulse_rifle/attack(mob/M as mob, mob/user as mob)
-	src.add_fingerprint(user)
-
-	if ((istype(M, /mob/living/carbon/human) && istype(M, /obj/item/clothing/head) && M.flags & 8 && prob(80)))
-		M << "\blue The helmet protects you from being hit hard in the head!"
+				if(O.client)
+					O.show_message(text("\red <B>[] has been rifle butted by []!</B>", M, user), 1, "\red You hear someone fall.", 2)
 		return
-	if (prob(50))
-		if (M.paralysis < 60)
-			M.paralysis = 60
-	else
-		if (M.weakened < 60)
-			M.weakened = 60
-	src.force = 35
-	..()
-	if(M.stat != 2)	M.stat = 1
-	for(var/mob/O in viewers(M, null))
-		if (O.client)
-			O.show_message(text("\red <B>[] has been rifle butted by []!</B>", M, user), 1, "\red You hear someone fall", 2)
-	return
+
 
 // AMMO
 
@@ -165,7 +152,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 /obj/item/weapon/gun/revolver/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (flag)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 	src.add_fingerprint(user)
@@ -310,7 +297,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 /obj/item/weapon/gun/shotgun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (flag)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 	if (src.pumped == 0)
@@ -473,7 +460,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 	if (flag)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 	if(!detective)
@@ -589,7 +576,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return
 	if (flag)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 
@@ -666,7 +653,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 /obj/item/weapon/gun/energy/taser_gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if(flag)
 		return
-	if (ismonkey(user) && ticker.mode.name != "monkey")
+	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
 		user << "\red You don't have the dexterity to do this!"
 		return
 	src.add_fingerprint(user)
@@ -789,7 +776,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 /obj/item/weapon/gun/energy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if(flag)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 
@@ -865,7 +852,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 /obj/item/weapon/gun/energy/teleport_gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if(flag)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 	src.add_fingerprint(user)
@@ -980,7 +967,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			return
 		if (flag)
 			return
-		if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
 			usr << "\red You don't have the dexterity to do this!"
 			return
 
