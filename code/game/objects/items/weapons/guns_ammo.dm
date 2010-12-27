@@ -152,7 +152,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 /obj/item/weapon/gun/revolver/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (flag)
 		return
-	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
+	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 	src.add_fingerprint(user)
@@ -297,7 +297,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 /obj/item/weapon/gun/shotgun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (flag)
 		return
-	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
+	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 	if (src.pumped == 0)
@@ -460,7 +460,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 	if (flag)
 		return
-	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
+	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 	if(!detective)
@@ -576,7 +576,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return
 	if (flag)
 		return
-	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
+	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 
@@ -653,7 +653,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 /obj/item/weapon/gun/energy/taser_gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if(flag)
 		return
-	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
+	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
 		user << "\red You don't have the dexterity to do this!"
 		return
 	src.add_fingerprint(user)
@@ -776,7 +776,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 /obj/item/weapon/gun/energy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if(flag)
 		return
-	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
+	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 
@@ -852,7 +852,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 /obj/item/weapon/gun/energy/teleport_gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if(flag)
 		return
-	if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
+	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
 	src.add_fingerprint(user)
@@ -967,7 +967,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			return
 		if (flag)
 			return
-		if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
+		if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
 			usr << "\red You don't have the dexterity to do this!"
 			return
 
