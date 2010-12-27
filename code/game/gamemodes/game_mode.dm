@@ -77,6 +77,9 @@
 	if (!R && istype(traitor_mob.belt, /obj/item/device/pda))
 		R = traitor_mob.belt
 		loc = "on your belt"
+	if (!R && istype(traitor_mob.wear_id, /obj/item/device/pda))
+		R = traitor_mob.wear_id
+		loc = "on your jumpsuit"
 	if (!R && istype(traitor_mob.l_hand, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = traitor_mob.l_hand
 		var/list/L = S.return_inv()
