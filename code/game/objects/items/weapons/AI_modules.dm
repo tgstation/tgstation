@@ -269,6 +269,7 @@ AI MODULES
 	lawpos = 0
 	while(lawpos < 15)
 		lawpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos)
+	lawpos = min(lawpos, 50)
 	var/newlaw = ""
 	var/targName = input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw)
 	newFreeFormLaw = targName
