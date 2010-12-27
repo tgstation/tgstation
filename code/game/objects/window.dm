@@ -132,6 +132,7 @@
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
 			O << text("\red [] smashes against the window.", usr)
+	playsound(src.loc, 'Glasshit.ogg', 100, 1)
 	src.health -= 15
 	if(src.health <= 0)
 		usr << text("\green You smash through the window.")

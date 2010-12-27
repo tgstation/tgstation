@@ -90,7 +90,7 @@
 			message = text("<B>[]</B> collapses!", src)
 			m_type = 2
 		if("help")
-			src << "choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roll, scratch,\nscretch, shake, sign-#, sulk, sway, tail, twitch, whimper"
+			src << "burp, choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roll, scratch,\nscretch, shake, sign-#, sulk, sway, tail, twitch, whimper"
 		else
 			src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))

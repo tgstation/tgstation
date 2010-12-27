@@ -80,6 +80,7 @@
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
 				O << text("\red [] mangles the grille.", usr)
+		playsound(src.loc, 'grillehit.ogg', 80, 1)
 		src.health -= 3
 		healthcheck()
 		return

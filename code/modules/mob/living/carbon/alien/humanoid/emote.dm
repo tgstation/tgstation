@@ -93,10 +93,12 @@
 			message = text("<B>[]</B> collapses!", src)
 			m_type = 2
 		if("help")
-			src << "choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
+			src << "burp, deathgasp, choke, collapse, dance, drool, gasp, shiver, gnarl, jump, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
 		else
 			src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))
+		if (act == "roar")
+			playsound(src.loc, 'hiss5.ogg', 40, 1, 1)
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)

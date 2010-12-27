@@ -239,7 +239,7 @@
 					for(var/mob/O in viewers(world.view,src))
 						O.show_message("\red <B>[src.target] has been leapt on by [lamarr ? src.name : "the alien"]!</B>", 1, "\red You hear someone fall", 2)
 					if (!lamarr)
-						target:bruteloss += 10
+						target:bruteloss += 5
 						if(prob(70))
 							target:paralysis = max(target:paralysis, 5)
 					src.loc = target.loc

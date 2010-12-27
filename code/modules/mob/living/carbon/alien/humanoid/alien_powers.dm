@@ -129,7 +129,7 @@ Doesn't work on silicon mobs or other aliens.*/
 		src.toxloss -= 10
 		log_say("AlienWhisper: [key_name(src)]->[M.key] : [msg]")
 
-		M << "\green You hear a strange alien voice in your head... \italic [msg]"
+		M << "\green You hear a strange, alien voice in your head... \italic [msg]"
 		src << {"\green You said: "[msg]" to [M]"}
 	else
 		src << "\green Not enough plasma stored."
