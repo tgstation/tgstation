@@ -524,7 +524,9 @@ Please clean it before use!</TT><BR>
 				src.icon_state = "mw1" //Make it look on too
 				src.updateUsrDialog()
 				src.being_cooked = new cooking(src)
+				use_power(500*(cook_time/50)/2)
 				spawn(cook_time) //After the cooking time
+					use_power(500*(cook_time/50)/2)
 					if(!isnull(src.being_cooked))
 						playsound(src.loc, 'ding.ogg', 50, 1)
 						if(istype(src.being_cooked, /obj/item/weapon/reagent_containers/food/snacks/humanburger))

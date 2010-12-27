@@ -80,12 +80,13 @@
 				if (world.time > src.lastDblClick+2)
 					src.lastDblClick = world.time
 					if((prob(40)) || (prob(95) && src.mutations & 16))
-						src << "\red You accidentally stun yourself with the [W.name]."
+						//src << "\red You accidentally stun yourself with the [W.name]."
+						src.visible_message("\red [src] accidentally stun \himself with the [W.name].", \
+							"\red You accidentally stun yourself with the [W.name].")
 						src.weakened = max(12, src.weakened)
 					else
-						for(var/mob/M in viewers(src, null))
-							if(M.client)
-								M << "\red <B>[src] accidentally bumps into [tmob] with the [W.name]."
+						src.visible_message("\red[src] accidentally bumps into [tmob] with the [W.name].", \
+							"\red You accidentally bumps into [tmob] with the [W.name].")
 						tmob.weakened = max(4, tmob.weakened)
 						tmob.stunned = max(4, tmob.stunned)
 					playsound(src.loc, 'Egloves.ogg', 50, 1, -1)
@@ -93,9 +94,8 @@
 					return
 		if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & 32)
 			if(prob(40) && !(src.mutations & 32))
-				for(var/mob/M in viewers(src, null))
-					if(M.client)
-						M << "\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>"
+				src.visible_message("\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>", \
+					"\red <B>You fail to push [tmob]'s fat ass out of the way.</B>")
 				src.now_pushing = 0
 				return
 	src.now_pushing = 0

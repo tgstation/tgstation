@@ -68,6 +68,10 @@ the blender or the processor: Processor items are solid objects and Blender resu
 
 /obj/machinery/blender/verb/blend()		//Blend shit. Note: In the actual blending loop, make sure it can't include the jug.
 	set src in oview(1)					// Otherwise, it'll try to blend it too.
+	if (usr.stat != 0)
+		return
+	if (src.stat != 0) //NOPOWER etc
+		return
 	if(src.processing)
 		usr << "The blender is in the process of blending."
 	else if(!src.container)
@@ -76,6 +80,7 @@ the blender or the processor: Processor items are solid objects and Blender resu
 		playsound(src.loc, 'blender.ogg', 50, 1)
 		src.processing = 1
 		usr << "You turn on the blender."
+		use_power(50)
 		for(var/obj/O in src.contents)
 			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/berries))
 				src.reagents.add_reagent("berryjuice", 5)
@@ -92,6 +97,8 @@ the blender or the processor: Processor items are solid objects and Blender resu
 
 /obj/machinery/blender/verb/detach()		//Transfers the contents of the Blender to the Blender Jug and then ejects the jug.
 	set src in oview(1)
+	if (usr.stat != 0)
+		return
 	if(src.processing)
 		usr << "The blender is in the process of blending."
 	else if(!src.container)
@@ -110,6 +117,8 @@ the blender or the processor: Processor items are solid objects and Blender resu
 
 /obj/machinery/blender/verb/eject()			//Ejects the non-reagent contents of the blender besides the jug.
 	set src in oview(1)
+	if (usr.stat != 0)
+		return
 	if(src.processing)
 		usr << "The blender is in the process of blending."
 	else if(!src.container)

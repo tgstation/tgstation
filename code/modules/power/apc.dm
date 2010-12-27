@@ -77,18 +77,6 @@
 		flagIndex+=1
 	return apcwires
 
-/obj/machinery/power/apc/updateUsrDialog()
-	if (stat & (BROKEN|MAINT))
-		return
-	var/list/nearby = viewers(1, src)
-	for(var/mob/M in nearby)
-		if ((M.client && M.machine == src))
-			src.interact(M)
-	if (istype(usr, /mob/living/silicon))
-		if (!(usr in nearby))
-			if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-				src.interact(usr)
-
 /obj/machinery/power/apc/updateDialog()
 	if (stat & (BROKEN|MAINT))
 		return
@@ -724,15 +712,15 @@
 		if(APC_WIRE_MAIN_POWER1)
 			src.shock(usr, 50)			//this doesn't work for some reason, give me a while I'll figure it out
 			src.shorted = 1
-			src.updateUsrDialog()
+			src.updateDialog()
 		if(APC_WIRE_MAIN_POWER2)
 			src.shock(usr, 50)
 			src.shorted = 1
-			src.updateUsrDialog()
+			src.updateDialog()
 		if (APC_WIRE_AI_CONTROL)
 			if (src.aidisabled == 0)
 				src.aidisabled = 1
-			src.updateUsrDialog()
+			src.updateDialog()
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 
@@ -745,18 +733,18 @@
 			if ((!src.isWireCut(APC_WIRE_MAIN_POWER1)) && (!src.isWireCut(APC_WIRE_MAIN_POWER2)))
 				src.shorted = 0
 				src.shock(usr, 50)
-				src.updateUsrDialog()
+				src.updateDialog()
 		if(APC_WIRE_MAIN_POWER2)
 			if ((!src.isWireCut(APC_WIRE_MAIN_POWER1)) && (!src.isWireCut(APC_WIRE_MAIN_POWER2)))
 				src.shorted = 0
 				src.shock(usr, 50)
-				src.updateUsrDialog()
+				src.updateDialog()
 		if (APC_WIRE_AI_CONTROL)
 			//one wire for AI control. Cutting this prevents the AI from controlling the door unless it has hacked the door through the power connection (which takes about a minute). If both main and backup power are cut, as well as this wire, then the AI cannot operate or hack the door at all.
 			//aidisabledDisabled: If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 			if (src.aidisabled == 1)
 				src.aidisabled = 0
-			src.updateUsrDialog()
+			src.updateDialog()
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
 
 /obj/machinery/power/apc/proc/pulse(var/wireColor)
@@ -903,7 +891,7 @@
 						malfai << "Hack complete. The APC is now under your exclusive control. Unable to fuse interface due to lack of cell do discharge."
 
 
-		src.updateUsrDialog()
+		src.updateDialog()
 		return
 
 	else
@@ -1080,7 +1068,7 @@
 		update()
 
 	//src.updateDialog()
-	src.updateUsrDialog()
+	src.updateDialog()
 
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff

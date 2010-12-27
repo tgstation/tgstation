@@ -99,6 +99,8 @@
 	return
 
 /obj/machinery/processor/attack_hand(var/mob/user as mob)
+	if (src.stat != 0) //NOPOWER etc
+		return
 	if(src.processing)
 		user << "\red The processor is in the process of processing."
 		return 1
@@ -115,6 +117,7 @@
 			"You turn on \a [src].", \
 			"You hear food processor")
 		playsound(src.loc, 'blender.ogg', 50, 1)
+		use_power(50)
 		sleep(P.time)
 		P.process(src.loc, O)
 		src.processing = 0
