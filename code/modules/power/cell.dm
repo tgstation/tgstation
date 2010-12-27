@@ -47,7 +47,7 @@
 
 /obj/item/weapon/cell/examine()
 	set src in view(1)
-	if(usr && !usr.stat)
+	if(usr /*&& !usr.stat*/)
 		if(maxcharge <= 2500)
 			usr << "[desc]\nThe manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.\nThe charge meter reads [round(src.percent() )]%."
 		else
@@ -80,8 +80,54 @@
 
 /obj/item/weapon/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
-
-	explosion(T, 0, 1, 2, 2) //TODO: involve charge
+/*
+ * 1000-cell	explosion(T, -1, 0, 1, 1)
+ * 2500-cell	explosion(T, -1, 0, 1, 1)
+ * 10000-cell	explosion(T, -1, 1, 3, 3)
+ * 15000-cell	explosion(T, -1, 2, 4, 4)
+ * */
+	if (charge==0)
+		return
+	var/devastation_range = -1 //round(charge/11000)
+	var/heavy_impact_range = round(sqrt(charge)/60)
+	var/light_impact_range = round(sqrt(charge)/30)
+	var/flash_range = light_impact_range
+	if (light_impact_range==0)
+		rigged = 0
+		corrupt()
+		return
+	//explosion(T, 0, 1, 2, 2)
+	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 
 	spawn(1)
 		del(src)
+
+/obj/item/weapon/cell/proc/corrupt()
+	charge /= 2
+	maxcharge /= 2
+	if (prob(10))
+		rigged = 1 //broken batterys are dangerous
+
+/obj/item/weapon/cell/ex_act(severity)
+
+	switch(severity)
+		if(1.0)
+			del(src)
+			return
+		if(2.0)
+			if (prob(50))
+				del(src)
+				return
+			if (prob(50))
+				corrupt()
+		if(3.0)
+			if (prob(25))
+				del(src)
+				return
+			if (prob(25))
+				corrupt()
+	return
+	
+/obj/item/weapon/cell/blob_act()
+	if(prob(75))
+		explode()

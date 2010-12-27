@@ -359,7 +359,7 @@
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
 	var/obj/cable/C = T.get_cable_node()
-	if (!C.netnum)
+	if (!C || !C.netnum)
 		return
 	makepowernets() //TODO: find fast way
 

@@ -5,6 +5,8 @@ tbh this could likely be better and I did not use all that many comments on it.
 However people seem to like it for some reason.
 */////////////////////////////////////////////////
 
+#define collector_control_range 12
+
 /////SINGULARITY SPAWNER
 /obj/machinery/the_singularitygen/
 	name = "Gravitational Singularity Generator"
@@ -73,6 +75,7 @@ However people seem to like it for some reason.
 	if(Ti)
 		src.Dtime = Ti
 	..()
+	notify_collector_controller()
 
 /obj/machinery/the_singularity/attack_hand(mob/user as mob)
 	return 1
@@ -83,11 +86,16 @@ However people seem to like it for some reason.
 /obj/machinery/the_singularity/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			del(src) //TODO: some animation
+			del(src)
 			return
 		if(2.0 to 3.0) //no way
 			return
 	return
+
+/obj/machinery/the_singularity/Del()
+	//TODO: some animation
+	notify_collector_controller()
+	..()
 
 /obj/machinery/the_singularity/process()
 	eat()
@@ -113,6 +121,7 @@ However people seem to like it for some reason.
 	if ( is_surrounded && active )
 		src.active = 0
 		src.dieot = 0
+		notify_collector_controller()
 		spawn(50)
 			if (!active)
 				grav_pull = 6
@@ -121,12 +130,18 @@ However people seem to like it for some reason.
 		src.active = 1
 		src.dieot = 1
 		grav_pull = 8
+		notify_collector_controller()
 	if(active == 1)
 		move()
 		spawn(5)
 			move()
 
 
+/obj/machinery/the_singularity/proc/notify_collector_controller()
+	var/oldsrc = src
+	src = 0 //for spawn() working even after Del(), see byond documentation about sleep() -rastaf0
+	for(var/obj/machinery/power/collector_control/myCC in orange(collector_control_range,oldsrc))
+		spawn() myCC.updatecons()
 
 /obj/machinery/the_singularity
 	var/global/list/uneatable = list(\
@@ -287,6 +302,7 @@ However people seem to like it for some reason.
 						new/obj/item/weapon/tile (X)
 						X:break_tile_to_plating()
 					else
+
 						X:break_tile()
 			else if(istype(X,/turf/simulated/wall))
 				if (istype(X,/turf/simulated/wall/r_wall))
@@ -566,51 +582,30 @@ However people seem to like it for some reason.
 		icon_state = "Emitter"
 
 /obj/machinery/emitter/attack_hand(mob/user as mob)
-	if (..())
-		return
 	if(state == 3)
-		if(!src.locked)
+		if(!src.locked || istype(user, /mob/living/silicon))
 			src.add_fingerprint(user)
 			if(src.active==1)
 				src.active = 0
-				user << "You turn off the emitter."
+				user << "You turn off the [src]."
 			else
 				src.active = 1
-				user << "You turn on the emitter."
+				user << "You turn on the [src]."
 				src.shot_number = 0
 				src.fire_delay = 100
 			update_icon()
 		else
 			user << "The controls are locked!"
 	else
-		user << "The emitter needs to be firmly secured to the floor first."
+		user << "The [src] needs to be firmly secured to the floor first."
 		return 1
-
-
-/obj/machinery/emitter/attack_ai(mob/user as mob)
-	if (..())
-		return
-	if(state == 3)
-		src.add_fingerprint(user)
-		if(src.active==1)
-			src.active = 0
-			user << "You turn off the emitter."
-		else
-			src.active = 1
-			user << "You turn on the emitter."
-			src.shot_number = 0
-			src.fire_delay = 100
-		update_icon()
-	else
-		user << "The emitter needs to be firmly secured to the floor first."
-
 
 /obj/machinery/emitter/process()
 
 	if(stat & (NOPOWER|BROKEN))
 		return
 
-	if(!src.state == 3)
+	if(!src.state == 3 || !anchored)
 		src.active = 0
 		return
 
@@ -661,7 +656,7 @@ However people seem to like it for some reason.
 /obj/machinery/emitter/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
-			user << "\red Turn off the emitter first."
+			user << "\red Turn off the [src] first."
 			return 1
 
 		else if(state == 0)
@@ -685,10 +680,10 @@ However people seem to like it for some reason.
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		if (state == 0)
-			user << "\red The emitter needs to be wrenched to the floor first."
+			user << "\red The [src] needs to be wrenched to the floor first."
 			return 1
 
-		if (W:get_fuel() < 1)
+		if (W:get_fuel() < 2) //weldingtool always uses 1 additional unit of fuel
 			user << "\blue You need more welding fuel to complete this task."
 			return 1
 		W:use_fuel(1)
@@ -697,21 +692,21 @@ However people seem to like it for some reason.
 
 		if(state == 1)
 			user.visible_message("[user.name] start to weld [src.name] to the floor.", \
-				"You start to weld the emitter to the floor.", \
+				"You start to weld the [src] to the floor.", \
 				"You hear welding")
 			if (do_after(user,20))
 				state = 3
-				user << "You weld the emitter to the floor."
+				user << "You weld the [src] to the floor."
 			else
 				return 1
 
 		else if(state == 3)
 			user.visible_message("[user.name] start to cut [src.name] to the floor.", \
-				"You start to cut the emitter free from the floor.", \
+				"You start to cut the [src] free from the floor.", \
 				"You hear welding")
 			if (do_after(user,20))
 				state = 1
-				user << "You cut the emitter free from the floor."
+				user << "You cut the [src] free from the floor."
 			else
 				return 1
 
@@ -776,20 +771,34 @@ However people seem to like it for some reason.
 	icon_state = "ca"
 	flick("ca_deactive", src)
 
+/obj/machinery/power/collector_array/proc/eject()
+	var/obj/item/weapon/tank/plasma/Z = src.P
+	Z.loc = get_turf(src)
+	Z.layer = initial(Z.layer)
+	src.P = null
+	if (src.active)
+		src.active = 0
+		updateicon_off()
+	else
+		updateicon()
+	if (CU)
+		CU.updatecons()
+
 /obj/machinery/power/collector_array/power_change()
 	..()
 	updateicon()
 
 /obj/machinery/power/collector_array/process()
-
-	if(P)
-		if(P.air_contents.toxins <= 0)
+	if(src.active == 1)
+		if(P)
+			if(P.air_contents.toxins <= 0)
+				P.air_contents.toxins = 0
+				src.active = 0
+				updateicon_off()
+		else
 			src.active = 0
 			updateicon_off()
-	else if(src.active == 1)
-		src.active = 0
-		updateicon_off()
-	..()
+	//use_power called from collector_array/process
 
 /obj/machinery/power/collector_array/attack_hand(mob/user as mob)
 	if (..())
@@ -838,17 +847,7 @@ However people seem to like it for some reason.
 	else if(istype(W, /obj/item/weapon/crowbar))
 		if(!P)
 			return 1
-		var/obj/item/weapon/tank/plasma/Z = src.P
-		Z.loc = get_turf(src)
-		Z.layer = initial(Z.layer)
-		src.P = null
-		if (src.active)
-			src.active = 0
-			updateicon_off()
-		else
-			updateicon()
-		if (CU)
-			CU.updatecons()
+		eject()
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(active)
@@ -866,8 +865,8 @@ However people seem to like it for some reason.
 				user.visible_message("[user.name] unsecure [src.name] reinforcing bolts to the floor.", \
 					"You undo the external reinforcing bolts.", \
 					"You hear ratchet")
-				if (CU)
-					CU.updatecons()
+			for(var/obj/machinery/power/collector_control/myCC in orange(1,src))
+				myCC.updatecons()
 
 	else
 		user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
@@ -878,11 +877,14 @@ However people seem to like it for some reason.
 /obj/machinery/power/collector_array/ex_act(severity)
 	switch(severity)
 		if(2.0 to 3.0)
-			var/obj/item/weapon/tank/plasma/Z = src.P
-			Z.loc = get_turf(src)
-			Z.layer = initial(Z.layer)
-			src.P = null
+			eject()
 	return ..()
+	
+/obj/machinery/power/collector_array/Del()
+	. = ..()
+	for(var/obj/machinery/power/collector_control/myCC in orange(1,src))
+		myCC.updatecons()
+
 ////////////CONTROL UNIT
 
 /obj/machinery/power/collector_control
@@ -921,14 +923,19 @@ However people seem to like it for some reason.
 
 /obj/machinery/power/collector_control/proc/updatecons()
 	S = list()
-	for(var/obj/machinery/the_singularity/myS in orange(12,src))
+	for(var/obj/machinery/the_singularity/myS in orange(collector_control_range,src))
 		S += myS
 
-	for (var/ca_dir in cardinal)
+	for (var/ca_dir in list( WEST, EAST, NORTH, SOUTH ) /* cardinal*/ )
 		var/obj/machinery/power/collector_array/newCA = locate() in get_step(src,ca_dir)
 		if (isnull(newCA))
 			continue
-		if (!newCA.anchored)
+		if (!isnull(newCA.CU) && newCA.CU != src)
+			var/n = CA.Find(newCA)
+			if (n)
+				CA[n] = null
+			continue
+		if (!newCA.anchored || (!isnull(newCA.CU) && newCA.CU != src))
 			var/n = CA.Find(newCA)
 			if (n)
 				CA[n] = null
@@ -947,12 +954,14 @@ However people seem to like it for some reason.
 		return
 	overlays += image('singularity.dmi', "cu on")
 	var/err = 0
-	for (var/i = 1, ((i<= CA.len) && (i<=4)), i++)
+	for (var/i = 1, i <= CA.len, i++)
 		var/obj/machinery/power/collector_array/myCA = CA[i]
 		if(myCA)
 			if (myCA.P)
 				if(myCA.active)
 					overlays += image('singularity.dmi', "cu [i] on")
+				if (myCA.P.air_contents.toxins <= 0)
+					err = 1
 			else
 				err = 1
 	if(err)
@@ -962,7 +971,7 @@ However people seem to like it for some reason.
 			overlays += image('singularity.dmi', "cu sing")
 			break
 	for (var/obj/machinery/the_singularity/myS in S)
-		if(myS && !myS.active)
+		if(myS && myS.active)
 			overlays += image('singularity.dmi', "cu conterr")
 			break
 
@@ -977,31 +986,30 @@ However people seem to like it for some reason.
 /obj/machinery/power/collector_control/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(src.active == 1)
-		var/power_a = 0
-		var/power_s = 0
-		var/power_p = 0
+	if(!active)
+		return
+	var/power_a = 0
+	var/power_s = 0
+	var/power_p = 0
 
-		for (var/obj/machinery/the_singularity/myS in S)
-			if(!isnull(myS))
-				power_s += myS.energy
+	for (var/obj/machinery/the_singularity/myS in S)
+		if(!isnull(myS))
+			power_s += myS.energy
 
-		for (var/i = 1, i<= CA.len, i++)
-			var/obj/machinery/power/collector_array/myCA = CA[i]
-			if (!myCA)
-				continue
-			var/obj/item/weapon/tank/plasma/myP = myCA.P
-			if(myP)
-				if (myCA.active)
-					myCA.use_power(250)
-					power_p += myP.air_contents.toxins
-					myP.air_contents.toxins -= 0.001
+	for (var/i = 1, i<= CA.len, i++)
+		var/obj/machinery/power/collector_array/myCA = CA[i]
+		if (!myCA)
+			continue
+		var/obj/item/weapon/tank/plasma/myP = myCA.P
+		if (myCA.active && myP)
+			myCA.use_power(250)
+			power_p += myP.air_contents.toxins
+			myP.air_contents.toxins -= 0.001
 
-		power_a = power_p*power_s*50
-		src.lastpower = power_a
-		add_avail(power_a)
-		use_power(250)
-	..()
+	power_a = power_p*power_s*50
+	src.lastpower = power_a
+	add_avail(power_a)
+	use_power(250)
 
 
 /obj/machinery/power/collector_control/attack_hand(mob/user as mob)
@@ -1013,14 +1021,14 @@ However people seem to like it for some reason.
 			return 1
 		src.active = !src.active
 		if(!src.active)
-			user << "You turn off the collector control."
+			user << "You turn off the [src]."
 			src.lastpower = 0
 			updateicon()
 		if(src.active)
-			user << "You turn on the collector control."
+			user << "You turn on the [src]."
 			updatecons()
 	else
-		user << "\red The collector control needs to be secured to the floor first."
+		user << "\red The [src] needs to be secured to the floor first."
 		return 1
 
 /obj/machinery/power/collector_control/attackby(obj/item/W, mob/user)
@@ -1040,7 +1048,7 @@ However people seem to like it for some reason.
 			connect_to_network()
 		else
 			user.visible_message("[user.name] unsecure [src.name] to the floor.", \
-				"You undo the collector control securing bolts.", \
+				"You undo the [src] securing bolts.", \
 				"You hear ratchet")
 			disconnect_from_network()
 	else
@@ -1050,7 +1058,7 @@ However people seem to like it for some reason.
 	src.add_fingerprint(user)
 
 /////FIELD GEN
-
+#define field_generator_max_power 250
 /obj/machinery/field_generator
 	name = "Field Generator"
 	desc = "Projects an energy field when active"
@@ -1063,7 +1071,6 @@ However people seem to like it for some reason.
 	var/Varpower = 0
 	var/active = 0
 	var/power = 20
-	var/max_power = 250
 	var/state = 0
 	//var/steps = 0
 	//var/last_check = 0
@@ -1081,9 +1088,9 @@ However people seem to like it for some reason.
 		return
 	var/level = 3
 	switch (power)
-		if(0 to 40)
+		if(0 to 60)
 			level = 1
-		if(41 to 220)
+		if(61 to 220)
 			level = 2
 		if(221 to INFINITY)
 			level = 3
@@ -1092,9 +1099,16 @@ However people seem to like it for some reason.
 		powerlevel = level
 		icon_state = "Field_Gen +a[powerlevel]"
 
+/obj/machinery/field_generator/proc/turn_off()
+	src.active = 0
+	spawn(1)
+		src.cleanup()
+	update_icon()
+
 /obj/machinery/field_generator/proc/turn_on()
 	src.active = 1
 	warming_up = 1
+	powerlevel = 0
 	spawn(1)
 		while (warming_up<3 && active)
 			sleep(50)
@@ -1104,36 +1118,23 @@ However people seem to like it for some reason.
 
 /obj/machinery/field_generator/attack_hand(mob/user as mob)
 	if(state == 3)
-		if(!src.locked)
+		if(!src.locked || istype(user, /mob/living/silicon))
 			if(src.active >= 1)
 	//			src.active = 0
 	//			icon_state = "Field_Gen"
-				user << "You are unable to turn off the field generator, wait till it powers down."
+				user << "You are unable to turn off the [src]r, wait till it powers down."
 	//			src.cleanup()
 				return 1
 			else
 				user.visible_message("[user.name] turn on [src.name]", \
-					"You turn on the field generator.", \
+					"You turn on the [src].", \
 					"You hear heavy droning")
 				turn_on()
 				src.add_fingerprint(user)
 		else
 			user << "The controls are locked!"
 	else
-		user << "The field generator needs to be firmly secured to the floor first."
-
-/obj/machinery/field_generator/attack_ai(mob/user as mob)
-	if(state == 3)
-		if(src.active >= 1)
-			user << "You are unable to turn off the field generator, wait till it powers down."
-		else
-			user.visible_message("[user.name] turn on [src.name]", \
-				"You turn on the field generator.", \
-				"You hear heavy droning")
-			turn_on()
-			src.add_fingerprint(user)
-	else
-		user << "The field generator needs to be firmly secured to the floor first."
+		user << "The [src] needs to be firmly secured to the floor first."
 
 /obj/machinery/field_generator/New()
 	..()
@@ -1146,13 +1147,14 @@ However people seem to like it for some reason.
 		if(src.active == 0)
 			src.active = 1
 			src.state = 3
-			src.power = 250
+			src.power = field_generator_max_power
 			src.anchored = 1
+			src.warming_up = 1
 		Varedit_start = 0
 
 	if(src.active == 1)
-		if(!src.state == 3)
-			src.active = 0
+		if(!src.state == 3 || !anchored)
+			turn_off()
 			return
 		spawn(1)
 			setup_field(1)
@@ -1165,17 +1167,16 @@ However people seem to like it for some reason.
 		src.active = 2
 	if(src.power < 0)
 		src.power = 0
-	if(src.power > src.max_power)
-		src.power = src.max_power
+	if(src.power > field_generator_max_power)
+		src.power = field_generator_max_power
 	if(src.active >= 1)
 		src.power -= 1
 		if(Varpower == 0)
 			if(src.power <= 0)
 				for(var/mob/M in viewers(src))
 					M.show_message("\red The [src.name] shuts down due to lack of power!")
-				src.active = 0
-				spawn(1)
-					src.cleanup()
+				turn_off()
+				return
 		update_icon()
 
 /obj/machinery/field_generator/proc/setup_field(var/NSEW)
@@ -1214,7 +1215,7 @@ However people seem to like it for some reason.
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench) && state!=3)
 		if(active)
-			user << "Turn off the field generator first."
+			user << "Turn off the [src] first."
 			return 1
 
 		if(state == 0)
@@ -1237,7 +1238,7 @@ However people seem to like it for some reason.
 		if(state == 0)
 			user << "\red The [src.name] needs to be wrenched to the floor first."
 			return 1
-		if (W:get_fuel() < 1)
+		if (W:get_fuel() < 2)
 			user << "\blue You need more welding fuel to complete this task."
 			return 1
 		W:use_fuel(1)
@@ -1246,7 +1247,7 @@ However people seem to like it for some reason.
 
 		if(state == 1)
 			user.visible_message("[user.name] start to weld [src.name] to the floor.", \
-				"You start to weld the field generator to the floor.", \
+				"You start to weld the [src] to the floor.", \
 				"You hear welding")
 			if (do_after(user,20))
 				state = 3
@@ -1256,11 +1257,11 @@ However people seem to like it for some reason.
 
 		else if(state == 3)
 			user.visible_message("[user.name] start to cut [src.name] free from the floor.", \
-				"You start to cut the field generator free from the floor.", \
+				"You start to cut the [src] free from the floor.", \
 				"You hear welding")
 			if (do_after(user,20))
 				state = 1
-				user << "You cut the field generator free from the floor."
+				user << "You cut the [src] free from the floor."
 			else
 				return 1
 
@@ -1302,7 +1303,8 @@ However people seem to like it for some reason.
 		if (isnull(F))
 			continue
 		G = (F.gen_primary == src) ? F.gen_secondary : F.gen_primary
-		G.fields -= F
+		if (G)
+			G.fields -= F
 		del(F)
 	fields = list()
 
