@@ -4,4 +4,5 @@
 	icon = 'mob.dmi'//
 	icon_state = "ai-holo"
 	density = 0
-	var/parent_ai = null
+	var/mob/living/silicon/ai/parent_ai = null
+	var/datum/ai_laws/ailaws = null

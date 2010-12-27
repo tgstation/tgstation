@@ -6,6 +6,7 @@
 			if(src.state == "off") //question number three
 				var/mob/living/silicon/aihologram/holo = new /mob/living/silicon/aihologram(src.loc)
 				holo.parent_ai = user
+				holo.ailaws = holo.parent_ai.laws_object
 				holo.client = usr.client //should move the client there
 				src.state = "on"
 				src.icon_state = "holopad1"

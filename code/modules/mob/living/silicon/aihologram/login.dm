@@ -1,4 +1,4 @@
-/mob/dead/aihologram/Login()
+/mob/living/silicon/aihologram/Login()
 	..()
 
 	src.client.screen = null
