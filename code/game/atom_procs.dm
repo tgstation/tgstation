@@ -101,8 +101,9 @@
 			var/obj/decal/cleanable/blood/this = new /obj/decal/cleanable/blood(source2)
 			this.blood_DNA = M.dna.unique_enzymes
 			this.blood_type = M.b_type
-			this.virus = new M.virus.type
-			this.virus.holder = this
+			if (M.virus)
+				this.virus = new M.virus.type
+				this.virus.holder = this
 		else if (istype(src, /mob/living/carbon/human))
 			src.blood_DNA = M.dna.unique_enzymes
 			src.blood_type = M.b_type
