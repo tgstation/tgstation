@@ -576,32 +576,13 @@
 	var/gibtime = 40 // Time from starting until meat appears
 	var/mob/occupant // Mob who has been put inside
 
-/obj/machinery/travel
-	name = "travel thingie"
-	desc = "it is used for travel idunno"
-	icon = 'travel.dmi'
-	density = 1
+/obj/machinery/holopad
+	name = "holopad"
+	desc = "A floor-mounted device for projecting AI holograms."
+	icon_state = "holopad0"
 	anchored = 1
-
-	//note - didn't use a single loc list just because it's easier to edit via adminmagics if this is done this way
-	var/z_connect[world.maxz] //the z position of the tiles it connects to
-	var/x_connect[world.maxx] //the x position of the tiles it connects to
-	var/y_connect[world.maxy] //the y position of the tiles it connects to
-
-/obj/machinery/travel/ladder
-	icon_state = "ladder_up"
-	name = "ladder"
-	desc = "It is a ladder."
-	var/connected = 0
-
-/obj/machinery/travel/elevator
-	icon_state = "elevator_closed"
-	name = "elevator"
-	desc = "It is an elevator. The display shows \"1\"."
-
-	var/current_floor = 1 //current floor the elevator is on. do NOT confuse with current z-level of the elevator
-	var/list/elevators_connected = list() //list of elevators it is connected to
-	var/list/floors = list() //dependant on the number of elevators, converts z-levels to floors, basically
+	var/state = "off"
+	var/slave_holo = null
 
 /*			//By Darem, will implement.... eventually...
 /obj/machinery/circuitprinter
