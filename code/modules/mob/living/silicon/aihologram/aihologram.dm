@@ -36,6 +36,11 @@
 /mob/living/silicon/aihologram/bullet_act(flag)
 	return
 
+/mob/living/silicon/aihologram/Life()
+	if(src.stat)
+		del(src)
+	..()
+
 /mob/living/silicon/aihologram/proc/back_to_ai()
 	set category = "AI Commands"
 	set name = "Return To AI"

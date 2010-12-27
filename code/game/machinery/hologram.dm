@@ -8,6 +8,8 @@
 				holo.parent_ai = user
 				holo.ailaws = holo.parent_ai.laws_object
 				holo.client = usr.client //should move the client there
+				holo.name = holo.parent_ai.name
+				holo.real_name = holo.parent_ai.real_name
 				src.state = "on"
 				src.icon_state = "holopad1"
 				src.slave_holo = holo
