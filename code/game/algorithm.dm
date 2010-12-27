@@ -13,6 +13,7 @@
 	goon_loadfile()
 	beta_tester_loadfile()
 	LoadBans()
+	process_teleport_locs() //Sets up the wizard teleport locations
 
 	spawn(30)
 		//EXPERIMENTAL

@@ -43,6 +43,19 @@
 								// (original area before splitting due to sd_DAL)
 	var/list/related			// the other areas of the same type as this
 
+/*Adding a wizard area teleport list because motherfucking lag -- Urist*/
+/*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
+var/list/teleportlocs = list()
+
+proc/process_teleport_locs()
+	for(var/area/AR in world)
+		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station)) continue
+		if(teleportlocs.Find(AR.name)) continue
+		var/turf/picked = pick(get_area_turfs(AR.type))
+		if (picked.z == 1)
+			teleportlocs += AR.name
+			teleportlocs[AR.name] = AR
+/*-----------------------------------------------------------------------------*/
 
 /area/engine/
 
