@@ -904,9 +904,16 @@
 /obj/item/clothing/under/rank/centcom_officer
 	desc = "It has a CentCom officer rank stripe on it."
 	name = "CentCom Officer Jumpsuit"
-	icon_state = "hop"
-	item_state = "b_suit"
+	icon_state = "officer"
+	item_state = "g_suit"
 	color = "officer"
+
+/obj/item/clothing/under/rank/centcom_commander
+	desc = "It has a CentCom commander rank stripe on it."
+	name = "CentCom Officer Jumpsuit"
+	icon_state = "centcom"
+	item_state = "dg_suit"
+	color = "centcom"
 
 /obj/item/clothing/under/rank/head_of_security
 	desc = "It has a Head of Security rank stripe on it."

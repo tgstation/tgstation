@@ -72,6 +72,39 @@
 	attack_hand(user as mob)
 		return
 
+	attack_alien(var/mob/living/carbon/alien/user as mob) //So aliums can attack and potentially eat space carp.
+		if(src.alive)
+			if (user.a_intent == "help")
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\blue [user] caresses [src.name] with its scythe like arm."), 1)
+			else
+				src.health -= rand(15,30)
+				if(src.aggressive)
+					src.target = user
+					src.state = 1
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has slashed [src.name]!</B>", user), 1)
+				playsound(src.loc, 'slice.ogg', 25, 1, -1)
+				if(prob(10)) new /obj/decal/cleanable/blood(src.loc)
+				if (src.health <= 0)
+					src.death()
+		else
+			if (user.a_intent == "grab")
+				for(var/mob/N in viewers(user, null))
+					if(N.client)
+						N.show_message(text("\red <B>[user] is attempting to devour the carp!</B>"), 1)
+				if(!do_after(user, 50))	return
+				for(var/mob/N in viewers(user, null))
+					if(N.client)
+						N.show_message(text("\red <B>[user] hungrily devours the carp!</B>"), 1)
+				user.health += rand(10,25)
+				del(src)
+			else
+				user << "\green The creature is already dead."
+		return
+
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(src.alive)
 			switch(W.damtype)

@@ -68,30 +68,30 @@ TELEPORT GUN
 		spawn()
 			A.process()
 		return
-	attack(mob/M as mob, mob/user as mob)
-		..()
-		src.add_fingerprint(user)
-		if ((prob(50) && M.stat < 2))
-			var/mob/living/carbon/human/H = M
-			if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-				M << "\blue The helmet protects you from being hit hard in the head!"
-				for(var/mob/O in viewers(M, null))
-					if(O.client)
-						O.show_message(text("\red <B>[] blocked a hit from []!</B>", M, user), 1)
-				return
-			var/time = rand(20, 60)
-			if (prob(90))
-				M.paralysis = max(time, M.paralysis)
-			else
-				M.weakened = max(time, M.weakened)
-			src.force = 35
-			..()
-			if(M.stat != 2)	M.stat = 1
-			for(var/mob/O in viewers(M, null))
-				if(O.client)
-					O.show_message(text("\red <B>[] has been rifle butted by []!</B>", M, user), 1, "\red You hear someone fall.", 2)
-		return
 
+/obj/item/weapon/gun/energy/pulse_rifle/attack(mob/M as mob, mob/user as mob)
+	src.add_fingerprint(user)
+	var/mob/living/carbon/human/H = M
+
+	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
+		M << "\blue The helmet protects you from being hit hard in the head!"
+		for(var/mob/O in viewers(M, null))
+			if(O.client)
+				O.show_message(text("\red <B>[] blocked a hit from []!</B>", M, user), 1)
+		return
+	else
+		var/time = rand(20, 60)
+		if (prob(90))
+			M.paralysis = max(time, M.paralysis)
+		else
+			M.weakened = max(time, M.weakened)
+		src.force = 35
+		..()
+		if(M.stat != 2)	M.stat = 1
+		for(var/mob/O in viewers(M, null))
+			if(O.client)
+				O.show_message(text("\red <B>[] has been rifle butted by []!</B>", M, user), 1, "\red You hear someone fall.", 2)
+	return
 
 // AMMO
 
@@ -538,10 +538,6 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		for(var/mob/O in viewers(M, null))
 			if (O.client)	O.show_message(text("\red <B>[] has been pistol whipped with the detectives revolver by []!</B>", M, user), 1, "\red You hear someone fall", 2)
 	return
-
-
-
-
 
 // ENERGY GUN
 

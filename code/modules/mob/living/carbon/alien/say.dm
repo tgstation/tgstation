@@ -11,7 +11,8 @@
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			src.alien_talk(message)
 		else
-			playsound(src.loc, "hiss", 25, 1, 1)//So aliens can hiss while they hiss yo/N
+			if (copytext(message, 1, 2) != "*" && !src.stat)
+				playsound(src.loc, "hiss", 25, 1, 1)//So aliens can hiss while they hiss yo/N
 			return ..(message)
 	else
 

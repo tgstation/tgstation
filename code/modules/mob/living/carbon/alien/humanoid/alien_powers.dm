@@ -1,15 +1,5 @@
 /*NOTES:
-
-There are several problems with alien powers right now. I am currently trying to fix the dissolve verb so it makes a lot more sense.
-Alien spit is ridiculous and needs to be toned down. It homes in on targets when it should probably work
-more like a taser shot but with continuous toxin damage to the target if they are hit.
-Invisibility works well but 30 seconds is too long. 15 would be good considering it doesn't cost much and makes the alien a lot more
-robust (can't be canceled by anything short of thermals or a superpower).
-Vent crawl shouldn't transport the alien to the Prison Station or back. The list should also be in some order since right now it's
-often difficult to pick the right destination.
-Resin wall should also apply to mobs so that aliens can envelope them in resin (effectively paralyze them) to successfully hatch more
-aliens. Perhaps it should also prevent the target from suiciding.
-All I can think of right now./N
+These are being worked on.
 */
 
 /mob/living/carbon/alien/humanoid/verb/invis()

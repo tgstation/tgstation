@@ -20,7 +20,7 @@
 				m_type = 2
 		if ("deathgasp")
 			message = "<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw..."
-			m_type = 1
+			m_type = 2
 		if("scratch")
 			if (!src.restrained())
 				message = "<B>The [src.name]</B> scratches."
@@ -99,6 +99,8 @@
 	if ((message && src.stat == 0))
 		if (act == "roar")
 			playsound(src.loc, 'hiss5.ogg', 40, 1, 1)
+		if (act == "deathgasp")
+			playsound(src.loc, 'hiss6.ogg', 80, 1, 1)
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)

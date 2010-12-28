@@ -285,7 +285,8 @@
 
 	if (M.a_intent == "help")
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
+			if ((O.client && !( O.blinded )))
+				O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 	else
 		if (M.a_intent == "hurt")
 			if ((prob(95) && src.health > 0))
@@ -294,7 +295,7 @@
 						O.show_message(text("\red <B>[] has slashed [src.name]!</B>", M), 1)
 
 				playsound(src.loc, 'slice.ogg', 25, 1, -1)
-				var/damage = rand(5, 10)
+				var/damage = rand(15, 30)
 				if (prob(40))
 					damage = rand(20, 40)
 					if (src.paralysis < 5)
