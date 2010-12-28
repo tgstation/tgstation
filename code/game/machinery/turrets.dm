@@ -43,7 +43,8 @@
 
 /area/turret_protected/proc/popDownTurrets()
 	for (var/obj/machinery/turret/aTurret in src)
-		aTurret.popDown()
+		if (!aTurret.isDown())
+			aTurret.popDown()
 
 /obj/machinery/turret
 	name = "turret"
@@ -117,38 +118,93 @@
 		if (istype(loc, /area/turret_protected))
 			src.wasvalid = 1
 			var/area/turret_protected/tarea = loc
+			listcheck()
 
-			if (tarea.turretTargets.len>0)
+			if (tarea.turretTargets.len>0 && enabled)
 				if (!isPopping())
 					if (isDown())
 						popUp()
 					else
-						var/mob/target
-						do
-							target = pick(tarea.turretTargets)
-							src.dir = get_dir(src, target)
-							if (src.enabled)
-								if (istype(target, /mob/living))
-									if (target.stat!=2)
-										src.shootAt(target)
-									else
-										tarea.subjectDied(target)
-										target = null
-								else if (istype(target, /obj/mecha))
-									var/obj/mecha/mecha = target
-									if(!mecha.occupant)
-										if (mecha in tarea.turretTargets)
-											tarea.turretTargets -= mecha
-											target = null
-									else
-										src.shootAt(target)
-						while(!target && tarea.turretTargets.len>0)
-
+						targetting()
+			else
+				if (!isPopping())
+					if (!isDown())
+						popDown()
 		else
 			if (src.wasvalid)
 				src.die()
 			else
 				world << text("ERROR: Turret at [x], [y], [z] is NOT in a turret-protected area!")
+
+/obj/machinery/turret/proc/listcheck()
+	for (var/mob/living/carbon/guy in loc.loc)
+		if (guy in loc.loc:turretTargets)
+			continue
+		if (!guy.stat)
+			loc.loc:turretTargets += guy
+
+
+/obj/machinery/turret/proc/targetting()
+	var/mob/target
+	var/notarget = 0
+	do
+		if (notarget >= 20)
+			return
+		if (target)
+			if ((target.lying && !lasers) || target.stat)
+				target = null
+		if (!target)
+			listcheck()
+			if (!lasers)
+				for (var/mob/possible in loc.loc:turretTargets)
+					if (possible.stat)
+						loc.loc:Exited(possible)
+						notarget++
+						continue
+					if (possible.lying)
+						notarget++
+						continue
+					if (!target)
+						target = possible
+						notarget = 0
+						break
+			else
+				for (var/mob/possible in loc.loc:turretTargets)
+					if (possible.stat)
+						loc.loc:Exited(possible)
+						notarget++
+						continue
+					if (!target)
+						target = possible
+						notarget = 0
+						break
+
+		if (target)
+			src.dir = get_dir(src, target)
+			if (src.enabled)
+				if (istype(target, /mob/living))
+					if (istype(target.loc.loc, loc.loc))
+						if (!target.stat)
+							src.shootAt(target)
+						else
+							loc.loc:Exited(target)
+							target = null
+					else
+						loc.loc:Exited(target)
+						target = null
+				else if (istype(target, /obj/mecha))
+					var/obj/mecha/mecha = target
+					if (istype(target.loc.loc, loc.loc))
+						loc.loc:Exited(target)
+					if(!mecha.occupant)
+						if (mecha in loc.loc:turretTargets)
+							loc.loc:turretTargets -= mecha
+							target = null
+					else
+						src.shootAt(target)
+		else sleep(1)
+	while(!target && loc.loc:turretTargets.len>0)
+
 
 /obj/machinery/turret/proc/isDown()
 	return (invisibility!=0)
