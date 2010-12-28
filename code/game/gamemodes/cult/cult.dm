@@ -103,31 +103,34 @@
 			cult_mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately. (still, check your backpack. it may have been a mere bug. if you have a piece of bloody paper, all is well)"
 		else
 			cult_mob << "You have a talisman in your backpack, one that will help you start the cult on this station. Use it well and remember - there are others."
-		if(!wordtravel)
-			runerandom()
-		var/word
-		if(startwords.len > 0)
-			var/word=pick(startwords)
-			startwords -= word
-		else
-			var/word=pick(allwords)
-		var/wordexp
-		switch(word)
-			if("travel")
-				wordexp = "[wordtravel] is travel..."
-			if("blood")
-				wordexp = "[wordblood] is blood..."
-			if("join")
-				wordexp = "[wordjoin] is join..."
-			if("hell")
-				wordexp = "[wordhell] is Hell..."
-			if("self")
-				wordexp = "[wordself] is self..."
-			if("see")
-				wordexp = "[wordsee] is see..."
-		cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordexp]"
-		cult_mob.mind.store_memory("<B>You remember one thing</B>: [wordexp]", 0, 0)
+		grant_runeword(cult_mob)
 		cultists.Add(cult_mob)
+
+/datum/game_mode/cult/proc/grant_runeword(mob/living/carbon/human/cult_mob)
+	if(!wordtravel)
+		runerandom()
+	var/word
+	if(startwords.len > 0)
+		word=pick(startwords)
+		startwords -= word
+	else
+		word=pick(allwords)
+	var/wordexp
+	switch(word)
+		if("travel")
+			wordexp = "[wordtravel] is travel..."
+		if("blood")
+			wordexp = "[wordblood] is blood..."
+		if("join")
+			wordexp = "[wordjoin] is join..."
+		if("hell")
+			wordexp = "[wordhell] is Hell..."
+		if("self")
+			wordexp = "[wordself] is self..."
+		if("see")
+			wordexp = "[wordsee] is see..."
+	cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordexp]"
+	cult_mob.mind.store_memory("<B>You remember one thing</B>: [wordexp]", 0, 0)
 
 /datum/game_mode/cult/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
