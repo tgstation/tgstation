@@ -105,6 +105,7 @@
 			cult_mob << "You have a talisman in your backpack, one that will help you start the cult on this station. Use it well and remember - there are others."
 		if(!wordtravel)
 			runerandom()
+		var/word
 		if(startwords.len > 0)
 			var/word=pick(startwords)
 			startwords -= word
