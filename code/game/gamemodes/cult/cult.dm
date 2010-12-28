@@ -8,7 +8,9 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-	var/list/startwords = list("travel","blood","join","hell","self","see")
+	var/list/startwords = list("blood","join","self")
+	//var/list/startwords = list("travel","blood","join","hell","self","see")
+	var/list/allwords = list("travel","blood","join","hell","self","see")
 
 	var/list/objectives = list()
 
@@ -42,7 +44,7 @@
 		world.Reboot()
 		return
 
-	cultists_number = 3
+	cultists_number = 4 //3
 	while(cultists_number > 0)
 		cult += pick(cultists_possible)
 		cultists_possible -= cult
@@ -103,7 +105,11 @@
 			cult_mob << "You have a talisman in your backpack, one that will help you start the cult on this station. Use it well and remember - there are others."
 		if(!wordtravel)
 			runerandom()
-		var/word=pick(startwords)
+		if(startwords.len > 0)
+			var/word=pick(startwords)
+			startwords -= word
+		else
+			var/word=pick(allwords)
 		var/wordexp
 		switch(word)
 			if("travel")
@@ -118,7 +124,6 @@
 				wordexp = "[wordself] is self..."
 			if("see")
 				wordexp = "[wordsee] is see..."
-		startwords -= word
 		cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordexp]"
 		cult_mob.mind.store_memory("<B>You remember one thing</B>: [wordexp]", 0, 0)
 		cultists.Add(cult_mob)
