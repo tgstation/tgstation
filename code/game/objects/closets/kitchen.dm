@@ -40,7 +40,7 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
 	new /obj/item/weapon/kitchenknife(src)
-	if(prob(80))
+	if(prob(95))
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeymeat(src)
 	else
