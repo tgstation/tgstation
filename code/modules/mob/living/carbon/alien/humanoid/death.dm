@@ -7,7 +7,9 @@
 
 	if (!gibbed)
 
-		emote("deathgasp") // Dead -- Skie
+//		emote("deathgasp") // Dead -- Skie // Doesn't work due to stat == 2 -- Urist
+		for(var/mob/O in viewers(src, null))
+			O.show_message("<B>[src]</B> lets out a waning guttural screech, green blood bubbling from its maw...", 1)
 
 		src.canmove = 0
 		if(src.client)
