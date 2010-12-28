@@ -5,7 +5,7 @@
 /area/turret_protected/proc/subjectDied(target)
 	if (istype(target, /mob))
 		if (!istype(target, /mob/living/silicon))
-			if (target:stat==2)
+			if (target:stat)
 				if (target in turretTargets)
 					src.Exited(target)
 
@@ -99,6 +99,7 @@
 	src.power_change()
 
 /obj/machinery/turret/process()
+	listcheck()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(lastfired && world.time - lastfired < shot_delay)
@@ -118,7 +119,7 @@
 		if (istype(loc, /area/turret_protected))
 			src.wasvalid = 1
 			var/area/turret_protected/tarea = loc
-			listcheck()
+
 
 			if (tarea.turretTargets.len>0 && enabled)
 				if (!isPopping())
@@ -140,6 +141,8 @@
 	for (var/mob/living/carbon/guy in loc.loc)
 		if (guy in loc.loc:turretTargets)
 			continue
+		if (guy.lying && !lasers)
+			continue
 		if (!guy.stat)
 			loc.loc:turretTargets += guy
 
@@ -148,20 +151,30 @@
 	var/mob/target
 	var/notarget = 0
 	do
+
 		if (notarget >= 20)
 			return
 		if (target)
+			if (!istype(target.loc.loc, loc.loc))
+				loc.loc:Exited(target)
+				target = null
+		if (target)
 			if ((target.lying && !lasers) || target.stat)
+				loc.loc:Exited(target)
 				target = null
 		if (!target)
 			listcheck()
 			if (!lasers)
 				for (var/mob/possible in loc.loc:turretTargets)
+					if (!istype(possible.loc.loc, loc.loc))
+						loc.loc:Exited(possible)
+						continue
 					if (possible.stat)
 						loc.loc:Exited(possible)
 						notarget++
 						continue
 					if (possible.lying)
+						loc.loc:Exited(possible)
 						notarget++
 						continue
 					if (!target)
@@ -170,6 +183,9 @@
 						break
 			else
 				for (var/mob/possible in loc.loc:turretTargets)
+					if (!istype(possible.loc.loc, loc.loc))
+						loc.loc:Exited(possible)
+						continue
 					if (possible.stat)
 						loc.loc:Exited(possible)
 						notarget++
@@ -178,24 +194,17 @@
 						target = possible
 						notarget = 0
 						break
-
 		if (target)
 			src.dir = get_dir(src, target)
 			if (src.enabled)
 				if (istype(target, /mob/living))
-					if (istype(target.loc.loc, loc.loc))
-						if (!target.stat)
-							src.shootAt(target)
-						else
-							loc.loc:Exited(target)
-							target = null
+					if (!target.stat)
+						src.shootAt(target)
 					else
 						loc.loc:Exited(target)
 						target = null
 				else if (istype(target, /obj/mecha))
 					var/obj/mecha/mecha = target
-					if (!istype(target.loc.loc, loc.loc))
-						loc.loc:Exited(target)
 					if(!mecha.occupant)
 						if (mecha in loc.loc:turretTargets)
 							loc.loc:turretTargets -= mecha
