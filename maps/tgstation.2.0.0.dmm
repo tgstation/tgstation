@@ -2036,7 +2036,7 @@
 "aNh" = (/obj/machinery/door/airlock/command{name = "AI Upload"; req_access_txt = "16"},/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor{dir = 1; icon_state = "blue"},/area/turret_protected/ai_upload_foyer)
 "aNi" = (/obj/securearea,/obj/machinery/atmospherics/pipe/simple,/turf/simulated/wall/r_wall,/area/turret_protected/ai_upload_foyer)
 "aNj" = (/obj/machinery/power/apc{dir = 2; name = "Bridge APC"; pixel_y = -24},/obj/cable,/turf/simulated/floor{tag = "icon-blue (SOUTHWEST)"; icon_state = "blue"; dir = 10},/area/bridge)
-"aNk" = (/obj/machinery/light_switch{pixel_y = -25},/turf/simulated/floor{dir = 0; icon_state = "blue"},/area/bridge)
+"aNk" = (/obj/machinery/light_switch{pixel_y = -25},/turf/simulated/floor{tag = "icon-whitehall"; icon_state = "whitehall"; dir = 2},/area/bridge)
 "aNl" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = -29},/turf/simulated/floor{tag = "icon-whitehall"; icon_state = "whitehall"; dir = 2},/area/bridge)
 "aNm" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor{tag = "icon-whitehall"; icon_state = "whitehall"; dir = 2},/area/bridge)
 "aNn" = (/obj/machinery/camera{c_tag = "Bridge East"; dir = 1},/obj/closet/emcloset,/turf/simulated/floor{tag = "icon-whitehall"; icon_state = "whitehall"; dir = 2},/area/bridge)
