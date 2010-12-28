@@ -162,7 +162,7 @@
 		else
 			if (stat & MAINT)
 				usr << "The cover is closed. Something wrong with it: it's doesn't work."
-			else if (emagged || malfhack)
+			else if (malfhack)
 				usr << "The cover is broken. It's may be hard to force it open."
 			else
 				usr << "The cover is closed."

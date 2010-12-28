@@ -11,6 +11,7 @@
 		anchored = 0
 		pressure_resistance = 2*ONE_ATMOSPHERE
 
+#define maxstoredpower 500
 /obj/machinery/shieldwallgen
 		name = "Shield Generator"
 		desc = "A shield generator."
@@ -32,7 +33,6 @@
 //		var/maxshieldload = 200
 		var/obj/cable/attached		// the attached cable
 		var/storedpower = 0
-		var/maxstoredpower = 500
 		flags = FPRINT | CONDUCT
 
 /obj/machinery/shield
@@ -53,6 +53,7 @@
 		anchored = 1
 		density = 1
 		unacidable = 1
+		var/needs_power = 0
 		var/active = 1
 //		var/power = 10
 		var/delay = 5
@@ -160,43 +161,37 @@
 
 /obj/machinery/shieldgen/attack_hand(mob/user as mob)
 	if (src.active)
-		for(var/mob/viwer in viewers(world.view, src.loc))
-			viwer << text("<font color='blue'>\icon[] [user] deactivated the shield generator.</font>", src)
-		shields_down()
-
+		user.visible_message("\blue \icon[src] [user] deactivated the shield generator.", \
+			"\blue \icon[src] You deactivate the shield generator.", \
+			"You hear heavy droning fade out.")
+		src.shields_down()
 	else
-		for(var/mob/viwer in viewers(world.view, src.loc))
-			viwer << text("<font color='blue'>\icon[] [user] activated the shield generator.</font>", src)
-		shields_up()
-
+		user.visible_message("\blue \icon[src] [user] activated the shield generator.", \
+			"\blue \icon[src] You activate the shield generator.", \
+			"You hear heavy droning.")
+		src.shields_up()
 
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
 
-
-/obj/machinery/shieldwallgen/proc/get_connection()
-	var/turf/T = src.loc
-	if(!istype(T, /turf/simulated/floor))
-		return
-
-	for(var/obj/cable/C in T)
-		if(C.d1 == 0)
-			return C.netnum
-
-	return 0
-
-
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
+		power = 0
 		return 0
+	var/turf/T = src.loc
+	var/obj/cable/C = T.get_cable_node()
+	var/net = C.netnum		// find the powernet of the connected cable
 
-	var/net = get_connection()		// find the powernet of the connected cable
+	if(!net)
+		power = 0
+		return 0
+	var/datum/powernet/PN = powernets[net]			// find the powernet. Magic code, voodoo code.
 
-	var/datum/powernet/PN			// find the powernet. Magic code, voodoo code.
-	if(net)
-		PN = powernets[net]
-	var/shieldload = rand(50,200)
-
-	if((!PN || !PN.avail) && !storedpower)		// no cable or no power, and no power stored
+	if(!PN)
+		power = 0
+		return 0
+	var/surplus = max(PN.avail-PN.load, 0)
+	var/shieldload = min(rand(50,200), surplus)
+	if(shieldload==0 && !storedpower)		// no cable or no power, and no power stored
 		power = 0
 		return 0
 	else
@@ -208,52 +203,37 @@
 //		use_power(250) //uses APC power
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
-	if(state == 1)
-		if(!src.locked)
-			if(power == 1)
-				if(src.active >= 1)
-					src.active = 0
-					icon_state = "Shield_Gen"
-					user << "You turn off the shield generator."
-					src.cleanup()
-				else
-					src.active = 1
-					icon_state = "Shield_Gen +a"
-					user << "You turn on the shield generator."
-			else
-				user << "The shield generator needs to be powered by wire underneath."
-		else
-			user << "The controls are locked!"
+	if(state != 1)
+		user << "\red The shield generator needs to be firmly secured to the floor first."
+		return 1
+	if(src.locked && !istype(user, /mob/living/silicon))
+		user << "\red The controls are locked!"
+		return 1
+	if(power != 1)
+		user << "\red The shield generator needs to be powered by wire underneath."
+		return 1
+		
+	if(src.active >= 1)
+		src.active = 0
+		icon_state = "Shield_Gen"
+		user << "You "
+		
+		user.visible_message("[user] turned the shield generator off.", \
+			"You turn off the shield generator.", \
+			"You hear heavy droning fade out.")
+		src.cleanup()
 	else
-		user << "The shield generator needs to be firmly secured to the floor first."
+		src.active = 1
+		icon_state = "Shield_Gen +a"
+		user.visible_message("[user] turned the shield generator on.", \
+			"You turn on the shield generator.", \
+			"You hear heavy droning.")
 	src.add_fingerprint(user)
-
-/obj/machinery/shieldwallgen/attack_ai(mob/user as mob)
-	if(state == 1)
-		if(power == 1)
-			if(src.active >= 1)
-				user << "You turn off the shield generator."
-				icon_state = "Shield_Gen"
-				src.active = 0
-			else
-				src.active = 1
-				icon_state = "Shield_Gen +a"
-				user << "You turn on the shield generator."
-		else
-			user << "The shield generator needs to be powered by wire underneath."
-	else
-		user << "The shield generator needs to be firmly secured to the floor first."
-	src.add_fingerprint(user)
-
-/obj/machinery/shieldwallgen/New()
-	..()
-	return
-
 
 /obj/machinery/shieldwallgen/process()
 	spawn(100)
 		power()
-		if(power == 1)
+		if(power)
 			storedpower -= 50 //this way it can survive longer and survive at all
 	if(storedpower >= maxstoredpower)
 		storedpower = maxstoredpower
@@ -277,8 +257,8 @@
 		src.active = 2
 	if(src.active >= 1)
 		if(src.power == 0)
-			for(var/mob/M in viewers(src))
-				M.show_message("\red The [src.name] shuts down due to lack of power!")
+			src.visible_message("\red The [src.name] shuts down due to lack of power!", \
+				"You hear heavy droning fade out")
 			icon_state = "Shield_Gen"
 			src.active = 0
 			spawn(1)
@@ -396,18 +376,19 @@
 
 /obj/machinery/shieldwallgen/bullet_act(flag)
 
-	if (flag == PROJECTILE_BULLET)
-		src.storedpower -= 10
-	else if (flag == PROJECTILE_WEAKBULLET)
-		src.storedpower -= 1
-	else if (flag == PROJECTILE_LASER)
-		src.storedpower +=20
-	else if (flag == PROJECTILE_TASER)
-		src.storedpower +=3
-	else if (flag == PROJECTILE_PULSE)
-		src.storedpower +=50
-	else
-		src.storedpower -=2
+	switch(flag)
+		if (PROJECTILE_BULLET)
+			src.storedpower -= 10
+		if (PROJECTILE_WEAKBULLET)
+			src.storedpower -= 1
+		if (PROJECTILE_LASER)
+			src.storedpower +=20
+		if (PROJECTILE_TASER)
+			src.storedpower +=3
+		if (PROJECTILE_PULSE)
+			src.storedpower +=50
+		else
+			src.storedpower -=2
 	return
 
 
@@ -480,6 +461,8 @@
 	..()
 	src.gen_primary = A
 	src.gen_secondary = B
+	if(A && B)
+		needs_power = 1
 	spawn(1)
 		src.sd_SetLuminosity(3)
 
@@ -498,52 +481,42 @@
 	return
 
 /obj/machinery/shieldwall/process()
-	if(isnull(gen_primary)||isnull(gen_secondary))
-		del(src)
-		return
+	if(needs_power)
+		if(isnull(gen_primary)||isnull(gen_secondary))
+			del(src)
+			return
 
-	if(!(gen_primary.active)||!(gen_secondary.active))
-		del(src)
-		return
+		if(!(gen_primary.active)||!(gen_secondary.active))
+			del(src)
+			return
 //
-	if(prob(50))
-		gen_primary.storedpower -= 10
-	else
-		gen_secondary.storedpower -=10
-
-
-/obj/machinery/shieldwall/bullet_act(flag)
-
-	if (flag == PROJECTILE_BULLET)
 		if(prob(50))
 			gen_primary.storedpower -= 10
 		else
 			gen_secondary.storedpower -=10
-	else if (flag == PROJECTILE_WEAKBULLET)
+
+
+/obj/machinery/shieldwall/bullet_act(flag)
+
+	if(needs_power)
+		var/obj/machinery/shieldwallgen/G
 		if(prob(50))
-			gen_primary.storedpower -= 1
+			G = gen_primary
 		else
-			gen_secondary.storedpower -=1
-	else if (flag == PROJECTILE_LASER)
-		if(prob(50))
-			gen_primary.storedpower += 20
-		else
-			gen_secondary.storedpower +=20
-	else if (flag == PROJECTILE_TASER)
-		if(prob(50))
-			gen_primary.storedpower += 3
-		else
-			gen_secondary.storedpower +=3
-	else if (flag == PROJECTILE_PULSE)
-		if(prob(50))
-			gen_primary.storedpower += 50
-		else
-			gen_secondary.storedpower +=50
-	else
-		if(prob(50))
-			gen_primary.storedpower -= 2
-		else
-			gen_secondary.storedpower -=2
+			G = gen_secondary
+		switch(flag)
+			if (PROJECTILE_BULLET)
+				G.storedpower -= 10
+			if (PROJECTILE_WEAKBULLET)
+				G.storedpower -=1
+			if (PROJECTILE_LASER)
+				G.storedpower +=20
+			if (PROJECTILE_TASER)
+				G.storedpower +=3
+			if (PROJECTILE_PULSE)
+				G.storedpower +=50
+			else
+				G.storedpower -=2
 	return
 
 

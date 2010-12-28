@@ -370,7 +370,7 @@
 	
 /turf/proc/get_cable_node()
 	if(!istype(src, /turf/simulated/floor))
-		return
+		return null
 	for(var/obj/cable/C in src)
 		if(C.d1 == 0)
 			return C
