@@ -194,7 +194,7 @@
 						target = null
 				else if (istype(target, /obj/mecha))
 					var/obj/mecha/mecha = target
-					if (istype(target.loc.loc, loc.loc))
+					if (!istype(target.loc.loc, loc.loc))
 						loc.loc:Exited(target)
 					if(!mecha.occupant)
 						if (mecha in loc.loc:turretTargets)
