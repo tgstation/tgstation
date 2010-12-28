@@ -960,7 +960,8 @@
 		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R
 		R.my_atom = src
-		icon_state = "pill[rand(1,20)]"
+		if(!icon_state)
+			icon_state = "pill[rand(1,20)]"
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
@@ -1138,7 +1139,7 @@
 	name = "bottle"
 	desc = "A small bottle."
 	icon = 'chemical.dmi'
-	icon_state = "bottle16"
+	icon_state = null
 	item_state = "atoxinbottle"
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
@@ -1147,7 +1148,8 @@
 		var/datum/reagents/R = new/datum/reagents(30)
 		reagents = R
 		R.my_atom = src
-		icon_state = "bottle[rand(1,20)]"
+		if(!icon_state)
+			icon_state = "bottle[rand(1,20)]"
 
 /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline
 	name = "inaprovaline bottle"
