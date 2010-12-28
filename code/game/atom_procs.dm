@@ -126,22 +126,26 @@
 			var/turf/simulated/source1 = src
 			var/obj/decal/cleanable/blood/this = new /obj/decal/cleanable/blood(source1)
 			this.blood_DNA = M.dna.unique_enzymes
-			this.virus = new M.virus.type
-			this.virus.holder = this
+			if(M.virus)
+				this.virus = new M.virus.type
+				this.virus.holder = this
 
 	else if( istype(M, /mob/living/carbon/alien ))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
 			var/obj/decal/cleanable/xenoblood/this = new /obj/decal/cleanable/xenoblood(source2)
-			this.virus = new M.virus.type
-			this.virus.holder = this
+			if(M.virus)
+				this.virus = new M.virus.type
+				this.virus.holder = this
 
 	else if( istype(M, /mob/living/silicon/robot ))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
 			var/obj/decal/cleanable/oil/this = new /obj/decal/cleanable/oil(source2)
-			this.virus = new M.virus.type
-			this.virus.holder = this
+			if(M.virus)
+				this.virus = new M.virus.type
+				this.virus.holder = this
+
 
 
 /atom/proc/clean_blood()
