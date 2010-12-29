@@ -1,5 +1,7 @@
 /mob/living/silicon/robot/death(gibbed)
 	var/cancel
+	if (!gibbed)
+		src.emote("deathgasp")
 	src.stat = 2
 	src.canmove = 0
 

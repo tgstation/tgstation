@@ -79,6 +79,10 @@
 			message = "<B>[src]</B> nods."
 			m_type = 1
 
+		if ("deathgasp")
+			message = "<B>[src]</B> shudders violently for a moment, then becomes motionless, its eyes slowly darkening."
+			m_type = 1
+
 		if ("glare")
 			var/M = null
 			if (param)
