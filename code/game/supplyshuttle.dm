@@ -129,10 +129,11 @@ var/ordernum=0
 	var/shuttleat = supply_shuttle_at_station ? SUPPLY_STATION_AREATYPE : SUPPLY_DOCK_AREATYPE
 
 	for(var/turf/T in get_area_turfs(shuttleat) )
-		if((locate(/mob/living) in T) && (!locate(/mob/living/carbon/monkey) in T)) return 0
+		//if((locate(/mob/living) in T) && (!locate(/mob/living/carbon/monkey) in T)) return 0  //old check for living excluded monkeys
+		if((locate(/mob/living) in T)) return 0
 		if((locate(/obj/item/device/radio/beacon) in T)) return 0
 		for(var/atom/ATM in T)
-			if((locate(/mob/living) in ATM) && (!locate(/mob/living/carbon/monkey) in ATM)) return 0
+			if((locate(/mob/living) in ATM)) return 0
 			if((locate(/obj/item/device/radio/beacon) in ATM)) return 0
 
 	return 1

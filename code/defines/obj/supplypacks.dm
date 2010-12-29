@@ -70,6 +70,7 @@
 	containertype = "/obj/crate/freezer"
 	containername = "Food crate"
 
+/* DO NOT UNCOMMENT THIS, ORDERING THEM WILL BREAK THE SHUTTLE
 /datum/supply_packs/monkey
 	name = "Monkey crate"
 	contains = list("/mob/living/carbon/monkey",
@@ -79,7 +80,7 @@
 					"/mob/living/carbon/monkey")
 	cost = 20
 	containertype = "/obj/crate/freezer"
-	containername = "Monkey crate"
+	containername = "Monkey crate" */
 
 /datum/supply_packs/engineering
 	name = "Engineering crate"
