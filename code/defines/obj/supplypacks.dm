@@ -70,6 +70,21 @@
 	containertype = "/obj/crate/freezer"
 	containername = "Food crate"
 
+/datum/supply_packs/meat
+	name = "Meat crate"
+	contains = list("/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
+					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
+					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
+					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
+					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
+					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
+					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
+					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
+					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat")
+	cost = 10
+	containertype = "/obj/crate/freezer"
+	containername = "Meat crate"
+
 /* DO NOT UNCOMMENT THIS, ORDERING THEM WILL BREAK THE SHUTTLE
 /datum/supply_packs/monkey
 	name = "Monkey crate"
