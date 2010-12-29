@@ -447,6 +447,7 @@
 #include "code\game\objects\kitchen.dm"
 #include "code\game\objects\lamarr.dm"
 #include "code\game\objects\livestock.dm"
+#include "code\game\objects\new_year.dm"
 #include "code\game\objects\noticeboard.dm"
 #include "code\game\objects\object_procs.dm"
 #include "code\game\objects\portals.dm"
