@@ -1291,10 +1291,10 @@ datum
 					return
 				..()
 
-		oliveoil
-			name = "Olive Oil"
-			id = "oliveoil"
-			description = "An oil derived from various types of olives. A famous export of Space Italy."
+		cornoil
+			name = "Corn Oil"
+			id = "cornoil"
+			description = "An oil derived from various types of corn."
 			reagent_state = LIQUID
 			nutriment_factor = 20 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/M)

@@ -228,7 +228,7 @@ datum
 			name = "Glycerol"
 			id = "glycerol"
 			result = "glycerol"
-			required_reagents = list("oliveoil" = 3, "acid" = 1)
+			required_reagents = list("cornoil" = 3, "acid" = 1)
 			result_amount = 1
 
 		nitroglycerin

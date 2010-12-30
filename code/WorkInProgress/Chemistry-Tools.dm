@@ -1972,9 +1972,9 @@
 					name = "Pepper Mill"
 					desc = "Often used to flavor food or make people sneeze."
 					icon_state = "peppermillsmall"
-				if("oliveoil")
-					name = "Olive Oil"
-					desc = "A delicious oil used in cooking. Possibly made from space olives."
+				if("cornoil")
+					name = "Corn Oil"
+					desc = "A delicious oil used in cooking. Made from corn."
 					icon_state = "oliveoil"
 				else
 					name = "Misc Condiment Bottle"
@@ -2013,14 +2013,6 @@
 		reagents = R
 		R.my_atom = src
 		reagents.add_reagent("blackpepper", 20)
-
-/obj/item/weapon/reagent_containers/food/condiment/oliveoil			//Will remove this as soon as there is a way to make olive oil.
-	name = "Olive Oil"
-	desc = "A delicious oil used in cooking. Possibly made from space olives."
-	icon_state = "oliveoil"		//redundant but added so it looks nicer on the map.
-	New()
-		..()
-		reagents.add_reagent("oliveoil", 50)
 
 
 ///////////////////////////////////////////////Drinks
