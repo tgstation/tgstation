@@ -154,6 +154,8 @@ datum
 				if(self.data&&method == INGEST)
 					if(M.virus && M.virus.type == self.data)
 						M.virus.cure()
+					else if(!(self.data in M.resistances))
+						M.resistances += self.data
 				return
 
 

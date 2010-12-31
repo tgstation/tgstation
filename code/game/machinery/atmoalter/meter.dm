@@ -58,7 +58,7 @@
 	if (src.target)
 		var/datum/gas_mixture/environment = target.return_air()
 		if(environment)
-			t += text("The pressure gauge reads [] kPa", round(environment.return_pressure(), 0.1))
+			t += "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)]&deg;K ([round(environment.temperature-T0C,0.01)]&deg;C)"
 		else
 			t += "The sensor error light is blinking."
 	else
@@ -78,7 +78,7 @@
 		if (src.target)
 			var/datum/gas_mixture/environment = target.return_air()
 			if(environment)
-				t = text("<B>Pressure:</B> [] kPa", round(environment.return_pressure(), 0.1))
+				t = "<B>Pressure:</B> [round(environment.return_pressure(), 0.01)] kPa; <B>Temperature:</B> [round(environment.temperature,0.01)]&deg;K ([round(environment.temperature-T0C,0.01)]&deg;C)"
 			else
 				t = "\red <B>Results: Sensor Error!</B>"
 		else

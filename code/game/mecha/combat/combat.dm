@@ -191,6 +191,7 @@
 			src.Move(src.loc)
 			if(usr.client)
 				usr.client.mouse_pointer_icon = file("icons/misc/mecha_mouse.dmi")
+			src.log_message("[usr] moved in as pilot.")
 	return
 
 /obj/mecha/combat/go_out()
@@ -209,6 +210,7 @@
 				weapons -= destr_weapon
 				destr_weapon.destroy()
 				src.occupant_message("<font color='red'>The [destr_weapon] is destroyed!</font>")
+				src.log_append_to_last("[destr_weapon] is destoyed.",1)
 	return
 
 

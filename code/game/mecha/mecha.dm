@@ -22,6 +22,7 @@
 	var/deflect_chance = 2 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	var/obj/item/weapon/cell/cell = new
 	var/state = 0
+	var/list/log = new
 
 	var/datum/effects/system/spark_spread/spark_system = new
 	var/lights = 0
@@ -48,6 +49,7 @@
 	var/datum/global_iterator/pr_location_temp_check //processes location temperature damage
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
 
+
 /obj/mecha/New()
 	..()
 	src.air_contents.volume = gas_tank_volume //liters
@@ -64,8 +66,10 @@
 	pr_inertial_movement = new /datum/global_iterator/mecha_intertial_movement(null,0)
 	pr_location_temp_check = new /datum/global_iterator/mecha_location_temp_check(list(src))
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
+
 	src.verbs -= /obj/mecha/verb/disconnect_from_port
 	src.verbs -= /atom/movable/verb/pull
+	src.log_message("[src.name] created.")
 	return
 
 /obj/mecha/Del()
@@ -140,6 +144,7 @@
 		if(istype(src.loc, /turf/space))
 			if(!src.check_for_support())
 				src.pr_inertial_movement.start(list(src,direction))
+				src.log_message("Movement control lost. Inertial movement started.")
 		return 1
 	return 0
 
@@ -192,6 +197,7 @@
 		if("fire")
 			src.health -= amount*1.2
 	src.update_health()
+	src.log_append_to_last("Took [amount] points of damage. Damage type: \"[type]\".",1)
 	return
 
 /obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)//TODO
@@ -206,6 +212,7 @@
 				if(int_dam_flag)
 					internal_damage |= int_dam_flag
 					pr_internal_damage.start()
+					src.log_append_to_last("Internal damage of type [int_dam_flag].[ignore_threshold?"Ignoring damage threshold.":null]",1)
 	return
 
 
@@ -217,6 +224,7 @@
 	return
 
 /obj/mecha/attack_hand(mob/user as mob)
+	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 	if (user.mutations & 8 && !prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -225,6 +233,7 @@
 	else
 		src.visible_message("<font color='red'><b>[user] hits [src.name]. Nothing happens</b></font>")
 		user << "<font color='red'><b>You hit [src.name] with no visible effect.</b></font>"
+		src.log_append_to_last("Armor saved.")
 	return
 
 /obj/mecha/attack_paw(mob/user as mob)
@@ -232,6 +241,7 @@
 
 
 /obj/mecha/attack_alien(mob/user as mob)
+	src.log_message("Attack by alien. Attacker - [user].",1)
 	if(!prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -241,6 +251,7 @@
 			if(V.client && !(V.blinded))
 				V.show_message("\red The [user] slashes at [src.name]'s armor!", 1)
 	else
+		src.log_append_to_last("Armor saved.")
 		playsound(src.loc, 'slash.ogg', 50, 1, -1)
 		user << "\green Your claws had no effect!"
 		src.occupant_message("\blue The [user]'s claws are stopped by the armor.")
@@ -251,8 +262,10 @@
 
 
 /obj/mecha/hitby(A as mob|obj)
+	src.log_message("Hit by [A].",1)
 	if(prob(src.deflect_chance) || istype(A, /mob))
 		src.occupant_message("\blue The [A] bounces off the armor.")
+		src.log_append_to_last("Armor saved.")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
 				V.show_message("The [A] bounces off the [src.name] armor", 1)
@@ -260,22 +273,34 @@
 			var/mob/M = A
 			M.bruteloss += 10
 			M.updatehealth()
-		return
 
 	else if(istype(A, /obj))
 		var/obj/O = A
 		if(O.throwforce)
 			src.take_damage(O.throwforce)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		return
+
+	return
 
 
 /obj/mecha/bullet_act(flag)
+	var/dam_type
+	switch(dam_type)
+		if(PROJECTILE_PULSE)
+			dam_type = "Pulse"
+		if(PROJECTILE_LASER)
+			dam_type = "Laser"
+		if(PROJECTILE_TASER)
+			dam_type = "Taser"
+		else
+			dam_type = "Default"
+	src.log_message("Hit by projectile. Type: [dam_type]([flag]).",1)
 	if(prob(src.deflect_chance))
 		src.occupant_message("\blue The armor deflects the incoming projectile.")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
 				V.show_message("The [src.name] armor deflects the projectile", 1)
+		src.log_append_to_last("Armor saved.")
 	else
 		var/damage
 		var/ignore_threshold
@@ -309,8 +334,10 @@
 	return
 
 /obj/mecha/ex_act(severity)
+	src.log_message("Affected by explosion of severity: [severity].",1)
 	if(prob(src.deflect_chance))
 		severity++
+		src.log_append_to_last("Armor saved, changing severity to [severity].")
 	switch(severity)
 		if(1.0)
 			src.destroy()
@@ -327,17 +354,6 @@
 				src.take_damage(initial(src.health)/4)
 				src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),1)
 	return
-
-/obj/mecha/proc/check_location_temp()
-	spawn while(src)
-		if(istype(src.loc, /turf/simulated/))
-			var/turf/simulated/T = src.loc
-			if(T.air)
-				if(T.air.temperature > src.max_temperature)
-					src.take_damage(10)
-		sleep(10)
-	return
-
 
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////
@@ -387,7 +403,7 @@
 	var/datum/pipe_network/network = connected_port.return_network(src)
 	if(network && !network.gases.Find(air_contents))
 		network.gases += air_contents
-
+	src.log_message("Connected to gas port.")
 	return 1
 
 /obj/mecha/proc/disconnect()
@@ -400,7 +416,7 @@
 
 	connected_port.connected_device = null
 	connected_port = null
-
+	src.log_message("Disconnected from gas port.")
 	return 1
 
 
@@ -455,6 +471,8 @@
 		src.sd_SetLuminosity(src.luminosity + src.lights_power)
 	else
 		src.sd_SetLuminosity(src.luminosity - src.lights_power)
+	src.log_message("Toggled lights.")
+	return
 
 /obj/mecha/verb/move_inside()
 	set name = "Move Inside"
@@ -462,8 +480,10 @@
 
 	if (usr.stat != 0 || !istype(usr, /mob/living/carbon/human))
 		return
+	src.log_message("[usr] tries to move in.")
 	if (src.occupant)
 		usr << "\blue <B>The [src.name] is already occupied!</B>"
+		src.log_append_to_last("Permission denied.")
 		return
 /*
 	if (usr.abiotic())
@@ -472,6 +492,7 @@
 */
 	if(!src.operation_allowed(usr))
 		usr << "\red Access denied"
+		src.log_append_to_last("Permission denied.")
 		return
 	usr << "You start climbing into [src.name]"
 	spawn(20)
@@ -483,6 +504,7 @@
 			src.add_fingerprint(usr)
 			src.Entered(usr)
 			src.Move(src.loc)
+			src.log_append_to_last("[usr] moved in as pilot.")
 	return
 
 
@@ -509,6 +531,7 @@
 /obj/mecha/proc/go_out()
 	if(!src.occupant) return
 	if(src.occupant.Move(src.loc))
+		src.log_message("[src.occupant] moved out.")
 		src.Exited(src.occupant)
 		if (src.occupant.client)
 			src.occupant.client.eye = src.occupant.client.mob
@@ -516,6 +539,7 @@
 		src.occupant << browse(null, "window=exosuit")
 		src.occupant = null
 		src.pr_update_stats.stop()
+
 	return
 
 ////// Misc
@@ -525,6 +549,26 @@
 		if(src.occupant && src.occupant.client)
 			src.occupant << "[message]"
 	return
+
+/obj/mecha/proc/log_message(message as text,red=null)
+	log.len++
+	log[log.len] = list("time"=world.timeofday,"message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	return log.len
+
+/obj/mecha/proc/log_append_to_last(message as text,red=null)
+	var/list/last_entry = src.log[src.log.len]
+	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
+	return
+
+
+/obj/mecha/proc/get_log_html()
+	var/output = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
+	for(var/list/entry in log)
+		output += {"<div style='font-weight: bold;'>[time2text(entry["time"],"DDD MMM DD hh:mm:ss")]</div>
+						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
+						"}
+	output += "</body></html>"
+	return output
 
 /obj/mecha/proc/operation_allowed(mob/living/carbon/human/H)
 	//check if it doesn't require any access at all
@@ -573,6 +617,7 @@
 
 
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	src.log_message("Attacked by [W].")
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.internals_access_allowed(usr))
 			if(state==0)
@@ -609,6 +654,7 @@
 			src.cell = null
 			state = 4
 			user << "You unscrew and pry out the powercell."
+			src.log_message("Powercell removed")
 		else if(state==4 && src.cell)
 			state=3
 			user << "You screw the cell in place"
@@ -621,6 +667,7 @@
 				user.drop_item()
 				W.loc = src
 				src.cell = W
+				src.log_message("Powercell installed")
 			else
 				user << "There's already a powercell installed."
 		return
@@ -644,6 +691,7 @@
 	else
 		if(prob(src.deflect_chance))
 			user << "\red The [W] bounces off [src.name] armor."
+			src.log_append_to_last("Armor saved.")
 /*
 			for (var/mob/V in viewers(src))
 				if(V.client && !(V.blinded))
@@ -684,6 +732,7 @@
 	var/output = {"<a href='?src=\ref[src];toggle_lights=1'>Toggle Lights</a><br>
 						[(/obj/mecha/verb/disconnect_from_port in src.verbs)?"<a href='?src=\ref[src];port_disconnect=1'>Disconnect from port</a><br>":null]
 						[(/obj/mecha/verb/connect_to_port in src.verbs)?"<a href='?src=\ref[src];port_connect=1'>Connect to port</a><br>":null]
+						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
 						<a href='?src=\ref[src];eject=1'>Eject</a><br>
 					"}
 	return output
@@ -705,15 +754,22 @@
 	if (href_list["eject"])
 		src.eject()
 		return
+	if (href_list["view_log"])
+		src.occupant << browse(src.get_log_html(), "window=exosuit_log")
+		onclose(occupant, "exosuit_log")
+		return
 	if (href_list["repair_int_control_lost"])
 		src.occupant_message("Recalibrating coordination system.")
+		src.log_message("Recalibration of coordination system started.")
 		var/T = src.loc
 		spawn(100)
 			if(T == src.loc)
 				src.internal_damage &= ~MECHA_INT_CONTROL_LOST
 				src.occupant_message("<font color='blue'>Recalibration successful.</font>")
+				src.log_message("Recalibration of coordination system finished with 0 errors.")
 			else
 				src.occupant_message("<font color='red'>Recalibration failed.</font>")
+				src.log_message("Recalibration of coordination system failed with 1 error.",1)
 	return
 
 

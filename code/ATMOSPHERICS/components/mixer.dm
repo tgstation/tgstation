@@ -7,6 +7,7 @@ obj/machinery/atmospherics/mixer
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
+	req_access = list(access_atmospherics)
 
 	var/on = 0
 
@@ -247,3 +248,58 @@ obj/machinery/atmospherics/mixer
 			node_out = null
 
 		return null
+
+
+	attack_hand(user as mob)
+		if(..())
+			return
+		src.add_fingerprint(usr)
+		if(!src.allowed(user))
+			user << "\red Access denied."
+			return
+		usr.machine = src
+		var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
+					<b>Desirable output pressure: </b>
+					<a href='?src=\ref[src];out_press=-100'><b>-</b></a>
+					<a href='?src=\ref[src];out_press=-10'><b>-</b></a>
+					<a href='?src=\ref[src];out_press=-1'>-</a>
+					[target_pressure]kPa
+					<a href='?src=\ref[src];out_press=1'>+</a>
+					<a href='?src=\ref[src];out_press=10'><b>+</b></a>
+					<a href='?src=\ref[src];out_press=100'><b>+</b></a>
+					<br>
+					<b>Node 1 Concentration:</b>
+					<a href='?src=\ref[src];node1_c=-0.1'><b>-</b></a>
+					<a href='?src=\ref[src];node1_c=-0.01'>-</a>
+					[node1_concentration]([node1_concentration*100]%)
+					<a href='?src=\ref[src];node1_c=0.01'><b>+</b></a>
+					<a href='?src=\ref[src];node1_c=0.1'>+</a>
+					<br>
+					<b>Node 2 Concentration:</b>
+					<a href='?src=\ref[src];node2_c=-0.1'><b>-</b></a>
+					<a href='?src=\ref[src];node2_c=-0.01'>-</a>
+					[node2_concentration]([node2_concentration*100]%)
+					<a href='?src=\ref[src];node2_c=0.01'><b>+</b></a>
+					<a href='?src=\ref[src];node2_c=0.1'>+</a>
+					"}
+
+		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_mixer")
+		onclose(user, "atmo_mixer")
+		return
+
+	Topic(href,href_list)
+		if(href_list["power"])
+			on = !on
+		if(href_list["out_press"])
+			src.target_pressure = max(0, min(4500, src.target_pressure + text2num(href_list["out_press"])))
+		if(href_list["node1_c"])
+			var/value = text2num(href_list["node1_c"])
+			src.node1_concentration = max(0, min(1, src.node1_concentration + value))
+			src.node2_concentration = max(0, min(1, src.node2_concentration - value))
+		if(href_list["node2_c"])
+			var/value = text2num(href_list["node2_c"])
+			src.node2_concentration = max(0, min(1, src.node2_concentration + value))
+			src.node1_concentration = max(0, min(1, src.node1_concentration - value))
+		src.update_icon()
+		src.updateUsrDialog()
+		return

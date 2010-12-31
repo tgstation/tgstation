@@ -336,7 +336,9 @@ obj/machinery/atmospherics/filter/attack_hand(user as mob) // -- TLE
 		else
 			current_filter_type = "ERROR - Report this bug to the admin, please!"
 
-	dat += {"<b>Filtering: </b>[current_filter_type]<br><HR>
+	dat += {"
+			<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
+			<b>Filtering: </b>[current_filter_type]<br><HR>
 			<h4>Set Filter Type:</h4>
 			<A href='?src=\ref[src];filterset=0'>Carbon Molecules</A><BR>
 			<A href='?src=\ref[src];filterset=1'>Oxygen</A><BR>
@@ -344,12 +346,15 @@ obj/machinery/atmospherics/filter/attack_hand(user as mob) // -- TLE
 			<A href='?src=\ref[src];filterset=3'>Carbon Dioxide</A><BR>
 			<A href='?src=\ref[src];filterset=4'>Nitrous Oxide</A><BR>
 			<A href='?src=\ref[src];filterset=-1'>Nothing</A><BR>
-			<HR><B>Desirible output pressure:</B>
+			<HR><B>Desirable output pressure:</B>
+			<a href='?src=\ref[src];out_press=-100'><b>-</b></a>
 			<a href='?src=\ref[src];out_press=-10'><b>-</b></a>
 			<a href='?src=\ref[src];out_press=-1'>-</a>
 			[src.target_pressure]
 			<a href='?src=\ref[src];out_press=1'>+</a>
-			<a href='?src=\ref[src];out_press=10'><b>+</b></a>"}
+			<a href='?src=\ref[src];out_press=10'><b>+</b></a>
+			<a href='?src=\ref[src];out_press=100'><b>+</b></a>
+			"}
 /*
 		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD>[dat]","window=atmo_filter")
 		onclose(user, "atmo_filter")
@@ -375,8 +380,13 @@ obj/machinery/atmospherics/filter/Topic(href, href_list) // -- TLE
 		src.temp = null
 	if(href_list["out_press"])
 		src.target_pressure = max(0, min(4000, src.target_pressure + text2num(href_list["out_press"])))
-
+	if(href_list["power"])
+		on=!on
+	src.update_icon()
+	src.updateUsrDialog()
+/*
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
 			src.attack_hand(M)
+*/
 	return

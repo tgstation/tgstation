@@ -33,13 +33,11 @@
 			var/turf/T = get_turf(O.loc)
 			if(T)
 				T.Entered(O)
-		return
-
+			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	if (href_list["select_tool"])
 		var/tool = locate(href_list["select_tool"])
 		if(tool)
 			src.selected_tool = tool
-		return
 	return
 
 /obj/mecha/working/get_stats_part()
@@ -70,4 +68,5 @@
 				tools -= destr_tool
 				destr_tool.destroy()
 				src.occupant_message("<font color='red'>The [destr_tool] is destroyed!</font>")
+				src.log_append_to_last("[destr_tool] is destroyed.")
 	return

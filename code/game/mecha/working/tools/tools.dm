@@ -10,6 +10,7 @@
 	if(!istype(mecha, /obj/mecha/working))
 		return
 	src.chassis = mecha
+	chassis.log_append_to_last("[src.name] initialized.")
 	return
 
 
@@ -75,6 +76,7 @@
 								O.loc = chassis
 								O.anchored = 0
 								chassis.occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
+								chassis.log_message("Loaded [O]. Cargo compartment capacity: [chassis.cargo_capacity - chassis.cargo.len]")
 							else
 								chassis.occupant_message("<font color='red'>You must hold still while handling objects.</font>")
 							tool_ready = 1
@@ -123,6 +125,7 @@
 					if(istype(target, /turf/simulated/wall/r_wall))
 						chassis.occupant_message("\red The [target] is too durable to drill through.")
 					else
+						chassis.log_message("Drilled through [target]")
 						target.ex_act(2)
 				tool_ready = 1
 		return

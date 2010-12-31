@@ -22,9 +22,11 @@ obj/machinery/atmospherics/binary/pump
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE
 
+/*
 	attack_hand(mob/user)
 		on = !on
 		update_icon()
+*/
 
 	update_icon()
 		if(node1&&node2)
@@ -123,6 +125,39 @@ obj/machinery/atmospherics/binary/pump
 
 				target_pressure = number
 
-		if(signal.data["tag"])
-			spawn(5) broadcast_status()
+		broadcast_status()
 		update_icon()
+		return
+
+
+	attack_hand(user as mob)
+		if(..())
+			return
+		src.add_fingerprint(usr)
+		if(!src.allowed(user))
+			user << "\red Access denied."
+			return
+		usr.machine = src
+		var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
+					<b>Desirable output pressure: </b>
+					<a href='?src=\ref[src];out_press=-100'><b>-</b></a>
+					<a href='?src=\ref[src];out_press=-10'><b>-</b></a>
+					<a href='?src=\ref[src];out_press=-1'>-</a>
+					[round(target_pressure,0.1)]kPa
+					<a href='?src=\ref[src];out_press=1'>+</a>
+					<a href='?src=\ref[src];out_press=10'><b>+</b></a>
+					<a href='?src=\ref[src];out_press=100'><b>+</b></a>
+					"}
+
+		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
+		onclose(user, "atmo_pump")
+		return
+
+	Topic(href,href_list)
+		if(href_list["power"])
+			on = !on
+		if(href_list["out_press"])
+			src.target_pressure = max(0, min(4500, src.target_pressure + text2num(href_list["out_press"])))
+		src.update_icon()
+		src.updateUsrDialog()
+		return

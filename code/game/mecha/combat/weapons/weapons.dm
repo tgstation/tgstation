@@ -10,6 +10,7 @@
 	if(!istype(mecha, /obj/mecha/combat))
 		return
 	src.chassis = mecha
+	chassis.log_append_to_last("[src.name] initialized.")
 	return
 
 /datum/mecha_weapon/proc/destroy()
@@ -55,6 +56,7 @@
 		missiles--
 		spawn(weapon_cooldown)
 			weapon_ready = 1
+		chassis.log_message("Fired from [src.name], targeting [target].",1)
 		return
 
 	proc/rearm()
@@ -64,6 +66,7 @@
 				missiles++
 				missiles_to_add--
 				chassis.cell.charge -= missile_energy_cost
+		chassis.log_message("Rearmed [src.name].")
 		return
 
 	get_weapon_info()
@@ -108,6 +111,7 @@
 			F.prime()
 		spawn(weapon_cooldown)
 			weapon_ready = 1
+		chassis.log_message("Fired from [src.name], targeting [target].")
 		return
 
 /datum/mecha_weapon/laser
@@ -136,7 +140,7 @@
 			A.process()
 		spawn(weapon_cooldown)
 			weapon_ready = 1
-
+		chassis.log_message("Fired from [src.name], targeting [target].")
 		return
 
 
@@ -144,6 +148,7 @@
 	weapon_cooldown = 50
 	name = "eZ-13 mk2 Heavy pulse rifle"
 	energy_drain = 60
+	var/num_penetrations = 2
 
 	fire(target)
 		if(!fire_checks(target)) return
@@ -157,6 +162,7 @@
 
 		playsound(chassis, 'marauder.ogg', 50, 1)
 		var/obj/beam/a_laser/A = new /obj/beam/a_laser/pulse_laser(curloc)
+		A.life = num_penetrations
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -166,7 +172,7 @@
 			A.process()
 		spawn(weapon_cooldown)
 			weapon_ready = 1
-
+		chassis.log_message("Fired from [src.name], targeting [target].")
 		return
 
 
@@ -174,6 +180,7 @@
 	weapon_cooldown = 10
 	name = "PBT \"Pacifier\" Mounted Taser"
 	energy_drain = 20
+	weapon_cooldown = 7
 
 	fire(target)
 		if(!fire_checks(target)) return
@@ -196,7 +203,7 @@
 			A.process()
 		spawn(weapon_cooldown)
 			weapon_ready = 1
-
+		chassis.log_message("Fired from [src.name], targeting [target].")
 		return
 
 
