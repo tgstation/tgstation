@@ -26,6 +26,7 @@
 	var/karma_spent = 0
 	var/ooccolor = "#b82e00" //only used for admins of host level, default is equal to admin default
 	var/midis = 1 //Check if midis should be played for someone -- Urist
+	var/be_alien = 0 //Check if that guy wants to be an alien -- Urist
 
 	authenticate = 0
 	// comment out the line below when debugging locally to enable the options & messages menu

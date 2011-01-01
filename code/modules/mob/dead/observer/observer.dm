@@ -235,3 +235,13 @@ var/list/karma_spenders = list()
 	else
 		isnegative = 1
 	sql_report_karma(src, M, isnegative)
+
+/mob/dead/observer/verb/toggle_alien_candidate()
+	set name = "Toggle Be Alien Candidate"
+	set desc = "Determines whether you will or will not be an alien candidate when someone bursts."
+	if(src.client.be_alien)
+		src.client.be_alien = 0
+		src << "You are now excluded from alien candidate lists until end of round."
+	else if(!src.client.be_alien)
+		src.client.be_alien = 1
+		src << "You are now included in alien candidate lists until end of round."

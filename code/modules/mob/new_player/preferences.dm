@@ -6,6 +6,7 @@ datum/preferences
 
 	var/be_syndicate
 	var/midis = 1
+	var/be_alien = 1
 	var/ooccolor = "#b82e00"
 	var/be_random_name = 0
 	var/underwear = 1
@@ -360,6 +361,7 @@ datum/preferences
 		dat += " <font color=\"#0000[num2hex(src.b_eyes, 2)]\">Blue</font> - <a href='byond://?src=\ref[user];preferences=1;b_eyes=input'>[src.b_eyes]</a>"
 */
 		dat += "<hr>"
+		dat += "<b>Be alien candidate:</b> <a href=\"byond://?src=\ref[user];preferences=1;be_alien=input\"><b>[src.be_alien == 1 ? "Yes" : "No"]</b></a><br>"
 		if(!jobban_isbanned(user, "Syndicate"))
 			dat += "<b>Be syndicate?:</b> <a href =\"byond://?src=\ref[user];preferences=1;b_syndicate=1\"><b>[(src.be_syndicate ? "Yes" : "No")]</b></a><br>"
 		else
@@ -685,10 +687,10 @@ datum/preferences
 				src.UI = 'screen1.dmi'
 
 		if (link_tags["midis"])
-			if (src.midis)
-				src.midis = 0
-			else
-				src.midis = 1
+			src.midis = (src.midis+1)%2
+
+		if (link_tags["be_alien"])
+			src.be_alien = (src.be_alien+1)%2
 
 		if (link_tags["underwear"])
 			if(!IsGuestKey(user.key))
@@ -838,6 +840,7 @@ datum/preferences
 		spawn(10)
 			character.client.midis = midis
 			character.client.ooccolor = ooccolor
+			character.client.be_alien = be_alien
 
 /*
 
