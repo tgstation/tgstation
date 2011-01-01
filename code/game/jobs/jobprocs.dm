@@ -633,7 +633,7 @@
 		usr.verbs += /client/proc/mimewall
 	for (var/mob/V in viewers(usr))
 		if(V!=usr)
-			V.show_message("[usr] looks as if a wall is in front of him.", 3, "", 2)
+			V.show_message("[usr] looks as if a wall is in front of them.", 3, "", 2)
 	usr << "You form a wall in front of yourself."
 	var/obj/forcefield/F =  new /obj/forcefield(locate(usr.x,usr.y,usr.z))
 	F.icon_state = "empty"

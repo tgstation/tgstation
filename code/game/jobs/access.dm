@@ -116,7 +116,7 @@
 		if("Medical Doctor")
 			return list(access_medical, access_morgue)
 		if("Botanist")	// -- TLE
-			return list(access_medical, access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS
+			return list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT
 		if("Librarian") // -- TLE
 			return list(access_library)
 		if("Lawyer") //Muskets 160910
