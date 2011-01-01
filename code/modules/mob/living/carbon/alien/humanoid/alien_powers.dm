@@ -311,7 +311,7 @@ I kind of like the right click only--the window version can get a little confusi
 		return
 
 /mob/living/carbon/alien/humanoid/verb/corrode(obj/O as anything in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
-	set name = "Corrose with Acid (200)"
+	set name = "Corrode with Acid (200)"
 	set desc = "Drench an object in acid, destroying it over time."
 
 	if(!istype(O, /obj))

@@ -118,8 +118,9 @@
 /obj/item/attack_paw(mob/user as mob)
 
 	if(isalien(user)) // -- TLE
-		user << "Your claws aren't capable of such fine manipulation."
-		return
+		if(!user:has_fine_manipulation) // -- defaults to 0, only changes due to badminnery -- Urist
+			user << "Your claws aren't capable of such fine manipulation."
+			return
 
 //	if(istype(src, /obj/item/weapon/gun)) //Temporary fix until I figure out what's going with monkey/add_blood code./N
 //		user << "Sorry Mr. Monkey, guns aren't for you."
