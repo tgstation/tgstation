@@ -60,6 +60,7 @@
 		if (istype(target, /obj/item/weapon/storage)) return ..()
 		if (!src.state && stage == 2)
 			user << "\red You prime the grenade! 3 seconds!"
+			message_admins("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
 			src.state = 1
 			src.icon_state = "chemg4"
 			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
@@ -72,6 +73,7 @@
 	attack_self(mob/user as mob)
 		if (!src.state && stage == 2)
 			user << "\red You prime the grenade! 3 seconds!"
+			message_admins("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
 			src.state = 1
 			src.icon_state = "chemg4"
 			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
