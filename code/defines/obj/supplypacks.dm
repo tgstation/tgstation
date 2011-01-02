@@ -9,7 +9,7 @@
 					"/obj/item/weapon/smokebomb",
 					"/obj/item/weapon/smokebomb",
 					"/obj/item/weapon/pen/sleepypen",
-					"/obj/item/weapon/incendiarygrenade")
+					"/obj/item/weapon/chem_grenade/incendiary")
 	cost = 20
 	containertype = "/obj/crate"
 	containername = "Special Ops crate"
@@ -217,9 +217,9 @@
 					"/obj/item/weapon/tank/plasma",
 					"/obj/item/weapon/tank/plasma",
 					"/obj/item/weapon/tank/plasma",
-					"/obj/item/weapon/incendiarygrenade",
-					"/obj/item/weapon/incendiarygrenade",
-					"/obj/item/weapon/incendiarygrenade",
+					"/obj/item/weapon/chem_grenade/incendiary",
+					"/obj/item/weapon/chem_grenade/incendiary",
+					"/obj/item/weapon/chem_grenade/incendiary",
 					"/obj/item/clothing/gloves/stungloves")
 	cost = 25
 	containertype = "/obj/crate/secure/weapon"

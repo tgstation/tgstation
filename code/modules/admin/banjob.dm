@@ -9,6 +9,9 @@ var
 
 /proc/jobban_isbanned(mob/M, rank)
 	if(M)
+		if (rank == "Captain" || rank == "AI" || rank == "Head of Personnel" || rank == "Head of Security" || rank == "Chief Engineer" || rank == "Research Director" || rank == "Warden" || rank == "Detective" || rank == "Chief Medical Officer")
+			if(IsGuestKey(M.key)/* && config.guest_jobban*/)
+				return 1
 		if (jobban_keylist.Find(text("[M.ckey] - [rank]")))
 			return 1
 		else

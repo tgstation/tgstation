@@ -285,25 +285,22 @@ datum
 		napalm
 			name = "Napalm"
 			id = "napalm"
-			result = null
+			result = "napalm"
 			required_reagents = list("aluminium" = 1, "plasma" = 1, "acid" = 1 )
-			result_amount = null
+			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/location = get_turf(holder.my_atom)
+				var/location = get_turf(holder.my_atom.loc)
 				for(var/turf/simulated/floor/target_tile in range(1,location))
 					if(target_tile.parent && target_tile.parent.group_processing)
 						target_tile.parent.suspend_group_processing()
 
 					var/datum/gas_mixture/napalm = new
-					var/datum/gas/volatile_fuel/fuel = new
 
-					fuel.moles = 15
-					napalm.trace_gases += fuel
+					napalm.toxins = 2 * created_volume
 
 					target_tile.assume_air(napalm)
-
 					spawn (0) target_tile.hotspot_expose(700, 400)
-
+				holder.del_reagent("napalm")
 				return
 
 		smoke
@@ -336,13 +333,6 @@ datum
 			result = "chloralhydrate"
 			required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
 			result_amount = 1
-
-		morphine
-			name = "Morphine"
-			id = "morphine"
-			result = "morphine"
-			required_reagents = list("opium" = 10, "enzyme" = 2)
-			result_amount = 5
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -468,7 +458,8 @@ datum
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				new /obj/item/weapon/reagent_containers/food/snacks/tofu(location)
+				for(var/i = 1, i <= created_volume, i++)
+					new /obj/item/weapon/reagent_containers/food/snacks/tofu(location)
 				return
 
 		soysauce

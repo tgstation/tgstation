@@ -30,6 +30,7 @@
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 1
+	var/guest_jobban = 1
 
 	var/server
 	var/banappeals
@@ -164,6 +165,9 @@
 
 			if ("banappeals")
 				config.banappeals = value
+
+			if ("guest_jobban")
+				config.guest_jobban = text2num(value)
 
 			if ("probability")
 				var/prob_pos = findtext(value, " ")

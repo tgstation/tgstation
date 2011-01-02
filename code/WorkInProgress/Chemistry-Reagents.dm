@@ -554,6 +554,12 @@ datum
 			description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 			reagent_state = LIQUID
 
+		napalm
+			name = "Napalm RG-218"
+			id = "napalm"
+			description = "A plasma based variant of napalm that burns violently upon exposure to oxygen."
+			reagent_state = LIQUID
+
 		radium
 			name = "Radium"
 			id = "radium"
@@ -1112,64 +1118,7 @@ datum
 				data++
 				..()
 				return
-		/*
-		addiction					//Is a generic "addiction" reagent that is produced by any chemical that is addictive.
-			name = "Addiction"		//	It should never be seen by the player since it only exists inside the body.
-			id = "addiction"
-			description = "Raw addiction. Patented by the Robust Softdrinks Corporation."
-			reagent_state = SOLID
-			on_mob_life(var/mob/M)
-				if(!M) M = holder.my_atom
-				if(M.reagents.has_reagent("opium") || M.reagents.has_reagent("morphine"))	//Addictive substances goes here.
-					M.reagents.add_reagent("addiction", 1)	//If you if have the substance, it adds another to balance out metabolism
-				else										//If you don't, you start stuffering withdrawls.
-					if(!M:stuttering)
-						M:stuttering = 1
-					M:stuttering += 2
-					M:confused += 2
-					if(!data) data = 1
-					switch(data)
-						if(10 to 30)
-							M:toxloss++
-							M.make_jittery(2)
-						if(31 to INFINITY)
-							M:toxloss++
-							M.make_jittery(10)
-				..()											//It also starts working out of your system.
-				return
 
-		opium
-			name = "Opium"
-			id = "opium"
-			description = "A mildly addictive narcotic analgesic."
-			reagent_state = SOLID
-			on_mob_life(var/mob/M)
-				if(!M) M = holder.my_atom
-				if(prob(50)) M:fireloss	-= 2
-				if(prob(50)) M:bruteloss -= 2
-				M.reagents.add_reagent("addiction", 1)		//It's addictive? A shock!
-				..()
-				return
-
-		morphine
-			name = "Morphine"
-			id = "morphine"
-			description = "A refined form of opium. It is a powerful narcotic analgesic."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
-				if(!M) M = holder.my_atom
-				if(prob(50)) M:fireloss -= 5
-				if(prob(50)) M:bruteloss -= 5
-				M.reagents.add_reagent("addiction", 2)		//2x addictive for 3x the effect.
-				var/overdose = 0
-				if(!data) data = 1
-				if(data > 100) overdose = 1								//Oh no! An overdose
-				if(overdose == 1)
-					M:toxloss += 50
-					data = 0
-				..()
-				return
-*/
 
 /////////////////////////Food Reagents////////////////////////////
 // Part of the food code. Nutriment is used instead of the old "heal_amt" code. Also is where all the food

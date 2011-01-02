@@ -117,7 +117,7 @@
 
 
 /obj/item/weapon/chem_grenade/metalfoam
-	name = "metal foam grenade"
+	name = "Metal-Foam Grenade"
 	desc = "Used for emergency sealing of air breaches."
 	icon_state = "chemg3"
 	stage = 2
@@ -134,8 +134,26 @@
 		beakers += B1
 		beakers += B2
 
+/obj/item/weapon/chem_grenade/incendiary
+	name = "Incendiary Grenade"
+	desc = "Used for clearing rooms of living things."
+	icon_state = "chemg3"
+	stage = 2
+
+	New()
+		..()
+		var/obj/item/weapon/reagent_containers/glass/B1 = new(src)
+		var/obj/item/weapon/reagent_containers/glass/B2 = new(src)
+
+		B1.reagents.add_reagent("aluminium", 25)
+		B2.reagents.add_reagent("plasma", 25)
+		B2.reagents.add_reagent("acid", 25)
+
+		beakers += B1
+		beakers += B2
+
 /obj/item/weapon/chem_grenade/cleaner
-	name = "cleaner grenade"
+	name = "Cleaner Grenade"
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
 	icon_state = "chemg3"
 	stage = 2
@@ -755,7 +773,7 @@
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
 				user << "\red you can't add anymore to [target]."
 				return
-			var/trans = src.reagents.trans_to(target, 1)
+			var/trans = src.reagents.trans_to(target, 5)
 			user << "\blue You transfer [trans] units of the condiment to [target]."
 
 
@@ -1388,7 +1406,7 @@
 	icon_state = "candy_corn"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/chips
