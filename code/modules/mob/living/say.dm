@@ -68,7 +68,7 @@
 			message_mode = "left hand"
 			message = copytext(message, 3)
 
-		else if (copytext(message, 1, 3) == ":h")
+		else if (copytext(message, 1, 3) == ":h" || (copytext(message, 1, 3) == ":ð" ))
 			if (ishuman(src))
 				message_mode = "secure headset"
 			message = copytext(message, 3)
@@ -81,14 +81,17 @@
 			message_mode = "intercom"
 			message = copytext(message, 3)
 
-		else if (copytext(message, 1, 3) == ":s" && src.robot_talk_understand)
+		else if ((copytext(message, 1, 3) == ":s" || (copytext(message, 1, 3) == ":û" )) && src.robot_talk_understand)
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			src.robot_talk(message)
 			return
-	//
 
-	message = trim(message)
+		else if ((copytext(message, 1, 3) == ":a" || (copytext(message, 1, 3) == ":ô")) && src.alien_talk_understand)
+			message = copytext(message, 3)
+			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			src.alien_talk(message)
+			return
 
 	if (!message)
 		return

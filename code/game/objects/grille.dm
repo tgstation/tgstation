@@ -131,11 +131,11 @@
 			src.icon_state = "brokengrille"
 			src.density = 0
 			src.destroyed = 1
-			new /obj/item/weapon/rods( src.loc )
+			new /obj/item/stack/rods( src.loc )
 
 		else
 			if (src.health <= -10.0)
-				new /obj/item/weapon/rods( src.loc )
+				new /obj/item/stack/rods( src.loc )
 				//SN src = null
 				del(src)
 				return

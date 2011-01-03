@@ -127,7 +127,7 @@
 	icon_state = "welder-rods"
 	item_state = "welder"
 	var/obj/item/weapon/weldingtool/part1 = null
-	var/obj/item/weapon/rods/part2 = null
+	var/obj/item/stack/rods/part2 = null
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 3.0
@@ -142,7 +142,7 @@
 	icon_state = "welder-rods-igniter"
 	item_state = "welder"
 	var/obj/item/weapon/weldingtool/part1 = null
-	var/obj/item/weapon/rods/part2 = null
+	var/obj/item/stack/rods/part2 = null
 	var/obj/item/device/igniter/part3 = null
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT

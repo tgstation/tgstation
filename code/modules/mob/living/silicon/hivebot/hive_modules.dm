@@ -44,11 +44,11 @@
 	src.modules += new /obj/item/weapon/wirecutters(src)
 	src.modules += new /obj/item/device/multitool(src)
 
-	var/obj/item/weapon/sheet/metal/M = new /obj/item/weapon/sheet/metal(src)
+	var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(src)
 	M.amount = 50
 	src.modules += M
 
-	var/obj/item/weapon/sheet/rglass/G = new /obj/item/weapon/sheet/rglass(src)
+	var/obj/item/stack/sheet/rglass/G = new /obj/item/stack/sheet/rglass(src)
 	G.amount = 50
 	src.modules += G
 

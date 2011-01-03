@@ -105,7 +105,7 @@
 
 
 
-/obj/computerframe/attackby(obj/item/weapon/P as obj, mob/user as mob)
+/obj/computerframe/attackby(obj/item/P as obj, mob/user as mob)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
@@ -118,8 +118,7 @@
 				playsound(src.loc, 'Welder.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You deconstruct the frame."
-					var/obj/item/weapon/sheet/metal/A = new /obj/item/weapon/sheet/metal( src.loc )
-					A.amount = 5
+					new /obj/item/stack/sheet/metal( src.loc, 5 )
 					del(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
@@ -171,24 +170,21 @@
 				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
 				A.amount = 5
 
-			if(istype(P, /obj/item/weapon/sheet/glass))
+			if(istype(P, /obj/item/stack/sheet/glass))
 				if(P:amount >= 2)
 					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						if(P)
-							P:amount -= 2
-							if(!P:amount) del(P)
-							user << "\blue You put in the glass panel."
-							src.state = 4
-							src.icon_state = "4"
+						P:use(2)
+						user << "\blue You put in the glass panel."
+						src.state = 4
+						src.icon_state = "4"
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'Crowbar.ogg', 50, 1)
 				user << "\blue You remove the glass panel."
 				src.state = 3
 				src.icon_state = "3"
-				var/obj/item/weapon/sheet/glass/A = new /obj/item/weapon/sheet/glass( src.loc )
-				A.amount = 2
+				new /obj/item/stack/sheet/glass( src.loc, 2 )
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."

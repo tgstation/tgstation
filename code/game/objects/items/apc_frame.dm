@@ -2,8 +2,7 @@
 
 /obj/item/apc_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
-		var/obj/item/weapon/sheet/metal/M = new /obj/item/weapon/sheet/metal( src.loc )
-		M.amount = 2
+		new /obj/item/stack/sheet/metal( src.loc, 2 )
 		del(src)
 
 /obj/item/apc_frame/proc/try_build(turf/on_wall)

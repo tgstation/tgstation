@@ -217,7 +217,7 @@
 
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
 
-	if (istype(user, /mob/living/silicon))
+	if (istype(user, /mob/living/silicon) && get_dist(src,user)>1)
 		return src.attack_hand(user)
 	if (istype(W, /obj/item/weapon/crowbar) && opened)
 		if (has_electronics==1)
@@ -270,20 +270,20 @@
 			if (cell)
 				user << "\red Close the APC first." //Less hints more mystery!
 				return
-			else if (!has_electronics || !terminal)
-				user << "\red There is nothing to secure."
-				return
 			else
 				if (has_electronics==1)
 					has_electronics = 2
 					stat &= ~MAINT
 					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 					user << "You screw the circuit electronics into place."
-				else /*(has_electronics==2)*/
+				else if (has_electronics==2)
 					has_electronics = 1
 					stat |= MAINT
 					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 					user << "You unfasten the electronics."
+				else /* has_electronics==0 */
+					user << "\red There is nothing to secure."
+					return
 				updateicon()
 		else if(emagged || malfhack)
 			user << "The interface is broken"
@@ -377,7 +377,7 @@
 		playsound(src.loc, 'Welder.ogg', 50, 1)
 		if(do_after(user, 50))
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)
-				new /obj/item/weapon/sheet/metal(loc)
+				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
 					"\red [src] has been cut apart by [user.name] with the weldingtool.",\
 					"You disassembled brocken APC frame.",\
@@ -419,14 +419,15 @@
 				&& !opened \
 				&& W.force >= 5 \
 				&& W.w_class >= 3.0 \
-				&& !istype(W, /obj/item/weapon/gun) \
-				&& prob(10) )
+				&& prob(20) )
 			opened = 2
 			user.visible_message("\red The APC cover was knocked down with the [W.name] by [user.name]!", \
 				"\red You knock down the APC cover with your [W.name]!", \
 				"You hear bang")
 			updateicon()
 		else
+			if (istype(user, /mob/living/silicon))
+				return src.attack_hand(user)
 			user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
 				"\red You hit the [src.name] with your [W.name]!", \
 				"You hear bang")
@@ -478,7 +479,7 @@
 				return
 	if(wiresexposed && (!istype(user, /mob/living/silicon)))
 		user.machine = src
-		var/t1 = text("<B>Access Panel</B><br>\n")
+		var/t1 = text("<html><head><title>[area.name] APC wires</title></head><body><B>Access Panel</B><br>\n")
 		var/list/apcwires = list(
 			"Orange" = 1,
 			"Dark red" = 2,
@@ -495,7 +496,7 @@
 				t1 += "<a href='?src=\ref[src];pulse=[apcwires[wiredesc]]'>Pulse</a> "
 			t1 += "<br>"
 		t1 += text("<br>\n[(src.locked ? "The APC is locked." : "The APC is unlocked.")]<br>\n[(src.shorted ? "The APCs power has been shorted." : "The APC is working properly!")]<br>\n[(src.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]")
-		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p>\n")
+		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p></body></html>")
 		user << browse(t1, "window=apcwires")
 		onclose(user, "apcwires")
 
@@ -868,6 +869,7 @@
 					if (src.z == 1)
 						ticker.mode:apcs++
 					src.malfai = usr
+					src.locked = 1
 					if (src.cell)
 						if (src.cell.charge > 0)
 							src.cell.charge = 0

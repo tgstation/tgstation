@@ -816,3 +816,90 @@ obj/item/brain
 	density = 1
 	opacity = 1
 	anchored = 1
+
+/obj/item/stack
+	var/singular_name
+	var/amount = 1.0
+	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+
+/obj/item/stack/rods
+	name = "metal rods"
+	singular_name = "metal rod"
+	icon_state = "rods"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	w_class = 3.0
+	force = 9.0
+	throwforce = 15.0
+	throw_speed = 5
+	throw_range = 20
+	m_amt = 1875
+	max_amount = 60
+
+/obj/item/stack/sheet
+	name = "sheet"
+//	var/const/length = 2.5 //2.5*1.5*0.01*100000 == 3750 == m_amt
+//	var/const/width = 1.5
+//	var/const/height = 0.01
+	flags = FPRINT | TABLEPASS
+	w_class = 3.0
+	max_amount = 50
+
+/obj/item/stack/sheet/glass
+	name = "glass"
+	singular_name = "glass sheet"
+	icon_state = "sheet-glass"
+	force = 5.0
+	g_amt = 3750
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 3
+
+/obj/item/stack/sheet/rglass
+	name = "reinforced glass"
+	singular_name = "reinforced glass sheet"
+	icon_state = "sheet-rglass"
+	force = 6.0
+	g_amt = 3750
+	m_amt = 1875
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 3
+
+/obj/item/stack/sheet/metal
+	name = "metal"
+	singular_name = "metal sheet"
+	desc = "A heavy sheet of metal."
+	icon_state = "sheet-metal"
+	force = 5.0
+	m_amt = 3750
+	throwforce = 14.0
+	throw_speed = 1
+	throw_range = 4
+	flags = FPRINT | TABLEPASS | CONDUCT
+
+/obj/item/stack/sheet/r_metal
+	name = "reinforced metal"
+	singular_name = "reinforced metal sheet"
+	desc = "A very heavy sheet of metal."
+	icon_state = "sheet-r_metal"
+	item_state = "sheet-metal"
+	force = 5.0
+	m_amt = 7500
+	throwforce = 15.0
+	throw_speed = 1
+	throw_range = 4
+	flags = FPRINT | TABLEPASS | CONDUCT
+
+/obj/item/stack/tile
+	name = "steel floor tile"
+	singular_name = "steel floor tile"
+	desc = "Those could work as a pretty decent throwing weapon"
+	icon_state = "tile"
+	w_class = 3.0
+	force = 6.0
+	m_amt = 937.5
+	throwforce = 15.0
+	throw_speed = 5
+	throw_range = 20
+	flags = FPRINT | TABLEPASS | CONDUCT
+	max_amount = 10

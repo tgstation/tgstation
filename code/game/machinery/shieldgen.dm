@@ -216,7 +216,6 @@
 	if(src.active >= 1)
 		src.active = 0
 		icon_state = "Shield_Gen"
-		user << "You "
 		
 		user.visible_message("[user] turned the shield generator off.", \
 			"You turn off the shield generator.", \

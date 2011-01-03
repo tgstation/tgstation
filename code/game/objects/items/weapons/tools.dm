@@ -88,15 +88,17 @@ WELDINGTOOOL
 	usr << text("\icon[] [] contains [] units of fuel left!", src, src.name, get_fuel() )
 	return
 
-/obj/item/weapon/weldingtool/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (status == 0 && istype(W,/obj/item/weapon/screwdriver))
-		status = 1
-		user << "\blue The welder can now be attached and modified."
-	else if (status == 1 && istype(W,/obj/item/weapon/rods))
-		var/obj/item/weapon/rods/R = W
-		R.amount = R.amount - 1
-		if (R.amount == 0)
-			del(R)
+/obj/item/weapon/weldingtool/attackby(obj/item/W as obj, mob/user as mob)
+	if (istype(W,/obj/item/weapon/screwdriver))
+		status = !status
+		if (status)
+			user << "\blue You resecure the welder."
+		else
+			user << "\blue The welder can now be attached and modified."
+		src.add_fingerprint(user)
+	else if (status == 1 && istype(W,/obj/item/stack/rods))
+		var/obj/item/stack/rods/R = W
+		R.use(1)
 		var/obj/item/assembly/weld_rod/F = new /obj/item/assembly/weld_rod( user )
 		src.loc = F
 		F.part1 = src
@@ -120,10 +122,8 @@ WELDINGTOOOL
 		R.layer = 20
 		F.loc = user
 		src.add_fingerprint(user)
-	else if (status == 1 && istype(W,/obj/item/weapon/screwdriver))
-		status = 0
-		user << "\blue You resecure the welder."
-		return
+	else
+		..()
 
 // helper functions for weldingtool fuel use
 

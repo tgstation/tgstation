@@ -1095,6 +1095,43 @@
 			T.Entered(W)
 	return
 
+/mob/proc/before_take_item(var/obj/item/item)
+	u_equip(item)
+	if (src.client)
+		src.client.screen -= item
+	src.update_clothing()
+	return
+
+/mob/proc/get_active_hand()
+	if (src.hand)
+		return src.l_hand
+	else
+		return src.r_hand
+
+/mob/proc/get_inactive_hand()
+	if ( ! src.hand)
+		return src.l_hand
+	else
+		return src.r_hand
+
+/mob/proc/put_in_hand(var/obj/item/I)
+	I.loc = src
+	if (src.hand)
+		src.l_hand = I
+	else
+		src.r_hand = I
+	I.layer = 20
+	src.update_clothing()
+
+/mob/proc/put_in_inactive_hand(var/obj/item/I)
+	I.loc = src
+	if (!src.hand)
+		src.l_hand = I
+	else
+		src.r_hand = I
+	I.layer = 20
+	src.update_clothing()
+
 /mob/proc/reset_view(atom/A)
 	if (src.client)
 		if (istype(A, /atom/movable))

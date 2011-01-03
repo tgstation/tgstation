@@ -15,114 +15,128 @@ obj/structure
 			icon_state = "reinforced"
 			state = 2
 
-/obj/structure/girder/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wrench) && state == 0 && anchored && !istype(src,/obj/structure/girder/displaced))
 		playsound(src.loc, 'Ratchet.ogg', 100, 1)
-		var/turf/T = get_turf(user)
 		user << "\blue Now disassembling the girder"
-		sleep(40)
-		if(get_turf(user) == T)
+		if(do_after(user,40))
 			user << "\blue You dissasembled the girder!"
-			new /obj/item/weapon/sheet/metal(get_turf(src))
+			new /obj/item/stack/sheet/metal(get_turf(src))
 			del(src)
 
-	else if((istype(W, /obj/item/weapon/sheet/metal)) && (W:amount >= 2) && istype(src,/obj/structure/girder/displaced))
-		W:amount -= 2
-		if(W:amount <= 0)
-			del(W)
+	else if((istype(W, /obj/item/stack/sheet/metal)) && (W:amount >= 2) && istype(src,/obj/structure/girder/displaced))
+		W:use(2)
 		user << "\blue You create a false wall! Push on it to open or close the passage."
 		new /obj/falsewall (src.loc)
 		del(src)
 
-	else if(istype(W, /obj/item/weapon/sheet/r_metal) && istype(src,/obj/structure/girder/displaced))
-		W:amount -= 1
-		if(W:amount <= 0)
-			del(W)
+	else if(istype(W, /obj/item/stack/sheet/r_metal) && istype(src,/obj/structure/girder/displaced))
+		W:use(2)
 		user << "\blue You create a false r wall! Push on it to open or close the passage."
 		new /obj/falserwall (src.loc)
 		del(src)
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
 		playsound(src.loc, 'Screwdriver.ogg', 100, 1)
-		var/turf/T = get_turf(user)
 		user << "\blue Now unsecuring support struts"
-		sleep(40)
-		if(get_turf(user) == T)
+		if(do_after(user,40))
 			user << "\blue You unsecured the support struts!"
 			state = 1
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && istype(src,/obj/structure/girder/reinforced) && state == 1)
 		playsound(src.loc, 'Wirecutter.ogg', 100, 1)
-		var/turf/T = get_turf(user)
 		user << "\blue Now removing support struts"
-		sleep(40)
-		if(get_turf(user) == T)
+		if(do_after(user,40))
 			user << "\blue You removed the support struts!"
 			new/obj/structure/girder( src.loc )
 			del(src)
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 0 && anchored )
 		playsound(src.loc, 'Crowbar.ogg', 100, 1)
-		var/turf/T = get_turf(user)
 		user << "\blue Now dislodging the girder"
-		sleep(40)
-		if(get_turf(user) == T)
+		if(do_after(user, 40))
 			user << "\blue You dislodged the girder!"
 			new/obj/structure/girder/displaced( src.loc )
 			del(src)
 
 	else if(istype(W, /obj/item/weapon/wrench) && state == 0 && !anchored )
 		playsound(src.loc, 'Ratchet.ogg', 100, 1)
-		var/turf/T = get_turf(user)
 		user << "\blue Now securing the girder"
-		sleep(40)
-		if(get_turf(user) == T)
+		if(get_turf(user, 40))
 			user << "\blue You secured the girder!"
 			new/obj/structure/girder( src.loc )
 			del(src)
 
-	else if((istype(W, /obj/item/weapon/sheet/metal)) && (W:amount >= 2))
-		var/turf/T = get_turf(user)
+	else if((istype(W, /obj/item/stack/sheet/metal)) && (W:amount >= 2))
 		user << "\blue Now adding plating..."
-		sleep(40)
-		if (get_turf(user) == T)
+		if (do_after(user,40))
 			user << "\blue You added the plating!"
 			var/turf/Tsrc = get_turf(src)
 			Tsrc.ReplaceWithWall()
-			W:amount -= 2
-			if(W:amount <= 0)
-				del(W)
+			W:use(2)
 			del(src)
 		return
 
-	else if (istype(W, /obj/item/weapon/sheet/r_metal))
-		var/turf/T = get_turf(user)
+	else if (istype(W, /obj/item/stack/sheet/r_metal))
 		if (src.icon_state == "reinforced") //Time to finalize!
 			user << "\blue Now finalising reinforced wall."
-			sleep(50)
-			if(W)
-				if(get_turf(user) == T)
-					user << "\blue Wall fully reinforced!"
-					var/turf/Tsrc = get_turf(src)
-					Tsrc.ReplaceWithRWall()
-					W:amount--
-					if (W:amount <= 0)
-						del(W)
-					del(src)
-					return
+			if(do_after(user, 50))
+				user << "\blue Wall fully reinforced!"
+				var/turf/Tsrc = get_turf(src)
+				Tsrc.ReplaceWithRWall()
+				W:use(1)
+				del(src)
+				return
 		else
 			user << "\blue Now reinforcing girders"
-			sleep(60)
-			user << "\blue Girders reinforced!"
-			W:amount--
-			if (W:amount <= 0)
-				del(W)
-			new/obj/structure/girder/reinforced( src.loc )
-			del(src)
-			return
+			if (do_after(user,60))
+				user << "\blue Girders reinforced!"
+				W:use(1)
+				new/obj/structure/girder/reinforced( src.loc )
+				del(src)
+				return
 	else
 		..()
 
 /obj/structure/girder/blob_act()
 	if(prob(40))
 		del(src)
+
+
+// LATTICE
+
+
+/obj/lattice/blob_act()
+	del(src)
+	return
+
+/obj/lattice/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			del(src)
+			return
+		if(2.0)
+			del(src)
+			return
+		if(3.0)
+			return
+		else
+	return
+
+/obj/lattice/attackby(obj/item/C as obj, mob/user as mob)
+
+	if (istype(C, /obj/item/stack/tile))
+
+		C:build(get_turf(src))
+		C:use(1)
+		playsound(src.loc, 'Genhit.ogg', 50, 1)
+		C.add_fingerprint(user)
+		del(src)
+		return
+	if (istype(C, /obj/item/weapon/weldingtool) && C:welding)
+		user << "\blue Slicing lattice joints ..."
+		C:eyecheck(user)
+		new /obj/item/stack/rods(src.loc)
+		del(src)
+
+	return

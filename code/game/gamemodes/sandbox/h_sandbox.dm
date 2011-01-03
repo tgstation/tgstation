@@ -88,11 +88,11 @@ datum/hSB
 					P.back.layer = 20
 					P.internal = P.back
 				if("hsbmetal")
-					var/obj/item/weapon/sheet/hsb = new/obj/item/weapon/sheet/metal
+					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/metal
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbglass")
-					var/obj/item/weapon/sheet/hsb = new/obj/item/weapon/sheet/glass
+					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass
 					hsb.amount = 50
 					hsb.loc = usr.loc
 				if("hsbairlock")

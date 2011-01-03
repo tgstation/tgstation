@@ -20,13 +20,13 @@
 
 /obj/stool/blob_act()
 	if(prob(75))
-		new /obj/item/weapon/sheet/metal( src.loc )
+		new /obj/item/stack/sheet/metal( src.loc )
 		del(src)
 
 /obj/stool/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
-		new /obj/item/weapon/sheet/metal( src.loc )
+		new /obj/item/stack/sheet/metal( src.loc )
 		//SN src = null
 		del(src)
 	return
@@ -36,7 +36,7 @@
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
-		new /obj/item/weapon/sheet/metal( src.loc )
+		new /obj/item/stack/sheet/metal( src.loc )
 		del(src)
 	return
 

@@ -172,12 +172,12 @@
 
 /datum/recipe/humankabob
 	humanmeat_amount = 2
-	extra_item = /obj/item/weapon/rods
+	extra_item = /obj/item/stack/rods
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/humankabob"
 
 /datum/recipe/monkeykabob
 	monkeymeat_amount = 2
-	extra_item = /obj/item/weapon/rods
+	extra_item = /obj/item/stack/rods
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/monkeykabob"
 
 /datum/recipe/tofubread

@@ -10,7 +10,7 @@
 			health -= 35
 			if(health <=0)
 				new /obj/item/weapon/shard( src.loc )
-				new /obj/item/weapon/rods( src.loc )
+				new /obj/item/stack/rods( src.loc )
 				src.density = 0
 				del(src)
 
@@ -24,21 +24,21 @@
 			return
 		if(2.0)
 			new /obj/item/weapon/shard( src.loc )
-			if(reinf) new /obj/item/weapon/rods( src.loc)
+			if(reinf) new /obj/item/stack/rods( src.loc)
 			//SN src = null
 			del(src)
 			return
 		if(3.0)
 			if (prob(50))
 				new /obj/item/weapon/shard( src.loc )
-				if(reinf) new /obj/item/weapon/rods( src.loc)
+				if(reinf) new /obj/item/stack/rods( src.loc)
 
 				del(src)
 				return
 	return
 
 /obj/window/blob_act()
-	if(reinf) new /obj/item/weapon/rods( src.loc)
+	if(reinf) new /obj/item/stack/rods( src.loc)
 	density = 0
 	del(src)
 
@@ -66,7 +66,7 @@
 	//world << "glass at [x],[y],[z] Mhit"
 	src.health = 0
 	new /obj/item/weapon/shard( src.loc )
-	if(reinf) new /obj/item/weapon/rods( src.loc)
+	if(reinf) new /obj/item/stack/rods( src.loc)
 	src.density = 0
 
 
@@ -92,7 +92,7 @@
 		step(src, get_dir(AM, src))
 	if (src.health <= 0)
 		new /obj/item/weapon/shard( src.loc )
-		if(reinf) new /obj/item/weapon/rods( src.loc)
+		if(reinf) new /obj/item/stack/rods( src.loc)
 		src.density = 0
 		del(src)
 		return
@@ -107,7 +107,7 @@
 				O << text("\red [] smashes through the window!", usr)
 		src.health = 0
 		new /obj/item/weapon/shard( src.loc )
-		if(reinf) new /obj/item/weapon/rods( src.loc)
+		if(reinf) new /obj/item/stack/rods( src.loc)
 		src.density = 0
 		del(src)
 	return
@@ -120,7 +120,7 @@
 				O << text("\red [] smashes through the window!", usr)
 		src.health = 0
 		new /obj/item/weapon/shard( src.loc )
-		if(reinf) new /obj/item/weapon/rods( src.loc)
+		if(reinf) new /obj/item/stack/rods( src.loc)
 		src.density = 0
 		del(src)
 	return
@@ -142,7 +142,7 @@
 		src.health = 0
 		new /obj/item/weapon/shard(src.loc)
 		if(reinf)
-			new /obj/item/weapon/rods(src.loc)
+			new /obj/item/stack/rods(src.loc)
 		src.density = 0
 		del(src)
 		return
@@ -183,11 +183,11 @@
 				index = 0
 				while(index < 2)
 					new /obj/item/weapon/shard( src.loc )
-					if(reinf) new /obj/item/weapon/rods( src.loc)
+					if(reinf) new /obj/item/stack/rods( src.loc)
 					index++
 			else
 				new /obj/item/weapon/shard( src.loc )
-				if(reinf) new /obj/item/weapon/rods( src.loc)
+				if(reinf) new /obj/item/stack/rods( src.loc)
 			src.density = 0
 			del(src)
 			return

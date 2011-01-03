@@ -227,21 +227,21 @@
 		if(!devastated)
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
-			new /obj/item/weapon/sheet/r_metal( src )
+			new /obj/item/stack/sheet/r_metal( src )
 		else
-			new /obj/item/weapon/sheet/metal( src )
-			new /obj/item/weapon/sheet/metal( src )
-			new /obj/item/weapon/sheet/r_metal( src )
+			new /obj/item/stack/sheet/metal( src )
+			new /obj/item/stack/sheet/metal( src )
+			new /obj/item/stack/sheet/r_metal( src )
 	else
 		if(!devastated)
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			new /obj/structure/girder(src)
-			new /obj/item/weapon/sheet/metal( src )
-			new /obj/item/weapon/sheet/metal( src )
+			new /obj/item/stack/sheet/metal( src )
+			new /obj/item/stack/sheet/metal( src )
 		else
-			new /obj/item/weapon/sheet/metal( src )
-			new /obj/item/weapon/sheet/metal( src )
-			new /obj/item/weapon/sheet/metal( src )
+			new /obj/item/stack/sheet/metal( src )
+			new /obj/item/stack/sheet/metal( src )
+			new /obj/item/stack/sheet/metal( src )
 
 	ReplaceWithFloor()
 
@@ -355,7 +355,7 @@
 	return
 
 
-/turf/simulated/wall/r_wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/wall/r_wall/attackby(obj/item/W as obj, mob/user as mob)
 
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
@@ -397,7 +397,7 @@
 			sleep(100)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 6
-				new /obj/item/weapon/rods( src )
+				new /obj/item/stack/rods( src )
 				user << "\blue You removed the support rods."
 
 	else if (istype(W, /obj/item/weapon/wrench))
@@ -414,7 +414,7 @@
 		if (src.d_state == 0)
 			playsound(src.loc, 'Wirecutter.ogg', 100, 1)
 			src.d_state = 1
-			new /obj/item/weapon/rods( src )
+			new /obj/item/stack/rods( src )
 
 	else if (istype(W, /obj/item/weapon/screwdriver))
 		if (src.d_state == 1)
@@ -447,7 +447,7 @@
 				dismantle_wall()
 				return
 
-	else if ((istype(W, /obj/item/weapon/sheet/metal)) && (src.d_state))
+	else if ((istype(W, /obj/item/stack/sheet/metal)) && (src.d_state))
 		var/turf/T = user.loc
 		user << "\blue Repairing wall."
 		sleep(100)
@@ -491,7 +491,7 @@
 			switch(pick(1,2;75,3))
 				if (1)
 					src.ReplaceWithLattice()
-					if(prob(33)) new /obj/item/weapon/sheet/metal(src)
+					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
 					src.ReplaceWithSpace()
 				if(3)
@@ -500,7 +500,7 @@
 					else
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
-					if(prob(33)) new /obj/item/weapon/sheet/metal(src)
+					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 		if(3.0)
 			if (prob(50))
 				src.break_tile()
@@ -543,8 +543,7 @@ turf/simulated/floor/proc/update_icon()
 		user << "\blue Removing rods..."
 		playsound(src.loc, 'Ratchet.ogg', 80, 1)
 		if(do_after(user, 30))
-			new /obj/item/weapon/rods(src)
-			new /obj/item/weapon/rods(src)
+			new /obj/item/stack/rods(src, 2)
 			ReplaceWithFloor()
 			var/turf/simulated/floor/F = src
 			F.to_plating()
@@ -596,7 +595,7 @@ turf/simulated/floor/proc/update_icon()
 		icon_state = "floor"
 	levelupdate()
 
-/turf/simulated/floor/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
 
 	if(!C || !user)
 		return 0
@@ -605,36 +604,33 @@ turf/simulated/floor/proc/update_icon()
 		if(broken || burnt)
 			user << "\red You remove the broken plating."
 		else
-			new /obj/item/weapon/tile(src)
+			new /obj/item/stack/tile(src)
 
 		to_plating()
 		playsound(src.loc, 'Crowbar.ogg', 80, 1)
 
 		return
 
-	if(istype(C, /obj/item/weapon/rods))
+	if(istype(C, /obj/item/stack/rods))
 		if (!src.intact)
 			if (C:amount >= 2)
 				user << "\blue Reinforcing the floor..."
 				if(do_after(user, 30))
-					if (C)
-						ReplaceWithEngineFloor()
-						C:amount -= 2
-						if (C:amount <= 0) del(C) //wtf
-						playsound(src.loc, 'Deconstruct.ogg', 80, 1)
+					ReplaceWithEngineFloor()
+					playsound(src.loc, 'Deconstruct.ogg', 80, 1)
+					C:use(2)
+					return
 			else
 				user << "\red You need more rods."
 		else
 			user << "\red You must remove the plating first."
 		return
 
-	if(istype(C, /obj/item/weapon/tile) && !intact)
+	if(istype(C, /obj/item/stack/tile) && !intact)
 		restore_tile()
-		var/obj/item/weapon/tile/T = C
+		var/obj/item/stack/tile/T = C
 		playsound(src.loc, 'Genhit.ogg', 50, 1)
-		if(--T.amount < 1)
-			del(T)
-			return
+		T.use(1)
 
 	if(istype(C, /obj/item/weapon/cable_coil))
 		if(!intact)
@@ -685,32 +681,22 @@ turf/simulated/floor/proc/update_icon()
 		step(user.pulling, get_dir(user.pulling.loc, src))
 	return
 
-/turf/space/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
-	if (istype(C, /obj/item/weapon/rods))
+	if (istype(C, /obj/item/stack/rods))
 		user << "\blue Constructing support lattice ..."
 		playsound(src.loc, 'Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
-		C:amount--
-
-		if (C:amount < 1)
-			user.u_equip(C)
-			del(C)
-			return
+		C:use(1)
 		return
 
-	if (istype(C, /obj/item/weapon/tile))
-		if(locate(/obj/lattice, src))
-			var/obj/lattice/L = locate(/obj/lattice, src)
+	if (istype(C, /obj/item/stack/tile))
+		var/obj/lattice/L = locate(/obj/lattice, src)
+		if(L)
 			del(L)
 			playsound(src.loc, 'Genhit.ogg', 50, 1)
 			C:build(src)
-			C:amount--
-
-			if (C:amount < 1)
-				user.u_equip(C)
-				del(C)
-				return
+			C:use(1)
 			return
 		else
 			user << "\red The plating is going to need some support."

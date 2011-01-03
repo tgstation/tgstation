@@ -8,8 +8,8 @@
 	var/operating = 0
 	var/obj/item/robot_parts/being_built = null
 
-/obj/machinery/robotic_fabricator/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
-	if (istype(O, /obj/item/weapon/sheet/metal))
+/obj/machinery/robotic_fabricator/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if (istype(O, /obj/item/stack/sheet/metal))
 		if (src.metal_amount < 150000.0)
 			var/count = 0
 			spawn(15)
@@ -17,7 +17,7 @@
 					if(!O:amount)
 						return
 					while(metal_amount < 150000 && O:amount)
-						src.metal_amount += O:height * O:width * O:length * 100000.0
+						src.metal_amount += O:m_amt /*O:height * O:width * O:length * 100000.0*/
 						O:amount--
 						count++
 

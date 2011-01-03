@@ -52,9 +52,10 @@
 	icon_state = "headset"
 	item_state = "headset"
 	var/protective_temperature = 0
+	var/bintran = 0
 
 /obj/item/device/radio/headset/traitor
-// No variables, as everything else it does is handled in human's life.dm
+	bintran = 1
 
 /obj/item/device/radio/headset/headset_sec // -- TLE
 	name = "Security Radio Headset"

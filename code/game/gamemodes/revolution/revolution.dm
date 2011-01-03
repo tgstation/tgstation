@@ -398,7 +398,7 @@
 /////////////////////////////
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		if(rev_mind.current.stat != 2)
+		if(rev_mind && rev_mind.current && rev_mind.current.stat != 2)
 			return 0
 	return 1
 

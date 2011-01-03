@@ -32,13 +32,14 @@ However people seem to like it for some reason.
 		anchored = !anchored
 		playsound(src.loc, 'Ratchet.ogg', 75, 1)
 		if(anchored)
-			user.visible_message("[user.name] secure [src.name] to the floor.", \
+			user.visible_message("[user.name] secures [src.name] to the floor.", \
 				"You secure the [src.name] to the floor.", \
 				"You hear ratchet")
 		else
-			user.visible_message("[user.name] unsecure [src.name] from the floor.", \
-				"You unsecure the [src.name] to the floor.", \
+			user.visible_message("[user.name] unsecures [src.name] from the floor.", \
+				"You unsecure the [src.name] from the floor.", \
 				"You hear ratchet")
+		return
 	return ..()
 
 /proc/singularity_is_surrounded(turf/T)
@@ -139,7 +140,7 @@ However people seem to like it for some reason.
 
 /obj/machinery/the_singularity/proc/notify_collector_controller()
 	var/oldsrc = src
-	src = 0 //for spawn() working even after Del(), see byond documentation about sleep() -rastaf0
+	src = null //for spawn() working even after Del(), see byond documentation about sleep() -rastaf0
 	for(var/obj/machinery/power/collector_control/myCC in orange(collector_control_range,oldsrc))
 		spawn() myCC.updatecons()
 
@@ -212,9 +213,6 @@ However people seem to like it for some reason.
 		gain = 2
 
 	else if(isturf(A))
-		if(istype(A, /turf/space))
-			world << "DEBUG: the_singularity tryes to eat space!!!11"
-			return
 		/*if(!active)
 			if(isturf(A,/turf/simulated/floor/engine)) //here was a bug. But now it's a feature. -rasta0
 				return*/
@@ -299,19 +297,13 @@ However people seem to like it for some reason.
 			if (istype(X,/turf/simulated/floor) && !istype(X,/turf/simulated/floor/plating))
 				if(!X:broken)
 					if(prob(80))
-						new/obj/item/weapon/tile (X)
+						new/obj/item/stack/tile (X)
 						X:break_tile_to_plating()
 					else
 
 						X:break_tile()
 			else if(istype(X,/turf/simulated/wall))
-				if (istype(X,/turf/simulated/wall/r_wall))
-					new /obj/structure/girder/reinforced( X )
-					new /obj/item/weapon/sheet/r_metal( X )
-				else
-					new /obj/structure/girder( X )
-					new /obj/item/weapon/sheet/metal( X )
-				X:ReplaceWithFloor()
+				X:dismantle_wall()
 			else
 				X:ReplaceWithFloor()
 
@@ -662,16 +654,16 @@ However people seem to like it for some reason.
 		else if(state == 0)
 			state = 1
 			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user.visible_message("[user.name] secure [src.name] to the floor.", \
-				"You secure the external reinforcing bolts to the floor.", \
+			user.visible_message("[user.name] secures [src.name] to the floor.", \
+				"You secure the external reinforcing bolts.", \
 				"You hear ratchet")
 			src.anchored = 1
 
 		else if(state == 1)
 			state = 0
 			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user.visible_message("[user.name] unsecure [src.name] to the floor.", \
-				"You undo the external reinforcing bolts to the floor.", \
+			user.visible_message("[user.name] unsecures [src.name] to the floor.", \
+				"You undo the external reinforcing bolts.", \
 				"You hear ratchet")
 			src.anchored = 0
 		else
@@ -691,7 +683,7 @@ However people seem to like it for some reason.
 		playsound(src.loc, 'Welder2.ogg', 50, 1)
 
 		if(state == 1)
-			user.visible_message("[user.name] start to weld [src.name] to the floor.", \
+			user.visible_message("[user.name] starts to weld [src.name] to the floor.", \
 				"You start to weld the [src] to the floor.", \
 				"You hear welding")
 			if (do_after(user,20))
@@ -701,7 +693,7 @@ However people seem to like it for some reason.
 				return 1
 
 		else if(state == 3)
-			user.visible_message("[user.name] start to cut [src.name] to the floor.", \
+			user.visible_message("[user.name] starts to cut [src.name] from the floor.", \
 				"You start to cut the [src] free from the floor.", \
 				"You hear welding")
 			if (do_after(user,20))
@@ -818,11 +810,11 @@ However people seem to like it for some reason.
 	src.active = !src.active
 	if(src.active)
 		updateicon_on()
-		user.visible_message("[user.name] turn on the collector array.", \
+		user.visible_message("[user.name] turns on the collector array.", \
 			"You turn on the collector array.")
 	else
 		updateicon_off()
-		user.visible_message("[user.name] turn off the collector array.", \
+		user.visible_message("[user.name] turns off the collector array.", \
 			"You turn off the collector array.")
 	CU.updatecons()
 
@@ -858,11 +850,11 @@ However people seem to like it for some reason.
 			playsound(src.loc, 'Ratchet.ogg', 75, 1)
 			src.anchored = !src.anchored
 			if(src.anchored == 1)
-				user.visible_message("[user.name] secure [src.name] reinforcing bolts to the floor.", \
-					"You secure the collector reinforcing bolts to the floor.", \
+				user.visible_message("[user.name] secures [src.name] reinforcing bolts to the floor.", \
+					"You secure the collector reinforcing bolts.", \
 					"You hear ratchet")
 			else
-				user.visible_message("[user.name] unsecure [src.name] reinforcing bolts to the floor.", \
+				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 					"You undo the external reinforcing bolts.", \
 					"You hear ratchet")
 			for(var/obj/machinery/power/collector_control/myCC in orange(1,src))
@@ -1042,12 +1034,12 @@ However people seem to like it for some reason.
 		playsound(src.loc, 'Ratchet.ogg', 75, 1)
 		src.anchored = !src.anchored
 		if(src.anchored == 1)
-			user.visible_message("[user.name] secure [src.name] to the floor.", \
+			user.visible_message("[user.name] secures [src.name] to the floor.", \
 				"You secure the [src.name] to the floor.", \
 				"You hear ratchet")
 			connect_to_network()
 		else
-			user.visible_message("[user.name] unsecure [src.name] to the floor.", \
+			user.visible_message("[user.name] unsecures [src.name] to the floor.", \
 				"You undo the [src] securing bolts.", \
 				"You hear ratchet")
 			disconnect_from_network()
@@ -1122,11 +1114,11 @@ However people seem to like it for some reason.
 			if(src.active >= 1)
 	//			src.active = 0
 	//			icon_state = "Field_Gen"
-				user << "You are unable to turn off the [src]r, wait till it powers down."
+				user << "You are unable to turn off the [src], wait till it powers down."
 	//			src.cleanup()
 				return 1
 			else
-				user.visible_message("[user.name] turn on [src.name]", \
+				user.visible_message("[user.name] turns on [src.name]", \
 					"You turn on the [src].", \
 					"You hear heavy droning")
 				turn_on()
@@ -1221,7 +1213,7 @@ However people seem to like it for some reason.
 		if(state == 0)
 			state = 1
 			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user.visible_message("[user.name] secure [src.name] to the floor.", \
+			user.visible_message("[user.name] secures [src.name] to the floor.", \
 				"You secure the external reinforcing bolts to the floor.", \
 				"You hear ratchet")
 			src.anchored = 1
@@ -1229,7 +1221,7 @@ However people seem to like it for some reason.
 		else if(state == 1)
 			state = 0
 			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			user.visible_message("[user.name] unsecure [src.name] reinforcing bolts to the floor.", \
+			user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 				"You undo the external reinforcing bolts.", \
 				"You hear ratchet")
 			src.anchored = 0
@@ -1246,7 +1238,7 @@ However people seem to like it for some reason.
 		playsound(src.loc, 'Welder2.ogg', 50, 1)
 
 		if(state == 1)
-			user.visible_message("[user.name] start to weld [src.name] to the floor.", \
+			user.visible_message("[user.name] starts to weld [src.name] to the floor.", \
 				"You start to weld the [src] to the floor.", \
 				"You hear welding")
 			if (do_after(user,20))
@@ -1256,7 +1248,7 @@ However people seem to like it for some reason.
 				return 1
 
 		else if(state == 3)
-			user.visible_message("[user.name] start to cut [src.name] free from the floor.", \
+			user.visible_message("[user.name] starts to cut [src.name] free from the floor.", \
 				"You start to cut the [src] free from the floor.", \
 				"You hear welding")
 			if (do_after(user,20))

@@ -1,6 +1,7 @@
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	icon = 'atmos.dmi'
+	icon_state = "yellow"
 	density = 1
 	var/health = 100.0
 	flags = FPRINT | CONDUCT
@@ -8,7 +9,8 @@
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
 
-	var/color = "blue"
+	var/color = "yellow"
+	var/labeled = 0
 	var/filled = 0.5
 	pressure_resistance = 7*ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
@@ -18,10 +20,12 @@
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"
 	color = "redws"
+	labeled = 1
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
 	icon_state = "red"
 	color = "red"
+	labeled = 1
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
@@ -29,14 +33,17 @@
 	name = "Canister \[Toxin (Bio)\]"
 	icon_state = "orange"
 	color = "orange"
+	labeled = 1
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
 	icon_state = "black"
 	color = "black"
+	labeled = 1
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Canister \[Air\]"
 	icon_state = "grey"
 	color = "grey"
+	labeled = 1
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	src.overlays = 0
@@ -158,7 +165,7 @@
 		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
 <A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
 "}
-	var/output_text = {"<TT><B>[name]</B><BR>
+	var/output_text = {"<TT><B>[name]</B>[!labeled?" <A href='?src=\ref[src];relabel=1'><small>relabel</small></a>":""]<BR>
 Pressure: [air_contents.return_pressure()] KPa<BR>
 Port Status: [(connected_port)?("Connected"):("Disconnected")]
 [holding_text]
@@ -195,6 +202,23 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 			else
 				release_pressure = max(ONE_ATMOSPHERE/10, release_pressure+diff)
 
+		if (href_list["relabel"])
+			if (!labeled)
+				var/list/colors = list(\
+					"\[N2O\]" = "redws", \
+					"\[N2\]" = "red", \
+					"\[O2\]" = "blue", \
+					"\[Toxin (Bio)\]" = "orange", \
+					"\[CO2\]" = "black", \
+					"\[Air\]" = "grey", \
+					"\[CAUTION\]" = "yellow", \
+				)
+				var/label = input("Choose canister label", "Gas canister") as null|anything in colors
+				if (label)
+					src.color = colors[label]
+					src.icon_state = colors[label]
+					src.name = "Canister: [label]"
+					labeled = 1
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)
 		update_icon()

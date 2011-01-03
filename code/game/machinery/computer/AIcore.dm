@@ -10,7 +10,7 @@
 	var/obj/item/brain/brain = null
 
 
-/obj/AIcore/attackby(obj/item/weapon/P as obj, mob/user as mob)
+/obj/AIcore/attackby(obj/item/P as obj, mob/user as mob)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
@@ -23,8 +23,7 @@
 				playsound(src.loc, 'Welder.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You deconstruct the frame."
-					var/obj/item/weapon/sheet/r_metal/A = new /obj/item/weapon/sheet/r_metal( src.loc )
-					A.amount = 4
+					new /obj/item/stack/sheet/r_metal( src.loc, 4)
 					del(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
@@ -79,7 +78,7 @@
 					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
 					A.amount = 5
 
-			if(istype(P, /obj/item/weapon/sheet/rglass))
+			if(istype(P, /obj/item/stack/sheet/rglass))
 				if(P:amount >= 2)
 					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
@@ -129,8 +128,7 @@
 					src.icon_state = "3b"
 				else
 					src.icon_state = "3"
-				var/obj/item/weapon/sheet/rglass/A = new /obj/item/weapon/sheet/rglass( src.loc )
-				A.amount = 2
+				new /obj/item/stack/sheet/rglass( src.loc, 2 )
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."

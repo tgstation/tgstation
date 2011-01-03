@@ -92,7 +92,7 @@
 						if(istype(O,/obj/item/weapon/rcd))
 							if(O:matter < 30)
 								O:matter += 1
-						if(istype(O,/obj/item/weapon/sheet/metal) || istype(O,/obj/item/weapon/sheet/rglass) || istype(O,/obj/item/weapon/cable_coil))
+						if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/weapon/cable_coil))
 							if(O:amount < 50)
 								O:amount += 1
 						// Security

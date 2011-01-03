@@ -38,13 +38,7 @@
 		return
 
 	if(charging)
-		charging.loc = usr
-		charging.layer = 20
-		if (user.hand )
-			user.l_hand = charging
-		else
-			user.r_hand = charging
-
+		usr.put_in_hand(charging)
 		charging.add_fingerprint(user)
 		charging.updateicon()
 
@@ -52,6 +46,9 @@
 		user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
 		chargelevel = -1
 		updateicon()
+
+/obj/machinery/cell_charger/attack_ai(mob/user)
+	return
 
 /obj/machinery/cell_charger/process()
 	//world << "ccpt [charging] [stat]"

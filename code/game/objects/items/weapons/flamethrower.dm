@@ -21,7 +21,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	var/lit = 0	//on or off
 	var/turf/previousturf = null
 	var/obj/item/weapon/weldingtool/part1 = null
-	var/obj/item/weapon/rods/part2 = null
+	var/obj/item/stack/rods/part2 = null
 	var/obj/item/device/igniter/part3 = null
 	var/obj/item/weapon/tank/plasma/part4 = null
 	m_amt = 500
@@ -155,7 +155,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	if(isturf(location)) //start a fire if possible
 		location.hotspot_expose(700, 2)
 
-/obj/item/weapon/flamethrower/attackby(obj/item/weapon/tank/plasma/W as obj, mob/user as mob)
+/obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)
 		return
 	if (istype(W,/obj/item/weapon/tank/plasma))

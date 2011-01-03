@@ -135,9 +135,10 @@
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	throwforce = 5
-	w_class = 2.0
 	throw_speed = 4
 	throw_range = 20
+	m_amt = 30
+	g_amt = 20
 
 
 /obj/item/weapon/axe
@@ -922,7 +923,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	w_class = 1.0
 	throw_speed = 7
 	throw_range = 15
-	m_amt = 60
+	m_amt = 10
 
 /obj/item/weapon/pen/sleepypen
 	desc = "It's a normal black ink pen with a sharp point."
@@ -933,19 +934,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	icon = 'items.dmi'
 	icon_state = "rack_parts"
 	flags = FPRINT | TABLEPASS| CONDUCT
-
-/obj/item/weapon/rods
-	name = "rods"
-	icon = 'items.dmi'
-	icon_state = "rods"
-	var/amount = 1.0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 3.0
-	force = 9.0
-	throwforce = 15.0
-	throw_speed = 5
-	throw_range = 20
-	m_amt = 1875
+	m_amt = 3750
 
 /obj/item/weapon/rubber_chicken
 	name = "Rubber Chicken"
@@ -975,68 +964,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	force = 5.0
 	throwforce = 15.0
 	item_state = "shard-glass"
-
-/obj/item/weapon/sheet
-	name = "sheet"
-	icon = 'items.dmi'
-	var/amount = 1.0
-	var/length = 2.5
-	var/width = 1.5
-	var/height = 0.01
-	flags = FPRINT | TABLEPASS
-	throwforce = 5.0
-	throw_speed = 1
-	throw_range = 4
-	w_class = 4.0
-
-/obj/item/weapon/sheet/glass
-	name = "glass"
-	icon_state = "sheet-glass"
-	force = 5.0
 	g_amt = 3750
-	throwforce = 5
-	w_class = 3.0
-	throw_speed = 3
-	throw_range = 3
-
-/obj/item/weapon/sheet/rglass
-	name = "reinforced glass"
-	icon_state = "sheet-rglass"
-	item_state = "sheet-rglass"
-	force = 6.0
-	g_amt = 3750
-	m_amt = 1875
-	throwforce = 5
-	w_class = 3.0
-	throw_speed = 3
-	throw_range = 3
-
-/obj/item/weapon/sheet/metal
-	name = "metal"
-	icon_state = "sheet-metal"
-	desc = "A heavy sheet of metal."
-	throwforce = 14.0
-	m_amt = 3750
-	throwforce = 10.0
-	throw_speed = 1
-	throw_range = 4
-	w_class = 3.0
-	flags = FPRINT | TABLEPASS | CONDUCT
-
-/obj/item/weapon/sheet/r_metal
-	name = "reinforced metal"
-	desc = "A very heavy sheet of metal."
-	icon_state = "sheet-r_metal"
-	force = 5.0
-	throwforce = 14.0
-	item_state = "sheet-metal"
-	m_amt = 7500
-	throwforce = 15.0
-	throw_speed = 1
-	throw_range = 4
-	w_class = 3.0
-	flags = FPRINT | TABLEPASS | CONDUCT
-
 
 /obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
@@ -1101,12 +1029,14 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "table parts"
 	icon = 'items.dmi'
 	icon_state = "table_parts"
+	m_amt = 3750
 	flags = FPRINT | TABLEPASS| CONDUCT
 
 /obj/item/weapon/table_parts/reinforced
 	name = "table parts"
 	icon = 'items.dmi'
 	icon_state = "reinf_tableparts"
+	m_amt = 7500
 	flags = FPRINT | TABLEPASS| CONDUCT
 
 /obj/item/weapon/tank
@@ -1155,19 +1085,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	w_class = 2.5
 	force = 4.0
 
-/obj/item/weapon/tile
-	name = "steel floor tile"
-	desc = "... Those could work as a pretty decent throwing weapon"
-	icon = 'items.dmi'
-	icon_state = "tile"
-	var/amount = 1.0
-	w_class = 3.0
-	throw_speed = 5
-	throw_range = 20
-	force = 6.0
-	throwforce = 15.0
-
-
 /obj/item/weapon/teleportation_scroll
 	name = "Teleportation Scroll"
 	icon = 'items.dmi'
@@ -1183,7 +1100,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "weldingtool"
 	icon = 'items.dmi'
 	icon_state = "welder"
-	var/welding = 0.0
+	var/welding = 0
 	var/status = 0	//flamethrower construction :shobon:
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 3.0
@@ -1191,7 +1108,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	m_amt = 30
+	m_amt = 70
 	g_amt = 30
 
 /obj/item/weapon/wire
@@ -1247,6 +1164,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	m_amt = 700
+	g_amt = 50
 	var/rigged = 0		// true if rigged to explode
 
 /obj/item/weapon/cell/robotcrate

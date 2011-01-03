@@ -27,7 +27,7 @@
 
 /datum/supply_packs/metal50
 	name = "50 Metal Sheets"
-	contains = list("/obj/item/weapon/sheet/metal")
+	contains = list("/obj/item/stack/sheet/metal")
 	amount = 50
 	cost = 15
 	containertype = "/obj/crate"
@@ -35,7 +35,7 @@
 
 /datum/supply_packs/glass50
 	name = "50 Glass Sheets"
-	contains = list("/obj/item/weapon/sheet/glass")
+	contains = list("/obj/item/stack/sheet/glass")
 	amount = 50
 	cost = 15
 	containertype = "/obj/crate"

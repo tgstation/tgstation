@@ -82,7 +82,7 @@ obj/door_assembly
 		state = 1
 		glass = 1
 
-/obj/door_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool) && W:welding && !anchored )
 		if (W:get_fuel() < 1)
 			user << "\blue You need more welding fuel to dissassemble the airlock assembly."
@@ -94,12 +94,9 @@ obj/door_assembly
 		sleep(40)
 		if(get_turf(user) == T)
 			user << "\blue You dissasembled the airlock assembly!"
-			new /obj/item/weapon/sheet/metal(get_turf(src))
-			new /obj/item/weapon/sheet/metal(get_turf(src))
-			new /obj/item/weapon/sheet/metal(get_turf(src))
-			new /obj/item/weapon/sheet/metal(get_turf(src))
+			new /obj/item/stack/sheet/metal(get_turf(src), 4)
 			if(src.glass==1)
-				new /obj/item/weapon/sheet/rglass(get_turf(src))
+				new /obj/item/stack/sheet/rglass(get_turf(src))
 			del(src)
 	else if(istype(W, /obj/item/weapon/wrench) && !anchored )
 		playsound(src.loc, 'Ratchet.ogg', 100, 1)
@@ -207,7 +204,7 @@ obj/door_assembly
 				ae = electronics
 				electronics = null
 				ae.loc = src.loc
-	else if(istype(W, /obj/item/weapon/sheet/rglass) && glass == 0)
+	else if(istype(W, /obj/item/stack/sheet/rglass) && glass == 0)
 		playsound(src.loc, 'Crowbar.ogg', 100, 1)
 		var/turf/T = get_turf(user)
 		user.visible_message("[user] adds reinforced glass windows to the airlock assembly.", "You start to install reinforced glass windows into the airlock assembly.")

@@ -74,21 +74,14 @@
 	return
 
 
-/obj/machinery/bot/floorbot/attackby(var/obj/item/weapon/W , mob/user as mob)
-	if(istype(W, /obj/item/weapon/tile))
-		var/obj/item/weapon/tile/T = W
+/obj/machinery/bot/floorbot/attackby(var/obj/item/W , mob/user as mob)
+	if(istype(W, /obj/item/stack/tile))
+		var/obj/item/stack/tile/T = W
 		if(src.amount >= 50)
 			return
-		var/loaded = 0
-		if(src.amount + T.amount > 50)
-			var/i = 50 - src.amount
-			src.amount += i
-			T.amount -= i
-			loaded = i
-		else
-			src.amount += T.amount
-			loaded = T.amount
-			del(T)
+		var/loaded = min(50-src.amount, T.amount)
+		T.use(loaded)
+		src.amount += loaded
 		user << "\red You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!"
 		src.updateicon()
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -162,7 +155,7 @@
 				floorbottargets += bot.target
 	if(src.amount <= 0 && ((src.target == null) || !src.target))
 		if(src.eattiles)
-			for(var/obj/item/weapon/tile/T in view(7, src))
+			for(var/obj/item/stack/tile/T in view(7, src))
 				if(T != src.oldtarget && !(target in floorbottargets))
 					src.oldtarget = T
 					src.target = T
@@ -170,7 +163,7 @@
 		if(src.target == null || !src.target)
 			if(src.maketiles)
 				if(src.target == null || !src.target)
-					for(var/obj/item/weapon/sheet/metal/M in view(7, src))
+					for(var/obj/item/stack/sheet/metal/M in view(7, src))
 						if(!(M in floorbottargets) && M != src.oldtarget && M.amount == 1 && !(istype(M.loc, /turf/simulated/wall)))
 							src.oldtarget = M
 							src.target = M
@@ -208,7 +201,7 @@
 					src.target = F
 					break
 		if((!src.target || src.target == null) && src.eattiles)
-			for(var/obj/item/weapon/tile/T in view(7, src))
+			for(var/obj/item/stack/tile/T in view(7, src))
 				if(!(T in floorbottargets) && T != src.oldtarget)
 					src.oldtarget = T
 					src.target = T
@@ -238,9 +231,9 @@
 		src.path = new()
 
 	if(src.loc == src.target || src.loc == src.target.loc)
-		if(istype(src.target, /obj/item/weapon/tile))
+		if(istype(src.target, /obj/item/stack/tile))
 			src.eattile(src.target)
-		else if(istype(src.target, /obj/item/weapon/sheet/metal))
+		else if(istype(src.target, /obj/item/stack/sheet/metal))
 			src.maketile(src.target)
 		else if(istype(src.target, /turf/))
 			repair(src.target)
@@ -263,7 +256,7 @@
 	if(istype(target, /turf/space/))
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\red [src] begins to repair the hole"), 1)
-		var/obj/item/weapon/tile/T = new /obj/item/weapon/tile
+		var/obj/item/stack/tile/T = new /obj/item/stack/tile
 		src.repairing = 1
 		spawn(50)
 			T.build(src.loc)
@@ -284,8 +277,8 @@
 			src.anchored = 0
 			src.target = null
 
-/obj/machinery/bot/floorbot/proc/eattile(var/obj/item/weapon/tile/T)
-	if(!istype(T, /obj/item/weapon/tile))
+/obj/machinery/bot/floorbot/proc/eattile(var/obj/item/stack/tile/T)
+	if(!istype(T, /obj/item/stack/tile))
 		return
 	for(var/mob/O in viewers(src, null))
 		O.show_message(text("\red [src] begins to collect tiles."), 1)
@@ -306,8 +299,8 @@
 		src.target = null
 		src.repairing = 0
 
-/obj/machinery/bot/floorbot/proc/maketile(var/obj/item/weapon/sheet/metal/M)
-	if(!istype(M, /obj/item/weapon/sheet/metal))
+/obj/machinery/bot/floorbot/proc/maketile(var/obj/item/stack/sheet/metal/M)
+	if(!istype(M, /obj/item/stack/sheet/metal))
 		return
 	if(M.amount > 1)
 		return
@@ -319,7 +312,7 @@
 			src.target = null
 			src.repairing = 0
 			return
-		var/obj/item/weapon/tile/T = new /obj/item/weapon/tile
+		var/obj/item/stack/tile/T = new /obj/item/stack/tile
 		T.amount = 4
 		T.loc = M.loc
 		del(M)
@@ -334,8 +327,8 @@
 
 
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/weapon/tile/T, mob/user as mob)
-	if(!istype(T, /obj/item/weapon/tile))
+/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/T, mob/user as mob)
+	if(!istype(T, /obj/item/stack/tile))
 		..()
 		return
 	if(src.contents.len >= 1)

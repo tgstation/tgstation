@@ -678,10 +678,9 @@
 
 		handle_regular_hud_updates()
 
-			if (istype(src.ears, /obj/item/device/radio/headset/traitor))
-				src.robot_talk_understand = 1
-			else
-				src.robot_talk_understand = 0
+			if (istype(src.ears, /obj/item/device/radio/headset))
+				var/obj/item/device/radio/headset/H = src.ears
+				src.robot_talk_understand = H.bintran
 
 			if (src.stat == 2 || src.mutations & 4)
 				src.sight |= SEE_TURFS
