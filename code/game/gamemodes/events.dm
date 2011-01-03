@@ -228,7 +228,7 @@
 	world << sound('outbreak7.ogg')
 	var/virus_type
 	if(!virus)
-		virus_type = pick(/datum/disease/dnaspread,/datum/disease/flu,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
+		virus_type = pick(/datum/disease/dnaspread,/datum/disease/flu,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis/*,/datum/disease/pierrot_throat*/)
 	else
 		switch(virus)
 			if("fake gbs")
@@ -245,8 +245,8 @@
 				virus_type = /datum/disease/dnaspread
 			if("flu")
 				virus_type = /datum/disease/flu
-			if("pierrot's throat")
-				virus_type = /datum/disease/pierrot_throat
+//			if("pierrot's throat")
+//				virus_type = /datum/disease/pierrot_throat
 	for(var/mob/living/carbon/human/H in world)
 		if((H.virus) || (H.stat == 2))
 			continue

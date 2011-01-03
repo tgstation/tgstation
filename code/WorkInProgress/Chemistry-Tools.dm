@@ -1242,7 +1242,7 @@
 		var/datum/disease/F = new /datum/disease/flu(0)
 		var/list/data = list("virus"= F)
 		reagents.add_reagent("blood", 20, data)
-
+/*
 /obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat
 	name = "Pierrot's Throat culture bottle"
 	desc = "A small bottle. Contains H0NI<42 virion culture in synthblood medium."
@@ -1254,7 +1254,7 @@
 		var/datum/disease/F = new /datum/disease/pierrot_throat(0)
 		var/list/data = list("virus"= F)
 		reagents.add_reagent("blood", 20, data)
-
+*/
 /obj/item/weapon/reagent_containers/glass/bottle/cold
 	name = "Rhinovirus culture bottle"
 	desc = "A small bottle. Contains XY-rhinovirus culture in synthblood medium."
