@@ -5,7 +5,9 @@
 	max_stages = 5
 	spread = "Syringe"
 	spread_type = SPECIAL
-	cure = "None"
+	cure = "Spaceacillin & Glycerol"
+	cure_id = list("spaceacillin", "glycerol")
+	cure_chance = 5
 	agent = "Rip-LEY Alien Microbes"
 	affected_species = list("Human")
 	var/gibbed = 0

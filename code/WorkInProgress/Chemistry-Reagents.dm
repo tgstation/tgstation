@@ -346,6 +346,11 @@ datum
 			description = "A colorless, odorless gas."
 			reagent_state = GAS
 
+		copper
+			name = "Copper"
+			id = "copper"
+			description = "A highly ductile metal."
+
 		nitrogen
 			name = "Nitrogen"
 			id = "nitrogen"
