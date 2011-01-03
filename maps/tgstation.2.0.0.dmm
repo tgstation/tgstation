@@ -6751,7 +6751,7 @@
 "czQ" = (/obj/table/woodentable{dir = 1; icon_state = "woodentable"; tag = "icon-woodentable (NORTH)"},/obj/item/clothing/shoes/clown_shoes,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"; tag = "icon-grass1"},/area/planet/clown)
 "czR" = (/obj/table/woodentable{dir = 1; icon_state = "woodentable"; tag = "icon-woodentable (NORTH)"},/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"; tag = "icon-grass1"},/area/planet/clown)
 "czS" = (/obj/table/woodentable{dir = 5},/obj/item/clothing/mask/gas/clown_hat,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"; tag = "icon-grass1"},/area/planet/clown)
-"czT" = (/obj/item/weapon/banana,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"; tag = "icon-grass1"},/area/planet/clown)
+"czT" = (/obj/item/weapon/reagent_containers/food/snacks/banana,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"; tag = "icon-grass1"},/area/planet/clown)
 "czU" = (/obj/table/woodentable{dir = 10; icon_state = "woodentable"},/obj/item/weapon/stamp/clown,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"; tag = "icon-grass1"},/area/planet/clown)
 "czV" = (/obj/table/woodentable,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"; tag = "icon-grass1"},/area/planet/clown)
 "czW" = (/obj/table/woodentable,/obj/item/clothing/under/clown,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"; tag = "icon-grass1"},/area/planet/clown)

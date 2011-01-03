@@ -1128,7 +1128,7 @@ datum
 			id = "nutriment"
 			description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 			reagent_state = SOLID
-			nutriment_factor = 25 * REAGENTS_METABOLISM
+			nutriment_factor = 15 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				if(prob(50)) M:bruteloss--
@@ -1294,6 +1294,12 @@ datum
 				M:nutrition += nutriment_factor
 				..()
 				return
+
+		banana
+			name = "Essence of Banana"
+			id = "banana"
+			description = "The raw essence of a banana. HONK"
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -61,7 +61,7 @@
 
 /datum/recipe/pie
 	flour_amount = 2
-	extra_item = /obj/item/weapon/banana
+	extra_item = /obj/item/weapon/reagent_containers/food/snacks/banana
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/pie"
 
 /datum/recipe/donkpocket

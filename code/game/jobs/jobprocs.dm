@@ -304,7 +304,7 @@
 			src.equip_if_possible(new /obj/item/clothing/under/clown(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/clown_shoes(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/mask/gas/clown_hat(src), slot_wear_mask)
-			src.equip_if_possible(new /obj/item/weapon/banana(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/banana(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/bikehorn(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/stamp/clown(src), slot_in_backpack)
 			src.mutations |= 16

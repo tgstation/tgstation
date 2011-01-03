@@ -1,22 +1,10 @@
 /*
 CONTAINS:
-BANANANANANA
+NO MORE BANANA, NOW YOU CAN EAT IT. GO SEE OTHER FOOD STUFFS.
 BANANA PEEL
 BIKE HORN
 
 */
-
-/obj/item/weapon/banana/attack_self(mob/M as mob)
-	var/obj/item/weapon/bananapeel/W = new /obj/item/weapon/bananapeel( M )
-	M << "\blue You peel the banana."
-	if (M.hand)
-		M.l_hand = W
-	else
-		M.r_hand = W
-	W.layer = 20
-	W.add_fingerprint(M)
-	del(src)
-	return
 
 /obj/item/weapon/bananapeel/HasEntered(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))

@@ -787,6 +787,9 @@
 	icon_state = null
 	var/bitesize = 1
 
+	proc/On_Consume()
+		return
+
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
 	attack_self(mob/user as mob)
@@ -839,6 +842,7 @@
 						if(!reagents.total_volume)
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
+							On_Consume()
 							del(src)
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1
@@ -1239,6 +1243,17 @@
 		var/list/data = list("virus"= F)
 		reagents.add_reagent("blood", 20, data)
 
+/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat
+	name = "Pierrot's Throat culture bottle"
+	desc = "A small bottle. Contains H0NI<42 virion culture in synthblood medium."
+	icon = 'chemical.dmi'
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 5
+	New()
+		..()
+		var/datum/disease/F = new /datum/disease/pierrot_throat(0)
+		var/list/data = list("virus"= F)
+		reagents.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/cold
 	name = "Rhinovirus culture bottle"
@@ -1951,7 +1966,28 @@
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
-
+/obj/item/weapon/reagent_containers/food/snacks/banana
+	name = "Banana"
+	desc = "A banana."
+	icon = 'items.dmi'
+	icon_state = "banana"
+	item_state = "banana"
+	On_Consume()
+		var/mob/M = usr
+		var/obj/item/weapon/bananapeel/W = new /obj/item/weapon/bananapeel( M )
+		M << "\blue You peel the banana."
+		if (M.hand)
+			M.l_hand = W
+		else
+			M.r_hand = W
+		W.layer = 20
+		W.add_fingerprint(M)
+	New()
+		..()
+		reagents.add_reagent("banana", 5)
+		bitesize = 5
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 ///////////////////////////////////////////////Condiments
 //Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all

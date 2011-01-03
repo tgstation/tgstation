@@ -63,9 +63,9 @@
 					"/obj/item/weapon/reagent_containers/food/snacks/faggot",
 					"/obj/item/kitchen/egg_box",
 					"/obj/item/weapon/storage/condimentbottles",
-					"/obj/item/weapon/banana",
-					"/obj/item/weapon/banana",
-					"/obj/item/weapon/banana")
+					"/obj/item/weapon/reagent_containers/food/snacks/banana",
+					"/obj/item/weapon/reagent_containers/food/snacks/banana",
+					"/obj/item/weapon/reagent_containers/food/snacks/banana")
 	cost = 5
 	containertype = "/obj/crate/freezer"
 	containername = "Food crate"
@@ -134,6 +134,7 @@
 					"/obj/item/weapon/reagent_containers/glass/bottle/magnitis",
 //					"/obj/item/weapon/reagent_containers/glass/bottle/wizarditis", worse than GBS if anything
 //					"/obj/item/weapon/reagent_containers/glass/bottle/gbs", No. Just no.
+					"/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat",
 					"/obj/item/weapon/reagent_containers/glass/bottle/brainrot",
 					"/obj/item/weapon/storage/firstaid/syringes",
 					"/obj/item/weapon/storage/beakerbox")

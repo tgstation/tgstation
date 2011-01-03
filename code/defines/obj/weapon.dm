@@ -153,20 +153,6 @@
 	w_class = 3.0
 	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS
 
-/obj/item/weapon/banana
-	name = "Banana"
-	desc = "A banana."
-	icon = 'items.dmi'
-	icon_state = "banana"
-	item_state = "banana"
-	throwforce = 0
-	w_class = 1.0
-	throw_speed = 4
-	throw_range = 20
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
 /obj/item/weapon/bananapeel
 	name = "Banana Peel"
 	desc = "A peel from a banana."
