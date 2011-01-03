@@ -127,7 +127,7 @@ STUN BATON
 			if(status == 1 && charges == 0)
 				user << "\red Not enough charge"
 			return
-	if((charges > 0 && status == 1) && (istype(H, /mob/living/carbon/human)))
+	if((charges > 0 && status == 1) && (istype(H, /mob/living/carbon)))
 		flick("baton_active", src)
 		if (user.a_intent == "hurt")
 		/*	if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(40))
@@ -171,39 +171,6 @@ STUN BATON
 			if (M.stuttering < 10 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stuttering = 10
 			if (M.stunned < 10 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
-				M.stunned = 10
-			user.lastattacked = M
-			M.lastattacker = user
-		for(var/mob/O in viewers(M))
-			if (O.client)	O.show_message("\red <B>[M] has been stunned with the stun baton by [user]!</B>", 1, "\red You hear someone fall", 2)
-	else if((charges > 0 && status == 1) && (istype(M, /mob/living/carbon/monkey)))
-		flick("baton_active", src)
-		if (user.a_intent == "hurt")
-			playsound(src.loc, 'Genhit.ogg', 50, 1, -1)
-			if(isrobot(user))
-				var/mob/living/silicon/robot/R = user
-				R.cell.charge -= 20
-			else
-				charges--
-			if (M.weakened < 1 && (!(M.mutations & 8)) )
-				M.weakened = 1
-			if (M.stuttering < 1 && (!(M.mutations & 8)) )
-				M.stuttering = 1
-			..()
-			if (M.stunned < 1 && (!(M.mutations & 8)) )
-				M.stunned = 1
-		else
-			playsound(src.loc, 'Egloves.ogg', 50, 1, -1)
-			if(isrobot(user))
-				var/mob/living/silicon/robot/R = user
-				R.cell.charge -= 20
-			else
-				charges--
-			if (M.weakened < 10 && (!(M.mutations & 8)) )
-				M.weakened = 10
-			if (M.stuttering < 10 && (!(M.mutations & 8)) )
-				M.stuttering = 10
-			if (M.stunned < 10 && (!(M.mutations & 8)) )
 				M.stunned = 10
 			user.lastattacked = M
 			M.lastattacker = user

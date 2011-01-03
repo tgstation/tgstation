@@ -24,7 +24,7 @@ These are being worked on.
 	return
 
 /*Alien spit now works like a taser shot. It won't home in on the target but will act the same once it does hit.
-Doesn't work on silicon mobs or other aliens.*/
+Doesn't work on other aliens/AI.*/
 /mob/living/carbon/alien/humanoid/verb/spit(mob/target as mob in oview())
 	set name = "Spit Neurotoxin (50)"
 	set desc = "Spits neurotoxin at someone, paralyzing them for a short time."
@@ -37,6 +37,10 @@ Doesn't work on silicon mobs or other aliens.*/
 		src << "\green Your allies are not a valid target."
 		return
 	if(src.toxloss >= 50)
+		src << "\green You spit neurotoxin at [target]."
+		for(var/mob/O in oviewers())
+			if ((O.client && !( O.blinded )))
+				O << "\red [src] spits neurotoxin at [target]!"
 		src.toxloss -= 50
 		var/turf/T = usr.loc
 		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
@@ -199,7 +203,7 @@ Doesn't work on silicon mobs or other aliens.*/
 		src.toxloss -= 100
 		src << "\green You begin to shape a wall of resin."
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
+			O.show_message(text("\red <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
 		//var/obj/alien/resin/R = new(src.loc)
 		new /obj/alien/resin(src.loc)
 	else

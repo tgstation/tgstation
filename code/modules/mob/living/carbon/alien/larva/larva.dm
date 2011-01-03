@@ -96,7 +96,7 @@
 	else if(flag == PROJECTILE_LASER)
 		var/d = 20
 
-		if (!src.eye_blurry) src.eye_blurry = 4 //This stuff makes no sense but lasers need a buff.
+//		if (!src.eye_blurry) src.eye_blurry = 4 //This stuff makes no sense but lasers need a buff./ It really doesn't make any sense. /N
 		if (prob(25)) src.stunned++
 
 		if (src.stat != 2)
@@ -331,27 +331,38 @@
 	return
 
 /mob/living/carbon/alien/larva/attack_paw(mob/living/carbon/monkey/M as mob)
-	if(istype(M, /mob/living/carbon/alien))	return//Quick fix since these display double for aliens when they interact with aliens.
-	if (M.a_intent == "help")
-		src.sleeping = 0
-		src.resting = 0
-		if (src.paralysis >= 3) src.paralysis -= 3
-		if (src.stunned >= 3) src.stunned -= 3
-		if (src.weakened >= 3) src.weakened -= 3
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\blue [M.name] shakes [src] trying to wake it up!", ), 1)
-	else
-		if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
-			return
-		if (src.health > 0)
-			playsound(src.loc, 'bite.ogg', 50, 1, -1)
+	if(!(istype(M, /mob/living/carbon/monkey)))	return//Fix for aliens receiving double messages when attacking other aliens.
+
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
+
+	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return
+	..()
+
+	switch(M.a_intent)
+
+		if ("help")
+			src.sleeping = 0
+			src.resting = 0
+			if (src.paralysis >= 3) src.paralysis -= 3
+			if (src.stunned >= 3) src.stunned -= 3
+			if (src.weakened >= 3) src.weakened -= 3
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
-			var/damage = rand(1, 3)
-
-			src.bruteloss += damage
-
-			src.updatehealth()
+				if ((O.client && !( O.blinded )))
+					O.show_message(text("\blue [M.name] shakes [src] trying to wake it up!", ), 1)
+		else
+			if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+				return
+			if (src.health > 0)
+				playsound(src.loc, 'bite.ogg', 50, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
+				src.bruteloss  += rand(1, 3)
+				src.updatehealth()
 	return
 
 /mob/living/carbon/alien/larva/attack_hand(mob/living/carbon/human/M as mob)
@@ -363,7 +374,9 @@
 		M << "No attacking people at spawn, you jackass."
 		return
 
-	if ((M.gloves && M.gloves.elecgen == 1 && M.a_intent == "hurt") /*&& (!istype(src:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+	..()
+
+	if(M.gloves && M.gloves.elecgen == 1)//Stungloves. Any contact will stun the alien.
 		if(M.gloves.uses > 0)
 			M.gloves.uses--
 			if (src.weakened < 5)
@@ -373,40 +386,39 @@
 			if (src.stunned < 5)
 				src.stunned = 5
 			for(var/mob/O in viewers(src, null))
-				if (O.client)
-					O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
-		else
-			M.gloves.elecgen = 0
-			M << "\red Not enough charge! "
-			return
+				if ((O.client && !( O.blinded )))
+					O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall.", 2)
 
-	if (M.a_intent == "help")
-		if (src.health > 0)
-			src.sleeping = 0
-			src.resting = 0
-			if (src.paralysis >= 3) src.paralysis -= 3
-			if (src.stunned >= 3) src.stunned -= 3
-			if (src.weakened >= 3) src.weakened -= 3
-			playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\blue [] shakes [] trying to wake [] up!", M, src, src), 1)
-		else
-			if (M.health >= -75.0)
-				if ((M.head && M.head.flags & 4) || (M.wear_mask && !( M.wear_mask.flags & 32 )) )
-					M << "\blue <B>Remove that mask!</B>"
-					return
-				var/obj/equip_e/human/O = new /obj/equip_e/human(  )
-				O.source = M
-				O.target = src
-				O.s_loc = M.loc
-				O.t_loc = src.loc
-				O.place = "CPR"
-				src.requests += O
-				spawn( 0 )
-					O.process()
-					return
-	else
-		if (M.a_intent == "grab")
+	switch(M.a_intent)
+
+		if ("help")
+			if (src.health > 0)
+				src.sleeping = 0
+				src.resting = 0
+				if (src.paralysis >= 3) src.paralysis -= 3
+				if (src.stunned >= 3) src.stunned -= 3
+				if (src.weakened >= 3) src.weakened -= 3
+				playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\blue [] shakes [] trying to wake [] up!", M, src, src), 1)
+			else
+				if (M.health >= -75.0)
+					if ((M.head && M.head.flags & 4) || (M.wear_mask && !( M.wear_mask.flags & 32 )) )
+						M << "\blue <B>Remove that mask!</B>"
+						return
+					var/obj/equip_e/human/O = new /obj/equip_e/human(  )
+					O.source = M
+					O.target = src
+					O.s_loc = M.loc
+					O.t_loc = src.loc
+					O.place = "CPR"
+					src.requests += O
+					spawn( 0 )
+						O.process()
+						return
+
+		if ("grab")
 			if (M == src)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
@@ -421,33 +433,36 @@
 			G.synch()
 			playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+				if ((O.client && !( O.blinded )))
+					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+
 		else
-			if (M.a_intent == "hurt" && !(M.gloves && M.gloves.elecgen == 1))
-				var/damage = rand(1, 9)
-
-				if (prob(90))
-					if (M.mutations & 8 && prob(90))
-						damage += 5
-						spawn(0)
-							src.paralysis += 1
-							step_away(src,M,15)
-							sleep(3)
-							step_away(src,M,15)
-					playsound(src.loc, "punch", 25, 1, -1)
-					for(var/mob/O in viewers(src, null))
+			var/damage = rand(1, 9)
+			if (prob(90))
+				if (M.mutations & 8)
+					damage += 5
+					spawn(0)
+						src.paralysis += 1
+						step_away(src,M,15)
+						sleep(3)
+						step_away(src,M,15)
+				playsound(src.loc, "punch", 25, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
-
-					src.bruteloss += damage
-
-					src.updatehealth()
-				else
-					playsound(src.loc, 'punchmiss.ogg', 25, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
-					return
+				if (damage > 4.9)
+					if (src.weakened < 10)
+						src.weakened = rand(10, 15)
+					for(var/mob/O in viewers(M, null))
+						if ((O.client && !( O.blinded )))
+							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
+				src.bruteloss += damage
+				src.updatehealth()
 			else
-				return
+				playsound(src.loc, 'punchmiss.ogg', 25, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
 	return
 
 /mob/living/carbon/alien/larva/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
@@ -461,25 +476,29 @@
 
 	..()
 
-	if (M.a_intent == "help")
-		src.sleeping = 0
-		src.resting = 0
-		if (src.paralysis >= 3) src.paralysis -= 3
-		if (src.stunned >= 3) src.stunned -= 3
-		if (src.weakened >= 3) src.weakened -= 3
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\blue [M.name] nuzzles [] trying to wake it up!", src), 1)
+	switch(M.a_intent)
 
-	else
-		if (src.health > 0)
-			playsound(src.loc, 'bite.ogg', 50, 1, -1)
-			var/damage = rand(1, 3)
+		if ("help")
+			src.sleeping = 0
+			src.resting = 0
+			if (src.paralysis >= 3) src.paralysis -= 3
+			if (src.stunned >= 3) src.stunned -= 3
+			if (src.weakened >= 3) src.weakened -= 3
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-			src.bruteloss += damage
-			src.updatehealth()
+				if ((O.client && !( O.blinded )))
+					O.show_message(text("\blue [M.name] nuzzles [] trying to wake it up!", src), 1)
+
 		else
-			M << "\green <B>[src.name] is too injured for that.</B>"
+			if (src.health > 0)
+				playsound(src.loc, 'bite.ogg', 50, 1, -1)
+				var/damage = rand(1, 3)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
+				src.bruteloss += damage
+				src.updatehealth()
+			else
+				M << "\green <B>[src.name] is too injured for that.</B>"
 	return
 
 /mob/living/carbon/alien/larva/restrained()

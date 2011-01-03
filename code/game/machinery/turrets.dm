@@ -359,6 +359,20 @@
 	user << browse(t, "window=turretid")
 	onclose(user, "turretid")
 
+
+/obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	if(!(stat & BROKEN))
+		playsound(src.loc, 'slash.ogg', 25, 1, -1)
+		for(var/mob/O in viewers(src, null))
+			if ((O.client && !( O.blinded )))
+				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
+		src.health -= 4
+		if (src.health <= 0)
+			src.die()
+	else
+		M << "\green That object is useless to you."
+	return
+
 /obj/machinery/turretid/Topic(href, href_list)
 	..()
 	if (src.locked)

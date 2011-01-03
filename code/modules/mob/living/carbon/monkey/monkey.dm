@@ -283,28 +283,27 @@
 		M << "No attacking people at spawn, you jackass."
 		return
 
-	if (M.a_intent == "help")
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
-	else
-		if (M.a_intent == "hurt")
-			if ((prob(95) && src.health > 0))
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has slashed [src.name]!</B>", M), 1)
+	switch(M.a_intent)
+		if ("help")
+			for(var/mob/O in viewers(src, null))
+				if ((O.client && !( O.blinded )))
+					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 
+		if ("hurt")
+			if ((prob(95) && src.health > 0))
 				playsound(src.loc, 'slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
-				if (prob(40))
+				if (damage >= 25)
 					damage = rand(20, 40)
-					if (src.paralysis < 5)
+					if (src.paralysis < 15)
 						src.paralysis = rand(10, 15)
-						spawn( 0 )
-							for(var/mob/O in viewers(src, null))
-								if ((O.client && !( O.blinded )))
-									O.show_message(text("\red <B>[] has wounded [src.name]!</B>", M), 1)
-							return
+					for(var/mob/O in viewers(src, null))
+						if ((O.client && !( O.blinded )))
+							O.show_message(text("\red <B>[] has wounded [src.name]!</B>", M), 1)
+				else
+					for(var/mob/O in viewers(src, null))
+						if ((O.client && !( O.blinded )))
+							O.show_message(text("\red <B>[] has slashed [src.name]!</B>", M), 1)
 				src.bruteloss += damage
 				src.updatehealth()
 			else
@@ -312,36 +311,39 @@
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to lunge at [src.name]!</B>", M), 1)
-		else
-			if (M.a_intent == "grab")
-				if (M == src)
-					return
-				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
-				G.assailant = M
-				if (M.hand)
-					M.l_hand = G
-				else
-					M.r_hand = G
-				G.layer = 20
-				G.affecting = src
-				src.grabbed_by += G
-				G.synch()
-				playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					O.show_message(text("\red [] has grabbed [src.name] passively!", M), 1)
+
+		if ("grab")
+			if (M == src)
+				return
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
+			G.assailant = M
+			if (M.hand)
+				M.l_hand = G
 			else
-				if (!( src.paralysis ))
-					playsound(src.loc, 'pierce.ogg', 25, 1, -1)
-					if(prob(25))
-						src.paralysis = 2
-						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
-								O.show_message(text("\red <B>[] has tackled down [src.name]!</B>", M), 1)
-					else
-						drop_item()
-						for(var/mob/O in viewers(src, null))
-							if ((O.client && !( O.blinded )))
-								O.show_message(text("\red <B>[] has disarmed [src.name]!</B>", M), 1)
+				M.r_hand = G
+			G.layer = 20
+			G.affecting = src
+			src.grabbed_by += G
+			G.synch()
+			playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
+			for(var/mob/O in viewers(src, null))
+				O.show_message(text("\red [] has grabbed [src.name] passively!", M), 1)
+
+		if ("disarm")
+			playsound(src.loc, 'pierce.ogg', 25, 1, -1)
+			var/damage = 5
+			if(prob(95))
+				src.weakened = rand(10, 15)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has tackled down [src.name]!</B>", M), 1)
+			else
+				drop_item()
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has disarmed [src.name]!</B>", M), 1)
+			src.bruteloss += damage
+			src.updatehealth()
 	return
 
 /mob/living/carbon/monkey/Stat()

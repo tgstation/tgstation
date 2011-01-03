@@ -231,6 +231,40 @@
 				src.stunned = min(5, src.stunned)
 	return
 
+/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
+
+	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return
+
+	switch(M.a_intent)
+
+		if ("help")
+			for(var/mob/O in viewers(src, null))
+				if ((O.client && !( O.blinded )))
+					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
+
+		else //harm
+			var/damage = rand(10, 20)
+			if (prob(90))
+				playsound(src.loc, 'slash.ogg', 25, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
+				if(prob(8))
+					flick("noise", src.flash)
+				src.bruteloss += damage
+				src.updatehealth()
+			else
+				playsound(src.loc, 'slashmiss.ogg', 25, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
+	return
+
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 	usr:cameraFollow = null

@@ -36,10 +36,15 @@ WELDINGTOOOL
 	if(!(user.zone_sel.selecting == ("eyes" || "head")))
 		return ..()
 	var/mob/living/carbon/human/H = M
+
 	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		user << "\blue You're going to need to remove that mask/helmet/glasses first."
 		return
+	if(istype(M, /mob/living/carbon/alien))//Aliens don't have eyes./N
+		user << "\blue You cannot locate any eyes on this creature!"
+		return
+
 	for(var/mob/O in viewers(M, null))
 		if(O == (user || M))	continue
 		if(M == user)	O.show_message(text("\red [] has stabbed themself with []!", user, src), 1)

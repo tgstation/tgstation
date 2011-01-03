@@ -70,6 +70,8 @@
 			continue
 		if ((istype(O, /mob/living/carbon/human) && (istype(O:glasses, /obj/item/clothing/glasses/sunglasses))))
 			continue
+		if (istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
+			continue
 
 		O.weakened = src.strength
 		if ((O.eye_stat > 15 && prob(O.eye_stat + 50)))

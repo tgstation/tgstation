@@ -15,7 +15,7 @@
 
 	attack_hand(mob/user)
 		if(!(istype(usr, /mob/living/silicon) || istype(usr, /mob/living/carbon/human)))
-			user << "\red You don't have the dexterity to do this"
+			user << "\red You don't have the dexterity to do this."
 			return
 		if(stat & (NOPOWER|BROKEN))
 			return

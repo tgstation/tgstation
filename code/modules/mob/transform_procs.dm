@@ -240,7 +240,6 @@
 	if (src.client)
 		src.client.mob = O
 	O.loc = src.loc
-	O.a_intent = "hurt"
 	O << "<B>You are now an alien.</B>"
 	del(src)
 	return

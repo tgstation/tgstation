@@ -39,9 +39,8 @@
 	density = 1
 	opacity = 1
 	anchored = 1
-	unacidable = 0 //So aliens can destroy their own walls if they need to.
-
-	var/health = 20
+//Alien can now normally destroy resin walls so they are no longer targetable with acid.
+	var/health = 50
 
 /obj/alien/weeds
 	name = "weeds"

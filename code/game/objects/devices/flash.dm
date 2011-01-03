@@ -10,6 +10,8 @@
 			var/mob/living/carbon/human/H = M
 			if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses) || istype(H.head, /obj/item/clothing/head/helmet/welding))
 				safety = 1
+		if (istype(M, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
+			safety = 1
 		if(isrobot(user))
 			spawn(0)
 				var/atom/movable/overlay/animation = new(user.loc)
@@ -21,7 +23,7 @@
 				sleep(5)
 				del(animation)
 		if (!( safety ))
-			if (M.client)
+			if (M.client)//Probably here to prevent forced conversion of dced players. /N
 				if (status == 0)
 					user << "\red The bulb has been burnt out!"
 					return
@@ -48,12 +50,13 @@
 						if(user.mind in ticker.mode:head_revolutionaries)
 							ticker.mode:add_revolutionary(M.mind)
 
-		for(var/mob/O in viewers(user, null))
-			if(status == 1)
-				if(!istype(M, /mob/living/carbon/alien)) //So aliens don't show up as being blinded when it has no effect on them./N
-					O.show_message(text("\red [] blinds [] with the flash!", user, M))
-				else
-					O.show_message(text("\red [] fails to blind [] with the flash!", user, M))
+					for(var/mob/O in viewers(user, null))
+						if(status == 1)
+							O.show_message(text("\red [] blinds [] with the flash!", user, M))
+		else
+			for(var/mob/O in viewers(user, null))
+				if(status == 1)
+					O.show_message(text("\blue [] fails to blind [] with the flash!", user, M))
 	src.attack_self(user, 1)
 	return
 
@@ -98,5 +101,7 @@
 					var/mob/living/carbon/human/H = M
 					if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses) || istype(H.head, /obj/item/clothing/head/helmet/welding))
 						safety = 1
+				if (istype(M, /mob/living/carbon/alien))//So aliens don't see those annoying flash screens.
+					safety = 1
 				if (!( safety ))
 					flick("flash", M.flash)

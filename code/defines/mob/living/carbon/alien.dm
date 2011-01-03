@@ -5,7 +5,6 @@
 	say_message = "hisses"
 	icon = 'alien.dmi'
 	gender = NEUTER
-	flags = 258.0
 
 	toxloss = 250
 	var/alien_invis = 0.0

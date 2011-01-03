@@ -460,66 +460,79 @@
 		return ..()
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
 
-	if (M.a_intent == "help")
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
+	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return
 
-	else if (M.a_intent == "grab")
-		if (M == src)
-			return
-		var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
-		G.assailant = M
-		if (M.hand)
-			M.l_hand = G
-		else
-			M.r_hand = G
-		G.layer = 20
-		G.affecting = src
-		src.grabbed_by += G
-		G.synch()
-		playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+	switch(M.a_intent)
 
-	else if (M.a_intent == "hurt")
-		var/damage = rand(10, 20)
-		if (prob(90))
-			/*
-			if (M.class == "combat")
-				damage += 15
-				if(prob(20))
-					src.weakened = max(src.weakened,4)
-					src.stunned = max(src.stunned,4)
-			*/
-
-			playsound(src.loc, 'slash.ogg', 25, 1, -1)
+		if ("help")
 			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
-			if(prob(8))
-				flick("noise", src.flash)
-			src.bruteloss += damage
-			src.updatehealth()
-		else
-			playsound(src.loc, 'slashmiss.ogg', 25, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
-			return
+				if ((O.client && !( O.blinded )))
+					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
 
-	else if (M.a_intent == "disarm")
-		if(!(src.lying))
-			var/randn = rand(1, 100)
-			if (randn <= 40)
-				src.stunned = 5
-				step(src,get_dir(M,src))
-				spawn(5) step(src,get_dir(M,src))
-				playsound(src.loc, 'slash.ogg', 50, 1, -1)
+		if ("grab")
+			if (M == src)
+				return
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
+			G.assailant = M
+			if (M.hand)
+				M.l_hand = G
+			else
+				M.r_hand = G
+			G.layer = 20
+			G.affecting = src
+			src.grabbed_by += G
+			G.synch()
+			playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
+			for(var/mob/O in viewers(src, null))
+				if ((O.client && !( O.blinded )))
+					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
+
+		if ("hurt")
+			var/damage = rand(10, 20)
+			if (prob(90))
+				/*
+				if (M.class == "combat")
+					damage += 15
+					if(prob(20))
+						src.weakened = max(src.weakened,4)
+						src.stunned = max(src.stunned,4)
+				What is this?*/
+
+				playsound(src.loc, 'slash.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
-					O.show_message(text("\red <B>[] has pushed back []!</B>", M, src), 1)
+					O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
+				if(prob(8))
+					flick("noise", src.flash)
+				src.bruteloss += damage
+				src.updatehealth()
 			else
 				playsound(src.loc, 'slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
-					O.show_message(text("\red <B>[] attempted to push back []!</B>", M, src), 1)
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
+
+		if ("disarm")
+			if(!(src.lying))
+				var/randn = rand(1, 100)
+				if (randn <= 85)
+					src.stunned = 5
+					step(src,get_dir(M,src))
+					spawn(5) step(src,get_dir(M,src))
+					playsound(src.loc, 'pierce.ogg', 50, 1, -1)
+					for(var/mob/O in viewers(src, null))
+						if ((O.client && !( O.blinded )))
+							O.show_message(text("\red <B>[] has forced back []!</B>", M, src), 1)
+				else
+					playsound(src.loc, 'slashmiss.ogg', 25, 1, -1)
+					for(var/mob/O in viewers(src, null))
+						if ((O.client && !( O.blinded )))
+							O.show_message(text("\red <B>[] attempted to force back []!</B>", M, src), 1)
 	return
 
 /mob/living/silicon/robot/attack_hand(mob/user)
