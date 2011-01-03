@@ -29,6 +29,8 @@
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
+	color = "blue"
+	labeled = 1
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Toxin (Bio)\]"
 	icon_state = "orange"
