@@ -88,7 +88,6 @@
 #define FILE_DIR "code/modules/mob/living/carbon/alien/larva"
 #define FILE_DIR "code/modules/mob/living/carbon/beast"
 #define FILE_DIR "code/modules/mob/living/carbon/human"
-#define FILE_DIR "code/modules/mob/living/carbon/human/Vampire"
 #define FILE_DIR "code/modules/mob/living/carbon/monkey"
 #define FILE_DIR "code/modules/mob/living/silicon"
 #define FILE_DIR "code/modules/mob/living/silicon/ai"
