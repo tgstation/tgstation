@@ -7,6 +7,7 @@ datum/preferences
 	var/be_syndicate
 	var/midis = 1
 	var/be_alien = 1
+	var/lastchangelog = 0 // size of last seen changelog file -- rastaf0 -- rastaf0
 	var/ooccolor = "#b82e00"
 	var/be_random_name = 0
 	var/underwear = 1

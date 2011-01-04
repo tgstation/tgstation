@@ -37,7 +37,16 @@ mob/new_player
 
 		if(!preferences.savefile_load(src, 0))
 			preferences.ShowChoices(src)
-
+			if (src.client.changes)
+				src.changes()
+		else
+			var/lastchangelog = length('changelog.html')
+			world << "DEBUG: lastchangelog = [lastchangelog]"
+			world << "DEBUG: preferences.lastchangelog = [preferences.lastchangelog]"
+			if (!src.client.changes && preferences.lastchangelog!=lastchangelog)
+				src.changes()
+				preferences.lastchangelog = lastchangelog
+				preferences.savefile_save(src)
 		//PDA Resource Initialisation =======================================================>
 
 

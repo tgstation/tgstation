@@ -38,6 +38,7 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["be_alien"] << src.be_alien // Urist
 	F["midis"] << src.midis // Urist
 	F["ooccolor"] << src.ooccolor // Urist
+	F["lastchangelog"] << src.lastchangelog // rastaf0
 
 	return 1
 
@@ -94,6 +95,7 @@ datum/preferences/proc/savefile_load(mob/user, var/silent = 1)
 	F["be_alien"] >> src.be_alien // Urist
 	F["midis"] >> src.midis // Urist
 	F["ooccolor"] >> src.ooccolor // Urist
+	F["lastchangelog"] >> src.lastchangelog // rastaf0
 	return 1
 
 #undef SAVEFILE_VERSION_MAX
