@@ -250,8 +250,8 @@
 				if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 					internal = null
 				if(internal)
-					if (src.internals)
-						src.internals.icon_state = "internal1"
+					//if (src.internals) //should be unnecessary, uncomment if it isn't. -raftaf0
+					//	src.internals.icon_state = "internal1"
 					return internal.remove_air_volume(volume_needed)
 				else
 					if (src.internals)

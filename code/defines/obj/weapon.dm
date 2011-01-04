@@ -133,7 +133,7 @@
 	icon_state = "atmos"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT 
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
@@ -1039,6 +1039,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 4
+	var/volume = 70
 
 /obj/item/weapon/tank/anesthetic
 	name = "Gas Tank (Sleeping Agent)"
@@ -1051,10 +1052,13 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	w_class = 4.0
 	item_state = "jetpack"
 	var/datum/effects/system/ion_trail_follow/ion_trail
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	//volume = 140 //jetpack sould be larger, but then it will never deplete -rastaf0
 
 /obj/item/weapon/tank/oxygen
 	name = "Gas Tank (Oxygen)"
 	icon_state = "oxygen"
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
 /obj/item/weapon/tank/air
 	name = "Gas Tank (Air Mix)"
@@ -1070,6 +1074,8 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	w_class = 2.5
 	force = 4.0
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	volume = 10 //yeah, SO tiny
 
 /obj/item/weapon/teleportation_scroll
 	name = "Teleportation Scroll"

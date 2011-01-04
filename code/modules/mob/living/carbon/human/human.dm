@@ -2448,17 +2448,24 @@
 			if (src.target.internal)
 				src.target.internal.add_fingerprint(src.source)
 				src.target.internal = null
+				if (src.target.internals)
+					src.target.internals.icon_state = "internal0"
 			else
-				if (src.target.internal)
-					src.target.internal = null
 				if (!( istype(src.target.wear_mask, /obj/item/clothing/mask) ))
 					return
 				else
 					if (istype(src.target.back, /obj/item/weapon/tank))
 						src.target.internal = src.target.back
+					else if (istype(src.target.s_store, /obj/item/weapon/tank))
+						src.target.internal = src.target.s_store
+					else if (istype(src.target.belt, /obj/item/weapon/tank))
+						src.target.internal = src.target.belt
+					if (src.target.internal)
 						for(var/mob/M in viewers(src.target, 1))
 							M.show_message(text("[] is now running on internals.", src.target), 1)
 						src.target.internal.add_fingerprint(src.source)
+						if (src.target.internals)
+							src.target.internals.icon_state = "internal1"
 		else
 	if(src.source)
 		src.source.update_clothing()

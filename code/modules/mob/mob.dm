@@ -803,7 +803,30 @@
 			usr.machine = null
 		if("internal")
 			if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
-				usr.internal = null
+				if (usr.internal)
+					usr.internal = null
+					if (usr.internals)
+						usr.internals.icon_state = "internal0"
+				else
+					if (!( istype(usr.wear_mask, /obj/item/clothing/mask) ))
+						return
+					else
+						if (istype(usr.back, /obj/item/weapon/tank))
+							usr.internal = usr.back
+						else if (ishuman(usr) && istype(usr:s_store, /obj/item/weapon/tank))
+							usr.internal = usr:s_store
+						else if (ishuman(usr) && istype(usr:belt, /obj/item/weapon/tank))
+							usr.internal = usr:belt
+						else if (istype(usr.l_hand, /obj/item/weapon/tank))
+							usr.internal = usr.l_hand
+						else if (istype(usr.r_hand, /obj/item/weapon/tank))
+							usr.internal = usr.r_hand
+						if (usr.internal)
+							//for(var/mob/M in viewers(usr, 1))
+							//	M.show_message(text("[] is now running on internals.", usr), 1)
+							usr << "You are now running on internals."
+							if (usr.internals)
+								usr.internals.icon_state = "internal1"
 		if("pull")
 			usr.pulling = null
 		if("sleep")
