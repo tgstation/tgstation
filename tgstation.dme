@@ -187,6 +187,7 @@
 #include "code\datums\diseases\gbs.dm"
 #include "code\datums\diseases\jungle_fever.dm"
 #include "code\datums\diseases\magnitis.dm"
+#include "code\datums\diseases\pierrot_throat.dm"
 #include "code\datums\diseases\plasmatoid.dm"
 #include "code\datums\diseases\robotic_transformation.dm"
 #include "code\datums\diseases\wizarditis.dm"
