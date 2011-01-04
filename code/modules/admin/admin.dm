@@ -849,12 +849,13 @@ var/showadminmessages = 1
 						removed_paths += dirty_path
 					else if (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
 						removed_paths += dirty_path
-					else if (ispath(path, /obj/item/weapon/gun/energy/pulse_rifle))
+					else if (ispath(path, /obj/item/weapon/gun/energy/pulse_rifle) && !(src.rank in list("Coder", "Host")))
 						removed_paths += dirty_path
 					else if (ispath(path, /obj/bhole) && !(src.rank in list("Coder", "Host")))
 						removed_paths += dirty_path
 					else if (ispath(path, /mob) && !(src.rank in list("Shit Guy", "Coder", "Host")))
 						removed_paths += dirty_path
+
 					else
 						paths += path
 

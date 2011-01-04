@@ -1,31 +1,28 @@
-/mob/living/carbon/alien/humanoid/queen/New()
+/mob/living/carbon/alien/humanoid/sentinel/New()
 	spawn (1)
 		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
-		src.verbs += /mob/living/carbon/alien/humanoid/sentinel/verb/spit
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
 		R.my_atom = src
-		src.stand_icon = new /icon('alien.dmi', "queen_s")
-		src.lying_icon = new /icon('alien.dmi', "queen_l")
+		src.stand_icon = new /icon('alien.dmi', "aliens_s")
+		src.lying_icon = new /icon('alien.dmi', "aliens_l")
 		src.icon = src.stand_icon
-
-//there should only be one queen
-//		if(src.name == "alien") src.name = text("alien ([rand(1, 1000)])")
+		if(src.name == "alien sentinel") src.name = text("alien sentinel ([rand(1, 1000)])")
 		src.real_name = src.name
 		src << "\blue Your icons have been generated!"
 
 		update_clothing()
 
 
-/mob/living/carbon/alien/humanoid/queen
+/mob/living/carbon/alien/humanoid/sentinel
 
 	updatehealth()
 		if (src.nodamage == 0)
 		//oxyloss is only used for suicide
 		//toxloss isn't used for aliens, its actually used as alien powers!!
-			src.health = 250 - src.oxyloss - src.fireloss - src.bruteloss
+			src.health = 125 - src.oxyloss - src.fireloss - src.bruteloss
 		else
-			src.health = 250
+			src.health = 125
 			src.stat = 0
 
 	handle_regular_hud_updates()
@@ -38,10 +35,10 @@
 			src.see_invisible = 2
 		else if (src.stat != 2)
 			src.sight |= SEE_MOBS
-			src.sight |= SEE_TURFS
+			src.sight &= SEE_TURFS
 			src.sight &= ~SEE_OBJS
-			src.see_in_dark = 8
-			src.see_invisible = 2
+			src.see_in_dark = 7
+			src.see_invisible = 3
 
 		if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
 		if (src.rest) src.rest.icon_state = text("rest[]", src.resting)
@@ -49,15 +46,15 @@
 		if (src.healths)
 			if (src.stat != 2)
 				switch(health)
-					if(250 to INFINITY)
+					if(125 to INFINITY)
 						src.healths.icon_state = "health0"
-					if(175 to 250)
+					if(100 to 125)
 						src.healths.icon_state = "health1"
-					if(100 to 175)
+					if(75 to 100)
 						src.healths.icon_state = "health2"
-					if(50 to 100)
+					if(25 to 75)
 						src.healths.icon_state = "health3"
-					if(0 to 50)
+					if(0 to 25)
 						src.healths.icon_state = "health4"
 					else
 						src.healths.icon_state = "health5"
@@ -68,17 +65,19 @@
 
 		//If there are alien weeds on the ground then heal if needed or give some toxins
 		if(locate(/obj/alien/weeds) in loc)
-			if(health >= 250)
-				toxloss += 20
+			if(health >= 125)
+				toxloss += 10
 				if(toxloss > max_plasma)
 					toxloss = max_plasma
+
 			else
-				bruteloss -= 5
-				fireloss -= 5
+				bruteloss -= 10
+				fireloss -= 10
+
 
 	handle_regular_status_updates()
 
-		health = 250 - (oxyloss + fireloss + bruteloss)
+		health = 150 - (oxyloss + fireloss + bruteloss)
 
 		if(oxyloss > 50) paralysis = max(paralysis, 3)
 
@@ -160,22 +159,48 @@
 
 		return 1
 
-//Queen verbs
-/mob/living/carbon/alien/humanoid/queen/verb/lay_egg()
+//Sentinel verbs
 
-	set name = "Lay Egg (200)"
-	set desc = "Plants an egg"
+/mob/living/carbon/alien/humanoid/sentinel/verb/spit(mob/target as mob in oview())
+	set name = "Spit Neurotoxin (50)"
+	set desc = "Spits neurotoxin at someone, paralyzing them for a short time."
 	set category = "Alien"
 
 	if(src.stat)
-		src << "You must be concious to do this"
+		src << "\green You must be conscious to do this."
 		return
-	if(src.toxloss >= 200)
-		src.toxloss -= 200
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
-		new /obj/alien/egg(src.loc)
+	if(istype(target, /mob/living/carbon/alien))
+		src << "\green Your allies are not a valid target."
+		return
+	if(src.toxloss >= 50)
+		src << "\green You spit neurotoxin at [target]."
+		for(var/mob/O in oviewers())
+			if ((O.client && !( O.blinded )))
+				O << "\red [src] spits neurotoxin at [target]!"
+		src.toxloss -= 50
+		var/turf/T = usr.loc
+		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+
+		if(!U || !T)
+			return
+		while(U && !istype(U,/turf))
+			U = U.loc
+		if(!istype(T, /turf))
+			return
+		if (U == T)
+			usr.bullet_act(PROJECTILE_DART)
+			return
+		if(!istype(U, /turf))
+			return
+
+		var/obj/bullet/neurodart/A = new /obj/bullet/neurodart(usr.loc)
+
+		A.current = U
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+
+		A.process()
 
 	else
-		src << "\green Not enough plasma stored"
+		src << "\green Not enough plasma stored."
 	return

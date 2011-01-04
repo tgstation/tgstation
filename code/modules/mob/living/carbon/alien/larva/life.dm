@@ -86,17 +86,33 @@
 
 		handle_mutations_and_radiation()
 
-			if(src.amount_grown >= 200)
-				src << "\green You are growing into a beautiful alien!"
-				var/mob/living/carbon/alien/humanoid/H = new /mob/living/carbon/alien/humanoid( src.loc )
-				H.toxloss = src.toxloss
+			if(src.amount_grown == 200)
+				src << "\green You are growing into a beautiful alien! It is time to choose a caste."
+				src << "\green There are three to choose from:"
+				src << "\green <B>Hunters</B> are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves."
+				src << "\green <B>Sentinels</B> are tasked with protecting the hive and are deadly up close and at a range. They are not as physically imposing nor fast as the hunters."
+				src << "\green <B>Drones</B> are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen."
+				var/CASTE = alert(src, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
 
+				var/mob/H
+				switch(CASTE)
+					if("Hunter")
+						H = new /mob/living/carbon/alien/humanoid/hunter (src.loc)
+					if("Sentinel")
+						H = new /mob/living/carbon/alien/humanoid/sentinel (src.loc)
+					if("Drone")
+						H = new /mob/living/carbon/alien/humanoid/drone (src.loc)
+
+				H.mind = new//Mind initialize stuff.
+				H.mind.current = src
+				H.mind.assigned_role = "Alien"
+				H.mind.special_role = CASTE
+				H.mind.key = src.key
 				if(src.client)
 					src.client.mob = H
 
-				spawn(10)
-					del(src)
-					return
+				del(src)
+				return
 			//grow!! but not if metroid or dead
 			if(!istype(src,/mob/living/carbon/alien/larva/metroid) && src.health>-100)
 				src.amount_grown++

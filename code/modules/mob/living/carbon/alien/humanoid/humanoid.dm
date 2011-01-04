@@ -1,64 +1,6 @@
-/*
-Maybe you could combine elements from the Blob mode into a new Alien mode since Blob rarely seems to get much
-play these days, is hard as fuck to actually win, and gets more use as a random event these days.
-
-The main Alien's objective is to corrupt, infest, whatever you want to call it to a certain % of the station.
-Give it an ability which, every so often allows it to drop a bunch of slime which infests floors and walls. The
-main alien would be poor at actually killing anyone, but very difficult to bring down - maybe it is immune to
-brute and toxic damage, and fire kills it but takes a long exposure time to do so. Suffocation/exposure would
-be the only reliable way to off it.
-
-Like the Wizard, the Alien can select from a few abilities, though they center around building things in the
-slime rather than being straight up attacks or spells. For instance, it might be able to build tunnels which
-take it instantly from one slime patch to another, or pods which huff poison gas at anyone that gets too close.
-It can only build in areas it slimed, and the abilities have long cooldowns. The structures can also be destroyed
-by anyone determined enough.
-
-Anyone who stays in the slime for too long will end up becoming a mutant which serves the main alien. This would
-give the alien an incentive to try and incapacitate or find incapacitated people to drag back into its
-territory to gain more slaves. The mutants are basically just monkeys - crippled with only a few equipment
-slots, but share some of the alien's durability.
-
-To get rid of the slime, you can weld it, taze/laser it, set it on fire, blow it up or get the janitor
-to clean it up, or just beat the shit out of it (which takes ages).
-
-
-[11:32] <&Rick> nah dont let it wear clothing
-[11:32] <&Rick> but have alien items that replace suit functions
-[11:32] <&Rick> like an item that lets them walk around in space with no penalty
-[11:32] <&Nannek> yeah cool
-[11:33] <&Nannek> thinking making it breathe plasma or would that make the aliens life too hard
-[11:33] <&Rick> hmm
-[11:33] <&Rick> maybe breathing plasma benefit it
-[11:33] <&Rick> but not required
-[11:33] <&Nannek> yeah makes them stronger/faster or something
-[11:33] <&Rick> like have stamina or something that recharges when the alien is breathing plasma
-[11:33] <&Nannek> which in turn lets it uses special alien abilities
-[11:34] <&Rick> if theres something the alien should be able to wear
-[11:34] <&Rick> is a full human skin body suit
-[11:34] <&Nannek> oh
-[11:34] <&Rick> make it so you can skin dead people
-[11:34] <&Nannek> that could be fun
-[11:34] <&Rick> 8)
-[11:34] <&Rick> but no clothing even if wearing a human suit
-[11:34] <&Nannek> then they can pretend to be the human for a limited time before the suit rips apart
-[11:35] <&Rick> yeah
-[11:35] <&Nannek> thinking not letting aliens understand humans and vice versa
-[11:35] <&Rick> that would be hilarious
-[11:35] <&Rick> have a universal translator item
-[11:35] <&Rick> so if the alien loses it
-[11:35] <&Rick> they lose being able to communicate
-[11:35] <&Nannek> kk
-
-
-This is all very silly and I will probably remove it in the future. /N
-*/
-
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	spawn (1)
-		src.verbs += /mob/living/carbon/alien/humanoid/proc/ventcrawl // Give only normal aliens ventcrawling -- TLE
-		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target //So aliens propely get two acid verbs. /N
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
 		R.my_atom = src
@@ -113,6 +55,10 @@ This is all very silly and I will probably remove it in the future. /N
 	var/tally = 0
 	if (istype(src, /mob/living/carbon/alien/humanoid/queen))
 		tally += 5
+	if (istype(src, /mob/living/carbon/alien/humanoid/drone))
+		tally += 2
+	if (istype(src, /mob/living/carbon/alien/humanoid/sentinel))
+		tally += 1
 	return tally
 
 //This needs to be fixed

@@ -252,9 +252,18 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 		alert("There are no available spots to spawn the xeno. Aborting command.")
 		return
 
+	var/CASTE = alert(src, "Please choose which caste to spawn.",,"Hunter","Sentinel","Drone")
+
 	var/obj/landmark/spawn_here = pick(xeno_list)
-	var/mob/living/carbon/alien/humanoid/new_xeno = new(spawn_here.loc)
-	new_xeno.plasma = 250
+
+	var/mob/new_xeno
+	switch(CASTE)
+		if("Hunter")
+			new_xeno = new /mob/living/carbon/alien/humanoid/hunter (spawn_here.loc)
+		if("Sentinel")
+			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel (spawn_here.loc)
+		if("Drone")
+			new_xeno = new /mob/living/carbon/alien/humanoid/drone (spawn_here.loc)
 
 	var/list/candidates = list() // Picks a random ghost for the role. Mostly a copy of alien burst code. Doesn't spawn the one using the command.
 	for(var/mob/dead/observer/G in world)
@@ -264,19 +273,26 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 	if(candidates.len)
 		var/mob/dead/observer/G = pick(candidates)
 		message_admins("\blue [key_name_admin(usr)] has spawned [G.key] as a filthy xeno.", 1)
-		new_xeno.client = G.client
+
+		new_xeno.mind = new//Mind initialize stuff.
+		new_xeno.mind.current = new_xeno
+		new_xeno.mind.assigned_role = "Alien"
+		new_xeno.mind.special_role = CASTE
+		new_xeno.mind.key = G.key
+		if(G.client)
+			G.client.mob = new_xeno
+
 		del(G)
 	else
 		alert("There are no available ghosts to throw into the xeno. Aborting command.")
 		del(new_xeno)
 		return
 
-/*Current project. Currently trying to get preferences save to work for characteristics. That and randomized characteristics.
-Will probably check for admin status at some point or with possible other spawn options other than Assistant.
-Re-spawning traitors or traitor targets is more tricky.
+/*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
 Works kind of like entering the game with a new character. Character receives a new mind.
-They spawn as an assistant but there is no announcement. /N  */
+Since gibbed traitors retain their mind through their ghost, I might add some functionality to bring them back.
+/N */
 /client/proc/respawn_character()
 	set category = "Special Verbs"
 	set name = "Respawn Character"
@@ -284,26 +300,55 @@ They spawn as an assistant but there is no announcement. /N  */
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = input(usr, "Please specify which key/client will be respawned. That person will not retain their traitor/other status when respawned.", "What?", "")
+	var/input = input(src, "Please specify which key will be respawned. Make sure their key is properly capitalized. That person will not retain their traitor/other status when respawned.", "Key", "")
 	if(!input)
 		return
-	var/GKEY = input
-	var/GNAME = "none"
-	var/mob/dead/observer/GDEL //To properly delete the mob later on.
+	var/GNAME //To auto-copy the mob's name.
+	var/GDEL //To properly delete the mob later on.
+	var/GKEY = "null"//To later check if a person was found or not.
 	for(var/mob/dead/observer/G in world)
-		if(G.key==input||GKEY)
-			GDEL = G
-			GNAME = G.real_name
-		else
-			alert("There is no such key in the game or the person is not currently a ghost. Aborting command.")
-			return
+		if(G.client)
+			if(G.key==input)
+				GNAME = G.real_name
+				GDEL = G
+				GKEY = input
+				goto NEXT//Stops processing once it finds a match.
 
-	var/new_character_gender = MALE //to determine character's gender for few of the other procs.
+	NEXT
+
+	if(GKEY == "null")
+		alert("There is no active key like that in the game or the person is not currently a ghost. Aborting command.")
+		return
+
+	var/mob/living/carbon/human/new_character = new(src)
+	var/new_character_gender = MALE //to determine character's gender for few of the other lines.
+//	if(!preferences.preferences.savefile_load(GDEL, 0))
+//		if(alert("Please specify the character's gender.",,"Male","Female")=="Female")
+//			new_character_gender = FEMALE
+
 	if(alert("Please specify the character's gender.",,"Male","Female")=="Female")
 		new_character_gender = FEMALE
+//	else
+//		GDEL.preferences.preferences.savefile_load()
+	//	GDEL.preferences.preferences.copy_to(new_character)
+
+	var/RANK
+	var/list/JOBLIST
+	JOBLIST = list("Virologist","Chief Medical Officer","Research Director","Chief Engineer","Chief Engineer","Cargo Technician","Quartermaster","Lawyer","Librarian","Botanist","Roboticist","Chef","Barman","Atmospheric Technician","Head of Personnel","Head of Security","Scientist","Warden","Security Officer","Captain","Medical Doctor","Detective","Assistant","Station Engineer","Mime","Clown","Janitor","Chemist","Geneticist","Chaplain")
+
+	TRYAGAIN
+
+	var/input2 = input(src, "Please specify which job the character will be respawned as. Start with a capital, such as Assistant or Research Director. Leaving the box as blank will default to Assistant.", "Rank", "")
+	if(!input2)
+		RANK = "Assistant"
+	else
+		if(JOBLIST.Find(input2)==0)
+			src << "That job is not valid. Check your spelling or leave the box as blank."
+			goto TRYAGAIN
+		else
+			RANK = input2
 
 	var/spawn_here = pick(latejoin)//"JoinLate" is a landmark which is deleted on round start. So, latejoin has to be used instead.
-	var/mob/living/carbon/human/new_character = new(src)
 	new_character.gender = new_character_gender
 
 //	var/datum/preferences/preferences
@@ -322,15 +367,16 @@ They spawn as an assistant but there is no announcement. /N  */
 	new_character.real_name = GNAME
 	message_admins("\blue [key_name_admin(usr)] has respawned [GKEY] as [new_character.name].", 1) //Here so it doesn't null client if an admin re-spawns themselves.
 	new_character.key = GKEY
-//	preferences.copy_to(new_character)
+//	preferences.copy_to(new_character)//Can't copy preferences as they are created on round start. Or loaded.
 	new_character.dna.ready_dna(new_character)
-//	new_character:ManifestLateSpawn()
+//	new_character:ManifestLateSpawn()//That announces the character on all the systems.
 	new_character.mind = new
 	new_character.mind.key = GKEY
 	new_character.mind.current = new_character
-	new_character.mind.assigned_role = "Assistant"
-	new_character.Equip_Rank("Assistant", joined_late=1)
+	new_character.mind.assigned_role = RANK
+	new_character.Equip_Rank(RANK, joined_late=1)
 	del(GDEL)
+
 
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Fun"

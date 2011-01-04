@@ -18,6 +18,28 @@
 	var/list/body_standing = list(  )
 	var/list/body_lying = list(  )
 
+/mob/living/carbon/alien/humanoid/hunter
+	name = "alien hunter"
+
+	health = 150
+	toxloss = 50
+	max_plasma = 150
+	icon_state = "alien_s"
+
+/mob/living/carbon/alien/humanoid/sentinel
+	name = "alien sentinel"
+
+	health = 125
+	toxloss = 100
+	max_plasma = 250
+	icon_state = "alien_s"
+
+/mob/living/carbon/alien/humanoid/drone
+	name = "alien drone"
+
+	health = 100
+	icon_state = "alien_s"
+
 /mob/living/carbon/alien/humanoid/queen
 	name = "alien queen"
 
