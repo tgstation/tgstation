@@ -11,8 +11,8 @@
 			if(prob(5 * src.virus.stage))
 				var/H = pick(pick_list)
 				if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
-					temp_message[H] = "HONK"
-					pick_list -= H
+				temp_message[H] = "HONK"
+				pick_list -= H
 			message = dd_list2text(temp_message, " ")
 	..(message)
 
