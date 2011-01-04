@@ -245,8 +245,8 @@
 				virus_type = /datum/disease/dnaspread
 			if("flu")
 				virus_type = /datum/disease/flu
-//			if("pierrot's throat")
-//				virus_type = /datum/disease/pierrot_throat
+			if("pierrot's throat")
+				virus_type = /datum/disease/pierrot_throat
 	for(var/mob/living/carbon/human/H in world)
 		if((H.virus) || (H.stat == 2))
 			continue
