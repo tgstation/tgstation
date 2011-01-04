@@ -16,6 +16,7 @@
 	var/frustration = 0						//How long it's gone without reaching it's target.
 	var/patience = 35						//The maximum time it'll chase a target.
 	var/mob/living/carbon/target			//It's combat target.
+	var/list/mob/living/carbon/flee_from = new/list()
 	var/list/path_target = new/list()		//The path to the combat target.
 
 	var/turf/trg_idle					//It's idle target, the one it's following but not attacking.
@@ -25,6 +26,7 @@
 	var/maxhealth = 25
 	var/health = 25
 	var/aggressive = 0
+	var/cowardly = 0 //PLEASE do not mix with agressive, I have no idea what its behaviour will be then
 	flags = 258.0
 	var/strength = 10 //The damage done by the creature if it attacks something.
 	var/cycle_pause = 5
@@ -230,62 +232,83 @@
 		set background = 1
 		if (!alive)				//If it isn't alive, it shouldn't be doing anything.
 			return
-		if (!target)
-			if (path_target.len) path_target = new/list()	//No target but there's still path data? reset it.
-			var/last_health = INFINITY						//Set as high as possible as an initial value.
-			var/view = view_range-2							//Actual sight slightly lower then it's total sight.
-			for (var/mob/living/carbon/C in range(view,src.loc))	//Checks all carbon creatures in range.
-				if (!aggressive)									//Is this animal angry? If not, what the fuck are you doing?
-					break
-				if (C.stat == 2 || !can_see(src,C,view_range) || (!can_see(src,C,(view_range / 2)) && C.invisibility >= 1))
-					continue
-				if(C:stunned || C:paralysis || C:weakened)
-					target = C
-					break
-				if(C:health < last_health)				//Selects the target but does NOT break the FOR loop.
-					last_health = C:health				//	As such, it'll keep going until it finds the one with the
-					target = C							//	lowest health.
-			if(target)			//Does it have a target NOW?
-				if (aggressive)	//Double checking if it is aggressive or not.
-					set_attack()
-			else if(state != 2)	//If it doesn't have a target and it isn't idling already, idle.
-				set_idle()
-				idle()
-		else if(target)		//It already has a target? YAY!
-			var/turf/distance = get_dist(src, target)
-			if (src.aggressive)  //I probably don't need this check, but just in case.
-				set_attack()
-			else
-				set_idle()
-				idle()
-			if(can_see(src,target,view_range ))	//Can I see it?
-				if(distance <= 1)  				//Am I close enough to attack it?
-					for(var/mob/O in viewers(world.view,src))
-						O.show_message("\red <B>[src.target] has been attacked by [src.name]!</B>", 1, "\red You hear someone fall.", 2)
-					target:bruteloss += strength
-					special_attack()
-					src.loc = target.loc
-					set_null()
-				step_towards(src,get_step_towards2(src , target)) // Move towards the target.
-			else
-				if( !path_target.len )		//Don't have a path yet but do have a target?
-					path_attack(target)			//Find a path!
-					if(!path_target.len)		//Still no path?
-						set_null()				//Fuck this shit.
-				if( path_target.len )						 //Ok, I DO have a path
-					var/turf/next = path_target[1] //Select the next square to move to.
-					if(next in range(1,src))		//Is it next to it?
-						path_attack(target)			//Re-find path.
-					if(!path_target.len)			//If can't path to the target, it gets really angry.
-						src.frustration += 5
+		if (cowardly) //cowardly = 1 stuff
+			if (!flee_from.len) //checking for threats
+				var/view = view_range-2							//Actual sight slightly lower then it's total sight.
+				for (var/mob/living/carbon/C in range(view,src.loc))
+					if ((get_dir(src,C) & dir) || (C.m_intent=="run" && C.moved_recently)) //if it can see or hear anyone nearby, start fleeing
+						flee_from += C
+			if (flee_from.len) //ohgodrun
+				var/viable_dirs = 0
+				for(var/mob/living/carbon/C in flee_from)
+					if(!(C in view(src,view_range))) //first, see if someone who it has been fleeing from is still there. if not, delete that guy from the list
+						flee_from -= C
 					else
-						next = path_target[1]		//If it CAN path to the target, select the next move point
-						path_target -= next
-						step_towards(src,next)		//And move in that direction.
-			if (get_dist(src, src.target) >= distance) src.frustration++ //If it hasn't reached the target yet, get a little angry.
-			else src.frustration--			//It reached the target! Get less angry.
-			if(frustration >= patience) set_null()		//If too angry? Fuck this shit.
-		if(target)
+						viable_dirs |= get_dir(src,C)
+				viable_dirs = 15 - viable_dirs //so it runs AWAY from those directions, not TOWARDS them
+				if(viable_dirs) //if there is somewhere to run, DO IT DAMNIT
+					var/list/turfs_to_move_to = new/list()
+					for(var/turf/T in orange(src,1))
+						if((get_dir(src,T) & viable_dirs) == get_dir(src,T))
+							turfs_to_move_to += T
+					src.Move(pick(turfs_to_move_to))
+		if (aggressive) //aggressive = 1 stuff
+			if (!target)
+				if (path_target.len) path_target = new/list()	//No target but there's still path data? reset it.
+				var/last_health = INFINITY						//Set as high as possible as an initial value.
+				var/view = view_range-2							//Actual sight slightly lower then it's total sight.
+				for (var/mob/living/carbon/C in range(view,src.loc))	//Checks all carbon creatures in range.
+					if (!aggressive)									//Is this animal angry? If not, what the fuck are you doing?
+						break
+					if (C.stat == 2 || !can_see(src,C,view_range) || (!can_see(src,C,(view_range / 2)) && C.invisibility >= 1))
+						continue
+					if(C:stunned || C:paralysis || C:weakened)
+						target = C
+						break
+					if(C:health < last_health)				//Selects the target but does NOT break the FOR loop.
+						last_health = C:health				//	As such, it'll keep going until it finds the one with the
+						target = C							//	lowest health.
+				if(target)			//Does it have a target NOW?
+					if (aggressive)	//Double checking if it is aggressive or not.
+						set_attack()
+				else if(state != 2)	//If it doesn't have a target and it isn't idling already, idle.
+					set_idle()
+					idle()
+			else if(target)		//It already has a target? YAY!
+				var/turf/distance = get_dist(src, target)
+				if (src.aggressive)  //I probably don't need this check, but just in case.
+					set_attack()
+				else
+					set_idle()
+					idle()
+				if(can_see(src,target,view_range ))	//Can I see it?
+					if(distance <= 1)  				//Am I close enough to attack it?
+						for(var/mob/O in viewers(world.view,src))
+							O.show_message("\red <B>[src.target] has been attacked by [src.name]!</B>", 1, "\red You hear someone fall.", 2)
+						target:bruteloss += strength
+						special_attack()
+						src.loc = target.loc
+						set_null()
+					step_towards(src,get_step_towards2(src , target)) // Move towards the target.
+				else
+					if( !path_target.len )		//Don't have a path yet but do have a target?
+						path_attack(target)			//Find a path!
+						if(!path_target.len)		//Still no path?
+							set_null()				//Fuck this shit.
+					if( path_target.len )						 //Ok, I DO have a path
+						var/turf/next = path_target[1] //Select the next square to move to.
+						if(next in range(1,src))		//Is it next to it?
+							path_attack(target)			//Re-find path.
+						if(!path_target.len)			//If can't path to the target, it gets really angry.
+							src.frustration += 5
+						else
+							next = path_target[1]		//If it CAN path to the target, select the next move point
+							path_target -= next
+							step_towards(src,next)		//And move in that direction.
+				if (get_dist(src, src.target) >= distance) src.frustration++ //If it hasn't reached the target yet, get a little angry.
+				else src.frustration--			//It reached the target! Get less angry.
+				if(frustration >= patience) set_null()		//If too angry? Fuck this shit.
+		if(target || flee_from.len)
 			spawn(cycle_pause / 3)
 				src.process()
 		else
@@ -412,6 +435,18 @@
 	view_range = 14
 	stun_chance = 40
 	intelligence = "Assistant"
+
+/obj/livestock/lizard
+	name = "Lizard"
+	desc = "A cute tiny lizard."
+	icon_state = "lizard"
+	cowardly = 1
+	health = 10
+	maxhealth = 10
+	strength = 2
+	cycle_pause = 10
+	patience = 50
+	view_range = 7
 
 /* 		Commented out because of filthy xeno-lovers.
 /obj/livestock/cow
