@@ -41,8 +41,6 @@ mob/new_player
 				src.changes()
 		else
 			var/lastchangelog = length('changelog.html')
-			world << "DEBUG: lastchangelog = [lastchangelog]"
-			world << "DEBUG: preferences.lastchangelog = [preferences.lastchangelog]"
 			if (!src.client.changes && preferences.lastchangelog!=lastchangelog)
 				src.changes()
 				preferences.lastchangelog = lastchangelog

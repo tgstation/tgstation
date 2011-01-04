@@ -4,7 +4,7 @@
 	icon = 'belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	can_hold = list("/obj/item/weapon/crowbar","/obj/item/weapon/screwdriver","/obj/item/weapon/weldingtool","/obj/item/weapon/wirecutters","/obj/item/weapon/wrench","/obj/item/device/multitool","/obj/item/device/flashlight","/obj/item/weapon/cable_coil")
+	can_hold = list("/obj/item/weapon/crowbar","/obj/item/weapon/screwdriver","/obj/item/weapon/weldingtool","/obj/item/weapon/wirecutters","/obj/item/weapon/wrench","/obj/item/device/multitool","/obj/item/device/flashlight","/obj/item/weapon/cable_coil", "/obj/item/device/t_scanner", "/obj/item/device/analyzer")
 	flags = FPRINT | TABLEPASS | ONBELT
 
 /obj/item/weapon/storage
