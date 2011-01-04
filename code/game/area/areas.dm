@@ -64,6 +64,11 @@
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
 				aiPlayer.triggerAlarm("Power", src, cameras, source)
+		for(var/obj/machinery/computer/station_alert/a in world)
+			if(state == 1)
+				a.cancelAlarm("Power", src, source)
+			else
+				a.triggerAlarm("Power", src, source)
 	return
 
 /area/proc/atmosalert()
@@ -78,7 +83,7 @@
 			cameras += C
 		for(var/mob/living/silicon/aiPlayer in world)
 			aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
-		for(var/obj/machinery/computer/atmosphere/alerts/a in world)
+		for(var/obj/machinery/computer/station_alert/a in world)
 			a.triggerAlarm("Atmosphere", src, cameras, src)
 	return
 
@@ -89,7 +94,7 @@
 		//src.updateicon()
 		for(var/mob/living/silicon/aiPlayer in world)
 			aiPlayer.cancelAlarm("Atmosphere", src, src)
-		for(var/obj/machinery/computer/atmosphere/alerts/a in world)
+		for(var/obj/machinery/computer/station_alert/a in world)
 			a.cancelAlarm("Atmosphere", src, src)
 	return
 
@@ -113,7 +118,7 @@
 			cameras += C
 		for (var/mob/living/silicon/ai/aiPlayer in world)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-		for (var/obj/machinery/computer/atmosphere/alerts/a in world)
+		for (var/obj/machinery/computer/station_alert/a in world)
 			a.triggerAlarm("Fire", src, cameras, src)
 	return
 
@@ -131,7 +136,7 @@
 					D.open()
 		for (var/mob/living/silicon/ai/aiPlayer in world)
 			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/atmosphere/alerts/a in world)
+		for (var/obj/machinery/computer/station_alert/a in world)
 			a.cancelAlarm("Fire", src, src)
 	return
 

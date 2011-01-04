@@ -54,9 +54,9 @@
 /obj/item/weapon/circuitboard/secure_data
 	name = "Circuit board (Security Records)"
 	computertype = "/obj/machinery/computer/secure_data"
-/obj/item/weapon/circuitboard/atmospherealerts
-	name = "Circuit board (Atmosphere alerts)"
-	computertype = "/obj/machinery/computer/atmosphere/alerts"
+/obj/item/weapon/circuitboard/stationalert
+	name = "Circuit board (Station Alerts)"
+	computertype = "/obj/machinery/computer/station_alert"
 /obj/item/weapon/circuitboard/atmospheresiphonswitch
 	name = "Circuit board (Atmosphere siphon control)"
 	computertype = "/obj/machinery/computer/atmosphere/siphonswitch"
@@ -66,9 +66,9 @@
 /obj/item/weapon/circuitboard/injector_control
 	name = "Circuit board (Injector control)"
 	computertype = "/obj/machinery/computer/general_air_control/fuel_injection"
-/obj/item/weapon/circuitboard/general_alert
-	name = "Circuit board (General Alert)"
-	computertype = "/obj/machinery/computer/general_alert"
+/obj/item/weapon/circuitboard/atmos_alert
+	name = "Circuit board (Atmospheric Alert)"
+	computertype = "/obj/machinery/computer/atmos_alert"
 /obj/item/weapon/circuitboard/pod
 	name = "Circuit board (Massdriver control)"
 	computertype = "/obj/machinery/computer/pod"

@@ -109,7 +109,7 @@
 		src.updateicon()
 		spawn(5)
 			src.update()
-		
+
 
 
 /obj/machinery/power/apc/proc/make_terminal()
@@ -118,7 +118,7 @@
 	terminal = new/obj/machinery/power/terminal(src.loc)
 	terminal.dir = tdir
 	terminal.master = src
-	
+
 /obj/machinery/power/apc/proc/init()
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level
@@ -137,7 +137,7 @@
 	updateicon()
 
 	make_terminal()
-	
+
 	spawn(5)
 		src.update()
 
@@ -158,7 +158,7 @@
 				usr << "Electronics installed but not wired."
 			else /* if (!has_electronics && !terminal) */
 				usr << "There is no electronics nor connected wires."
-				
+
 		else
 			if (stat & MAINT)
 				usr << "The cover is closed. Something wrong with it: it's doesn't work."
@@ -1013,6 +1013,7 @@
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
+			area.poweralert(1, src)
 			if(cell.percent() > 75)
 				area.poweralert(1, src)
 
@@ -1105,7 +1106,7 @@
 	switch(severity)
 		if(1.0)
 			//set_broken() //now Del() do what we need
-			if (cell) 
+			if (cell)
 				cell.ex_act(1.0) // more lags woohoo
 			del(src)
 			return

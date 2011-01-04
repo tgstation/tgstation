@@ -11,6 +11,7 @@
 	music = null
 
 /area/mine/lobby //DO NOT TURN THE SD_LIGHTING STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+	name = "Mining station"
 	requires_power = 0
 	luminosity = 1
 	icon_state = "mine"
@@ -353,16 +354,16 @@
 					new /obj/item/stack/sheet/metal(output.loc)
 					del(O)
 				if (istype(O,/obj/item/weapon/ore/diamond))
-					new /obj/item/weapon/sheet/diamond(output.loc)
+					new /obj/item/stack/sheet/diamond(output.loc)
 					del(O)
 				if (istype(O,/obj/item/weapon/ore/plasma))
-					new /obj/item/weapon/sheet/plasma(output.loc)
+					new /obj/item/stack/sheet/plasma(output.loc)
 					del(O)
 				if (istype(O,/obj/item/weapon/ore/gold))
-					new /obj/item/weapon/sheet/gold(output.loc)
+					new /obj/item/stack/sheet/gold(output.loc)
 					del(O)
 				if (istype(O,/obj/item/weapon/ore/silver))
-					new /obj/item/weapon/sheet/silver(output.loc)
+					new /obj/item/stack/sheet/silver(output.loc)
 					del(O)
 				if (istype(O,/obj/item/weapon/ore/uranium))
 					new /obj/item/weapon/ore/uranium(output.loc)
@@ -413,20 +414,81 @@
 			new /obj/item/stack/sheet/metal(output.loc)
 			del(O)
 		if (istype(O,/obj/item/weapon/ore/diamond))
-			new /obj/item/weapon/sheet/diamond(output.loc)
+			new /obj/item/stack/sheet/diamond(output.loc)
 			del(O)
 		if (istype(O,/obj/item/weapon/ore/plasma))
-			new /obj/item/weapon/sheet/plasma(output.loc)
+			new /obj/item/stack/sheet/plasma(output.loc)
 			del(O)
 		if (istype(O,/obj/item/weapon/ore/gold))
-			new /obj/item/weapon/sheet/gold(output.loc)
+			new /obj/item/stack/sheet/gold(output.loc)
 			del(O)
 		if (istype(O,/obj/item/weapon/ore/silver))
-			new /obj/item/weapon/sheet/silver(output.loc)
+			new /obj/item/stack/sheet/silver(output.loc)
 			del(O)
 		if (istype(O,/obj/item/weapon/ore/uranium))
 			new /obj/item/weapon/ore/uranium(output.loc)
 			del(O)
+
+/**********************Mineral processing unit**************************/
+
+
+/obj/machinery/mineral/stacking_machine
+	name = "Stacking machine"
+	icon = 'stationobjs.dmi'
+	icon_state = "controller"
+	density = 1
+	anchored = 1.0
+	var/stk_types = list()
+	var/stk_amt   = list()
+	var/obj/machinery/mineral/input = null
+	var/obj/machinery/mineral/output = null
+
+
+/obj/machinery/mineral/stacking_machine/New()
+	..()
+	spawn( 5 )
+		src.input = locate(/obj/machinery/mineral/input, get_step(src, EAST))
+		src.output = locate(/obj/machinery/mineral/output, get_step(src, WEST))
+		processing_items.Add(src)
+		return
+	return
+
+/*
+
+/obj/machinery/mineral/stacking_machine/process()
+	if (src.output && src.input)
+		var/obj/item/O
+		O = locate(/obj/item, input.loc)
+
+		if (O.type in stk_types)
+			var/i
+			for (i = 0; i < stk_types.len; i++)
+				if (stk_types[i] == O.type)
+					stk_amt[i]++
+				else
+					stk_types += O.type
+					stk_amt[stk_types.len-1] = 1
+
+		if (istype(O,/obj/item/weapon/ore/iron))
+			new /obj/item/stack/sheet/metal(output.loc)
+			del(O)
+		if (istype(O,/obj/item/weapon/ore/diamond))
+			new /obj/item/stack/sheet/diamond(output.loc)
+			del(O)
+		if (istype(O,/obj/item/weapon/ore/plasma))
+			new /obj/item/stack/sheet/plasma(output.loc)
+			del(O)
+		if (istype(O,/obj/item/weapon/ore/gold))
+			new /obj/item/stack/sheet/gold(output.loc)
+			del(O)
+		if (istype(O,/obj/item/weapon/ore/silver))
+			new /obj/item/stack/sheet/silver(output.loc)
+			del(O)
+		if (istype(O,/obj/item/weapon/ore/uranium))
+			new /obj/item/weapon/ore/uranium(output.loc)
+			del(O)
+
+*/
 
 /**********************Mint**************************/
 
@@ -456,12 +518,12 @@
 
 /obj/machinery/mineral/mint/process()
 	if (src.output && src.input)
-		var/obj/item/weapon/sheet/O
-		O = locate(/obj/item/weapon/sheet, input.loc)
-		if (istype(O,/obj/item/weapon/sheet/gold))
+		var/obj/item/stack/sheet/O
+		O = locate(/obj/item/stack/sheet, input.loc)
+		if (istype(O,/obj/item/stack/sheet/gold))
 			amt_gold += 100
 			del(O)
-		if (istype(O,/obj/item/weapon/sheet/silver))
+		if (istype(O,/obj/item/stack/sheet/silver))
 			amt_silver += 100
 			del(O)
 
@@ -668,7 +730,7 @@
 
 /******************************Materials****************************/
 
-/obj/item/weapon/sheet/gold
+/obj/item/stack/sheet/gold
 	name = "gold"
 	icon_state = "sheet-gold"
 	force = 5.0
@@ -678,11 +740,11 @@
 	throw_speed = 3
 	throw_range = 3
 
-/obj/item/weapon/sheet/gold/New()
+/obj/item/stack/sheet/gold/New()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 
-/obj/item/weapon/sheet/silver
+/obj/item/stack/sheet/silver
 	name = "silver"
 	icon_state = "sheet-silver"
 	force = 5.0
@@ -692,11 +754,11 @@
 	throw_speed = 3
 	throw_range = 3
 
-/obj/item/weapon/sheet/silver/New()
+/obj/item/stack/sheet/silver/New()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 
-/obj/item/weapon/sheet/diamond
+/obj/item/stack/sheet/diamond
 	name = "diamond"
 	icon_state = "sheet-diamond"
 	force = 5.0
@@ -706,11 +768,11 @@
 	throw_speed = 3
 	throw_range = 3
 
-/obj/item/weapon/sheet/diamond/New()
+/obj/item/stack/sheet/diamond/New()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 
-/obj/item/weapon/sheet/plasma
+/obj/item/stack/sheet/plasma
 	name = "solid plasma"
 	icon_state = "sheet-plasma"
 	force = 5.0

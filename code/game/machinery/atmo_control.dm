@@ -477,7 +477,7 @@ Rate: [volume_rate] L/sec<BR>"}
 
 				radio_connection.post_signal(src, signal)
 
-/obj/machinery/computer/general_alert
+/obj/machinery/computer/atmos_alert
 	var/datum/radio_frequency/radio_connection
 
 	initialize()
@@ -511,6 +511,7 @@ Rate: [volume_rate] L/sec<BR>"}
 		onclose(user, "computer")
 
 	process()
+
 		if(priority_alarms.len)
 			icon_state = "alert:2"
 

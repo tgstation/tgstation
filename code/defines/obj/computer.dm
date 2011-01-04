@@ -52,13 +52,13 @@
 /obj/machinery/computer/atmosphere
 	name = "atmos"
 
-/obj/machinery/computer/atmosphere/alerts
-	name = "Alert Computer"
-	icon_state = "atmos"
-	var/alarms = list("Fire"=list(), "Atmosphere"=list())
+/obj/machinery/computer/station_alert
+	name = "Station Alert Computer"
+	icon_state = "alert:0"
+	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
 
-/obj/machinery/computer/general_alert
-	name = "General Alert Computer"
+/obj/machinery/computer/atmos_alert
+	name = "Atmospheric Alert Computer"
 	icon_state = "alert:0"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
