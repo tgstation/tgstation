@@ -138,9 +138,10 @@ obj
 			sd_SetLuminosity(3)
 
 		Del()
-			loc:active_hotspot = null
-			src.sd_SetLuminosity(0)
-			loc = null
+			if (!istype(loc, /turf/space))
+				loc:active_hotspot = null
+				src.sd_SetLuminosity(0)
+				loc = null
 
 
 			..()

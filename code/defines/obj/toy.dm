@@ -162,23 +162,24 @@ obj/item/toy/blink
 			playsound(user.loc, 'syringeproj.ogg', 50, 1)
 
 			for(var/i=0, i<6, i++)
-				if(D.loc == trg) break
-				step_towards(D,trg)
+				if (D)
+					if(D.loc == trg) break
+					step_towards(D,trg)
 
-				for(var/mob/living/M in D.loc)
-					if(!istype(M,/mob/living)) continue
-					if(M == user) continue
-					for(var/mob/O in viewers(world.view, D))
-						O.show_message(text("\red [] was hit by the foam dart!", M), 1)
-					new /obj/item/toy/ammo/crossbow(M.loc)
-					del(D)
-					return
-
-				for(var/atom/A in D.loc)
-					if(A == user) continue
-					if(A.density)
-						new /obj/item/toy/ammo/crossbow(A.loc)
+					for(var/mob/living/M in D.loc)
+						if(!istype(M,/mob/living)) continue
+						if(M == user) continue
+						for(var/mob/O in viewers(world.view, D))
+							O.show_message(text("\red [] was hit by the foam dart!", M), 1)
+						new /obj/item/toy/ammo/crossbow(M.loc)
 						del(D)
+						return
+
+					for(var/atom/A in D.loc)
+						if(A == user) continue
+						if(A.density)
+							new /obj/item/toy/ammo/crossbow(A.loc)
+							del(D)
 
 				sleep(1)
 

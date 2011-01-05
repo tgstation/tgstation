@@ -105,9 +105,9 @@ datum
 					if(D)
 						blood_prop.virus = new D.type
 						blood_prop.virus.holder = blood_prop
-					if(istype(T, /turf/simulated/floor))
+					if(istype(T, /turf/simulated/floor) && D)
 						blood_prop.virus.spread_type = CONTACT_FEET
-					else
+					else if (D)
 						blood_prop.virus.spread_type = CONTACT_HANDS
 
 				else if(istype(self.data["donor"], /mob/living/carbon/monkey))
@@ -184,7 +184,7 @@ datum
 							T:wet_overlay = null
 
 				var/hotspot = (locate(/obj/hotspot) in T)
-				if(hotspot)
+				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
@@ -195,7 +195,7 @@ datum
 				src = null
 				var/turf/T = get_turf(O)
 				var/hotspot = (locate(/obj/hotspot) in T)
-				if(hotspot)
+				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()

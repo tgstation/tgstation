@@ -179,7 +179,9 @@
 		return 0
 	var/turf/T = src.loc
 	var/obj/cable/C = T.get_cable_node()
-	var/net = C.netnum		// find the powernet of the connected cable
+	var/net
+	if (C)
+		net = C.netnum		// find the powernet of the connected cable
 
 	if(!net)
 		power = 0
@@ -212,11 +214,11 @@
 	if(power != 1)
 		user << "\red The shield generator needs to be powered by wire underneath."
 		return 1
-		
+
 	if(src.active >= 1)
 		src.active = 0
 		icon_state = "Shield_Gen"
-		
+
 		user.visible_message("[user] turned the shield generator off.", \
 			"You turn off the shield generator.", \
 			"You hear heavy droning fade out.")

@@ -662,8 +662,9 @@ steam.start() -- spawns the effect
 			F.amount = amount
 			if(!metal)
 				F.create_reagents(10)
-				for(var/datum/reagent/R in reagents.reagent_list)
-					F.reagents.add_reagent(R.id,1)
+				if (reagents)
+					for(var/datum/reagent/R in reagents.reagent_list)
+						F.reagents.add_reagent(R.id,1)
 		sleep(15)
 
 // foam disolves when heated

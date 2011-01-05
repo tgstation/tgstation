@@ -14,7 +14,8 @@
 			V.show_message("\red [M] writhes in pain as the markings below him glow a bloody red.", 3, "\red You hear an anguished scream.", 2)
 		M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 		M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-		ticker.mode:grant_runeword(M)
+		if (ticker.mode.name == "cult")
+			ticker.mode:grant_runeword(M)
 		cultists.Add(M)
 		return
 	return fizzle()

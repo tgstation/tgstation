@@ -44,7 +44,7 @@
 	..()
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
-		if(ticker.mode != null)
+		if(ticker.mode)
 			//world << "DEBUG: ticker not null"
 			if(ticker.mode.name == "AI malfunction")
 				//world << "DEBUG: malf mode ticker test"

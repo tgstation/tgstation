@@ -181,9 +181,9 @@ datum
 							if(isobj(A)) spawn(0) R.reaction_obj(A, R.volume+volume_modifier)
 					if(INGEST)
 						for(var/datum/reagent/R in reagent_list)
-							if(ismob(A)) spawn(0) R.reaction_mob(A, INGEST, R.volume+volume_modifier)
-							if(isturf(A)) spawn(0) R.reaction_turf(A, R.volume+volume_modifier)
-							if(isobj(A)) spawn(0) R.reaction_obj(A, R.volume+volume_modifier)
+							if(ismob(A) && R) spawn(0) R.reaction_mob(A, INGEST, R.volume+volume_modifier)
+							if(isturf(A) && R) spawn(0) R.reaction_turf(A, R.volume+volume_modifier)
+							if(isobj(A) && R) spawn(0) R.reaction_obj(A, R.volume+volume_modifier)
 				return
 
 			add_reagent(var/reagent, var/amount, var/data=null)
