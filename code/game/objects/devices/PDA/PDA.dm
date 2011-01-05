@@ -28,6 +28,7 @@
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!" //Current note in the notepad function.
+	var/rad = "" //A place to stick the radio menu
 	var/datum/data/record/active1 = null //General
 	var/datum/data/record/active2 = null //Medical
 	var/datum/data/record/active3 = null //Security
@@ -52,6 +53,7 @@
 /obj/item/device/pda/janitor
 	default_cartridge = /obj/item/weapon/cartridge/janitor
 	icon_state = "pda-j"
+	ttone = "slip"
 
 /obj/item/device/pda/toxins
 	default_cartridge = /obj/item/weapon/cartridge/signal/toxins
@@ -92,339 +94,8 @@
 
 /obj/item/device/pda/chaplain
 	icon_state = "pda-holy"
+	ttone = "God"
 
-/obj/item/weapon/cartridge
-	name = "generic cartridge"
-	desc = "A data cartridge for portable microcomputers."
-	icon = 'pda.dmi'
-	icon_state = "cart"
-	item_state = "electronic"
-	w_class = 1
-
-	var/access_security = 0
-	var/access_engine = 0
-	var/access_medical = 0
-	var/access_manifest = 0
-	var/access_clown = 0
-	var/access_mime = 0
-	var/access_janitor = 0
-	var/access_reagent_scanner = 0
-	var/access_remote_door = 0 //Control some blast doors remotely!!
-	var/remote_door_id = ""
-	var/access_status_display = 0
-	var/access_quartermaster = 0
-	var/access_hydroponics = 0
-
-	// common cartridge procs
-
-	// send a signal on a frequency
-	proc/post_signal(var/freq, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
-
-		//world << "Post: [freq]: [key]=[value], [key2]=[value2]"
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-
-		if(!frequency) return
-
-		var/datum/signal/signal = new()
-		signal.source = src
-		signal.transmission_method = 1
-		signal.data[key] = value
-		if(key2)
-			signal.data[key2] = value2
-		if(key3)
-			signal.data[key3] = value3
-
-		frequency.post_signal(src, signal)
-
-
-/obj/item/weapon/cartridge/engineering
-	name = "Power-ON Cartridge"
-	icon_state = "cart-e"
-	access_engine = 1
-
-/obj/item/weapon/cartridge/medical
-	name = "Med-U Cartridge"
-	icon_state = "cart-m"
-	access_medical = 1
-
-/obj/item/weapon/cartridge/security
-	name = "R.O.B.U.S.T. Cartridge"
-	icon_state = "cart-s"
-	access_security = 1
-
-
-	var/list/botlist = null		// list of bots
-	var/obj/machinery/bot/secbot/active 	// the active bot; if null, show bot list
-	var/list/botstatus			// the status signal sent by the bot
-
-	var/control_freq = 1447
-
-	// create a new QM cartridge, and register to receive bot control & beacon message
-	New()
-		..()
-		spawn(5)
-			if(radio_controller)
-				radio_controller.add_object(src, "[control_freq]")
-
-	// receive radio signals
-	// can detect bot status signals
-	// create/populate list as they are recvd
-
-	receive_signal(datum/signal/signal)
-		var/obj/item/device/pda/P = src.loc
-
-		/*
-		world << "recvd:[P] : [signal.source]"
-		for(var/d in signal.data)
-			world << "- [d] = [signal.data[d]]"
-		*/
-		if (signal.data["type"] == "secbot")
-			if(!botlist)
-				botlist = new()
-
-			if(!(signal.source in botlist))
-				botlist += signal.source
-
-			if(active == signal.source)
-				var/list/b = signal.data
-				botstatus = b.Copy()
-
-		if (istype(P)) P.updateSelfDialog()
-
-
-
-
-	Topic(href, href_list)
-		..()
-		var/obj/item/device/pda/PDA = src.loc
-
-		switch(href_list["op"])
-
-			if("control")
-				active = locate(href_list["bot"])
-				post_signal(control_freq, "command", "bot_status", "active", active)
-
-			if("scanbots")		// find all bots
-				botlist = null
-				post_signal(control_freq, "command", "bot_status")
-
-			if("botlist")
-				active = null
-				PDA.updateSelfDialog()
-
-			if("stop", "go")
-				post_signal(control_freq, "command", href_list["op"], "active", active)
-				post_signal(control_freq, "command", "bot_status", "active", active)
-
-			if("summon")
-				post_signal(control_freq, "command", "summon", "active", active, "target", get_turf(PDA) )
-				post_signal(control_freq, "command", "bot_status", "active", active)
-
-/obj/item/weapon/cartridge/janitor
-	name = "CustodiPRO Cartridge"
-	desc = "The ultimate in clean-room design."
-	icon_state = "cart-j"
-	access_janitor = 1
-
-/obj/item/weapon/cartridge/clown
-	name = "Honkworks 5.0"
-	icon_state = "cart-clown"
-	access_clown = 1
-	var/honk_charges = 5
-
-/obj/item/weapon/cartridge/mime
-	name = "Gestur-O 1000"
-	icon_state = "cart-mi"
-	access_mime = 1
-	var/mime_charges = 5
-
-//Radio cart - Essentially a "one-way" signaler, does nothing with received signals.
-/obj/item/weapon/cartridge/signal
-	name = "generic signaler cartridge"
-	desc = "A data cartridge with an integrated radio signaler module."
-	var/frequency = 1457
-	var/code = 30.0
-	var/last_transmission
-	var/datum/radio_frequency/radio_connection
-	New()
-		..()
-		if(radio_controller)
-			initialize()
-
-/obj/item/weapon/cartridge/signal/toxins
-	name = "Signal Ace 2"
-	desc = "Complete with integrated radio signaler!"
-	icon_state = "cart-tox"
-	access_reagent_scanner = 1
-
-/obj/item/weapon/cartridge/head
-	name = "Easy-Record DELUXE"
-	icon_state = "cart-h"
-	access_manifest = 1
-	access_engine = 1
-	access_security = 1
-	access_status_display = 1
-
-/obj/item/weapon/cartridge/captain
-	name = "Value-PAK Cartridge"
-	desc = "Now with 200% more value!"
-	icon_state = "cart-c"
-	access_manifest = 1
-	access_engine = 1
-	access_security = 1
-	access_medical = 1
-	access_reagent_scanner = 1
-	access_status_display = 1
-
-/obj/item/weapon/cartridge/quartermaster
-	name = "Space Parts & Space Vendors Cartridge"
-	desc = "Perfect for the Quartermaster on the go!"
-	icon_state = "cart-q"
-	access_quartermaster = 1
-
-	var/list/botlist = null		// list of bots
-	var/obj/machinery/bot/mulebot/active 	// the active bot; if null, show bot list
-	var/list/botstatus			// the status signal sent by the bot
-	var/list/beacons
-
-	var/beacon_freq = 1445
-	var/control_freq = 1447
-
-	// create a new QM cartridge, and register to receive bot control & beacon message
-	New()
-		..()
-		spawn(5)
-			if(radio_controller)
-				radio_controller.add_object(src, "[control_freq]")
-				radio_controller.add_object(src, "[beacon_freq]")
-				spawn(10)
-					post_signal(beacon_freq, "findbeacon", "delivery")
-
-	// receive radio signals
-	// can detect bot status signals
-	// and beacon locations
-	// create/populate lists as they are recvd
-
-	receive_signal(datum/signal/signal)
-		var/obj/item/device/pda/P = src.loc
-
-		/*
-		world << "recvd:[P] : [signal.source]"
-		for(var/d in signal.data)
-			world << "- [d] = [signal.data[d]]"
-		*/
-		if(signal.data["type"] == "mulebot")
-			if(!botlist)
-				botlist = new()
-
-			if(!(signal.source in botlist))
-				botlist += signal.source
-
-			if(active == signal.source)
-				var/list/b = signal.data
-				botstatus = b.Copy()
-
-		else if(signal.data["beacon"])
-			if(!beacons)
-				beacons = new()
-
-			beacons[signal.data["beacon"] ] = signal.source
-
-
-		if(istype(P)) P.updateSelfDialog()
-
-
-
-
-	Topic(href, href_list)
-		..()
-		var/obj/item/device/pda/PDA = src.loc
-		var/cmd = "command"
-		if(active) cmd = "command [active.suffix]"
-
-		switch(href_list["op"])
-
-			if("control")
-				active = locate(href_list["bot"])
-				post_signal(control_freq, cmd, "bot_status")
-
-			if("scanbots")		// find all bots
-				botlist = null
-				post_signal(control_freq, "command", "bot_status")
-
-			if("botlist")
-				active = null
-				PDA.updateSelfDialog()
-
-			if("unload")
-				post_signal(control_freq, cmd, "unload")
-				post_signal(control_freq, cmd, "bot_status")
-			if("setdest")
-				if(beacons)
-					var/dest = input("Select Bot Destination", "Mulebot [active.suffix] Interlink", active.destination) as null|anything in beacons
-					if(dest)
-						post_signal(control_freq, cmd, "target", "destination", dest)
-						post_signal(control_freq, cmd, "bot_status")
-
-			if("retoff")
-				post_signal(control_freq, cmd, "autoret", "value", 0)
-				post_signal(control_freq, cmd, "bot_status")
-			if("reton")
-				post_signal(control_freq, cmd, "autoret", "value", 1)
-				post_signal(control_freq, cmd, "bot_status")
-
-			if("pickoff")
-				post_signal(control_freq, cmd, "autopick", "value", 0)
-				post_signal(control_freq, cmd, "bot_status")
-			if("pickon")
-				post_signal(control_freq, cmd, "autopick", "value", 1)
-				post_signal(control_freq, cmd, "bot_status")
-
-			if("stop", "go", "home")
-				post_signal(control_freq, cmd, href_list["op"])
-				post_signal(control_freq, cmd, "bot_status")
-
-
-/obj/item/weapon/cartridge/syndicate
-	name = "Detomatix Cartridge"
-	icon_state = "cart"
-	access_remote_door = 1
-	remote_door_id = "syndicate" //Make sure this matches the syndicate shuttle's shield/door id!!
-	var/shock_charges = 4
-/*
- *	Radio Cartridge, essentially a signaler.
- */
-
-
-/obj/item/weapon/cartridge/signal/initialize()
-	if (src.frequency < 1441 || src.frequency > 1489)
-		src.frequency = sanitize_frequency(src.frequency)
-
-	set_frequency(frequency)
-
-/obj/item/weapon/cartridge/signal/proc/set_frequency(new_frequency)
-	radio_controller.remove_object(src, "[frequency]")
-	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, "[frequency]")
-
-/obj/item/weapon/cartridge/signal/proc/send_signal(message="ACTIVATE")
-
-	if(last_transmission && world.time < (last_transmission + 5))
-		return
-	last_transmission = world.time
-
-	var/time = time2text(world.realtime,"hh:mm:ss")
-	var/turf/T = get_turf(src)
-	lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-
-	var/datum/signal/signal = new
-	signal.source = src
-	signal.encryption = code
-	signal.data["message"] = message
-
-	radio_connection.post_signal(src, signal)
-
-	return
 
 
 /*
@@ -882,14 +553,14 @@
 Frequency:
 <a href='byond://?src=\ref[src];sfreq=-10'>-</a>
 <a href='byond://?src=\ref[src];sfreq=-2'>-</a>
-[format_frequency(src.cartridge:frequency)]
+[format_frequency(src.cartridge.radio:frequency)]
 <a href='byond://?src=\ref[src];sfreq=2'>+</a>
 <a href='byond://?src=\ref[src];sfreq=10'>+</a><br>
 <br>
 Code:
 <a href='byond://?src=\ref[src];scode=-5'>-</a>
 <a href='byond://?src=\ref[src];scode=-1'>-</a>
-[src.cartridge:code]
+[src.cartridge.radio:code]
 <a href='byond://?src=\ref[src];scode=1'>+</a>
 <a href='byond://?src=\ref[src];scode=5'>+</a><br>"}
 
@@ -931,7 +602,7 @@ Code:
 
 
 			if(12)		// Quartermaster mulebot control
-				var/obj/item/weapon/cartridge/quartermaster/QC = cartridge
+				var/obj/item/radio/integrated/mule/QC = cartridge.radio
 				if(!QC)
 					dat += "Interlink Error - Please reinsert cartridge."
 					return
@@ -992,7 +663,7 @@ Code:
 						dat += "<HR><A href='byond://?src=\ref[QC];op=botlist'><img src=pda_back.png>Return to bot list</A>"
 
 			if(13)		// Security Bot control
-				var/obj/item/weapon/cartridge/security/SC = cartridge
+				var/obj/item/radio/integrated/beepsky/SC = cartridge.radio
 				if(!SC)
 					dat += "Interlink Error - Please reinsert cartridge."
 					return
@@ -1320,7 +991,10 @@ Code:
 			src.scanmode = 0
 			src.mmode = 0
 			src.smode = 0
+			if (src.cartridge.radio)
+				src.cartridge.radio.hostpda = null
 			src.cartridge = null
+
 
 		else if (href_list["tfunc"]) //If viewing texts then erase them, if not then toggle silent status
 			if (src.tmode)
@@ -1349,21 +1023,21 @@ Code:
 		//Toxins PDA signaler stuff
 		else if ((href_list["ssend"]) && (istype(src.cartridge,/obj/item/weapon/cartridge/signal)))
 			for(var/obj/item/assembly/r_i_ptank/R in world) //Bomblist stuff
-				if((R.part1.code == src.cartridge:code) && (R.part1.frequency == src.cartridge:frequency))
-					bombers += "[key_name(usr)] has activated a radio bomb (Freq: [format_frequency(src.cartridge:frequency)], Code: [src.cartridge:code]). Temp = [R.part3.air_contents.temperature-T0C]."
+				if((R.part1.code == src.cartridge.radio:code) && (R.part1.frequency == src.cartridge.radio:frequency))
+					bombers += "[key_name(usr)] has activated a radio bomb (Freq: [format_frequency(src.cartridge.radio:frequency)], Code: [src.cartridge.radio:code]). Temp = [R.part3.air_contents.temperature-T0C]."
 			spawn( 0 )
-				src.cartridge:send_signal("ACTIVATE")
+				src.cartridge.radio:send_signal("ACTIVATE")
 				return
 
 		else if ((href_list["sfreq"]) && (istype(src.cartridge,/obj/item/weapon/cartridge/signal)))
-			var/new_frequency = sanitize_frequency(src.cartridge:frequency + text2num(href_list["sfreq"]))
-			src.cartridge:set_frequency(new_frequency)
+			var/new_frequency = sanitize_frequency(src.cartridge.radio:frequency + text2num(href_list["sfreq"]))
+			src.cartridge.radio:set_frequency(new_frequency)
 
 		else if ((href_list["scode"]) && (istype(src.cartridge,/obj/item/weapon/cartridge/signal)))
-			src.cartridge:code += text2num(href_list["scode"])
-			src.cartridge:code = round(src.cartridge:code)
-			src.cartridge:code = min(100, src.cartridge:code)
-			src.cartridge:code = max(1, src.cartridge:code)
+			src.cartridge.radio:code += text2num(href_list["scode"])
+			src.cartridge.radio:code = round(src.cartridge.radio:code)
+			src.cartridge.radio:code = min(100, src.cartridge.radio:code)
+			src.cartridge.radio:code = max(1, src.cartridge.radio:code)
 
 		else if (href_list["statdisp"] && cartridge && cartridge.access_status_display)
 
@@ -1422,13 +1096,15 @@ Code:
 		C.loc = src
 		user << "\blue You insert [C] into [src]."
 		src.cartridge = C
+		if (C:radio)
+			C:radio.hostpda = src
 		src.updateUsrDialog()
 
 	else if (istype(C, /obj/item/weapon/card/id) && C:registered)
 		if(!src.owner)
 			src.owner = C:registered
 			src.ownjob = C:assignment
-			src.name = "PDA-[src.owner]([src.ownjob])"
+			src.name = "PDA-[src.owner] ([src.ownjob])"
 			user << "\blue Card scanned."
 			src.updateSelfDialog()
 			return
@@ -1442,7 +1118,7 @@ Code:
 			return
 		if((src.owner == C:registered) && (src.ownjob != C:assignment))
 			src.ownjob = C:assignment
-			src.name = "PDA-[src.owner]([src.ownjob])"
+			src.name = "PDA-[src.owner] ([src.ownjob])"
 			user << "\blue Rank updated."
 			src.updateSelfDialog()
 			return
@@ -1639,158 +1315,3 @@ Code:
  */
 
 //Syndicate uplink hidden inside a traitor PDA
-/obj/item/weapon/integrated_uplink
-	name = "uplink module"
-	desc = "An electronic uplink system of unknown origin."
-	icon = 'module.dmi'
-	icon_state = "power_mod"
-	var/uses = 10
-	var/obj/item/device/pda/hostpda = null
-	var/orignote = null //Restore original notes when locked.
-	var/active = 0 //Are we currently active??
-	var/menu_message = ""
-	var/lock_code = "password" //What's the password?
-
-//Communicate with traitor through the PDA's note function.
-/obj/item/weapon/integrated_uplink/proc/print_to_host(var/text)
-	if (isnull(src.hostpda))
-		return
-	src.hostpda.note = text
-
-	for (var/mob/M in viewers(1, src.hostpda.loc))
-		if (M.client && M.machine == src.hostpda)
-			src.hostpda.attack_self(M)
-
-	return
-
-//Let's build a menu!
-/obj/item/weapon/integrated_uplink/proc/generate_menu()
-	src.menu_message = "<B>Syndicate Uplink Console:</B><BR>"
-	src.menu_message += "Tele-Crystals left: [src.uses]<BR>"
-	src.menu_message += "<HR>"
-	src.menu_message += "<B>Request item:</B><BR>"
-	src.menu_message += "<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=projector'>Chameleon-projector</A> (4)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=revolver'>Revolver</A> (7)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=revolver_ammo'>Ammo-357</A> for use with Revolver (2)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=xbow'>Energy Crossbow</A> (5)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=empbox'>5 EMP Grenades</A> (4)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=voice'>Voice-Changer</A> (4)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=jump'>Chameleon Jumpsuit</A> (3)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=card'>Syndicate Card</A> (3)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=emag'>Electromagnet Card</A> (3)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_freedom'>Freedom Implant (with injector)</A> (3)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=cloak'>Cloaking Device</A> (4)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=sword'>Energy Sword</A> (4)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=bomb'>Plastic Explosives</A> (4)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=powersink'>Power Sink</A> (5)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=detomatix'>Detomatix Cartridge</A> (3)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=space'>Syndicate-made Space Suit (inludes a helmet)</A> (3)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=botchat'>Binary Translator</A> (4)<BR>"
-	src.menu_message += "<HR>"
-	return
-
-/obj/item/weapon/integrated_uplink/proc/unlock()
-	if ((isnull(src.hostpda)) || (src.active))
-		return
-
-	src.orignote = src.hostpda.note
-	src.active = 1
-	src.hostpda.mode = 5 //Switch right to the notes program
-
-	src.generate_menu()
-	src.print_to_host(src.menu_message)
-	return
-
-/obj/item/weapon/integrated_uplink/Topic(href, href_list)
-	if ((isnull(src.hostpda)) || (!src.active))
-		return
-
-	if (usr.stat || usr.restrained() || !in_range(src.hostpda, usr))
-		return
-
-	if (href_list["buy_item"])
-		switch(href_list["buy_item"])
-			if("revolver")
-				if (src.uses >= 7)
-					src.uses -= 7
-					var/obj/item/weapon/gun/revolver/O = new /obj/item/weapon/gun/revolver(get_turf(src.hostpda))
-					O.bullets = 7
-			if("revolver_ammo")
-				if (src.uses >= 2)
-					src.uses -= 2
-					new /obj/item/weapon/ammo/a357(get_turf(src.hostpda))
-			if("xbow")
-				if (src.uses >= 5)
-					src.uses -= 5
-					new /obj/item/weapon/gun/energy/crossbow(get_turf(src.hostpda))
-			if("empbox")
-				if (src.uses >= 4)
-					src.uses -= 4
-					new /obj/item/weapon/storage/emp_kit(get_turf(src.hostpda))
-			if("voice")
-				if (src.uses >= 4)
-					src.uses -= 4
-					new /obj/item/clothing/mask/gas/voice(get_turf(src.hostpda))
-			if("jump")
-				if (src.uses >= 3)
-					src.uses -= 3
-					new /obj/item/clothing/under/chameleon(get_turf(src.hostpda))
-			if("card")
-				if (src.uses >= 3)
-					src.uses -= 3
-					new /obj/item/weapon/card/id/syndicate(get_turf(src.hostpda))
-			if("emag")
-				if (src.uses >= 3)
-					src.uses -= 3
-					new /obj/item/weapon/card/emag(get_turf(src.hostpda))
-			if("imp_freedom")
-				if (src.uses >= 3)
-					src.uses -= 3
-					var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(src.hostpda))
-					O.imp = new /obj/item/weapon/implant/freedom(O)
-			if("sleepypen")
-				if (src.uses >= 5)
-					src.uses -= 5
-					new /obj/item/weapon/pen/sleepypen(get_turf(src.hostpda))
-			if("projector")
-				if (src.uses >= 4)
-					src.uses -= 4
-					new /obj/item/device/chameleon(get_turf(src.hostpda))
-			if("cloak")
-				if (src.uses >= 4)
-					src.uses -= 4
-					new /obj/item/weapon/cloaking_device(get_turf(src.hostpda))
-			if("sword")
-				if (src.uses >= 4)
-					src.uses -= 4
-					new /obj/item/weapon/sword(get_turf(src.hostpda))
-			if("bomb")
-				if (src.uses >= 4)
-					src.uses -= 4
-					new /obj/item/weapon/plastique(get_turf(src.hostpda))
-					new /obj/item/weapon/plastique(get_turf(src.hostpda))
-			if("powersink")
-				if (src.uses >= 5)
-					src.uses -= 5
-					new /obj/item/device/powersink(get_turf(src.hostpda))
-			if("detomatix")
-				if (src.uses >= 3)
-				 src.uses -= 3
-				 new /obj/item/weapon/cartridge/syndicate(get_turf(src.hostpda))
-			if("space")
-				if (src.uses >= 3)
-				 src.uses -= 3
-				 new /obj/item/clothing/suit/space/syndicate(get_turf(src.hostpda))
-				 new /obj/item/clothing/head/helmet/space/syndicate(get_turf(src.hostpda))
-			if("botchat")
-				if (src.uses >= 4)
-					src.uses -= 4
-					new /obj/item/device/radio/headset/traitor(get_turf(src.hostpda))
-
-		src.generate_menu()
-		src.print_to_host(src.menu_message)
-		return
-
-	return
