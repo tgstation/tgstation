@@ -63,7 +63,7 @@
 	// create/populate list as they are recvd
 
 	receive_signal(datum/signal/signal)
-		var/obj/item/device/pda/P = src.loc
+//		var/obj/item/device/pda/P = src.loc
 
 		/*
 		world << "recvd:[P] : [signal.source]"
@@ -138,7 +138,7 @@
 	// create/populate lists as they are recvd
 
 	receive_signal(datum/signal/signal)
-		var/obj/item/device/pda/P = src.loc
+//		var/obj/item/device/pda/P = src.loc
 
 		/*
 		world << "recvd:[P] : [signal.source]"
