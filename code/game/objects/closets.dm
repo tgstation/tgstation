@@ -61,6 +61,8 @@
 			o.loc = src
 
 	for (var/mob/M in src.loc)
+		if (istype (M, /mob/dead/observer))
+			continue
 		if (M.buckled)
 			continue
 
