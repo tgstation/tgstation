@@ -10,7 +10,7 @@
 	new /obj/item/clothing/shoes/magboots( src )
 	new /obj/item/clothing/ears/earmuffs( src )
 	new /obj/item/clothing/glasses/meson( src )
-	new /obj/item/clothing/suit/fire( src )
+	new /obj/item/clothing/suit/fire/firefighter( src )
 	new /obj/item/clothing/suit/hazardvest( src )
 	new /obj/item/clothing/mask/gas( src )
 	new /obj/item/clothing/head/helmet/welding( src )

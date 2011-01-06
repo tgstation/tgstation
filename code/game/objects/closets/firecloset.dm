@@ -18,4 +18,4 @@
 		new /obj/item/weapon/tank/emergency_oxygen(src)
 
 	if (prob (10))
-		new /obj/item/clothing/suit/fire(src)
+		new /obj/item/clothing/suit/fire/firefighter(src)
