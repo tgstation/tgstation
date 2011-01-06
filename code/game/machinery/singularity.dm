@@ -477,6 +477,8 @@ However people seem to like it for some reason.
 	..()
 	src.gen_primary = A
 	src.gen_secondary = B
+	if(A&&B)
+		src.dir = get_dir(B,A)
 	spawn(1)
 		src.sd_SetLuminosity(5)
 
@@ -871,7 +873,7 @@ However people seem to like it for some reason.
 		if(2.0 to 3.0)
 			eject()
 	return ..()
-	
+
 /obj/machinery/power/collector_array/Del()
 	. = ..()
 	for(var/obj/machinery/power/collector_control/myCC in orange(1,src))
