@@ -17,7 +17,7 @@
 
 	var/tmode = 0 //Texting mode, 1 to view recieved messages
 	var/fon = 0 //Is the flashlight function on?
-	var/f_lum = 3 //Luminosity for the flashlight function
+	var/f_lum = 4 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
@@ -414,15 +414,15 @@
 			src.updateUsrDialog()
 
 		else if (href_list["editnote"])
-			if (src.mode == 5)
+			if (src.mode == "notes")
 				var/n = input(usr, "Please enter message", src.name, src.note) as message
 				if (!in_range(src, usr) && src.loc != usr)
 					return
 				n = copytext(adminscrub(n), 1, MAX_MESSAGE_LEN)
-				if (src.mode == 5)
+				if (src.mode == "notes")
 					src.note = n
 
-			else if (src.mode == 7)
+			else if (src.mode == "messenger")
 				var/t = input(usr, "Please enter message", src.name, null) as text
 				t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 				if (!t)
@@ -595,7 +595,7 @@
 			playsound(src.loc, 'bikehorn.ogg', 50, 1)
 			src.last_honk = world.time
 
-		if (src.mode == 7 || src.tmode == 1)
+		if (src.mode == "messenger" || src.tmode == 1)
 			src.overlays = null
 
 		if ((src.honkamt > 0) && (prob(60)))
