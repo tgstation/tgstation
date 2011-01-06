@@ -15,6 +15,8 @@
 			src.attack_hand(M)
 	AutoUpdateAI(src)
 
+/obj/proc/update_icon()
+	return
 
 /obj/item/proc/updateSelfDialog()
 	var/mob/M = src.loc

@@ -100,39 +100,40 @@
 
 	process()
 
+	update_icon()
+		src.overlays = new/list()
+		src.underlays = new/list()
+		if(!tank_one && !tank_two && !attached_device)
+			icon_state = "valve_1"
+			return
+		icon_state = "valve"
+		var/tank_one_icon = ""
+		var/tank_two_icon = ""
+		if(tank_one)
+			tank_one_icon = tank_one.icon_state
+		if(tank_two)
+			tank_two_icon = tank_two.icon_state
+		if(tank_one)
+			var/icon/I = new(src.icon, icon_state = "[tank_one_icon]")
+			//var/obj/overlay/tank_one_overlay = new
+			//tank_one_overlay.icon = src.icon
+			//tank_one_overlay.icon_state = tank_one_icon
+			src.underlays += I
+		if(tank_two)
+			var/icon/J = new(src.icon, icon_state = "[tank_two_icon]")
+			//I.Flip(EAST) this breaks the perspective!
+			J.Shift(WEST, 13)
+			//var/obj/underlay/tank_two_overlay = new
+			//tank_two_overlay.icon = I
+			src.underlays += J
+		if(attached_device)
+			var/icon/K = new(src.icon, icon_state = "device")
+			//var/obj/overlay/device_overlay = new
+			//device_overlay.icon = src.icon
+			//device_overlay.icon_state = device_icon
+			src.overlays += K
 	proc
-		update_icon()
-			src.overlays = new/list()
-			src.underlays = new/list()
-			if(!tank_one && !tank_two && !attached_device)
-				icon_state = "valve_1"
-				return
-			icon_state = "valve"
-			var/tank_one_icon = ""
-			var/tank_two_icon = ""
-			if(tank_one)
-				tank_one_icon = tank_one.icon_state
-			if(tank_two)
-				tank_two_icon = tank_two.icon_state
-			if(tank_one)
-				var/icon/I = new(src.icon, icon_state = "[tank_one_icon]")
-				//var/obj/overlay/tank_one_overlay = new
-				//tank_one_overlay.icon = src.icon
-				//tank_one_overlay.icon_state = tank_one_icon
-				src.underlays += I
-			if(tank_two)
-				var/icon/J = new(src.icon, icon_state = "[tank_two_icon]")
-				//I.Flip(EAST) this breaks the perspective!
-				J.Shift(WEST, 13)
-				//var/obj/underlay/tank_two_overlay = new
-				//tank_two_overlay.icon = I
-				src.underlays += J
-			if(attached_device)
-				var/icon/K = new(src.icon, icon_state = "device")
-				//var/obj/overlay/device_overlay = new
-				//device_overlay.icon = src.icon
-				//device_overlay.icon_state = device_icon
-				src.overlays += K
+
 
 		/*
 		Exadv1: I know this isn't how it's going to work, but this was just to check

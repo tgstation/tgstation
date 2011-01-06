@@ -32,7 +32,7 @@ obj/machinery/embedded_controller
 		user.machine = src
 		onclose(user, "computer")
 
-	proc/update_icon()
+	update_icon()
 	proc/return_text()
 
 	proc/post_signal(datum/signal/signal, comm_line)

@@ -58,7 +58,7 @@
 		playsound(src.loc, 'Glasshit.ogg', 75, 1)
 	return
 
-/obj/displaycase/proc/update_icon()
+/obj/displaycase/update_icon()
 	if(src.destroyed)
 		src.icon_state = "glassboxb[src.occupied]"
 	else

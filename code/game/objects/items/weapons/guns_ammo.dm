@@ -96,7 +96,7 @@ TELEPORT GUN
 // AMMO
 
 
-/obj/item/weapon/ammo/proc/update_icon()
+/obj/item/weapon/ammo/update_icon()
 	return
 
 
@@ -541,7 +541,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 // ENERGY GUN
 
-/obj/item/weapon/gun/energy/proc/update_icon()
+/obj/item/weapon/gun/energy/update_icon()
 	if (istype(src, /obj/item/weapon/gun/energy/crossbow)) return
 	var/ratio = src.charges / 10
 	ratio = round(ratio, 0.25) * 100

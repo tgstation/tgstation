@@ -644,14 +644,13 @@
 					user << "\blue You inject 5 units of the solution. The syringe now contains [src.reagents.total_volume] units."
 		return
 
-	proc
-		update_icon()
-			var/rounded_vol = round(reagents.total_volume,5)
-			if(ismob(loc))
-				icon_state = "[mode][rounded_vol]"
-			else
-				icon_state = "[rounded_vol]"
-			item_state = "syringe_[rounded_vol]"
+	update_icon()
+		var/rounded_vol = round(reagents.total_volume,5)
+		if(ismob(loc))
+			icon_state = "[mode][rounded_vol]"
+		else
+			icon_state = "[rounded_vol]"
+		item_state = "syringe_[rounded_vol]"
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Syringes. END

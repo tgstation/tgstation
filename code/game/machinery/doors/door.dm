@@ -156,7 +156,7 @@
 				s.set_up(2, 1, src)
 				s.start()
 
-/obj/machinery/door/proc/update_icon()
+/obj/machinery/door/update_icon()
 	if(density)
 		icon_state = "door1"
 	else

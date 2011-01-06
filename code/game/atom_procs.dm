@@ -163,6 +163,7 @@
 			source2.blood_DNA = null
 //			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
 			source2.icon = source2.icon_old
+			source2.update_icon()
 		if (istype(src, /turf/simulated))
 			var/obj/item/source2 = src
 			source2.blood_DNA = null

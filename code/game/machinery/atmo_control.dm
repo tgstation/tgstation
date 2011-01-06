@@ -22,7 +22,7 @@ obj/machinery/air_sensor
 
 	var/datum/radio_frequency/radio_connection
 
-	proc/update_icon()
+	update_icon()
 		icon_state = "gsensor[on]"
 
 	process()

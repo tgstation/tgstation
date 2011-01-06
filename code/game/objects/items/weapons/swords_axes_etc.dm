@@ -69,7 +69,7 @@ STUN BATON
 
 // STUN BATON
 
-/obj/item/weapon/baton/proc/update_icon()
+/obj/item/weapon/baton/update_icon()
 	if(src.status)
 		icon_state = "stunbaton_active"
 	else

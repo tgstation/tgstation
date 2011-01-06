@@ -80,7 +80,7 @@
 		playsound(src.loc, 'Glasshit.ogg', 75, 1)
 	return
 
-/obj/lamarr/proc/update_icon()
+/obj/lamarr/update_icon()
 	if(src.destroyed)
 		src.icon_state = "labcageb[src.occupied]"
 	else

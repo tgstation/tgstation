@@ -569,7 +569,7 @@ However people seem to like it for some reason.
 	..()
 	return
 
-/obj/machinery/emitter/proc/update_icon()
+/obj/machinery/emitter/update_icon()
 	if (active && !(stat & (NOPOWER|BROKEN)))
 		icon_state = "Emitter +a"
 	else
@@ -1076,7 +1076,7 @@ However people seem to like it for some reason.
 	var/list/obj/machinery/containment_field/fields
 ////FIELD GEN START
 
-/obj/machinery/field_generator/proc/update_icon()
+/obj/machinery/field_generator/update_icon()
 	if (!active)
 		icon_state = "Field_Gen"
 		return

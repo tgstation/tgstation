@@ -5,9 +5,6 @@ ZIPPO
 
 
 */
-/obj/item/weapon/cigpacket/proc/update_icon()
-	return
-
 /obj/item/weapon/cigpacket/update_icon()
 	src.icon_state = text("cigpacket[]", src.cigcount)
 	src.desc = text("There are [] cigs\s left!", src.cigcount)

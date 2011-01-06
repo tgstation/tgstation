@@ -30,19 +30,19 @@ the blender or the processor: Processor items are solid objects and Blender resu
 	on_reagent_change()			//When the reagents change, change the icon as well.
 		update_icon()
 
-	proc
-		update_icon()			//Changes the icon depending on how full it is and whether it has the jug attached.
-			if(src.container)
-				switch(src.reagents.total_volume)
-					if(0)
-						src.icon_state = "blender_e"		//Empty
-					if(1 to 75)
-						src.icon_state = "blender_h"		//Some but not full
-					if(76 to 100)
-						src.icon_state = "blender_f"		//Mostly full.
-			else
-				src.icon_state = "blender_d"				//No jug. Should be redundant but just in case.
-			return
+
+	update_icon()			//Changes the icon depending on how full it is and whether it has the jug attached.
+		if(src.container)
+			switch(src.reagents.total_volume)
+				if(0)
+					src.icon_state = "blender_e"		//Empty
+				if(1 to 75)
+					src.icon_state = "blender_h"		//Some but not full
+				if(76 to 100)
+					src.icon_state = "blender_f"		//Mostly full.
+		else
+			src.icon_state = "blender_d"				//No jug. Should be redundant but just in case.
+		return
 
 /obj/machinery/blender/attackby(var/obj/item/O as obj, var/mob/user as mob)		//Attack it with an object.
 	if(src.contents.len >= 10 || src.reagents.total_volume >= 80)		//Too full. Max 10 items or 80 units of reagent

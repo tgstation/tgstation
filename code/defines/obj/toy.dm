@@ -20,11 +20,10 @@ obj/item/toy/blink
 	w_class = 1.0
 	var/amount_left = 7.0
 
-	proc
-		update_icon()
-			src.icon_state = text("357-[]", src.amount_left)
-			src.desc = text("There are [] caps\s left!", src.amount_left)
-			return
+	update_icon()
+		src.icon_state = text("357-[]", src.amount_left)
+		src.desc = text("There are [] caps\s left!", src.amount_left)
+		return
 
 /obj/item/toy/ammo/crossbow
 	name = "foam dart"

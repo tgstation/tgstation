@@ -22,7 +22,7 @@
 		update_icon()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if(open)
 			icon_state = "sheater-open"
 		else

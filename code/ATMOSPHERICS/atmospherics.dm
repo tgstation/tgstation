@@ -49,5 +49,5 @@ obj/machinery/atmospherics
 
 		disconnect(obj/machinery/atmospherics/reference)
 
-		update_icon()
-			return null
+	update_icon()
+		return null

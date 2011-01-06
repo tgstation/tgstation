@@ -104,7 +104,7 @@ obj/machinery/airlock_sensor
 	var/on = 1
 	var/alert = 0
 
-	proc/update_icon()
+	update_icon()
 		if(on)
 			if(alert)
 				icon_state = "airlock_sensor_alert"
@@ -170,7 +170,7 @@ obj/machinery/access_button
 
 	var/on = 1
 
-	proc/update_icon()
+	update_icon()
 		if(on)
 			icon_state = "access_button_standby"
 		else
