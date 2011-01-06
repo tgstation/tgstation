@@ -953,6 +953,12 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		var/ratio = src.charges / maximum_charges
 		ratio = round(ratio, 0.25) * 100
 		src.icon_state = text("energy[]", ratio)
+		overlays = null
+		switch (mode)
+			if (1)
+				overlays += "energykill"
+			if (2)
+				overlays += "energystun"
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if ((usr.mutations & 16) && prob(50))
@@ -1016,6 +1022,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		else if (mode == 2)
 			mode = 1
 			user << "\blue You set the gun to kill"
+		update_icon()
 
 	attack(mob/M as mob, mob/user as mob)
 		..()
