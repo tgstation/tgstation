@@ -233,11 +233,10 @@
 		if (!alive)				//If it isn't alive, it shouldn't be doing anything.
 			return
 		if (cowardly) //cowardly = 1 stuff
-			if (!flee_from.len) //checking for threats
-				var/view = view_range-2							//Actual sight slightly lower then it's total sight.
-				for (var/mob/living/carbon/C in range(view,src.loc))
-					if ((get_dir(src,C) & dir) || (C.m_intent=="run" && C.moved_recently)) //if it can see or hear anyone nearby, start fleeing
-						flee_from += C
+			var/view = view_range-2							//Actual sight slightly lower then it's total sight.
+			for (var/mob/living/carbon/C in range(view,src.loc)) //checking for threats
+				if (((get_dir(src,C) & dir) || (C.m_intent=="run" && C.moved_recently)) && !(C in flee_from)) //if it can see or hear anyone nearby, start fleeing
+					flee_from += C
 			if (flee_from.len) //ohgodrun
 				var/viable_dirs = 0
 				for(var/mob/living/carbon/C in flee_from)
@@ -249,7 +248,7 @@
 				if(viable_dirs) //if there is somewhere to run, DO IT DAMNIT
 					var/list/turfs_to_move_to = new/list()
 					for(var/turf/T in orange(src,1))
-						if((get_dir(src,T) & viable_dirs) == get_dir(src,T))
+						if(((get_dir(src,T) & viable_dirs) == get_dir(src,T)) && !T.density)
 							turfs_to_move_to += T
 					src.Move(pick(turfs_to_move_to))
 		if (aggressive) //aggressive = 1 stuff

@@ -1005,7 +1005,7 @@
 	src.verbs -= /client/proc/cmd_admin_mute
 	src.verbs -= /client/proc/cmd_admin_pm
 	src.verbs -= /client/proc/cmd_admin_direct_narrate 	// -- TLE
-	src.verbs -= /client/proc/cmd_admin_say
+	//src.verbs -= /client/proc/cmd_admin_say
 	src.verbs -= /client/proc/cmd_admin_subtle_message
 	src.verbs -= /client/proc/cmd_admin_world_narrate 	// -- TLE
 	src.verbs -= /client/proc/get_admin_state
