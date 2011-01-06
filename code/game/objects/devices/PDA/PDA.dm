@@ -12,10 +12,9 @@
 	var/owner = null
 	var/default_cartridge = 0 // Access level defined by cartridge
 	var/obj/item/weapon/cartridge/cartridge = null //current cartridge
-	var/mode = 0 //0-10, Main menu, Crew manifest, Engine monitor, Atmos scanner, med records, notes, sec records, messenger, mop locator, signaler, status display.
+	var/mode = "main" //0-10, Main menu, Crew manifest, Engine monitor, Atmos scanner, med records, notes, sec records, messenger, mop locator, signaler, status display.
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
-	var/mmode = 0 //medical record viewing mode
-	var/smode = 0 //Security record viewing mode???
+
 	var/tmode = 0 //Texting mode, 1 to view recieved messages
 	var/fon = 0 //Is the flashlight function on?
 	var/f_lum = 3 //Luminosity for the flashlight function
@@ -28,13 +27,10 @@
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!" //Current note in the notepad function.
-	var/rad = "" //A place to stick the radio menu
-	var/datum/data/record/active1 = null //General
-	var/datum/data/record/active2 = null //Medical
-	var/datum/data/record/active3 = null //Security
+	var/cart = "" //A place to stick cartridge menu information
+
 	var/obj/item/weapon/integrated_uplink/uplink = null
-	var/message1	// used for status_displays
-	var/message2
+
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
 
@@ -94,7 +90,7 @@
 
 /obj/item/device/pda/chaplain
 	icon_state = "pda-holy"
-	ttone = "God"
+	ttone = "holy"
 
 
 
@@ -152,9 +148,9 @@
 
 	dat += "<a href='byond://?src=\ref[src];close=1'><img src=pda_exit.png> Close</a>"
 
-	if ((!isnull(src.cartridge)) && (!src.mode))
+	if ((!isnull(src.cartridge)) && (src.mode == "main"))
 		dat += " | <a href='byond://?src=\ref[src];rc=1'><img src=pda_eject.png> Eject [src.cartridge]</a>"
-	if (src.mode)
+	if (src.mode != "main")
 		dat += " | <a href='byond://?src=\ref[src];mm=1'><img src=pda_menu.png> Main Menu</a>"
 		dat += " | <a href='byond://?src=\ref[src];refresh=1'><img src=pda_refresh.png> Refresh</a>"
 
@@ -165,7 +161,7 @@
 		dat += "<a href='byond://?src=\ref[src];refresh=1'><img src=pda_refresh.png> Retry</a>"
 	else
 		switch (src.mode)
-			if (0)
+			if ("main")
 				dat += "<h2>PERSONAL DATA ASSISTANT</h2>"
 				dat += "Owner: [src.owner], [src.ownjob]<br>"
 				dat += text("ID: <A href='?src=\ref[];auth=1'>[]</A><br>", src, (src.id ? "[src.id.registered], [src.id.assignment]" : "----------"))
@@ -177,112 +173,61 @@
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];note=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];mess=1'><img src=pda_mail.png> Messenger</a></li>"
-				if (!isnull(src.cartridge) && src.cartridge.access_clown)
-					dat += "<li><a href='byond://?src=\ref[src];honk=1'><img src=pda_honk.png> Honk Synthesizer</a></li>"
 
-				if (!isnull(src.cartridge) && src.cartridge.access_manifest)
-					dat += "<li><a href='byond://?src=\ref[src];cm=1'><img src=pda_notes.png> View Crew Manifest</a></li>"
-
-
-				if(cartridge && cartridge.access_status_display)
-					dat += "<li><a href='byond://?src=\ref[src];sd=1'><img src=pda_status.png> Set Status Display</a></li>"
-
-
-				dat += "</ul>"
-
-				if (!isnull(src.cartridge) && src.cartridge.access_engine)
-					dat += "<h4>Engineering Functions</h4>"
-					dat += "<ul>"
-					dat += "<li><a href='byond://?src=\ref[src];em=1'><img src=pda_power.png> Power Monitor</a></li>"
+				if (src.cartridge)
+					if (src.cartridge.access_clown)
+						dat += "<li><a href='byond://?src=\ref[src];honk=1'><img src=pda_honk.png> Honk Synthesizer</a></li>"
+					if (src.cartridge.access_manifest)
+						dat += "<li><a href='byond://?src=\ref[src];cart=crew'><img src=pda_notes.png> View Crew Manifest</a></li>"
+					if(cartridge.access_status_display)
+						dat += "<li><a href='byond://?src=\ref[src];cart=status'><img src=pda_status.png> Set Status Display</a></li>"
 					dat += "</ul>"
 
-				if (!isnull(src.cartridge) && src.cartridge.access_medical)
-					dat += "<h4>Medical Functions</h4>"
-					dat += "<ul>"
-					dat += "<li><a href='byond://?src=\ref[src];mr=1'><img src=pda_medical.png> Medical Records</a></li>"
-					dat += "<li><a href='byond://?src=\ref[src];set_scanmode=1'><img src=pda_scanner.png> [src.scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
-					dat += "</ul>"
-
-				if (!isnull(src.cartridge) && src.cartridge.access_security)
-					dat += "<h4>Security Functions</h4>"
-					dat += "<ul>"
-					dat += "<li><a href='byond://?src=\ref[src];sr=1'><img src=pda_cuffs.png> Security Records</A></li>"
-					dat += "<li><a href='byond://?src=\ref[src];set_scanmode=2'><img src=pda_scanner.png> [src.scanmode == 2 ? "Disable" : "Enable"] Forensic Scanner</a></li>"
-					if(istype(cartridge, /obj/item/weapon/cartridge/security))
-						dat += "<li><a href='byond://?src=\ref[src];secbot=1'><img src=pda_cuffs.png> Security Bot Access</a></li>"
-					dat += "</ul>"
-
-				if(cartridge && cartridge.access_quartermaster)
-					dat += "<h4>Quartermaster Functions:</h4>"
-					dat += "<ul>"
-					dat += "<li><a href='byond://?src=\ref[src];suppshut=1'><img src=pda_crate.png> Supply Records</A></li>"
-					dat += "<li><a href='byond://?src=\ref[src];mulectrl=1'><img src=pda_mule.png> Delivery Bot Control</A></li>"
-					dat += "</ul>"
+					if (src.cartridge.access_engine)
+						dat += "<h4>Engineering Functions</h4>"
+						dat += "<ul>"
+						dat += "<li><a href='byond://?src=\ref[src];cart=power'><img src=pda_power.png> Power Monitor</a></li>"
+						dat += "</ul>"
+					if (src.cartridge.access_medical)
+						dat += "<h4>Medical Functions</h4>"
+						dat += "<ul>"
+						dat += "<li><a href='byond://?src=\ref[src];cart=medical'><img src=pda_medical.png> Medical Records</a></li>"
+						dat += "<li><a href='byond://?src=\ref[src];set_scanmode=1'><img src=pda_scanner.png> [src.scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
+						dat += "</ul>"
+					if (src.cartridge.access_security)
+						dat += "<h4>Security Functions</h4>"
+						dat += "<ul>"
+						dat += "<li><a href='byond://?src=\ref[src];cart=security'><img src=pda_cuffs.png> Security Records</A></li>"
+						dat += "<li><a href='byond://?src=\ref[src];set_scanmode=2'><img src=pda_scanner.png> [src.scanmode == 2 ? "Disable" : "Enable"] Forensic Scanner</a></li>"
+					if(istype(cartridge.radio, /obj/item/radio/integrated/beepsky))
+						dat += "<li><a href='byond://?src=\ref[src];cart=beepsky'><img src=pda_cuffs.png> Security Bot Access</a></li>"
+						dat += "</ul>"
+					else dat += "</ul>"
+					if(cartridge.access_quartermaster)
+						dat += "<h4>Quartermaster Functions:</h4>"
+						dat += "<ul>"
+						dat += "<li><a href='byond://?src=\ref[src];cart=qm'><img src=pda_crate.png> Supply Records</A></li>"
+						dat += "<li><a href='byond://?src=\ref[src];cart=mule'><img src=pda_mule.png> Delivery Bot Control</A></li>"
+						dat += "</ul>"
+				else dat += "</ul>"
 
 				dat += "<h4>Utilities</h4>"
 				dat += "<ul>"
-				if (!isnull(src.cartridge) && src.cartridge.access_janitor)
-					dat += "<li><a href='byond://?src=\ref[src];jl=1'><img src=pda_bucket.png> Equipment Locator</a></li>"
-				if (!isnull(src.cartridge) && (istype(src.cartridge, /obj/item/weapon/cartridge/signal)))
-					dat += "<li><a href='byond://?src=\ref[src];sigmode=1'><img src=pda_signaler.png> Signaler System</a></li>"
-				if (!isnull(src.cartridge) && src.cartridge.access_reagent_scanner)
-					dat += "<li><a href='byond://?src=\ref[src];set_scanmode=3'><img src=pda_reagent.png> [src.scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
+				if (src.cartridge)
+					if (src.cartridge.access_janitor)
+						dat += "<li><a href='byond://?src=\ref[src];cart=janitor'><img src=pda_bucket.png> Equipment Locator</a></li>"
+					if (istype(src.cartridge.radio, /obj/item/radio/integrated/signal))
+						dat += "<li><a href='byond://?src=\ref[src];cart=signal'><img src=pda_signaler.png> Signaler System</a></li>"
+					if (src.cartridge.access_reagent_scanner)
+						dat += "<li><a href='byond://?src=\ref[src];set_scanmode=3'><img src=pda_reagent.png> [src.scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
 				//Remote shuttle shield control for syndies I guess
-				if (!isnull(src.cartridge) && src.cartridge.access_remote_door)
-					dat += "<li><a href='byond://?src=\ref[src];remotedoor=1'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
-				dat += "<li><a href='byond://?src=\ref[src];am=1'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
+					if (src.cartridge.access_remote_door)
+						dat += "<li><a href='byond://?src=\ref[src];remotedoor=1'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];atmos=1'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];flight=1'><img src=pda_flashlight.png> [src.fon ? "Disable" : "Enable"] Flashlight</a></li>"
-
 				dat += "</ul>"
 
-			if (1)
-
-				dat += "<h4><img src=pda_notes.png> Crew Manifest</h4>"
-				dat += "Entries cannot be modified from this terminal.<br><br>"
-
-				for (var/datum/data/record/t in data_core.general)
-					dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
-				dat += "<br>"
-
-			if (2)
-
-				//muskets 250810
-				//experimental PDA power monitoring code
-				//mostly ripped off from the power monitor computer
-				//powerreport, powerreportnodes, powerreportavail and powerreportviewload are new globals updated by the
-				//power monitor computer
-				//
-				//only the first power computer to come online will update, if that breaks you can build another and it'll take over
-				//an existing second power monitor should take over fine too
-				//see changes to /game/machinery/computer/power.dm
-				dat += "<h4><img src=pda_power.png> Power Monitor</h4>"
-
-				if(!powerreport)
-					dat += "\red No connection"
-				else
-					var/list/L = list()
-					for(var/obj/machinery/power/terminal/term in powerreportnodes)
-						if(istype(term.master, /obj/machinery/power/apc))
-							var/obj/machinery/power/apc/A = term.master
-							L += A
-
-					dat += "<PRE>Total power: [powerreportavail] W<BR>Total load:  [num2text(powerreportviewload,10)] W<BR>"
-
-					dat += "<FONT SIZE=-1>"
-
-					if(L.len > 0)
-						dat += "Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
-
-						var/list/S = list(" Off","AOff","  On", " AOn")
-						var/list/chg = list("N","C","F")
-
-						for(var/obj/machinery/power/apc/A in L)
-							dat += copytext(add_tspace(A.area.name, 30), 1, 30)
-							dat += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
-
-					dat += "</FONT></PRE>"
-
-			if (3)
+			if ("atmos")
 
 				dat += "<h4><img src=pda_atmos.png> Atmospheric Readings</h4>"
 
@@ -319,55 +264,8 @@
 
 				dat += "<br>"
 
-			if (4)
-				if (!src.mmode)
 
-					dat += "<h4><img src=pda_medical.png> Medical Record List</h4>"
-					for (var/datum/data/record/R in data_core.general)
-						dat += "<a href='byond://?src=\ref[src];d_rec=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
-					dat += "<br>"
-
-				else if (src.mmode)
-
-					dat += "<h4><img src=pda_medical.png> Medical Record</h4>"
-
-					dat += "<a href='byond://?src=\ref[src];pback=1'>Back</a><br>"
-
-					if (istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1))
-						dat += "Name: [src.active1.fields["name"]] ID: [src.active1.fields["id"]]<br>"
-						dat += "Sex: [src.active1.fields["sex"]]<br>"
-						dat += "Age: [src.active1.fields["age"]]<br>"
-						dat += "Fingerprint: [src.active1.fields["fingerprint"]]<br>"
-						dat += "Physical Status: [src.active1.fields["p_stat"]]<br>"
-						dat += "Mental Status: [src.active1.fields["m_stat"]]<br>"
-					else
-						dat += "<b>Record Lost!</b><br>"
-
-					dat += "<br>"
-
-					dat += "<h4><img src=pda_medical.png> Medical Data</h4>"
-					if (istype(src.active2, /datum/data/record) && data_core.medical.Find(src.active2))
-						dat += "Blood Type: [src.active2.fields["b_type"]]<br><br>"
-
-						dat += "Minor Disabilities: [src.active2.fields["mi_dis"]]<br>"
-						dat += "Details: [src.active2.fields["mi_dis_d"]]<br><br>"
-
-						dat += "Major Disabilities: [src.active2.fields["ma_dis"]]<br>"
-						dat += "Details: [src.active2.fields["ma_dis_d"]]<br><br>"
-
-						dat += "Allergies: [src.active2.fields["alg"]]<br>"
-						dat += "Details: [src.active2.fields["alg_d"]]<br><br>"
-
-						dat += "Current Diseases: [src.active2.fields["cdi"]]<br>"
-						dat += "Details: [src.active2.fields["cdi_d"]]<br><br>"
-
-						dat += "Important Notes: [src.active2.fields["notes"]]<br>"
-					else
-						dat += "<b>Record Lost!</b><br>"
-
-					dat += "<br>"
-
-			if (5)
+			if ("notes")
 				dat += "<h4><img src=pda_notes.png> Notekeeper V2.1</h4>"
 
 				if ((!isnull(src.uplink)) && (src.uplink.active))
@@ -377,52 +275,10 @@
 
 				dat += src.note
 
-			if (6)
-				if (!src.smode)
+			if ("cart")
+				dat += src.cart
 
-					dat += "<h4><img src=pda_cuffs.png> Security Record List</h4>"
-
-					for (var/datum/data/record/R in data_core.general)
-						dat += "<a href='byond://?src=\ref[src];d_rec=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
-
-					dat += "<br>"
-
-				else if (src.smode)
-
-					dat += "<h4><img src=pda_cuffs.png> Security Record</h4>"
-
-					dat += "<a href='byond://?src=\ref[src];pback=1'><img src=pda_back.png> Back</a><br>"
-
-					if (istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1))
-						dat += "Name: [src.active1.fields["name"]] ID: [src.active1.fields["id"]]<br>"
-						dat += "Sex: [src.active1.fields["sex"]]<br>"
-						dat += "Age: [src.active1.fields["age"]]<br>"
-						dat += "Fingerprint: [src.active1.fields["fingerprint"]]<br>"
-						dat += "Physical Status: [src.active1.fields["p_stat"]]<br>"
-						dat += "Mental Status: [src.active1.fields["m_stat"]]<br>"
-					else
-						dat += "<b>Record Lost!</b><br>"
-
-					dat += "<br>"
-
-					dat += "<h4><img src=pda_cuffs.png> Security Data</h4>"
-					if (istype(src.active3, /datum/data/record) && data_core.security.Find(src.active3))
-						dat += "Criminal Status: [src.active3.fields["criminal"]]<br>"
-
-						dat += "Minor Crimes: [src.active3.fields["mi_crim"]]<br>"
-						dat += "Details: [src.active3.fields["mi_crim"]]<br><br>"
-
-						dat += "Major Crimes: [src.active3.fields["ma_crim"]]<br>"
-						dat += "Details: [src.active3.fields["ma_crim_d"]]<br><br>"
-
-						dat += "Important Notes:<br>"
-						dat += "[src.active3.fields["notes"]]"
-					else
-						dat += "<b>Record Lost!</b><br>"
-
-					dat += "<br>"
-
-			if (7)
+			if ("messenger")
 
 				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.4</h4>"
 
@@ -484,235 +340,7 @@
 
 					dat += src.tnote
 					dat += "<br>"
-			if (8)
 
-				dat += "<h4><img src=pda_bucket.png> Persistent Custodial Object Locator</h4>"
-
-				var/turf/cl = get_turf(src)
-				if (cl)
-					dat += "Current Orbital Location: <b>\[[cl.x],[cl.y]\]</b>"
-
-					dat += "<h4>Located Mops:</h4>"
-
-					var/ldat
-					for (var/obj/item/weapon/mop/M in world)
-						var/turf/ml = get_turf(M)
-
-						if (ml.z != cl.z)
-							continue
-
-						ldat += "Mop - <b>\[[ml.x],[ml.y]\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
-
-					if (!ldat)
-						dat += "None"
-					else
-						dat += "[ldat]"
-
-					dat += "<h4>Located Mop Buckets:</h4>"
-
-					ldat = null
-					for (var/obj/mopbucket/B in world)
-						var/turf/bl = get_turf(B)
-
-						if (bl.z != cl.z)
-							continue
-
-						ldat += "Bucket - <b>\[[bl.x],[bl.y]\]</b> - Water level: [B.reagents.total_volume]/70<br>"
-
-					if (!ldat)
-						dat += "None"
-					else
-						dat += "[ldat]"
-
-					dat += "<h4>Located Cleanbots:</h4>"
-
-					ldat = null
-					for (var/obj/machinery/bot/cleanbot/B in world)
-						var/turf/bl = get_turf(B)
-
-						if (bl.z != cl.z)
-							continue
-
-						ldat += "Cleanbot - <b>\[[bl.x],[bl.y]\]</b> - [B.on ? "Online" : "Offline"]<br>"
-
-					if (!ldat)
-						dat += "None"
-					else
-						dat += "[ldat]"
-
-				else
-					dat += "ERROR: Unable to determine current location."
-
-			if (9)
-				if (!isnull(src.cartridge) && (istype(src.cartridge, /obj/item/weapon/cartridge/signal)))
-					dat += "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
-
-					dat += {"
-<a href='byond://?src=\ref[src];ssend=1'>Send Signal</A><BR>
-
-Frequency:
-<a href='byond://?src=\ref[src];sfreq=-10'>-</a>
-<a href='byond://?src=\ref[src];sfreq=-2'>-</a>
-[format_frequency(src.cartridge.radio:frequency)]
-<a href='byond://?src=\ref[src];sfreq=2'>+</a>
-<a href='byond://?src=\ref[src];sfreq=10'>+</a><br>
-<br>
-Code:
-<a href='byond://?src=\ref[src];scode=-5'>-</a>
-<a href='byond://?src=\ref[src];scode=-1'>-</a>
-[src.cartridge.radio:code]
-<a href='byond://?src=\ref[src];scode=1'>+</a>
-<a href='byond://?src=\ref[src];scode=5'>+</a><br>"}
-
-				else
-					dat += "ERROR: Unable to access cartridge signaler system.<br>Please check cartridge."
-
-			if (10)		// status display
-
-				dat += "<h4><img src=pda_status.png> Station Status Display Interlink</h4>"
-
-				dat += "\[ <A HREF='?src=\ref[src];statdisp=blank'>Clear</A> \]<BR>"
-				dat += "\[ <A HREF='?src=\ref[src];statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
-				dat += "\[ <A HREF='?src=\ref[src];statdisp=message'>Message</A> \]"
-				dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];statdisp=setmsg1'>[ message1 ? message1 : "(none)"]</A>"
-				dat += "<li> Line 2: <A HREF='?src=\ref[src];statdisp=setmsg2'>[ message2 ? message2 : "(none)"]</A></ul><br>"
-				dat += "\[ Alert: <A HREF='?src=\ref[src];statdisp=alert;alert=default'>None</A> |"
-				dat += " <A HREF='?src=\ref[src];statdisp=alert;alert=redalert'>Red Alert</A> |"
-				dat += " <A HREF='?src=\ref[src];statdisp=alert;alert=lockdown'>Lockdown</A> |"
-				dat += " <A HREF='?src=\ref[src];statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"
-
-
-			if(11)		// Quartermaster Supply Shuttle
-
-				dat += "<h4><img src=pda_crate.png> Supply Record Interlink</h4>"
-
-				dat += "<BR><B>Supply shuttle</B><BR>"
-				dat += "Location: [supply_shuttle_moving ? "Moving to station ([supply_shuttle_timeleft] Mins.)":supply_shuttle_at_station ? "Station":"Dock"]<BR>"
-				dat += "Current approved orders: <BR><ol>"
-				for(var/S in supply_shuttle_shoppinglist)
-					var/datum/supply_order/SO = S
-					dat += "<li>[SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]</li>"
-				dat += "</ol>"
-
-				dat += "Current requests: <BR><ol>"
-				for(var/S in supply_shuttle_requestlist)
-					var/datum/supply_order/SO = S
-					dat += "<li>[SO.object.name] requested by [SO.orderedby]</li>"
-				dat += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
-
-
-			if(12)		// Quartermaster mulebot control
-				var/obj/item/radio/integrated/mule/QC = cartridge.radio
-				if(!QC)
-					dat += "Interlink Error - Please reinsert cartridge."
-					return
-
-				dat += "<h4><img src=pda_mule.png> M.U.L.E. bot Interlink V0.8</h4>"
-
-				if(!QC.active)
-					// list of bots
-					if(!QC.botlist || (QC.botlist && QC.botlist.len==0))
-						dat += "No bots found.<BR>"
-
-					else
-						for(var/obj/machinery/bot/mulebot/B in QC.botlist)
-							dat += "<A href='byond://?src=\ref[QC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
-
-
-
-					dat += "<BR><A href='byond://?src=\ref[QC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
-
-				else	// bot selected, control it
-
-
-					dat += "<B>[QC.active]</B><BR> Status: (<A href='byond://?src=\ref[QC];op=control;bot=\ref[QC.active]'><img src=pda_refresh.png><i>refresh</i></A>)<BR>"
-
-					if(!QC.botstatus)
-						dat += "Waiting for response...<BR>"
-					else
-
-						dat += "Location: [QC.botstatus["loca"] ]<BR>"
-						dat += "Mode: "
-
-						switch(QC.botstatus["mode"])
-							if(0)
-								dat += "Ready"
-							if(1)
-								dat += "Loading/Unloading"
-							if(2)
-								dat += "Navigating to Delivery Location"
-							if(3)
-								dat += "Navigating to Home"
-							if(4)
-								dat += "Waiting for clear path"
-							if(5,6)
-								dat += "Calculating navigation path"
-							if(7)
-								dat += "Unable to locate destination"
-						var/obj/crate/C = QC.botstatus["load"]
-						dat += "<BR>Current Load: [ !C ? "<i>none</i>" : "[C.name] (<A href='byond://?src=\ref[QC];op=unload'><i>unload</i></A>)" ]<BR>"
-						dat += "Destination: [!QC.botstatus["dest"] ? "<i>none</i>" : QC.botstatus["dest"] ] (<A href='byond://?src=\ref[QC];op=setdest'><i>set</i></A>)<BR>"
-						dat += "Power: [QC.botstatus["powr"]]%<BR>"
-						dat += "Home: [!QC.botstatus["home"] ? "<i>none</i>" : QC.botstatus["home"] ]<BR>"
-						dat += "Auto Return Home: [QC.botstatus["retn"] ? "<B>On</B> <A href='byond://?src=\ref[QC];op=retoff'>Off</A>" : "(<A href='byond://?src=\ref[QC];op=reton'><i>On</i></A>) <B>Off</B>"]<BR>"
-						dat += "Auto Pickup Crate: [QC.botstatus["pick"] ? "<B>On</B> <A href='byond://?src=\ref[QC];op=pickoff'>Off</A>" : "(<A href='byond://?src=\ref[QC];op=pickon'><i>On</i></A>) <B>Off</B>"]<BR><BR>"
-
-						dat += "\[<A href='byond://?src=\ref[QC];op=stop'>Stop</A>\] "
-						dat += "\[<A href='byond://?src=\ref[QC];op=go'>Proceed</A>\] "
-						dat += "\[<A href='byond://?src=\ref[QC];op=home'>Return Home</A>\]<BR>"
-						dat += "<HR><A href='byond://?src=\ref[QC];op=botlist'><img src=pda_back.png>Return to bot list</A>"
-
-			if(13)		// Security Bot control
-				var/obj/item/radio/integrated/beepsky/SC = cartridge.radio
-				if(!SC)
-					dat += "Interlink Error - Please reinsert cartridge."
-					return
-
-				dat += "<h4><img src=pda_cuffs.png> Securitron Interlink</h4>"
-
-				if(!SC.active)
-					// list of bots
-					if(!SC.botlist || (SC.botlist && SC.botlist.len==0))
-						dat += "No bots found.<BR>"
-
-					else
-						for(var/obj/machinery/bot/secbot/B in SC.botlist)
-							dat += "<A href='byond://?src=\ref[SC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
-
-
-
-					dat += "<BR><A href='byond://?src=\ref[SC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
-
-				else	// bot selected, control it
-
-
-					dat += "<B>[SC.active]</B><BR> Status: (<A href='byond://?src=\ref[SC];op=control;bot=\ref[SC.active]'><img src=pda_refresh.png><i>refresh</i></A>)<BR>"
-
-					if(!SC.botstatus)
-						dat += "Waiting for response...<BR>"
-					else
-
-						dat += "Location: [SC.botstatus["loca"] ]<BR>"
-						dat += "Mode: "
-
-						switch(SC.botstatus["mode"])
-							if(0)
-								dat += "Ready"
-							if(1)
-								dat += "Apprehending target"
-							if(2,3)
-								dat += "Arresting target"
-							if(4)
-								dat += "Starting patrol"
-							if(5)
-								dat += "On patrol"
-							if(6)
-								dat += "Responding to summons"
-
-						dat += "<BR>\[<A href='byond://?src=\ref[SC];op=stop'>Stop Patrol</A>\] "
-						dat += "\[<A href='byond://?src=\ref[SC];op=go'>Start Patrol</A>\] "
-						dat += "\[<A href='byond://?src=\ref[SC];op=summon'>Summon Bot</A>\]<BR>"
-						dat += "<HR><A href='byond://?src=\ref[SC];op=botlist'><img src=pda_back.png>Return to bot list</A>"
 
 	dat += "</body></html>"
 	user << browse(dat, "window=pda")
@@ -752,32 +380,25 @@ Code:
 					I.loc = src
 					src.id = I
 
+
 		if (href_list["mm"])
-			src.mode = 0
+			src.mode = "main"
 
-		else if (href_list["cm"])
-			src.mode = 1
+		if (href_list["cart"])
+			cartridge.mode = href_list["cart"]
+			cartridge.unlock()
 
-		else if (href_list["am"])
-			src.mode = 3
+		else if (href_list["atmos"])
+			src.mode = "atmos"
 
 		else if (href_list["note"])
-			src.mode = 5
+			src.mode = "notes"
 
 		else if (href_list["mess"])
-			src.mode = 7
+			src.mode = "messenger"
 
-		else if (href_list["sd"])
-			src.mode = 10
-
-		else if (href_list["suppshut"])
-			src.mode = 11
-
-		else if (href_list["mulectrl"])
-			src.mode = 12
-
-		else if (href_list["secbot"])
-			mode = 13
+		else if (href_list["pback"])
+			src.tmode = !src.tmode
 
 		else if (href_list["flight"])
 			src.fon = (!src.fon)
@@ -854,59 +475,13 @@ Code:
 
 
 		else if (href_list["refresh"])
-			src.updateUsrDialog()
+			if (mode == "cart")
+				cartridge.unlock()
+			else src.updateUsrDialog()
 
 		else if (href_list["close"])
 			usr << browse(null, "window=pda")
 			usr.machine = null
-
-		else if (href_list["d_rec"])
-			var/datum/data/record/R = locate(href_list["d_rec"])
-			var/datum/data/record/M = locate(href_list["d_rec"])
-			var/datum/data/record/S = locate(href_list["d_rec"])
-
-			if (data_core.general.Find(R))
-				for (var/datum/data/record/E in data_core.medical)
-					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
-						M = E
-						break
-
-				for (var/datum/data/record/E in data_core.security)
-					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
-						S = E
-						break
-
-				src.active1 = R
-				src.active2 = M
-				src.active3 = S
-
-			if (src.mode == 4)
-				src.mmode = 1
-			else
-				src.smode = 1
-
-		else if (href_list["pback"])
-			if (src.mode == 4)
-				src.mmode = 0
-			if (src.mode == 7)
-				src.tmode = !src.tmode
-			else
-				src.smode = 0
-
-		else if (href_list["em"] && !isnull(src.cartridge) && src.cartridge.access_engine)
-			src.mode = 2
-
-		else if (href_list["mr"] && !isnull(src.cartridge) && src.cartridge.access_medical)
-			src.mode = 4
-
-		else if (href_list["sr"] && !isnull(src.cartridge) && src.cartridge.access_security)
-			src.mode = 6
-
-		else if (href_list["jl"] && !isnull(src.cartridge) && src.cartridge.access_janitor)
-			src.mode = 8
-
-		else if ((href_list["sigmode"]) && (!isnull(src.cartridge)) && (istype(src.cartridge, /obj/item/weapon/cartridge/signal)))
-			src.mode = 9
 
 		else if (href_list["set_scanmode"])
 			var/smode = (text2num(href_list["set_scanmode"]))
@@ -989,8 +564,8 @@ Code:
 
 			src.cartridge.loc = T
 			src.scanmode = 0
-			src.mmode = 0
-			src.smode = 0
+			cartridge.mmode = 0
+			cartridge.smode = 0
 			if (src.cartridge.radio)
 				src.cartridge.radio.hostpda = null
 			src.cartridge = null
@@ -1020,43 +595,6 @@ Code:
 			playsound(src.loc, 'bikehorn.ogg', 50, 1)
 			src.last_honk = world.time
 
-		//Toxins PDA signaler stuff
-		else if ((href_list["ssend"]) && (istype(src.cartridge,/obj/item/weapon/cartridge/signal)))
-			for(var/obj/item/assembly/r_i_ptank/R in world) //Bomblist stuff
-				if((R.part1.code == src.cartridge.radio:code) && (R.part1.frequency == src.cartridge.radio:frequency))
-					bombers += "[key_name(usr)] has activated a radio bomb (Freq: [format_frequency(src.cartridge.radio:frequency)], Code: [src.cartridge.radio:code]). Temp = [R.part3.air_contents.temperature-T0C]."
-			spawn( 0 )
-				src.cartridge.radio:send_signal("ACTIVATE")
-				return
-
-		else if ((href_list["sfreq"]) && (istype(src.cartridge,/obj/item/weapon/cartridge/signal)))
-			var/new_frequency = sanitize_frequency(src.cartridge.radio:frequency + text2num(href_list["sfreq"]))
-			src.cartridge.radio:set_frequency(new_frequency)
-
-		else if ((href_list["scode"]) && (istype(src.cartridge,/obj/item/weapon/cartridge/signal)))
-			src.cartridge.radio:code += text2num(href_list["scode"])
-			src.cartridge.radio:code = round(src.cartridge.radio:code)
-			src.cartridge.radio:code = min(100, src.cartridge.radio:code)
-			src.cartridge.radio:code = max(1, src.cartridge.radio:code)
-
-		else if (href_list["statdisp"] && cartridge && cartridge.access_status_display)
-
-			switch(href_list["statdisp"])
-				if("message")
-					post_status("message", message1, message2)
-				if("alert")
-					post_status("alert", href_list["alert"])
-
-				if("setmsg1")
-					message1 = input("Line 1", "Enter Message Text", message1) as text|null
-					src.updateSelfDialog()
-				if("setmsg2")
-					message2 = input("Line 2", "Enter Message Text", message2) as text|null
-					src.updateSelfDialog()
-				else
-					post_status(href_list["statdisp"])
-
-
 		if (src.mode == 7 || src.tmode == 1)
 			src.overlays = null
 
@@ -1069,25 +607,7 @@ Code:
 				src.attack_self(M)
 
 // access to status display signals
-/obj/item/device/pda/proc/post_status(var/command, var/data1, var/data2)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency("1435")
-
-	if(!frequency) return
-
-	var/datum/signal/status_signal = new
-	status_signal.source = src
-	status_signal.transmission_method = 1
-	status_signal.data["command"] = command
-
-	switch(command)
-		if("message")
-			status_signal.data["msg1"] = data1
-			status_signal.data["msg2"] = data2
-		if("alert")
-			status_signal.data["picture_state"] = data1
-
-	frequency.post_signal(src, status_signal)
 
 
 /obj/item/device/pda/attackby(obj/item/weapon/C as obj, mob/user as mob)

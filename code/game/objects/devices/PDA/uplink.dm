@@ -56,7 +56,7 @@
 
 	src.orignote = src.hostpda.note
 	src.active = 1
-	src.hostpda.mode = 5 //Switch right to the notes program
+	src.hostpda.mode = "notes" //Switch right to the notes program
 
 	src.generate_menu()
 	src.print_to_host(src.menu_message)

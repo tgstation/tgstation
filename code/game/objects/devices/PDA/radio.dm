@@ -5,7 +5,7 @@
 	icon_state = "power_mod"
 	var/obj/item/device/pda/hostpda = null
 
-//	var/active = 0 //Are we currently active??
+	var/on = 0 //Are we currently active??
 	var/menu_message = ""
 
 	New()
@@ -34,11 +34,11 @@
 	proc/print_to_host(var/text)
 		if (isnull(src.hostpda))
 			return
-		src.hostpda.rad = text
+		src.hostpda.cart = text
 
 		for (var/mob/M in viewers(1, src.hostpda.loc))
 			if (M.client && M.machine == src.hostpda)
-				src.hostpda.attack_self(M)
+				src.hostpda.cartridge.unlock()
 
 		return
 
@@ -83,9 +83,6 @@
 
 //		if (istype(P)) P.updateSelfDialog()
 
-
-
-
 	Topic(href, href_list)
 		..()
 		var/obj/item/device/pda/PDA = src.hostpda
@@ -111,7 +108,7 @@
 			if("summon")
 				post_signal(control_freq, "command", "summon", "active", active, "target", get_turf(PDA) )
 				post_signal(control_freq, "command", "bot_status", "active", active)
-		PDA.updateSelfDialog()
+		PDA.cartridge.unlock()
 
 /obj/item/radio/integrated/mule
 	var/list/botlist = null		// list of bots
@@ -165,9 +162,6 @@
 
 //		if(istype(P)) P.updateSelfDialog()
 
-
-
-
 	Topic(href, href_list)
 		..()
 		var/obj/item/device/pda/PDA = src.hostpda
@@ -215,7 +209,7 @@
 			if("stop", "go", "home")
 				post_signal(control_freq, cmd, href_list["op"])
 				post_signal(control_freq, cmd, "bot_status")
-		PDA.updateSelfDialog()
+		PDA.cartridge.unlock()
 
 
 
