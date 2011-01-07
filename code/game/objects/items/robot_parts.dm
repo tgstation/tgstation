@@ -73,6 +73,7 @@
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/stack/sheet/metal))
 		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
+		B.loc = get_turf(src)
 		user << "You armed the robot frame"
 		W:use(1)
 		if (user.get_inactive_hand()==src)
