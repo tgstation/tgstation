@@ -706,6 +706,10 @@ proc/process_teleport_locs()
 	name = "Port Solar Array"
 	icon_state = "panelsP"
 
+/area/quartermaster
+	name = "Quartermasters"
+	icon_state = "quart"
+
 /area/quartermaster/office
 	name = "Cargo Office"
 	icon_state = "quartoffice"
@@ -714,13 +718,17 @@ proc/process_teleport_locs()
 	name = "Cargo Bay"
 	icon_state = "quartstorage"
 
-/area/quartermaster/
-	name = "Quartermasters"
-	icon_state = "quart"
-
 /area/quartermaster/qm
 	name = "Quartermaster's Office"
 	icon_state = "quart"
+
+/area/quartermaster/miningdock
+	name = "Mining Dock"
+	icon_state = "yellow"
+
+/area/quartermaster/mechbay
+	name = "Mech Bay"
+	icon_state = "yellow"
 
 /area/janitor/
 	name = "Janitors Closet"
