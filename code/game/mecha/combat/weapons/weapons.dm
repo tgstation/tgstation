@@ -49,14 +49,14 @@
 
 	fire(target)
 		if(!fire_checks(target) || missiles <=0) return
+		weapon_ready = 0
 		var/obj/item/missile/M = new /obj/item/missile(chassis.loc)
 		M.primed = 1
 		M.throw_at(target, missile_range, missile_speed)
-		weapon_ready = 0
 		missiles--
 		spawn(weapon_cooldown)
 			weapon_ready = 1
-		chassis.log_message("Fired from [src.name], targeting [target].",1)
+		chassis.log_message("Fired from [src.name], targeting [target].")
 		return
 
 	proc/rearm()
@@ -103,9 +103,9 @@
 
 	fire(target)
 		if(!fire_checks(target) || missiles <=0) return
+		weapon_ready = 0
 		var/obj/item/weapon/flashbang/F = new /obj/item/weapon/flashbang(chassis.loc)
 		F.throw_at(target, missile_range, missile_speed)
-		weapon_ready = 0
 		missiles--
 		spawn(det_time)
 			F.prime()
@@ -128,13 +128,12 @@
 			return
 		if (targloc == curloc)
 			return
-
+		weapon_ready = 0
 		playsound(chassis, 'Laser.ogg', 50, 1)
 		var/obj/beam/a_laser/A = new /obj/beam/a_laser(curloc)
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
-		weapon_ready = 0
 		chassis.cell.use(energy_drain)
 		spawn()
 			A.process()
@@ -148,7 +147,6 @@
 	weapon_cooldown = 50
 	name = "eZ-13 mk2 Heavy pulse rifle"
 	energy_drain = 60
-	var/num_penetrations = 2
 
 	fire(target)
 		if(!fire_checks(target)) return
@@ -162,7 +160,6 @@
 
 		playsound(chassis, 'marauder.ogg', 50, 1)
 		var/obj/beam/a_laser/A = new /obj/beam/a_laser/pulse_laser(curloc)
-		A.life = num_penetrations
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -206,7 +203,92 @@
 		chassis.log_message("Fired from [src.name], targeting [target].")
 		return
 
+/datum/mecha_weapon/missile_rack/banana_mortar
+	name = "Banana Mortar"
+	missiles = 15
+	missile_speed = 1.5
+	missile_energy_cost = 100
+	weapon_cooldown = 20
 
+	fire(target)
+		if(!fire_checks(target) || missiles <=0) return
+		weapon_ready = 0
+		var/obj/item/weapon/bananapeel/B = new /obj/item/weapon/bananapeel(chassis.loc)
+		playsound(chassis, 'bikehorn.ogg', 60, 1)
+		B.throw_at(target, missile_range, missile_speed)
+		missiles--
+		spawn(weapon_cooldown)
+			weapon_ready = 1
+		chassis.log_message("Bananed from [src.name], targeting [target]. HONK!")
+		return
+
+
+/datum/mecha_weapon/missile_rack/mousetrap_mortar
+	name = "Mousetrap Mortar"
+	missiles = 15
+	missile_speed = 1.5
+	missile_energy_cost = 100
+	weapon_cooldown = 10
+
+	fire(target)
+		if(!fire_checks(target) || missiles <=0) return
+		weapon_ready = 0
+		var/obj/item/weapon/mousetrap/M = new /obj/item/weapon/mousetrap(chassis.loc)
+		M.armed = 1
+		playsound(chassis, 'bikehorn.ogg', 60, 1)
+		M.throw_at(target, missile_range, missile_speed)
+		missiles--
+		spawn(weapon_cooldown)
+			weapon_ready = 1
+		chassis.log_message("Launched a mouse-trap from [src.name], targeting [target]. HONK!")
+		return
+
+
+/datum/mecha_weapon/honker
+	weapon_cooldown = 10
+	name = "HoNkER BlAsT 5000"
+	energy_drain = 200
+	weapon_cooldown = 150
+
+	fire(target)
+		if(!chassis)
+			return 0
+		if(energy_drain && chassis.cell.charge < energy_drain)
+			return 0
+		if(!weapon_ready)
+			return 0
+		weapon_ready = 0
+		playsound(chassis, 'AirHorn.ogg', 100, 1)
+		chassis.occupant_message("<font color='red' size='5'>HONK</font>")
+		for(var/mob/living/carbon/M in orange(10, chassis))
+			M << "<font color='red' size='7'>HONK</font>"
+			M.sleeping = 0
+			if(M.stuttering)
+				M.stuttering = 1
+			M.stuttering += 10
+			M.ear_deaf += 60
+			M.weakened = 3
+			if(prob(70))
+				M.stunned = 10
+				M.paralysis += 4
+			else
+				M.make_jittery(10)
+			/* //else the mousetraps are useless
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if(isobj(H.shoes))
+					var/thingy = H.shoes
+					H.drop_from_slot(H.shoes)
+					walk_away(thingy,chassis,15,2)
+					spawn(20)
+						if(thingy)
+							walk(thingy,0)
+			*/
+		chassis.cell.use(energy_drain)
+		spawn(weapon_cooldown)
+			weapon_ready = 1
+		chassis.log_message("Honked from [src.name]. HONK!")
+		return
 
 
 /*

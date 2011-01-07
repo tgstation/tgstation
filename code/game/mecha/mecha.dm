@@ -39,7 +39,6 @@
 	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
 	var/internal_damage = 0 //contains bitflags
 
-
 	var/list/operation_req_access = list(access_engine)//required access level for mecha operation
 	var/list/internals_req_access = list(access_engine)//required access level to open cell compartment
 
@@ -77,15 +76,24 @@
 	..()
 	return
 
+///client/var/mech_click
+
 /client/Click(object,location,control,params)
 	..()
 	var/mob/M = src.mob
 	if(M && istype(M.loc, /obj/mecha))
+/*
+		if(mech_click == world.time) return
+		mech_click = world.time
+*/
 		if(!location) return
 		if(M.stat>0) return
 		if(!istype(object,/atom)) return
 		var/obj/mecha/Mech = M.loc
-		Mech.click_action(object)
+//		sleep(-1)
+		spawn()
+			Mech.click_action(object)
+
 
 
 /obj/mecha/proc/click_action(atom/target)
@@ -176,13 +184,17 @@
 
 /obj/mecha/Bump(var/atom/obstacle)
 //	src.inertia_dir = null
-	if(src.occupant)
+	if(istype(obstacle, /obj))
+		var/obj/O = obstacle
 		if(istype(obstacle , /obj/machinery/door))
-			var/obj/machinery/door/D = obstacle
-			D.Bumped(src.occupant)
-			return
+			if(src.occupant)
+				O.Bumped(src.occupant)
+		else if(!O.anchored)
+			step(obstacle,src.dir)
 //		else
 //			obstacle.Bumped(src)
+	else if(istype(obstacle, /mob))
+		step(obstacle,src.dir)
 	return
 
 
@@ -423,6 +435,7 @@
 /////////////////////////
 ////////  Verbs  ////////
 /////////////////////////
+
 
 /obj/mecha/verb/connect_to_port()
 	set name = "Connect to port"
@@ -678,7 +691,7 @@
 			return
 		if (src.internal_damage & MECHA_INT_TANK_BREACH)
 			src.internal_damage &= ~MECHA_INT_TANK_BREACH
-			user << "\blue You seal the breached gas tank."
+			user << "\blue You repair the damaged gas tank."
 			W:use_fuel(1)
 		if(src.health<initial(src.health))
 			user << "\blue You repair some damage to [src.name]."
@@ -705,7 +718,7 @@
 
 /obj/mecha/proc/get_stats_html()
 	var/output = {"<html>
-						<head><title>[src.name] data</title><meta HTTP-EQUIV='Refresh' content='10'></head>
+						<head><title>[src.name] data</title></head>
 						<body style="color: #00ff00; background: #000000; font: 13px 'Courier', monospace;">
 						[src.get_stats_part()]
 						<hr>
@@ -722,7 +735,7 @@
 						[internal_damage&MECHA_INT_CONTROL_LOST?"<font color='red'><b>COORDINATION SYSTEM CALIBRATION FAILURE</b></font> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a><br>":null]
 						<b>Integrity: </b> [health/initial(health)*100]%<br>
 						<b>Powercell charge: </b>[cell.charge/cell.maxcharge*100]%<br>
-						<b>Airtank pressure: </b>[src.return_pressure()]<br>
+						<b>Airtank pressure: </b>[src.return_pressure()]kPa<br>
 						<b>Internal temperature: </b> [src.air_contents.temperature]&deg;K|[src.air_contents.temperature - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
 					"}

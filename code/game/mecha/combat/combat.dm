@@ -43,7 +43,7 @@
 /obj/mecha/combat/melee_action(target)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = pick(oview(1,src))
-	if(!melee_can_hit || (!istype(target, /obj) && !istype(target, /mob) && !istype(target, /turf))) return
+	if(!melee_can_hit || !istype(target, /atom)) return
 	if(istype(target, /mob))
 		var/mob/M = target
 		if(src.occupant.a_intent == "hurt")
@@ -212,6 +212,17 @@
 				src.occupant_message("<font color='red'>The [destr_weapon] is destroyed!</font>")
 				src.log_append_to_last("[destr_weapon] is destoyed.",1)
 	return
+
+/obj/mecha/combat/get_stats_part()
+	var/output = ..()
+	output += "<b>Weapon systems:</b><div style=\"margin-left: 15px;\">"
+	if(weapons.len)
+		for(var/datum/mecha_weapon/W in weapons)
+			output += "[selected_weapon==W?"<b>":"<a href='?src=\ref[src];select_weapon=\ref[W]'>"][W.get_weapon_info()][selected_weapon==W?"</b>":"</a>"]<br>"
+	else
+		output += "None"
+	output += "</div>"
+	return output
 
 
 /* //the garbage collector should handle this

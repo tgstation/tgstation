@@ -26,11 +26,11 @@
 	if(overload)
 		overload = 0
 		step_in = initial(step_in)
-		src.occupant << "\blue You disable leg actuators overload."
+		src.occupant_message("<font color='blue'>You disable leg actuators overload.</font>")
 	else
 		overload = 1
 		step_in = min(1, round(step_in/2))
-		src.occupant << "\red You enable leg actuators overload."
+		src.occupant_message("<font color='red'> You enable leg actuators overload.</font>")
 	return
 
 
@@ -43,19 +43,12 @@
 		if(health < initial(health) - initial(health)/3)
 			overload = 0
 			step_in = initial(step_in)
-			src.occupant << "\red Leg actuators damage threshold exceded. Disabling overload."
+			src.occupant_message("<font color='red'>Leg actuators damage threshold exceded. Disabling overload.</font>")
 	return
 
 
 /obj/mecha/combat/gygax/get_stats_part()
 	var/output = ..()
-	output += "<b>Weapon systems:</b><div style=\"margin-left: 15px;\">"
-	if(weapons.len)
-		for(var/datum/mecha_weapon/W in weapons)
-			output += "[selected_weapon==W?"<b>":"<a href='?src=\ref[src];select_weapon=\ref[W]'>"][W.get_weapon_info()][selected_weapon==W?"</b>":"</a>"]<br>"
-	else
-		output += "None"
-	output += "</div>"
 	output += "<b>Leg actuators overload: [overload?"on":"off"]</b>"
 	return output
 
@@ -69,5 +62,4 @@
 	..()
 	if (href_list["toggle_leg_overload"])
 		src.overload()
-		return
 	return

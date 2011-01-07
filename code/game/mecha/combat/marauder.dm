@@ -28,7 +28,7 @@
 	if(!can_move)
 		return 0
 	if(connected_port)
-		src.occupant << "Unable to move while connected to the air system port"
+		src.occupant_message("Unable to move while connected to the air system port")
 		return 0
 	if(!thrusters && src.pr_inertial_movement.active())
 		return 0
@@ -83,13 +83,6 @@
 
 /obj/mecha/combat/marauder/get_stats_part()
 	var/output = ..()
-	output += "<b>Weapon systems:</b><div style=\"margin-left: 15px;\">"
-	if(weapons.len)
-		for(var/datum/mecha_weapon/W in weapons)
-			output += "[selected_weapon==W?"<b>":"<a href='?src=\ref[src];select_weapon=\ref[W]'>"][W.get_weapon_info()][selected_weapon==W?"</b>":"</a>"]<br>"
-	else
-		output += "None"
-	output += "</div>"
 	output += {"<b>Smoke:</b> [smoke]
 					<br>
 					<b>Thrusters:</b> [thrusters?"on":"off"]
@@ -108,11 +101,6 @@
 	..()
 	if (href_list["toggle_thrusters"])
 		src.toggle_thrusters()
-		return
 	if (href_list["smoke"])
 		src.smoke()
-		return
-	if (href_list["rearm_srm"])
-		var/datum/mecha_weapon/missile_rack/MR = weapons[2]
-		MR.rearm()
 	return
