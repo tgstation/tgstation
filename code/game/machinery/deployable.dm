@@ -53,22 +53,20 @@ for reference:
 /obj/machinery/depolyable
 	name = "deployable"
 	desc = "deployable"
-	icon = 'deployable.dmi'
-	layer = 5.0
-//	req_access = list(access_security)
+	icon = 'objects.dmi'
+	req_access = list(access_security)//I'm changing this until these are properly tested./N
 
 /obj/machinery/deployable/barrier
 	name = "deployable barrier"
 	desc = "A deployable barrier. Swipe your ID card to lock/unlock it."
-	icon = 'deployable.dmi'
-	layer = 5.0
+	icon = 'objects.dmi'
 	anchored = 0.0
 	density = 1.0
 	icon_state = "barrier0"
 	var/health = 100.0
 	var/maxhealth = 100.0
 	var/locked = 0.0
-	req_access = list(access_maint_tunnels)
+//	req_access = list(access_maint_tunnels)
 
 	New()
 		..()
@@ -123,18 +121,28 @@ for reference:
 			src.explode()
 		return
 
-	bullet_act(flag, A as obj)
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
+		if(air_group || (height==0))
+			return 1
+		if (mover.flags & 2)
+			return 1
+		else
+			return 0
+
+/*	bullet_act(flag, A as obj)
 		switch(flag)
 			if (PROJECTILE_BULLET)
 				src.health -= 20
-			//if (PROJECTILE_WEAKBULLET || PROJECTILE_BEANBAG) //Detective's revolver fires marshmallows
-			//	src.health -= 2
+			if (PROJECTILE_WEAKBULLET) //Detective's revolver fires marshmallows
+				src.health -= 2
 			if (PROJECTILE_LASER)
 				src.health -= 20
 			if (PROJECTILE_PULSE)
 				src.health -=50
 		if (src.health <= 0)
 			src.explode()
+These should not block bullets/N */
+
 
 	proc/explode()
 
