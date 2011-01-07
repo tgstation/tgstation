@@ -1,3 +1,15 @@
+/obj/item/clothing/head/rabbitears
+	name = "rabbitears"
+	desc = "The ears from a bunny"
+	icon_state = "bunny"
+	flags = FPRINT | TABLEPASS | HEADSPACE
+
+/obj/item/clothing/under/blackskirt
+	name = "Black skirt"
+	desc = "A black skirt"
+	icon_state = "blackskirt"
+	color = "blackskirt"
+
 /obj/item/clothing/shoes/red
 	name = "red shoes"
 	icon_state = "red"

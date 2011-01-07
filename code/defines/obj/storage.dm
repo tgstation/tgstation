@@ -22,26 +22,38 @@
 	flags = 259.0
 
 /obj/item/weapon/storage/pill_bottle
-	name = "Pill bottle"
+	name = "pill bottle"
 	icon_state = "pill_canister"
 	icon = 'chemical.dmi'
 	item_state = "contsolid"
 	can_hold = list("/obj/item/weapon/reagent_containers/pill")
 
 /obj/item/weapon/storage/box
-	name = "Box"
+	name = "box"
 	icon_state = "box"
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/pillbottlebox
-	name = "Pill Bottles"
+	name = "pill bottles"
 	icon_state = "box"
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/blankbox
-	name = "Blank Shells"
+	name = "blank shells"
 	icon_state = "box"
 	item_state = "syringe_kit"
+
+/obj/item/weapon/storage/backpack/clown
+	name = "Giggles Von Honkerton"
+	icon_state = "clownpack"
+
+/obj/item/weapon/storage/backpack/medic
+	name = "medic's backpack"
+	icon_state = "medicalpack"
+
+/obj/item/weapon/storage/backpack/security
+	name = "security backpack"
+	icon_state = "securitypack"
 
 /obj/item/weapon/storage/briefcase
 	name = "briefcase"
@@ -53,7 +65,7 @@
 	w_class = 4.0
 
 /obj/item/weapon/storage/disk_kit
-	name = "Data Disks"
+	name = "data disks"
 	icon_state = "id"
 	item_state = "syringe_kit"
 
