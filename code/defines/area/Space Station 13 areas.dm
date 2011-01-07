@@ -482,11 +482,11 @@ proc/process_teleport_locs()
 	icon_state = "courtroom"
 
 /area/crew_quarters/heads
-	name = "Head of Staff's Quarters"
+	name = "Head of Personnel's Quarters"
 	icon_state = "head_quarters"
 
 /area/crew_quarters/hor
-	name = "Head of Research's Office"
+	name = "Research Director's Office"
 	icon_state = "head_quarters"
 
 /area/crew_quarters/chief

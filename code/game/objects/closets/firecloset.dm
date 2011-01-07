@@ -1,21 +1,14 @@
 /obj/closet/firecloset/New()
 	..()
-
+	sleep(2)
 	if (prob (1))
 		del(src)
 		return
 
-	switch (pickweight(list("extinguisher" = 40, "toolbox" = 40, "nothing" = 20)))
-		if ("extinguisher")
-			new /obj/item/weapon/extinguisher(src)
-		if ("toolbox")
-			new /obj/item/weapon/storage/toolbox/emergency(src)
+	new /obj/item/weapon/extinguisher(src)
 
-	if (prob (30))
-		new /obj/item/clothing/mask/breath(src)
+	new /obj/item/clothing/mask/gas(src)
 
-	if (prob (30))
-		new /obj/item/weapon/tank/emergency_oxygen(src)
+	new /obj/item/weapon/tank/emergency_oxygen(src)
 
-	if (prob (10))
-		new /obj/item/clothing/suit/fire/firefighter(src)
+	new /obj/item/clothing/suit/fire/firefighter(src)
