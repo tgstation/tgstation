@@ -10,7 +10,7 @@
 	icon_state = "captain"
 	music = null
 
-/area/mine/lobby //DO NOT TURN THE SD_LIGHTING STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+/area/mine/lobby
 	name = "Mining station"
 	requires_power = 0
 	luminosity = 1
@@ -31,6 +31,7 @@
 	var/mineralAmt = 0
 
 /turf/simulated/asteroid/New()
+	..()
 	oxygen = 0.01
 	nitrogen = 0.01
 
@@ -143,6 +144,7 @@
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 
 /turf/simulated/floor/airless/asteroid/New()
+	..()
 	if (prob(50))
 		seedName = pick(list("1","2","3","4"))
 		seedAmt = rand(1,4)
@@ -198,6 +200,24 @@
 	icon = 'Mining.dmi'
 	icon_state = "ore"
 
+/obj/item/weapon/ore/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/satchel))
+		var/obj/item/weapon/satchel/S = W
+		if (S.mode == 1)
+			for (var/obj/item/weapon/ore/O in locate(src.x,src.y,src.z))
+				if (S.contents.len < S.capacity)
+					S.contents += O;
+				else
+					user << "\blue The satchel is full."
+					break
+			user << "\blue You pick up all the ores."
+		else
+			if (S.contents.len < S.capacity)
+				S.contents += src;
+			else
+				user << "\blue The satchel is full."
+	return
+
 /obj/item/weapon/ore/uranium
 	name = "Uranium ore"
 	icon = 'Mining.dmi'
@@ -231,6 +251,67 @@
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
+
+/**********************Ore pile**************************/
+
+/obj/item/weapon/ore_pile
+	name = "Pile of ores"
+	icon = 'Mining.dmi'
+	icon_state = "orepile"
+
+/**********************Satchel**************************/
+
+/obj/item/weapon/satchel
+	icon = 'mining.dmi'
+	icon_state = "satchel"
+	name = "Mining Satchel"
+	var/mode = 0;  //0 = pick one at a time, 1 = pick all on tile
+	var/capacity = 10; //the number of ore pieces it can carry.
+
+/obj/item/weapon/satchel/attack_self(mob/user as mob)
+	for (var/obj/item/weapon/ore/O in contents)
+		contents -= O
+		O.loc = user.loc
+		user << "\blue You empty the satchel."
+	return
+
+/obj/item/weapon/satchel/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/ore))
+		var/obj/item/weapon/ore/O = W
+		src.contents += O;
+	return
+
+/obj/item/weapon/satchel/verb/all_on_tile()
+	mode = 1
+	return
+
+/obj/item/weapon/satchel/verb/one_at_a_time()
+	mode = 0
+	return
+
+/**********************Ore box**************************/
+
+/obj/ore_box
+	icon = 'mining.dmi'
+	icon_state = "orebox"
+	name = "A box of ores"
+	desc = "It's heavy"
+	density = 1
+
+/obj/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/ore))
+		src.contents += W;
+	if (istype(W, /obj/item/weapon/satchel))
+		src.contents += W.contents
+		user << "\blue You empty the satchel into the box."
+	return
+
+/obj/ore_box/attack_hand(obj, mob/user as mob)
+	for (var/obj/item/weapon/ore/O in contents)
+		contents -= O
+		O.loc = src.loc
+	user << "\blue You empty the box"
+	return
 
 /**********************Alien Seeds**************************/
 
@@ -413,23 +494,28 @@
 		if (istype(O,/obj/item/weapon/ore/iron))
 			new /obj/item/stack/sheet/metal(output.loc)
 			del(O)
+			return
 		if (istype(O,/obj/item/weapon/ore/diamond))
 			new /obj/item/stack/sheet/diamond(output.loc)
 			del(O)
+			return
 		if (istype(O,/obj/item/weapon/ore/plasma))
 			new /obj/item/stack/sheet/plasma(output.loc)
 			del(O)
+			return
 		if (istype(O,/obj/item/weapon/ore/gold))
 			new /obj/item/stack/sheet/gold(output.loc)
 			del(O)
+			return
 		if (istype(O,/obj/item/weapon/ore/silver))
 			new /obj/item/stack/sheet/silver(output.loc)
 			del(O)
-		if (istype(O,/obj/item/weapon/ore/uranium))
-			new /obj/item/weapon/ore/uranium(output.loc)
-			del(O)
+			return
+		if (O)
+			O.loc = src.output.loc
+	return
 
-/**********************Mineral processing unit**************************/
+/**********************Mineral stacking unit**************************/
 
 
 /obj/machinery/mineral/stacking_machine
@@ -451,6 +537,14 @@
 		src.output = locate(/obj/machinery/mineral/output, get_step(src, WEST))
 		processing_items.Add(src)
 		return
+	return
+
+/obj/machinery/mineral/stacking_machine/process() //PLACEHOLDER PROC
+	if (src.output && src.input)
+		var/obj/item/O
+		O = locate(/obj/item, input.loc)
+		if (O)
+			O.loc = src.output.loc
 	return
 
 /*
@@ -960,6 +1054,9 @@
 	var/moving = 0;
 	anchored = 1
 	density = 1
+	var/speed = 0
+	var/slowing = 0
+	var/atom/movable/load = null //what it's carrying
 
 /obj/machinery/rail_car/attack_hand(user as mob)
 	if (moving == 0)
@@ -975,53 +1072,156 @@ for (var/client/C)
 	C << "Dela."
 */
 
+/obj/machinery/rail_car/MouseDrop_T(var/atom/movable/C, mob/user)
+
+	if(user.stat)
+		return
+
+	if (!istype(C) || C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
+		return
+
+	if(ismob(C))
+		load(C)
+
+
+/obj/machinery/rail_car/proc/load(var/atom/movable/C)
+
+	if(get_dist(C, src) > 1)
+		return
+	//mode = 1
+
+	C.loc = src.loc
+	sleep(2)
+	C.loc = src
+	load = C
+
+	C.pixel_y += 9
+	if(C.layer < layer)
+		C.layer = layer + 0.1
+	overlays += C
+
+	if(ismob(C))
+		var/mob/M = C
+		if(M.client)
+			M.client.perspective = EYE_PERSPECTIVE
+			M.client.eye = src
+
+	//mode = 0
+	//send_status()
+
+/obj/machinery/rail_car/proc/unload(var/dirn = 0)
+	if(!load)
+		return
+
+	overlays = null
+
+	load.loc = src.loc
+	load.pixel_y -= 9
+	load.layer = initial(load.layer)
+	if(ismob(load))
+		var/mob/M = load
+		if(M.client)
+			M.client.perspective = MOB_PERSPECTIVE
+			M.client.eye = src
+
+
+	if(dirn)
+		step(load, dirn)
+
+	load = null
+
+	// in case non-load items end up in contents, dump every else too
+	// this seems to happen sometimes due to race conditions
+	// with items dropping as mobs are loaded
+
+	for(var/atom/movable/AM in src)
+		AM.loc = src.loc
+		AM.layer = initial(AM.layer)
+		AM.pixel_y = initial(AM.pixel_y)
+		if(ismob(AM))
+			var/mob/M = AM
+			if(M.client)
+				M.client.perspective = MOB_PERSPECTIVE
+				M.client.eye = src
+
+/obj/machinery/rail_car/relaymove(var/mob/user)
+	if(user.stat)
+		return
+	if(load == user)
+		unload(0)
+	return
+
 /obj/machinery/rail_car/process()
 	if (moving == 1)
-		switch (direction)
-			if ("S")
-				for (var/obj/machinery/rail_track/R in locate(src.x,src.y-1,src.z))
-					if (R.dir == 10)
-						direction = "W"
-					if (R.dir == 9)
-						direction = "E"
-					if (R.dir == 2 || R.dir == 1 || R.dir == 10 || R.dir == 9)
-						step(src,get_dir(src,R))
-						break
-					else
-						moving = 0
-			if ("N")
-				for (var/obj/machinery/rail_track/R in locate(src.x,src.y+1,src.z))
-					if (R.dir == 5)
-						direction = "E"
-					if (R.dir == 6)
-						direction = "W"
-					if (R.dir == 5 || R.dir == 1 || R.dir == 6 || R.dir == 2)
-						step(src,get_dir(src,R))
-						break
-					else
-						moving = 0
-			if ("E")
-				for (var/obj/machinery/rail_track/R in locate(src.x+1,src.y,src.z))
-					if (R.dir == 6)
-						direction = "S"
-					if (R.dir == 10)
-						direction = "N"
-					if (R.dir == 4 || R.dir == 8 || R.dir == 10 || R.dir == 6)
-						step(src,get_dir(src,R))
-						break
-					else
-						moving = 0
-			if ("W")
-				for (var/obj/machinery/rail_track/R in locate(src.x-1,src.y,src.z))
-					if (R.dir == 9)
-						direction = "N"
-					if (R.dir == 5)
-						direction = "S"
-					if (R.dir == 8 || R.dir == 9 || R.dir == 5 || R.dir == 4)
-						step(src,get_dir(src,R))
-						break
-					else
-						moving = 0
+		if (slowing == 1)
+			if (speed > 0)
+				speed--;
+				if (speed == 0)
+					slowing = 0
+		else
+			if (speed < 10)
+				speed++;
+		var/i = 0
+		for (i = 0; i < speed; i++)
+			if (moving == 1)
+				switch (direction)
+					if ("S")
+						for (var/obj/machinery/rail_track/R in locate(src.x,src.y-1,src.z))
+							if (R.dir == 10)
+								direction = "W"
+							if (R.dir == 9)
+								direction = "E"
+							if (R.dir == 2 || R.dir == 1 || R.dir == 10 || R.dir == 9)
+								for (var/mob/living/M in locate(src.x,src.y-1,src.z))
+									step(M,get_dir(src,R))
+								step(src,get_dir(src,R))
+								break
+							else
+								moving = 0
+								speed = 0
+					if ("N")
+						for (var/obj/machinery/rail_track/R in locate(src.x,src.y+1,src.z))
+							if (R.dir == 5)
+								direction = "E"
+							if (R.dir == 6)
+								direction = "W"
+							if (R.dir == 5 || R.dir == 1 || R.dir == 6 || R.dir == 2)
+								for (var/mob/living/M in locate(src.x,src.y+1,src.z))
+									step(M,get_dir(src,R))
+								step(src,get_dir(src,R))
+								break
+							else
+								moving = 0
+								speed = 0
+					if ("E")
+						for (var/obj/machinery/rail_track/R in locate(src.x+1,src.y,src.z))
+							if (R.dir == 6)
+								direction = "S"
+							if (R.dir == 10)
+								direction = "N"
+							if (R.dir == 4 || R.dir == 8 || R.dir == 10 || R.dir == 6)
+								for (var/mob/living/M in locate(src.x+1,src.y,src.z))
+									step(M,get_dir(src,R))
+								step(src,get_dir(src,R))
+								break
+							else
+								moving = 0
+								speed = 0
+					if ("W")
+						for (var/obj/machinery/rail_track/R in locate(src.x-1,src.y,src.z))
+							if (R.dir == 9)
+								direction = "N"
+							if (R.dir == 5)
+								direction = "S"
+							if (R.dir == 8 || R.dir == 9 || R.dir == 5 || R.dir == 4)
+								for (var/mob/living/M in locate(src.x-1,src.y,src.z))
+									step(M,get_dir(src,R))
+								step(src,get_dir(src,R))
+								break
+							else
+								moving = 0
+								speed = 0
+				sleep(1)
 	else
 		processing_items.Remove(src)
 		moving = 0
