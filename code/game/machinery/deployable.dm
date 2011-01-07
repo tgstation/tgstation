@@ -57,7 +57,7 @@ for reference:
 	layer = 5.0
 //	req_access = list(access_security)
 
-/obj/machinery/barrier
+/obj/machinery/deployable/barrier
 	name = "deployable barrier"
 	desc = "A deployable barrier. Swipe your ID card to lock/unlock it."
 	icon = 'deployable.dmi'
