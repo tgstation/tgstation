@@ -985,6 +985,17 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 20
 	m_amt = 100
 
+/obj/item/weapon/spellbook
+	name = "Spell Book"
+	icon = 'library.dmi'
+	icon_state ="book"
+	throw_speed = 1
+	throw_range = 5
+	w_class = 1.0
+	flags = FPRINT | TABLEPASS
+	var/uses = 4.0
+	var/temp = null
+
 /obj/item/weapon/staff
 	name = "wizards staff"
 	icon = 'wizard.dmi'

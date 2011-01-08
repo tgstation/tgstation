@@ -3,6 +3,7 @@
 /client/proc/blind(mob/M as mob in oview())
 	set category = "Spells"
 	set name = "Blind"
+	set desc = "This spell temporarly blinds a single person and does not require wizard garb."
 //	if(!usr.casting()) return
 	usr.verbs -= /client/proc/blind
 	spawn(300)
@@ -35,7 +36,7 @@
 /client/proc/magicmissile()
 	set category = "Spells"
 	set name = "Magic missile"
-	set desc="Whom"
+	set desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
 	if(!usr.casting()) return
 
 	usr.say("FORTI GY AMA")
@@ -80,7 +81,7 @@
 
 	set category = "Spells"
 	set name = "Smoke"
-	set desc = "Creates a cloud of smoke"
+	set desc = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
 //	if(!usr.casting()) return
 	usr.verbs -= /client/proc/smokecloud
 	spawn(120)
@@ -105,7 +106,7 @@
 
 	set category = "Spells"
 	set name = "Forcewall"
-	set desc = "Create a forcewall on your location."
+	set desc = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
 
 //	if(!usr.casting()) return
 
@@ -127,7 +128,7 @@
 /client/proc/fireball(mob/T as mob in oview())
 	set category = "Spells"
 	set name = "Fireball"
-	set desc="Fireball target:"
+	set desc = "This spell fires a fireball at a target and does not require wizard garb."
 //	if(!usr.casting()) return
 
 	usr.verbs -= /client/proc/fireball
@@ -162,6 +163,7 @@
 /client/proc/knock()
 	set category = "Spells"
 	set name = "Knock"
+	set desc = "This spell opens nearby doors and does not require wizard garb."
 //	if(!usr.casting()) return
 	usr.verbs -= /client/proc/knock
 	spawn(100)
@@ -180,6 +182,7 @@
 /mob/proc/kill(mob/M as mob in oview(1))
 	set category = "Spells"
 	set name = "Disintegrate"
+	set desc = "This spell instantly kills somebody adjacent to you with the vilest of magick."
 	if(!usr.casting()) return
 	usr.verbs -= /mob/proc/kill
 	spawn(600)
@@ -199,6 +202,7 @@
 /mob/proc/tech()
 	set category = "Spells"
 	set name = "Disable Technology"
+	set desc = "This spell disables all weapons, cameras and most other technology in range."
 	if(!usr.casting()) return
 	usr.verbs -= /mob/proc/tech
 	spawn(400)
@@ -388,7 +392,7 @@
 /client/proc/blink()
 	set category = "Spells"
 	set name = "Blink"
-	set desc="Blink"
+	set desc = "This spell randomly teleports you a short distance."
 	if(!usr.casting()) return
 	var/list/turfs = new/list()
 	for(var/turf/T in orange(6))
@@ -413,7 +417,7 @@
 /mob/proc/teleport()
 	set category = "Spells"
 	set name = "Teleport"
-	set desc="Teleport"
+	set desc = "This spell teleports you to a type of area of your selection."
 	if(!usr.casting()) return
 	var/A
 	usr.verbs -= /mob/proc/teleport
@@ -490,6 +494,7 @@
 /client/proc/jaunt()
 	set category = "Spells"
 	set name = "Ethereal Jaunt"
+	set desc = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
 	if(!usr.casting()) return
 	usr.verbs -= /client/proc/jaunt
 	spawn(300)
@@ -574,6 +579,7 @@
 /client/proc/mutate()
 	set category = "Spells"
 	set name = "Mutate"
+	set desc = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
 	if(!usr.casting()) return
 	usr.verbs -= /client/proc/mutate
 	spawn(400)
@@ -592,66 +598,76 @@
 		if (usr.mutations & 8) usr.mutations &= ~8
 	return
 
-//BODY SWAP
+//BODY SWAP /N
 
 /mob/proc/swap(mob/M as mob in oview())
 	set category = "Spells"
-	set name = "Body Swap"
+	set name = "Mind Transfer"
+	set desc = "This spell allows the user to switch bodies with a target."
 
 	if(M.client && M.mind)
-		if(!M.mind.special_role && (istype(M, /mob/living/carbon/human)))
-			var/mob/living/carbon/human/H = M
-			var/mob/living/carbon/human/U = src
+		if(M.mind.special_role != "Wizard" || "Changeling" || "Cultist")//Wizards, changelings, and cultists are protected.
+			if( (istype(M, /mob/living/carbon/human)) || (istype(M, /mob/living/carbon/monkey)) && M.stat != 2)
+				var/mob/living/carbon/human/H = M //so it does not freak out when looking at the variables.
+				var/mob/living/carbon/human/U = src
 
-			U.whisper("GIN'YU CAPAN")
-			U.verbs -= /mob/proc/swap
-			if(U.mind.special_verbs.len)
-				for(var/V in U.mind.special_verbs)
-					U.verbs -= V
+				U.whisper("GIN'YU CAPAN")
+				U.verbs -= /mob/proc/swap
+				if(U.mind.special_verbs.len)
+					for(var/V in U.mind.special_verbs)
+						U.verbs -= V
 
-			var/mob/dead/observer/G = new /mob/dead/observer(H) //To properly transfer clients so no-one gets kicked off the game.
+				var/mob/dead/observer/G = new /mob/dead/observer(H) //To properly transfer clients so no-one gets kicked off the game.
 
-			H.client.mob = G
-			G.mind = H.mind
+				H.client.mob = G
+				if(H.mind.special_verbs.len)
+					for(var/V in H.mind.special_verbs)
+						H.verbs -= V
+				G.mind = H.mind
 
-			U.client.mob = H
-			H.mind = U.mind
-			if(H.mind.special_verbs.len)
-				var/spell_loss = 1
-				var/probability = 95
-				for(var/V in H.mind.special_verbs)
-					if(spell_loss == 0)
-						H.verbs += V
-					else
-						if(prob(probability))
+				U.client.mob = H
+				H.mind = U.mind
+				if(H.mind.special_verbs.len)
+					var/spell_loss = 1//Can lose only one spell during transfer.
+					var/probability = 95 //To determine the chance of wizard losing their spell.
+					for(var/V in H.mind.special_verbs)
+						if(spell_loss == 0)
 							H.verbs += V
-							probability -= 7
 						else
-							spell_loss = 0
-							H.mind.special_verbs -= V
-							spawn(500)
-								H << "The mind transfer has robbed you of a spell."
+							if(prob(probability))
+								H.verbs += V
+								probability -= 7//Chance of of keeping spells goes down each time a spell is added. Less spells means less chance of losing them.
+							else
+								spell_loss = 0
+								H.mind.special_verbs -= V
+								spawn(500)
+									H << "The mind transfer has robbed you of a spell."
 
+				G.client.mob = U
+				U.mind = G.mind
+				if(U.mind.special_verbs.len)//Basic fix to swap verbs for any mob if needed.
+					for(var/V in U.mind.special_verbs)
+						U.verbs += V
 
-			G.client.mob = U
-			U.mind = G.mind
+				U.mind.current = U
+				H.mind.current = H
+				spawn(500)
+					U << "Something about your body doesn't seem quite right..."
 
-			U.mind.current = U
-			H.mind.current = H
-			spawn(500)
-				U << "Something about your body doesn't seem quite right..."
+				U.paralysis += 20
+				H.paralysis += 20
 
-			U.paralysis += 20
-			H.paralysis += 20
+				spawn(600)
+					H.verbs += /mob/proc/swap
 
-			spawn(600)
-				H.verbs += /mob/proc/swap
-
-			del(G)
+				del(G)
+			else
+				src << "Their mind is not compatible."
+				return
 		else
 			src << "Their mind is resisting your spell."
 			return
 
 	else
-		src << "Their mind is not compatible."
+		src << "They appear to be brain-dead."
 	return

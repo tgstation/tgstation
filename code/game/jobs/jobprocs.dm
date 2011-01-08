@@ -321,6 +321,8 @@
 			src.equip_if_possible(new /obj/item/clothing/belt/suspenders(src), slot_belt)
 			src.verbs += /client/proc/mimespeak
 			src.verbs += /client/proc/mimewall
+			src.mind.special_verbs += /client/proc/mimespeak
+			src.mind.special_verbs += /client/proc/mimewall
 			src.miming = 1
 
 		if ("Station Engineer")

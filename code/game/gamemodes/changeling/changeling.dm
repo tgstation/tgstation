@@ -60,6 +60,7 @@
 
 
 	grant_changeling_powers(changeling.current)
+	changeling.special_role = "Changeling"
 	changelings += changeling
 
 	//OBJECTIVES - Always absorb 5 genomes, plus random traitor objectives.

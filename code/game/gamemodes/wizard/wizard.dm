@@ -165,7 +165,7 @@
 	wizard_mob.equip_if_possible(new /obj/item/weapon/storage/backpack(wizard_mob), wizard_mob.slot_back)
 //	wizard_mob.equip_if_possible(new /obj/item/weapon/scrying_gem(wizard_mob), wizard_mob.slot_l_store) For scrying gem.
 	wizard_mob.equip_if_possible(new /obj/item/weapon/teleportation_scroll(wizard_mob), wizard_mob.slot_r_store)
-	wizard_mob.equip_if_possible(new /obj/item/weapon/SWF_uplink(wizard_mob), wizard_mob.slot_l_hand)
+	wizard_mob.equip_if_possible(new /obj/item/weapon/spellbook(wizard_mob), wizard_mob.slot_r_hand)
 
 	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
 	wizard_mob << "In your pockets you will find two more important, magical artifacts. Use them as needed."
@@ -254,17 +254,136 @@
 	else
 		return ..()
 
+//SPELL BOOK PROCS
 
-/obj/item/weapon/spellbook
-	name = "Spell Book"
-	icon = 'library.dmi'
-	icon_state ="book"
-	throw_speed = 1
-	throw_range = 5
-	w_class = 1.0
-	flags = FPRINT | TABLEPASS
-	//WIP
+/obj/item/weapon/spellbook/attack_self(mob/user as mob)
+	user.machine = src
+	var/dat
+	if (src.temp)
+		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
+	else
+		dat = "<B>The Book of Spells:</B><BR>"
+		dat += "Spells left to memorize: [src.uses]<BR>"
+		dat += "<HR>"
+		dat += "<B>Memorize which spell:</B><BR>"
+		dat += "<I>The number after the spell name is the cooldown time.</I><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=1'>Magic Missile</A> (10)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=2'>Fireball</A> (10)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=3'>Disintegrate</A> (60)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=4'>Disable Technology</A> (60)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=5'>Smoke</A> (10)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=6'>Blind</A> (30)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=7'>Mind Transfer</A> (60)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=8'>Forcewall</A> (10)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=9'>Blink</A> (2)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=10'>Teleport</A> (60)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=11'>Mutate</A> (60)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=12'>Ethereal Jaunt</A> (60)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=13'>Knock</A> (10)<BR>"
+		dat += "<HR>"
+	user << browse(dat, "window=radio")
+	onclose(user, "radio")
+	return
 
+/obj/item/weapon/spellbook/Topic(href, href_list)
+	..()
+	if (usr.stat || usr.restrained())
+		return
+	var/mob/living/carbon/human/H = usr
+	if (!( istype(H, /mob/living/carbon/human)))
+		return 1
+	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
+		usr.machine = src
+		switch(href_list["spell_choice"])
+			if ("1")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /client/proc/magicmissile
+					usr.mind.special_verbs += /client/proc/magicmissile
+					src.temp = "This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage."
+			if ("2")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /client/proc/fireball
+					usr.mind.special_verbs += /client/proc/fireball
+					src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
+			if ("3")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /mob/proc/kill
+					usr.mind.special_verbs += /mob/proc/kill
+					src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
+			if ("4")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /mob/proc/tech
+					usr.mind.special_verbs += /mob/proc/tech
+					src.temp = "This spell disables all weapons, cameras and most other technology in range."
+			if ("5")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /client/proc/smokecloud
+					usr.mind.special_verbs += /client/proc/smokecloud
+					src.temp = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
+			if ("6")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /client/proc/blind
+					usr.mind.special_verbs += /client/proc/blind
+					src.temp = "This spell temporarly blinds a single person and does not require wizard garb."
+			if ("7")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /mob/proc/swap
+					src.temp = "This spell allows the user to switch bodies with a target. Careful to not lose your memory in the process."
+			if ("8")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /client/proc/forcewall
+					usr.mind.special_verbs += /client/proc/forcewall
+					src.temp = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
+			if ("9")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /client/proc/blink
+					usr.mind.special_verbs += /client/proc/blink
+					src.temp = "This spell randomly teleports you a short distance. Useful for evasion or getting into areas if you have patience."
+			if ("10")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /mob/proc/teleport
+					usr.mind.special_verbs += /mob/proc/teleport
+					src.temp = "This spell teleports you to a type of area of your selection. Very useful if you are in danger, but has a decent cooldown, and is unpredictable."
+			if ("11")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /client/proc/mutate
+					usr.mind.special_verbs += /client/proc/mutate
+					src.temp = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
+			if ("12")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /client/proc/jaunt
+					usr.mind.special_verbs += /client/proc/jaunt
+					src.temp = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
+			if ("13")
+				if (src.uses >= 1)
+					src.uses -= 1
+					usr.verbs += /client/proc/knock
+					usr.mind.special_verbs += /client/proc/knock
+					src.temp = "This spell opens nearby doors and does not require wizard garb."
+			else
+				if (href_list["temp"])
+					src.temp = null
+		if (istype(src.loc, /mob))
+			attack_self(src.loc)
+		else
+			for(var/mob/M in viewers(1, src))
+				if (M.client)
+					src.attack_self(M)
+	return
+
+//SWF UPLINK PROCS
 /obj/item/weapon/SWF_uplink/attack_self(mob/user as mob)
 	user.machine = src
 	var/dat
@@ -285,7 +404,7 @@
 			dat += "<A href='byond://?src=\ref[src];spell_emp=1'>Disable Technology</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_smoke=1'>Smoke</A> (10)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_blind=1'>Blind</A> (30)<BR>"
-			dat += "<A href='byond://?src=\ref[src];spell_swap=1'>Body Swap</A> (60)<BR>"
+			dat += "<A href='byond://?src=\ref[src];spell_swap=1'>Mind Transfer</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_forcewall=1'>Forcewall</A> (10)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_blink=1'>Blink</A> (2)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A> (60)<BR>"
