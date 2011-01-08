@@ -703,7 +703,7 @@
 				src.sight &= ~SEE_TURFS
 				src.sight &= ~SEE_MOBS
 				src.sight &= ~SEE_OBJS
-				if (src.mutantrace == "lizard")
+				if (src.mutantrace == "lizard" || src.mutantrace == "metroid")
 					src.see_in_dark = 3
 					src.see_invisible = 1
 				else if (src.druggy) // If drugged~

@@ -2,6 +2,12 @@
 	if(src.mutantrace == "lizard")
 		if(copytext(message, 1, 2) != "*")
 			message = dd_replaceText(message, "s", stutter("ss"))
+	if(src.mutantrace == "metroid" && prob(5))
+		if(copytext(message, 1, 2) != "*")
+			message = "SKR"
+			var/imax = rand(5,20)
+			for(var/i = 0,i<imax,i++)
+				message += "E"
 	if(istype(src.virus, /datum/disease/pierrot_throat))
 		var/list/temp_message = dd_text2list(message, " ")
 		var/list/pick_list = list()
