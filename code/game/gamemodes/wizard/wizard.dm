@@ -54,29 +54,27 @@
 	world << "<B>There is a \red SPACE WIZARD\black on the station. You can't let him achieve his objective!</B>"
 
 /datum/game_mode/wizard/pre_setup()
-	// Can't pick a wizard here, as we don't want him to then become the AI.
-	return 1
-
-/datum/game_mode/wizard/post_setup()
-
+//
 	var/list/possible_wizards = get_possible_wizards()
 
 	if(possible_wizards.len>0)
 		wizard = pick(possible_wizards)
+	else
+		world << "<B>A WIZARD COULD NOT BE SPAWNED FFFFFFUUUUCK</B>"
 
 	if(istype(wizard))
+		wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		wizard.special_role = "wizard"
-		if(wizardstart.len == 0)
-			wizard.current << "<B>\red A starting location for you could not be found, please report this bug!</B>"
-		else
-			var/starting_loc = pick(wizardstart)
-			wizard.current.loc = starting_loc
 
-	for (var/obj/landmark/A in world)
-		if (A.name == "Teleport-Scroll")
-			new /obj/item/weapon/teleportation_scroll(A.loc)
-			del(A)
-			continue
+	if(wizardstart.len == 0)
+		wizard.current << "<B>\red A starting location for you could not be found, please report this bug!</B>"
+	else
+		var/starting_loc = pick(wizardstart)
+		wizard.current.loc = starting_loc
+
+	return 1
+
+/datum/game_mode/wizard/post_setup()
 
 	switch(rand(1,100))
 		if(1 to 30)
@@ -136,103 +134,42 @@
 		send_intercept()
 
 /datum/game_mode/wizard/proc/get_possible_wizards()
-	var/list/candidates = list()
-	for(var/mob/living/carbon/player in world)
-		if (player.client)
+	var/list/candidates = list()//Shamelessly copied from nuke code.
+
+	for(var/mob/new_player/player in world)
+		if((player.client) &&  (player.ready))
 			if(player.be_syndicate)
 				candidates += player.mind
 
 	if(candidates.len < 1)
-		for(var/mob/living/carbon/player in world)
-			if (player.client)
+		for(var/mob/new_player/player in world)
+			if((player.client) && (player.ready))
 				candidates += player.mind
 
-	return candidates
+	if(candidates.len < 1)
+		return null
+	else
+		return candidates
 
 /datum/game_mode/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
 	if (!istype(wizard_mob))
 		return
 	wizard_mob.verbs += /client/proc/jaunt
-	if (wizard_mob.mind.assigned_role == "Clown")
-		wizard_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
-		wizard_mob.mutations &= ~16
+	wizard_mob.mind.special_verbs += /client/proc/jaunt
 
-	var/freq = 1441
-	var/list/freqlist = list()
-	while (freq <= 1489)
-		if (freq < 1451 || freq > 1459)
-			freqlist += freq
-		freq += 2
-		if ((freq % 2) == 0)
-			freq += 1
-	freq = freqlist[rand(1, freqlist.len)]
-	// generate a passcode if the uplink is hidden in a PDA
-	var/pda_pass = "[rand(100,999)] [pick("Morgan","Circe","Prospero","Elminister","Raistlin","Tzeentch","Saruman","Khelben","Dumbledor","Gandalf","Houdini","Teferi","Urza","Tenser","Zagyg","Mystryl","Boccob","Merlin")]"
+	wizard_mob.equip_if_possible(new /obj/item/device/radio/headset(wizard_mob), wizard_mob.slot_ears)
+	wizard_mob.equip_if_possible(new /obj/item/clothing/under/lightpurple(wizard_mob), wizard_mob.slot_w_uniform)
+	wizard_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal(wizard_mob), wizard_mob.slot_shoes)
+	wizard_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe(wizard_mob), wizard_mob.slot_wear_suit)
+	wizard_mob.equip_if_possible(new /obj/item/clothing/head/wizard(wizard_mob), wizard_mob.slot_head)
+	wizard_mob.equip_if_possible(new /obj/item/weapon/storage/backpack(wizard_mob), wizard_mob.slot_back)
+//	wizard_mob.equip_if_possible(new /obj/item/weapon/scrying_gem(wizard_mob), wizard_mob.slot_l_store) For scrying gem.
+	wizard_mob.equip_if_possible(new /obj/item/weapon/teleportation_scroll(wizard_mob), wizard_mob.slot_r_store)
+	wizard_mob.equip_if_possible(new /obj/item/weapon/SWF_uplink(wizard_mob), wizard_mob.slot_l_hand)
 
-	del(wizard_mob.wear_suit)
-	del(wizard_mob.head)
-	del(wizard_mob.shoes)
-	del(wizard_mob.r_hand)
-	wizard_mob.wear_suit = new /obj/item/clothing/suit/wizrobe(wizard_mob)
-	wizard_mob.wear_suit.layer = 20
-	wizard_mob.head = new /obj/item/clothing/head/wizard(wizard_mob)
-	wizard_mob.head.layer = 20
-	wizard_mob.shoes = new /obj/item/clothing/shoes/sandal(wizard_mob)
-	wizard_mob.shoes.layer = 20
-	//wizard_mob.r_hand = new /obj/item/weapon/staff(wizard_mob) //Wizards don't need the staff or use it. N
-	//wizard_mob.r_hand.layer = 20 //Wizards don't need the staff or use it. N
-
-	var/loc = ""
-	var/obj/item/device/R = null //Hide the uplink in a PDA if available, otherwise radio
-	if (!R && istype(wizard_mob.belt, /obj/item/device/pda))
-		R = wizard_mob.belt
-		loc = "on your belt"
-	if (!R && istype(wizard_mob.l_hand, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = wizard_mob.l_hand
-		var/list/L = S.return_inv()
-		for (var/obj/item/device/radio/foo in L)
-			R = foo
-			loc = "in the [S.name] in your left hand"
-			break
-	if (!R && istype(wizard_mob.r_hand, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = wizard_mob.r_hand
-		var/list/L = S.return_inv()
-		for (var/obj/item/device/radio/foo in L)
-			R = foo
-			loc = "in the [S.name] in your right hand"
-			break
-	if (!R && istype(wizard_mob.back, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = wizard_mob.back
-		var/list/L = S.return_inv()
-		for (var/obj/item/device/radio/foo in L)
-			R = foo
-			loc = "in the [S.name] on your back"
-			break
-	if (!R && wizard_mob.w_uniform && istype(wizard_mob.belt, /obj/item/device/radio))
-		R = wizard_mob.belt
-		loc = "on your belt"
-	if (!R && istype(wizard_mob.ears, /obj/item/device/radio))
-		R = wizard_mob.ears
-		loc = "on your head"
-	if (!R)
-		wizard_mob << "Unfortunately, the Space Wizards Federation wasn't able to get you a radio."
-	else
-		if (istype(R, /obj/item/device/radio))
-			var/obj/item/weapon/SWF_uplink/T = new /obj/item/weapon/SWF_uplink(R)
-			R:traitorradio = T
-			R:traitor_frequency = freq
-			T.name = R.name
-			T.icon_state = R.icon_state
-			T.origradio = R
-			wizard_mob << "The Space Wizards Federation have cunningly disguised a spell book as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock it's hidden features."
-			wizard_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
-		else if (istype(R, /obj/item/device/pda))
-			var/obj/item/weapon/integrated_uplink/SWF/T = new /obj/item/weapon/integrated_uplink/SWF(R)
-			R:uplink = T
-			T.lock_code = pda_pass
-			T.hostpda = R
-			wizard_mob << "The Space Wizards Federation have cunningly enchanted a spellbook into your PDA [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
-			wizard_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
+	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
+	wizard_mob << "In your pockets you will find two more important, magical artifacts. Use them as needed."
+	wizard_mob.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
 
 /datum/game_mode/wizard/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
@@ -317,15 +254,16 @@
 	else
 		return ..()
 
-/obj/item/weapon/SWF_uplink/proc/explode()
-	var/turf/location = get_turf(src.loc)
-	location.hotspot_expose(700, 125)
 
-	explosion(location, 0, 0, 2, 4)
-
-	del(src.master)
-	del(src)
-	return
+/obj/item/weapon/spellbook
+	name = "Spell Book"
+	icon = 'library.dmi'
+	icon_state ="book"
+	throw_speed = 1
+	throw_range = 5
+	w_class = 1.0
+	flags = FPRINT | TABLEPASS
+	//WIP
 
 /obj/item/weapon/SWF_uplink/attack_self(mob/user as mob)
 	user.machine = src
@@ -347,9 +285,10 @@
 			dat += "<A href='byond://?src=\ref[src];spell_emp=1'>Disable Technology</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_smoke=1'>Smoke</A> (10)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_blind=1'>Blind</A> (30)<BR>"
+			dat += "<A href='byond://?src=\ref[src];spell_swap=1'>Body Swap</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_forcewall=1'>Forcewall</A> (10)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_blink=1'>Blink</A> (2)<BR>"
-			dat += "<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A> (30)<BR>"
+			dat += "<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_mutate=1'>Mutate</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_jaunt=1'>Ethereal Jaunt</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_knock=1'>Knock</A> (10)<BR>"
@@ -375,61 +314,78 @@
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/magicmissile
+				usr.mind.special_verbs += /client/proc/magicmissile
 				src.temp = "This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage."
 		else if (href_list["spell_fireball"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/fireball
+				usr.mind.special_verbs += /client/proc/fireball
 				src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
 		else if (href_list["spell_disintegrate"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /mob/proc/kill
+				usr.mind.special_verbs += /mob/proc/kill
 				src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
 		else if (href_list["spell_emp"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /mob/proc/tech
+				usr.mind.special_verbs += /mob/proc/tech
 				src.temp = "This spell disables all weapons, cameras and most other technology in range."
 		else if (href_list["spell_smoke"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/smokecloud
+				usr.mind.special_verbs += /client/proc/smokecloud
 				src.temp = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
 		else if (href_list["spell_blind"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/blind
+				usr.mind.special_verbs += /client/proc/blind
 				src.temp = "This spell temporarly blinds a single person and does not require wizard garb."
+		else if (href_list["spell_swap"])
+			if (src.uses >= 1)
+				src.uses -= 1
+				usr.verbs += /mob/proc/swap
+				src.temp = "This spell allows the user to switch bodies with a target. Careful to not lose your memory in the process."
 		else if (href_list["spell_forcewall"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/forcewall
+				usr.mind.special_verbs += /client/proc/forcewall
 				src.temp = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
 		else if (href_list["spell_blink"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/blink
+				usr.mind.special_verbs += /client/proc/blink
 				src.temp = "This spell randomly teleports you a short distance. Useful for evasion or getting into areas if you have patience."
 		else if (href_list["spell_teleport"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /mob/proc/teleport
+				usr.mind.special_verbs += /mob/proc/teleport
 				src.temp = "This spell teleports you to a type of area of your selection. Very useful if you are in danger, but has a decent cooldown, and is unpredictable."
 		else if (href_list["spell_mutate"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/mutate
+				usr.mind.special_verbs += /client/proc/mutate
 				src.temp = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
 		else if (href_list["spell_jaunt"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/jaunt
+				usr.mind.special_verbs += /client/proc/jaunt
 				src.temp = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
 		else if (href_list["spell_knock"])
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /client/proc/knock
+				usr.mind.special_verbs += /client/proc/knock
 				src.temp = "This spell opens nearby doors and does not require wizard garb."
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
@@ -472,6 +428,143 @@
 					src.attack_self(M)
 	return
 
+/obj/item/weapon/SWF_uplink/proc/explode()
+	var/turf/location = get_turf(src.loc)
+	location.hotspot_expose(700, 125)
+
+	explosion(location, 0, 0, 2, 4)
+
+	del(src.master)
+	del(src)
+	return
+
+/*Checks if the wizard can cast spells.
+Made a proc so this is not repeated 14 (or more) times.*/
+/mob/proc/casting()
+	if(usr.stat)
+		usr << "Not when you're incapicated."
+		return 0
+	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
+		usr << "I don't feel strong enough without my robe."
+		return 0
+	if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
+		usr << "I don't feel strong enough without my sandals."
+		return 0
+	if(!istype(usr:head, /obj/item/clothing/head/wizard))
+		usr << "I don't feel strong enough without my hat."
+		return 0
+	else
+		return 1
+
+/*Checks if the wizard is a mime and male/female.
+Outputs the appropriate voice if the user is not a mime.
+Made a proc here so it's not repeated several times.*/
+/mob/proc/spellvoice()
+//	if(!usr.miming)No longer necessary.
+	if(usr.gender=="male")
+		playsound(usr.loc, pick('vs_chant_conj_hm.wav','vs_chant_conj_lm.wav','vs_chant_ench_hm.wav','vs_chant_ench_lm.wav','vs_chant_evoc_hm.wav','vs_chant_evoc_lm.wav','vs_chant_illu_hm.wav','vs_chant_illu_lm.wav','vs_chant_necr_hm.wav','vs_chant_necr_lm.wav'), 100, 1)
+	else
+		playsound(usr.loc, pick('vs_chant_conj_hf.wav','vs_chant_conj_lf.wav','vs_chant_ench_hf.wav','vs_chant_ench_lf.wav','vs_chant_evoc_hf.wav','vs_chant_evoc_lf.wav','vs_chant_illu_hf.wav','vs_chant_illu_lf.wav','vs_chant_necr_hf.wav','vs_chant_necr_lf.wav'), 100, 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//UNUSED/OLD CODE
+
+//	for (var/obj/landmark/A in world)
+//		if (A.name == "Teleport-Scroll")
+//			new /obj/item/weapon/teleportation_scroll(A.loc)
+//			del(A)
+//			continue
+//Scroll now starts in the wizard's inventory.
+
+//	if (wizard_mob.mind.assigned_role == "Clown")
+//		wizard_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
+//		wizard_mob.mutations &= ~16 No more clowns as wizarrrddsss
+
+/*Creates random numbers/codes for the uplink.
+	var/freq = 1441
+	var/list/freqlist = list()
+	while (freq <= 1489)
+		if (freq < 1451 || freq > 1459)
+			freqlist += freq
+		freq += 2
+		if ((freq % 2) == 0)
+			freq += 1
+	freq = freqlist[rand(1, freqlist.len)]
+	// generate a passcode if the uplink is hidden in a PDA
+	var/pda_pass = "[rand(100,999)] [pick("Morgan","Circe","Prospero","Elminister","Raistlin","Tzeentch","Saruman","Khelben","Dumbledor","Gandalf","Houdini","Teferi","Urza","Tenser","Zagyg","Mystryl","Boccob","Merlin")]"
+No longer used because wizards begin with a spell book.*/
+
+/*Checks where to spawn the swf uplink.
+	var/loc = ""
+	var/obj/item/device/R = null //Hide the uplink in a PDA if available, otherwise radio
+	if (!R && istype(wizard_mob.belt, /obj/item/device/pda))
+		R = wizard_mob.belt
+		loc = "on your belt"
+	if (!R && istype(wizard_mob.l_hand, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = wizard_mob.l_hand
+		var/list/L = S.return_inv()
+		for (var/obj/item/device/radio/foo in L)
+			R = foo
+			loc = "in the [S.name] in your left hand"
+			break
+	if (!R && istype(wizard_mob.r_hand, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = wizard_mob.r_hand
+		var/list/L = S.return_inv()
+		for (var/obj/item/device/radio/foo in L)
+			R = foo
+			loc = "in the [S.name] in your right hand"
+			break
+	if (!R && istype(wizard_mob.back, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = wizard_mob.back
+		var/list/L = S.return_inv()
+		for (var/obj/item/device/radio/foo in L)
+			R = foo
+			loc = "in the [S.name] on your back"
+			break
+	if (!R && wizard_mob.w_uniform && istype(wizard_mob.belt, /obj/item/device/radio))
+		R = wizard_mob.belt
+		loc = "on your belt"
+	if (!R && istype(wizard_mob.ears, /obj/item/device/radio))
+		R = wizard_mob.ears
+		loc = "on your head"
+	if (!R)
+		wizard_mob << "Unfortunately, the Space Wizards Federation wasn't able to get you a radio."
+	else
+		if (istype(R, /obj/item/device/radio))
+			var/obj/item/weapon/SWF_uplink/T = new /obj/item/weapon/SWF_uplink(R)
+			R:traitorradio = T
+			R:traitor_frequency = freq
+			T.name = R.name
+			T.icon_state = R.icon_state
+			T.origradio = R
+			wizard_mob << "The Space Wizards Federation have cunningly disguised a spell book as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock it's hidden features."
+			wizard_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
+		else if (istype(R, /obj/item/device/pda))
+			var/obj/item/weapon/integrated_uplink/SWF/T = new /obj/item/weapon/integrated_uplink/SWF(R)
+			R:uplink = T
+			T.lock_code = pda_pass
+			T.hostpda = R
+			wizard_mob << "The Space Wizards Federation have cunningly enchanted a spellbook into your PDA [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
+			wizard_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
+No longer used because wizards begin with a spell book.*/
+
+/*Code which works for intergrated uplinks, like those in PDAs.
 /obj/item/weapon/integrated_uplink/SWF
 	name = "enchanted uplink"
 	uses = 4
@@ -577,31 +670,4 @@
 		return
 
 	return
-
-/*Checks if the wizard can cast spells.
-Made a proc so this is not repeated 14 (or more) times.*/
-/mob/proc/casting()
-	if(usr.stat)
-		usr << "Not when you're incapicated."
-		return 0
-	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
-		usr << "I don't feel strong enough without my robe."
-		return 0
-	if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
-		usr << "I don't feel strong enough without my sandals."
-		return 0
-	if(!istype(usr:head, /obj/item/clothing/head/wizard))
-		usr << "I don't feel strong enough without my hat."
-		return 0
-	else
-		return 1
-
-/*Checks if the wizard is a mime and male/female.
-Outputs the appropriate voice if the user is not a mime.
-Made a proc here so it's not repeated several times.*/
-/mob/proc/spellvoice()
-	if(!usr.miming)
-		if(usr.gender=="male")
-			playsound(usr.loc, pick('vs_chant_conj_hm.wav','vs_chant_conj_lm.wav','vs_chant_ench_hm.wav','vs_chant_ench_lm.wav','vs_chant_evoc_hm.wav','vs_chant_evoc_lm.wav','vs_chant_illu_hm.wav','vs_chant_illu_lm.wav','vs_chant_necr_hm.wav','vs_chant_necr_lm.wav'), 100, 1)
-		else
-			playsound(usr.loc, pick('vs_chant_conj_hf.wav','vs_chant_conj_lf.wav','vs_chant_ench_hf.wav','vs_chant_ench_lf.wav','vs_chant_evoc_hf.wav','vs_chant_evoc_lf.wav','vs_chant_illu_hf.wav','vs_chant_illu_lf.wav','vs_chant_necr_hf.wav','vs_chant_necr_lf.wav'), 100, 1)
+No longer used because wizards begin with a spell book.*/

@@ -2,6 +2,7 @@
 	spawn (1)
 		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
 		src.verbs += /mob/living/carbon/alien/humanoid/sentinel/verb/spit
+		src.verbs -= /mob/living/carbon/alien/humanoid/verb/ventcrawl
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
 		R.my_atom = src

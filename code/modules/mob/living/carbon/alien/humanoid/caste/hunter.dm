@@ -166,14 +166,14 @@
 	set category = "Alien"
 
 	if(src.stat)
-		src << "\green You must be conscious to do this"
+		src << "\green You must be conscious to do this."
 		return
 	if(src.toxloss >= 50)
 		src.toxloss -= 50
 		src.alien_invis = 1.0
 		src << "\green You are now invisible."
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] fades into the surroundings!</B>"), 1)
+		for(var/mob/O in oviewers(src, null))
+			O.show_message(text("\red <B>[src] fades into the surroundings!</B>"), 1)
 		spawn(150)
 			src.alien_invis = 0.0
 			src << "\green You are no longer invisible."
@@ -181,68 +181,22 @@
 		src << "\green Not enough plasma stored"
 	return
 
-/mob/living/carbon/alien/humanoid/hunter/verb/ventcrawl() // -- TLE
-	set name = "Crawl through Vent"
-	set desc = "Enter an air vent and appear at a random one"
+/mob/living/carbon/alien/humanoid/hunter/verb/regurgitate()
+	set name = "Regurgitate"
+	set desc = "Empties the contents of your stomach"
 	set category = "Alien"
-//	if(!istype(V,/obj/machinery/atmoalter/siphs/fullairsiphon/air_vent))
-//		return
 
 	if(src.stat)
 		src << "\green You must be conscious to do this."
 		return
-	var/vent_found = 0
-	for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
-		if(!v.welded)
-			vent_found = v
 
-	if(!vent_found)
-		src << "\green You must be standing on or beside an open air vent to enter it."
-		return
-	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
-		if(temp_vent.loc == src.loc)
-			continue
-		if(temp_vent.welded)
-			continue
-		vents.Add(temp_vent)
-	var/list/choices = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/vent in vents)
-		if(vent.loc.z != src.loc.z)
-			continue
-		if(vent.welded)
-			continue
-		var/atom/a = get_turf_loc(vent)
-		choices.Add(a.loc)
-	var/turf/startloc = src.loc
-	var/obj/selection = input("Select a destination.", "Duct System") in choices
-	var/selection_position = choices.Find(selection)
-	if(src.loc != startloc)
-		src << "\green You need to remain still while entering a vent."
-		return
-	var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection_position]
-	if(target_vent)
+	if(src.stomach_contents.len)
+		for(var/mob/M in src)
+			if(M in src.stomach_contents)
+				src.stomach_contents.Remove(M)
+				M.loc = src.loc
+				M.paralysis += 10
+
 		for(var/mob/O in viewers(src, null))
-			O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
-		var/list/huggers = list()
-		for(var/obj/alien/facehugger/F in view(3, src))
-			if(istype(F, /obj/alien/facehugger))
-				huggers.Add(F)
-
-		src.loc = vent_found
-		for(var/obj/alien/facehugger/F in huggers)
-			F.loc = vent_found
-		var/travel_time = get_dist(src.loc, target_vent.loc)
-
-		spawn(round(travel_time/2))//give sound warning to anyone near the target vent
-			if(!target_vent.welded)
-				for(var/mob/O in hearers(target_vent, null))
-					O.show_message("You hear something crawling trough the ventilation pipes.")
-
-		spawn(travel_time)
-			if(target_vent.welded)//the vent can be welded while alien scrolled through the list or travelled.
-				target_vent = vent_found //travel back. No additional time required.
-				src << "\red The vent you were heading to appears to be welded."
-			src.loc = target_vent.loc
-			for(var/obj/alien/facehugger/F in huggers)
-				F.loc = src.loc
+			O.show_message(text("\green <B>[src] hurls out the contents of their stomach.</B>"), 1)
+	return

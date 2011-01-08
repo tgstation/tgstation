@@ -133,7 +133,7 @@
 	icon_state = "atmos"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT 
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
@@ -1079,8 +1079,8 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/teleportation_scroll
 	name = "Teleportation Scroll"
-	icon = 'items.dmi'
-	icon_state = "paper"
+	icon = 'wizard.dmi'
+	icon_state = "scroll"
 	var/uses = 4.0
 	flags = FPRINT | TABLEPASS
 	w_class = 2.0

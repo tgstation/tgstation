@@ -451,7 +451,10 @@
 			for(var/mob/N in viewers(user, null))
 				if(N.client)
 					N.show_message(text("\red <B>[user] is attempting to devour [src.affecting]!</B>"), 1)
-			if(!do_mob(user, src.affecting)||!do_after(user, 100)) return
+			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
+				if(!do_mob(user, src.affecting)||!do_after(user, 30)) return
+			else
+				if(!do_mob(user, src.affecting)||!do_after(user, 100)) return
 			for(var/mob/N in viewers(user, null))
 				if(N.client)
 					N.show_message(text("\red <B>[user] devours [src.affecting]!</B>"), 1)

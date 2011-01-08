@@ -8,6 +8,7 @@ datum/mind
 	var/special_role
 
 	var/list/datum/objective/objectives = list()
+	var/list/datum/objective/special_verbs = list()
 
 	proc/transfer_to(mob/new_character)
 		if(current)
