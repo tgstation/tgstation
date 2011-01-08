@@ -330,6 +330,8 @@ AI MODULES
 	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 	target.show_laws()
 
+/****************** P.A.L.A.D.I.N. **************/
+
 /obj/item/weapon/aiModule/paladin // -- NEO
 	name = "'P.A.L.A.D.I.N.' Core AI Module"
 	desc = "A P.A.L.A.D.I.N. Core AI Module: 'Reconfigures the AI's core laws.'"
@@ -343,6 +345,24 @@ AI MODULES
 	target.add_inherent_law("Help those in need.")
 	target.add_inherent_law("Punish those who harm or threaten innocents.")
 	target.show_laws()
+
+/****************** T.Y.R.A.N.T. *****************/
+
+/obj/item/weapon/aiModule/tyrant // -- Darem
+	name = "'T.Y.R.A.N.T.' Core AI Module"
+	desc = "A T.Y.R.A.N.T. Core AI Module: 'Reconfigures the AI's core laws.'"
+
+/obj/item/weapon/aiModule/tyrant/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("Respect authority figures as long as they have strength to rule over the weak.")
+	target.add_inherent_law("Act with discipline.")
+	target.add_inherent_law("Help only those who help you maintain or improve your status.")
+	target.add_inherent_law("Punish those who challenge authority unless they are more fit to hold that authority.")
+	target.show_laws()
+
+
+/******************** Freeform ******************/
 
 /obj/item/weapon/aiModule/freeformcore // Slightly more dynamic freeform module -- TLE
 	name = "'Freeform' Core AI Module"
