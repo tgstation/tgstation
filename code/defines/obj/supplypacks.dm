@@ -361,5 +361,15 @@
 	containername = "Exotic Seeds crate"
 	access = access_hydroponics
 
+/datum/supply_packs/securitybarriers
+	name = "Security Barriers"
+	contains = list("/obj/machinery/deployable/barrier",
+	"/obj/machinery/deployable/barrier",
+	"/obj/machinery/deployable/barrier",
+	"/obj/machinery/deployable/barrier")
+	cost = 20
+	containertype = "/obj/crate/secure/gear"
+	containername = "Secruity Barriers crate"
+	access = access_security
 
 //SUPPLY PACKS

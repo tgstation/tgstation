@@ -66,6 +66,7 @@ for reference:
 	var/health = 100.0
 	var/maxhealth = 100.0
 	var/locked = 0.0
+	var/emagged = 0.0
 //	req_access = list(access_maint_tunnels)
 
 	New()
@@ -74,17 +75,57 @@ for reference:
 		src.icon_state = "barrier[src.locked]"
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if (istype(W, /obj/item/weapon/card/id/))
 			if (src.allowed(user))
-				src.locked = !src.locked
-				src.anchored = !src.anchored
-				src.icon_state = "barrier[src.locked]"
-				user << "Barrier lock toggled."
-				return
+				if	(src.emagged < 2.0)
+					src.locked = !src.locked
+					src.anchored = !src.anchored
+					src.icon_state = "barrier[src.locked]"
+					if ((src.locked == 1.0) && (src.emagged < 2.0))
+						user << "Barrier lock toggled on."
+						return
+					else if ((src.locked == 0.0) && (src.emagged < 2.0))
+						user << "Barrier lock toggled off."
+						return
+				else
+					var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+					s.set_up(2, 1, src)
+					s.start()
+					for(var/mob/O in viewers(src, null))
+						O << "\red BZZzZZzZZzZT"
+					return
 			return
+		else if (istype(W, /obj/item/weapon/card/emag))
+			if (src.emagged == 0)
+				src.emagged = 1
+				src.req_access = null
+				user << "You break the ID authentication lock on the [src]."
+				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
+				for(var/mob/O in viewers(src, null))
+					O << "\red BZZZZT"
+				return
+			else if (src.emagged == 1)
+				src.emagged = 2
+				user << "You short out the anchoring mechanism on the [src]."
+				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
+				for(var/mob/O in viewers(src, null))
+					O << "\red BZZZZT"
+				return
 		else if (istype(W, /obj/item/weapon/wrench))
 			if (src.health < src.maxhealth)
 				src.health = src.maxhealth
+				src.emagged = 0
+				src.req_access = list(access_security)
+				for(var/mob/O in viewers(src, null))
+					O << "\red [user] repairs the [src]!"
+				return
+			else if (src.emagged > 0)
+				src.emagged = 0
+				src.req_access = list(access_security)
 				for(var/mob/O in viewers(src, null))
 					O << "\red [user] repairs the [src]!"
 				return
