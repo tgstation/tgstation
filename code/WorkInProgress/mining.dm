@@ -103,7 +103,7 @@
 		user << "\red You start picking."
 		//playsound(src.loc, 'Welder.ogg', 100, 1)
 
-		sleep(100)
+		sleep(40)
 		if ((user.loc == T && user.equipped() == W))
 			user << "\blue You finish cutting into the rock."
 			gets_drilled()
@@ -248,11 +248,17 @@
 	icon = 'Mining.dmi'
 	icon_state = "Diamond ore"
 
+/obj/item/weapon/ore/slag
+	name = "Slag"
+	desc = "Completely useless"
+	icon = 'Mining.dmi'
+	icon_state = "slag"
+
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
-/**********************Ore pile**************************/
+/**********************Ore pile (not used)**************************/
 
 /obj/item/weapon/ore_pile
 	name = "Pile of ores"
@@ -266,7 +272,7 @@
 	icon_state = "satchel"
 	name = "Mining Satchel"
 	var/mode = 0;  //0 = pick one at a time, 1 = pick all on tile
-	var/capacity = 10; //the number of ore pieces it can carry.
+	var/capacity = 50; //the number of ore pieces it can carry.
 
 /obj/item/weapon/satchel/attack_self(mob/user as mob)
 	for (var/obj/item/weapon/ore/O in contents)
@@ -485,9 +491,7 @@
 
 /obj/machinery/mineral/processing_unit_console/attack_hand(user as mob)
 
-	var/dat = ""
-	dat += text("What the heck can you even control on this, anyway??<br><br>")
-
+	var/dat = "<b>Smelter control console</b><br><br>"
 	//iron
 	if (machine.selected_iron==1)
 		dat += text("<A href='?src=\ref[src];sel_iron=no'><font color='green'>Y</font></A> ")
@@ -659,27 +663,55 @@
 
 
 				//if a non valid combination is selected
+
+				var/b = 1 //this part checks if all required ores are available
+
+				if (!(selected_gold || selected_silver ||selected_diamond || selected_uranium | selected_plasma || selected_iron))
+					b = 0
+
 				if (selected_gold == 1)
-					ore_gold--
+					if (ore_gold <= 0)
+						b = 0
 				if (selected_silver == 1)
-					ore_silver--
+					if (ore_silver <= 0)
+						b = 0
 				if (selected_diamond == 1)
-					ore_diamond--
-				if (selected_plasma == 1)
-					ore_plasma--
+					if (ore_diamond <= 0)
+						b = 0
 				if (selected_uranium == 1)
-					ore_uranium--
+					if (ore_uranium <= 0)
+						b = 0
+				if (selected_plasma == 1)
+					if (ore_plasma <= 0)
+						b = 0
 				if (selected_iron == 1)
-					ore_iron--
+					if (ore_iron <= 0)
+						b = 0
 
-				new /obj/decal/ash(output.loc)
-
+				if (b) //if they are, deduct one from each, produce slag and shut the machine off
+					if (selected_gold == 1)
+						ore_gold--
+					if (selected_silver == 1)
+						ore_silver--
+					if (selected_diamond == 1)
+						ore_diamond--
+					if (selected_uranium == 1)
+						ore_uranium--
+					if (selected_plasma == 1)
+						ore_plasma--
+					if (selected_iron == 1)
+						ore_iron--
+					new /obj/item/weapon/ore/slag(output.loc)
+					on = 0
+				else
+					on = 0
+					break
 				break
 			else
 				break
 		for (i = 0; i < 10; i++)
-			var/obj/item/weapon/ore/O
-			O = locate(/obj/item/weapon/ore, input.loc)
+			var/obj/item/O
+			O = locate(/obj/item, input.loc)
 			if (O)
 				if (istype(O,/obj/item/weapon/ore/iron))
 					ore_iron++;
@@ -725,12 +757,12 @@
 	icon_state = "production_console"
 	density = 1
 	anchored = 1
-	var/obj/machinery/mineral/processing_unit/machine = null
+	var/obj/machinery/mineral/stacking_machine/machine = null
 
 /obj/machinery/mineral/stacking_unit_console/New()
 	..()
 	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, SOUTH))
+		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, SOUTHEAST))
 		if (machine)
 			machine.CONSOLE = src
 		else
@@ -740,9 +772,57 @@
 
 	var/dat
 
-	dat += text("What the heck can you even control on this, anyway??<br><br>")
+	dat += text("<b>Stacking unit console</b><br><br>")
+
+	dat += text("Iron: [machine.ore_iron] <A href='?src=\ref[src];release=iron'>Release</A><br>")
+	dat += text("Plasma: [machine.ore_plasma] <A href='?src=\ref[src];release=plasma'>Release</A><br>")
+	dat += text("Gold: [machine.ore_gold] <A href='?src=\ref[src];release=gold'>Release</A><br>")
+	dat += text("Silver: [machine.ore_silver] <A href='?src=\ref[src];release=silver'>Release</A><br>")
+	dat += text("Damond: [machine.ore_diamond] <A href='?src=\ref[src];release=diamond'>Release</A><br><br>")
+
+	dat += text("Stacking: [machine.stack_amt]<br><br>")
 
 	user << browse("[dat]", "window=console_stacking_machine")
+
+/obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
+	if(..())
+		return
+	usr.machine = src
+	src.add_fingerprint(usr)
+	if(href_list["release"])
+		switch(href_list["release"])
+			if ("plasma")
+				if (machine.ore_plasma > 0)
+					var/obj/item/stack/sheet/plasma/G = new /obj/item/stack/sheet/plasma
+					G.amount = machine.ore_plasma
+					G.loc = machine.output.loc
+					machine.ore_plasma = 0
+			if ("gold")
+				if (machine.ore_gold > 0)
+					var/obj/item/stack/sheet/gold/G = new /obj/item/stack/sheet/gold
+					G.amount = machine.ore_gold
+					G.loc = machine.output.loc
+					machine.ore_gold = 0
+			if ("silver")
+				if (machine.ore_silver > 0)
+					var/obj/item/stack/sheet/silver/G = new /obj/item/stack/sheet/silver
+					G.amount = machine.ore_silver
+					G.loc = machine.output.loc
+					machine.ore_silver = 0
+			if ("diamond")
+				if (machine.ore_diamond > 0)
+					var/obj/item/stack/sheet/diamond/G = new /obj/item/stack/sheet/diamond
+					G.amount = machine.ore_diamond
+					G.loc = machine.output.loc
+					machine.ore_diamond = 0
+			if ("iron")
+				if (machine.ore_iron > 0)
+					var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal
+					G.amount = machine.ore_iron
+					G.loc = machine.output.loc
+					machine.ore_iron = 0
+	src.updateUsrDialog()
+	return
 
 
 /**********************Mineral stacking unit**************************/
@@ -754,11 +834,17 @@
 	icon_state = "controller"
 	density = 1
 	anchored = 1.0
+	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
-
+	var/ore_gold = 0;
+	var/ore_silver = 0;
+	var/ore_diamond = 0;
+	var/ore_plasma = 0;
+	var/ore_iron = 0;
+	var/stack_amt = 50; //ammount to stack before releassing
 
 /obj/machinery/mineral/stacking_machine/New()
 	..()
@@ -769,50 +855,117 @@
 		return
 	return
 
-/obj/machinery/mineral/stacking_machine/process() //PLACEHOLDER PROC
-	if (src.output && src.input)
-		var/obj/item/O
-		O = locate(/obj/item, input.loc)
-		if (O)
-			O.loc = src.output.loc
-	return
-
-/*
-
 /obj/machinery/mineral/stacking_machine/process()
 	if (src.output && src.input)
 		var/obj/item/O
-		O = locate(/obj/item, input.loc)
+		while (locate(/obj/item, input.loc))
+			O = locate(/obj/item, input.loc)
+			if (istype(O,/obj/item/stack/sheet/metal))
+				ore_iron++;
+				//new /obj/item/stack/sheet/metal(output.loc)
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/diamond))
+				ore_diamond++;
+				//new /obj/item/stack/sheet/diamond(output.loc)
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/plasma))
+				ore_plasma++
+				//new /obj/item/stack/sheet/plasma(output.loc)
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/gold))
+				ore_gold++
+				//new /obj/item/stack/sheet/gold(output.loc)
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/silver))
+				ore_silver++
+				//new /obj/item/stack/sheet/silver(output.loc)
+				del(O)
+				continue
+			if (istype(O,/obj/item/weapon/ore/slag))
+				del(O)
+				continue
+			O.loc = src.output.loc
+	if (ore_gold >= stack_amt)
+		var/obj/item/stack/sheet/gold/G = new /obj/item/stack/sheet/gold
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_gold -= stack_amt
+		return
+	if (ore_silver >= stack_amt)
+		var/obj/item/stack/sheet/silver/G = new /obj/item/stack/sheet/silver
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_silver -= stack_amt
+		return
+	if (ore_diamond >= stack_amt)
+		var/obj/item/stack/sheet/diamond/G = new /obj/item/stack/sheet/diamond
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_diamond -= stack_amt
+		return
+	if (ore_plasma >= stack_amt)
+		var/obj/item/stack/sheet/plasma/G = new /obj/item/stack/sheet/plasma
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_plasma -= stack_amt
+		return
+	if (ore_iron >= stack_amt)
+		var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_iron -= stack_amt
+		return
+	return
 
-		if (O.type in stk_types)
+
+/**********************Unloading unit**************************/
+
+
+/obj/machinery/mineral/unloading_machine
+	name = "Unloading machine"
+	icon = 'stationobjs.dmi'
+	icon_state = "controller"
+	density = 1
+	anchored = 1.0
+	var/obj/machinery/mineral/input = null
+	var/obj/machinery/mineral/output = null
+
+
+/obj/machinery/mineral/unloading_machine/New()
+	..()
+	spawn( 5 )
+		src.input = locate(/obj/machinery/mineral/input, get_step(src, SOUTH))
+		src.output = locate(/obj/machinery/mineral/output, get_step(src, NORTH))
+		processing_items.Add(src)
+		return
+	return
+
+/obj/machinery/mineral/unloading_machine/process()
+	if (src.output && src.input)
+		if (locate(/obj/ore_box, input.loc))
+			var/obj/ore_box/BOX = locate(/obj/ore_box, input.loc)
+			var/i = 0
+			for (var/obj/item/weapon/ore/O in BOX.contents)
+				BOX.contents -= O
+				O.loc = output.loc
+				i++
+				if (i>=10)
+					return
+		if (locate(/obj/item, input.loc))
+			var/obj/item/O
 			var/i
-			for (i = 0; i < stk_types.len; i++)
-				if (stk_types[i] == O.type)
-					stk_amt[i]++
+			for (i = 0; i<10; i++)
+				O = locate(/obj/item, input.loc)
+				if (O)
+					O.loc = src.output.loc
 				else
-					stk_types += O.type
-					stk_amt[stk_types.len-1] = 1
+					return
+	return
 
-		if (istype(O,/obj/item/weapon/ore/iron))
-			new /obj/item/stack/sheet/metal(output.loc)
-			del(O)
-		if (istype(O,/obj/item/weapon/ore/diamond))
-			new /obj/item/stack/sheet/diamond(output.loc)
-			del(O)
-		if (istype(O,/obj/item/weapon/ore/plasma))
-			new /obj/item/stack/sheet/plasma(output.loc)
-			del(O)
-		if (istype(O,/obj/item/weapon/ore/gold))
-			new /obj/item/stack/sheet/gold(output.loc)
-			del(O)
-		if (istype(O,/obj/item/weapon/ore/silver))
-			new /obj/item/stack/sheet/silver(output.loc)
-			del(O)
-		if (istype(O,/obj/item/weapon/ore/uranium))
-			new /obj/item/weapon/ore/uranium(output.loc)
-			del(O)
-
-*/
 
 /**********************Mint**************************/
 
@@ -985,9 +1138,9 @@
 				newtoxins = 0
 				processing = 1
 				var/obj/item/weapon/ore/O
-				while(locate(/obj/item/weapon/ore, input.loc) && locate(/obj/machinery/portable_atmospherics/canister,output.loc))
-					O = locate(/obj/item/weapon/ore, input.loc)
-					if (istype(O,/obj/item/weapon/ore/uranium))
+				while(locate(/obj/item/weapon/ore/plasma, input.loc) && locate(/obj/machinery/portable_atmospherics/canister,output.loc))
+					O = locate(/obj/item/weapon/ore/plasma, input.loc)
+					if (istype(O,/obj/item/weapon/ore/plasma))
 						var/obj/machinery/portable_atmospherics/canister/C
 						C = locate(/obj/machinery/portable_atmospherics/canister,output.loc)
 						C.air_contents.toxins += 100
