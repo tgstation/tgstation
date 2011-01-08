@@ -272,7 +272,7 @@
 	for (var/obj/item/weapon/ore/O in contents)
 		contents -= O
 		O.loc = user.loc
-		user << "\blue You empty the satchel."
+	user << "\blue You empty the satchel."
 	return
 
 /obj/item/weapon/satchel/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -464,6 +464,127 @@
 		return
 	return
 
+/**********************Mineral processing unit console**************************/
+
+/obj/machinery/mineral/processing_unit_console
+	name = "Produciton machine console"
+	icon = 'terminals.dmi'
+	icon_state = "production_console"
+	density = 1
+	anchored = 1
+	var/obj/machinery/mineral/processing_unit/machine = null
+
+/obj/machinery/mineral/processing_unit_console/New()
+	..()
+	spawn(7)
+		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, EAST))
+		if (machine)
+			machine.CONSOLE = src
+		else
+			del(src)
+
+/obj/machinery/mineral/processing_unit_console/attack_hand(user as mob)
+
+	var/dat = ""
+	dat += text("What the heck can you even control on this, anyway??<br><br>")
+
+	//iron
+	if (machine.selected_iron==1)
+		dat += text("<A href='?src=\ref[src];sel_iron=no'><font color='green'>Y</font></A> ")
+	else
+		dat += text("<A href='?src=\ref[src];sel_iron=yes'><font color='red'>N</font></A> ")
+	dat += text("Iron: [machine.ore_iron]<br>")
+
+	//plasma
+	if (machine.selected_plasma==1)
+		dat += text("<A href='?src=\ref[src];sel_plasma=no'><font color='green'>Y</font></A> ")
+	else
+		dat += text("<A href='?src=\ref[src];sel_plasma=yes'><font color='red'>N</font></A> ")
+	dat += text("Plasma: [machine.ore_plasma]<br>")
+
+	//uranium
+	if (machine.selected_uranium==1)
+		dat += text("<A href='?src=\ref[src];sel_uranium=no'><font color='green'>Y</font></A> ")
+	else
+		dat += text("<A href='?src=\ref[src];sel_uranium=yes'><font color='red'>N</font></A> ")
+	dat += text("Uranium: [machine.ore_uranium]<br>")
+
+	//gold
+	if (machine.selected_gold==1)
+		dat += text("<A href='?src=\ref[src];sel_gold=no'><font color='green'>Y</font></A> ")
+	else
+		dat += text("<A href='?src=\ref[src];sel_gold=yes'><font color='red'>N</font></A> ")
+	dat += text("Gold: [machine.ore_gold]<br>")
+
+	//silver
+	if (machine.selected_silver==1)
+		dat += text("<A href='?src=\ref[src];sel_silver=no'><font color='green'>Y</font></A> ")
+	else
+		dat += text("<A href='?src=\ref[src];sel_silver=yes'><font color='red'>N</font></A> ")
+	dat += text("Silver: [machine.ore_silver]<br>")
+
+	//diamond
+	if (machine.selected_diamond==1)
+		dat += text("<A href='?src=\ref[src];sel_diamond=no'><font color='green'>Y</font></A> ")
+	else
+		dat += text("<A href='?src=\ref[src];sel_diamond=yes'><font color='red'>N</font></A> ")
+	dat += text("Diamond: [machine.ore_diamond]<br>")
+
+	//On or off
+	dat += text("Machine is currently ")
+	if (machine.on==1)
+		dat += text("<A href='?src=\ref[src];set_on=off'>On</A> ")
+	else
+		dat += text("<A href='?src=\ref[src];set_on=on'>Off</A> ")
+
+
+
+	user << browse("[dat]", "window=console_processing_unit")
+
+
+
+/obj/machinery/mineral/processing_unit_console/Topic(href, href_list)
+	if(..())
+		return
+	usr.machine = src
+	src.add_fingerprint(usr)
+	if(href_list["sel_iron"])
+		if (href_list["sel_iron"] == "yes")
+			machine.selected_iron = 1
+		else
+			machine.selected_iron = 0
+	if(href_list["sel_plasma"])
+		if (href_list["sel_plasma"] == "yes")
+			machine.selected_plasma = 1
+		else
+			machine.selected_plasma = 0
+	if(href_list["sel_uranium"])
+		if (href_list["sel_uranium"] == "yes")
+			machine.selected_uranium = 1
+		else
+			machine.selected_uranium = 0
+	if(href_list["sel_gold"])
+		if (href_list["sel_gold"] == "yes")
+			machine.selected_gold = 1
+		else
+			machine.selected_gold = 0
+	if(href_list["sel_silver"])
+		if (href_list["sel_silver"] == "yes")
+			machine.selected_silver = 1
+		else
+			machine.selected_silver = 0
+	if(href_list["sel_diamond"])
+		if (href_list["sel_diamond"] == "yes")
+			machine.selected_diamond = 1
+		else
+			machine.selected_diamond = 0
+	if(href_list["set_on"])
+		if (href_list["set_on"] == "on")
+			machine.on = 1
+		else
+			machine.on = 0
+	src.updateUsrDialog()
+	return
 
 /**********************Mineral processing unit**************************/
 
@@ -476,7 +597,20 @@
 	anchored = 1.0
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
-
+	var/obj/machinery/mineral/CONSOLE = null
+	var/ore_gold = 0;
+	var/ore_silver = 0;
+	var/ore_diamond = 0;
+	var/ore_plasma = 0;
+	var/ore_uranium = 0;
+	var/ore_iron = 0;
+	var/selected_gold = 0
+	var/selected_silver = 0
+	var/selected_diamond = 0
+	var/selected_plasma = 0
+	var/selected_uranium = 0
+	var/selected_iron = 0
+	var/on = 0 //0 = off, 1 =... oh you know!
 
 /obj/machinery/mineral/processing_unit/New()
 	..()
@@ -489,31 +623,127 @@
 
 /obj/machinery/mineral/processing_unit/process()
 	if (src.output && src.input)
-		var/obj/item/weapon/ore/O
-		O = locate(/obj/item/weapon/ore, input.loc)
-		if (istype(O,/obj/item/weapon/ore/iron))
-			new /obj/item/stack/sheet/metal(output.loc)
-			del(O)
-			return
-		if (istype(O,/obj/item/weapon/ore/diamond))
-			new /obj/item/stack/sheet/diamond(output.loc)
-			del(O)
-			return
-		if (istype(O,/obj/item/weapon/ore/plasma))
-			new /obj/item/stack/sheet/plasma(output.loc)
-			del(O)
-			return
-		if (istype(O,/obj/item/weapon/ore/gold))
-			new /obj/item/stack/sheet/gold(output.loc)
-			del(O)
-			return
-		if (istype(O,/obj/item/weapon/ore/silver))
-			new /obj/item/stack/sheet/silver(output.loc)
-			del(O)
-			return
-		if (O)
-			O.loc = src.output.loc
+		var/i
+		for (i = 0; i < 10; i++)
+			if (on)
+				if (selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0)
+					if (ore_gold > 0)
+						ore_gold--;
+						new /obj/item/stack/sheet/gold(output.loc)
+					continue
+				if (selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0)
+					if (ore_silver > 0)
+						ore_silver--;
+						new /obj/item/stack/sheet/silver(output.loc)
+					continue
+				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0)
+					if (ore_diamond > 0)
+						ore_diamond--;
+						new /obj/item/stack/sheet/diamond(output.loc)
+					continue
+				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0)
+					if (ore_plasma > 0)
+						ore_plasma--;
+						new /obj/item/stack/sheet/plasma(output.loc)
+					continue
+				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0)
+					if (ore_uranium > 0)
+						ore_uranium--;
+						new /obj/item/weapon/ore/uranium(output.loc)
+					continue
+				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1)
+					if (ore_iron > 0)
+						ore_iron--;
+						new /obj/item/stack/sheet/metal(output.loc)
+					continue
+
+
+				//if a non valid combination is selected
+				if (selected_gold == 1)
+					ore_gold--
+				if (selected_silver == 1)
+					ore_silver--
+				if (selected_diamond == 1)
+					ore_diamond--
+				if (selected_plasma == 1)
+					ore_plasma--
+				if (selected_uranium == 1)
+					ore_uranium--
+				if (selected_iron == 1)
+					ore_iron--
+
+				new /obj/decal/ash(output.loc)
+
+				break
+			else
+				break
+		for (i = 0; i < 10; i++)
+			var/obj/item/weapon/ore/O
+			O = locate(/obj/item/weapon/ore, input.loc)
+			if (O)
+				if (istype(O,/obj/item/weapon/ore/iron))
+					ore_iron++;
+					//new /obj/item/stack/sheet/metal(output.loc)
+					del(O)
+					continue
+				if (istype(O,/obj/item/weapon/ore/diamond))
+					ore_diamond++;
+					//new /obj/item/stack/sheet/diamond(output.loc)
+					del(O)
+					continue
+				if (istype(O,/obj/item/weapon/ore/plasma))
+					ore_plasma++
+					//new /obj/item/stack/sheet/plasma(output.loc)
+					del(O)
+					continue
+				if (istype(O,/obj/item/weapon/ore/gold))
+					ore_gold++
+					//new /obj/item/stack/sheet/gold(output.loc)
+					del(O)
+					continue
+				if (istype(O,/obj/item/weapon/ore/silver))
+					ore_silver++
+					//new /obj/item/stack/sheet/silver(output.loc)
+					del(O)
+					continue
+				if (istype(O,/obj/item/weapon/ore/uranium))
+					ore_uranium++
+					del(O)
+					continue
+				O.loc = src.output.loc
+			else
+				break
 	return
+
+
+
+/**********************Mineral stacking unit console**************************/
+
+/obj/machinery/mineral/stacking_unit_console
+	name = "Stacking machine console"
+	icon = 'terminals.dmi'
+	icon_state = "production_console"
+	density = 1
+	anchored = 1
+	var/obj/machinery/mineral/processing_unit/machine = null
+
+/obj/machinery/mineral/stacking_unit_console/New()
+	..()
+	spawn(7)
+		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, SOUTH))
+		if (machine)
+			machine.CONSOLE = src
+		else
+			del(src)
+
+/obj/machinery/mineral/stacking_unit_console/attack_hand(user as mob)
+
+	var/dat
+
+	dat += text("What the heck can you even control on this, anyway??<br><br>")
+
+	user << browse("[dat]", "window=console_stacking_machine")
+
 
 /**********************Mineral stacking unit**************************/
 
@@ -640,7 +870,6 @@
 	dat += text("<br><br><font color='#888888'><b>Silver inserterd: </b>[amt_silver]</font>")
 
 	dat += text("<br><br><A href='?src=\ref[src];makeCoins=[1]'>Make coins</A>")
-
 	dat += text("<br><br>found: <font color='green'><b>[newCoins]</b></font>")
 	user << browse("[dat]", "window=mint")
 
