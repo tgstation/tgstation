@@ -46,10 +46,10 @@ datum/controller/game_controller
 		for(var/obj/machinery/atmospherics/machine in world)
 			machine.build_network()
 
-		world << "\red \b Initializing atmos machinery"
+		/*world << "\red \b Initializing atmos machinery"
 		sleep(-1)
 
-		find_air_alarms()
+		find_air_alarms()*/
 
 		world << "\red \b Initializations complete."
 

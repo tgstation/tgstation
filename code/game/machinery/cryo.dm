@@ -93,12 +93,12 @@
 			<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [round(src.occupant.oxyloss,0.1)]<BR>Brute damage: [round(src.occupant.bruteloss,0.1)]<BR>Fire damage: [round(src.occupant.fireloss,0.1)]<BR>Toxin damage: [round(src.occupant.toxloss,0.1)]<BR>Body temperature: [src.occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
 
 		"}
-
+		user.machine = src
 		user << browse(dat, "window=cryo")
 		onclose(user, "cryo")
 
 	Topic(href, href_list)
-		if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+		if ((get_dist(src, usr) <= 1) || istype(usr, /mob/living/silicon/ai))
 			if(href_list["start"])
 				src.on = !src.on
 				build_icon()
@@ -113,33 +113,19 @@
 	attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
 		if(istype(G, /obj/item/weapon/reagent_containers/glass))
 			if(src.beaker)
-				user << "A beaker is already loaded into the machine."
+				user << "\red A beaker is already loaded into the machine."
 				return
 
 			src.beaker =  G
 			user.drop_item()
 			G.loc = src
-			user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
+			user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
 		else if(istype(G, /obj/item/weapon/grab))
 			if(!ismob(G:affecting))
 				return
-			if (src.occupant)
-				user << "\blue <B>The cryo cell is already occupied!</B>"
-				return
-			if (G:affecting.abiotic())
-				user << "Subject may not have abiotic items on."
-				return
 			var/mob/M = G:affecting
-			if (M.client)
-				M.client.perspective = EYE_PERSPECTIVE
-				M.client.eye = src
-			M.loc = src
-			src.occupant = M
-			for(var/obj/O in src)
-				O.loc = src.loc
-			src.add_fingerprint(user)
-			build_icon()
-			del(G)
+			if(put_mob(M))
+				del(G)
 		src.updateUsrDialog()
 		return
 
@@ -224,6 +210,26 @@
 			src.occupant = null
 			build_icon()
 			return
+		put_mob(mob/M as mob)
+			if (src.occupant)
+				usr << "\red <B>The cryo cell is already occupied!</B>"
+				return
+			if (M.abiotic())
+				usr << "\red Subject may not have abiotic items on."
+				return
+			if(!src.node)
+				usr << "\red The cell is not corrrectly connected to its pipe network!"
+				return
+			if (M.client)
+				M.client.perspective = EYE_PERSPECTIVE
+				M.client.eye = src
+			M.pulling = null
+			M.loc = src
+			src.occupant = M
+			M.metabslow = 1
+			src.add_fingerprint(usr)
+			build_icon()
+			return 1
 
 	verb
 		move_eject()
@@ -240,25 +246,7 @@
 			set src in oview(1)
 			if (usr.stat != 0 || stat & (NOPOWER|BROKEN))
 				return
-			if (src.occupant)
-				usr << "\blue <B>The cell is already occupied!</B>"
-				return
-			if (usr.abiotic())
-				usr << "Subject may not have abiotic items on."
-				return
-			if(!src.node)
-				usr << "The cell is not corrrectly connected to its pipe network!"
-				return
-			usr.pulling = null
-			usr.client.perspective = EYE_PERSPECTIVE
-			usr.client.eye = src
-			usr.loc = src
-			usr.metabslow = 1
-			src.occupant = usr
-			/*for(var/obj/O in src)
-				O.loc = src.loc*/
-			src.add_fingerprint(usr)
-			build_icon()
+			put_mob(usr)
 			return
 
 

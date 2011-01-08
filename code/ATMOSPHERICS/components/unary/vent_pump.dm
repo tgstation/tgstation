@@ -6,14 +6,9 @@
 	desc = "Has a valve and pump attached to it"
 
 	level = 1
-
-	high_volume
-		name = "Large Air Vent"
-
-		New()
-			..()
-
-			air_contents.volume = 1000
+	var/channel = ENVIRON
+	var/area_uid
+	var/id = null
 
 	var/on = 0
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
@@ -28,6 +23,26 @@
 
 	var/welded = 0 // Added for aliens -- TLE
 
+	var/frequency = 1439
+	var/datum/radio_frequency/radio_connection
+
+	
+	New()
+		var/area/A = get_area(loc)
+		if (A.master)
+			A = A.master
+		area_uid = A.uid
+		..()
+		if (!id)
+			id = "\ref[src]"
+	
+	high_volume
+		name = "Large Air Vent"
+		New()
+			..()
+			channel = EQUIP
+			air_contents.volume = 1000
+
 	update_icon()
 		if(on && !(stat & (NOPOWER|BROKEN)))
 			if(pump_direction)
@@ -38,6 +53,7 @@
 			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
 
 		return
+
 	process()
 		..()
 		if(stat & (NOPOWER|BROKEN))
@@ -45,9 +61,10 @@
 		if (!node)
 			on = 0
 		broadcast_status()
-
 		if(!on)
 			return 0
+
+		use_power(5, channel)
 		if(welded)
 			return 0
 
@@ -67,8 +84,8 @@
 					var/transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 					var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
-					use_power(10, ENVIRON)
+	
+					use_power(round(air_contents.volume/12), channel)
 					loc.assume_air(removed)
 
 					if(network)
@@ -76,7 +93,6 @@
 
 		else //external -> internal
 			var/pressure_delta = 10000
-
 			if(pressure_checks&1)
 				pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
 			if(pressure_checks&2)
@@ -89,7 +105,9 @@
 					var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 					if (isnull(removed)) //in space
 						return
-					use_power(10, ENVIRON)
+					
+
+					use_power(round(air_contents.volume/12), channel)
 					air_contents.merge(removed)
 
 					if(network)
@@ -114,21 +132,20 @@
 			signal.transmission_method = 1 //radio signal
 			signal.source = src
 
-			signal.data["tag"] = id
+			signal.data["area"] = src.area_uid
+			signal.data["tag"] = src.id
 			signal.data["device"] = "AVP"
 			signal.data["power"] = on?("on"):("off")
 			signal.data["direction"] = pump_direction?("release"):("siphon")
 			signal.data["checks"] = pressure_checks
 			signal.data["internal"] = internal_pressure_bound
 			signal.data["external"] = external_pressure_bound
+			signal.data["timestamp"] = air_master.current_cycle
 
 			radio_connection.post_signal(src, signal)
 
 			return 1
 
-	var/frequency = 0
-	var/id = null
-	var/datum/radio_frequency/radio_connection
 
 	initialize()
 		..()
@@ -137,7 +154,7 @@
 		update_icon()
 
 	receive_signal(datum/signal/signal)
-		if(signal.data["tag"] && (signal.data["tag"] != id))
+		if(!signal.data["tag"] || (signal.data["tag"] != id))
 			return 0
 
 		switch(signal.data["command"])
@@ -185,6 +202,9 @@
 
 				external_pressure_bound = number
 
+			if("init")
+				name = signal.data["parameter"]
+
 		if(signal.data["tag"])
 			spawn(2)
 				broadcast_status()
@@ -225,8 +245,34 @@
 			usr << "It seems welded shut."
 
 	power_change()
-		if(powered(ENVIRON))
+		if(powered(channel))
 			stat &= ~NOPOWER
 		else
 			stat |= NOPOWER
 		update_icon()
+
+	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		if (!istype(W, /obj/item/weapon/wrench))
+			return ..()
+		if (!(stat & NOPOWER) && on)
+			user << "\red You cannot unwrench this [src], turn it off first."
+			return 1
+		var/turf/T = src.loc
+		if (level==1 && isturf(T) && T.intact)
+			user << "\red You must remove the plating first."
+			return 1
+		var/datum/gas_mixture/int_air = return_air()
+		var/datum/gas_mixture/env_air = loc.return_air()
+		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
+			add_fingerprint(user)
+			return 1
+		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		user << "\blue You begin to unfasten \the [src]..."
+		if (do_after(user, 40))
+			user.visible_message( \
+				"[user] unfastens \the [src].", \
+				"\blue You have unfastened \the [src].", \
+				"You hear ratchet.")
+			new /obj/item/weapon/pipe(loc, make_from=src)
+			del(src)

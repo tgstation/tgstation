@@ -38,18 +38,19 @@ obj/machinery/atmospherics/binary/pump
 				icon_state = "exposed_2_off"
 			else
 				icon_state = "exposed_3_off"
-			on = 0
-
 		return
 
 	process()
 		..()
+		if(stat & (NOPOWER|BROKEN))
+			return
 		if(!on)
 			return 0
+		use_power(5)
 
 		var/output_starting_pressure = air2.return_pressure()
 
-		if(output_starting_pressure >= target_pressure)
+		if( (target_pressure - output_starting_pressure) < 0.01)
 			//No need to pump gas if target is already reached!
 			return 1
 
@@ -68,6 +69,7 @@ obj/machinery/atmospherics/binary/pump
 			if(network2)
 				network2.update = 1
 
+			use_power(round(air2.volume/12))
 		return 1
 
 	//Radio remote control
@@ -95,6 +97,22 @@ obj/machinery/atmospherics/binary/pump
 			radio_connection.post_signal(src, signal)
 
 			return 1
+		interact(mob/user as mob)
+			var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
+						<b>Desirable output pressure: </b>
+						<a href='?src=\ref[src];out_press=-1000'><b>-</b></a>
+						<a href='?src=\ref[src];out_press=-100'><b>-</b></a>
+						<a href='?src=\ref[src];out_press=-10'><b>-</b></a>
+						<a href='?src=\ref[src];out_press=-1'>-</a>
+						[round(target_pressure,0.1)]kPa
+						<a href='?src=\ref[src];out_press=1'>+</a>
+						<a href='?src=\ref[src];out_press=10'><b>+</b></a>
+						<a href='?src=\ref[src];out_press=100'><b>+</b></a>
+						<a href='?src=\ref[src];out_press=1000'><b>+</b></a>
+						"}
+
+			user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
+			onclose(user, "atmo_pump")
 
 	var/frequency = 0
 	var/id = null
@@ -138,19 +156,7 @@ obj/machinery/atmospherics/binary/pump
 			user << "\red Access denied."
 			return
 		usr.machine = src
-		var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
-					<b>Desirable output pressure: </b>
-					<a href='?src=\ref[src];out_press=-100'><b>-</b></a>
-					<a href='?src=\ref[src];out_press=-10'><b>-</b></a>
-					<a href='?src=\ref[src];out_press=-1'>-</a>
-					[round(target_pressure,0.1)]kPa
-					<a href='?src=\ref[src];out_press=1'>+</a>
-					<a href='?src=\ref[src];out_press=10'><b>+</b></a>
-					<a href='?src=\ref[src];out_press=100'><b>+</b></a>
-					"}
-
-		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
-		onclose(user, "atmo_pump")
+		interact(user)
 		return
 
 	Topic(href,href_list)
@@ -158,6 +164,37 @@ obj/machinery/atmospherics/binary/pump
 			on = !on
 		if(href_list["out_press"])
 			src.target_pressure = max(0, min(4500, src.target_pressure + text2num(href_list["out_press"])))
+		usr.machine = src
 		src.update_icon()
 		src.updateUsrDialog()
 		return
+
+	power_change()
+		..()
+		update_icon()
+
+	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		if (!istype(W, /obj/item/weapon/wrench))
+			return ..()
+		if (!(stat & NOPOWER) && on)
+			user << "\red You cannot unwrench this [src], turn it off first."
+			return 1
+		var/turf/T = src.loc
+		if (level==1 && isturf(T) && T.intact)
+			user << "\red You must remove the plating first."
+			return 1
+		var/datum/gas_mixture/int_air = return_air()
+		var/datum/gas_mixture/env_air = loc.return_air()
+		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
+			add_fingerprint(user)
+			return 1
+		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		user << "\blue You begin to unfasten \the [src]..."
+		if (do_after(user, 40))
+			user.visible_message( \
+				"[user] unfastens \the [src].", \
+				"\blue You have unfastened \the [src].", \
+				"You hear ratchet.")
+			new /obj/item/weapon/pipe(loc, make_from=src)
+			del(src)

@@ -20,6 +20,16 @@
 	var/volume_rate = 120
 	var/panic = 0 //is this scrubber panicked?
 
+	var/area_uid
+
+	New()
+		var/area/A = get_area(loc)
+		if (A.master)
+			A = A.master
+		area_uid = A.uid
+		id_tag = "\ref[src]"
+		..()
+
 	update_icon()
 		if(node && on && !(stat & (NOPOWER|BROKEN)))
 			if(scrubbing)
@@ -42,6 +52,8 @@
 
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal
+			signal.source = src
+			signal.data["area"] = area_uid
 			signal.data["tag"] = id_tag
 			signal.data["device"] = "AScr"
 			signal.data["timestamp"] = air_master.current_cycle
@@ -57,8 +69,8 @@
 
 	initialize()
 		..()
-		set_frequency(frequency)
-		update_icon()
+		if (frequency)
+			set_frequency(frequency)
 
 
 	process()
@@ -82,7 +94,8 @@
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 				if (isnull(removed)) //in space
 					return
-				use_power(30, ENVIRON)
+				var/power = (scrub_Toxins+scrub_CO2+scrub_N2O)*volume_rate/12
+				use_power(round(power+5), ENVIRON)
 				//Filter it
 				var/datum/gas_mixture/filtered_out = new
 				filtered_out.temperature = removed.temperature
@@ -112,7 +125,9 @@
 					network.update = 1
 
 		else //Just siphoning all air
-			use_power(volume_rate/12, ENVIRON)
+			if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
+				return
+			use_power(round(volume_rate/12)+5, ENVIRON)
 			var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -137,7 +152,7 @@
 */
 
 	receive_signal(datum/signal/signal)
-		if(signal.data["tag"] && (signal.data["tag"] != id_tag))
+		if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
 			return ..()
 
 		switch(signal.data["command"])
@@ -160,6 +175,8 @@
 				else
 					scrubbing = 1
 					volume_rate = initial(volume_rate)
+			if("init")
+				name = signal.data["parameter"]
 		if(signal.data["tag"])
 			spawn(2)
 				broadcast_status()
@@ -172,3 +189,29 @@
 		else
 			stat |= NOPOWER
 		update_icon()
+
+	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		if (!istype(W, /obj/item/weapon/wrench))
+			return ..()
+		if (!(stat & NOPOWER) && on)
+			user << "\red You cannot unwrench this [src], turn it off first."
+			return 1
+		var/turf/T = src.loc
+		if (level==1 && isturf(T) && T.intact)
+			user << "\red You must remove the plating first."
+			return 1
+		var/datum/gas_mixture/int_air = return_air()
+		var/datum/gas_mixture/env_air = loc.return_air()
+		if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+			user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
+			add_fingerprint(user)
+			return 1
+		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		user << "\blue You begin to unfasten \the [src]..."
+		if (do_after(user, 40))
+			user.visible_message( \
+				"[user] unfastens \the [src].", \
+				"\blue You have unfastened \the [src].", \
+				"You hear ratchet.")
+			new /obj/item/weapon/pipe(loc, make_from=src)
+			del(src)

@@ -6,7 +6,7 @@ obj/machinery/atmospherics/pipe
 	var/volume = 0
 	var/nodealert = 0
 
-
+	layer = 2.4 //under wires with their 2.5
 
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 		//minimum pressure before check_pressure(...) should be called
@@ -143,13 +143,19 @@ obj/machinery/atmospherics/pipe
 			var/pressure_difference = pressure - environment.return_pressure()
 
 			if(pressure_difference > maximum_pressure)
-				del(src)
+				burst()
 
 			else if(pressure_difference > fatigue_pressure)
+				//TODO: leak to turf, doing pfshhhhh
 				if(prob(5))
-					del(src)
+					burst()
 
 			else return 1
+
+		proc/burst()
+			src.visible_message("\red \bold [src] bursts!");
+			playsound(src.loc, 'bang.ogg', 25, 1)
+			del(src)
 
 		Del()
 			if(node1)
@@ -163,6 +169,8 @@ obj/machinery/atmospherics/pipe
 			return list(node1, node2)
 
 		update_icon()
+			if(dir==3) dir = 1
+			else if(dir==12) dir = 4
 			if(node1&&node2)
 				var/C = ""
 				switch(color)
@@ -173,49 +181,30 @@ obj/machinery/atmospherics/pipe
 					if ("yellow") C = "-y"
 				icon_state = "intact[C][invisibility ? "-f" : "" ]"
 
-				var/node1_direction = get_dir(src, node1)
-				var/node2_direction = get_dir(src, node2)
+				//var/node1_direction = get_dir(src, node1)
+				//var/node2_direction = get_dir(src, node2)
 
-				dir = node1_direction|node2_direction
-				if(dir==3) dir = 1
-				else if(dir==12) dir = 4
+				//dir = node1_direction|node2_direction
 
 			else
-				icon_state = "exposed[invisibility ? "-f" : "" ]"
+				var/have_node1 = node1?1:0
+				var/have_node2 = node2?1:0
+				icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
 
-				if(node1)
-					dir = get_dir(src,node1)
-
-				else if(node2)
-					dir = get_dir(src,node2)
-
-				else
+				if(!node1&&!node2)
 					del(src)
 
 		initialize()
 			var/connect_directions = initialize_directions
-
-/*			switch(dir)
-				if(NORTH)
-					connect_directions = NORTH|SOUTH
-				if(SOUTH)
-					connect_directions = NORTH|SOUTH
-				if(EAST)
-					connect_directions = EAST|WEST
-				if(WEST)
-					connect_directions = EAST|WEST
-				else
-					connect_directions = dir
-*/
 			for(var/direction in cardinal)
 				if(direction&connect_directions)
 					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
 						if(target.initialize_directions & get_dir(target,src))
 							node1 = target
+							connect_directions &= ~direction
 							break
-
-					connect_directions &= ~direction
-					break
+					if (node1)
+						break
 
 
 			for(var/direction in cardinal)
@@ -223,13 +212,14 @@ obj/machinery/atmospherics/pipe
 					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
 						if(target.initialize_directions & get_dir(target,src))
 							node2 = target
+							connect_directions &= ~direction
 							break
-
-					connect_directions &= ~direction
-					break
+					if(node2)
+						break
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
+			update_icon()
 			//update_icon()
 
 		disconnect(obj/machinery/atmospherics/reference)
@@ -260,47 +250,69 @@ obj/machinery/atmospherics/pipe
 		level = 2
 
 
-	simple/junction
+	simple/heat_exchanging/junction
 		icon = 'junction.dmi'
 		icon_state = "intact"
 		level = 2
-
-		update_icon()
-			if(istype(node1, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
-				dir = get_dir(src, node1)
-
-				if(node2)
-					icon_state = "intact"
-				else
-					icon_state = "exposed"
-
-			else if(istype(node2, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
-				dir = get_dir(src, node2)
-
-				if(node1)
-					icon_state = "intact"
-				else
-					icon_state = "exposed"
-
-			else
-				icon_state = "exposed"
-
-	simple/heat_exchanging
-		icon = 'heat.dmi'
-		icon_state = "3"
-		level = 2
-
-		minimum_temperature_difference = 20
-		thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
+		minimum_temperature_difference = 300
+		thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
 		update_icon()
 			if(node1&&node2)
 				icon_state = "intact"
+			else
+				var/have_node1 = node1?1:0
+				var/have_node2 = node2?1:0
+				icon_state = "exposed[have_node1][have_node2]"
+			if(!node1&&!node2)
+				del(src)
 
-				var/node1_direction = get_dir(src, node1)
-				var/node2_direction = get_dir(src, node2)
+		initialize()
+			if(!node1)
+				for(var/obj/machinery/atmospherics/pipe/simple/target in get_step(src,initialize_directions))
+					if(target.initialize_directions & get_dir(target,src))
+						node1 = target
+						break
+			if(!node2)
+				for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,initialize_directions_he))
+					if(target.initialize_directions_he & get_dir(target,src))
+						node2 = target
+						break
 
-				icon_state = "[node1_direction|node2_direction]"
+			update_icon()
+
+	simple/heat_exchanging
+		icon = 'heat.dmi'
+		icon_state = "intact"
+		level = 2
+		var/initialize_directions_he
+
+		minimum_temperature_difference = 20
+		thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
+
+		initialize()
+			var/connect_directions = initialize_directions_he
+			for(var/direction in cardinal)
+				if(direction&connect_directions)
+					for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,direction))
+						if(target.initialize_directions_he & get_dir(target,src))
+							node1 = target
+							connect_directions &= ~direction
+							break
+					if (node1)
+						break
+
+			for(var/direction in cardinal)
+				if(direction&connect_directions)
+					for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,direction))
+						if(target.initialize_directions_he & get_dir(target,src))
+							node2 = target
+							connect_directions &= ~direction
+							break
+					if (node2)
+						break
+			update_icon()
+
 
 	tank
 		icon = 'pipe_tank.dmi'
@@ -426,6 +438,7 @@ obj/machinery/atmospherics/pipe
 				icon_state = "exposed"
 
 		initialize()
+
 			var/connect_direction = dir
 
 			for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
@@ -665,10 +678,10 @@ obj/machinery/atmospherics/pipe
 					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
 						if(target.initialize_directions & get_dir(target,src))
 							node1 = target
+							connect_directions &= ~direction
 							break
-
-					connect_directions &= ~direction
-					break
+					if (node1)
+						break
 
 
 			for(var/direction in cardinal)
@@ -676,10 +689,10 @@ obj/machinery/atmospherics/pipe
 					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
 						if(target.initialize_directions & get_dir(target,src))
 							node2 = target
+							connect_directions &= ~direction
 							break
-
-					connect_directions &= ~direction
-					break
+					if (node2)
+						break
 
 
 			for(var/direction in cardinal)
@@ -687,11 +700,39 @@ obj/machinery/atmospherics/pipe
 					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
 						if(target.initialize_directions & get_dir(target,src))
 							node3 = target
+							connect_directions &= ~direction
 							break
-
-					connect_directions &= ~direction
-					break
+					if (node3)
+						break
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
 			//update_icon()
+			update_icon()
+
+obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if (istype(W, /obj/machinery/atmospherics/pipe/tank))
+		return ..()
+	if (istype(W, /obj/machinery/atmospherics/pipe/vent))
+		return ..()
+	if (!istype(W, /obj/item/weapon/wrench))
+		return ..()
+	var/turf/T = src.loc
+	if (level==1 && isturf(T) && T.intact)
+		user << "\red You must remove the plating first."
+		return 1
+	var/datum/gas_mixture/int_air = return_air()
+	var/datum/gas_mixture/env_air = loc.return_air()
+	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+		user << "\red You cannot unwrench this [src], it too exerted due to internal pressure."
+		add_fingerprint(user)
+		return 1
+	playsound(src.loc, 'Ratchet.ogg', 50, 1)
+	user << "\blue You begin to unfasten \the [src]..."
+	if (do_after(user, 40))
+		user.visible_message( \
+			"[user] unfastens \the [src].", \
+			"\blue You have unfastened \the [src].", \
+			"You hear ratchet.")
+		new /obj/item/weapon/pipe(loc, make_from=src)
+		del(src)

@@ -71,11 +71,11 @@
 		else
 			to_transfer = min(src.amount, S.max_amount-S.amount)
 		S.amount+=to_transfer
+		if (S && usr.machine==S)
+			spawn(0) S.interact(usr)
 		src.use(to_transfer)
 		if (src && usr.machine==src)
 			spawn(0) src.interact(usr)
-		if (S && usr.machine==S)
-			spawn(0) S.interact(usr)
 	else return ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)

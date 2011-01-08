@@ -178,7 +178,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 <A href='?src=\ref[user];mach_close=canister'>Close</A><BR>
 "}
 
-	user << browse(output_text, "window=canister;size=600x300")
+	user << browse("<html><head><title>[src]</title></head><body>[output_text]</body></html>", "window=canister;size=600x300")
 	onclose(user, "canister")
 	return
 

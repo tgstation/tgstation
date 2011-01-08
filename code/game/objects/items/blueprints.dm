@@ -158,12 +158,11 @@ move an amendment</a> to the drawing.</p>
 
 
 /obj/item/blueprints/proc/set_area_machinery_title(var/area/A,var/title,var/oldtitle)
-	for(var/area/RA in A.related)
-		for(var/obj/machinery/alarm/M in RA)
-			M.alarm_zone = title
 	if (!oldtitle) // or dd_replacetext goes to infinite loop
 		return
 	for(var/area/RA in A.related)
+		for(var/obj/machinery/alarm/M in RA)
+			M.name = dd_replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/power/apc/M in RA)
 			M.name = dd_replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in RA)

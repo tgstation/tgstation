@@ -11,19 +11,28 @@
 /obj/machinery/pipedispenser/attack_hand(user as mob)
 	if(..())
 		return
-
 	var/dat = {"
-<A href='?src=\ref[src];make=0'>Pipe<BR>
-<A href='?src=\ref[src];make=1'>Bent Pipe<BR>
-<A href='?src=\ref[src];make=4'>Connector<BR>
-<A href='?src=\ref[src];make=5'>Manifold<BR>
-<A href='?src=\ref[src];make=7'>Unary Vent<BR>
-<A href='?src=\ref[src];make=8'>Manual Valve<BR>
-<A href='?src=\ref[src];make=9'>Gas Pump<BR>
-<A href='?src=\ref[src];make=10'>Scrubber<BR>"}
+<b>Regular pipes:</b><BR>
+<A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
+<A href='?src=\ref[src];make=1;dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=4;dir=1'>Connector</A><BR>
+<A href='?src=\ref[src];make=5;dir=1'>Manifold</A><BR>
+<A href='?src=\ref[src];make=7;dir=1'>Unary Vent</A><BR>
+<A href='?src=\ref[src];make=8;dir=1'>Manual Valve</A><BR>
+<A href='?src=\ref[src];make=9;dir=1'>Gas Pump</A><BR>
+<A href='?src=\ref[src];make=10;dir=1'>Scrubber</A><BR>
+<A href='?src=\ref[src];makemeter=1'>Meter</A><BR>
+<b>Heat exchange:</b><BR>
+<A href='?src=\ref[src];make=2;dir=1'>Pipe</A><BR>
+<A href='?src=\ref[src];make=3;dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=6;dir=1'>Junction</A><BR>
+<b>Insulated pipes:</b><BR>
+<A href='?src=\ref[src];make=11;dir=1'>Pipe</A><BR>
+<A href='?src=\ref[src];make=12;dir=5'>Bent Pipe</A><BR>
+"}
 
 
-	user << browse("<HEAD><TITLE>Pipe Dispenser</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
+	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	onclose(user, "pipedispenser")
 	return
 
@@ -34,13 +43,15 @@
 	src.add_fingerprint(usr)
 	if(href_list["make"])
 		var/p_type = text2num(href_list["make"])
-		var/obj/item/weapon/pipe/P = new /obj/item/weapon/pipe(src.loc)
-		P.pipe_type = p_type
+		var/p_dir = text2num(href_list["dir"])
+		var/obj/item/weapon/pipe/P = new (usr.loc, pipe_type=p_type, dir=p_dir)
 		P.update()
+	if(href_list["makemeter"])
+		new /obj/item/weapon/pipe_meter(usr.loc)
 
-	for(var/mob/M in viewers(1, src))
+/*	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
-			src.attack_hand(M)
+			src.attack_hand(M)*/
 	return
 
 /obj/machinery/pipedispenser/New()
@@ -67,7 +78,7 @@
 <A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
 "}
 
-	user << browse("<HEAD><TITLE>Disposal Pipe Dispenser</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
+	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	return
 
 // 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk

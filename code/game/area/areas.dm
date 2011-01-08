@@ -1,8 +1,12 @@
 // ===
+/area/
+	var/global/global_uid = 0
+	var/uid
 
 /area/New()
 
 	src.icon = 'alert.dmi'
+	uid = ++global_uid
 	spawn(1)
 	//world.log << "New: [src] [tag]"
 		var/sd_created = findtext(tag,"sd_L")

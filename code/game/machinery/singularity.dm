@@ -217,11 +217,14 @@ However people seem to like it for some reason.
 			if(isturf(A,/turf/simulated/floor/engine)) //here was a bug. But now it's a feature. -rasta0
 				return*/
 
-		if(istype(A,/turf/simulated/floor))
+/*		if(istype(A,/turf/simulated/floor))
 			A:ReplaceWithSpace()
 			gain = 2
 		else
-			A:ReplaceWithFloor()
+			A:ReplaceWithFloor()*/
+		A:ReplaceWithSpace() //
+		gain = 2
+
 	src.energy += gain
 
 /////////////////////////////////////////////Controls which "event" is called

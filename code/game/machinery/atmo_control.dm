@@ -491,12 +491,14 @@ Rate: [volume_rate] L/sec<BR>"}
 
 		if(!zone || !severity) return
 
+		minor_alarms -= zone
+		priority_alarms -= zone
 		if(severity=="severe")
-			priority_alarms -= zone
 			priority_alarms += zone
-		else
-			minor_alarms -= zone
+		else if (severity=="minor")
 			minor_alarms += zone
+		else /*"clear"*/
+			//do nothing
 
 	proc
 		set_frequency(new_frequency)

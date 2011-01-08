@@ -6,25 +6,23 @@
 	var/list/sensor_information = list()
 	var/list/vent_information = list()
 	var/datum/radio_frequency/radio_connection
-	var/alarm_area //Currently unused. Maybe do something if emmaged or hacked...Like change the area to security, syphon air out, ..., profit.
+	//var/alarm_area //Currently unused. Maybe do something if emmaged or hacked...Like change the area to security, syphon air out, ..., profit.
 	var/locked = 1
 	var/panic = 0 //is this alarm panicked?
 	var/device = null
+	var/area_uid
 
 	req_access = list(access_atmospherics)
 
 	attack_hand(mob/user)
-		if(!(istype(usr, /mob/living/silicon) || istype(usr, /mob/living/carbon/human)))
-			user << "\red You don't have the dexterity to do this."
-			return
-		if(stat & (NOPOWER|BROKEN))
+		. = ..()
+		if (.)
 			return
 
 		//Following is no longer needed, as all human/silicon mobs will be able to view air info.
 		/*else if(!(istype(usr, /mob/living/silicon)) && locked)
 			user << "\red You must unlock the Air Alarm interface first"
 			return*/
-		src.add_fingerprint(user)
 
 		user << browse(return_text(),"window=air_alarm")
 		user.machine = src
@@ -33,23 +31,44 @@
 
 
 	receive_signal(datum/signal/signal)
-		if(!signal || signal.encryption) return
-
+		if(stat & (NOPOWER|BROKEN))
+			return
+		if(!signal || signal.encryption)
+			return
 		var/id_tag = signal.data["tag"]
-		if(!id_tag || (!sensors.Find(id_tag) && !vents.Find(id_tag))) return
+		if (!id_tag)
+			return
+		if (!signal.data["area"] || signal.data["area"] != area_uid)
+			return
+		if((!sensors.Find(id_tag) && !vents.Find(id_tag)))
+			register_env_machine(id_tag, signal.data["device"])
 		if(signal.data["device"] == "AScr")
 			sensor_information[id_tag] = signal.data
 		else if(signal.data["device"] == "AVP")
 			vent_information[id_tag] = signal.data
 
 	proc
+		register_env_machine(var/m_id, var/device_type)
+			var/area/A = get_area(loc)
+			var/new_name
+			if (device_type=="AVP")
+				new_name = "[A.name] Vent Pump #[vent_information.len+1]"
+				vents[m_id] = new_name
+			else if (device_type=="AScr")
+				new_name = "[A.name] Air Scrubber #[sensor_information.len+1]"
+				sensors[m_id] = new_name
+			else
+				return
+			spawn (10)
+				send_signal(m_id, "init", new_name )
+			
 		set_frequency(new_frequency)
 			radio_controller.remove_object(src, "[frequency]")
 			frequency = new_frequency
 			radio_connection = radio_controller.add_object(src, "[frequency]")
 
 
-		send_signal(var/target, var/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+		send_signal(var/target, var/command, var/parameter = null)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 			if(!radio_connection)
 				return 0
 
@@ -59,6 +78,8 @@
 
 			signal.data["tag"] = target
 			signal.data["command"] = command
+			if (parameter)
+				signal.data["parameter"] = parameter
 
 			radio_connection.post_signal(src, signal)
 //			world << text("Signal [] Broadcasted to []", command, target)
@@ -67,9 +88,9 @@
 
 		return_text()
 			if(!(istype(usr, /mob/living/silicon)) && locked)
-				return "<html><head><title>[alarm_zone] Air Alarm</title></head><body>[return_status()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
+				return "<html><head><title>[src]</title></head><body>[return_status()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
 			else
-				return "<html><head><title>[alarm_zone] Air Alarm</title></head><body>[return_status()]<hr>[return_controls()]</body></html>"
+				return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[return_controls()]</body></html>"
 
 		return_status()
 			var/turf/location = src.loc
@@ -182,7 +203,7 @@
 						"}
 
 				output += "<A href='?src=\ref[src];toggle_panic_siphon_global=1'><font color='red'><B>TOGGLE PANIC SYPHON IN AREA</B></font></A>"
-				output += "<HR><A href='?src=\ref[src];reinit_atmos_machinery=1'>Reinitialize atmospheric machinery in area</A>"
+				//output += "<HR><A href='?src=\ref[src];reinit_atmos_machinery=1'>Reinitialize atmospheric machinery in area</A>"
 			else
 				var/sensor_data
 				if(src.device == "Scrubbers")
@@ -200,6 +221,8 @@
 								sensor_part += "<A href='?src=\ref[src];scr_toggle_panic_siphon=[id_tag]'><font color='[(data["panic"]?"blue'>Dea":"red'>A")]ctivate panic syphon</A></font><BR>"
 								if(data["panic"])
 									sensor_part += "<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>"
+								if (data["timestamp"]+3 < air_master.current_cycle)
+									sensor_part += "<font color='red'><B>[long_name] not responding.</B></font><BR>"
 								sensor_part += "<HR>"
 							else
 								sensor_part = "<FONT color='red'>[long_name] can not be found!</FONT><BR><HR>"
@@ -217,14 +240,16 @@
 
 							if(data)
 								sensor_part += {"<B>Operating:</B> <A href='?src=\ref[src];v_toggle_power=[id_tag]'>[data["power"]]</A><BR>
-												<B>Pressure checks:</B> <A href='?src=\ref[src];v_toggle_checks=[id_tag]'>[data["checks"]?"on":"off"]</A><BR>
-												<HR>"}
+												<B>Pressure checks:</B> <A href='?src=\ref[src];v_toggle_checks=[id_tag]'>[data["checks"]?"on":"off"]</A><BR>"}
+								if (data["timestamp"]+3 < air_master.current_cycle)
+									sensor_part += "<font color='red'><B>[long_name] not responding.</B></font><BR>"
+								sensor_part += "<HR>"
 							else
 								sensor_part = "<FONT color='red'>[long_name] can not be found!</FONT><HR>"
 
 							sensor_data += sensor_part
 					else
-						sensor_data = "No scrubbers connected.<BR>"
+						sensor_data = "No vents connected.<BR>"
 
 				output = {"[sensor_data]<a href='?src=\ref[src];main=1'>Main menu</a><br>"}
 
@@ -293,9 +318,9 @@
 			for(var/P in vents)
 				send_signal(P, "power_off")
 			panic = !panic
-		if(href_list["reinit_atmos_machinery"])
+/*		if(href_list["reinit_atmos_machinery"])
 			var/A = get_area(loc)
-			connect_area_atmos_machinery(A)
+			connect_area_atmos_machinery(A)*/
 
 
 		spawn(5)
@@ -306,13 +331,12 @@
 
 /obj/machinery/alarm/New()
 	..()
-
-	if(!alarm_zone)
-		var/area/A = get_area(loc)
-		if(A.name)
-			alarm_zone = A.name
-		else
-			alarm_zone = "Unregistered"
+	var/area/A = get_area(loc)
+	if (A.master)
+		A = A.master
+	area_uid = A.uid
+	if (name == "alarm")
+		name = "[A.name] Air Alarm"
 
 /obj/machinery/alarm/process()
 	if (src.skipprocess)
@@ -404,16 +428,19 @@
 
 	if(!frequency) return
 
+	var/area/A = get_area(loc)
 	var/datum/signal/alert_signal = new
 	alert_signal.source = src
 	alert_signal.transmission_method = 1
-	alert_signal.data["zone"] = alarm_zone
+	alert_signal.data["zone"] = A.name
 	alert_signal.data["type"] = "Atmospheric"
 
 	if(alert_level==0)
 		alert_signal.data["alert"] = "severe"
-	else
+	else if (alert_level==1)
 		alert_signal.data["alert"] = "minor"
+	else if (alert_level==0)
+		alert_signal.data["alert"] = "clear"
 
 	frequency.post_signal(src, alert_signal)
 
@@ -432,6 +459,7 @@
 			if(src.allowed(usr))
 				locked = !locked
 				user << "You [ locked ? "lock" : "unlock"] the Air Alarm interface."
+				src.updateUsrDialog()
 			else
 				user << "\red Access denied."
 		return

@@ -10,7 +10,6 @@
 	anchored = 1.0
 	var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = "1437"
-	var/alarm_zone = null
 
 /obj/machinery/autolathe
 	name = "Autolathe"
@@ -20,7 +19,7 @@
 	var/g_amount = 0.0
 	var/operating = 0.0
 	var/opened = 0.0
-	var/temp = null
+	//var/temp = null
 	anchored = 1.0
 	var/list/L = list()
 	var/list/LL = list()

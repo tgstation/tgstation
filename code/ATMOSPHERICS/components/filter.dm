@@ -347,6 +347,7 @@ obj/machinery/atmospherics/filter/attack_hand(user as mob) // -- TLE
 			<A href='?src=\ref[src];filterset=4'>Nitrous Oxide</A><BR>
 			<A href='?src=\ref[src];filterset=-1'>Nothing</A><BR>
 			<HR><B>Desirable output pressure:</B>
+			<a href='?src=\ref[src];out_press=-1000'><b>-</b></a>
 			<a href='?src=\ref[src];out_press=-100'><b>-</b></a>
 			<a href='?src=\ref[src];out_press=-10'><b>-</b></a>
 			<a href='?src=\ref[src];out_press=-1'>-</a>
@@ -354,6 +355,7 @@ obj/machinery/atmospherics/filter/attack_hand(user as mob) // -- TLE
 			<a href='?src=\ref[src];out_press=1'>+</a>
 			<a href='?src=\ref[src];out_press=10'><b>+</b></a>
 			<a href='?src=\ref[src];out_press=100'><b>+</b></a>
+			<a href='?src=\ref[src];out_press=1000'><b>+</b></a>
 			"}
 /*
 		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD>[dat]","window=atmo_filter")

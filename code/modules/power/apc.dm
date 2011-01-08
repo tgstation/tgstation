@@ -449,7 +449,7 @@
 			cell.updateicon()
 
 			src.cell = null
-			user.visible_message("\red [user.name] remove the power cell from [src.name]!", "You remove the power cell.")
+			user.visible_message("\red [user.name] removes the power cell from [src.name]!", "You remove the power cell.")
 			//user << "You remove the power cell."
 			charging = 0
 			src.updateicon()
@@ -457,6 +457,7 @@
 	else
 		if(stat & (BROKEN|MAINT)) return
 		// do APC interaction
+		user.machine = src
 		src.interact(user)
 
 
@@ -478,7 +479,6 @@
 				user << browse(null, "window=apc")
 				return
 	if(wiresexposed && (!istype(user, /mob/living/silicon)))
-		user.machine = src
 		var/t1 = text("<html><head><title>[area.name] APC wires</title></head><body><B>Access Panel</B><br>\n")
 		var/list/apcwires = list(
 			"Orange" = 1,

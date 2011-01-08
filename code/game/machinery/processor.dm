@@ -115,14 +115,14 @@
 		src.processing = 1
 		user.visible_message("\blue [user] turns on \a [src].", \
 			"You turn on \a [src].", \
-			"You hear food processor")
+			"You hear a food processor")
 		playsound(src.loc, 'blender.ogg', 50, 1)
 		use_power(50)
 		sleep(P.time)
 		P.process(src.loc, O)
 		src.processing = 0
 	src.visible_message("\blue \the [src] finished processing.", \
-		"You hear food processor stop")
+		"You hear food processor stops")
 
 
 
