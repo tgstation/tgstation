@@ -4,7 +4,11 @@
 			message = dd_replaceText(message, "s", stutter("ss"))
 	if(src.mutantrace == "metroid" && prob(5))
 		if(copytext(message, 1, 2) != "*")
-			message = "SKR"
+			if(copytext(message, 1, 2) == ";")
+				message = ";"
+			else
+				message = ""
+			message += "SKR"
 			var/imax = rand(5,20)
 			for(var/i = 0,i<imax,i++)
 				message += "E"
