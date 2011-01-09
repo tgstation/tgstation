@@ -64,7 +64,7 @@
 
 	if(istype(wizard))
 		wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
-		wizard.special_role = "wizard"
+		wizard.special_role = "Wizard"
 
 	if(wizardstart.len == 0)
 		wizard.current << "<B>\red A starting location for you could not be found, please report this bug!</B>"
@@ -120,6 +120,22 @@
 
 	equip_wizard(wizard.current)
 
+	spawn(0)//Allows the wizard to choose a custom name or go with a random one. Spawn 0 so it does not lag the round starting.
+		var/wizard_name_first = pick(wizard_first)
+		var/wizard_name_second = pick(wizard_second)
+		var/randomname = "[wizard_name_first] [wizard_name_second]"
+		var/newname = input(wizard.current, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname)
+
+		if (length(newname) == 0)
+			newname = randomname
+
+		if (newname)
+			if (length(newname) >= 26)
+				newname = copytext(newname, 1, 26)
+				newname = dd_replacetext(newname, ">", "'")
+		wizard.current.real_name = newname
+		wizard.current.name = newname
+
 	wizards += wizard.current
 
 	wizard.current << "<B>\red You are the Space Wizard!</B>"
@@ -156,6 +172,14 @@
 		return
 	wizard_mob.verbs += /client/proc/jaunt
 	wizard_mob.mind.special_verbs += /client/proc/jaunt
+
+	//So zards properly get their items when they are admin-made.
+	del(wizard_mob.wear_suit)
+	del(wizard_mob.head)
+	del(wizard_mob.shoes)
+	del(wizard_mob.r_hand)
+	del(wizard_mob.r_store)
+	del(wizard_mob.l_store)
 
 	wizard_mob.equip_if_possible(new /obj/item/device/radio/headset(wizard_mob), wizard_mob.slot_ears)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/under/lightpurple(wizard_mob), wizard_mob.slot_w_uniform)
@@ -281,6 +305,7 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=12'>Ethereal Jaunt</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=13'>Knock</A> (10)<BR>"
 		dat += "<HR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=14'>Re-memorize Spells</A><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -372,6 +397,16 @@
 					usr.verbs += /client/proc/knock
 					usr.mind.special_verbs += /client/proc/knock
 					src.temp = "This spell opens nearby doors and does not require wizard garb."
+			if ("14")
+				for(var/area/wizard_station/A in world)
+					if(usr in A.contents)
+						src.uses = 5
+						usr.spellremove(usr)
+						src.temp = "All spells have been removed. You may now memorize a new set of spells."
+						break
+					else
+						src.temp = "You may only re-memorize spells whilst located inside the wizard sanctuary."
+						break
 			else
 				if (href_list["temp"])
 					src.temp = null
@@ -557,12 +592,42 @@
 	del(src)
 	return
 
+//OTHER PROCS
+
+//To batch-remove wizard spells. Linked to mind.dm.
+/mob/proc/spellremove(var/mob/M as mob)
+//	..()
+	if(M.verbs.len)
+		M.verbs -= /client/proc/jaunt
+		M.verbs -= /client/proc/magicmissile
+		M.verbs -= /client/proc/fireball
+		M.verbs -= /mob/proc/kill
+		M.verbs -= /mob/proc/tech
+		M.verbs -= /client/proc/smokecloud
+		M.verbs -= /client/proc/blind
+		M.verbs -= /client/proc/forcewall
+		M.verbs -= /mob/proc/teleport
+		M.verbs -= /client/proc/mutate
+		M.verbs -= /client/proc/knock
+		M.verbs -= /mob/proc/swap
+	if(M.mind && M.mind.special_verbs.len)
+		M.mind.special_verbs -= /client/proc/jaunt
+		M.mind.special_verbs -= /client/proc/magicmissile
+		M.mind.special_verbs -= /client/proc/fireball
+		M.mind.special_verbs -= /mob/proc/kill
+		M.mind.special_verbs -= /mob/proc/tech
+		M.mind.special_verbs -= /client/proc/smokecloud
+		M.mind.special_verbs -= /client/proc/blind
+		M.mind.special_verbs -= /client/proc/forcewall
+		M.mind.special_verbs -= /mob/proc/teleport
+		M.mind.special_verbs -= /client/proc/mutate
+		M.mind.special_verbs -= /client/proc/knock
+		M.mind.special_verbs -= /mob/proc/swap
+
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/
 /mob/proc/casting()
-	if(usr.stat)
-		usr << "Not when you're incapicated."
-		return 0
+//Removed the stat check because not all spells require clothing now.
 	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
 		usr << "I don't feel strong enough without my robe."
 		return 0

@@ -42,6 +42,7 @@
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 
 	return 1
 

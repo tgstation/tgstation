@@ -96,17 +96,17 @@ datum/mind
 
 		if (cantoggle)
 			if(src in current_mode.traitors)
-				if (special_role == "fake wizard")
+				if (special_role == "Fake Wizard")
 					out += "<a href='?src=\ref[src];traitorize=traitor'>Traitor</a> "
-					out += "<font color=red>Fake wizard</font> "
-					srole = "Fake wizard"
+					out += "<font color=red>Fake Wizard</font> "
+					srole = "Fake Wizard"
 				else
 					out += "<b>Traitor</b> "
-					out += "<a href='?src=\ref[src];traitorize=fakewizard'>Fake wizard</a> "
+					out += "<a href='?src=\ref[src];traitorize=fakewizard'>Fake Wizard</a> "
 					srole = "Traitor"
 			else
 				out += "<a href='?src=\ref[src];traitorize=traitor'>Traitor</a> "
-				out += "<a href='?src=\ref[src];traitorize=fakewizard'>Fake wizard</a> "
+				out += "<a href='?src=\ref[src];traitorize=fakewizard'>Fake Wizard</a> "
 
 			if (srole)
 				out += "<a href='?src=\ref[src];traitorize=civilian'>Civilian</a> "
@@ -344,10 +344,10 @@ datum/mind
 					current_mode.equip_wizard(current)
 					current << "<B>\red You are the Space Wizard!</B>"
 					current.loc = pick(wizardstart)
-					special_role = "fake wizard"
+					special_role = "Fake Wizard"
 
 				if ("changeling")
-					if (alert("Old changeling would lost his memory. Are you sure?", , "Yes", "No") != "Yes") return
+					if (alert("Old changeling would lose their memory. Are you sure?", , "Yes", "No") != "Yes") return
 					if (changeling)
 						changeling.clear_memory()
 						current_mode:changelings -= changeling
@@ -400,17 +400,8 @@ datum/mind
 				del(t)
 
 		// remove wizards spells
-		current.verbs -= /client/proc/jaunt
-		current.verbs -= /client/proc/magicmissile
-		current.verbs -= /client/proc/fireball
-		current.verbs -= /mob/proc/kill
-		current.verbs -= /mob/proc/tech
-		current.verbs -= /client/proc/smokecloud
-		current.verbs -= /client/proc/blind
-		current.verbs -= /client/proc/forcewall
-		current.verbs -= /mob/proc/teleport
-		current.verbs -= /client/proc/mutate
-		current.verbs -= /client/proc/knock
+		//If there are more special powers that need removal, they can be procced into here./N
+		current.spellremove(current)
 
 		// clear memory
 		memory = ""
@@ -420,7 +411,7 @@ datum/mind
 		if (src in current_mode.traitors)
 			current_mode.traitors -= src
 			if (!silent)
-				if (special_role == "fake wizard")
+				if (special_role == "Fake Wizard")
 					src.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT>"
 				else
 					src.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>"

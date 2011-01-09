@@ -66,6 +66,7 @@
 		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"
 		for(var/datum/objective/objective in rev_mind.objectives)
 			rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			rev_mind.special_role = "Head Revolutionary"
 			obj_count++
 
 	spawn (rand(waittime_l, waittime_h))
@@ -205,6 +206,7 @@
 	if(!(rev_mind in revolutionaries) && !(rev_mind in head_revolutionaries) && !(rev_mind in uncons))
 		revolutionaries += rev_mind
 		rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
+		rev_mind.special_role = "Revolutionary"
 		update_rev_icons_added(rev_mind)
 
 //////////////////////////////////////////////////////////////////////////////

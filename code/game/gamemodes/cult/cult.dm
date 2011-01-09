@@ -81,6 +81,7 @@
 			cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 		cult_mind.current << "The convert rune is join blood self"
 		cult_mind.memory += "The convert rune is join blood self<BR>"
+		cult_mind.special_role = "Cultist"
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()

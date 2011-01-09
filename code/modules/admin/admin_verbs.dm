@@ -1326,44 +1326,6 @@
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	message_admins("\blue [src.ckey] creating an admin explosion at [epicenter.loc].")
 
-/client/proc/make_cultist(var/mob/M in world) // -- TLE, modified by Urist
-	set category = "Admin"
-	set name = "Make Cultist"
-	set desc = "Makes target a cultist"
-	if(!wordtravel)
-		runerandom()
-	if(M)
-		if(cultists.Find(M))
-			return
-		else
-			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
-				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground."
-				new /obj/item/weapon/tome(M.loc)
-			else
-				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie."
-			var/glimpse=pick("1","2","3","4","5","6","7","8")
-			switch(glimpse)
-				if("1")
-					M << "\red You remembered one thing from the glimpse... [wordtravel] is travel..."
-				if("2")
-					M << "\red You remembered one thing from the glimpse... [wordblood] is blood..."
-				if("3")
-					M << "\red You remembered one thing from the glimpse... [wordjoin] is join..."
-				if("4")
-					M << "\red You remembered one thing from the glimpse... [wordhell] is Hell..."
-				if("5")
-					M << "\red You remembered one thing from the glimpse... [worddestr] is destroy..."
-				if("6")
-					M << "\red You remembered one thing from the glimpse... [wordtech] is technology..."
-				if("7")
-					M << "\red You remembered one thing from the glimpse... [wordself] is self..."
-				if("8")
-					M << "\red You remembered one thing from the glimpse... [wordsee] is see..."
-			cultists.Add(M)
-			src << "Made [M] a cultist."
-			if(ticker.mode.name == "cult")
-				ticker.mode:cult += M.mind
-
 /client/proc/check_words() // -- Urist
 	set category = "Special Verbs"
 	set name = "Check Rune Words"

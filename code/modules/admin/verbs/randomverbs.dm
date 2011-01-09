@@ -290,8 +290,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 
 /*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
-Works kind of like entering the game with a new character. Character receives a new mind.
-Since gibbed traitors retain their mind through their ghost, I might add some functionality to bring them back.
+Works kind of like entering the game with a new character. Character receives a new mind if they didn't have one.
 /N */
 /client/proc/respawn_character()
 	set category = "Special Verbs"
@@ -303,18 +302,18 @@ Since gibbed traitors retain their mind through their ghost, I might add some fu
 	var/input = input(src, "Please specify which key will be respawned. Make sure their key is properly capitalized. That person will not retain their traitor/other status when respawned.", "Key", "")
 	if(!input)
 		return
-	var/GNAME //To auto-copy the mob's name.
-	var/GDEL //To properly delete the mob later on.
+
+	var/mob/dead/observer/G
+	var/mob/G_found
+
 	var/GKEY = "null"//To later check if a person was found or not.
-	for(var/mob/dead/observer/G in world)
+
+	for(G in world)
 		if(G.client)
 			if(G.key==input)
-				GNAME = G.real_name
-				GDEL = G
+				G_found = G
 				GKEY = input
-				goto NEXT//Stops processing once it finds a match.
-
-	NEXT
+				break
 
 	if(GKEY == "null")
 		alert("There is no active key like that in the game or the person is not currently a ghost. Aborting command.")
@@ -322,31 +321,20 @@ Since gibbed traitors retain their mind through their ghost, I might add some fu
 
 	var/mob/living/carbon/human/new_character = new(src)
 	var/new_character_gender = MALE //to determine character's gender for few of the other lines.
+
 //	if(!preferences.preferences.savefile_load(GDEL, 0))
 //		if(alert("Please specify the character's gender.",,"Male","Female")=="Female")
 //			new_character_gender = FEMALE
 
 	if(alert("Please specify the character's gender.",,"Male","Female")=="Female")
 		new_character_gender = FEMALE
+
 //	else
 //		GDEL.preferences.preferences.savefile_load()
 	//	GDEL.preferences.preferences.copy_to(new_character)
 
-	var/RANK
-	var/list/JOBLIST
-	JOBLIST = list("Virologist","Chief Medical Officer","Research Director","Chief Engineer","Chief Engineer","Cargo Technician","Quartermaster","Lawyer","Librarian","Botanist","Roboticist","Chef","Barman","Atmospheric Technician","Head of Personnel","Head of Security","Scientist","Warden","Security Officer","Captain","Medical Doctor","Detective","Assistant","Station Engineer","Mime","Clown","Janitor","Chemist","Geneticist","Chaplain")
-
-	TRYAGAIN
-
-	var/input2 = input(src, "Please specify which job the character will be respawned as. Start with a capital, such as Assistant or Research Director. Leaving the box as blank will default to Assistant.", "Rank", "")
-	if(!input2)
-		RANK = "Assistant"
-	else
-		if(JOBLIST.Find(input2)==0)
-			src << "That job is not valid. Check your spelling or leave the box as blank."
-			goto TRYAGAIN
-		else
-			RANK = input2
+	var/RANK = input("Please specify which job the character will be respawned as.", "Assigned role") as null|anything in get_all_jobs()
+	if (!RANK)	RANK = "Assistant"
 
 	var/spawn_here = pick(latejoin)//"JoinLate" is a landmark which is deleted on round start. So, latejoin has to be used instead.
 	new_character.gender = new_character_gender
@@ -364,19 +352,41 @@ Since gibbed traitors retain their mind through their ghost, I might add some fu
 //	new_character.preferences.update_preview_icon(new_character)
 
 	new_character.loc = spawn_here
-	new_character.real_name = GNAME
+	new_character.real_name = G_found.name
+	new_character.name = G_found.name
 	message_admins("\blue [key_name_admin(usr)] has respawned [GKEY] as [new_character.name].", 1) //Here so it doesn't null client if an admin re-spawns themselves.
 	new_character.key = GKEY
-//	preferences.copy_to(new_character)//Can't copy preferences as they are created on round start. Or loaded.
-	new_character.dna.ready_dna(new_character)
-//	new_character:ManifestLateSpawn()//That announces the character on all the systems.
-	new_character.mind = new
-	new_character.mind.key = GKEY
-	new_character.mind.current = new_character
-	new_character.mind.assigned_role = RANK
-	new_character.Equip_Rank(RANK, joined_late=1)
-	del(GDEL)
 
+//	preferences.copy_to(new_character)//Can't copy preferences as they are created on round start. Or loaded.
+
+	new_character.dna.ready_dna(new_character)
+
+//	new_character:ManifestLateSpawn()//That announces the character on all the systems.
+
+	if(G.mind)
+		new_character.mind = G_found.mind
+		new_character.mind.current = new_character
+		new_character.mind.assigned_role = RANK
+	else
+		new_character.mind = new
+		new_character.mind.key = GKEY
+		new_character.mind.current = new_character
+		new_character.mind.assigned_role = RANK
+
+	new_character.Equip_Rank(RANK, joined_late=1)
+	del(G)
+
+/*	var/datum/game_mode/current_mode = ticker.mode
+	switch(new_character.mind.special_role)
+		if("Changeling")
+			var/datum/game_mode/changeling.grant_changeling_powers(new_character)
+		if("traitor")
+			var/datum/game_mode/traitor.equip_traitor(new_character)
+		if("Wizard"||"Fake Wizard")
+			var/datum/game_mode/new_character.loc = pick(wizardstart)
+			wizard.equip_wizard(new_character)
+		if("Syndicate")
+			var/datum/game_mode/nuclear.equip_syndicate(new_character)*/
 
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Fun"
