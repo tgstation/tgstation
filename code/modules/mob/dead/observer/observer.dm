@@ -90,80 +90,17 @@
 	if((usr.stat != 2) || !istype(usr, /mob/dead/observer))
 		usr << "Not when you're not dead!"
 		return
-	var/A
-	var/list/L = list()
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
-	A = input("Area to jump to", "BOOYEA", A) in list("Engine","Hallways","Toxins","Storage","Maintenance","Crew Quarters","Medical","Security","Chapel","Bridge","AI Satellite","Thunderdome","Derelict","Mining")
+	var/A
+	A = input("Area to jump to", "BOOYEA", A) in ghostteleportlocs
+	var/area/thearea = ghostteleportlocs[A]
 
-	switch (A)
-		if ("Engine")
-			for(var/area/B in world)
-				if(istype(B, /area/engine) && !istype(B, /area/engine/combustion) && !istype(B, /area/engine/engine_walls))
-					L += B
-			A = pick(L)
-		if ("Hallways")
-			for(var/area/hallway/B in world)
-				L += B
-			A = pick(L)
-		if ("Toxins")
-			for(var/area/B in world)
-				if(istype(B, /area/toxins) && !istype(B, /area/toxins/test_area))
-					L += B
-			A = pick(L)
-		if ("Storage")
-			for(var/area/storage/B in world)
-				L += B
-			A = pick(L)
-		if ("Maintenance")
-			for(var/area/maintenance/B in world)
-				L += B
-			A = pick(L)
-		if ("Crew Quarters")
-			for(var/area/crew_quarters/B in world)
-				L += B
-			A = pick(L)
-		if ("Medical")
-			for(var/area/medical/B in world)
-				L += B
-			A = pick(L)
-		if ("Security")
-			for(var/area/security/B in world)
-				L += B
-			A = pick(L)
-		if ("Chapel")
-			for(var/area/chapel/B in world)
-				L += B
-			A = pick(L)
-		if ("Bridge")
-			for(var/area/bridge/B in world)
-				L += B
-			A = pick(L)
-		if ("AI Satellite")
-			for(var/area/turret_protected/aisat/B in world)
-				L += B
-			A = pick(L)
-		if ("Thunderdome")
-			for(var/area/tdome/B in world)
-				L += B
-			A = pick(L)
-		if ("Derelict")
-			for(var/area/derelict/B in world)
-				L += B
-			A = pick(L)
-		if ("Mining")
-			for(var/area/mine/B in world)
-				L += B
-			A = pick(L)
-
-	var/list/Q = list()
-	for(var/turf/T in A)
-		Q+=T
-	if (Q.len)
-		usr.loc = pick(Q)
-	else
-		usr << "Teleporting to that area doesn't seem to be working currently. But at least now it tells you that."
+	var/list/L = list()
+	for(var/turf/T in get_area_turfs(thearea.type))
+		L+=T
+	usr.loc = pick(L)
 
 var/list/karma_spenders = list()
 

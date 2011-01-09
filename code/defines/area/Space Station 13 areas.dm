@@ -55,6 +55,17 @@ proc/process_teleport_locs()
 		if (picked.z == 1)
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
+
+var/list/ghostteleportlocs = list()
+
+proc/process_ghost_teleport_locs()
+	for(var/area/AR in world)
+		if(ghostteleportlocs.Find(AR.name)) continue
+		var/turf/picked = pick(get_area_turfs(AR.type))
+		if (picked.z == 1 || picked.z == 8)
+			ghostteleportlocs += AR.name
+			ghostteleportlocs[AR.name] = AR
+
 /*-----------------------------------------------------------------------------*/
 
 /area/engine/

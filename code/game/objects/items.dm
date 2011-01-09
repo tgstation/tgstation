@@ -151,10 +151,10 @@
 	return
 
 /obj/item/weapon/pen/sleepypen/New()
-	var/datum/reagents/R = new/datum/reagents(50) //Used to be 300
+	var/datum/reagents/R = new/datum/reagents(30) //Used to be 300
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("chloralhydrate", 50)	//Used to be 100 sleep toxin
+	R.add_reagent("chloralhydrate", 30)	//Used to be 100 sleep toxin
 //	R.add_reagent("impedrezene", 100)
 //	R.add_reagent("cryptobiolin", 100)
 	..()

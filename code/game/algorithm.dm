@@ -14,6 +14,7 @@
 	beta_tester_loadfile()
 	LoadBans()
 	process_teleport_locs() //Sets up the wizard teleport locations
+	process_ghost_teleport_locs() //Sets up ghost teleport locations.
 
 	spawn(30)
 		//EXPERIMENTAL

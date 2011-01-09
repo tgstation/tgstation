@@ -196,7 +196,7 @@ Operations Highlights:
 								reagents.remove_reagent("acid", 20)
 							if("pacid")
 								reagents.remove_reagent("pacid", 20)
-							if("plasma")
+							if("plasma")	//Plasma = Bad. Causes damage and possibly explosion.
 								for(var/mob/V in viewers(src, null))
 									V.show_message(text("\red The plasma in the Circuit Printer reacts violently!"))
 								sleep(20)
@@ -220,7 +220,7 @@ Operations Highlights:
 						for(var/mob/V in viewers(src, null))
 							V.show_message(text("\red The contaminants ruined the circuit board!"))
 
-					if(prob(imprint_chance < 100))
+					if(prob(imprint_chance < 100))	//Contaminants damage machine.
 						health -= ((100 - imprint_chance) / 5)
 						for(var/mob/V in viewers(src, null))
 							V.show_message(text("\red The contaminents damaged the Circuit Printer!"))
@@ -233,9 +233,9 @@ Operations Highlights:
 			screen = 2
 		else if(href_list["access"]) //Set Menu "Access Log
 			screen = 3
-		else if(href_list["dispose"])
+		else if(href_list["dispose"]) //Purges the specific reagent from the holder.
 			reagents.del_reagent(href_list["dispose"])
-		else if(href_list["disposeall"])
+		else if(href_list["disposeall"])	//Purges all the reagents from the holder.
 			reagents.clear_reagents()
 
 
@@ -254,10 +254,10 @@ Operations Highlights:
 	item_state = "card-id"
 	w_class = 1.0
 	var
-		blueprint = ""
-		department = ""
-		security = ""
-		circuit = ""
+		blueprint = ""			//File path of circuit board it creates.
+		department = ""			//Department board belongs to.
+		security = ""			//Danger/Value of board.
+		circuit = ""			//The name of the circuit it creates (for display elsewhere).
 	New()
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
