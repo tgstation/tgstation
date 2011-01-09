@@ -32,3 +32,5 @@ Kreol
 Kaschei
 Lina
 Morgan
+Alatar
+Palando

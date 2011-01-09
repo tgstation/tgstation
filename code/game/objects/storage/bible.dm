@@ -52,7 +52,7 @@
 		if ((istype(M, /mob/living/carbon/human) && prob(60)))
 			bless(M)
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] heals [] with the power of Christ!</B>", user, M), 1)
+				O.show_message(text("\red <B>[] heals [] with the power of [src.deity_name]!</B>", user, M), 1)
 			M << "\red May the power of Christ compel you to be healed!"
 			playsound(src.loc, "punch", 25, 1, -1)
 		else

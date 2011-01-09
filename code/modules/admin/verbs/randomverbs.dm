@@ -291,6 +291,8 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 /*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
 Works kind of like entering the game with a new character. Character receives a new mind if they didn't have one.
+Traitors and the like can also be revived with the previous role mostly intact.
+TO DO: actually integrate random appearance and player preference save.
 /N */
 /client/proc/respawn_character()
 	set category = "Special Verbs"
@@ -322,71 +324,65 @@ Works kind of like entering the game with a new character. Character receives a 
 	var/mob/living/carbon/human/new_character = new(src)
 	var/new_character_gender = MALE //to determine character's gender for few of the other lines.
 
-//	if(!preferences.preferences.savefile_load(GDEL, 0))
-//		if(alert("Please specify the character's gender.",,"Male","Female")=="Female")
-//			new_character_gender = FEMALE
-
 	if(alert("Please specify the character's gender.",,"Male","Female")=="Female")
 		new_character_gender = FEMALE
-
-//	else
-//		GDEL.preferences.preferences.savefile_load()
-	//	GDEL.preferences.preferences.copy_to(new_character)
-
-	var/RANK = input("Please specify which job the character will be respawned as.", "Assigned role") as null|anything in get_all_jobs()
-	if (!RANK)	RANK = "Assistant"
 
 	var/spawn_here = pick(latejoin)//"JoinLate" is a landmark which is deleted on round start. So, latejoin has to be used instead.
 	new_character.gender = new_character_gender
 
-//	var/datum/preferences/preferences
-//	new_character.preferences.randomize_name(new_character)
-//	new_character.preferences = new
-//	new_character.preferences.randomize_name = new_character
-//	new_character.name = preferences.real_name
-//	new_character.real_name = new_character.name
-//	randomize_name(new_character)
-//	randomize_skin_tone()
-//	new_character.preferences.randomize_hair_color(var/target = "hair")
-//	new_character.preferences.randomize_eyes_color(new_character)
-//	new_character.preferences.update_preview_icon(new_character)
+//	if( !( call(/datum/preferences/proc/savefile_load)(G_found, 0) ) )Run time errors.
+//		call(/datum/preferences/proc/copy_to)(new_character)
+
+	var/RANK = input("Please specify which job the character will be respawned as.", "Assigned role") as null|anything in get_all_jobs()
+	if (!RANK)	RANK = "Assistant"
 
 	new_character.loc = spawn_here
 	new_character.real_name = G_found.name
 	new_character.name = G_found.name
-	message_admins("\blue [key_name_admin(usr)] has respawned [GKEY] as [new_character.name].", 1) //Here so it doesn't null client if an admin re-spawns themselves.
-	new_character.key = GKEY
-
-//	preferences.copy_to(new_character)//Can't copy preferences as they are created on round start. Or loaded.
 
 	new_character.dna.ready_dna(new_character)
 
-//	new_character:ManifestLateSpawn()//That announces the character on all the systems.
-
-	if(G.mind)
+	if(G_found.mind)
 		new_character.mind = G_found.mind
 		new_character.mind.current = new_character
 		new_character.mind.assigned_role = RANK
+		new_character.mind.memory = ""//Memory erased so it doesn't get clunkered up with useless info.
 	else
 		new_character.mind = new
 		new_character.mind.key = GKEY
 		new_character.mind.current = new_character
 		new_character.mind.assigned_role = RANK
 
-	new_character.Equip_Rank(RANK, joined_late=1)
-	del(G)
-
-/*	var/datum/game_mode/current_mode = ticker.mode
+	//These procs function with the assumption that the mob is already a traitor based on their mind.
+	//So all they do is re-equip the mob with powers and/or items. Or not, if they have no special role.
 	switch(new_character.mind.special_role)
 		if("Changeling")
-			var/datum/game_mode/changeling.grant_changeling_powers(new_character)
+			new_character.Equip_Rank(RANK, joined_late=1)
+			new_character.make_changeling()
 		if("traitor")
-			var/datum/game_mode/traitor.equip_traitor(new_character)
-		if("Wizard"||"Fake Wizard")
-			var/datum/game_mode/new_character.loc = pick(wizardstart)
-			wizard.equip_wizard(new_character)
+			new_character.Equip_Rank(RANK, joined_late=1)
+			ticker.mode.equip_traitor(new_character)
+		if("Wizard","Fake Wizard")
+			new_character.loc = pick(wizardstart)
+			new_character.spellremove(new_character)//to properly clear their special verbs in mind.
+			ticker.mode.equip_wizard(new_character)
 		if("Syndicate")
-			var/datum/game_mode/nuclear.equip_syndicate(new_character)*/
+			var/obj/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
+			if(synd_spawn)
+				new_character.loc = get_turf(synd_spawn)
+			ticker.mode:equip_syndicate(new_character)
+		else
+			new_character.Equip_Rank(RANK, joined_late=1)
+
+	//Announces the character on all the systems.
+	if(alert("Should this character be added to various databases, such as medical records? Click yes only if the character was observing prior. Wizards and nuke operatives will not be added.",,"No","Yes")=="Yes")
+		call(/mob/new_player/proc/ManifestLateSpawn)(new_character)
+
+	new_character.key = GKEY
+	new_character << "You have been respawned. Enjoy the game."
+	del(G_found)
+
+	message_admins("\blue [key_name_admin(src)] has respawned [GKEY] as [new_character.name].", 1)
 
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Fun"

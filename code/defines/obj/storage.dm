@@ -192,6 +192,7 @@
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS
 	var/mob/affecting = null
+	var/deity_name = "Christ"
 
 /obj/item/weapon/storage/bible/booze
 	name = "bible"

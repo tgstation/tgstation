@@ -34,3 +34,6 @@ the Bandit Killer
 the Dragon Spooker
 Inverse
 le Fay
+the Blue
+the Red
+the Benevolent
