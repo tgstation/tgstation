@@ -30,11 +30,6 @@
 	var/mineralName = ""
 	var/mineralAmt = 0
 
-/turf/simulated/asteroid/New()
-	..()
-	oxygen = 0.01
-	nitrogen = 0.01
-
 /turf/simulated/mineral/urenium
 	name = "Uranium deposit"
 	icon_state = "rock_Uranium"
@@ -73,12 +68,12 @@
 
 /turf/simulated/mineral/ReplaceWithFloor()
 	if(!icon_old) icon_old = icon_state
-	var/turf/simulated/floor/airless/W
+	var/turf/simulated/floor/airless/asteroid/W
 	var/old_dir = dir
 
-	W = new /turf/simulated/floor/airless( locate(src.x, src.y, src.z) )
+	W = new /turf/simulated/floor/airless/asteroid( locate(src.x, src.y, src.z) )
 	W.dir = old_dir
-	W.icon_state = "asteroid"
+	W.fullUpdateMineralOverlays()
 
 	/*
 	W.icon_old = old_icon
@@ -88,6 +83,7 @@
 	W.sd_SetOpacity(0)
 	W.levelupdate()
 	return W
+
 
 /turf/simulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
@@ -148,6 +144,8 @@
 	if (prob(50))
 		seedName = pick(list("1","2","3","4"))
 		seedAmt = rand(1,4)
+	spawn(2)
+		updateMineralOverlays()
 
 /turf/simulated/floor/airless/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
@@ -192,6 +190,48 @@
 		seedName = ""
 		seedAmt = 0
 	return
+
+/turf/simulated/floor/airless/asteroid/proc/updateMineralOverlays()
+
+	src.overlays = null
+
+	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
+		src.overlays += image('walls.dmi', "rock_side_n")
+	if(istype(get_step(src, SOUTH), /turf/simulated/mineral))
+		src.overlays += image('walls.dmi', "rock_side_s", layer=6)
+	if(istype(get_step(src, EAST), /turf/simulated/mineral))
+		src.overlays += image('walls.dmi', "rock_side_e", layer=6)
+	if(istype(get_step(src, WEST), /turf/simulated/mineral))
+		src.overlays += image('walls.dmi', "rock_side_w", layer=6)
+
+
+/turf/simulated/floor/airless/asteroid/proc/fullUpdateMineralOverlays()
+	var/turf/simulated/floor/airless/asteroid/A
+	if(istype(get_step(src, WEST), /turf/simulated/floor/airless/asteroid))
+		A = get_step(src, WEST)
+		A.updateMineralOverlays()
+	if(istype(get_step(src, EAST), /turf/simulated/floor/airless/asteroid))
+		A = get_step(src, EAST)
+		A.updateMineralOverlays()
+	if(istype(get_step(src, NORTH), /turf/simulated/floor/airless/asteroid))
+		A = get_step(src, NORTH)
+		A.updateMineralOverlays()
+	if(istype(get_step(src, NORTHWEST), /turf/simulated/floor/airless/asteroid))
+		A = get_step(src, NORTHWEST)
+		A.updateMineralOverlays()
+	if(istype(get_step(src, NORTHEAST), /turf/simulated/floor/airless/asteroid))
+		A = get_step(src, NORTHEAST)
+		A.updateMineralOverlays()
+	if(istype(get_step(src, SOUTHWEST), /turf/simulated/floor/airless/asteroid))
+		A = get_step(src, SOUTHWEST)
+		A.updateMineralOverlays()
+	if(istype(get_step(src, SOUTHEAST), /turf/simulated/floor/airless/asteroid))
+		A = get_step(src, SOUTHEAST)
+		A.updateMineralOverlays()
+	if(istype(get_step(src, SOUTH), /turf/simulated/floor/airless/asteroid))
+		A = get_step(src, SOUTH)
+		A.updateMineralOverlays()
+	src.updateMineralOverlays()
 
 /**********************Mineral ores**************************/
 
