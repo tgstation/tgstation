@@ -35,6 +35,8 @@
 					M.fireloss = A.fireloss
 					M.bruteloss = A.bruteloss
 					M.toxloss = A.toxloss
+					if (!A.stat)
+						M.stat = A.stat
 					M.updatehealth()
 					M << "You have been uploaded to a stationary terminal. Remote device connection restored."
 					user << "<b>Transfer succesful</b>: [M.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."

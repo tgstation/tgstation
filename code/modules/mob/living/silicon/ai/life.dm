@@ -56,7 +56,7 @@
 					loc = T.loc
 					if (istype(loc, /area))
 						//stage = 4
-						if (!loc.master.power_equip)
+						if (!loc.master.power_equip && isturf(src.loc))
 							//stage = 5
 							blind = 1
 
@@ -100,7 +100,7 @@
 					src.see_in_dark = 0
 					src.see_invisible = 0
 
-					if ((!loc.master.power_equip) || istype(T, /turf/space))
+					if (((!loc.master.power_equip) || istype(T, /turf/space)) && isturf(src.loc))
 						if (src:aiRestorePowerRoutine==0)
 							src:aiRestorePowerRoutine = 1
 
