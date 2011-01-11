@@ -66,6 +66,12 @@
 	mineralName = "Plasma"
 	mineralAmt = 5
 
+/turf/simulated/mineral/clown
+	name = "Bananium deposit"
+	icon_state = "rock_Clown"
+	mineralName = "Clown"
+	mineralAmt = 2
+
 /turf/simulated/mineral/ReplaceWithFloor()
 	if(!icon_old) icon_old = icon_state
 	var/turf/simulated/floor/airless/asteroid/W
@@ -124,6 +130,8 @@
 				new /obj/item/weapon/ore/plasma(src)
 			if (src.mineralName == "Diamond")
 				new /obj/item/weapon/ore/diamond(src)
+			if (src.mineralName == "Clown")
+				new /obj/item/weapon/ore/clown(src)
 	ReplaceWithFloor()
 	return
 
@@ -287,6 +295,11 @@
 	name = "Diamond ore"
 	icon = 'Mining.dmi'
 	icon_state = "Diamond ore"
+
+/obj/item/weapon/ore/clown
+	name = "Bananium ore"
+	icon = 'Mining.dmi'
+	icon_state = "Clown ore"
 
 /obj/item/weapon/ore/slag
 	name = "Slag"
@@ -574,6 +587,13 @@
 		dat += text("<A href='?src=\ref[src];sel_diamond=yes'><font color='red'>N</font></A> ")
 	dat += text("Diamond: [machine.ore_diamond]<br>")
 
+	//bananium
+	if (machine.selected_clown==1)
+		dat += text("<A href='?src=\ref[src];sel_clown=no'><font color='green'>Y</font></A> ")
+	else
+		dat += text("<A href='?src=\ref[src];sel_clown=yes'><font color='red'>N</font></A> ")
+	dat += text("Bananium: [machine.ore_clown]<br>")
+
 	//On or off
 	dat += text("Machine is currently ")
 	if (machine.on==1)
@@ -622,6 +642,11 @@
 			machine.selected_diamond = 1
 		else
 			machine.selected_diamond = 0
+	if(href_list["sel_clown"])
+		if (href_list["sel_clown"] == "yes")
+			machine.selected_clown = 1
+		else
+			machine.selected_clown = 0
 	if(href_list["set_on"])
 		if (href_list["set_on"] == "on")
 			machine.on = 1
@@ -634,7 +659,7 @@
 
 
 /obj/machinery/mineral/processing_unit
-	name = "Production machine"
+	name = "Furnace"
 	icon = 'stationobjs.dmi'
 	icon_state = "controller"
 	density = 1
@@ -648,12 +673,14 @@
 	var/ore_plasma = 0;
 	var/ore_uranium = 0;
 	var/ore_iron = 0;
+	var/ore_clown = 0;
 	var/selected_gold = 0
 	var/selected_silver = 0
 	var/selected_diamond = 0
 	var/selected_plasma = 0
 	var/selected_uranium = 0
 	var/selected_iron = 0
+	var/selected_clown = 0
 	var/on = 0 //0 = off, 1 =... oh you know!
 
 /obj/machinery/mineral/processing_unit/New()
@@ -670,35 +697,62 @@
 		var/i
 		for (i = 0; i < 10; i++)
 			if (on)
-				if (selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0)
+				if (selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_gold > 0)
 						ore_gold--;
 						new /obj/item/stack/sheet/gold(output.loc)
+					else
+						on = 0
 					continue
-				if (selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0)
+				if (selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_silver > 0)
 						ore_silver--;
 						new /obj/item/stack/sheet/silver(output.loc)
+					else
+						on = 0
 					continue
-				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0)
+				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_diamond > 0)
 						ore_diamond--;
 						new /obj/item/stack/sheet/diamond(output.loc)
+					else
+						on = 0
 					continue
-				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0)
+				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_plasma > 0)
 						ore_plasma--;
 						new /obj/item/stack/sheet/plasma(output.loc)
+					else
+						on = 0
 					continue
-				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0)
+				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
 					if (ore_uranium > 0)
 						ore_uranium--;
 						new /obj/item/weapon/ore/uranium(output.loc)
+					else
+						on = 0
 					continue
-				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1)
+				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
 					if (ore_iron > 0)
 						ore_iron--;
 						new /obj/item/stack/sheet/metal(output.loc)
+					else
+						on = 0
+					continue
+				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
+					if (ore_iron > 0)
+						ore_iron--;
+						new /obj/item/stack/sheet/metal(output.loc)
+					else
+						on = 0
+					continue
+
+				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1)
+					if (ore_clown > 0)
+						ore_clown--;
+						new /obj/item/stack/sheet/metal(output.loc)
+					else
+						on = 0
 					continue
 
 
@@ -728,6 +782,10 @@
 					if (ore_iron <= 0)
 						b = 0
 
+				if (selected_clown == 1)
+					if (ore_clown <= 0)
+						b = 0
+
 				if (b) //if they are, deduct one from each, produce slag and shut the machine off
 					if (selected_gold == 1)
 						ore_gold--
@@ -741,6 +799,8 @@
 						ore_plasma--
 					if (selected_iron == 1)
 						ore_iron--
+					if (selected_clown == 1)
+						ore_clown--
 					new /obj/item/weapon/ore/slag(output.loc)
 					on = 0
 				else
@@ -782,6 +842,10 @@
 					ore_uranium++
 					del(O)
 					continue
+				if (istype(O,/obj/item/weapon/ore/clown))
+					ore_clown++
+					del(O)
+					continue
 				O.loc = src.output.loc
 			else
 				break
@@ -819,6 +883,7 @@
 	dat += text("Gold: [machine.ore_gold] <A href='?src=\ref[src];release=gold'>Release</A><br>")
 	dat += text("Silver: [machine.ore_silver] <A href='?src=\ref[src];release=silver'>Release</A><br>")
 	dat += text("Damond: [machine.ore_diamond] <A href='?src=\ref[src];release=diamond'>Release</A><br><br>")
+	dat += text("Bananium: [machine.ore_clown] <A href='?src=\ref[src];release=clown'>Release</A><br><br>")
 
 	dat += text("Stacking: [machine.stack_amt]<br><br>")
 
@@ -861,6 +926,12 @@
 					G.amount = machine.ore_iron
 					G.loc = machine.output.loc
 					machine.ore_iron = 0
+			if ("clown")
+				if (machine.ore_clown > 0)
+					var/obj/item/stack/sheet/clown/G = new /obj/item/stack/sheet/clown
+					G.amount = machine.ore_clown
+					G.loc = machine.output.loc
+					machine.ore_iron = 0
 	src.updateUsrDialog()
 	return
 
@@ -884,6 +955,7 @@
 	var/ore_diamond = 0;
 	var/ore_plasma = 0;
 	var/ore_iron = 0;
+	var/ore_clown = 0;
 	var/stack_amt = 50; //ammount to stack before releassing
 
 /obj/machinery/mineral/stacking_machine/New()
@@ -925,6 +997,11 @@
 				//new /obj/item/stack/sheet/silver(output.loc)
 				del(O)
 				continue
+			if (istype(O,/obj/item/stack/sheet/clown))
+				ore_clown++
+				//new /obj/item/stack/sheet/silver(output.loc)
+				del(O)
+				continue
 			if (istype(O,/obj/item/weapon/ore/slag))
 				del(O)
 				continue
@@ -958,6 +1035,12 @@
 		G.amount = stack_amt
 		G.loc = output.loc
 		ore_iron -= stack_amt
+		return
+	if (ore_clown >= stack_amt)
+		var/obj/item/stack/sheet/clown/G = new /obj/item/stack/sheet/clown
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_clown -= stack_amt
 		return
 	return
 
@@ -1297,6 +1380,20 @@
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
+
+/obj/item/stack/sheet/clown
+	name = "bananium"
+	icon_state = "sheet-clown"
+	force = 5.0
+	g_amt = 3750
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+
+/obj/item/stack/sheet/diamond/New()
+	pixel_x = rand(0,4)-4
+	pixel_y = rand(0,4)-4
 
 
 /**********************Rail track**************************/
