@@ -191,10 +191,11 @@ var/global/datum/controller/gameticker/ticker
 				world << "<b>[aiPlayer.name]'s laws when it was deactivated were:</b>"
 			aiPlayer.show_laws(1)
 
-			var/robolist = "The AI's loyal minions were: "
+			var/robolist = "<b>The AI's loyal minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in world)
 				if (robo.connected_ai == aiPlayer)
-					robolist += "[robo.name][robo.stat == 2?" (Deactivated), ":", "]"
+					robolist += "[robo.name][robo.stat?" (Deactivated), ":", "]"
+			world << "[robolist]"
 
 	for (var/mob/living/silicon/robot/robo in world)
 		if (!robo.connected_ai)
@@ -202,7 +203,7 @@ var/global/datum/controller/gameticker/ticker
 				world << "<b>[robo.name] survived as an AI-less borg! Its laws were:</b>"
 			else
 				world << "<b>[robo.name] was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
-			robo.show_laws(1)
+			robo.laws.show_laws(1)
 
 	mode.declare_completion()
 
