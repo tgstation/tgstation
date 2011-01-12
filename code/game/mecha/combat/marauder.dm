@@ -6,12 +6,14 @@
 	health = 500
 	deflect_chance = 25
 	max_temperature = 5000
+	infra_luminosity = 4
 	var/thrusters = 0
 	var/smoke = 5
 	var/smoke_ready = 1
 	var/smoke_cooldown = 100
 	var/datum/effects/system/harmless_smoke_spread/smoke_system = new
 	operation_req_access = list(access_heads)
+	wreckage = "/obj/decal/mecha_wreckage/marauder"
 
 
 
@@ -46,6 +48,7 @@
 			if(!src.check_for_support())
 				src.pr_inertial_movement.start(list(src,direction))
 				if(thrusters)
+					src.pr_inertial_movement.set_process_args(list(src,direction))
 					tmp_step_energy_drain = step_energy_drain*2
 
 		can_move = 0
@@ -91,10 +94,10 @@
 
 
 /obj/mecha/combat/marauder/get_commands()
-	var/output = ..()
-	output += {"<a href='?src=\ref[src];toggle_thrusters=1'>Toggle thrusters</a><br>
+	var/output = {"<a href='?src=\ref[src];toggle_thrusters=1'>Toggle thrusters</a><br>
 					<a href='?src=\ref[src];smoke=1'>Smoke</a><br>
 					"}
+	output += ..()
 	return output
 
 /obj/mecha/combat/marauder/Topic(href, href_list)

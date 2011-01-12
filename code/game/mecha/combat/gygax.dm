@@ -6,8 +6,10 @@
 	health = 300
 	deflect_chance = 10
 	max_temperature = 3500
+	infra_luminosity = 10
 	var/overload = 0
 	operation_req_access = list(access_security)
+	wreckage = "/obj/decal/mecha_wreckage/gygax"
 
 /obj/mecha/combat/gygax/New()
 	..()
@@ -53,9 +55,9 @@
 	return output
 
 /obj/mecha/combat/gygax/get_commands()
-	var/output = ..()
-	output += {"<a href='?src=\ref[src];toggle_leg_overload=1'>Toggle leg actuators overload</a><br>
+	var/output = {"<a href='?src=\ref[src];toggle_leg_overload=1'>Toggle leg actuators overload</a><br>
 				"}
+	output += ..()
 	return output
 
 /obj/mecha/combat/gygax/Topic(href, href_list)

@@ -19,6 +19,9 @@
 		del src
 	return
 
+/datum/mecha_tool/proc/get_tool_info()
+	return src.name
+
 
 /datum/mecha_tool/proc/action(atom/target)
 	if(!target)
@@ -30,6 +33,9 @@
 	if(!tool_ready)
 		return 0
 	return 1
+
+/datum/mecha_tool/proc/range_action(atom/target)
+	return
 
 
 /*
@@ -53,16 +59,23 @@
 /datum/mecha_tool/hydraulic_clamp
 	name = "Hydraulic Clamp"
 	tool_cooldown = 15
-	tool_ready = 1
 	energy_drain = 10
 	var/force = 15
+	var/obj/mecha/working/ripley/cargo_holder
+
+	New()
+		..()
+		if(istype(chassis, /obj/mecha/working/ripley))
+			cargo_holder = chassis
+		return
 
 	action(atom/target)
 		if(!..()) return
+		if(!cargo_holder) return
 		if(istype(target,/obj))
 			var/obj/O = target
 			if(!O.anchored)
-				if(chassis.cargo.len < chassis.cargo_capacity)
+				if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 					chassis.occupant_message("You lift [target] and start to load it into cargo compartment.")
 					chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
 					tool_ready = 0
@@ -72,13 +85,16 @@
 					spawn(tool_cooldown)
 						if(chassis)
 							if(T == chassis.loc && src == chassis.selected_tool)
-								chassis.cargo += O
+								cargo_holder.cargo += O
 								O.loc = chassis
 								O.anchored = 0
+								if(istype(O, /obj/machinery/bot))// That's shit-code right here, folks.
+									O:on = 0
 								chassis.occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
-								chassis.log_message("Loaded [O]. Cargo compartment capacity: [chassis.cargo_capacity - chassis.cargo.len]")
+								chassis.log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 							else
 								chassis.occupant_message("<font color='red'>You must hold still while handling objects.</font>")
+								O.anchored = initial(O.anchored)
 							tool_ready = 1
 
 				else
@@ -108,7 +124,6 @@
 /datum/mecha_tool/drill
 	name = "Drill"
 	tool_cooldown = 40
-	tool_ready = 1
 	energy_drain = 20
 	var/force = 15
 
@@ -130,6 +145,71 @@
 				tool_ready = 1
 		return
 
+
+/datum/mecha_tool/extinguisher
+	name = "Extinguisher"
+	tool_cooldown = 7
+	energy_drain = 0
+	var/datum/reagents/reagents
+
+
+	New()
+		reagents = new/datum/reagents(200)
+		reagents.my_atom = src
+		reagents.add_reagent("water", 200)
+		..()
+		return
+
+	action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
+		if(!..()) return
+		if(get_dist(chassis, target)>2) return
+		tool_ready = 0
+		spawn(tool_cooldown)
+			tool_ready = 1
+		if(istype(target, /obj/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
+			var/obj/o = target
+			o.reagents.trans_to(src, 200)
+			chassis.occupant_message("\blue Extinguisher refilled")
+			playsound(chassis, 'refill.ogg', 50, 1, -6)
+		else
+			if(src.reagents.total_volume > 0)
+				playsound(chassis, 'extinguish.ogg', 75, 1, -3)
+				var/direction = get_dir(chassis,target)
+				var/turf/T = get_turf(target)
+				var/turf/T1 = get_step(T,turn(direction, 90))
+				var/turf/T2 = get_step(T,turn(direction, -90))
+
+				var/list/the_targets = list(T,T1,T2)
+				for(var/a=0, a<5, a++)
+					spawn(0)
+						var/obj/effects/water/W = new /obj/effects/water(get_turf(chassis))
+						if(!W)
+							return
+						var/turf/my_target = pick(the_targets)
+						var/datum/reagents/R = new/datum/reagents(5)
+						W.reagents = R
+						R.my_atom = W
+						src.reagents.trans_to(W,1)
+						for(var/b=0, b<5, b++)
+							if(!W)
+								return
+							step_towards(W,my_target)
+							if(!W)
+								return
+							var/turf/W_turf = get_turf(W)
+							W.reagents.reaction(W_turf)
+							for(var/atom/atm in W_turf)
+								W.reagents.reaction(atm)
+							if(W.loc == my_target)
+								break
+							sleep(2)
+		return
+
+	get_tool_info()
+		return "[src.name] \[[src.reagents.total_volume]\]"
+
+	proc/on_reagent_change()
+		return
 
 
 /*

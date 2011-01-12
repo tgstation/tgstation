@@ -33,14 +33,14 @@
 	return
 */
 
-/obj/mecha/combat/range_action(target)
+/obj/mecha/combat/range_action(target as obj|mob|turf)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = pick(view(10,target))
 	if(selected_weapon)
 		selected_weapon.fire(target)
 	return
 
-/obj/mecha/combat/melee_action(target)
+/obj/mecha/combat/melee_action(target as obj|mob|turf)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = pick(oview(1,src))
 	if(!melee_can_hit || !istype(target, /atom)) return
@@ -108,7 +108,7 @@
 		if(damtype == "brute")
 			for(var/target_type in src.destroyable_obj)
 				if(istype(target, target_type) && hascall(target, "attackby"))
-					src.occupant.show_message("[src.name] hits [target].", 1)
+					src.occupant.show_message("You hit [target].", 1)
 					src.visible_message("<font color='red'><b>[src.name] hits [target]</b></font>")
 					for (var/mob/V in viewers(src))
 						if(V.client && !(V.blinded))
@@ -162,37 +162,13 @@
 	return
 
 
-/obj/mecha/combat/move_inside()
-	set name = "Move Inside"
-	set src in oview(1)
-
-	if (usr.stat != 0 || !istype(usr, /mob/living/carbon/human))
-		return
-	if (src.occupant)
-		usr << "\blue <B>The [src.name] is already occupied!</B>"
-		return
-/*
-	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
-		return
-*/
-	if(!src.operation_allowed(usr))
-		usr << "\red Access denied"
-		return
-	usr << "You start climbing into [src.name]"
-	spawn(20)
-		if(usr in range(1))
-			usr.pulling = null
-	//		usr.client.eye = src
-			src.occupant = usr
-			usr.loc = src
-			src.add_fingerprint(usr)
-			src.Entered(usr)
-			src.Move(src.loc)
-			if(usr.client)
-				usr.client.mouse_pointer_icon = file("icons/misc/mecha_mouse.dmi")
-			src.log_message("[usr] moved in as pilot.")
-	return
+/obj/mecha/combat/moved_inside(var/mob/living/carbon/human/H as mob)
+	if(..(H))
+		if(usr.client)
+			usr.client.mouse_pointer_icon = file("icons/misc/mecha_mouse.dmi")
+		return 1
+	else
+		return 0
 
 /obj/mecha/combat/go_out()
 	if(src.occupant && src.occupant.client)

@@ -14,6 +14,7 @@
 	anchored = 1 //no pulling around.
 	unacidable = 1 //and no deleting hoomans inside
 	layer = MOB_LAYER //icon draw layer
+	infra_luminosity = 15
 	var/can_move = 1
 	var/mob/living/carbon/human/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
@@ -48,9 +49,12 @@
 	var/datum/global_iterator/pr_location_temp_check //processes location temperature damage
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
 
+	var/wreckage
+
 
 /obj/mecha/New()
 	..()
+	src.icon_state += "-open"
 	src.air_contents.volume = gas_tank_volume //liters
 	src.air_contents.temperature = T20C
 	src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
@@ -225,6 +229,7 @@
 					internal_damage |= int_dam_flag
 					pr_internal_damage.start()
 					src.log_append_to_last("Internal damage of type [int_dam_flag].[ignore_threshold?"Ignoring damage threshold.":null]",1)
+					src.occupant << sound('warning-buzzer.ogg',wait=0)
 	return
 
 
@@ -323,7 +328,6 @@
 			if(PROJECTILE_LASER)
 				damage = 20
 			if(PROJECTILE_TASER)
-				damage = 5
 				src.cell.use(500)
 			else
 				damage = 10
@@ -332,17 +336,22 @@
 	return
 
 /obj/mecha/proc/destroy()
-	if(src.occupant)
-		var/mob/M = src.occupant
-		src.go_out()
-		if(prob(20))
-			M.bruteloss += rand(10,20)
-			M.updatehealth()
-		else
-			M.gib()
+	var/obj/mecha/mecha = src
+	src = null
+	var/mob/M
 	spawn()
-		explosion(src.loc, 0, 0, 1, 3)
-		del(src)
+		if(mecha.occupant)
+			M = mecha.occupant
+		explosion(mecha.loc, 0, 0, 1, 3)
+		if(mecha.wreckage)
+			new mecha.wreckage(get_turf(mecha))
+		del(mecha)
+		if(M)
+			if(prob(20))
+				M.bruteloss += rand(10,20)
+				M.updatehealth()
+			else
+				M.gib()
 	return
 
 /obj/mecha/ex_act(severity)
@@ -509,16 +518,26 @@
 		return
 	usr << "You start climbing into [src.name]"
 	spawn(20)
-		if(usr in range(1))
-			usr.pulling = null
-			usr.client.eye = src
-			src.occupant = usr
-			usr.loc = src
-			src.add_fingerprint(usr)
-			src.Entered(usr)
-			src.Move(src.loc)
-			src.log_append_to_last("[usr] moved in as pilot.")
+		moved_inside(usr)
 	return
+
+/obj/mecha/proc/moved_inside(var/mob/living/carbon/human/H as mob)
+	if(H && H in range(1))
+		H.pulling = null
+		src.occupant = H
+		H.loc = src
+		if(H.client)
+			H.client.eye = src
+			H.client.perspective = EYE_PERSPECTIVE
+		src.add_fingerprint(H)
+		src.Entered(H)
+		src.Move(src.loc)
+		src.log_append_to_last("[H] moved in as pilot.")
+		src.icon_state = initial(icon_state)
+		playsound(src, 'windowdoor.ogg', 50, 1)
+		return 1
+	else
+		return 0
 
 
 /obj/mecha/verb/view_stats()
@@ -548,11 +567,12 @@
 		src.Exited(src.occupant)
 		if (src.occupant.client)
 			src.occupant.client.eye = src.occupant.client.mob
-//			src.occupant.client.perspective = MOB_PERSPECTIVE
+			src.occupant.client.perspective = MOB_PERSPECTIVE
 		src.occupant << browse(null, "window=exosuit")
 		src.occupant = null
 		src.pr_update_stats.stop()
-
+		src.icon_state = initial(icon_state)+"-open"
+		src.dir = SOUTH
 	return
 
 ////// Misc
@@ -783,11 +803,73 @@
 			else
 				src.occupant_message("<font color='red'>Recalibration failed.</font>")
 				src.log_message("Recalibration of coordination system failed with 1 error.",1)
+/*
+
+	if (href_list["ai_take_control"])
+		var/var/mob/living/silicon/ai/AI = locate(href_list["ai_take_control"])
+		var/duration = text2num(href_list["duration"])
+		var/mob/living/silicon/ai/O = new /mob/living/silicon/ai(src)
+		var/cur_occupant = src.occupant
+		O.invisibility = 0
+		O.canmove = 1
+		O.name = AI.name
+		O.real_name = AI.real_name
+		O.anchored = 1
+		O.aiRestorePowerRoutine = 0
+		O.control_disabled = 1 // Can't control things remotely if you're stuck in a card!
+		O.laws_object = AI.laws_object
+		O.stat = AI.stat
+		O.oxyloss = AI.oxyloss
+		O.fireloss = AI.fireloss
+		O.bruteloss = AI.bruteloss
+		O.toxloss = AI.toxloss
+		O.updatehealth()
+		src.occupant = O
+		if(AI.mind)
+			AI.mind.transfer_to(O)
+		AI.name = "Inactive AI"
+		AI.real_name = "Inactive AI"
+		AI.icon_state = "ai-empty"
+		spawn(duration)
+			AI.name = O.name
+			AI.real_name = O.real_name
+			if(O.mind)
+				O.mind.transfer_to(AI)
+			AI.control_disabled = 0
+			AI.laws_object = O.laws_object
+			AI.oxyloss = O.oxyloss
+			AI.fireloss = O.fireloss
+			AI.bruteloss = O.bruteloss
+			AI.toxloss = O.toxloss
+			AI.updatehealth()
+			del(O)
+			if (!AI.stat)
+				AI.icon_state = "ai"
+			else
+				AI.icon_state = "ai-crash"
+			src.occupant = cur_occupant
+*/
 	return
 
 
-
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
+	return
+
+/*
+/obj/mecha/attack_ai(var/mob/living/silicon/ai/user as mob)
+	if(!istype(user, /mob/living/silicon/ai))
+		return
+	var/output = {"<b>Assume direct control over [src]?</b>
+						<a href='?src=\ref[src];ai_take_control=\ref[user];duration=3000'>Yes</a><br>
+						"}
+	user << browse(output, "window=mecha_attack_ai")
+	return
+*/
+
+/obj/mecha/hear_talk(mob/M as mob, text)
+	if(occupant)
+		var/rendered = "<span class='game say'><span class='name'>[M.name]: </span> <span class='message'>[text]</span></span>"
+		occupant.show_message(rendered, 2)
 	return
 
 

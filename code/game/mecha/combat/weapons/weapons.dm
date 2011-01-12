@@ -52,6 +52,7 @@
 		weapon_ready = 0
 		var/obj/item/missile/M = new /obj/item/missile(chassis.loc)
 		M.primed = 1
+		playsound(chassis, 'bang.ogg', 50, 1)
 		M.throw_at(target, missile_range, missile_speed)
 		missiles--
 		spawn(weapon_cooldown)
@@ -105,6 +106,7 @@
 		if(!fire_checks(target) || missiles <=0) return
 		weapon_ready = 0
 		var/obj/item/weapon/flashbang/F = new /obj/item/weapon/flashbang(chassis.loc)
+		playsound(chassis, 'bang.ogg', 50, 1)
 		F.throw_at(target, missile_range, missile_speed)
 		missiles--
 		spawn(det_time)
@@ -260,15 +262,15 @@
 		weapon_ready = 0
 		playsound(chassis, 'AirHorn.ogg', 100, 1)
 		chassis.occupant_message("<font color='red' size='5'>HONK</font>")
-		for(var/mob/living/carbon/M in orange(10, chassis))
+		for(var/mob/living/carbon/M in ohearers(10, chassis))
+			if(istype(M, /mob/living/carbon/human) && istype(M:ears, /obj/item/clothing/ears/earmuffs))
+				continue
 			M << "<font color='red' size='7'>HONK</font>"
 			M.sleeping = 0
-			if(M.stuttering)
-				M.stuttering = 1
-			M.stuttering += 10
+			M.stuttering += 20
 			M.ear_deaf += 60
 			M.weakened = 3
-			if(prob(70))
+			if(prob(30))
 				M.stunned = 10
 				M.paralysis += 4
 			else
