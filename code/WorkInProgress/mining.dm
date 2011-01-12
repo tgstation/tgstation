@@ -1252,7 +1252,7 @@
 		return
 	return
 
-/*
+
 /obj/machinery/mineral/mint/process()
 	if (src.output && src.input)
 		var/obj/item/stack/sheet/O
@@ -1279,7 +1279,7 @@
 			if (istype(O,/obj/item/stack/sheet/clown))
 				amt_clown += 100
 				del(O)
-*/
+
 
 /obj/machinery/mineral/mint/attack_hand(user as mob)
 
