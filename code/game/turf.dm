@@ -110,28 +110,28 @@
 			O.hide(0)
 
 /turf/proc/ReplaceWithFloor()
-	if(!icon_old) icon_old = icon_state
-	var/turf/simulated/floor/W
-	var/old_icon = icon_old
+	var/prior_icon = icon_old
 	var/old_dir = dir
 
-	W = new /turf/simulated/floor( locate(src.x, src.y, src.z) )
+	var/turf/simulated/floor/W = new /turf/simulated/floor( locate(src.x, src.y, src.z) )
 
 	W.dir = old_dir
-	W.icon_old = old_icon
-	if(old_icon) W.icon_state = old_icon
+	if(prior_icon) W.icon_state = prior_icon
+	else W.icon_state = "floor"
 	W.opacity = 1
 	W.sd_SetOpacity(0)
 	W.levelupdate()
 	return W
 
 /turf/proc/ReplaceWithEngineFloor()
-	if(!icon_old) icon_old = icon_state
-	var/old_icon = icon_old
+	var/prior_icon = icon_old
 	var/old_dir = dir
+
 	var/turf/simulated/floor/engine/E = new /turf/simulated/floor/engine( locate(src.x, src.y, src.z) )
+
 	E.dir = old_dir
-	E.icon_old = old_icon
+	if(prior_icon) E.icon_state = prior_icon
+	else E.icon_state = "engine"
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if (istype(A,/mob/living/carbon))
@@ -189,32 +189,30 @@
 	..()
 
 /turf/proc/ReplaceWithSpace()
-	if(!icon_old) icon_old = icon_state
-	var/old_icon = icon_old
 	var/old_dir = dir
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
 	S.dir = old_dir
-	S.icon_old = old_icon
 	return S
 
 /turf/proc/ReplaceWithLattice()
-	if(!icon_old) icon_old = icon_state
-	var/old_icon = icon_old
 	var/old_dir = dir
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
 	S.dir = old_dir
-	S.icon_old = old_icon
 	new /obj/lattice( locate(src.x, src.y, src.z) )
 	return S
 
 /turf/proc/ReplaceWithWall()
+	var/old_icon = icon_state
 	var/turf/simulated/wall/S = new /turf/simulated/wall( locate(src.x, src.y, src.z) )
+	S.icon_old = old_icon
 	S.opacity = 0
 	S.sd_NewOpacity(1)
 	return S
 
 /turf/proc/ReplaceWithRWall()
+	var/old_icon = icon_state
 	var/turf/simulated/wall/r_wall/S = new /turf/simulated/wall/r_wall( locate(src.x, src.y, src.z) )
+	S.icon_old = old_icon
 	S.opacity = 0
 	S.sd_NewOpacity(1)
 	return S
