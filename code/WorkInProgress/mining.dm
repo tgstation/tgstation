@@ -29,6 +29,8 @@
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 
+/turf/simulated/mineral/Del()
+	return
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
@@ -113,6 +115,7 @@
 	return
 
 /turf/simulated/mineral/random/Del()
+	return
 
 /turf/simulated/mineral/uranium
 	name = "Uranium deposit"
