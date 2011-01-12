@@ -571,6 +571,9 @@ turf/simulated/floor/proc/update_icon()
 	burnt = 0
 	levelupdate()
 
+/turf/simulated/floor/proc/gets_drilled()
+	return
+
 /turf/simulated/floor/proc/break_tile_to_plating()
 	if(intact) to_plating()
 	break_tile()
