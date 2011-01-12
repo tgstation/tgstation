@@ -123,6 +123,20 @@
 	W.levelupdate()
 	return W
 
+/turf/proc/ReplaceWithPlating()
+	var/prior_icon = icon_old
+	var/old_dir = dir
+
+	var/turf/simulated/floor/plating/W = new /turf/simulated/floor/plating( locate(src.x, src.y, src.z) )
+
+	W.dir = old_dir
+	if(prior_icon) W.icon_state = prior_icon
+	else W.icon_state = "plating"
+	W.opacity = 1
+	W.sd_SetOpacity(0)
+	W.levelupdate()
+	return W
+
 /turf/proc/ReplaceWithEngineFloor()
 	var/prior_icon = icon_old
 	var/old_dir = dir
@@ -563,6 +577,8 @@ turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/floor/proc/break_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
+	if(istype(src,/turf/simulated/floor/mech_bay_recharge_floor))
+		src.ReplaceWithPlating()
 	if(broken) return
 	if(!icon_old) icon_old = icon_state
 	if(intact)
