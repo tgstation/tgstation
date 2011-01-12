@@ -43,7 +43,7 @@
 	var/area/A = get_area()
 	var/text = {"<HTML><head><title>[src]</title></head><BODY>
 <h2>[station_name()] blueprints</h2>
-<small>Property of Nanotrasen. For heads of stuff only. Store in high-secure storage.</small><hr>
+<small>Property of Nanotrasen. For heads of staff only. Store in high-secure storage.</small><hr>
 "}
 	switch (get_area_type())
 		if (AREA_SPACE)
@@ -193,8 +193,13 @@ move an amendment</a> to the drawing.</p>
 	for(var/obj/machinery/door/window/D in T2)
 		if(turn(dir,180) == D.dir)
 			return BORDER_BETWEEN
-	for (var/obj/machinery/door/M in T2)
+	if (locate(/obj/machinery/door) in T2)
 		return BORDER_2NDTILE
+	if (locate(/obj/falsewall) in T2)
+		return BORDER_2NDTILE
+	if (locate(/obj/falserwall) in T2)
+		return BORDER_2NDTILE
+	
 	return BORDER_NONE
 
 /obj/item/blueprints/proc/detect_room(var/turf/first)

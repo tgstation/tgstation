@@ -57,6 +57,7 @@ However people seem to like it for some reason.
 	icon_state = "Singularity"
 	anchored = 1
 	density = 1
+	layer = 6
 	unacidable = 1 //Don't comment this out.
 	var/active = 0
 	var/energy = 10
@@ -770,6 +771,8 @@ However people seem to like it for some reason.
 
 /obj/machinery/power/collector_array/proc/eject()
 	var/obj/item/weapon/tank/plasma/Z = src.P
+	if (!Z)
+		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
 	src.P = null

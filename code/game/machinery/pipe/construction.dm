@@ -16,7 +16,7 @@ Buildable meters
 #define PIPE_INSULATED_STRAIGHT	11
 #define PIPE_INSULATED_BENT		12
 
-/obj/item/weapon/pipe
+/obj/item/pipe
 	name = "pipe"
 	desc = "A pipe"
 	var/pipe_type = 0
@@ -28,8 +28,8 @@ Buildable meters
 	flags = TABLEPASS|FPRINT
 	w_class = 4
 	level = 2
- //TODO: список номер_типа -> тип
-/obj/item/weapon/pipe/New(var/loc, var/pipe_type as num, var/dir as num, var/obj/machinery/atmospherics/make_from = null)
+
+/obj/item/pipe/New(var/loc, var/pipe_type as num, var/dir as num, var/obj/machinery/atmospherics/make_from = null)
 	..()
 	if (make_from)
 		src.dir = make_from.dir
@@ -43,6 +43,8 @@ Buildable meters
 			src.pipe_type = PIPE_JUNCTION
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging)) 
 			src.pipe_type = PIPE_HE_STRAIGHT + is_bent
+		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/insulated))
+			src.pipe_type = PIPE_INSULATED_STRAIGHT + is_bent
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple))
 			src.pipe_type = PIPE_SIMPLE_STRAIGHT + is_bent
 		else if(istype(make_from, /obj/machinery/atmospherics/portables_connector))
@@ -57,19 +59,17 @@ Buildable meters
 			src.pipe_type = PIPE_PUMP
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_scrubber))
 			src.pipe_type = PIPE_SCRUBBER
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/insulated))
-			src.pipe_type = PIPE_INSULATED_STRAIGHT + is_bent
-		if (is_bent)
-			src.dir = make_from.initialize_directions  //workaround. Bent pipes with one node==null have cardinal direction. - rastaf0
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
 	//src.pipe_dir = get_pipe_dir()
 	update()
+	src.pixel_x = rand(-5, 5)
+	src.pixel_y = rand(-5, 5)
 
 //update the name and icon of the pipe item depending on the type
 
-/obj/item/weapon/pipe/proc/update()
+/obj/item/pipe/proc/update()
 	var/list/nlist = list( \
 		"pipe", \
 		"bent pipe", \
@@ -102,31 +102,13 @@ Buildable meters
 		"insulated", \
 	)
 	icon_state = islist[pipe_type + 1]
-	updateicon()
-
-//update the icon of the item
-
-/obj/item/weapon/pipe/proc/updateicon()
-	if(invisibility)				// true if placed under floor
-		icon -= rgb(0,0,0,128)		// fade the icon
-	else
-		icon = initial(icon)		// otherwise reset to inital icon
-
-// called to hide or unhide a pipe
-// i=true if hiding
-
-/obj/item/weapon/pipe/hide(var/i)
-
-	invisibility = i ? 101 : 0		// make hidden pipe items invisible
-	updateicon()
-
 
 //called when a turf is attacked with a pipe item
 // place the pipe on the turf, setting pipe level to 1 (underfloor) if the turf is not intact
 
 // rotate the pipe item clockwise
 
-/obj/item/weapon/pipe/verb/rotate()
+/obj/item/pipe/verb/rotate()
 	set name = "Rotate Pipe"
 	set src in view(1)
 
@@ -134,18 +116,30 @@ Buildable meters
 		return
 
 	src.dir = turn(src.dir, -90)
+
+	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE))
+		if(dir==2)
+			dir = 1
+		else if(dir==8)
+			dir = 4
 	//src.pipe_dir = get_pipe_dir()
 	return
 
-/obj/item/weapon/pipe/Move()
-	var/dir = src.dir
+/obj/item/pipe/Move()
 	..()
-	src.dir = dir
+	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_HE_BENT, PIPE_INSULATED_BENT)) \
+		&& (src.dir in cardinal))
+		src.dir = src.dir|turn(src.dir, 90)
+	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE))
+		if(dir==2)
+			dir = 1
+		else if(dir==8)
+			dir = 4
 	return
 
 // returns all pipe's endpoints
 
-/obj/item/weapon/pipe/proc/get_pipe_dir()
+/obj/item/pipe/proc/get_pipe_dir()
 	if (!dir)
 		return 0
 	var/flip = turn(dir, 180)
@@ -169,7 +163,7 @@ Buildable meters
 			return flip|cw|acw
 	return 0
 
-/obj/item/weapon/pipe/proc/get_pdir() //endpoints for regular pipes
+/obj/item/pipe/proc/get_pdir() //endpoints for regular pipes
 
 	var/flip = turn(dir, 180)
 //	var/cw = turn(dir, -90)
@@ -186,7 +180,7 @@ Buildable meters
 
 // return the h_dir (heat-exchange pipes) from the type and the dir
 
-/obj/item/weapon/pipe/proc/get_hdir() //endpoints for h/e pipes
+/obj/item/pipe/proc/get_hdir() //endpoints for h/e pipes
 
 //	var/flip = turn(dir, 180)
 //	var/cw = turn(dir, -90)
@@ -201,15 +195,20 @@ Buildable meters
 		else
 			return 0
 
-/obj/item/weapon/pipe/attack_self(mob/user as mob)
+/obj/item/pipe/attack_self(mob/user as mob)
 	return rotate()
 
-/obj/item/weapon/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	//*
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!isturf(src.loc))
 		return 1
+	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_INSULATED_STRAIGHT, PIPE_MVALVE))
+		if(dir==2)
+			dir = 1
+		else if(dir==8)
+			dir = 4
 	var/pipe_dir = get_pipe_dir()
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
@@ -264,6 +263,8 @@ Buildable meters
 			C.initialize_directions = pipe_dir
 			if (pipename)
 				C.name = pipename
+			var/turf/T = C.loc
+			C.level = T.intact ? 2 : 1
 			C.initialize()
 			C.build_network()
 			if (C.node)
@@ -311,20 +312,15 @@ Buildable meters
 			if (P.node2)
 				P.node2.initialize()
 				P.node2.build_network()
-/*
-		if(6)		//junctions
-			var/obj/machinery/junction/J = new( src.loc )
-			J.dir = dir
-			J.p_dir = src.get_pdir()
-			J.h_dir = src.get_hdir()
-			J.level = 2
-*/
+
 		if(PIPE_UVENT)		//unary vent
 			var/obj/machinery/atmospherics/unary/vent_pump/V = new( src.loc )
 			V.dir = dir
 			V.initialize_directions = pipe_dir
 			if (pipename)
 				V.name = pipename
+			var/turf/T = V.loc
+			V.level = T.intact ? 2 : 1
 			V.initialize()
 			V.build_network()
 			if (V.node)
@@ -338,6 +334,8 @@ Buildable meters
 			V.initialize_directions = pipe_dir
 			if (pipename)
 				V.name = pipename
+			var/turf/T = V.loc
+			V.level = T.intact ? 2 : 1
 			V.initialize()
 			V.build_network()
 			if (V.node1)
@@ -355,6 +353,8 @@ Buildable meters
 			P.initialize_directions = pipe_dir
 			if (pipename)
 				P.name = pipename
+			var/turf/T = P.loc
+			P.level = T.intact ? 2 : 1
 			P.initialize()
 			P.build_network()
 			if (P.node1)
@@ -371,6 +371,8 @@ Buildable meters
 			S.initialize_directions = pipe_dir
 			if (pipename)
 				S.name = pipename
+			var/turf/T = S.loc
+			S.level = T.intact ? 2 : 1
 			S.initialize()
 			S.build_network()
 			if (S.node)
@@ -397,8 +399,8 @@ Buildable meters
 
 	playsound(src.loc, 'Ratchet.ogg', 50, 1)
 	user.visible_message( \
-		"[user] fastens the pipe.", \
-		"\blue You have fastened the pipe.", \
+		"[user] fastens the [src].", \
+		"\blue You have fastened the [src].", \
 		"You hear ratchet.")
 	del(src)	// remove the pipe item
 
@@ -409,7 +411,7 @@ Buildable meters
 
 
 
-/obj/item/weapon/pipe_meter
+/obj/item/pipe_meter
 	name = "meter"
 	desc = "A meter that can be laid on pipes"
 	icon = 'pipe-item.dmi'
@@ -418,7 +420,7 @@ Buildable meters
 	flags = TABLEPASS|FPRINT
 	w_class = 4
 
-/obj/item/weapon/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()

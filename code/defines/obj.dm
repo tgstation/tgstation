@@ -172,6 +172,7 @@
 	anchored = 1.0
 	flags = FPRINT | CONDUCT
 	pressure_resistance = 5*ONE_ATMOSPHERE
+	layer = 2.9
 
 /obj/securearea
 	desc = "A warning sign which reads 'SECURE AREA'"
@@ -467,7 +468,7 @@
 	icon_state = "lattice"
 	density = 0
 	anchored = 1.0
-	layer = 2.5
+	layer = 2.3 //under pipes
 	//	flags = 64.0
 
 /obj/list_container

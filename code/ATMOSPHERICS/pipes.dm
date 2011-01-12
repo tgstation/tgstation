@@ -155,6 +155,9 @@ obj/machinery/atmospherics/pipe
 		proc/burst()
 			src.visible_message("\red \bold [src] bursts!");
 			playsound(src.loc, 'bang.ogg', 25, 1)
+			var/datum/effects/system/harmless_smoke_spread/smoke = new
+			smoke.set_up(1,0, src.loc, 0)
+			smoke.start()
 			del(src)
 
 		Del()
@@ -187,35 +190,33 @@ obj/machinery/atmospherics/pipe
 				//dir = node1_direction|node2_direction
 
 			else
+				if(!node1&&!node2)
+					del(src) //TODO: silent deleting looks weird
 				var/have_node1 = node1?1:0
 				var/have_node2 = node2?1:0
 				icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
 
-				if(!node1&&!node2)
-					del(src)
 
 		initialize()
-			var/connect_directions = initialize_directions
+			var/node1_dir
+			var/node2_dir
+			
 			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node1 = target
-							connect_directions &= ~direction
-							break
-					if (node1)
-						break
+				if(direction&initialize_directions)
+					if (!node1_dir)
+						node1_dir = direction
+					else if (!node2_dir)
+						node2_dir = direction
+			
+			for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
+				if(target.initialize_directions & get_dir(target,src))
+					node1 = target
+					break
+			for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
+				if(target.initialize_directions & get_dir(target,src))
+					node2 = target
+					break
 
-
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node2 = target
-							connect_directions &= ~direction
-							break
-					if(node2)
-						break
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
@@ -268,16 +269,14 @@ obj/machinery/atmospherics/pipe
 				del(src)
 
 		initialize()
-			if(!node1)
-				for(var/obj/machinery/atmospherics/pipe/simple/target in get_step(src,initialize_directions))
-					if(target.initialize_directions & get_dir(target,src))
-						node1 = target
-						break
-			if(!node2)
-				for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,initialize_directions_he))
-					if(target.initialize_directions_he & get_dir(target,src))
-						node2 = target
-						break
+			for(var/obj/machinery/atmospherics/target in get_step(src,initialize_directions))
+				if(target.initialize_directions & get_dir(target,src))
+					node1 = target
+					break
+			for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,initialize_directions_he))
+				if(target.initialize_directions_he & get_dir(target,src))
+					node2 = target
+					break
 
 			update_icon()
 
@@ -291,26 +290,25 @@ obj/machinery/atmospherics/pipe
 		thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
 
 		initialize()
-			var/connect_directions = initialize_directions_he
+			var/node1_dir
+			var/node2_dir
+			
 			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,direction))
-						if(target.initialize_directions_he & get_dir(target,src))
-							node1 = target
-							connect_directions &= ~direction
-							break
-					if (node1)
-						break
+				if(direction&initialize_directions_he)
+					if (!node1_dir)
+						node1_dir = direction
+					else if (!node2_dir)
+						node2_dir = direction
+			
+			for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,node1_dir))
+				if(target.initialize_directions_he & get_dir(target,src))
+					node1 = target
+					break
+			for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,node2_dir))
+				if(target.initialize_directions_he & get_dir(target,src))
+					node2 = target
+					break
 
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,direction))
-						if(target.initialize_directions_he & get_dir(target,src))
-							node2 = target
-							connect_directions &= ~direction
-							break
-					if (node2)
-						break
 			update_icon()
 
 
@@ -711,9 +709,9 @@ obj/machinery/atmospherics/pipe
 			update_icon()
 
 obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if (istype(W, /obj/machinery/atmospherics/pipe/tank))
+	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
 		return ..()
-	if (istype(W, /obj/machinery/atmospherics/pipe/vent))
+	if (istype(src, /obj/machinery/atmospherics/pipe/vent))
 		return ..()
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
@@ -734,5 +732,9 @@ obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/u
 			"[user] unfastens \the [src].", \
 			"\blue You have unfastened \the [src].", \
 			"You hear ratchet.")
-		new /obj/item/weapon/pipe(loc, make_from=src)
+		new /obj/item/pipe(loc, make_from=src)
+		for (var/obj/machinery/meter/meter in T)
+			if (meter.target == src)
+				new /obj/item/pipe_meter(T)
+				del(meter)
 		del(src)
