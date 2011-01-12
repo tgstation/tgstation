@@ -21,9 +21,12 @@
 	name = "Rock"
 	icon = 'walls.dmi'
 	icon_state = "rock"
+	oxygen = 0
+	nitrogen = 0
 	opacity = 1
 	density = 1
 	blocks_air = 1
+	temperature = TCMB
 	var/mineralName = ""
 	var/mineralAmt = 0
 	var/spread = 0 //will the seam spread?
@@ -265,6 +268,9 @@
 	name = "Asteroid"
 	icon = 'floors.dmi'
 	icon_state = "asteroid"
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
 	var/seedName = "" //Name of the seed it contains
 	var/seedAmt = 0   //Ammount of the seed it contains
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
@@ -1246,6 +1252,7 @@
 		return
 	return
 
+/*
 /obj/machinery/mineral/mint/process()
 	if (src.output && src.input)
 		var/obj/item/stack/sheet/O
@@ -1272,7 +1279,7 @@
 			if (istype(O,/obj/item/stack/sheet/clown))
 				amt_clown += 100
 				del(O)
-
+*/
 
 /obj/machinery/mineral/mint/attack_hand(user as mob)
 
