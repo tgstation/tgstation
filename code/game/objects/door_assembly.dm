@@ -206,11 +206,11 @@ obj/door_assembly
 				ae.loc = src.loc
 	else if(istype(W, /obj/item/stack/sheet/rglass) && glass == 0)
 		playsound(src.loc, 'Crowbar.ogg', 100, 1)
-		var/turf/T = get_turf(user)
 		user.visible_message("[user] adds reinforced glass windows to the airlock assembly.", "You start to install reinforced glass windows into the airlock assembly.")
-		sleep(40)
-		if(get_turf(user) == T)
+		var/obj/item/stack/sheet/rglass/G = W
+		if(do_after(user, 40) && G.amount>=1)
 			user << "\blue You installed glass windows the airlock assembly!"
+			G.use(1)
 			src.glass = 1
 			src.doortype = 7
 			src.name = "Near finished Window Airlock Assembly"
