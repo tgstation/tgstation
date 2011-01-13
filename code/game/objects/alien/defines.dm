@@ -8,9 +8,8 @@
 	desc = "It looks like a weird egg"
 	name = "egg"
 	icon_state = "egg"
-
 	density = 0
-	anchored = 1
+	anchored = 0
 
 	var/health = 100
 
