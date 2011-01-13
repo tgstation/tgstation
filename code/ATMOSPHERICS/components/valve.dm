@@ -131,7 +131,7 @@ obj/machinery/atmospherics/valve
 	initialize()
 		if(node1 && node2) return
 
-/*		var/connect_directions
+		var/connect_directions
 
 		switch(dir)
 			if(NORTH)
@@ -162,16 +162,7 @@ obj/machinery/atmospherics/valve
 						node2 = target
 						break
 				if(node1)
-					break*/
-		for(var/obj/machinery/atmospherics/target in get_step(src,dir))
-			if(target.initialize_directions & get_dir(target,src))
-				node1 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,turn(dir,180)))
-			if(target.initialize_directions & get_dir(target,src))
-				node2 = target
-				break
+					break
 
 	build_network()
 		if(!network_node1 && node1)
@@ -292,5 +283,5 @@ obj/machinery/atmospherics/valve
 				"[user] unfastens \the [src].", \
 				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
-			new /obj/item/pipe(loc, make_from=src)
+			new /obj/item/weapon/pipe(loc, make_from=src)
 			del(src)

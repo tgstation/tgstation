@@ -12,177 +12,65 @@
 
 /area/mine/lobby
 	name = "Mining station"
+	requires_power = 0
+	luminosity = 1
 	icon_state = "mine"
+	sd_lighting = 0
 
 
 /**********************Mineral deposits**************************/
 
 /turf/simulated/mineral //wall piece
-	name = "Rock"
+	name = "Mineral deposit"
 	icon = 'walls.dmi'
 	icon_state = "rock"
-	oxygen = 0
-	nitrogen = 0
 	opacity = 1
 	density = 1
 	blocks_air = 1
-	temperature = TCMB
 	var/mineralName = ""
 	var/mineralAmt = 0
-	var/spread = 0 //will the seam spread?
-	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 
-/turf/simulated/mineral/Del()
-	return
-
-/turf/simulated/mineral/ex_act(severity)
-	switch(severity)
-		if(3.0)
-			return
-		if(2.0)
-			if (prob(70))
-				src.mineralAmt -= 1 //some of the stuff gets blown up
-				src.gets_drilled()
-		if(1.0)
-			src.mineralAmt -= 2 //some of the stuff gets blown up
-			src.gets_drilled()
-	return
-
-/turf/simulated/mineral/New()
-	desc = "0"
-	if (mineralName && mineralAmt && spread && spreadChance)
-		var/sp = pickweight(list("1" = spreadChance, "0" = 100-spreadChance))
-		if(sp == "1")
-			if(istype(get_step(src, SOUTH), /turf/simulated/mineral/random))
-				//var/turf/simulated/mineral/random/R
-				//R = get_step(src, SOUTH)
-				new src.type(get_step(src, SOUTH))
-				//R.levelupdate()
-		sp = pickweight(list("1" = spreadChance, "0" = 100-spreadChance))
-		if(sp == "1")
-			if(istype(get_step(src, NORTH), /turf/simulated/mineral/random))
-				//var/turf/simulated/mineral/random/R
-				//R = get_step(src, NORTH)
-				new src.type(get_step(src, NORTH))
-				//R.levelupdate()
-		sp = pickweight(list("1" = spreadChance, "0" = 100-spreadChance))
-		if(sp == "1")
-			if(istype(get_step(src, WEST), /turf/simulated/mineral/random))
-				//var/turf/simulated/mineral/random/R
-				//R = get_step(src, WEST)
-				new src.type(get_step(src, WEST))
-				//R.levelupdate()
-		sp = pickweight(list("1" = spreadChance, "0" = 100-spreadChance))
-		if(sp == "1")
-			if(istype(get_step(src, EAST), /turf/simulated/mineral/random))
-				//var/turf/simulated/mineral/random/R
-				//R = get_step(src, EAST)
-				new src.type(get_step(src, EAST))
-				//R.levelupdate()
-
-	return
-
-/*if(istype(get_step(src, SOUTH), /turf/simulated/floor/airless/asteroid))
-		A = get_step(src, SOUTH)
-		A.updateMineralOverlays()*/
-
-/turf/simulated/mineral/random
-	name = "Mineral deposit"
-	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5)
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25)
-	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
-
-/turf/simulated/mineral/random/New()
-	var/mChance = pickweight(list("1" = mineralChance, "0" = 100-mineralChance))
-	if (mChance == "1")
-		var/mName = pickweight(mineralSpawnChanceList) //temp mineral name
-		spawn(5)
-			if (mName)
-				var/turf/simulated/mineral/M
-				switch(mName)
-					if("Uranium")
-						M = new/turf/simulated/mineral/uranium(src)
-					if("Iron")
-						M = new/turf/simulated/mineral/iron(src)
-					if("Diamond")
-						M = new/turf/simulated/mineral/diamond(src)
-					if("Gold")
-						M = new/turf/simulated/mineral/gold(src)
-					if("Silver")
-						M = new/turf/simulated/mineral/silver(src)
-					if("Plasma")
-						M = new/turf/simulated/mineral/plasma(src)
-				if(M)
-					src = M
-					M.levelupdate()
-	return
-
-/turf/simulated/mineral/random/Del()
-	return
-
-/turf/simulated/mineral/uranium
+/turf/simulated/mineral/urenium
 	name = "Uranium deposit"
 	icon_state = "rock_Uranium"
 	mineralName = "Uranium"
 	mineralAmt = 5
-	spreadChance = 10
-	spread = 1
-
-
 
 /turf/simulated/mineral/iron
 	name = "Iron deposit"
 	icon_state = "rock_Iron"
 	mineralName = "Iron"
 	mineralAmt = 5
-	spreadChance = 25
-	spread = 1
-
 
 /turf/simulated/mineral/diamond
 	name = "Diamond deposit"
 	icon_state = "rock_Diamond"
 	mineralName = "Diamond"
 	mineralAmt = 5
-	spreadChance = 10
-	spread = 1
-
 
 /turf/simulated/mineral/gold
 	name = "Gold deposit"
 	icon_state = "rock_Gold"
 	mineralName = "Gold"
 	mineralAmt = 5
-	spreadChance = 10
-	spread = 1
-
 
 /turf/simulated/mineral/silver
 	name = "Silver deposit"
 	icon_state = "rock_Silver"
 	mineralName = "Silver"
 	mineralAmt = 5
-	spreadChance = 10
-	spread = 1
-
 
 /turf/simulated/mineral/plasma
 	name = "Plasma deposit"
 	icon_state = "rock_Plasma"
 	mineralName = "Plasma"
 	mineralAmt = 5
-	spreadChance = 25
-	spread = 1
-
 
 /turf/simulated/mineral/clown
 	name = "Bananium deposit"
 	icon_state = "rock_Clown"
 	mineralName = "Clown"
-	mineralAmt = 3
-	spreadChance = 0
-	spread = 0
-
+	mineralAmt = 2
 
 /turf/simulated/mineral/ReplaceWithFloor()
 	if(!icon_old) icon_old = icon_state
@@ -247,19 +135,6 @@
 	ReplaceWithFloor()
 	return
 
-/*
-/turf/simulated/mineral/proc/setRandomMinerals()
-	var/s = pickweight(list("uranium" = 5, "iron" = 50, "gold" = 5, "silver" = 5, "plasma" = 50, "diamond" = 1))
-	if (s)
-		mineralName = s
-
-	var/N = text2path("/turf/simulated/mineral/[s]")
-	if (N)
-		var/turf/simulated/mineral/M = new N
-		src = M
-		if (src.mineralName)
-			mineralAmt = 5
-	return*/
 
 
 /**********************Asteroid**************************/
@@ -268,9 +143,6 @@
 	name = "Asteroid"
 	icon = 'floors.dmi'
 	icon_state = "asteroid"
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
 	var/seedName = "" //Name of the seed it contains
 	var/seedAmt = 0   //Ammount of the seed it contains
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
@@ -282,9 +154,6 @@
 		seedAmt = rand(1,4)
 	spawn(2)
 		updateMineralOverlays()
-
-/turf/simulated/floor/airless/asteroid/ex_act(severity)
-	return
 
 /turf/simulated/floor/airless/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
@@ -1234,11 +1103,6 @@
 	var/obj/machinery/mineral/output = null
 	var/amt_silver = 0 //amount of silver
 	var/amt_gold = 0   //amount of gold
-	var/amt_diamond = 0
-	var/amt_iron = 0
-	var/amt_plasma = 0
-	var/amt_uranium = 0
-	var/amt_clown = 0
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = 0
 
@@ -1252,33 +1116,16 @@
 		return
 	return
 
-
 /obj/machinery/mineral/mint/process()
 	if (src.output && src.input)
 		var/obj/item/stack/sheet/O
 		O = locate(/obj/item/stack/sheet, input.loc)
-		if(O)
-			if (istype(O,/obj/item/stack/sheet/gold))
-				amt_gold += 100
-				del(O)
-			if (istype(O,/obj/item/stack/sheet/silver))
-				amt_silver += 100
-				del(O)
-			if (istype(O,/obj/item/stack/sheet/diamond))
-				amt_diamond += 100
-				del(O)
-			if (istype(O,/obj/item/stack/sheet/plasma))
-				amt_plasma += 100
-				del(O)
-			if (istype(O,/obj/item/weapon/ore/uranium))
-				amt_uranium += 100
-				del(O)
-			if (istype(O,/obj/item/stack/sheet/metal))
-				amt_iron += 100
-				del(O)
-			if (istype(O,/obj/item/stack/sheet/clown))
-				amt_clown += 100
-				del(O)
+		if (istype(O,/obj/item/stack/sheet/gold))
+			amt_gold += 100
+			del(O)
+		if (istype(O,/obj/item/stack/sheet/silver))
+			amt_silver += 100
+			del(O)
 
 
 /obj/machinery/mineral/mint/attack_hand(user as mob)
@@ -1297,11 +1144,6 @@
 
 	dat += text("<br><br><font color='#ffcc00'><b>Gold inserterd: </b>[amt_gold]</font>")
 	dat += text("<br><br><font color='#888888'><b>Silver inserterd: </b>[amt_silver]</font>")
-	dat += text("<br><br><font color='#555555'><b>Iron inserterd: </b>[amt_iron]</font>")
-	dat += text("<br><br><font color='#8888FF'><b>Diamond inserterd: </b>[amt_diamond]</font>")
-	dat += text("<br><br><font color='#FF8800'><b>Plasma inserterd: </b>[amt_plasma]</font>")
-	dat += text("<br><br><font color='#008800'><b>Uranium inserterd: </b>[amt_uranium]</font>")
-	dat += text("<br><br><font color='#AAAA00'><b>Bananium inserterd: </b>[amt_clown]</font>")
 
 	dat += text("<br><br><A href='?src=\ref[src];makeCoins=[1]'>Make coins</A>")
 	dat += text("<br><br>found: <font color='green'><b>[newCoins]</b></font>")
@@ -1329,37 +1171,6 @@
 				newCoins++
 				src.updateUsrDialog()
 				sleep(5);
-			while(amt_diamond > 0)
-				new /obj/item/weapon/coin/diamond(output.loc)
-				amt_diamond -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-			while(amt_iron > 0)
-				new /obj/item/weapon/coin/iron(output.loc)
-				amt_iron -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-			while(amt_plasma > 0)
-				new /obj/item/weapon/coin/plasma(output.loc)
-				amt_plasma -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-			while(amt_uranium > 0)
-				new /obj/item/weapon/coin/uranium(output.loc)
-				amt_uranium -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-			while(amt_clown > 0)
-				new /obj/item/weapon/coin/clown(output.loc)
-				amt_clown -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-
 			processing = 0;
 	src.updateUsrDialog()
 	return
@@ -1388,26 +1199,6 @@
 /obj/item/weapon/coin/silver
 	name = "Silver coin"
 	icon_state = "coin_silver"
-
-/obj/item/weapon/coin/diamond
-	name = "Diamond coin"
-	icon_state = "coin_diamond"
-
-/obj/item/weapon/coin/iron
-	name = "Iron coin"
-	icon_state = "coin_iron"
-
-/obj/item/weapon/coin/plasma
-	name = "Solid plasma coin"
-	icon_state = "coin_plasma"
-
-/obj/item/weapon/coin/uranium
-	name = "Uranium coin"
-	icon_state = "coin_uranium"
-
-/obj/item/weapon/coin/clown
-	name = "Bananaium coin"
-	icon_state = "coin_clown"
 
 
 
@@ -1516,10 +1307,10 @@
 	icon = 'items.dmi'
 	icon_state = "pickaxe"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 15.0
-	throwforce = 4.0
+	force = 5.0
+	throwforce = 7.0
 	item_state = "wrench"
-	w_class = 4.0
+	w_class = 2.0
 	m_amt = 50
 
 /*****************************Shovel********************************/
@@ -1529,10 +1320,10 @@
 	icon = 'items.dmi'
 	icon_state = "shovel"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 8.0
-	throwforce = 4.0
+	force = 5.0
+	throwforce = 7.0
 	item_state = "wrench"
-	w_class = 4.0
+	w_class = 2.0
 	m_amt = 50
 
 
@@ -1613,7 +1404,6 @@
 	icon_state = "rail"
 	dir = 2
 	var/id = null    //this is needed for switches to work Set to the same on the whole length of the track
-	anchored = 1
 
 /**********************Rail intersection**************************/
 
@@ -2109,12 +1899,12 @@ for (var/client/C)
 		dat += text("<br><br><br><A href='?src=\ref[src];scrap=1'>Scrap current shuttle</A>")
 	else
 		dat += text("<b>Available ships to build:</b><br><br>")
-		dat += text("<A href='?src=\ref[src];ship=hopper'>Planet hopper</A> - Tiny, Slow, 25000 metal<br>")
-		dat += text("<A href='?src=\ref[src];ship=bus'>Blunder Bus</A> - Small, Decent speed, 60000 metal<br>")
-		dat += text("<A href='?src=\ref[src];ship=dinghy'>Space dinghy</A> - Medium size, Decent speed, 100000 metal<br>")
-		dat += text("<A href='?src=\ref[src];ship=van'>Boxvan MMDLVIr</A> - Medium size, Decent speed, 120000 metal<br>")
-		dat += text("<A href='?src=\ref[src];ship=secvan'>Boxvan MMDLVI - Security eidition</A> - Large, Rather slow, 125000 metal<br>")
-		dat += text("<A href='?src=\ref[src];ship=station4'>Space station 4</A> - Huge, Slow, 250000 metal<br>")
+		dat += text("<A href='?src=\ref[src];ship=hopper'>Planet hopper</A> - Tiny, Slow<br>")
+		dat += text("<A href='?src=\ref[src];ship=bus'>Blunder Bus</A> - Small, Decent speed<br>")
+		dat += text("<A href='?src=\ref[src];ship=dinghy'>Space dinghy</A> - Medium size, Decent speed<br>")
+		dat += text("<A href='?src=\ref[src];ship=van'>Boxvan MMDLVIr</A> - Medium size, Decent speed<br>")
+		dat += text("<A href='?src=\ref[src];ship=secvan'>Boxvan MMDLVI - Security eidition</A> - Large, Rather slow<br>")
+		dat += text("<A href='?src=\ref[src];ship=station4'>Space station 4</A> - Huge, Slow<br>")
 
 	user << browse("[dat]", "window=shipbuilder")
 

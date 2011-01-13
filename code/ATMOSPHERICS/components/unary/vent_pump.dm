@@ -26,7 +26,7 @@
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
 
-	
+
 	New()
 		var/area/A = get_area(loc)
 		if (A.master)
@@ -35,7 +35,7 @@
 		..()
 		if (!id)
 			id = "\ref[src]"
-	
+
 	high_volume
 		name = "Large Air Vent"
 		New()
@@ -84,7 +84,7 @@
 					var/transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 					var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-	
+
 					use_power(round(air_contents.volume/12), channel)
 					loc.assume_air(removed)
 
@@ -105,7 +105,7 @@
 					var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 					if (isnull(removed)) //in space
 						return
-					
+
 
 					use_power(round(air_contents.volume/12), channel)
 					air_contents.merge(removed)
@@ -274,5 +274,5 @@
 				"[user] unfastens \the [src].", \
 				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
-			new /obj/item/pipe(loc, make_from=src)
+			new /obj/item/weapon/pipe(loc, make_from=src)
 			del(src)

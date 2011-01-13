@@ -83,7 +83,7 @@
 		if(!on)
 			return 0
 
-			
+
 		var/datum/gas_mixture/environment = loc.return_air()
 
 		if(scrubbing)
@@ -213,5 +213,5 @@
 				"[user] unfastens \the [src].", \
 				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
-			new /obj/item/pipe(loc, make_from=src)
+			new /obj/item/weapon/pipe(loc, make_from=src)
 			del(src)
