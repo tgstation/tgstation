@@ -9,7 +9,7 @@
 	affected_species = list("Human")
 	permeability_mod = 1
 
-/datum/disease/gbs/stage_act()
+/datum/disease/rhumba_beat/stage_act()
 	..()
 	switch(stage)
 		if(1)
