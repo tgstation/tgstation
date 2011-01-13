@@ -13,10 +13,10 @@
 	..()
 	switch(stage)
 		if(1)
-			if(affected_mob.ckey == "callagan")
+			if(affected_mob.ckey == "rosham")
 				src.cure()
 		if(2)
-			if(affected_mob.ckey == "callagan")
+			if(affected_mob.ckey == "rosham")
 				src.cure()
 			if(prob(45))
 				affected_mob.toxloss += 5
@@ -24,7 +24,7 @@
 			if(prob(1))
 				affected_mob << "\red You feel strange..."
 		if(3)
-			if(affected_mob.ckey == "callagan")
+			if(affected_mob.ckey == "rosham")
 				src.cure()
 			if(prob(5))
 				affected_mob << "\red You feel the urge to dance..."
@@ -33,7 +33,7 @@
 			else if(prob(10))
 				affected_mob << "\red You feel the need to chick chicky boom..."
 		if(4)
-			if(affected_mob.ckey == "callagan")
+			if(affected_mob.ckey == "rosham")
 				src.cure()
 			if(prob(10))
 				affected_mob.emote("gasp")
@@ -42,7 +42,7 @@
 				affected_mob.toxloss += 5
 				affected_mob.updatehealth()
 		if(5)
-			if(affected_mob.ckey == "callagan")
+			if(affected_mob.ckey == "rosham")
 				src.cure()
 			affected_mob << "\red Your body is unable to contain the Rhumba Beat..."
 			if(prob(50))

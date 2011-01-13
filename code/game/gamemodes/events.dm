@@ -237,6 +237,8 @@
 				virus_type = /datum/disease/gbs
 			if("magnitis")
 				virus_type = /datum/disease/magnitis
+			if("rhumba beat")
+				virus_type = /datum/disease/rhumba_beat
 			if("brain rot")
 				virus_type = /datum/disease/brainrot
 			if("cold")

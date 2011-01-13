@@ -1293,7 +1293,7 @@
 		var/datum/disease/F = new /datum/disease/fake_gbs(0)
 		var/list/data = list("virus"= F)
 		reagents.add_reagent("blood", 20, data)
-
+/*
 /obj/item/weapon/reagent_containers/glass/bottle/rhumba_beat
 	name = "Rhumba Beat culture bottle"
 	desc = "A small bottle. Contains The Rhumba Beat culture in synthblood medium."//Or simply - General BullShit
@@ -1308,7 +1308,7 @@
 		var/datum/disease/F = new /datum/disease/rhumba_beat
 		var/list/data = list("virus"= F)
 		R.add_reagent("blood", 20, data)
-
+*/
 
 /obj/item/weapon/reagent_containers/glass/bottle/brainrot
 	name = "Brainrot culture bottle"

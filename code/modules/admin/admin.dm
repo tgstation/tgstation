@@ -1181,7 +1181,7 @@ var/showadminmessages = 1
 						viral_outbreak()
 						message_admins("[key_name_admin(usr)] has triggered a virus outbreak", 1)
 					else
-						var/list/viruses = list("fake gbs","gbs","magnitis","wizarditis",/*"beesease",*/"brain rot","cold","retrovirus","flu","pierrot's throat")
+						var/list/viruses = list("fake gbs","gbs","magnitis","wizarditis",/*"beesease",*/"brain rot","cold","retrovirus","flu","pierrot's throat","rhumba beat")
 						var/V = input("Choose the virus to spread", "BIOHAZARD") in viruses
 						viral_outbreak(V)
 						message_admins("[key_name_admin(usr)] has triggered a virus outbreak of [V]", 1)
