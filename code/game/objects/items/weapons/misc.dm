@@ -73,7 +73,14 @@ DNA INJECTOR
 			O.t_loc = M.loc
 			O.place = "dnainjector"
 			M.requests += O
-			message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
+			if (dnatype == "se")
+				if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
+					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name] \red(MONKEY)")
+				else
+					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
+			else
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
+
 			spawn( 0 )
 				O.process()
 				return
@@ -85,6 +92,12 @@ DNA INJECTOR
 				user << "\red Apparently it didn't work."
 				return
 			inject(M)
-			message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
+			if (dnatype == "se")
+				if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
+					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name] \red(MONKEY)")
+				else
+					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
+			else
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
 			user.show_message(text("\red You inject [M]"))
 	return
