@@ -4,7 +4,6 @@ ORANGE SHOES
 MUZZLE
 CAKEHAT
 SUNGLASSES
-CIGARETTE
 SWAT SUIT
 CHAMELEON JUMPSUIT
 DEATH COMMANDO GAS MASK
@@ -89,103 +88,6 @@ DEATH COMMANDO GAS MASK
 		src.damtype = "brute"
 		src.icon_state = "cake0"
 	return
-
-
-/obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/weldingtool)  && W:welding)
-		if(src.lit == 0)
-			src.lit = 1
-			src.damtype = "fire"
-			src.icon_state = "cigon"
-			src.item_state = "cigon"
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] casually lights the cigarette with [], what a badass.", user, W), 1)
-			spawn() //start fires while it's lit
-				src.process()
-	else if(istype(W, /obj/item/weapon/zippo) && W:lit)
-		if(src.lit == 0)
-			src.lit = 1
-			src.icon_state = "cigon"
-			src.item_state = "cigon"
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red With a single flick of his wrist, [] smoothly lights his cigarette with his []. Damn they're cool.", user, W), 1)
-			spawn() //start fires while it's lit
-				src.process()
-
-
-
-/obj/item/clothing/mask/cigarette/process()
-
-	var/atom/lastHolder = null
-
-	while(src.lit == 1)
-		var/turf/location = src.loc
-		var/atom/holder = loc
-		var/isHeld = 0
-		var/mob/M = null
-		src.smoketime--
-
-		if(istype(location, /mob/))
-			M = location
-			if(M.l_hand == src || M.r_hand == src || M.wear_mask == src)
-				location = M.loc
-		if(src.smoketime < 1)
-			var/obj/item/weapon/cigbutt/C = new /obj/item/weapon/cigbutt
-			if(M != null)
-				M << "\red Your cigarette goes out."
-			C.loc = location
-			del(src)
-			return
-		if (istype(location, /turf)) //start a fire if possible
-			location.hotspot_expose(700, 5)
-		if (ismob(holder))
-			isHeld = 1
-		else
-
-
-
-
-			// note remove luminosity processing until can understand how to make this compatible
-			// with the fire checks, etc.
-
-			isHeld = 0
-			if (lastHolder != null)
-				//lastHolder.sd_SetLuminosity(0)
-				lastHolder = null
-
-		if (isHeld == 1)
-			//if (holder != lastHolder && lastHolder != null)
-				//lastHolder.sd_SetLuminosity(0)
-			//holder.sd_SetLuminosity(1)
-			lastHolder = holder
-
-		//sd_SetLuminosity(1)
-		sleep(10)
-
-	if (lastHolder != null)
-		//lastHolder.sd_SetLuminosity(0)
-		lastHolder = null
-
-	//sd_SetLuminosity(0)
-
-
-/obj/item/clothing/mask/cigarette/dropped(mob/user as mob)
-	if(src.lit == 1)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] calmly drops and treads on the lit cigarette, putting it out instantly.", user), 1)
-		src.lit = -1
-		src.damtype = "brute"
-		src.icon_state = "cigbutt"
-		src.item_state = "cigoff"
-		src.name = "Cigarette butt"
-		src.desc = "A cigarette butt."
-		return ..()
-	else
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] drops the []. Guess they've had enough for the day.", user, src), 1)
-		return ..()
-
-
 
 
 /obj/item/clothing/under/chameleon/New()

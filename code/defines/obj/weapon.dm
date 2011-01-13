@@ -19,6 +19,21 @@
 	g_amt = 7500
 	m_amt = 1000
 
+/obj/item/weapon/match
+	name = "Match"
+	desc = "A simple match stick, used for lighting tobacco"
+	icon = 'cigarettes.dmi'
+	icon_state = "match_unlit"
+	var/lit = 0
+	var/smoketime = 5
+
+/obj/item/weapon/matchbox
+	name = "Matchbox"
+	desc = "A box of matches"
+	icon = 'cigarettes.dmi'
+	icon_state = "matchbox"
+	var/matchcount = 20
+
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build walls/floor."

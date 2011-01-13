@@ -461,7 +461,7 @@
 	permeability_coefficient = 0.25
 
 /obj/item/clothing/shoes/sandal
-	desc = "A pair of rather plain sandals, wooden sandals."
+	desc = "A pair of rather plain, wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
 

@@ -1,10 +1,185 @@
 /*
 CONTAINS:
+MATCHES
+MATCHBOXES
+CIGARETTES
 CIG PACKET
 ZIPPO
-
-
 */
+
+///////////
+//MATCHES//
+///////////
+
+/obj/item/weapon/match/process()
+	while(src.lit == 1)
+		src.smoketime--
+		sleep(10)
+		if(src.smoketime < 1)
+			src.icon_state = "match_burnt"
+			src.lit = -1
+			return
+
+/obj/item/weapon/match/dropped(mob/user as mob)
+	if(src.lit == 1)
+		src.lit = -1
+		src.damtype = "brute"
+		src.icon_state = "match_burnt"
+		src.item_state = "cigoff"
+		src.name = "Burnt match"
+		src.desc = "A match that has been burnt"
+		return ..()
+
+//////////////
+//MATCHBOXES//
+//////////////
+/obj/item/weapon/matchbox/attack_hand(mob/user as mob)
+	if(user.r_hand == src || user.l_hand == src)
+		if(src.matchcount <= 0)
+			user << "\red You're out of matches. Shouldn't have wasted so many..."
+			return
+		else
+			src.matchcount--
+			var/obj/item/weapon/match/W = new /obj/item/weapon/match(user)
+			if(user.hand)
+				user.l_hand = W
+			else
+				user.r_hand = W
+			W.layer = 20
+	else
+		return ..()
+	if(src.matchcount <= 0)
+		src.icon_state = "matchbox_e"
+	else if(src.matchcount <= 5)
+		src.icon_state = "matchbox_1q"
+	else if(src.matchcount <= 10)
+		src.icon_state = "matchbox_h"
+	else if(src.matchcount <= 15)
+		src.icon_state = "matchbox_3q"
+	else
+		src.icon_state = "matchbox"
+	src.update_icon()
+	return
+
+obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/match) && W.lit == 0)
+		W.lit = 1
+		W.icon_state = "match_lit"
+		W.process()
+	W.update_icon()
+	return
+
+
+//////////////
+//CIGARETTES//
+//////////////
+/obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/weldingtool)  && W:welding)
+		if(src.lit == 0)
+			src.lit = 1
+			src.damtype = "fire"
+			src.icon_state = "cigon"
+			src.item_state = "cigon"
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red [] casually lights the cigarette with [], what a badass.", user, W), 1)
+			spawn() //start fires while it's lit
+				src.process()
+	else if(istype(W, /obj/item/weapon/zippo) && W:lit)
+		if(src.lit == 0)
+			src.lit = 1
+			src.icon_state = "cigon"
+			src.item_state = "cigon"
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red With a single flick of his wrist, [] smoothly lights his cigarette with his []. Damn they're cool.", user, W), 1)
+			spawn() //start fires while it's lit
+				src.process()
+	else if(istype(W, /obj/item/weapon/match) && W:lit)
+		if(src.lit == 0)
+			src.lit = 1
+			src.icon_state = "cigon"
+			src.item_state = "cigon"
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red With a single flick of his wrist, [] smoothly lights his cigarette with his []. Damn they're cool.", user, W), 1)
+			spawn() //start fires while it's lit
+				src.process()
+
+
+
+/obj/item/clothing/mask/cigarette/process()
+
+	var/atom/lastHolder = null
+
+	while(src.lit == 1)
+		var/turf/location = src.loc
+		var/atom/holder = loc
+		var/isHeld = 0
+		var/mob/M = null
+		src.smoketime--
+
+		if(istype(location, /mob/))
+			M = location
+			if(M.l_hand == src || M.r_hand == src || M.wear_mask == src)
+				location = M.loc
+		if(src.smoketime < 1)
+			var/obj/item/weapon/cigbutt/C = new /obj/item/weapon/cigbutt
+			if(M != null)
+				M << "\red Your cigarette goes out."
+			C.loc = location
+			del(src)
+			return
+		if (istype(location, /turf)) //start a fire if possible
+			location.hotspot_expose(700, 5)
+		if (ismob(holder))
+			isHeld = 1
+		else
+
+
+
+
+			// note remove luminosity processing until can understand how to make this compatible
+			// with the fire checks, etc.
+
+			isHeld = 0
+			if (lastHolder != null)
+				//lastHolder.sd_SetLuminosity(0)
+				lastHolder = null
+
+		if (isHeld == 1)
+			//if (holder != lastHolder && lastHolder != null)
+				//lastHolder.sd_SetLuminosity(0)
+			//holder.sd_SetLuminosity(1)
+			lastHolder = holder
+
+		//sd_SetLuminosity(1)
+		sleep(10)
+
+	if (lastHolder != null)
+		//lastHolder.sd_SetLuminosity(0)
+		lastHolder = null
+
+	//sd_SetLuminosity(0)
+
+
+/obj/item/clothing/mask/cigarette/dropped(mob/user as mob)
+	if(src.lit == 1)
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red [] calmly drops and treads on the lit cigarette, putting it out instantly.", user), 1)
+		src.lit = -1
+		src.damtype = "brute"
+		src.icon_state = "cigbutt"
+		src.item_state = "cigoff"
+		src.name = "Cigarette butt"
+		src.desc = "A cigarette butt."
+		return ..()
+	else
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red [] drops the []. Guess they've had enough for the day.", user, src), 1)
+		return ..()
+
+////////////
+//CIG PACK//
+////////////
+
 /obj/item/weapon/cigpacket/update_icon()
 	src.icon_state = text("cigpacket[]", src.cigcount)
 	src.desc = text("There are [] cigs\s left!", src.cigcount)
@@ -28,7 +203,9 @@ ZIPPO
 	src.update_icon()
 	return
 
-
+/////////
+//ZIPPO//
+/////////
 #define ZIPPO_LUM 2
 
 /obj/item/weapon/zippo/attack_self(mob/user)
