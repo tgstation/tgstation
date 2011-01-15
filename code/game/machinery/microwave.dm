@@ -200,18 +200,18 @@
 /datum/recipe/clownburger
 	extra_item = /obj/item/clothing/mask/gas/clown_hat
 	flour_amount = 1
-	creates = "obj/item/weapon/reagent_containers/food/snacks/clownburger"
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/clownburger"
 
 /datum/recipe/mimeburger
 	extra_item = /obj/item/clothing/head/beret
 	flour_amount = 1
-	creates = "obj/item/weapon/reagent_containers/food/snacks/mimeburger"
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/mimeburger"
 
 /datum/recipe/cubancarp
 	extra_item = /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	flour_amount = 1
 	carpmeat_amount = 1
-	creates = "obj/item/weapon/reagent_containers/food/snacks/cubancarp"
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/cubancarp"
 
 
 
