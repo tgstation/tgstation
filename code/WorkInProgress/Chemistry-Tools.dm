@@ -43,7 +43,7 @@
 				stage = 2
 			else
 				user << "\red You need to add at least one beaker before locking the assembly."
-		else if (istype(W,/obj/item/weapon/reagent_containers/glass/beaker) && stage == 1)
+		else if ((istype(W,/obj/item/weapon/reagent_containers/glass/beaker) || istype(W, /obj/item/weapon/reagent_containers/glass/dispenser)) && stage == 1)
 			if(beakers.len == 2)
 				user << "\red The grenade can not hold more containers."
 				return
@@ -1607,6 +1607,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("carpotoxin", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	name = "meat"
@@ -1856,6 +1857,38 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/clownburger
+	name = "Clown Burger"
+	desc = "This tastes funny..."
+	icon_state = "clownburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		var/datum/disease/F = new /datum/disease/pierrot_throat(0)
+		var/list/data = list("virus"= F)
+		reagents.add_reagent("blood", 4, data)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/mimeburger
+	name = "Mime Burger"
+	desc = "It's taste defies language."
+	icon_state = "mimeburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/cubancarp
+	name = "Cuban Carp"
+	desc = "A grifftastic sandwich that burns your tongue and then leaves it numb!"
+	icon_state = "cubancarp"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("carpotoxin", 3)
+		reagents.add_reagent("capsaicin", 3)
 		bitesize = 2
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////

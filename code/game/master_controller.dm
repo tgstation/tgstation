@@ -76,7 +76,9 @@ datum/controller/game_controller
 					M.Life()
 			else
 				M.Life()
-
+			if (M.mind)
+				if (M.mind.special_role == "Changeling")
+					M.chem_charges = max(min((M.chem_charges+0.5), 50), 0)
 		sleep(-1)
 
 		for(var/datum/disease/D in active_diseases)

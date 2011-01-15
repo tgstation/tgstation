@@ -88,7 +88,6 @@
 	var/weakened = 0.0
 	var/losebreath = 0.0
 	var/metabslow = 0	// Metabolism slowed
-	var/muted = null
 	var/intent = null
 	var/shakecamera = 0
 	var/a_intent = "help"
@@ -109,6 +108,8 @@
 	var/r_Tourette = 0
 
 	var/miming = null //checks if the guy is a mime
+	var/silent = null //Can't talk. Value goes down every life proc.
+	var/muted = null //Can't talk in any way shape or form (Even OOC or emote). An admin punishment
 
 	var/obj/hud/hud_used = null
 
@@ -168,6 +169,8 @@
 	var/changeling_level = 0
 	var/list/absorbed_dna = list()
 	var/changeling_fakedeath = 0
+	var/chem_charges = 20.0
+	var/sting_range = 1
 
 
 	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE

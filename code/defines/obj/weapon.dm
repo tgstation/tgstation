@@ -1188,6 +1188,14 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 /obj/item/weapon/cell/robotcrate
 	maxcharge = 10000
 
+/*/obj/item/weapon/cell/potato
+	name = "Potato Battery"
+	desc = "A rechargable starch based power cell."
+	icon = 'harvest.dmi'
+	icon_state = "potato_battery"
+	maxcharge = 100
+	m_amt = 0
+	g_amt = 0*/
 
 /obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
 	var/list/cameras = new/list()

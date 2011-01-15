@@ -177,6 +177,8 @@
 				stat("Internal Atmosphere Info", src.internal.name)
 				stat("Tank Pressure", src.internal.air_contents.return_pressure())
 				stat("Distribution Pressure", src.internal.distribute_pressure)
+		if (src.mind.special_role == "Changeling")
+			stat("Chemical Storage", src.chem_charges)
 
 
 /mob/living/carbon/human/bullet_act(flag, A as obj)

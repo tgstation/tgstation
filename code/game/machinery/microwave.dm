@@ -6,6 +6,7 @@
 	var/monkeymeat_amount = 0
 	var/xenomeat_amount = 0
 	var/humanmeat_amount = 0
+	var/carpmeat_amount = 0
 	var/donkpocket_amount = 0
 	var/milk_amount = 0
 	var/hotsauce_amount = 0
@@ -196,6 +197,22 @@
 	cheese_amount = 1
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/cheesyfries"
 
+/datum/recipe/clownburger
+	extra_item = /obj/item/clothing/mask/gas/clown_hat
+	flour_amount = 1
+	creates = "obj/item/weapon/reagent_containers/food/snacks/clownburger"
+
+/datum/recipe/mimeburger
+	extra_item = /obj/item/clothing/head/beret
+	flour_amount = 1
+	creates = "obj/item/weapon/reagent_containers/food/snacks/mimeburger"
+
+/datum/recipe/cubancarp
+	extra_item = /obj/item/weapon/reagent_containers/food/snacks/grown/chili
+	flour_amount = 1
+	carpmeat_amount = 1
+	creates = "obj/item/weapon/reagent_containers/food/snacks/cubancarp"
+
 
 
 // *** After making the recipe above, add it in here! ***
@@ -204,6 +221,9 @@
 //					at the wrong recipe. It's a hack job but it works until I clean up the microwave code.
 /obj/machinery/microwave/New()
 	..()
+	src.available_recipes += new /datum/recipe/clownburger(src)
+	src.available_recipes += new /datum/recipe/mimeburger(src)
+	src.available_recipes += new /datum/recipe/cubancarp(src)
 	src.available_recipes += new /datum/recipe/humankabob(src)
 	src.available_recipes += new /datum/recipe/monkeykabob(src)
 	src.available_recipes += new /datum/recipe/jellydonut(src)
@@ -328,6 +348,13 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.humanmeat_amount++
 			del(O)
 
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/carpmeat))
+		if(src.carpmeat_amount < 5)
+			for(var/mob/V in viewers(src, null))
+				V.show_message(text("\blue [user] adds some meat to the microwave."))
+			src.carpmeat_amount++
+			del(O)
+
 	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/donkpocket))
 		if(src.donkpocket_amount < 2)
 			for(var/mob/V in viewers(src, null))
@@ -418,7 +445,8 @@ Please clean it before use!</TT><BR>
 <B>Turnovers:</B>[src.donkpocket_amount] turnovers<BR>
 <B>Milk:</B>[src.milk_amount] cups of milk.<BR>
 [sauces]
-<B>Other Meat:</B>[src.humanmeat_amount] slabs of meat<BR>
+<B>Human Meat:</B>[src.humanmeat_amount] slabs of meat<BR>
+<B>Carp Meat:</B>[src.carpmeat_amount] fillets of meat<BR>
 [xenodisplay]
 <HR>
 <BR>
@@ -454,7 +482,7 @@ Please clean it before use!</TT><BR>
 				for(var/mob/V in viewers(src, null))
 					V.show_message(text("\blue The microwave turns on."))
 				for(var/datum/recipe/R in src.available_recipes) //Look through the recipe list we made above
-					if(src.berryjuice_amount >= R.berryjuice_amount && src.cheese_amount == R.cheese_amount && src.tofu_amount == R.tofu_amount && src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount && src.xenomeat_amount == R.xenomeat_amount && src.hotsauce_amount >= R.hotsauce_amount && src.coldsauce_amount >= R.coldsauce_amount && src.soysauce_amount >= R.soysauce_amount && src.ketchup_amount >= R.ketchup_amount && src.milk_amount >= R.milk_amount) // Check if it's an accepted recipe
+					if(src.carpmeat_amount == R.carpmeat_amount && src.berryjuice_amount >= R.berryjuice_amount && src.cheese_amount == R.cheese_amount && src.tofu_amount == R.tofu_amount && src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount && src.xenomeat_amount == R.xenomeat_amount && src.hotsauce_amount >= R.hotsauce_amount && src.coldsauce_amount >= R.coldsauce_amount && src.soysauce_amount >= R.soysauce_amount && src.ketchup_amount >= R.ketchup_amount && src.milk_amount >= R.milk_amount) // Check if it's an accepted recipe
 						var/thing
 						if(src.extra_item)
 							if (src.extra_item.type == R.extra_item) thing = 1
@@ -464,7 +492,7 @@ Please clean it before use!</TT><BR>
 							cooked_item = R.creates // Store the item that will be created
 
 				if(cooked_item == null) //Oops that wasn't a recipe dummy!!!
-					if(src.egg_amount > 0 || src.tofu_amount > 0 || src.flour_amount > 0 || src.water_amount > 0 || src.monkeymeat_amount > 0 || src.humanmeat_amount > 0 || src.donkpocket_amount > 0 || src.hotsauce_amount > 0 ||src.coldsauce_amount > 0 || src.soysauce_amount > 0 || src.ketchup_amount > 0 || src.milk_amount > 0 && src.extra_item == null) //Make sure there's something inside though to dirty it
+					if(src.carpmeat_amount > 0 || src.egg_amount > 0 || src.tofu_amount > 0 || src.flour_amount > 0 || src.water_amount > 0 || src.monkeymeat_amount > 0 || src.humanmeat_amount > 0 || src.donkpocket_amount > 0 || src.hotsauce_amount > 0 ||src.coldsauce_amount > 0 || src.soysauce_amount > 0 || src.ketchup_amount > 0 || src.milk_amount > 0 && src.extra_item == null) //Make sure there's something inside though to dirty it
 						src.operating = 1 // Turn it on
 						src.icon_state = "mw1"
 						src.updateUsrDialog()
@@ -568,6 +596,7 @@ Please clean it before use!</TT><BR>
 	src.tofu_amount = 0
 	src.ketchup_amount = 0
 	src.berryjuice_amount = 0
+	src.carpmeat_amount = 0
 	src.updateUsrDialog()
 	//src.temp.reagents.clear_reagents()
 	return

@@ -285,18 +285,19 @@ datum
 		napalm
 			name = "Napalm"
 			id = "napalm"
-			result = "napalm"
+			result = null
 			required_reagents = list("aluminium" = 1, "plasma" = 1, "acid" = 1 )
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom.loc)
-				for(var/turf/simulated/floor/target_tile in range(1,location))
+				for(var/turf/simulated/floor/target_tile in range(0,location))
 					if(target_tile.parent && target_tile.parent.group_processing)
 						target_tile.parent.suspend_group_processing()
 
 					var/datum/gas_mixture/napalm = new
 
-					napalm.toxins = 2 * created_volume
+					napalm.toxins = created_volume * created_volume
+					napalm.temperature = 400+T0C
 
 					target_tile.assume_air(napalm)
 					spawn (0) target_tile.hotspot_expose(700, 400)
@@ -333,6 +334,13 @@ datum
 			result = "chloralhydrate"
 			required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
 			result_amount = 1
+
+		zombiepowder
+			name = "Zombie Powder"
+			id = "zombiepowder"
+			result = "zombiepowder"
+			required_reagents = list("carpotoxin" = 5, "stoxin" = 5, "copper" = 5)
+			result_amount = 2
 
 ///////////////////////////////////////////////////////////////////////////////////
 

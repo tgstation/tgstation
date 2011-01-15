@@ -537,6 +537,16 @@
 		..()
 		reagents.add_reagent("nutriment", max(round((potency / 5), 1), 2))
 
+	/*attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/cable_coil))
+			if(W:amount >= 5)
+				W:amount -= 5
+				if(!W:amount) del(W)
+				user << "\blue You add cable to the potato."
+				new /obj/item/weapon/cell/potato(src.loc)
+				del(src)*/
+
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 	seed = "/obj/item/seeds/berryseed"
 	name = "Berries"

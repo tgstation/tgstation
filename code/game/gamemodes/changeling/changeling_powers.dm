@@ -2,9 +2,9 @@
 	src.verbs += /client/proc/changeling_lesser_transform
 	src.verbs += /client/proc/changeling_fakedeath
 
-	spawn(600)
-		src.verbs += /client/proc/changeling_neurotoxic_sting
-		src.verbs += /client/proc/changeling_hallucinogenic_sting
+	src.verbs += /client/proc/changeling_blind_dart
+	src.verbs += /client/proc/changeling_deaf_dart
+	src.verbs += /client/proc/changeling_silence_dart
 
 	src.changeling_level = 1
 	return
@@ -15,9 +15,12 @@
 	src.verbs += /client/proc/changeling_lesser_form
 	src.verbs += /client/proc/changeling_fakedeath
 
-	spawn(600)
-		src.verbs += /client/proc/changeling_neurotoxic_sting
-		src.verbs += /client/proc/changeling_hallucinogenic_sting
+	src.verbs += /client/proc/changeling_deaf_dart
+	src.verbs += /client/proc/changeling_blind_dart
+	src.verbs += /client/proc/changeling_paralysis_dart
+	src.verbs += /client/proc/changeling_silence_dart
+	src.verbs += /client/proc/changeling_transformation_dart
+	src.verbs += /client/proc/changeling_boost_range
 
 	src.changeling_level = 2
 	if (src.absorbed_dna.len <= 0)
@@ -35,12 +38,15 @@
 	src.verbs -= /client/proc/changeling_lesser_form
 	src.verbs -= /client/proc/changeling_lesser_transform
 	src.verbs -= /client/proc/changeling_fakedeath
-	src.verbs -= /client/proc/changeling_neurotoxic_sting
-	src.verbs -= /client/proc/changeling_hallucinogenic_sting
+	src.verbs += /client/proc/changeling_deaf_dart
+	src.verbs += /client/proc/changeling_blind_dart
+	src.verbs += /client/proc/changeling_paralysis_dart
+	src.verbs += /client/proc/changeling_silence_dart
+	src.verbs += /client/proc/changeling_boost_range
 
 /client/proc/changeling_absorb_dna()
 	set category = "Changeling"
-	set name = "Absorb DNA"
+	set name = "Absorb DNA (5)"
 
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
@@ -48,6 +54,10 @@
 
 	if (!istype(usr.equipped(), /obj/item/weapon/grab))
 		usr << "\red We must be grabbing a creature in our active hand to absorb them."
+		return
+
+	if(usr.chem_charges < 5)
+		usr << "\red We don't have enough stored chemicals to do that!"
 		return
 
 	var/obj/item/weapon/grab/G = usr.equipped()
@@ -61,18 +71,20 @@
 		usr << "\red We must have a tighter grip to absorb this creature."
 		return
 
+	usr.chem_charges -= 5
+
 	var/mob/living/carbon/human/T = M
 
 	usr << "\blue This creature is compatible. We must hold still..."
 
-	if (!do_mob(usr, T, 200))
+	if (!do_mob(usr, T, 150))
 		usr << "\red Our absorption of [T] has been interrupted!"
 		return
 
 	usr << "\blue We extend a proboscis."
 	usr.visible_message(text("\red <B>[usr] extends a proboscis!</B>"))
 
-	if (!do_mob(usr, T, 200))
+	if (!do_mob(usr, T, 150))
 		usr << "\red Our absorption of [T] has been interrupted!"
 		return
 
@@ -81,7 +93,7 @@
 	T << "\red <B>You feel a sharp stabbing pain!</B>"
 	T.bruteloss += 40
 
-	if (!do_mob(usr, T, 200))
+	if (!do_mob(usr, T, 150))
 		usr << "\red Our absorption of [T] has been interrupted!"
 		return
 
@@ -100,7 +112,7 @@
 
 /client/proc/changeling_transform()
 	set category = "Changeling"
-	set name = "Transform"
+	set name = "Transform (5)"
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
 		return
@@ -109,10 +121,16 @@
 		usr << "\red We have not yet absorbed any compatible DNA."
 		return
 
+	if(usr.chem_charges < 5)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
 	var/S = input("Select the target DNA: ", "Target DNA", null) in usr.absorbed_dna
 
 	if (S == null)
 		return
+
+	usr.chem_charges -= 5
 
 	usr.visible_message(text("\red <B>[usr] transforms!</B>"))
 
@@ -120,15 +138,27 @@
 	usr.real_name = S
 	updateappearance(usr, usr.dna.uni_identity)
 	domutcheck(usr, null)
+
+	usr.verbs -= /client/proc/changeling_transform
+
+	spawn(10)
+		usr.verbs += /client/proc/changeling_transform
+
 	return
 
 /client/proc/changeling_lesser_form()
 	set category = "Changeling"
-	set name = "Lesser Form"
+	set name = "Lesser Form (1)"
 
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
 		return
+
+	if(usr.chem_charges < 1)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
+	usr.chem_charges--
 
 	usr.remove_changeling_powers()
 
@@ -195,7 +225,7 @@
 
 /client/proc/changeling_lesser_transform()
 	set category = "Changeling"
-	set name = "Transform"
+	set name = "Transform (1)"
 
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
@@ -205,10 +235,16 @@
 		usr << "\red We have not yet absorbed any compatible DNA."
 		return
 
+	if(usr.chem_charges < 1)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
 	var/S = input("Select the target DNA: ", "Target DNA", null) in usr.absorbed_dna
 
 	if (S == null)
 		return
+
+	usr.chem_charges -= 1
 
 	usr.remove_changeling_powers()
 
@@ -279,11 +315,17 @@
 
 /client/proc/changeling_fakedeath()
 	set category = "Changeling"
-	set name = "Regenerative Stasis"
+	set name = "Regenerative Stasis (20)"
 
 	if(usr.stat == 2)
 		usr << "\red We are dead."
 		return
+
+	if(usr.chem_charges < 20)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
+	usr.chem_charges -= 20
 
 	usr << "\blue We will regenerate our form."
 
@@ -294,7 +336,7 @@
 
 	usr.emote("gasp")
 
-	spawn(600)
+	spawn(550)
 		if (usr.stat != 2)
 			if(istype(usr, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = usr
@@ -329,61 +371,201 @@
 
 	return
 
-/client/proc/changeling_neurotoxic_sting(mob/T as mob in oview(1))
+/client/proc/changeling_boost_range()
 	set category = "Changeling"
-	set name = "Neurotoxic Venom"
+	set name = "Boost Dart Range (10)"
+	set desc="Boosts dart range by 1."
+
+	if(usr.stat)
+		usr << "\red Not when we are incapacitated."
+		return
+
+	if(usr.chem_charges < 10)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
+	if(usr.sting_range >= 3)
+		usr << "\red We can't boost the range anymore!"
+		return
+
+	usr.chem_charges -= 10
+
+	usr << "\blue Your throat adjusts to launch the dart."
+	usr.sting_range++
+
+	usr.verbs -= /client/proc/changeling_boost_range
+
+	spawn(10)
+		usr.verbs += /client/proc/changeling_boost_range
+
+	return
+
+/client/proc/changeling_silence_dart(mob/T as mob in oview(usr.sting_range))
+	set category = "Changeling"
+	set name = "Silence Dart (10)"
 	set desc="Sting target:"
 
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
 		return
+
+	if(usr.chem_charges < 10)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
+	usr.chem_charges -= 10
+	usr.sting_range = 1
+
+	usr << "\blue We stealthily sting [T]."
+	T << "You feel a small prick and a burning sensation in your throat."
+
+	T.silent += 30
+
+	usr.verbs -= /client/proc/changeling_silence_dart
+
+	spawn(10)
+		usr.verbs += /client/proc/changeling_silence_dart
+
+	return
+
+/client/proc/changeling_blind_dart(mob/T as mob in oview(usr.sting_range))
+	set category = "Changeling"
+	set name = "Blind Dart (20)"
+	set desc="Sting target:"
+
+	if(usr.stat)
+		usr << "\red Not when we are incapacitated."
+		return
+
+	if(usr.chem_charges < 20)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
+	usr.chem_charges -= 20
+	usr.sting_range = 1
+
+	usr << "\blue We stealthily sting [T]."
+
+	var/obj/overlay/B = new /obj/overlay( T.loc )
+	B.icon_state = "blspell"
+	B.icon = 'wizard.dmi'
+	B.name = "spell"
+	B.anchored = 1
+	B.density = 0
+	B.layer = 4
+	T.canmove = 0
+	spawn(5)
+		del(B)
+		T.canmove = 1
+	T << text("\blue Your eyes cry out in pain!")
+	T.disabilities |= 1
+	spawn(300)
+		T.disabilities &= ~1
+	T.eye_blind = 10
+	T.eye_blurry = 20
+
+	usr.verbs -= /client/proc/changeling_blind_dart
+
+	spawn(10)
+		usr.verbs += /client/proc/changeling_blind_dart
+
+	return
+
+/client/proc/changeling_deaf_dart(mob/T as mob in oview(usr.sting_range))
+	set category = "Changeling"
+	set name = "Deaf Dart (5)"
+	set desc="Sting target:"
+
+	if(usr.stat)
+		usr << "\red Not when we are incapacitated."
+		return
+
+	if(usr.chem_charges < 5)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
+	usr.chem_charges -= 5
+	usr.sting_range = 1
+
+	usr << "\blue We stealthily sting [T]."
+
+	T.sdisabilities |= 4
+	spawn(300)
+		T.sdisabilities &= ~4
+
+	usr.verbs -= /client/proc/changeling_deaf_dart
+
+	spawn(10)
+		usr.verbs += /client/proc/changeling_deaf_dart
+
+	return
+
+/client/proc/changeling_paralysis_dart(mob/T as mob in oview(usr.sting_range))
+	set category = "Changeling"
+	set name = "Paralysis Dart (30)"
+	set desc="Sting target:"
+
+	if(usr.stat)
+		usr << "\red Not when we are incapacitated."
+		return
+
+	if(usr.chem_charges < 30)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
+	usr.chem_charges -= 30
+	usr.sting_range = 1
 
 	usr << "\blue We stealthily sting [T]."
 	T << "You feel a small prick and a burning sensation."
 
-	/* These are the normal sting, commented out for testing upgraded sting
-
-	T.reagents.add_reagent("toxin", 10)
-	T.reagents.add_reagent("stoxin", 20)
-
-	*/
-
-	// These reagents are copied from the sleepy-pen, testing for the changeling super-sting bio upgrade
 	if (T.reagents)
-		T.reagents.add_reagent("stoxin", 100)
-		T.reagents.add_reagent("impedrezene", 100)
-		T.reagents.add_reagent("cryptobiolin", 100)
-	else
-		usr << "This is a debug message you are getting because you have attempted to sting something that lacks a reagent container. Bug the guy that did the changeling code until he fixes it."
+		T.reagents.add_reagent("zombiepowder", 20)
 
-	usr.verbs -= /client/proc/changeling_neurotoxic_sting
+	usr.verbs -= /client/proc/changeling_paralysis_dart
 
-	spawn(600)
-		usr.verbs += /client/proc/changeling_neurotoxic_sting
+	spawn(10)
+		usr.verbs += /client/proc/changeling_paralysis_dart
 
 	return
 
-/client/proc/changeling_hallucinogenic_sting(mob/T as mob in oview(1))
+/client/proc/changeling_transformation_dart(mob/T as mob in oview(usr.sting_range))
 	set category = "Changeling"
-	set name = "Hallucinogenic Venom"
+	set name = "Transformation Dart (30)"
 	set desc="Sting target:"
 
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
 		return
 
+	if(usr.chem_charges < 30)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
+	if(T.stat != 2 || (T.mutations & 64) || (!ishuman(T) && !ismonkey(T)))
+		usr << "\red We can't transform that target!"
+		return
+
+	var/S = input("Select the target DNA: ", "Target DNA", null) in usr.absorbed_dna
+
+	if (S == null)
+		return
+
+	usr.chem_charges -= 30
+	usr.sting_range = 1
+
 	usr << "\blue We stealthily sting [T]."
 
-	spawn(50) //Give the changeling a chance to calmly walk away before the target FREAKS THE FUCK OUT
-	if (T.reagents)
-		T.reagents.add_reagent("space_drugs", 5)
-	else
-		usr << "This is a debug message you are getting because you have attempted to sting something that lacks a reagent container. Bug the guy that did the changeling code until he fixes it."
+	T.visible_message(text("\red <B>[usr] transforms!</B>"))
 
+	T.dna = usr.absorbed_dna[S]
+	T.real_name = S
+	updateappearance(T, T.dna.uni_identity)
+	domutcheck(T, null)
 
-	usr.verbs -= /client/proc/changeling_hallucinogenic_sting
+	usr.verbs -= /client/proc/changeling_transformation_dart
 
-	spawn(600)
-		usr.verbs += /client/proc/changeling_hallucinogenic_sting
+	spawn(10)
+		usr.verbs += /client/proc/changeling_transformation_dart
 
 	return

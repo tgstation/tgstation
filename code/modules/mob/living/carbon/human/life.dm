@@ -93,7 +93,6 @@
 
 
 		handle_disabilities()
-
 			if (src.disabilities & 2)
 				if ((prob(1) && src.paralysis < 1 && src.r_epil < 1))
 					src << "\red You have a seizure!"
@@ -618,6 +617,8 @@
 				src.paralysis = max(src.paralysis, 5)
 
 			if (src.stat != 2) //Alive.
+				if (src.silent)
+					src.silent--
 
 				if (src.paralysis || src.stunned || src.weakened || changeling_fakedeath) //Stunned etc.
 					if (src.stunned > 0)
@@ -647,6 +648,7 @@
 				src.lying = 1
 				src.blinded = 1
 				src.stat = 2
+				src.silent = 0
 
 			if (src.stuttering) src.stuttering--
 

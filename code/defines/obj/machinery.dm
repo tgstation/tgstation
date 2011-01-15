@@ -540,6 +540,7 @@
 	var/ketchup_amount = 0
 	var/tofu_amount = 0
 	var/berryjuice_amount = 0
+	var/carpmeat_amount = 0
 	var/humanmeat_name = ""
 	var/humanmeat_job = ""
 	var/operating = 0 // Is it on?

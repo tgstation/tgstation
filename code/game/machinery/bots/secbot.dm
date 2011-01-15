@@ -53,8 +53,8 @@
 
 
 /obj/machinery/bot/secbot/beepsky
-	name = "Officer Beepsky"
-	desc = "It's Officer Beepsky! He's a loose cannon but he gets the job done."
+	name = "Officer Beep O'sky"
+	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
 	idcheck = 0
 	auto_patrol = 1
 

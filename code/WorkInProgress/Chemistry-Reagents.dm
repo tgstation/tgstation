@@ -251,6 +251,8 @@ datum
 					holder.remove_reagent("amatoxin", 2)
 				if(holder.has_reagent("chloralhydrate"))
 					holder.remove_reagent("chloralhydrate", 5)
+				if(holder.has_reagent("carpotoxin"))
+					holder.remove_reagent("carpotoxin", 1)
 				M:toxloss = max(M:toxloss-2,0)
 				..()
 				return
@@ -559,12 +561,6 @@ datum
 			description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 			reagent_state = LIQUID
 
-		napalm
-			name = "Napalm RG-218"
-			id = "napalm"
-			description = "A plasma based variant of napalm that burns violently upon exposure to oxygen."
-			reagent_state = LIQUID
-
 		radium
 			name = "Radium"
 			id = "radium"
@@ -807,6 +803,7 @@ datum
 				if(!M.confused) M.confused = 1
 				M.confused = max(M.confused, 20)
 				holder.remove_reagent(src.id, 0.2)
+				..()
 				return
 
 		lexorin
@@ -818,6 +815,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(33)) M.bruteloss++
 				holder.remove_reagent(src.id, 0.3)
+				..()
 				return
 
 		kelotane
@@ -963,6 +961,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(5)) M:emote(pick("twitch","blink_r","shiver"))
 				holder.remove_reagent(src.id, 0.2)
+				..()
 				return
 
 		cryoxadone
@@ -988,6 +987,32 @@ datum
 
 			on_mob_life(var/mob/M)//no more mr. panacea
 				holder.remove_reagent(src.id, 0.2)
+				..()
+				return
+
+		carpotoxin
+			name = "Carpotoxin"
+			id = "carpotoxin"
+			description = "A deadly neurotoxin produced by the dreaded spess carp."
+			reagent_state = LIQUID
+
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:toxloss += 2
+				..()
+				return
+
+		zombiepowder
+			name = "Zombie Powder"
+			id = "zombiepowder"
+			description = "A strong neurotoxin that puts the subject into a death-like state."
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:oxyloss += 0.5
+				M:toxloss += 0.5
+				M:weakened = max(M:weakened, 10)
+				M:silent = max(M:silent, 10)
+				..()
 				return
 
 
