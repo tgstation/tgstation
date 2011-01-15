@@ -54,6 +54,7 @@
 			var/datum/pipe_network/network = connected_port.return_network(src)
 			if(network && !network.gases.Find(air_contents))
 				network.gases += air_contents
+				network.update = 1
 
 			return 1
 

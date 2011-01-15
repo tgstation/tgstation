@@ -106,6 +106,12 @@ obj/machinery/atmospherics/valve
 		build_network()
 
 		return 1
+	
+	proc/normalize_dir()
+		if(dir==3)
+			dir = 1
+		else if(dir==12)
+			dir = 4
 
 	attack_ai(mob/user as mob)
 		return
@@ -129,10 +135,28 @@ obj/machinery/atmospherics/valve
 		return
 
 	initialize()
-		if(node1 && node2) return
+		normalize_dir()
 
+		var/node1_dir
+		var/node2_dir
+		
+		for(var/direction in cardinal)
+			if(direction&initialize_directions)
+				if (!node1_dir)
+					node1_dir = direction
+				else if (!node2_dir)
+					node2_dir = direction
+		
+		for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
+			if(target.initialize_directions & get_dir(target,src))
+				node1 = target
+				break
+		for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
+			if(target.initialize_directions & get_dir(target,src))
+				node2 = target
+				break
+/*
 		var/connect_directions
-
 		switch(dir)
 			if(NORTH)
 				connect_directions = NORTH|SOUTH
@@ -163,7 +187,7 @@ obj/machinery/atmospherics/valve
 						break
 				if(node1)
 					break
-
+*/
 	build_network()
 		if(!network_node1 && node1)
 			network_node1 = new /datum/pipe_network()
@@ -283,5 +307,5 @@ obj/machinery/atmospherics/valve
 				"[user] unfastens \the [src].", \
 				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
-			new /obj/item/weapon/pipe(loc, make_from=src)
+			new /obj/item/pipe(loc, make_from=src)
 			del(src)

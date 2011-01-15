@@ -196,5 +196,5 @@ obj/machinery/atmospherics/binary/pump
 				"[user] unfastens \the [src].", \
 				"\blue You have unfastened \the [src].", \
 				"You hear ratchet.")
-			new /obj/item/weapon/pipe(loc, make_from=src)
+			new /obj/item/pipe(loc, make_from=src)
 			del(src)
