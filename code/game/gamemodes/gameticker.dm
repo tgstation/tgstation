@@ -203,7 +203,7 @@ var/global/datum/controller/gameticker/ticker
 				world << "<b>[robo.name] survived as an AI-less borg! Its laws were:</b>"
 			else
 				world << "<b>[robo.name] was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
-			robo.laws.show_laws(1)
+			robo.laws.show_laws(world)
 
 	mode.declare_completion()
 
