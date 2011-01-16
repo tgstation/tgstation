@@ -327,7 +327,7 @@
 					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
 	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
-			user << "\red You must remove the plating first."
+			user << "\red You must remove the floor plating first."
 			return
 		var/obj/item/weapon/cable_coil/C = W
 		if(C.amount < 10)
@@ -348,7 +348,7 @@
 			terminal.connect_to_network()
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
-			user << "\red You must remove the plating first."
+			user << "\red You must remove the floor plating first."
 			return
 		user << "You begin to cut cables..."
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)

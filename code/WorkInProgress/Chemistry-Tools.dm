@@ -1,7 +1,3 @@
-// Bottles transfer 50 units
-// Beakers transfer 50 units
-// Syringes transfer 15 units
-// Droppers transfer 5 units
 
 //BUG!!!: reactions on splashing etc cause errors because stuff gets deleted before it executes.
 //		  Bandaid fix using spawn - very ugly, need to fix this.
@@ -295,6 +291,7 @@
 	pressure_resistance = 2*ONE_ATMOSPHERE
 
 	var/amount_per_transfer_from_this = 10
+	var/possible_transfer_amounts = list(10,25,50,100)
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
@@ -303,6 +300,9 @@
 		var/datum/reagents/R = new/datum/reagents(1000)
 		reagents = R
 		R.my_atom = src
+		if (!possible_transfer_amounts)
+			src.verbs -= /obj/reagent_dispensers/verb/set_APTFT
+		..()
 
 	examine()
 		set src in view(2)
@@ -314,6 +314,13 @@
 				usr << "\blue [R.volume] units of [R.name]"
 		else
 			usr << "\blue Nothing."
+
+	verb/set_APTFT() //set amount_per_transfer_from_this
+		set name = "Set transfer amount"
+		set src in range(1)
+		var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
+		if (N)
+			amount_per_transfer_from_this = N
 
 	ex_act(severity)
 		switch(severity)
@@ -347,9 +354,20 @@
 	icon_state = null
 	w_class = 1
 	var/amount_per_transfer_from_this = 5
+	var/possible_transfer_amounts = list(5,10,25)
+	
+	verb/set_APTFT() //set amount_per_transfer_from_this
+		set name = "Set transfer amount"
+		set src in range(0)
+		var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
+		if (N)
+			amount_per_transfer_from_this = N
 
-/*	New()
-		var/datum/reagents/R = new/datum/reagents(50)
+	New()
+		if (!possible_transfer_amounts)
+			src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
+		..()
+/*		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R
 		R.my_atom = src */
 
@@ -374,19 +392,21 @@
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,25)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 	var/list/can_be_placed_into = list(
-	/obj/machinery/chem_master/,
-	/obj/table,
-	/obj/secure_closet,
-	/obj/closet,
-	/obj/item/weapon/storage,
-	/obj/machinery/atmospherics/unary/cryo_cell,
-	/obj/item/weapon/chem_grenade,
-	/obj/machinery/bot/medbot,
-	/obj/machinery/computer/pandemic,
-	/obj/item/weapon/secstorage/ssafe)
+		/obj/machinery/chem_master/,
+		/obj/table,
+		/obj/secure_closet,
+		/obj/closet,
+		/obj/item/weapon/storage,
+		/obj/machinery/atmospherics/unary/cryo_cell,
+		/obj/item/weapon/chem_grenade,
+		/obj/machinery/bot/medbot,
+		/obj/machinery/computer/pandemic,
+		/obj/item/weapon/secstorage/ssafe
+	)
 
 	examine()
 		set src in view(2)
@@ -403,6 +423,7 @@
 		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R
 		R.my_atom = src
+		..()
 
 
 	afterattack(obj/target, mob/user , flag)
@@ -427,7 +448,7 @@
 				user << "\red [src] is full."
 				return
 
-			var/trans = target.reagents.trans_to(src, 10)
+			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
 			user << "\blue You fill [src] with [trans] units of the contents of [target]."
 
 		else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
@@ -439,7 +460,7 @@
 				user << "\red [target] is full."
 				return
 
-			var/trans = src.reagents.trans_to(target, 10)
+			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user << "\blue You transfer [trans] units of the solution to [target]."
 
 		else if(reagents.total_volume)
@@ -461,12 +482,14 @@
 	icon = 'chemical.dmi'
 	icon_state = "dropper0"
 	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = list(1,2,3,4,5)
 	var/filled = 0
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(5)
 		reagents = R
 		R.my_atom = src
+		..()
 
 	afterattack(obj/target, mob/user , flag)
 		if(!target.reagents) return
@@ -486,10 +509,11 @@
 					O.show_message(text("\red <B>[] drips something onto []!</B>", user, target), 1)
 				src.reagents.reaction(target, TOUCH)
 
-			spawn(5) src.reagents.trans_to(target, 5)
-			user << "\blue You transfer 5 units of the solution."
-			filled = 0
-			icon_state = "dropper[filled]"
+			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+			user << "\blue You transfer [trans] units of the solution."
+			if (src.reagents.total_volume<=0)
+				filled = 0
+				icon_state = "dropper[filled]"
 
 		else
 
@@ -501,9 +525,9 @@
 				user << "\red [target] is empty."
 				return
 
-			target.reagents.trans_to(src, 5)
+			var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 
-			user << "\blue You fill the dropper with 5 units of the solution."
+			user << "\blue You fill the dropper with [trans] units of the solution."
 
 			filled = 1
 			icon_state = "dropper[filled]"
@@ -523,6 +547,7 @@
 	item_state = "syringe_0"
 	icon_state = "0"
 	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = null //list(5,10,15)
 	var/mode = "d"
 
 	New()
@@ -530,6 +555,7 @@
 		reagents = R
 		R.maximum_volume = 15
 		R.my_atom = src
+		..()
 
 	on_reagent_change()
 		update_icon()
@@ -613,9 +639,9 @@
 					user << "\red You cannot directly remove reagents from this object."
 					return
 
-				target.reagents.trans_to(src, 5)
+				var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
 
-				user << "\blue You fill the syringe with 5 units of the solution."
+				user << "\blue You fill the syringe with [trans] units of the solution."
 
 			if("i")
 				if(!reagents.total_volume)
@@ -640,8 +666,8 @@
 				if(ismob(target) && target == user)
 					src.reagents.reaction(target, INGEST)
 				spawn(5)
-					src.reagents.trans_to(target, 5)
-					user << "\blue You inject 5 units of the solution. The syringe now contains [src.reagents.total_volume] units."
+					var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+					user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
 		return
 
 	update_icon()
@@ -667,11 +693,11 @@
 	item_state = "hypo"
 	icon_state = "hypo"
 	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = null
 	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
-	return
 
 /obj/item/weapon/reagent_containers/hypospray/New()
 	var/datum/reagents/R = new/datum/reagents(30)
@@ -685,11 +711,12 @@
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
-		user << "\red You inject [M] with the hypospray."
+		user << "\blue You inject [M] with the hypospray."
 		M << "\red You feel a tiny prick!"
 		src.reagents.reaction(M, INGEST)
-		if(M.reagents) reagents.trans_to(M, 10)
-		user << "\red 10 units injected.  [reagents.total_volume] units remaining in the hypospray."
+		if(M.reagents) 
+			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
+			user << "\blue [trans] units injected.  [reagents.total_volume] units remaining in the hypospray."
 	return
 
 
@@ -697,6 +724,7 @@
 /// Food.
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/food
+	possible_transfer_amounts = null
 
 	New()												//Sets the default container amount for all food items.
 		var/datum/reagents/R = new/datum/reagents(50)	//	if you want a food item with a different capacity
@@ -704,6 +732,7 @@
 		R.my_atom = src
 		src.pixel_x = rand(-5.0, 5)						//Randomizes postion slightly.
 		src.pixel_y = rand(-5.0, 5)
+		..()
 
 /obj/item/weapon/reagent_containers/food/condiment	//Food items that aren't eaten normally and leave an empty container behind.
 	name = "Condiment Container"
@@ -711,6 +740,7 @@
 	icon = 'food.dmi'
 	icon_state = "emptycondiment"
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	possible_transfer_amounts = list(1,5,10)
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
@@ -719,7 +749,7 @@
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		var/datum/reagents/R = src.reagents
 
-		if(!R.total_volume || !R)
+		if(!R || !R.total_volume)
 			user << "\red None of [src] left, oh no!"
 			return 0
 
@@ -763,7 +793,7 @@
 				user << "\red [src] is full."
 				return
 
-			var/trans = target.reagents.trans_to(src, 5)
+			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
 			user << "\blue You fill [src] with [trans] units of the contents of [target]."
 
 		//Something like a glass or a food item. Player probably wants to transfer TO it.
@@ -774,7 +804,7 @@
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
 				user << "\red you can't add anymore to [target]."
 				return
-			var/trans = src.reagents.trans_to(target, 5)
+			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user << "\blue You transfer [trans] units of the condiment to [target]."
 
 
@@ -869,6 +899,7 @@
 	icon_state = null
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
+	possible_transfer_amounts = list(5,10,25)
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(50)
@@ -916,7 +947,7 @@
 
 			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 				var/mob/living/silicon/robot/bro = user
-				bro.cell.charge -= 30
+				bro.cell.use(30)
 				var/refill = R.get_master_reagent_id()
 				spawn(600)
 					R.add_reagent(refill, fillevel)
@@ -942,7 +973,7 @@
 				user << "\red [src] is full."
 				return
 
-			var/trans = target.reagents.trans_to(src, 10)
+			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
 			user << "\blue You fill [src] with [trans] units of the contents of [target]."
 
 		else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
@@ -954,12 +985,12 @@
 				user << "\red [target] is full."
 				return
 
-			var/trans = src.reagents.trans_to(target, 10)
+			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user << "\blue You transfer [trans] units of the solution to [target]."
 
 			if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 				var/mob/living/silicon/robot/bro = user
-				bro.cell.charge -= 30
+				bro.cell.use(30)
 				var/refill = reagents.get_master_reagent_id()
 				spawn(600)
 					reagents.add_reagent(refill, trans)
@@ -978,6 +1009,7 @@
 	icon = 'chemical.dmi'
 	icon_state = null
 	item_state = "pill"
+	possible_transfer_amounts = null
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(50)
@@ -1060,9 +1092,10 @@
 	m_amt = 200
 	g_amt = 0
 	w_class = 3.0
-
 	amount_per_transfer_from_this = 20
+	possible_transfer_amounts = list(10,20,30,50,70)
 	flags = FPRINT | OPENCONTAINER
+
 	New()
 		var/datum/reagents/R = new/datum/reagents(70)
 		reagents = R
@@ -1094,6 +1127,7 @@
 	w_class = 4.0
 
 	amount_per_transfer_from_this = 20
+	possible_transfer_amounts = list(10,20,30,60)
 	flags = FPRINT
 	New()
 		var/datum/reagents/R = new/datum/reagents(120)
@@ -1165,6 +1199,7 @@
 	icon_state = null
 	item_state = "atoxinbottle"
 	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 	New()
@@ -1906,11 +1941,8 @@
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
 			W.visible_message(" \red <B>You slice the meatbread! </B>", 1)
-			new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
 			del(src)
 			return
 
@@ -1936,11 +1968,8 @@
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
 			W.visible_message(" \red <B>You slice the xenomeatbread! </B>", 1)
-			new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
+			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
 			del(src)
 			return
 
@@ -1966,11 +1995,8 @@
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
 			W.visible_message(" \red <B>You slice the tofubread! </B>", 1)
-			new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
 			del(src)
 			return
 
@@ -1996,11 +2022,8 @@
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/kitchenknife /* || /obj/item/weapon/scalpel*/))
 			W.visible_message(" \red <B> You slice the cheese! </B>", 1)
-			new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
-			new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
 			del(src)
 			return
 
@@ -2081,7 +2104,10 @@
 					icon_state = "oliveoil"
 				else
 					name = "Misc Condiment Bottle"
-					desc = "A mixture of various condiments"
+					if (reagents.reagent_list.len==1)
+						desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
+					else
+						desc = "A mixture of various condiments. [reagents.get_master_reagent_name()] is one of them."
 					icon_state = "mixedcondiments"
 		else
 			icon_state = "emptycondiment"
@@ -2473,6 +2499,7 @@
 	amount_per_transfer_from_this = 5
 	icon = 'vending.dmi'
 	icon_state = "water_cooler"
+	possible_transfer_amounts = null
 	New()
 		..()
 		anchored = 1
