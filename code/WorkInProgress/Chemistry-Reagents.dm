@@ -924,7 +924,7 @@ datum
 				if(!M) M = holder.my_atom
 				M:eye_blurry = max(M:eye_blurry-5 , 0)
 				M:eye_blind = max(M:eye_blind-5 , 0)
-				M:sdisabilities &= 1
+				M:sdisabilities &= ~1
 				..()
 				return
 
