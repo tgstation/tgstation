@@ -18,8 +18,6 @@ However people seem to like it for some reason.
 
 
 //////////////////////Singularity gen START
-/obj/machinery/the_singularitygen/New()
-	..()
 
 /obj/machinery/the_singularitygen/process()
 	var/turf/T = get_turf(src)
@@ -120,8 +118,13 @@ However people seem to like it for some reason.
 		if(1000 to 1999)
 			for(var/obj/machinery/field_generator/F in orange(5,src))
 				F.turn_off()
+			Zzzzap()
+			BHolerip()
+			Toxmob()
 		if(2000 to INFINITY)
 			explosion(src.loc, 4, 8, 15, 0)
+			Zzzzap()
+			Toxmob()
 			src.ex_act(1) //if it survived the explosion
 
 	if(prob(15))//Chance for it to run a special event
@@ -171,10 +174,11 @@ However people seem to like it for some reason.
 	return 1
 
 /obj/machinery/the_singularity/proc/eat()
+
 	for (var/atom/X in orange(grav_pull,src))
 		if(isarea(X))
 			continue
-		if (!is_eatable(X))
+		if(!is_eatable(X))
 			continue
 
 		if(istype(X,/obj/machinery/field_generator))
@@ -216,6 +220,7 @@ However people seem to like it for some reason.
 	var/gain = 0
 	if (!is_eatable(A))
 		return
+
 	if (istype(A,/mob/living))//if its a mob
 		gain = 20
 		if(istype(A,/mob/living/carbon/human))
@@ -230,15 +235,13 @@ However people seem to like it for some reason.
 		gain = 2
 
 	else if(isturf(A))
-		/*if(!active)
-			if(isturf(A,/turf/simulated/floor/engine)) //here was a bug. But now it's a feature. -rasta0
-				return*/
-
-/*		if(istype(A,/turf/simulated/floor))
-			A:ReplaceWithSpace()
-			gain = 2
-		else
-			A:ReplaceWithFloor()*/
+		var/turf/T = A
+		if(T.intact) //stolen from t-ray
+			for(var/obj/O in T.contents)
+				if(O.level != 1)
+					continue
+				if(O.invisibility == 101) 
+					src.Bumped(O)
 		A:ReplaceWithSpace() //
 		gain = 2
 
@@ -255,9 +258,9 @@ However people seem to like it for some reason.
 				BHolerip()
 			else
 				event()
-		if(3)//tox damage all carbon mobs in area
+		if(3,4)//tox damage all carbon mobs in area
 			Toxmob()
-		if(4)//Stun mobs who lack optic scanners
+		if(5)//Stun mobs who lack optic scanners
 			Mezzer()
 		else
 			//do nothing
@@ -265,17 +268,24 @@ However people seem to like it for some reason.
 
 
 /obj/machinery/the_singularity/proc/Toxmob()
-	for(var/mob/living/carbon/M in view(7, src.loc))
+	var/toxrange = 7
+	if (src.energy>100)
+		toxrange+=round((src.energy-100)/100)
+	var/toxloss = 3
+	var/radiation = 10
+	var/fireloss = 0
+	if (src.energy>150)
+		toxloss += ((src.energy-150)/50)*3
+		radiation += ((src.energy-150)/50)*10
+	if (src.energy>300)
+		fireloss += ((src.energy-300)/50)*3
+	for(var/mob/living/carbon/M in view(toxrange, src.loc))
 		if(istype(M,/mob/living/carbon/human))
-			if(M:wear_suit)
+			if(M:wear_suit) //TODO: check for radiation protection
 				return
-		M.toxloss += 3
-		M.radiation += 10
-		if (src.energy>150)
-			M.toxloss += ((src.energy-150)/50)*3
-			M.radiation += ((src.energy-150)/50)*10
-		if (src.energy>300)
-			M.fireloss += ((src.energy-300)/50)*3
+		M.toxloss += toxloss
+		M.radiation += radiation
+		M.fireloss += fireloss
 		M.updatehealth()
 		M << "\red You feel odd."
 
@@ -619,7 +629,7 @@ However people seem to like it for some reason.
 	if(stat & (NOPOWER|BROKEN))
 		return
 
-	if(!src.state == 3 || !anchored)
+	if(src.state != 3)
 		src.active = 0
 		return
 
@@ -641,7 +651,7 @@ However people seem to like it for some reason.
 			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			s.set_up(5, 1, src)
 			s.start()
-
+		A.dir = src.dir
 		if(src.dir == 1)//Up
 			A.yo = 20
 			A.xo = 0
@@ -693,6 +703,9 @@ However people seem to like it for some reason.
 			return 1
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+		if(active)
+			user << "\red Turn off the [src] first."
+			return 1
 		if (state == 0)
 			user << "\red The [src] needs to be wrenched to the floor first."
 			return 1
@@ -756,6 +769,7 @@ However people seem to like it for some reason.
 	var/active = 0
 	var/obj/item/weapon/tank/plasma/P = null
 	var/obj/machinery/power/collector_control/CU = null
+	var/locked
 
 
 /////////////ARRAY START
@@ -819,17 +833,17 @@ However people seem to like it for some reason.
 /obj/machinery/power/collector_array/attack_hand(mob/user as mob)
 	if (..())
 		return
-	if(src.anchored != 1)
+	if(!src.anchored)
 		user << "\red The [src] needs to be secured to the floor first."
-		return 1
-	if (!src.allowed(user))
-		user << "\red Access denied."
 		return 1
 	if (!P)
 		user << "\red The [src] cannot be turned on without plasma."
 		return 1
 	if (!CU)
 		user << "\red The [src] is not connected with The Radiation Collector Control."
+		return 1
+	if(src.locked)
+		user << "\red The controls are locked."
 		return 1
 	src.active = !src.active
 	if(src.active)
@@ -844,24 +858,26 @@ However people seem to like it for some reason.
 
 /obj/machinery/power/collector_array/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/tank/plasma))
-		if(src.anchored == 1)
-			if(src.P)
-				user << "\red There appears to already be a plasma tank loaded!"
-				return 1
-			src.P = W
-			W.loc = src
-			if (user.client)
-				user.client.screen -= W
-			user.u_equip(W)
-			updateicon()
-			if (CU)
-				CU.updatecons()
-		else
+		if(!src.anchored)
 			user << "The collector needs to be secured to the floor first."
 			return 1
+		if(src.P)
+			user << "\red There appears to already be a plasma tank loaded!"
+			return 1
+		src.P = W
+		W.loc = src
+		if (user.client)
+			user.client.screen -= W
+		user.u_equip(W)
+		updateicon()
+		if (CU)
+			CU.updatecons()
 
 	else if(istype(W, /obj/item/weapon/crowbar))
 		if(!P)
+			return 1
+		if(active)
+			user << "\red Turn off the collector first."
 			return 1
 		eject()
 
@@ -870,20 +886,25 @@ However people seem to like it for some reason.
 			user << "\red Turn off the collector first."
 			return 1
 
+		playsound(src.loc, 'Ratchet.ogg', 75, 1)
+		src.anchored = !src.anchored
+		if(src.anchored == 1)
+			user.visible_message("[user.name] secures [src.name] reinforcing bolts to the floor.", \
+				"You secure the collector reinforcing bolts.", \
+				"You hear ratchet")
 		else
-			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-			src.anchored = !src.anchored
-			if(src.anchored == 1)
-				user.visible_message("[user.name] secures [src.name] reinforcing bolts to the floor.", \
-					"You secure the collector reinforcing bolts.", \
-					"You hear ratchet")
-			else
-				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
-					"You undo the external reinforcing bolts.", \
-					"You hear ratchet")
-			for(var/obj/machinery/power/collector_control/myCC in orange(1,src))
-				myCC.updatecons()
-
+			user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
+				"You undo the external reinforcing bolts.", \
+				"You hear ratchet")
+		for(var/obj/machinery/power/collector_control/myCC in orange(1,src))
+			myCC.updatecons()
+	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if (src.allowed(user))
+			src.locked = !src.locked
+			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+		else
+			user << "\red Access denied."
+			return 1
 	else
 		user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
 			"\red You hit the [src.name] with your [W.name]!", \
@@ -892,14 +913,18 @@ However people seem to like it for some reason.
 
 /obj/machinery/power/collector_array/ex_act(severity)
 	switch(severity)
-		if(2.0 to 3.0)
+		if(2, 3)
 			eject()
 	return ..()
 
 /obj/machinery/power/collector_array/Del()
+	var/oldsrc = src
+	src = null
+	spawn(1)
+		for(var/obj/machinery/power/collector_control/myCC in orange(1,src))
+			myCC.updatecons()
+	src = oldsrc
 	. = ..()
-	for(var/obj/machinery/power/collector_control/myCC in orange(1,src))
-		myCC.updatecons()
 
 ////////////CONTROL UNIT
 
@@ -916,6 +941,7 @@ However people seem to like it for some reason.
 	var/lastpower = 0
 	var/obj/machinery/power/collector_array/CA[4]
 	var/list/obj/machinery/the_singularity/S
+	var/locked
 
 ////////////CONTROL UNIT START
 
@@ -1031,21 +1057,20 @@ However people seem to like it for some reason.
 /obj/machinery/power/collector_control/attack_hand(mob/user as mob)
 	if (..())
 		return
-	if(src.anchored==1)
-		if (!src.allowed(user))
-			user << "\red Access denied."
-			return 1
-		src.active = !src.active
-		if(!src.active)
-			user << "You turn off the [src]."
-			src.lastpower = 0
-			updateicon()
-		if(src.active)
-			user << "You turn on the [src]."
-			updatecons()
-	else
+	if(!src.anchored)
 		user << "\red The [src] needs to be secured to the floor first."
 		return 1
+	if(src.locked)
+		user << "\red The controls are locked."
+		return 1
+	src.active = !src.active
+	if(!src.active)
+		user << "You turn off the [src]."
+		src.lastpower = 0
+		updateicon()
+	if(src.active)
+		user << "You turn on the [src]."
+		updatecons()
 
 /obj/machinery/power/collector_control/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
@@ -1067,6 +1092,13 @@ However people seem to like it for some reason.
 				"You undo the [src] securing bolts.", \
 				"You hear ratchet")
 			disconnect_from_network()
+	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if (src.allowed(user))
+			src.locked = !src.locked
+			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+		else
+			user << "\red Access denied."
+			return 1
 	else
 		user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
 			"\red You hit the [src.name] with your [W.name]!", \
