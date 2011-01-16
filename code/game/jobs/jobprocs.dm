@@ -272,7 +272,7 @@
 
 	switch(rank)
 		if ("Chaplain")
-			var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(src)
+			var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(src)
 			src.equip_if_possible(B, slot_l_hand)
 			src.equip_if_possible(new /obj/item/device/pda/chaplain(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chaplain(src), slot_w_uniform)
@@ -281,17 +281,20 @@
 			//	src.see_invisible = 15 -- Doesn't work as see_invisible is reset every world cycle. -- Skie
 			//The two procs below allow the Chaplain to choose their religion. All it really does is change their bible.
 			spawn(0)
-				var/religion_name = "[religion_name()]"
-				var/new_religion = input(src, "You are the Chaplain. Would you like to change your religion?", "Name change", religion_name)
+				var/religion_name = "Bible"
+				var/new_religion = input(src, "You are the Chaplain. Would you like to change your religion? Default is the Bible.", "Name change", religion_name)
 
-				if (length(new_religion) == 0)
+				if ((length(new_religion) == 0) || (new_religion == "Bible"))
 					new_religion = religion_name
 
 				if (new_religion)
 					if (length(new_religion) >= 26)
 						new_religion = copytext(new_religion, 1, 26)
 						new_religion = dd_replacetext(new_religion, ">", "'")
-				B.name = "The Holy Book of [new_religion]"
+						if(new_religion == "Bible")
+							B.name = "Holy Bible"
+						else
+							B.name = "The Holy Book of [new_religion]"
 
 			spawn(1)
 				var/deity_name = "Christ"
