@@ -472,6 +472,7 @@
 #include "code\game\objects\structures.dm"
 #include "code\game\objects\tables_racks.dm"
 #include "code\game\objects\tank.dm"
+#include "code\game\objects\traps.dm"
 #include "code\game\objects\weapons.dm"
 #include "code\game\objects\window.dm"
 #include "code\game\objects\alien\acid.dm"
