@@ -19,6 +19,7 @@ to null does not delete the object itself. Thank you.
 	var/max_stages = 0.0
 	var/cure = null
 	var/cure_id = null// reagent.id or list containing them
+	var/cure_list = null // allows for multiple possible cure combinations
 	var/cure_chance = 8//chance for the cure to do its job
 	var/spread = null //spread type description
 	var/spread_type = AIRBORNE
@@ -35,6 +36,10 @@ to null does not delete the object itself. Thank you.
 	var/desc = null//description. Leave it null and this disease won't show in med records.
 	var/severity = null//severity descr
 	var/longevity = 250//time in "ticks" the virus stays in inanimate object (blood stains, corpses, etc). In syringes, bottles and beakers it stays infinitely.
+
+/datum/disease/New()
+	..()
+	cure_list = list(cure_id) // to add more cures, add more vars to this list in the actual disease's New()
 
 /datum/disease/proc/stage_act()
 	var/cure_present = has_cure()
@@ -61,12 +66,22 @@ to null does not delete the object itself. Thank you.
 /datum/disease/proc/has_cure()//check if affected_mob has required reagents.
 	if(!cure_id) return 0
 	var/result = 1
-	if(istype(cure_id, /list))
-		for(var/C_id in cure_id)
-			if(!affected_mob.reagents.has_reagent(C_id))
+	if(cure_list == list(cure_id))
+		if(istype(cure_id, /list))
+			for(var/C_id in cure_id)
+				if(!affected_mob.reagents.has_reagent(C_id))
+					result = 0
+		else if(!affected_mob.reagents.has_reagent(cure_id))
+			result = 0
+	else
+		for(var/C_list in cure_list)
+			if(istype(C_list, /list))
+				for(var/C_id in cure_id)
+					if(!affected_mob.reagents.has_reagent(C_id))
+						result = 0
+			else if(!affected_mob.reagents.has_reagent(C_list))
 				result = 0
-	else if(!affected_mob.reagents.has_reagent(cure_id))
-		result = 0
+
 	return result
 
 
