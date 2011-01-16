@@ -116,6 +116,14 @@ However people seem to like it for some reason.
 		else
 			energy -= 5
 
+	switch(energy)
+		if(1000 to 1999)
+			for(var/obj/machinery/field_generator/F in orange(5,src))
+				F.turn_off()
+		if(2000 to INFINITY)
+			explosion(src.loc, 4, 8, 15, 0)
+			src.ex_act(1) //if it survived the explosion
+
 	if(prob(15))//Chance for it to run a special event
 		event()
 	var/turf/T = get_turf(src)
