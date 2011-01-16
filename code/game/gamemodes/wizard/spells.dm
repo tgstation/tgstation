@@ -566,7 +566,7 @@
 		H.client.eye = H
 		del(animation)
 		del(holder)
-
+/*
 /obj/dummy/spell_jaunt
 	name = "water"
 	icon = 'effects.dmi'
@@ -605,7 +605,7 @@
 	return
 /obj/dummy/spell_jaunt/bullet_act(blah,blah)
 	return
-
+*/
 //MUTATE
 
 /client/proc/mutate()

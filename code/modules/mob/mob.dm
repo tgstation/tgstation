@@ -2148,6 +2148,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 		//if (master_controller)
 		//	stat(null, "Loop: [master_controller.loop_freq]")
 
+	if (src.spell_list.len)
+
+		for(var/obj/spell/S in src.spell_list)
+			statpanel("Spells","",S)
+
 /client/proc/station_explosion_cinematic(var/derp)
 	if(src.mob)
 		var/mob/M = src.mob

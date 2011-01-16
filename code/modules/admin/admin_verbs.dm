@@ -99,6 +99,7 @@
 			src.verbs += /obj/admins/proc/vmode   				//start vote
 			src.verbs += /obj/admins/proc/votekill 				//abort vote
 
+			src.verbs += /client/proc/give_spell
 			src.verbs += /client/proc/cmd_admin_alienize
 			src.verbs += /client/proc/cmd_admin_changelinginize
 			src.verbs += /client/proc/cmd_admin_abominize 		// -- TLE
@@ -222,6 +223,7 @@
 			src.verbs += /obj/admins/proc/vmode   				//start vote
 			src.verbs += /obj/admins/proc/votekill 				//abort vote
 
+			src.verbs += /client/proc/give_spell
 			src.verbs += /client/proc/cmd_admin_alienize
 			src.verbs += /client/proc/cmd_admin_changelinginize
 			src.verbs += /client/proc/cmd_admin_abominize 		// -- TLE
@@ -1053,6 +1055,7 @@
 	src.verbs -= /obj/admins/proc/vmode   				//start vote
 	src.verbs -= /obj/admins/proc/votekill 				//abort vote
 
+	src.verbs -= /client/proc/give_spell
 	src.verbs -= /client/proc/cmd_admin_alienize
 	src.verbs -= /client/proc/cmd_admin_changelinginize
 	src.verbs -= /client/proc/cmd_admin_abominize 		// -- TLE
@@ -1333,6 +1336,13 @@
 	if(!wordtravel)
 		runerandom()
 	usr << "[wordtravel] is travel, [wordblood] is blood, [wordjoin] is join, [wordhell] is Hell, [worddestr] is destroy, [wordtech] is technology, [wordself] is self, [wordsee] is see"
+
+/client/proc/give_spell(mob/T as mob in world) // -- Urist
+	set category = "Fun"
+	set name = "Give Spell"
+	set desc = "Gives a spell to a mob."
+	var/obj/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") in spells
+	T.spell_list += new S
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"

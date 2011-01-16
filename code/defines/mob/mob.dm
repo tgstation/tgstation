@@ -159,6 +159,9 @@
 	var/voice_message = null // When you are not understood by others (replaced with just screeches, hisses, chimpers etc.)
 	var/say_message = null // When you are understood by others. Currently only used by aliens and monkeys in their say_quote procs
 
+//Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button
+	var/obj/spell/list/spell_list = list()
+
 //Monkey/infected mode
 	var/list/resistances = list()
 	var/datum/disease/virus = null
