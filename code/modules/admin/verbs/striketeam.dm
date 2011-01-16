@@ -65,6 +65,7 @@ var/global/sent_strike_team = 0
 			new_commando.mind.assigned_role = "Death Commando"
 			new_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")//So they don't forget their code or mission.
 			new_commando.mind.store_memory("<B>Mission:</B> \red [input].")
+			new_commando.resistances += "alien_embryo"
 
 			del(STARTLOC)
 
