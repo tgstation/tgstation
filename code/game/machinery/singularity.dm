@@ -198,7 +198,6 @@ However people seem to like it for some reason.
 						var/obj/item/clothing/shoes/magboots/M = H.shoes
 						if(M.magpulse)
 							continue
-					else
 						step_towards(H,src)
 
 /obj/machinery/the_singularity/proc/move()
