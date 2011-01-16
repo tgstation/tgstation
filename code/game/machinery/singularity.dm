@@ -189,8 +189,17 @@ However people seem to like it for some reason.
 			if(0 to 2)
 				src.Bumped(X)
 			else if(!isturf(X))
-				if(!X:anchored)
-					step_towards(X,src)
+				if(!istype(X,/mob/living/carbon/human))
+					if(!X:anchored)
+						step_towards(X,src)
+				else
+					var/mob/living/carbon/human/H = X
+					if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
+						var/obj/item/clothing/shoes/magboots/M = H.shoes
+						if(M.magpulse)
+							continue
+					else
+						step_towards(H,src)
 
 /obj/machinery/the_singularity/proc/move()
 	var/direction_go = pick(cardinal)

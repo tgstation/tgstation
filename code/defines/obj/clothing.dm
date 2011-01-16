@@ -479,6 +479,7 @@
 	icon_state = "magboots0"
 	protective_temperature = 800
 	heat_transfer_coefficient = 0.01
+	var/magpulse = 0
 //	flags = NOSLIP //disabled by default
 
 /obj/item/clothing/shoes/clown_shoes
