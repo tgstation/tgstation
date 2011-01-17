@@ -1590,7 +1590,7 @@
 		if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
 			W.icon = 'kitchen.dmi'
 			W.icon_state = "forkloaded"
-			world << "[user] takes a piece of omelette with his fork!"
+			viewers(3,user) << "[user] takes a piece of omelette with his fork!"
 
 /obj/item/weapon/reagent_containers/food/snacks/omeletteforkload
 	name = "Omelette Du Fromage"
