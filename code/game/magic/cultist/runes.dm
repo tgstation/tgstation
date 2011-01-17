@@ -15,6 +15,10 @@ var/list/sacrificed = list()
 					index++
 					allrunesloc.len = index
 					allrunesloc[index] = R.loc
+			if(index >= 5)
+				usr << "\red You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric"
+				usr.bruteloss += 5
+				del(src)
 			if(allrunesloc && index != 0)
 				if(istype(src,/obj/rune))
 					usr.say("Sas'so c'arta forbici!")
@@ -38,15 +42,21 @@ var/list/sacrificed = list()
 //			var/index = 0
 		//	var/tempnum = 0
 			var/culcount = 0
+			var/runecount = 0
 			var/obj/rune/IP = null
-			for(var/mob/living/carbon/human/C in orange(1,src))
-				if(cultists.Find(C))
-					culcount++
 			for(var/obj/rune/R in world)
 				if(R == src)
 					continue
 				if(R.word1 == wordtravel && R.word2 == wordother && R.word3 == key)
 					IP = R
+					runecount++
+			if(runecount >= 2)
+				usr << "\red You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric"
+				usr.bruteloss += 5
+				del(src)
+			for(var/mob/living/carbon/human/C in orange(1,src))
+				if(cultists.Find(C))
+					culcount++
 			if(culcount>=3)
 				usr.say("Sas'so c'arta forbici tarem!")
 				usr.visible_message("\red You feel air moving from the rune - like as it was swapped with somewhere else.", \
@@ -387,7 +397,33 @@ var/list/sacrificed = list()
 										M.key=O.key
 										del(O)
 
-										rejuvenatedheal(M) // Darem, this is just rejuvenation code that has been made into a proc. Look into rune8 file for the code itself.
+//										rejuvenatedheal(M)
+
+										if(istype(M, /mob/living/carbon/human))
+											var/mob/living/carbon/human/H = M
+											for(var/A in H.organs)
+												var/datum/organ/external/affecting = null
+												if(!H.organs[A])    continue
+												affecting = H.organs[A]
+												if(!istype(affecting, /datum/organ/external))    continue
+												affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
+											H.UpdateDamageIcon()
+										M.fireloss = 0
+										M.toxloss = 0
+										M.bruteloss = 0
+										M.oxyloss = 0
+										M.paralysis = 0
+										M.stunned = 0
+										M.weakened = 0
+										M.radiation = 0
+										M.health = 100
+										M.updatehealth()
+										M.buckled = initial(M.buckled)
+										M.handcuffed = initial(M.handcuffed)
+										if (M.stat > 1)
+											M.stat=0
+
+
 										usr.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
 										M.visible_message("\red [M]'s eyes glow with a faint red as he stands up, slowly starting to breathe again.", \
 										"\red Life... I'm alive again...", \
@@ -409,7 +445,7 @@ var/list/sacrificed = list()
 			var/S=0
 			for(var/obj/rune/R in orange(rad,src))
 				if(R!=src)
-					R.visibility=0
+					R:visibility=0
 				S=1
 			if(S)
 				if(istype(src,/obj/rune))
@@ -668,7 +704,7 @@ var/list/sacrificed = list()
 			if(go)
 				for(var/obj/rune/R in orange(rad,src))
 					if(R!=src)
-						R.visibility=15
+						R:visibility=15
 					S=1
 			if(S)
 				if(istype(W,/obj/item/weapon/storage/bible))
@@ -766,9 +802,11 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in range(7,src))
 					if (cultists.Find(C))
 						continue
-					C.ear_deaf += 30
+					C.ear_deaf += 50
 					C.show_message("\red World around you suddenly becomes quiet.", 3)
 					affected++
+					if(prob(1))
+						C.disabilities |= 4
 				if(affected)
 					usr.say("Sti' kaliedir!")
 					usr << "\red World becomes quiet as deafening rune dissipates into fine dust."
@@ -782,6 +820,7 @@ var/list/sacrificed = list()
 					if (cultists.Find(C))
 						continue
 					C.ear_deaf += 30
+					//talismans is weaker.
 					C.show_message("\red World around you suddenly becomes quiet.", 3)
 					for (var/mob/V in orange(1,src))
 						if(!cultists.Find(V))
@@ -794,8 +833,12 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in viewers(src))
 					if (cultists.Find(C))
 						continue
-					C.eye_blurry += 30
-					C.eye_blind += 10
+					C.eye_blurry += 50
+					C.eye_blind += 20
+					if(prob(5))
+						C.disabilities |= 1
+						if(prob(1))
+							C.sdisabilities |= 1
 					C.show_message("\red Suddenly you see red flash, that blinds you.", 3)
 					affected++
 				if(affected)
@@ -812,6 +855,7 @@ var/list/sacrificed = list()
 						continue
 					C.eye_blurry += 30
 					C.eye_blind += 10
+					//talismans is weaker.
 					C.show_message("\red You feel sharp pain in your eyes, and the world disappears into darkness..", 3)
 			return
 

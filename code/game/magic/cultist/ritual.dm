@@ -10,7 +10,7 @@ var/worddestr = null
 var/wordother = null
 var/wordhear = null
 var/wordfree = null
-var/wordhide
+var/wordhide = null
 var/runedec = 0
 
 /client/proc/check_words() // -- Urist
@@ -276,7 +276,7 @@ var/runedec = 0
 			return ..()
 		if(cultists.Find(M))
 			return
-		M.fireloss += rand(5,15)
+		M.fireloss += rand(5,20) //really lucky - 5 hits for a crit
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] beats [] with the arcane tome!</B>", user, M), 1)
 		M << "\red You feel searing heat inside!"
