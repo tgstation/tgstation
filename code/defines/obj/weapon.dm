@@ -29,10 +29,10 @@
 
 /obj/item/weapon/matchbox
 	name = "Matchbox"
-	desc = "A box of matches"
+	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
 	icon = 'cigarettes.dmi'
 	icon_state = "matchbox"
-	var/matchcount = 20
+	var/matchcount = 10
 
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"

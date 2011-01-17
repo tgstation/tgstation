@@ -49,13 +49,11 @@ ZIPPO
 	else
 		return ..()
 	if(src.matchcount <= 0)
-		src.icon_state = "matchbox_e"
-	else if(src.matchcount <= 5)
-		src.icon_state = "matchbox_1q"
-	else if(src.matchcount <= 10)
-		src.icon_state = "matchbox_h"
-	else if(src.matchcount <= 15)
-		src.icon_state = "matchbox_3q"
+		src.icon_state = "matchbox_empty"
+	else if(src.matchcount <= 3)
+		src.icon_state = "matchbox_almostempty"
+	else if(src.matchcount <= 6)
+		src.icon_state = "matchbox_almostfull"
 	else
 		src.icon_state = "matchbox"
 	src.update_icon()
