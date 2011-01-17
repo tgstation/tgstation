@@ -174,11 +174,10 @@ However people seem to like it for some reason.
 	return 1
 
 /obj/machinery/the_singularity/proc/eat()
-
 	for (var/atom/X in orange(grav_pull,src))
 		if(isarea(X))
 			continue
-		if(!is_eatable(X))
+		if (!is_eatable(X))
 			continue
 
 		if(istype(X,/obj/machinery/field_generator))
@@ -202,7 +201,7 @@ However people seem to like it for some reason.
 						var/obj/item/clothing/shoes/magboots/M = H.shoes
 						if(M.magpulse)
 							continue
-						step_towards(H,src)
+					step_towards(H,src)
 
 /obj/machinery/the_singularity/proc/move()
 	var/direction_go = pick(cardinal)
@@ -240,7 +239,7 @@ However people seem to like it for some reason.
 			for(var/obj/O in T.contents)
 				if(O.level != 1)
 					continue
-				if(O.invisibility == 101) 
+				if(O.invisibility == 101)
 					src.Bumped(O)
 		A:ReplaceWithSpace() //
 		gain = 2
