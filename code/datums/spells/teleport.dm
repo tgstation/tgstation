@@ -31,7 +31,7 @@
 
 	var/area/thearea = teleportlocs[A]
 
-	usr.say("SCYAR NILA [uppertext(A)]")
+	usr.say("[invocation] [uppertext(A)]")
 	if(usr.gender=="male")
 		playsound(usr.loc, pick('vs_chant_conj_hm.wav','vs_chant_conj_lm.wav','vs_chant_ench_hm.wav','vs_chant_ench_lm.wav','vs_chant_evoc_hm.wav','vs_chant_evoc_lm.wav','vs_chant_illu_hm.wav','vs_chant_illu_lm.wav','vs_chant_necr_hm.wav','vs_chant_necr_lm.wav'), 100, 1)
 	else

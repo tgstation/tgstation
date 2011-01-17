@@ -34,14 +34,26 @@
 		if("gib")
 			M.gib()
 		if("kill")
-			for(var/i=0,i<damage_amount,i++)
+			for(var/i=0,i<abs(damage_amount),i++)
 				sleep(0) //to avoid troubles with instantly applying lots of damage, it seems to be buggy
 				switch(damage_type)
 					if("brute")
-						M.bruteloss++
+						if(damage_amount>0)
+							M.bruteloss++
+						else
+							M.bruteloss--
 					if("toxin")
-						M.toxloss++
+						if(damage_amount>0)
+							M.toxloss++
+						else
+							M.toxloss--
 					if("oxygen")
-						M.oxyloss++
+						if(damage_amount>0)
+							M.oxyloss++
+						else
+							M.oxyloss--
 					if("fire")
-						M.fireloss++
+						if(damage_amount>0)
+							M.fireloss++
+						else
+							M.fireloss--

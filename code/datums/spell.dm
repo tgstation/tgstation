@@ -1,4 +1,4 @@
-var/list/spells = list(/obj/spell/blind,/obj/spell/blink,/obj/spell/disintegrate,/obj/spell/ethereal_jaunt,/obj/spell/fireball,/obj/spell/forcewall,/obj/spell/knock,/obj/spell/magic_missile,/obj/spell/mutate,/obj/spell/teleport) //needed for the badmin verb for now
+var/list/spells = list(/obj/spell/blind,/obj/spell/blink,/obj/spell/conjure,/obj/spell/disintegrate,/obj/spell/ethereal_jaunt,/obj/spell/fireball,/obj/spell/forcewall,/obj/spell/knock,/obj/spell/magic_missile,/obj/spell/mutate,/obj/spell/teleport) //needed for the badmin verb for now
 
 /obj/spell
 	name = "Spell"
@@ -7,6 +7,7 @@ var/list/spells = list(/obj/spell/blind,/obj/spell/blink,/obj/spell/disintegrate
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
 	var/recharge = 100 //recharge time in deciseconds
 	var/clothes_req = 1 //see if it requires clothes
+	var/stat_allowed = 0 //see if it requires being conscious
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_type = "none" //can be none, whisper and shout
 	var/range = 7 //the range of the spell
@@ -20,7 +21,7 @@ var/list/spells = list(/obj/spell/blind,/obj/spell/blink,/obj/spell/disintegrate
 	if(cast)
 		usr << "[name] is still recharging."
 		return 0
-	if(usr.stat)
+	if(usr.stat && !stat_allowed)
 		usr << "Not when you're incapacitated."
 		return 0
 	if(clothes_req) //clothes check

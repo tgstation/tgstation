@@ -200,6 +200,7 @@
 #include "code\datums\spells\blind.dm"
 #include "code\datums\spells\blink.dm"
 #include "code\datums\spells\body_swap.dm"
+#include "code\datums\spells\conjure.dm"
 #include "code\datums\spells\disable_tech.dm"
 #include "code\datums\spells\disintegrate.dm"
 #include "code\datums\spells\ethereal_jaunt.dm"

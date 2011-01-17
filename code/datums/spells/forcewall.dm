@@ -25,6 +25,8 @@
 		forcefields += new /obj/forcefield(T)
 
 	spawn (wall_lifespan)
-		del (forcefields)
+		for(var/obj/forcefield/F in forcefields)
+			del(F)
+		del(forcefields)
 
 	return
