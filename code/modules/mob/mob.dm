@@ -1380,6 +1380,16 @@
 			namecounts[name] = 1
 		creatures[name] = D
 
+	for (var/obj/machinery/the_singularity/S in world)
+		var/name = "Singularity"
+		if (name in names)
+			namecounts[name]++
+			name = "[name] ([namecounts[name]])"
+		else
+			names.Add(name)
+			namecounts[name] = 1
+		creatures[name] = S
+
 	for (var/obj/machinery/bot/B in world)
 		var/name = "BOT: [B.name]"
 		if (name in names)

@@ -387,31 +387,7 @@ var/list/sacrificed = list()
 										M.key=O.key
 										del(O)
 
-										//rejuvenatedheal(M) // Darem, this is just rejuvenation code that has been made into a proc. Look into rune8 file for the code itself.
-										if(istype(M, /mob/living/carbon/human))
-											var/mob/living/carbon/human/H = M
-											for(var/A in H.organs)
-												var/datum/organ/external/affecting = null
-												if(!H.organs[A])    continue
-												affecting = H.organs[A]
-												if(!istype(affecting, /datum/organ/external))    continue
-												affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
-											H.UpdateDamageIcon()
-										M.fireloss = 0
-										M.toxloss = 0
-										M.bruteloss = 0
-										M.oxyloss = 0
-										M.paralysis = 0
-										M.stunned = 0
-										M.weakened = 0
-										M.radiation = 0
-										M.health = 100
-										M.updatehealth()
-										M.buckled = initial(M.buckled)
-										M.handcuffed = initial(M.handcuffed)
-										if (M.stat > 1)
-											M.stat=0
-
+										rejuvenatedheal(M) // Darem, this is just rejuvenation code that has been made into a proc. Look into rune8 file for the code itself.
 										usr.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
 										M.visible_message("\red [M]'s eyes glow with a faint red as he stands up, slowly starting to breathe again.", \
 										"\red Life... I'm alive again...", \
@@ -725,9 +701,9 @@ var/list/sacrificed = list()
 			src.density = !src.density
 			usr.bruteloss += 2
 			if(src.density)
-				usr << "Your blood flows into the rune, and you feel that the very space over the rune thickens."
+				usr << "\red Your blood flows into the rune, and you feel that the very space over the rune thickens."
 			else
-				usr << "Your blood flows into the rune, and you feel as the rune releases its grasp on space."
+				usr << "\red Your blood flows into the rune, and you feel as the rune releases its grasp on space."
 			return
 
 /////////////////////////////////////////EIGHTTEENTH RUNE
@@ -744,7 +720,7 @@ var/list/sacrificed = list()
 				if (cultist == usr) //just to be sure.
 					return
 				if(!cultist.buckled && !cultist.handcuffed)
-					usr << "The [cultist] is already free."
+					usr << "\red The [cultist] is already free."
 					return
 				cultist.buckled = initial(cultist.buckled)
 				cultist.handcuffed = initial(cultist.handcuffed)
@@ -769,7 +745,7 @@ var/list/sacrificed = list()
 				if (cultist == usr) //just to be sure.
 					return
 				if(cultist.buckled || cultist.handcuffed || (!isturf(cultist.loc) && !istype(cultist.loc, /obj/closet)))
-					usr << "You cannot summon the [cultist], for him shackles of blood are strong"
+					usr << "\red You cannot summon the [cultist], for him shackles of blood are strong"
 					return fizzle()
 				cultist.loc = src.loc
 				for(var/mob/living/carbon/human/C in orange(1,src))
@@ -787,7 +763,7 @@ var/list/sacrificed = list()
 		deafen()
 			if(istype(src,/obj/rune))
 				var/affected = 0
-				for(var/mob/living/carbon/C in viewers(src))
+				for(var/mob/living/carbon/C in range(7,src))
 					if (cultists.Find(C))
 						continue
 					C.ear_deaf += 30
@@ -795,14 +771,14 @@ var/list/sacrificed = list()
 					affected++
 				if(affected)
 					usr.say("Sti' kaliedir!")
-					usr << "World becomes quiet as deafening rune dissipates into fine dust."
+					usr << "\red World becomes quiet as deafening rune dissipates into fine dust."
 					del(src)
 				else
 					return fizzle()
 			else
 				usr.whisper("Sti' kaliedir!")
 				usr << "\red Your talisman turns into gray dust, deafening everyone around."
-				for(var/mob/living/carbon/C in viewers(usr))
+				for(var/mob/living/carbon/C in range(7,usr))
 					if (cultists.Find(C))
 						continue
 					C.ear_deaf += 30
@@ -824,7 +800,7 @@ var/list/sacrificed = list()
 					affected++
 				if(affected)
 					usr.say("Sti' kaliesin!")
-					usr << "Rune flashes, blinding those who not follow the Nar-Sie. and dissipates into fine dust."
+					usr << "\red Rune flashes, blinding those who not follow the Nar-Sie, and dissipates into fine dust."
 					del(src)
 				else
 					return fizzle()
@@ -876,11 +852,11 @@ var/list/sacrificed = list()
 					if(R.blood_DNA == src.blood_DNA && R.blood_type == src.blood_type)
 						for(var/mob/M in orange(2,R))
 							M.fireloss += 15
-							M << "Rune suddenly ignites, burning you!"
+							M << "\red Rune suddenly ignites, burning you!"
 				for(var/obj/decal/cleanable/blood/B in world)
 					if(B.blood_DNA == src.blood_DNA && B.blood_type == src.blood_type)
 						for(var/mob/M in orange(1,B))
 							M.fireloss += 5
-							M << "Blood suddenly ignites, burning you!"
+							M << "\red Blood suddenly ignites, burning you!"
 							del(B)
 				del(src)
