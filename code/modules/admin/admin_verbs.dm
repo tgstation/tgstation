@@ -1328,7 +1328,7 @@
 			var/flash_range = input("Flash range (in tiles):") as num
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	message_admins("\blue [src.ckey] creating an admin explosion at [epicenter.loc].")
-
+/*
 /client/proc/check_words() // -- Urist
 	set category = "Special Verbs"
 	set name = "Check Rune Words"
@@ -1336,7 +1336,7 @@
 	if(!wordtravel)
 		runerandom()
 	usr << "[wordtravel] is travel, [wordblood] is blood, [wordjoin] is join, [wordhell] is Hell, [worddestr] is destroy, [wordtech] is technology, [wordself] is self, [wordsee] is see"
-
+*/
 /client/proc/give_spell(mob/T as mob in world) // -- Urist
 	set category = "Fun"
 	set name = "Give Spell"
