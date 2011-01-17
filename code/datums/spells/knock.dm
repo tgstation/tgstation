@@ -19,5 +19,6 @@
 
 	for(var/obj/machinery/door/G in oview(usr,range))
 		spawn(1)
+			G:locked = 0
 			G.open()
 	return

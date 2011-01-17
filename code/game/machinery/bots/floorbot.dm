@@ -10,6 +10,7 @@
 	throw_range = 5
 	w_class = 3.0
 	flags = TABLEPASS
+	var/created_name = "Floorbot"
 
 /obj/item/weapon/toolbox_tiles_sensor
 	desc = "It's a toolbox with tiles sticking out the top and a sensor attached"
@@ -22,6 +23,7 @@
 	throw_range = 5
 	w_class = 3.0
 	flags = TABLEPASS
+	var/created_name = "Floorbot"
 
 //Floorbot
 /obj/machinery/bot/floorbot
@@ -349,30 +351,48 @@
 	del(T)
 	del(src)
 
-/obj/item/weapon/toolbox_tiles/attackby(var/obj/item/device/prox_sensor/D, mob/user as mob)
-	if(!istype(D, /obj/item/device/prox_sensor))
-		return
-	var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor
-	B.loc = user
-	if (user.r_hand == D)
-		user.u_equip(D)
-		user.r_hand = B
-	else
-		user.u_equip(D)
-		user.l_hand = B
-	B.layer = 20
-	user << "You add the sensor to the toolbox and tiles!"
-	del(D)
-	del(src)
+/obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
+	if(istype(W, /obj/item/device/prox_sensor))
+		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor
+		B.loc = user
+		if (user.r_hand == W)
+			user.u_equip(W)
+			user.r_hand = B
+		else
+			user.u_equip(W)
+			user.l_hand = B
+		B.created_name = src.created_name
+		B.layer = 20
+		user << "You add the sensor to the toolbox and tiles!"
+		del(W)
+		del(src)
+	else if (istype(W, /obj/item/weapon/pen))
+		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
+		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+		if (!t)
+			return
+		if (!in_range(src, usr) && src.loc != usr)
+			return
 
-/obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/robot_parts/P, mob/user as mob)
-	if(!istype(P, /obj/item/robot_parts/l_arm) && !istype(P, /obj/item/robot_parts/r_arm))
-		return
-	var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
-	if(user.r_hand == src || user.l_hand == src)
-		A.loc = user.loc
-	else
-		A.loc = src.loc
-	user << "You add the robot arm to the odd looking toolbox assembly! Boop beep!"
-	del(P)
-	del(src)
+		src.created_name = t
+
+/obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob)
+	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
+		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
+		if(user.r_hand == src || user.l_hand == src)
+			A.loc = user.loc
+		else
+			A.loc = src.loc
+		A.name = src.created_name
+		user << "You add the robot arm to the odd looking toolbox assembly! Boop beep!"
+		del(W)
+		del(src)
+	else if (istype(W, /obj/item/weapon/pen))
+		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
+		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+		if (!t)
+			return
+		if (!in_range(src, usr) && src.loc != usr)
+			return
+
+		src.created_name = t

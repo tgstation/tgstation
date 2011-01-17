@@ -43,6 +43,7 @@
 	var/obj/item/robot_parts/chest/chest = null
 	var/obj/item/robot_parts/head/head = null
 	var/obj/item/brain/brain = null
+	var/created_name = "Cyborg"
 
 /obj/item/robot_parts/robot_suit/New()
 	..()
@@ -138,8 +139,8 @@
 				O.gender = src.brain.owner.gender
 			//O.start = 1
 			O.invisibility = 0
-			O.name = "Cyborg"
-			O.real_name = "Cyborg"
+			O.name = src.created_name
+			O.real_name = src.created_name
 
 			if (src.brain.owner.client)
 				O.lastKnownIP = src.brain.owner.client.address
@@ -166,6 +167,16 @@
 			del(src)
 		else
 			user << "\blue The brain must go in after everything else!"
+
+	if (istype(W, /obj/item/weapon/pen))
+		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
+		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+		if (!t)
+			return
+		if (!in_range(src, usr) && src.loc != usr)
+			return
+
+		src.created_name = t
 
 	return
 

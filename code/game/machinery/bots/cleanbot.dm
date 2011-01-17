@@ -10,6 +10,7 @@
 	throw_range = 5
 	w_class = 3.0
 	flags = TABLEPASS
+	var/created_name = "Cleanbot"
 
 
 //Cleanbot
@@ -210,17 +211,28 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		src.anchored = 0
 		src.target = null
 
-/obj/item/weapon/bucket_sensor/attackby(var/obj/item/robot_parts/P, mob/user as mob)
-	if(!istype(P, /obj/item/robot_parts/l_arm) && !istype(P, /obj/item/robot_parts/r_arm))
-		return
-	var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot
-	if(user.r_hand == src || user.l_hand == src)
-		A.loc = user.loc
-	else
-		A.loc = src.loc
-	user << "You add the robot arm to the bucket and sensor assembly! Beep boop!"
-	del(P)
-	del(src)
+/obj/item/weapon/bucket_sensor/attackby(var/obj/item/W, mob/user as mob)
+	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
+		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot
+		if(user.r_hand == src || user.l_hand == src)
+			A.loc = user.loc
+		else
+			A.loc = src.loc
+		A.name = src.created_name
+		user << "You add the robot arm to the bucket and sensor assembly! Beep boop!"
+		del(W)
+		del(src)
+
+	else if (istype(W, /obj/item/weapon/pen))
+		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
+		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+		if (!t)
+			return
+		if (!in_range(src, usr) && src.loc != usr)
+			return
+
+		src.created_name = t
+
 
 
 
