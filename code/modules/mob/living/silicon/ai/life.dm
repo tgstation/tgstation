@@ -109,6 +109,8 @@
 							if (!checktraitor(src))
 								src.set_zeroth_law("")
 							src.clear_supplied_laws()
+							var/time = time2text(world.realtime,"hh:mm:ss")
+							lawchanges.Add("[time] <b>:</b> [src.name]'s noncore laws have been reset due to power failure")
 							spawn(50)
 								while ((src:aiRestorePowerRoutine!=0) && stat!=2)
 									src.oxyloss += 2

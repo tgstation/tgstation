@@ -1255,6 +1255,11 @@ var/showadminmessages = 1
 					for(var/sig in lastsignalers)
 						dat += "[sig]<BR>"
 					usr << browse(dat, "window=lastsignalers;size=800x500")
+				if("list_lawchanges")
+					var/dat = "<B>Showing last [length(lawchanges)] law changes.</B><HR>"
+					for(var/sig in lawchanges)
+						dat += "[sig]<BR>"
+					usr << browse(dat, "window=lawchanges;size=800x500")
 				if("check_antagonist")
 					if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 						var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
@@ -1611,6 +1616,7 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsadmin=list_bombers'>Bombing List</A><BR>
 <A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
 <A href='?src=\ref[src];secretsadmin=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
+<A href='?src=\ref[src];secretsadmin=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
 <A href='?src=\ref[src];secretsadmin=showailaws'>Show AI Laws</A><BR>
 <A href='?src=\ref[src];secretsadmin=showgm'>Show Game Mode</A><BR>
 <A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>

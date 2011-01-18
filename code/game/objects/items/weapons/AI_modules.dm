@@ -114,6 +114,9 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	target << "[sender] has uploaded a change to the laws you must follow, using a [name]. From now on: "
+	var/time = time2text(world.realtime,"hh:mm:ss")
+	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
+
 
 /******************** Modules ********************/
 
@@ -135,6 +138,8 @@ AI MODULES
 	var/law = text("Safeguard [], and you may overrule rules 1-3 if necessary to safeguard them.", targetName)
 	target << law
 	target.add_supplied_law(4, law)
+	lawchanges.Add("The law specified [targetName]")
+
 
 
 /******************** OneHuman ********************/
@@ -156,9 +161,11 @@ AI MODULES
 	if (!checktraitor(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
 		target << law
 		target.set_zeroth_law(law)
+		lawchanges.Add("The law specified [targetName]")
 	else
 		target << "[sender.real_name] attempted to modify your zeroth law." // And lets them know that someone tried. --NeoFite
 		target << "It would be in your best interest to play along with [sender.real_name] that [law]"
+		lawchanges.Add("The law specified [targetName], but the AI's existing law 0 cannot be overriden.")
 
 /******************** ProtectStation ********************/
 
@@ -282,6 +289,7 @@ AI MODULES
 	if(!lawpos || lawpos < 15)
 		lawpos = 15
 	target.add_supplied_law(lawpos, law)
+	lawchanges.Add("The law was '[newFreeFormLaw]'")
 
 
 /******************** Reset ********************/
@@ -380,6 +388,7 @@ AI MODULES
 	..()
 	var/law = "[newFreeFormLaw]"
 	target.add_inherent_law(law)
+	lawchanges.Add("The law is '[newFreeFormLaw]'")
 
 /******************** Robocop ********************/
 /*
