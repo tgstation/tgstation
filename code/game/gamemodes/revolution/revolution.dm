@@ -58,6 +58,7 @@
 			rev_obj.find_target_by_role(head_mind.assigned_role)
 			rev_mind.objectives += rev_obj
 
+		equip_traitor(rev_mind.current) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 		equip_revolutionary(rev_mind.current)
 		update_rev_icons_added(rev_mind)
 
@@ -78,73 +79,18 @@
 /datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
 	if(!istype(rev_mob))
 		return
-	if (rev_mob.mind.assigned_role == "Clown")
-		rev_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
-		rev_mob.mutations &= ~16
-	spawn (100)
-		var/freq = 1441
-		var/list/freqlist = list()
-		while (freq <= 1489)
-			if (freq < 1451 || freq > 1459)
-				freqlist += freq
-			freq += 2
-			if ((freq % 2) == 0)
-				freq += 1
-		freq = freqlist[rand(1, freqlist.len)]
-		var/loc = ""
-		var/obj/item/device/radio/R = null
-		if (!R && istype(rev_mob.l_hand, /obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = rev_mob.l_hand
-			var/list/L = S.return_inv()
-			for (var/obj/item/device/radio/foo in L)
-				R = foo
-				loc = "in the [S.name] in your left hand"
-				break
-		if (!R && istype(rev_mob.r_hand, /obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = rev_mob.r_hand
-			var/list/L = S.return_inv()
-			for (var/obj/item/device/radio/foo in L)
-				R = foo
-				loc = "in the [S.name] in your right hand"
-				break
-		if (!R && istype(rev_mob.back, /obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = rev_mob.back
-			var/list/L = S.return_inv()
-			for (var/obj/item/device/radio/foo in L)
-				R = foo
-				loc = "in the [S.name] on your back"
-				break
-		if (!R && rev_mob.w_uniform && istype(rev_mob.belt, /obj/item/device/radio))
-			R = rev_mob.belt
-			loc = "on your belt"
-		if (!R && istype(rev_mob.ears, /obj/item/device/radio))
-			R = rev_mob.ears
-			loc = "on your head"
-		if (!R)
-			rev_mob << "Unfortunately, the Syndicate wasn't able to get you a radio."
-		else
-			var/obj/item/weapon/syndicate_uplink/T = new /obj/item/weapon/syndicate_uplink(R)
-			R.traitorradio = T
-			R.traitor_frequency = freq
-			T.name = R.name
-			T.icon_state = R.icon_state
-			T.origradio = R
-			rev_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock it's hidden features."
-			rev_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).", 0, 0)
-
-		var/flashspawned = 0
-
-		if (rev_mob.r_store && !flashspawned)
-			rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_l_store)
-			flashspawned = 1
-		if (rev_mob.l_store && !flashspawned)
-			rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_r_store)
-			flashspawned = 1
-		if (istype(rev_mob.back, /obj/item/weapon/storage) && !flashspawned)
-			rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_in_backpack)
-			flashspawned = 1
-		if (!flashspawned)
-			rev_mob << "The Syndicate were unfortunately unable to get you a flash."
+	var/flashspawned = 0
+	if (rev_mob.r_store && !flashspawned)
+		rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_l_store)
+		flashspawned = 1
+	if (rev_mob.l_store && !flashspawned)
+		rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_r_store)
+		flashspawned = 1
+	if (istype(rev_mob.back, /obj/item/weapon/storage) && !flashspawned)
+		rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_in_backpack)
+		flashspawned = 1
+	if (!flashspawned)
+		rev_mob << "The Syndicate were unfortunately unable to get you a flash."
 
 //////////////////////////////////////////
 //Deals with the communication intercept//
