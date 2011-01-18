@@ -12,7 +12,7 @@
 	if (istype(O, /obj/item/weapon/screwdriver))
 		if (!opened)
 			src.opened = 1
-			src.icon_state = "autolathef"
+			src.icon_state = "autolathe_t"
 			user << "You open the maintenance hatch of [src]."
 		else
 			src.opened = 0
@@ -49,14 +49,15 @@
 		amount = stack.amount
 		if (m_amt)
 			amount = min(amount, round((max_m_amount-src.m_amount)/m_amt))
+			flick("autolathe_o",src)//plays metal insertion animation
 		if (g_amt)
 			amount = min(amount, round((max_g_amount-src.g_amount)/g_amt))
+			flick("autolathe_r",src)//plays glass insertion animation
 		stack.use(amount)
 	else
 		usr.before_take_item(O)
 		O.loc = src
-	icon_state = "autolathe1"
-	flick("autolathe_c",src)
+	icon_state = "autolathe"
 	busy = 1
 	use_power(max(1000, (m_amt+g_amt)*amount/10))
 	spawn(16)
@@ -115,7 +116,7 @@
 		dat += "<br>"
 	user << browse("<HTML><HEAD><TITLE>Autolathe Control Panel</TITLE></HEAD><BODY><TT>[dat]</TT></BODY></HTML>", "window=autolathe_regular")
 	onclose(user, "autolathe_regular")
-	
+
 /obj/machinery/autolathe/proc/interact(mob/user as mob)
 	if(..())
 		return
@@ -137,7 +138,7 @@
 	src.add_fingerprint(usr)
 	if (!busy)
 		if(href_list["make"])
-			var/turf/T = get_step(src.loc, get_dir(src,usr)) 
+			var/turf/T = get_step(src.loc, get_dir(src,usr))
 			var/obj/template = locate(href_list["make"])
 			var/multiplier = text2num(href_list["multiplier"])
 			if (!multiplier) multiplier = 1
@@ -145,13 +146,11 @@
 			if(src.m_amount >= template.m_amt*multiplier && src.g_amount >= template.g_amt*multiplier)
 				busy = 1
 				use_power(power)
-				icon_state = "autolathe1"
-				flick("autolathe_c",src)
+				icon_state = "autolathe"
+				flick("autolathe_n",src)
 				spawn(16)
 					use_power(power)
 					spawn(16)
-						icon_state = "autolathe"
-						flick("autolathe_o",src)
 						use_power(power)
 						spawn(16)
 							src.m_amount -= template.m_amt*multiplier

@@ -91,7 +91,6 @@ Operations Highlights:
 			amount = stack.amount
 			amount = min(amount, round((max_g_amount-src.g_amount)/g_amt))
 			stack.use(amount)
-			flick("circuit_imprinter_ani", src)
 			sleep(32)
 			src.g_amount += g_amt * amount
 			user << "\blue You add glass to the [name]."
