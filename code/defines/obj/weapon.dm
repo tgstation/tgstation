@@ -1351,11 +1351,38 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	m_amt = 10000
 	g_amt = 5000
 
+/obj/item/weapon/retractor
+	name = "retractor"
+	icon = 'surgery.dmi'
+	icon_state = "retractor"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
+
+/obj/item/weapon/hemostat
+	name = "retractor"
+	icon = 'surgery.dmi'
+	icon_state = "hemostat"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
+
+/obj/item/weapon/cautery
+	name = "retractor"
+	icon = 'surgery.dmi'
+	icon_state = "cautery"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
+
+/obj/item/weapon/surgicaldrill
+	name = "retractor"
+	icon = 'surgery.dmi'
+	icon_state = "drill"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
 
 /obj/item/weapon/circular_saw
 	name = "circular saw"
 	icon = 'surgery.dmi'
-	icon_state = "saw1"
+	icon_state = "saw"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0
