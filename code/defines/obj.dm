@@ -330,11 +330,24 @@
 	desc = "A hand-held emergency light."
 	icon_state = "flight0"
 	var/on = 0
+	var/brightness_on = 4 //luminosity when on
+	var/icon_on = "flight1"
+	var/icon_off = "flight0"
 	w_class = 2
 	item_state = "flight"
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	m_amt = 50
 	g_amt = 20
+
+/obj/item/device/flashlight/pen
+	name = "penlight"
+	desc = "A pen-sized light."
+	icon_state = "plight0"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	item_state = ""
+	icon_on = "plight1"
+	icon_off = "plight0"
+	brightness_on = 3
 
 /obj/item/device/healthanalyzer
 	name = "Health Analyzer"

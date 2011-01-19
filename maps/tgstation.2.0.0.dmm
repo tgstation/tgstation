@@ -3351,7 +3351,7 @@
 "bmw" = (/obj/secure_closet/medical1,/turf/simulated/floor{icon_state = "white"},/area/medical/research)
 "bmx" = (/obj/closet/wardrobe/genetics_white,/turf/simulated/floor{icon_state = "white"},/area/medical/research)
 "bmy" = (/obj/table{dir = 9; icon_state = "tabledir"; pixel_y = 0},/obj/item/weapon/storage/diskbox,/obj/item/weapon/paper{info = "Angela, while it may appear that the lab monkeys are communicating with each other, I assure you it's quite impossible. You claim that one monkey signed the passcode for a supply closet to another and the latter proceeded to open it. As I'm sure you know, there have literally been tens of thousands of studies of primate intelligence and there is no evidence of behavior even remotely that sophisticated. So either you've single handedly trumped the entire field of animal behaviorists or you're badly in need of a vacation."; name = "re: Damn Chimps"},/turf/simulated/floor{icon_state = "white"},/area/medical/research)
-"bmz" = (/obj/table{icon_state = "tabledir"; dir = 1},/obj/item/weapon/storage/diskbox,/turf/simulated/floor{icon_state = "white"},/area/medical/research)
+"bmz" = (/obj/table{icon_state = "tabledir"; dir = 1},/obj/item/weapon/storage/diskbox,/obj/item/device/flashlight/pen,/turf/simulated/floor{icon_state = "white"},/area/medical/research)
 "bmA" = (/obj/machinery/atmospherics/pipe/simple,/turf/simulated/wall,/area/chapel/main)
 "bmB" = (/obj/machinery/light/small,/obj/machinery/atmospherics/unary/vent_pump{on = 1},/turf/simulated/floor{icon_state = "dark"},/area/chapel/main)
 "bmC" = (/obj/table{icon_state = "tabledir"; dir = 9},/turf/simulated/floor{icon_state = "dark"},/area/chapel/main)
