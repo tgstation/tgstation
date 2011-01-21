@@ -2209,6 +2209,17 @@ var/showadminmessages = 1
 		usr << "Sorry, this mob have no mind!"
 	M.mind.edit_memory()
 
+/obj/admins/proc/toggletintedweldhelmets()
+	set category = "Debug"
+	set desc="Reduces view range when wearing welding helmets"
+	set name="Toggle tinted welding helmes"
+	tinted_weldhelh = !( tinted_weldhelh )
+	if (tinted_weldhelh)
+		world << "<B>The tinted_weldhelh has been enabled!</B>"
+	else
+		world << "<B>The tinted_weldhelh has been disabled!</B>"
+	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
+	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.", 1)
 //
 //
 //ALL DONE

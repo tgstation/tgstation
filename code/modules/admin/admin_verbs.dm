@@ -80,6 +80,8 @@
 			src.verbs += /client/proc/ticklag
 			src.verbs += /proc/givetestverbs
 			src.verbs += /obj/admins/proc/spawn_atom
+			src.verbs += /obj/admins/proc/toggletintedweldhelmets
+			
 
 			// Admin helpers
 			src.verbs += /client/proc/cmd_admin_attack_log
@@ -204,6 +206,7 @@
 			src.verbs += /client/proc/ticklag
 			src.verbs += /proc/givetestverbs
 			src.verbs += /obj/admins/proc/spawn_atom
+			src.verbs += /obj/admins/proc/toggletintedweldhelmets
 
 			// Admin helpers
 			src.verbs += /client/proc/cmd_admin_attack_log
@@ -329,6 +332,7 @@
 			//src.verbs += /client/proc/ticklag
 			//src.verbs += /proc/givetestverbs
 			//src.verbs += /obj/admins/proc/spawn_atom
+			src.verbs += /obj/admins/proc/toggletintedweldhelmets
 
 			// Admin helpers
 			src.verbs += /client/proc/cmd_admin_attack_log
@@ -481,6 +485,7 @@
 			//src.verbs += /client/proc/ticklag
 			//src.verbs += /proc/givetestverbs
 			//src.verbs += /obj/admins/proc/spawn_atom
+			src.verbs += /obj/admins/proc/toggletintedweldhelmets
 
 			// Admin helpers
 			src.verbs += /client/proc/cmd_admin_attack_log
@@ -623,6 +628,7 @@
 			//src.verbs += /client/proc/ticklag
 			//src.verbs += /proc/givetestverbs
 			//src.verbs += /obj/admins/proc/spawn_atom
+			src.verbs += /obj/admins/proc/toggletintedweldhelmets
 
 			// Admin helpers
 			//src.verbs += /client/proc/cmd_admin_attack_log
@@ -1036,6 +1042,7 @@
 	src.verbs -= /client/proc/ticklag
 	src.verbs -= /proc/givetestverbs
 	src.verbs -= /obj/admins/proc/spawn_atom
+	src.verbs -= /obj/admins/proc/toggletintedweldhelmets
 
 	// Admin helpers
 	src.verbs -= /client/proc/cmd_admin_attack_log

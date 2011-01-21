@@ -261,7 +261,7 @@
 			W.loc = src
 			cell = W
 			user.visible_message(\
-				"\red [user.name] has inserted the power cell. to [src.name]!",\
+				"\red [user.name] has inserted the power cell to [src.name]!",\
 				"You insert the power cell.")
 			chargecount = 0
 			updateicon()
@@ -271,7 +271,7 @@
 				user << "\red Close the APC first." //Less hints more mystery!
 				return
 			else
-				if (has_electronics==1)
+				if (has_electronics==1 && terminal)
 					has_electronics = 2
 					stat &= ~MAINT
 					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
