@@ -296,7 +296,7 @@ datum
 
 					var/datum/gas_mixture/napalm = new
 
-					napalm.toxins = created_volume * created_volume
+					napalm.toxins = created_volume
 					napalm.temperature = 400+T0C
 
 					target_tile.assume_air(napalm)
