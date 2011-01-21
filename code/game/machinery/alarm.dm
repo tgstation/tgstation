@@ -38,9 +38,9 @@
 		var/id_tag = signal.data["tag"]
 		if (!id_tag)
 			return
-		if (!signal.data["area"] || signal.data["area"] != area_uid)
+		if (signal.data["area"] != area_uid)
 			return
-		if((!sensors.Find(id_tag) && !vents.Find(id_tag)))
+		if((!sensors[id_tag] && !vents[id_tag]))
 			register_env_machine(id_tag, signal.data["device"])
 		if(signal.data["device"] == "AScr")
 			sensor_information[id_tag] = signal.data
@@ -63,9 +63,9 @@
 				send_signal(m_id, "init", new_name )
 			
 		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
+			radio_controller.remove_object(src, frequency)
 			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, "[frequency]")
+			radio_connection = radio_controller.add_object(src, frequency, RADIO_TO_AIRALARM)
 
 
 		send_signal(var/target, var/command, var/parameter = null)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
@@ -81,7 +81,7 @@
 			if (parameter)
 				signal.data["parameter"] = parameter
 
-			radio_connection.post_signal(src, signal)
+			radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 //			world << text("Signal [] Broadcasted to []", command, target)
 
 			return 1

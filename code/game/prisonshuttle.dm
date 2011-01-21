@@ -215,7 +215,7 @@ var/prison_shuttle_timeleft = 0
 
 /obj/machinery/computer/prison_shuttle/proc/post_signal(var/command)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency("1311")
+	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1311)
 
 	if(!frequency) return
 

@@ -26,6 +26,8 @@
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
 
+	var/radio_filter_out
+	var/radio_filter_in
 
 	New()
 		var/area/A = get_area(loc)
@@ -119,10 +121,10 @@
 
 	proc
 		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
+			radio_controller.remove_object(src, frequency)
 			frequency = new_frequency
 			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
+				radio_connection = radio_controller.add_object(src, frequency,radio_filter_in)
 
 		broadcast_status()
 			if(!radio_connection)
@@ -142,13 +144,17 @@
 			signal.data["external"] = external_pressure_bound
 			signal.data["timestamp"] = air_master.current_cycle
 
-			radio_connection.post_signal(src, signal)
+			radio_connection.post_signal(src, signal, radio_filter_out)
 
 			return 1
 
 
 	initialize()
 		..()
+		
+		//some vents work his own spesial way
+		radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
+		radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 		if(frequency)
 			set_frequency(frequency)
 		update_icon()
@@ -227,7 +233,7 @@
 		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 			if (W:get_fuel() < 1)
 				user << "\blue You need more welding fuel to complete this task."
-				return
+				return 1
 			W:use_fuel(1)
 			playsound(src.loc, 'Welder2.ogg', 50, 1)
 

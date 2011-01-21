@@ -83,7 +83,7 @@
 			src.host_program.transfer_holder(src.hd)
 
 		if(radio_controller)
-			radio_controller.add_object(src, "[frequency]")
+			radio_controller.add_object(src, frequency)
 
 
 	if (src.default_cartridge)
@@ -207,7 +207,7 @@
 
 		signal.source = src
 
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
+		var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
 		signal.transmission_method = TRANSMISSION_RADIO
 		if(frequency)

@@ -80,8 +80,8 @@
 
 		spawn(5)	// must wait for map loading to finish
 			if(radio_controller)
-				radio_controller.add_object(src, "[control_freq]")
-				radio_controller.add_object(src, "[beacon_freq]")
+				radio_controller.add_object(src, control_freq)
+				radio_controller.add_object(src, beacon_freq)
 
 			var/count = 0
 			for(var/obj/machinery/bot/mulebot/other in world)
@@ -881,7 +881,7 @@
 		if(freq == control_freq && !(wires & wire_remote_tx))
 			return
 
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
+		var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
 		if(!frequency) return
 

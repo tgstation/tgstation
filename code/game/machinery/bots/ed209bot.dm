@@ -80,8 +80,8 @@
 			src.cam.c_tag = src.name
 			src.cam.network = "SS13"
 			if(radio_controller)
-				radio_controller.add_object(src, "[control_freq]")
-				radio_controller.add_object(src, "[beacon_freq]")
+				radio_controller.add_object(src, control_freq)
+				radio_controller.add_object(src, beacon_freq)
 
 	examine()
 		set src in view()
@@ -546,7 +546,7 @@ Auto Patrol: []"},
 	// send a radio signal with multiple data key/values
 	proc/post_signal_multiple(var/freq, var/list/keyval)
 
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
+		var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
 		if(!frequency) return
 

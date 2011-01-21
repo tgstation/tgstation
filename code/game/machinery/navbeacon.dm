@@ -30,7 +30,7 @@
 
 		spawn(5)	// must wait for map loading to finish
 			if(radio_controller)
-				radio_controller.add_object(src, "[freq]")
+				radio_controller.add_object(src, freq)
 
 	// set the transponder codes assoc list from codes_txt
 	proc/set_codes()
@@ -84,7 +84,7 @@
 
 	proc/post_signal()
 
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
+		var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 
 		if(!frequency) return
 

@@ -21,7 +21,8 @@
 	var/panic = 0 //is this scrubber panicked?
 
 	var/area_uid
-
+	var/radio_filter_out
+	var/radio_filter_in
 	New()
 		var/area/A = get_area(loc)
 		if (A.master)
@@ -42,9 +43,9 @@
 
 	proc
 		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
+			radio_controller.remove_object(src, frequency)
 			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, "[frequency]")
+			radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
 
 		broadcast_status()
 			if(!radio_connection)
@@ -63,12 +64,14 @@
 			signal.data["filter_co2"] = scrub_CO2
 			signal.data["filter_toxins"] = scrub_Toxins
 			signal.data["filter_n2o"] = scrub_N2O
-			radio_connection.post_signal(src, signal)
+			radio_connection.post_signal(src, signal, radio_filter_out)
 
 			return 1
 
 	initialize()
 		..()
+		radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
+		radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 		if (frequency)
 			set_frequency(frequency)
 
