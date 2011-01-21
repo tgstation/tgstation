@@ -905,6 +905,7 @@
 		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R
 		R.my_atom = src
+		..()
 
 	on_reagent_change()
 		if (gulp_size < 5) gulp_size = 5
@@ -2046,11 +2047,7 @@
 		var/mob/M = usr
 		var/obj/item/weapon/bananapeel/W = new /obj/item/weapon/bananapeel( M )
 		M << "\blue You peel the banana."
-		if (M.hand)
-			M.l_hand = W
-		else
-			M.r_hand = W
-		W.layer = 20
+		M.put_in_hand(W)
 		W.add_fingerprint(M)
 	New()
 		..()
@@ -2065,6 +2062,13 @@
 //	to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
 
 /obj/item/weapon/reagent_containers/food/condiment
+
+	New()
+		var/datum/reagents/R = new/datum/reagents(50)
+		reagents = R
+		R.my_atom = src
+		..()
+
 	on_reagent_change()
 		if(icon_state == "saltshakersmall" || icon_state == "peppermillsmall")
 			return
@@ -2128,6 +2132,8 @@
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
 	New()
+		..()
+		del(reagents)
 		var/datum/reagents/R = new/datum/reagents(20)
 		reagents = R
 		R.my_atom = src
@@ -2138,6 +2144,8 @@
 	desc = "Often used to flavor food or make people sneeze."
 	icon_state = "peppermillsmall"
 	New()
+		..()
+		del(reagents)
 		var/datum/reagents/R = new/datum/reagents(20)
 		reagents = R
 		R.my_atom = src
@@ -2265,6 +2273,7 @@
 	desc = "A paper water cup."
 	icon_state = "water_cup_e"
 	New()
+		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 		var/datum/reagents/R = new/datum/reagents(10)
 		reagents = R
 		R.my_atom = src
@@ -2279,6 +2288,7 @@
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
 //Notes by Darem: Functionally identical to regular drinks. The only difference is that the default bottle size is 100.
 /obj/item/weapon/reagent_containers/food/drinks/bottle
+	amount_per_transfer_from_this = 10
 	New()
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
@@ -2531,6 +2541,7 @@
 	name = "Shaker"
 	desc = "A metal shaker to mix drinks in."
 	icon_state = "shaker"
+	amount_per_transfer_from_this = 10
 	New()
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
@@ -2549,6 +2560,7 @@
 	name = "glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
+	amount_per_transfer_from_this = 10
 	New()
 		var/datum/reagents/R = new/datum/reagents(50)
 		reagents = R

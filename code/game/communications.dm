@@ -151,7 +151,7 @@ datum/radio_frequency
 				if(!start_point)
 					del(signal)
 					return 0
-			if (filter && ooc_allowed)//HACK, remove ooc_allowed
+			if (filter)
 				var/list/obj/devices_line = devices[filter_str]
 				for(var/obj/device in devices_line)
 					if(device == source)
