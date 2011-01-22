@@ -911,6 +911,10 @@ proc/process_ghost_teleport_locs()
 	name = "Derelict Aft Solar Array"
 	icon_state = "aft"
 
+/area/derelict/singularity_engine
+	name = "Derelict Singularity Engine"
+	icon_state = "engine"
+
 //Construction
 
 /area/construction
