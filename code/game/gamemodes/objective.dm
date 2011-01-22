@@ -109,7 +109,7 @@ datum
 			var/target_name
 			proc/find_target()
 				var/list/items = list(
-					"the captain's antique laser gun", 
+					"the captain's antique laser gun",
 					"a hand teleporter",
 					"an RCD",
 					"a jetpack",
@@ -123,15 +123,15 @@ datum
 				)
 				target_name = pick(items)
 				switch(target_name)
-					if("captain's antique laser gun")
+					if("the captain's antique laser gun")
 						steal_target = /obj/item/weapon/gun/energy/laser_gun/captain
-					if("hand teleporter")
+					if("a hand teleporter")
 						steal_target = /obj/item/weapon/hand_tele
-					if("RCD")
+					if("an RCD")
 						steal_target = /obj/item/weapon/rcd
-					if("jetpack")
+					if("a jetpack")
 						steal_target = /obj/item/weapon/tank/jetpack
-					if("captains jumpsuit")
+					if("a captains jumpsuit")
 						steal_target = /obj/item/clothing/under/rank/captain
 					if("functional ai")
 						steal_target = /obj/item/device/aicard
@@ -147,7 +147,7 @@ datum
 						steal_target = /obj/item/weapon/tank
 
 
-				explanation_text = "Steal a [target_name]."
+				explanation_text = "Steal [target_name]."
 
 				return steal_target
 
@@ -172,7 +172,7 @@ datum
 								for(var/obj/item/weapon/tank/T in owner.current.contents)
 									found_toxins += T.air_contents.toxins
 								return found_toxins>=target
-								
+
 							else
 								return 1
 						else
