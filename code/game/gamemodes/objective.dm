@@ -108,8 +108,19 @@ datum
 			var/obj/item/steal_target
 			var/target_name
 			proc/find_target()
-				var/list/items = list("captain's antique laser gun", "hand teleporter", "RCD", "jetpack", "captains jumpsuit", "functional ai")
-
+				var/list/items = list(
+					"the captain's antique laser gun", 
+					"a hand teleporter",
+					"an RCD",
+					"a jetpack",
+					"a captains jumpsuit",
+					"functional ai",
+					"a pair of magboots",
+					"the station blueprints",
+					"thermal optics",
+					"the engineers rig suit",
+					"28 moles of plasma (full tank)"
+				)
 				target_name = pick(items)
 				switch(target_name)
 					if("captain's antique laser gun")
@@ -124,6 +135,16 @@ datum
 						steal_target = /obj/item/clothing/under/rank/captain
 					if("functional ai")
 						steal_target = /obj/item/device/aicard
+					if("the station blueprints")
+						steal_target = /obj/item/blueprints
+					if("a pair of magboots")
+						steal_target = /obj/item/clothing/shoes/magboots
+					if("thermal optics")
+						steal_target = /obj/item/clothing/glasses/thermal
+					if("the engineers rig suit")
+						steal_target = /obj/item/clothing/suit/space/rig
+					if("28 moles of plasma (full tank)")
+						steal_target = /obj/item/weapon/tank
 
 
 				explanation_text = "Steal a [target_name]."
@@ -145,6 +166,13 @@ datum
 											return 1
 //								world << "didn't find a living AI on the card"
 									return 0
+							else if (target_name == "28 moles of plasma (full tank)")
+								var/target = 28 //moles
+								var/found_toxins = 0.0 //moles
+								for(var/obj/item/weapon/tank/T in owner.current.contents)
+									found_toxins += T.air_contents.toxins
+								return found_toxins>=target
+								
 							else
 								return 1
 						else
