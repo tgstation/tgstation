@@ -107,76 +107,83 @@ datum
 		steal
 			var/obj/item/steal_target
 			var/target_name
+			var/global/list/possible_items = list(
+				"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser_gun/captain,
+				"a hand teleporter" = /obj/item/weapon/hand_tele,
+				"an RCD" = /obj/item/weapon/rcd,
+				"a jetpack" = /obj/item/weapon/tank/jetpack,
+				"a captains jumpsuit" = /obj/item/clothing/under/rank/captain,
+				"functional ai" = /obj/item/device/aicard,
+				"a pair of magboots" = /obj/item/clothing/shoes/magboots,
+				"the station blueprints" = /obj/item/blueprints,
+				"thermal optics" = /obj/item/clothing/glasses/thermal,
+				"the engineers rig suit" = /obj/item/clothing/suit/space/rig,
+				"28 moles of plasma (full tank)" = /obj/item/weapon/tank,
+			)
+
+			var/global/list/possible_items_special = list(
+				"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,
+			)
+			
+			proc/set_target(var/target_name as text)
+				src.target_name = target_name
+				src.steal_target = possible_items[target_name]
+				if (!src.steal_target )
+					src.steal_target = possible_items_special[target_name]
+				src.explanation_text = "Steal [target_name]."
+				return src.steal_target
+
 			proc/find_target()
-				var/list/items = list(
-					"the captain's antique laser gun",
-					"a hand teleporter",
-					"an RCD",
-					"a jetpack",
-					"a captains jumpsuit",
-					"functional ai",
-					"a pair of magboots",
-					"the station blueprints",
-					"thermal optics",
-					"the engineers rig suit",
-					"28 moles of plasma (full tank)"
-				)
-				target_name = pick(items)
-				switch(target_name)
-					if("the captain's antique laser gun")
-						steal_target = /obj/item/weapon/gun/energy/laser_gun/captain
-					if("a hand teleporter")
-						steal_target = /obj/item/weapon/hand_tele
-					if("an RCD")
-						steal_target = /obj/item/weapon/rcd
-					if("a jetpack")
-						steal_target = /obj/item/weapon/tank/jetpack
-					if("a captains jumpsuit")
-						steal_target = /obj/item/clothing/under/rank/captain
-					if("functional ai")
-						steal_target = /obj/item/device/aicard
-					if("the station blueprints")
-						steal_target = /obj/item/blueprints
-					if("a pair of magboots")
-						steal_target = /obj/item/clothing/shoes/magboots
-					if("thermal optics")
-						steal_target = /obj/item/clothing/glasses/thermal
-					if("the engineers rig suit")
-						steal_target = /obj/item/clothing/suit/space/rig
-					if("28 moles of plasma (full tank)")
-						steal_target = /obj/item/weapon/tank
+				return set_target(pick(possible_items))
 
+			proc/select_target()
+				var/list/possible_items_all = possible_items+possible_items_special+"custom"
+				var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
+				if (!new_target) return
 
-				explanation_text = "Steal [target_name]."
+				if (new_target == "custom")
+					var/steal_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
+					if (!steal_target) return
+					var/tmp_obj = new steal_target
+					new_target = tmp_obj:name
+					del(tmp_obj)
+					new_target = input("Enter target name:", "Objective target", new_target) as text|null
+					if (!new_target) return
 
-				return steal_target
+					src.target_name = new_target
+					src.steal_target = steal_target
+					src.explanation_text = "Steal [new_target]."
+
+				else
+					set_target(new_target)
+
+				return src.steal_target
 
 			check_completion()
-				if(steal_target)
-					if(owner.current)
-						if(owner.current.check_contents_for(steal_target))
-							if(target_name == "functional ai")
-//								world << "dude's after an AI, time to check for one."
-								for(var/obj/item/device/aicard/C in owner.current.contents)
-//									world << "Found an intelicard, checking it for an AI"
-									for(var/mob/living/silicon/ai/M in C)
-//										world << "Found an AI, checking if it's alive"
-										if(istype(M, /mob/living/silicon/ai) && M.stat != 2)
-//											world << "yay, you win!"
-											return 1
-//								world << "didn't find a living AI on the card"
-									return 0
-							else if (target_name == "28 moles of plasma (full tank)")
-								var/target = 28 //moles
-								var/found_toxins = 0.0 //moles
-								for(var/obj/item/weapon/tank/T in owner.current.contents)
-									found_toxins += T.air_contents.toxins
-								return found_toxins>=target
-
-							else
+				if(!steal_target || !owner.current)
+					return 0
+				var/list/all_items = owner.current.get_contents()
+				switch (target_name)
+					if ("28 moles of plasma (full tank)")
+						var/target = 28 //moles
+						var/found_toxins = 0.0 //moles
+						for(var/obj/item/weapon/tank/T in all_items)
+							found_toxins += T.air_contents.toxins
+						return found_toxins>=target
+					if("functional ai")
+//						world << "dude's after an AI, time to check for one."
+						for(var/obj/item/device/aicard/C in all_items)
+//							world << "Found an intelicard, checking it for an AI"
+							for(var/mob/living/silicon/ai/M in C)
+//								world << "Found an AI, checking if it's alive"
+								if(istype(M, /mob/living/silicon/ai) && M.stat != 2)
+//									world << "yay, you win!"
+									return 1
+					else
+						for(var/obj/I in all_items)
+							if(I.type == steal_target)
 								return 1
-						else
-							return 0
+				return 0
 
 		nuclear
 			explanation_text = "Destroy the station with a nuclear device."

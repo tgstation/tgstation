@@ -17,9 +17,7 @@
 
 		var/datum/objective/steal/steal_objective = new
 		steal_objective.owner = H.mind
-		steal_objective.target_name = "nuclear authentication disk"
-		steal_objective.steal_target = /obj/item/weapon/disk/nuclear
-		steal_objective.explanation_text = "Steal a [steal_objective.target_name]."
+		steal_objective.set_target("nuclear authentication disk")
 		H.mind.objectives += steal_objective
 
 		var/datum/objective/hijack/hijack_objective = new

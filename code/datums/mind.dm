@@ -221,48 +221,14 @@ datum/mind
 					new_objective.owner = src
 
 				if ("steal")
-					var/list/items = list("custom", "captain's antique laser gun", "hand teleporter", "RCD", "jetpack", "captains jumpsuit", "functional ai", "magnetic boots")
-
-					var/def_target = null
-					if (istype(objective, /datum/objective/steal))
-						def_target = objective:target_name
-
-					var/new_target = input("Select target:", "Objective target", def_target) as null|anything in items
-					if (!new_target) return
-
-					if (new_target == "custom")
-						var/steal_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
-						if (!steal_target) return
-						var/tmp_obj = new steal_target
-						new_target = tmp_obj:name
-						del(tmp_obj)
-						new_target = input("Enter target name:", "Objective target", new_target) as text|null
-						if (!new_target) return
-
+					if (!istype(objective, /datum/objective/steal))
 						new_objective = new /datum/objective/steal
 						new_objective.owner = src
-						new_objective:steal_target = steal_target
-
 					else
-						new_objective = new /datum/objective/steal
-						new_objective.owner = src
-						switch(new_target)
-							if ("captain's antique laser gun")
-								new_objective:steal_target = /obj/item/weapon/gun/energy/laser_gun/captain
-							if ("hand teleporter")
-								new_objective:steal_target = /obj/item/weapon/hand_tele
-							if ("RCD")
-								new_objective:steal_target = /obj/item/weapon/rcd
-							if ("jetpack")
-								new_objective:steal_target = /obj/item/weapon/tank/jetpack
-							if ("captains jumpsuit")
-								new_objective:steal_target = /obj/item/clothing/under/rank/captain
-							if ("functional ai")
-								new_objective:steal_target = /obj/item/device/aicard
-							if ("magnetic boots")
-								new_objective:steal_target = /obj/item/clothing/shoes/magboots
-					new_objective:target_name = new_target
-					new_objective.explanation_text = "Steal a [new_target]."
+						new_objective = objective
+					var/datum/objective/steal/steal = new_objective
+					if (!steal.select_target())
+						return
 
 				if ("nuclear")
 					new_objective = new /datum/objective/nuclear
