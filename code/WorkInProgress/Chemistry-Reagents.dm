@@ -627,6 +627,27 @@ datum
 				..()
 				return
 
+		sterilizine
+			name = "Sterilizine"
+			id = "sterilizine"
+			description = "Sterilizes wounds in preparation for surgery."
+			reagent_state = LIQUID
+	/*		reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				src = null
+				if (method==TOUCH)
+					if(istype(M, /mob/living/carbon/human))
+						if(M.health >= -100 && M.health <= 0)
+							M.crit_op_stage = 0.0
+				if (method==INGEST)
+					usr << "Well, that was stupid."
+					M:toxloss += 3
+				return
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+					M.radiation += 3
+					..()
+					return
+	*/
 		iron
 			name = "Iron"
 			id = "iron"
@@ -925,7 +946,7 @@ datum
 				M:eye_blurry = max(M:eye_blurry-5 , 0)
 				M:eye_blind = max(M:eye_blind-5 , 0)
 				M:disabilities &= ~1
-				M:sdisabilities &= ~1
+//				M:sdisabilities &= ~1		Replaced by eye surgery
 				..()
 				return
 

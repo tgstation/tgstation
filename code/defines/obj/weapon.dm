@@ -1359,21 +1359,21 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	w_class = 1.0
 
 /obj/item/weapon/hemostat
-	name = "retractor"
+	name = "hemostat"
 	icon = 'surgery.dmi'
 	icon_state = "hemostat"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 
 /obj/item/weapon/cautery
-	name = "retractor"
+	name = "cautery"
 	icon = 'surgery.dmi'
 	icon_state = "cautery"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 
 /obj/item/weapon/surgicaldrill
-	name = "retractor"
+	name = "surgical drill"
 	icon = 'surgery.dmi'
 	icon_state = "drill"
 	flags = FPRINT | TABLEPASS | CONDUCT

@@ -1,10 +1,160 @@
 /*
 CONTAINS:
+RETRACTOR
+HEMOSTAT
+CAUTERY
+SURGICAL DRILL
 SCALPEL
 CIRCULAR SAW
 
 */
 
+/////////////
+//RETRACTOR//
+/////////////
+/obj/item/weapon/retractor/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M, /mob))
+		return
+
+	if(!(locate(/obj/machinery/optable, M.loc) && M.resting))
+		return ..()
+
+	if (user.zone_sel.selecting == "eyes")
+
+		var/mob/living/carbon/human/H = M
+		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+			// Eye surgery cannot be performed unless the head is clear
+			user << "\blue You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		switch(M.eye_op_stage)
+			if(1.0)
+				for(var/mob/O in viewers(M, null))
+					if(O == (user || M))
+						continue
+					if(M == user)
+						O.show_message(text("\red [user] begins to have his eyes retracted."), 1)
+					else
+						O.show_message(text("\red [M] is having his eyes retracted by [user]."), 1)
+
+				if(M != user)
+					M << "\red [user] begins to seperate your eyes with [src]!"
+					user << "\red You seperate [M]'s eyes with [src]!"
+				else
+					user << "\red You begin to pry open your eyes with [src]!"
+					if(prob(25))
+						user << "\red You mess up!"
+						M.bruteloss += 15
+
+				M.updatehealth()
+				M:eye_op_stage = 2.0
+
+	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
+		return ..()
+
+	return
+
+////////////
+//Hemostat//
+////////////
+
+/obj/item/weapon/hemostat/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M, /mob))
+		return
+
+	if(!(locate(/obj/machinery/optable, M.loc) && M.resting))
+		return ..()
+
+	if (user.zone_sel.selecting == "eyes")
+
+		var/mob/living/carbon/human/H = M
+		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+			// Eye surgery cannot be performed unless the head is clear
+			user << "\blue You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		switch(M.eye_op_stage)
+			if(2.0)
+				for(var/mob/O in viewers(M, null))
+					if(O == (user || M))
+						continue
+					if(M == user)
+						O.show_message(text("\red [user] begins to have his eyes mended."), 1)
+					else
+						O.show_message(text("\red [M] is having his eyes mended by [user]."), 1)
+
+				if(M != user)
+					M << "\red [user] begins to mend your eyes with [src]!"
+					user << "\red You mend [M]'s eyes with [src]!"
+				else
+					user << "\red You begin to mend your eyes with [src]!"
+					if(prob(25))
+						user << "\red You mess up!"
+						M.bruteloss += 15
+
+				M.updatehealth()
+				M:eye_op_stage = 3.0
+
+	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
+		return ..()
+
+	return
+
+///////////
+//Cautery//
+///////////
+
+/obj/item/weapon/cautery/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M, /mob))
+		return
+
+	if(!(locate(/obj/machinery/optable, M.loc) && M.resting))
+		return ..()
+
+	if (user.zone_sel.selecting == "eyes")
+
+		var/mob/living/carbon/human/H = M
+		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+			// Eye surgery cannot be performed unless the head is clear
+			user << "\blue You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		switch(M.eye_op_stage)
+			if(3.0)
+				for(var/mob/O in viewers(M, null))
+					if(O == (user || M))
+						continue
+					if(M == user)
+						O.show_message(text("\red [user] begins to have his eyes cauterized."), 1)
+					else
+						O.show_message(text("\red [M] is having his eyes cauterized by [user]."), 1)
+
+				if(M != user)
+					M << "\red [user] begins to cauterize your eyes!"
+					user << "\red You cauterize [M]'s eyes with [src]!"
+				else
+					user << "\red You begin to cauterize your eyes!"
+					if(prob(25))
+						user << "\red You mess up!"
+						M.bruteloss += 15
+
+
+				M.updatehealth()
+				M.sdisabilities &= ~1
+				M:eye_op_stage = 0.0
+
+	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
+		return ..()
+
+	return
+
+
+//obj/item/weapon/surgicaldrill
+
+
+///////////
+//SCALPEL//
+///////////
 /obj/item/weapon/scalpel/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
 		return
@@ -85,18 +235,48 @@ CIRCULAR SAW
 				..()
 		return
 
+	else if(user.zone_sel.selecting == "eyes")
+		user << "\blue So far so good."
+
+		var/mob/living/carbon/human/H = M
+		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+			// Eye surgery cannot be performed unless the head is clear
+			user << "\blue You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		switch(M:eye_op_stage)
+			if(0.0)
+				for(var/mob/O in viewers(M, null))
+					if(O == (user || M))
+						continue
+					if(M == user)
+						O.show_message(text("\red [user] begins to cut around his eyes with [src]!"), 1)
+					else
+						O.show_message(text("\red [M] is beginning to have his eyes incised with [src] by [user]."), 1)
+
+				if(M != user)
+					M << "\red [user] begins to cut open your eyes with [src]!"
+					user << "\red You make an incision around [M]'s eyes with [src]!"
+				else
+					user << "\red You begin to cut open your eyes with [src]!"
+					if(prob(25))
+						user << "\red You mess up!"
+						M.bruteloss += 15
+
+				user << "\blue So far so good before."
+				M.updatehealth()
+				M:eye_op_stage = 1.0
+				user << "\blue So far so good after."
+
 	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
 		return ..()
 
 	return
 
 
-
-
-
-
-// CIRCULAR SAW
-
+////////////////
+//CIRCULAR SAW//
+////////////////
 /obj/item/weapon/circular_saw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
 		return

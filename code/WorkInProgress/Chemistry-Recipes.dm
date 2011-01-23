@@ -42,6 +42,13 @@ datum
 			required_reagents = list("aluminium" = 1, "silicon" = 1, "oxygen" = 1)
 			result_amount = 3
 
+		sterilizine
+			name = "Sterilizine"
+			id = "sterilizine"
+			result = "sterilizine"
+			required_reagents = list("ethanol" = 1, "anti-toxin" = 1, "chlorine" = 1)
+			result_amount = 3
+
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
