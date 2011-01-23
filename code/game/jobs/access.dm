@@ -43,7 +43,7 @@
 	access_court = 42
 	access_clown = 43
 	access_mime = 44
-
+	access_surgery = 45
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
@@ -114,7 +114,7 @@
 		if("Detective")
 			return list(access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 		if("Medical Doctor")
-			return list(access_medical, access_morgue)
+			return list(access_medical, access_morgue, access_surgery)
 		if("Botanist")	// -- TLE
 			return list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT
 		if("Librarian") // -- TLE
@@ -138,7 +138,7 @@
 			            access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab, access_engine, access_rd,
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer, access_virology)
+			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer, access_virology, access_surgery)
 		if("Atmospheric Technician")
 			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage)
 		if("Barman")
@@ -171,7 +171,7 @@
 		if("Virologist")
 			return list(access_medical, access_morgue, access_virology)
 		if("Chief Medical Officer")
-			return list(access_medical, access_morgue, access_medlab, access_robotics, access_heads, access_chemistry, access_virology, access_cmo)
+			return list(access_medical, access_morgue, access_medlab, access_robotics, access_heads, access_chemistry, access_virology, access_cmo, access_surgery)
 		else
 			return list()
 
@@ -183,7 +183,7 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
-	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime)
+	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery)
 
 /proc/get_access_desc(A)
 	switch(A)
@@ -273,6 +273,8 @@
 			return "HONK! Access"
 		if(access_mime)
 			return "Silent Access"
+		if(access_surgery)
+			return "Operating Room"
 
 /proc/get_all_jobs()
 	return list("Assistant", "Station Engineer", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",

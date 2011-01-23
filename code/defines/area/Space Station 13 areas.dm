@@ -651,6 +651,10 @@ proc/process_ghost_teleport_locs()
 	name = "Chemistry"
 	icon_state = "chem"
 
+/area/medical/surgery
+	name = "Surgery"
+	icon_state = "surgery"
+
 //Security
 
 /area/security/main
