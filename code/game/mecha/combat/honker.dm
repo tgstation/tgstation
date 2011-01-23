@@ -74,14 +74,14 @@
 	return result
 
 
-/obj/mecha/combat/honker/Topic(href, href_list)
+/*obj/mecha/combat/honker/Topic(href, href_list)
 	..()
 	if (href_list["play_sound"])
 		switch(href_list["play_sound"])
 			if("sadtrombone")
-				playsound(src, 'sadtrombone.ogg', 50)
+//				playsound(src, 'sadtrombone.ogg', 50)
 	return
-
+*/
 
 proc/rand_hex_color()
 	var/list/colors = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
