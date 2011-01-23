@@ -3,10 +3,10 @@
 	name = "Marauder"
 	icon_state = "marauder"
 	step_in = 10
-	health = 500
+	health = 400
 	deflect_chance = 25
 	max_temperature = 5000
-	infra_luminosity = 4
+	infra_luminosity = 3
 	var/thrusters = 0
 	var/smoke = 5
 	var/smoke_ready = 1
@@ -14,7 +14,6 @@
 	var/datum/effects/system/harmless_smoke_spread/smoke_system = new
 	operation_req_access = list(access_heads)
 	wreckage = "/obj/decal/mecha_wreckage/marauder"
-
 
 
 /obj/mecha/combat/marauder/New()
@@ -69,6 +68,7 @@
 			thrusters = !thrusters
 			src.occupant << "\blue Thrusters [thrusters?"en":"dis"]abled."
 	return
+
 
 /obj/mecha/combat/marauder/verb/smoke()
 	set category = "Exosuit Interface"

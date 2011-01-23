@@ -35,7 +35,7 @@
 
 /obj/mecha/combat/range_action(target as obj|mob|turf)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
-		target = pick(view(10,target))
+		target = pick(view(3,target))
 	if(selected_weapon)
 		selected_weapon.fire(target)
 	return

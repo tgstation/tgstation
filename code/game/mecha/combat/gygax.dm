@@ -6,7 +6,7 @@
 	health = 300
 	deflect_chance = 10
 	max_temperature = 3500
-	infra_luminosity = 10
+	infra_luminosity = 6
 	var/overload = 0
 	operation_req_access = list(access_security)
 	wreckage = "/obj/decal/mecha_wreckage/gygax"

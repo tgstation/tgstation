@@ -7,7 +7,7 @@
 	health = 200
 	internal_damage_threshold = 40
 	wreckage = "/obj/decal/mecha_wreckage/ripley"
-	infra_luminosity = 8
+	infra_luminosity = 5
 
 
 /obj/mecha/working/firefighter/New()

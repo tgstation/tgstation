@@ -146,7 +146,7 @@
 
 
 /datum/mecha_weapon/pulse
-	weapon_cooldown = 50
+	weapon_cooldown = 30
 	name = "eZ-13 mk2 Heavy pulse rifle"
 	energy_drain = 60
 
@@ -161,7 +161,7 @@
 			return
 
 		playsound(chassis, 'marauder.ogg', 50, 1)
-		var/obj/beam/a_laser/A = new /obj/beam/a_laser/pulse_laser(curloc)
+		var/obj/beam/a_laser/A = new /obj/beam/a_laser/pulse_laser/heavy_pulse(curloc)
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -174,6 +174,16 @@
 		chassis.log_message("Fired from [src.name], targeting [target].")
 		return
 
+
+/obj/beam/a_laser/pulse_laser/heavy_pulse
+	name = "heavy pulse laser"
+	icon_state = "u_laser"
+	life = 20
+
+	Bump(atom/A)
+		A.bullet_act(PROJECTILE_PULSE)
+		src.life -= 10
+		return
 
 /datum/mecha_weapon/taser
 	weapon_cooldown = 10
@@ -262,19 +272,19 @@
 		weapon_ready = 0
 		playsound(chassis, 'AirHorn.ogg', 100, 1)
 		chassis.occupant_message("<font color='red' size='5'>HONK</font>")
-		for(var/mob/living/carbon/M in ohearers(10, chassis))
+		for(var/mob/living/carbon/M in ohearers(6, chassis))
 			if(istype(M, /mob/living/carbon/human) && istype(M:ears, /obj/item/clothing/ears/earmuffs))
 				continue
 			M << "<font color='red' size='7'>HONK</font>"
 			M.sleeping = 0
 			M.stuttering += 20
-			M.ear_deaf += 60
+			M.ear_deaf += 30
 			M.weakened = 3
 			if(prob(30))
 				M.stunned = 10
 				M.paralysis += 4
 			else
-				M.make_jittery(10)
+				M.make_jittery(500)
 			/* //else the mousetraps are useless
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M

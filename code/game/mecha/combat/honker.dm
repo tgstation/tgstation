@@ -7,7 +7,7 @@
 	deflect_chance = 60
 	internal_damage_threshold = 60
 	max_temperature = 3500
-	infra_luminosity = 8
+	infra_luminosity = 5
 	operation_req_access = list(access_clown)
 
 /obj/mecha/combat/honker/New()
@@ -48,6 +48,9 @@
 	else
 		output += "None. HONK!"
 	output += "</div>"
+	output += {"<b>Sounds of HONK:</b><div style=\"margin-left: 15px;\">
+					<a href='?src=\ref[src];play_sound=sadtrombone'>Sad Trombone</a>
+					</div>"}
 	return output
 
 
@@ -69,6 +72,16 @@
 	if(result)
 		playsound(src, "clownstep", 70, 1)
 	return result
+
+
+/obj/mecha/combat/honker/Topic(href, href_list)
+	..()
+	if (href_list["play_sound"])
+		switch(href_list["play_sound"])
+			if("sadtrombone")
+				playsound(src, 'sadtrombone.ogg', 50)
+	return
+
 
 proc/rand_hex_color()
 	var/list/colors = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")

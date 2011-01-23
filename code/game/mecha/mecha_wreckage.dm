@@ -15,6 +15,12 @@
 	var/list/crowbar_salvage = list("/obj/item/weapon/cell")
 	var/salvage_num = 5
 
+/obj/decal/mecha_wreckage/ex_act(severity)
+	if(severity < 3)
+		spawn
+			del src
+	return
+
 /obj/decal/mecha_wreckage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		if(salvage_num <= 0)
@@ -68,6 +74,18 @@
 	name = "Gygax wreckage"
 	icon_state = "gygax-broken"
 
+	var/datum/construction/construct
+
+	New()
+		..()
+		construct = new /datum/construction/mecha/gygax(src)
+		return
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(!construct.check_step(W, user))
+			..()
+		return
+
 
 /obj/decal/mecha_wreckage/marauder
 	name = "Marauder wreckage"
@@ -77,6 +95,8 @@
 /obj/decal/mecha_wreckage/ripley
 	name = "Ripley wreckage"
 	icon_state = "ripley-broken"
+
+
 
 
 /obj/decal/mecha_wreckage/durand

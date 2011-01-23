@@ -90,12 +90,12 @@
 		if(mech_click == world.time) return
 		mech_click = world.time
 */
-		if(!location) return
+		if(!location) return //probably GUI
 		if(M.stat>0) return
 		if(!istype(object,/atom)) return
 		var/obj/mecha/Mech = M.loc
 //		sleep(-1)
-		spawn()
+		spawn() //this helps prevent clickspam fest.
 			Mech.click_action(object)
 
 
@@ -245,11 +245,9 @@
 	if (user.mutations & 8 && !prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		src.visible_message("<font color='red'><b>[user] hits [src.name], doing some damage.</b></font>")
-		user << "<font color='red'><b>You hit [src.name] with all your might. The metal creaks and bends.</b></font>"
+		user.visible_message("<font color='red'><b>[user] hits [src.name], doing some damage.</b></font>", "<font color='red'><b>You hit [src.name] with all your might. The metal creaks and bends.</b></font>")
 	else
-		src.visible_message("<font color='red'><b>[user] hits [src.name]. Nothing happens</b></font>")
-		user << "<font color='red'><b>You hit [src.name] with no visible effect.</b></font>"
+		user.visible_message("<font color='red'><b>[user] hits [src.name]. Nothing happens</b></font>","<font color='red'><b>You hit [src.name] with no visible effect.</b></font>")
 		src.log_append_to_last("Armor saved.")
 	return
 
@@ -282,10 +280,8 @@
 	src.log_message("Hit by [A].",1)
 	if(prob(src.deflect_chance) || istype(A, /mob))
 		src.occupant_message("\blue The [A] bounces off the armor.")
+		src.visible_message("The [A] bounces off the [src.name] armor")
 		src.log_append_to_last("Armor saved.")
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.show_message("The [A] bounces off the [src.name] armor", 1)
 		if(istype(A, /mob))
 			var/mob/M = A
 			M.bruteloss += 10
@@ -314,9 +310,7 @@
 	src.log_message("Hit by projectile. Type: [dam_type]([flag]).",1)
 	if(prob(src.deflect_chance))
 		src.occupant_message("\blue The armor deflects the incoming projectile.")
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.show_message("The [src.name] armor deflects the projectile", 1)
+		src.visible_message("The [src.name] armor deflects the projectile")
 		src.log_append_to_last("Armor saved.")
 	else
 		var/damage
@@ -372,7 +366,7 @@
 			if (prob(5))
 				src.destroy()
 			else
-				src.take_damage(initial(src.health)/4)
+				src.take_damage(initial(src.health)/5)
 				src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),1)
 	return
 
@@ -749,11 +743,13 @@
 	return output
 
 /obj/mecha/proc/get_stats_part()
+	var/integrity = health/initial(health)*100
 	var/output = {"[internal_damage&MECHA_INT_FIRE?"<font color='red'><b>INTERNAL FIRE</b></font><br>":null]
 						[internal_damage&MECHA_INT_TEMP_CONTROL?"<font color='red'><b>LIFE SUPPORT SYSTEM MALFUNCTION</b></font><br>":null]
 						[internal_damage&MECHA_INT_TANK_BREACH?"<font color='red'><b>GAS TANK BREACH</b></font><br>":null]
 						[internal_damage&MECHA_INT_CONTROL_LOST?"<font color='red'><b>COORDINATION SYSTEM CALIBRATION FAILURE</b></font> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a><br>":null]
-						<b>Integrity: </b> [health/initial(health)*100]%<br>
+						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font>":null]
+						<b>Integrity: </b> [integrity]%<br>
 						<b>Powercell charge: </b>[cell.charge/cell.maxcharge*100]%<br>
 						<b>Airtank pressure: </b>[src.return_pressure()]kPa<br>
 						<b>Internal temperature: </b> [src.air_contents.temperature]&deg;K|[src.air_contents.temperature - T0C]&deg;C<br>
@@ -867,8 +863,8 @@
 */
 
 /obj/mecha/hear_talk(mob/M as mob, text)
-	if(occupant)
-		var/rendered = "<span class='game say'><span class='name'>[M.name]: </span> <span class='message'>[text]</span></span>"
+	if(occupant && M)
+		var/rendered = "<span class='game say'><span class='name'>[M.name]</span> <span class='message'>[M.say_quote(text)]</span></span>"
 		occupant.show_message(rendered, 2)
 	return
 
@@ -929,7 +925,6 @@
 			if(!(mecha.internal_damage & MECHA_INT_TEMP_CONTROL) && prob(5))
 				mecha.internal_damage &= ~MECHA_INT_FIRE
 				mecha.occupant_message("<font color='blue'><b>Internal fire extinquished.</b></font>")
-				return
 			if(mecha.air_contents && mecha.air_contents.volume > 0) //heat the air_contents
 				mecha.air_contents.temperature = min(1500+T0C, mecha.air_contents.temperature+rand(10,15))
 				if(mecha.air_contents.temperature>mecha.max_temperature/2)
