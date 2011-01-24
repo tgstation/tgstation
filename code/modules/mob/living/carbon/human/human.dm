@@ -2587,3 +2587,59 @@
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)
+
+//gets assignment from ID or ID inside PDA or PDA itself
+//Useful when player do something with computers
+/mob/living/carbon/human/proc/get_assignment(var/if_no_id = "No id", var/if_no_job = "No job")
+	var/obj/item/device/pda/pda = src.wear_id
+	var/obj/item/weapon/card/id/id = src.wear_id
+	if (istype(pda))
+		if (pda.id)
+			. = pda.id.assignment
+		else
+			. = pda.ownjob
+	else if (istype(id))
+		. = id.assignment
+	else
+		return if_no_id
+	if (!.)
+		. = if_no_job
+	return
+
+//gets name from ID or ID inside PDA or PDA itself
+//Useful when player do something with computers
+/mob/living/carbon/human/proc/get_authentification_name(var/if_no_id = "Unknown")
+	var/obj/item/device/pda/pda = src.wear_id
+	var/obj/item/weapon/card/id/id = src.wear_id
+	if (istype(pda))
+		if (pda.id)
+			. = pda.id.registered
+		else
+			. = pda.owner
+	else if (istype(id))
+		. = id.registered
+	else
+		return if_no_id
+	return
+
+//gets name from ID or PDA itself, ID inside PDA doesn't matter
+//Useful when player is being seen by other mobs
+/mob/living/carbon/human/proc/get_visible_name(var/if_no_id = "Unknown")
+	var/obj/item/device/pda/pda = src.wear_id
+	var/obj/item/weapon/card/id/id = src.wear_id
+	if (istype(pda))
+		. = pda.owner
+	else if (istype(id))
+		. = id.registered
+	else
+		return if_no_id
+	return
+
+//gets ID card object from special clothes slot or null.
+/mob/living/carbon/human/proc/get_idcard()
+	var/obj/item/weapon/card/id/id = src.wear_id
+	var/obj/item/device/pda/pda = src.wear_id
+	if (istype(pda) && pda.id)
+		id = pda.id
+	if (istype(id))
+		return id

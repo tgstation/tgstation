@@ -990,10 +990,7 @@ var/showadminmessages = 1
 							continue
 						H.paralysis += 5
 						if(H.wear_id)
-							var/obj/item/weapon/card/id/id = H.wear_id
-							if (istype (H.wear_id, /obj/item/device/pda))
-								var/obj/item/device/pda/pda = H.wear_id
-								id = pda.id
+							var/obj/item/weapon/card/id/id = H.get_idcard()
 							for(var/A in id.access)
 								if(A == access_security)
 									security++
@@ -1404,7 +1401,7 @@ var/showadminmessages = 1
 					dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 					for(var/mob/living/carbon/human/H in world)
 						if(H.ckey)
-							dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, (istype(H.wear_id, /obj/item/weapon/card/id) ? text("[]", H.wear_id.assignment) : "Unknown Position"))
+							dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
 					dat += "</table>"
 					usr << browse(dat, "window=manifest;size=440x410")
 				if("DNA")

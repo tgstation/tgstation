@@ -18,15 +18,8 @@
 
 	var/alt_name = ""
 	if (istype(src, /mob/living/carbon/human) && src.name != src.real_name)
-		if (src.wear_id)
-			var/obj/item/weapon/card/id/id = src:wear_id
-			if(istype(src:wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = src:wear_id
-				id = pda.id
-			alt_name = " (as [id:registered])"
-		else
-			alt_name = " (as Unknown)"
-
+		var/mob/living/carbon/human/H = src
+		alt_name = " (as [H.get_visible_name()])"
 	// Mute disability
 	if (src.sdisabilities & 2)
 		return

@@ -700,6 +700,11 @@ datum
 				napalm.trace_gases += fuel
 				T.assume_air(napalm)
 				return
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:toxloss += 1
+				..()
+				return
 
 		space_cleaner
 			name = "Space cleaner"

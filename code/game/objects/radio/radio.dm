@@ -145,18 +145,11 @@ Frequency:
 
 	var/eqjobname
 
-	if (istype(M, /mob/living/carbon))
-		if (M:wear_id)
-			var/id
-			if (istype(M:wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = M:wear_id
-				if (pda.id) id = pda.id.assignment
-				else id = pda.ownjob
-			else id = M:wear_id.assignment
-			if (id) eqjobname = id
-			else eqjobname = "No job"
-		else
-			eqjobname = "No id"
+	if (istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		eqjobname = H.get_assignment()
+	else if (istype(M, /mob/living/carbon))
+		eqjobname = "No id" //only humans can wear ID
 	else if (istype(M,/mob/living/silicon/ai))
 		eqjobname = "AI"
 	else if (istype(M,/mob/living/silicon/robot))

@@ -184,7 +184,7 @@
 /obj/manifest/proc/manifest()
 	var/dat = "<B>Crew Manifest</B>:<BR>"
 	for(var/mob/living/carbon/human/M in world)
-		dat += text("    <B>[]</B> -  []<BR>", M.name, (istype(M.wear_id, /obj/item/weapon/card/id) ? text("[]", M.wear_id.assignment) : "Unknown Position"))
+		dat += text("    <B>[]</B> -  []<BR>", M.name, M.get_assignment())
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
 	P.info = dat
 	P.name = "paper- 'Crew Manifest'"
