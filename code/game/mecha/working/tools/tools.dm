@@ -139,6 +139,10 @@
 				if(T == chassis.loc && src == chassis.selected_tool)
 					if(istype(target, /turf/simulated/wall/r_wall))
 						chassis.occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
+					else if(istype(target, /turf/simulated/mineral))
+						var/turf/simulated/mineral/M = target
+						chassis.log_message("Drilled through [target]")
+						M.gets_drilled()
 					else
 						chassis.log_message("Drilled through [target]")
 						target.ex_act(2)

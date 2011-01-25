@@ -473,3 +473,22 @@ Operations Highlights:
 	circuit = "'T.Y.R.A.N.T.' AI Core Module"
 	department = "Command and Control"
 	security = "ULTRA'"
+
+
+///////////////////////////////////
+//////////Mecha Module Disks///////
+///////////////////////////////////
+
+/obj/item/weapon/disk/circuit_disk/mecha/ripley/main
+	name = "Circuit Design (APLU \"Ripley\" Central Control module)"
+	blueprint = "/obj/item/mecha_parts/circuitboard/ripley/main"
+	circuit = "Circuit Board (APLU \"Ripley\" Central Control module)"
+	department = "Engineering"
+	security = "MEDIUM"
+
+/obj/item/weapon/disk/circuit_disk/mecha/ripley/peripherals
+	name = "Circuit Design (APLU \"Ripley\" Peripherals Control module)"
+	blueprint = "/obj/item/mecha_parts/circuitboard/ripley/peripherals"
+	circuit = "Circuit Board (APLU \"Ripley\" Peripherals Control module)"
+	department = "Engineering"
+	security = "MEDIUM"

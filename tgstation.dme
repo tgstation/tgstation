@@ -425,6 +425,7 @@
 #include "code\game\mecha\global_iterator.dm"
 #include "code\game\mecha\mech_bay.dm"
 #include "code\game\mecha\mecha.dm"
+#include "code\game\mecha\mecha_construction.dm"
 #include "code\game\mecha\mecha_wreckage.dm"
 #include "code\game\mecha\combat\combat.dm"
 #include "code\game\mecha\combat\gygax.dm"

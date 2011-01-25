@@ -370,6 +370,12 @@
 				src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),1)
 	return
 
+/obj/mecha/blob_act()
+	return
+
+/obj/mecha/meteorhit()
+	return ex_act(rand(1,3))//should do for now
+
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////
 /////////////////////////////////////
@@ -644,7 +650,6 @@
 
 
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	src.log_message("Attacked by [W].")
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.internals_access_allowed(usr))
 			if(state==0)
@@ -716,6 +721,7 @@
 		return
 
 	else
+		src.log_message("Attacked by [W]. Attacker - [user]")
 		if(prob(src.deflect_chance))
 			user << "\red The [W] bounces off [src.name] armor."
 			src.log_append_to_last("Armor saved.")
@@ -725,6 +731,8 @@
 					V.show_message("The [W] bounces off [src.name] armor.", 1)
 */
 		else
+			src.occupant_message("[user] hits [src] with [W].")
+			user.visible_message("[user] hits [src] with [W].", "You hit [src] with [W]")
 			src.take_damage(W.force,W.damtype)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 	return
