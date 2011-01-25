@@ -799,7 +799,7 @@
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 15
-	layer = 4
+	//layer = 4
 
 
 /obj/item/weapon/paper/Internal
@@ -925,6 +925,13 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
+	var/text_size = 2
+	var/text_color = "#000000"
+	var/text_bold = 0
+	var/text_italic = 0
+	var/text_underline = 0
+	var/text_break = 0
+
 
 /obj/item/weapon/pen/sleepypen
 	desc = "It's a normal black ink pen with a sharp point."
