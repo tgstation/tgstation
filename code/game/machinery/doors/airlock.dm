@@ -349,8 +349,18 @@ About the new airlock wires panel:
 
 //borrowed from the grille's get_connection
 /obj/machinery/door/airlock/proc/get_connection()
-	if(stat & NOPOWER)	return 0
-	return 1
+	var/netnumber = 0
+	if(stat & NOPOWER) return 0
+	var/turf/TU = src.loc
+	if (!TU) return 0
+	var/area/A = TU.loc
+	if (!A) return 0
+	for(var/area/RA in A.related)
+		for(var/obj/machinery/power/apc/APC in RA)
+			var/obj/machinery/power/terminal/T = APC.terminal
+			netnumber = T.netnum
+			return netnumber
+	return 0
 
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise
@@ -372,11 +382,17 @@ About the new airlock wires panel:
 	else
 		return 0
 
-/obj/machinery/door/airlock/proc/airlockelectrocute(mob/user, netnum)
+/obj/machinery/door/airlock/proc/airlockelectrocute(mob/user, prb, netnum)
 	//You're probably getting shocked deal w/ it
+
+	if (prob(min(100,max(0,100-prb))))
+		return 0
 
 	if(!netnum)		// unconnected cable is unpowered
 		return 0
+
+	if(!((src.arePowerSystemsOn() && !(stat & NOPOWER))))
+		return
 
 	var/prot = 1
 
@@ -390,6 +406,10 @@ About the new airlock wires panel:
 	else if (istype(user, /mob/living/silicon))
 		return 0
 
+	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+
 	if(prot == 0)		// elec insulted gloves protect completely
 		return 0
 
@@ -397,10 +417,6 @@ About the new airlock wires panel:
 	var/datum/powernet/PN			// find the powernet
 	if(powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
-
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
 
 	var/shock_damage = 0
 	if(PN.avail > 750000)	//someone juiced up the grid enough, people going to die!

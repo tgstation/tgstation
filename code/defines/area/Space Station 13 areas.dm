@@ -595,6 +595,10 @@ proc/process_ghost_teleport_locs()
 	name = "Engine Monitoring"
 	icon_state = "engine_monitoring"
 
+/area/engine/engine_CE_office
+	name = "Engine New Office"
+	icon_state = "engine_CE"
+
 /area/engine/combustion
 	name = "Engine Combustion Chamber"
 	icon_state = "engine"
@@ -743,6 +747,10 @@ proc/process_ghost_teleport_locs()
 /area/quartermaster/miningdock
 	name = "Mining Dock"
 	icon_state = "yellow"
+
+/area/quartermaster/miningstorage
+	name = "Mining Storage"
+	icon_state = "green"
 
 /area/quartermaster/mechbay
 	name = "Mech Bay"
