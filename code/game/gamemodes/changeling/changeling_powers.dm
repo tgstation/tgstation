@@ -38,11 +38,12 @@
 	src.verbs -= /client/proc/changeling_lesser_form
 	src.verbs -= /client/proc/changeling_lesser_transform
 	src.verbs -= /client/proc/changeling_fakedeath
-	src.verbs += /client/proc/changeling_deaf_dart
-	src.verbs += /client/proc/changeling_blind_dart
-	src.verbs += /client/proc/changeling_paralysis_dart
-	src.verbs += /client/proc/changeling_silence_dart
-	src.verbs += /client/proc/changeling_boost_range
+	src.verbs -= /client/proc/changeling_deaf_dart
+	src.verbs -= /client/proc/changeling_blind_dart
+	src.verbs -= /client/proc/changeling_paralysis_dart
+	src.verbs -= /client/proc/changeling_silence_dart
+	src.verbs -= /client/proc/changeling_boost_range
+	usr.verbs -= /client/proc/changeling_transformation_dart
 
 /client/proc/changeling_absorb_dna()
 	set category = "Changeling"
@@ -395,7 +396,7 @@
 
 	usr.verbs -= /client/proc/changeling_boost_range
 
-	spawn(10)
+	spawn(5)
 		usr.verbs += /client/proc/changeling_boost_range
 
 	return
@@ -423,7 +424,7 @@
 
 	usr.verbs -= /client/proc/changeling_silence_dart
 
-	spawn(10)
+	spawn(5)
 		usr.verbs += /client/proc/changeling_silence_dart
 
 	return
@@ -466,7 +467,7 @@
 
 	usr.verbs -= /client/proc/changeling_blind_dart
 
-	spawn(10)
+	spawn(5)
 		usr.verbs += /client/proc/changeling_blind_dart
 
 	return
@@ -495,7 +496,7 @@
 
 	usr.verbs -= /client/proc/changeling_deaf_dart
 
-	spawn(10)
+	spawn(5)
 		usr.verbs += /client/proc/changeling_deaf_dart
 
 	return
@@ -524,7 +525,7 @@
 
 	usr.verbs -= /client/proc/changeling_paralysis_dart
 
-	spawn(10)
+	spawn(5)
 		usr.verbs += /client/proc/changeling_paralysis_dart
 
 	return
@@ -565,7 +566,7 @@
 
 	usr.verbs -= /client/proc/changeling_transformation_dart
 
-	spawn(10)
+	spawn(5)
 		usr.verbs += /client/proc/changeling_transformation_dart
 
 	return

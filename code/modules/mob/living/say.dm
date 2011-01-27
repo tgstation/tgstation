@@ -8,10 +8,10 @@
 
 	if (length(message) >= 1)
 		if (copytext(message, 1, 2) != "*")
-			if (src.miming || src.silent)
+			if (src.miming)
 				return
 
-	if (src.muted)
+	if (src.muted || src.silent)
 		return
 
 	if (src.stat == 2)

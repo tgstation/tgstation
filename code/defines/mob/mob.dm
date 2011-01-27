@@ -172,7 +172,7 @@
 	var/changeling_level = 0
 	var/list/absorbed_dna = list()
 	var/changeling_fakedeath = 0
-	var/chem_charges = 20.0
+	var/chem_charges = 10.00
 	var/sting_range = 1
 
 
