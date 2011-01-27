@@ -671,7 +671,7 @@ Auto Patrol: []"},
 		spawn(0)
 			if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
 				var/obj/machinery/door/D = M
-				if (D.check_access(src.botcard))
+				if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
 					D.open()
 					src.frustration = 0
 			else if ((istype(M, /mob/living/)) && (!src.anchored))

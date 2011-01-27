@@ -1215,7 +1215,6 @@
 	desc = "A small bottle. Contains inaprovaline - used to stabilize patients."
 	icon = 'chemical.dmi'
 	icon_state = "bottle16"
-	amount_per_transfer_from_this = 10
 
 	New()
 		..()
@@ -1226,7 +1225,6 @@
 	desc = "A small bottle."
 	icon = 'chemical.dmi'
 	icon_state = "bottle12"
-	amount_per_transfer_from_this = 5
 
 	New()
 		..()
@@ -1237,7 +1235,6 @@
 	desc = "A small bottle."
 	icon = 'chemical.dmi'
 	icon_state = "bottle20"
-	amount_per_transfer_from_this = 5
 
 	New()
 		..()
@@ -1248,7 +1245,6 @@
 	desc = "A small bottle."
 	icon = 'chemical.dmi'
 	icon_state = "bottle20"
-	amount_per_transfer_from_this = 5
 
 	New()
 		..()
@@ -1259,7 +1255,6 @@
 	desc = "A small bottle."
 	icon = 'chemical.dmi'
 	icon_state = "bottle17"
-	amount_per_transfer_from_this = 5
 
 	New()
 		..()
@@ -1271,7 +1266,6 @@
 	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
-	amount_per_transfer_from_this = 5
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/flu(0)
@@ -1283,7 +1277,6 @@
 	desc = "A small bottle. Contains H0NI<42 virion culture in synthblood medium."
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
-	amount_per_transfer_from_this = 5
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/pierrot_throat(0)
@@ -1295,7 +1288,6 @@
 	desc = "A small bottle. Contains XY-rhinovirus culture in synthblood medium."
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
-	amount_per_transfer_from_this = 5
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/cold(0)
@@ -1323,7 +1315,6 @@
 	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS- culture in synthblood medium."//Or simply - General BullShit
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
-	amount_per_transfer_from_this = 5
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/fake_gbs(0)
@@ -1351,7 +1342,6 @@
 	desc = "A small bottle. Contains Cryptococcus Cosmosis culture in synthblood medium."
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
-	amount_per_transfer_from_this = 5
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/brainrot(0)
@@ -1363,7 +1353,6 @@
 	desc = "A small bottle. Contains a small dosage of Fukkos Miracos."
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
-	amount_per_transfer_from_this = 5
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/magnitis(0)
@@ -1376,7 +1365,6 @@
 	desc = "A small bottle. Contains a sample of Rincewindus Vulgaris."
 	icon = 'chemical.dmi'
 	icon_state = "bottle3"
-	amount_per_transfer_from_this = 5
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/wizarditis(0)
