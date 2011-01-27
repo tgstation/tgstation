@@ -80,3 +80,20 @@
 			src.contract_disease(M.virus)
 			M.virus.spread_type = s_spread_type
 	return
+
+/mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
+	shock_damage *= siemens_coeff
+	if (shock_damage<1)
+		return 0
+	src.burn_skin(shock_damage)
+	//src.fireloss += shock_damage //burn_skin will do this for us
+	src.updatehealth()
+	src.visible_message(
+		"\red [src] was shocked by the [source]!", \
+		"\red <B>You feel a powerful shock course through your body!</B>", \
+		"\red You hear a heavy electrical crack." \
+	)
+	if(src.stunned < shock_damage)	src.stunned = shock_damage
+	if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
+
+	return shock_damage

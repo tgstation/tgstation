@@ -147,7 +147,7 @@ About the new airlock wires panel:
 					spawn (10)
 						src.justzap = 0
 					return
-			else if (src.justzap)
+			else /*if (src.justzap)*/
 				return
 	..(user)
 
@@ -173,8 +173,8 @@ About the new airlock wires panel:
 			else
 				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
 					src.locked = 0
+					usr << "You hear a click from inside the door."
 					src.updateUsrDialog()
-				usr << "You hear a click from inside the door."
 			update_icon()
 
 		if (AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
@@ -347,107 +347,21 @@ About the new airlock wires panel:
 	if (src.secondsBackupPowerLost > 0)
 		src.secondsBackupPowerLost = 0
 
-//borrowed from the grille's get_connection
-/obj/machinery/door/airlock/proc/get_connection()
-	var/netnumber = 0
-	if(stat & NOPOWER) return 0
-	var/turf/TU = src.loc
-	if (!TU) return 0
-	var/area/A = TU.loc
-	if (!A) return 0
-	for(var/area/RA in A.related)
-		for(var/obj/machinery/power/apc/APC in RA)
-			var/obj/machinery/power/terminal/T = APC.terminal
-			netnumber = T.netnum
-			return netnumber
-	return 0
-
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise
 // The preceding comment was borrowed from the grille's shock script
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
-
-
+	if((stat & (NOPOWER)) || !src.arePowerSystemsOn())		// unpowered, no shock
+		return 0
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you
-
-	var/net = get_connection()		// find the powernet of the connected cable
-
-	if(!net)		// cable is unpowered
-		return 0
-
-
-	if (src.airlockelectrocute(user, prb, net))
+	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start() //sparks always.
+	if (electrocute_mob(user, get_area(src), src))
 		return 1
 	else
 		return 0
-
-/obj/machinery/door/airlock/proc/airlockelectrocute(mob/user, prb, netnum)
-	//You're probably getting shocked deal w/ it
-
-	if (prob(min(100,max(0,100-prb))))
-		return 0
-
-	if(!netnum)		// unconnected cable is unpowered
-		return 0
-
-	if(!((src.arePowerSystemsOn() && !(stat & NOPOWER))))
-		return
-
-	var/prot = 1
-
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-
-		if(H.gloves)
-			var/obj/item/clothing/gloves/G = H.gloves
-
-			prot = G.siemens_coefficient
-	else if (istype(user, /mob/living/silicon))
-		return 0
-
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
-
-	if(prot == 0)		// elec insulted gloves protect completely
-		return 0
-
-	//ok you're getting shocked now
-	var/datum/powernet/PN			// find the powernet
-	if(powernets && powernets.len >= netnum)
-		PN = powernets[netnum]
-
-	var/shock_damage = 0
-	if(PN.avail > 750000)	//someone juiced up the grid enough, people going to die!
-		shock_damage = min(rand(70,145),rand(70,145))*prot
-	else if(PN.avail > 100000)
-		shock_damage = min(rand(35,110),rand(35,110))*prot
-	else if(PN.avail > 75000)
-		shock_damage = min(rand(30,100),rand(30,100))*prot
-	else if(PN.avail > 50000)
-		shock_damage = min(rand(25,90),rand(25,90))*prot
-	else if(PN.avail > 25000)
-		shock_damage = min(rand(20,80),rand(20,80))*prot
-	else if(PN.avail > 10000)
-		shock_damage = min(rand(20,65),rand(20,65))*prot
-	else
-		shock_damage = min(rand(20,45),rand(20,45))*prot
-
-//		message_admins("\blue <B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]")
-
-	user.burn_skin(shock_damage)
-	user.fireloss += shock_damage
-	user.updatehealth()
-	user << "\red <B>You feel a powerful shock course through your body!</B>"
-	sleep(1)
-
-	if(user.stunned < shock_damage)	user.stunned = shock_damage
-	if(user.weakened < 20*prot)	user.weakened = 20*prot
-	for(var/mob/M in viewers(src))
-		if(M == user)	continue
-		M.show_message("\red [user.name] was shocked by the [src.name]!", 3, "\red You hear a heavy electrical crack", 2)
-	return 1
 
 
 /obj/machinery/door/airlock/update_icon()
@@ -878,7 +792,6 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/attackby(C as obj, mob/user as mob)
 	//world << text("airlock attackby src [] obj [] mob []", src, C, user)
-	var/turf/T = get_turf(user)
 	if (!istype(usr, /mob/living/silicon))
 		if (src.isElectrified())
 			if(src.shock(user, 75))
@@ -913,8 +826,7 @@ About the new airlock wires panel:
 		if ((src.density) && ( src.welded ) && !( src.operating ) && src.p_open && (!src.arePowerSystemsOn() || (stat & NOPOWER)) && !src.locked)
 			playsound(src.loc, 'Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics into the airlock assembly.")
-			sleep(40)
-			if(get_turf(user) == T)
+			if(do_after(user,40))
 				user << "\blue You removed the airlock electronics!"
 				switch(src.doortype)
 					if(0) new/obj/door_assembly/door_assembly_0( src.loc )
@@ -936,7 +848,7 @@ About the new airlock wires panel:
 
 				del(src)
 				return
-		else if (src.arePowerSystemsOn() || !(stat & NOPOWER))
+		else if (src.arePowerSystemsOn() && !(stat & NOPOWER))
 			user << "\blue The airlock's motors resist your efforts to pry it open."
 		else if (src.locked)
 			user << "\blue The airlock's bolts prevent it from being pried open."

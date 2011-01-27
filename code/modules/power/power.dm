@@ -356,13 +356,31 @@
 		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
 
+/datum/powernet/proc/get_electrocute_damage()
+	switch(avail)
+		if (750000 to INFINITY)
+			return min(rand(70,145),rand(70,145))
+		if (100000 to 750000-1)
+			return min(rand(35,110),rand(35,110))
+		if (75000 to 100000-1)
+			return min(rand(30,100),rand(30,100))
+		if (50000 to 75000-1)
+			return min(rand(25,90),rand(25,90))
+		if (25000 to 50000-1)
+			return min(rand(20,80),rand(20,80))
+		if (10000 to 25000-1)
+			return min(rand(20,65),rand(20,65))
+		if (100 to 10000-1)
+			return min(rand(10,20),rand(10,20))
+		else
+			return 0
+
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
 	var/obj/cable/C = T.get_cable_node()
 	if (!C || !C.netnum)
 		return
 	makepowernets() //TODO: find fast way
-
 
 /obj/machinery/power/proc/disconnect_from_network()
 	//TODO: dunno how to do that
@@ -375,3 +393,68 @@
 		if(C.d1 == 0)
 			return C
 	return null
+
+/area/proc/get_apc()
+	for(var/area/RA in src.related)
+		var/obj/machinery/power/apc/FINDME = locate() in RA
+		if (FINDME)
+			return FINDME
+
+
+//Determines how strong could be shock, deals damage to mob, uses power.
+//M is a mob who touched wire/whatever
+//power_source is a source of electricity, can be powercell, area, apc, cable, powernet or null
+//source is an object caused electrocuting (airlock, grille, etc)
+//No animations will be performed by this proc.
+/proc/electrocute_mob(mob/living/carbon/M as mob, var/power_source, var/obj/source)
+	var/area/source_area
+	if (istype(power_source,/area))
+		source_area = power_source
+		power_source = source_area.get_apc()
+	if (istype(power_source,/obj/cable))
+		var/obj/cable/tmp = power_source
+		power_source = powernets[tmp.netnum]
+
+	var/datum/powernet/PN
+	var/obj/item/weapon/cell/cell
+
+	if (istype(power_source,/datum/powernet))
+		PN = power_source
+	else if (istype(power_source,/obj/item/weapon/cell))
+		cell = power_source
+	else if (istype(power_source,/obj/machinery/power/apc))
+		var/obj/machinery/power/apc/apc = power_source
+		cell = apc.cell
+		if (apc.terminal)
+			PN = apc.terminal.powernet
+	else if (!power_source)
+		return 0
+	else
+		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): wrong power_source")
+		return 0
+	if (!cell && !PN)
+		return 0
+	var/PN_damage = 0
+	var/cell_damage = 0
+	if (PN)
+		PN_damage = PN.get_electrocute_damage()
+	if (cell)
+		cell_damage = cell.get_electrocute_damage()
+	var/shock_damage = 0
+	if (PN_damage>=cell_damage)
+		power_source = PN
+		shock_damage = PN_damage
+	else
+		power_source = cell
+		shock_damage = cell_damage
+	var/drained_hp = M.electrocute_act(shock_damage, source) //zzzzzzap!
+	var/drained_energy = drained_hp*20
+	
+	if (source_area)
+		source_area.use_power(drained_energy/CELLRATE)
+	else if (istype(power_source,/datum/powernet))
+		var/drained_power = drained_energy/CELLRATE //convert from "joules" to "watts"
+		PN.newload+=drained_power
+	else if (istype(power_source, /obj/item/weapon/cell))
+		cell.use(drained_energy)
+	return drained_energy

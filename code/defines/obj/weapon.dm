@@ -26,6 +26,7 @@
 	icon_state = "match_unlit"
 	var/lit = 0
 	var/smoketime = 5
+	w_class = 1.0
 
 /obj/item/weapon/matchbox
 	name = "Matchbox"
@@ -33,6 +34,7 @@
 	icon = 'cigarettes.dmi'
 	icon_state = "matchbox"
 	var/matchcount = 10
+	w_class = 1.0
 
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"

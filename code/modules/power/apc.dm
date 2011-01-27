@@ -171,10 +171,11 @@
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/proc/updateicon()
+	src.overlays = null
 	if(opened)
 		var/basestate = "apc[ cell ? "2" : "1" ]"	// if opened, show cell if it's inserted
 		if (opened==1)
-			if (stat & MAINT)
+			if (stat & (MAINT|BROKEN))
 				icon_state = "apcmaint" //disassembled APC cannot hold cell
 			else
 				icon_state = basestate
@@ -183,31 +184,18 @@
 				icon_state = "[basestate]-b-nocover"
 			else /* if (emagged)*/
 				icon_state = "[basestate]-nocover"
-		src.overlays = null							// also delete all overlays
-		return
-	else if(emagged || malfhack)
-		icon_state = "apcemag"
-		src.overlays = null
-		return
-	else if(wiresexposed)
-		icon_state = "apcewires"
-		src.overlays = null
-		return
 	else if (stat & BROKEN)
 		icon_state = "apc-b"
-		src.overlays = null
-		return
+	else if(emagged || malfhack)
+		icon_state = "apcemag"
+	else if(wiresexposed)
+		icon_state = "apcewires"
 	else
 		icon_state = "apc0"
-
 		// if closed, update overlays for channel status
-
-		src.overlays = null
 		if (!(stat & (BROKEN|MAINT)))
 			overlays += image('power.dmi', "apcox-[locked]")	// 0=blue 1=red
 			overlays += image('power.dmi', "apco3-[charging]") // 0=red, 1=yellow/black 2=green
-
-
 			if(operating)
 				overlays += image('power.dmi', "apco0-[equipment]")	// 0=red, 1=green, 2=blue
 				overlays += image('power.dmi', "apco1-[lighting]")
@@ -338,7 +326,10 @@
 		if(do_after(user, 20) && C.amount >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/cable/N = T.get_cable_node()
-			if (N && N.electrocute(usr, 50, N.netnum))
+			if (prob(80) && electrocute_mob(usr, N, N))
+				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				s.set_up(5, 1, src)
+				s.start()
 				return
 			C.use(10)
 			user.visible_message(\
@@ -353,7 +344,10 @@
 		user << "You begin to cut cables..."
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 		if(do_after(user, 50))
-			if (terminal.electrocute(usr, 50, terminal.netnum))
+			if (prob(80) && electrocute_mob(usr, terminal.powernet, terminal))
+				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				s.set_up(5, 1, src)
+				s.start()
 				return
 			new /obj/item/weapon/cable_coil(loc,10)
 			user.visible_message(\
@@ -394,18 +388,18 @@
 		if (opened==2)
 			opened = 1
 		user.visible_message(\
-			"\red [user.name] has replace the damaged APC frontal panel with new one.",\
+			"\red [user.name] has replaced the damaged APC frontal panel with new one.",\
 			"You replace the damaged APC frontal panel with new one.")
 		del(W)
 		updateicon()
 	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
-			user << "You cannot repair this heavy damaged APC until broken electronics still inside."
+			user << "You cannot repair this heavy damaged APC until broken electronics stills inside."
 			return
 		user << "You begin to replace the damaged APC frame..."
 		if(do_after(user, 50))
 			user.visible_message(\
-				"\red [user.name] has replace the damaged APC frame with new one.",\
+				"\red [user.name] has replaced the damaged APC frame with new one.",\
 				"You replace the damaged APC frame with new one.")
 			del(W)
 			stat &= ~BROKEN
@@ -428,6 +422,10 @@
 		else
 			if (istype(user, /mob/living/silicon))
 				return src.attack_hand(user)
+			if (wiresexposed && \
+				(istype(W, /obj/item/device/multitool) || \
+				istype(W, /obj/item/weapon/wirecutters)))
+				return src.attack_hand(user)
 			user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
 				"\red You hit the [src.name] with your [W.name]!", \
 				"You hear bang")
@@ -438,13 +436,7 @@
 	add_fingerprint(user)
 	if(opened && (!istype(user, /mob/living/silicon)))
 		if(cell)
-			cell.loc = usr
-			cell.layer = 20
-			if (user.hand )
-				user.l_hand = cell
-			else
-				user.r_hand = cell
-
+			usr.put_in_hand(cell)
 			cell.add_fingerprint(user)
 			cell.updateicon()
 
@@ -633,85 +625,13 @@
 	var/wireFlag = APCIndexToFlag[wireIndex]
 	return ((src.apcwires & wireFlag) == 0)
 
-/obj/machinery/power/apc/proc/get_connection()
-	if(stat & (BROKEN|MAINT))	return 0
-	return 1
-
-/obj/machinery/power/apc/proc/shock(mob/user, prb)
-	if(!prob(prb))
-		return 0
-	var/is_powered = get_connection()		// find the powernet of the connected cable
-	return src.apcelectrocute(user, is_powered)
-
-/obj/machinery/power/apc/proc/apcelectrocute(mob/user, is_powered)
-
-	if(!is_powered)		// unconnected cable is unpowered
-		return 0
-
-	var/prot = 1
-
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		if(H.gloves)
-			var/obj/item/clothing/gloves/G = H.gloves
-			prot = G.siemens_coefficient
-	else if (istype(user, /mob/living/silicon))
-		return 0
-
-	if(prot == 0)		// elec insulted gloves protect completely
-		return 0
-
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
-
-	var/shock_damage = 0
-	if (cell.charge >=2500)
-		shock_damage = min(rand(70,145),rand(70,145))*prot
-		cell.use(2000)
-	else if(cell.charge >=1750)
-		shock_damage = min(rand(35,110),rand(35,110))*prot
-		cell.use(1600)
-	else if(cell.charge >=1500)
-		shock_damage = min(rand(30,100),rand(30,100))*prot
-		cell.use(1000)
-	else if(cell.charge >=750)
-		shock_damage = min(rand(25,90),rand(25,90))*prot
-		cell.use(500)
-	else if(cell.charge >=250)
-		shock_damage = min(rand(20,80),rand(20,80))*prot
-		cell.use(125)
-	else if(cell.charge >=100)
-		shock_damage = min(rand(20,65),rand(20,65))*prot
-		cell.use(50)
-	else
-		return 0
-
-	user.burn_skin(shock_damage)
-	user.fireloss += shock_damage
-	user.updatehealth()
-	user.visible_message("\red [user.name] was shocked by the [src.name]!", "\red <B>You feel a powerful shock course through your body!</B>", "\red You hear a heavy electrical crack")
-	//user << "\red <B>You feel a powerful shock course through your body!</B>"
-	sleep(1)
-
-	if(user.stunned < shock_damage)	user.stunned = shock_damage
-	if(user.weakened < 20*prot)	user.weakened = 20*prot
-
-/*
- *	for(var/mob/M in viewers(src))
-		if(M == user)	continue
-		M.show_message("\red [user.name] was shocked by the [src.name]!", 3, "\red You hear a heavy electrical crack", 2)
-*/
-	return 1
-
-
 /obj/machinery/power/apc/proc/cut(var/wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
 	var/wireIndex = APCWireColorToIndex[wireColor]
 	apcwires &= ~wireFlag
 	switch(wireIndex)
 		if(APC_WIRE_MAIN_POWER1)
-			src.shock(usr, 50)			//this doesn't work for some reason, give me a while I'll figure it out
+			src.shock(usr, 50)
 			src.shorted = 1
 			src.updateDialog()
 		if(APC_WIRE_MAIN_POWER2)
@@ -1066,9 +986,11 @@
 
 	// update icon & area power if anything changed
 
-	if(last_lt != lighting || last_eq != equipment || last_en != environ || last_ch != charging)
+	if(last_lt != lighting || last_eq != equipment || last_en != environ)
 		updateicon()
 		update()
+	else if (last_ch != charging)
+		updateicon()
 
 	//src.updateDialog()
 	src.updateDialog()
@@ -1137,7 +1059,7 @@
 // overload all the lights in this APC area
 
 /obj/machinery/power/apc/proc/overload_lighting()
-	if(!get_connection() || !operating || shorted)
+	if(/* !get_connection() || */ !operating || shorted)
 		return
 	if( cell && cell.charge>=20)
 		cell.use(20);
@@ -1154,3 +1076,15 @@
 	area.power_environ = 0
 	area.power_change()
 	..()
+
+
+/obj/machinery/power/apc/proc/shock(mob/user, prb)
+	if(!prob(prb))
+		return 0
+	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	if (electrocute_mob(user, src, src))
+		return 1
+	else
+		return 0

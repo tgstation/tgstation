@@ -16,10 +16,9 @@
 	if (!istype(loc, /turf/simulated/floor))
 		usr << "\red APC cannot be placed on this spot."
 		return
-	for(var/area/RA in A.related)
-		for(var/obj/machinery/power/apc/FINDME in RA)
-			usr << "\red This area already has APC."
-			return //only one APC per area
+	if (A.get_apc())
+		usr << "\red This area already has APC."
+		return //only one APC per area
 	if (A.requires_power == 0)
 		usr << "\red APC cannot be placed in this area."
 		return

@@ -378,75 +378,16 @@
 			src.shoot_inventory = !src.shoot_inventory
 
 
-//"Borrowed" airlock shocking code.
 /obj/machinery/vending/proc/shock(mob/user, prb)
-
-
-	if(!prob(prb))
-		return 0
-
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return 0
-
-	if (src.electrocute(user, 1))
+	if(!prob(prb))
+		return 0
+	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	if (electrocute_mob(user, get_area(src), src))
 		return 1
 	else
 		return 0
 
-/obj/machinery/vending/electrocute(mob/user, netnum)
-
-	if(!netnum)		// unconnected cable is unpowered
-		return 0
-
-	var/prot = 1
-
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-
-		if(H.gloves)
-			var/obj/item/clothing/gloves/G = H.gloves
-
-			prot = G.siemens_coefficient
-	else if (istype(user, /mob/living/silicon))
-		return 0
-
-	if(prot == 0)		// elec insulted gloves protect completely
-		return 0
-
-	//ok you're getting shocked now
-	var/datum/powernet/PN			// find the powernet
-	if(powernets && powernets.len >= netnum)
-		PN = powernets[netnum]
-
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
-
-	var/shock_damage = 0
-	if(PN.avail > 750000)	//someone juiced up the grid enough, people going to die!
-		shock_damage = min(rand(70,145),rand(70,145))*prot
-	else if(PN.avail > 100000)
-		shock_damage = min(rand(35,110),rand(35,110))*prot
-	else if(PN.avail > 75000)
-		shock_damage = min(rand(30,100),rand(30,100))*prot
-	else if(PN.avail > 50000)
-		shock_damage = min(rand(25,90),rand(25,90))*prot
-	else if(PN.avail > 25000)
-		shock_damage = min(rand(20,80),rand(20,80))*prot
-	else if(PN.avail > 10000)
-		shock_damage = min(rand(20,65),rand(20,65))*prot
-	else
-		shock_damage = min(rand(20,45),rand(20,45))*prot
-
-	user.burn_skin(shock_damage)
-	user.fireloss += shock_damage
-	user.updatehealth()
-	user << "\red <B>You feel a powerful shock course through your body!</B>"
-	sleep(1)
-
-	if(user.stunned < shock_damage)	user.stunned = shock_damage
-	if(user.weakened < 20*prot)	user.weakened = 20*prot
-	for(var/mob/M in viewers(src))
-		if(M == user)	continue
-		M.show_message("\red [user.name] was shocked by the [src.name]!", 3, "\red You hear a heavy electrical crack", 2)
-	return 1

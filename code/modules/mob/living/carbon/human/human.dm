@@ -2643,3 +2643,9 @@
 		id = pda.id
 	if (istype(id))
 		return id
+
+/mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
+	if(src.gloves)
+		var/obj/item/clothing/gloves/G = src.gloves
+		siemens_coeff = G.siemens_coefficient
+	return ..(shock_damage,source,siemens_coeff)

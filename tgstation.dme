@@ -353,7 +353,7 @@
 #include "code\game\machinery\hydroponics.dm"
 #include "code\game\machinery\igniter.dm"
 #include "code\game\machinery\lightswitch.dm"
-#include "code\game\machinery\main.dm"
+#include "code\game\machinery\machinery.dm"
 #include "code\game\machinery\microwave.dm"
 #include "code\game\machinery\morgue.dm"
 #include "code\game\machinery\navbeacon.dm"

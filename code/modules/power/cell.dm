@@ -57,9 +57,15 @@
 /obj/item/weapon/cell/attackby(obj/item/W, mob/user)
 	var/obj/item/clothing/gloves/G = W
 	if(istype(G))
+		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
+		if (prob(80) && electrocute_mob(user, src, src))
+			return 1
 		if(charge < 1000)
 			return
 
+		G.siemens_coefficient = min(G.siemens_coefficient,0.7)
 		G.elecgen = 1
 		G.uses = min(5, round(charge / 1000))
 		use(G.uses*1000)
@@ -131,3 +137,22 @@
 /obj/item/weapon/cell/blob_act()
 	if(prob(75))
 		explode()
+
+/obj/item/weapon/cell/proc/get_electrocute_damage()
+	switch (charge)
+		if (9000 to INFINITY)
+			return min(rand(90,150),rand(90,150))
+		if (2500 to 9000-1)
+			return min(rand(70,145),rand(70,145))
+		if (1750 to 2500-1)
+			return min(rand(35,110),rand(35,110))
+		if (1500 to 1750-1)
+			return min(rand(30,100),rand(30,100))
+		if (750 to 1500-1)
+			return min(rand(25,90),rand(25,90))
+		if (250 to 750-1)
+			return min(rand(20,80),rand(20,80))
+		if (100 to 250-1)
+			return min(rand(20,65),rand(20,65))
+		else
+			return 0

@@ -121,9 +121,9 @@
 	if(..())
 		return
 	if (src.shocked)
-		src.shock(user)
+		src.shock(user,50)
 	if (src.opened)
-		wires_win(user)
+		wires_win(user,50)
 		return
 	if (src.disabled)
 		user << "\red You press the button, but nothing happens."
@@ -178,11 +178,11 @@
 							spawn(100) src.hacked = !src.hacked
 						if(src.disable_wire == href_list["wire"])
 							src.disabled = !src.disabled
-							src.shock(usr)
+							src.shock(usr,50)
 							spawn(100) src.disabled = !src.disabled
 						if(src.shock_wire == href_list["wire"])
 							src.shocked = !src.shocked
-							src.shock(usr)
+							src.shock(usr,50)
 							spawn(100) src.shocked = !src.shocked
 			if(href_list["act"] == "wire")
 				if (!istype(usr.equipped(), /obj/item/weapon/wirecutters))
@@ -192,10 +192,10 @@
 						src.hacked = !src.hacked
 					if(src.disable_wire == href_list["wire"])
 						src.disabled = !src.disabled
-						src.shock(usr)
+						src.shock(usr,50)
 					if(src.shock_wire == href_list["wire"])
 						src.shocked = !src.shocked
-						src.shock(usr)
+						src.shock(usr,50)
 	else
 		usr << "\red The autolathe is busy. Please wait for completion of previous operation."
 	src.updateUsrDialog()
@@ -263,16 +263,15 @@ var/global/list/autolathe_recipes_hidden = list( \
 	src.disable_wire = pick(w)
 	w -= src.disable_wire
 
-/obj/machinery/autolathe/proc/get_connection()
-	var/turf/T = src.loc
-	if(!istype(T, /turf/simulated/floor))
-		return
-
-	for(var/obj/cable/C in T)
-		if(C.d1 == 0)
-			return C.netnum
-
-	return 0
-
-/obj/machinery/autolathe/proc/shock(M as mob)
-	return src.electrocute(M, 50, get_connection())
+/obj/machinery/autolathe/proc/shock(mob/user, prb)
+	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
+		return 0
+	if(!prob(prb))
+		return 0
+	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	if (electrocute_mob(user, get_area(src), src))
+		return 1
+	else
+		return 0

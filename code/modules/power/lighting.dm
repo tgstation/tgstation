@@ -170,8 +170,9 @@
 					continue
 				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 			if(on && (W.flags & CONDUCT))
-				if(!user.mutations & 2)
-					src.electrocute(user, 50, null, 20000)
+				//if(!user.mutations & 2)
+				if (prob(50))
+					electrocute_mob(user, get_area(src), src)
 			broken()
 
 		else
@@ -179,13 +180,14 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		user << "You stick \the [W.name] into the light socket!"
+		user << "You stick \the [W] into the light socket!"
 		if(has_power() && (W.flags & CONDUCT))
 			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-			if(!user.mutations & 2)
-				src.electrocute(user, 75, null, 20000)
+			//if(!user.mutations & 2)
+			if (prob(75))
+				electrocute_mob(user, get_area(src), src)
 
 
 // returns whether this light has power

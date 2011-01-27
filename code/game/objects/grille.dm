@@ -1,16 +1,3 @@
-//returns the netnum of a stub cable at this grille loc, or 0 if none
-
-/obj/grille/proc/get_connection()
-	var/turf/T = src.loc
-	if(!istype(T, /turf/simulated/floor))
-		return
-
-	for(var/obj/cable/C in T)
-		if(C.d1 == 0)
-			return C.netnum
-
-	return 0
-
 
 /obj/grille/ex_act(severity)
 	switch(severity)
@@ -152,9 +139,11 @@
 	if(!prob(prb))
 		return 0
 
-	var/net = get_connection()		// find the powernet of the connected cable
-
-	if(!net)		// cable is unpowered
+	var/turf/T = get_turf(src)
+	if (electrocute_mob(user, T.get_cable_node(), src))
+		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
+		return 1
+	else
 		return 0
-
-	return src.electrocute(user, prb, net)
