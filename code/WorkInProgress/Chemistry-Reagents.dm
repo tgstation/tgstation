@@ -811,10 +811,10 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature < 310)
-					M.bodytemperature = max(310, M.bodytemperature-10)
-				else if(M.bodytemperature > 311)
-					M.bodytemperature = min(310, M.bodytemperature+10)
+				if(M.bodytemperature > 310)
+					M.bodytemperature = max(310, M.bodytemperature-20)
+				else if(M.bodytemperature < 311)
+					M.bodytemperature = min(310, M.bodytemperature+20)
 				..()
 				return
 
@@ -1396,7 +1396,8 @@ datum
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0
-				M.bodytemperature = min(310, M.bodytemperature+5) //310 is the normal bodytemp. 310.055
+				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature+5)
 				M.make_jittery(5)
 				..()
 				return
@@ -1409,7 +1410,8 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				M:drowsyness = max(0,M:drowsyness-5)
-				M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
+				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = max(310, M.bodytemperature-5)
 				M:nutrition += 5
 				..()
 				return
@@ -1422,7 +1424,8 @@ datum
 			on_mob_life(var/mob/M)
 				M:drowsyness = max(0,M:drowsyness-7)
 				M:sleeping = 0
-				M.bodytemperature = max(310, M.bodytemperature-5)
+				if (M.bodytemperature > 310)
+					M.bodytemperature = max(310, M.bodytemperature-5)
 				M.make_jittery(5)
 				M:nutrition += 3
 				..()
@@ -1436,7 +1439,8 @@ datum
 			on_mob_life(var/mob/M)
 				M:drowsyness = max(0,M:drowsyness-7)
 				M:sleeping = 0
-				M.bodytemperature = max(310, M.bodytemperature-5)
+				if (M.bodytemperature > 310)
+					M.bodytemperature = max(310, M.bodytemperature-5)
 				M.make_jittery(5)
 				M:nutrition += 2
 				if(!data) data = 1
@@ -1457,7 +1461,8 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				M:drowsyness = max(0,M:drowsyness-6)
-				M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
+				if (M.bodytemperature > 310)
+					M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
 				M:nutrition += 5
 				..()
 				return
@@ -1468,7 +1473,8 @@ datum
 			description = "Tastes like a hull breach in your mouth."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
-				M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
+				if (M.bodytemperature > 310)
+					M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
 				M:nutrition += 2
 				..()
 				return
@@ -1639,7 +1645,8 @@ datum
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0
-				M.bodytemperature = min(310, M.bodytemperature-5)
+				if (M.bodytemperature > 310)
+					M.bodytemperature = max(310, M.bodytemperature-5)
 				..()
 				return
 
@@ -1769,7 +1776,8 @@ datum
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0
-				M.bodytemperature = min(310, M.bodytemperature-5)
+				if (M.bodytemperature > 310)
+					M.bodytemperature = max(310, M.bodytemperature-5)
 				..()
 				return
 
@@ -1971,7 +1979,8 @@ datum
 			description = "This thing is FLAMING!. CALL THE DAMN SHUTTLE!"
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
-				M.bodytemperature = min(330, M.bodytemperature+15) //310 is the normal bodytemp. 310.055
+				if (M.bodytemperature < 330)
+					M.bodytemperature = min(330, M.bodytemperature+15) //310 is the normal bodytemp. 310.055
 				if(!data) data = 1
 				data++
 				M.dizziness +=3

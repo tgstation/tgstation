@@ -60,12 +60,12 @@
 		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		if (prob(80) && electrocute_mob(user, src, src))
+		if (prob(80+(G.siemens_coefficient*100)) && electrocute_mob(user, src, src))
 			return 1
 		if(charge < 1000)
 			return
 
-		G.siemens_coefficient = min(G.siemens_coefficient,0.7)
+		G.siemens_coefficient = max(G.siemens_coefficient,0.3)
 		G.elecgen = 1
 		G.uses = min(5, round(charge / 1000))
 		use(G.uses*1000)

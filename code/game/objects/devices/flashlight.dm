@@ -35,7 +35,7 @@
 
 		for(var/mob/O in viewers(M, null))//echo message
 			if ((O.client && !(O.blinded )))
-				O.show_message("\blue [(O==user?"You direct":"[user]")] [src] to [(M==user? "your":"[M]")] eyes", 1)
+				O.show_message("\blue [(O==user?"You direct":"[user] directs")] [src] to [(M==user? "your":"[M]")] eyes", 1)
 
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))//robots and aliens are unaffected
 			if(M.stat > 1 || M.sdisabilities & 1)//mob is dead or fully blind
