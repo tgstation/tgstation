@@ -259,6 +259,24 @@
 	opacity = 0
 	density = 0
 
+/obj/sign/maltesefalcon1         //The sign is 64x32, so it needs two tiles. ;3
+	desc = "The Maltese Falcon, Space Bar and Grill"
+	name = "The Maltese Falcon"
+	icon = 'decals.dmi'
+	icon_state = "maltesefalcon1"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+/obj/sign/maltesefalcon2
+	desc = "The Maltese Falcon, Space Bar and Grill"
+	name = "The Maltese Falcon"
+	icon = 'decals.dmi'
+	icon_state = "maltesefalcon2"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
 
 /obj/hud
 	name = "hud"

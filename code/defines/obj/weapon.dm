@@ -33,6 +33,9 @@
 	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
 	icon = 'cigarettes.dmi'
 	icon_state = "matchbox"
+	item_state = "zippo"
+	w_class = 1
+	flags = ONBELT | TABLEPASS
 	var/matchcount = 10
 	w_class = 1.0
 
