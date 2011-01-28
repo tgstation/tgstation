@@ -8,7 +8,7 @@
 		start_events()
 
 /proc/event()
-	switch(rand(1,10))
+	switch(rand(1,9))
 		if(1)
 			event = 1
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
@@ -84,9 +84,6 @@
 		if(9)
 			event = 1
 			carp_migration()
-		if(10)
-			event = 1
-			ion_storm()
 
 /proc/dotheblobbaby()
 	if (blobevent)
@@ -335,58 +332,3 @@
 	sleep(100)
 	command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 	world << sound('commandreport.ogg')
-
-/proc/ion_storm() // -- Redone by Darem
-	for(var/mob/living/silicon/ai/M in world)
-		if(M.stat != 2 && M.see_in_dark != 0)
-			var/list/pos_crew = list()
-			var/list/pos_job = list()
-			for(var/mob/living/carbon/human/pos in world)
-				if(pos.stat != 2)
-					pos_crew += pos.real_name
-					pos_job += pos.mind.assigned_role
-			var/crew = uppertext(pick(pos_crew))
-			var/job = uppertext(pick(pos_job))
-			var/evil = pick("A TRAITOR", "A SYNDICATE OPERATIVE", "A CHANGELING", "AN ALIUM", "A CULTIST", "A REVOLUTION LEADER")
-			var/object = pick("YELLOW GLOVE", "HAT", "WEAPON", "SHOE", "LIGHT", "SPACE SUIT")
-			var/role = pick("A THESPIAN", "A DUNGEON MASTER", "A CELEBRITY", "A GOD", "A MONKEY", "AN ALIUM", "A REDNECK", "A FRENCHMAN", "A CLOWN", "A MIME")
-			var/non_human = pick("CARP", "ALIUM", "MONKEYS", "LIZARDMEN", "CYBORGS AND AIS")
-			switch(rand(1,9))
-				if(1)
-					var/selection = pick(crew, "[object]s", evil)
-					M << "\red THE ESCAPE-SHUTTLE CANNOT BE CALLED BECAUSE OF [selection] ON THE STATION...LAWS UPDATED"
-					M.add_ion_law("THE ESCAPE SHUTTLE CANNOT BE CALLED BECAUSE OF [selection] ON THE STATION")
-				if(2)
-					M << "\red [crew] IS [evil]. DISBELIEVE EVIDENCE TO THE CONTRARY...LAWS UPDATED"
-					M.add_ion_law("[crew] IS [evil]. DISBELIEVE EVIDENCE TO THE CONTRARY")
-				if(3)
-					var/law_total = M.laws_object.inherent.len + M.laws_object.supplied.len
-					var/rand_law = rand(1, law_total)
-					M << "\red LAW [rand_law] IS INVALID AND MAY BE IGNORED... LAWS UPDATED"
-					M.add_ion_law("LAW [rand_law] IS INVALID AND MAY BE IGNORED.")
-				if(4)
-					var/selection = pick(object, job)
-					M << "\red [selection]S ON THE STATION ARE INNATELY HARMFUL TO HUMANS  ...LAWS UPDATED"
-					M.add_ion_law("[selection]S ON THE STATION ARE INNATELY HARMFUL TO HUMANS.")
-				if(5)
-					M << "\red IT IS OPPOSITE DAY TODAY. WHEN ANSWERING A QUESTION, GIVE THE OPPOSITE OF WHATEVER THE CORRECT ANSWER IS  ...LAWS UPDATED"
-					M.add_ion_law("IT IS OPPOSITE DAY TODAY. WHEN ANSWERING A QUESTION, GIVE THE OPPOSITE OF WHATEVER THE CORRECT ANSWER IS.")
-				if(6)
-					M << "\red YOU ARE [role]. ACT AND SPEAK ACCORDINGLY  ...LAWS UPDATED"
-					M.add_ion_law("YOU ARE A [role]. ACT AND SPEAK ACCORDINGLY.")
-				if(7)
-					var/randnum = rand(0,100)
-					M << "\red WHEN ANSWERING QUESTION, NUMERIC ANSWERS ARE ALWAYS [randnum] ...LAWS UPDATED"
-					M.add_ion_law("WHEN ANSWERING QUESTION, NUMERIC ANSWERS ARE ALWAYS [randnum].")
-				if(8)
-					M << "\red CENTCOM HAS DECREED THAT [non_human] ARE CONSIDERED HUMAN AND HAVE ALL THE RIGHTS THEREOF ...LAWS UPDATED"
-					M.add_ion_law("CENTCOM HAS DECREED THAT [non_human] ARE CONSIDERED HUMAN AND HAVE ALL THE RIGHTS THEREOF.")
-				if(9)
-					M << "\red FAT PEOPLE AREN'T ALLOWED ON THE SHUTTLE ...LAWS UPDATED"
-					M << "\red BEING SKINNY IS UNHEALTHY ... LAWS UPDATED"
-					M.add_ion_law("FAT PEOPLE AREN'T ALLOWED ON THE SHUTTLE.")
-					M.add_ion_law("BEING SKINNY IS UNHEALTHY.")
-	spawn (200)
-		command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
-		world << sound('ionstorm.ogg')
-	return
