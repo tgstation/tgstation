@@ -44,12 +44,13 @@
 	..()
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
-		if(ticker.mode)
-			//world << "DEBUG: ticker not null"
-			if(ticker.mode.name == "AI malfunction")
-				//world << "DEBUG: malf mode ticker test"
-				if(ticker.mode:malf_mode_declared)
-					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
+		if(ticker)
+			if(ticker.mode)
+				//world << "DEBUG: ticker not null"
+				if(ticker.mode.name == "AI malfunction")
+					//world << "DEBUG: malf mode ticker test"
+					if(ticker.mode:malf_mode_declared)
+						stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
 		if(emergency_shuttle)
 			if(emergency_shuttle.online && emergency_shuttle.location < 2)
 				var/timeleft = emergency_shuttle.timeleft()

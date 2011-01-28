@@ -266,10 +266,10 @@
 							O.show_message(text("\red [] was hit by the syringe!", M), 1)
 
 						del(D)
-
-					for(var/atom/A in D.loc)
-						if(A == user) continue
-						if(A.density) del(D)
+					if(D)
+						for(var/atom/A in D.loc)
+							if(A == user) continue
+							if(A.density) del(D)
 
 					sleep(1)
 
@@ -355,7 +355,7 @@
 	w_class = 1
 	var/amount_per_transfer_from_this = 5
 	var/possible_transfer_amounts = list(5,10,25)
-	
+
 	verb/set_APTFT() //set amount_per_transfer_from_this
 		set name = "Set transfer amount"
 		set src in range(0)
@@ -714,7 +714,7 @@
 		user << "\blue You inject [M] with the hypospray."
 		M << "\red You feel a tiny prick!"
 		src.reagents.reaction(M, INGEST)
-		if(M.reagents) 
+		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
 			user << "\blue [trans] units injected.  [reagents.total_volume] units remaining in the hypospray."
 	return
