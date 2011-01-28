@@ -6,7 +6,7 @@
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"http://ss13.lljk.net/\">"
+	s += "<a href=\"http://tgstation13.servehttp.com\">" //Change this to wherever you want the hub to link to.
 	s += "[game_version]"
 	s += "</a>"
 	s += ")"
@@ -18,9 +18,6 @@
 
 	if (ticker && master_mode)
 		features += master_mode
-
-	if (config && config.enable_authentication)
-		features += "goon only"
 
 	if (!enter_allowed)
 		features += "closed"
