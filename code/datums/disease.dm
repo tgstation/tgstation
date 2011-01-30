@@ -37,10 +37,6 @@ to null does not delete the object itself. Thank you.
 	var/severity = null//severity descr
 	var/longevity = 250//time in "ticks" the virus stays in inanimate object (blood stains, corpses, etc). In syringes, bottles and beakers it stays infinitely.
 
-/datum/disease/New()
-	..()
-	cure_list = list(cure_id) // to add more cures, add more vars to this list in the actual disease's New()
-
 /datum/disease/proc/stage_act()
 	var/cure_present = has_cure()
 	//world << "[cure_present]"
@@ -320,6 +316,7 @@ to null does not delete the object itself. Thank you.
 
 
 /datum/disease/New(var/process=1)//process = 1 - adding the object to global list. List is processed by master controller.
+	cure_list = list(cure_id) // to add more cures, add more vars to this list in the actual disease's New()
 	if(process)					 // Viruses in list are considered active.
 		active_diseases += src
 
