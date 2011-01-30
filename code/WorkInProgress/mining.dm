@@ -1,3 +1,396 @@
+/obj/item/weapon/book/manual/engineering_construction
+	name = "Station Repairs and Construction"
+	icon = 'library.dmi'
+	icon_state ="bookEngineering"
+	due_date = 0 // Game time in 1/10th seconds
+	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
+
+//big pile of shit below.
+
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 18px; margin: 15px 0px 5px;}
+				h2 {font-size: 15px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {list-style: none; margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				</style>
+				</head>
+				<body>
+				<h2> Construction </h2>
+
+				<h3>  Advanced Materials </h3>
+
+				<h4>   Rods </h4>
+
+				Use <font color='gray'><b>metal</b></font> and click "2x metal rods" (makes two sets of rods)
+
+				<h4>   Floor tiles </h4>
+
+				Use <font color='gray'><b>metal</b></font> and click "4x floor tiles" (makes 4 floor tiles)
+
+
+				<h4>   Reinforced Glass </h4>
+
+				Use <font color='gray'><b>rods</b></font> on <font color='blue'><b>glass</b></font>
+
+				<h4>   Reinforced Metal </h4>
+
+				Click the <font color='gray'></b>metal<b></font> in your hand to open the construction panel,
+				<br>Choose 'Reinforced sheets' form the list
+
+				<h3>  Floor </h3>
+
+				Use the <font color="gray"><b>rods</b></font> on <b>space</b>
+				<br>Use the <font color="gray"><b>floor tile</b></font> on <b>space</b> with lattice
+				<br>Use another <font color="gray"><b>floor tile</b></font> on the plating
+				<br>Alternate method - Click on <font color="gray"></b>floor tile</b></font> in hand while on top of an area of <b>space</b>. No need for <font color="gray"><b>rods</b></font> with this method.
+
+				<h3>  Walls </h3>
+
+				Click the <font color='gray'><b>metal</b></font> in your hand to open the construction panel,
+				<br>Choose 'Build wall girders' form the list
+				<br>Use the remaining 2 sheets of <font color='gray'><b>metal</b></font> on the girders
+
+				<h3>  Reinforced walls </h3>
+
+				Click the <font color='gray'><b>metal</b></font> in your hand to open the construction panel,
+				<br>Choose 'Build wall girders' form the list
+				<br>Use the <font color='gray'><b>reinforced metal</b></font> on the girders to reinforce them
+				<br>Use the last <font color='gray'><b>reinforced metal</b></font> sheet reinforced girders to finish the wall
+
+
+				<h3>  Grille </h3>
+
+				Stand where you wish the grille to be placed
+				<br>Click on the stack of 2 <font color="gray"><b>rods</b></font> with the hand you have them in
+
+				<h3>  Glass panels </h3>
+
+				<h4>   One directional </h4>
+
+				Click the <font color="blue"><b>glass</b></font> pane
+				<br>Click the "one direct" button
+				<br>Right-click the new pane and rotate it
+				<br>Use the screwdriver to fasten it down
+
+				<h4>   Full </h4>
+
+				Click the <font color="blue"><b>glass</b></font> pane
+				<br>Click the "full" button
+				<br>Use the screwdriver to fasten it down
+
+				<h3>  Reinforced glass panels </h3>
+
+				<h4>   One directional </h4>
+
+				Click the <font color="blue"><b>reinforced glass</b></font> pane
+				<br>Click the "one direct" button
+				<br>Right-click the new pane and rotate it
+				<br>Screwdriver (Unsecure pane.)
+				<br>Crowbar (Pane out of frame.)
+				<br>Screwdriver (Secure frame to floor.)
+				<br>Crowbar (Pop pane in.)
+				<br>Screwdriver (Secure pane.)
+
+				<h4>   Full </h4>
+
+				Click the <font color="blue"><b>reinforced glass</b></font> pane
+				<br>Click the "full" button
+				<br>Screwdriver
+				<br>Crowbar
+				<br>Screwdriver
+
+				<h3>  Hidden Door </h3>
+
+				Click the <font color='gray'><b>metal</b></font> in your hand to open the construction panel,
+				<br>Choose 'Build wall girders' form the list
+				<br>Use crowbar on girders and wait a few seconds for the girders to dislodge.
+				<br>Use the remaining 2 sheets of <font color='gray'><b>metal</b></font> on the girders
+
+				To turn a wall into a hidden door, follow the deconstruction guide for the wall type until the final wrenching, and instead proceed from the "Use crowbar on girders" line above.
+
+				<h4>   Reinforced </h4>
+
+				Click the <font color='gray'><b>metal</b></font> in your hand to open the construction panel,
+				<br>Choose 'Build wall girders' form the list
+				<br>Use crowbar on girders and wait a few seconds for the girders to dislodge.
+				<br>Use the <font color='gray'><b>reinforced metal</b></font> on the dislodged girders twice to finish it
+
+				<h3>  APC </h3>
+
+				Use the <font color='gray'><b>metal</b></font> and make an APC Assembly
+				<br>Use the assembly on the wall you want the APC on.
+				<br>Fit it with the wire coil.
+				<br>Fit it with the Power Control Module.
+				<br>Screwdriver the electronics into place.
+				<br>Add the Power Cell.
+				<br>Crowbar shut. It starts ID locked, with the cover engaged and the main switch turned off.
+
+				<h3>  Airlock </h3>
+
+				Use the <font color='gray'><b>metal</b></font> and make an Airlock Assembly
+				<br>Wrench it inplace
+				<br>Add reinforced glass (Only if you wish to make a glass airlock)
+				<br>Add wires
+				<br>Unlock the airlock electronic board with an ID
+				<br>Use the airlock electronic board and set the access level
+				<br>Add the airlock electronic board to the airlock frame.
+				<br>Screwdriver to finish
+
+				<h3>  Computers </h3>
+
+				Use the <font color='gray'><b>metal</b></font> to open the construction panel
+				<br>Choose Computer frame
+				<br>Wrench it inplace
+				<br>Insert Circuitboard
+				<br>Screwdriver
+				<br>Wires
+				<br><font color='blue'><b>glass</b></font>
+				<br>Screwdriver to finish
+
+				<h3>  AI Core </h3>
+
+				Build Frame from 4 <font color='fray'><b>reinforced sheets</b></font>
+				<br>Wrench into place
+				<br>Add Circuit board
+				<br>Screwdriver
+				<br>Add wires
+				<br>Add brain (only if you want a NEW AI)
+				<br>Add <font color='blue'><b>reinforced glass</b></font>
+				<br>Screwdriver
+
+				<h2> Deconstruction </h2>
+
+				<h3>  Walls </h3>
+
+				Wdlder
+				<br>Wrench
+
+				<h3>  Reinforced walls </h3>
+
+				Wirecutters.
+				<br>Screwdriver.
+				<br>Welder.
+				<br>Crowbar.
+				<br>Wrench.
+				<br>Welder.
+				<br>Crowbar.
+				<br>Screwdriver.
+				<br>Wirecutters.
+				<br>Wrench.
+
+				<h3>  Grille </h3>
+
+				Wirecutters
+				<br>Welder (to destroy it)
+				<br>or
+				<br>screwdriver (to unfasten it)
+
+				<h3>  Glass panels </h3>
+
+				The first method destroys it, the second gives a pullable pane of glass.
+
+				<br>Welding glass shards creates a pane of glass.
+
+				<h3>  Reinforced glass panels </h3>
+
+				Screwdriver to loosen the pane.
+				<br>Crowbar to pop it out.
+				<br>Screwdriver to unscrew the frame.
+				<br>Crowbar to pop the pane in.
+				<br>Screwdriver to secure it.
+
+				Hitting the pane repeatedly with a blunt item will smash it into one set of metal rods and a glass shard.
+
+				<h3>  Hidden Door (Regular or Reinforced) </h3>
+
+				Screwdriver
+				<br>Welder
+				<br>Wrench
+
+				<h3>APC </h3>
+
+				Swipe Card to unlock APC.
+				<br>Remove Power Cell.
+				<br>Screwdriver to unsecure electronics.
+				<br>Wirecutters to remove cables.
+				<br>Crowbar to remove Power Control Board.
+				<br>Welder to remover from wall.
+				<br>Wrenching the frame that is now detached from the wall de-constructs it to two metal sheets.
+
+				<h3>  Airlock </h3>
+
+				Screwdriver the door.
+				<br>Use multitool and wirecutters to disable everything except the doorbolts as detailed in books on hacking. Doorbolts must be up for this to work.
+				<br>Weld the door shut.
+				<br>Crowbar the electronics out.
+				<br>Wirecut the wires out.
+				<br>Unsecure it with a wrench.
+				<br>Weld it to deconstruct to metal plates.
+
+				Cannot be done to emagged airlock. RCD deconstruction must be used for that.
+
+				<h3>  Computers </h3>
+
+				Screwdriver.
+				<br>Crowbar.
+				<br>Wirecutters.
+				<br>Screwdriver.
+				<br>Wrench.
+				<br>Welder.	"}
+
+
+/obj/item/weapon/book/manual/engineering_hacking
+	name = "Hacking"
+	icon = 'library.dmi'
+	icon_state ="bookHacking"
+	due_date = 0 // Game time in 1/10th seconds
+	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
+
+//big pile of shit below.
+
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 18px; margin: 15px 0px 5px;}
+				h2 {font-size: 15px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {list-style: none; margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				</style>
+				</head>
+				<body>
+				<h2>What you'll need</h2>
+				<ul>
+				<li><b>Insulated gloves</b> Hackables have power lines, and cutting/pulsing these without gloves can harm you.</li>
+				<li><b>Screwdriver</b> for opening up panels and the like. A necessary tool</li>
+				<li><b>Wirecutters</b> for cutting and mending wires. Also a necessary tool</li>
+				<li><b>Multitool</b> for pulsing wires; not necessary for most hacking, but makes life a lot easier.</li>
+				</ul>
+
+				<h2>Important Hackables</h2>
+
+				<h3>Airlocks</h3>
+				Both internal and external access airlocks are hackable, despite the fact that external ones look a lot like firelocks, which are not hackable. Wires are randomized at the start of each round, but are standardized throughout the station, e.g., every orange wire might toggle the bolts. This is probably where you'll be doing the most of your hacking. Remember, cutting power to the door will stop everything else from working.
+				<ol>
+				<li> Screwdriver in hand, click on the airlock to open the panel and expose the wiring</li>
+				<li> With multitool, wirecutters, or an empty hand, click on the airlock to access the wiring.</li>
+				<li> Fiddle with the wires by pulsing to test each one and cutting what you need to.</li>
+				<ul>
+					<li><b>ID wire</b>: <i>Pulsing</i> will flash the 'access denied' red light; <i>cutting</i> will prevent anyone from opening the door if it's a restricted door; otherwise, it does nothing.</li>
+					<li><b>AI control wire</b>: <i>Pulsing</i> will flash the 'AI control light' off and on quickly; <i>cutting</i> will prevent the AI from accessing the door unless s/he hacks the power wires</li>
+					<li><b>Main power wire</b>: <i>Pulsing</i> will turn off the 'test light' and kill the power for 1 minute; <i>cutting</i> will kill the power for 10 seconds before backup power kicks in.</li>
+					<li><b>Backup power wire</b>: <i>Pulsing</i> will turn off the 'test light' kill the power for 1 minute of the main power is out, otherwise, nothing. <i>Cutting</i> will obviously disable the backup power.</li>
+					<li><b>Bolt control wire</b>: <i>Pulsing</i> will toggle the bolts; <i>cutting</i> will drop the bolts.</li>
+					<li><b>Door control wire</b>: If the door is ID restricted, this is pretty much useless. If not, <i>Pulsing</i> will open/close the door and <i>cutting</i> will keep it that way, sortof like bolting.</li>
+					<li><b>Electrifying wire</b>: <i>Pulsing</i> will electrify the door for 30 seconds; <i>cutting</i> will permanently electrify it until mended. I haven't a clue how to find this wire out except through trial and painful error. Obviously useless if there is no power to the door.</li>
+				</ul>
+				<li> Screwdriver the door again to shut the panel. Otherwise, trying to open the door will always give you the wiring popup.</li>
+				</ol>
+
+				<h4>Airlock Strategies</h4>
+				<ul>
+					<li><b>Ghetto hacking</b> involves accessing a useless airlock and cutting all of the wires in order until the bolts drop, making a note of the wire you just cut. Keeping this in mind, you can now open restricted doors by cutting all the wires except the bolt control and then crowbarring that fucker open. Useful if you don't have a multi-tool. Note that this is a bad idea if you lack gloves.</li>
+					<li><b>Open ID restricted doors</b> by pulsing a main power wire and then crowbarring it open. If it's bolted, be sure to pulse the bolt wire before you kill the power or you're shit outta luck for a minute. (You can shorten this by cutting and mending the power wire, but by then the power would probably have reset anyway. Still, taking 20 seconds less to unhack the Escape shuttle doors is always good)</li>
+					<li><b>Create a pain in the ass obstacle</b> by dropping the bolts, cutting all the wires, and then welding the door shut. This is especially effective if you happen to have the only pair of insulated gloves on the station.</li>
+					<li><b>Remotely pulse an airlock</b> by attaching a signaler, which when signaled pulses the wire it's attached to. This allows you to remotely bolt and unbolt a door, for instance. Be sure to turn off the speaker so no one can hear it being toggled.</li>
+					<li><b>Use multitools for bolted </b> as they are awesome. First find two wires of importance. The bolts wire, and the main power wire. Pulse a random door to find out the wires. If you hear sparks, see your health going down or see the message "You feel a powerful shock coursing through your body!", close that hacking window and move onto another door. Once you got the main power wire, head to an unbolted door, pulse the wire, crowbar it open. You get a larger window of time to crowbar, and you can do it without gloves. If a door is bolted, pulse the bolts wires, and go and cut the power then crowbar it.</li>
+				</ul>
+
+				<h3>APCs</h3>
+				Used to control power to a certain room. Nice to know when a rogue AI or douchebag engineers keep turning off your power. All APC breakers can be accessed via Power Monitoring Computers regardless of the lock status, so hope that whoever's fucking with the power isn't paying attention
+				<ol>
+				<li>Screwdriver in hand, click on APC to open the panel and expose the wiring</li>
+				<li>Click with an empty hand to access the wiring</li>
+				<li>Fiddle with the wires by pulsing to test each one and cutting what you need to.</li>
+				<ul>
+					<li><b>Power wires (2)</b>: <i>Pulse</i> will short out the APC. You must <i>cut and mend</i> the wire to restore power. Not repairing the short will render the main breaker moot, even if accessed remotely.</li>
+					<li><b>AI control wire</b>: Like the airlock, <i>pulsing</i> will flash the light off and on quickly; <i>cutting</i> will disable AI control</li>
+				</ul>
+				<li>Screwdriver it back up to toggle lighting, equipment, and atmospherics as you see fit (unless you've killed the power)</li>
+				</ol>
+
+				<h3>Autolathe</h3>
+				<ol>
+				<li>Click on the autolathe to open it</li>
+				<li>Click on the autolathe with an empty hand to access the wiring, then get a tool in your hand</li>
+				<li>The window is glitched and won't show what wires are cut, so you better track what wires you modify. There are three important wires, which are randomized. Cutting them toggles their light permanently, pulsing does so temporarily(30 secs or something). Red light is power, green light is electrocution and blue is hacked options.</li>
+				<li>Have fun accessing some new options</li>
+				<ul>
+				<li>RCD supplies</li>
+				<li>Infrared beam (security)</li>
+				<li>Infrared sensor</li>
+				<li>Bullets</li>
+				<li>Other shit</li>
+				</ul>
+				</ol>
+
+				<h3>Air alarm/Fire alarm/Cameras</h3>
+				Use wirecutters to enable/disable. Disabled <i>air alarms</i> will show no lights, <i>fire alarms</i> will not automatically trigger firelocks, and <i>cameras</i> will show a red light and prevent anyone from viewing the room through a console (including AI).
+
+
+				<h3>MULE</h3>
+				No better way to get away from it all with a joyride on a MULE! And run over some people with it too.
+				<ol>
+				<li>Unlock the controls with a Quartermaster's ID.</li>
+				<li>Unscrew the maintenance panel with the screwdriver.</li>
+				<li>Pulse various wires with a multitool. Pay attention to the reaction the MULE gives.</li>
+				<ol>
+					<li>Cutting the wire that causes the loading bay to thunk will remove cargo restrictions.</li>
+					<li>Cutting the wire that leads to the safety light will awaken its thirst for blood and cause it to run over people in its path. DO NOT DO THIS UNLESS YOU ARE A TRAITOR OR LOVE GETTING THE SHIT ROBUSTED OUT OF YOU.</li>
+					<li>Cutting <i>one</i> of the wires that makes the motor whine will safely speed up the MULE. Cutting both will immobilize it.</li>
+				</ol>
+				<li>Screw the panel back on.</li>
+				</ol>
+
+				<h2>Minor Hackables</h2>
+				I haven't a clue why you'd ever want to hack any of these things, but you can!
+
+				<h3>Radio/Signaler</h3>
+				<ol>
+				<li>Screwdriver in hand, click on the offending radio so it can be modified or attached
+				<li>The usual radio use panel will pop up, but now with access to the wiring. If you've closed it by accident, just click on the radio as if you were going to change the settings on it.
+				<li>There are three wires. Two have apparent uses; the third is pretty much useless.
+				<ul>
+					<li><b>Output wire</b> will disengage the speakers (or signal-receiving on a signaler)
+					<li><b>Input wire</b> will permanently disengage the microphone (or signal-sending on a signaler)
+				</ul>
+				</ol>
+				Interestingly, tracking beacons and station intercoms also count as radios.
+
+				<h3>Secure Briefcase, Safes</h3>
+				<i>seriously who is dumb enough to use these things anyway god damn</i>
+				<ol>
+				<li>Screwdriver in hand, click on the (briefcase/safe) to open the panel and expose the wiring</li>
+				<li>Multi-tool-spam the (briefcase/safe) until you get a confirmation that the memory is reset.</li>
+				<li>The memory is now reset. Punch in your favorite code and hit E to set it.</li>
+				<li>Screwdriver the panel shut.</li>
+				</ol>
+
+				<h3> Vending machines </h3>
+				The only thing worth hacking!
+
+				Four wires
+				<ol>
+				<li><b>Firing wire</b> when cut fires stuff at people. When pulsed will do so. Controlled by the blinking light.</li>
+				<li><b>Contraband wire</b> does nothing when cut, when pulsed unlocks illegal or rare goods. Wire is unknown. </li>
+				<li><b>Access wire</b> when cut it turns on a yellow light, allowing for ID restricted machines(med machines, sec machines, possibly botany machines) to be used by anyone.</li>
+				<li><b>Shock wire</b> Like the firing wire in effects from hacking, except it shocks instead of shoots.</li>
+				</ol>
+"}
+
+
+
+
+
+
+
+
+
 /**********************Light************************/
 
 //this item is intended to give the effect of entering the mine, so that light gradually fades
@@ -723,14 +1116,14 @@
 /obj/machinery/mineral/input
 	icon = 'craft.dmi'
 	icon_state = "core"
-	name = "Purifier input area"
+	name = "Input area"
 	density = 0
 	anchored = 1.0
 
 /obj/machinery/mineral/output
 	icon = 'craft.dmi'
 	icon_state = "core"
-	name = "Purifier output area"
+	name = "Output area"
 	density = 0
 	anchored = 1.0
 

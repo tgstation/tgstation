@@ -14,7 +14,6 @@
 #define FILE_DIR "code/datums"
 #define FILE_DIR "code/datums/diseases"
 #define FILE_DIR "code/datums/spells"
-#define FILE_DIR "code/datums/technology"
 #define FILE_DIR "code/defines"
 #define FILE_DIR "code/defines/area"
 #define FILE_DIR "code/defines/mob"
