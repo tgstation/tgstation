@@ -2,9 +2,9 @@
 	src.verbs += /client/proc/changeling_lesser_transform
 	src.verbs += /client/proc/changeling_fakedeath
 
-	src.verbs += /client/proc/changeling_blind_dart
-	src.verbs += /client/proc/changeling_deaf_dart
-	src.verbs += /client/proc/changeling_silence_dart
+	src.verbs += /client/proc/changeling_blind_sting
+	src.verbs += /client/proc/changeling_deaf_sting
+	src.verbs += /client/proc/changeling_silence_sting
 
 	src.changeling_level = 1
 	return
@@ -15,11 +15,11 @@
 	src.verbs += /client/proc/changeling_lesser_form
 	src.verbs += /client/proc/changeling_fakedeath
 
-	src.verbs += /client/proc/changeling_deaf_dart
-	src.verbs += /client/proc/changeling_blind_dart
-	src.verbs += /client/proc/changeling_paralysis_dart
-	src.verbs += /client/proc/changeling_silence_dart
-	src.verbs += /client/proc/changeling_transformation_dart
+	src.verbs += /client/proc/changeling_deaf_sting
+	src.verbs += /client/proc/changeling_blind_sting
+	src.verbs += /client/proc/changeling_paralysis_sting
+	src.verbs += /client/proc/changeling_silence_sting
+	src.verbs += /client/proc/changeling_transformation_sting
 	src.verbs += /client/proc/changeling_boost_range
 
 	src.changeling_level = 2
@@ -38,16 +38,16 @@
 	src.verbs -= /client/proc/changeling_lesser_form
 	src.verbs -= /client/proc/changeling_lesser_transform
 	src.verbs -= /client/proc/changeling_fakedeath
-	src.verbs -= /client/proc/changeling_deaf_dart
-	src.verbs -= /client/proc/changeling_blind_dart
-	src.verbs -= /client/proc/changeling_paralysis_dart
-	src.verbs -= /client/proc/changeling_silence_dart
+	src.verbs -= /client/proc/changeling_deaf_sting
+	src.verbs -= /client/proc/changeling_blind_sting
+	src.verbs -= /client/proc/changeling_paralysis_sting
+	src.verbs -= /client/proc/changeling_silence_sting
 	src.verbs -= /client/proc/changeling_boost_range
-	usr.verbs -= /client/proc/changeling_transformation_dart
+	usr.verbs -= /client/proc/changeling_transformation_sting
 
 /client/proc/changeling_absorb_dna()
 	set category = "Changeling"
-	set name = "Absorb DNA (5)"
+	set name = "Absorb DNA"
 
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
@@ -55,10 +55,6 @@
 
 	if (!istype(usr.equipped(), /obj/item/weapon/grab))
 		usr << "\red We must be grabbing a creature in our active hand to absorb them."
-		return
-
-	if(usr.chem_charges < 5)
-		usr << "\red We don't have enough stored chemicals to do that!"
 		return
 
 	var/obj/item/weapon/grab/G = usr.equipped()
@@ -72,7 +68,7 @@
 		usr << "\red We must have a tighter grip to absorb this creature."
 		return
 
-	usr.chem_charges -= 5
+	usr.chem_charges += 5
 
 	var/mob/living/carbon/human/T = M
 
@@ -103,6 +99,8 @@
 	T << "\red <B>You have been absorbed by the changeling!</B>"
 
 	usr.absorbed_dna[T.real_name] = T.dna
+	if(usr.nutrition < 400) usr.nutrition = min((usr.nutrition + T.nutrition), 400)
+	usr.chem_charges += 5
 
 	T.death(0)
 	T.real_name = "Unknown"
@@ -374,8 +372,8 @@
 
 /client/proc/changeling_boost_range()
 	set category = "Changeling"
-	set name = "Boost Dart Range (10)"
-	set desc="Boosts dart range by 1."
+	set name = "Ranged Sting (10)"
+	set desc="Your next sting ability can be used against targets 3 squares away."
 
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
@@ -385,14 +383,10 @@
 		usr << "\red We don't have enough stored chemicals to do that!"
 		return
 
-	if(usr.sting_range >= 3)
-		usr << "\red We can't boost the range anymore!"
-		return
-
 	usr.chem_charges -= 10
 
-	usr << "\blue Your throat adjusts to launch the dart."
-	usr.sting_range++
+	usr << "\blue Your throat adjusts to launch the sting."
+	usr.sting_range = 3
 
 	usr.verbs -= /client/proc/changeling_boost_range
 
@@ -401,10 +395,10 @@
 
 	return
 
-/client/proc/changeling_silence_dart(mob/T as mob in oview(usr.sting_range))
+/client/proc/changeling_silence_sting(mob/T as mob in oview(usr.sting_range))
 	set category = "Changeling"
-	set name = "Silence Dart (10)"
-	set desc="Sting target:"
+	set name = "Silence sting (10)"
+	set desc="Sting target"
 
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
@@ -422,17 +416,17 @@
 
 	T.silent += 30
 
-	usr.verbs -= /client/proc/changeling_silence_dart
+	usr.verbs -= /client/proc/changeling_silence_sting
 
 	spawn(5)
-		usr.verbs += /client/proc/changeling_silence_dart
+		usr.verbs += /client/proc/changeling_silence_sting
 
 	return
 
-/client/proc/changeling_blind_dart(mob/T as mob in oview(usr.sting_range))
+/client/proc/changeling_blind_sting(mob/T as mob in oview(usr.sting_range))
 	set category = "Changeling"
-	set name = "Blind Dart (20)"
-	set desc="Sting target:"
+	set name = "Blind sting (20)"
+	set desc="Sting target"
 
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
@@ -465,16 +459,16 @@
 	T.eye_blind = 10
 	T.eye_blurry = 20
 
-	usr.verbs -= /client/proc/changeling_blind_dart
+	usr.verbs -= /client/proc/changeling_blind_sting
 
 	spawn(5)
-		usr.verbs += /client/proc/changeling_blind_dart
+		usr.verbs += /client/proc/changeling_blind_sting
 
 	return
 
-/client/proc/changeling_deaf_dart(mob/T as mob in oview(usr.sting_range))
+/client/proc/changeling_deaf_sting(mob/T as mob in oview(usr.sting_range))
 	set category = "Changeling"
-	set name = "Deaf Dart (5)"
+	set name = "Deaf sting (5)"
 	set desc="Sting target:"
 
 	if(usr.stat)
@@ -494,17 +488,17 @@
 	spawn(300)
 		T.sdisabilities &= ~4
 
-	usr.verbs -= /client/proc/changeling_deaf_dart
+	usr.verbs -= /client/proc/changeling_deaf_sting
 
 	spawn(5)
-		usr.verbs += /client/proc/changeling_deaf_dart
+		usr.verbs += /client/proc/changeling_deaf_sting
 
 	return
 
-/client/proc/changeling_paralysis_dart(mob/T as mob in oview(usr.sting_range))
+/client/proc/changeling_paralysis_sting(mob/T as mob in oview(usr.sting_range))
 	set category = "Changeling"
-	set name = "Paralysis Dart (30)"
-	set desc="Sting target:"
+	set name = "Paralysis sting (30)"
+	set desc="Sting target"
 
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
@@ -523,17 +517,17 @@
 	if (T.reagents)
 		T.reagents.add_reagent("zombiepowder", 20)
 
-	usr.verbs -= /client/proc/changeling_paralysis_dart
+	usr.verbs -= /client/proc/changeling_paralysis_sting
 
 	spawn(5)
-		usr.verbs += /client/proc/changeling_paralysis_dart
+		usr.verbs += /client/proc/changeling_paralysis_sting
 
 	return
 
-/client/proc/changeling_transformation_dart(mob/T as mob in oview(usr.sting_range))
+/client/proc/changeling_transformation_sting(mob/T as mob in oview(usr.sting_range))
 	set category = "Changeling"
-	set name = "Transformation Dart (30)"
-	set desc="Sting target:"
+	set name = "Transformation sting (30)"
+	set desc="Sting target"
 
 	if(usr.stat)
 		usr << "\red Not when we are incapacitated."
@@ -564,9 +558,9 @@
 	updateappearance(T, T.dna.uni_identity)
 	domutcheck(T, null)
 
-	usr.verbs -= /client/proc/changeling_transformation_dart
+	usr.verbs -= /client/proc/changeling_transformation_sting
 
 	spawn(5)
-		usr.verbs += /client/proc/changeling_transformation_dart
+		usr.verbs += /client/proc/changeling_transformation_sting
 
 	return
