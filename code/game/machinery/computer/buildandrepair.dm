@@ -102,6 +102,9 @@
 /obj/item/weapon/circuitboard/prisoner
 	name = "Circuit board (Prisoner Management)"
 	computertype = "/obj/machinery/computer/prisoner"
+/obj/item/weapon/circuitboard/rdconsole
+	name = "Circuit Board (RD Console)"
+	computertype = "/obj/machinery/computer/rdconsole"
 
 
 

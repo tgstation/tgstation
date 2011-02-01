@@ -13,9 +13,8 @@ The currently supporting non-reagent materials:
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
 
-Reliabilitity Guidelines:
-- The more dangerous the malfunctions are, the higher the base reliabliity (otherwise, people will just skip that tech).
-- High base reliability = High material cost; Low base reliability = Low material cost.
+TODO:
+- Add a "has materials" type proc to... something...
 
 */
 #define	IMPRINTER	1	//For circuits.
@@ -30,10 +29,26 @@ datum
 			desc = "Desc"					//Description of the created object.
 			id = "id"						//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
 			list/req_tech = list()			//IDs of that techs the object originated from and the minimum level requirements.
+			reliability_mod = 100			//Reliability modifier of the device at it's starting point.
+			reliability_base = 100			//Base reliability of a device before modifiers.
 			reliability = 100				//Reliability of the device.
 			build_type = null				//Flag as to what kind machine the design is built in. See defines.
 			list/materials = list()			//List of materials. Format: "id" = amount.
 			build_path = ""					//The file path of the object that gets created
+
+		proc
+			//A proc to calculate the reliability of a design based on tech levels and innate modifiers.
+			//Input: A list of /datum/tech; Output: The new reliabilty.
+			CalcReliability(var/list/temp_techs)
+				var/new_reliability = reliability_mod + reliability_base
+				for(var/datum/tech/T in temp_techs)
+					if(T.id in req_tech)
+						new_reliability += (T.level - req_tech[T]) * 5
+				new_reliability = between(reliability_base, new_reliability, 100)
+				return new_reliability
+
+
+
 
 		seccamera
 			name = "Circuit Design (Security)"
@@ -371,6 +386,40 @@ datum
 			build_type = IMPRINTER
 			materials = list("$metal" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/ripley/peripherals"
+
+////////////////////////////////////////
+//////////Disk Construction Disks///////
+////////////////////////////////////////
+		design_disk
+			name = "Design Storage Disk"
+			desc = "Produce additional disks for storing device designs."
+			id = "design_disk"
+			req_tech = list()
+			reliability = 100
+			build_type = PROTOLATHE | AUTOLATHE
+			materials = list("$metal" = 50, "$glass" = 20)
+			build_path = "/obj/item/weapon/disk/design_disk"
+
+		tech_disk
+			name = "Technology Data Storage Disk"
+			desc = "Produce additional disks for storing technology data."
+			id = "tech_disk"
+			req_tech = list()
+			reliability = 100
+			build_type = PROTOLATHE | AUTOLATHE
+			materials = list("$metal" = 50, "$glass" = 20)
+			build_path = "/obj/item/weapon/disk/tech_disk"
+
+
+		dummy_design
+			name = "Dummy Design"
+			desc = "Just a design for testing purposes. Makes a d20"
+			id = "dummy_design"
+			req_tech = list()
+			reliability = 100
+			build_type = PROTOLATHE
+			materials = list("$metal" = 2500, "$glass" = 2500)
+			build_path = "/obj/item/weapon/deconstruction_test"
 
 
 ////////////////////////////////////////
