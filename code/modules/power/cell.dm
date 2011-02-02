@@ -53,19 +53,19 @@
 		else
 			usr << "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!!!\nThe charge meter reads [round(src.percent() )]%."
 
-
+//Just because someone gets you occasionally with stun gloves doesn't mean you can put in code to kill everyone who tries to make some.
 /obj/item/weapon/cell/attackby(obj/item/W, mob/user)
 	var/obj/item/clothing/gloves/G = W
 	if(istype(G))
-		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-		s.set_up(3, 1, src)
+	//	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	//	s.set_up(3, 1, src)
 		s.start()
-		if (prob(80+(G.siemens_coefficient*100)) && electrocute_mob(user, src, src))
-			return 1
+	//	if (prob(80+(G.siemens_coefficient*100)) && electrocute_mob(user, src, src))
+	//		return 1
 		if(charge < 1000)
 			return
 
-		G.siemens_coefficient = max(G.siemens_coefficient,0.3)
+	//	G.siemens_coefficient = max(G.siemens_coefficient,0.3)
 		G.elecgen = 1
 		G.uses = min(5, round(charge / 1000))
 		use(G.uses*1000)
@@ -133,7 +133,7 @@
 			if (prob(25))
 				corrupt()
 	return
-	
+
 /obj/item/weapon/cell/blob_act()
 	if(prob(75))
 		explode()
