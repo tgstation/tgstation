@@ -22,6 +22,9 @@ Pod/Blast Doors computer
 			del(src)
 			return
 		if(2.0)
+			if (prob(25))
+				del(src)
+				return
 			if (prob(50))
 				for(var/x in src.verbs)
 					src.verbs -= x

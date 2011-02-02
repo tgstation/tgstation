@@ -1170,6 +1170,9 @@ var/showadminmessages = 1
 				if("radiation")
 					message_admins("[key_name_admin(usr)] has has irradiated the station", 1)
 					high_radiation_event()
+				if("immovable")
+					message_admins("[key_name_admin(usr)] has sent an immovable rod to the station", 1)
+					immovablerod()
 				if("prison_break")
 					message_admins("[key_name_admin(usr)] has allowed a prison break", 1)
 					prison_break()
@@ -1633,6 +1636,7 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
 <A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
 <A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
+<A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
 <BR>
 <B>Fun Secrets</B><BR>
 <BR>

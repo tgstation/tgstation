@@ -8,7 +8,7 @@
 		start_events()
 
 /proc/event()
-	switch(rand(1,9))
+	switch(rand(1,10))
 		if(1)
 			event = 1
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
@@ -84,6 +84,9 @@
 		if(9)
 			event = 1
 			carp_migration()
+		if(10)
+			event = 1
+			immovablerod()
 
 /proc/dotheblobbaby()
 	if (blobevent)
@@ -247,6 +250,8 @@
 				virus_type = /datum/disease/dnaspread
 			if("flu")
 				virus_type = /datum/disease/flu
+			if("t-virus")
+				virus_type = /datum/disease/t_virus
 			if("pierrot's throat")
 				virus_type = /datum/disease/pierrot_throat
 	for(var/mob/living/carbon/human/H in world)

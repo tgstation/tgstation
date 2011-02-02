@@ -95,6 +95,10 @@
 				new /obj/item/weapon/shard( src.loc )
 			return
 		if(2.0)
+			if (prob(25))
+				new /obj/item/weapon/shard( src.loc )
+				del(src)
+				return
 			if (prob(50))
 				broken()
 		if(3.0)
