@@ -54,180 +54,180 @@ datum
 			name = "Circuit Design (Security)"
 			desc = "Allows for the construction of circuit boards used to build security camera computers."
 			id = "seccamera"
-			req_tech = list()
+			req_tech = list("programming" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/security"
 
 		aicore
 			name = "Circuit Design (AI Core)"
 			desc = "Allows for the construction of circuit boards used to build new AI cores."
 			id = "aicore"
-			req_tech = list()
+			req_tech = list("programming" = 5, "biotech" = 5)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/aicore"
 
 		aiupload
 			name = "Circuit Design (AI Upload)"
 			desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
 			id = "aiupload"
-			req_tech = list()
+			req_tech = list("programming" = 5)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/aiupload"
 
 		med_data
 			name = "Circuit Design (Medical Records)"
 			desc = "Allows for the construction of circuit boards used to build a medical records console."
 			id = "med_data"
-			req_tech = list()
+			req_tech = list("programming" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/med_data"
 
 		pandemic
 			name = "Circuit Design (PanD.E.M.I.C. 2200)"
 			desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
 			id = "pandemic"
-			req_tech = list()
+			req_tech = list("programming" = 2, "biotech" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/pandemic"
 
 		scan_console
 			name = "Circuit Design (DNA Machine)"
 			desc = "Allows for the construction of circuit boards used to build a new DNA scanning console."
 			id = "scan_console"
-			req_tech = list()
+			req_tech = list("programming" = 2, "biotech" = 3)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/machinery/scan_consolenew"
 
 		comconsole
 			name = "Circuit Design (Communications)"
 			desc = "Allows for the construction of circuit boards used to build a communications console."
 			id = "comconsole"
-			req_tech = list()
+			req_tech = list("programming" = 2, "magnets" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/communications"
 
 		idcardconsole
 			name = "Circuit Design (ID Computer)"
 			desc = "Allows for the construction of circuit boards used to build an ID computer."
 			id = "idcardconsole"
-			req_tech = list()
+			req_tech = list("programming" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/card"
 
 		teleconsole
 			name = "Circuit Design (Teleporter Console)"
 			desc = "Allows for the construction of circuit boards used to build a teleporter control console."
 			id = "teleconsole"
-			req_tech = list()
+			req_tech = list("programming" = 3, "bluespace" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/teleporter"
 
 		secdata
 			name = "Circuit Design (Security Records Console)"
 			desc = "Allows for the construction of circuit boards used to build a security records console."
 			id = "secdata"
-			req_tech = list()
+			req_tech = list("programming" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/secure_data"
 
 		atmosalerts
 			name = "Circuit Design (Atmosphere Alerts Console)"
 			desc = "Allows for the construction of circuit boards used to build an atmosphere alert console.."
 			id = "atmosalerts"
-			req_tech = list()
+			req_tech = list("programming" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/atmosphere/alerts"
 
 		air_management
 			name = "Circuit Design (Atmospheric Monitor)"
 			desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
 			id = "air_management"
-			req_tech = list()
+			req_tech = list("programming" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/general_air_control"
 
 		general_alert
 			name = "Circuit Design (General Alert Console)"
 			desc = "Allows for the construction of circuit boards used to build a General Alert console."
 			id = "general_alert"
-			req_tech = list()
+			req_tech = list("programming" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/general_alert"
 
 		robocontrol
 			name = "Circuit Design (Robotics Control Console)"
 			desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
 			id = "robocontrol"
-			req_tech = list()
+			req_tech = list("programming" = 4)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/robotics"
 
 		clonecontrol
 			name = "Circuit Design (Cloning Machine Console)"
 			desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
 			id = "clonecontrol"
-			req_tech = list()
+			req_tech = list("programming" = 3, "biotech" = 4)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/cloning"
 
 		arcademachine
 			name = "Circuit Design (Arcade Machine)"
 			desc = "Allows for the construction of circuit boards used to build a new arcade machine."
 			id = "arcademachine"
-			req_tech = list()
+			req_tech = list("programming" = 1)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/arcade"
 
 		powermonitor
 			name = "Circuit Design (Power Monitor)"
 			desc = "Allows for the construction of circuit boards used to build a new power monitor"
 			id = "powermonitor"
-			req_tech = list()
+			req_tech = list("programming" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/machinery/power/monitor"
 
 		prisonmanage
 			name = "Circuit Design (Prisoner Management Console)"
 			desc = "Allows for the construction of circuit boards used to build a prisoner management console."
 			id = "prisonmanage"
-			req_tech = list()
+			req_tech = list("programming" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/prisoner"
 
 ///////////////////////////////////
@@ -237,130 +237,130 @@ datum
 			name = "Module Design (Safeguard)"
 			desc = "Allows for the construction of a Safeguard AI Module."
 			id = "safeguard_module"
-			req_tech = list()
+			req_tech = list("programming" = 5)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/safeguard"
 
 		onehuman_module
 			name = "Module Design (OneHuman)"
 			desc = "Allows for the construction of a OneHuman AI Module."
 			id = "onehuman_module"
-			req_tech = list()
+			req_tech = list("programming" = 5, "syndicate" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/oneHuman"
 
 		protectstation_module
 			name = "Module Design (ProtectStation)"
 			desc = "Allows for the construction of a ProtectStation AI Module."
 			id = "protectstation_module"
-			req_tech = list()
+			req_tech = list("programming" = 5)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/protectStation"
 
 		notele_module
 			name = "Module Design (TeleporterOffline Module)"
 			desc = "Allows for the construction of a TeleporterOffline AI Module."
 			id = "notele_module"
-			req_tech = list()
+			req_tech = list("programming" = 5)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/teleporterOffline"
 
 		quarantine_module
 			name = "Module Design (Quarantine)"
 			desc = "Allows for the construction of a Quarantine AI Module."
 			id = "quarantine_module"
-			req_tech = list()
+			req_tech = list("programming" = 5, "biotech" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/quarantine"
 
 		oxygen_module
 			name = "Module Design (OxygenIsToxicToHumans)"
 			desc = "Allows for the construction of a Safeguard AI Module."
 			id = "oxygen_module"
-			req_tech = list()
+			req_tech = list("programming" = 5, "biotech" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/oxygen"
 
 		freeform_module
 			name = "Module Design (Freeform)"
 			desc = "Allows for the construction of a Freeform AI Module."
 			id = "freeform_module"
-			req_tech = list()
+			req_tech = list("programming" = 6)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/freeform"
 
 		reset_module
 			name = "Module Design (Reset)"
 			desc = "Allows for the construction of a Reset AI Module."
 			id = "reset_module"
-			req_tech = list()
+			req_tech = list("programming" = 5)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/reset"
 
 		purge_module
 			name = "Module Design (Purge)"
 			desc = "Allows for the construction of a Purge AI Module."
 			id = "purge_module"
-			req_tech = list()
+			req_tech = list("programming" = 5)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/purge"
 
 		freeformcore_module
 			name = "Core Module Design (Freeform)"
 			desc = "Allows for the construction of a Freeform AI Core Module."
 			id = "freeformcore_module"
-			req_tech = list()
+			req_tech = list("programming" = 6)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/freeformcore"
 
 		asimov
 			name = "Core Module Design (Asimov)"
 			desc = "Allows for the construction of a Asimov AI Core Module."
 			id = "asimov_module"
-			req_tech = list()
+			req_tech = list("programming" = 5)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/asimov"
 
 		paladin_module
 			name = "Core Module Design (P.A.L.A.D.I.N.)"
 			desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."
 			id = "paladin_module"
-			req_tech = list()
+			req_tech = list("programming" = 5)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/paladin"
 
 		tyrant_module
 			name = "Core Module Design (T.Y.R.A.N.T.)"
 			desc = "Allows for the construction of a T.Y.R.A.N.T. AI Module."
 			id = "tyrant_module"
-			req_tech = list()
+			req_tech = list("programming" = 5, "syndicate" = 2)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/tyrant"
 
 ///////////////////////////////////
@@ -371,20 +371,20 @@ datum
 			name = "Circuit Design (APLU \"Ripley\" Central Control module)"
 			desc = "Allows for the construction of a Safeguard AI Module."
 			id = "ripley_main"
-			req_tech = list()
+			req_tech = list("programming" = 3, "robotics" = 5)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/ripley/main"
 
 		ripley_peri
 			name = "Circuit Design (APLU \"Ripley\" Peripherals Control module)"
 			desc = "Allows for the construction of a Safeguard AI Module."
 			id = "ripley_peri"
-			req_tech = list()
+			req_tech = list("programming" = 3, "robotics" = 5)
 			reliability = 100
 			build_type = IMPRINTER
-			materials = list("$metal" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/ripley/peripherals"
 
 ////////////////////////////////////////
@@ -394,32 +394,52 @@ datum
 			name = "Design Storage Disk"
 			desc = "Produce additional disks for storing device designs."
 			id = "design_disk"
-			req_tech = list()
+			req_tech = list("programming" = 1)
 			reliability = 100
 			build_type = PROTOLATHE | AUTOLATHE
-			materials = list("$metal" = 50, "$glass" = 20)
+			materials = list("$metal" = 30, "$glass" = 10)
 			build_path = "/obj/item/weapon/disk/design_disk"
 
 		tech_disk
 			name = "Technology Data Storage Disk"
 			desc = "Produce additional disks for storing technology data."
 			id = "tech_disk"
-			req_tech = list()
+			req_tech = list("programming" = 1)
+			reliability = 100
+			build_type = PROTOLATHE | AUTOLATHE
+			materials = list("$metal" = 30, "$glass" = 10)
+			build_path = "/obj/item/weapon/disk/tech_disk"
+
+////////////////////////////////////////
+/////////////Stock Parts////////////////
+////////////////////////////////////////
+
+		basic_capacitor
+			name = "Basic Capacitor"
+			desc = "A stock part used in the construction of various devices."
+			id = "basic_capacitor"
+			req_tech = list("powerstorage" = 2)
+			reliability = 100
+			build_type = PROTOLATHE | AUTOLATHE
+			materials = list("$metal" = 50, "$glass" = 50)
+
+		basic_sensor
+			name = "Basic Sensor Module"
+			desc = "A stock part used in the construction of various devices."
+			id = "basic_senosr"
+			req_tech = list("magnets" = 2)
 			reliability = 100
 			build_type = PROTOLATHE | AUTOLATHE
 			materials = list("$metal" = 50, "$glass" = 20)
-			build_path = "/obj/item/weapon/disk/tech_disk"
 
-
-		dummy_design
-			name = "Dummy Design"
-			desc = "Just a design for testing purposes. Makes a d20"
-			id = "dummy_design"
-			req_tech = list()
+		basic_micro_mani
+			name = "Basic Micro Manipulator"
+			desc = "A stock part used in the construction of various devices."
+			id = "basic_micro_mani"
+			req_tech = list("robotics" = 1)
 			reliability = 100
-			build_type = PROTOLATHE
-			materials = list("$metal" = 2500, "$glass" = 2500)
-			build_path = "/obj/item/weapon/deconstruction_test"
+			build_type = PROTOLATHE | AUTOLATHE
+			materials = list("$metal" = 30)
 
 
 ////////////////////////////////////////
@@ -433,6 +453,8 @@ datum
 	icon_state = "datadisk2"
 	item_state = "card-id"
 	w_class = 1.0
+	m_amt = 30
+	g_amt = 10
 	var/datum/design/blueprint
 	New()
 		src.pixel_x = rand(-5.0, 5)

@@ -8,6 +8,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 */
 /obj/machinery/protolathe
+	name = "Protolathe"
 	density = 1
 	anchored = 1.0
 	icon_state = "protolathe"
@@ -65,3 +66,4 @@ Note: Must be placed west/left of and R&D console to function.
 			del(O)
 		busy = 0
 		src.updateUsrDialog()
+	return

@@ -7,8 +7,7 @@ Note: Must be placed east/right of an R&D console to function.
 */
 /obj/machinery/destructive_analyzer
 	name = "Destructive Analyzer"
-	//icon_state = "d_analyzer"
-	icon_state = "autolathe"
+	icon_state = "d_analyzer"
 	var/obj/item/weapon/loaded_item = null
 	var/obj/machinery/computer/rdconsole/linked_console
 	anchored = 1
@@ -30,6 +29,7 @@ Note: Must be placed east/right of an R&D console to function.
 			user.drop_item()
 			O.loc = src
 			user << "\blue You add the [O.name] to the machine!"
+			image('stationobjs.dmi', icon_state="d_analyzer_o")
 
 		return
 
@@ -41,4 +41,4 @@ Note: Must be placed east/right of an R&D console to function.
 	icon_state = "d20"
 	g_amt = 5000
 	m_amt = 5000
-	origin_tech = list("materials" = 4, "plasmatech" = 2, "syndicate" = 5)
+	origin_tech = list("materials" = 4, "plasmatech" = 2, "syndicate" = 5, "programming" = 9)

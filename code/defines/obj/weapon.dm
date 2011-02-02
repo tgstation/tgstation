@@ -1649,3 +1649,44 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	w_class = 2.0
 	var/timer = 10
 	var/atom/target = null
+
+/obj/item/weapon/stock_parts
+	name = "stock part"
+	desc = "What?"
+	icon = 'stock_parts.dmi'
+	New()
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/stock_parts/console_screen
+	name = "Console Screen"
+	desc = "Used in the construction of computers and other devices with a interactive console."
+	icon_state = "screen"
+	origin_tech = list("materials" = 2)
+	g_amt = 200
+
+/obj/item/weapon/stock_parts/capacitor
+	name = "Capacitor"
+	desc = "A basic capacitor used in the construction of a variety of devices."
+	icon_state = "capacitor"
+	var/max_charge = 100
+	origin_tech = list("energystorage" = 2)
+	m_amt = 50
+	g_amt = 50
+
+/obj/item/weapon/stock_parts/scanning_module
+	name = "Scanning Module"
+	desc = "A compact, high resolution scanning module used in the construction of certain devices."
+	icon_state = "scan_module"
+	var/rating = 1
+	origin_tech = list("magnets" = 2)
+	m_amt = 50
+	g_amt = 20
+
+/obj/item/weapon/stock_parts/micro_manipulator
+	name = "Micro Manipulator"
+	desc = "A tiny little manipulator used in the construction of certain devices."
+	icon_state = "micro_mani"
+	var/rating = 1
+	origin_tech = list("robotics" = 1)
+	m_amt = 30

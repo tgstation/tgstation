@@ -69,8 +69,9 @@ research holder datum.
 			var/matches = 0
 			for(var/req in T.req_tech)
 				for(var/datum/tech/known in known_tech)
-					if(req == known && T.req_tech[req] <= known_tech[known])
+					if((req == known.id) && (known.level >= T.req_tech[req]))
 						matches++
+						break
 			if(matches == T.req_tech.len)
 				return 1
 			else
@@ -81,11 +82,12 @@ research holder datum.
 		DesignHasReqs(var/datum/design/D)
 			if(D.req_tech.len == 0)
 				return 1
-			var/matches
+			var/matches = 0
 			for(var/req in D.req_tech)
 				for(var/datum/tech/known in known_tech)
-					if(req == known && D.req_tech[req] <= known_tech[known])
+					if((req == known.id) && (known.level >= D.req_tech[req]))
 						matches++
+						break
 			if(matches == D.req_tech.len)
 				return 1
 			else
@@ -100,26 +102,24 @@ research holder datum.
 						known.level = T.level
 					return
 			known_tech += T
-			RefreshResearch()
 			return
 
 		AddDesign2Known(var/datum/design/D)
 			for(var/datum/design/known in known_designs)
 				if(D.id == known.id)
-					if(D.reliability > known.reliability)
-						known.reliability = D.reliability
+					if(D.reliability_mod > known.reliability_mod)
+						known.reliability_mod = D.reliability_mod
 					return
 			known_designs += D
-			RefreshResearch()
 			return
 
 		//Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
 		//Input/Output: n/a
 		RefreshResearch()
-			for(var/datum/tech/PT in possible_tech - known_tech)
+			for(var/datum/tech/PT in possible_tech)
 				if(TechHasReqs(PT))
 					AddTech2Known(PT)
-			for(var/datum/design/PD in possible_designs - known_designs)
+			for(var/datum/design/PD in possible_designs)
 				if(DesignHasReqs(PD))
 					AddDesign2Known(PD)
 			for(var/datum/tech/T in known_tech)
@@ -188,7 +188,7 @@ datum
 
 		programming
 			name = "Data Theory Research"
-			desc = "The development of new computer and artificial intelligence systems."
+			desc = "The development of new computer and artificial intelligence and datat storage systems."
 			id = "programming"
 
 		syndicate
@@ -227,11 +227,12 @@ datum
 			id = "smestech"
 			req_tech = list("powerstorage" = 3, "magnets" = 3)
 
-		cybernetics
-			name = "Cybernetic Technology"
-			desc = "The development of advanced man/machine interfaces."
-			id = "cybernetics"
-			req_tech = list("biotech" = 3, "programming" = 3)
+		robotics
+			name = "Robotics Technology"
+			desc = "The development of advanced automated, autonomous machines."
+			id = "robotics"
+			req_tech = list("materials" = 3, "programming" = 3)
+
 
 /obj/item/weapon/disk/tech_disk
 	name = "Technology Disk"
@@ -240,6 +241,8 @@ datum
 	icon_state = "datadisk2"
 	item_state = "card-id"
 	w_class = 1.0
+	m_amt = 30
+	g_amt = 10
 	var/datum/tech/stored
 	New()
 		src.pixel_x = rand(-5.0, 5)

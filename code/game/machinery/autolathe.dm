@@ -224,6 +224,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/reagent_containers/glass/bucket(), \
 		new /obj/item/weapon/ammo/shell/blank(), \
 		new /obj/item/device/taperecorder(), \
+		new /obj/item/weapon/stock_parts/console_screen(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \

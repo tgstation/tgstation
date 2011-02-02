@@ -363,28 +363,3 @@
 
 	//too small to put a man in
 	large = 0
-
-/*////////////////Disk Closets//////////////////
-Note: All lockers are locked with a security level LOWER then the room the locker is placed in. This is intentional so that in
-case of station emergency where someone needs a disk out of the locker, someone with the lesser access (but still in the
-department) can break in and get the disk. */
-
-/obj/secure_closet/disk_security
-	name = "Security Data Storage"
-	req_access = list(access_brig)
-
-/obj/secure_closet/disk_medical
-	name = "Medical Data Storage"
-	req_access = list(access_medical)
-
-/obj/secure_closet/disk_command
-	name = "Command and Control Data Storage"
-	req_access = list(access_heads)
-
-/obj/secure_closet/disk_engineering
-	name = "Engineering Data Storage"
-	req_access = list(access_engine)
-
-/obj/secure_closet/disk_research
-	name = "Research and Development Data Storage"
-	req_access = list(access_tox)
