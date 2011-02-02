@@ -250,8 +250,8 @@
 				virus_type = /datum/disease/dnaspread
 			if("flu")
 				virus_type = /datum/disease/flu
-			if("t-virus")
-				virus_type = /datum/disease/t_virus
+//			if("t-virus")
+//				virus_type = /datum/disease/t_virus
 			if("pierrot's throat")
 				virus_type = /datum/disease/pierrot_throat
 	for(var/mob/living/carbon/human/H in world)
