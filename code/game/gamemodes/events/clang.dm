@@ -72,7 +72,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	//rod time!
 	var/obj/immovablerod/immrod = new /obj/immovablerod(start.loc)
-	world << "Rod in play, starting at [start.loc.x],[start.loc.y] and going to [end.loc.x],[end.loc.y]"
+//	world << "Rod in play, starting at [start.loc.x],[start.loc.y] and going to [end.loc.x],[end.loc.y]"
 	while (immrod.loc != end.loc)
 		step_towards(immrod, end)
 /*		for(var/turf/T in immrod.loc)
