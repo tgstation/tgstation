@@ -945,4 +945,4 @@ obj/item/brain
 	throw_speed = 5
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
-	max_amount = 10
+	max_amount = 60

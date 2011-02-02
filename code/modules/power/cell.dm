@@ -59,7 +59,7 @@
 	if(istype(G))
 	//	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 	//	s.set_up(3, 1, src)
-		s.start()
+	//	s.start()
 	//	if (prob(80+(G.siemens_coefficient*100)) && electrocute_mob(user, src, src))
 	//		return 1
 		if(charge < 1000)

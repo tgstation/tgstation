@@ -76,7 +76,7 @@ datum/controller/game_controller
 					M.Life()
 			else
 				M.Life()
-			if (M.mind)
+			if (M && M.mind) //I think it will be better if author place this under mob/Life() - rastaf0
 				if (M.mind.special_role == "Changeling")
 					M.chem_charges = between(0, (max((0.9 - (M.chem_charges / 50)), 0.1) + M.chem_charges), 50)
 		sleep(-1)

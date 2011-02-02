@@ -101,7 +101,26 @@ obj/structure
 /obj/structure/girder/blob_act()
 	if(prob(40))
 		del(src)
-
+		
+/obj/structure/girder/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			del(src)
+			return
+		if(2.0)
+			if (prob(30))
+				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+				new remains(loc)
+				del(src)
+			return
+		if(3.0)
+			if (prob(5))
+				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+				new remains(loc)
+				del(src)
+			return
+		else
+	return
 
 // LATTICE
 
