@@ -11,6 +11,12 @@
 	var/uses = 0
 	body_parts_covered = HANDS
 
+/obj/item/clothing/gloves/white
+	name = "White Gloves"
+	desc = "These look pretty fancy."
+	icon_state = "latex"
+	item_state = "lgloves"
+
 /obj/item/clothing/gloves/black
 	desc = "These gloves are fire-resistant."
 	name = "Black Gloves"
