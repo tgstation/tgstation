@@ -254,6 +254,7 @@
 				playsound(user.loc, 'syringeproj.ogg', 50, 1)
 
 				for(var/i=0, i<6, i++)
+					if(!D) break
 					if(D.loc == trg) break
 					step_towards(D,trg)
 
@@ -273,7 +274,7 @@
 
 					sleep(1)
 
-				spawn(10) del(D)
+				if (D) spawn(10) del(D)
 
 				return
 

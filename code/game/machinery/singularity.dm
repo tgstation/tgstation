@@ -154,7 +154,7 @@ However people seem to like it for some reason.
 	var/oldsrc = src
 	src = null //for spawn() working even after Del(), see byond documentation about sleep() -rastaf0
 	for(var/obj/machinery/power/collector_control/myCC in orange(collector_control_range,oldsrc))
-		spawn() myCC.updatecons()
+		spawn() if(myCC) myCC.updatecons()
 
 /obj/machinery/the_singularity
 	var/global/list/uneatable = list(\

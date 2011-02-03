@@ -351,6 +351,7 @@
 	return
 
 /obj/item/assembly/rad_prox/receive_signal(datum/signal/signal)
+	if (!src.part2 || !src.part1) return
 	if (signal.source == src.part2)
 		src.part1.send_signal("ACTIVATE")
 	return

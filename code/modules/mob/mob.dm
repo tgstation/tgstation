@@ -1225,7 +1225,8 @@
 			var/obj/item/weapon/grab/G = src.r_hand
 			if (!( L.container.Find(G.affecting) ))
 				L.container += G.affecting
-				G.affecting.ret_grab(L, 1)
+				if (G.affecting)
+					G.affecting.ret_grab(L, 1)
 		if (!( flag ))
 			if (L.master == src)
 				var/list/temp = list(  )
@@ -1497,6 +1498,7 @@
 			var/t = input("Message:", text("Private message to [M.key]"))  as text
 			if (!( t ))
 				return
+			if (!usr) return
 			if (usr.client && usr.client.holder)
 				M << "\red Admin PM from-<b>[key_name(usr, M, 0)]</b>: [t]"
 				usr << "\blue Admin PM to-<b>[key_name(M, usr, 1)]</b>: [t]"

@@ -166,6 +166,7 @@ datum
 			reagent_state = LIQUID
 
 			reaction_turf(var/turf/T, var/volume)
+				if (istype(T, /turf/space)) return
 				src = null
 				if(volume >= 3)
 					if(T:wet >= 1) return
@@ -210,16 +211,15 @@ datum
 			reagent_state = LIQUID
 
 			reaction_turf(var/turf/T, var/volume)
-				if (!istype(T, /turf/space))
-					src = null
-					if(T:wet >= 2) return
-					T:wet = 2
-					spawn(800)
-						T:wet = 0
-						if(T:wet_overlay)
-							T:overlays -= T:wet_overlay
-							T:wet_overlay = null
-
+				if (istype(T, /turf/space)) return
+				src = null
+				if(T:wet >= 2) return
+				T:wet = 2
+				spawn(800)
+					T:wet = 0
+					if(T:wet_overlay)
+						T:overlays -= T:wet_overlay
+						T:wet_overlay = null
 					return
 
 		bilk

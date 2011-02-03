@@ -84,7 +84,8 @@ obj/structure
 				user << "\blue Wall fully reinforced!"
 				var/turf/Tsrc = get_turf(src)
 				Tsrc.ReplaceWithRWall()
-				W:use(1)
+				if (W)
+					W:use(1)
 				del(src)
 				return
 		else
@@ -101,7 +102,7 @@ obj/structure
 /obj/structure/girder/blob_act()
 	if(prob(40))
 		del(src)
-		
+
 /obj/structure/girder/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -149,7 +150,8 @@ obj/structure
 		C:build(get_turf(src))
 		C:use(1)
 		playsound(src.loc, 'Genhit.ogg', 50, 1)
-		C.add_fingerprint(user)
+		if (C)
+			C.add_fingerprint(user)
 		del(src)
 		return
 	if (istype(C, /obj/item/weapon/weldingtool) && C:welding)
