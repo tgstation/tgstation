@@ -343,13 +343,13 @@
 
 		if ("Mime")
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/device/pda/mime(src), slot_r_store)
+			src.equip_if_possible(new /obj/item/device/pda/mime(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/mime(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/gloves/latex(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/mask/mime(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/head/beret(src), slot_head)
-			src.equip_if_possible(new /obj/item/clothing/belt/suspenders(src), slot_belt)
+			src.equip_if_possible(new /obj/item/clothing/suit/suspenders(src), slot_wear_suit)
 			src.verbs += /client/proc/mimespeak
 			src.verbs += /client/proc/mimewall
 			src.mind.special_verbs += /client/proc/mimespeak
@@ -657,11 +657,13 @@
 		pda.owner = src.real_name
 		pda.ownjob = src.wear_id.assignment
 		pda.name = "PDA-[src.real_name] ([pda.ownjob])"
+/*
 	if (istype(src.r_store, /obj/item/device/pda))  //damned mime PDAs not starting in belt slot
 		var/obj/item/device/pda/pda = src.r_store
 		pda.owner = src.real_name
 		pda.ownjob = src.wear_id.assignment
 		pda.name = "PDA-[src.real_name] ([pda.ownjob])"
+*/
 
 /client/proc/mimewall()
 	set category = "Mime"
