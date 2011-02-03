@@ -7,6 +7,7 @@
 	var/metal_amount = 0
 	var/operating = 0
 	var/obj/item/robot_parts/being_built = null
+	power_usage = 1000
 
 /obj/machinery/robotic_fabricator/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/stack/sheet/metal))
@@ -38,8 +39,6 @@
 /obj/machinery/robotic_fabricator/process()
 	if (stat & (NOPOWER | BROKEN))
 		return
-
-	use_power(1000)
 
 /obj/machinery/robotic_fabricator/attack_paw(user as mob)
 	return src.attack_hand(user)

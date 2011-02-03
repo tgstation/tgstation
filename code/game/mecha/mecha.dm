@@ -705,17 +705,15 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
-		if (W:get_fuel() < 2)
-			user << "\blue You need more welding fuel to complete this task."
+		if (W:remove_fuel(1,user))
+			if (src.internal_damage & MECHA_INT_TANK_BREACH)
+				src.internal_damage &= ~MECHA_INT_TANK_BREACH
+				user << "\blue You repair the damaged gas tank."
+		else
 			return
-		if (src.internal_damage & MECHA_INT_TANK_BREACH)
-			src.internal_damage &= ~MECHA_INT_TANK_BREACH
-			user << "\blue You repair the damaged gas tank."
-			W:use_fuel(1)
 		if(src.health<initial(src.health))
 			user << "\blue You repair some damage to [src.name]."
 			src.health += min(20, initial(src.health)-src.health)
-			W:use_fuel(1)
 		else
 			user << "The [src.name] is at full integrity"
 		return

@@ -1,7 +1,13 @@
 /obj/machinery
 	name = "machinery"
 	icon = 'stationobjs.dmi'
-	var/stat = 0
+	var
+		stat = 0
+		power_usage = 200
+		power_channel = EQUIP
+		//EQUIP,ENVIRON or LIGHT
+
+
 
 /obj/machinery/alarm
 	name = "alarm"
@@ -10,6 +16,7 @@
 	anchored = 1.0
 	var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = "1437"
+	power_usage = 5
 
 /obj/machinery/autolathe
 	name = "Autolathe"
@@ -30,6 +37,7 @@
 	var/hack_wire
 	var/disable_wire
 	var/shock_wire
+	power_usage = 50
 
 /obj/machinery/camera
 	name = "Security Camera"
@@ -43,7 +51,7 @@
 	anchored = 1.0
 	var/invuln = null
 	var/bugged = 0
-
+	power_usage = 5
 
 
 /obj/machinery/dispenser
@@ -55,6 +63,7 @@
 	var/o2tanks = 10.0
 	var/pltanks = 10.0
 	anchored = 1.0
+	power_usage = 10
 
 /obj/machinery/dna_scanner
 	name = "DNA Scanner/Implanter"
@@ -64,6 +73,7 @@
 	var/locked = 0.0
 	var/mob/occupant = null
 	anchored = 1.0
+	power_usage = 200
 
 /obj/machinery/dna_scannernew
 	name = "DNA Modifier"
@@ -73,7 +83,7 @@
 	var/locked = 0.0
 	var/mob/occupant = null
 	anchored = 1.0
-
+	power_usage = 200
 
 /obj/machinery/firealarm
 	name = "Fire Alarm"
@@ -85,6 +95,8 @@
 	var/timing = 0.0
 	var/lockdownbyai = 0
 	anchored = 1.0
+	power_usage = 5
+	power_channel = ENVIRON
 
 /obj/machinery/partyalarm
 	name = "Party Button"
@@ -96,7 +108,7 @@
 	var/timing = 0.0
 	var/lockdownbyai = 0
 	anchored = 1.0
-
+	power_usage = 5
 
 
 /obj/machinery/hologram_proj
@@ -143,6 +155,7 @@
 	var/id = 1.0
 	anchored = 1.0
 	var/drive_range = 50 //this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
+	power_usage = 50
 
 /obj/machinery/meter
 	name = "meter"
@@ -152,6 +165,7 @@
 	anchored = 1.0
 	var/frequency = 0
 	var/id
+	power_usage = 5
 
 /obj/machinery/nuclearbomb
 	desc = "Uh oh."
@@ -169,6 +183,7 @@
 	var/safety = 1.0
 	var/obj/item/weapon/disk/nuclear/auth = null
 	flags = FPRINT
+	power_usage = 0
 
 /obj/machinery/optable
 	name = "Operating Table"
@@ -176,7 +191,7 @@
 	icon_state = "table2-idle"
 	density = 1
 	anchored = 1.0
-
+	power_usage = 40
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
 
@@ -195,6 +210,7 @@
 	var/can_rotate = 1
 	var/can_maximize_speed = 0
 	var/one_person_only = 0
+	power_usage = 0
 
 /obj/machinery/vehicle/pod
 	name = "Escape Pod"
@@ -220,6 +236,7 @@
 	var/locked = 0.0
 	var/mob/occupant = null
 	anchored = 1.0
+	power_usage = 600
 
 /obj/machinery/scan_console
 	name = "DNA Scanner Access Console"
@@ -238,6 +255,7 @@
 	var/temp = null
 	var/obj/machinery/dna_scanner/connected = null
 	anchored = 1.0
+	power_usage = 400
 
 /obj/machinery/scan_consolenew
 	name = "DNA Modifier Access Console"
@@ -272,6 +290,7 @@
 	var/obj/machinery/dna_scanner/connected = null
 	var/obj/item/weapon/disk/data/diskette = null
 	anchored = 1.0
+	power_usage = 400
 
 /obj/machinery/sec_lock
 	name = "Security Pad"
@@ -283,6 +302,7 @@
 	var/obj/machinery/door/d2 = null
 	anchored = 1.0
 	req_access = list(access_brig)
+	power_usage = 5
 
 /obj/machinery/door_control
 	name = "Remote Door Control"
@@ -291,6 +311,7 @@
 	desc = "A remote control switch for a door."
 	var/id = null
 	anchored = 1.0
+	power_usage = 5
 
 /obj/machinery/driver_button
 	name = "Mass Driver Button"
@@ -300,6 +321,7 @@
 	var/id = null
 	var/active = 0
 	anchored = 1.0
+	power_usage = 5
 
 /obj/machinery/ignition_switch
 	name = "Ignition Switch"
@@ -309,10 +331,12 @@
 	var/id = null
 	var/active = 0
 	anchored = 1.0
+	power_usage = 5
 
 /obj/machinery/shuttle
 	name = "shuttle"
 	icon = 'shuttle.dmi'
+	power_usage = 0
 
 /obj/machinery/shuttle/engine
 	name = "engine"
@@ -358,17 +382,19 @@
 	name = "hub"
 	icon_state = "tele0"
 	var/accurate = 0
+	power_usage = 100
 
 /obj/machinery/teleport/station
 	name = "station"
 	icon_state = "controller"
 	var/active = 0
 	var/engaged = 0
+	power_usage = 100
 
 /obj/machinery/wire
 	name = "wire"
 	icon = 'power_cond.dmi'
-
+	power_usage = 1
 
 /obj/machinery/power
 	name = null
@@ -378,6 +404,7 @@
 	var/netnum = 0
 	var/directwired = 1		// by default, power machines are connected by a cable in a neighbouring turf
 							// if set to 0, requires a 0-X cable on this turf
+	power_usage = 0
 
 /obj/machinery/power/terminal
 	name = "terminal"
@@ -420,36 +447,7 @@
 	icon_state = "power"
 	density = 1
 	anchored = 1
-
-#define SMESMAXCHARGELEVEL 200000
-#define SMESMAXOUTPUT 200000
-
-/obj/machinery/power/smes/magical
-	name = "magical power storage unit"
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
-	process()
-		capacity = INFINITY
-		charge = INFINITY
-		..()
-
-/obj/machinery/power/smes
-	name = "power storage unit"
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
-	icon_state = "smes"
-	density = 1
-	anchored = 1
-	var/output = 30000
-	var/lastout = 0
-	var/loaddemand = 0
-	var/capacity = 5e6
-	var/charge = 1e6
-	var/charging = 0
-	var/chargemode = 0
-	var/chargecount = 0
-	var/chargelevel = 30000
-	var/online = 1
-	var/n_tag = null
-	var/obj/machinery/power/terminal/terminal = null
+	power_usage = 600
 
 /obj/machinery/power/solar
 	name = "solar panel"
@@ -467,6 +465,7 @@
 	var/ndir = SOUTH
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control
+	power_usage = 0
 
 /obj/machinery/power/solar_control
 	name = "solar panel control"
@@ -484,7 +483,7 @@
 	var/trackrate = 600		// 300-900 seconds
 	var/trackdir = 1		// 0 =CCW, 1=CW
 	var/nexttime = 0
-
+	power_usage = 500
 
 
 /obj/machinery/cell_charger
@@ -495,6 +494,7 @@
 	var/obj/item/weapon/cell/charging = null
 	var/chargelevel = -1
 	anchored = 1
+	power_usage = 50
 
 /obj/machinery/light_switch
 	desc = "A light switch"
@@ -525,6 +525,7 @@
 	icon_state = "mw"
 	density = 1
 	anchored = 1
+	power_usage = 100
 	var/egg_amount = 0 //Current number of eggs inside
 	var/flour_amount = 0 //Current amount of flour inside
 	var/water_amount = 0 //Current amount of water inside
@@ -563,6 +564,8 @@
 	anchored = 1
 	var/broken = 0
 	var/processing = 0
+	power_usage = 50
+
 
 /obj/machinery/gibber
 	name = "Gibber"
@@ -575,6 +578,7 @@
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
 	var/mob/occupant // Mob who has been put inside
+	power_usage = 50
 
 /obj/machinery/holopad
 	name = "holopad"
@@ -583,3 +587,4 @@
 	anchored = 1
 	var/state = "off"
 	var/slave_holo = null
+	power_usage = 50

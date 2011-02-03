@@ -63,6 +63,7 @@
 	var/wasvalid = 0
 	var/lastfired = 0
 	var/shot_delay = 30 //3 seconds between shots
+	power_usage = 100
 
 /obj/machinery/turretcover
 	name = "pop-up turret cover"
@@ -107,7 +108,6 @@
 	lastfired = world.time
 	if (src.cover==null)
 		src.cover = new /obj/machinery/turretcover(src.loc)
-	use_power(50)
 	var/loc = src.loc
 	if (istype(loc, /turf))
 		loc = loc:loc
@@ -252,10 +252,10 @@
 	var/obj/beam/a_laser/A
 	if (src.lasers)
 		A = new /obj/beam/a_laser( loc )
-		use_power(50)
+		use_power(500)
 	else
 		A = new /obj/bullet/electrode( loc )
-		use_power(100)
+		use_power(200)
 
 	if (!( istype(U, /turf) ))
 		//A = null

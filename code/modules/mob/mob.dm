@@ -1381,7 +1381,7 @@
 			namecounts[name] = 1
 		creatures[name] = D
 
-	for (var/obj/machinery/the_singularity/S in world)
+	for (var/obj/machinery/singularity/S in world)
 		var/name = "Singularity"
 		if (name in names)
 			namecounts[name]++

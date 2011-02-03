@@ -53,8 +53,6 @@
 			src.state = "off"
 			src.icon_state = "holopad0"
 			src.slave_holo = null
-		else
-			use_power(300)
 	if(src.state == "off" && src.slave_holo) //usually happens if the power ran out
 		del(src.slave_holo) //code for returning the control back to the AI is in the mob's del() code
 		src.slave_holo = null

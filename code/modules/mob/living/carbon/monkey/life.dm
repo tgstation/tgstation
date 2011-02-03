@@ -40,6 +40,9 @@
 	//Disease Check
 	handle_virus_updates()
 
+	//Changeling things
+	handle_changeling()
+
 	//Handle temperature/pressure differences between body and environment
 	if(environment)	// More error checking -- TLE
 		handle_environment(environment)
@@ -565,3 +568,8 @@
 				src.density = 1
 			else
 				src.density = !src.lying
+
+		handle_changeling()
+			if (mind)
+				if (mind.special_role == "Changeling")
+					src.chem_charges = between(0, (max((0.9 - (chem_charges / 50)), 0.1) + chem_charges), 50)

@@ -366,23 +366,23 @@
 			user << "\blue You need more welding fuel to complete this task."
 			return
 		user << "You start welding APC frame..."
-		W:use_fuel(2)
-		W:eyecheck(user)
-		playsound(src.loc, 'Welder.ogg', 50, 1)
-		if(do_after(user, 50))
-			if (emagged || malfhack || (stat & BROKEN) || opened==2)
-				new /obj/item/stack/sheet/metal(loc)
-				user.visible_message(\
-					"\red [src] has been cut apart by [user.name] with the weldingtool.",\
-					"You disassembled brocken APC frame.",\
-					"\red You hear welding.")
-			else
-				new /obj/item/apc_frame(loc)
-				user.visible_message(\
-					"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
-					"You cut APC frame from the wall.",\
-					"\red You hear welding.")
-			del(src)
+		if(W:remove_fuel(2))
+			playsound(src.loc, 'Welder.ogg', 50, 1)
+			if(do_after(user, 50))
+				if (emagged || malfhack || (stat & BROKEN) || opened==2)
+					new /obj/item/stack/sheet/metal(loc)
+					user.visible_message(\
+						"\red [src] has been cut apart by [user.name] with the weldingtool.",\
+						"You disassembled brocken APC frame.",\
+						"\red You hear welding.")
+				else
+					new /obj/item/apc_frame(loc)
+					user.visible_message(\
+						"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
+						"You cut APC frame from the wall.",\
+						"\red You hear welding.")
+				del(src)
+				return
 	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
 		emagged = 0
 		if (opened==2)
@@ -810,7 +810,7 @@
 						else
 							malfai << "Hack complete. The APC is now under your exclusive control. Unable to fuse interface due to insufficient cell charge."
 					else
-						malfai << "Hack complete. The APC is now under your exclusive control. Unable to fuse interface due to lack of cell do discharge."
+						malfai << "Hack complete. The APC is now under your exclusive control. Unable to fuse interface due to lack of cell to discharge."
 
 
 		src.updateDialog()

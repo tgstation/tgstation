@@ -132,33 +132,19 @@
 
 		else if(istype(I, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/W = I
-			if(W.welding)
-				if(W.get_fuel() > 2)
-					W.use_fuel(2)
-					playsound(src.loc, 'Welder2.ogg', 100, 1)
-
-					// check if anything changed over 2 seconds
-					var/turf/uloc = user.loc
-					var/atom/wloc = W.loc
-					user << "Welding the pipe in place."
-					sleep(20)
-					if(user.loc == uloc && wloc == W.loc)
-
-						update()
-						var/pipetype = dpipetype()
-						var/obj/disposalpipe/P = new pipetype(src.loc)
-						P.base_icon_state = base_state
-						P.dir = dir
-						P.dpdir = dpdir
-						P.updateicon()
-
-						del(src)
-					else
-						user << "You must stay still while welding."
-						return
-
-
-
-				else
-					user << "You need more welding fuel to complete this task."
+			if(W.remove_fuel(2))
+				playsound(src.loc, 'Welder2.ogg', 100, 1)
+				user << "Welding the pipe in place."
+				if(do_after(user, 20))
+					update()
+					var/pipetype = dpipetype()
+					var/obj/disposalpipe/P = new pipetype(src.loc)
+					P.base_icon_state = base_state
+					P.dir = dir
+					P.dpdir = dpdir
+					P.updateicon()
+					del(src)
 					return
+			else
+				user << "You need more welding fuel to complete this task."
+				return

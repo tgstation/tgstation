@@ -351,9 +351,10 @@
 	statpanel("Status")
 	stat(null, text("Intent: []", src.a_intent))
 	stat(null, text("Move Mode: []", src.m_intent))
-	if (src.client.statpanel == "Status")
-		if (src.mind.special_role == "Changeling")
-			stat("Chemical Storage", src.chem_charges)
+	if(client && mind)
+		if (src.client.statpanel == "Status")
+			if (src.mind.special_role == "Changeling")
+				stat("Chemical Storage", src.chem_charges)
 	return
 
 /mob/living/carbon/monkey/update_clothing()

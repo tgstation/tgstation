@@ -41,6 +41,9 @@
 	//Disease Check
 	handle_virus_updates()
 
+	//Changeling things
+	handle_changeling()
+
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
 
@@ -720,7 +723,7 @@
 					if(!seer)
 						src.see_invisible = 0
 
-			if (istype(src.head, /obj/item/clothing/head/helmet/welding) && tinted_weldhelh)	
+			if (istype(src.head, /obj/item/clothing/head/helmet/welding) && tinted_weldhelh)
 				src.see_in_dark = 0
 
 			if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
@@ -866,6 +869,13 @@
 							if(!M.nodamage)
 								M.bruteloss += 5
 							src.nutrition += 10
+
+		handle_changeling()
+			if (mind)
+				if (mind.special_role == "Changeling")
+					src.chem_charges = between(0, (max((0.9 - (chem_charges / 50)), 0.1) + chem_charges), 50)
+
+
 /*
 			// Commented out so hunger system won't be such shock
 			// Damage and effects from not eating

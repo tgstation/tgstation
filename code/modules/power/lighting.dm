@@ -19,7 +19,10 @@
 	desc = "A lighting fixture."
 	anchored = 1
 	layer = 5  					// They were appearing under mobs which is a little weird - Ostaf
+	power_usage = 0
+	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = 0					// 1 if on, 0 if off
+	var/on_gs = 0
 	var/brightness = 8			// luminosity when on, also used in power calculation
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 
@@ -63,8 +66,22 @@
 // create a new lighting fixture
 /obj/machinery/light/New()
 	..()
+
+	switch(fitting)
+		if("tube")
+			brightness = rand(6,9)
+		if("bulb")
+			brightness = rand(3,6)
 	spawn(1)
 		update()
+
+/obj/machinery/light/Del()
+	var/area/A = get_area(src)
+	if(A)
+		on = 0
+//		A.update_lights()
+	..()
+
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update()
@@ -100,7 +117,12 @@
 				icon_state = "[base_state]-burned"
 				on = 0
 				sd_SetLuminosity(0)
-
+	power_usage = (luminosity * 20)
+	if(on != on_gs)
+		on_gs = on
+//		var/area/A = get_area(src)
+//		if(A)
+//			A.update_lights()
 
 
 // attempt to set the light's on/off status
@@ -129,8 +151,6 @@
 
 /obj/machinery/light/attackby(obj/item/W, mob/user)
 
-	if (istype(user, /mob/living/silicon))
-		return
 
 	// attempt to insert light
 	if(istype(W, /obj/item/weapon/light))
@@ -145,6 +165,7 @@
 				user << "You insert the [L.name]."
 				switchcount = L.switchcount
 				rigged = L.rigged
+				brightness = L.brightness
 				del(L)
 
 				on = has_power()
@@ -255,6 +276,7 @@
 	var/obj/item/weapon/light/L = new light_type()
 	L.status = status
 	L.rigged = rigged
+	L.brightness = src.brightness
 	L.loc = usr
 	L.layer = 20
 	if(user.hand)
@@ -318,8 +340,9 @@
 #define LIGHTING_POWER_FACTOR 20		//20W per unit luminosity
 
 /obj/machinery/light/process()
-	if(on)
-		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
+	return
+//	if(on)
+//		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
 
 // called when area power state changes
 
@@ -402,6 +425,7 @@
 	var/switchcount = 0	// number of times switched
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
+	var/brightness = 2 //how much light it gives off
 
 /obj/item/weapon/light/tube
 	name = "light tube"
@@ -410,6 +434,7 @@
 	base_state = "ltube"
 	item_state = "c_tube"
 	g_amt = 200
+	brightness = 8
 
 /obj/item/weapon/light/bulb
 	name = "light bulb"
@@ -418,6 +443,7 @@
 	base_state = "lbulb"
 	item_state = "contvapour"
 	g_amt = 100
+	brightness = 5
 
 // update the icon state and description of the light
 /obj/item/weapon/light
@@ -436,6 +462,11 @@
 
 /obj/item/weapon/light/New()
 	..()
+	switch(name)
+		if("light tube")
+			brightness = rand(6,9)
+		if("light bulb")
+			brightness = rand(4,6)
 	update()
 
 

@@ -11,6 +11,7 @@ datum/controller/game_controller
 	setup()
 		if(master_controller && (master_controller != src))
 			del(src)
+			return
 			//There can be only one master.
 
 		if(!air_master)
@@ -76,9 +77,7 @@ datum/controller/game_controller
 					M.Life()
 			else
 				M.Life()
-			if (M && M.mind) //I think it will be better if author place this under mob/Life() - rastaf0
-				if (M.mind.special_role == "Changeling")
-					M.chem_charges = between(0, (max((0.9 - (M.chem_charges / 50)), 0.1) + M.chem_charges), 50)
+
 		sleep(-1)
 
 		for(var/datum/disease/D in active_diseases)
@@ -86,6 +85,9 @@ datum/controller/game_controller
 
 		for(var/obj/machinery/machine in machines)
 			machine.process()
+			if(machine)//Testing this for now, might change it up later - Mport
+				if(machine.power_usage && machine.power_channel)
+					machine.use_power(machine.power_usage,machine.power_channel)
 
 		sleep(-1)
 		sleep(1)

@@ -46,7 +46,6 @@ obj/machinery/atmospherics/binary/pump
 			return
 		if(!on)
 			return 0
-		use_power(5)
 
 		var/output_starting_pressure = air2.return_pressure()
 
@@ -69,7 +68,6 @@ obj/machinery/atmospherics/binary/pump
 			if(network2)
 				network2.update = 1
 
-			use_power(round(air2.volume/12))
 		return 1
 
 	//Radio remote control

@@ -97,8 +97,7 @@
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 				if (isnull(removed)) //in space
 					return
-				var/power = (scrub_Toxins+scrub_CO2+scrub_N2O)*volume_rate/12
-				use_power(round(power+5), ENVIRON)
+
 				//Filter it
 				var/datum/gas_mixture/filtered_out = new
 				filtered_out.temperature = removed.temperature
@@ -130,7 +129,7 @@
 		else //Just siphoning all air
 			if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
 				return
-			use_power(round(volume_rate/12)+5, ENVIRON)
+
 			var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)

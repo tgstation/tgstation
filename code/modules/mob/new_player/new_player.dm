@@ -3,6 +3,7 @@ mob/new_player
 
 	var/datum/preferences/preferences
 	var/ready = 0
+	var/spawning = 0
 
 	invisibility = 101
 
@@ -80,6 +81,8 @@ mob/new_player
 	Logout()
 		ready = 0
 		..()
+		if(!spawning)
+			del(src)
 		return
 
 	verb
@@ -141,6 +144,8 @@ mob/new_player
 
 			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 				var/mob/dead/observer/observer = new()
+
+				src.spawning = 1
 
 				close_spawn_windows()
 				var/obj/O = locate("landmark*Observer-Start")
@@ -397,6 +402,7 @@ mob/new_player
 		src << browse(dat, "window=latechoices;size=300x640;can_close=0")
 
 	proc/create_character()
+		src.spawning = 1
 		var/mob/living/carbon/human/new_character = new(src.loc)
 
 		close_spawn_windows()

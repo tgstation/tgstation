@@ -781,8 +781,7 @@ Auto Patrol: []"},
 		src.icon_state = "ed209_shell"
 		del(W)
 	else if ((istype(W, /obj/item/weapon/weldingtool)) && (src.build_step == 3))
-		if ((W:welding) && (W:get_fuel() >= 1))
-			W:use_fuel(1)
+		if (W:remove_fuel(1,user))
 			src.build_step++
 			src.name = "shielded frame assembly"
 			user << "You welded the vest to [src]!"
@@ -864,10 +863,8 @@ Auto Patrol: []"},
 	var/obj/beam/a_laser/A
 	if (src.emagged)
 		A = new /obj/beam/a_laser( loc )
-		use_power(50)
 	else
 		A = new /obj/bullet/electrode( loc )
-		use_power(100)
 
 	if (!( istype(U, /turf) ))
 		//A = null

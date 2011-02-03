@@ -45,7 +45,7 @@
 			src.verbs += /proc/toggle_adminmsg
 
 			src.verbs += /client/proc/triple_ai					//triple AIs~ --NEO
-
+			src.verbs += /client/proc/cmd_mass_modify_object_variables
 			// Admin "must have"
 			src.verbs += /client/proc/cmd_admin_list_occ
 			src.verbs += /client/proc/cmd_admin_mute
@@ -81,7 +81,7 @@
 			src.verbs += /proc/givetestverbs
 			src.verbs += /obj/admins/proc/spawn_atom
 			src.verbs += /obj/admins/proc/toggletintedweldhelmets
-			
+
 
 			// Admin helpers
 			src.verbs += /client/proc/cmd_admin_attack_log
@@ -171,7 +171,7 @@
 			src.verbs += /obj/admins/proc/voteres 				//toggle votes
 			src.verbs += /client/proc/deadchat					//toggles deadchat
 			src.verbs += /proc/toggle_adminmsg
-
+			src.verbs += /client/proc/cmd_mass_modify_object_variables
 			// Admin "must have"
 			src.verbs += /client/proc/cmd_admin_list_occ
 			src.verbs += /client/proc/cmd_admin_mute
@@ -1093,7 +1093,7 @@
 	src.verbs -= /client/proc/cmd_admin_prison
 	src.verbs -= /obj/admins/proc/unprison
 	src.verbs -= /proc/togglebuildmode
-
+	src.verbs -= /client/proc/cmd_mass_modify_object_variables
 	// Unnecessary commands
 	src.verbs -= /client/proc/funbutton
 	src.verbs -= /client/proc/make_sound 				// -- TLE

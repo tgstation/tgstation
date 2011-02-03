@@ -1,5 +1,7 @@
 /obj/machinery/alarm
 
+	power_usage = 5
+	power_channel = ENVIRON
 	var/frequency = 1439
 	var/list/sensors = list()
 	var/list/vents = list()
@@ -61,7 +63,7 @@
 				return
 			spawn (10)
 				send_signal(m_id, "init", new_name )
-			
+
 		set_frequency(new_frequency)
 			radio_controller.remove_object(src, frequency)
 			frequency = new_frequency
@@ -352,7 +354,6 @@
 		icon_state = "alarmp"
 		return
 
-	use_power(5, ENVIRON)
 
 	if (!( istype(location, /turf) ))
 		return 0
@@ -573,8 +574,6 @@
 /obj/machinery/firealarm/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
-
-	use_power(10, ENVIRON)
 
 	var/area/A = src.loc
 	A = A.loc

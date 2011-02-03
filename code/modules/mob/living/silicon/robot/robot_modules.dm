@@ -45,7 +45,7 @@
 	..()
 	src.modules += new /obj/item/weapon/extinguisher(src)
 	src.modules += new /obj/item/weapon/screwdriver(src)
-	src.modules += new /obj/item/weapon/weldingtool(src)
+	src.modules += new /obj/item/weapon/weldingtool/largetank(src)
 	src.modules += new /obj/item/weapon/wrench(src)
 	src.modules += new /obj/item/device/analyzer(src)
 	src.modules += new /obj/item/device/flashlight(src)

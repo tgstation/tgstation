@@ -34,6 +34,7 @@
 		var/obj/cable/attached		// the attached cable
 		var/storedpower = 0
 		flags = FPRINT | CONDUCT
+		power_usage = 500
 
 /obj/machinery/shield
 		name = "shield"

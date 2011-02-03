@@ -1126,21 +1126,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/weapon/weldingtool
-	name = "weldingtool"
-	icon = 'items.dmi'
-	icon_state = "welder"
-	var/welding = 0
-	var/status = 0	//flamethrower construction :shobon:
-	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 3.0
-	throwforce = 5.0
-	throw_speed = 1
-	throw_range = 5
-	w_class = 2.0
-	m_amt = 70
-	g_amt = 30
-
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
 	name = "wire"

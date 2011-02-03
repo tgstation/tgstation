@@ -281,6 +281,7 @@
 
 		process_locks()
 			if(weapon_lock)
+				src.module_active = null
 				src.module_state_1 = null
 				src.module_state_2 = null
 				src.module_state_3 = null

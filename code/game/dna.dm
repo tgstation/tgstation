@@ -645,7 +645,6 @@
 /obj/machinery/scan_consolenew/process() //not really used right now
 	if(stat & (NOPOWER|BROKEN))
 		return
-	use_power(250) // power stuff
 	if (!( src.status )) //remove this
 		return
 	return

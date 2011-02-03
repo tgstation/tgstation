@@ -11,7 +11,7 @@
 	name = "status display"
 	anchored = 1
 	density = 1
-
+	power_usage = 250
 	var/mode = 1	// 0 = Blank
 					// 1 = Shuttle timer
 					// 2 = Arbitrary message(s)
@@ -48,8 +48,6 @@
 		if(stat & NOPOWER)
 			overlays = null
 			return
-
-		use_power(200)
 
 		update()
 
@@ -269,8 +267,6 @@
 		if(stat & NOPOWER)
 			overlays = null
 			return
-
-		use_power(200)
 
 		update()
 

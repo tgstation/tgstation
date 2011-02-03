@@ -1,4 +1,5 @@
 obj/machinery/atmospherics/pipe
+	power_usage = 0
 
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent
@@ -205,14 +206,14 @@ obj/machinery/atmospherics/pipe
 			normalize_dir()
 			var/node1_dir
 			var/node2_dir
-			
+
 			for(var/direction in cardinal)
 				if(direction&initialize_directions)
 					if (!node1_dir)
 						node1_dir = direction
 					else if (!node2_dir)
 						node2_dir = direction
-			
+
 			for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
 				if(target.initialize_directions & get_dir(target,src))
 					node1 = target
@@ -298,14 +299,14 @@ obj/machinery/atmospherics/pipe
 			normalize_dir()
 			var/node1_dir
 			var/node2_dir
-			
+
 			for(var/direction in cardinal)
 				if(direction&initialize_directions_he)
 					if (!node1_dir)
 						node1_dir = direction
 					else if (!node2_dir)
 						node2_dir = direction
-			
+
 			for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,node1_dir))
 				if(target.initialize_directions_he & get_dir(target,src))
 					node1 = target

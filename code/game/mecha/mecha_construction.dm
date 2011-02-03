@@ -139,12 +139,10 @@
 	custom_action(step, atom/used_atom, mob/user)
 		if(istype(used_atom, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/W = used_atom
-			if(W.get_fuel() < 2)
-				user << ("You need more fuel to complete current task")
-				return 0
+			if (W:remove_fuel(2, user))
+				playsound(holder, 'Welder2.ogg', 50, 1)
 			else
-				W.use_fuel(1)
-				playsound(holder, 'Welder.ogg', 50, 1)
+				return 0
 		else if(istype(used_atom, /obj/item/weapon/wrench))
 			playsound(holder, 'Ratchet.ogg', 50, 1)
 

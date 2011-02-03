@@ -26,18 +26,17 @@
 		if(salvage_num <= 0)
 			user << "You can't see anything of value left on this wreck."
 			return
-		if (W:get_fuel() < 2)
-			user << "\blue You need more welding fuel to complete this task."
-		else
+		if (W:remove_fuel(1,user))
 			var/type = prob(70)?pick(welder_salvage):null
 			if(type)
 				var/N = new type(get_turf(user))
 				user.visible_message("[user] cuts [N] from [src]", "You cut [N] from [src]", "You hear a sound of welder nearby")
-				W:use_fuel(1)
 			else
 				user << "You failed to salvage anything valuable from [src]."
 			salvage_num--
-		return
+		else
+			user << "\blue You need more welding fuel to complete this task."
+			return
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(salvage_num <= 0)
 			user << "You can't see anything of value left on this wreck."

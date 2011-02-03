@@ -1,6 +1,37 @@
 // the SMES
 // stores power
 
+#define SMESMAXCHARGELEVEL 200000
+#define SMESMAXOUTPUT 200000
+
+/obj/machinery/power/smes/magical
+	name = "magical power storage unit"
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
+	process()
+		capacity = INFINITY
+		charge = INFINITY
+		..()
+
+/obj/machinery/power/smes
+	name = "power storage unit"
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
+	icon_state = "smes"
+	density = 1
+	anchored = 1
+	var/output = 50000
+	var/lastout = 0
+	var/loaddemand = 0
+	var/capacity = 5e6
+	var/charge = 1e6
+	var/charging = 0
+	var/chargemode = 0
+	var/chargecount = 0
+	var/chargelevel = 50000
+	var/online = 1
+	var/n_tag = null
+	var/obj/machinery/power/terminal/terminal = null
+
+
 /obj/machinery/power/smes/New()
 	..()
 

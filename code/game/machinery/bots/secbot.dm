@@ -756,8 +756,7 @@ Auto Patrol: []"},
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if ((istype(W, /obj/item/weapon/weldingtool)) && (!src.build_step))
-		if ((W:welding) && (W:get_fuel() >= 1))
-			W:use_fuel(1)
+		if(W:remove_fuel(1,user))
 			src.build_step++
 			src.overlays += image('aibots.dmi', "hs_hole")
 			user << "You weld a hole in [src]!"

@@ -4,7 +4,7 @@
 	icon_state = "pod_0"
 	density = 1
 	anchored = 1.0
-
+	power_usage = 80
 	var/mob/occupant = null
 
 

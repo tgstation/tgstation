@@ -71,3 +71,9 @@
 		var/rendered = "<span class='game say'><span class='name'>[M.name]: </span> <span class='message'>[text]</span></span>"
 		mo.show_message(rendered, 2)
 	return
+
+/proc/is_item_in_list(var/list/L, var/atom/A)
+	for(var/atom/O in L)
+		if(O == A)
+			return 1
+	return 0

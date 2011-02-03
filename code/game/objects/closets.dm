@@ -142,10 +142,9 @@
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
 
 		if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
-			if (W:get_fuel() < 2)
+			if (!W:remove_fuel(1,user))
 				user << "\blue You need more welding fuel to complete this task."
 				return
-			W:use_fuel(1)
 			new /obj/item/stack/sheet/metal(src.loc)
 			for (var/mob/M in viewers(src))
 				M.show_message("\red [src] has been cut apart by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
@@ -158,11 +157,9 @@
 			W.loc = src.loc
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
-		if (W:get_fuel() < 2)
+		if (!W:remove_fuel(1,user))
 			user << "\blue You need more welding fuel to complete this task."
 			return
-		W:eyecheck(user)
-		W:use_fuel(1)
 		src.welded =! src.welded
 		for(var/mob/M in viewers(src))
 			M.show_message("\red [src] has been [welded?"welded shut":"unwelded"] by [user.name].", 3, "\red You hear welding.", 2)

@@ -185,18 +185,16 @@
 
 /mob/living/silicon/hivebot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
-		if (W:get_fuel() > 2)
-			W:use_fuel(1)
+		if (W:remove_fuel(4))
+			src.bruteloss -= 30
+			if(src.bruteloss < 0) src.bruteloss = 0
+			src.updatehealth()
+			src.add_fingerprint(user)
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
 		else
 			user << "Need more welding fuel!"
 			return
-		src.bruteloss -= 30
-		if(src.bruteloss < 0) src.bruteloss = 0
-		src.updatehealth()
-		src.add_fingerprint(user)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [user] has fixed some of the dents on [src]!"), 1)
-
 
 /mob/living/silicon/hivebot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 

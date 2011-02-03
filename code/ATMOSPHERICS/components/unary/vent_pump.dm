@@ -6,7 +6,6 @@
 	desc = "Has a valve and pump attached to it"
 
 	level = 1
-	var/channel = ENVIRON
 	var/area_uid
 	var/id = null
 
@@ -42,7 +41,6 @@
 		name = "Large Air Vent"
 		New()
 			..()
-			channel = EQUIP
 			air_contents.volume = 1000
 
 	update_icon()
@@ -66,7 +64,6 @@
 		if(!on)
 			return 0
 
-		use_power(5, channel)
 		if(welded)
 			return 0
 
@@ -87,7 +84,6 @@
 
 					var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
-					use_power(round(air_contents.volume/12), channel)
 					loc.assume_air(removed)
 
 					if(network)
@@ -108,8 +104,6 @@
 					if (isnull(removed)) //in space
 						return
 
-
-					use_power(round(air_contents.volume/12), channel)
 					air_contents.merge(removed)
 
 					if(network)
@@ -151,7 +145,7 @@
 
 	initialize()
 		..()
-		
+
 		//some vents work his own spesial way
 		radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
 		radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
@@ -228,22 +222,21 @@
 			on = 0
 		return
 
-	attackby(obj/item/W, mob/user)			// Added for aliens -- TLE
-		// Stolen from the Emitter welding code of the Singularity
-		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
-			if (W:get_fuel() < 1)
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/weapon/weldingtool))
+			if (W:remove_fuel(2,user))
+				user << "\blue Now welding the vent."
+				if(do_after(user, 20))
+					playsound(src.loc, 'Welder2.ogg', 50, 1)
+					if(!welded)
+						user.visible_message("[user] welds the vent shut.", "You weld the vent shut.", "You hear welding.")
+						welded = 1
+					else
+						user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
+						welded = 0
+			else
 				user << "\blue You need more welding fuel to complete this task."
 				return 1
-			W:use_fuel(1)
-			playsound(src.loc, 'Welder2.ogg', 50, 1)
-
-			if(!welded)
-				user.visible_message("[user] welds the vent shut.", "You weld the vent shut.", "You hear welding.")
-				welded = 1
-			else
-				user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
-				welded = 0
-
 	examine()
 		set src in oview(1)
 		..()
@@ -251,10 +244,10 @@
 			usr << "It seems welded shut."
 
 	power_change()
-		if(powered(channel))
-			stat &= ~NOPOWER
-		else
-			stat |= NOPOWER
+//		if(powered(EVNIRON))
+//			stat &= ~NOPOWER
+//		else
+//			stat |= NOPOWER
 		update_icon()
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)

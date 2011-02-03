@@ -16,6 +16,7 @@ the blender or the processor: Processor items are solid objects and Blender resu
 	icon_state = "blender_e"
 	density = 1
 	anchored = 1
+	power_usage = 20
 	flags = OPENCONTAINER		//So that you can pour stuff into it.
 	var/processing = 0			//This turns on (1) while it is processing so you don't accidentally get multiples from the same item.
 	var/container = 1			//Is there a jug attached? Could have been done with a for loop but it's less code this way.

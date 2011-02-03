@@ -19,7 +19,7 @@
 
 		src.icon = 'alert.dmi'
 		src.layer = 10
-
+//		update_lights()
 		if(name == "Space")			// override defaults for space
 			requires_power = 0
 
@@ -56,7 +56,15 @@
 		A = A.loc
 	return null
 */
-
+/*
+/area/proc/update_lights()
+	var/new_power = 0
+	for(var/obj/machinery/light/L in src.contents)
+		if(L.on)
+			new_power += (L.luminosity * 20)
+	lighting_power_usage = new_power
+	return
+*/
 /area/proc/poweralert(var/state, var/source)
 	if (state != poweralm)
 		poweralm = state

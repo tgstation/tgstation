@@ -143,7 +143,7 @@
 /obj/machinery/computer/aifixer/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	use_power(500)
+
 
 	src.updateDialog()
 	return

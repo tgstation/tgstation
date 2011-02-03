@@ -43,6 +43,8 @@
 	return
 
 /obj/machinery/power/solar/proc/update_solar_exposure()
+	if(!sun)
+		return
 	if(obscured)
 		sunfrac = 0
 		return

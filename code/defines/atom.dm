@@ -76,6 +76,9 @@ obj
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
 
+/atom/proc/emp_act(var/severity)
+	return
+
 /atom/movable/overlay/attackby(a, b)
 	if (src.master)
 		return src.master.attackby(a, b)

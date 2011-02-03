@@ -325,8 +325,7 @@
 		return
 
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
-		W:eyecheck(user)
-		var/turf/T = user.loc
+		var/turf/T = get_turf(user)
 		if (!( istype(T, /turf) ))
 			return
 
@@ -346,19 +345,18 @@
 			spawn(100) del(O)
 			return
 
-		if (W:get_fuel() < 5)
+		if (W:remove_fuel(5,user))
+			user << "\blue Now disassembling the outer wall plating."
+			playsound(src.loc, 'Welder.ogg', 100, 1)
+			sleep(100)
+			if (istype(src, /turf/simulated/wall))
+				if ((get_turf(user) == T && user.equipped() == W))
+					user << "\blue You disassembled the outer wall plating."
+					dismantle_wall()
+		else
 			user << "\blue You need more welding fuel to complete this task."
 			return
-		W:use_fuel(5)
 
-		user << "\blue Now disassembling the outer wall plating."
-		playsound(src.loc, 'Welder.ogg', 100, 1)
-
-		sleep(100)
-		if (istype(src, /turf/simulated/wall))
-			if ((user.loc == T && user.equipped() == W))
-				user << "\blue You disassembled the outer wall plating."
-				dismantle_wall()
 	else if(istype(W,/obj/item/apc_frame))
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)
@@ -809,7 +807,7 @@ turf/simulated/floor/proc/update_icon()
 			var/list/y_arr
 
 			if(src.x <= 1)
-				if(istype(A, /obj/meteor))
+				if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 					del(A)
 					return
 
@@ -884,7 +882,7 @@ turf/simulated/floor/proc/update_icon()
 							A.loc.Entered(A)
 
 			else if (src.y >= world.maxy)
-				if(istype(A, /obj/meteor))
+				if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 					del(A)
 					return
 				var/list/cur_pos = src.get_global_map_pos()
@@ -914,7 +912,7 @@ turf/simulated/floor/proc/update_icon()
 
 			if (src.x <= 2)
 				if(prob(50))
-					if(istype(A, /obj/meteor))
+					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
 					if(istype(A,/mob/living/carbon/human))
@@ -935,7 +933,7 @@ turf/simulated/floor/proc/update_icon()
 						if ((A && A.loc))
 							A.loc.Entered(A)
 				else
-					if(istype(A, /obj/meteor))
+					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
 					if(istype(A,/mob/living/carbon/human))
@@ -957,7 +955,7 @@ turf/simulated/floor/proc/update_icon()
 							A.loc.Entered(A)
 			else if (A.x >= (world.maxx - 1))
 				if(prob(50))
-					if(istype(A, /obj/meteor))
+					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
 					if(istype(A,/mob/living/carbon/human))
@@ -978,7 +976,7 @@ turf/simulated/floor/proc/update_icon()
 						if ((A && A.loc))
 							A.loc.Entered(A)
 				else
-					if(istype(A, /obj/meteor))
+					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
 					if(istype(A,/mob/living/carbon/human))
@@ -1000,7 +998,7 @@ turf/simulated/floor/proc/update_icon()
 							A.loc.Entered(A)
 			else if (src.y <= 2)
 				if(prob(50))
-					if(istype(A, /obj/meteor))
+					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
 					if(istype(A,/mob/living/carbon/human))
@@ -1021,7 +1019,7 @@ turf/simulated/floor/proc/update_icon()
 						if ((A && A.loc))
 							A.loc.Entered(A)
 				else
-					if(istype(A, /obj/meteor))
+					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
 					if(istype(A,/mob/living/carbon/human))
@@ -1044,7 +1042,7 @@ turf/simulated/floor/proc/update_icon()
 
 			else if (A.y >= (world.maxy - 1))
 				if(prob(50))
-					if(istype(A, /obj/meteor))
+					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
 					if(istype(A,/mob/living/carbon/human))
@@ -1065,7 +1063,7 @@ turf/simulated/floor/proc/update_icon()
 						if ((A && A.loc))
 							A.loc.Entered(A)
 				else
-					if(istype(A, /obj/meteor))
+					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
 					if(istype(A,/mob/living/carbon/human))

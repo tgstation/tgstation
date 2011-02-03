@@ -12,6 +12,9 @@ Pipelines + Other Objects -> Pipe network
 
 obj/machinery/atmospherics
 	anchored = 1
+	power_usage = 10
+	power_channel = ENVIRON
+
 
 	var/initialize_directions = 0
 	var/color

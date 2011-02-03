@@ -15,21 +15,17 @@ FLOOR TILES
 		if(amount < 2)
 			user << "\red You need at least two rods to do this."
 			return
-		if (W:get_fuel() < 3)
-			user << "\red You need more welding fuel to complete this task."
-			return
-		W:eyecheck(user)
-		W:use_fuel(2)
-		var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-		new_item.add_to_stacks(usr)
-		for (var/mob/M in viewers(src))
-			M.show_message("\red [src] is shaped into metal by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
-		var/obj/item/stack/rods/R = src
-		src = null
-		var/replace = (user.get_inactive_hand()==R)
-		R.use(2)
-		if (!R && replace)
-			user.put_in_hand(new_item)
+		if(W:remove_fuel(2,user))
+			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
+			new_item.add_to_stacks(usr)
+			for (var/mob/M in viewers(src))
+				M.show_message("\red [src] is shaped into metal by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
+			var/obj/item/stack/rods/R = src
+			src = null
+			var/replace = (user.get_inactive_hand()==R)
+			R.use(2)
+			if (!R && replace)
+				user.put_in_hand(new_item)
 		return
 	..()
 

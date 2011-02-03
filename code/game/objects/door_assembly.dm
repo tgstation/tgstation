@@ -84,20 +84,18 @@ obj/door_assembly
 
 /obj/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool) && W:welding && !anchored )
-		if (W:get_fuel() < 1)
+		if (W:remove_fuel(1,user))
+			user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
+			playsound(src.loc, 'Welder2.ogg', 50, 1)
+			if(do_after(user, 40))
+				user << "\blue You dissasembled the airlock assembly!"
+				new /obj/item/stack/sheet/metal(get_turf(src), 4)
+				if(src.glass==1)
+					new /obj/item/stack/sheet/rglass(get_turf(src))
+				del(src)
+		else
 			user << "\blue You need more welding fuel to dissassemble the airlock assembly."
 			return
-		W:use_fuel(1)
-		user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
-		playsound(src.loc, 'Welder2.ogg', 50, 1)
-		var/turf/T = get_turf(user)
-		sleep(40)
-		if(get_turf(user) == T)
-			user << "\blue You dissasembled the airlock assembly!"
-			new /obj/item/stack/sheet/metal(get_turf(src), 4)
-			if(src.glass==1)
-				new /obj/item/stack/sheet/rglass(get_turf(src))
-			del(src)
 	else if(istype(W, /obj/item/weapon/wrench) && !anchored )
 		playsound(src.loc, 'Ratchet.ogg', 100, 1)
 		var/turf/T = get_turf(user)

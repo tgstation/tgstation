@@ -3,6 +3,7 @@ obj/machinery/recharger
 	icon = 'stationobjs.dmi'
 	icon_state = "recharger0"
 	name = "recharger"
+	power_usage = 50
 
 	var
 		obj/item/weapon/gun/energy/charging = null
