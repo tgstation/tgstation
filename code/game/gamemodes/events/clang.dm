@@ -29,6 +29,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if (istype(clong, /mob))
 			if(clong.density || prob(10))
 				src.throw_impact(clong)
+		if(clong && prob(25))
+			src.loc = clong.loc
 
 /proc/immovablerod()
 
