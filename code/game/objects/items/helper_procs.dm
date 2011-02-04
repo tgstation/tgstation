@@ -72,8 +72,10 @@
 		mo.show_message(rendered, 2)
 	return
 
-/proc/is_item_in_list(var/list/L, var/atom/A)
-	for(var/atom/O in L)
-		if(O == A)
+/proc/is_type_in_list(var/list/L, var/atom/A)
+	for(var/type in L)
+		if(isnull(type))
+			continue
+		if(istype(A, type))
 			return 1
 	return 0

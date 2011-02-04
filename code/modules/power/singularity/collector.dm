@@ -51,6 +51,10 @@
 			user.visible_message("[user.name] [anchored? "secures":"unsecures"] the [src.name].", \
 				"You [anchored? "secure":"undo"] the external bolts.", \
 				"You hear ratchet")
+			if(anchored)
+				connect_to_network()
+			else
+				disconnect_from_network()
 		else
 			..()
 			return 1

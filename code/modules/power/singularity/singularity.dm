@@ -14,7 +14,7 @@ var/global/list/uneatable = list(
 	unacidable = 1 //Don't comment this out.
 	power_usage = 0
 	var
-		active = 0
+//		active = 0
 		contained = 1 //Are we going to move around?
 		energy = 100 //How strong are we?
 		dissipate = 0 //Do we lose energy over time? TODO:Set this to 1 when/if the feederthing is finished
@@ -57,7 +57,10 @@ var/global/list/uneatable = list(
 				if(prob(10))
 					del(src)
 					return
+				else
+					energy += 50
 			if(2.0 to 3.0)
+				energy += round((rand(20,60)/2),1)
 				return
 		return
 
@@ -77,7 +80,7 @@ var/global/list/uneatable = list(
 		dissipate()
 		check_energy()
 		move()
-		if(prob(event_chance))//Chance for it to run a special event
+		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 		pulse()
 		return
@@ -111,18 +114,11 @@ var/global/list/uneatable = list(
 			return 1
 
 
-		is_eatable(atom/X)
-			for (var/Type in uneatable)
-				if (istype(X, Type))
-					return 0
-			return 1
-
-
 		eat()
 			for (var/atom/X in orange(grav_pull,src))
 				if(isarea(X))
 					continue
-				if (!is_eatable(X))
+				if(is_type_in_list(uneatable,X))
 					continue
 				switch(get_dist(src,X))
 					if(0 to 2)
@@ -142,8 +138,8 @@ var/global/list/uneatable = list(
 
 		consume(var/atom/A)
 			var/gain = 0
-			if (!is_eatable(A))
-				return
+			if(is_type_in_list(uneatable,A))
+				return 0
 			if (istype(A,/mob/living))//Mobs get gibbed
 				gain = 20
 				if(istype(A,/mob/living/carbon/human))
@@ -170,21 +166,23 @@ var/global/list/uneatable = list(
 
 
 		move(var/movement_dir = 0)
-			if(!movement_dir == 1 || !movement_dir == 2 || !movement_dir == 4 || !movement_dir == 8)
+			if(!(movement_dir in cardinal))
 				movement_dir = pick(NORTH, SOUTH, EAST, WEST)
-			var/turf/T = null
 			switch(movement_dir)
 				if(NORTH)
-					T = locate(src.x,src.y+3,src.z)
+					if(!(can_move(locate(src.x,src.y+3,src.z))&&can_move(locate(src.x+1,src.y+3,src.z))&&can_move(locate(src.x-1,src.y+3,src.z))))
+						return 0
 				if(SOUTH)
-					T = locate(src.x,src.y-3,src.z)
+					if(!(can_move(locate(src.x,src.y-3,src.z))&&can_move(locate(src.x+1,src.y-3,src.z))&&can_move(locate(src.x-1,src.y-3,src.z))))
+						return 0
 				if(EAST)
-					T =locate(src.x+3,src.y,src.z)
+					if(!(can_move(locate(src.x+3,src.y,src.z))&&can_move(locate(src.x+3,src.y+1,src.z))&&can_move(locate(src.x+3,src.y-1,src.z))))
+						return 0
 				if(WEST)
-					T = locate(src.x-3,src.y,src.z)
-			if(can_move(T))
-				spawn(0)
-					step(src, movement_dir)
+					if(!(can_move(locate(src.x-3,src.y,src.z))&&can_move(locate(src.x-3,src.y+1,src.z))&&can_move(locate(src.x-3,src.y-1,src.z))))
+						return 0
+			spawn(0)
+				step(src, movement_dir)
 
 
 		can_move(var/turf/T)

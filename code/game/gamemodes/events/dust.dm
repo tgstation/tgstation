@@ -9,7 +9,7 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 	var/numbers = 1
 	switch(strength)
 		if("weak")
-		 numbers = rand(4,8)
+		 numbers = rand(2,4)
 		 for(var/i = 0 to numbers)
 		 	new/obj/space_dust/weak()
 		if("norm")

@@ -1,5 +1,4 @@
 
-/////FIELD GEN
 #define field_generator_max_power 250
 /obj/machinery/field_generator
 	name = "Field Generator"
@@ -141,15 +140,15 @@
 
 	bullet_act(flag)
 		if (flag == PROJECTILE_BULLET)
-			src.power -= 100
-		else if (flag == PROJECTILE_WEAKBULLET)
 			src.power -= 50
+		else if (flag == PROJECTILE_WEAKBULLET)
+			src.power -= 25
 		else if (flag == PROJECTILE_LASER)
-			src.power += 20
+			src.power += 10
 		else if (flag == PROJECTILE_TASER)
 			src.power += 5
 		else
-			src.power -= 30
+			src.power -= 10
 		update_icon()
 		return
 
@@ -194,8 +193,12 @@
 				if (isnull(F))
 					continue
 				power_draw++
-
-			if(draw_power(round(power_draw/2,1)))
+			if(!power_draw)//If we are usin no power then we have no fields and should turn off
+				for(var/mob/M in viewers(src))
+					M.show_message("\red The [src.name] shuts down!")
+				turn_off()
+				src.power = 0
+			else if(draw_power(round(power_draw/2,1)))
 				return 1
 			else
 				for(var/mob/M in viewers(src))
@@ -204,33 +207,34 @@
 				src.power = 0
 				return
 
-
-		draw_power(var/draw = 0,var/obj/machinery/field_generator/G = null, var/obj/machinery/field_generator/last = null)
-//			if(G && G == src)//Loopin, set fail
-//				return 0
+//This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
+		draw_power(var/draw = 0, var/failsafe = 0, var/obj/machinery/field_generator/G = null, var/obj/machinery/field_generator/last = null)
+			if((G && G == src) || (failsafe >= 8))//Loopin, set fail
+				return 0
+			else
+				failsafe++
 			if(src.power >= draw)//We have enough power
 				src.power -= draw
 				return 1
 			else//Need more power
-				return 0
-/*				draw -= src.power
-				src.power = 0 ill finis this up when not about to pass out
+				draw -= src.power
+				src.power = 0
 				for(var/obj/machinery/field_generator/FG in connected_gens)
 					if(isnull(FG))
 						continue
 					if(FG == last)//We just asked you
 						continue
 					if(G)//Another gen is askin for power and we dont have it
-						if(FG.draw_power(draw,G,src))//Can you take the load
+						if(FG.draw_power(draw,failsafe,G,src))//Can you take the load
 							return 1
 						else
 							return 0
 					else//We are askin another for power
-						if(FG.draw_power(draw,src,src))
+						if(FG.draw_power(draw,failsafe,src,src))
 							return 1
 						else
 							return 0
-*/
+
 
 		start_fields()
 			if(!src.state == 2 || !anchored)
@@ -255,12 +259,20 @@
 				return
 			for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for another generator
 				T = get_step(T, NSEW)
+				if(T.density)//We cant shoot a field though this
+					return 0
+				for(var/atom/A in T.contents)
+					if(ismob(A))
+						continue
+					if(!istype(A,/obj/machinery/field_generator))
+						if(A.density)//Somethin is blocking our path, note downside to this is that you can easily mess up the system by tossin a locker or such in the way and it takes forever to reset it
+							return 0
 				steps += 1
 				G = locate(/obj/machinery/field_generator) in T
 				if(!isnull(G))
 					steps -= 1
 					if(!G.active)
-						return
+						return 0
 					break
 			if(isnull(G))
 				return
