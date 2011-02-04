@@ -1793,10 +1793,12 @@
 	var/amt_diamond = 0
 	var/amt_iron = 0
 	var/amt_plasma = 0
-	var/amt_uranium = 0
+	//var/amt_uranium = 0
 	var/amt_clown = 0
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = 0
+	var/chosen = "metal" //which material will be used to make coins
+	var/coinsToProduce = 10
 
 
 /obj/machinery/mineral/mint/New()
@@ -1810,113 +1812,197 @@
 
 
 /obj/machinery/mineral/mint/process()
-	if (src.output && src.input)
+	if ( src.input)
 		var/obj/item/stack/sheet/O
 		O = locate(/obj/item/stack/sheet, input.loc)
 		if(O)
 			if (istype(O,/obj/item/stack/sheet/gold))
-				amt_gold += 100
+				amt_gold += 100 * O.amount
 				del(O)
 			if (istype(O,/obj/item/stack/sheet/silver))
-				amt_silver += 100
+				amt_silver += 100 * O.amount
 				del(O)
 			if (istype(O,/obj/item/stack/sheet/diamond))
-				amt_diamond += 100
+				amt_diamond += 100 * O.amount
 				del(O)
 			if (istype(O,/obj/item/stack/sheet/plasma))
-				amt_plasma += 100
+				amt_plasma += 100 * O.amount
 				del(O)
-			if (istype(O,/obj/item/weapon/ore/uranium))
+			/*if (istype(O,/obj/item/weapon/ore/uranium))
 				amt_uranium += 100
-				del(O)
+				del(O)*/
 			if (istype(O,/obj/item/stack/sheet/metal))
-				amt_iron += 100
+				amt_iron += 100 * O.amount
 				del(O)
 			if (istype(O,/obj/item/stack/sheet/clown))
-				amt_clown += 100
+				amt_clown += 100 * O.amount
 				del(O)
 
 
 /obj/machinery/mineral/mint/attack_hand(user as mob)
 
-	var/dat
-	dat = text("input connection status: ")
-	if (input)
-		dat += text("<b><font color='green'>CONNECTED</font></b>")
-	else
-		dat += text("<b><font color='red'>NOT CONNECTED</font></b>")
-	dat += text("<br>output connection status: ")
-	if (output)
-		dat += text("<b><font color='green'>CONNECTED</font></b>")
-	else
-		dat += text("<b><font color='red'>NOT CONNECTED</font></b>")
+	var/dat = "<b>Coin Press</b><br>"
 
-	dat += text("<br><br><font color='#ffcc00'><b>Gold inserterd: </b>[amt_gold]</font>")
-	dat += text("<br><br><font color='#888888'><b>Silver inserterd: </b>[amt_silver]</font>")
-	dat += text("<br><br><font color='#555555'><b>Iron inserterd: </b>[amt_iron]</font>")
-	dat += text("<br><br><font color='#8888FF'><b>Diamond inserterd: </b>[amt_diamond]</font>")
-	dat += text("<br><br><font color='#FF8800'><b>Plasma inserterd: </b>[amt_plasma]</font>")
-	dat += text("<br><br><font color='#008800'><b>Uranium inserterd: </b>[amt_uranium]</font>")
-	dat += text("<br><br><font color='#AAAA00'><b>Bananium inserterd: </b>[amt_clown]</font>")
+	if (!input)
+		dat += text("input connection status: ")
+		dat += text("<b><font color='red'>NOT CONNECTED</font></b><br>")
+	if (!output)
+		dat += text("<br>output connection status: ")
+		dat += text("<b><font color='red'>NOT CONNECTED</font></b><br>")
 
-	dat += text("<br><br><A href='?src=\ref[src];makeCoins=[1]'>Make coins</A>")
-	dat += text("<br><br>found: <font color='green'><b>[newCoins]</b></font>")
+	dat += text("<br><font color='#ffcc00'><b>Gold inserterd: </b>[amt_gold]</font> ")
+	if (chosen == "gold")
+		dat += text("chosen")
+	else
+		dat += text("<A href='?src=\ref[src];choose=gold'>Choose</A>")
+	dat += text("<br><font color='#888888'><b>Silver inserterd: </b>[amt_silver]</font> ")
+	if (chosen == "silver")
+		dat += text("chosen")
+	else
+		dat += text("<A href='?src=\ref[src];choose=silver'>Choose</A>")
+	dat += text("<br><font color='#555555'><b>Iron inserterd: </b>[amt_iron]</font> ")
+	if (chosen == "metal")
+		dat += text("chosen")
+	else
+		dat += text("<A href='?src=\ref[src];choose=metal'>Choose</A>")
+	dat += text("<br><font color='#8888FF'><b>Diamond inserterd: </b>[amt_diamond]</font> ")
+	if (chosen == "diamond")
+		dat += text("chosen")
+	else
+		dat += text("<A href='?src=\ref[src];choose=diamond'>Choose</A>")
+	dat += text("<br><font color='#FF8800'><b>Plasma inserterd: </b>[amt_plasma]</font> ")
+	if (chosen == "plasma")
+		dat += text("chosen")
+	else
+		dat += text("<A href='?src=\ref[src];choose=plasma'>Choose</A>")
+	/*dat += text("<br><font color='#008800'><b>uranium inserterd: </b>[amt_uranium]</font> ")
+	if (chosen == "uranium")
+		dat += text("chosen")
+	else
+		dat += text("<A href='?src=\ref[src];choose=uranium'>Choose</A>")*/
+	if(amt_clown > 0)
+		dat += text("<br><font color='#AAAA00'><b>Bananium inserterd: </b>[amt_clown]</font> ")
+		if (chosen == "clown")
+			dat += text("chosen")
+		else
+			dat += text("<A href='?src=\ref[src];choose=clown'>Choose</A>")
+
+	dat += text("<br><br>Will produce [coinsToProduce] [chosen] coins if enough materials are available.<br>")
+	dat += text("The dial which controls the number of conins to produce seems to be stuck. A technician has already been dispatched to fix this.")
+	/*dat += text("<A href='?src=\ref[src];chooseAmt=[-10]'>-10</A> ")
+	dat += text("<A href='?src=\ref[src];chooseAmt=[-5]'>-5</A> ")
+	dat += text("<A href='?src=\ref[src];chooseAmt=[-1]'>-1</A> ")
+	dat += text("<A href='?src=\ref[src];chooseAmt=[1]'>+1</A> ")
+	dat += text("<A href='?src=\ref[src];chooseAmt=[5]'>+5</A> ")
+	dat += text("<A href='?src=\ref[src];chooseAmt=[10]'>+10</A> ")*/
+
+	dat += text("<br><br>In total this machine produced <font color='green'><b>[newCoins]</b></font> coins.")
+	dat += text("<br><A href='?src=\ref[src];makeCoins=[1]'>Make coins</A>")
 	user << browse("[dat]", "window=mint")
 
 /obj/machinery/mineral/mint/Topic(href, href_list)
 	if(..())
 		return
 	if(processing==1)
+		usr << "\blue The machine is processing."
 		return
 	usr.machine = src
 	src.add_fingerprint(usr)
+	if(href_list["choose"])
+		chosen = href_list["choose"]
+	if(href_list["chooseamt"])
+		coinsToProduce += href_list["chooseamt"]
 	if(href_list["makeCoins"])
 		if (src.output)
 			processing = 1;
-			while(amt_gold > 0)
-				new /obj/item/weapon/coin/gold(output.loc)
-				amt_gold -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-			while(amt_silver > 0)
-				new /obj/item/weapon/coin/silver(output.loc)
-				amt_silver -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-			while(amt_diamond > 0)
-				new /obj/item/weapon/coin/diamond(output.loc)
-				amt_diamond -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-			while(amt_iron > 0)
-				new /obj/item/weapon/coin/iron(output.loc)
-				amt_iron -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-			while(amt_plasma > 0)
-				new /obj/item/weapon/coin/plasma(output.loc)
-				amt_plasma -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-			while(amt_uranium > 0)
-				new /obj/item/weapon/coin/uranium(output.loc)
-				amt_uranium -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-			while(amt_clown > 0)
-				new /obj/item/weapon/coin/clown(output.loc)
-				amt_clown -= 20
-				newCoins++
-				src.updateUsrDialog()
-				sleep(5);
-
+			var/obj/item/weapon/moneybag/M
+			switch(chosen)
+				if("metal")
+					while(amt_iron > 0 && coinsToProduce > 0)
+						if (locate(/obj/item/weapon/moneybag,output.loc))
+							M = locate(/obj/item/weapon/moneybag,output.loc)
+						else
+							M = new/obj/item/weapon/moneybag(output.loc)
+						new/obj/item/weapon/coin/iron(M)
+						amt_iron -= 20
+						coinsToProduce--
+						newCoins++
+						src.updateUsrDialog()
+						sleep(5);
+				if("gold")
+					while(amt_gold > 0 && coinsToProduce > 0)
+						if (locate(/obj/item/weapon/moneybag,output.loc))
+							M = locate(/obj/item/weapon/moneybag,output.loc)
+						else
+							M = new/obj/item/weapon/moneybag(output.loc)
+						new /obj/item/weapon/coin/gold(M)
+						amt_gold -= 20
+						coinsToProduce--
+						newCoins++
+						src.updateUsrDialog()
+						sleep(5);
+				if("silver")
+					while(amt_silver > 0 && coinsToProduce > 0)
+						if (locate(/obj/item/weapon/moneybag,output.loc))
+							M = locate(/obj/item/weapon/moneybag,output.loc)
+						else
+							M = new/obj/item/weapon/moneybag(output.loc)
+						new /obj/item/weapon/coin/silver(M)
+						amt_silver -= 20
+						coinsToProduce--
+						newCoins++
+						src.updateUsrDialog()
+						sleep(5);
+				if("diamond")
+					while(amt_diamond > 0 && coinsToProduce > 0)
+						if (locate(/obj/item/weapon/moneybag,output.loc))
+							M = locate(/obj/item/weapon/moneybag,output.loc)
+						else
+							M = new/obj/item/weapon/moneybag(output.loc)
+						new /obj/item/weapon/coin/diamond(M)
+						amt_diamond -= 20
+						coinsToProduce--
+						newCoins++
+						src.updateUsrDialog()
+						sleep(5);
+				if("plasma")
+					while(amt_plasma > 0 && coinsToProduce > 0)
+						if (locate(/obj/item/weapon/moneybag,output.loc))
+							M = locate(/obj/item/weapon/moneybag,output.loc)
+						else
+							M = new/obj/item/weapon/moneybag(output.loc)
+						new /obj/item/weapon/coin/plasma(M)
+						amt_plasma -= 20
+						coinsToProduce--
+						newCoins++
+						src.updateUsrDialog()
+						sleep(5);
+				/*if("uranium")
+					while(amt_uranium > 0 && coinsToProduce > 0)
+						if (locate(/obj/item/weapon/moneybag,output.loc))
+							M = locate(/obj/item/weapon/moneybag,output.loc)
+						else
+							M = new/obj/item/weapon/moneybag(output.loc)
+						new /obj/item/weapon/coin/uranium(M)
+						amt_uranium -= 20
+						coinsToProduce--
+						newCoins++
+						src.updateUsrDialog()
+						sleep(5)*/
+				if("clown")
+					while(amt_clown > 0 && coinsToProduce > 0)
+						if (locate(/obj/item/weapon/moneybag,output.loc))
+							M = locate(/obj/item/weapon/moneybag,output.loc)
+						else
+							M = new/obj/item/weapon/moneybag(output.loc)
+						new /obj/item/weapon/coin/clown(M)
+						amt_clown -= 20
+						coinsToProduce--
+						newCoins++
+						src.updateUsrDialog()
+						sleep(5);
 			processing = 0;
+	coinsToProduce = 10;
 	src.updateUsrDialog()
 	return
 
@@ -1965,7 +2051,72 @@
 	name = "Bananaium coin"
 	icon_state = "coin_clown"
 
+/*****************************Money bag********************************/
 
+/obj/item/weapon/moneybag
+	icon = 'storage.dmi'
+	name = "Money bag"
+	icon_state = "moneybag"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	force = 10.0
+	throwforce = 2.0
+	w_class = 4.0
+
+/obj/item/weapon/moneybag/attack_hand(user as mob)
+	var/amt_gold = 0
+	var/amt_silver = 0
+	var/amt_diamond = 0
+	var/amt_iron = 0
+	var/amt_plasma = 0
+	var/amt_uranium = 0
+	var/amt_clown = 0
+
+	for (var/obj/item/weapon/coin/C in contents)
+		if (istype(C,/obj/item/weapon/coin/diamond))
+			amt_diamond++;
+		if (istype(C,/obj/item/weapon/coin/plasma))
+			amt_plasma++;
+		if (istype(C,/obj/item/weapon/coin/iron))
+			amt_iron++;
+		if (istype(C,/obj/item/weapon/coin/silver))
+			amt_silver++;
+		if (istype(C,/obj/item/weapon/coin/gold))
+			amt_gold++;
+		if (istype(C,/obj/item/weapon/coin/uranium))
+			amt_uranium++;
+		if (istype(C,/obj/item/weapon/coin/clown))
+			amt_clown++;
+
+	var/dat = text("<b>The contents of the moneybag reveal...</b><br>")
+	if (amt_gold)
+		dat += text("Gold coins: [amt_gold]<br>")
+	if (amt_silver)
+		dat += text("Silver coins: [amt_silver]<br>")
+	if (amt_iron)
+		dat += text("Metal coins: [amt_iron]<br>")
+	if (amt_diamond)
+		dat += text("Diamond coins: [amt_diamond]<br>")
+	if (amt_plasma)
+		dat += text("Plasma coins: [amt_plasma]<br>")
+	if (amt_uranium)
+		dat += text("Uranium coins: [amt_uranium]<br>")
+	if (amt_clown)
+		dat += text("Bananium coins: [amt_clown]<br>")
+	if (amt_clown)
+		dat += text("<br>Strangely you can only view the bag's contents. There is no way to remove them.")
+	user << browse("[dat]", "window=moneybag")
+
+/obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/coin))
+		var/obj/item/weapon/coin/C = W
+		user << "\blue You add the [C.name] into the bag."
+		contents += C
+	if (istype(W, /obj/item/weapon/moneybag))
+		var/obj/item/weapon/moneybag/C = W
+		for (var/obj/O in C.contents)
+			contents += O;
+		user << "\blue You empty the [C.name] into the bag."
+	return
 
 /**********************Gas extractor**************************/
 

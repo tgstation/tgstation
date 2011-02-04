@@ -117,6 +117,16 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/escape/centcom
 	icon_state = "shuttle"
 
+/area/shuttle/mining
+	name = "Emergency Shuttle"
+	music = "music/escape.ogg"
+
+/area/shuttle/mining/station
+	icon_state = "shuttle2"
+
+/area/shuttle/mining/outpost
+	icon_state = "shuttle"
+
 /area/shuttle/transport1/centcom
 	icon_state = "shuttle"
 
@@ -507,6 +517,10 @@ proc/process_ghost_teleport_locs()
 /area/crew_quarters/chief
 	name = "Chief Engineer's Office"
 	icon_state = "head_quarters"
+
+/area/mint
+	name = "Minte"
+	icon_state = "green"
 
 //Crew
 
