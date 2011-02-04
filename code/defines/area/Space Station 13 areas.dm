@@ -1025,3 +1025,7 @@ proc/process_ghost_teleport_locs()
 /area/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
+
+/area/turret_protected/NewAIMain
+	name = "AI Main New"
+	icon_state = "storage"
