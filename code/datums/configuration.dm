@@ -22,6 +22,7 @@
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
 	var/enable_authentication = 0		// goon authentication
+	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
@@ -168,6 +169,9 @@
 
 			if ("guest_jobban")
 				config.guest_jobban = text2num(value)
+
+			if ("dont_del_newmob")
+				config.del_new_on_log = 0
 
 			if ("probability")
 				var/prob_pos = findtext(value, " ")

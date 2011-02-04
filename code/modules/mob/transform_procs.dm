@@ -41,6 +41,11 @@
 	del(src)
 	return
 
+/mob/new_player/AIize()
+	src.spawning = 1
+	..()
+	return
+
 /mob/living/carbon/AIize()
 	if (src.monkeyizing)
 		return

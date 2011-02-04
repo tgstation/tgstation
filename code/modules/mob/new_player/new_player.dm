@@ -81,6 +81,8 @@ mob/new_player
 	Logout()
 		ready = 0
 		..()
+		if(!config.del_new_on_log)
+			return
 		if(!spawning)
 			del(src)
 		return
