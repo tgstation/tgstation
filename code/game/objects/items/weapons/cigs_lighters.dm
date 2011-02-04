@@ -68,36 +68,36 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 	return
 
 
-//////////////
-//CIGARETTES//
-//////////////
+///////////////////////
+//CIGARETTES + CIGARS//
+///////////////////////
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool)  && W:welding)
 		if(src.lit == 0)
 			src.lit = 1
 			src.damtype = "fire"
-			src.icon_state = "cigon"
-			src.item_state = "cigon"
+			src.icon_state = icon_on
+			src.item_state = icon_on
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] casually lights the cigarette with [], what a badass.", user, W), 1)
+				O.show_message(text("\red [] casually lights the [] with [], what a badass.", user, src.name, W), 1)
 			spawn() //start fires while it's lit
 				src.process()
 	else if(istype(W, /obj/item/weapon/zippo) && W:lit)
 		if(src.lit == 0)
 			src.lit = 1
-			src.icon_state = "cigon"
-			src.item_state = "cigon"
+			src.icon_state = icon_on
+			src.item_state = icon_on
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red With a single flick of his wrist, [] smoothly lights his cigarette with his []. Damn they're cool.", user, W), 1)
+				O.show_message(text("\red With a single flick of his wrist, [] smoothly lights his [] with his []. Damn they're cool.", user, src.name, W), 1)
 			spawn() //start fires while it's lit
 				src.process()
 	else if(istype(W, /obj/item/weapon/match) && W:lit)
 		if(src.lit == 0)
 			src.lit = 1
-			src.icon_state = "cigon"
-			src.item_state = "cigon"
+			src.icon_state = icon_on
+			src.item_state = icon_on
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red With a single flick of his wrist, [] smoothly lights his cigarette with his []. Damn they're cool.", user, W), 1)
+				O.show_message(text("\red [] lights his [] with his []. How poor can you get?", user, src.name, W), 1)
 			spawn() //start fires while it's lit
 				src.process()
 
@@ -119,10 +119,14 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 			if(M.l_hand == src || M.r_hand == src || M.wear_mask == src)
 				location = M.loc
 		if(src.smoketime < 1)
-			var/obj/item/weapon/cigbutt/C = new /obj/item/weapon/cigbutt
+			if (istype(src,/obj/item/clothing/mask/cigarette/cigar))
+				var/obj/item/weapon/cigbutt/C = new /obj/item/weapon/cigarbutt
+				C.loc = location
+			else
+				var/obj/item/weapon/cigbutt/C = new /obj/item/weapon/cigbutt
+				C.loc = location
 			if(M != null)
-				M << "\red Your cigarette goes out."
-			C.loc = location
+				M << "\red Your [src.name] goes out."
 			del(src)
 			return
 		if (istype(location, /turf)) //start a fire if possible
@@ -161,13 +165,13 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 /obj/item/clothing/mask/cigarette/dropped(mob/user as mob)
 	if(src.lit == 1)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] calmly drops and treads on the lit cigarette, putting it out instantly.", user), 1)
+			O.show_message(text("\red [] calmly drops and treads on the lit [], putting it out instantly.", user,src.name), 1)
 		src.lit = -1
 		src.damtype = "brute"
-		src.icon_state = "cigbutt"
-		src.item_state = "cigoff"
-		src.name = "Cigarette butt"
-		src.desc = "A cigarette butt."
+		src.icon_state = icon_butt
+		src.item_state = icon_off
+		src.desc = "A [src.name] butt."
+		src.name = "[src.name] butt"
 		return ..()
 	else
 		for(var/mob/O in viewers(user, null))

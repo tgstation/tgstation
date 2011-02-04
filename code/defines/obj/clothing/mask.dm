@@ -99,11 +99,24 @@
 	name = "Cigarette"
 	icon_state = "cigoff"
 	var/lit = 0
+	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
+	var/icon_off = "cigoff"
+	var/icon_butt = "cigbutt"
 	throw_speed = 0.5
 	item_state = "cigoff"
 	var/lastHolder = null
 	var/smoketime = 300
 	w_class = 1
+
+/obj/item/clothing/mask/cigarette/cigar
+	name = "Premium Cigar"
+	icon_state = "cigaroff"
+	icon_on = "cigaron"
+	icon_off = "cigaroff"
+	icon_butt = "cigarbutt"
+	throw_speed = 0.5
+	item_state = "cigaroff"
+	smoketime = 1500
 
 /obj/item/clothing/mask/mime
 	name = "mime mask"

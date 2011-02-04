@@ -1445,6 +1445,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	var/cigcount = 6
 	flags = ONBELT | TABLEPASS
 
+/*
 /obj/item/weapon/cigarpacket
 	name = "Pete's Cuban Cigars"
 	desc = "The most robust cigars on the planet."
@@ -1454,7 +1455,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	w_class = 1
 	throwforce = 2
 	var/cigarcount = 6
-	flags = ONBELT | TABLEPASS
+	flags = ONBELT | TABLEPASS */
 
 /obj/item/weapon/cigbutt
 	name = "Cigarette butt"
