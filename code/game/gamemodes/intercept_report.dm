@@ -58,6 +58,7 @@
 /datum/intercept_text/proc/pick_mob()
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in world)
+		if (man.mind.special_role == "Syndicate") continue
 		dudes += man
 	var/dude = pick(dudes)
 	return dude
@@ -96,7 +97,7 @@
 	var/traitor_job
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
 	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
-	if(prob(prob_right_job))
+	if(prob(prob_right_job) && cult_check_mob(correct_mob))
 		if (correct_mob)
 			traitor_job = correct_mob:assigned_role
 	else
@@ -116,6 +117,14 @@
 		src.text += "organisation."
 	src.text += "<BR>However, if this information is acted on without substantial evidence, those responsible will face severe repercussions."
 
+/datum/intercept_text/proc/cult_check_mob(correct_mob) //ok, this is pretty hacky, but if it works right, people that can't normally be cultists will make the proc return null, which should make the cult report proc not use said person. --NEO
+	var/datum/game_mode/cult/checklist = new /datum/game_mode/cult
+	var/list/ucs = checklist.get_unconvertables()
+	del(checklist)
+	if (correct_mob in ucs) return
+	return 1
+
+
 /datum/intercept_text/proc/build_rev(correct_mob)
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
@@ -123,7 +132,7 @@
 	var/traitor_job
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
 	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
-	if(prob(prob_right_job))
+	if(prob(prob_right_job) && rev_check_mob(correct_mob))
 		if (correct_mob)
 			traitor_job = correct_mob:assigned_role
 	else
@@ -142,6 +151,13 @@
 		src.text += "<BR> In addition, we are [prob_right_dude]% sure that [traitor_name] may have also some in to contact with this "
 		src.text += "organisation."
 	src.text += "<BR>However, if this information is acted on without substantial evidence, those responsible will face severe repercussions."
+
+/datum/intercept_text/proc/rev_check_mob(correct_mob) //ok, this is pretty hacky, but if it works right, people that can't normally be cultists will make the proc return null, which should make the cult report proc not use said person. --NEO
+	var/datum/game_mode/revolution/checklist = new /datum/game_mode/revolution
+	var/list/ucs = checklist.get_unconvertables()
+	del(checklist)
+	if (correct_mob in ucs) return
+	return 1
 
 /datum/intercept_text/proc/build_wizard(correct_mob)
 	var/SWF_desc = pick(SWF_names)
