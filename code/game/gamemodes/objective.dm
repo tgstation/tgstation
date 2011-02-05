@@ -47,6 +47,7 @@ datum
 			check_completion()
 				if(target && target.current)
 					if(target.current.stat == 2 || istype(target.current.loc.loc, /area/tdome) || istype(target.current,/mob/living/silicon)) //Assuming this works, people in the thunderdome and borgs now count as dead for traitor objectives. --NeoFite
+						return 1
 					else
 						return 0
 				else
