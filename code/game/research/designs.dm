@@ -13,14 +13,11 @@ The currently supporting non-reagent materials:
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
 
-TODO:
-- Add a "has materials" type proc to... something...
-
 */
 #define	IMPRINTER	1	//For circuits.
 #define PROTOLATHE	2	//For stuff with reliability issues.
 #define	AUTOLATHE	4	//For general use or 100% reliability items.
-//Note: More then one of these can be added to a design but it isn't suggested.
+//Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 datum
 	design						//Datum for object designs, used in construction
@@ -55,7 +52,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build security camera computers."
 			id = "seccamera"
 			req_tech = list("programming" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/security"
@@ -65,7 +61,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build new AI cores."
 			id = "aicore"
 			req_tech = list("programming" = 5, "biotech" = 5)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/aicore"
@@ -75,7 +70,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
 			id = "aiupload"
 			req_tech = list("programming" = 5)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/aiupload"
@@ -85,7 +79,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a medical records console."
 			id = "med_data"
 			req_tech = list("programming" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/med_data"
@@ -95,7 +88,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
 			id = "pandemic"
 			req_tech = list("programming" = 2, "biotech" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/pandemic"
@@ -105,7 +97,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a new DNA scanning console."
 			id = "scan_console"
 			req_tech = list("programming" = 2, "biotech" = 3)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/machinery/scan_consolenew"
@@ -115,7 +106,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a communications console."
 			id = "comconsole"
 			req_tech = list("programming" = 2, "magnets" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/communications"
@@ -125,7 +115,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build an ID computer."
 			id = "idcardconsole"
 			req_tech = list("programming" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/card"
@@ -135,7 +124,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a teleporter control console."
 			id = "teleconsole"
 			req_tech = list("programming" = 3, "bluespace" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/teleporter"
@@ -145,7 +133,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a security records console."
 			id = "secdata"
 			req_tech = list("programming" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/secure_data"
@@ -155,7 +142,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build an atmosphere alert console.."
 			id = "atmosalerts"
 			req_tech = list("programming" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/atmosphere/alerts"
@@ -165,7 +151,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
 			id = "air_management"
 			req_tech = list("programming" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/general_air_control"
@@ -175,7 +160,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a General Alert console."
 			id = "general_alert"
 			req_tech = list("programming" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/general_alert"
@@ -185,7 +169,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
 			id = "robocontrol"
 			req_tech = list("programming" = 4)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/robotics"
@@ -195,7 +178,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
 			id = "clonecontrol"
 			req_tech = list("programming" = 3, "biotech" = 4)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/cloning"
@@ -205,7 +187,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a new arcade machine."
 			id = "arcademachine"
 			req_tech = list("programming" = 1)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/arcade"
@@ -215,7 +196,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a new power monitor"
 			id = "powermonitor"
 			req_tech = list("programming" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/machinery/power/monitor"
@@ -225,7 +205,6 @@ datum
 			desc = "Allows for the construction of circuit boards used to build a prisoner management console."
 			id = "prisonmanage"
 			req_tech = list("programming" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/prisoner"

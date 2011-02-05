@@ -352,6 +352,7 @@
 #include "code\game\machinery\blender.dm"
 #include "code\game\machinery\camera.dm"
 #include "code\game\machinery\cell_charger.dm"
+#include "code\game\machinery\constructable_frame.dm"
 #include "code\game\machinery\cryo.dm"
 #include "code\game\machinery\deployable.dm"
 #include "code\game\machinery\dispenser.dm"

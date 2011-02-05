@@ -1,11 +1,39 @@
 /*
 Research and Development (R&D) Console
 
-This is the main work horse of the R&D system. It contains the menus/controls for the Destructive Analyzer and the Protolathe. It
-also contains the /datum/research holder with all the known/possible technology paths and device designs.
+This is the main work horse of the R&D system. It contains the menus/controls for the Destructive Analyzer, Protolathe, and Circuit
+imprinter. It also contains the /datum/research holder with all the known/possible technology paths and device designs.
+
+Basic use: When it first is created, it will attempt to link up to related devices within 3 squares. It'll only link up if they
+aren't already linked to another console. Any consoles it cannot link up with (either because all of a certain type are already
+linked or there aren't any in range), you'll just not have access to that menu. In the settings menu, there are menu options that
+allow a player to attempt to re-sync with nearby consoles. You can also force it to disconnect from a specific console.
+
+The imprinting and construction menus do NOT require toxins access to access but all the other menus do. However, if you leave it
+on a menu, nothing is to stop the person from using the options on that menu (although they won't be able to change to a different
+one). You can also lock the console on the settings menu if you're feeling paranoid and you don't want anyone messing with it who
+doesn't have toxins access.
+
+When a R&D console is destroyed or even partially disassembled, you lose all research data on it. However, there are two ways around
+this dire fate:
+- The easiest way is to go to the settings menu and select "Sync Database with Network." That causes it to upload (but not download)
+it's data to every other device in the game. Each console has a "disconnect from network" option that'll will cause data base sync
+operations to skip that console. This is useful if you want to make a "public" R&D console or, for example, give the engineers
+a circuit imprinter with certain designs on it and don't want it accidentally updating. The downside of this method is that you have
+to have physical access to the other console to send data back. Note: An R&D console is on CentCom so if a random griffan happens to
+cause a ton of data to be lost, an admin can go send it back.
+- The second method is with Technology Disks and Design Disks. Each of these disks can hold a single technology or design datum in
+it's entirety. You can then take the disk to any R&D console and upload it's data to it. This method is a lot more secure (since it
+won't update every console in existence) but it's more of a hassle to do. Also, the disks can be stolen.
 
 
 */
+/obj/machinery/r_n_d  //All devices that link into the R&D console fall into thise type for easy identification.
+	name = "R&D Device"
+	density = 1
+	anchored = 1
+	var/obj/machinery/computer/rdconsole/linked_console
+
 /obj/machinery/computer/rdconsole
 	name = "R&D Console"
 	icon_state = "rdcomp"
@@ -14,9 +42,9 @@ also contains the /datum/research holder with all the known/possible technology 
 		obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 		obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
 
-		obj/machinery/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
-		obj/machinery/protolathe/linked_lathe = null				//Linked Protolathe
-		obj/machinery/circuit_imprinter/linked_imprinter = null		//Linked Circuit Imprinter
+		obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
+		obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
+		obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
 		screen = 1.0	//Which screen is currently showing.
 		sync = 1		//Will it get updated when the R&D console does it's syncing process.
@@ -60,15 +88,21 @@ also contains the /datum/research holder with all the known/possible technology 
 			return return_name
 
 		SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
-			linked_destroy = null
-			linked_destroy = locate(/obj/machinery/destructive_analyzer, get_step(src, EAST))
-			if(linked_destroy) linked_destroy.linked_console = src
-			linked_lathe = null
-			linked_lathe = locate(/obj/machinery/protolathe, get_step(src, WEST))
-			if(linked_lathe) linked_lathe.linked_console = src
-			linked_imprinter = null
-			linked_imprinter = locate(/obj/machinery/circuit_imprinter/, get_step(src, WEST))
-			if(linked_imprinter) linked_imprinter.linked_console = src
+			for(var/obj/machinery/r_n_d/D in orange(3,src))
+				if(D.linked_console != null)
+					continue
+				if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
+					if(linked_destroy == null)
+						linked_destroy = D
+						D.linked_console = src
+				else if(istype(D, /obj/machinery/r_n_d/protolathe))
+					if(linked_lathe == null)
+						linked_lathe = D
+						D.linked_console = src
+				else if(istype(D, /obj/machinery/r_n_d/circuit_imprinter))
+					if(linked_imprinter == null)
+						linked_imprinter = D
+						D.linked_console = src
 			return
 
 
@@ -182,28 +216,39 @@ also contains the /datum/research holder with all the known/possible technology 
 			screen = 1.4
 
 		else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
-			linked_destroy.loaded_item:loc = src.loc
-			linked_destroy.loaded_item = null
-			screen = 2.1
+			if(linked_destroy.busy)
+				usr << "\red The destructive analyzer is busy at the moment."
+
+			else
+				linked_destroy.loaded_item:loc = linked_destroy.loc
+				linked_destroy.loaded_item = null
+				linked_destroy.icon_state = "d_analyzer"
+				screen = 2.1
 
 		else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
-			var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
-			if(choice == "Cancel") return
-			screen = 0.1
-			updateUsrDialog()
-			flick("d_analyzer_n", linked_destroy)
-			spawn(16)
-				for(var/T in linked_destroy.loaded_item.origin_tech)
-					files.UpdateTech(T, linked_destroy.loaded_item.origin_tech[T])
-				if(linked_lathe) //Also sends salvaged materials to a linked autolateh, if any.
-					linked_lathe.m_amount = min(linked_lathe.max_m_amount, (linked_lathe.m_amount + linked_destroy.loaded_item.m_amt))
-					linked_lathe.g_amount = min(linked_lathe.max_g_amount, (linked_lathe.g_amount + linked_destroy.loaded_item.g_amt))
-				linked_destroy.loaded_item = null
-				for(var/I in contents)
-					del(I)
-				linked_destroy.overlays = null
-				screen = 1.0
+			if(linked_destroy.busy)
+				usr << "\red The destructive analyzer is busy at the moment."
+
+			else
+				var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
+				linked_destroy.busy = 1
+				if(choice == "Cancel") return
+				screen = 0.1
 				updateUsrDialog()
+				flick("d_analyzer_process", linked_destroy)
+				spawn(24)
+					linked_destroy.busy = 0
+					for(var/T in linked_destroy.loaded_item.origin_tech)
+						files.UpdateTech(T, linked_destroy.loaded_item.origin_tech[T])
+					if(linked_lathe) //Also sends salvaged materials to a linked autolateh, if any.
+						linked_lathe.m_amount = min(linked_lathe.max_m_amount, (linked_lathe.m_amount + linked_destroy.loaded_item.m_amt))
+						linked_lathe.g_amount = min(linked_lathe.max_g_amount, (linked_lathe.g_amount + linked_destroy.loaded_item.g_amt))
+					linked_destroy.loaded_item = null
+					for(var/I in contents)
+						del(I)
+					linked_destroy.icon_state = "d_analyzer"
+					screen = 1.0
+					updateUsrDialog()
 
 		else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
 			if(src.allowed(usr))
@@ -247,12 +292,12 @@ also contains the /datum/research holder with all the known/possible technology 
 					if(linked_lathe.g_amount < 0)
 						linked_lathe.g_amount = 0
 					var/obj/new_item = new being_built.build_path(src)
-					new_item.loc = src.loc
+					new_item.loc = linked_destroy.loc
 					linked_lathe.busy = 0
 					screen = 3.1
 					updateUsrDialog()
 
-		else if(href_list["imprint"])
+		else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
 			linked_imprinter.busy = 1
 			screen = 0.4
 			updateUsrDialog()
@@ -277,16 +322,35 @@ also contains the /datum/research holder with all the known/possible technology 
 							linked_imprinter.reagents.remove_reagent(I, being_built.materials[I])
 							power += being_built.materials[I]
 				var/obj/new_item = new being_built.build_path(src)
-				new_item.loc = src.loc
+				new_item.loc = linked_destroy.loc
 				linked_imprinter.busy = 0
 				screen = 4.1
 				updateUsrDialog()
 
-		else if(href_list["dispose"])
+		else if(href_list["dispose"])  //Causes the circuit imprinter to dispose of a single reagent (all of it)
 			linked_imprinter.reagents.del_reagent(href_list["dispose"])
 
-		else if(href_list["disposeall"])
+		else if(href_list["disposeall"]) //Causes the circuit imprinter to dispose of all it's reagents.
 			linked_imprinter.reagents.clear_reagents()
+
+		else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
+			screen = 0.0
+			spawn(20)
+				SyncRDevices()
+				screen = 1.6
+				updateUsrDialog()
+
+		else if(href_list["disconnect"]) //The R&D console disconnects with a specific device.
+			switch(href_list["disconnect"])
+				if("destroy")
+					linked_destroy.linked_console = null
+					linked_destroy = null
+				if("lathe")
+					linked_lathe.linked_console = null
+					linked_lathe = null
+				if("imprinter")
+					linked_imprinter.linked_console = null
+					linked_imprinter = null
 
 		updateUsrDialog()
 		return
@@ -296,7 +360,6 @@ also contains the /datum/research holder with all the known/possible technology 
 			return
 		user.machine = src
 		var/dat = ""
-		SyncRDevices()
 		files.RefreshResearch()
 		switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
 			if(2 to 2.9)
@@ -409,9 +472,25 @@ also contains the /datum/research holder with all the known/possible technology 
 				dat += "<A href='?src=\ref[src];sync=1'>Sync Database with Network</A><BR>"
 				if(sync) dat += "<A href='?src=\ref[src];togglesync=1'>Disconnect from Research Network</A><BR>"
 				else dat += "<A href='?src=\ref[src];togglesync=1'>Connect to Research Network</A><BR>"
+				dat += "<A href='?src=\ref[src];menu=1.7'>Device Linkage Menu</A><BR>"
 				dat += "<A href='?src=\ref[src];lock=0.2'>Lock Console</A><BR>"
 				dat += "<HR><A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 
+			if(1.7) //R&D device linkage
+				dat += "R&D Console Device Linkage Menu:<BR><BR>"
+				dat += "<A href='?src=\ref[src];find_device=1'>Re-sync with Nearby Devices</A><BR>"
+				dat += "Linked Devices:<BR>"
+				if(!linked_destroy && !linked_lathe && !linked_imprinter)
+					dat += "No devices connected<BR>"
+				else
+					if(linked_destroy)
+						dat += "* Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>(Disconnect)</A><BR>"
+					if(linked_lathe)
+						dat += "* Protolathe <A href='?src=\ref[src];disconnect=lathe'>(Disconnect)</A><BR>"
+					if(linked_imprinter)
+						dat += "* Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>(Disconnect)</A><BR>"
+				dat += "<HR><A href='?src=\ref[src];menu=1.6'>Settings Menu</A>"
+				dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 
 			////////////////////DESTRUCTIVE ANALYZER SCREENS////////////////////////////
 			if(2.0)

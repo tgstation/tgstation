@@ -12,7 +12,7 @@
 	density = 1
 	anchored = 0
 	name = "Computer-frame"
-	icon = 'computer_frame.dmi'
+	icon = 'stock_parts.dmi'
 	icon_state = "0"
 	var/state = 0
 	var/obj/item/weapon/motherboard/mainboard = null

@@ -5,13 +5,12 @@ It is used to destroy hand-held objects and advance technological research. Cont
 
 Note: Must be placed east/right of an R&D console to function.
 */
-/obj/machinery/destructive_analyzer
+/obj/machinery/r_n_d/destructive_analyzer
 	name = "Destructive Analyzer"
 	icon_state = "d_analyzer"
-	var/obj/item/weapon/loaded_item = null
-	var/obj/machinery/computer/rdconsole/linked_console
-	anchored = 1
-	density = 1
+	var
+		obj/item/weapon/loaded_item = null
+		busy = 0
 
 	meteorhit()
 		del(src)
@@ -19,18 +18,24 @@ Note: Must be placed east/right of an R&D console to function.
 
 	attackby(var/obj/O as obj, var/mob/user as mob)
 		if (!linked_console)
-			user << "\The protolathe must be linked to an R&D console first!"
+			user << "\red The protolathe must be linked to an R&D console first!"
+			return
+		if (busy)
+			user << "\red The protolathe is busy right now."
 			return
 		if (istype(O, /obj/item/weapon) && !loaded_item)
 			if (O.origin_tech.len == 0)
 				user << "\red You cannot deconstruct this item!"
 				return
+			busy = 1
 			loaded_item = O
 			user.drop_item()
 			O.loc = src
 			user << "\blue You add the [O.name] to the machine!"
-			image('stationobjs.dmi', icon_state="d_analyzer_o")
-
+			flick("d_analyzer_la", src)
+			spawn(10)
+				icon_state = "d_analyzer_l"
+				busy = 0
 		return
 
 //For testing purposes only.

@@ -4,17 +4,14 @@ a /datum/desgin on the linked R&D console. You can then print them out in a fasi
 using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 */
-/obj/machinery/circuit_imprinter
+/obj/machinery/r_n_d/circuit_imprinter
 	name = "Circuit Imprinter"
 	icon_state = "circuit_imprinter"
-	density = 1
-	anchored = 1
 	flags = OPENCONTAINER
 	var
 		g_amount = 0
 		const/max_g_amount = 75000.0
 		busy = 0
-		obj/machinery/computer/rdconsole/linked_console = null //Linked R&D Console
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(100)		//Holder for the reagents used as materials.

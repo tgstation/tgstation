@@ -253,6 +253,8 @@ datum
 					holder.remove_reagent("chloralhydrate", 5)
 				if(holder.has_reagent("carpotoxin"))
 					holder.remove_reagent("carpotoxin", 1)
+				if(holder.has_reagent("zombiepowder"))
+					holder.remove_reagent("zombiepowder", 0.5)
 				M:toxloss = max(M:toxloss-2,0)
 				..()
 				return

@@ -2,7 +2,7 @@
 	density = 1
 	anchored = 0
 	name = "Computer-frame"
-	icon = 'computer_frame.dmi'
+	icon = 'stock_parts.dmi'
 	icon_state = "0"
 	var/state = 0
 	var/obj/item/weapon/circuitboard/circuit = null
@@ -16,95 +16,98 @@
 	icon = 'module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
-	var/id = null
-	var/frequency = null
-	var/computertype = null
-	var/powernet = null
-	var/list/records = null
+	var
+		id = null
+		frequency = null
+		build_path = null
+		board_type = "computer"
+		list/req_components = null
+		powernet = null
+		list/records = null
 
 /obj/item/weapon/circuitboard/security
 	name = "Circuit board (Security)"
-	computertype = "/obj/machinery/computer/security"
+	build_path = "/obj/machinery/computer/security"
 /obj/item/weapon/circuitboard/aicore
 	name = "Circuit board (AI core)"
 /obj/item/weapon/circuitboard/aiupload
 	name = "Circuit board (AI Upload)"
-	computertype = "/obj/machinery/computer/aiupload"
+	build_path = "/obj/machinery/computer/aiupload"
 /obj/item/weapon/circuitboard/med_data
 	name = "Circuit board (Medical Records)"
-	computertype = "/obj/machinery/computer/med_data"
+	build_path = "/obj/machinery/computer/med_data"
 /obj/item/weapon/circuitboard/pandemic
 	name = "Circuit board (PanD.E.M.I.C. 2200)"
-	computertype = "/obj/machinery/computer/pandemic"
+	build_path = "/obj/machinery/computer/pandemic"
 /obj/item/weapon/circuitboard/scan_consolenew
 	name = "Circuit board (DNA Machine)"
-	computertype = "/obj/machinery/scan_consolenew"
+	build_path = "/obj/machinery/scan_consolenew"
 /obj/item/weapon/circuitboard/communications
 	name = "Circuit board (Communications)"
-	computertype = "/obj/machinery/computer/communications"
+	build_path = "/obj/machinery/computer/communications"
 /obj/item/weapon/circuitboard/card
 	name = "Circuit board (ID Computer)"
-	computertype = "/obj/machinery/computer/card"
+	build_path = "/obj/machinery/computer/card"
 //obj/item/weapon/circuitboard/shield
 //	name = "Circuit board (Shield Control)"
-//	computertype = "/obj/machinery/computer/stationshield"
+//	build_path = "/obj/machinery/computer/stationshield"
 /obj/item/weapon/circuitboard/teleporter
 	name = "Circuit board (Teleporter)"
-	computertype = "/obj/machinery/computer/teleporter"
+	build_path = "/obj/machinery/computer/teleporter"
 /obj/item/weapon/circuitboard/secure_data
 	name = "Circuit board (Security Records)"
-	computertype = "/obj/machinery/computer/secure_data"
+	build_path = "/obj/machinery/computer/secure_data"
 /obj/item/weapon/circuitboard/stationalert
 	name = "Circuit board (Station Alerts)"
-	computertype = "/obj/machinery/computer/station_alert"
+	build_path = "/obj/machinery/computer/station_alert"
 /obj/item/weapon/circuitboard/atmospheresiphonswitch
 	name = "Circuit board (Atmosphere siphon control)"
-	computertype = "/obj/machinery/computer/atmosphere/siphonswitch"
+	build_path = "/obj/machinery/computer/atmosphere/siphonswitch"
 /obj/item/weapon/circuitboard/air_management
 	name = "Circuit board (Atmospheric monitor)"
-	computertype = "/obj/machinery/computer/general_air_control"
+	build_path = "/obj/machinery/computer/general_air_control"
 /obj/item/weapon/circuitboard/injector_control
 	name = "Circuit board (Injector control)"
-	computertype = "/obj/machinery/computer/general_air_control/fuel_injection"
+	build_path = "/obj/machinery/computer/general_air_control/fuel_injection"
 /obj/item/weapon/circuitboard/atmos_alert
 	name = "Circuit board (Atmospheric Alert)"
-	computertype = "/obj/machinery/computer/atmos_alert"
+	build_path = "/obj/machinery/computer/atmos_alert"
 /obj/item/weapon/circuitboard/pod
 	name = "Circuit board (Massdriver control)"
-	computertype = "/obj/machinery/computer/pod"
+	build_path = "/obj/machinery/computer/pod"
 /obj/item/weapon/circuitboard/robotics
 	name = "Circuit board (Robotics Control)"
-	computertype = "/obj/machinery/computer/robotics"
+	build_path = "/obj/machinery/computer/robotics"
 /obj/item/weapon/circuitboard/cloning
 	name = "Circuit board (Cloning)"
-	computertype = "/obj/machinery/computer/cloning"
+	build_path = "/obj/machinery/computer/cloning"
 /obj/item/weapon/circuitboard/arcade
 	name = "Circuit board (Arcade)"
-	computertype = "/obj/machinery/computer/arcade"
+	build_path = "/obj/machinery/computer/arcade"
 /obj/item/weapon/circuitboard/turbine_control
 	name = "Circuit board (Turbine control)"
-	computertype = "/obj/machinery/computer/turbine_computer"
+	build_path = "/obj/machinery/computer/turbine_computer"
 /obj/item/weapon/circuitboard/solar_control
 	name = "Circuit board (Solar Control)"  //name fixed 250810
-	computertype = "/obj/machinery/power/solar_control"
+	build_path = "/obj/machinery/power/solar_control"
 /obj/item/weapon/circuitboard/powermonitor
 	name = "Circuit board (Power Monitor)"  //name fixed 250810
-	computertype = "/obj/machinery/power/monitor"
+	build_path = "/obj/machinery/power/monitor"
 /obj/item/weapon/circuitboard/olddoor
 	name = "Circuit board (DoorMex)"
-	computertype = "/obj/machinery/computer/pod/old"
+	build_path = "/obj/machinery/computer/pod/old"
 /obj/item/weapon/circuitboard/syndicatedoor
 	name = "Circuit board (ProComp Executive)"
-	computertype = "/obj/machinery/computer/pod/old/syndicate"
+	build_path = "/obj/machinery/computer/pod/old/syndicate"
 /obj/item/weapon/circuitboard/swfdoor
 	name = "Circuit board (Magix)"
-	computertype = "/obj/machinery/computer/pod/old/swf"
+	build_path = "/obj/machinery/computer/pod/old/swf"
 /obj/item/weapon/circuitboard/prisoner
 	name = "Circuit board (Prisoner Management)"
-	computertype = "/obj/machinery/computer/prisoner"
+	build_path = "/obj/machinery/computer/prisoner"
 /obj/item/weapon/circuitboard/rdconsole
 	name = "Circuit Board (RD Console)"
-	computertype = "/obj/machinery/computer/rdconsole"
+	build_path = "/obj/machinery/computer/rdconsole"
 
 
 
@@ -131,12 +134,16 @@
 					src.anchored = 0
 					src.state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
-				playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-				user << "\blue You place the circuit board inside the frame."
-				src.icon_state = "1"
-				src.circuit = P
-				user.drop_item()
-				P.loc = src
+				var/obj/item/weapon/circuitboard/B = P
+				if(B.board_type == "computer")
+					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+					user << "\blue You place the circuit board inside the frame."
+					src.icon_state = "1"
+					src.circuit = P
+					user.drop_item()
+					P.loc = src
+				else
+					user << "\red This frame does not accept circuit boards of this type!"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 				user << "\blue You screw the circuit board into place."
@@ -191,7 +198,7 @@
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
-				var/B = new src.circuit.computertype ( src.loc )
+				var/B = new src.circuit.build_path ( src.loc )
 				if(circuit.powernet) B:powernet = circuit.powernet
 				if(circuit.id) B:id = circuit.id
 				if(circuit.records) B:records = circuit.records
