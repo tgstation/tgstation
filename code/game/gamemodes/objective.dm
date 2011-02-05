@@ -46,9 +46,7 @@ datum
 
 			check_completion()
 				if(target && target.current)
-					if(target.current.stat == 2 || istype(target.current.loc.loc, /area/tdome)) //Assuming this works, people in the thunderdome now count as dead for traitor objectives. --NeoFite
-						return 1
-					else if (istype(target.current,/mob/living/silicon)) //Since I'm planning on making mind datums transfer over when people get borged, make borgs/AIs still count as a successful kill. --NeoFite
+					if(target.current.stat == 2 || istype(target.current.loc.loc, /area/tdome) || istype(target.current,/mob/living/silicon)) //Assuming this works, people in the thunderdome and borgs now count as dead for traitor objectives. --NeoFite
 					else
 						return 0
 				else
