@@ -186,6 +186,9 @@
 		if(!changeling.current)
 			return 1
 
+		if(istype(changeling.current,/mob/living/silicon))
+			return 1
+
 		if(changeling.current.stat==2)
 			if(changelingdeathticker>=600)
 				return 1

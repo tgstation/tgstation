@@ -413,6 +413,7 @@ mob/new_player
 		new_character.dna.ready_dna(new_character)
 		if(mind)
 			mind.transfer_to(new_character)
+			mind.original = new_character
 
 
 		return new_character

@@ -1,6 +1,7 @@
 datum/mind
 	var/key
 	var/mob/current
+	var/mob/original
 
 	var/memory
 

@@ -48,6 +48,7 @@ datum
 				if(target && target.current)
 					if(target.current.stat == 2 || istype(target.current.loc.loc, /area/tdome)) //Assuming this works, people in the thunderdome now count as dead for traitor objectives. --NeoFite
 						return 1
+					else if (istype(target.current,/mob/living/silicon)) //Since I'm planning on making mind datums transfer over when people get borged, make borgs/AIs still count as a successful kill. --NeoFite
 					else
 						return 0
 				else
@@ -57,6 +58,8 @@ datum
 			explanation_text = "Hijack the emergency shuttle by escaping alone."
 
 			check_completion()
+				if(istype(owner.current, /mob/living/silicon))
+					return 0
 				if(emergency_shuttle.location<2)
 					return 0
 
@@ -77,6 +80,8 @@ datum
 			explanation_text = "Escape on the shuttle alive."
 
 			check_completion()
+				if(istype(owner.current, /mob/living/silicon))
+					return 0
 				if(emergency_shuttle.location<2)
 					return 0
 
@@ -98,6 +103,8 @@ datum
 			explanation_text = "Stay alive until the end"
 
 			check_completion()
+				if(istype(owner.current, /mob/living/silicon) && owner.current != owner.original)
+					return 0
 				if(!owner.current || owner.current.stat == 2)
 					return 0
 
@@ -124,7 +131,7 @@ datum
 			var/global/list/possible_items_special = list(
 				"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,
 			)
-			
+
 			proc/set_target(var/target_name as text)
 				src.target_name = target_name
 				src.steal_target = possible_items[target_name]

@@ -83,6 +83,7 @@
 	O.lastKnownIP = src.client.address
 
 	mind.transfer_to(O)
+	O.mind.original = O
 
 	var/obj/loc_landmark
 	for(var/obj/landmark/start/sloc in world)

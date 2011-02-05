@@ -27,7 +27,12 @@
 		var/traitor_name
 
 		if(traitor.current)
-			traitor_name = "[traitor.current.real_name] (played by [traitor.key])"
+			if(traitor.current == traitor.original)
+				traitor_name = "[traitor.current.real_name] (played by [traitor.key])"
+			else if (traitor.original)
+				traitor_name = "[traitor.current.real_name] (originally [traitor.original.real_name]) (played by [traitor.key])"
+			else
+				traitor_name = "[traitor.current.real_name] (original character destroyed) (played by [traitor.key])"
 		else
 			traitor_name = "[traitor.key] (character destroyed)"
 

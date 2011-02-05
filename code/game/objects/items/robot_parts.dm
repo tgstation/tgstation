@@ -143,14 +143,14 @@
 			O.real_name = src.created_name
 
 			if (src.brain.owner.client)
-				O.lastKnownIP = src.brain.owner.client.address
-				src.brain.owner.client.mob = O
+				src.brain.owner.mind.transfer_to(O)
 			else
 				for(var/mob/dead/observer/G in world)
 					if(G.corpse == src.brain.owner && G.client)
-						G.client.mob = O
+						G.corpse.mind.transfer_to(O)
 						del(G)
 						break
+			if(O.mind.special_role) O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 
 			O.loc = src.loc
 			O << "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>"
