@@ -385,7 +385,137 @@
 
 
 
+/obj/item/weapon/book/manual/engineering_guide
+	name = "Engineering Textbook"
+	icon = 'library.dmi'
+	icon_state ="bookEngineering2"
+	due_date = 0 // Game time in 1/10th seconds
+	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 
+//big pile of shit below.
+
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 18px; margin: 15px 0px 5px;}
+				h2 {font-size: 15px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {list-style: none; margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				</style>
+				</head>
+				<body>
+				So, you're an Engineer, fresh from the academy, eh? Well here is a guide for you, then. Engineering, the Space station 13 way!
+
+				<h2> How much game experience do i need to be a good engineer? </h2>
+
+				Engineering is rather complex, but in itself teaches you many of the station's core mechanics. Even someone with very little experience, who can pick up and empty a toolbox is able to become a good engineer.
+
+				<h2> Before we start </h2>
+
+				<h3> Engineering equipment </h3>
+
+				This is an image of the tools every engineer should be trusted to have on him at all times:
+
+				<p><img src='http://tgstation13.servehttp.com/wiki/images/7/72/Engineers_loadout.png'>
+
+				<p><table cellpadding=3 cellspacing=0 border=1>
+				<tr bgcolor='#ddaa77'>
+				<td><b>Container picture</b></td>
+				<td><b>Container name</b></td>
+				<td><b>Contents</b></td>
+				<tr bgcolor='#eeccaa' align='center'>
+				<td><img src='http://tgstation13.servehttp.com/wiki/images/1/17/Eng_toolbelt.PNG'></td>
+				<td><b>Utility belt</b></td>
+				<td><img src='http://tgstation13.servehttp.com/wiki/images/e/e2/Toolbelt.png'></td>
+				</tr>
+				<tr bgcolor='#eeccaa' align='center'>
+				<td><img src='http://tgstation13.servehttp.com/wiki/images/e/eb/Eng_backpack.PNG'></td>
+				<td><b>Backpack</b></td>
+				<td><img src='http://tgstation13.servehttp.com/wiki/images/9/97/Engineers_backpack_contents.png'></td>
+				</tr>
+				<tr bgcolor='#eeccaa' align='center'>
+				<td><img src='http://tgstation13.servehttp.com/wiki/images/f/fc/Eng_box.PNG'></td>
+				<td><b>Box</b></td>
+				<td><img src='http://tgstation13.servehttp.com/wiki/images/b/b1/Engineers_box_contents.PNG'></td>
+				</tr>
+				</table>
+
+				<p>Note that some of these are for roleplay reasons only. Although you can wear a welding mask all the time it makes little to no sense to do that from a roleplay standpoint. Same applies to keeping a pen (but you will not start with a pen). You'll need it very rarely, but a time will come when you'll actually need it. Roleplay too determines if you're a good engineer or not.
+
+				<h2> The engine, solars and power </h2>
+
+				<h3> Generating power </h3>
+
+				The primary purpose of engineering is to maintain the station's power. To do this, you will need to start the Singularity Engine. Please read the book entitled: 'Singularity engine' for details on this.
+
+				<p>The solars are the next thing you need to worry about. As starting the singularity can be a bit risky, you should watch others do it before you attempt it alone. In the mean time, you can do the wiring of the solars. To do this you will need the RIG suit as well as internals (oxygen tank and gas mask), all of which can be found in engineering. Note that it is a good idea to return the RIG suit once you're done. More on wiring solars can be found in the book entitled 'Solar Panels on Space Stations'
+
+				<h3> Wiring </h3>
+
+				If a part of the station looses power it is likely wires have been cut somewhere. To search for cut wires under floors you will need a T-Ray Scanner. To cut wires, use the wirecutters and to place new ones click on the floor where you'd like them to be placed. The wire will be placed on the targeted tile from the tile you're standing on. You can also place wires on the tile you're currently on by clicking the tile. the wire will be placed in the direction you're currently facing. To place smooth wires, click on the red dot (end point) of an existing wire with more wire in your hand.
+
+				<p>Wiring intersections demand special mention. Making an intersection requires all the wire pieces to be end-points. If you make a smooth wire going south to north and place a half-wire going east, they will not be connected. To connect them you have to remove the smooth wire and replace it with two half-wires. Once all of them are placed, if you right click the tile you should see three wire pieces, all of which meet in the center.
+
+				<h3> Power monitoring and distribution </h3>
+
+				an APC or Area Power Controller is located in every room. It is usually locked, but you can unlock it by swiping your ID on it. It contains a power cell. You can shut off a room's power or disable or enable lighting, equipment or atmospheric systems with it. Every room can have only one APC. The guide to their construction and deconstruction can be found in the book entitled 'Station repairs and construction'. APC's can also be hacked (More on that in the book entitled 'Hacking'). It's also a good idea to know how to do that. DO NOT PRACTICE ON THE ENGINE APCs! If you mess up, you can destroy it through hacking which can set the singularity free if you do it in engineering! You know this warning is here because it happened before.
+
+				<h2> Station structural integrity </h2>
+
+				An educated word which basically means wall repairs.
+
+				<h3> The secrets surrounding walls </h3>
+
+				Walls come in two forms: Regular and reinforced. Building a regular wall is a two step process: constructing girders and adding plating. To construct a girder have a stack of two or more sheets of metal on you (right click the metal and examine it to see how many sheets are in the stack). Left click the metal for a construction window to appear. choose "Construct wall girders" from the list and wait a few seconds while they're built. Once they're built, click on the girders with another stack of two or more metal to add the plating. Note that only fully built walls will prevent air from escaping freely through them. Reinforced walls share the first step: the building of the girders. after this, you'll need 4 sheets of metal. In the same way as you built the girders, create two reinforced sheets. Use one of them on the girders to create reinforced girders and the other on the reinforced girders to finalize them. Reinforced walls are much stronger than regular walls and take much longer to get through using regular tools.
+
+				<p>For more on construction read the book entitled 'Station Repairs and Construction'
+
+				<h3> Pretty glass </h3>
+
+				Notice how most of the glass around the station is built as a double pane, which surrounds a grille. Making this by hand can be a bit tricky at first, but is simple once you get the hang of it. To build such a wall, you'll need 4 sheets of glass and 3 sheets of metal, alternatively you can have 6 sets of rods. You'll also need a screwdriver and crowbar, tho having wirecutters and a welder with you is a good idea, as you'll likely get it wrong the first time and will need those to dismantle the grille. First you have to prepare your materials. Use the metal on itself and create 6 sets of rods (2 are made each time). Now pick the rods up (you can stack them, but don't click too quickly or the game might think you wanted to build a grille). After this, use 4 of the rods on 4 sheets of glass to create 4 sheets of reinforced glass. Now pick up all your tools (put them on your utility belt if you have one or in your backpack) and pick up the remaining two rods in one hand and the 4 sheets of reinforced glass in your other (remember, you can stack glass too). Now stand where you'd like the glass to be. Use the rods on themselves and this will create a grille. DO NOT MOVE! Now use the glass on itself 4 times and create a single paned glass every time. Right click on the glass to rotate it until you have 3 of the 4 sides covered. The remaining side is your escape route. use the combination of screwdriver - crowbar - screwdriver on each of the 3 panes which are already in place to secure them. Now move out of the grille and rotate the last window so it covers the last side. Fasten that with the same screwdriver - crowbar - screwdriver combination. Congratulations. You've just made a proper window. You're already better at construction than most.
+
+				<p>For more on construction read the book entitled 'Station Repairs and Construction'
+
+				<h2> Robots, Artificial Intelligence and Computers </h2>
+
+				As an engineer, it is required of you to understand how most computers are operated, how they work, how they're created, dismantled and repaired. You're also the best equipped station employee to prevent the AI from taking a life of it's own.
+
+				<h3> Computers </h3>
+
+				Computers are everywhere on SS13. Engineering has a power monitoring computer, several solar computers and a general alerts computer. Almost everything you can control is done through a computer. Making them is described in the book entitled 'Station Repairs and Construction', as is their dissasembly (for those which can be deconstructed). To learn how to operate different computer you'll need to start using them and find out how they work while doing so. There are too many to explain them all here.
+
+				<h3> Artificial int... stupidity </h3>
+
+				More often than not, the AI will be rogue. This means it has laws which are harmful. It will try it's best to kill any crew members by flooding the halls with toxic plasma, sparking fires, overloading APC's, electrifying doors, etc. At such a time you have two choices: Destroy it or reset it. As said, the AI works on a principle of laws. People can upload new ones to it and if these are harmful, you'll first want to try to reset it. In technical storage (in the maintenance hallway between assistant's storage and EVA) you have an AI upload card and an AI reset module. To reset the AI, first create an AI upload computer and once it is created, click on it to choose the rogue AI and use the module on it to reset it. If the person has uploaded a core law, then it's a bit harder. A core law cannot be reset with the AI reset module. You'll need to override it with another AI core module. These can be found in the AI upload area under lock and key. But if the person who uploaded the traitorous law got in, you can get in too, right? The often preferred alternative is to simply kill the AI. Tear down the walls and shoot it, blow it up, use the chemist to prepare something. There are many ways of doing this. Note that if hostile runtimes are reported, you'll have to get to the AI satellite, as the rogue AI is there.
+
+				<p>Blowing up cyborgs is normally done by the roboticist or Research Director, but you may need to help them create a robotics console at some point. One of these can be found in tech storage, but is usually stolen quickly.
+
+				<p>The alternative methods to being helpful included hacking APCs and doors, usually to disable the AI control. This is especially important anywhere near a robotics control, engine, or any of the SMES rooms. The AI has no reason to have control over these anyway.
+
+				<h2> Getting the man out of danger... alive! </h2>
+
+				It's your job to save lives when they cry out for help.
+
+				<h3> Firefighting </h3>
+
+				Engineers get access to maintenance hallways, which contain several firesuits and extinguishers. If a fire breaks out somewhere, put it out. Firesuits allow you to walk in almost any fire. Extinguishers have a limited capacity. Refill them with water tanks, which can be found all around the station.
+
+				<h3> Physical rescue </h3>
+
+				If someone cries that he can't get out of somewhere and no one can get him out, then it's your job to do so. Hacking airlocks, deconstructing walls, basically whatever it takes to get to them. I don't need to point out that you should never put others or yourself at risk in doing so!
+
+				<h3> Space recovery </h3>
+
+				A body's been spaced? Well now it's your job to recover it. Ask the AI or captain to get a jetpack and space suit from EVA and go after the body. You'll most frequently find bodies either somewhere near the derelict or the AI satellite. Drag them to a teleporter and get them back to the station. The use of lockers will help greatly, as lockers do not drift like bodies do, but cannot travel across Z-levels. ALWAYS have tools, glass and metal with you when doing this! Some teleporters need to be rebuilt and some bodies float around randomly and need floor tiles to be build in their path to actually stop
+
+				<h2> Space exploration </h2>
+
+				Space exploration can be fun. Although there are not too many things to see in space at the moment, but things change sometimes. You may also get some things which could come in handy.
+
+
+				"}
 
 
 
