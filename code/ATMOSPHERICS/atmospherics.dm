@@ -14,7 +14,7 @@ obj/machinery/atmospherics
 	anchored = 1
 	power_usage = 10
 	power_channel = ENVIRON
-
+	var/nodealert = 0
 
 	var/initialize_directions = 0
 	var/color

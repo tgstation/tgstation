@@ -5,7 +5,7 @@ obj/machinery/atmospherics/pipe
 	var/datum/pipeline/parent
 
 	var/volume = 0
-	var/nodealert = 0
+
 
 	layer = 2.4 //under wires with their 2.5
 
@@ -118,6 +118,8 @@ obj/machinery/atmospherics/pipe
 				if(!nodealert)
 					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
 					nodealert = 1
+			else if (nodealert)
+				nodealert = 0
 
 
 			else if(parent)
@@ -342,6 +344,11 @@ obj/machinery/atmospherics/pipe
 			..()
 			if(!node1)
 				parent.mingle_with_turf(loc, 200)
+				if(!nodealert)
+					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+					nodealert = 1
+			else if (nodealert)
+				nodealert = 0
 
 		carbon_dioxide
 			name = "Pressure Tank (Carbon Dioxide)"
@@ -515,6 +522,13 @@ obj/machinery/atmospherics/pipe
 			if(parent)
 				parent.mingle_with_turf(loc, 250)
 
+			if(!node1)
+				if(!nodealert)
+					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+					nodealert = 1
+			else if (nodealert)
+				nodealert = 0
+
 		Del()
 			if(node1)
 				node1.disconnect(src)
@@ -606,12 +620,21 @@ obj/machinery/atmospherics/pipe
 
 			if(!node1)
 				parent.mingle_with_turf(loc, 70)
-
+				if(!nodealert)
+					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+					nodealert = 1
 			else if(!node2)
 				parent.mingle_with_turf(loc, 70)
-
+				if(!nodealert)
+					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+					nodealert = 1
 			else if(!node3)
 				parent.mingle_with_turf(loc, 70)
+				if(!nodealert)
+					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+					nodealert = 1
+			else if (nodealert)
+				nodealert = 0
 
 		Del()
 			if(node1)

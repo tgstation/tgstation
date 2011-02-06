@@ -28,6 +28,7 @@
 			src.holder.level = 6
 
 			// Settings
+
 			src.verbs += /client/proc/colorooc // -- Urist
 			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
 			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
@@ -62,6 +63,7 @@
 			src.verbs += /obj/admins/proc/startnow				//start now bitch
 
 			// Debug
+			src.verbs += /client/proc/atmosscan //for locating piping breaks
 			src.verbs += /client/proc/debug_variables
 			src.verbs += /client/proc/cmd_modify_object_variables
 			src.verbs += /client/proc/cmd_modify_ticker_variables
@@ -188,6 +190,7 @@
 			src.verbs += /obj/admins/proc/startnow				//start now bitch
 
 			// Debug
+			src.verbs += /client/proc/atmosscan //for locating piping breaks
 			src.verbs += /client/proc/debug_variables
 			src.verbs += /client/proc/cmd_modify_object_variables
 			src.verbs += /client/proc/cmd_modify_ticker_variables

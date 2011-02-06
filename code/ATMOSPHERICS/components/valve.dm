@@ -106,7 +106,7 @@ obj/machinery/atmospherics/valve
 		build_network()
 
 		return 1
-	
+
 	proc/normalize_dir()
 		if(dir==3)
 			dir = 1
@@ -131,6 +131,17 @@ obj/machinery/atmospherics/valve
 		..()
 		if(open && (!node1 || !node2))
 			close()
+		if(!node1)
+			if(!nodealert)
+				//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+				nodealert = 1
+		else if (!node2)
+			if(!nodealert)
+				//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+				nodealert = 1
+		else if (nodealert)
+			nodealert = 0
+
 
 		return
 
@@ -139,14 +150,14 @@ obj/machinery/atmospherics/valve
 
 		var/node1_dir
 		var/node2_dir
-		
+
 		for(var/direction in cardinal)
 			if(direction&initialize_directions)
 				if (!node1_dir)
 					node1_dir = direction
 				else if (!node2_dir)
 					node2_dir = direction
-		
+
 		for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
 			if(target.initialize_directions & get_dir(target,src))
 				node1 = target
