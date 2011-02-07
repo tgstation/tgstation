@@ -884,7 +884,10 @@
 		var/dam_zone = pick("chest", "chest", "chest", "head", "groin")
 		if (istype(src.organs[dam_zone], /datum/organ/external))
 			var/datum/organ/external/temp = src.organs[dam_zone]
-			temp.take_damage((istype(O, /obj/meteor/small) ? 10 : 25), 30)
+			if (istype(O, /obj/immovablerod))
+				temp.take_damage(101, 0)
+			else
+				temp.take_damage((istype(O, /obj/meteor/small) ? 10 : 25), 30)
 			src.UpdateDamageIcon()
 		src.updatehealth()
 	return

@@ -13,7 +13,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	icon = 'objects.dmi'
 	icon_state = "immrod"
 	throwforce = 100
-	density = 0
+	density = 1
 	anchored = 1
 
 	Bump(atom/clong)
@@ -29,7 +29,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 					O.show_message("CLANG", 2)
 		if (istype(clong, /mob))
 			if(clong.density || prob(10))
-				src.throw_impact(clong)
+				clong.meteorhit(src)
 		if(clong && prob(25))
 			src.loc = clong.loc
 
