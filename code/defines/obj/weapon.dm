@@ -1636,6 +1636,8 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	var/timer = 10
 	var/atom/target = null
 
+///////////////////////////////////////Stock Parts /////////////////////////////////
+
 /obj/item/weapon/stock_parts
 	name = "stock part"
 	desc = "What?"
@@ -1649,14 +1651,14 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Console Screen"
 	desc = "Used in the construction of computers and other devices with a interactive console."
 	icon_state = "screen"
-	origin_tech = list("materials" = 2)
+	origin_tech = list("materials" = 1)
 	g_amt = 200
 
 /obj/item/weapon/stock_parts/capacitor
 	name = "Capacitor"
 	desc = "A basic capacitor used in the construction of a variety of devices."
 	icon_state = "capacitor"
-	origin_tech = list("energystorage" = 2)
+	origin_tech = list("energystorage" = 1)
 	m_amt = 50
 	g_amt = 50
 
@@ -1664,7 +1666,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Scanning Module"
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
 	icon_state = "scan_module"
-	origin_tech = list("magnets" = 2)
+	origin_tech = list("magnets" = 1)
 	m_amt = 50
 	g_amt = 20
 
@@ -1679,7 +1681,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Micro-laser"
 	desc = "A tiny laser used in certain devices."
 	icon_state = "micro_laser"
-	origin_tech = list("magnets" = 2)
+	origin_tech = list("magnets" = 1)
 	m_amt = 10
 	g_amt = 20
 
@@ -1687,5 +1689,48 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Matter Bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "matter_bin"
-	origin_tech = list("materials" = 2)
+	origin_tech = list("materials" = 1)
+	m_amt = 80
+
+/obj/item/weapon/stock_parts/adv_capacitor
+	name = "Advanced Capacitor"
+	desc = "An advanced capacitor used in the construction of a variety of devices."
+	icon_state = "capacitor"
+	origin_tech = list("energystorage" = 3)
+	rating = 2
+	m_amt = 50
+	g_amt = 50
+
+/obj/item/weapon/stock_parts/adv_scanning_module
+	name = "Advanced Scanning Module"
+	desc = "A compact, high resolution scanning module used in the construction of certain devices."
+	icon_state = "scan_module"
+	origin_tech = list("magnets" = 3)
+	rating = 2
+	m_amt = 50
+	g_amt = 20
+
+/obj/item/weapon/stock_parts/nano_manipulator
+	name = "Nano-Manipulator"
+	desc = "A tiny little manipulator used in the construction of certain devices."
+	icon_state = "micro_mani"
+	origin_tech = list("robotics" = 3)
+	rating = 2
+	m_amt = 30
+
+/obj/item/weapon/stock_parts/high_micro_laser
+	name = "High-Power Micro-laser"
+	desc = "A tiny laser used in certain devices."
+	icon_state = "micro_laser"
+	origin_tech = list("magnets" = 3)
+	rating = 2
+	m_amt = 10
+	g_amt = 20
+
+/obj/item/weapon/stock_parts/adv_matter_bin
+	name = "Advanced Matter Bin"
+	desc = "A container for hold compressed matter awaiting re-construction."
+	icon_state = "matter_bin"
+	origin_tech = list("materials" = 3)
+	rating = 2
 	m_amt = 80

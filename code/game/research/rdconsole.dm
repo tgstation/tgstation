@@ -241,11 +241,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					for(var/T in linked_destroy.loaded_item.origin_tech)
 						files.UpdateTech(T, linked_destroy.loaded_item.origin_tech[T])
 					if(linked_lathe) //Also sends salvaged materials to a linked autolateh, if any.
-						linked_lathe.m_amount = min(linked_lathe.max_m_amount, (linked_lathe.m_amount + linked_destroy.loaded_item.m_amt))
-						linked_lathe.g_amount = min(linked_lathe.max_g_amount, (linked_lathe.g_amount + linked_destroy.loaded_item.g_amt))
+						linked_lathe.m_amount = min(linked_lathe.max_m_amount, ((linked_lathe.m_amount + linked_destroy.loaded_item.m_amt)/2))
+						linked_lathe.g_amount = min(linked_lathe.max_g_amount, ((linked_lathe.g_amount + linked_destroy.loaded_item.g_amt)/2))
 					linked_destroy.loaded_item = null
 					for(var/I in contents)
 						del(I)
+					use_power(250)
 					linked_destroy.icon_state = "d_analyzer"
 					screen = 1.0
 					updateUsrDialog()
@@ -322,6 +323,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							linked_imprinter.reagents.remove_reagent(I, being_built.materials[I])
 							power += being_built.materials[I]
 				var/obj/new_item = new being_built.build_path(src)
+				use_power(power)
 				new_item.loc = linked_destroy.loc
 				linked_imprinter.busy = 0
 				screen = 4.1

@@ -217,7 +217,6 @@ datum
 			desc = "Allows for the construction of a Safeguard AI Module."
 			id = "safeguard_module"
 			req_tech = list("programming" = 5)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/safeguard"
@@ -227,7 +226,6 @@ datum
 			desc = "Allows for the construction of a OneHuman AI Module."
 			id = "onehuman_module"
 			req_tech = list("programming" = 5, "syndicate" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/oneHuman"
@@ -237,7 +235,6 @@ datum
 			desc = "Allows for the construction of a ProtectStation AI Module."
 			id = "protectstation_module"
 			req_tech = list("programming" = 5)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/protectStation"
@@ -247,7 +244,6 @@ datum
 			desc = "Allows for the construction of a TeleporterOffline AI Module."
 			id = "notele_module"
 			req_tech = list("programming" = 5)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/teleporterOffline"
@@ -257,7 +253,6 @@ datum
 			desc = "Allows for the construction of a Quarantine AI Module."
 			id = "quarantine_module"
 			req_tech = list("programming" = 5, "biotech" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/quarantine"
@@ -267,7 +262,6 @@ datum
 			desc = "Allows for the construction of a Safeguard AI Module."
 			id = "oxygen_module"
 			req_tech = list("programming" = 5, "biotech" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/oxygen"
@@ -277,7 +271,6 @@ datum
 			desc = "Allows for the construction of a Freeform AI Module."
 			id = "freeform_module"
 			req_tech = list("programming" = 6)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/freeform"
@@ -287,7 +280,6 @@ datum
 			desc = "Allows for the construction of a Reset AI Module."
 			id = "reset_module"
 			req_tech = list("programming" = 5)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/reset"
@@ -297,7 +289,6 @@ datum
 			desc = "Allows for the construction of a Purge AI Module."
 			id = "purge_module"
 			req_tech = list("programming" = 5)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/purge"
@@ -307,7 +298,6 @@ datum
 			desc = "Allows for the construction of a Freeform AI Core Module."
 			id = "freeformcore_module"
 			req_tech = list("programming" = 6)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/freeformcore"
@@ -317,7 +307,6 @@ datum
 			desc = "Allows for the construction of a Asimov AI Core Module."
 			id = "asimov_module"
 			req_tech = list("programming" = 5)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/asimov"
@@ -327,7 +316,6 @@ datum
 			desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."
 			id = "paladin_module"
 			req_tech = list("programming" = 5)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/paladin"
@@ -337,7 +325,6 @@ datum
 			desc = "Allows for the construction of a T.Y.R.A.N.T. AI Module."
 			id = "tyrant_module"
 			req_tech = list("programming" = 5, "syndicate" = 2)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/tyrant"
@@ -351,7 +338,6 @@ datum
 			desc = "Allows for the construction of a Safeguard AI Module."
 			id = "ripley_main"
 			req_tech = list("programming" = 3, "robotics" = 5)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/ripley/main"
@@ -361,7 +347,6 @@ datum
 			desc = "Allows for the construction of a Safeguard AI Module."
 			id = "ripley_peri"
 			req_tech = list("programming" = 3, "robotics" = 5)
-			reliability = 100
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/ripley/peripherals"
@@ -374,7 +359,6 @@ datum
 			desc = "Produce additional disks for storing device designs."
 			id = "design_disk"
 			req_tech = list("programming" = 1)
-			reliability = 100
 			build_type = PROTOLATHE | AUTOLATHE
 			materials = list("$metal" = 30, "$glass" = 10)
 			build_path = "/obj/item/weapon/disk/design_disk"
@@ -384,7 +368,6 @@ datum
 			desc = "Produce additional disks for storing technology data."
 			id = "tech_disk"
 			req_tech = list("programming" = 1)
-			reliability = 100
 			build_type = PROTOLATHE | AUTOLATHE
 			materials = list("$metal" = 30, "$glass" = 10)
 			build_path = "/obj/item/weapon/disk/tech_disk"
@@ -397,29 +380,91 @@ datum
 			name = "Basic Capacitor"
 			desc = "A stock part used in the construction of various devices."
 			id = "basic_capacitor"
-			req_tech = list("powerstorage" = 2)
-			reliability = 100
+			req_tech = list("powerstorage" = 1)
 			build_type = PROTOLATHE | AUTOLATHE
 			materials = list("$metal" = 50, "$glass" = 50)
+			build_path = "/obj/item/weapon/stock_parts/capacitor"
 
 		basic_sensor
 			name = "Basic Sensor Module"
 			desc = "A stock part used in the construction of various devices."
-			id = "basic_senosr"
-			req_tech = list("magnets" = 2)
-			reliability = 100
+			id = "basic_sensor"
+			req_tech = list("magnets" = 1)
 			build_type = PROTOLATHE | AUTOLATHE
 			materials = list("$metal" = 50, "$glass" = 20)
+			build_path = "/obj/item/weapon/stock_parts/scanning_module"
 
-		basic_micro_mani
-			name = "Basic Micro Manipulator"
+		micro_mani
+			name = "Micro Manipulator"
 			desc = "A stock part used in the construction of various devices."
-			id = "basic_micro_mani"
+			id = "micro_mani"
 			req_tech = list("robotics" = 1)
-			reliability = 100
 			build_type = PROTOLATHE | AUTOLATHE
 			materials = list("$metal" = 30)
+			build_path = "/obj/item/weapon/stock_parts/micro_manipulator"
 
+		basic_micro_laser
+			name = "Basic Micro-Laser"
+			desc = "A stock part used in the construction of various devices."
+			id = "basic_micro_laser"
+			req_tech = list("magnets" = 1)
+			build_type = PROTOLATHE | AUTOLATHE
+			materials = list("$metal" = 10, "$glass" = 20)
+			build_path = "/obj/item/weapon/stock_parts/micro_laser"
+
+		basic_matter_bin
+			name = "Basic Matter Bin"
+			desc = "A stock part used in the construction of various devices."
+			id = "basic_matter_bin"
+			req_tech = list("materials" = 1)
+			build_type = PROTOLATHE | AUTOLATHE
+			materials = list("$metal" = 80)
+			build_path = "/obj/item/weapon/stock_parts/matter_bin"
+
+		adv_capacitor
+			name = "Advanced Capacitor"
+			desc = "A stock part used in the construction of various devices."
+			id = "adv_capacitor"
+			req_tech = list("powerstorage" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 50, "$glass" = 50)
+			build_path = "/obj/item/weapon/stock_parts/adv_capacitor"
+
+		adv_sensor
+			name = "Advanced Sensor Module"
+			desc = "A stock part used in the construction of various devices."
+			id = "adv_sensor"
+			req_tech = list("magnets" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 50, "$glass" = 20)
+			build_path = "/obj/item/weapon/stock_parts/adv_scanning_module"
+
+		nano_mani
+			name = "Nano Manipulator"
+			desc = "A stock part used in the construction of various devices."
+			id = "nano_mani"
+			req_tech = list("robotics" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 30)
+			build_path = "/obj/item/weapon/stock_parts/nano_manipulator"
+
+		high_micro_laser
+			name = "High-Power Micro-Laser"
+			desc = "A stock part used in the construction of various devices."
+			id = "high_micro_laser"
+			req_tech = list("magnets" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 10, "$glass" = 20)
+			build_path = "/obj/item/weapon/stock_parts/high_micro_laser"
+
+		adv_matter_bin
+			name = "Advanced Matter Bin"
+			desc = "A stock part used in the construction of various devices."
+			id = "basic_matter_bin"
+			req_tech = list("materials" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 80)
+			build_path = "/obj/item/weapon/stock_parts/adv_matter_bin"
 
 ////////////////////////////////////////
 //Disks for transporting design datums//
