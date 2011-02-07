@@ -35,48 +35,39 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /proc/immovablerod()
 
-	var/list/liste = list()
-	var/list/listw = list()
-	var/list/listn = list()
-	var/list/lists = list()
+	var/startx = 0
+	var/starty = 0
+	var/endy = 0
+	var/endx = 0
+	var/startside = pick(cardinal)
 
-	var/obj/start
-	var/obj/end
-
-	for (var/obj/landmark/rod in world) //setting up the possible start points
-		switch (rod.name)
-			if("rod-n")
-				listn += rod
-			if("rod-s")
-				lists += rod
-			if("rod-e")
-				liste += rod
-			if("rod-w")
-				listw += rod
-
-	if (!(liste.len && listw.len && listn.len && lists.len)) //cancel the event if not all directions have locations
-		log_admin("Immovable rod event failed due to lack of starting points")
-		return
-
-	var/pick = pick("north","south","east","west") //Picking which side we start from
-	switch(pick)
-		if("north")
-			start = pick(listn)
-			end = pick(lists)
-		if("south")
-			start = pick(lists)
-			end = pick(listn)
-		if("east")
-			start = pick(liste)
-			end = pick(listw)
-		if("west")
-			start = pick(listw)
-			end = pick(liste)
+	switch(startside)
+		if(NORTH)
+			starty = 187
+			startx = rand(41, 199)
+			endy = 38
+			endx = rand(41, 199)
+		if(EAST)
+			starty = rand(38, 187)
+			startx = 199
+			endy = rand(38, 187)
+			endx = 41
+		if(SOUTH)
+			starty = 38
+			startx = rand(41, 199)
+			endy = 187
+			endx = rand(41, 199)
+		if(WEST)
+			starty = rand(38, 187)
+			startx = 41
+			endy = rand(38, 187)
+			endx = 199
 
 	//rod time!
-	var/obj/immovablerod/immrod = new /obj/immovablerod(start.loc)
+	var/obj/immovablerod/immrod = new /obj/immovablerod(locate(startx, starty, 1))
 //	world << "Rod in play, starting at [start.loc.x],[start.loc.y] and going to [end.loc.x],[end.loc.y]"
-	while (immrod.loc != end.loc)
+	var/end = locate(endx, endy, 1)
+	while (immrod.loc != end)
 		if (immrod.z != 1)
 			immrod.z = 1
 		step_towards(immrod, end)
