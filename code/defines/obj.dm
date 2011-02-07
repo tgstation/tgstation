@@ -760,6 +760,15 @@
 	var/occupied = 1
 	var/destroyed = 0
 
+/obj/showcase
+	name = "Showcase"
+	icon = 'stationobjs.dmi'
+	icon_state = "showcase_1"
+	desc = "A stand with the empty body of a cyborg bolted to it."
+	density = 1
+	anchored = 1
+	unacidable = 1//temporary until I decide whether the borg can be removed. -veyveyr
+
 obj/item/brain
 	name = "brain"
 	icon = 'surgery.dmi'

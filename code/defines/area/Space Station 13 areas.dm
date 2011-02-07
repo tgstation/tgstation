@@ -352,6 +352,10 @@ proc/process_ghost_teleport_locs()
 	name = "Prison Medbay"
 	icon_state = "medbay"
 
+/area/medical/mechbay
+	name = "Mech Bay"
+	icon_state = "mechbay"
+
 /area/prison/solar
 	name = "Prison Solar Array"
 	icon_state = "storage"
@@ -569,8 +573,12 @@ proc/process_ghost_teleport_locs()
 	icon_state = "kitchen"
 
 /area/crew_quarters/bar
-	name= "Bar"
+	name = "Bar"
 	icon_state = "bar"
+
+/area/crew_quarters/theatre
+	name = "Theatre"
+	icon_state = "Theatre"
 
 /area/library
  	name = "Library"
@@ -627,6 +635,18 @@ proc/process_ghost_teleport_locs()
 	name = "Engine Launcher Room"
 	icon_state = "engine_monitoring"
 
+/area/assembly/chargebay
+	name = "Recharging Bay"
+	icon_state = "mechbay"
+
+/area/assembly/showroom
+	name = "Robotics Showroom"
+	icon_state = "showroom"
+
+/area/assembly/assembly_line
+	name = "Assembly Line"
+	icon_state = "ass_line"
+
 //Teleporter
 
 /area/teleporter
@@ -673,6 +693,14 @@ proc/process_ghost_teleport_locs()
 /area/medical/surgery
 	name = "Surgery"
 	icon_state = "surgery"
+
+/area/medical/exam_room
+	name = "Exam Room"
+	icon_state = "exam_room"
+
+/area/medical/genetics
+	name = "Genetics"
+	icon_state = "genetics"
 
 //Security
 
@@ -800,6 +828,10 @@ proc/process_ghost_teleport_locs()
 /area/toxins/mixing
 	name = "Toxin Mixing Room"
 	icon_state = "toxmix"
+
+/area/toxins/server
+	name = "Server Room"
+	icon_state = "server"
 
 //Storage
 
