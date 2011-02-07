@@ -759,5 +759,5 @@
 #include "code\WorkInProgress\recycling\disposal.dm"
 #include "code\WorkInProgress\recycling\scrap.dm"
 #include "interface\skin.dmf"
-#include "maps\tgstation.2.0.1.dmm"
+#include "maps\tgstation.2.0.0.dmm"
 // END_INCLUDE

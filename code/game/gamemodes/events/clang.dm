@@ -67,12 +67,16 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/obj/immovablerod/immrod = new /obj/immovablerod(locate(startx, starty, 1))
 //	world << "Rod in play, starting at [start.loc.x],[start.loc.y] and going to [end.loc.x],[end.loc.y]"
 	var/end = locate(endx, endy, 1)
-	while (immrod.loc != end)
+	spawn(0)
+		walk_towards(immrod, end,1)
+	sleep(1)
+	while (immrod)
 		if (immrod.z != 1)
 			immrod.z = 1
-		step_towards(immrod, end)
-		sleep(1)
-
-	del(immrod)
+		if(immrod.loc == end)
+			del(immrod)
+		sleep(10)
+	for(var/obj/immovablerod/imm in world)
+		return
 	sleep(50)
 	command_alert("What the fuck was that?!", "General Alert")
