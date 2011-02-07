@@ -14,6 +14,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	icon_state = "immrod"
 	throwforce = 100
 	density = 0
+	anchored = 1
 
 	Bump(atom/clong)
 		if (istype(clong, /turf))
@@ -76,21 +77,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/obj/immovablerod/immrod = new /obj/immovablerod(start.loc)
 //	world << "Rod in play, starting at [start.loc.x],[start.loc.y] and going to [end.loc.x],[end.loc.y]"
 	while (immrod.loc != end.loc)
+		if (immrod.z != 1)
+			immrod.z = 1
 		step_towards(immrod, end)
-/*		for(var/turf/T in immrod.loc)
-			if(T.density)
-				T.ex_act(2)
-				for (var/mob/O in hearers(immrod, null))
-					O.show_message("CLANG", 2)
-		for(var/obj/O in immrod.loc)
-			if(O.density)
-				O.ex_act(2)
-				for (var/mob/M in hearers(immrod, null))
-					M.show_message("CLANG", 2)
-		for(var/mob/living/ouch in immrod.loc)
-			if(ouch.density || prob(10))
-				immrod.throw_impact(ouch)
-				*/
 		sleep(1)
 
 	del(immrod)
