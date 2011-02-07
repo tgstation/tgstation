@@ -157,7 +157,7 @@
 		if("Chef")
 			return list(access_kitchen, access_morgue)
 		if("Roboticist")
-			return list(access_robotics, access_tech_storage, access_medical, access_morgue,
+			return list(access_robotics, access_tech_storage, access_morgue,
 			            access_maint_tunnels)
 		if("Cargo Technician")
 			return list(access_maint_tunnels, access_cargo, access_cargo_bot)
@@ -166,15 +166,15 @@
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_ai_upload, access_construction)
+			            access_heads, access_ai_upload, access_construction, access_robotics)
 		if("Research Director") // added hydroponics access -- Skie
-			return list(access_medical, access_morgue, access_medlab, access_robotics, access_rd,
+			return list(access_medical, access_morgue, access_medlab, access_rd,
 			            access_tech_storage, access_maint_tunnels, access_heads, access_tox,
-			            access_tox_storage, access_chemistry, access_teleporter, access_hydroponics, access_virology, access_research)
+			            access_tox_storage, access_chemistry, access_teleporter, access_hydroponics, access_virology, access_research, access_robotics)
 		if("Virologist")
 			return list(access_medical, access_morgue, access_virology, access_research)
 		if("Chief Medical Officer")
-			return list(access_medical, access_morgue, access_medlab, access_robotics, access_heads, access_chemistry, access_virology, access_cmo, access_surgery, access_research)
+			return list(access_medical, access_morgue, access_medlab, access_heads, access_chemistry, access_virology, access_cmo, access_surgery, access_research)
 		else
 			return list()
 
@@ -198,9 +198,9 @@
 		if(2) //medbay
 			return list(access_medical, access_medlab, access_morgue, access_chemistry, access_virology, access_cmo, access_surgery)
 		if(3) //research
-			return list(access_tox, access_tox_storage, access_rd, access_robotics, access_hydroponics, access_manufacturing, access_research)
+			return list(access_tox, access_tox_storage, access_rd, access_hydroponics, access_manufacturing, access_research)
 		if(4) //engineering and maintenance
-			return list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_emergency_storage, access_tech_storage, access_atmospherics, access_construction)
+			return list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_emergency_storage, access_tech_storage, access_atmospherics, access_construction, access_robotics)
 		if(5) //command
 			return list(access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers)
 		if(6) //station general
