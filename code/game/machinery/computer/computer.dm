@@ -187,16 +187,20 @@ Pod/Blast Doors computer
 			for(var/job in alljobs)
 				jobs += "<a href='?src=\ref[src];assign=[job]'>[dd_replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
 			var/accesses = ""
-			for(var/A in get_all_accesses())
-				if(A in src.modify.access)
-					accesses += "<a href='?src=\ref[src];access=[A];allowed=0'><font color=\"red\">[dd_replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
-				else
-					accesses += "<a href='?src=\ref[src];access=[A];allowed=1'>[dd_replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
+			var/i
+			for(i = 1; i <= 7; i++)
+				accesses += "<b>[get_region_accesses_name(i)]:</b> "
+				for(var/A in get_region_accesses(i))
+					if(A in src.modify.access)
+						accesses += "<a href='?src=\ref[src];access=[A];allowed=0'><font color=\"red\">[dd_replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
+					else
+						accesses += "<a href='?src=\ref[src];access=[A];allowed=1'>[dd_replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
+				accesses += "<br>"
 			body = "[carddesc]<br>[jobs]<br><br>[accesses]"
 		else
 			body = "<a href='?src=\ref[src];auth=1'>{Log in}</a>"
 		dat = "<tt>[header][body]<hr><a href='?src=\ref[src];mode=1'>Access Crew Manifest</a><br></tt>"
-	user << browse(dat, "window=id_com;size=700x375")
+	user << browse(dat, "window=id_com;size=700x520")
 	onclose(user, "id_com")
 	return
 

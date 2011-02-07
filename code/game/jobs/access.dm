@@ -189,6 +189,45 @@
 	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research)
 
+/proc/get_region_accesses(var/code)
+	switch(code)
+		if(0)
+			return get_all_accesses()
+		if(1) //security
+			return list(access_security, access_brig, access_armory, access_forensics_lockers, access_court)
+		if(2) //medbay
+			return list(access_medical, access_medlab, access_morgue, access_chemistry, access_virology, access_cmo, access_surgery)
+		if(3) //research
+			return list(access_tox, access_tox_storage, access_rd, access_robotics, access_hydroponics, access_manufacturing, access_research)
+		if(4) //engineering and maintenance
+			return list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_emergency_storage, access_tech_storage, access_atmospherics, access_construction)
+		if(5) //command
+			return list(access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers)
+		if(6) //station general
+			return list(access_chapel_office, access_kitchen,access_bar, access_janitor, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
+		if(7) //cargo
+			return list(access_cargo, access_cargo_bot, access_qm)
+
+/proc/get_region_accesses_name(var/code)
+	switch(code)
+		if(0)
+			return "All"
+		if(1) //security
+			return "Security"
+		if(2) //medbay
+			return "Medbay"
+		if(3) //research
+			return "Research"
+		if(4) //engineering and maintenance
+			return "Engineering"
+		if(5) //command
+			return "Command"
+		if(6) //station general
+			return "Station General"
+		if(7) //cargo
+			return "Cargo"
+
+
 /proc/get_access_desc(A)
 	switch(A)
 		if(access_cargo)
