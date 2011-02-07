@@ -738,10 +738,12 @@
 			if (user.l_hand == src)
 				user.l_hand = R
 				R.layer = 20
-		src.part1.loc = R
-		src.part2.loc = R
-		src.part1.master = R
-		src.part2.master = R
+		if(src.part1)
+			src.part1.loc = R
+			src.part1.master = R
+		if(src.part2)
+			src.part2.loc = R
+			src.part2.master = R
 		var/turf/T = src.loc
 		if (!( istype(T, /turf) ))
 			T = T.loc
@@ -762,9 +764,10 @@
 		message_admins("[key_name_admin(user)] welded a time bomb. Temp: [src.part3.air_contents.temperature-T0C]")
 		user.show_message("\blue A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.", 1)
 	else
-		src.status = 0
-		bombers += "[key_name(user)] unwelded a time bomb. Temp: [src.part3.air_contents.temperature-T0C]"
-		user << "\blue The hole has been closed."
+		if(src)
+			src.status = 0
+			bombers += "[key_name(user)] unwelded a time bomb. Temp: [src.part3.air_contents.temperature-T0C]"
+			user << "\blue The hole has been closed."
 	src.part2.status = src.status
 
 	src.add_fingerprint(user)

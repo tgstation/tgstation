@@ -19,14 +19,15 @@
 		target.overlays += image('assemblies.dmi', "plastic-explosive2")
 		user << "Bomb has been planted. Timer counting down from [src.timer]."
 		spawn(src.timer*10)
-			explosion(location, -1, -1, 2, 3)
-			if (istype(src.target, /turf/simulated/wall)) src.target:dismantle_wall(1)
-			else src.target.ex_act(1)
-			if (isobj(src.target))
-				if (src.target)
-					del(src.target)
-			if (src)
-				del(src)
+			if(target)
+				explosion(location, -1, -1, 2, 3)
+				if (istype(src.target, /turf/simulated/wall)) src.target:dismantle_wall(1)
+				else src.target.ex_act(1)
+				if (isobj(src.target))
+					if (src.target)
+						del(src.target)
+				if (src)
+					del(src)
 
 /obj/item/weapon/plastique/attack(mob/M as mob, mob/user as mob, def_zone)
 	return

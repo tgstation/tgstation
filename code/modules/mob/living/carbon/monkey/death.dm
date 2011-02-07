@@ -4,9 +4,9 @@
 	var/cancel
 	if (src.healths)
 		src.healths.icon_state = "health5"
-
-	for(var/mob/O in viewers(src, null))
-		O.show_message("<b>The [src.name]</b> lets out a faint chimper as it collapses and stops moving...", 1) //ded -- Urist
+	if(!gibbed)
+		for(var/mob/O in viewers(src, null))
+			O.show_message("<b>The [src.name]</b> lets out a faint chimper as it collapses and stops moving...", 1) //ded -- Urist
 
 	src.stat = 2
 	src.canmove = 0

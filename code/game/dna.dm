@@ -365,8 +365,9 @@
 			del(animation)
 
 		var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey(src)
-		O.dna = M.dna
-		M.dna = null
+		if (M.dna)
+			O.dna = M.dna
+			M.dna = null
 
 		for(var/obj/T in M)
 			del(T)

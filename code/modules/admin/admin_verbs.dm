@@ -63,6 +63,7 @@
 			src.verbs += /obj/admins/proc/startnow				//start now bitch
 
 			// Debug
+			src.verbs += /client/proc/restartcontroller //exactly what it sounds like
 			src.verbs += /client/proc/atmosscan //for locating piping breaks
 			src.verbs += /client/proc/debug_variables
 			src.verbs += /client/proc/cmd_modify_object_variables
@@ -190,6 +191,7 @@
 			src.verbs += /obj/admins/proc/startnow				//start now bitch
 
 			// Debug
+			src.verbs += /client/proc/restartcontroller //exactly what it sounds like
 			src.verbs += /client/proc/atmosscan //for locating piping breaks
 			src.verbs += /client/proc/debug_variables
 			src.verbs += /client/proc/cmd_modify_object_variables

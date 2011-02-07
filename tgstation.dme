@@ -608,6 +608,7 @@
 #include "code\modules\admin\verbs\diagnostics.dm"
 #include "code\modules\admin\verbs\grillify.dm"
 #include "code\modules\admin\verbs\massmodvar.dm"
+#include "code\modules\admin\verbs\MC.dm"
 #include "code\modules\admin\verbs\modifyvariables.dm"
 #include "code\modules\admin\verbs\onlyone.dm"
 #include "code\modules\admin\verbs\playsound.dm"

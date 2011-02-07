@@ -560,18 +560,18 @@ var/showadminmessages = 1
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				message_admins("\red Admin [key_name_admin(usr)] AIized [key_name_admin(M)]!", 1)
-				if (ticker.mode.name  == "AI malfunction")
-					var/obj/O = locate("landmark*ai")
-					M << "\blue <B>You have been teleported to your new starting location!</B>"
-					M.loc = O.loc
-					M.buckled = null
-				else
-					var/obj/S = locate(text("start*AI"))
-					if ((istype(S, /obj/landmark/start) && istype(S.loc, /turf)))
-						M << "\blue <B>You have been teleported to your new starting location!</B>"
-						M.loc = S.loc
-						M.buckled = null
-					world << "<b>[M.real_name] is the AI!</b>"
+//				if (ticker.mode.name  == "AI malfunction")
+//					var/obj/O = locate("landmark*ai")
+//					M << "\blue <B>You have been teleported to your new starting location!</B>"
+//					M.loc = O.loc
+//					M.buckled = null
+//				else
+//					var/obj/S = locate(text("start*AI"))
+//					if ((istype(S, /obj/landmark/start) && istype(S.loc, /turf)))
+//						M << "\blue <B>You have been teleported to your new starting location!</B>"
+//						M.loc = S.loc
+//						M.buckled = null
+				//	world << "<b>[M.real_name] is the AI!</b>"
 				log_admin("[key_name(usr)] AIized [key_name(M)]")
 				H.AIize()
 			else
@@ -1131,6 +1131,7 @@ var/showadminmessages = 1
 						if(T.z == 1 && istype(T,/turf/simulated/floor) && !istype(T,/turf/space))
 							turfs += T
 					for(var/turf/T in world)
+						set background = 1
 						if(prob(20) && T.z == 1 && istype(T,/turf/simulated/floor))
 							spawn(50+rand(0,3000))
 								picked = pick(turfs)
