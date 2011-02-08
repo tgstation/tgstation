@@ -3,12 +3,14 @@
 	set category = "Special Verbs"
 	if(M.client)
 		if(M.client.buildmode)
+			log_admin("[key_name(usr)] has left build mode.")
 			M.client.buildmode = 0
 			M.client.show_popup_menus = 1
 			for(var/obj/buildholder/H)
 				if(H.cl == M.client)
 					del(H)
 		else
+			log_admin("[key_name(usr)] has entered build mode.")
 			M.client.buildmode = 1
 			M.client.show_popup_menus = 0
 
