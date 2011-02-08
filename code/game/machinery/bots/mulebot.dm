@@ -25,7 +25,7 @@
 	var/new_destination = ""	// pending new destination (waiting for beacon response)
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(access_cargo, access_cargo_bot)
+	req_access = list(access_cargo, access_cargo_bot, access_robotics) // added robotics access so assembly line drop-off works properly -veyveyr
 	var/path[] = new()
 
 	var/mode = 0		//0 = idle/ready
