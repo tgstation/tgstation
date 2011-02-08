@@ -1,6 +1,6 @@
 /*
   HOW IT WORKS
-  
+
   The radio_controller is a global object maintaining all radio transmissions, think about it as about "ether".
   Note that /obj/item/device/radio handles transmission using nonstandard way.
   procs:
@@ -182,7 +182,7 @@ datum/radio_frequency
 //						N++
 //				log_admin("DEBUG: post_signal(source=[source] ([source.x], [source.y]),filter=[filter]) frequency=[frequency], N=[N],Nt=[Nt]")
 
-				
+
 
 			del(signal)
 
@@ -198,7 +198,7 @@ datum/radio_frequency
 //			var/l = devices_line___.len
 			//log_admin("DEBUG: devices_line.len=[devices_line.len]")
 			//log_admin("DEBUG: devices(filter_str).len=[l]")
-			
+
 		remove_listener(obj/device)
 			for (var/devices_filter in devices)
 				devices[devices_filter]-=device

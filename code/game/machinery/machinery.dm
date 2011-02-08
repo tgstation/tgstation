@@ -28,7 +28,7 @@
 /obj/machinery/blob_act()
 	if(prob(50))
 		del(src)
-		
+
 
 /obj/machinery/Topic(href, href_list)
 	..()

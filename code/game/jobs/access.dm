@@ -50,15 +50,13 @@
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
 /obj/New()
-
+	//NOTE: If a room requires more than one access (IE: Morgue + medbay) set the req_acesss_txt to "5;6" if it requires 5 and 6
 	if(src.req_access_txt)
-		var/req_access_str = params2list(req_access_txt)
-		var/req_access_changed = 0
+		var/list/req_access_str = dd_text2list(req_access_txt,";")
+		req_access = list()
 		for(var/x in req_access_str)
 			var/n = text2num(x)
 			if(n)
-				if(!req_access_changed)
-					req_access = list()
 				req_access += n
 	..()
 
@@ -130,7 +128,7 @@
 		if("Warden")
 			return list(access_security, access_brig, access_armory, access_court)
 		if("Scientist")
-			return list(access_tox, access_tox_storage, access_research)
+			return list(access_tox, access_tox_storage, access_research, access_medical)
 		if("Head of Security")
 			return list(access_medical, access_morgue, access_tox, access_tox_storage, access_chemistry, access_medlab, access_court,
 			            access_teleporter, access_heads, access_tech_storage, access_security, access_brig, access_atmospherics,
