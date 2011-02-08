@@ -314,7 +314,7 @@
 	access = access_robotics
 
 /datum/supply_packs/mecha_ripley
-	name = "APLU \"Ripley\" Exosuit Assembly Crate"
+	name = "DIY All-inclusive APLU \"Ripley\" Exosuit Assembly Crate"
 	contains = list("/obj/mecha_chassis/ripley",
 	"/obj/item/mecha_parts/part/ripley_torso",
 	"/obj/item/mecha_parts/part/ripley_left_arm",
@@ -323,7 +323,9 @@
 	"/obj/item/mecha_parts/part/ripley_right_leg",
 	"/obj/item/weapon/disk/circuit_disk/mecha/ripley/main",
 	"/obj/item/weapon/disk/circuit_disk/mecha/ripley/peripherals",
-	"/obj/item/weapon/book/manual/ripley_build_and_repair")
+	"/obj/item/weapon/book/manual/ripley_build_and_repair",
+	"/obj/item/mecha_parts/circuitboard/ripley/peripherals", //TEMPORARY due to lack of circuitboard printer
+	"/obj/item/mecha_parts/circuitboard/ripley/main") //TEMPORARY due to lack of circuitboard printer
 	cost = 40
 	containertype = "/obj/crate/secure"
 	containername = "ARLU \"Ripley\" Exosuit Assembly"
