@@ -751,7 +751,11 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			if(M.stat != 2)	M.stat = 1
 			for(var/mob/O in viewers(M, null))
 				if (O.client)	O.show_message("\red <B>[M] has been stunned with the taser gun by [user]!</B>", 1, "\red You hear someone fall", 2)
-		src.charges--
+		if(isrobot(user))
+			var/mob/living/silicon/robot/R = user
+			R.cell.charge -= 20
+		else
+			src.charges--
 		update_icon()
 	else // no charges in the gun, so they just wallop the target with it
 		..()
