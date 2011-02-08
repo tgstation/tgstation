@@ -846,6 +846,7 @@
 					usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
 					return
 				for(var/i=1, i<=src.wear_suit.allowed.len, i++)
+					if(!W) return
 		//			world << "[src.wear_suit.allowed[i]] and [W.type]"
 					if (findtext("[W.type]","[src.wear_suit.allowed[i]]") || istype(W, /obj/item/device/pda) || istype(W, /obj/item/weapon/pen))
 						confirm = 1

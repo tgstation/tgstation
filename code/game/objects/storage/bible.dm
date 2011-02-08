@@ -75,7 +75,8 @@
 			call(/obj/rune/proc/revealrunes)(src)
 
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+	if (istype(W, /obj/item/weapon/storage/bible))
+		return
 	if (src.contents.len >= 7)
 		return
 	if (W.w_class > 3)

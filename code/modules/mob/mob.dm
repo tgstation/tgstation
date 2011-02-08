@@ -1141,6 +1141,7 @@
 		return src.r_hand
 
 /mob/proc/put_in_hand(var/obj/item/I)
+	if(!I) return
 	I.loc = src
 	if (src.hand)
 		src.l_hand = I

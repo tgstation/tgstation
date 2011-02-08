@@ -736,6 +736,7 @@
 	flags = FPRINT
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 
 /obj/kitchenspike
 	name = "a meat spike"

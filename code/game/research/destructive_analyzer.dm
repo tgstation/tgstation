@@ -24,6 +24,9 @@ Note: Must be placed east/right of an R&D console to function.
 			user << "\red The protolathe is busy right now."
 			return
 		if (istype(O, /obj/item/weapon) && !loaded_item)
+			if(!O.origin_tech)
+				user << "\red This doesn't seem to have a tech origin!"
+				return
 			if (O.origin_tech.len == 0)
 				user << "\red You cannot deconstruct this item!"
 				return

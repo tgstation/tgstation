@@ -93,6 +93,7 @@
 	return
 
 /obj/item/attack_hand(mob/user as mob)
+	if (!user) return
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
 			if (M.s_active == src.loc)

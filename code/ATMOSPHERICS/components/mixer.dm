@@ -88,6 +88,7 @@ obj/machinery/atmospherics/mixer
 		var/air_in2_moles = air_in2.total_moles()
 
 		if((air_in1_moles < transfer_moles1) || (air_in2_moles < transfer_moles2))
+			if(!transfer_moles1 || !transfer_moles2) return
 			var/ratio = min(air_in1_moles/transfer_moles1, air_in2_moles/transfer_moles2)
 
 			transfer_moles1 *= ratio

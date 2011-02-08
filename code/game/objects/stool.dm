@@ -111,12 +111,13 @@
 	src:buckled_mobs += M
 	src.add_fingerprint(user)
 	return
-	
+
 /obj/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
+	if (!istype(M)) return
 	buckle_mob(M, user)
 	M.lying = 1
 	return
-	
+
 /obj/stool/bed/attack_hand(mob/user as mob)
 	for(var/mob/M in src.buckled_mobs)
 		if (M.buckled == src)

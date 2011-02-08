@@ -150,7 +150,8 @@
 						G.corpse.mind.transfer_to(O)
 						del(G)
 						break
-			if(O.mind.special_role) O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+			if(O.mind)
+				if(O.mind.special_role) O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 
 			O.loc = src.loc
 			O << "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>"

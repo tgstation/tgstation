@@ -58,6 +58,7 @@
 /datum/intercept_text/proc/pick_mob()
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in world)
+		if (!man.mind) continue
 		if (man.mind.special_role == "Syndicate") continue
 		dudes += man
 	var/dude = pick(dudes)
@@ -65,6 +66,7 @@
 
 /datum/intercept_text/proc/pick_fingerprints()
 	var/mob/living/carbon/human/dude = src.pick_mob()
+	if (!dude) return pick_fingerprints()
 	var/print = "[md5(dude.dna.uni_identity)]"
 	return print
 
