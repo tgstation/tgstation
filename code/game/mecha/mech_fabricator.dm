@@ -1,0 +1,191 @@
+/////////////////////////////
+///// Part Fabricator ///////
+/////////////////////////////
+
+
+/obj/machinery/mecha_part_fabricator
+	icon = 'mech_fab.dmi'
+	icon_state = "fabricator"
+	name = "Exosuit Fabricator"
+	density = 1
+	anchored = 1
+	layer=2
+	power_usage = 100
+	var/list/resources = list(
+										"metal"=20000,
+										"glass"=20000,
+										"gold"=0,
+										"silver"=0,
+										"diamond"=0,
+										"plasma"=0
+										)
+	var/res_max_amount = 200000
+	var/part_set
+	var/obj/being_built
+	var/list/part_sets = list(
+	"Ripley"=list(
+						list("result"="/obj/mecha_chassis/ripley","time"=100,"metal"=20000),
+						list("result"="/obj/item/mecha_parts/part/ripley_torso","time"=300,"metal"=40000,"glass"=15000),
+						list("result"="/obj/item/mecha_parts/part/ripley_left_arm","time"=200,"metal"=25000),
+						list("result"="/obj/item/mecha_parts/part/ripley_right_arm","time"=200,"metal"=25000),
+						list("result"="/obj/item/mecha_parts/part/ripley_left_leg","time"=200,"metal"=30000),
+						list("result"="/obj/item/mecha_parts/part/ripley_right_leg","time"=200,"metal"=30000)
+						),
+	"Gygax"=list(
+						list("result"="/obj/mecha_chassis/gygax","time"=100,"metal"=25000),
+						list("result"="/obj/item/mecha_parts/part/gygax_torso","time"=300,"metal"=50000,"glass"=20000),
+						list("result"="/obj/item/mecha_parts/part/gygax_head","time"=200,"metal"=20000,"glass"=10000),
+						list("result"="/obj/item/mecha_parts/part/gygax_left_arm","time"=200,"metal"=30000),
+						list("result"="/obj/item/mecha_parts/part/gygax_right_arm","time"=200,"metal"=30000),
+						list("result"="/obj/item/mecha_parts/part/gygax_left_leg","time"=200,"metal"=35000),
+						list("result"="/obj/item/mecha_parts/part/gygax_right_leg","time"=200,"metal"=35000),
+						list("result"="/obj/item/mecha_parts/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000)
+						)
+	)
+
+	proc/output_parts_list(set_name)
+		var/output = ""
+		if(set_name in part_sets)
+			var/list/part_set = part_sets[set_name]
+			for(var/part in part_set)
+				var/resources_available = check_resources(part)
+				output += "[resources_available?"<a href='?src=\ref[src];part=\ref[part]'>":"<span class='red'>"][output_part_info(part)][resources_available?"</a>":"</span>"]<br>"
+		return output
+
+	proc/output_part_info(part)
+		var/path = part["result"]
+		var/obj/O = new path(src)
+		var/cost = "Cost: "
+		var/i = 0
+		for(var/p in part)
+			if(p in resources)
+				cost += "[i?" | ":null][part[p]] [p]"
+				i++
+		var/output = "[O.name] ([cost]) [part["time"]/10]sec"
+		del O
+		return output
+
+	proc/output_available_resources()
+		var/output
+		for(var/resource in resources)
+			output += "<span class=\"res_name\">[resource]: </span>[min(res_max_amount, resources[resource])] cm<sup>3</sup><br>"
+		return output
+
+	proc/remove_resources(part)
+		for(var/p in part)
+			if(p in resources)
+				src.resources[p] -= part[p]
+		return
+
+	proc/check_resources(part)
+		for(var/p in part)
+			if(p in resources)
+				if(src.resources[p] < part[p])
+					return 0
+		return 1
+
+	attack_hand(mob/user as mob)
+		var/dat
+		if (..())
+			return
+		user.machine = src
+		if (src.being_built)
+			dat = {"<TT>Building [src.being_built.name].<BR>
+						Please wait until completion...</TT><BR>
+						<BR>
+					"}
+		else
+			dat = output_available_resources()
+			dat += "<hr>"
+			if(!part_set)
+				for(var/part_set in part_sets)
+					dat += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]<BR>"
+			else
+				dat += output_parts_list(part_set)
+				dat += "<hr><a href='?src=\ref[src];part_set=clear'>Return</a>"
+
+		user << browse({"
+<html>
+<head>
+<title>[src.name]</title>
+<style>
+.res_name {font-weight: bold; text-transform: capitalize;}
+.red {color: #f00;}
+</style>
+</head>
+<body>[dat]</body>
+</html>
+							"}, "window=mecha_fabricator")
+		onclose(user, "mecha_fabricator")
+		return
+
+
+	Topic(href, href_list)
+		..()
+		if(href_list["part_set"])
+			if(href_list["part_set"]=="clear")
+				src.part_set = null
+			else
+				src.part_set = href_list["part_set"]
+		if(href_list["part"])
+			var/list/part = locate(href_list["part"])
+			if(!part) return
+			var/path = part["result"]
+			var/time = part["time"]
+			src.being_built = new path(src)
+			src.remove_resources(part)
+			src.icon_state = "fabricator_ani"
+			src.power_usage = 2000
+			spawn(time)
+				src.being_built.Move(get_step(src,EAST))
+				src.icon_state = initial(src.icon_state)
+				src.power_usage = initial(src.power_usage)
+				src.visible_message("[src] beeps, \"The [src.being_built] is complete\".")
+				src.being_built = null
+				src.updateUsrDialog()
+		src.updateUsrDialog()
+		return
+
+	process()
+		if (stat & (NOPOWER|BROKEN))
+			return
+
+	attackby(obj/item/stack/sheet/W as obj, mob/user as mob)
+		var/material
+		var/amnt
+		if(istype(W, /obj/item/stack/sheet/gold))
+			material = "gold"
+			amnt = "g_amt"
+		else if(istype(W, /obj/item/stack/sheet/silver))
+			material = "silver"
+			amnt = "g_amt"
+		else if(istype(W, /obj/item/stack/sheet/diamond))
+			material = "diamond"
+			amnt = "g_amt"
+		else if(istype(W, /obj/item/stack/sheet/plasma))
+			material = "plasma"
+			amnt = "g_amt"
+		else if(istype(W, /obj/item/stack/sheet/metal))
+			material = "metal"
+			amnt = "m_amt"
+		else if(istype(W, /obj/item/stack/sheet/glass))
+			material = "glass"
+			amnt = "g_amt"
+		else
+			return ..()
+
+		var/name = "[W.name]"
+		if(src.resources[material] < res_max_amount)
+			var/count = 0
+			spawn(10)
+				if(W && W.amount)
+					while(src.resources[material] < res_max_amount && W)
+						src.resources[material] += W.vars[amnt]
+						W.use(1)
+						count++
+
+					user << "You insert [count] [name] into the fabricator."
+					src.updateUsrDialog()
+		else
+			user << "The fabricator cannot hold more [name]."
+		return

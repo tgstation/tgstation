@@ -28,7 +28,7 @@
 	var/datum/effects/system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_power = 6
-	var/inertia_dir = null //for open space travel.
+	//var/inertia_dir = null //for open space travel.
 
 	//inner atmos machinery. Air tank mostly
 	var/datum/gas_mixture/air_contents = new

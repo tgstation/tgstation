@@ -351,6 +351,33 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/ripley/peripherals"
 
+		gygax_main
+			name = "Circuit Design (\"Gygax\" Central Control module)"
+			desc = "Allows for the construction of a Safeguard AI Module."
+			id = "gygax_main"
+			req_tech = list("programming" = 4, "robotics" = 5)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/mecha_parts/circuitboard/gygax/main"
+
+		gygax_peri
+			name = "Circuit Design (\"Gygax\" Peripherals Control module)"
+			desc = "Allows for the construction of a Safeguard AI Module."
+			id = "gygax_peri"
+			req_tech = list("programming" = 4, "robotics" = 5)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/mecha_parts/circuitboard/gygax/peripherals"
+
+		gygax_targ
+			name = "Circuit Design (\"Gygax\" Weapons & Targeting Control module)"
+			desc = "Allows for the construction of a Safeguard AI Module."
+			id = "gygax_targ"
+			req_tech = list("programming" = 4, "robotics" = 5)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/mecha_parts/circuitboard/gygax/targeting"
+
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
 ////////////////////////////////////////
