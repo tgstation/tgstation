@@ -9,6 +9,9 @@
 	var/datum/construction/construct
 	flags = FPRINT | CONDUCT
 
+
+
+//////// Ripley chassis
 /obj/mecha_chassis/ripley
 	name = "Ripley Chassis Frame"
 
@@ -37,7 +40,7 @@
 			..()
 		return
 
-
+/////// Gygax chasis
 /obj/mecha_chassis/gygax
 	name = "Gygax Chassis Frame"
 
@@ -65,6 +68,36 @@
 		if(!construct || !construct.check_step(W, user))
 			..()
 		return
+
+/////// Firefighter chassis
+/obj/mecha_chassis/firefighter
+	name = "Ripley-on-Fire Chassis Frame"
+
+	New()
+		..()
+		construct = new /datum/construction/mecha/firefighter_chassis(src)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/mecha_parts))
+			if(construct)
+				construct.check_all_steps(W, user)
+		else
+			..()
+		return
+
+/obj/mecha_chassis/firefighter_full
+	name = "Ripley-on-Fire Chassis"
+	icon_state = "ripley_chassis"
+
+	New()
+		..()
+		construct = new /datum/construction/mecha/firefighter(src)
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(!construct || !construct.check_step(W, user))
+			..()
+		return
+
 
 /////////////////////////
 ////// Mecha Parts //////
@@ -130,6 +163,28 @@
 	name="Gygax Armour Plates"
 	icon_state = "gygax_armour"
 
+////////// Firefighter
+
+/obj/item/mecha_parts/part/firefighter_torso
+	name="Ripley-on-Fire Torso"
+	icon_state = "ripley_harness"
+
+/obj/item/mecha_parts/part/firefighter_left_arm
+	name="Ripley-on-Fire Left Arm"
+	icon_state = "ripley_l_arm"
+
+/obj/item/mecha_parts/part/firefighter_right_arm
+	name="Ripley-on-Fire Right Arm"
+	icon_state = "ripley_r_arm"
+
+/obj/item/mecha_parts/part/firefighter_left_leg
+	name="Ripley-on-Fire Left Leg"
+	icon_state = "ripley_l_leg"
+
+/obj/item/mecha_parts/part/firefighter_right_leg
+	name="Ripley-on-Fire Right Leg"
+	icon_state = "ripley_r_leg"
+
 
 
 
@@ -164,6 +219,10 @@
 	gygax/main
 		name = "Circuit board (Gygax Central Control module)"
 		icon_state = "mainboard"
+
+	firefighter/peripherals
+		name = "Circuit board (Ripley-on-Fire Peripherals Control module)"
+		icon_state = "mcontroller"
 
 ////////////////////////////////
 ///// Construction datums //////
@@ -375,6 +434,79 @@
 				user.visible_message("[user] secures Gygax Armour Plates.", "You secure Gygax Armour Plates.")
 			if(1)
 				user.visible_message("[user] welds Gygax Armour Plates to [holder].", "You weld Gygax Armour Plates to [holder].")
+		return 1
+
+
+/datum/construction/mecha/firefighter_chassis
+	result = "/obj/mecha_chassis/firefighter_full"
+	steps = list(list("key"="/obj/item/mecha_parts/part/firefighter_torso"),//1
+					 list("key"="/obj/item/mecha_parts/part/firefighter_left_arm"),//2
+					 list("key"="/obj/item/mecha_parts/part/firefighter_right_arm"),//3
+					 list("key"="/obj/item/mecha_parts/part/firefighter_left_leg"),//4
+					 list("key"="/obj/item/mecha_parts/part/firefighter_right_leg")//5
+					)
+
+	custom_action(step, atom/used_atom, mob/user)
+		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
+		holder.overlays += used_atom.icon_state+"+o"
+		del used_atom
+		return 1
+
+
+/datum/construction/mecha/firefighter
+	result = "/obj/mecha/working/firefighter"
+	steps = list(list("key"="/obj/item/weapon/weldingtool"),//1
+					 list("key"="/obj/item/weapon/wrench"),//2
+					 list("key"="/obj/item/stack/sheet/r_metal"),//3
+					 list("key"="/obj/item/weapon/weldingtool"),//4
+					 list("key"="/obj/item/weapon/wrench"),//5
+					 list("key"="/obj/item/stack/sheet/metal"),//6
+					 list("key"="/obj/item/weapon/screwdriver"),//7
+					 list("key"="/obj/item/mecha_parts/circuitboard/firefighter/peripherals"),//8
+					 list("key"="/obj/item/weapon/screwdriver"),//9
+					 list("key"="/obj/item/mecha_parts/circuitboard/ripley/main"),//10
+					 list("key"="/obj/item/weapon/wirecutters"),//11
+					 list("key"="/obj/item/weapon/cable_coil"),//12
+					 list("key"="/obj/item/weapon/screwdriver"),//13
+					 list("key"="/obj/item/weapon/wrench")//14
+					)
+
+	custom_action(step, atom/used_atom, mob/user)
+		if(!..())
+			return 0
+
+		//TODO: better messages.
+		switch(step)
+			if(14)
+				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
+			if(13)
+				user.visible_message("[user] adjusts [holder] hydraulic systems.", "You adjust [holder] hydraulic systems.")
+			if(12)
+				user.visible_message("[user] adds the wiring to [holder].", "You add the wiring to [holder].")
+			if(11)
+				user.visible_message("[user] adjusts the wiring of [holder].", "You adjust the wiring of [holder].")
+			if(10)
+				user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
+				del used_atom
+			if(9)
+				user.visible_message("[user] secures the mainboard.", "You secure the mainboard.")
+			if(8)
+				user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
+				del used_atom
+			if(7)
+				user.visible_message("[user] secures the peripherals control module.", "You secure the peripherals control module.")
+			if(6)
+				user.visible_message("[user] installs internal armor layer to [holder].", "You install internal armor layer to [holder].")
+			if(5)
+				user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
+			if(4)
+				user.visible_message("[user] welds internal armor layer to [holder].", "You weld the internal armor layer to [holder].")
+			if(3)
+				user.visible_message("[user] installs external reinforced armor layer to [holder].", "You install external reinforced armor layer to [holder].")
+			if(2)
+				user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
+			if(1)
+				user.visible_message("[user] welds external armor layer to [holder].", "You weld external armor layer to [holder].")
 		return 1
 
 

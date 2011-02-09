@@ -98,15 +98,7 @@ obj/machinery/atmospherics/binary/pump
 		interact(mob/user as mob)
 			var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 						<b>Desirable output pressure: </b>
-						<a href='?src=\ref[src];out_press=-1000'><b>-</b></a>
-						<a href='?src=\ref[src];out_press=-100'><b>-</b></a>
-						<a href='?src=\ref[src];out_press=-10'><b>-</b></a>
-						<a href='?src=\ref[src];out_press=-1'>-</a>
-						[round(target_pressure,0.1)]kPa
-						<a href='?src=\ref[src];out_press=1'>+</a>
-						<a href='?src=\ref[src];out_press=10'><b>+</b></a>
-						<a href='?src=\ref[src];out_press=100'><b>+</b></a>
-						<a href='?src=\ref[src];out_press=1000'><b>+</b></a>
+						[round(target_pressure,0.1)]kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
 						"}
 
 			user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
@@ -160,8 +152,9 @@ obj/machinery/atmospherics/binary/pump
 	Topic(href,href_list)
 		if(href_list["power"])
 			on = !on
-		if(href_list["out_press"])
-			src.target_pressure = max(0, min(4500, src.target_pressure + text2num(href_list["out_press"])))
+		if(href_list["set_press"])
+			var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
+			src.target_pressure = max(0, min(4500, new_pressure))
 		usr.machine = src
 		src.update_icon()
 		src.updateUsrDialog()

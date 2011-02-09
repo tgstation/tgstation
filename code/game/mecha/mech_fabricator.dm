@@ -24,7 +24,7 @@
 	var/res_max_amount = 200000
 	var/part_set
 	var/obj/being_built
-	var/list/part_sets = list(
+	var/list/part_sets = list( //set names must be unique
 	"Ripley"=list(
 						list("result"="/obj/mecha_chassis/ripley","time"=100,"metal"=20000),
 						list("result"="/obj/item/mecha_parts/part/ripley_torso","time"=300,"metal"=40000,"glass"=15000),
@@ -33,6 +33,17 @@
 						list("result"="/obj/item/mecha_parts/part/ripley_left_leg","time"=200,"metal"=30000),
 						list("result"="/obj/item/mecha_parts/part/ripley_right_leg","time"=200,"metal"=30000)
 						),
+/*
+	"Ripley-on-Fire"=list(
+						list("result"="/obj/mecha_chassis/firefighter","time"=150,"metal"=20000),
+						list("result"="/obj/item/mecha_parts/part/firefighter_torso","time"=300,"metal"=45000,"glass"=20000),
+						list("result"="/obj/item/mecha_parts/part/firefighter_left_arm","time"=200,"metal"=25000),
+						list("result"="/obj/item/mecha_parts/part/firefighter_right_arm","time"=200,"metal"=25000),
+						list("result"="/obj/item/mecha_parts/part/firefighter_left_leg","time"=200,"metal"=30000),
+						list("result"="/obj/item/mecha_parts/part/firefighter_right_leg","time"=200,"metal"=30000)
+						),
+*/
+
 	"Gygax"=list(
 						list("result"="/obj/mecha_chassis/gygax","time"=100,"metal"=25000),
 						list("result"="/obj/item/mecha_parts/part/gygax_torso","time"=300,"metal"=50000,"glass"=20000),
@@ -44,6 +55,51 @@
 						list("result"="/obj/item/mecha_parts/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000)
 						)
 	)
+
+
+	proc/add_part_set(set_name,parts=null)
+		if(set_name in part_sets)//attempt to create duplicate set
+			return 0
+		if(isnull(parts))
+			part_sets[set_name] = list()
+		else
+			part_sets[set_name] = parts
+		return 1
+
+	proc/add_part_to_set(set_name,part)
+		src.add_part_set(set_name)//if no "set_name" set exists, create
+		var/list/part_set = part_sets[set_name]
+		part_set[++part_set.len] = part
+		return
+
+	proc/remove_part_set(set_name)
+		for(var/i=1,i<=part_sets.len,i++)
+			if(part_sets[i]==set_name)
+				part_sets.Cut(i,++i)
+		return
+
+	proc/sanity_check()
+		for(var/p in resources)
+			var/index = resources.Find(p)
+			index = resources.Find(p, index)
+			if(index) //duplicate resource
+				world << "Duplicate resource definition for [src](\ref[src])"
+				return 0
+		for(var/set_name in part_sets)
+			var/index = part_sets.Find(set_name)
+			index = part_sets.Find(set_name, index)
+			if(index) //duplicate part set
+				world << "Duplicate part set definition for [src](\ref[src])"
+				return 0
+		return 1
+/*
+	New()
+		..()
+		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000))
+		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/ripley_left_arm","time"=200,"metal"=25000))
+		src.remove_part_set("Gygax")
+		return
+*/
 
 	proc/output_parts_list(set_name)
 		var/output = ""
@@ -175,6 +231,10 @@
 			amnt = "g_amt"
 		else
 			return ..()
+
+		if(src.being_built)
+			user << "The fabricator is currently processing. Please wait until completion."
+			return
 
 		var/name = "[W.name]"
 		if(src.resources[material] < res_max_amount)

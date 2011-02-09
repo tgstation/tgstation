@@ -347,15 +347,7 @@ obj/machinery/atmospherics/filter/attack_hand(user as mob) // -- TLE
 			<A href='?src=\ref[src];filterset=4'>Nitrous Oxide</A><BR>
 			<A href='?src=\ref[src];filterset=-1'>Nothing</A><BR>
 			<HR><B>Desirable output pressure:</B>
-			<a href='?src=\ref[src];out_press=-1000'><b>-</b></a>
-			<a href='?src=\ref[src];out_press=-100'><b>-</b></a>
-			<a href='?src=\ref[src];out_press=-10'><b>-</b></a>
-			<a href='?src=\ref[src];out_press=-1'>-</a>
-			[src.target_pressure]
-			<a href='?src=\ref[src];out_press=1'>+</a>
-			<a href='?src=\ref[src];out_press=10'><b>+</b></a>
-			<a href='?src=\ref[src];out_press=100'><b>+</b></a>
-			<a href='?src=\ref[src];out_press=1000'><b>+</b></a>
+			[src.target_pressure] | <a href='?src=\ref[src];set_press=1'>Change</a>
 			"}
 /*
 		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD>[dat]","window=atmo_filter")
@@ -380,8 +372,9 @@ obj/machinery/atmospherics/filter/Topic(href, href_list) // -- TLE
 		src.filter_type = text2num(href_list["filterset"])
 	if (href_list["temp"])
 		src.temp = null
-	if(href_list["out_press"])
-		src.target_pressure = max(0, min(4000, src.target_pressure + text2num(href_list["out_press"])))
+	if(href_list["set_press"])
+		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
+		src.target_pressure = max(0, min(4500, new_pressure))
 	if(href_list["power"])
 		on=!on
 	src.update_icon()

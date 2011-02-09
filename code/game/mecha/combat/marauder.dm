@@ -7,6 +7,7 @@
 	deflect_chance = 25
 	max_temperature = 5000
 	infra_luminosity = 3
+	var/zoom = 0
 	var/thrusters = 0
 	var/smoke = 5
 	var/smoke_ready = 1
@@ -28,6 +29,9 @@
 /obj/mecha/combat/marauder/relaymove(mob/user,direction)
 	if(!can_move)
 		return 0
+	if(zoom)
+		src.occupant_message("Unable to move while in zoom mode.")
+		return 0
 	if(connected_port)
 		src.occupant_message("Unable to move while connected to the air system port")
 		return 0
@@ -40,6 +44,9 @@
 	var/move_result = 0
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		move_result = step_rand(src)
+	else if(src.dir!=direction)
+		src.dir=direction
+		move_result = 1
 	else
 		move_result	= step(src,direction)
 	if(move_result)
@@ -66,7 +73,7 @@
 	if(src.occupant)
 		if(cell.charge > 0)
 			thrusters = !thrusters
-			src.occupant << "\blue Thrusters [thrusters?"en":"dis"]abled."
+			src.occupant_message("\blue Thrusters [thrusters?"en":"dis"]abled.")
 	return
 
 
@@ -84,6 +91,29 @@
 			smoke_ready = 1
 	return
 
+/obj/mecha/combat/marauder/verb/zoom()
+	set category = "Exosuit Interface"
+	set name = "Zoom"
+	set src in view(0)
+	if(usr!=src.occupant)
+		return
+	if(src.occupant.client)
+		src.zoom = !src.zoom
+		src.log_message("Toggled zoom mode.")
+		src.occupant_message("\blue Zoom mode [zoom?"en":"dis"]abled.")
+		if(zoom)
+			src.occupant.client.view = 12
+		else
+			src.occupant.client.view = world.view//world.view - default mob view size
+	return
+
+
+/obj/mecha/combat/marauder/go_out()
+	src.occupant.client.view = world.view
+	..()
+	return
+
+
 /obj/mecha/combat/marauder/get_stats_part()
 	var/output = ..()
 	output += {"<b>Smoke:</b> [smoke]
@@ -95,7 +125,9 @@
 
 /obj/mecha/combat/marauder/get_commands()
 	var/output = {"<a href='?src=\ref[src];toggle_thrusters=1'>Toggle thrusters</a><br>
-					<a href='?src=\ref[src];smoke=1'>Smoke</a><br>
+						<a href='?src=\ref[src];toggle_zoom=1'>Toggle zoom mode</a><br>
+						<a href='?src=\ref[src];smoke=1'>Smoke</a><br>
+						<hr>
 					"}
 	output += ..()
 	return output
@@ -106,4 +138,6 @@
 		src.toggle_thrusters()
 	if (href_list["smoke"])
 		src.smoke()
+	if (href_list["toggle_zoom"])
+		src.zoom()
 	return

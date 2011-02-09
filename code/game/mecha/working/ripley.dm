@@ -52,7 +52,7 @@
 	output += "</div>"
 	return output
 
-/obj/mecha/working/ripley/destroy()
+/obj/mecha/working/ripley/Del()
 	for(var/obj/O in cargo)
 		if(rand(0,1))
 			cargo -= O

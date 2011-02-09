@@ -31,6 +31,7 @@
 	//var/inertia_dir = null //for open space travel.
 
 	//inner atmos machinery. Air tank mostly
+	var/use_internal_tank = 0
 	var/datum/gas_mixture/air_contents = new
 	var/obj/machinery/atmospherics/portables_connector/connected_port = null //filling the air tanks
 	var/filled = 0.5
@@ -105,6 +106,8 @@
 	if(!src.occupant) return
 	if(state || !cell || cell.charge<=0) return
 	if(src == target) return
+	if(!(get_dir(src,target) & src.dir))//wrong direction
+		return
 	if(get_dist(src,target)<=1)
 		src.melee_action(target)
 	else
@@ -147,6 +150,9 @@
 	var/move_result = 0
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		move_result = step_rand(src)
+	else if(src.dir!=direction)
+		src.dir=direction
+		move_result = 1
 	else
 		move_result	= step(src,direction)
 	if(move_result)
@@ -376,18 +382,28 @@
 /obj/mecha/meteorhit()
 	return ex_act(rand(1,3))//should do for now
 
+/obj/mecha/emp_act()
+	cell.use(rand(cell.maxcharge/2, cell.maxcharge))
+	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST),1)
+	return
+
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////
 /////////////////////////////////////
 
-/* //standard for /obj class
+/*
+//standard for /obj class
 /obj/mecha/handle_internal_lifeform(lifeform, volume)
 	..()
-	world << "Handling occupant breathing"
+	world << "Handling [lifeform] breathing. Requested [volume]"
 */
 
 /obj/mecha/remove_air(amount)
-	return src.air_contents.remove(amount)
+	if(src.use_internal_tank)
+		return src.air_contents.remove(amount)
+	else
+		var/turf/T = get_turf(src)
+		return T.remove_air(amount)
 
 /obj/mecha/return_air()
 	return src.air_contents
@@ -495,6 +511,18 @@
 		src.sd_SetLuminosity(src.luminosity - src.lights_power)
 	src.log_message("Toggled lights.")
 	return
+
+
+/obj/mecha/verb/toggle_internal_tank()
+	set name = "Toggle internal airtank usage."
+	set category = "Exosuit Interface"
+	set src in view(0)
+	if(usr!=src.occupant)
+		return
+	use_internal_tank = !use_internal_tank
+	src.log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
+	return
+
 
 /obj/mecha/verb/move_inside()
 	set name = "Move Inside"
@@ -757,6 +785,7 @@
 						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font>":null]
 						<b>Integrity: </b> [integrity]%<br>
 						<b>Powercell charge: </b>[cell.charge/cell.maxcharge*100]%<br>
+						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
 						<b>Airtank pressure: </b>[src.return_pressure()]kPa<br>
 						<b>Internal temperature: </b> [src.air_contents.temperature]&deg;K|[src.air_contents.temperature - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
@@ -765,6 +794,7 @@
 
 /obj/mecha/proc/get_commands()
 	var/output = {"<a href='?src=\ref[src];toggle_lights=1'>Toggle Lights</a><br>
+						<a href='?src=\ref[src];toggle_airtank=1'>Toggle Internal Airtank Usage</a><br>
 						[(/obj/mecha/verb/disconnect_from_port in src.verbs)?"<a href='?src=\ref[src];port_disconnect=1'>Disconnect from port</a><br>":null]
 						[(/obj/mecha/verb/connect_to_port in src.verbs)?"<a href='?src=\ref[src];port_connect=1'>Connect to port</a><br>":null]
 						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
@@ -779,6 +809,9 @@
 		return
 	if (href_list["toggle_lights"])
 		src.toggle_lights()
+		return
+	if (href_list["toggle_airtank"])
+		src.toggle_internal_tank()
 		return
 	if (href_list["port_disconnect"])
 		src.disconnect_from_port()
