@@ -16,6 +16,7 @@
 	var/temperature_resistance = 1000 + T0C
 	volume = 1000
 	use_power = 0
+	var/release_log = ""
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
@@ -191,6 +192,16 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 		usr.machine = src
 
 		if(href_list["toggle"])
+			if (valve_open)
+				if (holding)
+					release_log += "Valve was <b>closed</b> by [usr], stopping the transfer into the [holding]<br>"
+				else
+					release_log += "Valve was <b>closed</b> by [usr], stopping the transfer into the <font color='red'><b>air</b></font><br>"
+			else
+				if (holding)
+					release_log += "Valve was <b>opened</b> by [usr], starting the transfer into the [holding]<br>"
+				else
+					release_log += "Valve was <b>opened</b> by [usr], starting the transfer into the <font color='red'><b>air</b></font><br>"
 			valve_open = !valve_open
 
 		if (href_list["remove_tank"])
