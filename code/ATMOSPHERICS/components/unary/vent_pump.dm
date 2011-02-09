@@ -33,9 +33,8 @@
 		if (A.master)
 			A = A.master
 		area_uid = A.uid
+		id = "\ref[src]"
 		..()
-		if (!id)
-			id = "\ref[src]"
 
 	high_volume
 		name = "Large Air Vent"
