@@ -1,6 +1,7 @@
 /obj/machinery/alarm
-
-	power_usage = 5
+	use_power = 1
+	idle_power_usage = 4
+	active_power_usage = 8
 	power_channel = ENVIRON
 	var/frequency = 1439
 	var/list/sensors = list()

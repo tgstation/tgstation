@@ -1,4 +1,3 @@
-
 /obj/machinery/containment_field
 	name = "Containment Field"
 	desc = "An energy field."
@@ -7,7 +6,8 @@
 	anchored = 1
 	density = 0
 	unacidable = 1
-	power_usage = 0
+	use_power = 0
+
 
 	New()
 		spawn(1)

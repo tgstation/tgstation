@@ -12,7 +12,9 @@
 	var/shot_number = 0
 	var/state = 0
 	var/locked = 0
-	power_usage = 0
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 300
 
 
 /obj/machinery/emitter/New()
@@ -34,13 +36,13 @@
 			if(src.active==1)
 				src.active = 0
 				user << "You turn off the [src]."
-				src.power_usage = 0
+				src.use_power = 1
 			else
 				src.active = 1
 				user << "You turn on the [src]."
 				src.shot_number = 0
 				src.fire_delay = 100
-				src.power_usage = 100
+				src.use_power = 2
 			update_icon()
 		else
 			user << "The controls are locked!"
@@ -53,7 +55,7 @@
 	if(prob(1)&&prob(1))
 		if(src.active)
 			src.active = 0
-			src.power_usage = 0
+			src.use_power = 1
 	return 1
 
 
@@ -109,11 +111,10 @@
 
 
 /obj/machinery/emitter/attackby(obj/item/W, mob/user)
-	if(active)
-		user << "Turn off the [src] first."
-		return
-
-	else if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/weapon/wrench))
+		if(active)
+			user << "Turn off the [src] first."
+			return
 		switch(state)
 			if(0)
 				state = 1
@@ -134,6 +135,9 @@
 				return
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
+		if(active)
+			user << "Turn off the [src] first."
+			return
 		switch(state)
 			if(0)
 				user << "\red The [src.name] needs to be wrenched to the floor."

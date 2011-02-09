@@ -4,7 +4,9 @@
 	icon_state = "pod_0"
 	density = 1
 	anchored = 1.0
-	power_usage = 80
+	use_power = 1
+	idle_power_usage = 5
+	active_power_usage = 1000
 	var/mob/occupant = null
 
 
@@ -55,7 +57,6 @@
 						return
 					else
 						R.cell.charge += 50
-						use_power(50)
 						return
 
 
@@ -67,7 +68,6 @@
 						return
 					else
 						H.energy += 50
-						use_power(50)
 						return
 
 		go_out()
@@ -81,6 +81,7 @@
 			src.occupant.loc = src.loc
 			src.occupant = null
 			build_icon()
+			src.use_power = 1
 			return
 
 		restock_modules()
@@ -136,6 +137,7 @@
 				O.loc = src.loc*/
 			src.add_fingerprint(usr)
 			build_icon()
+			src.use_power = 2
 			return
 
 

@@ -84,10 +84,11 @@ datum/controller/game_controller
 			D.process()
 
 		for(var/obj/machinery/machine in machines)
-			machine.process()
-			if(machine)//Testing this for now, might change it up later - Mport
-				if(machine.power_usage && machine.power_channel)
-					machine.use_power(machine.power_usage,machine.power_channel)
+			if(machine)
+				machine.process()
+				if(machine && machine.use_power)
+					machine.auto_use_power()
+
 
 		sleep(-1)
 		sleep(1)

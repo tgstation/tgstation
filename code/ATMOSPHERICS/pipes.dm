@@ -1,5 +1,4 @@
 obj/machinery/atmospherics/pipe
-	power_usage = 0
 
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent

@@ -10,7 +10,9 @@
 	density = 1
 	anchored = 1
 	layer=2
-	power_usage = 100
+	use_power = 1
+	idle_power_usage = 20
+	active_power_usage = 5000
 	var/list/resources = list(
 										"metal"=20000,
 										"glass"=20000,
@@ -135,11 +137,11 @@
 			src.being_built = new path(src)
 			src.remove_resources(part)
 			src.icon_state = "fabricator_ani"
-			src.power_usage = 2000
+			src.use_power = 2
 			spawn(time)
+				src.use_power = 1
 				src.being_built.Move(get_step(src,EAST))
 				src.icon_state = initial(src.icon_state)
-				src.power_usage = initial(src.power_usage)
 				src.visible_message("[src] beeps, \"The [src.being_built] is complete\".")
 				src.being_built = null
 				src.updateUsrDialog()

@@ -63,7 +63,9 @@
 	var/wasvalid = 0
 	var/lastfired = 0
 	var/shot_delay = 30 //3 seconds between shots
-	power_usage = 100
+	use_power = 1
+	idle_power_usage = 50
+	active_power_usage = 300
 
 /obj/machinery/turretcover
 	name = "pop-up turret cover"
@@ -125,12 +127,14 @@
 				if (!isPopping())
 					if (isDown())
 						popUp()
+						use_power = 2
 					else
 						targetting()
 			else
 				if (!isPopping())
 					if (!isDown())
 						popDown()
+						use_power = 1
 		else
 			if (src.wasvalid)
 				src.die()

@@ -8,7 +8,7 @@
 	anchored = 0
 	density = 1
 	req_access = list(access_engine)
-	power_usage = 0
+	use_power = 0
 	var
 		Varedit_start = 0
 		Varpower = 0
@@ -58,7 +58,6 @@
 			Varedit_start = 0
 		if(src.active == 2)
 			calc_power()
-
 		return
 
 
@@ -144,7 +143,7 @@
 		else if (flag == PROJECTILE_WEAKBULLET)
 			src.power -= 25
 		else if (flag == PROJECTILE_LASER)
-			src.power += 10
+			src.power += 20
 		else if (flag == PROJECTILE_TASER)
 			src.power += 5
 		else

@@ -19,7 +19,9 @@
 	desc = "A lighting fixture."
 	anchored = 1
 	layer = 5  					// They were appearing under mobs which is a little weird - Ostaf
-	power_usage = 0
+	use_power = 2
+	idle_power_usage = 2
+	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
@@ -44,6 +46,12 @@
 	light_type = /obj/item/weapon/light/bulb
 
 
+/obj/machinery/light/spot
+	name = "spotlight"
+	fitting = "large tube"
+	light_type = /obj/item/weapon/light/tube/large
+	brightness = 15
+
 // the desk lamp
 /obj/machinery/light/lamp
 	name = "desk lamp"
@@ -53,7 +61,6 @@
 	brightness = 5
 	desc = "A desk lamp"
 	light_type = /obj/item/weapon/light/bulb
-
 	var/switchon = 0		// independent switching for lamps - not controlled by area lightswitch
 
 // green-shaded desk lamp
@@ -98,7 +105,10 @@
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
 			on = 0
-
+	if(!on)
+		use_power = 1
+	else
+		use_power = 2
 	var/oldlum = luminosity
 
 	//luminosity = on * brightness
@@ -117,7 +127,7 @@
 				icon_state = "[base_state]-burned"
 				on = 0
 				sd_SetLuminosity(0)
-	power_usage = (luminosity * 20)
+	active_power_usage = (luminosity * 20)
 	if(on != on_gs)
 		on_gs = on
 //		var/area/A = get_area(src)
@@ -435,6 +445,10 @@
 	item_state = "c_tube"
 	g_amt = 200
 	brightness = 8
+
+	large
+		name = "large light tube"
+		brightness = 15
 
 /obj/item/weapon/light/bulb
 	name = "light bulb"

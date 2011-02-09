@@ -7,17 +7,33 @@
 	icon_state = "TheSingGen"
 	anchored = 1
 	density = 1
-	power_usage = 0
+	use_power = 0
+	var
+		energy = 0
 
 //////////////////////Singularity gen START
 
 /obj/machinery/the_singularitygen/process()
 	var/turf/T = get_turf(src)
+	if(src.energy >= 200)
+		new /obj/machinery/singularity/(T, 50)
+		spawn(0)
+			del(src)
+		return
+/*
 	if (singularity_is_surrounded(T))
 		new /obj/machinery/singularity/(T, 200)
 		spawn(0)
 			del(src)
 		return
+*/
+
+///obj/machinery/the_singularitygen/Bumped(atom/A)
+//	if(istype(A,/obj/accelerated_particle))
+//		src.energy += A:energy
+//		return
+//	..()
+
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -33,6 +49,7 @@
 				"You hear ratchet")
 		return
 	return ..()
+
 
 /proc/singularity_is_surrounded(turf/T)//TODO:Add a timer so we dont need this
 	var/checkpointC = 0

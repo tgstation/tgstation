@@ -7,7 +7,9 @@
 	var/metal_amount = 0
 	var/operating = 0
 	var/obj/item/robot_parts/being_built = null
-	power_usage = 1000
+	use_power = 1
+	idle_power_usage = 20
+	active_power_usage = 5000
 
 /obj/machinery/robotic_fabricator/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/stack/sheet/metal))
@@ -126,6 +128,7 @@ Please wait until completion...</TT><BR>
 			if (!isnull(building))
 				if (src.metal_amount >= build_cost)
 					src.operating = 1
+					src.use_power = 2
 
 					src.metal_amount = max(0, src.metal_amount - build_cost)
 
@@ -134,13 +137,11 @@ Please wait until completion...</TT><BR>
 					src.icon_state = "fab-active"
 					src.updateUsrDialog()
 
-					use_power(5000)
-
 					spawn (build_time)
 						if (!isnull(src.being_built))
 							src.being_built.loc = get_turf(src)
 							src.being_built = null
-
+						src.use_power = 1
 						src.operating = 0
 						src.icon_state = "fab-idle"
 		return

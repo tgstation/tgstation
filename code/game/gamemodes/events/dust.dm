@@ -102,7 +102,8 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 					A.ex_act(strength)
 				life--
 				if(life <= 0)
-					spawn(0)
+					walk(src,0)
+					spawn(1)
 						del(src)
 					return 0
 		return
