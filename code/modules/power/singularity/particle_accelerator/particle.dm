@@ -3,7 +3,7 @@
 	desc = "Small things moving very fast."
 	icon = 'particle_accelerator.dmi'
 	icon_state = "particle"//Need a new icon for this
-	anchored = 0
+	anchored = 1
 	density = 1
 	var
 		movement_range = 10

@@ -79,7 +79,7 @@ var/global/list/uneatable = list(
 		eat()
 		dissipate()
 		check_energy()
-		if(current_size >= 3)
+		if(current_size >= 5)
 			move()
 			if(current_size <= 7)
 				pulse()
@@ -99,8 +99,11 @@ var/global/list/uneatable = list(
 				dissipate_track++
 
 
-		expand()
-			switch(src.allowed_size)
+		expand(var/force_size = 0)
+			var/temp_allowed_size = src.allowed_size
+			if(force_size)
+				temp_allowed_size = force_size
+			switch(temp_allowed_size)
 				if(1)
 					current_size = 1
 					icon = 'singularity.dmi'
@@ -158,6 +161,8 @@ var/global/list/uneatable = list(
 					dissipate = 0 //It cant go smaller due to e loss
 			if(current_size == allowed_size)
 				return 1
+			else if(current_size < (--temp_allowed_size))
+				expand(temp_allowed_size)
 			else
 				return 0
 
@@ -261,7 +266,7 @@ var/global/list/uneatable = list(
 					if(1)
 						steps = 1
 					if(3)
-						steps = 2
+						steps = 3//Yes this is right
 					if(5)
 						steps = 3
 					if(7)
