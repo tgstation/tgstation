@@ -306,8 +306,8 @@
 	"/obj/item/device/flash",
 	"/obj/item/device/flash",
 	"/obj/item/device/flash",
-	"/obj/item/weapon/cell/robotcrate",
-	"/obj/item/weapon/cell/robotcrate")
+	"/obj/item/weapon/cell/high",
+	"/obj/item/weapon/cell/high")
 	cost = 10
 	containertype = /obj/crate/secure/gear
 	containername = "Robotics Assembly"

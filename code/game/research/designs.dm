@@ -26,7 +26,7 @@ datum
 			desc = "Desc"					//Description of the created object.
 			id = "id"						//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
 			list/req_tech = list()			//IDs of that techs the object originated from and the minimum level requirements.
-			reliability_mod = 100			//Reliability modifier of the device at it's starting point.
+			reliability_mod = 0				//Reliability modifier of the device at it's starting point.
 			reliability_base = 100			//Base reliability of a device before modifiers.
 			reliability = 100				//Reliability of the device.
 			build_type = null				//Flag as to what kind machine the design is built in. See defines.
@@ -335,7 +335,7 @@ datum
 
 		ripley_main
 			name = "Circuit Design (APLU \"Ripley\" Central Control module)"
-			desc = "Allows for the construction of a Safeguard AI Module."
+			desc = "Allows for the construction of a \"Ripley\" Central Control module."
 			id = "ripley_main"
 			req_tech = list("programming" = 3, "robotics" = 5)
 			build_type = IMPRINTER
@@ -344,7 +344,7 @@ datum
 
 		ripley_peri
 			name = "Circuit Design (APLU \"Ripley\" Peripherals Control module)"
-			desc = "Allows for the construction of a Safeguard AI Module."
+			desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
 			id = "ripley_peri"
 			req_tech = list("programming" = 3, "robotics" = 5)
 			build_type = IMPRINTER
@@ -353,7 +353,7 @@ datum
 
 		gygax_main
 			name = "Circuit Design (\"Gygax\" Central Control module)"
-			desc = "Allows for the construction of a Safeguard AI Module."
+			desc = "Allows for the construction of a \"Gygax\" Central Control module."
 			id = "gygax_main"
 			req_tech = list("programming" = 4, "robotics" = 5)
 			build_type = IMPRINTER
@@ -362,7 +362,7 @@ datum
 
 		gygax_peri
 			name = "Circuit Design (\"Gygax\" Peripherals Control module)"
-			desc = "Allows for the construction of a Safeguard AI Module."
+			desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
 			id = "gygax_peri"
 			req_tech = list("programming" = 4, "robotics" = 5)
 			build_type = IMPRINTER
@@ -371,7 +371,7 @@ datum
 
 		gygax_targ
 			name = "Circuit Design (\"Gygax\" Weapons & Targeting Control module)"
-			desc = "Allows for the construction of a Safeguard AI Module."
+			desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
 			id = "gygax_targ"
 			req_tech = list("programming" = 4, "robotics" = 5)
 			build_type = IMPRINTER
@@ -492,6 +492,38 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 80)
 			build_path = "/obj/item/weapon/stock_parts/adv_matter_bin"
+
+////////////////////////////////////////
+//////////////////Power/////////////////
+////////////////////////////////////////
+
+		basic_cell
+			name = "Basic Power Cell"
+			desc = "A basic power cell that holds 1000 units of energy"
+			id = "basic_cell"
+			req_tech = list("powerstorage" = 1)
+			build_type = PROTOLATHE | AUTOLATHE
+			materials = list("$metal" = 700, "$glass" = 50)
+			build_path = "/obj/item/weapon/cell"
+
+		high_cell
+			name = "High-Capacity Power Cell"
+			desc = "A power cell that holds 10000 units of energy"
+			id = "high_cell"
+			req_tech = list("powerstorage" = 3)
+			build_type = PROTOLATHE | AUTOLATHE
+			materials = list("$metal" = 700, "$glass" = 60)
+			build_path = "/obj/item/weapon/cell/high"
+
+		super_cell
+			name = "Super-Capacity Power Cell"
+			desc = "A power cell that holds 20000 units of energy"
+			id = "super_cell"
+			req_tech = list("powerstorage" = 5, "materials" = 2)
+			reliability_base = 75
+			build_type = PROTOLATHE
+			materials = list("$metal" = 700, "$glass" = 70)
+			build_path = "/obj/item/weapon/cell/super"
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

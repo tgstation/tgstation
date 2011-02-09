@@ -136,6 +136,13 @@ research holder datum.
 					if(KT.level <= level) KT.level = max((KT.level + 1), (level - 1))
 			return
 
+		UpdateDesign(var/path)
+			for(var/datum/design/KD in known_designs)
+				if(KD.build_path == path)
+					KD.reliability_mod++
+					break
+			return
+
 
 
 

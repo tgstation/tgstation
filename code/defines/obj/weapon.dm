@@ -1179,6 +1179,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	icon = 'power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
+	origin_tech = list("powerstorage" = 1)
 	flags = FPRINT|TABLEPASS
 	force = 5.0
 	throwforce = 5.0
@@ -1191,9 +1192,19 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	m_amt = 700
 	g_amt = 50
 	var/rigged = 0		// true if rigged to explode
+	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 
-/obj/item/weapon/cell/robotcrate
+/obj/item/weapon/cell/high
+	name = "high-capacity power cell"
+	origin_tech = list("powerstorage" = 3)
 	maxcharge = 10000
+	g_amt = 60
+
+/obj/item/weapon/cell/super
+	name = "super-capcity power cell"
+	origin_tech = list("powerstorage" = 5)
+	maxcharge = 20000
+	g_amt = 70
 
 /*/obj/item/weapon/cell/potato
 	name = "Potato Battery"

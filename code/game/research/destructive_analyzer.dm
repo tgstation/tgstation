@@ -30,6 +30,9 @@ Note: Must be placed east/right of an R&D console to function.
 			if (O.origin_tech.len == 0)
 				user << "\red You cannot deconstruct this item!"
 				return
+			if(O.reliability < 90 && O.crit_fail == 0)
+				usr << "\red Item is neither reliable enough or broken enough to learn from."
+				return
 			busy = 1
 			loaded_item = O
 			user.drop_item()

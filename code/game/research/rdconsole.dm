@@ -228,7 +228,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
 			if(linked_destroy.busy)
 				usr << "\red The destructive analyzer is busy at the moment."
-
 			else
 				var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
 				linked_destroy.busy = 1
@@ -238,6 +237,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				flick("d_analyzer_process", linked_destroy)
 				spawn(24)
 					linked_destroy.busy = 0
+					if(linked_destroy.reliability < 90)
+						files.UpdateDesign(linked_destroy.loaded_item.type)
 					for(var/T in linked_destroy.loaded_item.origin_tech)
 						files.UpdateTech(T, linked_destroy.loaded_item.origin_tech[T])
 					if(linked_lathe) //Also sends salvaged materials to a linked autolateh, if any.
@@ -293,7 +294,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					if(linked_lathe.g_amount < 0)
 						linked_lathe.g_amount = 0
 					var/obj/new_item = new being_built.build_path(src)
-					new_item.loc = linked_destroy.loc
+					new_item.reliability = being_built.reliability
+					new_item.loc = linked_lathe.loc
 					linked_lathe.busy = 0
 					screen = 3.1
 					updateUsrDialog()
@@ -323,8 +325,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							linked_imprinter.reagents.remove_reagent(I, being_built.materials[I])
 							power += being_built.materials[I]
 				var/obj/new_item = new being_built.build_path(src)
+				new_item.reliability = being_built.reliability
 				use_power(power)
-				new_item.loc = linked_destroy.loc
+				new_item.loc = linked_imprinter.loc
 				linked_imprinter.busy = 0
 				screen = 4.1
 				updateUsrDialog()
@@ -400,11 +403,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				else if(d_disk) dat += "<A href='?src=\ref[src];menu=1.4'>Disk Operations</A><BR>"
 				else dat += "(Please Insert Disk)<BR>"
 				if(linked_destroy != null) dat += "<A href='?src=\ref[src];menu=2.2'>Destructive Analyzer Menu</A><BR>"
-				else dat += "(NO DESTRUCTIVE ANALYZER CONNECTED TO CONSOLE)<BR>"
 				if(linked_lathe != null) dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Construction Menu</A><BR>"
-				else dat += "(NO PROTOLATHE CONNECTED TO CONSOLE)<BR>"
 				if(linked_imprinter != null) dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Construction Menu</A><BR>"
-				else dat += "(NO IMPRINTER CONNECTED TO CONSOLE)<BR>"
 				dat += "<A href='?src=\ref[src];menu=1.6'>Settings</A>"
 
 			if(1.1) //Research viewer
@@ -482,15 +482,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "R&D Console Device Linkage Menu:<BR><BR>"
 				dat += "<A href='?src=\ref[src];find_device=1'>Re-sync with Nearby Devices</A><BR>"
 				dat += "Linked Devices:<BR>"
-				if(!linked_destroy && !linked_lathe && !linked_imprinter)
-					dat += "No devices connected<BR>"
+				if(linked_destroy)
+					dat += "* Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>(Disconnect)</A><BR>"
 				else
-					if(linked_destroy)
-						dat += "* Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>(Disconnect)</A><BR>"
-					if(linked_lathe)
-						dat += "* Protolathe <A href='?src=\ref[src];disconnect=lathe'>(Disconnect)</A><BR>"
-					if(linked_imprinter)
-						dat += "* Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>(Disconnect)</A><BR>"
+					dat += "* (No Destructive Analyzer Linked)<BR>"
+				if(linked_lathe)
+					dat += "* Protolathe <A href='?src=\ref[src];disconnect=lathe'>(Disconnect)</A><BR>"
+				else
+					dat += "* (No Protolathe Linked)<BR>"
+				if(linked_imprinter)
+					dat += "* Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>(Disconnect)</A><BR>"
+				else
+					dat += "* (No Circuit Imprinter Linked)<BR>"
 				dat += "<HR><A href='?src=\ref[src];menu=1.6'>Settings Menu</A>"
 				dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 

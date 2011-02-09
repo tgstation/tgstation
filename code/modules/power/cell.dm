@@ -10,7 +10,6 @@
 	spawn(5)
 		updateicon()
 
-
 /obj/item/weapon/cell/proc/updateicon()
 
 	if(maxcharge <= 2500)
@@ -39,7 +38,15 @@
 // recharge the cell
 /obj/item/weapon/cell/proc/give(var/amount)
 	var/power_used = min(maxcharge-charge,amount)
-	charge += power_used
+	if(crit_fail)
+		power_used = 0
+	else if(prob(reliability))
+		charge += power_used
+	else
+		minor_fault++
+		if(prob(minor_fault))
+			crit_fail = 1
+			power_used = 0
 	if(rigged && amount > 0)
 		explode()
 	return power_used
