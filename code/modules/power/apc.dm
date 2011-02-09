@@ -366,7 +366,7 @@
 			user << "\blue You need more welding fuel to complete this task."
 			return
 		user << "You start welding APC frame..."
-		if(W:remove_fuel(2))
+		if(W:remove_fuel(2,user))
 			playsound(src.loc, 'Welder.ogg', 50, 1)
 			if(do_after(user, 50))
 				if (emagged || malfhack || (stat & BROKEN) || opened==2)

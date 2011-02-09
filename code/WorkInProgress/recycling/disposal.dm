@@ -685,7 +685,7 @@
 			var/obj/item/weapon/weldingtool/W = I
 
 			if(W.welding)
-				if(W.remove_fuel(3))
+				if(W.remove_fuel(3,user))
 					playsound(src.loc, 'Welder2.ogg', 100, 1)
 					// check if anything changed over 2 seconds
 					var/turf/uloc = user.loc

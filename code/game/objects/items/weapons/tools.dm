@@ -211,7 +211,7 @@ WELDINGTOOOL
 				reagents.remove_reagent("fuel", amount)
 				check_status()
 				if(M)
-					eyecheck()//TODO:eyecheck should really be in mob not here
+					eyecheck(M)//TODO:eyecheck should really be in mob not here
 				return 1
 			else
 				if(M)
@@ -256,7 +256,7 @@ WELDINGTOOOL
 
 		eyecheck(mob/user as mob)//TODO:Move this over to /mob/ where it should be
 			//check eye protection
-			if(!ishuman() && !ismonkey())
+			if(!ishuman(user) && !ismonkey(user))
 				return 1
 			var/safety = 0
 			if (istype(user, /mob/living/carbon/human))
