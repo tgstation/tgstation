@@ -99,6 +99,10 @@
 			src.overlays += image(src.icon, "[initial(icon_state)]-panel")
 		src.updateUsrDialog()
 		return
+	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
+		if(src.panel_open)
+			attack_hand(user)
+		return
 	else
 		..()
 
