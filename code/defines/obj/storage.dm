@@ -83,6 +83,8 @@
 	icon_state = "firstaid"
 	throw_speed = 2
 	throw_range = 8
+	var/empty = 0
+
 /obj/item/weapon/storage/firstaid/fire
 	name = "Fire First Aid"
 	icon_state = "ointment"

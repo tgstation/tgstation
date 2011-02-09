@@ -1,5 +1,7 @@
+
 /obj/item/weapon/storage/firstaid/fire/New()
 	..()
+	if (empty) return
 	new /obj/item/weapon/medical/ointment( src )
 	new /obj/item/weapon/medical/ointment( src )
 	new /obj/item/device/healthanalyzer( src )
@@ -11,6 +13,7 @@
 
 /obj/item/weapon/storage/firstaid/syringes/New()
 	..()
+	if (empty) return
 	new /obj/item/weapon/reagent_containers/syringe( src )
 	new /obj/item/weapon/reagent_containers/syringe( src )
 	new /obj/item/weapon/reagent_containers/syringe( src )
@@ -23,6 +26,7 @@
 /obj/item/weapon/storage/firstaid/regular/New()
 
 	..()
+	if (empty) return
 	new /obj/item/weapon/medical/bruise_pack(src)
 	new /obj/item/weapon/medical/bruise_pack(src)
 	new /obj/item/weapon/medical/bruise_pack(src)
@@ -35,6 +39,7 @@
 /obj/item/weapon/storage/firstaid/toxin/New()
 
 	..()
+	if (empty) return
 	new /obj/item/weapon/reagent_containers/syringe/antitoxin( src )
 	new /obj/item/weapon/reagent_containers/syringe/antitoxin( src )
 	new /obj/item/weapon/reagent_containers/syringe/antitoxin( src )
@@ -47,6 +52,7 @@
 /obj/item/weapon/storage/firstaid/o2/New()
 
 	..()
+	if (empty) return
 	new /obj/item/weapon/reagent_containers/pill/dexalin( src )
 	new /obj/item/weapon/reagent_containers/pill/dexalin( src )
 	new /obj/item/weapon/reagent_containers/pill/dexalin( src )
