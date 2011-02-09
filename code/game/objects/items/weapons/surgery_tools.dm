@@ -16,7 +16,7 @@ CIRCULAR SAW
 	if(!istype(M, /mob))
 		return
 
-	if(!(locate(/obj/machinery/optable, M.loc) && M.resting))
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/table/, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(50))))
 		return ..()
 
 	if (user.zone_sel.selecting == "eyes")
@@ -62,7 +62,7 @@ CIRCULAR SAW
 	if(!istype(M, /mob))
 		return
 
-	if(!(locate(/obj/machinery/optable, M.loc) && M.resting))
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/table/, M.loc) && M.lying && prob(50))))
 		return ..()
 
 	if (user.zone_sel.selecting == "eyes")
@@ -108,7 +108,7 @@ CIRCULAR SAW
 	if(!istype(M, /mob))
 		return
 
-	if(!(locate(/obj/machinery/optable, M.loc) && M.resting))
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/table/, M.loc) && M.lying && prob(50))))
 		return ..()
 
 	if (user.zone_sel.selecting == "eyes")
@@ -167,7 +167,7 @@ CIRCULAR SAW
 
 	src.add_fingerprint(user)
 
-	if(!(locate(/obj/machinery/optable, M.loc) && M.resting))
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/table/, M.loc) && M.lying && prob(50))))
 		return ..()
 
 	if(user.zone_sel.selecting == "head")
@@ -289,7 +289,7 @@ CIRCULAR SAW
 
 	src.add_fingerprint(user)
 
-	if(!(locate(/obj/machinery/optable, M.loc) && M.resting))
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/table/, M.loc) && M.lying && prob(50))))
 		return ..()
 
 	if(user.zone_sel.selecting == "head")
