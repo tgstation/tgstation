@@ -4,8 +4,8 @@
 
 
 /obj/machinery/mecha_part_fabricator
-	icon = 'mech_fab.dmi'
-	icon_state = "fabricator"
+	icon = 'stationobjs.dmi'
+	icon_state = "mechfab1"
 	name = "Exosuit Fabricator"
 	density = 1
 	anchored = 1
@@ -192,7 +192,7 @@
 			var/time = part["time"]
 			src.being_built = new path(src)
 			src.remove_resources(part)
-			src.icon_state = "fabricator_ani"
+			flick("mechfab3", src)
 			src.use_power = 2
 			spawn(time)
 				src.use_power = 1
@@ -246,6 +246,7 @@
 						W.use(1)
 						count++
 
+					flick("mechfab2", src)
 					user << "You insert [count] [name] into the fabricator."
 					src.updateUsrDialog()
 		else
