@@ -242,6 +242,51 @@
 				<br>Wrench.
 				<br>Welder.	"}
 
+/obj/item/weapon/book/manual/engineering_particle_accelerator
+	name = "Particle Accelerator User's Guide"
+	icon = 'library.dmi'
+	icon_state ="bookParticleAccelerator"
+	due_date = 0 // Game time in 1/10th seconds
+	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
+
+//big pile of shit below.
+
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 18px; margin: 15px 0px 5px;}
+				h2 {font-size: 15px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {list-style: none; margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				</style>
+				</head>
+				<body>
+
+				<h3>Experienced user's guide</h3>
+
+				<h4>Setting up</h4>
+
+				<ol>
+					<li><b>Wrench</b> all pieces to the floor</li>
+					<li>Add <b>wires</b> to all the pieces</li>
+					<li>Close all the panels with your <b>screwdriver</b></li>
+				</ol>
+
+				<h4>Use</h4>
+
+				<ol>
+					<li>Open the control panel</li>
+					<li>Set the speed to 2</li>
+					<li>Start firing at the singularity generator</li>
+					<li><font color='red'><b>When the singularity reaches a large enough size so it starts moving on it's own set the speed down to 1</b></font></li>
+					<li>Remember to wear a radiation suit when working with this machine... we did tell you that at the start, right?</li>
+				</ol>
+
+				</body>
+				</html>"}
+
 
 /obj/item/weapon/book/manual/engineering_hacking
 	name = "Hacking"
