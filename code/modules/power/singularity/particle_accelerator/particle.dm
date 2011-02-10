@@ -7,11 +7,11 @@
 	density = 1
 	var
 		movement_range = 10
-		energy = 5
+		energy = 10
 
 	weak
 		movement_range = 8
-		energy = 10
+		energy = 5
 
 	strong
 		movement_range = 15

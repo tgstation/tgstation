@@ -94,7 +94,7 @@
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/engine/process()
+/obj/machinery/computer/prisoner/process()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	use_power(500)
@@ -117,9 +117,9 @@
 					choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					R << "You hear quiet beep from the base of your skull."
-					message_admins("\blue [key_name_admin(usr)] gibbed [R.name]")
 					if(prob(95))
 						R.gib()
+						message_admins("\blue [key_name_admin(usr)] killswitched [R.name]")
 					else
 						R << "\blue you hear a click as the implant fails to detonate and disintegrates."
 

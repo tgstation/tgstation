@@ -31,6 +31,8 @@ var/reportingpower = 0  //this tracks whether this power monitoring computer is 
 	user.machine = src
 	var/t = "<TT><B>Power Monitoring</B><HR>"
 
+	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
+	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	if(!powernet)
 		t += "\red No connection"
@@ -58,11 +60,9 @@ var/reportingpower = 0  //this tracks whether this power monitoring computer is 
 				t += copytext(add_tspace(A.area.name, 30), 1, 30)
 				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
-		t += "</FONT></PRE>"
+		t += "</FONT></PRE></TT>"
 
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A></TT>"
-
-	user << browse(t, "window=powcomp;size=420x700")
+	user << browse(t, "window=powcomp;size=420x900")
 	onclose(user, "powcomp")
 
 
@@ -72,6 +72,10 @@ var/reportingpower = 0  //this tracks whether this power monitoring computer is 
 		usr << browse(null, "window=powcomp")
 		usr.machine = null
 		return
+	if( href_list["update"] )
+		src.updateDialog()
+		return
+
 
 /obj/machinery/power/monitor/process()
 	if(!(stat & (NOPOWER|BROKEN)) )
@@ -91,8 +95,6 @@ var/reportingpower = 0  //this tracks whether this power monitoring computer is 
 				powerreportnodes = powernet.nodes
 				powerreportavail = powernet.avail
 				powerreportviewload = powernet.viewload
-
-	src.updateDialog()
 
 
 /obj/machinery/power/monitor/power_change()

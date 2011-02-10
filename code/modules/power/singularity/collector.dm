@@ -49,12 +49,12 @@
 			if(src.P)
 				user << "\red There appears to already be a plasma tank loaded!"
 				return 1
-			updateicon()
 			src.P = W
 			W.loc = src
 			if (user.client)
 				user.client.screen -= W
 			user.u_equip(W)
+			updateicon()
 		else if(istype(W, /obj/item/weapon/crowbar))
 			if(P)
 				eject()

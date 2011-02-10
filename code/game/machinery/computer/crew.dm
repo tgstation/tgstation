@@ -1,92 +1,107 @@
 /obj/machinery/computer/crew
 	name = "crew monitoring computer"
 	icon_state = "crew"
+	use_power = 1
+	idle_power_usage = 250
+	active_power_usage = 500
+
+	var
+		list/tracked
+
+	New()
+		tracked = list()
+		..()
 
 
-/obj/machinery/computer/crew/attack_ai(mob/user)
-	add_fingerprint(user)
+	attack_ai(mob/user)
+		attack_hand(user)
+		interact(user)
 
-	if(stat & (BROKEN|NOPOWER))
+
+	attack_hand(mob/user)
+		add_fingerprint(user)
+		if(stat & (BROKEN|NOPOWER))
+			return
+		interact(user)
+
+
+	process()
 		return
-	interact(user)
-
-/obj/machinery/computer/crew/attack_hand(mob/user)
-	add_fingerprint(user)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-	interact(user)
 
 
-/obj/machinery/computer/crew/proc/interact(mob/user)
+	power_change()
+		if(stat & BROKEN)
+			icon_state = "broken"
+		else
+			if( powered() )
+				icon_state = initial(icon_state)
+				stat &= ~NOPOWER
+			else
+				spawn(rand(0, 15))
+					src.icon_state = "c_unpowered"
+					stat |= NOPOWER
 
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
-			user.machine = null
-			user << browse(null, "window=powcomp")
+
+	Topic(href, href_list)
+		..()
+		if( href_list["close"] )
+			usr << browse(null, "window=crewcomp")
+			usr.machine = null
+			return
+		if(href_list["update"])
+			src.updateDialog()
 			return
 
 
-	user.machine = src
-	var/t = "<TT><B>Crew Monitoring</B><HR>"
-	t += "<table><tr><td>Name</td><td>Vitals</td><td>Position</td></tr>"
-	var/list/tracked = list()
+	proc
+		interact(mob/user)
+			if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+				if (!istype(user, /mob/living/silicon))
+					user.machine = null
+					user << browse(null, "window=powcomp")
+					return
+			user.machine = src
+			src.scan()
+			var/t = "<TT><B>Crew Monitoring</B><HR>"
+			t += "<BR><A href='?src=\ref[src];update=1'>Refresh</A>"
+			t += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
+			t += "<table><tr><td>Name</td><td>Vitals</td><td>Position</td></tr>"
+			for(var/obj/item/clothing/under/rank/C in src.tracked)
+				if((C) && (C.has_sensor) && (C.loc) && (C.loc.z == 1))
+					if(istype(C.loc, /mob/living/carbon/human))
+						var/mob/living/carbon/human/H = C.loc
+						var/dam1 = round(H.oxyloss,1)
+						var/dam2 = round(H.toxloss,1)
+						var/dam3 = round(H.fireloss,1)
+						var/dam4 = round(H.bruteloss,1)
+						switch(C.sensor_mode)
+							if(1)
+								if(H.wear_id)
+									t += "<tr><td>[H.wear_id.name]</td><td>"
+								else
+									t += "<tr><td>Unknown:</td><td>"
+								t+= "[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"]</td><td>Not Available</td></tr>"
+							if(2)
+								if(H.wear_id)
+									t += "<tr><td>[H.wear_id.name]</td><td>"
+								else
+									t += "<tr><td>Unknown:</td><td>"
+								t += "[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"], [dam1] - [dam2] - [dam3] - [dam4]</td><td>Not Available</td></tr>"
+							if(3)
+								t += "<tr><td>[H.name]</td><td>[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"], [dam2] - [dam2] - [dam3] - [dam4]</td><td>[get_area(H)] ([H.x], [H.y])</td></tr>"
+			t += "</table>"
+			t += "</FONT></PRE></TT>"
+			user << browse(t, "window=crewcomp;size=500x800")
+			onclose(user, "crewcomp")
 
-	for(var/obj/item/clothing/under/C in world)
-		if(istype(C.loc, /mob/living/carbon/human))
-			tracked.Add(C.loc)
-
-	for(var/mob/living/carbon/human/H in tracked)
-		for(var/obj/item/clothing/under/C in H)
-			if(H.z != 1 || istype(H.loc, /turf/space))
-				if(C.mode > 0)
-					t += "<tr><td>[H.name]</td><td></td><td>Not Available</td></tr>"
-				break
-			switch(C.mode)
-				//if(0)
-					//t += "<tr><td>Not Available</td><td>Not Available</td><td>Not Available</td></tr>"
-				if(1)
-					t += "<tr><td>[H.name]</td><td>[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"]</td><td>Not Available</td></tr>"
-				if(2)
-					t += "<tr><td>[H.name]</td><td>[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"], [H.oxyloss] - [H.toxloss] - [H.fireloss] - [H.bruteloss]</td><td>Not Available</td></tr>"
-				if(3)
-					var/turf/mob_loc = get_turf_loc(H)
-					t += "<tr><td>[H.name]</td><td>[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"], [H.oxyloss] - [H.toxloss] - [H.fireloss] - [H.bruteloss]</td><td>[mob_loc.loc] ([H.x], [H.y])</td></tr>"
-			break
-
-	t += "</table>"
-	t += "</FONT></PRE>"
-
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A></TT>"
-
-	user << browse(t, "window=crewcomp;size=420x700")
-	onclose(user, "crewcomp")
-
-
-/obj/machinery/computer/crew/Topic(href, href_list)
-	..()
-	if( href_list["close"] )
-		usr << browse(null, "window=crewcomp")
-		usr.machine = null
-		return
-
-/obj/machinery/computer/crew/process()
-	if(!(stat & (NOPOWER|BROKEN)) )
-		use_power(250)
-
-	src.updateDialog()
-
-
-/obj/machinery/computer/crew/power_change()
-
-	if(stat & BROKEN)
-		icon_state = "broken"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-		else
-			spawn(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				stat |= NOPOWER
-
+		scan()
+			for(var/obj/item/clothing/under/rank/C in world)
+				if((C.has_sensor) && (istype(C.loc, /mob/living/carbon/human)))
+					var/check = 0
+					for(var/O in src.tracked)
+						if(O == C)
+							check = 1
+							break
+					if(!check)
+						src.tracked.Add(C)
+			return 1

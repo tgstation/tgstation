@@ -7,12 +7,21 @@
 	density = 0
 	unacidable = 1
 	use_power = 0
-
+	var
+		obj/machinery/field_generator/FG1 = null
+		obj/machinery/field_generator/FG2 = null
 
 	New()
 		spawn(1)
 			src.sd_SetLuminosity(5)
 
+
+	Del()
+		if(FG1)
+			FG1.cleanup()
+		if(FG2)
+			FG2.cleanup()
+		..()
 
 	attack_hand(mob/user as mob)
 		if(get_dist(src, user) > 1)
@@ -23,24 +32,28 @@
 
 
 	blob_act()
-		return
+		return 0
 
 
 	ex_act(severity)
-		return
+		return 0
 
 
 	HasProximity(atom/movable/AM as mob|obj)
 		if(istype(AM,/mob/living/silicon) && prob(40))
 			shock(AM)
-			return
+			return 1
 		if(istype(AM,/mob/living/carbon) && prob(50))
 			shock(AM)
-			return
+			return 1
+		return 0
 
 
 	proc
 		shock(mob/user as mob)
+			if(!FG1 || !FG2)
+				del(src)
+				return 0
 			if(iscarbon(user))
 				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 				s.set_up(5, 1, user.loc)
@@ -73,3 +86,10 @@
 						user.stunned = 2
 				return
 			return
+
+		set_master(var/master1,var/master2)
+			if(!master1 || !master2)
+				return 0
+			FG1 = master1
+			FG2 = master2
+			return 1

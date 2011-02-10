@@ -9,6 +9,7 @@
 	permeability_coefficient = 0.90
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
+
 // Colors
 
 /obj/item/clothing/under/chameleon
@@ -79,6 +80,15 @@
 	color = "yellow"
 
 // RANKS
+/obj/item/clothing/under/rank
+	var
+		has_sensor = 1//For the crew computer 2 = unable to change mode
+		sensor_mode = 0
+		/*
+		1 = Report living/dead
+		2 = Report detailed damages
+		3 = Report location
+		*/
 
 /obj/item/clothing/under/rank/atmospheric_technician
 	desc = "It has an Atmospherics rank stripe on it."
@@ -202,27 +212,33 @@
 	color = "hydroponics"
 	permeability_coefficient = 0.50
 
-// OTHER NONRANKED STATION JOBS
+/obj/item/clothing/under/rank/cargo
+	name = "Quartermaster's Jumpsuit"
+	desc = "What can brown do for you?"
+	icon_state = "lightbrown"
+	item_state = "lb_suit"
+	color = "cargo"
 
-/obj/item/clothing/under/bartender
+/obj/item/clothing/under/rank/bartender
 	desc = "It looks like it could use more flair."
 	name = "Bartender's Uniform"
 	icon_state = "ba_suit"
 	item_state = "ba_suit"
 	color = "ba_suit"
 
-/obj/item/clothing/under/clown
+/obj/item/clothing/under/rank/clown
 	name = "clown suit"
 	desc = "Wearing this, all the children love you, for all the wrong reasons."
 	icon_state = "clown"
 	color = "clown"
 
-/obj/item/clothing/under/chef
+/obj/item/clothing/under/rank/chef
 	desc = "Issued only to the most hardcore chefs in space."
 	name = "Chef's Uniform"
 	icon_state = "chef"
 	color = "chef"
 
+// OTHER NONRANKED STATION JOBS
 /obj/item/clothing/under/det
 	name = "Hard worn suit"
 	desc = "Someone who wears this means business."
@@ -257,20 +273,12 @@
 	icon_state = "sl_suit"
 	color = "sl_suit"
 
-/obj/item/clothing/under/cargo
-	name = "Quartermaster's Jumpsuit"
-	desc = "What can brown do for you?"
-	icon_state = "lightbrown"
-	item_state = "lb_suit"
-	color = "cargo"
-
 /obj/item/clothing/under/syndicate
 	name = "Tactical Turtleneck"
 	desc = "Non-descript, slightly suspicious civilian clothing."
 	icon_state = "syndicate"
 	item_state = "bl_suit"
 	color = "syndicate"
-	mode = 0
 
 /obj/item/clothing/under/syndicate/tacticool
 	name = "Tacticool Turtleneck"
@@ -278,7 +286,6 @@
 	icon_state = "tactifool"
 	item_state = "bl_suit"
 	color = "tactifool"
-	mode = 0
 
 /obj/item/clothing/under/librarian
 	name = "Sensible Suit"

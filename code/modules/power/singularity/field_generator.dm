@@ -136,6 +136,12 @@
 	emp_act()
 		return 0
 
+	blob_act()
+		if(active)
+			return 0
+		else
+			..()
+
 
 	bullet_act(flag)
 		if (flag == PROJECTILE_BULLET)
@@ -181,33 +187,30 @@
 
 		calc_power()
 			if(Varpower)
-				return
+				return 1
 
 			update_icon()
 			if(src.power > field_generator_max_power)
 				src.power = field_generator_max_power
 
-			var/power_draw = 0
+			var/power_draw = 2
 			for (var/obj/machinery/containment_field/F in fields)
 				if (isnull(F))
 					continue
 				power_draw++
-			if(!power_draw)//If we are usin no power then we have no fields and should turn off
-				for(var/mob/M in viewers(src))
-					M.show_message("\red The [src.name] shuts down!")
-				turn_off()
-				src.power = 0
-			else if(draw_power(round(power_draw/2,1)))
+			if(draw_power(round(power_draw/2,1)))
 				return 1
 			else
 				for(var/mob/M in viewers(src))
 					M.show_message("\red The [src.name] shuts down!")
 				turn_off()
 				src.power = 0
-				return
+				return 0
 
 //This could likely be better, it tends to start loopin if you have a complex generator loop setup.  Still works well enough to run the engine fields will likely recode the field gens and fields sometime -Mport
 		draw_power(var/draw = 0, var/failsafe = 0, var/obj/machinery/field_generator/G = null, var/obj/machinery/field_generator/last = null)
+			if(Varpower)
+				return 1
 			if((G && G == src) || (failsafe >= 8))//Loopin, set fail
 				return 0
 			else

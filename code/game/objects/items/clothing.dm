@@ -103,13 +103,6 @@ DEATH COMMANDO GAS MASK
 		var/obj/item/clothing/under/V = new U
 		src.clothing_choices += V
 
-	src.clothing_choices += new /obj/item/clothing/under/bartender
-	src.clothing_choices += new /obj/item/clothing/under/cargo
-	src.clothing_choices += new /obj/item/clothing/under/chef
-	src.clothing_choices += new /obj/item/clothing/under/clown
-	src.clothing_choices += new /obj/item/clothing/under/det
-	src.clothing_choices += new /obj/item/clothing/under/librarian
-
 	return
 
 
@@ -177,36 +170,38 @@ DEATH COMMANDO GAS MASK
 	icon_state = "death_commando_mask"
 	item_state = "death_commando_mask"
 
+/obj/item/clothing/under/rank/New()
+	sensor_mode = pick(0,1,2,3)
+	..()
 
-
-/obj/item/clothing/under/var/mode = 1 // 0 - Off, 1 - Binary Lifesigns, 2 - Vitals, 3 - Positioning and Vitals
-
-/obj/item/clothing/under/verb/toggle()
+/obj/item/clothing/under/rank/verb/toggle()
 	set name = "Toggle Suit Sensors"
 	var/mob/M = usr
-	if (istype (M, /mob/dead/)) return
-	if (usr.stat != 0) return
-	if (istype (src, /obj/item/clothing/under/color/orange/))
-		mode = 3
-		usr << "There are no controls for the sensing equipment woven into the fabric."
-		return
-	mode += 1
-	if(mode > 3)
-		mode = 0
-	switch(mode)
+	if (istype(M, /mob/dead/)) return
+	if (usr.stat) return
+	if(src.has_sensor >= 2)
+		usr << "The controls are locked."
+		return 0
+	if(src.has_sensor <= 0)
+		usr << "This suit does not have any sensors"
+		return 0
+	src.sensor_mode += 1
+	if(src.sensor_mode > 3)
+		src.sensor_mode = 0
+	switch(src.sensor_mode)
 		if(0)
 			usr << "You disable your suit's remote sensing equipment."
 		if(1)
-			usr << "You enable your suit's remote sensing equipment. It will now report whether you are live or dead."
+			usr << "Your suit will now report whether you are live or dead."
 		if(2)
-			usr << "You enable more complicated sensors in your suit. It will now report your vital lifesigns."
+			usr << "Your suit will now report your vital lifesigns."
 		if(3)
-			usr << "You activate the full suite of sensors in your suit. It will now report your vital lifesigns as well as your coordinate position."
+			usr << "Your suit will now report your vital lifesigns as well as your coordinate position."
 	..()
 
-/obj/item/clothing/under/examine()
+/obj/item/clothing/under/rank/examine()
 	..()
-	switch(mode)
+	switch(src.sensor_mode)
 		if(0)
 			usr << "Its sensors appear to be disabled."
 		if(1)
@@ -216,8 +211,6 @@ DEATH COMMANDO GAS MASK
 		if(3)
 			usr << "Its vital tracker and tracking beacon appear to be enabled."
 
-
-/obj/item/clothing/under/color/orange/mode = 3
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user as mob)
 	if(src.magpulse)

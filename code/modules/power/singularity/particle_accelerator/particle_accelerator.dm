@@ -54,6 +54,32 @@ PE|PE|PE
 		icon_state = "end_cap"
 
 
+	verb/rotate()
+		set name = "Rotate"
+		set src in oview(1)
+
+		if (src.anchored || usr:stat)
+			usr << "It is fastened to the floor!"
+			return 0
+		src.dir = turn(src.dir, 90)
+		return 1
+
+
+	examine()
+		set src in usr
+		switch(src.construction_state)
+			if(0)
+				src.desc = text("Part of a Particle Accelerator, looks like its not attached to the flooring")
+			if(1)
+				src.desc = text("Part of a Particle Accelerator, looks like its missing some cables")
+			if(2)
+				src.desc = text("Part of a Particle Accelerator, looks like its got an open panel")
+			if(3)
+				src.desc = text("Part of a Particle Accelerator, looks like its all setup")
+		..()
+		return
+
+
 	attackby(obj/item/W, mob/user)
 		if(istool(W))
 			if(src.process_tool_hit(W,user))
@@ -155,6 +181,32 @@ PE|PE|PE
 	var
 		construction_state = 0
 		active = 0
+
+
+	verb/rotate()
+		set name = "Rotate"
+		set src in oview(1)
+
+		if (src.anchored || usr:stat)
+			usr << "It is fastened to the floor!"
+			return 0
+		src.dir = turn(src.dir, 90)
+		return 1
+
+
+	examine()
+		set src in usr
+		switch(src.construction_state)
+			if(0)
+				src.desc = text("Part of a Particle Accelerator, looks like its not attached to the flooring")
+			if(1)
+				src.desc = text("Part of a Particle Accelerator, looks like its missing some cables")
+			if(2)
+				src.desc = text("Part of a Particle Accelerator, looks like its got an open panel")
+			if(3)
+				src.desc = text("Part of a Particle Accelerator, looks like its all setup")
+		..()
+		return
 
 
 	attackby(obj/item/W, mob/user)

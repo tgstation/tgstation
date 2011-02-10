@@ -111,6 +111,44 @@
 	containertype = "/obj/crate"
 	containername = "Engineering crate"
 
+/datum/supply_packs/engine
+	name = "Emitter crate"
+	contains = list("/obj/machinery/emitter",
+					"/obj/machinery/emitter",)
+	cost = 10
+	containertype = "/obj/crate/secure"
+	containername = "Emitter crate"
+	access = access_heads
+
+/datum/supply_packs/engine/field_gen
+	name = "Field Generator crate"
+	contains = list("/obj/machinery/field_generator",
+					"/obj/machinery/field_generator",)
+	containername = "Field Generator crate"
+
+/datum/supply_packs/engine/sing_gen
+	name = "Singularity Generator crate"
+	contains = list("/obj/machinery/the_singularitygen")
+	containername = "Singularity Generator crate"
+
+/datum/supply_packs/engine/collector
+	name = "Collector crate"
+	contains = list("/obj/machinery/power/rad_collector")
+	containername = "Collector crate"
+
+/datum/supply_packs/engine/PA
+	name = "Particle Accelerator crate"
+	cost = 40
+	contains = list("/obj/particle_accelerator/fuel_chamber",
+					"/obj/machinery/particle_accelerator/control_box",
+					"/obj/particle_accelerator/particle_emitter/center",
+					"/obj/particle_accelerator/particle_emitter/left",
+					"/obj/particle_accelerator/particle_emitter/right",
+					"/obj/particle_accelerator/power_box",
+					"/obj/particle_accelerator/end_cap")
+	containername = "Particle Accelerator crate"
+
+
 /datum/supply_packs/medical
 	name = "Medical crate"
 	contains = list("/obj/item/weapon/storage/firstaid/regular",

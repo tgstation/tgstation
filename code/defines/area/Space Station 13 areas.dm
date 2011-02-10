@@ -614,6 +614,10 @@ proc/process_ghost_teleport_locs()
 	name = "Engine Hallway"
 	icon_state = "engine_hallway"
 
+/area/engine/engineering
+	name = "Engineering"
+	icon_state = "engine_hallway"
+
 /area/engine/engine_mon
 	name = "Engine Monitoring"
 	icon_state = "engine_monitoring"

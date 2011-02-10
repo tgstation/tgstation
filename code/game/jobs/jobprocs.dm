@@ -333,7 +333,7 @@
 //			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/clown (src), slot_back)
 			src.equip_if_possible(new /obj/item/device/pda/clown(src), slot_belt)
-			src.equip_if_possible(new /obj/item/clothing/under/clown(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/under/rank/clown(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/clown_shoes(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/mask/gas/clown_hat(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/banana(src), slot_in_backpack)
@@ -489,7 +489,7 @@
 //			src.equip_if_possible(new /obj/item/weapon/crowbar(src), slot_in_backpack) // same as with engineers, WHY
 
 		if ("Barman")
-			src.equip_if_possible(new /obj/item/clothing/under/bartender(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/under/rank/bartender(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
@@ -499,7 +499,7 @@
 			src.equip_if_possible(new /obj/item/weapon/ammo/shell/beanbag(src), slot_in_backpack)
 
 		if ("Chef")
-			src.equip_if_possible(new /obj/item/clothing/under/chef(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/under/rank/chef(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/head/chefhat(src), slot_head)
 //			src.equip_if_possible(new /obj/item/weapon/kitchen/rollingpin(src), slot_in_backpack) // it's in his office
@@ -540,7 +540,7 @@
 		if ("Quartermaster")
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
-			src.equip_if_possible(new /obj/item/clothing/under/cargo(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/under/rank/cargo(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/quartermaster(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/weapon/clipboard(src), slot_l_hand)
@@ -549,7 +549,7 @@
 		if ("Cargo Technician")
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
-			src.equip_if_possible(new /obj/item/clothing/under/cargo(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/under/rank/cargo(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/quartermaster(src), slot_belt)
 
 		if ("Chief Engineer")
