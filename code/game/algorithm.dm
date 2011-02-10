@@ -10,8 +10,8 @@
 
 	jobban_loadbanfile()
 	jobban_updatelegacybans()
-	goon_loadfile()
-	beta_tester_loadfile()
+//	goon_loadfile() Somehow I doubt we need this anymore
+//	beta_tester_loadfile()
 	LoadBans()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	process_ghost_teleport_locs() //Sets up ghost teleport locations.

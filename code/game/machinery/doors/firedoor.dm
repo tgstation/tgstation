@@ -51,7 +51,6 @@
 					src.sd_SetOpacity(1)
 					src.operating = 0
 					return
-	..()
 	return
 
 /obj/machinery/door/firedoor/process()

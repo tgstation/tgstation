@@ -1215,7 +1215,7 @@
 	if (src.holder)
 		src.holder.Secrets()
 	return
-
+/*
 /client/proc/goons()
 	set name = "Goons"
 	set category = "Admin"
@@ -1229,7 +1229,7 @@
 	if (src.holder)
 		src.holder.beta_testers()
 	return
-
+*/
 /client/proc/voting()
 	set name = "Voting"
 	set category = "Admin"

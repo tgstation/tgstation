@@ -437,22 +437,6 @@ proc/process_ghost_teleport_locs()
 	name = "Aft Maintenance"
 	icon_state = "amaint"
 
-/area/maintenance/auxsolarport
-	name = "Port Auxiliary Solar Maintenance"
-	icon_state = "SolarcontrolA"
-
-/area/maintenance/starboardsolar
-	name = "Starboard Solar Maintenance"
-	icon_state = "SolarcontrolS"
-
-/area/maintenance/portsolar
-	name = "Port Solar Maintenance"
-	icon_state = "SolarcontrolP"
-
-/area/maintenance/auxsolarstarboard
-	name = "Starboard Auxiliary Solar Maintenance"
-	icon_state = "SolarcontrolA"
-
 /area/maintenance/storage
 	name = "Atmospherics"
 	icon_state = "green"
@@ -598,46 +582,68 @@ proc/process_ghost_teleport_locs()
 
 //Engineering
 
-/area/engine/engine_smes
-	name = "Engine SMES Room"
-	icon_state = "engine"
+/area/engine
+	engine_smes
+		name = "Engineering SMES"
+		icon_state = "engine_smes"
+		requires_power = 0//This area only covers the batteries and they deal with their own power
 
-/area/engine/engine_walls
-	name = "Engine Walls"
-	icon_state = "engine"
+	engineering
+		name = "Engineering"
+		icon_state = "engine"
 
-/area/engine/engine_gas_storage
-	name = "Engine Storage"
-	icon_state = "engine_gas_storage"
+	chiefs_office
+		name = "Cheif Engineers office"
+		icon_state = "engine_control"
 
-/area/engine/engine_hallway
-	name = "Engine Hallway"
-	icon_state = "engine_hallway"
 
-/area/engine/engineering
-	name = "Engineering"
-	icon_state = "engine_hallway"
+//Solars
 
-/area/engine/engine_mon
-	name = "Engine Monitoring"
-	icon_state = "engine_monitoring"
+/area/solar
+	requires_power = 0
+	luminosity = 1
+	sd_lighting = 0
 
-/area/engine/engine_CE_office
-	name = "Engine New Office"
-	icon_state = "engine_CE"
+	auxport
+		name = "Port Auxiliary Solar Array"
+		icon_state = "panelsA"
 
-/area/engine/combustion
-	name = "Engine Combustion Chamber"
-	icon_state = "engine"
-	music = "signal"
+	auxstarboard
+		name = "Starboard Auxiliary Solar Array"
+		icon_state = "panelsA"
 
-/area/engine/engine_control
-	name = "Engine Control"
-	icon_state = "engine_control"
+	fore
+		name = "Fore Solar Array"
+		icon_state = "yellow"
 
-/area/engine/launcher
-	name = "Engine Launcher Room"
-	icon_state = "engine_monitoring"
+	aft
+		name = "Aft Solar Array"
+		icon_state = "aft"
+
+	starboard
+		name = "Starboard Solar Array"
+		icon_state = "panelsS"
+
+	port
+		name = "Port Solar Array"
+		icon_state = "panelsP"
+
+/area/maintenance/auxsolarport
+	name = "Port Auxiliary Solar Maintenance"
+	icon_state = "SolarcontrolA"
+
+/area/maintenance/starboardsolar
+	name = "Starboard Solar Maintenance"
+	icon_state = "SolarcontrolS"
+
+/area/maintenance/portsolar
+	name = "Port Solar Maintenance"
+	icon_state = "SolarcontrolP"
+
+/area/maintenance/auxsolarstarboard
+	name = "Starboard Auxiliary Solar Maintenance"
+	icon_state = "SolarcontrolA"
+
 
 /area/assembly/chargebay
 	name = "Recharging Bay"
@@ -743,37 +749,6 @@ proc/process_ghost_teleport_locs()
 /area/security/vacantoffice
 	name = "Vacant Office"
 	icon_state = "security"
-
-//Solars
-
-/area/solar
-	requires_power = 0
-	luminosity = 1
-	sd_lighting = 0
-
-/area/solar/auxport
-	name = "Port Auxiliary Solar Array"
-	icon_state = "panelsA"
-
-/area/solar/auxstarboard
-	name = "Starboard Auxiliary Solar Array"
-	icon_state = "panelsA"
-
-/area/solar/fore
-	name = "Fore Solar Array"
-	icon_state = "yellow"
-
-/area/solar/aft
-	name = "Aft Solar Array"
-	icon_state = "aft"
-
-/area/solar/starboard
-	name = "Starboard Solar Array"
-	icon_state = "panelsS"
-
-/area/solar/port
-	name = "Port Solar Array"
-	icon_state = "panelsP"
 
 /area/quartermaster
 	name = "Quartermasters"

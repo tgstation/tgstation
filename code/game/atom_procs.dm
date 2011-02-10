@@ -46,34 +46,43 @@
 					O << text("\red <B>[] has been hit by [] with []</B>", src, user, W)
 	return
 
-/atom/proc/add_fingerprint(mob/living/carbon/human/M as mob)
-	if ((!( istype(M, /mob/living/carbon/human) ) || !( istype(M.dna, /datum/dna) )))
-		return 0
+
+/atom/proc/add_fingerprint(mob/living/M as mob)
+	if(isnull(M)) return
+	if(isnull(M.key)) return
 	if (!( src.flags ) & 256)
 		return
-	if (M.gloves)
-		if(src.fingerprintslast != M.key)
-			src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",M.real_name, M.key)
-			src.fingerprintslast = M.key
-		return 0
-	if (!( src.fingerprints ))
-		src.fingerprints = text("[]", md5(M.dna.uni_identity))
-		if(src.fingerprintslast != M.key)
-			src.fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
-			src.fingerprintslast = M.key
-		return 1
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if (!istype(H.dna, /datum/dna))
+			return 0
+		if (H.gloves)
+			if(src.fingerprintslast != H.key)
+				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
+				src.fingerprintslast = H.key
+			return 0
+		if (!( src.fingerprints ))
+			src.fingerprints = text("[]", md5(H.dna.uni_identity))
+			if(src.fingerprintslast != H.key)
+				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
+				src.fingerprintslast = H.key
+			return 1
+		else
+			var/list/L = params2list(src.fingerprints)
+			L -= md5(H.dna.uni_identity)
+			while(L.len >= 3)
+				L -= L[1]
+			L += md5(H.dna.uni_identity)
+			src.fingerprints = list2params(L)
+			if(src.fingerprintslast != H.key)
+				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
+				src.fingerprintslast = H.key
 	else
-		var/list/L = params2list(src.fingerprints)
-		L -= md5(M.dna.uni_identity)
-		while(L.len >= 3)
-			L -= L[1]
-		L += md5(M.dna.uni_identity)
-		src.fingerprints = list2params(L)
-
 		if(src.fingerprintslast != M.key)
 			src.fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
 			src.fingerprintslast = M.key
 	return
+
 
 /atom/proc/add_blood(mob/living/carbon/human/M as mob)
 	if (!( istype(M, /mob/living/carbon/human) ))

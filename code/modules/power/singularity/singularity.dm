@@ -79,7 +79,7 @@ var/global/list/uneatable = list(
 		eat()
 		dissipate()
 		check_energy()
-		if(current_size >= 5)
+		if(current_size >= 3)
 			move()
 			if(current_size <= 7)
 				pulse()

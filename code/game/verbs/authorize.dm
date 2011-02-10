@@ -42,6 +42,7 @@
 			src << "\blue[no_auth_motd]"
 		src.authenticating = 0
 
+/* The old goon auth/beta code is here
 /client/proc/beta_tester_auth()
 	set name = "Tester?"
 	/*if(istester(src))
@@ -162,3 +163,4 @@ var/list/beta_tester_keylist
 		goon_savefile()
 		return 1
 	return 0
+*/

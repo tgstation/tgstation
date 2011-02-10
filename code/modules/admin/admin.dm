@@ -238,7 +238,7 @@ var/showadminmessages = 1
 					//del(M)
 				if("Cancel")
 					return
-
+/*
 	if (href_list["remove"])
 		if ((src.rank in list( "Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
 			var/t = href_list["remove"]
@@ -246,7 +246,7 @@ var/showadminmessages = 1
 				log_admin("[key_name(usr)] removed [t] from the goonlist.")
 				message_admins("\blue [key_name_admin(usr)] removed [t] from the goonlist.")
 				remove_goon(t)
-
+*/
 	if (href_list["mute2"])
 		if ((src.rank in list( "Moderator", "Secondary Administrator", "Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
 			var/mob/M = locate(href_list["mute2"])
@@ -266,24 +266,28 @@ var/showadminmessages = 1
 			var/dat = text({"<B>What mode do you wish to play?</B><HR>
 			<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>
 			<A href='?src=\ref[src];c_mode2=wizard'>Wizard</A><br>
-			<A href='?src=\ref[src];c_mode2=restructuring'>Corporate Restructuring</A><br>
-			<A href='?src=\ref[src];c_mode2=random'>Random</A><br>
 			<A href='?src=\ref[src];c_mode2=traitor'>Traitor</A><br>
 			<A href='?src=\ref[src];c_mode2=meteor'>Meteor</A><br>
 			<A href='?src=\ref[src];c_mode2=extended'>Extended</A><br>
-			<A href='?src=\ref[src];c_mode2=monkey'>Monkey</A><br>
 			<A href='?src=\ref[src];c_mode2=nuclear'>Nuclear Emergency</A><br>
 			<A href='?src=\ref[src];c_mode2=blob'>Blob</A><br>
 			<A href='?src=\ref[src];c_mode2=sandbox'>Sandbox</A><br>
 			<A href='?src=\ref[src];c_mode2=revolution'>Revolution</A><br>
 			<A href='?src=\ref[src];c_mode2=cult'>Cult</A><br>
 			<A href='?src=\ref[src];c_mode2=malfunction'>AI Malfunction</A><br>
-			<A href='?src=\ref[src];c_mode2=deathmatch'>Death Commando Deathmatch</A><br>
-			<A href='?src=\ref[src];c_mode2=confliction'>Confliction (TESTING)</A><br>
-			<A href='?src=\ref[src];c_mode2=ctf'>Capture The Flag (Beta)</A><br><br>
 			<A href='?src=\ref[src];c_mode2=changeling'>Changeling</A><br><br>
 			Now: [master_mode]\n"})
 			usr << browse(dat, "window=c_mode")
+/*
+			<A href='?src=\ref[src];c_mode2=restructuring'>Corporate Restructuring</A><br>
+			<A href='?src=\ref[src];c_mode2=random'>Random</A><br>
+			<A href='?src=\ref[src];c_mode2=monkey'>Monkey</A><br>
+			<A href='?src=\ref[src];c_mode2=deathmatch'>Death Commando Deathmatch</A><br>
+			<A href='?src=\ref[src];c_mode2=confliction'>Confliction (TESTING)</A><br>
+			<A href='?src=\ref[src];c_mode2=ctf'>Capture The Flag (Beta)</A><br><br>
+
+*/
+
 
 	if (href_list["c_mode2"])
 		if ((src.rank in list( "Secondary Administrator", "Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
@@ -1575,7 +1579,7 @@ var/showadminmessages = 1
 //			if(lvl == 6 )
 	usr << browse(dat, "window=admin2;size=210x180")
 	return
-
+/*
 /obj/admins/proc/goons()
 	var/dat = "<HR><B>GOOOOOOONS</B><HR><table cellspacing=5><tr><th>Key</th><th>SA Username</th></tr>"
 	for(var/t in goon_keylist)
@@ -1589,7 +1593,7 @@ var/showadminmessages = 1
 		dat += text("<tr><td>[t]</td></tr>")
 	dat += "</table>"
 	usr << browse(dat, "window=ban;size=300x400")
-
+*/
 /obj/admins/proc/Secrets()
 
 	var/lvl = 0

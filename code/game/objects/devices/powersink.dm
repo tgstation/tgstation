@@ -12,7 +12,7 @@
 	throw_range = 2
 	m_amt = 750
 	w_amt = 750
-	var/drain_rate = 200000		// amount of power to drain per tick
+	var/drain_rate = 600000		// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 1e8		// maximum power that can be drained before exploding
 	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
