@@ -935,7 +935,7 @@
 					usr:module_active = null
 
 		else
-			src.DblClick()
+			src.QueueClick()
 	return
 
 /obj/screen/attack_hand(mob/user as mob, using)

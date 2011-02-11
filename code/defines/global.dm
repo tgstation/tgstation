@@ -200,3 +200,8 @@ var
 	sqlpass = ""
 
 	sqllogging = 0 // Should we log deaths, population stats, etc?
+
+	// Changing this will affect on how quickly players are allowed to click on things.
+	// Measured in 1/10th of a second. Defaults to 10 = 1 sec. -- Skie
+	// TODO: Make changable by admin command? I dunno.
+	ClickDelay = 10

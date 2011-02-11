@@ -363,7 +363,7 @@
 					var/emptyHand = (W == null)
 
 					if(emptyHand)
-						src.id.DblClick()
+						src.id.QueueClick()
 						if(!istype(src.id.loc, /obj/item/device/pda))
 
 							src.id = null

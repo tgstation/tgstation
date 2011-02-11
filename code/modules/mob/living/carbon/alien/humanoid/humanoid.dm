@@ -256,7 +256,7 @@
 		return
 	if (emptyHand)
 		usr.next_move = usr.prev_move
-		usr:lastDblClick -= 3	//permit the double-click redirection to proceed.
+		usr:lastClick -= 3	//permit the double-click redirection to proceed.
 	switch(text)
 
 //if emptyhand then wear the suit, no bedsheet clothes for the alien
@@ -264,7 +264,7 @@
 		if("o_clothing")
 			if (src.wear_suit)
 				if (emptyHand)
-					src.wear_suit.DblClick()
+					src.wear_suit.QueueClick()
 				return
 			if (( istype(W, /obj/alien/skin_suit) ))
 				src.u_equip(W)
@@ -280,7 +280,7 @@
 		if("head")
 			if (src.head)
 				if (emptyHand)
-					src.head.DblClick()
+					src.head.QueueClick()
 				return
 			if (( istype(W, /obj/alien/head) ))
 				src.u_equip(W)
@@ -296,7 +296,7 @@
 		if("storage1")
 			if (src.l_store)
 				if (emptyHand)
-					src.l_store.DblClick()
+					src.l_store.QueueClick()
 				return
 			if ((!( istype(W, /obj/item) ) || W.w_class > 3))
 				return
@@ -305,7 +305,7 @@
 		if("storage2")
 			if (src.r_store)
 				if (emptyHand)
-					src.r_store.DblClick()
+					src.r_store.QueueClick()
 				return
 			if ((!( istype(W, /obj/item) ) || W.w_class > 3))
 				return
