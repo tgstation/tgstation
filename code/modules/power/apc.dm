@@ -1023,6 +1023,17 @@
 	set_broken()
 	return
 
+/obj/machinery/power/apc/emp_act(severity)
+	if(cell)
+		cell.emp_act(severity)
+	lighting = 0
+	equipment = 0
+	environ = 0
+	spawn(600)
+		equipment = 3
+		environ = 3
+	..()
+
 /obj/machinery/power/apc/ex_act(severity)
 
 	switch(severity)

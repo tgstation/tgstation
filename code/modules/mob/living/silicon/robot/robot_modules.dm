@@ -8,6 +8,14 @@
 	var/list/modules = list()
 	var/obj/item/emag
 
+	emp_act(severity)
+		if(modules)
+			for(var/obj/O in modules)
+				O.emp_act(severity)
+		if(emag)
+			emag.emp_act(severity)
+		..()
+
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
 /*

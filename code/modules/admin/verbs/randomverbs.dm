@@ -525,6 +525,27 @@ TO DO: actually integrate random appearance and player preference save.
 	else
 		return
 
+/client/proc/cmd_admin_emp(atom/O as obj|mob|turf in world)
+	set category = "Special Verbs"
+	set name = "EM Pulse"
+
+	if (!src.authenticated || !src.holder)
+		src << "Only administrators may use this command."
+		return
+
+	var/heavy = input("Range of heavy pulse.", text("Input"))  as num
+	var/light = input("Range of light pulse.", text("Input"))  as num
+
+	if (heavy || light)
+
+		empulse(O, heavy, light)
+		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
+		message_admins("[key_name_admin(usr)] created an EM PUlse ([heavy],[light]) at ([O.x],[O.y],[O.z])", 1)
+
+		return
+	else
+		return
+
 /client/proc/cmd_admin_gib(mob/M as mob in world)
 	set category = "Special Verbs"
 	set name = "Gib"

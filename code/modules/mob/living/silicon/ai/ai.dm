@@ -136,6 +136,17 @@
 /mob/living/silicon/ai/restrained()
 	return 0
 
+/mob/living/silicon/ai/emp_act(severity)
+	if (prob(30))
+		switch(pick(1,2,3)) //Add Random laws.
+			if(1)
+				src.cancel_camera()
+			if(2)
+				src.lockdown()
+			if(3)
+				src.ai_call_shuttle()
+	..()
+
 /mob/living/silicon/ai/ex_act(severity)
 	flick("flash", src.flash)
 

@@ -287,6 +287,13 @@
 		src.die()
 	return
 
+/obj/machinery/turret/emp_act(severity)
+	switch(severity)
+		if(1)
+			enabled = 0
+			lasers = 0
+			power_change()
+	..()
 
 /obj/machinery/turret/ex_act(severity)
 	if(severity < 3)

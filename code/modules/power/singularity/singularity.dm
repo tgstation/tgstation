@@ -376,16 +376,7 @@ var/global/list/uneatable = list(
 
 
 		emp_area()
-			var/turf/myturf = get_turf(src)
-			var/obj/overlay/pulse = new/obj/overlay ( myturf )
-			pulse.icon = 'effects.dmi'
-			pulse.icon_state = "emppulse"
-			pulse.name = "emp pulse"
-			pulse.anchored = 1
-			spawn(20)
-				del(pulse)
-			for (var/atom/X in orange(8,src))
-				X.emp_act()
+			empulse(src, 6, 8)
 			return
 
 

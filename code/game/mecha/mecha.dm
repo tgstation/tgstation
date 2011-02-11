@@ -354,6 +354,10 @@
 				M.gib()
 	return
 
+/obj/mecha/emp_act(severity)
+	cell.charge = 0
+	health -= 100 / severity
+	update_health()
 /obj/mecha/ex_act(severity)
 	src.log_message("Affected by explosion of severity: [severity].",1)
 	if(prob(src.deflect_chance))

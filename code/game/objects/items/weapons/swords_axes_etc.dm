@@ -177,6 +177,13 @@ STUN BATON
 		for(var/mob/O in viewers(M))
 			if (O.client)	O.show_message("\red <B>[M] has been stunned with the stun baton by [user]!</B>", 1, "\red You hear someone fall", 2)
 
+/obj/item/weapon/baton/emp_act(severity)
+	switch(severity)
+		if(1)
+			src.charges = 0
+		if(2)
+			charges -= 5
+
 /obj/item/weapon/classic_baton/attack(mob/M as mob, mob/user as mob)
 	if ((usr.mutations & 16) && prob(50))
 		usr << "\red You club yourself over the head."

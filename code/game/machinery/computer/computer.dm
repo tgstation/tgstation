@@ -16,6 +16,10 @@ Pod/Blast Doors computer
 	smoke.start()
 	return
 
+/obj/machinery/computer/emp_act(severity)
+	if(prob(20/severity)) set_broken()
+	..()
+
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
 		if(1.0)

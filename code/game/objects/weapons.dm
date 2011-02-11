@@ -705,6 +705,12 @@
 
 	return
 
+/obj/item/assembly/m_i_ptank/emp_act(severity)
+
+	if(istype(part3,/obj/item/weapon/tank/plasma) && prob(100/severity))
+		part3.ignite()
+	..()
+
 //*****RM
 
 /obj/item/assembly/t_i_ptank/c_state(n)
@@ -800,6 +806,11 @@
 			src.part3.release()
 	return
 
+/obj/item/assembly/t_i_ptank/emp_act(severity)
+	if(istype(part3,/obj/item/weapon/tank/plasma) && prob(100/severity))
+		part3.ignite()
+	..()
+
 /obj/item/assembly/r_i_ptank/examine()
 	..()
 	src.part3.examine()
@@ -863,6 +874,13 @@
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return
+
+/obj/item/assembly/r_i_ptank/emp_act(severity)
+	if(istype(part3,/obj/item/weapon/tank/plasma) && prob(100/severity))
+		part3.ignite()
+	..()
+
+//*****RM
 
 /obj/item/clothing/suit/armor/a_i_a_ptank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/device/analyzer))

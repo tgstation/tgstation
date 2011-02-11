@@ -548,7 +548,10 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	src.icon_state = text("gun[]", ratio)
 	return
 
-
+/obj/item/weapon/gun/energy/emp_act(severity)
+	charges = 0
+	update_icon()
+	..()
 
 
 // LASER GUN

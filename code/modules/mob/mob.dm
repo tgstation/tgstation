@@ -2205,3 +2205,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
 	  return 0 //only carbon liveforms has this proc
+
+/mob/emp_act(severity)
+	var/list/L = src.get_contents()
+	for(var/obj/O in L)
+		O.emp_act(severity)
+	..()

@@ -158,6 +158,13 @@
 		src.drowsyness += 5
 	return
 
+/mob/living/carbon/alien/humanoid/emp_act(severity)
+	if(wear_suit) wear_suit.emp_act(severity)
+	if(head) head.emp_act(severity)
+	if(r_store) r_store.emp_act(severity)
+	if(l_store) l_store.emp_act(severity)
+	..()
+
 /mob/living/carbon/alien/humanoid/ex_act(severity)
 	flick("flash", src.flash)
 

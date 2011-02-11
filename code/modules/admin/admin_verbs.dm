@@ -130,6 +130,7 @@
 			src.verbs += /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 			src.verbs += /client/proc/cmd_admin_explosion
+			src.verbs += /client/proc/cmd_admin_emp
 			src.verbs += /client/proc/cmd_admin_delete
 			src.verbs += /client/proc/cmd_admin_drop_everything
 			src.verbs += /client/proc/cmd_admin_prison
@@ -257,6 +258,7 @@
 			src.verbs += /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 			src.verbs += /client/proc/cmd_admin_explosion
+			src.verbs += /client/proc/cmd_admin_emp
 			src.verbs += /client/proc/cmd_admin_delete
 			src.verbs += /client/proc/cmd_admin_drop_everything
 			src.verbs += /client/proc/cmd_admin_prison
@@ -382,6 +384,7 @@
 			src.verbs += /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 			//src.verbs += /client/proc/cmd_admin_explosion
+			//src.verbs += /client/proc/cmd_admin_emp
 			src.verbs += /client/proc/cmd_admin_delete
 			src.verbs += /client/proc/cmd_admin_drop_everything
 			src.verbs += /client/proc/cmd_admin_prison
@@ -535,6 +538,7 @@
 			//src.verbs += /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 			//src.verbs += /client/proc/cmd_admin_explosion
+			//src.verbs += /client/proc/cmd_admin_emp
 			//src.verbs += /client/proc/cmd_admin_delete
 			//src.verbs += /client/proc/cmd_admin_drop_everything
 			src.verbs += /client/proc/cmd_admin_prison
@@ -678,6 +682,7 @@
 			//src.verbs += /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 			//src.verbs += /client/proc/cmd_admin_explosion
+			//src.verbs += /client/proc/cmd_admin_emp
 			//src.verbs += /client/proc/cmd_admin_delete
 			//src.verbs += /client/proc/cmd_admin_drop_everything
 			src.verbs += /client/proc/cmd_admin_prison
@@ -816,6 +821,7 @@
 			//src.verbs += /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 			//src.verbs += /client/proc/cmd_admin_explosion
+			//src.verbs += /client/proc/cmd_admin_emp
 			//src.verbs += /client/proc/cmd_admin_delete
 			//src.verbs += /client/proc/cmd_admin_drop_everything
 			src.verbs += /client/proc/cmd_admin_prison
@@ -938,6 +944,7 @@
 			//src.verbs += /client/proc/cmd_admin_gib
 			src.verbs += /client/proc/cmd_admin_gib_self
 			//src.verbs += /client/proc/cmd_admin_explosion
+			//src.verbs += /client/proc/cmd_admin_emp
 			//src.verbs += /client/proc/cmd_admin_delete
 			//src.verbs += /client/proc/cmd_admin_drop_everything
 			src.verbs += /client/proc/cmd_admin_prison
@@ -1093,6 +1100,7 @@
 	src.verbs -= /client/proc/cmd_admin_gib
 	src.verbs -= /client/proc/cmd_admin_gib_self
 	src.verbs -= /client/proc/cmd_admin_explosion
+	src.verbs -= /client/proc/cmd_admin_emp
 	src.verbs -= /client/proc/cmd_admin_delete
 	src.verbs -= /client/proc/cmd_admin_drop_everything
 	src.verbs -= /client/proc/cmd_admin_prison

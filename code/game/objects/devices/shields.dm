@@ -20,3 +20,8 @@
 		src.icon_state = "shield0"
 	src.add_fingerprint(user)
 	return
+
+/obj/item/weapon/cloaking_device/emp_act(severity)
+	active = 0
+	icon_state = "shield0"
+	..()

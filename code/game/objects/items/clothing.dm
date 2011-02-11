@@ -7,6 +7,7 @@ SUNGLASSES
 SWAT SUIT
 CHAMELEON JUMPSUIT
 DEATH COMMANDO GAS MASK
+THERMAL GLASSES
 
 */
 
@@ -159,6 +160,18 @@ DEATH COMMANDO GAS MASK
 	item_state = A.item_state
 	color = A.color
 
+/obj/item/clothing/under/chameleon/emp_act(severity)
+	name = "psychedelic"
+	desc = "Groovy!"
+	icon_state = "psyche"
+	color = "psyche"
+	spawn(200)
+		name = "Black Jumpsuit"
+		icon_state = "bl_suit"
+		color = "black"
+		desc = null
+	..()
+
 /obj/item/clothing/suit/swat_suit/death_commando
 	name = "Death Commando Suit"
 	icon_state = "death_commando_suit"
@@ -242,3 +255,16 @@ DEATH COMMANDO GAS MASK
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
 		user << "You lower the ear flaps on the ushanka."
+
+
+/obj/item/clothing/glasses/thermal/emp_act(severity)
+	if(istype(src.loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = src.loc
+		M << "\red The Optical Thermal Scanner overloads and blinds you!"
+		if(M.glasses == src)
+			M.eye_blind = 3
+			M.eye_blurry = 5
+			M.disabilities |= 1
+			spawn(100)
+				M.disabilities &= ~1
+	..()

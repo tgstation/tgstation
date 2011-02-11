@@ -105,3 +105,7 @@
 					safety = 1
 				if (!( safety ))
 					flick("flash", M.flash)
+
+/obj/item/device/flash/emp_act(severity)
+	src.attack_self()
+	..()

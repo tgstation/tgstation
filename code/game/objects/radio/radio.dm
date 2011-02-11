@@ -285,3 +285,8 @@ Frequency:
 		//Foreach goto(83)
 	src.add_fingerprint(user)
 	return
+
+/obj/item/device/radio/emp_act(severity)
+	broadcasting = 0
+	listening = 0
+	..()

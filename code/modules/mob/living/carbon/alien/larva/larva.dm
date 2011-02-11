@@ -122,6 +122,10 @@
 		src.drowsyness += 5
 	return
 
+/mob/living/carbon/alien/larva/emp_act(severity)
+	..()
+
+
 /mob/living/carbon/alien/larva/ex_act(severity)
 	flick("flash", src.flash)
 

@@ -9,6 +9,21 @@
 /obj/machinery/proc/process()
 	return
 
+/obj/machinery/emp_act(severity)
+	if(use_power && stat == 0)
+		use_power(7500/severity)
+
+		var/obj/overlay/pulse2 = new/obj/overlay ( src.loc )
+		pulse2.icon = 'effects.dmi'
+		pulse2.icon_state = "empdisable"
+		pulse2.name = "emp sparks"
+		pulse2.anchored = 1
+		pulse2.dir = pick(cardinal)
+
+		spawn(10)
+			del(pulse2)
+	..()
+
 /obj/machinery/ex_act(severity)
 	switch(severity)
 		if(1.0)

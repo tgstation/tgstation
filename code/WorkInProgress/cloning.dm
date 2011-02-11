@@ -653,6 +653,10 @@
 	src.go_out()
 	return
 
+/obj/machinery/clonepod/emp_act(severity)
+	if(prob(100/severity)) malfunction()
+	..()
+
 /obj/machinery/clonepod/ex_act(severity)
 	switch(severity)
 		if(1.0)

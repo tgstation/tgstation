@@ -419,6 +419,22 @@
 		return
 	return
 
+/mob/living/carbon/human/emp_act(severity)
+	if(wear_suit) wear_suit.emp_act(severity)
+	if(w_uniform) w_uniform.emp_act(severity)
+	if(shoes) shoes.emp_act(severity)
+	if(belt) belt.emp_act(severity)
+	if(gloves) gloves.emp_act(severity)
+	if(glasses) glasses.emp_act(severity)
+	if(head) head.emp_act(severity)
+	if(ears) ears.emp_act(severity)
+	if(wear_id) wear_id.emp_act(severity)
+	if(r_store) r_store.emp_act(severity)
+	if(l_store) l_store.emp_act(severity)
+	if(s_store) s_store.emp_act(severity)
+	if(h_store) h_store.emp_act(severity)
+	..()
+
 /mob/living/carbon/human/ex_act(severity)
 	flick("flash", src.flash)
 

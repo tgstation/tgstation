@@ -445,6 +445,7 @@
 #include "code\game\objects\displaycase.dm"
 #include "code\game\objects\door_assembly.dm"
 #include "code\game\objects\effect_system.dm"
+#include "code\game\objects\empulse.dm"
 #include "code\game\objects\explosion.dm"
 #include "code\game\objects\gibs.dm"
 #include "code\game\objects\grille.dm"

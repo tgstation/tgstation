@@ -560,6 +560,10 @@
 /obj/machinery/firealarm/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
+/obj/machinery/firealarm/emp_act(severity)
+	if(prob(50/severity)) alarm()
+	..()
+
 /obj/machinery/firealarm/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wirecutters))
 		src.detecting = !( src.detecting )

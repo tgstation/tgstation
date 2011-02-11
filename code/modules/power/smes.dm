@@ -316,6 +316,19 @@
 
 	return
 
+/obj/machinery/power/smes/emp_act(severity)
+	online = 0
+	charging = 0
+	output = 0
+	charge -= 1e6/severity
+	if (charge < 0)
+		charge = 0
+	spawn(100)
+		output = initial(output)
+		charging = initial(charging)
+		online = initial(online)
+	..()
+
 /proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)
 	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
 	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C?C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"

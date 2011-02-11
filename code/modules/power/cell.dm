@@ -121,6 +121,14 @@
 	if (prob(10))
 		rigged = 1 //broken batterys are dangerous
 
+/obj/item/weapon/cell/emp_act(severity)
+	charge -= 1000 / severity
+	if (charge < 0)
+		charge = 0
+	if(reliability != 100 && prob(50/severity))
+		reliability -= 10 / severity
+	..()
+
 /obj/item/weapon/cell/ex_act(severity)
 
 	switch(severity)
