@@ -107,10 +107,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				var/mob/temp = input("Select mob", "Selection", usr) as mob in world
 				lst[i] = temp.loc
 
+
 	spawn(0)
 		if(target)
+			log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 		else
+			log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 	usr << "\blue Proc returned: [returnval ? returnval : "null"]"
 
