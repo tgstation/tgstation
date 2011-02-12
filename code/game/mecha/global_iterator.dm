@@ -80,7 +80,7 @@ Data storage vars:
 			if(!set_process_args(arguments))
 				return 0
 		control_switch = 1
-		spawn(-1)
+		spawn()
 			src.main()
 		return 1
 

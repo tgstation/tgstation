@@ -81,13 +81,13 @@
 	proc/sanity_check()
 		for(var/p in resources)
 			var/index = resources.Find(p)
-			index = resources.Find(p, index)
+			index = resources.Find(p, ++index)
 			if(index) //duplicate resource
 				world << "Duplicate resource definition for [src](\ref[src])"
 				return 0
 		for(var/set_name in part_sets)
 			var/index = part_sets.Find(set_name)
-			index = part_sets.Find(set_name, index)
+			index = part_sets.Find(set_name, ++index)
 			if(index) //duplicate part set
 				world << "Duplicate part set definition for [src](\ref[src])"
 				return 0
@@ -245,7 +245,6 @@
 						src.resources[material] += W.vars[amnt]
 						W.use(1)
 						count++
-
 					flick("mechfab2", src)
 					user << "You insert [count] [name] into the fabricator."
 					src.updateUsrDialog()

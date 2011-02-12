@@ -32,7 +32,7 @@
 	else
 		overload = 1
 		step_in = min(1, round(step_in/2))
-		src.occupant_message("<font color='red'> You enable leg actuators overload.</font>")
+		src.occupant_message("<font color='red'>You enable leg actuators overload.</font>")
 	return
 
 

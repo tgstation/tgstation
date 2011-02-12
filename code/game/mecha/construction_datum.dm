@@ -58,11 +58,3 @@
 		while(null in L)
 			L -= null
 		return
-
-
-
-
-
-
-
-

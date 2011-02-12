@@ -39,7 +39,7 @@
 
 
 
-/datum/mecha_weapon/missile_rack
+/datum/mecha_weapon/missile_rack //TODO: move missile racks to ballistic class
 	name = "SRM-8 Missile Rack"
 	var/missiles = 8
 	var/missile_speed = 2
@@ -137,8 +137,7 @@
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
 		chassis.cell.use(energy_drain)
-		spawn()
-			A.process()
+		A.process()
 		spawn(weapon_cooldown)
 			weapon_ready = 1
 		chassis.log_message("Fired from [src.name], targeting [target].")
@@ -148,7 +147,7 @@
 /datum/mecha_weapon/pulse
 	weapon_cooldown = 30
 	name = "eZ-13 mk2 Heavy pulse rifle"
-	energy_drain = 60
+	energy_drain = 120
 
 	fire(target)
 		if(!fire_checks(target)) return
@@ -167,8 +166,7 @@
 		A.xo = targloc.x - curloc.x
 		weapon_ready = 0
 		chassis.cell.use(energy_drain)
-		spawn()
-			A.process()
+		A.process()
 		spawn(weapon_cooldown)
 			weapon_ready = 1
 		chassis.log_message("Fired from [src.name], targeting [target].")
@@ -303,32 +301,102 @@
 		return
 
 
-/*
-/datum/mecha_weapon/scattershot
-	name = "Scuttershot"
-	var/missiles = 8
-	var/missile_speed = 2
-	var/missile_range = 30
-	var/missile_energy_cost = 1000
-	weapon_cooldown = 60
 
-	fire(target)
-		if(!..() || missiles <=0) return
-		var/obj/item/missile/M = new /obj/item/missile(chassis.loc)
-		M.primed = 1
-		M.throw_at(target, missile_range, missile_speed)
-		weapon_ready = 0
-		missiles--
-		spawn(weapon_cooldown)
-			weapon_ready = 1
-		return
+/datum/mecha_weapon/ballistic
+	name = "General Ballisic Weapon"
+	var/projectiles
+	var/projectile_energy_cost
+
+	get_weapon_info()
+		return "[src.name]\[[src.projectiles]\][(src.projectiles < initial(src.projectiles))?" - <a href='?src=\ref[src];rearm=1'>Rearm</a>":null]"
 
 	proc/rearm()
-		if(missiles < initial(missiles))
-			var/missiles_to_add = initial(missiles) - missiles
-			while(chassis.cell.charge >= missile_energy_cost && missiles_to_add)
-				missiles++
-				missiles_to_add--
-				chassis.cell.charge -= missile_energy_cost
+		if(projectiles < initial(projectiles))
+			var/projectiles_to_add = initial(projectiles) - projectiles
+			while(chassis.cell.charge >= projectile_energy_cost && projectiles_to_add)
+				projectiles++
+				projectiles_to_add--
+				chassis.cell.charge -= projectile_energy_cost
+		chassis.log_message("Rearmed [src.name].")
 		return
-*/
+
+	Topic(href, href_list)
+		if (href_list["rearm"])
+			src.rearm()
+		return
+
+
+/datum/mecha_weapon/ballistic/scattershot
+	name = "LBX AC 10 \"Scattershot\""
+	weapon_cooldown = 20
+	projectiles = 100
+	projectile_energy_cost = 25
+	var/projectiles_per_shot = 4
+	var/deviation = 0.7
+
+	fire(atom/target)
+		if(!fire_checks(target) || projectiles <=0) return
+		var/turf/curloc = get_turf(chassis)
+		var/turf/targloc = get_turf(target)
+		if(!curloc || !targloc) return
+		var/target_x = targloc.x
+		var/target_y = targloc.y
+		var/target_z = targloc.z
+		targloc = null
+		target = null
+		for(var/i=1 to min(projectiles, projectiles_per_shot))
+			targloc = locate(target_x+GaussRandRound(deviation,1),target_y+GaussRandRound(deviation,1),target_z)
+			if(!targloc || targloc == curloc)
+				break
+			playsound(chassis, 'Gunshot.ogg', 80, 1)
+			var/obj/bullet/A = new /obj/bullet(curloc)
+			src.projectiles--
+			A.current = curloc
+			A.yo = targloc.y - curloc.y
+			A.xo = targloc.x - curloc.x
+			weapon_ready = 0
+			A.process()
+		spawn(weapon_cooldown)
+			weapon_ready = 1
+		chassis.log_message("Fired from [src.name], targeting [target].")
+		return
+
+
+
+/datum/mecha_weapon/ballistic/lmg
+	name = "Ultra AC 2"
+	weapon_cooldown = 10
+	projectiles = 300
+	projectile_energy_cost = 20
+	var/projectiles_per_shot = 3
+	var/deviation = 0.3
+
+	fire(atom/target)
+		if(!fire_checks(target) || projectiles <=0) return
+		var/turf/targloc = get_turf(target)
+		var/target_x = targloc.x
+		var/target_y = targloc.y
+		var/target_z = targloc.z
+		targloc = null
+		target = null
+		spawn	for(var/i=1 to min(projectiles, projectiles_per_shot))
+			if(!chassis) break
+			var/turf/curloc = get_turf(chassis)
+			targloc = locate(target_x+GaussRandRound(deviation,1),target_y+GaussRandRound(deviation,1),target_z)
+			if (!targloc || !curloc)
+				continue
+			if (targloc == curloc)
+				continue
+			playsound(chassis, 'Gunshot.ogg', 50, 1)
+			var/obj/bullet/weakbullet/A = new /obj/bullet/weakbullet(curloc)
+			src.projectiles--
+			A.current = curloc
+			A.yo = targloc.y - curloc.y
+			A.xo = targloc.x - curloc.x
+			A.process()
+			sleep(2)
+		weapon_ready = 0
+		spawn(weapon_cooldown)
+			weapon_ready = 1
+		chassis.log_message("Fired from [src.name], targeting [target].")
+		return

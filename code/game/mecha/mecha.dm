@@ -304,7 +304,7 @@
 
 /obj/mecha/bullet_act(flag)
 	var/dam_type
-	switch(dam_type)
+	switch(flag)
 		if(PROJECTILE_PULSE)
 			dam_type = "Pulse"
 		if(PROJECTILE_LASER)
@@ -329,23 +329,31 @@
 				damage = 20
 			if(PROJECTILE_TASER)
 				src.cell.use(500)
-			else
+			if(PROJECTILE_WEAKBULLET)
+				damage = 8
+			if(PROJECTILE_BULLET)
 				damage = 10
+			if(PROJECTILE_BOLT)
+				damage = 5
+			if(PROJECTILE_DART)
+				damage = 5
+			else
+				return
 		src.take_damage(damage)
 		src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),ignore_threshold)
 	return
 
 /obj/mecha/proc/destroy()
 	var/obj/mecha/mecha = src
+	var/mob/M = src.occupant
+	var/turf/T = src.loc
+	var/wreckage = src.wreckage
 	src = null
-	var/mob/M
-	spawn()
-		if(mecha.occupant)
-			M = mecha.occupant
-		explosion(mecha.loc, 0, 0, 1, 3)
-		if(mecha.wreckage)
-			new mecha.wreckage(get_turf(mecha))
-		del(mecha)
+	del(mecha)
+	explosion(T, 0, 0, 1, 3)
+	spawn(0)
+		if(wreckage)
+			new wreckage(T)
 		if(M)
 			if(prob(20))
 				M.bruteloss += rand(10,20)
@@ -354,10 +362,6 @@
 				M.gib()
 	return
 
-/obj/mecha/emp_act(severity)
-	cell.charge = 0
-	health -= 100 / severity
-	update_health()
 /obj/mecha/ex_act(severity)
 	src.log_message("Affected by explosion of severity: [severity].",1)
 	if(prob(src.deflect_chance))
@@ -380,14 +384,17 @@
 				src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),1)
 	return
 
+//TODO
 /obj/mecha/blob_act()
 	return
 
 /obj/mecha/meteorhit()
 	return ex_act(rand(1,3))//should do for now
 
-/obj/mecha/emp_act()
-	cell.use(rand(cell.maxcharge/2, cell.maxcharge))
+/obj/mecha/emp_act(severity)
+	cell.charge -= min(cell.charge, cell.maxcharge/severity)
+	health -= 100 / severity
+	update_health()
 	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST),1)
 	return
 
@@ -567,6 +574,8 @@
 		src.log_append_to_last("[H] moved in as pilot.")
 		src.icon_state = initial(icon_state)
 		playsound(src, 'windowdoor.ogg', 50, 1)
+		if(!internal_damage)
+			src.occupant << sound('nominal.ogg',volume=50)
 		return 1
 	else
 		return 0
@@ -969,7 +978,7 @@
 				mecha.internal_damage &= ~MECHA_INT_FIRE
 				mecha.occupant_message("<font color='blue'><b>Internal fire extinquished.</b></font>")
 			if(mecha.air_contents && mecha.air_contents.volume > 0) //heat the air_contents
-				mecha.air_contents.temperature = min(1500+T0C, mecha.air_contents.temperature+rand(10,15))
+				mecha.air_contents.temperature = min(6000+T0C, mecha.air_contents.temperature+rand(10,15))
 				if(mecha.air_contents.temperature>mecha.max_temperature/2)
 					mecha.take_damage(1,"fire")
 		if(mecha.internal_damage & MECHA_INT_TEMP_CONTROL) //stop the mecha_preserve_temp loop datum

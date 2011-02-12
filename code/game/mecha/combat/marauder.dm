@@ -103,13 +103,15 @@
 		src.occupant_message("\blue Zoom mode [zoom?"en":"dis"]abled.")
 		if(zoom)
 			src.occupant.client.view = 12
+			src.occupant << sound('imag_enh.ogg',volume=50)
 		else
 			src.occupant.client.view = world.view//world.view - default mob view size
 	return
 
 
 /obj/mecha/combat/marauder/go_out()
-	src.occupant.client.view = world.view
+	if(src.occupant && src.occupant.client)
+		src.occupant.client.view = world.view
 	..()
 	return
 

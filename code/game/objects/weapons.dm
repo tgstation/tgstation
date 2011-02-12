@@ -1046,19 +1046,18 @@
 	return
 
 /obj/bullet/proc/process()
-	if ((!( src.current ) || src.loc == src.current))
-		src.current = locate(min(max(src.x + src.xo, 1), world.maxx), min(max(src.y + src.yo, 1), world.maxy), src.z)
-	if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
-		//SN src = null
-		del(src)
-		return
-	step_towards(src, src.current)
-	spawn( 1 )
-		process()
-		return
+	spawn while(src)
+		if ((!( src.current ) || src.loc == src.current))
+			src.current = locate(min(max(src.x + src.xo, 1), world.maxx), min(max(src.y + src.yo, 1), world.maxy), src.z)
+		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
+			//SN src = null
+			del(src)
+			return
+		step_towards(src, src.current)
+		sleep( 1 )
 	return
 
-/obj/beam/a_laser/Bump(atom/A as mob|obj|turf|area)
+/obj/beam/a_laser/Bump(atom/A as mob|obj|turf)
 	spawn(0)
 		if(A)
 			A.bullet_act(PROJECTILE_LASER, src)

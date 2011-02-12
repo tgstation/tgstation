@@ -834,3 +834,17 @@
 //Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value.
 /proc/between(var/low, var/middle, var/high)
 	return max(min(middle, high), low)
+
+//returns random gauss number
+proc/GaussRand(var/sigma)
+  var/x,y,rsq
+  do
+    x=2*rand()-1
+    y=2*rand()-1
+    rsq=x*x+y*y
+  while(rsq>1 || !rsq)
+  return sigma*y*sqrt(-2*log(rsq)/rsq)
+
+//returns random gauss number, rounded to 'roundto'
+proc/GaussRandRound(var/sigma,var/roundto)
+	return round(GaussRand(sigma),roundto)

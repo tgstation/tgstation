@@ -5,7 +5,7 @@
 	var/list/weapons = new
 	var/datum/mecha_weapon/selected_weapon
 	operation_req_access = list(access_security)
-	internals_req_access = list(access_engine)
+	internals_req_access = list(access_engine,access_robotics)
 	var/force = 25
 	var/damtype = "brute"
 	var/melee_cooldown = 10
@@ -177,9 +177,9 @@
 	return
 
 
-/obj/mecha/combat/check_for_internal_damage(var/list/possible_int_damage)
-	..(possible_int_damage)
-	if(prob(5) && (src.health*100/initial(src.health))<src.internal_damage_threshold)
+/obj/mecha/combat/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
+	..()
+	if(prob(5) && (ignore_threshold || (src.health*100/initial(src.health))<src.internal_damage_threshold))
 		if(weapons.len)
 			var/datum/mecha_weapon/destr_weapon = pick(weapons)
 			if(destr_weapon)
@@ -187,6 +187,7 @@
 				destr_weapon.destroy()
 				src.occupant_message("<font color='red'>The [destr_weapon] is destroyed!</font>")
 				src.log_append_to_last("[destr_weapon] is destoyed.",1)
+				src.occupant << sound('weapdestr.ogg',volume=50)
 	return
 
 /obj/mecha/combat/get_stats_part()
