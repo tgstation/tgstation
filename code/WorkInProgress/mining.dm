@@ -471,7 +471,7 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 					<li>Open the control panel</li>
 					<li>Set the speed to 2</li>
 					<li>Start firing at the singularity generator</li>
-					<li><font color='red'><b>When the singularity reaches a large enough size so it starts moving on it's own set the speed down to 1</b></font></li>
+					<li><font color='red'><b>When the singularity reaches a large enough size so it starts moving on it's own set the speed down to 0, but don't shut it off</b></font></li>
 					<li>Remember to wear a radiation suit when working with this machine... we did tell you that at the start, right?</li>
 				</ol>
 
