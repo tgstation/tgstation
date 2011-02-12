@@ -212,6 +212,23 @@
 	icon_state = "firesuit"
 	item_state = "firefighter"
 
+/obj/item/clothing/suit/radiation
+	name = "Radiation suit"
+	desc = "A suit that protects against radiation."
+	icon_state = "rad"
+	item_state = "rad_suit"
+	//w_class = 4//bulky item
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	heat_transfer_coefficient = 1
+	radiation_protection = 1
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	slowdown = 1.3
+
+	protective_temperature = 4500
+	heat_transfer_coefficient = 0.01
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
+
 /obj/item/clothing/suit/fire/heavy
 	name = "firesuit"
 	desc = "A suit that protects against extreme fire and heat."
@@ -238,6 +255,7 @@
 	heat_transfer_coefficient = 0.02
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 3
+	radiation_protection = 0.25
 
 /obj/item/clothing/suit/space/rig
 	name = "rig suit"
@@ -245,6 +263,7 @@
 	icon_state = "rig"
 	item_state = "rig_suit"
 	slowdown = 2
+	radiation_protection = 0.75
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"

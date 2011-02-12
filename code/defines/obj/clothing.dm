@@ -15,7 +15,7 @@
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
-
+	var/radiation_protection = 0.0 //percentage of radiation it will absorb
 
 
 
