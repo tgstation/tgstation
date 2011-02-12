@@ -754,6 +754,14 @@ proc/process_ghost_teleport_locs()
 	name = "Quartermasters"
 	icon_state = "quart"
 
+///////////WORK IN PROGRESS//////////
+
+/area/quartermaster/sorting
+	name = "Construction Area"
+	icon_state = "quartstorage"
+
+////////////WORK IN PROGRESS//////////
+
 /area/quartermaster/office
 	name = "Cargo Office"
 	icon_state = "quartoffice"
