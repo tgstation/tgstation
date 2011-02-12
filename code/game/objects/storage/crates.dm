@@ -58,6 +58,17 @@
 	openicon = "largebinopen"
 	closedicon = "largebin"
 
+/obj/crate/radiation
+	desc = "A crate with a radiation sign on it."
+	name = "Radioactive gear crate"
+	icon = 'storage.dmi'
+	icon_state = "radiation"
+	density = 1
+	openicon = "radiationopen"
+	closedicon = "radiation"
+
+/obj/item/clothing/suit/radiation
+
 /obj/crate/secure/weapon
 	desc = "A secure weapons crate."
 	name = "Weapons crate"
@@ -173,6 +184,13 @@
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd(src)
+
+/obj/crate/radiation/New()
+	..()
+	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/suit/radiation(src)
 
 /obj/crate/proc/open()
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
