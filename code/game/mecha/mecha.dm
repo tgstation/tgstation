@@ -84,7 +84,6 @@
 ///client/var/mech_click
 
 /client/Click(object,location,control,params)
-	..()
 	var/mob/M = src.mob
 	if(M && istype(M.loc, /obj/mecha))
 /*
@@ -98,8 +97,8 @@
 //		sleep(-1)
 		spawn() //this helps prevent clickspam fest.
 			Mech.click_action(object)
-
-
+	else
+		return ..()
 
 /obj/mecha/proc/click_action(atom/target)
 	if(!istype(target,/turf) && !istype(target.loc,/turf)) return
