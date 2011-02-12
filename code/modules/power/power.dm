@@ -358,19 +358,21 @@
 
 /datum/powernet/proc/get_electrocute_damage()
 	switch(avail)
-		if (750000 to INFINITY)
-			return min(rand(70,145),rand(70,145))
+		if (1300000 to INFINITY)
+			return min(rand(70,150),rand(70,150))
+		if (750000 to 1300000)
+			return min(rand(50,115),rand(50,115))
 		if (100000 to 750000-1)
-			return min(rand(35,110),rand(35,110))
+			return min(rand(35,101),rand(35,101))
 		if (75000 to 100000-1)
-			return min(rand(30,100),rand(30,100))
+			return min(rand(30,95),rand(30,95))
 		if (50000 to 75000-1)
-			return min(rand(25,90),rand(25,90))
+			return min(rand(25,80),rand(25,80))
 		if (25000 to 50000-1)
-			return min(rand(20,80),rand(20,80))
+			return min(rand(20,70),rand(20,70))
 		if (10000 to 25000-1)
 			return min(rand(20,65),rand(20,65))
-		if (100 to 10000-1)
+		if (1000 to 10000-1)
 			return min(rand(10,20),rand(10,20))
 		else
 			return 0
@@ -406,7 +408,7 @@
 //power_source is a source of electricity, can be powercell, area, apc, cable, powernet or null
 //source is an object caused electrocuting (airlock, grille, etc)
 //No animations will be performed by this proc.
-/proc/electrocute_mob(mob/living/carbon/M as mob, var/power_source, var/obj/source)
+/proc/electrocute_mob(mob/living/carbon/M as mob, var/power_source, var/obj/source, var/siemens_coeff = 1.0)
 	var/area/source_area
 	if (istype(power_source,/area))
 		source_area = power_source
@@ -447,7 +449,7 @@
 	else
 		power_source = cell
 		shock_damage = cell_damage
-	var/drained_hp = M.electrocute_act(shock_damage, source) //zzzzzzap!
+	var/drained_hp = M.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
 	var/drained_energy = drained_hp*20
 	
 	if (source_area)

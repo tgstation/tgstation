@@ -88,13 +88,16 @@
 		PN = powernets[netnum]
 	return PN
 
-/obj/cable/attackby(obj/item/weapon/W, mob/user)
+/obj/cable/attackby(obj/item/W, mob/user)
 
 	var/turf/T = src.loc
 	if(T.intact)
 		return
 
 	if(istype(W, /obj/item/weapon/wirecutters))
+
+		if (shock(user, 50))
+			return
 
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
 			new/obj/item/weapon/cable_coil(T, 2)
@@ -104,8 +107,6 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
 
-		shock(user, 50)
-
 		defer_powernet_rebuild = 0		// to fix no-action bug
 		del(src)
 
@@ -113,10 +114,10 @@
 
 
 	else if(istype(W, /obj/item/weapon/cable_coil))
+		if (shock(user, 50))
+			return
 		var/obj/item/weapon/cable_coil/coil = W
-
 		coil.cable_join(src, user)
-		//TODO: shock in cable_join
 
 	else if(istype(W, /obj/item/device/multitool))
 
@@ -128,20 +129,20 @@
 		else
 			user << "\red The cable is not powered."
 
-		if(prob(40))
-			shock(user, 10)
+		shock(user, 5, 0.2)
 
 	else
-		shock(user, 10)
+		if (W.flags & CONDUCT)
+			shock(user, 50, 0.7)
 
 	src.add_fingerprint(user)
 
 // shock the user with probability prb
 
-/obj/cable/proc/shock(mob/user, prb)
+/obj/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
 	if(!prob(prb))
 		return 0
-	if (electrocute_mob(user, powernets[src.netnum], src))
+	if (electrocute_mob(user, powernets[src.netnum], src, siemens_coeff))
 		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()

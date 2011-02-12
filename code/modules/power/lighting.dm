@@ -202,8 +202,8 @@
 				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 			if(on && (W.flags & CONDUCT))
 				//if(!user.mutations & 2)
-				if (prob(50))
-					electrocute_mob(user, get_area(src), src)
+				if (prob(12))
+					electrocute_mob(user, get_area(src), src, 0.3)
 			broken()
 
 		else
@@ -218,7 +218,7 @@
 			s.start()
 			//if(!user.mutations & 2)
 			if (prob(75))
-				electrocute_mob(user, get_area(src), src)
+				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
 
 
 // returns whether this light has power

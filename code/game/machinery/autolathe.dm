@@ -272,7 +272,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src))
+	if (electrocute_mob(user, get_area(src), src, 0.7))
 		return 1
 	else
 		return 0
