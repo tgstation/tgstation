@@ -4,21 +4,25 @@
 	if (!message)
 		return
 
-	log_say("[src.name]/[src.key] : [message]")
-
 	if (length(message) >= 1)
-		if (copytext(message, 1, 2) != "*")
-			if (src.miming)
-				return
-
-	if (src.muted || src.silent)
-		return
+		if (src.miming && copytext(message, 1, 2) != "*")
+			return
 
 	if (src.stat == 2)
 		return src.say_dead(message)
 
+	if (src.muted || src.silent)
+		return
+
 	// wtf?
 	if (src.stat)
+		return
+
+	// Mute disability
+	if (src.sdisabilities & 2)
+		return
+
+	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 
 	// emotes
@@ -29,13 +33,6 @@
 	if (istype(src, /mob/living/carbon/human) && src.name != src.real_name)
 		var/mob/living/carbon/human/H = src
 		alt_name = " (as [H.get_visible_name()])"
-	// Mute disability
-	if (src.sdisabilities & 2)
-		return
-
-	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
-		return
-
 	var/italics = 0
 	var/message_range = null
 	var/message_mode = null
@@ -49,46 +46,50 @@
 			message_mode = "headset"
 		message = copytext(message, 2)
 
-
 	else if (length(message) >= 2)
-		if (copytext(message, 1, 3) == ":r")
-			message_mode = "right hand"
-			message = copytext(message, 3)
+		var/channel_prefix = copytext(message, 1, 3)
 
-		else if (copytext(message, 1, 3) == ":l")
-			message_mode = "left hand"
-			message = copytext(message, 3)
-
-		else if (copytext(message, 1, 3) == ":h" || (copytext(message, 1, 3) == ":ð" ))
-			if (ishuman(src))
-				message_mode = "secure headset"
-			message = copytext(message, 3)
-
-		/*else if (copytext(message, 1, 3) == ":w")
-			message_mode = "whisper"
-			message = copytext(message, 3)*/
-
-		else if (copytext(message, 1, 3) == ":i")
-			message_mode = "intercom"
-			message = copytext(message, 3)
-
-		else if ((copytext(message, 1, 3) == ":s" || (copytext(message, 1, 3) == ":û" )) && src.robot_talk_understand)
-			message = copytext(message, 3)
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-			src.robot_talk(message)
-			return
-
-		else if ((copytext(message, 1, 3) == ":a" || (copytext(message, 1, 3) == ":ô")) && src.alien_talk_understand)
-			message = copytext(message, 3)
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-			src.alien_talk(message)
-			return
+		var/list/keys = list(
+			  ":r" = "right hand",
+			  ":l" = "left hand",
+			  ":i" = "intercom",
+			  ":h" = "department",
+			  ":c" = "Command",
+			  ":n" = "Science",
+			  ":m" = "Medical",
+			  ":e" = "Engineering",
+			  ":s" = "Security",
+			  ":w" = "whisper",
+			  ":b" = "binary",
+			  ":a" = "alientalk",
+			  ":t" = "Syndicate",
+			  
+			  //kinda localization -- rastaf0
+			  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
+			  ":ê" = "right hand",
+			  ":ä" = "left hand",
+			  ":ø" = "intercom",
+			  ":ð" = "department",
+			  ":ñ" = "Command",
+			  ":ò" = "Science",
+			  ":ü" = "Medical",
+			  ":ó" = "Engineering",
+			  ":û" = "Security",
+			  ":ö" = "whisper",
+			  ":è" = "binary",
+			  ":ô" = "alientalk",
+			  ":å" = "Syndicate",
+		)
+		
+		message_mode = keys[channel_prefix]
+		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
+		if (message_mode)
+			message = trim(copytext(message, 3))
+			if (!ishuman(src) && (message_mode=="department" || (message_mode in radiochannels)))
+				message_mode = null //only humans can use headsets
 
 	if (!message)
 		return
-
-	if (src.stuttering)
-		message = stutter(message)
 
 	// :downs:
 	if (src.brainloss >= 60)
@@ -98,12 +99,18 @@
 		message = dd_replacetext(message, "you", "u")
 		message = dd_replacetext(message, "help", "halp")
 		message = dd_replacetext(message, "grief", "grife")
+		message = dd_replacetext(message, "space", "spess")
+		message = dd_replacetext(message, "carp", "crap")
 		if(prob(50))
 			message = uppertext(message)
-			message = "[message][stutter(pick("!", "!!", "!!!"))]"
+			message += "[stutter(pick("!", "!!", "!!!"))]"
 		if(!src.stuttering && prob(15))
 			message = stutter(message)
 
+	if (src.stuttering)
+		message = stutter(message)
+
+/* //qw do not have beesease atm.
 	if(src.virus)
 		if(src.virus.name=="beesease" && src.virus.stage>=2)
 			if(prob(src.virus.stage*10))
@@ -111,7 +118,7 @@
 				message = "B"
 				for(var/i=0,i<bzz,i++)
 					message += "Z"
-
+*/
 
 	switch (message_mode)
 		if ("headset")
@@ -142,17 +149,42 @@
 			message_range = 1
 			italics = 1
 
-		//Might put this back if people are used to the old system.
-		/*if ("whisper")
-			message_range = 1
-			italics = 1*/
-
 		if ("intercom")
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
 				I.talk_into(src, message)
 
 			message_range = 1
 			italics = 1
+
+		//I see no reason to restrict such way of whispering
+		if ("whisper")
+			src.whisper(message)
+			return
+
+		if ("binary")
+			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
+			src.robot_talk(message)
+			return
+
+		if ("alientalk")
+			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
+			src.alien_talk(message)
+			return
+
+		if ("department")
+			if (src:ears)
+				src:ears.talk_into(src, message, message_mode)
+			message_range = 1
+			italics = 1
+/////SPECIAL HEADSETS START
+		else
+			//world << "SPECIAL HEADSETS"
+			if (message_mode in radiochannels)
+				if (src:ears)
+					src:ears.talk_into(src, message, message_mode)
+				message_range = 1
+				italics = 1
+/////SPECIAL HEADSETS END
 
 	for (var/obj/O in view(message_range, src))
 		spawn (0)
@@ -233,5 +265,7 @@
 	for (var/mob/M in world)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat > 1 && !(M in heard_a))
+		if (M.stat >= 2 && !(M in heard_a))
 			M.show_message(rendered, 2)
+
+	log_say("[src.name]/[src.key] : [message]")

@@ -96,14 +96,14 @@
 		usr << browse(null, "window=radio")
 		return
 	return
-
+/*
 /obj/item/device/radio/electropack/accept_rad(obj/item/device/radio/signaler/R as obj, message)
 
 	if ((istype(R, /obj/item/device/radio/signaler) && R.frequency == src.frequency && R.code == src.code))
 		return 1
 	else
 		return null
-	return
+	return*/
 
 /obj/item/device/radio/electropack/receive_signal(datum/signal/signal)
 	if(!signal || (signal.encryption != code))

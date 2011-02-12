@@ -84,6 +84,7 @@
 	src.fingerprints  = from.fingerprints
 	src.fingerprintshidden  = from.fingerprintshidden 
 	src.fingerprintslast  = from.fingerprintslast
+	//TODO bloody overlay
 
 /datum/stack_recipe
 	var/title = "ERROR"

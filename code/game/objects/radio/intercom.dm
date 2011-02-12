@@ -13,6 +13,8 @@
 		attack_self(user)
 
 /obj/item/device/radio/intercom/send_hear()
+	if (!(src.wires & WIRE_RECEIVE))
+		return
 	if (src.listening)
 		return hearers(7, src.loc)
 

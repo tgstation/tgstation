@@ -67,6 +67,7 @@ Radiochat range: 1441 to 1489
 
 Radio:
 1459 - standard radio chat
+1351 - Science
 1353 - Command
 1355 - Medical
 1357 - Engineering
@@ -75,8 +76,8 @@ Radio:
 1443 - Confession Intercom
 
 Devices:
-1457 - RSD default
 1451 - tracking implant
+1457 - RSD default
 
 On the map:
 1311 for prison shuttle console (in fact, it is not used)
@@ -93,6 +94,21 @@ On the map:
 1453 for engineering access
 1455 for AI access
 */
+
+var/list/radiochannels = list(
+	"Common" = 1459,
+	"Science" = 1351,
+	"Command" = 1353,
+	"Medical" = 1355,
+	"Engineering" = 1357,
+	"Security" = 1359,
+	"Deathsquad" = 1441,
+	"Syndicate" = 1213,
+)
+//depenging helpers
+var/list/DEPT_FREQS = list(1351,1355,1357,1359,1213,1441)
+var/const/COMM_FREQ = 1353
+var/const/SYND_FREQ = 1213
 
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1

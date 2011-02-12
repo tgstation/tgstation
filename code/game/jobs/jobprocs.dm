@@ -396,7 +396,7 @@
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_r_store)
 
 		if ("Captain")
-			src.equip_if_possible(new /obj/item/device/radio/headset/headset_com (src), slot_ears) // -- TLE
+			src.equip_if_possible(new /obj/item/device/radio/headset/heads/captain (src), slot_ears)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
 			src.equip_if_possible(new /obj/item/device/pda/captain(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/captain(src), slot_w_uniform)
@@ -443,6 +443,7 @@
 			src.equip_if_possible(new /obj/item/device/flash(src), slot_l_store)
 
 		if ("Scientist")
+			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sci (src), slot_ears)
 			src.equip_if_possible(new /obj/item/device/pda/toxins(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/scientist(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
@@ -452,7 +453,7 @@
 			src.equip_if_possible(new /obj/item/weapon/tank/air(src), slot_l_hand)
 
 		if ("Head of Security")
-			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sec (src), slot_ears) // -- TLE
+			src.equip_if_possible(new /obj/item/device/radio/headset/heads/hos (src), slot_ears)
 			src.equip_if_possible(new /obj/item/device/pda/heads(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/head_of_security(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/hos(src), slot_wear_suit)
@@ -553,7 +554,7 @@
 			src.equip_if_possible(new /obj/item/device/pda/quartermaster(src), slot_belt)
 
 		if ("Chief Engineer")
-			src.equip_if_possible(new /obj/item/device/radio/headset/headset_eng (src), slot_ears) // -- TLE
+			src.equip_if_possible(new /obj/item/device/radio/headset/heads/ce (src), slot_ears)
 			src.equip_if_possible(new /obj/item/device/pda/heads(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/gloves/yellow(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
@@ -562,7 +563,7 @@
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chief_engineer(src), slot_w_uniform)
 
 		if ("Research Director")
-			src.equip_if_possible(new /obj/item/device/radio/headset/headset_com (src), slot_ears) // -- TLE
+			src.equip_if_possible(new /obj/item/device/radio/headset/heads/rd (src), slot_ears)
 			src.equip_if_possible(new /obj/item/device/pda/heads(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/research_director(src), slot_w_uniform)
@@ -572,7 +573,7 @@
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_r_store)
 
 		if ("Chief Medical Officer")
-			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears) // -- TLE
+			src.equip_if_possible(new /obj/item/device/radio/headset/heads/cmo (src), slot_ears)
 			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (src), slot_back)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
