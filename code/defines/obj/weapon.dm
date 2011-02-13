@@ -771,7 +771,7 @@
 
 /obj/item/weapon/paint
 	name = "Paint Can"
-	icon = 'old_or_unused.dmi'
+	icon = 'items.dmi'
 	icon_state = "paint_neutral"
 	var/color = "neutral"
 	item_state = "paintcan"

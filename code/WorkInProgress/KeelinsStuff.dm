@@ -1,5 +1,5 @@
 /obj/signpost
-	icon = 'old_or_unused.dmi'
+	icon = 'stationobjs.dmi'
 	icon_state = "signpost"
 	anchored = 1
 	density = 1
@@ -89,7 +89,7 @@
 		src.throw_at(target, throw_range, throw_speed)
 
 /obj/item/weapon/hand_labeler
-	icon = 'old_or_unused.dmi'
+	icon = 'items.dmi'
 	icon_state = "labeler"
 	item_state = "flight"
 	name = "Hand labeler"

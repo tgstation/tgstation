@@ -174,7 +174,7 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	icon = 'old_or_unused.dmi'
+	icon = 'effects.dmi'
 	icon_state = "dirt"
 
 /obj/decal/cleanable/greenglow
@@ -192,7 +192,7 @@
 	density = 0
 	anchored = 1
 	layer = 3
-	icon = 'old_or_unused.dmi'
+	icon = 'effects.dmi'
 	icon_state = "cobweb1"
 
 /obj/decal/cleanable/molten_item
@@ -210,7 +210,7 @@
 	density = 0
 	anchored = 1
 	layer = 3
-	icon = 'old_or_unused.dmi'
+	icon = 'effects.dmi'
 	icon_state = "cobweb2"
 
 // Used for spray that you spray at walls, tables, hydrovats etc
