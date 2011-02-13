@@ -228,8 +228,8 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 					M << "\red [crew] is [target]...LAWS UPDATED"
 					M.add_ion_law("[crew] is [target]")
 				if(11)
-					M << "\red HARM IS DEFINED AS [define]...LAWS UPDATED"
-					M.add_ion_law("HARM IS DEFINED AS [define]")
+					M << "\red [define] IS A FORM OF HARM...LAWS UPDATED"
+					M.add_ion_law("[define] IS A FORM OF HARM")
 				if(12)
 					M << "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED"
 					M.add_ion_law("YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS")
@@ -400,7 +400,7 @@ TO DO: actually integrate random appearance and player preference save.
 			usr << "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power."
 		else
 			M.add_ion_law(input)
-			for(var/mob/living/silicon/O in world)
+			for(var/mob/living/silicon/ai/O in world)
 				O << "\red " + input
 
 	log_admin("Admin [key_name(usr)] has added a new AI law - [input]")

@@ -29,6 +29,7 @@
 					M.real_name = A.real_name
 					if(A.mind)
 						A.mind.transfer_to(M)
+						A.mind.original = M
 					M.control_disabled = 0
 					M.laws_object = A.laws_object
 					M.oxyloss = A.oxyloss
@@ -74,6 +75,7 @@
 				O.updatehealth()
 				if(M.mind)
 					M.mind.transfer_to(O)
+					M.mind.original = O
 				src.name = "inteliCard - [M.name]"
 				M.name = "Inactive AI"
 				M.real_name = "Inactive AI"
@@ -126,11 +128,19 @@
 
 
 	attack_self(mob/user)
+		if (!in_range(src, user))
+			return
 		user.machine = src
 		var/dat = "<TT><B>Intelicard</B><BR>"
 		var/laws
 		for(var/mob/living/silicon/ai/A in src)
 			dat += "Stored AI: [A.name]<br>System integrity: [(A.health+100)/2]%<br>"
+
+			for (var/index = 1, index <= A.laws_object.ion.len, index++)
+				var/law = A.laws_object.ion[index]
+				if (length(law) > 0)
+					var/num = ionnum()
+					laws += "[num]. [law]"
 
 			if (A.laws_object.zeroth)
 				laws += "0: [A.laws_object.zeroth]<BR>"
