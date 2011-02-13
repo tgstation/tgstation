@@ -1,3 +1,4 @@
+
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	spawn (1)
@@ -256,7 +257,7 @@
 		return
 	if (emptyHand)
 		usr.next_move = usr.prev_move
-		usr:lastClick -= 3	//permit the double-click redirection to proceed.
+		usr:lastDblClick -= 3	//permit the double-click redirection to proceed.
 	switch(text)
 
 //if emptyhand then wear the suit, no bedsheet clothes for the alien
@@ -264,7 +265,7 @@
 		if("o_clothing")
 			if (src.wear_suit)
 				if (emptyHand)
-					src.wear_suit.QueueClick()
+					src.wear_suit.DblClick()
 				return
 			if (( istype(W, /obj/alien/skin_suit) ))
 				src.u_equip(W)
@@ -280,7 +281,7 @@
 		if("head")
 			if (src.head)
 				if (emptyHand)
-					src.head.QueueClick()
+					src.head.DblClick()
 				return
 			if (( istype(W, /obj/alien/head) ))
 				src.u_equip(W)
@@ -296,7 +297,7 @@
 		if("storage1")
 			if (src.l_store)
 				if (emptyHand)
-					src.l_store.QueueClick()
+					src.l_store.DblClick()
 				return
 			if ((!( istype(W, /obj/item) ) || W.w_class > 3))
 				return
@@ -305,7 +306,7 @@
 		if("storage2")
 			if (src.r_store)
 				if (emptyHand)
-					src.r_store.QueueClick()
+					src.r_store.DblClick()
 				return
 			if ((!( istype(W, /obj/item) ) || W.w_class > 3))
 				return

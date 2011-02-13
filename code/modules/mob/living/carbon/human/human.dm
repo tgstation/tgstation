@@ -1,3 +1,4 @@
+
 /mob/living/carbon/human/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
@@ -89,8 +90,8 @@
 		if(istype(src.equipped(), /obj/item/weapon/baton)) // add any other item paths you think are necessary
 			if(src.loc:sd_lumcount < 3 || src.blinded)
 				var/obj/item/weapon/W = src.equipped()
-				if (world.time > src.lastClick+2)
-					src.lastClick = world.time
+				if (world.time > src.lastDblClick+2)
+					src.lastDblClick = world.time
 					if((prob(40)) || (prob(95) && src.mutations & 16))
 						//src << "\red You accidentally stun yourself with the [W.name]."
 						src.visible_message("\red [src] accidentally stun \himself with the [W.name].", \
@@ -697,12 +698,12 @@
 		return
 	if (emptyHand)
 		usr.next_move = usr.prev_move
-		usr:lastClick -= 3	//permit the double-click redirection to proceed.
+		usr:lastDblClick -= 3	//permit the double-click redirection to proceed.
 	switch(text)
 		if("mask")
 			if (src.wear_mask)
 				if (emptyHand)
-					src.wear_mask.QueueClick()
+					src.wear_mask.DblClick()
 				return
 			if (!( istype(W, /obj/item/clothing/mask) ))
 				return
@@ -712,7 +713,7 @@
 		if("back")
 			if (src.back)
 				if (emptyHand)
-					src.back.QueueClick()
+					src.back.DblClick()
 				return
 			if (!istype(W, /obj/item))
 				return
@@ -725,7 +726,7 @@
 /*		if("headset")
 			if (src.ears)
 				if (emptyHand)
-					src.ears.QueueClick()
+					src.ears.DblClick()
 				return
 			if (!( istype(W, /obj/item/device/radio/headset) ))
 				return
@@ -735,7 +736,7 @@
 		if("o_clothing")
 			if (src.wear_suit)
 				if (emptyHand)
-					src.wear_suit.QueueClick()
+					src.wear_suit.DblClick()
 				return
 			if (!( istype(W, /obj/item/clothing/suit) ))
 				return
@@ -748,7 +749,7 @@
 		if("gloves")
 			if (src.gloves)
 				if (emptyHand)
-					src.gloves.QueueClick()
+					src.gloves.DblClick()
 				return
 			if (!( istype(W, /obj/item/clothing/gloves) ))
 				return
@@ -758,7 +759,7 @@
 		if("shoes")
 			if (src.shoes)
 				if (emptyHand)
-					src.shoes.QueueClick()
+					src.shoes.DblClick()
 				return
 			if (!( istype(W, /obj/item/clothing/shoes) ))
 				return
@@ -768,7 +769,7 @@
 		if("belt")
 			if (src.belt)
 				if (emptyHand)
-					src.belt.QueueClick()
+					src.belt.DblClick()
 				return
 			if (!W || !W.flags || !( W.flags & ONBELT ))
 				return
@@ -778,7 +779,7 @@
 		if("eyes")
 			if (src.glasses)
 				if (emptyHand)
-					src.glasses.QueueClick()
+					src.glasses.DblClick()
 				return
 			if (!( istype(W, /obj/item/clothing/glasses) ))
 				return
@@ -788,7 +789,7 @@
 		if("head")
 			if (src.head)
 				if (emptyHand)
-					src.head.QueueClick()
+					src.head.DblClick()
 				return
 			if (( istype(W, /obj/item/weapon/paper) ))
 				src.u_equip(W)
@@ -801,7 +802,7 @@
 		if("ears")
 			if (src.ears)
 				if (emptyHand)
-					src.ears.QueueClick()
+					src.ears.DblClick()
 				return
 			if (!( istype(W, /obj/item/clothing/ears) ) && !( istype(W, /obj/item/device/radio/headset) ))
 				return
@@ -811,7 +812,7 @@
 		if("i_clothing")
 			if (src.w_uniform)
 				if (emptyHand)
-					src.w_uniform.QueueClick()
+					src.w_uniform.DblClick()
 				return
 			if (!( istype(W, /obj/item/clothing/under) ))
 				return
@@ -824,7 +825,7 @@
 		if("id")
 			if (src.wear_id)
 				if (emptyHand)
-					src.wear_id.QueueClick()
+					src.wear_id.DblClick()
 				return
 			if (!src.w_uniform)
 				return
@@ -836,7 +837,7 @@
 		if("storage1")
 			if (src.l_store)
 				if (emptyHand)
-					src.l_store.QueueClick()
+					src.l_store.DblClick()
 				return
 			if ((!( istype(W, /obj/item) ) || W.w_class > 2 || !( src.w_uniform )))
 				return
@@ -845,7 +846,7 @@
 		if("storage2")
 			if (src.r_store)
 				if (emptyHand)
-					src.r_store.QueueClick()
+					src.r_store.DblClick()
 				return
 			if ((!( istype(W, /obj/item) ) || W.w_class > 2 || !( src.w_uniform )))
 				return
@@ -854,7 +855,7 @@
 		if("suit storage")
 			if (src.s_store)
 				if (emptyHand)
-					src.s_store.QueueClick()
+					src.s_store.DblClick()
 				return
 			var/confirm
 			if (src.wear_suit)
@@ -875,7 +876,7 @@
 		if("hat storage")
 			if (src.h_store)
 				if (emptyHand)
-					src.h_store.QueueClick()
+					src.h_store.DblClick()
 				return
 			var/confirm
 			if (src.head)

@@ -1,3 +1,4 @@
+
 //The advanced pea-green monochrome lcd of tomorrow.
 
 /obj/item/device/pda
@@ -363,7 +364,7 @@
 					var/emptyHand = (W == null)
 
 					if(emptyHand)
-						src.id.QueueClick()
+						src.id.DblClick()
 						if(!istype(src.id.loc, /obj/item/device/pda))
 
 							src.id = null

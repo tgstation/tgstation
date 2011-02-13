@@ -1,3 +1,4 @@
+
 /client/proc
 	general_report()
 		set category = "Debug"
@@ -97,15 +98,15 @@
 					largest_move_time = M.next_move - world.time
 				else
 					largest_move_time = 1
-			if(M.lastClick >= largest_click_time)
+			if(M.lastDblClick >= largest_click_time)
 				largest_click_mob = M
-				if(M.lastClick > world.time)
-					largest_click_time = M.lastClick - world.time
+				if(M.lastDblClick > world.time)
+					largest_click_time = M.lastDblClick - world.time
 				else
 					largest_click_time = 0
-			log_admin("DEBUG: [key_name(M)]  next_move = [M.next_move]  lastClick = [M.lastClick]  world.time = [world.time]")
+			log_admin("DEBUG: [key_name(M)]  next_move = [M.next_move]  lastDblClick = [M.lastDblClick]  world.time = [world.time]")
 			M.next_move = 1
-			M.lastClick = 0
+			M.lastDblClick = 0
 		message_admins("[key_name_admin(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [largest_move_time/10] seconds!", 1)
 		message_admins("[key_name_admin(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!", 1)
 		message_admins("world.time = [world.time]", 1)

@@ -1,3 +1,4 @@
+
 /mob/proc/Cell()
 	set category = "Admin"
 	set hidden = 1
@@ -935,7 +936,7 @@
 					usr:module_active = null
 
 		else
-			src.QueueClick()
+			src.DblClick()
 	return
 
 /obj/screen/attack_hand(mob/user as mob, using)

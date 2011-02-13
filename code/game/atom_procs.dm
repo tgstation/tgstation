@@ -1,4 +1,5 @@
 
+
 /atom/proc/MouseDrop_T()
 	return
 
@@ -195,43 +196,16 @@
 		build_click(usr, usr.client.buildmode, location, control, params, src)
 		return
 
-	// One click buffer implementation -- Skie
+	return DblClick()
 
-	// If we have clicked recently and there's no click action queued
-	if ( (world.time < usr.lastClick+ClickDelay) && (usr.next_click_queued == 0) )
-
-		//world << "Queuing next click action on [src] by [usr]"
-
-		usr.next_click_queued = 1 // It's now queued
-
-		spawn(world.time - usr.lastClick+ClickDelay) // Spawn the click action soon
-			usr.next_click_queued = 0 // It's not queued anymore
-
-			//world << "Proceeding on queued action on [src] by [usr]"
-
-			return QueueClick()
-
-	// Otherwise if enough time has passed from the last click action, let the click proceed.
-	else
-		return QueueClick()
-
-// This replaces the old method where Click() would return DblClick()... which makes no sense.
-// Basically contains what DblClick used to, but it can't be accessed by actually double clicking.
-/atom/proc/QueueClick()
-
-//TODO: DEFERRED: REWRITE
+/atom/DblClick() //TODO: DEFERRED: REWRITE
 //	world << "checking if this shit gets called at all"
-//	if (world.time <= usr:lastClick+2)
+	if (world.time <= usr:lastDblClick+2)
 //		world << "BLOCKED atom.DblClick() on [src] by [usr] : src.type is [src.type]"
-//		return
-//	else
-//		world << "atom.DblClick() on [src] by [usr] : src.type is [src.type]"
-
-	if(usr.next_click_queued == 1)
 		return
-
-	usr.lastClick = world.time
-
+	else
+//		world << "atom.DblClick() on [src] by [usr] : src.type is [src.type]"
+		usr:lastDblClick = world.time
 	if (istype(usr, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/ai = usr
 		if (ai.control_disabled)
@@ -240,6 +214,7 @@
 		var/mob/living/silicon/robot/bot = usr
 		if (bot.lockcharge) return
 	..()
+
 
 
 	if(usr.in_throw_mode)
@@ -283,11 +258,11 @@
 
 //	world << "according to dblclick(), t5 is [t5]"
 	if (((t5 || (W && (W.flags & 16))) && !( istype(src, /obj/screen) )))
-		//if (usr.next_move < world.time) -- Removed due to Click Queue implementation -- Skie
-		//	usr.prev_move = usr.next_move
-		//	usr.next_move = world.time + 1 // Was 10
-		//else
-		//	return
+		if (usr.next_move < world.time) // -- Removed due to Click Queue implementation -- Skie
+			usr.prev_move = usr.next_move
+			usr.next_move = world.time + 1 // Was 10
+		else
+			return
 		if ((src.loc && (get_dist(src, usr) < 2 || src.loc == usr.loc)))
 			var/direct = get_dir(usr, src)
 			var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( usr.loc )
@@ -398,10 +373,10 @@
 	else
 		if (istype(src, /obj/screen))
 			usr.prev_move = usr.next_move
-			//if (usr.next_move < world.time) -- Removed due to Click Queue implementation -- Skie
-			//	usr.next_move = world.time + 1 // was 10
-			//else
-			//	return
+			if (usr.next_move < world.time) //-- Removed due to Click Queue implementation -- Skie
+				usr.next_move = world.time + 1 // was 10
+			else
+				return
 			if (!( usr.restrained() ))
 				if ((W && !( istype(src, /obj/screen) )))
 					src.attackby(W, usr)
