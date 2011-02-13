@@ -79,6 +79,20 @@
 		return src.close()
 	return src.open()
 
+/obj/secure_closet/emp_act(severity)
+	for(var/obj/O in src)
+		O.emp_act(severity)
+	if(!broken)
+		if(prob(50/severity))
+			src.locked = !src.locked
+		if(prob(20/severity) && !opened)
+			if(!locked)
+				open()
+			else
+				src.req_access = list()
+				src.req_access += pick(get_all_accesses())
+	..()
+
 /obj/secure_closet/ex_act(severity)
 	switch(severity)
 		if (1)

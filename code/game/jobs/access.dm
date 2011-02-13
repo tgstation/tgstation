@@ -53,7 +53,8 @@
 	//NOTE: If a room requires more than one access (IE: Morgue + medbay) set the req_acesss_txt to "5;6" if it requires 5 and 6
 	if(src.req_access_txt)
 		var/list/req_access_str = dd_text2list(req_access_txt,";")
-		req_access = list()
+		if(!req_access)
+			req_access = list()
 		for(var/x in req_access_str)
 			var/n = text2num(x)
 			if(n)

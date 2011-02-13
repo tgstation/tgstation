@@ -157,6 +157,12 @@
 		return
 	return
 
+/obj/item/weapon/storage/emp_act(severity)
+	if(!istype(src.loc, /mob/living))
+		for(var/obj/O in contents)
+			O.emp_act(severity)
+	..()
+
 /obj/screen/storage/attackby(W, mob/user as mob)
 	src.master.attackby(W, user)
 	return
