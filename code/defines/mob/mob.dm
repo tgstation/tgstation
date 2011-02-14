@@ -94,7 +94,6 @@
 	var/m_int = null
 	var/m_intent = "run"
 	var/lastDblClick = 0
-	var/next_click_queued = 0 // For one UI-click buffer system
 	var/lastKnownIP = null
 	var/obj/stool/buckled = null
 	var/obj/item/weapon/handcuffs/handcuffed = null

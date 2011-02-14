@@ -216,7 +216,6 @@
 	..()
 
 
-
 	if(usr.in_throw_mode)
 		return usr:throw_item(src)
 
@@ -258,9 +257,9 @@
 
 //	world << "according to dblclick(), t5 is [t5]"
 	if (((t5 || (W && (W.flags & 16))) && !( istype(src, /obj/screen) )))
-		if (usr.next_move < world.time) // -- Removed due to Click Queue implementation -- Skie
+		if (usr.next_move < world.time)
 			usr.prev_move = usr.next_move
-			usr.next_move = world.time + 1 // Was 10
+			usr.next_move = world.time + 10
 		else
 			return
 		if ((src.loc && (get_dist(src, usr) < 2 || src.loc == usr.loc)))
@@ -373,8 +372,8 @@
 	else
 		if (istype(src, /obj/screen))
 			usr.prev_move = usr.next_move
-			if (usr.next_move < world.time) //-- Removed due to Click Queue implementation -- Skie
-				usr.next_move = world.time + 1 // was 10
+			if (usr.next_move < world.time)
+				usr.next_move = world.time + 10
 			else
 				return
 			if (!( usr.restrained() ))
@@ -401,10 +400,6 @@
 					else
 						if (istype(usr, /mob/living/carbon/alien/humanoid))
 							src.hand_al(usr, usr.hand)
-	return
-
-
-/atom/DblClick() // Does nothing.
 	return
 
 
