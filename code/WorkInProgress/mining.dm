@@ -941,7 +941,82 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 
 	return
 
+/**********************Miner Lockers**************************/
 
+/obj/secure_closet/miner
+	name = "Miner's Equipment"
+	icon_state = "miningsec1"
+	icon_closed = "miningsec"
+	icon_locked = "miningsec1"
+	icon_broken = "miningsecbroken"
+	icon_off = "miningsecoff"
+	req_access = list(access_mining)
+
+/obj/secure_closet/miner/New()
+	..()
+	sleep(2)
+	new /obj/item/device/analyzer(src)
+	new /obj/item/clothing/under/color/white(src)
+	new /obj/item/clothing/gloves/black(src)
+	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/weapon/satchel(src)
+	new /obj/item/device/flashlight/lantern(src)
+	new /obj/item/weapon/shovel(src)
+	new /obj/item/weapon/pickaxe(src)
+
+
+/**********************Shuttle Computer**************************/
+
+var/mining_shuttle_tickstomove = 15
+var/mining_shuttle_moving = 0
+var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
+
+proc/move_mining_shuttle()
+	if (mining_shuttle_moving)
+		return
+	mining_shuttle_moving = 1
+	spawn(mining_shuttle_tickstomove*10)
+		var/area/fromArea
+		var/area/toArea
+		if (mining_shuttle_location == 1)
+			fromArea = locate(/area/shuttle/mining/outpost)
+			toArea = locate(/area/shuttle/mining/station)
+		else
+			fromArea = locate(/area/shuttle/mining/station)
+			toArea = locate(/area/shuttle/mining/outpost)
+		fromArea.move_contents_to(toArea)
+		if (mining_shuttle_location)
+			mining_shuttle_location = 0
+		else
+			mining_shuttle_location = 1
+		mining_shuttle_moving = 0
+	return
+
+/obj/machinery/computer/mining_shuttle
+	name = "Mining Shuttle Console"
+	icon = 'computer.dmi'
+	icon_state = "shuttle"
+	req_access = list(access_mining)
+	//var/hacked = 0 TODO
+	var/location = 0 //0 = station, 1 = mining base
+
+/obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
+	src.add_fingerprint(usr)
+	var/dat
+	dat = text("<b>Mining shuttle: <A href='?src=\ref[src];move=[1]'>Call</A></b>")
+	user << browse("[dat]", "window=miningshuttle;size=200x100")
+
+/obj/machinery/computer/mining_shuttle/Topic(href, href_list)
+	if(..())
+		return
+	usr.machine = src
+	src.add_fingerprint(usr)
+	if(href_list["move"])
+		if (!mining_shuttle_moving)
+			usr << "\blue shuttle called and will arrive shortly"
+			move_mining_shuttle()
+		else
+			usr << "\blue shuttle is already moving"
 
 /**********************Mine areas**************************/
 
@@ -956,8 +1031,28 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 	music = null
 
 /area/mine/lobby
-	name = "Mining station"
+	name = "Mining station Hallways"
 	icon_state = "mine"
+
+/area/mine/storage
+	name = "Mining station Storage"
+	icon_state = "green"
+
+/area/mine/production
+	name = "Mining station Production Area"
+	icon_state = "janitor"
+
+/area/mine/living_quarters
+	name = "Mining station Living Quarters"
+	icon_state = "yellow"
+
+/area/mine/eva
+	name = "Mining station EVA"
+	icon_state = "eva"
+
+/area/mine/maintenance
+	name = "Mining station Maintenance"
+	icon_state = "maintcentral"
 
 
 /**********************Mineral deposits**************************/
@@ -1406,7 +1501,7 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 /obj/ore_box
 	icon = 'mining.dmi'
 	icon_state = "orebox"
-	name = "A box of ores"
+	name = "Ore Box"
 	desc = "It's heavy"
 	density = 1
 

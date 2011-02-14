@@ -366,6 +366,13 @@
 			//src.equip_if_possible(new /obj/item/weapon/crowbar(src), slot_in_backpack) // - commented out, why would you need this when you spawn with a blue toolbox - muskets
 			src.equip_if_possible(new /obj/item/device/t_scanner(src), slot_r_store)
 
+		if ("Shaft Miner")
+			src.equip_if_possible(new /obj/item/clothing/under/color/white(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
+			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
+			src.equip_if_possible(new /obj/item/weapon/crowbar(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/satchel(src), slot_r_store)
+
 		if ("Assistant")
 			src.equip_if_possible(new /obj/item/clothing/under/color/grey(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)

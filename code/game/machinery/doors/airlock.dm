@@ -82,31 +82,26 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/command
 	name = "Airlock"
 	icon = 'Doorcom.dmi'
-	req_access = list(access_heads)
 	doortype = 1
 
 /obj/machinery/door/airlock/security
 	name = "Airlock"
 	icon = 'Doorsec.dmi'
-	req_access = list(access_security)
 	doortype = 2
 
 /obj/machinery/door/airlock/engineering
 	name = "Airlock"
 	icon = 'Dooreng.dmi'
-	req_access = list(access_engine)
 	doortype = 3
 
 /obj/machinery/door/airlock/medical
 	name = "Airlock"
 	icon = 'Doormed.dmi'
-	req_access = list(access_medical)
 	doortype = 4
 
 /obj/machinery/door/airlock/maintenance
 	name = "Maintenance Access"
 	icon = 'Doormaint.dmi'
-	req_access = list(access_maint_tunnels)
 	doortype = 5
 
 /obj/machinery/door/airlock/external

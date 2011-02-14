@@ -231,6 +231,8 @@ mob/new_player
 					AttemptLateSpawn("Chief Medical Officer", cmoMax)
 				if ("28")
 					AttemptLateSpawn("Warden", wardenMax)
+				if ("29")
+					AttemptLateSpawn("Shaft Miner", minerMax)
 
 		if(!ready && href_list["preferences"])
 			preferences.process_link(src, href_list)
@@ -398,6 +400,8 @@ mob/new_player
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=27'>Chief Medical Officer</a><br>"
 		if (IsJobAvailable("Warden", wardenMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=28'>Warden</a><br>"
+		if (IsJobAvailable("Shaft Miner",minerMax))
+			dat += "<a href='byond://?src=\ref[src];SelectedJob=29'>Shaft Miner</a> (BETA)<br>"
 		if (!jobban_isbanned(src,"Assistant"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=18'>Assistant</a><br>"
 

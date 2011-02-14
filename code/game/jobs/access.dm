@@ -46,7 +46,9 @@
 	access_surgery = 45
 	access_theatre = 46
 	access_research = 47
-	access_mailsorting = 48
+	access_mining = 48
+	access_mining_office = 49
+	access_mailsorting = 50
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
@@ -160,8 +162,10 @@
 			return list(access_robotics, access_tech_storage, access_maint_tunnels)
 		if("Cargo Technician")
 			return list(access_maint_tunnels, access_cargo, access_cargo_bot)
+		if("Shaft Miner")
+			return list(access_maint_tunnels, access_mining)
 		if("Quartermaster")
-			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm)
+			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_office)
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
@@ -186,7 +190,7 @@
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
 	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
-	            access_theatre, access_research, access_mailsorting)
+	            access_theatre, access_research, access_mining, access_mining_office, access_mailsorting)
 
 /proc/get_region_accesses(var/code)
 	switch(code)
@@ -204,8 +208,8 @@
 			return list(access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers)
 		if(6) //station general
 			return list(access_chapel_office, access_kitchen,access_bar, access_janitor, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
-		if(7) //cargo
-			return list(access_cargo, access_cargo_bot, access_qm)
+		if(7) //supply
+			return list(access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_office, access_mailsorting)
 
 /proc/get_region_accesses_name(var/code)
 	switch(code)
@@ -223,8 +227,8 @@
 			return "Command"
 		if(6) //station general
 			return "Station General"
-		if(7) //cargo
-			return "Cargo"
+		if(7) //supply
+			return "Supply"
 
 
 /proc/get_access_desc(A)
@@ -321,11 +325,15 @@
 			return "Theatre"
 		if(access_research)
 			return "Research"
+		if(access_mining)
+			return "Mining"
+		if(access_mining_office)
+			return "Mining Office"
 		if(access_mailsorting)
 			return "Delivery Office"
 
 /proc/get_all_jobs()
-	return list("Assistant", "Station Engineer", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",
+	return list("Assistant", "Station Engineer", "Shaft Miner", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",
 				"Geneticist", "Scientist", "Head of Security", "Head of Personnel", "Atmospheric Technician",
 				"Chaplain", "Barman", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster",
 				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer", "Virologist", "Cargo Technician", "Chief Medical Officer")

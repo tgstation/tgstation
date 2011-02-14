@@ -75,6 +75,7 @@ var
 
 	captainMax = 1
 	engineerMax = 5
+	minerMax = 3
 	barmanMax = 1
 	scientistMax = 3
 	chemistMax = 1
