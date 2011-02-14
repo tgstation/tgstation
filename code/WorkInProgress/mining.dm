@@ -997,7 +997,7 @@ proc/move_mining_shuttle()
 	icon = 'computer.dmi'
 	icon_state = "shuttle"
 	req_access = list(access_mining)
-	//var/hacked = 0 TODO
+	var/hacked = 0
 	var/location = 0 //0 = station, 1 = mining base
 
 /obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
@@ -1017,6 +1017,13 @@ proc/move_mining_shuttle()
 			move_mining_shuttle()
 		else
 			usr << "\blue shuttle is already moving"
+
+/obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+	if (istype(W, /obj/item/weapon/card/emag))
+		src.req_access = list()
+		hacked = 1
+		usr << "The computer's controls are now all access"
 
 /**********************Mine areas**************************/
 

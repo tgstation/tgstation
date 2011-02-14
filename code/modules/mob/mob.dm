@@ -1345,7 +1345,7 @@
 		src << browse_rsc('postcardsmall.jpg')
 		src << browse_rsc('somerights20.png')
 		src << browse_rsc('88x31.png')
-		src << browse('changelog.html', "window=changes;size=400x650")
+		src << browse('changelog.html', "window=changes;size=675x650")
 		src.client.changes = 1
 
 /mob/verb/succumb()
