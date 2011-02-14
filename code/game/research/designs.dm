@@ -378,6 +378,33 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/gygax/targeting"
 
+		honker_main
+			name = "Circuit Design (\"H.O.N.K\" Central Control module)"
+			desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
+			id = "honker_main"
+			req_tech = list("programming" = 2, "robotics" = 3)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/mecha_parts/circuitboard/honker/main"
+
+		honker_peri
+			name = "Circuit Design (\"H.O.N.K\" Peripherals Control module)"
+			desc = "Allows for the construction of a \"H.O.N.K\" Peripheral Control module."
+			id = "honker_peri"
+			req_tech = list("programming" = 2, "robotics" = 3)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/mecha_parts/circuitboard/honker/peripherals"
+
+		honker_targ
+			name = "Circuit Design (\"H.O.N.K\" Weapons & Targeting Control module)"
+			desc = "Allows for the construction of a \"H.O.N.K\" Weapons & Targeting Control module."
+			id = "honker_targ"
+			req_tech = list("programming" = 2, "robotics" = 3)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/mecha_parts/circuitboard/honker/targeting"
+
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
 ////////////////////////////////////////

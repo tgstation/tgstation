@@ -90,7 +90,13 @@
 		if(mech_click == world.time) return
 		mech_click = world.time
 */
-		if(!location) return //probably GUI
+		if(istype(object, /obj/screen))
+			var/obj/screen/using = object
+			if(using.screen_loc == ui_acti || using.screen_loc == ui_iarrowleft || using.screen_loc == ui_iarrowright)//ignore all HUD objects save 'intent' and its arrows
+				return ..()
+			else
+				return
+//		if(!location) return //probably GUI
 		if(M.stat>0) return
 		if(!istype(object,/atom)) return
 		var/obj/mecha/Mech = M.loc
@@ -101,11 +107,12 @@
 		return ..()
 
 /obj/mecha/proc/click_action(atom/target)
-	if(!istype(target,/turf) && !istype(target.loc,/turf)) return
+//	if(!istype(target,/turf) && !istype(target.loc,/turf)) return
 	if(!src.occupant) return
 	if(state || !cell || cell.charge<=0) return
 	if(src == target) return
-	if(!(get_dir(src,target) & src.dir))//wrong direction
+	var/dir_to_target = get_dir(src,target)
+	if(dir_to_target && !(get_dir(src,target) & src.dir))//wrong direction
 		return
 	if(get_dist(src,target)<=1)
 		src.melee_action(target)
@@ -684,13 +691,16 @@
 	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
 		return 0
 	for(var/req in src.internals_req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
+		if(req in I.access)
+			return 1
+	return 0
 
 
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if(src.occupant)
+			user << "Unable to initiate maintenance protocol."
+			return
 		if(src.internals_access_allowed(usr))
 			if(state==0)
 				state = 1

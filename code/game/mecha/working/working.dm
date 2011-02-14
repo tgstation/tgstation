@@ -26,6 +26,8 @@
 		var/tool = locate(href_list["select_tool"])
 		if(tool)
 			src.selected_tool = tool
+	if (href_list["unlock_id_upload"])
+		add_req_access = 1
 	if (href_list["add_req_access"])
 		if(!add_req_access) return
 		var/access = text2num(href_list["add_req_access"])
@@ -78,6 +80,12 @@
 	else
 		return ..()
 
+/obj/mecha/working/get_commands()
+	var/output = {"<a href='?src=\ref[src];unlock_id_upload=1'>Unlock ID upload panel</a><br>
+				"}
+	output += ..()
+	return output
+
 
 /obj/mecha/working/proc/output_access_dialog(obj/item/weapon/card/id/id_card, mob/user)
 	if(!id_card || !user) return
@@ -88,9 +96,9 @@
 	for(var/a in id_card.access)
 		if(a in operation_req_access) continue
 		var/a_name = get_access_desc(a)
-		if(!a_name) continue
+		if(!a_name) continue //there's some strange access without a name
 		output += "[a_name] - <a href='?src=\ref[src];add_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Add</a><br>"
-	output += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a>"
+	output += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> <font color='red'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</font>"
 	output += "</body></html>"
 	user << browse(output, "window=exosuit_add_access")
 	onclose(user, "exosuit_add_access")

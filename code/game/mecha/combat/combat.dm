@@ -115,7 +115,7 @@
 							V.show_message("[src.name] hits [target].", 1)
 					if(!istype(target, /turf/simulated/wall))
 						target:attackby(src,src.occupant)
-					else if(prob(2))
+					else if(prob(5))
 						target:dismantle_wall(1)
 						src.occupant_message("\blue You smash through the wall.")
 						src.visible_message("<b>[src.name] smashes through the wall</b>")

@@ -19,7 +19,8 @@
 										"gold"=0,
 										"silver"=0,
 										"diamond"=0,
-										"plasma"=0
+										"plasma"=0,
+										"bananium"=0
 										)
 	var/res_max_amount = 200000
 	var/part_set
@@ -53,6 +54,16 @@
 						list("result"="/obj/item/mecha_parts/part/gygax_left_leg","time"=200,"metal"=35000),
 						list("result"="/obj/item/mecha_parts/part/gygax_right_leg","time"=200,"metal"=35000),
 						list("result"="/obj/item/mecha_parts/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000)
+						),
+
+	"H.O.N.K"=list(
+						list("result"="/obj/mecha_chassis/honker","time"=100,"metal"=20000),
+						list("result"="/obj/item/mecha_parts/part/honker_torso","time"=300,"metal"=35000,"glass"=10000,"bananium"=10000),
+						list("result"="/obj/item/mecha_parts/part/honker_head","time"=200,"metal"=15000,"glass"=5000,"bananium"=5000),
+						list("result"="/obj/item/mecha_parts/part/honker_left_arm","time"=200,"metal"=20000,"bananium"=5000),
+						list("result"="/obj/item/mecha_parts/part/honker_right_arm","time"=200,"metal"=20000,"bananium"=5000),
+						list("result"="/obj/item/mecha_parts/part/honker_left_leg","time"=200,"metal"=20000,"bananium"=5000),
+						list("result"="/obj/item/mecha_parts/part/honker_right_leg","time"=200,"metal"=20000,"bananium"=5000),
 						)
 	)
 
@@ -192,13 +203,14 @@
 			var/time = part["time"]
 			src.being_built = new path(src)
 			src.remove_resources(part)
-			flick("mechfab3", src)
+			src.icon_state = "mechfab3" //looks better than 'flick'
 			src.use_power = 2
 			spawn(time)
 				src.use_power = 1
 				src.being_built.Move(get_step(src,EAST))
 				src.icon_state = initial(src.icon_state)
 				src.visible_message("[src] beeps, \"The [src.being_built] is complete\".")
+				src.icon_state = initial(src.icon_state)
 				src.being_built = null
 				src.updateUsrDialog()
 		src.updateUsrDialog()
@@ -228,6 +240,9 @@
 			amnt = "m_amt"
 		else if(istype(W, /obj/item/stack/sheet/glass))
 			material = "glass"
+			amnt = "g_amt"
+		else if(istype(W, /obj/item/stack/sheet/clown))
+			material = "bananium"
 			amnt = "g_amt"
 		else
 			return ..()

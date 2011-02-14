@@ -343,7 +343,6 @@
 		var/target_y = targloc.y
 		var/target_z = targloc.z
 		targloc = null
-		target = null
 		for(var/i=1 to min(projectiles, projectiles_per_shot))
 			targloc = locate(target_x+GaussRandRound(deviation,1),target_y+GaussRandRound(deviation,1),target_z)
 			if(!targloc || targloc == curloc)
@@ -378,7 +377,6 @@
 		var/target_y = targloc.y
 		var/target_z = targloc.z
 		targloc = null
-		target = null
 		spawn	for(var/i=1 to min(projectiles, projectiles_per_shot))
 			if(!chassis) break
 			var/turf/curloc = get_turf(chassis)

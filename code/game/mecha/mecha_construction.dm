@@ -9,95 +9,44 @@
 	var/datum/construction/construct
 	flags = FPRINT | CONDUCT
 
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(!construct || !construct.action(W, user))
+			..()
+		return
+
 
 
 //////// Ripley chassis
 /obj/mecha_chassis/ripley
-	name = "Ripley Chassis Frame"
+	name = "Ripley Chassis"
 
 	New()
 		..()
 		construct = new /datum/construction/mecha/ripley_chassis(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/mecha_parts))
-			if(construct)
-				construct.check_all_steps(W, user)
-		else
-			..()
-		return
-
-/obj/mecha_chassis/ripley_full
-	name = "Ripley Chassis"
-	icon_state = "ripley_chassis"
-
-	New()
-		..()
-		construct = new /datum/construction/mecha/ripley(src)
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(!construct || !construct.check_step(W, user))
-			..()
-		return
-
 /////// Gygax chasis
 /obj/mecha_chassis/gygax
-	name = "Gygax Chassis Frame"
+	name = "Gygax Chassis"
 
 	New()
 		..()
 		construct = new /datum/construction/mecha/gygax_chassis(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/mecha_parts))
-			if(construct)
-				construct.check_all_steps(W, user)
-		else
-			..()
-		return
-
-/obj/mecha_chassis/gygax_full
-	name = "Gygax Chassis"
-	icon_state = "gygax_chassis"
-
-	New()
-		..()
-		construct = new /datum/construction/mecha/gygax(src)
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(!construct || !construct.check_step(W, user))
-			..()
-		return
-
 /////// Firefighter chassis
 /obj/mecha_chassis/firefighter
-	name = "Ripley-on-Fire Chassis Frame"
+	name = "Ripley-on-Fire Chassis"
 
 	New()
 		..()
 		construct = new /datum/construction/mecha/firefighter_chassis(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/mecha_parts))
-			if(construct)
-				construct.check_all_steps(W, user)
-		else
-			..()
-		return
-
-/obj/mecha_chassis/firefighter_full
-	name = "Ripley-on-Fire Chassis"
-	icon_state = "ripley_chassis"
+/////// HONK chassis
+/obj/mecha_chassis/honker
+	name = "H.O.N.K Chassis"
 
 	New()
 		..()
-		construct = new /datum/construction/mecha/firefighter(src)
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(!construct || !construct.check_step(W, user))
-			..()
-		return
-
+		construct = new /datum/construction/mecha/honker_chassis(src)
 
 /////////////////////////
 ////// Mecha Parts //////
@@ -186,6 +135,30 @@
 	icon_state = "ripley_r_leg"
 
 
+////////// HONK
+/obj/item/mecha_parts/part/honker_torso
+	name="H.O.N.K Torso"
+	icon_state = "honker_harness"
+
+/obj/item/mecha_parts/part/honker_head
+	name="H.O.N.K Head"
+	icon_state = "honker_head"
+
+/obj/item/mecha_parts/part/honker_left_arm
+	name="H.O.N.K Left Arm"
+	icon_state = "honker_l_arm"
+
+/obj/item/mecha_parts/part/honker_right_arm
+	name="H.O.N.K Right Arm"
+	icon_state = "honker_r_arm"
+
+/obj/item/mecha_parts/part/honker_left_leg
+	name="H.O.N.K Left Leg"
+	icon_state = "honker_l_leg"
+
+/obj/item/mecha_parts/part/honker_right_leg
+	name="H.O.N.K Right Leg"
+	icon_state = "honker_r_leg"
 
 
 /obj/item/mecha_parts/circuitboard
@@ -213,7 +186,7 @@
 		icon_state = "mcontroller"
 
 	gygax/targeting
-		name = "Circuit board (Weapon Control and Targeting module)"
+		name = "Circuit board (Gygax Weapon Control and Targeting module)"
 		icon_state = "mcontroller"
 
 	gygax/main
@@ -223,6 +196,19 @@
 	firefighter/peripherals
 		name = "Circuit board (Ripley-on-Fire Peripherals Control module)"
 		icon_state = "mcontroller"
+
+	honker/peripherals
+		name = "Circuit board (H.O.N.K Peripherals Control module)"
+		icon_state = "mcontroller"
+
+	honker/targeting
+		name = "Circuit board (H.O.N.K Weapon Control and Targeting module)"
+		icon_state = "mcontroller"
+
+	honker/main
+		name = "Circuit board (H.O.N.K Central Control module)"
+		icon_state = "mainboard"
+
 
 ////////////////////////////////
 ///// Construction datums //////
@@ -268,18 +254,21 @@
 					)
 
 	custom_action(step, atom/used_atom, mob/user)
-/*
-		switch(step)
-			if(5)
-			if(4)
-			if(3)
-			if(2)
-			if(1)
-*/
 		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 		holder.overlays += used_atom.icon_state+"+o"
 		del used_atom
 		return 1
+
+	action(atom/used_atom,mob/user as mob)
+		return check_all_steps(used_atom,user)
+
+	spawn_result()
+		var/obj/mecha_chassis/const_holder = holder
+		const_holder.construct = new /datum/construction/mecha/ripley(const_holder)
+		const_holder.density = 1
+		spawn()
+			del src
+		return
 
 
 /datum/construction/mecha/ripley
@@ -299,6 +288,9 @@
 					 list("key"="/obj/item/weapon/screwdriver"),//13
 					 list("key"="/obj/item/weapon/wrench")//14
 					)
+
+	action(atom/used_atom,mob/user as mob)
+		return check_step(used_atom,user)
 
 	custom_action(step, atom/used_atom, mob/user)
 		if(!..())
@@ -356,6 +348,18 @@
 		del used_atom
 		return 1
 
+	action(atom/used_atom,mob/user as mob)
+		return check_all_steps(used_atom,user)
+
+	spawn_result()
+		var/obj/mecha_chassis/const_holder = holder
+		const_holder.construct = new /datum/construction/mecha/gygax(const_holder)
+		const_holder.density = 1
+		spawn()
+			del src
+		return
+
+
 
 /datum/construction/mecha/gygax
 	result = "/obj/mecha/combat/gygax"
@@ -380,6 +384,9 @@
 					 list("key"="/obj/item/weapon/screwdriver"),//19
 					 list("key"="/obj/item/weapon/wrench")//20
 					)
+
+	action(atom/used_atom,mob/user as mob)
+		return check_step(used_atom,user)
 
 	custom_action(step, atom/used_atom, mob/user)
 		if(!..())
@@ -452,6 +459,17 @@
 		del used_atom
 		return 1
 
+	action(atom/used_atom,mob/user as mob)
+		return check_all_steps(used_atom,user)
+
+	spawn_result()
+		var/obj/mecha_chassis/const_holder = holder
+		const_holder.construct = new /datum/construction/mecha/firefighter(const_holder)
+		const_holder.density = 1
+		spawn()
+			del src
+		return
+
 
 /datum/construction/mecha/firefighter
 	result = "/obj/mecha/working/firefighter"
@@ -470,6 +488,10 @@
 					 list("key"="/obj/item/weapon/screwdriver"),//13
 					 list("key"="/obj/item/weapon/wrench")//14
 					)
+
+	action(atom/used_atom,mob/user as mob)
+		return check_step(used_atom,user)
+
 
 	custom_action(step, atom/used_atom, mob/user)
 		if(!..())
@@ -508,6 +530,92 @@
 			if(1)
 				user.visible_message("[user] welds external armor layer to [holder].", "You weld external armor layer to [holder].")
 		return 1
+
+
+
+/datum/construction/mecha/honker_chassis
+	result = "/obj/mecha_chassis/honker_full"
+	steps = list(list("key"="/obj/item/mecha_parts/part/honker_torso"),//1
+					 list("key"="/obj/item/mecha_parts/part/honker_left_arm"),//2
+					 list("key"="/obj/item/mecha_parts/part/honker_right_arm"),//3
+					 list("key"="/obj/item/mecha_parts/part/honker_left_leg"),//4
+					 list("key"="/obj/item/mecha_parts/part/honker_right_leg"),//5
+					 list("key"="/obj/item/mecha_parts/part/honker_head")
+					)
+
+	action(atom/used_atom,mob/user as mob)
+		return check_all_steps(used_atom,user)
+
+	custom_action(step, atom/used_atom, mob/user)
+		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
+		holder.overlays += used_atom.icon_state+"+o"
+		del used_atom
+		return 1
+
+	spawn_result()
+		var/obj/mecha_chassis/const_holder = holder
+		const_holder.construct = new /datum/construction/mecha/honker(const_holder)
+		const_holder.density = 1
+		spawn()
+			del src
+		return
+
+
+/datum/construction/mecha/honker
+	result = "/obj/mecha/combat/honker"
+	steps = list(list("key"="/obj/item/weapon/bikehorn"),//1
+					 list("key"="/obj/item/clothing/shoes/clown_shoes"),//2
+					 list("key"="/obj/item/weapon/bikehorn"),//3
+					 list("key"="/obj/item/clothing/mask/gas/clown_hat"),//4
+					 list("key"="/obj/item/weapon/bikehorn"),//5
+					 list("key"="/obj/item/weapon/mousetrap"),//6
+					 list("key"="/obj/item/weapon/bikehorn"),//7
+					 list("key"="/obj/item/weapon/bananapeel"),//8
+					 list("key"="/obj/item/weapon/bikehorn"),//9
+					 list("key"="/obj/item/mecha_parts/circuitboard/honker/targeting"),//10
+					 list("key"="/obj/item/weapon/bikehorn"),//11
+					 list("key"="/obj/item/mecha_parts/circuitboard/honker/peripherals"),//12
+					 list("key"="/obj/item/weapon/bikehorn"),//13
+					 list("key"="/obj/item/mecha_parts/circuitboard/honker/main"),//14
+					 list("key"="/obj/item/weapon/bikehorn"),//15
+					 )
+
+	action(atom/used_atom,mob/user as mob)
+		return check_step(used_atom,user)
+
+	custom_action(step, atom/used_atom, mob/user)
+		if(!..())
+			return 0
+
+		if(istype(used_atom, /obj/item/weapon/bikehorn))
+			playsound(holder, 'bikehorn.ogg', 50, 1)
+			user.visible_message("HONK!")
+
+		//TODO: better messages.
+		switch(step)
+			if(14)
+				user.visible_message("[user] installs the central control module into [holder].", "You install the central control module into [holder].")
+				del used_atom
+			if(12)
+				user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
+				del used_atom
+			if(10)
+				user.visible_message("[user] installs the weapon control module into [holder].", "You install the weapon control module into [holder].")
+				del used_atom
+			if(8)
+				user.visible_message("[user] installs the banana peel into hONK1 socket.", "You install the banana peel into the hONK1 socket.")
+				del used_atom
+			if(6)
+				user.visible_message("[user] installs the mousetrap into hONK2 socket.", "You install the mousetrap into hONK2 socket.")
+				del used_atom
+			if(4)
+				user.visible_message("[user] puts clown wig and mask on [holder].", "You put clown wig and mask on [holder].")
+				del used_atom
+			if(2)
+				user.visible_message("[user] puts clown boots on [holder].", "You put clown boots on [holder].")
+				del used_atom
+		return 1
+
 
 
 

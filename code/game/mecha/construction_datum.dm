@@ -17,6 +17,9 @@
 			spawn_result()
 		return
 
+	proc/action(atom/used_atom,mob/user as mob)
+		return
+
 	proc/check_step(atom/used_atom,mob/user as mob) //check last step only
 		var/valid_step = is_right_key(used_atom)
 		if(valid_step)

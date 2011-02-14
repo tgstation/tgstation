@@ -2,7 +2,7 @@
 	desc = "Heavy duty combat exosuit."
 	name = "Marauder"
 	icon_state = "marauder"
-	step_in = 10
+	step_in = 7
 	health = 400
 	deflect_chance = 25
 	max_temperature = 5000
@@ -112,6 +112,7 @@
 /obj/mecha/combat/marauder/go_out()
 	if(src.occupant && src.occupant.client)
 		src.occupant.client.view = world.view
+		src.zoom = 0
 	..()
 	return
 

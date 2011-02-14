@@ -2,7 +2,7 @@
 	desc = "Security exosuit."
 	name = "Gygax"
 	icon_state = "gygax"
-	step_in = 6
+	step_in = 5
 	health = 300
 	deflect_chance = 10
 	max_temperature = 3500
