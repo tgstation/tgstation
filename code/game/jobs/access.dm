@@ -46,6 +46,7 @@
 	access_surgery = 45
 	access_theatre = 46
 	access_research = 47
+	access_mailsorting = 48
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
@@ -185,7 +186,7 @@
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
 	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
-	            access_theatre, access_research)
+	            access_theatre, access_research, access_mailsorting)
 
 /proc/get_region_accesses(var/code)
 	switch(code)
@@ -320,6 +321,8 @@
 			return "Theatre"
 		if(access_research)
 			return "Research"
+		if(access_mailsorting)
+			return "Delivery Office"
 
 /proc/get_all_jobs()
 	return list("Assistant", "Station Engineer", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",
