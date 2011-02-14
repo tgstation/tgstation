@@ -1089,6 +1089,26 @@ proc/move_mining_shuttle()
 	return
 
 /turf/simulated/mineral/New()
+
+	spawn(1)
+		var/turf/T
+		if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)) || (istype(get_step(src, NORTH), /turf/simulated/shuttle/floor)))
+			T = get_step(src, NORTH)
+			if (T)
+				T.overlays += image('walls.dmi', "rock_side_s")
+		if((istype(get_step(src, SOUTH), /turf/simulated/floor)) || (istype(get_step(src, SOUTH), /turf/space)) || (istype(get_step(src, SOUTH), /turf/simulated/shuttle/floor)))
+			T = get_step(src, SOUTH)
+			if (T)
+				T.overlays += image('walls.dmi', "rock_side_n", layer=6)
+		if((istype(get_step(src, EAST), /turf/simulated/floor)) || (istype(get_step(src, EAST), /turf/space)) || (istype(get_step(src, EAST), /turf/simulated/shuttle/floor)))
+			T = get_step(src, EAST)
+			if (T)
+				T.overlays += image('walls.dmi', "rock_side_w", layer=6)
+		if((istype(get_step(src, WEST), /turf/simulated/floor)) || (istype(get_step(src, WEST), /turf/space)) || (istype(get_step(src, WEST), /turf/simulated/shuttle/floor)))
+			T = get_step(src, WEST)
+			if (T)
+				T.overlays += image('walls.dmi', "rock_side_e", layer=6)
+
 	if (mineralName && mineralAmt && spread && spreadChance)
 		if(prob(spreadChance))
 			if(istype(get_step(src, SOUTH), /turf/simulated/mineral/random))
@@ -1111,9 +1131,10 @@ proc/move_mining_shuttle()
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/simulated/mineral/random/New()
+	..()
 	if (prob(mineralChance))
 		var/mName = pickweight(mineralSpawnChanceList) //temp mineral name
-		//spawn(5)
+
 		if (mName)
 			var/turf/simulated/mineral/M
 			switch(mName)
@@ -1294,9 +1315,9 @@ proc/move_mining_shuttle()
 
 /turf/simulated/floor/airless/asteroid/New()
 	..()
-	if (prob(50))
-		seedName = pick(list("1","2","3","4"))
-		seedAmt = rand(1,4)
+	//if (prob(50))
+	//	seedName = pick(list("1","2","3","4"))
+	//	seedAmt = rand(1,4)
 	spawn(2)
 		updateMineralOverlays()
 
