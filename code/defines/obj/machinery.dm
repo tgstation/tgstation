@@ -12,6 +12,9 @@
 		active_power_usage = 0
 		power_channel = EQUIP
 		//EQUIP,ENVIRON or LIGHT
+		uid
+		global
+			gl_uid = 1
 
 /obj/machinery/alarm
 	name = "alarm"

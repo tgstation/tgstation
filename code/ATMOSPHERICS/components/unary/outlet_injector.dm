@@ -95,7 +95,7 @@
 		set_frequency(frequency)
 
 	receive_signal(datum/signal/signal)
-		if(signal.data["tag"] && (signal.data["tag"] != id))
+		if(!signal.data["tag"] || (signal.data["tag"] != id) || !signal.data["command"])
 			return 0
 
 		switch(signal.data["command"])
@@ -110,6 +110,7 @@
 
 			if("inject")
 				spawn inject()
+				return
 
 			if("set_volume_rate")
 				var/number = text2num(signal.data["parameter"])
@@ -117,8 +118,14 @@
 
 				volume_rate = number
 
-		if(signal.data["tag"])
-			spawn(5) broadcast_status()
+			if("status")
+				//broadcast_status
+
+			else
+				log_admin("DEBUG \[[world.timeofday]\]: outlet_injector/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
+				return
+		spawn(5)
+			broadcast_status()
 		update_icon()
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.

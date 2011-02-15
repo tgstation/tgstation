@@ -28,7 +28,9 @@
 		if (A.master)
 			A = A.master
 		area_uid = A.uid
-		id_tag = "\ref[src]"
+		if (!id_tag)
+			assign_uid()
+			id_tag = num2text(uid)
 		..()
 
 	update_icon()
@@ -54,16 +56,18 @@
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal
 			signal.source = src
-			signal.data["area"] = area_uid
-			signal.data["tag"] = id_tag
-			signal.data["device"] = "AScr"
-			signal.data["timestamp"] = air_master.current_cycle
-			signal.data["on"] = on
-			signal.data["scrubbing"] = scrubbing
-			signal.data["panic"] = panic
-			signal.data["filter_co2"] = scrub_CO2
-			signal.data["filter_toxins"] = scrub_Toxins
-			signal.data["filter_n2o"] = scrub_N2O
+			signal.data = list(
+				"area" = area_uid,
+				"tag" = id_tag,
+				"device" = "AScr",
+				"timestamp" = air_master.current_cycle,
+				"on" = on,
+				"scrubbing" = scrubbing,
+				"panic" = panic,
+				"filter_co2" = scrub_CO2,
+				"filter_toxins" = scrub_Toxins,
+				"filter_n2o" = scrub_N2O,
+			)
 			radio_connection.post_signal(src, signal, radio_filter_out)
 
 			return 1
@@ -154,8 +158,8 @@
 */
 
 	receive_signal(datum/signal/signal)
-		if(!signal.data["tag"] || (signal.data["tag"] != id_tag))
-			return ..()
+		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || !signal.data["command"])
+			return 0
 
 		switch(signal.data["command"])
 			if("toggle_power")
@@ -179,10 +183,17 @@
 					volume_rate = initial(volume_rate)
 			if("init")
 				name = signal.data["parameter"]
-		if(signal.data["tag"])
-			spawn(2)
-				broadcast_status()
-				update_icon()
+				return
+
+			if("status")
+				//broadcast_status
+
+			else
+				log_admin("DEBUG \[[world.timeofday]\]: vent_scrubber/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
+				return
+		spawn(2)
+			broadcast_status()
+			update_icon()
 		return
 
 	power_change()

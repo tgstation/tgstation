@@ -77,7 +77,7 @@ obj/machinery/atmospherics/binary/pump
 			radio_controller.remove_object(src, frequency)
 			frequency = new_frequency
 			if(frequency)
-				radio_connection = radio_controller.add_object(src, frequency)
+				radio_connection = radio_controller.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
 		broadcast_status()
 			if(!radio_connection)
@@ -92,7 +92,7 @@ obj/machinery/atmospherics/binary/pump
 			signal.data["power"] = on
 			signal.data["target_output"] = target_pressure
 
-			radio_connection.post_signal(src, signal)
+			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			return 1
 		interact(mob/user as mob)
@@ -114,7 +114,7 @@ obj/machinery/atmospherics/binary/pump
 			set_frequency(frequency)
 
 	receive_signal(datum/signal/signal)
-		if(signal.data["tag"] && (signal.data["tag"] != id))
+		if(!signal.data["tag"] || (signal.data["tag"] != id))
 			return 0
 
 		switch(signal.data["command"])
@@ -132,8 +132,8 @@ obj/machinery/atmospherics/binary/pump
 				number = min(max(number, 0), ONE_ATMOSPHERE*50)
 
 				target_pressure = number
-
-		broadcast_status()
+		spawn(5)
+			broadcast_status()
 		update_icon()
 		return
 

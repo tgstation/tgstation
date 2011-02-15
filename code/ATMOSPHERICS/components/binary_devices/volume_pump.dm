@@ -89,7 +89,7 @@ obj/machinery/atmospherics/binary/volume_pump
 		set_frequency(frequency)
 
 	receive_signal(datum/signal/signal)
-		if(signal.data["tag"] && (signal.data["tag"] != id))
+		if(!signal.data["tag"] || (signal.data["tag"] != id))
 			return 0
 
 		switch(signal.data["command"])
@@ -108,6 +108,6 @@ obj/machinery/atmospherics/binary/volume_pump
 
 				transfer_rate = number
 
-		if(signal.data["tag"])
-			spawn(5) broadcast_status()
+		spawn(5)
+			broadcast_status()
 		update_icon()

@@ -110,7 +110,7 @@
 			radio_controller.remove_object(src, frequency)
 			frequency = new_frequency
 			if(frequency)
-				radio_connection = radio_controller.add_object(src, frequency)
+				radio_connection = radio_controller.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
 		broadcast_status()
 			if(!radio_connection)
@@ -129,7 +129,7 @@
 			signal.data["output"] = output_pressure_max
 			signal.data["external"] = external_pressure_bound
 
-			radio_connection.post_signal(src, signal)
+			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			return 1
 
@@ -143,7 +143,7 @@
 			set_frequency(frequency)
 
 	receive_signal(datum/signal/signal)
-		if(signal.data["tag"] && (signal.data["tag"] != id))
+		if(!signal.data["tag"] || (signal.data["tag"] != id))
 			return 0
 
 		switch(signal.data["command"])
@@ -193,6 +193,7 @@
 
 				external_pressure_bound = number
 
-		if(signal.data["tag"])
-			spawn(5) broadcast_status()
+		//if(signal.data["tag"])
+		spawn(5)
+			broadcast_status()
 		update_icon()

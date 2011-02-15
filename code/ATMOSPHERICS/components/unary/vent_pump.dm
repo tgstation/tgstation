@@ -7,7 +7,7 @@
 
 	level = 1
 	var/area_uid
-	var/id = null
+	var/id_tag = null
 
 	var/on = 0
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
@@ -33,7 +33,9 @@
 		if (A.master)
 			A = A.master
 		area_uid = A.uid
-		id = "\ref[src]"
+		if (!id_tag)
+			assign_uid()
+			id_tag = num2text(uid)
 		..()
 
 	high_volume
@@ -127,15 +129,17 @@
 			signal.transmission_method = 1 //radio signal
 			signal.source = src
 
-			signal.data["area"] = src.area_uid
-			signal.data["tag"] = src.id
-			signal.data["device"] = "AVP"
-			signal.data["power"] = on?("on"):("off")
-			signal.data["direction"] = pump_direction?("release"):("siphon")
-			signal.data["checks"] = pressure_checks
-			signal.data["internal"] = internal_pressure_bound
-			signal.data["external"] = external_pressure_bound
-			signal.data["timestamp"] = air_master.current_cycle
+			signal.data = list(
+				"area" = src.area_uid,
+				"tag" = src.id_tag,
+				"device" = "AVP",
+				"power" = on?("on"):("off"),
+				"direction" = pump_direction?("release"):("siphon"),
+				"checks" = pressure_checks,
+				"internal" = internal_pressure_bound,
+				"external" = external_pressure_bound,
+				"timestamp" = air_master.current_cycle,
+			)
 
 			radio_connection.post_signal(src, signal, radio_filter_out)
 
@@ -153,7 +157,8 @@
 		update_icon()
 
 	receive_signal(datum/signal/signal)
-		if(!signal.data["tag"] || (signal.data["tag"] != id))
+		//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/unary/vent_pump/receive_signal([signal.debug_print()])")
+		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || !signal.data["command"])
 			return 0
 
 		switch(signal.data["command"])
@@ -203,11 +208,17 @@
 
 			if("init")
 				name = signal.data["parameter"]
+				return
 
-		if(signal.data["tag"])
-			spawn(2)
-				broadcast_status()
-				update_icon()
+			if("status")
+				//broadcast_status
+
+			else
+				log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
+				return
+		spawn(2)
+			broadcast_status()
+			update_icon()
 		return
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.

@@ -43,7 +43,7 @@
 			return
 		if (signal.data["area"] != area_uid)
 			return
-		if((!sensors[id_tag] && !vents[id_tag]))
+		if(!(id_tag in sensors) && !(id_tag in vents))
 			register_env_machine(id_tag, signal.data["device"])
 		if(signal.data["device"] == "AScr")
 			sensor_information[id_tag] = signal.data

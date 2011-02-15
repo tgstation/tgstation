@@ -80,8 +80,8 @@
 			src.cam.c_tag = src.name
 			src.cam.network = "SS13"
 			if(radio_controller)
-				radio_controller.add_object(src, control_freq)
-				radio_controller.add_object(src, beacon_freq)
+				radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
+				radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
 	examine()
 		set src in view()
@@ -553,24 +553,25 @@ Auto Patrol: []"},
 		var/datum/signal/signal = new()
 		signal.source = src
 		signal.transmission_method = 1
-		for(var/key in keyval)
-			signal.data[key] = keyval[key]
+		//for(var/key in keyval)
+		//	signal.data[key] = keyval[key]
 			//world << "sent [key],[keyval[key]] on [freq]"
-
+		signal.data = keyval
 		if (signal.data["findbeacon"])
-			frequency.post_signal(src, signal, null)
+			frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
 		else if (signal.data["type"] == "secbot")
-			frequency.post_signal(src, signal, null)
+			frequency.post_signal(src, signal, filter = RADIO_SECBOT)
 		else
 			frequency.post_signal(src, signal)
 
 	// signals bot status etc. to controller
 	proc/send_status()
-		var/list/kv = new()
-		kv["type"] = "secbot"
-		kv["name"] = name
-		kv["loca"] = loc.loc	// area
-		kv["mode"] = mode
+		var/list/kv = list(
+			"type" = "secbot",
+			"name" = name,
+			"loca" = loc.loc,	// area
+			"mode" = mode,
+		)
 		post_signal_multiple(control_freq, kv)
 
 

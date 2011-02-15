@@ -15,33 +15,11 @@
 	
 	for (var/ch_name in channels)
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
-	/*
-	if(src.secure_frequency)
-		secure_radio_connection = radio_controller.add_object(src, secure_frequency,  RADIO_CHAT)
-	if(src.channels.Find("Medical"))
-		med_connection = radio_controller.add_object(src, med_freq,  RADIO_CHAT)
-	if(src.channels.Find("Science"))
-		sci_connection = radio_controller.add_object(src, sci_freq,  RADIO_CHAT)
-	if(src.channels.Find("Security"))
-		sec_connection = radio_controller.add_object(src, sec_freq,  RADIO_CHAT)
-	if(src.channels.Find("Command"))
-		com_connection = radio_controller.add_object(src, com_freq,  RADIO_CHAT)
-	if(src.channels.Find("Engineer"))
-		eng_connection = radio_controller.add_object(src, eng_freq,  RADIO_CHAT)*/
 
 /obj/item/device/radio
 	var
 		datum/radio_frequency/radio_connection
-		
 		list/datum/radio_frequency/secure_radio_connections = new
-		/*
-		datum/radio_frequency/secure_radio_connection // Shared by Mport2004 for the security headsets -- TLE
-		datum/radio_frequency/med_connection
-		datum/radio_frequency/sci_connection
-		datum/radio_frequency/com_connection
-		datum/radio_frequency/eng_connection
-		datum/radio_frequency/sec_connection*/
-
 	proc
 		set_frequency(new_frequency)
 			radio_controller.remove_object(src, frequency)

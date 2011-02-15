@@ -59,7 +59,7 @@ obj/machinery/door/airlock
 			signal.data["door_status"] = density?("closed"):("open")
 			signal.data["lock_status"] = locked?("locked"):("unlocked")
 
-			radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE)
+			radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 
 	open(surpress_send)
 		. = ..()
@@ -74,7 +74,7 @@ obj/machinery/door/airlock
 			radio_controller.remove_object(src, frequency)
 			if(new_frequency)
 				frequency = new_frequency
-				radio_connection = radio_controller.add_object(src, frequency)
+				radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
 
 	initialize()
 		if(frequency)
@@ -119,7 +119,7 @@ obj/machinery/airlock_sensor
 		signal.data["tag"] = master_tag
 		signal.data["command"] = "cycle"
 
-		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE)
+		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 		flick("airlock_sensor_cycle", src)
 
 	process()
@@ -136,7 +136,7 @@ obj/machinery/airlock_sensor
 
 			signal.data["pressure"] = num2text(pressure)
 
-			radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE)
+			radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 
 		update_icon()
 
@@ -144,7 +144,7 @@ obj/machinery/airlock_sensor
 		set_frequency(new_frequency)
 			radio_controller.remove_object(src, frequency)
 			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, frequency)
+			radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
 
 	initialize()
 		set_frequency(frequency)
@@ -183,14 +183,14 @@ obj/machinery/access_button
 			signal.data["tag"] = master_tag
 			signal.data["command"] = command
 
-			radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE)
+			radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 		flick("access_button_cycle", src)
 
 	proc
 		set_frequency(new_frequency)
 			radio_controller.remove_object(src, frequency)
 			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, frequency)
+			radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
 
 	initialize()
 		set_frequency(frequency)

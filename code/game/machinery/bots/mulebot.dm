@@ -80,8 +80,8 @@
 
 		spawn(5)	// must wait for map loading to finish
 			if(radio_controller)
-				radio_controller.add_object(src, control_freq)
-				radio_controller.add_object(src, beacon_freq)
+				radio_controller.add_object(src, control_freq, filter = RADIO_MULEBOT)
+				radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
 			var/count = 0
 			for(var/obj/machinery/bot/mulebot/other in world)
@@ -890,24 +890,31 @@
 		var/datum/signal/signal = new()
 		signal.source = src
 		signal.transmission_method = 1
-		for(var/key in keyval)
-			signal.data[key] = keyval[key]
+		//for(var/key in keyval)
+		//	signal.data[key] = keyval[key]
+		signal.data = keyval
 			//world << "sent [key],[keyval[key]] on [freq]"
-		frequency.post_signal(src, signal)
+		if (signal.data["findbeacon"])
+			frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
+		else if (signal.data["type"] == "mulebot")
+			frequency.post_signal(src, signal, filter = RADIO_MULEBOT)
+		else
+			frequency.post_signal(src, signal)
 
 	// signals bot status etc. to controller
 	proc/send_status()
-		var/list/kv = new()
-		kv["type"] = "mulebot"
-		kv["name"] = suffix
-		kv["loca"] = loc.loc	// area
-		kv["mode"] = mode
-		kv["powr"] = cell ? cell.percent() : 0
-		kv["dest"] = destination
-		kv["home"] = home_destination
-		kv["load"] = load
-		kv["retn"] = auto_return
-		kv["pick"] = auto_pickup
+		var/list/kv = list(
+			"type" = "mulebot",
+			"name" = suffix,
+			"loca" = loc.loc,	// area
+			"mode" = mode,
+			"powr" = (cell ? cell.percent() : 0),
+			"dest" = destination,
+			"home" = home_destination,
+			"load" = load,
+			"retn" = auto_return,
+			"pick" = auto_pickup,
+		)
 		post_signal_multiple(control_freq, kv)
 
 

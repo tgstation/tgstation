@@ -98,3 +98,7 @@
 
 	src.add_fingerprint(user)
 	return 0
+
+/obj/machinery/proc/assign_uid()
+	uid = gl_uid
+	gl_uid++

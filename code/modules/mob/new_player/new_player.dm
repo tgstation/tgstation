@@ -1,6 +1,4 @@
 mob/new_player
-	anchored = 1
-
 	var/datum/preferences/preferences
 	var/ready = 0
 	var/spawning = 0
@@ -14,7 +12,8 @@ mob/new_player
 	anchored = 1	//  don't get pushed around
 
 	Login()
-		..()
+		//Next line is commented out because seem it does nothing helpful and on the other hand it calls mob/new_player/Move() to EACH turf in the world. --rastaf0
+		//..()
 
 		if(!preferences)
 			preferences = new

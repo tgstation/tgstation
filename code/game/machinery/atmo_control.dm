@@ -55,14 +55,14 @@ obj/machinery/air_sensor
 					signal.data["toxins"] = 0
 					signal.data["nitrogen"] = 0
 					signal.data["carbon_dioxide"] = 0
-			radio_connection.post_signal(src, signal)
+			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 
 	proc
 		set_frequency(new_frequency)
 			radio_controller.remove_object(src, frequency)
 			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, frequency)
+			radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 	initialize()
 		set_frequency(frequency)
@@ -178,7 +178,7 @@ obj/machinery/computer/general_air_control
 		set_frequency(new_frequency)
 			radio_controller.remove_object(src, frequency)
 			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, frequency)
+			radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 	initialize()
 		set_frequency(frequency)
@@ -254,9 +254,9 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.source = src
 
 				signal.data["tag"] = input_tag
-				signal.data["status"] = 1
+				signal.data["command"] = "status"
 
-				radio_connection.post_signal(src, signal)
+				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			if(href_list["in_toggle_injector"])
 				input_info = null
@@ -270,7 +270,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["tag"] = input_tag
 				signal.data["command"] = "power_toggle"
 
-				radio_connection.post_signal(src, signal)
+				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			if(href_list["out_refresh_status"])
 				output_info = null
@@ -282,9 +282,9 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.source = src
 
 				signal.data["tag"] = output_tag
-				signal.data["status"] = 1
+				signal.data["command"] = "status"
 
-				radio_connection.post_signal(src, signal)
+				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			if(href_list["out_toggle_power"])
 				output_info = null
@@ -298,7 +298,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["tag"] = output_tag
 				signal.data["command"] = "power_toggle"
 
-				radio_connection.post_signal(src, signal)
+				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			if(href_list["out_set_pressure"])
 				output_info = null
@@ -313,7 +313,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.data["command"] = "set_internal_pressure"
 				signal.data["parameter"] = "[pressure_setting]"
 
-				radio_connection.post_signal(src, signal)
+				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			if(href_list["adj_pressure"])
 				var/change = text2num(href_list["adj_pressure"])
@@ -393,7 +393,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				else
 					signal.data["command"] = "power_off"
 
-				radio_connection.post_signal(src, signal)
+				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			..()
 
@@ -443,9 +443,9 @@ Rate: [volume_rate] L/sec<BR>"}
 				signal.source = src
 
 				signal.data["tag"] = device_tag
-				signal.data["status"] = 1
+				signal.data["command"] = "status"
 
-				radio_connection.post_signal(src, signal)
+				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			if(href_list["toggle_automation"])
 				automation = !automation
@@ -462,7 +462,7 @@ Rate: [volume_rate] L/sec<BR>"}
 				signal.data["tag"] = device_tag
 				signal.data["command"] = "power_toggle"
 
-				radio_connection.post_signal(src, signal)
+				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			if(href_list["injection"])
 				if(!radio_connection)
@@ -475,7 +475,7 @@ Rate: [volume_rate] L/sec<BR>"}
 				signal.data["tag"] = device_tag
 				signal.data["command"] = "inject"
 
-				radio_connection.post_signal(src, signal)
+				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_alert
 	var/datum/radio_frequency/radio_connection
@@ -504,7 +504,7 @@ Rate: [volume_rate] L/sec<BR>"}
 		set_frequency(new_frequency)
 			radio_controller.remove_object(src, receive_frequency)
 			receive_frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, receive_frequency)
+			radio_connection = radio_controller.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
 
 	attack_hand(mob/user)

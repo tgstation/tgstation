@@ -116,18 +116,34 @@
 		set category = "Debug"
 		set name = "Radio report"
 
-		var/output = "<b>Radio Report</b><hr>"/*
+		var/filters = list(
+			"1" = "RADIO_TO_AIRALARM",
+			"2" = "RADIO_FROM_AIRALARM",
+			"3" = "RADIO_CHAT",
+			"4" = "RADIO_ATMOSIA",
+			"5" = "RADIO_NAVBEACONS",
+			"6" = "RADIO_AIRLOCK",
+			"7" = "RADIO_SECBOT",
+			"8" = "RADIO_MULEBOT",
+			"_default" = "NO_FILTER"
+			)
+		var/output = "<b>Radio Report</b><hr>"
 		for (var/fq in radio_controller.frequencies)
 			output += "<b>Freq: [fq]</b><br>"
 			var/list/datum/radio_frequency/fqs = radio_controller.frequencies[fq]
-			output += "&nbsp;&nbsp;Voice: [fqs.voice.len]<br>"
-			output += "&nbsp;&nbsp;Broadcast: [fqs.broadcast.len]<br>"
-			output += "&nbsp;&nbsp;Tags: <br>"
-			for (var/tag in fqs.tags)
-				var/list/ctag = fqs.tags[tag]
-				output += "&nbsp;&nbsp;&nbsp;&nbsp;[tag]: [ctag.len]<br>"
-			output += "&nbsp;&nbsp;Groups: <br>"
-			for (var/group in fqs.groups)
-				var/list/cgroup = fqs.groups[group]
-				output += "&nbsp;&nbsp;&nbsp;&nbsp;[group]: [cgroup.len]<br>"*/
+			if (!fqs)
+				output += "&nbsp;&nbsp;<b>ERROR</b><br>"
+				continue
+			for (var/filter in fqs.devices)
+				var/list/f = fqs.devices[filter]
+				if (!f)
+					output += "&nbsp;&nbsp;[filters[filter]]: ERROR<br>"
+					continue
+				output += "&nbsp;&nbsp;[filters[filter]]: [f.len]<br>"
+				for (var/device in f)
+					if (isobj(device))
+						output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([device:x],[device:y],[device:z] in area [get_area(device:loc)])<br>"
+					else
+						output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
+					
 		usr << browse(output,"window=radioreport")
