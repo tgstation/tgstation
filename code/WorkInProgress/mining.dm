@@ -2578,21 +2578,19 @@ proc/move_mining_shuttle()
 
 	var/dat = text("<b>The contents of the moneybag reveal...</b><br>")
 	if (amt_gold)
-		dat += text("Gold coins: [amt_gold]<br>")
+		dat += text("Gold coins: [amt_gold]<br> <A href='?src=\ref[src];remove=gold'>Remove one</A>")
 	if (amt_silver)
-		dat += text("Silver coins: [amt_silver]<br>")
+		dat += text("Silver coins: [amt_silver]<br> <A href='?src=\ref[src];remove=silver'>Remove one</A>")
 	if (amt_iron)
-		dat += text("Metal coins: [amt_iron]<br>")
+		dat += text("Metal coins: [amt_iron]<br> <A href='?src=\ref[src];remove=iron'>Remove one</A>")
 	if (amt_diamond)
-		dat += text("Diamond coins: [amt_diamond]<br>")
+		dat += text("Diamond coins: [amt_diamond]<br> <A href='?src=\ref[src];remove=diamond'>Remove one</A>")
 	if (amt_plasma)
-		dat += text("Plasma coins: [amt_plasma]<br>")
+		dat += text("Plasma coins: [amt_plasma]<br> <A href='?src=\ref[src];remove=plasma'>Remove one</A>")
 	if (amt_uranium)
-		dat += text("Uranium coins: [amt_uranium]<br>")
+		dat += text("Uranium coins: [amt_uranium]<br> <A href='?src=\ref[src];remove=uranium'>Remove one</A>")
 	if (amt_clown)
-		dat += text("Bananium coins: [amt_clown]<br>")
-	if (amt_clown)
-		dat += text("<br>Strangely you can only view the bag's contents. There is no way to remove them.")
+		dat += text("Bananium coins: [amt_clown]<br> <A href='?src=\ref[src];remove=clown'>Remove one</A>")
 	user << browse("[dat]", "window=moneybag")
 
 /obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -2606,6 +2604,34 @@ proc/move_mining_shuttle()
 			contents += O;
 		user << "\blue You empty the [C.name] into the bag."
 	return
+
+/obj/item/weapon/moneybag/Topic(href, href_list)
+	if(..())
+		return
+	usr.machine = src
+	src.add_fingerprint(usr)
+	if(href_list["remove"])
+		var/obj/item/weapon/coin/COIN
+		switch(href_list["remove"])
+			if("gold")
+				COIN = locate(/obj/item/weapon/coin/gold,src.contents)
+			if("silver")
+				COIN = locate(/obj/item/weapon/coin/silver,src.contents)
+			if("iron")
+				COIN = locate(/obj/item/weapon/coin/iron,src.contents)
+			if("diamond")
+				COIN = locate(/obj/item/weapon/coin/diamond,src.contents)
+			if("plasma")
+				COIN = locate(/obj/item/weapon/coin/plasma,src.contents)
+			if("uranium")
+				COIN = locate(/obj/item/weapon/coin/uranium,src.contents)
+			if("clown")
+				COIN = locate(/obj/item/weapon/coin/clown,src.contents)
+		if(!COIN)
+			return
+		COIN.loc = src.loc
+	return
+
 
 /**********************Gas extractor**************************/
 
