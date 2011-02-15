@@ -111,6 +111,8 @@ Filter types:
 		if(transfer_moles > 0)
 			var/datum/gas_mixture/removed = air_in.remove(transfer_moles)
 
+			if(!removed)
+				return
 			var/datum/gas_mixture/filtered_out = new
 			filtered_out.temperature = removed.temperature
 
