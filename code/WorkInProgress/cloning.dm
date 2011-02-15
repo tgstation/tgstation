@@ -295,7 +295,7 @@
 //Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
 		if ((!selected) || (!src.pod1) || (src.pod1.occupant) || (src.pod1.mess))
 			src.temp = "Unable to initiate cloning cycle." // most helpful error message in THE HISTORY OF THE WORLD
-		else if (src.pod1.growclone(selected, C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"]))
+		else if (src.pod1.growclone(selected, C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"]))
 			src.temp = "Cloning cycle activated."
 			src.records.Remove(C)
 			del(C)
@@ -322,6 +322,7 @@
 	subject.dna.check_integrity()
 
 	var/datum/data/record/R = new /datum/data/record(  )
+	R.fields["mrace"] = subject.mutantrace
 	R.fields["ckey"] = subject.ckey
 	R.fields["name"] = subject.real_name
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)
@@ -432,7 +433,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref)
+/obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref, var/mrace)
 	if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 		return 0
 
@@ -466,23 +467,28 @@
 	else
 		src.occupant.real_name = "clone"  //No null names!!
 
+
 	var/datum/mind/clonemind = (locate(mindref) in ticker.minds)
 
 	if ((clonemind) && (istype(clonemind))) //Move that mind over!!
 		clonemind.transfer_to(src.occupant)
+		clonemind.original = src.occupant
 	else //welp
 		src.occupant.mind = new /datum/mind(  )
 		src.occupant.mind.key = src.occupant.key
 		src.occupant.mind.current = src.occupant
+		src.occupant.mind.original = src.occupant
 		src.occupant.mind.transfer_to(src.occupant)
 		ticker.minds += src.occupant.mind
 
 	// -- Mode/mind specific stuff goes here
 	switch(ticker.mode.name)
 		if ("revolution")
-			if ((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries))
+			if (src.occupant.mind in ticker.mode:revolutionaries)
 				ticker.mode:add_revolutionary(src.occupant.mind)
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
+			if (src.occupant.mind in ticker.mode:head_revolutionaries)
+				ticker.mode:update_all_rev_icons()
 		if ("cult")
 			if (src.occupant.mind in ticker.mode:cult)
 				ticker.mode:add_cultist(src.occupant.mind)
@@ -504,7 +510,9 @@
 	if (se)
 		src.occupant.dna.struc_enzymes = se
 		randmutb(src.occupant) //Sometimes the clones come out wrong.
-
+	src.occupant:update_face()
+	src.occupant:update_body()
+	src.occupant:mutantrace = mrace
 	src.attempting = 0
 	return 1
 
