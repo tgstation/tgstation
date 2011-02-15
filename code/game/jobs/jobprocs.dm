@@ -367,6 +367,7 @@
 			src.equip_if_possible(new /obj/item/device/t_scanner(src), slot_r_store)
 
 		if ("Shaft Miner")
+			src.equip_if_possible(new /obj/item/device/radio/headset/headset_mine (src), slot_ears)
 			src.equip_if_possible(new /obj/item/clothing/under/color/white(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
@@ -475,7 +476,7 @@
 
 
 		if ("Head of Personnel")
-			src.equip_if_possible(new /obj/item/device/radio/headset/headset_com (src), slot_ears) // -- TLE
+			src.equip_if_possible(new /obj/item/device/radio/headset/heads/hop (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
 			src.equip_if_possible(new /obj/item/device/pda/heads(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/head_of_personnel(src), slot_w_uniform)
@@ -546,6 +547,7 @@
 			src.equip_if_possible(new /obj/item/weapon/storage/briefcase(src), slot_l_hand)
 
 		if ("Quartermaster")
+			src.equip_if_possible(new /obj/item/device/radio/headset/heads/qm (src), slot_ears)
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/cargo(src), slot_w_uniform)
@@ -555,6 +557,7 @@
 			//src.equip_if_possible(new /obj/item/clothing/suit/exo_suit(src), slot_wear_suit)
 
 		if ("Cargo Technician")
+			src.equip_if_possible(new /obj/item/device/radio/headset/headset_cargo(src), slot_ears)
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/cargo(src), slot_w_uniform)

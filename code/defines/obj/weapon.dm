@@ -376,6 +376,10 @@
 	item_state = "wrench"
 	w_class = 2.0
 	m_amt = 50
+	
+/obj/item/weapon/crowbar/red
+	icon = 'items.dmi'
+	icon_state = "red_crowbar"
 
 /obj/item/weapon/disk
 	name = "disk"
@@ -991,7 +995,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
-	icon = 'device.dmi'
+	icon = 'radio.dmi'
 	icon_state = "radio"
 	var/temp = null
 	var/uses = 10.0
@@ -1007,7 +1011,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/SWF_uplink
 	name = "station bounced radio"
-	icon = 'device.dmi'
+	icon = 'radio.dmi'
 	icon_state = "radio"
 	var/temp = null
 	var/uses = 4.0

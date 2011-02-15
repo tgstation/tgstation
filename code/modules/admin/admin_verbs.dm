@@ -1402,7 +1402,9 @@
 	src << "Here's your rightclick admin verbs back"
 
 	src.verbs -= /client/proc/unstealthadmin
+	var/temp = src.deadchat
 	src.update_admins(src.holder.rank)
+	src.deadchat = temp
 
 /client/proc/stealthadmin()
 	set name = "Toggle admin verb visibility"

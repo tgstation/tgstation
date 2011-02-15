@@ -127,7 +127,7 @@
 				radio_controller.add_object(src, control_freq, filter = RADIO_MULEBOT)
 				radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 				spawn(10)
-					post_signal(beacon_freq, "findbeacon", "delivery", filter = RADIO_NAVBEACONS)
+					post_signal(beacon_freq, "findbeacon", "delivery", s_filter = RADIO_NAVBEACONS)
 
 	// receive radio signals
 	// can detect bot status signals

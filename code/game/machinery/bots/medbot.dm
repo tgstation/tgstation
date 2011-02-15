@@ -11,9 +11,9 @@
 	layer = 5.0
 	density = 1
 	anchored = 0
+	health = 20
+	maxhealth = 20
 	req_access =list(access_medical)
-	var/on = 1
-	var/health = 20
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 	var/locked = 1
 	var/emagged = 0
@@ -79,16 +79,22 @@
 		src.cam.c_tag = src.name
 		src.cam.network = "SS13"
 
-/obj/machinery/bot/medbot/examine()
-	set src in view()
-	..()
+/obj/machinery/bot/medbot/turn_on()
+	. = ..()
+	src.icon_state = "medibot[src.on]"
+	src.updateUsrDialog()
 
-	if (src.health < 20)
-		if (src.health > 15)
-			usr << text("\red [src]'s parts look loose.")
-		else
-			usr << text("\red <B>[src]'s parts look very loose!</B>")
-	return
+/obj/machinery/bot/medbot/turn_off()
+	..()
+	src.patient = null
+	src.oldpatient = null
+	src.oldloc = null
+	src.path = new()
+	src.currently_healing = 0
+	src.last_found = world.time
+	src.icon_state = "medibot[src.on]"
+	src.updateUsrDialog()
+
 
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
 	return toggle_power()
@@ -97,6 +103,9 @@
 	return attack_hand(user)
 
 /obj/machinery/bot/medbot/attack_hand(mob/user as mob)
+	. = ..()
+	if (.)
+		return
 	var/dat
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
@@ -190,12 +199,6 @@
 		else
 			user << "\red Access denied."
 
-	else if (istype(W, /obj/item/weapon/screwdriver))
-		if (src.health < initial(src.health))
-			src.health = initial(src.health)
-			for(var/mob/O in viewers(src, null))
-				O << "\red [user] repairs [src]!"
-
 	else if (istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(src.locked)
 			user << "You cannot insert a beaker because the panel is locked!"
@@ -212,17 +215,9 @@
 		return
 
 	else
-		switch(W.damtype)
-			if("fire")
-				src.health -= W.force * 0.75
-			if("brute")
-				src.health -= W.force * 0.5
-			else
-		if (src.health <= 0)
-			src.explode()
-		else if (W.force)
-			step_to(src, (get_step_away(src,user)))
 		..()
+		if (health < maxhealth && !istype(W, /obj/item/weapon/screwdriver) && W.force)
+			step_to(src, (get_step_away(src,user)))
 
 
 /obj/machinery/bot/medbot/process()
@@ -317,15 +312,10 @@
 
 
 /obj/machinery/bot/medbot/proc/toggle_power()
-	src.on = !src.on
-	src.patient = null
-	src.oldpatient = null
-	src.oldloc = null
-	src.path = new()
-	src.currently_healing = 0
-	src.last_found = world.time
-	src.icon_state = "medibot[src.on]"
-	src.updateUsrDialog()
+	if (src.on)
+		turn_off()
+	else
+		turn_on()
 	return
 
 /obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
@@ -453,43 +443,11 @@
 	return
 
 /obj/machinery/bot/medbot/bullet_act(flag, A as obj)
-	if (flag == PROJECTILE_BULLET)
-		src.health -= 18
+	if (flag == PROJECTILE_TASER)
+		src.stunned = min(stunned+10,20)
+	..()
 
-	else if (flag == PROJECTILE_TASER)
-		src.stunned += 10
-		if(src.stunned > 20)
-			src.stunned = 20
-
-	else if (flag == PROJECTILE_LASER)
-		src.health -= 8
-
-
-	if (src.health <= 0)
-		src.explode()
-
-/obj/machinery/bot/medbot/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			src.explode()
-			return
-		if(2.0)
-			src.health -= 15
-			if (src.health <= 0)
-				src.explode()
-			return
-	return
-
-/obj/machinery/bot/medbot/meteorhit()
-	src.explode()
-	return
-
-/obj/machinery/bot/medbot/blob_act()
-	if(prob(50))
-		src.explode()
-	return
-
-/obj/machinery/bot/medbot/proc/explode()
+/obj/machinery/bot/medbot/explode()
 	src.on = 0
 	for(var/mob/O in hearers(src, null))
 		O.show_message("\red <B>[src] blows apart!</B>", 1)

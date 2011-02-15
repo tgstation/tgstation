@@ -1,5 +1,5 @@
 proc/spawn_asteroid(var/atom/start_loc,var/type,var/size,var/richness)//type: 0 or null - random, 1 - nothing,  2 - iron, 3 - silicon
-	if(start_loc.x - size < 3 || start_loc.x + size >= world.maxx - 3 || start_loc.y - size < 3 || start_loc.y + size > world.maxy -3)
+	if(start_loc.x - size < 5 || start_loc.x + size >= world.maxx - 5 || start_loc.y - size < 5 || start_loc.y + size > world.maxy -5)
 		return 0
 	if(!size)
 		size = pick(100;2,50;3,35;4,25;6,10;12)

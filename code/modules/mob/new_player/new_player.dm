@@ -232,6 +232,8 @@ mob/new_player
 					AttemptLateSpawn("Warden", wardenMax)
 				if ("29")
 					AttemptLateSpawn("Shaft Miner", minerMax)
+				if ("30")
+					AttemptLateSpawn("Mime", mimeMax)
 
 		if(!ready && href_list["preferences"])
 			preferences.process_link(src, href_list)
@@ -375,6 +377,9 @@ mob/new_player
 
 		if (IsJobAvailable("Clown",clownMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=15'>Clown</a><br>"
+
+		if (IsJobAvailable("Mime",mimeMax))
+			dat += "<a href='byond://?src=\ref[src];SelectedJob=30'>Mime</a><br>"
 
 		if (IsJobAvailable("Chef",chefMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=16'>Chef</a><br>"

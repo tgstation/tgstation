@@ -1222,7 +1222,8 @@
 			var/obj/item/weapon/grab/G = src.l_hand
 			if (!( L.container.Find(G.affecting) ))
 				L.container += G.affecting
-				G.affecting.ret_grab(L, 1)
+				if (G.affecting)
+					G.affecting.ret_grab(L, 1)
 		if (istype(src.r_hand, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = src.r_hand
 			if (!( L.container.Find(G.affecting) ))

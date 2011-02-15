@@ -34,9 +34,10 @@
 	layer = 5.0
 	density = 0
 	anchored = 0
+	health = 25
+	maxhealth = 25
 	//weight = 1.0E7
 	var/amount = 10
-	var/on = 1
 	var/repairing = 0
 	var/improvefloors = 0
 	var/eattiles = 0
@@ -54,7 +55,28 @@
 	..()
 	src.updateicon()
 
-/obj/machinery/bot/floorbot/attack_hand(user as mob)
+/obj/machinery/bot/floorbot/turn_on()
+	. = ..()
+	src.updateicon()
+	src.updateUsrDialog()
+
+/obj/machinery/bot/floorbot/turn_off()
+	..()
+	src.target = null
+	src.oldtarget = null
+	src.oldloc = null
+	src.updateicon()
+	src.path = new()
+	src.updateUsrDialog()
+
+/obj/machinery/bot/floorbot/attack_hand(mob/user as mob)
+	. = ..()
+	if (.)
+		return
+	usr.machine = src
+	interact(user)
+
+/obj/machinery/bot/floorbot/proc/interact(mob/user as mob)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>"
@@ -86,13 +108,15 @@
 		src.amount += loaded
 		user << "\red You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!"
 		src.updateicon()
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr))
 			src.locked = !src.locked
 			user << "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls."
 		else
 			user << "The [src] doesn't seem to accept your authority."
 		src.updateUsrDialog()
+	else
+		..()
 
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
@@ -102,13 +126,10 @@
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
-			src.on = !src.on
-			src.target = null
-			src.oldtarget = null
-			src.oldloc = null
-			src.updateicon()
-			src.path = new()
-			src.updateUsrDialog()
+			if (src.on)
+				turn_off()
+			else
+				turn_on()
 		if("improve")
 			src.improvefloors = !src.improvefloors
 			src.updateUsrDialog()
@@ -136,12 +157,10 @@
 
 
 /obj/machinery/bot/floorbot/attack_ai()
-	src.on = !src.on
-	src.target = null
-	src.oldtarget = null
-	src.oldloc = null
-	src.updateicon()
-	src.path = new()
+	if (src.on)
+		turn_off()
+	else
+		turn_on()
 
 /obj/machinery/bot/floorbot/process()
 	set background = 1
@@ -327,6 +346,26 @@
 	else
 		src.icon_state = "floorbot[src.on]e"
 
+/obj/machinery/bot/floorbot/explode()
+	src.on = 0
+	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	var/turf/Tsec = get_turf(src)
+
+	new /obj/item/weapon/storage/toolbox/mechanical(Tsec)
+
+	new /obj/item/device/prox_sensor(Tsec)
+
+	if (prob(50))
+		new /obj/item/robot_parts/l_arm(Tsec)
+
+	if (amount)
+		new /obj/item/stack/tile(Tsec) // only one tile, yes
+		
+	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
+	del(src)
+	return
 
 
 /obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/T, mob/user as mob)

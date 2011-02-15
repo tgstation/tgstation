@@ -6,7 +6,7 @@
 
 /obj/item/weapon/storage/toolbox/emergency/New()
 	..()
-	new /obj/item/weapon/crowbar(src)
+	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/device/flashlight(src)
 	new /obj/item/device/radio(src)

@@ -101,6 +101,7 @@ var
 	viroMax = 1
 	wardenMax = 1
 	cmoMax = 1
+	mimeMax = 1
 
 	list/bombers = list(  )
 	list/admin_log = list (  )

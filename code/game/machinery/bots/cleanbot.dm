@@ -23,7 +23,8 @@
 	density = 0
 	anchored = 0
 	//weight = 1.0E7
-	var/on = 1
+	health = 25
+	maxhealth = 25
 	var/cleaning = 0
 	var/locked = 1
 	var/screwloose = 0
@@ -36,15 +37,35 @@
 	var/oldloc = null
 	req_access = list(access_janitor)
 	var/path[] = new()
-
-
+	
 /obj/machinery/bot/cleanbot/New()
 	..()
 	src.get_targets()
 	src.icon_state = "cleanbot[src.on]"
 
 
-/obj/machinery/bot/cleanbot/attack_hand(user as mob)
+/obj/machinery/bot/cleanbot/turn_on()
+	. = ..()
+	src.icon_state = "cleanbot[src.on]"
+	src.updateUsrDialog()
+
+/obj/machinery/bot/cleanbot/turn_off()
+	..()
+	src.target = null
+	src.oldtarget = null
+	src.oldloc = null
+	src.icon_state = "cleanbot[src.on]"
+	src.path = new()
+	src.updateUsrDialog()
+
+/obj/machinery/bot/cleanbot/attack_hand(mob/user as mob)
+	. = ..()
+	if (.)
+		return
+	usr.machine = src
+	interact(user)
+
+/obj/machinery/bot/cleanbot/proc/interact(mob/user as mob)
 	var/dat
 	dat += text({"
 <TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
@@ -73,13 +94,10 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	src.add_fingerprint(usr)
 	switch(href_list["operation"])
 		if("start")
-			src.on = !src.on
-			src.target = null
-			src.oldtarget = null
-			src.oldloc = null
-			src.icon_state = "cleanbot[src.on]"
-			src.path = new()
-			src.updateUsrDialog()
+			if (src.on)
+				turn_off()
+			else
+				turn_on()
 		if("blood")
 			src.blood =!src.blood
 			src.get_targets()
@@ -94,12 +112,10 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			src.updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attack_ai()
-	src.on = !src.on
-	src.target = null
-	src.oldtarget = null
-	src.oldloc = null
-	src.icon_state = "cleanbot[src.on]"
-	src.path = new()
+	if (src.on)
+		turn_off()
+	else
+		turn_on()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -108,7 +124,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			user << "You [ src.locked ? "lock" : "unlock"] the [src] behaviour controls."
 		else
 			user << "\red This [src] doesn't seem to accept your authority."
-	if (istype(W, /obj/item/weapon/screwdriver))
+	else if (istype(W, /obj/item/weapon/screwdriver))
 		if(!src.locked)
 			src.panelopen = !src.panelopen
 			user << "You [ src.panelopen ? "open" : "close"] the hidden panel on [src]."
@@ -118,6 +134,8 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		src.screwloose = 1
 		src.panelopen = 0
 		src.locked = 1*/
+	else
+		return ..()
 
 /obj/machinery/bot/cleanbot/process()
 	set background = 1
@@ -210,6 +228,24 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		src.icon_state = "cleanbot[src.on]"
 		src.anchored = 0
 		src.target = null
+
+/obj/machinery/bot/cleanbot/explode()
+	src.on = 0
+	src.visible_message("\red <B>[src] blows apart!</B>", 1)
+	var/turf/Tsec = get_turf(src)
+
+	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)
+
+	new /obj/item/device/prox_sensor(Tsec)
+
+	if (prob(50))
+		new /obj/item/robot_parts/l_arm(Tsec)
+
+	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
+	del(src)
+	return
 
 /obj/item/weapon/bucket_sensor/attackby(var/obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))

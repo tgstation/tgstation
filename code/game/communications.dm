@@ -74,6 +74,8 @@ Radio:
 1359 - Security
 1441 - death squad
 1443 - Confession Intercom
+1349 - Miners
+1347 - Cargo techs
 
 Devices:
 1451 - tracking implant
@@ -104,10 +106,12 @@ var/list/radiochannels = list(
 	"Security" = 1359,
 	"Deathsquad" = 1441,
 	"Syndicate" = 1213,
+	"Mining" = 1349,
+	"Cargo" = 1347,
 )
 //depenging helpers
-var/list/DEPT_FREQS = list(1351,1355,1357,1359,1213,1441)
-var/const/COMM_FREQ = 1353
+var/list/DEPT_FREQS = list(1351,1355,1357,1359,1213,1441,1349,1347)
+var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213
 
 #define TRANSMISSION_WIRE	0

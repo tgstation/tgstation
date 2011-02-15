@@ -63,6 +63,8 @@
 			  ":b" = "binary",
 			  ":a" = "alientalk",
 			  ":t" = "Syndicate",
+			  ":d" = "Mining",
+			  ":q" = "Cargo",
 			  
 			  //kinda localization -- rastaf0
 			  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -79,6 +81,8 @@
 			  ":è" = "binary",
 			  ":ô" = "alientalk",
 			  ":å" = "Syndicate",
+			  ":â" = "Mining",
+			  ":é" = "Cargo",
 		)
 		
 		message_mode = keys[channel_prefix]

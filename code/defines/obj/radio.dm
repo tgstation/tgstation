@@ -1,4 +1,5 @@
 /obj/item/device/radio
+	icon = 'radio.dmi'
 	name = "station bounced radio"
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"
@@ -116,7 +117,7 @@
 	name = "Captain's Headset"
 	icon_state = "com_headset"
 	item_state = "headset"
-	channels = list("Command" = 1, "Science" = 0, "Medical" = 0, "Security" = 1, "Engineering" = 0)
+	channels = list("Command" = 1, "Science" = 0, "Medical" = 0, "Security" = 1, "Engineering" = 0, "Mining" = 0, "Cargo" = 0)
 
 /obj/item/device/radio/headset/heads/rd // -- Bar
 	name = "Research Director's Headset"
@@ -134,10 +135,34 @@
 	name = "Chief Engineer's Headset"
 	icon_state = "com_headset"
 	item_state = "headset"
-	channels = list("Engineering" = 1, "Command" = 1)
+	channels = list("Engineering" = 1, "Command" = 1, "Mining" = 1)
 
 /obj/item/device/radio/headset/heads/cmo // -- Bar
 	name = "Chief Medical Officer's Headset"
 	icon_state = "com_headset"
 	item_state = "headset"
 	channels = list("Medical" = 1, "Command" = 1)
+	
+/obj/item/device/radio/headset/heads/hop // -- rastaf0
+	name = "Head of Personnel's Headset"
+	icon_state = "com_headset"
+	item_state = "headset"
+	channels = list("Command" = 1, "Security" = 1, "Cargo" = 0)
+
+/obj/item/device/radio/headset/headset_mine // -- rastaf0
+	name = "Mining Radio Headset"
+	icon_state = "mine_headset"
+	item_state = "headset"
+	channels = list("Mining" = 1)
+
+/obj/item/device/radio/headset/headset_cargo // -- rastaf0
+	name = "Cargo Radio Headset"
+	icon_state = "cargo_headset"
+	item_state = "headset"
+	channels = list("Cargo" = 1)
+
+/obj/item/device/radio/headset/heads/qm // -- rastaf0 //he is not a real head but he gives orders sometimes
+	name = "Quartermaster's Headset"
+	icon_state = "cargo_headset"
+	item_state = "headset"
+	channels = list("Cargo" = 1, "Mining" = 1) //no command frequency yet
