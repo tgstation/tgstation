@@ -47,7 +47,7 @@
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=powersink'>Power Sink</A> (5)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=detomatix'>Detomatix Cartridge</A> (3)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=space'>Syndicate-made Space Suit (inludes a helmet)</A> (3)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=botchat'>Binary Translator</A> (4)<BR>"
+	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=botchat'>Binary Translator</A> (1)<BR>"
 	src.menu_message += "<HR>"
 	return
 
@@ -149,8 +149,8 @@
 				 new /obj/item/clothing/suit/space/syndicate(get_turf(src.hostpda))
 				 new /obj/item/clothing/head/helmet/space/syndicate(get_turf(src.hostpda))
 			if("botchat")
-				if (src.uses >= 4)
-					src.uses -= 4
+				if (src.uses >= 1)
+					src.uses -= 1
 					new /obj/item/device/radio/headset/traitor(get_turf(src.hostpda))
 
 		src.generate_menu()
