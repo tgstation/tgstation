@@ -30,14 +30,12 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 
 /datum/craftlathe_item/New(var/param_id,var/param_name,var/param_amount,var/param_ammount_per_attackby,var/list/param_recipe,var/param_type = null)
 	..()
-	world << "ADDING [param_name]"
 	id = param_id
 	name = param_name
 	recipe = param_recipe
 	item_type = param_type
 	amount = param_amount;
 	amount_attackby = param_ammount_per_attackby
-	world << "SUCCESSFULLY ADDED [name]"
 	return
 
 //this proc checks the recipe you give in it's parameter with the entire list of available items. If any match, it returns the item from CRAFT_ITEMS. the returned item should not be changed!!
@@ -168,10 +166,11 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 		del(W)
 
 /obj/machinery/autolathe2/proc/build_recipes()
-	world << "BUILDING RECIPES"
 	//Parameters: ID, Name, Amount, Amount_added_per_attackby, Recipe, Object type
 	CRAFT_ITEMS += new/datum/craftlathe_item("METAL","Metal",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/metal)
+	CRAFT_ITEMS += new/datum/craftlathe_item("R METAL","Reinforced Metal",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/r_metal)
 	CRAFT_ITEMS += new/datum/craftlathe_item("GLASS","Glass",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/glass)
+	CRAFT_ITEMS += new/datum/craftlathe_item("R GLASS","Reinforced Glass",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/rglass)
 	CRAFT_ITEMS += new/datum/craftlathe_item("GOLD","Gold",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/gold)
 	CRAFT_ITEMS += new/datum/craftlathe_item("SILVER","Silver",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/silver)
 	CRAFT_ITEMS += new/datum/craftlathe_item("DIAMOND","Diamond",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/diamond)
@@ -180,10 +179,54 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 	CRAFT_ITEMS += new/datum/craftlathe_item("CLOWN","Bananium",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/clown)
 	CRAFT_ITEMS += new/datum/craftlathe_item("SCREWS","Screws",9,9,list("","","","","METAL","","","METAL",""))
 	CRAFT_ITEMS += new/datum/craftlathe_item("COGS","Cogs",9,9,list("","METAL","","METAL","METAL","METAL","","METAL",""))
-	CRAFT_ITEMS += new/datum/craftlathe_item("M SHEET","Metal Sheet",10,10,list("","","","","METAL","METAL","","METAL","METAL"))
-	CRAFT_ITEMS += new/datum/craftlathe_item("G SHEET","Glass Sheet",10,10,list("","","","","GLASS","GLASS","","GLASS","GLASS"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("SWITCH","Switch",12,12,list("METAL","","METAL","METAL","METAL","","METAL","",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("KEYBOARD","Keyboard",1,1,list("","","","SWITCH","SWITCH","SWITCH","SWITCH","SWITCH","SWITCH"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("M PANEL","Metal Panel",10,10,list("","","","","METAL","METAL","","METAL","METAL"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("CASE","Equipment Case",1,1,list("M PANEL","M PANEL","M PANEL","M PANEL","","M PANEL","M PANEL","M PANEL","M PANEL"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("G PANEL","Glass Panel",10,10,list("","","","","GLASS","GLASS","","GLASS","GLASS"))
 	CRAFT_ITEMS += new/datum/craftlathe_item("SCREEN","Screen",1,1,list("","GLASS","","GLASS","PLASMA","GLASS","","GLASS",""))
-	world << "BUILDING RECIPES COMPLETE"
+	CRAFT_ITEMS += new/datum/craftlathe_item("EL SILVER","Electronics Silver",30,30,list("","","","","SILVER","","","",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("EL GOLD","Electronics Gold",6,6,list("","","","","GOLD","","","",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("TINTED GL","Tinted Glass",2,2,list("","METAL","","","GLASS","","","",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("TANK VALVE","Tank Transfer Valuve",1,1,list("","PIPE","","","PIPE","SWITCH","","PIPE",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("PIPE","Pipe",1,1,list("","M PANEL","","","M PANEL","","","M PANEL",""))
+
+	CRAFT_ITEMS += new/datum/craftlathe_item("CB FRAME","Circuitboard Frame",1,1,list("","","","M PANEL","G PANEL","M PANEL","G PANEL","M PANEL","G PANEL"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("ROM","ROM Module",1,1,list("EL SILVER","EL SILVER","EL SILVER","EL SILVER","","EL SILVER","EL SILVER","EL SILVER","EL SILVER"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("RAM","RAM Module",1,1,list("EL SILVER","EL SILVER","EL SILVER","EL SILVER","EL GOLD","EL SILVER","EL SILVER","EL SILVER","EL SILVER"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("PROCESSOR","Processor",1,1,list("EL GOLD","EL SILVER","EL GOLD","EL SILVER","EL SILVER","EL SILVER","EL SILVER","EL GOLD","EL SILVER"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("ANTENNA","Antenna",1,1,list("","","EL SILVER","","","EL SILVER","EL SILVER","EL SILVER","EL SILVER"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("OP RECEPTOR","Optic Receptor",1,1,list("G PANEL","G PANEL","G PANEL","","EL GOLD","","G PANEL","G PANEL","G PANEL"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("THERMAL OP R","Thermal Optic Receptor",1,1,list("","OP RECEPTOR","","ROM","DIAMOND","DIAMOND","","OP RECEPTOR",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("MASON OP R","Mason Optic Receptor",1,1,list("","OP RECEPTOR","","ROM","EL SILVER","EL SILVER","","OP RECEPTOR",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("EAR FRAME","Earpiece Frame",1,1,list("M PANEL","M PANEL","M PANEL","M PANEL","","M PANEL","M PANEL","M PANEL",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("RADIO M","Radio Module",1,1,list("","ANTENNA","","","ROM","","CB FRAME","CB FRAME","CB FRAME"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("EARPIECE","Radio Earpiece",1,1,list("","","","","RADIO M","","","EAR FRAME",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("EARMUFFS","Earmuffs",1,1,list("","M PANEL","","EAR FRAME","","EAR FRAME","","",""))
+
+	CRAFT_ITEMS += new/datum/craftlathe_item("GLASSES FRAME","Glasses Frame",1,1,list("M PANEL","","M PANEL","M PANEL","","M PANEL","M PANEL","M PANEL","M PANEL"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("MASONS","Mason Scanners",1,1,list("","","","MASON OP R","GLASSES FRAME","MASON OP R","","",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("THERMALS","Thermal Scanners",1,1,list("","","","THERMAL OP R","GLASSES FRAME","THERMAL OP R","","",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("SUNGLASSES","Sunglasses",1,1,list("","","","TINTED GL","GLASSES FRAME","TINTED GL","","",""))
+
+	CRAFT_ITEMS += new/datum/craftlathe_item("HELMET FR","Helmet Frame",1,1,list("METAL","METAL","METAL","METAL","","METAL","","",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("HELMET","Security Helmet",1,1,list("R METAL","R METAL","R METAL","R METAL","HELMET FR","R METAL","","GLASS",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("HOS HELMET","HoS Helmet",1,1,list("SILVER","GOLD","SILVER","SILVER","HELMET","SILVER","","",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("HARDHAT","Hardhat",1,1,list("","FLASHLIGHT","","","HELMET FR","","","",""))
+	CRAFT_ITEMS += new/datum/craftlathe_item("SWAT HELMET","SWAT Helmet",1,1,list("","","","","HELMET","","R GLASS","R GLASS","R GLASS"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("WELDING HELM","Welding Helmet",1,1,list("","","","","HELMET FR","","TINTED GL","TINTED GL","TINTED GL"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("SPACE HELMET","Space Helmet",1,1,list("R METAL","SILVER","R METAL","SILVER","HELMET FR","SILVER","R GLASS","R GLASS","R GLASS"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("RIG HELMET","RIG Helmet",1,1,list("R METAL","SILVER","R METAL","SILVER","SPACE HELMET","SILVER","R GLASS","R GLASS","R GLASS"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("GAS MASK","Gas Mask",1,1,list("","","","","HELMET FR","TANK VALVE","","G PANEL",""))
+
+	CRAFT_ITEMS += new/datum/craftlathe_item("ARMOR FRAME","Armor Frame",1,1,list("R METAL","","R METAL","R METAL","R METAL","R METAL","R METAL","R METAL","R METAL"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("ARMOR","Armored Vest",1,1,list("R METAL","","R METAL","R METAL","ARMOR FRAME","R METAL","R METAL","R METAL","R METAL"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("HOS ARMOR","HoS Armor",1,1,list("DIAMOND","","DIAMOND","URANIUM","ARMOR","URANIUM","URANIUM","R METAL","URANIUM"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("CAP ARMOR","Captain Armor",1,1,list("DIAMOND","","DIAMOND","URANIUM","HOS ARMOR","URANIUM","URANIUM","R METAL","URANIUM"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("SPACE S FR","Space Suit Frame",1,1,list("SILVER","","SILVER","SILVER","SILVER","SILVER","SILVER","SILVER","SILVER"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("SPACE SUIT","Space Suit",1,1,list("SILVER","","SILVER","RAM","SPACE S FR","RADIO M","SILVER","SILVEr","SILVER"))
+	CRAFT_ITEMS += new/datum/craftlathe_item("RIG SUIT","RIG Suit",1,1,list("SILVER","","SILVER","SILVER","SPACE SUIT","SILVER","SILVER","SILVER","SILVER"))
+	//TODO: Flashlight, type paths
 	return
 
 
