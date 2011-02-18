@@ -236,7 +236,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 1
-	radiation_protection = 1
+	radiation_protection = 0.75
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 1.3
 

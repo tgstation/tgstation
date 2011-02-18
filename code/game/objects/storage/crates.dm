@@ -191,6 +191,10 @@
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/head/radiation(src)
+	new /obj/item/clothing/head/radiation(src)
+	new /obj/item/clothing/head/radiation(src)
+	new /obj/item/clothing/head/radiation(src)
 
 /obj/crate/proc/open()
 	playsound(src.loc, 'click.ogg', 15, 1, -3)

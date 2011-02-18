@@ -6,6 +6,12 @@
 	body_parts_covered = HEAD
 	var/list/allowed = list(/obj/item/weapon/pen)
 
+/obj/item/clothing/head/radiation
+	name = "Radiation Hood"
+	icon_state = "rad"
+	radiation_protection = 0.35
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
 	icon_state = "bio"

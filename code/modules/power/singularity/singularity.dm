@@ -351,27 +351,42 @@ var/global/list/uneatable = list(
 				radiation = round(((src.energy-150)/50)*5,1)
 			for(var/mob/living/carbon/M in view(toxrange, src.loc))
 				if(istype(M,/mob/living/carbon/human))
+					var/P = 0
 					if(M:wear_suit)
-						var/P = M:wear_suit.radiation_protection
-						if (P > 0)
-							if (P == 1)
+						P += M:wear_suit.radiation_protection
+					if(M:head)
+						P += M:head.radiation_protection
+					if (P > 0)
+						if (P >= 1)
+							if(M:wear_suit)
 								M << "The [M:wear_suit] beeps, indicating it just received a burst of radiation. Good thing you had it on."
-								return
-							if (toxloss >= 100)
-								toxloss = 100 - (P * 100) //a suit which protects you from 10% radiation will make you only receive 90 damage even if you're showered with a MILLION points of toxloss
+							else if (M:head)
+								M << "The [M:head] beeps, indicating it just received a burst of radiation. Good thing you had it on."
 							else
-								toxloss = toxloss - (P * toxloss)
-							if (radiation > 15)
-								radiation = 15 - (15 * P)
-							else
-								radiation = radiation - (P * radiation)
-							M << "\red The [M:wear_suit] absorbs some of the radiation from the singularity."
+								M << "Your body deflects all the radiation"
+							return
+						if (toxloss >= 100)
+							toxloss = 100 - (P * 100) //a suit and/or headgear which protects you from 10% radiation will make you only receive 90 damage even if you're showered with a MILLION points of toxloss
 						else
-							M << "\red You feel odd."
+							toxloss = toxloss - (P * toxloss)
+						if (radiation > 15)
+							radiation = 15 - (15 * P)
+						else
+							radiation = radiation - (P * radiation)
+						if(M:wear_suit)
+							M << "\red The [M:wear_suit] absorbs some of the radiation from the singularity."
+						else if (M:head)
+							M << "\red The [M:head] absorbs some of the radiation from the singularity."
+						else
+							M << "\red Your body protects you from some of the radiation."
+					else
+						if(prob(50))
+							M << "\red <b>You feel odd.</b>"
+						else
+							M << "\red <b>You feel sick.</b>"
 				M.toxloss += toxloss
 				M.radiation += radiation
 				M.updatehealth()
-				M << "\red You feel odd."
 			return
 
 
