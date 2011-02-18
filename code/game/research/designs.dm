@@ -456,7 +456,7 @@ datum
 			req_tech = list("robotics" = 1)
 			build_type = PROTOLATHE | AUTOLATHE
 			materials = list("$metal" = 30)
-			build_path = "/obj/item/weapon/stock_parts/micro_manipulator"
+			build_path = "/obj/item/weapon/stock_parts/manipulator"
 
 		basic_micro_laser
 			name = "Basic Micro-Laser"
@@ -483,7 +483,7 @@ datum
 			req_tech = list("powerstorage" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 50, "$glass" = 50)
-			build_path = "/obj/item/weapon/stock_parts/adv_capacitor"
+			build_path = "/obj/item/weapon/stock_parts/capacitor/adv"
 
 		adv_sensor
 			name = "Advanced Sensor Module"
@@ -492,7 +492,7 @@ datum
 			req_tech = list("magnets" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 50, "$glass" = 20)
-			build_path = "/obj/item/weapon/stock_parts/adv_scanning_module"
+			build_path = "/obj/item/weapon/stock_parts/scanning_module/adv"
 
 		nano_mani
 			name = "Nano Manipulator"
@@ -501,7 +501,7 @@ datum
 			req_tech = list("robotics" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 30)
-			build_path = "/obj/item/weapon/stock_parts/nano_manipulator"
+			build_path = "/obj/item/weapon/stock_parts/manipulator/nano"
 
 		high_micro_laser
 			name = "High-Power Micro-Laser"
@@ -510,7 +510,7 @@ datum
 			req_tech = list("magnets" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 10, "$glass" = 20)
-			build_path = "/obj/item/weapon/stock_parts/high_micro_laser"
+			build_path = "/obj/item/weapon/stock_parts/micro_laser/high"
 
 		adv_matter_bin
 			name = "Advanced Matter Bin"
@@ -519,7 +519,7 @@ datum
 			req_tech = list("materials" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 80)
-			build_path = "/obj/item/weapon/stock_parts/adv_matter_bin"
+			build_path = "/obj/item/weapon/stock_parts/matter_bin/adv"
 
 ////////////////////////////////////////
 //////////////////Power/////////////////

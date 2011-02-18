@@ -1777,7 +1777,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	m_amt = 50
 	g_amt = 20
 
-/obj/item/weapon/stock_parts/micro_manipulator/nano
+/obj/item/weapon/stock_parts/manipulator/nano
 	name = "Nano-Manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
