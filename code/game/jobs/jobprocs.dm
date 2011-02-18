@@ -563,6 +563,13 @@
 			src.equip_if_possible(new /obj/item/clothing/under/rank/cargo(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/quartermaster(src), slot_belt)
 
+		if ("Mail Sorter")
+			src.equip_if_possible(new /obj/item/device/radio/headset/headset_cargo(src), slot_ears)
+			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
+			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
+			src.equip_if_possible(new /obj/item/clothing/under/rank/cargo(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/device/pda/quartermaster(src), slot_belt)
+
 		if ("Chief Engineer")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/ce (src), slot_ears)
 			src.equip_if_possible(new /obj/item/device/pda/heads(src), slot_belt)

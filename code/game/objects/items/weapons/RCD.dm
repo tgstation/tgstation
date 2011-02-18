@@ -11,6 +11,7 @@ RCD
 	return
 
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/weapon/rcd_ammo))
 		if ((matter + 10) > 30)
 			user << "The RCD cant hold any more matter."

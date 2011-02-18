@@ -37,7 +37,7 @@
 	var/oldloc = null
 	req_access = list(access_janitor)
 	var/path[] = new()
-	
+
 /obj/machinery/bot/cleanbot/New()
 	..()
 	src.get_targets()
@@ -248,6 +248,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	return
 
 /obj/item/weapon/bucket_sensor/attackby(var/obj/item/W, mob/user as mob)
+	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot
 		if(user.r_hand == src || user.l_hand == src)

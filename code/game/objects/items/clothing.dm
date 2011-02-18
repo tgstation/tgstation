@@ -42,6 +42,7 @@ THERMAL GLASSES
 	return
 
 /obj/item/clothing/shoes/orange/attackby(H as obj, loc)
+	..()
 	if ((istype(H, /obj/item/weapon/handcuffs) && !( src.chained )))
 		//H = null
 		del(H)
@@ -121,6 +122,7 @@ THERMAL GLASSES
 
 
 /obj/item/clothing/under/chameleon/attackby(obj/item/clothing/under/U as obj, mob/user as mob)
+	..()
 
 	if(istype(U, /obj/item/clothing/under/chameleon))
 		user << "\red Nothing happens."

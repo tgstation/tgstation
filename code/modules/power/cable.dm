@@ -203,6 +203,7 @@
 		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
 
 /obj/item/weapon/cable_coil/attackby(obj/item/weapon/W, mob/user)
+	..()
 	if( istype(W, /obj/item/weapon/wirecutters) && src.amount > 1)
 		src.amount--
 		new/obj/item/weapon/cable_coil(user.loc, 1)

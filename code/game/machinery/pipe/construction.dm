@@ -41,7 +41,7 @@ Buildable meters
 			is_bent = 1
 		if     (istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction))
 			src.pipe_type = PIPE_JUNCTION
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging)) 
+		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
 			src.pipe_type = PIPE_HE_STRAIGHT + is_bent
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/insulated))
 			src.pipe_type = PIPE_INSULATED_STRAIGHT + is_bent
@@ -199,6 +199,7 @@ Buildable meters
 	return rotate()
 
 /obj/item/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	..()
 	//*
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
@@ -421,6 +422,7 @@ Buildable meters
 	w_class = 4
 
 /obj/item/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	..()
 
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()

@@ -12,7 +12,7 @@
 		src.frequency = sanitize_frequency(src.frequency)
 
 	set_frequency(frequency)
-	
+
 	for (var/ch_name in channels)
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
 
@@ -270,7 +270,7 @@ Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[li
 	if ((R.frequency == src.frequency && message))
 		return 1
 	else if
-		
+
 	else
 		return null
 	return
@@ -315,6 +315,7 @@ Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[li
 	return
 
 /obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	user.machine = src
 	if (!( istype(W, /obj/item/weapon/screwdriver) ))
 		return

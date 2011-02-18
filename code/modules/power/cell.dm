@@ -62,6 +62,7 @@
 
 //Just because someone gets you occasionally with stun gloves doesn't mean you can put in code to kill everyone who tries to make some.
 /obj/item/weapon/cell/attackby(obj/item/W, mob/user)
+	..()
 	var/obj/item/clothing/gloves/G = W
 	if(istype(G))
 	//	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread

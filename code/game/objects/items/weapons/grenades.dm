@@ -44,6 +44,7 @@ FLASHBANG
 	return
 
 /obj/item/weapon/flashbang/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/weapon/screwdriver))
 		switch(src.det_time)
 			if ("1")

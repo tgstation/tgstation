@@ -16,6 +16,7 @@ IMPLANTER
 	return
 
 /obj/item/weapon/implantcase/attackby(obj/item/weapon/I as obj, mob/user as mob)
+	..()
 	if (istype(I, /obj/item/weapon/pen))
 		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 		if (user.equipped() != I)
@@ -111,7 +112,7 @@ IMPLANTER
 	return
 
 /obj/item/weapon/implantpad/attackby(obj/item/weapon/implantcase/C as obj, mob/user as mob)
-
+	..()
 	if (istype(C, /obj/item/weapon/implantcase))
 		if (!( src.case ))
 			user.drop_item()

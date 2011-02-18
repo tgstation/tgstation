@@ -226,6 +226,7 @@
 
 
 /obj/item/scrap/attackby(obj/item/I, mob/user)
+	..()
 	if(istype(I, /obj/item/scrap))
 		var/obj/item/scrap/S = I
 		if( (S.total()+src.total() ) > MAX_SCRAP )

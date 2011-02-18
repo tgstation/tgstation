@@ -21,11 +21,12 @@
 	fuel = 1e-12		//pico-kilogram
 
 /obj/item/weapon/fuel/attackby(obj/item/weapon/fuel/F, mob/user)
+	..()
 	if(istype(src, /obj/item/weapon/fuel/antiH))
 		if(istype(F, /obj/item/weapon/fuel/antiH))
 			src.fuel += F.fuel
 			F.fuel = 0
-			user << "You have added the anti-Hydorgen to the storage ring, it now contains [src.fuel]kg"
+			user << "You have added the anti-Hydrogen to the storage ring, it now contains [src.fuel]kg"
 		if(istype(F, /obj/item/weapon/fuel/H))
 			src.fuel += F.fuel
 			del(F)
@@ -34,7 +35,7 @@
 		if(istype(F, /obj/item/weapon/fuel/H))
 			src.fuel += F.fuel
 			F.fuel = 0
-			user << "You have added the Hydorgen to the storage ring, it now contains [src.fuel]kg"
+			user << "You have added the Hydrogen to the storage ring, it now contains [src.fuel]kg"
 		if(istype(F, /obj/item/weapon/fuel/antiH))
 			src.fuel += F.fuel
 			del(src)

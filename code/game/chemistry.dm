@@ -41,6 +41,7 @@
 	src.mustard_gas.set_up(5, 0, usr.loc)
 
 /obj/item/weapon/smokebomb/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/weapon/screwdriver))
 		if (src.det_time == 60)
 			src.det_time = 20
@@ -109,6 +110,7 @@
 	return
 
 /obj/item/weapon/mustardbomb/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/weapon/screwdriver))
 		if (src.det_time == 80)
 			src.det_time = 40
@@ -208,6 +210,7 @@
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/trashcan/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 
 	if (src.contents.len >= 7)
 		user << "The trashcan is full!"

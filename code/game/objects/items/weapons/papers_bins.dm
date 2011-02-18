@@ -212,6 +212,7 @@ CLIPBOARDS
 	return
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)
+	..()
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1
@@ -410,6 +411,7 @@ CLIPBOARDS
 // WRAPPING PAPER
 
 /obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (!( locate(/obj/table, src.loc) ))
 		user << "\blue You MUST put the paper on a table!"
 	if (W.w_class < 4)
@@ -497,6 +499,7 @@ CLIPBOARDS
 	user << "\blue You cant move."
 
 /obj/spresent/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 
 	if (!istype(W, /obj/item/weapon/wirecutters))
 		user << "/blue I need wirecutters for that."
@@ -737,7 +740,7 @@ CLIPBOARDS
 	return
 
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/P as obj, mob/user as mob)
-
+	..()
 	if (istype(P, /obj/item/weapon/paper))
 		if (src.contents.len < 15)
 			user.drop_item()

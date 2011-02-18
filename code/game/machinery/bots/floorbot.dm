@@ -360,7 +360,7 @@
 
 	if (amount)
 		new /obj/item/stack/tile(Tsec) // only one tile, yes
-		
+
 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -369,6 +369,7 @@
 
 
 /obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/T, mob/user as mob)
+	..()
 	if(!istype(T, /obj/item/stack/tile))
 		..()
 		return
@@ -391,6 +392,7 @@
 	del(src)
 
 /obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
+	..()
 	if(istype(W, /obj/item/device/prox_sensor))
 		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor
 		B.loc = user
@@ -416,6 +418,7 @@
 		src.created_name = t
 
 /obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob)
+	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
 		if(user.r_hand == src || user.l_hand == src)

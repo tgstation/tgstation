@@ -487,6 +487,7 @@
 // attack bulb/tube with object
 // if a syringe, can inject plasma to make it explode
 /obj/item/weapon/light/attackby(var/obj/item/I, var/mob/user)
+	..()
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 

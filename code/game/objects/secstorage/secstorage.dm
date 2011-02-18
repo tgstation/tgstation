@@ -93,6 +93,7 @@
 	return
 
 /obj/item/weapon/secstorage/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if ((W.w_class > 3 || istype(W, /obj/item/weapon/secstorage)))
 		return
 	if ((istype(W, /obj/item/weapon/card/emag)) && (src.locked == 1) && (!src.emagged))

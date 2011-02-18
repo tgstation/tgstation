@@ -686,7 +686,7 @@
 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	
+
 	new /obj/decal/cleanable/oil(src.loc)
 	del(src)
 
@@ -699,6 +699,7 @@
 //Secbot Construction
 
 /obj/item/clothing/head/helmet/attackby(var/obj/item/device/radio/signaler/S, mob/user as mob)
+	..()
 	if (!istype(S, /obj/item/device/radio/signaler))
 		..()
 		return
@@ -724,6 +725,7 @@
 
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if ((istype(W, /obj/item/weapon/weldingtool)) && (!src.build_step))
 		if(W:remove_fuel(1,user))
 			src.build_step++

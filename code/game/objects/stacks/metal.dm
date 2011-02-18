@@ -11,6 +11,7 @@ FLOOR TILES
 // RODS
 
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		if(amount < 2)
 			user << "\red You need at least two rods to do this."

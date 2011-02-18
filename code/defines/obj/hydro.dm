@@ -469,6 +469,7 @@
 		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "This is a \blue [name]"
 		switch(plant_type)
@@ -492,6 +493,7 @@
 		return
 
 /obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		user << "This is a \blue [name]"
 		switch(plant_type)

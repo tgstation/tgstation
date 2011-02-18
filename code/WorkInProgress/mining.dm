@@ -1468,6 +1468,7 @@ proc/move_mining_shuttle()
 	icon_state = "ore"
 
 /obj/item/weapon/ore/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/weapon/satchel))
 		var/obj/item/weapon/satchel/S = W
 		if (S.mode == 1)
@@ -1554,6 +1555,7 @@ proc/move_mining_shuttle()
 	return
 
 /obj/item/weapon/satchel/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/weapon/ore))
 		var/obj/item/weapon/ore/O = W
 		src.contents += O;
@@ -2637,6 +2639,7 @@ proc/move_mining_shuttle()
 	user << browse("[dat]", "window=moneybag")
 
 /obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W
 		user << "\blue You add the [C.name] into the bag."

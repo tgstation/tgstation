@@ -102,6 +102,7 @@ var
 	wardenMax = 1
 	cmoMax = 1
 	mimeMax = 1
+	sorterMax = 2
 
 	list/bombers = list(  )
 	list/admin_log = list (  )

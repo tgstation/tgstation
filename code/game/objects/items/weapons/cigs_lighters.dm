@@ -72,6 +72,7 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 //CIGARETTES + CIGARS//
 ///////////////////////
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if(istype(W, /obj/item/weapon/weldingtool)  && W:welding)
 		if(src.lit == 0)
 			src.lit = 1

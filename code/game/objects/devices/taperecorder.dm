@@ -35,6 +35,7 @@
 		return
 
 /obj/item/device/taperecorder/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/weapon/card/emag))
 		if (src.emagged == 0)
 			src.emagged = 1

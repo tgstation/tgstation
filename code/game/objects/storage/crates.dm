@@ -251,7 +251,14 @@
 	return attack_hand(user)
 
 /obj/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(opened)
+	if (istype(W, /obj/item/weapon/packageWrap))
+		var/obj/item/weapon/packageWrap/O = W
+		if (O.amount > 3)
+			var/obj/bigDelivery/P = new /obj/bigDelivery(get_turf(src.loc))
+			P.wrapped = src
+			src.loc = P
+			O.amount -= 3
+	else if(opened)
 		user.drop_item()
 		if(W)
 			W.loc = src.loc

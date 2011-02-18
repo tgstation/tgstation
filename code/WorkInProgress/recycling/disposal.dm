@@ -300,6 +300,7 @@
 		var/obj/disposalholder/H = new()	// virtual holder object which actually
 											// travels through the pipes.
 
+
 		H.init(src)	// copy the contents of disposer to holder
 
 		air_contents = new()		// new empty gas resv.
@@ -358,6 +359,7 @@
 	dir = 0
 	var/count = 1000	//*** can travel 1000 steps before going inactive (in case of loops)
 	var/has_fat_guy = 0	// true if contains a fat person
+	var/destinationTag = 0 // changes if contains a delivery container
 
 
 	// initialize a holder from the contents of a disposal unit
@@ -373,6 +375,13 @@
 				var/mob/living/carbon/human/H = AM
 				if(H.mutations & 32)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
+			if(istype(AM, /obj/bigDelivery))
+				var/obj/bigDelivery/T = AM
+				src.destinationTag = T.sortTag
+			if(istype(AM, /obj/item/smallDelivery))
+				var/obj/item/smallDelivery/T = AM
+				src.destinationTag = T.sortTag
+
 
 
 
@@ -504,7 +513,7 @@
 				..()
 				return
 
-			// otherswise, do normal expel from turf
+			// otherwise, do normal expel from turf
 			expel(H, T, 0)
 		..()
 
@@ -640,7 +649,7 @@
 				del(H)
 				return
 
-			// otherswise, do normal expel from turf
+			// otherwise, do normal expel from turf
 			expel(H, T, 0)
 
 		spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
@@ -789,6 +798,69 @@
 				return setbit
 			else
 				return mask & (~setbit)
+
+//a three-way junction that sorts objects
+/obj/disposalpipe/sortjunction
+
+	desc = "An underfloor disposal pipe with a package sorting mechanism."
+	icon_state = "pipe-j1s"
+	var/sortType = 0
+	var/posdir = 0
+	var/negdir = 0
+	var/sortdir = 0
+
+	New()
+		..()
+		posdir = dir
+		if(icon_state == "pipe-j1s")
+			sortdir = turn(posdir, -90)
+			negdir = turn(posdir, 180)
+		else
+			icon_state = "pipe-j2s"
+			sortdir = turn(posdir, 90)
+			negdir = turn(posdir, 180)
+		dpdir = sortdir | posdir | negdir
+
+		update()
+		return
+
+
+	// next direction to move
+	// if coming in from negdir, then next is primary dir or sortdir
+	// if coming in from posdir, then flip around and go back to posdir
+	// if coming in from sortdir, go to posdir
+
+	nextdir(var/fromdir, var/sortTag)
+		//var/flipdir = turn(fromdir, 180)
+		if(fromdir != sortdir)	// probably came from the negdir
+
+			if(src.sortType == sortTag) //if destination matches filtered type...
+				return sortdir		// exit through sortdirection
+			else
+				return posdir
+		else				// came from sortdir
+							// so go with the flow to positive direction
+			return posdir
+
+	transfer(var/obj/disposalholder/H)
+		var/nextdir = nextdir(H.dir, H.destinationTag)
+		H.dir = nextdir
+		var/turf/T = H.nextloc()
+		var/obj/disposalpipe/P = H.findpipe(T)
+
+		if(P)
+			// find other holder in next loc, if inactive merge it with current
+			var/obj/disposalholder/H2 = locate() in P
+			if(H2 && !H2.active)
+				H.merge(H2)
+
+			H.loc = P
+		else			// if wasn't a pipe, then set loc to turf
+			H.loc = T
+			return null
+
+		return P
+
 
 
 

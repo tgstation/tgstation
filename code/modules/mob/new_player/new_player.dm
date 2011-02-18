@@ -234,6 +234,8 @@ mob/new_player
 					AttemptLateSpawn("Shaft Miner", minerMax)
 				if ("30")
 					AttemptLateSpawn("Mime", mimeMax)
+				if ("31")
+					AttemptLateSpawn("Mail Sorter", sorterMax)
 
 		if(!ready && href_list["preferences"])
 			preferences.process_link(src, href_list)
@@ -406,6 +408,8 @@ mob/new_player
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=28'>Warden</a><br>"
 		if (IsJobAvailable("Shaft Miner",minerMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=29'>Shaft Miner</a> (BETA)<br>"
+		if (IsJobAvailable("Mail Sorter",sorterMax))
+			dat += "<a href='byond://?src=\ref[src];SelectedJob=31'>Mail Sorter</a> (BETA)<br>"
 		if (!jobban_isbanned(src,"Assistant"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=18'>Assistant</a><br>"
 

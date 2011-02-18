@@ -441,6 +441,10 @@ proc/process_ghost_teleport_locs()
 	name = "Atmospherics"
 	icon_state = "green"
 
+/area/maintenance/incinerator
+	name = "Incinerator"
+	icon_state = "disposal"
+
 /area/maintenance/disposal
 	name = "Waste Disposal"
 	icon_state = "disposal"
@@ -757,7 +761,7 @@ proc/process_ghost_teleport_locs()
 ///////////WORK IN PROGRESS//////////
 
 /area/quartermaster/sorting
-	name = "Construction Area"
+	name = "Delivery Office"
 	icon_state = "quartstorage"
 
 ////////////WORK IN PROGRESS//////////

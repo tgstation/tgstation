@@ -166,6 +166,7 @@
 	return
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	var/obj/item/weapon/icon = src
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
@@ -364,6 +365,7 @@
 	del(src)
 
 /obj/item/weapon/tank/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
 	..()
 	if (istype(W, /obj/item/assembly/rad_ignite))
 		var/obj/item/assembly/rad_ignite/S = W

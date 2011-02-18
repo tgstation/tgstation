@@ -61,6 +61,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	return
 
 /obj/item/assembly/weld_rod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/weapon/wrench) )
 		var/turf/T = src.loc
 		if (ismob(T))
@@ -114,6 +115,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	return
 
 /obj/item/assembly/w_r_ignite/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
@@ -156,6 +158,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		location.hotspot_expose(700, 2)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob)
+	..()
 	if(user.stat || user.restrained() || user.lying)
 		return
 	if (istype(W,/obj/item/weapon/tank/plasma))

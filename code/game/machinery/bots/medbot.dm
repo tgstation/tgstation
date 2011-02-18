@@ -527,6 +527,7 @@
  */
 
 /obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob)
+	..()
 	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		if (src.contents.len >= 7)
 			return
@@ -564,6 +565,7 @@
 		del(src)
 
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if ((istype(W, /obj/item/device/healthanalyzer)) && (!src.build_step))
 		src.build_step++
 		user << "You add the health sensor to [src]!"

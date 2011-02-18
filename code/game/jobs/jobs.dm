@@ -23,6 +23,7 @@ var/list/occupations = list(
 	"Chemist", "Chemist",
 	"Quartermaster",
 	"Cargo Technician","Cargo Technician",
+	"Mail Sorter", "Mail Sorter",
 	"Botanist", "Botanist",
 	"Librarian",
 	"Lawyer",

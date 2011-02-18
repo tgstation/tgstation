@@ -49,6 +49,7 @@ PLANT ANALYZER
 					M.invisibility = 2
 
 /obj/item/device/detective_scanner/attackby(obj/item/weapon/f_card/W as obj, mob/user as mob)
+	..()
 
 	if (istype(W, /obj/item/weapon/f_card))
 		if (W.fingerprints)

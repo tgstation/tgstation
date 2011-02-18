@@ -38,6 +38,7 @@ MEDICAL
 		..()
 
 /obj/item/weapon/medical/attackby(obj/item/weapon/medical/W as obj, mob/user as mob)
+	..()
 	if (!istype(W, src.type))
 		return
 

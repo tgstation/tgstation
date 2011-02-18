@@ -13,7 +13,7 @@
 	..()
 	if (amount)
 		src.amount=amount
-	
+
 	return
 
 /obj/item/stack/examine()
@@ -61,6 +61,7 @@
 	return
 
 /obj/item/stack/attackby(obj/item/W as obj, mob/user as mob)
+	..()
 	if (istype(W, src.type))
 		var/obj/item/stack/S = W
 		if (S.amount >= max_amount)
@@ -82,7 +83,7 @@
 	src.blood_DNA = from.blood_DNA
 	src.blood_type = from.blood_type
 	src.fingerprints  = from.fingerprints
-	src.fingerprintshidden  = from.fingerprintshidden 
+	src.fingerprintshidden  = from.fingerprintshidden
 	src.fingerprintslast  = from.fingerprintslast
 	//TODO bloody overlay
 
@@ -157,7 +158,7 @@
 		return
 	if (href_list["make"])
 		if (src.amount < 1) del(src) //Never should happen
-			
+
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
 		if (!multiplier) multiplier = 1

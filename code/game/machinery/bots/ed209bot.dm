@@ -788,6 +788,7 @@ Auto Patrol: []"},
 
 
 /obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (((istype(W, /obj/item/robot_parts/l_leg)) || (istype(W, /obj/item/robot_parts/r_leg))) && (src.build_step == 0 || src.build_step == 1))
 		src.build_step++
 		user << "You add the robot leg to [src]!"

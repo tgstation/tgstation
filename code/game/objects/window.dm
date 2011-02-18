@@ -151,6 +151,7 @@
 /obj/window/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 
+
 	if (istype(W, /obj/item/weapon/screwdriver))
 		if(reinf && state >= 1)
 			state = 3 - state

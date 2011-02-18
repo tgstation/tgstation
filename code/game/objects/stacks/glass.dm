@@ -54,6 +54,7 @@ SHARDS
 	construct_window(usr, src)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
+	..()
 	if( istype(W, /obj/item/stack/rods) )
 		var/obj/item/stack/rods/V  = W
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
@@ -113,6 +114,7 @@ SHARDS
 	return
 
 /obj/item/weapon/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if ( istype(W, /obj/item/weapon/weldingtool) && W:welding )
 		W:eyecheck(user)
 		new /obj/item/stack/sheet/glass( user.loc )

@@ -22,6 +22,7 @@
 	return
 
 /obj/item/device/radio/electropack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 
 	if (istype(W, /obj/item/weapon/screwdriver))
 		src.e_pads = !( src.e_pads )

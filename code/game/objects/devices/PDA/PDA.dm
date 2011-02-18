@@ -612,6 +612,7 @@
 
 
 /obj/item/device/pda/attackby(obj/item/weapon/C as obj, mob/user as mob)
+	..()
 	if (istype(C, /obj/item/weapon/cartridge) && isnull(src.cartridge))
 		user.drop_item()
 		C.loc = src

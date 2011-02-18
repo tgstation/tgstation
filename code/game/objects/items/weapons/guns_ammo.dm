@@ -129,6 +129,7 @@ TELEPORT GUN
 	return
 
 obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/user as mob)
+	..()
 
 	if (istype(A, /obj/item/weapon/ammo/a357))
 		if (src.bullets >= 7)
@@ -242,6 +243,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 //0, not loaded. 1, beanbag, 2, 12gauge, 3, blank, 4, dart.
 
 /obj/item/weapon/gun/shotgun/attackby(obj/item/weapon/A as obj, mob/user as mob)
+	..()
 	if (istype(A, /obj/item/weapon/ammo/shell/beanbag))
 		if (index == src.shellsmax || shellsunlimited >= 1) //...than sorry.
 			user << "\blue It's already fully loaded!"
@@ -434,6 +436,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	return
 
 /obj/item/weapon/gun/detectiverevolver/attackby(obj/item/weapon/ammo/a38/A as obj, mob/user as mob)
+	..()
 
 	if (istype(A, /obj/item/weapon/ammo/a38))
 		if (src.bullets >= 7)

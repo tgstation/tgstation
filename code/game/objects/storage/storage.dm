@@ -80,7 +80,7 @@
 	return
 
 /obj/item/weapon/storage/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+	..()
 	if(can_hold.len)
 		var/ok = 0
 		for(var/A in can_hold)
@@ -250,6 +250,7 @@
 	src.add_fingerprint(user)
 
 /obj/item/weapon/storage/utilitybelt/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if(!can_use())
 		user << "\red I need to wear the belt for that."
 		return

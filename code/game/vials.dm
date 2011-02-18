@@ -45,6 +45,7 @@
 	user << "\blue The vial shatters."
 	src.shatter()
 /obj/item/weapon/vial/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	user << "\blue The vial shatters."
 	src.shatter()
 /obj/item/weapon/vial/attack_self(mob/user as mob)

@@ -144,6 +144,17 @@
 	user.update_clothing()
 	return
 
+/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/packageWrap))
+		var/obj/item/weapon/packageWrap/O = W
+		if (O.amount > 1)
+			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(src.loc))
+			P.wrapped = src
+
+			src.loc = P
+			O.amount -= 1
+
+
 /obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone)
 	if (!M) // not sure if this is the right thing...
 		return

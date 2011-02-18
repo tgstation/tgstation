@@ -117,6 +117,7 @@
 	return
 
 /obj/item/assembly/time_ignite/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
@@ -151,6 +152,7 @@
 //***********
 
 /obj/item/assembly/anal_ignite/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
@@ -225,6 +227,7 @@
 		src.add_fingerprint(user)
 */
 /obj/item/assembly/a_i_a/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
@@ -268,6 +271,7 @@
 	return
 
 /obj/item/assembly/rad_time/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
 		var/turf/T = src.loc
@@ -325,7 +329,7 @@
 	return
 
 /obj/item/assembly/rad_prox/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+	..()
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
@@ -387,7 +391,7 @@
 	return
 
 /obj/item/assembly/rad_infra/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+	..()
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
@@ -475,6 +479,7 @@
 	return
 
 /obj/item/assembly/prox_ignite/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
@@ -535,7 +540,7 @@
 		return
 
 /obj/item/assembly/rad_ignite/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+	..()
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
 		var/turf/T = src.loc
 		if (ismob(T))
@@ -636,6 +641,7 @@
 	return
 
 /obj/item/assembly/m_i_ptank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/device/analyzer))
 		src.part3.attackby(W, user)
 
@@ -734,6 +740,7 @@
 	return
 
 /obj/item/assembly/t_i_ptank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 
 	if (istype(W, /obj/item/device/analyzer))
 		src.part3.attackby(W, user)
@@ -827,6 +834,7 @@
 	return
 
 /obj/item/assembly/r_i_ptank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 
 	if (istype(W, /obj/item/device/analyzer))
 		src.part3.attackby(W, user)
@@ -883,6 +891,7 @@
 //*****RM
 
 /obj/item/clothing/suit/armor/a_i_a_ptank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if (istype(W, /obj/item/device/analyzer))
 		src.part4.attackby(W, user)
 

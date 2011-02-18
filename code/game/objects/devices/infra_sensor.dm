@@ -111,6 +111,7 @@
 	return
 
 /obj/item/device/infra/attackby(obj/item/device/radio/signaler/S as obj, mob/user as mob)
+	..()
 	if ((!( istype(S, /obj/item/device/radio/signaler) ) || !( S.b_stat )))
 		return
 	var/obj/item/assembly/rad_infra/R = new /obj/item/assembly/rad_infra( user )

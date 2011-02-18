@@ -118,6 +118,7 @@ FINGERPRINT CARD
 	return
 
 /obj/item/weapon/fcardholder/attackby(obj/item/weapon/P as obj, mob/user as mob)
+	..()
 	if (istype(P, /obj/item/weapon/f_card))
 		if (src.contents.len < 30)
 			user.drop_item()
@@ -205,7 +206,7 @@ FINGERPRINT CARD
 	return
 
 /obj/item/weapon/f_card/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+	..()
 	if (istype(W, /obj/item/weapon/f_card))
 		if ((src.fingerprints || W.fingerprints))
 			return
