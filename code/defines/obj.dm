@@ -3,7 +3,7 @@
 	var/m_amt = 0	// metal
 	var/g_amt = 0	// glass
 	var/w_amt = 0	// waster amounts
-	var/list/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
+	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/crit_fail = 0
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
@@ -771,7 +771,7 @@
 	anchored = 1
 	unacidable = 1//temporary until I decide whether the borg can be removed. -veyveyr
 
-obj/item/brain
+/obj/item/brain
 	name = "brain"
 	icon = 'surgery.dmi'
 	icon_state = "brain2"
@@ -781,6 +781,7 @@ obj/item/brain
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 5
+	origin_tech = "biotech=3"
 
 	var/mob/living/carbon/human/owner = null
 

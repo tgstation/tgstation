@@ -18,6 +18,7 @@
 	w_class = 4.0
 	g_amt = 7500
 	m_amt = 1000
+	origin_tech = "materials=2"
 
 /obj/item/weapon/match
 	name = "Match"
@@ -27,6 +28,7 @@
 	var/lit = 0
 	var/smoketime = 5
 	w_class = 1.0
+	origin_tech = "materials=1"
 
 /obj/item/weapon/matchbox
 	name = "Matchbox"
@@ -58,6 +60,7 @@
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 50000
+	origin_tech = "materials=3"
 	var/datum/effects/system/spark_spread/spark_system
 
 
@@ -70,6 +73,7 @@
 	opacity = 0
 	density = 0
 	anchored = 0.0
+	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000
 
@@ -159,6 +163,7 @@
 	throw_range = 20
 	m_amt = 30
 	g_amt = 20
+	origin_tech = "magnets=1"
 
 
 /obj/item/weapon/axe
@@ -235,11 +240,13 @@
 	desc = "A pack designed to treat blunt-force trauma."
 	icon_state = "brutepack"
 	heal_brute = 60
+	origin_tech = "biotech=1"
 
 /obj/item/weapon/medical/ointment
 	name = "ointment"
 	icon_state = "ointment"
 	heal_burn = 40
+	origin_tech = "biotech=1"
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
@@ -256,6 +263,7 @@
 	var/last_pic = 1.0
 	item_state = "wrench"
 	w_class = 2.0
+	origin_tech = "magnets=1"
 
 /obj/item/weapon/card
 	name = "card"
@@ -285,6 +293,7 @@
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
+	origin_tech = "magnets=2;syndicate=2"
 
 /obj/item/weapon/card/id
 	name = "identification card"
@@ -302,6 +311,7 @@
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels)
+	origin_tech = "syndicate=2"
 
 /obj/item/weapon/card/id/captains_spare
 	name = "Captain's spare ID"
@@ -347,6 +357,7 @@
 	throw_speed = 2
 	throw_range = 10
 	w_class = 2.0
+	origin_tech = "magnets=3;syndicate=3"
 
 #define MAXCOIL 30
 /obj/item/weapon/cable_coil
@@ -365,6 +376,7 @@
 /obj/item/weapon/cable_coil/cut
 	icon = 'power.dmi'
 	icon_state = "coil2"
+	origin_tech = "materials=1"
 
 /obj/item/weapon/crowbar
 	name = "crowbar"
@@ -376,7 +388,7 @@
 	item_state = "wrench"
 	w_class = 2.0
 	m_amt = 50
-	
+
 /obj/item/weapon/crowbar/red
 	icon = 'items.dmi'
 	icon_state = "red_crowbar"
@@ -412,6 +424,7 @@
 	force = 10.0
 	item_state = "fire_extinguisher"
 	m_amt = 90
+	origin_tech = "materials=1"
 
 /obj/item/weapon/f_card
 	name = "Finger Print Card"
@@ -444,6 +457,7 @@
 	throw_speed = 4
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	origin_tech = "materials=2"
 
 /obj/item/weapon/empgrenade
 	desc = "It is set to detonate in 5 seconds."
@@ -457,6 +471,7 @@
 	throw_speed = 4
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	origin_tech = "materials=2;magnets=3"
 
 /obj/item/weapon/flasks
 	name = "flask"
@@ -528,6 +543,7 @@
 	w_class = 2.0
 	throw_speed = 4
 	throw_range = 10
+	origin_tech = "combat=1"
 
 /obj/item/weapon/gun/shotgun
 	name = "shotgun"
@@ -541,6 +557,7 @@
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 	var/pumped = 0
 	shellsmax = 2
+	origin_tech = "combat=2"
 
 /obj/item/weapon/gun/shotgun/combat
 	name = "combat shotgun"
@@ -549,11 +566,13 @@
 	force = 12.0
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY // THERE IS NO COMBAT SHOTGUN BACK SPRITE. DON'T ADD ONBACK -- Callagan
 	shellsmax = 8
+	origin_tech = "combat=3"
 
 /obj/item/weapon/gun/energy
 	name = "energy"
 	var/charges = 10.0
 	var/maximum_charges = 10.0
+	origin_tech = "combat=2;magnets=2"
 
 /obj/item/weapon/gun/energy/taser_gun
 	name = "taser gun"
@@ -566,6 +585,7 @@
 	charges = 4
 	maximum_charges = 4
 	m_amt = 2000
+	origin_tech = "combat=2;magnets=2"
 
 /obj/item/weapon/gun/energy/teleport_gun
 	name = "teleport gun"
@@ -581,6 +601,7 @@
 	m_amt = 2000
 	var/failchance = 5
 	var/obj/item/target = null
+	origin_tech = "combat=2;magnets=2;bluespace=3"
 
 /obj/item/weapon/gun/energy/crossbow // Laaazy
 	name = "mini energy-crossbow"
@@ -594,6 +615,7 @@
 	charges = 3
 	maximum_charges = 3
 	m_amt = 2000
+	origin_tech = "combat=2;magnets=2;syndicate=2"
 
 /obj/item/weapon/gun/energy/laser_gun
 	name = "laser gun"
@@ -603,6 +625,7 @@
 	throw_range = 10
 	force = 7.0
 	m_amt = 2000
+	origin_tech = "combat=3;magnets=2"
 
 /obj/item/weapon/gun/energy/laser_gun/captain
 	icon_state = "caplaser"
@@ -619,11 +642,13 @@
 	throw_range = 10
 	force = 24.0
 	m_amt = 2000
+	origin_tech = "combat=3;materials=2"
 
 /obj/item/weapon/gun/revolver/mateba
 	desc = "There are 0 bullets left. Uses 357"
 	name = "revolver"
 	icon_state = "mateba"
+	origin_tech = "combat=2;materials=2"
 
 /obj/item/weapon/gun/detectiverevolver
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
@@ -635,6 +660,7 @@
 	throw_range = 10
 	force = 14.0
 	m_amt = 1000
+	origin_tech = "combat=2;materials=2"
 
 /obj/item/weapon/hand_tele
 	name = "hand tele"
@@ -646,6 +672,7 @@
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
+	origin_tech = "magnets=1;bluespace=3"
 
 /obj/item/weapon/handcuffs
 	name = "handcuffs"
@@ -657,6 +684,7 @@
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 500
+	origin_tech = "materials=1"
 
 
 /obj/item/weapon/implant
@@ -743,6 +771,7 @@
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 400
+	origin_tech = "magnets=1"
 
 
 
@@ -955,6 +984,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 /obj/item/weapon/pen/sleepypen
 	desc = "It's a normal black ink pen with a sharp point."
 	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
+	origin_tech = "materials=2;biotech=1;syndicate=2"
 
 /obj/item/weapon/rack_parts
 	name = "rack parts"
@@ -1008,6 +1038,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
+	origin_tech = "magnets=2;syndicate=3"
 
 /obj/item/weapon/SWF_uplink
 	name = "station bounced radio"
@@ -1058,6 +1089,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 5
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
+	origin_tech = "magnets=3;syndicate=3"
 
 /obj/item/weapon/sword/pirate
 	name = "energy cutlass"
@@ -1139,6 +1171,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	item_state = "paper"
 	throw_speed = 4
 	throw_range = 20
+	origin_tech = "bluespace=4"
 
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
@@ -1160,6 +1193,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 9
 	w_class = 2.0
 	m_amt = 80
+	origin_tech = "materials=1"
 
 /obj/item/weapon/wrapping_paper
 	name = "wrapping paper"
@@ -1176,6 +1210,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throwforce = 7.0
 	w_class = 2.0
 	m_amt = 150
+	origin_tech = "materials=1"
 
 /obj/item/weapon/cell
 	name = "power cell"
@@ -1183,7 +1218,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	icon = 'power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
-	origin_tech = list("powerstorage" = 1)
+	origin_tech = "powerstorage=1"
 	flags = FPRINT|TABLEPASS
 	force = 5.0
 	throwforce = 5.0
@@ -1200,13 +1235,13 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/cell/high
 	name = "high-capacity power cell"
-	origin_tech = list("powerstorage" = 3)
+	origin_tech = "powerstorage=2"
 	maxcharge = 10000
 	g_amt = 60
 
 /obj/item/weapon/cell/super
 	name = "super-capcity power cell"
-	origin_tech = list("powerstorage" = 5)
+	origin_tech = "powerstorage=3"
 	maxcharge = 20000
 	g_amt = 70
 
@@ -1321,6 +1356,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
+	origin_tech = "materials=1"
 
 /obj/item/weapon/tray
 	name = "Tray"
@@ -1343,6 +1379,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 3
 	throw_range = 5
 	flags = FPRINT | TABLEPASS | CONDUCT
+	origin_tech = "materials=1"
 
 
 /obj/item/weapon/kitchen/utensil/fork
@@ -1372,6 +1409,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 5
 	m_amt = 10000
 	g_amt = 5000
+	origin_tech = "materials=1;biotech=1"
 
 /obj/item/weapon/retractor
 	name = "retractor"
@@ -1379,6 +1417,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	icon_state = "retractor"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
 
 /obj/item/weapon/hemostat
 	name = "hemostat"
@@ -1386,6 +1425,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	icon_state = "hemostat"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
 
 /obj/item/weapon/cautery
 	name = "cautery"
@@ -1393,6 +1433,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	icon_state = "cautery"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
 
 /obj/item/weapon/surgicaldrill
 	name = "surgical drill"
@@ -1400,6 +1441,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	icon_state = "drill"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
 
 /obj/item/weapon/circular_saw
 	name = "circular saw"
@@ -1413,6 +1455,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 5
 	m_amt = 20000
 	g_amt = 10000
+	origin_tech = "materials=1;biotech=1"
 
 /obj/item/weapon/stamp
 	desc = "A rubber stamp for stamping important documents."
@@ -1676,14 +1719,14 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Console Screen"
 	desc = "Used in the construction of computers and other devices with a interactive console."
 	icon_state = "screen"
-	origin_tech = list("materials" = 1)
+	origin_tech = "materials=1"
 	g_amt = 200
 
 /obj/item/weapon/stock_parts/capacitor
 	name = "Capacitor"
 	desc = "A basic capacitor used in the construction of a variety of devices."
 	icon_state = "capacitor"
-	origin_tech = list("energystorage" = 1)
+	origin_tech = "energystorage=1"
 	m_amt = 50
 	g_amt = 50
 
@@ -1691,7 +1734,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Scanning Module"
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
 	icon_state = "scan_module"
-	origin_tech = list("magnets" = 1)
+	origin_tech = "magnets=1"
 	m_amt = 50
 	g_amt = 20
 
@@ -1699,14 +1742,14 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Micro-Manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
-	origin_tech = list("robotics" = 1)
+	origin_tech = "robotics=1"
 	m_amt = 30
 
 /obj/item/weapon/stock_parts/micro_laser
 	name = "Micro-laser"
 	desc = "A tiny laser used in certain devices."
 	icon_state = "micro_laser"
-	origin_tech = list("magnets" = 1)
+	origin_tech = "magnets=1"
 	m_amt = 10
 	g_amt = 20
 
@@ -1714,48 +1757,47 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Matter Bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "matter_bin"
-	origin_tech = list("materials" = 1)
+	origin_tech = "materials=1"
 	m_amt = 80
 
-/obj/item/weapon/stock_parts/adv_capacitor
+/obj/item/weapon/stock_parts/capacitor/adv
 	name = "Advanced Capacitor"
 	desc = "An advanced capacitor used in the construction of a variety of devices."
-	icon_state = "capacitor"
-	origin_tech = list("energystorage" = 3)
+	origin_tech = "energystorage=3"
 	rating = 2
 	m_amt = 50
 	g_amt = 50
 
-/obj/item/weapon/stock_parts/adv_scanning_module
+/obj/item/weapon/stock_parts/scanning_module/adv
 	name = "Advanced Scanning Module"
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
 	icon_state = "scan_module"
-	origin_tech = list("magnets" = 3)
+	origin_tech = "magnets=3"
 	rating = 2
 	m_amt = 50
 	g_amt = 20
 
-/obj/item/weapon/stock_parts/nano_manipulator
+/obj/item/weapon/stock_parts/micro_manipulator/nano
 	name = "Nano-Manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
-	origin_tech = list("robotics" = 3)
+	origin_tech = "robotics=3"
 	rating = 2
 	m_amt = 30
 
-/obj/item/weapon/stock_parts/high_micro_laser
+/obj/item/weapon/stock_parts/micro_laser/high
 	name = "High-Power Micro-laser"
 	desc = "A tiny laser used in certain devices."
 	icon_state = "micro_laser"
-	origin_tech = list("magnets" = 3)
+	origin_tech = "magnets=3"
 	rating = 2
 	m_amt = 10
 	g_amt = 20
 
-/obj/item/weapon/stock_parts/adv_matter_bin
+/obj/item/weapon/stock_parts/matter_bin/adv
 	name = "Advanced Matter Bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "matter_bin"
-	origin_tech = list("materials" = 3)
+	origin_tech = "materials=3"
 	rating = 2
 	m_amt = 80

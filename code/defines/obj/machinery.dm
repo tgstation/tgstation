@@ -12,7 +12,9 @@
 		active_power_usage = 0
 		power_channel = EQUIP
 		//EQUIP,ENVIRON or LIGHT
+		list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 		uid
+		manual = 0
 		global
 			gl_uid = 1
 

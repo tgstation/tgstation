@@ -108,6 +108,7 @@
 
 /obj/item/stack
 	var/list/datum/stack_recipe/recipes
+	origin_tech = "materials=1"
 
 /obj/item/stack/attack_self(mob/user as mob)
 	interact(user)

@@ -33,7 +33,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 - Name:		Pretty obvious. This is often viewable to the players.
 - Desc:		Pretty obvious. Also player viewable.
 - ID:		This is the unique ID of the tech that is used by the various procs to find and/or maniuplate it.
-- Level:	This is the current level of the tech. All techs start at 1 and have a max of 10. Devices and some techs require a certain
+- Level:	This is the current level of the tech. All techs start at 1 and have a max of 20. Devices and some techs require a certain
 level in specific techs before you can produce them.
 - Req_tech:	This is a list of the techs required to unlock this tech path. If left blank, it'll automatically be loaded into the
 research holder datum.
@@ -123,7 +123,7 @@ research holder datum.
 				if(DesignHasReqs(PD))
 					AddDesign2Known(PD)
 			for(var/datum/tech/T in known_tech)
-				T = between(1,T.level,10)
+				T = between(1,T.level,20)
 			for(var/datum/design/D in known_designs)
 				D.CalcReliability(known_tech)
 			return
@@ -203,19 +203,12 @@ datum
 			desc = "The study of technologies that violate Nanotrassen regulations."
 			id = "syndicate"
 
+		combat
+			name = "Combat Systems Research"
+			desc = "The development of offensive and defensive systems."
+			id = "combat"
+
 	//Branch Techs
-		metaltech
-			name = "Metallurgy Research"
-			desc = "Development of new and improved metal alloys for different purposes."
-			id = "metaltech"
-			req_tech = list("materials" = 2)
-
-		glasstech
-			name = "Transparent Material Research"
-			desc = "Development of new and stronger transparent materials (glass, crystal, transparent aluminum, etc)."
-			id = "glasstech"
-			req_tech = list("materials" = 2)
-
 		explosives
 			name = "Explosives Research"
 			desc = "The creation and application of explosive materials."
@@ -227,12 +220,6 @@ datum
 			desc = "Research into more powerful and more reliable sources."
 			id = "generators"
 			req_tech = list("powerstorage" = 2)
-
-		smestech
-			name = "Super-Magnetic Energy Storage Technology"
-			desc = "Design better, stationary power storage devices."
-			id = "smestech"
-			req_tech = list("powerstorage" = 3, "magnets" = 3)
 
 		robotics
 			name = "Robotics Technology"

@@ -3,26 +3,21 @@
 	icon = 'stock_parts.dmi'
 	icon_state = "box_0"
 	density = 1
-	anchored = 0
+	anchored = 1
+	use_power = 0
 	var
 		obj/item/weapon/circuitboard/circuit = null
 		list/components = null
 		list/req_components = null
-		state = 0
+		state = 1
 
 /*
 To Do: Add deconstruct code to constructable machines. A marvelous idea, I know.
 */
+
 /obj/machinery/constructable_frame/machine_frame
 	attackby(obj/item/P as obj, mob/user as mob)
 		switch(state)
-			if(0)
-				if(istype(P, /obj/item/weapon/wrench))
-					playsound(src.loc, 'Ratchet.ogg', 75, 1)
-					user << "\blue You wrench the frame into place."
-					anchored = 1
-					state = 1
-
 			if(1)
 				if(istype(P, /obj/item/weapon/cable_coil))
 					if(P:amount >= 5)
@@ -36,9 +31,9 @@ To Do: Add deconstruct code to constructable machines. A marvelous idea, I know.
 							icon_state = "box_1"
 				if(istype(P, /obj/item/weapon/wrench))
 					playsound(src.loc, 'Ratchet.ogg', 75, 1)
-					user << "\blue You unbolt the frame from the floor."
-					anchored = 0
-					state = 0
+					user << "\blue You dismantle the frame"
+					new /obj/item/stack/sheet/metal(src.loc, 5)
+					del(src)
 			if(2)
 				if(istype(P, /obj/item/weapon/circuitboard))
 					var/obj/item/weapon/circuitboard/B = P
@@ -88,7 +83,15 @@ To Do: Add deconstruct code to constructable machines. A marvelous idea, I know.
 							break
 					if(component_check)
 						playsound(src.loc, 'Screwdriver.ogg', 50, 1)
-						new src.circuit.build_path ( src.loc )
+						var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
+						for(var/obj/O in new_machine.component_parts)
+							del(O)
+						new_machine.component_parts = list()
+						for(var/obj/O in src)
+							O.loc = new_machine
+							new_machine.component_parts += O
+						circuit.loc = new_machine
+						new_machine.RefreshParts()
 						del(src)
 
 				if(istype(P, /obj/item/weapon))
@@ -105,7 +108,7 @@ To Do: Add deconstruct code to constructable machines. A marvelous idea, I know.
 
 //Machine Frame Circuit Boards
 /*Common Parts: Parts List: Ignitor, Timer, Infra-red laser, Infra-red sensor, t_scanner, Capacitor, Valve, sensor unit,
-micro-manipulator, console screen, beaker, Microlaser, matter bin
+micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 Note: Once everything is added to the public areas, will add m_amt and g_amt to circuit boards since autolathe won't be able
 to destroy them and players will be able to make replacements.
 */
@@ -113,36 +116,38 @@ to destroy them and players will be able to make replacements.
 	name = "Circuit board (Destructive Analyzer)"
 	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
 	board_type = "machine"
-	origin_tech = list("magnets" = 3, "materials" = 2)
+	origin_tech = "magnets=2;materials=2"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
 							"/obj/item/weapon/stock_parts/micro_manipulator" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 1)
 
 /obj/item/weapon/circuitboard/autolathe
-	name = "Circuit board (Destructive Analyzer)"
-	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
+	name = "Circuit board (Autolathe)"
+	build_path = "/obj/machinery/autolathe"
 	board_type = "machine"
-	origin_tech = list("materials" = 3)
+	origin_tech = "materials=3"
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 2,
-							"/obj/item/weapon/stock_parts/micro_manipulator" = 2,
+							"/obj/item/weapon/stock_parts/matter_bin" = 3,
+							"/obj/item/weapon/stock_parts/micro_manipulator" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/protolathe
-	name = "Circuit board (Destructive Analyzer)"
-	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
+	name = "Circuit board (Protolathe)"
+	build_path = "/obj/machinery/r_n_d/protolathe"
 	board_type = "machine"
-	origin_tech = list("materials" = 3)
+	origin_tech = "materials=2"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 2,
-							"/obj/item/weapon/stock_parts/micro_manipulator" = 2)
+							"/obj/item/weapon/stock_parts/micro_manipulator" = 2,
+							"/obj/item/weapon/reagent_containers/glass/beaker" = 2)
+
 
 /obj/item/weapon/circuitboard/circuit_imprinter
-	name = "Circuit board (Destructive Analyzer)"
-	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
+	name = "Circuit board (Circuit Imprinter)"
+	build_path = "/obj/machinery/r_n_d/circuit_imprinter"
 	board_type = "machine"
-	origin_tech = list("materials" = 3, "programming" = 3)
+	origin_tech = "materials=2;programming=2"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 1,
 							"/obj/item/weapon/stock_parts/micro_manipulator" = 1,

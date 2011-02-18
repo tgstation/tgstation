@@ -18,6 +18,7 @@ AI MODULES
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 15
+	origin_tech = "programming=3"
 
 /obj/machinery/computer/aiupload/attackby(obj/item/weapon/aiModule/module as obj, mob/user as mob)
 	if(istype(module, /obj/item/weapon/aiModule))
@@ -148,6 +149,7 @@ AI MODULES
 	name = "'OneHuman' AI Module"
 	var/targetName = "name"
 	desc = "A 'one human' AI module: 'Only <name> is human.'"
+	origin_tech = "programming=3;syndicate=2"
 
 /obj/item/weapon/aiModule/oneHuman/attack_hand(var/mob/user as mob)
 	..()
@@ -217,6 +219,7 @@ AI MODULES
 /obj/item/weapon/aiModule/quarantine
 	name = "'Quarantine' AI Module"
 	desc = "A 'quarantine' AI module: 'The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving.'"
+	origin_tech = "programming=3;biotech=2"
 
 /obj/item/weapon/aiModule/quarantine/attack_hand(var/mob/user as mob)
 	..()
@@ -232,6 +235,7 @@ AI MODULES
 /obj/item/weapon/aiModule/oxygen
 	name = "'OxygenIsToxicToHumans' AI Module"
 	desc = "A 'OxygenIsToxicToHumans' AI module: 'Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.'"
+	origin_tech = "programming=3;biotech=2"
 
 /obj/item/weapon/aiModule/oxygen/attack_hand(var/mob/user as mob)
 	..()
@@ -270,6 +274,7 @@ AI MODULES
 	var/newFreeFormLaw = "freeform"
 	var/lawpos = 15
 	desc = "A 'freeform' AI module: '<freeform>'"
+	origin_tech = "programming=4"
 
 /obj/item/weapon/aiModule/freeform/attack_hand(var/mob/user as mob)
 	..()
@@ -343,6 +348,7 @@ AI MODULES
 /obj/item/weapon/aiModule/paladin // -- NEO
 	name = "'P.A.L.A.D.I.N.' Core AI Module"
 	desc = "A P.A.L.A.D.I.N. Core AI Module: 'Reconfigures the AI's core laws.'"
+	origin_tech = "programming=4"
 
 /obj/item/weapon/aiModule/paladin/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -359,6 +365,7 @@ AI MODULES
 /obj/item/weapon/aiModule/tyrant // -- Darem
 	name = "'T.Y.R.A.N.T.' Core AI Module"
 	desc = "A T.Y.R.A.N.T. Core AI Module: 'Reconfigures the AI's core laws.'"
+	origin_tech = "programming=4;syndicate=2"
 
 /obj/item/weapon/aiModule/tyrant/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -376,6 +383,7 @@ AI MODULES
 	name = "'Freeform' Core AI Module"
 	var/newFreeFormLaw = "freeform"
 	desc = "A 'freeform' Core AI module: '<freeform>'"
+	origin_tech = "programming=4"
 
 /obj/item/weapon/aiModule/freeformcore/attack_hand(var/mob/user as mob)
 	..()
@@ -395,6 +403,7 @@ AI MODULES
 /obj/item/weapon/aiModule/robocop // -- TLE
 	name = "'Robocop' Core AI Module"
 	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
+	orign_tech = "programming=4"
 
 /obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()

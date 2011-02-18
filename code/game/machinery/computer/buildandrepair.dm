@@ -16,6 +16,7 @@
 	icon = 'module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
+	origin_tech = "programming=2"
 	var
 		id = null
 		frequency = null
@@ -30,21 +31,26 @@
 	build_path = "/obj/machinery/computer/security"
 /obj/item/weapon/circuitboard/aicore
 	name = "Circuit board (AI core)"
+	origin_tech = "programming=4;biotech=2"
 /obj/item/weapon/circuitboard/aiupload
 	name = "Circuit board (AI Upload)"
 	build_path = "/obj/machinery/computer/aiupload"
+	origin_tech = "programming=4"
 /obj/item/weapon/circuitboard/med_data
 	name = "Circuit board (Medical Records)"
 	build_path = "/obj/machinery/computer/med_data"
 /obj/item/weapon/circuitboard/pandemic
 	name = "Circuit board (PanD.E.M.I.C. 2200)"
 	build_path = "/obj/machinery/computer/pandemic"
+	origin_tech = "programming=2;biotech=2"
 /obj/item/weapon/circuitboard/scan_consolenew
 	name = "Circuit board (DNA Machine)"
 	build_path = "/obj/machinery/scan_consolenew"
+	origin_tech = "programming=2;biotech=2"
 /obj/item/weapon/circuitboard/communications
 	name = "Circuit board (Communications)"
 	build_path = "/obj/machinery/computer/communications"
+	origin_tech = "programming=2;magnets=2"
 /obj/item/weapon/circuitboard/card
 	name = "Circuit board (ID Computer)"
 	build_path = "/obj/machinery/computer/card"
@@ -54,6 +60,7 @@
 /obj/item/weapon/circuitboard/teleporter
 	name = "Circuit board (Teleporter)"
 	build_path = "/obj/machinery/computer/teleporter"
+	origin_tech = "programming=2;bluespace=2"
 /obj/item/weapon/circuitboard/secure_data
 	name = "Circuit board (Security Records)"
 	build_path = "/obj/machinery/computer/secure_data"
@@ -78,12 +85,15 @@
 /obj/item/weapon/circuitboard/robotics
 	name = "Circuit board (Robotics Control)"
 	build_path = "/obj/machinery/computer/robotics"
+	origin_tech = "programming=3"
 /obj/item/weapon/circuitboard/cloning
 	name = "Circuit board (Cloning)"
 	build_path = "/obj/machinery/computer/cloning"
+	origin_tech = "programming=3;biotech=3"
 /obj/item/weapon/circuitboard/arcade
 	name = "Circuit board (Arcade)"
 	build_path = "/obj/machinery/computer/arcade"
+	origin_tech = "programming=1"
 /obj/item/weapon/circuitboard/turbine_control
 	name = "Circuit board (Turbine control)"
 	build_path = "/obj/machinery/computer/turbine_computer"

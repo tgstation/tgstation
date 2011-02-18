@@ -1490,36 +1490,43 @@ proc/move_mining_shuttle()
 	name = "Uranium ore"
 	icon = 'Mining.dmi'
 	icon_state = "Uranium ore"
+	origin_tech = "materials=5"
 
 /obj/item/weapon/ore/iron
 	name = "Iron ore"
 	icon = 'Mining.dmi'
 	icon_state = "Iron ore"
+	origin_tech = "materials=1"
 
 /obj/item/weapon/ore/plasma
 	name = "Plasma ore"
 	icon = 'Mining.dmi'
 	icon_state = "Plasma ore"
+	origin_tech = "materials=2"
 
 /obj/item/weapon/ore/silver
 	name = "Silver ore"
 	icon = 'Mining.dmi'
 	icon_state = "Silver ore"
+	origin_tech = "materials=3"
 
 /obj/item/weapon/ore/gold
 	name = "Gold ore"
 	icon = 'Mining.dmi'
 	icon_state = "Gold ore"
+	origin_tech = "materials=4"
 
 /obj/item/weapon/ore/diamond
 	name = "Diamond ore"
 	icon = 'Mining.dmi'
 	icon_state = "Diamond ore"
+	origin_tech = "materials=6"
 
 /obj/item/weapon/ore/clown
 	name = "Bananium ore"
 	icon = 'Mining.dmi'
 	icon_state = "Clown ore"
+	origin_tech = "materials=4"
 
 /obj/item/weapon/ore/slag
 	name = "Slag"
@@ -2810,11 +2817,11 @@ proc/move_mining_shuttle()
 	name = "gold"
 	icon_state = "sheet-gold"
 	force = 5.0
-	g_amt = 3750
 	throwforce = 5
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
+	origin_tech = "materials=4"
 
 /obj/item/stack/sheet/gold/New()
 	pixel_x = rand(0,4)-4
@@ -2824,11 +2831,11 @@ proc/move_mining_shuttle()
 	name = "silver"
 	icon_state = "sheet-silver"
 	force = 5.0
-	g_amt = 3750
 	throwforce = 5
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
+	origin_tech = "materials=3"
 
 /obj/item/stack/sheet/silver/New()
 	pixel_x = rand(0,4)-4
@@ -2838,11 +2845,10 @@ proc/move_mining_shuttle()
 	name = "diamond"
 	icon_state = "sheet-diamond"
 	force = 5.0
-	g_amt = 3750
 	throwforce = 5
 	w_class = 3.0
-	throw_speed = 3
 	throw_range = 3
+	origin_tech = "materials=6"
 
 /obj/item/stack/sheet/diamond/New()
 	pixel_x = rand(0,4)-4
@@ -2852,23 +2858,23 @@ proc/move_mining_shuttle()
 	name = "solid plasma"
 	icon_state = "sheet-plasma"
 	force = 5.0
-	g_amt = 3750
 	throwforce = 5
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
+	origin_tech = "plasmatech=2;materials=2"
 
 /obj/item/stack/sheet/clown
 	name = "bananium"
 	icon_state = "sheet-clown"
 	force = 5.0
-	g_amt = 3750
 	throwforce = 5
 	w_class = 3.0
 	throw_speed = 3
 	throw_range = 3
+	origin_tech = "materials=4"
 
-/obj/item/stack/sheet/diamond/New()
+/obj/item/stack/sheet/clown/New()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 

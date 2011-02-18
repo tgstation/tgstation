@@ -1,7 +1,8 @@
 /obj/machinery/autolathe
 	var/busy = 0
-	var/const/max_m_amount = 150000.0
-	var/const/max_g_amount = 75000.0
+	var/max_m_amount = 150000.0
+	var/max_g_amount = 75000.0
+
 
 /obj/machinery/autolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (stat)
@@ -18,10 +19,20 @@
 			src.opened = 0
 			src.icon_state = "autolathe"
 			user << "You close the maintenance hatch of [src]."
-		return
-	if (opened)
-		user << "\red You can't load the autolathe while it's opened."
 		return 1
+	if (opened)
+		if(istype(O, /obj/item/weapon/crowbar))
+			playsound(src.loc, 'Crowbar.ogg', 50, 1)
+			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/I in component_parts)
+				I.loc = src.loc
+			del(src)
+			return 1
+		else
+			user << "\red You can't load the autolathe while it's opened."
+			return 1
 	if (src.m_amount + O.m_amt > max_m_amount)
 		user << "\red The autolathe is full. Please remove metal from the autolathe in order to insert more."
 		return 1
@@ -166,21 +177,22 @@
 							busy = 0
 							src.updateUsrDialog()
 		if(href_list["act"])
+			var/temp_wire = href_list["wire"]
 			if(href_list["act"] == "pulse")
 				if (!istype(usr.equipped(), /obj/item/device/multitool))
 					usr << "You need a multitool!"
 				else
-					if(src.wires[href_list["wire"]])
+					if(src.wires[temp_wire])
 						usr << "You can't pulse a cut wire."
 					else
-						if(src.hack_wire == href_list["wire"])
+						if(src.hack_wire == temp_wire)
 							src.hacked = !src.hacked
 							spawn(100) src.hacked = !src.hacked
-						if(src.disable_wire == href_list["wire"])
+						if(src.disable_wire == temp_wire)
 							src.disabled = !src.disabled
 							src.shock(usr,50)
 							spawn(100) src.disabled = !src.disabled
-						if(src.shock_wire == href_list["wire"])
+						if(src.shock_wire == temp_wire)
 							src.shocked = !src.shocked
 							src.shock(usr,50)
 							spawn(100) src.shocked = !src.shocked
@@ -188,12 +200,13 @@
 				if (!istype(usr.equipped(), /obj/item/weapon/wirecutters))
 					usr << "You need wirecutters!"
 				else
-					if(src.hack_wire == href_list["wire"])
+					wires[temp_wire] = !wires[temp_wire]
+					if(src.hack_wire == temp_wire)
 						src.hacked = !src.hacked
-					if(src.disable_wire == href_list["wire"])
+					if(src.disable_wire == temp_wire)
 						src.disabled = !src.disabled
 						src.shock(usr,50)
-					if(src.shock_wire == href_list["wire"])
+					if(src.shock_wire == temp_wire)
 						src.shocked = !src.shocked
 						src.shock(usr,50)
 	else
@@ -242,8 +255,27 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/weapon/ammo/shell/dart(), \
 		/* new /obj/item/weapon/shield/riot(), */ \
 	)
+
+/obj/machinery/autolathe/RefreshParts()
+	..()
+	var/tot_rating = 0
+	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
+		tot_rating += MB.rating
+	tot_rating *= 25000
+	max_m_amount = tot_rating * 2
+	max_g_amount = tot_rating
+
 /obj/machinery/autolathe/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/autolathe(src)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/micro_manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	RefreshParts()
+
 	src.L = autolathe_recipes
 	src.LL = autolathe_recipes_hidden
 	src.wires["Light Red"] = 0

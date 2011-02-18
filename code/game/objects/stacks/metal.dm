@@ -73,6 +73,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("computer frame", /obj/computerframe, 5, one_per_turf = 1), \
 	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("airlock assembly", /obj/door_assembly, 4, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, one_per_turf = 1), \
 	null, \
 	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2), \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/chem_grenade), \

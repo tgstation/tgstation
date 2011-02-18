@@ -14,9 +14,10 @@ The currently supporting non-reagent materials:
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
 
 */
-#define	IMPRINTER	1	//For circuits.
-#define PROTOLATHE	2	//For stuff with reliability issues.
-#define	AUTOLATHE	4	//For general use or 100% reliability items.
+#define	IMPRINTER	1	//For circuits. Uses glass/chemicals.
+#define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals
+#define	AUTOLATHE	4	//Uses glass/metal only.
+#define CRAFTLATHE	8	//Uses fuck if I know. For use eventually.
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 datum
@@ -45,7 +46,7 @@ datum
 				return new_reliability
 
 
-
+///////////////////Computer Boards///////////////////////////////////
 
 		seccamera
 			name = "Circuit Design (Security)"
@@ -60,7 +61,7 @@ datum
 			name = "Circuit Design (AI Core)"
 			desc = "Allows for the construction of circuit boards used to build new AI cores."
 			id = "aicore"
-			req_tech = list("programming" = 5, "biotech" = 5)
+			req_tech = list("programming" = 4, "biotech" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/aicore"
@@ -69,7 +70,7 @@ datum
 			name = "Circuit Design (AI Upload)"
 			desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
 			id = "aiupload"
-			req_tech = list("programming" = 5)
+			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/aiupload"
@@ -177,7 +178,7 @@ datum
 			name = "Circuit Design (Cloning Machine Console)"
 			desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
 			id = "clonecontrol"
-			req_tech = list("programming" = 3, "biotech" = 4)
+			req_tech = list("programming" = 3, "biotech" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/cloning"
@@ -216,7 +217,7 @@ datum
 			name = "Module Design (Safeguard)"
 			desc = "Allows for the construction of a Safeguard AI Module."
 			id = "safeguard_module"
-			req_tech = list("programming" = 5)
+			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/safeguard"
@@ -225,7 +226,7 @@ datum
 			name = "Module Design (OneHuman)"
 			desc = "Allows for the construction of a OneHuman AI Module."
 			id = "onehuman_module"
-			req_tech = list("programming" = 5, "syndicate" = 2)
+			req_tech = list("programming" = 3, "syndicate" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/oneHuman"
@@ -234,7 +235,7 @@ datum
 			name = "Module Design (ProtectStation)"
 			desc = "Allows for the construction of a ProtectStation AI Module."
 			id = "protectstation_module"
-			req_tech = list("programming" = 5)
+			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/protectStation"
@@ -243,7 +244,7 @@ datum
 			name = "Module Design (TeleporterOffline Module)"
 			desc = "Allows for the construction of a TeleporterOffline AI Module."
 			id = "notele_module"
-			req_tech = list("programming" = 5)
+			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/teleporterOffline"
@@ -252,7 +253,7 @@ datum
 			name = "Module Design (Quarantine)"
 			desc = "Allows for the construction of a Quarantine AI Module."
 			id = "quarantine_module"
-			req_tech = list("programming" = 5, "biotech" = 2)
+			req_tech = list("programming" = 3, "biotech" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/quarantine"
@@ -261,7 +262,7 @@ datum
 			name = "Module Design (OxygenIsToxicToHumans)"
 			desc = "Allows for the construction of a Safeguard AI Module."
 			id = "oxygen_module"
-			req_tech = list("programming" = 5, "biotech" = 2)
+			req_tech = list("programming" = 3, "biotech" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/oxygen"
@@ -270,7 +271,7 @@ datum
 			name = "Module Design (Freeform)"
 			desc = "Allows for the construction of a Freeform AI Module."
 			id = "freeform_module"
-			req_tech = list("programming" = 6)
+			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/freeform"
@@ -279,7 +280,7 @@ datum
 			name = "Module Design (Reset)"
 			desc = "Allows for the construction of a Reset AI Module."
 			id = "reset_module"
-			req_tech = list("programming" = 5)
+			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/reset"
@@ -288,7 +289,7 @@ datum
 			name = "Module Design (Purge)"
 			desc = "Allows for the construction of a Purge AI Module."
 			id = "purge_module"
-			req_tech = list("programming" = 5)
+			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/purge"
@@ -297,7 +298,7 @@ datum
 			name = "Core Module Design (Freeform)"
 			desc = "Allows for the construction of a Freeform AI Core Module."
 			id = "freeformcore_module"
-			req_tech = list("programming" = 6)
+			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/freeformcore"
@@ -306,7 +307,7 @@ datum
 			name = "Core Module Design (Asimov)"
 			desc = "Allows for the construction of a Asimov AI Core Module."
 			id = "asimov_module"
-			req_tech = list("programming" = 5)
+			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/asimov"
@@ -315,7 +316,7 @@ datum
 			name = "Core Module Design (P.A.L.A.D.I.N.)"
 			desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."
 			id = "paladin_module"
-			req_tech = list("programming" = 5)
+			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/paladin"
@@ -324,7 +325,7 @@ datum
 			name = "Core Module Design (T.Y.R.A.N.T.)"
 			desc = "Allows for the construction of a T.Y.R.A.N.T. AI Module."
 			id = "tyrant_module"
-			req_tech = list("programming" = 5, "syndicate" = 2)
+			req_tech = list("programming" = 4, "syndicate" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/tyrant"
@@ -537,7 +538,7 @@ datum
 			name = "High-Capacity Power Cell"
 			desc = "A power cell that holds 10000 units of energy"
 			id = "high_cell"
-			req_tech = list("powerstorage" = 3)
+			req_tech = list("powerstorage" = 2)
 			build_type = PROTOLATHE | AUTOLATHE
 			materials = list("$metal" = 700, "$glass" = 60)
 			build_path = "/obj/item/weapon/cell/high"
@@ -546,11 +547,64 @@ datum
 			name = "Super-Capacity Power Cell"
 			desc = "A power cell that holds 20000 units of energy"
 			id = "super_cell"
-			req_tech = list("powerstorage" = 5, "materials" = 2)
+			req_tech = list("powerstorage" = 3, "materials" = 2)
 			reliability_base = 75
 			build_type = PROTOLATHE
 			materials = list("$metal" = 700, "$glass" = 70)
 			build_path = "/obj/item/weapon/cell/super"
+
+////////////////////////////////////////
+/////////Machine Frame Boards///////////
+////////////////////////////////////////
+
+		destructive_analyzer
+			name = "Destructive Analyzer Board"
+			desc = "The circuit board for a destructive analyzer."
+			id = "destructive_analyzer"
+			req_tech = list("materials" = 2, "magnets" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/machinery/r_n_d/destructive_analyzer"
+
+		protolathe
+			name = "Protolathe Board"
+			desc = "The circuit board for a protolathe."
+			id = "protolathe"
+			req_tech = list("materials" = 3)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/machinery/r_n_d/protolathe"
+
+		circuit_imprinter
+			name = "Circuit Imprinter Board"
+			desc = "The circuit board for a circuit imprinter."
+			id = "circuit_imprinter"
+			req_tech = list("materials" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/machinery/r_n_d/circuit_imprinter"
+
+		protolathe
+			name = "Protolathe Board"
+			desc = "The circuit board for a autolathe."
+			id = "autolathe"
+			req_tech = list("materials" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/machinery/autolathe"
+
+/////////////////////////////////////////
+//////////////////Test///////////////////
+/////////////////////////////////////////
+
+		test
+			name = "Test Design"
+			desc = "A design to test the new protolathe."
+			id = "protolathe_test"
+			build_type = PROTOLATHE
+			req_tech = list("materials" = 1)
+			materials = list("$gold" = 3000, "iron" = 15, "copper" = 10, "$silver" = 2500)
+			build_path = "/obj/item/weapon/banhammer"
 
 ////////////////////////////////////////
 //Disks for transporting design datums//
