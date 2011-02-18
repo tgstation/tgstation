@@ -61,27 +61,27 @@
 /obj/closet/l3closet/general
 	icon_state = "bio_general"
 	icon_closed = "bio_general"
-	icon_opened = "bioopen_general"
+	icon_opened = "bio_generalopen"
 
 /obj/closet/l3closet/virology
 	icon_state = "bio_virology"
 	icon_closed = "bio_virology"
-	icon_opened = "bioopen_virology"
+	icon_opened = "bio_virologyopen"
 
 /obj/closet/l3closet/security
 	icon_state = "bio_security"
 	icon_closed = "bio_security"
-	icon_opened = "bioopen_security"
+	icon_opened = "bio_securityopen"
 
 /obj/closet/l3closet/janitor
 	icon_state = "bio_janitor"
 	icon_closed = "bio_janitor"
-	icon_opened = "bioopen_janitor"
+	icon_opened = "bio_janitoropen"
 
 /obj/closet/l3closet/scientist
 	icon_state = "bio_scientist"
 	icon_closed = "bio_scientist"
-	icon_opened = "bioopen_scientist"
+	icon_opened = "bio_scientistopen"
 
 /obj/closet/syndicate
 	desc = "Why is this here?"
