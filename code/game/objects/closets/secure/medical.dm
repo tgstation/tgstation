@@ -57,9 +57,9 @@
 	new /obj/item/clothing/under/rank/medical( src )
 	new /obj/item/weapon/tank/air( src )
 	new /obj/item/clothing/mask/gas( src )
-	new /obj/item/clothing/suit/bio_suit( src )
+	new /obj/item/clothing/suit/bio_suit/general( src )
 	new /obj/item/clothing/shoes/white( src )
 	new /obj/item/clothing/gloves/latex( src )
-	new /obj/item/clothing/head/bio_hood( src )
+	new /obj/item/clothing/head/bio_hood/general( src )
 	new /obj/item/clothing/suit/labcoat(src)
 	return

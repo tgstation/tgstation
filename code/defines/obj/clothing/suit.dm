@@ -19,6 +19,21 @@
 	heat_transfer_coefficient = 0.30
 	slowdown = 1.3
 
+/obj/item/clothing/suit/bio_suit/general
+	icon_state = "bio_general"
+
+/obj/item/clothing/suit/bio_suit/virology
+	icon_state = "bio_virology"
+
+/obj/item/clothing/suit/bio_suit/security
+	icon_state = "bio_security"
+
+/obj/item/clothing/suit/bio_suit/janitor
+	icon_state = "bio_janitor"
+
+/obj/item/clothing/suit/bio_suit/scientist
+	icon_state = "bio_scientist"
+
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
 	name = "Plague doctor suit"
 	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."

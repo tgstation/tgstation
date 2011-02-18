@@ -58,6 +58,31 @@
 	icon_closed = "bio"
 	icon_opened = "bioopen"
 
+/obj/closet/l3closet/general
+	icon_state = "bio_general"
+	icon_closed = "bio_general"
+	icon_opened = "bioopen_general"
+
+/obj/closet/l3closet/virology
+	icon_state = "bio_virology"
+	icon_closed = "bio_virology"
+	icon_opened = "bioopen_virology"
+
+/obj/closet/l3closet/security
+	icon_state = "bio_security"
+	icon_closed = "bio_security"
+	icon_opened = "bioopen_security"
+
+/obj/closet/l3closet/janitor
+	icon_state = "bio_janitor"
+	icon_closed = "bio_janitor"
+	icon_opened = "bioopen_janitor"
+
+/obj/closet/l3closet/scientist
+	icon_state = "bio_scientist"
+	icon_closed = "bio_scientist"
+	icon_opened = "bioopen_scientist"
+
 /obj/closet/syndicate
 	desc = "Why is this here?"
 	name = "Weapons Closet"

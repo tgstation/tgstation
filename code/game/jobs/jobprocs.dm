@@ -455,8 +455,8 @@
 			src.equip_if_possible(new /obj/item/device/pda/toxins(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/scientist(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
-//			src.equip_if_possible(new /obj/item/clothing/suit/bio_suit(src), slot_wear_suit)
-//			src.equip_if_possible(new /obj/item/clothing/head/bio_hood(src), slot_head)
+//			src.equip_if_possible(new /obj/item/clothing/suit/bio_suit/scientist(src), slot_wear_suit)
+//			src.equip_if_possible(new /obj/item/clothing/head/bio_hood/scientist(src), slot_head)
 			src.equip_if_possible(new /obj/item/clothing/mask/gas(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/weapon/tank/air(src), slot_l_hand)
 

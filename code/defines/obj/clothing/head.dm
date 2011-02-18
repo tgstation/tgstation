@@ -12,6 +12,21 @@
 	permeability_coefficient = 0.01
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
 
+/obj/item/clothing/head/bio_hood/general
+	icon_state = "bio_general"
+
+/obj/item/clothing/head/bio_hood/virology
+	icon_state = "bio_virology"
+
+/obj/item/clothing/head/bio_hood/security
+	icon_state = "bio_security"
+
+/obj/item/clothing/head/bio_hood/janitor
+	icon_state = "bio_janitor"
+
+/obj/item/clothing/head/bio_hood/scientist
+	icon_state = "bio_scientist"
+
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
 	desc = "It is a cakehat"
