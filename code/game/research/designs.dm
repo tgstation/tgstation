@@ -597,14 +597,14 @@ datum
 //////////////////Test///////////////////
 /////////////////////////////////////////
 
-		test
+	/*	test
 			name = "Test Design"
 			desc = "A design to test the new protolathe."
 			id = "protolathe_test"
 			build_type = PROTOLATHE
 			req_tech = list("materials" = 1)
 			materials = list("$gold" = 3000, "iron" = 15, "copper" = 10, "$silver" = 2500)
-			build_path = "/obj/item/weapon/banhammer"
+			build_path = "/obj/item/weapon/banhammer" */
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

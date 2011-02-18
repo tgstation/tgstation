@@ -209,11 +209,11 @@ datum
 			id = "combat"
 
 	//Branch Techs
-		explosives
+	/*	explosives
 			name = "Explosives Research"
 			desc = "The creation and application of explosive materials."
 			id = "explosives"
-			req_tech = list("materials" = 3)
+			req_tech = list("materials" = 3) */
 
 		generators
 			name = "Power Generation Technology"

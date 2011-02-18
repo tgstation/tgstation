@@ -99,11 +99,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return
 
 //For testing purposes only.
-/obj/item/weapon/deconstruction_test
+/*/obj/item/weapon/deconstruction_test
 	name = "Test Item"
 	desc = "WTF?"
 	icon = 'weapons.dmi'
 	icon_state = "d20"
 	g_amt = 5000
 	m_amt = 5000
-	origin_tech = "materials=5;plasmatech=5;syndicate=5;programming=9"
+	origin_tech = "materials=5;plasmatech=5;syndicate=5;programming=9"*/
