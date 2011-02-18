@@ -40,7 +40,7 @@
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=emag'>Electromagnet Card</A> (3)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_freedom'>Freedom Implant (with injector)</A> (3)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (2)<BR>"
+	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (3)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=cloak'>Cloaking Device</A> (4)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=sword'>Energy Sword</A> (4)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=bomb'>Plastic Explosives</A> (4)<BR>"
@@ -115,8 +115,8 @@
 					src.uses -= 5
 					new /obj/item/weapon/pen/sleepypen(get_turf(src.hostpda))
 			if("paralysispen")
-				if (src.uses >= 2)
-					src.uses -= 2
+				if (src.uses >= 3)
+					src.uses -= 3
 					new /obj/item/device/flashlight/pen/paralysis(get_turf(src.hostpda))
 			if("projector")
 				if (src.uses >= 4)

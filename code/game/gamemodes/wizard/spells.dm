@@ -681,6 +681,11 @@
 								spawn(500)
 									H << "The mind transfer has robbed you of a spell."
 
+			/*	//This code SHOULD work to prevent Mind Swap spam since the spell transfer code above instantly resets it.
+				//I can't test this code because I can't test mind stuff on my own :x -- Darem.
+				if(hascall(H, /mob/proc/swap))
+					H.verbs -= /mob/proc/swap
+				*/
 				G.client.mob = U
 				U.mind = G.mind
 				if(U.mind.special_verbs.len)//Basic fix to swap verbs for any mob if needed.

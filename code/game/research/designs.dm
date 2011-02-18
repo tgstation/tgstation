@@ -199,7 +199,7 @@ datum
 			req_tech = list("programming" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/machinery/power/monitor"
+			build_path = "/obj/item/weapon/circuitboard/powermonitor"
 
 		prisonmanage
 			name = "Circuit Design (Prisoner Management Console)"
