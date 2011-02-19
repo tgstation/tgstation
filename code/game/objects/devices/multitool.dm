@@ -15,3 +15,4 @@
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
 	m_amt = 50
 	g_amt = 20
+	origin_tech = "magnets=1"

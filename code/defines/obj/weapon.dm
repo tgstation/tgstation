@@ -60,7 +60,7 @@
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 50000
-	origin_tech = "materials=3"
+	origin_tech = "materials=4"
 	var/datum/effects/system/spark_spread/spark_system
 
 
@@ -165,6 +165,28 @@
 	g_amt = 20
 	origin_tech = "magnets=1"
 
+/obj/item/device/mass_spectrometer
+	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
+	name = "mass-spectrometer"
+	icon_state = "spectrometer"
+	item_state = "analyzer"
+	w_class = 2.0
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT | OPENCONTAINER
+	throwforce = 5
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 30
+	g_amt = 20
+	origin_tech = "magnets=2;biotech=2"
+	var
+		details = 0
+		recent_fail = 0
+
+/obj/item/device/mass_spectrometer/adv
+	name = "advanced mass-spectrometer"
+	icon_state = "adv_spectrometer"
+	details = 1
+	origin_tech = "magnets=4;biotech=2"
 
 /obj/item/weapon/axe
 	name = "Axe"
@@ -177,6 +199,7 @@
 	throw_range = 5
 	w_class = 3.0
 	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS
+	origin_tech = "combat=3"
 
 /obj/item/weapon/bananapeel
 	name = "Banana Peel"
@@ -201,6 +224,7 @@
 	var/charges = 10.0
 	var/maximum_charges = 10.0
 	var/status = 1
+	origin_tech = "combat=2"
 
 /obj/item/weapon/bedsheet
 	name = "bedsheet"
@@ -424,7 +448,6 @@
 	force = 10.0
 	item_state = "fire_extinguisher"
 	m_amt = 90
-	origin_tech = "materials=1"
 
 /obj/item/weapon/f_card
 	name = "Finger Print Card"
@@ -457,7 +480,7 @@
 	throw_speed = 4
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	origin_tech = "materials=2"
+	origin_tech = "materials=2;combat=1"
 
 /obj/item/weapon/empgrenade
 	desc = "It is set to detonate in 5 seconds."
@@ -631,6 +654,7 @@
 	icon_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
+	origin_tech = null
 
 /obj/item/weapon/gun/revolver
 	desc = "There are 0 bullets left. Uses 357"
@@ -648,7 +672,7 @@
 	desc = "There are 0 bullets left. Uses 357"
 	name = "revolver"
 	icon_state = "mateba"
-	origin_tech = "combat=2;materials=2"
+	origin_tech = "combat=3;materials=2"
 
 /obj/item/weapon/gun/detectiverevolver
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
@@ -1056,6 +1080,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
+	origin_tech = "magnets=1"
 
 /obj/item/weapon/spellbook
 	name = "Spell Book"
@@ -1563,6 +1588,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	force = null
 	throwforce = null
 	var/armed = 0
+	origin_tech = "combat=1"
 
 /obj/item/weapon/mousetrap/armed
 	icon_state = "mousetraparmed"
@@ -1613,6 +1639,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_speed = 1
 	throw_range = 3
 	plant_type = 1
+	origin_tech = "combat=1"
 	seed = "/obj/item/seeds/nettleseed"
 	New()
 		..()
@@ -1633,6 +1660,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 3
 	plant_type = 1
 	seed = "/obj/item/seeds/deathnettleseed"
+	origin_tech = "combat=3"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
@@ -1726,7 +1754,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Capacitor"
 	desc = "A basic capacitor used in the construction of a variety of devices."
 	icon_state = "capacitor"
-	origin_tech = "energystorage=1"
+	origin_tech = "powerstorage=1"
 	m_amt = 50
 	g_amt = 50
 
@@ -1742,7 +1770,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Micro-Manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
-	origin_tech = "robotics=1"
+	origin_tech = "materials=1;programming=1"
 	m_amt = 30
 
 /obj/item/weapon/stock_parts/micro_laser
@@ -1763,7 +1791,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 /obj/item/weapon/stock_parts/capacitor/adv
 	name = "Advanced Capacitor"
 	desc = "An advanced capacitor used in the construction of a variety of devices."
-	origin_tech = "energystorage=3"
+	origin_tech = "powerstorage=3"
 	rating = 2
 	m_amt = 50
 	g_amt = 50
@@ -1781,7 +1809,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Nano-Manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
-	origin_tech = "robotics=3"
+	origin_tech = "materials=3,programming=2"
 	rating = 2
 	m_amt = 30
 

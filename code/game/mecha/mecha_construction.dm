@@ -173,6 +173,9 @@
 	throw_speed = 3
 	throw_range = 15
 
+	ripley
+		origin_tech = "programming=3;materials=3"
+
 	ripley/peripherals
 		name = "Circuit board (Ripley Peripherals Control module)"
 		icon_state = "mcontroller"
@@ -180,6 +183,9 @@
 	ripley/main
 		name = "Circuit board (Ripley Central Control module)"
 		icon_state = "mainboard"
+
+	gygax
+		origin_tech = "programming=4;materials=4"
 
 	gygax/peripherals
 		name = "Circuit board (Gygax Peripherals Control module)"
@@ -196,6 +202,9 @@
 	firefighter/peripherals
 		name = "Circuit board (Ripley-on-Fire Peripherals Control module)"
 		icon_state = "mcontroller"
+
+	honker
+		origin_tech = "programming=3;materials=3"
 
 	honker/peripherals
 		name = "Circuit board (H.O.N.K Peripherals Control module)"

@@ -41,9 +41,10 @@ datum
 				var/new_reliability = reliability_mod + reliability_base
 				for(var/datum/tech/T in temp_techs)
 					if(T.id in req_tech)
-						new_reliability += (T.level - req_tech[T]) * 5
+						new_reliability += T.level
 				new_reliability = between(reliability_base, new_reliability, 100)
-				return new_reliability
+				reliability = new_reliability
+				return
 
 
 ///////////////////Computer Boards///////////////////////////////////
@@ -226,7 +227,7 @@ datum
 			name = "Module Design (OneHuman)"
 			desc = "Allows for the construction of a OneHuman AI Module."
 			id = "onehuman_module"
-			req_tech = list("programming" = 3, "syndicate" = 2)
+			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/oneHuman"
@@ -330,6 +331,21 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/tyrant"
 
+
+///////////////////////////////////
+/////Non-Board Computer Stuff//////
+///////////////////////////////////
+
+		intellicard
+			name = "Intellicard AI Transportation System"
+			desc = "Allows for the construction of an intellicard."
+			id = "intellicard"
+			req_tech = list("programming" = 4)
+			build_type = PROTOLATHE
+			materials = list("$glass" = 1000, "$gold" = 200)
+			build_path = "/obj/item/device/aicard"
+
+
 ///////////////////////////////////
 //////////Mecha Module Disks///////
 ///////////////////////////////////
@@ -338,7 +354,7 @@ datum
 			name = "Circuit Design (APLU \"Ripley\" Central Control module)"
 			desc = "Allows for the construction of a \"Ripley\" Central Control module."
 			id = "ripley_main"
-			req_tech = list("programming" = 3, "robotics" = 5)
+			req_tech = list("programming" = 3, "materials" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/ripley/main"
@@ -347,7 +363,7 @@ datum
 			name = "Circuit Design (APLU \"Ripley\" Peripherals Control module)"
 			desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
 			id = "ripley_peri"
-			req_tech = list("programming" = 3, "robotics" = 5)
+			req_tech = list("programming" = 3, "materials" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/ripley/peripherals"
@@ -356,7 +372,7 @@ datum
 			name = "Circuit Design (\"Gygax\" Central Control module)"
 			desc = "Allows for the construction of a \"Gygax\" Central Control module."
 			id = "gygax_main"
-			req_tech = list("programming" = 4, "robotics" = 5)
+			req_tech = list("programming" = 4, "materials" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/gygax/main"
@@ -365,7 +381,7 @@ datum
 			name = "Circuit Design (\"Gygax\" Peripherals Control module)"
 			desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
 			id = "gygax_peri"
-			req_tech = list("programming" = 4, "robotics" = 5)
+			req_tech = list("programming" = 4, "materials" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/gygax/peripherals"
@@ -374,7 +390,7 @@ datum
 			name = "Circuit Design (\"Gygax\" Weapons & Targeting Control module)"
 			desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
 			id = "gygax_targ"
-			req_tech = list("programming" = 4, "robotics" = 5)
+			req_tech = list("programming" = 4, "materials" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/gygax/targeting"
@@ -383,7 +399,7 @@ datum
 			name = "Circuit Design (\"H.O.N.K\" Central Control module)"
 			desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
 			id = "honker_main"
-			req_tech = list("programming" = 2, "robotics" = 3)
+			req_tech = list("programming" = 3, "materials" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/honker/main"
@@ -392,7 +408,7 @@ datum
 			name = "Circuit Design (\"H.O.N.K\" Peripherals Control module)"
 			desc = "Allows for the construction of a \"H.O.N.K\" Peripheral Control module."
 			id = "honker_peri"
-			req_tech = list("programming" = 2, "robotics" = 3)
+			req_tech = list("programming" = 3, "materials" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/honker/peripherals"
@@ -401,7 +417,7 @@ datum
 			name = "Circuit Design (\"H.O.N.K\" Weapons & Targeting Control module)"
 			desc = "Allows for the construction of a \"H.O.N.K\" Weapons & Targeting Control module."
 			id = "honker_targ"
-			req_tech = list("programming" = 2, "robotics" = 3)
+			req_tech = list("programming" = 3, "materials" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/honker/targeting"
@@ -453,7 +469,7 @@ datum
 			name = "Micro Manipulator"
 			desc = "A stock part used in the construction of various devices."
 			id = "micro_mani"
-			req_tech = list("robotics" = 1)
+			req_tech = list("materials" = 1, "programming" = 1)
 			build_type = PROTOLATHE | AUTOLATHE
 			materials = list("$metal" = 30)
 			build_path = "/obj/item/weapon/stock_parts/manipulator"
@@ -498,7 +514,7 @@ datum
 			name = "Nano Manipulator"
 			desc = "A stock part used in the construction of various devices."
 			id = "nano_mani"
-			req_tech = list("robotics" = 3)
+			req_tech = list("materials" = 3, "programming" = 2)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 30)
 			build_path = "/obj/item/weapon/stock_parts/manipulator/nano"
@@ -584,14 +600,38 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/machinery/r_n_d/circuit_imprinter"
 
-		protolathe
-			name = "Protolathe Board"
+		autolathe
+			name = "Atuolathe Board"
 			desc = "The circuit board for a autolathe."
 			id = "autolathe"
 			req_tech = list("materials" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/machinery/autolathe"
+
+/////////////////////////////////////////
+////////////Medical Tools////////////////
+/////////////////////////////////////////
+
+		mass_spectrometer
+			name = "Mass-Spectrometer"
+			desc = "A device for analyzing chemicals in the blood."
+			id = "mass_spectrometer"
+			req_tech = list("biotech" = 2, "magnets" = 2)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 30, "$glass" = 20)
+			reliability_base = 76
+			build_path = "/obj/item/device/mass_spectrometer"
+
+		adv_mass_spectrometer
+			name = "Advanced Mass-Spectrometer"
+			desc = "A device for analyzing chemicals in the blood and their quantities."
+			id = "adv_mass_spectrometer"
+			req_tech = list("biotech" = 2, "magnets" = 4)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 30, "$glass" = 20)
+			reliability_base = 74
+			build_path = "/obj/item/device/mass_spectrometer/adv"
 
 /////////////////////////////////////////
 //////////////////Test///////////////////

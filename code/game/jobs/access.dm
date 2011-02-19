@@ -49,6 +49,8 @@
 	access_mining = 48
 	access_mining_office = 49
 	access_mailsorting = 50
+	access_mint = 51
+	access_mint_vault = 52
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
@@ -167,11 +169,11 @@
 		if("Shaft Miner")
 			return list(access_maint_tunnels, access_mining)
 		if("Quartermaster")
-			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_office)
+			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_office, access_mint)
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_ai_upload, access_construction, access_robotics)
+			            access_heads, access_ai_upload, access_construction, access_robotics, access_mint)
 		if("Research Director") // added hydroponics access -- Skie
 			return list(access_medical, access_morgue, access_medlab, access_rd,
 			            access_tech_storage, access_maint_tunnels, access_heads, access_tox,
@@ -192,7 +194,7 @@
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
 	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
-	            access_theatre, access_research, access_mining, access_mining_office, access_mailsorting)
+	            access_theatre, access_research, access_mining, access_mining_office, access_mailsorting, access_mint_vault, access_mint)
 
 /proc/get_region_accesses(var/code)
 	switch(code)
@@ -207,11 +209,11 @@
 		if(4) //engineering and maintenance
 			return list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_emergency_storage, access_tech_storage, access_atmospherics, access_construction, access_robotics)
 		if(5) //command
-			return list(access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers)
+			return list(access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_mint_vault)
 		if(6) //station general
 			return list(access_chapel_office, access_kitchen,access_bar, access_janitor, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
 		if(7) //supply
-			return list(access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_office, access_mailsorting)
+			return list(access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_office, access_mailsorting, access_mint)
 
 /proc/get_region_accesses_name(var/code)
 	switch(code)

@@ -139,7 +139,7 @@ research holder datum.
 		UpdateDesign(var/path)
 			for(var/datum/design/KD in known_designs)
 				if(KD.build_path == path)
-					KD.reliability_mod++
+					KD.reliability_mod += rand(1,2)
 					break
 			return
 
@@ -174,8 +174,8 @@ datum
 			id = "plasmatech"
 
 		powerstorage
-			name = "Power Storage Technology"
-			desc = "The various technologies behind the storage of electicity."
+			name = "Power Manipulation Technology"
+			desc = "The various technologies behind the storage and generation of electicity."
 			id = "powerstorage"
 
 		bluespace
@@ -195,7 +195,7 @@ datum
 
 		programming
 			name = "Data Theory Research"
-			desc = "The development of new computer and artificial intelligence and datat storage systems."
+			desc = "The development of new computer and artificial intelligence and data storage systems."
 			id = "programming"
 
 		syndicate
@@ -213,7 +213,7 @@ datum
 			name = "Explosives Research"
 			desc = "The creation and application of explosive materials."
 			id = "explosives"
-			req_tech = list("materials" = 3) */
+			req_tech = list("materials" = 3)
 
 		generators
 			name = "Power Generation Technology"
@@ -225,7 +225,7 @@ datum
 			name = "Robotics Technology"
 			desc = "The development of advanced automated, autonomous machines."
 			id = "robotics"
-			req_tech = list("materials" = 3, "programming" = 3)
+			req_tech = list("materials" = 3, "programming" = 3)*/
 
 
 /obj/item/weapon/disk/tech_disk

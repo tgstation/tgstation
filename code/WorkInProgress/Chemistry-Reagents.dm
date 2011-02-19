@@ -68,7 +68,7 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"virus"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null)
+			data = new/list("donor"=null,"virus"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID

@@ -37,6 +37,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
+	origin_tech = "syndicate=2;magnets=4"
 	var/can_use = 1
 	var/obj/dummy/chameleon/active_dummy = null
 	var/saved_item = "/obj/item/weapon/shard"

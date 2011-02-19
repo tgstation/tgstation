@@ -146,6 +146,9 @@
 		safety = 1
 	return
 
+/obj/item/weapon/pen/sleepypen
+	origin_tech = "syndicate=1"
+
 /obj/item/weapon/pen/sleepypen/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 	return

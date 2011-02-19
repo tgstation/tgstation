@@ -6,6 +6,7 @@ DETECTIVE SCANNER
 HEALTH ANALYZER
 GAS ANALYZER
 PLANT ANALYZER
+MASS SPECTROMETER
 
 */
 
@@ -237,3 +238,54 @@ PLANT ANALYZER
 
 	src.add_fingerprint(user)
 	return
+
+/obj/item/device/mass_spectrometer/New()
+	..()
+	var/datum/reagents/R = new/datum/reagents(5)
+	reagents = R
+	R.my_atom = src
+
+/obj/item/device/mass_spectrometer/on_reagent_change()
+	if(reagents.total_volume)
+		icon_state = initial(icon_state) + "_s"
+	else
+		icon_state = initial(icon_state)
+
+/obj/item/device/mass_spectrometer/attack_self(mob/user as mob)
+	if (user.stat)
+		return
+	if (crit_fail)
+		user << "\red This device has critically failed and is no longer functional!"
+		return
+	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		user << "\red You don't have the dexterity to do this!"
+		return
+	if(reagents.total_volume)
+		var/list/blood_traces = list()
+		for(var/datum/reagent/R in reagents.reagent_list)
+			if(R.id != "blood")
+				reagents.clear_reagents()
+				user << "\red The sample was contaminated! Please insert another sample"
+				return
+			else
+				blood_traces = params2list(R.data["trace_chem"])
+				break
+		var/dat = "Trace Chemicals Found: "
+		for(var/R in blood_traces)
+			if(prob(reliability))
+				if(details)
+					dat += "[R] ([blood_traces[R]] units) "
+				else
+					dat += "[R] "
+				recent_fail = 0
+			else
+				if(recent_fail)
+					crit_fail = 1
+					reagents.clear_reagents()
+					return
+				else
+					recent_fail = 1
+		user << "[dat]"
+		reagents.clear_reagents()
+	return
+

@@ -224,8 +224,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(linked_destroy.busy)
 				usr << "\red The destructive analyzer is busy at the moment."
 
-			else
-				linked_destroy.loaded_item:loc = linked_destroy.loc
+			else if(linked_destroy.loaded_item)
+				linked_destroy.loaded_item.loc = linked_destroy.loc
 				linked_destroy.loaded_item = null
 				linked_destroy.icon_state = "d_analyzer"
 				screen = 2.1
@@ -243,15 +243,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				spawn(24)
 					linked_destroy.busy = 0
 					if(!linked_destroy.hacked)
-						if(linked_destroy.reliability < 90)
-							files.UpdateDesign(linked_destroy.loaded_item.type)
-						else
+						if(linked_destroy.loaded_item.reliability >= 90)
 							var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
 							for(var/T in temp_tech)
 								files.UpdateTech(T, temp_tech[T])
-						if(linked_lathe) //Also sends salvaged materials to a linked autolateh, if any.
-							linked_lathe.m_amount = min(linked_lathe.max_material_storage, ((linked_lathe.TotalMaterials() + linked_destroy.loaded_item.m_amt)*linked_destroy.decon_mod))
-							linked_lathe.g_amount = min(linked_lathe.max_material_storage, ((linked_lathe.TotalMaterials() + linked_destroy.loaded_item.g_amt)*linked_destroy.decon_mod))
+						if(linked_destroy.loaded_item.reliability < 100)
+							files.UpdateDesign(linked_destroy.loaded_item.type)
+						if(linked_lathe) //Also sends salvaged materials to a linked autolathe, if any.
+							linked_lathe.m_amount = min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*linked_destroy.decon_mod))
+							linked_lathe.g_amount = min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*linked_destroy.decon_mod))
 						linked_destroy.loaded_item = null
 					for(var/I in contents)
 						del(I)
@@ -427,6 +427,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					screen = 2.0
 				else if(linked_destroy.loaded_item == null)
 					screen = 2.1
+				else
+					screen = 2.2
 			if(3 to 3.9)
 				if(linked_lathe == null)
 					screen = 3.0
