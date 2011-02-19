@@ -1301,6 +1301,23 @@ datum
 					return
 				..()
 
+		syndicream
+			name = "Cream filling"
+			id = "syndicream"
+			description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/M)
+				M:nutrition += nutriment_factor
+				if(istype(M, /mob/living/carbon/human) && M.mind)
+					if(M.mind.special_role)
+						if(!M) M = holder.my_atom
+						M:bruteloss--
+						M:fireloss--
+						M:nutrition += nutriment_factor
+						..()
+						return
+				..()
+
 		cornoil
 			name = "Corn Oil"
 			id = "cornoil"

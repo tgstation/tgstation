@@ -1856,6 +1856,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("syndicream", 2)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
