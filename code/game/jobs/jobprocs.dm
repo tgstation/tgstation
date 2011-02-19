@@ -281,26 +281,26 @@
 			//	src.see_invisible = 15 -- Doesn't work as see_invisible is reset every world cycle. -- Skie
 			//The two procs below allow the Chaplain to choose their religion. All it really does is change their bible.
 			spawn(0)
-				var/religion_name = "Bible"
+				var/religion_name = "Imperium"
 				var/new_religion = input(src, "You are the Chaplain. Would you like to change your religion? Default is the Bible.", "Name change", religion_name)
 
-				if ((length(new_religion) == 0) || (new_religion == "Bible"))
+				if ((length(new_religion) == 0) || (new_religion == "Imperium"))
 					new_religion = religion_name
 
 				if (new_religion)
 					if (length(new_religion) >= 26)
 						new_religion = copytext(new_religion, 1, 26)
 						new_religion = dd_replacetext(new_religion, ">", "'")
-						if(new_religion == "Bible")
-							B.name = "Holy Bible"
+						if(new_religion == "Imperium")
+							B.name = "Uplifting Primer"
 						else
 							B.name = "The Holy Book of [new_religion]"
 
 			spawn(1)
-				var/deity_name = "Christ"
-				var/new_deity = input(src, "Would you like to change your deity? Default is Christ.", "Name change", deity_name)
+				var/deity_name = "Emperor"
+				var/new_deity = input(src, "Would you like to change your deity? Default is the God Emperor of Mankind.", "Name change", deity_name)
 
-				if ( (length(new_deity) == 0) || (new_deity == "Christ") )
+				if ( (length(new_deity) == 0) || (new_deity == "God Emperor of Mankind") )
 					new_deity = deity_name
 
 				if(new_deity)
@@ -368,11 +368,11 @@
 
 		if ("Shaft Miner")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_mine (src), slot_ears)
-			src.equip_if_possible(new /obj/item/clothing/under/color/white(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/under/rank/miner(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/weapon/crowbar(src), slot_in_backpack)
-			src.equip_if_possible(new /obj/item/weapon/satchel(src), slot_l_hand)
+			src.equip_if_possible(new /obj/item/weapon/satchel(src), slot_in_backpack)
 
 		if ("Assistant")
 			src.equip_if_possible(new /obj/item/clothing/under/color/grey(src), slot_w_uniform)

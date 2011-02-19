@@ -2843,7 +2843,7 @@ proc/move_mining_shuttle()
 	force = 15.0
 	throwforce = 4.0
 	item_state = "wrench"
-	w_class = 4.0
+	w_class = 1.0
 	m_amt = 50
 
 /*****************************Shovel********************************/
@@ -2856,7 +2856,7 @@ proc/move_mining_shuttle()
 	force = 8.0
 	throwforce = 4.0
 	item_state = "wrench"
-	w_class = 4.0
+	w_class = 1.0
 	m_amt = 50
 
 

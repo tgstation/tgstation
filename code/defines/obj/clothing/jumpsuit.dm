@@ -161,6 +161,14 @@
 	item_state = "dg_suit"
 	color = "centcom"
 
+/obj/item/clothing/under/rank/miner
+	desc = "A snappy jumpsuit with a sturdy set of overalls. It is very dirty."
+	name = "Shaft Miner Jumpsuit"
+	icon_state = "miner"
+	item_state = "miner"
+	color = "miner"
+	permeability_coefficient = 0.50
+
 /obj/item/clothing/under/rank/head_of_security
 	desc = "It has a Head of Security rank stripe on it."
 	name = "Head of Security Jumpsuit"
