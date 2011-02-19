@@ -110,8 +110,6 @@ var/list/sacrificed = list()
 				"\red You hear an anguished scream.")
 				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 				M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-				if (ticker.mode.name == "cult")
-					ticker.mode:grant_runeword(M)
 				cultists.Add(M)
 				return
 			return fizzle()
@@ -413,7 +411,7 @@ var/list/sacrificed = list()
 						del(src)
 						usr.say("H'drak v'loso, mir'kanas verbot!")
 						return
-				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordblood)
+				if(R.word1==wordblood && R.word2==wordsee && R.word3==wordhide)
 					for(var/obj/item/weapon/paper/P in src.loc)
 						if(P.info)
 							usr << "\red The blank is tainted. It is unsuitable."
@@ -496,20 +494,94 @@ var/list/sacrificed = list()
 /////////////////////////////////////////FIFTEENTH RUNE
 
 		sacrifice()
-			var/culcount = 0
+			var/list/cultsinrange = list()
+			var/list/victims = list()
+			for(var/mob/living/carbon/human/V in src.loc)
+				if(!cultists.Find(V))
+					victims.Add(V)
 			for(var/mob/living/carbon/human/C in orange(1,src))
 				if(cultists.Find(C))
-					culcount++
-			if(culcount>=3)
-				for(var/mob/living/carbon/human/S in src.loc)
-					if(ticker.mode.name == "cult")
-						if(S == ticker.mode:sacrifice_target.current)//Iunno, check if it's a target
-							sacrificed += S.mind
-							S.gib(1)
-							usr << "\red The Geometer of Blood accepts this sacrifice."
+					cultsinrange.Add(C)
+			for(var/mob/H in victims)
+				for(var/mob/K in cultsinrange)
+					K.say("Barhah hra zar'garis!")
+				if (ticker.mode.name == "cult")
+					if(H == ticker.mode:sacrifice_target.current)
+						if(cultsinrange.len >= 3)
+							H.gib(1)
+							sacrificed += H.mind
+							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
 						else
-							usr << "\red The Geometer of Blood does not accept this sacrifice."
-						return
+							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
+					else
+						if(cultsinrange.len >= 3)
+							if(H.stat !=2)
+								H.gib(1)
+								if(prob(80))
+									usr << "\red The Geometer of Blood accepts this sacrifice."
+									ticker.mode:grant_runeword(usr)
+								else
+									usr << "\red The Geometer of blood accepts this sacrifice."
+									usr << "\red However, this soul was not enough to gain His favor."
+							else
+								H.gib(1)
+								if(prob(40))
+									usr << "\red The Geometer of blood accepts this sacrifice."
+									ticker.mode:grant_runeword(usr)
+								else
+									usr << "\red The Geometer of blood accepts this sacrifice."
+									usr << "\red However, a mere dead body is not enough to satisfy Him."
+						else
+							if(H.stat !=2)
+								usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
+							else
+								H.gib(1)
+								if(prob(40))
+									usr << "\red The Geometer of blood accepts this sacrifice."
+									ticker.mode:grant_runeword(usr)
+								else
+									usr << "\red The Geometer of blood accepts this sacrifice."
+									usr << "\red However, a mere dead body is not enough to satisfy Him."
+				else
+					if(cultsinrange.len >= 3)
+						H.gib(1)
+						usr << "\red The Geometer of Blood accepts this sacrifice."
+					else
+						if(H.stat !=2)
+							usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
+						else
+							H.gib(1)
+							usr << "\red The Geometer of blood accepts this sacrifice."
+
+				return
+			for(var/mob/living/carbon/monkey/M in src.loc)
+				for(var/mob/K in cultsinrange)
+					K.say("Barhah hra zar'garis!")
+				M.gib(1)
+				if (ticker.mode.name == "cult")
+					if(prob(20))
+						usr << "\red The Geometer of Blood accepts your meager sacrifice."
+						ticker.mode:grant_runeword(usr)
+					else
+						usr << "\red The Geometer of blood accepts this sacrifice."
+						usr << "\red However, a mere monkey is not enough to satisfy Him."
+				else
+					usr << "\red The Geometer of Blood accepts your meager sacrifice."
+				return
+			for(var/mob/living/carbon/alien/A)
+				for(var/mob/K in cultsinrange)
+					K.say("Barhah hra zar'garis!")
+				A.gib(1)
+				if (ticker.mode.name == "cult")
+					if(prob(75))
+						usr << "\red The Geometer of Blood accepts your exotic sacrifice."
+						ticker.mode:grant_runeword(usr)
+					else
+						usr << "\red The Geometer of Blood accepts your exotic sacrifice."
+						usr << "\red However, this alien is not enough to gain His favor."
+				else
+					usr << "\red The Geometer of Blood accepts your exotic sacrifice."
+				return
 			return fizzle()
 
 /////////////////////////////////////////SIXTEENTH RUNE

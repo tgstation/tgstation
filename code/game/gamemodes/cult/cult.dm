@@ -8,9 +8,9 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-	var/list/startwords = list("blood","join","self")
+	var/list/startwords = list("blood","join","self","hell")
 	//var/list/startwords = list("travel","blood","join","hell","self","see")
-	var/list/allwords = list("travel","blood","join","hell","self","see")
+	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hear", "free", "hide")
 
 	var/list/objectives = list()
 
@@ -130,8 +130,20 @@
 			wordexp = "[wordself] is self..."
 		if("see")
 			wordexp = "[wordsee] is see..."
-	cult_mob << "\red You remembered one thing from the dark teachings of your master... [wordexp]"
-	cult_mob.mind.store_memory("<B>You remember one thing</B>: [wordexp]", 0, 0)
+		if("tech")
+			wordexp = "[wordtech] is technology..."
+		if("destroy")
+			wordexp = "[worddestr] is destroy..."
+		if("other")
+			wordexp = "[wordother] is other..."
+		if("hear")
+			wordexp = "[wordhear] is hear..."
+		if("free")
+			wordexp = "[wordfree] is free..."
+		if("hide")
+			wordexp = "[wordhide] is hide..."
+	cult_mob << "\red You remember one thing from the dark teachings of your master... [wordexp]"
+	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
 /datum/game_mode/cult/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"

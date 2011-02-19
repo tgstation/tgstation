@@ -73,7 +73,7 @@ var/runedec = 0
 // blood join Hell - Raise dead
 
 // hide see blood - Hide nearby runes
-// destroy hide blood - Reveal nearby runes
+// blood see hide - Reveal nearby runes  - The point of this rune is that its reversed obscure rune. So you always know the words to reveal the rune once oyu have obscured it.
 
 // Hell travel self - Leave your body and ghost around
 // blood see travel - Manifest a ghost into a mortal body
@@ -144,7 +144,7 @@ var/runedec = 0
 			return talisman()
 		if(word1 == wordhell && word2 == wordblood && word3 == wordjoin)
 			return sacrifice()
-		if(word1 == worddestr && word2 == wordhide && word3 == wordblood)
+		if(word1 == wordblood && word2 == wordsee && word3 == wordhide)
 			return revealrunes(src)
 		if(word1 == worddestr && word2 == wordtravel && word3 == wordself)
 			return wall()
@@ -223,7 +223,7 @@ var/runedec = 0
 				icon_state = "[rand(1,6)]"
 				src.icon += rgb(255, 255, 255)
 				return
-			if(word1 == worddestr && word2 == wordhide && word3 == wordblood)
+			if(word1 == wordblood && word2 == wordsee && word3 == wordhide)
 				icon_state = "4"
 				src.icon += rgb(255, 255, 255)
 				return
@@ -455,9 +455,9 @@ var/runedec = 0
 					R.loc = user.loc
 					R.check_icon()
 				if("reveal")
-					R.word1=worddestr
-					R.word2=wordhide
-					R.word3=wordblood
+					R.word1=wordblood
+					R.word2=wordsee
+					R.word3=wordhide
 					R.loc = user.loc
 					R.check_icon()
 				if("wall")

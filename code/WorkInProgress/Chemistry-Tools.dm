@@ -2786,6 +2786,10 @@
 					icon_state = "glass_white"
 					name = "Glass of soy milk"
 					desc = "White and nutritious soy goodness!"
+				if("berryjuice")
+					icon_state = "berryjuice"
+					name = "Glass berry joice"
+					desc = "Berry juice. Or maybe its jam. Who cares?"
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"
