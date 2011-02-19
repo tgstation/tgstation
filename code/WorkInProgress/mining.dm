@@ -796,7 +796,56 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 
 				"}
 
+/obj/item/weapon/book/manual/engineering_singularity_safety
+	name = "Singularity Safety in Special Circumstances"
+	icon = 'library.dmi'
+	icon_state ="bookEngineeringSingularitySafety"
+	due_date = 0 // Game time in 1/10th seconds
+	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 
+//big pile of shit below.
+
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 18px; margin: 15px 0px 5px;}
+				h2 {font-size: 15px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {list-style: none; margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				</style>
+				</head>
+				<body>
+				<h3>Singularity Safety in Special Circumstances</h3>
+
+				<h4>Power outage</h4>
+
+				A power problem has made the entire station loose power? Could be station-wide wiring problems or syndicate power sinks. In any case follow these steps:
+				<p>
+				<b>Step one:</b> <b><font color='red'>PANIC!</font></b><br>
+				<b>Step two:</b> Get your ass over to engineering! <b>QUICKLY!!!</b><br>
+				<b>Step three:</b> Get to the <b>Area Power Controller</b> which controls the power to the emitters.<br>
+				<b>Step four:</b> Swipe it with your <b>ID card</b> - if it doesn't unlock, continue with step 15.<br>
+				<b>Step five:</b> Open the console and disengage the cover lock.<br>
+				<b>Step six:</b> Pry open the APC with a <b>Crowbar.</b><br>
+				<b>Step seven:</b> Take out the empty <b>power cell.</b><br>
+				<b>Step eight:</b> Put in the new, <b>full power cell</b> - if you don't have one, continue with step 15.<br>
+				<b>Step nine:</b> Quickly put on a <b>Radiation suit.</b><br>
+				<b>Step ten:</b> Check if the <b>singularity field generators</b> withstood the down-time - if they didn't, continue with step 15.<br>
+				<b>Step eleven:</b> Since disaster was averted you now have to ensure it doesn't repeat. If it was a powersink which caused it and if the engineering apc is wired to the same powernet, which the powersink is on, you have to remove the piece of wire which links the apc to the powernet. If it wasn't a powersink which caused it, then skip to step 14.<br>
+				<b>Step twelve:</b> Grab your crowbar and pry away the tile closest to the APC.<br>
+				<b>Step thirteen:</b> Use the wirecutters to cut the wire which is conecting the grid to the terminal. <br>
+				<b>Step fourteen:</b> Go to the bar and tell the guys how you saved them all. Stop reading this guide here.<br>
+				<b>Step fifteen:</b> <b>GET THE FUCK OUT OF THERE!!!</b><br>
+				</p>
+
+				<h4>Shields get damaged</h4>
+
+				Step one: <b>GET THE FUCK OUT OF THERE!!! FORGET THE WOMEN AND CHILDREN, SAVE YOURSELF!!!</b><br>
+				</body>
+				</html>
+				"}
 
 
 
