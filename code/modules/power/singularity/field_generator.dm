@@ -284,6 +284,7 @@
 				T = get_step(T, NSEW)
 				if(!locate(/obj/machinery/containment_field) in T)
 					var/obj/machinery/containment_field/CF = new/obj/machinery/containment_field()
+					CF.set_master(src,G)
 					fields += CF
 					G.fields += CF
 					CF.loc = T
