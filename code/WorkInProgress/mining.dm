@@ -1465,6 +1465,10 @@ proc/move_mining_shuttle()
 				new /obj/item/seeds/alien/alien4(src)
 		seedName = ""
 		seedAmt = 0
+	new/obj/item/weapon/ore/glass(src)
+	new/obj/item/weapon/ore/glass(src)
+	new/obj/item/weapon/ore/glass(src)
+	new/obj/item/weapon/ore/glass(src)
 	return
 
 /turf/simulated/floor/airless/asteroid/proc/updateMineralOverlays()
@@ -1537,50 +1541,47 @@ proc/move_mining_shuttle()
 
 /obj/item/weapon/ore/uranium
 	name = "Uranium ore"
-	icon = 'Mining.dmi'
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
 
 /obj/item/weapon/ore/iron
 	name = "Iron ore"
-	icon = 'Mining.dmi'
 	icon_state = "Iron ore"
+	origin_tech = "materials=1"
+
+/obj/item/weapon/ore/glass
+	name = "Sand"
+	icon_state = "Glass ore"
 	origin_tech = "materials=1"
 
 /obj/item/weapon/ore/plasma
 	name = "Plasma ore"
-	icon = 'Mining.dmi'
 	icon_state = "Plasma ore"
 	origin_tech = "materials=2"
 
 /obj/item/weapon/ore/silver
 	name = "Silver ore"
-	icon = 'Mining.dmi'
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
 
 /obj/item/weapon/ore/gold
 	name = "Gold ore"
-	icon = 'Mining.dmi'
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
 
 /obj/item/weapon/ore/diamond
 	name = "Diamond ore"
-	icon = 'Mining.dmi'
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
 
 /obj/item/weapon/ore/clown
 	name = "Bananium ore"
-	icon = 'Mining.dmi'
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
 
 /obj/item/weapon/ore/slag
 	name = "Slag"
 	desc = "Completely useless"
-	icon = 'Mining.dmi'
 	icon_state = "slag"
 
 /obj/item/weapon/ore/New()
@@ -1643,11 +1644,68 @@ proc/move_mining_shuttle()
 	return
 
 /obj/ore_box/attack_hand(obj, mob/user as mob)
-	for (var/obj/item/weapon/ore/O in contents)
-		contents -= O
-		O.loc = src.loc
-	user << "\blue You empty the box"
+	var/amt_gold = 0
+	var/amt_silver = 0
+	var/amt_diamond = 0
+	var/amt_glass = 0
+	var/amt_iron = 0
+	var/amt_plasma = 0
+	var/amt_uranium = 0
+	var/amt_clown = 0
+
+	for (var/obj/item/weapon/ore/C in contents)
+		if (istype(C,/obj/item/weapon/ore/diamond))
+			amt_diamond++;
+		if (istype(C,/obj/item/weapon/ore/glass))
+			amt_glass++;
+		if (istype(C,/obj/item/weapon/ore/plasma))
+			amt_plasma++;
+		if (istype(C,/obj/item/weapon/ore/iron))
+			amt_iron++;
+		if (istype(C,/obj/item/weapon/ore/silver))
+			amt_silver++;
+		if (istype(C,/obj/item/weapon/ore/gold))
+			amt_gold++;
+		if (istype(C,/obj/item/weapon/ore/uranium))
+			amt_uranium++;
+		if (istype(C,/obj/item/weapon/ore/clown))
+			amt_clown++;
+
+	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
+	if (amt_gold)
+		dat += text("Gold ore: [amt_gold]<br>")
+	if (amt_silver)
+		dat += text("Silver ore: [amt_silver]<br>")
+	if (amt_iron)
+		dat += text("Metal ore: [amt_iron]<br>")
+	if (amt_glass)
+		dat += text("Sand: [amt_glass]<br>")
+	if (amt_diamond)
+		dat += text("Diamond ore: [amt_diamond]<br>")
+	if (amt_plasma)
+		dat += text("Plasma ore: [amt_plasma]<br>")
+	if (amt_uranium)
+		dat += text("Uranium ore: [amt_uranium]<br>")
+	if (amt_clown)
+		dat += text("Bananium ore: [amt_clown]<br>")
+
+	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
+	user << browse("[dat]", "window=orebox")
 	return
+
+/obj/ore_box/Topic(href, href_list)
+	if(..())
+		return
+	usr.machine = src
+	src.add_fingerprint(usr)
+	if(href_list["removeall"])
+		for (var/obj/item/weapon/ore/O in contents)
+			contents -= O
+			O.loc = src.loc
+		usr << "\blue You empty the box"
+	src.updateUsrDialog()
+	return
+
 
 /**********************Alien Seeds**************************/
 
@@ -1800,6 +1858,31 @@ proc/move_mining_shuttle()
 		return
 	return
 
+
+/**********************Ore to material recipes datum**************************/
+
+var/list/AVAILABLE_ORES = typesof(/obj/item/weapon/ore)
+
+/datum/material_recipe
+	var/name
+	var/list/obj/item/weapon/ore/recipe
+	var/obj/prod_type  //produced material/object type
+
+	New(var/param_name, var/param_recipe, var/param_prod_type)
+		name = param_name
+		recipe = param_recipe
+		prod_type = param_prod_type
+
+var/list/datum/material_recipe/MATERIAL_RECIPES = list(
+		new/datum/material_recipe("Metal",list(/obj/item/weapon/ore/iron),/obj/item/stack/sheet/metal),
+		new/datum/material_recipe("Glass",list(/obj/item/weapon/ore/glass),/obj/item/stack/sheet/glass),
+		new/datum/material_recipe("Gold",list(/obj/item/weapon/ore/gold),/obj/item/stack/sheet/gold),
+		new/datum/material_recipe("Silver",list(/obj/item/weapon/ore/silver),/obj/item/stack/sheet/silver),
+		new/datum/material_recipe("Diamond",list(/obj/item/weapon/ore/diamond),/obj/item/stack/sheet/diamond),
+		new/datum/material_recipe("Plasma",list(/obj/item/weapon/ore/plasma),/obj/item/stack/sheet/plasma),
+		new/datum/material_recipe("Bananium",list(/obj/item/weapon/ore/clown),/obj/item/stack/sheet/clown)
+	)
+
 /**********************Mineral processing unit console**************************/
 
 /obj/machinery/mineral/processing_unit_console
@@ -1823,61 +1906,94 @@ proc/move_mining_shuttle()
 
 	var/dat = "<b>Smelter control console</b><br><br>"
 	//iron
-	if (machine.selected_iron==1)
-		dat += text("<A href='?src=\ref[src];sel_iron=no'><font color='green'>Y</font></A> ")
-	else
-		dat += text("<A href='?src=\ref[src];sel_iron=yes'><font color='red'>N</font></A> ")
-	dat += text("Iron: [machine.ore_iron]<br>")
+	if(machine.ore_iron || machine.ore_plasma || machine.ore_uranium || machine.ore_gold || machine.ore_silver || machine.ore_diamond || machine.ore_clown)
+		if(machine.ore_iron)
+			if (machine.selected_iron==1)
+				dat += text("<A href='?src=\ref[src];sel_iron=no'><font color='green'>Smelting</font></A> ")
+			else
+				dat += text("<A href='?src=\ref[src];sel_iron=yes'><font color='red'>Not smelting</font></A> ")
+			dat += text("Iron: [machine.ore_iron]<br>")
+		else
+			machine.selected_iron = 0
 
-	//plasma
-	if (machine.selected_plasma==1)
-		dat += text("<A href='?src=\ref[src];sel_plasma=no'><font color='green'>Y</font></A> ")
-	else
-		dat += text("<A href='?src=\ref[src];sel_plasma=yes'><font color='red'>N</font></A> ")
-	dat += text("Plasma: [machine.ore_plasma]<br>")
+		//sand - glass
+		if(machine.ore_glass)
+			if (machine.selected_glass==1)
+				dat += text("<A href='?src=\ref[src];sel_glass=no'><font color='green'>Smelting</font></A> ")
+			else
+				dat += text("<A href='?src=\ref[src];sel_glass=yes'><font color='red'>Not smelting</font></A> ")
+			dat += text("Sand: [machine.ore_glass]<br>")
+		else
+			machine.selected_glass = 0
 
-	//uranium
-	if (machine.selected_uranium==1)
-		dat += text("<A href='?src=\ref[src];sel_uranium=no'><font color='green'>Y</font></A> ")
-	else
-		dat += text("<A href='?src=\ref[src];sel_uranium=yes'><font color='red'>N</font></A> ")
-	dat += text("Uranium: [machine.ore_uranium]<br>")
+		//plasma
+		if(machine.ore_plasma)
+			if (machine.selected_plasma==1)
+				dat += text("<A href='?src=\ref[src];sel_plasma=no'><font color='green'>Smelting</font></A> ")
+			else
+				dat += text("<A href='?src=\ref[src];sel_plasma=yes'><font color='red'>Not smelting</font></A> ")
+			dat += text("Plasma: [machine.ore_plasma]<br>")
+		else
+			machine.selected_plasma = 0
 
-	//gold
-	if (machine.selected_gold==1)
-		dat += text("<A href='?src=\ref[src];sel_gold=no'><font color='green'>Y</font></A> ")
-	else
-		dat += text("<A href='?src=\ref[src];sel_gold=yes'><font color='red'>N</font></A> ")
-	dat += text("Gold: [machine.ore_gold]<br>")
+		//uranium
+		if(machine.ore_uranium)
+			if (machine.selected_uranium==1)
+				dat += text("<A href='?src=\ref[src];sel_uranium=no'><font color='green'>Smelting</font></A> ")
+			else
+				dat += text("<A href='?src=\ref[src];sel_uranium=yes'><font color='red'>Not smelting</font></A> ")
+			dat += text("Uranium: [machine.ore_uranium]<br>")
+		else
+			machine.selected_uranium = 0
 
-	//silver
-	if (machine.selected_silver==1)
-		dat += text("<A href='?src=\ref[src];sel_silver=no'><font color='green'>Y</font></A> ")
-	else
-		dat += text("<A href='?src=\ref[src];sel_silver=yes'><font color='red'>N</font></A> ")
-	dat += text("Silver: [machine.ore_silver]<br>")
+		//gold
+		if(machine.ore_gold)
+			if (machine.selected_gold==1)
+				dat += text("<A href='?src=\ref[src];sel_gold=no'><font color='green'>Smelting</font></A> ")
+			else
+				dat += text("<A href='?src=\ref[src];sel_gold=yes'><font color='red'>Not smelting</font></A> ")
+			dat += text("Gold: [machine.ore_gold]<br>")
+		else
+			machine.selected_gold = 0
 
-	//diamond
-	if (machine.selected_diamond==1)
-		dat += text("<A href='?src=\ref[src];sel_diamond=no'><font color='green'>Y</font></A> ")
-	else
-		dat += text("<A href='?src=\ref[src];sel_diamond=yes'><font color='red'>N</font></A> ")
-	dat += text("Diamond: [machine.ore_diamond]<br>")
+		//silver
+		if(machine.ore_silver)
+			if (machine.selected_silver==1)
+				dat += text("<A href='?src=\ref[src];sel_silver=no'><font color='green'>Smelting</font></A> ")
+			else
+				dat += text("<A href='?src=\ref[src];sel_silver=yes'><font color='red'>Not smelting</font></A> ")
+			dat += text("Silver: [machine.ore_silver]<br>")
+		else
+			machine.selected_silver = 0
 
-	//bananium
-	if (machine.selected_clown==1)
-		dat += text("<A href='?src=\ref[src];sel_clown=no'><font color='green'>Y</font></A> ")
-	else
-		dat += text("<A href='?src=\ref[src];sel_clown=yes'><font color='red'>N</font></A> ")
-	dat += text("Bananium: [machine.ore_clown]<br>")
+		//diamond
+		if(machine.ore_diamond)
+			if (machine.selected_diamond==1)
+				dat += text("<A href='?src=\ref[src];sel_diamond=no'><font color='green'>Smelting</font></A> ")
+			else
+				dat += text("<A href='?src=\ref[src];sel_diamond=yes'><font color='red'>Not smelting</font></A> ")
+			dat += text("Diamond: [machine.ore_diamond]<br>")
+		else
+			machine.selected_diamond = 0
 
-	//On or off
-	dat += text("Machine is currently ")
-	if (machine.on==1)
-		dat += text("<A href='?src=\ref[src];set_on=off'>On</A> ")
-	else
-		dat += text("<A href='?src=\ref[src];set_on=on'>Off</A> ")
+		//bananium
+		if(machine.ore_clown)
+			if (machine.selected_clown==1)
+				dat += text("<A href='?src=\ref[src];sel_clown=no'><font color='green'>Smelting</font></A> ")
+			else
+				dat += text("<A href='?src=\ref[src];sel_clown=yes'><font color='red'>Not smelting</font></A> ")
+			dat += text("Bananium: [machine.ore_clown]<br>")
+		else
+			machine.selected_clown = 0
 
+		//On or off
+		dat += text("Machine is currently ")
+		if (machine.on==1)
+			dat += text("<A href='?src=\ref[src];set_on=off'>On</A> ")
+		else
+			dat += text("<A href='?src=\ref[src];set_on=on'>Off</A> ")
+	else
+		dat+="---No Materials Loaded---"
 
 
 	user << browse("[dat]", "window=console_processing_unit")
@@ -1894,6 +2010,11 @@ proc/move_mining_shuttle()
 			machine.selected_iron = 1
 		else
 			machine.selected_iron = 0
+	if(href_list["sel_glass"])
+		if (href_list["sel_glass"] == "yes")
+			machine.selected_glass = 1
+		else
+			machine.selected_glass = 0
 	if(href_list["sel_plasma"])
 		if (href_list["sel_plasma"] == "yes")
 			machine.selected_plasma = 1
@@ -1947,6 +2068,7 @@ proc/move_mining_shuttle()
 	var/ore_gold = 0;
 	var/ore_silver = 0;
 	var/ore_diamond = 0;
+	var/ore_glass = 0;
 	var/ore_plasma = 0;
 	var/ore_uranium = 0;
 	var/ore_iron = 0;
@@ -1954,6 +2076,7 @@ proc/move_mining_shuttle()
 	var/selected_gold = 0
 	var/selected_silver = 0
 	var/selected_diamond = 0
+	var/selected_glass = 0
 	var/selected_plasma = 0
 	var/selected_uranium = 0
 	var/selected_iron = 0
@@ -1974,49 +2097,56 @@ proc/move_mining_shuttle()
 		var/i
 		for (i = 0; i < 10; i++)
 			if (on)
-				if (selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+					if (ore_glass > 0)
+						ore_glass--;
+						new /obj/item/stack/sheet/glass(output.loc)
+					else
+						on = 0
+					continue
+				if (selected_glass == 0 && selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_gold > 0)
 						ore_gold--;
 						new /obj/item/stack/sheet/gold(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_silver > 0)
 						ore_silver--;
 						new /obj/item/stack/sheet/silver(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_diamond > 0)
 						ore_diamond--;
 						new /obj/item/stack/sheet/diamond(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_plasma > 0)
 						ore_plasma--;
 						new /obj/item/stack/sheet/plasma(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
 					if (ore_uranium > 0)
 						ore_uranium--;
 						new /obj/item/weapon/ore/uranium(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
 					if (ore_iron > 0)
 						ore_iron--;
 						new /obj/item/stack/sheet/metal(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
 					if (ore_iron > 0)
 						ore_iron--;
 						new /obj/item/stack/sheet/metal(output.loc)
@@ -2024,10 +2154,10 @@ proc/move_mining_shuttle()
 						on = 0
 					continue
 
-				if (selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1)
 					if (ore_clown > 0)
 						ore_clown--;
-						new /obj/item/stack/sheet/metal(output.loc)
+						new /obj/item/stack/sheet/clown(output.loc)
 					else
 						on = 0
 					continue
@@ -2058,7 +2188,9 @@ proc/move_mining_shuttle()
 				if (selected_iron == 1)
 					if (ore_iron <= 0)
 						b = 0
-
+				if (selected_glass == 1)
+					if (ore_glass <= 0)
+						b = 0
 				if (selected_clown == 1)
 					if (ore_clown <= 0)
 						b = 0
@@ -2092,27 +2224,26 @@ proc/move_mining_shuttle()
 			if (O)
 				if (istype(O,/obj/item/weapon/ore/iron))
 					ore_iron++;
-					//new /obj/item/stack/sheet/metal(output.loc)
+					del(O)
+					continue
+				if (istype(O,/obj/item/weapon/ore/glass))
+					ore_glass++;
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/diamond))
 					ore_diamond++;
-					//new /obj/item/stack/sheet/diamond(output.loc)
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/plasma))
 					ore_plasma++
-					//new /obj/item/stack/sheet/plasma(output.loc)
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/gold))
 					ore_gold++
-					//new /obj/item/stack/sheet/gold(output.loc)
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/silver))
 					ore_silver++
-					//new /obj/item/stack/sheet/silver(output.loc)
 					del(O)
 					continue
 				if (istype(O,/obj/item/weapon/ore/uranium))
@@ -2155,12 +2286,24 @@ proc/move_mining_shuttle()
 
 	dat += text("<b>Stacking unit console</b><br><br>")
 
-	dat += text("Iron: [machine.ore_iron] <A href='?src=\ref[src];release=iron'>Release</A><br>")
-	dat += text("Plasma: [machine.ore_plasma] <A href='?src=\ref[src];release=plasma'>Release</A><br>")
-	dat += text("Gold: [machine.ore_gold] <A href='?src=\ref[src];release=gold'>Release</A><br>")
-	dat += text("Silver: [machine.ore_silver] <A href='?src=\ref[src];release=silver'>Release</A><br>")
-	dat += text("Damond: [machine.ore_diamond] <A href='?src=\ref[src];release=diamond'>Release</A><br><br>")
-	dat += text("Bananium: [machine.ore_clown] <A href='?src=\ref[src];release=clown'>Release</A><br><br>")
+	if(machine.ore_iron)
+		dat += text("Iron: [machine.ore_iron] <A href='?src=\ref[src];release=iron'>Release</A><br>")
+	if(machine.ore_steel)
+		dat += text("Steel: [machine.ore_steel] <A href='?src=\ref[src];release=steel'>Release</A><br>")
+	if(machine.ore_glass)
+		dat += text("Glass: [machine.ore_glass] <A href='?src=\ref[src];release=glass'>Release</A><br>")
+	if(machine.ore_rglass)
+		dat += text("Reinforced Glass: [machine.ore_rglass] <A href='?src=\ref[src];release=rglass'>Release</A><br>")
+	if(machine.ore_plasma)
+		dat += text("Plasma: [machine.ore_plasma] <A href='?src=\ref[src];release=plasma'>Release</A><br>")
+	if(machine.ore_gold)
+		dat += text("Gold: [machine.ore_gold] <A href='?src=\ref[src];release=gold'>Release</A><br>")
+	if(machine.ore_silver)
+		dat += text("Silver: [machine.ore_silver] <A href='?src=\ref[src];release=silver'>Release</A><br>")
+	if(machine.ore_diamond)
+		dat += text("Damond: [machine.ore_diamond] <A href='?src=\ref[src];release=diamond'>Release</A><br>")
+	if(machine.ore_clown)
+		dat += text("Bananium: [machine.ore_clown] <A href='?src=\ref[src];release=clown'>Release</A><br><br>")
 
 	dat += text("Stacking: [machine.stack_amt]<br><br>")
 
@@ -2179,6 +2322,18 @@ proc/move_mining_shuttle()
 					G.amount = machine.ore_plasma
 					G.loc = machine.output.loc
 					machine.ore_plasma = 0
+			if ("glass")
+				if (machine.ore_glass > 0)
+					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass
+					G.amount = machine.ore_glass
+					G.loc = machine.output.loc
+					machine.ore_glass = 0
+			if ("rglass")
+				if (machine.ore_rglass > 0)
+					var/obj/item/stack/sheet/rglass/G = new /obj/item/stack/sheet/rglass
+					G.amount = machine.ore_rglass
+					G.loc = machine.output.loc
+					machine.ore_rglass = 0
 			if ("gold")
 				if (machine.ore_gold > 0)
 					var/obj/item/stack/sheet/gold/G = new /obj/item/stack/sheet/gold
@@ -2203,12 +2358,18 @@ proc/move_mining_shuttle()
 					G.amount = machine.ore_iron
 					G.loc = machine.output.loc
 					machine.ore_iron = 0
+			if ("steel")
+				if (machine.ore_steel > 0)
+					var/obj/item/stack/sheet/r_metal/G = new /obj/item/stack/sheet/r_metal
+					G.amount = machine.ore_steel
+					G.loc = machine.output.loc
+					machine.ore_steel = 0
 			if ("clown")
 				if (machine.ore_clown > 0)
 					var/obj/item/stack/sheet/clown/G = new /obj/item/stack/sheet/clown
 					G.amount = machine.ore_clown
 					G.loc = machine.output.loc
-					machine.ore_iron = 0
+					machine.ore_clown = 0
 	src.updateUsrDialog()
 	return
 
@@ -2233,6 +2394,9 @@ proc/move_mining_shuttle()
 	var/ore_plasma = 0;
 	var/ore_iron = 0;
 	var/ore_clown = 0;
+	var/ore_glass = 0;
+	var/ore_rglass = 0;
+	var/ore_steel = 0;
 	var/stack_amt = 50; //ammount to stack before releassing
 
 /obj/machinery/mineral/stacking_machine/New()
@@ -2251,32 +2415,38 @@ proc/move_mining_shuttle()
 			O = locate(/obj/item, input.loc)
 			if (istype(O,/obj/item/stack/sheet/metal))
 				ore_iron++;
-				//new /obj/item/stack/sheet/metal(output.loc)
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/diamond))
 				ore_diamond++;
-				//new /obj/item/stack/sheet/diamond(output.loc)
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/plasma))
 				ore_plasma++
-				//new /obj/item/stack/sheet/plasma(output.loc)
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/gold))
 				ore_gold++
-				//new /obj/item/stack/sheet/gold(output.loc)
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/silver))
 				ore_silver++
-				//new /obj/item/stack/sheet/silver(output.loc)
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/clown))
 				ore_clown++
-				//new /obj/item/stack/sheet/silver(output.loc)
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/glass))
+				ore_glass++
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/rglass))
+				ore_rglass++
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/r_metal))
+				ore_steel++
 				del(O)
 				continue
 			if (istype(O,/obj/item/weapon/ore/slag))
@@ -2318,6 +2488,24 @@ proc/move_mining_shuttle()
 		G.amount = stack_amt
 		G.loc = output.loc
 		ore_clown -= stack_amt
+		return
+	if (ore_glass >= stack_amt)
+		var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_glass -= stack_amt
+		return
+	if (ore_rglass >= stack_amt)
+		var/obj/item/stack/sheet/rglass/G = new /obj/item/stack/sheet/rglass
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_rglass -= stack_amt
+		return
+	if (ore_steel >= stack_amt)
+		var/obj/item/stack/sheet/r_metal/G = new /obj/item/stack/sheet/r_metal
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_steel -= stack_amt
 		return
 	return
 
@@ -2604,10 +2792,9 @@ proc/move_mining_shuttle()
 	name = "Coin"
 	icon_state = "coin"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 5.0
-	throwforce = 7.0
-	w_class = 2.0
-	m_amt = 50
+	force = 0.0
+	throwforce = 0.0
+	w_class = 1.0
 
 /obj/item/weapon/coin/New()
 	pixel_x = rand(0,16)-8
@@ -2843,7 +3030,7 @@ proc/move_mining_shuttle()
 	force = 15.0
 	throwforce = 4.0
 	item_state = "wrench"
-	w_class = 1.0
+	w_class = 4.0
 	m_amt = 50
 
 /*****************************Shovel********************************/
@@ -2856,7 +3043,7 @@ proc/move_mining_shuttle()
 	force = 8.0
 	throwforce = 4.0
 	item_state = "wrench"
-	w_class = 1.0
+	w_class = 3.0
 	m_amt = 50
 
 
