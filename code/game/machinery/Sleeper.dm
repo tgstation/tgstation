@@ -158,7 +158,7 @@
 	for (var/mob/V in viewers(user))
 		V.show_message("[user] starts putting [G.affecting.name] into the sleeper.", 3)
 	if(do_after(user, 20))
-		if(!G.affecting) return
+		if(!G || !G.affecting) return
 		var/mob/M = G.affecting
 		if (M.client)
 			M.client.perspective = EYE_PERSPECTIVE

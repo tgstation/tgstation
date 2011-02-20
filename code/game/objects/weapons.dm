@@ -94,6 +94,14 @@
 
 //*****RM
 
+/obj/item/assembly/time_ignite/premade/New()
+	..()
+	part1 = new(src)
+	part2 = new(src)
+	part1.master = src
+	part2.master = src
+	//part2.status = 0
+
 /obj/item/assembly/time_ignite/Del()
 	del(part1)
 	del(part2)

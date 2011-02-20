@@ -915,19 +915,7 @@ turf/simulated/floor/proc/update_icon()
 					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
-					if(istype(A,/mob/living/carbon/human))
-						if(A:knowledge)
-							if(A:knowledge > 0)
-								if(prob(50))
-									A.z = 8
-								else
-									A.z = 3
-							else
-								A.z = 3
-						else
-							A.z = 3
-					else
-						A.z = 3
+					A.z = 3
 					A.x = world.maxx - 2
 					spawn (0)
 						if ((A && A.loc))
@@ -936,19 +924,7 @@ turf/simulated/floor/proc/update_icon()
 					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
-					if(istype(A,/mob/living/carbon/human))
-						if(A:knowledge)
-							if(A:knowledge > 0)
-								if(prob(50))
-									A.z = 8
-								else
-									A.z = 4
-							else
-								A.z = 4
-						else
-							A.z = 4
-					else
-						A.z = 4
+					A.z = 4
 					A.x = world.maxx - 2
 					spawn (0)
 						if ((A && A.loc))
@@ -958,19 +934,7 @@ turf/simulated/floor/proc/update_icon()
 					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
-					if(istype(A,/mob/living/carbon/human))
-						if(A:knowledge)
-							if(A:knowledge > 0)
-								if(prob(50))
-									A.z = 8
-								else
-									A.z = 3
-							else
-								A.z = 3
-						else
-							A.z = 3
-					else
-						A.z = 3
+					A.z = 3
 					A.x = 3
 					spawn (0)
 						if ((A && A.loc))
@@ -979,19 +943,7 @@ turf/simulated/floor/proc/update_icon()
 					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
-					if(istype(A,/mob/living/carbon/human))
-						if(A:knowledge)
-							if(A:knowledge > 0)
-								if(prob(50))
-									A.z = 8
-								else
-									A.z = 4
-							else
-								A.z = 4
-						else
-							A.z = 4
-					else
-						A.z = 4
+					A.z = 4
 					A.x = 3
 					spawn (0)
 						if ((A && A.loc))
@@ -1001,19 +953,7 @@ turf/simulated/floor/proc/update_icon()
 					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
-					if(istype(A,/mob/living/carbon/human))
-						if(A:knowledge)
-							if(A:knowledge > 0)
-								if(prob(50))
-									A.z = 8
-								else
-									A.z = 3
-							else
-								A.z = 3
-						else
-							A.z = 3
-					else
-						A.z = 3
+					A.z = 3
 					A.y = world.maxy - 2
 					spawn (0)
 						if ((A && A.loc))
@@ -1022,19 +962,7 @@ turf/simulated/floor/proc/update_icon()
 					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
-					if(istype(A,/mob/living/carbon/human))
-						if(A:knowledge > 0)
-							if(A:knowledge > 0)
-								if(prob(50))
-									A.z = 8
-								else
-									A.z = 4
-							else
-								A.z = 4
-						else
-							A.z = 4
-					else
-						A.z = 4
+					A.z = 4
 					A.y = world.maxy - 2
 					spawn (0)
 						if ((A && A.loc))
@@ -1045,19 +973,7 @@ turf/simulated/floor/proc/update_icon()
 					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
-					if(istype(A,/mob/living/carbon/human))
-						if(A:knowledge)
-							if(A:knowledge > 0)
-								if(prob(50))
-									A.z = 8
-								else
-									A.z = 3
-							else
-								A.z = 3
-						else
-							A.z = 3
-					else
-						A.z = 3
+					A.z = 3
 					A.y = 3
 					spawn (0)
 						if ((A && A.loc))
@@ -1066,19 +982,7 @@ turf/simulated/floor/proc/update_icon()
 					if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 						del(A)
 						return
-					if(istype(A,/mob/living/carbon/human))
-						if(A:knowledge)
-							if(A:knowledge > 0)
-								if(prob(50))
-									A.z = 8
-								else
-									A.z = 3
-							else
-								A.z = 3
-						else
-							A.z = 3
-					else
-						A.z = 3
+					A.z = 3
 					A.y = 3
 					spawn (0)
 						if ((A && A.loc))

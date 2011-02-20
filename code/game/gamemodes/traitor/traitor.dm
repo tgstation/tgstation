@@ -66,6 +66,8 @@
 //	message_admins("Players counted: [num_players]  Number of traitors chosen: [num_traitors]")
 
 	for(var/j = 0, j < num_traitors, j++)
+		if (!possible_traitors.len)
+			break
 		var/datum/mind/traitor = pick(possible_traitors)
 		traitors += traitor
 		possible_traitors.Remove(traitor)
