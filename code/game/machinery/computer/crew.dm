@@ -66,7 +66,7 @@
 			t += "<BR><A href='?src=\ref[src];update=1'>Refresh</A>"
 			t += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
 			t += "<table><tr><td>Name</td><td>Vitals</td><td>Position</td></tr>"
-			for(var/obj/item/clothing/under/rank/C in src.tracked)
+			for(var/obj/item/clothing/under/C in src.tracked)
 				if((C) && (C.has_sensor) && (C.loc) && (C.loc.z == 1))
 					if(istype(C.loc, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = C.loc
@@ -95,7 +95,7 @@
 			onclose(user, "crewcomp")
 
 		scan()
-			for(var/obj/item/clothing/under/rank/C in world)
+			for(var/obj/item/clothing/under/C in world)
 				if((C.has_sensor) && (istype(C.loc, /mob/living/carbon/human)))
 					var/check = 0
 					for(var/O in src.tracked)

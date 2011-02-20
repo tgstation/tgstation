@@ -8,7 +8,13 @@
 	heat_transfer_coefficient = 0.30
 	permeability_coefficient = 0.90
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-
+	var/has_sensor = 1//For the crew computer 2 = unable to change mode
+	var/sensor_mode = 0
+		/*
+		1 = Report living/dead
+		2 = Report detailed damages
+		3 = Report location
+		*/
 
 // Colors
 
@@ -81,14 +87,8 @@
 
 // RANKS
 /obj/item/clothing/under/rank
-	var
-		has_sensor = 1//For the crew computer 2 = unable to change mode
-		sensor_mode = 0
-		/*
-		1 = Report living/dead
-		2 = Report detailed damages
-		3 = Report location
-		*/
+
+
 
 /obj/item/clothing/under/rank/atmospheric_technician
 	desc = "It has an Atmospherics rank stripe on it."
@@ -287,6 +287,7 @@
 	icon_state = "syndicate"
 	item_state = "bl_suit"
 	color = "syndicate"
+	has_sensor = 0
 
 /obj/item/clothing/under/syndicate/tacticool
 	name = "Tacticool Turtleneck"

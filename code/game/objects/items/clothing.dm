@@ -189,7 +189,7 @@ THERMAL GLASSES
 	sensor_mode = pick(0,1,2,3)
 	..()
 
-/obj/item/clothing/under/rank/verb/toggle()
+/obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
 	var/mob/M = usr
 	if (istype(M, /mob/dead/)) return
@@ -214,7 +214,7 @@ THERMAL GLASSES
 			usr << "Your suit will now report your vital lifesigns as well as your coordinate position."
 	..()
 
-/obj/item/clothing/under/rank/examine()
+/obj/item/clothing/under/examine()
 	..()
 	switch(src.sensor_mode)
 		if(0)
@@ -227,19 +227,20 @@ THERMAL GLASSES
 			usr << "Its vital tracker and tracking beacon appear to be enabled."
 
 
-/obj/item/clothing/shoes/magboots/attack_self(mob/user as mob)
+/obj/item/clothing/shoes/magboots/verb/toggle()
+	set name = "Toggle Magboots"
 	if(src.magpulse)
 		src.flags &= ~NOSLIP
 		src.slowdown = SHOES_SLOWDOWN
 		src.magpulse = 0
 		icon_state = "magboots0"
-		user << "You disable the mag-pulse traction system."
+		usr << "You disable the mag-pulse traction system."
 	else
 		src.flags |= NOSLIP
 		src.slowdown = 2
 		src.magpulse = 1
 		icon_state = "magboots1"
-		user << "You enable the mag-pulse traction system."
+		usr << "You enable the mag-pulse traction system."
 
 /obj/item/clothing/shoes/magboots/examine()
 	..()
