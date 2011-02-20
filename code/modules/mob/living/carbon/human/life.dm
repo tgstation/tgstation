@@ -144,12 +144,15 @@
 		handle_mutations_and_radiation()
 
 			if(src.fireloss)
-				if(src.mutations & 2 || prob(50))
-					switch(src.fireloss)
-						if(1 to 50)
-							src.fireloss--
-						if(51 to 100)
-							src.fireloss -= 5
+				for(var/A in src.organs)
+					if(!src.organs[A])	continue
+					var/datum/organ/external/affecting = src.organs[A]
+					if(!istype(affecting))	continue
+
+					if(src.mutations & 2 || (prob(1) && prob(75)))
+						affecting.heal_damage(0,1)
+						src.UpdateDamageIcon()
+						src.updatehealth()
 
 			if (src.mutations & 8 && src.health <= 25)
 				src.mutations &= ~8
