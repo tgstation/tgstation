@@ -49,26 +49,9 @@
 	icon_state = "rwindow"
 	name = "reinforced window"
 
-/obj/window/reinforced/north
-	dir = NORTH
+/obj/window/reinforced/tinted
+	name = "tinted window"
+	opacity = 1
 
-/obj/window/reinforced/east
-	dir = EAST
-
-/obj/window/reinforced/west
-	dir = WEST
-
-/obj/window/reinforced/south
-	dir = SOUTH
-
-/obj/window/reinforced/northwest
-	dir = NORTHWEST
-
-/obj/window/reinforced/northeast
-	dir = NORTHEAST
-
-/obj/window/reinforced/southwest
-	dir = SOUTHWEST
-
-/obj/window/reinforced/southeast
-	dir = SOUTHEAST
+/obj/window/reinforced/tinted/frosted
+	name = "frosted window"
