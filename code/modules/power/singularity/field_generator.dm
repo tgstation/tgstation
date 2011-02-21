@@ -19,6 +19,7 @@
 		powerlevel = 0
 		list/obj/machinery/containment_field/fields
 		list/obj/machinery/field_generator/connected_gens
+		clean_up = 0
 
 
 	update_icon()
@@ -310,6 +311,7 @@
 
 
 		cleanup()
+			clean_up = 1
 			for (var/obj/machinery/containment_field/F in fields)
 				if (isnull(F))
 					continue
@@ -321,3 +323,4 @@
 				FG.connected_gens.Remove(src)
 				connected_gens.Remove(FG)
 			connected_gens = list()
+			clean_up = 0

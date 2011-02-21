@@ -17,9 +17,9 @@
 
 
 	Del()
-		if(FG1)
+		if(FG1 && !FG1.clean_up)
 			FG1.cleanup()
-		if(FG2)
+		if(FG2 && !FG2.clean_up)
 			FG2.cleanup()
 		..()
 
