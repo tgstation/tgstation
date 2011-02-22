@@ -49,6 +49,20 @@ datum
 			required_reagents = list("ethanol" = 1, "anti-toxin" = 1, "chlorine" = 1)
 			result_amount = 3
 
+		inaprovaline
+			name = "Inaprovaline"
+			id = "inaprovaline"
+			result = "inaprovaline"
+			required_reagents = list("oxygen" = 1, "carbon" = 1, "sugar" = 1)
+			result_amount = 3
+
+		anti_toxin
+			name = "Anti-Toxin (Dylovene)"
+			id = "anti_toxin"
+			result = "anti_toxin"
+			required_reagents = list("silicon" = 1, "potassium" = 1, "nitrogen" = 1)
+			result_amount = 3
+
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -61,7 +75,7 @@ datum
 		//	id = "cyanide"
 		//	result = "cyanide"
 		//	required_reagents = list("hydrogen" = 1, "carbon" = 1, "nitrogen" = 1)
-		//	result_amount = 3
+		//	result_amount = 1
 
 		thermite
 			name = "Thermite"

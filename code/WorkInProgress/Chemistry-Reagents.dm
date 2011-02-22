@@ -280,6 +280,7 @@ datum
 				if(!M) M = holder.my_atom
 				M:toxloss += 3
 				M:oxyloss += 3
+				M:sleeping += 1
 				..()
 				return
 

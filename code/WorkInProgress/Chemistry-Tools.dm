@@ -1236,6 +1236,16 @@
 		..()
 		reagents.add_reagent("toxin", 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/cyanide
+	name = "cyanide bottle"
+	desc = "A small bottle."
+	icon = 'chemical.dmi'
+	icon_state = "bottle12"
+
+	New()
+		..()
+		reagents.add_reagent("cyanide", 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin
 	name = "sleep-toxin bottle"
 	desc = "A small bottle."
@@ -2428,6 +2438,14 @@
 	New()
 		..()
 		reagents.add_reagent("toxin", 50)
+
+/obj/item/weapon/reagent_containers/pill/cyanide
+	name = "Cyanide pill"
+	desc = "Don't swallow this."
+	icon_state = "pill5"
+	New()
+		..()
+		reagents.add_reagent("cyanide", 50)
 
 /obj/item/weapon/reagent_containers/pill/stox
 	name = "Sleeping pill"
