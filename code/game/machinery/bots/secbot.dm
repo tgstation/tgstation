@@ -113,17 +113,17 @@
 
 	dat += text({"
 <TT><B>Automatic Security Unit v1.3</B></TT><BR><BR>
-/obj/machinery/bot/secbot/Status: []<BR>
-/obj/machinery/bot/secbot/Behaviour controls are [src.locked ? "locked" : "unlocked"]"},
+Status: []<BR>
+Behaviour controls are [src.locked ? "locked" : "unlocked"]"},
 
 "<A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A>" )
 
 	if(!src.locked)
 		dat += text({"<BR>
-/obj/machinery/bot/secbot/Check for Weapon Authorization: []<BR>
-/obj/machinery/bot/secbot/Check Security Records: []<BR>
-/obj/machinery/bot/secbot/Operating Mode: []<BR>
-/obj/machinery/bot/secbot/Auto Patrol: []"},
+Check for Weapon Authorization: []<BR>
+Check Security Records: []<BR>
+Operating Mode: []<BR>
+Auto Patrol: []"},
 
 "<A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A>",

@@ -214,8 +214,8 @@
 	m_amt = 2000
 
 	examine()
-		set src in view(2)
 		..()
+		if (!(usr in view(2)) && usr!=src.loc) return
 		usr << "\icon [src] Syringe gun:"
 		usr << "\blue [syringes] / [max_syringes] Syringes."
 
@@ -306,11 +306,10 @@
 		..()
 
 	examine()
-		set src in view(2)
 		..()
+		if (!(usr in view(2)) && usr!=src.loc) return
 		usr << "\blue It contains:"
-		if(!reagents) return
-		if(reagents.reagent_list.len)
+		if(reagents && reagents.reagent_list.len)
 			for(var/datum/reagent/R in reagents.reagent_list)
 				usr << "\blue [R.volume] units of [R.name]"
 		else
@@ -356,6 +355,7 @@
 	w_class = 1
 	var/amount_per_transfer_from_this = 5
 	var/possible_transfer_amounts = list(5,10,25)
+	var/volume = 30
 
 	verb/set_APTFT() //set amount_per_transfer_from_this
 		set name = "Set transfer amount"
@@ -365,12 +365,12 @@
 			amount_per_transfer_from_this = N
 
 	New()
+		..()
 		if (!possible_transfer_amounts)
 			src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
-		..()
-/*		var/datum/reagents/R = new/datum/reagents(50)
+		var/datum/reagents/R = new/datum/reagents(volume)
 		reagents = R
-		R.my_atom = src */
+		R.my_atom = src 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
@@ -386,7 +386,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// (Mixing)Glass.
 ////////////////////////////////////////////////////////////////////////////////
-/obj/item/weapon/reagent_containers/glass/
+/obj/item/weapon/reagent_containers/glass
 	name = " "
 	desc = " "
 	icon = 'chemical.dmi'
@@ -394,6 +394,7 @@
 	item_state = "null"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,25)
+	volume = 50
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 	var/list/can_be_placed_into = list(
@@ -410,22 +411,14 @@
 	)
 
 	examine()
-		set src in view(2)
 		..()
+		if (!(usr in view(2)) && usr!=src.loc) return
 		usr << "\blue It contains:"
-		if(!reagents) return
-		if(reagents.reagent_list.len)
+		if(reagents && reagents.reagent_list.len)
 			for(var/datum/reagent/R in reagents.reagent_list)
 				usr << "\blue [R.volume] units of [R.name]"
 		else
 			usr << "\blue Nothing."
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		..()
-
 
 	afterattack(obj/target, mob/user , flag)
 		for(var/type in src.can_be_placed_into)
@@ -484,13 +477,8 @@
 	icon_state = "dropper0"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1,2,3,4,5)
+	volume = 5
 	var/filled = 0
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(5)
-		reagents = R
-		R.my_atom = src
-		..()
 
 	afterattack(obj/target, mob/user , flag)
 		if(!target.reagents) return
@@ -541,6 +529,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Syringes.
 ////////////////////////////////////////////////////////////////////////////////
+#define SYRINGE_DRAW 0
+#define SYRINGE_INJECT 1
+
 /obj/item/weapon/reagent_containers/syringe
 	name = "Syringe"
 	desc = "A syringe."
@@ -549,14 +540,8 @@
 	icon_state = "0"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = null //list(5,10,15)
-	var/mode = "d"
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(15)
-		reagents = R
-		R.maximum_volume = 15
-		R.my_atom = src
-		..()
+	volume = 15
+	var/mode = SYRINGE_DRAW
 
 	on_reagent_change()
 		update_icon()
@@ -570,11 +555,14 @@
 		update_icon()
 
 	attack_self(mob/user as mob)
+/*
 		switch(mode)
-			if("d")
-				mode = "i"
-			if("i")
-				mode = "d"
+			if(SYRINGE_DRAW)
+				mode = SYRINGE_INJECT
+			if(SYRINGE_INJECT)
+				mode = SYRINGE_DRAW
+*/
+		mode = !mode
 		update_icon()
 
 	attack_hand()
@@ -591,7 +579,7 @@
 		if(!target.reagents) return
 
 		switch(mode)
-			if("d")
+			if(SYRINGE_DRAW)
 
 				if(reagents.total_volume >= reagents.maximum_volume)
 					user << "\red The syringe is full."
@@ -633,33 +621,34 @@
 						user << "\blue You take a blood sample from [target]"
 						for(var/mob/O in viewers(4, user))
 							O.show_message("\red [user] takes a blood sample from [target].", 1)
-					return
+						
+				else //if not mob
+					if(!target.reagents.total_volume)
+						user << "\red [target] is empty."
+						return
 
+					if(!target.is_open_container() && !istype(target,/obj/reagent_dispensers))
+						user << "\red You cannot directly remove reagents from this object."
+						return
 
-				if(!target.reagents.total_volume)
-					user << "\red [target] is empty."
-					return
+					var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
 
-
-				if(!target.is_open_container() && !istype(target,/obj/reagent_dispensers))
-					user << "\red You cannot directly remove reagents from this object."
-					return
-
-				var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-
-				user << "\blue You fill the syringe with [trans] units of the solution."
-
-			if("i")
+					user << "\blue You fill the syringe with [trans] units of the solution."
+				if (reagents.total_volume >= reagents.maximum_volume)
+					mode=!mode
+					update_icon()
+				
+			if(SYRINGE_INJECT)
 				if(!reagents.total_volume)
 					user << "\red The Syringe is empty."
 					return
 				if(istype(target, /obj/item/weapon/implantcase/chem))
 					return
-				if(target.reagents.total_volume >= target.reagents.maximum_volume)
-					user << "\red [target] is full."
-					return
 				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food))
 					user << "\red You cannot directly fill this object."
+					return
+				if(target.reagents.total_volume >= target.reagents.maximum_volume)
+					user << "\red [target] is full."
 					return
 
 				if(ismob(target) && target != user)
@@ -674,12 +663,22 @@
 				spawn(5)
 					var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 					user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
+					if (reagents.total_volume >= reagents.maximum_volume && mode==SYRINGE_INJECT)
+						mode = SYRINGE_DRAW
+						update_icon()
+						
 		return
 
 	update_icon()
 		var/rounded_vol = round(reagents.total_volume,5)
 		if(ismob(loc))
-			icon_state = "[mode][rounded_vol]"
+			var/mode_t
+			switch(mode)
+				if (SYRINGE_DRAW)
+					mode_t = "d"
+				if (SYRINGE_INJECT)
+					mode_t = "i"
+			icon_state = "[mode_t][rounded_vol]"
 		else
 			icon_state = "[rounded_vol]"
 		item_state = "syringe_[rounded_vol]"
@@ -699,19 +698,19 @@
 	item_state = "hypo"
 	icon_state = "hypo"
 	amount_per_transfer_from_this = 10
+	volume = 30
 	possible_transfer_amounts = null
 	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
+/*
 /obj/item/weapon/reagent_containers/hypospray/New()
-	var/datum/reagents/R = new/datum/reagents(30)
-	reagents = R
-	R.my_atom = src
-	//R.add_reagent("tricordrazine", 30) //uncomment this to make it start with stuff in
 	..()
+	reagents.add_reagent("tricordrazine", 30) //uncomment this to make it start with stuff in
 	return
+*/
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/M as mob, mob/user as mob)
 	if (!( istype(M, /mob) ))
@@ -731,89 +730,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/reagent_containers/food
 	possible_transfer_amounts = null
+	volume = 50 //Sets the default container amount for all food items.
 
-	New()												//Sets the default container amount for all food items.
-		var/datum/reagents/R = new/datum/reagents(50)	//	if you want a food item with a different capacity
-		reagents = R									//	then just redefine it in the code for the specific food item.
-		R.my_atom = src
+	New()												
+		..()
 		src.pixel_x = rand(-5.0, 5)						//Randomizes postion slightly.
 		src.pixel_y = rand(-5.0, 5)
-		..()
-
-/obj/item/weapon/reagent_containers/food/condiment	//Food items that aren't eaten normally and leave an empty container behind.
-	name = "Condiment Container"
-	desc = "Just your average condiment container."
-	icon = 'food.dmi'
-	icon_state = "emptycondiment"
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	possible_transfer_amounts = list(1,5,10)
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		return
-	attack_self(mob/user as mob)
-		return
-	attack(mob/M as mob, mob/user as mob, def_zone)
-		var/datum/reagents/R = src.reagents
-
-		if(!R || !R.total_volume)
-			user << "\red None of [src] left, oh no!"
-			return 0
-
-		if(M == user)
-			M << "\blue You swallow some of contents of the [src]."
-			if(reagents.total_volume)
-				reagents.reaction(M, INGEST)
-				spawn(5)
-					reagents.trans_to(M, 10)
-
-			playsound(M.loc,'drink.ogg', rand(10,50), 1)
-			return 1
-		else if( istype(M, /mob/living/carbon/human) )
-
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] attempts to feed [M] [src].", 1)
-			if(!do_mob(user, M)) return
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] feeds [M] [src].", 1)
-
-			if(reagents.total_volume)
-				reagents.reaction(M, INGEST)
-				spawn(5)
-					reagents.trans_to(M, 10)
-
-			playsound(M.loc,'drink.ogg', rand(10,50), 1)
-			return 1
-		return 0
-
-	attackby(obj/item/I as obj, mob/user as mob)
-		return
-
-	afterattack(obj/target, mob/user , flag)
-		if(istype(target, /obj/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
-
-			if(!target.reagents.total_volume)
-				user << "\red [target] is empty."
-				return
-
-			if(reagents.total_volume >= reagents.maximum_volume)
-				user << "\red [src] is full."
-				return
-
-			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			user << "\blue You fill [src] with [trans] units of the contents of [target]."
-
-		//Something like a glass or a food item. Player probably wants to transfer TO it.
-		else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
-			if(!reagents.total_volume)
-				user << "\red [src] is empty."
-				return
-			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				user << "\red you can't add anymore to [target]."
-				return
-			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			user << "\blue You transfer [trans] units of the condiment to [target]."
-
-
 
 /obj/item/weapon/reagent_containers/food/snacks		//Food items that are eaten normally and don't leave anything behind.
 	name = "snack"
@@ -821,6 +743,7 @@
 	icon = 'food.dmi'
 	icon_state = null
 	var/bitesize = 1
+	var/bitecount = 0
 
 	proc/On_Consume()
 		return
@@ -874,6 +797,7 @@
 							reagents.trans_to(M, temp_bitesize)
 						else
 							reagents.trans_to(M, reagents.total_volume)
+						bitecount++
 						if(!reagents.total_volume)
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
@@ -889,6 +813,17 @@
 	afterattack(obj/target, mob/user , flag)
 		return
 
+	examine()
+		..()
+		if (!(usr in range(0)) && usr!=src.loc) return
+		if (bitecount==0)
+			return
+		else if (bitecount==1)
+			usr << "\blue \The [src] was bitten by someone!"
+		else if (bitecount<=3)
+			usr << "\blue \The [src] was bitten [bitecount] times!"
+		else
+			usr << "\blue \The [src] was bitten multiple times!"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -906,12 +841,7 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,25)
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		..()
+	volume = 50
 
 	on_reagent_change()
 		if (gulp_size < 5) gulp_size = 5
@@ -1003,6 +933,20 @@
 					reagents.add_reagent(refill, trans)
 
 		return
+
+	examine()
+		..()
+		if (!(usr in range(0)) && usr!=src.loc) return
+		if(!reagents || reagents.total_volume==0)
+			usr << "\blue \The [src] is empty!"
+		else if (reagents.total_volume<src.volume/4)
+			usr << "\blue \The [src] is almost empty!"
+		else if (reagents.total_volume<src.volume/2)
+			usr << "\blue \The [src] is half full!"
+		else if (reagents.total_volume<src.volume/0.90)
+			usr << "\blue \The [src] is almost full!"
+		else
+			usr << "\blue \The [src] is full!"
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////
@@ -1017,11 +961,10 @@
 	icon_state = null
 	item_state = "pill"
 	possible_transfer_amounts = null
+	volume = 50
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
+		..()
 		if(!icon_state)
 			icon_state = "pill[rand(1,20)]"
 
@@ -1101,12 +1044,8 @@
 	w_class = 3.0
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
+	volume = 70
 	flags = FPRINT | OPENCONTAINER
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(70)
-		reagents = R
-		R.my_atom = src
 
 	attackby(var/obj/D, mob/user as mob)
 		if(istype(D, /obj/item/device/prox_sensor))
@@ -1135,11 +1074,9 @@
 
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,60)
+	volume = 120
 	flags = FPRINT
-	New()
-		var/datum/reagents/R = new/datum/reagents(120)
-		reagents = R
-		R.my_atom = src
+
 
 /obj/item/weapon/reagent_containers/glass/dispenser
 	name = "reagent glass"
@@ -1175,11 +1112,7 @@
 	desc = "A blender jug, part of a blender."
 	icon = 'kitchen.dmi'
 	icon_state = "blender_jug_e"
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+	volume = 100
 
 	on_reagent_change()
 		switch(src.reagents.total_volume)
@@ -1199,7 +1132,7 @@
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/bottle/
+/obj/item/weapon/reagent_containers/glass/bottle
 	name = "bottle"
 	desc = "A small bottle."
 	icon = 'chemical.dmi'
@@ -1208,11 +1141,10 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	volume = 30
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
+		..()
 		if(!icon_state)
 			icon_state = "bottle[rand(1,20)]"
 
@@ -1408,7 +1340,7 @@
 		..()
 		reagents.add_reagent("inaprovaline", 7)
 		reagents.add_reagent("anti_toxin", 8)
-		mode = "i"
+		mode = SYRINGE_INJECT
 		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/inaprovaline
@@ -1587,6 +1519,7 @@
 	name = "Omelette Du Fromage"
 	desc = "That's all you can say!"
 	icon_state = "omelette"
+	var/herp = 0
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -1595,7 +1528,11 @@
 		if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
 			W.icon = 'kitchen.dmi'
 			W.icon_state = "forkloaded"
-			viewers(3,user) << "[user] takes a piece of omelette with his fork!"
+			if (herp)
+				world << "[user] takes a piece of omelette with his fork!"
+			else
+				viewers(3,user) << "[user] takes a piece of omelette with his fork!"
+
 
 /obj/item/weapon/reagent_containers/food/snacks/omeletteforkload
 	name = "Omelette Du Fromage"
@@ -1951,6 +1888,12 @@
 				new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
 			del(src)
 			return
+		if(istype(W, /obj/item/weapon/circular_saw))
+			W.visible_message(" \red <B>You inaccurate slice the meatbread with your [W]! </B>", 1)
+			for(var/i=0,i<3,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice (src.loc)
+			del(src)
+			return
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
 	name = "meatbread slice"
@@ -1975,6 +1918,12 @@
 		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
 			W.visible_message(" \red <B>You slice the xenomeatbread! </B>", 1)
 			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
+			del(src)
+			return
+		if(istype(W, /obj/item/weapon/circular_saw))
+			W.visible_message(" \red <B>You inaccurate slice the xenomeatbread with your [W]! </B>", 1)
+			for(var/i=0,i<3,i++)
 				new /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice (src.loc)
 			del(src)
 			return
@@ -2005,6 +1954,12 @@
 				new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
 			del(src)
 			return
+		if(istype(W, /obj/item/weapon/circular_saw))
+			W.visible_message(" \red <B>You inaccurate slice the tofubread with your [W]! </B>", 1)
+			for(var/i=0,i<3,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice (src.loc)
+			del(src)
+			return
 
 /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
 	name = "Tofubread slice"
@@ -2029,6 +1984,12 @@
 		if(istype(W, /obj/item/weapon/kitchenknife /* || /obj/item/weapon/scalpel*/))
 			W.visible_message(" \red <B> You slice the cheese! </B>", 1)
 			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
+			del(src)
+			return
+		if(istype(W, /obj/item/weapon/circular_saw))
+			W.visible_message(" \red <B>You inaccurate slice the cheese with your [W]! </B>", 1)
+			for(var/i=0,i<3,i++)
 				new /obj/item/weapon/reagent_containers/food/snacks/cheesewedge (src.loc)
 			del(src)
 			return
@@ -2066,13 +2027,79 @@
 //	leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
 //	to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
 
-/obj/item/weapon/reagent_containers/food/condiment
+/obj/item/weapon/reagent_containers/food/condiment	//Food items that aren't eaten normally and leave an empty container behind.
+	name = "Condiment Container"
+	desc = "Just your average condiment container."
+	icon = 'food.dmi'
+	icon_state = "emptycondiment"
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	possible_transfer_amounts = list(1,5,10)
+	volume = 50
 
-	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		..()
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		return
+	attack_self(mob/user as mob)
+		return
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		var/datum/reagents/R = src.reagents
+
+		if(!R || !R.total_volume)
+			user << "\red None of [src] left, oh no!"
+			return 0
+
+		if(M == user)
+			M << "\blue You swallow some of contents of the [src]."
+			if(reagents.total_volume)
+				reagents.reaction(M, INGEST)
+				spawn(5)
+					reagents.trans_to(M, 10)
+
+			playsound(M.loc,'drink.ogg', rand(10,50), 1)
+			return 1
+		else if( istype(M, /mob/living/carbon/human) )
+
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message("\red [user] attempts to feed [M] [src].", 1)
+			if(!do_mob(user, M)) return
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message("\red [user] feeds [M] [src].", 1)
+
+			if(reagents.total_volume)
+				reagents.reaction(M, INGEST)
+				spawn(5)
+					reagents.trans_to(M, 10)
+
+			playsound(M.loc,'drink.ogg', rand(10,50), 1)
+			return 1
+		return 0
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		return
+
+	afterattack(obj/target, mob/user , flag)
+		if(istype(target, /obj/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+
+			if(!target.reagents.total_volume)
+				user << "\red [target] is empty."
+				return
+
+			if(reagents.total_volume >= reagents.maximum_volume)
+				user << "\red [src] is full."
+				return
+
+			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+			user << "\blue You fill [src] with [trans] units of the contents of [target]."
+
+		//Something like a glass or a food item. Player probably wants to transfer TO it.
+		else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
+			if(!reagents.total_volume)
+				user << "\red [src] is empty."
+				return
+			if(target.reagents.total_volume >= target.reagents.maximum_volume)
+				user << "\red you can't add anymore to [target]."
+				return
+			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+			user << "\blue You transfer [trans] units of the condiment to [target]."
 
 	on_reagent_change()
 		if(icon_state == "saltshakersmall" || icon_state == "peppermillsmall")
@@ -2136,24 +2163,22 @@
 	name = "Salt Shaker"											//	a large one.
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
+	possible_transfer_amounts = list(1,20) //for clown turning the lid off
+	amount_per_transfer_from_this = 1
+	volume = 20
 	New()
 		..()
-		del(reagents)
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
 		reagents.add_reagent("sodiumchloride", 20)
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "Pepper Mill"
 	desc = "Often used to flavor food or make people sneeze."
 	icon_state = "peppermillsmall"
+	possible_transfer_amounts = list(1,20) //for clown turning the lid off
+	amount_per_transfer_from_this = 1
+	volume = 20
 	New()
 		..()
-		del(reagents)
-		var/datum/reagents/R = new/datum/reagents(20)
-		reagents = R
-		R.my_atom = src
 		reagents.add_reagent("blackpepper", 20)
 
 
@@ -2277,11 +2302,10 @@
 	name = "Paper Cup"
 	desc = "A paper water cup."
 	icon_state = "water_cup_e"
+	possible_transfer_amounts = null
+	volume = 10
 	New()
-		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
-		var/datum/reagents/R = new/datum/reagents(10)
-		reagents = R
-		R.my_atom = src
+		..()
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 	on_reagent_change()
@@ -2294,10 +2318,7 @@
 //Notes by Darem: Functionally identical to regular drinks. The only difference is that the default bottle size is 100.
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
-	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+	volume = 100
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater Gin"
@@ -2523,9 +2544,9 @@
 	icon = 'vending.dmi'
 	icon_state = "water_cooler"
 	possible_transfer_amounts = null
+	anchored = 1
 	New()
 		..()
-		anchored = 1
 		reagents.add_reagent("water",500)
 
 
@@ -2555,29 +2576,20 @@
 	desc = "A metal shaker to mix drinks in."
 	icon_state = "shaker"
 	amount_per_transfer_from_this = 10
-	New()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+	volume = 100
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
 	name = "Captain's Flask"
 	desc = "A metal flask belonging to the captain"
 	icon_state = "flask"
-	New()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
+	volume = 60
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
 	name = "glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
-	New()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
+	volume = 50
 
 	on_reagent_change()
 /*		if(reagents.reagent_list.len > 1 )
