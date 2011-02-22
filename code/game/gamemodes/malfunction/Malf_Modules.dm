@@ -80,7 +80,7 @@ rcd light flash thingy on matter drain
 		for(var/datum/game_mode/malfunction/AI_Module/small/overload_machine/overload in usr:current_modules)
 			if(overload.uses > 0)
 				overload.uses --
-				for(var/mob/V in hearers(obj, null))
+				for(var/mob/V in hearers(M, null))
 					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
 				spawn(50)
 					explosion(get_turf(M), 0,1,1,0)
