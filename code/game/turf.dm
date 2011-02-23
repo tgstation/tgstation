@@ -343,6 +343,7 @@
 			F.burn_tile()
 			user << "\red The thermite melts the wall."
 			spawn(100) del(O)
+			F.sd_LumReset()
 			return
 
 		if (W:remove_fuel(5,user))
@@ -391,6 +392,7 @@
 			F.burn_tile()
 			user << "\red The thermite melts the wall."
 			spawn(100) del(O)
+			F.sd_LumReset()
 			return
 
 		if (src.d_state == 2)

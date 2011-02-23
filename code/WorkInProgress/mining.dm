@@ -1416,6 +1416,7 @@ proc/move_mining_shuttle()
 	*/
 	W.opacity = 1
 	W.sd_SetOpacity(0)
+	W.sd_LumReset()
 	W.levelupdate()
 	return W
 

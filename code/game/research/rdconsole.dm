@@ -247,7 +247,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
 							for(var/T in temp_tech)
 								files.UpdateTech(T, temp_tech[T])
-						if(linked_destroy.loaded_item.reliability < 100)
+						if(linked_destroy.loaded_item.reliability < 100 && linked_destroy.loaded_item.crit_fail)
 							files.UpdateDesign(linked_destroy.loaded_item.type)
 						if(linked_lathe) //Also sends salvaged materials to a linked autolathe, if any.
 							linked_lathe.m_amount = min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*linked_destroy.decon_mod))
