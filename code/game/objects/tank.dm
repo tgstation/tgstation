@@ -118,7 +118,7 @@
 			var/turf/epicenter = get_turf(loc)
 
 			//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
-
+			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
 			explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 			del(src)
 
