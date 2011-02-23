@@ -370,7 +370,7 @@
 			src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 		var/datum/reagents/R = new/datum/reagents(volume)
 		reagents = R
-		R.my_atom = src 
+		R.my_atom = src
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		return
@@ -621,7 +621,7 @@
 						user << "\blue You take a blood sample from [target]"
 						for(var/mob/O in viewers(4, user))
 							O.show_message("\red [user] takes a blood sample from [target].", 1)
-						
+
 				else //if not mob
 					if(!target.reagents.total_volume)
 						user << "\red [target] is empty."
@@ -637,7 +637,7 @@
 				if (reagents.total_volume >= reagents.maximum_volume)
 					mode=!mode
 					update_icon()
-				
+
 			if(SYRINGE_INJECT)
 				if(!reagents.total_volume)
 					user << "\red The Syringe is empty."
@@ -666,7 +666,7 @@
 					if (reagents.total_volume >= reagents.maximum_volume && mode==SYRINGE_INJECT)
 						mode = SYRINGE_DRAW
 						update_icon()
-						
+
 		return
 
 	update_icon()
@@ -732,7 +732,7 @@
 	possible_transfer_amounts = null
 	volume = 50 //Sets the default container amount for all food items.
 
-	New()												
+	New()
 		..()
 		src.pixel_x = rand(-5.0, 5)						//Randomizes postion slightly.
 		src.pixel_y = rand(-5.0, 5)
@@ -1124,13 +1124,19 @@
 				icon_state = "blender_jug_f"
 
 /obj/item/weapon/reagent_containers/glass/large
-	name = "large reagent glass"
-	desc = "A large reagent glass."
-	icon = 'chemical.dmi'
-	icon_state = "beakerlarge"
-	item_state = "beaker"
-	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+   name = "large reagent glass"
+   desc = "A large reagent glass."
+   icon = 'chemical.dmi'
+   icon_state = "beakerlarge"
+   item_state = "beaker"
+
+   New()
+      var/datum/reagents/R = new/datum/reagents(100)
+      reagents = R
+      R.my_atom = src
+
+   amount_per_transfer_from_this = 10
+   flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/bottle
 	name = "bottle"
