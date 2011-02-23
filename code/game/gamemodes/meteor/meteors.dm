@@ -3,8 +3,8 @@
 /var/const/meteor_wave_delay = 625 //minimum wait between waves in tenths of seconds
 //set to at least 100 unless you want evarr ruining every round
 
-/var/const/meteors_in_wave = 150
-/var/const/meteors_in_small_wave = 3
+/var/const/meteors_in_wave = 50
+/var/const/meteors_in_small_wave = 10
 
 /proc/meteor_wave()
 	if(!ticker || wavesecret)
