@@ -1934,8 +1934,12 @@ proc/move_mining_shuttle()
 /obj/machinery/mineral/purifier/New()
 	..()
 	spawn( 5 )
-		src.input = locate(/obj/machinery/mineral/input, get_step(src, WEST))
-		src.output = locate(/obj/machinery/mineral/output, get_step(src, EAST))
+		for (var/dir in cardinal)
+			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+			if(src.input) break
+		for (var/dir in cardinal)
+			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+			if(src.output) break
 		return
 	return
 
@@ -2167,8 +2171,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 /obj/machinery/mineral/processing_unit/New()
 	..()
 	spawn( 5 )
-		src.input = locate(/obj/machinery/mineral/input, get_step(src, NORTH))
-		src.output = locate(/obj/machinery/mineral/output, get_step(src, SOUTH))
+		for (var/dir in cardinal)
+			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+			if(src.input) break
+		for (var/dir in cardinal)
+			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+			if(src.output) break
 		processing_items.Add(src)
 		return
 	return
@@ -2483,8 +2491,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 /obj/machinery/mineral/stacking_machine/New()
 	..()
 	spawn( 5 )
-		src.input = locate(/obj/machinery/mineral/input, get_step(src, EAST))
-		src.output = locate(/obj/machinery/mineral/output, get_step(src, WEST))
+		for (var/dir in cardinal)
+			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+			if(src.input) break
+		for (var/dir in cardinal)
+			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+			if(src.output) break
 		processing_items.Add(src)
 		return
 	return
@@ -2495,39 +2507,39 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		while (locate(/obj/item, input.loc))
 			O = locate(/obj/item, input.loc)
 			if (istype(O,/obj/item/stack/sheet/metal))
-				ore_iron++;
+				ore_iron+= O:amount;
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/diamond))
-				ore_diamond++;
+				ore_diamond+= O:amount;
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/plasma))
-				ore_plasma++
+				ore_plasma+= O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/gold))
-				ore_gold++
+				ore_gold+= O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/silver))
-				ore_silver++
+				ore_silver+= O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/clown))
-				ore_clown++
+				ore_clown+= O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/glass))
-				ore_glass++
+				ore_glass+= O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/rglass))
-				ore_rglass++
+				ore_rglass+= O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/r_metal))
-				ore_steel++
+				ore_steel+= O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/weapon/ore/slag))
@@ -2607,8 +2619,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 /obj/machinery/mineral/unloading_machine/New()
 	..()
 	spawn( 5 )
-		src.input = locate(/obj/machinery/mineral/input, get_step(src, SOUTH))
-		src.output = locate(/obj/machinery/mineral/output, get_step(src, NORTH))
+		for (var/dir in cardinal)
+			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+			if(src.input) break
+		for (var/dir in cardinal)
+			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+			if(src.output) break
 		processing_items.Add(src)
 		return
 	return
@@ -2663,8 +2679,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 /obj/machinery/mineral/mint/New()
 	..()
 	spawn( 5 )
-		src.input = locate(/obj/machinery/mineral/input, get_step(src, NORTH))
-		src.output = locate(/obj/machinery/mineral/output, get_step(src, SOUTH))
+		for (var/dir in cardinal)
+			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+			if(src.input) break
+		for (var/dir in cardinal)
+			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+			if(src.output) break
 		processing_items.Add(src)
 		return
 	return
@@ -3021,8 +3041,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 /obj/machinery/mineral/gasextractor/New()
 	..()
 	spawn( 5 )
-		src.input = locate(/obj/machinery/mineral/input, get_step(src, NORTH))
-		src.output = locate(/obj/machinery/mineral/output, get_step(src, SOUTH))
+		for (var/dir in cardinal)
+			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+			if(src.input) break
+		for (var/dir in cardinal)
+			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+			if(src.output) break
 		return
 	return
 
