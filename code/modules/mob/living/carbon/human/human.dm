@@ -439,6 +439,9 @@
 /mob/living/carbon/human/ex_act(severity)
 	flick("flash", src.flash)
 
+// /obj/item/clothing/suit/bomb_suit( src )
+// /obj/item/clothing/head/bomb_hood( src )
+
 	if (src.stat == 2 && src.client)
 		src.gib(1)
 		return
@@ -450,6 +453,7 @@
 		return
 
 	var/shielded = 0
+
 	for(var/obj/item/device/shield/S in src)
 		if (S.active)
 			shielded = 1
@@ -460,8 +464,15 @@
 	switch (severity)
 		if (1.0)
 			b_loss += 500
-			src.gib(1)
-			return
+			if (!istype(src.wear_suit, /obj/item/clothing/suit/bomb_suit))
+				src.gib(1)
+				return
+			else
+				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
+				src.throw_at(target, 200, 4)
+			//return
+//				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
+				//user.throw_at(target, 200, 4)
 
 		if (2.0)
 			if (!shielded)
@@ -469,17 +480,23 @@
 
 			f_loss += 60
 
+			if (istype(src.wear_suit, /obj/item/clothing/suit/bomb_suit))
+				b_loss = b_loss/1.5
+				f_loss = f_loss/1.5
+
 			if (!istype(src.ears, /obj/item/clothing/ears/earmuffs))
 				src.ear_damage += 30
 				src.ear_deaf += 120
 
 		if(3.0)
 			b_loss += 30
-			if (prob(50) && !shielded)
-				src.paralysis += 10
+			if (istype(src.wear_suit, /obj/item/clothing/suit/bomb_suit))
+				b_loss = b_loss/2
 			if (!istype(src.ears, /obj/item/clothing/ears/earmuffs))
 				src.ear_damage += 15
 				src.ear_deaf += 60
+			if (prob(50) && !shielded)
+				src.paralysis += 10
 
 	for(var/organ in src.organs)
 		var/datum/organ/external/temp = src.organs[text("[]", organ)]
@@ -509,6 +526,7 @@
 					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)
 
 	src.UpdateDamageIcon()
+
 
 /mob/living/carbon/human/blob_act()
 	if (src.stat == 2)

@@ -12,6 +12,11 @@
 	radiation_protection = 0.35
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
 
+/obj/item/clothing/head/bomb_hood
+	name = "bomb hood"
+	icon_state = "bombsuit"
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
 	icon_state = "bio"

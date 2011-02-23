@@ -51,6 +51,13 @@
 	icon_closed = "coffin"
 	icon_opened = "coffin_open"
 
+/obj/closet/bombcloset
+	desc = "A bulky (yet mobile) closet. Comes prestocked with a level 4 bombsuit."
+	name = "EOD closet"
+	icon_state = "bombsuit"
+	icon_closed = "bombsuit"
+	icon_opened = "bombsuitopen"
+
 /obj/closet/l3closet
 	desc = "A bulky (yet mobile) closet. Comes prestocked with level 3 biohazard gear for emergencies."
 	name = "Level 3 Biohazard Suit"
