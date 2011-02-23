@@ -209,7 +209,7 @@
 
 	for(var/mob/new_player/player in world)
 		if((player.client) &&  (player.ready))
-			if(player.be_syndicate)
+			if(player.preferences.be_syndicate)
 				candidates += player.mind
 
 	if(candidates.len < 1)

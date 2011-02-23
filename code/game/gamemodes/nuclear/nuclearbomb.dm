@@ -146,7 +146,7 @@
 	if (istype( A, /area))
 		if (A.name == "Space")
 			derp = 1
-		if (A.name == "Syndicate Station")
+		if (istype(A, /area/syndicate_station))
 			derp = 1
 		if (A.name == "Wizard's Den")
 			derp = 1
@@ -155,7 +155,7 @@
 			for(var/area/target in get_step(src,direction))
 				if (target.name == "Space")
 					derp = 1
-				if (target.name == "Syndicate Station")
+				if (istype(target, /area/syndicate_station))
 					derp = 1
 				if (target.name == "Wizard's Den")
 					derp = 1
