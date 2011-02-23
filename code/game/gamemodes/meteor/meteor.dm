@@ -59,7 +59,7 @@
 
 	var/list/possible_modes = list()
 	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
-	var/number = pick(3, 4)
+	var/number = pick(2, 3)
 	var/i = 0
 	for(i = 0, i < number, i++)
 		possible_modes.Remove(pick(possible_modes))
