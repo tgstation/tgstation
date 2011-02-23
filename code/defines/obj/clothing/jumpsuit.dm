@@ -169,6 +169,15 @@
 	color = "miner"
 	permeability_coefficient = 0.50
 
+/obj/item/clothing/under/rank/roboticist
+	desc = "A slimming black with reinforced seams. Great for industrial work."
+	name = "Roboticist Jumpsuit"
+	icon_state = "robotics"
+	item_state = "bl_suit"
+	color = "black"
+	permeability_coefficient = 0.25		//This is the protection a lab coat provided previously.
+	heat_transfer_coefficient = 0.75
+
 /obj/item/clothing/under/rank/head_of_security
 	desc = "It has a Head of Security rank stripe on it."
 	name = "Head of Security Jumpsuit"
