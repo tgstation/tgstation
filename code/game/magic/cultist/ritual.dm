@@ -8,8 +8,8 @@ var/wordjoin = null
 var/wordtech = null
 var/worddestr = null
 var/wordother = null
-var/wordhear = null
-var/wordfree = null
+//var/wordhear = null
+//var/wordfree = null
 var/wordhide = null
 var/runedec = 0
 
@@ -19,11 +19,11 @@ var/runedec = 0
 	set desc = "Check the rune-word meaning"
 	if(!wordtravel)
 		runerandom()
-	usr << "[wordtravel] is travel, [wordblood] is blood, [wordjoin] is join, [wordhell] is Hell, [worddestr] is destroy, [wordtech] is technology, [wordself] is self, [wordsee] is see, [wordfree] is freedom, [wordhear] is hear, [wordother] is other, [wordhide] is hide."
+	usr << "[wordtravel] is travel, [wordblood] is blood, [wordjoin] is join, [wordhell] is Hell, [worddestr] is destroy, [wordtech] is technology, [wordself] is self, [wordsee] is see, [wordother] is other, [wordhide] is hide."
 
 
 /proc/runerandom() //randomizes word meaning
-	var/list/runewords=list("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq", "karazet", "geeri", "orkan", "allaq")
+	var/list/runewords=list("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq", "karazet", "geeri") ///"orkan" and "allaq" removed.
 	wordtravel=pick(runewords)
 	runewords-=wordtravel
 	wordself=pick(runewords)
@@ -42,10 +42,10 @@ var/runedec = 0
 	runewords-=worddestr
 	wordother=pick(runewords)
 	runewords-=wordother
-	wordhear=pick(runewords)
-	runewords-=wordhear
-	wordfree=pick(runewords)
-	runewords-=wordfree
+//	wordhear=pick(runewords)
+//	runewords-=wordhear
+//	wordfree=pick(runewords)
+//	runewords-=wordfree
 	wordhide=pick(runewords)
 	runewords-=wordhide
 
@@ -61,6 +61,7 @@ var/runedec = 0
 		word1
 		word2
 		word3
+// Places these combos are mentioned: this file - twice in the rune code, once in imbued tome, once in tome's HTML runes.dm - in the imbue rune code. If you change a combination - dont forget to change it everywhere.
 
 // travel self [word] - Teleport to random [rune with word destination matching]
 // travel other [word] - Portal to rune with word destination matching
@@ -81,13 +82,13 @@ var/runedec = 0
 // Hell blood join - Sacrifice rune
 // destroy travel self - Wall rune
 // join other self - Summon cultist rune
-// freedom join other - Freeing rune
+// travel technology other - Freeing rune    //    other blood travel was freedom join other
 
-// destroy see hear - Deafening rune
+// hide other see - Deafening rune     //     was destroy see hear
 // destroy see other - Blinding rune
 // destroy see blood - BLOOD BOIL
 
-// other hear blood - Communication rune
+// self other technology - Communication rune  //was other hear blood
 
 	examine()
 		if(!cultists.Find(usr))
@@ -127,7 +128,7 @@ var/runedec = 0
 		if(word1 == wordhell && word2 == wordjoin && word3 == wordself)
 			return tearreality()
 		if(word1 == worddestr && word2 == wordsee && word3 == wordtech)
-			return emp(src.loc,1)
+			return emp(src.loc,3)
 		if(word1 == wordtravel && word2 == wordblood && word3 == wordself)
 			return drain()
 		if(word1 == wordsee && word2 == wordhell && word3 == wordjoin)
@@ -148,17 +149,17 @@ var/runedec = 0
 			return revealrunes(src)
 		if(word1 == worddestr && word2 == wordtravel && word3 == wordself)
 			return wall()
-		if(word1 == wordfree && word2 == wordjoin && word3 == wordother)
+		if(word1 == wordtravel && word2 == wordtech && word3 == wordother)
 			return freedom()
 		if(word1 == wordjoin && word2 == wordother && word3 == wordself)
 			return cultsummon()
-		if(word1 == worddestr && word2 == wordsee && word3 == wordhear)
+		if(word1 == wordhide && word2 == wordother && word3 == wordsee)
 			return deafen()
 		if(word1 == worddestr && word2 == wordsee && word3 == wordother)
 			return blind()
 		if(word1 == worddestr && word2 == wordsee && word3 == wordblood)
 			return bloodboil()
-		if(word1 == wordother && word2 == wordhear && word3 == wordblood)
+		if(word1 == wordself && word2 == wordother && word3 == wordtech)
 			return communicate()
 		if(word1 == wordtravel && word2 == wordother)
 			return itemport(src.word3)
@@ -231,7 +232,7 @@ var/runedec = 0
 				icon_state = "1"
 				src.icon += rgb(255, 0, 0)
 				return
-			if(word1 == wordfree && word2 == wordjoin && word3 == wordother)
+			if(word1 == wordtravel && word2 == wordtech && word3 == wordother)
 				icon_state = "4"
 				src.icon += rgb(255, 0, 255)
 				return
@@ -239,7 +240,7 @@ var/runedec = 0
 				icon_state = "2"
 				src.icon += rgb(0, 255, 0)
 				return
-			if(word1 == worddestr && word2 == wordsee && word3 == wordhear)
+			if(word1 == wordhide && word2 == wordother && word3 == wordsee)
 				icon_state = "4"
 				src.icon += rgb(0, 255, 0)
 				return
@@ -251,7 +252,7 @@ var/runedec = 0
 				icon_state = "4"
 				src.icon += rgb(255, 0, 0)
 				return
-			if(word1 == wordother && word2 == wordhear && word3 == wordblood)
+			if(word1 == wordself && word2 == wordother && word3 == wordtech)
 				icon_state = "3"
 				src.icon += rgb(200, 0, 0)
 				return
@@ -270,6 +271,95 @@ var/runedec = 0
 	throw_range = 5
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS
+	var/dat
+
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 25px; margin: 15px 0px 5px;}
+				h2 {font-size: 20px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {list-style: none; margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				</style>
+				</head>
+				<body>
+				<h1>The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood.</h1>
+
+				<i>The book is written in an unknown dialect, there are lots of pictures of various complex geometric shapes. You find some notes in english that give you basic understanding of the many runes written in the book. The notes give you an understanding what the words for the runes should be. However, you do not know how to write all these words in this dialect.</i><br>
+				<i>Below is the summary of the runes.</i>
+
+				<h2>Contents</h2>
+				<p>
+				<b>Teleport self: </b>Travel Self (word)<br>
+				<b>Teleport other: </b>Travel Other (word)<br>
+				<b>Summon new tome: </b>See Blood Hell<br>
+				<b>Convert a person: </b>Join Blood Self<br>
+				<b>Summon Nar-Sie: </b>Hell Join Self<br>
+				<b>Disable technology: </b>Destroy See Technology<br>
+				<b>Drain blood: </b>Travel Blood Self<br>
+				<b>Raise dead: </b>Blood Join Hell<br>
+				<b>Hide runes: </b>Hide See Blood<br>
+				<b>Reveal hidden runes: </b>Blood See Hide<br>
+				<b>Leave your body: </b>Hell travel self<br>
+				<b>Ghost Manifest: </b>Blood See Travel<br>
+				<b>Imbue a talisman: </b>Hell Technology Join<br>
+				<b>Sacrifice: </b>Hell Blood Join<br>
+				<b>Create a wall: </b>Destroy Travel Self<br>
+				<b>Summon cultist: </b>Join Other Self<br>
+				<b>Free a cultist: </b>Travel technology other<br>
+				<b>Deafen: </b>Hide other see<br>
+				<b>Blind: </b>Destroy See Other<br>
+				<b>Blood Boil: </b>Destroy See Blood<br>
+				<b>Communicate: </b>Self other technology<br>
+				</p>
+				<h2>Rune Descriptions</h2>
+				<h3>Teleport self</h3>
+				Teleport rune is a special rune, as it only needs two words, with the third word being destination. Basically, when you have two runes with the same destination, invoking one will teleport you to the other one. If there are more than 2 runes, you will be teleported to a random one. Runes with different third words will create separate networks. You can imbue this rune into a talisman, giving you a great escape mechanism.<br>
+				<h3>Teleport other</h3>
+				Teleport other allows for teleportation for any movable object to another rune with the same third word. You need 3 cultists chanting the invocation for this rune to work.<br>
+				<h3>Summon new tome</h3>
+				Invoking this rune summons a new arcane tome.
+				<h3>Convert a person</h3>
+				This rune opens target's mind to the realm of Nar-Sie, which usually results in this person joining the cult. However, some people (mostly the ones who posess high authority) have strong enough will to stay true to their old ideals. <br>
+				<h3>Summon Nar-Sie</h3>
+				The ultimate rune. It summons the Avatar of Nar-Sie himself, tearing a huge hole in reality and consuming everything around it. Summoning it is the final goal of any cult.<br>
+				<h3>Disable Technology</h3>
+				Invoking this rune creates a strong electromagnetic pulse in a small radius, making it basically analogic to an EMP grenade. You can imbue this rune into a talisman, making it a decent defensive item.<br>
+				<h3>Drain Blood</h3>
+				This rune instantly heals you of some brute damage at the expense a person placed on top of the rune. Whenever you invoke a drain rune, ALL drain runes in very large radius are activated, draining blood from anyone located on top of those runes. This includes yourself, though the blood you drain from yourself just comes back to you. This might help you identify this rune when studying words. One drain gives up to 25HP per each victim, but you can repeat it if you need more. Draining only works on living people, so you might need to recharge your "Battery" once its empty. Drinking too much blood at once might cause blood hunger.<br>
+				<h3>Raise Dead</h3>
+				This rune allows for the resurrection of any dead person. You will need a dead human body and a living human sacrifice. Make 2 raise dead runes. Put a living non-braindead human on top of one, and a dead body on the other one. When you invoke the rune, the life force of the living human will be transferred into the dead body, allowing a ghost standing on top of the dead body will enter it, instantly and fully healing it. Use other runes to ensure there is a ghost ready to be resurrected.<br>
+				<h3>Hide runes</h3>
+				This rune makes all nearby runes completely invisible. They are still there and will work if activated somehow, but you cannot invoke them directly if you do not see them.<br>
+				<h3>Reveal runes</h3>
+				This rune is made to reverse the process of hiding a rune. It reveals all hidden runes in a rather large area around it.
+				<h3>Leave your body</h3>
+				This rune gently rips your soul out of your body, leaving it intact. You can observe the surroundings as a ghost as well as communicate with other ghosts. Your body takes damage while you are there, so ensure your journey is not too long, or youmight never come back.<br>
+				<h3>Manifest a ghost</h3>
+				Unlike the Raise Dead rune, this rune does not require any special preparations or vessels. Instead of using full lifeforce of a sacrifice, it will drain YOUR lifefirce. Stand on the rune and invoke it. If theres a ghost standing over the rune, it will materialise, and will live as long as you dont move off the rune or die. You can put a paper with a name on it on the rune to make the new body look like that person.<br>
+				<h3>Imbue a talisman</h3>
+				This rune allows you to imbue the magic of some runes into paper talismans. Create an imbue rune, then an appropriate rune beside it. Put an empty piece of paper on the imbue rune and invoke it. ou will now have a 1-use talisman with the power of the target rune. Using a talisman drains alot of health, so be careful with it. You can imbue a talisman with the following powers: summon tome, reveal, conceal, teleport, tisable technology, communicate, deafen and blind.<br>
+				<h3>Sacrifice</h3>
+				Sacrifice rune allows you to sacrifice a living thing or a body to the Geometer of Blood. Monkeys and dead humans are the most basic sacrifices, they might or might not be enough to gain His favor. A living human is what a real sacrifice should be, however, you will need 3 people chanting the invocation to sacrifice a living person.
+				<h3>Create a wall</h3>
+				Invoking this rune solidifies the air above it, creating an an invisible wall. To remove the wall, simply invoke the rune again.
+				<h3>Summon cultist</h3>
+				This rune allows you to summon a fellow cultist to your location. The target cultist must be unhandcuffed ant not buckled to anything. You also need to have 3 people chanting at the rune to succesfully invoke it.<br>
+				<h3>Free a cultist</h3>
+				This rune unhandcuffs and unbuckles any cultist, no matter where he is. You need to have 3 people invoking the rune for it to work.<br>
+				<h3>Deafen</h3>
+				This rune temporarily deafens everyone around you, including your fellow cultists, so be careful.<br>
+				<h3>Blind</h3>
+				This rune temporarily blinds everyone around you, including your fellow cultists, so be careful.<br>
+				<h3>Blood boil</h3>
+				This rune boils the blood of a person on top of it. The damage is enough to instantly critically hurt any person. You need 2 cultists invoking the rune for it to work.<br>
+				<h3>Communicate</h3>
+				Invoking this rune allows you to relay a message to all cultists on the station.
+				</body>
+				</html>
+				"}
+
 
 	attack(mob/M as mob, mob/user as mob)
 		if(!cultists.Find(user))
@@ -304,9 +394,13 @@ var/runedec = 0
 					if("No")
 						return
 			else
-				if(alert("Scribe a rune?",,"Yes","No")=="No")
-					return
-			var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri", "orkan", "allaq")
+				switch(alert("You open the tome",,"Read it","Scribe a rune","Cancel"))
+					if("Cancel")
+						return
+					if("Read it")
+						user << browse("[dat]", "window=book")
+						return
+			var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
 			var/w1
 			var/w2
 			var/w3
@@ -363,7 +457,7 @@ var/runedec = 0
 				R.blood_type = H.b_type
 			switch(r)
 				if("teleport")
-					var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri", "orkan", "allaq")
+					var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
 					var/beacon
 					if(usr)
 						beacon = input("Select the last rune", "Rune Scribing") in words
@@ -373,7 +467,7 @@ var/runedec = 0
 					R.loc = user.loc
 					R.check_icon()
 				if("itemport")
-					var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri", "orkan", "allaq")
+					var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
 					var/beacon
 					if(usr)
 						beacon = input("Select the last rune", "Rune Scribing") in words
@@ -467,8 +561,8 @@ var/runedec = 0
 					R.loc = user.loc
 					R.check_icon()
 				if("freedom")
-					R.word1=wordfree
-					R.word2=wordjoin
+					R.word1=wordtravel
+					R.word2=wordtech
 					R.word3=wordother
 					R.loc = user.loc
 					R.check_icon()
@@ -479,9 +573,9 @@ var/runedec = 0
 					R.loc = user.loc
 					R.check_icon()
 				if("deafen")
-					R.word1=worddestr
-					R.word2=wordsee
-					R.word3=wordhear
+					R.word1=wordhide
+					R.word2=wordother
+					R.word3=wordsee
 					R.loc = user.loc
 					R.check_icon()
 				if("blind")
@@ -497,9 +591,9 @@ var/runedec = 0
 					R.loc = user.loc
 					R.check_icon()
 				if("communicate")
-					R.word1=wordother
-					R.word2=wordhear
-					R.word3=wordblood
+					R.word1=wordself
+					R.word2=wordother
+					R.word3=wordtech
 					R.loc = user.loc
 					R.check_icon()
 
@@ -535,12 +629,12 @@ var/runedec = 0
 			if("newtome")
 				call(/obj/rune/proc/tomesummon)()
 			if("emp")
-				call(/obj/rune/proc/emp)(usr.loc,4)
+				call(/obj/rune/proc/emp)(usr.loc,5)
 			if("conceal")
 				call(/obj/rune/proc/obscure)(2)
 			if("revealrunes")
 				call(/obj/rune/proc/revealrunes)(src)
-			if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri", "orkan")
+			if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
 				call(/obj/rune/proc/teleport)(imbue)
 			if("communicate")
 				call(/obj/rune/proc/communicate)()

@@ -10,7 +10,7 @@
 
 	var/list/startwords = list("blood","join","self","hell")
 	//var/list/startwords = list("travel","blood","join","hell","self","see")
-	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hear", "free", "hide")
+	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
 
 	var/list/objectives = list()
 
@@ -136,10 +136,10 @@
 			wordexp = "[worddestr] is destroy..."
 		if("other")
 			wordexp = "[wordother] is other..."
-		if("hear")
-			wordexp = "[wordhear] is hear..."
-		if("free")
-			wordexp = "[wordfree] is free..."
+//		if("hear")
+//			wordexp = "[wordhear] is hear..."
+//		if("free")
+//			wordexp = "[wordfree] is free..."
 		if("hide")
 			wordexp = "[wordhide] is hide..."
 	cult_mob << "\red You remember one thing from the dark teachings of your master... [wordexp]"

@@ -150,7 +150,7 @@ var/list/sacrificed = list()
 				T.hotspot_expose(700,125)
 
 			var/rune = src // detaching the proc - in theory
-			empulse(src, (range_red - 2), range_red)
+			empulse(U, (range_red - 2), range_red)
 			del(rune)
 			return
 
@@ -350,11 +350,11 @@ var/list/sacrificed = list()
 
 /////////////////////////////////////////TWELFTH RUNE
 
-		talisman()//only hide, emp, teleport and tome runes can be imbued atm
+		talisman()//only hide, emp, teleport, deafen, blind and tome runes can be imbued atm
 			for(var/obj/rune/R in orange(1,src))
 				if(R==src)
 					continue
-				if(R.word1==wordtravel && R.word2==wordself)
+				if(R.word1==wordtravel && R.word2==wordself)  //teleport
 					for(var/obj/item/weapon/paper/P in src.loc)
 						if(P.info)
 							usr << "\red The blank is tainted. It is unsuitable."
@@ -369,7 +369,7 @@ var/list/sacrificed = list()
 						del(src)
 						usr.say("H'drak v'loso, mir'kanas verbot!")
 						return
-				if(R.word1==wordsee && R.word2==wordblood && R.word3==wordhell)
+				if(R.word1==wordsee && R.word2==wordblood && R.word3==wordhell) //tome
 					for(var/obj/item/weapon/paper/P in src.loc)
 						if(P.info)
 							usr << "\red The blank is tainted. It is unsuitable."
@@ -383,7 +383,7 @@ var/list/sacrificed = list()
 						del(src)
 						usr.say("H'drak v'loso, mir'kanas verbot!")
 						return
-				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordtech)
+				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordtech) //emp
 					for(var/obj/item/weapon/paper/P in src.loc)
 						if(P.info)
 							usr << "\red The blank is tainted. It is unsuitable."
@@ -397,7 +397,7 @@ var/list/sacrificed = list()
 						del(src)
 						usr.say("H'drak v'loso, mir'kanas verbot!")
 						return
-				if(R.word1==wordblood && R.word2==wordsee && R.word3==worddestr)
+				if(R.word1==wordblood && R.word2==wordsee && R.word3==worddestr) //conceal
 					for(var/obj/item/weapon/paper/P in src.loc)
 						if(P.info)
 							usr << "\red The blank is tainted. It is unsuitable."
@@ -411,7 +411,7 @@ var/list/sacrificed = list()
 						del(src)
 						usr.say("H'drak v'loso, mir'kanas verbot!")
 						return
-				if(R.word1==wordblood && R.word2==wordsee && R.word3==wordhide)
+				if(R.word1==wordblood && R.word2==wordsee && R.word3==wordhide) //reveal
 					for(var/obj/item/weapon/paper/P in src.loc)
 						if(P.info)
 							usr << "\red The blank is tainted. It is unsuitable."
@@ -425,7 +425,7 @@ var/list/sacrificed = list()
 						del(src)
 						usr.say("H'drak v'loso, mir'kanas verbot!")
 						return
-				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordhear)
+				if(R.word1==wordhide && R.word2==wordother && R.word3==wordsee) //deafen
 					for(var/obj/item/weapon/paper/P in src.loc)
 						if(P.info)
 							usr << "\red The blank is tainted. It is unsuitable."
@@ -439,7 +439,7 @@ var/list/sacrificed = list()
 						del(src)
 						usr.say("H'drak v'loso, mir'kanas verbot!")
 						return
-				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordother)
+				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordother) //blind
 					for(var/obj/item/weapon/paper/P in src.loc)
 						if(P.info)
 							usr << "\red The blank is tainted. It is unsuitable."
@@ -447,6 +447,20 @@ var/list/sacrificed = list()
 						del(P)
 						var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(src.loc)
 						T.imbue = "blind"
+						for (var/mob/V in viewers(src))
+							V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
+						del(R)
+						del(src)
+						usr.say("H'drak v'loso, mir'kanas verbot!")
+						return
+				if(R.word1==wordself && R.word2==wordother && R.word3==wordtech) //communicat
+					for(var/obj/item/weapon/paper/P in src.loc)
+						if(P.info)
+							usr << "\red The blank is tainted. It is unsuitable."
+							return
+						del(P)
+						var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(src.loc)
+						T.imbue = "communicate"
 						for (var/mob/V in viewers(src))
 							V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
 						del(R)
@@ -568,10 +582,10 @@ var/list/sacrificed = list()
 				else
 					usr << "\red The Geometer of Blood accepts your meager sacrifice."
 				return
-			for(var/mob/living/carbon/alien/A)
+/*			for(var/mob/living/carbon/alien/A)
 				for(var/mob/K in cultsinrange)
 					K.say("Barhah hra zar'garis!")
-				A.gib(1)
+				A.dust()      /// A.gib(1) doesnt work for some reason, and dust() leaves that skull and bones thingy which we dont really need.
 				if (ticker.mode.name == "cult")
 					if(prob(75))
 						usr << "\red The Geometer of Blood accepts your exotic sacrifice."
@@ -582,7 +596,7 @@ var/list/sacrificed = list()
 				else
 					usr << "\red The Geometer of Blood accepts your exotic sacrifice."
 				return
-			return fizzle()
+			return fizzle() */
 
 /////////////////////////////////////////SIXTEENTH RUNE
 
