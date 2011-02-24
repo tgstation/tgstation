@@ -2224,7 +2224,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
 					if (ore_uranium > 0)
 						ore_uranium--;
-						new /obj/item/weapon/ore/uranium(output.loc)
+						new /obj/item/stack/sheet/uranium(output.loc)
 					else
 						on = 0
 					continue
@@ -2389,8 +2389,10 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		dat += text("Gold: [machine.ore_gold] <A href='?src=\ref[src];release=gold'>Release</A><br>")
 	if(machine.ore_silver)
 		dat += text("Silver: [machine.ore_silver] <A href='?src=\ref[src];release=silver'>Release</A><br>")
+	if(machine.ore_uranium)
+		dat += text("Uranium: [machine.ore_uranium] <A href='?src=\ref[src];release=uranium'>Release</A><br>")
 	if(machine.ore_diamond)
-		dat += text("Damond: [machine.ore_diamond] <A href='?src=\ref[src];release=diamond'>Release</A><br>")
+		dat += text("Diamond: [machine.ore_diamond] <A href='?src=\ref[src];release=diamond'>Release</A><br>")
 	if(machine.ore_clown)
 		dat += text("Bananium: [machine.ore_clown] <A href='?src=\ref[src];release=clown'>Release</A><br><br>")
 
@@ -2411,6 +2413,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 					G.amount = machine.ore_plasma
 					G.loc = machine.output.loc
 					machine.ore_plasma = 0
+			if ("uranium")
+				if (machine.ore_uranium > 0)
+					var/obj/item/stack/sheet/uranium/G = new /obj/item/stack/sheet/uranium
+					G.amount = machine.ore_uranium
+					G.loc = machine.output.loc
+					machine.ore_uranium = 0
 			if ("glass")
 				if (machine.ore_glass > 0)
 					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass
@@ -2482,6 +2490,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	var/ore_diamond = 0;
 	var/ore_plasma = 0;
 	var/ore_iron = 0;
+	var/ore_uranium = 0;
 	var/ore_clown = 0;
 	var/ore_glass = 0;
 	var/ore_rglass = 0;
@@ -2528,6 +2537,10 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 				continue
 			if (istype(O,/obj/item/stack/sheet/clown))
 				ore_clown+= O:amount
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/uranium))
+				ore_uranium+= O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/stack/sheet/glass))
@@ -2581,6 +2594,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		G.amount = stack_amt
 		G.loc = output.loc
 		ore_clown -= stack_amt
+		return
+	if (ore_uranium >= stack_amt)
+		var/obj/item/stack/sheet/uranium/G = new /obj/item/stack/sheet/uranium
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_uranium -= stack_amt
 		return
 	if (ore_glass >= stack_amt)
 		var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass
@@ -3194,6 +3213,16 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 /obj/item/stack/sheet/diamond/New()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
+
+/obj/item/stack/sheet/uranium
+	name = "Uranium block"
+	icon_state = "sheet-uranium"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
 
 /obj/item/stack/sheet/plasma
 	name = "solid plasma"
