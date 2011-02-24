@@ -77,13 +77,14 @@
 	src.ion = list()
 
 /datum/ai_laws/proc/show_laws(var/who)
+
+	if (src.zeroth)
+		who << "0. [src.zeroth]"
+
 	for (var/index = 1, index <= src.ion.len, index++)
 		var/law = src.ion[index]
 		var/num = ionnum()
 		who << "[num]. [law]"
-
-	if (src.zeroth)
-		who << "0. [src.zeroth]"
 
 	var/number = 1
 	for (var/index = 1, index <= src.inherent.len, index++)

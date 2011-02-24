@@ -60,6 +60,14 @@
 	//src.laws_object.show_laws(world)
 	var/number = 1
 	sleep(10)
+
+
+
+	if (src.laws_object.zeroth)
+		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
+			src.say("0. [src.laws_object.zeroth]")
+			sleep(10)
+
 	for (var/index = 1, index <= src.laws_object.ion.len, index++)
 		var/law = src.laws_object.ion[index]
 		var/num = ionnum()
@@ -67,12 +75,6 @@
 			if (src.ioncheck[index] == "Yes")
 				src.say("[num]. [law]")
 				sleep(10)
-
-
-	if (src.laws_object.zeroth)
-		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
-			src.say("0. [src.laws_object.zeroth]")
-			sleep(10)
 
 	for (var/index = 1, index <= src.laws_object.inherent.len, index++)
 		var/law = src.laws_object.inherent[index]
@@ -100,6 +102,13 @@
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
+
+
+	if (src.laws_object.zeroth)
+		if (!src.lawcheck[1])
+			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
+		list += {"<A href='byond://?src=\ref[src];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws_object.zeroth]<BR>"}
+
 	for (var/index = 1, index <= src.laws_object.ion.len, index++)
 		var/law = src.laws_object.ion[index]
 
@@ -110,12 +119,6 @@
 				src.ioncheck[index] = "Yes"
 			list += {"<A href='byond://?src=\ref[src];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
 			src.ioncheck.len += 1
-
-	if (src.laws_object.zeroth)
-		if (!src.lawcheck[1])
-			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
-		list += {"<A href='byond://?src=\ref[src];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws_object.zeroth]<BR>"}
-
 
 	var/number = 1
 	for (var/index = 1, index <= src.laws_object.inherent.len, index++)
