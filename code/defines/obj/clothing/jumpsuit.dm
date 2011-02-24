@@ -173,7 +173,7 @@
 	desc = "A slimming black with reinforced seams. Great for industrial work."
 	name = "Roboticist Jumpsuit"
 	icon_state = "robotics"
-	item_state = "bl_suit"
+	item_state = "robotics"
 	color = "black"
 	permeability_coefficient = 0.25		//This is the protection a lab coat provided previously.
 	heat_transfer_coefficient = 0.75
