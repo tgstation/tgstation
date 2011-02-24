@@ -959,6 +959,39 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 	var/mode = 2
 
+	nuclear
+		name = "Advanced Energy Gun"
+		desc = "An energy gun with an experimental miniaturized reactor."
+		var/critfail = 0
+
+		New()
+			charge()
+
+		proc/charge()
+			if(charges < maximum_charges)
+				if(failcheck())
+					charges++ //If the gun isn't fully charged, and it doesn't suffer a failure, add a charge.
+					update_icon()
+			if(!critfail)
+				spawn(50) charge()
+
+		proc/failcheck()
+			if (prob(src.reliability)) return 1 //No failure
+			if (prob(src.reliability))
+				for (var/mob/M in range(0,src)) //Only a minor failure, enjoy your radiation if you're in the same tile or carrying it
+					if (src in M.contents)
+						M << "\red Your gun feels pleasantly warm for a moment."
+					else
+						M << "\red You feel a warm sensation."
+					src.loc:radiation += rand(1,40)
+			else
+				for (var/mob/M in range(rand(1,4),src)) //Big failure, TIME FOR RADIATION BITCHES
+					if (src in M.contents)
+						M << "\red Your gun's reactor overloads!"
+					M << "\red You feel a wave of heat wash over you."
+					M.radiation += 100
+				critfail = 1 //break the gun so it stops recharging
+
 	update_icon()
 		var/ratio = src.charges / maximum_charges
 		ratio = round(ratio, 0.25) * 100

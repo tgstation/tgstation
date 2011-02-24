@@ -15,6 +15,9 @@ obj/machinery/recharger
 	if (src.charging || src.charging2)
 		return
 	if (istype(G, /obj/item/weapon/gun/energy))
+		if (istype(G, /obj/item/weapon/gun/energy/general/nuclear))
+			user << "Your gun's recharge port was removed to make room for a miniaturized reactor."
+			return
 		user.drop_item()
 		G.loc = src
 		src.charging = G

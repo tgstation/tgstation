@@ -634,6 +634,22 @@ datum
 			build_path = "/obj/item/device/mass_spectrometer/adv"
 
 /////////////////////////////////////////
+/////////////////Weapons/////////////////
+/////////////////////////////////////////
+
+		nuclear_gun
+			name = "Advanced Energy Gun"
+			desc = "An energy gun with an experimental miniaturized reactor."
+			id = "nuclear_gun"
+			req_tech = list("combat" = 2, "materials" = 5, "powerstorage" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 500)
+			reliability_base = 76
+			build_path = "/obj/item/weapon/gun/energy/general/nuclear"
+
+
+
+/////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
 
