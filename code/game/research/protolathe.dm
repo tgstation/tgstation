@@ -18,6 +18,7 @@ Note: Must be placed west/left of and R&D console to function.
 		gold_amount = 0.0
 		silver_amount = 0.0
 		plasma_amount = 0.0
+		uranium_amount = 0.0
 		diamond_amount = 0.0
 		clown_amount = 0.0
 
@@ -35,7 +36,7 @@ Note: Must be placed west/left of and R&D console to function.
 		RefreshParts()
 
 	proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
-		return m_amount + g_amount + gold_amount + silver_amount + plasma_amount + diamond_amount + clown_amount
+		return m_amount + g_amount + gold_amount + silver_amount + plasma_amount + uranium_amount + diamond_amount + clown_amount
 
 	RefreshParts()
 		var/T = 0
@@ -129,6 +130,8 @@ Note: Must be placed west/left of and R&D console to function.
 				silver_amount += amount * 3750
 			else if(istype(stack, /obj/item/stack/sheet/plasma))
 				plasma_amount += amount * 3750
+			else if(istype(stack, /obj/item/stack/sheet/uranium))
+				uranium_amount += amount * 3750
 			else if(istype(stack, /obj/item/stack/sheet/diamond))
 				diamond_amount += amount * 3750
 			else if(istype(stack, /obj/item/stack/sheet/clown))

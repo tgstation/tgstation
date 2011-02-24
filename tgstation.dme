@@ -532,6 +532,7 @@
 #include "code\game\objects\items\weapons\hydroponics.dm"
 #include "code\game\objects\items\weapons\implants.dm"
 #include "code\game\objects\items\weapons\kitchen.dm"
+#include "code\game\objects\items\weapons\manuals.dm"
 #include "code\game\objects\items\weapons\medical.dm"
 #include "code\game\objects\items\weapons\misc.dm"
 #include "code\game\objects\items\weapons\mops_cleaners.dm"

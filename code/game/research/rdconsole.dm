@@ -253,7 +253,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							linked_lathe.m_amount = min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*linked_destroy.decon_mod))
 							linked_lathe.g_amount = min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*linked_destroy.decon_mod))
 						linked_destroy.loaded_item = null
-					for(var/I in contents)
+					for(var/obj/I in linked_destroy.contents)
+						for(var/mob/M in I.contents)
+							M.death()
 						del(I)
 					use_power(250)
 					linked_destroy.icon_state = "d_analyzer"
@@ -310,6 +312,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-being_built.materials[M]))
 							if("$plasma")
 								linked_lathe.plasma_amount = max(0, (linked_lathe.plasma_amount-being_built.materials[M]))
+							if("$uranium")
+								linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-being_built.materials[M]))
 							if("$diamond")
 								linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-being_built.materials[M]))
 							if("$clown")
@@ -386,6 +390,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if("plasma")
 					new /obj/item/stack/sheet/plasma(linked_lathe.loc, text2num(href_list["ejectsheet_amt"]))
 					linked_lathe.plasma_amount = max(0, (linked_lathe.plasma_amount-(text2num(href_list["ejectsheet_amt"]) * 3750)))
+				if("uranium")
+					new /obj/item/stack/sheet/uranium(linked_lathe.loc, text2num(href_list["ejectsheet_amt"]))
+					linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-(text2num(href_list["ejectsheet_amt"]) * 3750)))
 				if("diamond")
 					new /obj/item/stack/sheet/diamond(linked_lathe.loc, text2num(href_list["ejectsheet_amt"]))
 					linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-(text2num(href_list["ejectsheet_amt"]) * 3750)))
@@ -412,6 +419,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					linked_imprinter.linked_console = null
 					linked_imprinter = null
 
+		else if(href_list["reset"]) //Reset the R&D console's database.
+			var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
+			if(choice == "Continue")
+				screen = 0.0
+				del(files)
+				files = new /datum/research(src)
+				spawn(20)
+					screen = 1.6
+					updateUsrDialog()
 		updateUsrDialog()
 		return
 
@@ -477,7 +493,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(t_disk.stored == null)
 					dat += "The disk has no data stored on it.<HR>"
 					dat += "Operations: "
-					dat += "<A href='?src=\ref[src];menu=3.1'>Load Tech to Disk</A> || "
+					dat += "<A href='?src=\ref[src];menu=1.3'>Load Tech to Disk</A> || "
 				else
 					dat += "Name: [t_disk.stored.name]<BR>"
 					dat += "Level: [t_disk.stored.level]<BR>"
@@ -494,13 +510,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					dat += "[T.name] "
 					dat += "<A href='?src=\ref[src];copy_tech=1;copy_tech_ID=[T.id]'>(Copy to Disk)</A><BR>"
 				dat += "<HR><BR><A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-				dat += "<A href='?src=\ref[src];menu=3.0'>Return to Disk Operations</A>"
+				dat += "<A href='?src=\ref[src];menu=1.2'>Return to Disk Operations</A>"
 
 			if(1.4) //Design Disk menu.
 				if(d_disk.blueprint == null)
 					dat += "The disk has no data stored on it.<HR>"
 					dat += "Operations: "
-					dat += "<A href='?src=\ref[src];menu=4.1'>Load Design to Disk</A> || "
+					dat += "<A href='?src=\ref[src];menu=1.5'>Load Design to Disk</A> || "
 				else
 					dat += "Name: [d_disk.blueprint.name]<BR>"
 					dat += "Level: [between(0, (d_disk.blueprint.reliability + rand(-15,15)), 100)]<BR>"
@@ -524,7 +540,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					dat += "[D.name] "
 					dat += "<A href='?src=\ref[src];copy_design=1;copy_design_ID=[D.id]'>(Copy to Disk)</A><BR>"
 				dat += "<HR><A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
-				dat += "<A href='?src=\ref[src];menu=3.0'>Return to Disk Operations</A>"
+				dat += "<A href='?src=\ref[src];menu=1.4'>Return to Disk Operations</A>"
 
 			if(1.6) //R&D console settings
 				dat += "R&D Console Setting:<BR><BR>"
@@ -533,6 +549,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				else dat += "<A href='?src=\ref[src];togglesync=1'>Connect to Research Network</A><BR>"
 				dat += "<A href='?src=\ref[src];menu=1.7'>Device Linkage Menu</A><BR>"
 				dat += "<A href='?src=\ref[src];lock=0.2'>Lock Console</A><BR>"
+				dat += "<A href='?src=\ref[src];reset=1'>Reset R&D Database.</A><BR>"
 				dat += "<HR><A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 
 			if(1.7) //R&D device linkage
@@ -602,6 +619,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									if(D.materials[M] > linked_lathe.silver_amount) check_materials = 0
 								if("$plasma")
 									if(D.materials[M] > linked_lathe.plasma_amount) check_materials = 0
+								if("$uranium")
+									if(D.materials[M] > linked_lathe.uranium_amount) check_materials = 0
 								if("$diamond")
 									if(D.materials[M] > linked_lathe.diamond_amount) check_materials = 0
 								if("$clown")
@@ -652,6 +671,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(linked_lathe.plasma_amount > 3750) dat += "<A href='?src=\ref[src];ejectsheet=plasma;ejectsheet_amt=1'>(1 Sheet)</A> "
 				if(linked_lathe.plasma_amount > 18750) dat += "<A href='?src=\ref[src];ejectsheet=plasma;ejectsheet_amt=5'>(5 Sheets)</A> "
 				if(linked_lathe.plasma_amount > 3750) dat += "<A href='?src=\ref[src];ejectsheet=plasmaejectsheet_amt=50'>(Max Sheets)</A>"
+				dat += "<BR>"
+				//Uranium
+				dat += "* [linked_lathe.uranium_amount] cm<sup>3</sup> of Uranium || "
+				dat += "Eject: "
+				if(linked_lathe.uranium_amount > 3750) dat += "<A href='?src=\ref[src];ejectsheet=uranium;ejectsheet_amt=1'>(1 Sheet)</A> "
+				if(linked_lathe.uranium_amount > 18750) dat += "<A href='?src=\ref[src];ejectsheet=uranium;ejectsheet_amt=5'>(5 Sheets)</A> "
+				if(linked_lathe.uranium_amount > 3750) dat += "<A href='?src=\ref[src];ejectsheet=uranium;ejectsheet_amt=50'>(Max Sheets)</A>"
 				dat += "<BR>"
 				//Diamond
 				dat += "* [linked_lathe.diamond_amount] cm<sup>3</sup> of Diamond || "

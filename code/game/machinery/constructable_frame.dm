@@ -17,6 +17,9 @@ To Do: Add deconstruct code to constructable machines. A marvelous idea, I know.
 
 /obj/machinery/constructable_frame/machine_frame
 	attackby(obj/item/P as obj, mob/user as mob)
+		if(P.crit_fail)
+			user << "\red This part is faulty, you cannot add this to the machine!"
+			return
 		switch(state)
 			if(1)
 				if(istype(P, /obj/item/weapon/cable_coil))
@@ -97,12 +100,20 @@ To Do: Add deconstruct code to constructable machines. A marvelous idea, I know.
 				if(istype(P, /obj/item/weapon))
 					for(var/I in req_components)
 						if(istype(P, text2path(I)) && (req_components[I] > 0))
+							if(istype(P, /obj/item/weapon/cable_coil))
+								var/obj/item/weapon/cable_coil/CP = P
+								if(CP.amount > 1)
+									var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src)
+									CC.amount = 1
+									components += CC
+									req_components[I]--
+									break
 							user.drop_item()
 							P.loc = src
 							components += P
 							req_components[I]--
 							break
-					if(P.loc != src)
+					if(P.loc != src && !istype(P, /obj/item/weapon/cable_coil))
 						user << "\red You cannot add that component to the machine!"
 
 
@@ -152,3 +163,14 @@ to destroy them and players will be able to make replacements.
 							"/obj/item/weapon/stock_parts/matter_bin" = 1,
 							"/obj/item/weapon/stock_parts/micro_manipulator" = 1,
 							"/obj/item/weapon/reagent_containers/glass/beaker" = 2)
+
+/obj/item/weapon/circuitboard/pacman
+	name = "Circuit Board (PACMAN-type Generator)"
+	build_path = "/obj/machinery/power/port_gen/pacman"
+	board_type = "machine"
+	origin_tech = "powerstorage=3;plasmatech=2"
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 1,
+							"/obj/item/weapon/stock_parts/micro_laser" = 1,
+							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/weapon/stock_parts/capacitor" = 1)
