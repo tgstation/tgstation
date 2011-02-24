@@ -4130,7 +4130,7 @@
 "bBv" = (/obj/table{dir = 9; icon_state = "tabledir"},/obj/item/weapon/crowbar,/obj/item/weapon/crowbar,/turf/simulated/floor{icon_state = "white"},/area/toxins/lab)
 "bBw" = (/obj/table{dir = 5; icon_state = "tabledir"},/obj/item/weapon/screwdriver,/obj/item/weapon/screwdriver,/obj/item/weapon/cable_coil{pixel_x = 3; pixel_y = -7},/obj/item/weapon/cable_coil{pixel_x = 3; pixel_y = -7},/turf/simulated/floor{icon_state = "white"},/area/toxins/lab)
 "bBx" = (/obj/table{dir = 9; icon_state = "tabledir"},/obj/item/weapon/stock_parts/micro_laser,/obj/item/weapon/stock_parts/micro_laser,/turf/simulated/floor{icon_state = "white"},/area/toxins/lab)
-"bBy" = (/obj/table{dir = 5; icon_state = "tabledir"},/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/item/weapon/stock_parts/micro_manipulator,/obj/item/weapon/stock_parts/micro_manipulator,/turf/simulated/floor{icon_state = "white"},/area/toxins/lab)
+"bBy" = (/obj/table{dir = 5; icon_state = "tabledir"},/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/item/weapon/stock_parts/manipulator,/turf/simulated/floor{icon_state = "white"},/area/toxins/lab)
 "bBz" = (/obj/machinery/atmospherics/pipe/manifold{dir = 8; icon_state = "manifold"; layer = 3; level = 2},/obj/item/stack/sheet/metal{amount = 50},/turf/simulated/floor{icon_state = "white"},/area/toxins/lab)
 "bBA" = (/obj/machinery/atmospherics/binary/pump{dir = 4; icon_state = "intact_on"; on = 1},/turf/simulated/wall/r_wall,/area/toxins/server)
 "bBB" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/obj/machinery/atmospherics/unary/outlet_injector{icon_state = "on"; dir = 8; pixel_y = 1; on = 1},/turf/simulated/floor{icon_state = "dark"; name = "server floor"; nitrogen = 500; oxygen = 0; temperature = 80},/area/toxins/server)

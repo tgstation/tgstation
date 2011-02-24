@@ -17,7 +17,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		component_parts = list()
 		component_parts += new /obj/item/weapon/circuitboard/destructive_analyzer(src)
 		component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-		component_parts += new /obj/item/weapon/stock_parts/micro_manipulator(src)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
 		component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
 		RefreshParts()
 

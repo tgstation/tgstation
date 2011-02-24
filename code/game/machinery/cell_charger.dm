@@ -32,9 +32,7 @@
 		overlays = null
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
-	add_fingerprint(user)
-
-	if(stat & BROKEN)
+	if(..())
 		return
 
 	if(charging)
