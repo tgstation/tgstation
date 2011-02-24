@@ -58,6 +58,13 @@
 	icon_closed = "bombsuit"
 	icon_opened = "bombsuitopen"
 
+/obj/closet/bombclosetsecurity
+	desc = "A bulky (yet mobile) closet. Comes prestocked with a level 4 bombsuit."
+	name = "EOD closet"
+	icon_state = "bombsuitsec"
+	icon_closed = "bombsuitsec"
+	icon_opened = "bombsuitsecopen"
+
 /obj/closet/l3closet
 	desc = "A bulky (yet mobile) closet. Comes prestocked with level 3 biohazard gear for emergencies."
 	name = "Level 3 Biohazard Suit"

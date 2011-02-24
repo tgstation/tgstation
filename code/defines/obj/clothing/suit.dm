@@ -19,6 +19,11 @@
 	heat_transfer_coefficient = 0.30
 	slowdown = 2
 
+/obj/item/clothing/suit/bomb_suit/security
+	icon_state = "bombsuitsec"
+	item_state = "bombsuitsec"
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/baton,/obj/item/weapon/handcuffs)
+
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
 	desc = "A suit that protects against biological contamination."

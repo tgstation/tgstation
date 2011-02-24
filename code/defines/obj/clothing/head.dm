@@ -17,6 +17,10 @@
 	icon_state = "bombsuit"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
 
+/obj/item/clothing/head/bomb_hood/security
+	icon_state = "bombsuitsec"
+	item_state = "bombsuitsec"
+
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
 	icon_state = "bio"
