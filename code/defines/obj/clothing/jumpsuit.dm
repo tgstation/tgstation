@@ -174,7 +174,7 @@
 	name = "Roboticist Jumpsuit"
 	icon_state = "robotics"
 	item_state = "robotics"
-	color = "black"
+	color = "robotics"
 	permeability_coefficient = 0.25		//This is the protection a lab coat provided previously.
 	heat_transfer_coefficient = 0.75
 
