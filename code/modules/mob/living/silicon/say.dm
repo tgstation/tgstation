@@ -40,6 +40,8 @@
 			if(S.robot_talk_understand)
 				if(S.robot_talk_understand == src.robot_talk_understand)
 					S.show_message(rendered, 2)
+			else if (S.binarycheck())
+				S.show_message(rendered, 2)
 
 	var/list/listening = hearers(1, src)
 	listening -= src

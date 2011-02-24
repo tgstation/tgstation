@@ -686,10 +686,6 @@
 
 		handle_regular_hud_updates()
 
-			if (istype(src.ears, /obj/item/device/radio/headset))
-				var/obj/item/device/radio/headset/H = src.ears
-				src.robot_talk_understand = H.translate_binary
-
 			if (src.stat == 2 || src.mutations & 4)
 				src.sight |= SEE_TURFS
 				src.sight |= SEE_MOBS

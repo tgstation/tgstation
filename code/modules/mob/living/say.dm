@@ -1,3 +1,21 @@
+/mob/living/proc/binarycheck()
+	if (istype(src, /mob/living/silicon)) return 1
+	if (!istype(src, /mob/living/carbon/human)) return
+	var/mob/living/carbon/human/H = src
+	if (H.ears)
+		var/obj/item/device/radio/headset/dongle = H.ears
+		if(!istype(dongle)) return
+		if(dongle.translate_binary) return 1
+
+/mob/living/proc/hivecheck()
+	if (istype(src, /mob/living/carbon/alien)) return 1
+	if (!istype(src, /mob/living/carbon/human)) return
+	var/mob/living/carbon/human/H = src
+	if (H.ears)
+		var/obj/item/device/radio/headset/dongle = H.ears
+		if(!istype(dongle)) return
+		if(dongle.translate_hive) return 1
+
 /mob/living/say(var/message)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
@@ -65,7 +83,7 @@
 			  ":t" = "Syndicate",
 			  ":d" = "Mining",
 			  ":q" = "Cargo",
-			  
+
 			  //kinda localization -- rastaf0
 			  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 			  ":ê" = "right hand",
@@ -84,7 +102,7 @@
 			  ":â" = "Mining",
 			  ":é" = "Cargo",
 		)
-		
+
 		message_mode = keys[channel_prefix]
 		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
 		if (message_mode)
@@ -166,13 +184,15 @@
 			return
 
 		if ("binary")
+			if(src.robot_talk_understand || src.binarycheck())
 			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
-			src.robot_talk(message)
+				src.robot_talk(message)
 			return
 
 		if ("alientalk")
+			if(src.alien_talk_understand || src.hivecheck())
 			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
-			src.alien_talk(message)
+				src.alien_talk(message)
 			return
 
 		if ("department")
