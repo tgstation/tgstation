@@ -956,13 +956,14 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	charges = 10
 	maximum_charges = 10
 	m_amt = 2000
+	g_amt = 1000
 
 	var/mode = 2
 
 	nuclear
 		name = "Advanced Energy Gun"
 		desc = "An energy gun with an experimental miniaturized reactor."
-		var/critfail = 0
+		origin_tech = "combat=3;materials=5;powerstorage=3"
 
 		New()
 			charge()
@@ -972,7 +973,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				if(failcheck())
 					charges++ //If the gun isn't fully charged, and it doesn't suffer a failure, add a charge.
 					update_icon()
-			if(!critfail)
+			if(!crit_fail)
 				spawn(50) charge()
 
 		proc/failcheck()
@@ -990,7 +991,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 						M << "\red Your gun's reactor overloads!"
 					M << "\red You feel a wave of heat wash over you."
 					M.radiation += 100
-				critfail = 1 //break the gun so it stops recharging
+				crit_fail = 1 //break the gun so it stops recharging
 
 	update_icon()
 		var/ratio = src.charges / maximum_charges

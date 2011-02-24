@@ -8,10 +8,26 @@ you use one of the material IDs below. These are NOT ids in the usual sense (the
 they are simply references used as part of a "has materials?" type proc. They all start with a $ to denote that they aren't reagents.
 The currently supporting non-reagent materials:
 - $metal (/obj/item/stack/metal). One sheet = 3750 units.
-- $glass (/obj/item/stack/metal). One sheet = 3750 units.
+- $glass (/obj/item/stack/glass). One sheet = 3750 units.
+- $plasma (/obj/item/stack/plasma). One sheet = 3750 units.
+- $silver (/obj/item/stack/silver). One sheet = 3750 units.
+- $gold (/obj/item/stack/gold). One sheet = 3750 units.
+- $uranium (/obj/item/stack/uranium). One sheet = 3750 units.
+- $diamond (/obj/item/stack/diamond). One sheet = 3750 units.
+- $clown (/obj/item/stack/clown). One sheet = 3750 units. ("Bananium")
 (Insert new ones here)
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
+
+Design Guidlines
+- The reliability formula for all R&D built items is reliability_base (a fixed number) + total tech levels required to make it +
+reliability_mod (starts at 0, gets improved through experimentation). Example: PACMAN generator. 79 base reliablity + 6 tech
+(3 plasmatech, 3 powerstorage) + 0 (since it's completely new) = 85% reliability. Reliability is the chance it works CORRECTLY.
+- When adding new designs, check rdreadme.dm to see what kind of things have already been made and where new stuff is needed.
+- A single sheet of anything is 3750 units of material. Materials besides metal/glass require help from other jobs (mining for
+other types of metals and chemistry for reagents).
+- Add the AUTOLATHE tag to
+
 
 */
 #define	IMPRINTER	1	//For circuits. Uses glass/chemicals.
@@ -531,11 +547,61 @@ datum
 		adv_matter_bin
 			name = "Advanced Matter Bin"
 			desc = "A stock part used in the construction of various devices."
-			id = "basic_matter_bin"
+			id = "adv_matter_bin"
 			req_tech = list("materials" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 80)
 			build_path = "/obj/item/weapon/stock_parts/matter_bin/adv"
+
+		super_capacitor
+			name = "Super Capacitor"
+			desc = "A stock part used in the construction of various devices."
+			id = "super_capacitor"
+			req_tech = list("powerstorage" = 5, "materials" = 4)
+			build_type = PROTOLATHE
+			reliability_base = 71
+			materials = list("$metal" = 50, "$glass" = 50, "$gold" = 20)
+			build_path = "/obj/item/weapon/stock_parts/capacitor/super"
+
+		phasic_sensor
+			name = "Phasic Sensor Module"
+			desc = "A stock part used in the construction of various devices."
+			id = "phasic_sensor"
+			req_tech = list("magnets" = 5, "materials" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 50, "$glass" = 20, "$silver" = 10)
+			reliability_base = 72
+			build_path = "/obj/item/weapon/stock_parts/scanning_module/phasic"
+
+		pico_mani
+			name = "Pico Manipulator"
+			desc = "A stock part used in the construction of various devices."
+			id = "pico_mani"
+			req_tech = list("materials" = 5, "programming" = 2)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 30)
+			reliability_base = 73
+			build_path = "/obj/item/weapon/stock_parts/manipulator/pico"
+
+		ultra_micro_laser
+			name = "Ultra-High-Power Micro-Laser"
+			desc = "A stock part used in the construction of various devices."
+			id = "ultra_micro_laser"
+			req_tech = list("magnets" = 5, "materials" = 5)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 10, "$glass" = 20, "$uranium" = 10)
+			reliability_base = 70
+			build_path = "/obj/item/weapon/stock_parts/micro_laser/ultra"
+
+		super_matter_bin
+			name = "Super Matter Bin"
+			desc = "A stock part used in the construction of various devices."
+			id = "super_matter_bin"
+			req_tech = list("materials" = 5)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 80)
+			reliability_base = 75
+			build_path = "/obj/item/weapon/stock_parts/matter_bin/super"
 
 ////////////////////////////////////////
 //////////////////Power/////////////////
@@ -570,7 +636,7 @@ datum
 			build_path = "/obj/item/weapon/cell/super"
 
 ////////////////////////////////////////
-/////////Machine Frame Boards///////////
+//////////////MISC Boards///////////////
 ////////////////////////////////////////
 
 		destructive_analyzer
@@ -609,15 +675,40 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/machinery/autolathe"
 
+/////////////////////////////////////////
+////////////Power Stuff//////////////////
+/////////////////////////////////////////
+
 		pacman
 			name = "PACMAN-type Generator Board"
 			desc = "The circuit board that for a PACMAN-type portable generator."
 			id = "pacman"
-			req_tech = list("plasmatech" = 2, "powerstorage" = 3)
+			req_tech = list("plasmatech" = 3, "powerstorage" = 3)
 			build_type = IMPRINTER
-			reliability_base = 80
+			reliability_base = 79
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/pacman"
+
+		superpacman
+			name = "SUPERPACMAN-type Generator Board"
+			desc = "The circuit board that for a SUPERPACMAN-type portable generator."
+			id = "superpacman"
+			req_tech = list("materials" = 5, "powerstorage" = 4)
+			build_type = IMPRINTER
+			reliability_base = 76
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/pacman/super"
+
+		mrspacman
+			name = "MRSPACMAN-type Generator Board"
+			desc = "The circuit board that for a MRSPACMAN-type portable generator."
+			id = "mrspacman"
+			req_tech = list("materials" = 6, "powerstorage" = 5)
+			build_type = IMPRINTER
+			reliability_base = 74
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/pacman/mrs"
+
 
 /////////////////////////////////////////
 ////////////Medical Tools////////////////
@@ -651,7 +742,7 @@ datum
 			name = "Advanced Energy Gun"
 			desc = "An energy gun with an experimental miniaturized reactor."
 			id = "nuclear_gun"
-			req_tech = list("combat" = 2, "materials" = 5, "powerstorage" = 3)
+			req_tech = list("combat" = 3, "materials" = 5, "powerstorage" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 500)
 			reliability_base = 76

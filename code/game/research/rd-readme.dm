@@ -36,9 +36,9 @@ When thinking about new stuff, check here to see if there are any slots unfilled
 1	|	Metal
 2	|	Solid Plasma
 3	|	Silver
-4	|	Gold
-5	|	Uranium
-6	|	Diamond
+4	|	Gold, Super Capacitor
+5	|	Uranium, Nuclear Gun, SUPERPACMAN
+6	|	Diamond, MRSPACMAN
 7	|
 8	|
 9	|
@@ -57,7 +57,7 @@ When thinking about new stuff, check here to see if there are any slots unfilled
 //PLASMA TECH
 1	|
 2	|	Solid Plasma
-3	|
+3	|	Pacman Generator
 4	|
 5	|
 6	|
@@ -79,9 +79,9 @@ When thinking about new stuff, check here to see if there are any slots unfilled
 //POWER TECH
 1	|	Basic Capacitor, Basic Cell
 2	|	High-Capacity Cell (10,000)
-3	|	Super-Capacity Cell (20,000), Powersink
-4	|
-5	|
+3	|	Super-Capacity Cell (20,000), Powersink, PACMAN
+4	|	SUPERPACMAN
+5	|	MRSPACMAN, Super Capacitor
 6	|
 7	|
 8	|
@@ -147,7 +147,7 @@ When thinking about new stuff, check here to see if there are any slots unfilled
 2	|	Comm Console Board
 3	|	Adv Sensor
 4	|	Adv Mass Spectrometer, Chameleon Projector
-5	|
+5	|	Phasic Sensor
 6	|
 7	|
 8	|
@@ -169,7 +169,7 @@ When thinking about new stuff, check here to see if there are any slots unfilled
 2	|	Sec Camera
 3	|	Cloning Machine Console Board
 4	|	AI Core, Intellicard
-5	|
+5	|	Pico-Manipulator, Ultra-Micro-Laser
 6	|
 7	|
 8	|
@@ -211,7 +211,7 @@ When thinking about new stuff, check here to see if there are any slots unfilled
 //COMBAT
 1	|	Flashbang, Mousetrap, Nettle
 2	|	Stun Baton
-3	|	Power Axe, Death Nettle
+3	|	Power Axe, Death Nettle, Nuclear Gun
 4	|
 5	|
 6	|

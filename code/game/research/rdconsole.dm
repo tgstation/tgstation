@@ -77,6 +77,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						return_name = "Silver"
 					if("plasma")
 						return_name = "Solid Plasma"
+					if("uranium")
+						return_name = "Uranium"
 					if("diamond")
 						return_name = "Diamond"
 					if("clown")
@@ -114,8 +116,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	New()
 		..()
 		files = new /datum/research(src) //Setup the research data holder.
-		spawn(10)
-			SyncRDevices()
+
+	initialize()
+		SyncRDevices()
 
 	attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 		//The construction/deconstruction of the console code.
@@ -250,8 +253,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(linked_destroy.loaded_item.reliability < 100 && linked_destroy.loaded_item.crit_fail)
 							files.UpdateDesign(linked_destroy.loaded_item.type)
 						if(linked_lathe) //Also sends salvaged materials to a linked autolathe, if any.
-							linked_lathe.m_amount = min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*linked_destroy.decon_mod))
-							linked_lathe.g_amount = min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*linked_destroy.decon_mod))
+							linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*linked_destroy.decon_mod))
+							linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*linked_destroy.decon_mod))
 						linked_destroy.loaded_item = null
 					for(var/obj/I in linked_destroy.contents)
 						for(var/mob/M in I.contents)
@@ -404,7 +407,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			screen = 0.0
 			spawn(20)
 				SyncRDevices()
-				screen = 1.6
+				screen = 1.7
 				updateUsrDialog()
 
 		else if(href_list["disconnect"]) //The R&D console disconnects with a specific device.

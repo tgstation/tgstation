@@ -87,8 +87,10 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman
 	name = "P.A.C.M.A.N.-type Portable Generator"
 	var
-		plasma_coins = 0
+		coins = 0
 		max_coins = 120
+		coin_path = "/obj/item/weapon/coin/plasma"
+		board_path = "/obj/item/weapon/circuitboard/pacman"
 
 	New()
 		..()
@@ -98,7 +100,7 @@ display round(lastgen) and plasmatank amount
 		component_parts += new /obj/item/weapon/cable_coil(src)
 		component_parts += new /obj/item/weapon/cable_coil(src)
 		component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-		component_parts += new /obj/item/weapon/circuitboard/pacman(src)
+		component_parts += new board_path(src)
 		RefreshParts()
 
 	RefreshParts()
@@ -112,29 +114,29 @@ display round(lastgen) and plasmatank amount
 		for(var/obj/item/weapon/CP in component_parts)
 			temp_reliability += CP.reliability
 		reliability = min(round(temp_reliability / 4), 100)
-		power_gen = round(5000 * (max(2, temp_rating) / 2))
+		power_gen = round(initial(power_gen) * (max(2, temp_rating) / 2))
 
 	examine()
 		..()
-		usr << "\blue The generator has [plasma_coins] units of fuel left, producing [power_gen] per cycle."
+		usr << "\blue The generator has [coins] units of fuel left, producing [power_gen] per cycle."
 		if(crit_fail) usr << "\red The generator seems to have broken down."
 
 	HasFuel()
-		if(plasma_coins)
+		if(coins)
 			return 1
 		return 0
 
 	UseFuel()
-		if(plasma_coins)
-			plasma_coins--
+		if(coins)
+			coins--
 		return
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if(istype(O, /obj/item/weapon/coin/plasma))
-			if(plasma_coins >= max_coins)
+		if(istype(O, text2path(coin_path)))
+			if(coins >= max_coins)
 				user << "\red The generator already has it's maximum amount of fuel!"
 				return
-			plasma_coins++
+			coins++
 			user.drop_item()
 			del(O)
 			user << "\blue You add a coin to the generator."
@@ -169,3 +171,15 @@ display round(lastgen) and plasmatank amount
 			active = 0
 			icon_state = "portgen0"
 			user << "\blue The generator is off."
+
+/obj/machinery/power/port_gen/pacman/super
+	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
+	coin_path = "/obj/item/weapon/coin/uranium"
+	power_gen = 10000
+	board_path = "/obj/item/weapon/circuitboard/pacman/super"
+
+/obj/machinery/power/port_gen/pacman/mrs
+	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
+	coin_path = "/obj/item/weapon/coin/diamond"
+	power_gen = 20000
+	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"

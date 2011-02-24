@@ -168,9 +168,17 @@ to destroy them and players will be able to make replacements.
 	name = "Circuit Board (PACMAN-type Generator)"
 	build_path = "/obj/machinery/power/port_gen/pacman"
 	board_type = "machine"
-	origin_tech = "powerstorage=3;plasmatech=2"
+	origin_tech = "powerstorage=3;plasmatech=3"
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/cable_coil" = 2,
 							"/obj/item/weapon/stock_parts/capacitor" = 1)
+
+/obj/item/weapon/circuitboard/pacman/super
+	name = "Circuit Board (SUPERPACMAN-type Generator)"
+	origin_tech = "powerstorage=4;plasmatech=5"
+
+/obj/item/weapon/circuitboard/pacman/mrs
+	name = "Circuit Board (MRSPACMAN-type Generator)"
+	origin_tech = "powerstorage=5;plasmatech=6"
