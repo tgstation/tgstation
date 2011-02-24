@@ -960,23 +960,32 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 	var/mode = 2
 
+	New()
+		..()
+		overlays += "energystun"
+
 	nuclear
 		name = "Advanced Energy Gun"
 		desc = "An energy gun with an experimental miniaturized reactor."
 		origin_tech = "combat=3;materials=5;powerstorage=3"
+		var/lightfail = 0
 
 		New()
+			..()
 			charge()
+			update_reactor()
 
 		proc/charge()
 			if(charges < maximum_charges)
 				if(failcheck())
 					charges++ //If the gun isn't fully charged, and it doesn't suffer a failure, add a charge.
 					update_icon()
+			update_reactor()
 			if(!crit_fail)
 				spawn(50) charge()
 
 		proc/failcheck()
+			lightfail = 0
 			if (prob(src.reliability)) return 1 //No failure
 			if (prob(src.reliability))
 				for (var/mob/M in range(0,src)) //Only a minor failure, enjoy your radiation if you're in the same tile or carrying it
@@ -985,6 +994,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 					else
 						M << "\red You feel a warm sensation."
 					src.loc:radiation += rand(1,40)
+				lightfail = 1
 			else
 				for (var/mob/M in range(rand(1,4),src)) //Big failure, TIME FOR RADIATION BITCHES
 					if (src in M.contents)
@@ -993,16 +1003,22 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 					M.radiation += 100
 				crit_fail = 1 //break the gun so it stops recharging
 
+		proc/update_reactor()
+			overlays -= "nenergy-c"
+			overlays -= "nenergy-f"
+			overlays -= "nenergy-g"
+			if(crit_fail)
+				overlays += "nenergy-c"
+				return
+			if(lightfail)
+				overlays += "nenergy-f"
+			else
+				overlays += "nenergy-g"
+
 	update_icon()
 		var/ratio = src.charges / maximum_charges
 		ratio = round(ratio, 0.25) * 100
 		src.icon_state = text("energy[]", ratio)
-		overlays = null
-		switch (mode)
-			if (1)
-				overlays += "energykill"
-			if (2)
-				overlays += "energystun"
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if ((usr.mutations & 16) && prob(50))
@@ -1063,9 +1079,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		if(mode == 1)
 			mode = 2
 			user << "\blue You set the gun to stun"
+			overlays += "energystun"
+			overlays -= "energykill"
 		else if (mode == 2)
 			mode = 1
 			user << "\blue You set the gun to kill"
+			overlays += "energykill"
+			overlays -= "energystun"
 		update_icon()
 
 	attack(mob/M as mob, mob/user as mob)
