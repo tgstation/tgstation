@@ -2527,6 +2527,16 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throw_range = 3
 	origin_tech = "materials=5"
 
+/obj/item/stack/sheet/enruranium
+	name = "Enriched Uranium block"
+	icon_state = "sheet-enruranium"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=5"
+
 /obj/item/stack/sheet/plasma
 	name = "solid plasma"
 	icon_state = "sheet-plasma"
