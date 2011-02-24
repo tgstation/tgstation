@@ -129,6 +129,11 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle/transport1/centcom
 	icon_state = "shuttle"
+	name = "Transport Shuttle Centcom"
+
+/area/shuttle/transport1/station
+	icon_state = "shuttle"
+	name = "Transport Shuttle"
 
 /area/shuttle/transport2/centcom
 	icon_state = "shuttle"
@@ -148,6 +153,14 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle/specops/station
 	name = "Special Ops Shuttle"
+	icon_state = "shuttlered2"
+
+/area/shuttle/administration/centcom
+	name = "Administration Shuttle Centcom"
+	icon_state = "shuttlered"
+
+/area/shuttle/administration/station
+	name = "Administration Shuttle"
 	icon_state = "shuttlered2"
 
 /area/shuttle/thunderdome

@@ -1039,6 +1039,29 @@ var/showadminmessages = 1
 						log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 					else
 						alert("You're not of a high enough rank to do this")
+				if("moveminingshuttle")
+					if ((src.rank in list( "Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
+						if(mining_shuttle_moving)
+							return
+						move_mining_shuttle()
+						message_admins("\blue [key_name_admin(usr)] moved mining shuttle", 1)
+						log_admin("[key_name(usr)] moved the mining shuttle")
+					else
+						alert("You're not of a high enough rank to do this")
+				if("moveadminshuttle")
+					if ((src.rank in list( "Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
+						move_admin_shuttle()
+						message_admins("\blue [key_name_admin(usr)] moved the centcom administration shuttle", 1)
+						log_admin("[key_name(usr)] moved the centcom administration shuttle")
+					else
+						alert("You're not of a high enough rank to do this")
+				if("moveferry")
+					if ((src.rank in list( "Administrator", "Primary Administrator", "Shit Guy", "Coder", "Host"  )))
+						move_ferry()
+						message_admins("\blue [key_name_admin(usr)] moved the centcom ferry", 1)
+						log_admin("[key_name(usr)] moved the centcom ferry")
+					else
+						alert("You're not of a high enough rank to do this")
 				if("flicklights")
 					while(!usr.stat)
 	//knock yourself out to stop the ghosts
@@ -1662,7 +1685,9 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 <A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
 <A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
-<A href='?src=\ref[src];secretsfun=dorf'>Dorf Mode</A><BR><BR>"}
+<A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
+<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
+<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR><BR>"}
 //<A href='?src=\ref[src];secretsfun=shockwave'>Station Shockwave</A><BR>
 
 	if(lvl >= 5)
