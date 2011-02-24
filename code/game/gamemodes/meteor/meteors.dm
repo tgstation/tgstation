@@ -66,10 +66,14 @@
 
 
 	var/obj/meteor/M
-	if(rand(50))
-		M = new /obj/meteor( pickedstart )
-	else
-		M = new /obj/meteor/small( pickedstart )
+	switch(rand(1, 100))
+
+		if(1 to 10)
+			M = new /obj/meteor/big( pickedstart )
+		if(11 to 75)
+			M = new /obj/meteor( pickedstart )
+		if(76 to 100)
+			M = new /obj/meteor/small( pickedstart )
 
 	M.dest = pickedgoal
 	spawn(0)
@@ -107,7 +111,7 @@
 			playsound(src.loc, 'meteorimpact.ogg', 40, 1)
 		if (--src.hits <= 0)
 			if(prob(15) && !istype(A, /obj/grille))
-				explosion(src.loc, 0, 1, 2, 3)
+				explosion(src.loc, 0, 1, 2, 3, 0)
 				playsound(src.loc, "explosion", 50, 1)
 			del(src)
 	return
@@ -118,3 +122,25 @@
 	if (severity < 4)
 		del(src)
 	return
+
+/obj/meteor/big
+	name = "big meteor"
+	hits = 5
+
+	ex_act(severity)
+		return
+
+	Bump(atom/A)
+		spawn(0)
+			for(var/mob/M in range(10, src))
+				if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
+					shake_camera(M, 3, 1)
+			if (A)
+				explosion(src.loc, 0, 1, 2, 3, 0)
+				playsound(src.loc, 'meteorimpact.ogg', 40, 1)
+			if (--src.hits <= 0)
+				if(prob(15) && !istype(A, /obj/grille))
+					explosion(src.loc, 1, 2, 3, 4, 0)
+					playsound(src.loc, "explosion", 50, 1)
+				del(src)
+		return

@@ -1,4 +1,4 @@
-proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
 	if(!epicenter) return
 	spawn(0)
 		defer_powernet_rebuild = 1
@@ -7,7 +7,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			return explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 		playsound(epicenter.loc, 'explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
 		playsound(epicenter.loc, "explosion", 100, 1, round(devastation_range,1) )
-		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
+		if (adminlog)
+			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
 
 		if(heavy_impact_range > 1)
 			var/datum/effects/system/explosion/E = new/datum/effects/system/explosion()
