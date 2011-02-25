@@ -398,3 +398,5 @@
 			weapon_ready = 1
 		chassis.log_message("Fired from [src.name], targeting [target].")
 		return
+
+

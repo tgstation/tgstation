@@ -129,9 +129,8 @@
 /obj/mecha/combat/marauder/get_commands()
 	var/output = {"<a href='?src=\ref[src];toggle_thrusters=1'>Toggle thrusters</a><br>
 						<a href='?src=\ref[src];toggle_zoom=1'>Toggle zoom mode</a><br>
-						<a href='?src=\ref[src];smoke=1'>Smoke</a><br>
-						<hr>
-					"}
+						<a href='?src=\ref[src];smoke=1'>Smoke</a>
+						<hr>"}
 	output += ..()
 	return output
 

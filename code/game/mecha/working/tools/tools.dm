@@ -60,7 +60,7 @@
 	name = "Hydraulic Clamp"
 	tool_cooldown = 15
 	energy_drain = 10
-	var/force = 15
+	var/force = 20
 	var/obj/mecha/working/ripley/cargo_holder
 
 	New()

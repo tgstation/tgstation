@@ -85,8 +85,11 @@
 			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
 		usr << "\red You don't have the dexterity to do this!"
 		return 1
+/*
+	//distance checks are made by atom/proc/DblClick
 	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !istype(user, /mob/living/silicon))
 		return 1
+*/
 	if (ishuman(user))
 		if(user.brainloss >= 60)
 			for(var/mob/M in viewers(src, null))

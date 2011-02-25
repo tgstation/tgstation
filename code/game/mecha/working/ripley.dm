@@ -31,7 +31,7 @@
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && O in src.cargo)
 			src.occupant << "\blue You unload [O]."
-			O.loc = src.loc
+			O.loc = get_turf(src)
 			src.cargo -= O
 			var/turf/T = get_turf(O)
 			if(T)
@@ -53,13 +53,20 @@
 	return output
 
 /obj/mecha/working/ripley/Del()
-	for(var/obj/O in cargo)
-		if(rand(0,1))
-			cargo -= O
-			del O
-		else
-			O.loc = get_turf(src)
-			step_rand(O)
+	for(var/mob/M in src)
+		if(M==src.occupant)
+			continue
+		M.loc = get_turf(src)
+		var/turf/T = get_turf(M)
+		if(T)
+			T.Entered(M)
+		step_rand(M)
+	for(var/atom/movable/A in src.cargo)
+		A.loc = get_turf(src)
+		var/turf/T = get_turf(A)
+		if(T)
+			T.Entered(A)
+		step_rand(A)
 	..()
 	return
 

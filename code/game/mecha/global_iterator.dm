@@ -67,8 +67,7 @@ Data storage vars:
 		while(src && control_switch)
 			last_exec = world.timeofday
 			if(check_for_null && has_null_args())
-				src.stop()
-				break
+				return src.stop()
 			result = src.process(arglist(arg_list))
 			sleep(delay)
 		return

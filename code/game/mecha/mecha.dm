@@ -90,39 +90,71 @@
 		if(mech_click == world.time) return
 		mech_click = world.time
 */
+		if(!istype(object, /atom)) return
 		if(istype(object, /obj/screen))
 			var/obj/screen/using = object
 			if(using.screen_loc == ui_acti || using.screen_loc == ui_iarrowleft || using.screen_loc == ui_iarrowright)//ignore all HUD objects save 'intent' and its arrows
 				return ..()
 			else
 				return
-//		if(!location) return //probably GUI
-		if(M.stat>0) return
-		if(!istype(object,/atom)) return
 		var/obj/mecha/Mech = M.loc
-//		sleep(-1)
 		spawn() //this helps prevent clickspam fest.
-			Mech.click_action(object)
+			Mech.click_action(object,M)
 	else
 		return ..()
 
-/obj/mecha/proc/click_action(atom/target)
-//	if(!istype(target,/turf) && !istype(target.loc,/turf)) return
-	if(!src.occupant) return
+/obj/mecha/proc/click_action(atom/target,mob/user)
+	if(!src.occupant || src.occupant != user ) return
+	if(user.stat) return
 	if(state || !cell || cell.charge<=0) return
 	if(src == target) return
 	var/dir_to_target = get_dir(src,target)
-	if(dir_to_target && !(get_dir(src,target) & src.dir))//wrong direction
+	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
 		return
-	if(get_dist(src,target)<=1)
-		src.melee_action(target)
-	else
+	if(get_dist(src,target)>1)
 		src.range_action(target)
+	else
+		src.melee_action(target)
 	return
 
 
 /obj/mecha/proc/melee_action(atom/target)
-	return
+/*
+	if(istype(target, /obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/A = target
+		if(A.locked)
+			src.occupant_message("Unable to open airlock - bolted")
+			return 0
+		else if(src.density && !src.welded && !src.operating) && ((!src.arePowerSystemsOn()) || (stat & NOPOWER)))
+			if(src.arePowerSystemsOn() && !(stat&NOPOWER))
+				A.open()
+			else
+				spawn(0)
+					src.operating = 1
+					animate("opening")
+					sleep(15)
+					src.density = 0
+					update_icon()
+					if (!istype(src, /obj/machinery/door/airlock/glass))
+						src.sd_SetOpacity(0)
+					src.operating = 0
+			return 0
+		else if(!src.density && !src.welded && !src.operating)
+			if(src.arePowerSystemsOn() && !(stat&NOPOWER))
+				A.close()
+			else
+				spawn( 0 )
+					src.operating = 1
+					animate("closing")
+					src.density = 1
+					sleep(15)
+					update_icon()
+					if ((src.visible) && (!istype(src, /obj/machinery/door/airlock/glass)))
+						src.sd_SetOpacity(1)
+					src.operating = 0
+			return 0
+*/
+	return 1
 
 /obj/mecha/proc/range_action(atom/target)
 	return
@@ -144,7 +176,7 @@
 //////////////////////////////////
 
 /obj/mecha/relaymove(mob/user,direction)
-	if(!can_move)
+	if(!can_move || user != src.occupant)
 		return 0
 	if(connected_port)
 		src.occupant_message("Unable to move while connected to the air system port")
@@ -230,7 +262,7 @@
 
 /obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)//TODO
 	if(!src) return
-	if(prob(40))
+	if(prob(25))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
@@ -238,8 +270,8 @@
 			if(possible_int_damage.len)
 				var/int_dam_flag = pick(possible_int_damage)
 				if(int_dam_flag)
-					internal_damage |= int_dam_flag
-					pr_internal_damage.start()
+					src.internal_damage |= int_dam_flag
+					src.pr_internal_damage.start()
 					src.log_append_to_last("Internal damage of type [int_dam_flag].[ignore_threshold?"Ignoring damage threshold.":null]",1)
 					src.occupant << sound('warning-buzzer.ogg',wait=0)
 	return
@@ -288,8 +320,11 @@
 	return
 
 
-/obj/mecha/hitby(A as mob|obj)
+/obj/mecha/hitby(atom/movable/A as mob|obj)
 	src.log_message("Hit by [A].",1)
+	if(istype(A, /obj/item/mecha_tracking))
+		A.loc = src
+		return
 	if(prob(src.deflect_chance) || istype(A, /mob))
 		src.occupant_message("\blue The [A] bounces off the armor.")
 		src.visible_message("The [A] bounces off the [src.name] armor")
@@ -350,22 +385,17 @@
 	return
 
 /obj/mecha/proc/destroy()
-	var/obj/mecha/mecha = src
-	var/mob/M = src.occupant
-	var/turf/T = src.loc
-	var/wreckage = src.wreckage
-	src = null
-	del(mecha)
-	explosion(T, 0, 0, 1, 3)
-	spawn(0)
-		if(wreckage)
-			new wreckage(T)
-		if(M)
-			if(prob(20))
-				M.bruteloss += rand(10,20)
-				M.updatehealth()
-			else
-				M.gib()
+	spawn()
+		var/obj/mecha/mecha = src
+	//	var/mob/M = src.occupant
+		var/turf/T = src.loc
+		var/wreckage = src.wreckage
+		src = null
+		del(mecha)
+		explosion(T, 0, 0, 1, 3)
+		spawn(0)
+			if(wreckage)
+				new wreckage(T)
 	return
 
 /obj/mecha/ex_act(severity)
@@ -399,8 +429,8 @@
 
 /obj/mecha/emp_act(severity)
 	cell.charge -= min(cell.charge, cell.maxcharge/severity)
-	health -= 100 / severity
-	update_health()
+	src.log_message("EMP pulse detected")
+	take_damage(100 / severity)
 	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST),1)
 	return
 
@@ -426,7 +456,10 @@
 	return src.air_contents
 
 /obj/mecha/proc/return_pressure()
-	return src.air_contents.return_pressure()
+	if(src.air_contents)
+		return src.air_contents.return_pressure()
+	else
+		return 0
 
 /*
 /obj/mecha/proc/preserve_temp()
@@ -768,6 +801,12 @@
 			user << "The [src.name] is at full integrity"
 		return
 
+	else if(istype(W, /obj/item/mecha_tracking))
+		user.drop_from_slot(W)
+		W.loc = src
+		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
+		return
+
 	else
 		src.log_message("Attacked by [W]. Attacker - [user]")
 		if(prob(src.deflect_chance))
@@ -804,7 +843,7 @@
 						[internal_damage&MECHA_INT_TEMP_CONTROL?"<font color='red'><b>LIFE SUPPORT SYSTEM MALFUNCTION</b></font><br>":null]
 						[internal_damage&MECHA_INT_TANK_BREACH?"<font color='red'><b>GAS TANK BREACH</b></font><br>":null]
 						[internal_damage&MECHA_INT_CONTROL_LOST?"<font color='red'><b>COORDINATION SYSTEM CALIBRATION FAILURE</b></font> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a><br>":null]
-						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font>":null]
+						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font><br>":null]
 						<b>Integrity: </b> [integrity]%<br>
 						<b>Powercell charge: </b>[cell.charge/cell.maxcharge*100]%<br>
 						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
@@ -955,7 +994,7 @@
 /datum/global_iterator/mecha_intertial_movement //inertial movement in space
 	delay = 7
 
-	process(var/obj/mecha/mecha,direction)
+	process(var/obj/mecha/mecha as obj,direction)
 		if(direction)
 			if(!step(mecha, direction)||mecha.check_for_support())
 				src.stop()
@@ -978,8 +1017,7 @@
 
 	process(var/obj/mecha/mecha)
 		if(!mecha.internal_damage)
-			src.stop()
-			return
+			return src.stop()
 		if(mecha.internal_damage & MECHA_INT_FIRE)
 			if(mecha.return_pressure()>mecha.maximum_pressure*1.5 && !(mecha.internal_damage&MECHA_INT_TANK_BREACH))
 				mecha.internal_damage |= MECHA_INT_TANK_BREACH

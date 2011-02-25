@@ -59,6 +59,8 @@
 	icon_state = "blank"
 	w_class = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
+	var/construction_time = 100
+	var/list/construction_cost = list("/obj/item/stack/sheet/metal"=20000)
 
 /////////// Ripley
 
@@ -383,15 +385,19 @@
 					 list("key"="/obj/item/weapon/wrench"),//9
 					 list("key"="/obj/item/weapon/gun/energy/laser_gun"),//10
 					 list("key"="/obj/item/weapon/screwdriver"),//11
-					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/targeting"),//12
+					 list("key"="/obj/item/weapon/stock_parts/adv_capacitor"),//12
 					 list("key"="/obj/item/weapon/screwdriver"),//13
-					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/peripherals"),//14
+					 list("key"="/obj/item/weapon/stock_parts/adv_scanning_module"),//14
 					 list("key"="/obj/item/weapon/screwdriver"),//15
-					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/main"),//16
-					 list("key"="/obj/item/weapon/wirecutters"),//17
-					 list("key"="/obj/item/weapon/cable_coil"),//18
+					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/targeting"),//16
+					 list("key"="/obj/item/weapon/screwdriver"),//17
+					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/peripherals"),//18
 					 list("key"="/obj/item/weapon/screwdriver"),//19
-					 list("key"="/obj/item/weapon/wrench")//20
+					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/main"),//20
+					 list("key"="/obj/item/weapon/wirecutters"),//21
+					 list("key"="/obj/item/weapon/cable_coil"),//22
+					 list("key"="/obj/item/weapon/screwdriver"),//23
+					 list("key"="/obj/item/weapon/wrench")//24
 					)
 
 	action(atom/used_atom,mob/user as mob)
@@ -403,29 +409,39 @@
 
 		//TODO: better messages.
 		switch(step)
-			if(20)
+			if(24)
 				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
-			if(19)
+			if(23)
 				user.visible_message("[user] adjusts [holder] hydraulic systems.", "You adjust [holder] hydraulic systems.")
-			if(18)
+			if(22)
 				user.visible_message("[user] adds the wiring to [holder].", "You add the wiring to [holder].")
-			if(17)
+			if(21)
 				user.visible_message("[user] adjusts the wiring of [holder].", "You adjust the wiring of [holder].")
-			if(16)
+			if(20)
 				user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
 				del used_atom
-			if(15)
+			if(19)
 				user.visible_message("[user] secures the mainboard.", "You secure the mainboard.")
-			if(14)
+			if(18)
 				user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
 				del used_atom
-			if(13)
+			if(17)
 				user.visible_message("[user] secures the peripherals control module.", "You secure the peripherals control module.")
-			if(12)
+			if(16)
 				user.visible_message("[user] installs the weapon control module into [holder].", "You install the weapon control module into [holder].")
 				del used_atom
-			if(11)
+			if(15)
 				user.visible_message("[user] secures the weapon control module.", "You secure the weapon control module.")
+			if(14)
+				user.visible_message("[user] installs advanced scanner module to [holder].", "You install advanced scanner module to [holder].")
+				del used_atom
+			if(13)
+				user.visible_message("[user] secures the advanced scanner module.", "You secure the advanced scanner module.")
+			if(12)
+				user.visible_message("[user] installs advanced capacitor to [holder].", "You install advanced capacitor to [holder].")
+				del used_atom
+			if(11)
+				user.visible_message("[user] secures the advanced capacitor.", "You secure the advanced capacitor.")
 			if(10)
 				user.visible_message("[user] installs the laser gun into the weapon socket.", "You install the laser gun into the weapon socket.")
 				del used_atom

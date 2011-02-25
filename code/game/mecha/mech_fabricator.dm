@@ -9,10 +9,11 @@
 	name = "Exosuit Fabricator"
 	density = 1
 	anchored = 1
-	layer=2
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
+	var/time_coeff = 1 //can be upgraded with research
+	var/resource_coeff = 1.5 //can be upgraded with research
 	var/list/resources = list(
 										"metal"=20000,
 										"glass"=20000,
@@ -64,7 +65,8 @@
 						list("result"="/obj/item/mecha_parts/part/honker_right_arm","time"=200,"metal"=20000,"bananium"=5000),
 						list("result"="/obj/item/mecha_parts/part/honker_left_leg","time"=200,"metal"=20000,"bananium"=5000),
 						list("result"="/obj/item/mecha_parts/part/honker_right_leg","time"=200,"metal"=20000,"bananium"=5000),
-						)
+						),
+	"Misc"=list(list("result"="/obj/item/mecha_tracking","time"=30,"metal"=500))
 	)
 
 
@@ -128,9 +130,9 @@
 		var/i = 0
 		for(var/p in part)
 			if(p in resources)
-				cost += "[i?" | ":null][part[p]] [p]"
+				cost += "[i?" | ":null][part[p]*resource_coeff] [p]"
 				i++
-		var/output = "[O.name] ([cost]) [part["time"]/10]sec"
+		var/output = "[O.name] ([cost]) [part["time"]*time_coeff/10]sec"
 		del O
 		return output
 
@@ -143,13 +145,13 @@
 	proc/remove_resources(part)
 		for(var/p in part)
 			if(p in resources)
-				src.resources[p] -= part[p]
+				src.resources[p] -= part[p]*resource_coeff
 		return
 
 	proc/check_resources(part)
 		for(var/p in part)
 			if(p in resources)
-				if(src.resources[p] < part[p])
+				if(src.resources[p] < part[p]*resource_coeff)
 					return 0
 		return 1
 
@@ -205,7 +207,233 @@
 			src.remove_resources(part)
 			src.icon_state = "mechfab3" //looks better than 'flick'
 			src.use_power = 2
-			spawn(time)
+			spawn(time*time_coeff)
+				src.use_power = 1
+				src.being_built.Move(get_step(src,EAST))
+				src.icon_state = initial(src.icon_state)
+				src.visible_message("[src] beeps, \"The [src.being_built] is complete\".")
+				src.icon_state = initial(src.icon_state)
+				src.being_built = null
+				src.updateUsrDialog()
+		src.updateUsrDialog()
+		return
+
+	process()
+		if (stat & (NOPOWER|BROKEN))
+			return
+
+	attackby(obj/item/stack/sheet/W as obj, mob/user as mob)
+		var/material
+		if(istype(W, /obj/item/stack/sheet/gold))
+			material = "gold"
+		else if(istype(W, /obj/item/stack/sheet/silver))
+			material = "silver"
+		else if(istype(W, /obj/item/stack/sheet/diamond))
+			material = "diamond"
+		else if(istype(W, /obj/item/stack/sheet/plasma))
+			material = "plasma"
+		else if(istype(W, /obj/item/stack/sheet/metal))
+			material = "metal"
+		else if(istype(W, /obj/item/stack/sheet/glass))
+			material = "glass"
+		else if(istype(W, /obj/item/stack/sheet/clown))
+			material = "bananium"
+		else
+			return ..()
+
+		if(src.being_built)
+			user << "The fabricator is currently processing. Please wait until completion."
+			return
+
+		var/name = "[W.name]"
+		var/amnt = W.perunit
+		if(src.resources[material] < res_max_amount)
+			var/count = 0
+			spawn(10)
+				if(W && W.amount)
+					while(src.resources[material] < res_max_amount && W)
+						src.resources[material] += amnt
+						W.use(1)
+						count++
+					flick("mechfab2", src)
+					user << "You insert [count] [name] into the fabricator."
+					src.updateUsrDialog()
+		else
+			user << "The fabricator cannot hold more [name]."
+		return
+
+/*
+/obj/machinery/mecha_part_fabricator_wip
+	icon = 'stationobjs.dmi'
+	icon_state = "mechfab1"
+	name = "Exosuit Fabricator"
+	density = 1
+	anchored = 1
+	layer=2
+	use_power = 1
+	idle_power_usage = 20
+	active_power_usage = 5000
+	var/time_coeff = 2 //can be upgraded with research
+	var/resource_coeff = 1.5 //can be upgraded with research
+	var/list/resources = list(
+										"/obj/item/stack/sheet/metal"=20000,
+
+										)
+	var/res_max_amount = 200000
+	var/part_set
+	var/obj/being_built
+	var/list/part_sets = list( //set names must be unique
+	"Ripley"=list("/obj/item/mecha_parts/part/ripley_torso",
+						"/obj/item/mecha_parts/part/ripley_left_arm",
+						"/obj/item/mecha_parts/part/ripley_right_arm",
+						"/obj/item/mecha_parts/part/ripley_left_leg",
+						"/obj/item/mecha_parts/part/ripley_right_leg"
+					)
+	)
+
+	New()
+		..()
+		for(var/part_set in part_sets)
+			var/list/parts = part_sets[part_set]
+			for(var/i;i<=parts.len;i++)
+				parts[i]=new text2path(parts[i])(src)
+		return
+
+
+	proc/add_part_set(set_name,parts=null)
+		if(set_name in part_sets)//attempt to create duplicate set
+			return 0
+		if(isnull(parts))
+			part_sets[set_name] = list()
+		else
+			part_sets[set_name] = parts
+		return 1
+
+	proc/add_part_to_set(set_name,part)
+		src.add_part_set(set_name)//if no "set_name" set exists, create
+		var/list/part_set = part_sets[set_name]
+		part_set[++part_set.len] = part
+		return
+
+	proc/remove_part_set(set_name)
+		for(var/i=1,i<=part_sets.len,i++)
+			if(part_sets[i]==set_name)
+				part_sets.Cut(i,++i)
+		return
+
+	proc/sanity_check()
+		for(var/p in resources)
+			var/index = resources.Find(p)
+			index = resources.Find(p, ++index)
+			if(index) //duplicate resource
+				world << "Duplicate resource definition for [src](\ref[src])"
+				return 0
+		for(var/set_name in part_sets)
+			var/index = part_sets.Find(set_name)
+			index = part_sets.Find(set_name, ++index)
+			if(index) //duplicate part set
+				world << "Duplicate part set definition for [src](\ref[src])"
+				return 0
+		return 1
+/*
+	New()
+		..()
+		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/gygax_armour","time"=600,"metal"=75000,"diamond"=10000))
+		src.add_part_to_set("Test",list("result"="/obj/item/mecha_parts/part/ripley_left_arm","time"=200,"metal"=25000))
+		src.remove_part_set("Gygax")
+		return
+*/
+
+	proc/output_parts_list(set_name)
+		var/output = ""
+		if(set_name in part_sets)
+			var/list/part_set = part_sets[set_name]
+			for(var/part in part_set)
+				var/resources_available = check_resources(part)
+				output += "[resources_available?"<a href='?src=\ref[src];part=\ref[part]'>":"<span class='red'>"][output_part_info(part)][resources_available?"</a>":"</span>"]<br>"
+		return output
+
+	proc/output_part_info(var/obj/item/mecha_parts/part)
+		var/cost = "Cost: "
+		var/i = 0
+		for(var/resource in part.construction_cost)
+			cost += "[i?" | ":null][part[p]*resource_coeff] [p]"
+			i++
+		var/output = "[O.name] ([cost]) [part["time"]*time_coeff/10]sec"
+		del O
+		return output
+
+	proc/output_available_resources()
+		var/output
+		for(var/resource in resources)
+			output += "<span class=\"res_name\">[resource]: </span>[min(res_max_amount, resources[resource])] cm<sup>3</sup><br>"
+		return output
+
+	proc/remove_resources(var/obj/item/mecha_parts/part)
+		for(var/resource in part.construction_cost)
+			src.resources[resource] -= part.construction_cost[resource]*resource_coeff
+		return
+
+	proc/check_resources(var/obj/item/mecha_parts/part)
+		for(var/resource in part.construction_cost)
+			if(resource in src.resources)
+				if(src.resources[resource] < part.construction_cost[resource]*resource_coeff)
+					return 0
+		return 1
+
+	attack_hand(mob/user as mob)
+		var/dat
+		if (..())
+			return
+		user.machine = src
+		if (src.being_built)
+			dat = {"<TT>Building [src.being_built.name].<BR>
+						Please wait until completion...</TT><BR>
+						<BR>
+					"}
+		else
+			dat = output_available_resources()
+			dat += "<hr>"
+			if(!part_set)
+				for(var/part_set in part_sets)
+					dat += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]<BR>"
+			else
+				dat += output_parts_list(part_set)
+				dat += "<hr><a href='?src=\ref[src];part_set=clear'>Return</a>"
+
+		user << browse({"
+<html>
+<head>
+<title>[src.name]</title>
+<style>
+.res_name {font-weight: bold; text-transform: capitalize;}
+.red {color: #f00;}
+</style>
+</head>
+<body>[dat]</body>
+</html>
+							"}, "window=mecha_fabricator")
+		onclose(user, "mecha_fabricator")
+		return
+
+
+	Topic(href, href_list)
+		..()
+		if(href_list["part_set"])
+			if(href_list["part_set"]=="clear")
+				src.part_set = null
+			else
+				src.part_set = href_list["part_set"]
+		if(href_list["part"])
+			var/list/part = locate(href_list["part"])
+			if(!part) return
+			var/path = part["result"]
+			var/time = part["time"]
+			src.being_built = new path(src)
+			src.remove_resources(part)
+			src.icon_state = "mechfab3" //looks better than 'flick'
+			src.use_power = 2
+			spawn(time*time_coeff)
 				src.use_power = 1
 				src.being_built.Move(get_step(src,EAST))
 				src.icon_state = initial(src.icon_state)
@@ -225,25 +453,25 @@
 		var/amnt
 		if(istype(W, /obj/item/stack/sheet/gold))
 			material = "gold"
-			amnt = W:perunit
+			amnt = "g_amt"
 		else if(istype(W, /obj/item/stack/sheet/silver))
 			material = "silver"
-			amnt = W:perunit
+			amnt = "g_amt"
 		else if(istype(W, /obj/item/stack/sheet/diamond))
 			material = "diamond"
-			amnt = W:perunit
+			amnt = "g_amt"
 		else if(istype(W, /obj/item/stack/sheet/plasma))
 			material = "plasma"
-			amnt = W:perunit
+			amnt = "g_amt"
 		else if(istype(W, /obj/item/stack/sheet/metal))
 			material = "metal"
-			amnt = W:perunit
+			amnt = "m_amt"
 		else if(istype(W, /obj/item/stack/sheet/glass))
 			material = "glass"
-			amnt = W:perunit
+			amnt = "g_amt"
 		else if(istype(W, /obj/item/stack/sheet/clown))
 			material = "bananium"
-			amnt = W:perunit
+			amnt = "g_amt"
 		else
 			return ..()
 
@@ -252,12 +480,13 @@
 			return
 
 		var/name = "[W.name]"
+		var/type = "[W.type]"
 		if(src.resources[material] < res_max_amount)
 			var/count = 0
 			spawn(10)
 				if(W && W.amount)
-					while(src.resources[material] < res_max_amount && W)
-						src.resources[material] += amnt
+					while(src.resources[type] < res_max_amount && W)
+						src.resources[type] += W.vars[amnt]
 						W.use(1)
 						count++
 					flick("mechfab2", src)
@@ -266,3 +495,4 @@
 		else
 			user << "The fabricator cannot hold more [name]."
 		return
+*/

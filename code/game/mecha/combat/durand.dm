@@ -42,6 +42,7 @@
 	else
 		deflect_chance = initial(deflect_chance)
 		src.occupant_message("<font color='red'>You disable [src] defence mode.</font>")
+	src.log_message("Toggled defence mode.")
 	return
 
 
@@ -51,8 +52,7 @@
 	return output
 
 /obj/mecha/combat/durand/get_commands()
-	var/output = {"<a href='?src=\ref[src];toggle_defence_mode=1'>Toggle defence mode</a><br>
-				"}
+	var/output = "<a href='?src=\ref[src];toggle_defence_mode=1'>Toggle defence mode</a><hr>"
 	output += ..()
 	return output
 

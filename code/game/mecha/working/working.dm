@@ -9,6 +9,11 @@
 	var/add_req_access = 1
 	internal_damage_threshold = 70
 
+/obj/mecha/working/New()
+	..()
+	new /obj/item/mecha_tracking(src)
+	return
+
 
 /obj/mecha/working/melee_action(atom/target as obj|mob|turf)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)

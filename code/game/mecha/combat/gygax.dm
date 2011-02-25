@@ -33,6 +33,7 @@
 		overload = 1
 		step_in = min(1, round(step_in/2))
 		src.occupant_message("<font color='red'>You enable leg actuators overload.</font>")
+	src.log_message("Toggled leg actuators overload.")
 	return
 
 
@@ -55,8 +56,7 @@
 	return output
 
 /obj/mecha/combat/gygax/get_commands()
-	var/output = {"<a href='?src=\ref[src];toggle_leg_overload=1'>Toggle leg actuators overload</a><br>
-				"}
+	var/output = "<a href='?src=\ref[src];toggle_leg_overload=1'>Toggle leg actuators overload</a><br><hr>"
 	output += ..()
 	return output
 
