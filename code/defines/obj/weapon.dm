@@ -109,6 +109,11 @@
 	icon_state = "357-7"
 	amount_left = 7.0
 
+/obj/item/weapon/ammo/a45
+	desc = "There are 10 bullets left!"
+	name = "ammo-45"
+	icon_state = "45-10"
+	amount_left = 10.0
 
 /obj/item/weapon/ammo/shell //easier to add new shell types. Like badmin laser/taser/pulse shells.
 	desc = "Generic shell description."
@@ -673,6 +678,30 @@
 	name = "revolver"
 	icon_state = "mateba"
 	origin_tech = "combat=3;materials=2"
+
+/obj/item/weapon/gun/glock
+	desc = "There are 0 bullets left. Uses .45 ACP"
+	name = "glock"
+	icon_state = "glock"
+	var/obj/item/weapon/ammo/a45/magazine
+	w_class = 3.0
+	throw_speed = 2
+	throw_range = 10
+	force = 6.0
+	m_amt = 2000
+//	origin_tech = "combat=3;materials=2"
+
+/obj/item/weapon/gun/m1911
+	desc = "There are 0 bullets left. Uses .45 ACP"
+	name = "m1911"
+	icon_state = "m1911"
+	var/obj/item/weapon/ammo/a45/magazine
+	w_class = 3.0
+	throw_speed = 2
+	throw_range = 10
+	force = 14.0
+	m_amt = 2000
+//	origin_tech = "combat=3;materials=2"
 
 /obj/item/weapon/gun/detectiverevolver
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
