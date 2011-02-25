@@ -969,18 +969,17 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		desc = "An energy gun with an experimental miniaturized reactor."
 		origin_tech = "combat=3;materials=5;powerstorage=3"
 		var/lightfail = 0
+		icon_state = "nucgun"
 
 		New()
 			..()
 			charge()
-			update_reactor()
 
 		proc/charge()
 			if(charges < maximum_charges)
 				if(failcheck())
 					charges++ //If the gun isn't fully charged, and it doesn't suffer a failure, add a charge.
-					update_icon()
-			update_reactor()
+			update_icon()
 			if(!crit_fail)
 				spawn(50) charge()
 
@@ -1002,21 +1001,51 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 					M << "\red You feel a wave of heat wash over you."
 					M.radiation += 100
 				crit_fail = 1 //break the gun so it stops recharging
+				update_icon()
+
+		update_icon()
+			overlays = null
+			update_charge()
+			update_reactor()
+			update_mode()
+
+		proc/update_charge()
+			if (crit_fail)
+				overlays += "nucgun-whee"
+				return
+			var/ratio = src.charges / maximum_charges
+			ratio = round(ratio, 0.25) * 100
+			overlays += text("nucgun-[]", ratio)
 
 		proc/update_reactor()
-			overlays -= "nenergy-c"
-			overlays -= "nenergy-f"
-			overlays -= "nenergy-g"
 			if(crit_fail)
-				overlays += "nenergy-c"
+				overlays += "nucgun-crit"
 				return
 			if(lightfail)
-				overlays += "nenergy-f"
+				overlays += "nucgun-medium"
+			else if ((charges/maximum_charges) <= 0.5)
+				overlays += "nucgun-light"
 			else
-				overlays += "nenergy-g"
+				overlays += "nucgun-clean"
+
+		proc/update_mode()
+			if (mode == 2)
+				overlays += "nucgun-stun"
+			else if (mode == 1)
+				overlays += "nucgun-kill"
+
+		attack_self(mob/user as mob)
+			if(mode == 1)
+				mode = 2
+				user << "\blue You set the gun to stun"
+
+			else if (mode == 2)
+				mode = 1
+				user << "\blue You set the gun to kill"
+			update_icon()
 
 	update_icon()
-		var/ratio = src.charges / maximum_charges
+		var/ratio = charges / maximum_charges
 		ratio = round(ratio, 0.25) * 100
 		src.icon_state = text("energy[]", ratio)
 
