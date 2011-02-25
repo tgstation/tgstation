@@ -1,4 +1,5 @@
 var/global/datum/controller/game_controller/master_controller //Set in world.New()
+var/global/controllernum = "no"
 
 datum/controller/game_controller
 	var/processing = 1
@@ -60,6 +61,8 @@ datum/controller/game_controller
 		if(!processing)
 			return 0
 		//world << "Processing"
+		controllernum = "yes"
+		spawn (100) controllernum = "no"
 
 		var/start_time = world.timeofday
 
@@ -109,5 +112,6 @@ datum/controller/game_controller
 		sleep(world.timeofday+10-start_time)
 
 		spawn process()
+
 
 		return 1
