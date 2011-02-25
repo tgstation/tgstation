@@ -2525,6 +2525,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "materials=4"
+	perunit = 2000
 
 /obj/item/stack/sheet/gold/New()
 	pixel_x = rand(0,4)-4
@@ -2539,6 +2540,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "materials=3"
+	perunit = 2000
 
 /obj/item/stack/sheet/silver/New()
 	pixel_x = rand(0,4)-4
@@ -2552,6 +2554,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	w_class = 3.0
 	throw_range = 3
 	origin_tech = "materials=6"
+	perunit = 1000
 
 /obj/item/stack/sheet/diamond/New()
 	pixel_x = rand(0,4)-4
@@ -2566,6 +2569,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "materials=5"
+	perunit = 2000
 
 /obj/item/stack/sheet/enruranium
 	name = "Enriched Uranium block"
@@ -2576,6 +2580,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "materials=5"
+	perunit = 1000
 
 /obj/item/stack/sheet/plasma
 	name = "solid plasma"
@@ -2586,6 +2591,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "plasmatech=2;materials=2"
+	perunit = 2000
 
 /obj/item/stack/sheet/clown
 	name = "bananium"
@@ -2596,6 +2602,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "materials=4"
+	perunit = 2000
 
 /obj/item/stack/sheet/clown/New()
 	pixel_x = rand(0,4)-4

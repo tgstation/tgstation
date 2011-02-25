@@ -225,25 +225,25 @@
 		var/amnt
 		if(istype(W, /obj/item/stack/sheet/gold))
 			material = "gold"
-			amnt = "g_amt"
+			amnt = W:perunit
 		else if(istype(W, /obj/item/stack/sheet/silver))
 			material = "silver"
-			amnt = "g_amt"
+			amnt = W:perunit
 		else if(istype(W, /obj/item/stack/sheet/diamond))
 			material = "diamond"
-			amnt = "g_amt"
+			amnt = W:perunit
 		else if(istype(W, /obj/item/stack/sheet/plasma))
 			material = "plasma"
-			amnt = "g_amt"
+			amnt = W:perunit
 		else if(istype(W, /obj/item/stack/sheet/metal))
 			material = "metal"
-			amnt = "m_amt"
+			amnt = W:perunit
 		else if(istype(W, /obj/item/stack/sheet/glass))
 			material = "glass"
-			amnt = "g_amt"
+			amnt = W:perunit
 		else if(istype(W, /obj/item/stack/sheet/clown))
 			material = "bananium"
-			amnt = "g_amt"
+			amnt = W:perunit
 		else
 			return ..()
 
@@ -257,7 +257,7 @@
 			spawn(10)
 				if(W && W.amount)
 					while(src.resources[material] < res_max_amount && W)
-						src.resources[material] += W.vars[amnt]
+						src.resources[material] += amnt
 						W.use(1)
 						count++
 					flick("mechfab2", src)

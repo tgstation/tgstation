@@ -898,6 +898,7 @@
 	flags = FPRINT | TABLEPASS
 	w_class = 3.0
 	max_amount = 50
+	var/perunit = 3750
 
 /obj/item/stack/sheet/glass
 	name = "glass"
