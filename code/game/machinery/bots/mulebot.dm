@@ -28,7 +28,7 @@
 	var/new_destination = ""	// pending new destination (waiting for beacon response)
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(access_cargo, access_cargo_bot, access_robotics) // added robotics access so assembly line drop-off works properly -veyveyr
+	req_access = list(access_cargo, access_cargo_bot) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
 	var/path[] = new()
 
 	var/mode = 0		//0 = idle/ready
@@ -76,6 +76,7 @@
 	..()
 	botcard = new(src)
 	botcard.access = get_access("Quartermaster")
+	botcard.access += access_robotics
 	cell = new(src)
 	cell.charge = 2000
 	cell.maxcharge = 2000
@@ -961,6 +962,6 @@
 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	
+
 	new /obj/decal/cleanable/oil(src.loc)
 	del(src)
