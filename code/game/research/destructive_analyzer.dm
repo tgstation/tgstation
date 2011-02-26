@@ -40,8 +40,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 
 	attackby(var/obj/O as obj, var/mob/user as mob)
-		if (disabled)
-			return
 		if (shocked)
 			shock(user,50)
 		if (istype(O, /obj/item/weapon/screwdriver))
@@ -70,6 +68,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 			else
 				user << "\red You can't load the [src.name] while it's opened."
 				return 1
+		if (disabled)
+			return
 		if (!linked_console)
 			user << "\red The protolathe must be linked to an R&D console first!"
 			return

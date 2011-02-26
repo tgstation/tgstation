@@ -43,6 +43,7 @@
 	name = "AI Upload"
 	icon_state = "aiupload"
 	var/mob/living/silicon/ai/current = null
+	var/opened = 0
 
 /obj/machinery/computer/borgupload
 	name = "Cyborg Upload"

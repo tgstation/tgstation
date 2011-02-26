@@ -245,7 +245,7 @@ datum
 			id = "safeguard_module"
 			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
 			build_path = "/obj/item/weapon/aiModule/safeguard"
 
 		onehuman_module
@@ -254,7 +254,7 @@ datum
 			id = "onehuman_module"
 			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
 			build_path = "/obj/item/weapon/aiModule/oneHuman"
 
 		protectstation_module
@@ -263,7 +263,7 @@ datum
 			id = "protectstation_module"
 			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
 			build_path = "/obj/item/weapon/aiModule/protectStation"
 
 		notele_module
@@ -272,14 +272,14 @@ datum
 			id = "notele_module"
 			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
 			build_path = "/obj/item/weapon/aiModule/teleporterOffline"
 
 		quarantine_module
 			name = "Module Design (Quarantine)"
 			desc = "Allows for the construction of a Quarantine AI Module."
 			id = "quarantine_module"
-			req_tech = list("programming" = 3, "biotech" = 2)
+			req_tech = list("programming" = 3, "biotech" = 2, "$gold" = 100)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/quarantine"
@@ -288,7 +288,7 @@ datum
 			name = "Module Design (OxygenIsToxicToHumans)"
 			desc = "Allows for the construction of a Safeguard AI Module."
 			id = "oxygen_module"
-			req_tech = list("programming" = 3, "biotech" = 2)
+			req_tech = list("programming" = 3, "biotech" = 2, "$gold" = 100)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/aiModule/oxygen"
@@ -299,7 +299,7 @@ datum
 			id = "freeform_module"
 			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
 			build_path = "/obj/item/weapon/aiModule/freeform"
 
 		reset_module
@@ -308,7 +308,7 @@ datum
 			id = "reset_module"
 			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20, "$gold" = 100)
 			build_path = "/obj/item/weapon/aiModule/reset"
 
 		purge_module
@@ -317,7 +317,7 @@ datum
 			id = "purge_module"
 			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
 			build_path = "/obj/item/weapon/aiModule/purge"
 
 		freeformcore_module
@@ -326,7 +326,7 @@ datum
 			id = "freeformcore_module"
 			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
 			build_path = "/obj/item/weapon/aiModule/freeformcore"
 
 		asimov
@@ -335,7 +335,7 @@ datum
 			id = "asimov_module"
 			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
 			build_path = "/obj/item/weapon/aiModule/asimov"
 
 		paladin_module
@@ -344,7 +344,7 @@ datum
 			id = "paladin_module"
 			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
 			build_path = "/obj/item/weapon/aiModule/paladin"
 
 		tyrant_module
@@ -353,7 +353,7 @@ datum
 			id = "tyrant_module"
 			req_tech = list("programming" = 4, "syndicate" = 2)
 			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
+			materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
 			build_path = "/obj/item/weapon/aiModule/tyrant"
 
 
@@ -655,7 +655,7 @@ datum
 			req_tech = list("materials" = 2, "magnets" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/machinery/r_n_d/destructive_analyzer"
+			build_path = "/obj/item/weapon/circuitboard/destructive_analyzer"
 
 		protolathe
 			name = "Protolathe Board"
@@ -664,7 +664,7 @@ datum
 			req_tech = list("materials" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/machinery/r_n_d/protolathe"
+			build_path = "/obj/item/weapon/circuitboard/protolathe"
 
 		circuit_imprinter
 			name = "Circuit Imprinter Board"
@@ -673,7 +673,7 @@ datum
 			req_tech = list("materials" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/machinery/r_n_d/circuit_imprinter"
+			build_path = "/obj/item/weapon/circuitboard/circuit_imprinter"
 
 		autolathe
 			name = "Atuolathe Board"
@@ -682,7 +682,25 @@ datum
 			req_tech = list("materials" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/machinery/autolathe"
+			build_path = "/obj/item/weapon/circuitboard/autolathe"
+
+		rdservercontrol
+			name = "R&D Server Control Console Board"
+			desc = "The circuit board for a R&D Server Control Console"
+			id = "rdservercontrol"
+			req_tech = list("programming" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/rdservercontrol"
+
+		rdserver
+			name = "R&D Server Board"
+			desc = "The circuit board for an R&D Server"
+			id = "rdserver"
+			req_tech = list("programming" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/rdserver"
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////

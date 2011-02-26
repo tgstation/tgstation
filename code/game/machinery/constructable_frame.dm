@@ -182,3 +182,12 @@ to destroy them and players will be able to make replacements.
 /obj/item/weapon/circuitboard/pacman/mrs
 	name = "Circuit Board (MRSPACMAN-type Generator)"
 	origin_tech = "powerstorage=5;plasmatech=6"
+
+obj/item/weapon/circuitboard/rdserver
+	name = "Circuit Board (R&D Server)"
+	build_path = "/obj/machinery/r_n_d/server"
+	board_type = "machine"
+	origin_tech = "programming=3"
+	req_components = list(
+							"/obj/item/weapon/cable_coil" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1)

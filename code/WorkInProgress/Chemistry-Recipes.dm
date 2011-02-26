@@ -310,7 +310,7 @@ datum
 			required_reagents = list("aluminium" = 1, "plasma" = 1, "acid" = 1 )
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/location = get_turf(holder.my_atom.loc)
+				var/turf/location = get_turf(holder.my_atom.loc)
 				for(var/turf/simulated/floor/target_tile in range(0,location))
 					if(target_tile.parent && target_tile.parent.group_processing)
 						target_tile.parent.suspend_group_processing()

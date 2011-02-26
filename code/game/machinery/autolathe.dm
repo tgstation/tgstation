@@ -3,7 +3,6 @@
 	var/max_m_amount = 150000.0
 	var/max_g_amount = 75000.0
 
-
 /obj/machinery/autolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (stat)
 		return 1
@@ -27,8 +26,15 @@
 			M.state = 2
 			M.icon_state = "box_1"
 			for(var/obj/I in component_parts)
+				if(I.reliability != 100 && crit_fail)
+					I.crit_fail = 1
 				I.loc = src.loc
-			del(src)
+			if(m_amount >= 3750)
+				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
+				G.amount = round(m_amount / 3750)
+			if(g_amount >= 3750)
+				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
+				G.amount = round(g_amount / 3750)
 			return 1
 		else
 			user << "\red You can't load the autolathe while it's opened."

@@ -51,8 +51,6 @@ Note: Must be placed west/left of and R&D console to function.
 		max_material_storage = T * 75000
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if (disabled)
-			return
 		if (shocked)
 			shock(user,50)
 		if (O.is_open_container())
@@ -77,12 +75,42 @@ Note: Must be placed west/left of and R&D console to function.
 				M.state = 2
 				M.icon_state = "box_1"
 				for(var/obj/I in component_parts)
+					if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
+						reagents.trans_to(I, reagents.total_volume)
+					if(I.reliability != 100 && crit_fail)
+						I.crit_fail = 1
 					I.loc = src.loc
+				if(m_amount >= 3750)
+					var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
+					G.amount = round(m_amount / 3750)
+				if(g_amount >= 3750)
+					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
+					G.amount = round(g_amount / 3750)
+				if(plasma_amount >= 3750)
+					var/obj/item/stack/sheet/plasma/G = new /obj/item/stack/sheet/plasma(src.loc)
+					G.amount = round(plasma_amount / 3750)
+				if(silver_amount >= 3750)
+					var/obj/item/stack/sheet/silver/G = new /obj/item/stack/sheet/silver(src.loc)
+					G.amount = round(silver_amount / 3750)
+				if(gold_amount >= 3750)
+					var/obj/item/stack/sheet/gold/G = new /obj/item/stack/sheet/gold(src.loc)
+					G.amount = round(gold_amount / 3750)
+				if(uranium_amount >= 3750)
+					var/obj/item/stack/sheet/uranium/G = new /obj/item/stack/sheet/uranium(src.loc)
+					G.amount = round(uranium_amount / 3750)
+				if(diamond_amount >= 3750)
+					var/obj/item/stack/sheet/diamond/G = new /obj/item/stack/sheet/diamond(src.loc)
+					G.amount = round(diamond_amount / 3750)
+				if(clown_amount >= 3750)
+					var/obj/item/stack/sheet/clown/G = new /obj/item/stack/sheet/clown(src.loc)
+					G.amount = round(clown_amount / 3750)
 				del(src)
 				return 1
 			else
 				user << "\red You can't load the [src.name] while it's opened."
 				return 1
+		if (disabled)
+			return
 		if (!linked_console)
 			user << "\The protolathe must be linked to an R&D console first!"
 			return 1
@@ -118,6 +146,7 @@ Note: Must be placed west/left of and R&D console to function.
 		busy = 1
 		use_power(max(1000, (3750*amount/10)))
 		spawn(16)
+			user << "\blue You add [amount] sheets to the [src.name]."
 			icon_state = "protolathe"
 			flick("protolathe_o",src)
 			if(istype(stack, /obj/item/stack/sheet/metal))

@@ -10,7 +10,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	flags = OPENCONTAINER
 	var
 		g_amount = 0
-		max_g_amount = 75000.0
+		gold_amount = 0
+		diamond_amount = 0
+		max_material_amount = 75000.0
 
 	New()
 		..()
@@ -32,7 +34,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		T = 0
 		for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 			T += M.rating
-		max_g_amount = T * 75000.0
+		max_material_amount = T * 75000.0
 
 
 	blob_act()
@@ -43,9 +45,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		del(src)
 		return
 
+	proc/TotalMaterials()
+		return g_amount + gold_amount + diamond_amount
+
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if (disabled)
-			return
 		if (shocked)
 			shock(user,50)
 		if (istype(O, /obj/item/weapon/screwdriver))
@@ -68,18 +71,27 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				M.state = 2
 				M.icon_state = "box_1"
 				for(var/obj/I in component_parts)
+					if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
+						reagents.trans_to(I, reagents.total_volume)
+					if(I.reliability != 100 && crit_fail)
+						I.crit_fail = 1
 					I.loc = src.loc
+				if(g_amount >= 3750)
+					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
+					G.amount = round(g_amount / 3750)
 				del(src)
 				return 1
 			else
 				user << "\red You can't load the [src.name] while it's opened."
 				return 1
+		if (disabled)
+			return
 		if (!linked_console)
 			user << "\The [name] must be linked to an R&D console first!"
 			return 1
 		if (O.is_open_container())
 			return 1
-		if (!istype(O, /obj/item/stack/sheet/glass))
+		if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/gold) && !istype(O, /obj/item/stack/sheet/diamond))
 			user << "\red You cannot insert this item into the [name]!"
 			return 1
 		if (stat)
@@ -87,24 +99,31 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if (busy)
 			user << "\red The [name] is busy. Please wait for completion of previous operation."
 			return 1
-		if (src.g_amount + O.g_amt > max_g_amount)
+		if ((TotalMaterials() + 3750) > max_material_amount)
 			user << "\red The [name] is full. Please remove glass from the protolathe in order to insert more."
 			return 1
 
+		var/obj/item/stack/stack = O
 		var/amount = 1
-		var/obj/item/stack/sheet/glass/stack
-		var/g_amt = O.g_amt
-		stack = O
-		amount = stack.amount
-		if (g_amt)
-			amount = min(amount, round((max_g_amount-src.g_amount)/g_amt))
-		stack.use(amount)
+		var/title = "[stack.name]: [stack.amount] sheet\s left"
+		switch(alert(title, "How many sheets do you want to load?", "one", "max", "cancel", null))
+			if("one")
+				amount = 1
+			if("max")
+				amount = min(stack.amount, round((max_material_amount-TotalMaterials())/3750))
+			else
+				return 1
+
 		busy = 1
-		use_power(max(1000, (g_amt)*amount/10))
+		use_power(max(1000, (3750*amount/10)))
 		spawn(16)
-			src.g_amount += g_amt * amount
-			if (O && O.loc == src)
-				del(O)
+			user << "\blue You add [amount] sheets to the [src.name]."
+			if(istype(stack, /obj/item/stack/sheet/glass))
+				g_amount += amount * 3750
+			else if(istype(stack, /obj/item/stack/sheet/gold))
+				gold_amount += amount * 3750
+			else if(istype(stack, /obj/item/stack/sheet/diamond))
+				diamond_amount += amount * 3750
+			stack.use(amount)
 			busy = 0
 			src.updateUsrDialog()
-			return

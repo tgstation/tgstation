@@ -121,6 +121,9 @@
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
 	build_path = "/obj/machinery/computer/mecha"
+/obj/item/weapon/circuitboard/rdservercontrol
+	name = "Circuit Board (R&D Server Control)"
+	build_path = "/obj/machinery/computer/rdservercontrol"
 
 
 
