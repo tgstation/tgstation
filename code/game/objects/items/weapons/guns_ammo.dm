@@ -1178,6 +1178,12 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	..()
 	return
 
+/obj/item/weapon/ammo/assaultmag/examine()
+	set src in usr
+	src.desc = text("There are [] bullet\s left!", src.amount_left)
+	..()
+	return
+
 /obj/item/weapon/gun/glock/attackby(obj/item/weapon/ammo/a45/A as obj, mob/user as mob)
 	..()
 
@@ -1285,6 +1291,169 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	src.magazine.amount_left--
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("\red <B>[] fires the  m1911 at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+	var/turf/T = user.loc
+	var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+	if ((!( U ) || !( T )))
+		return
+	while(!( istype(U, /turf) ))
+		U = U.loc
+	if (!( istype(T, /turf) ))
+		return
+	if (U == T)
+		user.bullet_act(PROJECTILE_BULLET)
+		return
+	var/obj/bullet/A = new /obj/bullet( user.loc )
+	if (!istype(U, /turf))
+		del(A)
+		return
+	A.current = U
+	A.yo = U.y - T.y
+	A.xo = U.x - T.x
+	user.next_move = world.time + 4
+	spawn( 0 )
+		A.process()
+		return
+	return
+
+/obj/item/weapon/gun/carbine/examine()
+	set src in usr
+	if (src.magazine)
+		if (istype(src.magazine, /obj/item/weapon/ammo/assaultmag))
+			src.desc = text("There are [] bullet\s left! Uses 5.56x45mm NATO", src.magazine.amount_left)
+	else
+		src.desc = "There are 0 bullets left! Uses 5.56x45mm NATO"
+	..()
+	return
+
+/obj/item/weapon/gun/carbine/verb/eject()
+	set src in usr
+	if (src.magazine)
+		if (istype(src.magazine, /obj/item/weapon/ammo/assaultmag))
+			if (istype(src.loc, /mob))
+				var/obj/item/W = src.loc:equipped()
+				var/emptyHand = (W == null)
+				if(emptyHand)
+					src.magazine.DblClick()
+					if(!istype(src.magazine.loc, /obj/item/weapon/gun/m1911))
+						src.magazine = null
+						src.icon_state = "carbinenomag"
+			else
+				src.magazine.loc = src.loc
+				src.magazine = null
+	..()
+	return
+
+/obj/item/weapon/gun/carbine/attackby(obj/item/weapon/ammo/assaultmag/A as obj, mob/user as mob)
+	..()
+
+	if (istype(A, /obj/item/weapon/ammo/assaultmag))
+		if (src.magazine)
+			user << "\blue There is already a magazine in!"
+			return 1
+		user.drop_item()
+		A.loc = src
+		src.magazine = A
+		src.icon_state = "carbine"
+		return 1
+	return
+
+/obj/item/weapon/gun/carbine/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+
+	if (flag)
+		return
+	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
+		usr << "\red You don't have the dexterity to do this!"
+		return
+	src.add_fingerprint(user)
+	if (src.magazine.amount_left < 1)
+		user.show_message("\red *click* *click*", 2)
+		return
+	playsound(user, 'Gunshot.ogg', 100, 1)
+	src.magazine.amount_left--
+	for(var/mob/O in viewers(user, null))
+		O.show_message(text("\red <B>[] fires the  carbine at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+	var/turf/T = user.loc
+	var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+	if ((!( U ) || !( T )))
+		return
+	while(!( istype(U, /turf) ))
+		U = U.loc
+	if (!( istype(T, /turf) ))
+		return
+	if (U == T)
+		user.bullet_act(PROJECTILE_WEAKBULLET)
+		return
+	var/obj/bullet/weakbullet/A = new /obj/bullet/weakbullet( user.loc )
+	if (!istype(U, /turf))
+		del(A)
+		return
+	A.current = U
+	A.yo = U.y - T.y
+	A.xo = U.x - T.x
+	user.next_move = world.time + 4
+	spawn( 0 )
+		A.process()
+		return
+	return
+
+
+/obj/item/weapon/gun/ak331/examine()
+	set src in usr
+	if (src.magazine)
+		if (istype(src.magazine, /obj/item/weapon/ammo/assaultmag))
+			src.desc = text("There are [] bullet\s left! Uses 5.56x45mm NATO", src.magazine.amount_left)
+	else
+		src.desc = "There are 0 bullets left! Uses 5.56x45mm NATO"
+	..()
+	return
+
+/obj/item/weapon/gun/ak331/verb/eject()
+	set src in usr
+	if (src.magazine)
+		if (istype(src.magazine, /obj/item/weapon/ammo/assaultmag))
+			if (istype(src.loc, /mob))
+				var/obj/item/W = src.loc:equipped()
+				var/emptyHand = (W == null)
+				if(emptyHand)
+					src.magazine.DblClick()
+					if(!istype(src.magazine.loc, /obj/item/weapon/gun/m1911))
+						src.magazine = null
+						src.icon_state = "ak331nomag"
+			else
+				src.magazine.loc = src.loc
+				src.magazine = null
+	..()
+	return
+
+/obj/item/weapon/gun/ak331/attackby(obj/item/weapon/ammo/assaultmag/A as obj, mob/user as mob)
+	..()
+
+	if (istype(A, /obj/item/weapon/ammo/assaultmag))
+		if (src.magazine)
+			user << "\blue There is already a magazine in!"
+			return 1
+		user.drop_item()
+		A.loc = src
+		src.magazine = A
+		src.icon_state = "ak331"
+		return 1
+	return
+
+/obj/item/weapon/gun/ak331/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+
+	if (flag)
+		return
+	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
+		usr << "\red You don't have the dexterity to do this!"
+		return
+	src.add_fingerprint(user)
+	if (src.magazine.amount_left < 1)
+		user.show_message("\red *click* *click*", 2)
+		return
+	playsound(user, 'Gunshot.ogg', 100, 1)
+	src.magazine.amount_left--
+	for(var/mob/O in viewers(user, null))
+		O.show_message(text("\red <B>[] fires the  ak331 at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
 	var/turf/T = user.loc
 	var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 	if ((!( U ) || !( T )))

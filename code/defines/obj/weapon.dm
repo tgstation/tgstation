@@ -115,6 +115,12 @@
 	icon_state = "45-10"
 	amount_left = 10.0
 
+/obj/item/weapon/ammo/assaultmag
+	desc = "There are 30 bullets left!"
+	name = "5.56x45mm NATO"
+	icon_state = "5.56"
+	amount_left = 30.0
+
 /obj/item/weapon/ammo/shell //easier to add new shell types. Like badmin laser/taser/pulse shells.
 	desc = "Generic shell description."
 	name = "Generic shell."
@@ -592,7 +598,7 @@
 	icon_state = "cshotgun"
 	w_class = 4.0
 	force = 12.0
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY // THERE IS NO COMBAT SHOTGUN BACK SPRITE. DON'T ADD ONBACK -- Callagan
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 	shellsmax = 8
 	origin_tech = "combat=3"
 
@@ -700,6 +706,32 @@
 	throw_speed = 2
 	throw_range = 10
 	force = 14.0
+	m_amt = 2000
+//	origin_tech = "combat=3;materials=2"
+
+/obj/item/weapon/gun/carbine
+	desc = "There are 0 bullets left. Uses 5.56x45mm NATO"
+	name = "carbine"
+	icon_state = "carbinenomag"
+	var/obj/item/weapon/ammo/assaultmag/magazine
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	w_class = 4.0
+	throw_speed = 2
+	throw_range = 10
+	force = 6.0
+	m_amt = 2000
+//	origin_tech = "combat=3;materials=2"
+
+/obj/item/weapon/gun/ak331
+	desc = "There are 0 bullets left. Uses 5.56x45mm NATO"
+	name = "ak331"
+	icon_state = "ak331nomag"
+	var/obj/item/weapon/ammo/assaultmag/magazine
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	w_class = 4.0
+	throw_speed = 2
+	throw_range = 10
+	force = 18.0
 	m_amt = 2000
 //	origin_tech = "combat=3;materials=2"
 
