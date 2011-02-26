@@ -569,6 +569,16 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		src.icon_state = text("laser[]", ratio)
 	return
 
+/obj/item/weapon/gun/energy/laser_gun/captain/New()
+	charge()
+
+/obj/item/weapon/gun/energy/laser_gun/captain/proc/charge()
+	if(charges < maximum_charges)
+		charges++
+		update_icon()
+	spawn(50) charge()
+
+
 /obj/item/weapon/gun/energy/laser_gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if ((usr.mutations & 16) && prob(50))
 		usr << "\red The laser gun blows up in your face."
