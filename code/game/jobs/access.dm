@@ -169,11 +169,12 @@
 		if("Shaft Miner")
 			return list(access_maint_tunnels, access_mining)
 		if("Quartermaster")
-			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_office, access_mint)
+			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mint)
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_ai_upload, access_construction, access_robotics, access_mint)
+			            access_heads, access_ai_upload, access_construction, , access_mining, access_robotics,
+			            access_mining_office, access_mint)
 		if("Research Director") // added hydroponics access -- Skie
 			return list(access_medical, access_morgue, access_medlab, access_rd,
 			            access_tech_storage, access_maint_tunnels, access_heads, access_tox,

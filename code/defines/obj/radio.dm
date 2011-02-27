@@ -95,6 +95,12 @@
 	item_state = "headset"
 	channels = list("Engineering" = 1)
 
+/obj/item/device/radio/headset/headset_rob // -- DH
+	name = "Robotics Radio Headset"
+	icon_state = "rob_headset"
+	item_state = "headset"
+	channels = list("Engineering" = 1)
+
 /obj/item/device/radio/headset/headset_med // -- TLE
 	name = "Medical Radio Headset"
 	icon_state = "med_headset"
@@ -142,12 +148,12 @@
 	icon_state = "com_headset"
 	item_state = "headset"
 	channels = list("Medical" = 1, "Command" = 1)
-	
+
 /obj/item/device/radio/headset/heads/hop // -- rastaf0
 	name = "Head of Personnel's Headset"
 	icon_state = "com_headset"
 	item_state = "headset"
-	channels = list("Command" = 1, "Security" = 1, "Cargo" = 0)
+	channels = list("Command" = 1, "Security" = 1, "Cargo" = 1)
 
 /obj/item/device/radio/headset/headset_mine // -- rastaf0
 	name = "Mining Radio Headset"
@@ -161,8 +167,8 @@
 	item_state = "headset"
 	channels = list("Cargo" = 1)
 
-/obj/item/device/radio/headset/heads/qm // -- rastaf0 //he is not a real head but he gives orders sometimes
+/obj/item/device/radio/headset/heads/qm // -- rastaf0
 	name = "Quartermaster's Headset"
 	icon_state = "cargo_headset"
 	item_state = "headset"
-	channels = list("Cargo" = 1, "Mining" = 1) //no command frequency yet
+	channels = list("Cargo" = 1)
