@@ -1908,7 +1908,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 /obj/item/weapon/stock_parts/scanning_module/phasic
 	name = "Phasic Scanning Module"
 	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
-	icon_state = "scan_module"
 	origin_tech = "magnets=5"
 	rating = 3
 	m_amt = 50
@@ -1917,7 +1916,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 /obj/item/weapon/stock_parts/manipulator/pico
 	name = "Pico-Manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
-	icon_state = "pico_mani"
 	origin_tech = "materials=5,programming=2"
 	rating = 3
 	m_amt = 30
@@ -1925,7 +1923,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 /obj/item/weapon/stock_parts/micro_laser/ultra
 	name = "Ultra-High-Power Micro-laser"
 	desc = "A tiny laser used in certain devices."
-	icon_state = "micro_laser"
 	origin_tech = "magnets=5"
 	rating = 3
 	m_amt = 10
@@ -1934,7 +1931,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 /obj/item/weapon/stock_parts/matter_bin/super
 	name = "Super Matter Bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
-	icon_state = "matter_bin"
 	origin_tech = "materials=5"
 	rating = 3
 	m_amt = 80

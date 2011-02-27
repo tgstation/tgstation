@@ -57,6 +57,17 @@ proc/process_teleport_locs()
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
+	var/not_in_order = 0
+	do
+		not_in_order = 0
+		if(teleportlocs.len <= 1)
+			break
+		for(var/i = 1, i <= (teleportlocs.len - 1), i++)
+			if(sorttext(teleportlocs[i], teleportlocs[i+1]) == -1)
+				teleportlocs.Swap(i, i+1)
+				not_in_order = 1
+	while(not_in_order)
+
 var/list/ghostteleportlocs = list()
 
 proc/process_ghost_teleport_locs()
@@ -66,9 +77,21 @@ proc/process_ghost_teleport_locs()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == 1 || picked.z == 8)
+		if (picked.z == 1 || picked.z == 5)
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
+
+	var/not_in_order = 0
+	do
+		not_in_order = 0
+		if(ghostteleportlocs.len <= 1)
+			break
+		for(var/i = 1, i <= (ghostteleportlocs.len - 1), i++)
+			if(sorttext(ghostteleportlocs[i], ghostteleportlocs[i+1]) == -1)
+				ghostteleportlocs.Swap(i, i+1)
+				not_in_order = 1
+	while(not_in_order)
+
 
 /*-----------------------------------------------------------------------------*/
 
