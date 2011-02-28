@@ -654,6 +654,9 @@
 		src.loc = pick(NL)
 	return
 
+	if (rank == "Clown")
+		clname(src)
+
 /mob/living/carbon/human/proc/spawnId(rank)
 	var/obj/item/weapon/card/id/C = null
 	switch(rank)

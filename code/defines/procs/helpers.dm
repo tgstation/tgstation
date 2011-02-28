@@ -533,6 +533,32 @@
 		M.real_name = newname
 		M.name = newname
 
+/proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
+	var/randomname = pick(clown_names)
+	var/newname = input(M,"You are the clown. Would you like to change your name to something else?", "Name change",randomname)
+
+	if (length(newname) == 0)
+		newname = randomname
+
+	if (newname)
+		if (newname == "Unknown")
+			M << "That name is reserved."
+			return clname(M)
+		for (var/mob/living/carbon/A in world)
+			if (A.real_name == newname)
+				M << "There's already a clown with that name."
+				return clname(M)
+		if (length(newname) >= 26)
+			newname = copytext(newname, 1, 26)
+		newname = dd_replacetext(newname, ">", "'")
+		M.real_name = newname
+		M.name = newname
+//	if (istype(src.belt, /obj/item/device/pda))
+//		var/obj/item/device/pda/pda = src.belt
+//		pda.owner = src.real_name
+//		pda.ownjob = src.wear_id.assignment
+	//	pda.name = "PDA-[src.real_name] ([pda.ownjob])"
+
 /proc/ionnum()
 	return "[pick("!","@","#","$","%","^","&","*")][pick(pick("!","@","#","$","%","^","&","*"))][pick(pick("!","@","#","$","%","^","&","*"))][pick(pick("!","@","#","$","%","^","&","*"))]"
 
