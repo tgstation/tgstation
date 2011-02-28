@@ -11,10 +11,6 @@
 		list/req_components = null
 		state = 1
 
-/*
-To Do: Add deconstruct code to constructable machines. A marvelous idea, I know.
-*/
-
 /obj/machinery/constructable_frame/machine_frame
 	attackby(obj/item/P as obj, mob/user as mob)
 		if(P.crit_fail)
@@ -52,6 +48,7 @@ To Do: Add deconstruct code to constructable machines. A marvelous idea, I know.
 						req_components = circuit.req_components.Copy()
 						for(var/A in circuit.req_components)
 							req_components[A] = circuit.req_components[A]
+						if(circuit.frame_desc) desc = circuit.frame_desc
 					else
 						user << "\red This frame does not accept circuit boards of this type!"
 				if(istype(P, /obj/item/weapon/wirecutters))
@@ -74,6 +71,7 @@ To Do: Add deconstruct code to constructable machines. A marvelous idea, I know.
 						user << "\blue You remove the circuit board and other components."
 						for(var/obj/item/weapon/W in components)
 							W.loc = src.loc
+					desc = initial(desc)
 					req_components = null
 					components = null
 					icon_state = "box_1"
@@ -128,6 +126,7 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
 	board_type = "machine"
 	origin_tech = "magnets=2;materials=2"
+	frame_desc = "Requires 2 Scanning Modules, 1 Manipulator, and 1 Micro-Laser."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
@@ -138,6 +137,7 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/autolathe"
 	board_type = "machine"
 	origin_tech = "materials=3"
+	frame_desc = "Requires 3 Matter Bins, 1 Manipulator, and 1 Console Screen."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 3,
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
@@ -148,6 +148,7 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/r_n_d/protolathe"
 	board_type = "machine"
 	origin_tech = "materials=2"
+	frame_desc = "Requires 2 Matter Bins, 2 Manipulators, and 2 Beakers."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 2,
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
@@ -159,6 +160,7 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/r_n_d/circuit_imprinter"
 	board_type = "machine"
 	origin_tech = "materials=2;programming=2"
+	frame_desc = "Requires 1 Matter Bin, 1 Manipulator, and 2 Beakers."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 1,
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
@@ -169,6 +171,7 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/power/port_gen/pacman"
 	board_type = "machine"
 	origin_tech = "powerstorage=3;plasmatech=3"
+	frame_desc = "Requires 1 Matter Bin, 1 Micro-Laser, 2 Pieces of Cable, and 1 Capacitor."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
@@ -188,6 +191,7 @@ obj/item/weapon/circuitboard/rdserver
 	build_path = "/obj/machinery/r_n_d/server"
 	board_type = "machine"
 	origin_tech = "programming=3"
+	frame_desc = "Requires 2 pieces of cable, and 1 Scanning Module."
 	req_components = list(
 							"/obj/item/weapon/cable_coil" = 2,
 							"/obj/item/weapon/stock_parts/scanning_module" = 1)

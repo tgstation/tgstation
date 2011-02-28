@@ -775,7 +775,15 @@ datum
 			reliability_base = 76
 			build_path = "/obj/item/weapon/gun/energy/general/nuclear"
 
-
+		large_grenade
+			name = "Large Grenade"
+			desc = "A grenade that affects a larger area and use larger containers."
+			id = "large_Grenade"
+			req_tech = list("combat" = 3, "materials" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 3000)
+			reliability_base = 79
+			build_path = "/obj/item/weapon/chem_grenade/large"
 
 /////////////////////////////////////////
 //////////////////Test///////////////////

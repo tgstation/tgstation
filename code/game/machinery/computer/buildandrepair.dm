@@ -25,6 +25,7 @@
 		list/req_components = null
 		powernet = null
 		list/records = null
+		frame_desc = null
 
 /obj/item/weapon/circuitboard/security
 	name = "Circuit board (Security)"

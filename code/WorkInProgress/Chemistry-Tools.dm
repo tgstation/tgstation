@@ -4,8 +4,8 @@
 
 ///////////////////////////////Grenades
 /obj/item/weapon/chem_grenade
-	name = "metal casing"
-	icon_state = "chemg1"
+	name = "grenade"
+	icon_state = "chemg"
 	icon = 'chemical.dmi'
 	item_state = "flashbang"
 	w_class = 2.0
@@ -13,10 +13,12 @@
 	var/stage = 0
 	var/state = 0
 	var/list/beakers = new/list()
+	var/list/allowed_containers = list("/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/reagent_containers/glass/dispenser")
+	var/list/disallowed_container = "/obj/item/weapon/reagent_containers/glass/large"
+	var/affected_area = 3
 	throw_speed = 4
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY
-
 	New()
 		var/datum/reagents/R = new/datum/reagents(1000)
 		reagents = R
@@ -27,54 +29,65 @@
 			user << "\blue You add [W] to the metal casing."
 			playsound(src.loc, 'Screwdriver2.ogg', 25, -3)
 			del(W) //Okay so we're not really adding anything here. cheating.
-			icon_state = "chemg2"
-			name = "unsecured grenade"
+			icon_state = initial(icon_state)+"_ass"
 			stage = 1
 		else if(istype(W,/obj/item/weapon/screwdriver) && stage == 1)
 			if(beakers.len)
 				user << "\blue You lock the assembly."
 				playsound(src.loc, 'Screwdriver.ogg', 25, -3)
-				name = "grenade"
-				icon_state = "chemg3"
+				icon_state = initial(icon_state)+"_locked"
 				stage = 2
 			else
 				user << "\red You need to add at least one beaker before locking the assembly."
-		else if ((istype(W,/obj/item/weapon/reagent_containers/glass/beaker) || istype(W, /obj/item/weapon/reagent_containers/glass/dispenser)) && stage == 1)
-			if(beakers.len == 2)
-				user << "\red The grenade can not hold more containers."
-				return
-			else
-				if(W.reagents.total_volume)
-					user << "\blue You add \the [W] to the assembly."
-					user.drop_item()
-					W.loc = src
-					beakers += W
+		else
+			var/found = 0
+			for(var/container_type in allowed_containers)
+				if(istype(W, text2path(container_type)))
+					found = 1
+					break
+			if(disallowed_container)
+				if(istype(W, disallowed_container))
+					return
+			if(found)
+				if(beakers.len == 2)
+					user << "\red The grenade can not hold more containers."
+					return
 				else
-					user << "\red \the [W] is empty."
+					if(W.reagents.total_volume)
+						user << "\blue You add \the [W] to the assembly."
+						user.drop_item()
+						W.loc = src
+						beakers += W
+					else
+						user << "\red \the [W] is empty."
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (istype(target, /obj/item/weapon/storage)) return ..()
-		if (!src.state && stage == 2)
+		if (!src.state && stage == 2 && !crit_fail)
 			user << "\red You prime the grenade! 3 seconds!"
 			message_admins("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
 			src.state = 1
-			src.icon_state = "chemg4"
+			src.icon_state = initial(icon_state)+"_armed"
 			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
 			spawn(30)
 				explode()
 			user.drop_item()
 			var/t = (isturf(target) ? target : target.loc)
 			walk_towards(src, t, 3)
+		else if(crit_fail)
+			user << "\red This grenade is a dud and unusable!"
 
 	attack_self(mob/user as mob)
-		if (!src.state && stage == 2)
+		if (!src.state && stage == 2 && !crit_fail)
 			user << "\red You prime the grenade! 3 seconds!"
 			message_admins("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
 			src.state = 1
-			src.icon_state = "chemg4"
+			src.icon_state = initial(icon_state)+"_armed"
 			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
 			spawn(30)
 				explode()
+		else if(crit_fail)
+			user << "\red This grenade is a dud and unusable!"
 
 	attack_hand()
 		walk(src,0)
@@ -84,46 +97,59 @@
 
 	proc
 		explode()
-			var/has_reagents = 0
-			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-				if(G.reagents.total_volume) has_reagents = 1
+			if(reliability)
+				var/has_reagents = 0
+				for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+					if(G.reagents.total_volume) has_reagents = 1
 
-			if(!has_reagents)
-				playsound(src.loc, 'Screwdriver2.ogg', 50, 1)
-				state = 0
-				return
+				if(!has_reagents)
+					playsound(src.loc, 'Screwdriver2.ogg', 50, 1)
+					state = 0
+					return
 
-			playsound(src.loc, 'bamf.ogg', 50, 1)
+				playsound(src.loc, 'bamf.ogg', 50, 1)
 
-			for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
-				G.reagents.trans_to(src, G.reagents.total_volume)
+				for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+					G.reagents.trans_to(src, G.reagents.total_volume)
 
-			if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
-				var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread()
-				steam.set_up(10, 0, get_turf(src))
-				steam.attach(src)
-				steam.start()
+				if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
+					var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread()
+					steam.set_up(10, 0, get_turf(src))
+					steam.attach(src)
+					steam.start()
 
-				for(var/atom/A in view(3, src.loc))
-					if( A == src ) continue
-					src.reagents.reaction(A, 1, 10)
+					for(var/atom/A in view(affected_area, src.loc))
+						if( A == src ) continue
+						src.reagents.reaction(A, 1, 10)
 
 
-			invisibility = 100 //Why am i doing this?
-			spawn(50)		   //To make sure all reagents can work
-				del(src)	   //correctly before deleting the grenade.
+				invisibility = 100 //Why am i doing this?
+				spawn(50)		   //To make sure all reagents can work
+					del(src)	   //correctly before deleting the grenade.
+			else
+				icon_state = initial(icon_state) + "_locked"
+				crit_fail = 1
+				for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
+					G.loc = get_turf(src.loc)
 
+/obj/item/weapon/chem_grenade/large
+	name = "Large Chem Grenade"
+	desc = "An oversized grenade that affects a larger area."
+	icon_state = "large_grenade"
+	allowed_containers = list("/obj/item/weapon/reagent_containers/glass")
+	disallowed_container = "/obj/item/weapon/reagent_containers/glass/blender_jug"
+	origin_tech = "combat=3;materials=3"
+	affected_area = 4
 
 /obj/item/weapon/chem_grenade/metalfoam
 	name = "Metal-Foam Grenade"
 	desc = "Used for emergency sealing of air breaches."
-	icon_state = "chemg3"
 	stage = 2
 
 	New()
 		..()
-		var/obj/item/weapon/reagent_containers/glass/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/B2 = new(src)
+		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
 		B1.reagents.add_reagent("aluminium", 30)
 		B2.reagents.add_reagent("foaming_agent", 10)
@@ -131,17 +157,17 @@
 
 		beakers += B1
 		beakers += B2
+		icon_state = "chemg_locked"
 
 /obj/item/weapon/chem_grenade/incendiary
 	name = "Incendiary Grenade"
 	desc = "Used for clearing rooms of living things."
-	icon_state = "chemg3"
 	stage = 2
 
 	New()
 		..()
-		var/obj/item/weapon/reagent_containers/glass/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/B2 = new(src)
+		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
 		B1.reagents.add_reagent("aluminium", 25)
 		B2.reagents.add_reagent("plasma", 25)
@@ -149,17 +175,17 @@
 
 		beakers += B1
 		beakers += B2
+		icon_state = "chemg_locked"
 
 /obj/item/weapon/chem_grenade/cleaner
 	name = "Cleaner Grenade"
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
-	icon_state = "chemg3"
 	stage = 2
 
 	New()
 		..()
-		var/obj/item/weapon/reagent_containers/glass/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/B2 = new(src)
+		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
 		B1.reagents.add_reagent("fluorosurfactant", 30)
 		B2.reagents.add_reagent("water", 10)
@@ -167,6 +193,7 @@
 
 		beakers += B1
 		beakers += B2
+		icon_state = "chemg_locked"
 /*
 /obj/item/weapon/chem_grenade/poo
 	name = "poo grenade"

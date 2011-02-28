@@ -189,7 +189,7 @@ When thinking about new stuff, check here to see if there are any slots unfilled
 //SYNDICATE
 1	|	Sleepypen
 2	|	TYRANT Module, Emag
-3	|	Cloaking Device, Powre Sink
+3	|	Cloaking Device, Power Sink
 4	|
 5	|
 6	|

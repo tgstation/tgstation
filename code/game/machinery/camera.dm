@@ -232,24 +232,25 @@
 	return
 
 /obj/machinery/camera/emp_act(severity)
-	icon_state = "cameraemp"
-	network = null                   //Not the best way but it will do. I think.
-	spawn(900)
-		network = initial(network)
-		icon_state = initial(icon_state)
-	for(var/mob/living/silicon/ai/O in world)
-		if (O.current == src)
-			O.cancel_camera()
-			O << "Your connection to the camera has been lost."
-	for(var/mob/O in world)
-		if (istype(O.machine, /obj/machinery/computer/security))
-			var/obj/machinery/computer/security/S = O.machine
-			if (S.current == src)
-				O.machine = null
-				S.current = null
-				O.reset_view(null)
-				O << "The screen bursts into static."
-	..()
+	if(prob(100/(hardened + severity)))
+		icon_state = "cameraemp"
+		network = null                   //Not the best way but it will do. I think.
+		spawn(900)
+			network = initial(network)
+			icon_state = initial(icon_state)
+		for(var/mob/living/silicon/ai/O in world)
+			if (O.current == src)
+				O.cancel_camera()
+				O << "Your connection to the camera has been lost."
+		for(var/mob/O in world)
+			if (istype(O.machine, /obj/machinery/computer/security))
+				var/obj/machinery/computer/security/S = O.machine
+				if (S.current == src)
+					O.machine = null
+					S.current = null
+					O.reset_view(null)
+					O << "The screen bursts into static."
+		..()
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)

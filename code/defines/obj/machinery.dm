@@ -64,10 +64,10 @@
 	anchored = 1.0
 	var/invuln = null
 	var/bugged = 0
+	var/hardened = 0
 	use_power = 2
 	idle_power_usage = 5
 	active_power_usage = 10
-
 
 /obj/machinery/dispenser
 	desc = "A simple yet bulky one-way storage device for gas tanks. Holds 10 plasma and 10 oxygen tanks."
