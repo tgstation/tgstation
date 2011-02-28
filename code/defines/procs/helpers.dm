@@ -536,6 +536,7 @@
 /proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
 	var/randomname = pick(clown_names)
 	var/newname = input(M,"You are the clown. Would you like to change your name to something else?", "Name change",randomname)
+	var/oldname = M.real_name
 
 	if (length(newname) == 0)
 		newname = randomname
@@ -553,11 +554,17 @@
 		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname
 		M.name = newname
-//	if (istype(src.belt, /obj/item/device/pda))
-//		var/obj/item/device/pda/pda = src.belt
-//		pda.owner = src.real_name
-//		pda.ownjob = src.wear_id.assignment
-	//	pda.name = "PDA-[src.real_name] ([pda.ownjob])"
+
+	for (var/obj/item/device/pda/pda in M.contents)
+		if (pda.owner == oldname)
+			pda.owner = newname
+			pda.name = "PDA-[newname] ([pda.ownjob])"
+			break
+	for(var/obj/item/weapon/card/id/id in M.contents)
+		if(id.registered == oldname)
+			id.registered = newname
+			id.name = "[id.registered]'s ID Card ([id.assignment])"
+			break
 
 /proc/ionnum()
 	return "[pick("!","@","#","$","%","^","&","*")][pick(pick("!","@","#","$","%","^","&","*"))][pick(pick("!","@","#","$","%","^","&","*"))][pick(pick("!","@","#","$","%","^","&","*"))]"

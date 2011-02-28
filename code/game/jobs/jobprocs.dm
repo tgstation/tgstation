@@ -654,8 +654,6 @@
 		src.loc = pick(NL)
 	return
 
-	if (rank == "Clown")
-		clname(src)
 
 /mob/living/carbon/human/proc/spawnId(rank)
 	var/obj/item/weapon/card/id/C = null
@@ -685,6 +683,8 @@
 		pda.ownjob = src.wear_id.assignment
 		pda.name = "PDA-[src.real_name] ([pda.ownjob])"
 */
+	if (rank == "Clown")
+		spawn clname(src)
 
 /client/proc/mimewall()
 	set category = "Mime"
