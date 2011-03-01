@@ -104,19 +104,31 @@
 	throw_range = 20
 
 /obj/item/weapon/ammo/a357
-	desc = "There are 7 bullets left!"
+	desc = "There are 7 rounds left!"
 	name = "ammo-357"
 	icon_state = "357-7"
 	amount_left = 7.0
 
 /obj/item/weapon/ammo/a45
-	desc = "There are 10 bullets left!"
+	desc = "There are 10 rounds left!"
 	name = "ammo-45"
 	icon_state = "45-10"
 	amount_left = 10.0
 
+/obj/item/weapon/ammo/a763m
+	desc = "There are 9 rounds left!"
+	name = "ammo-7.63x25"
+	icon_state = "7.63x25m-9"
+	amount_left = 9.0
+
+/obj/item/weapon/ammo/a9x19p
+	desc = "There are 8 rounds left!"
+	name = "ammo-9x19"
+	icon_state = "9x19p-8"
+	amount_left = 8.0
+
 /obj/item/weapon/ammo/assaultmag
-	desc = "There are 30 bullets left!"
+	desc = "There are 30 rounds left!"
 	name = "5.56x45mm NATO"
 	icon_state = "5.56"
 	amount_left = 30.0
@@ -685,8 +697,32 @@
 	icon_state = "mateba"
 	origin_tech = "combat=3;materials=2"
 
+/obj/item/weapon/gun/c96
+	desc = "There are 0 rounds left. Uses 7.63x25 Mauser"
+	name = "c96"
+	icon_state = "c96"
+	var/obj/item/weapon/ammo/a763m/magazine
+	w_class = 3.0
+	throw_speed = 2
+	throw_range = 10
+	force = 12.0
+	m_amt = 2000
+//	origin_tech = "combat=2;materials=2"
+
+/obj/item/weapon/gun/p08
+	desc = "There are 0 rounds left. Uses 9x19 Parabellum"
+	name = "p08"
+	icon_state = "p08empty"
+	var/obj/item/weapon/ammo/a9x19p/magazine
+	w_class = 3.0
+	throw_speed = 2
+	throw_range = 10
+	force = 16.0
+	m_amt = 2000
+//	origin_tech = "combat=2;materials=2"
+
 /obj/item/weapon/gun/glock
-	desc = "There are 0 bullets left. Uses .45 ACP"
+	desc = "There are 0 rounds left. Uses .45 ACP"
 	name = "glock"
 	icon_state = "glock"
 	var/obj/item/weapon/ammo/a45/magazine
@@ -695,10 +731,10 @@
 	throw_range = 10
 	force = 6.0
 	m_amt = 2000
-//	origin_tech = "combat=3;materials=2"
+//	origin_tech = "combat=2;materials=2"
 
 /obj/item/weapon/gun/m1911
-	desc = "There are 0 bullets left. Uses .45 ACP"
+	desc = "There are 0 rounds left. Uses .45 ACP"
 	name = "m1911"
 	icon_state = "m1911"
 	var/obj/item/weapon/ammo/a45/magazine
@@ -707,10 +743,10 @@
 	throw_range = 10
 	force = 14.0
 	m_amt = 2000
-//	origin_tech = "combat=3;materials=2"
+//	origin_tech = "combat=2;materials=2"
 
 /obj/item/weapon/gun/carbine
-	desc = "There are 0 bullets left. Uses 5.56x45mm NATO"
+	desc = "There are 0 rounds left. Uses 5.56x45mm NATO"
 	name = "carbine"
 	icon_state = "carbinenomag"
 	var/obj/item/weapon/ammo/assaultmag/magazine
@@ -720,10 +756,10 @@
 	throw_range = 10
 	force = 6.0
 	m_amt = 2000
-//	origin_tech = "combat=3;materials=2"
+//	origin_tech = "combat=2;materials=2"
 
 /obj/item/weapon/gun/ak331
-	desc = "There are 0 bullets left. Uses 5.56x45mm NATO"
+	desc = "There are 0 rounds left. Uses 5.56x45mm NATO"
 	name = "ak331"
 	icon_state = "ak331nomag"
 	var/obj/item/weapon/ammo/assaultmag/magazine
@@ -733,7 +769,7 @@
 	throw_range = 10
 	force = 18.0
 	m_amt = 2000
-//	origin_tech = "combat=3;materials=2"
+//	origin_tech = "combat=2;materials=2"
 
 /obj/item/weapon/gun/detectiverevolver
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
