@@ -145,7 +145,7 @@
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer, access_virology, access_surgery,
-			            access_theatre, access_research)
+			            access_theatre, access_research, access_mining_office, access_mining)
 		if("Atmospheric Technician")
 			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage)
 		if("Barman")
@@ -167,14 +167,14 @@
 		if("Mail Sorter")
 			return list(access_maint_tunnels, access_mailsorting)
 		if("Shaft Miner")
-			return list(access_maint_tunnels, access_mining)
+			return list(access_maint_tunnels, access_mining, access_mint)
 		if("Quartermaster")
-			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mint)
+			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining_office, access_mining)
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_ai_upload, access_construction, , access_mining, access_robotics,
-			            access_mining_office, access_mint)
+			            access_heads, access_ai_upload, access_construction, access_robotics,
+			             access_mint)
 		if("Research Director") // added hydroponics access -- Skie
 			return list(access_medical, access_morgue, access_medlab, access_rd,
 			            access_tech_storage, access_maint_tunnels, access_heads, access_tox,
