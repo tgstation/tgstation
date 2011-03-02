@@ -106,7 +106,7 @@
 /obj/mecha/proc/click_action(atom/target,mob/user)
 	if(!src.occupant || src.occupant != user ) return
 	if(user.stat) return
-	if(state || !cell || cell.charge<=0) return
+	if(state || !get_charge()) return
 	if(src == target) return
 	var/dir_to_target = get_dir(src,target)
 	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
@@ -183,7 +183,7 @@
 		return 0
 	if(src.pr_inertial_movement.active())
 		return 0
-	if(state || !cell || cell.charge<=0)
+	if(state || !get_charge())
 		return 0
 	var/move_result = 0
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
@@ -428,8 +428,8 @@
 	return ex_act(rand(1,3))//should do for now
 
 /obj/mecha/emp_act(severity)
-	cell.charge -= min(cell.charge, cell.maxcharge/severity)
-	src.log_message("EMP pulse detected")
+	cell.use(min(cell.charge, cell.maxcharge/severity))
+	src.log_message("EMP detected")
 	take_damage(100 / severity)
 	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST),1)
 	return
@@ -839,13 +839,14 @@
 
 /obj/mecha/proc/get_stats_part()
 	var/integrity = health/initial(health)*100
+	var/cell_charge = get_charge()
 	var/output = {"[internal_damage&MECHA_INT_FIRE?"<font color='red'><b>INTERNAL FIRE</b></font><br>":null]
 						[internal_damage&MECHA_INT_TEMP_CONTROL?"<font color='red'><b>LIFE SUPPORT SYSTEM MALFUNCTION</b></font><br>":null]
 						[internal_damage&MECHA_INT_TANK_BREACH?"<font color='red'><b>GAS TANK BREACH</b></font><br>":null]
 						[internal_damage&MECHA_INT_CONTROL_LOST?"<font color='red'><b>COORDINATION SYSTEM CALIBRATION FAILURE</b></font> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a><br>":null]
 						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font><br>":null]
 						<b>Integrity: </b> [integrity]%<br>
-						<b>Powercell charge: </b>[cell.charge/cell.maxcharge*100]%<br>
+						<b>Powercell charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
 						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
 						<b>Airtank pressure: </b>[src.return_pressure()]kPa<br>
 						<b>Internal temperature: </b> [src.air_contents.temperature]&deg;K|[src.air_contents.temperature - T0C]&deg;C<br>
@@ -967,6 +968,10 @@
 		var/rendered = "<span class='game say'><span class='name'>[M.name]</span> <span class='message'>[M.say_quote(text)]</span></span>"
 		occupant.show_message(rendered, 2)
 	return
+
+/obj/mecha/proc/get_charge()//returns null if no powercell, else returns cell.charge
+	if(!src.cell) return
+	return max(0, src.cell.charge)
 
 
 //////////////////////////////////////////

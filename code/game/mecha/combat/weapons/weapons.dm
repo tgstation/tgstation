@@ -28,7 +28,7 @@
 		return 0
 	if(!chassis)
 		return 0
-	if(energy_drain && chassis.cell.charge < energy_drain)
+	if(energy_drain && chassis.get_charge() < energy_drain)
 		return 0
 	if(!weapon_ready)
 		return 0
@@ -63,10 +63,10 @@
 	proc/rearm()
 		if(missiles < initial(missiles))
 			var/missiles_to_add = initial(missiles) - missiles
-			while(chassis.cell.charge >= missile_energy_cost && missiles_to_add)
+			while(chassis.get_charge() >= missile_energy_cost && missiles_to_add)
 				missiles++
 				missiles_to_add--
-				chassis.cell.charge -= missile_energy_cost
+				chassis.cell.use(missile_energy_cost)
 		chassis.log_message("Rearmed [src.name].")
 		return
 
@@ -263,7 +263,7 @@
 	fire(target)
 		if(!chassis)
 			return 0
-		if(energy_drain && chassis.cell.charge < energy_drain)
+		if(energy_drain && chassis.get_charge() < energy_drain)
 			return 0
 		if(!weapon_ready)
 			return 0
@@ -271,8 +271,10 @@
 		playsound(chassis, 'AirHorn.ogg', 100, 1)
 		chassis.occupant_message("<font color='red' size='5'>HONK</font>")
 		for(var/mob/living/carbon/M in ohearers(6, chassis))
-			if(istype(M, /mob/living/carbon/human) && istype(M:ears, /obj/item/clothing/ears/earmuffs))
-				continue
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+					continue
 			M << "<font color='red' size='7'>HONK</font>"
 			M.sleeping = 0
 			M.stuttering += 20
@@ -313,10 +315,10 @@
 	proc/rearm()
 		if(projectiles < initial(projectiles))
 			var/projectiles_to_add = initial(projectiles) - projectiles
-			while(chassis.cell.charge >= projectile_energy_cost && projectiles_to_add)
+			while(chassis.get_charge() >= projectile_energy_cost && projectiles_to_add)
 				projectiles++
 				projectiles_to_add--
-				chassis.cell.charge -= projectile_energy_cost
+				chassis.cell.use(projectile_energy_cost)
 		chassis.log_message("Rearmed [src.name].")
 		return
 

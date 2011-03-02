@@ -31,12 +31,13 @@
 	return
 
 /obj/mecha/combat/honker/get_stats_part()
+	var/cell_charge = get_charge()
 	var/output = {"[internal_damage&MECHA_INT_FIRE?"<font color='red'><b>INTERNAL FIRE</b></font><br>":null]
 						[internal_damage&MECHA_INT_TEMP_CONTROL?"<font color='red'><b>CLOWN SUPPORT SYSTEM MALFUNCTION</b></font><br>":null]
 						[internal_damage&MECHA_INT_TANK_BREACH?"<font color='red'><b>GAS TANK HONK</b></font><br>":null]
 						[internal_damage&MECHA_INT_CONTROL_LOST?"<font color='red'><b>HONK-A-DOODLE</b></font> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a><br>":null]
 						<b>IntegriHONK: </b> [health/initial(health)*100] %) <br>
-						<b>PowerHONK charge: </b>[cell.charge/cell.maxcharge*100] %)<br>
+						<b>PowerHONK charge: </b>[isnull(cell_charge)?"Someone HONKed powerHonk!!!":"[cell.percent()]%"])<br>
 						<b>AirHONK pressure: </b>[src.return_pressure()]HoNKs<br>
 						<b>Internal HONKature: </b> [src.air_contents.temperature]&deg;honK|[src.air_contents.temperature - T0C]&deg;honCk<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>

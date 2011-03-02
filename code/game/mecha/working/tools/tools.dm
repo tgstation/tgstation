@@ -28,7 +28,7 @@
 		return 0
 	if(!chassis)
 		return 0
-	if(energy_drain && chassis.cell.charge < energy_drain)
+	if(energy_drain && chassis.get_charge() < energy_drain)
 		return 0
 	if(!tool_ready)
 		return 0
@@ -143,6 +143,9 @@
 						var/turf/simulated/mineral/M = target
 						chassis.log_message("Drilled through [target]")
 						M.gets_drilled()
+						for(var/turf/simulated/mineral/N in range(chassis,1))
+							if(get_dir(chassis,N)&chassis.dir)
+								N.gets_drilled()
 					else
 						chassis.log_message("Drilled through [target]")
 						target.ex_act(2)

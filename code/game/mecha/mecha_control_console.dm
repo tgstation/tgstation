@@ -93,9 +93,10 @@
 		if(!istype(src.loc, /obj/mecha))
 			return 0
 		var/obj/mecha/M = src.loc
+		var/cell_charge = M.get_charge()
 		var/answer = {"<b>Name:</b> [M.name]<br>
 							<b>Integrity:</b> [M.health/initial(M.health)*100]%<br>
-							<b>Cell charge:</b> [M.cell?"[M.cell.charge/M.cell.maxcharge*100]%":"Not found"]<br>
+							<b>Cell charge:</b> [isnull(cell_charge)?"Not found":"[M.cell.percent()]%"]<br>
 							<b>Airtank:</b> [M.return_pressure()]kPa<br>
 							<b>Pilot:</b> [M.occupant||"None"]<br>
 							<b>Location:</b> [get_area(M)||"Unknown"]<br>

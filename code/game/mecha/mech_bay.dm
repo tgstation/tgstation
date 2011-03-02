@@ -110,7 +110,7 @@
 		if(mecha in port.recharge_floor)
 			var/delta = min(max_charge, mecha.cell.maxcharge - mecha.cell.charge)
 			if(delta>0)
-				mecha.cell.charge += delta
+				mecha.cell.give(delta)
 				port.use_power(delta*150)
 			else
 				mecha.occupant_message("<font color='blue'><b>Fully charged.</b></font>")
@@ -181,7 +181,8 @@
 			output += {"<b>Mech Bay Recharge Station Data:</b><div style='margin-left: 15px;'>
 							<b>Mecha: </b>[recharge_floor.recharging_mecha||"None"]<br>"}
 			if(recharge_floor.recharging_mecha)
-				output += "<b>Cell charge: </b>[recharge_floor.recharging_mecha.cell?"[recharge_floor.recharging_mecha.cell.charge]/[recharge_floor.recharging_mecha.cell.maxcharge]":"No powercell found"]<br>"
+				var/cell_charge = recharge_floor.recharging_mecha.get_charge()
+				output += "<b>Cell charge: </b>[isnull(cell_charge)?"No powercell found":"[recharge_floor.recharging_mecha.cell.charge]/[recharge_floor.recharging_mecha.cell.maxcharge]"]<br>"
 			output += "</div>"
 		if(!recharge_port)
 			output += "<font color='red'>Mech Bay Power Port not initialized.</font><br>"

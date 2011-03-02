@@ -48,6 +48,13 @@ datum/controller/game_controller
 		for(var/obj/machinery/atmospherics/machine in world)
 			machine.build_network()
 
+		world << "\red \b Initializing atmos machinery."
+		sleep(-1)
+		for(var/obj/machinery/atmospherics/unary/vent_pump/T in world)
+			T.broadcast_status()
+		for(var/obj/machinery/atmospherics/unary/vent_scrubber/T in world)
+			T.broadcast_status()
+
 		/*world << "\red \b Initializing atmos machinery"
 		sleep(-1)
 

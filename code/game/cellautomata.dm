@@ -161,13 +161,15 @@
 /atom/verb/point()
 	set name = "Point To"
 	set src in oview()
+	var/atom/this = src//detach proc from src
+	src = null
 
 	if (!usr || !isturf(usr.loc))
 		return
 	else if (usr.stat != 0 || usr.restrained())
 		return
 
-	var/tile = get_turf(src)
+	var/tile = get_turf(this)
 	if (!tile)
 		return
 
@@ -175,7 +177,7 @@
 	spawn (20)
 		del(P)
 
-	usr.visible_message("<b>[usr]</b> points to [src]")
+	usr.visible_message("<b>[usr]</b> points to [this]")
 
 /obj/decal/point/point()
 	set src in oview()

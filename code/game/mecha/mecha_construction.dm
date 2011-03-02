@@ -385,9 +385,9 @@
 					 list("key"="/obj/item/weapon/wrench"),//9
 					 list("key"="/obj/item/weapon/gun/energy/laser_gun"),//10
 					 list("key"="/obj/item/weapon/screwdriver"),//11
-					 list("key"="/obj/item/weapon/stock_parts/adv_capacitor"),//12
+					 list("key"="/obj/item/weapon/stock_parts/capacitor/adv"),//12
 					 list("key"="/obj/item/weapon/screwdriver"),//13
-					 list("key"="/obj/item/weapon/stock_parts/adv_scanning_module"),//14
+					 list("key"="/obj/item/weapon/stock_parts/scanning_module/adv"),//14
 					 list("key"="/obj/item/weapon/screwdriver"),//15
 					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/targeting"),//16
 					 list("key"="/obj/item/weapon/screwdriver"),//17

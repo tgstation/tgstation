@@ -36,6 +36,9 @@
 		if (!id_tag)
 			assign_uid()
 			id_tag = num2text(uid)
+		if(ticker && ticker.current_state == 3)//if the game is running
+			src.initialize()
+			src.broadcast_status()
 		..()
 
 	high_volume
@@ -61,7 +64,7 @@
 			return
 		if (!node)
 			on = 0
-		broadcast_status()
+		//broadcast_status()
 		if(!on)
 			return 0
 
@@ -173,7 +176,6 @@
 
 			if("toggle_checks")
 				pressure_checks = (pressure_checks?0:3)
-
 
 			if("set_direction")
 				var/number = text2num(signal.data["parameter"])
