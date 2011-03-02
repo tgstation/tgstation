@@ -1884,7 +1884,7 @@
 "aKl" = (/obj/rack,/obj/item/clothing/under/owl,/obj/item/clothing/mask/owl_mask,/obj/machinery/atmospherics/pipe/simple{color = "red"; dir = 4; icon_state = "intact-r-f"; layer = 3; level = 1; name = "pipe"},/obj/machinery/light{dir = 4; icon_state = "tube1"; tag = "icon-tube1 (EAST)"},/turf/simulated/floor,/area/crew_quarters/theatre)
 "aKm" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 8; on = 1; scrub_Toxins = 1},/obj/stool/chair{dir = 1},/obj/item/device/radio/intercom{frequency = 1480; name = "Confessional Intercom"; pixel_x = -25},/turf/simulated/floor{icon_state = "dark"},/area/chapel/main)
 "aKn" = (/obj/machinery/door{icon = 'icons/obj/doors/doormorgue.dmi'; name = "Confession Booth"; req_access_txt = "0"},/turf/simulated/floor{icon_state = "dark"},/area/chapel/main)
-"aKo" = (/turf/simulated/floor{dir = 6; icon_state = "carpetsymbol"; tag = "icon-carpet"},/area/chapel/main)
+"aKo" = (/turf/simulated/floor{dir = 2; icon_state = "carpetsymbol"; tag = "icon-carpet"},/area/chapel/main)
 "aKp" = (/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor{dir = 1; icon_state = "carpetside"; tag = "icon-carpet"},/area/chapel/main)
 "aKq" = (/obj/stool/chair{dir = 4},/turf/simulated/floor{dir = 8; icon_state = "escape"; tag = "icon-escape (WEST)"},/area/hallway/secondary/exit)
 "aKr" = (/turf/simulated/floor{dir = 4; icon_state = "warning"; tag = "icon-warning"},/area/hallway/secondary/exit)
