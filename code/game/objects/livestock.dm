@@ -15,7 +15,7 @@
 
 	var/frustration = 0						//How long it's gone without reaching it's target.
 	var/patience = 35						//The maximum time it'll chase a target.
-	var/mob/living/carbon/target			//It's combat target.
+	var/mob/living/carbon/target			//Its combat target.
 	var/list/mob/living/carbon/flee_from = new/list()
 	var/list/path_target = new/list()		//The path to the combat target.
 
