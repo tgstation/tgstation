@@ -60,19 +60,22 @@
 	src.attack_self(user, 1)
 	return
 
-/obj/item/device/flash/attack_self(mob/living/carbon/user as mob, flag)
-	if ((usr.mutations & 16) && prob(50))
+/obj/item/device/flash/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
+	if (emp)
+
+	else if ((usr.mutations & 16) && prob(50))
 		usr << "\red The Flash slips out of your hand."
 		usr.drop_item()
+		return
+	else if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		usr << "\red You don't have the dexterity to do this!"
 		return
 	if ( (world.time + 600) > src.l_time)
 		src.shots = 5
 	if (src.shots < 1)
 		user.show_message("\red *click* *click*", 2)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
-		return
+
 	src.l_time = world.time
 	add_fingerprint(user)
 	src.shots--
@@ -107,5 +110,5 @@
 					flick("flash", M.flash)
 
 /obj/item/device/flash/emp_act(severity)
-	src.attack_self()
+	src.attack_self(null,1,1)
 	..()

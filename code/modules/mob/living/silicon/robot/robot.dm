@@ -11,7 +11,8 @@
 			src.real_name += " [pick(rand(1, 999))]"
 			src.name = src.real_name
 	spawn (4)
-		src.connected_ai = activeais()
+		if (src.client)
+			src.connected_ai = activeais()
 		if (src.connected_ai)
 			src.connected_ai.connected_robots += src
 //			src.laws = src.connected_ai.laws_object //The borg inherits its AI's laws

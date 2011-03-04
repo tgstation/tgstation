@@ -482,12 +482,13 @@ datum
 
 					if(prob(75))
 						var/datum/organ/external/affecting = M:organs["head"]
-						affecting.take_damage(25, 0)
-						M:UpdateDamage()
-						M:UpdateDamageIcon()
-						M:emote("scream")
-						M << "\red Your face has become disfigured!"
-						M.real_name = "Unknown"
+						if(affecting)
+							affecting.take_damage(25, 0)
+							M:UpdateDamage()
+							M:UpdateDamageIcon()
+							M:emote("scream")
+							M << "\red Your face has become disfigured!"
+							M.real_name = "Unknown"
 					else
 						M:bruteloss += 15
 				else
