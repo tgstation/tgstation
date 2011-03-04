@@ -81,6 +81,7 @@
 			src.verbs += /client/proc/Debug2					//debug toggle switch
 			src.verbs += /client/proc/fix_next_move
 			src.verbs += /client/proc/ticklag
+			src.verbs += /client/proc/camera_view
 			src.verbs += /proc/givetestverbs
 			src.verbs += /obj/admins/proc/spawn_atom
 			src.verbs += /obj/admins/proc/toggletintedweldhelmets

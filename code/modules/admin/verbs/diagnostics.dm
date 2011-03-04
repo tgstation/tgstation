@@ -1,4 +1,14 @@
 
+var/camera_range_display_status = 0
+
+/obj/debugging/camera_range
+	icon = '480x480.dmi'
+	icon_state = "25percent"
+
+	New()
+		src.pixel_x = -224
+		src.pixel_y = -224
+
 /client/proc
 	general_report()
 		set category = "Debug"
@@ -21,6 +31,24 @@
 "}
 
 		usr << browse(output,"window=generalreport")
+
+	camera_view()
+		set category = "Debug"
+		set name = "Camera Range Display"
+
+		if(camera_range_display_status)
+			camera_range_display_status = 0
+		else
+			camera_range_display_status = 1
+
+
+
+		for(var/obj/debugging/camera_range/C in world)
+			del(C)
+
+		if(camera_range_display_status)
+			for(var/obj/machinery/camera/C in world)
+				new/obj/debugging/camera_range(C.loc)
 
 	air_report()
 		set category = "Debug"
@@ -145,5 +173,5 @@
 						output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([device:x],[device:y],[device:z] in area [get_area(device:loc)])<br>"
 					else
 						output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
-					
+
 		usr << browse(output,"window=radioreport")
