@@ -625,6 +625,9 @@ var/showadminmessages = 1
 
 	if (href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
+		if(!M)
+			usr << "You seem to be selecting a mob that doesn't exist."
+			return
 		var/dat = "<html><head><title>Options for [M.key]</title></head>"
 		var/foo = "\[ "
 		if (ismob(M) && M.client)
