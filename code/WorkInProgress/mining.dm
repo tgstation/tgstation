@@ -2528,6 +2528,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	perunit = 2000
 
 /obj/item/stack/sheet/gold/New()
+	..()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 
@@ -2543,6 +2544,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	perunit = 2000
 
 /obj/item/stack/sheet/silver/New()
+	..()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 
@@ -2557,6 +2559,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	perunit = 1000
 
 /obj/item/stack/sheet/diamond/New()
+	..()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 
@@ -2605,6 +2608,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	perunit = 2000
 
 /obj/item/stack/sheet/clown/New()
+	..()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 

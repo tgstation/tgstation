@@ -183,11 +183,12 @@
 				if(P:amount >= 5)
 					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						P:amount -= 5
-						if(!P:amount) del(P)
-						user << "\blue You add cables to the frame."
-						src.state = 3
-						src.icon_state = "3"
+						if(P)
+							P:amount -= 5
+							if(!P:amount) del(P)
+							user << "\blue You add cables to the frame."
+							src.state = 3
+							src.icon_state = "3"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'wirecutter.ogg', 50, 1)
@@ -201,10 +202,11 @@
 				if(P:amount >= 2)
 					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20))
-						P:use(2)
-						user << "\blue You put in the glass panel."
-						src.state = 4
-						src.icon_state = "4"
+						if(P)
+							P:use(2)
+							user << "\blue You put in the glass panel."
+							src.state = 4
+							src.icon_state = "4"
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'Crowbar.ogg', 50, 1)

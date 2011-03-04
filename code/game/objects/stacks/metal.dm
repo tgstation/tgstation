@@ -102,7 +102,8 @@ var/global/list/datum/stack_recipe/r_metal_recipes = list ( \
 
 // TILES
 
-/obj/item/stack/tile/New()
+/obj/item/stack/tile/New(var/loc, var/amount=null)
+	..()
 	src.pixel_x = rand(1, 14)
 	src.pixel_y = rand(1, 14)
 	return

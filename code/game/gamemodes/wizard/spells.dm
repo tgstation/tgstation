@@ -485,8 +485,10 @@
 					break
 			if(clear)
 				L+=T
-
-	usr.loc = pick(L)
+	if(L.len)
+		usr.loc = pick(L)
+	else
+		usr <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
 
 	smoke.start()
 

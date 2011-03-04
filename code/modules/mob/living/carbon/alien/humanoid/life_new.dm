@@ -164,8 +164,8 @@
 
 
 		breathe()
-
-			if(src.reagents.has_reagent("lexorin")) return
+			if(src.reagents)
+				if(src.reagents.has_reagent("lexorin")) return
 			if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 			var/datum/gas_mixture/environment = loc.return_air()

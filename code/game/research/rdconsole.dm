@@ -258,6 +258,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					spawn(24)
 						linked_destroy.busy = 0
 						if(!linked_destroy.hacked)
+							if(!linked_destroy.loaded_item)
+								usr <<"\red The destructive analyzer appears to be empty."
+								return
 							if(linked_destroy.loaded_item.reliability >= 90)
 								var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
 								for(var/T in temp_tech)

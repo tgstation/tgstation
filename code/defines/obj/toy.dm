@@ -183,8 +183,9 @@ obj/item/toy/blink
 				sleep(1)
 
 			spawn(10)
-				new /obj/item/toy/ammo/crossbow(D.loc)
-				del(D)
+				if(D)
+					new /obj/item/toy/ammo/crossbow(D.loc)
+					del(D)
 
 			return
 		else if (bullets == 0)
