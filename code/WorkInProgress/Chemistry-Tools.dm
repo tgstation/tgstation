@@ -620,6 +620,9 @@
 						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 						var/mob/living/carbon/T = target
 						var/datum/reagent/B = new /datum/reagent/blood
+						if(!T.dna)
+							usr << "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)"
+							return
 						B.holder = src
 						B.volume = amount
 						//set reagent data
