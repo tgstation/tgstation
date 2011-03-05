@@ -578,7 +578,7 @@
 	set name = "Move Inside"
 	set src in oview(1)
 
-	if (usr.stat != 0 || !istype(usr, /mob/living/carbon/human))
+	if (usr.stat || !ishuman(usr))
 		return
 	src.log_message("[usr] tries to move in.")
 	if (src.occupant)

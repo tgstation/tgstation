@@ -53,7 +53,7 @@
 			bless(M)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] heals [] with the power of [src.deity_name]!</B>", user, M), 1)
-			M << "\red May the power of Christ compel you to be healed!"
+			M << "\red May the power of [src.deity_name] compel you to be healed!"
 			playsound(src.loc, "punch", 25, 1, -1)
 		else
 			if(ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))

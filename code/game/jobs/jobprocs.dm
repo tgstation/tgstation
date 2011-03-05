@@ -290,11 +290,11 @@
 				if (new_religion)
 					if (length(new_religion) >= 26)
 						new_religion = copytext(new_religion, 1, 26)
-						new_religion = dd_replacetext(new_religion, ">", "'")
-						if(new_religion == "Imperium")
-							B.name = "Uplifting Primer"
-						else
-							B.name = "The Holy Book of [new_religion]"
+					new_religion = dd_replacetext(new_religion, ">", "'")
+					if(new_religion == "Imperium")
+						B.name = "Uplifting Primer"
+					else
+						B.name = "The Holy Book of [new_religion]"
 
 			spawn(1)
 				var/deity_name = "Emperor"

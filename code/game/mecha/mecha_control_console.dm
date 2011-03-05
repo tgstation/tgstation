@@ -90,7 +90,7 @@
 	icon_state = "motion2"
 
 	proc/get_mecha_info()
-		if(!istype(src.loc, /obj/mecha))
+		if(!in_mecha())
 			return 0
 		var/obj/mecha/M = src.loc
 		var/cell_charge = M.get_charge()
