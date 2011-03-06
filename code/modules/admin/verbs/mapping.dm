@@ -20,6 +20,7 @@
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 
 var/camera_range_display_status = 0
+var/intercom_range_display_status = 0
 
 /obj/debugging/camera_range
 	icon = '480x480.dmi'
@@ -29,7 +30,17 @@ var/camera_range_display_status = 0
 		src.pixel_x = -224
 		src.pixel_y = -224
 
+/obj/debugging/marker
+	icon = 'areas.dmi'
+	icon_state = "yellow"
+
 /client/proc
+
+	do_not_use_these()
+		set category = "Mapping"
+		set name = "-None of these are for ingame use!!"
+
+		..()
 
 	camera_view()
 		set category = "Mapping"
@@ -56,7 +67,7 @@ var/camera_range_display_status = 0
 		set name = "Sec Camera Report"
 
 		if(!master_controller)
-			alert(usr,"Master_controller not found.","Air Report")
+			alert(usr,"Master_controller not found.","Sec Camera Report")
 			return 0
 
 		var/list/obj/machinery/camera/CL = list()
@@ -79,3 +90,22 @@ var/camera_range_display_status = 0
 
 		output += "</ul>"
 		usr << browse(output,"window=airreport;size=1000x500")
+
+	intercom_view()
+		set category = "Mapping"
+		set name = "Intercom Range Display"
+
+		if(intercom_range_display_status)
+			intercom_range_display_status = 0
+		else
+			intercom_range_display_status = 1
+
+		for(var/obj/debugging/marker/M in world)
+			del(M)
+
+		if(intercom_range_display_status)
+			for(var/obj/item/device/radio/intercom/I in world)
+				for(var/turf/T in orange(7,I))
+					var/obj/debugging/marker/F = new/obj/debugging/marker(T)
+					if (!(F in view(7,I.loc)))
+						del(F)

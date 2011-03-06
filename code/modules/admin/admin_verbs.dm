@@ -87,8 +87,10 @@
 			src.verbs += /obj/admins/proc/toggletintedweldhelmets
 
 			// Mapping helpers
-			src.verbs += /client/proc/camera_view
-			src.verbs += /client/proc/sec_camera_report
+			src.verbs += /client/proc/do_not_use_these 			//-errorage
+			src.verbs += /client/proc/camera_view 				//-errorage
+			src.verbs += /client/proc/sec_camera_report 		//-errorage
+			src.verbs += /client/proc/intercom_view 			//-errorage
 
 			// Admin helpers
 			src.verbs += /client/proc/cmd_admin_attack_log
