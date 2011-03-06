@@ -515,11 +515,11 @@
 
 		if ("Roboticist")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_rob (src), slot_ears) // -- DH
-			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
+			src.equip_if_possible(new /obj/item/device/pda/engineering(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/roboticist(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-//			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)  // No longer medical or research, so away it goes!
+			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)  // No longer medical or research, so away it goes! //Same person who took it away has returned it.
 //			src.equip_if_possible(new /obj/item/weapon/crowbar(src), slot_in_backpack) //another job with toolbox and this
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/weapon/storage/toolbox/mechanical(src), slot_l_hand)
