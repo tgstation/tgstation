@@ -1,7 +1,6 @@
 /obj/window
 	name = "window"
 	icon = 'structures.dmi'
-	icon_state = "window"
 	desc = "A window."
 	density = 1
 	var/health = 14.0
@@ -18,11 +17,14 @@
 
 // Basic
 
+/obj/window/basic
+	icon_state = "window"
+
 /obj/window/basic/north
 	dir = NORTH
 
 /obj/window/basic/east
-	dir = NORTH
+	dir = EAST
 
 /obj/window/basic/west
 	dir = WEST

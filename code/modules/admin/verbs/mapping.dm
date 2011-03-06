@@ -44,7 +44,7 @@ var/intercom_range_display_status = 0
 
 	camera_view()
 		set category = "Mapping"
-		set name = "Camera Range Display"
+		set name = "MAP Sec Camera Range Display"
 
 		if(camera_range_display_status)
 			camera_range_display_status = 0
@@ -64,7 +64,7 @@ var/intercom_range_display_status = 0
 
 	sec_camera_report()
 		set category = "Mapping"
-		set name = "Sec Camera Report"
+		set name = "MAP Sec Camera Report"
 
 		if(!master_controller)
 			alert(usr,"Master_controller not found.","Sec Camera Report")
@@ -93,7 +93,7 @@ var/intercom_range_display_status = 0
 
 	intercom_view()
 		set category = "Mapping"
-		set name = "Intercom Range Display"
+		set name = "MAP Intercom Range Display"
 
 		if(intercom_range_display_status)
 			intercom_range_display_status = 0
