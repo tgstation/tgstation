@@ -376,7 +376,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				power = max(2000, power)
 				screen = 0.4
 				linked_imprinter.busy = 1
-				flick("circuit_imprinter_ani",linked_lathe)
+				flick("circuit_imprinter_ani",linked_imprinter)
 				spawn(16)
 					use_power(power)
 					for(var/M in being_built.materials)
@@ -410,43 +410,62 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			linked_lathe.reagents.clear_reagents()
 
 		else if(href_list["lathe_ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
+			var/desired_num_sheets = text2num(href_list["lathe_ejectsheet_amt"])
+			var/res_amount, type
 			switch(href_list["lathe_ejectsheet"])
 				if("metal")
-					new /obj/item/stack/sheet/metal(linked_lathe.loc, text2num(href_list["lathe_ejectsheet_amt"]))
-					linked_lathe.m_amount = max(0, (linked_lathe.m_amount-(text2num(href_list["lathe_ejectsheet_amt"]) * 3750)))
+					type = /obj/item/stack/sheet/metal
+					res_amount = "m_amount"
 				if("glass")
-					new /obj/item/stack/sheet/glass(linked_lathe.loc, text2num(href_list["lathe_ejectsheet_amt"]))
-					linked_lathe.g_amount = max(0, (linked_lathe.g_amount-(text2num(href_list["lathe_ejectsheet_amt"]) * 3750)))
+					type = /obj/item/stack/sheet/glass
+					res_amount = "g_amount"
 				if("gold")
-					new /obj/item/stack/sheet/gold(linked_lathe.loc, text2num(href_list["lathe_ejectsheet_amt"]))
-					linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-(text2num(href_list["lathe_ejectsheet_amt"]) * 3750)))
+					type = /obj/item/stack/sheet/gold
+					res_amount = "gold_amount"
 				if("silver")
-					new /obj/item/stack/sheet/silver(linked_lathe.loc, text2num(href_list["lathe_ejectsheet_amt"]))
-					linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-(text2num(href_list["lathe_ejectsheet_amt"]) * 3750)))
+					type = /obj/item/stack/sheet/silver
+					res_amount = "silver_amount"
 				if("plasma")
-					new /obj/item/stack/sheet/plasma(linked_lathe.loc, text2num(href_list["lathe_ejectsheet_amt"]))
-					linked_lathe.plasma_amount = max(0, (linked_lathe.plasma_amount-(text2num(href_list["lathe_ejectsheet_amt"]) * 3750)))
+					type = /obj/item/stack/sheet/plasma
+					res_amount = "plasma_amount"
 				if("uranium")
-					new /obj/item/stack/sheet/uranium(linked_lathe.loc, text2num(href_list["lathe_ejectsheet_amt"]))
-					linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-(text2num(href_list["lathe_ejectsheet_amt"]) * 3750)))
+					type = /obj/item/stack/sheet/uranium
+					res_amount = "uranium_amount"
 				if("diamond")
-					new /obj/item/stack/sheet/diamond(linked_lathe.loc, text2num(href_list["lathe_ejectsheet_amt"]))
-					linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-(text2num(href_list["lathe_ejectsheet_amt"]) * 3750)))
+					type = /obj/item/stack/sheet/diamond
+					res_amount = "diamond_amount"
 				if("clown")
-					new /obj/item/stack/sheet/clown(linked_lathe.loc, text2num(href_list["lathe_ejectsheet_amt"]))
-					linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-(text2num(href_list["lathe_ejectsheet_amt"]) * 3750)))
-
+					type = /obj/item/stack/sheet/clown
+					res_amount = "clown_amount"
+			if(ispath(type) && hasvar(linked_lathe, res_amount))
+				var/obj/item/stack/sheet/sheet = new type(linked_lathe.loc)
+				var/available_num_sheets = round(linked_lathe.vars[res_amount]/sheet.perunit)
+				if(available_num_sheets>0)
+					sheet.amount = min(available_num_sheets, desired_num_sheets)
+					linked_lathe.vars[res_amount] = max(0, (linked_lathe.vars[res_amount]-sheet.amount * sheet.perunit))
+				else
+					del sheet
 		else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
+			var/desired_num_sheets = text2num(href_list["imprinter_ejectsheet_amt"])
+			var/res_amount, type
 			switch(href_list["imprinter_ejectsheet"])
 				if("glass")
-					new /obj/item/stack/sheet/glass(linked_imprinter.loc, text2num(href_list["imprinter_ejectsheet"]))
-					linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-(text2num(href_list["imprinter_ejectsheet_amt"]) * 3750)))
+					type = /obj/item/stack/sheet/glass
+					res_amount = "g_amount"
 				if("gold")
-					new /obj/item/stack/sheet/gold(linked_imprinter.loc, text2num(href_list["imprinter_ejectsheet"]))
-					linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-(text2num(href_list["imprinter_ejectsheet_amt"]) * 3750)))
+					type = /obj/item/stack/sheet/gold
+					res_amount = "gold_amount"
 				if("diamond")
-					new /obj/item/stack/sheet/diamond(linked_imprinter.loc, text2num(href_list["imprinter_ejectsheet"]))
-					linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-(text2num(href_list["imprinter_ejectsheet_amt"]) * 3750)))
+					type = /obj/item/stack/sheet/diamond
+					res_amount = "diamond_amount"
+			if(ispath(type) && hasvar(linked_imprinter, res_amount))
+				var/obj/item/stack/sheet/sheet = new type(linked_imprinter.loc)
+				var/available_num_sheets = round(linked_imprinter.vars[res_amount]/sheet.perunit)
+				if(available_num_sheets>0)
+					sheet.amount = min(available_num_sheets, desired_num_sheets)
+					linked_imprinter.vars[res_amount] = max(0, (linked_imprinter.vars[res_amount]-sheet.amount * sheet.perunit))
+				else
+					del sheet
 
 		else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
 			screen = 0.0
