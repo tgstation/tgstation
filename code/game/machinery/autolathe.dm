@@ -35,6 +35,7 @@
 			if(g_amount >= 3750)
 				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
 				G.amount = round(g_amount / 3750)
+			del(src)
 			return 1
 		else
 			user << "\red You can't load the autolathe while it's opened."
