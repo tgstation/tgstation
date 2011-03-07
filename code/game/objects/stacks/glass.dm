@@ -27,10 +27,28 @@ SHARDS
 				if(!(win.ini_dir in cardinal))
 					usr << "\red Can't let you do that."
 					return 1
-			var/obj/window/W = new /obj/window( usr.loc, reinf )
-			if (directions.len)
-				W.dir = directions[1]
-				W.ini_dir = W.dir
+			var/dir_to_set = 2
+			//yes, this could probably be done better but hey... it works...
+			for(var/obj/window/WT in usr.loc)
+				if (WT.dir == dir_to_set)
+					dir_to_set = 4
+			for(var/obj/window/WT in usr.loc)
+				if (WT.dir == dir_to_set)
+					dir_to_set = 1
+			for(var/obj/window/WT in usr.loc)
+				if (WT.dir == dir_to_set)
+					dir_to_set = 8
+			for(var/obj/window/WT in usr.loc)
+				if (WT.dir == dir_to_set)
+					dir_to_set = 2
+			var/obj/window/W
+			if(reinf)
+				W = new /obj/window/reinforced( usr.loc, reinf )
+				W.state = 0
+			else
+				W = new /obj/window/basic( usr.loc, reinf )
+			W.dir = dir_to_set
+			W.ini_dir = W.dir
 			W.anchored = 0
 			src.use(1)
 		if("full (2 sheets)")
@@ -39,7 +57,12 @@ SHARDS
 			if (locate(/obj/window) in usr.loc)
 				usr << "\red Can't let you do that."
 				return 1
-			var/obj/window/W = new /obj/window( usr.loc, reinf )
+			var/obj/window/W
+			if(reinf)
+				W = new /obj/window/reinforced( usr.loc, reinf )
+				W.state = 0
+			else
+				W = new /obj/window/basic( usr.loc, reinf )
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0

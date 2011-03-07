@@ -149,9 +149,6 @@
 	return
 
 /obj/window/attackby(obj/item/weapon/W as obj, mob/user as mob)
-
-
-
 	if (istype(W, /obj/item/weapon/screwdriver))
 		if(reinf && state >= 1)
 			state = 3 - state
@@ -197,7 +194,7 @@
 
 
 /obj/window/verb/rotate()
-	set name = "Rotate Window"
+	set name = "Rotate Window Counter-Clockwise"
 	set src in oview(1)
 
 	if (src.anchored)
@@ -207,6 +204,23 @@
 	update_nearby_tiles(need_rebuild=1) //Compel updates before
 
 	src.dir = turn(src.dir, 90)
+
+	update_nearby_tiles(need_rebuild=1)
+
+	src.ini_dir = src.dir
+	return
+
+/obj/window/verb/revrotate()
+	set name = "Rotate Window Clockwise"
+	set src in oview(1)
+
+	if (src.anchored)
+		usr << "It is fastened to the floor; therefore, you can't rotate it!"
+		return 0
+
+	update_nearby_tiles(need_rebuild=1) //Compel updates before
+
+	src.dir = turn(src.dir, 270)
 
 	update_nearby_tiles(need_rebuild=1)
 
