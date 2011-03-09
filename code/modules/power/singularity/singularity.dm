@@ -88,6 +88,9 @@ var/global/list/uneatable = list(
 						event()
 		return
 
+	attack_ai() //to prevent ais from gibbing themselves when they click on one.
+		return
+
 	proc
 		dissipate()
 			if(!dissipate)
