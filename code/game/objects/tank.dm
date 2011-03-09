@@ -106,6 +106,8 @@
 
 		var/pressure = air_contents.return_pressure()
 		if(pressure > TANK_FRAGMENT_PRESSURE)
+			if(!istype(src.loc,/obj/item/device/transfer_valve))
+				message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
 			//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
 			//Give the gas a chance to build up more pressure through reacting
 			air_contents.react()
@@ -118,7 +120,7 @@
 			var/turf/epicenter = get_turf(loc)
 
 			//world << "\blue Exploding Pressure: [pressure] kPa, intensity: [range]"
-			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
+
 			explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 			del(src)
 
