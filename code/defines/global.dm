@@ -203,3 +203,17 @@ var
 	sqlpass = ""
 
 	sqllogging = 0 // Should we log deaths, population stats, etc?
+
+
+
+	// Forum MySQL configuration (for use with forum account/key authentication)
+	// These are all default values that will load should the forumdbconfig.txt
+	// file fail to read for whatever reason.
+
+	forumsqladdress = "localhost"
+	forumsqlport = "3306"
+	forumsqldb = "tgstation"
+	forumsqllogin = "root"
+	forumsqlpass = ""
+	forum_activated_group = "2"
+	forum_authenticated_group = "10"
