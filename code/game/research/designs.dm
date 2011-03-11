@@ -786,6 +786,20 @@ datum
 			build_path = "/obj/item/weapon/chem_grenade/large"
 
 /////////////////////////////////////////
+//////////////Blue Space/////////////////
+/////////////////////////////////////////
+
+		bag_holding
+			name = "Bag of Holding"
+			desc = "A backpack that opens into a localized pocket of Blue Space."
+			id = "bag_holding"
+			req_tech = list("bluespace" = 4)
+			build_type = PROTOLATHE
+			materials = list("$gold" = 1000, "$diamond" = 500, "$uranium" = 250)
+			reliability_base = 80
+			build_path = "/obj/item/weapon/storage/backpack/holding"
+
+/////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
 

@@ -182,6 +182,31 @@
 			P.show_message(text("\red <B>The [] bounces off of the portal!</B>", M.name), 1)
 		return
 
+//Bags of Holding cause bluespace teleportation to go funky. --NeoFite
+	if (istype(M, /mob))
+		var/mob/MM = M
+		if(MM.check_contents_for(/obj/item/weapon/storage/backpack/holding))
+			MM << "\red The Bluespace interface on your Bag of Holding interferes with the teleport!"
+			precision = rand(1,100)
+	if (istype(M, /obj/item/weapon/storage/backpack/holding))
+		precision = rand(1,100)
+	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
+		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
+			for (var/obj/OO in O.contents)
+				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))
+					for (var/obj/OOO in OO.contents)
+						if (istype(OOO, /obj/item/weapon/storage/backpack/holding))
+							precision = rand(1,100)
+				if (istype(OO, /obj/item/weapon/storage/backpack/holding))
+					precision = rand(1,100)
+		if (istype(O, /obj/item/weapon/storage/backpack/holding))
+			precision = rand(1,100)
+		if (istype(O, /mob))
+			var/mob/MM = O
+			if(MM.check_contents_for(/obj/item/weapon/storage/backpack/holding))
+				precision = rand(1,100)
+
+
 	var/turf/destturf = get_turf(destination)
 
 	var/tx = destturf.x + rand(precision * -1, precision)

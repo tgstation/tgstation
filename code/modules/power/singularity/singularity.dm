@@ -214,6 +214,11 @@ var/global/list/uneatable = list(
 
 
 		consume(var/atom/A)
+			if (istype(A,/obj/item/weapon/storage/backpack/holding))
+				del(A)
+				explosion(src.loc,10,15,20,40)
+				if(src) del(src)
+				return
 			var/gain = 0
 			if(is_type_in_list(A, uneatable))
 				return 0
