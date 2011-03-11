@@ -527,7 +527,7 @@
  */
 
 /obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob)
-	..()
+	//..()
 	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		if (src.contents.len >= 7)
 			return

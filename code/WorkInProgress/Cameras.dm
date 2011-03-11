@@ -32,7 +32,7 @@
 	return
 
 /obj/item/weapon/storage/photo_album/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
+	//..()
 
 	if (src.contents.len >= 7)
 		return

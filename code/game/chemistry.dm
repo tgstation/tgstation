@@ -210,7 +210,7 @@
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/trashcan/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
+	//..()
 
 	if (src.contents.len >= 7)
 		user << "The trashcan is full!"

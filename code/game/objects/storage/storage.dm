@@ -250,7 +250,7 @@
 	src.add_fingerprint(user)
 
 /obj/item/weapon/storage/utilitybelt/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
+	//..()  //This will make it impossible to wrap the belt in wrapping paper, but will enable them to work as intended once more.
 	if(!can_use())
 		user << "\red I need to wear the belt for that."
 		return

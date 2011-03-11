@@ -9,7 +9,7 @@
 	new /obj/item/weapon/pen(src)
 
 /obj/item/weapon/storage/briefcase/attack(mob/M as mob, mob/user as mob)
-	..()
+	//..()
 
 	if ((usr.mutations & 16) && prob(50))
 		usr << "\red The [src] slips out of your hand and hits your head."
