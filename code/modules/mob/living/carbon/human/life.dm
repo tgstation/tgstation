@@ -599,7 +599,7 @@
 
 		handle_regular_status_updates()
 
-			health = 100 - (oxyloss + toxloss + fireloss + bruteloss)
+			health = 100 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
 
 			if(oxyloss > 50) paralysis = max(paralysis, 3)
 

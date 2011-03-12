@@ -106,6 +106,7 @@
 	var/r_epil = 0
 	var/r_ch_cou = 0
 	var/r_Tourette = 0
+	var/cloneloss = 0
 
 	var/miming = null //checks if the guy is a mime
 	var/silent = null //Can't talk. Value goes down every life proc.

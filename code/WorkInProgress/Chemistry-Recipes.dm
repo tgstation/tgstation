@@ -217,6 +217,13 @@ datum
 			required_reagents = list("dexalin" = 1, "water" = 1, "oxygen" = 1)
 			result_amount = 10
 
+		clonexadone
+			name = "Clonexadone"
+			id = "clonexadone"
+			result = "clonexadone"
+			required_reagents = list("plasma" = 1, "cryoxadone" = 1, "sodium" = 1)
+			result_amount = 10
+
 		spaceacillin
 			name = "Spaceacillin"
 			id = "spaceacillin"

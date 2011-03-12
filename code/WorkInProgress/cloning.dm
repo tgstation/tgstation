@@ -450,14 +450,12 @@
 	src.icon_state = "pod_1"
 	//Get the clone body ready
 	src.occupant.rejuv = 10
-	src.occupant.bruteloss += 90
-	src.occupant.toxloss += 50
-	src.occupant.oxyloss += 40
+	src.occupant.cloneloss += 190 //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
 	src.occupant.brainloss += 90
 	src.occupant.paralysis += 4
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
-	src.occupant.health = (src.occupant.bruteloss + src.occupant.toxloss + src.occupant.oxyloss)
+	src.occupant.health = (src.occupant.bruteloss + src.occupant.toxloss + src.occupant.oxyloss + src.occupant.cloneloss)
 
 	src.occupant << "\blue <b>Clone generation process initiated.</b>"
 	src.occupant << "\blue This will take a moment, please hold."
@@ -536,10 +534,7 @@
 			src.occupant.paralysis = 4
 
 			 //Slowly get that clone healed and finished.
-			src.occupant.bruteloss = max(src.occupant.bruteloss-1, 0)
-
-			//At this rate one clone takes about 95 seconds to produce.(with heal_level 90)
-			src.occupant.toxloss = max(src.occupant.toxloss-0.5, 0)
+			src.occupant.cloneloss = max(src.occupant.cloneloss-1, 0)
 
 			//Premature clones may have brain damage.
 			src.occupant.brainloss = max(src.occupant.brainloss-1, 0)
@@ -550,9 +545,6 @@
 
 			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
 			src.occupant.oxyloss = max(src.occupant.oxyloss-2, 0)
-
-			//Stop baking in the tubes you jerks.
-			src.occupant.fireloss = max(src.occupant.fireloss-2, 0)
 
 			use_power(7500) //This might need tweaking.
 			return

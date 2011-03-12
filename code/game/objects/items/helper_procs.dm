@@ -66,10 +66,12 @@
 	return
 
 /obj/proc/hear_talk(mob/M as mob, text)
+/*
 	var/mob/mo = locate(/mob) in src
 	if(mo)
 		var/rendered = "<span class='game say'><span class='name'>[M.name]: </span> <span class='message'>[text]</span></span>"
 		mo.show_message(rendered, 2)
+		*/
 	return
 
 /proc/is_type_in_list(var/atom/A, var/list/L)

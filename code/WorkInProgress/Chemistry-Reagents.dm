@@ -1010,6 +1010,22 @@ datum
 				..()
 				return
 
+		clonexadone
+			name = "Clonexadone"
+			id = "clonexadone"
+			description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' clones that get ejected early when used in conjunction with a cryo tube."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				if(M.bodytemperature < 170)
+					if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-6)
+					if(M:oxyloss) M:oxyloss = max(0, M:oxyloss-6)
+					if(M:bruteloss) M:bruteloss = max(0, M:bruteloss-6)
+					if(M:fireloss) M:fireloss = max(0, M:fireloss-6)
+					if(M:toxloss) M:toxloss = max(0, M:toxloss-6)
+				..()
+				return
+
 		spaceacillin
 			name = "Spaceacillin"
 			id = "spaceacillin"

@@ -106,6 +106,12 @@
 			else
 				usr << "\red <B>[src.name] looks severely injured!</B>"
 
+		if (src.cloneloss)
+			if (src.cloneloss < 30)
+				usr << "\red [src.name] looks slightly... unfinished?"
+			else
+				usr << "\red <B>[src.name] looks very... unfinished?</B>"
+
 		if (src.fireloss)
 			if (src.fireloss < 30)
 				usr << "\red [src.name] looks slightly burned!"
