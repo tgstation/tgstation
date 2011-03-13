@@ -124,8 +124,31 @@
 		return
 
 
+/obj/bookcase/manuals/medical
+	name = "Medical Manuals bookcase"
+
+	New()
+		..()
+		new /obj/item/weapon/book/manual/medical_cloning(src)
 
 
+/obj/bookcase/manuals/engineering
+	name = "Engineering Manuals bookcase"
+
+	New()
+		..()
+		new /obj/item/weapon/book/manual/engineering_construction(src)
+		new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
+		new /obj/item/weapon/book/manual/engineering_hacking(src)
+		new /obj/item/weapon/book/manual/engineering_guide(src)
+		new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
+
+/obj/bookcase/manuals/research_and_development
+	name = "R&D Manuals bookcase"
+
+	New()
+		..()
+		new /obj/item/weapon/book/manual/research_and_development(src)
 
 
 
