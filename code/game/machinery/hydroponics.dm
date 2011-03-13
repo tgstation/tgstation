@@ -400,7 +400,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if ( istype(O, /obj/item/weapon/reagent_containers/syringe))  // Syringe stuff
 		var/obj/item/weapon/reagent_containers/syringe/S = O
 		if (src.planted)
-			if (S.mode == "i")
+			if (S.mode == 1)
 				user << "\red You inject the [src.myseed.plantname] with a chemical solution."
 
 				// There needs to be a good amount of mutagen to actually work
