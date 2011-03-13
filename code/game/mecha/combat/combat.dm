@@ -108,7 +108,7 @@
 		if(damtype == "brute")
 			for(var/target_type in src.destroyable_obj)
 				if(istype(target, target_type) && hascall(target, "attackby"))
-					src.occupant.show_message("You hit [target].", 1)
+					src.occupant_message("You hit [target].")
 					src.visible_message("<font color='red'><b>[src.name] hits [target]</b></font>")
 					for (var/mob/V in viewers(src))
 						if(V.client && !(V.blinded))

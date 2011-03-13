@@ -1,10 +1,20 @@
-///////////////////////////
-////// Mecha Chassis //////
-///////////////////////////
+/////////////////////////
+////// Mecha Parts //////
+/////////////////////////
 
-/obj/mecha_chassis
-	name="Mecha Chassis"
+/obj/item/mecha_parts
+	name = "mecha part"
 	icon = 'mech_construct.dmi'
+	icon_state = "blank"
+	w_class = 20
+	flags = FPRINT | TABLEPASS | CONDUCT
+	origin_tech = "programming=2;materials=2"
+	var/construction_time = 100
+	var/list/construction_cost = list("metal"=20000,"glass"=5000)
+
+
+/obj/item/mecha_parts/chassis
+	name="Mecha Chassis"
 	icon_state = "backbone"
 	var/datum/construction/construct
 	flags = FPRINT | CONDUCT
@@ -14,107 +24,115 @@
 			..()
 		return
 
+	attack_hand()
+		return
 
+/////////// Ripley
 
-//////// Ripley chassis
-/obj/mecha_chassis/ripley
+/obj/item/mecha_parts/chassis/ripley
 	name = "Ripley Chassis"
 
 	New()
 		..()
 		construct = new /datum/construction/mecha/ripley_chassis(src)
 
-/////// Gygax chasis
-/obj/mecha_chassis/gygax
+/obj/item/mecha_parts/part/ripley_torso
+	name="Ripley Torso"
+	icon_state = "ripley_harness"
+	construction_time = 300
+	construction_cost = list("metal"=40000,"glass"=15000)
+
+/obj/item/mecha_parts/part/ripley_left_arm
+	name="Ripley Left Arm"
+	icon_state = "ripley_l_arm"
+	construction_time = 200
+	construction_cost = list("metal"=25000)
+
+/obj/item/mecha_parts/part/ripley_right_arm
+	name="Ripley Right Arm"
+	icon_state = "ripley_r_arm"
+	construction_time = 200
+	construction_cost = list("metal"=25000)
+
+/obj/item/mecha_parts/part/ripley_left_leg
+	name="Ripley Left Leg"
+	icon_state = "ripley_l_leg"
+	construction_time = 200
+	construction_cost = list("metal"=30000)
+
+/obj/item/mecha_parts/part/ripley_right_leg
+	name="Ripley Right Leg"
+	icon_state = "ripley_r_leg"
+	construction_time = 200
+	construction_cost = list("metal"=30000)
+
+///////// Gygax
+
+/obj/item/mecha_parts/chassis/gygax
 	name = "Gygax Chassis"
+	construction_cost = list("metal"=25000)
 
 	New()
 		..()
 		construct = new /datum/construction/mecha/gygax_chassis(src)
 
-/////// Firefighter chassis
-/obj/mecha_chassis/firefighter
+/obj/item/mecha_parts/part/gygax_torso
+	name="Gygax Torso"
+	icon_state = "gygax_harness"
+	origin_tech = "programming=3;materials=4;biotech=1"
+	construction_time = 300
+	construction_cost = list("metal"=50000,"glass"=20000)
+
+/obj/item/mecha_parts/part/gygax_head
+	name="Gygax Head"
+	icon_state = "gygax_head"
+	origin_tech = "programming=3;materials=4;magnets=3"
+	construction_time = 200
+	construction_cost = list("metal"=20000,"glass"=10000)
+
+/obj/item/mecha_parts/part/gygax_left_arm
+	name="Gygax Left Arm"
+	icon_state = "gygax_l_arm"
+	origin_tech = "programming=3;materials=4"
+	construction_time = 200
+	construction_cost = list("metal"=30000,"glass"=20000)
+
+/obj/item/mecha_parts/part/gygax_right_arm
+	name="Gygax Right Arm"
+	icon_state = "gygax_r_arm"
+	origin_tech = "programming=3;materials=4"
+	construction_time = 200
+	construction_cost = list("metal"=30000,"glass"=20000)
+
+/obj/item/mecha_parts/part/gygax_left_leg
+	name="Gygax Left Leg"
+	icon_state = "gygax_l_leg"
+	origin_tech = "programming=3;materials=4"
+	construction_time = 200
+	construction_cost = list("metal"=35000,"glass"=20000)
+
+/obj/item/mecha_parts/part/gygax_right_leg
+	name="Gygax Right Leg"
+	icon_state = "gygax_r_leg"
+	origin_tech = "programming=3;materials=4"
+	construction_time = 200
+	construction_cost = list("metal"=35000,"glass"=20000)
+
+/obj/item/mecha_parts/part/gygax_armour
+	name="Gygax Armour Plates"
+	icon_state = "gygax_armour"
+	origin_tech = "materials=5,combat=4"
+	construction_time = 600
+	construction_cost = list("metal"=75000,"diamond"=10000)
+
+////////// Firefighter
+
+/obj/item/mecha_parts/chassis/firefighter
 	name = "Ripley-on-Fire Chassis"
 
 	New()
 		..()
 		construct = new /datum/construction/mecha/firefighter_chassis(src)
-
-/////// HONK chassis
-/obj/mecha_chassis/honker
-	name = "H.O.N.K Chassis"
-
-	New()
-		..()
-		construct = new /datum/construction/mecha/honker_chassis(src)
-
-/////////////////////////
-////// Mecha Parts //////
-/////////////////////////
-
-
-/obj/item/mecha_parts
-	name = "mecha part"
-	icon = 'mech_construct.dmi'
-	icon_state = "blank"
-	w_class = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
-	var/construction_time = 100
-	var/list/construction_cost = list("/obj/item/stack/sheet/metal"=20000)
-
-/////////// Ripley
-
-/obj/item/mecha_parts/part/ripley_torso
-	name="Ripley Torso"
-	icon_state = "ripley_harness"
-
-/obj/item/mecha_parts/part/ripley_left_arm
-	name="Ripley Left Arm"
-	icon_state = "ripley_l_arm"
-
-/obj/item/mecha_parts/part/ripley_right_arm
-	name="Ripley Right Arm"
-	icon_state = "ripley_r_arm"
-
-/obj/item/mecha_parts/part/ripley_left_leg
-	name="Ripley Left Leg"
-	icon_state = "ripley_l_leg"
-
-/obj/item/mecha_parts/part/ripley_right_leg
-	name="Ripley Right Leg"
-	icon_state = "ripley_r_leg"
-
-///////// Gygax
-
-/obj/item/mecha_parts/part/gygax_torso
-	name="Gygax Torso"
-	icon_state = "gygax_harness"
-
-/obj/item/mecha_parts/part/gygax_head
-	name="Gygax Head"
-	icon_state = "gygax_head"
-
-/obj/item/mecha_parts/part/gygax_left_arm
-	name="Gygax Left Arm"
-	icon_state = "gygax_l_arm"
-
-/obj/item/mecha_parts/part/gygax_right_arm
-	name="Gygax Right Arm"
-	icon_state = "gygax_r_arm"
-
-/obj/item/mecha_parts/part/gygax_left_leg
-	name="Gygax Left Leg"
-	icon_state = "gygax_l_leg"
-
-/obj/item/mecha_parts/part/gygax_right_leg
-	name="Gygax Right Leg"
-	icon_state = "gygax_r_leg"
-
-/obj/item/mecha_parts/part/gygax_armour
-	name="Gygax Armour Plates"
-	icon_state = "gygax_armour"
-
-////////// Firefighter
 
 /obj/item/mecha_parts/part/firefighter_torso
 	name="Ripley-on-Fire Torso"
@@ -138,29 +156,49 @@
 
 
 ////////// HONK
+
+/obj/item/mecha_parts/chassis/honker
+	name = "H.O.N.K Chassis"
+
+	New()
+		..()
+		construct = new /datum/construction/mecha/honker_chassis(src)
+
 /obj/item/mecha_parts/part/honker_torso
 	name="H.O.N.K Torso"
 	icon_state = "honker_harness"
+	construction_time = 300
+	construction_cost = list("metal"=35000,"glass"=10000,"bananium"=10000)
 
 /obj/item/mecha_parts/part/honker_head
 	name="H.O.N.K Head"
 	icon_state = "honker_head"
+	construction_time = 200
+	construction_cost = list("metal"=15000,"glass"=5000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_left_arm
 	name="H.O.N.K Left Arm"
 	icon_state = "honker_l_arm"
+	construction_time = 200
+	construction_cost = list("metal"=20000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_right_arm
 	name="H.O.N.K Right Arm"
 	icon_state = "honker_r_arm"
+	construction_time = 200
+	construction_cost = list("metal"=20000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_left_leg
 	name="H.O.N.K Left Leg"
 	icon_state = "honker_l_leg"
+	construction_time = 200
+	construction_cost = list("metal"=20000,"bananium"=5000)
 
 /obj/item/mecha_parts/part/honker_right_leg
 	name="H.O.N.K Right Leg"
 	icon_state = "honker_r_leg"
+	construction_time = 200
+	construction_cost = list("metal"=20000,"bananium"=5000)
 
 
 /obj/item/mecha_parts/circuitboard
@@ -176,7 +214,7 @@
 	throw_range = 15
 
 	ripley
-		origin_tech = "programming=3;materials=3"
+		origin_tech = "programming=3;materials=1"
 
 	ripley/peripherals
 		name = "Circuit board (Ripley Peripherals Control module)"
@@ -187,7 +225,7 @@
 		icon_state = "mainboard"
 
 	gygax
-		origin_tech = "programming=4;materials=4"
+		origin_tech = "programming=4;materials=2"
 
 	gygax/peripherals
 		name = "Circuit board (Gygax Peripherals Control module)"
@@ -196,6 +234,7 @@
 	gygax/targeting
 		name = "Circuit board (Gygax Weapon Control and Targeting module)"
 		icon_state = "mcontroller"
+		origin_tech = "programming=3;materials=1;combat=3"
 
 	gygax/main
 		name = "Circuit board (Gygax Central Control module)"
@@ -206,7 +245,7 @@
 		icon_state = "mcontroller"
 
 	honker
-		origin_tech = "programming=3;materials=3"
+		origin_tech = "programming=3;materials=2"
 
 	honker/peripherals
 		name = "Circuit board (H.O.N.K Peripherals Control module)"
@@ -256,7 +295,6 @@
 
 
 /datum/construction/mecha/ripley_chassis
-	result = "/obj/mecha_chassis/ripley_full"
 	steps = list(list("key"="/obj/item/mecha_parts/part/ripley_torso"),//1
 					 list("key"="/obj/item/mecha_parts/part/ripley_left_arm"),//2
 					 list("key"="/obj/item/mecha_parts/part/ripley_right_arm"),//3
@@ -274,7 +312,7 @@
 		return check_all_steps(used_atom,user)
 
 	spawn_result()
-		var/obj/mecha_chassis/const_holder = holder
+		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/mecha/ripley(const_holder)
 		const_holder.density = 1
 		spawn()
@@ -344,7 +382,6 @@
 
 
 /datum/construction/mecha/gygax_chassis
-	result = "/obj/mecha_chassis/gygax_full"
 	steps = list(list("key"="/obj/item/mecha_parts/part/gygax_torso"),//1
 					 list("key"="/obj/item/mecha_parts/part/gygax_left_arm"),//2
 					 list("key"="/obj/item/mecha_parts/part/gygax_right_arm"),//3
@@ -363,7 +400,7 @@
 		return check_all_steps(used_atom,user)
 
 	spawn_result()
-		var/obj/mecha_chassis/const_holder = holder
+		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/mecha/gygax(const_holder)
 		const_holder.density = 1
 		spawn()
@@ -470,7 +507,6 @@
 
 
 /datum/construction/mecha/firefighter_chassis
-	result = "/obj/mecha_chassis/firefighter_full"
 	steps = list(list("key"="/obj/item/mecha_parts/part/firefighter_torso"),//1
 					 list("key"="/obj/item/mecha_parts/part/firefighter_left_arm"),//2
 					 list("key"="/obj/item/mecha_parts/part/firefighter_right_arm"),//3
@@ -488,7 +524,7 @@
 		return check_all_steps(used_atom,user)
 
 	spawn_result()
-		var/obj/mecha_chassis/const_holder = holder
+		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/mecha/firefighter(const_holder)
 		const_holder.density = 1
 		spawn()
@@ -559,7 +595,6 @@
 
 
 /datum/construction/mecha/honker_chassis
-	result = "/obj/mecha_chassis/honker_full"
 	steps = list(list("key"="/obj/item/mecha_parts/part/honker_torso"),//1
 					 list("key"="/obj/item/mecha_parts/part/honker_left_arm"),//2
 					 list("key"="/obj/item/mecha_parts/part/honker_right_arm"),//3
@@ -578,7 +613,7 @@
 		return 1
 
 	spawn_result()
-		var/obj/mecha_chassis/const_holder = holder
+		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/mecha/honker(const_holder)
 		const_holder.density = 1
 		spawn()

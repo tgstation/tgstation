@@ -88,6 +88,8 @@
 	desc = "Device used to transmit exosuit data."
 	icon = 'device.dmi'
 	icon_state = "motion2"
+	var/construction_time = 30
+	var/list/construction_cost = list("metal"=500)
 
 	proc/get_mecha_info()
 		if(!in_mecha())

@@ -127,4 +127,8 @@ Data storage vars:
 //			world << "\red Invalid arguments supplied for [src.type], ref = \ref[src]"
 			return 0
 
+	proc/toggle_null_checks()
+		src.check_for_null = !src.check_for_null
+		return
+
 
