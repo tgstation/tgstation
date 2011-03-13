@@ -1018,11 +1018,11 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
-					if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-6)
-					if(M:oxyloss) M:oxyloss = max(0, M:oxyloss-6)
-					if(M:bruteloss) M:bruteloss = max(0, M:bruteloss-6)
-					if(M:fireloss) M:fireloss = max(0, M:fireloss-6)
-					if(M:toxloss) M:toxloss = max(0, M:toxloss-6)
+					if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-3)
+					if(M:oxyloss) M:oxyloss = max(0, M:oxyloss-3)
+					if(M:bruteloss) M:bruteloss = max(0, M:bruteloss-3)
+					if(M:fireloss) M:fireloss = max(0, M:fireloss-3)
+					if(M:toxloss) M:toxloss = max(0, M:toxloss-3)
 				..()
 				return
 

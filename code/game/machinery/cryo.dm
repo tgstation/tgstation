@@ -206,7 +206,7 @@
 				src.occupant.client.eye = src.occupant.client.mob
 				src.occupant.client.perspective = MOB_PERSPECTIVE
 			src.occupant.loc = src.loc
-			src.occupant.metabslow = 0
+//			src.occupant.metabslow = 0
 			src.occupant = null
 			build_icon()
 			return
@@ -226,7 +226,7 @@
 			M.pulling = null
 			M.loc = src
 			src.occupant = M
-			M.metabslow = 1
+//			M.metabslow = 1
 			src.add_fingerprint(usr)
 			build_icon()
 			return 1

@@ -101,7 +101,7 @@
 	icon_state = "vest"
 	item_state = "wcoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list()
+	allowed = list(/obj/item/device/pda)
 
 /obj/item/clothing/suit/apron
 	name = "apron"
