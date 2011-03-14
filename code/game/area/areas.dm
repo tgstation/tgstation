@@ -83,33 +83,30 @@
 				a.triggerAlarm("Power", src, source)
 	return
 
-/area/proc/atmosalert()
-	if(src.name == "Space") //No atmos alarms in space
-		return
-	if(!(src.atmosalm))
-		src.atmosalm = 1
+/area/proc/atmosalert(danger_level)
+//	if(src.type==/area) //No atmos alarms in space
+//		return 0 //redudant
+	if(danger_level != src.atmosalm)
 		//src.updateicon()
-		src.mouse_opacity = 0
-		var/list/cameras = list()
-		for(var/obj/machinery/camera/C in src)
-			cameras += C
-		for(var/mob/living/silicon/aiPlayer in world)
-			aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
-		for(var/obj/machinery/computer/station_alert/a in world)
-			a.triggerAlarm("Atmosphere", src, cameras, src)
-	return
-
-/area/proc/atmosreset()
-	if(src.atmosalm)
-		src.atmosalm = 0
-		src.mouse_opacity = 0
-		//src.updateicon()
-		for(var/mob/living/silicon/aiPlayer in world)
-			aiPlayer.cancelAlarm("Atmosphere", src, src)
-		for(var/obj/machinery/computer/station_alert/a in world)
-			a.cancelAlarm("Atmosphere", src, src)
-	return
-
+		//src.mouse_opacity = 0
+		if (danger_level==2)
+			var/list/cameras = list()
+			for(var/area/RA in src.related)
+				//src.updateicon()
+				for(var/obj/machinery/camera/C in RA)
+					cameras += C
+			for(var/mob/living/silicon/aiPlayer in world)
+				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
+			for(var/obj/machinery/computer/station_alert/a in world)
+				a.triggerAlarm("Atmosphere", src, cameras, src)
+		else if (src.atmosalm == 2)
+			for(var/mob/living/silicon/aiPlayer in world)
+				aiPlayer.cancelAlarm("Atmosphere", src, src)
+			for(var/obj/machinery/computer/station_alert/a in world)
+				a.cancelAlarm("Atmosphere", src, src)
+		src.atmosalm = danger_level
+		return 1
+	return 0
 
 /area/proc/firealert()
 	if(src.name == "Space") //no fire alarms in space

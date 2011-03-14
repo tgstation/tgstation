@@ -155,13 +155,6 @@
 					targetdirection = null
 			src.updateUsrDialog()
 
-
-/obj/machinery/bot/floorbot/attack_ai()
-	if (src.on)
-		turn_off()
-	else
-		turn_on()
-
 /obj/machinery/bot/floorbot/process()
 	set background = 1
 

@@ -22,6 +22,10 @@ obj/machinery/atmospherics/binary/pump
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE
 
+	var/frequency = 0
+	var/id = null
+	var/datum/radio_frequency/radio_connection
+
 /*
 	attack_hand(mob/user)
 		on = !on
@@ -87,14 +91,18 @@ obj/machinery/atmospherics/binary/pump
 			signal.transmission_method = 1 //radio signal
 			signal.source = src
 
-			signal.data["tag"] = id
-			signal.data["device"] = "AGP"
-			signal.data["power"] = on
-			signal.data["target_output"] = target_pressure
+			signal.data = list(
+				"tag" = id,
+				"device" = "AGP",
+				"power" = on,
+				"target_output" = target_pressure,
+				"sigtype" = "status"
+			)
 
 			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			return 1
+
 		interact(mob/user as mob)
 			var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 						<b>Desirable output pressure: </b>
@@ -104,35 +112,34 @@ obj/machinery/atmospherics/binary/pump
 			user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_pump")
 			onclose(user, "atmo_pump")
 
-	var/frequency = 0
-	var/id = null
-	var/datum/radio_frequency/radio_connection
-
 	initialize()
 		..()
 		if(frequency)
 			set_frequency(frequency)
 
 	receive_signal(datum/signal/signal)
-		if(!signal.data["tag"] || (signal.data["tag"] != id))
+		if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 			return 0
 
-		switch(signal.data["command"])
-			if("power_on")
-				on = 1
+		if("power" in signal.data)
+			on = text2num(signal.data["power"])
 
-			if("power_off")
-				on = 0
+		if("power_toggle" in signal.data)
+			on = !on
 
-			if("power_toggle")
-				on = !on
+		if("set_output_pressure" in signal.data)
+			target_pressure = between(
+				0,
+				text2num(signal.data["set_output_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
-			if("set_output_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+		if("status" in signal.data)
+			spawn(2)
+				broadcast_status()
+			return //do not update_icon
 
-				target_pressure = number
-		spawn(5)
+		spawn(2)
 			broadcast_status()
 		update_icon()
 		return

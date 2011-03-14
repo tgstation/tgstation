@@ -783,7 +783,7 @@
 		//SN src = null
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/weldingtool) ))
+	if (!( istype(W, /obj/item/weapon/weldingtool) && W:welding))
 		return
 	if (!( src.status ))
 		src.status = 1
@@ -875,7 +875,7 @@
 		//SN src = null
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/weldingtool) ))
+	if (!( istype(W, /obj/item/weapon/weldingtool) && W:welding ))
 		return
 	if (!( src.status ))
 		src.status = 1
@@ -935,7 +935,7 @@
 		//SN src = null
 		del(src)
 		return
-	if (( istype(W, /obj/item/weapon/weldingtool) ))
+	if (( istype(W, /obj/item/weapon/weldingtool) && W:welding))
 		return
 	if (!( src.status ))
 		src.status = 1

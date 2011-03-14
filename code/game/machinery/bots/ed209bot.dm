@@ -156,12 +156,6 @@ Auto Patrol: []"},
 			mode = SECBOT_IDLE
 			updateUsrDialog()
 
-/obj/machinery/bot/ed209/attack_ai(mob/user as mob)
-	if (src.on)
-		turn_off()
-	else
-		turn_on()
-
 /obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if ((istype(W, /obj/item/weapon/card/emag)) && (!src.emagged))
 		user << "\red You short out [src]'s target assessment circuits."
@@ -750,6 +744,8 @@ Auto Patrol: []"},
 
 
 /obj/machinery/bot/ed209/emp_act(severity)
+	if (cam)
+		cam.emp_act(severity)
 	if (severity > 2)
 		..(severity-1)
 	else if (severity==2 && prob(70))
@@ -809,7 +805,7 @@ Auto Patrol: []"},
 		src.item_state = "ed209_shell"
 		src.icon_state = "ed209_shell"
 		del(W)
-	else if ((istype(W, /obj/item/weapon/weldingtool)) && (src.build_step == 3))
+	else if ((istype(W, /obj/item/weapon/weldingtool) && W:welding) && (src.build_step == 3))
 		if (W:remove_fuel(1,user))
 			src.build_step++
 			src.name = "shielded frame assembly"

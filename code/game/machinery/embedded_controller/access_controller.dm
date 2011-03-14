@@ -55,85 +55,92 @@ datum/computer/file/embedded_program/access_controller
 				target_state = ACCESS_STATE_INTERNAL
 
 	process()
-		switch(state)
-			if(ACCESS_STATE_INTERNAL) // state -1
-				if(target_state > state)
-					if(memory["interior_status"] == "locked")
-						state = ACCESS_STATE_LOCKED
-					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						if(memory["interior_status"] == "closed")
-							signal.data["command"] = "lock"
-						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
-
-			if(ACCESS_STATE_LOCKED)
-				if(target_state < state)
-					if(memory["exterior_status"] != "locked")
-						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						if(memory["exterior_status"] == "closed")
-							signal.data["command"] = "lock"
-						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
-					else
-						if(memory["interior_status"] == "closed" || memory["interior_status"] == "open")
-							state = ACCESS_STATE_INTERNAL
+		var/process_again = 1
+		while(process_again)
+			process_again = 0
+			switch(state)
+				if(ACCESS_STATE_INTERNAL) // state -1
+					if(target_state > state)
+						if(memory["interior_status"] == "locked")
+							state = ACCESS_STATE_LOCKED
+							process_again = 1
 						else
 							var/datum/signal/signal = new
 							signal.data["tag"] = interior_door_tag
-							signal.data["command"] = "unlock"
+							if(memory["interior_status"] == "closed")
+								signal.data["command"] = "lock"
+							else
+								signal.data["command"] = "secure_close"
 							post_signal(signal)
-				else if(target_state > state)
-					if(memory["interior_status"] != "locked")
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						if(memory["interior_status"] == "closed")
-							signal.data["command"] = "lock"
+
+				if(ACCESS_STATE_LOCKED)
+					if(target_state < state)
+						if(memory["exterior_status"] != "locked")
+							var/datum/signal/signal = new
+							signal.data["tag"] = exterior_door_tag
+							if(memory["exterior_status"] == "closed")
+								signal.data["command"] = "lock"
+							else
+								signal.data["command"] = "secure_close"
+							post_signal(signal)
 						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
+							if(memory["interior_status"] == "closed" || memory["interior_status"] == "open")
+								state = ACCESS_STATE_INTERNAL
+								process_again = 1
+							else
+								var/datum/signal/signal = new
+								signal.data["tag"] = interior_door_tag
+								signal.data["command"] = "secure_open"
+								post_signal(signal)
+					else if(target_state > state)
+						if(memory["interior_status"] != "locked")
+							var/datum/signal/signal = new
+							signal.data["tag"] = interior_door_tag
+							if(memory["interior_status"] == "closed")
+								signal.data["command"] = "lock"
+							else
+								signal.data["command"] = "secure_close"
+							post_signal(signal)
+						else
+							if(memory["exterior_status"] == "closed" || memory["exterior_status"] == "open")
+								state = ACCESS_STATE_EXTERNAL
+								process_again = 1
+							else
+								var/datum/signal/signal = new
+								signal.data["tag"] = exterior_door_tag
+								signal.data["command"] = "secure_open"
+								post_signal(signal)
 					else
-						if(memory["exterior_status"] == "closed" || memory["exterior_status"] == "open")
-							state = ACCESS_STATE_EXTERNAL
+						if(memory["interior_status"] != "locked")
+							var/datum/signal/signal = new
+							signal.data["tag"] = interior_door_tag
+							if(memory["interior_status"] == "closed")
+								signal.data["command"] = "lock"
+							else
+								signal.data["command"] = "secure_close"
+							post_signal(signal)
+						else if(memory["exterior_status"] != "locked")
+							var/datum/signal/signal = new
+							signal.data["tag"] = exterior_door_tag
+							if(memory["exterior_status"] == "closed")
+								signal.data["command"] = "lock"
+							else
+								signal.data["command"] = "secure_close"
+							post_signal(signal)
+
+				if(ACCESS_STATE_EXTERNAL) //state 1
+					if(target_state < state)
+						if(memory["exterior_status"] == "locked")
+							state = ACCESS_STATE_LOCKED
+							process_again = 1
 						else
 							var/datum/signal/signal = new
 							signal.data["tag"] = exterior_door_tag
-							signal.data["command"] = "unlock"
+							if(memory["exterior_status"] == "closed")
+								signal.data["command"] = "lock"
+							else
+								signal.data["command"] = "secure_close"
 							post_signal(signal)
-				else
-					if(memory["interior_status"] != "locked")
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						if(memory["interior_status"] == "closed")
-							signal.data["command"] = "lock"
-						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
-					else if(memory["exterior_status"] != "locked")
-						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						if(memory["exterior_status"] == "closed")
-							signal.data["command"] = "lock"
-						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
-
-			if(ACCESS_STATE_EXTERNAL) //state 1
-				if(target_state < state)
-					if(memory["exterior_status"] == "locked")
-						state = ACCESS_STATE_LOCKED
-					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						if(memory["exterior_status"] == "closed")
-							signal.data["command"] = "lock"
-						else
-							signal.data["command"] = "secure_close"
-						post_signal(signal)
 
 
 		return 1

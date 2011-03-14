@@ -160,12 +160,6 @@ Auto Patrol: []"},
 			mode = SECBOT_IDLE
 			updateUsrDialog()
 
-/obj/machinery/bot/secbot/attack_ai(mob/user as mob)
-	if (src.on)
-		turn_off()
-	else
-		turn_on()
-
 /obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if ((istype(W, /obj/item/weapon/card/emag)) && (!src.emagged))
 		user << "\red You short out [src]'s target assessment circuits."
@@ -696,6 +690,11 @@ Auto Patrol: []"},
 		src.target = user
 		src.mode = SECBOT_HUNT
 
+/obj/machinery/bot/secbot/emp_act(severity)
+	if (cam)
+		cam.emp_act(severity)
+	..()
+
 //Secbot Construction
 
 /obj/item/clothing/head/helmet/attackby(var/obj/item/device/radio/signaler/S, mob/user as mob)
@@ -726,7 +725,7 @@ Auto Patrol: []"},
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ((istype(W, /obj/item/weapon/weldingtool)) && (!src.build_step))
+	if ((istype(W, /obj/item/weapon/weldingtool) && W:welding) && (!src.build_step))
 		if(W:remove_fuel(1,user))
 			src.build_step++
 			src.overlays += image('aibots.dmi', "hs_hole")

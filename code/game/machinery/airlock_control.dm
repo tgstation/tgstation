@@ -10,7 +10,7 @@ obj/machinery/door/airlock
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption) return
 
-		if(id_tag != signal.data["tag"]) return
+		if(id_tag != signal.data["tag"] || !signal.data["command"]) return
 
 		switch(signal.data["command"])
 			if("open")
@@ -32,7 +32,7 @@ obj/machinery/door/airlock
 					locked = 0
 					update_icon()
 
-					sleep(5)
+					sleep(2)
 					open(1)
 
 					locked = 1
@@ -44,7 +44,7 @@ obj/machinery/door/airlock
 					close(1)
 
 					locked = 1
-					sleep(5)
+					sleep(2)
 					update_icon()
 
 		send_status()
@@ -54,7 +54,7 @@ obj/machinery/door/airlock
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal
 			signal.data["tag"] = id_tag
-			signal.data["timestamp"] = air_master.current_cycle
+			signal.data["timestamp"] = world.time
 
 			signal.data["door_status"] = density?("closed"):("open")
 			signal.data["lock_status"] = locked?("locked"):("unlocked")
@@ -127,7 +127,7 @@ obj/machinery/airlock_sensor
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal
 			signal.data["tag"] = id_tag
-			signal.data["timestamp"] = air_master.current_cycle
+			signal.data["timestamp"] = world.time
 
 			var/datum/gas_mixture/air_sample = return_air()
 

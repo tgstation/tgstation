@@ -74,11 +74,13 @@ obj/machinery/atmospherics/binary/volume_pump
 			signal.transmission_method = 1 //radio signal
 			signal.source = src
 
-			signal.data["tag"] = id
-			signal.data["device"] = "APV"
-			signal.data["power"] = on
-			signal.data["transfer_rate"] = transfer_rate
-
+			signal.data = list(
+				"tag" = id,
+				"device" = "APV",
+				"power" = on,
+				"transfer_rate" = transfer_rate,
+				"sigtype" = "status"
+			)
 			radio_connection.post_signal(src, signal)
 
 			return 1
@@ -89,25 +91,27 @@ obj/machinery/atmospherics/binary/volume_pump
 		set_frequency(frequency)
 
 	receive_signal(datum/signal/signal)
-		if(!signal.data["tag"] || (signal.data["tag"] != id))
+		if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 			return 0
 
-		switch(signal.data["command"])
-			if("power_on")
-				on = 1
+		if("power" in signal.data)
+			on = text2num(signal.data["power"])
 
-			if("power_off")
-				on = 0
+		if("power_toggle" in signal.data)
+			on = !on
 
-			if("power_toggle")
-				on = !on
+		if("set_transfer_rate" in signal.data)
+			transfer_rate = between(
+				0,
+				text2num(signal.data["set_transfer_rate"]),
+				air1.volume
+			)
 
-			if("set_transfer_rate")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), air1.volume)
+		if("status" in signal.data)
+			spawn(2)
+				broadcast_status()
+			return //do not update_icon
 
-				transfer_rate = number
-
-		spawn(5)
+		spawn(2)
 			broadcast_status()
 		update_icon()

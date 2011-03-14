@@ -195,14 +195,14 @@
 
 
 /obj/machinery/bot/mulebot/attack_ai(var/mob/user)
-	usr.machine = src
+	user.machine = src
 	interact(user, 1)
 
 /obj/machinery/bot/mulebot/attack_hand(var/mob/user)
 	. = ..()
 	if (.)
 		return
-	usr.machine = src
+	user.machine = src
 	interact(user, 0)
 
 /obj/machinery/bot/mulebot/proc/interact(var/mob/user, var/ai=0)

@@ -111,12 +111,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			usr << "You press the weird button."
 			src.updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/attack_ai()
-	if (src.on)
-		turn_off()
-	else
-		turn_on()
-
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr))

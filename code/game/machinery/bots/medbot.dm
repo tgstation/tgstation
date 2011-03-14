@@ -95,10 +95,6 @@
 	src.icon_state = "medibot[src.on]"
 	src.updateUsrDialog()
 
-
-/obj/machinery/bot/medbot/attack_ai(mob/user as mob)
-	return toggle_power()
-
 /obj/machinery/bot/medbot/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
@@ -143,7 +139,10 @@
 	usr.machine = src
 	src.add_fingerprint(usr)
 	if ((href_list["power"]) && (src.allowed(usr)))
-		src.toggle_power()
+		if (src.on)
+			turn_off()
+		else
+			turn_on()
 
 	else if((href_list["adj_threshold"]) && (!src.locked))
 		var/adjust_num = text2num(href_list["adj_threshold"])
@@ -310,14 +309,6 @@
 
 	return
 
-
-/obj/machinery/bot/medbot/proc/toggle_power()
-	if (src.on)
-		turn_off()
-	else
-		turn_on()
-	return
-
 /obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
 	//Time to see if they need medical help!
 	if(C.stat == 2)
@@ -445,6 +436,11 @@
 /obj/machinery/bot/medbot/bullet_act(flag, A as obj)
 	if (flag == PROJECTILE_TASER)
 		src.stunned = min(stunned+10,20)
+	..()
+
+/obj/machinery/bot/medbot/emp_act(severity)
+	if (cam)
+		cam.emp_act(severity)
 	..()
 
 /obj/machinery/bot/medbot/explode()

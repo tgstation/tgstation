@@ -63,7 +63,7 @@
 	icon_state = "alert:0"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
-	var/receive_frequency = "1437"
+	var/receive_frequency = 1437
 
 
 /obj/machinery/computer/atmosphere/siphonswitch

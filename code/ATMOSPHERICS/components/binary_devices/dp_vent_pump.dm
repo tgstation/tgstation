@@ -120,15 +120,17 @@
 			signal.transmission_method = 1 //radio signal
 			signal.source = src
 
-			signal.data["tag"] = id
-			signal.data["device"] = "ADVP"
-			signal.data["power"] = on?("on"):("off")
-			signal.data["direction"] = pump_direction?("release"):("siphon")
-			signal.data["checks"] = pressure_checks
-			signal.data["input"] = input_pressure_min
-			signal.data["output"] = output_pressure_max
-			signal.data["external"] = external_pressure_bound
-
+			signal.data = list(
+				"tag" = id,
+				"device" = "ADVP",
+				"power" = on,
+				"direction" = pump_direction?("release"):("siphon"),
+				"checks" = pressure_checks,
+				"input" = input_pressure_min,
+				"output" = output_pressure_max,
+				"external" = external_pressure_bound,
+				"sigtype" = "status"
+			)
 			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			return 1
@@ -143,57 +145,55 @@
 			set_frequency(frequency)
 
 	receive_signal(datum/signal/signal)
-		if(!signal.data["tag"] || (signal.data["tag"] != id))
+		if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 			return 0
 
-		switch(signal.data["command"])
-			if("power_on")
-				on = 1
+		if("power" in signal.data)
+			on = text2num(signal.data["power"])
 
-			if("power_off")
-				on = 0
+		if("power_toggle" in signal.data)
+			on = !on
 
-			if("power_toggle")
-				on = !on
+		if("set_direction" in signal.data)
+			pump_direction = text2num(signal.data["set_direction"])
 
-			if("set_direction")
-				var/number = text2num(signal.data["parameter"])
-				if(number > 0.5)
-					pump_direction = 1
-				else
-					pump_direction = 0
+		if("checks" in signal.data)
+			pressure_checks = text2num(signal.data["checks"])
 
-			if("set_checks")
-				var/number = round(text2num(signal.data["parameter"]),1)
-				pressure_checks = number
+		if("purge" in signal.data)
+			pressure_checks &= ~1
+			pump_direction = 0
 
-			if("purge")
-				pressure_checks &= ~1
-				pump_direction = 0
+		if("stabalize" in signal.data)
+			pressure_checks |= 1
+			pump_direction = 1
 
-			if("stabalize")
-				pressure_checks |= 1
-				pump_direction = 1
+		if("set_input_pressure" in signal.data)
+			input_pressure_min = between(
+				0,
+				text2num(signal.data["set_input_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
-			if("set_input_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+		if("set_output_pressure" in signal.data)
+			output_pressure_max = between(
+				0,
+				text2num(signal.data["set_output_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
-				input_pressure_min = number
+		if("set_external_pressure" in signal.data)
+			external_pressure_bound = between(
+				0,
+				text2num(signal.data["set_external_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
-			if("set_output_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
-
-				output_pressure_max = number
-
-			if("set_external_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
-
-				external_pressure_bound = number
-
+		if("status" in signal.data)
+			spawn(2)
+				broadcast_status()
+			return //do not update_icon
 		//if(signal.data["tag"])
-		spawn(5)
+		spawn(2)
 			broadcast_status()
 		update_icon()

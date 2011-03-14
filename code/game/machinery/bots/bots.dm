@@ -130,6 +130,14 @@
 		stat &= ~EMPED
 		if (was_on)
 			turn_on()
+
+
+/obj/machinery/bot/attack_ai(mob/user as mob)
+	if (src.on)
+		turn_off()
+	else
+		turn_on()
+
 /******************************************************************/
 // Navigation procs
 // Used for A-star pathfinding

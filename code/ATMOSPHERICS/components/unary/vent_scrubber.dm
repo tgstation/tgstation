@@ -63,13 +63,14 @@
 				"area" = area_uid,
 				"tag" = id_tag,
 				"device" = "AScr",
-				"timestamp" = air_master.current_cycle,
-				"on" = on,
+				"timestamp" = world.time,
+				"power" = on,
 				"scrubbing" = scrubbing,
 				"panic" = panic,
 				"filter_co2" = scrub_CO2,
 				"filter_toxins" = scrub_Toxins,
 				"filter_n2o" = scrub_N2O,
+				"sigtype" = "status"
 			)
 			radio_connection.post_signal(src, signal, radio_filter_out)
 
@@ -160,42 +161,68 @@
 */
 
 	receive_signal(datum/signal/signal)
-		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || !signal.data["command"])
+		if(stat & (NOPOWER|BROKEN))
+			return
+		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 			return 0
 
-		switch(signal.data["command"])
-			if("toggle_power")
-				on = !on
-			if("toggle_scrubbing")
-				scrubbing = !scrubbing
-			if("toggle_co2_scrub")
-				scrub_CO2 = !scrub_CO2
-			if("toggle_tox_scrub")
-				scrub_Toxins = !scrub_Toxins
-			if("toggle_n2o_scrub")
-				scrub_N2O = !scrub_N2O
-			if("toggle_panic_siphon")
-				panic = !panic
-				if(panic)
-					on = 1
-					scrubbing = 0
-					volume_rate = 2000
-				else
-					scrubbing = 1
-					volume_rate = initial(volume_rate)
-			if("init")
-				name = signal.data["parameter"]
-				return
+		if("power" in signal.data)
+			on = text2num(signal.data["power"])
+		if("power_toggle" in signal.data)
+			on = !on
 
-			if("status")
-				//broadcast_status
-
+		if("panic_siphon" in signal.data) //must be before if("scrubbing" thing
+			panic = text2num(signal.data["panic_siphon"])
+			if(panic)
+				on = 1
+				scrubbing = 0
+				volume_rate = 2000
 			else
-				log_admin("DEBUG \[[world.timeofday]\]: vent_scrubber/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
-				return
+				scrubbing = 1
+				volume_rate = initial(volume_rate)
+		if("toggle_panic_siphon" in signal.data)
+			panic = !panic
+			if(panic)
+				on = 1
+				scrubbing = 0
+				volume_rate = 2000
+			else
+				scrubbing = 1
+				volume_rate = initial(volume_rate)
+
+		if("scrubbing" in signal.data)
+			scrubbing = text2num(signal.data["scrubbing"])
+		if("toggle_scrubbing" in signal.data)
+			scrubbing = !scrubbing
+
+		if("co2_scrub" in signal.data)
+			scrub_CO2 = text2num(signal.data["co2_scrub"])
+		if("toggle_co2_scrub" in signal.data)
+			scrub_CO2 = !scrub_CO2
+
+		if("tox_scrub" in signal.data)
+			scrub_Toxins = text2num(signal.data["tox_scrub"])
+		if("toggle_tox_scrub" in signal.data)
+			scrub_Toxins = !scrub_Toxins
+
+		if("n2o_scrub" in signal.data)
+			scrub_N2O = text2num(signal.data["n2o_scrub"])
+		if("toggle_n2o_scrub" in signal.data)
+			scrub_N2O = !scrub_N2O
+
+		if("init" in signal.data)
+			name = signal.data["init"]
+			return
+
+		if("status" in signal.data)
+			spawn(2)
+				broadcast_status()
+			return //do not update_icon
+
+//			log_admin("DEBUG \[[world.timeofday]\]: vent_scrubber/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 		spawn(2)
 			broadcast_status()
-			update_icon()
+		update_icon()
 		return
 
 	power_change()

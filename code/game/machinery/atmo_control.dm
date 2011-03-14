@@ -30,7 +30,7 @@ obj/machinery/air_sensor
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal
 			signal.data["tag"] = id_tag
-			signal.data["timestamp"] = air_master.current_cycle
+			signal.data["timestamp"] = world.time
 
 			var/datum/gas_mixture/air_sample = return_air()
 
@@ -55,6 +55,7 @@ obj/machinery/air_sensor
 					signal.data["toxins"] = 0
 					signal.data["nitrogen"] = 0
 					signal.data["carbon_dioxide"] = 0
+			signal.data["sigtype"]="status"
 			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 
@@ -215,7 +216,7 @@ Rate: [volume_rate] L/sec<BR>"}
 			output += "<BR>"
 
 			if(output_info)
-				var/power = (output_info["power"] == "on")
+				var/power = (output_info["power"])
 				var/output_pressure = output_info["internal"]
 				output += {"<B>Output</B>: [power?("Open"):("On Hold")] <A href='?src=\ref[src];out_refresh_status=1'>Refresh</A><BR>
 Max Output Pressure: [output_pressure] kPa<BR>"}
@@ -244,83 +245,43 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 			if(..())
 				return
 
+			if(href_list["adj_pressure"])
+				var/change = text2num(href_list["adj_pressure"])
+				pressure_setting = between(0, pressure_setting + change, 50*ONE_ATMOSPHERE)
+				spawn(1)
+					src.updateDialog()
+				return
+
+			if(!radio_connection)
+				return 0
+			var/datum/signal/signal = new
+			signal.transmission_method = 1 //radio signal
+			signal.source = src
 			if(href_list["in_refresh_status"])
 				input_info = null
-				if(!radio_connection)
-					return 0
-
-				var/datum/signal/signal = new
-				signal.transmission_method = 1 //radio signal
-				signal.source = src
-
-				signal.data["tag"] = input_tag
-				signal.data["command"] = "status"
-
-				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+				signal.data = list ("tag" = input_tag, "status")
 
 			if(href_list["in_toggle_injector"])
 				input_info = null
-				if(!radio_connection)
-					return 0
-
-				var/datum/signal/signal = new
-				signal.transmission_method = 1 //radio signal
-				signal.source = src
-
-				signal.data["tag"] = input_tag
-				signal.data["command"] = "power_toggle"
-
-				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+				signal.data = list ("tag" = input_tag, "power_toggle")
 
 			if(href_list["out_refresh_status"])
 				output_info = null
-				if(!radio_connection)
-					return 0
-
-				var/datum/signal/signal = new
-				signal.transmission_method = 1 //radio signal
-				signal.source = src
-
-				signal.data["tag"] = output_tag
-				signal.data["command"] = "status"
-
-				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+				signal.data = list ("tag" = output_tag, "status")
 
 			if(href_list["out_toggle_power"])
 				output_info = null
-				if(!radio_connection)
-					return 0
-
-				var/datum/signal/signal = new
-				signal.transmission_method = 1 //radio signal
-				signal.source = src
-
-				signal.data["tag"] = output_tag
-				signal.data["command"] = "power_toggle"
-
-				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+				signal.data = list ("tag" = output_tag, "power_toggle")
 
 			if(href_list["out_set_pressure"])
 				output_info = null
-				if(!radio_connection)
-					return 0
+				signal.data = list ("tag" = output_tag, "set_internal_pressure" = "[pressure_setting]")
 
-				var/datum/signal/signal = new
-				signal.transmission_method = 1 //radio signal
-				signal.source = src
+			signal.data["sigtype"]="command"
+			radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-				signal.data["tag"] = output_tag
-				signal.data["command"] = "set_internal_pressure"
-				signal.data["parameter"] = "[pressure_setting]"
-
-				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
-
-			if(href_list["adj_pressure"])
-				var/change = text2num(href_list["adj_pressure"])
-				pressure_setting = min(max(0, pressure_setting + change), 50*ONE_ATMOSPHERE)
-
-			spawn(7)
-				attack_hand(usr)
+			spawn(5)
+				src.updateDialog()
 
 	fuel_injection
 		icon = 'computer.dmi'
@@ -386,12 +347,11 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				signal.transmission_method = 1 //radio signal
 				signal.source = src
 
-				signal.data["tag"] = device_tag
-
-				if(injecting)
-					signal.data["command"] = "power_on"
-				else
-					signal.data["command"] = "power_off"
+				signal.data = list(
+					"tag" = device_tag,
+					"power" = injecting,
+					"sigtype"="command"
+				)
 
 				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
@@ -441,10 +401,11 @@ Rate: [volume_rate] L/sec<BR>"}
 				var/datum/signal/signal = new
 				signal.transmission_method = 1 //radio signal
 				signal.source = src
-
-				signal.data["tag"] = device_tag
-				signal.data["command"] = "status"
-
+				signal.data = list(
+					"tag" = device_tag,
+					"status",
+					"sigtype"="command"
+				)
 				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 			if(href_list["toggle_automation"])
@@ -458,9 +419,11 @@ Rate: [volume_rate] L/sec<BR>"}
 				var/datum/signal/signal = new
 				signal.transmission_method = 1 //radio signal
 				signal.source = src
-
-				signal.data["tag"] = device_tag
-				signal.data["command"] = "power_toggle"
+				signal.data = list(
+					"tag" = device_tag,
+					"power_toggle",
+					"sigtype"="command"
+				)
 
 				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
@@ -471,79 +434,79 @@ Rate: [volume_rate] L/sec<BR>"}
 				var/datum/signal/signal = new
 				signal.transmission_method = 1 //radio signal
 				signal.source = src
-
-				signal.data["tag"] = device_tag
-				signal.data["command"] = "inject"
+				signal.data = list(
+					"tag" = device_tag,
+					"inject",
+					"sigtype"="command"
+				)
 
 				radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_alert
 	var/datum/radio_frequency/radio_connection
 
-	initialize()
-		set_frequency(receive_frequency)
+/obj/machinery/computer/atmos_alert/initialize()
+	set_frequency(receive_frequency)
 
-	receive_signal(datum/signal/signal)
-		if(!signal || signal.encryption) return
+/obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
+	if(!signal || signal.encryption) return
 
-		var/zone = signal.data["zone"]
-		var/severity = signal.data["alert"]
+	var/zone = signal.data["zone"]
+	var/severity = signal.data["alert"]
 
-		if(!zone || !severity) return
+	if(!zone || !severity) return
 
-		minor_alarms -= zone
-		priority_alarms -= zone
-		if(severity=="severe")
-			priority_alarms += zone
-		else if (severity=="minor")
-			minor_alarms += zone
-		else /*"clear"*/
-			//do nothing
+	minor_alarms -= zone
+	priority_alarms -= zone
+	if(severity=="severe")
+		priority_alarms += zone
+	else if (severity=="minor")
+		minor_alarms += zone
+	/*else "clear"*/
+		//do nothing
+	update_icon()
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, receive_frequency)
-			receive_frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, receive_frequency, RADIO_ATMOSIA)
+/obj/machinery/computer/atmos_alert/proc/set_frequency(new_frequency)
+	radio_controller.remove_object(src, receive_frequency)
+	receive_frequency = new_frequency
+	radio_connection = radio_controller.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
+/obj/machinery/computer/atmos_alert/attack_hand(mob/user)
+	user << browse(return_text(),"window=computer")
+	user.machine = src
+	onclose(user, "computer")
 
-	attack_hand(mob/user)
-		user << browse(return_text(),"window=computer")
-		user.machine = src
-		onclose(user, "computer")
+/obj/machinery/computer/atmos_alert/process()
+	..()
+	src.updateDialog()
 
-	process()
+/obj/machinery/computer/atmos_alert/update_icon()
+	if(priority_alarms.len)
+		icon_state = "alert:2"
 
-		if(priority_alarms.len)
-			icon_state = "alert:2"
+	else if(minor_alarms.len)
+		icon_state = "alert:1"
 
-		else if(minor_alarms.len)
-			icon_state = "alert:1"
+	else
+		icon_state = "alert:0"
 
-		else
-			icon_state = "alert:0"
+/obj/machinery/computer/atmos_alert/proc/return_text()
+	var/priority_text
+	var/minor_text
 
-		..()
+	if(priority_alarms.len)
+		for(var/zone in priority_alarms)
+			priority_text += "<FONT color='red'><B>[zone]</B></FONT>  <A href='?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
+	else
+		priority_text = "No priority alerts detected.<BR>"
 
-		src.updateDialog()
+	if(minor_alarms.len)
+		for(var/zone in minor_alarms)
+			minor_text += "<B>[zone]</B>  <A href='?src=\ref[src];minor_clear=[ckey(zone)]'>X</A><BR>"
+	else
+		minor_text = "No minor alerts detected.<BR>"
 
-	proc/return_text()
-		var/priority_text
-		var/minor_text
-
-		if(priority_alarms.len)
-			for(var/zone in priority_alarms)
-				priority_text += "<FONT color='red'><B>[zone]</B></FONT>  <A href='?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
-		else
-			priority_text = "No priority alerts detected.<BR>"
-
-		if(minor_alarms.len)
-			for(var/zone in minor_alarms)
-				minor_text += "<B>[zone]</B>  <A href='?src=\ref[src];minor_clear=[ckey(zone)]'>X</A><BR>"
-		else
-			minor_text = "No minor alerts detected.<BR>"
-
-		var/output = {"<B>[name]</B><HR>
+	var/output = {"<B>[name]</B><HR>
 <B>Priority Alerts:</B><BR>
 [priority_text]
 <BR>
@@ -552,20 +515,21 @@ Rate: [volume_rate] L/sec<BR>"}
 [minor_text]
 <BR>"}
 
-		return output
+	return output
 
-	Topic(href, href_list)
-		if(..())
-			return
+/obj/machinery/computer/atmos_alert/Topic(href, href_list)
+	if(..())
+		return
 
-		if(href_list["priority_clear"])
-			var/removing_zone = href_list["priority_clear"]
-			for(var/zone in priority_alarms)
-				if(ckey(zone) == removing_zone)
-					priority_alarms -= zone
+	if(href_list["priority_clear"])
+		var/removing_zone = href_list["priority_clear"]
+		for(var/zone in priority_alarms)
+			if(ckey(zone) == removing_zone)
+				priority_alarms -= zone
 
-		if(href_list["minor_clear"])
-			var/removing_zone = href_list["minor_clear"]
-			for(var/zone in minor_alarms)
-				if(ckey(zone) == removing_zone)
-					minor_alarms -= zone
+	if(href_list["minor_clear"])
+		var/removing_zone = href_list["minor_clear"]
+		for(var/zone in minor_alarms)
+			if(ckey(zone) == removing_zone)
+				minor_alarms -= zone
+	update_icon()

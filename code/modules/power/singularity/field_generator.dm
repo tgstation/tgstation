@@ -102,7 +102,7 @@
 				if(2)
 					user << "\red The [src.name] needs to be unwelded from the floor."
 					return
-		else if(istype(W, /obj/item/weapon/weldingtool))
+		else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 			switch(state)
 				if(0)
 					user << "\red The [src.name] needs to be wrenched to the floor."

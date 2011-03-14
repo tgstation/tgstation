@@ -44,15 +44,16 @@
 		var/datum/signal/signal = new
 		signal.source = src
 		signal.transmission_method = 1
-
-		signal.data["tag"] = id
-		signal.data["device"] = "AM"
-		signal.data["pressure"] = round(env_pressure)
-
+		signal.data = list(
+			"tag" = id,
+			"device" = "AM",
+			"pressure" = round(env_pressure),
+			"sigtype" = "status"
+		)
 		radio_connection.post_signal(src, signal)
 
 /obj/machinery/meter/examine()
-	set src in oview(1)
+	set src in view(3)
 
 	var/t = "A gas flow meter. "
 	if (src.target)
@@ -71,10 +72,10 @@
 /obj/machinery/meter/Click()
 
 	if(stat & (NOPOWER|BROKEN))
-		return
+		return 1
 
 	var/t = null
-	if (get_dist(usr, src) <= 3 || istype(usr, /mob/living/silicon/ai))
+	if (get_dist(usr, src) <= 3 || istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/dead))
 		if (src.target)
 			var/datum/gas_mixture/environment = target.return_air()
 			if(environment)
@@ -87,7 +88,7 @@
 		usr << "\blue <B>You are too far away.</B>"
 
 	usr << t
-	return
+	return 1
 	
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (!istype(W, /obj/item/weapon/wrench))

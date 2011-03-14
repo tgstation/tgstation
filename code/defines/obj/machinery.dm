@@ -18,17 +18,6 @@
 		global
 			gl_uid = 1
 
-/obj/machinery/alarm
-	name = "alarm"
-	icon = 'monitors.dmi'
-	icon_state = "alarm0"
-	anchored = 1.0
-	var/skipprocess = 0 //Experimenting
-	var/alarm_frequency = "1437"
-	use_power = 1
-	idle_power_usage = 5
-	active_power_usage = 0
-
 /obj/machinery/autolathe
 	name = "Autolathe"
 	icon_state = "autolathe"

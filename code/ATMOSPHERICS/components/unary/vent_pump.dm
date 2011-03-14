@@ -64,7 +64,7 @@
 			return
 		if (!node)
 			on = 0
-		//broadcast_status()
+		//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 		if(!on)
 			return 0
 
@@ -136,12 +136,13 @@
 				"area" = src.area_uid,
 				"tag" = src.id_tag,
 				"device" = "AVP",
-				"power" = on?("on"):("off"),
+				"power" = on,
 				"direction" = pump_direction?("release"):("siphon"),
 				"checks" = pressure_checks,
 				"internal" = internal_pressure_bound,
 				"external" = external_pressure_bound,
-				"timestamp" = air_master.current_cycle,
+				"timestamp" = world.time,
+				"sigtype" = "status"
 			)
 
 			radio_connection.post_signal(src, signal, radio_filter_out)
@@ -153,74 +154,82 @@
 		..()
 
 		//some vents work his own spesial way
-		radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
-		radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
+		radio_filter_in = frequency==1439?(RADIO_FROM_AIRALARM):null
+		radio_filter_out = frequency==1439?(RADIO_TO_AIRALARM):null
 		if(frequency)
 			set_frequency(frequency)
-		update_icon()
 
 	receive_signal(datum/signal/signal)
+		if(stat & (NOPOWER|BROKEN))
+			return
 		//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/unary/vent_pump/receive_signal([signal.debug_print()])")
-		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || !signal.data["command"])
+		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 			return 0
 
-		switch(signal.data["command"])
-			if("power_on")
-				on = 1
+		if("purge" in signal.data)
+			pressure_checks &= ~1
+			pump_direction = 0
 
-			if("power_off")
-				on = 0
+		if("stabalize" in signal.data)
+			pressure_checks |= 1
+			pump_direction = 1
 
-			if("power_toggle")
-				on = !on
+		if("power" in signal.data)
+			on = text2num(signal.data["power"])
 
-			if("toggle_checks")
-				pressure_checks = (pressure_checks?0:3)
+		if("power_toggle" in signal.data)
+			on = !on
 
-			if("set_direction")
-				var/number = text2num(signal.data["parameter"])
-				if(number > 0.5)
-					pump_direction = 1
-				else
-					pump_direction = 0
+		if("checks" in signal.data)
+			pressure_checks = text2num(signal.data["checks"])
 
-			if("purge")
-				pressure_checks &= ~1
-				pump_direction = 0
+		if("checks_toggle" in signal.data)
+			pressure_checks = (pressure_checks?0:3)
 
-			if("stabalize")
-				pressure_checks |= 1
-				pump_direction = 1
+		if("direction" in signal.data)
+			pump_direction = text2num(signal.data["direction"])
 
-			if("set_checks")
-				var/number = round(text2num(signal.data["parameter"]),1)
-				pressure_checks = number
+		if("set_internal_pressure" in signal.data)
+			internal_pressure_bound = between(
+				0,
+				text2num(signal.data["set_internal_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
-			if("set_internal_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+		if("set_external_pressure" in signal.data)
+			external_pressure_bound = between(
+				0,
+				text2num(signal.data["set_external_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
-				internal_pressure_bound = number
+		if("adjust_internal_pressure" in signal.data)
+			internal_pressure_bound = between(
+				0,
+				internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
-			if("set_external_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+		if("adjust_external_pressure" in signal.data)
+			external_pressure_bound = between(
+				0,
+				external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),
+				ONE_ATMOSPHERE*50
+			)
 
-				external_pressure_bound = number
+		if("init" in signal.data)
+			name = signal.data["init"]
+			return
 
-			if("init")
-				name = signal.data["parameter"]
-				return
+		if("status" in signal.data)
+			spawn(2)
+				broadcast_status()
+			return //do not update_icon
 
-			if("status")
-				//broadcast_status
-
-			else
-				log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
-				return
+			//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 		spawn(2)
 			broadcast_status()
-			update_icon()
+		update_icon()
 		return
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.
@@ -235,7 +244,7 @@
 		return
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 			if (W:remove_fuel(2,user))
 				user << "\blue Now welding the vent."
 				if(do_after(user, 20))

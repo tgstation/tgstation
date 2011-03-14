@@ -32,7 +32,7 @@ datum/computer/file/embedded_program/airlock_controller
 			memory["interior_status"] = signal.data["door_status"]
 
 		else if(receive_tag==airpump_tag)
-			if(signal.data["power"]=="on")
+			if(signal.data["power"])
 				memory["pump_status"] = signal.data["direction"]
 			else
 				memory["pump_status"] = "off"
@@ -57,119 +57,146 @@ datum/computer/file/embedded_program/airlock_controller
 				target_state = AIRLOCK_STATE_CLOSED
 
 	process()
-		switch(state)
-			if(AIRLOCK_STATE_INOPEN) // state -2
-				if(target_state > state)
-					if(memory["interior_status"] == "closed")
-						state = AIRLOCK_STATE_CLOSED
-					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						signal.data["command"] = "secure_close"
-						post_signal(signal)
-				else
-					if(memory["pump_status"] != "off")
-						var/datum/signal/signal = new
-						signal.data["tag"] = airpump_tag
-						signal.data["command"] = "power_off"
-						post_signal(signal)
-
-			if(AIRLOCK_STATE_PRESSURIZE)
-				if(target_state < state)
-					if(sensor_pressure >= ONE_ATMOSPHERE*0.95)
-						if(memory["interior_status"] == "open")
-							state = AIRLOCK_STATE_INOPEN
+		var/process_again = 1
+		while(process_again)
+			process_again = 0
+			switch(state)
+				if(AIRLOCK_STATE_INOPEN) // state -2
+					if(target_state > state)
+						if(memory["interior_status"] == "closed")
+							state = AIRLOCK_STATE_CLOSED
+							process_again = 1
 						else
 							var/datum/signal/signal = new
 							signal.data["tag"] = interior_door_tag
-							signal.data["command"] = "secure_open"
+							signal.data["command"] = "secure_close"
 							post_signal(signal)
 					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = airpump_tag
-						if(memory["pump_status"] == "siphon")
-							signal.data["command"] = "stabalize"
-						else if(memory["pump_status"] != "release")
-							signal.data["command"] = "power_on"
-						post_signal(signal)
-				else if(target_state > state)
-					state = AIRLOCK_STATE_CLOSED
+						if(memory["pump_status"] != "off")
+							var/datum/signal/signal = new
+							signal.data = list(
+								"tag" = airpump_tag,
+								"power" = 0,
+								"sigtype"="command"
+							)
+							post_signal(signal)
 
-			if(AIRLOCK_STATE_CLOSED)
-				if(target_state > state)
-					if(memory["interior_status"] == "closed")
-						state = AIRLOCK_STATE_DEPRESSURIZE
-					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						signal.data["command"] = "secure_close"
-						post_signal(signal)
-				else if(target_state < state)
-					if(memory["exterior_status"] == "closed")
-						state = AIRLOCK_STATE_PRESSURIZE
-					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						signal.data["command"] = "secure_close"
-						post_signal(signal)
+				if(AIRLOCK_STATE_PRESSURIZE)
+					if(target_state < state)
+						if(sensor_pressure >= ONE_ATMOSPHERE*0.95)
+							if(memory["interior_status"] == "open")
+								state = AIRLOCK_STATE_INOPEN
+								process_again = 1
+							else
+								var/datum/signal/signal = new
+								signal.data["tag"] = interior_door_tag
+								signal.data["command"] = "secure_open"
+								post_signal(signal)
+						else
+							var/datum/signal/signal = new
+							signal.data = list(
+								"tag" = airpump_tag,
+								"sigtype"="command"
+							)
+							if(memory["pump_status"] == "siphon")
+								signal.data["stabalize"] = 1
+							else if(memory["pump_status"] != "release")
+								signal.data["power"] = 1
+							post_signal(signal)
+					else if(target_state > state)
+						state = AIRLOCK_STATE_CLOSED
+						process_again = 1
 
-				else
-					if(memory["pump_status"] != "off")
-						var/datum/signal/signal = new
-						signal.data["tag"] = airpump_tag
-						signal.data["command"] = "power_off"
-						post_signal(signal)
-
-			if(AIRLOCK_STATE_DEPRESSURIZE)
-				var/target_pressure = ONE_ATMOSPHERE*0.05
-				if(sanitize_external)
-					target_pressure = ONE_ATMOSPHERE*0.01
-
-				if(sensor_pressure <= target_pressure)
+				if(AIRLOCK_STATE_CLOSED)
 					if(target_state > state)
-						if(memory["exterior_status"] == "open")
-							state = AIRLOCK_STATE_OUTOPEN
+						if(memory["interior_status"] == "closed")
+							state = AIRLOCK_STATE_DEPRESSURIZE
+							process_again = 1
+						else
+							var/datum/signal/signal = new
+							signal.data["tag"] = interior_door_tag
+							signal.data["command"] = "secure_close"
+							post_signal(signal)
+					else if(target_state < state)
+						if(memory["exterior_status"] == "closed")
+							state = AIRLOCK_STATE_PRESSURIZE
+							process_again = 1
 						else
 							var/datum/signal/signal = new
 							signal.data["tag"] = exterior_door_tag
-							signal.data["command"] = "secure_open"
+							signal.data["command"] = "secure_close"
 							post_signal(signal)
-					else if(target_state < state)
-						state = AIRLOCK_STATE_CLOSED
-				else if((target_state < state) && !sanitize_external)
-					state = AIRLOCK_STATE_CLOSED
-				else
-					var/datum/signal/signal = new
-					signal.transmission_method = 1 //radio signal
-					signal.data["tag"] = airpump_tag
-					if(memory["pump_status"] == "release")
-						signal.data["command"] = "purge"
-					else if(memory["pump_status"] != "siphon")
-						signal.data["command"] = "power_on"
-					post_signal(signal)
 
-			if(AIRLOCK_STATE_OUTOPEN) //state 2
-				if(target_state < state)
-					if(memory["exterior_status"] == "closed")
-						if(sanitize_external)
-							state = AIRLOCK_STATE_DEPRESSURIZE
-						else
+					else
+						if(memory["pump_status"] != "off")
+							var/datum/signal/signal = new
+							signal.data = list(
+								"tag" = airpump_tag,
+								"power" = 0,
+								"sigtype"="command"
+							)
+							post_signal(signal)
+
+				if(AIRLOCK_STATE_DEPRESSURIZE)
+					var/target_pressure = ONE_ATMOSPHERE*0.05
+					if(sanitize_external)
+						target_pressure = ONE_ATMOSPHERE*0.01
+
+					if(sensor_pressure <= target_pressure)
+						if(target_state > state)
+							if(memory["exterior_status"] == "open")
+								state = AIRLOCK_STATE_OUTOPEN
+							else
+								var/datum/signal/signal = new
+								signal.data["tag"] = exterior_door_tag
+								signal.data["command"] = "secure_open"
+								post_signal(signal)
+						else if(target_state < state)
 							state = AIRLOCK_STATE_CLOSED
+							process_again = 1
+					else if((target_state < state) && !sanitize_external)
+						state = AIRLOCK_STATE_CLOSED
+						process_again = 1
 					else
 						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						signal.data["command"] = "secure_close"
+						signal.transmission_method = 1 //radio signal
+						signal.data = list(
+							"tag" = airpump_tag,
+							"sigtype"="command"
+						)
+						if(memory["pump_status"] == "release")
+							signal.data["purge"] = 1
+						else if(memory["pump_status"] != "siphon")
+							signal.data["power"] = 1
 						post_signal(signal)
-				else
-					if(memory["pump_status"] != "off")
-						var/datum/signal/signal = new
-						signal.data["tag"] = airpump_tag
-						signal.data["command"] = "power_off"
-						post_signal(signal)
+
+				if(AIRLOCK_STATE_OUTOPEN) //state 2
+					if(target_state < state)
+						if(memory["exterior_status"] == "closed")
+							if(sanitize_external)
+								state = AIRLOCK_STATE_DEPRESSURIZE
+								process_again = 1
+							else
+								state = AIRLOCK_STATE_CLOSED
+								process_again = 1
+						else
+							var/datum/signal/signal = new
+							signal.data["tag"] = exterior_door_tag
+							signal.data["command"] = "secure_close"
+							post_signal(signal)
+					else
+						if(memory["pump_status"] != "off")
+							var/datum/signal/signal = new
+							signal.data = list(
+								"tag" = airpump_tag,
+								"power" = 0,
+								"sigtype"="command"
+							)
+							post_signal(signal)
 
 		memory["sensor_pressure"] = sensor_pressure
 		memory["processing"] = state != target_state
-		sensor_pressure = null
+		//sensor_pressure = null //not sure if we can comment this out. Uncomment in case of problems -rastaf0
 
 		return 1
 
