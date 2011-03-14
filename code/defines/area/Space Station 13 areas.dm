@@ -141,7 +141,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "shuttle"
 
 /area/shuttle/mining
-	name = "Emergency Shuttle"
+	name = "Mining Shuttle"
 	music = "music/escape.ogg"
 
 /area/shuttle/mining/station
@@ -633,7 +633,7 @@ proc/process_ghost_teleport_locs()
 		icon_state = "engine"
 
 	chiefs_office
-		name = "Cheif Engineers office"
+		name = "Chief Engineers office"
 		icon_state = "engine_control"
 
 
