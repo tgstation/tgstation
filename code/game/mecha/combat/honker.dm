@@ -12,20 +12,20 @@
 
 /obj/mecha/combat/honker/New()
 	..()
+/*
 	weapons += new /datum/mecha_weapon/honker(src)
 	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar(src)
 	weapons += new /datum/mecha_weapon/missile_rack/mousetrap_mortar(src)
 	selected_weapon = weapons[1]
 	return
+*/
 
 
 /obj/mecha/combat/honker/melee_action(target)
-	if(internal_damage&MECHA_INT_CONTROL_LOST)
-		target = pick(oview(1,src))
 	if(!melee_can_hit || !istype(target, /atom))
 		return
-	if(istype(selected_weapon, /datum/mecha_weapon/honker))
-		selected_weapon.fire(target)
+	if(istype(selected, /obj/item/mecha_parts/mecha_equipment/weapon/honker))
+		selected.action(target)
 	else if(istype(target, /mob))
 		step_away(target,src,15)
 	return
@@ -43,9 +43,9 @@
 						<b>Lights: </b>[lights?"on":"off"]<br>
 					"}
 	output += "<b>HONKon systems:</b><div style=\"margin-left: 15px;\">"
-	if(weapons.len)
-		for(var/datum/mecha_weapon/W in weapons)
-			output += "[selected_weapon==W?"<b>":"<a href='?src=\ref[src];select_weapon=\ref[W]'>"][W.get_weapon_info()][selected_weapon==W?"</b>":"</a>"]<br>"
+	if(equipment.len)
+		for(var/obj/item/mecha_parts/mecha_equipment/W in equipment)
+			output += "[selected==W?"<b>":"<a href='?src=\ref[src];select_equip=\ref[W]'>"][W.get_equip_info()][selected==W?"</b>":"</a>"]<br>"
 	else
 		output += "None. HONK!"
 	output += "</div>"

@@ -13,6 +13,7 @@
 	var/list/welder_salvage = list("/obj/item/stack/sheet/r_metal","/obj/item/stack/sheet/metal","/obj/item/stack/rods")
 	var/list/wirecutters_salvage = list("/obj/item/weapon/cable_coil")
 	var/list/crowbar_salvage = list("/obj/item/weapon/cell")
+	var/list/equipment = new
 	var/salvage_num = 5
 
 /obj/decal/mecha_wreckage/ex_act(severity)
@@ -50,6 +51,12 @@
 				user << "You failed to salvage anything valuable from [src]."
 			salvage_num--
 	if(istype(W, /obj/item/weapon/crowbar))
+		if(equipment.len)
+			var/obj/item/mecha_parts/mecha_equipment/E = pick(equipment)
+			if(E)
+				E.loc = get_turf(user)
+				user.visible_message("[user] pries [E] from [src].", "You pry [E] from [src].")
+			return
 		if(salvage_num<=0)
 			user << "You can't see anything of value left on this wreck."
 			return

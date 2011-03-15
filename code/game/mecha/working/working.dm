@@ -2,8 +2,6 @@
 	deflect_chance = 10
 	health = 500
 	req_access = access_heads
-	var/datum/mecha_tool/selected_tool
-	var/list/tools = new
 	operation_req_access = list(access_engine,access_robotics)
 	internals_req_access = list(access_engine,access_robotics)
 	var/add_req_access = 1
@@ -14,23 +12,20 @@
 	new /obj/item/mecha_tracking(src)
 	return
 
-
+/*
 /obj/mecha/working/melee_action(atom/target as obj|mob|turf)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = pick(oview(1,src))
 	if(selected_tool)
 		selected_tool.action(target)
 	return
+*/
 
 /obj/mecha/working/range_action(atom/target as obj|mob|turf)
 	return
 
 /obj/mecha/working/Topic(href, href_list)
 	..()
-	if (href_list["select_tool"])
-		var/tool = locate(href_list["select_tool"])
-		if(tool)
-			src.selected_tool = tool
 	if (href_list["unlock_id_upload"])
 		add_req_access = 1
 	if (href_list["add_req_access"])
@@ -50,27 +45,13 @@
 /obj/mecha/working/get_stats_part()
 	var/output = ..()
 	output += "<b>[src.name] Tools:</b><div style=\"margin-left: 15px;\">"
-	if(tools.len)
-		for(var/datum/mecha_tool/MT in tools)
-			output += "[selected_tool==MT?"<b>":"<a href='?src=\ref[src];select_tool=\ref[MT]'>"][MT.get_tool_info()][selected_tool==MT?"</b>":"</a>"]<br>"
+	if(equipment.len)
+		for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
+			output += "[selected==MT?"<b>":"<a href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</b>":"</a>"]<br>"
 	else
 		output += "None"
 	output += "</div>"
 	return output
-
-
-/obj/mecha/working/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
-	..()
-	if(prob(5) && (ignore_threshold || (src.health*100/initial(src.health))<src.internal_damage_threshold))
-		if(tools.len)
-			var/datum/mecha_tool/destr_tool = pick(tools)
-			if(destr_tool)
-				tools -= destr_tool
-				destr_tool.destroy()
-				src.occupant_message("<font color='red'>The [destr_tool] is destroyed!</font>")
-				src.log_append_to_last("[destr_tool] is destroyed.")
-				src.occupant << sound('critdestr.ogg',volume=50)
-	return
 
 
 /obj/mecha/working/attackby(obj/item/weapon/W as obj, mob/user as mob)

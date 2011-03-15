@@ -1,9 +1,6 @@
 /obj/mecha/combat
 	deflect_chance = 10
 	health = 500
-
-	var/list/weapons = new
-	var/datum/mecha_weapon/selected_weapon
 	operation_req_access = list(access_security)
 	internals_req_access = list(access_engine,access_robotics)
 	var/force = 25
@@ -33,12 +30,14 @@
 	return
 */
 
+/*
 /obj/mecha/combat/range_action(target as obj|mob|turf)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = pick(view(3,target))
 	if(selected_weapon)
 		selected_weapon.fire(target)
 	return
+*/
 
 /obj/mecha/combat/melee_action(target as obj|mob|turf)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
@@ -115,7 +114,7 @@
 							V.show_message("[src.name] hits [target].", 1)
 					if(!istype(target, /turf/simulated/wall))
 						target:attackby(src,src.occupant)
-					else if(prob(5))
+					else if(prob(20))
 						target:dismantle_wall(1)
 						src.occupant_message("\blue You smash through the wall.")
 						src.visible_message("<b>[src.name] smashes through the wall</b>")
@@ -153,17 +152,9 @@
 
 	return 0
 */
-/obj/mecha/combat/Topic(href, href_list)
-	..()
-	if (href_list["select_weapon"])
-		var/weapon = locate(href_list["select_weapon"])
-		if(weapon)
-			src.selected_weapon = weapon
-	return
-
 
 /obj/mecha/combat/moved_inside(var/mob/living/carbon/human/H as mob)
-	if(..(H))
+	if(..())
 		if(usr.client)
 			usr.client.mouse_pointer_icon = file("icons/misc/mecha_mouse.dmi")
 		return 1
@@ -176,26 +167,12 @@
 	..()
 	return
 
-
-/obj/mecha/combat/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
-	..()
-	if(prob(5) && (ignore_threshold || (src.health*100/initial(src.health))<src.internal_damage_threshold))
-		if(weapons.len)
-			var/datum/mecha_weapon/destr_weapon = pick(weapons)
-			if(destr_weapon)
-				weapons -= destr_weapon
-				destr_weapon.destroy()
-				src.occupant_message("<font color='red'>The [destr_weapon] is destroyed!</font>")
-				src.log_append_to_last("[destr_weapon] is destoyed.",1)
-				src.occupant << sound('weapdestr.ogg',volume=50)
-	return
-
 /obj/mecha/combat/get_stats_part()
 	var/output = ..()
 	output += "<b>Weapon systems:</b><div style=\"margin-left: 15px;\">"
-	if(weapons.len)
-		for(var/datum/mecha_weapon/W in weapons)
-			output += "[selected_weapon==W?"<b>":"<a href='?src=\ref[src];select_weapon=\ref[W]'>"][W.get_weapon_info()][selected_weapon==W?"</b>":"</a>"]<br>"
+	if(equipment.len)
+		for(var/obj/item/mecha_parts/mecha_equipment/W in equipment)
+			output += "[selected==W?"<b>":"<a href='?src=\ref[src];select_equip=\ref[W]'>"][W.get_equip_info()][selected==W?"</b>":"</a>"]<br>"
 	else
 		output += "None"
 	output += "</div>"

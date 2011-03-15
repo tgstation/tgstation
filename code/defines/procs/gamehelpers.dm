@@ -81,3 +81,29 @@
 
 	//turfs += centerturf
 	return turfs
+
+/proc/circlerangeturfs(center=usr,radius=3)
+
+	var/turf/centerturf = get_turf(center)
+	var/list/turfs = new/list()
+	var/rsq = radius * (radius+0.5)
+
+	for(var/turf/T in range(radius, centerturf))
+		var/dx = T.x - centerturf.x
+		var/dy = T.y - centerturf.y
+		if(dx*dx + dy*dy <= rsq)
+			turfs += T
+	return turfs
+
+/proc/circleviewturfs(center=usr,radius=3)
+
+	var/turf/centerturf = get_turf(center)
+	var/list/turfs = new/list()
+	var/rsq = radius * (radius+0.5)
+
+	for(var/turf/T in view(radius, centerturf))
+		var/dx = T.x - centerturf.x
+		var/dy = T.y - centerturf.y
+		if(dx*dx + dy*dy <= rsq)
+			turfs += T
+	return turfs

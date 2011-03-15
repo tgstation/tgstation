@@ -8,8 +8,9 @@ proc/spawn_asteroid(var/atom/start_loc,var/type,var/size,var/richness)//type: 0 
 	if(!richness)
 		richness = rand(10,40)
 //	world << "Asteroid size: [size]; Asteroid type: [type]"
-	var/list/turfs = circlerange(start_loc,size)
+	var/list/turfs = circlerangeturfs(start_loc,size)
 	var/area/asteroid/AstAr = new
+	AstAr.name = "Asteroid #[start_loc.x][start_loc.y][start_loc.z]"
 	for(var/turf/T in turfs)
 		var/dist = get_dist(start_loc,T)
 		if(abs(GaussRand(dist))<size) //prob(100-(dist*rand(2,4))))//I'm terrible at generating random things.
@@ -25,17 +26,17 @@ proc/spawn_asteroid(var/atom/start_loc,var/type,var/size,var/richness)//type: 0 
 			A.opacity = 0
 			A.sd_NewOpacity(1)
 			AstAr.contents += A
-/*
-	if(max_secret_rooms && size == 12)
-		var/x_len = rand(4,12)
-		var/y_len = pick(4,12)
+
+	if(max_secret_rooms && size >= 10)
+		var/x_len = rand(4,size)
+		var/y_len = pick(4,size)
 		var/st_l = locate(start_loc.x-round(x_len/2),start_loc.y-round(y_len/2),start_loc.z)
 		spawn_room(st_l,x_len,y_len)
 		max_secret_rooms--
-*/
+
 	return 1
 
-/proc/populate_w_asteroids(var/z,var/density)
+/proc/populate_w_asteroids(var/z,var/density=null)
 	if(!density)
 		density = pick(10,20,40)
 	while(density)
@@ -96,9 +97,9 @@ proc/spawn_asteroid(var/atom/start_loc,var/type,var/size,var/richness)//type: 0 
 proc/spawn_room(var/atom/start_loc,var/x_size,var/y_size,var/wall,var/floor)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())
 
-	world << "Room spawned at [start_loc.x],[start_loc.y],[start_loc.z]"
+	//world << "Room spawned at [start_loc.x],[start_loc.y],[start_loc.z]"
 	if(!wall)
-		wall = pick(/turf/simulated/wall/r_wall,/turf/simulated/wall)
+		wall = pick(/turf/simulated/wall/r_wall,/turf/simulated/wall,/obj/alien/resin)
 	if(!floor)
 		floor = pick(/turf/simulated/floor,/turf/simulated/floor/engine)
 
@@ -141,7 +142,18 @@ proc/admin_spawn_room_at_pos()
 		spawn_room(locate(x,y,z),x_len,y_len,wall,floor)
 	return
 
+var/global/list/space_surprises = list(/obj/alien/facehugger,
+													/obj/livestock/spesscarp,
+													/obj/livestock/spesscarp/elite,
+													/obj/creature,
+													/obj/item/weapon/rcd,
+													/obj/item/weapon/rcd_ammo,
+													/obj/item/weapon/spacecash,
+													/obj/item/weapon/cloaking_device,
+													/obj/item/weapon/gun/energy/teleport_gun,
+													/obj/item/weapon/rubber_chicken,
+													/obj/item/weapon/sword/pirate
+													)
 
 
-
-var/global/max_secret_rooms = 3
+var/global/max_secret_rooms = 6

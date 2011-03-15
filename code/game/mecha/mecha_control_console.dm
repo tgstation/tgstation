@@ -102,13 +102,7 @@
 							<b>Airtank:</b> [M.return_pressure()]kPa<br>
 							<b>Pilot:</b> [M.occupant||"None"]<br>
 							<b>Location:</b> [get_area(M)||"Unknown"]<br>
-							<b>Active equipment:</b>"}
-		if(istype(M, /obj/mecha/combat))
-			var/obj/mecha/combat/CM = M
-			answer += " [CM.selected_weapon.name]<br>"
-		else if(istype(M, /obj/mecha/working))
-			var/obj/mecha/working/WM = M
-			answer += " [WM.selected_tool.name]<br>"
+							<b>Active equipment:</b> [M.selected||"None"]"}
 		if(istype(M, /obj/mecha/working/ripley))
 			var/obj/mecha/working/ripley/RM = M
 			answer += "<b>Used cargo space:</b> [RM.cargo.len/RM.cargo_capacity*100]%<br>"

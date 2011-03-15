@@ -121,6 +121,8 @@ proc
 		var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare)
 		var/closed[] = new()
 		var/path[]
+		start = get_turf(start)
+		if(!start) return 0
 
 		open.Enqueue(new /PathNode(start,null,0,call(start,dist)(end)))
 

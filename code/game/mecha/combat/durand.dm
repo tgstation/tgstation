@@ -4,7 +4,7 @@
 	icon_state = "durand"
 	step_in = 6
 	health = 350
-	deflect_chance = 12
+	deflect_chance = 15
 	max_temperature = 3000
 	infra_luminosity = 8
 	operation_req_access = list(access_security)
@@ -13,17 +13,20 @@
 	var/defence_deflect = 30
 	wreckage = "/obj/decal/mecha_wreckage/durand"
 
-
+/*
 /obj/mecha/combat/durand/New()
 	..()
 	weapons += new /datum/mecha_weapon/ballistic/lmg(src)
 	weapons += new /datum/mecha_weapon/ballistic/scattershot(src)
 	selected_weapon = weapons[1]
 	return
+*/
 
 /obj/mecha/combat/durand/relaymove(mob/user,direction)
 	if(defence)
-		src.occupant_message("<font color='red'>Unable to move while in defence mode</font>")
+		if(world.time - last_message > 20)
+			src.occupant_message("<font color='red'>Unable to move while in defence mode</font>")
+			last_message = world.time
 		return 0
 	. = ..()
 	return

@@ -913,7 +913,7 @@
 "arC" = (/obj/machinery/door/airlock/external{name = "West Auxillary Solar Maintenance"; req_access = null; req_access_txt = "13"},/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/simulated/floor/plating,/area/maintenance/auxsolarport)
 "arD" = (/obj/grille,/obj/window/reinforced{dir = 4},/obj/window/reinforced{dir = 1},/obj/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/storage/tech)
 "arE" = (/obj/rack{dir = 8},/obj/item/weapon/circuitboard/aiupload,/turf/simulated/floor,/area/storage/tech)
-"arF" = (/obj/rack{dir = 8},/obj/item/weapon/circuitboard/robotics,/turf/simulated/floor,/area/storage/tech)
+"arF" = (/obj/rack{dir = 8},/obj/item/weapon/circuitboard/mecha_control{pixel_x = -2; pixel_y = 2},/obj/item/weapon/circuitboard/robotics{pixel_x = 1; pixel_y = -1},/turf/simulated/floor,/area/storage/tech)
 "arG" = (/obj/machinery/atmospherics/pipe/simple{dir = 5},/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "arH" = (/obj/machinery/atmospherics/pipe/manifold,/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "arI" = (/obj/machinery/atmospherics/pipe/simple{dir = 4},/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/simulated/floor/plating,/area/maintenance/fpmaint)

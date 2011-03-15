@@ -24,6 +24,7 @@
 	var/obj/item/weapon/cell/cell = new
 	var/state = 0
 	var/list/log = new
+	var/last_message = 0
 
 	var/datum/effects/system/spark_spread/spark_system = new
 	var/lights = 0
@@ -51,6 +52,10 @@
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
 
 	var/wreckage
+
+	var/list/equipment = new
+	var/obj/item/mecha_parts/mecha_equipment/selected
+	var/max_equip = 2
 
 
 /obj/mecha/New()
@@ -111,50 +116,21 @@
 	var/dir_to_target = get_dir(src,target)
 	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
 		return
-	if(get_dist(src,target)>1)
-		src.range_action(target)
+	if(internal_damage&MECHA_INT_CONTROL_LOST)
+		target = pick(view(3,target))
+	var/dist = get_dist(src, target)
+	if(dist>1)
+		if(selected && selected.is_ranged())
+			selected.action(target)
+	else if(selected && !selected.is_ranged())
+		selected.action(target)
 	else
 		src.melee_action(target)
 	return
 
 
 /obj/mecha/proc/melee_action(atom/target)
-/*
-	if(istype(target, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/A = target
-		if(A.locked)
-			src.occupant_message("Unable to open airlock - bolted")
-			return 0
-		else if(src.density && !src.welded && !src.operating) && ((!src.arePowerSystemsOn()) || (stat & NOPOWER)))
-			if(src.arePowerSystemsOn() && !(stat&NOPOWER))
-				A.open()
-			else
-				spawn(0)
-					src.operating = 1
-					animate("opening")
-					sleep(15)
-					src.density = 0
-					update_icon()
-					if (!istype(src, /obj/machinery/door/airlock/glass))
-						src.sd_SetOpacity(0)
-					src.operating = 0
-			return 0
-		else if(!src.density && !src.welded && !src.operating)
-			if(src.arePowerSystemsOn() && !(stat&NOPOWER))
-				A.close()
-			else
-				spawn( 0 )
-					src.operating = 1
-					animate("closing")
-					src.density = 1
-					sleep(15)
-					update_icon()
-					if ((src.visible) && (!istype(src, /obj/machinery/door/airlock/glass)))
-						src.sd_SetOpacity(1)
-					src.operating = 0
-			return 0
-*/
-	return 1
+	return
 
 /obj/mecha/proc/range_action(atom/target)
 	return
@@ -234,15 +210,23 @@
 //	src.inertia_dir = null
 	if(istype(obstacle, /obj))
 		var/obj/O = obstacle
-		if(istype(obstacle , /obj/machinery/door))
+		if(istype(O , /obj/machinery/door))
 			if(src.occupant)
 				O.Bumped(src.occupant)
+		/* //not working, will fix later
+		else if(istype(O, /obj/portal)) //derpfix
+			src.anchored = 0
+			O.Bumped(src)
+			src.anchored = 1
+		*/
 		else if(!O.anchored)
 			step(obstacle,src.dir)
-//		else
-//			obstacle.Bumped(src)
+		else //I have no idea why I disabled this
+			obstacle.Bumped(src)
 	else if(istype(obstacle, /mob))
 		step(obstacle,src.dir)
+	else
+		obstacle.Bumped(src)
 	return
 
 
@@ -255,12 +239,13 @@
 		if("brute")
 			src.health -= amount
 		if("fire")
-			src.health -= amount*1.2
+			amount *= 1.2
+			src.health -= amount
 	src.update_health()
 	src.log_append_to_last("Took [amount] points of damage. Damage type: \"[type]\".",1)
 	return
 
-/obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)//TODO
+/obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
 	if(!src) return
 	if(prob(25))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
@@ -274,6 +259,21 @@
 					src.pr_internal_damage.start()
 					src.log_append_to_last("Internal damage of type [int_dam_flag].[ignore_threshold?"Ignoring damage threshold.":null]",1)
 					src.occupant << sound('warning-buzzer.ogg',wait=0)
+	if(prob(5))
+		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
+			if(equipment.len)
+				var/obj/item/mecha_parts/mecha_equipment/destr = pick(equipment)
+				if(destr)
+					equipment -= destr
+					while(null in equipment)
+						equipment -= null
+					destr.destroy()
+					src.occupant_message("<font color='red'>The [destr] is destroyed!</font>")
+					src.log_append_to_last("[destr] is destroyed.",1)
+					if(istype(destr, /obj/item/mecha_parts/mecha_equipment/weapon))
+						src.occupant << sound('weapdestr.ogg',volume=50)
+					else
+						src.occupant << sound('critdestr.ogg',volume=50)
 	return
 
 
@@ -390,12 +390,20 @@
 	//	var/mob/M = src.occupant
 		var/turf/T = src.loc
 		var/wreckage = src.wreckage
+		var/list/r_equipment = src.equipment
 		src = null
 		del(mecha)
 		explosion(T, 0, 0, 1, 3)
 		spawn(0)
 			if(wreckage)
-				new wreckage(T)
+				var/obj/decal/mecha_wreckage/WR = new wreckage(T)
+				for(var/obj/item/mecha_parts/mecha_equipment/E in r_equipment)
+					if(prob(30))
+						WR.equipment += E
+						E.reliability = rand(30,100)
+					else
+						E.loc = T
+						E.destroy()
 	return
 
 /obj/mecha/ex_act(severity)
@@ -596,7 +604,10 @@
 		return
 	usr << "You start climbing into [src.name]"
 	spawn(20)
-		moved_inside(usr)
+		if(!src.occupant)
+			moved_inside(usr)
+		else if(src.occupant!=usr)
+			usr << "[src.occupant] was faster. Try better next time, loser."
 	return
 
 /obj/mecha/proc/moved_inside(var/mob/living/carbon/human/H as mob)
@@ -730,6 +741,16 @@
 
 
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
+		var/obj/item/mecha_parts/mecha_equipment/E = W
+		spawn()
+			if(E.can_attach(src))
+				user.drop_item()
+				E.attach(src)
+				user.visible_message("[user] attaches [W] to [src]", "You attach [W] to [src]")
+			else
+				user << "You were unable to attach [W] to [src]"
+		return
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.occupant)
 			user << "Unable to initiate maintenance protocol."
@@ -900,6 +921,10 @@
 			else
 				src.occupant_message("<font color='red'>Recalibration failed.</font>")
 				src.log_message("Recalibration of coordination system failed with 1 error.",1)
+	if(href_list["select_equip"])
+		var/obj/item/mecha_parts/mecha_equipment/equip = locate(href_list["select_equip"])
+		if(equip)
+			src.selected = equip
 /*
 
 	if (href_list["ai_take_control"])
@@ -965,10 +990,24 @@
 
 /obj/mecha/hear_talk(mob/M as mob, text)
 	if(occupant && M)
+		if(!occupant.say_understands(M))
+			text = stars(text)
 		var/rendered = "<span class='game say'><span class='name'>[M.name]</span> <span class='message'>[M.say_quote(text)]</span></span>"
 		occupant.show_message(rendered, 2)
 	return
+/*
+if ("binary")
+			if(src.robot_talk_understand || src.binarycheck())
+			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
+				src.robot_talk(message)
+			return
 
+if ("alientalk")
+	if(src.alien_talk_understand || src.hivecheck())
+	//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
+		src.alien_talk(message)
+	return
+*/
 /obj/mecha/proc/get_charge()//returns null if no powercell, else returns cell.charge
 	if(!src.cell) return
 	return max(0, src.cell.charge)

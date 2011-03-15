@@ -11,6 +11,7 @@
 	operation_req_access = list(access_security)
 	wreckage = "/obj/decal/mecha_wreckage/gygax"
 
+/*
 /obj/mecha/combat/gygax/New()
 	..()
 	weapons += new /datum/mecha_weapon/taser(src)
@@ -18,6 +19,7 @@
 	weapons += new /datum/mecha_weapon/missile_rack/flashbang(src)
 	selected_weapon = weapons[1]
 	return
+*/
 
 /obj/mecha/combat/gygax/verb/overload()
 	set category = "Exosuit Interface"

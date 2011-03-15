@@ -398,6 +398,7 @@
 										"silver"=0,
 										"diamond"=0,
 										"plasma"=0,
+										"uranium"=0,
 										"bananium"=0
 										)
 	var/res_max_amount = 200000
@@ -436,6 +437,20 @@
 						/obj/item/mecha_parts/part/honker_left_leg,
 						/obj/item/mecha_parts/part/honker_right_leg
 						),
+	"Exosuit Equipment"=list(
+									/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
+									/obj/item/mecha_parts/mecha_equipment/tool/drill,
+									/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
+									/obj/item/mecha_parts/mecha_equipment/tool/rcd,
+									/obj/item/mecha_parts/mecha_equipment/weapon/laser,
+									/obj/item/mecha_parts/mecha_equipment/weapon/taser,
+									/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
+									/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot,
+									/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang,
+									/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
+									/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
+									/obj/item/mecha_parts/mecha_equipment/weapon/honker),
+
 	"Misc"=list(/obj/item/mecha_tracking)
 
 	)
@@ -535,7 +550,7 @@
 	proc/output_available_resources()
 		var/output
 		for(var/resource in resources)
-			output += "<span class=\"res_name\">[resource]: </span>[min(res_max_amount, resources[resource])] cm<sup style='font-size: 8px;'>3</sup><br>"
+			output += "<span class=\"res_name\">[resource]: </span>[min(res_max_amount, resources[resource])] cm&sup3;<br>"
 		return output
 
 	proc/remove_resources(var/obj/item/mecha_parts/part as obj)
@@ -733,6 +748,8 @@
 			material = "glass"
 		else if(istype(W, /obj/item/stack/sheet/clown))
 			material = "bananium"
+		else if(istype(W, /obj/item/stack/sheet/uranium))
+			material = "uranium"
 		else
 			return ..()
 

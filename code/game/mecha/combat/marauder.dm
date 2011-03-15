@@ -19,9 +19,10 @@
 
 /obj/mecha/combat/marauder/New()
 	..()
-	weapons += new /datum/mecha_weapon/pulse(src)
-	weapons += new /datum/mecha_weapon/missile_rack(src)
-	selected_weapon = weapons[1]
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/pulse
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	ME.attach(src)
 	src.smoke_system.set_up(3, 0, src)
 	src.smoke_system.attach(src)
 	return
@@ -30,10 +31,14 @@
 	if(!can_move)
 		return 0
 	if(zoom)
-		src.occupant_message("Unable to move while in zoom mode.")
+		if(world.time - last_message > 20)
+			src.occupant_message("Unable to move while in zoom mode.")
+			last_message = world.time
 		return 0
 	if(connected_port)
-		src.occupant_message("Unable to move while connected to the air system port")
+		if(world.time - last_message > 20)
+			src.occupant_message("Unable to move while connected to the air system port")
+			last_message = world.time
 		return 0
 	if(!thrusters && src.pr_inertial_movement.active())
 		return 0
