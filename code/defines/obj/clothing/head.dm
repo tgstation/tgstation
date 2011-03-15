@@ -183,6 +183,13 @@
 	icon_state = "hoscap"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
 
+/obj/item/clothing/head/helmet/that
+	name = "Sturdy Top hat"
+	desc = "An amish looking helmet"
+	icon_state = "tophat"
+	item_state = "that"
+	flags = FPRINT|TABLEPASS|HEADSPACE
+
 
 
 

@@ -70,6 +70,9 @@
 	new /obj/item/clothing/shoes/black( src )
 	new /obj/item/clothing/shoes/black( src )
 	new /obj/item/clothing/shoes/black( src )
+	new /obj/item/clothing/head/that( src )
+	new /obj/item/clothing/head/that( src )
+	new /obj/item/clothing/head/that( src )
 	return
 /obj/closet/wardrobe/chaplain_black/New()
 	new /obj/item/clothing/under/rank/chaplain( src )
