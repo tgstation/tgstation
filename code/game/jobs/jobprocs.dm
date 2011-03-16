@@ -652,6 +652,17 @@
 				if(clear)
 					NL += T
 		src.loc = pick(NL)
+
+	/*
+	spawn(10)
+		var/obj/item/weapon/camera_test/CT = new/obj/item/weapon/camera_test(src.loc)
+		CT.afterattack(src, src, 10)
+		var/obj/item/weapon/photo/PH
+		PH = locate(/obj/item/weapon/photo,src.loc)
+		if(PH)
+			PH.layer = 3
+			src.equip_if_possible(PH, slot_in_backpack)
+		del(CT)*/ //--For another day - errorage
 	return
 
 

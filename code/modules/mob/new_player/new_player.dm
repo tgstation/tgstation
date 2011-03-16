@@ -407,7 +407,7 @@ mob/new_player
 		if (IsJobAvailable("Warden", wardenMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=28'>Warden</a><br>"
 		if (IsJobAvailable("Shaft Miner",minerMax))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=29'>Shaft Miner</a> (BETA)<br>"
+			dat += "<a href='byond://?src=\ref[src];SelectedJob=29'>Shaft Miner</a><br>"
 		if (IsJobAvailable("Mail Sorter",sorterMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=31'>Mail Sorter</a> (BETA)<br>"
 		if (!jobban_isbanned(src,"Assistant"))

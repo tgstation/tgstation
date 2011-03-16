@@ -349,6 +349,7 @@
 	var/access = list()
 	var/registered = null
 	var/assignment = null
+	var/obj/item/weapon/photo/PHOTO = null
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"
