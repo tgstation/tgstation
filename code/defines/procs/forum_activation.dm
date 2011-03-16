@@ -30,8 +30,8 @@
 
 	dbcon.Connect("dbi:mysql:[TG13db]:[TG13address]:[TG13port]","[TG13user]","[TG13pass]")
 	if(!dbcon.IsConnected())
-		usr << "<font color=red><b>Server Connection Error</b> : Unable to open a connection with the forum database.</font>"
-		usr << "<i>Potential causes for this problem: Incorrect login information, incorrect server connection information, the forum server is down or not responding to requests, your firewall is blocking outgoing SQL requests.</i>"
+		src << "<font color=red><b>Server Connection Error</b> : Unable to open a connection with the forum database.</font>"
+		src << "<i>Potential causes for this problem: Incorrect login information, incorrect server connection information, the forum server is down or not responding to requests, your firewall is blocking outgoing SQL requests.</i>"
 		return
 
 	// Sanitize inputs to avoid SQL injection attacks
@@ -48,46 +48,50 @@
 	while(query.NextRow())
 		uid = query.item[1]		// Find and save the account's user_id
 	if(!uid)
-		usr << "Forum account not found!"
+		src << "Forum account not found!"
 		dbcon.Disconnect()
 		return
 
 	query = dbcon.NewQuery("SELECT pf_byondkey FROM [forumsqldb].phpbb_profile_fields_data WHERE user_id = [uid]")
 	if(!query.Execute())
-		usr << "Unable to verify whether account is already associated with a BYOND key or not. This error shouldn't occur, please contact an administrator."
+		src << "Unable to verify whether account is already associated with a BYOND key or not. This error shouldn't occur, please contact an administrator."
 		dbcon.Disconnect()
 		return
 	if(query.RowCount() > 0)
 		query.NextRow()
 		var/currentholder = query.item[1]
-		usr << "Forum account already has a BYOND key associated with it. The current BYOND key associated with the account is \"[currentholder]\"."
-		usr << "If this is not a key you own and you feel that someone has wrongfully authenticated your forum account please contact an administrator to have your account returned to you."
+		src << "Forum account already has a BYOND key associated with it. The current BYOND key associated with the account is \"[currentholder]\"."
+		src << "If this is not a key you own and you feel that someone has wrongfully authenticated your forum account please contact an administrator to have your account returned to you."
 		dbcon.Disconnect()
 		return
 
 	query = dbcon.NewQuery("SELECT * FROM [forumsqldb].phpbb_user_group WHERE user_id = [uid] AND group_id = [forum_authenticated_group]")
 	if(!query.Execute())
-		usr << "Unable to verify whether account is already part of the authenticated group or not. This error should not occur, please contact an administrator."
+		src << "Unable to verify whether account is already part of the authenticated group or not. This error should not occur, please contact an administrator."
 		dbcon.Disconnect()
 		return
 	if(query.RowCount() > 0)
-		usr << "Forum account already belongs to the authenticated group. If this is your account and you did not authenticate it please contact an administrator to have your account returned to you."
+		src << "Forum account already belongs to the authenticated group. If this is your account and you did not authenticate it please contact an administrator to have your account returned to you."
 		dbcon.Disconnect()
 		return
 
 	query = dbcon.NewQuery("INSERT INTO [forumsqldb].phpbb_profile_fields_data (user_id, pf_byondkey) VALUES ([uid], '[playerkey]')") // Remember which key is associated with the account
 	if(!query.Execute())
-		usr << "Unable to associate key with account. Authentication failed."
+		src << "Unable to associate key with account. Authentication failed."
 		dbcon.Disconnect()
 		return
 
 	query = dbcon.NewQuery("UPDATE [forumsqldb].phpbb_user_group SET group_id = [forum_authenticated_group] WHERE user_id = [uid] AND group_id = [forum_activated_group]") // Replace 'Registered Users' group with 'Activated Users'
 	if(!query.Execute())
-		usr << "Unable to move account into authenticated group. This error shouldn't occur, contact an administrator for help. Authentication failed."
+		src << "Unable to move account into authenticated group. This error shouldn't occur, contact an administrator for help. Authentication failed."
 		dbcon.Disconnect()
 		return
+
+	query = dbcon.NewQuery("UPDATE [forumsqldb].phpbb_users SET group_id = [forum_authenticated_group] WHERE user_id = [uid]") // Change 'default group' the the authenticated group. Not doing so was causing many authenticated accounts to retain their unauthenticated permissions, despite being succesfully authenticated.
+	if(!query.Execute())
+		src << "Unable to modify default group for account. This error should never occur, contact an administrator for help. Authentication failed."
 	else
-		usr << "Authentication succeeded. You may now start posting on the <a href=http://tgstation13.servehttp.com/phpBB3/>tgstation forums</a>."
+		src << "Authentication succeeded. You may now start posting on the <a href=http://tgstation13.servehttp.com/phpBB3/>tgstation forums</a>."
 	dbcon.Disconnect()
 
 
