@@ -41,6 +41,7 @@
 				O << text("\red [] kicks the grille.", usr)
 		playsound(src.loc, 'grillehit.ogg', 80, 1)
 		src.health -= 3
+		healthcheck()
 
 /obj/grille/attack_paw(var/obj/M)
 	if ((usr.mutations & 8))
@@ -85,9 +86,14 @@
 
 /obj/grille/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wirecutters))
-		if(!shock(user, 100))
+		if(!(destroyed))
+			if(!shock(user, 100))
+				playsound(src.loc, 'Wirecutter.ogg', 100, 1)
+				src.health = 0
+		else
 			playsound(src.loc, 'Wirecutter.ogg', 100, 1)
-			src.health = 0
+			src.health = -100
+
 	else if ((istype(W, /obj/item/weapon/screwdriver) && (istype(src.loc, /turf/simulated) || src.anchored)))
 		if(!shock(user, 90))
 			playsound(src.loc, 'Screwdriver.ogg', 100, 1)
