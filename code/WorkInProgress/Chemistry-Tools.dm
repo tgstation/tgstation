@@ -194,25 +194,6 @@
 		beakers += B1
 		beakers += B2
 		icon_state = "chemg_locked"
-/*
-/obj/item/weapon/chem_grenade/poo
-	name = "poo grenade"
-	desc = "A ShiTastic! brand biological warfare charge. Not very effective unless the target is squeamish."
-	icon_state = "chemg3"
-	stage = 2
-
-	New()
-		..()
-		var/obj/item/weapon/reagent_containers/glass/B1 = new(src)
-		var/obj/item/weapon/reagent_containers/glass/B2 = new(src)
-
-		B1.reagents.add_reagent("poo", 30)
-		B2.reagents.add_reagent("poo", 30)
-
-		beakers += B1
-		beakers += B2
-*/
-///////////////////////////////Grenades
 
 /obj/syringe_gun_dummy
 	name = ""
@@ -304,8 +285,6 @@
 				if (D) spawn(10) del(D)
 
 				return
-
-
 
 
 /obj/reagent_dispensers
@@ -2254,8 +2233,8 @@
 		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
-	name = "Sandy Balls Tea"
-	desc = "The perfect tea for those who enjoy life's simple pleasures."
+	name = "Duke Purple Tea"
+	desc = "For excellent taste, you can always bet on Duke Purple."
 	icon_state = "tea"
 	New()
 		..()

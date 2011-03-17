@@ -71,7 +71,7 @@ var
 	enter_allowed = 1
 	shuttle_frozen = 0
 	shuttle_left = 0
-	tinted_weldhelh = 1
+	tinted_weldhelh = 0
 
 	captainMax = 1
 	engineerMax = 5

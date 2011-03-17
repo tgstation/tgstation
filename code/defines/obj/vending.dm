@@ -47,8 +47,8 @@
 	product_hideamt = "5;2"
 
 /obj/machinery/vending/coffee
-	name = "Warm drinks machine"
-	desc = "A vending machine which dispenses warm drinks."
+	name = "Hot Drinks machine"
+	desc = "A vending machine which dispenses hot drinks."
 	icon_state = "coffee"
 	icon_vend = "coffee-vend"
 	product_paths = "/obj/item/weapon/reagent_containers/food/drinks/coffee;/obj/item/weapon/reagent_containers/food/drinks/tea"

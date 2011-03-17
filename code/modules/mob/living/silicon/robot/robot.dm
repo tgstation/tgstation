@@ -38,8 +38,8 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(src.module)
 		return
-	//var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Janitor", "Brobot")
-	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Janitor", "Brobot", "Security")
+	//var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Janitor", "Service", "Brobot")
+	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Janitor", "Brobot", "Service", "Security")
 	if(src.module)
 		return
 	switch(mod)
@@ -48,6 +48,13 @@
 			src.hands.icon_state = "standard"
 			src.icon_state = "robot"
 			src.modtype = "Stand"
+
+		if("Service")
+			src.module = new /obj/item/weapon/robot_module/butler(src)
+			src.hands.icon_state = "service"
+			src.icon_state = "Service"
+			src.modtype = "Butler"
+
 /*
 		if("Medical")
 			src.module = new /obj/item/weapon/robot_module/medical(src)

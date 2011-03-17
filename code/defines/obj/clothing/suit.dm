@@ -89,6 +89,12 @@
 	icon_state = "labcoat_cmo"
 	item_state = "labcoat_cmo"
 
+/obj/item/clothing/suit/labcoat/mad
+	name = "The Mad's labcoat"
+	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."
+	icon_state = "labcoat_cmo"
+	item_state = "labcoat_cmo"
+
 /obj/item/clothing/suit/straight_jacket
 	name = "straight jacket"
 	desc = "A suit that totally restrains an individual"

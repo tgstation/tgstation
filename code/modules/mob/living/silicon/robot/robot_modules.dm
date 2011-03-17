@@ -34,6 +34,9 @@
 /obj/item/weapon/robot_module/brobot
 	name = "brobot robot module"
 
+/obj/item/weapon/robot_module/butler
+	name = "service robot module"
+
 /obj/item/weapon/robot_module/New()//Shit all the mods have
 	src.modules += new /obj/item/device/flash(src)
 	src.emag = new /obj/item/toy/sword(src)
@@ -91,6 +94,19 @@
 	src.modules += new /obj/item/weapon/scalpel(src)
 	src.modules += new /obj/item/weapon/circular_saw(src)
 */
+
+
+/obj/item/weapon/robot_module/butler/New()
+	..()
+	src.modules += new /obj/item/weapon/spacecash(src)
+	src.modules += new /obj/item/weapon/pen(src)
+	src.modules += new /obj/item/weapon/paper(src)
+	src.modules += new /obj/item/weapon/reagent_containers/dropper(src)
+	src.modules += new /obj/item/weapon/tray(src)
+	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
+	src.emag = new /obj/item/weapon/sword(src)
+	src.emag.name = "Helper's Little Helper"
+
 
 /obj/item/weapon/robot_module/security/New()
 	..()
