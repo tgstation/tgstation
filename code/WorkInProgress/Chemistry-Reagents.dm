@@ -1439,6 +1439,22 @@ datum
 				..()
 				return
 
+		tea
+			name = "Tea"
+			id = "tea"
+			description = "Tasty black tea, it has antioxidants, it's good for you!"
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				..()
+				M.dizziness = max(0,M.dizziness-2)
+				M:drowsyness = max(0,M:drowsyness-1)
+				M:sleeping = 0
+				if(M:toxloss && prob(50))
+					M:toxloss--
+				if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature+5)
+				..()
+				return
 
 		space_cola
 			name = "Cola"

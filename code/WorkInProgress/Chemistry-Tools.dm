@@ -2253,6 +2253,16 @@
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
+/obj/item/weapon/reagent_containers/food/drinks/tea
+	name = "Sandy Balls Tea"
+	desc = "The perfect tea for those who enjoy life's simple pleasures."
+	icon_state = "tea"
+	New()
+		..()
+		reagents.add_reagent("tea", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
 /obj/item/weapon/reagent_containers/food/drinks/cola
 	name = "Space Cola"
 	desc = "Cola. in space."

@@ -36,8 +36,8 @@
 	product_paths = "/obj/item/weapon/reagent_containers/food/drinks/bottle/gin;/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey;/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla;/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka;/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth;/obj/item/weapon/reagent_containers/food/drinks/bottle/rum;/obj/item/weapon/reagent_containers/food/drinks/bottle/wine;/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac;/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua;/obj/item/weapon/reagent_containers/food/drinks/beer;/obj/item/weapon/reagent_containers/food/drinks/ale;/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/cream;/obj/item/weapon/reagent_containers/food/drinks/tonic;/obj/item/weapon/reagent_containers/food/drinks/cola;/obj/item/weapon/reagent_containers/food/drinks/sodawater;/obj/item/weapon/reagent_containers/food/drinks/drinkingglass"
 	product_amounts = "5;5;5;5;5;5;5;5;5;6;6;4;4;4;4;8;8;8;30"
 	vend_delay = 15
-	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/coffee"
-	product_hideamt = "10"
+	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/coffee;/obj/item/weapon/reagent_containers/food/drinks/tea"
+	product_hideamt = "10;10"
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Quite delighted to serve you!;Is nobody thirsty on this station?"
 
 /obj/machinery/vending/assist
@@ -47,12 +47,12 @@
 	product_hideamt = "5;2"
 
 /obj/machinery/vending/coffee
-	name = "coffee machine"
-	desc = "A Robust Coffee vending machine."
+	name = "Warm drinks machine"
+	desc = "A vending machine which dispenses warm drinks."
 	icon_state = "coffee"
 	icon_vend = "coffee-vend"
-	product_paths = "/obj/item/weapon/reagent_containers/food/drinks/coffee"
-	product_amounts = "25"
+	product_paths = "/obj/item/weapon/reagent_containers/food/drinks/coffee;/obj/item/weapon/reagent_containers/food/drinks/tea"
+	product_amounts = "25;25"
 	vend_delay = 34
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/cola"
 	product_hideamt = "5"
