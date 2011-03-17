@@ -68,6 +68,7 @@
 	name = "Bag of Holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
+	icon_state = "holdingpack"
 
 	New()
 		..()
@@ -120,3 +121,4 @@
 			for (var/obj/O in src.contents) //it broke, delete what was in it
 				del(O)
 			crit_fail = 1
+			icon_state = "brokenpack"
