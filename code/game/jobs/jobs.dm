@@ -14,7 +14,7 @@ var/list/occupations = list(
 	"Research Director",
 	"Chaplain",
 	"Roboticist",
-//	"Cyborg","Cyborg","Cyborg" // -- The goons have a good idea with this. Why doesn't the AI start with cyborgs? There's people killing themselves to be cyborgs have the time anyway at round start.
+	"Cyborg","Cyborg", // --DH
 	"AI",
 	"Barman",
 	"Chef",

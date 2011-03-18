@@ -71,7 +71,7 @@ var
 	enter_allowed = 1
 	shuttle_frozen = 0
 	shuttle_left = 0
-	tinted_weldhelh = 1 //as soon as the thing is sprited, we'll code in the toggle verb, bot for now, it should stay on by default. -errorage
+	tinted_weldhelh = 0 //as soon as the thing is sprited, we'll code in the toggle verb, bot for now, it should stay on by default. -errorage //Until you have the actual functionality for it, don't set this on by default. You're putting the cart before the horse. --DH
 
 	captainMax = 1
 	engineerMax = 5
@@ -103,6 +103,7 @@ var
 	cmoMax = 1
 	mimeMax = 1
 	sorterMax = 2
+	borgMax = 2
 
 	list/bombers = list(  )
 	list/admin_log = list (  )

@@ -101,11 +101,11 @@
 	src.modules += new /obj/item/weapon/spacecash(src)
 	src.modules += new /obj/item/weapon/pen(src)
 	src.modules += new /obj/item/weapon/paper(src)
-	src.modules += new /obj/item/weapon/reagent_containers/dropper(src)
+	src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 	src.modules += new /obj/item/weapon/tray(src)
 	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
-	src.emag = new /obj/item/weapon/sword(src)
-	src.emag.name = "Helper's Little Helper"
+	src.emag = new /obj/item/weapon/reagent_containers/food/snacks/roburgerbig(src)
+	src.emag.name = "Last Meal"
 
 
 /obj/item/weapon/robot_module/security/New()

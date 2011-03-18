@@ -204,6 +204,15 @@
 	opacity = 0
 	density = 0
 
+/obj/sign/examroom
+	desc = "A guidance sign which reads 'EXAM ROOM'"
+	name = "EXAM"
+	icon = 'decals.dmi'
+	icon_state = "examroom"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
 /obj/sign/vacuum
 	desc = "A warning sign which reads 'HARD VACUUM AHEAD'"
 	name = "HARD VACUUM AHEAD"

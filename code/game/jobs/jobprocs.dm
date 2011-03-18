@@ -282,7 +282,7 @@
 			//The two procs below allow the Chaplain to choose their religion. All it really does is change their bible.
 			spawn(0)
 				var/religion_name = "Imperium"
-				var/new_religion = input(src, "You are the Chaplain. Would you like to change your religion? Default is the Bible.", "Name change", religion_name)
+				var/new_religion = input(src, "You are the Chaplain. Would you like to change your religion? Default is the Imperial Cult.", "Name change", religion_name)
 
 				if ((length(new_religion) == 0) || (new_religion == "Imperium"))
 					new_religion = religion_name
@@ -330,7 +330,6 @@
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 
 		if ("Clown")
-//			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/clown (src), slot_back)
 			src.equip_if_possible(new /obj/item/device/pda/clown(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/clown(src), slot_w_uniform)
@@ -363,7 +362,6 @@
 			src.equip_if_possible(new /obj/item/clothing/shoes/orange(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/weapon/storage/toolbox/mechanical(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/clothing/gloves/yellow(src), slot_gloves)
-			//src.equip_if_possible(new /obj/item/weapon/crowbar(src), slot_in_backpack) // - commented out, why would you need this when you spawn with a blue toolbox - muskets
 			src.equip_if_possible(new /obj/item/device/t_scanner(src), slot_r_store)
 
 		if ("Shaft Miner")
@@ -413,13 +411,11 @@
 			src.equip_if_possible(new /obj/item/clothing/head/caphat(src), slot_head)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 //			src.equip_if_possible(new /obj/item/weapon/gun/taser_gun(src), slot_belt)
-//			src.equip_if_possible(new /obj/item/weapon/gun/energy/laser_gun(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/storage/id_kit(src), slot_in_backpack)
 
 
 		if ("Security Officer")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sec (src), slot_ears) // -- TLE
-//			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/security (src), slot_back)
 			src.equip_if_possible(new /obj/item/device/pda/security(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/color/red(src), slot_w_uniform)
@@ -436,7 +432,6 @@
 
 		if ("Warden")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sec (src), slot_ears) // -- TLE
-//			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/security (src), slot_back)
 			src.equip_if_possible(new /obj/item/device/pda/security(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/warden(src), slot_w_uniform)
@@ -455,8 +450,6 @@
 			src.equip_if_possible(new /obj/item/device/pda/toxins(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/scientist(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
-//			src.equip_if_possible(new /obj/item/clothing/suit/bio_suit/scientist(src), slot_wear_suit)
-//			src.equip_if_possible(new /obj/item/clothing/head/bio_hood/scientist(src), slot_head)
 			src.equip_if_possible(new /obj/item/clothing/mask/gas(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/weapon/tank/air(src), slot_l_hand)
 
@@ -485,7 +478,6 @@
 			src.equip_if_possible(new /obj/item/clothing/head/helmet(src), slot_head)
 //			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 //			src.equip_if_possible(new /obj/item/weapon/gun/taser_gun(src), slot_belt)
-//			src.equip_if_possible(new /obj/item/weapon/gun/energy/laser_gun(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/storage/id_kit(src), slot_in_backpack)
 //			src.equip_if_possible(new /obj/item/device/flash(src), slot_l_store)
 
@@ -495,7 +487,6 @@
 			src.equip_if_possible(new /obj/item/clothing/under/rank/atmospheric_technician(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/weapon/storage/toolbox/mechanical(src), slot_l_hand)
-//			src.equip_if_possible(new /obj/item/weapon/crowbar(src), slot_in_backpack) // same as with engineers, WHY
 
 		if ("Barman")
 			src.equip_if_possible(new /obj/item/clothing/under/rank/bartender(src), slot_w_uniform)
@@ -519,14 +510,11 @@
 			src.equip_if_possible(new /obj/item/clothing/under/rank/roboticist(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)  // No longer medical or research, so away it goes! //Same person who took it away has returned it.
-//			src.equip_if_possible(new /obj/item/weapon/crowbar(src), slot_in_backpack) //another job with toolbox and this
+			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/weapon/storage/toolbox/mechanical(src), slot_l_hand)
 
 		if ("Botanist")
-//			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears)
-//			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/hydroponics(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/gloves/botanic_leather(src), slot_gloves)
@@ -554,7 +542,6 @@
 			src.equip_if_possible(new /obj/item/device/pda/quartermaster(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/weapon/clipboard(src), slot_l_hand)
-			//src.equip_if_possible(new /obj/item/clothing/suit/exo_suit(src), slot_wear_suit)
 
 		if ("Cargo Technician")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_cargo(src), slot_ears)
@@ -607,6 +594,9 @@
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_r_store)
+
+		if ("Cyborg")
+			Robotize()
 
 		else
 			src << "RUH ROH! Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
