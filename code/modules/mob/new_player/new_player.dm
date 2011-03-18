@@ -260,8 +260,8 @@ mob/new_player
 			//for(var/datum/data/record/t in data_core.general)
 			//	if((t.fields["name"] == character.real_name) && (t.fields["rank"] == "Unassigned"))
 			//		t.fields["rank"] = rank
-
-				ManifestLateSpawn(character)
+				if(character.mind.assigned_role != "Cyborg")
+					ManifestLateSpawn(character)
 				if(ticker)
 					if (ticker.current_state == GAME_STATE_PLAYING)
 						var/list/mob/living/silicon/ai/ailist = list()
@@ -270,10 +270,13 @@ mob/new_player
 								ailist += A
 						if (ailist.len)
 							var/mob/living/silicon/ai/announcer = pick(ailist)
-							announcer.say("[character.real_name] has signed up as [rank].")
+							if(character.mind.assigned_role != "Cyborg")
+								announcer.say("[character.real_name] has signed up as [rank].")
 
 					var/starting_loc = pick(latejoin)
 					character.loc = starting_loc
+					if(character.mind.assigned_role == "Cyborg")
+						character.Robotize()
 					del(src)
 
 		else

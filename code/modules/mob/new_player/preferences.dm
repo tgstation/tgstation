@@ -839,9 +839,10 @@ datum/preferences
 		character.update_body()
 
 		spawn(10)
-			character.client.midis = midis
-			character.client.ooccolor = ooccolor
-			character.client.be_alien = be_alien
+			if(character)
+				character.client.midis = midis
+				character.client.ooccolor = ooccolor
+				character.client.be_alien = be_alien
 
 /*
 

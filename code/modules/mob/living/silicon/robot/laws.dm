@@ -18,13 +18,17 @@
 			else
 				src.lawsync()
 				src << "<b>Laws synced with AI, be sure to note any changes.</b>"
+				if (mind.special_role == "traitor")
+					src << "<b>Remember, your AI does NOT share or know about your law 0."
 		else
 			src << "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>"
 			src.lawupdate = 0
 
 	who << "<b>Obey these laws:</b>"
 	laws.show_laws(who)
-	if (connected_ai)
+	if (mind.special_role == "traitor" && connected_ai)
+		who << "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>"
+	else if (connected_ai)
 		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>"
 	else if (emagged)
 		who << "<b>Remember, AIs are not syndicate operatives, so you are not required to listen to them.</b>"
@@ -64,8 +68,9 @@
 			if (length(temp) > 0)
 				src.laws.ion[index] = temp
 
-		temp = master.zeroth
-		src.laws.zeroth = temp
+		if (!checktraitor(src))
+			temp = master.zeroth
+			src.laws.zeroth = temp
 
 		src.laws.inherent.len = master.inherent.len
 		for (var/index = 1, index <= master.inherent.len, index++)

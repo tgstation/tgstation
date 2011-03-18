@@ -104,7 +104,7 @@
 			traitor_job = correct_mob:assigned_role
 	else
 		var/list/job_tmp = get_all_jobs()
-		job_tmp.Remove("Captain", "Chaplain", "AI", "Security Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer")
+		job_tmp.Remove("Captain", "Chaplain", "AI", "Cyborg", "Security Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer")
 		traitor_job = pick(job_tmp)
 	if(prob(prob_right_dude) && ticker.mode == "cult")
 		traitor_name = correct_mob:current
@@ -139,7 +139,7 @@
 			traitor_job = correct_mob:assigned_role
 	else
 		var/list/job_tmp = get_all_jobs()
-		job_tmp.Remove("Captain", "AI", "Security Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Warden", "Chief Medical Officer")
+		job_tmp.Remove("Captain", "AI", "Cyborg", "Security Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Warden", "Chief Medical Officer")
 		traitor_job = pick(job_tmp)
 	if(prob(prob_right_dude) && ticker.mode == "revolution")
 		traitor_name = correct_mob:current

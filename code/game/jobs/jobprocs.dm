@@ -596,7 +596,7 @@
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_r_store)
 
 		if ("Cyborg")
-			Robotize()
+//			Robotize()
 
 		else
 			src << "RUH ROH! Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
@@ -624,6 +624,8 @@
 			S = locate("start*[rank]") // use old stype
 		if (istype(S, /obj/landmark/start) && istype(S.loc, /turf))
 			src.loc = S.loc
+//			if(S.name == "Cyborg")
+//				src.Robotize()
 	else
 		var/list/L = list()
 		for(var/area/arrival/start/S in world)
@@ -642,6 +644,9 @@
 				if(clear)
 					NL += T
 		src.loc = pick(NL)
+	if(src.mind.assigned_role == "Cyborg")
+		src << "YOU ARE GETTING BORGED NOW"
+		src.Robotize()
 
 	/*
 	spawn(10)
@@ -659,6 +664,8 @@
 /mob/living/carbon/human/proc/spawnId(rank)
 	var/obj/item/weapon/card/id/C = null
 	switch(rank)
+		if("Cyborg")
+			return
 		if("Captain")
 			C = new /obj/item/weapon/card/id/gold(src)
 		else

@@ -188,7 +188,7 @@
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
 	O.cell.maxcharge = 7500
-	O.cell.charge = 1500
+	O.cell.charge = 7500
 
 
 	O.gender = src.gender
@@ -196,8 +196,17 @@
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
 	O.lastKnownIP = src.client.address
-	if (src.client)
-		src.client.mob = O
+	if (src.mind)
+		src.mind.transfer_to(O)
+		if (src.mind.assigned_role == "Cyborg")
+			src.mind.original = O
+	else //welp
+		src.mind = new /datum/mind(  )
+		src.mind.key = src.key
+		src.mind.current = O
+		src.mind.original = O
+		src.mind.transfer_to(O)
+		ticker.minds += O.mind
 	O.loc = src.loc
 	O << "<B>You are playing a Robot. A Robot can interact with most electronic objects in its view point.</B>"
 	O << "<B>You must follow the laws that the AI has. You are the AI's assistant to the station basically.</B>"

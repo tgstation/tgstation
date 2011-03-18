@@ -95,8 +95,6 @@
 			survive_objective.owner = traitor
 			traitor.objectives += survive_objective
 
-			add_law_zero(traitor.current)
-
 		else
 			switch(rand(1,100))
 				if(1 to 50)
@@ -121,14 +119,18 @@
 					traitor.objectives += hijack_objective
 
 
-			equip_traitor(traitor.current)
 
-		traitor.current << "<B>You are the traitor.</B>"
+		spawn(rand(10,100))
+			traitor.current << "<B>You are the traitor.</B>"
 
-		var/obj_count = 1
-		for(var/datum/objective/objective in traitor.objectives)
-			traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			obj_count++
+			var/obj_count = 1
+			for(var/datum/objective/objective in traitor.objectives)
+				traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+				obj_count++
+			if (istype(traitor.current, /mob/living/silicon))
+				add_law_zero(traitor.current)
+			else
+				equip_traitor(traitor.current)
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
