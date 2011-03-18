@@ -71,7 +71,7 @@ var
 	enter_allowed = 1
 	shuttle_frozen = 0
 	shuttle_left = 0
-	tinted_weldhelh = 0
+	tinted_weldhelh = 1 //as soon as the thing is sprited, we'll code in the toggle verb, bot for now, it should stay on by default. -errorage
 
 	captainMax = 1
 	engineerMax = 5

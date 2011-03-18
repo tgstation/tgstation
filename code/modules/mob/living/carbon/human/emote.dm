@@ -1,4 +1,4 @@
-/mob/living/carbon/human/emote(var/act)
+/mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null)
 	var/param = null
 
 	if (findtext(act, "-", 1, null))
@@ -7,13 +7,11 @@
 		act = copytext(act, 1, t1)
 
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	var/m_type = 1
+	//var/m_type = 1
 
 	for (var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
 			I.trigger(act, src)
-
-	var/message
 
 	switch(act)
 		if ("airguitar")
@@ -60,6 +58,11 @@
 				return
 			message = "<B>[src]</B> [input]"
 
+		if ("me")
+			if(!(message))
+				return
+			else
+				message = "<B>[src]</B> [message]"
 
 		if ("salute")
 			if (!src.buckled)
@@ -147,6 +150,10 @@
 
 		if ("blush")
 			message = "<B>[src]</B> blushes."
+			m_type = 1
+
+		if ("wave")
+			message = "<B>[src]</B> waves."
 			m_type = 1
 
 		if ("gasp")

@@ -9,6 +9,10 @@
 	set name = "Say"
 	usr.say(message)
 
+/mob/verb/me_verb(message as text)
+	set name = "Me"
+	usr.emote("me",1,message)
+
 /mob/proc/say_dead(var/message)
 	var/name = src.real_name
 	var/alt_name = ""
