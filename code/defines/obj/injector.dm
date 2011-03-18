@@ -19,25 +19,37 @@
 	name = "DNA-Injector (Anti-Hulk)"
 	dnatype = "se"
 	dna = "708"
-	block = 2
+	//block = 2
+	New()
+		..()
+		block = HULKBLOCK
 
 /obj/item/weapon/dnainjector/hulkmut
 	name = "DNA-Injector (Hulk)"
 	dnatype = "se"
 	dna = "FED"
-	block = 2
+	//block = 2
+	New()
+		..()
+		block = HULKBLOCK
 
 /obj/item/weapon/dnainjector/xraymut
 	name = "DNA-Injector (Xray)"
 	dnatype = "se"
 	dna = "FED"
-	block = 8
+	//block = 8
+	New()
+		..()
+		block = XRAYBLOCK
 
 /obj/item/weapon/dnainjector/antixray
 	name = "DNA-Injector (Anti-Xray)"
 	dnatype = "se"
 	dna = "708"
-	block = 8
+	//block = 8
+	New()
+		..()
+		block = XRAYBLOCK
 
 /////////////////////////////////////
 /obj/item/weapon/dnainjector/antiglasses
@@ -80,13 +92,19 @@
 	name = "DNA-Injector (Clumsy)"
 	dnatype = "se"
 	dna = "FA0"
-	block = 6
+	//block = 6
+	New()
+		..()
+		block = CLUMSYBLOCK
 
 /obj/item/weapon/dnainjector/anticlumsy
 	name = "DNA-Injector (Anti-Clumy)"
 	dnatype = "se"
 	dna = "708"
-	block = 6
+	//block = 6
+	New()
+		..()
+		block = CLUMSYBLOCK
 
 /obj/item/weapon/dnainjector/antitour
 	name = "DNA-Injector (Anti-Tour.)"
@@ -116,49 +134,73 @@
 	name = "DNA-Injector (Anti-Fire)"
 	dnatype = "se"
 	dna = "708"
-	block = 10
+	//block = 10
+	New()
+		..()
+		block = FIREBLOCK
 
 /obj/item/weapon/dnainjector/firemut
 	name = "DNA-Injector (Fire)"
 	dnatype = "se"
 	dna = "FED"
-	block = 10
+	//block = 10
+	New()
+		..()
+		block = FIREBLOCK
 
 /obj/item/weapon/dnainjector/blindmut
 	name = "DNA-Injector (Blind)"
 	dnatype = "se"
 	dna = "FA0"
-	block = 11
+	//block = 11
+	New()
+		..()
+		block = BLINDBLOCK
 
 /obj/item/weapon/dnainjector/antiblind
 	name = "DNA-Injector (Anti-Blind)"
 	dnatype = "se"
 	dna = "708"
-	block = 11
+	//block = 11
+	New()
+		..()
+		block = BLINDBLOCK
 
 /obj/item/weapon/dnainjector/antitele
 	name = "DNA-Injector (Anti-Tele.)"
 	dnatype = "se"
 	dna = "708"
-	block = 12
+	//block = 12
+	New()
+		..()
+		block = TELEBLOCK
 
 /obj/item/weapon/dnainjector/telemut
 	name = "DNA-Injector (Tele.)"
 	dnatype = "se"
 	dna = "FED"
-	block = 12
+	//block = 12
+	New()
+		..()
+		block = TELEBLOCK
 
 /obj/item/weapon/dnainjector/deafmut
 	name = "DNA-Injector (Deaf)"
 	dnatype = "se"
 	dna = "FA0"
-	block = 13
+	//block = 13
+	New()
+		..()
+		block = DEAFBLOCK
 
 /obj/item/weapon/dnainjector/antideaf
 	name = "DNA-Injector (Anti-Deaf)"
 	dnatype = "se"
 	dna = "708"
-	block = 13
+	//block = 13
+	New()
+		..()
+		block = DEAFBLOCK
 
 /obj/item/weapon/dnainjector/h2m
 	name = "DNA-Injector (Human > Monkey)"

@@ -312,6 +312,7 @@
 		..()
 
 	examine()
+		set src in view()
 		..()
 		if (!(usr in view(2)) && usr!=src.loc) return
 		usr << "\blue It contains:"
@@ -323,7 +324,7 @@
 
 	verb/set_APTFT() //set amount_per_transfer_from_this
 		set name = "Set transfer amount"
-		set src in range(1)
+		set src in view(1)
 		var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 		if (N)
 			amount_per_transfer_from_this = N
@@ -417,6 +418,7 @@
 	)
 
 	examine()
+		set src in view()
 		..()
 		if (!(usr in view(2)) && usr!=src.loc) return
 		usr << "\blue It contains:"
@@ -1133,19 +1135,15 @@
 				icon_state = "blender_jug_f"
 
 /obj/item/weapon/reagent_containers/glass/large
-   name = "large reagent glass"
-   desc = "A large reagent glass."
-   icon = 'chemical.dmi'
-   icon_state = "beakerlarge"
-   item_state = "beaker"
-
-   New()
-      var/datum/reagents/R = new/datum/reagents(100)
-      reagents = R
-      R.my_atom = src
-
-   amount_per_transfer_from_this = 10
-   flags = FPRINT | TABLEPASS | OPENCONTAINER
+	name = "large reagent glass"
+	desc = "A large reagent glass."
+	icon = 'chemical.dmi'
+	icon_state = "beakerlarge"
+	item_state = "beaker"
+	volume = 100
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,30,50)
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/bottle
 	name = "bottle"
