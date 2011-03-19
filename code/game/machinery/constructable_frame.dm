@@ -180,10 +180,12 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/pacman/super
 	name = "Circuit Board (SUPERPACMAN-type Generator)"
+	build_path = "/obj/machinery/power/port_gen/pacman/super"
 	origin_tech = "powerstorage=4;plasmatech=5"
 
 /obj/item/weapon/circuitboard/pacman/mrs
 	name = "Circuit Board (MRSPACMAN-type Generator)"
+	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
 	origin_tech = "powerstorage=5;plasmatech=6"
 
 obj/item/weapon/circuitboard/rdserver
