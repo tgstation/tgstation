@@ -1633,8 +1633,9 @@
 	icon_state = "roburger"
 	New()
 		..()
+		volume = 100
 		reagents.add_reagent("nanites", 100)
-		bitesize = 1
+		bitesize = 0.1
 
 /obj/item/weapon/reagent_containers/food/snacks/xenoburger
 	name = "xenoburger"
