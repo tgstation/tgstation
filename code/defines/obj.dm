@@ -115,6 +115,7 @@
 	icon = 'projectiles.dmi'
 	icon_state = "bullet"
 	density = 1
+	throwforce = 0.1 //an attempt to make it possible to shoot your way through space
 	unacidable = 1//Just to be sure.
 	var/yo = null
 	var/xo = null
