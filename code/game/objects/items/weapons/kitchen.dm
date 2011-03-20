@@ -22,6 +22,20 @@ KNIFE
 	if(!istype(M, /mob))
 		return
 
+	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
+		if(M == user)
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\blue [] eats a delicious forkful of omelette!", user), 1)
+				M.reagents.add_reagent("nutriment", 1)
+		else
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\blue [] feeds [] a delicious forkful of omelette!", user, M), 1)
+				M.reagents.add_reagent("nutriment", 1)
+		src.icon_state = "fork"
+		return
+
+
+
 	if((usr.mutations & 16) && prob(50))
 		M << "\red You stab yourself in the eye."
 		M.sdisabilities |= 1

@@ -1593,12 +1593,19 @@
 		bitesize = 1
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
+			if (W.icon_state == "forkloaded")
+				user << "\red You already have omelette on your fork."
+				return
 			W.icon = 'kitchen.dmi'
 			W.icon_state = "forkloaded"
 			if (herp)
 				world << "[user] takes a piece of omelette with his fork!"
 			else
 				viewers(3,user) << "[user] takes a piece of omelette with his fork!"
+			reagents.remove_reagent("nutriment", 1)
+			if (reagents.total_volume <= 0)
+				del(src)
+
 
 
 /obj/item/weapon/reagent_containers/food/snacks/omeletteforkload
