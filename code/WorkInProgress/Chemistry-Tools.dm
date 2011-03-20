@@ -1638,9 +1638,9 @@
 	name = "roburger"
 	desc = "This massive patty looks like poison. Beep."
 	icon_state = "roburger"
+	volume = 100
 	New()
 		..()
-		volume = 100
 		reagents.add_reagent("nanites", 100)
 		bitesize = 0.1
 
