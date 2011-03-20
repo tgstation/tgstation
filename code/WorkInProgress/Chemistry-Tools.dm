@@ -222,6 +222,7 @@
 	m_amt = 2000
 
 	examine()
+		set src in view()
 		..()
 		if (!(usr in view(2)) && usr!=src.loc) return
 		usr << "\icon [src] Syringe gun:"
@@ -879,6 +880,7 @@
 		return
 
 	examine()
+		set src in view()
 		..()
 		if (!(usr in range(0)) && usr!=src.loc) return
 		if (bitecount==0)
@@ -1000,6 +1002,7 @@
 		return
 
 	examine()
+		set src in view()
 		..()
 		if (!(usr in range(0)) && usr!=src.loc) return
 		if(!reagents || reagents.total_volume==0)
@@ -1743,7 +1746,24 @@
 	icon_state = "carrotcake"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("nutriment", 30)
+		bitesize = 2
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+			W.visible_message(" \red <B>You slice the [src]! </B>", 1)
+			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/carrotcakeslice (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/carrotcakeslice
+	name = "Carrot Cake slice"
+	desc = "Carrotty slice of Carrot Cake"
+	icon_state = "carrotcake_slice"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesecake
@@ -1752,7 +1772,24 @@
 	icon_state = "cheesecake"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("nutriment", 30)
+		bitesize = 2
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+			W.visible_message(" \red <B>You slice the [src]! </B>", 1)
+			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice
+	name = "Cheese Cake slice"
+	desc = "Slice of pure cheestisfaction"
+	icon_state = "cheesecake_slice"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/plaincake
@@ -1761,7 +1798,23 @@
 	icon_state = "plaincake"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("nutriment", 25)
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+			W.visible_message(" \red <B>You slice the [src]! </B>", 1)
+			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/plaincakeslice (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/plaincakeslice
+	name = "Vanilla Cake slice"
+	desc = "Just a slice of cake, it is enough for everyone."
+	icon_state = "plaincake_slice"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/humeatpie
 	name = "Meat-pie"
@@ -1785,7 +1838,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/xemeatpie
 	name = "Xeno-pie"
-	icon_state = "pie" //placeholder
+	icon_state = "xenomeatpie"
 	desc = "A delicious meatpie. Probably heretical."
 	New()
 		..()

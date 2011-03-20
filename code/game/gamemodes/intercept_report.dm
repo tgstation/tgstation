@@ -61,14 +61,17 @@
 		if (!man.mind) continue
 		if (man.mind.special_role == "Syndicate") continue
 		dudes += man
-	var/dude = pick(dudes)
-	return dude
+	if (dudes.len==0)
+		return null
+	return pick(dudes)
 
 /datum/intercept_text/proc/pick_fingerprints()
 	var/mob/living/carbon/human/dude = src.pick_mob()
-	if (!dude) return pick_fingerprints()
-	var/print = "[md5(dude.dna.uni_identity)]"
-	return print
+	//if (!dude) return pick_fingerprints() //who coded that is totally crasy or just a traitor. -- rastaf0
+	if (dude)
+		return num2text(md5(dude.dna.uni_identity))
+	else
+		return num2text(md5(num2text(rand(1,10000))))
 
 /datum/intercept_text/proc/build_traitor(correct_mob)
 	var/name_1 = pick(src.org_names_1)

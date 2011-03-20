@@ -522,40 +522,40 @@ var/list/sacrificed = list()
 				if (ticker.mode.name == "cult")
 					if(H == ticker.mode:sacrifice_target.current)
 						if(cultsinrange.len >= 3)
-							H.gib(1)
 							sacrificed += H.mind
+							H.gib(1)
 							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
 						else
 							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
 					else
 						if(cultsinrange.len >= 3)
 							if(H.stat !=2)
-								H.gib(1)
 								if(prob(80))
 									usr << "\red The Geometer of Blood accepts this sacrifice."
 									ticker.mode:grant_runeword(usr)
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, this soul was not enough to gain His favor."
-							else
 								H.gib(1)
+							else
 								if(prob(40))
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									ticker.mode:grant_runeword(usr)
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
+								H.gib(1)
 						else
 							if(H.stat !=2)
 								usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
 							else
-								H.gib(1)
 								if(prob(40))
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									ticker.mode:grant_runeword(usr)
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
+								H.gib(1)
 				else
 					if(cultsinrange.len >= 3)
 						H.gib(1)
