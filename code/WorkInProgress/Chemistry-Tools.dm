@@ -1764,10 +1764,10 @@
 		reagents.add_reagent("nutriment", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/humeatpie
-	name = "-pie"
+	name = "Meat-pie"
 	var/hname = ""
 	var/job = null
-	icon_state = "pie" //placeholder
+	icon_state = "meatpie"
 	desc = "A delicious meatpie."
 	New()
 		..()
@@ -1776,7 +1776,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/momeatpie
 	name = "Meat-pie"
-	icon_state = "pie"
+	icon_state = "meatpie"
 	desc = "A delicious meatpie."
 	New()
 		..()
