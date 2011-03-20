@@ -103,7 +103,7 @@ var
 	cmoMax = 1
 	mimeMax = 1
 	sorterMax = 2
-	borgMax = 2
+	borgMax = 5
 
 	list/bombers = list(  )
 	list/admin_log = list (  )
