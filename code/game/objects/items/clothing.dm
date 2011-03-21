@@ -227,6 +227,21 @@ THERMAL GLASSES
 			usr << "Its vital tracker and tracking beacon appear to be enabled."
 
 
+/obj/item/clothing/head/helmet/welding/verb/toggle()
+	set name = "Adjust welding mask"
+	if(src.up)
+		src.up = !src.up
+		src.see_face = !src.see_face
+		src.flags |= HEADCOVERSEYES
+		icon_state = "welding"
+		usr << "You flip the mask down to protect your eyes."
+	else
+		src.up = !src.up
+		src.see_face = !src.see_face
+		src.flags &= ~HEADCOVERSEYES
+		icon_state = "weldingup"
+		usr << "You push the mask up out of your face."
+
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
 	if(src.magpulse)

@@ -177,6 +177,7 @@
 	protective_temperature = 1300
 	m_amt = 3000
 	g_amt = 1000
+	var/up = 0
 
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS helmet"

@@ -722,8 +722,12 @@
 					if(!seer)
 						src.see_invisible = 0
 
-			if (istype(src.head, /obj/item/clothing/head/helmet/welding) && tinted_weldhelh)
-				src.see_in_dark = 0
+			if (istype(src.glasses, /obj/item/clothing/glasses/sunglasses))
+				src.see_in_dark = 1
+
+			if (istype(src.head, /obj/item/clothing/head/helmet/welding))
+				if(!src.head:up && tinted_weldhelh)
+					src.see_in_dark = 0
 
 			if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
 			if (src.rest) src.rest.icon_state = text("rest[]", src.resting)
@@ -813,8 +817,9 @@
 					if (src.druggy)
 						src.client.screen += src.hud_used.druggy
 
-					if (istype(src.head, /obj/item/clothing/head/helmet/welding) && tinted_weldhelh)
-						src.client.screen += src.hud_used.darkMask
+					if (istype(src.head, /obj/item/clothing/head/helmet/welding))
+						if(!src.head:up && tinted_weldhelh)
+							src.client.screen += src.hud_used.darkMask
 
 			if (src.stat != 2)
 				if (src.machine)
