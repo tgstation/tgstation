@@ -260,10 +260,14 @@ WELDINGTOOOL
 				return 1
 			var/safety = 0
 			if (istype(user, /mob/living/carbon/human))
-				if (istype(user:head, /obj/item/clothing/head/helmet/welding) || istype(user:head, /obj/item/clothing/head/helmet/space))
+				if (istype(user:head, /obj/item/clothing/head/helmet/welding))
+					if (!user:head:up)
+						safety = 2
+				else if (istype(user:head, /obj/item/clothing/head/helmet/space))
 					safety = 2
 				else if (istype(user:glasses, /obj/item/clothing/glasses/sunglasses))
 					safety = 1
+
 				else if (istype(user:glasses, /obj/item/clothing/glasses/thermal))
 					safety = -1
 				else

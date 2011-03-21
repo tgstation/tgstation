@@ -8,8 +8,11 @@
 		var/safety = null
 		if (istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses) || istype(H.head, /obj/item/clothing/head/helmet/welding))
+			if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses))
 				safety = 1
+			if (istype(H.head, /obj/item/clothing/head/helmet/welding))
+				if(!H.head:up)
+					safety = 1
 		if (istype(M, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
 			safety = 1
 		if(isrobot(user))
@@ -102,8 +105,11 @@
 				var/safety = null
 				if (istype(M, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = M
-					if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses) || istype(H.head, /obj/item/clothing/head/helmet/welding))
+					if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses))
 						safety = 1
+					if (istype(H.head, /obj/item/clothing/head/helmet/welding))
+						if(!H.head:up)
+							safety = 1
 				if (istype(M, /mob/living/carbon/alien))//So aliens don't see those annoying flash screens.
 					safety = 1
 				if (!( safety ))

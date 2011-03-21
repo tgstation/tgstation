@@ -143,7 +143,14 @@ FLASHBANG
 					M.ear_deaf += 10
 					if (prob(20))
 						M.ear_damage += rand(0, 4)
-					if ((!( istype(H.glasses, /obj/item/clothing/glasses/sunglasses) || istype(H.head, /obj/item/clothing/head/helmet/welding) ) || M.paralysis))
+					var/safe = 0
+					if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses))
+						safe = 1
+					if (istype(H.head, /obj/item/clothing/head/helmet/welding))
+						if(!H.head:up)
+							safe = 1
+
+					if(!safe)
 						if(!(M.mutations & 8))  M.stunned = 7
 						if(!(M.mutations & 8))  M.weakened = 2
 					else
@@ -155,7 +162,13 @@ FLASHBANG
 					flick("flash", M.flash)
 				else
 					var/mob/living/carbon/human/H = M
-					if (!( istype(H.glasses, /obj/item/clothing/glasses/sunglasses) || istype(H.head, /obj/item/clothing/head/helmet/welding) ) )
+					var/safe = 0
+					if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses))
+						safe = 1
+					if (istype(H.head, /obj/item/clothing/head/helmet/welding))
+						if(!H.head:up)
+							safe = 1
+					if(!safe)
 						flick("flash", M.flash)
 				M.eye_stat += rand(1, 2)
 				M.ear_deaf += 5
