@@ -387,7 +387,7 @@
 /obj/machinery/power/proc/disconnect_from_network()
 	//TODO: dunno how to do that
 	return
-	
+
 /turf/proc/get_cable_node()
 	if(!istype(src, /turf/simulated/floor))
 		return null
@@ -409,6 +409,13 @@
 //source is an object caused electrocuting (airlock, grille, etc)
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/carbon/M as mob, var/power_source, var/obj/source, var/siemens_coeff = 1.0)
+	if(istype(M,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		if(H.gloves)
+			var/obj/item/clothing/gloves/G = H.gloves
+			var/siem_coef = G.siemens_coefficient
+			if(siem_coef == 0) //to avoid spamming with insulated glvoes on
+				return 0
 	var/area/source_area
 	if (istype(power_source,/area))
 		source_area = power_source
@@ -451,7 +458,7 @@
 		shock_damage = cell_damage
 	var/drained_hp = M.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
 	var/drained_energy = drained_hp*20
-	
+
 	if (source_area)
 		source_area.use_power(drained_energy/CELLRATE)
 	else if (istype(power_source,/datum/powernet))
