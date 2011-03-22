@@ -373,6 +373,16 @@
 	icon_broken = "fridgebroken"
 	icon_off = "fridge1"
 
+/obj/secure_closet/money_freezer
+	name = "Freezer"
+	icon_state = "fridge1"
+	icon_closed = "fridge"
+	icon_locked = "fridge1"
+	icon_opened = "fridgeopen"
+	icon_broken = "fridgebroken"
+	icon_off = "fridge1"
+	req_access = list(access_heads_vault)
+
 /obj/secure_closet/engineering_chief
 	name = "Chief Engineer's Locker"
 	req_access = list(access_heads)

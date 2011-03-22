@@ -91,6 +91,21 @@
 	throw_range = 2
 	w_class = 1.0
 
+/obj/item/weapon/spacecash/c10
+	icon_state = "spacecash10"
+/obj/item/weapon/spacecash/c20
+	icon_state = "spacecash20"
+/obj/item/weapon/spacecash/c50
+	icon_state = "spacecash50"
+/obj/item/weapon/spacecash/c100
+	icon_state = "spacecash100"
+/obj/item/weapon/spacecash/c200
+	icon_state = "spacecash200"
+/obj/item/weapon/spacecash/c500
+	icon_state = "spacecash500"
+/obj/item/weapon/spacecash/c1000
+	icon_state = "spacecash1000"
+
 /obj/item/weapon/ammo
 	name = "ammo"
 	icon = 'ammo.dmi'

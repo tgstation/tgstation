@@ -2333,19 +2333,19 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 
 	var/dat = text("<b>The contents of the moneybag reveal...</b><br>")
 	if (amt_gold)
-		dat += text("Gold coins: [amt_gold]<br> <A href='?src=\ref[src];remove=gold'>Remove one</A>")
+		dat += text("Gold coins: [amt_gold] <A href='?src=\ref[src];remove=gold'>Remove one</A><br>")
 	if (amt_silver)
-		dat += text("Silver coins: [amt_silver]<br> <A href='?src=\ref[src];remove=silver'>Remove one</A>")
+		dat += text("Silver coins: [amt_silver] <A href='?src=\ref[src];remove=silver'>Remove one</A><br>")
 	if (amt_iron)
-		dat += text("Metal coins: [amt_iron]<br> <A href='?src=\ref[src];remove=iron'>Remove one</A>")
+		dat += text("Metal coins: [amt_iron] <A href='?src=\ref[src];remove=iron'>Remove one</A><br>")
 	if (amt_diamond)
-		dat += text("Diamond coins: [amt_diamond]<br> <A href='?src=\ref[src];remove=diamond'>Remove one</A>")
+		dat += text("Diamond coins: [amt_diamond] <A href='?src=\ref[src];remove=diamond'>Remove one</A><br>")
 	if (amt_plasma)
-		dat += text("Plasma coins: [amt_plasma]<br> <A href='?src=\ref[src];remove=plasma'>Remove one</A>")
+		dat += text("Plasma coins: [amt_plasma] <A href='?src=\ref[src];remove=plasma'>Remove one</A><br>")
 	if (amt_uranium)
-		dat += text("Uranium coins: [amt_uranium]<br> <A href='?src=\ref[src];remove=uranium'>Remove one</A>")
+		dat += text("Uranium coins: [amt_uranium] <A href='?src=\ref[src];remove=uranium'>Remove one</A><br>")
 	if (amt_clown)
-		dat += text("Bananium coins: [amt_clown]<br> <A href='?src=\ref[src];remove=clown'>Remove one</A>")
+		dat += text("Bananium coins: [amt_clown] <A href='?src=\ref[src];remove=clown'>Remove one</A><br>")
 	user << browse("[dat]", "window=moneybag")
 
 /obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -2353,6 +2353,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	if (istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W
 		user << "\blue You add the [C.name] into the bag."
+		usr.drop_item()
 		contents += C
 	if (istype(W, /obj/item/weapon/moneybag))
 		var/obj/item/weapon/moneybag/C = W
@@ -2387,6 +2388,19 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 			return
 		COIN.loc = src.loc
 	return
+
+
+
+/obj/item/weapon/moneybag/vault
+
+/obj/item/weapon/moneybag/vault/New()
+	..()
+	new /obj/item/weapon/coin/silver(src)
+	new /obj/item/weapon/coin/silver(src)
+	new /obj/item/weapon/coin/silver(src)
+	new /obj/item/weapon/coin/silver(src)
+	new /obj/item/weapon/coin/gold(src)
+	new /obj/item/weapon/coin/gold(src)
 
 
 /**********************Gas extractor**************************/

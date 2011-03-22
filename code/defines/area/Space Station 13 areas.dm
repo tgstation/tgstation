@@ -775,7 +775,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "detective"
 
 /area/security/nuke_storage
-	name = "Nuke Storage"
+	name = "Heads Vault"
 	icon_state = "nuke_storage"
 
 /area/security/checkpoint

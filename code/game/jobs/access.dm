@@ -51,6 +51,8 @@
 	access_mailsorting = 50
 	access_mint = 51
 	access_mint_vault = 52
+	access_heads_vault = 53
+	access_mining_station = 54
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
@@ -145,7 +147,7 @@
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer, access_virology, access_surgery,
-			            access_theatre, access_research, access_mining_office, access_mining)
+			            access_theatre, access_research, access_mining_office, access_mining, access_heads_vault, access_mining_station)
 		if("Atmospheric Technician")
 			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage)
 		if("Barman")
@@ -167,7 +169,7 @@
 		if("Mail Sorter")
 			return list(access_maint_tunnels, access_mailsorting)
 		if("Shaft Miner")
-			return list(access_maint_tunnels, access_mining, access_mint)
+			return list(access_maint_tunnels, access_mining, access_mint, access_mining_station)
 		if("Quartermaster")
 			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining_office, access_mining)
 		if("Chief Engineer")
@@ -195,7 +197,7 @@
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
 	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
-	            access_theatre, access_research, access_mining, access_mining_office, access_mailsorting, access_mint_vault, access_mint)
+	            access_theatre, access_research, access_mining, access_mining_office, access_mailsorting, access_mint_vault, access_mint, access_heads_vault, access_mining_station)
 
 /proc/get_region_accesses(var/code)
 	switch(code)
@@ -210,11 +212,11 @@
 		if(4) //engineering and maintenance
 			return list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_emergency_storage, access_tech_storage, access_atmospherics, access_construction, access_robotics)
 		if(5) //command
-			return list(access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_mint_vault)
+			return list(access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_mint_vault, access_heads_vault)
 		if(6) //station general
 			return list(access_chapel_office, access_kitchen,access_bar, access_janitor, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
 		if(7) //supply
-			return list(access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_office, access_mailsorting, access_mint)
+			return list(access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_office, access_mining_station, access_mailsorting, access_mint)
 
 /proc/get_region_accesses_name(var/code)
 	switch(code)
@@ -336,6 +338,15 @@
 			return "Mining Office"
 		if(access_mailsorting)
 			return "Delivery Office"
+		if(access_mint)
+			return "Mint"
+		if(access_mint_vault)
+			return "Mint Vault"
+		if(access_heads_vault)
+			return "Main Vault"
+		if(access_mining_station)
+			return "Mining Station"
+
 
 /proc/get_all_jobs()
 	return list("Assistant", "Station Engineer", "Shaft Miner", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",

@@ -124,7 +124,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/vault
 	name = "Vault"
 	icon = 'vault.dmi'
-	opacity = 0
+	opacity = 1
 	doortype = 9
 
 /*
