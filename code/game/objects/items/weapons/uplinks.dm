@@ -28,23 +28,33 @@ SYNDICATE UPLINK
 			dat += "<HR>"
 			dat += "<B>Request item:</B><BR>"
 			dat += "<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><BR>"
-			dat += "<A href='byond://?src=\ref[src];item_revolver=1'>Revolver</A> (7)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_revolver_ammo=1'>Ammo-357</A> for use with Revolver (2)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_xbow=1'>Energy Crossbow</A> (5)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_empbox=1'>5 EMP Grenades</A> (4)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_voice=1'>Voice-Changer</A> (4)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_jump=1'>Chameleon Jumpsuit</A> (3)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_card=1'>Syndicate Card</A> (3)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_emag=1'>Electromagnet Card</A> (3)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_imp_freedom=1'>Freedom Implant (with injector)</A> (3)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_sleepypen=1'>Sleepy Pen</A> (4)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_cloak=1'>Cloaking Device</A> (4)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_sword=1'>Energy Sword</A> (4)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_bomb=1'>Syndicate Bomb</A> (4)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_powersink=1'>Power Sink</A> (5)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_cartridge=1'>Detomatix Cartridge</A> (3)"
-			dat += "<A href='byond://?src=\ref[src];item_space=1'>Syndicate-made Space Suit (inludes a helmet)</A> (3)<BR>"
-			dat += "<A href='byond://?src=\ref[src];item_botchat=1'>Binary Translator</A> (3)<BR>"
+			dat += "<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=revolver'>Revolver</A> (6)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=revolver_ammo'>Ammo-357</A> for use with Revolver (2)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=xbow'>Energy Crossbow</A> (5)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=sword'>Energy Sword</A> (4)<BR>"
+			dat += "<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=jump'>Chameleon Jumpsuit</A> (3)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=card'>Syndicate Card</A> (3)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=voice'>Voice-Changer</A> (4)<BR>"
+			dat += "<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=imp_freedom'>Freedom Implant (with injector)</A> (3)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (3)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>"
+			dat += "<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=detomatix'>Detomatix Cartridge</A> (3)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=bomb'>Plastic Explosives</A> (2)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=powersink'>Power Sink</A> (5)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=space'>Syndicate-made Space Suit (inludes a helmet)</A> (3)<BR>"
+			dat += "<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=projector'>Chameleon-projector</A> (4)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=cloak'>Cloaking Device</A> (4)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=emag'>Electromagnet Card</A> (3)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=empbox'>5 EMP Grenades</A> (4)<BR>"
+			dat += "<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=botchat'>Binary Translator</A> (3)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=lawmod'>Hacked AI Module</A> (7)<BR>"
+
 			dat += "<HR>"
 			if (src.origradio)
 				dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</A><BR>"
@@ -63,79 +73,94 @@ SYNDICATE UPLINK
 		return 1
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
 		usr.machine = src
-		if (href_list["item_emag"])
-			if (src.uses >= 3)
-				src.uses -= 3
-				new /obj/item/weapon/card/emag( H.loc )
-		else if (href_list["item_empbox"])
-			if (src.uses >= 4)
-				src.uses -= 4
-				new /obj/item/weapon/storage/emp_kit( H.loc )
-		else if (href_list["item_sleepypen"])
-			if (src.uses >= 4)
-				src.uses -= 4
-				new /obj/item/weapon/pen/sleepypen( H.loc )
-		else if (href_list["item_cloak"])
-			if (src.uses >= 4)
-				src.uses -= 4
-				new /obj/item/weapon/cloaking_device( H.loc )
-		else if (href_list["item_revolver"])
-			if (src.uses >= 7)
-				src.uses -= 7
-				var/obj/item/weapon/gun/revolver/O = new /obj/item/weapon/gun/revolver(H.loc)
-				O.bullets = 7
-		else if (href_list["item_xbow"])
-			if (src.uses >= 5)
-				src.uses -= 5
-				new /obj/item/weapon/gun/energy/crossbow( H.loc )
-		else if (href_list["item_revolver_ammo"])
-			if (src.uses >= 2)
-				src.uses -= 2
-				new /obj/item/weapon/ammo/a357(H.loc)
-		else if (href_list["item_voice"])
-			if (src.uses >= 4)
-				src.uses -= 4
-				new /obj/item/clothing/mask/gas/voice(H.loc)
-		else if (href_list["item_jump"])
-			if (src.uses >= 3)
-				src.uses -= 3
-				new /obj/item/clothing/under/chameleon(H.loc)
-		else if (href_list["item_imp_freedom"])
-			if (src.uses >= 3)
-				src.uses -= 3
-				var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(H.loc)
-				O.imp = new /obj/item/weapon/implant/freedom(O)
-				src.temp = "The implant is triggered by an emote and has a random amount of uses."
-		else if (href_list["item_bomb"])
-			if (src.uses >= 4)
-				src.uses -= 4
-				new /obj/item/weapon/plastique(H.loc)
-				new /obj/item/weapon/plastique(H.loc)
-		else if (href_list["item_card"])
-			if (src.uses >= 3)
-				src.uses -= 3
-				new /obj/item/weapon/card/id/syndicate(H.loc)
-		else if (href_list["item_sword"])
-			if (src.uses >= 4)
-				src.uses -= 4
-				new /obj/item/weapon/sword(H.loc)
-		else if (href_list["item_cartridge"])
-			if (src.uses >= 3)
-				src.uses -= 3
-				new /obj/item/weapon/cartridge/syndicate(H.loc)
-		else if (href_list["item_powersink"])
-			if (src.uses >= 5)
-				src.uses -= 5
-				new /obj/item/device/powersink(H.loc)
-		else if(href_list["item_space"])
-			if (src.uses >= 3)
-				src.uses -= 3
-				new /obj/item/clothing/suit/space/syndicate(H.loc)
-				new /obj/item/clothing/head/helmet/space/syndicate(H.loc)
-		else if(href_list["item_botchat"])
-			if (src.uses >= 3)
-				src.uses -= 3
-				new /obj/item/device/radio/headset/traitor(H.loc)
+		if (href_list["buy_item"])
+			switch(href_list["buy_item"])
+				if("revolver")
+					if (src.uses >= 6)
+						src.uses -= 6
+						var/obj/item/weapon/gun/revolver/O = new /obj/item/weapon/gun/revolver(get_turf(src))
+						O.bullets = 7
+				if("revolver_ammo")
+					if (src.uses >= 2)
+						src.uses -= 2
+						new /obj/item/weapon/ammo/a357(get_turf(src))
+				if("xbow")
+					if (src.uses >= 5)
+						src.uses -= 5
+						new /obj/item/weapon/gun/energy/crossbow(get_turf(src))
+				if("empbox")
+					if (src.uses >= 4)
+						src.uses -= 4
+						new /obj/item/weapon/storage/emp_kit(get_turf(src))
+				if("voice")
+					if (src.uses >= 4)
+						src.uses -= 4
+						new /obj/item/clothing/mask/gas/voice(get_turf(src))
+				if("jump")
+					if (src.uses >= 3)
+						src.uses -= 3
+						new /obj/item/clothing/under/chameleon(get_turf(src))
+				if("card")
+					if (src.uses >= 3)
+						src.uses -= 3
+						new /obj/item/weapon/card/id/syndicate(get_turf(src))
+				if("emag")
+					if (src.uses >= 3)
+						src.uses -= 3
+						new /obj/item/weapon/card/emag(get_turf(src))
+				if("imp_freedom")
+					if (src.uses >= 3)
+						src.uses -= 3
+						var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(src))
+						O.imp = new /obj/item/weapon/implant/freedom(O)
+				if("sleepypen")
+					if (src.uses >= 5)
+						src.uses -= 5
+						new /obj/item/weapon/pen/sleepypen(get_turf(src))
+				if("paralysispen")
+					if (src.uses >= 3)
+						src.uses -= 3
+						new /obj/item/device/flashlight/pen/paralysis(get_turf(src))
+				if("projector")
+					if (src.uses >= 4)
+						src.uses -= 4
+						new /obj/item/device/chameleon(get_turf(src))
+				if("cloak")
+					if (src.uses >= 4)
+						var/choice = input("Spawning a cloak in nuke is generally regarded as entirely dumb, are you sure?") in list("Confirm", "Abort")
+						if(choice == "Confirm")
+							if (src.uses >= 4)
+								src.uses -= 4
+								new /obj/item/weapon/cloaking_device(get_turf(src))
+				if("sword")
+					if (src.uses >= 4)
+						src.uses -= 4
+						new /obj/item/weapon/sword(get_turf(src))
+				if("bomb")
+					if (src.uses >= 2)
+						src.uses -= 2
+						new /obj/item/weapon/plastique(get_turf(src))
+				if("powersink")
+					if (src.uses >= 5)
+						src.uses -= 5
+						new /obj/item/device/powersink(get_turf(src))
+				if("detomatix")
+					if (src.uses >= 3)
+					 src.uses -= 3
+					 new /obj/item/weapon/cartridge/syndicate(get_turf(src))
+				if("space")
+					if (src.uses >= 3)
+					 src.uses -= 3
+					 new /obj/item/clothing/suit/space/syndicate(get_turf(src))
+					 new /obj/item/clothing/head/helmet/space/syndicate(get_turf(src))
+				if("lawmod")
+					if (src.uses >= 7)
+						src.uses -= 7
+						new /obj/item/weapon/aiModule/syndicate(get_turf(src))
+				if("botchat")
+					if (src.uses >= 3)
+						src.uses -= 3
+						new /obj/item/device/radio/headset/traitor(get_turf(src))
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
 			usr.machine = null

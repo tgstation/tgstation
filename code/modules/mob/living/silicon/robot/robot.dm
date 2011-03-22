@@ -219,17 +219,19 @@
 		if (src.stat != 2)
 			src.bruteloss += 60
 			src.updatehealth()
+		return
 /*
 	else if (flag == PROJECTILE_MEDBULLET)
 		if (src.stat != 2)
 			src.bruteloss += 30
 			src.updatehealth()
-
+*/
 	else if (flag == PROJECTILE_WEAKBULLET)
 		if (src.stat != 2)
 			src.bruteloss += 15
 			src.updatehealth()
-
+		return
+/*
 	else if (flag == PROJECTILE_MPBULLET)
 		if (src.stat != 2)
 			src.bruteloss += 20
@@ -247,6 +249,9 @@
 */
 
 	else if (flag == PROJECTILE_TASER)
+		if (src.stat != 2)
+			src.bruteloss += rand(1,10)
+			src.stunned += rand(0,3)
 		return
 	else if (flag == PROJECTILE_DART)
 		if (src.stat != 2)

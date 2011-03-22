@@ -30,7 +30,7 @@
 	src.menu_message += "<B>Request item:</B><BR>"
 	src.menu_message += "<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><BR>"
 	src.menu_message += "<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=revolver'>Revolver</A> (7)<BR>"
+	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=revolver'>Revolver</A> (6)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=revolver_ammo'>Ammo-357</A> for use with Revolver (2)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=xbow'>Energy Crossbow</A> (5)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=sword'>Energy Sword</A> (4)<BR>"
@@ -44,7 +44,7 @@
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>"
 	src.menu_message += "<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=detomatix'>Detomatix Cartridge</A> (3)<BR>"
-	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=bomb'>Plastic Explosives</A> (4)<BR>"
+	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=bomb'>Plastic Explosives</A> (2)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=powersink'>Power Sink</A> (5)<BR>"
 	src.menu_message += "<A href='byond://?src=\ref[src];buy_item=space'>Syndicate-made Space Suit (inludes a helmet)</A> (3)<BR>"
 	src.menu_message += "<BR>"
@@ -81,8 +81,8 @@
 	if (href_list["buy_item"])
 		switch(href_list["buy_item"])
 			if("revolver")
-				if (src.uses >= 7)
-					src.uses -= 7
+				if (src.uses >= 6)
+					src.uses -= 6
 					var/obj/item/weapon/gun/revolver/O = new /obj/item/weapon/gun/revolver(get_turf(src.hostpda))
 					O.bullets = 7
 			if("revolver_ammo")
@@ -139,9 +139,8 @@
 					src.uses -= 4
 					new /obj/item/weapon/sword(get_turf(src.hostpda))
 			if("bomb")
-				if (src.uses >= 4)
-					src.uses -= 4
-					new /obj/item/weapon/plastique(get_turf(src.hostpda))
+				if (src.uses >= 2)
+					src.uses -= 2
 					new /obj/item/weapon/plastique(get_turf(src.hostpda))
 			if("powersink")
 				if (src.uses >= 5)
