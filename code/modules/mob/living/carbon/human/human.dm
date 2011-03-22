@@ -2695,3 +2695,18 @@
 		var/obj/item/clothing/gloves/G = src.gloves
 		siemens_coeff = G.siemens_coefficient
 	return ..(shock_damage,source,siemens_coeff)
+
+/mob/living/carbon/human/proc/heal_organ_damage(var/brute, var/burn)
+	var/list/parts = list()
+	for(var/A in src.organs)
+		if(!src.organs[A])	continue
+		var/datum/organ/external/affecting = src.organs[A]
+		if(!istype(affecting))	continue
+		if((brute && affecting.brute_dam) || (burn && affecting.burn_dam))
+			parts += affecting
+
+	if(!parts.len) return
+	var/datum/organ/external/picked = pick(parts)
+	picked.heal_damage(brute,burn)
+	src.UpdateDamageIcon()
+	src.updatehealth()

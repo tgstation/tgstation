@@ -62,7 +62,7 @@ datum
 					M << "You don't feel too good."
 					M.toxloss+=20
 				else if(prob(40))
-					M.bruteloss-=5
+					M:heal_organ_damage(5,0)
 				..()
 
 
@@ -855,7 +855,7 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				M:fireloss = max(M:fireloss-2,0)
+				M:heal_organ_damage(0,2)
 				..()
 				return
 
@@ -889,8 +889,8 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(40)) M:oxyloss--
-				if(M:bruteloss && prob(40)) M:bruteloss--
-				if(M:fireloss && prob(40)) M:fireloss--
+				if(M:bruteloss && prob(40)) M:heal_organ_damage(1,0)
+				if(M:fireloss && prob(40)) M:heal_organ_damage(0,1)
 				if(M:toxloss && prob(40)) M:toxloss--
 				..()
 				return
@@ -979,7 +979,7 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(M:bruteloss && prob(40)) M:bruteloss--
+				if(M:bruteloss && prob(40)) M:heal_organ_damage(1,0)
 				..()
 				return
 
@@ -1004,8 +1004,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
 					if(M:oxyloss) M:oxyloss = max(0, M:oxyloss-3)
-					if(M:bruteloss) M:bruteloss = max(0, M:bruteloss-3)
-					if(M:fireloss) M:fireloss = max(0, M:fireloss-3)
+					M:heal_organ_damage(3,3)
 					if(M:toxloss) M:toxloss = max(0, M:toxloss-3)
 				..()
 				return
@@ -1020,8 +1019,7 @@ datum
 				if(M.bodytemperature < 170)
 					if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-3)
 					if(M:oxyloss) M:oxyloss = max(0, M:oxyloss-3)
-					if(M:bruteloss) M:bruteloss = max(0, M:bruteloss-3)
-					if(M:fireloss) M:fireloss = max(0, M:fireloss-3)
+					M:heal_organ_damage(3,3)
 					if(M:toxloss) M:toxloss = max(0, M:toxloss-3)
 				..()
 				return
@@ -1208,7 +1206,7 @@ datum
 			nutriment_factor = 15 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(prob(50)) M:bruteloss--
+				if(prob(50)) M:heal_organ_damage(1,0)
 				M:nutrition += nutriment_factor	// For hunger and fatness
 /*
 				// If overeaten - vomit and fall down
@@ -1312,8 +1310,7 @@ datum
 				M:nutrition += nutriment_factor
 				if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective"))
 					if(!M) M = holder.my_atom
-					M:bruteloss--
-					M:fireloss--
+					M:heal_organ_damage(1,1)
 					M:nutrition += nutriment_factor
 					..()
 					return
@@ -1329,8 +1326,7 @@ datum
 				if(istype(M, /mob/living/carbon/human) && M.mind)
 					if(M.mind.special_role)
 						if(!M) M = holder.my_atom
-						M:bruteloss--
-						M:fireloss--
+						M:heal_organ_damage(1,1)
 						M:nutrition += nutriment_factor
 						..()
 						return
@@ -1406,7 +1402,7 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(M:bruteloss && prob(10)) M:bruteloss--
+				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
 				M:nutrition++
 				..()
 				return
@@ -1418,7 +1414,7 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(M:bruteloss && prob(10)) M:bruteloss--
+				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
 				M:nutrition++
 				..()
 				return
@@ -1711,8 +1707,8 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(30)) M:oxyloss--
-				if(M:bruteloss && prob(30)) M:bruteloss--
-				if(M:fireloss && prob(30)) M:fireloss--
+				if(M:bruteloss && prob(30)) M:heal_organ_damage(1,0)
+				if(M:fireloss && prob(30)) M:heal_organ_damage(0,1)
 				if(M:toxloss && prob(30)) M:toxloss--
 				M:nutrition++
 				..()
@@ -1726,8 +1722,8 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(20)) M:oxyloss--
-				if(M:bruteloss && prob(20)) M:bruteloss--
-				if(M:fireloss && prob(20)) M:fireloss--
+				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
+				if(M:fireloss && prob(20)) M:heal_organ_damage(0,1)
 				if(M:toxloss && prob(20)) M:toxloss--
 				M:nutrition++
 				..()
@@ -1741,8 +1737,8 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(20)) M:oxyloss--
-				if(M:bruteloss && prob(20)) M:bruteloss--
-				if(M:fireloss && prob(20)) M:fireloss--
+				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
+				if(M:fireloss && prob(20)) M:heal_organ_damage(0,1)
 				if(M:toxloss && prob(20)) M:toxloss--
 				M:nutrition++
 				..()
@@ -2072,8 +2068,8 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(50)) M:oxyloss -= 2
-				if(M:bruteloss && prob(60)) M:bruteloss -= 2
-				if(M:fireloss && prob(50)) M:fireloss -= 2
+				if(M:bruteloss && prob(60)) M:heal_organ_damage(2,0)
+				if(M:fireloss && prob(50)) M:heal_organ_damage(0,2)
 				if(M:toxloss && prob(50)) M:toxloss -= 2
 				if(M.dizziness !=0) M.dizziness = max(0,M.dizziness-15)
 				if(M.confused !=0) M.confused = max(0,M.confused - 5)
