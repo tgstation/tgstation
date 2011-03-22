@@ -65,7 +65,7 @@
 	else if(M.stat == 2)
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] smacks []'s lifeless corpse with [].</B>", user, M, src), 1)
-			playsound(src.loc, "punch", 25, 1, -1)
+		playsound(src.loc, "punch", 25, 1, -1)
 	return
 
 /obj/item/weapon/storage/bible/afterattack(atom/A, mob/user as mob)

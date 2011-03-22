@@ -150,7 +150,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return 1
 	return
 
-/obj/item/weapon/gun/revolver/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/revolver/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag, pbs)
 	if (flag)
 		return
 	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
@@ -162,8 +162,12 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return
 	playsound(user, 'Gunshot.ogg', 100, 1)
 	src.bullets--
-	for(var/mob/O in viewers(user, null))
-		O.show_message(text("\red <B>[] fires a revolver at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+	if(!pbs)
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red <B>[] fires a revolver at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+	else
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red <B>[] has been shot point-blank by []!</B>", target, user), 1, "\red You hear a gunshot", 2)
 	var/turf/T = user.loc
 	var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 	if ((!( U ) || !( T )))
@@ -190,39 +194,40 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 /obj/item/weapon/gun/revolver/attack(mob/M as mob, mob/user as mob)
 	src.add_fingerprint(user)
-	var/mob/living/carbon/human/H = M
+//	var/mob/living/carbon/human/H = M
 
 // ******* Check
 
-	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-		M << "\blue The helmet protects you from being hit hard in the head!"
-		return
+//	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
+//		M << "\blue The helmet protects you from being hit hard in the head!"
+//		return
 	if ((user.a_intent == "hurt" && src.bullets > 0))
-		if (prob(20))
-			if (M.paralysis < 10)
-				M.paralysis = 10
-		else
-			if (M.weakened < 10)
-				M.weakened = 10
-		src.bullets--
-		src.force = 90
-		..()
-		src.force = 60
-		if(M.stat != 2)	M.stat = 1
-		for(var/mob/O in viewers(M, null))
-			if(O.client)	O.show_message(text("\red <B>[] has been shot point-blank by []!</B>", M, user), 1, "\red You hear someone fall", 2)
+//		if (prob(20))
+//			if (M.paralysis < 10)
+//				M.paralysis = 10
+//		else
+//			if (M.weakened < 10)
+//				M.weakened = 10
+//		src.bullets--
+//		src.force = 90
+//		..()
+//		src.force = 24
+//		if(M.stat != 2)	M.stat = 1
+//		for(var/mob/O in viewers(M, null))
+//			if(O.client)	O.show_message(text("\red <B>[] has been shot point-blank by []!</B>", M, user), 1, "\red You hear someone fall", 2)
+		src.afterattack(M, user, 0, 1)
 	else
-		if (prob(50))
-			if (M.paralysis < 60)
-				M.paralysis = 60
-		else
-			if (M.weakened < 60)
-				M.weakened = 60
-		src.force = 30
+//		if (prob(50))
+//			if (M.paralysis < 60)
+//				M.paralysis = 60
+//		else
+//			if (M.weakened < 60)
+//				M.weakened = 60
+//		src.force = 24
 		..()
-		if(M.stat != 2)	M.stat = 1
-		for(var/mob/O in viewers(M, null))
-			if (O.client)	O.show_message(text("\red <B>[] has been pistol whipped by []!</B>", M, user), 1, "\red You hear someone fall", 2)
+//		if(M.stat != 2)	M.stat = 1
+//		for(var/mob/O in viewers(M, null))
+//			if (O.client)	O.show_message(text("\red <B>[] has been pistol whipped by []!</B>", M, user), 1, "\red You hear someone fall", 2)
 	return
 
 
