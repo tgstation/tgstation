@@ -1170,6 +1170,8 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	return
 
 /obj/item/weapon/gun/c96/verb/eject()
+	set name = "Eject Clip"
+	set category = "Object"
 	set src in usr
 	if (src.magazine)
 		if (istype(src.magazine, /obj/item/weapon/ammo/a763m))
@@ -1260,6 +1262,8 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	return
 
 /obj/item/weapon/gun/p08/verb/eject()
+	set name = "Eject Clip"
+	set category = "Object"
 	set src in usr
 	if (src.magazine)
 		if (istype(src.magazine, /obj/item/weapon/ammo/a9x19p))
@@ -1350,6 +1354,8 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	return
 
 /obj/item/weapon/gun/glock/verb/eject()
+	set name = "Eject Clip"
+	set category = "Object"
 	set src in usr
 	if (src.magazine)
 		if (istype(src.magazine, /obj/item/weapon/ammo/a45))
@@ -1441,6 +1447,8 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	return
 
 /obj/item/weapon/gun/m1911/verb/eject()
+	set name = "Eject Clip"
+	set category = "Object"
 	set src in usr
 	if (src.magazine)
 		if (istype(src.magazine, /obj/item/weapon/ammo/a45))
@@ -1520,6 +1528,8 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	return
 
 /obj/item/weapon/gun/carbine/verb/eject()
+	set name = "Eject Clip"
+	set category = "Object"
 	set src in usr
 	if (src.magazine)
 		if (istype(src.magazine, /obj/item/weapon/ammo/assaultmag))
@@ -1602,6 +1612,8 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	return
 
 /obj/item/weapon/gun/ak331/verb/eject()
+	set name = "Eject Clip"
+	set category = "Object"
 	set src in usr
 	if (src.magazine)
 		if (istype(src.magazine, /obj/item/weapon/ammo/assaultmag))

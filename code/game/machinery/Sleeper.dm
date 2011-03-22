@@ -277,7 +277,8 @@
 	return
 
 /obj/machinery/sleeper/verb/eject()
-	set name = "Eject"
+	set name = "Eject Sleeper"
+	set category = "Object"
 	set src in oview(1)
 
 	if (usr.stat != 0)
@@ -289,7 +290,8 @@
 	return
 
 /obj/machinery/sleeper/verb/move_inside()
-	set name = "Move Inside"
+	set name = "Enter Sleeper"
+	set category = "Object"
 	set src in oview(1)
 
 	if (usr.stat != 0)

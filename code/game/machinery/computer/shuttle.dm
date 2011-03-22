@@ -133,6 +133,8 @@
 */
 
 /obj/machinery/computer/prison_shuttle/verb/take_off()
+	set category = "Object"
+	set name = "Launch Prison Shuttle"
 	set src in oview(1)
 
 	if (usr.stat || usr.restrained())
@@ -174,6 +176,8 @@
 	return
 
 /obj/machinery/computer/prison_shuttle/verb/restabalize()
+	set category = "Object"
+	set name = "Restabilize Prison Shuttle"
 	set src in oview(1)
 
 	src.add_fingerprint(usr)

@@ -2,6 +2,7 @@
 
 /obj/machinery/computer/security/verb/station_map()
 	set name = ".map"
+	set category = "Object"
 	set src in view(1)
 	usr.machine = src
 

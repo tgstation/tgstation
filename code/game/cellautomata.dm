@@ -161,6 +161,7 @@
 
 /atom/verb/point()
 	set name = "Point To"
+	set category = "Object"
 	set src in oview()
 	var/atom/this = src//detach proc from src
 	src = null

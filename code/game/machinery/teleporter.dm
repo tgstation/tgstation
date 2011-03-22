@@ -77,6 +77,8 @@
 	return
 
 /obj/machinery/computer/teleporter/verb/set_id(t as text)
+	set category = "Object"
+	set name = "Set teleporter ID"
 	set src in oview(1)
 	set desc = "ID Tag:"
 
@@ -278,6 +280,8 @@
 	return
 
 /obj/machinery/teleport/station/verb/testfire()
+	set name = "Test Fire Teleporter"
+	set category = "Object"
 	set src in oview(1)
 
 	if(stat & (BROKEN|NOPOWER) || !istype(usr,/mob/living))
@@ -372,6 +376,8 @@
 	return
 
 /obj/machinery/computer/data/verb/display()
+	set name = "Display"
+	set category = "Object"
 	set src in oview(1)
 
 	for(var/x in src.topics)
@@ -382,6 +388,7 @@
 
 /obj/machinery/computer/data/verb/read(topic as text)
 	set name = "Read"
+	set category = "Object"
 	set src in oview(1)
 
 	if (src.topics[text("[]", topic)])

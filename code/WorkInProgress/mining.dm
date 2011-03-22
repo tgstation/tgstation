@@ -1041,13 +1041,17 @@ proc/move_mining_shuttle()
 		src.contents += O;
 	return
 
-/obj/item/weapon/satchel/verb/all_on_tile()
-	mode = 1
-	return
+/obj/item/weapon/satchel/verb/toggle_mode()
+	set name = "Switch Satchel Method"
+	set category = "Object"
 
-/obj/item/weapon/satchel/verb/one_at_a_time()
-	mode = 0
-	return
+	mode = !mode
+	switch (mode)
+		if(1)
+			usr << "The satchel now picks up all ore in a tile at once."
+		if(0)
+			usr << "The satchel now picks up ore one at a time."
+
 
 /**********************Ore box**************************/
 

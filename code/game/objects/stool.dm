@@ -158,6 +158,8 @@
 	return
 
 /obj/stool/chair/e_chair/verb/toggle_power()
+	set name = "Toggle Electric Chair"
+	set category = "Object"
 	set src in oview(1)
 
 	if ((usr.stat || usr.restrained() || !( usr.canmove ) || usr.lying))
@@ -234,6 +236,7 @@
 
 /obj/stool/chair/verb/rotate()
 	set name = "Rotate Chair"
+	set category = "Object"
 	set src in oview(1)
 
 	src.dir = turn(src.dir, 90)

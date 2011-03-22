@@ -487,6 +487,8 @@
 	return
 
 /mob/living/carbon/monkey/verb/removeinternal()
+	set name = "Remove Internals"
+	set category = "IC"
 	src.internal = null
 	return
 

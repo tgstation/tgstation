@@ -157,6 +157,7 @@
 
 
 /mob/verb/vote()
+	set category = "OOC"
 	set name = "Vote"
 	if(!usr.client.authenticated)
 		usr << "You're not authenticated, you can't vote."

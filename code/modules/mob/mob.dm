@@ -1242,7 +1242,8 @@
 	return
 
 /mob/verb/mode()
-	set name = "Equipment Mode"
+	set name = "Activate Held Object"
+	set category = "IC"
 
 	set src = usr
 
@@ -1264,6 +1265,7 @@
 
 /mob/verb/memory()
 	set name = "Notes"
+	set category = "OOC"
 	if(mind)
 		mind.show_memory(src)
 	else
@@ -1271,6 +1273,7 @@
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
+	set category = "OOC"
 
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
@@ -1291,13 +1294,16 @@
 	if (popup)
 		src.memory()
 
+/*
 /mob/verb/help()
 	set name = "Help"
 	src << browse('help.html', "window=help")
 	return
+*/
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
+	set category = "OOC"
 
 	if (!( abandon_allowed ))
 		return
@@ -1338,10 +1344,12 @@
 
 /mob/verb/cmd_rules()
 	set name = "Rules"
+	set category = "OOC"
 	src << browse(rules, "window=rules;size=480x320")
 
 /mob/verb/changes()
 	set name = "Changelog"
+	set category = "OOC"
 	if (src.client)
 		src << browse_rsc('postcardsmall.jpg')
 		src << browse_rsc('somerights20.png')
@@ -1359,6 +1367,7 @@
 
 /mob/verb/observe()
 	set name = "Observe"
+	set category = "OOC"
 	var/is_admin = 0
 
 	if (src.client.holder && src.client.holder.level >= 1 && ( src.client.holder.state == 2 || src.client.holder.level > 3 ))
@@ -1463,6 +1472,7 @@
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
+	set category = "OOC"
 	src.reset_view(null)
 	src.machine = null
 	if(istype(src, /mob/living))
@@ -1636,6 +1646,8 @@
 	return
 
 /atom/movable/verb/pull()
+	set name = "Pull"
+	set category = "IC"
 	set src in oview(1)
 
 	if (!( usr ))
@@ -1645,6 +1657,8 @@
 	return
 
 /atom/verb/examine()
+	set name = "Examine"
+	set category = "IC"
 	set src in oview(12)	//make it work from farther away
 
 	if (!( usr ))

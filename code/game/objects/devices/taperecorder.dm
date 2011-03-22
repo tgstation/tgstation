@@ -57,7 +57,8 @@
 	return
 
 /obj/item/device/taperecorder/verb/record()
-	set name = "record"
+	set name = "Start Recording"
+	set category = "Object"
 	if(usr.stat)
 		usr << "Not when you're incapicated."
 		return
@@ -80,7 +81,8 @@
 
 
 /obj/item/device/taperecorder/verb/stop_recording()
-	set name = "stop"
+	set name = "Stop Recording"
+	set category = "Object"
 
 	if(usr.stat)
 		usr << "Not when you're incapicated."
@@ -97,7 +99,8 @@
 
 
 /obj/item/device/taperecorder/verb/clear_memory()
-	set name = "clear memory"
+	set name = "Clear Memory"
+	set category = "Object"
 
 	if(usr.stat)
 		usr << "Not when you're incapicated."
@@ -116,7 +119,8 @@
 
 
 /obj/item/device/taperecorder/verb/playback_memory()
-	set name = "playback memory"
+	set name = "Playback Memory"
+	set category = "Object"
 
 	if(usr.stat)
 		usr << "Not when you're incapicated."

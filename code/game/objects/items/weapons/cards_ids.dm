@@ -13,6 +13,8 @@ FINGERPRINT CARD
 // DATA CARDS
 
 /obj/item/weapon/card/data/verb/label(t as text)
+	set name = "Label Disk"
+	set category = "Object"
 	set src in usr
 
 	if (t)
@@ -36,6 +38,7 @@ FINGERPRINT CARD
 
 /obj/item/weapon/card/id/verb/read()
 	set name = "Read ID Card"
+	set category = "Object"
 	set src in usr
 
 	usr << text("\icon[] []: The current assignment on the card is [].", src, src.name, src.assignment)
@@ -69,7 +72,8 @@ FINGERPRINT CARD
 			//PHOTO.loc = locate(0,0,0)
 
 /obj/item/weapon/card/id/verb/removePhoto()
-	set name = "Remove Photo"
+	set name = "Remove Photo From ID"
+	set category = "Object"
 
 	if(PHOTO)
 		contents -= PHOTO

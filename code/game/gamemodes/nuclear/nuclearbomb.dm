@@ -42,6 +42,7 @@
 	return
 
 /obj/machinery/nuclearbomb/verb/make_deployable()
+	set category = "Object"
 	set name = "Make Deployable"
 	set src in oview(1)
 

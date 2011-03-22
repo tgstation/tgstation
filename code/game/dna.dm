@@ -490,6 +490,8 @@
 
 /obj/machinery/dna_scannernew/verb/eject()
 	set src in oview(1)
+	set category = "Object"
+	set name = "Eject DNA Scanner"
 
 	if (usr.stat != 0)
 		return
@@ -499,6 +501,8 @@
 
 /obj/machinery/dna_scannernew/verb/move_inside()
 	set src in oview(1)
+	set category = "Object"
+	set name = "Enter DNA Scanner"
 
 	if (usr.stat != 0)
 		return

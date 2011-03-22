@@ -438,6 +438,8 @@
 	return
 
 /obj/item/assembly/rad_infra/verb/rotate()
+	set name = "Rotate Assembly"
+	set category = "Object"
 	set src in usr
 
 	src.dir = turn(src.dir, 90)

@@ -42,6 +42,8 @@
 			del(G)
 
 /obj/machinery/gibber/verb/eject()
+	set category = "Object"
+	set name = "Empty Gibber"
 	set src in oview(1)
 
 	if (usr.stat != 0)

@@ -21,6 +21,8 @@ AI MODULES
 	origin_tech = "programming=3"
 
 /obj/machinery/computer/aiupload/verb/AccessInternals()
+	set category = "Object"
+	set name = "Access Computer's Internals"
 	set src in oview(1)
 	if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || istype(usr, /mob/living/silicon))
 		return

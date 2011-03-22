@@ -583,7 +583,8 @@
 
 
 /obj/mecha/verb/move_inside()
-	set name = "Move Inside"
+	set category = "Object"
+	set name = "Enter Mecha"
 	set src in oview(1)
 
 	if (usr.stat || !ishuman(usr))

@@ -139,7 +139,8 @@ THERMAL GLASSES
 		user << "\red Pattern absorbed by the suit."
 
 /obj/item/clothing/under/chameleon/verb/change()
-	set name = "Change"
+	set name = "Change Color"
+	set category = "Object"
 	set src in usr
 
 	if(icon_state == "psyche")
@@ -191,6 +192,7 @@ THERMAL GLASSES
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
+	set category = "Object"
 	var/mob/M = usr
 	if (istype(M, /mob/dead/)) return
 	if (usr.stat) return
@@ -228,6 +230,7 @@ THERMAL GLASSES
 
 
 /obj/item/clothing/head/helmet/welding/verb/toggle()
+	set category = "Object"
 	set name = "Adjust welding mask"
 	if(src.up)
 		src.up = !src.up
@@ -244,6 +247,7 @@ THERMAL GLASSES
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
+	set category = "Object"
 	if(src.magpulse)
 		src.flags &= ~NOSLIP
 		src.slowdown = SHOES_SLOWDOWN

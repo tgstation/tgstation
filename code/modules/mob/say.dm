@@ -3,14 +3,17 @@
 
 /mob/verb/whisper()
 	set name = "Whisper"
+	set category = "IC"
 	return
 
 /mob/verb/say_verb(message as text)
 	set name = "Say"
+	set category = "IC"
 	usr.say(message)
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"
+	set category = "IC"
 	usr.emote("me",1,message)
 
 /mob/proc/say_dead(var/message)

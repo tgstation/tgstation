@@ -5,6 +5,8 @@
 	return null
 
 /obj/item/device/radio/beacon/verb/alter_signal(t as text)
+	set name = "Alter Beacon's Signal"
+	set category = "Object"
 	set src in usr
 
 	if ((usr.canmove && !( usr.restrained() )))

@@ -250,7 +250,7 @@
 
 	else if (flag == PROJECTILE_TASER)
 		if (src.stat != 2)
-			src.bruteloss += rand(1,10)
+			src.fireloss += rand(0,10)
 			src.stunned += rand(0,3)
 		return
 	else if (flag == PROJECTILE_DART)

@@ -97,5 +97,6 @@
 
 /client/verb/activate_forum_account(var/a as text)
 	set name = "Activate Forum Account"
+	set category = "Special Verbs"
 	set desc = "Associate a tgstation forum account with your BYOND key to enable posting."
 	associate_key_with_forum(a, src.key)

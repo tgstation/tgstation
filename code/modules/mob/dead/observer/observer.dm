@@ -107,6 +107,7 @@ var/list/karma_spenders = list()
 
 /mob/dead/observer/verb/spend_karma(var/mob/M in world) // Karma system -- TLE
 	set name = "Spend Karma"
+	set category = "Special Verbs"
 	set desc = "Let the gods know whether someone's been naughty or nice. <One use only>"
 	if(!istype(M, /mob))
 		usr << "\red That's not a mob. You shouldn't have even been able to specify that. Please inform your server administrator post haste."
@@ -154,6 +155,7 @@ var/list/karma_spenders = list()
 
 /mob/dead/observer/verb/toggle_alien_candidate()
 	set name = "Toggle Be Alien Candidate"
+	set category = "OOC"
 	set desc = "Determines whether you will or will not be an alien candidate when someone bursts."
 	if(src.client.be_alien)
 		src.client.be_alien = 0
