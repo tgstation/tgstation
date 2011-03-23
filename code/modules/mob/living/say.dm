@@ -210,12 +210,8 @@
 				italics = 1
 /////SPECIAL HEADSETS END
 
-	for (var/obj/O in view(message_range, src))
-		spawn (0)
-			if (O)
-				O.hear_talk(src, message)
-
 	var/list/listening
+/*
 	if(istype(src.loc, /obj/item/device/aicard)) // -- TLE
 		var/obj/O = src.loc
 		if(istype(O.loc, /mob))
@@ -226,8 +222,33 @@
 	else
 		listening = hearers(message_range, src)
 
-	listening -= src
-	listening += src
+	for (var/obj/O in view(message_range, src))
+		for (var/mob/M in O)
+			listening += M // maybe need to check if M can hear src
+		spawn (0)
+			if (O)
+				O.hear_talk(src, message)
+
+	if (!(src in listening))
+		listening += src
+
+*/
+	var/turf/T = get_turf(src)
+	listening = hearers(message_range, T)
+	var/list/V = view(message_range, T)
+	//find mobs in lockers, cryo and intellycards
+	for (var/mob/M in world)
+		if (isturf(M.loc))
+			continue //if M can hear us it is already was found by hearers()
+		if (!M.client)
+			continue //skip monkeys and leavers
+		if (get_turf(M) in V) //this slow, but I don't think we'd have a lot of wardrobewhores every round --rastaf0
+			listening+=M
+
+	for (var/obj/O in V)
+		spawn (0)
+			if (O)
+				O.hear_talk(src, message)
 
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
@@ -252,14 +273,14 @@
 
 		for (var/mob/M in heard_a)
 			M.show_message(rendered, 2)
-
+/*
 			for(var/obj/O in M) // This is terribly costly for such a unique circumstance, should probably do this a different way in the future -- TLE
 				if(istype(O, /obj/item/device/aicard))
 					for(var/mob/M2 in O)
 						M2.show_message(rendered, 2)
 						break
 					break
-
+*/
 	if (length(heard_b))
 		var/message_b
 
@@ -289,7 +310,7 @@
 	for (var/mob/M in world)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat >= 2 && !(M in heard_a))
+		if (M.stat >= 2 && !(M in heard_a) && M.ghost_ears)
 			M.show_message(rendered, 2)
 
 	log_say("[src.name]/[src.key] : [message]")

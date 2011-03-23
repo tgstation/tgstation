@@ -269,13 +269,7 @@
 			return 1
 	return 0
 
-/obj/proc/alter_health()
-	return 1
-
 /atom/proc/relaymove()
-	return
-
-/obj/proc/hide(h)
 	return
 
 /obj/item/weapon/grab/proc/throw()
@@ -1364,6 +1358,13 @@
 		src.oxyloss += src.health + 200
 		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
 		src << "\blue You have given up life and succumbed to death."
+
+/mob/var/ghost_ears = 1
+/mob/verb/toggle_ghost_ears()
+	set name = "Ghost ears"
+	set category = "OOC"
+	set desc = "Hear talks from everywhere"
+	src.ghost_ears = !src.ghost_ears
 
 /mob/verb/observe()
 	set name = "Observe"
