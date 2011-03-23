@@ -52,7 +52,11 @@
 		if("Service")
 			src.module = new /obj/item/weapon/robot_module/butler(src)
 			src.hands.icon_state = "service"
-			src.icon_state = "Service"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Butler")
+			if(icontype== "Waitress")
+				src.icon_state = "Service"
+			else
+				src.icon_state = "Service2"
 			src.modtype = "Butler"
 
 /*

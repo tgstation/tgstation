@@ -118,11 +118,8 @@
 	item_state = "cigaroff"
 	smoketime = 1500
 
-/obj/item/clothing/mask/mime
+/obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "It looks a little creepy"
 	icon_state = "mime"
-	throw_speed = 0.5
-	var/lastHolder = null
-	var/smoketime = 300
-	w_class = 1
+	item_state = "clown_hat"

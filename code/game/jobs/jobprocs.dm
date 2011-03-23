@@ -346,7 +346,7 @@
 			src.equip_if_possible(new /obj/item/clothing/under/mime(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/gloves/white(src), slot_gloves)
-			src.equip_if_possible(new /obj/item/clothing/mask/mime(src), slot_wear_mask)
+			src.equip_if_possible(new /obj/item/clothing/mask/gas/mime(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/head/beret(src), slot_head)
 			src.equip_if_possible(new /obj/item/clothing/suit/suspenders(src), slot_wear_suit)
 			src.verbs += /client/proc/mimespeak
