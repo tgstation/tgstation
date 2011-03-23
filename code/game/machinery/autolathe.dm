@@ -238,7 +238,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/stack/sheet/rglass(), \
 		new /obj/item/stack/rods(), \
 		new /obj/item/weapon/rcd_ammo(), \
-		new /obj/item/weapon/kitchenknife(),\
+		new /obj/item/weapon/kitchenknife(), \
 		new /obj/item/weapon/scalpel(), \
 		new /obj/item/weapon/circular_saw(), \
 		new /obj/item/device/t_scanner(), \

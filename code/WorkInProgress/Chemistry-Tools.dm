@@ -1298,7 +1298,6 @@
 		..()
 		reagents.add_reagent("diethylamine", 30)
 
-
 /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"
 	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."
