@@ -444,6 +444,9 @@
 
 				last_text = world.time
 
+				for (var/obj/machinery/message_server/MS in world)
+					MS.send_pda_message("[P.owner]","[src.owner]","[t]")
+
 				src.tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 				P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];editnote=\ref[src]'>[src.owner]</a>:</b></i><br>[t]<br>"
 

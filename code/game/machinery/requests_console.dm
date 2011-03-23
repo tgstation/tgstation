@@ -189,6 +189,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			screen = 0
 			priority = -1
 	if(href_list["department"] && src.message)
+		var/log_msg = src.message
 		var/message = src.message;
 		message += "<br>"
 		if (src.msgVerified)
@@ -199,6 +200,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			message += "<br>"
 		src.screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (message)
+			for (var/obj/machinery/message_server/MS in world)
+				MS.send_rc_message(href_list["department"],src.department,log_msg,msgStamped,msgVerified,priority)
 			for (var/obj/machinery/requests_console/CONSOLE in allConsoles)
 				if (ckey(CONSOLE.department) == ckey(href_list["department"]))
 					if(src.priority == "2") //High priority

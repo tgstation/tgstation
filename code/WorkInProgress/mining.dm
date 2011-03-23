@@ -1190,18 +1190,22 @@ proc/move_mining_shuttle()
 /**********************Input and output plates**************************/
 
 /obj/machinery/mineral/input
-	icon = 'craft.dmi'
-	icon_state = "core"
+	icon = 'screen1.dmi'
+	icon_state = "x2"
 	name = "Input area"
 	density = 0
 	anchored = 1.0
+	New()
+		icon_state = "blank"
 
 /obj/machinery/mineral/output
-	icon = 'craft.dmi'
-	icon_state = "core"
+	icon = 'screen1.dmi'
+	icon_state = "x"
 	name = "Output area"
 	density = 0
 	anchored = 1.0
+	New()
+		icon_state = "blank"
 
 
 /**********************Mineral purifier (not used, replaced with mineral processing unit)**************************/
