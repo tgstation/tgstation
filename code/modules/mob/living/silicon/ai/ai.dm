@@ -14,6 +14,8 @@
 		src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 		src.verbs += /mob/living/silicon/ai/proc/ai_camera_track
 		src.verbs += /mob/living/silicon/ai/proc/ai_camera_list
+		//Added ai_network_change by Mord_Sith
+		src.verbs += /mob/living/silicon/ai/proc/ai_network_change
 		src.verbs += /mob/living/silicon/ai/proc/lockdown
 		src.verbs += /mob/living/silicon/ai/proc/disablelockdown
 		src.verbs += /mob/living/silicon/ai/proc/ai_statuschange
@@ -353,38 +355,35 @@
 	src.machine = null
 	src:cameraFollow = null
 
-/mob/living/silicon/ai/verb/change_network()
+//Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
+//Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
+//Addition by Mord_Sith to define AI's network change ability
+/mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
 	set name = "Change Camera Network"
 	src.reset_view(null)
 	src.machine = null
 	src:cameraFollow = null
-	if(src.network == "AI Satellite")
-		src.network = "SS13"
-	else if (src.network == "Prison")
-		if (ticker.mode.name == "AI malfunction")
-//			world << "It's malf, checking if this dude is malfunctioning"
-			var/datum/game_mode/malfunction/malf = ticker.mode
-			for (var/datum/mind/M in malf.malf_ai)
-//				world << "There's a malf ai, he belongs to [M.key], while the AI tryign to poke around is [src.mind.key]"
-				if (src.mind == M)
-//					world <<"They match"
-					src.network = "AI Satellite"
-					src << "\blue Switched to [src.network] camera network."
-					return
-				else
-//					world <<"They don't match"
-					src.network = "SS13"
-					src << "\blue Switched to [src.network] camera network."
-					return
-//			world <<"Oh shit there isn't a malf AI"
-			src.network = "SS13"
+	var/cameralist[0]
+
+	if(usr.stat == 2)
+		usr << "You can't change your camera network because you are dead!"
+		return
+
+	for (var/obj/machinery/camera/C in world)
+		if(C.network == "AI Satellite")
+			if (ticker.mode.name == "AI malfunction")
+				var/datum/game_mode/malfunction/malf = ticker.mode
+				for (var/datum/mind/M in malf.malf_ai)
+					if (src.mind == M)
+						cameralist[C.network] = C.network
 		else
-			src.network = "SS13"
-	else //(src.network == "SS13")
-		src.network = "Prison"
-//		src.network = "AI Satellite"
+			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "toxins" && C.network != "Prison")
+				cameralist[C.network] = C.network
+
+	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist
 	src << "\blue Switched to [src.network] camera network."
+//End of code by Mord_Sith
 
 
 /mob/living/silicon/ai/proc/choose_modules()

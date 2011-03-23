@@ -307,6 +307,20 @@
 				if (S.current == src)
 					O << "[user] holds a paper up to one of the cameras ..."
 					O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+	else if (istype(W, /obj/item/weapon/wrench)) //Adding dismantlable cameras to go with the constructable ones. --NEO
+		if(src.status)
+			user << "\red You can't dismantle a camera while it is active."
+		else
+			user << "\blue Dismantling camera..."
+			if(do_after(user, 20))
+				var/obj/item/weapon/chem_grenade/case = new /obj/item/weapon/chem_grenade(src.loc)
+				case.path = 2
+				case.state = 5
+				case.anchored = 1
+				case.circuit = new /obj/item/device/multitool
+				if (istype(src, /obj/machinery/camera/motion))
+					case.motion = 1
+			del(src)
 	else if (istype(W, /obj/item/weapon/camera_bug))
 		if (!src.status)
 			user << "\blue Camera non-functional"
