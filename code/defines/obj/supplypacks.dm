@@ -58,11 +58,11 @@
 	contains = list("/obj/item/weapon/reagent_containers/food/snacks/flour",
 					"/obj/item/weapon/reagent_containers/food/snacks/flour",
 					"/obj/item/weapon/reagent_containers/food/snacks/flour",
-					"/obj/item/weapon/reagent_containers/food/snacks/faggot",
-					"/obj/item/weapon/reagent_containers/food/snacks/faggot",
-					"/obj/item/weapon/reagent_containers/food/snacks/faggot",
+					"/obj/item/weapon/reagent_containers/food/snacks/flour",
+					"/obj/item/weapon/reagent_containers/food/drinks/milk",
+					"/obj/item/weapon/reagent_containers/food/drinks/milk",
 					"/obj/item/kitchen/egg_box",
-					"/obj/item/weapon/storage/condimentbottles",
+					"/obj/item/weapon/reagent_containers/food/condiment/enzyme",
 					"/obj/item/weapon/reagent_containers/food/snacks/banana",
 					"/obj/item/weapon/reagent_containers/food/snacks/banana",
 					"/obj/item/weapon/reagent_containers/food/snacks/banana")
@@ -85,17 +85,7 @@
 	containertype = "/obj/crate/freezer"
 	containername = "Meat crate"
 
-/* DO NOT UNCOMMENT THIS, ORDERING THEM WILL BREAK THE SHUTTLE
-/datum/supply_packs/monkey
-	name = "Monkey crate"
-	contains = list("/mob/living/carbon/monkey",
-					"/mob/living/carbon/monkey",
-					"/mob/living/carbon/monkey",
-					"/mob/living/carbon/monkey",
-					"/mob/living/carbon/monkey")
-	cost = 20
-	containertype = "/obj/crate/freezer"
-	containername = "Monkey crate" */
+// Don't add living things to crates, that's bad, it will break the shuttle.
 
 /datum/supply_packs/engineering
 	name = "Engineering crate"
@@ -212,7 +202,7 @@
 					"/obj/item/weapon/storage/lightbox",
 					"/obj/item/weapon/storage/lightbox",
 					"/obj/item/weapon/storage/lightbox")
-	cost = 10
+	cost = 5
 	containertype = "/obj/crate"
 	containername = "Replacement lights"
 
@@ -275,17 +265,30 @@
 					"/obj/item/weapon/storage/flashbang_kit",
 					"/obj/item/weapon/handcuffs",
 					"/obj/item/weapon/handcuffs")
-	cost = 30
+	cost = 20
 	containertype = "/obj/crate/secure/gear"
 	containername = "Riot crate"
+	access = access_security
+
+/datum/supply_packs/armor
+	name = "Armor crate"
+	contains = list("/obj/item/clothing/head/helmet",
+					"/obj/item/clothing/head/helmet",
+					"/obj/item/weapon/shield/riot",
+					"/obj/item/weapon/shield/riot",
+					"/obj/item/clothing/suit/armor/vest",
+					"/obj/item/clothing/suit/armor/vest",)
+	cost = 20
+	containertype = "/obj/crate/secure/gear"
+	containername = "Armor crate"
 	access = access_security
 
 /datum/supply_packs/evacuation
 	name = "Emergency equipment"
 	contains = list("/obj/machinery/bot/floorbot",
 	"/obj/machinery/bot/floorbot",
-	"/obj/machinery/bot/floorbot",
-	"/obj/machinery/bot/floorbot",
+	"/obj/machinery/bot/medbot",
+	"/obj/machinery/bot/medbot",
 	"/obj/item/weapon/tank/air",
 	"/obj/item/weapon/tank/air",
 	"/obj/item/weapon/tank/air",
@@ -367,14 +370,10 @@
 	"/obj/item/weapon/plantbgone",
 	"/obj/item/weapon/plantbgone",
 	"/obj/item/weapon/plantbgone",
-//	"/obj/item/weapon/weedspray",
-//	"/obj/item/weapon/weedspray",
-//	"/obj/item/weapon/pestspray",
-//	"/obj/item/weapon/pestspray",
 	"/obj/item/weapon/minihoe",
 	"/obj/item/device/analyzer/plant_analyzer",
-	"/obj/item/clothing/gloves/latex",
-	"/obj/item/clothing/gloves/latex") // For handling nettles etc
+	"/obj/item/clothing/gloves/botanic_leather",
+	"/obj/item/clothing/suit/apron") // Updated with new things
 	cost = 10
 	containertype = /obj/crate/hydroponics
 	containername = "Hydroponics crate"
@@ -384,6 +383,7 @@
 	name = "Seeds Crate"
 	contains = list("/obj/item/seeds/chiliseed",
 	"/obj/item/seeds/berryseed",
+	"/obj/item/seeds/corn",
 	"/obj/item/seeds/eggplantseed",
 	"/obj/item/seeds/tomatoseed",
 	"/obj/item/seeds/soyaseed",
