@@ -1807,7 +1807,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 10
 	var/toxicity = 4
 	var/WeedKillStr = 2
-
+*/
 /obj/item/weapon/pestspray // -- Skie
 	desc = "Pest eliminator spray! Do not inhale!"
 	icon = 'hydroponics.dmi'
@@ -1821,7 +1821,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 10
 	var/toxicity = 4
 	var/PestKillStr = 2
-*/
 
 /obj/item/weapon/minihoe // -- Numbers
 	name = "Mini hoe"
