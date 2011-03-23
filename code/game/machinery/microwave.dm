@@ -98,6 +98,13 @@
 	cheese_amount = 3
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/xenomeatbread"
 
+/datum/recipe/bananabread
+	flour_amount = 3
+	egg_amount = 3
+	milk_amount = 1
+	extra_item = /obj/item/weapon/reagent_containers/food/snacks/banana
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/bananabread"
+
 /datum/recipe/omelette
 	egg_amount = 2
 	cheese_amount = 2

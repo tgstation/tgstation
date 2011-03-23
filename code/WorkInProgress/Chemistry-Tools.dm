@@ -763,7 +763,7 @@
 	icon = 'syringe.dmi'
 	item_state = "hypo"
 	icon_state = "hypo"
-	amount_per_transfer_from_this = 10
+	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = null
 	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
@@ -1278,6 +1278,26 @@
 		..()
 		reagents.add_reagent("anti_toxin", 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/ammonia
+	name = "ammonia bottle"
+	desc = "A small bottle."
+	icon = 'chemical.dmi'
+	icon_state = "bottle20"
+
+	New()
+		..()
+		reagents.add_reagent("ammonia", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/diethylamine
+	name = "diethylamine bottle"
+	desc = "A small bottle."
+	icon = 'chemical.dmi'
+	icon_state = "bottle17"
+
+	New()
+		..()
+		reagents.add_reagent("diethylamine", 30)
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"
@@ -1742,11 +1762,12 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotcake
 	name = "Carrot Cake"
-	desc = "A favorite desert of a certain wascally wabbit. Also not a lie."
+	desc = "A favorite desert of a certain wascally wabbit. Not a lie."
 	icon_state = "carrotcake"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 30)
+		reagents.add_reagent("imidazoline", 10)
 		bitesize = 2
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -1759,11 +1780,12 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotcakeslice
 	name = "Carrot Cake slice"
-	desc = "Carrotty slice of Carrot Cake"
+	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
 	icon_state = "carrotcake_slice"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("imidazoline", 2)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesecake
@@ -1824,7 +1846,7 @@
 	desc = "A delicious meatpie."
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("nutriment", 10)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/momeatpie
@@ -1833,7 +1855,7 @@
 	desc = "A delicious meatpie."
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("nutriment", 10)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/xemeatpie
@@ -2074,6 +2096,40 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("xenomicrobes", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/bananabread
+	name = "banana-nut bread"
+	desc = "A heavenly and filling treat."
+	icon_state = "tofubread" //filler sprite till there is a banana bread sprite
+	New()
+		..()
+		reagents.add_reagent("banana", 20)
+		reagents.add_reagent("nutriment", 20)
+		bitesize = 2
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+			W.visible_message(" \red <B>You slice the banana bread! </B>", 1)
+			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice (src.loc)
+			del(src)
+			return
+		if(istype(W, /obj/item/weapon/circular_saw))
+			W.visible_message(" \red <B>You inaccurately slice the banana bread with your [W]! </B>", 1)
+			for(var/i=0,i<3,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/bananabreadslice
+	name = "meatbread slice"
+	desc = "A slice of delicious Banana bread."
+	icon_state = "tofubreadslice" //Filler sprite
+	New()
+		..()
+		reagents.add_reagent("banana", 4)
+		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofubread
@@ -2357,11 +2413,31 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
 	name = "Duke Purple Tea"
-	desc = "For excellent taste, you can always bet on Duke Purple."
+	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	icon_state = "tea"
 	New()
 		..()
 		reagents.add_reagent("tea", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/ice
+	name = "Ice Cup"
+	desc = "Careful, cold ice, do not chew."
+	icon_state = "coffee"
+	New()
+		..()
+		reagents.add_reagent("ice", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/h_chocolate
+	name = "Dutch Hot Coco"
+	desc = "Made in Space South America."
+	icon_state = "tea"
+	New()
+		..()
+		reagents.add_reagent("h_chocolate", 30)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
@@ -2427,7 +2503,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/starkist
 	name = "Star-kist"
-	desc = "The taste of a star in liquid form."
+	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
 	New()
 		..()

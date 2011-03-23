@@ -469,6 +469,13 @@ datum
 			required_reagents = list("hydrogen" = 3, "nitrogen" = 1)
 			result_amount = 3
 
+		diethylamine
+			name = "Diethylamine"
+			id = "diethylamine"
+			result = "diethylamine"
+			required_reagents = list ("ammonia" = 1, "ethanol" = 1)
+			result_amount = 2
+
 		space_cleaner
 			name = "Space cleaner"
 			id = "cleaner"
@@ -515,6 +522,35 @@ datum
 				var/location = get_turf(holder.my_atom)
 				new /obj/item/weapon/reagent_containers/food/snacks/cheesewheel(location)
 				return
+
+		icetea
+			name = "Iced Tea"
+			id = "icetea"
+			result = "icetea"
+			required_reagents = list("ice" = 1, "tea" = 3)
+			result_amount = 4
+
+		icecoffee
+			name = "Iced Coffee"
+			id = "icecoffee"
+			result = "icecoffee"
+			required_reagents = list("ice" = 1, "coffee" = 3)
+			result_amount = 4
+
+		hot_ramen
+			name = "Hot Ramen"
+			id = "hot_ramen"
+			result = "hot_ramen"
+			required_reagents = list("water" = 1, "dry_ramen" = 3)
+			result_amount = 3
+
+		hell_ramen
+			name = "Hell Ramen"
+			id = "hell_ramen"
+			result = "hell_ramen"
+			required_reagents = list("capsaicin" = 1, "hot_ramen" = 6)
+			result_amount = 6
+
 
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////
 

@@ -979,7 +979,7 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(M:bruteloss && prob(40)) M:heal_organ_damage(1,0)
+				M:heal_organ_damage(2,0)
 				..()
 				return
 
@@ -1391,6 +1391,39 @@ datum
 			description = "The raw essence of a banana. HONK"
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 
+		dry_ramen
+			name = "Dry Ramen"
+			id = "dry_ramen"
+			description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
+			reagent_state = SOLID
+			on_mob_life(var/mob/M)
+				..()
+				M:nutrition += 1
+				return
+
+		hot_ramen
+			name = "Hot Ramen"
+			id = "hot_ramen"
+			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				..()
+				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature+10)
+				M:nutrition += 5
+				return
+
+		hell_ramen
+			name = "Hell Ramen"
+			id = "hell_ramen"
+			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				..()
+				M:bodytemperature += 10
+				M:nutrition += 5
+				return
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
@@ -1450,6 +1483,49 @@ datum
 				if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+5)
 				..()
+				return
+
+		icecoffee
+			name = "Iced Coffee"
+			id = "icecoffee"
+			description = "Coffee and ice, refreshing and cool."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				..()
+				M.dizziness = max(0,M.dizziness-5)
+				M:drowsyness = max(0,M:drowsyness-3)
+				M:sleeping = 0
+				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature-5)
+				M.make_jittery(5)
+				..()
+				return
+
+		icetea
+			name = "Iced Tea"
+			id = "icetea"
+			description = "No relation to a certain rap artist/ actor."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				..()
+				M.dizziness = max(0,M.dizziness-2)
+				M:drowsyness = max(0,M:drowsyness-1)
+				M:sleeping = 0
+				if(M:toxloss && prob(50)) M:toxloss--
+				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature-5)
+				return
+
+		h_chocolate
+			name = "Hot Chocolate"
+			id = "h_chocolate"
+			description = "Made with love! And coco beans."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				..()
+				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature+5)
+				M:nutrition += 5
 				return
 
 		space_cola
@@ -1827,6 +1903,17 @@ datum
 				M:sleeping = 0
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5)
+				..()
+				return
+
+		ice
+			name = "Ice"
+			id = "ice"
+			description = "Frozen water, your dentist wouldn't like you chewing this."
+			reagent_state = SOLID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:bodytemperature -= 5
 				..()
 				return
 
