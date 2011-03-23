@@ -1218,6 +1218,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	flags = FPRINT | TABLEPASS | NOSHIELD
 
 /obj/item/weapon/sword
+	var/color
 	name = "energy sword"
 	icon_state = "sword0"
 	var/active = 0.0
