@@ -314,6 +314,7 @@
 	name = "red space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
+	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 
@@ -324,12 +325,16 @@
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = -1
+	radiation_protection = 0.75
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
+	w_class = 3
+	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	slowdown = 0
 
 /obj/item/clothing/suit/suspenders
 	name = "suspenders"
