@@ -314,6 +314,7 @@
 			user << "\blue Dismantling camera..."
 			if(do_after(user, 20))
 				var/obj/item/weapon/chem_grenade/case = new /obj/item/weapon/chem_grenade(src.loc)
+				case.name = "Camera Assembly"
 				case.path = 2
 				case.state = 5
 				case.anchored = 1

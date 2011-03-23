@@ -16,7 +16,7 @@ STUN BATON
 	..()
 
 /obj/item/weapon/sword/New()
-	color = pick("red","blue")
+	color = pick("red","blue","green","purple")
 
 /obj/item/weapon/sword/attack_self(mob/user as mob)
 	if ((user.mutations & 16) && prob(50))
@@ -45,6 +45,13 @@ STUN BATON
 	src.add_fingerprint(user)
 	return
 
+/obj/item/weapon/sword/green
+	New()
+		color = "green"
+
+/obj/item/weapon/sword/red
+	New()
+		color = "red"
 
 // AXE
 
