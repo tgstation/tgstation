@@ -174,12 +174,14 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
+	icon_state = "portgen1"
 	coin_path = "/obj/item/weapon/coin/uranium"
 	power_gen = 10000
 	board_path = "/obj/item/weapon/circuitboard/pacman/super"
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
+	icon_state = "portgen2"
 	coin_path = "/obj/item/weapon/coin/diamond"
 	power_gen = 20000
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
