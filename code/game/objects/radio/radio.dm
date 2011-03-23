@@ -187,9 +187,7 @@ Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[li
 	//for (var/obj/item/device/radio/R in radio_connection.devices)
 	for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"]) // Modified for security headset code -- TLE
 		//if(R.accept_rad(src, message))
-		for (var/i in R.send_hear(display_freq))
-			if (!(i in receive))
-				receive += i
+		receive |= R.send_hear(display_freq)
 
 	//world << "DEBUG: receive.len=[receive.len]"
 	var/list/heard_masked = list() // masked name or no real name
@@ -294,13 +292,20 @@ Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[li
 					break
 		if (!accept)
 			return
-	var/list/hear = hearers(1, src.loc)
 
-	// modified so that a mob holding the radio is always a hearer of it
-	// this fixes radio problems when inside something (e.g. mulebot)
-	if(ismob(loc))
-		if(! (loc in hear) )
-			hear += loc
+	var/turf/T = get_turf(src)
+	var/list/hear = hearers(1, T)
+	var/list/V
+	//find mobs in lockers, cryo and intellycards
+	for (var/mob/M in world)
+		if (isturf(M.loc))
+			continue //if M can hear us it is already was found by hearers()
+		if (!M.client)
+			continue //skip monkeys and leavers
+		if (!V) //lasy initialisation
+			V = view(1, T)
+		if (get_turf(M) in V) //this slow, but I don't think we'd have a lot of wardrobewhores every round --rastaf0
+			hear+=M
 	return hear
 
 /obj/item/device/radio/examine()

@@ -141,11 +141,12 @@
 				for(var/i=0,i<bzz,i++)
 					message += "Z"
 */
-
+	var/list/obj/item/used_radios = new
 	switch (message_mode)
 		if ("headset")
 			if (src:ears)
 				src:ears.talk_into(src, message)
+				used_radios += src:ears
 
 			message_range = 1
 			italics = 1
@@ -153,6 +154,7 @@
 		if ("secure headset")
 			if (src:ears)
 				src:ears.talk_into(src, message, 1)
+				used_radios += src:ears
 
 			message_range = 1
 			italics = 1
@@ -160,6 +162,7 @@
 		if ("right hand")
 			if (src.r_hand)
 				src.r_hand.talk_into(src, message)
+				used_radios += src:r_hand
 
 			message_range = 1
 			italics = 1
@@ -167,6 +170,7 @@
 		if ("left hand")
 			if (src.l_hand)
 				src.l_hand.talk_into(src, message)
+				used_radios += src:l_hand
 
 			message_range = 1
 			italics = 1
@@ -174,6 +178,7 @@
 		if ("intercom")
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
 				I.talk_into(src, message)
+				used_radios += I
 
 			message_range = 1
 			italics = 1
@@ -198,6 +203,7 @@
 		if ("department")
 			if (src:ears)
 				src:ears.talk_into(src, message, message_mode)
+				used_radios += src:ears
 			message_range = 1
 			italics = 1
 /////SPECIAL HEADSETS START
@@ -206,6 +212,7 @@
 			if (message_mode in radiochannels)
 				if (src:ears)
 					src:ears.talk_into(src, message, message_mode)
+					used_radios += src:ears
 				message_range = 1
 				italics = 1
 /////SPECIAL HEADSETS END
@@ -245,7 +252,7 @@
 		if (get_turf(M) in V) //this slow, but I don't think we'd have a lot of wardrobewhores every round --rastaf0
 			listening+=M
 
-	for (var/obj/O in V)
+	for (var/obj/O in (V-used_radios))
 		spawn (0)
 			if (O)
 				O.hear_talk(src, message)
