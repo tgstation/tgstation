@@ -625,6 +625,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("imidazoline", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/amanita
 	seed = "/obj/item/seeds/amanitamycelium"
