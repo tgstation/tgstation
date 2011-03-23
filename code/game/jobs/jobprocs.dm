@@ -439,7 +439,7 @@
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/clothing/mask/gas/emergency(src), slot_wear_mask)
-			src.equip_if_possible(new /obj/item/weapon/gun/taser_gun(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/gun/energy/taser_gun(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_in_backpack)
 //			src.equip_if_possible(new /obj/item/weapon/storage/flashbang_kit(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/device/flash(src), slot_l_store)

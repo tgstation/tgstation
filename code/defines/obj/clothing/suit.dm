@@ -116,6 +116,13 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list (/obj/item/weapon/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
 
+/obj/item/clothing/suit/apron
+	name = "Chef's apron"
+	icon_state = "chef"
+	item_state = "chef"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	allowed = list (/obj/item/weapon/kitchenknife)
+
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificant, gem-lined robe that seems to radiate power."
