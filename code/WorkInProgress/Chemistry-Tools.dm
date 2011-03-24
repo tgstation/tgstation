@@ -2155,8 +2155,8 @@
 	icon_state = "popcorn"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
-		bitesize = 1
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
 	name = "Carpburger"

@@ -246,13 +246,13 @@
 	//find mobs in lockers, cryo and intellycards
 	for (var/mob/M in world)
 		if (isturf(M.loc))
-			continue //if M can hear us it is already was found by hearers()
+			continue //if M can hear us it was already found by hearers()
 		if (!M.client)
 			continue //skip monkeys and leavers
 		if (get_turf(M) in V) //this slow, but I don't think we'd have a lot of wardrobewhores every round --rastaf0
 			listening+=M
 
-	for (var/obj/O in (V-used_radios))
+	for (var/obj/O in ((V | src.contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 		spawn (0)
 			if (O)
 				O.hear_talk(src, message)

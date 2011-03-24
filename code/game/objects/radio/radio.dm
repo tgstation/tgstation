@@ -149,7 +149,6 @@ Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[li
 	src.add_fingerprint(usr)
 
 /obj/item/device/radio/talk_into(mob/M as mob, message, channel)
-
 	var/datum/radio_frequency/connection = null // Code shared by Mport2004 for Security Headsets -- TLE
 	if(channel && src.channels && src.channels.len > 0)
 		if (channel == "department")
