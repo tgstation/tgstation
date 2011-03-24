@@ -2027,7 +2027,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 /obj/machinery/mineral/mint
 	name = "Coin press"
 	icon = 'stationobjs.dmi'
-	icon_state = "controller"
+	icon_state = "coinpress0"
 	density = 1
 	anchored = 1.0
 	var/obj/machinery/mineral/input = null
@@ -2098,38 +2098,38 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		dat += text("<br>output connection status: ")
 		dat += text("<b><font color='red'>NOT CONNECTED</font></b><br>")
 
-	dat += text("<br><font color='#ffcc00'><b>Gold inserterd: </b>[amt_gold]</font> ")
+	dat += text("<br><font color='#ffcc00'><b>Gold inserted: </b>[amt_gold]</font> ")
 	if (chosen == "gold")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=gold'>Choose</A>")
-	dat += text("<br><font color='#888888'><b>Silver inserterd: </b>[amt_silver]</font> ")
+	dat += text("<br><font color='#888888'><b>Silver inserted: </b>[amt_silver]</font> ")
 	if (chosen == "silver")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=silver'>Choose</A>")
-	dat += text("<br><font color='#555555'><b>Iron inserterd: </b>[amt_iron]</font> ")
+	dat += text("<br><font color='#555555'><b>Iron inserted: </b>[amt_iron]</font> ")
 	if (chosen == "metal")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=metal'>Choose</A>")
-	dat += text("<br><font color='#8888FF'><b>Diamond inserterd: </b>[amt_diamond]</font> ")
+	dat += text("<br><font color='#8888FF'><b>Diamond inserted: </b>[amt_diamond]</font> ")
 	if (chosen == "diamond")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=diamond'>Choose</A>")
-	dat += text("<br><font color='#FF8800'><b>Plasma inserterd: </b>[amt_plasma]</font> ")
+	dat += text("<br><font color='#FF8800'><b>Plasma inserted: </b>[amt_plasma]</font> ")
 	if (chosen == "plasma")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=plasma'>Choose</A>")
-	dat += text("<br><font color='#008800'><b>uranium inserterd: </b>[amt_uranium]</font> ")
+	dat += text("<br><font color='#008800'><b>uranium inserted: </b>[amt_uranium]</font> ")
 	if (chosen == "uranium")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=uranium'>Choose</A>")
 	if(amt_clown > 0)
-		dat += text("<br><font color='#AAAA00'><b>Bananium inserterd: </b>[amt_clown]</font> ")
+		dat += text("<br><font color='#AAAA00'><b>Bananium inserted: </b>[amt_clown]</font> ")
 		if (chosen == "clown")
 			dat += text("chosen")
 		else
@@ -2164,6 +2164,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		var/temp_coins = coinsToProduce
 		if (src.output)
 			processing = 1;
+			icon_state = "coinpress1"
 			var/obj/item/weapon/moneybag/M
 			switch(chosen)
 				if("metal")
@@ -2250,6 +2251,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 						newCoins++
 						src.updateUsrDialog()
 						sleep(5);
+			icon_state = "coinpress0"
 			processing = 0;
 			coinsToProduce = temp_coins
 	src.updateUsrDialog()
