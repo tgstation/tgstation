@@ -312,10 +312,11 @@
 		if ("Geneticist")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
+			src.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (src), slot_back)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/geneticist(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
-			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_r_store)
+			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
 
 		if ("Chemist")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears) // -- TLE
@@ -383,6 +384,7 @@
 			src.equip_if_possible(new /obj/item/clothing/under/det(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/head/det_hat(src), slot_head)
+			src.equip_if_possible(new /obj/item/clothing/mask/cigarette/cigar(src), slot_wear_mask) // Smoked the rest coming to station lol - Micro
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/weapon/storage/fcard_kit(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/fcardholder(src), slot_in_backpack)
@@ -399,7 +401,7 @@
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_l_hand)
-			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_r_store)
+			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
 
 		if ("Captain")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/captain (src), slot_ears)
@@ -426,7 +428,7 @@
 //			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 //			src.equip_if_possible(new /obj/item/weapon/gun/taser_gun(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_in_backpack)
-			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_l_store)
+			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_s_store)
 
 		if ("Warden")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sec (src), slot_ears) // -- TLE
@@ -439,7 +441,7 @@
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/clothing/mask/gas/emergency(src), slot_wear_mask)
-			src.equip_if_possible(new /obj/item/weapon/gun/energy/taser_gun(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/gun/energy/taser_gun(src), slot_s_store)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_in_backpack)
 //			src.equip_if_possible(new /obj/item/weapon/storage/flashbang_kit(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/device/flash(src), slot_l_store)
@@ -464,7 +466,7 @@
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/security (src), slot_back)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_in_backpack)
-			src.equip_if_possible(new /obj/item/weapon/gun/energy/general(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/gun/energy/general(src), slot_s_store)
 			src.equip_if_possible(new /obj/item/device/flash(src), slot_l_store)
 
 
@@ -500,6 +502,7 @@
 
 		if ("Chef")
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chef(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/suit/chef(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/head/chefhat(src), slot_head)
 //			src.equip_if_possible(new /obj/item/weapon/kitchen/rollingpin(src), slot_in_backpack) // it's in his office
@@ -514,12 +517,12 @@
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/weapon/storage/toolbox/mechanical(src), slot_l_hand)
 
-		if ("Botanist")
+		if ("Botanist") //slot_s_store will free the hands of the working class
 			src.equip_if_possible(new /obj/item/clothing/under/rank/hydroponics(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/gloves/botanic_leather(src), slot_gloves)
-			src.equip_if_possible(new /obj/item/device/analyzer/plant_analyzer(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/clothing/suit/apron(src), slot_wear_suit)
+			src.equip_if_possible(new /obj/item/device/analyzer/plant_analyzer(src), slot_s_store)
 
 		if ("Librarian")
 
@@ -562,7 +565,8 @@
 			src.equip_if_possible(new /obj/item/device/pda/heads(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/gloves/yellow(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
-			src.equip_if_possible(new /obj/item/clothing/head/helmet/hardhat(src), slot_head)
+			src.equip_if_possible(new /obj/item/clothing/head/helmet/hardhat(src), slot_head) // It felt right. - Micro
+			src.equip_if_possible(new /obj/item/clothing/mask/cigarette/cigar(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/glasses/meson(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chief_engineer(src), slot_w_uniform)
 
@@ -574,7 +578,7 @@
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/pen(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/weapon/clipboard(src), slot_r_hand)
-			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_r_store)
+			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
 
 		if ("Chief Medical Officer")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/cmo (src), slot_ears)
@@ -584,16 +588,17 @@
 			src.equip_if_possible(new /obj/item/clothing/under/rank/medical(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat/cmo(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_l_hand)
-			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_r_store)
+			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
 
 		if ("Virologist")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (src), slot_back)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/medical(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/mask/surgical(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
-			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_r_store)
+			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
 
 		if ("Cyborg")
 //			Robotize()

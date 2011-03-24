@@ -63,7 +63,7 @@
 	icon_state = "detective"
 	item_state = "det_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	allowed = list(/obj/item/weapon/gun/detectiverevolver,/obj/item/weapon/ammo/a38,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
+	allowed = list(/obj/item/weapon/gun/detectiverevolver,/obj/item/weapon/gun/revolver,/obj/item/weapon/ammo/a38,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
@@ -116,12 +116,16 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list (/obj/item/weapon/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
 
-/obj/item/clothing/suit/apron
+/obj/item/clothing/suit/chef
 	name = "Chef's apron"
 	icon_state = "chef"
 	item_state = "chef"
+	gas_transfer_coefficient = 0.90
+	permeability_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list (/obj/item/weapon/kitchenknife)
+	protective_temperature = 1000 //If you can't stand the heat, get back to the kitchen - Micro
+	heat_transfer_coefficient = 0.75
 
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
@@ -155,7 +159,7 @@
 // ARMOR
 
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/baton,/obj/item/weapon/handcuffs)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/revolver,/obj/item/weapon/baton,/obj/item/weapon/handcuffs)
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"

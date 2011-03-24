@@ -41,6 +41,7 @@
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
 	vchange = 1
+	radiation_protection = 0.35
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"

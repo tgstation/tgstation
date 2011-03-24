@@ -140,6 +140,7 @@
 	name = "rig helmet"
 	icon_state = "rig"
 	item_state = "rig_helm"
+	radiation_protection = 0.15
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
