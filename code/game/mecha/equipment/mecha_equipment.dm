@@ -11,7 +11,7 @@
 	var/equip_ready = 1
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
-	var/ranged = 0
+	var/range = MELEE //bitflags
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown()
@@ -35,7 +35,10 @@
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span> [src.name]"
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_ranged()//add a distance restricted equipment. Why not?
-	return ranged
+	return range&RANGED
+
+/obj/item/mecha_parts/mecha_equipment/proc/is_melee()
+	return range&MELEE
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/action_checks(atom/target)

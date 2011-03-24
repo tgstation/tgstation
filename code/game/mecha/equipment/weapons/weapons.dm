@@ -1,12 +1,12 @@
 /obj/item/mecha_parts/mecha_equipment/weapon
 	name = "mecha weapon"
-	ranged = 1
+	range = RANGED
 	origin_tech = "materials=3;combat=3"
 
 
-/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(var/obj/mecha/combat/M as obj)
 	if(..())
-		if(istype(M, /obj/mecha/combat))
+		if(istype(M))
 			return 1
 	return 0
 
@@ -113,12 +113,13 @@
 	icon_state = "mecha_honker"
 	energy_drain = 200
 	equip_cooldown = 150
+	range = MELEE|RANGED
 	construction_time = 500
 	construction_cost = list("metal"=20000,"bananium"=10000)
 
-	can_attach(obj/mecha/M as obj)
+	can_attach(obj/mecha/combat/honker/M as obj)
 		if(..())
-			if(istype(M, /obj/mecha/combat/honker))
+			if(istype(M))
 				return 1
 		return 0
 
@@ -340,9 +341,9 @@
 	construction_time = 300
 	construction_cost = list("metal"=20000,"bananium"=5000)
 
-	can_attach(obj/mecha/M as obj)
+	can_attach(obj/mecha/combat/honker/M as obj)
 		if(..())
-			if(istype(M, /obj/mecha/combat/honker))
+			if(istype(M))
 				return 1
 		return 0
 
@@ -369,9 +370,9 @@
 	construction_time = 300
 	construction_cost = list("metal"=20000,"bananium"=5000)
 
-	can_attach(obj/mecha/M as obj)
+	can_attach(obj/mecha/combat/honker/M as obj)
 		if(..())
-			if(istype(M, /obj/mecha/combat/honker))
+			if(istype(M))
 				return 1
 		return 0
 

@@ -279,7 +279,36 @@
 
 	else if(istype(used_atom, /obj/item/weapon/cable_coil))
 		var/obj/item/weapon/cable_coil/C = used_atom
-		if(C.amount<3)
+		if(C.amount<4)
+			user << ("There's not enough cable to finish the task.")
+			return 0
+		else
+			C.use(4)
+	else if(istype(used_atom, /obj/item/stack))
+		var/obj/item/stack/S = used_atom
+		if(S.amount < 5)
+			user << ("There's not enough material in this stack.")
+			return 0
+		else
+			S.use(5)
+	return 1
+
+/datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user as mob)
+	if(istype(used_atom, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/W = used_atom
+		if (W:remove_fuel(2, user))
+			playsound(holder, 'Welder2.ogg', 50, 1)
+		else
+			return 0
+	else if(istype(used_atom, /obj/item/weapon/wrench))
+		playsound(holder, 'Ratchet.ogg', 50, 1)
+
+	else if(istype(used_atom, /obj/item/weapon/wirecutters))
+		playsound(holder, 'Wirecutter.ogg', 50, 1)
+
+	else if(istype(used_atom, /obj/item/weapon/cable_coil))
+		var/obj/item/weapon/cable_coil/C = used_atom
+		if(C.amount<4)
 			user << ("There's not enough cable to finish the task.")
 			return 0
 		else
@@ -313,70 +342,117 @@
 
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
-		const_holder.construct = new /datum/construction/mecha/ripley(const_holder)
+		const_holder.construct = new /datum/construction/reversible/mecha/ripley(const_holder)
 		const_holder.density = 1
 		spawn()
 			del src
 		return
 
 
-/datum/construction/mecha/ripley
+/datum/construction/reversible/mecha/ripley
 	result = "/obj/mecha/working/ripley"
-	steps = list(list("key"="/obj/item/weapon/weldingtool"),//1
-					 list("key"="/obj/item/weapon/wrench"),//2
-					 list("key"="/obj/item/stack/sheet/r_metal"),//3
-					 list("key"="/obj/item/weapon/weldingtool"),//4
-					 list("key"="/obj/item/weapon/wrench"),//5
-					 list("key"="/obj/item/stack/sheet/metal"),//6
-					 list("key"="/obj/item/weapon/screwdriver"),//7
-					 list("key"="/obj/item/mecha_parts/circuitboard/ripley/peripherals"),//8
-					 list("key"="/obj/item/weapon/screwdriver"),//9
-					 list("key"="/obj/item/mecha_parts/circuitboard/ripley/main"),//10
-					 list("key"="/obj/item/weapon/wirecutters"),//11
-					 list("key"="/obj/item/weapon/cable_coil"),//12
-					 list("key"="/obj/item/weapon/screwdriver"),//13
-					 list("key"="/obj/item/weapon/wrench")//14
+	steps = list(list("key"=/obj/item/weapon/weldingtool,"backkey"=/obj/item/weapon/wrench),//1
+					 list("key"=/obj/item/weapon/wrench,"backkey"=/obj/item/weapon/crowbar),//2
+					 list("key"=/obj/item/stack/sheet/r_metal,"backkey"=/obj/item/weapon/weldingtool),//3
+					 list("key"=/obj/item/weapon/weldingtool,"backkey"=/obj/item/weapon/wrench),//4
+					 list("key"=/obj/item/weapon/wrench,"backkey"=/obj/item/weapon/crowbar),//5
+					 list("key"=/obj/item/stack/sheet/metal,"backkey"=/obj/item/weapon/screwdriver),//6
+					 list("key"=/obj/item/weapon/screwdriver,"backkey"=/obj/item/weapon/crowbar),//7
+					 list("key"=/obj/item/mecha_parts/circuitboard/ripley/peripherals,"backkey"=/obj/item/weapon/screwdriver),//8
+					 list("key"=/obj/item/weapon/screwdriver,"backkey"=/obj/item/weapon/crowbar),//9
+					 list("key"=/obj/item/mecha_parts/circuitboard/ripley/main,"backkey"=/obj/item/weapon/screwdriver),//10
+					 list("key"=/obj/item/weapon/wirecutters,"backkey"=/obj/item/weapon/screwdriver),//11
+					 list("key"=/obj/item/weapon/cable_coil,"backkey"=/obj/item/weapon/screwdriver),//12
+					 list("key"=/obj/item/weapon/screwdriver,"backkey"=/obj/item/weapon/wrench),//13
+					 list("key"=/obj/item/weapon/wrench)//14
 					)
 
 	action(atom/used_atom,mob/user as mob)
 		return check_step(used_atom,user)
 
-	custom_action(step, atom/used_atom, mob/user)
+	custom_action(index, diff, atom/used_atom, mob/user)
 		if(!..())
 			return 0
 
 		//TODO: better messages.
-		switch(step)
+		switch(index)
 			if(14)
 				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
 			if(13)
-				user.visible_message("[user] adjusts [holder] hydraulic systems.", "You adjust [holder] hydraulic systems.")
+				if(diff==FORWARD)
+					user.visible_message("[user] activates [holder] hydraulic systems.", "You activate [holder] hydraulic systems.")
+				else
+					user.visible_message("[user] disconnects [holder] hydraulic systems", "You disconnect [holder] hydraulic systems.")
 			if(12)
-				user.visible_message("[user] adds the wiring to [holder].", "You add the wiring to [holder].")
+				if(diff==FORWARD)
+					user.visible_message("[user] adds the wiring to [holder].", "You add the wiring to [holder].")
+				else
+					user.visible_message("[user] deactivates [holder] hydraulic systems.", "You deactivate [holder] hydraulic systems.")
 			if(11)
-				user.visible_message("[user] adjusts the wiring of [holder].", "You adjust the wiring of [holder].")
+				if(diff==FORWARD)
+					user.visible_message("[user] adjusts the wiring of [holder].", "You adjust the wiring of [holder].")
+				else
+					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
+					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil(get_turf(holder))
+					coil.amount = 4
 			if(10)
-				user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
-				del used_atom
+				if(diff==FORWARD)
+					user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
+					del used_atom
+				else
+					user.visible_message("[user] disconnects the wiring of [holder].", "You disconnect the wiring of [holder].")
 			if(9)
-				user.visible_message("[user] secures the mainboard.", "You secure the mainboard.")
+				if(diff==FORWARD)
+					user.visible_message("[user] secures the mainboard.", "You secure the mainboard.")
+				else
+					user.visible_message("[user] removes the central control module from [holder].", "You remove the central computer mainboard from [holder].")
+					new /obj/item/mecha_parts/circuitboard/ripley/main(get_turf(holder))
 			if(8)
-				user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
-				del used_atom
+				if(diff==FORWARD)
+					user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
+					del used_atom
+				else
+					user.visible_message("[user] unfastens the mainboard.", "You unfasten the mainboard.")
 			if(7)
-				user.visible_message("[user] secures the peripherals control module.", "You secure the peripherals control module.")
+				if(diff==FORWARD)
+					user.visible_message("[user] secures the peripherals control module.", "You secure the peripherals control module.")
+				else
+					user.visible_message("[user] removes the peripherals control module from [holder].", "You remove the peripherals control module from [holder].")
+					new /obj/item/mecha_parts/circuitboard/ripley/peripherals(get_turf(holder))
 			if(6)
-				user.visible_message("[user] installs internal armor layer to [holder].", "You install internal armor layer to [holder].")
+				if(diff==FORWARD)
+					user.visible_message("[user] installs internal armor layer to [holder].", "You install internal armor layer to [holder].")
+				else
+					user.visible_message("[user] unfastens the peripherals control module.", "You unfasten the peripherals control module.")
 			if(5)
-				user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
+				if(diff==FORWARD)
+					user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
+				else
+					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
+					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
+					MS.amount = 5
 			if(4)
-				user.visible_message("[user] welds internal armor layer to [holder].", "You weld the internal armor layer to [holder].")
+				if(diff==FORWARD)
+					user.visible_message("[user] welds internal armor layer to [holder].", "You weld the internal armor layer to [holder].")
+				else
+					user.visible_message("[user] unfastens the internal armor layer.", "You unfasten the internal armor layer.")
 			if(3)
-				user.visible_message("[user] installs external reinforced armor layer to [holder].", "You install external reinforced armor layer to [holder].")
+				if(diff==FORWARD)
+					user.visible_message("[user] installs external reinforced armor layer to [holder].", "You install external reinforced armor layer to [holder].")
+				else
+					user.visible_message("[user] cuts internal armor layer from [holder].", "You cut the internal armor layer from [holder].")
 			if(2)
-				user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
+				if(diff==FORWARD)
+					user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
+				else
+					user.visible_message("[user] pries external armor layer from [holder].", "You prie external armor layer from [holder].")
+					var/obj/item/stack/sheet/r_metal/MS = new /obj/item/stack/sheet/r_metal(get_turf(holder))
+					MS.amount = 5
 			if(1)
-				user.visible_message("[user] welds external armor layer to [holder].", "You weld external armor layer to [holder].")
+				if(diff==FORWARD)
+					user.visible_message("[user] welds external armor layer to [holder].", "You weld external armor layer to [holder].")
+				else
+					user.visible_message("[user] unfastens the external armor layer.", "You unfasten the external armor layer.")
 		return 1
 
 
@@ -417,24 +493,20 @@
 					 list("key"="/obj/item/weapon/weldingtool"),//4
 					 list("key"="/obj/item/weapon/wrench"),//5
 					 list("key"="/obj/item/stack/sheet/metal"),//6
-					 list("key"="/obj/item/weapon/wrench"),//7
-					 list("key"="/obj/item/weapon/gun/energy/taser_gun"),//8
-					 list("key"="/obj/item/weapon/wrench"),//9
-					 list("key"="/obj/item/weapon/gun/energy/laser_gun"),//10
+					 list("key"="/obj/item/weapon/screwdriver"),//7
+					 list("key"="/obj/item/weapon/stock_parts/capacitor/adv"),//8
+					 list("key"="/obj/item/weapon/screwdriver"),//9
+					 list("key"="/obj/item/weapon/stock_parts/scanning_module/adv"),//10
 					 list("key"="/obj/item/weapon/screwdriver"),//11
-					 list("key"="/obj/item/weapon/stock_parts/capacitor/adv"),//12
+					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/targeting"),//12
 					 list("key"="/obj/item/weapon/screwdriver"),//13
-					 list("key"="/obj/item/weapon/stock_parts/scanning_module/adv"),//14
+					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/peripherals"),//14
 					 list("key"="/obj/item/weapon/screwdriver"),//15
-					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/targeting"),//16
-					 list("key"="/obj/item/weapon/screwdriver"),//17
-					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/peripherals"),//18
+					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/main"),//16
+					 list("key"="/obj/item/weapon/wirecutters"),//17
+					 list("key"="/obj/item/weapon/cable_coil"),//18
 					 list("key"="/obj/item/weapon/screwdriver"),//19
-					 list("key"="/obj/item/mecha_parts/circuitboard/gygax/main"),//20
-					 list("key"="/obj/item/weapon/wirecutters"),//21
-					 list("key"="/obj/item/weapon/cable_coil"),//22
-					 list("key"="/obj/item/weapon/screwdriver"),//23
-					 list("key"="/obj/item/weapon/wrench")//24
+					 list("key"="/obj/item/weapon/wrench")//20
 					)
 
 	action(atom/used_atom,mob/user as mob)
@@ -446,49 +518,39 @@
 
 		//TODO: better messages.
 		switch(step)
-			if(24)
-				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
-			if(23)
-				user.visible_message("[user] adjusts [holder] hydraulic systems.", "You adjust [holder] hydraulic systems.")
-			if(22)
-				user.visible_message("[user] adds the wiring to [holder].", "You add the wiring to [holder].")
-			if(21)
-				user.visible_message("[user] adjusts the wiring of [holder].", "You adjust the wiring of [holder].")
 			if(20)
+				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
+			if(19)
+				user.visible_message("[user] adjusts [holder] hydraulic systems.", "You adjust [holder] hydraulic systems.")
+			if(18)
+				user.visible_message("[user] adds the wiring to [holder].", "You add the wiring to [holder].")
+			if(17)
+				user.visible_message("[user] adjusts the wiring of [holder].", "You adjust the wiring of [holder].")
+			if(16)
 				user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
 				del used_atom
-			if(19)
+			if(15)
 				user.visible_message("[user] secures the mainboard.", "You secure the mainboard.")
-			if(18)
+			if(14)
 				user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
 				del used_atom
-			if(17)
+			if(13)
 				user.visible_message("[user] secures the peripherals control module.", "You secure the peripherals control module.")
-			if(16)
+			if(12)
 				user.visible_message("[user] installs the weapon control module into [holder].", "You install the weapon control module into [holder].")
 				del used_atom
-			if(15)
+			if(11)
 				user.visible_message("[user] secures the weapon control module.", "You secure the weapon control module.")
-			if(14)
+			if(10)
 				user.visible_message("[user] installs advanced scanner module to [holder].", "You install advanced scanner module to [holder].")
 				del used_atom
-			if(13)
+			if(9)
 				user.visible_message("[user] secures the advanced scanner module.", "You secure the advanced scanner module.")
-			if(12)
+			if(8)
 				user.visible_message("[user] installs advanced capacitor to [holder].", "You install advanced capacitor to [holder].")
 				del used_atom
-			if(11)
-				user.visible_message("[user] secures the advanced capacitor.", "You secure the advanced capacitor.")
-			if(10)
-				user.visible_message("[user] installs the laser gun into the weapon socket.", "You install the laser gun into the weapon socket.")
-				del used_atom
-			if(9)
-				user.visible_message("[user] secures the laser gun in place and connects it to [holder] powernet.", "You secure the laser gun in place and connect it to [holder] powernet.")
-			if(8)
-				user.visible_message("[user] installs the taser gun into the weapon socket.", "You install the taser gun into the weapon socket.")
-				del used_atom
 			if(7)
-				user.visible_message("[user] secures the taser gun in place and connects it to [holder] powernet.", "You secure the taser gun in place and connect it to [holder] powernet.")
+				user.visible_message("[user] secures the advanced capacitor.", "You secure the advanced capacitor.")
 			if(6)
 				user.visible_message("[user] installs internal armor layer to [holder].", "You install internal armor layer to [holder].")
 			if(5)
@@ -628,16 +690,12 @@
 					 list("key"="/obj/item/weapon/bikehorn"),//3
 					 list("key"="/obj/item/clothing/mask/gas/clown_hat"),//4
 					 list("key"="/obj/item/weapon/bikehorn"),//5
-					 list("key"="/obj/item/weapon/mousetrap"),//6
+					 list("key"="/obj/item/mecha_parts/circuitboard/honker/targeting"),//6
 					 list("key"="/obj/item/weapon/bikehorn"),//7
-					 list("key"="/obj/item/weapon/bananapeel"),//8
+					 list("key"="/obj/item/mecha_parts/circuitboard/honker/peripherals"),//8
 					 list("key"="/obj/item/weapon/bikehorn"),//9
-					 list("key"="/obj/item/mecha_parts/circuitboard/honker/targeting"),//10
+					 list("key"="/obj/item/mecha_parts/circuitboard/honker/main"),//10
 					 list("key"="/obj/item/weapon/bikehorn"),//11
-					 list("key"="/obj/item/mecha_parts/circuitboard/honker/peripherals"),//12
-					 list("key"="/obj/item/weapon/bikehorn"),//13
-					 list("key"="/obj/item/mecha_parts/circuitboard/honker/main"),//14
-					 list("key"="/obj/item/weapon/bikehorn"),//15
 					 )
 
 	action(atom/used_atom,mob/user as mob)
@@ -653,20 +711,14 @@
 
 		//TODO: better messages.
 		switch(step)
-			if(14)
+			if(10)
 				user.visible_message("[user] installs the central control module into [holder].", "You install the central control module into [holder].")
 				del used_atom
-			if(12)
+			if(8)
 				user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
 				del used_atom
-			if(10)
-				user.visible_message("[user] installs the weapon control module into [holder].", "You install the weapon control module into [holder].")
-				del used_atom
-			if(8)
-				user.visible_message("[user] installs the banana peel into hONK1 socket.", "You install the banana peel into the hONK1 socket.")
-				del used_atom
 			if(6)
-				user.visible_message("[user] installs the mousetrap into hONK2 socket.", "You install the mousetrap into hONK2 socket.")
+				user.visible_message("[user] installs the weapon control module into [holder].", "You install the weapon control module into [holder].")
 				del used_atom
 			if(4)
 				user.visible_message("[user] puts clown wig and mask on [holder].", "You put clown wig and mask on [holder].")

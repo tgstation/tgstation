@@ -131,4 +131,9 @@ Data storage vars:
 		src.check_for_null = !src.check_for_null
 		return
 
+	proc/toggle()
+		if(!src.stop())
+			src.start()
+		return
+
 

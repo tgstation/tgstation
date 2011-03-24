@@ -172,15 +172,15 @@
 	icon_state = "mecha_rcd"
 	equip_cooldown = 20
 	energy_drain = 250
-	ranged = 1
+	range = MELEE|RANGED
 	construction_time = 1200
-	construction_cost = list("metal"=50000,"plasma"=40000,"silver"=30000,"gold"=20000)
+	construction_cost = list("metal"=30000,"plasma"=25000,"silver"=20000,"gold"=20000)
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 	var/disabled = 0 //malf
 
 	action(atom/target)
 		if(!action_checks(target) || disabled || get_dist(chassis, target)>3) return
-		playsound(src.loc, 'click.ogg', 50, 1)
+		playsound(chassis, 'click.ogg', 50, 1)
 		//meh
 		switch(mode)
 			if(0)
@@ -191,7 +191,7 @@
 						if(disabled) return
 						chassis.spark_system.start()
 						target:ReplaceWithFloor()
-						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+						playsound(target, 'Deconstruct.ogg', 50, 1)
 						equip_ready = 1
 						chassis.cell.give(energy_drain)
 				else if (istype(target, /turf/simulated/floor))
@@ -201,7 +201,7 @@
 						if(disabled) return
 						chassis.spark_system.start()
 						target:ReplaceWithSpace()
-						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+						playsound(target, 'Deconstruct.ogg', 50, 1)
 						equip_ready = 1
 						chassis.cell.give(energy_drain)
 				else if (istype(target, /obj/machinery/door/airlock))
@@ -211,7 +211,7 @@
 						if(disabled) return
 						chassis.spark_system.start()
 						del(target)
-						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+						playsound(target, 'Deconstruct.ogg', 50, 1)
 						equip_ready = 1
 						chassis.cell.give(energy_drain)
 			if(1)
@@ -221,7 +221,7 @@
 					if(do_after_cooldown())
 						if(disabled) return
 						target:ReplaceWithFloor()
-						playsound(chassis.loc, 'Deconstruct.ogg', 50, 1)
+						playsound(target, 'Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
 						equip_ready = 1
 						chassis.cell.use(energy_drain*3)
@@ -231,7 +231,7 @@
 					if(do_after_cooldown())
 						if(disabled) return
 						target:ReplaceWithWall()
-						playsound(chassis.loc, 'Deconstruct.ogg', 50, 1)
+						playsound(target, 'Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
 						equip_ready = 1
 						chassis.cell.use(energy_drain*3)
@@ -244,8 +244,8 @@
 						chassis.spark_system.start()
 						var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock(target)
 						T.autoclose = 1
-						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-						playsound(src.loc, 'sparks2.ogg', 50, 1)
+						playsound(target, 'Deconstruct.ogg', 50, 1)
+						playsound(target, 'sparks2.ogg', 50, 1)
 						equip_ready = 1
 						chassis.cell.use(energy_drain*3)
 		return
@@ -275,13 +275,14 @@
 	icon_state = "mecha_teleport"
 	equip_cooldown = 300
 	energy_drain = 1000
-	ranged = 1
+	range = RANGED
 
 	action(atom/target)
 		if(!action_checks(target)) return
 		var/turf/T = get_turf(target)
 		if(T)
 			equip_ready = 0
+			chassis.cell.use(energy_drain)
 			do_teleport(chassis, T, 4)
 			if(do_after_cooldown())
 				equip_ready = 1
@@ -293,7 +294,7 @@
 	icon_state = "mecha_wholegen"
 	equip_cooldown = 50
 	energy_drain = 300
-	ranged = 1
+	range = RANGED
 
 
 	action(atom/target)
@@ -334,4 +335,64 @@
 		src = null
 		spawn(rand(150,300))
 			del(P)
+		return
+
+/obj/item/mecha_parts/mecha_equipment/gravcatapult
+	name = "Gravitational Catapult"
+	icon_state = "mecha_teleport"
+	equip_cooldown = 10
+	energy_drain = 200
+	range = MELEE|RANGED
+	var/atom/movable/locked
+	var/mode = 1 //1 - gravsling 2 - gravpush
+
+
+	action(atom/movable/target)
+		switch(mode)
+			if(1)
+				if(!action_checks(target) && !locked) return
+				if(!locked)
+					if(!istype(target) || target.anchored)
+						chassis.occupant_message("Unable to lock on [target]")
+						return
+					locked = target
+					chassis.occupant_message("Locked on [target]")
+					return
+				else if(target!=locked)
+					if(locked in view(chassis))
+						locked.throw_at(target, 14, 1.5)
+						locked = null
+						equip_ready = 0
+						chassis.cell.use(energy_drain)
+						if(do_after_cooldown())
+							equip_ready = 1
+					else
+						chassis.occupant_message("Lock on [locked] disengaged.")
+						locked = null
+			if(2)
+				if(!action_checks(target)) return
+				var/list/atoms = list()
+				if(isturf(target))
+					atoms = range(target,3)
+				else
+					atoms = orange(target,3)
+				for(var/atom/movable/A in atoms)
+					if(A.anchored) continue
+					spawn(0)
+						var/iter = 5-get_dist(A,target)
+						for(var/i=0 to iter)
+							step_away(A,target)
+							sleep(2)
+				equip_ready = 0
+				chassis.cell.use(energy_drain)
+				if(do_after_cooldown())
+					equip_ready = 1
+		return
+
+	get_equip_info()
+		return "[..()] [mode==1?"([locked||"Nothing"])":null] \[<a href='?src=\ref[src];mode=1'>S</a>|<a href='?src=\ref[src];mode=2'>P</a>\]"
+
+	Topic(href, href_list)
+		if(href_list["mode"])
+			mode = text2num(href_list["mode"])
 		return

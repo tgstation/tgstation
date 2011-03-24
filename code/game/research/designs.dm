@@ -34,6 +34,7 @@ other types of metals and chemistry for reagents).
 #define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals
 #define	AUTOLATHE	4	//Uses glass/metal only.
 #define CRAFTLATHE	8	//Uses fuck if I know. For use eventually.
+#define MECHFAB		16
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 datum
@@ -446,6 +447,69 @@ datum
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/honker/targeting"
+
+////////////////////////////////////////
+/////////// Mecha Equpment /////////////
+////////////////////////////////////////
+
+		mech_scattershot
+			name = "Exosuit Weapon Design (LBX AC 10 \"Scattershot\")"
+			desc = "Allows for the construction of LBX AC 10."
+			id = "mech_scattershot"
+			build_type = MECHFAB
+			req_tech = list("combat" = 4)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot"
+
+		mech_laser
+			name = "Exosuit Weapon Design (CH-PS \"Immolator\" Laser)"
+			desc = "Allows for the construction of CH-PS Laser."
+			id = "mech_laser"
+			build_type = MECHFAB
+			req_tech = list("combat" = 2)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/laser"
+
+		mech_grenade_launcher
+			name = "Exosuit Weapon Design (SGL-6 Grenade Launcher)"
+			desc = "Allows for the construction of SGL-6 Grenade Launcher."
+			id = "mech_grenade_launcher"
+			build_type = MECHFAB
+			req_tech = list("combat" = 3)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang"
+
+		mech_wormhole_gen
+			name = "Exosuit Module Design (Localized Wormhole Generator)"
+			desc = "An exosuit module that allows generating of small quasi-stable wormholes."
+			id = "mech_wormhole_gen"
+			build_type = MECHFAB
+			req_tech = list("bluepace" = 4)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/wormhole_generator"
+
+		mech_teleporter
+			name = "Exosuit Module Design (Teleporter Module)"
+			desc = "An exosuit module that allows exosuits to teleport to any position in view."
+			id = "mech_teleporter"
+			build_type = MECHFAB
+			req_tech = list("bluespace" = 10)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/teleporter"
+
+		mech_rcd
+			name = "Exosuit Module Design (RCD Module)"
+			desc = "An exosuit-mounted Rapid Construction Device."
+			id = "mech_rcd"
+			build_type = MECHFAB
+			req_tech = list("materials" = 4, "bluespace" = 4, "magnets" = 4, "powerstorage"=4)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/tool/rcd"
+
+		mech_gravcatapult
+			name = "Exosuit Module Design (Gravitational Catapult Module)"
+			desc = "An exosuit mounted Gravitational Catapult."
+			id = "mech_gravcatapult"
+			build_type = MECHFAB
+			req_tech = list("bluespace" = 1, "magnets" = 3)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/gravcatapult"
+
+
+
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
@@ -863,3 +927,5 @@ datum
 	New()
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
+
+

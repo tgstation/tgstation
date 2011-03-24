@@ -22,10 +22,8 @@
 
 
 /obj/mecha/combat/honker/melee_action(target)
-	if(!melee_can_hit || !istype(target, /atom))
+	if(!melee_can_hit)
 		return
-	if(istype(selected, /obj/item/mecha_parts/mecha_equipment/weapon/honker))
-		selected.action(target)
 	else if(istype(target, /mob))
 		step_away(target,src,15)
 	return

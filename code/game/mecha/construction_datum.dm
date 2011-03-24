@@ -1,3 +1,6 @@
+#define FORWARD -1
+#define BACKWARD 1
+
 /datum/construction
 	var/list/steps
 	var/atom/holder
@@ -61,3 +64,36 @@
 		while(null in L)
 			L -= null
 		return
+
+/datum/construction/reversible
+	var/index
+
+	New(atom)
+		..()
+		index = steps.len
+		return
+
+	proc/update_index(diff as num)
+		index+=diff
+		if(index==0)
+			spawn_result()
+		return
+
+	is_right_key(atom/used_atom) // returns index step
+		var/list/L = steps[index]
+		if(istype(used_atom, L["key"]))
+			return FORWARD //to the first step -> forward
+		else if(L["backkey"] && istype(used_atom, L["backkey"]))
+			return BACKWARD //to the last step -> backwards
+		return 0
+
+	check_step(atom/used_atom,mob/user as mob)
+		var/diff = is_right_key(used_atom)
+		if(diff)
+			if(custom_action(index, diff, used_atom, user))
+				update_index(diff)
+				return 1
+		return 0
+
+	custom_action(index, diff, used_atom, user)
+		return 1

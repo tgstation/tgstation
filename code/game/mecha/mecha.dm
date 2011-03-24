@@ -4,6 +4,9 @@
 #define MECHA_INT_TANK_BREACH 8
 #define MECHA_INT_CONTROL_LOST 16
 
+#define MELEE 1
+#define RANGED 2
+
 
 /obj/mecha
 	name = "Mecha"
@@ -122,7 +125,7 @@
 	if(dist>1)
 		if(selected && selected.is_ranged())
 			selected.action(target)
-	else if(selected && !selected.is_ranged())
+	else if(selected && selected.is_melee())
 		selected.action(target)
 	else
 		src.melee_action(target)
@@ -147,6 +150,12 @@
 	return
 */
 
+/obj/mecha/proc/do_after(delay as num)
+	sleep(delay)
+	if(src)
+		return 1
+	return 0
+
 //////////////////////////////////
 ////////  Movement procs  ////////
 //////////////////////////////////
@@ -155,7 +164,9 @@
 	if(!can_move || user != src.occupant)
 		return 0
 	if(connected_port)
-		src.occupant_message("Unable to move while connected to the air system port")
+		if(world.time - last_message > 20)
+			src.occupant_message("Unable to move while connected to the air system port")
+			last_message = world.time
 		return 0
 	if(src.pr_inertial_movement.active())
 		return 0
@@ -171,12 +182,13 @@
 		move_result	= step(src,direction)
 	if(move_result)
 		can_move = 0
-		spawn(step_in) can_move = 1
 		cell.use(src.step_energy_drain)
 		if(istype(src.loc, /turf/space))
 			if(!src.check_for_support())
 				src.pr_inertial_movement.start(list(src,direction))
 				src.log_message("Movement control lost. Inertial movement started.")
+		if(do_after(step_in))
+			can_move = 1
 		return 1
 	return 0
 
@@ -213,12 +225,11 @@
 		if(istype(O , /obj/machinery/door))
 			if(src.occupant)
 				O.Bumped(src.occupant)
-		/* //not working, will fix later
 		else if(istype(O, /obj/portal)) //derpfix
 			src.anchored = 0
-			O.Bumped(src)
-			src.anchored = 1
-		*/
+			O.HasEntered(src)
+			spawn(0)//countering portal teleport spawn(0), hurr
+				src.anchored = 1
 		else if(!O.anchored)
 			step(obstacle,src.dir)
 		else //I have no idea why I disabled this
@@ -604,7 +615,7 @@
 		src.log_append_to_last("Permission denied.")
 		return
 	usr << "You start climbing into [src.name]"
-	spawn(20)
+	if(do_after(20))
 		if(!src.occupant)
 			moved_inside(usr)
 		else if(src.occupant!=usr)
@@ -665,6 +676,15 @@
 		src.pr_update_stats.stop()
 		src.icon_state = initial(icon_state)+"-open"
 		src.dir = SOUTH
+	return
+
+/obj/mecha/examine()
+	set src in view()
+	..()
+	if(equipment && equipment.len)
+		usr << "It's equipped with:"
+		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
+			usr << "\icon[ME] [ME]"
 	return
 
 ////// Misc
@@ -840,8 +860,8 @@
 					V.show_message("The [W] bounces off [src.name] armor.", 1)
 */
 		else
-			src.occupant_message("[user] hits [src] with [W].")
-			user.visible_message("[user] hits [src] with [W].", "You hit [src] with [W]")
+			src.occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
+			user.visible_message("<font color='red'><b>[user] hits [src] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
 			src.take_damage(W.force,W.damtype)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 	return
@@ -914,7 +934,7 @@
 		src.occupant_message("Recalibrating coordination system.")
 		src.log_message("Recalibration of coordination system started.")
 		var/T = src.loc
-		spawn(100)
+		if(do_after(100))
 			if(T == src.loc)
 				src.internal_damage &= ~MECHA_INT_CONTROL_LOST
 				src.occupant_message("<font color='blue'>Recalibration successful.</font>")
@@ -926,6 +946,8 @@
 		var/obj/item/mecha_parts/mecha_equipment/equip = locate(href_list["select_equip"])
 		if(equip)
 			src.selected = equip
+			src.occupant_message("You switch to [equip]")
+			src.visible_message("[src] raises [equip]")
 /*
 
 	if (href_list["ai_take_control"])
