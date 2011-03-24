@@ -2247,7 +2247,7 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/bananabread
-	name = "banana-nut bread"
+	name = "Banana-nut bread"
 	desc = "A heavenly and filling treat."
 	icon_state = "tofubread" //filler sprite till there is a banana bread sprite
 	New()
@@ -2271,8 +2271,8 @@
 			return
 
 /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice
-	name = "meatbread slice"
-	desc = "A slice of delicious Banana bread."
+	name = "Banana-nut bread slice"
+	desc = "A slice of delicious banana bread."
 	icon_state = "tofubreadslice" //Filler sprite
 	New()
 		..()

@@ -862,7 +862,7 @@ proc/move_mining_shuttle()
 			return
 
 		user << "\red You start digging."
-		playsound(src.loc, 'Welder.ogg', 100, 1)
+		playsound(src.loc, 'rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(50)
 		if ((user.loc == T && user.equipped() == W))
@@ -2542,7 +2542,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		name = "Diamond Pickaxe"
 		digspeed = 10
 		origin_tech = "materials=6"
-		desc = "This makes no metallurgic sense."
+		desc = "This makes perfect sense."
 
 /*****************************Shovel********************************/
 
