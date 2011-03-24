@@ -158,6 +158,9 @@
 
 	usr.verbs -= /datum/game_mode/malfunction/proc/ai_win
 	ticker.mode:boom = 1
+	for(var/mob/M in world)
+		if(M.client)
+			M << 'Alarm.ogg'
 	world << "Self-destructing in 10"
 	sleep(10)
 	world << "9"

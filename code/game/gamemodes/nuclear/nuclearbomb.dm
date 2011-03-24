@@ -133,7 +133,8 @@
 	src.yes_code = 0
 	src.safety = 1
 	src.icon_state = "nuclearbomb3"
-	sleep(20)
+	playsound(src,'Alarm.ogg',100,0,5)
+	sleep(100)
 
 /*
 	var/turf/ground_zero = get_turf(loc)
