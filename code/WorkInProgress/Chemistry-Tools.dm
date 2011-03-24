@@ -973,8 +973,13 @@
 					reagents.reaction(M, INGEST)
 					spawn(5)
 						if(reagents.total_volume > bitesize)
+							/*
+							 * I totally cannot understand what this code supposed to do.
+							 * Right now every snack consumes in 2 bites, my popcorn does not work right, so I simplify it. -- rastaf0
 							var/temp_bitesize =  max(reagents.total_volume /2, bitesize)
 							reagents.trans_to(M, temp_bitesize)
+							*/
+							reagents.trans_to(M, bitesize)
 						else
 							reagents.trans_to(M, reagents.total_volume)
 						bitecount++
@@ -2141,6 +2146,34 @@
 		reagents.add_reagent("carpotoxin", 3)
 		reagents.add_reagent("capsaicin", 3)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/popcorn
+	name = "Popcorn"
+	desc = "Now let's find some cinema."
+	icon_state = "popcorn"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		bitesize = 0.1
+		
+/obj/item/weapon/reagent_containers/food/snacks/fishburger
+	name = "Carpburger"	
+	desc = "Nanotracen: wasting rare ingridients for fastfood since 2548"
+	icon_state = "fishburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("carpotoxin", 3)
+		bitesize = 2
+		
+/obj/item/weapon/reagent_containers/food/snacks/tofuburger
+	name = "Togu Burger"	
+	desc = "What.. is that meat?"
+	icon_state = "tofuburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		bitesize = 1
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels

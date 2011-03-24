@@ -220,7 +220,19 @@
 	carpmeat_amount = 1
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/cubancarp"
 
+/datum/recipe/popcorn
+	extra_item = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/popcorn"
 
+/datum/recipe/fishburger
+	carpmeat_amount = 1
+	flour_amount = 1
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/fishburger"
+
+/datum/recipe/tofuburger
+	tofu_amount = 1
+	flour_amount = 1
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/tofuburger"
 
 // *** After making the recipe above, add it in here! ***
 // Special Note: When adding recipes to the list, make sure to list recipes with extra_item before similar recipes without
@@ -264,6 +276,9 @@
 	src.available_recipes += new /datum/recipe/loadedbakedpotato(src)
 	src.available_recipes += new /datum/recipe/cheesyfries(src)
 	src.available_recipes += new /datum/recipe/xenomeatbread(src)
+	src.available_recipes += new /datum/recipe/popcorn(src)
+	src.available_recipes += new /datum/recipe/fishburger(src)
+	src.available_recipes += new /datum/recipe/tofuburger(src)
 
 
 

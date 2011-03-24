@@ -58,6 +58,26 @@ datum
 				return the_id
 
 			trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+				if (!target)
+					return
+				var/datum/reagents/R = target.reagents
+				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
+				var/part = amount / src.total_volume
+				var/trans_data = null
+				for (var/datum/reagent/current_reagent in src.reagent_list)
+					var/current_reagent_transfer = current_reagent.volume * part
+					if(preserve_data)
+						trans_data = current_reagent.data
+					R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+					src.remove_reagent(current_reagent.id, current_reagent_transfer)
+					
+				src.update_total()
+				R.update_total()
+				R.handle_reactions()
+				src.handle_reactions()
+				return amount
+
+/*
 				if (!target) return
 				var/total_transfered = 0
 				var/current_list_element = 1
@@ -83,11 +103,11 @@ datum
 					total_transfered++
 					src.update_total()
 					R.update_total()
-
 				R.handle_reactions()
 				handle_reactions()
 
 				return total_transfered
+*/
 
 			metabolize(var/mob/M)
 				for(var/A in reagent_list)
