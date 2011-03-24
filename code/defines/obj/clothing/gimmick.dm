@@ -1,7 +1,13 @@
 /obj/item/clothing/head/rabbitears
-	name = "rabbitears"
-	desc = "The ears from a bunny"
+	name = "Rabbit Ears"
+	desc = "Wearing thes makes you looks useless, and only good for your sex appeal."
 	icon_state = "bunny"
+	flags = FPRINT | TABLEPASS | HEADSPACE
+
+/obj/item/clothing/head/kitty
+	name = "Kitty Ears"
+	desc = "Meow?"
+	icon_state = "kitty"
 	flags = FPRINT | TABLEPASS | HEADSPACE
 
 /obj/item/clothing/under/blackskirt

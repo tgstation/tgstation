@@ -895,6 +895,42 @@ datum
 				..()
 				return
 
+		Wizordrazine //Going to use this for a spell soon, regeneration, it might seem OP, but that's the point.
+			name = "Wizordrazine"
+			id = "wizordrazine"
+			description = "I don't have to explain shit about Wizordrazine, its magic."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-3)
+				if(M:oxyloss) M:oxyloss = max(0, M:oxyloss-3)
+				M:heal_organ_damage(3,3)
+				M:drowsyness = max(M:drowsyness-2, 0)
+				if(holder.has_reagent("toxin"))
+					holder.remove_reagent("toxin", 2)
+				if(holder.has_reagent("stoxin"))
+					holder.remove_reagent("stoxin", 2)
+				if(holder.has_reagent("plasma"))
+					holder.remove_reagent("plasma", 1)
+				if(holder.has_reagent("acid"))
+					holder.remove_reagent("acid", 1)
+				if(holder.has_reagent("cyanide"))
+					holder.remove_reagent("cyanide", 1)
+				if(holder.has_reagent("amatoxin"))
+					holder.remove_reagent("amatoxin", 2)
+				if(holder.has_reagent("chloralhydrate"))
+					holder.remove_reagent("chloralhydrate", 5)
+				if(holder.has_reagent("carpotoxin"))
+					holder.remove_reagent("carpotoxin", 1)
+				if(holder.has_reagent("zombiepowder"))
+					holder.remove_reagent("zombiepowder", 0.5)
+				M:brainloss = max(M:brainloss-3 , 0)
+				M.disabilities = 0
+				M.sdisabilities = 0
+				if(M:toxloss) M:toxloss = max(0, M:toxloss-3)
+				..()
+				return
+
 		synaptizine
 			name = "Synaptizine"
 			id = "synaptizine"

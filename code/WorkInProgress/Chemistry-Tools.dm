@@ -1349,7 +1349,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"
-	desc = "A small bottle."
+	desc = "A small bottle of toxins. Do not drink, it is poisonous."
 	icon = 'chemical.dmi'
 	icon_state = "bottle12"
 
@@ -1359,7 +1359,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/cyanide
 	name = "cyanide bottle"
-	desc = "A small bottle."
+	desc = "A small bottle of cyanide. Bitter almonds?"
 	icon = 'chemical.dmi'
 	icon_state = "bottle12"
 
@@ -1369,7 +1369,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin
 	name = "sleep-toxin bottle"
-	desc = "A small bottle."
+	desc = "A small bottle of sleep toxins. Just the fumes make you sleepy."
 	icon = 'chemical.dmi'
 	icon_state = "bottle20"
 
@@ -1379,7 +1379,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate
 	name = "Chloral Hydrate Bottle"
-	desc = "A small bottle."
+	desc = "A small bottle of Choral Hydrate. Mickey's Favorite!"
 	icon = 'chemical.dmi'
 	icon_state = "bottle20"
 
@@ -1389,7 +1389,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/antitoxin
 	name = "anti-toxin bottle"
-	desc = "A small bottle."
+	desc = "A small bottle of Anti-toxins. Counters poisons, and repairs damage, a wonder drug."
 	icon = 'chemical.dmi'
 	icon_state = "bottle17"
 
@@ -1605,15 +1605,15 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
-	desc = "Man, that shit looks good. I bet it's got nougat. Fuck."
+	desc = "Nougat love it or hate it."
 	icon_state = "candy"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
-	name = "candy corn"
-	desc = "It's a handful of candy corn. Can be stored in a detective's hat."
+	name = "candy corm" //Not a typo
+	desc = "It's a handful of candy corm. Can be stored in a detective's hat."
 	icon_state = "candy_corn"
 	New()
 		..()
@@ -1693,7 +1693,7 @@
 	icon_state = "donkpocket"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("nutriment", 2)
 	var/warm = 0
 	proc/cooltime() //Not working, derp?
 		if (src.warm)
@@ -1868,7 +1868,8 @@
 	icon_state = "soylent"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
 	name = "Soylen Virdians"
@@ -1876,7 +1877,8 @@
 	icon_state = "soylent"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotcake
 	name = "Carrot Cake"
@@ -1961,7 +1963,7 @@
 	var/hname = ""
 	var/job = null
 	icon_state = "meatpie"
-	desc = "A delicious meatpie."
+	desc = "The best meatpies on station."
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -2023,7 +2025,7 @@
 	desc = "A delicious kabob"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeykabob
@@ -2032,7 +2034,7 @@
 	desc = "A delicious kabob"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky
@@ -2067,8 +2069,7 @@
 	desc = "We all love tofu."
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 3
+		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers
 	name = "Cheesie Honkers"
@@ -2096,7 +2097,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		bitesize = 3
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/fries
 	name = "Space Fries"
@@ -2105,6 +2106,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries
 	name = "Cheesy Fries"
@@ -2142,38 +2144,38 @@
 	icon_state = "cubancarp"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("carpotoxin", 3)
 		reagents.add_reagent("capsaicin", 3)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn
-	name = "Popcorn"
+	name = "Popcorm" //not a typo
 	desc = "Now let's find some cinema."
 	icon_state = "popcorn"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
-		bitesize = 0.1
-		
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 1
+
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
-	name = "Carpburger"	
+	name = "Carpburger"
 	desc = "Nanotracen: wasting rare ingridients for fastfood since 2548"
 	icon_state = "fishburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("carpotoxin", 3)
 		bitesize = 2
-		
+
 /obj/item/weapon/reagent_containers/food/snacks/tofuburger
-	name = "Togu Burger"	
+	name = "Togu Burger"
 	desc = "What.. is that meat?"
 	icon_state = "tofuburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 4)
-		bitesize = 1
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
@@ -2280,7 +2282,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/tofubread
 	name = "Tofubread"
-	icon_state = "Like meatbread but for vegans. Not guaranteed to give superpowers."
+	icon_state = "Like meatbread but for vegetarians. Not guaranteed to give superpowers."
 	icon_state = "tofubread"
 	New()
 		..()
