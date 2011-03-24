@@ -778,8 +778,7 @@ proc/move_mining_shuttle()
 		user << "\red You start picking."
 		//playsound(src.loc, 'Welder.ogg', 100, 1)
 
-		sleep(40)
-		if ((user.loc == T && user.equipped() == W))
+		if(do_after(user,W:digspeed))
 			user << "\blue You finish cutting into the rock."
 			gets_drilled()
 
@@ -2522,6 +2521,25 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	item_state = "wrench"
 	w_class = 4.0
 	m_amt = 50
+	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
+
+	silver
+		name = "Silver Pickaxe"
+		digspeed = 30
+		origin_tech = "materials=3"
+		desc = "This makes no metallurgic sense."
+
+	gold
+		name = "Golden Pickaxe"
+		digspeed = 20
+		origin_tech = "materials=4"
+		desc = "This makes no metallurgic sense."
+
+	diamond
+		name = "Diamond Pickaxe"
+		digspeed = 10
+		origin_tech = "materials=6"
+		desc = "This makes no metallurgic sense."
 
 /*****************************Shovel********************************/
 

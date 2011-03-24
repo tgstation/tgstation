@@ -786,6 +786,40 @@ datum
 			build_path = "/obj/item/weapon/chem_grenade/large"
 
 /////////////////////////////////////////
+/////////////////Mining//////////////////
+/////////////////////////////////////////
+
+		pick_silver
+			name = "Silver Pickaxe"
+			desc = "This makes no metallurgic sense."
+			id = "pick_silver"
+			req_tech = list("materials" = 3)
+			build_type = PROTOLATHE
+			materials = list("$silver" = 3000)
+			reliability_base = 79
+			build_path = "/obj/item/weapon/pickaxe/silver"
+
+		pick_gold
+			name = "Golden Pickaxe"
+			desc = "This makes no metallurgic sense."
+			id = "pick_gold"
+			req_tech = list("materials" = 4)
+			build_type = PROTOLATHE
+			materials = list("$gold" = 3000)
+			reliability_base = 79
+			build_path = "/obj/item/weapon/pickaxe/gold"
+
+		pick_diamond
+			name = "Diamond Pickaxe"
+			desc = "This makes no metallurgic sense."
+			id = "pick_diamond"
+			req_tech = list("materials" = 6)
+			build_type = PROTOLATHE
+			materials = list("$diamond" = 3000)
+			reliability_base = 79
+			build_path = "/obj/item/weapon/pickaxe/diamond"
+
+/////////////////////////////////////////
 //////////////Blue Space/////////////////
 /////////////////////////////////////////
 
@@ -795,7 +829,7 @@ datum
 			id = "bag_holding"
 			req_tech = list("bluespace" = 4)
 			build_type = PROTOLATHE
-			materials = list("$gold" = 1000, "$diamond" = 500, "$uranium" = 250)
+			materials = list("$gold" = 3000, "$diamond" = 1500, "$uranium" = 250)
 			reliability_base = 80
 			build_path = "/obj/item/weapon/storage/backpack/holding"
 
