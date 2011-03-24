@@ -139,6 +139,7 @@
 #define DEBUG
 // END_PREFERENCES
 // BEGIN_INCLUDE
+#include "code\names.dm"
 #include "code\setup.dm"
 #include "code\stylesheet.dm"
 #include "code\ATMOSPHERICS\atmospherics.dm"
