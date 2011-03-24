@@ -61,7 +61,7 @@
 		//	M.equip_if_possible(new /obj/item/weapon/storage/toolbox/mechanical(M), M.slot_l_hand)
 			M.equip_if_possible(new /obj/item/clothing/gloves/yellow(M), M.slot_gloves)
 			M.equip_if_possible(new /obj/item/device/t_scanner(M), M.slot_r_store)
-			M.equip_if_possible(new /obj/item/device/radio/headset(M), M.slot_ears)
+			//M.equip_if_possible(new /obj/item/device/radio/headset(M), M.slot_ears)
 			M.equip_if_possible(new /obj/item/weapon/storage/backpack(M), M.slot_back)
 			if (prob(50))
 				M.equip_if_possible(new /obj/item/clothing/mask/gas(M), M.slot_wear_mask)

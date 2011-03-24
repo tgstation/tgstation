@@ -175,11 +175,12 @@ THERMAL GLASSES
 		desc = null
 	..()
 
+/*
 /obj/item/clothing/suit/swat_suit/death_commando
 	name = "Death Commando Suit"
 	icon_state = "death_commando_suit"
 	item_state = "death_commando_suit"
-	flags = FPRINT | TABLEPASS | SUITSPACE
+	flags = FPRINT | TABLEPASS | SUITSPACE*/
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"

@@ -52,7 +52,7 @@
 /obj/secure_closet/CMO/New()
 	..()
 	sleep(2)
-	new /obj/item/device/radio/headset/headset_med( src )
+	new /obj/item/device/radio/headset/heads/cmo( src )
 	new /obj/item/clothing/suit/labcoat/cmo( src )
 	new /obj/item/clothing/under/rank/medical( src )
 	new /obj/item/weapon/tank/air( src )

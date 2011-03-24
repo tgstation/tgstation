@@ -53,7 +53,9 @@
 
 /obj/window/reinforced/tinted
 	name = "tinted window"
+	icon_state = "twindow"
 	opacity = 1
 
 /obj/window/reinforced/tinted/frosted
+	icon_state = "fwindow"
 	name = "frosted window"

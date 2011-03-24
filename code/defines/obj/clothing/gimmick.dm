@@ -101,11 +101,12 @@
 	icon_state = "cloud"
 	color = "cloud"
 
-/obj/item/clothing/under/yay
+/*/obj/item/clothing/under/yay
 	name = "yay"
 	desc = "Yay!"
 	icon_state = "yay"
-	color = "yay"
+	color = "yay"*/ // no sprite --errorage
+
 
 // UNUSED COLORS
 
@@ -115,11 +116,12 @@
 	icon_state = "psyche"
 	color = "psyche"
 
+/*
 /obj/item/clothing/under/maroon
 	name = "maroon"
 	desc = "maroon"
 	icon_state = "maroon"
-	color = "maroon"
+	color = "maroon"*/ // no sprite -- errorage
 
 /obj/item/clothing/under/lightblue
 	name = "lightblue"

@@ -226,6 +226,7 @@
 					if (prob(20))
 						d = d / 2
 					d = d / 4
+			/*
 		else
 			if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
 				if (prob(90))
@@ -236,7 +237,7 @@
 						show_message("\red Your armor only softens the blow!", 4)
 						if (prob(60))
 							d = d / 2
-						d = d / 5
+						d = d / 5*/
 		if (istype(src.r_hand, /obj/item/weapon/shield/riot))
 			if (prob(90))
 				show_message("\red Your shield absorbs the blow!", 4)
@@ -273,11 +274,11 @@
 			if (prob(5))
 				show_message("\red Your armor absorbs the hit!", 4)
 				return
-		else
+		/*else
 			if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
 				if (prob(70))
 					show_message("\red Your armor absorbs the hit!", 4)
-					return
+					return*/
 		if (prob(75) && src.stunned <= 10)
 			src.stunned = 10
 		else
@@ -303,7 +304,7 @@
 					if (prob(20))
 						d = d / 2
 					d = d / 2
-		else
+		/*else
 			if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
 				if (prob(70))
 					show_message("\red Your armor absorbs the blow!", 4)
@@ -313,7 +314,7 @@
 						show_message("\red Your armor only softens the blow!", 4)
 						if (prob(60))
 							d = d / 2
-						d = d / 2
+						d = d / 2*/
 
 		if (!src.eye_blurry) src.eye_blurry = 4 //This stuff makes no sense but lasers need a buff.
 		if (prob(25)) src.stunned++
@@ -339,7 +340,7 @@
 					if (prob(20))
 						d = d / 2
 					d = d / 2
-		else
+		/*else
 			if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
 				if (prob(50))
 					show_message("\red Your armor absorbs the blow!", 4)
@@ -349,7 +350,7 @@
 						show_message("\red Your armor only softens the blow!", 4)
 						if (prob(50))
 							d = d / 2
-						d = d / 2
+						d = d / 2*/
 		if (src.stat != 2)
 			var/organ = src.organs[ran_zone("chest")]
 			if (istype(organ, /datum/organ/external))
@@ -377,7 +378,7 @@
 					if (prob(20))
 						d = d / 2
 					d = d / 4
-		else
+		/*else
 			if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
 				if (prob(90))
 					show_message("\red Your armor absorbs the blow!", 4)
@@ -387,7 +388,7 @@
 						show_message("\red Your armor only softens the blow!", 4)
 						if (prob(60))
 							d = d / 2
-						d = d / 5
+						d = d / 5*/
 		if (istype(src.r_hand, /obj/item/weapon/shield/riot))
 			if (prob(90))
 				show_message("\red Your shield absorbs the blow!", 4)
@@ -1381,11 +1382,11 @@
 					for(var/mob/O in viewers(src, null))
 						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
 					return
-			else if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
+			/*else if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
 				if (prob(25))
 					for(var/mob/O in viewers(src, null))
 						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return
+					return*/
 			else
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -1437,11 +1438,11 @@
 					for(var/mob/O in viewers(src, null))
 						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
 					return
-			else if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
+			/*else if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
 				if (prob(25))
 					for(var/mob/O in viewers(src, null))
 						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return
+					return*/
 			else
 				for(var/mob/O in viewers(src, null))
 					O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)

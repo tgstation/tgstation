@@ -2,7 +2,7 @@
 	..()
 	sleep(2)
 	new /obj/item/blueprints( src )
-	new /obj/item/device/radio/headset/headset_eng( src )
+	new /obj/item/device/radio/headset/heads/ce( src )
 	new /obj/item/clothing/under/rank/chief_engineer( src )
 	new /obj/item/clothing/gloves/yellow( src )
 	new /obj/item/clothing/shoes/brown( src )

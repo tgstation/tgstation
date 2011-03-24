@@ -41,3 +41,7 @@
 	icon_state = "thermal"
 	item_state = "glasses"
 	origin_tech = "magnets=3"
+
+/obj/item/clothing/glasses/thermal/monocle
+	name = "Thermoncle"
+	icon_state = "thermoncle"

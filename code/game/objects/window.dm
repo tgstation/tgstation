@@ -241,6 +241,8 @@
 		name = "reinforced window"
 		state = 2*anchored
 		health = 40
+		if(opacity)
+			icon_state = "twindow"
 
 	update_nearby_tiles(need_rebuild=1)
 

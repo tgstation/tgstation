@@ -22,6 +22,15 @@
 	openicon = "o2crateopen"
 	closedicon = "o2crate"
 
+/obj/crate/trashcart
+	desc = "A heavy, metal trashcart with wheels."
+	name = "Trash Cart"
+	icon = 'storage.dmi'
+	icon_state = "trashcart"
+	density = 1
+	openicon = "trashcartopen"
+	closedicon = "trashcart"
+
 /obj/crate/medical
 	desc = "A medical crate."
 	name = "Medical crate"

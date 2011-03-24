@@ -110,6 +110,7 @@
 
 /obj/item/clothing/mask/cigarette/cigar
 	name = "Premium Cigar"
+	desc = "Only for the best of space travelers."
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
 	icon_off = "cigaroff"
@@ -117,6 +118,14 @@
 	throw_speed = 0.5
 	item_state = "cigaroff"
 	smoketime = 1500
+
+/obj/item/clothing/mask/cigarette/cigar/cohiba
+	name = "Cohiba Cigar"
+	desc = "There's little more you could want from a cigar."
+	icon_state = "cigaroff"
+	icon_on = "cigaron"
+	icon_off = "cigaroff"
+	icon_butt = "cigarbutt"
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
