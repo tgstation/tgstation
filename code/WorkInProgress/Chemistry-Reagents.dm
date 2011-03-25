@@ -895,7 +895,7 @@ datum
 				..()
 				return
 
-		Wizordrazine //Going to use this for a spell soon, regeneration, it might seem OP, but that's the point.
+		wizordrazine //Going to use this for a spell soon, regeneration, it might seem OP, but that's the point.
 			name = "Wizordrazine"
 			id = "wizordrazine"
 			description = "I don't have to explain shit about Wizordrazine, its magic."
@@ -927,6 +927,10 @@ datum
 				M:brainloss = max(M:brainloss-3 , 0)
 				M.disabilities = 0
 				M.sdisabilities = 0
+				M:eye_blurry = max(M:eye_blurry-5 , 0)
+				M:eye_blind = max(M:eye_blind-5 , 0)
+				M:disabilities &= ~1
+				M:sdisabilities &= ~1
 				if(M:toxloss) M:toxloss = max(0, M:toxloss-3)
 				..()
 				return
@@ -966,7 +970,7 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(M:radiation && prob(80)) M:radiation--
+				if(M:radiation) M:radiation--
 				..()
 				return
 
@@ -1003,7 +1007,7 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				M:radiation = max(M:radiation-3,0)
-				if(M:toxloss && prob(50)) M:toxloss--
+				if(M:toxloss) M:toxloss--
 				if(prob(15)) M:bruteloss++
 				..()
 				return

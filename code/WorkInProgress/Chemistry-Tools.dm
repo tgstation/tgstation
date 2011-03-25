@@ -1603,6 +1603,25 @@
 //		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
 //		bitesize = 3													//This is the amount each bite consumes.
 
+/obj/item/weapon/reagent_containers/food/snacks/banana
+	name = "Banana"
+	desc = "A banana."
+	icon = 'items.dmi'
+	icon_state = "banana"
+	item_state = "banana"
+	On_Consume()
+		var/mob/M = usr
+		var/obj/item/weapon/bananapeel/W = new /obj/item/weapon/bananapeel( M )
+		M << "\blue You peel the banana."
+		M.put_in_hand(W)
+		W.add_fingerprint(M)
+	New()
+		..()
+		reagents.add_reagent("banana", 5)
+		bitesize = 5
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
+
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Nougat love it or hate it."
@@ -1669,14 +1688,39 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 
-/obj/item/weapon/reagent_containers/food/snacks/brainburger
-	name = "brainburger"
-	desc = "A strange looking burger. It looks almost sentient."
-	icon_state = "brainburger"
+
+/obj/item/weapon/reagent_containers/food/snacks/tofu
+	name = "Tofu"
+	icon_state = "tofu"
+	desc = "We all love tofu."
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
-		bitesize = 2
+		reagents.add_reagent("nutriment", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/monkeymeat
+	name = "meat"
+	desc = "A slab of meat"
+	icon_state = "meat"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/carpmeat
+	name = "carp fillet"
+	desc = "A fillet of spess carp meat"
+	icon_state = "fishfillet"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("carpotoxin", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/xenomeat
+	name = "meat"
+	desc = "A slab of meat"
+	icon_state = "xenomeat"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/faggot
 	name = "Faggot"
@@ -1703,6 +1747,15 @@
 				src.name = "donk-pocket"
 		return
 
+/obj/item/weapon/reagent_containers/food/snacks/brainburger
+	name = "brainburger"
+	desc = "A strange looking burger. It looks almost sentient."
+	icon_state = "brainburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/humanburger
 	name = "-burger"
 	var/hname = ""
@@ -1723,46 +1776,24 @@
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/omelette
-	name = "Omelette Du Fromage"
-	desc = "That's all you can say!"
-	icon_state = "omelette"
-	var/herp = 0
+/obj/item/weapon/reagent_containers/food/snacks/fishburger
+	name = "Fillet -o- Carp Sandwich"
+	desc = "Almost like a carp is yelling some where... Give me back that fillet -o- carp, give me that carp."
+	icon_state = "fishburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
-		bitesize = 1
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
-			if (W.icon_state == "forkloaded")
-				user << "\red You already have omelette on your fork."
-				return
-			W.icon = 'kitchen.dmi'
-			W.icon_state = "forkloaded"
-			if (herp)
-				world << "[user] takes a piece of omelette with his fork!"
-			else
-				viewers(3,user) << "[user] takes a piece of omelette with his fork!"
-			reagents.remove_reagent("nutriment", 1)
-			if (reagents.total_volume <= 0)
-				del(src)
+		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("carpotoxin", 3)
+		bitesize = 2
 
-
-
-/obj/item/weapon/reagent_containers/food/snacks/omeletteforkload
-	name = "Omelette Du Fromage"
-	desc = "That's all you can say!"
+/obj/item/weapon/reagent_containers/food/snacks/tofuburger
+	name = "Togu Burger"
+	desc = "What.. is that meat?"
+	icon_state = "tofuburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/muffin
-	name = "Muffin"
-	desc = "A delicious and spongy little cake"
-	icon_state = "muffin"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/roburger
 	name = "roburger"
@@ -1795,38 +1826,83 @@
 		reagents.add_reagent("nutriment", 2)
 		bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeymeat
-	name = "meat"
-	desc = "A slab of meat"
-	icon_state = "meat"
+/obj/item/weapon/reagent_containers/food/snacks/clownburger
+	name = "Clown Burger"
+	desc = "This tastes funny..."
+	icon_state = "clownburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", 4)
+		var/datum/disease/F = new /datum/disease/pierrot_throat(0)
+		var/list/data = list("virus"= F)
+		reagents.add_reagent("blood", 4, data)
+		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/carpmeat
-	name = "carp fillet"
-	desc = "A fillet of spess carp meat"
-	icon_state = "fishfillet"
+/obj/item/weapon/reagent_containers/food/snacks/mimeburger
+	name = "Mime Burger"
+	desc = "It's taste defies language."
+	icon_state = "mimeburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
-		reagents.add_reagent("carpotoxin", 3)
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/xenomeat
-	name = "meat"
-	desc = "A slab of meat"
-	icon_state = "xenomeat"
+/obj/item/weapon/reagent_containers/food/snacks/omelette
+	name = "Omelette Du Fromage"
+	desc = "That's all you can say!"
+	icon_state = "omelette"
+	var/herp = 0
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 1
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
+			if (W.icon_state == "forkloaded")
+				user << "\red You already have omelette on your fork."
+				return
+			W.icon = 'kitchen.dmi'
+			W.icon_state = "forkloaded"
+			if (herp)
+				world << "[user] takes a piece of omelette with his fork!"
+			else
+				viewers(3,user) << "[user] takes a piece of omelette with his fork!"
+			reagents.remove_reagent("nutriment", 1)
+			if (reagents.total_volume <= 0)
+				del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/omeletteforkload
+	name = "Omelette Du Fromage"
+	desc = "That's all you can say!"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/muffin
+	name = "Muffin"
+	desc = "A delicious and spongy little cake"
+	icon_state = "muffin"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
-	name = "custard pie"
-	desc = "It smells delicious. You just want to plant your face in it."
+	name = "Banana Cream Pie"
+	desc = "Just like back home, on clown planet! HONK!"
 	icon_state = "pie"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("banana",5)
+
+/obj/item/weapon/reagent_containers/food/snacks/berrypie
+	name = "Very Berry Pie"
+	desc = "No black birds, this is a good sign."
+	icon_state = "pie"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("berryjuice", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/waffles
 	name = "waffles"
@@ -1868,7 +1944,7 @@
 	icon_state = "soylent"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("nutriment", 14)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
@@ -1878,84 +1954,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/carrotcake
-	name = "Carrot Cake"
-	desc = "A favorite desert of a certain wascally wabbit. Not a lie."
-	icon_state = "carrotcake"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 30)
-		reagents.add_reagent("imidazoline", 10)
-		bitesize = 2
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
-			W.visible_message(" \red <B>You slice the [src]! </B>", 1)
-			for(var/i=0,i<5,i++)
-				new /obj/item/weapon/reagent_containers/food/snacks/carrotcakeslice (src.loc)
-			del(src)
-			return
-
-/obj/item/weapon/reagent_containers/food/snacks/carrotcakeslice
-	name = "Carrot Cake slice"
-	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
-	icon_state = "carrotcake_slice"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("imidazoline", 2)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/cheesecake
-	name = "Cheese Cake"
-	desc = "DANGEROUSLY cheesy."
-	icon_state = "cheesecake"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 30)
-		bitesize = 2
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
-			W.visible_message(" \red <B>You slice the [src]! </B>", 1)
-			for(var/i=0,i<5,i++)
-				new /obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice (src.loc)
-			del(src)
-			return
-
-/obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice
-	name = "Cheese Cake slice"
-	desc = "Slice of pure cheestisfaction"
-	icon_state = "cheesecake_slice"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/plaincake
-	name = "Vanilla Cake"
-	desc = "A plain cake, not a lie."
-	icon_state = "plaincake"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 25)
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
-			W.visible_message(" \red <B>You slice the [src]! </B>", 1)
-			for(var/i=0,i<5,i++)
-				new /obj/item/weapon/reagent_containers/food/snacks/plaincakeslice (src.loc)
-			del(src)
-			return
-
-/obj/item/weapon/reagent_containers/food/snacks/plaincakeslice
-	name = "Vanilla Cake slice"
-	desc = "Just a slice of cake, it is enough for everyone."
-	icon_state = "plaincake_slice"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 5)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/humeatpie
@@ -1973,6 +1971,15 @@
 	name = "Meat-pie"
 	icon_state = "meatpie"
 	desc = "A delicious meatpie."
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/tofupie
+	name = "Tofu-pie"
+	icon_state = "meatpie"
+	desc = "A delicious tofu pie."
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -2037,6 +2044,35 @@
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/tofukabob
+	name = "Tofu-kabob"
+	icon_state = "kabob"
+	desc = "A delicious kabob"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/cubancarp
+	name = "Cuban Carp"
+	desc = "A grifftastic sandwich that burns your tongue and then leaves it numb!"
+	icon_state = "cubancarp"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("carpotoxin", 3)
+		reagents.add_reagent("capsaicin", 3)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/popcorn
+	name = "Popcorm" //not a typo
+	desc = "Now let's find some cinema."
+	icon_state = "popcorn"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
+
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky
 	name = "Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
@@ -2062,14 +2098,6 @@
 		..()
 		reagents.add_reagent("sugar", 4)
 		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/tofu
-	name = "Tofu"
-	icon_state = "tofu"
-	desc = "We all love tofu."
-	New()
-		..()
-		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers
 	name = "Cheesie Honkers"
@@ -2115,66 +2143,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/clownburger
-	name = "Clown Burger"
-	desc = "This tastes funny..."
-	icon_state = "clownburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 4)
-		var/datum/disease/F = new /datum/disease/pierrot_throat(0)
-		var/list/data = list("virus"= F)
-		reagents.add_reagent("blood", 4, data)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/mimeburger
-	name = "Mime Burger"
-	desc = "It's taste defies language."
-	icon_state = "mimeburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 8)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/cubancarp
-	name = "Cuban Carp"
-	desc = "A grifftastic sandwich that burns your tongue and then leaves it numb!"
-	icon_state = "cubancarp"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		reagents.add_reagent("carpotoxin", 3)
-		reagents.add_reagent("capsaicin", 3)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/popcorn
-	name = "Popcorm" //not a typo
-	desc = "Now let's find some cinema."
-	icon_state = "popcorn"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 2)
-		bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
-
-/obj/item/weapon/reagent_containers/food/snacks/fishburger
-	name = "Carpburger"
-	desc = "Nanotracen: wasting rare ingridients for fastfood since 2548"
-	icon_state = "fishburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 8)
-		reagents.add_reagent("carpotoxin", 3)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/tofuburger
-	name = "Togu Burger"
-	desc = "What.. is that meat?"
-	icon_state = "tofuburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
@@ -2313,6 +2281,84 @@
 		bitesize = 2
 
 
+/obj/item/weapon/reagent_containers/food/snacks/carrotcake
+	name = "Carrot Cake"
+	desc = "A favorite desert of a certain wascally wabbit. Not a lie."
+	icon_state = "carrotcake"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 30)
+		reagents.add_reagent("imidazoline", 10)
+		bitesize = 2
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+			W.visible_message(" \red <B>You slice the [src]! </B>", 1)
+			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/carrotcakeslice (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/carrotcakeslice
+	name = "Carrot Cake slice"
+	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
+	icon_state = "carrotcake_slice"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("imidazoline", 2)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesecake
+	name = "Cheese Cake"
+	desc = "DANGEROUSLY cheesy."
+	icon_state = "cheesecake"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 30)
+		bitesize = 2
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+			W.visible_message(" \red <B>You slice the [src]! </B>", 1)
+			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice
+	name = "Cheese Cake slice"
+	desc = "Slice of pure cheestisfaction"
+	icon_state = "cheesecake_slice"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/plaincake
+	name = "Vanilla Cake"
+	desc = "A plain cake, not a lie."
+	icon_state = "plaincake"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 25)
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/kitchenknife /*|| /obj/item/weapon/scalpel*/))
+			W.visible_message(" \red <B>You slice the [src]! </B>", 1)
+			for(var/i=0,i<5,i++)
+				new /obj/item/weapon/reagent_containers/food/snacks/plaincakeslice (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/plaincakeslice
+	name = "Vanilla Cake slice"
+	desc = "Just a slice of cake, it is enough for everyone."
+	icon_state = "plaincake_slice"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/cheesewheel
 	name = "Cheese wheel"
 	desc = "A big wheel of delcious Cheddar."
@@ -2344,25 +2390,6 @@
 		..()
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/banana
-	name = "Banana"
-	desc = "A banana."
-	icon = 'items.dmi'
-	icon_state = "banana"
-	item_state = "banana"
-	On_Consume()
-		var/mob/M = usr
-		var/obj/item/weapon/bananapeel/W = new /obj/item/weapon/bananapeel( M )
-		M << "\blue You peel the banana."
-		M.put_in_hand(W)
-		W.add_fingerprint(M)
-	New()
-		..()
-		reagents.add_reagent("banana", 5)
-		bitesize = 5
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
 
 ///////////////////////////////////////////////Condiments
 //Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all

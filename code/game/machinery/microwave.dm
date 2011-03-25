@@ -50,6 +50,32 @@
 	extra_item = /obj/item/robot_parts/head
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/roburger"
 
+/datum/recipe/xenoburger
+	egg_amount = 0
+	flour_amount = 1
+	xenomeat_amount = 1
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/xenoburger"
+
+/datum/recipe/fishburger
+	carpmeat_amount = 1
+	flour_amount = 1
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/fishburger"
+
+/datum/recipe/tofuburger
+	tofu_amount = 1
+	flour_amount = 1
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/tofuburger"
+
+/datum/recipe/clownburger
+	extra_item = /obj/item/clothing/mask/gas/clown_hat
+	flour_amount = 1
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/clownburger"
+
+/datum/recipe/mimeburger
+	extra_item = /obj/item/clothing/head/beret
+	flour_amount = 1
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/mimeburger"
+
 /datum/recipe/waffles
 	egg_amount = 2
 	flour_amount = 2
@@ -60,11 +86,6 @@
 	humanmeat_amount = 1
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/faggot"
 
-/datum/recipe/pie
-	flour_amount = 2
-	extra_item = /obj/item/weapon/reagent_containers/food/snacks/banana
-	creates = "/obj/item/weapon/reagent_containers/food/snacks/pie"
-
 /datum/recipe/donkpocket
 	flour_amount = 1
 	extra_item = /obj/item/weapon/reagent_containers/food/snacks/faggot
@@ -73,12 +94,6 @@
 /datum/recipe/donkpocket_warm
 	donkpocket_amount = 1
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/donkpocket"
-
-/datum/recipe/xenoburger
-	egg_amount = 0
-	flour_amount = 1
-	xenomeat_amount = 1
-	creates = "/obj/item/weapon/reagent_containers/food/snacks/xenoburger"
 
 /datum/recipe/meatbread
 	flour_amount = 3
@@ -161,10 +176,25 @@
 	monkeymeat_amount = 1
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/momeatpie"
 
+/datum/recipe/tofupie
+	flour_amount = 2
+	tofu_amount = 1
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/tofupie"
+
 /datum/recipe/xemeatpie
 	flour_amount = 2
 	xenomeat_amount = 1
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/xemeatpie"
+
+/datum/recipe/pie
+	flour_amount = 2
+	extra_item = /obj/item/weapon/reagent_containers/food/snacks/banana
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/pie"
+
+/datum/recipe/berrypie
+	flour_amount = 2
+	berryjuice_amount = 1
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/berrypie"
 
 /datum/recipe/wingfangchu
 	soysauce_amount = 1
@@ -188,6 +218,11 @@
 	extra_item = /obj/item/stack/rods
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/monkeykabob"
 
+/datum/recipe/tofukabob
+	tofu_amount = 2
+	extra_item = /obj/item/stack/rods
+	creates = "/obj/item/weapon/reagent_containers/food/snacks/tofukabob"
+
 /datum/recipe/tofubread
 	tofu_amount = 3
 	cheese_amount = 3
@@ -204,16 +239,6 @@
 	cheese_amount = 1
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/cheesyfries"
 
-/datum/recipe/clownburger
-	extra_item = /obj/item/clothing/mask/gas/clown_hat
-	flour_amount = 1
-	creates = "/obj/item/weapon/reagent_containers/food/snacks/clownburger"
-
-/datum/recipe/mimeburger
-	extra_item = /obj/item/clothing/head/beret
-	flour_amount = 1
-	creates = "/obj/item/weapon/reagent_containers/food/snacks/mimeburger"
-
 /datum/recipe/cubancarp
 	extra_item = /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	flour_amount = 1
@@ -224,16 +249,6 @@
 	extra_item = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	creates = "/obj/item/weapon/reagent_containers/food/snacks/popcorn"
 
-/datum/recipe/fishburger
-	carpmeat_amount = 1
-	flour_amount = 1
-	creates = "/obj/item/weapon/reagent_containers/food/snacks/fishburger"
-
-/datum/recipe/tofuburger
-	tofu_amount = 1
-	flour_amount = 1
-	creates = "/obj/item/weapon/reagent_containers/food/snacks/tofuburger"
-
 // *** After making the recipe above, add it in here! ***
 // Special Note: When adding recipes to the list, make sure to list recipes with extra_item before similar recipes without
 //					one. The reason being that sometimes the FOR loop that searchs through the recipes will just stop
@@ -242,20 +257,24 @@
 	..()
 	src.available_recipes += new /datum/recipe/clownburger(src)
 	src.available_recipes += new /datum/recipe/mimeburger(src)
+	src.available_recipes += new /datum/recipe/brainburger(src)
+	src.available_recipes += new /datum/recipe/roburger(src)
+	src.available_recipes += new /datum/recipe/fishburger(src)
+	src.available_recipes += new /datum/recipe/tofuburger(src)
+	src.available_recipes += new /datum/recipe/monkeyburger(src)
+	src.available_recipes += new /datum/recipe/humanburger(src)
 	src.available_recipes += new /datum/recipe/cubancarp(src)
 	src.available_recipes += new /datum/recipe/humankabob(src)
 	src.available_recipes += new /datum/recipe/monkeykabob(src)
+	src.available_recipes += new /datum/recipe/tofukabob(src)
 	src.available_recipes += new /datum/recipe/jellydonut(src)
 	src.available_recipes += new /datum/recipe/donut(src)
-	src.available_recipes += new /datum/recipe/monkeyburger(src)
-	src.available_recipes += new /datum/recipe/humanburger(src)
 	src.available_recipes += new /datum/recipe/waffles(src)
-	src.available_recipes += new /datum/recipe/brainburger(src)
 	src.available_recipes += new /datum/recipe/faggot(src)
-	src.available_recipes += new /datum/recipe/roburger(src)
 	src.available_recipes += new /datum/recipe/donkpocket(src)
 	src.available_recipes += new /datum/recipe/donkpocket_warm(src)
 	src.available_recipes += new /datum/recipe/pie(src)
+	src.available_recipes += new /datum/recipe/berrypie(src)
 	src.available_recipes += new /datum/recipe/xenoburger(src)
 	src.available_recipes += new /datum/recipe/meatbread(src)
 	src.available_recipes += new /datum/recipe/meatbreadhuman(src)
@@ -266,9 +285,11 @@
 	src.available_recipes += new /datum/recipe/soylentgreen(src)
 	src.available_recipes += new /datum/recipe/carrotcake(src)
 	src.available_recipes += new /datum/recipe/cheesecake(src)
+	src.available_recipes += new /datum/recipe/bananabread(src)
 	src.available_recipes += new /datum/recipe/plaincake(src)
 	src.available_recipes += new /datum/recipe/humeatpie(src)
 	src.available_recipes += new /datum/recipe/momeatpie(src)
+	src.available_recipes += new /datum/recipe/tofupie(src)
 	src.available_recipes += new /datum/recipe/xemeatpie(src)
 	src.available_recipes += new /datum/recipe/wingfangchu(src)
 	src.available_recipes += new /datum/recipe/chaosdonut(src)
@@ -277,8 +298,6 @@
 	src.available_recipes += new /datum/recipe/cheesyfries(src)
 	src.available_recipes += new /datum/recipe/xenomeatbread(src)
 	src.available_recipes += new /datum/recipe/popcorn(src)
-	src.available_recipes += new /datum/recipe/fishburger(src)
-	src.available_recipes += new /datum/recipe/tofuburger(src)
 
 
 
