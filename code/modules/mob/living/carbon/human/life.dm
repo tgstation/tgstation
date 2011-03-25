@@ -691,6 +691,10 @@
 				src.see_in_dark = 3
 				if(!src.druggy)
 					src.see_invisible = 0
+			else if (istype(src.glasses, /obj/item/clothing/glasses/night))
+				src.see_in_dark = 5
+				if(!src.druggy)
+					src.see_invisible = 0
 			else if (istype(src.glasses, /obj/item/clothing/glasses/thermal))
 				src.sight |= SEE_MOBS
 				src.see_in_dark = 4

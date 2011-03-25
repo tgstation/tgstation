@@ -17,6 +17,12 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2"
 
+/obj/item/clothing/glasses/night
+	name = "Night Vision Goggles"
+	icon_state = "night"
+	item_state = "glasses"
+	origin_tech = "magnets=2"
+
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
 	icon_state = "glasses"
