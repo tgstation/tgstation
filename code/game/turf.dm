@@ -632,7 +632,7 @@ turf/simulated/floor/proc/update_icon()
 		if (!src.intact)
 			if (C:amount >= 2)
 				user << "\blue Reinforcing the floor..."
-				if(do_after(user, 30))
+				if(do_after(user, 30) && C && C:amount >= 2 && !src.intact)
 					ReplaceWithEngineFloor()
 					playsound(src.loc, 'Deconstruct.ogg', 80, 1)
 					C:use(2)
