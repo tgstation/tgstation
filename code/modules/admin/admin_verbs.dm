@@ -87,10 +87,11 @@
 			src.verbs += /obj/admins/proc/toggletintedweldhelmets
 
 			// Mapping helpers
-			src.verbs += /client/proc/do_not_use_these 			//-errorage
-			src.verbs += /client/proc/camera_view 				//-errorage
-			src.verbs += /client/proc/sec_camera_report 		//-errorage
-			src.verbs += /client/proc/intercom_view 			//-errorage
+// 			src.verbs += /client/proc/do_not_use_these 			//-errorage
+// 			src.verbs += /client/proc/camera_view 				//-errorage
+// 			src.verbs += /client/proc/sec_camera_report 		//-errorage
+// 			src.verbs += /client/proc/intercom_view 			//-errorage
+			src.verbs += /client/proc/enable_mapping_debug 			//-rastaf0
 
 			// Admin helpers
 			src.verbs += /client/proc/cmd_admin_attack_log
@@ -1061,6 +1062,13 @@
 	src.verbs -= /proc/givetestverbs
 	src.verbs -= /obj/admins/proc/spawn_atom
 	src.verbs -= /obj/admins/proc/toggletintedweldhelmets
+	src.verbs -= /client/proc/atmosscan
+	src.verbs -= /client/proc/restartcontroller
+	src.verbs -= /client/proc/enable_mapping_debug
+	src.verbs -= /client/proc/do_not_use_these
+	src.verbs -= /client/proc/camera_view
+	src.verbs -= /client/proc/sec_camera_report
+	src.verbs -= /client/proc/intercom_view
 
 	// Admin helpers
 	src.verbs -= /client/proc/cmd_admin_attack_log
@@ -1113,6 +1121,9 @@
 	src.verbs -= /obj/admins/proc/unprison
 	src.verbs -= /proc/togglebuildmode
 	src.verbs -= /client/proc/cmd_mass_modify_object_variables
+	
+	src.verbs -= /client/proc/triple_ai
+	src.verbs -= /client/proc/only_one
 	// Unnecessary commands
 	src.verbs -= /client/proc/funbutton
 	src.verbs -= /client/proc/make_sound 				// -- TLE
@@ -1428,7 +1439,7 @@
 	switch (src.holder.rank)
 		if ("Host")
 			// Settings
-			src.verbs += /client/proc/colorooc // -- Urist
+			//src.verbs += /client/proc/colorooc // -- Urist
 			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
 			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
 			src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning

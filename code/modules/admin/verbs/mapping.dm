@@ -109,3 +109,11 @@ var/intercom_range_display_status = 0
 					var/obj/debugging/marker/F = new/obj/debugging/marker(T)
 					if (!(F in view(7,I.loc)))
 						del(F)
+
+	enable_mapping_debug()
+		set category = "Debug"
+		set name = "Mapping debug"
+		src.verbs += /client/proc/do_not_use_these 			//-errorage
+		src.verbs += /client/proc/camera_view 				//-errorage
+		src.verbs += /client/proc/sec_camera_report 		//-errorage
+		src.verbs += /client/proc/intercom_view 			//-errorage

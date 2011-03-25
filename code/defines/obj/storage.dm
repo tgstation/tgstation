@@ -4,9 +4,39 @@
 	icon = 'belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	can_hold = list("/obj/item/weapon/crowbar","/obj/item/weapon/screwdriver","/obj/item/weapon/weldingtool","/obj/item/weapon/wirecutters","/obj/item/weapon/wrench","/obj/item/device/multitool","/obj/item/device/flashlight","/obj/item/weapon/cable_coil", "/obj/item/device/t_scanner", "/obj/item/device/analyzer")
+	can_hold = list(
+		"/obj/item/weapon/crowbar",
+		"/obj/item/weapon/screwdriver",
+		"/obj/item/weapon/weldingtool",
+		"/obj/item/weapon/wirecutters",
+		"/obj/item/weapon/wrench",
+		"/obj/item/device/multitool",
+		"/obj/item/device/flashlight",
+		"/obj/item/weapon/cable_coil",
+		"/obj/item/device/t_scanner",
+		"/obj/item/device/analyzer")
 	flags = FPRINT | TABLEPASS | ONBELT
 
+/obj/item/weapon/storage/utilitybelt/medical
+   name = "medical belt"
+   desc = "Can hold various medical equipment."
+   icon_state = "medicalbelt"
+   item_state = "medical"
+   can_hold = list(
+		"/obj/item/device/healthanalyzer",
+		"/obj/item/weapon/dnainjector",
+		"/obj/item/weapon/reagent_containers/dropper",
+		"/obj/item/weapon/reagent_containers/glass/beaker",
+		"/obj/item/weapon/reagent_containers/glass/bottle",
+		"/obj/item/weapon/reagent_containers/pill",
+		"/obj/item/weapon/reagent_containers/syringe",
+		"/obj/item/weapon/reagent_containers/glass/dispenser",
+		"/obj/item/weapon/zippo",
+		"/obj/item/weapon/cigpacket",
+		"/obj/item/weapon/storage/pill_bottle",
+		"/obj/item/weapon/medical")
+   flags = FPRINT | TABLEPASS | ONBELT
+  
 /obj/item/weapon/storage
 	icon = 'storage.dmi'
 	name = "storage"
@@ -26,6 +56,7 @@
 	icon_state = "pill_canister"
 	icon = 'chemical.dmi'
 	item_state = "contsolid"
+	w_class = 2.0
 	can_hold = list("/obj/item/weapon/reagent_containers/pill")
 
 /obj/item/weapon/storage/box

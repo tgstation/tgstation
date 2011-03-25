@@ -269,6 +269,7 @@
 
 /proc/possess(obj/O as obj in world)
 	set name = "Possess Obj"
+	set category = "Object"
 	usr.loc = O
 	usr.real_name = O.name
 	usr.name = O.name
@@ -277,6 +278,7 @@
 
 /proc/release(obj/O as obj in world)
 	set name = "Release Obj"
+	set category = "Object"
 	//usr.loc = get_turf(usr)
 	usr.loc = O.loc // Appear where the object you were controlling is -- TLE
 	usr.client.eye = usr

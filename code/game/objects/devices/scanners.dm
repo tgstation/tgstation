@@ -159,7 +159,7 @@ MASS SPECTROMETER
 		O.show_message(text("\red [] has analyzed []'s vitals!", user, M), 1)
 		//Foreach goto(67)
 	var/fake_oxy = max(rand(1,40), M.oxyloss, (300 - (M.toxloss + M.fireloss + M.bruteloss)))
-	if(M.changeling_fakedeath || M.reagents.has_reagent("zombiepowder"))
+	if(M.changeling_fakedeath || M.reagents && M.reagents.has_reagent("zombiepowder"))
 		user.show_message(text("\blue Analyzing Results for []:\n\t Overall Status: []", M, "dead"), 1)
 		user.show_message(text("\blue \t Damage Specifics: []-[]-[]-[]", fake_oxy < 50 ? "\red [fake_oxy]" : fake_oxy , M.toxloss > 50 ? "\red [M.toxloss]" : M.toxloss, M.fireloss > 50 ? "\red[M.fireloss]" : M.fireloss, M.bruteloss > 50 ? "\red[M.bruteloss]" : M.bruteloss), 1)
 	else
@@ -167,7 +167,7 @@ MASS SPECTROMETER
 		user.show_message(text("\blue \t Damage Specifics: []-[]-[]-[]", M.oxyloss > 50 ? "\red [M.oxyloss]" : M.oxyloss, M.toxloss > 50 ? "\red [M.toxloss]" : M.toxloss, M.fireloss > 50 ? "\red[M.fireloss]" : M.fireloss, M.bruteloss > 50 ? "\red[M.bruteloss]" : M.bruteloss), 1)
 	user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
 	user.show_message("\blue Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
-	if(M.changeling_fakedeath || M.reagents.has_reagent("zombiepowder"))
+	if(M.changeling_fakedeath ||  M.reagents && M.reagents.has_reagent("zombiepowder"))
 		user.show_message(text("\blue [] | [] | [] | []", fake_oxy > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", M.toxloss > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", M.fireloss > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", M.bruteloss > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
 	else
 		user.show_message(text("\blue [] | [] | [] | []", M.oxyloss > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", M.toxloss > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", M.fireloss > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", M.bruteloss > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
@@ -175,7 +175,7 @@ MASS SPECTROMETER
 		user.show_message(text("\red Subject appears to have been imperfectly cloned."), 1)
 	if (M.virus)
 		user.show_message(text("\red <b>Warning: Virus Detected.</b>\nName: [M.virus.name].\nType: [M.virus.spread].\nStage: [M.virus.stage]/[M.virus.max_stages].\nPossible Cure: [M.virus.cure]"))
-	if (M.reagents:get_reagent_amount("inaprovaline"))
+	if (M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		user.show_message(text("\blue Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals."), 1)
 	if (M.brainloss >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
 		user.show_message(text("\red Subject is brain dead."), 1)

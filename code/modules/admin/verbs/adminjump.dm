@@ -16,6 +16,7 @@
 
 /client/proc/jumptoturf(var/turf/T in world)
 	set name = "Jump to Turf"
+	set category = "Admin"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return

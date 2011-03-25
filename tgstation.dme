@@ -206,7 +206,6 @@
 #include "code\datums\spells\knock.dm"
 #include "code\datums\spells\magic_missile.dm"
 #include "code\datums\spells\mutate.dm"
-#include "code\datums\spells\regenerate.dm"
 #include "code\datums\spells\teleport.dm"
 #include "code\defines\atom.dm"
 #include "code\defines\client.dm"

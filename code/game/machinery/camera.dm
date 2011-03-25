@@ -269,6 +269,7 @@
 	user.reset_view(src)
 
 /obj/machinery/camera/attackby(W as obj, user as mob)
+	..()
 	if (istype(W, /obj/item/weapon/wirecutters))
 		src.status = !( src.status )
 		if (!( src.status ))

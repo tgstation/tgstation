@@ -211,7 +211,7 @@
 					for(var/mob/O in viewers(M, null))
 						O.show_message(text("\red <B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.", 2)
 					if (prob(50))
-						if (ticker.mode.name == "revolution")
+						if (ticker.mode.name == "revolution" && M != user)
 							ticker.mode:remove_revolutionary(H.mind)
 				if (b_dam && prob(25 + (b_dam * 2)))
 					src.add_blood(H)

@@ -1787,7 +1787,7 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/tofuburger
-	name = "Togu Burger"
+	name = "Tofu Burger"
 	desc = "What.. is that meat?"
 	icon_state = "tofuburger"
 	New()

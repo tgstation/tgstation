@@ -91,7 +91,7 @@
 
 	if (src.contents.len >= 7)
 		return
-	if ((W.w_class >= 3 || istype(W, /obj/item/weapon/storage) || src.loc == W))
+	if ((W.w_class >= 3 || (istype(W, /obj/item/weapon/storage) && !istype(W, /obj/item/weapon/storage/pill_bottle)) || src.loc == W))
 		return
 	user.u_equip(W)
 	W.loc = src
