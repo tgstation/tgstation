@@ -37,6 +37,9 @@
 /obj/item/weapon/robot_module/butler
 	name = "service robot module"
 
+/obj/item/weapon/robot_module/miner
+	name = "miner robot module"
+
 /obj/item/weapon/robot_module/New()//Shit all the mods have
 	src.modules += new /obj/item/device/flash(src)
 	src.emag = new /obj/item/toy/sword(src)
@@ -127,6 +130,13 @@
 	R.my_atom = src.emag
 	R.add_reagent("lube", 1000)
 	src.emag.name = "Lube spray"
+
+/obj/item/weapon/robot_module/miner/New()
+	..()
+	src.modules += new /obj/item/weapon/pickaxe(src)
+	src.modules += new /obj/item/weapon/shovel(src)
+	src.modules += new /obj/item/weapon/satchel(src)
+	src.emag = new /obj/item/weapon/borg/stun(src)
 
 /obj/item/weapon/robot_module/brobot/New()
 	..()
