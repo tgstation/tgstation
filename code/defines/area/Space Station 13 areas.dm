@@ -547,7 +547,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "head_quarters"
 
 /area/mint
-	name = "Minte"
+	name = "Mint"
 	icon_state = "green"
 
 //Crew
