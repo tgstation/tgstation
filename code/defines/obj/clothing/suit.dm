@@ -312,7 +312,7 @@
 	icon_state = "rig"
 	item_state = "rig_suit"
 	slowdown = 2
-	radiation_protection = 0.75
+	radiation_protection = 0.50
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"

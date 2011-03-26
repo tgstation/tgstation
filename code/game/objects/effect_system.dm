@@ -389,6 +389,106 @@ steam.start() -- spawns the effect
 
 
 /////////////////////////////////////////////
+// Sleep smoke
+/////////////////////////////////////////////
+
+/obj/effects/sleep_smoke
+	name = "smoke"
+	icon_state = "smoke"
+	opacity = 1
+	anchored = 0.0
+	mouse_opacity = 0
+	var/amount = 6.0
+	//Remove this bit to use the old smoke
+	icon = '96x96.dmi'
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effects/sleep_smoke/New()
+	..()
+	spawn (200+rand(10,30))
+		del(src)
+	return
+
+/obj/effects/sleep_smoke/Move()
+	..()
+	for(var/mob/living/carbon/M in get_turf(src))
+		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
+//		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal))  // I'll work on it later
+		else
+			M.drop_item()
+			M:sleeping += 1
+			if (M.coughedtime != 1)
+				M.coughedtime = 1
+				M.emote("cough")
+				spawn ( 20 )
+					M.coughedtime = 0
+	return
+
+/obj/effects/sleep_smoke/HasEntered(mob/living/carbon/M as mob )
+	..()
+	if(istype(M, /mob/living/carbon))
+		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
+//		if (M.wear_suit, /obj/item/clothing/suit/wizrobe && (M.hat, /obj/item/clothing/head/wizard) && (M.shoes, /obj/item/clothing/shoes/sandal)) // Work on it later
+			return
+		else
+			M.drop_item()
+			M:sleeping += 1
+			if (M.coughedtime != 1)
+				M.coughedtime = 1
+				M.emote("cough")
+				spawn ( 20 )
+					M.coughedtime = 0
+	return
+
+/datum/effects/system/sleep_smoke_spread
+	var/number = 3
+	var/cardinals = 0
+	var/turf/location
+	var/atom/holder
+	var/total_smoke = 0 // To stop it being spammed and lagging!
+	var/direction
+
+/datum/effects/system/sleep_smoke_spread/proc/set_up(n = 5, c = 0, loca, direct)
+	if(n > 20)
+		n = 20
+	number = n
+	cardinals = c
+	if(istype(loca, /turf/))
+		location = loca
+	else
+		location = get_turf(loca)
+	if(direct)
+		direction = direct
+
+
+/datum/effects/system/sleep_smoke_spread/proc/attach(atom/atom)
+	holder = atom
+
+/datum/effects/system/sleep_smoke_spread/proc/start()
+	var/i = 0
+	for(i=0, i<src.number, i++)
+		if(src.total_smoke > 20)
+			return
+		spawn(0)
+			if(holder)
+				src.location = get_turf(holder)
+			var/obj/effects/sleep_smoke/smoke = new /obj/effects/sleep_smoke(src.location)
+			src.total_smoke++
+			var/direction = src.direction
+			if(!direction)
+				if(src.cardinals)
+					direction = pick(cardinal)
+				else
+					direction = pick(alldirs)
+			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
+				sleep(10)
+				step(smoke,direction)
+			spawn(150+rand(10,30))
+				del(smoke)
+				src.total_smoke--
+
+/////////////////////////////////////////////
 // Mustard Gas
 /////////////////////////////////////////////
 

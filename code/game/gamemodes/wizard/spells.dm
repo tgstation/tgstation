@@ -99,6 +99,25 @@
 	smoke.set_up(10, 0, usr.loc)
 	smoke.start()
 
+
+//SLEEP SMOKE
+
+///client/proc/smokecloud()
+//
+//	set category = "Spells"
+//	set name = "Sleep Smoke"
+//	set desc = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb. But, without the robes, you have no protection against the magic."
+//	if(usr.stat)
+//		src << "Not when you are incapacitated."
+//		return
+//	if(!usr.casting()) return
+//	usr.verbs -= /client/proc/smokecloud
+//	spawn(120)
+//		usr.verbs += /client/proc/smokecloud
+//	var/datum/effects/system/sleep_smoke_spread/smoke = new /datum/effects/system/sleep_smoke_spread()
+//	smoke.set_up(10, 0, usr.loc)
+//	smoke.start()
+
 //FORCE WALL
 
 /obj/forcefield
