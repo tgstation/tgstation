@@ -73,10 +73,10 @@
 			stunned = max(stunned,0)
 			paralysis = max(paralysis, 0)
 			weakened = max(weakened, 0)
-			bruteloss = min(bruteloss, 0)
-			fireloss = min(fireloss, 0)
-			oxyloss = min(oxyloss, 0)
-			toxloss = min(toxloss, 0)
+			bruteloss = max(bruteloss, 0)
+			fireloss = max(fireloss, 0)
+			oxyloss = max(oxyloss, 0)
+			toxloss = max(toxloss, 0)
 
 		handle_disabilities()
 
@@ -190,7 +190,7 @@
 			if(src.resting)
 				src.weakened = max(src.weakened, 5)
 
-			if(health < -100)
+			if(health < -100 && stat != 2)
 				death()
 			else if(src.health < 0)
 				if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")

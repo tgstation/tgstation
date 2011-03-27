@@ -652,6 +652,7 @@
 #include "code\modules\mob\living\carbon\beast\bodypart.dm"
 #include "code\modules\mob\living\carbon\beast\death.dm"
 #include "code\modules\mob\living\carbon\brain\brain.dm"
+#include "code\modules\mob\living\carbon\brain\death.dm"
 #include "code\modules\mob\living\carbon\brain\life.dm"
 #include "code\modules\mob\living\carbon\brain\MMI.dm"
 #include "code\modules\mob\living\carbon\human\death.dm"

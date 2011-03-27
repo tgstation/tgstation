@@ -157,9 +157,13 @@
 
 
 /obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone)
+
 	if (!M) // not sure if this is the right thing...
 		return
+	var/messagesource = M
 
+	if (istype(M,/mob/living/carbon/brain))
+		messagesource = M:container
 	if (src.hitsound)
 		playsound(src.loc, hitsound, 50, 1, -1)
 	/////////////////////////
@@ -169,7 +173,7 @@
 	//	M.lastattacker = null
 	/////////////////////////
 	if(!istype(M, /mob/living/carbon/human))
-		for(var/mob/O in viewers(M, null))
+		for(var/mob/O in viewers(messagesource, null))
 			O.show_message(text("\red <B>[] has been attacked with [][] </B>", M, src, (user ? text(" by [].", user) : ".")), 1)
 	var/power = src.force
 	if (istype(M, /mob/living/carbon/human))
