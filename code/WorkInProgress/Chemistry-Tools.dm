@@ -1833,9 +1833,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
-		var/datum/disease/F = new /datum/disease/pierrot_throat(0)
-		var/list/data = list("virus"= F)
-		reagents.add_reagent("blood", 4, data)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
