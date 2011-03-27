@@ -777,7 +777,7 @@ proc/move_mining_shuttle()
 			return
 
 		user << "\red You start picking."
-		//playsound(src.loc, 'Welder.ogg', 100, 1)
+		playsound(user, 'Genhit.ogg', 20, 1)
 
 		if(do_after(user,W:digspeed))
 			user << "\blue You finish cutting into the rock."

@@ -123,7 +123,7 @@
 	synd_mob.equip_if_possible(new /obj/item/weapon/card/id/syndicate(synd_mob), synd_mob.slot_wear_id)
 	synd_mob.equip_if_possible(new /obj/item/weapon/storage/backpack(synd_mob), synd_mob.slot_back)
 	synd_mob.equip_if_possible(new /obj/item/weapon/ammo/a357(synd_mob), synd_mob.slot_in_backpack)
-	synd_mob.equip_if_possible(new /obj/item/weapon/reagent_containers/pill/cyanide, (synd_mob), synd_mob.slot_in_backpack) //Because it needed to be upgraded by someone - Micro
+	synd_mob.equip_if_possible(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), synd_mob.slot_in_backpack) //Because it needed to be upgraded by someone - Micro
 	var/obj/item/weapon/gun/revolver/G = new /obj/item/weapon/gun/revolver(synd_mob)
 	G.bullets = 7
 	synd_mob.equip_if_possible(G, synd_mob.slot_belt)
