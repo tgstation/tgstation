@@ -1072,18 +1072,30 @@ proc/process_ghost_teleport_locs()
 /area/turret_protected/AIsatextFP
 	name = "AI Sat Ext"
 	icon_state = "storage"
+	requires_power = 0
+	luminosity = 1
+	sd_lighting = 0
 
 /area/turret_protected/AIsatextFS
 	name = "AI Sat Ext"
 	icon_state = "storage"
+	requires_power = 0
+	luminosity = 1
+	sd_lighting = 0
 
 /area/turret_protected/AIsatextAS
 	name = "AI Sat Ext"
 	icon_state = "storage"
+	requires_power = 0
+	luminosity = 1
+	sd_lighting = 0
 
 /area/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
+	requires_power = 0
+	luminosity = 1
+	sd_lighting = 0
 
 /area/turret_protected/NewAIMain
 	name = "AI Main New"
