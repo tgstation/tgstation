@@ -4,13 +4,12 @@
 	icon_state = "durand"
 	step_in = 6
 	health = 350
-	deflect_chance = 15
+	deflect_chance = 20
 	max_temperature = 3000
 	infra_luminosity = 8
-	operation_req_access = list(access_security)
 	force = 35
 	var/defence = 0
-	var/defence_deflect = 30
+	var/defence_deflect = 35
 	wreckage = "/obj/decal/mecha_wreckage/durand"
 
 /*

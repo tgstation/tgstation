@@ -380,7 +380,7 @@ datum
 			name = "Circuit Design (APLU \"Ripley\" Central Control module)"
 			desc = "Allows for the construction of a \"Ripley\" Central Control module."
 			id = "ripley_main"
-			req_tech = list("programming" = 3, "materials" = 3)
+			req_tech = list("programming" = 3, "materials" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/ripley/main"
@@ -389,7 +389,7 @@ datum
 			name = "Circuit Design (APLU \"Ripley\" Peripherals Control module)"
 			desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
 			id = "ripley_peri"
-			req_tech = list("programming" = 3, "materials" = 3)
+			req_tech = list("programming" = 3, "materials" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/ripley/peripherals"
@@ -398,7 +398,7 @@ datum
 			name = "Circuit Design (\"Gygax\" Central Control module)"
 			desc = "Allows for the construction of a \"Gygax\" Central Control module."
 			id = "gygax_main"
-			req_tech = list("programming" = 4, "materials" = 4)
+			req_tech = list("programming" = 4, "materials" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/gygax/main"
@@ -407,7 +407,7 @@ datum
 			name = "Circuit Design (\"Gygax\" Peripherals Control module)"
 			desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
 			id = "gygax_peri"
-			req_tech = list("programming" = 4, "materials" = 4)
+			req_tech = list("programming" = 4, "materials" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/gygax/peripherals"
@@ -416,16 +416,44 @@ datum
 			name = "Circuit Design (\"Gygax\" Weapons & Targeting Control module)"
 			desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
 			id = "gygax_targ"
-			req_tech = list("programming" = 4, "materials" = 4)
+			req_tech = list("programming" = 4, "materials" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/gygax/targeting"
+
+		durand_main
+			name = "Circuit Design (\"Gygax\" Central Control module)"
+			desc = "Allows for the construction of a \"Gygax\" Central Control module."
+			id = "durand_main"
+			req_tech = list("programming" = 4, "materials" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/mecha_parts/circuitboard/durand/main"
+
+		durand_peri
+			name = "Circuit Design (\"Gygax\" Peripherals Control module)"
+			desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
+			id = "durand_peri"
+			req_tech = list("programming" = 4, "materials" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/mecha_parts/circuitboard/durand/peripherals"
+
+		durand_targ
+			name = "Circuit Design (\"Gygax\" Weapons & Targeting Control module)"
+			desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
+			id = "durand_targ"
+			req_tech = list("programming" = 4, "materials" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/mecha_parts/circuitboard/durand/targeting"
+
 
 		honker_main
 			name = "Circuit Design (\"H.O.N.K\" Central Control module)"
 			desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
 			id = "honker_main"
-			req_tech = list("programming" = 3, "materials" = 3)
+			req_tech = list("programming" = 3, "materials" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/honker/main"
@@ -434,7 +462,7 @@ datum
 			name = "Circuit Design (\"H.O.N.K\" Peripherals Control module)"
 			desc = "Allows for the construction of a \"H.O.N.K\" Peripheral Control module."
 			id = "honker_peri"
-			req_tech = list("programming" = 3, "materials" = 3)
+			req_tech = list("programming" = 3, "materials" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/honker/peripherals"
@@ -443,7 +471,7 @@ datum
 			name = "Circuit Design (\"H.O.N.K\" Weapons & Targeting Control module)"
 			desc = "Allows for the construction of a \"H.O.N.K\" Weapons & Targeting Control module."
 			id = "honker_targ"
-			req_tech = list("programming" = 3, "materials" = 3)
+			req_tech = list("programming" = 3, "materials" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/mecha_parts/circuitboard/honker/targeting"
@@ -505,7 +533,7 @@ datum
 			desc = "An exosuit mounted Gravitational Catapult."
 			id = "mech_gravcatapult"
 			build_type = MECHFAB
-			req_tech = list("bluespace" = 1, "magnets" = 3)
+			req_tech = list("bluespace" = 2, "magnets" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/gravcatapult"
 
 

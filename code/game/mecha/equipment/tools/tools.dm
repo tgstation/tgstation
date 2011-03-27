@@ -35,10 +35,6 @@
 							cargo_holder.cargo += O
 							O.loc = chassis
 							O.anchored = 0
-							/*
-							if(istype(O, /obj/machinery/bot))// That's shit-code right here, folks.
-								O:on = 0
-							*/
 							chassis.occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
 							chassis.log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 						else
@@ -66,7 +62,7 @@
 				chassis.visible_message("[chassis] pushes [target] out of the way.")
 			equip_ready = 0
 			chassis.cell.use(energy_drain)
-			spawn(equip_cooldown)
+			if(do_after_cooldown())
 				equip_ready = 1
 		return 1
 
@@ -89,12 +85,10 @@
 				if(istype(target, /turf/simulated/wall/r_wall))
 					chassis.occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
 				else if(istype(target, /turf/simulated/mineral))
-					var/turf/simulated/mineral/M = target
+					for(var/turf/simulated/mineral/M in range(chassis,1))
+						if(get_dir(chassis,M)&chassis.dir)
+							M.gets_drilled()
 					chassis.log_message("Drilled through [target]")
-					M.gets_drilled()
-					for(var/turf/simulated/mineral/N in range(chassis,1))
-						if(get_dir(chassis,N)&chassis.dir)
-							N.gets_drilled()
 				else
 					chassis.log_message("Drilled through [target]")
 					target.ex_act(2)
@@ -107,6 +101,7 @@
 	icon_state = "mecha_exting"
 	equip_cooldown = 5
 	energy_drain = 0
+	range = MELEE|RANGED
 
 	New()
 		reagents = new/datum/reagents(200)
@@ -116,7 +111,7 @@
 		return
 
 	action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
-		if(!action_checks(target)) return
+		if(!action_checks(target) || get_dist(chassis, target)>3) return
 		if(get_dist(chassis, target)>2) return
 		equip_ready = 0
 		if(do_after_cooldown())
@@ -145,7 +140,7 @@
 						W.reagents = R
 						R.my_atom = W
 						src.reagents.trans_to(W,1)
-						for(var/b=0, b<5, b++)
+						for(var/b=0, b<4, b++)
 							if(!W)
 								return
 							step_towards(W,my_target)

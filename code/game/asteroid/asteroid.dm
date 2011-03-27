@@ -31,8 +31,9 @@ proc/spawn_asteroid(var/atom/start_loc,var/type,var/size,var/richness)//type: 0 
 		var/x_len = rand(4,size)
 		var/y_len = pick(4,size)
 		var/st_l = locate(start_loc.x-round(x_len/2),start_loc.y-round(y_len/2),start_loc.z)
-		spawn_room(st_l,x_len,y_len)
-		max_secret_rooms--
+		if(st_l)
+			spawn_room(st_l,x_len,y_len)
+			max_secret_rooms--
 
 	return 1
 

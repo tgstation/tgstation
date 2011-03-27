@@ -79,6 +79,14 @@ obj
 /atom/proc/emp_act(var/severity)
 	return
 
+/atom/proc/in_contents_of(container)//can take class or object instance as argument
+	if(ispath(container))
+		if(istype(src.loc, container))
+			return 1
+	else if(src in container)
+		return 1
+	return
+
 /atom/movable/overlay/attackby(a, b)
 	if (src.master)
 		return src.master.attackby(a, b)
@@ -127,5 +135,6 @@ obj
 		src.last_move = get_dir(A, src.loc)
 		src.moved_recently = 1
 	return
+
 ////////////
 

@@ -43,6 +43,7 @@
 	name = "eZ-13 mk2 Heavy pulse rifle"
 	icon_state = "mecha_pulse"
 	energy_drain = 120
+	origin_tech = "materials=3;combat=6;powerstorage=4"
 
 	action(target)
 		if(!action_checks(target)) return
@@ -70,7 +71,8 @@
 
 /obj/beam/a_laser/pulse_laser/heavy_pulse
 	name = "heavy pulse laser"
-	icon_state = "u_laser"
+	icon = 'xcomalien.dmi'
+	icon_state = "plasma"
 	life = 20
 
 	Bump(atom/A)

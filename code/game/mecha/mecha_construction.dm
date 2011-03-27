@@ -17,6 +17,7 @@
 	name="Mecha Chassis"
 	icon_state = "backbone"
 	var/datum/construction/construct
+	construction_cost = list("metal"=20000)
 	flags = FPRINT | CONDUCT
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -39,30 +40,35 @@
 /obj/item/mecha_parts/part/ripley_torso
 	name="Ripley Torso"
 	icon_state = "ripley_harness"
+	origin_tech = "programming=2;materials=3;biotech=1"
 	construction_time = 300
 	construction_cost = list("metal"=40000,"glass"=15000)
 
 /obj/item/mecha_parts/part/ripley_left_arm
 	name="Ripley Left Arm"
 	icon_state = "ripley_l_arm"
+	origin_tech = "programming=2;materials=3"
 	construction_time = 200
 	construction_cost = list("metal"=25000)
 
 /obj/item/mecha_parts/part/ripley_right_arm
 	name="Ripley Right Arm"
 	icon_state = "ripley_r_arm"
+	origin_tech = "programming=2;materials=3"
 	construction_time = 200
 	construction_cost = list("metal"=25000)
 
 /obj/item/mecha_parts/part/ripley_left_leg
 	name="Ripley Left Leg"
 	icon_state = "ripley_l_leg"
+	origin_tech = "programming=2;materials=3"
 	construction_time = 200
 	construction_cost = list("metal"=30000)
 
 /obj/item/mecha_parts/part/ripley_right_leg
 	name="Ripley Right Leg"
 	icon_state = "ripley_r_leg"
+	origin_tech = "programming=2;materials=3"
 	construction_time = 200
 	construction_cost = list("metal"=30000)
 
@@ -79,51 +85,113 @@
 /obj/item/mecha_parts/part/gygax_torso
 	name="Gygax Torso"
 	icon_state = "gygax_harness"
-	origin_tech = "programming=3;materials=4;biotech=1"
+	origin_tech = "programming=2;materials=4;biotech=2"
 	construction_time = 300
 	construction_cost = list("metal"=50000,"glass"=20000)
 
 /obj/item/mecha_parts/part/gygax_head
 	name="Gygax Head"
 	icon_state = "gygax_head"
-	origin_tech = "programming=3;materials=4;magnets=3"
+	origin_tech = "programming=2;materials=4;magnets=3"
 	construction_time = 200
 	construction_cost = list("metal"=20000,"glass"=10000)
 
 /obj/item/mecha_parts/part/gygax_left_arm
 	name="Gygax Left Arm"
 	icon_state = "gygax_l_arm"
-	origin_tech = "programming=3;materials=4"
+	origin_tech = "programming=2;materials=4"
 	construction_time = 200
-	construction_cost = list("metal"=30000,"glass"=20000)
+	construction_cost = list("metal"=30000)
 
 /obj/item/mecha_parts/part/gygax_right_arm
 	name="Gygax Right Arm"
 	icon_state = "gygax_r_arm"
-	origin_tech = "programming=3;materials=4"
+	origin_tech = "programming=2;materials=4"
 	construction_time = 200
-	construction_cost = list("metal"=30000,"glass"=20000)
+	construction_cost = list("metal"=30000)
 
 /obj/item/mecha_parts/part/gygax_left_leg
 	name="Gygax Left Leg"
 	icon_state = "gygax_l_leg"
-	origin_tech = "programming=3;materials=4"
+	origin_tech = "programming=2;materials=4"
 	construction_time = 200
-	construction_cost = list("metal"=35000,"glass"=20000)
+	construction_cost = list("metal"=35000)
 
 /obj/item/mecha_parts/part/gygax_right_leg
 	name="Gygax Right Leg"
 	icon_state = "gygax_r_leg"
-	origin_tech = "programming=3;materials=4"
+	origin_tech = "programming=2;materials=4"
 	construction_time = 200
-	construction_cost = list("metal"=35000,"glass"=20000)
+	construction_cost = list("metal"=35000)
 
 /obj/item/mecha_parts/part/gygax_armour
 	name="Gygax Armour Plates"
 	icon_state = "gygax_armour"
 	origin_tech = "materials=5;combat=4"
 	construction_time = 600
-	construction_cost = list("metal"=75000,"diamond"=10000)
+	construction_cost = list("metal"=50000,"diamond"=10000)
+
+
+//////////// Durand
+
+/obj/item/mecha_parts/chassis/durand
+	name = "Durand Chassis"
+	construction_cost = list("metal"=25000)
+
+	New()
+		..()
+		construct = new /datum/construction/mecha/durand_chassis(src)
+
+/obj/item/mecha_parts/part/durand_torso
+	name="Durand Torso"
+	icon_state = "gygax_harness"
+	origin_tech = "programming=2;materials=4;biotech=2"
+	construction_time = 300
+	construction_cost = list("metal"=55000,"glass"=20000,"silver"=10000)
+
+/obj/item/mecha_parts/part/durand_head
+	name="Durand Head"
+	icon_state = "gygax_head"
+	origin_tech = "programming=2;materials=4;magnets=3"
+	construction_time = 200
+	construction_cost = list("metal"=25000,"glass"=10000,"silver"=5000)
+
+/obj/item/mecha_parts/part/durand_left_arm
+	name="Durand Left Arm"
+	icon_state = "gygax_l_arm"
+	origin_tech = "programming=2;materials=4"
+	construction_time = 200
+	construction_cost = list("metal"=35000,"silver"=5000)
+
+/obj/item/mecha_parts/part/durand_right_arm
+	name="Durand Right Arm"
+	icon_state = "gygax_r_arm"
+	origin_tech = "programming=2;materials=4"
+	construction_time = 200
+	construction_cost = list("metal"=35000,"silver"=5000)
+
+/obj/item/mecha_parts/part/durand_left_leg
+	name="Durand Left Leg"
+	icon_state = "gygax_l_leg"
+	origin_tech = "programming=2;materials=4"
+	construction_time = 200
+	construction_cost = list("metal"=40000,"silver"=5000)
+
+/obj/item/mecha_parts/part/durand_right_leg
+	name="Durand Right Leg"
+	icon_state = "gygax_r_leg"
+	origin_tech = "programming=2;materials=4"
+	construction_time = 200
+	construction_cost = list("metal"=40000,"silver"=5000)
+
+/obj/item/mecha_parts/part/durand_armour
+	name="Durand Armour Plates"
+	icon_state = "gygax_armour"
+	origin_tech = "materials=5;combat=4"
+	construction_time = 600
+	construction_cost = list("metal"=50000,"uranium"=10000)
+
+
 
 ////////// Firefighter
 
@@ -214,7 +282,7 @@
 	throw_range = 15
 
 	ripley
-		origin_tech = "programming=3;materials=1"
+		origin_tech = "programming=3"
 
 	ripley/peripherals
 		name = "Circuit board (Ripley Peripherals Control module)"
@@ -225,7 +293,7 @@
 		icon_state = "mainboard"
 
 	gygax
-		origin_tech = "programming=4;materials=2"
+		origin_tech = "programming=4"
 
 	gygax/peripherals
 		name = "Circuit board (Gygax Peripherals Control module)"
@@ -234,10 +302,26 @@
 	gygax/targeting
 		name = "Circuit board (Gygax Weapon Control and Targeting module)"
 		icon_state = "mcontroller"
-		origin_tech = "programming=3;materials=1;combat=3"
+		origin_tech = "programming=3;combat=3"
 
 	gygax/main
 		name = "Circuit board (Gygax Central Control module)"
+		icon_state = "mainboard"
+
+	durand
+		origin_tech = "programming=4"
+
+	durand/peripherals
+		name = "Circuit board (Durand Peripherals Control module)"
+		icon_state = "mcontroller"
+
+	durand/targeting
+		name = "Circuit board (Durand Weapon Control and Targeting module)"
+		icon_state = "mcontroller"
+		origin_tech = "programming=3;combat=3"
+
+	durand/main
+		name = "Circuit board (Durand Central Control module)"
 		icon_state = "mainboard"
 
 	firefighter/peripherals
@@ -245,7 +329,7 @@
 		icon_state = "mcontroller"
 
 	honker
-		origin_tech = "programming=3;materials=2"
+		origin_tech = "programming=4"
 
 	honker/peripherals
 		name = "Circuit board (H.O.N.K Peripherals Control module)"
@@ -728,6 +812,116 @@
 				del used_atom
 		return 1
 
+
+
+
+/datum/construction/mecha/durand_chassis
+	steps = list(list("key"="/obj/item/mecha_parts/part/durand_torso"),//1
+					 list("key"="/obj/item/mecha_parts/part/durand_left_arm"),//2
+					 list("key"="/obj/item/mecha_parts/part/durand_right_arm"),//3
+					 list("key"="/obj/item/mecha_parts/part/durand_left_leg"),//4
+					 list("key"="/obj/item/mecha_parts/part/durand_right_leg"),//5
+					 list("key"="/obj/item/mecha_parts/part/durand_head")
+					)
+
+	custom_action(step, atom/used_atom, mob/user)
+		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
+		holder.overlays += used_atom.icon_state+"+o"
+		del used_atom
+		return 1
+
+	action(atom/used_atom,mob/user as mob)
+		return check_all_steps(used_atom,user)
+
+	spawn_result()
+		var/obj/item/mecha_parts/chassis/const_holder = holder
+		const_holder.construct = new /datum/construction/mecha/durand(const_holder)
+		const_holder.density = 1
+		spawn()
+			del src
+		return
+
+/datum/construction/mecha/durand
+	result = "/obj/mecha/combat/durand"
+	steps = list(list("key"="/obj/item/weapon/weldingtool"),//1
+					 list("key"="/obj/item/weapon/wrench"),//2
+					 list("key"="/obj/item/mecha_parts/part/durand_armour"),//3
+					 list("key"="/obj/item/weapon/weldingtool"),//4
+					 list("key"="/obj/item/weapon/wrench"),//5
+					 list("key"="/obj/item/stack/sheet/metal"),//6
+					 list("key"="/obj/item/weapon/screwdriver"),//7
+					 list("key"="/obj/item/weapon/stock_parts/capacitor/adv"),//8
+					 list("key"="/obj/item/weapon/screwdriver"),//9
+					 list("key"="/obj/item/weapon/stock_parts/scanning_module/adv"),//10
+					 list("key"="/obj/item/weapon/screwdriver"),//11
+					 list("key"="/obj/item/mecha_parts/circuitboard/durand/targeting"),//12
+					 list("key"="/obj/item/weapon/screwdriver"),//13
+					 list("key"="/obj/item/mecha_parts/circuitboard/durand/peripherals"),//14
+					 list("key"="/obj/item/weapon/screwdriver"),//15
+					 list("key"="/obj/item/mecha_parts/circuitboard/durand/main"),//16
+					 list("key"="/obj/item/weapon/wirecutters"),//17
+					 list("key"="/obj/item/weapon/cable_coil"),//18
+					 list("key"="/obj/item/weapon/screwdriver"),//19
+					 list("key"="/obj/item/weapon/wrench")//20
+					)
+
+	action(atom/used_atom,mob/user as mob)
+		return check_step(used_atom,user)
+
+	custom_action(step, atom/used_atom, mob/user)
+		if(!..())
+			return 0
+
+		//TODO: better messages.
+		switch(step)
+			if(20)
+				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
+			if(19)
+				user.visible_message("[user] adjusts [holder] hydraulic systems.", "You adjust [holder] hydraulic systems.")
+			if(18)
+				user.visible_message("[user] adds the wiring to [holder].", "You add the wiring to [holder].")
+			if(17)
+				user.visible_message("[user] adjusts the wiring of [holder].", "You adjust the wiring of [holder].")
+			if(16)
+				user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
+				del used_atom
+			if(15)
+				user.visible_message("[user] secures the mainboard.", "You secure the mainboard.")
+			if(14)
+				user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
+				del used_atom
+			if(13)
+				user.visible_message("[user] secures the peripherals control module.", "You secure the peripherals control module.")
+			if(12)
+				user.visible_message("[user] installs the weapon control module into [holder].", "You install the weapon control module into [holder].")
+				del used_atom
+			if(11)
+				user.visible_message("[user] secures the weapon control module.", "You secure the weapon control module.")
+			if(10)
+				user.visible_message("[user] installs advanced scanner module to [holder].", "You install advanced scanner module to [holder].")
+				del used_atom
+			if(9)
+				user.visible_message("[user] secures the advanced scanner module.", "You secure the advanced scanner module.")
+			if(8)
+				user.visible_message("[user] installs advanced capacitor to [holder].", "You install advanced capacitor to [holder].")
+				del used_atom
+			if(7)
+				user.visible_message("[user] secures the advanced capacitor.", "You secure the advanced capacitor.")
+			if(6)
+				user.visible_message("[user] installs internal armor layer to [holder].", "You install internal armor layer to [holder].")
+			if(5)
+				user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
+			if(4)
+				user.visible_message("[user] welds internal armor layer to [holder].", "You weld the internal armor layer to [holder].")
+			if(3)
+				user.visible_message("[user] installs Durand Armour Plates to [holder].", "You install Durand Armour Plates to [holder].")
+				holder.overlays += used_atom.icon_state
+				del used_atom
+			if(2)
+				user.visible_message("[user] secures Durand Armour Plates.", "You secure Durand Armour Plates.")
+			if(1)
+				user.visible_message("[user] welds Durand Armour Plates to [holder].", "You weld Durand Armour Plates to [holder].")
+		return 1
 
 
 

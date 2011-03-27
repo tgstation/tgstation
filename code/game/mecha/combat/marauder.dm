@@ -15,6 +15,8 @@
 	var/datum/effects/system/harmless_smoke_spread/smoke_system = new
 	operation_req_access = list(access_heads)
 	wreckage = "/obj/decal/mecha_wreckage/marauder"
+	add_req_access = 0
+	internal_damage_threshold = 25
 
 
 /obj/mecha/combat/marauder/New()

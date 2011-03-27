@@ -23,11 +23,12 @@
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/step_energy_drain = 10
 	var/health = 300 //health is health
-	var/deflect_chance = 2 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
+	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	var/obj/item/weapon/cell/cell = new
 	var/state = 0
 	var/list/log = new
 	var/last_message = 0
+	var/add_req_access = 1
 
 	var/datum/effects/system/spark_spread/spark_system = new
 	var/lights = 0
@@ -45,13 +46,13 @@
 	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
 	var/internal_damage = 0 //contains bitflags
 
-	var/list/operation_req_access = list(access_engine)//required access level for mecha operation
-	var/list/internals_req_access = list(access_engine)//required access level to open cell compartment
+	var/list/operation_req_access = list()//required access level for mecha operation
+	var/list/internals_req_access = list(access_engine,access_robotics)//required access level to open cell compartment
 
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
 	var/datum/global_iterator/pr_update_stats //used to auto-update stats window
 	var/datum/global_iterator/pr_inertial_movement //controls intertial movement in spesss
-	var/datum/global_iterator/pr_location_temp_check //processes location temperature damage
+//	var/datum/global_iterator/pr_location_temp_check //processes location temperature damage
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
 
 	var/wreckage
@@ -76,7 +77,7 @@
 	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
 	pr_update_stats = new /datum/global_iterator/mecha_view_stats(list(src),0)
 	pr_inertial_movement = new /datum/global_iterator/mecha_intertial_movement(null,0)
-	pr_location_temp_check = new /datum/global_iterator/mecha_location_temp_check(list(src))
+//	pr_location_temp_check = new /datum/global_iterator/mecha_location_temp_check(list(src))
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
 
 	src.verbs -= /obj/mecha/verb/disconnect_from_port
@@ -86,6 +87,7 @@
 
 /obj/mecha/Del()
 	src.go_out()
+	src.loc.Exited(src)
 	..()
 	return
 
@@ -93,7 +95,7 @@
 
 /client/Click(object,location,control,params)
 	var/mob/M = src.mob
-	if(M && istype(M.loc, /obj/mecha))
+	if(M && M.in_contents_of(/obj/mecha))
 /*
 		if(mech_click == world.time) return
 		mech_click = world.time
@@ -258,7 +260,7 @@
 
 /obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
 	if(!src) return
-	if(prob(25))
+	if(prob(15))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
@@ -451,6 +453,12 @@
 	src.log_message("EMP detected")
 	take_damage(100 / severity)
 	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST),1)
+	return
+
+/obj/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature>src.max_temperature)
+		src.take_damage(5,"fire")
+		src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
 	return
 
 /////////////////////////////////////
@@ -776,6 +784,15 @@
 		if(src.occupant)
 			user << "Unable to initiate maintenance protocol."
 			return
+		if(add_req_access)
+			var/obj/item/weapon/card/id/id_card
+			if(istype(W, /obj/item/weapon/card/id))
+				id_card = W
+			else
+				var/obj/item/device/pda/pda = W
+				id_card = pda.id
+			output_access_dialog(id_card, user)
+			return
 		if(src.internals_access_allowed(usr))
 			if(state==0)
 				state = 1
@@ -901,6 +918,7 @@
 						<a href='?src=\ref[src];toggle_airtank=1'>Toggle Internal Airtank Usage</a><br>
 						[(/obj/mecha/verb/disconnect_from_port in src.verbs)?"<a href='?src=\ref[src];port_disconnect=1'>Disconnect from port</a><br>":null]
 						[(/obj/mecha/verb/connect_to_port in src.verbs)?"<a href='?src=\ref[src];port_connect=1'>Connect to port</a><br>":null]
+						<a href='?src=\ref[src];unlock_id_upload=1'>Unlock ID upload panel</a><br>
 						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
 						<a href='?src=\ref[src];eject=1'>Eject</a><br>
 					"}
@@ -948,6 +966,20 @@
 			src.selected = equip
 			src.occupant_message("You switch to [equip]")
 			src.visible_message("[src] raises [equip]")
+	if (href_list["unlock_id_upload"])
+		add_req_access = 1
+	if (href_list["add_req_access"])
+		if(!add_req_access) return
+		var/access = text2num(href_list["add_req_access"])
+		operation_req_access += access
+		output_access_dialog(locate(href_list["id_card"]),locate(href_list["user"]))
+	if (href_list["del_req_access"])
+		operation_req_access -= text2num(href_list["del_req_access"])
+		output_access_dialog(locate(href_list["id_card"]),locate(href_list["user"]))
+	if (href_list["finish_req_access"])
+		add_req_access = 0
+		var/mob/user = locate(href_list["user"])
+		user << browse(null,"window=exosuit_add_access")
 /*
 
 	if (href_list["ai_take_control"])
@@ -1036,6 +1068,24 @@ if ("alientalk")
 	return max(0, src.cell.charge)
 
 
+/obj/mecha/proc/output_access_dialog(obj/item/weapon/card/id/id_card, mob/user)
+	if(!id_card || !user) return
+	var/output = "<html><head></head><body><b>Following keycodes are present in this system:</b><br>"
+	for(var/a in operation_req_access)
+		output += "[get_access_desc(a)] - <a href='?src=\ref[src];del_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Delete</a><br>"
+	output += "<hr><b>Following keycodes were detected on portable device:</b><br>"
+	for(var/a in id_card.access)
+		if(a in operation_req_access) continue
+		var/a_name = get_access_desc(a)
+		if(!a_name) continue //there's some strange access without a name
+		output += "[a_name] - <a href='?src=\ref[src];add_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Add</a><br>"
+	output += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> <font color='red'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</font>"
+	output += "</body></html>"
+	user << browse(output, "window=exosuit_add_access")
+	onclose(user, "exosuit_add_access")
+	return
+
+
 //////////////////////////////////////////
 ////////  Mecha global iterators  ////////
 //////////////////////////////////////////
@@ -1069,6 +1119,7 @@ if ("alientalk")
 			src.stop()
 		return
 
+/*
 /datum/global_iterator/mecha_location_temp_check //mecha location temperature checks
 
 	process(var/obj/mecha/mecha)
@@ -1079,6 +1130,7 @@ if ("alientalk")
 					mecha.take_damage(5,"fire")
 					mecha.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
 		return
+*/
 
 /datum/global_iterator/mecha_internal_damage // processing internal damage
 

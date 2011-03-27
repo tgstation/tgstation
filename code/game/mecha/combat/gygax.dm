@@ -4,12 +4,13 @@
 	icon_state = "gygax"
 	step_in = 5
 	health = 300
-	deflect_chance = 10
+	deflect_chance = 15
 	max_temperature = 3500
 	infra_luminosity = 6
 	var/overload = 0
-	operation_req_access = list(access_security)
 	wreckage = "/obj/decal/mecha_wreckage/gygax"
+	internal_damage_threshold = 35
+
 
 /*
 /obj/mecha/combat/gygax/New()

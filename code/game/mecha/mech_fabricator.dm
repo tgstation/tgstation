@@ -53,7 +53,16 @@
 						/obj/item/mecha_parts/part/gygax_right_leg,
 						/obj/item/mecha_parts/part/gygax_armour
 					),
-
+	"Durand"=list(
+						/obj/item/mecha_parts/chassis/durand,
+						/obj/item/mecha_parts/part/durand_torso,
+						/obj/item/mecha_parts/part/durand_head,
+						/obj/item/mecha_parts/part/durand_left_arm,
+						/obj/item/mecha_parts/part/durand_right_arm,
+						/obj/item/mecha_parts/part/durand_left_leg,
+						/obj/item/mecha_parts/part/durand_right_leg,
+						/obj/item/mecha_parts/part/durand_armour
+					),
 	"H.O.N.K"=list(
 						/obj/item/mecha_parts/chassis/honker,
 						/obj/item/mecha_parts/part/honker_torso,
@@ -170,7 +179,7 @@
 		return output
 
 	proc/output_part_info(var/obj/item/mecha_parts/part)
-		var/output = "[part.name] (Cost: [output_part_cost(part)]) [round(part.construction_time*time_coeff,0.1)/10]sec"
+		var/output = "[part.name] (Cost: [output_part_cost(part)]) [get_construction_time_w_coeff(part,0.1)/10]sec"
 		return output
 
 	proc/output_part_cost(var/obj/item/mecha_parts/part)
@@ -178,7 +187,7 @@
 		var/output
 		for(var/p in part.construction_cost)
 			if(p in resources)
-				output += "[i?" | ":null][round(part.construction_cost[p]*resource_coeff,1)] [p]"
+				output += "[i?" | ":null][get_resource_cost_w_coeff(part,p,1)] [p]"
 				i++
 		return output
 
@@ -191,13 +200,13 @@
 	proc/remove_resources(var/obj/item/mecha_parts/part as obj)
 		for(var/resource in part.construction_cost)
 			if(resource in src.resources)
-				src.resources[resource] -= round(part.construction_cost[resource]*resource_coeff,1)
+				src.resources[resource] -= get_resource_cost_w_coeff(part,resource,1)
 		return
 
 	proc/check_resources(var/obj/item/mecha_parts/part as obj)
 		for(var/resource in part.construction_cost)
 			if(resource in src.resources)
-				if(src.resources[resource] < round(part.construction_cost[resource]*resource_coeff,1))
+				if(src.resources[resource] < get_resource_cost_w_coeff(part,resource,1))
 					return 0
 		return 1
 
@@ -319,6 +328,13 @@
 					src.updateUsrDialog()
 		return
 
+	proc/get_resource_cost_w_coeff(var/obj/item/mecha_parts/part as obj,var/resource as text, var/roundto=null)
+		roundto = roundto || 0.01
+		return round(part.construction_cost[resource]*resource_coeff, roundto)
+
+	proc/get_construction_time_w_coeff(var/obj/item/mecha_parts/part as obj, var/roundto=null)
+		roundto = roundto || 0.01
+		return round(part.construction_time*time_coeff, roundto)
 
 
 	attack_hand(mob/user as mob)

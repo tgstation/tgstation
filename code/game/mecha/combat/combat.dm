@@ -1,8 +1,4 @@
 /obj/mecha/combat
-	deflect_chance = 10
-	health = 500
-	operation_req_access = list(access_security)
-	internals_req_access = list(access_engine,access_robotics)
 	var/force = 25
 	var/damtype = "brute"
 	var/melee_cooldown = 10
@@ -52,7 +48,7 @@
 			if(M.stat>1)
 				M.gib()
 				melee_can_hit = 0
-				spawn(melee_cooldown)
+				if(do_after(melee_cooldown))
 					melee_can_hit = 1
 				return
 			if(istype(target, /mob/living/carbon/human))
@@ -87,19 +83,15 @@
 					else
 						return
 				M.updatehealth()
-
-			src.occupant.show_message("[src.name] hits [target].", 1)
-			for (var/mob/V in viewers(src))
-				if(V.client && !(V.blinded))
-					V.show_message("[src.name] hits [target].", 1)
-
+			src.occupant_message("You hit [target].")
+			src.visible_message("<font color='red'><b>[src.name] hits [target].</b></font>")
 		else
 			step_away(M,src)
 			src.occupant_message("You push [target] out of the way.")
 			src.visible_message("[src] pushes [target] out of the way.")
 
 		melee_can_hit = 0
-		spawn(melee_cooldown)
+		if(do_after(melee_cooldown))
 			melee_can_hit = 1
 		return
 
@@ -114,13 +106,13 @@
 							V.show_message("[src.name] hits [target].", 1)
 					if(!istype(target, /turf/simulated/wall))
 						target:attackby(src,src.occupant)
-					else if(prob(20))
+					else if(prob(5))
 						target:dismantle_wall(1)
 						src.occupant_message("\blue You smash through the wall.")
 						src.visible_message("<b>[src.name] smashes through the wall</b>")
 						playsound(src, 'smash.ogg', 50, 1)
 					melee_can_hit = 0
-					spawn(melee_cooldown)
+					if(do_after(melee_cooldown))
 						melee_can_hit = 1
 					break
 	return
