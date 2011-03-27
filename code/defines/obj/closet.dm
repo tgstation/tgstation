@@ -362,7 +362,13 @@
 	req_access = list(access_kitchen)
 
 /obj/secure_closet/meat
-	name = "Meat Locker"
+	name = "Meat Fridge"
+	icon_state = "fridge1"
+	icon_closed = "fridge"
+	icon_locked = "fridge1"
+	icon_opened = "fridgeopen"
+	icon_broken = "fridgebroken"
+	icon_off = "fridge1"
 
 /obj/secure_closet/fridge
 	name = "Refrigerator"

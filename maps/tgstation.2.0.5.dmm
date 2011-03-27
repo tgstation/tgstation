@@ -3221,7 +3221,7 @@
 "bjW" = (/obj/machinery/atmospherics/pipe/simple{dir = 9},/obj/grille,/turf/space,/area/turret_protected/ai_upload_foyer)
 "bjX" = (/obj/machinery/door/airlock/vault{icon_state = "door_locked"; locked = 1; req_access_txt = "53"},/turf/simulated/floor{tag = "icon-vault (NORTHEAST)"; icon_state = "vault"; dir = 5},/area/security/nuke_storage)
 "bjY" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/disposalpipe/segment{dir = 1},/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/hallway/primary/central)
-"bjZ" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/obj/machinery/alarm{pixel_y = 24},/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
+"bjZ" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/obj/machinery/alarm{pixel_y = 24},/obj/secure_closet/kitchen,/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "bka" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/obj/machinery/light_switch{pixel_y = 28},/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "bkb" = (/obj/disposalpipe/segment{dir = 1},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "bkc" = (/obj/machinery/gibber,/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
