@@ -150,6 +150,12 @@
 	icon_state = "wizard-fake"
 	item_state = "wizrobe"
 
+/obj/item/clothing/suit/wizrobe/marisa
+	name = "Witch Robe"
+	desc = "Magic is all about the spell power, ZE!"
+	icon_state = "marisa"
+	item_state = "marisarobe"
+
 /obj/item/clothing/suit/hazardvest
 	name = "hazard vest"
 	desc = "A vest designed to make one more noticable. It's not very good at it though"

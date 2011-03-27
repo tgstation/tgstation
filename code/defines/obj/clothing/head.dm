@@ -97,6 +97,11 @@
 	desc = "It has WIZZARD written across it in sequins. Comes with a cool beard."
 	icon_state = "wizard-fake"
 
+/obj/item/clothing/head/wizard/marisa
+	name = "Witch Hat"
+	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
+	icon_state = "marisa"
+
 /obj/item/clothing/head/chefhat
 	name = "Chef's hat"
 	icon_state = "chef"
