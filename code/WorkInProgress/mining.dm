@@ -2546,7 +2546,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		name = "Jackhammer"
 		icon_state = "jackhammer"
 		item_state = "jackhammer"
-		digspeed = 20
+		digspeed = 30
 		desc = "You've dig what you dug. Look out for giant lizards."
 
 	diamond
