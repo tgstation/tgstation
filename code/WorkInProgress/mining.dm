@@ -2521,25 +2521,38 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 15.0
 	throwforce = 4.0
-	item_state = "wrench"
+	item_state = "pickaxe"
 	w_class = 4.0
 	m_amt = 50
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
 
 	silver
 		name = "Silver Pickaxe"
+		icon_state = "spickaxe"
+		item_state = "spickaxe"
 		digspeed = 30
 		origin_tech = "materials=3"
 		desc = "This makes no metallurgic sense."
 
 	gold
 		name = "Golden Pickaxe"
+		icon_state = "gpickaxe"
+		item_state = "gpickaxe"
 		digspeed = 20
 		origin_tech = "materials=4"
 		desc = "This makes no metallurgic sense."
 
+	jackhammer
+		name = "Jackhammer"
+		icon_state = "jackhammer"
+		item_state = "jackhammer"
+		digspeed = 20
+		desc = "You've dig what you dug. Look out for giant lizards."
+
 	diamond
 		name = "Diamond Pickaxe"
+		icon_state = "dpickaxe"
+		item_state = "dpickaxe"
 		digspeed = 10
 		origin_tech = "materials=6"
 		desc = "This makes perfect sense."
@@ -2553,7 +2566,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 8.0
 	throwforce = 4.0
-	item_state = "wrench"
+	item_state = "shovel"
 	w_class = 3.0
 	m_amt = 50
 

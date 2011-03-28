@@ -133,7 +133,7 @@
 
 /obj/item/weapon/robot_module/miner/New()
 	..()
-	src.modules += new /obj/item/weapon/pickaxe(src)
+	src.modules += new /obj/item/weapon/pickaxe/jackhammer(src)
 	src.modules += new /obj/item/weapon/shovel(src)
 	src.modules += new /obj/item/weapon/satchel(src)
 	src.emag = new /obj/item/weapon/borg/stun(src)
