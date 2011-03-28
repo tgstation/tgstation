@@ -16,8 +16,6 @@
 				L.Add(T)
 	return L
 
-
-
 /obj/alien/facehugger
 	name = "alien"
 	desc = "An alien, looks pretty scary!"
@@ -139,8 +137,9 @@
 
 
 	verb/follow()
-		set src in view()
+		set src in view() //set src in get_aliens(view()) - does not work, damn shitty byond :( -- rastaf0
 		set name = "Follow Me"
+		set category = "Object" //"Alien" does not work perfect - humans get "Alien" tab too, that's annoying
 		if(!alive) return
 		if(!isalien(usr))
 			usr << text("\red <B>The alien ignores you.</B>")
@@ -156,6 +155,7 @@
 	verb/stop()
 		set src in view()
 		set name = "Stop Following"
+		set category = "Object"
 		if(!alive) return
 		if(!isalien(usr))
 			usr << text("\red <B>The alien ignores you.</B>")

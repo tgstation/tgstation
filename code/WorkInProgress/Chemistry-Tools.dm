@@ -35,7 +35,7 @@
 			user << "\blue You add [W] to the metal casing."
 			playsound(src.loc, 'Screwdriver2.ogg', 25, -3)
 			del(W) //Okay so we're not really adding anything here. cheating.
-			icon_state = "chemg2"
+			icon_state = initial(icon_state) +"_ass"
 			name = "unsecured grenade"
 			stage = 1
 		else if(istype(W,/obj/item/weapon/screwdriver) && stage == 1 && path != 2)
@@ -44,7 +44,7 @@
 				user << "\blue You lock the assembly."
 				playsound(src.loc, 'Screwdriver.ogg', 25, -3)
 				name = "grenade"
-				icon_state = "chemg3"
+				icon_state = initial(icon_state) +"_locked"
 				stage = 2
 			else
 				user << "\red You need to add at least one beaker before locking the assembly."
@@ -439,6 +439,7 @@
 
 	verb/set_APTFT() //set amount_per_transfer_from_this
 		set name = "Set transfer amount"
+		set category = "Object"
 		set src in view(1)
 		var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 		if (N)
@@ -481,6 +482,7 @@
 
 	verb/set_APTFT() //set amount_per_transfer_from_this
 		set name = "Set transfer amount"
+		set category = "Object"
 		set src in range(0)
 		var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 		if (N)

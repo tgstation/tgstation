@@ -4,8 +4,7 @@ proc/empulse(turf/epicenter, heavy_range, light_range, nolog=0)
 		message_admins("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
 
 	if (!istype(epicenter, /turf))
-		epicenter = epicenter.loc
-		return empulse(epicenter, heavy_range, light_range)
+		epicenter = get_turf(epicenter.loc)
 
 	if(heavy_range > 1)
 		var/obj/overlay/pulse = new/obj/overlay ( epicenter )
