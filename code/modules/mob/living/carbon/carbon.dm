@@ -87,7 +87,7 @@
 		return 0
 	src.burn_skin(shock_damage)
 	//src.fireloss += shock_damage //burn_skin will do this for us
-	src.updatehealth()
+	//src.updatehealth()
 	src.visible_message(
 		"\red [src] was shocked by the [source]!", \
 		"\red <B>You feel a powerful shock course through your body!</B>", \

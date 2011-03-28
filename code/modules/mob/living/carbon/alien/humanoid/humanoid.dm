@@ -800,3 +800,8 @@ In all, this is a lot like the monkey code. /N
 		src.health = 100
 		src.stat = 0
 
+
+/mob/living/carbon/alien/heal_organ_damage(var/brute, var/burn)
+	bruteloss = max(0, bruteloss-brute) //HACK
+	fireloss = max(0, fireloss-burn) //HACK
+	src.updatehealth()

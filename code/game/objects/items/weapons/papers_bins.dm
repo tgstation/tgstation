@@ -203,7 +203,12 @@ CLIPBOARDS
 	return
 
 /obj/item/weapon/paper/attack_ai(var/mob/living/silicon/ai/user as mob)
-	if (get_dist(src, user.current) < 2)
+	var/dist
+	if (istype(user) && user.current) //is AI
+		dist = get_dist(src, user.current) 
+	else //cyborg or AI not seeing through a camera
+		dist = get_dist(src, user) 
+	if (dist < 2)
 		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", src.name, src.info), text("window=[]", src.name))
 		onclose(usr, "[src.name]")
 	else

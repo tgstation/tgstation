@@ -702,3 +702,8 @@
 	src.target.update_clothing()
 	del(src)
 	return
+
+/mob/living/carbon/monkey/heal_organ_damage(var/brute, var/burn)
+	bruteloss = max(0, bruteloss-brute) //HACK
+	fireloss = max(0, fireloss-burn) //HACK
+	src.updatehealth()

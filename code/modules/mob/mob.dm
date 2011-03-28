@@ -2229,3 +2229,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 	for(var/obj/O in L)
 		O.emp_act(severity)
 	..()
+
+/mob/proc/heal_organ_damage(var/brute, var/burn)
+	var/list/parts = list()
+	for(var/A in src.organs)
+		if(!src.organs[A])	continue
+		var/datum/organ/external/affecting = src.organs[A]
+		if(!istype(affecting))	continue
+		if((brute && affecting.brute_dam) || (burn && affecting.burn_dam))
+			parts += affecting
+
+	if(!parts.len) return
+	var/datum/organ/external/picked = pick(parts)
+	picked.heal_damage(brute,burn)
+	src.updatehealth()

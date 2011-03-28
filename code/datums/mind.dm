@@ -240,7 +240,9 @@ datum/mind
 					if (istype(objective, /datum/objective/absorb))
 						def_num = objective:num_to_eat
 
-					var/num_to_eat = input("Number to eat:", "Objective", def_num) as text
+					var/num_to_eat = input("Number to eat:", "Objective", def_num) as num|null
+					if (isnull(num_to_eat))
+						return
 					new_objective = new /datum/objective/absorb
 					new_objective.owner = src
 					new_objective:num_to_eat = num_to_eat

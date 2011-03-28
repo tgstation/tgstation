@@ -169,9 +169,8 @@
 						occupant.oxyloss -= 1
 					//severe damage should heal waaay slower without proper chemicals
 					if(occupant.bodytemperature < 225)
-						if(occupant.bruteloss) occupant.bruteloss = max(0, occupant.bruteloss - min(1, 20/occupant.bruteloss))
-						if(occupant.fireloss) occupant.fireloss = max(0, occupant.fireloss - min(1, 20/occupant.fireloss))
-						if(occupant.toxloss) occupant.toxloss = max(0, occupant.toxloss - min(1, 20/occupant.toxloss))
+						occupant.toxloss = max(0, occupant.toxloss - min(1, 20/occupant.toxloss))
+						occupant.heal_organ_damage(min(1, 20/occupant.bruteloss),min(1, 20/occupant.fireloss))
 				if(beaker && (next_trans == 0))
 					beaker:reagents.trans_to(occupant, 1, 10)
 					beaker:reagents.reaction(occupant)
