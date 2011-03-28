@@ -132,4 +132,3 @@
 	name = "mime mask"
 	desc = "It looks a little creepy"
 	icon_state = "mime"
-	item_state = "clown_hat"

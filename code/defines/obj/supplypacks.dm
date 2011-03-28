@@ -270,6 +270,25 @@
 	containername = "Riot crate"
 	access = access_security
 
+
+/datum/supply_packs/riot
+	name = "Standard Costume crate"
+	contains = list("/obj/item/weapon/stamp/clown",
+					"/obj/item/weapon/storage/backpack/clown",
+					"/obj/item/clothing/shoes/clown_shoes",
+					"/obj/item/clothing/mask/gas/clown_hat",
+					"/obj/item/clothing/under/rank/clown",
+					"/obj/item/clothing/under/mime",
+					"/obj/item/clothing/shoes/black",
+					"/obj/item/clothing/gloves/white",
+					"/obj/item/clothing/mask/gas/mime",
+					"/obj/item/clothing/head/beret",
+					"/obj/item/clothing/suit/suspenders",)
+	cost = 10
+	containertype = "/obj/crate/secure/gear"
+	containername = "Standard Costume"
+	access = access_theatre
+
 /datum/supply_packs/armor
 	name = "Armor crate"
 	contains = list("/obj/item/clothing/head/helmet",
