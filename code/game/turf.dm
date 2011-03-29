@@ -346,7 +346,7 @@
 			F.sd_LumReset()
 			return
 
-		if (W:remove_fuel(5,user))
+		if (W:remove_fuel(0,user))
 			user << "\blue Now disassembling the outer wall plating."
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			sleep(100)

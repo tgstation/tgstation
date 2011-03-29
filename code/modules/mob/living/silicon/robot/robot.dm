@@ -371,7 +371,7 @@
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
-		if (W:remove_fuel(4))
+		if (W:remove_fuel(0))
 			src.bruteloss -= 30
 			if(src.bruteloss < 0) src.bruteloss = 0
 			src.updatehealth()

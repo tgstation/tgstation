@@ -27,7 +27,7 @@
 		if(salvage_num <= 0)
 			user << "You can't see anything of value left on this wreck."
 			return
-		if (W:remove_fuel(1,user))
+		if (W:remove_fuel(0,user))
 			var/type = prob(70)?pick(welder_salvage):null
 			if(type)
 				var/N = new type(get_turf(user))

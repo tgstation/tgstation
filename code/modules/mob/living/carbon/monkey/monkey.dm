@@ -375,12 +375,10 @@
 			src.icon_state = "monkey0"
 
 	if (src.wear_mask)
-		if (istype(src.wear_mask, /obj/item/clothing/mask) && src.update_icon)
-			var/t1 = src.wear_mask.item_state
-			if (!( t1 ))
-				t1 = src.wear_mask.icon_state
-			src.overlays += image("icon" = 'monkey.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = src.layer)
-		src.wear_mask.screen_loc = ui_mask
+		if (istype(src.wear_mask, /obj/item/clothing/mask))
+			var/t1 = src.wear_mask.icon_state
+			src.overlays += image("icon" = 'monkey.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = MOB_LAYER)
+			src.wear_mask.screen_loc = ui_mask
 
 	if (src.r_hand)
 		if(src.update_icon)
@@ -393,11 +391,8 @@
 		src.l_hand.screen_loc = ui_lhand
 
 	if (src.back)
-		if(src.update_icon)
-			if (!( src.lying ))
-				src.overlays += image("icon" = 'monkey.dmi', "icon_state" = "back", "layer" = src.layer)
-			else
-				src.overlays += image("icon" = 'monkey.dmi', "icon_state" = "back2", "layer" = src.layer)
+		var/t1 = src.back.icon_state //this will fix the back packs not working. Yay! Now I can delete all those monkey backpack sprites
+		src.overlays += image("icon" = 'back.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = MOB_LAYER)
 		src.back.screen_loc = ui_back
 
 	if (src.handcuffed && src.update_icon)

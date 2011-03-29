@@ -2557,6 +2557,14 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		origin_tech = "materials=6"
 		desc = "This makes perfect sense."
 
+	plasmacutter
+		name = "Plasma Cutter"
+		icon_state = "plasmacutter"
+		icon_state = "gun"
+		digspeed = 0
+		origin_tech = "materials=6, plasma=3"
+		desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+
 /*****************************Shovel********************************/
 
 /obj/item/weapon/shovel

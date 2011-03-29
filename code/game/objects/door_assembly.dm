@@ -84,7 +84,7 @@ obj/door_assembly
 
 /obj/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool) && W:welding && !anchored )
-		if (W:remove_fuel(1,user))
+		if (W:remove_fuel(0,user))
 			user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
 			playsound(src.loc, 'Welder2.ogg', 50, 1)
 			if(do_after(user, 40))

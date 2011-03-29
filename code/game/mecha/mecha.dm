@@ -847,7 +847,7 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
-		if (W:remove_fuel(1,user))
+		if (W:remove_fuel(0,user))
 			if (src.internal_damage & MECHA_INT_TANK_BREACH)
 				src.internal_damage &= ~MECHA_INT_TANK_BREACH
 				user << "\blue You repair the damaged gas tank."

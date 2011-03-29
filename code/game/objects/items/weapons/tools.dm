@@ -82,7 +82,7 @@ WELDINGTOOOL
 
 // WELDING TOOL
 /obj/item/weapon/weldingtool
-	name = "weldingtool"
+	name = "Welding Tool"
 	icon = 'items.dmi'
 	icon_state = "welder"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -304,7 +304,20 @@ WELDINGTOOOL
 
 
 /obj/item/weapon/weldingtool/largetank
-	name = "weldingtool"
-	icon = 'items.dmi'
-	icon_state = "welder"
+	name = "Industrial Welding Tool"
 	max_fuel = 40
+	m_amt = 70
+	g_amt = 60
+/obj/item/weapon/weldingtool/hugetank
+	name = "Upgraded Welding Tool"
+	max_fuel = 80
+	w_class = 3.0
+	m_amt = 70
+	g_amt = 120
+
+/obj/item/weapon/weldingtool/experimental
+	name = "Experimental Welding Tool"
+	max_fuel = 80
+	w_class = 3.0
+	m_amt = 70
+	g_amt = 120

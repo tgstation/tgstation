@@ -39,9 +39,9 @@
 	new /obj/item/clothing/head/helmet/welding( src )
 	new /obj/item/clothing/head/helmet/welding( src )
 	new /obj/item/clothing/head/helmet/welding( src )
-	new /obj/item/weapon/weldingtool( src )
-	new /obj/item/weapon/weldingtool( src )
-	new /obj/item/weapon/weldingtool( src )
+	new /obj/item/weapon/weldingtool/largetank( src )
+	new /obj/item/weapon/weldingtool/largetank( src )
+	new /obj/item/weapon/weldingtool/largetank( src )
 	return
 
 /obj/secure_closet/engineering_personal/New()

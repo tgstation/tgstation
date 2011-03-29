@@ -254,6 +254,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/device/timer(), \
 		new /obj/item/weapon/rcd(), \
 		new /obj/item/device/infra(), \
+		new /obj/item/weapon/weldingtool/largetank(), \
 		new /obj/item/device/infra_sensor(), \
 		new /obj/item/weapon/handcuffs(), \
 		new /obj/item/weapon/ammo/a357(), \
