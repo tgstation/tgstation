@@ -9,6 +9,7 @@
 	max_temperature = 3500
 	infra_luminosity = 5
 	operation_req_access = list(access_clown)
+	add_req_access = 0
 
 /obj/mecha/combat/honker/New()
 	..()
