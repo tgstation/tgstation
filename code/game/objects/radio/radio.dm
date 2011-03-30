@@ -221,6 +221,40 @@ Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[li
 			part_a = "<span class='deptradio'><span class='name'>"
 
 		var/quotedmsg = M.say_quote(message)
+
+		//This following recording is intended for research and feedback in the use of department radio channels. It was added on 30.3.2011 by errorage.
+
+		var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+		var/blackbox_msg = "[part_a][M.name][part_blackbox_b][quotedmsg][part_c]"
+		//var/blackbox_admin_msg = "[part_a][M.name] (Real name: [M.real_name])[part_blackbox_b][quotedmsg][part_c]"
+		for (var/obj/machinery/blackbox_recorder/BR in world)
+			//BR.messages_admin += blackbox_admin_msg
+			switch(display_freq)
+				if(1459)
+					BR.msg_common += blackbox_msg
+				if(1351)
+					BR.msg_science += blackbox_msg
+				if(1353)
+					BR.msg_command += blackbox_msg
+				if(1355)
+					BR.msg_medical += blackbox_msg
+				if(1357)
+					BR.msg_engineering += blackbox_msg
+				if(1359)
+					BR.msg_security += blackbox_msg
+				if(1441)
+					BR.msg_deathsquad += blackbox_msg
+				if(1213)
+					BR.msg_syndicate += blackbox_msg
+				if(1349)
+					BR.msg_mining += blackbox_msg
+				if(1347)
+					BR.msg_cargo += blackbox_msg
+				else
+					BR.messages += blackbox_msg
+
+		//End of research and feedback code.
+
 		if (length(heard_masked))
 			var/rendered = "[part_a][M.name][part_b][quotedmsg][part_c]"
 

@@ -63,3 +63,27 @@
 /obj/machinery/message_server/attack_hand(user as mob)
 	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
 
+
+
+/obj/machinery/blackbox_recorder
+	icon = 'stationobjs.dmi'
+	icon_state = "blackbox"
+	name = "Blackbox Recorder"
+	density = 1
+	anchored = 1.0
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 100
+	var/messages = list()
+	var/messages_admin = list()
+
+	var/msg_common = list()
+	var/msg_science = list()
+	var/msg_command = list()
+	var/msg_medical = list()
+	var/msg_engineering = list()
+	var/msg_security = list()
+	var/msg_deathsquad = list()
+	var/msg_syndicate = list()
+	var/msg_mining = list()
+	var/msg_cargo = list()
