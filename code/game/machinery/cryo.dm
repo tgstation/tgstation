@@ -169,7 +169,8 @@
 						occupant.oxyloss -= 1
 					//severe damage should heal waaay slower without proper chemicals
 					if(occupant.bodytemperature < 225)
-						occupant.toxloss = max(0, occupant.toxloss - min(1, 20/occupant.toxloss))
+						if (occupant.toxloss)
+							occupant.toxloss = max(0, occupant.toxloss - min(1, 20/occupant.toxloss))
 						var/heal_brute = occupant.bruteloss ? min(1, 20/occupant.bruteloss) : 0
 						var/heal_fire = occupant.fireloss ? min(1, 20/occupant.fireloss) : 0
 						occupant.heal_organ_damage(heal_brute,heal_fire)
