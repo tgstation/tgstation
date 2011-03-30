@@ -1172,7 +1172,7 @@
 	src.holder.state = 2
 	update_admins(rank)
 	if(!istype(src.mob, /mob/dead/observer))
-		src.mob.ghostize(1)
+		src.mob.adminghostize(1)
 	src << "\blue You are now observing"
 
 /client/proc/admin_play()

@@ -12,13 +12,18 @@
 		src.name = corpse.real_name
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
 
-/mob/proc/ghostize(var/adminoverride = 0)
+/mob/proc/ghostize()
 	set category = "Special Verbs"
 	set name = "Ghost"
 	set desc = "You cannot be revived as a ghost"
-	if(src.stat != 2 && !adminoverride)
+	if(src.stat != 2)
 		src << "Only dead people and admins get to ghost, and admins don't use this verb to ghost while alive."
 		return
+	if(src.client)
+		src.client.mob = new/mob/dead/observer(src)
+	return
+
+/mob/proc/adminghostize()
 	if(src.client)
 		src.client.mob = new/mob/dead/observer(src)
 	return
