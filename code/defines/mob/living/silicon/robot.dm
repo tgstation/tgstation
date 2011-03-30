@@ -27,6 +27,8 @@
 	var/obj/item/weapon/cell/cell = null
 	var/obj/machinery/camera/camera = null
 
+	var/obj/item/device/mmi/brain = null
+
 	var/opened = 0
 	var/emagged = 0
 	var/wiresexposed = 0

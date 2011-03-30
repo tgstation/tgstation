@@ -3323,7 +3323,7 @@
 "blU" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"; tag = "Streight"},/turf/simulated/floor{icon_state = "white"},/area/medical/surgery)
 "blV" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"; tag = "Streight"},/obj/machinery/atmospherics/pipe/simple{color = "blue"; icon_state = "intact-b-f"; level = 1; name = "pipe"},/obj/machinery/door/firedoor/border_only,/obj/machinery/door/airlock/medical{name = "Operating Theatre"; req_access_txt = "45"},/turf/simulated/floor{icon_state = "white"},/area/medical/surgery)
 "blW" = (/obj/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = "90Curve"},/turf/simulated/floor{icon_state = "white"},/area/medical/surgery)
-"blX" = (/obj/table{dir = 10; icon_state = "tabledir"},/turf/simulated/floor{icon_state = "white"},/area/medical/surgery)
+"blX" = (/obj/table{dir = 10; icon_state = "tabledir"},/obj/item/device/mmi,/obj/item/device/mmi,/turf/simulated/floor{icon_state = "white"},/area/medical/surgery)
 "blY" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/turf/simulated/floor{icon_state = "dark"},/area/medical/surgery)
 "blZ" = (/obj/closet/firecloset,/turf/simulated/floor/plating,/area/maintenance/starboard)
 "bma" = (/obj/grille,/obj/window/reinforced,/obj/window/reinforced{dir = 4},/obj/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/quartermaster/storage)

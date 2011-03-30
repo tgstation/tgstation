@@ -7,7 +7,7 @@
 	var/state = 0
 	var/datum/ai_laws/laws = new /datum/ai_laws/asimov
 	var/obj/item/weapon/circuitboard/circuit = null
-	var/obj/item/brain/brain = null
+	var/obj/item/device/mmi/brain = null
 
 
 /obj/AIcore/attackby(obj/item/P as obj, mob/user as mob)
@@ -105,7 +105,13 @@
 				src.laws.add_inherent_law(M.newFreeFormLaw)
 				usr << "Added a freeform law."
 
-			if(istype(P, /obj/item/brain))
+			if(istype(P, /obj/item/device/mmi))
+				if(!P:brain)
+					user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
+					return
+				if(P:brain.brainmob.stat == 2)
+					user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
+					return
 				user.drop_item()
 				P.loc = src
 				src.brain = P

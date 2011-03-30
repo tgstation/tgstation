@@ -571,6 +571,8 @@ Please clean it before use!</TT><BR>
 						src.extra_item = null
 
 					else //Otherwise it was empty, so just turn it on then off again with nothing happening
+						for(var/obj/O in src.contents)
+							del(O) //with how brains work now, need to make sure they get deleted so the poor player inside it gets ghosted. --NEO
 						src.operating = 1
 						src.icon_state = "mw1"
 						src.updateUsrDialog()

@@ -794,6 +794,7 @@
 	origin_tech = "biotech=3"
 
 	var/mob/living/carbon/human/owner = null
+	var/mob/living/carbon/brain/brainmob = null
 
 
 /obj/item/brain/New()
@@ -801,6 +802,25 @@
 	spawn(5)
 		if(src.owner)
 			src.name = "[src.owner]'s brain"
+			//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
+			brainmob = new /mob/living/carbon/brain
+			brainmob.loc = src
+			brainmob.name = owner.real_name
+			brainmob.real_name = owner.real_name
+			src.owner.mind.transfer_to(brainmob)
+			brainmob.death() //the brain is dead until stuffed into an MMI. In which case it might still be dead if it's been beat up.
+			brainmob.client.screen.len = null //clear the hud
+			brainmob << "\blue You might feel slightly disoriented. That's normal when your brain gets cut out."
+
+/obj/item/brain/Del()
+	if(src.brainmob)
+		if(src.brainmob.client)
+			var/mob/dead/observer/newmob
+			newmob = new/mob/dead/observer
+			newmob.loc = get_turf(src)
+			src.brainmob:client:mob = newmob
+			newmob:client:eye = newmob
+	..()
 
 /obj/noticeboard
 	name = "Notice Board"

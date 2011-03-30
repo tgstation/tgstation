@@ -18,6 +18,12 @@
 			return 1
 		return ..()
 
+//	verb
+//		body_jump()
+//			set category = "Special Verbs"
+//			set name = "Check on Original Body"
+
+
 /obj/hud/proc/brain_hud(var/ui_style='screen1_old.dmi')
 	src.station_explosion = new src.h_type( src )
 	src.station_explosion.icon = 'station_explosion.dmi'

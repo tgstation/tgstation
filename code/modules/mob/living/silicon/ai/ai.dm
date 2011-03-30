@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/brain/B)
+/mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B)
 	src.anchored = 1
 	src.canmove = 0
 	src.loc = loc
@@ -24,8 +24,8 @@
 		src.real_name = "Inactive AI"
 		src.icon_state = "ai-empty"
 	else
-		if (B.owner.mind)
-			B.owner.mind.transfer_to(src)
+		if (B.brain.brainmob.mind)
+			B.brain.brainmob.mind.transfer_to(src)
 
 		src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
 		src << "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>"

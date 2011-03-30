@@ -1,9 +1,10 @@
 /mob/living/carbon/brain/death(gibbed)
 	var/cancel
-	if (!gibbed)
-		for(var/mob/O in viewers(src.container, null))
-			O.show_message(text("\red <B>[]'s MMI flatlines!</B>", src), 1, "\red You hear something flatline.", 2)
-	src.container.icon_state = "mmi_dead"
+	if(src.container)
+		if (!gibbed)
+			for(var/mob/O in viewers(src.container, null))
+				O.show_message(text("\red <B>[]'s MMI flatlines!</B>", src), 1, "\red You hear something flatline.", 2)
+		src.container.icon_state = "mmi_dead"
 	src.stat = 2
 
 	if(src.blind)

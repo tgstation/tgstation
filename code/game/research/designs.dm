@@ -853,6 +853,16 @@ datum
 			reliability_base = 74
 			build_path = "/obj/item/device/mass_spectrometer/adv"
 
+		mmi
+			name = "Man-Machine Interface"
+			desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
+			id = "mmi"
+			req_tech = list("biotech" = 3)
+			build_type = PROTOLATHE | MECHFAB
+			materials = list("$metal" = 1000, "$glass" = 500)
+			reliability_base = 76
+			build_path = "/obj/item/device/mmi"
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////

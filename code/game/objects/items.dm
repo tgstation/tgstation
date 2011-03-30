@@ -341,21 +341,23 @@
 		if(M.client)
 			M.client.mob = new/mob/dead/observer(M)
 		//a mob can't have two clients so get rid of one
-
-		if(src.owner)
+		//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
+		src.brainmob.mind.transfer_to(M)
+		src.brainmob = null
+//		if(src.owner)
 		//if the brain has an owner corpse
-			if(src.owner.client)
+//			if(src.owner.client)
 			//if the player hasn't ghosted
-				src.owner.client.mob = M
+//				src.owner.client.mob = M
 				//then put them in M
-			else
+//			else
 			//if the player HAS ghosted
-				for(var/mob/dead/observer/O in world)
-					if(O.corpse == src.owner && O.client)
+//				for(var/mob/dead/observer/O in world)
+//					if(O.corpse == src.owner && O.client)
 					//find their ghost
-						O.client.mob = M
+//						O.client.mob = M
 						//put their mob in M
-						del(O)
+//						del(O)
 						//delete thier ghost
 
 		M:brain_op_stage = 3.0

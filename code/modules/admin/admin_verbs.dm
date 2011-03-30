@@ -1121,7 +1121,7 @@
 	src.verbs -= /obj/admins/proc/unprison
 	src.verbs -= /proc/togglebuildmode
 	src.verbs -= /client/proc/cmd_mass_modify_object_variables
-	
+
 	src.verbs -= /client/proc/triple_ai
 	src.verbs -= /client/proc/only_one
 	// Unnecessary commands
@@ -1172,7 +1172,7 @@
 	src.holder.state = 2
 	update_admins(rank)
 	if(!istype(src.mob, /mob/dead/observer))
-		src.mob.ghostize()
+		src.mob.ghostize(1)
 	src << "\blue You are now observing"
 
 /client/proc/admin_play()

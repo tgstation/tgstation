@@ -46,7 +46,7 @@ datum
 
 			check_completion()
 				if(target && target.current)
-					if(target.current.stat == 2 || istype(target.current.loc.loc, /area/tdome) || istype(target.current,/mob/living/silicon)) //Assuming this works, people in the thunderdome and borgs now count as dead for traitor objectives. --NeoFite
+					if(target.current.stat == 2 || istype(target.current.loc.loc, /area/tdome) || istype(target.current,/mob/living/silicon) || istype(target.current,/mob/living/carbon/brain)) //Assuming this works, people in the thunderdome and borgs now count as dead for traitor objectives. --NeoFite
 						return 1
 					else
 						return 0
@@ -80,6 +80,8 @@ datum
 
 			check_completion()
 				if(istype(owner.current, /mob/living/silicon))
+					return 0
+				if(istype(owner.current, /mob/living/carbon/brain))
 					return 0
 				if(emergency_shuttle.location<2)
 					return 0

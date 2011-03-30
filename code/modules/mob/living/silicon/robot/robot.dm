@@ -35,6 +35,13 @@
 		src.cell = C
 	..()
 
+/mob/living/silicon/robot/Del()
+	if(brain)
+		brain.loc = loc
+		mind.transfer_to(brain.brain.brainmob)
+	..()
+	//If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
+
 /mob/living/silicon/robot/proc/pick_module()
 	if(src.module)
 		return
