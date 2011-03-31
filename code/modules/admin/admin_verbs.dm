@@ -291,7 +291,7 @@
 //			src.verbs += /client/proc/cmd_admin_list_admins
 //			src.verbs += /client/proc/getmobs
 
-		if ("Admin who Sinned")
+		if ("Badmin")
 			src.deadchat = 1
 			src.holder.level = 4
 
@@ -853,7 +853,7 @@
 //			src.verbs += /client/proc/cmd_admin_list_admins
 //			src.verbs += /client/proc/getmobs
 
-		if ("Admin Observer")
+		if ("Moderator")
 			src.holder.level = 0
 
 			// Settings
@@ -976,7 +976,7 @@
 //			src.verbs += /client/proc/cmd_admin_list_admins
 //			src.verbs += /client/proc/getmobs
 
-		if ("Punished Admin")
+		if ("Admin Observer")
 			src.holder.level = -1
 			src.verbs += /client/proc/cmd_admin_say
 			src.verbs += /client/proc/cmd_admin_gib_self
@@ -1497,7 +1497,7 @@
 
 			// Old and unused
 
-		if ("Admin who Sinned") //Former Shit Guy
+		if ("Badmin") //Former Shit Guy
 			// Settings
 			//src.verbs += /client/proc/colorooc 				// -- Urist
 			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
@@ -1626,7 +1626,7 @@
 
 			// Old and unused
 
-		if ("Admin Observer") //Former Moderator
+		if ("Moderator") //Former Moderator
 			// Settings
 			//src.verbs += /client/proc/colorooc 				// -- Urist
 			//src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
@@ -1656,4 +1656,4 @@
 
 			// Old and unused
 
-		if ("Punished Admin") //Former Filthy Xeno
+		if ("Admin Observer") //Former Filthy Xeno

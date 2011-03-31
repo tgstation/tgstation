@@ -21,7 +21,7 @@
 
 	for (var/mob/M in world)
 		if (M.client && M.client.holder)
-			if (src.holder.rank == "Punished Admin")
+			if (src.holder.rank == "Admin Observer")
 				M << "<span class=\"gfartadmin\"><span class=\"prefix\">ADMIN:</span> <span class=\"name\">[key_name(usr, M)]:</span> <span class=\"message\">[msg]</span></span>"
 			else
 				M << "<span class=\"admin\"><span class=\"prefix\">ADMIN:</span> <span class=\"name\">[key_name(usr, M)]:</span> <span class=\"message\">[msg]</span></span>"

@@ -151,7 +151,7 @@
 				if(objholder in removed_paths)
 					alert("That path is not allowed.")
 					objholder = "/obj/closet"
-				else if (dd_hasprefix(objholder, "/mob") && !(usr.client.holder.rank in list("Game Master", "Game Admin", "Admin who Sinned")))
+				else if (dd_hasprefix(objholder, "/mob") && !(usr.client.holder.rank in list("Game Master", "Game Admin", "Badmin")))
 					objholder = "/obj/closet"
 			if(3)
 				var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "urine")

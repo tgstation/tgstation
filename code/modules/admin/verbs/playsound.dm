@@ -11,7 +11,7 @@
 	uploaded_sound.priority = 255
 	uploaded_sound.wait = 1
 
-	if(src.holder.rank == "Game Master" || src.holder.rank == "Game Admin" || src.holder.rank == "Admin who Sinned")
+	if(src.holder.rank == "Game Master" || src.holder.rank == "Game Admin" || src.holder.rank == "Badmin")
 		log_admin("[key_name(src)] played sound [S]")
 		message_admins("[key_name_admin(src)] played sound [S]", 1)
 		for(var/mob/M in world)
@@ -80,7 +80,7 @@ client/proc/space_asshole()
 	uploaded_sound.priority = 255
 	uploaded_sound.wait = 1
 
-	if(src.holder.rank == "Game Master" || src.holder.rank == "Game Admin" || src.holder.rank == "Admin who Sinned")
+	if(src.holder.rank == "Game Master" || src.holder.rank == "Game Admin" || src.holder.rank == "Badmin")
 		log_admin("[key_name(src)] played sound [S]")
 		message_admins("[key_name_admin(src)] played sound [S]", 1)
 		world << uploaded_sound
