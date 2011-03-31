@@ -377,7 +377,7 @@
 	if (src.wear_mask)
 		if (istype(src.wear_mask, /obj/item/clothing/mask))
 			var/t1 = src.wear_mask.icon_state
-			src.overlays += image("icon" = 'monkey.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = MOB_LAYER)
+			src.overlays += image("icon" = 'monkey.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = src.layer)
 			src.wear_mask.screen_loc = ui_mask
 
 	if (src.r_hand)
@@ -391,8 +391,8 @@
 		src.l_hand.screen_loc = ui_lhand
 
 	if (src.back)
-		var/t1 = src.back.icon_state //this will fix the back packs not working. Yay! Now I can delete all those monkey backpack sprites
-		src.overlays += image("icon" = 'back.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = MOB_LAYER)
+		var/t1 = src.back.icon_state //apparently tables make me upset and cause my dreams to shatter
+		src.overlays += image("icon" = 'back.dmi', "icon_state" = text("[][]", t1, (!( src.lying ) ? null : "2")), "layer" = src.layer)
 		src.back.screen_loc = ui_back
 
 	if (src.handcuffed && src.update_icon)
