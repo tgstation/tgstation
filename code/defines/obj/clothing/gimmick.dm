@@ -1,6 +1,6 @@
 /obj/item/clothing/head/rabbitears
 	name = "Rabbit Ears"
-	desc = "Wearing thes makes you looks useless, and only good for your sex appeal."
+	desc = "Wearing these makes you looks useless, and only good for your sex appeal."
 	icon_state = "bunny"
 	flags = FPRINT | TABLEPASS | HEADSPACE
 
@@ -12,7 +12,7 @@
 
 /obj/item/clothing/under/blackskirt
 	name = "Black skirt"
-	desc = "A black skirt"
+	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
 	color = "blackskirt"
 
@@ -30,6 +30,7 @@
 	desc = "Festive!"
 	icon_state = "santa"
 	item_state = "santa"
+	slowdown = 1
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 

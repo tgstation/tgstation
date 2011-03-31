@@ -140,6 +140,14 @@
 	color = "geneticswhite"
 	permeability_coefficient = 0.50
 
+/obj/item/clothing/under/rank/chemist
+	desc = "Made of a special fiber that gives special protection against biohazards. Has a chemist rank stripe on it."
+	name = "Chemist Jumpsuit"
+	icon_state = "genetics"
+	item_state = "w_suit"
+	color = "geneticswhite"
+	permeability_coefficient = 0.50
+
 /obj/item/clothing/under/rank/head_of_personnel
 	desc = "It has a Head of Personnel rank stripe on it."
 	name = "Head of Personnel Jumpsuit"
@@ -162,12 +170,11 @@
 	color = "centcom"
 
 /obj/item/clothing/under/rank/miner
-	desc = "A snappy jumpsuit with a sturdy set of overalls. It is very dirty."
+	desc = "A snappy jumpsuit with a sturdy set of overalls. It is very dirty. It has a shaft miner rank stripe on it."
 	name = "Shaft Miner Jumpsuit"
 	icon_state = "miner"
 	item_state = "miner"
 	color = "miner"
-	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/rank/roboticist
 	desc = "A slimming black with reinforced seams. Great for industrial work."
@@ -175,8 +182,6 @@
 	icon_state = "robotics"
 	item_state = "robotics"
 	color = "robotics"
-	permeability_coefficient = 0.25		//This is the protection a lab coat provided previously.
-	heat_transfer_coefficient = 0.75
 
 /obj/item/clothing/under/rank/head_of_security
 	desc = "It has a Head of Security rank stripe on it."
@@ -200,7 +205,7 @@
 	color = "director"
 
 /obj/item/clothing/under/rank/janitor
-	desc = "Official clothing of the station's poopscooper."
+	desc = "Official clothing of the station's poopscooper. It has a janitor rank stripe on it"
 	name = "Janitor's Jumpsuit"
 	icon_state = "janitor"
 	color = "janitor"
@@ -214,8 +219,16 @@
 	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/rank/medical
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a medical rank stripe on it."
+	desc = "Made of a special fiber that gives special protection against biohazards. It has a Chief Medical Officer  rank stripe on it."
 	name = "Medical Doctor's Jumpsuit"
+	icon_state = "medical"
+	item_state = "w_suit"
+	color = "medical"
+	permeability_coefficient = 0.50
+
+/obj/item/clothing/under/rank/chief_medical_officer
+	desc = "Made of a special fiber that gives special protection against biohazards. Has a medical rank stripe on it."
+	name = "Chief Medical Officer's Jumpsuit"
 	icon_state = "medical"
 	item_state = "w_suit"
 	color = "medical"
@@ -345,3 +358,15 @@
 /obj/item/clothing/under/shorts/grey
 	icon_state = "greyshorts"
 	color = "greyshorts"
+
+/obj/item/clothing/under/space
+	name = "NASA Jumpsuit"
+	icon_state = "black"
+	item_state = "bl_suit"
+	desc = "Has a NASA logo on it, looks space worthy."
+	gas_transfer_coefficient = 0.01
+	w_class = 4//bulky item
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	permeability_coefficient = 0.02
+	protective_temperature = 1000
+	heat_transfer_coefficient = 0.02

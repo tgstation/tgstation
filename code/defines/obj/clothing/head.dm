@@ -9,6 +9,7 @@
 /obj/item/clothing/head/radiation
 	name = "Radiation Hood"
 	icon_state = "rad"
+	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
 	radiation_protection = 0.35
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
 
@@ -24,6 +25,7 @@
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
 	icon_state = "bio"
+	desc = "Keeps the germs from flying on your face."
 	permeability_coefficient = 0.01
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
 
@@ -44,7 +46,7 @@
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
-	desc = "It is a cakehat"
+	desc = "It is a cakehat!"
 	icon_state = "cake0"
 	var/onfire = 0.0
 	var/status = 0
@@ -54,30 +56,32 @@
 /obj/item/clothing/head/caphat
 	name = "Captain's hat"
 	icon_state = "captain"
+	desc = "It is good being the king."
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	item_state = "caphat"
 
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
+	desc = "It is even better to be the emperor."
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	item_state = "centhat"
 
 /obj/item/clothing/head/det_hat
 	name = "hat"
-	desc = "Someone who wears this will look very smart"
+	desc = "Someone who wears this will look very smart."
 	icon_state = "detective"
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
-	desc = "A powdered wig"
+	desc = "A powdered wig."
 	icon_state = "pwig"
 	item_state = "pwig"
 
 /obj/item/clothing/head/that
 	name = "Top hat"
-	desc = "An amish looking hat"
+	desc = "An amish looking hat."
 	icon_state = "tophat"
 	item_state = "that"
 	flags = FPRINT|TABLEPASS|HEADSPACE
@@ -99,13 +103,14 @@
 
 /obj/item/clothing/head/wizard/marisa
 	name = "Witch Hat"
-	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
+	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
 	icon_state = "marisa"
 
 /obj/item/clothing/head/chefhat
 	name = "Chef's hat"
 	icon_state = "chef"
 	item_state = "chef"
+	desc = "The commander in chef's head wear."
 	flags = FPRINT | TABLEPASS | HEADSPACE
 
 /obj/item/clothing/head/plaguedoctorhat
@@ -116,7 +121,7 @@
 
 /obj/item/clothing/head/beret
 	name = "beret"
-	desc = "A mime's beret"
+	desc = "A beret, a mime's favorite headwear."
 	icon_state = "beret"
 	flags = FPRINT | TABLEPASS | HEADSPACE
 
@@ -135,13 +140,14 @@
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
 	icon_state = "space"
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
 	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES | HEADCOVERSMOUTH
 	see_face = 0.0
 	item_state = "space"
 	permeability_coefficient = 0.01
 
 /obj/item/clothing/head/helmet/space/rig
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding"
 	name = "rig helmet"
 	icon_state = "rig"
 	item_state = "rig_helm"
@@ -188,6 +194,7 @@
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS helmet"
 	icon_state = "hoscap"
+	desc = "A hat that shows the security grunts who's in charge!"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
 
 /obj/item/clothing/head/helmet/that

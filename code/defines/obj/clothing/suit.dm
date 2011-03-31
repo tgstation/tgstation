@@ -261,7 +261,7 @@
 
 	protective_temperature = 4500
 	heat_transfer_coefficient = 0.01
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/extinguisher)
 
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
@@ -269,7 +269,7 @@
 
 /obj/item/clothing/suit/radiation
 	name = "Radiation suit"
-	desc = "A suit that protects against radiation."
+	desc = "A suit that protects against radiation. Label: Made with lead, do not eat insulation."
 	icon_state = "rad"
 	item_state = "rad_suit"
 	//w_class = 4//bulky item
@@ -298,7 +298,7 @@
 
 /obj/item/clothing/suit/space
 	name = "space suit"
-	desc = "A suit that protects against low pressure environments."
+	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
 	icon_state = "space"
 	gas_transfer_coefficient = 0.01
 	item_state = "s_suit"
@@ -314,7 +314,7 @@
 
 /obj/item/clothing/suit/space/rig
 	name = "rig suit"
-	desc = "A special suit that protects against hazardous, low pressure environments."
+	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "rig"
 	item_state = "rig_suit"
 	slowdown = 2
@@ -324,9 +324,18 @@
 	name = "red space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
+	desc = "Has a tag on it: Totally not property of of a hostile corporation!"
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
+
+/obj/item/clothing/suit/space/nasa
+	name = "Tacticool NASA Voidsuit"
+	icon_state = "s-ninja"
+	item_state = "s-ninja_suit"
+	desc = "A tacticool, NASA Centcom branch designed, black Space suit. Used for AI satilite maintenance."
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/tank/emergency_oxygen)
+	slowdown = 1.3
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
