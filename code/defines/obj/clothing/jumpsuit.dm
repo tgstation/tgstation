@@ -219,7 +219,7 @@
 	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/rank/medical
-	desc = "Made of a special fiber that gives special protection against biohazards. It has a Chief Medical Officer  rank stripe on it."
+	desc = "Made of a special fiber that gives special protection against biohazards. It has a medical rank stripe on it."
 	name = "Medical Doctor's Jumpsuit"
 	icon_state = "medical"
 	item_state = "w_suit"
@@ -227,7 +227,7 @@
 	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/rank/chief_medical_officer
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a medical rank stripe on it."
+	desc = "Made of a special fiber that gives special protection against biohazards. Has a Chief Medical Officer rank stripe on it."
 	name = "Chief Medical Officer's Jumpsuit"
 	icon_state = "medical"
 	item_state = "w_suit"
