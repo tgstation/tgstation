@@ -493,9 +493,10 @@ var/list/sacrificed = list()
 				usr.say("O bidai nabora se'sma!")
 			else
 				usr.whisper("O bidai nabora se'sma!")
-			var/input = input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
+			var/input = input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "") as text|null
 			if(!input)
 				return fizzle()
+			input = sanitize(input)
 			if(istype(src,/obj/rune))
 				usr.say("[input]")
 			else
