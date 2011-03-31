@@ -3,11 +3,11 @@
 	name = "Durand"
 	icon_state = "durand"
 	step_in = 6
-	health = 350
+	health = 400
 	deflect_chance = 20
 	max_temperature = 3000
 	infra_luminosity = 8
-	force = 35
+	force = 40
 	var/defence = 0
 	var/defence_deflect = 35
 	wreckage = "/obj/decal/mecha_wreckage/durand"

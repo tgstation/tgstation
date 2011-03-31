@@ -104,7 +104,7 @@
 
 /datum/global_iterator/mech_bay_recharger
 	delay = 20
-	var/max_charge = 30
+	var/max_charge = 45
 
 	process(var/obj/machinery/mech_bay_recharge_port/port, var/obj/mecha/mecha)
 		if(mecha in port.recharge_floor)
@@ -129,7 +129,7 @@
 	icon = 'mech_bay.dmi'
 	icon_state = "recharge_comp"
 	var/autostart = 1
-	var/voltage = 30
+	var/voltage = 45
 	var/turf/simulated/floor/mech_bay_recharge_floor/recharge_floor
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 

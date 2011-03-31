@@ -19,7 +19,7 @@
 	layer = MOB_LAYER //icon draw layer
 	infra_luminosity = 15
 	var/can_move = 1
-	var/mob/living/carbon/human/occupant = null
+	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/step_energy_drain = 10
 	var/health = 300 //health is health
@@ -60,7 +60,6 @@
 	var/list/equipment = new
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	var/max_equip = 2
-
 
 /obj/mecha/New()
 	..()
@@ -406,7 +405,8 @@
 		var/list/r_equipment = src.equipment
 		src = null
 		del(mecha)
-		explosion(T, 0, 0, 1, 3)
+		if(prob(40))
+			explosion(T, 0, 0, 1, 3)
 		spawn(0)
 			if(wreckage)
 				var/obj/decal/mecha_wreckage/WR = new wreckage(T)
@@ -631,19 +631,61 @@
 	return
 
 /obj/mecha/proc/moved_inside(var/mob/living/carbon/human/H as mob)
-	if(H && H in range(1))
+	if(H && H.client && H in range(1))
+		H.client.eye = src
+		H.client.perspective = EYE_PERSPECTIVE
 		H.pulling = null
 		src.occupant = H
 		H.loc = src
-		if(H.client)
-			H.client.eye = src
-			H.client.perspective = EYE_PERSPECTIVE
 		src.add_fingerprint(H)
 		src.Entered(H)
 		src.Move(src.loc)
 		src.log_append_to_last("[H] moved in as pilot.")
 		src.icon_state = initial(icon_state)
 		playsound(src, 'windowdoor.ogg', 50, 1)
+		if(!internal_damage)
+			src.occupant << sound('nominal.ogg',volume=50)
+		return 1
+	else
+		return 0
+
+/obj/mecha/proc/mmi_move_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+	if(!mmi_as_oc.brain || !mmi_as_oc.brain.brainmob || !mmi_as_oc.brain.brainmob.client)
+		user << "Consciousness matrix not detected."
+		return 0
+	if(mmi_as_oc.brain.brainmob.stat)
+		user << "Beta-rhythm below acceptable level."
+		return 0
+	if(src.occupant)
+		return 0
+	if(do_after(20))
+		if(!src.occupant)
+			return mmi_moved_inside(mmi_as_oc,user)
+	return 0
+
+
+/obj/mecha/proc/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+	if(mmi_as_oc && user in range(1))
+		if(!mmi_as_oc.brain || !mmi_as_oc.brain.brainmob || !mmi_as_oc.brain.brainmob.client)
+			user << "Consciousness matrix not detected."
+			return 0
+		if(mmi_as_oc.brain.brainmob.stat)
+			user << "Beta-rhythm below acceptable level."
+			return 0
+		user.drop_from_slot(mmi_as_oc)
+		var/mob/brainmob = mmi_as_oc.brain.brainmob
+		brainmob.client.eye = src
+		brainmob.client.perspective = EYE_PERSPECTIVE
+		src.occupant = brainmob
+		brainmob.loc = src //should allow relaymove
+		brainmob.canmove = 1
+		mmi_as_oc.loc = src
+		mmi_as_oc.mecha = src
+		src.verbs -= /obj/mecha/verb/eject
+		src.Entered(mmi_as_oc)
+		src.Move(src.loc)
+		src.icon_state = initial(icon_state)
+		src.log_message("[mmi_as_oc] moved in as pilot.")
 		if(!internal_damage)
 			src.occupant << sound('nominal.ogg',volume=50)
 		return 1
@@ -660,6 +702,15 @@
 	pr_update_stats.start()
 	return
 
+/*
+/obj/mecha/verb/force_eject()
+	set category = "Object"
+	set name = "Force Eject"
+	set src in view(5)
+	src.go_out()
+	return
+*/
+
 /obj/mecha/verb/eject()
 	set name = "Eject"
 	set category = "Exosuit Interface"
@@ -673,13 +724,28 @@
 
 /obj/mecha/proc/go_out()
 	if(!src.occupant) return
-	if(src.occupant.Move(src.loc))
-		src.log_message("[src.occupant] moved out.")
-		src.Exited(src.occupant)
-		if (src.occupant.client)
+	var/atom/movable/mob_container
+	if(ishuman(src.occupant))
+		mob_container = src.occupant
+	else if(istype(src.occupant, /mob/living/carbon/brain))
+		var/mob/living/carbon/brain/brain = src.occupant
+		mob_container = brain.container
+	else
+		return
+	if(mob_container.Move(src.loc))//ejecting mob container
+		src.log_message("[mob_container] moved out.")
+		src.Exited(mob_container)
+		if(src.occupant.client)
 			src.occupant.client.eye = src.occupant.client.mob
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		src.occupant << browse(null, "window=exosuit")
+		if(istype(mob_container, /obj/item/device/mmi))
+			var/obj/item/device/mmi/mmi = mob_container
+			if(mmi.brain)
+				src.occupant.loc = mmi.brain
+			mmi.mecha = null
+			src.occupant.canmove = 0
+			src.verbs += /obj/mecha/verb/eject
 		src.occupant = null
 		src.pr_update_stats.stop()
 		src.icon_state = initial(icon_state)+"-open"
@@ -770,6 +836,14 @@
 
 
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+	if(istype(W, /obj/item/device/mmi))
+		if(src.mmi_move_inside(W,user))
+			user << "[src]-MMI interface initialized successfuly"
+		else
+			user << "[src]-MMI interface initialization failed."
+		return
+
 	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()
@@ -920,8 +994,9 @@
 						[(/obj/mecha/verb/connect_to_port in src.verbs)?"<a href='?src=\ref[src];port_connect=1'>Connect to port</a><br>":null]
 						<a href='?src=\ref[src];unlock_id_upload=1'>Unlock ID upload panel</a><br>
 						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
-						<a href='?src=\ref[src];eject=1'>Eject</a><br>
 					"}
+	if(/obj/mecha/verb/eject in src.verbs)
+		output += "<a href='?src=\ref[src];eject=1'>Eject</a><br>"
 	return output
 
 /obj/mecha/Topic(href, href_list)
@@ -1042,25 +1117,14 @@
 	user << browse(output, "window=mecha_attack_ai")
 	return
 */
-
+/* //it seems this is not needed anymore...
 /obj/mecha/hear_talk(mob/M as mob, text)
+	src.log_message("Heard talk from [M]")
 	if(occupant && M)
 		if(!occupant.say_understands(M))
 			text = stars(text)
 		var/rendered = "<span class='game say'><span class='name'>[M.name]</span> <span class='message'>[M.say_quote(text)]</span></span>"
 		occupant.show_message(rendered, 2)
-	return
-/*
-if ("binary")
-			if(src.robot_talk_understand || src.binarycheck())
-			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
-				src.robot_talk(message)
-			return
-
-if ("alientalk")
-	if(src.alien_talk_understand || src.hivecheck())
-	//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
-		src.alien_talk(message)
 	return
 */
 /obj/mecha/proc/get_charge()//returns null if no powercell, else returns cell.charge

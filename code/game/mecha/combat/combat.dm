@@ -1,5 +1,5 @@
 /obj/mecha/combat
-	var/force = 25
+	var/force = 30
 	var/damtype = "brute"
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
@@ -101,9 +101,6 @@
 				if(istype(target, target_type) && hascall(target, "attackby"))
 					src.occupant_message("You hit [target].")
 					src.visible_message("<font color='red'><b>[src.name] hits [target]</b></font>")
-					for (var/mob/V in viewers(src))
-						if(V.client && !(V.blinded))
-							V.show_message("[src.name] hits [target].", 1)
 					if(!istype(target, /turf/simulated/wall))
 						target:attackby(src,src.occupant)
 					else if(prob(5))
@@ -147,8 +144,8 @@
 
 /obj/mecha/combat/moved_inside(var/mob/living/carbon/human/H as mob)
 	if(..())
-		if(usr.client)
-			usr.client.mouse_pointer_icon = file("icons/misc/mecha_mouse.dmi")
+		if(H.client)
+			H.client.mouse_pointer_icon = file("icons/misc/mecha_mouse.dmi")
 		return 1
 	else
 		return 0

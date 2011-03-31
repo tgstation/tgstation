@@ -11,7 +11,7 @@
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/laser
-	equip_cooldown = 10
+	equip_cooldown = 7
 	name = "CH-PS \"Immolator\" Laser"
 	icon_state = "mecha_laser"
 	energy_drain = 30
@@ -84,7 +84,7 @@
 	name = "PBT \"Pacifier\" Mounted Taser"
 	icon_state = "mecha_taser"
 	energy_drain = 20
-	equip_cooldown = 7
+	equip_cooldown = 6
 
 	action(target)
 		if(!action_checks(target)) return

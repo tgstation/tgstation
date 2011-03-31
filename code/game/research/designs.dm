@@ -422,8 +422,8 @@ datum
 			build_path = "/obj/item/mecha_parts/circuitboard/gygax/targeting"
 
 		durand_main
-			name = "Circuit Design (\"Gygax\" Central Control module)"
-			desc = "Allows for the construction of a \"Gygax\" Central Control module."
+			name = "Circuit Design (\"Durand\" Central Control module)"
+			desc = "Allows for the construction of a \"Durand\" Central Control module."
 			id = "durand_main"
 			req_tech = list("programming" = 4, "materials" = 2)
 			build_type = IMPRINTER
@@ -431,8 +431,8 @@ datum
 			build_path = "/obj/item/mecha_parts/circuitboard/durand/main"
 
 		durand_peri
-			name = "Circuit Design (\"Gygax\" Peripherals Control module)"
-			desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
+			name = "Circuit Design (\"Durand\" Peripherals Control module)"
+			desc = "Allows for the construction of a \"Durand\" Peripheral Control module."
 			id = "durand_peri"
 			req_tech = list("programming" = 4, "materials" = 2)
 			build_type = IMPRINTER
@@ -440,8 +440,8 @@ datum
 			build_path = "/obj/item/mecha_parts/circuitboard/durand/peripherals"
 
 		durand_targ
-			name = "Circuit Design (\"Gygax\" Weapons & Targeting Control module)"
-			desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
+			name = "Circuit Design (\"Durand\" Weapons & Targeting Control module)"
+			desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
 			id = "durand_targ"
 			req_tech = list("programming" = 4, "materials" = 2)
 			build_type = IMPRINTER

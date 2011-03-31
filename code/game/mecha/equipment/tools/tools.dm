@@ -267,6 +267,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/teleporter
 	name = "Teleporter"
+	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	icon_state = "mecha_teleport"
 	equip_cooldown = 300
 	energy_drain = 1000
@@ -286,6 +287,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator
 	name = "Wormhole Generator"
+	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 	icon_state = "mecha_wholegen"
 	equip_cooldown = 50
 	energy_drain = 300
@@ -334,6 +336,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult
 	name = "Gravitational Catapult"
+	desc = "An exosuit mounted Gravitational Catapult."
 	icon_state = "mecha_teleport"
 	equip_cooldown = 10
 	energy_drain = 200

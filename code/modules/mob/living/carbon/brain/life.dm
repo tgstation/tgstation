@@ -122,7 +122,11 @@
 		get_breath_from_internal(volume_needed)
 
 		update_canmove()
-			canmove = 0
+			if(src.in_contents_of(/obj/mecha))
+				canmove = 1
+			else
+				canmove = 0
+			return
 
 		handle_breath(datum/gas_mixture/breath)
 

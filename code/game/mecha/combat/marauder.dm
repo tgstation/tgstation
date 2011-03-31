@@ -3,7 +3,7 @@
 	name = "Marauder"
 	icon_state = "marauder"
 	step_in = 7
-	health = 400
+	health = 500
 	deflect_chance = 25
 	max_temperature = 5000
 	infra_luminosity = 3
@@ -17,6 +17,7 @@
 	wreckage = "/obj/decal/mecha_wreckage/marauder"
 	add_req_access = 0
 	internal_damage_threshold = 25
+	force = 45
 
 
 /obj/mecha/combat/marauder/New()

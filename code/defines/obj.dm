@@ -807,9 +807,11 @@
 			brainmob.loc = src
 			brainmob.name = owner.real_name
 			brainmob.real_name = owner.real_name
-			src.owner.mind.transfer_to(brainmob)
+			if(src.owner.mind)
+				src.owner.mind.transfer_to(brainmob)
 			brainmob.death() //the brain is dead until stuffed into an MMI. In which case it might still be dead if it's been beat up.
-			brainmob.client.screen.len = null //clear the hud
+			if(brainmob.client)
+				brainmob.client.screen.len = null //clear the hud
 			brainmob << "\blue You might feel slightly disoriented. That's normal when your brain gets cut out."
 
 /obj/item/brain/Del()
