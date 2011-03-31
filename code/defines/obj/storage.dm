@@ -36,7 +36,7 @@
 		"/obj/item/weapon/storage/pill_bottle",
 		"/obj/item/weapon/medical")
    flags = FPRINT | TABLEPASS | ONBELT
-  
+
 /obj/item/weapon/storage
 	icon = 'storage.dmi'
 	name = "storage"
@@ -201,6 +201,7 @@
 	throw_speed = 1
 	throw_range = 7
 	w_class = 4.0
+	origin_tech = "combat=1"
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"

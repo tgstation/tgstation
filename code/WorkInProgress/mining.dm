@@ -776,6 +776,12 @@ proc/move_mining_shuttle()
 		if (!( istype(T, /turf) ))
 			return
 
+	if (istype(W, /obj/item/weapon/pickaxe/radius))
+		var/turf/T = user.loc
+		if (!( istype(T, /turf) ))
+			return
+
+
 		user << "\red You start picking."
 		playsound(user, 'Genhit.ogg', 20, 1)
 
@@ -2523,7 +2529,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throwforce = 4.0
 	item_state = "pickaxe"
 	w_class = 4.0
-	m_amt = 50
+	m_amt = 3000 //amking them on par with the require materials to make silver, gold, and diamond picks
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
 
 	silver
@@ -2542,13 +2548,6 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		origin_tech = "materials=4"
 		desc = "This makes no metallurgic sense."
 
-	jackhammer
-		name = "Jackhammer"
-		icon_state = "jackhammer"
-		item_state = "jackhammer"
-		digspeed = 30
-		desc = "You've dig what you dug. Look out for giant lizards."
-
 	diamond
 		name = "Diamond Pickaxe"
 		icon_state = "dpickaxe"
@@ -2564,6 +2563,25 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		digspeed = 0
 		origin_tech = "materials=6, plasma=3"
 		desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+
+/obj/item/weapon/pickaxe/radius // For the side project to make radius cutting devices
+
+	hammer
+		name = "Mining Sledge Hammer"
+		desc = "You feel like smashing your boss in the face with this."
+
+	jackhammer
+		name = "Jackhammer"
+		icon_state = "jackhammer"
+		item_state = "jackhammer"
+		digspeed = 30
+		desc = "You've dig what you dug. Look out for giant lizards."
+
+	drill
+		name = "Giga Drill"
+		digspeed = 10
+		desc = "Yours is the drill that will pierce the heavens!"
+
 
 /*****************************Shovel********************************/
 

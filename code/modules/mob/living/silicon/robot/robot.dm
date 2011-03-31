@@ -69,7 +69,7 @@
 		if("Miner")
 			src.module = new /obj/item/weapon/robot_module/miner(src)
 			src.hands.icon_state = "miner"
-			src.icon_state = "robot"
+			src.icon_state = "Miner"
 			src.modtype = "Miner"
 
 /*

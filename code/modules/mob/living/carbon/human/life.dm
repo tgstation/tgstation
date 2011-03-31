@@ -724,7 +724,7 @@
 
 			if (istype(src.head, /obj/item/clothing/head/helmet/welding))
 				if(!src.head:up && tinted_weldhelh)
-					src.see_in_dark = 0
+					src.see_in_dark = 1
 
 			if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
 			if (src.rest) src.rest.icon_state = text("rest[]", src.resting)

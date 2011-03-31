@@ -36,3 +36,12 @@
 		O.clean_blood()
 		for(var/mob/V in viewers(src, null))
 			V.show_message(text("\blue [user] washes \a [O] using \the [src]."))
+
+	shower
+		name = "Shower"
+		desc = "Plenty of hot water, owered by radiation! Nothing harmful could come from that right?"
+
+	kitchen
+		name = "Kitchen Sink"
+		icon = 'device.dmi'
+		icon_state = "sink_alt"
