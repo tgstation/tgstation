@@ -111,7 +111,7 @@
 		if (!( ismob(M) ))
 			return
 		var/t = input("Message:", text("Private message to [M.key]"))  as text
-		if(src.holder.rank != "Coder" && src.holder.rank != "Host")
+		if(src.holder.rank != "Game Admin" && src.holder.rank != "Game Master")
 			t = strip_html(t,500)
 		if (!( t ))
 			return
@@ -272,7 +272,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 				candidates.Add(G)
 	if(candidates.len)
 		var/mob/dead/observer/G = pick(candidates)
-		message_admins("\blue [key_name_admin(usr)] has spawned [G.key] as a filthy xeno.", 1)
+		message_admins("\blue [key_name_admin(usr)] has spawned [G.key] as a Punnished Admin.", 1)
 
 		new_xeno.mind = new//Mind initialize stuff.
 		new_xeno.mind.current = new_xeno

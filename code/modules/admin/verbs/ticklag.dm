@@ -7,7 +7,7 @@
 		if(src.authenticated && src.holder)
 			if(!src.mob)
 				return
-			if(src.holder.rank in list("Coder", "Host"))
+			if(src.holder.rank in list("Game Admin", "Game Master"))
 				world.tick_lag = number
 				log_admin("[key_name(src.mob)] set tick_lag to [number]")
 				message_admins("[key_name_admin(usr)] modified world's tick_lag to [number]")

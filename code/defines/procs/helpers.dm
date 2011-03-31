@@ -709,7 +709,7 @@
 				text += "<a href=\"byond://?src=\ref[include_link];priv_msg=\ref[the_mob]\">"
 
 		if (the_client && the_client.holder && the_client.stealth && !include_name)
-			text += "Administrator"
+			text += "Administrato"
 		else
 			text += "[the_key]"
 

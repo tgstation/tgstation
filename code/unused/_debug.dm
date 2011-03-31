@@ -9,7 +9,7 @@
 /client/verb/Debug()
 	set category = "Debug"
 	set name = "Debug-Debug"
-	if(src.holder.rank == "Coder")
+	if(src.holder.rank == "Game Admin")
 		Debug = !Debug
 
 		world << "Debugging [Debug ? "On" : "Off"]"

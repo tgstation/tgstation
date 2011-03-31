@@ -151,13 +151,13 @@
 				if(objholder in removed_paths)
 					alert("That path is not allowed.")
 					objholder = "/obj/closet"
-				else if (dd_hasprefix(objholder, "/mob") && !(usr.client.holder.rank in list("Host", "Coder", "Shit Guy")))
+				else if (dd_hasprefix(objholder, "/mob") && !(usr.client.holder.rank in list("Game Master", "Game Admin", "Admin who Sinned")))
 					objholder = "/obj/closet"
 			if(3)
 				var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "urine")
 
 				master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
-				if(master.buildmode.varholder in locked && !(usr.client.holder.rank in list("Host", "Coder")))
+				if(master.buildmode.varholder in locked && !(usr.client.holder.rank in list("Game Master", "Game Admin")))
 					return
 				var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
 				if(!thetype) return

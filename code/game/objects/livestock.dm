@@ -447,7 +447,7 @@
 	patience = 50
 	view_range = 7
 
-/* 		Commented out because of filthy xeno-lovers.
+/* 		Commented out because of Filthy Xeno-lovers.
 /obj/livestock/cow
 	name = "Pigmy Cow"
 	desc = "That's not my cow!"

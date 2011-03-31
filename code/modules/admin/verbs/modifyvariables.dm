@@ -114,7 +114,7 @@
 
 	var/dir
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder")))
+	if (locked.Find(variable) && !(src.holder.rank in list("Game Master", "Game Admin")))
 		return
 
 	if(isnull(variable))
@@ -249,7 +249,7 @@
 	var/var_value = O.vars[variable]
 	var/dir
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder")))
+	if (locked.Find(variable) && !(src.holder.rank in list("Game Master", "Game Admin")))
 		return
 
 	if(isnull(var_value))

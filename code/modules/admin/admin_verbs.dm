@@ -23,7 +23,7 @@
 			return
 
 	switch (rank)
-		if ("Host")
+		if ("Game Master")
 			src.deadchat = 1
 			src.holder.level = 6
 
@@ -162,7 +162,7 @@
 //			src.verbs += /client/proc/cmd_admin_list_admins
 //			src.verbs += /client/proc/getmobs
 
-		if ("Coder")
+		if ("Game Admin")
 			src.deadchat = 1
 			src.holder.level = 5
 
@@ -291,7 +291,7 @@
 //			src.verbs += /client/proc/cmd_admin_list_admins
 //			src.verbs += /client/proc/getmobs
 
-		if ("Shit Guy")
+		if ("Admin who Sinned")
 			src.deadchat = 1
 			src.holder.level = 4
 
@@ -416,7 +416,7 @@
 //			src.verbs += /client/proc/cmd_admin_list_admins
 //			src.verbs += /client/proc/getmobs
 
-		if ("Primary Administrator")
+		if ("Trial Admin")
 			src.deadchat = 1
 			src.holder.level = 3
 
@@ -570,7 +570,7 @@
 //			src.verbs += /client/proc/cmd_admin_list_admins
 //			src.verbs += /client/proc/getmobs
 
-		if ("Administrator")
+		if ("Admin Candidate")
 			src.holder.level = 2
 
 			if(src.holder.state == 2) // if observing
@@ -714,7 +714,7 @@
 //			src.verbs += /client/proc/cmd_admin_list_admins
 //			src.verbs += /client/proc/getmobs
 
-		if ("Secondary Administrator")
+		if ("Temporary Admin")
 			src.holder.level = 1
 
 			if(src.holder.state == 2) // if observing
@@ -853,7 +853,7 @@
 //			src.verbs += /client/proc/cmd_admin_list_admins
 //			src.verbs += /client/proc/getmobs
 
-		if ("Moderator")
+		if ("Admin Observer")
 			src.holder.level = 0
 
 			// Settings
@@ -976,7 +976,7 @@
 //			src.verbs += /client/proc/cmd_admin_list_admins
 //			src.verbs += /client/proc/getmobs
 
-		if ("Filthy Xeno")
+		if ("Punnished Admin")
 			src.holder.level = -1
 			src.verbs += /client/proc/cmd_admin_say
 			src.verbs += /client/proc/cmd_admin_gib_self
@@ -1437,7 +1437,7 @@
 	src.verbs += /client/proc/unstealthadmin
 
 	switch (src.holder.rank)
-		if ("Host")
+		if ("Game Master") //Former Host
 			// Settings
 			//src.verbs += /client/proc/colorooc // -- Urist
 			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
@@ -1467,7 +1467,7 @@
 
 			// Old and unused
 
-		if ("Coder")
+		if ("Game Admin") //Former Coder
 			// Settings
 			//src.verbs += /client/proc/colorooc 				// -- Urist
 			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
@@ -1497,7 +1497,7 @@
 
 			// Old and unused
 
-		if ("Shit Guy")
+		if ("Admin who Sinned") //Former Shit Guy
 			// Settings
 			//src.verbs += /client/proc/colorooc 				// -- Urist
 			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
@@ -1527,7 +1527,7 @@
 
 			// Old and unused
 
-		if ("Primary Administrator")
+		if ("Trial Admin") //Former Primary Administrator
 			if(src.holder.state == 2) // if observing
 				// Settings
 				src.verbs += /obj/admins/proc/toggleaban			//abandon mob
@@ -1564,17 +1564,19 @@
 
 			// Old and unused
 
-		if ("Administrator")
+		if ("Admin Candidate") //Removed the 'Administrator' rank, has same rights as Trial Admin (Expected that these will be set manually each round)
 			if(src.holder.state == 2) // if observing
 				// Settings
 				src.verbs += /obj/admins/proc/toggleaban			//abandon mob
-				src.verbs += /client/proc/deadchat					//toggles deadchat
+				src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
+				src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
+				src.verbs += /obj/admins/proc/toggletraitorscaling
 
 			// Settings
 			//src.verbs += /client/proc/colorooc 				// -- Urist
-			//src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
-			//src.verbs += /obj/admins/proc/adrev					//toggle admin revives
-			//src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
+			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
+			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
+			src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
 			src.verbs += /obj/admins/proc/delay					//game start delay
 			//src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
@@ -1585,21 +1587,10 @@
 			//src.verbs += /obj/admins/proc/toggle_aliens
 			src.verbs += /obj/admins/proc/voteres 				//toggle votes
 			src.verbs += /client/proc/deadchat					//toggles deadchat
-			//src.verbs += /proc/toggle_adminmsg
+			src.verbs += /proc/toggle_adminmsg
 
-			// Admin "must have"
 
-			// Debug
-
-			// Admin helpers
-
-			// Admin game intrusion
-
-			// Unnecessary commands
-
-			// Old and unused
-
-		if ("Secondary Administrator")
+		if ("Temporary Admin") //Former Secondary Administrator
 			if(src.holder.state == 2) // if observing
 				// Settings
 				src.verbs += /obj/admins/proc/toggleaban			//abandon mob
@@ -1635,7 +1626,7 @@
 
 			// Old and unused
 
-		if ("Moderator")
+		if ("Admin Observer") //Former Moderator
 			// Settings
 			//src.verbs += /client/proc/colorooc 				// -- Urist
 			//src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
@@ -1665,4 +1656,4 @@
 
 			// Old and unused
 
-		if ("Filthy Xeno")
+		if ("Punnished Admin") //Former Filthy Xeno

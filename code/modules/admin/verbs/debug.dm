@@ -4,12 +4,12 @@
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
-	if(src.holder.rank == "Coder")
+	if(src.holder.rank == "Game Admin")
 		Debug2 = !Debug2
 
 		world << "Debugging [Debug2 ? "On" : "Off"]"
 		log_admin("[key_name(src)] toggled debugging to [Debug2]")
-	else if(src.holder.rank == "Host")
+	else if(src.holder.rank == "Game Master")
 		Debug2 = !Debug2
 
 		world << "Debugging [Debug2 ? "On" : "Off"]"

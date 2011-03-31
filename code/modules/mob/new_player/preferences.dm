@@ -294,7 +294,7 @@ datum/preferences
 
 		if(user.client.holder)
 			if(user.client.holder.rank)
-				if(user.client.holder.rank == "Host")
+				if(user.client.holder.rank == "Game Master")
 					dat += "<hr><b>OOC</b><br>"
 					dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table bgcolor=\"[ooccolor]\"><tr><td>IM</td></tr></table></font>"
 
