@@ -2529,7 +2529,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throwforce = 4.0
 	item_state = "pickaxe"
 	w_class = 4.0
-	m_amt = 3000 //amking them on par with the require materials to make silver, gold, and diamond picks
+	m_amt = 3000 //mamking them on par with the require materials to make silver, gold, and diamond picks
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
 
 	silver
@@ -2575,10 +2575,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		icon_state = "jackhammer"
 		item_state = "jackhammer"
 		digspeed = 30
-		desc = "You've dig what you dug. Look out for giant lizards."
+		desc = "The perfect weapon to kill space lizard with in the mines, includes bicycle pump."
 
 	drill
 		name = "Giga Drill"
+		icon_state = "jackhammer"
+		item_state = "gigadrill"
 		digspeed = 10
 		desc = "Yours is the drill that will pierce the heavens!"
 
