@@ -976,7 +976,7 @@
 //			src.verbs += /client/proc/cmd_admin_list_admins
 //			src.verbs += /client/proc/getmobs
 
-		if ("Punnished Admin")
+		if ("Punished Admin")
 			src.holder.level = -1
 			src.verbs += /client/proc/cmd_admin_say
 			src.verbs += /client/proc/cmd_admin_gib_self
@@ -1656,4 +1656,4 @@
 
 			// Old and unused
 
-		if ("Punnished Admin") //Former Filthy Xeno
+		if ("Punished Admin") //Former Filthy Xeno
