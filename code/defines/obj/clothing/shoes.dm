@@ -32,6 +32,14 @@
 	icon_state = "swat"
 	slowdown = 0
 
+/obj/item/clothing/shoes/space_ninja
+	name = "ninja shoes"
+	desc = "A pair of running shoes, excellent for running and even better for smashing skulls."
+	icon_state = "s-ninja"
+	slowdown = -1
+	permeability_coefficient = 0.05
+	flags = NOSLIP
+
 /obj/item/clothing/shoes/white
 	name = "White Shoes"
 	icon_state = "white"

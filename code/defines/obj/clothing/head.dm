@@ -147,7 +147,7 @@
 	permeability_coefficient = 0.01
 
 /obj/item/clothing/head/helmet/space/rig
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding"
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
 	name = "rig helmet"
 	icon_state = "rig"
 	item_state = "rig_helm"
@@ -157,6 +157,13 @@
 	name = "red space helmet"
 	icon_state = "syndicate"
 	item_state = "syndicate"
+
+/obj/item/clothing/head/helmet/space/space_ninja
+	desc = "What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear."
+	name = "ninja hood"
+	icon_state = "s-ninja"
+	item_state = "s-ninja_mask"
+	radiation_protection = 0.25
 
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"

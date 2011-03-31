@@ -272,7 +272,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 				candidates.Add(G)
 	if(candidates.len)
 		var/mob/dead/observer/G = pick(candidates)
-		message_admins("\blue [key_name_admin(usr)] has spawned [G.key] as a Punnished Admin.", 1)
+		message_admins("\blue [key_name_admin(usr)] has spawned [G.key] as a filthy xeno.", 1)
 
 		new_xeno.mind = new//Mind initialize stuff.
 		new_xeno.mind.current = new_xeno
