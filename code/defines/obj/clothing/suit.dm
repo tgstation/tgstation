@@ -324,20 +324,20 @@
 	name = "red space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
-	desc = "Has a tag on it: Totally not property of of a hostile corporation!"
+	desc = "Has a tag on it: Totally not property of of a hostile corporation, honest!"
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 
-/*
-/obj/item/clothing/suit/space/nasa
-	name = "Tacticool NASA Voidsuit"
-	icon_state = "s-ninja"
-	item_state = "s-ninja_suit"
-	desc = "A tacticool, NASA Centcom branch designed, black Space suit. Used for AI satilite maintenance."
+
+/obj/item/clothing/suit/space/nasavoid
+	name = "NASA Voidsuit"
+	icon_state = "void"
+	item_state = "void"
+	desc = "A high tech, NASA Centcom branch designed, dark red Space suit. Used for AI satellite maintenance."
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1.3
-GET OUT OF HERE STAAAAAAAAALKER or until there is a new icon for the suit.*/
+
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"

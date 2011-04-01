@@ -56,14 +56,14 @@
 /obj/item/clothing/head/caphat
 	name = "Captain's hat"
 	icon_state = "captain"
-	desc = "It is good being the king."
+	desc = "It's good being the king."
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	item_state = "caphat"
 
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
-	desc = "It is even better to be the emperor."
+	desc = "It's even better to be the emperor."
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	item_state = "centhat"
 
@@ -157,6 +157,14 @@
 	name = "red space helmet"
 	icon_state = "syndicate"
 	item_state = "syndicate"
+	desc = "Has a tag: Totally not property of an enemy corporation, honest."
+
+/obj/item/clothing/head/helmet/space/nasavoid
+	name = "NASA Void Helmet"
+	desc = "A high tech, NASA Centcom branch designed, dark red space suit helmet. Used for AI satellite maintenance."
+	icon_state = "void"
+	item_state = "void"
+	see_face = 1
 
 /obj/item/clothing/head/helmet/space/space_ninja
 	desc = "What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear."
