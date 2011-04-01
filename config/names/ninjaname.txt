@@ -1,6 +1,5 @@
 Shadow
 Sarutobi
-Crimson
 Smoke
 Rain
 Scorpion
@@ -8,7 +7,6 @@ Zero
 Ermac
 Saibot
 Cyrax
-Deep
 Raphael
 Michaelangelo
 Donatello
@@ -25,6 +23,17 @@ Seven
 McNinja
 Hanzo
 Blood
-Grappler
-Ulimate
-Remorseless
+Iga
+Koga
+Hero
+Hiro
+Phantom
+Baki
+Ogre
+Daemon
+Goemon
+McAwesome
+Throat
+Death
+Aria
+Bro

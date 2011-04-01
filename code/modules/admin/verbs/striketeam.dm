@@ -204,6 +204,7 @@ Useful for copy pasta since I'm lazy.*/
 	new_ninja.mind = new
 	new_ninja.mind.current = new_ninja
 	new_ninja.mind.assigned_role = "Space Ninja"
+	new_ninja.mind.special_role = "Space Ninja"
 	new_ninja.mind.store_memory("<B>Mission:</B> \red [input].")
 	new_ninja.resistances += "alien_embryo"
 
@@ -215,19 +216,21 @@ Useful for copy pasta since I'm lazy.*/
 	new_ninja.equip_if_possible(new /obj/item/clothing/gloves/space_ninja(new_ninja), new_ninja.slot_gloves)
 	new_ninja.equip_if_possible(new /obj/item/clothing/head/helmet/space/space_ninja(new_ninja), new_ninja.slot_head)
 	new_ninja.equip_if_possible(new /obj/item/clothing/mask/gas/space_ninja(new_ninja), new_ninja.slot_wear_mask)
-	new_ninja.equip_if_possible(new /obj/item/clothing/glasses/thermal(new_ninja), new_ninja.slot_glasses)
+//	new_ninja.equip_if_possible(new /obj/item/clothing/glasses/thermal(new_ninja), new_ninja.slot_glasses) //These look ugly without the mask. And you will be able to take off the mask.
 	new_ninja.equip_if_possible(new /obj/item/device/flashlight(new_ninja), new_ninja.slot_belt)
 	new_ninja.equip_if_possible(new /obj/item/weapon/plastique(new_ninja), new_ninja.slot_r_store)
 	new_ninja.equip_if_possible(new /obj/item/weapon/plastique(new_ninja), new_ninja.slot_l_store)
 	var/obj/item/weapon/tank/emergency_oxygen/OXYTANK = new /obj/item/weapon/tank/emergency_oxygen(new_ninja)
 	new_ninja.equip_if_possible(OXYTANK, new_ninja.slot_s_store)
 
+/* You know, I'm not really sure why space ninjas would need an ID card.
 	var/obj/item/weapon/card/id/W = new(new_ninja)
 	W.name = "[new_ninja.real_name]'s ID Card"
 	W.access = access_maint_tunnels
 	W.assignment = "Space Ninja"
 	W.registered = new_ninja.real_name
 	new_ninja.equip_if_possible(W, new_ninja.slot_wear_id)
+	*/
 
 	var/admin_name = src//In case admins want to spawn themselves as ninjas.
 
@@ -238,7 +241,7 @@ Useful for copy pasta since I'm lazy.*/
 			if(((G.client.inactivity/10)/60) <= 5)
 				candidates.Add(G)
 	if(candidates.len)
-		G = input("Pick character to spawn as the Space Ninja", "Active Players", G) in candidates
+		G = input("Pick character to spawn as the Space Ninja", "Active Players", G) in candidates//It will auto-pick a person when there is only one candidate.
 		new_ninja.mind.key = G.key
 		new_ninja.client = G.client
 		del(G)
@@ -252,7 +255,189 @@ Useful for copy pasta since I'm lazy.*/
 
 	new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[input]</B>"
 
+	new_ninja.verbs += /mob/proc/phaseshift
+	new_ninja.verbs += /mob/proc/phasejaunt
+	new_ninja.verbs += /mob/proc/smokebomb
+	new_ninja.mind.special_verbs += /mob/proc/phaseshift
+	new_ninja.mind.special_verbs += /mob/proc/phasejaunt
+	new_ninja.mind.special_verbs += /mob/proc/smokebomb
+
 	message_admins("\blue [admin_name] has spawned [new_ninja.key] as a Space Ninja. Hide yo children!", 1)
 	log_admin("[admin_name] used Spawn Space Ninja.")
 
 //SPACE NINJA ABILITIES
+
+//Smoke
+//Summons smoke in radius of user.
+/mob/proc/smokebomb()
+	set name = "Smoke Bomb"
+	set desc = "Blind your enemies momentarily with a well-placed smoke bomb."
+	set category = "Ninja"
+
+	if(src.stat)
+		src << "\red You must be conscious to do this."
+		return
+	//add energy cost check
+	//add warning message for low energy
+
+	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
+	smoke.set_up(10, 0, src.loc)
+	smoke.start()
+	//subtract cost
+
+
+//9-10 Tile Teleport
+//Click to to teleport 9-10 tiles in direction facing.
+/mob/proc/phasejaunt()
+	set name = "Phase Jaunt"
+	set desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
+	set category = "Ninja"
+
+	if(src.stat)
+		src << "\red You must be conscious to do this."
+		return
+	//add energy cost check
+	//add warning message for low energy
+
+	var/list/turfs = new/list()
+	var/turf/picked
+	var/turf/mobloc = get_turf(src.loc)
+	switch(src.dir)
+		if(NORTH)
+			//highest Y
+			//X the same
+			for(var/turf/T in orange(10))
+				if(T.density) continue
+				if(T.x>world.maxx-4 || T.x<4)	continue
+				if(T.y>world.maxy-4 || T.y<4)	continue
+				if((T.y-mobloc.y)<9 || ((T.x+mobloc.x+1)-(mobloc.x*2))>2)	continue
+				turfs += T
+		if(SOUTH)
+			//lowest Y
+			//X the same
+			for(var/turf/T in orange(10))
+				if(T.density) continue
+				if(T.x>world.maxx-4 || T.x<4)	continue
+				if(T.y>world.maxy-4 || T.y<4)	continue
+				if((mobloc.y-T.y)<9 || ((T.x+mobloc.x+1)-(mobloc.x*2))>2)	continue
+				turfs += T
+		if(EAST)
+			//highest X
+			//Y the same
+			for(var/turf/T in orange(10))
+				if(T.density) continue
+				if(T.x>world.maxx-4 || T.x<4)	continue
+				if(T.y>world.maxy-4 || T.y<4)	continue
+				if((T.x-mobloc.x)<9 || ((T.y+mobloc.y+1)-(mobloc.y*2))>2)	continue
+				turfs += T
+		if(WEST)
+			//lowest X
+			//Y the same
+			for(var/turf/T in orange(10))
+				if(T.density) continue
+				if(T.x>world.maxx-4 || T.x<4)	continue
+				if(T.y>world.maxy-4 || T.y<4)	continue
+				if((mobloc.x-T.x)<9 || ((T.y+mobloc.y+1)-(mobloc.y*2))>2)	continue
+				turfs += T
+		else
+			return
+	if(!turfs.len) turfs += pick(/turf in orange(10))//Teleports randomly if there is no proper turf in a line.
+	picked = pick(turfs)
+
+	spawn(0)
+		var/atom/movable/overlay/animation = new(mobloc)
+		animation.icon = 'mob.dmi'
+		animation.icon_state = "blank"
+		animation.layer = src.layer + 1
+		animation.master = mobloc
+		flick("phaseout", animation)
+		sleep(15)
+		del(animation)
+
+	src.loc = picked
+
+	spawn(0)
+		var/atom/movable/overlay/animation = new(src.loc)
+		animation.icon = 'mob.dmi'
+		animation.icon_state = "blank"
+		animation.layer = src.layer + 1
+		animation.master = src
+		flick("phasein", animation)
+		sleep(15)
+		del(animation)
+	//subtract cost
+
+//Right Click Teleport
+//Right click to teleport somewhere, almost exactly like admin jump to turf.
+/mob/proc/phaseshift(var/turf/T in oview())
+	set name = "Phase Shift"
+	set desc = "Utilizes the internal VOID-shift device to rapidly transit to a destination in view."
+	set category = "Ninja"
+
+	if(src.stat)
+		src << "\red You must be conscious to do this."
+		return
+	//add energy cost check
+	//add warning message for low energy
+	if(T.density)
+		src << "\red You cannot teleport into solid walls."
+		return
+
+	var/turf/mobloc = get_turf(src.loc)
+
+	spawn(0)
+		var/atom/movable/overlay/animation = new(mobloc)
+		animation.icon = 'mob.dmi'
+		animation.icon_state = "blank"
+		animation.layer = src.layer + 1
+		animation.master = mobloc
+		flick("phaseout", animation)
+		sleep(15)
+		del(animation)
+
+	src.loc = T
+
+	spawn(0)
+		var/atom/movable/overlay/animation = new(src.loc)
+		animation.icon = 'mob.dmi'
+		animation.icon_state = "blank"
+		animation.layer = src.layer + 1
+		animation.master = src
+		flick("phasein", animation)
+		sleep(15)
+		del(animation)
+	//subtract cost
+
+/*
+//EMP Pulse
+//Disables nearby tech equipment.
+name = ""
+tab = "ninja"
+desc = ""
+cost = 0
+
+//Summon Energy Blade
+//Summons a blade of energy in active hand.
+name = ""
+tab = "ninja"
+desc = ""
+cost = 0
+
+//Toggle vision
+//Toggles between heat, meson, and night vision. Will be a function of the mask.
+switch()
+	if(1)
+		src.sight |= SEE_TURFS
+		src.blahblah.mode=2
+	if(2)
+		src.see_in_dark = 5
+		src.blahblah.mode=3
+	if(3)
+		src.sight |= SEE_MOBS
+		src.blahblah.mode=1
+
+//Toggle Stealth
+Will be a function of the suit, much like a regular cloak.
+
+*/
+

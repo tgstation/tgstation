@@ -665,7 +665,7 @@
 		return
 
 	if(M.client && M.mind)
-		if(M.mind.special_role != "Wizard" || "Fake Wizard" || "Changeling" || "Cultist")//Wizards, changelings, and cultists are protected.
+		if(M.mind.special_role != "Wizard" || "Fake Wizard" || "Changeling" || "Cultist" || "Space Ninja")//Wizards, changelings, ninjas, and cultists are protected.
 			if( (istype(M, /mob/living/carbon/human)) || (istype(M, /mob/living/carbon/monkey)) && M.stat != 2)
 				var/mob/living/carbon/human/H = M //so it does not freak out when looking at the variables.
 				var/mob/living/carbon/human/U = src
