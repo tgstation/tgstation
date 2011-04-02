@@ -518,7 +518,7 @@
 	desc = "A lightweight support lattice."
 	name = "lattice"
 	icon = 'structures.dmi'
-	icon_state = "lattice"
+	icon_state = "latticefull"
 	density = 0
 	anchored = 1.0
 	layer = 2.3 //under pipes
@@ -526,12 +526,12 @@
 
 /obj/lattice/New()
 	..()
-	if(!(istype(get_step(src, dir), /turf/space)))
+	if(!(istype(src.loc, /turf/space)))
 		del(src)
 	for(var/obj/lattice/LAT in src.loc)
 		if(LAT != src)
 			del(LAT)
-	icon_state = "lattice"
+	icon_state = "latticeblank"
 	updateOverlays()
 	for (var/dir in cardinal)
 		var/obj/lattice/L
