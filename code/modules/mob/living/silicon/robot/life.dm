@@ -147,6 +147,10 @@
 				src.sight |= SEE_OBJS
 				src.see_in_dark = 8
 				src.see_invisible = 2
+			else if (istype(src.module, /obj/item/weapon/robot_module/miner))
+				src.sight |= SEE_TURFS
+				src.see_in_dark = 8
+				src.see_invisible = 2
 			else if (src.stat != 2)
 				src.sight &= ~SEE_MOBS
 				src.sight &= ~SEE_TURFS
