@@ -1501,7 +1501,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "Tray"
 	icon = 'food.dmi'
 	icon_state = "tray"
-	desc = "A metal tray to lay food on."
+	desc = "A plastic tray to lay food on."
 	throwforce = 12.0
 	throwforce = 10.0
 	throw_speed = 1

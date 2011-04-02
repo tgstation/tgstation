@@ -131,3 +131,96 @@ KNIFE
 		usr << "\red You accidentally cut yourself with the [src]."
 		usr.bruteloss += 20
 		return
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////// TRAY -Agouri :3   ///////////////////////////////////////////////
+
+/obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if((usr.mutations & 16) && prob(50))              //What if he's a clown?
+		M << "\red You accidentally slam yourself with the [src]!"
+		M.weakened += 1
+		M.bruteloss += 2
+		if(prob(50))
+			playsound(M, 'trayhit1.wav', 50, 1)
+			return
+		else
+			playsound(M, 'trayhit2.wav', 50, 1) //sound playin'
+			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
+
+
+	if(!(user.zone_sel.selecting == ("eyes" || "head"))) //////////////hitting anything else other than the eyes
+		if(prob(15))
+			M.weakened += 3
+			M.bruteloss += 3
+		else
+			M.bruteloss +=5
+		if(prob(50))
+			playsound(M, 'trayhit1.wav', 50, 1)
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\red [] slams [] with the tray!", user, M), 1)
+			return
+		else
+			playsound(M, 'trayhit2.wav', 50, 1)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\red [] slams [] with the tray!", user, M), 1)
+			return
+
+
+
+	var/mob/living/carbon/human/H = M      ///////////////////////////////////// //Oh boy, guy chose to attack the eyes! Let's prepare a new variable!
+	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+		M << "\red You get slammed in the face with the tray, against your mask!"
+		if(prob(50))
+			playsound(M, 'trayhit1.wav', 50, 1)
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\red [] slams [] with the tray!", user, M), 1)
+		else
+			playsound(M, 'trayhit2.wav', 50, 1)  //sound playin'
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\red [] slams [] with the tray!", user, M), 1)
+		if(prob(10))
+			M.stunned = rand(1,3)
+			M.bruteloss += 3
+			return
+		else
+			M.bruteloss +=5
+			return
+
+	else //No eye or head protection, tough luck!
+		M << "\red You get slammed in the face with the tray!"
+		if(prob(50))
+			playsound(M, 'trayhit1.wav', 50, 1)
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\red [] slams [] in the face with the tray!", user, M), 1)
+		else
+			playsound(M, 'trayhit2.wav', 50, 1)  //sound playin' again
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\red [] slams [] in the face with the tray!", user, M), 1)
+		if(prob(30))
+			M.stunned = rand(2,4)
+			M.bruteloss +=4
+			return
+		else
+			M.bruteloss +=8
+			if(prob(30))
+				M.weakened+=2
+				return
+			return
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//Enough with the violent stuff, here's what happens if you try putting food on it
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+/*/obj/item/weapon/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
+		if (W.icon_state == "forkloaded")
+			user << "\red You already have omelette on your fork."
+			return
+		W.icon = 'kitchen.dmi'
+		W.icon_state = "forkloaded"
+		viewers(3,user) << "[user] takes a piece of omelette with his fork!"
+		reagents.remove_reagent("nutriment", 1)
+		if (reagents.total_volume <= 0)
+			del(src)*/
