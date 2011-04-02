@@ -680,7 +680,7 @@ TO DO: actually integrate random appearance and player preference save.
 	set desc = "switches between 1x and custom views"
 
 	if(src.view == world.view)
-		src.view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14)
+		src.view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
 	else
 		src.view = world.view
 

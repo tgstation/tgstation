@@ -2616,6 +2616,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	..()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
+	recipes = gold_recipes
+
+var/global/list/datum/stack_recipe/gold_recipes = list ( \
+	new/datum/stack_recipe("Plaque", /obj/item/weapon/plaque_assembly, 2), \
+	)
+
 
 /obj/item/stack/sheet/silver
 	name = "silver"

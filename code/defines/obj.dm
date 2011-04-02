@@ -272,6 +272,21 @@
 	opacity = 0
 	density = 0
 
+/obj/item/weapon/plaque_assembly
+	desc = "Put this on a wall and engrave an epitaph"
+	name = "Plaque Assembly"
+	icon = 'decals.dmi'
+	icon_state = "goldenplaque"
+
+/obj/item/weapon/plaque_assembly/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+	if(istype(A,/turf/simulated/wall) || istype(A,/turf/simulated/shuttle/wall) || istype(A,/turf/unsimulated/wall))
+		var/epitaph = input("What would you like to engrave", null)
+		if(epitaph)
+			var/obj/sign/goldenplaque/gp = new/obj/sign/goldenplaque(A)
+			gp.name = epitaph
+			gp.layer = 2.9
+			del(src)
+
 /obj/sign/maltesefalcon1         //The sign is 64x32, so it needs two tiles. ;3
 	desc = "The Maltese Falcon, Space Bar and Grill"
 	name = "The Maltese Falcon"
