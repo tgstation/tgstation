@@ -367,7 +367,7 @@
 					M << "Aargh it burns!"
 		M.updatehealth()
 	src.add_fingerprint(user)
-	return
+	return 1
 
 
 

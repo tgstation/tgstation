@@ -146,6 +146,8 @@
 
 /obj/item/weapon/tank/attack(mob/M as mob, mob/user as mob)
 	..()
+
+	/*
 	if ((prob(30) && M.stat < 2))
 		var/mob/living/carbon/human/H = M
 
@@ -166,6 +168,7 @@
 			if ((O.client && !( O.blinded )))
 				O << text("\red <B>[] has been knocked unconscious!</B>", M)
 	return
+	*/
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

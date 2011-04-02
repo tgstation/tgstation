@@ -11,8 +11,6 @@ STUN BATON
 
 // SWORD
 /obj/item/weapon/sword/attack(target as mob, mob/user as mob)
-	if(istype(target, /mob/living))
-		target:fireloss += 20
 	..()
 
 /obj/item/weapon/sword/New()
@@ -109,11 +107,10 @@ STUN BATON
 	src.add_fingerprint(user)
 	var/mob/living/carbon/human/H = M
 
-	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-		M << "\red The helmet protects you from being hit hard in the head!"
-		return
+
 	if (status == 0 || (status == 1 && charges ==0))
 		if(user.a_intent == "hurt")
+			if(!..()) return
 		/*	if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(40))
 				for(var/mob/O in viewers(M, null))
 					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
@@ -124,7 +121,6 @@ STUN BATON
 				return*/
 			if (M.weakened < 5 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.weakened = 5
-				..()
 			for(var/mob/O in viewers(M))
 				if (O.client)	O.show_message("\red <B>[M] has been beaten with the stun baton by [user]!</B>", 1)
 			if(status == 1 && charges == 0)
@@ -139,6 +135,7 @@ STUN BATON
 	if((charges > 0 && status == 1) && (istype(H, /mob/living/carbon)))
 		flick("baton_active", src)
 		if (user.a_intent == "hurt")
+			if(!..()) return
 		/*	if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(40))
 				for(var/mob/O in viewers(M, null))
 					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
@@ -157,7 +154,6 @@ STUN BATON
 				M.weakened = 1
 			if (M.stuttering < 1 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stuttering = 1
-			..()
 			if (M.stunned < 1 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stunned = 1
 		else
@@ -206,12 +202,12 @@ STUN BATON
 	src.add_fingerprint(user)
 
 	if (user.a_intent == "hurt")
+		if(!..()) return
 		playsound(src.loc, "swing_hit", 50, 1, -1)
 		if (M.weakened < 8 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.weakened = 8
 		if (M.stuttering < 8 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stuttering = 8
-		..()
 		if (M.stunned < 8 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stunned = 8
 		for(var/mob/O in viewers(M))

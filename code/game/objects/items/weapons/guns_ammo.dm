@@ -70,6 +70,8 @@ TELEPORT GUN
 		return
 
 /obj/item/weapon/gun/energy/pulse_rifle/attack(mob/M as mob, mob/user as mob)
+	..()
+	/*
 	src.add_fingerprint(user)
 	var/mob/living/carbon/human/H = M
 
@@ -92,7 +94,7 @@ TELEPORT GUN
 			if(O.client)
 				O.show_message(text("\red <B>[] has been rifle butted by []!</B>", M, user), 1, "\red You hear someone fall.", 2)
 	return
-
+	*/
 // AMMO
 
 
@@ -516,6 +518,8 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if(!detective)
 		usr << "\red You just don't feel cool enough to use this gun looking like that."
 		return
+	..()
+	/*
 	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
 		M << "\red The helmet protects you from being hit hard in the head!"
 		return
@@ -546,6 +550,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		for(var/mob/O in viewers(M, null))
 			if (O.client)	O.show_message(text("\red <B>[] has been pistol whipped with the detectives revolver by []!</B>", M, user), 1, "\red You hear someone fall", 2)
 	return
+	*/
 
 // ENERGY GUN
 
@@ -638,6 +643,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 /obj/item/weapon/gun/energy/laser_gun/attack(mob/M as mob, mob/user as mob)
 	..()
+	/*
 	src.add_fingerprint(user)
 	if ((prob(30) && M.stat < 2))
 		var/mob/living/carbon/human/H = M
@@ -658,6 +664,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			if(O.client)	O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall", 2)
 
 	return
+	*/
 
 // TASER GUN
 
@@ -722,6 +729,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return
 	if((src.charges >= 1) && (istype(H, /mob/living/carbon/human)))
 		if (user.a_intent == "hurt")
+			if (!..()) return
 			if (prob(20))
 				if (M.paralysis < 10 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 					M.paralysis = 10
@@ -729,7 +737,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				M.weakened = 10
 			if (M.stuttering < 10 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stuttering = 10
-			..()
+
 			if(M.stat != 2)	M.stat = 1
 			for(var/mob/O in viewers(M, null))
 				O.show_message("\red <B>[M] has been knocked unconscious!</B>", 1, "\red You hear someone fall", 2)
@@ -745,10 +753,15 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			if(M.stat != 2)	M.stat = 1
 			for(var/mob/O in viewers(M, null))
 				if (O.client)	O.show_message("\red <B>[M] has been stunned with the taser gun by [user]!</B>", 1, "\red You hear someone fall", 2)
-		src.charges--
+		if(isrobot(user))
+			var/mob/living/silicon/robot/R = user
+			R.cell.charge -= 20
+		else
+			src.charges--
 		update_icon()
 	else if((src.charges >= 1) && (istype(M, /mob/living/carbon/monkey)))
 		if (user.a_intent == "hurt")
+			if (!..()) return
 			if (prob(20))
 				if (M.paralysis < 10 && (!(M.mutations & 8)) )
 					M.paralysis = 10
@@ -756,7 +769,6 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				M.weakened = 10
 			if (M.stuttering < 10 && (!(M.mutations & 8)) )
 				M.stuttering = 10
-			..()
 			if(M.stat != 2)	M.stat = 1
 			for(var/mob/O in viewers(M, null))
 				O.show_message("\red <B>[M] has been knocked unconscious!</B>", 1, "\red You hear someone fall", 2)
@@ -833,11 +845,6 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	A.process()
 
 /obj/item/weapon/gun/energy/crossbow/attack(mob/M as mob, mob/user as mob)
-	src.add_fingerprint(user)
-	var/mob/living/carbon/human/H = M
-	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-		M << "\red The helmet protects you from being hit hard in the head!"
-		return
 	..()
 
 
@@ -1134,6 +1141,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 	attack(mob/M as mob, mob/user as mob)
 		..()
+		/*
 		src.add_fingerprint(user)
 		if ((prob(30) && M.stat < 2))
 			var/mob/living/carbon/human/H = M
@@ -1153,7 +1161,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				if(O.client)	O.show_message(text("\red <B>[M] has been knocked unconscious!</B>"), 1, "\red You hear someone fall", 2)
 
 		return
-
+		*/
 
 
 

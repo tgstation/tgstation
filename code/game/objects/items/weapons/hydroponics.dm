@@ -92,6 +92,7 @@ Deathnettle
 			user << "\red You are stunned by the Deathnettle when you try picking it up!"
 
 /obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M as mob, mob/user as mob)
+	if(!..()) return
 	if(istype(M, /mob/living/carbon/human))
 		M << "\red You are stunned by the powerful acid of the Deathnettle!"
 		M.eye_blurry += 4
@@ -99,7 +100,7 @@ Deathnettle
 			M.paralysis += 5
 			M.weakened += 2
 		M.drop_item()
-	..()
+
 
 /obj/item/weapon/grown/deathnettle/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (force > 0)
