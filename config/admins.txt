@@ -19,6 +19,6 @@ atomictroop - Game Admin
 neofite - Game Admin
 fateweaver - Game Admin
 agouri - Game Admin
-errorage - Game Master
+errorage - Game Admin
 
 uhangi - Trial Admin
