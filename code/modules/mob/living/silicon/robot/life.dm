@@ -87,7 +87,7 @@
 	//		else
 	//			src.overlays -= "emag"
 
-			if(health < 0)
+			if(health < 0 && src.stat != 2) //die only once
 				death()
 
 			if (src.stat != 2) //Alive.

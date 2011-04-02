@@ -35,7 +35,7 @@
 
 /datum/organ/external/proc/heal_damage(brute, burn)
 	src.brute_dam = max(0, src.brute_dam - brute)
-	src.burn_dam = max(0, src.brute_dam - burn)
+	src.burn_dam = max(0, src.burn_dam - burn)
 	return update_icon()
 
 /datum/organ/external/proc/get_damage()	//returns total damage
