@@ -35,6 +35,8 @@
 	else if(istype(src,/turf/simulated/wall) || istype(src,/obj/falsewall) || istype(src,/obj/falserwall))
 		src.icon_state = "wall[junction]"
 	else if(istype(src,/turf/simulated/shuttle/wall))
+		var/newicon = icon;
+		var/newiconstate = icon_state;
 		if(junction!=5 && junction!=6 && junction!=9 && junction!=10) //if it's not diagonal, all is well, no additional calculations needed
 			src.icon_state = "swall[junction]"
 		else //if it's diagonal, we need to figure out if we're using the floor diagonal or the space diagonal sprite
@@ -43,12 +45,18 @@
 				if(abs(src.x-F.x)-abs(src.y-F.y))
 					if((15-junction) & get_dir(src,F)) //if there's a floor in at least one of the empty space directions, return 1
 						is_floor = 1
+						newicon = F.icon
+						newiconstate = F.icon_state //we'll save these for later
 			for(var/turf/simulated/shuttle/floor/F in orange(src,1))
 				if(abs(src.x-F.x)-abs(src.y-F.y))
 					if((15-junction) & get_dir(src,F)) //if there's a floor in at least one of the empty space directions, return 1
 						is_floor = 1
+						newicon = F.icon
+						newiconstate = F.icon_state //we'll save these for later
 			if(is_floor) //if is_floor = 1, we use the floor diagonal sprite
-				src.icon_state = "swall_f[junction]"
+				src.icon = newicon; //we'll set the floor's icon to the floor next to it and overlay the wall segment. shuttle floor sprites have priority
+				src.icon_state = newiconstate; //
+				src.overlays += icon('shuttle.dmi',"swall_f[junction]")
 			else //otherwise, the space one
 				src.icon_state = "swall_s[junction]"
 
