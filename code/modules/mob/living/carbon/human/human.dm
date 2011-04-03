@@ -827,6 +827,8 @@
 				return
 			src.u_equip(W)
 			src.head = W
+			if(istype(W,/obj/item/clothing/head/kitty))
+				W.update_icon(src)
 			W.equipped(src, text)
 		if("ears")
 			if (src.ears)
@@ -1253,6 +1255,8 @@
 	if (src.head)
 		var/t1 = src.head.icon_state
 		var/icon/head_icon = icon('head.dmi', text("[][]", t1, (!( src.lying ) ? null : "2")))
+		if(istype(src.head,/obj/item/clothing/head/kitty))
+			head_icon = (( src.lying ) ? src.head:mob2 : src.head:mob)
 		src.overlays += image("icon" = head_icon, "layer" = MOB_LAYER)
 		if (src.head.blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "helmetblood[!src.lying ? "" : "2"]")
@@ -1343,11 +1347,6 @@
 			break
 
 	for (var/obj/item/weapon/cloaking_device/S in src)
-		if (S.active)
-			shielded = 2
-			break
-
-	for (var/obj/item/clothing/suit/space/space_ninja/S in src)
 		if (S.active)
 			shielded = 2
 			break
