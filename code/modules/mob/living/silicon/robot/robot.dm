@@ -718,14 +718,20 @@
 			src.module_state_1 = O
 			O.layer = 20
 			src.contents += O
+			if(istype(src.module_state_1,/obj/item/weapon/borg/sight))
+				src.sight_mode |= src.module_state_1:sight_mode
 		else if(!src.module_state_2)
 			src.module_state_2 = O
 			O.layer = 20
 			src.contents += O
+			if(istype(src.module_state_2,/obj/item/weapon/borg/sight))
+				src.sight_mode |= src.module_state_2:sight_mode
 		else if(!src.module_state_3)
 			src.module_state_3 = O
 			O.layer = 20
 			src.contents += O
+			if(istype(src.module_state_3,/obj/item/weapon/borg/sight))
+				src.sight_mode |= src.module_state_3:sight_mode
 		else
 			src << "You need to disable a module first!"
 		src.installed_modules()
@@ -753,6 +759,8 @@
 	if(isnull(src.module_active))
 		return
 	if(src.module_state_1 == src.module_active)
+		if(istype(src.module_state_1,/obj/item/weapon/borg/sight))
+			src.sight_mode &= ~src.module_state_1:sight_mode
 		if (src.client)
 			src.client.screen -= module_state_1
 		src.contents -= module_state_1
@@ -760,6 +768,8 @@
 		src.module_state_1 = null
 		src.inv1.icon_state = "inv1"
 	else if(src.module_state_2 == src.module_active)
+		if(istype(src.module_state_2,/obj/item/weapon/borg/sight))
+			src.sight_mode &= ~src.module_state_2:sight_mode
 		if (src.client)
 			src.client.screen -= module_state_2
 		src.contents -= module_state_2
@@ -767,6 +777,8 @@
 		src.module_state_2 = null
 		src.inv2.icon_state = "inv2"
 	else if(src.module_state_3 == src.module_active)
+		if(istype(src.module_state_3,/obj/item/weapon/borg/sight))
+			src.sight_mode &= ~src.module_state_3:sight_mode
 		if (src.client)
 			src.client.screen -= module_state_3
 		src.contents -= module_state_3

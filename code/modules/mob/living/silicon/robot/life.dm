@@ -46,6 +46,7 @@
 					src.module_state_1 = null
 					src.module_state_2 = null
 					src.module_state_3 = null
+					src.sight_mode = 0
 					src.cell.use(1)
 				else
 					if(src.module_state_1)
@@ -54,11 +55,18 @@
 						src.cell.use(5)
 					if(src.module_state_3)
 						src.cell.use(5)
+					if (sight_mode & BORGMESON)
+						src.cell.use(50)
+					if (sight_mode & BORGTHERM)
+						src.cell.use(100)
+					if (sight_mode & BORGXRAY)
+						src.cell.use(200)
 					src.cell.use(1)
 					src.blinded = 0
 					src.stat = 0
 			else
 				src.stat = 1
+
 
 		update_canmove()
 			if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
@@ -141,14 +149,23 @@
 
 		handle_regular_hud_updates()
 
-			if (src.stat == 2 || src.mutations & 4)
+			if (src.stat == 2 || src.mutations & 4 || src.sight_mode & BORGXRAY)
 				src.sight |= SEE_TURFS
 				src.sight |= SEE_MOBS
 				src.sight |= SEE_OBJS
 				src.see_in_dark = 8
 				src.see_invisible = 2
-			else if (istype(src.module, /obj/item/weapon/robot_module/miner))
+			else if (src.sight_mode & BORGMESON && src.sight_mode & BORGTHERM)
 				src.sight |= SEE_TURFS
+				src.sight |= SEE_MOBS
+				src.see_in_dark = 8
+				src.see_invisible = 2
+			else if (src.sight_mode & BORGMESON)
+				src.sight |= SEE_TURFS
+				src.see_in_dark = 8
+				src.see_invisible = 2
+			else if (src.sight_mode & BORGTHERM)
+				src.sight |= SEE_MOBS
 				src.see_in_dark = 8
 				src.see_invisible = 2
 			else if (src.stat != 2)

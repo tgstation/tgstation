@@ -5,6 +5,11 @@
 	icon_state = "robot"
 	health = 300
 
+#define BORGMESON 1
+#define BORGTHERM 2
+#define BORGXRAY  4
+
+	var/sight_mode = 0
 
 //Hud stuff
 

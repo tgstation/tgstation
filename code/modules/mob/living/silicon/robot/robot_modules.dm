@@ -40,6 +40,9 @@
 /obj/item/weapon/robot_module/miner
 	name = "miner robot module"
 
+obj/item/weapon/robot_module/syndicate
+	name = "syndicate robot module"
+
 /obj/item/weapon/robot_module/New()//Shit all the mods have
 	src.modules += new /obj/item/device/flash(src)
 	src.emag = new /obj/item/toy/sword(src)
@@ -84,6 +87,7 @@
 	var/obj/item/weapon/cable_coil/W = new /obj/item/weapon/cable_coil(src)
 	W.amount = 50
 	src.modules += W
+	src.modules += new /obj/item/weapon/borg/sight/meson(src)
 
 	src.emag = new /obj/item/weapon/borg/stun(src)
 
@@ -136,6 +140,7 @@
 	src.modules += new /obj/item/weapon/pickaxe/radius/jackhammer(src)
 	src.modules += new /obj/item/weapon/shovel(src)
 	src.modules += new /obj/item/weapon/satchel(src)
+	src.modules += new /obj/item/weapon/borg/sight/meson(src)
 	src.emag = new /obj/item/weapon/borg/stun(src)
 
 /obj/item/weapon/robot_module/brobot/New()
@@ -149,6 +154,10 @@
 	R.my_atom = src.emag
 	R.add_reagent("beer2", 50)
 	src.emag.name = "Mickey Finn's Special Brew"
+
+obj/item/weapon/robot_module/syndicate/New()
+	src.modules += new /obj/item/weapon/gun/energy/crossbow(src)
+	src.modules += new /obj/item/weapon/card/emag(src)
 
 /obj/item/weapon/borg/stun
 	name = "Electrified Arm"
@@ -166,3 +175,20 @@
 		for(var/mob/O in viewers(M, null))
 			if (O.client)
 				O.show_message("\red <B>[user] has prodded [M] with an electrically-charged arm!</B>", 1, "\red You hear someone fall", 2)
+
+/obj/item/weapon/borg/sight
+	icon = 'decals.dmi'
+	icon_state = "securearea"
+	var/sight_mode
+
+/obj/item/weapon/borg/sight/xray
+	name = "X-ray Vision"
+	sight_mode = BORGXRAY
+
+/obj/item/weapon/borg/sight/thermal
+	name = "Thermal Vision"
+	sight_mode = BORGTHERM
+
+/obj/item/weapon/borg/sight/meson
+	name = "Meson Vision"
+	sight_mode = BORGMESON
