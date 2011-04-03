@@ -19,11 +19,10 @@
 		mob.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
 		mob2.Blend(rgb(user.r_hair, user.g_hair, user.b_hair), ICON_ADD)
 
-//		var/icon/earbit = new/icon("icon" = 'head.dmi', "icon_state" = "kitty")
-//		var/icon/earbit2 = new/icon("icon" = 'head.dmi', "icon_state" = "kitty2")
-//		mob.Blend(earbit, ICON_OVERLAY)
-//		mob2.Blend(earbit2, ICON_OVERLAY)
-// Once you've dug up the sprites, update the first two lines then uncomment them. --NEO
+		var/icon/earbit = new/icon("icon" = 'head.dmi', "icon_state" = "kittyinner")
+		var/icon/earbit2 = new/icon("icon" = 'head.dmi', "icon_state" = "kittyinner2")
+		mob.Blend(earbit, ICON_OVERLAY)
+		mob2.Blend(earbit2, ICON_OVERLAY)
 
 /obj/item/clothing/under/blackskirt
 	name = "Black skirt"
