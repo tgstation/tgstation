@@ -347,6 +347,8 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 0
 	radiation_protection = 0.75
+	var/active = 0
+	var/energy = 100
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"

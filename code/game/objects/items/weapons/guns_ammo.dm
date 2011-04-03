@@ -510,7 +510,6 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 /obj/item/weapon/gun/detectiverevolver/attack(mob/M as mob, mob/user as mob)
 	src.add_fingerprint(user)
-	var/mob/living/carbon/human/H = M
 	var/detective = (istype(user:w_uniform, /obj/item/clothing/under/det) && istype(user:head, /obj/item/clothing/head/det_hat)  && istype(user:wear_suit, /obj/item/clothing/suit/det_suit))
 
 // ******* Check

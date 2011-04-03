@@ -37,10 +37,11 @@
 
 /obj/item/clothing/mask/gas/space_ninja
 	name = "ninja mask"
-	desc = "A close-fitting mask that acts both as an air filter and a post-modern fashion statement. Can disguise your voice."
+	desc = "A close-fitting mask that acts both as an air filter and a post-modern fashion statement."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
-	vchange = 1
+	var/mode = 1// 1=Night Vision |2=Thermal |3=Meson
+	vchange = 0
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"

@@ -1337,6 +1337,11 @@
 			shielded = 2
 			break
 
+	for (var/obj/item/clothing/suit/space/space_ninja/S in src)
+		if (S.active)
+			shielded = 2
+			break
+
 	if (shielded == 2)
 		src.invisibility = 2
 	else
@@ -2696,7 +2701,7 @@
 		var/obj/item/clothing/gloves/G = src.gloves
 		siemens_coeff = G.siemens_coefficient
 	return ..(shock_damage,source,siemens_coeff)
-	
+
 /mob/living/carbon/human/heal_organ_damage(var/brute, var/burn)
 	..()
 	src.UpdateDamageIcon()

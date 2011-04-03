@@ -8,7 +8,8 @@ SWAT SUIT
 CHAMELEON JUMPSUIT
 DEATH COMMANDO GAS MASK
 THERMAL GLASSES
-
+NINJA SUIT
+NINJA MASK
 */
 
 
@@ -291,3 +292,100 @@ THERMAL GLASSES
 			spawn(100)
 				M.disabilities &= ~1
 	..()
+
+//SPESS NINJA STUFF
+/obj/item/clothing/suit/space/space_ninja/verb/toggle()
+	set name = "Toggle Stealth"
+	set desc = "Toggles the internal CLOAK-tech on or off."
+	set category = "Object"
+
+	if(src.active)
+		spawn(0)
+			var/atom/movable/overlay/animation = new(usr.loc)
+			animation.icon = 'mob.dmi'
+			animation.icon_state = "blank"
+			animation.layer = usr.layer + 1
+			animation.master = usr
+			flick("uncloak", animation)
+			sleep(15)
+			del(animation)
+		src.active=0
+		usr << "\blue You are now visible."
+		for(var/mob/O in oviewers(usr, null))
+			O << "[usr.name] appears from thin air!"
+
+	else
+		spawn(0)
+			var/atom/movable/overlay/animation = new(usr.loc)
+			animation.icon = 'mob.dmi'
+			animation.icon_state = "blank"
+			animation.layer = usr.layer + 1
+			animation.master = usr
+			flick("cloak", animation)
+			sleep(15)
+			del(animation)
+		src.active=1
+		usr << "\blue You are now invisible to normal detection."
+		for(var/mob/O in oviewers(usr, null))
+			O << "[usr.name] vanishes into thin air!"
+
+//So apparently, examine won't show up as a verb when
+//viewing an object equipped on the hud
+//and that object having other verbs?
+//Doesn't really make any sense
+/obj/item/clothing/suit/space/space_ninja/examine()
+	..()
+	if(src.active)
+		usr << "The CLOAK-tech device is active."
+	else
+		usr << "The CLOAK-tech device is offline."
+
+
+/obj/item/clothing/mask/gas/space_ninja/verb/togglev()
+	set name = "Toggle Voice"
+	set desc = "Toggles the voice synthesizer on or off."
+	set category = "Object"
+	if(src.vchange==0)
+		src.vchange=1
+		usr << "You enable the voice voice synthesizer."
+	else
+		src.vchange=0
+		usr << "You disable the voice synthesizer."
+
+/obj/item/clothing/mask/gas/space_ninja/verb/switchm()
+	set name = "Switch Mode"
+	set desc = "Switches between Night Vision, Meson, or Thermal vision modes."
+	set category = "Object"
+	//Have to reset these manually since life.dm is retarded like that. Go figure.
+	switch(src.mode)
+		if(1)
+			src.mode=2
+			usr.see_in_dark = 2
+			usr << "Switching mode to <B>Thermal Scanner</B>."
+		if(2)
+			src.mode=3
+			usr.see_invisible = 0
+			usr.sight &= ~SEE_MOBS
+			usr << "Switching mode to <B>Meson Scanner</B>."
+		if(3)
+			src.mode=1
+			usr.sight &= ~SEE_TURFS
+			usr << "Switching mode to <B>Night Vision</B>."
+
+/obj/item/clothing/mask/gas/space_ninja/examine()
+	..()
+	var/mode = "Night Vision"
+	var/voice = "inactive"
+	switch(src.mode)
+		if(1)
+			mode = "Night Vision"
+		if(2)
+			mode = "Thermal Scanner"
+		if(3)
+			mode = "Meson Scanner"
+	if(src.vchange==0)
+		voice = "inactive"
+	else
+		voice = "active"
+	usr << "<B>[mode]</B> is active."
+	usr << "Voice mimicking algorithm is <B>[voice]</B>."

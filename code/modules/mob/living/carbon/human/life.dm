@@ -110,7 +110,7 @@
 ::::::::::::::::::::::::"~-,_::::::::::::::"~-,_:::"-,/|/\::::::::::: \::: \"-/|::|
 :::::::::::::::::::::::::::::::"~-,__:::::::::::',"-,:::"_|/\:|\: : : : \::\":/|\|
 ::::::::::::::::::::::::::::::::::::::::"~-,_:::::\:::\:::"~/_:|:|\: : : '-,\::"::,'\
-:::::::::::::::::::::::::::::::::::::::::::::::"-,_:'-,::\:::::::"-,|:||\,-, : '-,\:::|-'-„
+:::::::::::::::::::::::::::::::::::::::::::::::"-,_:'-,::\:::::::"-,|:||\,-, : '-,\:::|-'-
 :::::::::::::::::::::::::::::::::::::::::::::::::: ::,-,'"-:"~,:::::"/_/::|-/\--';;\:::/: ||\-,
 :::::::::::::::::::::::::::::::::::::::::::::::::: :/...'-,::::::"~„::::"-,/_:|:/\:/|/|/|_/:|
 :::::::::::::::::::::::::::::::::::::::::::::::::: |......"-,::::::::"~-:::::""~~~"¯:::|
@@ -723,9 +723,24 @@
 				src.see_in_dark = 8
 				if(!src.druggy)
 					src.see_invisible = 2
+
+			else if (istype(src.wear_mask, /obj/item/clothing/mask/gas/space_ninja))
+				switch(src.wear_mask:mode)
+					if(1)
+						src.see_in_dark = 5
+						if(!src.druggy)
+							src.see_invisible = 0
+					if(2)
+						src.sight |= SEE_MOBS
+						if(!src.druggy)
+							src.see_invisible = 2
+					if(3)
+						src.sight |= SEE_TURFS
+						if(!src.druggy)
+							src.see_invisible = 0
+
 			else if (istype(src.glasses, /obj/item/clothing/glasses/meson))
 				src.sight |= SEE_TURFS
-				src.see_in_dark = 3
 				if(!src.druggy)
 					src.see_invisible = 0
 			else if (istype(src.glasses, /obj/item/clothing/glasses/night))
@@ -734,9 +749,9 @@
 					src.see_invisible = 0
 			else if (istype(src.glasses, /obj/item/clothing/glasses/thermal))
 				src.sight |= SEE_MOBS
-				src.see_in_dark = 4
 				if(!src.druggy)
 					src.see_invisible = 2
+
 			else if (src.stat != 2)
 				src.sight &= ~SEE_TURFS
 				src.sight &= ~SEE_MOBS
@@ -756,10 +771,9 @@
 					if(!seer)
 						src.see_invisible = 0
 
-			if (istype(src.glasses, /obj/item/clothing/glasses/sunglasses))
+			else if (istype(src.glasses, /obj/item/clothing/glasses/sunglasses))
 				src.see_in_dark = 1
-
-			if (istype(src.head, /obj/item/clothing/head/helmet/welding))
+			else if (istype(src.head, /obj/item/clothing/head/helmet/welding))
 				if(!src.head:up && tinted_weldhelh)
 					src.see_in_dark = 1
 

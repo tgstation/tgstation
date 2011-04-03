@@ -216,7 +216,7 @@ Useful for copy pasta since I'm lazy.*/
 	new_ninja.equip_if_possible(new /obj/item/clothing/gloves/space_ninja(new_ninja), new_ninja.slot_gloves)
 	new_ninja.equip_if_possible(new /obj/item/clothing/head/helmet/space/space_ninja(new_ninja), new_ninja.slot_head)
 	new_ninja.equip_if_possible(new /obj/item/clothing/mask/gas/space_ninja(new_ninja), new_ninja.slot_wear_mask)
-//	new_ninja.equip_if_possible(new /obj/item/clothing/glasses/thermal(new_ninja), new_ninja.slot_glasses) //These look ugly without the mask. And you will be able to take off the mask.
+//	new_ninja.equip_if_possible(new /obj/item/clothing/glasses/thermal(new_ninja), new_ninja.slot_glasses) //No longer necessary.
 	new_ninja.equip_if_possible(new /obj/item/device/flashlight(new_ninja), new_ninja.slot_belt)
 	new_ninja.equip_if_possible(new /obj/item/weapon/plastique(new_ninja), new_ninja.slot_r_store)
 	new_ninja.equip_if_possible(new /obj/item/weapon/plastique(new_ninja), new_ninja.slot_l_store)
@@ -255,12 +255,14 @@ Useful for copy pasta since I'm lazy.*/
 
 	new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[input]</B>"
 
-	new_ninja.verbs += /mob/proc/phaseshift
-	new_ninja.verbs += /mob/proc/phasejaunt
-	new_ninja.verbs += /mob/proc/smokebomb
-	new_ninja.mind.special_verbs += /mob/proc/phaseshift
-	new_ninja.mind.special_verbs += /mob/proc/phasejaunt
-	new_ninja.mind.special_verbs += /mob/proc/smokebomb
+	new_ninja.verbs += /mob/proc/ninjashift
+	new_ninja.verbs += /mob/proc/ninjajaunt
+	new_ninja.verbs += /mob/proc/ninjasmoke
+	new_ninja.verbs += /mob/proc/ninjapulse
+	new_ninja.mind.special_verbs += /mob/proc/ninjashift
+	new_ninja.mind.special_verbs += /mob/proc/ninjajaunt
+	new_ninja.mind.special_verbs += /mob/proc/ninjasmoke
+	new_ninja.mind.special_verbs += /mob/proc/ninjapulse
 
 	message_admins("\blue [admin_name] has spawned [new_ninja.key] as a Space Ninja. Hide yo children!", 1)
 	log_admin("[admin_name] used Spawn Space Ninja.")
@@ -269,7 +271,8 @@ Useful for copy pasta since I'm lazy.*/
 
 //Smoke
 //Summons smoke in radius of user.
-/mob/proc/smokebomb()
+//Not sure why this would be useful (it's not) but whatever. Ninjas need their smoke bombs.
+/mob/proc/ninjasmoke()
 	set name = "Smoke Bomb"
 	set desc = "Blind your enemies momentarily with a well-placed smoke bomb."
 	set category = "Ninja"
@@ -283,12 +286,12 @@ Useful for copy pasta since I'm lazy.*/
 	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 	smoke.set_up(10, 0, src.loc)
 	smoke.start()
-	//subtract cost
+	//subtract cost(LOW)
 
 
 //9-10 Tile Teleport
 //Click to to teleport 9-10 tiles in direction facing.
-/mob/proc/phasejaunt()
+/mob/proc/ninjajaunt()
 	set name = "Phase Jaunt"
 	set desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
 	set category = "Ninja"
@@ -365,11 +368,16 @@ Useful for copy pasta since I'm lazy.*/
 		flick("phasein", animation)
 		sleep(15)
 		del(animation)
-	//subtract cost
+
+	spawn(0) //Any living mobs in teleport area are gibbed.
+		for(var/mob/living/M in picked)
+			if(M==src)	continue
+			M.gib()
+	//subtract cost(MED)
 
 //Right Click Teleport
 //Right click to teleport somewhere, almost exactly like admin jump to turf.
-/mob/proc/phaseshift(var/turf/T in oview())
+/mob/proc/ninjashift(var/turf/T in oview())
 	set name = "Phase Shift"
 	set desc = "Utilizes the internal VOID-shift device to rapidly transit to a destination in view."
 	set category = "Ninja"
@@ -406,16 +414,31 @@ Useful for copy pasta since I'm lazy.*/
 		flick("phasein", animation)
 		sleep(15)
 		del(animation)
-	//subtract cost
 
-/*
+	spawn(0) //Any living mobs in teleport area are gibbed.
+		for(var/mob/living/M in T)
+			if(M==src)	continue
+			M.gib()
+	//subtract cost(HIGH)
+
 //EMP Pulse
 //Disables nearby tech equipment.
-name = ""
-tab = "ninja"
-desc = ""
-cost = 0
+/mob/proc/ninjapulse()
+	set name = "EM Burst"
+	set desc = "Disable any nearby technology with a electro-magnetic pulse."
+	set category = "Ninja"
 
+	if(src.stat)
+		src << "\red You must be conscious to do this."
+		return
+	//add energy cost check
+	//add warning message for low energy
+
+	empulse(src, 4, 6) //Procs sure are nice. Slihgtly weaker than wizard's disable tch.
+
+	//subtract cost(HIGH)
+
+/*
 //Summon Energy Blade
 //Summons a blade of energy in active hand.
 name = ""
@@ -423,21 +446,7 @@ tab = "ninja"
 desc = ""
 cost = 0
 
-//Toggle vision
-//Toggles between heat, meson, and night vision. Will be a function of the mask.
-switch()
-	if(1)
-		src.sight |= SEE_TURFS
-		src.blahblah.mode=2
-	if(2)
-		src.see_in_dark = 5
-		src.blahblah.mode=3
-	if(3)
-		src.sight |= SEE_MOBS
-		src.blahblah.mode=1
-
-//Toggle Stealth
-Will be a function of the suit, much like a regular cloak.
+//Make untrackable by AI.
 
 */
 

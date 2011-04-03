@@ -13,9 +13,11 @@
 			if (istype(H.head, /obj/item/clothing/head/helmet/welding))
 				if(!H.head:up)
 					safety = 1
+			if (istype(H.wear_mask, /obj/item/clothing/mask/gas/space_ninja))
+				safety = 1
 		if (istype(M, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
 			safety = 1
-		if(isrobot(user))
+		if (isrobot(user))
 			spawn(0)
 				var/atom/movable/overlay/animation = new(user.loc)
 				animation.layer = user.layer + 1
