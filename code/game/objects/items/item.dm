@@ -352,7 +352,7 @@
 							else if (user2.w_uniform)
 								user2.w_uniform.add_blood(H)
 				affecting.take_damage(b_dam, f_dam)
-		H.UpdateDamageIcon()
+		H.UpdateDamageIcon()                     ///Only reference I can find on the attack() proc actually changing mob icon -Agouri
 	else
 		switch(src.damtype)
 			if("brute")

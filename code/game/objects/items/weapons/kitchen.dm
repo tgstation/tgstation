@@ -147,8 +147,17 @@ KNIFE
 			//playsound(M, 'trayhit2.wav', 50, 1) //sound playin'
 			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
 
+	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
+
 
 	if(!(user.zone_sel.selecting == ("eyes" || "head"))) //////////////hitting anything else other than the eyes
+		if(prob(33))
+			src.add_blood(H)
+			var/turf/location = H.loc
+			if (istype(location, /turf/simulated))
+				location.add_blood(H)     ///Plik plik, the sound of blood
+
+
 		if(prob(15))
 			M.weakened += 3
 			M.bruteloss += 3
@@ -157,27 +166,39 @@ KNIFE
 		if(prob(50))
 			//playsound(M, 'trayhit1.wav', 50, 1)
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] slams [] with the tray!", user, M), 1)
+				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 			return
 		else
 			//playsound(M, 'trayhit2.wav', 50, 1)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] slams [] with the tray!", user, M), 1)
+				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 			return
 
 
 
-	var/mob/living/carbon/human/H = M      ///////////////////////////////////// //Oh boy, guy chose to attack the eyes! Let's prepare a new variable!
+
 	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 		M << "\red You get slammed in the face with the tray, against your mask!"
+		if(prob(33))
+			src.add_blood(H)
+			if (H.wear_mask)
+				H.wear_mask.add_blood(H)
+			if (H.head)
+				H.head.add_blood(H)
+			if (H.glasses && prob(33))
+				H.glasses.add_blood(H)
+			var/turf/location = H.loc
+			if (istype(location, /turf/simulated))     //Addin' blood! At least on the floor and item :v
+				location.add_blood(H)
+
 		if(prob(50))
 			//playsound(M, 'trayhit1.wav', 50, 1)
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] slams [] with the tray!", user, M), 1)
+				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		else
 			//playsound(M, 'trayhit2.wav', 50, 1)  //sound playin'
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] slams [] with the tray!", user, M), 1)
+				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		if(prob(10))
 			M.stunned = rand(1,3)
 			M.bruteloss += 3
@@ -188,14 +209,20 @@ KNIFE
 
 	else //No eye or head protection, tough luck!
 		M << "\red You get slammed in the face with the tray!"
+		if(prob(33))
+			src.add_blood(M)
+			var/turf/location = H.loc
+			if (istype(location, /turf/simulated))
+				location.add_blood(H)
+
 		if(prob(50))
 		//	playsound(M, 'trayhit1.wav', 50, 1)
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] slams [] in the face with the tray!", user, M), 1)
+				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		else
 			//playsound(M, 'trayhit2.wav', 50, 1)  //sound playin' again
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red [] slams [] in the face with the tray!", user, M), 1)
+				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		if(prob(30))
 			M.stunned = rand(2,4)
 			M.bruteloss +=4
@@ -224,3 +251,26 @@ KNIFE
 		reagents.remove_reagent("nutriment", 1)
 		if (reagents.total_volume <= 0)
 			del(src)*/
+
+
+/*			if (prob(33))
+						var/turf/location = H.loc
+						if (istype(location, /turf/simulated))
+							location.add_blood(H)
+					if (H.wear_mask)
+						H.wear_mask.add_blood(H)
+					if (H.head)
+						H.head.add_blood(H)
+					if (H.glasses && prob(33))
+						H.glasses.add_blood(H)
+					if (istype(user, /mob/living/carbon/human))
+						var/mob/living/carbon/human/user2 = user
+						if (user2.gloves)
+							user2.gloves.add_blood(H)
+						else
+							user2.add_blood(H)
+						if (prob(15))
+							if (user2.wear_suit)
+								user2.wear_suit.add_blood(H)
+							else if (user2.w_uniform)
+								user2.w_uniform.add_blood(H)*/
