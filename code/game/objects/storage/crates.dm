@@ -272,6 +272,8 @@
 			src.loc = P
 			O.amount -= 3
 	else if(opened)
+		if(isrobot(user))
+			return
 		user.drop_item()
 		if(W)
 			W.loc = src.loc

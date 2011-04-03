@@ -81,6 +81,8 @@
 
 /obj/item/weapon/storage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
+	if(isrobot(user))
+		return
 	if(can_hold.len)
 		var/ok = 0
 		for(var/A in can_hold)

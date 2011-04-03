@@ -90,6 +90,8 @@
 
 	if ((!( istype(O, /obj/item/weapon) ) || user.equipped() != O))
 		return
+	if(isrobot(user))
+		return
 	user.drop_item()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -119,6 +121,10 @@
 		//SN src = null
 		del(src)
 		return
+
+	if(isrobot(user))
+		return
+
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc
 	return
@@ -127,6 +133,9 @@
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
+		if(G.state<2)
+			user << "\red You need a better grip to do that!"
+			return
 		G.affecting.loc = src.loc
 		G.affecting.weakened = 5
 		for(var/mob/O in viewers(world.view, src))
@@ -150,6 +159,8 @@
 				user << "\blue Table strengthened"
 				src.status = 2
 			return
+		if(isrobot(user))
+			return
 		user.drop_item()
 		if(W && W.loc)	W.loc = src.loc
 		return
@@ -163,6 +174,8 @@
 			playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 			del(src)
 			return
+	if(isrobot(user))
+		return
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc
 	return
@@ -203,6 +216,8 @@
 /obj/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
 	if ((!( istype(O, /obj/item/weapon) ) || user.equipped() != O))
 		return
+	if(isrobot(user))
+		return
 	user.drop_item()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -214,6 +229,8 @@
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
 		//SN src = null
 		del(src)
+		return
+	if(isrobot(user))
 		return
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc

@@ -160,6 +160,9 @@
 			del(src)
 			return
 
+		if(isrobot(user))
+			return
+
 		usr.drop_item()
 
 		if (W)
@@ -188,6 +191,8 @@
 	if(!src.opened)
 		return
 	if(istype(O, /obj/secure_closet) || istype(O, /obj/closet))
+		return
+	if(isrobot(user))
 		return
 	step_towards(O, src.loc)
 	user.show_viewers(text("\red [] stuffs [] into []!", user, O, src))
