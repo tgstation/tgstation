@@ -743,9 +743,6 @@
 				src.sight |= SEE_TURFS
 				if(!src.druggy)
 					src.see_invisible = 0
-			else if(src.reagents.has_reagent("psilocybin"))
-				if (src.druggy > 30)
-					src.see_invisible = 10
 			else if (istype(src.glasses, /obj/item/clothing/glasses/night))
 				src.see_in_dark = 5
 				if(!src.druggy)
