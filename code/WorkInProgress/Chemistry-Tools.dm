@@ -1780,7 +1780,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
 	name = "Fillet -o- Carp Sandwich"
-	desc = "Almost like a carp is yelling some where... Give me back that fillet -o- carp, give me that carp."
+	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
 	icon_state = "fishburger"
 	New()
 		..()
@@ -1834,7 +1834,7 @@
 	icon_state = "clownburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
@@ -1864,7 +1864,7 @@
 			W.icon_state = "forkloaded"
 			/*if (herp)
 				world << "[user] takes a piece of omelette with his fork!"*/ //Why this unecessary check? Oh I know, because I'm bad >:C
-			viewers(3,user) << "[user] takes a piece of omelette with his fork!"
+			viewers(3,user) << "[user] takes a piece of omelette with their fork!"
 			reagents.remove_reagent("nutriment", 1)
 			if (reagents.total_volume <= 0)
 				del(src)

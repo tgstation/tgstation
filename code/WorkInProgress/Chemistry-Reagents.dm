@@ -1335,9 +1335,26 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 30)
-				if(M.canmove) step(M, pick(cardinal))
-				if(prob(14)) M:emote(pick("twitch","drool","moan","giggle"))
+				if(!data) data = 1
+				switch(data)
+					if(1 to 5)
+						if (!M:stuttering) M:stuttering = 1
+						M.make_dizzy(5)
+						if(prob(10)) M:emote(pick("twitch","giggle"))
+					if(5 to 10)
+						if (!M:stuttering) M:stuttering = 1
+						M.make_jittery(10)
+						M.make_dizzy(10)
+						M.druggy = max(M.druggy, 31)
+						if(prob(20)) M:emote(pick("twitch","giggle"))
+					if (10 to INFINITY)
+						if (!M:stuttering) M:stuttering = 1
+						M.make_jittery(20)
+						M.make_dizzy(20)
+						M.druggy = max(M.druggy, 40)
+						if(prob(30)) M:emote(pick("twitch","giggle"))
 				holder.remove_reagent(src.id, 0.2)
+				data++
 				..()
 				return
 
@@ -1517,6 +1534,7 @@ datum
 				..()
 				M.dizziness = max(0,M.dizziness-2)
 				M:drowsyness = max(0,M:drowsyness-1)
+				M:jitteriness = max(0,M:jitteriness-3)
 				M:sleeping = 0
 				if(M:toxloss && prob(50))
 					M:toxloss--
