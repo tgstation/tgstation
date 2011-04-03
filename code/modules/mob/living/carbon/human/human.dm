@@ -183,7 +183,7 @@
 				stat("Chemical Storage", src.chem_charges)
 
 
-/mob/living/carbon/human/bullet_act(flag, A as obj)
+/mob/living/carbon/human/bullet_act(flag, A as obj, var/datum/organ/external/def_zone)
 	var/shielded = 0
 	for(var/obj/item/device/shield/S in src)
 		if (S.active)
@@ -202,6 +202,18 @@
 			src << "\blue Your shield was disturbed by a laser!"
 			if(src.paralysis <= 120)	src.paralysis = 120
 			src.updatehealth()
+
+	var/datum/organ/external/affecting
+	if(!def_zone)
+		var/organ = src.organs[ran_zone("chest")]
+		if (istype(organ, /datum/organ/external))
+			affecting = organ
+	else
+		affecting = src.organs["[def_zone]"]
+
+	if(!affecting)
+		return
+
 	if (locate(/obj/item/weapon/grab, src))
 		var/mob/safe = null
 		if (istype(src.l_hand, /obj/item/weapon/grab))
@@ -214,9 +226,19 @@
 				safe = G.affecting
 		if (safe)
 			return safe.bullet_act(flag, A)
+
+	var/armored = 0
+	if(affecting.name == "head")
+		if(src.head && istype(src.head,/obj/item/clothing/head/helmet))
+			armored = 1
+	else
+		if(src.wear_suit)
+			if(affecting.body_part & src.wear_suit.body_parts_covered)
+				armored = 1
+
 	if (flag == PROJECTILE_BULLET)
 		var/d = 51
-		if (istype(src.wear_suit, /obj/item/clothing/suit/armor))
+		if (armored)
 			if (prob(70))
 				show_message("\red Your armor absorbs the hit!", 4)
 				return
@@ -260,17 +282,14 @@
 							d = d / 2
 						d = d / 5
 		if (src.stat != 2)
-			var/organ = src.organs[ran_zone("chest")]
-			if (istype(organ, /datum/organ/external))
-				var/datum/organ/external/temp = organ
-				temp.take_damage(d, 0)
+			affecting.take_damage(d, 0)
 			src.UpdateDamageIcon()
 			src.updatehealth()
 			if (prob(50))
 				if(src.weakened <= 5)	src.weakened = 5
 		return
 	else if (flag == PROJECTILE_TASER)
-		if (istype(src.wear_suit, /obj/item/clothing/suit/armor))
+		if (armored)
 			if (prob(5))
 				show_message("\red Your armor absorbs the hit!", 4)
 				return
@@ -294,7 +313,7 @@
 			src.toxloss += 10
 	else if(flag == PROJECTILE_LASER)
 		var/d = 20
-		if (istype(src.wear_suit, /obj/item/clothing/suit/armor))
+		if (armored)
 			if (prob(40))
 				show_message("\red Your armor absorbs the hit!", 4)
 				return
@@ -320,10 +339,7 @@
 		if (prob(25)) src.stunned++
 
 		if (src.stat != 2)
-			var/organ = src.organs[ran_zone("chest")]
-			if (istype(organ, /datum/organ/external))
-				var/datum/organ/external/temp = organ
-				temp.take_damage(d, 0)
+			affecting.take_damage(0, d)
 			src.UpdateDamageIcon()
 			src.updatehealth()
 			if (prob(25))
@@ -352,10 +368,7 @@
 							d = d / 2
 						d = d / 2*/
 		if (src.stat != 2)
-			var/organ = src.organs[ran_zone("chest")]
-			if (istype(organ, /datum/organ/external))
-				var/datum/organ/external/temp = organ
-				temp.take_damage(d, 0)
+			affecting.take_damage(0, d)
 			src.UpdateDamageIcon()
 			src.updatehealth()
 			if (prob(50))
@@ -368,7 +381,7 @@
 		src.drowsyness += 5
 	else if(flag == PROJECTILE_WEAKBULLET)
 		var/d = 14
-		if (istype(src.wear_suit, /obj/item/clothing/suit/armor))
+		if (armored)
 			if (prob(70))
 				show_message("\red Your armor absorbs the hit!", 4)
 				return
@@ -411,10 +424,7 @@
 							d = d / 2
 						d = d / 5
 		if (src.stat != 2)
-			var/organ = src.organs[ran_zone("chest")]
-			if (istype(organ, /datum/organ/external))
-				var/datum/organ/external/temp = organ
-				temp.take_damage(d, 0)
+			affecting.take_damage(d, 0)
 			src.UpdateDamageIcon()
 			src.updatehealth()
 			if(src.weakened <= 5)	src.weakened = 5

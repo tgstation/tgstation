@@ -188,7 +188,7 @@
 		if(!istype(T, /turf))
 			return
 		if (U == T)
-			usr.bullet_act(PROJECTILE_DART)
+			usr.bullet_act(PROJECTILE_DART, src, src.get_organ_target())
 			return
 		if(!istype(U, /turf))
 			return

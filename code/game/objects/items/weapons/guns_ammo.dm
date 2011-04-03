@@ -56,11 +56,12 @@ TELEPORT GUN
 		if (!targloc || !istype(targloc, /turf) || !curloc)
 			return
 		if (targloc == curloc)
-			user.bullet_act(PROJECTILE_PULSE)
+			user.bullet_act(PROJECTILE_PULSE, src, user.get_organ_target())
 			return
 
 		var/obj/beam/a_laser/A = new /obj/beam/a_laser/pulse_laser(user.loc)
 		playsound(user, 'pulse.ogg', 50, 1)
+		A.def_zone = user.get_organ_target()
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -152,7 +153,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return 1
 	return
 
-/obj/item/weapon/gun/revolver/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag, pbs)
+/obj/item/weapon/gun/revolver/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (flag)
 		return
 	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
@@ -164,12 +165,8 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return
 	playsound(user, 'Gunshot.ogg', 100, 1)
 	src.bullets--
-	if(!pbs)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red <B>[] fires a revolver at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
-	else
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red <B>[] has been shot point-blank by []!</B>", target, user), 1, "\red You hear a gunshot", 2)
+	for(var/mob/O in viewers(user, null))
+		O.show_message(text("\red <B>[] fires a revolver at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
 	var/turf/T = user.loc
 	var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 	if ((!( U ) || !( T )))
@@ -179,12 +176,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if (!( istype(T, /turf) ))
 		return
 	if (U == T)
-		user.bullet_act(PROJECTILE_BULLET)
+		user.bullet_act(PROJECTILE_BULLET, src, user.get_organ_target())
 		return
 	var/obj/bullet/A = new /obj/bullet( user.loc )
 	if (!istype(U, /turf))
 		del(A)
 		return
+	A.def_zone = user.get_organ_target()
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -195,41 +193,14 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	return
 
 /obj/item/weapon/gun/revolver/attack(mob/M as mob, mob/user as mob)
-	src.add_fingerprint(user)
-//	var/mob/living/carbon/human/H = M
-
-// ******* Check
-
-//	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-//		M << "\blue The helmet protects you from being hit hard in the head!"
-//		return
 	if ((user.a_intent == "hurt" && src.bullets > 0))
-//		if (prob(20))
-//			if (M.paralysis < 10)
-//				M.paralysis = 10
-//		else
-//			if (M.weakened < 10)
-//				M.weakened = 10
-//		src.bullets--
-//		src.force = 90
-//		..()
-//		src.force = 24
-//		if(M.stat != 2)	M.stat = 1
-//		for(var/mob/O in viewers(M, null))
-//			if(O.client)	O.show_message(text("\red <B>[] has been shot point-blank by []!</B>", M, user), 1, "\red You hear someone fall", 2)
-		src.afterattack(M, user, 0, 1)
+		playsound(user, 'Gunshot.ogg', 100, 1)
+		for(var/mob/O in viewers(M, null))
+			if(O.client)	O.show_message(text("\red <B>[] has been shot point-blank by []!</B>", M, user), 1, "\red You hear a gunshot", 2)
+		M.bullet_act(PROJECTILE_BULLET, src, user.get_organ_target())
+		src.bullets--
 	else
-//		if (prob(50))
-//			if (M.paralysis < 60)
-//				M.paralysis = 60
-//		else
-//			if (M.weakened < 60)
-//				M.weakened = 60
-//		src.force = 24
 		..()
-//		if(M.stat != 2)	M.stat = 1
-//		for(var/mob/O in viewers(M, null))
-//			if (O.client)	O.show_message(text("\red <B>[] has been pistol whipped by []!</B>", M, user), 1, "\red You hear someone fall", 2)
 	return
 
 
@@ -334,16 +305,17 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return
 	if (U == T)
 		if (src.shells[index] == 1 || shellsunlimited == 1)
-			user.bullet_act(PROJECTILE_WEAKBULLET)
+			user.bullet_act(PROJECTILE_WEAKBULLET, src, user.get_organ_target())
 		else if (src.shells[index] == 2 || shellsunlimited == 2)
-			user.bullet_act(PROJECTILE_BULLET)
+			user.bullet_act(PROJECTILE_BULLET, src, user.get_organ_target())
 		else if (src.shells[index] == 4 || shellsunlimited == 4)
-			user.bullet_act(PROJECTILE_BOLT)
+			user.bullet_act(PROJECTILE_BOLT, src, user.get_organ_target())
 		return
 	switch(shellsunlimited)
 		if (1)
 			var/obj/bullet/A = new /obj/bullet/weakbullet( user.loc )
 			src.pumped = 0
+			A.def_zone = user.get_organ_target()
 			A.current = U
 			A.yo = U.y - T.y
 			A.xo = U.x - T.x
@@ -356,6 +328,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		if (2)
 			var/obj/bullet/A = new /obj/bullet( user.loc )
 			src.pumped = 0
+			A.def_zone = user.get_organ_target()
 			A.current = U
 			A.yo = U.y - T.y
 			A.xo = U.x - T.x
@@ -372,6 +345,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		if (4)
 			var/obj/bullet/A = new /obj/bullet/cbbolt( user.loc )
 			src.pumped = 0
+			A.def_zone = user.get_organ_target()
 			A.current = U
 			A.yo = U.y - T.y
 			A.xo = U.x - T.x
@@ -387,6 +361,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				src.pumped = 0
 				src.shells[index] = 0
 				index--
+				A.def_zone = user.get_organ_target()
 				A.current = U
 				A.yo = U.y - T.y
 				A.xo = U.x - T.x
@@ -401,6 +376,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				src.pumped = 0
 				src.shells[index] = 0
 				index--
+				A.def_zone = user.get_organ_target()
 				A.current = U
 				A.yo = U.y - T.y
 				A.xo = U.x - T.x
@@ -421,6 +397,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				src.pumped = 0
 				src.shells[index] = 0
 				index--
+				A.def_zone = user.get_organ_target()
 				A.current = U
 				A.yo = U.y - T.y
 				A.xo = U.x - T.x
@@ -493,12 +470,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if (!( istype(T, /turf) ))
 		return
 	if (U == T)
-		user.bullet_act(PROJECTILE_WEAKBULLET)
+		user.bullet_act(PROJECTILE_WEAKBULLET, src, user.get_organ_target())
 		return
 	var/obj/bullet/weakbullet/A = new /obj/bullet/weakbullet( user.loc )
 	if (!istype(U, /turf))
 		del(A)
 		return
+	A.def_zone = user.get_organ_target()
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -510,6 +488,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 /obj/item/weapon/gun/detectiverevolver/attack(mob/M as mob, mob/user as mob)
 	src.add_fingerprint(user)
+//	var/mob/living/carbon/human/H = M
 	var/detective = (istype(user:w_uniform, /obj/item/clothing/under/det) && istype(user:head, /obj/item/clothing/head/det_hat)  && istype(user:wear_suit, /obj/item/clothing/suit/det_suit))
 
 // ******* Check
@@ -625,12 +604,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if(!istype(T, /turf))
 		return
 	if(U == T)
-		user.bullet_act(PROJECTILE_LASER)
+		user.bullet_act(PROJECTILE_LASER, src, user.get_organ_target())
 		return
 	if(!istype(U, /turf))
 		return
 
 	var/obj/beam/a_laser/A = new /obj/beam/a_laser( user.loc )
+	A.def_zone = user.get_organ_target()
 
 	A.current = U
 	A.yo = U.y - T.y
@@ -702,13 +682,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if(!istype(T, /turf))
 		return
 	if (U == T)
-		user.bullet_act(PROJECTILE_TASER)
+		user.bullet_act(PROJECTILE_TASER, src, user.get_organ_target())
 		return
 	if(!istype(U, /turf))
 		return
 
 	var/obj/bullet/electrode/A = new /obj/bullet/electrode(user.loc)
-
+	A.def_zone = user.get_organ_target()
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -830,13 +810,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if(!istype(T, /turf))
 		return
 	if (U == T)
-		user.bullet_act(PROJECTILE_BOLT)
+		user.bullet_act(PROJECTILE_BOLT, src, user.get_organ_target())
 		return
 	if(!istype(U, /turf))
 		return
 
 	var/obj/bullet/cbbolt/A = new /obj/bullet/cbbolt(user.loc)
-
+	A.def_zone = user.get_organ_target()
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -906,6 +886,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return
 
 	var/obj/bullet/teleshot/A = new /obj/bullet/teleshot(user.loc)
+	A.def_zone = user.get_organ_target()
 
 	A.target = src.target
 	A.current = U
@@ -1100,15 +1081,16 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 		if(mode == 1)
 			if (targloc == curloc)
-				user.bullet_act(PROJECTILE_LASER)
+				user.bullet_act(PROJECTILE_LASER, src, user.get_organ_target())
 				return
 		else if(mode == 2)
 			if (targloc == curloc)
-				user.bullet_act(PROJECTILE_TASER)
+				user.bullet_act(PROJECTILE_TASER, src, user.get_organ_target())
 				return
 
 		if(mode == 1)
 			var/obj/beam/a_laser/A = new /obj/beam/a_laser(user.loc)
+			A.def_zone = user.get_organ_target()
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
@@ -1118,6 +1100,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 		else if(mode == 2)
 			var/obj/bullet/electrode/A = new /obj/bullet/electrode(user.loc)
+			A.def_zone = user.get_organ_target()
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
@@ -1239,12 +1222,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if (!( istype(T, /turf) ))
 		return
 	if (U == T)
-		user.bullet_act(PROJECTILE_BULLET)
+		user.bullet_act(PROJECTILE_BULLET, src, user.get_organ_target())
 		return
 	var/obj/bullet/weakbullet/A = new /obj/bullet/weakbullet( user.loc )
 	if (!istype(U, /turf))
 		del(A)
 		return
+	A.def_zone = user.get_organ_target()
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -1331,12 +1315,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if (!( istype(T, /turf) ))
 		return
 	if (U == T)
-		user.bullet_act(PROJECTILE_BULLET)
+		user.bullet_act(PROJECTILE_BULLET, src, user.get_organ_target())
 		return
 	var/obj/bullet/weakbullet/A = new /obj/bullet/weakbullet( user.loc )
 	if (!istype(U, /turf))
 		del(A)
 		return
+	A.def_zone = user.get_organ_target()
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -1428,12 +1413,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if (!( istype(T, /turf) ))
 		return
 	if (U == T)
-		user.bullet_act(PROJECTILE_WEAKBULLET)
+		user.bullet_act(PROJECTILE_WEAKBULLET, src, user.get_organ_target())
 		return
 	var/obj/bullet/weakbullet/A = new /obj/bullet/weakbullet( user.loc )
 	if (!istype(U, /turf))
 		del(A)
 		return
+	A.def_zone = user.get_organ_target()
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -1509,12 +1495,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if (!( istype(T, /turf) ))
 		return
 	if (U == T)
-		user.bullet_act(PROJECTILE_BULLET)
+		user.bullet_act(PROJECTILE_BULLET, src, user.get_organ_target())
 		return
 	var/obj/bullet/A = new /obj/bullet( user.loc )
 	if (!istype(U, /turf))
 		del(A)
 		return
+	A.def_zone = user.get_organ_target()
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -1592,12 +1579,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if (!( istype(T, /turf) ))
 		return
 	if (U == T)
-		user.bullet_act(PROJECTILE_WEAKBULLET)
+		user.bullet_act(PROJECTILE_WEAKBULLET, src, user.get_organ_target())
 		return
 	var/obj/bullet/weakbullet/A = new /obj/bullet/weakbullet( user.loc )
 	if (!istype(U, /turf))
 		del(A)
 		return
+	A.def_zone = user.get_organ_target()
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -1676,12 +1664,13 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if (!( istype(T, /turf) ))
 		return
 	if (U == T)
-		user.bullet_act(PROJECTILE_BULLET)
+		user.bullet_act(PROJECTILE_BULLET, src, user.get_organ_target())
 		return
 	var/obj/bullet/A = new /obj/bullet( user.loc )
 	if (!istype(U, /turf))
 		del(A)
 		return
+	A.def_zone = user.get_organ_target()
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x

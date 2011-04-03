@@ -1694,7 +1694,8 @@
 	return
 
 /client/Northwest()
-	src.mob.drop_item_v()
+	if(!isrobot(src))
+		src.mob.drop_item_v()
 	return
 
 /client/Center()
@@ -2229,6 +2230,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 	for(var/obj/O in L)
 		O.emp_act(severity)
 	..()
+
+/mob/proc/get_organ_target()
+	var/mob/shooter = src
+	var/t = shooter:zone_sel.selecting
+	if ((t in list( "eyes", "mouth" )))
+		t = "head"
+	var/datum/organ/external/def_zone = ran_zone(t)
+	return def_zone
 
 /mob/proc/heal_organ_damage(var/brute, var/burn)
 	var/list/parts = list()

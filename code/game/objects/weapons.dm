@@ -976,10 +976,10 @@
 /obj/bullet/Bump(atom/A as mob|obj|turf|area)
 	spawn(0)
 		if(A)
-			A.bullet_act(PROJECTILE_BULLET, src)
+			A.bullet_act(PROJECTILE_BULLET, src, def_zone)
 			if(istype(A,/turf))
 				for(var/obj/O in A)
-					O.bullet_act(PROJECTILE_BULLET, src)
+					O.bullet_act(PROJECTILE_BULLET, src, def_zone)
 
 		del(src)
 	return
@@ -998,7 +998,7 @@
 			A.bullet_act(PROJECTILE_WEAKBULLET, src)
 			if(istype(A,/turf))
 				for(var/obj/O in A)
-					O.bullet_act(PROJECTILE_WEAKBULLET, src)
+					O.bullet_act(PROJECTILE_WEAKBULLET, src, def_zone)
 
 		del(src)
 	return
@@ -1009,7 +1009,7 @@
 			A.bullet_act(PROJECTILE_TASER)
 			if(istype(A,/turf))
 				for(var/obj/O in A)
-					O.bullet_act(PROJECTILE_TASER, src)
+					O.bullet_act(PROJECTILE_TASER, src, def_zone)
 		del(src)
 	return
 
@@ -1019,7 +1019,7 @@
 			A.bullet_act(PROJECTILE_BOLT)
 			if(istype(A,/turf))
 				for(var/obj/O in A)
-					O.bullet_act(PROJECTILE_BOLT, src)
+					O.bullet_act(PROJECTILE_BOLT, src, def_zone)
 		del(src)
 	return
 
@@ -1029,7 +1029,7 @@
 			A.bullet_act(PROJECTILE_DART)
 			if(istype(A,/turf))
 				for(var/obj/O in A)
-					O.bullet_act(PROJECTILE_DART, src)
+					O.bullet_act(PROJECTILE_DART, src, def_zone)
 		del(src)
 	return
 
@@ -1079,7 +1079,7 @@
 /obj/beam/a_laser/Bump(atom/A as mob|obj|turf)
 	spawn(0)
 		if(A)
-			A.bullet_act(PROJECTILE_LASER, src)
+			A.bullet_act(PROJECTILE_LASER, src, def_zone)
 		del(src)
 
 /obj/beam/a_laser/proc/process()

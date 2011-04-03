@@ -5,5 +5,5 @@
 	Bump(atom/A)
 		spawn()
 			if(A)
-				A.bullet_act(PROJECTILE_PULSE)
+				A.bullet_act(PROJECTILE_PULSE, src, def_zone)
 			del(src)

@@ -70,6 +70,7 @@
 /obj/beam
 	name = "beam"
 	unacidable = 1//Just to be sure.
+	var/def_zone
 
 /obj/beam/a_laser
 	name = "a laser"
@@ -94,6 +95,7 @@
 	var/left = null
 	anchored = 1.0
 	flags = TABLEPASS
+
 
 /obj/bedsheetbin
 	name = "linen bin"
@@ -122,6 +124,7 @@
 	var/current = null
 	anchored = 1.0
 	flags = TABLEPASS
+	var/def_zone
 
 /obj/bullet/weakbullet
 

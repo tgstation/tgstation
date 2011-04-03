@@ -76,7 +76,7 @@
 	life = 20
 
 	Bump(atom/A)
-		A.bullet_act(PROJECTILE_PULSE)
+		A.bullet_act(PROJECTILE_PULSE, src, def_zone)
 		src.life -= 10
 		return
 

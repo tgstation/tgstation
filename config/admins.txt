@@ -4,6 +4,7 @@ sillazi - Game Master
 herpa - Game Master
 scaredofshadows - Game Master
 chicagoted - Game Master
+neofite - Game Master
 
 mport2004 - Game Admin
 lj82 - Game Admin
@@ -16,7 +17,6 @@ lastwish - Game Admin
 tashdurandel - Game Admin
 mario90900 - Game Admin
 atomictroop - Game Admin
-neofite - Game Admin
 fateweaver - Game Admin
 agouri - Game Admin
 errorage - Game Admin
