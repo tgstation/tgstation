@@ -775,12 +775,12 @@ proc/move_mining_shuttle()
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
-
+/*
 	if (istype(W, /obj/item/weapon/pickaxe/radius))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
-
+*///Watch your tabbing, microwave. --NEO
 
 		user << "\red You start picking."
 		playsound(user, 'Genhit.ogg', 20, 1)
