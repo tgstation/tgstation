@@ -245,6 +245,47 @@ obj/machinery/atmospherics/pipe
 
 			return null
 
+	simple/scrubbers
+		name="Scrubbers pipe"
+		color="red"
+		icon_state = ""
+
+	simple/supply
+		name="Air supply pipe"
+		color="blue"
+		icon_state = ""
+
+	simple/general
+		name="Pipe"
+		color=""
+		icon_state = ""
+
+	simple/scrubbers/visible
+		level = 2
+		icon_state = "intact-r"
+
+	simple/scrubbers/hidden
+		level = 1
+		icon_state = "intact-r-f"
+
+	simple/supply/visible
+		level = 2
+		icon_state = "intact-b"
+
+	simple/supply/hidden
+		level = 1
+		icon_state = "intact-b-f"
+
+	simple/general/visible
+		level = 2
+		icon_state = "intact"
+
+	simple/general/hidden
+		level = 1
+		icon_state = "intact-f"
+
+
+
 	simple/insulated
 		icon = 'red_pipe.dmi'
 		icon_state = "intact"
@@ -736,6 +777,45 @@ obj/machinery/atmospherics/pipe
 			hide(T.intact)
 			//update_icon()
 			update_icon()
+
+	manifold/scrubbers
+		name="Scrubbers pipe"
+		color="red"
+		icon_state = ""
+
+	manifold/supply
+		name="Air supply pipe"
+		color="blue"
+		icon_state = ""
+
+	manifold/general
+		name="Air supply pipe"
+		color="gray"
+		icon_state = ""
+
+	manifold/scrubbers/visible
+		level = 2
+		icon_state = "manifold-r"
+
+	manifold/scrubbers/hidden
+		level = 1
+		icon_state = "manifold-r-f"
+
+	manifold/supply/visible
+		level = 2
+		icon_state = "manifold-b"
+
+	manifold/supply/hidden
+		level = 1
+		icon_state = "manifold-b-f"
+
+	manifold/general/visible
+		level = 2
+		icon_state = "manifold"
+
+	manifold/general/hidden
+		level = 1
+		icon_state = "manifold-f"
 
 obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
