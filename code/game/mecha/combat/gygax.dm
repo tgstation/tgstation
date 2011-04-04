@@ -10,6 +10,7 @@
 	var/overload = 0
 	wreckage = "/obj/decal/mecha_wreckage/gygax"
 	internal_damage_threshold = 35
+	max_equip = 3
 
 
 /*

@@ -73,14 +73,18 @@
 						/obj/item/mecha_parts/part/honker_right_leg
 						),
 	"Exosuit Equipment"=list(
-									/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
-									/obj/item/mecha_parts/mecha_equipment/tool/drill,
-									/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
-									/obj/item/mecha_parts/mecha_equipment/weapon/taser,
-									/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
-									/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
-									/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
-									/obj/item/mecha_parts/mecha_equipment/weapon/honker),
+						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
+						/obj/item/mecha_parts/mecha_equipment/tool/drill,
+						/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
+						/obj/item/mecha_parts/mecha_equipment/weapon/taser,
+						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
+						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
+						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
+						/obj/item/mecha_parts/mecha_equipment/weapon/honker,
+						/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
+						/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
+						/obj/item/mecha_parts/mecha_equipment/repair_droid
+									),
 
 	"Misc"=list(/obj/item/mecha_tracking)
 
@@ -175,7 +179,7 @@
 			var/list/part_set = part_sets[set_name]
 			for(var/atom/part in part_set)
 				var/resources_available = check_resources(part)
-				output += "<div class='part'>[output_part_info(part)]<br>\[[resources_available?"<a href='?src=\ref[src];part=\ref[part]'>Build</a> | ":null]<a href='?src=\ref[src];add_to_queue=\ref[part]'>Add to queue</a>\]</div>"
+				output += "<div class='part'>[output_part_info(part)]<br>\[[resources_available?"<a href='?src=\ref[src];part=\ref[part]'>Build</a> | ":null]<a href='?src=\ref[src];add_to_queue=\ref[part]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=\ref[part]'>?</a>\]</div>"
 		return output
 
 	proc/output_part_info(var/obj/item/mecha_parts/part)
@@ -368,6 +372,7 @@
 					body, table {height: 100%;}
 					td {vertical-align: top; padding: 5px;}
 					html, body {padding: 0px; margin: 0px;}
+					h1 {font-size: 18px; margin: 5px 0px;}
 					</style>
 					</head><body>
 					<body>
@@ -436,6 +441,12 @@
 		if(href_list["auto_sync"])
 			src.sync = !src.sync
 			//pr_auto_sync.toggle()
+		if(href_list["part_desc"])
+			var/obj/part = locate(href_list["part_desc"])
+			temp = {"<h1>[part] description:</h1>
+						[part.desc]<br>
+						<a href='?src=\ref[src];clear_temp=1'>Return</a>
+						"}
 		src.updateUsrDialog()
 		return
 

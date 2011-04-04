@@ -874,6 +874,7 @@
 			brainmob.loc = src
 			brainmob.name = owner.real_name
 			brainmob.real_name = owner.real_name
+			brainmob.dna = owner.dna
 			if(src.owner.mind)
 				src.owner.mind.transfer_to(brainmob)
 			brainmob.death() //the brain is dead until stuffed into an MMI. In which case it might still be dead if it's been beat up.

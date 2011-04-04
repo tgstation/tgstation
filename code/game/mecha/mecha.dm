@@ -29,11 +29,11 @@
 	var/list/log = new
 	var/last_message = 0
 	var/add_req_access = 1
-
+	var/dna	//dna-locking the mech
+	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effects/system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_power = 6
-	//var/inertia_dir = null //for open space travel.
 
 	//inner atmos machinery. Air tank mostly
 	var/use_internal_tank = 0
@@ -334,8 +334,13 @@
 
 /obj/mecha/hitby(atom/movable/A as mob|obj)
 	src.log_message("Hit by [A].",1)
+	call((proc_res["dynhitby"]||src), "dynhitby")(A)
+	return
+
+/obj/mecha/proc/dynhitby(atom/movable/A)
 	if(istype(A, /obj/item/mecha_tracking))
 		A.loc = src
+		src.visible_message("The [A] fastens firmly to [src].")
 		return
 	if(prob(src.deflect_chance) || istype(A, /mob))
 		src.occupant_message("\blue The [A] bounces off the armor.")
@@ -345,13 +350,11 @@
 			var/mob/M = A
 			M.bruteloss += 10
 			M.updatehealth()
-
 	else if(istype(A, /obj))
 		var/obj/O = A
 		if(O.throwforce)
 			src.take_damage(O.throwforce)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-
 	return
 
 
@@ -372,29 +375,34 @@
 		src.visible_message("The [src.name] armor deflects the projectile")
 		src.log_append_to_last("Armor saved.")
 	else
-		var/damage
-		var/ignore_threshold
-		switch(flag)
-			if(PROJECTILE_PULSE)
-				damage = 40
-				ignore_threshold = 1
-			if(PROJECTILE_LASER)
-				damage = 20
-			if(PROJECTILE_TASER)
-				src.cell.use(500)
-			if(PROJECTILE_WEAKBULLET)
-				damage = 8
-			if(PROJECTILE_BULLET)
-				damage = 10
-			if(PROJECTILE_BOLT)
-				damage = 5
-			if(PROJECTILE_DART)
-				damage = 5
-			else
-				return
-		src.take_damage(damage)
-		src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),ignore_threshold)
+		call((proc_res["dynbulletdamage"]||src), "dynbulletdamage")(flag) //calls equipment
 	return
+
+/obj/mecha/proc/dynbulletdamage(flag)
+	var/damage
+	var/ignore_threshold
+	switch(flag)
+		if(PROJECTILE_PULSE)
+			damage = 40
+			ignore_threshold = 1
+		if(PROJECTILE_LASER)
+			damage = 20
+		if(PROJECTILE_TASER)
+			src.cell.use(500)
+		if(PROJECTILE_WEAKBULLET)
+			damage = 8
+		if(PROJECTILE_BULLET)
+			damage = 10
+		if(PROJECTILE_BOLT)
+			damage = 5
+		if(PROJECTILE_DART)
+			damage = 5
+		else
+			return
+	src.take_damage(damage)
+	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),ignore_threshold)
+	return
+
 
 /obj/mecha/proc/destroy()
 	spawn()
@@ -618,7 +626,10 @@
 		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
 */
-	if(!src.operation_allowed(usr))
+	var/passed
+	if((src.dna && usr.dna.unique_enzymes==src.dna))
+		passed = 1
+	if(!passed && !src.operation_allowed(usr))
 		usr << "\red Access denied"
 		src.log_append_to_last("Permission denied.")
 		return
@@ -657,6 +668,9 @@
 		user << "Beta-rhythm below acceptable level."
 		return 0
 	if(src.occupant)
+		return 0
+	if(src.dna && src.dna!=mmi_as_oc.brain.brainmob.dna.unique_enzymes)
+		user << "Stop it!"
 		return 0
 	if(do_after(20))
 		if(!src.occupant)
@@ -835,6 +849,25 @@
 	return 0
 
 
+
+/obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+	src.log_message("Attacked by [W]. Attacker - [user]")
+	if(prob(src.deflect_chance))
+		user << "\red The [W] bounces off [src.name] armor."
+		src.log_append_to_last("Armor saved.")
+/*
+		for (var/mob/V in viewers(src))
+			if(V.client && !(V.blinded))
+				V.show_message("The [W] bounces off [src.name] armor.", 1)
+*/
+	else
+		src.occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
+		user.visible_message("<font color='red'><b>[user] hits [src] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
+		src.take_damage(W.force,W.damtype)
+		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+	return
+
+
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(istype(W, /obj/item/device/mmi))
@@ -941,6 +974,8 @@
 		return
 
 	else
+		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
+/*
 		src.log_message("Attacked by [W]. Attacker - [user]")
 		if(prob(src.deflect_chance))
 			user << "\red The [W] bounces off [src.name] armor."
@@ -955,13 +990,19 @@
 			user.visible_message("<font color='red'><b>[user] hits [src] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
 			src.take_damage(W.force,W.damtype)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+*/
 	return
 
 
 /obj/mecha/proc/get_stats_html()
 	var/output = {"<html>
-						<head><title>[src.name] data</title></head>
-						<body style="color: #00ff00; background: #000000; font: 13px 'Courier', monospace;">
+						<head><title>[src.name] data</title>
+						<style>
+						body {color: #00ff00; background: #000000; font: 13px 'Courier', monospace;}
+						hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
+						</style>
+						</head>
+						<body>
 						[src.get_stats_part()]
 						<hr>
 						[src.get_commands()]
@@ -984,6 +1025,7 @@
 						<b>Airtank pressure: </b>[src.return_pressure()]kPa<br>
 						<b>Internal temperature: </b> [src.air_contents.temperature]&deg;K|[src.air_contents.temperature - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
+						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:5px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
 	return output
 
@@ -992,11 +1034,13 @@
 						<a href='?src=\ref[src];toggle_airtank=1'>Toggle Internal Airtank Usage</a><br>
 						[(/obj/mecha/verb/disconnect_from_port in src.verbs)?"<a href='?src=\ref[src];port_disconnect=1'>Disconnect from port</a><br>":null]
 						[(/obj/mecha/verb/connect_to_port in src.verbs)?"<a href='?src=\ref[src];port_connect=1'>Connect to port</a><br>":null]
+						<hr>
 						<a href='?src=\ref[src];unlock_id_upload=1'>Unlock ID upload panel</a><br>
 						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
+						<a href='?src=\ref[src];dna_lock=1'>DNA-lock</a><br>
+						<hr>
+						[(/obj/mecha/verb/eject in src.verbs)?"<a href='?src=\ref[src];eject=1'>Eject</a><br>":null]
 					"}
-	if(/obj/mecha/verb/eject in src.verbs)
-		output += "<a href='?src=\ref[src];eject=1'>Eject</a><br>"
 	return output
 
 /obj/mecha/Topic(href, href_list)
@@ -1055,6 +1099,12 @@
 		add_req_access = 0
 		var/mob/user = locate(href_list["user"])
 		user << browse(null,"window=exosuit_add_access")
+	if(href_list["dna_lock"])
+		if(src.occupant)
+			src.dna = src.occupant.dna.unique_enzymes
+			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
+	if(href_list["reset_dna"])
+		src.dna = null
 /*
 
 	if (href_list["ai_take_control"])

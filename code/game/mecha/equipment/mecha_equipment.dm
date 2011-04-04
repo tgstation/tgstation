@@ -75,3 +75,15 @@
 		if(istype(M, /obj/mecha/combat))
 			return 1
 	return 0
+
+/obj/item/mecha_parts/mecha_equipment/proc/detach()
+	if(src.Move(get_turf(chassis)))
+		chassis.equipment -= src
+		if(chassis.selected == src)
+			chassis.selected = null
+		chassis.log_message("[src] removed from equipment.")
+		src.chassis = null
+		src.equip_ready = 1
+	return
+
+

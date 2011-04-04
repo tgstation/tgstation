@@ -164,6 +164,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd
 	name = "Mounted RCD"
+	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
 	equip_cooldown = 20
 	energy_drain = 250
@@ -394,3 +395,232 @@
 		if(href_list["mode"])
 			mode = text2num(href_list["mode"])
 		return
+
+
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster //what is that noise? A BAWWW from TK mutants.
+	name = "Armor Booster Module (Close Combat Weaponry)"
+	desc = "Boosts exosuit armor against armed melee attacks."
+	icon_state = "mecha_abooster_ccw"
+	equip_cooldown = 10
+	energy_drain = 50
+	range = RANGED
+	construction_cost = list("metal"=20000,"silver"=20000)
+	var/deflect_coeff = 1.15
+	var/damage_coeff = 0.8
+
+	can_attach(obj/mecha/M as obj)
+		if(..())
+			if(!istype(M, /obj/mecha/combat/honker))
+				if(!M.proc_res["dynattackby"])
+					return 1
+		return 0
+
+	attach(obj/mecha/M as obj)
+		..()
+		chassis.proc_res["dynattackby"] = src
+		return
+
+	proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(!action_checks(user))
+			return chassis.dynattackby(W,user)
+		chassis.log_message("Attacked by [W]. Attacker - [user]")
+		if(prob(chassis.deflect_chance*src.deflect_coeff))
+			user << "\red The [W] bounces off [chassis] armor."
+			chassis.log_append_to_last("Armor saved.")
+		else
+			chassis.occupant_message("<font color='red'><b>[user] hits [chassis] with [W].</b></font>")
+			user.visible_message("<font color='red'><b>[user] hits [chassis] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
+			chassis.take_damage(round(W.force*0.8),W.damtype)
+			chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+		equip_ready = 0
+		chassis.cell.use(energy_drain)
+		if(do_after_cooldown())
+			equip_ready = 1
+		return
+
+
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
+	name = "Armor Booster Module (Ranged Weaponry)"
+	desc = "Boosts exosuit armor against ranged attacks. Completely blocks taser shots."
+	icon_state = "mecha_abooster_proj"
+	equip_cooldown = 10
+	energy_drain = 50
+	range = RANGED
+	construction_cost = list("metal"=20000,"gold"=20000)
+	var/damage_coeff = 0.8
+
+	can_attach(obj/mecha/M as obj)
+		if(..())
+			if(!istype(M, /obj/mecha/combat/honker))
+				if(!M.proc_res["dynbulletdamage"] && !M.proc_res["dynhitby"])
+					return 1
+		return 0
+
+	attach(obj/mecha/M as obj)
+		..()
+		chassis.proc_res["dynbulletdamage"] = src
+		chassis.proc_res["dynhitby"] = src
+		return
+
+	proc/dynbulletdamage(flag)
+		if(!action_checks(src))
+			return chassis.dynbulletdamage(flag)
+		var/damage
+		switch(flag)
+			if(PROJECTILE_PULSE)
+				damage = 30
+			if(PROJECTILE_LASER)
+				damage = 20
+			if(PROJECTILE_WEAKBULLET)
+				damage = 8
+			if(PROJECTILE_BULLET)
+				damage = 10
+			if(PROJECTILE_BOLT)
+				damage = 5
+			if(PROJECTILE_DART)
+				damage = 5
+			else
+				return
+		chassis.take_damage(round(damage*src.damage_coeff))
+		chassis.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+		equip_ready = 0
+		chassis.cell.use(energy_drain)
+		if(do_after_cooldown())
+			equip_ready = 1
+		return
+
+	proc/dynhitby(atom/movable/A)
+		if(!action_checks(A))
+			return chassis.dynhitby(A)
+		if(prob(chassis.deflect_chance) || istype(A, /mob) || istype(A, /obj/item/mecha_tracking))
+			chassis.occupant_message("\blue The [A] bounces off the armor.")
+			chassis.visible_message("The [A] bounces off the [chassis] armor")
+			chassis.log_append_to_last("Armor saved.")
+			if(istype(A, /mob))
+				var/mob/M = A
+				M.bruteloss += 10
+				M.updatehealth()
+		else if(istype(A, /obj))
+			var/obj/O = A
+			if(O.throwforce)
+				chassis.take_damage(O.throwforce*damage_coeff)
+				chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+		equip_ready = 0
+		chassis.cell.use(energy_drain)
+		if(do_after_cooldown())
+			equip_ready = 1
+		return
+
+
+/obj/item/mecha_parts/mecha_equipment/repair_droid
+	name = "Exosuit Repair Droid"
+	desc = "Automated repair droid. Scans exosuit for damage and repairs it. Can fix almost all types of external or internal damage."
+	icon_state = "repair_droid"
+	equip_cooldown = 20
+	energy_drain = 20
+	range = RANGED
+	construction_cost = list("metal"=10000,"gold"=5000,"silver"=5000,"glass"=10000)
+	var/health_boost = 2
+	var/datum/global_iterator/pr_repair_droid
+	var/icon/droid_overlay
+
+	New()
+		..()
+		pr_repair_droid = new /datum/global_iterator/mecha_repair_droid(list(src),0)
+		pr_repair_droid.set_delay(equip_cooldown)
+		return
+
+	attach(obj/mecha/M as obj)
+		..()
+		droid_overlay = new(src.icon, icon_state = "repair_droid")
+		M.overlays += droid_overlay
+		return
+
+	destroy()
+		chassis.overlays -= droid_overlay
+		..()
+		return
+
+	detach()
+		chassis.overlays -= droid_overlay
+		pr_repair_droid.stop()
+		..()
+		return
+
+	get_equip_info()
+		var/output = ..()
+		output += " - <a href='?src=\ref[src];toggle_repairs=1'>[pr_repair_droid.active()?"Dea":"A"]ctivate</a>"
+		return output
+
+	Topic(href, href_list)
+		if(href_list["toggle_repairs"])
+			chassis.overlays -= droid_overlay
+			if(pr_repair_droid.toggle())
+				droid_overlay = new(src.icon, icon_state = "repair_droid_a")
+				chassis.log_message("[src] activated.")
+			else
+				droid_overlay = new(src.icon, icon_state = "repair_droid")
+				chassis.log_message("[src] deactivated.")
+				equip_ready = 1
+			chassis.overlays += droid_overlay
+		return
+
+
+/datum/global_iterator/mecha_repair_droid
+
+	process(var/obj/item/mecha_parts/mecha_equipment/repair_droid/RD as obj)
+		if(!RD.chassis)
+			return src.stop()
+		var/repaired = 0
+		if(RD.chassis.health < initial(RD.chassis.health))
+			RD.chassis.health += min(RD.health_boost, initial(RD.chassis.health)-RD.chassis.health)
+			repaired = 1
+		if(RD.chassis.internal_damage && prob(20))
+			if(RD.chassis.internal_damage&MECHA_INT_TEMP_CONTROL)
+				RD.chassis.internal_damage &= ~MECHA_INT_TEMP_CONTROL
+				repaired = 1
+			else if(RD.chassis.internal_damage&MECHA_INT_SHORT_CIRCUIT)
+				RD.chassis.internal_damage &= ~MECHA_INT_SHORT_CIRCUIT
+				repaired = 1
+			else if(RD.chassis.internal_damage&MECHA_INT_TANK_BREACH)
+				RD.chassis.internal_damage &= ~MECHA_INT_TANK_BREACH
+				repaired = 1
+			else if(RD.chassis.internal_damage&MECHA_INT_CONTROL_LOST)
+				RD.chassis.internal_damage &= ~MECHA_INT_CONTROL_LOST
+				repaired = 1
+		if(repaired)
+			RD.chassis.cell.use(RD.energy_drain)
+			RD.equip_ready = 0
+		else
+			RD.equip_ready = 1
+		return
+
+/*
+/obj/item/mecha_parts/mecha_equipment/defence_shocker
+	name = "Exosuit Defence Shocker"
+	desc = ""
+	icon_state = "mecha_teleport"
+	equip_cooldown = 10
+	energy_drain = 100
+	range = RANGED
+	var/shock_damage = 15
+	var/active
+
+	can_attach(obj/mecha/M as obj)
+		if(..())
+			if(!istype(M, /obj/mecha/combat/honker))
+				if(!M.proc_res["dynattackby"] && !M.proc_res["dynattackhand"] && !!M.proc_res["dynattackalien"])
+					return 1
+		return 0
+
+	attach(obj/mecha/M as obj)
+		..()
+		chassis.proc_res["dynattackby"] = src
+		return
+
+	proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(!action_checks(user) || !active)
+			return
+		user.electrocute_act(shock_damage, src)
+		return chassis.dynattackby(W,user)
+*/

@@ -536,7 +536,13 @@ datum
 			req_tech = list("bluespace" = 2, "magnets" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/gravcatapult"
 
-
+		mech_repair_droid
+			name = "Exosuit Module Design (Repair Droid Module)"
+			desc = "Automated Repair Droid. BEEP BOOP"
+			id = "mech_repair_droid"
+			build_type = MECHFAB
+			req_tech = list("magnets" = 3, "programming" = 3)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/repair_droid"
 
 
 ////////////////////////////////////////

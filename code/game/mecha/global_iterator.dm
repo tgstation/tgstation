@@ -24,6 +24,8 @@ Control functions:
 
 	active() - Returns 1 if datum is active, 0 otherwise.
 
+	toggle() - toggles datum state. Returns 1 if datum activated, 0 otherwise
+
 Misc functions:
 
 	get_last_exec_time() - Returns the time of last iteration.
@@ -134,6 +136,6 @@ Data storage vars:
 	proc/toggle()
 		if(!src.stop())
 			src.start()
-		return
+		return src.active()
 
 
