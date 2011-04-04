@@ -2383,7 +2383,7 @@
 "aTQ" = (/obj/grille,/obj/window/reinforced{dir = 1},/obj/window/reinforced{dir = 8},/obj/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/hallway/secondary/entry)
 "aTR" = (/obj/machinery/power/apc{name = "Delivery Sorting APC"; pixel_y = -25},/obj/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor{icon_state = "arrival"; dir = 10},/area/quartermaster/sorting)
 "aTS" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = "Streight"},/turf/simulated/floor{icon_state = "arrival"},/area/quartermaster/sorting)
-"aTT" = (/obj/machinery/firealarm{dir = 1; pixel_y = -24},/turf/simulated/floor{icon_state = "arrival"},/area/quartermaster/sorting)
+"aTT" = (/obj/machinery/firealarm{dir = 1; pixel_y = -24},/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = "Streight"},/turf/simulated/floor{icon_state = "arrival"},/area/quartermaster/sorting)
 "aTU" = (/obj/machinery/light,/obj/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = "90Curve"},/turf/simulated/floor{icon_state = "arrival"},/area/quartermaster/sorting)
 "aTV" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/camera{c_tag = "Delivery Office"; dir = 1; network = "SS13"},/turf/simulated/floor{icon_state = "arrival"},/area/quartermaster/sorting)
 "aTW" = (/obj/grille,/obj/window/reinforced,/obj/window/reinforced{dir = 4},/obj/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/maintenance/port)
