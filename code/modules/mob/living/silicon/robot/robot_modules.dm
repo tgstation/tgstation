@@ -105,14 +105,24 @@ obj/item/weapon/robot_module/syndicate
 
 /obj/item/weapon/robot_module/butler/New()
 	..()
-	src.modules += new /obj/item/weapon/spacecash(src)
+	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 	src.modules += new /obj/item/weapon/pen(src)
-	src.modules += new /obj/item/weapon/paper(src)
+
+	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
+	M.matter = 30
+	src.modules += M
+
 	src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 	src.modules += new /obj/item/weapon/tray(src)
 	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
-	src.emag = new /obj/item/weapon/reagent_containers/food/snacks/roburgerbig(src)
-	src.emag.name = "Last Meal"
+//	src.emag = new /obj/item/weapon/reagent_containers/food/snacks/roburgerbig(src)
+//	src.emag.name = "Last Meal"
+	src.emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
+	var/datum/reagents/R = new/datum/reagents(50)
+	src.emag.reagents = R
+	R.my_atom = src.emag
+	R.add_reagent("beer2", 50)
+	src.emag.name = "Mickey Finn's Special Brew"
 
 
 /obj/item/weapon/robot_module/security/New()
@@ -135,6 +145,7 @@ obj/item/weapon/robot_module/syndicate
 	R.add_reagent("lube", 1000)
 	src.emag.name = "Lube spray"
 
+
 /obj/item/weapon/robot_module/miner/New()
 	..()
 	src.modules += new /obj/item/weapon/pickaxe/radius/jackhammer(src)
@@ -143,7 +154,7 @@ obj/item/weapon/robot_module/syndicate
 	src.modules += new /obj/item/weapon/borg/sight/meson(src)
 	src.emag = new /obj/item/weapon/borg/stun(src)
 
-/obj/item/weapon/robot_module/brobot/New()
+/* /obj/item/weapon/robot_module/brobot/New()
 	..()
 	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
 	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
@@ -153,11 +164,12 @@ obj/item/weapon/robot_module/syndicate
 	src.emag.reagents = R
 	R.my_atom = src.emag
 	R.add_reagent("beer2", 50)
-	src.emag.name = "Mickey Finn's Special Brew"
+	src.emag.name = "Mickey Finn's Special Brew" */ //Merged with Service borg, not a death, just a transformation
 
 obj/item/weapon/robot_module/syndicate/New()
 	src.modules += new /obj/item/weapon/gun/energy/crossbow(src)
 	src.modules += new /obj/item/weapon/card/emag(src)
+
 
 /obj/item/weapon/borg/stun
 	name = "Electrified Arm"

@@ -63,6 +63,18 @@
 	origin_tech = "materials=4"
 	var/datum/effects/system/spark_spread/spark_system
 
+/obj/item/weapon/rsf
+	name = "Rapid-Service-Fabricator (RSF)"
+	desc = "A device used to rapidly deploy service items."
+	icon = 'items.dmi'
+	icon_state = "rcd"
+	opacity = 0
+	density = 0
+	anchored = 0.0
+	var/matter = 0
+	var/mode = 1
+	flags = TABLEPASS
+	w_class = 3.0
 
 /obj/item/weapon/rcd_ammo
 	name = "Compressed matter cartridge"
@@ -1277,6 +1289,11 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	var/datum/effects/system/ion_trail_follow/ion_trail
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 	//volume = 140 //jetpack sould be larger, but then it will never deplete -rastaf0
+
+/obj/item/weapon/tank/jetpack/voidjetpack
+	name = "Void Jetpack (oxygen)"
+	icon_state = "voidjetpack0"
+//	item_state =  //I want my item state very soon Agouri.
 
 /obj/item/weapon/tank/oxygen
 	name = "Gas Tank (Oxygen)"

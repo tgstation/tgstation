@@ -46,7 +46,7 @@
 	if(src.module)
 		return
 	//var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Janitor", "Service", "Brobot")
-	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Miner", "Janitor", "Brobot", "Service", "Security")
+	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Miner", "Janitor","Service", "Security")
 	if(src.module)
 		return
 	switch(mod)
@@ -59,9 +59,11 @@
 		if("Service")
 			src.module = new /obj/item/weapon/robot_module/butler(src)
 			src.hands.icon_state = "service"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Butler")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler")
 			if(icontype== "Waitress")
 				src.icon_state = "Service"
+			else if(icontype == "Bro")
+				src.icon_state = "Brobot"
 			else
 				src.icon_state = "Service2"
 			src.modtype = "Butler"
@@ -116,7 +118,7 @@
 				src.icon_state = "Janbot"
 			src.modtype = "Jan"
 
-		if("Brobot")
+/*		if("Brobot")
 			src.module = new /obj/item/weapon/robot_module/brobot(src)
 			src.hands.icon_state = "brobot"
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Bro",)
@@ -124,7 +126,7 @@
 				src.icon_state = "Brobot"
 			else
 				src.icon_state = "robot"
-			src.modtype = "Bro"
+			src.modtype = "Bro"*/
 	src.overlays -= "eyes" //Takes off the eyes that it started with
 	updateicon()
 
