@@ -3,7 +3,7 @@
 	desc = "This spell instantly kills somebody adjacent to you with the vilest of magick."
 
 	school = "evocation"
-	recharge = 600
+	charge_max = 600
 	clothes_req = 1
 	invocation = "EI NATH"
 	invocation_type = "shout"
@@ -20,6 +20,9 @@
 		return
 
 	var/mob/M = input("Choose whom to [kill_type]", "ABRAKADABRA") as mob in oview(usr,range)
+
+	if(!M)
+		return
 
 	invocation()
 

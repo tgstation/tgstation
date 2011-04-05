@@ -3,7 +3,7 @@
 	desc = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
 
 	school = "transmutation"
-	recharge = 300
+	charge_max = 300
 	clothes_req = 1
 	invocation = "none"
 	invocation_type = "none"
@@ -22,6 +22,9 @@
 		M = input("Choose whom to jaunt", "ABRAKADABRA") as mob in view(usr,range)
 	else
 		M = usr
+
+	if(!M)
+		return
 
 	invocation()
 

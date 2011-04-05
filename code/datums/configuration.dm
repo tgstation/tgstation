@@ -23,6 +23,7 @@
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
 	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
+	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
@@ -173,6 +174,9 @@
 
 			if ("dont_del_newmob")
 				config.del_new_on_log = 0
+
+			if ("feature_object_spell_system")
+				config.feature_object_spell_system = 1
 
 			if ("probability")
 				var/prob_pos = findtext(value, " ")

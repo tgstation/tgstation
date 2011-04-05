@@ -2188,7 +2188,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if (src.spell_list.len)
 
 		for(var/obj/spell/S in src.spell_list)
-			statpanel("Spells","",S)
+			switch(S.charge_type)
+				if("recharge")
+					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
+				if("charges")
+					statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
 
 /client/proc/station_explosion_cinematic(var/derp)
 	if(src.mob)

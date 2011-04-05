@@ -1,8 +1,8 @@
 /obj/spell/disable_tech
 	name = "Disable Tech"
 	desc = "This spell disables all weapons, cameras and most other technology in range and doesn't require wizard garb."
-	recharge = 400
-	clothes_req = 0
+	charge_max = 400
+	clothes_req = 1
 	invocation = "NEC CANTIO"
 	invocation_type = "whisper"
 	range = 7

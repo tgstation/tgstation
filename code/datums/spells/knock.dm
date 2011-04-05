@@ -3,7 +3,7 @@
 	desc = "This spell opens nearby doors and does not require wizard garb."
 
 	school = "transmutation"
-	recharge = 100
+	charge_max = 100
 	clothes_req = 0
 	invocation = "AULIE OXIN FIERA"
 	invocation_type = "whisper"

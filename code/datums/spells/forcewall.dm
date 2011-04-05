@@ -3,7 +3,7 @@
 	desc = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
 
 	school = "transmutation"
-	recharge = 100
+	charge_max = 100
 	clothes_req = 0
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = "whisper"

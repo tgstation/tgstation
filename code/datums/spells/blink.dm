@@ -3,7 +3,7 @@
 	desc = "This spell randomly teleports you a short distance."
 
 	school = "abjuration"
-	recharge = 20
+	charge_max = 20
 	clothes_req = 1
 	invocation = "none"
 	invocation_type = "none"
@@ -24,6 +24,9 @@
 		M = input("Choose whom to blink", "ABRAKADABRA") as mob in view(usr,range)
 	else
 		M = usr
+
+	if(!M)
+		return
 
 	invocation()
 

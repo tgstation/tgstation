@@ -3,7 +3,7 @@
 	desc = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
 
 	school = "transmutation"
-	recharge = 400
+	charge_max = 400
 	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
@@ -24,6 +24,9 @@
 		M = input("Choose whom to mutate", "ABRAKADABRA") as mob in view(usr,range)
 	else
 		M = usr
+
+	if(!M)
+		return
 
 	invocation()
 

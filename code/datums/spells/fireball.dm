@@ -3,7 +3,7 @@
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
 
 	school = "evocation"
-	recharge = 200
+	charge_max = 200
 	clothes_req = 0
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
@@ -21,7 +21,10 @@
 	if(!cast_check())
 		return
 
-	var/mob/M = input("Choose whom to fireball", "ABRAKADABRA") as mob|obj|turf in oview(usr,range)
+	var/mob/M = input("Choose whom to fireball", "ABRAKADABRA") as mob in oview(usr,range)
+
+	if(!M)
+		return
 
 	invocation()
 

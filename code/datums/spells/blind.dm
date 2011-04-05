@@ -3,7 +3,7 @@
 	desc = "This spell temporarly blinds a single person and does not require wizard garb."
 
 	school = "transmutation"
-	recharge = 300
+	charge_max = 300
 	clothes_req = 0
 	invocation = "STI KALY"
 	invocation_type = "whisper"
@@ -20,6 +20,9 @@
 		return
 
 	var/mob/M = input("Choose whom to blind", "ABRAKADABRA") as mob in oview(usr,range)
+
+	if(!M)
+		return
 
 	invocation()
 

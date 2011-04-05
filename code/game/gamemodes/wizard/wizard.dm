@@ -189,7 +189,10 @@
 	wizard_mob.equip_if_possible(new /obj/item/weapon/storage/backpack(wizard_mob), wizard_mob.slot_back)
 //	wizard_mob.equip_if_possible(new /obj/item/weapon/scrying_gem(wizard_mob), wizard_mob.slot_l_store) For scrying gem.
 	wizard_mob.equip_if_possible(new /obj/item/weapon/teleportation_scroll(wizard_mob), wizard_mob.slot_r_store)
-	wizard_mob.equip_if_possible(new /obj/item/weapon/spellbook(wizard_mob), wizard_mob.slot_r_hand)
+	if(config.feature_object_spell_system) //if it's turned on (in config.txt), spawns an object spell spellbook
+		wizard_mob.equip_if_possible(new /obj/item/weapon/spellbook/object_type_spells(wizard_mob), wizard_mob.slot_r_hand)
+	else
+		wizard_mob.equip_if_possible(new /obj/item/weapon/spellbook(wizard_mob), wizard_mob.slot_r_hand)
 
 	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
 	wizard_mob << "In your pockets you will find two more important, magical artifacts. Use them as needed."
@@ -319,95 +322,124 @@
 		return 1
 	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
 		usr.machine = src
-		switch(href_list["spell_choice"])
-			if ("1")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /client/proc/magicmissile
-					usr.mind.special_verbs += /client/proc/magicmissile
-					src.temp = "This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage."
-			if ("2")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /client/proc/fireball
-					usr.mind.special_verbs += /client/proc/fireball
-					src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
-			if ("3")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /mob/proc/kill
-					usr.mind.special_verbs += /mob/proc/kill
-					src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
-			if ("4")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /mob/proc/tech
-					usr.mind.special_verbs += /mob/proc/tech
-					src.temp = "This spell disables all weapons, cameras and most other technology in range."
-			if ("5")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /client/proc/smokecloud
-					usr.mind.special_verbs += /client/proc/smokecloud
-					src.temp = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
-			if ("6")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /client/proc/blind
-					usr.mind.special_verbs += /client/proc/blind
-					src.temp = "This spell temporarly blinds a single person and does not require wizard garb."
-			if ("7")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /mob/proc/swap
-					src.temp = "This spell allows the user to switch bodies with a target. Careful to not lose your memory in the process."
-			if ("8")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /client/proc/forcewall
-					usr.mind.special_verbs += /client/proc/forcewall
-					src.temp = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
-			if ("9")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /client/proc/blink
-					usr.mind.special_verbs += /client/proc/blink
-					src.temp = "This spell randomly teleports you a short distance. Useful for evasion or getting into areas if you have patience."
-			if ("10")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /mob/proc/teleport
-					usr.mind.special_verbs += /mob/proc/teleport
-					src.temp = "This spell teleports you to a type of area of your selection. Very useful if you are in danger, but has a decent cooldown, and is unpredictable."
-			if ("11")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /client/proc/mutate
-					usr.mind.special_verbs += /client/proc/mutate
-					src.temp = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
-			if ("12")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /client/proc/jaunt
-					usr.mind.special_verbs += /client/proc/jaunt
-					src.temp = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
-			if ("13")
-				if (src.uses >= 1)
-					src.uses -= 1
-					usr.verbs += /client/proc/knock
-					usr.mind.special_verbs += /client/proc/knock
-					src.temp = "This spell opens nearby doors and does not require wizard garb."
-			if ("14")
+		if(href_list["spell_choice"])
+			if(src.uses >= 1 && href_list["spell_choice"] != 14)
+				src.uses--
+				if(spell_type == "verb")
+					switch(href_list["spell_choice"])
+						if ("1")
+							usr.verbs += /client/proc/magicmissile
+							usr.mind.special_verbs += /client/proc/magicmissile
+							src.temp = "This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage."
+						if ("2")
+							usr.verbs += /client/proc/fireball
+							usr.mind.special_verbs += /client/proc/fireball
+							src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
+						if ("3")
+							usr.verbs += /mob/proc/kill
+							usr.mind.special_verbs += /mob/proc/kill
+							src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
+						if ("4")
+							usr.verbs += /mob/proc/tech
+							usr.mind.special_verbs += /mob/proc/tech
+							src.temp = "This spell disables all weapons, cameras and most other technology in range."
+						if ("5")
+							usr.verbs += /client/proc/smokecloud
+							usr.mind.special_verbs += /client/proc/smokecloud
+							src.temp = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
+						if ("6")
+							usr.verbs += /client/proc/blind
+							usr.mind.special_verbs += /client/proc/blind
+							src.temp = "This spell temporarly blinds a single person and does not require wizard garb."
+						if ("7")
+							usr.verbs += /mob/proc/swap
+							src.temp = "This spell allows the user to switch bodies with a target. Careful to not lose your memory in the process."
+						if ("8")
+							usr.verbs += /client/proc/forcewall
+							usr.mind.special_verbs += /client/proc/forcewall
+							src.temp = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
+						if ("9")
+							usr.verbs += /client/proc/blink
+							usr.mind.special_verbs += /client/proc/blink
+							src.temp = "This spell randomly teleports you a short distance. Useful for evasion or getting into areas if you have patience."
+						if ("10")
+							usr.verbs += /mob/proc/teleport
+							usr.mind.special_verbs += /mob/proc/teleport
+							src.temp = "This spell teleports you to a type of area of your selection. Very useful if you are in danger, but has a decent cooldown, and is unpredictable."
+						if ("11")
+							usr.verbs += /client/proc/mutate
+							usr.mind.special_verbs += /client/proc/mutate
+							src.temp = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
+						if ("12")
+							usr.verbs += /client/proc/jaunt
+							usr.mind.special_verbs += /client/proc/jaunt
+							src.temp = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
+						if ("13")
+							usr.verbs += /client/proc/knock
+							usr.mind.special_verbs += /client/proc/knock
+							src.temp = "This spell opens nearby doors and does not require wizard garb."
+				else if(spell_type == "object")
+					var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock")
+					world << available_spells[text2num(href_list["spell_choice"])] //DEBUG
+					var/already_knows = 0
+					for(var/obj/spell/aspell in usr.spell_list)
+						if(available_spells[text2num(href_list["spell_choice"])] == aspell.name)
+							already_knows = 1
+							src.temp = "You already know that spell."
+							src.uses++
+							break
+					if(!already_knows)
+						switch(href_list["spell_choice"])
+							if ("1")
+								usr.spell_list += new /obj/spell/magic_missile(usr)
+								src.temp = "This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage."
+							if ("2")
+								usr.spell_list += new /obj/spell/fireball(usr)
+								src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
+							if ("3")
+								usr.spell_list += new /obj/spell/disintegrate(usr)
+								src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
+							if ("4")
+								usr.spell_list += new /obj/spell/disable_tech(usr)
+								src.temp = "This spell disables all weapons, cameras and most other technology in range."
+							if ("5")
+								usr.spell_list += new /obj/spell/smoke(usr)
+								src.temp = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
+							if ("6")
+								usr.spell_list += new /obj/spell/blind(usr)
+								src.temp = "This spell temporarly blinds a single person and does not require wizard garb."
+							if ("7")
+								usr.spell_list += new /obj/spell/mind_transfer(usr)
+								src.temp = "This spell allows the user to switch bodies with a target. Careful to not lose your memory in the process."
+							if ("8")
+								usr.spell_list += new /obj/spell/forcewall(usr)
+								src.temp = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
+							if ("9")
+								usr.spell_list += new /obj/spell/blink(usr)
+								src.temp = "This spell randomly teleports you a short distance. Useful for evasion or getting into areas if you have patience."
+							if ("10")
+								usr.spell_list += new /obj/spell/teleport(usr)
+								src.temp = "This spell teleports you to a type of area of your selection. Very useful if you are in danger, but has a decent cooldown, and is unpredictable."
+							if ("11")
+								usr.spell_list += new /obj/spell/mutate(usr)
+								src.temp = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
+							if ("12")
+								usr.spell_list += new /obj/spell/ethereal_jaunt(usr)
+								src.temp = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
+							if ("13")
+								usr.spell_list += new /obj/spell/knock(usr)
+								src.temp = "This spell opens nearby doors and does not require wizard garb."
+			if (href_list["spell_choice"] == "14")
 				var/area/wizard_station/A = locate()
 				if(usr in A.contents)
-					src.uses = 5
-					usr.spellremove(usr)
+					src.uses = src.max_uses
+					usr.spellremove(usr,spell_type)
 					src.temp = "All spells have been removed. You may now memorize a new set of spells."
 				else
 					src.temp = "You may only re-memorize spells whilst located inside the wizard sanctuary."
-			else
-				if (href_list["temp"])
-					src.temp = null
+		else
+			if (href_list["temp"])
+				src.temp = null
 		if (istype(src.loc, /mob))
 			attack_self(src.loc)
 		else
@@ -593,34 +625,38 @@
 //OTHER PROCS
 
 //To batch-remove wizard spells. Linked to mind.dm.
-/mob/proc/spellremove(var/mob/M as mob)
+/mob/proc/spellremove(var/mob/M as mob, var/spell_type = "verb")
 //	..()
-	if(M.verbs.len)
-		M.verbs -= /client/proc/jaunt
-		M.verbs -= /client/proc/magicmissile
-		M.verbs -= /client/proc/fireball
-		M.verbs -= /mob/proc/kill
-		M.verbs -= /mob/proc/tech
-		M.verbs -= /client/proc/smokecloud
-		M.verbs -= /client/proc/blind
-		M.verbs -= /client/proc/forcewall
-		M.verbs -= /mob/proc/teleport
-		M.verbs -= /client/proc/mutate
-		M.verbs -= /client/proc/knock
-		M.verbs -= /mob/proc/swap
-	if(M.mind && M.mind.special_verbs.len)
-		M.mind.special_verbs -= /client/proc/jaunt
-		M.mind.special_verbs -= /client/proc/magicmissile
-		M.mind.special_verbs -= /client/proc/fireball
-		M.mind.special_verbs -= /mob/proc/kill
-		M.mind.special_verbs -= /mob/proc/tech
-		M.mind.special_verbs -= /client/proc/smokecloud
-		M.mind.special_verbs -= /client/proc/blind
-		M.mind.special_verbs -= /client/proc/forcewall
-		M.mind.special_verbs -= /mob/proc/teleport
-		M.mind.special_verbs -= /client/proc/mutate
-		M.mind.special_verbs -= /client/proc/knock
-		M.mind.special_verbs -= /mob/proc/swap
+	if(spell_type == "verb")
+		if(M.verbs.len)
+			M.verbs -= /client/proc/jaunt
+			M.verbs -= /client/proc/magicmissile
+			M.verbs -= /client/proc/fireball
+			M.verbs -= /mob/proc/kill
+			M.verbs -= /mob/proc/tech
+			M.verbs -= /client/proc/smokecloud
+			M.verbs -= /client/proc/blind
+			M.verbs -= /client/proc/forcewall
+			M.verbs -= /mob/proc/teleport
+			M.verbs -= /client/proc/mutate
+			M.verbs -= /client/proc/knock
+			M.verbs -= /mob/proc/swap
+		if(M.mind && M.mind.special_verbs.len)
+			M.mind.special_verbs -= /client/proc/jaunt
+			M.mind.special_verbs -= /client/proc/magicmissile
+			M.mind.special_verbs -= /client/proc/fireball
+			M.mind.special_verbs -= /mob/proc/kill
+			M.mind.special_verbs -= /mob/proc/tech
+			M.mind.special_verbs -= /client/proc/smokecloud
+			M.mind.special_verbs -= /client/proc/blind
+			M.mind.special_verbs -= /client/proc/forcewall
+			M.mind.special_verbs -= /mob/proc/teleport
+			M.mind.special_verbs -= /client/proc/mutate
+			M.mind.special_verbs -= /client/proc/knock
+			M.mind.special_verbs -= /mob/proc/swap
+	else if(spell_type == "object")
+		for(var/obj/spell/spell_to_remove in src.spell_list)
+			src.spell_list -= spell_to_remove
 
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/

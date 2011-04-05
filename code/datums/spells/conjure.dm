@@ -3,7 +3,7 @@
 	desc = "This spell conjures an elite carp."
 
 	school = "conjuration"
-	recharge = 1200
+	charge_max = 1200
 	clothes_req = 1
 	invocation = "NOUK FHUNMM SACP RISSKA"
 	invocation_type = "shout"

@@ -3,7 +3,7 @@
 	desc = "This spell teleports you to a type of area of your selection."
 
 	school = "abjuration"
-	recharge = 600
+	charge_max = 600
 	clothes_req = 1
 	invocation = "SCYAR NILA"
 	invocation_type = "none" //hardcoded into the spell due to its specifics
@@ -22,6 +22,9 @@
 		M = input("Choose whom to teleport", "ABRAKADABRA") as mob in view(usr,range)
 	else
 		M = usr
+
+	if(!M)
+		return
 
 	invocation()
 
