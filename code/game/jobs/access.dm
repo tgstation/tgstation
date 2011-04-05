@@ -53,6 +53,7 @@
 	access_mint_vault = 52
 	access_heads_vault = 53
 	access_mining_station = 54
+	access_xenobiology = 55
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
@@ -180,7 +181,7 @@
 		if("Research Director") // added hydroponics access -- Skie
 			return list(access_medical, access_morgue, access_medlab, access_rd,
 			            access_tech_storage, access_maint_tunnels, access_heads, access_tox,
-			            access_tox_storage, access_chemistry, access_teleporter, access_hydroponics, access_virology, access_research, access_robotics)
+			            access_tox_storage, access_chemistry, access_teleporter, access_hydroponics, access_virology, access_research, access_robotics, access_xenobiology)
 		if("Virologist")
 			return list(access_medical, access_morgue, access_virology, access_research)
 		if("Chief Medical Officer")
@@ -197,7 +198,7 @@
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
 	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
-	            access_theatre, access_research, access_mining, access_mining_office, access_mailsorting, access_mint_vault, access_mint, access_heads_vault, access_mining_station)
+	            access_theatre, access_research, access_mining, access_mining_office, access_mailsorting, access_mint_vault, access_mint, access_heads_vault, access_mining_station, access_xenobiology)
 
 /proc/get_region_accesses(var/code)
 	switch(code)
@@ -208,7 +209,7 @@
 		if(2) //medbay
 			return list(access_medical, access_medlab, access_morgue, access_chemistry, access_virology, access_cmo, access_surgery)
 		if(3) //research
-			return list(access_tox, access_tox_storage, access_rd, access_hydroponics, access_manufacturing, access_research)
+			return list(access_tox, access_tox_storage, access_rd, access_hydroponics, access_manufacturing, access_research, access_xenobiology)
 		if(4) //engineering and maintenance
 			return list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_emergency_storage, access_tech_storage, access_atmospherics, access_construction, access_robotics)
 		if(5) //command
@@ -346,6 +347,8 @@
 			return "Main Vault"
 		if(access_mining_station)
 			return "Mining Station"
+		if(access_xenobiology)
+			return "Xenobiology"
 
 
 /proc/get_all_jobs()
