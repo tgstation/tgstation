@@ -559,6 +559,11 @@
 	else
 		var/message = null
 		switch(src.place)
+			if("mask")
+				if(istype(src.target.wear_mask, /obj/item/clothing)&&!src.target.wear_mask:canremove)
+					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", src.source, src.target.wear_mask, src.target)
+				else
+					message = text("\red <B>[] is trying to take off \a [] from []'s head!</B>", src.source, src.target.wear_mask, src.target)
 			if("l_hand")
 				message = text("\red <B>[] is trying to take off a [] from []'s left hand!</B>", src.source, src.target.l_hand, src.target)
 			if("r_hand")
@@ -590,6 +595,8 @@
 	switch(src.place)
 		if("mask")
 			if (src.target.wear_mask)
+				if(istype(src.target.wear_mask, /obj/item/clothing)&& !src.target.wear_mask:canremove)
+					return
 				var/obj/item/W = src.target.wear_mask
 				src.target.u_equip(W)
 				if (src.target.client)

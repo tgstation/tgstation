@@ -37,3 +37,6 @@ Throat
 Death
 Aria
 Bro
+Fox
+Null
+Raiden

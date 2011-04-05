@@ -10,6 +10,11 @@
 	if (!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
+		//For ninjas exploding when they die./N
+		if (src.mind&&src.mind.special_role == "Space Ninja")
+			var/location = src.loc
+			explosion(location, 1, 2, 3, 4)
+
 		src.canmove = 0
 		if(src.client)
 			src.blind.layer = 0

@@ -51,7 +51,8 @@
 	for (var/mob/M in world)
 		if (istype(M, /mob/new_player))
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
-		if (istype(M, /mob/living/carbon/human) && istype(M:wear_id, /obj/item/weapon/card/id/syndicate))
+		//Cameras can't track people wearing an agent card or a ninja hood.
+		if (istype(M, /mob/living/carbon/human) && (istype(M:wear_id, /obj/item/weapon/card/id/syndicate)||istype(M:head, /obj/item/clothing/head/helmet/space/space_ninja)))
 			continue
 		if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
 			continue

@@ -195,6 +195,7 @@
 	var/status = 0
 	flags = FPRINT | TABLEPASS | CONDUCT | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO
+	canremove = 0
 
 /obj/item/clothing/suit/armor/captain
 	name = "Captain's armor"
@@ -347,6 +348,7 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 0
 	radiation_protection = 0.75
+	canremove = 0
 	var/active = 0
 	var/energy = 100
 

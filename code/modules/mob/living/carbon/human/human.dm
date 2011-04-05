@@ -6,18 +6,7 @@
 
 	if (!dna)
 		dna = new /datum/dna( null )
-/*
-	if(istype(src, /mob/living/carbon/human/vampire))
-		spawn (1)
-			src.verbs += /mob/proc/mist
-			src.verbs += /mob/proc/port
-			src.verbs += /mob/proc/hellfire
-			src.verbs += /mob/proc/veil
-			src.verbs += /mob/proc/charm
-			src.verbs += /mob/proc/lights
-			src.verbs += /mob/proc/blood
-		src.mutantrace = "vampire"
-*/
+
 	spawn (1)
 		var/datum/organ/external/chest/chest = new /datum/organ/external/chest( src )
 		chest.owner = src
@@ -1351,6 +1340,11 @@
 			shielded = 2
 			break
 
+	for (var/obj/item/clothing/suit/space/space_ninja/S in src)//Same as a regular cloaking device but more ninja./N
+		if (S.active)
+			shielded = 2
+			break
+
 	if (shielded == 2)
 		src.invisibility = 2
 	else
@@ -2013,7 +2007,10 @@
 							var/message = null
 							switch(src.place)
 								if("mask")
-									message = text("\red <B>[] is trying to take off \a [] from []'s head!</B>", src.source, src.target.wear_mask, src.target)
+									if(istype(src.target.wear_mask, /obj/item/clothing)&&!src.target.wear_mask:canremove)
+										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", src.source, src.target.wear_mask, src.target)
+									else
+										message = text("\red <B>[] is trying to take off \a [] from []'s head!</B>", src.source, src.target.wear_mask, src.target)
 /*								if("headset")
 									message = text("\red <B>[] is trying to take off \a [] from []'s face!</B>", src.source, src.target.w_radio, src.target) */
 								if("l_hand")
@@ -2021,25 +2018,48 @@
 								if("r_hand")
 									message = text("\red <B>[] is trying to take off \a [] from []'s right hand!</B>", src.source, src.target.r_hand, src.target)
 								if("gloves")
-									message = text("\red <B>[] is trying to take off the [] from []'s hands!</B>", src.source, src.target.gloves, src.target)
+									if(istype(src.target.gloves, /obj/item/clothing)&&!src.target.gloves:canremove)
+										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", src.source, src.target.gloves, src.target)
+									else
+										message = text("\red <B>[] is trying to take off the [] from []'s hands!</B>", src.source, src.target.gloves, src.target)
 								if("eyes")
-									message = text("\red <B>[] is trying to take off the [] from []'s eyes!</B>", src.source, src.target.glasses, src.target)
+									if(istype(src.target.glasses, /obj/item/clothing)&&!src.target.glasses:canremove)
+										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", src.source, src.target.glasses, src.target)
+									else
+										message = text("\red <B>[] is trying to take off the [] from []'s eyes!</B>", src.source, src.target.glasses, src.target)
 								if("ears")
-									message = text("\red <B>[] is trying to take off the [] from []'s ears!</B>", src.source, src.target.ears, src.target)
+									if(istype(src.target.ears, /obj/item/clothing)&&!src.target.ears:canremove)
+										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", src.source, src.target.ears, src.target)
+									else
+										message = text("\red <B>[] is trying to take off the [] from []'s ears!</B>", src.source, src.target.ears, src.target)
 								if("head")
-									message = text("\red <B>[] is trying to take off the [] from []'s head!</B>", src.source, src.target.head, src.target)
+									if(istype(src.target.head, /obj/item/clothing)&&!src.target.head:canremove)
+										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", src.source, src.target.head, src.target)
+									else
+										message = text("\red <B>[] is trying to take off the [] from []'s head!</B>", src.source, src.target.head, src.target)
 								if("shoes")
-									message = text("\red <B>[] is trying to take off the [] from []'s feet!</B>", src.source, src.target.shoes, src.target)
+									if(istype(src.target.shoes, /obj/item/clothing)&&!src.target.shoes:canremove)
+										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", src.source, src.target.shoes, src.target)
+									else
+										message = text("\red <B>[] is trying to take off the [] from []'s feet!</B>", src.source, src.target.shoes, src.target)
 								if("belt")
 									message = text("\red <B>[] is trying to take off the [] from []'s belt!</B>", src.source, src.target.belt, src.target)
 								if("suit")
-									message = text("\red <B>[] is trying to take off \a [] from []'s body!</B>", src.source, src.target.wear_suit, src.target)
+									if(istype(src.target.wear_suit, /obj/item/clothing/suit/armor/a_i_a_ptank))//Exception for suicide vests.
+										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", src.source, src.target.wear_suit, src.target)
+									else if(istype(src.target.wear_suit, /obj/item/clothing)&&!src.target.wear_suit:canremove)
+										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", src.source, src.target.wear_suit, src.target)
+									else
+										message = text("\red <B>[] is trying to take off \a [] from []'s body!</B>", src.source, src.target.wear_suit, src.target)
 								if("back")
 									message = text("\red <B>[] is trying to take off \a [] from []'s back!</B>", src.source, src.target.back, src.target)
 								if("handcuff")
 									message = text("\red <B>[] is trying to unhandcuff []!</B>", src.source, src.target)
 								if("uniform")
-									message = text("\red <B>[] is trying to take off \a [] from []'s body!</B>", src.source, src.target.w_uniform, src.target)
+									if(istype(src.target.w_uniform, /obj/item/clothing)&&!src.target.w_uniform:canremove)
+										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", src.source, src.target.w_uniform, src.target)
+									else
+										message = text("\red <B>[] is trying to take off \a [] from []'s body!</B>", src.source, src.target.w_uniform, src.target)
 								if("s_store")
 									message = text("\red <B>[] is trying to take off \a [] from []'s suit!</B>", src.source, src.target.s_store, src.target)
 								if("h_store")
@@ -2081,6 +2101,15 @@
 		return
 	return
 
+/*
+This proc equips stuff (or does something else) when removing stuff manually from the character window when you click and drag.
+It works in conjuction with the process() above.
+This proc works for humans only. Aliens stripping humans and the like will all use this proc. Stripping monkeys or somesuch will use their version of this proc.
+The first if statement for "mask" and such refers to items that are already equipped and un-equipping them.
+The else statement is for equipping stuff to empty slots.
+!canremove refers to variable of /obj/item/clothing which either allows or disallows that item to be removed.
+It can still be worn/put on as normal.
+*/
 /obj/equip_e/human/done()
 	if(!src.source || !src.target)						return
 	if(src.source.loc != src.s_loc)						return
@@ -2091,7 +2120,9 @@
 	switch(src.place)
 		if("mask")
 			if (src.target.wear_mask)
-				var/obj/item/W = src.target.wear_mask
+				if(istype(src.target.wear_mask, /obj/item/clothing)&& !src.target.wear_mask:canremove)
+					return
+				var/obj/item/clothing/W = src.target.wear_mask
 				src.target.u_equip(W)
 				if (src.target.client)
 					src.target.client.screen -= W
@@ -2126,7 +2157,9 @@
 					src.item.loc = src.target*/
 		if("gloves")
 			if (src.target.gloves)
-				var/obj/item/W = src.target.gloves
+				if(istype(src.target.gloves, /obj/item/clothing)&& !src.target.gloves:canremove)
+					return
+				var/obj/item/clothing/W = src.target.gloves
 				src.target.u_equip(W)
 				if (src.target.client)
 					src.target.client.screen -= W
@@ -2144,6 +2177,8 @@
 					src.item.loc = src.target
 		if("eyes")
 			if (src.target.glasses)
+				if(istype(src.target.glasses, /obj/item/clothing)&& !src.target.glasses:canremove)
+					return
 				var/obj/item/W = src.target.glasses
 				src.target.u_equip(W)
 				if (src.target.client)
@@ -2206,6 +2241,8 @@
 						src.item.loc = src.target
 		if("head")
 			if (src.target.head)
+				if(istype(src.target.head, /obj/item/clothing)&& !src.target.head:canremove)
+					return
 				var/obj/item/W = src.target.head
 				src.target.u_equip(W)
 				if (src.target.client)
@@ -2224,6 +2261,8 @@
 					src.item.loc = src.target
 		if("ears")
 			if (src.target.ears)
+				if(istype(src.target.ears, /obj/item/clothing)&& !src.target.ears:canremove)
+					return
 				var/obj/item/W = src.target.ears
 				src.target.u_equip(W)
 				if (src.target.client)
@@ -2248,6 +2287,8 @@
 					src.item.loc = src.target
 		if("shoes")
 			if (src.target.shoes)
+				if(istype(src.target.shoes, /obj/item/clothing)&& !src.target.shoes:canremove)
+					return
 				var/obj/item/W = src.target.shoes
 				src.target.u_equip(W)
 				if (src.target.client)
@@ -2313,6 +2354,8 @@
 						src.item.add_fingerprint(src.target)
 		if("uniform")
 			if (src.target.w_uniform)
+				if(istype(src.target.w_uniform, /obj/item/clothing)&& !src.target.w_uniform:canremove)
+					return
 				var/obj/item/W = src.target.w_uniform
 				src.target.u_equip(W)
 				if (src.target.client)
@@ -2358,6 +2401,14 @@
 					src.item.loc = src.target
 		if("suit")
 			if (src.target.wear_suit)
+				if(istype(src.target.wear_suit, /obj/item/clothing/suit/armor/a_i_a_ptank))//triggers suicide vest if someone else tries to take it off/N
+					var/obj/item/clothing/suit/armor/a_i_a_ptank/A = src.target.wear_suit//mostly a copy from death.dm code.
+					bombers += "[src.target.key] has detonated a suicide bomb. Temp = [A.part4.air_contents.temperature-T0C]."
+					if(A.status && prob(90))
+						A.part4.ignite()
+						return
+				if(istype(src.target.wear_suit, /obj/item/clothing)&& !src.target.wear_suit:canremove)
+					if(!istype(src.target.wear_suit, /obj/item/clothing/suit/armor/a_i_a_ptank))	return//Can remove the suicide vest if it didn't trigger.
 				var/obj/item/W = src.target.wear_suit
 				src.target.u_equip(W)
 				if (src.target.client)

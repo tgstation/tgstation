@@ -35,3 +35,7 @@ Dragon
 Cruel
 Nightshade
 Black
+Gray
+Solid
+Liquid
+Solidus

@@ -36,7 +36,6 @@ var/global/sent_strike_team = 0
 	var/commando_number = 6 //for selecting a leader
 	var/leader_selected = 0 //when the leader is chosen. The last person spawned.
 	var/commando_leader_rank = pick("Lieutenant", "Captain", "Major")
-	var/list/commando_names = dd_file2list("config/names/last.txt")
 
 //Code for spawning a nuke auth code.
 	var/nuke_code = "[rand(10000, 99999.0)]"
@@ -47,7 +46,7 @@ var/global/sent_strike_team = 0
 		if (STARTLOC.name == "Commando")
 			var/mob/living/carbon/human/new_commando = new(STARTLOC.loc)
 			var/commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
-			var/commando_name = pick(commando_names)
+			var/commando_name = pick(last_names)
 			new_commando.gender = pick(MALE, FEMALE)
 			if (commando_number == 1)
 				leader_selected = 1
@@ -180,9 +179,6 @@ Useful for copy pasta since I'm lazy.*/
 	if(!input)
 		goto TRYAGAIN
 
-	var/list/ninja_titles = dd_file2list("config/names/ninjatitle.txt")
-	var/list/ninja_names = dd_file2list("config/names/ninjaname.txt")
-
 	var/list/LOCLIST = list()
 	for(var/obj/landmark/X in world)
 		if (X.name == "carpspawn")
@@ -224,6 +220,7 @@ Useful for copy pasta since I'm lazy.*/
 	new_ninja.equip_if_possible(OXYTANK, new_ninja.slot_s_store)
 
 /* You know, I'm not really sure why space ninjas would need an ID card.
+Running around as an unknown is badass and makes you manly
 	var/obj/item/weapon/card/id/W = new(new_ninja)
 	W.name = "[new_ninja.real_name]'s ID Card"
 	W.access = access_maint_tunnels
@@ -232,7 +229,7 @@ Useful for copy pasta since I'm lazy.*/
 	new_ninja.equip_if_possible(W, new_ninja.slot_wear_id)
 	*/
 
-	var/admin_name = src//In case admins want to spawn themselves as ninjas.
+	var/admin_name = src//In case admins want to spawn themselves as ninjas. Badmins
 
 	var/mob/dead/observer/G
 	var/list/candidates = list()
@@ -267,8 +264,29 @@ Useful for copy pasta since I'm lazy.*/
 	message_admins("\blue [admin_name] has spawned [new_ninja.key] as a Space Ninja. Hide yo children!", 1)
 	log_admin("[admin_name] used Spawn Space Ninja.")
 
-//SPACE NINJA ABILITIES
 
+
+//SPACE NINJA ABILITIES
+/*
+//	src << "\red Something has gone awry and you are missing one or more pieces of equipment."
+
+/mob/proc/ninjagear()
+	if(!istype(src:wear_suit, /obj/item/clothing/suit/space/space_ninja))	return 0
+	else if(!istype(src:head, /obj/item/clothing/head/helmet/space/space_ninja))	return 0
+	else if(!istype(src:gloves, /obj/item/clothing/gloves/space_ninja))	return 0
+	else if(!istype(src:shoes, /obj/item/clothing/shoes/space_ninja))	return 0
+	else	return 1
+
+/mob/proc/ninjacost(var/cost)
+	if(cost>src.wear_suit:energy)
+		return 0
+	else
+		src.wear_suit:energy=src.wear_suit:energy-cost
+		return 1
+
+//else if (istype(src.wear_mask, /obj/item/clothing/mask/gas/space_ninja))
+	//			switch(src.wear_mask:mode)
+*/
 //Smoke
 //Summons smoke in radius of user.
 //Not sure why this would be useful (it's not) but whatever. Ninjas need their smoke bombs.
@@ -286,7 +304,7 @@ Useful for copy pasta since I'm lazy.*/
 	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 	smoke.set_up(10, 0, src.loc)
 	smoke.start()
-	//subtract cost(LOW)
+	//subtract cost(5)
 
 
 //9-10 Tile Teleport
@@ -373,7 +391,7 @@ Useful for copy pasta since I'm lazy.*/
 		for(var/mob/living/M in picked)
 			if(M==src)	continue
 			M.gib()
-	//subtract cost(MED)
+	//subtract cost(10)
 
 //Right Click Teleport
 //Right click to teleport somewhere, almost exactly like admin jump to turf.
@@ -419,7 +437,7 @@ Useful for copy pasta since I'm lazy.*/
 		for(var/mob/living/M in T)
 			if(M==src)	continue
 			M.gib()
-	//subtract cost(HIGH)
+	//subtract cost(20)
 
 //EMP Pulse
 //Disables nearby tech equipment.
@@ -434,9 +452,9 @@ Useful for copy pasta since I'm lazy.*/
 	//add energy cost check
 	//add warning message for low energy
 
-	empulse(src, 4, 6) //Procs sure are nice. Slihgtly weaker than wizard's disable tch.
+	empulse(src, 4, 6) //Procs sure are nice. Slightly weaker than wizard's disable tch.
 
-	//subtract cost(HIGH)
+	//subtract cost(25)
 
 /*
 //Summon Energy Blade
@@ -445,8 +463,5 @@ name = ""
 tab = "ninja"
 desc = ""
 cost = 0
-
-//Make untrackable by AI.
-
 */
 

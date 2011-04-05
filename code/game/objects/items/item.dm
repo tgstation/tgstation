@@ -102,7 +102,11 @@
 					M.client.screen -= src
 	src.throwing = 0
 	if (src.loc == user)
-		user.u_equip(src)
+		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
+		if(istype(src, /obj/item/clothing) && !src:canremove)
+			return
+		else
+			user.u_equip(src)
 	else
 		src.pickup(user)
 
@@ -124,10 +128,6 @@
 			user << "Your claws aren't capable of such fine manipulation."
 			return
 
-//	if(istype(src, /obj/item/weapon/gun)) //Temporary fix until I figure out what's going with monkey/add_blood code./N
-//		user << "Sorry Mr. Monkey, guns aren't for you."
-//		return
-
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
 			if (M.s_active == src.loc)
@@ -135,7 +135,11 @@
 					M.client.screen -= src
 	src.throwing = 0
 	if (src.loc == user)
-		user.u_equip(src)
+		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
+		if(istype(src, /obj/item/clothing) && !src:canremove)
+			return
+		else
+			user.u_equip(src)
 	if (user.hand)
 		user.l_hand = src
 	else

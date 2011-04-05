@@ -15,9 +15,6 @@
 	name = "Black Shoes"
 	icon_state = "black"
 
-	protective_temperature = 1500
-	heat_transfer_coefficient = 0.01
-
 /obj/item/clothing/shoes/brown
 	name = "Brown Shoes"
 	icon_state = "brown"
@@ -37,8 +34,10 @@
 	desc = "A pair of running shoes, excellent for running and even better for smashing skulls."
 	icon_state = "s-ninja"
 	slowdown = -1
-	permeability_coefficient = 0.05
+	protective_temperature = 700
+	permeability_coefficient = 0.01
 	flags = NOSLIP
+	canremove = 0
 
 /obj/item/clothing/shoes/white
 	name = "White Shoes"
