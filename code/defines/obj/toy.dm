@@ -24,7 +24,7 @@ obj/item/toy/blink
 
 	update_icon()
 		src.icon_state = text("357-[]", src.amount_left)
-		src.desc = text("There are [] caps\s left! Make sure to recyle the box when it gets empty.", src.amount_left)
+		src.desc = text("There are [] caps\s left! Make sure to recycle the box in your local autolathe when it gets empty.", src.amount_left)
 		return
 
 /obj/item/toy/ammo/crossbow
@@ -45,12 +45,14 @@ obj/item/toy/blink
 
 /obj/item/toy/gun
 	name = "cap gun"
-	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up."
+	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up. Please recycle in your local autolathe when your out of caps!"
 	icon = 'gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY
 	w_class = 3.0
+	g_amt = 10
+	m_amt = 10
 	var/bullets = 7.0
 
 	examine()
