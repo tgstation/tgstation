@@ -330,6 +330,14 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 
+/obj/item/clothing/suit/syndicatefake
+	name = "red space suit replica"
+	icon_state = "syndicate"
+	item_state = "space_suit_syndicate"
+	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
+	w_class = 3
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 
 /obj/item/clothing/suit/space/nasavoid
 	name = "NASA Voidsuit"
@@ -338,7 +346,6 @@
 	desc = "A high tech, NASA Centcom branch designed, dark red Space suit. Used for AI satellite maintenance."
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1.3
-
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"

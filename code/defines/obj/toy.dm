@@ -13,16 +13,18 @@ obj/item/toy/blink
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
-	desc = "There are 7 caps left!"
-	icon = 'toy.dmi'
-	icon_state = "caps-7"
+	desc = "There are 7 caps left! Make sure to recyle the box when it gets empty."
+	icon = 'ammo.dmi'
+	icon_state = "357-7"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = 1.0
+	g_amt = 10
+	m_amt = 10
 	var/amount_left = 7.0
 
 	update_icon()
 		src.icon_state = text("357-[]", src.amount_left)
-		src.desc = text("There are [] caps\s left!", src.amount_left)
+		src.desc = text("There are [] caps\s left! Make sure to recyle the box when it gets empty.", src.amount_left)
 		return
 
 /obj/item/toy/ammo/crossbow
@@ -44,8 +46,8 @@ obj/item/toy/blink
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up."
-	icon = 'toy.dmi'
-	icon_state = "capgun"
+	icon = 'gun.dmi'
+	icon_state = "revolver"
 	item_state = "gun"
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY
 	w_class = 3.0
@@ -96,10 +98,10 @@ obj/item/toy/blink
 
 /obj/item/toy/sword
 	name = "toy sword"
-	desc = "A cheap, plastic replica of an energy sword. Ages 8 and up."
-	icon = 'toy.dmi'
-	icon_state = "toysword0"
-	item_state = "toysword0"
+	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
+	icon = 'weapons.dmi'
+	icon_state = "sword0"
+	item_state = "sword0"
 	var/active = 0.0
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
@@ -108,13 +110,15 @@ obj/item/toy/blink
 		src.active = !( src.active )
 		if (src.active)
 			user << "\blue You extend the plastic blade with a quick flick of your wrist."
-			src.icon_state = "toysword1"
-			src.item_state = "toysword1"
+			playsound(user, 'saberon.ogg', 50, 1)
+			src.icon_state = "swordblue"
+			src.item_state = "swordblue"
 			src.w_class = 4
 		else
 			user << "\blue You push the plastic blade back down into the handle."
-			src.icon_state = "toysword0"
-			src.item_state = "toysword0"
+			playsound(user, 'saberoff.ogg', 50, 1)
+			src.icon_state = "sword0"
+			src.item_state = "sword0"
 			src.w_class = 2
 		src.add_fingerprint(user)
 		return
@@ -122,9 +126,9 @@ obj/item/toy/blink
 /obj/item/toy/crossbow
 	name = "foam dart crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
-	icon = 'toy.dmi'
-	icon_state = "foamcrossbow"
-	item_state = "foamcrossbow"
+	icon = 'gun.dmi'
+	icon_state = "crossbow"
+	item_state = "crossbow"
 	flags = FPRINT | TABLEPASS | USEDELAY
 	w_class = 2.0
 	var/bullets = 5

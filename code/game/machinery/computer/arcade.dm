@@ -133,7 +133,7 @@
 		src.gameover = 1
 		src.temp = "[src.enemy_name] has fallen! Rejoice!"
 		var/obj/item/prize
-		var/prizeselect = pick(1,2,3,4,5,6)
+		var/prizeselect = pick(1,2,3,4,5,6,7)
 		switch(prizeselect)
 			if(1)
 				prize = new /obj/item/weapon/spacecash(src.loc)
@@ -150,6 +150,9 @@
 				prize = new /obj/item/toy/gun(src.loc)
 			if(6)
 				prize = new /obj/item/toy/crossbow(src.loc)
+			if(7)
+				prize = new /obj/item/clothing/suit/syndicatefake
+				prize = new /obj/item/clothing/head/syndicatefake
 
 
 	else if ((src.enemy_mp <= 5) && (prob(70)))
