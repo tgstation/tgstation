@@ -13,7 +13,7 @@ obj/item/toy/blink
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
-	desc = "There are 7 caps left! Make sure to recyle the box when it gets empty."
+	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
 	icon = 'ammo.dmi'
 	icon_state = "357-7"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -24,7 +24,7 @@ obj/item/toy/blink
 
 	update_icon()
 		src.icon_state = text("357-[]", src.amount_left)
-		src.desc = text("There are [] caps\s left! Make sure to recycle the box in your local autolathe when it gets empty.", src.amount_left)
+		src.desc = text("There are [] caps\s left! Make sure to recycle the box in an autolathe when it gets empty.", src.amount_left)
 		return
 
 /obj/item/toy/ammo/crossbow
@@ -45,7 +45,7 @@ obj/item/toy/blink
 
 /obj/item/toy/gun
 	name = "cap gun"
-	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up. Please recycle in your local autolathe when your out of caps!"
+	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
 	icon = 'gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"

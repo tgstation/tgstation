@@ -176,6 +176,12 @@
 	..()
 	return
 
+/obj/item/weapon/storage/dice/New()
+	new /obj/item/weapon/dice( src )
+	new /obj/item/weapon/dice/d20( src )
+	..()
+	return
+
 /obj/item/weapon/storage/mousetraps/New()
 	new /obj/item/weapon/mousetrap( src )
 	new /obj/item/weapon/mousetrap( src )

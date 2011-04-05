@@ -751,6 +751,10 @@
 				src.sight |= SEE_MOBS
 				if(!src.druggy)
 					src.see_invisible = 2
+			else if (istype(src.glasses, /obj/item/clothing/glasses/material))
+				src.sight |= SEE_OBJS
+				if (!src.druggy)
+					src.see_invisible = 0
 
 			else if (src.stat != 2)
 				src.sight &= ~SEE_TURFS

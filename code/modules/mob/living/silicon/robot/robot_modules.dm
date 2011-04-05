@@ -31,9 +31,10 @@
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
 
+/*
 /obj/item/weapon/robot_module/brobot
 	name = "brobot robot module"
-
+*/
 /obj/item/weapon/robot_module/butler
 	name = "service robot module"
 
@@ -113,6 +114,7 @@ obj/item/weapon/robot_module/syndicate
 	src.modules += M
 
 	src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
+	src.modules += new /obj/item/weapon/zippo(src)
 	src.modules += new /obj/item/weapon/tray(src)
 	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 //	src.emag = new /obj/item/weapon/reagent_containers/food/snacks/roburgerbig(src)
@@ -164,7 +166,8 @@ obj/item/weapon/robot_module/syndicate
 	src.emag.reagents = R
 	R.my_atom = src.emag
 	R.add_reagent("beer2", 50)
-	src.emag.name = "Mickey Finn's Special Brew" */ //Merged with Service borg, not a death, just a transformation
+	src.emag.name = "Mickey Finn's Special Brew"
+*/ //Merged with Service borg, not a death, just a transformation
 
 obj/item/weapon/robot_module/syndicate/New()
 	src.modules += new /obj/item/weapon/gun/energy/crossbow(src)

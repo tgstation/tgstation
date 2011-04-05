@@ -89,7 +89,7 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 			src.icon_state = icon_on
 			src.item_state = icon_on
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red With a single flick of his wrist, [] smoothly lights his [] with his []. Damn they're cool.", user, src.name, W), 1)
+				O.show_message(text("\red With a single flick of their wrist, [] smoothly lights their [] with their []. Damn they're cool.", user, src.name, W), 1)
 			spawn() //start fires while it's lit
 				src.process()
 	else if(istype(W, /obj/item/weapon/match) && W:lit)
@@ -98,7 +98,7 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 			src.icon_state = icon_on
 			src.item_state = icon_on
 			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] lights his [] with his []. How poor can you get?", user, src.name, W), 1)
+				O.show_message(text("\red [] lights their [] with their []. How poor can you get?", user, src.name, W), 1)
 			spawn() //start fires while it's lit
 				src.process()
 

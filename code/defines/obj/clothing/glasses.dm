@@ -23,6 +23,12 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2"
 
+/obj/item/clothing/glasses/material
+	name = "Optical Material Scanner"
+	icon_state = "blindfold"
+	item_state = "blindfold"
+	origin_tech = "magnets=2"
+
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
 	icon_state = "glasses"
