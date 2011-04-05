@@ -56,7 +56,10 @@
 			continue
 		if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
 			continue
-		if(M.invisibility) //cloaked
+		var/area/wizard_station/A = locate()//So that wizards are not tracked by the AI until they leave their sanctuary./N
+		if(M in A.contents)
+			continue
+		if(M.invisibility)//cloaked
 			continue
 		if(istype(M.loc,/obj/dummy))
 			continue

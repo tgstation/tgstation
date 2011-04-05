@@ -398,15 +398,13 @@
 					usr.mind.special_verbs += /client/proc/knock
 					src.temp = "This spell opens nearby doors and does not require wizard garb."
 			if ("14")
-				for(var/area/wizard_station/A in world)
-					if(usr in A.contents)
-						src.uses = 5
-						usr.spellremove(usr)
-						src.temp = "All spells have been removed. You may now memorize a new set of spells."
-						break
-					else
-						src.temp = "You may only re-memorize spells whilst located inside the wizard sanctuary."
-						break
+				var/area/wizard_station/A = locate()
+				if(usr in A.contents)
+					src.uses = 5
+					usr.spellremove(usr)
+					src.temp = "All spells have been removed. You may now memorize a new set of spells."
+				else
+					src.temp = "You may only re-memorize spells whilst located inside the wizard sanctuary."
 			else
 				if (href_list["temp"])
 					src.temp = null
