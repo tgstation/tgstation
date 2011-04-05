@@ -773,5 +773,5 @@
 #include "code\WorkInProgress\recycling\scrap.dm"
 #include "code\WorkInProgress\recycling\sortingmachinery.dm"
 #include "interface\skin.dmf"
-#include "maps\tgstation.2.0.5.dmm"
+#include "maps\tgstation.2.0.7.dmm"
 // END_INCLUDE
