@@ -159,7 +159,7 @@
 	desc = "Thunderdome closet."
 
 /obj/closet/malf/suits
-	desc = "Gear preperations closet."
+	desc = "Gear preparations closet."
 	icon_state = "syndicate"
 	icon_closed = "syndicate"
 	icon_opened = "syndicateopen"
