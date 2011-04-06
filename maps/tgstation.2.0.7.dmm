@@ -1152,7 +1152,7 @@
 "awh" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = "Streight"},/obj/disposalpipe/segment{dir = 4},/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "awi" = (/obj/machinery/atmospherics/pipe/simple,/obj/disposalpipe/segment{dir = 4},/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"; tag = "Streight"},/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "awj" = (/obj/disposalpipe/segment{dir = 4},/obj/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = "90Curve"},/turf/simulated/floor/plating,/area/maintenance/fpmaint)
-"awk" = (/obj/disposalpipe/segment{dir = 4},/turf/simulated/floor/plating,/area/ai_monitored/storage/eva)
+"awk" = (/obj/disposalpipe/segment{dir = 4},/turf/simulated/wall/r_wall,/area/ai_monitored/storage/eva)
 "awl" = (/obj/disposalpipe/segment{dir = 4},/turf/simulated/floor,/area/ai_monitored/storage/eva)
 "awm" = (/obj/disposalpipe/segment{dir = 4},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor,/area/ai_monitored/storage/eva)
 "awn" = (/obj/rack{dir = 8},/obj/item/weapon/tank/jetpack,/obj/disposalpipe/segment{dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva)
