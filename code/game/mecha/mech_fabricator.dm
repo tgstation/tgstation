@@ -222,7 +222,7 @@
 		src.icon_state = "mechfab3" //looks better than 'flick'
 		src.use_power = 2
 		src.updateUsrDialog()
-		sleep(round(part.construction_time*time_coeff,0.1))
+		sleep(get_construction_time_w_coeff(part,0.1))
 		if(!src) return
 		src.use_power = 1
 		src.being_built.Move(get_step(src,EAST))
@@ -300,12 +300,12 @@
 					if("materials")
 						diff = round(initial(resource_coeff) - (initial(resource_coeff)*T.level)/25,0.01)
 						if(resource_coeff!=diff)
-							resource_coeff = round(initial(resource_coeff) - (initial(resource_coeff)*T.level)/25,0.01)
+							resource_coeff = diff
 							output+="Production efficiency increased.<br>"
 					if("programming")
-						diff = round(initial(time_coeff) - (initial(time_coeff)*T.level)/25,0.01)
+						diff = round(initial(time_coeff) - (initial(time_coeff)*T.level)/25,0.1)
 						if(time_coeff!=diff)
-							time_coeff = round(initial(time_coeff) - (initial(time_coeff)*T.level)/25,0.1)
+							time_coeff = diff
 							output+="Production routines updated.<br>"
 		return output
 
@@ -346,6 +346,10 @@
 		if (..())
 			return
 		user.machine = src
+		var/turf/exit = get_step(src,EAST)
+		if(exit.density)
+			src.visible_message("<b>[src]</b> beeps, \"Error! Part outlet is obstructed\".")
+			return
 		if(temp)
 			left_part = temp
 		else if(src.being_built)

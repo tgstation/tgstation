@@ -166,6 +166,7 @@
 	name = "Mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
+	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4"
 	equip_cooldown = 20
 	energy_drain = 250
 	range = MELEE|RANGED
@@ -270,6 +271,7 @@
 	name = "Teleporter"
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	icon_state = "mecha_teleport"
+	origin_tech = "bluespace=10"
 	equip_cooldown = 300
 	energy_drain = 1000
 	range = RANGED
@@ -290,6 +292,7 @@
 	name = "Wormhole Generator"
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 	icon_state = "mecha_wholegen"
+	origin_tech = "bluespace=3"
 	equip_cooldown = 50
 	energy_drain = 300
 	range = RANGED
@@ -339,6 +342,7 @@
 	name = "Gravitational Catapult"
 	desc = "An exosuit mounted Gravitational Catapult."
 	icon_state = "mecha_teleport"
+	origin_tech = "bluespace=2;magnets=3"
 	equip_cooldown = 10
 	energy_drain = 200
 	range = MELEE|RANGED
@@ -401,10 +405,11 @@
 	name = "Armor Booster Module (Close Combat Weaponry)"
 	desc = "Boosts exosuit armor against armed melee attacks."
 	icon_state = "mecha_abooster_ccw"
+	origin_tech = "materials=3"
 	equip_cooldown = 10
 	energy_drain = 50
 	range = RANGED
-	construction_cost = list("metal"=20000,"silver"=20000)
+	construction_cost = list("metal"=20000,"silver"=5000)
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
 
@@ -443,10 +448,11 @@
 	name = "Armor Booster Module (Ranged Weaponry)"
 	desc = "Boosts exosuit armor against ranged attacks. Completely blocks taser shots."
 	icon_state = "mecha_abooster_proj"
+	origin_tech = "materials=4"
 	equip_cooldown = 10
 	energy_drain = 50
 	range = RANGED
-	construction_cost = list("metal"=20000,"gold"=20000)
+	construction_cost = list("metal"=20000,"gold"=5000)
 	var/damage_coeff = 0.8
 
 	can_attach(obj/mecha/M as obj)
@@ -516,6 +522,7 @@
 	name = "Exosuit Repair Droid"
 	desc = "Automated repair droid. Scans exosuit for damage and repairs it. Can fix almost all types of external or internal damage."
 	icon_state = "repair_droid"
+	origin_tech = "magnets=3;programming=3"
 	equip_cooldown = 20
 	energy_drain = 20
 	range = RANGED

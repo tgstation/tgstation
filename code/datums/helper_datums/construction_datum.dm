@@ -5,6 +5,7 @@
 	var/list/steps
 	var/atom/holder
 	var/result
+	var/list/steps_desc
 
 	New(atom)
 		..()
@@ -12,12 +13,15 @@
 		if(!holder) //don't want this without a holder
 			spawn
 				del src
+		set_desc(steps.len)
 		return
 
 	proc/next_step()
 		steps.len--
 		if(!steps.len)
 			spawn_result()
+		else
+			set_desc(steps.len)
 		return
 
 	proc/action(atom/used_atom,mob/user as mob)
@@ -65,6 +69,11 @@
 			L -= null
 		return
 
+	proc/set_desc(index as num)
+		var/list/step = steps[index]
+		holder.desc = step["desc"]
+		return
+
 /datum/construction/reversible
 	var/index
 
@@ -77,6 +86,8 @@
 		index+=diff
 		if(index==0)
 			spawn_result()
+		else
+			set_desc(index)
 		return
 
 	is_right_key(atom/used_atom) // returns index step

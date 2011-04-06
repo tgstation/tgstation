@@ -7,7 +7,7 @@ Generally, the only thing you want to play with (meaning, redefine) is the proce
 It must contain all the things you want done.
 
 Control functions:
-	new - used to create datum. First argument (optional) - var list(to use in process() proc),
+	new - used to create datum. First argument (optional) - var list(to use in process() proc) as list,
 	second (optional) - autostart control.
 	If autostart == TRUE, the loop will be started immediately after datum creation.
 
@@ -24,7 +24,7 @@ Control functions:
 
 	active() - Returns 1 if datum is active, 0 otherwise.
 
-	toggle() - toggles datum state. Returns 1 if datum activated, 0 otherwise
+	toggle() - toggles datum state. Returns new datum state (see active()).
 
 Misc functions:
 
@@ -38,14 +38,13 @@ Control vars:
 	delay - 	delay between iterations
 
 	check_for_null - if equals TRUE, on each iteration the supplied arguments will be checked for nulls.
-	If some varible equals null, the loop is stopped.
+	If some varible equals null (and null only), the loop is stopped.
 	Usefull, if some var unexpectedly becomes null - due to object deletion, for example.
-	Of course, you can check the variables inside process() proc to prevent runtime errors.
+	Of course, you can also check the variables inside process() proc to prevent runtime errors.
 
 Data storage vars:
 
 	result - stores the value returned by process() proc
-
 */
 
 /datum/global_iterator
@@ -131,7 +130,7 @@ Data storage vars:
 
 	proc/toggle_null_checks()
 		src.check_for_null = !src.check_for_null
-		return
+		return src.check_for_null
 
 	proc/toggle()
 		if(!src.stop())

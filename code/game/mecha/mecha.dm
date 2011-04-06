@@ -408,7 +408,7 @@
 	spawn()
 		var/obj/mecha/mecha = src
 	//	var/mob/M = src.occupant
-		var/turf/T = src.loc
+		var/turf/T = get_turf(src)
 		var/wreckage = src.wreckage
 		var/list/r_equipment = src.equipment
 		src = null
@@ -421,6 +421,8 @@
 				for(var/obj/item/mecha_parts/mecha_equipment/E in r_equipment)
 					if(prob(30))
 						WR.equipment += E
+						E.loc = WR
+						E.equip_ready = 1
 						E.reliability = rand(30,100)
 					else
 						E.loc = T
@@ -611,7 +613,7 @@
 
 /obj/mecha/verb/move_inside()
 	set category = "Object"
-	set name = "Enter Mecha"
+	set name = "Enter Exosuit"
 	set src in oview(1)
 
 	if (usr.stat || !ishuman(usr))
@@ -627,9 +629,12 @@
 		return
 */
 	var/passed
-	if((src.dna && usr.dna.unique_enzymes==src.dna))
+	if(src.dna)
+		if(usr.dna.unique_enzymes==src.dna)
+			passed = 1
+	else if(src.operation_allowed(usr))
 		passed = 1
-	if(!passed && !src.operation_allowed(usr))
+	if(!passed)
 		usr << "\red Access denied"
 		src.log_append_to_last("Permission denied.")
 		return
@@ -953,7 +958,7 @@
 				user << "There's already a powercell installed."
 		return
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding && user.a_intent != "hurt")
 		if (W:remove_fuel(0,user))
 			if (src.internal_damage & MECHA_INT_TANK_BREACH)
 				src.internal_damage &= ~MECHA_INT_TANK_BREACH

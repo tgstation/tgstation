@@ -509,7 +509,7 @@ datum
 			desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 			id = "mech_wormhole_gen"
 			build_type = MECHFAB
-			req_tech = list("bluepace" = 4)
+			req_tech = list("bluepace" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/wormhole_generator"
 
 		mech_teleporter
@@ -525,7 +525,7 @@ datum
 			desc = "An exosuit-mounted Rapid Construction Device."
 			id = "mech_rcd"
 			build_type = MECHFAB
-			req_tech = list("materials" = 4, "bluespace" = 4, "magnets" = 4, "powerstorage"=4)
+			req_tech = list("materials" = 4, "bluespace" = 3, "magnets" = 4, "powerstorage"=4)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/tool/rcd"
 
 		mech_gravcatapult
@@ -799,6 +799,16 @@ datum
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/rdserver"
+
+		mechfab
+			name = "Exosuit Fabricator Board"
+			desc = "The circuit board for an Exosuit Fabricator"
+			id = "mechfab"
+			req_tech = list("programming" = 2,"materials"=3)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/mechfab"
+
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
