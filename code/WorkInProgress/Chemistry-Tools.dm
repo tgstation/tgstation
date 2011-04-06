@@ -177,6 +177,7 @@
 		if (!src.state && stage == 2 && !crit_fail)
 			user << "\red You prime the grenade! 3 seconds!"
 			message_admins("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
+			log_game("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
 			src.state = 1
 			src.icon_state = initial(icon_state)+"_armed"
 			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
@@ -192,6 +193,7 @@
 		if (!src.state && stage == 2 && !crit_fail)
 			user << "\red You prime the grenade! 3 seconds!"
 			message_admins("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
+			log_game("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
 			src.state = 1
 			src.icon_state = initial(icon_state)+"_armed"
 			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)

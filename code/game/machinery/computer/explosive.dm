@@ -120,6 +120,7 @@
 					if(prob(95))
 						R.gib()
 						message_admins("\blue [key_name_admin(usr)] killswitched [R.name]")
+						log_game("[key_name(usr)] killswitched [R.name]")
 					else
 						R << "\blue you hear a click as the implant fails to detonate and disintegrates."
 

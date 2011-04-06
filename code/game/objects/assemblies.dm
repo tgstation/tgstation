@@ -43,6 +43,7 @@
 
 			bombers += "[key_name(user)] attached a [item] to a transfer valve."
 			message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
+			log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
 			attacher = key_name(user)
 
 
@@ -163,10 +164,10 @@
 				valve_open = 1
 				var/turf/bombturf = get_turf(src)
 				var/bombarea = bombturf.loc.name
-
-				bombers += "Bomb valve opened in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]"
-				message_admins("Bomb valve opened in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]")
-
+				var/log_str = "Bomb valve opened in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]"
+				bombers += log_str
+				message_admins(log_str)
+				log_game(log_str)
 				merge_gases()
 				spawn(20) // In case one tank bursts
 					for (var/i=0,i<5,i++)

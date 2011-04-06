@@ -38,7 +38,7 @@
 				if(!input)
 					return
 				captain_announce(input)
-				log_admin("[key_name(usr)] has made a captain announcement: [input]")
+				log_say("[key_name(usr)] has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement.", 1)
 		if("call-prison")
 			call_prison_shuttle(usr)
@@ -424,7 +424,7 @@
 //	These modes are no longer used so I am commenting them out. N
 
 	emergency_shuttle.incall()
-	log_admin("[key_name(user)] has called the shuttle.")
+	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
 	world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
 	world << sound('shuttlecalled.ogg')
@@ -438,7 +438,7 @@
 		return
 
 	emergency_shuttle.recall()
-	log_admin("[key_name(user)] has uncalled the shuttle.")
+	log_game("[key_name(user)] has uncalled the shuttle.")
 	message_admins("[key_name_admin(user)] has uncalled the shuttle.", 1)
 
 	return

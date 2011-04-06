@@ -245,13 +245,19 @@
 	var/list/V = view(message_range, T)
 	//find mobs in lockers, cryo and intellycards
 	for (var/mob/M in world)
-		if (isturf(M.loc))
-			continue //if M can hear us it was already found by hearers()
 		if (!M.client)
 			continue //skip monkeys and leavers
-		if (get_turf(M) in V) //this slow, but I don't think we'd have a lot of wardrobewhores every round --rastaf0
-			listening+=M
-
+		if (istype(M, /mob/new_player))
+			continue
+		if (M.stat <2) //is alive
+			if (isturf(M.loc))
+				continue //if M can hear us it was already found by hearers()
+			if (get_turf(M) in V) //this is slow, but I don't think we'd have a lot of wardrobewhores every round --rastaf0
+				listening+=M
+		else
+			if (M.ghost_ears && !(M in listening))
+				listening+=M
+			
 	for (var/obj/O in ((V | src.contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 		spawn (0)
 			if (O)
@@ -303,21 +309,6 @@
 		rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> <span class='message'>[message_b]</span></span>"
 
 		for (var/mob/M in heard_b)
-			M.show_message(rendered, 2)
-
-	message = src.say_quote(message)
-	if (italics)
-		message = "<i>[message]</i>"
-
-	if (!istype(src, /mob/living/carbon/human) || istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-		rendered = "<span class='game say'><span class='name'>[src.name]</span> <span class='message'>[message]</span></span>"
-	else
-		rendered = "<span class='game say'><span class='name'>[src.real_name]</span>[alt_name] <span class='message'>[message]</span></span>"
-
-	for (var/mob/M in world)
-		if (istype(M, /mob/new_player))
-			continue
-		if (M.stat >= 2 && !(M in heard_a) && M.ghost_ears)
 			M.show_message(rendered, 2)
 
 	log_say("[src.name]/[src.key] : [message]")

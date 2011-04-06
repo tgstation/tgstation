@@ -67,6 +67,7 @@
 	//Traitor's dead! Oh no!
 	if (ticker.mode.name == "traitor" && src.mind && src.mind.special_role == "traitor")
 		message_admins("\red Traitor [key_name_admin(src)] has died.")
+		log_game("Traitor [key_name(src)] has died.")
 
 	var/cancel
 	for (var/mob/M in world)

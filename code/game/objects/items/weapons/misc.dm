@@ -76,10 +76,13 @@ DNA INJECTOR
 			if (dnatype == "se")
 				if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
 					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name] \red(MONKEY)")
+					log_game("[key_name(user)] injected [key_name(M)] with the [src.name] (MONKEY)")
 				else
 					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
+					log_game("[key_name(user)] injected [key_name(M)] with the [src.name]")
 			else
 				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
+				log_game("[key_name(user)] injected [key_name(M)] with the [src.name]")
 
 			spawn( 0 )
 				O.process()
@@ -95,9 +98,12 @@ DNA INJECTOR
 			if (dnatype == "se")
 				if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
 					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name] \red(MONKEY)")
+					log_game("[key_name(user)] injected [key_name(M)] with the [src.name] (MONKEY)")
 				else
 					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
+					log_game("[key_name(user)] injected [key_name(M)] with the [src.name]")
 			else
 				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
+				log_game("[key_name(user)] injected [key_name(M)] with the [src.name]")
 			user.show_message(text("\red You inject [M]"))
 	return

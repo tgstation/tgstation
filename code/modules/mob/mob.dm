@@ -1365,6 +1365,10 @@
 	set category = "OOC"
 	set desc = "Hear talks from everywhere"
 	src.ghost_ears = !src.ghost_ears
+	if (ghost_ears)
+		usr << "Now you hear all speech in world"
+	else
+		usr << "Now you hear speech only from nearest creatures."
 
 /mob/verb/observe()
 	set name = "Observe"

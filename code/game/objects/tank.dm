@@ -108,6 +108,7 @@
 		if(pressure > TANK_FRAGMENT_PRESSURE)
 			if(!istype(src.loc,/obj/item/device/transfer_valve))
 				message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
+				log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
 			//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
 			//Give the gas a chance to build up more pressure through reacting
 			air_contents.react()
