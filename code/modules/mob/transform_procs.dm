@@ -31,20 +31,25 @@
 	O.dna = src.dna
 	src.dna = null
 	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
-	O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
+	//O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
+	O.dna.struc_enzymes = "[copytext(O.dna.struc_enzymes,1,1+3*13)]BB8"
+	O.loc = src.loc
+	O.virus = src.virus
+	src.virus = null
+	if (O.virus)
+		O.virus.affected_mob = O
 	if (src.client)
 		src.client.mob = O
-	O.loc = src.loc
 	O.a_intent = "hurt"
 	O << "<B>You are now a monkey.</B>"
-
-	del(src)
-	return
+	var/prev_body = src
+	src = null //prevent terminating proc due to folowing del()
+	del(prev_body)
+	return O
 
 /mob/new_player/AIize()
 	src.spawning = 1
-	..()
-	return
+	return ..()
 
 /mob/living/carbon/AIize()
 	if (src.monkeyizing)
@@ -67,7 +72,7 @@
 		del(src.organs[text("[]", t)])
 
 
-	..()
+	return ..()
 
 
 /mob/proc/AIize()

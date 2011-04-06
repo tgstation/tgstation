@@ -27,6 +27,7 @@
 
 		for (var/mob/living/carbon/monkey/rabid_monkey in world)
 			rabid_monkey.contract_disease(new /datum/disease/jungle_fever,0,0)
+			rabid_monkey << "<B>Your goal is to capture the entire human civilization and your first target is Centcom. Hijack the shuttle without humans aboard.</B>"
 
 /datum/game_mode/monkey/check_finished()
 	if(emergency_shuttle.location==2)
@@ -55,13 +56,17 @@
 						break
 
 	if (monkeywin)
-		world << "<FONT size = 3><B>The monkies have won!</B></FONT>"
+		world << "<FONT size=3 color=red><B>The monkeys have won! Humanity is doomed!</B></FONT>"
+		for (var/mob/living/carbon/human/player in world)
+			if (player.client)
+				spawn(0)
+					player.monkeyize()
 		for(var/mob/living/carbon/monkey/monkey_player in world)
 			if (monkey_player.client)
 				world << "<B>[monkey_player.key] was a monkey.</B>"
-
+		sleep(50)
 	else
-		world << "<FONT size = 3><B>The Research Staff has stopped the monkey invasion!</B></FONT>"
+		world << "<FONT size=3 color=red><B>The Research Staff has stopped the monkey invasion!</B></FONT>"
 		for(var/mob/living/carbon/monkey/monkey_player in world)
 			if (monkey_player.client)
 				world << "<B>[monkey_player.key] was a monkey.</B>"
