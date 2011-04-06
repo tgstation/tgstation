@@ -24,6 +24,7 @@
 	//var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 	//mind.store_memory("Time of death: [tod]", 0)
 
+	ticker.mode.check_win()
 	//src.icon_state = "dead"
 	for(var/mob/M in world)
 		if ((M.client && !( M.stat )))
@@ -39,4 +40,5 @@
 		spawn(50)
 			if(src.client && src.stat == 2)
 				src.verbs += /mob/proc/ghostize
+	
 	return ..(gibbed)

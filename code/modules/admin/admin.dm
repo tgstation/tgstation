@@ -263,74 +263,18 @@ var/showadminmessages = 1
 		if ((src.rank in list( "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			if (ticker && ticker.mode)
 				return alert(usr, "The game has already started.", null, null, null, null)
-			var/dat = text({"<B>What mode do you wish to play?</B><HR>
-			<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>
-			<A href='?src=\ref[src];c_mode2=wizard'>Wizard</A><br>
-			<A href='?src=\ref[src];c_mode2=traitor'>Traitor</A><br>
-			<A href='?src=\ref[src];c_mode2=meteor'>Meteor</A><br>
-			<A href='?src=\ref[src];c_mode2=extended'>Extended</A><br>
-			<A href='?src=\ref[src];c_mode2=nuclear'>Nuclear Emergency</A><br>
-			<A href='?src=\ref[src];c_mode2=blob'>Blob</A><br>
-			<A href='?src=\ref[src];c_mode2=sandbox'>Sandbox</A><br>
-			<A href='?src=\ref[src];c_mode2=revolution'>Revolution</A><br>
-			<A href='?src=\ref[src];c_mode2=cult'>Cult</A><br>
-			<A href='?src=\ref[src];c_mode2=malfunction'>AI Malfunction</A><br>
-			<A href='?src=\ref[src];c_mode2=changeling'>Changeling</A><br><br>
-			Now: [master_mode]\n"})
+			var/dat = {"<B>What mode do you wish to play?</B><HR>"}
+			for (var/mode in config.modes)
+				dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
+			dat += {"Now: [master_mode]"}
 			usr << browse(dat, "window=c_mode")
-/*
-			<A href='?src=\ref[src];c_mode2=restructuring'>Corporate Restructuring</A><br>
-			<A href='?src=\ref[src];c_mode2=random'>Random</A><br>
-			<A href='?src=\ref[src];c_mode2=monkey'>Monkey</A><br>
-			<A href='?src=\ref[src];c_mode2=deathmatch'>Death Commando Deathmatch</A><br>
-			<A href='?src=\ref[src];c_mode2=confliction'>Confliction (TESTING)</A><br>
-			<A href='?src=\ref[src];c_mode2=ctf'>Capture The Flag (Beta)</A><br><br>
-
-*/
 
 
 	if (href_list["c_mode2"])
 		if ((src.rank in list( "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			if (ticker && ticker.mode)
 				return alert(usr, "The game has already started.", null, null, null, null)
-			switch(href_list["c_mode2"])
-				if("secret")
-					master_mode = "secret"
-				if("random")
-					master_mode = "random"
-				if("traitor")
-					master_mode = "traitor"
-				if("meteor")
-					master_mode = "meteor"
-				if("extended")
-					master_mode = "extended"
-				if("monkey")
-					master_mode = "monkey"
-				if("nuclear")
-					master_mode = "nuclear"
-				if("blob")
-					master_mode = "blob"
-				if("sandbox")
-					master_mode = "sandbox"
-				if("restructuring")
-					master_mode = "restructuring"
-				if("wizard")
-					master_mode = "wizard"
-				if("revolution")
-					master_mode = "revolution"
-				if("cult")
-					master_mode = "cult"
-				if("malfunction")
-					master_mode = "malfunction"
-				if("deathmatch")
-					master_mode = "deathmatch"
-				if("confliction")
-					master_mode = "confliction"
-				if("ctf")
-					master_mode = "ctf"
-				if("changeling")
-					master_mode = "changeling"
-				else
+			master_mode = href_list["c_mode2"]
 			log_admin("[key_name(usr)] set the mode as [master_mode].")
 			message_admins("\blue [key_name_admin(usr)] set the mode as [master_mode].", 1)
 			world << "\blue <b>The mode is now: [master_mode]</b>"
