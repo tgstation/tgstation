@@ -1295,10 +1295,10 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 	//volume = 140 //jetpack sould be larger, but then it will never deplete -rastaf0
 
-/obj/item/weapon/tank/jetpack/voidjetpack
+/obj/item/weapon/tank/jetpack/void
 	name = "Void Jetpack (oxygen)"
 	icon_state = "voidjetpack0"
-//	item_state =  //I want my item state very soon Agouri.
+	item_state =  "voidjetpack0"
 
 /obj/item/weapon/tank/oxygen
 	name = "Gas Tank (Oxygen)"

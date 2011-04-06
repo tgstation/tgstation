@@ -151,8 +151,8 @@
 			if(6)
 				prize = new /obj/item/toy/crossbow(src.loc)
 			if(7)
-				prize = new /obj/item/clothing/suit/syndicatefake
-				prize = new /obj/item/clothing/head/syndicatefake
+				prize = new /obj/item/clothing/suit/syndicatefake(src.loc)
+				prize = new /obj/item/clothing/head/syndicatefake(src.loc)
 
 
 	else if ((src.enemy_mp <= 5) && (prob(70)))
