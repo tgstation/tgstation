@@ -667,10 +667,11 @@ Auto Patrol: []"},
 		return
 	return
 
-/obj/machinery/bot/ed209/Bumped(M as mob|obj)
+/obj/machinery/bot/ed209/Bumped(atom/movable/M as mob|obj)
 	spawn(0)
-		var/turf/T = get_turf(src)
-		M:loc = T
+		if (M)
+			var/turf/T = get_turf(src)
+			M:loc = T
 
 /obj/machinery/bot/ed209/proc/speak(var/message)
 	for(var/mob/O in hearers(src, null))

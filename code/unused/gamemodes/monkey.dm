@@ -62,8 +62,8 @@
 
 	else
 		world << "<FONT size = 3><B>The Research Staff has stopped the monkey invasion!</B></FONT>"
-		for(var/mob/living/carbon/human/human_player in world)
-			if (human_player.client)
-				world << "<B>[human_player.key] was [human_player.real_name].</B>"
+		for(var/mob/living/carbon/monkey/monkey_player in world)
+			if (monkey_player.client)
+				world << "<B>[monkey_player.key] was a monkey.</B>"
 
 	return 1

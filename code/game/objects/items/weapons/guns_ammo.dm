@@ -443,7 +443,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 /obj/item/weapon/gun/detectiverevolver/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 
-	var/detective = (istype(user:w_uniform, /obj/item/clothing/under/det) && istype(user:head, /obj/item/clothing/head/det_hat)  && istype(user:wear_suit, /obj/item/clothing/suit/det_suit))
+	var/detective = ((istype(user:w_uniform, /obj/item/clothing/under/det) || !istype(user, /mob/living/carbon/human)) && istype(user:head, /obj/item/clothing/head/det_hat) && istype(user:wear_suit, /obj/item/clothing/suit/det_suit))
 
 	if (flag)
 		return

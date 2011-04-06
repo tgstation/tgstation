@@ -1866,6 +1866,11 @@
 		alert(src,"You have been banned.\nReason : [isbanned]","Ban","Ok")
 		del(src)
 
+	if (!guests_allowed && IsGuestKey(src.key))
+		log_access("Failed Login: [src] - Guests not allowed")
+		message_admins("\blue Failed Login: [src] - Guests not allowed")
+		alert(src,"You cannot play here.\nReason : Guests not allowed","Guests not allowed","Ok")
+		del(src)
 
 	if (((world.address == src.address || !(src.address)) && !(host)))
 		host = src.key

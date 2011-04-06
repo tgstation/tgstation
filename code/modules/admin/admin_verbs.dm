@@ -37,6 +37,7 @@
 			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -176,6 +177,7 @@
 			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -306,6 +308,7 @@
 			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -461,6 +464,7 @@
 			//src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			//src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			//src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -606,6 +610,7 @@
 			//src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			//src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			//src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -747,6 +752,7 @@
 			//src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			//src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			//src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -871,6 +877,7 @@
 			//src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -1026,6 +1033,7 @@
 	src.verbs -= /obj/admins/proc/toggleaban			//abandon mob
 	src.verbs -= /obj/admins/proc/toggleAI				//Toggle the AI
 	src.verbs -= /obj/admins/proc/toggleenter			//Toggle enterting
+	src.verbs -= /obj/admins/proc/toggleguests			//Toggle guests entering
 	src.verbs -= /obj/admins/proc/toggleooc				//toggle ooc
 	src.verbs -= /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 	src.verbs -= /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -1455,6 +1463,7 @@
 			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -1485,6 +1494,7 @@
 			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -1515,6 +1525,7 @@
 			src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -1552,6 +1563,7 @@
 			//src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			//src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			//src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -1589,6 +1601,7 @@
 			//src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			//src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			//src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -1614,6 +1627,7 @@
 			//src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			//src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			//src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
@@ -1644,6 +1658,7 @@
 			//src.verbs += /obj/admins/proc/toggleaban			//abandon mob
 			src.verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			src.verbs += /obj/admins/proc/toggleenter			//Toggle enterting
+			src.verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			src.verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			src.verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//src.verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling

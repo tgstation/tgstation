@@ -2241,6 +2241,19 @@ var/showadminmessages = 1
 		world << "<B>The tinted_weldhelh has been disabled!</B>"
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.", 1)
+
+/obj/admins/proc/toggleguests()
+	set category = "Server"
+	set desc="Guests can't enter"
+	set name="Toggle guests"
+	guests_allowed = !( guests_allowed )
+	if (!( guests_allowed ))
+		world << "<B>Guests may no longer enter the game.</B>"
+	else   
+		world << "<B>Guests may now enter the game.</B>"
+	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
+	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.", 1)
+
 //
 //
 //ALL DONE

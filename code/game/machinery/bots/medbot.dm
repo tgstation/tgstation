@@ -482,11 +482,11 @@
 		return
 	return
 
-/obj/machinery/bot/medbot/Bumped(M as mob|obj)
+/obj/machinery/bot/medbot/Bumped(atom/movable/M as mob|obj)
 	spawn(0)
-		var/turf/T = get_turf(src)
-		M:loc = T
-
+		if (M)
+			var/turf/T = get_turf(src)
+			M:loc = T
 
 /*
  *	Pathfinding procs, allow the medibot to path through doors it has access to.

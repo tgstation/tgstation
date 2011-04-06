@@ -648,10 +648,11 @@ Auto Patrol: []"},
 		return
 	return
 
-/obj/machinery/bot/secbot/Bumped(M as mob|obj)
+/obj/machinery/bot/secbot/Bumped(atom/movable/M as mob|obj)
 	spawn(0)
-		var/turf/T = get_turf(src)
-		M:loc = T
+		if (M)
+			var/turf/T = get_turf(src)
+			M:loc = T
 
 /obj/machinery/bot/secbot/proc/speak(var/message)
 	for(var/mob/O in hearers(src, null))
