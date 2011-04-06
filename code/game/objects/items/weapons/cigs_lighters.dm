@@ -74,7 +74,8 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/weldingtool)  && W:welding)
-		if(src.lit == 0)
+		light("\red [user] casually lights the [name] with [W], what a badass.")
+/*		if(src.lit == 0)
 			src.lit = 1
 			src.damtype = "fire"
 			src.icon_state = icon_on
@@ -82,27 +83,38 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [] casually lights the [] with [], what a badass.", user, src.name, W), 1)
 			spawn() //start fires while it's lit
-				src.process()
+				src.process()*/
 	else if(istype(W, /obj/item/weapon/zippo) && W:lit)
-		if(src.lit == 0)
+		light("\red With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.")
+/*		if(src.lit == 0)
 			src.lit = 1
 			src.icon_state = icon_on
 			src.item_state = icon_on
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red With a single flick of their wrist, [] smoothly lights their [] with their []. Damn they're cool.", user, src.name, W), 1)
 			spawn() //start fires while it's lit
-				src.process()
+				src.process()*/
 	else if(istype(W, /obj/item/weapon/match) && W:lit)
-		if(src.lit == 0)
+		light("\red [user] lights their [name] with their [W]. How poor can you get?")
+/*		if(src.lit == 0)
 			src.lit = 1
 			src.icon_state = icon_on
 			src.item_state = icon_on
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [] lights their [] with their []. How poor can you get?", user, src.name, W), 1)
 			spawn() //start fires while it's lit
-				src.process()
+				src.process()*/
 
-
+/obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = "[usr] lights the [name].")
+	if(!src.lit)
+		src.lit = 1
+		src.damtype = "fire"
+		src.icon_state = icon_on
+		src.item_state = icon_on
+		for(var/mob/O in viewers(usr, null))
+			O.show_message(flavor_text, 1)
+		spawn()
+			src.process()
 
 /obj/item/clothing/mask/cigarette/process()
 
@@ -235,6 +247,17 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 		return ..()
 	return
 
+/obj/item/weapon/zippo/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M, /mob))
+		return
+
+	if(istype(M.wear_mask,/obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && src.lit)
+		if(M == user)
+			M.wear_mask:light("\red With a single flick of their wrist, [user] smoothly lights their [M.wear_mask.name] with their [src.name]. Damn they're cool.")
+		else
+			M.wear_mask:light("\red [user] whips the [src.name] out and holds it for [M]. Their arm is as steady as the unflickering flame they light the [M.wear_mask.name] with.")
+	else
+		..()
 
 /obj/item/weapon/zippo/process()
 
