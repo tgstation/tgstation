@@ -1,7 +1,9 @@
 /mob/living/carbon/human/proc/monkeyize()
 	if (src.monkeyizing)
 		return
-	for(var/obj/item/weapon/W in src)
+	for(var/obj/item/W in src)
+		if (W==src.w_uniform) // will be teared
+			continue
 		src.u_equip(W)
 		if (src.client)
 			src.client.screen -= W
