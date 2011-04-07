@@ -93,6 +93,7 @@
 						tmob.stunned = max(4, tmob.stunned)
 					playsound(src.loc, 'Egloves.ogg', 50, 1, -1)
 					W:charges--
+					src.now_pushing = 0
 					return
 		if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & 32)
 			if(prob(40) && !(src.mutations & 32))
@@ -112,9 +113,10 @@
 				if (istype(AM, /obj/window))
 					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
 						for(var/obj/window/win in get_step(AM,t))
+							src.now_pushing = 0
 							return
 				step(AM, t)
-			src.now_pushing = null
+			src.now_pushing = 0
 		return
 	return
 

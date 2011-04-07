@@ -323,6 +323,7 @@
 				if (istype(AM, /obj/window))
 					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
 						for(var/obj/window/win in get_step(AM,t))
+							src.now_pushing = 0
 							return
 				step(AM, t)
 			src.now_pushing = null
