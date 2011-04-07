@@ -2877,11 +2877,18 @@
 		..()
 		reagents.add_reagent("cyanide", 50)
 
+/obj/item/weapon/reagent_containers/pill/adminordrazine
+	name = "Adminordrazine pill"
+	desc = "It's magic, I don't have to explain shit."
+	icon_state = "pill16"
+	New()
+		..()
+		reagents.add_reagent("adminordrazine", 50)
+
 /obj/item/weapon/reagent_containers/pill/stox
 	name = "Sleeping pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
-
 	New()
 		..()
 		reagents.add_reagent("stoxin", 30)
@@ -2890,7 +2897,6 @@
 	name = "Kelotane pill"
 	desc = "Used to treat burns."
 	icon_state = "pill11"
-
 	New()
 		..()
 		reagents.add_reagent("kelotane", 30)
@@ -2899,7 +2905,6 @@
 	name = "Inaprovaline pill"
 	desc = "Used to stabilize patients."
 	icon_state = "pill20"
-
 	New()
 		..()
 		reagents.add_reagent("inaprovaline", 30)
@@ -2908,7 +2913,6 @@
 	name = "Dexalin pill"
 	desc = "Used to treat oxygen deprivation."
 	icon_state = "pill16"
-
 	New()
 		..()
 		reagents.add_reagent("dexalin", 30)
@@ -2920,7 +2924,6 @@
 	icon = 'objects.dmi'
 	icon_state = "watertank"
 	amount_per_transfer_from_this = 10
-
 	New()
 		..()
 		reagents.add_reagent("water",1000)
@@ -2931,7 +2934,6 @@
 	icon = 'objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 10
-
 	New()
 		..()
 		reagents.add_reagent("fuel",1000)
@@ -2965,7 +2967,6 @@
 	icon = 'objects.dmi'
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 10
-
 	New()
 		..()
 		reagents.add_reagent("beer",1000)

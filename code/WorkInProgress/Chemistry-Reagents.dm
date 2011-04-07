@@ -895,16 +895,16 @@ datum
 				..()
 				return
 
-		wizordrazine //Going to use this for a spell soon, regeneration, it might seem OP, but that's the point.
-			name = "Wizordrazine"
-			id = "wizordrazine"
-			description = "I don't have to explain shit about Wizordrazine, its magic."
+		adminordrazine //An OP chemical for adminis
+			name = "Adminordrazine"
+			id = "adminordrazine"
+			description = "I don't have to explain shit about adminordrazine, its magic."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-3)
-				if(M:oxyloss) M:oxyloss = max(0, M:oxyloss-3)
-				M:heal_organ_damage(3,3)
+				if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-5)
+				if(M:oxyloss) M:oxyloss = max(0, M:oxyloss-5)
+				M:heal_organ_damage(5,5)
 				M:drowsyness = max(M:drowsyness-2, 0)
 				if(holder.has_reagent("toxin"))
 					holder.remove_reagent("toxin", 2)
@@ -924,14 +924,14 @@ datum
 					holder.remove_reagent("carpotoxin", 1)
 				if(holder.has_reagent("zombiepowder"))
 					holder.remove_reagent("zombiepowder", 0.5)
-				M:brainloss = max(M:brainloss-3 , 0)
+				M:brainloss = max(M:brainloss-5 , 0)
 				M.disabilities = 0
 				M.sdisabilities = 0
 				M:eye_blurry = max(M:eye_blurry-5 , 0)
 				M:eye_blind = max(M:eye_blind-5 , 0)
 				M:disabilities &= ~1
 				M:sdisabilities &= ~1
-				if(M:toxloss) M:toxloss = max(0, M:toxloss-3)
+				if(M:toxloss) M:toxloss = max(0, M:toxloss-5)
 				..()
 				return
 
