@@ -130,6 +130,15 @@ obj
 				else
 					icon_state = "1"
 
+			if(temperature > location.max_fire_temperature_sustained)
+				location.max_fire_temperature_sustained = temperature
+
+			if(temperature > location.heat_capacity)
+				location.to_be_destroyed = 1
+				/*if(prob(25))
+					location.ReplaceWithSpace()
+					return 0*/
+
 			return 1
 
 		New()
@@ -138,10 +147,20 @@ obj
 			sd_SetLuminosity(3)
 
 		Del()
-			if (!istype(loc, /turf/space))
+			if (istype(loc, /turf/simulated))
+				var/turf/simulated/T = loc
 				loc:active_hotspot = null
 				src.sd_SetLuminosity(0)
-				loc = null
 
+				var/chance_of_deletion = min(100, T.max_fire_temperature_sustained / T.heat_capacity * 8)
+
+				if(T.to_be_destroyed)
+					if(prob(chance_of_deletion))
+						T.ReplaceWithSpace()
+					else
+						T.to_be_destroyed = 0
+						T.max_fire_temperature_sustained = 0
+
+				loc = null
 
 			..()

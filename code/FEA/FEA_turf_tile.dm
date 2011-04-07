@@ -358,7 +358,8 @@ turf
 			air.react()
 
 			if(active_hotspot)
-				active_hotspot.process(possible_fire_spreads)
+				if (!active_hotspot.process(possible_fire_spreads))
+					return 0
 
 			if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 				consider_superconductivity(starting = 1)

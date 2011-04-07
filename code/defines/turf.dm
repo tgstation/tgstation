@@ -43,6 +43,27 @@
 	var/thermite = 0
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
+	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
+	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
+
+/turf/simulated/floor
+	name = "floor"
+	icon = 'floors.dmi'
+	icon_state = "floor"
+	thermal_conductivity = 0.040
+	heat_capacity = 10000
+	var/broken = 0
+	var/burnt = 0
+
+	airless
+		name = "airless floor"
+		oxygen = 0.01
+		nitrogen = 0.01
+		temperature = TCMB
+
+		New()
+			..()
+			name = "floor"
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"
@@ -56,26 +77,6 @@
 	oxygen = 0
 	nitrogen = 0.001
 	temperature = TCMB
-
-
-/turf/simulated/floor
-	name = "floor"
-	icon = 'floors.dmi'
-	icon_state = "floor"
-	thermal_conductivity = 0.040
-	heat_capacity = 225000
-	var/broken = 0
-	var/burnt = 0
-
-	airless
-		name = "airless floor"
-		oxygen = 0.01
-		nitrogen = 0.01
-		temperature = TCMB
-
-		New()
-			..()
-			name = "floor"
 
 /turf/simulated/floor/plating
 	name = "plating"
