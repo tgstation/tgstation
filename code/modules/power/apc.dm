@@ -366,9 +366,11 @@
 			user << "\blue You need more welding fuel to complete this task."
 			return
 		user << "You start welding APC frame..."
-		if(W:remove_fuel(2,user))
+		if(W:remove_fuel(0,user))
+			W:welding = 2
 			playsound(src.loc, 'Welder.ogg', 50, 1)
 			if(do_after(user, 50))
+
 				if (emagged || malfhack || (stat & BROKEN) || opened==2)
 					new /obj/item/stack/sheet/metal(loc)
 					user.visible_message(\
@@ -381,8 +383,9 @@
 						"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
 						"You cut APC frame from the wall.",\
 						"\red You hear welding.")
-				del(src)
-				return
+			W:welding = 1
+			del(src)
+			return
 	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
 		emagged = 0
 		if (opened==2)

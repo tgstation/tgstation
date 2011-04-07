@@ -147,17 +147,21 @@
 	if (istype(W, /obj/item/weapon/weldingtool))
 		if(W:welding == 1)
 			if(src.status == 2)
+				W:welding = 2
 				user << "\blue Now weakening the reinforced table"
 				playsound(src.loc, 'Welder.ogg', 50, 1)
 				sleep(50)
 				user << "\blue Table weakened"
 				src.status = 1
+				W:welding = 1
 			else
+				W:welding = 2
 				user << "\blue Now strengthening the reinforced table"
 				playsound(src.loc, 'Welder.ogg', 50, 1)
 				sleep(50)
 				user << "\blue Table strengthened"
 				src.status = 2
+				W:welding = 1
 			return
 		if(isrobot(user))
 			return

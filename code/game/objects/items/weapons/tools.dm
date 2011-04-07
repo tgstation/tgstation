@@ -153,9 +153,18 @@ WELDINGTOOOL
 
 
 	process()
-		if(!welding)
-			processing_items.Remove(src)
-			return
+		switch(welding)
+			if(0)
+				processing_items.Remove(src)
+				return
+			if(1)
+				if(prob(5))//Welders left on now use up fuel, but lets not have them run out quite that fast
+					remove_fuel(1)
+			if(2)
+				if(prob(75))
+					remove_fuel(1)
+					//if you're actually actively welding, use fuel faster.
+
 		var/turf/location = src.loc
 		if(istype(location, /mob/))
 			var/mob/M = location
@@ -163,8 +172,7 @@ WELDINGTOOOL
 				location = get_turf(M)
 		if (istype(location, /turf))
 			location.hotspot_expose(700, 5)
-		if(prob(20))//Welders left on now use up fuel, but lets not have them run out quite that fast
-			remove_fuel(1)
+
 
 
 	afterattack(obj/O as obj, mob/user as mob)
@@ -309,6 +317,7 @@ WELDINGTOOOL
 	max_fuel = 40
 	m_amt = 70
 	g_amt = 60
+
 /obj/item/weapon/weldingtool/hugetank
 	name = "Upgraded Welding Tool"
 	max_fuel = 80

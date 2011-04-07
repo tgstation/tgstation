@@ -138,11 +138,13 @@
 					src.anchored = 1
 					src.state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
+				P:welding = 2
 				playsound(src.loc, 'Welder.ogg', 50, 1)
 				if(do_after(user, 20))
 					user << "\blue You deconstruct the frame."
 					new /obj/item/stack/sheet/metal( src.loc, 5 )
 					del(src)
+				P:welding = 1
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'Ratchet.ogg', 50, 1)

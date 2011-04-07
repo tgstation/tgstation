@@ -694,7 +694,8 @@
 			var/obj/item/weapon/weldingtool/W = I
 
 			if(W.welding)
-				if(W.remove_fuel(3,user))
+				if(W.remove_fuel(0,user))
+					W:welding = 2
 					playsound(src.loc, 'Welder2.ogg', 100, 1)
 					// check if anything changed over 2 seconds
 					var/turf/uloc = user.loc
@@ -705,7 +706,7 @@
 						welded()
 					else
 						user << "You must stay still while welding the pipe."
-						return
+					W:welding = 1
 				else
 					user << "You need more welding fuel to cut the pipe."
 					return

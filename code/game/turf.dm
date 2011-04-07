@@ -347,6 +347,7 @@
 			return
 
 		if (W:remove_fuel(0,user))
+			W:welding = 2
 			user << "\blue Now disassembling the outer wall plating."
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			sleep(100)
@@ -354,6 +355,7 @@
 				if ((get_turf(user) == T && user.equipped() == W))
 					user << "\blue You disassembled the outer wall plating."
 					dismantle_wall()
+			W:welding = 1
 		else
 			user << "\blue You need more welding fuel to complete this task."
 			return
@@ -396,14 +398,17 @@
 			return
 
 		if (src.d_state == 2)
+			W:welding = 2
 			user << "\blue Slicing metal cover."
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			sleep(60)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 3
 				user << "\blue You removed the metal cover."
+			W:welding = 1
 
 		else if (src.d_state == 5)
+			W:welding = 2
 			user << "\blue Removing support rods."
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			sleep(100)
@@ -411,6 +416,7 @@
 				src.d_state = 6
 				new /obj/item/stack/rods( src )
 				user << "\blue You removed the support rods."
+			W:welding = 1
 
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (src.d_state == 4)

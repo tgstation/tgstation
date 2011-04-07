@@ -246,6 +246,7 @@
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 			if (W:remove_fuel(0,user))
+				W:welding = 2
 				user << "\blue Now welding the vent."
 				if(do_after(user, 20))
 					playsound(src.loc, 'Welder2.ogg', 50, 1)
@@ -255,6 +256,7 @@
 					else
 						user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
 						welded = 0
+				W:welding = 1
 			else
 				user << "\blue You need more welding fuel to complete this task."
 				return 1

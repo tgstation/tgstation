@@ -85,6 +85,7 @@ obj/door_assembly
 /obj/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool) && W:welding && !anchored )
 		if (W:remove_fuel(0,user))
+			W:welding = 2
 			user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
 			playsound(src.loc, 'Welder2.ogg', 50, 1)
 			if(do_after(user, 40))
@@ -93,6 +94,7 @@ obj/door_assembly
 				if(src.glass==1)
 					new /obj/item/stack/sheet/rglass(get_turf(src))
 				del(src)
+			W:welding = 1
 		else
 			user << "\blue You need more welding fuel to dissassemble the airlock assembly."
 			return
