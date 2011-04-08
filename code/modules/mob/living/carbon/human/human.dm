@@ -218,14 +218,7 @@
 		if (safe)
 			return safe.bullet_act(flag, A)
 
-	var/armored = 0
-	if(affecting.name == "head")
-		if(src.head && istype(src.head,/obj/item/clothing/head/helmet))
-			armored = 1
-	else
-		if(src.wear_suit)
-			if(affecting.body_part & src.wear_suit.body_parts_covered)
-				armored = 1
+	var/armored = src.isarmored(affecting)
 
 	if (flag == PROJECTILE_BULLET)
 		var/d = 51
@@ -2767,3 +2760,16 @@ It can still be worn/put on as normal.
 /mob/living/carbon/human/heal_organ_damage(var/brute, var/burn)
 	..()
 	src.UpdateDamageIcon()
+
+/mob/living/carbon/human/proc/isarmored(var/datum/organ/external/def_zone)
+	if(def_zone.name == "head")
+		if(src.head && istype(src.head,/obj/item/clothing/head/helmet))
+			if(def_zone.body_part & src.head.body_parts_covered)
+				return 1
+				//If targetting the head and there's a helmet there, armored.
+	else
+		if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit/armor))
+			if(def_zone.body_part & src.wear_suit.body_parts_covered)
+				return 1
+				//If wearing armor that covers the targetted bodypart, armored.
+	return 0

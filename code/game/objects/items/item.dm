@@ -201,7 +201,7 @@
 			if (M.mutations & 2)
 				f_dam = 0
 			if (def_zone == "head")
-				if (b_dam && (istype(H.head, /obj/item/clothing/head/helmet/) && H.head.body_parts_covered & HEAD) && prob(80 - src.force))
+				if (b_dam && H.isarmored(affecting) && prob(80 - src.force))
 					if (prob(20))
 						affecting.take_damage(power, 0)
 					else
@@ -245,59 +245,15 @@
 							else if (user2.w_uniform)
 								user2.w_uniform.add_blood(H)
 				affecting.take_damage(b_dam, f_dam)
-			else if (def_zone == "chest")
-				if (b_dam && ((istype(H.wear_suit, /obj/item/clothing/suit/armor/)) && H.wear_suit.body_parts_covered & UPPER_TORSO) && prob(90 - src.force))
-					H.show_message("\red You have been protected from a hit to the chest.")
+			else if (def_zone == "chest" || def_zone == "groin")
+				if (b_dam && H.isarmored(affecting) && prob(90 - src.force))
+					H.show_message("\red You have been protected from a hit to the [affecting.name].")
 					return
 				if (b_dam && ((istype(H.r_hand, /obj/item/weapon/shield/riot))) && prob(90 - src.force))
-					H.show_message("\red You have been protected from a hit to the chest.")
+					H.show_message("\red You have been protected from a hit to the [affecting.name].")
 					return
 				if (b_dam && ((istype(H.l_hand, /obj/item/weapon/shield/riot))) && prob(90 - src.force))
-					H.show_message("\red You have been protected from a hit to the chest.")
-					return
-				if ((b_dam && prob(src.force + affecting.brute_dam + affecting.burn_dam)))
-					if (prob(50))
-						if (H.weakened < 5)
-							H.weakened = 5
-						for(var/mob/O in viewers(H, null))
-							O.show_message(text("\red <B>[] has been knocked down!</B>", H), 1, "\red You hear someone fall.", 2)
-					else
-						if (H.stunned < 2)
-							H.stunned = 2
-						for(var/mob/O in viewers(H, null))
-							O.show_message(text("\red <B>[] has been stunned!</B>", H), 1)
-					if(H.stat != 2)	H.stat = 1
-				if (b_dam && prob(25 + (b_dam * 2)))
-					src.add_blood(H)
-					if (prob(33))
-						var/turf/location = H.loc
-						if (istype(location, /turf/simulated))
-							location.add_blood(H)
-					if (H.wear_suit)
-						H.wear_suit.add_blood(H)
-					if (H.w_uniform)
-						H.w_uniform.add_blood(H)
-					if (istype(user, /mob/living/carbon/human))
-						var/mob/living/carbon/human/user2 = user
-						if (user2.gloves)
-							user2.gloves.add_blood(H)
-						else
-							user2.add_blood(H)
-						if (prob(15))
-							if (user2.wear_suit)
-								user2.wear_suit.add_blood(H)
-							else if (user2.w_uniform)
-								user2.w_uniform.add_blood(H)
-				affecting.take_damage(b_dam, f_dam)
-			else if (def_zone == "groin")
-				if (b_dam && (istype(H.wear_suit, /obj/item/clothing/suit/armor/) && H.wear_suit.body_parts_covered & LOWER_TORSO) && prob(90 - src.force))
-					H.show_message("\red You have been protected from a hit to the groin (phew).")
-					return
-				if (b_dam && ((istype(H.r_hand, /obj/item/weapon/shield/riot))) && prob(90 - src.force))
-					H.show_message("\red You have been protected from a hit to the groin (phew).")
-					return
-				if (b_dam && ((istype(H.l_hand, /obj/item/weapon/shield/riot))) && prob(90 - src.force))
-					H.show_message("\red You have been protected from a hit to the groin (phew).")
+					H.show_message("\red You have been protected from a hit to the [affecting.name].")
 					return
 				if ((b_dam && prob(src.force + affecting.brute_dam + affecting.burn_dam)))
 					if (prob(50))
@@ -334,6 +290,9 @@
 									user2.w_uniform.add_blood(H)
 					affecting.take_damage(b_dam, f_dam)
 			else
+				if (b_dam && H.isarmored(affecting) && prob(80 - src.force))
+					H.show_message("\red You have been protected from a hit to the [affecting.name].")
+					return
 				if (b_dam && prob(25 + (b_dam * 2)))
 					src.add_blood(H)
 					if (prob(33))
