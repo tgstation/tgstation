@@ -209,6 +209,7 @@
 	protective_temperature = 1000
 	heat_transfer_coefficient = 0.02
 	radiation_protection = 0.25
+	slowdown = 1.5
 	w_class = 4//bulky item
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 
