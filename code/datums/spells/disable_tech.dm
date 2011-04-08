@@ -1,11 +1,12 @@
 /obj/spell/disable_tech
 	name = "Disable Tech"
-	desc = "This spell disables all weapons, cameras and most other technology in range and doesn't require wizard garb."
+	desc = "This spell disables all weapons, cameras and most other technology in range."
 	charge_max = 400
 	clothes_req = 1
 	invocation = "NEC CANTIO"
-	invocation_type = "whisper"
-	range = 7
+	invocation_type = "shout"
+	var/emp_heavy_radius = 5
+	var/emp_light_radius = 7
 
 /obj/spell/disable_tech/Click()
 	..()
@@ -15,5 +16,5 @@
 
 	invocation()
 
-	empulse(src, (range-2), range)
+	empulse(usr.loc, src.emp_heavy_radius, src.emp_light_radius)
 	return

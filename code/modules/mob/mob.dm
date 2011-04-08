@@ -1711,7 +1711,11 @@
 
 /client/Move(n, direct)
 	if(src.mob.control_object)					// Hacking in something to control objects -- TLE
-		src.mob.control_object.Move(get_step(src.mob.control_object, direct),direct)
+		if(src.mob.control_object.density)
+			step(src.mob.control_object,direct)
+			src.mob.control_object.dir = direct
+		else
+			src.mob.control_object.loc = get_step(src.mob.control_object,direct)
 	if(istype(src.mob, /mob/dead/observer))
 		return src.mob.Move(n,direct)
 	if (src.moving)

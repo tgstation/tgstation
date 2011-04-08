@@ -170,8 +170,12 @@
 /datum/game_mode/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
 	if (!istype(wizard_mob))
 		return
-	wizard_mob.verbs += /client/proc/jaunt
-	wizard_mob.mind.special_verbs += /client/proc/jaunt
+
+	if(!config.feature_object_spell_system)
+		wizard_mob.verbs += /client/proc/jaunt
+		wizard_mob.mind.special_verbs += /client/proc/jaunt
+	else
+		wizard_mob.spell_list += new /obj/spell/ethereal_jaunt(usr)
 
 	//So zards properly get their items when they are admin-made.
 	del(wizard_mob.wear_suit)
@@ -380,7 +384,6 @@
 							src.temp = "This spell opens nearby doors and does not require wizard garb."
 				else if(spell_type == "object")
 					var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock")
-					world << available_spells[text2num(href_list["spell_choice"])] //DEBUG
 					var/already_knows = 0
 					for(var/obj/spell/aspell in usr.spell_list)
 						if(available_spells[text2num(href_list["spell_choice"])] == aspell.name)
@@ -641,6 +644,7 @@
 			M.verbs -= /client/proc/mutate
 			M.verbs -= /client/proc/knock
 			M.verbs -= /mob/proc/swap
+			M.verbs -= /client/proc/blink
 		if(M.mind && M.mind.special_verbs.len)
 			M.mind.special_verbs -= /client/proc/jaunt
 			M.mind.special_verbs -= /client/proc/magicmissile
@@ -654,6 +658,7 @@
 			M.mind.special_verbs -= /client/proc/mutate
 			M.mind.special_verbs -= /client/proc/knock
 			M.mind.special_verbs -= /mob/proc/swap
+			M.mind.special_verbs -= /client/proc/blink
 	else if(spell_type == "object")
 		for(var/obj/spell/spell_to_remove in src.spell_list)
 			src.spell_list -= spell_to_remove

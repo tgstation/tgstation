@@ -10,7 +10,7 @@
 	range = -1 //can affect only the user by default, but with var editing can be a teleport other spell
 	var/smoke_spread = 1 //if set to 0, no smoke spreads when teleporting
 
-/obj/spell/blink/Click()
+/obj/spell/teleport/Click()
 	..()
 
 	if(!cast_check())
