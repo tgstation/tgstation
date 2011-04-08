@@ -146,6 +146,15 @@
 	item_state = "space"
 	permeability_coefficient = 0.01
 
+/obj/item/clothing/head/helmet/space/capspace
+	name = "space helmet"
+	icon_state = "capspace"
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Only for the most fashionable of military figureheads."
+	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES
+	see_face = 0.0
+	item_state = "capspace"
+	permeability_coefficient = 0.01
+
 /obj/item/clothing/head/helmet/space/rig
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
 	name = "rig helmet"

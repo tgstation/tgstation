@@ -2706,7 +2706,7 @@
 "bab" = (/obj/disposalpipe/sortjunction{dir = 1; icon_state = "pipe-j2s"; sortType = 21},/turf/simulated/wall,/area/maintenance/port)
 "bac" = (/obj/machinery/door/firedoor/border_only,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor,/area/hallway/primary/central)
 "bad" = (/obj/machinery/door/firedoor/border_only,/turf/simulated/floor{icon_state = "bluecorner"},/area/hallway/primary/central)
-"bae" = (/obj/rack,/obj/item/clothing/mask/gas/emergency,/obj/item/weapon/tank/jetpack,/turf/simulated/floor,/area/crew_quarters/captain)
+"bae" = (/obj/rack,/obj/item/weapon/tank/jetpack,/obj/item/clothing/mask/gas,/obj/item/clothing/head/helmet/space/capspace,/turf/simulated/floor,/area/crew_quarters/captain)
 "baf" = (/obj/stool/bed,/obj/item/weapon/bedsheet,/obj/machinery/light_switch{pixel_y = -25},/turf/simulated/floor,/area/crew_quarters/captain)
 "bag" = (/obj/secure_closet/captains,/turf/simulated/floor,/area/crew_quarters/captain)
 "bah" = (/obj/table{icon_state = "tabledir"; dir = 4},/obj/machinery/light/lamp{pixel_x = 4; pixel_y = 1},/obj/machinery/light,/turf/simulated/floor,/area/crew_quarters/captain)
