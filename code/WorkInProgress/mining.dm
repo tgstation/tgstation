@@ -2579,9 +2579,9 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		desc = "The perfect weapon to kill space lizard with in the mines, includes bicycle pump."
 
 	drill
-		name = "Giga Drill"
+		name = "Turbo Drill"
 		icon_state = "jackhammer"
-		item_state = "gigadrill"
+		item_state = "handdrill"
 		digspeed = 10
 		desc = "Yours is the drill that will pierce the heavens!"
 
