@@ -38,7 +38,6 @@
 		flick("nuclearbombc", src)
 		src.icon_state = "nuclearbomb1"
 		src.extended = 1
-		bomb_set = 1
 	return
 
 /obj/machinery/nuclearbomb/verb/make_deployable()
@@ -98,8 +97,11 @@
 					src.timing = !( src.timing )
 					if (src.timing)
 						src.icon_state = "nuclearbomb2"
+						if(!src.safety)
+							bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
 						src.icon_state = "nuclearbomb1"
+						bomb_set = 0
 				if (href_list["safety"])
 					src.safety = !( src.safety )
 				if (href_list["anchor"])
