@@ -44,11 +44,12 @@
 //		return
 
 	if (M.stat !=2)
-		if (ticker.mode.name == "cult" && prob(10))
-			if(ticker.mode:cult.Find(M.mind))
-				ticker.mode:remove_cultist(M.mind)
-		if (cultists.Find(M) && prob(10))
-			cultists -= M
+		if (prob(10))
+			if(M.mind in ticker.mode.cult)
+				if (ticker.mode.name == "cult")
+					ticker.mode:remove_cultist(M.mind)
+				else 
+					ticker.mode.cult -= M.mind
 		if ((istype(M, /mob/living/carbon/human) && prob(60)))
 			bless(M)
 			for(var/mob/O in viewers(M, null))

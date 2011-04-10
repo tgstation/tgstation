@@ -2761,6 +2761,10 @@ It can still be worn/put on as normal.
 	..()
 	src.UpdateDamageIcon()
 
+/mob/living/carbon/human/take_organ_damage(var/brute, var/burn)
+	..()
+	src.UpdateDamageIcon()
+
 /mob/living/carbon/human/proc/isarmored(var/datum/organ/external/def_zone)
 	if(def_zone.name == "head")
 		if(src.head && istype(src.head,/obj/item/clothing/head/helmet))

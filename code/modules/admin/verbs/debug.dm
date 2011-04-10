@@ -221,7 +221,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!wordtravel)
 		runerandom()
 	if(M)
-		if(cultists.Find(M))
+		if(M.mind in ticker.mode.cult)
 			return
 		else
 			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
@@ -247,12 +247,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 					M << "\red You remembered one thing from the glimpse... [wordself] is self..."
 				if("8")
 					M << "\red You remembered one thing from the glimpse... [wordsee] is see..."
-			cultists.Add(M)
+
 			if(M.mind)
 				M.mind.special_role = "Cultist"
+				ticker.mode.cult += M.mind
 			src << "Made [M] a cultist."
-			if(ticker.mode.name == "cult")
-				ticker.mode:cult += M.mind
 
 /client/proc/cmd_debug_del_all()
 	set category = "Debug"

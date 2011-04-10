@@ -1,4 +1,4 @@
-var/list/cultists = list()
+
 var/wordtravel = null
 var/wordself = null
 var/wordsee = null
@@ -91,13 +91,13 @@ var/runedec = 0
 // self other technology - Communication rune  //was other hear blood
 
 	examine()
-		if(!cultists.Find(usr))
+		if(!iscultist(usr))
 			usr << "A strange collection of symbols drawn in blood."
 		else
 			usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
 
 	attackby(I as obj, user as mob)
-		if(istype(I, /obj/item/weapon/tome) && cultists.Find(user))
+		if(istype(I, /obj/item/weapon/tome) && iscultist(user))
 			user << "You retrace your steps, carefully undoing the lines of the rune."
 			del(src)
 			return
@@ -109,7 +109,7 @@ var/runedec = 0
 		return
 
 	attack_hand(mob/user as mob)
-		if(!cultists.Find(user))
+		if(!iscultist(user))
 			user << "You can't mouth the arcane scratchings without fumbling over them."
 			return
 		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle) || user.ear_deaf)
@@ -362,11 +362,11 @@ var/runedec = 0
 
 
 	attack(mob/M as mob, mob/user as mob)
-		if(!cultists.Find(user))
+		if(!iscultist(user))
 			return ..()
-		if(cultists.Find(M))
+		if(iscultist(M))
 			return
-		M.fireloss += rand(5,20) //really lucky - 5 hits for a crit
+		M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] beats [] with the arcane tome!</B>", user, M), 1)
 		M << "\red You feel searing heat inside!"
@@ -376,17 +376,17 @@ var/runedec = 0
 	attack_self(mob/user as mob)
 		if(!wordtravel)
 			runerandom()
-		if(cultists.Find(user))
+		if(iscultist(user))
 			var/C = 0
 			for(var/obj/rune/N in world)
 				C++
 			if (!istype(user.loc,/turf))
 				user << "\red You do not have enough space to write a proper rune."
 				return
-			if (C>=26+runedec) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
+			if (C>=26+runedec+ticker.mode.cult.len) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 				switch(alert("The cloth of reality can't take that much of a strain. By creating another rune, you risk locally tearing reality apart, which would prove fatal to you. Do you still wish to scribe the rune?",,"Yes","No"))
 					if("Yes")
-						if(prob(C*5-105-runedec*5)) //including the useless rune at the secret room, shouldn't count against the limit - Urist
+						if(prob(C*5-105-(runedec-ticker.mode.cult.len)*5)) //including the useless rune at the secret room, shouldn't count against the limit - Urist
 							usr.emote("scream")
 							user << "\red A tear momentarily appears in reality. Before it closes, you catch a glimpse of that which lies beyond. That proves to be too much for your mind."
 							usr.gib(1)
@@ -431,7 +431,7 @@ var/runedec = 0
 
 	examine()
 		set src in usr
-		if(!cultists.Find(usr))
+		if(!iscultist(usr))
 			usr << "An old, dusty tome with frayed edges and a sinister looking cover."
 		else
 			usr << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. Most of these are useless, though."
@@ -440,7 +440,7 @@ var/runedec = 0
 	w_class = 2.0
 	var/cultistsonly = 1
 	attack_self(mob/user as mob)
-		if(src.cultistsonly && !cultists.Find(usr))
+		if(src.cultistsonly && !iscultist(usr))
 			return
 		if(!wordtravel)
 			runerandom()
@@ -624,12 +624,12 @@ var/runedec = 0
 	var/uses = 0
 
 	attack_self(mob/user as mob)
-		usr.bruteloss+=5
+		usr.take_organ_damage(5, 0)
 		switch(imbue)
 			if("newtome")
 				call(/obj/rune/proc/tomesummon)()
 			if("emp")
-				call(/obj/rune/proc/emp)(usr.loc,5)
+				call(/obj/rune/proc/emp)(usr.loc,3)
 			if("conceal")
 				call(/obj/rune/proc/obscure)(2)
 			if("revealrunes")

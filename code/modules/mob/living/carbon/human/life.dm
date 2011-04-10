@@ -724,6 +724,13 @@
 				if(!src.druggy)
 					src.see_invisible = 2
 
+			else if (src.seer)
+				var/obj/rune/R = locate() in src.loc
+				if (istype(R) && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
+					see_invisible = 15
+				else
+					seer = 0
+					see_invisible = 0
 			else if (istype(src.wear_mask, /obj/item/clothing/mask/gas/space_ninja))
 				switch(src.wear_mask:mode)
 					if(1)

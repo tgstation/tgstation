@@ -16,11 +16,12 @@
 	set category = "Special Verbs"
 	set name = "Ghost"
 	set desc = "You cannot be revived as a ghost"
-	if(src.stat != 2)
+	/*if(src.stat != 2) //this check causes nothing but troubles. Commented out for Nar-Sie's sake. --rastaf0
 		src << "Only dead people and admins get to ghost, and admins don't use this verb to ghost while alive."
-		return
+		return*/
 	if(src.client)
 		src.client.mob = new/mob/dead/observer(src)
+		src.verbs -= /mob/proc/ghostize
 	return
 
 /mob/proc/adminghostize()
@@ -79,7 +80,7 @@
 		src.client.clear_admin_verbs()
 		src.client.holder.state = 1
 		src.client.update_admins(rank)
-	if(cultists.Find(corpse) && corpse.ajourn==1 && corpse.health>-100) //checks if it's an astral-journeying cultistm if it is and he's not on an astral journey rune, re-entering won't work
+	if(iscultist(corpse) && corpse.ajourn==1 && corpse.stat!=2) //checks if it's an astral-journeying cultistm if it is and he's not on an astral journey rune, re-entering won't work
 		var/S=0
 		for(var/obj/rune/R in world)
 			if(corpse.loc==R.loc && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself)
@@ -90,6 +91,8 @@
 	if(corpse.ajourn)
 		corpse.ajourn=0
 	src.client.mob = corpse
+	if (corpse.stat==2)
+		src.verbs += /mob/proc/ghostize
 	del(src)
 
 /mob/dead/observer/proc/dead_tele()

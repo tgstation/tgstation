@@ -234,8 +234,8 @@ datum
 
 				var/area/shuttle/escape/centcom/C = /area/shuttle/escape/centcom
 				for(var/turf/T in	get_area_turfs(C.type))
-					for(var/mob/living/carbon/human/H in T)
-						if(cultists.Find(H))
+					for(var/mob/living/carbon/H in T)
+						if(iscultist(H))
 							cultists_escaped++
 
 				if(cultists_escaped>=5)

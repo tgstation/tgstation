@@ -266,6 +266,8 @@ var/showadminmessages = 1
 			var/dat = {"<B>What mode do you wish to play?</B><HR>"}
 			for (var/mode in config.modes)
 				dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
+			dat += {"<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>"}
+			dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
 			dat += {"Now: [master_mode]"}
 			usr << browse(dat, "window=c_mode")
 
@@ -280,6 +282,7 @@ var/showadminmessages = 1
 			world << "\blue <b>The mode is now: [master_mode]</b>"
 
 			world.save_mode(master_mode)
+			.(href, list("c_mode"=1))
 
 	if (href_list["monkeyone"])
 		if ((src.rank in list( "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
@@ -634,7 +637,7 @@ var/showadminmessages = 1
 					alert("Is a Revolutionary!")
 				return
 			if("cult")
-				if(M.mind in current_mode:cult)
+				if(M.mind in current_mode.cult)
 					alert("Is a Cultist!")
 					return
 			if("wizard")
@@ -1957,24 +1960,15 @@ var/showadminmessages = 1
 		alert("[M.name] is not prisoned.")
 
 /mob/proc/revive()
-	if(istype(src, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = src
-		for(var/A in H.organs)
-			var/datum/organ/external/affecting = null
-			if(!H.organs[A])    continue
-			affecting = H.organs[A]
-			if(!istype(affecting, /datum/organ/external))    continue
-			affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
-		H.UpdateDamageIcon()
-	src.fireloss = 0
+	//src.fireloss = 0
 	src.toxloss = 0
-	src.bruteloss = 0
+	//src.bruteloss = 0
 	src.oxyloss = 0
 	src.paralysis = 0
 	src.stunned = 0
 	src.weakened =0
-	src.health = 100
-	src.updatehealth()
+	//src.health = 100
+	src.heal_overall_damage(1000, 1000)
 	src.buckled = initial(src.buckled)
 	src.handcuffed = initial(src.handcuffed)
 	if(src.stat > 1) src.stat=0

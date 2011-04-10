@@ -411,7 +411,7 @@ datum
 			reagent_state = GAS
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				M:bruteloss++
+				usr.take_organ_damage(1, 0)
 				..()
 				return
 
@@ -465,7 +465,7 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				M:toxloss++
-				M:fireloss++
+				usr.take_organ_damage(0, 1)
 				..()
 				return
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -510,7 +510,7 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				M:toxloss++
-				M:fireloss++
+				usr.take_organ_damage(0, 1)
 				..()
 				return
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -843,7 +843,8 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(prob(33)) M.bruteloss++
+				if(prob(33)) 
+					usr.take_organ_damage(1, 0)
 				holder.remove_reagent(src.id, 0.3)
 				..()
 				return
@@ -1008,7 +1009,8 @@ datum
 				if(!M) M = holder.my_atom
 				M:radiation = max(M:radiation-3,0)
 				if(M:toxloss) M:toxloss--
-				if(prob(15)) M:bruteloss++
+				if(prob(15))
+					usr.take_organ_damage(1, 0)
 				..()
 				return
 
@@ -1287,7 +1289,8 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				M:bodytemperature += 5
-				if(prob(40)) M:fireloss++
+				if(prob(40))
+					usr.take_organ_damage(0, 1)
 				..()
 				return
 
@@ -1300,7 +1303,8 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				M:bodytemperature -= 5
-				if(prob(40)) M:fireloss++
+				if(prob(40))
+					usr.take_organ_damage(0, 1)
 				..()
 				return
 

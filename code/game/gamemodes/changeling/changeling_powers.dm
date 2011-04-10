@@ -337,25 +337,17 @@
 
 	spawn(550)
 		if (usr.stat != 2)
-			if(istype(usr, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = usr
-				for(var/A in H.organs)
-					var/datum/organ/external/affecting = null
-					if(!H.organs[A])    continue
-					affecting = H.organs[A]
-					if(!istype(affecting, /datum/organ/external))    continue
-					affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
-				H.UpdateDamageIcon()
-			usr.fireloss = 0
+			//usr.fireloss = 0
 			usr.toxloss = 0
-			usr.bruteloss = 0
+			//usr.bruteloss = 0
 			usr.oxyloss = 0
 			usr.paralysis = 0
 			usr.stunned = 0
 			usr.weakened = 0
 			usr.radiation = 0
-			usr.health = 100
-			usr.updatehealth()
+			//usr.health = 100
+			//usr.updatehealth()
+			usr.heal_overall_damage(1000, 1000)
 			usr.reagents.clear_reagents()
 			usr.lying = 0
 			usr.canmove = 1

@@ -421,26 +421,18 @@ TO DO: actually integrate random appearance and player preference save.
 		alert("Cannot revive a ghost")
 		return
 	if(config.allow_admin_rev)
-		if(istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			for(var/A in H.organs)
-				var/datum/organ/external/affecting = null
-				if(!H.organs[A])    continue
-				affecting = H.organs[A]
-				if(!istype(affecting, /datum/organ/external))    continue
-				affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
-			H.UpdateDamageIcon()
-		M.fireloss = 0
+		//M.fireloss = 0
 		M.toxloss = 0
-		M.bruteloss = 0
+		//M.bruteloss = 0
 		M.oxyloss = 0
 		M.paralysis = 0
 		M.stunned = 0
 		M.weakened = 0
 		M.radiation = 0
-		M.health = 100
+		//M.health = 100
 		M.nutrition = 400
-		M.updatehealth()
+		M.heal_overall_damage(1000, 1000)
+		//M.updatehealth()
 		M.buckled = initial(M.buckled)
 		M.handcuffed = initial(M.handcuffed)
 		if (M.stat > 1)

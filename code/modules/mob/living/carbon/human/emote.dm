@@ -45,7 +45,10 @@
 			m_type = 1
 
 		if ("custom")
-			var/input = input("Choose an emote to display.")
+			var/input = input("Choose an emote to display.") as text|null
+			if (!input)
+				return
+			input = sanitize(input)
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
 			if (input2 == "Visible")
 				m_type = 1

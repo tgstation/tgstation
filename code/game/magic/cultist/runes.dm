@@ -17,7 +17,7 @@ var/list/sacrificed = list()
 					allrunesloc[index] = R.loc
 			if(index >= 5)
 				usr << "\red You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric"
-				usr.bruteloss += 5
+				usr.take_overall_damage(5, 0)
 				del(src)
 			if(allrunesloc && index != 0)
 				if(istype(src,/obj/rune))
@@ -52,10 +52,10 @@ var/list/sacrificed = list()
 					runecount++
 			if(runecount >= 2)
 				usr << "\red You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric"
-				usr.bruteloss += 5
+				usr.take_overall_damage(5, 0)
 				del(src)
-			for(var/mob/living/carbon/human/C in orange(1,src))
-				if(cultists.Find(C))
+			for(var/mob/living/carbon/C in orange(1,src))
+				if(iscultist(C))
 					culcount++
 			if(culcount>=3)
 				usr.say("Sas'so c'arta forbici tarem!")
@@ -69,7 +69,7 @@ var/list/sacrificed = list()
 					M.loc = IP.loc
 				return
 
-			return	fizzle()
+			return fizzle()
 
 
 /////////////////////////////////////////SECOND RUNE
@@ -94,15 +94,15 @@ var/list/sacrificed = list()
 /////////////////////////////////////////THIRD RUNE
 
 		convert()
-			for(var/mob/living/carbon/human/M in src.loc)
-				if(cultists.Find(M))
-					return fizzle()
+			for(var/mob/living/carbon/M in src.loc)
+				if(iscultist(M))
+					continue
 				if(M.stat==2)
-					return fizzle()
-				if(ticker.mode.name == "cult")
-					var/list/uncons = call(/datum/game_mode/cult/proc/get_unconvertables)()
+					continue
+				if(ticker && ticker.mode && ticker.mode.name == "cult")
+					var/list/uncons = ticker.mode:get_unconvertables()
 					if(M.mind in uncons)
-						return fizzle()
+						continue
 					ticker.mode:add_cultist(M.mind)
 				usr.say("Mah'weyh pleggh at e'ntrath!")
 				M.visible_message("\red [M] writhes in pain as the markings below him glow a bloody red.", \
@@ -110,7 +110,6 @@ var/list/sacrificed = list()
 				"\red You hear an anguished scream.")
 				M << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
 				M << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
-				cultists.Add(M)
 				return
 			return fizzle()
 
@@ -121,7 +120,7 @@ var/list/sacrificed = list()
 		tearreality()
 			var/cultist_count = 0
 			for(var/mob/M in range(1,src))
-				if(cultists.Find(M))
+				if(iscultist(M))
 					M.say("Tok-lyr rqa'nap g'lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
@@ -135,7 +134,7 @@ var/list/sacrificed = list()
 					ticker.mode:eldergod = 0
 				return
 			else
-				return
+				return fizzle()
 
 /////////////////////////////////////////FIFTH RUNE
 
@@ -161,10 +160,10 @@ var/list/sacrificed = list()
 			for(var/obj/rune/R in world)
 				if(R.word1==wordtravel && R.word2==wordblood && R.word3==wordself)
 					for(var/mob/living/carbon/D in R.loc)
-						if(D.health>=-100)
+						if(D.stat!=2)
 							var/bdrain = rand(1,25)
 							D << "\red You feel weakened."
-							D.bruteloss += bdrain
+							D.take_overall_damage(bdrain, 0)
 							drain += bdrain
 			if(!drain)
 				return fizzle()
@@ -173,16 +172,23 @@ var/list/sacrificed = list()
 			"\red The blood starts flowing from the rune and into your frail mortal body. You feel... empowered.", \
 			"\red You hear a liquid flowing.")
 			if(usr.bhunger)
-				usr.bhunger -= 2*drain
+				usr.bhunger = max(usr.bhunger-2*drain,0)
 			if(drain>=50)
 				usr.visible_message("\red [usr]'s eyes give off eerie red glow!", \
 				"\red ...but it wasn't nearly enough. You crave, crave for more. The hunger consumes you from within.", \
 				"\red You hear a heartbeat.")
 				usr.bhunger += drain
-				for (,usr.bhunger,usr.bhunger--)
-					sleep(50)
-					usr.bruteloss += 3
-			usr.bruteloss -= drain
+				src = usr
+				spawn()
+					for (,usr.bhunger>0,usr.bhunger--)
+						sleep(50)
+						usr.take_overall_damage(3, 0)
+				return
+			usr.heal_organ_damage(drain%5, 0)
+			drain-=drain%5
+			for (,drain>0,drain-=5)
+				sleep(2)
+				usr.heal_organ_damage(5, 0)
 			return
 
 
@@ -200,64 +206,104 @@ var/list/sacrificed = list()
 				else
 					usr << "\red The world beyond opens to your eyes."
 				usr.see_invisible = 15
+				usr.seer = 1
 				return
 			return fizzle()
 
 /////////////////////////////////////////EIGHTH RUNE
 
 		raise()
+			var/mob/living/carbon/human/corpse_to_raise
+			var/mob/living/carbon/human/body_to_sacrifice
+			var/mob/living/carbon/human/ghost
+			var/unsuitable_corpse_found = 0
+			var/corpse_is_target = 0
 			for(var/mob/living/carbon/human/M in src.loc)
-				if(M.health<=-100)
-					for(var/obj/rune/R in world)
-						if(R.word1==wordblood && R.word2==wordjoin && R.word3==wordhell)
-							for(var/mob/living/carbon/human/N in R.loc)
-								if(N.health>-100 && N.client)
-									for(var/mob/dead/observer/O in src.loc)
-										if(M.key)
-											usr << "\red The body still has some earthly ties. It must sever them, if only for them to grow again later."
-											return
-										if(!O.key)
-											continue
-										M.key=O.key
-										del(O)
+				if (M.stat>=2)
+					if (M.key)
+						unsuitable_corpse_found = 1
+					else if (ticker.mode.name == "cult" && M.mind == ticker.mode:sacrifice_target)
+						corpse_is_target = 1
+					else
+						corpse_to_raise = M
+						break
+			if (!corpse_to_raise)
+				if (unsuitable_corpse_found)
+					usr << "\red The body still has some earthly ties. It must sever them, if only for them to grow again later."
+				if (corpse_is_target)
+					usr << "\red The Geometer of blood wants this mortal for himself."
+				return fizzle()
+			
+
+			var/sacrifice_is_target = 0
+			find_sacrifice:
+				for(var/obj/rune/R in world)
+					if(R.word1==wordblood && R.word2==wordjoin && R.word3==wordhell)
+						for(var/mob/living/carbon/human/N in R.loc)
+							if (ticker.mode.name == "cult" && N.mind && N.mind == ticker.mode:sacrifice_target)
+								sacrifice_is_target = 1
+							else
+								if(N.stat<2)
+									body_to_sacrifice = N
+									break find_sacrifice
+
+			if (!body_to_sacrifice)
+				if (sacrifice_is_target)
+					usr << "\red The Geometer of blood wants that corpse for himself."
+				else
+					usr << "\red You need a dead corpse as source of energy to put soul in new body."
+				return fizzle()
+			
+			for(var/mob/dead/observer/O in src.loc)
+				if(!O.client)
+					continue
+				ghost = O
+				
+			if (!ghost)
+				usr << "\red You do not feel an ethernal immaterial soul here."
+				return fizzle()
 
 //										rejuvenatedheal(M)
+			corpse_to_raise.mind = new//Mind initialize stuff.
+			corpse_to_raise.mind.current = corpse_to_raise
+			corpse_to_raise.mind.original = corpse_to_raise
+			corpse_to_raise.mind.key = ghost.key
+			corpse_to_raise.key = ghost.key
+			del(ghost)
+			for(var/A in corpse_to_raise.organs)
+				var/datum/organ/external/affecting = corpse_to_raise.organs[A]
+				if(!istype(affecting))
+					continue
+				affecting.heal_damage(1000, 1000)
+			corpse_to_raise.toxloss = 0
+			corpse_to_raise.oxyloss = 0
+			corpse_to_raise.paralysis = 0
+			corpse_to_raise.stunned = 0
+			corpse_to_raise.weakened = 0
+			corpse_to_raise.radiation = 0
+			corpse_to_raise.buckled = null
+			if (corpse_to_raise.handcuffed)
+				del(corpse_to_raise.handcuffed)
+			corpse_to_raise.stat=0
+			corpse_to_raise.updatehealth()
+			corpse_to_raise.UpdateDamageIcon()
 
-										if(istype(M, /mob/living/carbon/human))
-											var/mob/living/carbon/human/H = M
-											for(var/A in H.organs)
-												var/datum/organ/external/affecting = null
-												if(!H.organs[A])    continue
-												affecting = H.organs[A]
-												if(!istype(affecting, /datum/organ/external))    continue
-												affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
-											H.UpdateDamageIcon()
-										M.fireloss = 0
-										M.toxloss = 0
-										M.bruteloss = 0
-										M.oxyloss = 0
-										M.paralysis = 0
-										M.stunned = 0
-										M.weakened = 0
-										M.radiation = 0
-										M.health = 100
-										M.updatehealth()
-										M.buckled = initial(M.buckled)
-										M.handcuffed = initial(M.handcuffed)
-										if (M.stat > 1)
-											M.stat=0
 
-
-										usr.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
-										M.visible_message("\red [M]'s eyes glow with a faint red as he stands up, slowly starting to breathe again.", \
-										"\red Life... I'm alive again...", \
-										"\red You hear a faint, slightly familiar whisper.")
-										N.gib(1)
-										N.visible_message("\red [N] is torn apart, a black smoke swiftly dissipating from his remains!", \
-										"\red You feel as your blood boils, tearing you apart.", \
-										"\red You hear a thousand voices, all crying in pain.")
-										return
-			return fizzle()
+			usr.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
+			corpse_to_raise.visible_message("\red [corpse_to_raise]'s eyes glow with a faint red as he stands up, slowly starting to breathe again.", \
+			"\red Life... I'm alive again...", \
+			"\red You hear a faint, slightly familiar whisper.")
+			body_to_sacrifice.visible_message("\red [body_to_sacrifice] is torn apart, a black smoke swiftly dissipating from his remains!", \
+			"\red You feel as your blood boils, tearing you apart.", \
+			"\red You hear a thousand voices, all crying in pain.")
+			body_to_sacrifice.gib(1)
+			if (ticker.mode.name == "cult")
+				ticker.mode:add_cultist(body_to_sacrifice.mind)
+			else
+				ticker.mode.cult+=body_to_sacrifice.mind
+			corpse_to_raise << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
+			corpse_to_raise << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+			return
 
 
 
@@ -297,17 +343,17 @@ var/list/sacrificed = list()
 			if(usr.loc==src.loc)
 				var/mob/living/carbon/human/L = usr
 				usr.say("Fwe'sh mah erl nyag r'ya!")
-				usr.ghostize()
 				usr.visible_message("\red [usr]'s eyes glow blue as \he freezes in place, absolutely motionless.", \
 				"\red The shadow that is your spirit separates itself from your body. You are now in the realm beyond. While this it's a great sight, being here strains your mind and body. Hurry.", \
 				"\red You hear only complete silence for a moment.")
+				usr.ghostize()
 				for(L.ajourn=1,L.ajourn)
 					sleep(10)
 					if(L.key)
 						L.ajourn=0
 						return
 					else
-						L.bruteloss++
+						L.take_organ_damage(1, 0)
 			return fizzle()
 
 
@@ -316,33 +362,58 @@ var/list/sacrificed = list()
 /////////////////////////////////////////ELEVENTH RUNE
 
 		manifest()
-			if(usr.loc==src.loc)
-				for(var/mob/dead/observer/O in src.loc)
-					usr.say("Gal'h'rfikk harfrandid mud'gib!")
-					var/mob/living/carbon/human/dummy/D = new /mob/living/carbon/human/dummy(src.loc)
-					usr.visible_message("\red A shape forms in the center of the rune. A shape of... a man.", \
-					"\red A shape forms in the center of the rune. A shape of... a man.", \
-					"\red You hear liquid flowing.")
-					D.real_name = "Unknown"
-					for(var/obj/item/weapon/paper/P in src.loc)
-						if(length(P.info)<=24)
-							D.real_name = P.info
-					D.universal_speak = 1
-					D.nodamage = 0
-					D.key = O.key
-					del(O)
-					for(,usr.loc==src.loc)
-						sleep(30)
-						if(usr.health>-100)
-							usr.bruteloss++
-						else
-							break
-					D.visible_message("\red [D] slowly dissipates into dust and bones.", \
-					"\red You feel pain, as bonds formed between your soul and this homunculus break.", \
-					"\red You hear faint rustle.")
-					D.dust(1)
-					return
-			return fizzle()
+			var/obj/rune/this_rune = src
+			src = null
+			if(usr.loc!=this_rune.loc)
+				return this_rune.fizzle()
+			var/mob/dead/observer/ghost
+			for(var/mob/dead/observer/O in this_rune.loc)
+				if (!O.client)
+					continue
+				ghost = O
+				break
+			if(!ghost)
+				return this_rune.fizzle()
+			
+			usr.say("Gal'h'rfikk harfrandid mud'gib!")
+			var/mob/living/carbon/human/dummy/D = new(this_rune.loc)
+			usr.visible_message("\red A shape forms in the center of the rune. A shape of... a man.", \
+			"\red A shape forms in the center of the rune. A shape of... a man.", \
+			"\red You hear liquid flowing.")
+			D.real_name = "Unknown"
+			for(var/obj/item/weapon/paper/P in this_rune.loc)
+/*
+				if(length(P.info)<=24)
+					D.real_name = P.info
+					break
+*/
+				if(length(P.name)<=24)
+					D.real_name = P.name
+					break
+			D.universal_speak = 1
+			D.nodamage = 0
+			D.mind = new//Mind initialize stuff.
+			D.mind.current = D
+			D.mind.original = D
+			D.mind.key = ghost.key
+			D.key = ghost.key
+			ghost.invisibility = 101
+			if (ticker.mode.name == "cult")
+				ticker.mode:add_cultist(D.mind)
+			else
+				ticker.mode.cult+=D.mind
+			D << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
+			D << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+			while(this_rune && usr && usr.stat==0 && usr.client && usr.loc==this_rune.loc)
+				usr.take_organ_damage(1, 0)
+				sleep(30)
+			D.visible_message("\red [D] slowly dissipates into dust and bones.", \
+			"\red You feel pain, as bonds formed between your soul and this homunculus break.", \
+			"\red You hear faint rustle.")
+			ghost.invisibility = 10
+			ghost.key = D.key
+			D.dust(1)
+			return
 
 
 
@@ -351,177 +422,128 @@ var/list/sacrificed = list()
 /////////////////////////////////////////TWELFTH RUNE
 
 		talisman()//only hide, emp, teleport, deafen, blind and tome runes can be imbued atm
+			var/obj/item/weapon/paper/newtalisman
+			var/unsuitable_newtalisman = 0
+			for(var/obj/item/weapon/paper/P in src.loc)
+				if(!P.info)
+					newtalisman = P
+					break
+				else
+					unsuitable_newtalisman = 1
+			if (!newtalisman)
+				if (unsuitable_newtalisman)
+					usr << "\red The blank is tainted. It is unsuitable."
+				return fizzle()
+		
+			var/obj/rune/imbued_from
+			var/obj/item/weapon/paper/talisman/T
 			for(var/obj/rune/R in orange(1,src))
 				if(R==src)
 					continue
 				if(R.word1==wordtravel && R.word2==wordself)  //teleport
-					for(var/obj/item/weapon/paper/P in src.loc)
-						if(P.info)
-							usr << "\red The blank is tainted. It is unsuitable."
-							return
-						del(P)
-						var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(src.loc)
-						T.imbue = "[R.word3]"
-						T.info = "[R.word3]"
-						for (var/mob/V in viewers(src))
-							V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
-						del(R)
-						del(src)
-						usr.say("H'drak v'loso, mir'kanas verbot!")
-						return
+					T = new(src.loc)
+					T.imbue = "[R.word3]"
+					T.info = "[R.word3]"
+					imbued_from = R
+					break
 				if(R.word1==wordsee && R.word2==wordblood && R.word3==wordhell) //tome
-					for(var/obj/item/weapon/paper/P in src.loc)
-						if(P.info)
-							usr << "\red The blank is tainted. It is unsuitable."
-							return
-						del(P)
-						var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(src.loc)
-						T.imbue = "newtome"
-						for (var/mob/V in viewers(src))
-							V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
-						del(R)
-						del(src)
-						usr.say("H'drak v'loso, mir'kanas verbot!")
-						return
+					T = new(src.loc)
+					T.imbue = "newtome"
+					imbued_from = R
+					break
 				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordtech) //emp
-					for(var/obj/item/weapon/paper/P in src.loc)
-						if(P.info)
-							usr << "\red The blank is tainted. It is unsuitable."
-							return
-						del(P)
-						var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(src.loc)
-						T.imbue = "emp"
-						for (var/mob/V in viewers(src))
-							V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
-						del(R)
-						del(src)
-						usr.say("H'drak v'loso, mir'kanas verbot!")
-						return
+					T = new(src.loc)
+					T.imbue = "emp"
+					imbued_from = R
+					break
 				if(R.word1==wordblood && R.word2==wordsee && R.word3==worddestr) //conceal
-					for(var/obj/item/weapon/paper/P in src.loc)
-						if(P.info)
-							usr << "\red The blank is tainted. It is unsuitable."
-							return
-						del(P)
-						var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(src.loc)
-						T.imbue = "conceal"
-						for (var/mob/V in viewers(src))
-							V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
-						del(R)
-						del(src)
-						usr.say("H'drak v'loso, mir'kanas verbot!")
-						return
+					T = new(src.loc)
+					T.imbue = "conceal"
+					imbued_from = R
+					break
 				if(R.word1==wordblood && R.word2==wordsee && R.word3==wordhide) //reveal
-					for(var/obj/item/weapon/paper/P in src.loc)
-						if(P.info)
-							usr << "\red The blank is tainted. It is unsuitable."
-							return
-						del(P)
-						var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(src.loc)
-						T.imbue = "revealrunes"
-						for (var/mob/V in viewers(src))
-							V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
-						del(R)
-						del(src)
-						usr.say("H'drak v'loso, mir'kanas verbot!")
-						return
+					T = new(src.loc)
+					T.imbue = "revealrunes"
+					imbued_from = R
+					break
 				if(R.word1==wordhide && R.word2==wordother && R.word3==wordsee) //deafen
-					for(var/obj/item/weapon/paper/P in src.loc)
-						if(P.info)
-							usr << "\red The blank is tainted. It is unsuitable."
-							return
-						del(P)
-						var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(src.loc)
-						T.imbue = "deafen"
-						for (var/mob/V in viewers(src))
-							V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
-						del(R)
-						del(src)
-						usr.say("H'drak v'loso, mir'kanas verbot!")
-						return
+					T = new(src.loc)
+					T.imbue = "deafen"
+					imbued_from = R
+					break
 				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordother) //blind
-					for(var/obj/item/weapon/paper/P in src.loc)
-						if(P.info)
-							usr << "\red The blank is tainted. It is unsuitable."
-							return
-						del(P)
-						var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(src.loc)
-						T.imbue = "blind"
-						for (var/mob/V in viewers(src))
-							V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
-						del(R)
-						del(src)
-						usr.say("H'drak v'loso, mir'kanas verbot!")
-						return
+					T = new(src.loc)
+					T.imbue = "blind"
+					imbued_from = R
+					break
 				if(R.word1==wordself && R.word2==wordother && R.word3==wordtech) //communicat
-					for(var/obj/item/weapon/paper/P in src.loc)
-						if(P.info)
-							usr << "\red The blank is tainted. It is unsuitable."
-							return
-						del(P)
-						var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(src.loc)
-						T.imbue = "communicate"
-						for (var/mob/V in viewers(src))
-							V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
-						del(R)
-						del(src)
-						usr.say("H'drak v'loso, mir'kanas verbot!")
-						return
-			return fizzle()
+					T = new(src.loc)
+					T.imbue = "communicate"
+					imbued_from = R
+					break
+			if (imbued_from)
+				for (var/mob/V in viewers(src))
+					V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
+				usr.say("H'drak v'loso, mir'kanas verbot!")
+				del(imbued_from)
+				del(src)
+			else
+				return fizzle()
 
 /////////////////////////////////////////THIRTEENTH RUNE
 
 		mend()
+			src = null
 			usr.say("Uhrast ka'hfa heldsagen ver'lot!")
-			usr.bruteloss+=200
-			runedec+=5
+			usr.take_overall_damage(200, 0)
+			runedec+=10
 			usr.visible_message("\red [usr] keels over dead, his blood glowing blue as it escapes his body and dissipates into thin air.", \
 			"\red In the last moment of your humbly life, you feel as fabric of reality mends... with your blood.", \
 			"\red You hear faint rustle.")
-			for(,usr.health<-100)
+			for(,usr.stat==2)
 				sleep(600)
-			runedec=0
+				if (!usr)
+					return
+			runedec-=10
 			return
-
-
 
 
 /////////////////////////////////////////FOURTEETH RUNE
 
 		communicate()
+			var/input = input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "") as text|null
+			if(!input)
+				return fizzle()
 			if(istype(src,/obj/rune))
 				usr.say("O bidai nabora se'sma!")
 			else
 				usr.whisper("O bidai nabora se'sma!")
-			var/input = input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "") as text|null
-			if(!input)
-				return fizzle()
-			input = sanitize(input)
+			var/input_s = sanitize(input)
 			if(istype(src,/obj/rune))
 				usr.say("[input]")
 			else
 				usr.whisper("[input]")
-			for(var/mob/living/carbon/human/H in cultists)
-				H << "\red \b [input]"
+			for(var/datum/mind/H in ticker.mode.cult)
+				if (H.current)
+					H.current << "\red \b [input_s]"
 			del(src)
 			return
 
 /////////////////////////////////////////FIFTEENTH RUNE
 
 		sacrifice()
-			var/list/cultsinrange = list()
-			var/list/victims = list()
+			var/list/mob/living/carbon/human/cultsinrange = list()
+			var/list/mob/living/carbon/human/victims = list()
 			for(var/mob/living/carbon/human/V in src.loc)
-				if(!cultists.Find(V))
-					victims.Add(V)
-			for(var/mob/living/carbon/human/C in orange(1,src))
-				if(cultists.Find(C))
-					cultsinrange.Add(C)
+				if(!(iscultist(V)))
+					victims += V
+			for(var/mob/living/carbon/C in orange(1,src))
+				if(iscultist(C))
+					cultsinrange += C
+					C.say("Barhah hra zar'garis!")
 			for(var/mob/H in victims)
-				for(var/mob/K in cultsinrange)
-					K.say("Barhah hra zar'garis!")
 				if (ticker.mode.name == "cult")
-					if(H == ticker.mode:sacrifice_target.current)
+					if(H.mind == ticker.mode:sacrifice_target)
 						if(cultsinrange.len >= 3)
 							sacrificed += H.mind
 							H.gib(1)
@@ -567,22 +589,25 @@ var/list/sacrificed = list()
 						else
 							H.gib(1)
 							usr << "\red The Geometer of blood accepts this sacrifice."
-
-				return
 			for(var/mob/living/carbon/monkey/M in src.loc)
-				for(var/mob/K in cultsinrange)
-					K.say("Barhah hra zar'garis!")
-				M.gib(1)
 				if (ticker.mode.name == "cult")
-					if(prob(20))
-						usr << "\red The Geometer of Blood accepts your meager sacrifice."
-						ticker.mode:grant_runeword(usr)
+					if(M.mind == ticker.mode:sacrifice_target)
+						if(cultsinrange.len >= 3)
+							sacrificed += M.mind
+							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
+						else
+							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
+							continue
 					else
-						usr << "\red The Geometer of blood accepts this sacrifice."
-						usr << "\red However, a mere monkey is not enough to satisfy Him."
+						if(prob(20))
+							usr << "\red The Geometer of Blood accepts your meager sacrifice."
+							ticker.mode:grant_runeword(usr)
+						else
+							usr << "\red The Geometer of blood accepts this sacrifice."
+							usr << "\red However, a mere monkey is not enough to satisfy Him."
 				else
 					usr << "\red The Geometer of Blood accepts your meager sacrifice."
-				return
+				M.gib(1)
 /*			for(var/mob/living/carbon/alien/A)
 				for(var/mob/K in cultsinrange)
 					K.say("Barhah hra zar'garis!")
@@ -648,7 +673,7 @@ var/list/sacrificed = list()
 		wall()
 			usr.say("Khari'd! Eske'te tannin!")
 			src.density = !src.density
-			usr.bruteloss += 2
+			usr.take_organ_damage(2, 0)
 			if(src.density)
 				usr << "\red Your blood flows into the rune, and you feel that the very space over the rune thickens."
 			else
@@ -658,36 +683,59 @@ var/list/sacrificed = list()
 /////////////////////////////////////////EIGHTTEENTH RUNE
 
 		freedom()
-			var/culcount = 0
-			for(var/mob/living/carbon/human/C in orange(1,src))
-				if(cultists.Find(C))
-					culcount++
-			if(culcount>=3)
-				var/mob/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - usr)
+			var/list/mob/living/carbon/cultists = new
+			for(var/datum/mind/H in ticker.mode.cult)
+				if (istype(H.current,/mob/living/carbon))
+					cultists+=H.current
+			var/list/mob/living/carbon/users = new
+			for(var/mob/living/carbon/C in orange(1,src))
+				if(iscultist(C))
+					users+=C
+			if(users.len>=3)
+				var/mob/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - users)
 				if(!cultist)
 					return fizzle()
 				if (cultist == usr) //just to be sure.
 					return
-				if(!cultist.buckled && !cultist.handcuffed)
+				if(!(cultist.buckled || \
+					cultist.handcuffed || \
+					istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle) || \
+					(istype(cultist.loc, /obj/closet)&&cultist.loc:welded) || \
+					(istype(cultist.loc, /obj/secure_closet)&&cultist.loc:locked) || \
+					(istype(cultist.loc, /obj/machinery/dna_scannernew)&&cultist.loc:locked) \
+				))
 					usr << "\red The [cultist] is already free."
 					return
-				cultist.buckled = initial(cultist.buckled)
-				cultist.handcuffed = initial(cultist.handcuffed)
-				for(var/mob/living/carbon/human/C in orange(1,src))
-					if(cultists.Find(C))
-						C.bruteloss += 15
-						C.say("Khari'd! Gual'te nikka!")
+				cultist.buckled = null
+				if (cultist.handcuffed)
+					cultist.handcuffed.loc = cultist.loc
+					cultist.handcuffed = null
+				if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
+					cultist.u_equip(cultist.wear_mask)
+				if(istype(cultist.loc, /obj/closet)&&cultist.loc:welded)
+					cultist.loc:welded = 0
+				if(istype(cultist.loc, /obj/secure_closet)&&cultist.loc:locked)
+					cultist.loc:locked = 0
+				if(istype(cultist.loc, /obj/machinery/dna_scannernew)&&cultist.loc:locked)
+					cultist.loc:locked = 0
+				for(var/mob/living/carbon/C in users)
+					usr.take_overall_damage(15, 0)
+					C.say("Khari'd! Gual'te nikka!")
 				del(src)
 			return fizzle()
 
 /////////////////////////////////////////NINETEENTH RUNE
 
 		cultsummon()
-			var/culcount = 0
-			for(var/mob/living/carbon/human/C in orange(1,src))
-				if(cultists.Find(C))
-					culcount++
-			if(culcount>=3)
+			var/list/mob/living/carbon/cultists = new
+			for(var/datum/mind/H in ticker.mode.cult)
+				if (istype(H.current,/mob/living/carbon))
+					cultists+=H.current
+			var/list/mob/living/carbon/users = new
+			for(var/mob/living/carbon/C in orange(1,src))
+				if(iscultist(C))
+					users+=C
+			if(users.len>=3)
 				var/mob/cultist = input("Choose the one who you want to summon", "Followers of Geometer") as null|anything in (cultists - usr)
 				if(!cultist)
 					return fizzle()
@@ -697,10 +745,12 @@ var/list/sacrificed = list()
 					usr << "\red You cannot summon the [cultist], for him shackles of blood are strong"
 					return fizzle()
 				cultist.loc = src.loc
+				cultist.lying = 1
+				cultist.update_clothing()
 				for(var/mob/living/carbon/human/C in orange(1,src))
-					if(cultists.Find(C))
+					if(iscultist(C))
 						C.say("N'ath reth sh'yro eth d'rekkathnor!")
-						C.bruteloss += 25
+						C.take_overall_damage(25, 0)
 				usr.visible_message("\red Rune disappears with a flash of red light, and in it's place now a body lies.", \
 				"\red You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.", \
 				"\red You hear a pop and smell ozone.")
@@ -713,7 +763,7 @@ var/list/sacrificed = list()
 			if(istype(src,/obj/rune))
 				var/affected = 0
 				for(var/mob/living/carbon/C in range(7,src))
-					if (cultists.Find(C))
+					if (iscultist(C))
 						continue
 					C.ear_deaf += 50
 					C.show_message("\red World around you suddenly becomes quiet.", 3)
@@ -727,16 +777,19 @@ var/list/sacrificed = list()
 				else
 					return fizzle()
 			else
-				usr.whisper("Sti' kaliedir!")
-				usr << "\red Your talisman turns into gray dust, deafening everyone around."
+				var/affected = 0
 				for(var/mob/living/carbon/C in range(7,usr))
-					if (cultists.Find(C))
+					if (iscultist(C))
 						continue
 					C.ear_deaf += 30
 					//talismans is weaker.
 					C.show_message("\red World around you suddenly becomes quiet.", 3)
+					affected++
+				if(affected)
+					usr.whisper("Sti' kaliedir!")
+					usr << "\red Your talisman turns into gray dust, deafening everyone around."
 					for (var/mob/V in orange(1,src))
-						if(!cultists.Find(V))
+						if(!(iscultist(V)))
 							V.show_message("\red Dust flows from [usr]'s hands for a moment, and the world suddenly becomes quiet..", 3)
 			return
 
@@ -744,13 +797,13 @@ var/list/sacrificed = list()
 			if(istype(src,/obj/rune))
 				var/affected = 0
 				for(var/mob/living/carbon/C in viewers(src))
-					if (cultists.Find(C))
+					if (iscultist(C))
 						continue
 					C.eye_blurry += 50
 					C.eye_blind += 20
 					if(prob(5))
 						C.disabilities |= 1
-						if(prob(1))
+						if(prob(10))
 							C.sdisabilities |= 1
 					C.show_message("\red Suddenly you see red flash, that blinds you.", 3)
 					affected++
@@ -761,35 +814,43 @@ var/list/sacrificed = list()
 				else
 					return fizzle()
 			else
-				usr.whisper("Sti' kaliesin!")
-				usr << "\red Your talisman turns into gray dust, blinding those who not follow the Nar-Sie."
+				var/affected = 0
 				for(var/mob/living/carbon/C in viewers(usr))
-					if (cultists.Find(C))
+					if (iscultist(C))
 						continue
 					C.eye_blurry += 30
 					C.eye_blind += 10
 					//talismans is weaker.
+					affected++
 					C.show_message("\red You feel sharp pain in your eyes, and the world disappears into darkness..", 3)
+				if(affected)
+					usr.whisper("Sti' kaliesin!")
+					usr << "\red Your talisman turns into gray dust, blinding those who not follow the Nar-Sie."
 			return
 
 
 		bloodboil() //cultists need at least one DANGEROUS rune. Even if they're all stealthy.
+/*
+			var/list/mob/living/carbon/cultists = new
+			for(var/datum/mind/H in ticker.mode.cult)
+				if (istype(H.current,/mob/living/carbon))
+					cultists+=H.current
+*/
 			var/culcount = 0 //also, wording for it is old wording for obscure rune, which is now hide-see-blood.
-			var/list/cultboil = list(cultists-usr) //and for this words are destroy-see-blood.
-			for(var/mob/living/carbon/human/C in orange(1,src))
-				if(cultists.Find(C))
+//			var/list/cultboil = list(cultists-usr) //and for this words are destroy-see-blood.
+			for(var/mob/living/carbon/C in orange(1,src))
+				if(iscultist(C))
 					culcount++
-			if(culcount>=2)
+			if(culcount>=3)
 				for(var/mob/living/carbon/M in viewers(usr))
-					if(cultboil.Find(M))
+					if(iscultist(M))
 						continue
-					M.bruteloss += 51
-					M.fireloss += 51
+					M.take_overall_damage(51,51)
 					M << "\red Your blood boils!"
 					if(prob(5))
 						spawn(5)
 							M.gib(1)
-				for(var/obj/rune/R in viewers(src))
+				for(var/obj/rune/R in view(src))
 					if(prob(10))
 						explosion(R.loc, -1, 0, 1, 5)
 				del(src)
@@ -801,19 +862,26 @@ var/list/sacrificed = list()
 
 		burningblood()
 			var/culcount = 0
-			for(var/mob/living/carbon/human/C in orange(1,src))
-				if(cultists.Find(C))
+			for(var/mob/living/carbon/C in orange(1,src))
+				if(iscultist(C))
 					culcount++
 			if(culcount >= 5)
 				for(var/obj/rune/R in world)
 					if(R.blood_DNA == src.blood_DNA && R.blood_type == src.blood_type)
 						for(var/mob/M in orange(2,R))
-							M.fireloss += 15
-							M << "\red Rune suddenly ignites, burning you!"
+							M.take_overall_damage(0,15)
+							if (R.invisibility>M.see_invisible)
+								M << "\red Aargh it burns!"
+							else
+								M << "\red Rune suddenly ignites, burning you!"
+							var/turf/T = get_turf(R)
+							T.hotspot_expose(700,125)
 				for(var/obj/decal/cleanable/blood/B in world)
 					if(B.blood_DNA == src.blood_DNA && B.blood_type == src.blood_type)
 						for(var/mob/M in orange(1,B))
-							M.fireloss += 5
+							M.take_overall_damage(0,5)
 							M << "\red Blood suddenly ignites, burning you!"
+							var/turf/T = get_turf(B)
+							T.hotspot_expose(700,125)
 							del(B)
 				del(src)

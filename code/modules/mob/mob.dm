@@ -2256,16 +2256,74 @@ note dizziness decrements automatically in the mob's Life() proc.
 	var/datum/organ/external/def_zone = ran_zone(t)
 	return def_zone
 
+// heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/proc/heal_organ_damage(var/brute, var/burn)
-	var/list/parts = list()
-	for(var/A in src.organs)
-		if(!src.organs[A])	continue
-		var/datum/organ/external/affecting = src.organs[A]
-		if(!istype(affecting))	continue
-		if((brute && affecting.brute_dam) || (burn && affecting.burn_dam))
-			parts += affecting
+	var/list/datum/organ/external/parts = list()
+	for(var/organ_name in src.organs)
+		var/datum/organ/external/organ = src.organs[organ_name]
+		if((brute && organ.brute_dam) || (burn && organ.burn_dam))
+			parts += organ
 
-	if(!parts.len) return
+	if(!parts.len)
+		return
 	var/datum/organ/external/picked = pick(parts)
 	picked.heal_damage(brute,burn)
+	src.updatehealth()
+
+// damage ONE external organ, organ gets randomly selected from damaged ones.
+/mob/proc/take_organ_damage(var/brute, var/burn)
+	var/list/datum/organ/external/parts = list()
+	for(var/organ_name in src.organs)
+		var/datum/organ/external/organ = src.organs[organ_name]
+		if(organ.brute_dam + organ.burn_dam < organ.max_damage)
+			parts += organ
+
+	if(!parts.len)
+		return
+	var/datum/organ/external/picked = pick(parts)
+	picked.take_damage(brute,burn)
+	src.updatehealth()
+
+// heal MANY external organs, in random order
+/mob/proc/heal_overall_damage(var/brute, var/burn)
+	var/list/datum/organ/external/parts = list()
+	for(var/organ_name in src.organs)
+		var/datum/organ/external/organ = src.organs[organ_name]
+		if((brute && organ.brute_dam) || (burn && organ.burn_dam))
+			parts += organ
+
+	while(parts.len && (brute>0 || burn>0) )
+		var/datum/organ/external/picked = pick(parts)
+		
+		var/brute_was = picked.brute_dam
+		var/burn_was = picked.burn_dam
+		
+		picked.heal_damage(brute,burn)
+		
+		brute -= (brute_was-picked.brute_dam)
+		burn -= (burn_was-picked.burn_dam)
+		
+		parts -= picked
+	src.updatehealth()
+
+// damage MANY external organs, in random order
+/mob/proc/take_overall_damage(var/brute, var/burn)
+	var/list/datum/organ/external/parts = list()
+	for(var/organ_name in src.organs)
+		var/datum/organ/external/organ = src.organs[organ_name]
+		if(organ.brute_dam + organ.burn_dam < organ.max_damage)
+			parts += organ
+
+	while(parts.len && (brute>0 || burn>0) )
+		var/datum/organ/external/picked = pick(parts)
+		
+		var/brute_was = picked.brute_dam
+		var/burn_was = picked.burn_dam
+		
+		picked.take_damage(brute,burn)
+		
+		brute -= (picked.brute_dam-brute_was)
+		burn -= (picked.burn_dam-burn_was)
+		
+		parts -= picked
 	src.updatehealth()

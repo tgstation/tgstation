@@ -1,9 +1,16 @@
+
+
+/datum/game_mode
+	var/list/datum/mind/cult = list()
+
+/proc/iscultist(mob/M as mob)
+	return M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
+
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
 
 	var/datum/mind/sacrifice_target = null
-	var/list/datum/mind/cult = list()
 	var/finished = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -105,7 +112,6 @@
 		else
 			cult_mob << "You have a talisman in your backpack, one that will help you start the cult on this station. Use it well and remember - there are others."
 		grant_runeword(cult_mob)
-		cultists.Add(cult_mob)
 
 /datum/game_mode/cult/proc/grant_runeword(mob/living/carbon/human/cult_mob)
 	if(!wordtravel)
@@ -175,6 +181,8 @@
 	world << sound('intercept.ogg')
 
 /datum/game_mode/cult/proc/add_cultist(datum/mind/cult_mind)
+	if (!cult_mind)
+		return
 	var/list/uncons = get_unconvertables()
 	if(!(cult_mind in cult) && !(cult_mind in uncons))
 		cult += cult_mind
@@ -200,7 +208,7 @@
 		cult_mind.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
-		for(var/mob/living/M in view(cult_mind.current))
+		for(var/mob/living/M in viewers(cult_mind.current))
 			M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"
 
 /datum/game_mode/cult/proc/update_all_cult_icons()

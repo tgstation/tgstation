@@ -42,6 +42,8 @@
 		O.virus.affected_mob = O
 	if (src.client)
 		src.client.mob = O
+	if(src.mind)
+		src.mind.transfer_to(O)
 	O.a_intent = "hurt"
 	O << "<B>You are now a monkey.</B>"
 	var/prev_body = src

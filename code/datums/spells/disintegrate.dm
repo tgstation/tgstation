@@ -37,6 +37,15 @@
 		if("gib")
 			M.gib()
 		if("kill")
+			if (damage_amount>0)
+				M.take_overall_damage(abs(damage_amount),abs(damage_amount))
+				M.toxloss+=abs(damage_amount)
+				M.oxyloss+=abs(damage_amount)
+			else
+				M.heal_overall_damage(abs(damage_amount),abs(damage_amount))
+				M.toxloss+=abs(damage_amount)
+				M.oxyloss+=abs(damage_amount)
+/*
 			for(var/i=0,i<abs(damage_amount),i++)
 				sleep(0) //to avoid troubles with instantly applying lots of damage, it seems to be buggy
 				switch(damage_type)
@@ -60,3 +69,4 @@
 							M.fireloss++
 						else
 							M.fireloss--
+*/

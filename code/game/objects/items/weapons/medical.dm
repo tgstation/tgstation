@@ -97,11 +97,10 @@ MEDICAL
 			H.UpdateDamageIcon()
 		else
 			H.UpdateDamage()
+		M.updatehealth()
 	else
-		M.bruteloss = max(0, M.bruteloss - (src.heal_brute/2))
-		M.fireloss = max(0, M.fireloss - (src.heal_burn/2))
+		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
 
-	M.updatehealth()
 
 	src.amount--
 	if (src.amount <= 0)

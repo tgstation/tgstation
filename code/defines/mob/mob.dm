@@ -107,6 +107,7 @@
 	var/r_ch_cou = 0
 	var/r_Tourette = 0
 	var/cloneloss = 0
+	var/seer = 0 //for cult
 
 	var/miming = null //checks if the guy is a mime
 	var/silent = null //Can't talk. Value goes down every life proc.
