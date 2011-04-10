@@ -360,6 +360,12 @@
 			user << "\blue You need more welding fuel to complete this task."
 			return
 
+	else if(istype(W, /obj/item/weapon/blade))
+		dismantle_wall(1)
+		for(var/mob/O in viewers(user, 5))
+			O.show_message(text("\blue The wall was sliced through by []!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+		return
+
 	else if(istype(W,/obj/item/apc_frame))
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)
@@ -417,6 +423,16 @@
 				new /obj/item/stack/rods( src )
 				user << "\blue You removed the support rods."
 			W:welding = 1
+
+	if(istype(W, /obj/item/weapon/blade))
+		var/turf/T = user.loc
+		user << "\blue Slicing through reinforced wall."
+		sleep(100)
+		if ((user.loc == T && user.equipped() == W))
+			dismantle_wall(1)
+			for(var/mob/O in viewers(user, 5))
+				O.show_message(text("\blue The reinforced wall was sliced through by []!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+		return
 
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (src.d_state == 4)
@@ -477,6 +493,7 @@
 				W:amount--
 			else
 				del(W)
+
 	if(istype(W,/obj/item/apc_frame))
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)

@@ -3,7 +3,7 @@
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'masks.dmi'
-	var/vchange = 0
+	var/vchange = 0//This doesn't seem to do anything. The voice changer gas mask is referenced by istype in say.dm /N
 	body_parts_covered = HEAD
 
 /obj/item/clothing/mask/gas
@@ -41,13 +41,13 @@
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
 	var/mode = 1// 1=Night Vision |2=Thermal |3=Meson
-	vchange = 0
+	var/voice = "Unknown"
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "gas_mask"
-	vchange = 1
+	vchange = 1//See note avove./N
 
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply but does not work very well in hard vacuum."

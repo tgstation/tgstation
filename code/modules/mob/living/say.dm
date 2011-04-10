@@ -278,9 +278,10 @@
 
 		if (italics)
 			message_a = "<i>[message_a]</i>"
-
 		if (!istype(src, /mob/living/carbon/human) || istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
 			rendered = "<span class='game say'><span class='name'>[src.name]</span> <span class='message'>[message_a]</span></span>"
+		else if (istype(src.wear_mask,  /obj/item/clothing/mask/gas/space_ninja))
+			rendered = "<span class='game say'><span class='name'>[src.wear_mask:voice]</span> <span class='message'>[message_a]</span></span>"
 		else
 			rendered = "<span class='game say'><span class='name'>[src.real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 

@@ -56,7 +56,7 @@
 	desc = "These nano-enhanced gloves insulate from electricity and provide fire resistance."
 	name = "ninja gloves"
 	icon_state = "s-ninja"
-	item_state = "swat_gl"
+	item_state = "s-ninja"
 	siemens_coefficient = 0
 	protective_temperature = 1100
 	heat_transfer_coefficient = 0.05

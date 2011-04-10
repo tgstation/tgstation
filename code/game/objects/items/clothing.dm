@@ -345,12 +345,45 @@ NINJA MASK
 	set name = "Toggle Voice"
 	set desc = "Toggles the voice synthesizer on or off."
 	set category = "Object"
-	if(src.vchange==0)
-		src.vchange=1
-		usr << "You enable the voice voice synthesizer."
+	var/vchange = (alert("Would you like to synthesize a new name or turn off the voice synthesizer?",,"New Name","Turn Off"))
+	if(vchange=="New Name")
+		var/chance = rand(1,100)
+		switch(chance)
+			if(1 to 50)//High chance of a regular name.
+				var/g = pick(0,1)
+				var/first = null
+				var/last = pick(last_names)
+				if(g==0)
+					first = pick(first_names_female)
+				else
+					first = pick(first_names_male)
+				voice = "[first] [last]"
+			if(51 to 80)//Smaller chance of a clown name.
+				var/first = pick(clown_names)
+				voice = "[first]"
+			if(81 to 90)//Small chance of a wizard name.
+				var/first = pick(wizard_first)
+				var/last = pick(wizard_second)
+				voice = "[first] [last]"
+			if(91 to 100)//Small chance of an existing crew name.
+				var/list/names = new()
+				for(var/mob/living/carbon/human/M in world)
+					if(M==usr||!M.client||!M.real_name)	continue
+					names.Add(M)
+				if(!names.len)
+					voice = "Cuban Pete"//Smallest chance to be the man.
+				else
+					var/mob/picked = pick(names)
+					voice = picked.real_name
+		usr << "You are now mimicking <B>[voice]</B>."
+		return
 	else
-		src.vchange=0
-		usr << "You disable the voice synthesizer."
+		if(voice!="Unknown")
+			usr << "You deactivate the voice synthesizer."
+			voice = "Unknown"
+		else
+			usr << "The voice synthesizer is already deactivated."
+	return
 
 /obj/item/clothing/mask/gas/space_ninja/verb/switchm()
 	set name = "Switch Mode"
@@ -388,4 +421,4 @@ NINJA MASK
 	else
 		voice = "active"
 	usr << "<B>[mode]</B> is active."
-	usr << "Voice mimicking algorithm is <B>[voice]</B>."
+	usr << "Voice mimicking algorithm is set to <B>[voice]</B>."

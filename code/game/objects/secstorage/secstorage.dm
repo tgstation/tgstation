@@ -94,16 +94,19 @@
 
 /obj/item/weapon/secstorage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ((W.w_class > 3 || istype(W, /obj/item/weapon/secstorage)))
-		return
-	if ((istype(W, /obj/item/weapon/card/emag)) && (src.locked == 1) && (!src.emagged))
+	if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/blade)) && (src.locked == 1) && (!src.emagged))
 		emagged = 1
 		src.overlays += image('storage.dmi', icon_sparking)
 		sleep(6)
 		src.overlays = null
 		overlays += image('storage.dmi', icon_locking)
 		locked = 0
-		user << "You short out the lock on [src]."
+		if(istype(W, /obj/item/weapon/blade))
+			user << "You slice through the lock on [src]."
+		else
+			user << "You short out the lock on [src]."
+		return
+	if ((W.w_class > 3 || istype(W, /obj/item/weapon/secstorage)))
 		return
 	if ((istype(W, /obj/item/weapon/screwdriver)) && (src.locked == 1))
 		sleep(6)

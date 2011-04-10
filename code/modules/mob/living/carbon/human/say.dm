@@ -12,13 +12,6 @@
 			var/imax = rand(5,20)
 			for(var/i = 0,i<imax,i++)
 				message += "E"
-	if(src.mutantrace == "golem")
-		if(copytext(message, 1, 2) != "*")
-			if(copytext(message, 1, 2) == ";")
-				message = ";"
-			else
-				message = ""
-			message += "..."
 	if(istype(src.virus, /datum/disease/pierrot_throat))
 		var/list/temp_message = dd_text2list(message, " ")
 		var/list/pick_list = list()
@@ -31,10 +24,26 @@
 				temp_message[H] = "HONK"
 				pick_list -= H
 			message = dd_list2text(temp_message, " ")
-	//Ninja mask obscures text but not voice. You should still come up as your own name.
-	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/space_ninja)&&!src.wear_mask:vchange)
+	//Ninja mask obscures text and voice if set to do so.
+	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/space_ninja)&&src.wear_mask:voice=="Unknown")
 		if(copytext(message, 1, 2) != "*")
-			//This text is hilarious.
+			var/list/temp_message = dd_text2list(message, " ")
+			var/list/pick_list = list()
+			for(var/i = 1, i <= temp_message.len, i++)
+				pick_list += i
+			for(var/i=1, i <= abs(temp_message.len/3), i++)
+				var/H = pick(pick_list)
+				if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
+				temp_message[H] = ninjaspeak(temp_message[H])
+				pick_list -= H
+			message = dd_list2text(temp_message, " ")
+			message = dd_replaceText(message, "o", "¤")
+			message = dd_replaceText(message, "p", "þ")
+			message = dd_replaceText(message, "l", "£")
+			message = dd_replaceText(message, "s", "§")
+			message = dd_replaceText(message, "u", "µ")
+			message = dd_replaceText(message, "b", "ß")
+			/*This text is hilarious but also absolutely retarded.
 			message = dd_replaceText(message, "l", "r")
 			message = dd_replaceText(message, "rr", "ru")
 			message = dd_replaceText(message, "v", "b")
@@ -60,6 +69,7 @@
 			message = dd_replaceText(message, "than", "sen")
 			message = dd_replaceText(message, ".", "")
 			message = lowertext(message)
+			*/
 	..(message)
 
 /mob/living/carbon/human/say_understands(var/other)

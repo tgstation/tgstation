@@ -247,7 +247,7 @@
 		overlays = null
 		overlays += redlight
 		return
-	else if (istype(W, /obj/item/weapon/card/emag) && locked &&!broken)
+	else if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/blade)) && locked &&!broken)
 		overlays = null
 		overlays += emag
 		overlays += sparks

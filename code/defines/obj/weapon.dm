@@ -1251,6 +1251,18 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "energy cutlass"
 	icon_state = "cutlass0"
 
+/obj/item/weapon/blade
+	name = "energy blade"
+	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
+	icon_state = "blade"
+	force = 70.0//Normal attacks deal very high damage.
+	throwforce = 1//Throwing or dropping the item deletes it.
+	throw_speed = 1
+	throw_range = 1
+	w_class = 4.0//So you can't hide in your pocket or some such.
+	flags = FPRINT | TABLEPASS | NOSHIELD
+	var/affecting = null
+
 /obj/item/weapon/table_parts
 	name = "table parts"
 	icon = 'items.dmi'

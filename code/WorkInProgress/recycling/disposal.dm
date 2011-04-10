@@ -40,6 +40,10 @@
 		if(stat & BROKEN)
 			return
 
+		if(istype(I, /obj/item/weapon/blade))
+			user << "You can't place that item inside the disposal unit."
+			return
+
 		var/obj/item/weapon/grab/G = I
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))
@@ -58,6 +62,7 @@
 
 		else
 			user.drop_item()
+
 			I.loc = src
 			user << "You place \the [I] into the [src]."
 			for(var/mob/M in viewers(src))

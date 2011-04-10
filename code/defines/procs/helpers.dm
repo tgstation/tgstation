@@ -881,3 +881,18 @@ proc/GaussRand(var/sigma)
 //returns random gauss number, rounded to 'roundto'
 proc/GaussRandRound(var/sigma,var/roundto)
 	return round(GaussRand(sigma),roundto)
+
+proc/anim(a,b,c,d,e)
+//a is location, b is animation icon, c is the layer, d is the flick animation, e is sleep time (optional).
+//Make sure that c actually has a layer or the game will run time error.
+	var/atom/movable/overlay/animation = new(a)
+	animation.icon = b
+	animation.icon_state = "blank"
+	animation.layer = c:layer+1//++ won't work right here.
+	animation.master = a
+	flick(d, animation)
+	if(e)
+		sleep(e)
+	else
+		sleep(15)
+	del(animation)

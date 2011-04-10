@@ -1,9 +1,9 @@
 /*
 CONTAINS:
 SWORD
+BLADE
 AXE
 STUN BATON
-
 */
 
 
@@ -51,6 +51,19 @@ STUN BATON
 	New()
 		color = "red"
 
+
+// BLADE
+//Two procs to delete the item if dropped or thrown.
+//Most of the other special functions are handled in their own files.
+
+/obj/item/weapon/blade/dropped()
+	del(src)
+	return
+
+/obj/item/weapon/blade/proc/throw()
+	del(src)
+	return
+
 // AXE
 
 /obj/item/weapon/axe/attack(target as mob, mob/user as mob)
@@ -70,9 +83,6 @@ STUN BATON
 		src.w_class = 5
 	src.add_fingerprint(user)
 	return
-
-
-
 
 // STUN BATON
 

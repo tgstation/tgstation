@@ -113,7 +113,7 @@
 	if (!src.requiresID())
 		//don't care who they are or what they have, act as if they're NOTHING
 		user = null
-	if (src.density && istype(I, /obj/item/weapon/card/emag))
+	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/blade)))
 		src.operating = -1
 		flick(text("[]spark", src.base_state), src)
 		sleep(6)

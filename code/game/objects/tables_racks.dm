@@ -125,6 +125,13 @@
 	if(isrobot(user))
 		return
 
+	if(istype(W, /obj/item/weapon/blade))
+		for(var/mob/O in viewers(user, 4))
+			O.show_message(text("\blue The table was sliced apart by []!", user), 1, text("\red You hear metal coming apart."), 2)
+		new /obj/item/weapon/table_parts( src.loc )
+		del(src)
+		return
+
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc
 	return
@@ -180,6 +187,14 @@
 			return
 	if(isrobot(user))
 		return
+
+	if(istype(W, /obj/item/weapon/blade))
+		for(var/mob/O in viewers(user, 4))
+			O.show_message(text("\blue The reinforced table was sliced apart by []!", user), 1, text("\red You hear metal coming apart."), 2)
+		new /obj/item/weapon/table_parts/reinforced( src.loc )
+		del(src)
+		return
+
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc
 	return

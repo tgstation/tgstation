@@ -248,10 +248,10 @@
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
 	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
-	icon_state = "heavy"
-	item_state = "heavy"
+	icon_state = "deathcommando"
+	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	slowdown = 1.5
+	slowdown = 0.5
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 
 // FIRE SUITS
@@ -356,7 +356,7 @@
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
-	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider-Clan assassins."
+	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
@@ -364,7 +364,8 @@
 	radiation_protection = 0.75
 	canremove = 0
 	var/active = 0
-	var/energy = 100
+	var/charge = 10000.0
+	var/maxcharge = 10000.0//Super high capacity charge but abilities eat a chunk of it./N
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"
