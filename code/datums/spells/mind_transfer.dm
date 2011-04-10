@@ -65,18 +65,30 @@
 
 	var/mob/dead/observer/temp_ghost = new /mob/dead/observer(target) //To properly transfer clients so no-one gets kicked off the game.
 
+	if(caster.mind.special_verbs.len)//Removes any special verbs from the original caster.
+		for(var/V in caster.mind.special_verbs)
+			caster.verbs -= V
 	victim.client.mob = temp_ghost
+	if(victim.mind.special_verbs.len)//Removes any special verbs from the original target.
+		for(var/V in victim.mind.special_verbs)
+			victim.verbs -= V
+
 	temp_ghost.spell_list = victim.spell_list
 	temp_ghost.mind = victim.mind
 
 	caster.client.mob = victim
 	victim.spell_list = caster.spell_list
 	victim.mind = caster.mind
+	if(victim.mind.special_verbs.len)//Adds verbs for the original caster if needed.
+		for(var/V in caster.mind.special_verbs)
+			caster.verbs += V
 
 	temp_ghost.client.mob = caster
 	caster.spell_list = temp_ghost.spell_list
 	caster.mind = temp_ghost.mind
-
+	if(caster.mind.special_verbs.len)//Adds verbs for original target if needed.
+		for(var/V in caster.mind.special_verbs)
+			caster.verbs += V
 	caster.mind.current = caster
 	victim.mind.current = victim
 
