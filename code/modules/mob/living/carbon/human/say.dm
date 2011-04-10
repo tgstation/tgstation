@@ -12,6 +12,13 @@
 			var/imax = rand(5,20)
 			for(var/i = 0,i<imax,i++)
 				message += "E"
+	if(src.mutantrace == "golem")
+		if(copytext(message, 1, 2) != "*")
+			if(copytext(message, 1, 2) == ";")
+				message = ";"
+			else
+				message = ""
+			message += "..."
 	if(istype(src.virus, /datum/disease/pierrot_throat))
 		var/list/temp_message = dd_text2list(message, " ")
 		var/list/pick_list = list()
