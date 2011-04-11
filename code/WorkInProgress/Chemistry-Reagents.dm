@@ -1626,7 +1626,7 @@ datum
 				M:drowsyness = max(0,M:drowsyness-5)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature-5)
-				M:nutrition += 5
+				M:nutrition += 2
 				..()
 				return
 
@@ -1641,7 +1641,7 @@ datum
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				M.make_jittery(5)
-				M:nutrition += 3
+				M:nutrition += 2
 				..()
 				return
 
@@ -1677,7 +1677,7 @@ datum
 				M:drowsyness = max(0,M:drowsyness-6)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
-				M:nutrition += 5
+				M:nutrition += 2
 				..()
 				return
 
