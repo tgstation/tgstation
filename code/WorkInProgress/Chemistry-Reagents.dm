@@ -64,7 +64,7 @@ datum
 				else if(prob(40))
 					M:heal_organ_damage(5,0)
 				..()
-
+				return
 
 
 		blood
@@ -227,6 +227,21 @@ datum
 			id = "bilk"
 			description = "This appears to be beer mixed with milk. Disgusting."
 			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
+				M:nutrition += 2
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M:jitteriness = max(M:jitteriness-3,0)
+				if(data >= 25)
+					if (!M:stuttering) M:stuttering = 1
+					M:stuttering += 3
+				if(data >= 40 && prob(33))
+					if (!M:confused) M:confused = 1
+					M:confused += 2
+				..()
+				return
 
 		anti_toxin
 			name = "Anti-Toxin (Dylovene)"
@@ -456,6 +471,11 @@ datum
 			id = "sugar"
 			description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 			reagent_state = SOLID
+			on_mob_life(var/mob/M)
+				M.make_jittery(5)
+				M:nutrition += 3
+				..()
+				return
 
 		acid
 			name = "Sulphuric acid"
@@ -843,9 +863,10 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(prob(33)) 
+				if(prob(33))
 					usr.take_organ_damage(1, 0)
-				holder.remove_reagent(src.id, 0.3)
+				M:oxyloss += 3
+				if(prob(20)) M:emote("gasp")
 				..()
 				return
 
@@ -868,6 +889,8 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				M:oxyloss = max(M:oxyloss-2, 0)
+				if(holder.has_reagent("lexorin"))
+					holder.remove_reagent("lexorin", 2)
 				..()
 				return
 
@@ -879,6 +902,8 @@ datum
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
 				M:oxyloss = 0
+				if(holder.has_reagent("lexorin"))
+					holder.remove_reagent("lexorin", 2)
 				..()
 				return
 
@@ -917,6 +942,8 @@ datum
 					holder.remove_reagent("acid", 1)
 				if(holder.has_reagent("cyanide"))
 					holder.remove_reagent("cyanide", 1)
+				if(holder.has_reagent("lexorin"))
+					holder.remove_reagent("lexorin", 2)
 				if(holder.has_reagent("amatoxin"))
 					holder.remove_reagent("amatoxin", 2)
 				if(holder.has_reagent("chloralhydrate"))
