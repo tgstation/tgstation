@@ -361,9 +361,18 @@
 			return
 
 	else if(istype(W, /obj/item/weapon/blade))
-		dismantle_wall(1)
-		for(var/mob/O in viewers(user, 5))
-			O.show_message(text("\blue The wall was sliced through by []!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+		var/turf/T = user.loc
+		user << "\blue Now slicing through wall."
+		W:spark_system.start()
+		playsound(src.loc, "sparks", 50, 1)
+		sleep(70)
+		if ((user.loc == T && user.equipped() == W))
+			W:spark_system.start()
+			playsound(src.loc, 'blade1.ogg', 50, 1)
+			playsound(src.loc, "sparks", 50, 1)
+			dismantle_wall(1)
+			for(var/mob/O in viewers(user, 5))
+				O.show_message(text("\blue The wall was sliced apart by []!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 		return
 
 	else if(istype(W,/obj/item/apc_frame))
@@ -424,14 +433,8 @@
 				user << "\blue You removed the support rods."
 			W:welding = 1
 
-	if(istype(W, /obj/item/weapon/blade))
-		var/turf/T = user.loc
-		user << "\blue Slicing through reinforced wall."
-		sleep(100)
-		if ((user.loc == T && user.equipped() == W))
-			dismantle_wall(1)
-			for(var/mob/O in viewers(user, 5))
-				O.show_message(text("\blue The reinforced wall was sliced through by []!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+	else if(istype(W, /obj/item/weapon/blade))
+		user << "\blue This wall is too thick to slice through. You will need to find a different path."
 		return
 
 	else if (istype(W, /obj/item/weapon/wrench))

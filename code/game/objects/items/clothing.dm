@@ -294,21 +294,148 @@ NINJA MASK
 	..()
 
 //SPESS NINJA STUFF
-/obj/item/clothing/suit/space/space_ninja/verb/toggle()
+
+/obj/item/clothing/suit/space/space_ninja/New()
+//Fix for the examine issue mentioned below. Followup: this doesn't fix anything. I'll need to take a look at how examine works.
+	src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
+
+/obj/item/clothing/suit/space/space_ninja/proc/init()
+	set name = "Initialize Suit"
+	set desc = "Initializes the suit for field operation."
+	set category = "Object"
+
+	if(usr.mind&&usr.mind.special_role=="Space Ninja"&&usr:wear_suit==src&&!src.initialize)
+		var/mob/living/carbon/human/U = usr
+		U << "\blue Now initializing..."
+		sleep(40)
+		if(!istype(U.head, /obj/item/clothing/head/helmet/space/space_ninja))
+			U << "\red <B>ERROR</B>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING..."
+			return
+		if(!istype(U.shoes, /obj/item/clothing/shoes/space_ninja))
+			U << "\red <B>ERROR</B>: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING..."
+			return
+		if(!istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
+			U << "\red <B>ERROR</B>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING..."
+			return
+		U << "\blue Securing external locking mechanism...\nNeural-net established."
+		U.head:canremove=0
+		U.shoes:canremove=0
+		U.gloves:canremove=0
+		src.canremove=0
+		sleep(40)
+		U << "\blue Extending neural-net interface...\nNow monitoring brain wave pattern..."
+		sleep(40)
+		if(U.stat==2)
+			U << "\red <B>FATAL ERROR</B>: 344--93#&&21 BRAIN WAV3 PATT$RN <B>RED</B>\nA-A-AB0RTING..."
+			return
+		U << "\blue Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation."
+		sleep(40)
+		U << "\blue VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>."
+		sleep(40)
+		U << "\blue Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[src.charge]<B>."
+		sleep(40)
+		U << "\blue All systems operational. Welcome to SpiderOS, [U.real_name]."
+		U.verbs += /mob/proc/ninjashift
+		U.verbs += /mob/proc/ninjajaunt
+		U.verbs += /mob/proc/ninjasmoke
+		U.verbs += /mob/proc/ninjapulse
+		U.verbs += /mob/proc/ninjablade
+		U.mind.special_verbs += /mob/proc/ninjashift
+		U.mind.special_verbs += /mob/proc/ninjajaunt
+		U.mind.special_verbs += /mob/proc/ninjasmoke
+		U.mind.special_verbs += /mob/proc/ninjapulse
+		U.mind.special_verbs += /mob/proc/ninjablade
+		src.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
+		src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+		src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/toggle
+		src.initialize=1
+		src.affecting=U
+		src.slowdown=0
+		U.shoes:slowdown--
+	else
+		if(usr.mind&&usr.mind.special_role=="Space Ninja")
+			usr << "\red You do not understand how this suit functions."
+		else if(usr:wear_suit!=src)
+			usr << "\red You must be wearing the suit to use this function."
+		else if(src.initialize)
+			usr << "\red The suit is already functioning."
+		else
+			usr << "\red You cannot use this function at this time."
+	return
+
+/obj/item/clothing/suit/space/space_ninja/proc/deinit()
+	set name = "De-Initialize Suit"
+	set desc = "Begins procedure to remove the suit."
+	set category = "Object"
+
+	if(!src.initialize)
+		usr << "\red The suit is not initialized."
+		return
+	if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
+		return
+
+	var/mob/living/carbon/human/U = usr
+
+	U << "\blue Now de-initializing..."
+	sleep(40)
+	U.verbs -= /mob/proc/ninjashift
+	U.verbs -= /mob/proc/ninjajaunt
+	U.verbs -= /mob/proc/ninjasmoke
+	U.verbs -= /mob/proc/ninjapulse
+	U.verbs -= /mob/proc/ninjablade
+	U.mind.special_verbs -= /mob/proc/ninjashift
+	U.mind.special_verbs -= /mob/proc/ninjajaunt
+	U.mind.special_verbs -= /mob/proc/ninjasmoke
+	U.mind.special_verbs -= /mob/proc/ninjapulse
+	U.mind.special_verbs -= /mob/proc/ninjablade
+	U << "\blue Logging off, [U:real_name]. Shutting down SpiderOS."
+	sleep(40)
+	U << "\blue Primary system status: <B>OFFLINE</B>.\nBackup system status: <B>OFFLINE</B>."
+	sleep(40)
+	U << "\blue VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>."
+	sleep(40)
+	if(U.stat==2||U.health<=0)
+		U << "\red <B>FATAL ERROR</B>: 412--GG##&77 BRAIN WAV3 PATT$RN <B>RED</B>\nI-I-INITIATING S-SELf DeStrCuCCCT%$#@@!!$^#!..."
+		spawn(10)
+			U << "\red #3#"
+		spawn(20)
+			U << "\red #2#"
+		spawn(30)
+			U << "\red #1#: <B>G00DBYE</B>"
+			U.gib()
+		return
+	U << "\blue Disconnecting neural-net interface...\green<B>Success</B>\blue."
+	sleep(40)
+	U << "\blue Disengaging neural-net interface...\green<B>Success</B>\blue."
+	sleep(40)
+	if(istype(U.head, /obj/item/clothing/head/helmet/space/space_ninja))
+		U.head.canremove=1
+	if(istype(U.shoes, /obj/item/clothing/shoes/space_ninja))
+		U.shoes:canremove=1
+		U.shoes:slowdown++
+	if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
+		U.gloves:canremove=1
+	src.canremove=1
+	U << "\blue Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>."
+	src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
+	src.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	src.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/toggle
+	src.initialize=0
+	src.affecting=null
+	src.slowdown=1
+	return
+
+/obj/item/clothing/suit/space/space_ninja/proc/toggle()
 	set name = "Toggle Stealth"
 	set desc = "Toggles the internal CLOAK-tech on or off."
 	set category = "Object"
 
+	if(usr:wear_suit!=src||!src.initialize)
+		usr << "\red You suit must be worn and active to use this function."
+		return
 	if(src.active)
 		spawn(0)
-			var/atom/movable/overlay/animation = new(usr.loc)
-			animation.icon = 'mob.dmi'
-			animation.icon_state = "blank"
-			animation.layer = usr.layer + 1
-			animation.master = usr
-			flick("uncloak", animation)
-			sleep(15)
-			del(animation)
+			anim(usr.loc,'mob.dmi',usr,"uncloak")
 		src.active=0
 		usr << "\blue You are now visible."
 		for(var/mob/O in oviewers(usr, null))
@@ -316,14 +443,7 @@ NINJA MASK
 
 	else
 		spawn(0)
-			var/atom/movable/overlay/animation = new(usr.loc)
-			animation.icon = 'mob.dmi'
-			animation.icon_state = "blank"
-			animation.layer = usr.layer + 1
-			animation.master = usr
-			flick("cloak", animation)
-			sleep(15)
-			del(animation)
+			anim(usr.loc,'mob.dmi',usr,"cloak")
 		src.active=1
 		usr << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(usr, null))
@@ -335,13 +455,18 @@ NINJA MASK
 //Doesn't really make any sense
 /obj/item/clothing/suit/space/space_ninja/examine()
 	..()
-	if(src.active)
-		usr << "The CLOAK-tech device is active."
-	else
-		usr << "The CLOAK-tech device is offline."
+	if(src.initialize)
+		usr << "All systems operational. Current energy capacity: <B>[src.charge]<B>."
+		if(src.active)
+			usr << "The CLOAK-tech device is active."
+		else
+			usr << "The CLOAK-tech device is offline."
 
+/obj/item/clothing/mask/gas/space_ninja/New()
+	src.verbs += /obj/item/clothing/mask/gas/space_ninja/proc/togglev
+	src.verbs += /obj/item/clothing/mask/gas/space_ninja/proc/switchm
 
-/obj/item/clothing/mask/gas/space_ninja/verb/togglev()
+/obj/item/clothing/mask/gas/space_ninja/proc/togglev()
 	set name = "Toggle Voice"
 	set desc = "Toggles the voice synthesizer on or off."
 	set category = "Object"
@@ -385,7 +510,7 @@ NINJA MASK
 			usr << "The voice synthesizer is already deactivated."
 	return
 
-/obj/item/clothing/mask/gas/space_ninja/verb/switchm()
+/obj/item/clothing/mask/gas/space_ninja/proc/switchm()
 	set name = "Switch Mode"
 	set desc = "Switches between Night Vision, Meson, or Thermal vision modes."
 	set category = "Object"

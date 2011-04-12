@@ -248,10 +248,10 @@
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
 	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
-	icon_state = "deathcommando"
+	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	slowdown = 0.5
+	slowdown = 1
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 
 // FIRE SUITS
@@ -360,12 +360,14 @@
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 0
+	slowdown = 1
 	radiation_protection = 0.75
-	canremove = 0
+	var/affecting = null
 	var/active = 0
 	var/charge = 10000.0
 	var/maxcharge = 10000.0//Super high capacity charge but abilities eat a chunk of it./N
+	var/initialize = 0
+	var/sbombs = 10.0
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"

@@ -172,6 +172,11 @@
 		src.locked = 0
 		src.icon_state = src.icon_broken
 		if(istype(W, /obj/item/weapon/blade))
+			var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+			spark_system.set_up(5, 0, src.loc)
+			spark_system.start()
+			playsound(src.loc, 'blade1.ogg', 50, 1)
+			playsound(src.loc, "sparks", 50, 1)
 			for(var/mob/O in viewers(user, 3))
 				O.show_message(text("\blue The locker has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 		else

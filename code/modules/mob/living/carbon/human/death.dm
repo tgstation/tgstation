@@ -11,7 +11,7 @@
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
 		//For ninjas exploding when they die./N
-		if (src.mind&&src.mind.special_role == "Space Ninja")
+		if (istype(src.wear_suit, /obj/item/clothing/suit/space/space_ninja)&&src.wear_suit:initialize)
 			var/location = src.loc
 			explosion(location, 1, 2, 3, 4)
 

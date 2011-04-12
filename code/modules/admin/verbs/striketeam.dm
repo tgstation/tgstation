@@ -176,7 +176,7 @@ Useful for copy pasta since I'm lazy.*/
 
 	set category = "Fun"
 	set name = "Spawn Space Ninja"
-	set desc = "Spawns a space ninja for when you just need a teenager with attitude."
+	set desc = "Spawns a space ninja for when you need a teenager with attitude."
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
@@ -249,22 +249,10 @@ Useful for copy pasta since I'm lazy.*/
 	new_ninja.internal = OXYTANK //So the poor ninja has something to breath when they spawn in spess.
 	new_ninja.internals.icon_state = "internal1"
 
-	new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[input]</B>"
-
-	new_ninja.verbs += /mob/proc/ninjashift
-	new_ninja.verbs += /mob/proc/ninjajaunt
-	new_ninja.verbs += /mob/proc/ninjasmoke
-	new_ninja.verbs += /mob/proc/ninjapulse
-	new_ninja.verbs += /mob/proc/ninjablade
-	new_ninja.mind.special_verbs += /mob/proc/ninjashift
-	new_ninja.mind.special_verbs += /mob/proc/ninjajaunt
-	new_ninja.mind.special_verbs += /mob/proc/ninjasmoke
-	new_ninja.mind.special_verbs += /mob/proc/ninjapulse
-	new_ninja.mind.special_verbs += /mob/proc/ninjablade
+	new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current mission is: \red <B>[input]</B>"
 
 	message_admins("\blue [admin_name] has spawned [new_ninja.key] as a Space Ninja. Hide yo children!", 1)
 	log_admin("[admin_name] used Spawn Space Ninja.")
-
 
 
 //SPACE NINJA ABILITIES
@@ -306,6 +294,7 @@ Useful for copy pasta since I'm lazy.*/
 	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 	smoke.set_up(10, 0, src.loc)
 	smoke.start()
+	playsound(src.loc, 'bamf.ogg', 50, 2)
 	//subtract cost(5)
 
 
@@ -369,11 +358,17 @@ Useful for copy pasta since I'm lazy.*/
 		return
 	picked = pick(turfs)
 	spawn(0)
+		playsound(src.loc, "sparks", 50, 1)
 		anim(mobloc,'mob.dmi',src,"phaseout")
 
 	src.loc = picked
 
 	spawn(0)
+		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+		playsound(src.loc, "sparks", 50, 1)
 		anim(src.loc,'mob.dmi',src,"phasein")
 
 	spawn(0) //Any living mobs in teleport area are gibbed.
@@ -387,7 +382,7 @@ Useful for copy pasta since I'm lazy.*/
 /mob/proc/ninjashift(var/turf/T in oview())
 	set name = "Phase Shift"
 	set desc = "Utilizes the internal VOID-shift device to rapidly transit to a destination in view."
-	set category = null//So it does not show up on the panel can still be right-clicked.
+	set category = null//So it does not show up on the panel but can still be right-clicked.
 
 	if(src.stat)
 		src << "\red You must be conscious to do this."
@@ -401,11 +396,17 @@ Useful for copy pasta since I'm lazy.*/
 	var/turf/mobloc = get_turf(src.loc)
 
 	spawn(0)
+		playsound(src.loc, 'sparks4.ogg', 50, 1)
 		anim(mobloc,'mob.dmi',src,"phaseout")
 
 	src.loc = T
 
 	spawn(0)
+		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sparks2.ogg', 50, 1)
 		anim(src.loc,'mob.dmi',src,"phasein")
 
 	spawn(0) //Any living mobs in teleport area are gibbed.
@@ -447,6 +448,8 @@ Useful for copy pasta since I'm lazy.*/
 
 	if(!src.get_active_hand()&&!istype(src.get_inactive_hand(), /obj/item/weapon/blade))
 		var/obj/item/weapon/blade/W = new()
+		W.spark_system.start()
+		playsound(src.loc, "sparks", 50, 1)
 		src.put_in_hand(W)
 /*
 /mob/proc/ninjastar(var/mob/living/M in oview())

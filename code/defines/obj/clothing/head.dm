@@ -188,7 +188,6 @@
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
 	radiation_protection = 0.25
-	canremove = 0
 	see_face = 1
 
 /obj/item/clothing/head/helmet/swat

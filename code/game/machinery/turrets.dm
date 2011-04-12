@@ -57,15 +57,22 @@
 	invisibility = 2
 	density = 1
 	var/lasers = 0
-	var/health = 18
+	var/health = 40
 	var/obj/machinery/turretcover/cover = null
 	var/popping = 0
 	var/wasvalid = 0
 	var/lastfired = 0
 	var/shot_delay = 30 //3 seconds between shots
+	var/datum/effects/system/spark_spread/spark_system
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
+
+/obj/machinery/turret/New()
+	src.spark_system = new /datum/effects/system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+	..()
 
 /obj/machinery/turretcover
 	name = "pop-up turret cover"
@@ -275,14 +282,23 @@
 
 /obj/machinery/turret/bullet_act(flag)
 	if (flag == PROJECTILE_BULLET)
-		src.health -= 4
+		src.health -= 17
 	else if (flag == PROJECTILE_TASER) //taser
 		src.health -= 1
 	else if(flag == PROJECTILE_PULSE)
-		src.health -= 10
+		src.health -= 30
 	else
 		src.health -= 2
+	src.spark_system.start()
+	if (src.health <= 0)
+		src.die()
+	return
 
+/obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
+	..()
+	playsound(src.loc, 'smash.ogg', 60, 1)
+	src.spark_system.start()
+	src.health -= W.force * 0.5
 	if (src.health <= 0)
 		src.die()
 	return
@@ -377,7 +393,7 @@
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
-		src.health -= 4
+		src.health -= 15
 		if (src.health <= 0)
 			src.die()
 	else

@@ -60,7 +60,6 @@
 	siemens_coefficient = 0
 	protective_temperature = 1100
 	heat_transfer_coefficient = 0.05
-	canremove = 0
 
 /obj/item/clothing/gloves/stungloves/
 	name = "Stungloves"

@@ -33,11 +33,10 @@
 	name = "ninja shoes"
 	desc = "A pair of running shoes, excellent for running and even better for smashing skulls."
 	icon_state = "s-ninja"
-	slowdown = -1
+	slowdown = 0
 	protective_temperature = 700
 	permeability_coefficient = 0.01
 	flags = NOSLIP
-	canremove = 0
 
 /obj/item/clothing/shoes/white
 	name = "White Shoes"

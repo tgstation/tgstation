@@ -128,6 +128,13 @@
 		src.operating = -1
 		if(istype(I, /obj/item/weapon/blade))
 			if(istype(src, /obj/machinery/door/airlock))
+				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+				spark_system.set_up(5, 0, src.loc)
+				spark_system.start()
+				playsound(src.loc, 'blade1.ogg', 50, 1)
+				playsound(src.loc, "sparks", 50, 1)
+				for(var/mob/O in viewers(user, 3))
+					O.show_message(text("\blue The door has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 				if((!src:arePowerSystemsOn()) || (stat & NOPOWER) || src:isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 					var/obj/door_assembly/temp
 					var/failsafe=0
@@ -145,16 +152,12 @@
 						temp.anchored=0
 						step_away(temp,usr,15)
 					else	del(temp)
-					for(var/mob/O in viewers(user, 3))
-						O.show_message(text("\blue The door has been sliced open by [] with an energy blade and kicked out of the way!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 					del(src)
 					return
 				else
 					src:welded = 0
 					src:locked = 0
 					update_icon()
-			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("\blue The door has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 		flick("door_spark", src)
 		sleep(6)
 		open()

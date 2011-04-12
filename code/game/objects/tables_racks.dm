@@ -126,6 +126,11 @@
 		return
 
 	if(istype(W, /obj/item/weapon/blade))
+		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src.loc, 'blade1.ogg', 50, 1)
+		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
 			O.show_message(text("\blue The table was sliced apart by []!", user), 1, text("\red You hear metal coming apart."), 2)
 		new /obj/item/weapon/table_parts( src.loc )
@@ -189,6 +194,11 @@
 		return
 
 	if(istype(W, /obj/item/weapon/blade))
+		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src.loc, 'blade1.ogg', 50, 1)
+		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
 			O.show_message(text("\blue The reinforced table was sliced apart by []!", user), 1, text("\red You hear metal coming apart."), 2)
 		new /obj/item/weapon/table_parts/reinforced( src.loc )

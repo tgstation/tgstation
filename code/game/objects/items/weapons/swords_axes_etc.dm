@@ -53,8 +53,13 @@ STUN BATON
 
 
 // BLADE
-//Two procs to delete the item if dropped or thrown.
 //Most of the other special functions are handled in their own files.
+
+/obj/item/weapon/blade/New()
+	src.spark_system = new /datum/effects/system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+	return
 
 /obj/item/weapon/blade/dropped()
 	del(src)
