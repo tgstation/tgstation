@@ -83,9 +83,9 @@
 		var/sourcetotalreagents = src.occupant.reagents.total_volume
 		var/totalslabs = 3
 
-		var/obj/item/weapon/reagent_containers/food/snacks/humanmeat/newmeat1 = new /obj/item/weapon/reagent_containers/food/snacks/humanmeat
-		var/obj/item/weapon/reagent_containers/food/snacks/humanmeat/newmeat2 = new /obj/item/weapon/reagent_containers/food/snacks/humanmeat
-		var/obj/item/weapon/reagent_containers/food/snacks/humanmeat/newmeat3 = new /obj/item/weapon/reagent_containers/food/snacks/humanmeat
+		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat1 = new
+		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat2 = new
+		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat3 = new
 
 		newmeat1.name = sourcename + newmeat1.name
 		newmeat1.subjectname = sourcename

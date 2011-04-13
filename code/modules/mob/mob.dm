@@ -1146,6 +1146,7 @@
 	u_equip(item)
 	if (src.client)
 		src.client.screen -= item
+	item.loc = null
 	src.update_clothing()
 	return
 

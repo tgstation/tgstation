@@ -72,15 +72,15 @@
 
 /datum/supply_packs/meat
 	name = "Meat crate"
-	contains = list("/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
-					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
-					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
-					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
-					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
-					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
-					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
-					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat",
-					"/obj/item/weapon/reagent_containers/food/snacks/monkeymeat")
+	contains = list("/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
+					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
+					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
+					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
+					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
+					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
+					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
+					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
+					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey")
 	cost = 10
 	containertype = "/obj/crate/freezer"
 	containername = "Meat crate"

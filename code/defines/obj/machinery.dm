@@ -173,6 +173,7 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	layer = TURF_LAYER
 
 /obj/machinery/mass_driver
 	name = "mass driver"
@@ -587,45 +588,20 @@
 	name = "Microwave"
 	icon = 'kitchen.dmi'
 	icon_state = "mw"
+	layer = 2.9
 	density = 1
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-	var/egg_amount = 0 //Current number of eggs inside
-	var/flour_amount = 0 //Current amount of flour inside
-	var/water_amount = 0 //Current amount of water inside
-	var/monkeymeat_amount = 0
-	var/cheese_amount = 0
-	var/humanmeat_amount = 0
-	var/donkpocket_amount = 0
-	var/xenomeat_amount = 0
-	var/milk_amount = 0
-	var/hotsauce_amount = 0
-	var/coldsauce_amount = 0
-	var/soysauce_amount = 0
-	var/ketchup_amount = 0
-	var/tofu_amount = 0
-	var/berryjuice_amount = 0
-	var/carpmeat_amount = 0
-	var/humanmeat_name = ""
-	var/humanmeat_job = ""
-	var/operating = 0 // Is it on?
-	var/dirty = 0 // Does it need cleaning?
-	var/broken = 0 // How broken is it???
-	var/list/available_recipes = list() // List of the recipes you can use
-	var/obj/item/weapon/reagent_containers/food/snacks/being_cooked = null // The item being cooked
-	var/obj/item/extra_item = null// One non food item that can be added
 	flags = OPENCONTAINER									//Temporary holder while it counts what's in it.
-	New()													//	Stuff can be added but not removed without destroying it.
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+
 
 /obj/machinery/processor
 	name = "Food Processor"
 	icon = 'kitchen.dmi'
 	icon_state = "processor"
+	layer = 2.9
 	density = 1
 	anchored = 1
 	var/broken = 0

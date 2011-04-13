@@ -1297,6 +1297,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 /obj/item/weapon/tank/anesthetic
 	name = "Gas Tank (Sleeping Agent)"
 	icon_state = "anesthetic"
+	item_state = "an_tank"
 
 /obj/item/weapon/tank/jetpack
 	name = "Jetpack (Oxygen)"

@@ -12,14 +12,19 @@
 	wheat
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 		output = /obj/item/weapon/reagent_containers/food/snacks/flour
+
+	meat
+		input = /obj/item/weapon/reagent_containers/food/snacks/meat
+		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
+/*
 	monkeymeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/monkeymeat
+		input = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 		
 	humanmeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/humanmeat
+		input = /obj/item/weapon/reagent_containers/food/snacks/meat/human
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
-
+*/
 	potato
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 		output = /obj/item/weapon/reagent_containers/food/snacks/fries

@@ -67,8 +67,6 @@
 
 /proc/is_type_in_list(var/atom/A, var/list/L)
 	for(var/type in L)
-		if(isnull(type))
-			continue
 		if(istype(A, type))
 			return 1
 	return 0
@@ -89,36 +87,36 @@ var/global/list/common_tools = list(
 	return 0
 
 /proc/iswrench(O)
-	if(O && istype(O, /obj/item/weapon/wrench))
+	if(istype(O, /obj/item/weapon/wrench))
 		return 1
 	return 0
 
 /proc/iswelder(O)
-	if(O && istype(O, /obj/item/weapon/weldingtool))
+	if(istype(O, /obj/item/weapon/weldingtool))
 		return 1
 	return 0
 
 /proc/iscoil(O)
-	if(O && istype(O, /obj/item/weapon/cable_coil))
+	if(istype(O, /obj/item/weapon/cable_coil))
 		return 1
 	return 0
 
 /proc/iswirecutter(O)
-	if(O && istype(O, /obj/item/weapon/wirecutters))
+	if(istype(O, /obj/item/weapon/wirecutters))
 		return 1
 	return 0
 
 /proc/isscrewdriver(O)
-	if(O && istype(O, /obj/item/weapon/screwdriver))
+	if(istype(O, /obj/item/weapon/screwdriver))
 		return 1
 	return 0
 
 /proc/ismultitool(O)
-	if(O && istype(O, /obj/item/device/multitool))
+	if(istype(O, /obj/item/device/multitool))
 		return 1
 	return 0
 
 /proc/iscrowbar(O)
-	if(O && istype(O, /obj/item/weapon/crowbar))
+	if(istype(O, /obj/item/weapon/crowbar))
 		return 1
 	return 0

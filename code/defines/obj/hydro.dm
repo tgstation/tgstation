@@ -232,7 +232,7 @@
 	mypath = "/obj/item/seeds/amanitamycelium"
 	species = "amanita"
 	plantname = "Fly Amanita"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/amanita"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita"
 	lifespan = 50
 	endurance = 35
 	maturation = 10
@@ -249,7 +249,7 @@
 	mypath = "/obj/item/seeds/angelmycelium"
 	species = "angel"
 	plantname = "Destroying Angel"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/angel"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel"
 	lifespan = 50
 	endurance = 35
 	maturation = 12
@@ -266,7 +266,7 @@
 	mypath = "/obj/item/seeds/libertymycelium"
 	species = "liberty"
 	plantname = "Liberty Cap"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/libertycap"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap"
 	lifespan = 25
 	endurance = 15
 	maturation = 7
@@ -283,7 +283,7 @@
 	mypath = "/obj/item/seeds/chantermycelium"
 	species = "chanter"
 	plantname = "Chanterelle"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/chanterelle"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle"
 	lifespan = 35
 	endurance = 20
 	maturation = 7
@@ -317,7 +317,7 @@
 	mypath = "/obj/item/seeds/plumpmycelium"
 	species = "plump"
 	plantname = "Plump Helmet"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/plumphelmet"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet"
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -627,7 +627,7 @@
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("imidazoline", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/amanita
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = "/obj/item/seeds/amanitamycelium"
 	name = "Fly amanita"
 	desc = "<I>Amanita Muscaria</I>: Learn poisonous mushrooms by heart. Only pick mushrooms you know."
@@ -640,7 +640,7 @@
 		reagents.add_reagent("psilocybin", max(drug_amt, 1))
 		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/angel
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
 	seed = "/obj/item/seeds/angelmycelium"
 	name = "Destroying angel"
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
@@ -653,7 +653,7 @@
 		reagents.add_reagent("psilocybin", max(drug_amt, 1))
 		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/libertycap
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
 	seed = "/obj/item/seeds/libertymycelium"
 	name = "Liberty cap"
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
@@ -665,7 +665,7 @@
 		reagents.add_reagent("psilocybin", max(drug_amt, 4))
 		bitesize = max(round(reagents.total_volume / 2), 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/plumphelmet
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	seed = "/obj/item/seeds/plumpmycelium"
 	name = "Plump Helmet"
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
@@ -675,7 +675,7 @@
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/chanterelle
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	seed = "/obj/item/seeds/chantermycelium"
 	name = "Chanterelle"
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty! There's a lot!"

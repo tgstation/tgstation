@@ -520,7 +520,7 @@ datum
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				new /obj/item/weapon/reagent_containers/food/snacks/cheesewheel(location)
+				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel(location)
 				return
 
 		icetea

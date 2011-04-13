@@ -5,7 +5,7 @@
 
 datum
 	reagents
-		var/list/reagent_list = new/list()
+		var/list/datum/reagent/reagent_list = new/list()
 		var/total_volume = 0
 		var/maximum_volume = 100
 		var/atom/my_atom = null

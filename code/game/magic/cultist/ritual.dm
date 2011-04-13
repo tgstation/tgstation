@@ -55,6 +55,7 @@ var/runedec = 0
 	icon_state = "1"
 	var/visibility = 0
 	unacidable = 1
+	layer = TURF_LAYER
 
 
 	var

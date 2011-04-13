@@ -795,6 +795,7 @@
 	icon_state = "table"
 	density = 1
 	anchored = 1.0
+	layer = 2.8
 
 /obj/table/reinforced
 	name = "reinforced table"

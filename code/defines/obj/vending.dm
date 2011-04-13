@@ -3,6 +3,7 @@
 	desc = "A generic vending machine."
 	icon = 'vending.dmi'
 	icon_state = "generic"
+	layer = 2.9
 	anchored = 1
 	density = 1
 	var/active = 1 //No sales pitches if off!
