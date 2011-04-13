@@ -364,8 +364,7 @@
 	radiation_protection = 0.75
 	var/affecting = null
 	var/active = 0
-	var/charge = 10000.0
-	var/maxcharge = 10000.0//Super high capacity charge but abilities eat a chunk of it./N
+	var/charge = 10000.0//The ninja suit does not have a top capacity. It's like a portable power sink.
 	var/initialize = 0
 	var/sbombs = 10.0
 

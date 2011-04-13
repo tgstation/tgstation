@@ -257,26 +257,21 @@ Useful for copy pasta since I'm lazy.*/
 
 //SPACE NINJA ABILITIES
 
-/*
-//	src << "\red Something has gone awry and you are missing one or more pieces of equipment."
-
-/mob/proc/ninjagear()
-	if(!istype(src:wear_suit, /obj/item/clothing/suit/space/space_ninja))	return 0
-	else if(!istype(src:head, /obj/item/clothing/head/helmet/space/space_ninja))	return 0
-	else if(!istype(src:gloves, /obj/item/clothing/gloves/space_ninja))	return 0
-	else if(!istype(src:shoes, /obj/item/clothing/shoes/space_ninja))	return 0
-	else	return 1
-
-/mob/proc/ninjacost(var/cost)
-	if(cost>src.wear_suit:energy)
+//X is optional, tells the proc to check for stealth.
+/mob/proc/ninjacost(C,X)
+	var/mob/living/carbon/human/U = src
+	if(U.stat)
+		U << "\red You must be conscious to do this."
 		return 0
-	else
-		src.wear_suit:energy=src.wear_suit:energy-cost
+	else if(X&&U.wear_suit:active)
+		U << "\red You must deactivate the CLOAK-tech device prior to using this ability."
+		return 0
+	else if(U.wear_suit:charge>=C*10)
 		return 1
+	else
+		U << "\red Not enough energy."
+		return 0
 
-//else if (istype(src.wear_mask, /obj/item/clothing/mask/gas/space_ninja))
-	//			switch(src.wear_mask:mode)
-*/
 //Smoke
 //Summons smoke in radius of user.
 //Not sure why this would be useful (it's not) but whatever. Ninjas need their smoke bombs.
@@ -288,15 +283,16 @@ Useful for copy pasta since I'm lazy.*/
 	if(src.stat)
 		src << "\red You must be conscious to do this."
 		return
-	//add energy cost check
-	//add warning message for low energy
+	if(!src:wear_suit:sbombs)
+		src << "\red There are no more smoke bombs remaining."
+		return
 
+	src:wear_suit:sbombs--
+	src << "\blue There are <B>[src:wear_suit:sbombs]</B> smoke bombs remaining."
 	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 	smoke.set_up(10, 0, src.loc)
 	smoke.start()
 	playsound(src.loc, 'bamf.ogg', 50, 2)
-	//subtract cost(5)
-
 
 //9-10 Tile Teleport
 //Click to to teleport 9-10 tiles in direction facing.
@@ -305,11 +301,9 @@ Useful for copy pasta since I'm lazy.*/
 	set desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
 	set category = "Ninja"
 
-	if(src.stat)
-		src << "\red You must be conscious to do this."
+	var/C = 100
+	if(!ninjacost(C,1))
 		return
-	//add energy cost check
-	//add warning message for low energy
 
 	var/list/turfs = new/list()
 	var/turf/picked
@@ -371,11 +365,11 @@ Useful for copy pasta since I'm lazy.*/
 		playsound(src.loc, "sparks", 50, 1)
 		anim(src.loc,'mob.dmi',src,"phasein")
 
-	spawn(0) //Any living mobs in teleport area are gibbed.
+	spawn(0)//Any living mobs in teleport area are gibbed.
 		for(var/mob/living/M in picked)
 			if(M==src)	continue
 			M.gib()
-	//subtract cost(10)
+	src:wear_suit:charge-=(C*10)
 
 //Right Click Teleport
 //Right click to teleport somewhere, almost exactly like admin jump to turf.
@@ -384,11 +378,10 @@ Useful for copy pasta since I'm lazy.*/
 	set desc = "Utilizes the internal VOID-shift device to rapidly transit to a destination in view."
 	set category = null//So it does not show up on the panel but can still be right-clicked.
 
-	if(src.stat)
-		src << "\red You must be conscious to do this."
+	var/C = 200
+	if(!ninjacost(C,1))
 		return
-	//add energy cost check
-	//add warning message for low energy
+
 	if(T.density)
 		src << "\red You cannot teleport into solid walls."
 		return
@@ -409,11 +402,11 @@ Useful for copy pasta since I'm lazy.*/
 		playsound(src.loc, 'sparks2.ogg', 50, 1)
 		anim(src.loc,'mob.dmi',src,"phasein")
 
-	spawn(0) //Any living mobs in teleport area are gibbed.
+	spawn(0)//Any living mobs in teleport area are gibbed.
 		for(var/mob/living/M in T)
 			if(M==src)	continue
 			M.gib()
-	//subtract cost(20)
+	src:wear_suit:charge-=(C*10)
 
 //EMP Pulse
 //Disables nearby tech equipment.
@@ -422,35 +415,33 @@ Useful for copy pasta since I'm lazy.*/
 	set desc = "Disable any nearby technology with a electro-magnetic pulse."
 	set category = "Ninja"
 
-	if(src.stat)
-		src << "\red You must be conscious to do this."
+	var/C = 250
+	if(!ninjacost(C,1))
 		return
-	//add energy cost check
-	//add warning message for low energy
 
+	playsound(src.loc, 'EMPulse.ogg', 60, 2)
 	empulse(src, 4, 6) //Procs sure are nice. Slightly weaker than wizard's disable tch.
 
-	//subtract cost(25)
+	src:wear_suit:charge-=(C*10)
 
-/mob/proc/ninjablade()
 //Summon Energy Blade
 //Summons a blade of energy in active hand.
+/mob/proc/ninjablade()
 	set name = "Energy Blade"
 	set desc = "Create a focused beam of energy in your active hand."
 	set category = "Ninja"
 
-	if(src.stat)
-		src << "\red You must be conscious to do this."
+	var/C = 10
+	if(!ninjacost(C))
 		return
-
-	//add energy cost check
-	//add warning message for low energy
 
 	if(!src.get_active_hand()&&!istype(src.get_inactive_hand(), /obj/item/weapon/blade))
 		var/obj/item/weapon/blade/W = new()
 		W.spark_system.start()
 		playsound(src.loc, "sparks", 50, 1)
 		src.put_in_hand(W)
+
+	src:wear_suit:charge-=(C*10)
 /*
 /mob/proc/ninjastar(var/mob/living/M in oview())
 */

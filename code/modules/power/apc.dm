@@ -437,6 +437,35 @@
 
 /obj/machinery/power/apc/attack_hand(mob/user)
 	add_fingerprint(user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/U = user
+		if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja)&&!U.gloves:canremove&&!U.gloves:draining)
+			var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
+			var/obj/item/clothing/gloves/space_ninja/G = U.gloves
+//			emagged = 1
+//			locked = 0
+			user << "\blue Now charging battery..."
+			G.draining = 1
+			if(cell&&cell.charge)
+				while(cell.charge>0)
+					var/drain = rand(500,1500)
+					if(cell.charge<drain)
+						drain = cell.charge
+					if (do_after(user,50))
+						var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+						spark_system.set_up(5, 0, src.loc)
+						spark_system.start()
+						playsound(src.loc, "sparks", 50, 1)
+						cell.charge-=drain
+						S.charge+=drain
+						U << "\blue Gained <B>[drain]</B> energy from the APC (<B>[cell.charge]</B> charge remaining)."
+					else	break
+				G.draining = 0
+				return
+			else
+				U << "\red This machine has run dry of power. You must find another."
+			return
+
 	if(opened && (!istype(user, /mob/living/silicon)))
 		if(cell)
 			usr.put_in_hand(cell)
@@ -454,8 +483,6 @@
 		// do APC interaction
 		user.machine = src
 		src.interact(user)
-
-
 
 /obj/machinery/power/apc/proc/interact(mob/user)
 

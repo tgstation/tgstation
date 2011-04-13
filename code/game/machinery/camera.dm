@@ -52,11 +52,14 @@
 		if (istype(M, /mob/new_player))
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
 		//Cameras can't track people wearing an agent card or a ninja hood.
-		if (istype(M, /mob/living/carbon/human) && (istype(M:wear_id, /obj/item/weapon/card/id/syndicate)||istype(M:head, /obj/item/clothing/head/helmet/space/space_ninja)))
-			continue
+		if (istype(M, /mob/living/carbon/human))
+			if(istype(M:wear_id, /obj/item/weapon/card/id/syndicate))
+				continue
+		 	if(istype(M:head, /obj/item/clothing/head/helmet/space/space_ninja)&&!M:head:canremove)
+		 		continue
 		if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
 			continue
-		var/area/wizard_station/A = locate()//So that wizards are not tracked by the AI until they leave their sanctuary./N
+		var/area/wizard_station/A = locate()//So that wizards are not tracked by the AI until they leave their sanctuary. Unless they talk on radio/N
 		if(M in A.contents)
 			continue
 		if(M.invisibility)//cloaked
@@ -97,10 +100,15 @@
 		while (usr:cameraFollow == target)
 			if (usr:cameraFollow == null)
 				return
-			else if (istype(target, /mob/living/carbon/human) && istype(target:wear_id, /obj/item/weapon/card/id/syndicate))
-				usr << "Follow camera mode ended."
-				usr:cameraFollow = null
-				return
+			else if (istype(target, /mob/living/carbon/human))
+				if(istype(target:wear_id, /obj/item/weapon/card/id/syndicate))
+					usr << "Follow camera mode terminated."
+					usr:cameraFollow = null
+					return
+		 		if(istype(target:head, /obj/item/clothing/head/helmet/space/space_ninja)&&!target:head:canremove)
+		 			usr << "Follow camera mode terminated."
+					usr:cameraFollow = null
+					return
 			else if(istype(target.loc,/obj/dummy))
 				usr << "Follow camera mode ended."
 				usr:cameraFollow = null

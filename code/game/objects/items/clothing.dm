@@ -219,6 +219,7 @@ NINJA MASK
 	..()
 
 /obj/item/clothing/under/examine()
+	set src in view()
 	..()
 	switch(src.sensor_mode)
 		if(0)
@@ -264,6 +265,7 @@ NINJA MASK
 		usr << "You enable the mag-pulse traction system."
 
 /obj/item/clothing/shoes/magboots/examine()
+	set src in view()
 	..()
 	var/state = "disabled"
 	if(src.flags&NOSLIP)
@@ -296,8 +298,32 @@ NINJA MASK
 //SPESS NINJA STUFF
 
 /obj/item/clothing/suit/space/space_ninja/New()
-//Fix for the examine issue mentioned below. Followup: this doesn't fix anything. I'll need to take a look at how examine works.
 	src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
+
+/obj/item/clothing/suit/space/space_ninja/proc/ntick(var/mob/living/carbon/human/U as mob)
+	set hidden = 1
+	set background = 1
+
+	spawn while(initialize&&charge>=0)//Suit on and has power.
+		if(!initialize)	return//When turned off the proc stops.
+		var/A = 5//Energy cost each tick.
+		if(istype(U.get_active_hand(), /obj/item/weapon/blade))//Sword check.
+			if(charge<=0)//If no charge left.
+				U.drop_item()//Sword is dropped from active hand (and deleted).
+			else	A += 20//Otherwise, more energy consumption.
+		else if(istype(U.get_inactive_hand(), /obj/item/weapon/blade))
+			if(charge<=0)
+				U.swap_hand()//swap hand
+				U.drop_item()//drop sword
+			else	A += 20
+		else if(active)
+			A += 25
+		charge-=A
+		if(charge<0)
+			charge=0
+			active=0
+//		stat("Ninja","#Current Charge: <B>[abs(charge/100)]</B>%",)
+		sleep(10)
 
 /obj/item/clothing/suit/space/space_ninja/proc/init()
 	set name = "Initialize Suit"
@@ -308,6 +334,10 @@ NINJA MASK
 		var/mob/living/carbon/human/U = usr
 		U << "\blue Now initializing..."
 		sleep(40)
+		if(U.mind.assigned_role=="Mime")
+			U << "\red <B>FATAL ERROR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECTED\nCOMMENCING SUB-R0UTIN3 13...\nTERMINATING U-U-USER..."
+			U.gib()
+			return
 		if(!istype(U.head, /obj/item/clothing/head/helmet/space/space_ninja))
 			U << "\red <B>ERROR</B>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING..."
 			return
@@ -325,16 +355,20 @@ NINJA MASK
 		sleep(40)
 		U << "\blue Extending neural-net interface...\nNow monitoring brain wave pattern..."
 		sleep(40)
-		if(U.stat==2)
+		if(U.stat==2||U.health<=0)
 			U << "\red <B>FATAL ERROR</B>: 344--93#&&21 BRAIN WAV3 PATT$RN <B>RED</B>\nA-A-AB0RTING..."
+			U.head:canremove=1
+			U.shoes:canremove=1
+			U.gloves:canremove=1
+			src.canremove=1
 			return
 		U << "\blue Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation."
 		sleep(40)
 		U << "\blue VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>."
 		sleep(40)
-		U << "\blue Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[src.charge]<B>."
+		U << "\blue Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[src.charge]</B>."
 		sleep(40)
-		U << "\blue All systems operational. Welcome to SpiderOS, [U.real_name]."
+		U << "\blue All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name]."
 		U.verbs += /mob/proc/ninjashift
 		U.verbs += /mob/proc/ninjajaunt
 		U.verbs += /mob/proc/ninjasmoke
@@ -352,6 +386,7 @@ NINJA MASK
 		src.affecting=U
 		src.slowdown=0
 		U.shoes:slowdown--
+		src.ntick(usr)
 	else
 		if(usr.mind&&usr.mind.special_role=="Space Ninja")
 			usr << "\red You do not understand how this suit functions."
@@ -388,13 +423,16 @@ NINJA MASK
 	U.mind.special_verbs -= /mob/proc/ninjasmoke
 	U.mind.special_verbs -= /mob/proc/ninjapulse
 	U.mind.special_verbs -= /mob/proc/ninjablade
-	U << "\blue Logging off, [U:real_name]. Shutting down SpiderOS."
+	U << "\blue Logging off, [U:real_name]. Shutting down <B>SpiderOS</B>."
 	sleep(40)
 	U << "\blue Primary system status: <B>OFFLINE</B>.\nBackup system status: <B>OFFLINE</B>."
 	sleep(40)
 	U << "\blue VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>."
+	if(active)//Shutdowns stealth.
+		active=0
+	src.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/toggle
 	sleep(40)
-	if(U.stat==2||U.health<=0)
+	if(U.stat||U.health<=0)
 		U << "\red <B>FATAL ERROR</B>: 412--GG##&77 BRAIN WAV3 PATT$RN <B>RED</B>\nI-I-INITIATING S-SELf DeStrCuCCCT%$#@@!!$^#!..."
 		spawn(10)
 			U << "\red #3#"
@@ -419,7 +457,6 @@ NINJA MASK
 	U << "\blue Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>."
 	src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
 	src.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
-	src.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/toggle
 	src.initialize=0
 	src.affecting=null
 	src.slowdown=1
@@ -449,18 +486,16 @@ NINJA MASK
 		for(var/mob/O in oviewers(usr, null))
 			O << "[usr.name] vanishes into thin air!"
 
-//So apparently, examine won't show up as a verb when
-//viewing an object equipped on the hud
-//and that object having other verbs?
-//Doesn't really make any sense
 /obj/item/clothing/suit/space/space_ninja/examine()
+	set src in view()
 	..()
 	if(src.initialize)
-		usr << "All systems operational. Current energy capacity: <B>[src.charge]<B>."
+		usr << "All systems operational. Current energy capacity: <B>[src.charge]</B>."
 		if(src.active)
-			usr << "The CLOAK-tech device is active."
+			usr << "The CLOAK-tech device is <B>active</B>."
 		else
-			usr << "The CLOAK-tech device is offline."
+			usr << "The CLOAK-tech device is <B>inactive</B>."
+		usr << "There are <B>[src.sbombs]</B> smoke bombs remaining."
 
 /obj/item/clothing/mask/gas/space_ninja/New()
 	src.verbs += /obj/item/clothing/mask/gas/space_ninja/proc/togglev
@@ -531,6 +566,7 @@ NINJA MASK
 			usr << "Switching mode to <B>Night Vision</B>."
 
 /obj/item/clothing/mask/gas/space_ninja/examine()
+	set src in view()
 	..()
 	var/mode = "Night Vision"
 	var/voice = "inactive"

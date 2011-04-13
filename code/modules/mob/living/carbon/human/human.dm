@@ -172,7 +172,8 @@
 		if (src.mind)
 			if (src.mind.special_role == "Changeling")
 				stat("Chemical Storage", src.chem_charges)
-
+		if (istype(src.wear_suit, /obj/item/clothing/suit/space/space_ninja)&&src.wear_suit:initialize)
+			stat("Energy Charge", abs(src.wear_suit:charge/100))
 
 /mob/living/carbon/human/bullet_act(flag, A as obj, var/datum/organ/external/def_zone)
 	var/shielded = 0
