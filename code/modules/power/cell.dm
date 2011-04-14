@@ -62,6 +62,30 @@
 	if(crit_fail)
 		usr << "\red This power cell seems to be faulty"
 
+/obj/item/weapon/cell/attack_self(mob/user as mob)
+	src.add_fingerprint(user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/U = user
+		if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja)&&U.gloves:candrain&&!U.gloves:draining)
+			var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
+			var/obj/item/clothing/gloves/space_ninja/G = U.gloves
+			if(charge)
+				user << "\blue Now charging battery..."
+				G.draining = 1
+				if (do_after(user,50))
+					U << "\blue Gained <B>[charge]</B> energy from the cell."
+					charge = 0
+					S.charge+=charge
+					G.draining = 0
+					corrupt()
+					updateicon()
+				else
+					U << "\red Procedure interrupted. Protocol terminated."
+					return
+			else
+				U << "\red This cell is empty and of no use."
+	return
+
 //Just because someone gets you occasionally with stun gloves doesn't mean you can put in code to kill everyone who tries to make some.
 /obj/item/weapon/cell/attackby(obj/item/W, mob/user)
 	..()

@@ -115,6 +115,14 @@
 		user = null
 	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/blade)))
 		src.operating = -1
+		if(istype(I, /obj/item/weapon/blade))
+			var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+			spark_system.set_up(5, 0, src.loc)
+			spark_system.start()
+			playsound(src.loc, "sparks", 50, 1)
+			playsound(src.loc, 'blade1.ogg', 50, 1)
+			for(var/mob/O in viewers(user, 5))
+				O.show_message(text("\blue The glass door was sliced open by []!", user), 1, text("\red You hear glass being sliced and sparks flying."), 2)
 		flick(text("[]spark", src.base_state), src)
 		sleep(6)
 		open()

@@ -25,7 +25,8 @@
 				pick_list -= H
 			message = dd_list2text(temp_message, " ")
 	//Ninja mask obscures text and voice if set to do so.
-	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/space_ninja)&&src.wear_mask:voice=="Unknown")
+	//Would make it more global but it's sort of ninja specific.
+	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja)&&src.wear_mask:voice=="Unknown")
 		if(copytext(message, 1, 2) != "*")
 			var/list/temp_message = dd_text2list(message, " ")
 			var/list/pick_list = list()

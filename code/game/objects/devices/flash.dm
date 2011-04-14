@@ -13,7 +13,7 @@
 			if (istype(H.head, /obj/item/clothing/head/helmet/welding))
 				if(!H.head:up)
 					safety = 1
-			if (istype(H.wear_mask, /obj/item/clothing/mask/gas/space_ninja))
+			if (istype(H.wear_mask, /obj/item/clothing/mask/gas/voice))
 				safety = 1
 		if (istype(M, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
 			safety = 1

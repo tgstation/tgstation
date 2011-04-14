@@ -299,6 +299,35 @@
 
 /obj/mecha/attack_hand(mob/user as mob)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
+/*	if(ishuman(user))
+		var/mob/living/carbon/human/U = user
+		if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja)&&U.gloves:candrain&&!U.gloves:draining)
+			var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
+			var/obj/item/clothing/gloves/space_ninja/G = U.gloves
+			user << "\blue Now charging battery..."
+			occupant_message("\red Warning: Unauthorized access through sub-route 4, block H, detected.")
+			G.draining = 1
+			if(get_charge())
+				var/drain = 0
+				var/totaldrain = 0
+				while(cell.charge>0)
+					drain = rand(100,300)
+					if(cell.charge<drain)
+						drain = cell.charge
+					if (do_after(U,10)) <--- gotta figure out why this isn't being called properly.
+						world << "PING"
+						spark_system.start()
+						playsound(src.loc, "sparks", 50, 1)
+						cell.charge-=drain
+						S.charge+=drain
+						totaldrain+=drain
+					else	break
+				U << "\blue Gained <B>[totaldrain]</B> energy from [src]."
+				G.draining = 0
+				return
+			else
+				U << "\red The exosuit's battery has run dry of power. You must find another source."
+			return*/
 	if (user.mutations & 8 && !prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))

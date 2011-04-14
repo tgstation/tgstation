@@ -61,6 +61,7 @@
 	protective_temperature = 1100
 	heat_transfer_coefficient = 0.05
 	var/draining = 0
+	var/candrain = 0
 
 /obj/item/clothing/gloves/stungloves/
 	name = "Stungloves"

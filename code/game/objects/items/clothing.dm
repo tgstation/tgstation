@@ -322,7 +322,6 @@ NINJA MASK
 		if(charge<0)
 			charge=0
 			active=0
-//		stat("Ninja","#Current Charge: <B>[abs(charge/100)]</B>%",)
 		sleep(10)
 
 /obj/item/clothing/suit/space/space_ninja/proc/init()
@@ -351,7 +350,7 @@ NINJA MASK
 		U.head:canremove=0
 		U.shoes:canremove=0
 		U.gloves:canremove=0
-		src.canremove=0
+		canremove=0
 		sleep(40)
 		U << "\blue Extending neural-net interface...\nNow monitoring brain wave pattern..."
 		sleep(40)
@@ -360,7 +359,7 @@ NINJA MASK
 			U.head:canremove=1
 			U.shoes:canremove=1
 			U.gloves:canremove=1
-			src.canremove=1
+			canremove=1
 			return
 		U << "\blue Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation."
 		sleep(40)
@@ -379,20 +378,21 @@ NINJA MASK
 		U.mind.special_verbs += /mob/proc/ninjasmoke
 		U.mind.special_verbs += /mob/proc/ninjapulse
 		U.mind.special_verbs += /mob/proc/ninjablade
-		src.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
-		src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
-		src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/toggle
-		src.initialize=1
-		src.affecting=U
-		src.slowdown=0
+		verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
+		verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+		verbs += /obj/item/clothing/suit/space/space_ninja/proc/toggle
+		U.gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/toggled
+		initialize=1
+		affecting=U
+		slowdown=0
 		U.shoes:slowdown--
-		src.ntick(usr)
+		ntick(usr)
 	else
 		if(usr.mind&&usr.mind.special_role=="Space Ninja")
 			usr << "\red You do not understand how this suit functions."
 		else if(usr:wear_suit!=src)
 			usr << "\red You must be wearing the suit to use this function."
-		else if(src.initialize)
+		else if(initialize)
 			usr << "\red The suit is already functioning."
 		else
 			usr << "\red You cannot use this function at this time."
@@ -403,7 +403,7 @@ NINJA MASK
 	set desc = "Begins procedure to remove the suit."
 	set category = "Object"
 
-	if(!src.initialize)
+	if(!initialize)
 		usr << "\red The suit is not initialized."
 		return
 	if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
@@ -430,7 +430,7 @@ NINJA MASK
 	U << "\blue VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>."
 	if(active)//Shutdowns stealth.
 		active=0
-	src.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/toggle
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/toggle
 	sleep(40)
 	if(U.stat||U.health<=0)
 		U << "\red <B>FATAL ERROR</B>: 412--GG##&77 BRAIN WAV3 PATT$RN <B>RED</B>\nI-I-INITIATING S-SELf DeStrCuCCCT%$#@@!!$^#!..."
@@ -453,13 +453,15 @@ NINJA MASK
 		U.shoes:slowdown++
 	if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
 		U.gloves:canremove=1
-	src.canremove=1
+		U.gloves:candrain=0
+		U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
+	canremove=1
 	U << "\blue Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>."
-	src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
-	src.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
-	src.initialize=0
-	src.affecting=null
-	src.slowdown=1
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	initialize=0
+	affecting=null
+	slowdown=1
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/toggle()
@@ -468,12 +470,12 @@ NINJA MASK
 	set category = "Object"
 
 	if(usr:wear_suit!=src||!src.initialize)
-		usr << "\red You suit must be worn and active to use this function."
+		usr << "\red Your suit must be worn and active to use this function."
 		return
-	if(src.active)
+	if(active)
 		spawn(0)
 			anim(usr.loc,'mob.dmi',usr,"uncloak")
-		src.active=0
+		active=0
 		usr << "\blue You are now visible."
 		for(var/mob/O in oviewers(usr, null))
 			O << "[usr.name] appears from thin air!"
@@ -481,7 +483,7 @@ NINJA MASK
 	else
 		spawn(0)
 			anim(usr.loc,'mob.dmi',usr,"cloak")
-		src.active=1
+		active=1
 		usr << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(usr, null))
 			O << "[usr.name] vanishes into thin air!"
@@ -489,19 +491,40 @@ NINJA MASK
 /obj/item/clothing/suit/space/space_ninja/examine()
 	set src in view()
 	..()
-	if(src.initialize)
+	if(initialize)
 		usr << "All systems operational. Current energy capacity: <B>[src.charge]</B>."
-		if(src.active)
+		if(active)
 			usr << "The CLOAK-tech device is <B>active</B>."
 		else
 			usr << "The CLOAK-tech device is <B>inactive</B>."
 		usr << "There are <B>[src.sbombs]</B> smoke bombs remaining."
 
-/obj/item/clothing/mask/gas/space_ninja/New()
-	src.verbs += /obj/item/clothing/mask/gas/space_ninja/proc/togglev
-	src.verbs += /obj/item/clothing/mask/gas/space_ninja/proc/switchm
+/obj/item/clothing/gloves/space_ninja/proc/toggled()
+	set name = "Toggle Drain"
+	set desc = "Toggles the energy drain mechanism on or off."
+	set category = "Object"
+	if(!candrain)
+		candrain=1
+		usr << "You enable the energy drain mechanism."
+	else
+		candrain=0
+		usr << "You disable the energy drain mechanism."
 
-/obj/item/clothing/mask/gas/space_ninja/proc/togglev()
+
+/obj/item/clothing/gloves/space_ninja/examine()
+	set src in view()
+	..()
+	if(!canremove)
+		if(candrain)
+			usr << "The energy drain mechanism is: <B>active</B>."
+		else
+			usr << "The energy drain mechanism is: <B>inactive</B>."
+
+/obj/item/clothing/mask/gas/voice/space_ninja/New()
+	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev
+	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm
+
+/obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev()
 	set name = "Toggle Voice"
 	set desc = "Toggles the voice synthesizer on or off."
 	set category = "Object"
@@ -545,39 +568,39 @@ NINJA MASK
 			usr << "The voice synthesizer is already deactivated."
 	return
 
-/obj/item/clothing/mask/gas/space_ninja/proc/switchm()
+/obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm()
 	set name = "Switch Mode"
 	set desc = "Switches between Night Vision, Meson, or Thermal vision modes."
 	set category = "Object"
 	//Have to reset these manually since life.dm is retarded like that. Go figure.
-	switch(src.mode)
+	switch(mode)
 		if(1)
-			src.mode=2
+			mode=2
 			usr.see_in_dark = 2
 			usr << "Switching mode to <B>Thermal Scanner</B>."
 		if(2)
-			src.mode=3
+			mode=3
 			usr.see_invisible = 0
 			usr.sight &= ~SEE_MOBS
 			usr << "Switching mode to <B>Meson Scanner</B>."
 		if(3)
-			src.mode=1
+			mode=1
 			usr.sight &= ~SEE_TURFS
 			usr << "Switching mode to <B>Night Vision</B>."
 
-/obj/item/clothing/mask/gas/space_ninja/examine()
+/obj/item/clothing/mask/gas/voice/space_ninja/examine()
 	set src in view()
 	..()
 	var/mode = "Night Vision"
 	var/voice = "inactive"
-	switch(src.mode)
+	switch(mode)
 		if(1)
 			mode = "Night Vision"
 		if(2)
 			mode = "Thermal Scanner"
 		if(3)
 			mode = "Meson Scanner"
-	if(src.vchange==0)
+	if(vchange==0)
 		voice = "inactive"
 	else
 		voice = "active"

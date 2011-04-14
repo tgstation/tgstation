@@ -731,7 +731,7 @@
 				else
 					seer = 0
 					see_invisible = 0
-			else if (istype(src.wear_mask, /obj/item/clothing/mask/gas/space_ninja))
+			else if (istype(src.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 				switch(src.wear_mask:mode)
 					if(1)
 						src.see_in_dark = 5

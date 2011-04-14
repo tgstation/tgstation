@@ -257,7 +257,7 @@
 		else
 			if (M.ghost_ears && !(M in listening))
 				listening+=M
-			
+
 	for (var/obj/O in ((V | src.contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 		spawn (0)
 			if (O)
@@ -278,10 +278,13 @@
 
 		if (italics)
 			message_a = "<i>[message_a]</i>"
-		if (!istype(src, /mob/living/carbon/human) || istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
+		if (!istype(src, /mob/living/carbon/human))
 			rendered = "<span class='game say'><span class='name'>[src.name]</span> <span class='message'>[message_a]</span></span>"
-		else if (istype(src.wear_mask,  /obj/item/clothing/mask/gas/space_ninja))
-			rendered = "<span class='game say'><span class='name'>[src.wear_mask:voice]</span> <span class='message'>[message_a]</span></span>"
+		else if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
+			if(wear_mask:vchange)
+				rendered = "<span class='game say'><span class='name'>[src.wear_mask:voice]</span> <span class='message'>[message_a]</span></span>"
+			else
+				rendered = "<span class='game say'><span class='name'>[src.name]</span> <span class='message'>[message_a]</span></span>"
 		else
 			rendered = "<span class='game say'><span class='name'>[src.real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 

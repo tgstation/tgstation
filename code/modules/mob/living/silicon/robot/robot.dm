@@ -1,6 +1,8 @@
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
-
+	spark_system = new /datum/effects/system/spark_spread()
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
 	spawn (1)
 		src << "\blue Your icons have been generated!"
 		playsound(src.loc, 'liveagain.ogg', 50, 1, -3)
@@ -590,6 +592,35 @@
 			src.cell = null
 			user << "You remove the power cell."
 			src.updateicon()
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/U = user
+		if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja)&&U.gloves:candrain&&!U.gloves:draining)
+			var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
+			var/obj/item/clothing/gloves/space_ninja/G = U.gloves
+			user << "\blue Now charging battery..."
+			src << "\red Warning: Unauthorized access through sub-route 12, block C, detected."
+			G.draining = 1
+			if(cell&&cell.charge)
+				var/drain = 0
+				var/totaldrain = 0
+				while(cell.charge>0)
+					drain = rand(100,300)
+					if(cell.charge<drain)
+						drain = cell.charge
+					if (do_after(U,10))
+						spark_system.start()
+						playsound(src.loc, "sparks", 50, 1)
+						cell.charge-=drain
+						S.charge+=drain
+						totaldrain+=drain
+					else	break
+				U << "\blue Gained <B>[totaldrain]</B> energy from [src]."
+				G.draining = 0
+				return
+			else
+				U << "\red Their battery has run dry of power. You must find another source."
+			return
 
 
 /mob/living/silicon/robot/proc/allowed(mob/M)

@@ -256,11 +256,17 @@ Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[li
 		//End of research and feedback code.
 
 		if (length(heard_masked))
-			var/rendered = "[part_a][M.name][part_b][quotedmsg][part_c]"
-
+			var/N = M.name
+			var/J = eqjobname
+			if (istype(M.wear_mask, /obj/item/clothing/mask/gas/voice)&&M.wear_mask:vchange)
+			//To properly have the ninja show up on radio. Could also be useful for similar items.
+			//Would not be necessary but the mob could be wearing a mask that is not a voice changer.
+				N = M.wear_mask:voice
+				J = "Unknown"
+			var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
 			for (var/mob/R in heard_masked)
 				if(istype(R, /mob/living/silicon/ai))
-					R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.name] ([eqjobname]) </a>[part_b][quotedmsg][part_c]", 2)
+					R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a>[part_b][quotedmsg][part_c]", 2)
 				else
 					R.show_message(rendered, 2)
 

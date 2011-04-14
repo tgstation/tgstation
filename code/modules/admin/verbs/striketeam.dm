@@ -221,7 +221,7 @@ Useful for copy pasta since I'm lazy.*/
 	new_ninja.equip_if_possible(new /obj/item/clothing/suit/space/space_ninja(new_ninja), new_ninja.slot_wear_suit)
 	new_ninja.equip_if_possible(new /obj/item/clothing/gloves/space_ninja(new_ninja), new_ninja.slot_gloves)
 	new_ninja.equip_if_possible(new /obj/item/clothing/head/helmet/space/space_ninja(new_ninja), new_ninja.slot_head)
-	new_ninja.equip_if_possible(new /obj/item/clothing/mask/gas/space_ninja(new_ninja), new_ninja.slot_wear_mask)
+	new_ninja.equip_if_possible(new /obj/item/clothing/mask/gas/voice/space_ninja(new_ninja), new_ninja.slot_wear_mask)
 	new_ninja.equip_if_possible(new /obj/item/device/flashlight(new_ninja), new_ninja.slot_belt)
 	new_ninja.equip_if_possible(new /obj/item/weapon/plastique(new_ninja), new_ninja.slot_r_store)
 	new_ninja.equip_if_possible(new /obj/item/weapon/plastique(new_ninja), new_ninja.slot_l_store)
