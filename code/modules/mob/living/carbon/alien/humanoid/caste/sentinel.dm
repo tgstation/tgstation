@@ -1,17 +1,17 @@
 /mob/living/carbon/alien/humanoid/sentinel/New()
+	var/datum/reagents/R = new/datum/reagents(100)
+	reagents = R
+	R.my_atom = src
+	if(src.name == "alien sentinel")
+		src.name = text("alien sentinel ([rand(1, 1000)])")
+	src.real_name = src.name
 	spawn (1)
 		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
 		src.stand_icon = new /icon('alien.dmi', "aliens_s")
 		src.lying_icon = new /icon('alien.dmi', "aliens_l")
 		src.icon = src.stand_icon
-		if(src.name == "alien sentinel") src.name = text("alien sentinel ([rand(1, 1000)])")
-		src.real_name = src.name
-		src << "\blue Your icons have been generated!"
-
 		update_clothing()
+		src << "\blue Your icons have been generated!"
 
 
 /mob/living/carbon/alien/humanoid/sentinel

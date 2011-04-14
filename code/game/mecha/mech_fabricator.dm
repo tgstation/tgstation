@@ -223,8 +223,9 @@
 		src.use_power = 2
 		src.updateUsrDialog()
 		sleep(get_construction_time_w_coeff(part,0.1))
-		if(!src) return
+		//if(!src) return // you do not need to check it, all sleeping procedires will be terminated when src dies. -- rastaf0
 		src.use_power = 1
+		if(!being_built) return //was runtime error with null.Move()
 		src.being_built.Move(get_step(src,EAST))
 		src.icon_state = initial(src.icon_state)
 		src.visible_message("<b>[src]</b> beeps, \"The [src.being_built] is complete\".")

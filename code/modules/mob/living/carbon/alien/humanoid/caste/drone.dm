@@ -1,18 +1,18 @@
 /mob/living/carbon/alien/humanoid/drone/New()
+	var/datum/reagents/R = new/datum/reagents(100)
+	reagents = R
+	R.my_atom = src
+	if(src.name == "alien drone")
+		src.name = text("alien drone ([rand(1, 1000)])")
+	src.real_name = src.name
 	spawn (1)
 		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
 		src.verbs -= /mob/living/carbon/alien/humanoid/verb/call_to
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
 		src.stand_icon = new /icon('alien.dmi', "aliend_s")
 		src.lying_icon = new /icon('alien.dmi', "aliend_l")
 		src.icon = src.stand_icon
-		if(src.name == "alien drone") src.name = text("alien drone ([rand(1, 1000)])")
-		src.real_name = src.name
-		src << "\blue Your icons have been generated!"
-
 		update_clothing()
+		src << "\blue Your icons have been generated!"
 
 //Drones use the same base as generic humanoids.
 //Drone verbs

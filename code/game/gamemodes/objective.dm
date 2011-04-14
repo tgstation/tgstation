@@ -205,7 +205,7 @@ datum
 				return num_to_eat
 
 			check_completion()
-				if((owner.current.absorbed_dna.len - 1) >= num_to_eat)
+				if(owner && owner.current && owner.current.absorbed_dna && ((owner.current.absorbed_dna.len - 1) >= num_to_eat))
 					return 1
 				else
 					return 0

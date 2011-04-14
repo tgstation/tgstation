@@ -10,9 +10,9 @@
 		del(src)
 
 /obj/item/weapon/tank/attack_self(mob/user as mob)
-	user.machine = src
 	if (!(src.air_contents))
 		return
+	user.machine = src
 
 	var/using_internal
 	if(istype(loc,/mob/living/carbon))
@@ -45,22 +45,26 @@
 			if(istype(loc,/mob/living/carbon))
 				var/mob/living/carbon/location = loc
 				if(location.internal == src)
-					usr << "\blue You close the tank release valve."
+					usr << "\blue You close \the [src] release valve."
 					if (location.internals)
 						location.internals.icon_state = "internal0"
 				else
 					if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
 						location.internal = src
-						usr << "\blue You open the tank valve."
+						usr << "\blue You open \the [src] valve."
 						if (location.internals)
 							location.internals.icon_state = "internal1"
 					else
-						usr << "\blue The valve immediately closes."
+						usr << "\blue You need something to connect to \the [src]."
 
 		src.add_fingerprint(usr)
+/*
+ * the following is needed for a tank lying on the floor. But currently we restrict players to use not weared tanks as intrals. --rastaf
 		for(var/mob/M in viewers(1, src.loc))
 			if ((M.client && M.machine == src))
 				src.attack_self(M)
+*/
+		src.attack_self(usr)
 	else
 		usr << browse(null, "window=tank")
 		return
@@ -144,10 +148,10 @@
 
 		else if(integrity < 3)
 			integrity++
-
+/* redundant. --rastaf0
 /obj/item/weapon/tank/attack(mob/M as mob, mob/user as mob)
 	..()
-
+*/
 	/*
 	if ((prob(30) && M.stat < 2))
 		var/mob/living/carbon/human/H = M
@@ -173,7 +177,7 @@
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	var/obj/item/weapon/icon = src
+	var/obj/icon = src
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if ((istype(W, /obj/item/device/analyzer) || (istype(W, /obj/item/device/pda))) && get_dist(user, src) <= 1)
@@ -228,7 +232,7 @@
 	..()
 
 /obj/item/weapon/tank/examine()
-	var/obj/item/weapon/icon = src
+	var/obj/icon = src
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if (!in_range(src, usr))
@@ -371,7 +375,8 @@
 		ground_zero.assume_air(air_contents)
 		ground_zero.hotspot_expose(1000, 125)
 
-	if(src.master) del(src.master)
+	if(src.master)
+		del(src.master)
 	del(src)
 
 /obj/item/weapon/tank/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -381,178 +386,128 @@
 		var/obj/item/assembly/rad_ignite/S = W
 		if (!( S.status ))
 			return
-		var/obj/item/assembly/r_i_ptank/R = new /obj/item/assembly/r_i_ptank( user )
+		var/obj/item/assembly/r_i_ptank/R = new
+
 		R.part1 = S.part1
 		S.part1.loc = R
 		S.part1.master = R
+
 		R.part2 = S.part2
 		S.part2.loc = R
 		S.part2.master = R
-		S.layer = initial(S.layer)
-		if (user.client)
-			user.client.screen -= S
-		if (user.r_hand == S)
-			user.u_equip(S)
-			user.r_hand = R
-		else
-			user.u_equip(S)
-			user.l_hand = R
+
 		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		if (user.client)
-			user.client.screen -= src
-		src.loc = R
 		R.part3 = src
-		R.layer = 20
-		R.loc = user
+
+		user.put_in_hand(R)
+		user.before_take_item(src)
+		src.loc = R
+
 		S.part1 = null
 		S.part2 = null
-		//S = null
 		del(S)
 	if (istype(W, /obj/item/assembly/prox_ignite))
 		var/obj/item/assembly/prox_ignite/S = W
 		if (!( S.status ))
 			return
-		var/obj/item/assembly/m_i_ptank/R = new /obj/item/assembly/m_i_ptank( user )
+		var/obj/item/assembly/m_i_ptank/R = new
 		R.part1 = S.part1
 		S.part1.loc = R
 		S.part1.master = R
+
 		R.part2 = S.part2
 		S.part2.loc = R
 		S.part2.master = R
-		S.layer = initial(S.layer)
-		if (user.client)
-			user.client.screen -= S
-		if (user.r_hand == S)
-			user.u_equip(S)
-			user.r_hand = R
-		else
-			user.u_equip(S)
-			user.l_hand = R
+
 		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		if (user.client)
-			user.client.screen -= src
-		src.loc = R
 		R.part3 = src
-		R.layer = 20
-		R.loc = user
+
+		user.put_in_hand(R)
+		user.before_take_item(src)
+		src.loc = R
+
 		S.part1 = null
 		S.part2 = null
-		//S = null
 		del(S)
 
 	if (istype(W, /obj/item/assembly/time_ignite))
 		var/obj/item/assembly/time_ignite/S = W
 		if (!( S.status ))
 			return
-		var/obj/item/assembly/t_i_ptank/R = new /obj/item/assembly/t_i_ptank( user )
+		var/obj/item/assembly/t_i_ptank/R = new
 		R.part1 = S.part1
-		if (S.part1)
-			S.part1.loc = R
-			S.part1.master = R
+		S.part1.loc = R
+		S.part1.master = R
+
 		R.part2 = S.part2
-		if (S.part2)
-			S.part2.loc = R
-			S.part2.master = R
-		S.layer = initial(S.layer)
-		if (user.client)
-			user.client.screen -= S
-		if (user.r_hand == S)
-			user.u_equip(S)
-			user.r_hand = R
-		else
-			user.u_equip(S)
-			user.l_hand = R
+		S.part2.loc = R
+		S.part2.master = R
+
 		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		if (user.client)
-			user.client.screen -= src
-		src.loc = R
 		R.part3 = src
-		R.layer = 20
-		R.loc = user
+
+		user.put_in_hand(R)
+		user.before_take_item(src)
+		src.loc = R
+
 		S.part1 = null
 		S.part2 = null
-		//S = null
 		del(S)
 	if (istype(W, /obj/item/assembly/a_i_a))
 		var/obj/item/assembly/a_i_a/S = W
 		if (!( S.status ))
 			return
-		var/obj/item/clothing/suit/armor/a_i_a_ptank/R = new /obj/item/clothing/suit/armor/a_i_a_ptank( user )
+		var/obj/item/clothing/suit/armor/a_i_a_ptank/R = new
 		R.part1 = S.part1
 		S.part1.loc = R
 		S.part1.master = R
+
 		R.part2 = S.part2
 		S.part2.loc = R
 		S.part2.master = R
+
 		R.part3 = S.part3
 		S.part3.loc = R
 		S.part3.master = R
-		S.layer = initial(S.layer)
-		if (user.client)
-			user.client.screen -= S
-		if (user.r_hand == S)
-			user.u_equip(S)
-			user.r_hand = R
-		else
-			user.u_equip(S)
-			user.l_hand = R
+
 		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		if (user.client)
-			user.client.screen -= src
-		src.loc = R
 		R.part4 = src
-		R.layer = 20
-		R.loc = user
+
+		user.put_in_hand(R)
+		user.before_take_item(src)
+		src.loc = R
+
 		S.part1 = null
 		S.part2 = null
 		S.part3 = null
-		//S = null
 		del(S)
 // PantsNote: More flamethrower assembly code. WOO!
 	if (istype(W, /obj/item/assembly/w_r_ignite))
 		var/obj/item/assembly/w_r_ignite/S = W
 		if (!( S.status ))
 			return
-		var/obj/item/weapon/flamethrower/R = new /obj/item/weapon/flamethrower( user )
+		var/obj/item/weapon/flamethrower/R = new
 		R.part1 = S.part1
 		S.part1.loc = R
 		S.part1.master = R
+
 		R.part2 = S.part2
 		S.part2.loc = R
 		S.part2.master = R
+
 		R.part3 = S.part3
 		S.part3.loc = R
 		S.part3.master = R
-		S.layer = initial(S.layer)
-		if (user.client)
-			user.client.screen -= S
-		if (user.r_hand == S)
-			user.u_equip(S)
-			user.r_hand = R
-		else
-			user.u_equip(S)
-			user.l_hand = R
+
 		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		if (user.client)
-			user.client.screen -= src
-		src.loc = R
 		R.part4 = src
-		R.layer = 20
-		R.loc = user
+
+		user.put_in_hand(R)
+		user.before_take_item(src)
+		src.loc = R
+
 		S.part1 = null
 		S.part2 = null
 		S.part3 = null
-		//S = null
 		del(S)
-
 	return

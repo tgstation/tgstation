@@ -169,13 +169,7 @@
 			implants += W
 
 	for(var/obj/item/W in usr)
-		usr.u_equip(W)
-		if (usr.client)
-			usr.client.screen -= W
-		if (W)
-			W.loc = usr.loc
-			W.dropped(usr)
-			W.layer = initial(W.layer)
+		usr.drop_from_slot(W)
 
 	usr.update_clothing()
 	usr.monkeyizing = 1

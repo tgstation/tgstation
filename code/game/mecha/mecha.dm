@@ -108,7 +108,8 @@
 				return
 		var/obj/mecha/Mech = M.loc
 		spawn() //this helps prevent clickspam fest.
-			Mech.click_action(object,M)
+			if (Mech)
+				Mech.click_action(object,M)
 	else
 		return ..()
 

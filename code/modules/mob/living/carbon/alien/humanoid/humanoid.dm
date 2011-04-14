@@ -1,20 +1,19 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
+	var/datum/reagents/R = new/datum/reagents(100)
+	reagents = R
+	R.my_atom = src
+	if(src.name == "alien")
+		src.name = text("alien ([rand(1, 1000)])")
+	src.real_name = src.name
 	spawn (1)
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
 		if(!istype(src, /mob/living/carbon/alien/humanoid/queen))
 			src.stand_icon = new /icon('alien.dmi', "alien_s")
 			src.lying_icon = new /icon('alien.dmi', "alien_l")
 		src.icon = src.stand_icon
-
-		if(src.name == "alien") src.name = text("alien ([rand(1, 1000)])")
-		src.real_name = src.name
-		src << "\blue Your icons have been generated!"
-
 		update_clothing()
+		src << "\blue Your icons have been generated!"
 	..()
 
 

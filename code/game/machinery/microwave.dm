@@ -91,13 +91,13 @@
 			new O.type (src)
 			O:use(1)
 			user.visible_message( \
-				"[user] has added one of [O] to \the [src].", \
+				"\blue [user] has added one of [O] to \the [src].", \
 				"\blue You add one of [O] to \the [src].")
 		else
 			user.before_take_item(O)
 			O.loc = src
 			user.visible_message( \
-				"[user] has added \the [O] to \the [src].", \
+				"\blue [user] has added \the [O] to \the [src].", \
 				"\blue You add \the [O] to \the [src].")
 	else if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
 	        istype(O,/obj/item/weapon/reagent_containers/food/drinks) || \

@@ -87,9 +87,10 @@
 /datum/recipe/proc/make_food(var/obj/container as obj)
 	var/obj/result_obj = new result(container)
 	for (var/obj/O in (container.contents-result_obj))
-		O.reagents.del_reagent("nutriment")
-		O.reagents.update_total()
-		O.reagents.trans_to(result_obj, O.reagents.total_volume)
+		if (O.reagents)
+			O.reagents.del_reagent("nutriment")
+			O.reagents.update_total()
+			O.reagents.trans_to(result_obj, O.reagents.total_volume)
 		del(O)
 	container.reagents.clear_reagents()
 	return result_obj
@@ -110,7 +111,9 @@
 		var/i_count = 0
 		. = possible_recipes[1]
 		for (var/datum/recipe/recipe in possible_recipes)
-			if (recipe.items.len > i_count || (recipe.items.len == i_count && recipe.reagents.len > r_count ))
+			var/N_i = (recipe.items)?(recipe.items.len):0
+			var/N_r = (recipe.reagents)?(recipe.reagents.len):0
+			if (N_i > i_count || (N_i== i_count && N_r > r_count ))
 				r_count = recipe.reagents.len
 				i_count = recipe.items.len
 				. = recipe

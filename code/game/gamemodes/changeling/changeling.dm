@@ -183,7 +183,7 @@
 		world << sound('intercept.ogg')
 
 	check_finished()
-		if(!changeling.current)
+		if(!changeling)
 			return 1
 
 		if(istype(changeling.current,/mob/living/silicon))

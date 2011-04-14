@@ -36,13 +36,13 @@
 			event = 1
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('spanomalies.ogg')
-			var/list/turfs = list(	)
+			var/list/turfs = new
 			var/turf/picked
-			for(var/turf/T in world)
-				if(T.z == 1 && istype(T,/turf/simulated/floor) && !istype(T,/turf/space))
+			for(var/turf/simulated/floor/T in world)
+				if(T.z == 1)
 					turfs += T
-			for(var/turf/T in world)
-				if(prob(20) && T.z == 1 && istype(T,/turf/simulated/floor))
+			for(var/turf/simulated/floor/T in turfs)
+				if(prob(20))
 					spawn(50+rand(0,3000))
 						picked = pick(turfs)
 						var/obj/portal/P = new /obj/portal( T )

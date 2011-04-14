@@ -5,14 +5,7 @@
 		src << "Only administrators may use this command."
 		return
 	for(var/obj/item/W in M)
-		if (istype(W,/obj/item))
-			M.u_equip(W)
-			if (M.client)
-				M.client.screen -= W
-			if (W)
-				W.loc = M.loc
-				W.dropped(M)
-				W.layer = initial(W.layer)
+		M.drop_from_slot(W)
 
 	log_admin("[key_name(usr)] made [key_name(M)] drop everything!")
 	message_admins("[key_name_admin(usr)] made [key_name_admin(M)] drop everything!", 1)
@@ -29,14 +22,7 @@
 			return
 		//strip their stuff before they teleport into a cell :downs:
 		for(var/obj/item/W in M)
-			if (!istype(W,/datum/organ))
-				M.u_equip(W)
-				if (M.client)
-					M.client.screen -= W
-				if (W)
-					W.loc = M.loc
-					W.dropped(M)
-					W.layer = initial(W.layer)
+			M.drop_from_slot(W)
 		//teleport person to cell
 		M.paralysis += 5
 		sleep(5)	//so they black out before warping

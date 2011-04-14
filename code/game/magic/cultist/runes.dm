@@ -513,7 +513,10 @@ var/list/sacrificed = list()
 		communicate()
 			var/input = input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "") as text|null
 			if(!input)
-				return fizzle()
+				if (istype(src))
+					return fizzle()
+				else
+					return
 			if(istype(src,/obj/rune))
 				usr.say("O bidai nabora se'sma!")
 			else

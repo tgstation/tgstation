@@ -2,10 +2,10 @@
 	var/obj/item/device/mmi/container = null
 
 	New()
-		spawn(1)
-			var/datum/reagents/R = new/datum/reagents(1000)
-			reagents = R
-			R.my_atom = src
+		var/datum/reagents/R = new/datum/reagents(1000)
+		reagents = R
+		R.my_atom = src
+		..()
 
 	say_understands(var/other)
 		if (istype(other, /mob/living/silicon/ai))

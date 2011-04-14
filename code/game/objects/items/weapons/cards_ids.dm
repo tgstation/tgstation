@@ -58,12 +58,9 @@ FINGERPRINT CARD
 	if(istype(W,/obj/item/weapon/photo))
 		if(!(PHOTO))
 			src.PHOTO = W
-			usr.u_equip(W)
+			usr.before_take_item(W)
 			W.loc = src
-			if ((usr.client && usr.s_active != src))
-				usr.client.screen -= W
 			//src.orient2hud(usr)
-			W.dropped(usr)
 			add_fingerprint(usr)
 			usr << "\blue You add the photo to the ID"
 		else

@@ -815,7 +815,7 @@
 						user << "\red You cannot directly remove reagents from this object."
 						return
 
-					var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+					var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
 
 					user << "\blue You fill the syringe with [trans] units of the solution."
 				if (reagents.total_volume >= reagents.maximum_volume)

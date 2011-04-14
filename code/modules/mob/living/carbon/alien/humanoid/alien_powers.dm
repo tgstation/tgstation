@@ -13,15 +13,18 @@ Doesn't work on other aliens/AI.*/
 	if(src.stat)
 		src << "\green You must be conscious to do this."
 		return
-	if(src.toxloss >= 100)
-		src.toxloss -= 100
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
-		var/obj/alien/weeds/W = new /obj/alien/weeds(src.loc)
-		W.Life()
-
-	else
+	if(!isturf(src.loc) || istype(src.loc, /turf/space))
+		src << "\green Bad place for garden!"
+		return
+	if(src.toxloss < 100)
 		src << "\green Not enough plasma stored."
+		return
+
+	src.toxloss -= 100
+	for(var/mob/O in viewers(src, null))
+		O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
+	var/obj/alien/weeds/W = new (src.loc)
+	W.Life()
 	return
 
 /mob/living/carbon/alien/humanoid/verb/call_to()

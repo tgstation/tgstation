@@ -275,6 +275,8 @@
 	return
 
 /obj/machinery/camera/attack_ai(var/mob/living/silicon/ai/user as mob)
+	if (!istype(user))
+		return
 	if (src.network != user.network || !(src.status))
 		return
 	user.current = src

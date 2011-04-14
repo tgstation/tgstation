@@ -34,7 +34,9 @@
 		"/obj/item/weapon/zippo",
 		"/obj/item/weapon/cigpacket",
 		"/obj/item/weapon/storage/pill_bottle",
-		"/obj/item/weapon/medical")
+		"/obj/item/weapon/medical",
+		"/obj/item/device/flashlight/pen"
+	)
    flags = FPRINT | TABLEPASS | ONBELT
 
 /obj/item/weapon/storage

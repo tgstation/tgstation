@@ -1122,8 +1122,9 @@
 		item.dropped(src)
 		if (item)
 			item.layer = initial(item.layer)
-	var/turf/T = get_turf(src.loc)
-	T.Entered(item)
+		var/turf/T = get_turf(src.loc)
+		if (istype(T))
+			T.Entered(item)
 	return
 
 /mob/proc/drop_item()
@@ -1138,16 +1139,17 @@
 			if (W)
 				W.layer = initial(W.layer)
 		var/turf/T = get_turf(src.loc)
-		if (T)
+		if (istype(T))
 			T.Entered(W)
 	return
 
 /mob/proc/before_take_item(var/obj/item/item)
-	u_equip(item)
-	if (src.client)
-		src.client.screen -= item
 	item.loc = null
-	src.update_clothing()
+	item.layer = initial(item.layer)
+	u_equip(item)
+	//if (src.client)
+	//	src.client.screen -= item
+	//src.update_clothing()
 	return
 
 /mob/proc/get_active_hand()
@@ -1299,7 +1301,10 @@
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
 
-	mind.store_memory(msg)
+	if(mind)
+		mind.store_memory(msg)
+	else
+		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
 
 /mob/proc/store_memory(msg as message, popup, sane = 1)
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)

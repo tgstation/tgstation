@@ -46,7 +46,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			if (!opened)
 				opened = 1
 				if(linked_console)
-					linked_console.linked_lathe = null
+					linked_console.linked_destroy = null
 					linked_console = null
 				icon_state = "d_analyzer_t"
 				user << "You open the maintenance hatch of [src]."

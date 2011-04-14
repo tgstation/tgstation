@@ -331,7 +331,8 @@
 		R.amount--
 		throw_item = new dump_path(src.loc)
 		break
-
+	if (!throw_item)
+		return 0
 	spawn(0)
 		throw_item.throw_at(target, 16, 3)
 	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")

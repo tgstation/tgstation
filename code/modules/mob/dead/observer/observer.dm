@@ -174,3 +174,12 @@ var/list/karma_spenders = list()
 	else if(!src.client.be_alien)
 		src.client.be_alien = 1
 		src << "You are now included in alien candidate lists until end of round."
+
+/mob/dead/observer/memory()
+	set hidden = 1
+	src << "\red You are dead! You have no mind to store memory!"
+
+/mob/dead/observer/add_memory()
+	set hidden = 1
+	src << "\red You are dead! You have no mind to store memory!"
+

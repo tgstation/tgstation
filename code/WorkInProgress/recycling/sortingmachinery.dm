@@ -11,10 +11,11 @@
 
 
 	attack_hand(mob/user as mob)
-		src.wrapped.loc = (get_turf(src.loc))
-		if (istype(src.wrapped,/obj/closet))
-			var/obj/closet/O = src.wrapped
-			O.welded = 0
+		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+			src.wrapped.loc = (get_turf(src.loc))
+			if (istype(src.wrapped,/obj/closet))
+				var/obj/closet/O = src.wrapped
+				O.welded = 0
 		del(src)
 		return
 
@@ -36,7 +37,8 @@
 
 
 	attack_hand(mob/user as mob)
-		src.wrapped.loc = (get_turf(src.loc))
+		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+			src.wrapped.loc = (get_turf(src.loc))
 
 		del(src)
 		return

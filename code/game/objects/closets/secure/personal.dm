@@ -24,7 +24,7 @@
 			user << "\red It appears to be broken."
 			return
 		var/obj/item/weapon/card/id/I = W
-		if (src.allowed(user) || !src.registered || (istype(W, /obj/item/weapon/card/id) && src.registered == I.registered))
+		if (src.allowed(user) || !src.registered || (istype(I) && (src.registered == I.registered)))
 			//they can open all lockers, or nobody owns this, or they own this locker
 			src.locked = !( src.locked )
 			for(var/mob/O in viewers(user, 3))

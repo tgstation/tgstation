@@ -87,51 +87,50 @@ datum
 				return
 
 
-			reaction_turf(var/turf/T, var/volume)//splash the blood all over the place
+			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
+				if(!istype(T)) return
 				var/datum/reagent/blood/self = src
 				src = null
-				if(!istype(T, /turf/simulated/)) return
 				var/datum/disease/D = self.data["virus"]
-				if(istype(self.data["donor"], /mob/living/carbon/human) || !self.data["donor"])
-					var/turf/simulated/source2 = T
-					var/list/objsonturf = range(0,T)
-					var/i
-					for(i=1, i<=objsonturf.len, i++)
-						if(istype(objsonturf[i],/obj/decal/cleanable/blood))
-							return
-					var/obj/decal/cleanable/blood/blood_prop = new /obj/decal/cleanable/blood(source2)
-					blood_prop.blood_DNA = self.data["blood_DNA"]
-					blood_prop.blood_type = self.data["blood_type"]
-					if(D)
+				if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
+					var/obj/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
+					if(!blood_prop) //first blood!
+						blood_prop = new(T)
+						blood_prop.blood_DNA = self.data["blood_DNA"]
+						blood_prop.blood_type = self.data["blood_type"]
+					if(D && !blood_prop.virus) //TODO: multiple viruses
 						blood_prop.virus = new D.type
 						blood_prop.virus.holder = blood_prop
-					if(istype(T, /turf/simulated/floor) && D)
-						blood_prop.virus.spread_type = CONTACT_FEET
-					else if (D)
-						blood_prop.virus.spread_type = CONTACT_HANDS
+						if(T.density==0)
+							blood_prop.virus.spread_type = CONTACT_FEET
+						else
+							blood_prop.virus.spread_type = CONTACT_HANDS
 
 				else if(istype(self.data["donor"], /mob/living/carbon/monkey))
-					var/turf/simulated/source1 = T
-					var/obj/decal/cleanable/blood/blood_prop = new /obj/decal/cleanable/blood(source1)
-					blood_prop.blood_DNA = self.data["blood_DNA"]
-					if(D)
+					var/obj/decal/cleanable/blood/blood_prop = locate() in T
+					if(!blood_prop)
+						blood_prop = new(T)
+						blood_prop.blood_DNA = self.data["blood_DNA"]
+					if(D && !blood_prop.virus)
 						blood_prop.virus = new D.type
 						blood_prop.virus.holder = blood_prop
-					if(istype(T, /turf/simulated/floor))
-						blood_prop.virus.spread_type = CONTACT_FEET
-					else
-						blood_prop.virus.spread_type = CONTACT_HANDS
+						if(T.density==0)
+							blood_prop.virus.spread_type = CONTACT_FEET
+						else
+							blood_prop.virus.spread_type = CONTACT_HANDS
 
 				else if(istype(self.data["donor"], /mob/living/carbon/alien))
-					var/turf/simulated/source2 = T
-					var/obj/decal/cleanable/xenoblood/blood_prop = new /obj/decal/cleanable/xenoblood(source2)
-					if(D)
+					var/obj/decal/cleanable/xenoblood/blood_prop = locate() in T
+					if(!blood_prop)
+						blood_prop = new(T)
+						blood_prop.blood_DNA = self.data["blood_DNA"]
+					if(D && !blood_prop.virus)
 						blood_prop.virus = new D.type
 						blood_prop.virus.holder = blood_prop
-					if(istype(T, /turf/simulated/floor))
-						blood_prop.virus.spread_type = CONTACT_FEET
-					else
-						blood_prop.virus.spread_type = CONTACT_HANDS
+						if(T.density==0)
+							blood_prop.virus.spread_type = CONTACT_FEET
+						else
+							blood_prop.virus.spread_type = CONTACT_HANDS
 				return
 
 /* Must check the transfering of reagents and their data first. They all can point to one disease datum.
@@ -165,24 +164,25 @@ datum
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 			reagent_state = LIQUID
 
-			reaction_turf(var/turf/T, var/volume)
-				if (istype(T, /turf/space)) return
+			reaction_turf(var/turf/simulated/T, var/volume)
+				if (!istype(T)) return
 				src = null
 				if(volume >= 3)
-					if(T:wet >= 1) return
-					T:wet = 1
-					if(T:wet_overlay)
-						T:overlays -= T:wet_overlay
-						T:wet_overlay = null
-					T:wet_overlay = image('water.dmi',T,"wet_floor")
-					T:overlays += T:wet_overlay
+					if(T.wet >= 1) return
+					T.wet = 1
+					if(T.wet_overlay)
+						T.overlays -= T.wet_overlay
+						T.wet_overlay = null
+					T.wet_overlay = image('water.dmi',T,"wet_floor")
+					T.overlays += T.wet_overlay
 
 					spawn(800)
-						if(T:wet >= 2) return
-						T:wet = 0
-						if(T:wet_overlay)
-							T:overlays -= T:wet_overlay
-							T:wet_overlay = null
+						if (!istype(T)) return
+						if(T.wet >= 2) return
+						T.wet = 0
+						if(T.wet_overlay)
+							T.overlays -= T.wet_overlay
+							T.wet_overlay = null
 
 				var/hotspot = (locate(/obj/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
@@ -210,16 +210,17 @@ datum
 			description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 			reagent_state = LIQUID
 
-			reaction_turf(var/turf/T, var/volume)
-				if (istype(T, /turf/space)) return
+			reaction_turf(var/turf/simulated/T, var/volume)
+				if (!istype(T)) return
 				src = null
-				if(T:wet >= 2) return
-				T:wet = 2
+				if(T.wet >= 2) return
+				T.wet = 2
 				spawn(800)
-					T:wet = 0
-					if(T:wet_overlay)
-						T:overlays -= T:wet_overlay
-						T:wet_overlay = null
+					if (!istype(T)) return
+					T.wet = 0
+					if(T.wet_overlay)
+						T.overlays -= T.wet_overlay
+						T.wet_overlay = null
 					return
 
 		bilk
@@ -1430,23 +1431,25 @@ datum
 				M:nutrition += nutriment_factor
 				..()
 				return
-			reaction_turf(var/turf/T, var/volume)
+			reaction_turf(var/turf/simulated/T, var/volume)
+				if (!istype(T)) return
 				src = null
 				if(volume >= 3)
-					if(T:wet >= 1) return
-					T:wet = 1
-					if(T:wet_overlay)
-						T:overlays -= T:wet_overlay
-						T:wet_overlay = null
-					T:wet_overlay = image('water.dmi',T,"wet_floor")
-					T:overlays += T:wet_overlay
+					if(T.wet >= 1) return
+					T.wet = 1
+					if(T.wet_overlay)
+						T.overlays -= T.wet_overlay
+						T.wet_overlay = null
+					T.wet_overlay = image('water.dmi',T,"wet_floor")
+					T.overlays += T.wet_overlay
 
 					spawn(800)
-						if(T:wet >= 2) return
-						T:wet = 0
-						if(T:wet_overlay)
-							T:overlays -= T:wet_overlay
-							T:wet_overlay = null
+						if (!istype(T)) return
+						if(T.wet >= 2) return
+						T.wet = 0
+						if(T.wet_overlay)
+							T.overlays -= T.wet_overlay
+							T.wet_overlay = null
 				var/hotspot = (locate(/obj/hotspot) in T)
 				if(hotspot)
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
@@ -2223,7 +2226,6 @@ datum
 			description = "Deny drinking this and prepare for THE LAW."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
-				spawn(5)
 				M.stunned = 2
 				if(!data) data = 1
 				data++

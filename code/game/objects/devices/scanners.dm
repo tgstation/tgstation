@@ -82,6 +82,8 @@ MASS SPECTROMETER
 
 /obj/item/device/detective_scanner/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 
+	if (!istype(M))
+		user << "\red [M] is not humas and cannot have the fingerprints."
 	if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
 		user << "\blue No fingerprints found on [M]"
 	else

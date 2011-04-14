@@ -114,6 +114,8 @@
 	return
 
 /obj/item/assembly/time_ignite/receive_signal()
+	if (!status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
 	src.part2.ignite()
@@ -130,14 +132,12 @@
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
-		if (src.part1)
-			src.part1.loc = T
-			src.part1.master = null
-			src.part1 = null
-		if (src.part2)
-			src.part2.loc = T
-			src.part2.master = null
-			src.part2 = null
+		src.part1.loc = T
+		src.part1.master = null
+		src.part1 = null
+		src.part2.loc = T
+		src.part2.master = null
+		src.part2 = null
 
 		del(src)
 		return
@@ -148,8 +148,7 @@
 		user.show_message("\blue The timer is now secured!", 1)
 	else
 		user.show_message("\blue The timer is now unsecured!", 1)
-	if (src.part2)
-		src.part2.status = src.status
+	src.part2.status = src.status
 	src.add_fingerprint(user)
 	return
 
@@ -166,10 +165,10 @@
 		if (ismob(T))
 			T = T.loc
 		src.part1.loc = T
-		src.part2.loc = T
 		src.part1.master = null
-		src.part2.master = null
 		src.part1 = null
+		src.part2.loc = T
+		src.part2.master = null
 		src.part2 = null
 
 		del(src)
@@ -183,7 +182,22 @@
 		src.part2.status = src.status
 		src.add_fingerprint(user)
 	if(( istype(W, /obj/item/clothing/suit/armor/vest) ) && src.status)
-		var/obj/item/assembly/a_i_a/R = new /obj/item/assembly/a_i_a( user )
+		var/obj/item/assembly/a_i_a/R = new
+		R.part1 = part1
+		R.part1.master = R
+		part1 = null
+
+		R.part2 = part2
+		R.part2.master = R
+		part2 = null
+
+		user.put_in_hand(R)
+		user.before_take_item(W)
+		R.part3 = W
+		R.part3.master = R
+		del(src)
+		
+/* WTF THIS SHIT? It is working? Shouldn't. --rastaf0
 		W.loc = R
 		R.part1 = W
 		R.part2 = W
@@ -207,6 +221,7 @@
 		R.layer = 20
 		R.loc = user
 		src.add_fingerprint(user)
+*/
 	return
 /*	else if ((istype(W, /obj/item/device/timer) && !( src.status )))
 
@@ -241,18 +256,21 @@
 		if (ismob(T))
 			T = T.loc
 		src.part1.loc = T
-		src.part2.loc = T
-		src.part3.loc = T
 		src.part1.master = null
-		src.part2.master = null
-		src.part3.master = null
 		src.part1 = null
+		src.part2.loc = T
+		src.part2.master = null
 		src.part2 = null
+		src.part3.loc = T
+		src.part3.master = null
 		src.part3 = null
 
 		del(src)
 		return
 	if (( istype(W, /obj/item/weapon/screwdriver) ))
+		if (!src.status && (!part1||!part2||!part3))
+			user << "\red You cannot finish the assembly, not all components are in place!"
+			return
 		src.status = !( src.status )
 		if (src.status)
 			user.show_message("\blue The armor is now secured!", 1)
@@ -306,7 +324,6 @@
 	return
 
 /obj/item/assembly/rad_time/attack_self(mob/user as mob)
-
 	src.part1.attack_self(user, src.status)
 	src.part2.attack_self(user, src.status)
 	src.add_fingerprint(user)
@@ -369,7 +386,6 @@
 	return
 
 /obj/item/assembly/rad_prox/receive_signal(datum/signal/signal)
-	if (!src.part2 || !src.part1) return
 	if (signal.source == src.part2)
 		src.part1.send_signal("ACTIVATE")
 	return
@@ -425,7 +441,6 @@
 	return
 
 /obj/item/assembly/rad_infra/attack_self(mob/user as mob)
-
 	src.part1.attack_self(user, src.status)
 	src.part2.attack_self(user, src.status)
 	src.add_fingerprint(user)
@@ -516,7 +531,8 @@
 
 /obj/item/assembly/prox_ignite/attack_self(mob/user as mob)
 
-	src.part1.attack_self(user, src.status)
+	if (src.part1)
+		src.part1.attack_self(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -578,7 +594,8 @@
 
 /obj/item/assembly/rad_ignite/attack_self(mob/user as mob)
 
-	src.part1.attack_self(user, src.status)
+	if (src.part1)
+		src.part1.attack_self(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -631,13 +648,13 @@
 /obj/item/assembly/m_i_ptank/dropped()
 
 	spawn( 0 )
-		src.part1.sense()
+		part1.sense()
 		return
 	return
 
 /obj/item/assembly/m_i_ptank/examine()
 	..()
-	src.part3.examine()
+	part3.examine()
 
 /obj/item/assembly/m_i_ptank/Del()
 
@@ -654,36 +671,25 @@
 	..()
 	if (istype(W, /obj/item/device/analyzer))
 		src.part3.attackby(W, user)
-
+		return
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
-		var/obj/item/assembly/prox_ignite/R = new /obj/item/assembly/prox_ignite(  )
+		var/obj/item/assembly/prox_ignite/R = new(get_turf(src.loc))
 		R.part1 = src.part1
+		R.part1.master = R
+		R.part1.loc = R
 		R.part2 = src.part2
-		R.loc = src.loc
-		if (user.r_hand == src)
-			user.r_hand = R
-			R.layer = 20
+		R.part2.master = R
+		R.part2.loc = R
+		if (user.get_inactive_hand()==src)
+			user.put_in_inactive_hand(part3)
 		else
-			if (user.l_hand == src)
-				user.l_hand = R
-				R.layer = 20
-		src.part1.loc = R
-		src.part2.loc = R
-		src.part1.master = R
-		src.part2.master = R
-		var/turf/T = src.loc
-		if (!( istype(T, /turf) ))
-			T = T.loc
-		if (!( istype(T, /turf) ))
-			T = T.loc
-		src.part3.loc = T
+			part3.loc = src.loc
 		src.part1 = null
 		src.part2 = null
 		src.part3 = null
-		//SN src = null
 		del(src)
 		return
-	if (!( istype(W, /obj/item/weapon/weldingtool) ))
+	if (!( istype(W, /obj/item/weapon/weldingtool)&&W:welding ))
 		return
 	if (!( src.status ))
 		src.status = 1
@@ -754,35 +760,22 @@
 
 	if (istype(W, /obj/item/device/analyzer))
 		src.part3.attackby(W, user)
-
+		return
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
-		var/obj/item/assembly/time_ignite/R = new /obj/item/assembly/time_ignite(  )
+		var/obj/item/assembly/time_ignite/R = new(get_turf(src.loc))
 		R.part1 = src.part1
+		R.part1.master = R
+		R.part1.loc = R
 		R.part2 = src.part2
-		R.loc = src.loc
-		if (user.r_hand == src)
-			user.r_hand = R
-			R.layer = 20
+		R.part2.master = R
+		R.part2.loc = R
+		if (user.get_inactive_hand()==src)
+			user.put_in_inactive_hand(part3)
 		else
-			if (user.l_hand == src)
-				user.l_hand = R
-				R.layer = 20
-		if(src.part1)
-			src.part1.loc = R
-			src.part1.master = R
-		if(src.part2)
-			src.part2.loc = R
-			src.part2.master = R
-		var/turf/T = src.loc
-		if (!( istype(T, /turf) ))
-			T = T.loc
-		if (!( istype(T, /turf) ))
-			T = T.loc
-		src.part3.loc = T
+			part3.loc = src.loc
 		src.part1 = null
 		src.part2 = null
 		src.part3 = null
-		//SN src = null
 		del(src)
 		return
 	if (!( istype(W, /obj/item/weapon/weldingtool) && W:welding))
@@ -798,15 +791,13 @@
 			bombers += "[key_name(user)] unwelded a time bomb. Temp: [src.part3.air_contents.temperature-T0C]"
 			user << "\blue The hole has been closed."
 	src.part2.status = src.status
-
 	src.add_fingerprint(user)
 	return
 
 /obj/item/assembly/t_i_ptank/attack_self(mob/user as mob)
 
-	if (src.part1)
-		src.part1.attack_self(user, 1)
-		playsound(src.loc, 'armbomb.ogg', 100, 1)
+	src.part1.attack_self(user, 1)
+	playsound(src.loc, 'armbomb.ogg', 100, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -848,33 +839,22 @@
 
 	if (istype(W, /obj/item/device/analyzer))
 		src.part3.attackby(W, user)
-
+		return
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
-		var/obj/item/assembly/rad_ignite/R = new /obj/item/assembly/rad_ignite(  )
+		var/obj/item/assembly/rad_ignite/R = new(get_turf(src.loc))
 		R.part1 = src.part1
+		R.part1.master = R
+		R.part1.loc = R
 		R.part2 = src.part2
-		R.loc = src.loc
-		if (user.r_hand == src)
-			user.r_hand = R
-			R.layer = 20
+		R.part2.master = R
+		R.part2.loc = R
+		if (user.get_inactive_hand()==src)
+			user.put_in_inactive_hand(part3)
 		else
-			if (user.l_hand == src)
-				user.l_hand = R
-				R.layer = 20
-		src.part1.loc = R
-		src.part2.loc = R
-		src.part1.master = R
-		src.part2.master = R
-		var/turf/T = src.loc
-		if (!( istype(T, /turf) ))
-			T = T.loc
-		if (!( istype(T, /turf) ))
-			T = T.loc
-		src.part3.loc = T
+			part3.loc = src.loc
 		src.part1 = null
 		src.part2 = null
 		src.part3 = null
-		//SN src = null
 		del(src)
 		return
 	if (!( istype(W, /obj/item/weapon/weldingtool) && W:welding ))
@@ -904,37 +884,26 @@
 	..()
 	if (istype(W, /obj/item/device/analyzer))
 		src.part4.attackby(W, user)
-
+		return
 	if ((istype(W, /obj/item/weapon/wrench) && !( src.status )))
-		var/obj/item/assembly/a_i_a/R = new /obj/item/assembly/a_i_a(  )
+		var/obj/item/assembly/a_i_a/R = new(get_turf(src.loc))
 		R.part1 = src.part1
+		R.part1.master = R
+		R.part1.loc = R
 		R.part2 = src.part2
+		R.part2.master = R
+		R.part2.loc = R
 		R.part3 = src.part3
-		R.loc = src.loc
-		if (user.r_hand == src)
-			user.r_hand = R
-			R.layer = 20
+		R.part3.master = R
+		R.part3.loc = R
+		if (user.get_inactive_hand()==src)
+			user.put_in_inactive_hand(part4)
 		else
-			if (user.l_hand == src)
-				user.l_hand = R
-				R.layer = 20
-		src.part1.loc = R
-		src.part2.loc = R
-		src.part3.loc = R
-		src.part1.master = R
-		src.part2.master = R
-		src.part3.master = R
-		var/turf/T = src.loc
-		if (!( istype(T, /turf) ))
-			T = T.loc
-		if (!( istype(T, /turf) ))
-			T = T.loc
-		src.part4.loc = T
+			part4.loc = src.loc
 		src.part1 = null
 		src.part2 = null
 		src.part3 = null
 		src.part4 = null
-		//SN src = null
 		del(src)
 		return
 	if (( istype(W, /obj/item/weapon/weldingtool) && W:welding))
@@ -953,10 +922,8 @@
 	return
 
 /obj/item/assembly/r_i_ptank/attack_self(mob/user as mob)
-
-	if (src.part1)
-		playsound(src.loc, 'armbomb.ogg', 100, 1)
-		src.part1.attack_self(user, 1)
+	playsound(src.loc, 'armbomb.ogg', 100, 1)
+	src.part1.attack_self(user, 1)
 	src.add_fingerprint(user)
 	return
 

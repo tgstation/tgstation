@@ -4,13 +4,7 @@
 	for(var/obj/item/W in src)
 		if (W==src.w_uniform) // will be teared
 			continue
-		src.u_equip(W)
-		if (src.client)
-			src.client.screen -= W
-		if (W)
-			W.loc = src.loc
-			W.dropped(src)
-			W.layer = initial(W.layer)
+		drop_from_slot(W)
 	src.update_clothing()
 	src.monkeyizing = 1
 	src.canmove = 0
@@ -58,15 +52,8 @@
 /mob/living/carbon/AIize()
 	if (src.monkeyizing)
 		return
-	for(var/obj/item/weapon/W in src)
-		src.u_equip(W)
-		if (src.client)
-			src.client.screen -= W
-		if (W)
-			W.loc = src.loc
-			W.dropped(src)
-			W.layer = initial(W.layer)
-			del(W)
+	for(var/obj/item/W in src)
+		drop_from_slot(W)
 	src.update_clothing()
 	src.monkeyizing = 1
 	src.canmove = 0
@@ -170,15 +157,8 @@
 /mob/living/carbon/human/proc/Robotize()
 	if (src.monkeyizing)
 		return
-	for(var/obj/item/weapon/W in src)
-		src.u_equip(W)
-		if (src.client)
-			src.client.screen -= W
-		if (W)
-			W.loc = src.loc
-			W.dropped(src)
-			W.layer = initial(W.layer)
-			del(W)
+	for(var/obj/item/W in src)
+		drop_from_slot(W)
 	src.update_clothing()
 	src.monkeyizing = 1
 	src.canmove = 0
@@ -235,14 +215,8 @@
 /mob/living/carbon/human/proc/Alienize()
 	if (src.monkeyizing)
 		return
-	for(var/obj/item/weapon/W in src)
-		src.u_equip(W)
-		if (src.client)
-			src.client.screen -= W
-		if (W)
-			W.loc = src.loc
-			W.dropped(src)
-			W.layer = initial(W.layer)
+	for(var/obj/item/W in src)
+		drop_from_slot(W)
 	src.update_clothing()
 	src.monkeyizing = 1
 	src.canmove = 0

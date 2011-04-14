@@ -1,21 +1,20 @@
 /mob/living/carbon/alien/humanoid/queen/New()
+	var/datum/reagents/R = new/datum/reagents(100)
+	reagents = R
+	R.my_atom = src
+//there should only be one queen
+//	if(src.name == "alien")
+//		src.name = text("alien ([rand(1, 1000)])")
+	src.real_name = src.name
 	spawn (1)
 		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
 		src.verbs += /mob/living/carbon/alien/humanoid/sentinel/verb/spit
 		src.verbs -= /mob/living/carbon/alien/humanoid/verb/ventcrawl
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
 		src.stand_icon = new /icon('alien.dmi', "queen_s")
 		src.lying_icon = new /icon('alien.dmi', "queen_l")
 		src.icon = src.stand_icon
-
-//there should only be one queen
-//		if(src.name == "alien") src.name = text("alien ([rand(1, 1000)])")
-		src.real_name = src.name
-		src << "\blue Your icons have been generated!"
-
 		update_clothing()
+		src << "\blue Your icons have been generated!"
 
 
 /mob/living/carbon/alien/humanoid/queen
