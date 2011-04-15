@@ -549,6 +549,7 @@
 	for(var/obj/lattice/LAT in src.loc)
 		if(LAT != src)
 			del(LAT)
+	icon = 'smoothlattice.dmi'
 	icon_state = "latticeblank"
 	updateOverlays()
 	for (var/dir in cardinal)
@@ -570,6 +571,20 @@
 	//	del(src)
 	spawn(1)
 		overlays = list()
+
+		var/dir_sum = 0
+
+		for (var/direction in cardinal)
+			if(locate(/obj/lattice, get_step(src, direction)))
+				dir_sum += direction
+			else
+				if(!(istype(get_step(src, direction), /turf/space)))
+					dir_sum += direction
+
+		icon_state = "lattice[dir_sum]"
+		return
+
+		/*
 		overlays += icon(icon,"lattice-middlebar") //the nw-se bar in the cneter
 		for (var/dir in cardinal)
 			if(locate(/obj/lattice, get_step(src, dir)))
@@ -590,6 +605,7 @@
 
 		if(!(overlays))
 			icon_state = "latticefull"
+		*/
 
 /obj/list_container
 	name = "list container"
