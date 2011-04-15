@@ -442,17 +442,26 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 	return
 
 /obj/item/weapon/gun/detectiverevolver/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
-
-	var/detective = ((istype(user:w_uniform, /obj/item/clothing/under/det) || !istype(user, /mob/living/carbon/human)) && istype(user:head, /obj/item/clothing/head/det_hat) && istype(user:wear_suit, /obj/item/clothing/suit/det_suit))
-
 	if (flag)
 		return
-	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
-		return
+
+	var/detective = 0
+	
+	if (istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		detective = (istype(H.w_uniform, /obj/item/clothing/under/det) && \
+                     istype(H.head,      /obj/item/clothing/head/det_hat) && \
+                     istype(H.wear_suit, /obj/item/clothing/suit/det_suit))
+	else if (istype(user, /mob/living/carbon/monkey))
+		if (ticker.mode != "monkey")
+			user << "\red You don't have the dexterity to do this!"
+			return
+		detective = 1
+		
 	if(!detective)
 		usr << "\red You just don't feel cool enough to use this gun looking like that."
 		return
+
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message("\red *click* *click*", 2)
@@ -487,19 +496,23 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 	return
 
 /obj/item/weapon/gun/detectiverevolver/attack(mob/M as mob, mob/living/user as mob)
-	src.add_fingerprint(user)
-	var/mob/living/carbon/human/H = user
-	var/detective
-	if(!istype(H))
-		detective = 0
-	else
-		detective = (istype(H.w_uniform, /obj/item/clothing/under/det) && istype(H.head, /obj/item/clothing/head/det_hat)  && istype(H.wear_suit, /obj/item/clothing/suit/det_suit))
-
-// ******* Check
-
+	var/detective = 0
+	
+	if (istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		detective = (istype(H.w_uniform, /obj/item/clothing/under/det) && \
+                     istype(H.head,      /obj/item/clothing/head/det_hat) && \
+                     istype(H.wear_suit, /obj/item/clothing/suit/det_suit))
+	else if (istype(user, /mob/living/carbon/monkey))
+		if (ticker.mode != "monkey")
+			user << "\red You don't have the dexterity to do this!"
+			return
+		detective = 1
+		
 	if(!detective)
-		usr << "\red You just don't feel cool enough to use this gun looking like that."
+		user << "\red You just don't feel cool enough to use this gun looking like that."
 		return
+	src.add_fingerprint(user)
 	..()
 	/*
 	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))

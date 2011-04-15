@@ -1017,7 +1017,7 @@ datum
 			id = "arithrazine"
 			description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M)
 				if(!M) M = holder.my_atom
 				M:radiation = 0
 				if(M:toxloss) M:toxloss--
