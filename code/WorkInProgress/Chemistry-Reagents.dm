@@ -473,8 +473,7 @@ datum
 			description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 			reagent_state = SOLID
 			on_mob_life(var/mob/M)
-				M.make_jittery(5)
-				M:nutrition += 3
+				M:nutrition += 1
 				..()
 				return
 
@@ -929,10 +928,11 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-5)
-				if(M:oxyloss) M:oxyloss = max(0, M:oxyloss-5)
+				M:cloneloss = 0
+				M:oxyloss = 0
+				M:radiation = 0
 				M:heal_organ_damage(5,5)
-				M:drowsyness = max(M:drowsyness-2, 0)
+				M:drowsyness = 0
 				if(holder.has_reagent("toxin"))
 					holder.remove_reagent("toxin", 2)
 				if(holder.has_reagent("stoxin"))
@@ -953,11 +953,11 @@ datum
 					holder.remove_reagent("carpotoxin", 1)
 				if(holder.has_reagent("zombiepowder"))
 					holder.remove_reagent("zombiepowder", 0.5)
-				M:brainloss = max(M:brainloss-5 , 0)
+				M:brainloss = 0
 				M.disabilities = 0
 				M.sdisabilities = 0
-				M:eye_blurry = max(M:eye_blurry-5 , 0)
-				M:eye_blind = max(M:eye_blind-5 , 0)
+				M:eye_blurry = 0
+				M:eye_blind = 0
 				M:disabilities &= ~1
 				M:sdisabilities &= ~1
 				if(M:toxloss) M:toxloss = max(0, M:toxloss-5)
@@ -999,7 +999,21 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				if(M:radiation) M:radiation--
+				M:radiation = max(M:radiation-3,0)
+				..()
+				return
+
+		arithrazine
+			name = "Arithrazine"
+			id = "arithrazine"
+			description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:radiation = 0
+				if(M:toxloss) M:toxloss--
+				if(prob(15))
+					M.take_organ_damage(1, 0)
 				..()
 				return
 
@@ -1025,20 +1039,6 @@ datum
 				M:eye_blind = max(M:eye_blind-5 , 0)
 				M:disabilities &= ~1
 //				M:sdisabilities &= ~1		Replaced by eye surgery
-				..()
-				return
-
-		arithrazine
-			name = "Arithrazine"
-			id = "arithrazine"
-			description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
-				if(!M) M = holder.my_atom
-				M:radiation = max(M:radiation-3,0)
-				if(M:toxloss) M:toxloss--
-				if(prob(15))
-					M.take_organ_damage(1, 0)
 				..()
 				return
 
@@ -1377,7 +1377,7 @@ datum
 						if (!M:stuttering) M:stuttering = 1
 						M.make_jittery(10)
 						M.make_dizzy(10)
-						M.druggy = max(M.druggy, 31)
+						M.druggy = max(M.druggy, 35)
 						if(prob(20)) M:emote(pick("twitch","giggle"))
 					if (10 to INFINITY)
 						if (!M:stuttering) M:stuttering = 1
@@ -1617,7 +1617,7 @@ datum
 				..()
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+5)
-				M:nutrition += 5
+				M:nutrition += 1
 				return
 
 		space_cola
@@ -1629,7 +1629,7 @@ datum
 				M:drowsyness = max(0,M:drowsyness-5)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature-5)
-				M:nutrition += 2
+				M:nutrition += 1
 				..()
 				return
 
@@ -1644,7 +1644,7 @@ datum
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				M.make_jittery(5)
-				M:nutrition += 2
+				M:nutrition += 1
 				..()
 				return
 
@@ -1659,7 +1659,7 @@ datum
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				M.make_jittery(5)
-				M:nutrition += 2
+				M:nutrition += 1
 				if(!data) data = 1
 				data++
 				M.dizziness +=4
@@ -1680,7 +1680,7 @@ datum
 				M:drowsyness = max(0,M:drowsyness-6)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
-				M:nutrition += 2
+				M:nutrition += 1
 				..()
 				return
 
@@ -1692,7 +1692,7 @@ datum
 			on_mob_life(var/mob/M)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
-				M:nutrition += 2
+				M:nutrition += 1
 				..()
 				return
 

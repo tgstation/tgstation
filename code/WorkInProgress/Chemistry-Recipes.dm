@@ -481,7 +481,7 @@ datum
 			id = "cleaner"
 			result = "cleaner"
 			required_reagents = list("ammonia" = 1, "water" = 1)
-			result_amount = 1
+			result_amount = 2
 
 		plantbgone
 			name = "Plant-B-Gone"

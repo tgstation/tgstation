@@ -327,7 +327,7 @@
 						if (bl.z != cl.z)
 							continue
 
-						ldat += "Bucket - <b>\[[bl.x],[bl.y]\]</b> - Water level: [B.reagents.total_volume]/70<br>"
+						ldat += "Bucket - <b>\[[bl.x],[bl.y]\]</b> - Water level: [B.reagents.total_volume]/100<br>"
 
 					if (!ldat)
 						menu += "None"

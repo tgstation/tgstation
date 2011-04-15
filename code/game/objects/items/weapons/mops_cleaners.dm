@@ -5,10 +5,10 @@ MOP
 
 */
 /obj/item/weapon/cleaner/New()
-	var/datum/reagents/R = new/datum/reagents(1000)
+	var/datum/reagents/R = new/datum/reagents(250)
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("cleaner", 1000)
+	R.add_reagent("cleaner", 250)
 
 /obj/item/weapon/cleaner/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
@@ -24,8 +24,8 @@ MOP
 	D.name = "chemicals"
 	D.icon = 'chemical.dmi'
 	D.icon_state = "chempuff"
-	D.create_reagents(10)
-	src.reagents.trans_to(D, 10)
+	D.create_reagents(5)
+	src.reagents.trans_to(D, 5)
 	playsound(src.loc, 'spray2.ogg', 50, 1, -6)
 
 	spawn(0)
