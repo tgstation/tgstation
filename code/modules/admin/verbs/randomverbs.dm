@@ -394,7 +394,7 @@ TO DO: actually integrate random appearance and player preference save.
 	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 	world << sound('ionstorm.ogg')
 
-/client/proc/cmd_admin_rejuvenate(mob/M as mob in world)
+/client/proc/cmd_admin_rejuvenate(mob/living/M as mob in world)
 	set category = "Special Verbs"
 	set name = "Rejuvenate"
     //    All admins should be authenticated, but... what if?
@@ -403,7 +403,7 @@ TO DO: actually integrate random appearance and player preference save.
 		return
 	if(!src.mob)
 		return
-	if(istype(M, /mob/dead/observer))
+	if(!istype(M))
 		alert("Cannot revive a ghost")
 		return
 	if(config.allow_admin_rev)
@@ -614,7 +614,7 @@ TO DO: actually integrate random appearance and player preference save.
 	// I will both remove their SVN access and permanently ban them from my servers.
 	return
 
-/client/proc/cmd_admin_check_contents(mob/M as mob in world)
+/client/proc/cmd_admin_check_contents(mob/living/M as mob in world)
 	set category = "Special Verbs"
 	set name = "Check Contents"
 

@@ -39,8 +39,8 @@
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = pick(oview(1,src))
 	if(!melee_can_hit || !istype(target, /atom)) return
-	if(istype(target, /mob))
-		var/mob/M = target
+	if(istype(target, /mob/living))
+		var/mob/living/M = target
 		if(src.occupant.a_intent == "hurt")
 			playsound(src, 'punch4.ogg', 50, 1)
 			if(damtype == "brute")
@@ -75,9 +75,9 @@
 				switch(damtype)
 					if("brute")
 						M.paralysis += 1
-						M.bruteloss += rand(force/2, force)
+						M.take_overall_damage(rand(force/2, force))
 					if("fire")
-						M.fireloss += rand(force/2, force)
+						M.take_overall_damage(0, rand(force/2, force))
 					if("tox")
 						M.toxloss += rand(force/2, force)
 					else

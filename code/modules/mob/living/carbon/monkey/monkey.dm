@@ -105,7 +105,7 @@
 			src.fireloss += 40
 		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
 	return
-
+/*
 /mob/living/carbon/monkey/bullet_act(flag)
 
 	if (flag == PROJECTILE_BULLET)
@@ -140,7 +140,7 @@
 		src.stuttering += 5
 		src.drowsyness += 5
 	return
-
+*/
 /mob/living/carbon/monkey/hand_p(mob/M as mob)
 	if ((M.a_intent == "hurt" && !( istype(src.wear_mask, /obj/item/clothing/mask/muzzle) )))
 		if ((prob(75) && src.health > 0))
@@ -704,12 +704,3 @@
 	del(src)
 	return
 
-/mob/living/carbon/monkey/heal_organ_damage(var/brute, var/burn)
-	bruteloss = max(0, bruteloss-brute) //HACK
-	fireloss = max(0, fireloss-burn) //HACK
-	src.updatehealth()
-
-/mob/living/carbon/monkey/take_organ_damage(var/brute, var/burn)
-	bruteloss += brute //HACK
-	fireloss += burn //HACK
-	src.updatehealth()

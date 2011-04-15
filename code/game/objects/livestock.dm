@@ -284,7 +284,7 @@
 					if(distance <= 1)  				//Am I close enough to attack it?
 						for(var/mob/O in viewers(world.view,src))
 							O.show_message("\red <B>[src.target] has been attacked by [src.name]!</B>", 1, "\red You hear someone fall.", 2)
-						target:bruteloss += strength
+						target.take_organ_damage(strength)
 						special_attack()
 						src.loc = target.loc
 						set_null()

@@ -376,10 +376,9 @@
 		src.occupant_message("\blue The [A] bounces off the armor.")
 		src.visible_message("The [A] bounces off the [src.name] armor")
 		src.log_append_to_last("Armor saved.")
-		if(istype(A, /mob))
-			var/mob/M = A
-			M.bruteloss += 10
-			M.updatehealth()
+		if(istype(A, /mob/living))
+			var/mob/living/M = A
+			M.take_organ_damage(10)
 	else if(istype(A, /obj))
 		var/obj/O = A
 		if(O.throwforce)

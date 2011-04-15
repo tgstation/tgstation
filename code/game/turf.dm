@@ -149,7 +149,7 @@
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if (istype(A,/mob/living/carbon))
-		var/mob/M = A
+		var/mob/living/carbon/M = A
 		if(M.lying)
 			return
 		if(istype(M, /mob/living/carbon/human))			// Split this into two seperate if checks, when non-humans were being checked it would throw a null error -- TLE
@@ -195,7 +195,7 @@
 				spawn(2) step(M, M.dir)
 				spawn(3) step(M, M.dir)
 				spawn(4) step(M, M.dir)
-				M.bruteloss += 2 // Was 5 -- TLE
+				M.take_organ_damage(2) // Was 5 -- TLE
 				M << "\blue You slipped on the floor!"
 				playsound(src.loc, 'slip.ogg', 50, 1, -3)
 				M.weakened = 10

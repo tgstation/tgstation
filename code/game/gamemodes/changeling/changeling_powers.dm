@@ -88,7 +88,7 @@
 	usr << "\blue We stab [T] with the proboscis."
 	usr.visible_message(text("\red <B>[usr] stabs [T] with the proboscis!</B>"))
 	T << "\red <B>You feel a sharp stabbing pain!</B>"
-	T.bruteloss += 40
+	T.take_overall_damage(40)
 
 	if (!do_mob(usr, T, 150))
 		usr << "\red Our absorption of [T] has been interrupted!"
@@ -191,8 +191,8 @@
 
 	for(var/obj/T in usr)
 		del(T)
-	for(var/R in usr.organs)
-		del(usr.organs[text("[]", R)])
+	//for(var/R in usr.organs) //redundant, let's give garbage collector work to do --rastaf0
+	//	del(usr.organs[text("[]", R)])
 
 	O.loc = usr.loc
 
@@ -341,7 +341,8 @@
 			usr.radiation = 0
 			//usr.health = 100
 			//usr.updatehealth()
-			usr.heal_overall_damage(1000, 1000)
+			var/mob/living/M = src
+			M.heal_overall_damage(1000, 1000)
 			usr.reagents.clear_reagents()
 			usr.lying = 0
 			usr.canmove = 1

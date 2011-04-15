@@ -20,24 +20,24 @@
 			H.UpdateDamage()
 	return
 
-/obj/item/weapon/storage/bible/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/storage/bible/attack(mob/M as mob, mob/living/user as mob)
 
 	var/chaplain = 0
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		chaplain = 1
 
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
+	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		user << "\red You don't have the dexterity to do this!"
 		return
 	if(!chaplain)
-		usr << "\red The book sizzles in your hands."
-		usr.fireloss += 10
+		user << "\red The book sizzles in your hands."
+		user.take_organ_damage(0,10)
 		return
 
-	if ((usr.mutations & 16) && prob(50))
-		usr << "\red The [src] slips out of your hand and hits your head."
-		usr.bruteloss += 10
-		usr.paralysis += 20
+	if ((user.mutations & 16) && prob(50))
+		user << "\red The [src] slips out of your hand and hits your head."
+		user.take_organ_damage(10)
+		user.paralysis += 20
 		return
 
 //	if(..() == BLOCKED)

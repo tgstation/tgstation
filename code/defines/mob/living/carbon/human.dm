@@ -52,6 +52,8 @@
 
 	var/mutantrace = null
 
+	var/list/organs = list(  )
+
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	nodamage = 1

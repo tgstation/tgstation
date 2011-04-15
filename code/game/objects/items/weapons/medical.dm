@@ -5,65 +5,33 @@ MEDICAL
 
 */
 
-/obj/item/weapon/medical/examine()
-	set src in view(1)
 
-	if (src.amount <= 0)
-		del(src)
+/obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
+	if (M.stat == 2)
+		var/t_him = "it"
+		if (M.gender == MALE)
+			t_him = "him"
+		else if (M.gender == FEMALE)
+			t_him = "her"
+		user << "\red \The [M] is dead, you cannot help [t_him]!"
 		return
 
-	..()
+	if (!istype(M))
+		user << "\red \The [src] cannot be applied to [M]!"
+		return 1
 
-	usr << "\icon[src] \blue There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!"
-
-/obj/item/weapon/medical/attack_hand(mob/user as mob)
-	if (user.r_hand == src || user.l_hand == src)
-		src.add_fingerprint(user)
-		var/obj/item/weapon/medical/split = new src.type(user)
-		split.amount = 1
-		src.amount--
-
-		if (user.hand)
-			user.l_hand = split
-		else
-			user.r_hand = split
-
-		split.layer = 20
-		split.add_fingerprint(user)
-
-		if (src.amount < 1)
-			del(src)
-			return
-	else
-		..()
-
-/obj/item/weapon/medical/attackby(obj/item/weapon/medical/W as obj, mob/user as mob)
-	..()
-	if (!istype(W, src.type))
-		return
-
-	if (W.amount == 5)
-		return
-
-	if (W.amount + src.amount > 5)
-		src.amount = (W.amount + src.amount) - 5
-		W.amount = 5
-	else
-		W.amount += src.amount
-		del(src)
-
-/obj/item/weapon/medical/attack(mob/M as mob, mob/user as mob)
-	if (M.health < 0)
-		return
-
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if ( ! (istype(user, /mob/living/carbon/human) || \
+			istype(user, /mob/living/silicon) || \
+			istype(user, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
 		user << "\red You don't have the dexterity to do this!"
-		return
+		return 1
 
 	if (user)
 		if (M != user)
-			for (var/mob/O in viewers(M, null))
-				O.show_message("\red [M] has been applied with [src] by [user]", 1)
+			user.visible_message( \
+				"\blue [M] has been applied with [src] by [user].", \
+				"\blue You apply \the [src] to [M]." \
+			)
 		else
 			var/t_himself = "itself"
 			if (user.gender == MALE)
@@ -71,8 +39,10 @@ MEDICAL
 			else if (user.gender == FEMALE)
 				t_himself = "herself"
 
-			for (var/mob/O in viewers(M, null))
-				O.show_message("\red [M] applied [src] on [t_himself]", 1)
+			user.visible_message( \
+				"\blue [M] applied [src] on [t_himself].", \
+				"\blue You apply \the [src] on yourself." \
+			)
 
 	if (istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
@@ -101,7 +71,4 @@ MEDICAL
 	else
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))
 
-
-	src.amount--
-	if (src.amount <= 0)
-		del(src)
+	use(1)

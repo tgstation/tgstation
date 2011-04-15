@@ -2607,54 +2607,49 @@ It can still be worn/put on as normal.
 
 /mob/living/carbon/human/proc/UpdateDamage()
 
-	var/list/L = list(  )
-	for(var/t in src.organs)
-		if (istype(src.organs[text("[]", t)], /datum/organ/external))
-			L += src.organs[text("[]", t)]
 	src.bruteloss = 0
 	src.fireloss = 0
-	for(var/datum/organ/external/O in L)
-		src.bruteloss += O.brute_dam
-		src.fireloss += O.burn_dam
+	var/datum/organ/external/O
+	for(var/t in src.organs)
+		O = src.organs[t]
+		if (istype(O, /datum/organ/external))
+			src.bruteloss += O.brute_dam
+			src.fireloss += O.burn_dam
 	return
 
 // new damage icon system
 // now constructs damage icon for each organ from mask * damage field
 
 /mob/living/carbon/human/proc/UpdateDamageIcon()
-	var/list/L = list(  )
-	for (var/t in src.organs)
-		if (istype(src.organs[t], /datum/organ/external))
-			L += src.organs[t]
-
 	del(src.body_standing)
 	src.body_standing = list()
 	del(src.body_lying)
 	src.body_lying = list()
-
 	src.bruteloss = 0
 	src.fireloss = 0
+	var/datum/organ/external/O
+	for(var/t in src.organs)
+		O = src.organs[t]
+		if (istype(O, /datum/organ/external))
+			src.bruteloss += O.brute_dam
+			src.fireloss += O.burn_dam
 
-	for (var/datum/organ/external/O in L)
-		src.bruteloss += O.brute_dam
-		src.fireloss += O.burn_dam
+			var/icon/DI = new /icon('dam_human.dmi', O.damage_state)			// the damage icon for whole human
+			DI.Blend(new /icon('dam_mask.dmi', O.icon_name), ICON_MULTIPLY)		// mask with this organ's pixels
 
-		var/icon/DI = new /icon('dam_human.dmi', O.damage_state)			// the damage icon for whole human
-		DI.Blend(new /icon('dam_mask.dmi', O.icon_name), ICON_MULTIPLY)		// mask with this organ's pixels
+	//		world << "[O.icon_name] [O.damage_state] \icon[DI]"
 
-//		world << "[O.icon_name] [O.damage_state] \icon[DI]"
+			body_standing += DI
 
-		body_standing += DI
+			DI = new /icon('dam_human.dmi', "[O.damage_state]-2")				// repeat for lying icons
+			DI.Blend(new /icon('dam_mask.dmi', "[O.icon_name]2"), ICON_MULTIPLY)
 
-		DI = new /icon('dam_human.dmi', "[O.damage_state]-2")				// repeat for lying icons
-		DI.Blend(new /icon('dam_mask.dmi', "[O.icon_name]2"), ICON_MULTIPLY)
+	//		world << "[O.r_name]2 [O.d_i_state]-2 \icon[DI]"
 
-//		world << "[O.r_name]2 [O.d_i_state]-2 \icon[DI]"
+			body_lying += DI
 
-		body_lying += DI
-
-		//src.body_standing += new /icon( 'dam_zones.dmi', text("[]", O.d_i_state) )
-		//src.body_lying += new /icon( 'dam_zones.dmi', text("[]2", O.d_i_state) )
+			//src.body_standing += new /icon( 'dam_zones.dmi', text("[]", O.d_i_state) )
+			//src.body_lying += new /icon( 'dam_zones.dmi', text("[]2", O.d_i_state) )
 
 /mob/living/carbon/human/show_inv(mob/user as mob)
 
@@ -2755,12 +2750,79 @@ It can still be worn/put on as normal.
 		siemens_coeff = G.siemens_coefficient
 	return ..(shock_damage,source,siemens_coeff)
 
+
+/mob/living/carbon/human/proc/get_damaged_organs(var/brute, var/burn)
+	var/list/datum/organ/external/parts = list()
+	for(var/organ_name in src.organs)
+		var/datum/organ/external/organ = src.organs[organ_name]
+		if((brute && organ.brute_dam) || (burn && organ.burn_dam))
+			parts += organ
+	return parts
+
+/mob/living/carbon/human/proc/get_damageable_organs()
+	var/list/datum/organ/external/parts = list()
+	for(var/organ_name in src.organs)
+		var/datum/organ/external/organ = src.organs[organ_name]
+		if(organ.brute_dam + organ.burn_dam < organ.max_damage)
+			parts += organ
+	return parts
+
+// heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/carbon/human/heal_organ_damage(var/brute, var/burn)
-	..()
+	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
+	if(!parts.len)
+		return
+	var/datum/organ/external/picked = pick(parts)
+	picked.heal_damage(brute,burn)
+	src.updatehealth()
 	src.UpdateDamageIcon()
 
+// damage ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/carbon/human/take_organ_damage(var/brute, var/burn)
-	..()
+	var/list/datum/organ/external/parts = get_damageable_organs()
+	if(!parts.len)
+		return
+	var/datum/organ/external/picked = pick(parts)
+	picked.take_damage(brute,burn)
+	src.updatehealth()
+	src.UpdateDamageIcon()
+
+// heal MANY external organs, in random order
+/mob/living/carbon/human/heal_overall_damage(var/brute, var/burn)
+	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
+
+	while(parts.len && (brute>0 || burn>0) )
+		var/datum/organ/external/picked = pick(parts)
+		
+		var/brute_was = picked.brute_dam
+		var/burn_was = picked.burn_dam
+		
+		picked.heal_damage(brute,burn)
+		
+		brute -= (brute_was-picked.brute_dam)
+		burn -= (burn_was-picked.burn_dam)
+		
+		parts -= picked
+	src.updatehealth()
+	src.UpdateDamageIcon()
+
+// damage MANY external organs, in random order
+/mob/living/carbon/human/take_overall_damage(var/brute, var/burn)
+	var/list/datum/organ/external/parts = get_damageable_organs()
+
+	while(parts.len && (brute>0 || burn>0) )
+		var/datum/organ/external/picked = pick(parts)
+		
+		var/brute_was = picked.brute_dam
+		var/burn_was = picked.burn_dam
+		
+		picked.take_damage(brute,burn)
+		
+		brute -= (picked.brute_dam-brute_was)
+		burn -= (picked.burn_dam-burn_was)
+		
+		parts -= picked
+	src.updatehealth()
 	src.UpdateDamageIcon()
 
 /mob/living/carbon/human/proc/isarmored(var/datum/organ/external/def_zone)
@@ -2775,3 +2837,24 @@ It can still be worn/put on as normal.
 				return 1
 				//If wearing armor that covers the targetted bodypart, armored.
 	return 0
+
+
+/mob/living/carbon/human/Topic(href, href_list)
+	if (href_list["mach_close"])
+		var/t1 = text("window=[]", href_list["mach_close"])
+		src.machine = null
+		src << browse(null, t1)
+	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
+		var/obj/equip_e/human/O = new /obj/equip_e/human(  )
+		O.source = usr
+		O.target = src
+		O.item = usr.equipped()
+		O.s_loc = usr.loc
+		O.t_loc = src.loc
+		O.place = href_list["item"]
+		src.requests += O
+		spawn( 0 )
+			O.process()
+			return
+	..()
+	return

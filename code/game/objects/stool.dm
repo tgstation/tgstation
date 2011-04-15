@@ -188,12 +188,13 @@
 
 	flick("e_chairs", src)
 	flick("e_chairos", src.overl)
-	for(var/mob/M in src.loc)
+	for(var/mob/living/M in src.loc)
 		M.burn_skin(85)
 		M << "\red <B>You feel a deep shock course through your body!</B>"
 		sleep(1)
 		M.burn_skin(85)
-		if(M.stunned < 600)	M.stunned = 600
+		if(M.stunned < 600)
+			M.stunned = 600
 	for(var/mob/M in hearers(src, null))
 		M.show_message("\red The electric chair went off!.", 3, "\red You hear a deep sharp shock.", 2)
 

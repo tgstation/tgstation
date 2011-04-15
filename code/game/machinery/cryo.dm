@@ -9,7 +9,7 @@
 	var/on = 0
 	var/temperature_archived
 	var/obj/overlay/O1 = null
-	var/mob/occupant = null
+	var/mob/living/carbon/occupant = null
 	var/beaker = null
 	var/next_trans = 0
 
@@ -212,7 +212,10 @@
 			src.occupant = null
 			build_icon()
 			return
-		put_mob(mob/M as mob)
+		put_mob(mob/living/carbon/M as mob)
+			if (!istype(M))
+				usr << "\red <B>The cryo cell cannot handle such liveform!</B>"
+				return
 			if (src.occupant)
 				usr << "\red <B>The cryo cell is already occupied!</B>"
 				return

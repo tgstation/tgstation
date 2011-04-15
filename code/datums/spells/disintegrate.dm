@@ -19,9 +19,9 @@
 	if(!cast_check())
 		return
 
-	var/mob/M = input("Choose whom to [kill_type]", "ABRAKADABRA") as mob in oview(usr,range)
+	var/mob/living/M = input("Choose whom to [kill_type]", "ABRAKADABRA") as mob in oview(usr,range)
 
-	if(!M)
+	if(!istype(M))
 		return
 
 	invocation()

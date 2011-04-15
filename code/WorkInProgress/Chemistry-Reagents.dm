@@ -42,7 +42,7 @@ datum
 				src = null
 				return
 
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
 				return
 
@@ -57,7 +57,7 @@ datum
 			id = "metroid"
 			description = "A green semi-liquid produced from one of the deadliest lifeforms in existence."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(prob(10))
 					M << "You don't feel too good."
 					M.toxloss+=20
@@ -228,7 +228,7 @@ datum
 			id = "bilk"
 			description = "This appears to be beer mixed with milk. Disgusting."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
 				M:nutrition += 2
 				if(!data) data = 1
@@ -250,7 +250,7 @@ datum
 			description = "Dylovene is a broad-spectrum antitoxin."
 			reagent_state = LIQUID
 
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:drowsyness = max(M:drowsyness-2, 0)
 				if(holder.has_reagent("toxin"))
@@ -281,7 +281,7 @@ datum
 			description = "A Toxic chemical."
 			reagent_state = LIQUID
 
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss += 1.5
 				..()
@@ -292,7 +292,7 @@ datum
 			id = "cyanide"
 			description = "A highly toxic chemical."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss += 3
 				M:oxyloss += 3
@@ -306,7 +306,7 @@ datum
 			description = "An effective hypnotic used to treat insomnia."
 			reagent_state = LIQUID
 
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
 				switch(data)
@@ -327,7 +327,7 @@ datum
 			description = "Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients."
 			reagent_state = LIQUID
 
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.losebreath >= 10)
 					M.losebreath = max(10, M.losebreath-5)
@@ -339,7 +339,7 @@ datum
 			id = "space_drugs"
 			description = "An illegal chemical compound used as drug."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 15)
 				if(M.canmove) step(M, pick(cardinal))
@@ -396,7 +396,7 @@ datum
 			description = "A chemical element."
 			reagent_state = LIQUID
 
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.canmove) step(M, pick(cardinal))
 				if(prob(5)) M:emote(pick("twitch","drool","moan"))
@@ -425,7 +425,7 @@ datum
 			id = "chlorine"
 			description = "A chemical element."
 			reagent_state = GAS
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.take_organ_damage(1, 0)
 				..()
@@ -436,7 +436,7 @@ datum
 			id = "fluorine"
 			description = "A highly-reactive chemical element."
 			reagent_state = GAS
-			on_mob_life(var/mob.M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss++
 				..()
@@ -460,7 +460,7 @@ datum
 			description = "A chemical element."
 			reagent_state = SOLID
 
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.canmove) step(M, pick(cardinal))
 				if(prob(5)) M:emote(pick("twitch","drool","moan"))
@@ -472,7 +472,7 @@ datum
 			id = "sugar"
 			description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 			reagent_state = SOLID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += 1
 				..()
 				return
@@ -482,13 +482,13 @@ datum
 			id = "acid"
 			description = "A strong mineral acid with the molecular formula H2SO4."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss++
 				M.take_organ_damage(0, 1)
 				..()
 				return
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						if(M:wear_mask)
@@ -499,8 +499,13 @@ datum
 							del (M:head)
 							M << "\red Your helmet melts into uselessness but protects you from the acid!"
 							return
+					if(istype(M, /mob/living/carbon/monkey))
+						if(M:wear_mask)
+							del (M:wear_mask)
+							M << "\red Your mask melts away but protects you from the acid!"
+							return
 
-					if(prob(75))
+					if(prob(75) && istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:organs["head"]
 						if(affecting)
 							affecting.take_damage(25, 0)
@@ -510,9 +515,9 @@ datum
 							M << "\red Your face has become disfigured!"
 							M.real_name = "Unknown"
 					else
-						M:bruteloss += 15
+						M.take_organ_damage(15)
 				else
-					M:bruteloss += 15
+					M.take_organ_damage(15)
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/item) && prob(40))
@@ -527,13 +532,13 @@ datum
 			id = "pacid"
 			description = "Polytrinic acid is a an extremely corrosive chemical substance."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss++
 				M.take_organ_damage(0, 1)
 				..()
 				return
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						if(M:wear_mask)
@@ -552,7 +557,11 @@ datum
 						M << "\red Your face has become disfigured!"
 						M.real_name = "Unknown"
 					else
-						M:bruteloss += 15
+						if(istype(M, /mob/living/carbon/monkey) && M:wear_mask)
+							del (M:wear_mask)
+							M << "\red Your mask melts away but protects you from the acid!"
+							return
+						M.take_organ_damage(15)
 				else
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:organs["head"]
@@ -563,7 +572,7 @@ datum
 						M << "\red Your face has become disfigured!"
 						M.real_name = "Unknown"
 					else
-						M:bruteloss += 15
+						M.take_organ_damage(15)
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/item))
@@ -590,7 +599,7 @@ datum
 			id = "radium"
 			description = "Radium is an alkaline earth metal. It is extremely radioactive."
 			reagent_state = SOLID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.radiation += 3
 				..()
@@ -608,7 +617,7 @@ datum
 			id = "ryetalyn"
 			description = "Ryetalyn can cure all genetic abnomalities."
 			reagent_state = SOLID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.mutations = 0
 				M.disabilities = 0
@@ -645,7 +654,7 @@ datum
 					domutcheck(M, null)
 					updateappearance(M,M.dna.uni_identity)
 				return
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.radiation += 3
 				..()
@@ -666,7 +675,7 @@ datum
 					usr << "Well, that was stupid."
 					M:toxloss += 3
 				return
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 					M.radiation += 3
 					..()
@@ -678,7 +687,7 @@ datum
 			description = "Pure iron is a metal."
 			reagent_state = SOLID
 /*
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if((M.virus) && (prob(8) && (M.virus.name=="Magnitis")))
 					if(M.virus.spread == "Airborne")
@@ -724,7 +733,7 @@ datum
 				napalm.trace_gases += fuel
 				T.assume_air(napalm)
 				return
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss += 1
 				..()
@@ -804,7 +813,7 @@ datum
 			id = "plasma"
 			description = "Plasma in its liquid form."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(holder.has_reagent("inaprovaline"))
 					holder.remove_reagent("inaprovaline", 2)
@@ -833,7 +842,7 @@ datum
 			id = "leporazine"
 			description = "Leporazine can be use to stabilize an individuals body temperature."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-20)
@@ -847,7 +856,7 @@ datum
 			id = "cryptobiolin"
 			description = "Cryptobiolin causes confusion and dizzyness."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.make_dizzy(1)
 				if(!M.confused) M.confused = 1
@@ -861,7 +870,7 @@ datum
 			id = "lexorin"
 			description = "Lexorin temporarily stops respiration. Causes tissue damage."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(prob(33))
 					M.take_organ_damage(1, 0)
@@ -875,7 +884,7 @@ datum
 			id = "kelotane"
 			description = "Kelotane is a drug used to treat burns."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:heal_organ_damage(0,2)
 				..()
@@ -886,7 +895,7 @@ datum
 			id = "dexalin"
 			description = "Dexalin is used in the treatment of oxygen deprivation."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:oxyloss = max(M:oxyloss-2, 0)
 				if(holder.has_reagent("lexorin"))
@@ -899,7 +908,7 @@ datum
 			id = "dexalinp"
 			description = "Dexalin Plus is used in the treatment of oxygen deprivation. Its highly effective."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:oxyloss = 0
 				if(holder.has_reagent("lexorin"))
@@ -912,7 +921,7 @@ datum
 			id = "tricordrazine"
 			description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(40)) M:oxyloss--
 				if(M:bruteloss && prob(40)) M:heal_organ_damage(1,0)
@@ -926,7 +935,7 @@ datum
 			id = "adminordrazine"
 			description = "I don't have to explain shit about adminordrazine, its magic."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:cloneloss = 0
 				M:oxyloss = 0
@@ -969,7 +978,7 @@ datum
 			id = "synaptizine"
 			description = "Synaptizine is used to treat neuroleptic shock. Can be used to help remove disabling symptoms such as paralysis."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:drowsyness = max(M:drowsyness-5, 0)
 				if(M:paralysis) M:paralysis--
@@ -983,7 +992,7 @@ datum
 			id = "impedrezene"
 			description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:jitteriness = max(M:jitteriness-5,0)
 				if(prob(80)) M:brainloss++
@@ -997,7 +1006,7 @@ datum
 			id = "hyronalin"
 			description = "Hyronalin is a medicinal drug used to counter the effects of radiation poisoning."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:radiation = max(M:radiation-3,0)
 				..()
@@ -1022,7 +1031,7 @@ datum
 			id = "alkysine"
 			description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:brainloss = max(M:brainloss-3 , 0)
 				..()
@@ -1033,7 +1042,7 @@ datum
 			id = "imidazoline"
 			description = "Heals eye damage"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:eye_blurry = max(M:eye_blurry-5 , 0)
 				M:eye_blind = max(M:eye_blind-5 , 0)
@@ -1042,12 +1051,26 @@ datum
 				..()
 				return
 
+		arithrazine
+			name = "Arithrazine"
+			id = "arithrazine"
+			description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:radiation = max(M:radiation-3,0)
+				if(M:toxloss) M:toxloss--
+				if(prob(15))
+					M.take_organ_damage(1, 0)
+				..()
+				return
+
 		bicaridine
 			name = "Bicaridine"
 			id = "bicaridine"
 			description = "Bicaridine is an analgesic medication and can be used to treat blunt trauma."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:heal_organ_damage(2,0)
 				..()
@@ -1058,7 +1081,7 @@ datum
 			id = "hyperzine"
 			description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(prob(5)) M:emote(pick("twitch","blink_r","shiver"))
 				holder.remove_reagent(src.id, 0.2)
@@ -1070,7 +1093,7 @@ datum
 			id = "cryoxadone"
 			description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
 					if(M:oxyloss) M:oxyloss = max(0, M:oxyloss-3)
@@ -1084,7 +1107,7 @@ datum
 			id = "clonexadone"
 			description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' clones that get ejected early when used in conjunction with a cryo tube."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
 					if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-3)
@@ -1100,7 +1123,7 @@ datum
 			description = "An all-purpose antiviral agent."
 			reagent_state = LIQUID
 
-			on_mob_life(var/mob/M)//no more mr. panacea
+			on_mob_life(var/mob/living/M as mob)//no more mr. panacea
 				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
@@ -1111,7 +1134,7 @@ datum
 			description = "A deadly neurotoxin produced by the dreaded spess carp."
 			reagent_state = LIQUID
 
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss += 2
 				..()
@@ -1121,7 +1144,7 @@ datum
 			name = "Zombie Powder"
 			id = "zombiepowder"
 			description = "A strong neurotoxin that puts the subject into a death-like state."
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:oxyloss += 0.5
 				M:toxloss += 0.5
@@ -1182,7 +1205,7 @@ datum
 			id = "ethanol"
 			description = "A well-known alcohol with a variety of applications."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.make_dizzy(5)
@@ -1213,7 +1236,7 @@ datum
 			id = "ethylredoxrazine"
 			description = "A powerfuld oxidizer that reacts with ethanol."
 			reagent_state = SOLID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.dizziness = 0
 				M:drowsyness = 0
@@ -1227,7 +1250,7 @@ datum
 			id = "chloralhydrate"
 			description = "A powerful sedative."
 			reagent_state = SOLID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
 				switch(data)
@@ -1248,7 +1271,7 @@ datum
 			id = "beer2"
 			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
 				switch(data)
@@ -1274,7 +1297,7 @@ datum
 			description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 			reagent_state = SOLID
 			nutriment_factor = 15 * REAGENTS_METABOLISM
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(prob(50)) M:heal_organ_damage(1,0)
 				M:nutrition += nutriment_factor	// For hunger and fatness
@@ -1314,7 +1337,7 @@ datum
 			description = "This is what makes chilis hot."
 			reagent_state = LIQUID
 			nutriment_factor = 5 * REAGENTS_METABOLISM
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:bodytemperature += 5
 				if(prob(40))
@@ -1328,7 +1351,7 @@ datum
 			description = "A special oil that noticably chills the body. Extraced from Icepeppers."
 			reagent_state = LIQUID
 			nutriment_factor = 5 * REAGENTS_METABOLISM
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:bodytemperature -= 5
 				if(prob(40))
@@ -1354,7 +1377,7 @@ datum
 			name = "Amatoxin"
 			id = "amatoxin"
 			description = "A powerful poison derived from certain species of mushroom."
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss++
 				..()
@@ -1364,7 +1387,7 @@ datum
 			name = "Psilocybin"
 			id = "psilocybin"
 			description = "A strong psycotropic derived from certain species of mushroom."
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 30)
 				if(!data) data = 1
@@ -1395,7 +1418,7 @@ datum
 			id = "sprinkles"
 			description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
 					if(!M) M = holder.my_atom
@@ -1410,7 +1433,7 @@ datum
 			id = "syndicream"
 			description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(istype(M, /mob/living/carbon/human) && M.mind)
 					if(M.mind.special_role)
@@ -1427,7 +1450,7 @@ datum
 			description = "An oil derived from various types of corn."
 			reagent_state = LIQUID
 			nutriment_factor = 20 * REAGENTS_METABOLISM
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				..()
 				return
@@ -1470,7 +1493,7 @@ datum
 			description = "A delicious blend of several different kinds of berries."
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:nutrition += nutriment_factor
 				..()
@@ -1487,7 +1510,7 @@ datum
 			id = "dry_ramen"
 			description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
 			reagent_state = SOLID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				..()
 				M:nutrition += 1
 				return
@@ -1497,7 +1520,7 @@ datum
 			id = "hot_ramen"
 			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				..()
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+10)
@@ -1509,7 +1532,7 @@ datum
 			id = "hell_ramen"
 			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				..()
 				M:bodytemperature += 10
 				M:nutrition += 5
@@ -1524,7 +1547,7 @@ datum
 			id = "milk"
 			description = "An opaque white liquid produced by the mammary glands of mammals."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
 				M:nutrition++
@@ -1536,7 +1559,7 @@ datum
 			id = "soymilk"
 			description = "An opaque white liquid made from soybeans."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
 				M:nutrition++
@@ -1548,7 +1571,7 @@ datum
 			id = "coffee"
 			description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
@@ -1564,7 +1587,7 @@ datum
 			id = "tea"
 			description = "Tasty black tea, it has antioxidants, it's good for you!"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.dizziness = max(0,M.dizziness-2)
 				M:drowsyness = max(0,M:drowsyness-1)
@@ -1582,7 +1605,7 @@ datum
 			id = "icecoffee"
 			description = "Coffee and ice, refreshing and cool."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
@@ -1598,7 +1621,7 @@ datum
 			id = "icetea"
 			description = "No relation to a certain rap artist/ actor."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.dizziness = max(0,M.dizziness-2)
 				M:drowsyness = max(0,M:drowsyness-1)
@@ -1613,7 +1636,7 @@ datum
 			id = "h_chocolate"
 			description = "Made with love! And coco beans."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				..()
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+5)
@@ -1625,7 +1648,7 @@ datum
 			id = "cola"
 			description = "A refreshing beverage."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-5)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature-5)
@@ -1638,7 +1661,7 @@ datum
 			id = "spacemountainwind"
 			description = "Blows right through you like a space wind."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-7)
 				M:sleeping = 0
 				if (M.bodytemperature > 310)
@@ -1653,7 +1676,7 @@ datum
 			id = "thirteenloko"
 			description = "A potent mixture of caffeine and alcohol."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-7)
 				M:sleeping = 0
 				if (M.bodytemperature > 310)
@@ -1676,7 +1699,7 @@ datum
 			id = "dr_gibb"
 			description = "A delicious blend of 42 different flavours"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-6)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
@@ -1689,7 +1712,7 @@ datum
 			id = "space_up"
 			description = "Tastes like a hull breach in your mouth."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
 				M:nutrition += 1
@@ -1701,7 +1724,7 @@ datum
 			id = "beer"
 			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.make_dizzy(3)
@@ -1721,7 +1744,7 @@ datum
 			id = "whiskey"
 			description = "A superb and well-aged single-malt whiskey. Damn."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=4
@@ -1738,7 +1761,7 @@ datum
 			id = "specialwhiskey"
 			description = "Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -1756,7 +1779,7 @@ datum
 			id = "gin"
 			description = "It's gin. In space. I say, good sir."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -1773,7 +1796,7 @@ datum
 			id = "rum"
 			description = "Yohoho and all that."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -1790,7 +1813,7 @@ datum
 			id = "vodka"
 			description = "Number one drink AND fueling choice for Russians worldwide."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -1807,7 +1830,7 @@ datum
 			id = "tequilla"
 			description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -1824,7 +1847,7 @@ datum
 			id = "vermouth"
 			description = "You suddenly feel a craving for a martini..."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -1841,7 +1864,7 @@ datum
 			id = "wine"
 			description = "An premium alchoholic beverage made from distilled grape juice."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=2
@@ -1858,7 +1881,7 @@ datum
 			id = "tonic"
 			description = "It tastes strange but at least the quinine keeps the Space Malaria at bay."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0
@@ -1872,7 +1895,7 @@ datum
 			id = "orangejuice"
 			description = "Both delicious AND rich in Vitamin C, what more do you need?"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(30)) M:oxyloss--
 				if(M:bruteloss && prob(30)) M:heal_organ_damage(1,0)
@@ -1887,7 +1910,7 @@ datum
 			id = "tomatojuice"
 			description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(20)) M:oxyloss--
 				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
@@ -1902,7 +1925,7 @@ datum
 			id = "limejuice"
 			description = "The sweet-sour juice of limes."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(20)) M:oxyloss--
 				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
@@ -1918,7 +1941,7 @@ datum
 			id = "kahlua"
 			description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0//Copy-paste from Coffee, derp
@@ -1932,7 +1955,7 @@ datum
 			id = "cognac"
 			description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=4
@@ -1955,7 +1978,7 @@ datum
 			id = "hooch"
 			description = "Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=6
@@ -1972,7 +1995,7 @@ datum
 			id = "ale"
 			description = "A dark alchoholic beverage made by malted barley and yeast."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -1989,7 +2012,7 @@ datum
 			id = "sodawater"
 			description = "A can of club soda. Why not make a scotch and soda?"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0
@@ -2003,7 +2026,7 @@ datum
 			id = "ice"
 			description = "Frozen water, your dentist wouldn't like you chewing this."
 			reagent_state = SOLID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:bodytemperature -= 5
 				..()
@@ -2017,7 +2040,7 @@ datum
 			id = "gintonic"
 			description = "An all time classic, mild cocktail."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2034,7 +2057,7 @@ datum
 			id = "cubalibre"
 			description = "Rum, mixed with cola. Viva la revolution."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2051,7 +2074,7 @@ datum
 			id = "whiskeycola"
 			description = "Whiskey, mixed with cola. Surprisingly refreshing."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2068,7 +2091,7 @@ datum
 			id = "martini"
 			description = "Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2085,7 +2108,7 @@ datum
 			id = "vodkamartini"
 			description = "Vodka with Gin. Not quite how 007 enjoyed it, but still delicious."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2102,7 +2125,7 @@ datum
 			id = "whiterussian"
 			description = "That's just, like, your opinion, man..."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2119,7 +2142,7 @@ datum
 			id = "screwdrivercocktail"
 			description = "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2136,7 +2159,7 @@ datum
 			id = "bloodymary"
 			description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2153,7 +2176,7 @@ datum
 			id = "gargleblaster"
 			description = "Whoah, this stuff looks volatile!"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=6
@@ -2172,7 +2195,7 @@ datum
 			id = "bravebull"
 			description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2189,7 +2212,7 @@ datum
 			id = "tequillasunrise"
 			description = "Tequilla and orange juice. Much like a Screwdriver, only Mexican~"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2206,7 +2229,7 @@ datum
 			id = "toxinsspecial"
 			description = "This thing is FLAMING!. CALL THE DAMN SHUTTLE!"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 330)
 					M.bodytemperature = min(330, M.bodytemperature+15) //310 is the normal bodytemp. 310.055
 				if(!data) data = 1
@@ -2225,7 +2248,7 @@ datum
 			id = "beepskysmash"
 			description = "Deny drinking this and prepare for THE LAW."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				M.stunned = 2
 				if(!data) data = 1
 				data++
@@ -2243,7 +2266,7 @@ datum
 			id = "doctorsdelight"
 			description = "A gulp a day keeps the MediBot away. That's probably for the best."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(50)) M:oxyloss -= 2
 				if(M:bruteloss && prob(60)) M:heal_organ_damage(2,0)
@@ -2259,7 +2282,7 @@ datum
 			id = "irishcream"
 			description = "Whiskey-imbued cream, what else would you expect from the Irish."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2276,7 +2299,7 @@ datum
 			id = "manlydorf"
 			description = "Beer and Ale, brought together in a delicious mix. Intended for true men only."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=5
@@ -2293,7 +2316,7 @@ datum
 			id = "longislandicedtea"
 			description = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2310,7 +2333,7 @@ datum
 			id = "moonshine"
 			description = "You've really hit rock bottom now... your liver packed its bags and left last night."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=5
@@ -2327,7 +2350,7 @@ datum
 			id = "b52"
 			description = "Coffee, Irish Cream, and congac. You will get bombed."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2344,7 +2367,7 @@ datum
 			id = "irishcoffee"
 			description = "Coffee, and alcohol. More fun than a Mimosa to drink in the morning."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3
@@ -2361,7 +2384,7 @@ datum
 			id = "margarita"
 			description = "On the rocks with salt on the rim. Arriba~!"
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=4
@@ -2378,7 +2401,7 @@ datum
 			id = "blackrussian"
 			description = "For the lactose-intolerant. Still as classy as a White Russian."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=4
@@ -2395,7 +2418,7 @@ datum
 			id = "manhattan"
 			description = "The Detective's undercover drink of choice. He never could stomach gin..."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=4
@@ -2412,7 +2435,7 @@ datum
 			id = "whiskeysoda"
 			description = "Ultimate refreshment."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=4
@@ -2429,7 +2452,7 @@ datum
 			id = "vodkatonic"
 			description = "For when a gin and tonic isn't russian enough."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=4
@@ -2446,7 +2469,7 @@ datum
 			id = "ginfizz"
 			description = "Refreshingly lemony, deliciously dry."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
 				M.dizziness +=4

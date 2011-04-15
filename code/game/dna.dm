@@ -265,7 +265,7 @@
 	else
 		return 0
 
-/proc/domutcheck(mob/M as mob, connected, inj)
+/proc/domutcheck(mob/living/M as mob, connected, inj)
 	//telekinesis = 1
 	//firemut = 2
 	//xray = 4
@@ -337,26 +337,22 @@
 //////////////////////////////////////////////////////////// Monkey Block
 	if (isblockon(getblock(M.dna.struc_enzymes, 14,3),14) && istype(M, /mob/living/carbon/human))
 	// human > monkey
+		var/mob/living/carbon/human/H = M
 		var/list/implants = list() //Try to preserve implants.
-		for(var/obj/item/weapon/W in M)
-			if (istype(W, /obj/item/weapon/implant))
-				implants += W
-		for(var/obj/item/weapon/W in M)
-			M.u_equip(W)
-			if (M.client)
-				M.client.screen -= W
-			if (W)
-				W.loc = M.loc
-				W.dropped(M)
-				W.layer = initial(W.layer)
+		for(var/obj/item/weapon/implant/W in H)
+			implants += W
 
 		if(!connected)
+			for(var/obj/item/W in (H.contents-implants))
+				if (W==H.w_uniform) // will be teared
+					continue
+				H.drop_from_slot(W)
 			M.update_clothing()
 			M.monkeyizing = 1
 			M.canmove = 0
 			M.icon = null
 			M.invisibility = 101
-			var/atom/movable/overlay/animation = new /atom/movable/overlay( M.loc )
+			var/atom/movable/overlay/animation = new( M.loc )
 			animation.icon_state = "blank"
 			animation.icon = 'mob.dmi'
 			animation.master = src
@@ -364,15 +360,22 @@
 			sleep(48)
 			del(animation)
 
-		var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey(src)
+		var/mob/living/carbon/monkey/O = new(src)
 		if (M.dna)
 			O.dna = M.dna
 			M.dna = null
 
-		for(var/obj/T in M)
+
+		O.virus = M.virus
+		M.virus = null
+		if (O.virus)
+			O.virus.affected_mob = O
+
+
+		for(var/obj/T in (M.contents-implants))
 			del(T)
-		for(var/R in M.organs)
-			del(M.organs[text("[]", R)])
+		//for(var/R in M.organs)
+		//	del(M.organs[text("[]", R)])
 
 		O.loc = M.loc
 
@@ -385,40 +388,32 @@
 			C.occupant = O
 			connected = null
 		O.name = text("monkey ([])",copytext(md5(M.real_name), 2, 6))
+		O.take_overall_damage(M.bruteloss + 40, M.fireloss)
 		O.toxloss += (M.toxloss + 20)
-		O.bruteloss += (M.bruteloss + 40)
 		O.oxyloss += M.oxyloss
-		O.fireloss += M.fireloss
 		O.stat = M.stat
 		O.a_intent = "hurt"
 		for (var/obj/item/weapon/implant/I in implants)
 			I.loc = O
 			I.implanted = O
-			continue
 		del(M)
 		return
 
 	if (!isblockon(getblock(M.dna.struc_enzymes, 14,3),14) && !istype(M, /mob/living/carbon/human))
-	// monkey > human
-		var/list/implants = list()
-		for (var/obj/item/weapon/implant/I in M) //Still preserving implants
-			implants += I
-
+	// monkey > human,
+		var/mob/living/carbon/monkey/Mo = M
+		var/list/implants = list() //Still preserving implants
+		for(var/obj/item/weapon/implant/W in Mo)
+			implants += W
 		if(!connected)
-			for(var/obj/item/weapon/W in M)
-				M.u_equip(W)
-				if (M.client)
-					M.client.screen -= W
-				if (W)
-					W.loc = M.loc
-					W.dropped(M)
-					W.layer = initial(W.layer)
+			for(var/obj/item/W in (Mo.contents-implants))
+				Mo.drop_from_slot(W)
 			M.update_clothing()
 			M.monkeyizing = 1
 			M.canmove = 0
 			M.icon = null
 			M.invisibility = 101
-			var/atom/movable/overlay/animation = new /atom/movable/overlay( M.loc )
+			var/atom/movable/overlay/animation = new( M.loc )
 			animation.icon_state = "blank"
 			animation.icon = 'mob.dmi'
 			animation.master = src
@@ -426,7 +421,7 @@
 			sleep(48)
 			del(animation)
 
-		var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )
+		var/mob/living/carbon/human/O = new( src )
 		if (isblockon(getblock(M.dna.uni_identity, 11,3),11))
 			O.gender = FEMALE
 		else
@@ -434,8 +429,13 @@
 		O.dna = M.dna
 		M.dna = null
 
-		for(var/obj/T in M)
-			del(T)
+		O.virus = M.virus
+		M.virus = null
+		if (O.virus)
+			O.virus.affected_mob = O
+
+		//for(var/obj/T in M)
+		//	del(T)
 
 		O.loc = M.loc
 
@@ -461,19 +461,18 @@
 				O.real_name = randomname
 				i++
 		updateappearance(O,O.dna.uni_identity)
+		O.take_overall_damage(M.bruteloss, M.fireloss)
 		O.toxloss += M.toxloss
-		O.bruteloss += M.bruteloss
 		O.oxyloss += M.oxyloss
-		O.fireloss += M.fireloss
 		O.stat = M.stat
 		for (var/obj/item/weapon/implant/I in implants)
 			I.loc = O
 			I.implanted = O
-			continue
 		del(M)
 		return
 //////////////////////////////////////////////////////////// Monkey Block
-	if (M) M.update_clothing()
+	if (M)
+		M.update_clothing()
 	return null
 /////////////////////////// DNA MISC-PROCS
 

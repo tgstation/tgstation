@@ -2,8 +2,8 @@
 /obj/item/weapon/storage/firstaid/fire/New()
 	..()
 	if (empty) return
-	new /obj/item/weapon/medical/ointment( src )
-	new /obj/item/weapon/medical/ointment( src )
+	new /obj/item/stack/medical/ointment( src )
+	new /obj/item/stack/medical/ointment( src )
 	new /obj/item/device/healthanalyzer( src )
 	new /obj/item/weapon/reagent_containers/syringe/inaprovaline( src )
 	new /obj/item/weapon/reagent_containers/syringe/inaprovaline( src )
@@ -27,11 +27,11 @@
 
 	..()
 	if (empty) return
-	new /obj/item/weapon/medical/bruise_pack(src)
-	new /obj/item/weapon/medical/bruise_pack(src)
-	new /obj/item/weapon/medical/bruise_pack(src)
-	new /obj/item/weapon/medical/ointment(src)
-	new /obj/item/weapon/medical/ointment(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/device/healthanalyzer(src)
 	new /obj/item/weapon/reagent_containers/syringe/inaprovaline( src )
 	return

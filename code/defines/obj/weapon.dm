@@ -299,25 +299,29 @@
 	throw_range = 15
 	var/spam_flag = 0
 
-/obj/item/weapon/medical
+/obj/item/stack/medical
 	name = "medical pack"
+	singular_name = "medical pack"
 	icon = 'items.dmi'
-	var/amount = 5
+	amount = 5
+	max_amount = 5
 	w_class = 1
 	throw_speed = 4
 	throw_range = 20
 	var/heal_brute = 0
 	var/heal_burn = 0
 
-/obj/item/weapon/medical/bruise_pack
+/obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
+	singular_name = "bruise pack"
 	desc = "A pack designed to treat blunt-force trauma."
 	icon_state = "brutepack"
 	heal_brute = 60
 	origin_tech = "biotech=1"
 
-/obj/item/weapon/medical/ointment
+/obj/item/stack/medical/ointment
 	name = "ointment"
+	singular_name = "ointment"
 	icon_state = "ointment"
 	heal_burn = 40
 	origin_tech = "biotech=1"

@@ -198,7 +198,7 @@
 		else
 	return
 
-/obj/machinery/sleeper/alter_health(mob/M as mob)
+/obj/machinery/sleeper/alter_health(mob/living/M as mob)
 	if (M.health > 0)
 		if (M.oxyloss >= 10)
 			var/amount = max(0.15, 1)

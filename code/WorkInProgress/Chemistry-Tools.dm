@@ -387,7 +387,7 @@
 						if(!istype(M,/mob/living/carbon)) continue
 						if(M == user) continue
 						D.reagents.trans_to(M, 15)
-						M.bruteloss += 5
+						M.take_organ_damage(5)
 						for(var/mob/O in viewers(world.view, D))
 							O.show_message(text("\red [] was hit by the syringe!", M), 1)
 

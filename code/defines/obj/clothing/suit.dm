@@ -81,7 +81,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	permeability_coefficient = 0.25
 	heat_transfer_coefficient = 0.75
-	allowed = list(/obj/item/device/analyzer,/obj/item/weapon/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen)
+	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen)
 
 /obj/item/clothing/suit/labcoat/cmo
 	name = "chief medical officer's labcoat"

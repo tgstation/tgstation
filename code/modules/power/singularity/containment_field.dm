@@ -50,7 +50,7 @@
 
 
 	proc
-		shock(mob/user as mob)
+		shock(mob/living/user as mob)
 			if(!FG1 || !FG2)
 				del(src)
 				return 0
@@ -76,8 +76,7 @@
 				s.set_up(5, 1, user.loc)
 				s.start()
 				var/shock_damage = rand(15,30)
-				user.fireloss += shock_damage
-				user.updatehealth()
+				user.take_overall_damage(0,shock_damage)
 				user.visible_message("\red [user.name] was shocked by the [src.name]!", \
 					"\red <B>Energy pulse detected, system damaged!</B>", \
 					"\red You hear an electrical crack")

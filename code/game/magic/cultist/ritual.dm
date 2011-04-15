@@ -362,7 +362,16 @@ var/runedec = 0
 				"}
 
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/living/M as mob, mob/living/user as mob)
+		if(istype(M,/mob/dead))
+			M.invisibility = 0
+			user.visible_message( \
+				"\red [user] drags the ghost to our plan of reality!", \
+				"\red You drag the ghost to our plan of reality!" \
+			)
+			return
+		if(!istype(M))
+			return
 		if(!iscultist(user))
 			return ..()
 		if(iscultist(M))
@@ -374,7 +383,7 @@ var/runedec = 0
 
 
 
-	attack_self(mob/user as mob)
+	attack_self(mob/living/user as mob)
 		if(!wordtravel)
 			runerandom()
 		if(iscultist(user))
@@ -414,7 +423,7 @@ var/runedec = 0
 			for (var/mob/V in viewers(src))
 				V.show_message("\red [user] slices open a finger and begins to chant and paint symbols on the floor.", 3, "\red You hear chanting.", 2)
 			user << "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world."
-			user.bruteloss += 1
+			user.take_overall_damage(1)
 			if(do_after(user, 50))
 				var/mob/living/carbon/human/H = user
 				var/obj/rune/R = new /obj/rune(user.loc)
@@ -624,8 +633,8 @@ var/runedec = 0
 	var/imbue = null
 	var/uses = 0
 
-	attack_self(mob/user as mob)
-		usr.take_organ_damage(5, 0)
+	attack_self(mob/living/user as mob)
+		user.take_organ_damage(5, 0)
 		switch(imbue)
 			if("newtome")
 				call(/obj/rune/proc/tomesummon)()

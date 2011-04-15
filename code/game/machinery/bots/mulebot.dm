@@ -964,4 +964,5 @@
 	s.start()
 
 	new /obj/decal/cleanable/oil(src.loc)
+	unload(0)
 	del(src)

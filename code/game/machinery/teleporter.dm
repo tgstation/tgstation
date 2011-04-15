@@ -158,8 +158,8 @@
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>The [] bounces off of the portal!</B>", M.name), 1)
 		return
-	if (istype(M, /mob))
-		var/mob/MM = M
+	if (istype(M, /mob/living))
+		var/mob/living/MM = M
 		if(MM.check_contents_for(/obj/item/weapon/disk/nuclear))
 			MM << "\red Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through."
 			return
@@ -175,8 +175,8 @@
 					disky = 1
 		if (istype(O, /obj/item/weapon/disk/nuclear))
 			disky = 1
-		if (istype(O, /mob))
-			var/mob/MM = O
+		if (istype(O, /mob/living))
+			var/mob/living/MM = O
 			if(MM.check_contents_for(/obj/item/weapon/disk/nuclear))
 				disky = 1
 	if (disky)
@@ -185,8 +185,8 @@
 		return
 
 //Bags of Holding cause bluespace teleportation to go funky. --NeoFite
-	if (istype(M, /mob))
-		var/mob/MM = M
+	if (istype(M, /mob/living))
+		var/mob/living/MM = M
 		if(MM.check_contents_for(/obj/item/weapon/storage/backpack/holding))
 			MM << "\red The Bluespace interface on your Bag of Holding interferes with the teleport!"
 			precision = rand(1,100)
@@ -203,8 +203,8 @@
 					precision = rand(1,100)
 		if (istype(O, /obj/item/weapon/storage/backpack/holding))
 			precision = rand(1,100)
-		if (istype(O, /mob))
-			var/mob/MM = O
+		if (istype(O, /mob/living))
+			var/mob/living/MM = O
 			if(MM.check_contents_for(/obj/item/weapon/storage/backpack/holding))
 				precision = rand(1,100)
 

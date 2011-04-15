@@ -26,8 +26,7 @@
 			if(prob(1))
 				affected_mob << "\red Your muscles ache."
 				if(prob(20))
-					affected_mob.bruteloss += 1
-					affected_mob.updatehealth()
+					affected_mob.take_organ_damage(1)
 			if(prob(1))
 				affected_mob << "\red Your stomach hurts."
 				if(prob(20))
@@ -46,8 +45,7 @@
 			if(prob(1))
 				affected_mob << "\red Your muscles ache."
 				if(prob(20))
-					affected_mob.bruteloss += 1
-					affected_mob.updatehealth()
+					affected_mob.take_organ_damage(1)
 			if(prob(1))
 				affected_mob << "\red Your stomach hurts."
 				if(prob(20))

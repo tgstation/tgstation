@@ -49,6 +49,13 @@
 	src.spawning = 1
 	return ..()
 
+/mob/living/carbon/human/AIize()
+	if (src.monkeyizing)
+		return
+	for(var/t in src.organs)
+		del(src.organs[text("[]", t)])
+	return ..()
+
 /mob/living/carbon/AIize()
 	if (src.monkeyizing)
 		return
@@ -59,10 +66,6 @@
 	src.canmove = 0
 	src.icon = null
 	src.invisibility = 101
-	for(var/t in src.organs)
-		del(src.organs[text("[]", t)])
-
-
 	return ..()
 
 

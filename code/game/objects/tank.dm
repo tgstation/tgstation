@@ -299,7 +299,7 @@
 		src.ion_trail.stop()
 	return
 
-/obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/user as mob)
+/obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user as mob)
 	if (!( src.on ))
 		return 0
 	if ((num < 0.01 || src.air_contents.total_moles() < num))
@@ -314,8 +314,7 @@
 		if (user)
 			var/d = G.toxins / 2
 			d = min(abs(user.health + 100), d, 25)
-			user.fireloss += d
-			user.updatehealth()
+			user.take_organ_damage(0,d)
 		return (G.oxygen >= 0.0075 ? 0.5 : 0)
 	else
 		if (G.oxygen >= 0.0075)

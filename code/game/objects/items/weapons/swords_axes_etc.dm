@@ -16,11 +16,10 @@ STUN BATON
 /obj/item/weapon/sword/New()
 	color = pick("red","blue","green","purple")
 
-/obj/item/weapon/sword/attack_self(mob/user as mob)
+/obj/item/weapon/sword/attack_self(mob/living/user as mob)
 	if ((user.mutations & 16) && prob(50))
 		user << "\red You accidentally cut yourself with [src]."
-		user.bruteloss += 5
-		user.fireloss +=5
+		user.take_organ_damage(5,5)
 	src.active = !( src.active )
 	if (src.active)
 		user << "\blue [src] is now active."
@@ -204,15 +203,15 @@ STUN BATON
 		if(2)
 			charges -= 5
 
-/obj/item/weapon/classic_baton/attack(mob/M as mob, mob/user as mob)
-	if ((usr.mutations & 16) && prob(50))
-		usr << "\red You club yourself over the head."
-		usr.weakened = max(3 * force, usr.weakened)
-		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
+/obj/item/weapon/classic_baton/attack(mob/M as mob, mob/living/user as mob)
+	if ((user.mutations & 16) && prob(50))
+		user << "\red You club yourself over the head."
+		user.weakened = max(3 * force, user.weakened)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
 			H.TakeDamage("head", 2 * force, 0)
 		else
-			usr.bruteloss += 2 * force
+			user.take_organ_damage(2*force)
 		return
 	src.add_fingerprint(user)
 

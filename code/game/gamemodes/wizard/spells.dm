@@ -48,7 +48,7 @@
 	usr.say("FORTI GY AMA")
 	usr.spellvoice()
 
-	for (var/mob/M as mob in oview())
+	for (var/mob/living/M as mob in oview())
 		spawn(0)
 			var/obj/overlay/A = new /obj/overlay( usr.loc )
 			A.icon_state = "magicm"
@@ -71,7 +71,7 @@
 				step_to(A,M,0)
 				if (get_dist(A,M) == 0)
 					M.weakened += 5
-					M.fireloss += 10
+					M.take_overall_damage(0,10)
 					del(A)
 					return
 				sleep(5)
@@ -155,7 +155,7 @@
 
 //FIREBALLAN
 
-/client/proc/fireball(mob/T as mob in oview())
+/client/proc/fireball(mob/living/T as mob in oview())
 	set category = "Spells"
 	set name = "Fireball"
 	set desc = "This spell fires a fireball at a target and does not require wizard garb."
@@ -181,9 +181,7 @@
 	for(i=0, i<100, i++)
 		step_to(A,T,0)
 		if (get_dist(A,T) <= 1)
-			T.bruteloss += 20
-			T.fireloss += 25
-
+			T.take_overall_damage(20,25)
 			explosion(T.loc, -1, -1, 2, 2)
 			del(A)
 			return
@@ -279,13 +277,12 @@
 				fuckthis:ignite()
 
 
-	for(var/mob/M in viewers(world.view-1, myturf))
+	for(var/mob/living/M in viewers(world.view-1, myturf))
 
-		if(!istype(M, /mob/living)) continue
 		if(M == usr) continue
 
 		if (istype(M, /mob/living/silicon))
-			M.fireloss += 25
+			M.take_overall_damage(0,25)
 			flick("noise", M:flash)
 			M << "\red <B>*BZZZT*</B>"
 			M << "\red Warning: Electromagnetic pulse detected."

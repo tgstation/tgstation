@@ -190,10 +190,10 @@ CLIPBOARDS
 	attack_self(usr)
 	return
 
-/obj/item/weapon/paper/attack_self(mob/user as mob)
-	if ((usr.mutations & 16) && prob(50))
-		usr << text("\red You cut yourself on the paper.")
-		usr.bruteloss += 3
+/obj/item/weapon/paper/attack_self(mob/living/user as mob)
+	if ((user.mutations & 16) && prob(50))
+		user << text("\red You cut yourself on the paper.")
+		user.take_organ_damage(3)
 		return
 	var/n_name = input(user, "What would you like to label the paper?", "Paper Labelling", null)  as text
 	n_name = copytext(n_name, 1, 32)
@@ -203,7 +203,7 @@ CLIPBOARDS
 	return
 
 /obj/item/weapon/paper/attack_ai(var/mob/living/silicon/ai/user as mob)
-	var/dist
+	var/dist	
 	if (istype(user) && user.current) //is AI
 		dist = get_dist(src, user.current) 
 	else //cyborg or AI not seeing through a camera

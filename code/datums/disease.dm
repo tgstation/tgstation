@@ -25,7 +25,7 @@ to null does not delete the object itself. Thank you.
 	var/spread_type = AIRBORNE
 	var/contagious_period = 0//the disease stage when it can be spread
 	var/list/affected_species = list()
-	var/mob/affected_mob = null //the mob which is affected by disease.
+	var/mob/living/carbon/affected_mob = null //the mob which is affected by disease.
 	var/holder = null //the atom containing the disease (mob or obj)
 	var/carrier = 0.0 //there will be a small chance that the person will be a carrier
 	var/curable = 1 //can this disease be cured? (By itself...)

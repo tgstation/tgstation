@@ -8,7 +8,7 @@
 	return
 
 /mob/living/silicon/emp_act(severity)
-	src.fireloss += 25
+	src.take_organ_damage(25)
 	flick("noise", src:flash)
 	src << "\red <B>*BZZZT*</B>"
 	src << "\red Warning: Electromagnetic pulse detected."

@@ -8,13 +8,13 @@
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
 
-/obj/item/weapon/storage/briefcase/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/storage/briefcase/attack(mob/M as mob, mob/living/user as mob)
 	//..()
 
-	if ((usr.mutations & 16) && prob(50))
-		usr << "\red The [src] slips out of your hand and hits your head."
-		usr.bruteloss += 10
-		usr.paralysis += 2
+	if ((user.mutations & 16) && prob(50))
+		user << "\red The [src] slips out of your hand and hits your head."
+		user.take_organ_damage(10)
+		user.paralysis += 2
 		return
 
 	if (M.stat < 2 && M.health < 50 && prob(90))

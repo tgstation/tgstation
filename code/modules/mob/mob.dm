@@ -20,12 +20,12 @@
 
 // fun if you want to typecast humans/monkeys/etc without writing long path-filled lines.
 /proc/ishuman(A)
-	if(A && istype(A, /mob/living/carbon/human))
+	if(istype(A, /mob/living/carbon/human))
 		return 1
 	return 0
 
 /proc/isalien(A)
-	if(A && istype(A, /mob/living/carbon/alien))
+	if(istype(A, /mob/living/carbon/alien))
 		return 1
 	return 0
 
@@ -35,7 +35,7 @@
 	return 0
 
 /proc/isrobot(A)
-	if(A && istype(A, /mob/living/silicon/robot))
+	if(istype(A, /mob/living/silicon/robot))
 		return 1
 	return 0
 
@@ -45,17 +45,17 @@
 	return 0
 
 /proc/isAI(A)
-	if(A && istype(A, /mob/living/silicon/ai))
+	if(istype(A, /mob/living/silicon/ai))
 		return 1
 	return 0
 
 /proc/iscarbon(A)
-	if(A && istype(A, /mob/living/carbon))
+	if(istype(A, /mob/living/carbon))
 		return 1
 	return 0
 
 /proc/issilicon(A)
-	if(A && istype(A, /mob/living/silicon))
+	if(istype(A, /mob/living/silicon))
 		return 1
 	return 0
 
@@ -983,26 +983,6 @@
 	..()
 	return
 
-/mob/living/carbon/human/Topic(href, href_list)
-	if (href_list["mach_close"])
-		var/t1 = text("window=[]", href_list["mach_close"])
-		src.machine = null
-		src << browse(null, t1)
-	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
-		var/obj/equip_e/human/O = new /obj/equip_e/human(  )
-		O.source = usr
-		O.target = src
-		O.item = usr.equipped()
-		O.s_loc = usr.loc
-		O.t_loc = src.loc
-		O.place = href_list["item"]
-		src.requests += O
-		spawn( 0 )
-			O.process()
-			return
-	..()
-	return
-
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 	if(!src.client)	return
 	if (type)
@@ -1096,13 +1076,6 @@
 	return
 
 
-/mob/living/carbon/proc/swap_hand()
-	src.hand = !( src.hand )
-	if (!( src.hand ))
-		src.hands.dir = NORTH
-	else
-		src.hands.dir = SOUTH
-	return
 
 /mob/proc/drop_item_v()
 	if (src.stat == 0)
@@ -1383,14 +1356,6 @@
 		src << browse('changelog.html', "window=changes;size=675x650")
 		src.client.changes = 1
 
-/mob/verb/succumb()
-	set hidden = 1
-
-	if ((src.health < 0 && src.health > -95.0))
-		src.oxyloss += src.health + 200
-		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
-		src << "\blue You have given up life and succumbed to death."
-
 /mob/var/ghost_ears = 1
 /mob/verb/toggle_ghost_ears()
 	set name = "Ghost ears"
@@ -1582,69 +1547,6 @@
 	if(LinkBlocked(usr.loc,src.loc)) return
 	src.show_inv(usr)
 
-/mob/bullet_act(flag)
-	if (flag == PROJECTILE_BULLET)
-		if (istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-			if (H.organs[text("[]", dam_zone)])
-				var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-				if (affecting.take_damage(51, 0))
-					H.UpdateDamageIcon()
-				else
-					H.UpdateDamage()
-		else
-			src.bruteloss += 51
-		src.updatehealth()
-		if (prob(80) && src.weakened <= 2)
-			src.weakened = 2
-	else if (flag == PROJECTILE_TASER)
-		if (prob(75) && src.stunned <= 10)
-			src.stunned = 10
-		else
-			src.weakened = 10
-	else if (flag == PROJECTILE_DART)
-		src.weakened += 5
-		src.toxloss += 10
-	else if(flag == PROJECTILE_LASER)
-		if (istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-			if (H.organs[text("[]", dam_zone)])
-				var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-				if (affecting.take_damage(20, 0))
-					H.UpdateDamageIcon()
-				else
-					H.UpdateDamage()
-		else
-			src.bruteloss += 20
-		src.updatehealth()
-		if (prob(25) && src.stunned <= 2)
-			src.stunned = 2
-	else if(flag == PROJECTILE_PULSE)
-		if (istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-			if (H.organs[text("[]", dam_zone)])
-				var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-				if (affecting.take_damage(40, 0))
-					H.UpdateDamageIcon()
-				else
-					H.UpdateDamage()
-		else
-			src.bruteloss += 40
-		src.updatehealth()
-		if (prob(50))
-			src.stunned = min(src.stunned, 5)
-	else if(flag == PROJECTILE_BOLT)
-		src.toxloss += 3
-		src.radiation += 100
-		src.updatehealth()
-		src.stuttering += 5
-		src.drowsyness += 5
-		if (prob(10))
-			src.weakened = min(src.weakened, 2)
-	return
 
 
 /atom/movable/Move(NewLoc, direct)
@@ -1961,64 +1863,6 @@
 	for(var/mob/M in viewers())
 		M.see(message)
 
-/mob/proc/updatehealth()
-	if (src.nodamage == 0)
-		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
-	else
-		src.health = 100
-		src.stat = 0
-
-//sort of a legacy burn method for /electrocute, /shock, and the e_chair
-/mob/proc/burn_skin(burn_amount)
-	if(istype(src, /mob/living/carbon/human))
-		//world << "DEBUG: burn_skin(), mutations=[mutations]"
-		if (src.mutations & 2) //fireproof
-			return 0
-		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
-		var/divided_damage = (burn_amount)/(H.organs.len)
-		var/datum/organ/external/affecting = null
-		var/extradam = 0	//added to when organ is at max dam
-		for(var/A in H.organs)
-			if(!H.organs[A])	continue
-			affecting = H.organs[A]
-			if(!istype(affecting, /datum/organ/external))	continue
-			if(affecting.take_damage(0, divided_damage+extradam))
-				extradam = 0
-			else
-				extradam += divided_damage
-		H.UpdateDamageIcon()
-		H.updatehealth()
-		return 1
-	else if(istype(src, /mob/living/carbon/monkey))
-		if (src.mutations & 2) //fireproof
-			return 0
-		var/mob/living/carbon/monkey/M = src
-		M.fireloss += burn_amount
-		M.updatehealth()
-		return 1
-	else if(istype(src, /mob/living/silicon/ai))
-		return 0
-
-/mob/proc/adjustBodyTemp(actual, desired, incrementboost)
-	var/temperature = actual
-	var/difference = abs(actual-desired)	//get difference
-	var/increments = difference/10 //find how many increments apart they are
-	var/change = increments*incrementboost	// Get the amount to change by (x per increment)
-
-	// Too cold
-	if(actual < desired)
-		temperature += change
-		if(actual > desired)
-			temperature = desired
-	// Too hot
-	if(actual > desired)
-		temperature -= change
-		if(actual < desired)
-			temperature = desired
-//	if(istype(src, /mob/living/carbon/human))
-//		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
-	return temperature
-
 //This is the proc for gibbing a mob. Cannot gib ghosts. Removed the medal reference,
 //added different sort of gibs and animations. N
 /mob/proc/gib()
@@ -2081,8 +1925,6 @@ Originally created for wizard disintegrate. I've removed the virus code since it
 */
 /mob/proc/dust()
 
-	if (istype(src, /mob/dead/observer))
-		return
 	src.death(1)
 	var/atom/movable/overlay/animation = null
 	src.monkeyizing = 1
@@ -2117,32 +1959,6 @@ Originally created for wizard disintegrate. I've removed the virus code since it
 
 	sleep(15)
 	del(src)
-
-/mob/proc/get_contents()
-	var/list/L = list()
-	L += src.contents
-	for(var/obj/item/weapon/storage/S in src.contents)
-		L += S.return_inv()
-	for(var/obj/item/weapon/gift/G in src.contents)
-		L += G.gift
-		if (istype(G.gift, /obj/item/weapon/storage))
-			L += G.gift:return_inv()
-	return L
-
-/mob/proc/check_contents_for(A)
-	var/list/L = list()
-	L += src.contents
-	for(var/obj/item/weapon/storage/S in src.contents)
-		L += S.return_inv()
-	for(var/obj/item/weapon/gift/G in src.contents)
-		L += G.gift
-		if (istype(G.gift, /obj/item/weapon/storage))
-			L += G.gift:return_inv()
-
-	for(var/obj/B in L)
-		if(B.type == A)
-			return 1
-	return 0
 
 
 /*
@@ -2270,92 +2086,3 @@ note dizziness decrements automatically in the mob's Life() proc.
 						boom.icon_state = "loss_malf"
 					else
 						boom.icon_state = "loss_general"
-
-/mob/proc/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
-	  return 0 //only carbon liveforms has this proc
-
-/mob/emp_act(severity)
-	var/list/L = src.get_contents()
-	for(var/obj/O in L)
-		O.emp_act(severity)
-	..()
-
-/mob/proc/get_organ_target()
-	var/mob/shooter = src
-	var/t = shooter:zone_sel.selecting
-	if ((t in list( "eyes", "mouth" )))
-		t = "head"
-	var/datum/organ/external/def_zone = ran_zone(t)
-	return def_zone
-
-// heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/proc/heal_organ_damage(var/brute, var/burn)
-	var/list/datum/organ/external/parts = list()
-	for(var/organ_name in src.organs)
-		var/datum/organ/external/organ = src.organs[organ_name]
-		if((brute && organ.brute_dam) || (burn && organ.burn_dam))
-			parts += organ
-
-	if(!parts.len)
-		return
-	var/datum/organ/external/picked = pick(parts)
-	picked.heal_damage(brute,burn)
-	src.updatehealth()
-
-// damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/proc/take_organ_damage(var/brute, var/burn)
-	var/list/datum/organ/external/parts = list()
-	for(var/organ_name in src.organs)
-		var/datum/organ/external/organ = src.organs[organ_name]
-		if(organ.brute_dam + organ.burn_dam < organ.max_damage)
-			parts += organ
-
-	if(!parts.len)
-		return
-	var/datum/organ/external/picked = pick(parts)
-	picked.take_damage(brute,burn)
-	src.updatehealth()
-
-// heal MANY external organs, in random order
-/mob/proc/heal_overall_damage(var/brute, var/burn)
-	var/list/datum/organ/external/parts = list()
-	for(var/organ_name in src.organs)
-		var/datum/organ/external/organ = src.organs[organ_name]
-		if((brute && organ.brute_dam) || (burn && organ.burn_dam))
-			parts += organ
-
-	while(parts.len && (brute>0 || burn>0) )
-		var/datum/organ/external/picked = pick(parts)
-		
-		var/brute_was = picked.brute_dam
-		var/burn_was = picked.burn_dam
-		
-		picked.heal_damage(brute,burn)
-		
-		brute -= (brute_was-picked.brute_dam)
-		burn -= (burn_was-picked.burn_dam)
-		
-		parts -= picked
-	src.updatehealth()
-
-// damage MANY external organs, in random order
-/mob/proc/take_overall_damage(var/brute, var/burn)
-	var/list/datum/organ/external/parts = list()
-	for(var/organ_name in src.organs)
-		var/datum/organ/external/organ = src.organs[organ_name]
-		if(organ.brute_dam + organ.burn_dam < organ.max_damage)
-			parts += organ
-
-	while(parts.len && (brute>0 || burn>0) )
-		var/datum/organ/external/picked = pick(parts)
-		
-		var/brute_was = picked.brute_dam
-		var/burn_was = picked.burn_dam
-		
-		picked.take_damage(brute,burn)
-		
-		brute -= (picked.brute_dam-brute_was)
-		burn -= (picked.burn_dam-burn_was)
-		
-		parts -= picked
-	src.updatehealth()

@@ -36,17 +36,17 @@ TELEPORT GUN
 
 	var/mode = 1//I guess I'll leave this here in case another mode to the weapon is added./N
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 		if ((user.mutations & 16) && prob(50))
-			usr << "\red The pulse rifle blows up in your face."
-			usr.fireloss += 20
-			usr.drop_item()
+			user << "\red The pulse rifle blows up in your face."
+			user.take_organ_damage(0,20)
+			user.drop_item()
 			del(src)
 			return
 		if (flag)
 			return
 		if ((!istype(user, /mob/living/carbon/human)) && ticker.mode != "monkey")
-			usr << "\red You don't have the dexterity to do this!"
+			user << "\red You don't have the dexterity to do this!"
 			return
 
 		src.add_fingerprint(user)
@@ -70,7 +70,7 @@ TELEPORT GUN
 			A.process()
 		return
 
-/obj/item/weapon/gun/energy/pulse_rifle/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/gun/energy/pulse_rifle/attack(mob/M as mob, mob/living/user as mob)
 	..()
 	/*
 	src.add_fingerprint(user)
@@ -131,7 +131,7 @@ TELEPORT GUN
 	..()
 	return
 
-obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/user as mob)
+obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/living/user as mob)
 	..()
 
 	if (istype(A, /obj/item/weapon/ammo/a357))
@@ -153,7 +153,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return 1
 	return
 
-/obj/item/weapon/gun/revolver/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/revolver/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 	if (flag)
 		return
 	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
@@ -192,7 +192,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return
 	return
 
-/obj/item/weapon/gun/revolver/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/gun/revolver/attack(mob/M as mob, mob/living/user as mob)
 	if ((user.a_intent == "hurt" && src.bullets > 0))
 		playsound(user, 'Gunshot.ogg', 100, 1)
 		for(var/mob/O in viewers(M, null))
@@ -220,7 +220,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 //0, not loaded. 1, beanbag, 2, 12gauge, 3, blank, 4, dart.
 
-/obj/item/weapon/gun/shotgun/attackby(obj/item/weapon/A as obj, mob/user as mob)
+/obj/item/weapon/gun/shotgun/attackby(obj/item/weapon/A as obj, mob/living/user as mob)
 	..()
 	if (istype(A, /obj/item/weapon/ammo/shell/beanbag))
 		if (index == src.shellsmax || shellsunlimited >= 1) //...than sorry.
@@ -274,7 +274,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return 1
 	return 1
 
-/obj/item/weapon/gun/shotgun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/shotgun/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 	if (flag)
 		return
 	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
@@ -419,7 +419,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	..()
 	return
 
-/obj/item/weapon/gun/detectiverevolver/attackby(obj/item/weapon/ammo/a38/A as obj, mob/user as mob)
+/obj/item/weapon/gun/detectiverevolver/attackby(obj/item/weapon/ammo/a38/A as obj, mob/living/user as mob)
 	..()
 
 	if (istype(A, /obj/item/weapon/ammo/a38))
@@ -441,7 +441,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return 1
 	return
 
-/obj/item/weapon/gun/detectiverevolver/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/detectiverevolver/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 
 	var/detective = ((istype(user:w_uniform, /obj/item/clothing/under/det) || !istype(user, /mob/living/carbon/human)) && istype(user:head, /obj/item/clothing/head/det_hat) && istype(user:wear_suit, /obj/item/clothing/suit/det_suit))
 
@@ -486,7 +486,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return
 	return
 
-/obj/item/weapon/gun/detectiverevolver/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/gun/detectiverevolver/attack(mob/M as mob, mob/living/user as mob)
 	src.add_fingerprint(user)
 	var/mob/living/carbon/human/H = user
 	var/detective
@@ -571,17 +571,17 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	spawn(50) charge()
 
 
-/obj/item/weapon/gun/energy/laser_gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-	if ((usr.mutations & 16) && prob(50))
-		usr << "\red The laser gun blows up in your face."
-		usr.fireloss += 20
-		usr.drop_item()
+/obj/item/weapon/gun/energy/laser_gun/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
+	if ((user.mutations & 16) && prob(50))
+		user << "\red The laser gun blows up in your face."
+		user.take_organ_damage(0,20)
+		user.drop_item()
 		del(src)
 		return
 	if (flag)
 		return
 	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
+		user << "\red You don't have the dexterity to do this!"
 		return
 
 	src.add_fingerprint(user)
@@ -624,7 +624,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	A.process()
 	return
 
-/obj/item/weapon/gun/energy/laser_gun/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/gun/energy/laser_gun/attack(mob/M as mob, mob/living/user as mob)
 	..()
 	/*
 	src.add_fingerprint(user)
@@ -657,7 +657,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	ratio = round(ratio, 0.25) * 100
 	src.icon_state = text("taser[]", ratio)
 
-/obj/item/weapon/gun/energy/taser_gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/energy/taser_gun/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 	if(flag)
 		return
 	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
@@ -700,7 +700,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	A.process()
 
 
-/obj/item/weapon/gun/energy/taser_gun/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/gun/energy/taser_gun/attack(mob/M as mob, mob/living/user as mob)
 	if ((usr.mutations & 16) && prob(50))
 		usr << "\red The taser gun discharges in your hand."
 		usr.paralysis += 60
@@ -789,7 +789,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	if(charges < maximum_charges) charges++
 	spawn(50) charge()
 
-/obj/item/weapon/gun/energy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/energy/crossbow/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 	if(flag)
 		return
 	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
@@ -827,16 +827,11 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 	A.process()
 
-/obj/item/weapon/gun/energy/crossbow/attack(mob/M as mob, mob/user as mob)
-	..()
-
-
-
 
 // TELEPORT GUN
 // This whole thing is just a copy/paste job
 
-/obj/item/weapon/gun/energy/teleport_gun/attack_self(mob/user as mob)
+/obj/item/weapon/gun/energy/teleport_gun/attack_self(mob/living/user as mob)
 	var/list/L = list(  )
 	for(var/obj/machinery/teleport/hub/R in world)
 		var/obj/machinery/computer/teleporter/com = locate(/obj/machinery/computer/teleporter, locate(R.x - 2, R.y, R.z))
@@ -860,7 +855,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	ratio = round(ratio, 0.25) * 100
 	src.icon_state = text("taser[]", ratio)
 
-/obj/item/weapon/gun/energy/teleport_gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/energy/teleport_gun/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 	if(flag)
 		return
 	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
@@ -899,7 +894,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 
 	A.process()
 
-/obj/item/weapon/gun/energy/teleport_gun/proc/point_blank_teleport(mob/M as mob, mob/user as mob)
+/obj/item/weapon/gun/energy/teleport_gun/proc/point_blank_teleport(mob/M as mob, mob/living/user as mob)
 	if (src.target == null)
 		var/list/turfs = list(	)
 		for(var/turf/T in orange(10))
@@ -921,7 +916,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 				do_teleport(M, src.target, 2)
 	return
 
-/obj/item/weapon/gun/energy/teleport_gun/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/gun/energy/teleport_gun/attack(mob/M as mob, mob/living/user as mob)
 	if ((usr.mutations & 16) && prob(50))
 		usr << "\red You shoot the teleport gun while holding it backwards."
 		point_blank_teleport(usr)
@@ -1040,7 +1035,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			else if (mode == 1)
 				overlays += "nucgun-kill"
 
-		attack_self(mob/user as mob)
+		attack_self(mob/living/user as mob)
 			if(mode == 1)
 				mode = 2
 				user << "\blue You set the gun to stun"
@@ -1055,17 +1050,17 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		ratio = round(ratio, 0.25) * 100
 		src.icon_state = text("energy[]", ratio)
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-		if ((usr.mutations & 16) && prob(50))
-			usr << "\red The energy gun blows up in your face."
-			usr.fireloss += 20
-			usr.drop_item()
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
+		if ((user.mutations & 16) && prob(50))
+			user << "\red The energy gun blows up in your face."
+			user.take_organ_damage(0,20)
+			user.drop_item()
 			del(src)
 			return
 		if (flag)
 			return
 		if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
-			usr << "\red You don't have the dexterity to do this!"
+			user << "\red You don't have the dexterity to do this!"
 			return
 
 		src.add_fingerprint(user)
@@ -1112,7 +1107,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			spawn()
 				A.process()
 
-	attack_self(mob/user as mob)
+	attack_self(mob/living/user as mob)
 		if(mode == 1)
 			mode = 2
 			user << "\blue You set the gun to stun"
@@ -1125,7 +1120,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 			overlays -= "energystun"
 		update_icon()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M as mob, mob/living/user as mob)
 		..()
 		/*
 		src.add_fingerprint(user)
@@ -1188,7 +1183,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	..()
 	return
 
-/obj/item/weapon/gun/c96/attackby(obj/item/weapon/ammo/a763m/A as obj, mob/user as mob)
+/obj/item/weapon/gun/c96/attackby(obj/item/weapon/ammo/a763m/A as obj, mob/living/user as mob)
 	..()
 
 	if (istype(A, /obj/item/weapon/ammo/a763m))
@@ -1202,7 +1197,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return 1
 	return
 
-/obj/item/weapon/gun/c96/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/c96/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 
 	if (flag)
 		return
@@ -1281,7 +1276,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	..()
 	return
 
-/obj/item/weapon/gun/p08/attackby(obj/item/weapon/ammo/a9x19p/A as obj, mob/user as mob)
+/obj/item/weapon/gun/p08/attackby(obj/item/weapon/ammo/a9x19p/A as obj, mob/living/user as mob)
 	..()
 
 	if (istype(A, /obj/item/weapon/ammo/a9x19p))
@@ -1295,7 +1290,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return 1
 	return
 
-/obj/item/weapon/gun/p08/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/p08/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 
 	if (flag)
 		return
@@ -1380,7 +1375,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	..()
 	return
 
-/obj/item/weapon/gun/glock/attackby(obj/item/weapon/ammo/a45/A as obj, mob/user as mob)
+/obj/item/weapon/gun/glock/attackby(obj/item/weapon/ammo/a45/A as obj, mob/living/user as mob)
 	..()
 
 	if (istype(A, /obj/item/weapon/ammo/a45))
@@ -1393,7 +1388,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return 1
 	return
 
-/obj/item/weapon/gun/glock/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/glock/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 
 	if (flag)
 		return
@@ -1462,7 +1457,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	..()
 	return
 
-/obj/item/weapon/gun/m1911/attackby(obj/item/weapon/ammo/a45/A as obj, mob/user as mob)
+/obj/item/weapon/gun/m1911/attackby(obj/item/weapon/ammo/a45/A as obj, mob/living/user as mob)
 	..()
 
 	if (istype(A, /obj/item/weapon/ammo/a45))
@@ -1475,7 +1470,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return 1
 	return
 
-/obj/item/weapon/gun/m1911/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/m1911/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 
 	if (flag)
 		return
@@ -1545,7 +1540,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	..()
 	return
 
-/obj/item/weapon/gun/carbine/attackby(obj/item/weapon/ammo/assaultmag/A as obj, mob/user as mob)
+/obj/item/weapon/gun/carbine/attackby(obj/item/weapon/ammo/assaultmag/A as obj, mob/living/user as mob)
 	..()
 
 	if (istype(A, /obj/item/weapon/ammo/assaultmag))
@@ -1559,7 +1554,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return 1
 	return
 
-/obj/item/weapon/gun/carbine/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/carbine/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 
 	if (flag)
 		return
@@ -1630,7 +1625,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 	..()
 	return
 
-/obj/item/weapon/gun/ak331/attackby(obj/item/weapon/ammo/assaultmag/A as obj, mob/user as mob)
+/obj/item/weapon/gun/ak331/attackby(obj/item/weapon/ammo/assaultmag/A as obj, mob/living/user as mob)
 	..()
 
 	if (istype(A, /obj/item/weapon/ammo/assaultmag))
@@ -1644,7 +1639,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/us
 		return 1
 	return
 
-/obj/item/weapon/gun/ak331/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/weapon/gun/ak331/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
 
 	if (flag)
 		return

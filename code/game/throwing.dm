@@ -75,23 +75,26 @@
 					src.throwing = 0
 
 /atom/proc/throw_impact(atom/hit_atom)
-	if(ismob(hit_atom))
-		hit_atom.visible_message("\red [hit_atom] has been hit by [src].")
-		var/mob/M = hit_atom
+	if(istype(hit_atom,/mob/living))
+		var/mob/living/M = hit_atom
+		M.visible_message("\red [hit_atom] has been hit by [src].")
 		if(src.vars.Find("throwforce"))
-			M.bruteloss += src:throwforce
+			M.take_organ_damage(src:throwforce)
 
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom
-		if(!O.anchored) step(O, src.dir)
+		if(!O.anchored)
+			step(O, src.dir)
 		O.hitby(src)
 
 	else if(isturf(hit_atom))
 		var/turf/T = hit_atom
 		if(T.density)
-			spawn(2) step(src, turn(src.dir, 180))
-			if(ismob(src) && hasvar(src,"bruteloss"))
-				src:bruteloss += 20
+			spawn(2)
+				step(src, turn(src.dir, 180))
+			if(istype(src,/mob/living))
+				var/mob/living/M = src
+				M.take_organ_damage(20)
 
 /atom/movable/Bump(atom/O)
 	if(src.throwing)

@@ -38,9 +38,8 @@
 	for(i=0, i<lifetime, i++)
 		step_to(A,M,0)
 		if(get_dist(A,M) <= 1)
-			if(istype(M,/mob))
-				M:bruteloss += bruteloss
-				M:fireloss += fireloss
+			if(istype(M,/mob/living))
+				M:take_organ_damage(bruteloss,fireloss)
 			explosion(M.loc, radius_devastation, radius_heavy, radius_light, radius_flash)
 			del(A)
 			return

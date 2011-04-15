@@ -489,11 +489,8 @@ var/showadminmessages = 1
 
 	if (href_list["revive"])
 		if ((src.rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
-			var/mob/M = locate(href_list["revive"])
+			var/mob/living/M = locate(href_list["revive"])
 			if (ismob(M))
-				if(istype(M, /mob/dead/observer))
-					alert("Cannot revive a ghost")
-					return
 				if(config.allow_admin_rev)
 					M.revive()
 					message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!", 1)
@@ -1961,7 +1958,7 @@ var/showadminmessages = 1
 	else
 		alert("[M.name] is not prisoned.")
 
-/mob/proc/revive()
+/mob/living/proc/revive()
 	//src.fireloss = 0
 	src.toxloss = 0
 	//src.bruteloss = 0

@@ -47,11 +47,11 @@
 			else
 				chassis.occupant_message("<font color='red'>[target] is firmly secured.</font>")
 
-		else if(istype(target,/mob))
-			var/mob/M = target
+		else if(istype(target,/mob/living))
+			var/mob/living/M = target
 			if(M.stat>1) return
 			if(chassis.occupant.a_intent == "hurt")
-				M.bruteloss += dam_force
+				M.take_overall_damage(dam_force)
 				M.oxyloss += round(dam_force/2)
 				M.updatehealth()
 				chassis.occupant_message("\red You squeese [target] with [src.name]. Something cracks.")
@@ -498,14 +498,13 @@
 	proc/dynhitby(atom/movable/A)
 		if(!action_checks(A))
 			return chassis.dynhitby(A)
-		if(prob(chassis.deflect_chance) || istype(A, /mob) || istype(A, /obj/item/mecha_tracking))
+		if(prob(chassis.deflect_chance) || istype(A, /mob/living) || istype(A, /obj/item/mecha_tracking))
 			chassis.occupant_message("\blue The [A] bounces off the armor.")
 			chassis.visible_message("The [A] bounces off the [chassis] armor")
 			chassis.log_append_to_last("Armor saved.")
-			if(istype(A, /mob))
-				var/mob/M = A
-				M.bruteloss += 10
-				M.updatehealth()
+			if(istype(A, /mob/living))
+				var/mob/living/M = A
+				M.take_organ_damage(10)
 		else if(istype(A, /obj))
 			var/obj/O = A
 			if(O.throwforce)

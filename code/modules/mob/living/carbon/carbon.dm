@@ -26,7 +26,7 @@
 					H.UpdateDamageIcon()
 					H.updatehealth()
 				else
-					src.bruteloss += d
+					src.take_organ_damage(d)
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
 						M.show_message(text("\red <B>[user] attacks [src]'s stomach wall with the [I.name]!"), 2)
@@ -85,7 +85,8 @@
 	shock_damage *= siemens_coeff
 	if (shock_damage<1)
 		return 0
-	src.burn_skin(shock_damage)
+	src.take_overall_damage(0,shock_damage)
+	//src.burn_skin(shock_damage)
 	//src.fireloss += shock_damage //burn_skin will do this for us
 	//src.updatehealth()
 	src.visible_message(
@@ -97,3 +98,12 @@
 	if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
 
 	return shock_damage
+
+
+/mob/living/carbon/proc/swap_hand()
+	src.hand = !( src.hand )
+	if (!( src.hand ))
+		src.hands.dir = NORTH
+	else
+		src.hands.dir = SOUTH
+	return

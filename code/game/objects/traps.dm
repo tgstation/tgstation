@@ -144,16 +144,16 @@
 			var/obj/item/weapon/ore/rock = new rock_type(hit_loc)
 			for(var/mob/living/M in hit_loc)
 				if(prob(rocks_hit_chance))
-					M.bruteloss += rand(rocks_min_dmg,rocks_max_dmg)
+					M.take_organ_damage(rand(rocks_min_dmg,rocks_max_dmg))
 					M << "A chunk of [lowertext(rock.name)] hits you in the head!"
 
 	if(target_type == "mob")
 		for(var/i=0,i<rocks_amt,i++)
-			var/mob/hit_loc = pick(targets)
+			var/mob/living/hit_loc = pick(targets)
 			var/rock_type = pick(rocks_type)
 			var/obj/item/weapon/ore/rock = new rock_type(hit_loc.loc)
 			if(prob(rocks_hit_chance))
-				hit_loc.bruteloss += rand(rocks_min_dmg,rocks_max_dmg)
+				hit_loc.take_organ_damage(rand(rocks_min_dmg,rocks_max_dmg))
 				hit_loc << "A chunk of [lowertext(rock.name)] hits you in the head!"
 
 /obj/trap/single
@@ -186,11 +186,18 @@
 
 	return varieties
 
-/obj/trap/single/rockfalls/activate(victim)
+/obj/trap/single/rockfalls/activate(mob/living/victim)
 	var/rock_type = pick(rocks_type)
 	var/obj/item/weapon/ore/rock = new rock_type(victim:loc)
-	if(prob(rock_hit_chance))
-		victim:bruteloss += rand(rock_min_dmg,rock_max_dmg)
+	if (istype(victim) && prob(rock_hit_chance))
+		var/dmg = rand(rock_min_dmg,rock_max_dmg)
+		if(istype(victim, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = victim
+			var/datum/organ/external/affecting = H.organs["head"]
+			affecting.take_damage(dmg)
+			H.updatehealth()
+		else
+			victim.take_organ_damage(dmg)
 		victim << "A chunk of [lowertext(rock.name)] hits you in the head!"
 
 /obj/trap/area

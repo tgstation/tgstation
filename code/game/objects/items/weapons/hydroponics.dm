@@ -72,7 +72,12 @@ Deathnettle
 /obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)
 		user << "\red The nettle burns your bare hand!"
-		user.fireloss += force
+		if(istype(user, /mob/living/carbon/human))
+			var/organ = (user.hand ? "l_":"r_") + pick("hand","hand","arm")
+			var/datum/organ/external/affecting = user.organs[organ]
+			affecting.take_damage(0,force)
+		else
+			user.take_organ_damage(0,force)
 
 /obj/item/weapon/grown/nettle/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (force > 0)
@@ -86,21 +91,25 @@ Deathnettle
 
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)
-		user.fireloss += force
+		if(istype(user, /mob/living/carbon/human))
+			var/organ = (user.hand ? "l_":"r_") + pick("hand","hand","arm")
+			var/datum/organ/external/affecting = user.organs[organ]
+			affecting.take_damage(0,force)
+		else
+			user.take_organ_damage(0,force)
 		if(prob(50))
 			user.paralysis += 5
 			user << "\red You are stunned by the Deathnettle when you try picking it up!"
 
 /obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!..()) return
-	if(istype(M, /mob/living/carbon/human))
+	if(istype(M, /mob/living))
 		M << "\red You are stunned by the powerful acid of the Deathnettle!"
-		M.eye_blurry += 4
+		M.eye_blurry += force/7
 		if(prob(20))
-			M.paralysis += 5
-			M.weakened += 2
+			M.paralysis += force/6
+			M.weakened += force/15
 		M.drop_item()
-
 
 /obj/item/weapon/grown/deathnettle/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (force > 0)

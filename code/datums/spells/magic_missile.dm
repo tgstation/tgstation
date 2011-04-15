@@ -23,7 +23,7 @@
 	invocation()
 
 	var/targets = 0
-	for (var/mob/M as mob in oview(usr,range))
+	for (var/mob/living/M as mob in oview(usr,range))
 		if(max_targets)
 			if(targets >= max_targets)
 				break
@@ -49,7 +49,7 @@
 				step_to(A,M,0)
 				if (get_dist(A,M) == 0)
 					M.weakened += missile_weaken_amt
-					M.fireloss += missile_damage
+					M.take_organ_damage(0, missile_damage)
 					del(A)
 					return
 				sleep(missile_step_delay)

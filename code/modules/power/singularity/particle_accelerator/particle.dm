@@ -49,9 +49,12 @@
 
 
 	proc
-		toxmob(var/mob/M)
+		toxmob(var/mob/living/M)
 			var/radiation = (energy*2)
 			if(istype(M,/mob/living/carbon/human))
+				if(M:wear_suit) //TODO: check for radiation protection
+					radiation = round(radiation/2,1)
+			if(istype(M,/mob/living/carbon/monkey))
 				if(M:wear_suit) //TODO: check for radiation protection
 					radiation = round(radiation/2,1)
 			M.radiation += radiation

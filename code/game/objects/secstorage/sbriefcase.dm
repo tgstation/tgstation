@@ -15,11 +15,11 @@
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
 
-/obj/item/weapon/secstorage/sbriefcase/attack(mob/M as mob, mob/user as mob)
-	if ((usr.mutations & 16) && prob(50))
-		usr << "\red The [src] slips out of your hand and hits your head."
-		usr.bruteloss += 10
-		usr.paralysis += 2
+/obj/item/weapon/secstorage/sbriefcase/attack(mob/M as mob, mob/living/user as mob)
+	if ((user.mutations & 16) && prob(50))
+		user << "\red The [src] slips out of your hand and hits your head."
+		user.take_organ_damage(10)
+		user.paralysis += 2
 		return
 
 	var/t = user:zone_sel.selecting

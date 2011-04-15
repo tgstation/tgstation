@@ -115,7 +115,7 @@
 
 	var/obj/hud/hud_used = null
 
-	var/list/organs = list(  )
+	//var/list/organs = list(  ) //moved to human.
 	var/list/grabbed_by = list(  )
 	var/list/requests = list(  )
 

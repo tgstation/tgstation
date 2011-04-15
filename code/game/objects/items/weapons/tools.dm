@@ -23,59 +23,14 @@ WELDINGTOOOL
 	return
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M, /mob))
-		return
-
-	if((usr.mutations & 16) && prob(50))
-		M << "\red You stab yourself in the eye."
-		M.sdisabilities |= 1
-		M.weakened += 4
-		M.bruteloss += 10
-
-	src.add_fingerprint(user)
-	if(!(user.zone_sel.selecting == ("eyes" || "head")))
+	if(!istype(M))
 		return ..()
-	var/mob/living/carbon/human/H = M
 
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "\blue You're going to need to remove that mask/helmet/glasses first."
-		return
-	if(istype(M, /mob/living/carbon/alien))//Aliens don't have eyes./N
-		user << "\blue You cannot locate any eyes on this creature!"
-		return
-
-	for(var/mob/O in viewers(M, null))
-		if(O == (user || M))	continue
-		if(M == user)	O.show_message(text("\red [] has stabbed themself with []!", user, src), 1)
-		else	O.show_message(text("\red [] has been stabbed in the eye with [] by [].", M, src, user), 1)
-	if(M != user)
-		M << "\red [user] stabs you in the eye with [src]!"
-		user << "\red You stab [M] in the eye with [src]!"
-	else
-		user << "\red You stab yourself in the eyes with [src]!"
-	if(istype(M, /mob/living/carbon/human))
-		var/datum/organ/external/affecting = M.organs["head"]
-		affecting.take_damage(7)
-	else
-		M.bruteloss += 7
-	M.eye_blurry += rand(3,4)
-	M.eye_stat += rand(2,4)
-	if (M.eye_stat >= 10)
-		M << "\red Your eyes start to bleed profusely!"
-		M.eye_blurry += 15+(0.1*M.eye_blurry)
-		M.disabilities |= 1
-		if(M.stat == 2)	return
-		if(prob(50))
-			M << "\red You drop what you're holding and clutch at your eyes!"
-			M.eye_blurry += 10
-			M.paralysis += 1
-			M.weakened += 4
-			M.drop_item()
-		if (prob(M.eye_stat - 10 + 1))
-			M << "\red You go blind!"
-			M.sdisabilities |= 1
-	return
+	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+		return ..()
+	if((user.mutations & 16) && prob(50))
+		M = user
+	return eyestab(M,user)
 
 
 

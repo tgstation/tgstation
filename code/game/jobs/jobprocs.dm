@@ -567,7 +567,7 @@
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/research_director(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
-			src.equip_if_possible(new /obj/item/weapon/pen(src), slot_l_hand)
+			//src.equip_if_possible(new /obj/item/weapon/pen(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/weapon/clipboard(src), slot_r_hand)
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
 

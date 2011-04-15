@@ -160,9 +160,9 @@
 			O.amount -= 1
 
 
-/obj/item/proc/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 
-	if (!M) // not sure if this is the right thing...
+	if (!istype(M)) // not sure if this is the right thing...
 		return
 	var/messagesource = M
 
@@ -319,18 +319,87 @@
 	else
 		switch(src.damtype)
 			if("brute")
-				M.bruteloss += power
+				M.take_organ_damage(power)
 				if (prob(33)) // Added blood for whacking non-humans too
 					var/turf/location = M.loc
 					if (istype(location, /turf/simulated))
 						location.add_blood_floor(M)
 			if("fire")
 				if (!(M.mutations & 2))
-					M.fireloss += power
+					M.take_organ_damage(0, power)
 					M << "Aargh it burns!"
 		M.updatehealth()
 	src.add_fingerprint(user)
 	return 1
 
+
+/obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+
+	var/mob/living/carbon/human/H = M
+	if(istype(H) && ( \
+			(H.head && H.head.flags & HEADCOVERSEYES) || \
+			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
+		))
+		// you can't stab someone in the eyes wearing a mask!
+		user << "\red You're going to need to remove that mask/helmet/glasses first."
+		return
+
+	var/mob/living/carbon/monkey/Mo = M
+	if(istype(Mo) && ( \
+			(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
+		))
+		// you can't stab someone in the eyes wearing a mask!
+		user << "\red You're going to need to remove that mask/helmet/glasses first."
+		return
+
+	if(istype(M, /mob/living/carbon/alien))//Aliens don't have eyes./N
+		user << "\red You cannot locate any eyes on this creature!"
+		return
+
+	src.add_fingerprint(user)
+	//if((user.mutations & 16) && prob(50))
+	//	M = user
+		/*
+		M << "\red You stab yourself in the eye."
+		M.sdisabilities |= 1
+		M.weakened += 4
+		M.bruteloss += 10
+		*/
+
+	if(M != user)
+		for(var/mob/O in (viewers(M) - user - M))
+			O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
+		M << "\red [user] stabs you in the eye with [src]!"
+		user << "\red You stab [M] in the eye with [src]!"
+	else
+		user.visible_message( \
+			"\red [user] has stabbed themself with [src]!", \
+			"\red You stab yourself in the eyes with [src]!" \
+		)
+	if(istype(M, /mob/living/carbon/human))
+		var/datum/organ/external/affecting = M:organs["head"]
+		affecting.take_damage(7)
+	else
+		M.take_organ_damage(7)
+	M.eye_blurry += rand(3,4)
+	M.eye_stat += rand(2,4)
+	if (M.eye_stat >= 10)
+		M.eye_blurry += 15+(0.1*M.eye_blurry)
+		M.disabilities |= 1
+		if(M.stat != 2)
+			M << "\red Your eyes start to bleed profusely!"
+		if(prob(50))
+			if(M.stat != 2)
+				M << "\red You drop what you're holding and clutch at your eyes!"
+				M.drop_item()
+			M.eye_blurry += 10
+			M.paralysis += 1
+			M.weakened += 4
+		if (prob(M.eye_stat - 10 + 1))
+			if(M.stat != 2)
+				M << "\red You go blind!"
+			M.sdisabilities |= 1
+	return
 
 

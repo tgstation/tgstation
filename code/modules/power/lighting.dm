@@ -277,9 +277,8 @@
 
 			affecting.take_damage( 0, 5 )		// 5 burn damage
 
-			H.UpdateDamageIcon()
-			H.fireloss += 5
 			H.updatehealth()
+			H.UpdateDamageIcon()
 			return				// if burned, don't remove the light
 
 	// create a light tube/bulb item and put it in the user's hand
