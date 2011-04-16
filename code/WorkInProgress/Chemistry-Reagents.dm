@@ -933,7 +933,7 @@ datum
 		adminordrazine //An OP chemical for adminis
 			name = "Adminordrazine"
 			id = "adminordrazine"
-			description = "I don't have to explain shit about adminordrazine, its magic."
+			description = "It's magic. We don't have to explain it."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -941,27 +941,29 @@ datum
 				M:oxyloss = 0
 				M:radiation = 0
 				M:heal_organ_damage(5,5)
-				M:drowsyness = 0
+				if(M:toxloss) M:toxloss = max(0, M:toxloss-5)
 				if(holder.has_reagent("toxin"))
-					holder.remove_reagent("toxin", 2)
+					holder.remove_reagent("toxin", 5)
 				if(holder.has_reagent("stoxin"))
-					holder.remove_reagent("stoxin", 2)
+					holder.remove_reagent("stoxin", 5)
 				if(holder.has_reagent("plasma"))
-					holder.remove_reagent("plasma", 1)
+					holder.remove_reagent("plasma", 5)
 				if(holder.has_reagent("acid"))
-					holder.remove_reagent("acid", 1)
+					holder.remove_reagent("acid", 5)
+				if(holder.has_reagent("pacid"))
+					holder.remove_reagent("pacid", 5)
 				if(holder.has_reagent("cyanide"))
-					holder.remove_reagent("cyanide", 1)
+					holder.remove_reagent("cyanide", 5)
 				if(holder.has_reagent("lexorin"))
-					holder.remove_reagent("lexorin", 2)
+					holder.remove_reagent("lexorin", 5)
 				if(holder.has_reagent("amatoxin"))
-					holder.remove_reagent("amatoxin", 2)
+					holder.remove_reagent("amatoxin", 5)
 				if(holder.has_reagent("chloralhydrate"))
 					holder.remove_reagent("chloralhydrate", 5)
 				if(holder.has_reagent("carpotoxin"))
-					holder.remove_reagent("carpotoxin", 1)
+					holder.remove_reagent("carpotoxin", 5)
 				if(holder.has_reagent("zombiepowder"))
-					holder.remove_reagent("zombiepowder", 0.5)
+					holder.remove_reagent("zombiepowder", 5)
 				M:brainloss = 0
 				M.disabilities = 0
 				M.sdisabilities = 0
@@ -969,7 +971,21 @@ datum
 				M:eye_blind = 0
 				M:disabilities &= ~1
 				M:sdisabilities &= ~1
-				if(M:toxloss) M:toxloss = max(0, M:toxloss-5)
+				M:weakened = 0
+				M:stunned = 0
+				M:paralysis = 0
+				M:silent = 0
+				M.dizziness = 0
+				M:drowsyness = 0
+				M:stuttering = 0
+				M:confused = 0
+				M:sleeping = 0
+				M:jitteriness = 0
+				M.virus.spread = "Remissive"
+				M.virus.stage--
+				if(M.virus.stage <= 0)
+					M.resistances += M.virus.type
+					M.virus = null
 				..()
 				return
 

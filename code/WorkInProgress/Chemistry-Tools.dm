@@ -1013,7 +1013,7 @@
 			usr << "\blue \The [src] was bitten [bitecount] times!"
 		else
 			usr << "\blue \The [src] was bitten multiple times!"
-			
+
 /obj/item/weapon/reagent_containers/food/snacks/sliceable
 	var/slice_path
 	var/slices_num
@@ -1060,7 +1060,7 @@
 			reagents.trans_to(slice,reagents_per_slice)
 		del(src)
 		return
-		
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// FOOD END
@@ -2118,7 +2118,7 @@
 
 /obj/item/weapon/reagent_containers/pill/adminordrazine
 	name = "Adminordrazine pill"
-	desc = "It's magic, I don't have to explain shit."
+	desc = "It's magic. We don't have to explain it."
 	icon_state = "pill16"
 	New()
 		..()
