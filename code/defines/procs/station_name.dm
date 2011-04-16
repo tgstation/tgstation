@@ -9,12 +9,12 @@
 		name += " "
 
 	// Prefix
-	name += pick("", "Dorf", "Alium", "Carp", "Ork", "Pete", "Control", "Nettle", "Aspie", "Class", "Race", "Fatguy", "Gentleman", "Touhou", "Capitalist", "Communist", "Bear", "Beard", "Derp", "Space", "Star", "Moon", "System", "Mining", "Neckbeard", "Research", "Supply", "Military", "Orbital", "Battle", "Science", "Asteroid", "Home", "Production", "Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional", "Robot")
+	name += pick("", "Dorf", "Alium", "Carp", "Ork", "Pete", "Control", "Nettle", "Aspie", "Class", "Crab", "Fist","Corrogated","Skeleton","Race", "Fatguy", "Gentleman", "Touhou", "Capitalist", "Communist", "Bear", "Beard", "Derp", "Space", "Star", "Moon", "System", "Mining", "Neckbeard", "Research", "Supply", "Military", "Orbital", "Battle", "Science", "Asteroid", "Home", "Production", "Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional", "Robot")
 	if (name)
 		name += " "
 
 	// Suffix
-	name += pick("Station", "Fortress", "Frontier", "Village", "Town", "City", "Edition", "Hive", "Complex", "Base", "Facility", "Depot", "Outpost", "Installation", "Drydock", "Observatory", "Array", "Relay", "Monitor", "Platform", "Construct", "Hangar", "Prison", "Center", "Port", "Waystation", "Factory", "Waypoint", "Stopover", "Hub", "HQ", "Office", "Object", "Fortification")
+	name += pick("Station", "Fortress", "Frontier", "Village", "Town", "City", "Edition", "Hive", "Complex", "Base", "Facility", "Depot", "Outpost", "Installation", "Drydock", "Observatory", "Array", "Relay", "Monitor", "Platform", "Construct", "Hangar", "Prison", "Center", "Port", "Waystation", "Factory", "Waypoint", "Stopover", "Hub", "HQ", "Office", "Object", "Fortification", "Colony", "Planet-Cracker")
 	name += " "
 
 	// ID Number
