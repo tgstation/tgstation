@@ -192,13 +192,17 @@
 			G.draining = 1
 			if(charge)
 				var/drain = 0
+				var/maxcapacity = 0
 				var/totaldrain = 0
 				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 				spark_system.set_up(5, 0, src.loc)
-				while(charge>0)
+				while(charge>0&&!maxcapacity)
 					drain = rand(100,300)
 					if(charge<drain)
 						drain = charge
+					if(S.charge+drain>S.maxcharge)
+						drain = S.maxcharge-S.charge
+						maxcapacity = 1
 					if (do_after(U,10))
 						spark_system.start()
 						playsound(src.loc, "sparks", 50, 1)

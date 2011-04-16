@@ -603,11 +603,15 @@
 			G.draining = 1
 			if(cell&&cell.charge)
 				var/drain = 0
+				var/maxcapacity = 0
 				var/totaldrain = 0
-				while(cell.charge>0)
+				while(cell.charge>0&&!maxcapacity)
 					drain = rand(100,300)
 					if(cell.charge<drain)
 						drain = cell.charge
+					if(S.charge+drain>S.maxcharge)
+						drain = S.maxcharge-S.charge
+						maxcapacity = 1
 					if (do_after(U,10))
 						spark_system.start()
 						playsound(src.loc, "sparks", 50, 1)

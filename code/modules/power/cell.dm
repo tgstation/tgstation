@@ -72,10 +72,13 @@
 			if(charge)
 				user << "\blue Now charging battery..."
 				G.draining = 1
-				if (do_after(user,50))
+				if (do_after(user,30))
 					U << "\blue Gained <B>[charge]</B> energy from the cell."
+					if(S.charge+charge>S.maxcharge)
+						S.charge=S.maxcharge
+					else
+						S.charge+=charge
 					charge = 0
-					S.charge+=charge
 					G.draining = 0
 					corrupt()
 					updateicon()

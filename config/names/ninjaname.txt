@@ -40,3 +40,4 @@ Bro
 Fox
 Null
 Raiden
+Samurai

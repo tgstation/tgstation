@@ -371,16 +371,20 @@ NINJA MASK
 		U.verbs += /mob/proc/ninjashift
 		U.verbs += /mob/proc/ninjajaunt
 		U.verbs += /mob/proc/ninjasmoke
+		U.verbs += /mob/proc/ninjaboost
 		U.verbs += /mob/proc/ninjapulse
 		U.verbs += /mob/proc/ninjablade
+		U.verbs += /mob/proc/ninjastar
 		U.mind.special_verbs += /mob/proc/ninjashift
 		U.mind.special_verbs += /mob/proc/ninjajaunt
 		U.mind.special_verbs += /mob/proc/ninjasmoke
+		U.mind.special_verbs += /mob/proc/ninjaboost
 		U.mind.special_verbs += /mob/proc/ninjapulse
 		U.mind.special_verbs += /mob/proc/ninjablade
+		U.mind.special_verbs += /mob/proc/ninjastar
 		verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
 		verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
-		verbs += /obj/item/clothing/suit/space/space_ninja/proc/toggle
+		verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
 		U.gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/toggled
 		initialize=1
 		affecting=U
@@ -416,21 +420,25 @@ NINJA MASK
 	U.verbs -= /mob/proc/ninjashift
 	U.verbs -= /mob/proc/ninjajaunt
 	U.verbs -= /mob/proc/ninjasmoke
+	U.verbs -= /mob/proc/ninjaboost
 	U.verbs -= /mob/proc/ninjapulse
 	U.verbs -= /mob/proc/ninjablade
+	U.verbs -= /mob/proc/ninjastar
 	U.mind.special_verbs -= /mob/proc/ninjashift
 	U.mind.special_verbs -= /mob/proc/ninjajaunt
 	U.mind.special_verbs -= /mob/proc/ninjasmoke
+	U.mind.special_verbs -= /mob/proc/ninjaboost
 	U.mind.special_verbs -= /mob/proc/ninjapulse
 	U.mind.special_verbs -= /mob/proc/ninjablade
+	U.mind.special_verbs -= /mob/proc/ninjastar
 	U << "\blue Logging off, [U:real_name]. Shutting down <B>SpiderOS</B>."
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
 	sleep(40)
 	U << "\blue Primary system status: <B>OFFLINE</B>.\nBackup system status: <B>OFFLINE</B>."
 	sleep(40)
 	U << "\blue VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>."
 	if(active)//Shutdowns stealth.
 		active=0
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/toggle
 	sleep(40)
 	if(U.stat||U.health<=0)
 		U << "\red <B>FATAL ERROR</B>: 412--GG##&77 BRAIN WAV3 PATT$RN <B>RED</B>\nI-I-INITIATING S-SELf DeStrCuCCCT%$#@@!!$^#!..."
@@ -464,29 +472,193 @@ NINJA MASK
 	slowdown=1
 	return
 
-/obj/item/clothing/suit/space/space_ninja/proc/toggle()
-	set name = "Toggle Stealth"
-	set desc = "Toggles the internal CLOAK-tech on or off."
+/obj/item/clothing/suit/space/space_ninja/proc/spideros()
+	set name = "Display SpiderOS"
+	set desc = "Utilize built-in computer system."
 	set category = "Object"
 
-	if(usr:wear_suit!=src||!src.initialize)
-		usr << "\red Your suit must be worn and active to use this function."
-		return
-	if(active)
-		spawn(0)
-			anim(usr.loc,'mob.dmi',usr,"uncloak")
-		active=0
-		usr << "\blue You are now visible."
-		for(var/mob/O in oviewers(usr, null))
-			O << "[usr.name] appears from thin air!"
-
+	var/mob/living/carbon/human/U = usr
+	var/dat = "<html><head><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#DB2929\"><style>a, a:link, a:visited, a:active, a:hover { color: #DB2929; }img {border-style:none;}</style>"
+	if(spideros==1)
+		dat += "<a href='byond://?src=\ref[src];choice=1'><img src=sos_7.png> Refresh</a>"
+		dat += " | <a href='byond://?src=\ref[src];choice=0'><img src=sos_8.png> Close</a>"
 	else
-		spawn(0)
-			anim(usr.loc,'mob.dmi',usr,"cloak")
-		active=1
-		usr << "\blue You are now invisible to normal detection."
-		for(var/mob/O in oviewers(usr, null))
-			O << "[usr.name] vanishes into thin air!"
+		dat += "<a href='byond://?src=\ref[src];choice=1'><img src=sos_7.png> Refresh</a>"
+		dat += " | <a href='byond://?src=\ref[src];choice=2'><img src=sos_1.png> Main Menu</a>"
+		dat += " | <a href='byond://?src=\ref[src];choice=0'><img src=sos_8.png> Close</a>"
+	dat += "<br>"
+	dat += "<h2 ALIGN=CENTER>SpiderOS v.1.34</h2>"
+	dat += "Welcome, <b>[U.real_name]</b>.<br>"
+	dat += "<br>"
+	dat += "<img src=sos_10.png> Current Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]<br>"
+	dat += "<img src=sos_9.png> Battery Life: [round(charge/100)]%<br>"
+	dat += "<img src=sos_11.png> Smoke Bombs: [sbombs]<br>"
+	dat += "<br>"
+
+	switch(spideros)//Should be easy to add new functions or windows.
+		if(1)
+			dat += "<h4><img src=sos_1.png> Available Functions:</h4>"
+			dat += "<ul>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=sos_4.png> Toggle Stealth: [active == 1 ? "Disable" : "Enable"]</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=4'><img src=sos_3.png> Medical Screen</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=sos_5.png> Atmos Scan</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=6'><img src=sos_12.png> Messenger</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=7'><img src=sos_6.png> Other</a></li>"
+			dat += "</ul>"
+		if(2)
+			dat += "<h4><img src=sos_3.png> Medical Report:</h4>"
+			if(U.dna)
+				dat += "<b>Fingerprints</b>: <i>[md5(U.dna.uni_identity)]</i><br>"
+				dat += "<b>Unique identity</b>: <i>[U.dna.unique_enzymes]</i><br>"
+			dat += "<h4>Overall Status: [U.stat > 1 ? "dead" : "[U.health]% healthy"]</h4>"
+			dat += "Oxygen loss: [U.oxyloss]"
+			dat += " | Toxin levels: [U.toxloss]<br>"
+			dat += "Burn severity: [U.fireloss]"
+			dat += " | Brute trauma: [U.bruteloss]<br>"
+			dat += "Body Temperature: [U.bodytemperature-T0C]&deg;C ([U.bodytemperature*1.8-459.67]&deg;F)<br>"
+			if(U.virus)
+				dat += "Warning Virus Detected. Name: [U.virus.name].Type: [U.virus.spread]. Stage: [U.virus.stage]/[U.virus.max_stages]. Possible Cure: [U.virus.cure].<br>"
+			dat += "<ul>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Dylovene'><img src=sos_2.png> Inject Dylovene: [chem1] left</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Dexalin Plus'><img src=sos_2.png> Inject Dexalin Plus: [chem2] left</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Tricordazine'><img src=sos_2.png> Inject Tricordazine: [chem3] left</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Spacelin'><img src=sos_2.png> Inject Spacelin: [chem4] left</a></li>"
+			dat += "</ul>"
+		if(3)
+			dat += "<h4><img src=sos_5.png>Atmospheric Scan:</h4>"
+			var/turf/T = get_turf_or_move(U.loc)
+			if (isnull(T))
+				dat += "Unable to obtain a reading.<br>"
+			else
+				var/datum/gas_mixture/environment = T.return_air()
+
+				var/pressure = environment.return_pressure()
+				var/total_moles = environment.total_moles()
+
+				dat += "Air Pressure: [round(pressure,0.1)] kPa"
+
+				if (total_moles)
+					var/o2_level = environment.oxygen/total_moles
+					var/n2_level = environment.nitrogen/total_moles
+					var/co2_level = environment.carbon_dioxide/total_moles
+					var/plasma_level = environment.toxins/total_moles
+					var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
+					dat += "<ul>"
+					dat += "<li>Nitrogen: [round(n2_level*100)]%</li>"
+					dat += "<li>Oxygen: [round(o2_level*100)]%</li>"
+					dat += "<li>Carbon Dioxide: [round(co2_level*100)]%</li>"
+					dat += "<li>Plasma: [round(plasma_level*100)]%</li>"
+					dat += "</ul>"
+					if(unknown_level > 0.01)
+						dat += "OTHER: [round(unknown_level)]%<br>"
+
+					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C"
+		if(4)
+			dat += "<h4><img src=sos_12.png> Anonymous Messenger:</h4>"//Anonymous because the receiver will not know the sender's identity.
+			dat += "<h4><img src=sos_6.png> Detected PDAs:</h4>"
+			dat += "<ul>"
+			var/count = 0
+			for (var/obj/item/device/pda/P in world)
+				if (!P.owner||P.toff)
+					continue
+				dat += "<li><a href='byond://?src=\ref[src];choice=\ref[P]'>[P]</a>"
+				dat += "</li>"
+				count++
+			dat += "</ul>"
+			if (count == 0)
+				dat += "None detected.<br>"
+		if(5)
+			dat += "<h4><img src=sos_6.png> Other Functions:</h4>"
+
+	dat += "</body></html>"
+
+	U << browse(dat,"window=spideros;size=400x444;border=1;can_resize=0;can_close=0;can_minimize=0")
+
+/obj/item/clothing/suit/space/space_ninja/Topic(href, href_list)
+	..()
+	var/mob/living/carbon/human/U = usr
+	if(U.stat||U.wear_suit!=src||!initialize)//Check to make sure the guy is wearing the suit after clicking and it's on.
+		U << "\red Your suit must be worn and active to use this function."
+		U << browse(null, "window=spideros")//Closes the window.
+		return
+
+	switch(href_list["choice"])
+		if("0")
+			U << browse(null, "window=spideros")
+			return
+		if("1")//Refresh, goes to the end of the proc.
+		if("2")//Back to main menu
+			spideros=1
+		if("3")
+			if(active)
+				spawn(0)
+					anim(usr.loc,'mob.dmi',usr,"uncloak")
+				active=0
+				U << "\blue You are now visible."
+				for(var/mob/O in oviewers(usr, null))
+					O << "[usr.name] appears from thin air!"
+			else
+				spawn(0)
+					anim(usr.loc,'mob.dmi',usr,"cloak")
+				active=1
+				U << "\blue You are now invisible to normal detection."
+				for(var/mob/O in oviewers(usr, null))
+					O << "[usr.name] vanishes into thin air!"
+		if("4")
+			spideros=2
+		if("5")
+			spideros=3
+		if("6")
+			spideros=4
+		if("7")
+			spideros=5
+		if("Dylovene")//These names really don't matter for specific functions but it's easier to use descriptive names.
+			if(chem1<=0)
+				U << "\red Error: the suit cannot perform this function."
+			else
+				U.reagents.add_reagent("anti_toxin", 15)
+				chem1--
+				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
+		if("Dexalin Plus")
+			if(chem2<=0)
+				U << "\red Error: the suit cannot perform this function."
+			else
+				U.reagents.add_reagent("dexalinp", 15)
+				chem2--
+				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
+		if("Tricordazine")
+			if(chem3<=0)
+				U << "\red Error: the suit cannot perform this function."
+			else
+				U.reagents.add_reagent("tricordrazine", 15)
+				chem3--
+				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
+		if("Spacelin")
+			if(chem4<=0)
+				U << "\red Error: the suit cannot perform this function."
+			else
+				U.reagents.add_reagent("spaceacillin", 15)
+				chem4--
+				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
+		else//Leaving this for the messenger because it's an awesome solution.
+			var/obj/item/device/pda/P = locate(href_list["choice"])
+			var/t = input(U, "Please enter untraceable message.") as text
+			t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+			if(!t||U.stat||U.wear_suit!=src||!initialize)//Wow, another one of these. Man...
+				return
+			if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
+				U << "\red Error: unable to deliver message."
+				spideros()
+				return
+			P.tnote += "<i><b>&larr; From unknown source:</b></i><br>[t]<br>"
+			if (!P.silent)
+				playsound(P.loc, 'twobeep.ogg', 50, 1)
+				for (var/mob/O in hearers(3, P.loc))
+					O.show_message(text("\icon[P] *[P.ttone]*"))
+			P.overlays = null
+			P.overlays += image('pda.dmi', "pda-r")
+	spideros()//Refreshes the screen.
+	return
 
 /obj/item/clothing/suit/space/space_ninja/examine()
 	set src in view()
@@ -498,6 +670,7 @@ NINJA MASK
 		else
 			usr << "The CLOAK-tech device is <B>inactive</B>."
 		usr << "There are <B>[src.sbombs]</B> smoke bombs remaining."
+		usr << "There are <B>[src.aboost]</B> adrenaline injectors remaining."
 
 /obj/item/clothing/gloves/space_ninja/proc/toggled()
 	set name = "Toggle Drain"

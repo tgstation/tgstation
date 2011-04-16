@@ -183,6 +183,8 @@ Useful for copy pasta since I'm lazy.*/
 	if(!ticker.mode)//Apparently, this doesn't actually prevent anything. Huh
 		alert("The game hasn't started yet!")
 		return
+	if(alert("Are you sure you want to send in a space ninja?",,"Yes","No")=="No")
+		return
 
 	TRYAGAIN
 	var/input = input(usr, "Please specify which mission the space ninja shall undertake.", "Specify Mission", "")
@@ -431,7 +433,7 @@ Useful for copy pasta since I'm lazy.*/
 	set desc = "Create a focused beam of energy in your active hand."
 	set category = "Ninja"
 
-	var/C = 10
+	var/C = 50
 	if(!ninjacost(C))
 		return
 
@@ -442,6 +444,65 @@ Useful for copy pasta since I'm lazy.*/
 		src.put_in_hand(W)
 
 	src:wear_suit:charge-=(C*10)
-/*
-/mob/proc/ninjastar(var/mob/living/M in oview())
-*/
+
+//Shoot Ninja Stars
+//Shoots ninja stars at random people.
+//This could be a lot better but I'm too tired atm.
+/mob/proc/ninjastar()
+	set name = "Energy Star"
+	set desc = "Launches an energy star at a random living target."
+	set category = "Ninja"
+
+	var/C = 30
+	if(!ninjacost(C))
+		return
+
+	var/mob/living/target//The point here is to pick a random, living mob in oview to shoot stuff at.
+	var/targets[]//So yo can shoot while yo throw dawg
+	targets = new()
+	for(var/mob/living/M in oview(7))
+		if(M.stat==2)	continue//Doesn't target corpses.
+		targets.Add(M)
+	if(targets.len)
+		target=pick(targets)
+	else
+		return
+	var/turf/curloc = src.loc
+	var/atom/targloc = get_turf(target)
+	if (!targloc || !istype(targloc, /turf) || !curloc)
+		return
+	if (targloc == curloc)
+		return
+	var/obj/bullet/neurodart/A = new /obj/bullet/neurodart(usr.loc)
+	A.current = curloc
+	A.yo = targloc.y - curloc.y
+	A.xo = targloc.x - curloc.x
+	src:wear_suit:charge-=(C*10)
+	A.process()
+	return
+
+//Adrenaline Boost
+//Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
+//Movement impairing would indicate drugs and the like
+/mob/proc/ninjaboost()
+	set name = "Adrenaline Boost"
+	set desc = "Inject a secret chemical that will counteract all movement-impairing effects."
+	set category = "Ninja"
+
+	if(src.stat==2)
+		src << "\red You must be <b>alive</b> to do this."
+		return
+	if(src:wear_suit:aboost<=0)
+		src << "\red You do not have any more adrenaline boosters."
+		return
+
+	src.paralysis = 0
+	src.stunned = 0
+	src.weakened = 0
+	spawn(10)
+		src.say("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!")
+	spawn(70)
+		src.reagents.add_reagent("radium", 15)
+		src << "red You are beginning to feal the after-effects of the injection."
+
+	src:wear_suit:aboost--

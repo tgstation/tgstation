@@ -299,7 +299,7 @@
 
 /obj/mecha/attack_hand(mob/user as mob)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
-/*	if(ishuman(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja)&&U.gloves:candrain&&!U.gloves:draining)
 			var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
@@ -309,13 +309,16 @@
 			G.draining = 1
 			if(get_charge())
 				var/drain = 0
+				var/maxcapacity = 0
 				var/totaldrain = 0
-				while(cell.charge>0)
+				while(cell.charge>0&&!maxcapacity)
 					drain = rand(100,300)
 					if(cell.charge<drain)
 						drain = cell.charge
-					if (do_after(U,10)) <--- gotta figure out why this isn't being called properly.
-						world << "PING"
+					if(S.charge+drain>S.maxcharge)
+						drain = S.maxcharge-S.charge
+						maxcapacity = 1
+					if (call(/proc/do_after)(U,10))//The mecha do_after proc was being called here instead of the mob one.
 						spark_system.start()
 						playsound(src.loc, "sparks", 50, 1)
 						cell.charge-=drain
@@ -327,7 +330,7 @@
 				return
 			else
 				U << "\red The exosuit's battery has run dry of power. You must find another source."
-			return*/
+			return
 	if (user.mutations & 8 && !prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))

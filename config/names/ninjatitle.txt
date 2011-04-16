@@ -39,3 +39,7 @@ Gray
 Solid
 Liquid
 Solidus
+Steel
+Nickel
+Silver
+Singing

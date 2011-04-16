@@ -73,6 +73,19 @@ mob/new_player
 			src << browse_rsc('pda_scanner.png')
 			src << browse_rsc('pda_signaler.png')
 			src << browse_rsc('pda_status.png')
+			//Loads icons for SpiderOS into client
+			src << browse_rsc('sos_1.png')
+			src << browse_rsc('sos_2.png')
+			src << browse_rsc('sos_3.png')
+			src << browse_rsc('sos_4.png')
+			src << browse_rsc('sos_5.png')
+			src << browse_rsc('sos_6.png')
+			src << browse_rsc('sos_7.png')
+			src << browse_rsc('sos_8.png')
+			src << browse_rsc('sos_9.png')
+			src << browse_rsc('sos_10.png')
+			src << browse_rsc('sos_11.png')
+			src << browse_rsc('sos_12.png')
 
 		//End PDA Resource Initialisation =====================================================>
 

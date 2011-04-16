@@ -170,7 +170,7 @@
 			if (src.mind.special_role == "Changeling")
 				stat("Chemical Storage", src.chem_charges)
 		if (istype(src.wear_suit, /obj/item/clothing/suit/space/space_ninja)&&src.wear_suit:initialize)
-			stat("Energy Charge", abs(src.wear_suit:charge/100))
+			stat("Energy Charge", round(src.wear_suit:charge/100))
 
 /mob/living/carbon/human/bullet_act(flag, A as obj, var/datum/organ/external/def_zone)
 	var/shielded = 0
@@ -2793,15 +2793,15 @@ It can still be worn/put on as normal.
 
 	while(parts.len && (brute>0 || burn>0) )
 		var/datum/organ/external/picked = pick(parts)
-		
+
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
-		
+
 		picked.heal_damage(brute,burn)
-		
+
 		brute -= (brute_was-picked.brute_dam)
 		burn -= (burn_was-picked.burn_dam)
-		
+
 		parts -= picked
 	src.updatehealth()
 	src.UpdateDamageIcon()
@@ -2812,15 +2812,15 @@ It can still be worn/put on as normal.
 
 	while(parts.len && (brute>0 || burn>0) )
 		var/datum/organ/external/picked = pick(parts)
-		
+
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
-		
+
 		picked.take_damage(brute,burn)
-		
+
 		brute -= (picked.brute_dam-brute_was)
 		burn -= (picked.burn_dam-burn_was)
-		
+
 		parts -= picked
 	src.updatehealth()
 	src.UpdateDamageIcon()
