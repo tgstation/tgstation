@@ -18,6 +18,7 @@ WELDINGTOOOL
 
 // SCREWDRIVER
 /obj/item/weapon/screwdriver/New()
+	icon_state = pick("screwdriver","screwdriver2","screwdriver3","screwdriver4","screwdriver5","screwdriver6","screwdriver7")
 	if (prob(75))
 		src.pixel_y = rand(0, 16)
 	return

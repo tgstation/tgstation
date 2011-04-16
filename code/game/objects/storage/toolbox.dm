@@ -28,4 +28,7 @@
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/cable_coil(src)
 	new /obj/item/weapon/cable_coil(src)
-	new /obj/item/weapon/cable_coil(src)
+	if(prob(5))
+		new /obj/item/clothing/gloves/yellow(src)
+	else
+		new /obj/item/weapon/cable_coil(src)

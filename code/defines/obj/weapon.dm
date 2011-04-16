@@ -1374,6 +1374,10 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	m_amt = 80
 	origin_tech = "materials=1"
 
+	New()
+		if(prob(50))
+			icon_state = "cutters-y"
+
 /obj/item/weapon/wrapping_paper
 	name = "wrapping paper"
 	icon = 'items.dmi'
