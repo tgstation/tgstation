@@ -33,9 +33,26 @@
 
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
+		if (istype(O, /obj/item/weapon/baton))
+			var/obj/item/weapon/baton/B = O
+			if (B.charges > 0 && B.status == 1)
+				flick("baton_active", src)
+				user.stunned = 10
+				user.stuttering = 10
+				user.weakened = 10
+				if(isrobot(user))
+					var/mob/living/silicon/robot/R = user
+					R.cell.charge -= 20
+				else
+					B.charges--
+				user.visible_message( \
+					"[user] was stunned by his wet [O].", \
+					"\red You have wet \the [O], it shocks you!")
+				return
 		O.clean_blood()
-		for(var/mob/V in viewers(src, null))
-			V.show_message(text("\blue [user] washes \a [O] using \the [src]."))
+		user.visible_message( \
+			"\blue [user] washes \a [O] using \the [src].", \
+			"\blue You wash \a [O] using \the [src].")
 
 	shower
 		name = "Shower"
@@ -43,5 +60,8 @@
 
 	kitchen
 		name = "Kitchen Sink"
-		icon = 'device.dmi'
 		icon_state = "sink_alt"
+
+	kitchen2
+		name = "Kitchen Sink"
+		icon_state = "sink_alt2"

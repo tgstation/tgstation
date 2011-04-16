@@ -332,6 +332,13 @@
 	item_state = "mime"
 	color = "mime"
 
+/obj/item/clothing/under/waiter
+	name = "Waiter Outfit"
+	desc = "There is a special pocket for tip."
+	icon_state = "waiter"
+	item_state = "waiter"
+	color = "waiter"
+
 
 // Athletic shorts.. heh
 /obj/item/clothing/under/shorts

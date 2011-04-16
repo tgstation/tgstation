@@ -208,7 +208,10 @@
 			user << "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C"
 		else
 			user << "\blue Tank is empty!"
-
+		src.add_fingerprint(user)
+	else if (istype(W,/obj/item/latexballon))
+		var/obj/item/latexballon/LB = W
+		LB.blow(src)
 		src.add_fingerprint(user)
 	return
 

@@ -145,3 +145,13 @@
 	vend_reply = "Have an enchanted evening!"
 	product_hidden = "/obj/item/weapon/reagent_containers/glass/bottle/wizarditis" //No one can get to the machine to hack it anyways
 	product_hideamt = "1" //Just one, for the lulz, not like anyone can get it - Microwave
+
+/obj/machinery/vending/dinnerware
+	name = "Dinnerware"
+	desc = "A kitchen and restaurant equipment vendor"
+	icon_state = "dinnerware"
+	product_paths = "/obj/item/weapon/tray;/obj/item/weapon/kitchen/utensil/fork;/obj/item/weapon/kitchenknife"
+	product_amounts = "6;4;2"
+	//product_amounts = "8;5;4" Old totals
+	product_hidden = "/obj/item/weapon/kitchen/utensil/spoon;/obj/item/weapon/kitchen/utensil/knife;/obj/item/weapon/kitchen/rollingpin"
+	product_hideamt = "2;2;2"
