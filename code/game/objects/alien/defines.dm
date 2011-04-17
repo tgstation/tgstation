@@ -38,8 +38,8 @@
 	density = 1
 	opacity = 1
 	anchored = 1
-//Alien can now normally destroy resin walls so they are no longer targetable with acid.
 	var/health = 50
+	var/affecting = null
 
 /obj/alien/weeds
 	name = "weeds"

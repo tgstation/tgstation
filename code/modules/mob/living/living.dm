@@ -8,67 +8,68 @@
 
 
 /mob/living/bullet_act(flag)
-	if (flag == PROJECTILE_BULLET)
-		if (istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-			if (H.organs[text("[]", dam_zone)])
-				var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-				if (affecting.take_damage(51, 0))
-					H.UpdateDamageIcon()
-				else
-					H.UpdateDamage()
-		else
-			src.take_organ_damage(51)
-		src.updatehealth()
-		if (prob(80) && src.weakened <= 2)
-			src.weakened = 2
-	else if (flag == PROJECTILE_TASER)
-		if (prob(75) && src.stunned <= 10)
-			src.stunned = 10
-		else
-			src.weakened = 10
-	else if (flag == PROJECTILE_DART)
-		src.weakened += 5
-		src.toxloss += 10
-	else if(flag == PROJECTILE_LASER)
-		if (istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-			if (H.organs[text("[]", dam_zone)])
-				var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-				if (affecting.take_damage(20, 0))
-					H.UpdateDamageIcon()
-				else
-					H.UpdateDamage()
-				src.updatehealth()
-		else
-			src.take_organ_damage(20)
-		if (prob(25) && src.stunned <= 2)
-			src.stunned = 2
-	else if(flag == PROJECTILE_PULSE)
-		if (istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-			if (H.organs[text("[]", dam_zone)])
-				var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-				if (affecting.take_damage(40, 0))
-					H.UpdateDamageIcon()
-				else
-					H.UpdateDamage()
-				src.updatehealth()
-		else
-			src.take_organ_damage(40)
-		if (prob(50))
-			src.stunned = min(src.stunned, 5)
-	else if(flag == PROJECTILE_BOLT)
-		src.toxloss += 3
-		src.radiation += 100
-		src.updatehealth()
-		src.stuttering += 5
-		src.drowsyness += 5
-		if (prob(10))
-			src.weakened = min(src.weakened, 2)
+	switch(flag)
+		if(PROJECTILE_BULLET)
+			if (istype(src, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = src
+				var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
+				if (H.organs[text("[]", dam_zone)])
+					var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
+					if (affecting.take_damage(51, 0))
+						H.UpdateDamageIcon()
+					else
+						H.UpdateDamage()
+			else
+				src.take_organ_damage(51)
+			src.updatehealth()
+			if (prob(80) && src.weakened <= 2)
+				src.weakened = 2
+		if(PROJECTILE_TASER)
+			if (prob(75) && src.stunned <= 10)
+				src.stunned = 10
+			else
+				src.weakened = 10
+		if(PROJECTILE_DART)
+			src.weakened += 5
+			src.toxloss += 10
+		if(PROJECTILE_LASER)
+			if (istype(src, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = src
+				var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
+				if (H.organs[text("[]", dam_zone)])
+					var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
+					if (affecting.take_damage(20, 0))
+						H.UpdateDamageIcon()
+					else
+						H.UpdateDamage()
+					src.updatehealth()
+			else
+				src.take_organ_damage(20)
+			if (prob(25) && src.stunned <= 2)
+				src.stunned = 2
+		if(PROJECTILE_PULSE)
+			if (istype(src, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = src
+				var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
+				if (H.organs[text("[]", dam_zone)])
+					var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
+					if (affecting.take_damage(40, 0))
+						H.UpdateDamageIcon()
+					else
+						H.UpdateDamage()
+					src.updatehealth()
+			else
+				src.take_organ_damage(40)
+			if (prob(50))
+				src.stunned = min(src.stunned, 5)
+		if(PROJECTILE_BOLT)
+			src.toxloss += 3
+			src.radiation += 100
+			src.updatehealth()
+			src.stuttering += 5
+			src.drowsyness += 5
+			if (prob(10))
+				src.weakened = min(src.weakened, 2)
 	return
 
 

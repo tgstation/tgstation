@@ -60,7 +60,6 @@
 
 //This is okay I guess unless we add alien shields or something. Should be cleaned up a bit.
 /mob/living/carbon/alien/larva/bullet_act(flag, A as obj)
-
 	if (locate(/obj/item/weapon/grab, src))
 		var/mob/safe = null
 		if (istype(src.l_hand, /obj/item/weapon/grab))
@@ -73,52 +72,53 @@
 				safe = G.affecting
 		if (safe)
 			return safe.bullet_act(flag, A)
-	if (flag == PROJECTILE_BULLET)
-		var/d = 51
+	switch(flag)
+		if(PROJECTILE_BULLET)
+			var/d = 51
 
-		if (src.stat != 2)
-			src.bruteloss += d
+			if (src.stat != 2)
+				src.bruteloss += d
 
+				src.updatehealth()
+				if (prob(50))
+					if(src.weakened <= 5)	src.weakened = 5
+			return
+		if(PROJECTILE_TASER)
+			if (prob(75) && src.stunned <= 10)
+				src.stunned = 10
+			else
+				src.weakened = 10
+			if (src.stuttering < 10)
+				src.stuttering = 10
+		if(PROJECTILE_DART)
+			return
+		if(PROJECTILE_LASER)
+			var/d = 20
+
+	//		if (!src.eye_blurry) src.eye_blurry = 4 //This stuff makes no sense but lasers need a buff./ It really doesn't make any sense. /N
+			if (prob(25)) src.stunned++
+
+			if (src.stat != 2)
+				src.bruteloss += d
+
+				src.updatehealth()
+				if (prob(25))
+					src.stunned = 1
+		if(PROJECTILE_PULSE)
+			var/d = 40
+
+			if (src.stat != 2)
+				src.bruteloss += d
+
+				src.updatehealth()
+				if (prob(50))
+					src.stunned = min(src.stunned, 5)
+		if(PROJECTILE_BOLT)
+			src.toxloss += 3
+			src.radiation += 100
 			src.updatehealth()
-			if (prob(50))
-				if(src.weakened <= 5)	src.weakened = 5
-		return
-	else if (flag == PROJECTILE_TASER)
-		if (prob(75) && src.stunned <= 10)
-			src.stunned = 10
-		else
-			src.weakened = 10
-		if (src.stuttering < 10)
-			src.stuttering = 10
-	else if (flag == PROJECTILE_DART)
-		return
-	else if(flag == PROJECTILE_LASER)
-		var/d = 20
-
-//		if (!src.eye_blurry) src.eye_blurry = 4 //This stuff makes no sense but lasers need a buff./ It really doesn't make any sense. /N
-		if (prob(25)) src.stunned++
-
-		if (src.stat != 2)
-			src.bruteloss += d
-
-			src.updatehealth()
-			if (prob(25))
-				src.stunned = 1
-	else if(flag == PROJECTILE_PULSE)
-		var/d = 40
-
-		if (src.stat != 2)
-			src.bruteloss += d
-
-			src.updatehealth()
-			if (prob(50))
-				src.stunned = min(src.stunned, 5)
-	else if(flag == PROJECTILE_BOLT)
-		src.toxloss += 3
-		src.radiation += 100
-		src.updatehealth()
-		src.stuttering += 5
-		src.drowsyness += 5
+			src.stuttering += 5
+			src.drowsyness += 5
 	return
 
 /mob/living/carbon/alien/larva/emp_act(severity)

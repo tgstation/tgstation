@@ -86,12 +86,15 @@
 		..()
 
 	bullet_act(flag, A as obj)
-		if (flag == PROJECTILE_BULLET)
-			src.health -= 20
-		else if (flag == PROJECTILE_WEAKBULLET)
-			src.health -= 4
-		else if (flag == PROJECTILE_LASER)
-			src.health -= 10
+		switch(flag)
+			if (PROJECTILE_BULLET)
+				src.health -= 20
+			if (PROJECTILE_WEAKBULLET)
+				src.health -= 4
+			if (PROJECTILE_LASER)
+				src.health -= 10
+			if (PROJECTILE_PULSE)
+				src.health -= 35
 		healthcheck()
 
 	ex_act(severity)

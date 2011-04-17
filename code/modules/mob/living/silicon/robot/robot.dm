@@ -236,65 +236,67 @@
 	return
 
 /mob/living/silicon/robot/bullet_act(flag)
-	if (flag == PROJECTILE_BULLET)
-		if (src.stat != 2)
-			src.bruteloss += 60
-			src.updatehealth()
-		return
-/*
-	else if (flag == PROJECTILE_MEDBULLET)
-		if (src.stat != 2)
-			src.bruteloss += 30
-			src.updatehealth()
-*/
-	else if (flag == PROJECTILE_WEAKBULLET)
-		if (src.stat != 2)
-			src.bruteloss += 15
-			src.updatehealth()
-		return
-/*
-	else if (flag == PROJECTILE_MPBULLET)
-		if (src.stat != 2)
-			src.bruteloss += 20
-			src.updatehealth()
+	switch(flag)
+		if(PROJECTILE_BULLET)
+			if (src.stat != 2)
+				src.bruteloss += 60
+				src.updatehealth()
+			return
+	/*
+		if(PROJECTILE_MEDBULLET)
+			if (src.stat != 2)
+				src.bruteloss += 30
+				src.updatehealth()
+	*/
+		if(PROJECTILE_WEAKBULLET)
+			if (src.stat != 2)
+				src.bruteloss += 15
+				src.updatehealth()
+			return
+	/*
+		if(PROJECTILE_MPBULLET)
+			if (src.stat != 2)
+				src.bruteloss += 20
+				src.updatehealth()
 
-	else if (flag == PROJECTILE_SLUG)
-		if (src.stat != 2)
-			src.bruteloss += 40
-			src.updatehealth()
+		if(PROJECTILE_SLUG)
+			if (src.stat != 2)
+				src.bruteloss += 40
+				src.updatehealth()
 
-	else if (flag == PROJECTILE_BAG)
-		if (src.stat != 2)
-			src.bruteloss += 2
-			src.updatehealth()
-*/
+		if(PROJECTILE_BAG)
+			if (src.stat != 2)
+				src.bruteloss += 2
+				src.updatehealth()
+	*/
 
-	else if (flag == PROJECTILE_TASER)
-		if (src.stat != 2)
-			src.fireloss += rand(0,10)
-			src.stunned += rand(0,3)
-		return
-	else if (flag == PROJECTILE_DART)
-		if (src.stat != 2)
-			src.stunned += 5
-			src.fireloss += 10
-			src.updatehealth()
-		return
-/*
-	else if (flag == PROJECTILE_WAVE)
-		if (src.stat != 2)
-			src.bruteloss += 25
-			src.updatehealth()
-		return
-*/
-	else if(flag == PROJECTILE_LASER)
-		if (src.stat != 2)
-			src.bruteloss += 20
-			src.updatehealth()
-	else if(flag == PROJECTILE_PULSE)
-		if (src.stat != 2)
-			src.bruteloss += 40
-			src.updatehealth()
+		if(PROJECTILE_TASER)
+			if (src.stat != 2)
+				src.fireloss += rand(0,10)
+				src.stunned += rand(0,3)
+			return
+		if(PROJECTILE_DART)
+			if (src.stat != 2)
+				src.stunned += 5
+				src.fireloss += 10
+				src.updatehealth()
+			return
+	/*
+		if(PROJECTILE_WAVE)
+			if (src.stat != 2)
+				src.bruteloss += 25
+				src.updatehealth()
+			return
+	*/
+		if(PROJECTILE_LASER)
+			if (src.stat != 2)
+				src.bruteloss += 20
+				src.updatehealth()
+		if(PROJECTILE_PULSE)
+			if (src.stat != 2)
+				src.bruteloss += 40
+				src.updatehealth()
+	spark_system.start()
 	return
 
 
@@ -495,6 +497,7 @@
 			else
 				user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
 	else
+		spark_system.start()
 		return ..()
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)

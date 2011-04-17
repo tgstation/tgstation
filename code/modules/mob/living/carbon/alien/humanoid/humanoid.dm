@@ -22,16 +22,6 @@
 	spawn( 0 )
 		if ((!( yes ) || src.now_pushing))
 			return
-		src.now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & 32)
-				if(prob(20))
-					for(var/mob/M in viewers(src, null))
-						if(M.client)
-							M << M << "\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>"
-					src.now_pushing = 0
-					return
 		src.now_pushing = 0
 		..()
 		if (!istype(AM, /atom/movable))
@@ -49,8 +39,6 @@
 			src.now_pushing = null
 		return
 	return
-
-//This is fine, maybe refine it a bit so they're faster than humans
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	var/tally = 0
@@ -74,18 +62,8 @@
 	stat(null, "Move Mode: [src.m_intent]")
 
 	if (src.client.statpanel == "Status")
-		if (src.internal)
-			if (!src.internal.air_contents)
-				del(src.internal)
-			else
-				stat("Internal Atmosphere Info", src.internal.name)
-				stat("Tank Pressure", src.internal.air_contents.return_pressure())
-				stat("Distribution Pressure", src.internal.distribute_pressure)
-
 		stat(null, "Plasma Stored: [src.toxloss]")
 
-
-//This is okay I guess unless we add alien shields or something. Should be cleaned up a bit.
 /mob/living/carbon/alien/humanoid/bullet_act(flag, A as obj)
 	var/shielded = 0
 	for(var/obj/item/device/shield/S in src)
@@ -117,46 +95,43 @@
 				safe = G.affecting
 		if (safe)
 			return safe.bullet_act(flag, A)
-	if (flag == PROJECTILE_BULLET)
-		var/d = 51
-		if (src.stat != 2)
-			src.bruteloss += d
-			src.updatehealth()
-			if (prob(50))
-				if(src.weakened <= 5)	src.weakened = 5
-		return
-	else if (flag == PROJECTILE_TASER)
-		if (prob(75) && src.stunned <= 10)
-			src.stunned = 10
-		else
-			src.weakened = 10
-		if (src.stuttering < 10)
-			src.stuttering = 10
-	else if (flag == PROJECTILE_DART)
-		return
-	else if(flag == PROJECTILE_LASER)
-		var/d = 20
-//		if (!src.eye_blurry) src.eye_blurry = 4 //This stuff makes no sense but lasers need a buff./ It really doesn't make any sense. /N
-		if (prob(25)) src.stunned++
-		if (src.stat != 2)
-			src.bruteloss += d
-			src.updatehealth()
-			if (prob(25))
-				src.stunned = 1
-	else if(flag == PROJECTILE_PULSE)
-		var/d = 40
+	switch(flag)//Did these people not know that switch is a function that exists? I swear, half of the code ignores switch completely.
+		if(PROJECTILE_BULLET)
+			var/d = 51
+			if (src.stat != 2)
+				src.bruteloss += d
+				src.updatehealth()
+				if (prob(50)&&weakened <= 5)
+					src.weakened = 5
+		if(PROJECTILE_TASER)
+			if (prob(75) && src.stunned <= 10)
+				src.stunned = 10
+			else
+				src.weakened = 10
+		if(PROJECTILE_DART)//Nothing is supposed to happen, just making sure it's listed.
 
-		if (src.stat != 2)
-			src.bruteloss += d
+		if(PROJECTILE_LASER)
+			var/d = 20
+	//		if (!src.eye_blurry) src.eye_blurry = 4 //This stuff makes no sense but lasers need a buff./ It really doesn't make any sense. /N
+			if (prob(25)) src.stunned++
+			if (src.stat != 2)
+				src.bruteloss += d
+				src.updatehealth()
+				if (prob(25))
+					src.stunned = 1
+		if(PROJECTILE_PULSE)
+			var/d = 40
+
+			if (src.stat != 2)
+				src.bruteloss += d
+				src.updatehealth()
+				if (prob(50))
+					src.stunned = min(src.stunned, 5)
+		if(PROJECTILE_BOLT)
+			src.toxloss += 3
+			src.radiation += 100
 			src.updatehealth()
-			if (prob(50))
-				src.stunned = min(src.stunned, 5)
-	else if(flag == PROJECTILE_BOLT)
-		src.toxloss += 3
-		src.radiation += 100
-		src.updatehealth()
-		src.stuttering += 5
-		src.drowsyness += 5
+			src.drowsyness += 5
 	return
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
@@ -237,18 +212,18 @@
 
 //unequip
 /mob/living/carbon/alien/humanoid/u_equip(obj/item/W as obj)
-	if (W == src.wear_suit)
-		src.wear_suit = null
-	else if (W == src.head)
-		src.head = null
-	else if (W == src.r_store)
-		src.r_store = null
-	else if (W == src.l_store)
-		src.l_store = null
-	else if (W == src.r_hand)
-		src.r_hand = null
-	else if (W == src.l_hand)
-		src.l_hand = null
+	if (W == wear_suit)
+		wear_suit = null
+	else if (W == head)
+		head = null
+	else if (W == r_store)
+		r_store = null
+	else if (W == l_store)
+		l_store = null
+	else if (W == r_hand)
+		r_hand = null
+	else if (W == l_hand)
+		l_hand = null
 
 /mob/living/carbon/alien/humanoid/db_click(text, t1)
 	var/obj/item/W = src.equipped()
@@ -567,7 +542,7 @@
 	return
 
 /mob/living/carbon/alien/humanoid/attack_paw(mob/living/carbon/monkey/M as mob)
-	if(!(istype(M, /mob/living/carbon/monkey)))	return//Fix for aliens receiving double messages when attacking other aliens.
+	if(!ismonkey(M))	return//Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
@@ -660,10 +635,10 @@
 		if ("hurt")
 			var/damage = rand(1, 9)
 			if (prob(90))
-				if (M.mutations & 8)
-					damage += 5
+				if (M.mutations & 8)//HULK SMASH
+					damage += 14
 					spawn(0)
-						src.paralysis += 1
+						src.paralysis += 5
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
@@ -671,9 +646,9 @@
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
-				if (damage > 4.9)
+				if (damage > 8)//Regular humans have a very small chance of weakening an alien.
 					if (src.weakened < 10)
-						src.weakened = rand(10, 15)
+						src.weakened = rand(1,5)
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
@@ -688,14 +663,14 @@
 		if ("disarm")
 			if (!src.lying)
 				var/randn = rand(1, 100)
-				if (randn <= 25)
+				if (randn <= 5)//Very small chance to push an alien down.
 					src.weakened = 2
 					playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has pushed down []!</B>", M, src), 1)
 				else
-					if (randn <= 60)
+					if (randn <= 50)
 						src.drop_item()
 						playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
 						for(var/mob/O in viewers(src, null))
