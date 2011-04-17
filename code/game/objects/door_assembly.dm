@@ -5,80 +5,127 @@ obj/door_assembly
 	icon_state = "door_as0"
 	anchored = 0
 	density = 1
-	var/doortype = 0
 	var/state = 0
 	var/glass = 0
+	var/base_icon_state
 	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
+	var/glass_type = /obj/machinery/door/airlock/glass //the type path of the airlock if changed into a glass airlock
+	var/glass_base_icon_state = "door_as_g"
+	New()
+		base_icon_state = copytext(icon_state,1,lentext(icon_state))
 
 	door_assembly_0
 		name = "Airlock Assembly"
 		icon_state = "door_as1"
+		airlock_type = /obj/machinery/door/airlock
 		anchored = 1
 		density = 1
-		doortype = 0
 		state = 1
 		glass = 0
 
 	door_assembly_com
 		name = "Command Airlock Assembly"
-		icon_state = "door_as1_com"
+		icon_state = "door_as_com1"
+		glass_base_icon_state = "door_as_gcom"
+		glass_type = /obj/machinery/door/airlock/glass_command
+		airlock_type = /obj/machinery/door/airlock/command
 		anchored = 1
 		density = 1
-		doortype = 1
 		state = 1
 		glass = 0
+
+		glass
+			glass = 1
+			icon_state = "door_as_gcom1"
 
 	door_assembly_sec
 		name = "Security Airlock Assembly"
-		icon_state = "door_as1_sec"
+		icon_state = "door_as_sec1"
+		glass_base_icon_state = "door_as_gsec"
+		glass_type = /obj/machinery/door/airlock/glass_security
+		airlock_type = /obj/machinery/door/airlock/security
 		anchored = 1
 		density = 1
-		doortype = 2
 		state = 1
 		glass = 0
+
+		glass
+			glass = 1
+			icon_state = "door_as_gsec1"
 
 	door_assembly_eng
 		name = "Engineering Airlock Assembly"
-		icon_state = "door_as1_eng"
+		icon_state = "door_as_eng1"
+		glass_base_icon_state = "door_as_geng"
+		glass_type = /obj/machinery/door/airlock/glass_engineering
+		airlock_type = /obj/machinery/door/airlock/engineering
 		anchored = 1
 		density = 1
-		doortype = 3
 		state = 1
 		glass = 0
+
+		glass
+			glass = 1
+			icon_state = "door_as_geng1"
 
 	door_assembly_med
 		name = "Medical Airlock Assembly"
-		icon_state = "door_as1_med"
+		icon_state = "door_as_med1"
+		glass_base_icon_state = "door_as_gmed"
+		glass_type = /obj/machinery/door/airlock/glass_medical
+		airlock_type = /obj/machinery/door/airlock/medical
 		anchored = 1
 		density = 1
-		doortype = 4
 		state = 1
 		glass = 0
 
+		glass
+			glass = 1
+			icon_state = "door_as_gmed1"
+
 	door_assembly_mai
 		name = "Maintenance Airlock Assembly"
-		icon_state = "door_as1_mai"
+		icon_state = "door_as_mai1"
+		airlock_type = /obj/machinery/door/airlock/maintenance
 		anchored = 1
 		density = 1
-		doortype = 5
 		state = 1
 		glass = 0
 
 	door_assembly_ext
 		name = "External Airlock Assembly"
-		icon_state = "door_as1_ext"
+		icon_state = "door_as_ext1"
+		airlock_type = /obj/machinery/door/airlock/external
 		anchored = 1
 		density = 1
-		doortype = 6
+		state = 1
+		glass = 0
+
+	door_assembly_fre
+		name = "Freezer Airlock Assembly"
+		icon_state = "door_as_fre1"
+		airlock_type = /obj/machinery/door/airlock/freezer
+		anchored = 1
+		density = 1
+		state = 1
+		glass = 0
+
+	door_assembly_mhatch
+		name = "Airtight Maintenance Hatch Assembly"
+		icon_state = "door_as_mhatch1"
+		airlock_type = /obj/machinery/door/airlock/maintenance_hatch
+		anchored = 1
+		density = 1
 		state = 1
 		glass = 0
 
 	door_assembly_g
 		name = "Glass Airlock Assembly"
-		icon_state = "door_as1_g"
+		icon_state = "door_as_g1"
+		airlock_type = /obj/machinery/door/airlock/glass
 		anchored = 1
 		density = 1
-		doortype = 7
 		state = 1
 		glass = 1
 
@@ -124,15 +171,6 @@ obj/door_assembly
 		if(get_turf(user) == T)
 			coil.use(1)
 			src.state = 1
-			switch(src.doortype)
-				if(0) src.icon_state = "door_as1"
-				if(1) src.icon_state = "door_as1_com"
-				if(2) src.icon_state = "door_as1_sec"
-				if(3) src.icon_state = "door_as1_eng"
-				if(4) src.icon_state = "door_as1_med"
-				if(5) src.icon_state = "door_as1_mai"
-				if(6) src.icon_state = "door_as1_ext"
-				if(7) src.icon_state = "door_as1_g"
 			user << "\blue You wire the Airlock!"
 			src.name = "Wired Airlock Assembly"
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
@@ -144,15 +182,6 @@ obj/door_assembly
 			user << "\blue You cut the airlock wires.!"
 			new/obj/item/weapon/cable_coil(T, 1)
 			src.state = 0
-			switch(doortype)
-				if(0) src.icon_state = "door_as0"
-				if(1) src.icon_state = "door_as0_com"
-				if(2) src.icon_state = "door_as0_sec"
-				if(3) src.icon_state = "door_as0_eng"
-				if(4) src.icon_state = "door_as0_med"
-				if(5) src.icon_state = "door_as0_mai"
-				if(6) src.icon_state = "door_as0_ext"
-				if(7) src.icon_state = "door_as0_g"
 			src.name = "Secured Airlock Assembly"
 	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == 1 )
 		playsound(src.loc, 'Screwdriver.ogg', 100, 1)
@@ -164,15 +193,6 @@ obj/door_assembly
 		if(get_turf(user) == T)
 			user << "\blue You installed the airlock electronics!"
 			src.state = 2
-			switch(src.doortype)
-				if(0) src.icon_state = "door_as2"
-				if(1) src.icon_state = "door_as2_com"
-				if(2) src.icon_state = "door_as2_sec"
-				if(3) src.icon_state = "door_as2_eng"
-				if(4) src.icon_state = "door_as2_med"
-				if(5) src.icon_state = "door_as2_mai"
-				if(6) src.icon_state = "door_as2_ext"
-				if(7) src.icon_state = "door_as2_g"
 			src.name = "Near finished Airlock Assembly"
 			src.electronics = W
 		else
@@ -187,15 +207,6 @@ obj/door_assembly
 		if(get_turf(user) == T)
 			user << "\blue You removed the airlock electronics!"
 			src.state = 1
-			switch(src.doortype)
-				if(0) src.icon_state = "door_as1"
-				if(1) src.icon_state = "door_as1_com"
-				if(2) src.icon_state = "door_as1_sec"
-				if(3) src.icon_state = "door_as1_eng"
-				if(4) src.icon_state = "door_as1_med"
-				if(5) src.icon_state = "door_as1_mai"
-				if(6) src.icon_state = "door_as1_ext"
-				if(7) src.icon_state = "door_as1_g"
 			src.name = "Wired Airlock Assembly"
 			var/obj/item/weapon/airlock_electronics/ae
 			if (!electronics)
@@ -212,13 +223,9 @@ obj/door_assembly
 			user << "\blue You installed glass windows the airlock assembly!"
 			G.use(1)
 			src.glass = 1
-			src.doortype = 7
 			src.name = "Near finished Window Airlock Assembly"
-			switch(src.state)
-				if(0) src.icon_state = "door_as0_g"
-				if(1) src.icon_state = "door_as1_g"
-				if(2) src.icon_state = "door_as2_g"
-				if(3) src.icon_state = "door_as3_g"
+			src.airlock_type = /obj/machinery/door/airlock/glass
+			src.base_icon_state = "door_as_g" //this will be applied to the icon_state with the correct state number at the proc's end.
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
 		playsound(src.loc, 'Screwdriver.ogg', 100, 1)
 		var/turf/T = get_turf(user)
@@ -227,17 +234,10 @@ obj/door_assembly
 		if(get_turf(user) == T)
 			user << "\blue You finish the airlock!"
 			var/obj/machinery/door/airlock/door
-			if (!src.glass)
-				switch(src.doortype)
-					if(0) door = new/obj/machinery/door/airlock( src.loc )
-					if(1) door = new/obj/machinery/door/airlock/command( src.loc )
-					if(2) door = new/obj/machinery/door/airlock/security( src.loc )
-					if(3) door = new/obj/machinery/door/airlock/engineering( src.loc )
-					if(4) door = new/obj/machinery/door/airlock/medical( src.loc )
-					if(5) door = new/obj/machinery/door/airlock/maintenance( src.loc )
-					if(6) door = new/obj/machinery/door/airlock/external( src.loc )
+			if(glass)
+				door = new src.glass_type( src.loc )
 			else
-				door = new/obj/machinery/door/airlock/glass( src.loc )
+				door = new src.airlock_type( src.loc )
 			//door.req_access = src.req_access
 			door.electronics = src.electronics
 			door.req_access = src.electronics.conf_access
@@ -245,3 +245,10 @@ obj/door_assembly
 			del(src)
 	else
 		..()
+	if(glass)
+		icon_state = "[glass_base_icon_state][state]"
+	else
+		icon_state = "[base_icon_state][state]"
+	//This updates the icon_state. They are named as "door_as1_eng" where the 1 in that example
+	//represents what state it's in. So the most generic algorithm for the correct updating of
+	//this is simply to change the number.
