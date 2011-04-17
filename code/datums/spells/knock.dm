@@ -1,4 +1,4 @@
-/obj/spell/knock
+/obj/spell/aoe_turf/knock
 	name = "Knock"
 	desc = "This spell opens nearby doors and does not require wizard garb."
 
@@ -9,16 +9,11 @@
 	invocation_type = "whisper"
 	range = 3
 
-/obj/spell/knock/Click()
-	..()
-
-	if(!cast_check())
-		return
-
-	invocation()
-
-	for(var/obj/machinery/door/G in oview(usr,range))
-		spawn(1)
-			G:locked = 0
-			G.open()
+/obj/spell/aoe_turf/knock/cast(list/targets)
+	for(var/turf/T in targets)
+		for(var/obj/machinery/door/door in T.contents)
+			spawn(1)
+				if(istype(door,/obj/machinery/door/airlock))
+					door:locked = 0
+				door.open()
 	return

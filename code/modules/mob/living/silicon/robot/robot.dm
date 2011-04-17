@@ -476,7 +476,7 @@
 				src.laws = new /datum/ai_laws/syndicate_override
 				var/time = time2text(world.realtime,"hh:mm:ss")
 				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [src.name]([src.key])")
-				set_zeroth_law("Only [usr] is a syndicate operative.")
+				set_zeroth_law("Only [user.name] and people he designates as being such are syndicate agents.")
 				src << "\red ALERT: Foreign software detected."
 				sleep(5)
 				src << "\red Initiating diagnostics..."

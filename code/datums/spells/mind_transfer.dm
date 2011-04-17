@@ -1,4 +1,4 @@
-/obj/spell/mind_transfer
+/obj/spell/targeted/mind_transfer
 	name = "Mind Transfer"
 	desc = "This spell allows the user to switch bodies with a target."
 
@@ -17,13 +17,16 @@
 	var/paralysis_amount_caster = 20 //how much the caster is paralysed for after the spell
 	var/paralysis_amount_victim = 20 //how much the victim is paralysed for after the spell
 
-/obj/spell/mind_transfer/Click()
-	..()
-
-	if(!cast_check())
+/obj/spell/targeted/mind_transfer/cast(list/targets) //magnets, so mostly hardcoded
+	if(!targets.len)
+		usr << "No mind found"
 		return
 
-	var/mob/target = input("Choose whom to transfer your mind to", "ABRAKADABRA") as mob in oview(usr,range)
+	if(targets.len > 1)
+		usr << "Too many minds! You're not a hive damnit!"
+		return
+
+	var/mob/target = targets[1]
 
 	if(!target.client || !target.mind)
 		usr << "They appear to be brain-dead."
@@ -41,8 +44,6 @@
 		usr << "You didn't study necromancy back at the Space Wizard Federation academy."
 		return
 
-	invocation()
-
 	var/mob/victim = target //mostly copypastaed, I have little idea how this works
 	var/mob/caster = usr
 	//losing spells
@@ -51,14 +52,14 @@
 		for(var/i=1,i<=spell_loss_amount,i++)
 			var/spell_loss_chance = base_spell_loss_chance
 			var/list/checked_spells = usr.spell_list
-			checked_spells -= src //MT can't be lost
+			checked_spells -= src //MT can't be lost //doesn't work
 
 			for(var/j=1,j<=checked_spells.len,j++)
 				if(prob(spell_loss_chance))
 					if(checked_spells.len)
 						usr.spell_list -= pick(checked_spells)
 						spawn(msg_wait)
-							caster << "The mind transfer has robbed you of a spell."
+							victim << "The mind transfer has robbed you of a spell."
 					break
 				else
 					spell_loss_chance += spell_loss_chance_modifier
@@ -96,6 +97,6 @@
 	victim.paralysis += paralysis_amount_victim
 
 	spawn(msg_wait)
-		victim << "Your body doesn't feel like itself."
+		caster << "Your body doesn't feel like itself."
 
 	del(temp_ghost)
