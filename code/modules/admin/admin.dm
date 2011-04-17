@@ -1784,7 +1784,7 @@ var/showadminmessages = 1
 	if (message)
 		if(usr.client.holder.rank != "Game Admin" && usr.client.holder.rank != "Game Master")
 			message = adminscrub(message,500)
-		world << "\blue <b>[usr.client.stealth ? "Admin Candidate" : usr.key] Announces:</b>\n \t [message]"
+		world << "\blue <b>[usr.client.stealth ? "Administrator" : usr.key] Announces:</b>\n \t [message]"
 		log_admin("Announce: [key_name(usr)] : [message]")
 /obj/admins/proc/toggleooc()
 	set category = "Server"
@@ -2186,7 +2186,7 @@ var/showadminmessages = 1
 	guests_allowed = !( guests_allowed )
 	if (!( guests_allowed ))
 		world << "<B>Guests may no longer enter the game.</B>"
-	else   
+	else
 		world << "<B>Guests may now enter the game.</B>"
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
 	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.", 1)
