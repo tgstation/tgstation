@@ -928,6 +928,7 @@
 	var/bitesize = 1
 	var/bitecount = 0
 
+	//Placeholder for effects that trigger on eating that aren't tied to reagents.
 	proc/On_Consume()
 		return
 
@@ -986,10 +987,10 @@
 						else
 							reagents.trans_to(M, reagents.total_volume)
 						bitecount++
+						On_Consume()
 						if(!reagents.total_volume)
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
-							On_Consume()
 							del(src)
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1

@@ -72,7 +72,7 @@ datum
 						trans_data = current_reagent.data
 					R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
 					src.remove_reagent(current_reagent.id, current_reagent_transfer)
-					
+
 				src.update_total()
 				R.update_total()
 				R.handle_reactions()
@@ -129,7 +129,7 @@ datum
 				update_total()
 
 			handle_reactions()
-				if(ismob(my_atom)) return //No reactions inside mobs :I
+				if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
 				for(var/A in typesof(/datum/chemical_reaction) - /datum/chemical_reaction)
 					var/datum/chemical_reaction/C = new A()

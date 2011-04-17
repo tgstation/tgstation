@@ -6,7 +6,7 @@
 	icon = 'monkey.dmi'
 	icon_state = "monkey1"
 	gender = NEUTER
-	flags = 258.0
+	//flags = 258.0
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 

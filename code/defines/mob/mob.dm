@@ -2,6 +2,7 @@
 	density = 1
 	layer = 4.0
 	animate_movement = 2
+	flags = NOREACT
 	var/datum/mind/mind
 
 	var/uses_hud = 0

@@ -14,7 +14,8 @@
 		if (istype(src.wear_suit, /obj/item/clothing/suit/space/space_ninja)&&src.wear_suit:initialize)
 			var/location = src.loc
 			explosion(location, 1, 2, 3, 4)
-
+		//src.flags = 0
+		//reagents.handle_reactions() //No magic stomach for corpses.
 		src.canmove = 0
 		if(src.client)
 			src.blind.layer = 0

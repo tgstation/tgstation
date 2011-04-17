@@ -594,7 +594,7 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-	flags = OPENCONTAINER									//Temporary holder while it counts what's in it.
+	flags = OPENCONTAINER | NOREACT
 
 
 /obj/machinery/processor

@@ -33,11 +33,12 @@
 	icon_state = "banana"
 	item_state = "banana"
 	On_Consume()
-		var/mob/M = usr
-		var/obj/item/weapon/bananapeel/W = new /obj/item/weapon/bananapeel( M )
-		M << "\blue You peel the banana."
-		M.put_in_hand(W)
-		W.add_fingerprint(M)
+		if(!reagents.total_volume)
+			var/mob/M = usr
+			var/obj/item/weapon/bananapeel/W = new /obj/item/weapon/bananapeel( M )
+			M << "\blue You peel the banana."
+			M.put_in_hand(W)
+			W.add_fingerprint(M)
 	New()
 		..()
 		reagents.add_reagent("banana", 5)
@@ -469,6 +470,12 @@
 		..()
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
+	On_Consume()
+		if(!reagents.total_volume)
+			var/mob/M = usr
+			var/obj/item/stack/rods/W = new /obj/item/stack/rods( M )
+			M << "\blue You lick clean the rod."
+			M.put_in_hand(W)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeykabob
 	name = "Meat-kabob"
@@ -478,6 +485,12 @@
 		..()
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
+	On_Consume()
+		if(!reagents.total_volume)
+			var/mob/M = usr
+			var/obj/item/stack/rods/W = new /obj/item/stack/rods( M )
+			M << "\blue You lick clean the rod."
+			M.put_in_hand(W)
 
 /obj/item/weapon/reagent_containers/food/snacks/tofukabob
 	name = "Tofu-kabob"
@@ -487,6 +500,12 @@
 		..()
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
+	On_Consume()
+		if(!reagents.total_volume)
+			var/mob/M = usr
+			var/obj/item/stack/rods/W = new /obj/item/stack/rods( M )
+			M << "\blue You lick clean the rod."
+			M.put_in_hand(W)
 
 /obj/item/weapon/reagent_containers/food/snacks/cubancarp
 	name = "Cuban Carp"
@@ -503,10 +522,17 @@
 	name = "Popcorm" //not a typo
 	desc = "Now let's find some cinema."
 	icon_state = "popcorn"
+	var/unpopped = 0
 	New()
 		..()
+		unpopped = rand(1,10)
 		reagents.add_reagent("nutriment", 2)
 		bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
+	On_Consume()
+		if(prob(unpopped))
+			usr << "\red You bite down on an un-popped kernel!"
+			unpopped = max(0, unpopped-1)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky
 	name = "Scaredy's Private Reserve Beef Jerky"
@@ -598,14 +624,15 @@
 		reagents.add_reagent("nutriment", 3)
 		bitesize = 2
 	On_Consume()
-		var/mob/M = usr
-		var/obj/item/weapon/paper/paper = locate() in src
-		M.visible_message( \
-			"\blue [M] takes a piece of paper from the cookie!", \
-			"\blue You take a piece of paper from the cookie! Read it!" \
-		)
-		M.put_in_hand(paper)
-		paper.add_fingerprint(M)
+		if(!reagents.total_volume)
+			var/mob/M = usr
+			var/obj/item/weapon/paper/paper = locate() in src
+			M.visible_message( \
+				"\blue [M] takes a piece of paper from the cookie!", \
+				"\blue You take a piece of paper from the cookie! Read it!" \
+			)
+			M.put_in_hand(paper)
+			paper.add_fingerprint(M)
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe
 	name = "Burned mess"
@@ -618,7 +645,7 @@
 		bitesize = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/meatstake
-	name = "Meat stake"
+	name = "Meat steak"
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatstake"
 	New()
