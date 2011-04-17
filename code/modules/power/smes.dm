@@ -196,7 +196,7 @@
 				var/totaldrain = 0
 				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 				spark_system.set_up(5, 0, src.loc)
-				while(charge>0&&!maxcapacity)
+				while(G.candrain&&charge>0&&!maxcapacity)
 					drain = rand(100,300)
 					if(charge<drain)
 						drain = charge

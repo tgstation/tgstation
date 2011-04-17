@@ -464,7 +464,7 @@
 				var/totaldrain = 0//Total energy drained.
 				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 				spark_system.set_up(5, 0, src.loc)
-				while(cell.charge>0&&!maxcapacity)
+				while(G.candrain&&cell.charge>0&&!maxcapacity)
 					drain = rand(100,300)
 					if(cell.charge<drain)
 						drain = cell.charge

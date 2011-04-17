@@ -1265,7 +1265,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
 	flags = FPRINT | TABLEPASS | NOSHIELD
-	var/affecting = null
 	var/datum/effects/system/spark_spread/spark_system
 
 /obj/item/weapon/table_parts

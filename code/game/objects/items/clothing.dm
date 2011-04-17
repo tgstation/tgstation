@@ -312,7 +312,18 @@ NINJA MASK
 //SPESS NINJA STUFF
 
 /obj/item/clothing/suit/space/space_ninja/New()
-	src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
+	..()
+	src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/init//suit initialize verb
+	spark_system = new /datum/effects/system/spark_spread()//spark initialize
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+	var/datum/reagents/R = new/datum/reagents(480)//reagent initialize
+	reagents = R
+	R.my_atom = src
+	reagents.add_reagent("tricordrazine", 80)
+	reagents.add_reagent("dexalinp", 80)
+	reagents.add_reagent("spaceacillin", 80)
+	reagents.add_reagent("anti_toxin", 80)
 
 /obj/item/clothing/suit/space/space_ninja/proc/ntick(var/mob/living/carbon/human/U as mob)
 	set hidden = 1
@@ -330,7 +341,7 @@ NINJA MASK
 				U.swap_hand()//swap hand
 				U.drop_item()//drop sword
 			else	A += 20
-		else if(active)
+		if(active)
 			A += 25
 		charge-=A
 		if(charge<0)
@@ -399,6 +410,7 @@ NINJA MASK
 		verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
 		verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
 		verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+		U.gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/drain_wire
 		U.gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/toggled
 		initialize=1
 		affecting=U
@@ -476,6 +488,8 @@ NINJA MASK
 	if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
 		U.gloves:canremove=1
 		U.gloves:candrain=0
+		U.gloves:draining=0
+		U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/drain_wire
 		U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
 	canremove=1
 	U << "\blue Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>."
@@ -493,15 +507,17 @@ NINJA MASK
 
 	var/mob/living/carbon/human/U = usr
 	var/dat = "<html><head><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#DB2929\"><style>a, a:link, a:visited, a:active, a:hover { color: #DB2929; }img {border-style:none;}</style>"
-	if(spideros==1)
-		dat += "<a href='byond://?src=\ref[src];choice=1'><img src=sos_7.png> Refresh</a>"
-		dat += " | <a href='byond://?src=\ref[src];choice=0'><img src=sos_8.png> Close</a>"
+	/*Here is where you would create a link for the cartridge used if the item has one.
+	As noted below, it's not worth the effort to make the cartridge removable unless it's done from the hub.*/
+	if(spideros==0)
+		dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=sos_7.png> Refresh</a>"
+		dat += " | <a href='byond://?src=\ref[src];choice=Close'><img src=sos_8.png> Close</a>"
 	else
-		dat += "<a href='byond://?src=\ref[src];choice=1'><img src=sos_7.png> Refresh</a>"
-		dat += " | <a href='byond://?src=\ref[src];choice=2'><img src=sos_1.png> Main Menu</a>"
-		dat += " | <a href='byond://?src=\ref[src];choice=0'><img src=sos_8.png> Close</a>"
+		dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=sos_7.png> Refresh</a>"
+		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=sos_1.png> Return</a>"
+		dat += " | <a href='byond://?src=\ref[src];choice=Close'><img src=sos_8.png> Close</a>"
 	dat += "<br>"
-	dat += "<h2 ALIGN=CENTER>SpiderOS v.1.34</h2>"
+	dat += "<h2 ALIGN=CENTER>SpiderOS v.1.337</h2>"
 	dat += "Welcome, <b>[U.real_name]</b>.<br>"
 	dat += "<br>"
 	dat += "<img src=sos_10.png> Current Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]<br>"
@@ -509,17 +525,34 @@ NINJA MASK
 	dat += "<img src=sos_11.png> Smoke Bombs: [sbombs]<br>"
 	dat += "<br>"
 
-	switch(spideros)//Should be easy to add new functions or windows.
-		if(1)
+	/*
+	HOW TO USE OR ADAPT THIS CODE:
+	The menu structure should not need to be altered to add new entries. Simply place them after what is already there.
+	As an exception, if there are multiple-tiered windows, for instance, going into medical alerts and then to DNA testing or something,
+	those menus should be added below their parents but have a greater value. The second sub-menu of menu 2 would have the number 22.
+	Another sub-menu of menu 2 would be 23, then 24, and up to 29. If those menus have their own sub-menus a similar format follows.
+	Sub-menu 1 of sub-menu 2(of menu 2) would be 221. Sub-menu 5 of sub-menu 2(of menu 2) would be 225. Menu 0 is a special case (it's the menu hub); you are free to use menus 1-9
+	to create your own data paths.
+	The Return button, when used, simply removes the final number and navigates to the menu prior. Menu 334, the fourth sub-menu of sub-menu
+	3, in menu 3, would navigate to sub menu 3 in menu 3. Or 33. Currently, only up to 6 digits are supported but this can be easily changed.
+	It is possible to go to a different menu/sub-menu from anywhere. When creating new menus don't forget to add them to Topic proc or else the game
+	will interpret you using the messenger function (the else clause in the switch).
+	Other buttons and functions should be named according to what they do.*/
+	switch(spideros)
+		if(0)
+			/*
+			For items that use cartridges (PDAs), simply switch() their hub function based on the cartridge inserted.
+			For ease of use, allow the removal of the cartidge only on the hub.
+			*/
 			dat += "<h4><img src=sos_1.png> Available Functions:</h4>"
 			dat += "<ul>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=sos_4.png> Toggle Stealth: [active == 1 ? "Disable" : "Enable"]</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=4'><img src=sos_3.png> Medical Screen</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=sos_5.png> Atmos Scan</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=6'><img src=sos_12.png> Messenger</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=7'><img src=sos_6.png> Other</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Stealth'><img src=sos_4.png> Toggle Stealth: [active == 1 ? "Disable" : "Enable"]</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=sos_3.png> Medical Screen</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=sos_5.png> Atmos Scan</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=sos_12.png> Messenger</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=4'><img src=sos_6.png> Other</a></li>"
 			dat += "</ul>"
-		if(2)
+		if(1)
 			dat += "<h4><img src=sos_3.png> Medical Report:</h4>"
 			if(U.dna)
 				dat += "<b>Fingerprints</b>: <i>[md5(U.dna.uni_identity)]</i><br>"
@@ -533,16 +566,16 @@ NINJA MASK
 			if(U.virus)
 				dat += "Warning Virus Detected. Name: [U.virus.name].Type: [U.virus.spread]. Stage: [U.virus.stage]/[U.virus.max_stages]. Possible Cure: [U.virus.cure].<br>"
 			dat += "<ul>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=Dylovene'><img src=sos_2.png> Inject Dylovene: [chem1] left</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=Dexalin Plus'><img src=sos_2.png> Inject Dexalin Plus: [chem2] left</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=Tricordazine'><img src=sos_2.png> Inject Tricordazine: [chem3] left</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=Spacelin'><img src=sos_2.png> Inject Spacelin: [chem4] left</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Dylovene'><img src=sos_2.png> Inject Dylovene: [reagents.get_reagent_amount("anti_toxin")/20] left</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Dexalin Plus'><img src=sos_2.png> Inject Dexalin Plus: [reagents.get_reagent_amount("dexalinp")/20] left</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Tricordazine'><img src=sos_2.png> Inject Tricordazine: [reagents.get_reagent_amount("tricordrazine")/20] left</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Spacelin'><img src=sos_2.png> Inject Spacelin: [reagents.get_reagent_amount("spaceacillin")/20] left</a></li>"
 			dat += "</ul>"
-		if(3)
-			dat += "<h4><img src=sos_5.png>Atmospheric Scan:</h4>"
+		if(2)
+			dat += "<h4><img src=sos_5.png>Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
 			var/turf/T = get_turf_or_move(U.loc)
 			if (isnull(T))
-				dat += "Unable to obtain a reading.<br>"
+				dat += "Unable to obtain a reading."
 			else
 				var/datum/gas_mixture/environment = T.return_air()
 
@@ -567,7 +600,7 @@ NINJA MASK
 						dat += "OTHER: [round(unknown_level)]%<br>"
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C"
-		if(4)
+		if(3)
 			dat += "<h4><img src=sos_12.png> Anonymous Messenger:</h4>"//Anonymous because the receiver will not know the sender's identity.
 			dat += "<h4><img src=sos_6.png> Detected PDAs:</h4>"
 			dat += "<ul>"
@@ -581,12 +614,37 @@ NINJA MASK
 			dat += "</ul>"
 			if (count == 0)
 				dat += "None detected.<br>"
-		if(5)
+			//dat += "<a href='byond://?src=\ref[src];choice=31'> Send Virus</a>"
+		if(4)
 			dat += "<h4><img src=sos_6.png> Other Functions:</h4>"
-
+/*
+			//Sub-menu testing stuff.
+			dat += "<li><a href='byond://?src=\ref[src];choice=49'> To sub-menu 49</a></li>"
+		if(31)
+			dat += "<h4><img src=sos_12.png> Send Virus:</h4>"
+			dat += "<h4><img src=sos_6.png> Detected PDAs:</h4>"
+			dat += "<ul>"
+			var/count = 0
+			for (var/obj/item/device/pda/P in world)
+				if (!P.owner||P.toff)
+					continue
+				dat += "<li><a href='byond://?src=\ref[src];choice=\ref[P]'><i>[P]</i></a>"
+				dat += "</li>"
+				count++
+			dat += "</ul>"
+			if (count == 0)
+				dat += "None detected.<br>"
+		if(49)
+			dat += "<h4><img src=sos_6.png> Other Functions 49:</h4>"
+			dat += "<a href='byond://?src=\ref[src];choice=491'> To sub-menu 491</a>"
+		if(491)
+			dat += "<h4><img src=sos_6.png> Other Functions 491:</h4>"
+			dat += "<a href='byond://?src=\ref[src];choice=0'> To main menu</a>"
+*/
 	dat += "</body></html>"
 
 	U << browse(dat,"window=spideros;size=400x444;border=1;can_resize=0;can_close=0;can_minimize=0")
+	//Setting the can>resize etc to 0 remove them from the drag bar but still allows the window to be draggable.
 
 /obj/item/clothing/suit/space/space_ninja/Topic(href, href_list)
 	..()
@@ -597,13 +655,19 @@ NINJA MASK
 		return
 
 	switch(href_list["choice"])
-		if("0")
+		if("Close")
 			U << browse(null, "window=spideros")
 			return
-		if("1")//Refresh, goes to the end of the proc.
-		if("2")//Back to main menu
-			spideros=1
-		if("3")
+		if("Refresh")//Refresh, goes to the end of the proc.
+		if("Return")//Return
+			if(spideros<=9)
+				spideros=0
+			else
+				spideros = round(spideros/10)//Best way to do this, flooring to nearest integer. As an example, another way of doing it is attached below:
+	//			var/temp = num2text(spideros)
+	//			var/return_to = copytext(temp, 1, (length(temp)))//length has to be to the length of the thing because by default it's length+1
+	//			spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to specify larger strings if needed.
+		if("Stealth")
 			if(active)
 				spawn(0)
 					anim(usr.loc,'mob.dmi',usr,"uncloak")
@@ -618,60 +682,84 @@ NINJA MASK
 				U << "\blue You are now invisible to normal detection."
 				for(var/mob/O in oviewers(usr, null))
 					O << "[usr.name] vanishes into thin air!"
-		if("4")
+		if("0")//Menus are numbers, see note above. 0 is the hub.
+			spideros=0
+		if("1")//Begin normal menus.
+			spideros=1
+		if("2")
 			spideros=2
-		if("5")
+		if("3")
 			spideros=3
-		if("6")
+		if("4")
 			spideros=4
-		if("7")
-			spideros=5
+		/*Sub-menu testing stuff.
+		if("31")
+			spideros=31
+		if("49")
+			spideros=49
+		if("491")
+			spideros=491 */
 		if("Dylovene")//These names really don't matter for specific functions but it's easier to use descriptive names.
-			if(chem1<=0)
-				U << "\red Error: the suit cannot perform this function."
+			if(!reagents.get_reagent_amount("anti_toxin"))
+				U << "\red Error: the suit cannot perform this function. Out of reagent."
 			else
-				U.reagents.add_reagent("anti_toxin", 15)
-				chem1--
+				reagents.reaction(U, 2)
+				reagents.trans_id_to(U, "anti_toxin", amount_per_transfer_from_this)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 		if("Dexalin Plus")
-			if(chem2<=0)
-				U << "\red Error: the suit cannot perform this function."
+			if(!reagents.get_reagent_amount("dexalinp"))
+				U << "\red Error: the suit cannot perform this function. Out of reagent."
 			else
-				U.reagents.add_reagent("dexalinp", 15)
-				chem2--
+				reagents.reaction(U, 2)
+				reagents.trans_id_to(U, "dexalinp", amount_per_transfer_from_this)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 		if("Tricordazine")
-			if(chem3<=0)
-				U << "\red Error: the suit cannot perform this function."
+			if(!reagents.get_reagent_amount("tricordrazine"))
+				U << "\red Error: the suit cannot perform this function. Out of reagent."
 			else
-				U.reagents.add_reagent("tricordrazine", 15)
-				chem3--
+				reagents.reaction(U, 2)
+				reagents.trans_id_to(U, "tricordrazine", amount_per_transfer_from_this)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 		if("Spacelin")
-			if(chem4<=0)
-				U << "\red Error: the suit cannot perform this function."
+			if(!reagents.get_reagent_amount("spaceacillin"))
+				U << "\red Error: the suit cannot perform this function. Out of reagent."
 			else
-				U.reagents.add_reagent("spaceacillin", 15)
-				chem4--
+				reagents.reaction(U, 2)
+				reagents.trans_id_to(U, "spaceacillin", amount_per_transfer_from_this)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
-		else//Leaving this for the messenger because it's an awesome solution.
-			var/obj/item/device/pda/P = locate(href_list["choice"])
-			var/t = input(U, "Please enter untraceable message.") as text
-			t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-			if(!t||U.stat||U.wear_suit!=src||!initialize)//Wow, another one of these. Man...
-				return
-			if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
-				U << "\red Error: unable to deliver message."
-				spideros()
-				return
-			P.tnote += "<i><b>&larr; From unknown source:</b></i><br>[t]<br>"
-			if (!P.silent)
-				playsound(P.loc, 'twobeep.ogg', 50, 1)
-				for (var/mob/O in hearers(3, P.loc))
-					O.show_message(text("\icon[P] *[P.ttone]*"))
-			P.overlays = null
-			P.overlays += image('pda.dmi', "pda-r")
-	spideros()//Refreshes the screen.
+
+		else
+		/*Leaving this for the messenger because it's an awesome solution. For switch to work, the variable has to be static.
+		Not the case when P is a specific object. The downside, of course, is that there is only one slot.
+		The following switch moves data to the appropriate function based on what screen it was clicked on. For now only uses screen 3.
+		As an example, I added screen 31 to send the silence virus to people in the commented bits.
+		You can do the same with functions that require dynamic tracking.
+		*/
+			switch(spideros)
+				if(3)
+					var/obj/item/device/pda/P = locate(href_list["choice"])
+					var/t = input(U, "Please enter untraceable message.") as text
+					t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+					if(!t||U.stat||U.wear_suit!=src||!initialize)//Wow, another one of these. Man...
+						return
+					if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
+						U << "\red Error: unable to deliver message."
+						spideros()
+						return
+					P.tnote += "<i><b>&larr; From unknown source:</b></i><br>[t]<br>"
+					if (!P.silent)
+						playsound(P.loc, 'twobeep.ogg', 50, 1)
+						for (var/mob/O in hearers(3, P.loc))
+							O.show_message(text("\icon[P] *[P.ttone]*"))
+					P.overlays = null
+					P.overlays += image('pda.dmi', "pda-r")
+			/*	if(31)
+					var/obj/item/device/pda/P = locate(href_list["choice"])
+					if (!P.toff)
+						U.show_message("\blue Virus sent!", 1)
+						P.silent = 1
+						P.ttone = "silence" */
+	spideros()//Refreshes the screen by calling it again (which replaces current screen with new screen).
 	return
 
 /obj/item/clothing/suit/space/space_ninja/examine()
@@ -686,6 +774,7 @@ NINJA MASK
 		usr << "There are <B>[src.sbombs]</B> smoke bombs remaining."
 		usr << "There are <B>[src.aboost]</B> adrenaline injectors remaining."
 
+//GLOVES
 /obj/item/clothing/gloves/space_ninja/proc/toggled()
 	set name = "Toggle Drain"
 	set desc = "Toggles the energy drain mechanism on or off."
@@ -697,6 +786,62 @@ NINJA MASK
 		candrain=0
 		usr << "You disable the energy drain mechanism."
 
+/obj/item/clothing/gloves/space_ninja/proc/drain_wire()
+	set name = "Drain From Wire"
+	set desc = "Drain energy directly from an exposed wire."
+	set category = "Object"
+
+	var/obj/cable/attached
+	var/mob/living/carbon/human/U = usr
+	if(candrain&&!draining)
+		var/turf/T = U.loc
+		if(isturf(T) && !T.intact)
+			attached = locate() in T
+			if(!attached)
+				U << "\red Warning: no exposed cable available."
+			else
+				U << "\blue Now charging battery, stand still..."
+				draining = 1
+				if(do_after(U,100)&&!isnull(attached))
+					processp(attached)
+				else
+					draining = 0
+					U << "\red Procedure interrupted. Protocol terminated."
+	return
+
+/obj/item/clothing/gloves/space_ninja/proc/processp(var/obj/cable/attached)
+//A lot of this comes from the powersink code.
+	var/mob/living/carbon/human/U = usr
+	var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
+	var/maxcapacity = 0
+	var/totaldrain = 0
+	var/datum/powernet/PN = attached.get_powernet()
+	while(candrain&&!maxcapacity&&!isnull(attached))
+		var/drain = rand(50,100)
+		var/drained = 0
+		if(PN&&do_after(U,10))
+			drained = min (drain, PN.avail)
+			PN.newload += drained
+			if(drained < drain)//if no power on net, drain apcs
+				for(var/obj/machinery/power/terminal/T in PN.nodes)
+					if(istype(T.master, /obj/machinery/power/apc))
+						var/obj/machinery/power/apc/A = T.master
+						if(A.operating && A.cell && A.cell.charge>0)
+							A.cell.charge = max(0, A.cell.charge - 5)
+							drained += 5
+		else	break
+		S.charge += drained
+		if(S.charge>S.maxcharge)
+			totaldrain += (drained-(S.charge-S.maxcharge))
+			S.charge = S.maxcharge
+			maxcapacity = 1
+		else
+			totaldrain += drained
+		S.spark_system.start()
+		if(drained==0)	break
+	draining = 0
+	U << "\blue Gained <B>[totaldrain]</B> energy from the power network."
+	return
 
 /obj/item/clothing/gloves/space_ninja/examine()
 	set src in view()
@@ -707,6 +852,7 @@ NINJA MASK
 		else
 			usr << "The energy drain mechanism is: <B>inactive</B>."
 
+//MASK
 /obj/item/clothing/mask/gas/voice/space_ninja/New()
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm

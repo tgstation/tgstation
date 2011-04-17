@@ -72,7 +72,7 @@
 			if(charge)
 				user << "\blue Now charging battery..."
 				G.draining = 1
-				if (do_after(user,30))
+				if (G.candrain&&do_after(user,30))
 					U << "\blue Gained <B>[charge]</B> energy from the cell."
 					if(S.charge+charge>S.maxcharge)
 						S.charge=S.maxcharge

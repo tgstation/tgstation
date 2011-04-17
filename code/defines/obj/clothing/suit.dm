@@ -363,17 +363,15 @@
 	slowdown = 1
 	radiation_protection = 0.75
 	var/affecting = null
-	var/active = 0
+	var/active = 0//Stealth off.
 	var/charge = 9000.0//Starts at 90% of normal capacity.
 	var/maxcharge = 30000.0//I want the suit upgradable if the ninja is able to find the parts but for now this'll do.
-	var/initialize = 0
-	var/spideros = 1//Mode of SpiderOS. 1=main menu||2=medical screen||3=atmos check||4=notes/misc
+	var/initialize = 0//Suit starts off.
+	var/spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check clothing.dm for how it all works.
 	var/sbombs = 10.0//Number of starting ninja smoke bombs.
-	var/aboost = 3.0//Number of adrenaline boosts.
-	var/chem1 = 3.0//Dylovene/Anti Tox
-	var/chem2 = 3.0//Dexalin Plus
-	var/chem3 = 3.0//Tricordazine
-	var/chem4 = 3.0//Spacelin
+	var/aboost = 3.0//Number of adrenaline boosters.
+	var/amount_per_transfer_from_this = 20//How much reagent is transferred.
+	var/datum/effects/system/spark_spread/spark_system
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"

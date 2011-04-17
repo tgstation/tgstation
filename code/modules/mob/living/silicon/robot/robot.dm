@@ -605,7 +605,7 @@
 				var/drain = 0
 				var/maxcapacity = 0
 				var/totaldrain = 0
-				while(cell.charge>0&&!maxcapacity)
+				while(G.candrain&&cell.charge>0&&!maxcapacity)
 					drain = rand(100,300)
 					if(cell.charge<drain)
 						drain = cell.charge

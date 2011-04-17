@@ -34,6 +34,11 @@ About the Holder:
 			to transfer to and the amount you want to transfer. Its return value is the
 			actual amount transfered (if one of the objects is full/empty)
 
+		trans_id_to(var/obj/target, var/reagent, var/amount)
+			Same as above but only for a specific reagent in the reagent list.
+			If the specified amount is greater than what is available, it will use
+			the amount of the reagent that is available. If no reagent exists, returns null.
+
 		metabolize(var/mob/M)
 			This proc is called by the mobs life proc. It simply calls on_mob_life for
 			all contained reagents. You shouldnt have to use this one directly.

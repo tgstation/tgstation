@@ -360,9 +360,7 @@ Useful for copy pasta since I'm lazy.*/
 	src.loc = picked
 
 	spawn(0)
-		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
-		spark_system.set_up(5, 0, src.loc)
-		spark_system.start()
+		src:wear_suit:spark_system.start()
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		anim(src.loc,'mob.dmi',src,"phasein")
@@ -397,9 +395,7 @@ Useful for copy pasta since I'm lazy.*/
 	src.loc = T
 
 	spawn(0)
-		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
-		spark_system.set_up(5, 0, src.loc)
-		spark_system.start()
+		src:wear_suit:spark_system.start()
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 		playsound(src.loc, 'sparks2.ogg', 50, 1)
 		anim(src.loc,'mob.dmi',src,"phasein")
@@ -483,7 +479,7 @@ Useful for copy pasta since I'm lazy.*/
 
 //Adrenaline Boost
 //Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
-//Movement impairing would indicate drugs and the like
+//Movement impairing would indicate drugs and the like.
 /mob/proc/ninjaboost()
 	set name = "Adrenaline Boost"
 	set desc = "Inject a secret chemical that will counteract all movement-impairing effects."
@@ -499,10 +495,10 @@ Useful for copy pasta since I'm lazy.*/
 	src.paralysis = 0
 	src.stunned = 0
 	src.weakened = 0
-	spawn(10)
+	spawn(30)
 		src.say("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!")
 	spawn(70)
-		src.reagents.add_reagent("radium", 15)
+		src.reagents.add_reagent("radium", 20)
 		src << "red You are beginning to feal the after-effects of the injection."
 
 	src:wear_suit:aboost--
