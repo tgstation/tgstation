@@ -146,3 +146,32 @@
 						output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
 
 		usr << browse(output,"window=radioreport")
+
+	reload_admins()
+		set name = "Reload Admins"
+		set category = "Debug"
+		
+		if(!(usr.client.holder && usr.client.holder.level >= 6)) // protect and prevent
+			usr << "\red Not a good cop"
+			return
+
+		message_admins("[usr] manually reloaded admins.txt")
+		usr << "You reload admins.txt"
+		var/text = file2text("config/admins.txt")
+		if (!text)
+			diary << "Failed to reload config/admins.txt\n"
+		else
+			var/list/lines = dd_text2list(text, "\n")
+			for(var/line in lines)
+				if (!line)
+					continue
+
+				if (copytext(line, 1, 2) == ";")
+					continue
+
+				var/pos = findtext(line, " - ", 1, null)
+				if (pos)
+					var/m_key = copytext(line, 1, pos)
+					var/a_lev = copytext(line, pos + 3, length(line) + 1)
+					admins[m_key] = a_lev
+					diary << ("ADMIN: [m_key] = [a_lev]")

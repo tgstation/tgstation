@@ -107,3 +107,25 @@
 	else
 		src.hands.dir = SOUTH
 	return
+
+
+/mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
+	if (src.health > 0)
+		var/t_him = "it"
+		if (src.gender == MALE)
+			t_him = "him"
+		else if (src.gender == FEMALE)
+			t_him = "her"
+		if (istype(src,/mob/living/carbon/human) && src:w_uniform)
+			var/mob/living/carbon/human/H = src
+			H.w_uniform.add_fingerprint(M)
+		src.sleeping = 0
+		src.resting = 0
+		if (src.paralysis >= 3) src.paralysis -= 3
+		if (src.stunned >= 3) src.stunned -= 3
+		if (src.weakened >= 3) src.weakened -= 3
+		playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
+		M.visible_message( \
+			"\blue [M] shakes [src] trying to wake [t_him] up!", \
+			"\blue You shake [src] trying to wake [t_him] up!", \
+			)

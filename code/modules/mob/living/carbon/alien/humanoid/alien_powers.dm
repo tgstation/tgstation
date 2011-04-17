@@ -54,7 +54,7 @@ Doesn't work on other aliens/AI.*/
 		src << "\green You must be conscious to do this."
 		return
 
-	var/msg = input("Message:", "Alien Whisper") as text
+	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if (!msg)
 		return
 

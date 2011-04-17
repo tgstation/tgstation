@@ -1510,7 +1510,7 @@
 				return
 			if (!( ismob(M) ))
 				return
-			var/t = input("Message:", text("Private message to [M.key]"))  as text
+			var/t = input("Message:", text("Private message to [M.key]"))  as text|null
 			if (!( t ))
 				return
 			if (!usr) return

@@ -25,9 +25,12 @@ var/global/datum/controller/gameticker/ticker
 	world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
 
 	while(current_state == GAME_STATE_PREGAME)
-		sleep(10)
-		pregame_timeleft--
-
+		if(!going)
+			sleep(10)
+		else
+			sleep(10)
+			pregame_timeleft--
+ 
 		if(pregame_timeleft <= 0)
 			current_state = GAME_STATE_SETTING_UP
 
@@ -102,8 +105,9 @@ var/global/datum/controller/gameticker/ticker
 	spawn() supply_ticker() // Added to kick-off the supply shuttle regenerating points -- TLE
 
 	spawn master_controller.process()
-
-	spawn(3000) statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
+	if (config.sql_enabled)
+		spawn(3000)
+		statistic_cycle() // Polls population totals regularly and stores them in an SQL DB -- TLE
 
 /datum/controller/gameticker
 	proc/distribute_jobs()

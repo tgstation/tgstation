@@ -197,6 +197,8 @@
 		user << "\red Access Denied"
 	return
 
+/obj/secure_closet
+	var/lastbang
 /obj/secure_closet/relaymove(mob/user as mob)
 	if (user.stat)
 		return
@@ -212,8 +214,10 @@
 		src.opened = 1
 	else
 		user << "\blue It's welded shut!"
-		for(var/mob/M in hearers(src, null))
-			M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
+		if (world.time > lastbang+5)
+			lastbang = world.time
+			for(var/mob/M in hearers(src, null))
+				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
 	return
 
 /obj/secure_closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)

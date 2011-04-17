@@ -348,14 +348,7 @@
 	switch(M.a_intent)
 
 		if ("help")
-			src.sleeping = 0
-			src.resting = 0
-			if (src.paralysis >= 3) src.paralysis -= 3
-			if (src.stunned >= 3) src.stunned -= 3
-			if (src.weakened >= 3) src.weakened -= 3
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M.name] shakes [src] trying to wake it up!", ), 1)
+			src.help_shake_act(M)
 		else
 			if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 				return
@@ -396,15 +389,7 @@
 
 		if ("help")
 			if (src.health > 0)
-				src.sleeping = 0
-				src.resting = 0
-				if (src.paralysis >= 3) src.paralysis -= 3
-				if (src.stunned >= 3) src.stunned -= 3
-				if (src.weakened >= 3) src.weakened -= 3
-				playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\blue [] shakes [] trying to wake [] up!", M, src, src), 1)
+				src.help_shake_act(M)
 			else
 				if (M.health >= -75.0)
 					if ((M.head && M.head.flags & 4) || (M.wear_mask && !( M.wear_mask.flags & 32 )) )

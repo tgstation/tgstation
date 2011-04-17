@@ -73,6 +73,7 @@
 			src.verbs += /client/proc/air_report
 			src.verbs += /client/proc/air_status
 			src.verbs += /client/proc/radio_report
+			src.verbs += /client/proc/reload_admins
 			src.verbs += /client/proc/kill_air // -- TLE
 			src.verbs += /client/proc/modifytemperature
 			src.verbs += /client/proc/callproc
@@ -211,6 +212,7 @@
 			src.verbs += /client/proc/air_report
 			src.verbs += /client/proc/air_status
 			src.verbs += /client/proc/radio_report
+			src.verbs += /client/proc/reload_admins
 			//src.verbs += /client/proc/kill_air // -- TLE
 			src.verbs += /client/proc/modifytemperature
 			src.verbs += /client/proc/callproc

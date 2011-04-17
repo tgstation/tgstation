@@ -361,6 +361,9 @@
 			has_electronics = 1
 			user << "You place the power control board inside the frame."
 			del(W)
+	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
+		user << "\red You cannot put the board inside, the frame is damaged."
+		return
 	else if (istype(W, /obj/item/weapon/weldingtool) && W:welding && opened && has_electronics==0 && !terminal)
 		if (W:get_fuel() < 3)
 			user << "\blue You need more welding fuel to complete this task."

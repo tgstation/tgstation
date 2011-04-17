@@ -468,9 +468,11 @@
 	icon_state = "term"
 	desc = "An underfloor wiring terminal for power equipment"
 	level = 1
+	layer = TURF_LAYER
 	var/obj/machinery/power/master = null
 	anchored = 1
 	directwired = 0		// must have a cable on same turf connecting to terminal
+	layer = 2.6 // a bit above wires
 
 /obj/machinery/power/generator
 	name = "generator"

@@ -16,6 +16,7 @@
 	new /obj/item/weapon/reagent_containers/dropper( src )
 	new /obj/item/weapon/reagent_containers/glass/beaker( src )
 	new /obj/item/weapon/reagent_containers/glass/beaker( src )
+	new /obj/item/weapon/storage/utilitybelt/medical( src )
 	return
 
 /obj/secure_closet/medical2/New()

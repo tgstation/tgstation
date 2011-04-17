@@ -1421,11 +1421,18 @@ var/showadminmessages = 1
 	//add <th>IP:</th> to this if wanting to add back in IP checking
 	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
 	var/list/mobs = sortmobs()
-	var/DBConnection/dbcon = new()
-	dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
-	if(!dbcon.IsConnected())
-		usr << "\red Unable to connect to karma database. This error can occur if your host has failed to set up an SQL database or improperly configured its login credentials.<br>"
+	var/show_karma = 0
+	var/DBConnection/dbcon
 
+	if(config.sql_enabled) // SQL is enabled in config.txt
+		dbcon = new() // Setting up connection
+		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
+		if(dbcon.IsConnected())
+			show_karma = 1
+		else
+			usr << "\red Unable to connect to karma database. This error can occur if your host has failed to set up an SQL database or improperly configured its login credentials.<br>"
+
+	if(!show_karma)
 		for(var/mob/M in mobs)
 			if(M.ckey)
 				dat += "<tr><td>[M.name]</td>"
@@ -1448,7 +1455,10 @@ var/showadminmessages = 1
 				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
 				<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>[checktraitor(M) ? "<font color=red>" : "<font>"]Traitor?</font></A></td>
 				"}
-				dat += "<td><font color=red>NOT CONNECTED</font></td></tr>"
+				if (config.sql_enabled)
+					dat += "<td><font color=red>ERROR</font></td></tr>"
+				else
+					dat += "<td>disabled</td></tr>"
 
 	else
 
@@ -1893,7 +1903,7 @@ var/showadminmessages = 1
 	set category = "Server"
 	set desc="Delay the game start"
 	set name="Delay"
-	if (ticker)
+	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
 		return alert("Too late... The game has already started!", null, null, null, null, null)
 	going = !( going )
 	if (!( going ))

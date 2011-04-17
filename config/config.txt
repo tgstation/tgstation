@@ -19,6 +19,9 @@ LOG_VOTE
 # log client Whisper
 LOG_WHISPER
 
+# sql switching
+# SQL_ENABLED
+
 # probablities for game modes chosen in "secret" and "random" modes
 # 
 # default probablity is 1, increase to make that mode more likely to be picked

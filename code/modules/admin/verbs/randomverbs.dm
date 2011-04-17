@@ -96,7 +96,7 @@
 			return
 		if (!( ismob(M) ))
 			return
-		var/t = input("Message:", text("Private message to [M.key]"))  as text
+		var/t = input("Message:", text("Private message to [M.key]"))  as text|null
 		if(src.holder.rank != "Game Admin" && src.holder.rank != "Game Master")
 			t = strip_html(t,500)
 		if (!( t ))
@@ -376,7 +376,7 @@ TO DO: actually integrate random appearance and player preference save.
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "")
+	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
 	if(!input)
 		return
 	for(var/mob/living/silicon/ai/M in world)
@@ -436,7 +436,7 @@ TO DO: actually integrate random appearance and player preference save.
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "")
+	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
 	if(!input)
 		return
 	for (var/obj/machinery/computer/communications/C in machines)

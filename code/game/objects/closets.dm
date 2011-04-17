@@ -199,14 +199,18 @@
 	src.add_fingerprint(user)
 	return
 
+/obj/closet
+	var/lastbang
 /obj/closet/relaymove(mob/user as mob)
 	if (user.stat)
 		return
 
 	if (!src.open())
 		user << "\blue It won't budge!"
-		for (var/mob/M in hearers(src, null))
-			M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
+		if (world.time > lastbang+5)
+			lastbang = world.time
+			for (var/mob/M in hearers(src, null))
+				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
 
 /obj/closet/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

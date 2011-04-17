@@ -12,6 +12,7 @@
 	var/log_game = 0					// log game events
 	var/log_vote = 0					// log voting
 	var/log_whisper = 0					// log client whisper
+	var/sql_enabled = 1					// for sql switching
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/allow_vote_mode = 0				// allow votes to change mode
 	var/allow_admin_jump = 1			// allows admin jumping
@@ -96,6 +97,9 @@
 
 			if ("log_access")
 				config.log_access = 1
+
+			if ("sql_enabled")
+				config.sql_enabled = 1
 
 			if ("log_say")
 				config.log_say = 1

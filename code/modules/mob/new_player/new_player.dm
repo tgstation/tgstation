@@ -128,8 +128,10 @@ mob/new_player
 			else
 				stat("Game Mode:", "[master_mode]")
 
-			if(ticker.current_state == GAME_STATE_PREGAME)
+			if((ticker.current_state == GAME_STATE_PREGAME) && going)
 				stat("Time To Start:", ticker.pregame_timeleft)
+			if((ticker.current_state == GAME_STATE_PREGAME) && !going)
+				stat("Time To Start:", "DELAYED")
 
 		statpanel("Lobby")
 		if(client.statpanel=="Lobby" && ticker)

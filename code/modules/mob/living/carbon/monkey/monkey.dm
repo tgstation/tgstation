@@ -159,13 +159,7 @@
 	..()
 
 	if (M.a_intent == "help")
-		src.sleeping = 0
-		src.resting = 0
-		if (src.paralysis >= 3) src.paralysis -= 3
-		if (src.stunned >= 3) src.stunned -= 3
-		if (src.weakened >= 3) src.weakened -= 3
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\blue [M.name] shakes [src.name] trying to wake him up!", 1)
+		src.help_shake_act(M)
 	else
 		if ((M.a_intent == "hurt" && !( istype(src.wear_mask, /obj/item/clothing/mask/muzzle) )))
 			if ((prob(75) && src.health > 0))
@@ -206,15 +200,7 @@
 			return
 
 	if (M.a_intent == "help")
-		src.sleeping = 0
-		src.resting = 0
-		if (src.paralysis >= 3) src.paralysis -= 3
-		if (src.stunned >= 3) src.stunned -= 3
-		if (src.weakened >= 3) src.weakened -= 3
-		playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("\blue [] shakes [src.name] trying to wake him up!", M), 1)
+		src.help_shake_act(M)
 	else
 		if (M.a_intent == "hurt")
 			if ((prob(75) && src.health > 0))

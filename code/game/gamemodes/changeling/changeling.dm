@@ -186,7 +186,7 @@
 		if(!changeling)
 			return 1
 
-		if(istype(changeling.current,/mob/living/silicon))
+		if(!istype(changeling.current,/mob/living/carbon))
 			return 1
 
 		if(changeling.current.stat==2)

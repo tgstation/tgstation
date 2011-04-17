@@ -1408,13 +1408,7 @@
 /mob/living/carbon/human/attack_paw(mob/M as mob)
 	..()
 	if (M.a_intent == "help")
-		src.sleeping = 0
-		src.resting = 0
-		if (src.paralysis >= 3) src.paralysis -= 3
-		if (src.stunned >= 3) src.stunned -= 3
-		if (src.weakened >= 3) src.weakened -= 3
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\blue [M.name] shakes [] trying to wake him up!", src), 1)
+		src.help_shake_act(M)
 	else
 		if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 			return
@@ -1642,16 +1636,7 @@
 
 	if (M.a_intent == "help")
 		if (src.health > 0)
-			if (src.w_uniform)
-				src.w_uniform.add_fingerprint(M)
-			src.sleeping = 0
-			src.resting = 0
-			if (src.paralysis >= 3) src.paralysis -= 3
-			if (src.stunned >= 3) src.stunned -= 3
-			if (src.weakened >= 3) src.weakened -= 3
-			playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\blue [] shakes [] trying to wake [] up!", M, src, src), 1)
+			src.help_shake_act(M)
 		else
 			if (M.health >= -75.0)
 				if (((M.head && M.head.flags & 4) || ((M.wear_mask && !( M.wear_mask.flags & 32 )) || ((src.head && src.head.flags & 4) || (src.wear_mask && !( src.wear_mask.flags & 32 ))))))
