@@ -39,7 +39,7 @@ datum
 			name = "Silicate"
 			id = "silicate"
 			result = "silicate"
-			required_reagents = list("aluminium" = 1, "silicon" = 1, "oxygen" = 1)
+			required_reagents = list("aluminum" = 1, "silicon" = 1, "oxygen" = 1)
 			result_amount = 3
 
 		sterilizine
@@ -81,7 +81,7 @@ datum
 			name = "Thermite"
 			id = "thermite"
 			result = "thermite"
-			required_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
+			required_reagents = list("aluminum" = 1, "iron" = 1, "oxygen" = 1)
 			result_amount = 3
 
 		lexorin
@@ -285,7 +285,7 @@ datum
 			name = "Flash powder"
 			id = "flash_powder"
 			result = null
-			required_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1 )
+			required_reagents = list("aluminum" = 1, "potassium" = 1, "sulfur" = 1 )
 			result_amount = null
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
@@ -314,7 +314,7 @@ datum
 			name = "Napalm"
 			id = "napalm"
 			result = null
-			required_reagents = list("aluminium" = 1, "plasma" = 1, "acid" = 1 )
+			required_reagents = list("aluminum" = 1, "plasma" = 1, "acid" = 1 )
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = get_turf(holder.my_atom.loc)
@@ -416,7 +416,7 @@ datum
 			name = "Metal Foam"
 			id = "metalfoam"
 			result = null
-			required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "pacid" = 1)
+			required_reagents = list("aluminum" = 3, "foaming_agent" = 1, "pacid" = 1)
 			result_amount = 5
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)

@@ -700,9 +700,9 @@ datum
 				return
 */
 
-		aluminium
-			name = "Aluminium"
-			id = "aluminium"
+		aluminum
+			name = "aluminum"
+			id = "aluminum"
 			description = "A silvery white and ductile member of the boron group of chemical elements."
 			reagent_state = SOLID
 

@@ -265,7 +265,7 @@
 		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("aluminium", 30)
+		B1.reagents.add_reagent("aluminum", 30)
 		B2.reagents.add_reagent("foaming_agent", 10)
 		B2.reagents.add_reagent("pacid", 10)
 
@@ -284,7 +284,7 @@
 		var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 		var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-		B1.reagents.add_reagent("aluminium", 25)
+		B1.reagents.add_reagent("aluminum", 25)
 		B2.reagents.add_reagent("plasma", 25)
 		B2.reagents.add_reagent("acid", 25)
 

@@ -852,7 +852,7 @@ steam.start() -- spawns the effect
 	anchored = 1
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
-	var/metal = 1		// 1=aluminium, 2=iron
+	var/metal = 1		// 1=aluminum, 2=iron
 
 	New()
 		..()
