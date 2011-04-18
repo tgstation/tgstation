@@ -15,12 +15,13 @@
 	LoadBans()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	process_ghost_teleport_locs() //Sets up ghost teleport locations.
-
-	spawn(30)
-		//EXPERIMENTAL
-		Optimize()
-		sleep_offline = 1
-		//EXPERIMENTAL
+	sleep_offline = 1
+	
+	if (config.kick_inactive)
+		spawn(30)
+			//EXPERIMENTAL
+			Optimize()
+			//EXPERIMENTAL
 
 	spawn(0)
 		SetupOccupationsList()

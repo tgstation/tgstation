@@ -22,6 +22,9 @@ LOG_WHISPER
 # sql switching
 # SQL_ENABLED
 
+#disconnect players who did nothing during 10 minutes
+# KICK_INACTIVE
+
 # probablities for game modes chosen in "secret" and "random" modes
 # 
 # default probablity is 1, increase to make that mode more likely to be picked

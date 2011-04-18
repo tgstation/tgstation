@@ -34,6 +34,7 @@
 	var/hostedby = null
 	var/respawn = 1
 	var/guest_jobban = 1
+	var/kick_inactive = 0				//force disconnect for inactive players
 
 	var/server
 	var/banappeals
@@ -196,6 +197,8 @@
 						diary << "Unknown game mode probability configuration definition: [prob_name]."
 				else
 					diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
+			if ("kick_inactive")
+				config.kick_inactive = text2num(value)
 			else
 				diary << "Unknown setting in configuration: '[name]'"
 
