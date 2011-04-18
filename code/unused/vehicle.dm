@@ -143,3 +143,138 @@
 						O << text("\blue <B> [] loads [] into []!</B>", H, H.pulling, src)
 
 				H.pulling = null
+
+
+/obj/machinery/vehicle/space_ship
+	icon = 'escapepod.dmi'
+	icon_state = "pod"
+	var/datum/global_iterator/space_ship_inertial_movement/pr_inertial_movement
+	var/datum/global_iterator/space_ship_speed_increment/pr_speed_increment
+	var/last_relay = 0
+	var/obj/machinery/portable_atmospherics/canister/internal_tank
+
+	New()
+		..()
+		internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
+		pr_inertial_movement = new /datum/global_iterator/space_ship_inertial_movement(list(src),0)
+		pr_speed_increment = new /datum/global_iterator/space_ship_speed_increment(list(src),0)
+		return
+
+	proc/inspace()
+		if(istype(src.loc, /turf/space))
+			return 1
+		return 0
+
+	remove_air(amount)
+		if(src.internal_tank)
+			return src.internal_tank.air_contents.remove(amount)
+		else
+			var/turf/T = get_turf(src)
+			return T.remove_air(amount)
+
+	return_air()
+		if(src.internal_tank)
+			return src.internal_tank.return_air()
+		return
+
+	proc/return_pressure()
+		if(src.internal_tank)
+			return src.internal_tank.return_pressure()
+		return 0
+
+	proc/return_temperature()
+		if(src.internal_tank)
+			return src.internal_tank.return_temperature()
+		return 0
+
+	Bump(var/atom/movable/A)
+		if(istype(A))
+			step(A, src.dir)
+		else
+			pr_speed_increment.stop()
+			pr_inertial_movement.stop()
+			pr_inertial_movement.cur_delay = pr_inertial_movement.max_delay
+			pr_inertial_movement.desired_delay = pr_inertial_movement.max_delay
+		return
+
+	process()
+		return
+
+	proc/get_desired_speed()
+		return (pr_inertial_movement.max_delay-pr_inertial_movement.desired_delay)/(pr_inertial_movement.max_delay-pr_inertial_movement.min_delay)*100
+
+	proc/get_current_speed()
+		return (pr_inertial_movement.max_delay-pr_inertial_movement.cur_delay)/(pr_inertial_movement.max_delay-pr_inertial_movement.min_delay)*100
+
+/obj/machinery/vehicle/space_ship/relaymove(mob/user as mob, direction)
+	spawn()
+		if (user.stat || world.time-last_relay<2)
+			return
+		last_relay = world.time
+		var/speed_change = 0
+		if(direction & NORTH)
+			pr_inertial_movement.desired_delay = between(pr_inertial_movement.min_delay, pr_inertial_movement.desired_delay-1, pr_inertial_movement.max_delay)
+			speed_change = 1
+		else if (direction & SOUTH)
+			pr_inertial_movement.desired_delay = between(pr_inertial_movement.min_delay, pr_inertial_movement.desired_delay+1, pr_inertial_movement.max_delay)
+			speed_change = 1
+		else if (src.can_rotate && direction & 4)
+			src.dir = turn(src.dir, -90.0)
+		else if (src.can_rotate && direction & 8)
+			src.dir = turn(src.dir, 90)
+		if(speed_change)
+			//user << "Desired speed: [get_desired_speed()]%"
+			src.pr_speed_increment.start()
+			src.pr_inertial_movement.start()
+	return
+
+//should try two directional iterator datums, one for vertical, one for horizontal movement.
+/datum/global_iterator/space_ship_inertial_movement
+	delay = 1
+	var/min_delay = 0
+	var/max_delay = 15
+	var/desired_delay
+	var/cur_delay
+	var/last_move
+
+	New()
+		..()
+		desired_delay = max_delay
+		cur_delay = max_delay
+
+	process(var/obj/machinery/vehicle/space_ship/SS as obj)
+		if(cur_delay >= max_delay)
+			return src.stop()
+		if(world.time - last_move < cur_delay)
+			return
+		last_move = world.time
+/*
+		if(src.delay>=SS.max_delay)
+			return src.stop()
+*/
+		if(!step(SS, SS.dir) || !SS.inspace())
+			src.stop()
+			src.cur_delay = max_delay
+			src.desired_delay = max_delay
+			if(src.delay<2)
+				SS.ex_act(2)
+		return
+
+	proc/set_desired_delay(var/num as num)
+		src.desired_delay = num
+		return
+
+/datum/global_iterator/space_ship_speed_increment
+	delay = 4
+
+	process(var/obj/machinery/vehicle/space_ship/SS as obj)
+		if(SS.pr_inertial_movement.desired_delay!=SS.pr_inertial_movement.cur_delay)
+			var/delta = SS.pr_inertial_movement.desired_delay - SS.pr_inertial_movement.cur_delay
+			SS.pr_inertial_movement.cur_delay += delta/abs(delta)
+			/*
+			for(var/mob/M in SS)
+				M << "Current speed: [SS.get_current_speed()]"
+			*/
+		else
+			src.stop()
+		return

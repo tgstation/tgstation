@@ -15,6 +15,12 @@
 	var/list/crowbar_salvage = list("/obj/item/weapon/cell")
 	var/list/equipment = new
 	var/salvage_num = 5
+	var/list/salvage
+
+	New()
+		..()
+		salvage = new
+		return
 
 /obj/decal/mecha_wreckage/ex_act(severity)
 	if(severity < 3)
@@ -51,11 +57,12 @@
 				user << "You failed to salvage anything valuable from [src]."
 			salvage_num--
 	if(istype(W, /obj/item/weapon/crowbar))
-		if(equipment.len)
-			var/obj/item/mecha_parts/mecha_equipment/E = pick(equipment)
-			if(E)
-				E.loc = get_turf(user)
-				user.visible_message("[user] pries [E] from [src].", "You pry [E] from [src].")
+		if(salvage.len)
+			var/obj/S = pick(salvage)
+			if(S)
+				S.loc = get_turf(user)
+				salvage -= S
+				user.visible_message("[user] pries [S] from [src].", "You pry [S] from [src].")
 			return
 		if(salvage_num<=0)
 			user << "You can't see anything of value left on this wreck."

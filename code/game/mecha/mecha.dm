@@ -37,11 +37,17 @@
 
 	//inner atmos machinery. Air tank mostly
 	var/use_internal_tank = 0
+
+	//TODO: replace with common airtank
+	/*
 	var/datum/gas_mixture/air_contents = new
-	var/obj/machinery/atmospherics/portables_connector/connected_port = null //filling the air tanks
+
 	var/filled = 0.5
 	var/gas_tank_volume = 500
-	var/maximum_pressure = 30*ONE_ATMOSPHERE
+	*/
+	var/obj/machinery/atmospherics/portables_connector/connected_port = null //filling the air tanks
+	var/obj/machinery/portable_atmospherics/canister/internal_tank
+
 	var/max_temperature = 2500
 	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
 	var/internal_damage = 0 //contains bitflags
@@ -64,9 +70,12 @@
 /obj/mecha/New()
 	..()
 	src.icon_state += "-open"
+	/*
 	src.air_contents.volume = gas_tank_volume //liters
 	src.air_contents.temperature = T20C
 	src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	*/
+	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	src.spark_system.set_up(2, 0, src)
 	src.spark_system.attach(src)
 	src.cell.charge = 15000
@@ -260,7 +269,7 @@
 
 /obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
 	if(!src) return
-	if(prob(15))
+	if(prob(20))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
@@ -301,9 +310,9 @@
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
-		if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja)&&U.gloves:candrain&&!U.gloves:draining)
+		var/obj/item/clothing/gloves/space_ninja/G = U.gloves
+		if(istype(G) && G.candrain && !G.draining)
 			var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
-			var/obj/item/clothing/gloves/space_ninja/G = U.gloves
 			user << "\blue Now charging battery..."
 			occupant_message("\red Warning: Unauthorized access through sub-route 4, block H, detected.")
 			G.draining = 1
@@ -321,7 +330,7 @@
 					if (call(/proc/do_after)(U,10))//The mecha do_after proc was being called here instead of the mob one.
 						spark_system.start()
 						playsound(src.loc, "sparks", 50, 1)
-						cell.charge-=drain
+						cell.use(drain)
 						S.charge+=drain
 						totaldrain+=drain
 					else	break
@@ -443,6 +452,8 @@
 		var/turf/T = get_turf(src)
 		var/wreckage = src.wreckage
 		var/list/r_equipment = src.equipment
+		var/obj/item/weapon/cell/r_cell = src.cell
+		var/obj/machinery/portable_atmospherics/canister/r_canister = src.internal_tank
 		src = null
 		del(mecha)
 		if(prob(40))
@@ -452,13 +463,20 @@
 				var/obj/decal/mecha_wreckage/WR = new wreckage(T)
 				for(var/obj/item/mecha_parts/mecha_equipment/E in r_equipment)
 					if(prob(30))
-						WR.equipment += E
+						WR.salvage += E
 						E.loc = WR
 						E.equip_ready = 1
 						E.reliability = rand(30,100)
 					else
 						E.loc = T
 						E.destroy()
+				if(r_cell)
+					WR.salvage += r_cell
+					r_cell.loc = WR
+					r_cell.charge = rand(0, r_cell.charge)
+				if(r_canister)
+					WR.salvage += r_canister
+					r_canister.loc = WR
 	return
 
 /obj/mecha/ex_act(severity)
@@ -515,20 +533,27 @@
 */
 
 /obj/mecha/remove_air(amount)
-	if(src.use_internal_tank)
-		return src.air_contents.remove(amount)
+	if(src.use_internal_tank && src.internal_tank)
+		return src.internal_tank.air_contents.remove(amount)
 	else
 		var/turf/T = get_turf(src)
 		return T.remove_air(amount)
 
 /obj/mecha/return_air()
-	return src.air_contents
+	if(src.internal_tank)
+		return src.internal_tank.return_air()
+	return
 
 /obj/mecha/proc/return_pressure()
-	if(src.air_contents)
-		return src.air_contents.return_pressure()
-	else
-		return 0
+	if(src.internal_tank)
+		return src.internal_tank.return_pressure()
+	return 0
+
+/obj/mecha/proc/return_temperature()
+	if(src.internal_tank)
+		return src.internal_tank.return_temperature()
+	return 0
+
 
 /*
 /obj/mecha/proc/preserve_temp()
@@ -557,8 +582,8 @@
 
 	//Actually enforce the air sharing
 	var/datum/pipe_network/network = connected_port.return_network(src)
-	if(network && !network.gases.Find(air_contents))
-		network.gases += air_contents
+	if(network && !(src.return_air() in network.gases))
+		network.gases += src.return_air()
 	src.log_message("Connected to gas port.")
 	return 1
 
@@ -568,7 +593,7 @@
 
 	var/datum/pipe_network/network = connected_port.return_network(src)
 	if(network)
-		network.gases -= air_contents
+		network.gases -= src.return_air()
 
 	connected_port.connected_device = null
 	connected_port = null
@@ -1060,7 +1085,7 @@
 						<b>Powercell charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
 						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
 						<b>Airtank pressure: </b>[src.return_pressure()]kPa<br>
-						<b>Internal temperature: </b> [src.air_contents.temperature]&deg;K|[src.air_contents.temperature - T0C]&deg;C<br>
+						<b>Internal temperature: </b> [src.return_temperature()]&deg;K|[src.return_temperature() - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
 						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:5px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
@@ -1246,9 +1271,10 @@
 	delay = 20
 
 	process(var/obj/mecha/mecha)
-		if(mecha.air_contents && mecha.air_contents.volume > 0)
-			var/delta = mecha.air_contents.temperature - T20C
-			mecha.air_contents.temperature -= max(-10, min(10, round(delta/4,0.1)))
+		var/datum/gas_mixture/int_tank_air = mecha.return_air()
+		if(int_tank_air && int_tank_air.volume > 0)
+			var/delta = int_tank_air.temperature - T20C
+			int_tank_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
 		return
 
 /datum/global_iterator/mecha_view_stats // open and update stats window
@@ -1288,24 +1314,21 @@
 	process(var/obj/mecha/mecha)
 		if(!mecha.internal_damage)
 			return src.stop()
+		var/datum/gas_mixture/int_tank_air = mecha.return_air()
 		if(mecha.internal_damage & MECHA_INT_FIRE)
-			if(mecha.return_pressure()>mecha.maximum_pressure*1.5 && !(mecha.internal_damage&MECHA_INT_TANK_BREACH))
+			if(mecha.return_pressure()>mecha.internal_tank.maximum_pressure && !(mecha.internal_damage&MECHA_INT_TANK_BREACH))
 				mecha.internal_damage |= MECHA_INT_TANK_BREACH
 			if(!(mecha.internal_damage & MECHA_INT_TEMP_CONTROL) && prob(5))
 				mecha.internal_damage &= ~MECHA_INT_FIRE
 				mecha.occupant_message("<font color='blue'><b>Internal fire extinquished.</b></font>")
-			if(mecha.air_contents && mecha.air_contents.volume > 0) //heat the air_contents
-				mecha.air_contents.temperature = min(6000+T0C, mecha.air_contents.temperature+rand(10,15))
-				if(mecha.air_contents.temperature>mecha.max_temperature/2)
+			if(int_tank_air && int_tank_air.volume>0) //heat the air_contents
+				int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
+				if(int_tank_air.temperature>mecha.max_temperature/2)//we assume that the tank contents include mecha pilot compartment.
 					mecha.take_damage(1,"fire")
 		if(mecha.internal_damage & MECHA_INT_TEMP_CONTROL) //stop the mecha_preserve_temp loop datum
 			mecha.pr_int_temp_processor.stop()
 		if(mecha.internal_damage & MECHA_INT_TANK_BREACH) //remove some air from internal tank
-			var/datum/gas_mixture/environment = mecha.loc.return_air()
-			var/env_pressure = environment.return_pressure()
-			var/pressure_delta = min(115 - env_pressure, (mecha.air_contents.return_pressure() - env_pressure)/2)
-			var/transfer_moles = 0
-			if(mecha.air_contents.temperature > 0 && pressure_delta > 0)
-				transfer_moles = pressure_delta*environment.volume/(mecha.air_contents.temperature * R_IDEAL_GAS_EQUATION)
-				mecha.loc.assume_air(mecha.air_contents.remove(transfer_moles))
+			if(int_tank_air)
+				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.25)
+				mecha.loc.assume_air(leaked_gas)
 		return

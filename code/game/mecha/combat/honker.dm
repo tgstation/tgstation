@@ -38,7 +38,7 @@
 						<b>IntegriHONK: </b> [health/initial(health)*100] %) <br>
 						<b>PowerHONK charge: </b>[isnull(cell_charge)?"Someone HONKed powerHonk!!!":"[cell.percent()]%"])<br>
 						<b>AirHONK pressure: </b>[src.return_pressure()]HoNKs<br>
-						<b>Internal HONKature: </b> [src.air_contents.temperature]&deg;honK|[src.air_contents.temperature - T0C]&deg;honCk<br>
+						<b>Internal HONKature: </b> [src.return_temperature()]&deg;honK|[src.return_temperature() - T0C]&deg;honCk<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
 					"}
 	output += "<b>HONKon systems:</b><div style=\"margin-left: 15px;\">"

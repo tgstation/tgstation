@@ -55,6 +55,7 @@ Data storage vars:
 	var/check_for_null = 1
 	var/forbid_garbage = 0
 	var/result
+	var/state = 0
 
 	New(list/arguments=null,autostart=1)
 		if(forbid_garbage) //prevents garbage collection with tag != null
@@ -65,13 +66,21 @@ Data storage vars:
 		return
 
 	proc/main()
+		src.state = 1
 		while(src && control_switch)
 			last_exec = world.timeofday
 			if(check_for_null && has_null_args())
-				return src.stop()
+				src.stop()
+				return 0
 			result = src.process(arglist(arg_list))
-			sleep(delay)
-		return
+			if(src.delay>0)
+				for(var/sleep_time=src.delay;sleep_time>0;sleep_time--) //uhh, this is ugly. But I see no other way to terminate sleeping proc. Such disgrace.
+					if(!src.control_switch)
+						return 0
+					sleep(1)
+			else
+				sleep(src.delay) //delay can also be 0 and -1
+		return 0
 
 	proc/start(list/arguments=null)
 		if(src.active())
@@ -79,15 +88,28 @@ Data storage vars:
 		if(arguments)
 			if(!set_process_args(arguments))
 				return 0
+		if(!state_check()) //the main loop is sleeping, wait for it to terminate.
+			return
 		control_switch = 1
 		spawn()
-			src.main()
+			src.state = src.main()
 		return 1
 
 	proc/stop()
 		if(!src.active())
 			return
 		control_switch = 0
+		if(!state_check())
+			return
+		return 1
+
+	proc/state_check()
+		var/lag = 0
+		while(src.state)
+			sleep(1)
+			if(++lag>10)
+				log_game("The global_iterator loop \ref[src] failed to terminate in designated timeframe. The supplied arguments were {[list2params(arg_list)]}")
+				return 0
 		return 1
 
 	proc/process()
@@ -97,13 +119,8 @@ Data storage vars:
 		return control_switch
 
 	proc/has_null_args()
-		if(null in arg_list) //Hope no "" or 0 errors here.
+		if(null in arg_list)
 			return 1
-/*
-			for(var/V in arg_list)
-				if(isnull(V))
-					return 1
-*/
 		return 0
 
 

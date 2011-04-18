@@ -12,10 +12,10 @@
 
 /area/turret_protected/Entered(O)
 	..()
-	if (istype(O, /mob))
-		if (!istype(O, /mob/living/silicon))
-			if (!(O in turretTargets))
-				turretTargets += O
+//	world << "[O] entered[src.x],[src.y],[src.z]"
+	if (istype(O, /mob/living/carbon))
+		if (!(O in turretTargets))
+			turretTargets += O
 	else if (istype(O, /obj/mecha))
 		var/obj/mecha/M = O
 		if (M.occupant)
@@ -24,6 +24,7 @@
 	return 1
 
 /area/turret_protected/Exited(O)
+//	world << "[O] exited [src.x],[src.y],[src.z]"
 	if (istype(O, /mob))
 		if (!istype(O, /mob/living/silicon))
 			if (O in turretTargets)
@@ -35,16 +36,9 @@
 	else if (istype(O, /obj/mecha))
 		if (O in turretTargets)
 			turretTargets -= O
-
-	if (turretTargets.len == 0)
-		popDownTurrets()
-
+	..()
 	return 1
 
-/area/turret_protected/proc/popDownTurrets()
-	for (var/obj/machinery/turret/aTurret in src)
-		if (!aTurret.isDown())
-			aTurret.popDown()
 
 /obj/machinery/turret
 	name = "turret"
@@ -67,12 +61,19 @@
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
+//	var/list/targets
+	var/atom/movable/cur_target
+	var/targeting_active = 0
+	var/area/turret_protected/protected_area
+
 
 /obj/machinery/turret/New()
 	spark_system = new /datum/effects/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+//	targets = new
 	..()
+	return
 
 /obj/machinery/turretcover
 	name = "pop-up turret cover"
@@ -108,122 +109,98 @@
 	src.lasers = lethal
 	src.power_change()
 
+
+/obj/machinery/turret/proc/get_protected_area()
+	var/area/turret_protected/TP = get_area(src)
+	if(istype(TP))
+		return TP
+	return
+
+/obj/machinery/turret/proc/check_target(var/atom/movable/T as mob|obj)
+	if(T && T in protected_area.turretTargets)
+		if(istype(T, /mob/living/carbon))
+			var/mob/living/carbon/MC = T
+			if(!MC.stat)
+				if(!MC.lying || lasers)
+					return 1
+		else if(istype(T, /obj/mecha))
+			var/obj/mecha/ME = T
+			if(ME.occupant)
+				return 1
+	return 0
+
+/obj/machinery/turret/proc/get_new_target()
+	var/list/new_targets = new
+	var/new_target
+	for(var/mob/living/carbon/M in protected_area.turretTargets)
+		if(!M.stat)
+			if(!M.lying || lasers)
+				new_targets += M
+	for(var/obj/mecha/M in protected_area.turretTargets)
+		if(M.occupant)
+			new_targets += M
+	if(new_targets.len)
+		new_target = pick(new_targets)
+	return new_target
+
+
 /obj/machinery/turret/process()
-	listcheck()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(lastfired && world.time - lastfired < shot_delay)
-		return
-	lastfired = world.time
-	if (src.cover==null)
+	if(src.cover==null)
 		src.cover = new /obj/machinery/turretcover(src.loc)
-	var/loc = src.loc
-	if (istype(loc, /turf))
-		loc = loc:loc
-	if (!istype(loc, /area))
-		world << text("Badly positioned turret - loc.loc is [].", loc)
+	protected_area = get_protected_area()
+	if(!protected_area || protected_area.turretTargets.len<=0 || !enabled)
+		if(!isDown() && !isPopping())
+			popDown()
 		return
-	var/area/area = loc
-	if (istype(area, /area))
-		if (istype(loc, /area/turret_protected))
-			src.wasvalid = 1
-			var/area/turret_protected/tarea = loc
+	if(!check_target(cur_target)) //if current target fails target check
+		cur_target = get_new_target() //get new target
 
-
-			if (tarea.turretTargets.len>0 && enabled)
-				if (!isPopping())
-					if (isDown())
-						popUp()
-						use_power = 2
-					else
-						targetting()
+	if(cur_target) //if it's found, proceed
+//		world << "[cur_target]"
+		if(!isPopping())
+			if(isDown())
+				popUp()
+				use_power = 2
 			else
-				if (!isPopping())
-					if (!isDown())
-						popDown()
-						use_power = 1
-		else
-			if (src.wasvalid)
-				src.die()
-			else
-				world << text("ERROR: Turret at [x], [y], [z] is NOT in a turret-protected area!")
-
-/obj/machinery/turret/proc/listcheck()
-	for (var/mob/living/carbon/guy in loc.loc)
-		if (guy in loc.loc:turretTargets)
-			continue
-		if (guy.lying && !lasers)
-			continue
-		if (!guy.stat)
-			loc.loc:turretTargets += guy
+				spawn()
+					if(!targeting_active)
+						targeting_active = 1
+						target()
+						targeting_active = 0
+	else if(!isPopping())//else, pop down
+		if(!isDown())
+			popDown()
+			use_power = 1
+	return
 
 
-/obj/machinery/turret/proc/targetting()
-	var/mob/target
-	var/notarget = 0
-	do
+/obj/machinery/turret/proc/target()
+	while(src && check_target(cur_target))
+		src.dir = get_dir(src, cur_target)
+		shootAt(cur_target)
+		sleep(shot_delay)
+	return
 
-		if (notarget >= 20)
-			return
-		if (target)
-			if (!istype(target.loc.loc, loc.loc))
-				loc.loc:Exited(target)
-				target = null
-		if (target)
-			if ((target.lying && !lasers) || target.stat)
-				loc.loc:Exited(target)
-				target = null
-		if (!target)
-			listcheck()
-			if (!lasers)
-				for (var/mob/possible in loc.loc:turretTargets)
-					if (!istype(possible.loc.loc, loc.loc))
-						loc.loc:Exited(possible)
-						continue
-					if (possible.stat)
-						loc.loc:Exited(possible)
-						notarget++
-						continue
-					if (possible.lying)
-						loc.loc:Exited(possible)
-						notarget++
-						continue
-					if (!target)
-						target = possible
-						notarget = 0
-						break
-			else
-				for (var/mob/possible in loc.loc:turretTargets)
-					if (!istype(possible.loc.loc, loc.loc))
-						loc.loc:Exited(possible)
-						continue
-					if (possible.stat)
-						loc.loc:Exited(possible)
-						notarget++
-						continue
-					if (!target)
-						target = possible
-						notarget = 0
-						break
-		if (target)
-			src.dir = get_dir(src, target)
-			if (src.enabled)
-				if (istype(target, /mob/living))
-					if (!target.stat)
-						src.shootAt(target)
-					else
-						loc.loc:Exited(target)
-						target = null
-				else if (istype(target, /obj/mecha))
-					var/obj/mecha/mecha = target
-					if(!mecha.occupant)
-						if (mecha in loc.loc:turretTargets)
-							loc.loc:turretTargets -= mecha
-							target = null
-					else
-						src.shootAt(target)
-		else sleep(1)
-	while(!target && loc.loc:turretTargets.len>0)
+/obj/machinery/turret/proc/shootAt(var/atom/movable/target)
+	var/turf/T = get_turf(src)
+	var/turf/U = get_turf(target)
+	if (!istype(T) || !istype(U))
+		return
+	var/obj/beam/a_laser/A
+	if (src.lasers)
+		A = new /obj/beam/a_laser( loc )
+		use_power(500)
+	else
+		A = new /obj/bullet/electrode( loc )
+		use_power(200)
+	A.current = T
+	A.yo = U.y - T.y
+	A.xo = U.x - T.x
+	spawn( 0 )
+		A.process()
+	return
 
 
 /obj/machinery/turret/proc/isDown()
@@ -249,36 +226,6 @@
 			if (popping==-1)
 				invisibility = 2
 				popping = 0
-
-/obj/machinery/turret/proc/shootAt(var/mob/target)
-	var/turf/T = loc
-	var/atom/U = (istype(target, /atom/movable) ? target.loc : target)
-	if ((!( U ) || !( T )))
-		return
-	while(!( istype(U, /turf) ))
-		U = U.loc
-	if (!( istype(T, /turf) ))
-		return
-
-	var/obj/beam/a_laser/A
-	if (src.lasers)
-		A = new /obj/beam/a_laser( loc )
-		use_power(500)
-	else
-		A = new /obj/bullet/electrode( loc )
-		use_power(200)
-
-	if (!( istype(U, /turf) ))
-		//A = null
-		del(A)
-		return
-	A.current = U
-	A.yo = U.y - T.y
-	A.xo = U.x - T.x
-	spawn( 0 )
-		A.process()
-		return
-	return
 
 /obj/machinery/turret/bullet_act(flag)
 	if (flag == PROJECTILE_BULLET)
