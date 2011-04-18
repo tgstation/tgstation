@@ -41,14 +41,13 @@ var/opt_inactive = null
 /world/proc/KickInactiveClients()
 	for(var/client/C)
 		if(!C.holder && ((C.inactivity/10)/60) >= 10) // Used to be 15 -- TLE
-			C << "\red You have been inactive for more than 10 minutes and have been disconnected."
-			/*
+			//C << "\red You have been inactive for more than 10 minutes and have been disconnected."
 			if(C.mob)
 				if(!istype(C.mob, /mob/dead/))
-					C << "\red Your character has also been killed to save on server resources."
-					C.mob.death(0) // Added to lighten the load they take on the server -- TLE
+					log_access("AFK: [key_name(C)]")
+					C << "\red You have been inactive for more than 10 minutes and have been disconnected."
+					C.mob.logged_in = 0
 			del(C)
-			*/
 
 /// EXPERIMENTAL STUFF
 
