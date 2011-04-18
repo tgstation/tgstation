@@ -646,7 +646,7 @@
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
-				if (damage > 8)//Regular humans have a very small chance of weakening an alien.
+				if (damage > 9||prob(5))//Regular humans have a very small chance of weakening an alien.
 					if (src.weakened < 10)
 						src.weakened = rand(1,5)
 					for(var/mob/O in viewers(M, null))

@@ -95,13 +95,13 @@ datum
 						if(preserve_data)
 							trans_data = current_reagent.data
 						R.add_reagent(current_reagent.id, amount, trans_data)
-						src.remove_reagent(current_reagent.id, amount)
+						src.remove_reagent(current_reagent.id, amount, 1)
 						break
 
 				src.update_total()
 				R.update_total()
 				R.handle_reactions()
-				src.handle_reactions()
+				//src.handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating) and transferring a specific reagent.
 				return amount
 
 /*
@@ -285,7 +285,7 @@ datum
 
 				return 1
 
-			remove_reagent(var/reagent, var/amount)
+			remove_reagent(var/reagent, var/amount, var/safety)//Added a safety check for the trans_id_to
 
 				if(!isnum(amount)) return 1
 
@@ -294,7 +294,8 @@ datum
 					if (R.id == reagent)
 						R.volume -= amount
 						update_total()
-						handle_reactions()
+						if(!safety)//So it does not handle reactions when it need not to
+							handle_reactions()
 						my_atom.on_reagent_change()
 						return 0
 

@@ -9,6 +9,7 @@ CHAMELEON JUMPSUIT
 DEATH COMMANDO GAS MASK
 THERMAL GLASSES
 NINJA SUIT
+NINJA GLOVES
 NINJA MASK
 */
 
@@ -311,6 +312,8 @@ NINJA MASK
 
 //SPESS NINJA STUFF
 
+//SUIT
+
 /obj/item/clothing/suit/space/space_ninja/New()
 	..()
 	src.verbs += /obj/item/clothing/suit/space/space_ninja/proc/init//suit initialize verb
@@ -324,6 +327,8 @@ NINJA MASK
 	reagents.add_reagent("dexalinp", 80)
 	reagents.add_reagent("spaceacillin", 80)
 	reagents.add_reagent("anti_toxin", 80)
+	reagents.add_reagent("radium", 80)
+	reagents.add_reagent("nutriment", 80)
 
 /obj/item/clothing/suit/space/space_ninja/proc/ntick(var/mob/living/carbon/human/U as mob)
 	set hidden = 1
@@ -347,7 +352,7 @@ NINJA MASK
 		if(charge<0)
 			charge=0
 			active=0
-		sleep(10)
+		sleep(10)//Checks every second.
 
 /obj/item/clothing/suit/space/space_ninja/proc/init()
 	set name = "Initialize Suit"
@@ -558,6 +563,7 @@ NINJA MASK
 				dat += "<b>Fingerprints</b>: <i>[md5(U.dna.uni_identity)]</i><br>"
 				dat += "<b>Unique identity</b>: <i>[U.dna.unique_enzymes]</i><br>"
 			dat += "<h4>Overall Status: [U.stat > 1 ? "dead" : "[U.health]% healthy"]</h4>"
+			dat += "<h4>Nutrition Status: [U.nutrition]</h4>"
 			dat += "Oxygen loss: [U.oxyloss]"
 			dat += " | Toxin levels: [U.toxloss]<br>"
 			dat += "Burn severity: [U.fireloss]"
@@ -570,6 +576,7 @@ NINJA MASK
 			dat += "<li><a href='byond://?src=\ref[src];choice=Dexalin Plus'><img src=sos_2.png> Inject Dexalin Plus: [reagents.get_reagent_amount("dexalinp")/20] left</a></li>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=Tricordazine'><img src=sos_2.png> Inject Tricordazine: [reagents.get_reagent_amount("tricordrazine")/20] left</a></li>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=Spacelin'><img src=sos_2.png> Inject Spacelin: [reagents.get_reagent_amount("spaceacillin")/20] left</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Nutriment'><img src=sos_2.png> Inject Nutriment: [reagents.get_reagent_amount("nutriment")/5] left</a></li>"//Special case since it's so freaking potent.
 			dat += "</ul>"
 		if(2)
 			dat += "<h4><img src=sos_5.png>Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
@@ -616,7 +623,41 @@ NINJA MASK
 				dat += "None detected.<br>"
 			//dat += "<a href='byond://?src=\ref[src];choice=31'> Send Virus</a>"
 		if(4)
-			dat += "<h4><img src=sos_6.png> Other Functions:</h4>"
+			dat += "<h4><img src=sos_6.png> Ninja Manual:</h4>"
+			dat += "<h5>Who they are:</h5>"
+			dat += "Space ninjas are a special type of ninja, specifically one of the space-faring type. The vast majority of space ninjas belong to the Spider Clan, a cult-like sect, which has existed for several hundred years. The Spider Clan practice a sort of augmentation of human flesh in order to achieve a more perfect state of being and follow Postmodern Space Bushido. They also kill people for money. Their leaders are chosen from the oldest of the grand-masters, people that have lived a lot longer than any mortal man should.<br>Being a sect of technology-loving fanatics, the Spider Clan have the very best to choose from in terms of hardware--cybernetic implants, exoskeleton rigs, hyper-capacity batteries, and you get the idea. Some believe that much of the Spider Clan equipment is based on reverse-engineered alien technology while others doubt such claims.<br>Whatever the case, their technology is absolutely superb."
+			dat += "<h5>How they relate to other SS13 organizations:</h5>"
+			dat += "<ul>"
+			dat += "<li>*<b>Nanotrasen</b> and the Syndicate are two sides of the same coin and that coin is valuable.</li>"
+			dat += "<li>*<b>The Space Wizard Federation</b> is a problem, mainly because they are an extremely dangerous group of unpredictable individuals--not to mention the wizards hate technology and are in direct opposition of the Spider Clan. Best avoided or left well-enough alone.</li>"
+			dat += "<li>*<b>Changeling Hivemind</b>: extremely dangerous and to be killed on sight.</li>"
+			dat += "<li>*<b>Xeno Hivemind</b>: their skulls make interesting kitchen decorations and are challenging to best, especially in larger nests.</li>"
+			dat += "</ul>"
+			dat += "<h5>The reason they (you) are here</h5>:"
+			dat += "Space ninjas are renowned throughout the known controlled space as fearless spies, infiltrators, and assassins. They are sent on missions of varying nature by Nanotrasen, the Syndicate, and other shady organizations and people. To hire a space ninja means serious business."
+			dat += "<h5>Their playstyle:</h5>"
+			dat += "A mix of traitor, changeling, and wizard. Ninjas rely on energy, or electricity to be precise, to keep their suits running (when out of energy, a suit hibernates). Suits gain energy from objects or creatures that contain electrical charge. APCs, cell batteries, SMES batteries, cyborgs, mechs, and exposed wires are currently supported. Through energy ninjas gain access to special powers--while all powers are tied to the ninja suit, the most useful of them are verb activated--to help them in their mission.<br>It is a constant struggle for a ninja to remain hidden long enough to recharge the suit and accomplish their objective; despite their arsenal of abilities, ninjas can die like any other. Unlike wizards, ninjas do not possess good crowd control and are typically forced to play more subdued in order to achieve their goals. Some of their abilities are specifically designed to confuse and disorient others.<br>With that said, it should be perfectly possible to completely flip the fuck out and rampage as a ninja."
+			dat += "<h5>Their powers:</h5>"
+			dat += "There are two primary types: powers that are activated through the suit and powers that are activated through the verb panel. Passive powers are always on. Active powers must be turned on and remain active only when there is energy to do so. All verb powers are active and their cost is listed next to them."
+			dat += "<b>Powers of the suit</b>: cannot be tracked by AI (passive), faster speed (passive), stealth (active), vision switch (passive if toggled), voice masking (passive), SpiderOS (passive if toggled), energy drain (passive if toggled)."
+			dat += "<ul>"
+			dat += "<li><i>Voice masking</i> generates a random name the ninja can use over the radio and in-person. Although, the former use is recommended.</li>"
+			dat += "<li><i>Toggling vision</i> cycles to one of the following: thermal, meson, or darkness vision.</li>"
+			dat += "<li><i>Stealth</i>, when activated, drains more battery charge and works similarly to a syndicate cloak.</li>"
+			dat += "<li><i>SpiderOS</i> is a specialized, PDA-like screen that allows for a small variety of functions, such as injecting healing chemicals directly from the suit. You are using it now, if that was not already obvious.</li>"
+			dat += "</ul>"
+			dat += "<b>Verbpowers</b>:"
+			dat += "<ul>"
+			dat += "<li>*<b>Phase Shift</b> (<i>2000E</i>) and <b>Phase Jaunt</b> (<i>1000E</i>) are unique powers in that they can both be used for defense and offense. Jaunt launches the ninja forward facing up to 10 squares, somewhat randomly selecting the final destination. Shift can only be used on turf in view but is precise (cannot be used on walls). Any living mob in the area teleported to is instantly gibbed.</li>"
+			dat += "<li>*<b>Energy Blade</b> (<i>500E</i>) is a highly effective weapon. It is summoned directly to the ninja's hand and can also function as an EMAG for certain objects (doors/lockers/etc). It will crit humans in two hits. This item cannot be placed in containers and when dropped or thrown disappears. Having an energy sword drains more power from the battery each tick.</li>"
+			dat += "<li>*<b>EM Pulse</b> (<i>2500E</i>) is a highly useful ability that will create an electromagnetic shockwave around the ninja, disabling technology whenever possible. If used properly it can render a security force effectively useless. Of course, getting beat up with a toolbox is not accounted for.</li>"
+			dat += "<li>*<b>Energy Star</b> (<i>300E</i>) is a ninja star made of green energy. It works by picking a random living target within range and can be spammed to great effect in incapacitating foes. (NOTE: this ability is WIP.)</li>"
+			dat += "<li>*<b>Adrenaline Boost</b> (<i>1 E. Boost/3</i>) recovers the user from stun, weakness, and paralysis. Also injects 15 units of radium into the bloodstream. (NOTE: this ability is WIP but probably finished.)</li>"
+			dat += "<li>*<b>Smoke Bomb</b> (<i>1 Sm.Bomb/10</i>) is a weak but potentially useful ability. It creates harmful smoke and can be used in tandem with other powers to confuse enemies.</li>"
+			dat += "<li>*<b>Hacking computer terminals</b>: this power was never finished but in theory, it would have allowed to remotely access computer terminals, provided they were linked to the same power network and were active.</li>"
+			dat += "</ul>"
+			dat += "That is all you will need to know. The rest will come with practice and talent. Good luck!"
+			dat += "<h4>Master /N</h4>"
 /*
 			//Sub-menu testing stuff.
 			dat += "<li><a href='byond://?src=\ref[src];choice=49'> To sub-menu 49</a></li>"
@@ -684,7 +725,7 @@ NINJA MASK
 					O << "[usr.name] vanishes into thin air!"
 		if("0")//Menus are numbers, see note above. 0 is the hub.
 			spideros=0
-		if("1")//Begin normal menus.
+		if("1")//Begin normal menus 1-9.
 			spideros=1
 		if("2")
 			spideros=2
@@ -701,32 +742,39 @@ NINJA MASK
 			spideros=491 */
 		if("Dylovene")//These names really don't matter for specific functions but it's easier to use descriptive names.
 			if(!reagents.get_reagent_amount("anti_toxin"))
-				U << "\red Error: the suit cannot perform this function. Out of reagent."
+				U << "\red Error: the suit cannot perform this function. Out of dylovene."
 			else
 				reagents.reaction(U, 2)
 				reagents.trans_id_to(U, "anti_toxin", amount_per_transfer_from_this)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 		if("Dexalin Plus")
 			if(!reagents.get_reagent_amount("dexalinp"))
-				U << "\red Error: the suit cannot perform this function. Out of reagent."
+				U << "\red Error: the suit cannot perform this function. Out of dexalinp."
 			else
 				reagents.reaction(U, 2)
 				reagents.trans_id_to(U, "dexalinp", amount_per_transfer_from_this)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 		if("Tricordazine")
 			if(!reagents.get_reagent_amount("tricordrazine"))
-				U << "\red Error: the suit cannot perform this function. Out of reagent."
+				U << "\red Error: the suit cannot perform this function. Out of tricordrazine."
 			else
 				reagents.reaction(U, 2)
 				reagents.trans_id_to(U, "tricordrazine", amount_per_transfer_from_this)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 		if("Spacelin")
 			if(!reagents.get_reagent_amount("spaceacillin"))
-				U << "\red Error: the suit cannot perform this function. Out of reagent."
+				U << "\red Error: the suit cannot perform this function. Out of spaceacillin."
 			else
 				reagents.reaction(U, 2)
 				reagents.trans_id_to(U, "spaceacillin", amount_per_transfer_from_this)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
+		if("Nutriment")
+			if(!reagents.get_reagent_amount("nutriment"))
+				U << "\red Error: the suit cannot perform this function. Out of nutriment."
+			else
+				reagents.reaction(U, 2)
+				reagents.trans_id_to(U, "nutriment", 5)
+				U << "You feel a tiny prick and a sudden rush of substance in to your veins."
 
 		else
 		/*Leaving this for the messenger because it's an awesome solution. For switch to work, the variable has to be static.

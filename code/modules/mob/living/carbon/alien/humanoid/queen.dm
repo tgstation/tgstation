@@ -167,15 +167,9 @@
 	set desc = "Plants an egg"
 	set category = "Alien"
 
-	if(src.stat)
-		src << "You must be concious to do this"
-		return
-	if(src.toxloss >= 200)
-		src.toxloss -= 200
+	if(powerc(50,1))//Can't plant eggs on spess tiles. That's silly.
+		toxloss -= 200
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
-		new /obj/alien/egg(src.loc)
-
-	else
-		src << "\green Not enough plasma stored"
+		new /obj/alien/egg(loc)
 	return

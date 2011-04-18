@@ -165,20 +165,16 @@
 	set desc = "Makes you invisible for 15 seconds"
 	set category = "Alien"
 
-	if(src.stat)
-		src << "\green You must be conscious to do this."
-		return
-	if(src.toxloss >= 50)
-		src.toxloss -= 50
-		src.alien_invis = 1.0
+	if(powerc(50))
+		toxloss -= 50
+		alien_invis = 1.0
 		src << "\green You are now invisible."
 		for(var/mob/O in oviewers(src, null))
 			O.show_message(text("\red <B>[src] fades into the surroundings!</B>"), 1)
 		spawn(150)
-			src.alien_invis = 0.0
-			src << "\green You are no longer invisible."
-	else
-		src << "\green Not enough plasma stored"
+			if(!isnull(src))//Don't want the game to runtime error when the mob no-longer exists.
+				alien_invis = 0.0
+				src << "\green You are no longer invisible."
 	return
 
 /mob/living/carbon/alien/humanoid/hunter/verb/regurgitate()
@@ -186,17 +182,13 @@
 	set desc = "Empties the contents of your stomach"
 	set category = "Alien"
 
-	if(src.stat)
-		src << "\green You must be conscious to do this."
-		return
-
-	if(src.stomach_contents.len)
-		for(var/mob/M in src)
-			if(M in src.stomach_contents)
-				src.stomach_contents.Remove(M)
-				M.loc = src.loc
-				M.paralysis += 10
-
-		for(var/mob/O in viewers(src, null))
-			O.show_message(text("\green <B>[src] hurls out the contents of their stomach.</B>"), 1)
+	if(powerc())
+		if(stomach_contents.len)
+			for(var/mob/M in src)
+				if(M in stomach_contents)
+					stomach_contents.Remove(M)
+					M.loc = loc
+					M.paralysis += 10
+			for(var/mob/O in viewers(src, null))
+				O.show_message(text("\green <B>[src] hurls out the contents of their stomach!</B>"), 1)
 	return

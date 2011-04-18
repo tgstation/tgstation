@@ -259,20 +259,30 @@ Useful for copy pasta since I'm lazy.*/
 
 //SPACE NINJA ABILITIES
 
-//X is optional, tells the proc to check for stealth.
+/*X is optional, tells the proc to check for specific stuff. C is also optional.
+All the procs here assume that the character is wearing the ninja suit if they are using the procs.
+They should, as I have made every effort for that to be the case.
+In the case that they are not, I imagine the game will run-time error like crazy.
+*/
 /mob/proc/ninjacost(C,X)
 	var/mob/living/carbon/human/U = src
+	var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
 	if(U.stat)
 		U << "\red You must be conscious to do this."
 		return 0
-	else if(X&&U.wear_suit:active)
-		U << "\red You must deactivate the CLOAK-tech device prior to using this ability."
-		return 0
-	else if(U.wear_suit:charge>=C*10)
-		return 1
-	else
+	else if(C&&S.charge<C*10)
 		U << "\red Not enough energy."
 		return 0
+	else if(X==1&&S.active)
+		U << "\red You must deactivate the CLOAK-tech device prior to using this ability."
+		return 0
+	else if(X==2&&S.sbombs<=0)
+		U << "\red There are no more smoke bombs remaining."
+		return 0
+	else if(X==3&&S.aboost<=0)
+		U << "\red You do not have any more adrenaline boosters."
+		return 0
+	else	return 1
 
 //Smoke
 //Summons smoke in radius of user.
@@ -282,19 +292,15 @@ Useful for copy pasta since I'm lazy.*/
 	set desc = "Blind your enemies momentarily with a well-placed smoke bomb."
 	set category = "Ninja"
 
-	if(src.stat)
-		src << "\red You must be conscious to do this."
-		return
-	if(!src:wear_suit:sbombs)
-		src << "\red There are no more smoke bombs remaining."
-		return
-
-	src:wear_suit:sbombs--
-	src << "\blue There are <B>[src:wear_suit:sbombs]</B> smoke bombs remaining."
-	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
-	smoke.set_up(10, 0, src.loc)
-	smoke.start()
-	playsound(src.loc, 'bamf.ogg', 50, 2)
+	if(ninjacost(,2))
+		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
+		S.sbombs--
+		src << "\blue There are <B>[S.sbombs]</B> smoke bombs remaining."
+		var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
+		smoke.set_up(10, 0, loc)
+		smoke.start()
+		playsound(loc, 'bamf.ogg', 50, 2)
+	return
 
 //9-10 Tile Teleport
 //Click to to teleport 9-10 tiles in direction facing.
@@ -304,72 +310,73 @@ Useful for copy pasta since I'm lazy.*/
 	set category = "Ninja"
 
 	var/C = 100
-	if(!ninjacost(C,1))
-		return
+	if(ninjacost(C,1))
+		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
+		var/list/turfs = new/list()
+		var/turf/picked
+		var/turf/mobloc = get_turf(loc)
+		var/safety = 0
+		switch(dir)
+			if(NORTH)
+				//highest Y
+				//X the same
+				for(var/turf/T in orange(10))
+					if(T.density) continue
+					if(T.x>world.maxx || T.x<1)	continue
+					if(T.y>world.maxy || T.y<1)	continue
+					if((T.y-mobloc.y)<9 || ((T.x+mobloc.x+1)-(mobloc.x*2))>2)	continue
+					turfs += T
+			if(SOUTH)
+				//lowest Y
+				//X the same
+				for(var/turf/T in orange(10))
+					if(T.density) continue
+					if(T.x>world.maxx || T.x<1)	continue
+					if(T.y>world.maxy || T.y<1)	continue
+					if((mobloc.y-T.y)<9 || ((T.x+mobloc.x+1)-(mobloc.x*2))>2)	continue
+					turfs += T
+			if(EAST)
+				//highest X
+				//Y the same
+				for(var/turf/T in orange(10))
+					if(T.density) continue
+					if(T.x>world.maxx || T.x<1)	continue
+					if(T.y>world.maxy || T.y<1)	continue
+					if((T.x-mobloc.x)<9 || ((T.y+mobloc.y+1)-(mobloc.y*2))>2)	continue
+					turfs += T
+			if(WEST)
+				//lowest X
+				//Y the same
+				for(var/turf/T in orange(10))
+					if(T.density) continue
+					if(T.x>world.maxx || T.x<1)	continue
+					if(T.y>world.maxy || T.y<1)	continue
+					if((mobloc.x-T.x)<9 || ((T.y+mobloc.y+1)-(mobloc.y*2))>2)	continue
+					turfs += T
+			else
+				safety = 1
+		if(turfs.len||safety)//Cancels the teleportation if no valid turf is found. Usually when teleporting near map edge.
+			picked = pick(turfs)
+			spawn(0)
+				playsound(loc, "sparks", 50, 1)
+				anim(mobloc,'mob.dmi',src,"phaseout")
 
-	var/list/turfs = new/list()
-	var/turf/picked
-	var/turf/mobloc = get_turf(src.loc)
-	switch(src.dir)
-		if(NORTH)
-			//highest Y
-			//X the same
-			for(var/turf/T in orange(10))
-				if(T.density) continue
-				if(T.x>world.maxx || T.x<1)	continue
-				if(T.y>world.maxy || T.y<1)	continue
-				if((T.y-mobloc.y)<9 || ((T.x+mobloc.x+1)-(mobloc.x*2))>2)	continue
-				turfs += T
-		if(SOUTH)
-			//lowest Y
-			//X the same
-			for(var/turf/T in orange(10))
-				if(T.density) continue
-				if(T.x>world.maxx || T.x<1)	continue
-				if(T.y>world.maxy || T.y<1)	continue
-				if((mobloc.y-T.y)<9 || ((T.x+mobloc.x+1)-(mobloc.x*2))>2)	continue
-				turfs += T
-		if(EAST)
-			//highest X
-			//Y the same
-			for(var/turf/T in orange(10))
-				if(T.density) continue
-				if(T.x>world.maxx || T.x<1)	continue
-				if(T.y>world.maxy || T.y<1)	continue
-				if((T.x-mobloc.x)<9 || ((T.y+mobloc.y+1)-(mobloc.y*2))>2)	continue
-				turfs += T
-		if(WEST)
-			//lowest X
-			//Y the same
-			for(var/turf/T in orange(10))
-				if(T.density) continue
-				if(T.x>world.maxx || T.x<1)	continue
-				if(T.y>world.maxy || T.y<1)	continue
-				if((mobloc.x-T.x)<9 || ((T.y+mobloc.y+1)-(mobloc.y*2))>2)	continue
-				turfs += T
+			loc = picked
+
+			spawn(0)
+				S.spark_system.start()
+				playsound(loc, 'Deconstruct.ogg', 50, 1)
+				playsound(loc, "sparks", 50, 1)
+				anim(loc,'mob.dmi',src,"phasein")
+
+			spawn(0)//Any living mobs in teleport area are gibbed.
+				for(var/mob/living/M in picked)
+					if(M==src)	continue
+					M.gib()
+			S.charge-=(C*10)
 		else
-			return
-	if(!turfs.len)//Cancels the teleportation if no valid turf is found. Usually when teleporting near map edge.
-		src << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
-		return
-	picked = pick(turfs)
-	spawn(0)
-		playsound(src.loc, "sparks", 50, 1)
-		anim(mobloc,'mob.dmi',src,"phaseout")
-
-	src.loc = picked
-
-	spawn(0)
-		src:wear_suit:spark_system.start()
-		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-		playsound(src.loc, "sparks", 50, 1)
-		anim(src.loc,'mob.dmi',src,"phasein")
-
-	spawn(0)//Any living mobs in teleport area are gibbed.
-		for(var/mob/living/M in picked)
-			if(M==src)	continue
-			M.gib()
-	src:wear_suit:charge-=(C*10)
+			src << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
+	return
 
 //Right Click Teleport
 //Right click to teleport somewhere, almost exactly like admin jump to turf.
@@ -379,32 +386,30 @@ Useful for copy pasta since I'm lazy.*/
 	set category = null//So it does not show up on the panel but can still be right-clicked.
 
 	var/C = 200
-	if(!ninjacost(C,1))
-		return
+	if(ninjacost(C,1))
+		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
+		if(!T.density)
+			var/turf/mobloc = get_turf(loc)
+			spawn(0)
+				playsound(loc, 'sparks4.ogg', 50, 1)
+				anim(mobloc,'mob.dmi',src,"phaseout")
 
-	if(T.density)
-		src << "\red You cannot teleport into solid walls."
-		return
+			loc = T
 
-	var/turf/mobloc = get_turf(src.loc)
+			spawn(0)
+				S.spark_system.start()
+				playsound(loc, 'Deconstruct.ogg', 50, 1)
+				playsound(loc, 'sparks2.ogg', 50, 1)
+				anim(loc,'mob.dmi',src,"phasein")
 
-	spawn(0)
-		playsound(src.loc, 'sparks4.ogg', 50, 1)
-		anim(mobloc,'mob.dmi',src,"phaseout")
-
-	src.loc = T
-
-	spawn(0)
-		src:wear_suit:spark_system.start()
-		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-		playsound(src.loc, 'sparks2.ogg', 50, 1)
-		anim(src.loc,'mob.dmi',src,"phasein")
-
-	spawn(0)//Any living mobs in teleport area are gibbed.
-		for(var/mob/living/M in T)
-			if(M==src)	continue
-			M.gib()
-	src:wear_suit:charge-=(C*10)
+			spawn(0)//Any living mobs in teleport area are gibbed.
+				for(var/mob/living/M in T)
+					if(M==src)	continue
+					M.gib()
+			S.charge-=(C*10)
+		else
+			src << "\red You cannot teleport into solid walls."
+	return
 
 //EMP Pulse
 //Disables nearby tech equipment.
@@ -414,13 +419,12 @@ Useful for copy pasta since I'm lazy.*/
 	set category = "Ninja"
 
 	var/C = 250
-	if(!ninjacost(C,1))
-		return
-
-	playsound(src.loc, 'EMPulse.ogg', 60, 2)
-	empulse(src, 4, 6) //Procs sure are nice. Slightly weaker than wizard's disable tch.
-
-	src:wear_suit:charge-=(C*10)
+	if(ninjacost(C,1))
+		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
+		playsound(loc, 'EMPulse.ogg', 60, 2)
+		empulse(src, 4, 6) //Procs sure are nice. Slightly weaker than wizard's disable tch.
+		S.charge-=(C*10)
+	return
 
 //Summon Energy Blade
 //Summons a blade of energy in active hand.
@@ -430,16 +434,17 @@ Useful for copy pasta since I'm lazy.*/
 	set category = "Ninja"
 
 	var/C = 50
-	if(!ninjacost(C))
-		return
-
-	if(!src.get_active_hand()&&!istype(src.get_inactive_hand(), /obj/item/weapon/blade))
-		var/obj/item/weapon/blade/W = new()
-		W.spark_system.start()
-		playsound(src.loc, "sparks", 50, 1)
-		src.put_in_hand(W)
-
-	src:wear_suit:charge-=(C*10)
+	if(ninjacost(C))
+		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
+		if(!get_active_hand()&&!istype(get_inactive_hand(), /obj/item/weapon/blade))
+			var/obj/item/weapon/blade/W = new()
+			W.spark_system.start()
+			playsound(src.loc, "sparks", 50, 1)
+			put_in_hand(W)
+			S.charge-=(C*10)
+		else
+			src << "\red You cannot summon the blade. Try dropping an item first."
+	return
 
 //Shoot Ninja Stars
 //Shoots ninja stars at random people.
@@ -450,31 +455,31 @@ Useful for copy pasta since I'm lazy.*/
 	set category = "Ninja"
 
 	var/C = 30
-	if(!ninjacost(C))
-		return
+	if(ninjacost(C))
+		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
+		var/mob/living/target//The point here is to pick a random, living mob in oview to shoot stuff at.
+		var/targets[]//So yo can shoot while yo throw dawg
+		targets = new()
+		for(var/mob/living/M in oview(7))
+			if(M.stat==2)	continue//Doesn't target corpses.
+			targets.Add(M)
+		if(targets.len)
+			target=pick(targets)
 
-	var/mob/living/target//The point here is to pick a random, living mob in oview to shoot stuff at.
-	var/targets[]//So yo can shoot while yo throw dawg
-	targets = new()
-	for(var/mob/living/M in oview(7))
-		if(M.stat==2)	continue//Doesn't target corpses.
-		targets.Add(M)
-	if(targets.len)
-		target=pick(targets)
-	else
-		return
-	var/turf/curloc = src.loc
-	var/atom/targloc = get_turf(target)
-	if (!targloc || !istype(targloc, /turf) || !curloc)
-		return
-	if (targloc == curloc)
-		return
-	var/obj/bullet/neurodart/A = new /obj/bullet/neurodart(usr.loc)
-	A.current = curloc
-	A.yo = targloc.y - curloc.y
-	A.xo = targloc.x - curloc.x
-	src:wear_suit:charge-=(C*10)
-	A.process()
+			var/turf/curloc = loc
+			var/atom/targloc = get_turf(target)
+			if (!targloc || !istype(targloc, /turf) || !curloc)
+				return
+			if (targloc == curloc)
+				return
+			var/obj/bullet/neurodart/A = new /obj/bullet/neurodart(loc)
+			A.current = curloc
+			A.yo = targloc.y - curloc.y
+			A.xo = targloc.x - curloc.x
+			S.charge-=(C*10)
+			A.process()
+		else
+			src << "\red There are no targets in view."
 	return
 
 //Adrenaline Boost
@@ -485,20 +490,18 @@ Useful for copy pasta since I'm lazy.*/
 	set desc = "Inject a secret chemical that will counteract all movement-impairing effects."
 	set category = "Ninja"
 
-	if(src.stat==2)
-		src << "\red You must be <b>alive</b> to do this."
-		return
-	if(src:wear_suit:aboost<=0)
-		src << "\red You do not have any more adrenaline boosters."
-		return
-
-	src.paralysis = 0
-	src.stunned = 0
-	src.weakened = 0
-	spawn(30)
-		src.say("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!")
-	spawn(70)
-		src.reagents.add_reagent("radium", 20)
-		src << "red You are beginning to feal the after-effects of the injection."
-
-	src:wear_suit:aboost--
+	if(ninjacost(,3))
+		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
+		//Wouldn't need to track adrenaline boosters if there was a miracle injection to get rid of paralysis and the like instantly.
+		//For now, adrenaline boosters ARE the miracle injection. Well, radium, really.
+		paralysis = 0
+		stunned = 0
+		weakened = 0
+		spawn(30)
+			say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
+		spawn(70)
+			S.reagents.reaction(src, 2)
+			S.reagents.trans_id_to(src, "radium", S.amount_per_transfer_from_this)
+			src << "\red You are beginning to feal the after-effects of the injection."
+		S.aboost--
+	return

@@ -166,41 +166,36 @@
 	set desc = "Spits neurotoxin at someone, paralyzing them for a short time."
 	set category = "Alien"
 
-	if(src.stat)
-		src << "\green You must be conscious to do this."
-		return
-	if(istype(target, /mob/living/carbon/alien))
-		src << "\green Your allies are not a valid target."
-		return
-	if(src.toxloss >= 50)
-		src << "\green You spit neurotoxin at [target]."
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << "\red [src] spits neurotoxin at [target]!"
-		src.toxloss -= 50
-		var/turf/T = usr.loc
-		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+	if(powerc(50))
+		if(!isalien(target))
+			toxloss -= 50
+			src << "\green You spit neurotoxin at [target]."
+			for(var/mob/O in oviewers())
+				if ((O.client && !( O.blinded )))
+					O << "\red [src] spits neurotoxin at [target]!"
+			//I'm not motivated enough to revise this. Prjectile code in general needs update.
+			var/turf/T = loc
+			var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 
-		if(!U || !T)
-			return
-		while(U && !istype(U,/turf))
-			U = U.loc
-		if(!istype(T, /turf))
-			return
-		if (U == T)
-			usr.bullet_act(PROJECTILE_DART, src, src.get_organ_target())
-			return
-		if(!istype(U, /turf))
-			return
+			if(!U || !T)
+				return
+			while(U && !istype(U,/turf))
+				U = U.loc
+			if(!istype(T, /turf))
+				return
+			if (U == T)
+				usr.bullet_act(PROJECTILE_DART, src, src.get_organ_target())
+				return
+			if(!istype(U, /turf))
+				return
 
-		var/obj/bullet/neurodart/A = new /obj/bullet/neurodart(usr.loc)
+			var/obj/bullet/neurodart/A = new /obj/bullet/neurodart(usr.loc)
 
-		A.current = U
-		A.yo = U.y - T.y
-		A.xo = U.x - T.x
-
-		A.process()
-
-	else
-		src << "\green Not enough plasma stored."
+			A.current = U
+			A.yo = U.y - T.y
+			A.xo = U.x - T.x
+			//
+			A.process()
+		else
+			src << "\green Your allies are not a valid target."
 	return
