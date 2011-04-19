@@ -34,6 +34,7 @@
 	icon_state = "beacon"
 	item_state = "signaler"
 	var/code = "electronic"
+	origin_tech = "bluespace=1"
 
 /obj/item/device/radio/courtroom_beacon
 	name = "Tracking Beacon"
@@ -99,7 +100,7 @@
 	name = "Robotics Radio Headset"
 	icon_state = "rob_headset"
 	item_state = "headset"
-	channels = list("Engineering" = 1)
+	channels = list("Engineering" = 1, "Science" = 1)
 
 /obj/item/device/radio/headset/headset_med // -- TLE
 	name = "Medical Radio Headset"
@@ -107,17 +108,23 @@
 	item_state = "headset"
 	channels = list("Medical" = 1)
 
-/obj/item/device/radio/headset/headset_com // -- TLE
-	name = "Command Radio Headset"
-	icon_state = "com_headset"
-	item_state = "headset"
-	channels = list("Command" = 1)
-
 /obj/item/device/radio/headset/headset_sci // -- Bar
 	name = "Science Radio Headset"
 	icon_state = "com_headset"
 	item_state = "headset"
 	channels = list("Science" = 1)
+
+/obj/item/device/radio/headset/headset_medsci // -- Micro
+	name = "Medical Research Radio Headset"
+	icon_state = "med_headset"
+	item_state = "headset"
+	channels = list("Medical" = 1, "Science" = 1)
+
+/obj/item/device/radio/headset/headset_com // -- TLE
+	name = "Command Radio Headset"
+	icon_state = "com_headset"
+	item_state = "headset"
+	channels = list("Command" = 1)
 
 /obj/item/device/radio/headset/heads/captain // -- Bar
 	name = "Captain's Headset"
@@ -141,7 +148,7 @@
 	name = "Chief Engineer's Headset"
 	icon_state = "com_headset"
 	item_state = "headset"
-	channels = list("Engineering" = 1, "Command" = 1, "Mining" = 1)
+	channels = list("Engineering" = 1, "Command" = 1)
 
 /obj/item/device/radio/headset/heads/cmo // -- Bar
 	name = "Chief Medical Officer's Headset"
@@ -153,7 +160,7 @@
 	name = "Head of Personnel's Headset"
 	icon_state = "com_headset"
 	item_state = "headset"
-	channels = list("Command" = 1, "Security" = 1, "Cargo" = 1)
+	channels = list("Command" = 1, "Security" = 0, "Cargo" = 1, "Mining" = 0)
 
 /obj/item/device/radio/headset/headset_mine // -- rastaf0
 	name = "Mining Radio Headset"
@@ -171,4 +178,4 @@
 	name = "Quartermaster's Headset"
 	icon_state = "cargo_headset"
 	item_state = "headset"
-	channels = list("Cargo" = 1)
+	channels = list("Cargo" = 1, "Mining" = 1)

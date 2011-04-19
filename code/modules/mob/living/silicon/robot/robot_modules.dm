@@ -154,7 +154,7 @@ obj/item/weapon/robot_module/syndicate
 
 /obj/item/weapon/robot_module/miner/New()
 	..()
-	src.modules += new /obj/item/weapon/pickaxe/radius/jackhammer(src)
+	src.modules += new /obj/item/weapon/pickaxe/jackhammer(src)
 	src.modules += new /obj/item/weapon/shovel(src)
 	src.modules += new /obj/item/weapon/satchel(src)
 	src.modules += new /obj/item/weapon/borg/sight/meson(src)

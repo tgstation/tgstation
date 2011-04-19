@@ -2530,8 +2530,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throwforce = 4.0
 	item_state = "pickaxe"
 	w_class = 4.0
-	m_amt = 3000 //mamking them on par with the require materials to make silver, gold, and diamond picks
+	m_amt = 3000 //making them on par with the require materials to make silver, gold, and diamond picks
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
+
+	hammer
+		name = "Mining Sledge Hammer"
+		desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
 
 	silver
 		name = "Silver Pickaxe"
@@ -2541,6 +2545,22 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		origin_tech = "materials=3"
 		desc = "This makes no metallurgic sense."
 
+	jackhammer
+		name = "Sonic Jackhammer"
+		icon_state = "jackhammer"
+		item_state = "jackhammer"
+		digspeed = 30
+		origin_tech = "materials=3; powerstorage=2"
+		desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
+
+	drill
+		name = "Mining Drill"
+		icon_state = "jackhammer"
+		item_state = "handdrill"
+		digspeed = 30
+		origin_tech = "materials=3; powerstorage=2"
+		desc = "Yours is the drill that will pierce through the rock walls."
+
 	gold
 		name = "Golden Pickaxe"
 		icon_state = "gpickaxe"
@@ -2549,42 +2569,31 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		origin_tech = "materials=4"
 		desc = "This makes no metallurgic sense."
 
+	plasmacutter
+		name = "Plasma Cutter"
+		icon_state = "plasmacutter"
+		icon_state = "gun"
+		w_class = 3.0 //it is smaller than the pickaxe
+		force = 10.0 //Also, weaker
+		digspeed = 20
+		origin_tech = "materials=4; plasmatech=2"
+		desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+
 	diamond
 		name = "Diamond Pickaxe"
 		icon_state = "dpickaxe"
 		item_state = "dpickaxe"
 		digspeed = 10
 		origin_tech = "materials=6"
-		desc = "This makes perfect sense."
+		desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
-	plasmacutter
-		name = "Plasma Cutter"
-		icon_state = "plasmacutter"
-		icon_state = "gun"
+	diamonddrill //When people ask about the badass leader of the mining tools, they are talking about ME!
+		name = "Diamond Mining Drill"
+		icon_state = "jackhammer"
+		item_state = "diamonddrill"
 		digspeed = 0
-		origin_tech = "materials=6; plasmatech=3"
-		desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-
-/obj/item/weapon/pickaxe/radius // For the side project to make radius cutting devices
-
-	hammer
-		name = "Mining Sledge Hammer"
-		desc = "You feel like smashing your boss in the face with this."
-
-	jackhammer
-		name = "Jackhammer"
-		icon_state = "jackhammer"
-		item_state = "jackhammer"
-		digspeed = 30
-		desc = "The perfect weapon to kill space lizard with in the mines, includes bicycle pump."
-
-	drill
-		name = "Turbo Drill"
-		icon_state = "jackhammer"
-		item_state = "handdrill"
-		digspeed = 10
+		origin_tech = "materials=6; powerstorage=4"
 		desc = "Yours is the drill that will pierce the heavens!"
-
 
 /*****************************Shovel********************************/
 

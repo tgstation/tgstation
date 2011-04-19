@@ -907,29 +907,39 @@ datum
 /////////////////Mining//////////////////
 /////////////////////////////////////////
 
-		pick_silver
-			name = "Silver Pickaxe"
-			desc = "This makes no metallurgic sense."
-			id = "pick_silver"
-			req_tech = list("materials" = 3)
+		jackhammer
+			name = "Sonic Jackhammer"
+			desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
+			id = "pick_jackhammer"
+			req_tech = list("materials" = 3, "powerstorage" = 2)
 			build_type = PROTOLATHE
-			materials = list("$silver" = 3000)
+			materials = list("$metal" = 2000, "$glass" = 500, "$silver" = 500)
 			reliability_base = 79
-			build_path = "/obj/item/weapon/pickaxe/silver"
+			build_path = "/obj/item/weapon/pickaxe/jackhammer"
 
-		pick_gold
-			name = "Golden Pickaxe"
-			desc = "This makes no metallurgic sense."
-			id = "pick_gold"
-			req_tech = list("materials" = 4)
+		drill
+			name = "Mining Drill"
+			desc = "Yours is the drill that will pierce through the rock walls."
+			id = "pick_jackhammer"
+			req_tech = list("materials" = 3, "powerstorage" = 2)
 			build_type = PROTOLATHE
-			materials = list("$gold" = 3000)
+			materials = list("$metal" = 6000, "$glass" = 1000) //expensive, but no need for miners.
 			reliability_base = 79
-			build_path = "/obj/item/weapon/pickaxe/gold"
+			build_path = "/obj/item/weapon/pickaxe/drill"
+
+		plasmacutter
+			name = "Plasma Cutter"
+			desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+			id = "pick_plasmacutter"
+			req_tech = list("materials" = 4, "plasmatech" = 2)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 1500, "$glass" = 500, "$gold" = 500, "$plasma" = 500)
+			reliability_base = 79
+			build_path = "/obj/item/weapon/pickaxe/plasmacutter"
 
 		pick_diamond
 			name = "Diamond Pickaxe"
-			desc = "This makes no metallurgic sense."
+			desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 			id = "pick_diamond"
 			req_tech = list("materials" = 6)
 			build_type = PROTOLATHE
@@ -937,9 +947,28 @@ datum
 			reliability_base = 79
 			build_path = "/obj/item/weapon/pickaxe/diamond"
 
+		drill_diamond
+			name = "Diamond Mining Drill"
+			desc = "Yours is the drill that will pierce the heavens!"
+			id = "drill_diamond"
+			req_tech = list("materials" = 6, "powerstorage" = 4)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 3000, "$glass" = 1000, "$diamond" = 3750) //Yes, a whole diamond is needed.
+			reliability_base = 79
+			build_path = "/obj/item/weapon/pickaxe/diamonddrill"
+
 /////////////////////////////////////////
 //////////////Blue Space/////////////////
 /////////////////////////////////////////
+
+		beacon
+			name = "Tracking Beacon"
+			desc = "A blue space tracking beacon."
+			id = "beacon"
+			req_tech = list("bluespace" = 1)
+			build_type = PROTOLATHE
+			materials = list ("$metal" = 20, "$glass" = 10)
+			build_path = "/obj/item/device/radio/beacon"
 
 		bag_holding
 			name = "Bag of Holding"
