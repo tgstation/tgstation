@@ -1,6 +1,6 @@
 /obj/spell/targeted/inflict_handler
 	name = "Inflict Handler"
-	desc = "This spell destroys/damages/heals and/or weakens/stuns the target."
+	desc = "This spell blinds and/or destroys/damages/heals and/or weakens/stuns the target."
 
 	var/amt_weaken = 0
 	var/amt_paralysis = 0 //stun
@@ -10,6 +10,9 @@
 	var/amt_dam_brute = 0
 	var/amt_dam_oxy = 0
 	var/amt_dam_tox = 0
+
+	var/amt_eye_blind = 0
+	var/amt_eye_blurry = 0
 
 	var/destroys = "none" //can be "none", "gib" or "disintegrate"
 
@@ -42,3 +45,6 @@
 		//disabling
 		target.weakened += amt_weaken
 		target.paralysis += amt_paralysis
+
+		target.eye_blind += amt_eye_blind
+		target.eye_blurry += amt_eye_blurry

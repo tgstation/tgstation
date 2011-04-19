@@ -21,12 +21,17 @@
 	var/proj_lifespan = 15 //in deciseconds * proj_step_delay
 	var/proj_step_delay = 1 //lower = faster
 
-/obj/spell/targeted/projectile/cast(list/targets)
+/obj/spell/targeted/projectile/cast(list/targets, mob/user = usr)
 
 	for(var/mob/target in targets)
 		spawn(0)
-			var/projectile_type = text2path(proj_type)
-			var/obj/spell/targeted/projectile = new projectile_type(usr)
+			var/obj/spell/targeted/projectile
+			if(istext(proj_type))
+				var/projectile_type = text2path(proj_type)
+				projectile = new projectile_type(user)
+			if(istype(proj_type,/obj/spell))
+				projectile = new /obj/spell/targeted/trigger(user)
+				projectile:linked_spells += proj_type
 			projectile.icon = proj_icon
 			projectile.icon_state = proj_icon_state
 			projectile.dir = get_dir(target,projectile)

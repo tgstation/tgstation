@@ -17,35 +17,35 @@
 	var/paralysis_amount_caster = 20 //how much the caster is paralysed for after the spell
 	var/paralysis_amount_victim = 20 //how much the victim is paralysed for after the spell
 
-/obj/spell/targeted/mind_transfer/cast(list/targets) //magnets, so mostly hardcoded
+/obj/spell/targeted/mind_transfer/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	if(!targets.len)
-		usr << "No mind found"
+		user << "No mind found"
 		return
 
 	if(targets.len > 1)
-		usr << "Too many minds! You're not a hive damnit!"
+		user << "Too many minds! You're not a hive damnit!"
 		return
 
 	var/mob/target = targets[1]
 
 	if(!target.client || !target.mind)
-		usr << "They appear to be brain-dead."
+		user << "They appear to be brain-dead."
 		return
 
 	if(target.mind.special_role in protected_roles)
-		usr << "Their mind is resisting your spell."
+		user << "Their mind is resisting your spell."
 		return
 
 	if(!target.type in compatible_mobs)
-		usr << "Their mind isn't compatible with yours."
+		user << "Their mind isn't compatible with yours."
 		return
 
 	if(target.stat == 2)
-		usr << "You didn't study necromancy back at the Space Wizard Federation academy."
+		user << "You didn't study necromancy back at the Space Wizard Federation academy."
 		return
 
 	var/mob/victim = target //mostly copypastaed, I have little idea how this works
-	var/mob/caster = usr
+	var/mob/caster = user
 	//losing spells
 
 	if(usr.spell_list.len)

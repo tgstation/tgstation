@@ -5,14 +5,14 @@
 	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
 	var/invocation_area = 1 //if the invocation appends the selected area
 
-/obj/spell/targeted/area_teleport/perform(list/targets)
+/obj/spell/targeted/area_teleport/perform(list/targets, recharge = 1)
 	var/thearea = before_cast(targets)
 	if(!thearea)
 		revert_cast()
 		return
 	invocation(thearea)
 	spawn(0)
-		if(charge_type == "recharge")
+		if(charge_type == "recharge" && recharge)
 			start_recharge()
 	cast(targets,thearea)
 	after_cast(targets)

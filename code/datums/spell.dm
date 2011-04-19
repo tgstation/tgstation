@@ -28,7 +28,7 @@ var/list/spells = typesof(/obj/spell) //needed for the badmin verb for now
 	var/smoke_spread = 0 //1 - harmless, 2 - harmful
 	var/smoke_amt = 0 //cropped at 10
 
-/obj/spell/proc/cast_check() //checks if the spell can be cast based on its settings
+/obj/spell/proc/cast_check(mob/user = usr) //checks if the spell can be cast based on its settings
 
 	if(!(src in usr.spell_list))
 		usr << "\red You shouldn't have this spell! Something's wrong."
@@ -67,7 +67,7 @@ var/list/spells = typesof(/obj/spell) //needed for the badmin verb for now
 
 	return 1
 
-/obj/spell/proc/invocation() //spelling the spell out and setting it on recharge/reducing charges amount
+/obj/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 
 	switch(invocation_type)
 		if("shout")
@@ -92,7 +92,7 @@ var/list/spells = typesof(/obj/spell) //needed for the badmin verb for now
 
 	choose_targets()
 
-/obj/spell/proc/choose_targets() //depends on subtype - /targeted or /aoe_turf
+/obj/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
 /obj/spell/proc/start_recharge()
@@ -100,11 +100,11 @@ var/list/spells = typesof(/obj/spell) //needed for the badmin verb for now
 		sleep(1)
 		charge_counter++
 
-/obj/spell/proc/perform(list/targets)
+/obj/spell/proc/perform(list/targets, recharge = 1) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation()
 	spawn(0)
-		if(charge_type == "recharge")
+		if(charge_type == "recharge" && recharge)
 			start_recharge()
 	cast(targets)
 	after_cast(targets)
@@ -164,31 +164,31 @@ var/list/spells = typesof(/obj/spell) //needed for the badmin verb for now
 /obj/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
 	var/max_targets = 1 //leave 0 for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
 	var/target_ignore_prev = 1 //only important if max_targets > 1, affects if the spell can be cast multiple times at one person from one cast
-	var/include_usr = 0 //if it includes usr in the target list
+	var/include_user = 0 //if it includes usr in the target list
 
 /obj/spell/aoe_turf //affects all turfs in view or range (depends)
 	var/inner_radius = -1 //for all your ring spell needs
 
-/obj/spell/targeted/choose_targets()
+/obj/spell/targeted/choose_targets(mob/user = usr)
 	var/list/targets = list()
 
 	switch(selection_type)
 		if("range")
 			switch(max_targets)
 				if(0)
-					for(var/mob/target in range(usr,range))
+					for(var/mob/target in range(user,range))
 						targets += target
 				if(1)
 					if(range < 0)
-						targets += usr
+						targets += user
 					else
-						var/possible_targets = range(usr,range)
-						if(!include_usr && usr in possible_targets)
-							possible_targets -= usr
+						var/possible_targets = range(user,range)
+						if(!include_user && user in possible_targets)
+							possible_targets -= user
 						targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
 				else
 					var/list/possible_targets = list()
-					for(var/mob/target in range(usr,range))
+					for(var/mob/target in range(user,range))
 						possible_targets += target
 					for(var/i=1,i<=max_targets,i++)
 						if(!possible_targets.len)
@@ -202,15 +202,15 @@ var/list/spells = typesof(/obj/spell) //needed for the badmin verb for now
 		if("view")
 			switch(max_targets)
 				if(0)
-					for(var/mob/target in view(usr,range))
+					for(var/mob/target in view(user,range))
 						targets += target
 				if(1)
 					if(range < 0)
-						targets += usr
+						targets += user
 					else
-						var/possible_targets = view(usr,range)
-						if(!include_usr && usr in possible_targets)
-							possible_targets -= usr
+						var/possible_targets = view(user,range)
+						if(!include_user && user in possible_targets)
+							possible_targets -= user
 						targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
 				else
 					var/list/possible_targets = list()
@@ -226,8 +226,8 @@ var/list/spells = typesof(/obj/spell) //needed for the badmin verb for now
 						else
 							targets += pick(possible_targets)
 
-	if(!include_usr && (usr in targets))
-		targets -= usr
+	if(!include_user && (user in targets))
+		targets -= user
 
 	if(!targets.len) //doesn't waste the spell
 		revert_cast()
@@ -237,17 +237,17 @@ var/list/spells = typesof(/obj/spell) //needed for the badmin verb for now
 
 	return
 
-/obj/spell/aoe_turf/choose_targets()
+/obj/spell/aoe_turf/choose_targets(mob/user = usr)
 	var/list/targets = list()
 
 	switch(selection_type)
 		if("range")
-			for(var/turf/target in range(usr,range))
-				if(!(target in range(usr,inner_radius)))
+			for(var/turf/target in range(user,range))
+				if(!(target in range(user,inner_radius)))
 					targets += target
 		if("view")
-			for(var/turf/target in view(usr,range))
-				if(!(target in view(usr,inner_radius)))
+			for(var/turf/target in view(user,range))
+				if(!(target in view(user,inner_radius)))
 					targets += target
 
 	if(!targets.len) //doesn't waste the spell

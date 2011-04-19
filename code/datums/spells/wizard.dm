@@ -1,24 +1,3 @@
-/obj/spell/targeted/projectile/fireball
-	name = "Fireball"
-	desc = "This spell fires a fireball at a target and does not require wizard garb."
-
-	school = "evocation"
-	charge_max = 200
-	clothes_req = 0
-	invocation = "ONI SOMA"
-	invocation_type = "shout"
-
-	proj_icon_state = "fireball"
-	proj_name = "a fireball"
-	proj_lingering = 1
-	proj_type = "/obj/spell/targeted/explosion/fireball"
-
-/obj/spell/targeted/explosion/fireball
-	ex_severe = -1
-	ex_heavy = -1
-	ex_light = 3
-	ex_flash = 5
-
 /obj/spell/targeted/projectile/magic_missile
 	name = "Magic Missile"
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
@@ -48,20 +27,6 @@
 	amt_weaken = 5
 	amt_dam_fire = 10
 
-/obj/spell/targeted/genetic/blind //doesn't work properly
-	name = "Blind"
-	desc = "This spell temporarily blinds a single person and does not require wizard garb."
-
-	school = "transmutation"
-	charge_max = 300
-	clothes_req = 0
-	invocation = "STI KALY"
-	invocation_type = "whisper"
-	message = "\blue Your eyes cry out in pain!"
-
-	disabilities = 1
-	duration = 300
-
 /obj/spell/targeted/genetic/mutate
 	name = "Mutate"
 	desc = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
@@ -73,7 +38,7 @@
 	invocation_type = "shout"
 	message = "\blue You feel strong! Your mind expands!"
 	range = -1
-	include_usr = 1
+	include_user = 1
 
 	mutations = 9
 	duration = 300
@@ -104,7 +69,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	include_usr = 1
+	include_user = 1
 
 	smoke_spread = 2
 	smoke_amt = 10
@@ -117,7 +82,7 @@
 	invocation = "NEC CANTIO"
 	invocation_type = "shout"
 	range = -1
-	include_usr = 1
+	include_user = 1
 
 	emp_heavy = 5
 	emp_light = 7
@@ -132,7 +97,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	include_usr = 1
+	include_user = 1
 
 	smoke_spread = 1
 	smoke_amt = 10
@@ -150,7 +115,7 @@
 	invocation = "SCYAR NILA"
 	invocation_type = "shout"
 	range = -1
-	include_usr = 1
+	include_user = 1
 
 	smoke_spread = 1
 	smoke_amt = 5
@@ -181,3 +146,55 @@
 	range = 1
 
 	summon_type = list("/obj/livestock/spesscarp/elite")
+
+/obj/spell/targeted/trigger/blind
+	name = "Blind"
+	desc = "This spell temporarily blinds a single person and does not require wizard garb."
+
+	school = "transmutation"
+	charge_max = 300
+	clothes_req = 0
+	invocation = "STI KALY"
+	invocation_type = "whisper"
+	message = "\blue Your eyes cry out in pain!"
+
+	starting_spells = list("/obj/spell/targeted/inflict_handler/blind","/obj/spell/targeted/genetic/blind")
+
+/obj/spell/targeted/inflict_handler/blind
+	amt_eye_blind = 10
+	amt_eye_blurry = 20
+
+/obj/spell/targeted/genetic/blind
+	disabilities = 1
+	duration = 300
+
+/obj/spell/targeted/projectile/fireball
+	name = "Fireball"
+	desc = "This spell fires a fireball at a target and does not require wizard garb."
+
+	school = "evocation"
+	charge_max = 200
+	clothes_req = 0
+	invocation = "ONI SOMA"
+	invocation_type = "shout"
+
+	proj_icon_state = "fireball"
+	proj_name = "a fireball"
+	proj_lingering = 1
+	proj_type = "/obj/spell/targeted/trigger/fireball"
+
+	proj_lifespan = 200
+	proj_step_delay = 1
+
+/obj/spell/targeted/trigger/fireball
+	starting_spells = list("/obj/spell/targeted/inflict_handler/fireball","/obj/spell/targeted/explosion/fireball")
+
+/obj/spell/targeted/inflict_handler/fireball
+	amt_dam_brute = 20
+	amt_dam_fire = 25
+
+/obj/spell/targeted/explosion/fireball
+	ex_severe = -1
+	ex_heavy = -1
+	ex_light = 2
+	ex_flash = 5

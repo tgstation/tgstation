@@ -409,7 +409,7 @@
 								usr.spell_list += new /obj/spell/targeted/smoke(usr)
 								src.temp = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
 							if ("6")
-								usr.spell_list += new /obj/spell/targeted/genetic/blind(usr)
+								usr.spell_list += new /obj/spell/targeted/trigger/blind(usr)
 								src.temp = "This spell temporarly blinds a single person and does not require wizard garb."
 							if ("7")
 								usr.spell_list += new /obj/spell/targeted/mind_transfer(usr)

@@ -8,7 +8,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	include_usr = 1
+	include_user = 1
 
 	var/jaunt_duration = 50 //in deciseconds
 
