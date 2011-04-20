@@ -22,11 +22,13 @@
 		//Little sanity check here
 		if ((isnull(temp_paths)) || (isnull(temp_amounts)) || (temp_paths.len != temp_amounts.len) || (temp_hidden.len != temp_hideamt.len))
 			stat |= BROKEN
+			power_change()
 			return
 
 		src.build_inventory(temp_paths,temp_amounts)
 		 //Add hidden inventory
 		src.build_inventory(temp_hidden,temp_hideamt, 1)
+		power_change()
 		return
 
 	return

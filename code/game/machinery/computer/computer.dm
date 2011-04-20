@@ -6,6 +6,10 @@ ID Computer
 Pod/Blast Doors computer
 */
 
+/obj/machinery/computer/New()
+	..()
+	spawn(2)
+		power_change()
 
 /obj/machinery/computer/meteorhit(var/obj/O as obj)
 	for(var/x in src.verbs)
