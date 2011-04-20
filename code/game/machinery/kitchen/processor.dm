@@ -1,3 +1,19 @@
+
+/obj/machinery/processor
+	name = "Food Processor"
+	icon = 'kitchen.dmi'
+	icon_state = "processor"
+	layer = 2.9
+	density = 1
+	anchored = 1
+	var/broken = 0
+	var/processing = 0
+	use_power = 1
+	idle_power_usage = 5
+	active_power_usage = 50
+
+
+
 /datum/food_processor_process
 	var/input
 	var/output
@@ -122,12 +138,11 @@
 			"You turn on \a [src].", \
 			"You hear a food processor")
 		playsound(src.loc, 'blender.ogg', 50, 1)
-		use_power(50)
+		use_power(500)
 		sleep(P.time)
 		P.process(src.loc, O)
 		src.processing = 0
 	src.visible_message("\blue \the [src] finished processing.", \
 		"You hear food processor stops")
-
 
 

@@ -1054,7 +1054,7 @@ datum
 				return
 
 		imidazoline
-			name = "imidazoline"
+			name = "Imidazoline"
 			id = "imidazoline"
 			description = "Heals eye damage"
 			reagent_state = LIQUID
@@ -1516,7 +1516,7 @@ datum
 				return
 
 		banana
-			name = "Essence of Banana"
+			name = "Banana Juice"
 			id = "banana"
 			description = "The raw essence of a banana. HONK"
 			nutriment_factor = 1 * REAGENTS_METABOLISM
@@ -1951,6 +1951,26 @@ datum
 				..()
 				return
 
+		carrotjuice
+			name = "Carrot juice"
+			id = "carrotjuice"
+			description = "It is just like a carrot but without crunching."
+			reagent_state = LIQUID
+			nutriment_factor = 0.3 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:eye_blurry = max(M:eye_blurry-1 , 0)
+				M:eye_blind = max(M:eye_blind-1 , 0)
+				if(!data) data = 1
+				switch(data)
+					if(1 to 20)
+						//nothing
+					if(21 to INFINITY)
+						if (prob(data-10))
+							M:disabilities &= ~1
+				data++
+				..()
+				return
 
 		kahlua
 			name = "Kahlua"
@@ -2494,5 +2514,24 @@ datum
 					M.stuttering += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
+				return
+
+		bahama_mama
+			name = "Bahama mama"
+			id = "bahama_mama"
+			description = "Tropic cocktail."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=3
+				if(data >= 55 && data <165)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+2,0)
+				if (M.bodytemperature > 310)
+					M.bodytemperature = max(310, M.bodytemperature-5)
 				..()
 				return

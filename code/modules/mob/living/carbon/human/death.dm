@@ -42,8 +42,7 @@
 	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-		if(client)
-			sql_report_death(src)
+	sql_report_death(src)
 	//src.icon_state = "dead"
 
 	ticker.mode.check_win()

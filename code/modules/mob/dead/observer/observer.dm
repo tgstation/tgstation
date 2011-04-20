@@ -19,9 +19,12 @@
 	/*if(src.stat != 2) //this check causes nothing but troubles. Commented out for Nar-Sie's sake. --rastaf0
 		src << "Only dead people and admins get to ghost, and admins don't use this verb to ghost while alive."
 		return*/
-	if(src.client)
-		src.client.mob = new/mob/dead/observer(src)
+	if(src.key)
+		var/mob/dead/observer/ghost = new(src)
+		ghost.key = src.key
 		src.verbs -= /mob/proc/ghostize
+		if (ghost.client)
+			ghost.client.eye = ghost
 	return
 
 /mob/proc/adminghostize()

@@ -509,8 +509,8 @@ datum
 			name = "Soy Sauce"
 			id = "soysauce"
 			result = "soysauce"
-			required_reagents = list("soymilk" = 1, "acid" = 1)
-			result_amount = 2
+			required_reagents = list("soymilk" = 4, "acid" = 1)
+			result_amount = 5
 
 		cheesewheel
 			name = "Cheesewheel"
@@ -750,4 +750,11 @@ datum
 			id = "ginfizz"
 			result = "ginfizz"
 			required_reagents = list("gin" = 2, "sodawater" = 1, "limejuice" = 1)
+			result_amount = 5
+
+		bahama_mama
+			name = "Bahama mama"
+			id = "bahama_mama"
+			result = "bahama_mama"
+			required_reagents = list("rum" = 2, "orangejuice" = 2, "limejuice" = 1, "ice" = 1)
 			result_amount = 5

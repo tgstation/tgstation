@@ -2474,8 +2474,20 @@
 					desc = "White and nutritious soy goodness!"
 				if("berryjuice")
 					icon_state = "berryjuice"
-					name = "Glass berry joice"
+					name = "Glass of berry juice"
 					desc = "Berry juice. Or maybe its jam. Who cares?"
+				if("carrotjuice")
+					icon_state = "carrotjuice"
+					name = "Glass of  carrot juice"
+					desc = "It is just like a carrot but without crunching."
+				if("banana")
+					icon_state = "banana"
+					name = "Glass of banana juice"
+					desc = "The raw essence of a banana. HONK"
+				if("bahama_mama")
+					icon_state = "bahama_mama"
+					name = "Bahama Mama"
+					desc = "Tropic cocktail"
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"

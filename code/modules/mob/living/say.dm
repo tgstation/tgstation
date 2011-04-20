@@ -255,8 +255,8 @@
 			if (get_turf(M) in V) //this is slow, but I don't think we'd have a lot of wardrobewhores every round --rastaf0
 				listening+=M
 		else
-			if (M.ghost_ears && !(M in listening))
-				listening+=M
+			if (M.client && M.client.ghost_ears)
+				listening|=M
 
 	for (var/obj/O in ((V | src.contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 		spawn (0)

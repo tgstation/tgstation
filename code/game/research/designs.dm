@@ -118,7 +118,7 @@ datum
 			req_tech = list("programming" = 2, "biotech" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/machinery/scan_consolenew"
+			build_path = "/obj/item/weapon/circuitboard/scan_consolenew"
 
 		comconsole
 			name = "Circuit Design (Communications)"

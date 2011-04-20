@@ -29,8 +29,8 @@
 			log_game("Rebooting because of no live players")
 			world.Reboot()
 			return
-	if (src.client)
+	if (src.key)
 		spawn(50)
-			if(src.client && src.stat == 2)
+			if(src.key && src.stat == 2)
 				src.verbs += /mob/proc/ghostize
 	return ..(gibbed)

@@ -443,14 +443,14 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000
-
+/*
 /obj/machinery/wire
 	name = "wire"
 	icon = 'power_cond.dmi'
 	use_power = 1
 	idle_power_usage = 0
 	active_power_usage = 1
-
+*/
 /obj/machinery/power
 	name = null
 	icon = 'power.dmi'
@@ -585,48 +585,6 @@
 	var/area/area = null
 	var/otherarea = null
 	var/id = 1
-
-/obj/machinery/microwave
-	name = "Microwave"
-	icon = 'kitchen.dmi'
-	icon_state = "mw"
-	layer = 2.9
-	density = 1
-	anchored = 1
-	use_power = 1
-	idle_power_usage = 5
-	active_power_usage = 100
-	flags = OPENCONTAINER | NOREACT
-
-
-/obj/machinery/processor
-	name = "Food Processor"
-	icon = 'kitchen.dmi'
-	icon_state = "processor"
-	layer = 2.9
-	density = 1
-	anchored = 1
-	var/broken = 0
-	var/processing = 0
-	use_power = 1
-	idle_power_usage = 5
-	active_power_usage = 50
-
-
-/obj/machinery/gibber
-	name = "Gibber"
-	desc = "The name isn't descriptive enough?"
-	icon = 'kitchen.dmi'
-	icon_state = "grinder"
-	density = 1
-	anchored = 1
-	var/operating = 0 //Is it on?
-	var/dirty = 0 // Does it need cleaning?
-	var/gibtime = 40 // Time from starting until meat appears
-	var/mob/occupant // Mob who has been put inside
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 50
 
 /obj/machinery/holopad
 	name = "holopad"

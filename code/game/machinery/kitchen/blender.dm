@@ -78,28 +78,27 @@ the blender or the processor: Processor items are solid objects and Blender resu
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(src.processing)
-		usr << "The blender is in the process of blending."
-	else if(!src.container)
-		usr << "The blender doesn't have an attached container!"
-	else
-		playsound(src.loc, 'blender.ogg', 50, 1)
-		src.processing = 1
-		usr << "You turn on the blender."
-		use_power(50)
-		for(var/obj/O in src.contents)
-			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/berries))
-				src.reagents.add_reagent("berryjuice", 5)
-			else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans))
-				src.reagents.add_reagent("soymilk", 5)
-			else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/tomato))
-				src.reagents.add_reagent("ketchup", 5)
-			else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/corn))
-				src.reagents.add_reagent("cornoil", 5)
-			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))	//This is intentionally not an "else if"
-				O.reagents.trans_to(src, O.reagents.total_volume)			//Think of it as the "pulp" leftover.
-				del(O)
-		src.processing = 0
-		usr << "The contents of the blender have been blended."
+		usr << "\red The blender is in the process of blending."
+		return
+	if(!src.container)
+		usr << "\red The blender doesn't have an attached container!"
+		return
+	playsound(src.loc, 'blender.ogg', 50, 1)
+	src.processing = 1
+	usr << "\blue You turn on the blender."
+	use_power(250)
+	for(var/obj/O in src.contents)
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans))
+			src.reagents.add_reagent("soymilk", 5)
+		else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/tomato))
+			src.reagents.add_reagent("ketchup", 5)
+		else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/corn))
+			src.reagents.add_reagent("cornoil", 5)
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))	//This is intentionally not an "else if"
+			O.reagents.trans_to(src, O.reagents.total_volume)			//Think of it as the "pulp" leftover.
+			del(O)
+	src.processing = 0
+	usr << "The contents of the blender have been blended."
 	return
 
 /obj/machinery/blender/verb/detach()		//Transfers the contents of the Blender to the Blender Jug and then ejects the jug.

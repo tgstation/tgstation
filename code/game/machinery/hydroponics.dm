@@ -678,7 +678,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				new item(user.loc)
 				t_amount++
 			else
-				var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new item(user.loc) // User gets a consumable
+				var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new item(user.loc, src.myseed.potency) // User gets a consumable
 				t_prod.seed = src.myseed.mypath
 				t_prod.species = src.myseed.species
 				t_prod.lifespan = src.myseed.lifespan
@@ -688,13 +688,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				t_prod.yield = src.myseed.yield
 				t_prod.potency = src.myseed.potency
 				t_prod.plant_type = src.myseed.plant_type
-				if(src.myseed.species == "amanita" || src.myseed.species == "angel")
-					t_prod.poison_amt = round(src.myseed.potency * 0.4, 1) // Potency translates to poison amount
-					t_prod.drug_amt = round(src.myseed.potency / 25, 1) // Small trip
-				else if(src.myseed.species == "liberty")
-					t_prod.drug_amt = round(src.myseed.potency / 5, 1) // TRIP TIME
-				else if(src.myseed.species == "chili" || src.myseed.species == "chiliice")
-					t_prod.heat_amt = src.myseed.potency // BRING ON THE HEAT //BUG: heat_amt not used at all
 				t_amount++
 		src.harvest = 0
 		src.lastproduce = src.age

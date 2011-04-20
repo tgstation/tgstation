@@ -29,9 +29,9 @@
 	//			world << "Bomb has ignited?"
 				A.part4.ignite()
 
-		if (src.client)
+		if (src.key)
 			spawn(10)
-				if(src.client && src.stat == 2)
+				if(src.key && src.stat == 2)
 					src.verbs += /mob/proc/ghostize
 
 	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch

@@ -62,6 +62,7 @@
 	maturation = 5
 	production = 5
 	yield = 2
+	potency = 10
 	plant_type = 0
 	growthstages = 6
 
@@ -107,6 +108,7 @@
 	maturation = 8
 	production = 6
 	yield = 2
+	potency = 10
 	plant_type = 0
 	growthstages = 6
 
@@ -221,7 +223,7 @@
 	maturation = 10
 	production = 1
 	yield = 4
-	potency = 0
+	potency = 10
 	oneharvest = 1
 	plant_type = 0
 	growthstages = 5
@@ -460,10 +462,9 @@
 	var/potency = -1
 	var/plant_type = 0
 	icon = 'harvest.dmi'
-	var/poison_amt = 0
-	var/drug_amt = 0
-	var/heat_amt = 0
-	New()
+	New(newloc,newpotency)
+		if (!isnull(newpotency))
+			potency = newpotency
 		..()
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
@@ -485,11 +486,6 @@
 		user << "- Production speed: \blue [production]"
 		user << "- Endurance: \blue [endurance]"
 		user << "- Healing properties: \blue [reagents.get_reagent_amount("nutriment")]"
-		user << "- Amatoxins: \blue [poison_amt]%"
-		user << "- Psilocybin: \blue [drug_amt]%"
-		user << "- Capsaicin: \blue [heat_amt]%"
-		user << ""
-
 		return
 
 /obj/item/weapon/grown/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -554,6 +550,7 @@
 	name = "Berries"
 	desc = "Nutritious!"
 	icon_state = "berrypile"
+	potency = 10
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
@@ -566,8 +563,13 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		reagents.add_reagent("capsaicin", max(round(heat_amt / 5, 1), 4))
+		reagents.add_reagent("capsaicin", max(round(potency / 5, 1), 4))
 		bitesize = max(round(reagents.total_volume / 2, 1), 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/chili/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	. = ..()
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "- Capsaicin: \blue [reagents.get_reagent_amount("capsaicin")]%"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	seed = "/obj/item/seeds/eggplantseed"
@@ -592,6 +594,7 @@
 	name = "Tomato"
 	desc = "Tom-mae-to or to-mah-to? You decide."
 	icon_state = "tomato"
+	potency = 10
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
@@ -614,18 +617,24 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		reagents.add_reagent("frostoil", max(round(heat_amt / 5, 1), 4))
+		reagents.add_reagent("frostoil", max(round(potency / 5, 1), 4))
 		bitesize = max(round(reagents.total_volume / 2, 1), 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	. = ..()
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "- Frostoil: \blue [reagents.get_reagent_amount("frostoil")]%"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
 	seed = "/obj/item/seeds/carrotseed"
 	name = "Carrot"
 	desc = "Good for the eyes!"
 	icon_state = "carrot"
+	potency = 10
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		reagents.add_reagent("imidazoline", 2)
+		reagents.add_reagent("imidazoline", max(round(potency / 5, 1), 4))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = "/obj/item/seeds/amanitamycelium"
@@ -636,9 +645,15 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		reagents.add_reagent("amatoxin", max(poison_amt, 4))
-		reagents.add_reagent("psilocybin", max(drug_amt, 1))
+		reagents.add_reagent("amatoxin", max(round(potency * 0.4, 1), 4))
+		reagents.add_reagent("psilocybin", max(round(potency / 25, 1), 1))
 		bitesize = max(round(reagents.total_volume / 2, 1), 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	. = ..()
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "- Amatoxins: \blue [reagents.get_reagent_amount("amatoxin")]%"
+		user << "- Psilocybin: \blue [reagents.get_reagent_amount("psilocybin")]%"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
 	seed = "/obj/item/seeds/angelmycelium"
@@ -649,9 +664,15 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		reagents.add_reagent("amatoxin", max(poison_amt, 14))
-		reagents.add_reagent("psilocybin", max(drug_amt, 1))
+		reagents.add_reagent("amatoxin", max(round(potency * 0.4, 1), 14))
+		reagents.add_reagent("psilocybin", max(round(potency / 25, 1), 1))
 		bitesize = max(round(reagents.total_volume / 2, 1), 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	. = ..()
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "- Amatoxins: \blue [reagents.get_reagent_amount("amatoxin")]%"
+		user << "- Psilocybin: \blue [reagents.get_reagent_amount("psilocybin")]%"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
 	seed = "/obj/item/seeds/libertymycelium"
@@ -662,8 +683,13 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-		reagents.add_reagent("psilocybin", max(drug_amt, 4))
+		reagents.add_reagent("psilocybin", max(round(potency / 5, 1), 4))
 		bitesize = max(round(reagents.total_volume / 2), 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	. = ..()
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "- Psilocybin: \blue [reagents.get_reagent_amount("psilocybin")]%"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	seed = "/obj/item/seeds/plumpmycelium"

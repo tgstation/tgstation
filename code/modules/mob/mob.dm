@@ -1356,16 +1356,16 @@
 		src << browse('changelog.html', "window=changes;size=675x650")
 		src.client.changes = 1
 
-/mob/var/ghost_ears = 1
-/mob/verb/toggle_ghost_ears()
+/client/var/ghost_ears = 1
+/client/verb/toggle_ghost_ears()
 	set name = "Ghost ears"
 	set category = "OOC"
 	set desc = "Hear talks from everywhere"
 	src.ghost_ears = !src.ghost_ears
 	if (ghost_ears)
-		usr << "Now you hear all speech in world"
+		usr << "\blue Now you hear all speech in the world"
 	else
-		usr << "Now you hear speech only from nearest creatures."
+		usr << "\blue Now you hear speech only from nearest creatures."
 
 /mob/verb/observe()
 	set name = "Observe"

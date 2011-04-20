@@ -80,7 +80,7 @@
 			if(!newname)
 				return
 			else
-				src.setname(newname)
+				src.setname(sanitize(newname))
 		else
 			..()
 	attack_hand(var/mob/user as mob)
@@ -189,7 +189,7 @@
 					if(!title)
 						return
 					else
-						src.name = title
+						src.name = sanitize(title)
 				else if("Contents")
 					var/content = strip_html(input("Write your book's contents (HTML NOT allowed):"),8192) as message|null
 					if(!content)
@@ -201,7 +201,7 @@
 					if(!nauthor)
 						return
 					else
-						src.author = nauthor
+						src.author = sanitize(nauthor)
 				else
 					return
 		else if(istype(W, /obj/item/weapon/barcodescanner))
@@ -362,7 +362,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["settitle"])
 		var/newtitle = input("Enter a title to search for:") as text|null
 		if(newtitle)
-			title = newtitle
+			title = sanitize(newtitle)
 		else
 			title = null
 		title = dd_replacetext(title, "'", "''")
@@ -375,7 +375,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["setauthor"])
 		var/newauthor = input("Enter an author to search for:") as text|null
 		if(newauthor)
-			author = newauthor
+			author = sanitize(newauthor)
 		else
 			author = null
 		author = dd_replacetext(author, "'", "''")
@@ -570,8 +570,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		buffer_mob = input("Enter the recipient's name:") as text|null
 	if(href_list["checkout"])
 		var/datum/borrowbook/b = new /datum/borrowbook
-		b.bookname = buffer_book
-		b.mobname = buffer_mob
+		b.bookname = sanitize(buffer_book)
+		b.mobname = sanitize(buffer_mob)
 		b.getdate = world.time
 		b.duedate = world.time + (checkoutperiod * 600)
 		checkouts.Add(b)
@@ -584,7 +584,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["setauthor"])
 		var/newauthor = input("Enter the author's name: ") as text|null
 		if(newauthor)
-			scanner.cache.author = newauthor
+			scanner.cache.author = sanitize(newauthor)
 	if(href_list["setcategory"])
 		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
 		if(newcategory)

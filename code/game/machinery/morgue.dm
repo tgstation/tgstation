@@ -268,10 +268,8 @@
 				for (var/obj/item/W in M)
 					if (prob(10))
 						W.loc = src
-				if (M.client)
-					var/mob/dead/observer/newmob = new(M)
-					M.client.mob = newmob
-					newmob.client.eye = newmob // Hrm
+				M.death(1)
+				M.ghostize()
 				del(M)
 				cremating = 0
 				locked = 0

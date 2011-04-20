@@ -1,35 +1,47 @@
 
+/obj/machinery/microwave
+	name = "Microwave"
+	icon = 'kitchen.dmi'
+	icon_state = "mw"
+	layer = 2.9
+	density = 1
+	anchored = 1
+	use_power = 1
+	idle_power_usage = 5
+	active_power_usage = 100
+	flags = OPENCONTAINER | NOREACT
+	var/operating = 0 // Is it on?
+	var/dirty = 0 // = {0..100} Does it need cleaning?
+	var/broken = 0 // ={0,1,2} How broken is it???
+	var/global/list/datum/recipe/available_recipes // List of the recipes you can use
+	var/global/list/acceptable_items // List of the items you can put in
+	var/global/list/acceptable_reagents // List of the reagents you can put in
+	var/global/max_n_of_items = 0
+
+
 // see code/modules/food/recipes_microwave.dm for recipes
 
 /*******************
 *   Initialising
 ********************/
-/obj/machinery/microwave
-	var/operating = 0 // Is it on?
-	var/dirty = 0 // = {0..100} Does it need cleaning?
-	var/broken = 0 // ={0,1,2} How broken is it???
-	var/list/datum/recipe/available_recipes // List of the recipes you can use
-	var/list/acceptable_items // List of the items you can put in
-	var/list/acceptable_reagents // List of the reagents you can put in
-	var/max_n_of_items = 0
 
 /obj/machinery/microwave/New()
 	//..() //do not need this
 	reagents = new/datum/reagents(100)
 	reagents.my_atom = src
-	available_recipes = new
-	for (var/type in (typesof(/datum/recipe)-/datum/recipe))
-		available_recipes+= new type
-	acceptable_items = new
-	acceptable_reagents = new
-	for (var/datum/recipe/recipe in available_recipes)
-		for (var/item in recipe.items)
-			//if (!(item in acceptable_items))
-			acceptable_items |= item
-		for (var/reagent in recipe.reagents)
-			acceptable_reagents |= reagent
-		if (recipe.items)
-			max_n_of_items = max(max_n_of_items,recipe.items.len)
+	if (!available_recipes)
+		available_recipes = new
+		for (var/type in (typesof(/datum/recipe)-/datum/recipe))
+			available_recipes+= new type
+		acceptable_items = new
+		acceptable_reagents = new
+		for (var/datum/recipe/recipe in available_recipes)
+			for (var/item in recipe.items)
+				acceptable_items |= item
+			for (var/reagent in recipe.reagents)
+				acceptable_reagents |= reagent
+			if (recipe.items)
+				max_n_of_items = max(max_n_of_items,recipe.items.len)
 
 /*******************
 *   Item Adding
@@ -103,12 +115,11 @@
 	        istype(O,/obj/item/weapon/reagent_containers/food/drinks) || \
 	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) \
 		)
-		var/obj/item/weapon/reagent_containers/glass/G = O
-		if (!G.reagents)
+		if (!O.reagents)
 			return 1
-		for (var/datum/reagent/R in G.reagents.reagent_list)
+		for (var/datum/reagent/R in O.reagents.reagent_list)
 			if (!(R.id in acceptable_reagents))
-				user << "\red Your [G] contains components unsuitable for cookery."
+				user << "\red Your [O] contains components unsuitable for cookery."
 				return 1
 		//G.reagents.trans_to(src,G.amount_per_transfer_from_this)
 	else if(istype(O,/obj/item/weapon/grab))
@@ -192,7 +203,7 @@
 			dat = {"<b>Ingredients:</b><br>[dat]"}
 		dat += {"<HR><BR>\
 <A href='?src=\ref[src];action=cook'>Turn on!<BR>\
-<A href='?src=\ref[src];action=dispose'>Dispose contents!<BR>\
+<A href='?src=\ref[src];action=dispose'>Eject ingredients!<BR>\
 "}
 
 	user << browse("<HEAD><TITLE>Microwave Controls</TITLE></HEAD><TT>[dat]</TT>", "window=microwave")
@@ -206,6 +217,8 @@
 ************************************/
 
 /obj/machinery/microwave/proc/cook()
+	if(stat & (NOPOWER|BROKEN))
+		return
 	start()
 	if (reagents.total_volume==0 && !(locate(/obj) in contents)) //dry run
 		if (!wzhzhzh(10))
@@ -295,9 +308,12 @@
 
 /obj/machinery/microwave/proc/dispose()
 	for (var/obj/O in contents)
-		del(O)
+		O.loc = src.loc
+	if (src.reagents.total_volume)
+		src.dirty++
 	src.reagents.clear_reagents()
 	usr << "\blue You dispose of the microwave contents."
+	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()
 	playsound(src.loc, 'splat.ogg', 50, 1) // Play a splat sound
@@ -354,38 +370,3 @@
 		if ("dispose")
 			dispose()
 	return
-/*
-			var/cooking = cooked_item // Get the item that needs to be spawned
-			if(!isnull(cooking))
-				src.operating = 1 // Turn it on so it can't be used again while it's cooking
-				src.icon_state = "mw1" //Make it look on too
-				src.updateUsrDialog()
-				src.being_cooked = new cooking(src)
-				use_power(500*(cook_time/50)/2)
-				spawn(cook_time) //After the cooking time
-					use_power(500*(cook_time/50)/2)
-					if(!isnull(src.being_cooked))
-						playsound(src.loc, 'ding.ogg', 50, 1)
-						if(istype(src.being_cooked, /obj/item/weapon/reagent_containers/food/snacks/humanburger))
-							src.being_cooked.name = humanmeat_name + src.being_cooked.name
-							src.being_cooked:job = humanmeat_job
-						else if(istype(src.being_cooked, /obj/item/weapon/reagent_containers/food/snacks/humeatpie))
-							src.being_cooked.name = humanmeat_name + src.being_cooked.name
-							src.being_cooked:job = humanmeat_job
-						else if(istype(src.being_cooked, /obj/item/weapon/reagent_containers/food/snacks/humankabob))
-							src.being_cooked.name = humanmeat_name + src.being_cooked.name
-							src.being_cooked:job = humanmeat_job
-						if(istype(src.being_cooked, /obj/item/weapon/reagent_containers/food/snacks/donkpocket))
-							src.being_cooked:warm = 1
-							src.being_cooked:reagents.add_reagent("tricordrazine", 5)
-							src.being_cooked:bitesize = 6
-							src.being_cooked.name = "Warm " + src.being_cooked.name
-							src.being_cooked:cooltime()
-						src.being_cooked.loc = get_turf(src) // Create the new item
-						src.being_cooked = null // We're done!
-
-					src.operating = 0 // Turn the microwave back off
-					src.icon_state = "mw"
-			else
-				return
-*/
