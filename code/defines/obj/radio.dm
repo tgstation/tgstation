@@ -136,7 +136,7 @@
 	name = "Research Director's Headset"
 	icon_state = "com_headset"
 	item_state = "headset"
-	channels = list("Science" = 1, "Command" = 1, "Medical" = 1)
+	channels = list("Science" = 1, "Command" = 1)
 
 /obj/item/device/radio/headset/heads/hos // -- Bar
 	name = "Head of Security's Headset"
