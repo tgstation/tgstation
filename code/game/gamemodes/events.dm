@@ -11,7 +11,7 @@
 		start_events()
 
 /proc/event()
-	switch(rand(1,10))
+	switch(pick(1,2,4,5,6,7,8,9,10))
 		if(1)
 			event = 1
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
@@ -32,7 +32,7 @@
 			spawn(rand(50, 300))
 				del(bh)
 
-		if(3)
+		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
 			event = 1
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('spanomalies.ogg')
