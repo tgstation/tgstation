@@ -813,10 +813,16 @@
 	anchored = 1.0
 	layer = 2.8
 
+/obj/table/onetilethick
+	icon_state = "table_1tilethick"
+
 /obj/table/reinforced
 	name = "reinforced table"
 	icon_state = "reinf_table"
 	var/status = 2
+
+/obj/table/reinforced/onetilethick
+	icon_state = "reinf_1tilethick"
 
 /obj/table/woodentable
 	name = "wooden table"
