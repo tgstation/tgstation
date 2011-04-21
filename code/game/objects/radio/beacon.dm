@@ -15,3 +15,8 @@
 		src.code = "beacon"
 	src.add_fingerprint(usr)
 	return
+
+/obj/item/device/radio/beacon/bacon //Probably a better way of doing this, I'm lazy.
+	proc/digest_delay()
+		spawn(600)
+			del(src)

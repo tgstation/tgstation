@@ -568,6 +568,21 @@ datum
 			required_reagents = list("berryjuice" = 10, "enzyme" = 2)
 			result_amount = 5
 
+		vodka
+			name = "Vodka"
+			id = "vodka"
+			result = "vodka"
+			required_reagents = list("potato" = 10, "enzyme" = 2)
+			result_amount = 5
+
+		kahlua
+			name = "Kahlua"
+			id = "kahlua"
+			result = "kahlua"
+			required_reagents = list("coffee" = 5, "sugar" = 5, "enzyme" = 2)
+
+
+
 		gin_tonic
 			name = "Gin and Tonic"
 			id = "gintonic"

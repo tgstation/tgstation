@@ -1536,11 +1536,11 @@ datum
 			id = "hot_ramen"
 			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 			reagent_state = LIQUID
+			nutriment_factor = 5 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/living/M as mob)
 				..()
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+10)
-				M:nutrition += 5
 				return
 
 		hell_ramen
@@ -1548,11 +1548,18 @@ datum
 			id = "hell_ramen"
 			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 			reagent_state = LIQUID
+			nutriment_factor = 5 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/living/M as mob)
 				..()
 				M:bodytemperature += 10
-				M:nutrition += 5
 				return
+
+		potato_juice
+			name = "Potato Juice"
+			id = "potato"
+			description = "Juice of the potato. Bleh."
+			reagent_state = LIQUID
+			nutriment_factor = 2 * REAGENTS_METABOLISM
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

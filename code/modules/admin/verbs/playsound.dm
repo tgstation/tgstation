@@ -54,6 +54,17 @@
 			CP << "Your body can't contain the rhumba beat"
 			CP.gib(1)
 
+/client/proc/bananaphone()
+	set category = "Fun"
+	set name = "Banana Phone"
+
+	message_admins("[key_name_admin(usr)] has activated Banana Phone!", 1)
+
+	for(var/mob/M in world)
+		if(M.client)
+			if(M.client.midis)
+				M << 'bananaphone.ogg'
+
 
 
 

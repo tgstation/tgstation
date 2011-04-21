@@ -15,6 +15,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = "carrotjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = "berryjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/banana  = "banana",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = "potato",
 	)
 
 /obj/machinery/juicer/New()
@@ -61,7 +62,7 @@
 	var/is_beaker_ready = 0
 	var/processing_chamber = ""
 	var/beaker_contents = ""
-	
+
 	for (var/i in allowed_items)
 		for (var/obj/item/O in src.contents)
 			if (!istype(O,i))
@@ -81,7 +82,7 @@
 		is_beaker_ready = 1
 	else
 		beaker_contents = "\The [src]  has attached a beaker and beaker is full!"
-		
+
 	var/dat = {"
 <b>Processing chamber contains:</b><br>
 [processing_chamber]<br>
@@ -103,7 +104,7 @@
 	switch(href_list["action"])
 		if ("juice")
 			juice()
-		
+
 		if ("detach")
 			detach()
 	src.updateUsrDialog()
@@ -129,6 +130,8 @@
 
 /obj/machinery/juicer/proc/get_juice_amount(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
 	if (!istype(O))
+		return 5
+	else if (O.potency == -1)
 		return 5
 	else
 		return round(5*sqrt(O.potency))

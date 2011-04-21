@@ -743,6 +743,44 @@
 		reagents.add_reagent("tomatojuice", 2)
 		bitesize = 5
 
+/obj/item/weapon/reagent_containers/food/snacks/telebacon
+	name = "Tele Bacon"
+	desc = "It takes a little odd but it is still delicious."
+	icon_state = "bacon"
+	var/obj/item/device/radio/beacon/bacon/baconbeacon
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		baconbeacon = new /obj/item/device/radio/beacon/bacon(src)
+	On_Consume()
+		if(!reagents.total_volume)
+			baconbeacon.loc = usr
+			baconbeacon.digest_delay()
+
+
+/obj/item/weapon/reagent_containers/food/snacks/bananaphone
+	name = "Banana Phone"
+	desc = "Ring ring ring ring ring..."
+	icon = 'items.dmi'
+	icon_state = "banana" //needs a new icon.
+	bitesize = 5
+	var/obj/item/device/radio/banana/bananaphone
+	New()
+		..()
+		reagents.add_reagent("banana", 5)
+		bananaphone = new /obj/item/device/radio/banana(src)
+		bananaphone.listening = 1
+		bananaphone.broadcasting = 1
+
+	On_Consume()
+		if(!reagents.total_volume)
+			usr << sound('bananaphone.ogg',1)
+	hear_talk(mob/M as mob, msg)
+		if(bananaphone)
+			bananaphone.hear_talk(M, msg)
+
+
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
