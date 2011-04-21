@@ -2555,8 +2555,8 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 
 	drill
 		name = "Mining Drill"
-		icon_state = "jackhammer"
-		item_state = "handdrill"
+		icon_state = "handdrill"
+		item_state = "jackhammer"
 		digspeed = 30
 		origin_tech = "materials=3; powerstorage=2"
 		desc = "Yours is the drill that will pierce through the rock walls."
@@ -2572,7 +2572,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	plasmacutter
 		name = "Plasma Cutter"
 		icon_state = "plasmacutter"
-		icon_state = "gun"
+		item_state = "gun"
 		w_class = 3.0 //it is smaller than the pickaxe
 		force = 10.0 //Also, weaker
 		digspeed = 20
@@ -2589,8 +2589,8 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 
 	diamonddrill //When people ask about the badass leader of the mining tools, they are talking about ME!
 		name = "Diamond Mining Drill"
-		icon_state = "jackhammer"
-		item_state = "diamonddrill"
+		icon_state = "diamonddrill"
+		item_state = "jackhammer"
 		digspeed = 0
 		origin_tech = "materials=6; powerstorage=4"
 		desc = "Yours is the drill that will pierce the heavens!"
