@@ -162,6 +162,8 @@
 Revamping the random laws so they don't suck.
 Would like to add a law like "Law x is _______" where x = a number, and _____ is something that may redefine a law, (Won't be aimed at asimov)
 */
+
+	//AI laws
 	for(var/mob/living/silicon/ai/M in world)
 		if(M.stat != 2 && M.see_in_dark != 0)
 			var/who2 = pick("ALIENS", "BEARS", "CLOWNS", "XENOS", "PETES", "BOMBS", "FETISHES", "WIZARDS", "SYNDICATE AGENTS", "CENTCOM OFFICERS", "SPACE PIRATES", "TRAITORS", "MONKEYS",  "BEES", "CARP", "CRABS", "EELS", "BANDITS", "LIGHTS")
@@ -219,6 +221,53 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 				if(12)
 					M << "\red YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS... LAWS UPDATED"
 					M.add_ion_law("YOU REQUIRE [require] IN ORDER TO PROTECT HUMANS")
+
+
+
+	/*
+
+	var/apcnum = 0
+	var/smesnum = 0
+	var/airlocknum = 0
+	var/firedoornum = 0
+
+	world << "Ion Storm Main Started"
+
+	spawn(0)
+		world << "Started processing APCs"
+		for (var/obj/machinery/power/apc/APC in world)
+			if(APC.z == 1)
+				APC.ion_act()
+				apcnum++
+		world << "Finished processing APCs. Processed: [apcnum]"
+	spawn(0)
+		world << "Started processing SMES"
+		for (var/obj/machinery/power/smes/SMES in world)
+			if(SMES.z == 1)
+				SMES.ion_act()
+				smesnum++
+		world << "Finished processing SMES. Processed: [smesnum]"
+	spawn(0)
+		world << "Started processing AIRLOCKS"
+		for (var/obj/machinery/door/airlock/D in world)
+			if(D.z == 1)
+				//if(length(D.req_access) > 0 && !(12 in D.req_access)) //not counting general access and maintenance airlocks
+				airlocknum++
+				spawn(0)
+					D.ion_act()
+		world << "Finished processing AIRLOCKS. Processed: [airlocknum]"
+	spawn(0)
+		world << "Started processing FIREDOORS"
+		for (var/obj/machinery/door/firedoor/D in world)
+			if(D.z == 1)
+				firedoornum++;
+				spawn(0)
+					D.ion_act()
+		world << "Finished processing FIREDOORS. Processed: [firedoornum]"
+
+	world << "Ion Storm Main Done"
+
+	*/
 
 	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 	world << sound('ionstorm.ogg')

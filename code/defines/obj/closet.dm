@@ -280,11 +280,11 @@
 
 /obj/secure_closet/highsec
 	name = "Head of Personnel"
-	req_access = list(access_heads)
+	req_access = list(access_hop)
 
 /obj/secure_closet/hos
 	name = "Head Of Security"
-	req_access = list(access_heads)
+	req_access = list(access_hos)
 
 /obj/secure_closet/captains
 	name = "Captain's Closet"
@@ -391,7 +391,7 @@
 
 /obj/secure_closet/engineering_chief
 	name = "Chief Engineer's Locker"
-	req_access = list(access_heads)
+	req_access = list(access_ce)
 
 /obj/secure_closet/engineering_electrical
 	name = "Electrical Supplies"

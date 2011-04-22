@@ -864,6 +864,28 @@
 
 	return
 
+/obj/machinery/power/apc/proc/ion_act()
+	//intended to be exactly the same as an AI malf attack
+	if(!src.malfhack && src.z == 1)
+		if(prob(3))
+			src.locked = 1
+			if (src.cell.charge > 0)
+				world << "\red blew APC in [src.loc.loc]"
+				src.cell.charge = 0
+				cell.corrupt()
+				src.malfhack = 1
+				updateicon()
+				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+				smoke.set_up(3, 0, src.loc)
+				smoke.attach(src)
+				smoke.start()
+				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				s.set_up(3, 1, src)
+				s.start()
+				for(var/mob/M in viewers(src))
+					M.show_message("\red The [src.name] suddenly lets out a blast of smoke and some sparks!", 3, "\red You hear sizzling electronics.", 2)
+
+
 /obj/machinery/power/apc/surplus()
 	if(terminal)
 		return terminal.surplus()
