@@ -25,6 +25,7 @@
 	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
+	var/traitor_scaling = 0 //if amount of traitors scales based on amount of players
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
@@ -182,6 +183,9 @@
 
 			if ("feature_object_spell_system")
 				config.feature_object_spell_system = 1
+
+			if ("traitor_scaling")
+				config.traitor_scaling = 1
 
 			if ("probability")
 				var/prob_pos = findtext(value, " ")

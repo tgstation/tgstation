@@ -75,7 +75,7 @@
 	else if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
-	if ( (world.time + 600) > src.l_time)
+	if ( world.time > (src.l_time + 600))
 		src.shots = 5
 	if (src.shots < 1)
 		user.show_message("\red *click* *click*", 2)

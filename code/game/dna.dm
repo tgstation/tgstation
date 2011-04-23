@@ -715,6 +715,8 @@
 /obj/machinery/scan_consolenew/Topic(href, href_list)
 	if(..())
 		return
+	if(!istype(usr.loc, /turf))
+		return
 	if ((usr.contents.Find(src) || in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
 		usr.machine = src
 		if (href_list["locked"])

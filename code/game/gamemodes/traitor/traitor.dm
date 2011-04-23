@@ -38,7 +38,8 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-	var/const/traitors_possible = 4
+	var/const/traitors_possible = 4 //hard limit on traitors if scaling is turned off
+	var/const/traitor_scaling_coeff = 5.0 //how much does the amount of players get divided by to determine traitors
 
 /datum/game_mode/traitor/announce()
 	world << "<B>The current game mode is - Traitor!</B>"
@@ -58,9 +59,10 @@
 	if(!possible_traitors.len)
 		return 0
 
-	if(traitor_scaling)
-		//num_traitors = max(1, min(round((num_players + i) / 10), traitors_possible))
-		num_traitors = max(1, min(round(num_players) + 1), traitors_possible) // -- TLE
+	if(config.traitor_scaling)
+		num_traitors = max(1, round((num_players)/(traitor_scaling_coeff)))
+	else
+		num_traitors = max(1, min(num_players, traitors_possible))
 
 //	log_game("Number of traitors: [num_traitors]")
 //	message_admins("Players counted: [num_players]  Number of traitors chosen: [num_traitors]")

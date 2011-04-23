@@ -45,7 +45,9 @@
 			if(istype(loc,/mob/living/carbon))
 				var/mob/living/carbon/location = loc
 				if(location.internal == src)
-					usr << "\blue You close \the [src] release valve."
+					location.internal = null
+					location.internals.icon_state = "internal0"
+					usr << "\blue You close the tank release valve."
 					if (location.internals)
 						location.internals.icon_state = "internal0"
 				else

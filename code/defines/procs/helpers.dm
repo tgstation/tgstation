@@ -130,6 +130,11 @@
 		t = copytext(t, 1, index) + "#" + copytext(t, index+1)
 		index = findtext(t, "\t")
 
+	index = findtext(t, "ÿ")
+	while(index)
+		t = copytext(t, 1, index) + "ß" + copytext(t, index+1)
+		index = findtext(t, "ÿ")
+
 	return html_encode(t)
 
 /proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN)

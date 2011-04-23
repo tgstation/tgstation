@@ -44,6 +44,9 @@ PROBABILITY CHANGELING 2
 PROBABILITY CULT 0
 PROBABILITY MONKEY 0
 
+# if amount of traitors scales or not
+#TRAITOR_SCALING
+
 # allow players to initiate a restart vote
 ALLOW_VOTE_RESTART
 
