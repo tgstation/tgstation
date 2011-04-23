@@ -53,7 +53,7 @@
 	new /obj/item/clothing/shoes/orange( src )
 	new /obj/item/clothing/suit/hazardvest( src )
 	new /obj/item/clothing/mask/gas( src )
-	new /obj/item/clothing/head/helmet/hardhat( src )
-	//new /obj/item/clothing/ears/earmuffs( src ) useless --errorage
+	//new /obj/item/clothing/head/helmet/hardhat( src ) engineers now spawn with them --Errorage
+	//new /obj/item/clothing/ears/earmuffs( src ) useless --Errorage
 	new /obj/item/clothing/glasses/meson( src )
 	return

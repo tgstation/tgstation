@@ -17,6 +17,16 @@
 		"/obj/item/device/analyzer")
 	flags = FPRINT | TABLEPASS | ONBELT
 
+/obj/item/weapon/storage/utilitybelt/full/New()
+	..()
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/weapon/cable_coil(src)
+
+
 /obj/item/weapon/storage/utilitybelt/medical
    name = "medical belt"
    desc = "Can hold various medical equipment."
