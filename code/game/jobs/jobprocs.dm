@@ -362,7 +362,7 @@
 			src.equip_if_possible(new /obj/item/clothing/under/rank/engineer(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/orange(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/weapon/storage/toolbox/mechanical(src), slot_l_hand)
-			src.equip_if_possible(new /obj/item/clothing/gloves/yellow(src), slot_gloves)
+			//src.equip_if_possible(new /obj/item/clothing/gloves/yellow(src), slot_gloves) removed as part of Dangercon 2011, approved by Urist_McDorf --Errorage
 			src.equip_if_possible(new /obj/item/device/t_scanner(src), slot_r_store)
 
 		if ("Shaft Miner")
@@ -554,11 +554,11 @@
 		if ("Chief Engineer")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/ce (src), slot_ears)
 			src.equip_if_possible(new /obj/item/device/pda/heads(src), slot_belt)
-			src.equip_if_possible(new /obj/item/clothing/gloves/yellow(src), slot_gloves)
+			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves) //changed to black as part of dangercon 2011, approved by Urist_McDorf --Errorage
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/head/helmet/hardhat(src), slot_head)
 			src.equip_if_possible(new /obj/item/clothing/mask/cigarette(src), slot_wear_mask) // sorry, no more cigar
-			src.equip_if_possible(new /obj/item/clothing/glasses/meson(src), slot_glasses)
+			//src.equip_if_possible(new /obj/item/clothing/glasses/meson(src), slot_glasses) Removed as part of DangerCon 2011, approved by Urist_McDorf, --Errorage
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chief_engineer(src), slot_w_uniform)
 
 		if ("Research Director")

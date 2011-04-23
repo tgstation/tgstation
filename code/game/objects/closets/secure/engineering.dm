@@ -7,10 +7,10 @@
 	new /obj/item/clothing/gloves/yellow( src )
 	new /obj/item/clothing/shoes/brown( src )
 	new /obj/item/weapon/storage/toolbox/mechanical( src )
-	new /obj/item/clothing/shoes/magboots( src )
-	new /obj/item/clothing/ears/earmuffs( src )
-	new /obj/item/clothing/glasses/meson( src )
-	new /obj/item/clothing/suit/fire/firefighter( src )
+	//new /obj/item/clothing/shoes/magboots( src ) Moved to RIG suit rack --errorage
+	//new /obj/item/clothing/ears/earmuffs( src ) useless --errorage
+	//new /obj/item/clothing/glasses/meson( src ) Moved to his desk --errorage
+	//new /obj/item/clothing/suit/fire/firefighter( src )
 	new /obj/item/clothing/suit/hazardvest( src )
 	new /obj/item/clothing/mask/gas( src )
 	new /obj/item/clothing/head/helmet/welding( src )
@@ -24,7 +24,7 @@
 	sleep(2)
 	new /obj/item/clothing/gloves/yellow( src )
 	new /obj/item/clothing/gloves/yellow( src )
-	new /obj/item/clothing/gloves/yellow( src )
+	//new /obj/item/clothing/gloves/yellow( src ) --Part of DangerCon 2011, approved by Urist_McDorf, --Errorage
 	new /obj/item/weapon/storage/toolbox/electrical( src )
 	new /obj/item/weapon/storage/toolbox/electrical( src )
 	new /obj/item/weapon/storage/toolbox/electrical( src )
@@ -54,6 +54,6 @@
 	new /obj/item/clothing/suit/hazardvest( src )
 	new /obj/item/clothing/mask/gas( src )
 	new /obj/item/clothing/head/helmet/hardhat( src )
-	new /obj/item/clothing/ears/earmuffs( src )
+	//new /obj/item/clothing/ears/earmuffs( src ) useless --errorage
 	new /obj/item/clothing/glasses/meson( src )
 	return
