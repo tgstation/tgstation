@@ -704,6 +704,8 @@
 	force = 7.0
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
+	var/shot_delay = 0 //used for borg guns, adds that much in deciseconds delay between shots
+	var/next_attack = 0 //used for the delay
 
 /obj/item/weapon/gun/energy/laser_gun/captain
 	icon_state = "caplaser"

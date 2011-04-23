@@ -14,7 +14,7 @@ var/list/occupations = list(
 	"Research Director",
 	"Chaplain",
 	"Roboticist",
-	"Cyborg","Cyborg",//"Cyborg","Cyborg","Cyborg",
+	"Cyborg",//"Cyborg","Cyborg","Cyborg","Cyborg", < Fuck that. Seriously. -- Urist
 	"AI",
 	"Barman",
 	"Chef",

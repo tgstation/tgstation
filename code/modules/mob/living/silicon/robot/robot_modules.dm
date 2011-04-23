@@ -137,6 +137,7 @@ obj/item/weapon/robot_module/syndicate
 	src.modules += new /obj/item/weapon/handcuffs(src)
 	src.modules += new /obj/item/weapon/gun/energy/taser_gun(src)
 	src.emag = new /obj/item/weapon/gun/energy/laser_gun(src)
+	src.emag:shot_delay = 7
 
 
 /obj/item/weapon/robot_module/janitor/New()

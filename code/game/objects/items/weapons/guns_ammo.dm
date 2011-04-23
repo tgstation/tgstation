@@ -446,7 +446,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 		return
 
 	var/detective = 0
-	
+
 	if (istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		detective = (istype(H.w_uniform, /obj/item/clothing/under/det) && \
@@ -457,7 +457,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 			user << "\red You don't have the dexterity to do this!"
 			return
 		detective = 1
-		
+
 	if(!detective)
 		usr << "\red You just don't feel cool enough to use this gun looking like that."
 		return
@@ -497,7 +497,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 
 /obj/item/weapon/gun/detectiverevolver/attack(mob/M as mob, mob/living/user as mob)
 	var/detective = 0
-	
+
 	if (istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		detective = (istype(H.w_uniform, /obj/item/clothing/under/det) && \
@@ -508,7 +508,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 			user << "\red You don't have the dexterity to do this!"
 			return
 		detective = 1
-		
+
 	if(!detective)
 		user << "\red You just don't feel cool enough to use this gun looking like that."
 		return
@@ -603,12 +603,17 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 		user << "\red *click* *click*"
 		return
 
+	if(next_attack > world.time)
+		return
+
 	playsound(user, 'Laser.ogg', 50, 1)
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= 30
 	else
 		src.charges--
+	if(shot_delay)
+		next_attack = world.time + shot_delay
 	update_icon()
 
 	var/turf/T = user.loc
