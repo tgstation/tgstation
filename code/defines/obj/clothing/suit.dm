@@ -13,10 +13,10 @@
 	icon_state = "bombsuit"
 	item_state = "bombsuit"
 	w_class = 4//bulky item
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 0.30
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
 
 /obj/item/clothing/suit/bomb_suit/security
@@ -30,10 +30,10 @@
 	icon_state = "bio"
 	item_state = "bio_suit"
 //	w_class = 4//bulky item
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 0.30
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 1.3
 
 /obj/item/clothing/suit/bio_suit/general
@@ -56,6 +56,7 @@
 	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."
 	icon_state = "plaguedoctor"
 	item_state = "bio_suit"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/suit/det_suit
 	name = "coat"
@@ -70,6 +71,7 @@
 	desc = "This robe commands authority."
 	icon_state = "judge"
 	item_state = "judge"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/cigpacket,/obj/item/weapon/spacecash)
 
@@ -78,9 +80,10 @@
 	desc = "A suit that protects against minor chemical spills."
 	icon_state = "labcoat"
 	item_state = "labcoat"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	permeability_coefficient = 0.25
 	heat_transfer_coefficient = 0.75
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen)
 
 /obj/item/clothing/suit/labcoat/cmo
@@ -113,6 +116,7 @@
 	name = "apron"
 	icon_state = "apron"
 	item_state = "apron"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list (/obj/item/weapon/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
 
@@ -121,11 +125,12 @@
 	icon_state = "chef"
 	item_state = "chef"
 	gas_transfer_coefficient = 0.90
-	permeability_coefficient = 0.90
+	permeability_coefficient = 0.50
+	heat_transfer_coefficient = 0.50
+	protective_temperature = 1000 //If you can't stand the heat, get back to the kitchen - Micro
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list (/obj/item/weapon/kitchenknife)
-	protective_temperature = 1000 //If you can't stand the heat, get back to the kitchen - Micro
-	heat_transfer_coefficient = 0.75
 
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
@@ -135,6 +140,7 @@
 	gas_transfer_coefficient = 0.01 // IT'S MAGICAL OKAY JEEZ +1 TO NOT DIE
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 0.01
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/teleportation_scroll)
 
@@ -161,6 +167,14 @@
 	desc = "A vest designed to make one more noticable. It's not very good at it though"
 	icon_state = "hazard"
 	item_state = "hazard"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+
+/obj/item/clothing/suit/suspenders
+	name = "suspenders"
+	desc = "They suspend the illusion of the mime's play." //Meh -- Urist
+	icon = 'belts.dmi'
+	icon_state = "suspenders"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 // ARMOR
 
@@ -202,16 +216,16 @@
 	desc = "Wearing this armor exemplifies who is in charge. You are in charge."
 	icon_state = "caparmor"
 	item_state = "caparmor"
+	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
-	flags = FPRINT | TABLEPASS | SUITSPACE
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	permeability_coefficient = 0.02
-	protective_temperature = 1000
 	heat_transfer_coefficient = 0.02
 	radiation_protection = 0.25
-	slowdown = 1.5
-	w_class = 4//bulky item
+	protective_temperature = 1000
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	flags = FPRINT | TABLEPASS | SUITSPACE
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	slowdown = 1.5
 
 /obj/item/clothing/suit/armor/centcomm
 	name = "Cent. Com. armor"
@@ -251,8 +265,8 @@
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	slowdown = 1
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	slowdown = 1
 
 // FIRE SUITS
 
@@ -264,12 +278,11 @@
 	//w_class = 4//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	slowdown = 1.3
-
-	protective_temperature = 4500
 	heat_transfer_coefficient = 0.01
+	protective_temperature = 4500
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/extinguisher)
+	slowdown = 1.3
 
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
@@ -281,25 +294,22 @@
 	icon_state = "rad"
 	item_state = "rad_suit"
 	//w_class = 4//bulky item
-	gas_transfer_coefficient = 0.01
-	permeability_coefficient = 0.01
-	heat_transfer_coefficient = 1
+	gas_transfer_coefficient = 0.90
+	permeability_coefficient = 0.50
+	heat_transfer_coefficient = 0.30 //Not a fire suit
 	radiation_protection = 0.75
+	protective_temperature = 1000 // Not a fire suit
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	slowdown = 1.3
-
-	protective_temperature = 4500
-	heat_transfer_coefficient = 0.01
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
+	slowdown = 1.3
 
 /obj/item/clothing/suit/fire/heavy
 	name = "firesuit"
 	desc = "A suit that protects against extreme fire and heat."
 	//icon_state = "thermal"
 	item_state = "ro_suit"
-	//w_class = 4//bulky item
+	w_class = 4//bulky item
 	protective_temperature = 10000
-	heat_transfer_coefficient = 0.01
 	slowdown = 1.7
 
 // SPACE SUITS
@@ -308,25 +318,25 @@
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
 	icon_state = "space"
-	gas_transfer_coefficient = 0.01
 	item_state = "s_suit"
 	w_class = 4//bulky item
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.02
+	heat_transfer_coefficient = 0.02
+	radiation_protection = 0.25
+	protective_temperature = 1000
 	flags = FPRINT | TABLEPASS | SUITSPACE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	permeability_coefficient = 0.02
-	protective_temperature = 1000
-	heat_transfer_coefficient = 0.02
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 3
-	radiation_protection = 0.25
 
 /obj/item/clothing/suit/space/rig
 	name = "rig suit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "rig"
 	item_state = "rig_suit"
-	slowdown = 2
 	radiation_protection = 0.50
+	slowdown = 2
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
@@ -360,7 +370,6 @@
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 1
 	radiation_protection = 0.75
 	var/affecting = null
 	var/active = 0//Stealth off.
@@ -372,6 +381,7 @@
 	var/aboost = 3.0//Number of adrenaline boosters.
 	var/amount_per_transfer_from_this = 20//How much reagent is transferred.
 	var/datum/effects/system/spark_spread/spark_system
+	slowdown = 1
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"
@@ -381,9 +391,3 @@
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 0
-
-/obj/item/clothing/suit/suspenders
-	name = "suspenders"
-	desc = "They suspend the illusion of the mime's play." //Meh -- Urist
-	icon = 'belts.dmi'
-	icon_state = "suspenders"
