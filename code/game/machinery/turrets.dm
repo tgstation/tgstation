@@ -177,7 +177,7 @@
 
 
 /obj/machinery/turret/proc/target()
-	while(src && check_target(cur_target))
+	while(src && enabled && !stat && check_target(cur_target))
 		src.dir = get_dir(src, cur_target)
 		shootAt(cur_target)
 		sleep(shot_delay)
