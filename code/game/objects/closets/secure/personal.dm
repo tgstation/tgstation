@@ -13,7 +13,7 @@
 /obj/secure_closet/personal/patient/New()
 	..()
 	contents = list()
-	spawn(2)
+	spawn(4)
 		new /obj/item/clothing/under/color/white( src )
 		new /obj/item/clothing/shoes/white( src )
 	return
