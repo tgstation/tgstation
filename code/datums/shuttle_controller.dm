@@ -15,6 +15,7 @@ datum/shuttle_controller
 		direction = 1 //-1 = going back to central command, 1 = going back to SS13
 
 		endtime			// timeofday that shuttle arrives
+		timelimit //important when the shuttle gets called for more than shuttlearrivetime
 		//timeleft = 360 //600
 		fake_recall = 0 //Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
 
@@ -22,12 +23,12 @@ datum/shuttle_controller
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
-	proc/incall()
+	proc/incall(coeff = 1)
 		if(endtime)
 			if(direction == -1)
 				setdirection(1)
 		else
-			settimeleft(SHUTTLEARRIVETIME)
+			settimeleft(SHUTTLEARRIVETIME*coeff)
 			online = 1
 
 	proc/recall()
@@ -57,6 +58,7 @@ datum/shuttle_controller
 	// sets the time left to a given delay (in seconds)
 	proc/settimeleft(var/delay)
 		endtime = world.timeofday + delay * 10
+		timelimit = delay
 
 	// sets the shuttle direction
 	// 1 = towards SS13, -1 = back to centcom
@@ -79,7 +81,7 @@ datum/shuttle_controller
 				timeleft = 0
 			switch(location)
 				if(0)
-					if(timeleft>SHUTTLEARRIVETIME)
+					if(timeleft>timelimit)
 						online = 0
 						direction = 1
 						endtime = null

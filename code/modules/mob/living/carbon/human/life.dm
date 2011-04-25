@@ -567,6 +567,9 @@
 				return
 			var/discomfort = min(abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
 
+			if(mutantrace == "plant")
+				discomfort *= 3 //I don't like magic numbers. I'll make mutantraces a datum with vars sometime later. -- Urist
+
 			switch(body_part)
 				if(HEAD)
 					TakeDamage("head", 0, 2.5*discomfort)
@@ -589,6 +592,23 @@
 
 		handle_chemicals_in_body()
 			if(reagents) reagents.metabolize(src)
+
+			if(mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
+				var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
+				if(istype(loc,/turf)) //else, there's considered to be no light
+					light_amount = min(10,loc:sd_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
+				if(nutrition < 500) //so they can't store nutrition to survive without light forever
+					nutrition += light_amount
+				if(light_amount > 0) //if there's enough light, heal
+					if(fireloss)
+						heal_overall_damage(0,1)
+					if(bruteloss)
+						heal_overall_damage(1,0)
+					if(toxloss)
+						toxloss--
+					if(oxyloss)
+						oxyloss--
+
 			if(overeatduration > 500 && !(src.mutations & 32))
 				src << "\red You suddenly feel blubbery!"
 				src.mutations |= 32
@@ -603,9 +623,15 @@
 				nutrition = max (0, nutrition - HUNGER_FACTOR)
 
 			if (nutrition > 450)
-				overeatduration++
+				if(overeatduration < 600) //capped so people don't take forever to unfat
+					overeatduration++
 			else
-				overeatduration = max (0, overeatduration - 1)
+				if(overeatduration > 1)
+					overeatduration -= 2 //doubled the unfat rate
+
+			if(mutantrace == "plant")
+				if(nutrition < 200)
+					take_overall_damage(2,0)
 
 			if (src.drowsyness)
 				src.drowsyness--
