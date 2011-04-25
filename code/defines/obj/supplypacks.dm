@@ -271,7 +271,7 @@
 	access = access_security
 
 
-/datum/supply_packs/riot
+/datum/supply_packs/costume
 	name = "Standard Costume crate"
 	contains = list("/obj/item/weapon/stamp/clown",
 					"/obj/item/weapon/storage/backpack/clown",

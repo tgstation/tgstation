@@ -145,7 +145,8 @@
 	icon_state = "firstaid"
 
 /obj/item/weapon/storage/firstaid/syringes
-	name = "Syringes (Biohazard Alert)"
+	name = "Syringes"
+	desc = "A biohazard alert warning is printed on the box"
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/firstaid/toxin

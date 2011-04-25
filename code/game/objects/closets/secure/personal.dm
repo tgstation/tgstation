@@ -10,6 +10,14 @@
 		new /obj/item/device/radio/headset( src )
 	return
 
+/obj/secure_closet/personal/patient/New()
+	..()
+	contents = list()
+	spawn(2)
+		new /obj/item/clothing/under/color/white( src )
+		new /obj/item/clothing/shoes/white( src )
+	return
+
 /obj/secure_closet/personal/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (src.opened)
 		if (istype(W, /obj/item/weapon/grab))

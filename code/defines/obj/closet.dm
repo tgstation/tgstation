@@ -212,7 +212,7 @@
 
 
 /obj/closet/wardrobe/white
-	name = "Medical Wardrobe"
+	name = "White Wardrobe"
 	icon_state = "white"
 	icon_closed = "white"
 
@@ -321,7 +321,7 @@
 	req_access = list(access_medical)
 
 /obj/secure_closet/medical3
-	name = "Medical Garb"
+	name = "Medical Doctor's Locker"
 	req_access = list(access_medical)
 
 /obj/secure_closet/RD
@@ -336,6 +336,8 @@
 	desc = "The first card swiped gains control."
 	name = "Personal Closet"
 
+/obj/secure_closet/personal/patient
+	name = "Patient's closet"
 
 /obj/secure_closet/security1
 	name = "Security Equipment"
