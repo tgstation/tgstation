@@ -1658,12 +1658,49 @@
 		return
 	if (!( src.mob ))
 		return
-	if (src.mob.stat == 2)
+	if (src.mob.stat==2)
 		return
-	if (src.mob.incorporeal_move)
-		src.mob.dir = direct
-		src.mob.loc = get_step(src.mob, direct)
-		//return src.mob.Move(get_step(src.mob,direct))
+	if (mob.incorporeal_move)//For Ninja crazy porting powers. Moves either 1 or 2 tiles.
+		var/turf/mobloc = get_turf(mob.loc)
+		if(prob(50))
+			var/locx
+			var/locy
+			switch(direct)
+				if(NORTH)
+					locx = mobloc.x
+					locy = (mobloc.y+2)
+					if(locy>world.maxy)
+						return
+				if(SOUTH)
+					locx = mobloc.x
+					locy = (mobloc.y-2)
+					if(locy<1)
+						return
+				if(EAST)
+					locy = mobloc.y
+					locx = (mobloc.x+2)
+					if(locx>world.maxx)
+						return
+				if(WEST)
+					locy = mobloc.y
+					locx = (mobloc.x-2)
+					if(locx<1)
+						return
+				else
+					return
+			mob.loc = locate(locx,locy,mobloc.z)
+			spawn(0)
+				var/limit = 2//For only two trailing shadows.
+				for(var/turf/T in getline(mobloc, mob.loc))
+					spawn(0)
+						anim(T,'mob.dmi',mob,"shadow")
+					limit--
+					if(limit<=0)	break
+		else
+			spawn(0)
+				anim(mobloc,'mob.dmi',mob,"shadow")
+			mob.loc = get_step(mob, direct)
+		mob.dir = direct
 		return
 	if(istype(src.mob, /mob/living/silicon/ai))
 		return AIMove(n,direct,src.mob)

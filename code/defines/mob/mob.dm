@@ -185,7 +185,7 @@
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
 
-// Ruby mode
+//Ninja stuff. Was originally for Ruby Mode but since that didn't go anywhere, I'm hijacking it.
 	var/incorporeal_move = 0
 
 

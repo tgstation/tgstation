@@ -325,7 +325,7 @@
 				var/maxcapacity = 0
 				var/totaldrain = 0
 				while(G.candrain&&cell.charge>0&&!maxcapacity)
-					drain = rand(100,300)
+					drain = rand(G.mindrain,G.maxdrain)
 					if(cell.charge<drain)
 						drain = cell.charge
 					if(S.charge+drain>S.maxcharge)

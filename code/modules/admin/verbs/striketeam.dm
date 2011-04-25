@@ -171,7 +171,7 @@ Useful for copy pasta since I'm lazy.*/
 	message_admins("\blue [key_name_admin(usr)] has spawned a CentCom strike squad.", 1)
 	log_admin("[key_name(usr)] used Spawn Death Squad.")
 
-//SPACE NINJAS
+//SPACE NINJAS=============================
 /client/proc/space_ninja()
 
 	set category = "Fun"
@@ -257,18 +257,18 @@ Useful for copy pasta since I'm lazy.*/
 	log_admin("[admin_name] used Spawn Space Ninja.")
 
 
-//SPACE NINJA ABILITIES
+//ABILITIES=============================
 
 /*X is optional, tells the proc to check for specific stuff. C is also optional.
 All the procs here assume that the character is wearing the ninja suit if they are using the procs.
 They should, as I have made every effort for that to be the case.
 In the case that they are not, I imagine the game will run-time error like crazy.
 */
-/mob/proc/ninjacost(C,X)
+/mob/proc/ninjacost(var/C as num,var/X as num)
 	var/mob/living/carbon/human/U = src
 	var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
-	if(U.stat)
-		U << "\red You must be conscious to do this."
+	if(U.stat||U.incorporeal_move)
+		U << "\red You must be conscious and solid to do this."
 		return 0
 	else if(C&&S.charge<C*10)
 		U << "\red Not enough energy."
@@ -316,7 +316,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 		var/turf/picked
 		var/turf/mobloc = get_turf(loc)
 		var/safety = 0
-		switch(dir)
+		switch(dir)//This can be done better but really isn't worth it in my opinion.
 			if(NORTH)
 				//highest Y
 				//X the same
@@ -355,7 +355,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 					turfs += T
 			else
 				safety = 1
-		if(turfs.len||safety)//Cancels the teleportation if no valid turf is found. Usually when teleporting near map edge.
+		if(turfs.len&&!safety)//Cancels the teleportation if no valid turf is found. Usually when teleporting near map edge.
 			picked = pick(turfs)
 			spawn(0)
 				playsound(loc, "sparks", 50, 1)
@@ -436,14 +436,24 @@ In the case that they are not, I imagine the game will run-time error like crazy
 	var/C = 50
 	if(ninjacost(C))
 		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
-		if(!get_active_hand()&&!istype(get_inactive_hand(), /obj/item/weapon/blade))
-			var/obj/item/weapon/blade/W = new()
-			W.spark_system.start()
+		if(!S.kamikaze)
+			if(!get_active_hand()&&!istype(get_inactive_hand(), /obj/item/weapon/blade))
+				var/obj/item/weapon/blade/W = new()
+				W.spark_system.start()
+				playsound(src.loc, "sparks", 50, 1)
+				put_in_hand(W)
+				S.charge-=(C*10)
+			else
+				src << "\red You can only summon one blade. Try dropping an item first."
+		else//Else you can run around with TWO energy blades. I don't know why you'd want to but cool factor remains.
+			if(!get_active_hand())
+				var/obj/item/weapon/blade/W = new()
+				put_in_hand(W)
+			if(!get_inactive_hand())
+				var/obj/item/weapon/blade/W = new()
+				put_in_inactive_hand(W)
+			S.spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
-			put_in_hand(W)
-			S.charge-=(C*10)
-		else
-			src << "\red You cannot summon the blade. Try dropping an item first."
 	return
 
 //Shoot Ninja Stars
@@ -457,14 +467,13 @@ In the case that they are not, I imagine the game will run-time error like crazy
 	var/C = 30
 	if(ninjacost(C))
 		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
-		var/mob/living/target//The point here is to pick a random, living mob in oview to shoot stuff at.
 		var/targets[]//So yo can shoot while yo throw dawg
 		targets = new()
 		for(var/mob/living/M in oview(7))
 			if(M.stat==2)	continue//Doesn't target corpses.
 			targets.Add(M)
 		if(targets.len)
-			target=pick(targets)
+			var/mob/living/target=pick(targets)//The point here is to pick a random, living mob in oview to shoot stuff at.
 
 			var/turf/curloc = loc
 			var/atom/targloc = get_turf(target)
@@ -504,4 +513,170 @@ In the case that they are not, I imagine the game will run-time error like crazy
 			S.reagents.trans_id_to(src, "radium", S.amount_per_transfer_from_this)
 			src << "\red You are beginning to feal the after-effects of the injection."
 		S.aboost--
+	return
+
+//KAMIKAZE=============================
+//Or otherwise known as anime mode. Which also happens to be ridiculously powerful.
+
+//Allows for incorporeal movement.
+//Also makes you move like you're on crack.
+/mob/proc/ninjawalk()
+	set name = "Shadow Walk"
+	set desc = "Combines the VOID-shift and CLOAK-tech devices to freely move between solid matter. Toggle on or off."
+	set category = "Ninja"
+
+	if(!usr.incorporeal_move)
+		incorporeal_move = 1
+		density = 0
+		src << "\blue You will now phase through solid matter."
+	else
+		incorporeal_move = 0
+		density = 1
+		src << "\blue You will no-longer phase through solid matter."
+	return
+
+/*
+Added click-spam protection of 1 second.
+Allows to gib up to five squares in a straight line. Seriously.*/
+/mob/proc/ninjaslayer()
+	set name = "Phase Slayer"
+	set desc = "Utilizes the internal VOID-shift device to mutilate creatures in a straight line."
+	set category = "Ninja"
+
+	if(ninjacost())
+		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
+		var/locx
+		var/locy
+		var/turf/mobloc = get_turf(loc)
+		var/safety = 0
+
+		switch(dir)
+			if(NORTH)
+				locx = mobloc.x
+				locy = (mobloc.y+5)
+				if(locy>world.maxy)
+					safety = 1
+			if(SOUTH)
+				locx = mobloc.x
+				locy = (mobloc.y-5)
+				if(locy<1)
+					safety = 1
+			if(EAST)
+				locy = mobloc.y
+				locx = (mobloc.x+5)
+				if(locx>world.maxx)
+					safety = 1
+			if(WEST)
+				locy = mobloc.y
+				locx = (mobloc.x-5)
+				if(locx<1)
+					safety = 1
+			else	safety = 1
+		if(!safety)//Cancels the teleportation if no valid turf is found. Usually when teleporting near map edge.
+			say("Ai Satsugai!")
+			verbs -= /mob/proc/ninjaslayer
+			var/turf/picked = locate(locx,locy,mobloc.z)
+			spawn(0)
+				playsound(loc, "sparks", 50, 1)
+				anim(mobloc,'mob.dmi',src,"phaseout")
+
+			spawn(0)
+				for(var/turf/T in getline(mobloc, picked))
+					spawn(0)
+						for(var/mob/living/M in T)
+							if(M==src)	continue
+							spawn(0)
+								M.gib()
+					if(T==mobloc||T==picked)	continue
+					spawn(0)
+						anim(T,'mob.dmi',src,"phasein")
+
+			loc = picked
+
+			spawn(0)
+				S.spark_system.start()
+				playsound(loc, 'Deconstruct.ogg', 50, 1)
+				playsound(loc, "sparks", 50, 1)
+				anim(loc,'mob.dmi',src,"phasein")
+			spawn(10)
+				verbs += /mob/proc/ninjaslayer
+		else
+			src << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
+	return
+
+//Appear behind a randomly chosen mob while a few decoy teleports appear.
+//This is so anime it hurts. But that's the point.
+/mob/proc/ninjamirage()
+	set name = "Spider Mirage"
+	set desc = "Utilizes the internal VOID-shift device to create decoys and teleport behind a random target."
+	set category = "Ninja"
+
+	if(ninjacost())//Simply checks for stat.
+		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
+		var/targets[]
+		targets = new()
+		for(var/mob/living/M in oview(6))
+			if(M.stat==2)	continue//Doesn't target corpses.
+			targets.Add(M)
+		if(targets.len)
+			var/mob/living/target=pick(targets)
+			var/locx
+			var/locy
+			var/turf/mobloc = get_turf(target.loc)
+			var/safety = 0
+			switch(target.dir)
+				if(NORTH)
+					locx = mobloc.x
+					locy = (mobloc.y-1)
+					if(locy<1)
+						safety = 1
+				if(SOUTH)
+					locx = mobloc.x
+					locy = (mobloc.y+1)
+					if(locy>world.maxy)
+						safety = 1
+				if(EAST)
+					locy = mobloc.y
+					locx = (mobloc.x-1)
+					if(locx<1)
+						safety = 1
+				if(WEST)
+					locy = mobloc.y
+					locx = (mobloc.x+1)
+					if(locx>world.maxx)
+						safety = 1
+				else	safety=1
+
+			if(!safety)
+				say("Kumo no Shinkiro!")
+				verbs -= /mob/proc/ninjamirage
+				var/turf/picked = locate(locx,locy,mobloc.z)
+				spawn(0)
+					playsound(loc, "sparks", 50, 1)
+					anim(mobloc,'mob.dmi',src,"phaseout")
+
+				spawn(0)
+					var/limit = 4
+					for(var/turf/T in oview(5))
+						if(prob(20))
+							spawn(0)
+								anim(T,'mob.dmi',src,"phasein")
+							limit--
+						if(limit<=0)	break
+
+				loc = picked
+				dir = target.dir
+
+				spawn(0)
+					S.spark_system.start()
+					playsound(loc, 'Deconstruct.ogg', 50, 1)
+					playsound(loc, "sparks", 50, 1)
+					anim(loc,'mob.dmi',src,"phasein")
+
+				spawn(10)
+					verbs += /mob/proc/ninjamirage
+			else
+				src << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
+		else
+			src << "\red There are no targets in view."
 	return

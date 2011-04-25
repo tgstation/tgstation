@@ -468,7 +468,7 @@
 				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 				spark_system.set_up(5, 0, src.loc)
 				while(G.candrain&&cell.charge>0&&!maxcapacity)
-					drain = rand(100,300)
+					drain = rand(G.mindrain,G.maxdrain)
 					if(cell.charge<drain)
 						drain = cell.charge
 					if(S.charge+drain>S.maxcharge)

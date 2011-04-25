@@ -337,19 +337,26 @@ NINJA MASK
 	spawn while(initialize&&charge>=0)//Suit on and has power.
 		if(!initialize)	return//When turned off the proc stops.
 		var/A = 5//Energy cost each tick.
-		if(istype(U.get_active_hand(), /obj/item/weapon/blade))//Sword check.
-			if(charge<=0)//If no charge left.
-				U.drop_item()//Sword is dropped from active hand (and deleted).
-			else	A += 20//Otherwise, more energy consumption.
-		else if(istype(U.get_inactive_hand(), /obj/item/weapon/blade))
-			if(charge<=0)
-				U.swap_hand()//swap hand
-				U.drop_item()//drop sword
-			else	A += 20
-		if(active)
-			A += 25
+		if(!kamikaze)
+			if(istype(U.get_active_hand(), /obj/item/weapon/blade))//Sword check.
+				if(charge<=0)//If no charge left.
+					U.drop_item()//Sword is dropped from active hand (and deleted).
+				else	A += 20//Otherwise, more energy consumption.
+			else if(istype(U.get_inactive_hand(), /obj/item/weapon/blade))
+				if(charge<=0)
+					U.swap_hand()//swap hand
+					U.drop_item()//drop sword
+				else	A += 20
+			if(active)
+				A += 25
+		else
+			A = 100
 		charge-=A
 		if(charge<0)
+			if(kamikaze)
+				U.say("I DIE TO LIVE AGAIN!")
+				U.death()
+				return
 			charge=0
 			active=0
 		sleep(10)//Checks every second.
@@ -361,6 +368,7 @@ NINJA MASK
 
 	if(usr.mind&&usr.mind.special_role=="Space Ninja"&&usr:wear_suit==src&&!src.initialize)
 		var/mob/living/carbon/human/U = usr
+		verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
 		U << "\blue Now initializing..."
 		sleep(40)
 		if(U.mind.assigned_role=="Mime")
@@ -390,6 +398,7 @@ NINJA MASK
 			U.shoes:canremove=1
 			U.gloves:canremove=1
 			canremove=1
+			verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
 			return
 		U << "\blue Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation."
 		sleep(40)
@@ -412,7 +421,6 @@ NINJA MASK
 		U.mind.special_verbs += /mob/proc/ninjapulse
 		U.mind.special_verbs += /mob/proc/ninjablade
 		U.mind.special_verbs += /mob/proc/ninjastar
-		verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
 		verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
 		verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
 		U.gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/drain_wire
@@ -445,8 +453,22 @@ NINJA MASK
 		return
 
 	var/mob/living/carbon/human/U = usr
-
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
 	U << "\blue Now de-initializing..."
+	if(kamikaze)
+		U << "\blue Disengaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>"
+		U.verbs -= /mob/proc/ninjaslayer
+		U.verbs -= /mob/proc/ninjawalk
+		U.verbs -= /mob/proc/ninjamirage
+		U.mind.special_verbs -= /mob/proc/ninjaslayer
+		U.mind.special_verbs -= /mob/proc/ninjawalk
+		U.mind.special_verbs -= /mob/proc/ninjamirage
+		kamikaze = 0
+		unlock = 0
+		U.incorporeal_move = 0
+		U.density = 1
+		icon_state = "s-ninja"
+	spideros = 0
 	sleep(40)
 	U.verbs -= /mob/proc/ninjashift
 	U.verbs -= /mob/proc/ninjajaunt
@@ -491,15 +513,17 @@ NINJA MASK
 		U.shoes:canremove=1
 		U.shoes:slowdown++
 	if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
+		U.gloves.icon_state = "s-ninja"
+		U.gloves.item_state = "s-ninja"
 		U.gloves:canremove=1
 		U.gloves:candrain=0
 		U.gloves:draining=0
 		U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/drain_wire
 		U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
+	U.update_clothing()
 	canremove=1
 	U << "\blue Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>."
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
 	initialize=0
 	affecting=null
 	slowdown=1
@@ -539,7 +563,7 @@ NINJA MASK
 	Sub-menu 1 of sub-menu 2(of menu 2) would be 221. Sub-menu 5 of sub-menu 2(of menu 2) would be 225. Menu 0 is a special case (it's the menu hub); you are free to use menus 1-9
 	to create your own data paths.
 	The Return button, when used, simply removes the final number and navigates to the menu prior. Menu 334, the fourth sub-menu of sub-menu
-	3, in menu 3, would navigate to sub menu 3 in menu 3. Or 33. Currently, only up to 6 digits are supported but this can be easily changed.
+	3, in menu 3, would navigate to sub menu 3 in menu 3. Or 33.
 	It is possible to go to a different menu/sub-menu from anywhere. When creating new menus don't forget to add them to Topic proc or else the game
 	will interpret you using the messenger function (the else clause in the switch).
 	Other buttons and functions should be named according to what they do.*/
@@ -608,6 +632,8 @@ NINJA MASK
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C"
 		if(3)
+			if(unlock==7)
+				dat += "<a href='byond://?src=\ref[src];choice=32'><img src=sos_1.png> Hidden Menu</a>"
 			dat += "<h4><img src=sos_12.png> Anonymous Messenger:</h4>"//Anonymous because the receiver will not know the sender's identity.
 			dat += "<h4><img src=sos_6.png> Detected PDAs:</h4>"
 			dat += "<ul>"
@@ -621,7 +647,14 @@ NINJA MASK
 			dat += "</ul>"
 			if (count == 0)
 				dat += "None detected.<br>"
-			//dat += "<a href='byond://?src=\ref[src];choice=31'> Send Virus</a>"
+			//dat += "<a href='byond://?src=\ref[src];choice=31'> Send Virus</a>
+		if(32)
+			dat += "<h4><img src=sos_1.png> Hidden Menu:</h4>"
+			dat += "Please input password: "
+			dat += "<a href='byond://?src=\ref[src];choice=Unlock Kamikaze'><b>HERE</b></a><br>"
+			dat += "<br>"
+			dat += "Remember, you will not be able to recharge energy during this function. If energy runs out, the suit will auto self-destruct.<br>"
+			dat += "Use with caution. De-initialize the suit when energy is low."
 		if(4)
 			dat += "<h4><img src=sos_6.png> Ninja Manual:</h4>"
 			dat += "<h5>Who they are:</h5>"
@@ -649,12 +682,12 @@ NINJA MASK
 			dat += "<b>Verbpowers</b>:"
 			dat += "<ul>"
 			dat += "<li>*<b>Phase Shift</b> (<i>2000E</i>) and <b>Phase Jaunt</b> (<i>1000E</i>) are unique powers in that they can both be used for defense and offense. Jaunt launches the ninja forward facing up to 10 squares, somewhat randomly selecting the final destination. Shift can only be used on turf in view but is precise (cannot be used on walls). Any living mob in the area teleported to is instantly gibbed.</li>"
-			dat += "<li>*<b>Energy Blade</b> (<i>500E</i>) is a highly effective weapon. It is summoned directly to the ninja's hand and can also function as an EMAG for certain objects (doors/lockers/etc). It will crit humans in two hits. This item cannot be placed in containers and when dropped or thrown disappears. Having an energy sword drains more power from the battery each tick.</li>"
+			dat += "<li>*<b>Energy Blade</b> (<i>500E</i>) is a highly effective weapon. It is summoned directly to the ninja's hand and can also function as an EMAG for certain objects (doors/lockers/etc). You may also use it to cut through walls and disabled doors. Experiment! The blade will crit humans in two hits. This item cannot be placed in containers and when dropped or thrown disappears. Having an energy sword drains more power from the battery each tick.</li>"
 			dat += "<li>*<b>EM Pulse</b> (<i>2500E</i>) is a highly useful ability that will create an electromagnetic shockwave around the ninja, disabling technology whenever possible. If used properly it can render a security force effectively useless. Of course, getting beat up with a toolbox is not accounted for.</li>"
-			dat += "<li>*<b>Energy Star</b> (<i>300E</i>) is a ninja star made of green energy. It works by picking a random living target within range and can be spammed to great effect in incapacitating foes. (NOTE: this ability is WIP.)</li>"
-			dat += "<li>*<b>Adrenaline Boost</b> (<i>1 E. Boost/3</i>) recovers the user from stun, weakness, and paralysis. Also injects 15 units of radium into the bloodstream. (NOTE: this ability is WIP but probably finished.)</li>"
+			dat += "<li>*<b>Energy Star</b> (<i>300E</i>) is a ninja star made of green energy AND coated in poison. It works by picking a random living target within range and can be spammed to great effect in incapacitating foes. Just remember that the poison used is also used by the Xeno Hivemind (and will have no effect on them).</li>"
+			dat += "<li>*<b>Adrenaline Boost</b> (<i>1 E. Boost/3</i>) recovers the user from stun, weakness, and paralysis. Also injects 20 units of radium into the bloodstream.</li>"
 			dat += "<li>*<b>Smoke Bomb</b> (<i>1 Sm.Bomb/10</i>) is a weak but potentially useful ability. It creates harmful smoke and can be used in tandem with other powers to confuse enemies.</li>"
-			dat += "<li>*<b>Hacking computer terminals</b>: this power was never finished but in theory, it would have allowed to remotely access computer terminals, provided they were linked to the same power network and were active.</li>"
+			dat += "<li>*<b>???</b>: unleash the <b>True Ultimate Power!</b></li>"
 			dat += "</ul>"
 			dat += "That is all you will need to know. The rest will come with practice and talent. Good luck!"
 			dat += "<h4>Master /N</h4>"
@@ -695,6 +728,37 @@ NINJA MASK
 		U << browse(null, "window=spideros")//Closes the window.
 		return
 
+	switch(unlock)//To unlock Kamikaze mode. Irrelevant elsewhere.
+		if(0)
+			if(href_list["choice"]=="Stealth"&&spideros==0)	unlock++
+		if(1)
+			if(href_list["choice"]=="2"&&spideros==0)	unlock++
+			else if(href_list["choice"]=="Return")
+			else	unlock=0
+		if(2)
+			if(href_list["choice"]=="3"&&spideros==0)	unlock++
+			else if(href_list["choice"]=="Return")
+			else	unlock=0
+		if(3)
+			if(href_list["choice"]=="Stealth"&&spideros==0)	unlock++
+			else if(href_list["choice"]=="Return")
+			else	unlock=0
+		if(4)
+			if(href_list["choice"]=="1"&&spideros==0)	unlock++
+			else if(href_list["choice"]=="Return")
+			else	unlock=0
+		if(5)
+			if(href_list["choice"]=="1"&&spideros==0)	unlock++
+			else if(href_list["choice"]=="Return")
+			else	unlock=0
+		if(6)
+			if(href_list["choice"]=="4"&&spideros==0)	unlock++
+			else if(href_list["choice"]=="Return")
+			else	unlock=0
+		if(7)//once unlocked, stays unlocked until deactivated.
+		else
+			unlock = 0
+
 	switch(href_list["choice"])
 		if("Close")
 			U << browse(null, "window=spideros")
@@ -731,6 +795,8 @@ NINJA MASK
 			spideros=2
 		if("3")
 			spideros=3
+		if("32")
+			spideros=32
 		if("4")
 			spideros=4
 		/*Sub-menu testing stuff.
@@ -740,6 +806,53 @@ NINJA MASK
 			spideros=49
 		if("491")
 			spideros=491 */
+		if("Unlock Kamikaze")
+			if(input(U)=="Divine Wind")
+				if( !(U.stat||U.wear_suit!=src||!initialize) )
+					U << "\blue Engaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>"
+					sleep(40)
+					U << "\blue Re-routing power nodes... \nUnlocking limiter..."
+					sleep(40)
+					U << "\blue Power nodes re-routed. \nLimiter unlocked."
+					sleep(10)
+					U << "\red Do or Die, <b>LET'S ROCK!!</b>"
+					if(verbs.Find(/obj/item/clothing/suit/space/space_ninja/proc/deinit))//To prevent engaging kamikaze and de-initializing at the same time.
+						kamikaze = 1
+						active = 0
+						icon_state = "s-ninjak"
+						if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
+							U.gloves.icon_state = "s-ninjak"
+							U.gloves.item_state = "s-ninjak"
+							U.gloves:candrain = 0
+							U.gloves:draining = 0
+							U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/drain_wire
+							U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
+						U.update_clothing()
+						U.verbs -= /mob/proc/ninjashift
+						U.verbs -= /mob/proc/ninjajaunt
+						U.verbs -= /mob/proc/ninjapulse
+						U.verbs -= /mob/proc/ninjastar
+						U.mind.special_verbs -= /mob/proc/ninjashift
+						U.mind.special_verbs -= /mob/proc/ninjajaunt
+						U.mind.special_verbs -= /mob/proc/ninjapulse
+						U.mind.special_verbs -= /mob/proc/ninjastar
+
+						U.verbs += /mob/proc/ninjaslayer
+						U.verbs += /mob/proc/ninjawalk
+						U.verbs += /mob/proc/ninjamirage
+						U.mind.special_verbs += /mob/proc/ninjaslayer
+						U.mind.special_verbs += /mob/proc/ninjawalk
+						U.mind.special_verbs += /mob/proc/ninjamirage
+						verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
+						U.ninjablade()
+					else
+						U << "Nevermind, you cheater."
+				U << browse(null, "window=spideros")
+				return
+			else
+				U << "\red ERROR: WRONG PASSWORD!"
+				unlock = 0
+				spideros = 0
 		if("Dylovene")//These names really don't matter for specific functions but it's easier to use descriptive names.
 			if(!reagents.get_reagent_amount("anti_toxin"))
 				U << "\red Error: the suit cannot perform this function. Out of dylovene."
@@ -807,6 +920,7 @@ NINJA MASK
 						U.show_message("\blue Virus sent!", 1)
 						P.silent = 1
 						P.ttone = "silence" */
+
 	spideros()//Refreshes the screen by calling it again (which replaces current screen with new screen).
 	return
 
@@ -815,12 +929,15 @@ NINJA MASK
 	..()
 	if(initialize)
 		usr << "All systems operational. Current energy capacity: <B>[src.charge]</B>."
-		if(active)
-			usr << "The CLOAK-tech device is <B>active</B>."
+		if(!kamikaze)
+			if(active)
+				usr << "The CLOAK-tech device is <B>active</B>."
+			else
+				usr << "The CLOAK-tech device is <B>inactive</B>."
 		else
-			usr << "The CLOAK-tech device is <B>inactive</B>."
-		usr << "There are <B>[src.sbombs]</B> smoke bombs remaining."
-		usr << "There are <B>[src.aboost]</B> adrenaline injectors remaining."
+			usr << "\red KAMIKAZE MODE ENGAGED!"
+		usr << "There are <B>[sbombs]</B> smoke bombs remaining."
+		usr << "There are <B>[aboost]</B> adrenaline boosters remaining."
 
 //GLOVES
 /obj/item/clothing/gloves/space_ninja/proc/toggled()
@@ -861,11 +978,13 @@ NINJA MASK
 //A lot of this comes from the powersink code.
 	var/mob/living/carbon/human/U = usr
 	var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
+	var/obj/item/clothing/gloves/space_ninja/G = U.gloves
+	var/drain = 0
 	var/maxcapacity = 0
 	var/totaldrain = 0
 	var/datum/powernet/PN = attached.get_powernet()
 	while(candrain&&!maxcapacity&&!isnull(attached))
-		var/drain = rand(50,100)
+		drain = (round((rand(G.mindrain,G.maxdrain))/2))
 		var/drained = 0
 		if(PN&&do_after(U,10))
 			drained = min (drain, PN.avail)

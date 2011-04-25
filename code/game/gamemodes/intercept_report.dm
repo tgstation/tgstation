@@ -59,7 +59,7 @@
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in world)
 		if (!man.mind) continue
-		if (man.mind.special_role == "Syndicate") continue
+		if (man.mind.assigned_role=="MODE") continue
 		dudes += man
 	if (dudes.len==0)
 		return null
@@ -80,11 +80,14 @@
 	var/traitor_name
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
 	if(prob(prob_right_dude) && ticker.mode == "traitor")
-		traitor_name = correct_mob:current
+		if(correct_mob:assigned_role=="MODE")
+			traitor_name = pick_mob()
+		else
+			traitor_name = correct_mob:current
 	else if(prob(prob_right_dude))
-		traitor_name = src.pick_mob()
+		traitor_name = pick_mob()
 	else
-		fingerprints = src.pick_fingerprints()
+		fingerprints = pick_fingerprints()
 
 	src.text += "<BR><BR>The <B>[name_1] [name_2]</B> implied an undercover operative was acting on their behalf on the station currently.<BR>"
 	src.text += "After some investigation, we "
@@ -104,15 +107,21 @@
 	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
 	if(prob(prob_right_job) && cult_check_mob(correct_mob))
 		if (correct_mob)
-			traitor_job = correct_mob:assigned_role
+			if(correct_mob:assigned_role=="MODE")
+				traitor_job = pick(get_all_jobs())
+			else
+				traitor_job = correct_mob:assigned_role
 	else
 		var/list/job_tmp = get_all_jobs()
 		job_tmp.Remove("Captain", "Chaplain", "AI", "Cyborg", "Security Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer")
 		traitor_job = pick(job_tmp)
 	if(prob(prob_right_dude) && ticker.mode == "cult")
-		traitor_name = correct_mob:current
+		if(correct_mob:assigned_role=="MODE")
+			traitor_name = src.pick_mob()
+		else
+			traitor_name = correct_mob:current
 	else
-		traitor_name = src.pick_mob()
+		traitor_name = pick_mob()
 
 	src.text += "<BR><BR>It has been brought to our attention that the [name_1] [name_2] have stumbled upon some dark secrets. They apparently want to spread the dangerous knowledge on as many stations as they can.<BR>"
 	src.text += "Based on our intelligence, we are [prob_right_job]% sure that if true, someone doing the job of [traitor_job] on your station may have been converted "
@@ -129,7 +138,6 @@
 	if (correct_mob in ucs) return
 	return 1
 
-
 /datum/intercept_text/proc/build_rev(correct_mob)
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
@@ -139,13 +147,19 @@
 	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
 	if(prob(prob_right_job) && rev_check_mob(correct_mob))
 		if (correct_mob)
-			traitor_job = correct_mob:assigned_role
+			if(correct_mob:assigned_role=="MODE")
+				traitor_job = pick(get_all_jobs())
+			else
+				traitor_job = correct_mob:assigned_role
 	else
 		var/list/job_tmp = get_all_jobs()
-		job_tmp.Remove("Captain", "AI", "Cyborg", "Security Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Warden", "Chief Medical Officer")
+		job_tmp.Remove("Captain", "AI", "Cyborg", "Security Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Warden", "Chief Medical Officer", "MODE")
 		traitor_job = pick(job_tmp)
 	if(prob(prob_right_dude) && ticker.mode == "revolution")
-		traitor_name = correct_mob:current
+		if(correct_mob:assigned_role=="MODE")
+			traitor_name = src.pick_mob()
+		else
+			traitor_name = correct_mob:current
 	else
 		traitor_name = src.pick_mob()
 
@@ -194,12 +208,17 @@
 	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
 	if(prob(prob_right_job))
 		if(correct_mob)
-			changeling_job = correct_mob:assigned_role
+			if(correct_mob:assigned_role=="MODE")
+				changeling_job = pick(get_all_jobs())
+			else
+				changeling_job = correct_mob:assigned_role
 	else
-		var/list/job_tmp = get_all_jobs()
-		changeling_job = pick(job_tmp)
+		changeling_job = pick(get_all_jobs())
 	if(prob(prob_right_dude) && ticker.mode == "changeling")
-		changeling_name = correct_mob:current
+		if(correct_mob:assigned_role=="MODE")
+			changeling_name = correct_mob:current
+		else
+			changeling_name = src.pick_mob()
 	else
 		changeling_name = src.pick_mob()
 
