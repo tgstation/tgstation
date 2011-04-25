@@ -371,6 +371,8 @@
 		return
 
 	for (var/obj/machinery/camera/C in world)
+		if(!C.status)
+			continue
 		if(C.network == "AI Satellite")
 			if (ticker.mode.name == "AI malfunction")
 				var/datum/game_mode/malfunction/malf = ticker.mode
