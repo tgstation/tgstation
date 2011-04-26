@@ -2,6 +2,7 @@
 CONTAINS:
 TABLE PARTS
 REINFORCED TABLE PARTS
+WOODEN TABLE PARTS
 RACK PARTS
 */
 
@@ -35,7 +36,32 @@ RACK PARTS
 	del(src)
 	return
 
+// WOODEN TABLE PARTS
+/obj/item/weapon/table_parts/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/wood( src.loc )
+		//SN src = null
+		del(src)
 
+/obj/item/weapon/table_parts/wood/attack_self(mob/user as mob)
+	var/state = input(user, "What type of table?", "Assembling Table", null) in list( "sides", "corners", "alone" )
+	var/direct = SOUTH
+	var/i_state
+	if(state == "alone")
+		i_state = "woodtable"
+	else if (state == "corners")
+		direct = input(user, "Direction?", "Assembling Table", null) in list( "NORTHWEST", "NORTHEAST", "SOUTHWEST", "SOUTHEAST" )
+		i_state = "woodentable"
+	else if (state == "sides")
+		direct = input(user, "Direction?", "Assembling Table", null) in list( "NORTH", "EAST", "SOUTH", "WEST" )
+		i_state = "woodentable"
+	var/obj/table/T = new /obj/table/woodentable( user.loc )
+	T.icon_state = i_state
+	T.dir = text2dir(direct)
+	T.add_fingerprint(user)
+	del(src)
+	return
 
 
 // REINFORCED TABLE PARTS

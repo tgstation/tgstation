@@ -1023,6 +1023,15 @@
 	max_amount = 50
 	var/perunit = 3750
 
+/obj/item/stack/sheet/wood
+	name = "Wood Planks"
+	singular_name = "wood plank"
+	icon_state = "sheet-wood"
+	force = 5.0
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 3
+
 /obj/item/stack/sheet/glass
 	name = "glass"
 	singular_name = "glass sheet"

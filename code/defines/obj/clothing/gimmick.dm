@@ -24,17 +24,6 @@
 		mob.Blend(earbit, ICON_OVERLAY)
 		mob2.Blend(earbit2, ICON_OVERLAY)
 
-/obj/item/clothing/under/blackskirt
-	name = "Black skirt"
-	desc = "A black skirt, very fancy!"
-	icon_state = "blackskirt"
-	color = "blackskirt"
-
-/obj/item/clothing/shoes/red
-	name = "red shoes"
-	icon_state = "red"
-
-
 /obj/item/clothing/head/helmet/space/santahat
 	name = "Santa's hat"
 	icon_state = "santahat"
@@ -45,8 +34,11 @@
 	icon_state = "santa"
 	item_state = "santa"
 	slowdown = 1
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | SUITSPACE
 
+/obj/item/clothing/shoes/red
+	name = "red shoes"
+	icon_state = "red"
 
 /obj/item/clothing/mask/owl_mask
 	name = "Owl mask"
@@ -81,7 +73,6 @@
 	item_state = "death"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	fire_resist = T0C+5200
-
 
 /*/obj/item/clothing/under/nazi1
 	name = "Nazi uniform"
@@ -127,7 +118,6 @@
 	desc = "Yay!"
 	icon_state = "yay"
 	color = "yay"*/ // no sprite --errorage
-
 
 // UNUSED COLORS
 
@@ -252,6 +242,19 @@
 	item_state = "r_suit"
 	color = "red_suit"
 
+/obj/item/clothing/under/blackskirt
+	name = "Black skirt"
+	desc = "A black skirt, very fancy!"
+	icon_state = "blackskirt"
+	color = "blackskirt"
+
+/obj/item/clothing/under/schoolgirl
+	name = "schoolgirl uniform"
+	desc = "It's just like one of my Japanese animes!"
+	icon_state = "schoolgirl"
+	item_state = "schoolgirl"
+	color = "schoolgirl"
+
 /obj/item/clothing/under/gimmick/rank/police
 	name = "Police Uniform"
 	desc = "Move along, nothing to see here."
@@ -318,13 +321,6 @@
 	desc = "Yarr."
 	icon_state = "bandana"
 	item_state = "bandana"
-
-/obj/item/clothing/under/schoolgirl
-	name = "schoolgirl uniform"
-	desc = "It's just like one of my Japanese animes!"
-	icon_state = "schoolgirl"
-	item_state = "schoolgirl"
-	color = "schoolgirl"
 
 /obj/item/clothing/under/soviet
 	name = "soviet uniform"

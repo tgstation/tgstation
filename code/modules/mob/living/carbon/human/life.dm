@@ -526,6 +526,8 @@
 				thermal_protection += 0.2
 			if(wear_suit && (wear_suit.flags & SUITSPACE))
 				thermal_protection += 3
+			if(w_uniform && (w_uniform.flags & SUITSPACE))
+				thermal_protection += 3
 			if(head && (head.flags & HEADSPACE))
 				thermal_protection += 1
 			if(src.mutations & 2)

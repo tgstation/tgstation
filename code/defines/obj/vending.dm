@@ -107,11 +107,11 @@
 	icon_state = "sec"
 	icon_deny = "sec-deny"
 	req_access_txt = "1"
-	product_paths = "/obj/item/weapon/handcuffs;/obj/item/weapon/flashbang;/obj/item/device/flash"
-	product_amounts = "8;2;5"
+	product_paths = "/obj/item/weapon/handcuffs;/obj/item/weapon/flashbang;/obj/item/device/flash;/obj/item/weapon/reagent_containers/food/snacks/donut"
+	product_amounts = "8;2;5;12"
 	//product_amounts = "8;5;4" Old totals
-	product_hidden = "/obj/item/clothing/glasses/sunglasses;/obj/item/weapon/reagent_containers/food/snacks/donut"
-	product_hideamt = "2;12"
+	product_hidden = "/obj/item/clothing/glasses/sunglasses;/obj/item/kitchen/donut_box"
+	product_hideamt = "2;2"
 
 /obj/machinery/vending/hydronutrients
 	name = "NutriMax"
@@ -128,8 +128,8 @@
 	name = "MegaSeed Servitor"
 	desc = "When you need seeds fast!"
 	icon_state = "seeds"
-	product_paths = "/obj/item/seeds/cornseed;/obj/item/seeds/chiliseed;/obj/item/seeds/berryseed;/obj/item/seeds/eggplantseed;/obj/item/seeds/tomatoseed;/obj/item/seeds/wheatseed;/obj/item/seeds/soyaseed;/obj/item/seeds/carrotseed;/obj/item/seeds/potatoseed;/obj/item/seeds/chantermycelium"
-	product_amounts = "2;2;2;2;2;2;2;2;2;2"
+	product_paths = "/obj/item/seeds/cornseed;/obj/item/seeds/chiliseed;/obj/item/seeds/berryseed;/obj/item/seeds/eggplantseed;/obj/item/seeds/tomatoseed;/obj/item/seeds/wheatseed;/obj/item/seeds/soyaseed;/obj/item/seeds/carrotseed;/obj/item/seeds/potatoseed;/obj/item/seeds/chantermycelium;/obj/item/seeds/towermycelium"
+	product_amounts = "2;2;2;2;2;2;2;2;2;2;2"
 	product_slogans = "THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!;Hands down the best seed selection on the station!;Also certain mushroom varieties available, more for experts! Get certified today!"
 	product_hidden = "/obj/item/seeds/amanitamycelium;/obj/item/seeds/libertymycelium;/obj/item/seeds/nettleseed;/obj/item/seeds/plumpmycelium"
 	product_hideamt = "2;2;2;2"

@@ -1277,11 +1277,15 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	flags = FPRINT | TABLEPASS| CONDUCT
 
 /obj/item/weapon/table_parts/reinforced
-	name = "table parts"
+	name = "reinforced table parts"
 	icon = 'items.dmi'
 	icon_state = "reinf_tableparts"
 	m_amt = 7500
 	flags = FPRINT | TABLEPASS| CONDUCT
+
+/obj/item/weapon/table_parts/wood
+	name = "wooden table parts"
+	icon_state = "wood_tableparts"
 
 /obj/item/weapon/tank
 	name = "tank"
@@ -1797,6 +1801,28 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 		reagents = R
 		R.my_atom = src
 
+/obj/item/weapon/grown/log
+	desc = "This is a log grown from a tower cap mushroom."
+	icon = 'harvest.dmi'
+	name = "Tower Cap Log"
+	icon_state = "logs"
+	force = 5
+	flags = TABLEPASS
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	plant_type = 2
+	origin_tech = "materials=1"
+	seed = "/obj/item/seeds/towermycelium"
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/circular_saw))
+			W.visible_message(" \red <B>You make planks out of the [src]! </B>", 1)
+			for(var/i=0,i<2,i++)
+				new /obj/item/stack/sheet/wood (src.loc)
+			del(src)
+			return
 
 /obj/item/weapon/grown/nettle // -- Skie
 	desc = "This is a nettle. It's probably <B>not</B> wise to touch it with bare hands..."

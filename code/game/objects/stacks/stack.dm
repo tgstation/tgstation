@@ -5,6 +5,7 @@
 	rmetal
 	glass
 	rglass
+	wood planks
 	floor tiles
 	metal rods
 */

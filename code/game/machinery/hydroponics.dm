@@ -419,25 +419,23 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				// Antitoxin binds shit pretty well. So the tox goes significantly down
 
 				if(S.reagents.has_reagent("anti_toxin", 1))
-					src.toxic -= round(S.reagents.get_reagent_amount("anti_toxin")*1.25)
+					src.toxic -= round(S.reagents.get_reagent_amount("anti_toxin")*2)
 
 				// NIGGA, YOU JUST WENT ON FULL RETARD.
 
 				if(S.reagents.has_reagent("toxin", 1))
-					src.toxic += round(S.reagents.get_reagent_amount("toxin")*2.5)
+					src.toxic += round(S.reagents.get_reagent_amount("toxin")*2)
 
-				// Milk contains some sugars as well as water. Makes for shitty nutrient, but hey
-
+				// Milk is good for humans, but bad for plants. The sugars canot be used by ploants, and the milk fat fuck up growth. Not shrooms though. I can't deal with this now...
 				if(S.reagents.has_reagent("milk", 1))
-					src.health += round(S.reagents.get_reagent_amount("milk")*0.1)
-					src.nutrilevel += round(S.reagents.get_reagent_amount("milk")*0.04)
-					src.waterlevel += round(S.reagents.get_reagent_amount("milk")*0.8)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("milk")*0.1)
+					src.waterlevel += round(S.reagents.get_reagent_amount("milk")*0.9)
 
 				// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
 
 				if(S.reagents.has_reagent("beer", 1))
 					src.health -= round(S.reagents.get_reagent_amount("beer")*0.05)
-					src.nutrilevel += round(S.reagents.get_reagent_amount("beer")*0.04)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("beer")*0.25)
 					src.waterlevel += round(S.reagents.get_reagent_amount("beer")*0.7)
 
 				// You're an idiot of thinking that one of the most corrosive and deadly gasses would be beneficial
@@ -460,19 +458,26 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 				if(S.reagents.has_reagent("phosphorus", 1))
 					src.health -= round(S.reagents.get_reagent_amount("phosphorus")*0.75)
-					src.nutrilevel += round(S.reagents.get_reagent_amount("phosphorus")*0.08)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("phosphorus")*0.1)
 					src.waterlevel -= round(S.reagents.get_reagent_amount("phosphorus")*0.5)
 					src.weedlevel -= rand(1,2)
 
-				// Eh whatever. It shouldn't be possible, but still
+				// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
 
 				if(S.reagents.has_reagent("sugar", 1))
-					src.nutrilevel += round(S.reagents.get_reagent_amount("sugar")*0.09)
+					src.weedlevel += rand(1,2)
+					src.pestlevel += rand(1,2)
+					src.nutrilevel+= round(S.reagents.get_reagent_amount("sugar")*0.1)
 
-
-
+				// It is water!
 				if(S.reagents.has_reagent("water", 1))
-					src.waterlevel += round(S.reagents.get_reagent_amount("water")*0.5)
+					src.waterlevel += round(S.reagents.get_reagent_amount("water")*1)
+
+				// A variety of nutrients are dissolved in club soda, without sugar. These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
+				if(S.reagents.has_reagent("sodawater", 1))
+					src.waterlevel += round(S.reagents.get_reagent_amount("sodawater")*1)
+					src.health += round(S.reagents.get_reagent_amount("sodawater")*0.1)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("sodawater")*0.1)
 
 				// Man, you guys are retards
 
@@ -498,25 +503,33 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				// Healing
 
 				if(S.reagents.has_reagent("cryoxadone", 1))
-					src.health += round(S.reagents.get_reagent_amount("cryoxadone")*0.5)
+					src.health += round(S.reagents.get_reagent_amount("cryoxadone")*3)
+					src.toxic -= round(S.reagents.get_reagent_amount("cryoxadone")*3)
 
-				// FINALLY IMPLEMENTED
+				// FINALLY IMPLEMENTED, Ammonia is bad ass.
 
 				if(S.reagents.has_reagent("ammonia", 1))
-					src.health += round(S.reagents.get_reagent_amount("ammonia")*0.1)
-					src.nutrilevel += round(S.reagents.get_reagent_amount("ammonia")*0.05)
+					src.health += round(S.reagents.get_reagent_amount("ammonia")*0.5)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("ammonia")*1)
 
-				// FINALLY IMPLEMENTED
+				// FINALLY IMPLEMENTED, This is more bad ass, and pest get hurt by the crossive nature of it, not the plant
 
 				if(S.reagents.has_reagent("diethylamine", 1))
-					src.health += round(S.reagents.get_reagent_amount("diethylamine")*0.2)
-					src.nutrilevel += round(S.reagents.get_reagent_amount("diethylamine")*0.1)
+					src.health += round(S.reagents.get_reagent_amount("diethylamine")*1)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("diethylamine")*2)
+					src.pestlevel -= rand(1,2)
+
+				// Compost, effectively
+
+				if(S.reagents.has_reagent("nutriment", 1))
+					src.health += round(S.reagents.get_reagent_amount("nutriment")*0.5)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("nutriment")*1)
 
 				// Poor man's mutagen.
 
 				if(S.reagents.has_reagent("radium", 1))
 					src.health -= round(S.reagents.get_reagent_amount("radium")*1.5)
-					src.toxic -= round(S.reagents.get_reagent_amount("radium")*2)
+					src.toxic += round(S.reagents.get_reagent_amount("radium")*2)
 				if(S.reagents.has_reagent("radium", 10))
 					switch(rand(100))
 						if (91  to 100)	src.plantdies()
@@ -579,12 +592,16 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "-Weed level: \blue [src.weedlevel]/10"
 			user << "-Pest level: \blue [src.pestlevel]/10"
 			user << "-Toxicity level: \blue [src.toxic]/100"
+			user << "-Water level: \blue [src.waterlevel]/100"
+			user << "-Nutrition level: \blue [src.nutrilevel]/100"
 			user << ""
 		else
 			user << "<B>No plant found.</B>"
 			user << "-Weed level: \blue [src.weedlevel]/10"
 			user << "-Pest level: \blue [src.pestlevel]/10"
 			user << "-Toxicity level: \blue [src.toxic]/100"
+			user << "-Water level: \blue [src.waterlevel]/100"
+			user << "-Nutrition level: \blue [src.nutrilevel]/100"
 			user << ""
 
 	else if (istype(O, /obj/item/weapon/plantbgone))

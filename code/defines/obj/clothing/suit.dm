@@ -222,8 +222,8 @@
 	heat_transfer_coefficient = 0.02
 	radiation_protection = 0.25
 	protective_temperature = 1000
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	flags = FPRINT | TABLEPASS | SUITSPACE
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1.5
 

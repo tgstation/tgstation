@@ -571,6 +571,7 @@
 #include "code\game\objects\stacks\glass.dm"
 #include "code\game\objects\stacks\metal.dm"
 #include "code\game\objects\stacks\stack.dm"
+#include "code\game\objects\stacks\wood.dm"
 #include "code\game\objects\storage\backpack.dm"
 #include "code\game\objects\storage\bible.dm"
 #include "code\game\objects\storage\briefcase.dm"

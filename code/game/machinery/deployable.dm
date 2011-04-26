@@ -1,5 +1,8 @@
 /*
+CONTAINS:
+
 Deployable items
+Barricades
 
 for reference:
 
@@ -49,6 +52,107 @@ for reference:
 	access_mime = 44
 
 */
+
+
+//Barricades, maybe there will be a metal one later...
+/obj/barricade/wooden
+	name = "wooden barricade"
+	desc = "This space is blocked off by a wooden barricade."
+	icon = 'structures.dmi'
+	icon_state = "woodenbarricade"
+	anchored = 1.0
+	density = 1.0
+	var/health = 100.0
+	var/maxhealth = 100.0
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/stack/sheet/wood))
+			if (src.health < src.maxhealth)
+				for(var/mob/O in viewers(src, null))
+					O << "\red [user] begins to repair the [src]!"
+				if(do_after(user,20))
+					src.health = src.maxhealth
+					W:use(1)
+					for(var/mob/O in viewers(src, null))
+						O << "\red [user] repairs the [src]!"
+					return
+			else
+				return
+			return
+		else
+			switch(W.damtype)
+				if("fire")
+					src.health -= W.force * 1
+				if("brute")
+					src.health -= W.force * 0.75
+				else
+			if (src.health <= 0)
+				for(var/mob/O in viewers(src, null))
+					O << "\red <B>The barricade is smashed appart!</B>"
+				new /obj/item/stack/sheet/wood(get_turf(src))
+				new /obj/item/stack/sheet/wood(get_turf(src))
+				new /obj/item/stack/sheet/wood(get_turf(src))
+				del(src)
+			..()
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				for(var/mob/O in viewers(src, null))
+					O << "\red <B>The barricade is blown appart!</B>"
+				del(src)
+				return
+			if(2.0)
+				src.health -= 25
+				if (src.health <= 0)
+					for(var/mob/O in viewers(src, null))
+						O << "\red <B>The barricade is blown appart!</B>"
+					new /obj/item/stack/sheet/wood(get_turf(src))
+					new /obj/item/stack/sheet/wood(get_turf(src))
+					new /obj/item/stack/sheet/wood(get_turf(src))
+					del(src)
+				return
+
+	meteorhit()
+		for(var/mob/O in viewers(src, null))
+			O << "\red <B>The barricade is smashed appart!</B>"
+		new /obj/item/stack/sheet/wood(get_turf(src))
+		new /obj/item/stack/sheet/wood(get_turf(src))
+		new /obj/item/stack/sheet/wood(get_turf(src))
+		del(src)
+		return
+
+	blob_act()
+		src.health -= 25
+		if (src.health <= 0)
+			for(var/mob/O in viewers(src, null))
+				O << "\red <B>The blob eats through the barricade!</B>"
+			del(src)
+		return
+
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
+		if(air_group || (height==0))
+			return 1
+		if (mover.flags & 2)
+			return 1
+		else
+			return 0
+
+/*	bullet_act(flag, A as obj)
+		switch(flag)
+			if (PROJECTILE_BULLET)
+				src.health -= 20
+			if (PROJECTILE_WEAKBULLET) //Detective's revolver fires marshmallows
+				src.health -= 2
+			if (PROJECTILE_LASER)
+				src.health -= 20
+			if (PROJECTILE_PULSE)
+				src.health -=50
+		if (src.health <= 0)
+			src.explode()
+These should not block bullets/N */
+
+//Actual Deployable machinery stuff
 
 /obj/machinery/depolyable
 	name = "deployable"

@@ -1,3 +1,10 @@
+/*
+CONTAINS:
+TABLE AND RACK OBJECT INTERATIONS
+*/
+
+
+//TABLE
 /obj/table/ex_act(severity)
 
 	switch(severity)
@@ -35,6 +42,8 @@
 				O << text("\red [] smashes the table apart!", usr)
 		if(istype(src, /obj/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
+		else if(istype(src, /obj/table/woodentable))
+			new/obj/item/weapon/table_parts/wood( src.loc )
 		else
 			new /obj/item/weapon/table_parts( src.loc )
 		src.density = 0
@@ -56,6 +65,8 @@
 			O << text("\red [] slices the table apart!", user)
 	if(istype(src, /obj/table/reinforced))
 		new /obj/item/weapon/table_parts/reinforced( src.loc )
+	else if(istype(src, /obj/table/woodentable))
+		new/obj/item/weapon/table_parts/wood( src.loc )
 	else
 		new /obj/item/weapon/table_parts( src.loc )
 	src.density = 0
@@ -70,6 +81,8 @@
 				O << text("\red [] smashes the table apart!", usr)
 		if(istype(src, /obj/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
+		else if(istype(src, /obj/table/woodentable))
+			new/obj/item/weapon/table_parts/wood( src.loc )
 		else
 			new /obj/item/weapon/table_parts( src.loc )
 		src.density = 0
@@ -141,6 +154,48 @@
 	if(W && W.loc)	W.loc = src.loc
 	return
 
+//WOODEN TABLES
+/obj/table/woodentable/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+	if (istype(W, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = W
+		if(G.state<2)
+			user << "\red You need a better grip to do that!"
+			return
+		G.affecting.loc = src.loc
+		G.affecting.weakened = 5
+		for(var/mob/O in viewers(world.view, src))
+			if (O.client)
+				O << text("\red [] puts [] on the wooden table.", G.assailant, G.affecting)
+		del(W)
+		return
+	if (istype(W, /obj/item/weapon/wrench))
+		user << "\blue Now disassembling the wooden table"
+		playsound(src.loc, 'Ratchet.ogg', 50, 1)
+		sleep(50)
+		new /obj/item/weapon/table_parts/wood( src.loc )
+		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+		del(src)
+		return
+	if(isrobot(user))
+		return
+	if(istype(W, /obj/item/weapon/blade))
+		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src.loc, 'blade1.ogg', 50, 1)
+		playsound(src.loc, "sparks", 50, 1)
+		for(var/mob/O in viewers(user, 4))
+			O.show_message(text("\blue The wooden table was sliced apart by []!", user), 1, text("\red You hear wood coming apart."), 2)
+		new /obj/item/weapon/table_parts/wood( src.loc )
+		del(src)
+		return
+
+	user.drop_item()
+	if(W && W.loc)	W.loc = src.loc
+	return
+
+//REINFORCED TABLES
 /obj/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (istype(W, /obj/item/weapon/grab))
@@ -208,6 +263,8 @@
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc
 	return
+
+//RACKS
 
 /obj/rack/ex_act(severity)
 	switch(severity)

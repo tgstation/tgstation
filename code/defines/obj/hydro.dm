@@ -302,7 +302,7 @@
 	mypath = "/obj/item/seeds/towermycelium"
 	species = "towercap"
 	plantname = "Tower Cap"
-	productname = "" // Doesn't exist yet
+	productname = "/obj/item/weapon/grown/log"
 	lifespan = 80
 	endurance = 50
 	maturation = 15
