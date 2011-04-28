@@ -150,7 +150,7 @@
 	if(src.cover==null)
 		src.cover = new /obj/machinery/turretcover(src.loc)
 	protected_area = get_protected_area()
-	if(!protected_area || protected_area.turretTargets.len<=0 || !enabled)
+	if(!enabled || !protected_area || protected_area.turretTargets.len<=0)
 		if(!isDown() && !isPopping())
 			popDown()
 		return
@@ -283,7 +283,20 @@
 	var/enabled = 1
 	var/lethal = 0
 	var/locked = 1
+	var/control_area //can be area name, path or nothing.
 	req_access = list(access_ai_upload)
+
+/obj/machinery/turretid/New()
+	..()
+	if(!control_area)
+		control_area = get_area(src)
+	else if(istext(control_area))
+		for(var/area/A in world)
+			if(A.name && A.name==control_area)
+				control_area = A
+				break
+	//don't have to check if control_area is path, since get_area_all_atoms can take path.
+	return
 
 /obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN) return
@@ -370,16 +383,9 @@
 	else
 		icon_state = "motion0"
 
-	var/loc = src.loc
-	if (istype(loc, /turf))
-		loc = loc:loc
-	if (!istype(loc, /area))
-		world << text("Turret badly positioned - loc.loc is [loc].")
-		return
-	var/area/area = loc
-
-	for (var/obj/machinery/turret/aTurret in get_area_all_atoms(area))
-		aTurret.setState(enabled, lethal)
+	if(control_area)
+		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(control_area))
+			aTurret.setState(enabled, lethal)
 
 
 
