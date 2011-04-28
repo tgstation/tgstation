@@ -60,7 +60,13 @@
 	return output
 
 /obj/mecha/combat/gygax/get_commands()
-	var/output = "<a href='?src=\ref[src];toggle_leg_overload=1'>Toggle leg actuators overload</a><br><hr>"
+	var/output = {"<div class='wr'>
+						<div class='header'>Special</div>
+						<div class='links'>
+						<a href='?src=\ref[src];toggle_leg_overload=1'>Toggle leg actuators overload</a>
+						</div>
+						</div>
+						"}
 	output += ..()
 	return output
 

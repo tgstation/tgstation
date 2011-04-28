@@ -54,7 +54,13 @@
 	return output
 
 /obj/mecha/combat/durand/get_commands()
-	var/output = "<a href='?src=\ref[src];toggle_defence_mode=1'>Toggle defence mode</a><hr>"
+	var/output = {"<div class='wr'>
+						<div class='header'>Special</div>
+						<div class='links'>
+						<a href='?src=\ref[src];toggle_defence_mode=1'>Toggle defence mode</a>
+						</div>
+						</div>
+						"}
 	output += ..()
 	return output
 

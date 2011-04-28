@@ -901,3 +901,14 @@ proc/anim(a,b,c,d,e)
 	else
 		sleep(15)
 	del(animation)
+
+
+//returns list element or null. Should prevent "index out of bounds" error.
+proc/listgetindex(var/list/list,index)
+	if(istype(list) && list.len)
+		if(isnum(index))
+			if(index>0 && index<=list.len)
+				return list[index]
+		else if(index in list)
+			return list[index]
+	return

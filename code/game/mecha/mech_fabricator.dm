@@ -173,10 +173,10 @@
 		return
 */
 
-	proc/output_parts_list(set_name as text)
+	proc/output_parts_list(set_name)
 		var/output = ""
-		if(set_name in part_sets)
-			var/list/part_set = part_sets[set_name]
+		var/list/part_set = listgetindex(part_sets, set_name)
+		if(istype(part_set))
 			for(var/atom/part in part_set)
 				var/resources_available = check_resources(part)
 				output += "<div class='part'>[output_part_info(part)]<br>\[[resources_available?"<a href='?src=\ref[src];part=\ref[part]'>Build</a> | ":null]<a href='?src=\ref[src];add_to_queue=\ref[part]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=\ref[part]'>?</a>\]</div>"
@@ -201,20 +201,20 @@
 			output += "<span class=\"res_name\">[resource]: </span>[min(res_max_amount, resources[resource])] cm&sup3;<br>"
 		return output
 
-	proc/remove_resources(var/obj/item/mecha_parts/part as obj)
+	proc/remove_resources(var/obj/item/mecha_parts/part)
 		for(var/resource in part.construction_cost)
 			if(resource in src.resources)
 				src.resources[resource] -= get_resource_cost_w_coeff(part,resource,1)
 		return
 
-	proc/check_resources(var/obj/item/mecha_parts/part as obj)
+	proc/check_resources(var/obj/item/mecha_parts/part)
 		for(var/resource in part.construction_cost)
 			if(resource in src.resources)
 				if(src.resources[resource] < get_resource_cost_w_coeff(part,resource,1))
 					return 0
 		return 1
 
-	proc/build_part(var/obj/item/mecha_parts/part as obj)
+	proc/build_part(var/obj/item/mecha_parts/part)
 		if(!part) return
 		src.being_built = new part.type(src)
 		src.desc = "It's building [src.being_built]."
@@ -225,40 +225,41 @@
 		sleep(get_construction_time_w_coeff(part,0.1))
 		//if(!src) return // you do not need to check it, all sleeping procedires will be terminated when src dies. -- rastaf0
 		src.use_power = 1
-		if(!being_built) return //was runtime error with null.Move()
-		src.being_built.Move(get_step(src,EAST))
 		src.icon_state = initial(src.icon_state)
-		src.visible_message("<b>[src]</b> beeps, \"The [src.being_built] is complete\".")
-		src.icon_state = initial(src.icon_state)
-		src.being_built = null
 		src.desc = initial(src.desc)
+		if(being_built)
+			src.being_built.Move(get_step(src,EAST))
+			src.visible_message("<b>[src]</b> beeps, \"The [src.being_built] is complete\".")
+			src.being_built = null
 		src.updateUsrDialog()
 		return 1
 
-	proc/add_part_set_to_queue(set_name as text)
+	proc/add_part_set_to_queue(set_name)
 		if(set_name in part_sets)
 			var/list/part_set = part_sets[set_name]
 			for(var/part in part_set)
 				add_to_queue(part)
 		return
 
-	proc/add_to_queue(part as obj)
+	proc/add_to_queue(part)
 		if(!istype(queue, /list))
 			queue = list()
-		queue[++queue.len] = part
+		if(part)
+			queue[++queue.len] = part
 		return queue.len
 
-	proc/remove_from_queue(index as num)
-		if(!istype(queue, /list) || !queue[index])
+	proc/remove_from_queue(index)
+		if(!isnum(index) || !istype(queue, /list) || (index<1 || index>queue.len))
 			return 0
 		queue.Cut(index,++index)
 		return 1
 
 	proc/process_queue()
-		while(istype(queue, /list) && queue.len)
+		var/part = listgetindex(src.queue, 1)
+		temp = null
+		while(part)
 			if(stat&(NOPOWER|BROKEN))
 				return 0
-			var/part = queue[1]
 			if(!check_resources(part))
 				src.visible_message("<b>[src]</b> beeps, \"Not enough resources. Queue processing stopped\".")
 				temp = {"<font color='red'>Not enough resources to build next part.</font><br>
@@ -266,6 +267,7 @@
 				return 0
 			remove_from_queue(1)
 			build_part(part)
+			part = listgetindex(src.queue, 1)
 		src.visible_message("<b>[src]</b> beeps, \"Queue processing finished successfully\".")
 		return 1
 
@@ -276,8 +278,9 @@
 		else
 			output += "<ol>"
 			for(var/i=1;i<=queue.len;i++)
-				var/atom/part = queue[i]
-				output += "<li[!check_resources(part)?" style='color: #f00;'":null]>[part.name] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
+				var/atom/part = listgetindex(src.queue, i)
+				if(part)
+					output += "<li[!check_resources(part)?" style='color: #f00;'":null]>[part.name] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
 			output += "</ol>"
 			output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
 		return output
@@ -423,7 +426,8 @@
 			var/part_set = href_list["partset_to_queue"]
 			add_part_set_to_queue(part_set)
 		if(href_list["process_queue"])
-			temp = null
+			if(processing_queue || being_built)
+				return 0
 			processing_queue = 1
 			process_queue()
 			processing_queue = 0

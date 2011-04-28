@@ -56,7 +56,6 @@
 	var/list/internals_req_access = list(access_engine,access_robotics)//required access level to open cell compartment
 
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
-	var/datum/global_iterator/pr_update_stats //used to auto-update stats window
 	var/datum/global_iterator/pr_inertial_movement //controls intertial movement in spesss
 //	var/datum/global_iterator/pr_location_temp_check //processes location temperature damage
 	var/datum/global_iterator/pr_internal_damage //processes internal damage
@@ -83,7 +82,6 @@
 
 //misc global_iteration datums
 	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
-	pr_update_stats = new /datum/global_iterator/mecha_view_stats(list(src),0)
 	pr_inertial_movement = new /datum/global_iterator/mecha_intertial_movement(null,0)
 //	pr_location_temp_check = new /datum/global_iterator/mecha_location_temp_check(list(src))
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
@@ -779,7 +777,8 @@
 	set src in view(0)
 	if(usr!=src.occupant)
 		return
-	pr_update_stats.start()
+	//pr_update_stats.start()
+	src.occupant << browse(src.get_stats_html(), "window=exosuit")
 	return
 
 /*
@@ -827,7 +826,6 @@
 			src.occupant.canmove = 0
 			src.verbs += /obj/mecha/verb/eject
 		src.occupant = null
-		src.pr_update_stats.stop()
 		src.icon_state = initial(icon_state)+"-open"
 		src.dir = SOUTH
 	return
@@ -863,7 +861,7 @@
 /obj/mecha/proc/get_log_html()
 	var/output = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
 	for(var/list/entry in log)
-		output += {"<div style='font-weight: bold;'>[time2text(entry["time"],"DDD MMM DD hh:mm:ss")]</div>
+		output += {"<div style='font-weight: bold;'>[time2text(entry["time"],"DDD MMM DD hh:mm:ss")] 2555</div>
 						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
 						"}
 	output += "</body></html>"
@@ -1066,10 +1064,32 @@
 						<style>
 						body {color: #00ff00; background: #000000; font: 13px 'Courier', monospace;}
 						hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
+						.wr {margin-bottom: 5px;}
+						.header {cursor:pointer;}
+						.open, .closed {background: #32CD32; color:#000; padding:1px 2px;}
+						.links a {margin-bottom: 2px;}
+						.visible {display: block;}
+						.hidden {display: none;}
 						</style>
+						<script language='javascript' type='text/javascript'>
+						[js_byjax]
+						[js_dropdowns]
+						function ticker() {
+						    setInterval(function(){
+						        window.location='byond://?src=\ref[src]&update_content=1';
+						    }, 1000);
+						}
+
+						window.onload = function() {
+							dropdowns();
+							ticker();
+						}
+						</script>
 						</head>
 						<body>
+						<div id='content'>
 						[src.get_stats_part()]
+						</div>
 						<hr>
 						[src.get_commands()]
 						</body>
@@ -1096,23 +1116,47 @@
 	return output
 
 /obj/mecha/proc/get_commands()
-	var/output = {"<a href='?src=\ref[src];toggle_lights=1'>Toggle Lights</a><br>
+	var/output = {"<div class='wr'>
+						<div class='header'>Lights & Airtank</div>
+						<div class='links'>
+						<a href='?src=\ref[src];toggle_lights=1'>Toggle Lights</a><br>
 						<a href='?src=\ref[src];toggle_airtank=1'>Toggle Internal Airtank Usage</a><br>
 						[(/obj/mecha/verb/disconnect_from_port in src.verbs)?"<a href='?src=\ref[src];port_disconnect=1'>Disconnect from port</a><br>":null]
 						[(/obj/mecha/verb/connect_to_port in src.verbs)?"<a href='?src=\ref[src];port_connect=1'>Connect to port</a><br>":null]
-						<hr>
+						</div>
+						</div>
+						<div class='wr'>
+						<div class='header'>Permissions & Logging</div>
+						<div class='links'>
 						<a href='?src=\ref[src];unlock_id_upload=1'>Unlock ID upload panel</a><br>
-						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
 						<a href='?src=\ref[src];dna_lock=1'>DNA-lock</a><br>
+						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
+						</div>
+						</div>
+						<div id='equipment_menu'>[get_equipment_menu()]</div>
 						<hr>
 						[(/obj/mecha/verb/eject in src.verbs)?"<a href='?src=\ref[src];eject=1'>Eject</a><br>":null]
-					"}
+						"}
 	return output
+
+/obj/mecha/proc/get_equipment_menu()
+	var/output
+	if(equipment.len)
+		output += {"<div class='wr'>
+						<div class='header'>Equipment</div>
+						<div class='links'>"}
+		for(var/obj/item/mecha_parts/mecha_equipment/W in equipment)
+			output += "[W.name] <a href='?src=\ref[W];detach=1'>Detach</a><br>"
+		output += "</div></div>"
+	return output
+
 
 /obj/mecha/Topic(href, href_list)
 	..()
+	if(href_list["update_content"])
+		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())
+		return
 	if (href_list["close"])
-		src.pr_update_stats.stop()
 		return
 	if (href_list["toggle_lights"])
 		src.toggle_lights()
@@ -1171,6 +1215,8 @@
 			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
 	if(href_list["reset_dna"])
 		src.dna = null
+
+
 /*
 
 	if (href_list["ai_take_control"])
@@ -1281,14 +1327,6 @@
 			int_tank_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
 		return
 
-/datum/global_iterator/mecha_view_stats // open and update stats window
-
-	process(var/obj/mecha/mecha)
-		if(mecha.occupant)
-			mecha.occupant << browse(mecha.get_stats_html(), "window=exosuit")
-			onclose(mecha.occupant, "exosuit", mecha)
-		return
-
 /datum/global_iterator/mecha_intertial_movement //inertial movement in space
 	delay = 7
 
@@ -1299,19 +1337,6 @@
 		else
 			src.stop()
 		return
-
-/*
-/datum/global_iterator/mecha_location_temp_check //mecha location temperature checks
-
-	process(var/obj/mecha/mecha)
-		if(istype(mecha.loc, /turf/simulated))
-			var/turf/simulated/T = mecha.loc
-			if(T.air)
-				if(T.air.temperature > mecha.max_temperature)
-					mecha.take_damage(5,"fire")
-					mecha.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
-		return
-*/
 
 /datum/global_iterator/mecha_internal_damage // processing internal damage
 

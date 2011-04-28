@@ -270,7 +270,7 @@
 	process(var/obj/machinery/vehicle/space_ship/SS as obj)
 		if(SS.pr_inertial_movement.desired_delay!=SS.pr_inertial_movement.cur_delay)
 			var/delta = SS.pr_inertial_movement.desired_delay - SS.pr_inertial_movement.cur_delay
-			SS.pr_inertial_movement.cur_delay += delta/abs(delta)
+			SS.pr_inertial_movement.cur_delay += delta>0?1:-1
 			/*
 			for(var/mob/M in SS)
 				M << "Current speed: [SS.get_current_speed()]"

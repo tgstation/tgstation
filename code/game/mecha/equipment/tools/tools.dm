@@ -425,6 +425,11 @@
 		chassis.proc_res["dynattackby"] = src
 		return
 
+	detach()
+		chassis.proc_res["dynattackby"] = null
+		..()
+		return
+
 	proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(!action_checks(user))
 			return chassis.dynattackby(W,user)
@@ -466,6 +471,12 @@
 		..()
 		chassis.proc_res["dynbulletdamage"] = src
 		chassis.proc_res["dynhitby"] = src
+		return
+
+	detach()
+		chassis.proc_res["dynbulletdamage"] = null
+		chassis.proc_res["dynhitby"] = null
+		..()
 		return
 
 	proc/dynbulletdamage(flag)
@@ -559,6 +570,7 @@
 		return output
 
 	Topic(href, href_list)
+		..()
 		if(href_list["toggle_repairs"])
 			chassis.overlays -= droid_overlay
 			if(pr_repair_droid.toggle())
@@ -615,7 +627,7 @@
 	can_attach(obj/mecha/M as obj)
 		if(..())
 			if(!istype(M, /obj/mecha/combat/honker))
-				if(!M.proc_res["dynattackby"] && !M.proc_res["dynattackhand"] && !!M.proc_res["dynattackalien"])
+				if(!M.proc_res["dynattackby"] && !M.proc_res["dynattackhand"] && !M.proc_res["dynattackalien"])
 					return 1
 		return 0
 
