@@ -1632,7 +1632,7 @@
 	return
 
 /client/Northwest()
-	if(!isrobot(src))
+	if(!isrobot(src.mob))
 		src.mob.drop_item_v()
 	return
 
