@@ -1531,7 +1531,7 @@
 "aDw" = (/obj/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/simulated/wall,/area/library)
 "aDx" = (/obj/machinery/atmospherics/pipe/simple,/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/turf/simulated/floor/plating,/area/maintenance/fsmaint)
 "aDy" = (/obj/machinery/atmospherics/pipe/simple{color = "blue"; icon_state = "intact-b-f"; level = 1; name = "pipe"},/turf/simulated/wall,/area/hydroponics)
-"aDz" = (/obj/table{icon_state = "tabledir"; dir = 4},/obj/item/device/analyzer/plant_analyzer,/obj/item/weapon/paper/hydroponics,/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
+"aDz" = (/obj/table{icon_state = "tabledir"; dir = 4},/obj/item/device/analyzer/plant_analyzer,/obj/item/weapon/paper/hydroponics,/obj/item/weapon/reagent_containers/food/drinks/britcup{desc = "Kingston's personal cup."; layer = 4},/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
 "aDA" = (/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
 "aDB" = (/obj/machinery/light,/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
 "aDC" = (/obj/item/weapon/storage/toolbox/mechanical{pixel_x = -2; pixel_y = -1},/obj/disposalpipe/segment{dir = 1},/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)

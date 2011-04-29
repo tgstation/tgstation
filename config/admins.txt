@@ -5,6 +5,8 @@ herpa - Game Master
 scaredofshadows - Game Master
 chicagoted - Game Master
 neofite - Game Master
+uristmcdorf - Game Master
+cinless - Game Master
 
 mport2004 - Game Admin
 lj82 - Game Admin

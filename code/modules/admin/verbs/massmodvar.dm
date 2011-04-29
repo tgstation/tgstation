@@ -145,23 +145,37 @@
 						A.vars[variable] = O.vars[variable]
 
 		if("num")
-			O.vars[variable] = input("Enter new number:","Num",\
-				O.vars[variable]) as num
+			var/new_value = input("Enter new number:","Num",\
+					O.vars[variable]) as num
+
+			if(variable=="luminosity")
+				O.sd_SetLuminosity(new_value)
+			else
+				O.vars[variable] = new_value
 
 			if(istype(O, /mob))
 				for(var/mob/M in world)
 					if (M.type == O.type)
-						M.vars[variable] = O.vars[variable]
+						if(variable=="luminosity")
+							M.sd_SetLuminosity(new_value)
+						else
+							M.vars[variable] = O.vars[variable]
 
 			else if(istype(O, /obj))
 				for(var/obj/A in world)
 					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+						if(variable=="luminosity")
+							A.sd_SetLuminosity(new_value)
+						else
+							A.vars[variable] = O.vars[variable]
 
 			else if(istype(O, /turf))
 				for(var/turf/A in world)
 					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+						if(variable=="luminosity")
+							A.sd_SetLuminosity(new_value)
+						else
+							A.vars[variable] = O.vars[variable]
 
 		if("type")
 			O.vars[variable] = input("Enter type:","Type",O.vars[variable]) \

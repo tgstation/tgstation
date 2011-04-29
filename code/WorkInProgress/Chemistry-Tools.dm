@@ -2234,6 +2234,12 @@
 	icon_state = "flask"
 	volume = 60
 
+/obj/item/weapon/reagent_containers/food/drinks/britcup
+	name = "cup"
+	desc = "A cup with the british flag emblazoned on it."
+	icon_state = "britcup"
+	volume = 30
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
 	name = "glass"
 	desc = "Your standard drinking glass."

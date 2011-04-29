@@ -93,7 +93,6 @@
 		if("No")
 			L += var_value
 
-
 /client/proc/mod_list(var/list/L)
 	if(!istype(L,/list)) src << "Not a List."
 
@@ -343,8 +342,13 @@
 				O.vars[variable]) as text
 
 		if("num")
-			O.vars[variable] = input("Enter new number:","Num",\
-				O.vars[variable]) as num
+			if(variable=="luminosity")
+				var/new_value = input("Enter new number:","Num",\
+					O.vars[variable]) as num
+				O.sd_SetLuminosity(new_value)
+			else
+				O.vars[variable] = input("Enter new number:","Num",\
+					O.vars[variable]) as num
 
 		if("type")
 			O.vars[variable] = input("Enter type:","Type",O.vars[variable]) \
