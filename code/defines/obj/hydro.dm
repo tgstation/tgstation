@@ -50,6 +50,29 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/replicapod
+	name = "Replica pod seeds"
+	icon_state = "seed-replicapod"
+	mypath = "/obj/item/seeds/replicapod"
+	species = "replicapod"
+	plantname = "Replica pod"
+	productname = "/mob/living/carbon/human" //verrry special -- Urist
+	lifespan = 25 //no idea what those do
+	endurance = 8
+	maturation = 12
+	production = 12
+	yield = 1 //seeds if there isn't a dna inside
+	oneharvest = 1
+	potency = 30
+	plant_type = 0
+	growthstages = 6
+	var/ui = null //for storing the guy
+	var/se = null
+	var/ckey = null
+	var/realName = null
+	var/mind = null
+	gender = "male"
+
 /obj/item/seeds/berryseed
 	name = "Berry seeds"
 	icon_state = "seed-berry"

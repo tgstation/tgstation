@@ -207,7 +207,7 @@ datum/mind
 						new_objective = new /datum/objective/assassinate
 						new_objective.owner = src
 						new_objective:target = new_target:mind
-						new_objective.explanation_text = "Assassinate [new_target:real_name], the [new_target:mind.assigned_role]."
+						new_objective.explanation_text = "Assassinate [new_target:real_name], the [new_target:mind:assigned_role]."
 
 				if ("hijack")
 					new_objective = new /datum/objective/hijack

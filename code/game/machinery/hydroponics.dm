@@ -672,50 +672,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(src.harvest)
 		if(!user in range(1,src))
 			return
-		var/item = text2path(src.myseed.productname)
-		var/t_amount = 0
-
-		while ( t_amount < (src.myseed.yield * src.yieldmod ))		//Yay for egg plants who need their own handling!
-			if(src.myseed.species == "nettle" || src.myseed.species == "deathnettle") // User gets a WEAPON
-				var/obj/item/weapon/grown/t_prod = new item(user.loc)
-				t_prod.seed = src.myseed.mypath
-				t_prod.species = src.myseed.species
-				t_prod.lifespan = src.myseed.lifespan
-				t_prod.endurance = src.myseed.endurance
-				t_prod.maturation = src.myseed.maturation
-				t_prod.production = src.myseed.production
-				t_prod.yield = src.myseed.yield
-				t_prod.potency = src.myseed.potency
-				t_prod.force = src.myseed.potency // POTENCY == DAMAGE FUCK YEEAHHH
-				t_prod.plant_type = src.myseed.plant_type
-				t_amount++
-			//else if(src.myseed.species == "towercap")
-				//var/obj/item/wood/t_prod = new item(user.loc) - User gets wood (heh) - not implemented yet
-			else if(src.myseed.species == "eggy")		//User gets an item that can't be re-planted.
-				new item(user.loc)
-				t_amount++
-			else
-				var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new item(user.loc, src.myseed.potency) // User gets a consumable
-				t_prod.seed = src.myseed.mypath
-				t_prod.species = src.myseed.species
-				t_prod.lifespan = src.myseed.lifespan
-				t_prod.endurance = src.myseed.endurance
-				t_prod.maturation = src.myseed.maturation
-				t_prod.production = src.myseed.production
-				t_prod.yield = src.myseed.yield
-				t_prod.potency = src.myseed.potency
-				t_prod.plant_type = src.myseed.plant_type
-				t_amount++
-		src.harvest = 0
-		src.lastproduce = src.age
-		if((src.yieldmod * src.myseed.yield) <= 0)
-			usr << text("\red You fail to harvest anything useful")
-		else
-			usr << text("You harvest from the [src.myseed.plantname]")
-		if(src.myseed.oneharvest)
-			src.planted = 0
-			src.dead = 0
-		src.updateicon()
+		myseed.harvest()
 	else if(src.dead)
 		src.planted = 0
 		src.dead = 0
@@ -737,114 +694,378 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			usr << text("The tray is filled with tiny worms!")
 		usr << text ("") // Empty line for readability.
 
+/obj/item/seeds/proc/harvest(mob/user = usr)
+	var/produce = text2path(productname)
+	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/t_amount = 0
 
+	while ( t_amount < (yield * parent.yieldmod ))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(user.loc, potency) // User gets a consumable
 
-// BROKEN!!!!!!
+		t_prod.seed = mypath
+		t_prod.species = species
+		t_prod.lifespan = lifespan
+		t_prod.endurance = endurance
+		t_prod.maturation = maturation
+		t_prod.production = production
+		t_prod.yield = yield
+		t_prod.potency = potency
+		t_prod.plant_type = plant_type
+		t_amount++
+
+	parent.update_tray()
+
+/obj/item/seeds/nettleseed/harvest(mob/user = usr)
+	var/produce = text2path(productname)
+	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/t_amount = 0
+
+	while ( t_amount < (yield * parent.yieldmod ))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(user.loc, potency) // User gets a consumable
+		t_prod.seed = mypath
+		t_prod.species = species
+		t_prod.lifespan = lifespan
+		t_prod.endurance = endurance
+		t_prod.maturation = maturation
+		t_prod.production = production
+		t_prod.yield = yield
+		t_prod.potency = potency
+		t_prod.plant_type = plant_type
+		t_amount++
+
+	parent.update_tray()
+
+/obj/item/seeds/deathnettleseed/harvest(mob/user = usr) //isn't a nettle subclass yet, so
+	var/produce = text2path(productname)
+	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/t_amount = 0
+
+	while ( t_amount < (yield * parent.yieldmod ))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(user.loc, potency) // User gets a consumable
+		t_prod.seed = mypath
+		t_prod.species = species
+		t_prod.lifespan = lifespan
+		t_prod.endurance = endurance
+		t_prod.maturation = maturation
+		t_prod.production = production
+		t_prod.yield = yield
+		t_prod.potency = potency
+		t_prod.plant_type = plant_type
+		t_amount++
+
+	parent.update_tray()
+
+/obj/item/seeds/eggyseed/harvest(mob/user = usr)
+	var/produce = text2path(productname)
+	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/t_amount = 0
+
+	while ( t_amount < (yield * parent.yieldmod ))
+		new produce(user.loc)
+		t_amount++
+
+	parent.update_tray()
+
+/obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
+	var/obj/machinery/hydroponics/parent = loc
+
+	if(ckey) //if there's human data stored in it, make a human
+		var/mob/ghost = find_dead_player("[ckey]")
+
+		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
+		if(ghost)
+			ghost.client.mob = podman
+
+		if (realName)
+			podman.real_name = realName
+		else
+			podman.real_name = "pod person"  //No null names!!
+
+		if(mind && istype(mind,/datum/mind)) //let's try that
+			mind:transfer_to(podman)
+			mind:original = podman
+		else //welp
+			podman.mind = new /datum/mind(  )
+			podman.mind.key = podman.key
+			podman.mind.current = podman
+			podman.mind.original = podman
+			podman.mind.transfer_to(podman)
+			ticker.minds += podman.mind
+
+			// -- Mode/mind specific stuff goes here
+		switch(ticker.mode.name)
+			if ("revolution")
+				if (podman.mind in ticker.mode:revolutionaries)
+					ticker.mode:add_revolutionary(podman.mind)
+					ticker.mode:update_all_rev_icons() //So the icon actually appears
+				if (podman.mind in ticker.mode:head_revolutionaries)
+					ticker.mode:update_all_rev_icons()
+			if ("cult")
+				if (podman.mind in ticker.mode:cult)
+					ticker.mode:add_cultist(podman.mind)
+					ticker.mode:update_all_cult_icons() //So the icon actually appears
+			if ("changeling")
+				if (podman.mind in ticker.mode:changelings)
+					podman.make_changeling()
+
+			// -- End mode specific stuff
+
+		if(ghost)
+			if (istype(ghost, /mob/dead/observer))
+				del(ghost) //Don't leave ghosts everywhere!!
+
+		podman.gender = gender
+
+		if (!podman.dna)
+			podman.dna = new /datum/dna(  )
+		if (ui)
+			podman.dna.uni_identity = ui
+			updateappearance(podman, ui)
+		if (se)
+			podman.dna.struc_enzymes = se
+		podman:update_face()
+		podman:update_body()
+
+		if(!prob(potency)) //if it fails, plantman!
+			podman.mutantrace = "plant"
+
+	else //else, one packet of seeds. ONE.
+		var/obj/item/seeds/replicapod/harvestseeds = new /obj/item/seeds/replicapod(user.loc)
+		harvestseeds.lifespan = lifespan
+		harvestseeds.endurance = endurance
+		harvestseeds.maturation = maturation
+		harvestseeds.production = production
+		harvestseeds.yield = yield
+		harvestseeds.potency = potency
+
+	parent.update_tray()
+
+/obj/item/seeds/replicapod/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/reagent_containers))
+
+		user << "You inject the contents of the syringe into the seeds."
+
+		for(var/datum/reagent/blood/bloodSample in W:reagents.reagent_list)
+			var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
+
+			//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
+			ui = source.dna.uni_identity
+			se = source.dna.struc_enzymes
+			ckey = source.ckey
+			realName = source.real_name
+			gender = source.gender
+
+			if (!isnull(source.mind))
+				mind = source.mind
+
+		W:reagents.clear_reagents()
+	else
+		return ..()
+
+/obj/machinery/hydroponics/proc/update_tray(mob/user = usr)
+	harvest = 0
+	lastproduce = src.age
+	if((yieldmod * myseed.yield) <= 0)
+		user << text("\red You fail to harvest anything useful")
+	else
+		user << text("You harvest from the [src.myseed.plantname]")
+	if(myseed.oneharvest)
+		planted = 0
+		dead = 0
+	updateicon()
+
 /*
-/datum/vinetracker
-	var/list/vines = list()
+else if (href_list["clone"])
+		var/datum/data/record/C = locate(href_list["clone"])
+		//Look for that player! They better be dead!
+		var/mob/selected = find_dead_player("[C.fields["ckey"]]")
 
-	proc/vineprocess()
-		set background = 1
-		while(vines.len > 0)
-			for(var/obj/plant/vine/V in vines)
-				sleep(-1)
-				switch(V.stage)
-					if(1)
-						for(var/turf/T in orange(1, V))
-							var/plantfound = 0
-							if(istype(T, /turf/space)) // Vines don't grow in space
-								break
-							for(var/obj/O in T)		   // Vines don't grow on other plants, either
-								if(istype(O, /obj/plant))
-									plantfound = 1
-									break
+//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
+		if ((!selected) || (!src.pod1) || (src.pod1.occupant) || (src.pod1.mess))
+			src.temp = "Unable to initiate cloning cycle." // most helpful error message in THE HISTORY OF THE WORLD
+		else if (src.pod1.growclone(selected, C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"]))
+			src.temp = "Cloning cycle activated."
+			src.records.Remove(C)
+			del(C)
+			src.menu = 1
 
-							if(plantfound)
-								continue
-							var/chance = rand(1,100)
-							if(chance < 50)
-								spawn() new /obj/plant/vine(T)
-								continue
-						V.health += 5
-						if(V.health >= 30)
-							V.stage = 2
-							V.icon_state = "spacevine2"
-							V.density = 1
-					else if(2)
-						/*
-						for(var/turf/T in orange(1, V))
-							var/plantfound = 0
-							if(istype(T, /turf/space))
-								break
-							for(var/obj/O in T)
-								if(istype(O, /obj/plant))
-									plantfound = 1
-									break
-							if(plantfound)
-								continue
-							if(prob(15))
-								spawn() new /obj/plant/vine(T)
-						*/
-						V.health += 5
-						if(V.health >= 40)
-							V.stage = 3
-							V.icon_state = "spacevine3"
-					else if(3)
-						V.health += 10
-						if(V.health >= 60)
-							V.stage = 4
-							V.icon_state = "spacevine4"
-					else if(4)
-						V.health += 20
-						spawn(3000) del(V)
-			sleep(600)
+----
 
-*/
+subject.dna.check_integrity()
 
-obj/plant
-	anchored = 1
-	var/stage = 1
-	var/health = 10
-/*
-obj/plant/vine
-	name = "space vine"
-	icon = 'hydroponics.dmi'
-	icon_state = "spacevine1"
-	anchored = 1
-	health = 20
-	var/datum/vinetracker/tracker
+	var/datum/data/record/R = new /datum/data/record(  )
+	R.fields["mrace"] = subject.mutantrace
+	R.fields["ckey"] = subject.ckey
+	R.fields["name"] = subject.real_name
+	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)
+	R.fields["UI"] = subject.dna.uni_identity
+	R.fields["SE"] = subject.dna.struc_enzymes
 
-	New()
-		..()
-		for(var/datum/vinetracker/V in world)
-			if(V)
-				tracker = V
-				V.vines.Add(src)
-				return
-		var/datum/vinetracker/V = new /datum/vinetracker
-		tracker = V
-		V.vines.Add(src)
-		spawn () V.vineprocess()
+	//Add an implant if needed
+	var/obj/item/weapon/implant/health/imp =locate(/obj/item/weapon/implant/health, subject)
+	if (isnull(imp))
+		imp = new /obj/item/weapon/implant/health(subject)
+		imp.implanted = subject
+		R.fields["imp"] = "\ref[imp]"
+	//Update it if needed
+	else
+		R.fields["imp"] = "\ref[imp]"
 
-	attackby(var/obj/item/weapon/W, var/mob/user)
-		if(health <= 0)
-			del(src)
+	if (!isnull(subject.mind)) //Save that mind so traitors can continue traitoring after cloning.
+		R.fields["mind"] = "\ref[subject.mind]"
+
+	src.records += R
+	src.temp = "Subject successfully scanned."
+
+----
+
+/obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref, var/mrace)
+	if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
+		return 0
+
+	src.attempting = 1 //One at a time!!
+	src.locked = 1
+
+	src.eject_wait = 1
+	spawn(30)
+		src.eject_wait = 0
+
+	src.occupant = new /mob/living/carbon/human(src)
+	ghost.client.mob = src.occupant
+
+	src.icon_state = "pod_1"
+	//Get the clone body ready
+	src.occupant.rejuv = 10
+	src.occupant.cloneloss += 190 //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
+	src.occupant.brainloss += 90
+	src.occupant.paralysis += 4
+
+	//Here let's calculate their health so the pod doesn't immediately eject them!!!
+	src.occupant.health = (src.occupant.bruteloss + src.occupant.toxloss + src.occupant.oxyloss + src.occupant.cloneloss)
+
+	src.occupant << "\blue <b>Clone generation process initiated.</b>"
+	src.occupant << "\blue This will take a moment, please hold."
+
+	if (clonename)
+		src.occupant.real_name = clonename
+	else
+		src.occupant.real_name = "clone"  //No null names!!
+
+
+	var/datum/mind/clonemind = (locate(mindref) in ticker.minds)
+
+	if ((clonemind) && (istype(clonemind))) //Move that mind over!!
+		clonemind.transfer_to(src.occupant)
+		clonemind.original = src.occupant
+	else //welp
+		src.occupant.mind = new /datum/mind(  )
+		src.occupant.mind.key = src.occupant.key
+		src.occupant.mind.current = src.occupant
+		src.occupant.mind.original = src.occupant
+		src.occupant.mind.transfer_to(src.occupant)
+		ticker.minds += src.occupant.mind
+
+	// -- Mode/mind specific stuff goes here
+	switch(ticker.mode.name)
+		if ("revolution")
+			if (src.occupant.mind in ticker.mode:revolutionaries)
+				ticker.mode:add_revolutionary(src.occupant.mind)
+				ticker.mode:update_all_rev_icons() //So the icon actually appears
+			if (src.occupant.mind in ticker.mode:head_revolutionaries)
+				ticker.mode:update_all_rev_icons()
+		if ("cult")
+			if (src.occupant.mind in ticker.mode:cult)
+				ticker.mode:add_cultist(src.occupant.mind)
+				ticker.mode:update_all_cult_icons() //So the icon actually appears
+		if ("changeling")
+			if (src.occupant.mind in ticker.mode:changelings)
+				src.occupant.make_changeling()
+
+	// -- End mode specific stuff
+
+	if (istype(ghost, /mob/dead/observer))
+		del(ghost) //Don't leave ghosts everywhere!!
+
+	if (!src.occupant.dna)
+		src.occupant.dna = new /datum/dna(  )
+	if (ui)
+		src.occupant.dna.uni_identity = ui
+		updateappearance(src.occupant, ui)
+	if (se)
+		src.occupant.dna.struc_enzymes = se
+		randmutb(src.occupant) //Sometimes the clones come out wrong.
+	src.occupant:update_face()
+	src.occupant:update_body()
+	src.occupant:mutantrace = mrace
+	src.attempting = 0
+	return 1
+
+//Grow clones to maturity then kick them out.  FREELOADERS
+/obj/machinery/clonepod/process()
+
+	if (stat & NOPOWER) //Autoeject if power is lost
+		if (src.occupant)
+			src.locked = 0
+			src.go_out()
+		return
+
+	if ((src.occupant) && (src.occupant.loc == src))
+		if((src.occupant.stat == 2) || (src.occupant.suiciding))  //Autoeject corpses and suiciding dudes.
+			src.locked = 0
+			src.go_out()
+			src.connected_message("Clone Rejected: Deceased.")
 			return
-		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
-		var/damage = W.force * 2
 
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
+		else if(src.occupant.health < src.heal_level)
+			src.occupant.paralysis = 4
 
-			if(WT.welding)
-				damage = 15
-				playsound(src.loc, 'Welder.ogg', 100, 1)
+			 //Slowly get that clone healed and finished.
+			src.occupant.cloneloss = max(src.occupant.cloneloss-1, 0)
 
-		src.health -= damage
+			//Premature clones may have brain damage.
+			src.occupant.brainloss = max(src.occupant.brainloss-1, 0)
 
-/obj/plant/vine/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 350)
-		health -= 15
-		if(health <= 0)
-			del(src) */
+			//So clones don't die of oxyloss in a running pod.
+			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
+				src.occupant.reagents.add_reagent("inaprovaline", 60)
+
+			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
+			src.occupant.oxyloss = max(src.occupant.oxyloss-2, 0)
+
+			use_power(7500) //This might need tweaking.
+			return
+
+		else if((src.occupant.health >= src.heal_level) && (!src.eject_wait))
+			src.connected_message("Cloning Process Complete.")
+			src.locked = 0
+			src.go_out()
+			return
+
+	else if ((!src.occupant) || (src.occupant.loc != src))
+		src.occupant = null
+		if (src.locked)
+			src.locked = 0
+		if (!src.mess)
+			icon_state = "pod_0"
+		use_power(200)
+		return
+
+	return
+
+	-----
+
+	Blood.data["donor"] = reference to human
+
+	---
+
+	else if(istype(W, /obj/item/weapon/reagent_containers/syringe))
+		var/obj/item/weapon/reagent_containers/syringe/S = W
+
+		user << "You inject the solution into the power cell."
+
+		if(S.reagents.has_reagent("plasma", 5))
+
+			rigged = 1
+
+		S.reagents.clear_reagents()
+*/
