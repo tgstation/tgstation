@@ -851,7 +851,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
 			ui = source.dna.uni_identity
 			se = source.dna.struc_enzymes
-			ckey = source.ckey
+			if(source.ckey)
+				ckey = source.ckey
+			else if(source.mind)
+				ckey = ckey(source.mind.key)
 			realName = source.real_name
 			gender = source.gender
 

@@ -57,10 +57,10 @@
 	species = "replicapod"
 	plantname = "Replica pod"
 	productname = "/mob/living/carbon/human" //verrry special -- Urist
-	lifespan = 25 //no idea what those do
+	lifespan = 50 //no idea what those do
 	endurance = 8
-	maturation = 12
-	production = 12
+	maturation = 10
+	production = 10
 	yield = 1 //seeds if there isn't a dna inside
 	oneharvest = 1
 	potency = 30
