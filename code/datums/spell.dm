@@ -28,21 +28,22 @@ var/list/spells = typesof(/obj/spell) //needed for the badmin verb for now
 	var/smoke_spread = 0 //1 - harmless, 2 - harmful
 	var/smoke_amt = 0 //cropped at 10
 
-/obj/spell/proc/cast_check(mob/user = usr) //checks if the spell can be cast based on its settings
+/obj/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
 	if(!(src in usr.spell_list))
 		usr << "\red You shouldn't have this spell! Something's wrong."
 		return 0
 
-	switch(charge_type)
-		if("recharge")
-			if(charge_counter < charge_max)
-				usr << "[name] is still recharging."
-				return 0
-		if("charges")
-			if(!charge_counter)
-				usr << "[name] has no charges left."
-				return 0
+	if(!skipcharge)
+		switch(charge_type)
+			if("recharge")
+				if(charge_counter < charge_max)
+					usr << "[name] is still recharging."
+					return 0
+			if("charges")
+				if(!charge_counter)
+					usr << "[name] has no charges left."
+					return 0
 
 	if(usr.stat && !stat_allowed)
 		usr << "Not when you're incapacitated."
@@ -59,11 +60,12 @@ var/list/spells = typesof(/obj/spell) //needed for the badmin verb for now
 			usr << "I don't feel strong enough without my hat."
 			return 0
 
-	switch(charge_type)
-		if("recharge")
-			charge_counter = 0 //doesn't start recharging until the targets selecting ends
-		if("charges")
-			charge_counter-- //returns the charge if the targets selecting fails
+	if(!skipcharge)
+		switch(charge_type)
+			if("recharge")
+				charge_counter = 0 //doesn't start recharging until the targets selecting ends
+			if("charges")
+				charge_counter-- //returns the charge if the targets selecting fails
 
 	return 1
 

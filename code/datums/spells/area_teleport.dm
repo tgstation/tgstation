@@ -7,7 +7,7 @@
 
 /obj/spell/targeted/area_teleport/perform(list/targets, recharge = 1)
 	var/thearea = before_cast(targets)
-	if(!thearea)
+	if(!thearea || !cast_check(1))
 		revert_cast()
 		return
 	invocation(thearea)
