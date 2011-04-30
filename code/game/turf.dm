@@ -138,14 +138,12 @@
 	return W
 
 /turf/proc/ReplaceWithEngineFloor()
-	var/prior_icon = icon_old
 	var/old_dir = dir
 
 	var/turf/simulated/floor/engine/E = new /turf/simulated/floor/engine( locate(src.x, src.y, src.z) )
 
 	E.dir = old_dir
-	if(prior_icon) E.icon_state = prior_icon
-	else E.icon_state = "engine"
+	E.icon_state = "engine"
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if (istype(A,/mob/living/carbon))
@@ -339,7 +337,7 @@
 			O.density = 1
 			O.layer = 5
 			var/turf/simulated/floor/F = ReplaceWithFloor()
-			F.to_plating()
+			F.make_plating()
 			F.burn_tile()
 			user << "\red The thermite melts the wall."
 			spawn(100) del(O)
@@ -405,7 +403,7 @@
 			O.density = 1
 			O.layer = 5
 			var/turf/simulated/floor/F = ReplaceWithFloor()
-			F.to_plating()
+			F.make_plating()
 			F.burn_tile()
 			user << "\red The thermite melts the wall."
 			spawn(100) del(O)
@@ -514,6 +512,60 @@
 		dismantle_wall()
 	return 0
 
+
+//This is so damaged or burnt tiles or platings don't get remembered as the default tile
+var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
+				"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
+				"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
+				"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
+				"light_on_broken","light_off",)
+
+/turf/simulated/floor
+
+	//Note to coders, the 'intact' var can no longer be used to determine if the floor is a plating or not.
+	//Use the is_plating(), is_sttel_floor() and is_light_floor() procs instead. --Errorage
+	name = "floor"
+	icon = 'floors.dmi'
+	icon_state = "floor"
+	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
+	thermal_conductivity = 0.040
+	heat_capacity = 10000
+	var/broken = 0
+	var/burnt = 0
+	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/steel
+
+	airless
+		name = "airless floor"
+		oxygen = 0.01
+		nitrogen = 0.01
+		temperature = TCMB
+
+		New()
+			..()
+			name = "floor"
+
+	light
+		name = "Light floor"
+		luminosity = 5
+		icon_state = "light_on"
+		floor_tile = new/obj/item/stack/tile/light
+
+		New()
+			floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
+			var/n = name //just in case commands rename it in the ..() call
+			..()
+			spawn(4)
+				update_icon()
+				name = n
+
+
+/turf/simulated/floor/New()
+	..()
+	if(icon_state in icons_to_ignore_at_floor_init) //so damaged/burned tiles or plating icons aren't saved as the default
+		icon_regular_floor = "floor"
+	else
+		icon_regular_floor = icon_state
+
 /turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
@@ -549,13 +601,43 @@
 	return
 
 turf/simulated/floor/proc/update_icon()
+	if(is_steel_floor())
+		if(!broken && !burnt)
+			icon_state = icon_regular_floor
+	if(is_plating())
+		if(!broken && !burnt)
+			icon_state = "plating"
+	if(is_light_floor())
+		var/obj/item/stack/tile/light/T = floor_tile
+		if(T.on)
+			switch(T.state)
+				if(0)
+					icon_state = "light_on"
+					sd_SetLuminosity(5)
+				if(1)
+					var/num = pick("1","2","3","4")
+					icon_state = "light_on_flicker[num]"
+					sd_SetLuminosity(5)
+				if(2)
+					icon_state = "light_on_broken"
+					sd_SetLuminosity(5)
+				if(3)
+					icon_state = "light_off"
+					sd_SetLuminosity(0)
+		else
+			sd_SetLuminosity(0)
+			icon_state = "light_off"
+
 
 
 /turf/simulated/floor/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
 /turf/simulated/floor/attack_hand(mob/user as mob)
-
+	if (is_light_floor())
+		var/obj/item/stack/tile/light/T = floor_tile
+		T.on = !T.on
+	update_icon()
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
 		return
 	if (user.pulling.anchored)
@@ -584,58 +666,116 @@ turf/simulated/floor/proc/update_icon()
 			new /obj/item/stack/rods(src, 2)
 			ReplaceWithFloor()
 			var/turf/simulated/floor/F = src
-			F.to_plating()
+			F.make_plating()
 			return
-
-/turf/simulated/floor/proc/to_plating()
-	if(istype(src,/turf/simulated/floor/engine)) return
-	if(!intact) return
-	if(!icon_old) icon_old = icon_state
-	src.icon_state = "plating"
-	intact = 0
-	broken = 0
-	burnt = 0
-	levelupdate()
 
 /turf/simulated/floor/proc/gets_drilled()
 	return
 
 /turf/simulated/floor/proc/break_tile_to_plating()
-	if(intact) to_plating()
+	if(!is_plating()) make_plating()
 	break_tile()
+
+/turf/simulated/floor/is_steel_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/steel))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_light_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/light))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_plating()
+	if(!floor_tile)
+		return 1
+	else
+		return 0
 
 /turf/simulated/floor/proc/break_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
 	if(istype(src,/turf/simulated/floor/mech_bay_recharge_floor))
 		src.ReplaceWithPlating()
 	if(broken) return
-	if(!icon_old) icon_old = icon_state
-	if(intact)
+	if(is_steel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"
 		broken = 1
-	else
+	else if(is_steel_floor())
+		src.icon_state = "light_broken"
+		broken = 1
+	else if(is_plating())
 		src.icon_state = "platingdmg[pick(1,2,3)]"
 		broken = 1
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
 	if(broken || burnt) return
-	if(!icon_old) icon_old = icon_state
-	if(intact)
+	if(is_steel_floor())
+		src.icon_state = "damaged[pick(1,2,3,4,5)]"
+		burnt = 1
+	else if(is_steel_floor())
 		src.icon_state = "floorscorched[pick(1,2)]"
-	else
+		burnt = 1
+	else if(is_plating())
 		src.icon_state = "panelscorched"
-	burnt = 1
+		burnt = 1
 
-/turf/simulated/floor/proc/restore_tile()
-	if(intact) return
-	intact = 1
+//This proc will delete the floor_tile and the update_iocn() proc will then change the icon_state of the turf
+/turf/simulated/floor/proc/make_plating()
+	if(istype(src,/turf/simulated/floor/engine)) return
+	if(!floor_tile) return
+	del(floor_tile)
+	sd_SetLuminosity(0)
+	floor_tile = null
+	intact = 0
 	broken = 0
 	burnt = 0
-	if(icon_old)
-		icon_state = icon_old
-	else
-		icon_state = "floor"
+
+	update_icon()
+	levelupdate()
+
+//This proc will make the turf a steel floor tile. The expected argument is the tile to make the turf with
+//If none is given it will make a new object. dropping or unequipping must be handled before or after calling
+//this proc.
+/turf/simulated/floor/proc/make_steel_floor(var/obj/item/stack/tile/steel/T = null)
+	broken = 0
+	burnt = 0
+	intact = 1
+	sd_SetLuminosity(0)
+	if(T)
+		if(istype(T,/obj/item/stack/tile/steel))
+			floor_tile = T
+			if (icon_regular_floor)
+				icon_state = icon_regular_floor
+			else
+				icon_state = "floor"
+				icon_regular_floor = icon_state
+			return
+	//if you gave a valid parameter, it won't get thisf ar.
+	floor_tile = new/obj/item/stack/tile/steel
+	icon_state = "floor"
+	icon_regular_floor = icon_state
+
+	update_icon()
+	levelupdate()
+
+//This proc will make the turf a light floor tile. The expected argument is the tile to make the turf with
+//If none is given it will make a new object. dropping or unequipping must be handled before or after calling
+//this proc.
+/turf/simulated/floor/proc/make_light_floor(var/obj/item/stack/tile/light/T = null)
+	broken = 0
+	burnt = 0
+	intact = 1
+	if(T)
+		if(istype(T,/obj/item/stack/tile/light))
+			floor_tile = T
+			return
+	//if you gave a valid parameter, it won't get thisf ar.
+	floor_tile = new/obj/item/stack/tile/light
+
+	update_icon()
 	levelupdate()
 
 /turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
@@ -643,22 +783,35 @@ turf/simulated/floor/proc/update_icon()
 	if(!C || !user)
 		return 0
 
-	if(istype(C, /obj/item/weapon/crowbar) && intact)
+	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
+		if(is_light_floor())
+			var/obj/item/stack/tile/light/T = floor_tile
+			if(T.state)
+				user.u_equip(C)
+				del(C)
+				T.state = C //fixing it by bashing it with a light bulb, fun eh?
+				update_icon()
+				user << "\blue You replace the light bulb."
+			else
+				user << "\blue The lightbulb seems fine, no need to replace it."
+
+	if(istype(C, /obj/item/weapon/crowbar) && (!(is_plating())))
 		if(broken || burnt)
 			user << "\red You remove the broken plating."
 		else
-			new /obj/item/stack/tile(src)
+			user << "\red You remove the [floor_tile.name]."
+			new floor_tile.type(src)
 
-		to_plating()
+		make_plating()
 		playsound(src.loc, 'Crowbar.ogg', 80, 1)
 
 		return
 
 	if(istype(C, /obj/item/stack/rods))
-		if (!src.intact)
+		if (is_plating())
 			if (C:amount >= 2)
 				user << "\blue Reinforcing the floor..."
-				if(do_after(user, 30) && C && C:amount >= 2 && !src.intact)
+				if(do_after(user, 30) && C && C:amount >= 2 && is_plating())
 					ReplaceWithEngineFloor()
 					playsound(src.loc, 'Deconstruct.ogg', 80, 1)
 					C:use(2)
@@ -669,14 +822,24 @@ turf/simulated/floor/proc/update_icon()
 			user << "\red You must remove the plating first."
 		return
 
-	if(istype(C, /obj/item/stack/tile) && !intact)
-		restore_tile()
-		var/obj/item/stack/tile/T = C
-		playsound(src.loc, 'Genhit.ogg', 50, 1)
-		T.use(1)
+	if(istype(C, /obj/item/stack/tile))
+		if(is_plating())
+			var/obj/item/stack/tile/T = C
+			floor_tile = new T.type
+			intact = 1
+			if(istype(T,/obj/item/stack/tile/light))
+				floor_tile:state = T:state
+				floor_tile:on = T:on
+			T.use(1)
+			update_icon()
+			levelupdate()
+			playsound(src.loc, 'Genhit.ogg', 50, 1)
+		else
+			user << "\blue This section already has a tile on it. Use a crowbar to pry it off."
+
 
 	if(istype(C, /obj/item/weapon/cable_coil))
-		if(!intact)
+		if(is_plating())
 			var/obj/item/weapon/cable_coil/coil = C
 			coil.turf_place(src, user)
 		else
@@ -733,7 +896,7 @@ turf/simulated/floor/proc/update_icon()
 		C:use(1)
 		return
 
-	if (istype(C, /obj/item/stack/tile))
+	if (istype(C, /obj/item/stack/tile/steel))
 		var/obj/lattice/L = locate(/obj/lattice, src)
 		if(L)
 			del(L)

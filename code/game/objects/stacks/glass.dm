@@ -78,7 +78,21 @@ SHARDS
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
 	..()
-	if( istype(W, /obj/item/stack/rods) )
+	if(istype(W,/obj/item/weapon/cable_coil))
+		var/obj/item/weapon/cable_coil/CC = W
+		if(CC.amount < 5)
+			user << "\b There is not enough wire in this coil. You need 5 lengths."
+		CC.amount -= 5
+		amount -= 1
+		user << "\blue You attack wire to the [name]."
+		new/obj/item/stack/light_w(user.loc)
+		if(CC.amount <= 0)
+			user.u_equip(CC)
+			del(CC)
+		if(src.amount <= 0)
+			user.u_equip(src)
+			del(src)
+	else if( istype(W, /obj/item/stack/rods) )
 		var/obj/item/stack/rods/V  = W
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 		RG.add_fingerprint(user)

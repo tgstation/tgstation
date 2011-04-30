@@ -1042,6 +1042,7 @@
 	throw_speed = 3
 	throw_range = 3
 
+
 /obj/item/stack/sheet/rglass
 	name = "reinforced glass"
 	singular_name = "reinforced glass sheet"
@@ -1078,9 +1079,9 @@
 	throw_range = 4
 	flags = FPRINT | TABLEPASS | CONDUCT
 
-/obj/item/stack/tile
-	name = "steel floor tile"
-	singular_name = "steel floor tile"
+/obj/item/stack/tile/steel
+	name = "Steel floor tile"
+	singular_name = "S	teel floor tile"
 	desc = "Those could work as a pretty decent throwing weapon"
 	icon_state = "tile"
 	w_class = 3.0
@@ -1091,3 +1092,75 @@
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
 	max_amount = 60
+
+/obj/item/stack/light_w
+	name = "Wired glass tile"
+	singular_name = "Wired glass tile"
+	desc = ""
+	icon_state = "glass_wire"
+	w_class = 3.0
+	force = 6.0
+	throwforce = 15.0
+	throw_speed = 5
+	throw_range = 20
+	flags = FPRINT | TABLEPASS | CONDUCT
+	max_amount = 60
+
+	attackby(var/obj/item/O as obj, var/mob/user as mob)
+		..()
+		if(istype(O,/obj/item/weapon/wirecutters))
+			var/obj/item/weapon/cable_coil/CC = new/obj/item/weapon/cable_coil(user.loc)
+			CC.amount = 5
+			amount--
+			new/obj/item/stack/sheet/glass(user.loc)
+			if(amount <= 0)
+				user.u_equip(src)
+				del(src)
+
+		if(istype(O,/obj/item/stack/sheet/metal))
+			var/obj/item/stack/sheet/metal/M = O
+			M.amount--
+			if(M.amount <= 0)
+				user.u_equip(M)
+				del(M)
+			amount--
+			new/obj/item/stack/tile/light(user.loc)
+			if(amount <= 0)
+				user.u_equip(src)
+				del(src)
+
+/obj/item/stack/tile/light
+	name = "Light floor tile"
+	singular_name = "Light floor tile"
+	desc = ""
+	icon_state = "tile_e"
+	w_class = 3.0
+	force = 6.0
+	throwforce = 15.0
+	throw_speed = 5
+	throw_range = 20
+	flags = FPRINT | TABLEPASS | CONDUCT
+	max_amount = 60
+	var/on = 1
+	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
+
+	New()
+		..()
+		if(prob(5))
+			state = 3 //broken
+		else if(prob(5))
+			state = 2 //breaking
+		else if(prob(10))
+			state = 1 //flickering occasionally
+		else
+			state = 0 //fine
+
+	attackby(var/obj/item/O as obj, var/mob/user as mob)
+		..()
+		if(istype(O,/obj/item/weapon/crowbar))
+			new/obj/item/stack/sheet/metal(user.loc)
+			amount--
+			new/obj/item/stack/light_w(user.loc)
+			if(amount <= 0)
+				user.u_equip(src)
+				del(src)

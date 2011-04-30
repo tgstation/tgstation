@@ -1,6 +1,6 @@
 /turf
 	icon = 'floors.dmi'
-	var/intact = 1
+	var/intact = 1 //for floors, use is_plating(), is_steel_floor() and is_light_floor()
 
 	level = 1.0
 
@@ -21,6 +21,14 @@
 		blocks_air = 0
 		icon_old = null
 		pathweight = 1
+
+	proc/is_plating()
+		return 0
+	proc/is_steel_floor()
+		return 0
+	proc/is_light_floor()
+		return 0
+
 
 /turf/space
 	icon = 'space.dmi'
@@ -46,25 +54,6 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
-/turf/simulated/floor
-	name = "floor"
-	icon = 'floors.dmi'
-	icon_state = "floor"
-	thermal_conductivity = 0.040
-	heat_capacity = 10000
-	var/broken = 0
-	var/burnt = 0
-
-	airless
-		name = "airless floor"
-		oxygen = 0.01
-		nitrogen = 0.01
-		temperature = TCMB
-
-		New()
-			..()
-			name = "floor"
-
 /turf/simulated/floor/engine
 	name = "reinforced floor"
 	icon_state = "engine"
@@ -81,6 +70,7 @@
 /turf/simulated/floor/plating
 	name = "plating"
 	icon_state = "plating"
+	floor_tile = null
 	intact = 0
 
 /turf/simulated/floor/plating/airless

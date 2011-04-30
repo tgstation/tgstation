@@ -960,7 +960,7 @@ NINJA MASK
 	var/mob/living/carbon/human/U = usr
 	if(candrain&&!draining)
 		var/turf/T = U.loc
-		if(isturf(T) && !T.intact)
+		if(isturf(T) && T.is_plating())
 			attached = locate() in T
 			if(!attached)
 				U << "\red Warning: no exposed cable available."
