@@ -1,5 +1,4 @@
 /obj/mecha/working
-	req_access = access_heads
 	internal_damage_threshold = 60
 
 /obj/mecha/working/New()
@@ -19,6 +18,7 @@
 /obj/mecha/working/range_action(atom/target as obj|mob|turf)
 	return
 
+/*
 /obj/mecha/working/get_stats_part()
 	var/output = ..()
 	output += "<b>[src.name] Tools:</b><div style=\"margin-left: 15px;\">"
@@ -29,3 +29,4 @@
 		output += "None"
 	output += "</div>"
 	return output
+*/

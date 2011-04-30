@@ -26,7 +26,7 @@
 				if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 					chassis.occupant_message("You lift [target] and start to load it into cargo compartment.")
 					chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
-					equip_ready = 0
+					set_ready_state(0)
 					chassis.cell.use(energy_drain)
 					O.anchored = 1
 					var/T = chassis.loc
@@ -40,7 +40,7 @@
 						else
 							chassis.occupant_message("<font color='red'>You must hold still while handling objects.</font>")
 							O.anchored = initial(O.anchored)
-						equip_ready = 1
+						set_ready_state(1)
 
 				else
 					chassis.occupant_message("<font color='red'>Not enough room in cargo compartment.</font>")
@@ -60,10 +60,10 @@
 				step_away(M,chassis)
 				chassis.occupant_message("You push [target] out of the way.")
 				chassis.visible_message("[chassis] pushes [target] out of the way.")
-			equip_ready = 0
+			set_ready_state(0)
 			chassis.cell.use(energy_drain)
 			if(do_after_cooldown())
-				equip_ready = 1
+				set_ready_state(1)
 		return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/drill
@@ -75,7 +75,7 @@
 
 	action(atom/target)
 		if(!action_checks(target)) return
-		equip_ready = 0
+		set_ready_state(0)
 		chassis.cell.use(energy_drain)
 		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]</b></font>", "You hear the drill.")
 		chassis.occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
@@ -92,7 +92,7 @@
 				else
 					chassis.log_message("Drilled through [target]")
 					target.ex_act(2)
-			equip_ready = 1
+			set_ready_state(1)
 		return 1
 
 
@@ -113,9 +113,9 @@
 	action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
 		if(!action_checks(target) || get_dist(chassis, target)>3) return
 		if(get_dist(chassis, target)>2) return
-		equip_ready = 0
+		set_ready_state(0)
 		if(do_after_cooldown())
-			equip_ready = 1
+			set_ready_state(1)
 		if(istype(target, /obj/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
 			var/obj/o = target
 			o.reagents.trans_to(src, 200)
@@ -183,59 +183,59 @@
 			if(0)
 				if (istype(target, /turf/simulated/wall))
 					chassis.occupant_message("Deconstructing [target]...")
-					equip_ready = 0
+					set_ready_state(0)
 					if(do_after_cooldown())
 						if(disabled) return
 						chassis.spark_system.start()
 						target:ReplaceWithFloor()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
-						equip_ready = 1
+						set_ready_state(1)
 						chassis.cell.give(energy_drain)
 				else if (istype(target, /turf/simulated/floor))
 					chassis.occupant_message("Deconstructing [target]...")
-					equip_ready = 0
+					set_ready_state(0)
 					if(do_after_cooldown())
 						if(disabled) return
 						chassis.spark_system.start()
 						target:ReplaceWithSpace()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
-						equip_ready = 1
+						set_ready_state(1)
 						chassis.cell.give(energy_drain)
 				else if (istype(target, /obj/machinery/door/airlock))
 					chassis.occupant_message("Deconstructing [target]...")
-					equip_ready = 0
+					set_ready_state(0)
 					if(do_after_cooldown())
 						if(disabled) return
 						chassis.spark_system.start()
 						del(target)
 						playsound(target, 'Deconstruct.ogg', 50, 1)
-						equip_ready = 1
+						set_ready_state(1)
 						chassis.cell.give(energy_drain)
 			if(1)
 				if(istype(target, /turf/space))
 					chassis.occupant_message("Building Floor...")
-					equip_ready = 0
+					set_ready_state(0)
 					if(do_after_cooldown())
 						if(disabled) return
 						target:ReplaceWithFloor()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
-						equip_ready = 1
+						set_ready_state(1)
 						chassis.cell.use(energy_drain*3)
 				else if(istype(target, /turf/simulated/floor))
 					chassis.occupant_message("Building Wall...")
-					equip_ready = 0
+					set_ready_state(0)
 					if(do_after_cooldown())
 						if(disabled) return
 						target:ReplaceWithWall()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
-						equip_ready = 1
+						set_ready_state(1)
 						chassis.cell.use(energy_drain*3)
 			if(2)
 				if(istype(target, /turf/simulated/floor))
 					chassis.occupant_message("Building Airlock...")
-					equip_ready = 0
+					set_ready_state(0)
 					if(do_after_cooldown())
 						if(disabled) return
 						chassis.spark_system.start()
@@ -243,7 +243,7 @@
 						T.autoclose = 1
 						playsound(target, 'Deconstruct.ogg', 50, 1)
 						playsound(target, 'sparks2.ogg', 50, 1)
-						equip_ready = 1
+						set_ready_state(1)
 						chassis.cell.use(energy_drain*3)
 		return
 
@@ -280,11 +280,11 @@
 		if(!action_checks(target)) return
 		var/turf/T = get_turf(target)
 		if(T)
-			equip_ready = 0
+			set_ready_state(0)
 			chassis.cell.use(energy_drain)
 			do_teleport(chassis, T, 4)
 			if(do_after_cooldown())
-				equip_ready = 1
+				set_ready_state(1)
 		return
 
 
@@ -323,7 +323,7 @@
 		if(!target_turf)
 			return
 		chassis.cell.use(energy_drain)
-		equip_ready = 0
+		set_ready_state(0)
 		var/obj/portal/P = new /obj/portal(get_turf(target))
 		P.target = target_turf
 		P.creator = null
@@ -332,7 +332,7 @@
 		P.icon_state = "anom"
 		P.name = "wormhole"
 		if(do_after_cooldown())
-			equip_ready = 1
+			set_ready_state(1)
 		src = null
 		spawn(rand(150,300))
 			del(P)
@@ -365,10 +365,10 @@
 					if(locked in view(chassis))
 						locked.throw_at(target, 14, 1.5)
 						locked = null
-						equip_ready = 0
+						set_ready_state(0)
 						chassis.cell.use(energy_drain)
 						if(do_after_cooldown())
-							equip_ready = 1
+							set_ready_state(1)
 					else
 						chassis.occupant_message("Lock on [locked] disengaged.")
 						locked = null
@@ -386,10 +386,10 @@
 						for(var/i=0 to iter)
 							step_away(A,target)
 							sleep(2)
-				equip_ready = 0
+				set_ready_state(0)
 				chassis.cell.use(energy_drain)
 				if(do_after_cooldown())
-					equip_ready = 1
+					set_ready_state(1)
 		return
 
 	get_equip_info()
@@ -398,6 +398,7 @@
 	Topic(href, href_list)
 		if(href_list["mode"])
 			mode = text2num(href_list["mode"])
+			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 		return
 
 
@@ -442,10 +443,10 @@
 			user.visible_message("<font color='red'><b>[user] hits [chassis] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
 			chassis.take_damage(round(W.force*0.8),W.damtype)
 			chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		equip_ready = 0
+		set_ready_state(0)
 		chassis.cell.use(energy_drain)
 		if(do_after_cooldown())
-			equip_ready = 1
+			set_ready_state(1)
 		return
 
 
@@ -500,10 +501,10 @@
 				return
 		chassis.take_damage(round(damage*src.damage_coeff))
 		chassis.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		equip_ready = 0
+		set_ready_state(0)
 		chassis.cell.use(energy_drain)
 		if(do_after_cooldown())
-			equip_ready = 1
+			set_ready_state(1)
 		return
 
 	proc/dynhitby(atom/movable/A)
@@ -519,12 +520,12 @@
 		else if(istype(A, /obj))
 			var/obj/O = A
 			if(O.throwforce)
-				chassis.take_damage(O.throwforce*damage_coeff)
+				chassis.take_damage(round(O.throwforce*damage_coeff))
 				chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		equip_ready = 0
+		set_ready_state(0)
 		chassis.cell.use(energy_drain)
 		if(do_after_cooldown())
-			equip_ready = 1
+			set_ready_state(1)
 		return
 
 
@@ -579,8 +580,9 @@
 			else
 				droid_overlay = new(src.icon, icon_state = "repair_droid")
 				chassis.log_message("[src] deactivated.")
-				equip_ready = 1
+				set_ready_state(1)
 			chassis.overlays += droid_overlay
+			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 		return
 
 
@@ -608,9 +610,9 @@
 				repaired = 1
 		if(repaired)
 			RD.chassis.cell.use(RD.energy_drain)
-			RD.equip_ready = 0
+			RD.set_ready_state(0)
 		else
-			RD.equip_ready = 1
+			RD.set_ready_state(1)
 		return
 
 /*

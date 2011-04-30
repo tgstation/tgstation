@@ -868,50 +868,38 @@
 	return output
 
 /obj/mecha/proc/operation_allowed(mob/living/carbon/human/H)
-	//check if it doesn't require any access at all
-	if(src.check_operational_access(null))
-		return 1
-	if(src.check_operational_access(H.equipped()) || src.check_operational_access(H.wear_id))
-		return 1
+	for(var/ID in list(H.equipped(), H.wear_id, H.belt))
+		if(src.check_access(ID,src.operation_req_access))
+			return 1
 	return 0
 
 
 /obj/mecha/proc/internals_access_allowed(mob/living/carbon/human/H)
-	//check if it doesn't require any access at all
-	if(src.check_internals_access(null))
-		return 1
-	if(src.check_internals_access(H.equipped()) || src.check_internals_access(H.wear_id))
-		return 1
-	return 0
-
-
-/obj/mecha/proc/check_operational_access(obj/item/weapon/card/id/I)
-	if(!istype(operation_req_access, /list)) //something's very wrong
-		return 1
-//	var/list/L = src.operation_req_access
-	if(!operation_req_access.len) //no requirements
-		return 1
-	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
-		return 0
-	for(var/req in src.operation_req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
-
-/obj/mecha/proc/check_internals_access(obj/item/weapon/card/id/I)
-	if(!istype(src.internals_req_access, /list)) //something's very wrong
-		return 1
-
-//	var/list/L = src.internals_req_access
-	if(!internals_req_access.len) //no requirements
-		return 1
-	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
-		return 0
-	for(var/req in src.internals_req_access)
-		if(req in I.access)
+	for(var/atom/ID in list(H.equipped(), H.wear_id, H.belt))
+		if(src.check_access(ID,src.internals_req_access))
 			return 1
 	return 0
 
+
+/obj/mecha/check_access(obj/item/weapon/card/id/I, list/access_list)
+	if(!istype(access_list))
+		return 1
+	if(!access_list.len) //no requirements
+		return 1
+	if(istype(I, /obj/item/device/pda))
+		var/obj/item/device/pda/pda = I
+		I = pda.id
+	if(!istype(I) || !I.access) //not ID or no access
+		return 0
+	if(access_list==src.operation_req_access)
+		for(var/req in access_list)
+			if(!(req in I.access)) //doesn't have this access
+				return 0
+	else if(access_list==src.internals_req_access)
+		for(var/req in access_list)
+			if(req in I.access)
+				return 1
+	return 1
 
 
 /obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -1090,6 +1078,9 @@
 						<div id='content'>
 						[src.get_stats_part()]
 						</div>
+						<div id='eq_list'>
+						[src.get_equipment_list()]
+						</div>
 						<hr>
 						[src.get_commands()]
 						</body>
@@ -1150,6 +1141,15 @@
 		output += "</div></div>"
 	return output
 
+/obj/mecha/proc/get_equipment_list()
+	if(!equipment.len)
+		return
+	var/output = "<b>Equipment:</b><div style=\"margin-left: 15px;\">"
+	for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
+		output += "[selected==MT?"<b id='\ref[MT]'>":"<a id='\ref[MT]' href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</b>":"</a>"]<br>"
+	output += "</div>"
+	return output
+
 
 /obj/mecha/Topic(href, href_list)
 	..()
@@ -1195,6 +1195,7 @@
 			src.selected = equip
 			src.occupant_message("You switch to [equip]")
 			src.visible_message("[src] raises [equip]")
+			send_byjax(src.occupant,"exosuit.browser","eq_list",src.get_equipment_list())
 	if (href_list["unlock_id_upload"])
 		add_req_access = 1
 	if (href_list["add_req_access"])

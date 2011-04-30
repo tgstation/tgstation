@@ -156,6 +156,7 @@
 	..()
 	return
 
+/*
 /obj/mecha/combat/get_stats_part()
 	var/output = ..()
 	output += "<b>Weapon systems:</b><div style=\"margin-left: 15px;\">"
@@ -166,7 +167,7 @@
 		output += "None"
 	output += "</div>"
 	return output
-
+*/
 
 /* //the garbage collector should handle this
 /obj/mecha/combat/Del()

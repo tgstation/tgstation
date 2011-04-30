@@ -26,13 +26,18 @@
 	..()
 	return
 
+/obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
+	if(chassis)
+		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
+		send_byjax(chassis.occupant,"exosuit.browser","equipment_menu",chassis.get_equipment_menu(),"dropdowns")
+	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/destroy()//missiles detonating, teleporter creating singularity?
 	if(chassis)
 		chassis.equipment -= src
 		if(chassis.selected == src)
 			chassis.selected = null
-		send_byjax(chassis.occupant,"exosuit.browser","equipment_menu",chassis.get_equipment_menu(),"dropdowns")
+		src.update_chassis_page()
 	spawn
 		del src
 	return
@@ -74,7 +79,7 @@
 	M.log_message("[src] initialized.")
 	if(!M.selected)
 		M.selected = src
-	send_byjax(M.occupant,"exosuit.browser","equipment_menu",M.get_equipment_menu(),"dropdowns")
+	src.update_chassis_page()
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/detach()
@@ -82,7 +87,7 @@
 		chassis.equipment -= src
 		if(chassis.selected == src)
 			chassis.selected = null
-		send_byjax(chassis.occupant,"exosuit.browser","equipment_menu",chassis.get_equipment_menu(),"dropdowns")
+		src.update_chassis_page()
 		chassis.log_message("[src] removed from equipment.")
 		src.chassis = null
 		src.equip_ready = 1
@@ -95,7 +100,7 @@
 	return
 
 
-/obj/item/mecha_parts/mecha_equipment/proc/set_state(state)
+/obj/item/mecha_parts/mecha_equipment/proc/set_ready_state(state)
 	equip_ready = state
 	send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 	return

@@ -9,14 +9,11 @@ function dropdowns() {
             divs\[i\].innerHTML = divs\[i\].innerHTML+' +';
             headers.push(divs\[i\]);
         }
-    }
-    for(var i=0;i<divs.length;i++){
         if(divs\[i\].className=='links') {
             divs\[i\].className='links hidden';
             links.push(divs\[i\]);
         }
     }
-
     for(var i=0;i<headers.length;i++){
         if(typeof(links\[i\])!== 'undefined' && links\[i\]!=null) {
             headers\[i\].onclick = (function(elem) {

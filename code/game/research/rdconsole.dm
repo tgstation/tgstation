@@ -258,35 +258,36 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					usr << "\red The destructive analyzer is busy at the moment."
 				else
 					var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
-					linked_destroy.busy = 1
 					if(choice == "Cancel") return
+					linked_destroy.busy = 1
 					screen = 0.1
 					updateUsrDialog()
 					flick("d_analyzer_process", linked_destroy)
 					spawn(24)
-						linked_destroy.busy = 0
-						if(!linked_destroy.hacked)
-							if(!linked_destroy.loaded_item)
-								usr <<"\red The destructive analyzer appears to be empty."
-								return
-							if(linked_destroy.loaded_item.reliability >= 90)
-								var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
-								for(var/T in temp_tech)
-									files.UpdateTech(T, temp_tech[T])
-							if(linked_destroy.loaded_item.reliability < 100 && linked_destroy.loaded_item.crit_fail)
-								files.UpdateDesign(linked_destroy.loaded_item.type)
-							if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
-								linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*linked_destroy.decon_mod))
-								linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*linked_destroy.decon_mod))
-							linked_destroy.loaded_item = null
-						for(var/obj/I in linked_destroy.contents)
-							for(var/mob/M in I.contents)
-								M.death()
-							del(I)
-						use_power(250)
-						linked_destroy.icon_state = "d_analyzer"
-						screen = 1.0
-						updateUsrDialog()
+						if(linked_destroy)
+							linked_destroy.busy = 0
+							if(!linked_destroy.hacked)
+								if(!linked_destroy.loaded_item)
+									usr <<"\red The destructive analyzer appears to be empty."
+									return
+								if(linked_destroy.loaded_item.reliability >= 90)
+									var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
+									for(var/T in temp_tech)
+										files.UpdateTech(T, temp_tech[T])
+								if(linked_destroy.loaded_item.reliability < 100 && linked_destroy.loaded_item.crit_fail)
+									files.UpdateDesign(linked_destroy.loaded_item.type)
+								if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
+									linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*linked_destroy.decon_mod))
+									linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*linked_destroy.decon_mod))
+								linked_destroy.loaded_item = null
+							for(var/obj/I in linked_destroy.contents)
+								for(var/mob/M in I.contents)
+									M.death()
+								del(I)
+							use_power(250)
+							linked_destroy.icon_state = "d_analyzer"
+							screen = 1.0
+							updateUsrDialog()
 
 		else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
 			if(src.allowed(usr))
@@ -300,28 +301,29 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				usr << "\red You must connect to the network first!"
 			else
 				spawn(30)
-					for(var/obj/machinery/r_n_d/server/S in world)
-						var/server_processed = 0
-						if(S.disabled)
-							continue
-						if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
-							for(var/datum/tech/T in files.known_tech)
-								S.files.AddTech2Known(T)
-							for(var/datum/design/D in files.known_designs)
-								S.files.AddDesign2Known(D)
-							S.files.RefreshResearch()
-							server_processed = 1
-						if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked)
-							for(var/datum/tech/T in S.files.known_tech)
-								files.AddTech2Known(T)
-							for(var/datum/design/D in S.files.known_designs)
-								files.AddDesign2Known(D)
-							files.RefreshResearch()
-							server_processed = 1
-						if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
-							S.produce_heat(100)
-					screen = 1.6
-					updateUsrDialog()
+					if(src)
+						for(var/obj/machinery/r_n_d/server/S in world)
+							var/server_processed = 0
+							if(S.disabled)
+								continue
+							if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
+								for(var/datum/tech/T in files.known_tech)
+									S.files.AddTech2Known(T)
+								for(var/datum/design/D in files.known_designs)
+									S.files.AddDesign2Known(D)
+								S.files.RefreshResearch()
+								server_processed = 1
+							if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked)
+								for(var/datum/tech/T in S.files.known_tech)
+									files.AddTech2Known(T)
+								for(var/datum/design/D in S.files.known_designs)
+									files.AddDesign2Known(D)
+								files.RefreshResearch()
+								server_processed = 1
+							if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
+								S.produce_heat(100)
+						screen = 1.6
+						updateUsrDialog()
 
 		else if(href_list["togglesync"]) //Prevents the console from being synced by other consoles. Can still send data.
 			sync = !sync
