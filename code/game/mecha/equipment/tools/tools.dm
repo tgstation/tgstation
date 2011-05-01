@@ -69,8 +69,8 @@
 /obj/item/mecha_parts/mecha_equipment/tool/drill
 	name = "Drill"
 	icon_state = "mecha_drill"
-	equip_cooldown = 40
-	energy_drain = 20
+	equip_cooldown = 30
+	energy_drain = 10
 	force = 15
 
 	action(atom/target)
@@ -79,6 +79,7 @@
 		chassis.cell.use(energy_drain)
 		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]</b></font>", "You hear the drill.")
 		chassis.occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
+		chassis.cell.use(energy_drain)
 		var/T = chassis.loc
 		if(do_after_cooldown())
 			if(T == chassis.loc && src == chassis.selected)
@@ -89,6 +90,12 @@
 						if(get_dir(chassis,M)&chassis.dir)
 							M.gets_drilled()
 					chassis.log_message("Drilled through [target]")
+					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
+						var/obj/ore_box/ore_box = locate(/obj/ore_box) in chassis:cargo
+						if(ore_box)
+							for(var/obj/item/weapon/ore/ore in range(chassis,1))
+								if(get_dir(chassis,ore)&chassis.dir)
+									ore.Move(ore_box)
 				else
 					chassis.log_message("Drilled through [target]")
 					target.ex_act(2)

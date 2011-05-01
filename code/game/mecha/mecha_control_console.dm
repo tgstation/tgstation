@@ -89,7 +89,7 @@
 	icon = 'device.dmi'
 	icon_state = "motion2"
 	origin_tech = "programming=2;magnets=2"
-	var/construction_time = 30
+	var/construction_time = 50
 	var/list/construction_cost = list("metal"=500)
 
 	proc/get_mecha_info()

@@ -12,7 +12,7 @@
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
-	var/time_coeff = 2 //can be upgraded with research
+	var/time_coeff = 1.5 //can be upgraded with research
 	var/resource_coeff = 1.5 //can be upgraded with research
 	var/list/resources = list(
 										"metal"=0,
@@ -183,7 +183,7 @@
 		return output
 
 	proc/output_part_info(var/obj/item/mecha_parts/part)
-		var/output = "[part.name] (Cost: [output_part_cost(part)]) [get_construction_time_w_coeff(part,0.1)/10]sec"
+		var/output = "[part.name] (Cost: [output_part_cost(part)]) [get_construction_time_w_coeff(part)/10]sec"
 		return output
 
 	proc/output_part_cost(var/obj/item/mecha_parts/part)
@@ -191,7 +191,7 @@
 		var/output
 		for(var/p in part.construction_cost)
 			if(p in resources)
-				output += "[i?" | ":null][get_resource_cost_w_coeff(part,p,1)] [p]"
+				output += "[i?" | ":null][get_resource_cost_w_coeff(part,p)] [p]"
 				i++
 		return output
 
@@ -204,13 +204,13 @@
 	proc/remove_resources(var/obj/item/mecha_parts/part)
 		for(var/resource in part.construction_cost)
 			if(resource in src.resources)
-				src.resources[resource] -= get_resource_cost_w_coeff(part,resource,1)
+				src.resources[resource] -= get_resource_cost_w_coeff(part,resource)
 		return
 
 	proc/check_resources(var/obj/item/mecha_parts/part)
 		for(var/resource in part.construction_cost)
 			if(resource in src.resources)
-				if(src.resources[resource] < get_resource_cost_w_coeff(part,resource,1))
+				if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
 					return 0
 		return 1
 
@@ -222,7 +222,7 @@
 		src.icon_state = "mechfab3" //looks better than 'flick'
 		src.use_power = 2
 		src.updateUsrDialog()
-		sleep(get_construction_time_w_coeff(part,0.1))
+		sleep(get_construction_time_w_coeff(part))
 		//if(!src) return // you do not need to check it, all sleeping procedires will be terminated when src dies. -- rastaf0
 		src.use_power = 1
 		src.icon_state = initial(src.icon_state)
@@ -233,6 +233,10 @@
 			src.being_built = null
 		src.updateUsrDialog()
 		return 1
+
+	proc/update_queue_on_page()
+		send_byjax(usr,"mecha_fabricator.browser","queue",src.list_queue())
+		return
 
 	proc/add_part_set_to_queue(set_name)
 		if(set_name in part_sets)
@@ -317,31 +321,31 @@
 	proc/sync(silent=null)
 		if(!silent)
 			temp = "Updating local R&D database..."
-		spawn(30)
-			if(!src) return
-			for(var/obj/machinery/computer/rdconsole/RDC in get_area(src))
-				if(!RDC.sync)
-					continue
-				for(var/datum/tech/T in RDC.files.known_tech)
-					files.AddTech2Known(T)
-				for(var/datum/design/D in RDC.files.known_designs)
-					files.AddDesign2Known(D)
-				files.RefreshResearch()
-				var/i = src.convert_designs()
-				var/tech_output = update_tech()
-				if(!silent)
-					temp = "Processed [i] equipment designs.<br>"
-					temp += tech_output
-					temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
-					src.updateUsrDialog()
+			src.updateUsrDialog()
+		sleep(30)
+		for(var/obj/machinery/computer/rdconsole/RDC in get_area(src))
+			if(!RDC.sync)
+				continue
+			for(var/datum/tech/T in RDC.files.known_tech)
+				files.AddTech2Known(T)
+			for(var/datum/design/D in RDC.files.known_designs)
+				files.AddDesign2Known(D)
+			files.RefreshResearch()
+			var/i = src.convert_designs()
+			var/tech_output = update_tech()
+			if(!silent)
+				temp = "Processed [i] equipment designs.<br>"
+				temp += tech_output
+				temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
+				src.updateUsrDialog()
+			if(i || tech_output)
+				src.visible_message("<b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\".")
 		return
 
-	proc/get_resource_cost_w_coeff(var/obj/item/mecha_parts/part as obj,var/resource as text, var/roundto=null)
-		roundto = roundto || 0.01
+	proc/get_resource_cost_w_coeff(var/obj/item/mecha_parts/part as obj,var/resource as text, var/roundto=1)
 		return round(part.construction_cost[resource]*resource_coeff, roundto)
 
-	proc/get_construction_time_w_coeff(var/obj/item/mecha_parts/part as obj, var/roundto=null)
-		roundto = roundto || 0.01
+	proc/get_construction_time_w_coeff(var/obj/item/mecha_parts/part as obj, var/roundto=1)
 		return round(part.construction_time*time_coeff, roundto)
 
 
@@ -382,6 +386,9 @@
 					html, body {padding: 0px; margin: 0px;}
 					h1 {font-size: 18px; margin: 5px 0px;}
 					</style>
+					<script language='javascript' type='text/javascript'>
+					[js_byjax]
+					</script>
 					</head><body>
 					<body>
 					<table style='width: 100%;'>
@@ -389,7 +396,7 @@
 					<td style='width: 70%; padding-right: 10px;'>
 					[left_part]
 					</td>
-					<td style='width: 30%; background: #ccc;'>
+					<td style='width: 30%; background: #ccc;' id='queue'>
 					[list_queue()]
 					</td>
 					<tr>
@@ -418,21 +425,26 @@
 		if(href_list["add_to_queue"])
 			var/part = locate(href_list["add_to_queue"])
 			add_to_queue(part)
+			return update_queue_on_page()
 		if(href_list["remove_from_queue"])
 			var/index = text2num(href_list["remove_from_queue"])
 			if(isnum(index))
 				remove_from_queue(index)
+			return update_queue_on_page()
 		if(href_list["partset_to_queue"])
 			var/part_set = href_list["partset_to_queue"]
 			add_part_set_to_queue(part_set)
+			return update_queue_on_page()
 		if(href_list["process_queue"])
 			if(processing_queue || being_built)
 				return 0
 			processing_queue = 1
 			process_queue()
 			processing_queue = 0
+/*
 		if(href_list["list_queue"])
 			list_queue()
+*/
 		if(href_list["clear_temp"])
 			temp = null
 		if(href_list["screen"])
@@ -443,8 +455,10 @@
 			if(isnum(index) && isnum(new_index))
 				if(new_index>0&&new_index<=queue.len)
 					queue.Swap(index,new_index)
+			return update_queue_on_page()
 		if(href_list["clear_queue"])
 			queue = list()
+			return update_queue_on_page()
 		if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
 			src.sync()
 		if(href_list["auto_sync"])
