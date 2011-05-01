@@ -81,6 +81,17 @@ client/proc/space_asshole()
 				M << 'space_asshole.ogg'
 
 
+client/proc/honk_theme()
+	set category = "Fun"
+	set name = "Honk"
+
+	message_admins("[key_name_admin(usr)] has creeped everyone out with Blackest Honks.", 1)
+
+	for(var/mob/M in world)
+		if(M.client)
+			if(M.client.midis)
+				M << 'honk_theme.ogg'
+
 
 	/*if(Debug2)
 	if(!src.authenticated || !src.holder)

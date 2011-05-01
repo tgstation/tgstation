@@ -336,6 +336,23 @@
 	growthstages = 3
 	plant_type = 2
 
+/obj/item/seeds/glowshroom
+	name = "Glowshroom mycelium"
+	icon_state = "mycelium-glowshroom"
+	mypath = "/obj/item/seeds/glowshroom"
+	species = "glowshroom"
+	plantname = "Glowshroom"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom"
+	lifespan = 30 //ten times that is the delay
+	endurance = 30
+	maturation = 15
+	production = 1
+	yield = 3 //-> spread
+	potency = 30 //-> brightness
+	oneharvest = 1
+	growthstages = 4
+	plant_type = 2
+
 /obj/item/seeds/plumpmycelium
 	name = "Plump Helmet mycelium"
 	icon_state = "mycelium-plump"
@@ -733,10 +750,47 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
+	seed = "/obj/item/seeds/glowshroom"
+	name = "Glowshroom"
+	desc = "<i>Glowshroom</i>: These species of mushrooms glown in the dark. OR DO THEY?"
+	icon_state = "glowshroom"
+	New()
+		..()
+		reagents.add_reagent("radium",1)
+		if(istype(src.loc,/mob))
+			pickup(src.loc)
+		else
+			src.sd_SetLuminosity(potency/10)
+	lifespan = 30 //ten times that is the delay
+	endurance = 30
+	maturation = 15
+	production = 1
+	yield = 3
+	potency = 30
+	plant_type = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user as mob)
+	if(istype(user.loc,/turf/space))
+		return
+	var/obj/glowshroom/planted = new /obj/glowshroom(user.loc)
 
+	planted.delay = lifespan * 10
+	planted.endurance = endurance
+	planted.yield = yield
+	planted.potency = potency
 
+	del(src)
 
+	user << "You plant the glowshroom."
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
+	src.sd_SetLuminosity(0)
+	user.sd_SetLuminosity(user.luminosity + potency/10)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
+	user.sd_SetLuminosity(user.luminosity - potency/10)
+	src.sd_SetLuminosity(potency/10)
 
 
 // *************************************

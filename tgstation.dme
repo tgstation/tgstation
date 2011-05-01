@@ -461,6 +461,7 @@
 #include "code\game\objects\empulse.dm"
 #include "code\game\objects\explosion.dm"
 #include "code\game\objects\gibs.dm"
+#include "code\game\objects\glowshroom.dm"
 #include "code\game\objects\grille.dm"
 #include "code\game\objects\items.dm"
 #include "code\game\objects\kitchen.dm"

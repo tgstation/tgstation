@@ -153,6 +153,7 @@
 			src.verbs += /client/proc/play_sound
 			src.verbs += /client/proc/cuban_pete 				// -- Urist
 			src.verbs += /client/proc/bananaphone				// -- Darem
+			src.verbs += /client/proc/honk_theme				// -- Urist the Honky
 			src.verbs += /client/proc/only_one  				// muskets
 			src.verbs += /client/proc/space_asshole 			// --Agouri :3
 			src.verbs += /client/proc/strike_team				//N
@@ -284,6 +285,7 @@
 			//src.verbs += /client/proc/object_talk 			// -- TLE
 			src.verbs += /client/proc/play_sound
 			src.verbs += /client/proc/cuban_pete 				// -- Urist
+			src.verbs += /client/proc/honk_theme				// -- Urist the Honky
 			src.verbs += /client/proc/bananaphone
 			src.verbs += /client/proc/only_one  				// muskets
 			src.verbs += /client/proc/space_asshole 			// --Agouri :3
@@ -1154,6 +1156,7 @@
 	src.verbs -= /client/proc/object_talk 				// -- TLE
 	src.verbs -= /client/proc/play_sound
 	src.verbs -= /client/proc/cuban_pete 				// -- Urist
+	src.verbs -= /client/proc/honk_theme				// -- Urist the Honky
 	src.verbs -= /client/proc/bananaphone				// -- Darem
 	src.verbs -= /client/proc/space_asshole 			// --Agouri :3
 	src.verbs -= /client/proc/strike_team				//N
