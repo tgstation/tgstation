@@ -8,7 +8,7 @@
 	layer = 2.1
 	var/endurance = 30
 	var/potency = 30
-	var/delay = 300
+	var/delay = 600
 	var/floor = 0
 	var/yield = 3
 	var/spreadChance = 80
@@ -45,58 +45,56 @@
 
 /obj/glowshroom/proc/Spread()
 	set background = 1
+	var/spreaded = 1
 
-	var/spreaded = 0
+	while(spreaded)
+		spreaded = 0
 
-	for(var/i=1,i<=yield,i++)
-		if(prob(spreadChance))
-			var/list/possibleLocs = list()
-			var/spreadsIntoAdjacent = 0
+		for(var/i=1,i<=yield,i++)
+			if(prob(spreadChance))
+				var/list/possibleLocs = list()
+				var/spreadsIntoAdjacent = 0
 
-			if(prob(spreadIntoAdjacentChance))
-				spreadsIntoAdjacent = 1
+				if(prob(spreadIntoAdjacentChance))
+					spreadsIntoAdjacent = 1
 
-			for(var/turf/turf in view(3,src))
-				if(!turf.density && !istype(turf,/turf/space))
-					var/isAdjacent = 0
-					if(!spreadsIntoAdjacent)
-						for(var/obj/glowshroom in view(1,turf))
-							isAdjacent = 1
-					if(!isAdjacent)
-						possibleLocs += turf
+				for(var/turf/turf in view(3,src))
+					if(!turf.density && !istype(turf,/turf/space))
+						var/isAdjacent = 0
+						if(!spreadsIntoAdjacent)
+							for(var/obj/glowshroom in view(1,turf))
+								isAdjacent = 1
+						if(!isAdjacent)
+							possibleLocs += turf
 
-			if(!possibleLocs.len)
-				break
+				if(!possibleLocs.len)
+					break
 
-			var/turf/newLoc = pick(possibleLocs)
+				var/turf/newLoc = pick(possibleLocs)
 
-			var/shroomCount = 0 //hacky
-			var/placeCount = 1
-			for(var/obj/glowshroom/shroom in newLoc)
-				shroomCount++
-			for(var/wallDir in cardinal)
-				var/turf/isWall = get_step(newLoc,wallDir)
-				if(isWall.density)
-					placeCount++
-			if(shroomCount >= placeCount)
-				continue
+				var/shroomCount = 0 //hacky
+				var/placeCount = 1
+				for(var/obj/glowshroom/shroom in newLoc)
+					shroomCount++
+				for(var/wallDir in cardinal)
+					var/turf/isWall = get_step(newLoc,wallDir)
+					if(isWall.density)
+						placeCount++
+				if(shroomCount >= placeCount)
+					continue
 
-			var/obj/glowshroom/child = new /obj/glowshroom(newLoc)
-			child.potency = potency
-			child.yield = yield
-			child.delay = delay
-			child.endurance = endurance
+				var/obj/glowshroom/child = new /obj/glowshroom(newLoc)
+				child.potency = potency
+				child.yield = yield
+				child.delay = delay
+				child.endurance = endurance
 
-			spreaded++
+				spreaded++
 
-	if(prob(evolveChance)) //very low chance to evolve on its own
-		potency += rand(4,6)
+		if(prob(evolveChance)) //very low chance to evolve on its own
+			potency += rand(4,6)
 
-	sleep(delay)
-
-	if(src)
-		if(spreaded)
-			.()
+		sleep(delay)
 
 /obj/glowshroom/proc/CalcDir(turf/location = loc)
 	var/direction = 16
