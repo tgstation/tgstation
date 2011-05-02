@@ -27,7 +27,11 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 				exTurfs += T
 
 		for(var/turf/T in exTurfs)
-			var/distance = get_dist(epicenter, T)
+			var/distance = 0
+			if(roundExplosions)
+				distance = get_dist_euclidian(epicenter, T)
+			else
+				distance = get_dist(epicenter, T)
 			if(distance < 0)
 				distance = 0
 			if(distance < devastation_range)
