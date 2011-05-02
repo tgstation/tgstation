@@ -784,6 +784,11 @@
 
 	user << "You plant the glowshroom."
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Del()
+	if(istype(loc,/mob))
+		loc.sd_SetLuminosity(loc.luminosity - potency/10)
+	..()
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
 	src.sd_SetLuminosity(0)
 	user.sd_SetLuminosity(user.luminosity + potency/10)

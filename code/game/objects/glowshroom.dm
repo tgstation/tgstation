@@ -12,8 +12,11 @@
 	var/floor = 0
 	var/yield = 3
 	var/spreadChance = 80
-	var/spreadIntoAdjacentChance = 10
+	var/spreadIntoAdjacentChance = 60
 	var/evolveChance = 2
+
+/obj/glowshroom/single
+	spreadChance = 0
 
 /obj/glowshroom/New()
 	..()
@@ -43,26 +46,29 @@
 /obj/glowshroom/proc/Spread()
 	set background = 1
 
+	var/spreaded = 0
+
 	for(var/i=1,i<=yield,i++)
 		if(prob(spreadChance))
 			var/list/possibleLocs = list()
+			var/spreadsIntoAdjacent = 0
+
+			if(prob(spreadIntoAdjacentChance))
+				spreadsIntoAdjacent = 1
 
 			for(var/turf/turf in view(3,src))
-				if(!turf.density)
-					possibleLocs += turf
+				if(!turf.density && !istype(turf,/turf/space))
+					var/isAdjacent = 0
+					if(!spreadsIntoAdjacent)
+						for(var/obj/glowshroom in view(1,turf))
+							isAdjacent = 1
+					if(!isAdjacent)
+						possibleLocs += turf
+
+			if(!possibleLocs.len)
+				break
 
 			var/turf/newLoc = pick(possibleLocs)
-
-			if(istype(newLoc,/turf/space))
-				continue
-
-			var/ifContinue = 0 //hacky
-			if(!prob(spreadIntoAdjacentChance))
-				for(var/obj/glowshroom in view(1,newLoc))
-					ifContinue = 1
-					break
-			if(ifContinue)
-				continue
 
 			var/shroomCount = 0 //hacky
 			var/placeCount = 1
@@ -81,13 +87,16 @@
 			child.delay = delay
 			child.endurance = endurance
 
+			spreaded++
+
 	if(prob(evolveChance)) //very low chance to evolve on its own
 		potency += rand(4,6)
 
 	sleep(delay)
 
 	if(src)
-		.()
+		if(spreaded)
+			.()
 
 /obj/glowshroom/proc/CalcDir(turf/location = loc)
 	var/direction = 16
