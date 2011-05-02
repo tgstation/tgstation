@@ -1140,6 +1140,12 @@ var/showadminmessages = 1
 				if("prison_break")
 					message_admins("[key_name_admin(usr)] has allowed a prison break", 1)
 					prison_break()
+				if("lightsout")
+					message_admins("[key_name_admin(usr)] has broke a lot of lights", 1)
+					lightsout(1,2)
+				if("blackout")
+					message_admins("[key_name_admin(usr)] broke all lights", 1)
+					lightsout(0,0)
 				if("virus")
 					if(alert("Do you want this to be a random disease or do you have something in mind?",,"Random","Choose")=="Random")
 						viral_outbreak()
@@ -1611,6 +1617,7 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
 <A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
 <A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
+<A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
 <BR>
 <B>Fun Secrets</B><BR>
 <BR>
@@ -1633,7 +1640,8 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
 <A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
-<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR><BR>"}
+<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
+<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR><BR>"}
 //<A href='?src=\ref[src];secretsfun=shockwave'>Station Shockwave</A><BR>
 
 	if(lvl >= 5)

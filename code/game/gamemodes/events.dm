@@ -11,9 +11,10 @@
 		start_events()
 
 /proc/event()
-	switch(pick(1,2,4,5,6,7,8,9,10))
+	event = 1
+
+	switch(pick(1,2,4,5,6,7,8,9,10,11))
 		if(1)
-			event = 1
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			world << sound('meteors.ogg')
 			spawn(100)
@@ -24,7 +25,6 @@
 				meteor_wave()
 
 		if(2)
-			event = 1
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('granomalies.ogg')
 			var/turf/T = pick(blobstart)
@@ -33,7 +33,6 @@
 				del(bh)
 
 		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
-			event = 1
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('spanomalies.ogg')
 			var/list/turfs = new
@@ -55,7 +54,6 @@
 						spawn(rand(300,600))
 							del(P)
 		if(4)
-			event = 1
 			command_alert("Confirmed anomaly type SPC-MGM-152 aboard [station_name()]. All personnel must destroy the anomaly.", "Anomaly Alert")
 			world << sound('outbreak5.ogg')
 			var/turf/T = pick(blobstart)
@@ -73,23 +71,19 @@
 			//start loop here
 
 		if(5)
-			event = 1
 			high_radiation_event()
 		if(6)
-			event = 1
 			viral_outbreak()
 		if(7)
-			event = 1
 			alien_infestation()
 		if(8)
-			event = 1
 			prison_break()
 		if(9)
-			event = 1
 			carp_migration()
 		if(10)
-			event = 1
 			immovablerod()
+		if(11)
+			lightsout(1,2)
 
 /proc/dotheblobbaby()
 	if (blobevent)
@@ -340,3 +334,33 @@
 	sleep(100)
 	command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 	world << sound('commandreport.ogg')
+
+/proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 25) //leave lightsoutAmount as 0 to break ALL lights
+	if(isEvent)
+		command_alert("In order to help fight Space Global Warming and conserve power, the lighting will be deactivated in some areas. Thank you for your understanding.","Budget Cuts Alert")
+
+	if(lightsoutAmount)
+		var/list/epicentreList = list()
+
+		for(var/i=1,i<=lightsoutAmount,i++)
+			var/list/possibleEpicentres = list()
+			for(var/obj/landmark/newEpicentre in world)
+				if(newEpicentre.name == "lightsout" && !(newEpicentre in epicentreList))
+					possibleEpicentres += newEpicentre
+			if(possibleEpicentres.len)
+				epicentreList += pick(possibleEpicentres)
+			else
+				break
+
+		if(!epicentreList.len)
+			return
+
+		for(var/obj/landmark/epicentre in epicentreList)
+			for(var/obj/machinery/power/apc/apc in range(epicentre,lightsoutRange))
+				apc.overload_lighting()
+
+	else
+		for(var/obj/machinery/power/apc/apc in world)
+			apc.overload_lighting()
+
+	return

@@ -25,6 +25,9 @@
 
 obj/machinery/hydroponics/process()
 
+	if(myseed && !(myseed in contents))
+		contents += myseed
+
 	if(world.time > (src.lastcycle + src.cycledelay))
 		src.lastcycle = world.time
 		if(src.planted && !src.dead)
@@ -308,8 +311,6 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 
 	else
 		return
-
-	contents += myseed
 
 	src.dead = 0
 	src.hardmutate()

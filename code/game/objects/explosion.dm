@@ -1,3 +1,5 @@
+var/roundExplosions = 1
+
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
 	if(!epicenter) return
 	spawn(0)
@@ -15,7 +17,16 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			E.set_up(epicenter)
 			E.start()
 
-		for(var/turf/T in range(light_impact_range, epicenter))
+		var/list/exTurfs = list()
+
+		if(roundExplosions)
+			for(var/turf/T in circlerange(epicenter,light_impact_range))
+				exTurfs += T
+		else
+			for(var/turf/T in range(light_impact_range, epicenter))
+				exTurfs += T
+
+		for(var/turf/T in exTurfs)
 			var/distance = get_dist(epicenter, T)
 			if(distance < 0)
 				distance = 0

@@ -8,7 +8,8 @@
 	..()
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/extinguisher(src)
-	new /obj/item/device/flashlight(src)
+	if(prob(50))
+		new /obj/item/device/flashlight(src)
 	new /obj/item/device/radio(src)
 
 /obj/item/weapon/storage/toolbox/mechanical/New()
