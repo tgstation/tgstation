@@ -246,14 +246,14 @@
 		return
 
 	proc/add_to_queue(part)
-		if(!istype(queue, /list))
+		if(!istype(queue))
 			queue = list()
 		if(part)
 			queue[++queue.len] = part
 		return queue.len
 
 	proc/remove_from_queue(index)
-		if(!isnum(index) || !istype(queue, /list) || (index<1 || index>queue.len))
+		if(!isnum(index) || !istype(queue) || (index<1 || index>queue.len))
 			return 0
 		queue.Cut(index,++index)
 		return 1
@@ -277,13 +277,13 @@
 
 	proc/list_queue()
 		var/output = "<b>Queue contains:</b>"
-		if(!istype(queue, /list) || !queue.len)
+		if(!istype(queue) || !queue.len)
 			output += "<br>Nothing"
 		else
 			output += "<ol>"
 			for(var/i=1;i<=queue.len;i++)
 				var/atom/part = listgetindex(src.queue, i)
-				if(part)
+				if(istype(part))
 					output += "<li[!check_resources(part)?" style='color: #f00;'":null]>[part.name] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
 			output += "</ol>"
 			output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"

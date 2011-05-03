@@ -152,12 +152,16 @@
 	var/datum/global_iterator/space_ship_speed_increment/pr_speed_increment
 	var/last_relay = 0
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
+	var/health = 100
+	var/datum/effects/system/spark_spread/spark_system = new
 
 	New()
 		..()
 		internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 		pr_inertial_movement = new /datum/global_iterator/space_ship_inertial_movement(list(src),0)
 		pr_speed_increment = new /datum/global_iterator/space_ship_speed_increment(list(src),0)
+		src.spark_system.set_up(2, 0, src)
+		src.spark_system.attach(src)
 		return
 
 	proc/inspace()
@@ -191,10 +195,20 @@
 		if(istype(A))
 			step(A, src.dir)
 		else
+			if(pr_inertial_movement.cur_delay<2)
+				take_damage(25)
 			pr_speed_increment.stop()
 			pr_inertial_movement.stop()
-			pr_inertial_movement.cur_delay = pr_inertial_movement.max_delay
-			pr_inertial_movement.desired_delay = pr_inertial_movement.max_delay
+		return
+
+	proc/take_damage(value)
+		if(isnum(value))
+			src.health -= value
+			if(src.health>0)
+				src.spark_system.start()
+				world << "[src] health is [health]"
+			else
+				src.ex_act(1)
 		return
 
 	process()
@@ -223,7 +237,7 @@
 		else if (src.can_rotate && direction & 8)
 			src.dir = turn(src.dir, 90)
 		if(speed_change)
-			//user << "Desired speed: [get_desired_speed()]%"
+//			user << "Desired speed: [get_desired_speed()]%"
 			src.pr_speed_increment.start()
 			src.pr_inertial_movement.start()
 	return
@@ -242,6 +256,11 @@
 		desired_delay = max_delay
 		cur_delay = max_delay
 
+	stop()
+		src.cur_delay = max_delay
+		src.desired_delay = max_delay
+		return ..()
+
 	process(var/obj/machinery/vehicle/space_ship/SS as obj)
 		if(cur_delay >= max_delay)
 			return src.stop()
@@ -254,10 +273,6 @@
 */
 		if(!step(SS, SS.dir) || !SS.inspace())
 			src.stop()
-			src.cur_delay = max_delay
-			src.desired_delay = max_delay
-			if(src.delay<2)
-				SS.ex_act(2)
 		return
 
 	proc/set_desired_delay(var/num as num)
@@ -265,16 +280,16 @@
 		return
 
 /datum/global_iterator/space_ship_speed_increment
-	delay = 4
+	delay = 5
 
 	process(var/obj/machinery/vehicle/space_ship/SS as obj)
 		if(SS.pr_inertial_movement.desired_delay!=SS.pr_inertial_movement.cur_delay)
 			var/delta = SS.pr_inertial_movement.desired_delay - SS.pr_inertial_movement.cur_delay
 			SS.pr_inertial_movement.cur_delay += delta>0?1:-1
-			/*
+/*
 			for(var/mob/M in SS)
 				M << "Current speed: [SS.get_current_speed()]"
-			*/
+*/
 		else
 			src.stop()
 		return

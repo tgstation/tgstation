@@ -71,8 +71,7 @@
 
 /obj/beam/a_laser/pulse_laser/heavy_pulse
 	name = "heavy pulse laser"
-	icon = 'xcomalien.dmi'
-	icon_state = "plasma"
+	icon_state = "pulse1_bl"
 	life = 20
 
 	Bump(atom/A)

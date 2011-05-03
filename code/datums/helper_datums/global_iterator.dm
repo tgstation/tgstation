@@ -58,6 +58,7 @@ Data storage vars:
 	var/state = 0
 
 	New(list/arguments=null,autostart=1)
+		delay = delay>0?(delay):1
 		if(forbid_garbage) //prevents garbage collection with tag != null
 			tag = "\ref[src]"
 		set_process_args(arguments)
@@ -73,13 +74,10 @@ Data storage vars:
 				src.stop()
 				return 0
 			result = src.process(arglist(arg_list))
-			if(src.delay>0)
-				for(var/sleep_time=src.delay;sleep_time>0;sleep_time--) //uhh, this is ugly. But I see no other way to terminate sleeping proc. Such disgrace.
-					if(!src.control_switch)
-						return 0
-					sleep(1)
-			else
-				sleep(src.delay) //delay can also be 0 and -1
+			for(var/sleep_time=src.delay;sleep_time>0;sleep_time--) //uhh, this is ugly. But I see no other way to terminate sleeping proc. Such disgrace.
+				if(!src.control_switch)
+					return 0
+				sleep(1)
 		return 0
 
 	proc/start(list/arguments=null)
@@ -126,7 +124,7 @@ Data storage vars:
 
 	proc/set_delay(new_delay)
 		if(isnum(new_delay))
-			delay = new_delay
+			delay = new_delay>0?(new_delay):1
 			return 1
 		else
 			return 0

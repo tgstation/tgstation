@@ -19,6 +19,14 @@
 		if(src.check_access(null))
 			if(density)
 				open()
+	else if(istype(AM, /obj/mecha))
+		var/obj/mecha/mecha = AM
+		if(density)
+			if(mecha.occupant && src.allowed(mecha.occupant))
+				open()
+			else
+				flick("door_deny", src)
+
 
 /obj/machinery/door/proc/bumpopen(mob/user as mob)
 	if (src.operating)

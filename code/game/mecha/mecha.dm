@@ -130,8 +130,7 @@
 		return
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = pick(view(3,target))
-	var/dist = get_dist(src, target)
-	if(dist>1)
+	if(get_dist(src, target)>1)
 		if(selected && selected.is_ranged())
 			selected.action(target)
 	else if(selected && selected.is_melee())
@@ -235,10 +234,7 @@
 //	src.inertia_dir = null
 	if(istype(obstacle, /obj))
 		var/obj/O = obstacle
-		if(istype(O , /obj/machinery/door))
-			if(src.occupant)
-				O.Bumped(src.occupant)
-		else if(istype(O, /obj/portal)) //derpfix
+		if(istype(O, /obj/portal)) //derpfix
 			src.anchored = 0
 			O.HasEntered(src)
 			spawn(0)//countering portal teleport spawn(0), hurr
@@ -1146,7 +1142,7 @@
 		return
 	var/output = "<b>Equipment:</b><div style=\"margin-left: 15px;\">"
 	for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
-		output += "[selected==MT?"<b id='\ref[MT]'>":"<a id='\ref[MT]' href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</b>":"</a>"]<br>"
+		output += "<div id='\ref[MT]'>[MT.get_equip_info()]</div>"
 	output += "</div>"
 	return output
 
