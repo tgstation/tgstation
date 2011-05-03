@@ -460,11 +460,11 @@
 			var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
 			var/obj/item/clothing/gloves/space_ninja/G = U.gloves
 			user << "\blue Now charging battery..."
-			G.draining = 1
 			if(cell&&cell.charge)
 				var/drain = 0//To drain from battery.
 				var/maxcapacity = 0//Safety check for full battery.
 				var/totaldrain = 0//Total energy drained.
+				G.draining = 1
 				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 				spark_system.set_up(5, 0, src.loc)
 				while(G.candrain&&cell.charge>0&&!maxcapacity)

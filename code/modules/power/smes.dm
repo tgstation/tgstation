@@ -189,8 +189,8 @@
 			var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
 			var/obj/item/clothing/gloves/space_ninja/G = U.gloves
 			user << "\blue Now charging battery..."
-			G.draining = 1
 			if(charge)
+				G.draining = 1
 				var/drain = 0
 				var/maxcapacity = 0
 				var/totaldrain = 0
