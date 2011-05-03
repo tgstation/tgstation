@@ -70,7 +70,7 @@
 	var/se = null
 	var/ckey = null
 	var/realName = null
-	var/mind = null
+	var/datum/mind/mind = null
 	gender = "male"
 
 /obj/item/seeds/berryseed

@@ -793,7 +793,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			podman.real_name = "pod person"  //No null names!!
 
-		if(mind && istype(mind,/datum/mind)) //let's try that
+		if(mind && istype(mind,/datum/mind) && mind.current.stat == 2) //only transfer dead people's minds
 			mind:transfer_to(podman)
 			mind:original = podman
 		else //welp
@@ -841,14 +841,18 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(!prob(potency)) //if it fails, plantman!
 			podman.mutantrace = "plant"
 
-	else //else, one packet of seeds. ONE.
-		var/obj/item/seeds/replicapod/harvestseeds = new /obj/item/seeds/replicapod(user.loc)
-		harvestseeds.lifespan = lifespan
-		harvestseeds.endurance = endurance
-		harvestseeds.maturation = maturation
-		harvestseeds.production = production
-		harvestseeds.yield = yield
-		harvestseeds.potency = potency
+	else //else, one packet of seeds. maybe two
+		var/seed_count = 1
+		if(prob(yield * parent.yieldmod * 20))
+			seed_count++
+		for(var/i=0,i<seed_count,i++)
+			var/obj/item/seeds/replicapod/harvestseeds = new /obj/item/seeds/replicapod(user.loc)
+			harvestseeds.lifespan = lifespan
+			harvestseeds.endurance = endurance
+			harvestseeds.maturation = maturation
+			harvestseeds.production = production
+			harvestseeds.yield = yield
+			harvestseeds.potency = potency
 
 	parent.update_tray()
 

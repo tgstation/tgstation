@@ -102,6 +102,14 @@
 		for(var/obj/falsewall/W in range(temploc,1))
 			W.relativewall()
 
+	for(var/direction in cardinal)
+		for(var/obj/glowshroom/shroom in get_step(src,direction))
+			if(!shroom.floor) //shrooms drop to the floor
+				shroom.floor = 1
+				shroom.icon_state = "glowshroomf"
+				shroom.pixel_x = 0
+				shroom.pixel_y = 0
+
 	..()
 
 /obj/falsewall/Del()

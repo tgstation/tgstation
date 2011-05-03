@@ -7,7 +7,7 @@
 
 	if(corpse)
 		src.corpse = corpse
-		src.loc = get_turf(corpse.loc)
+		src.loc = get_turf(corpse)
 		src.real_name = corpse.real_name
 		src.name = corpse.real_name
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
@@ -16,6 +16,7 @@
 	set category = "Special Verbs"
 	set name = "Ghost"
 	set desc = "You cannot be revived as a ghost"
+
 	/*if(src.stat != 2) //this check causes nothing but troubles. Commented out for Nar-Sie's sake. --rastaf0
 		src << "Only dead people and admins get to ghost, and admins don't use this verb to ghost while alive."
 		return*/

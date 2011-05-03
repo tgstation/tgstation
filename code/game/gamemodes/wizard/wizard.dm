@@ -661,7 +661,7 @@
 			M.mind.special_verbs -= /client/proc/blink
 	else if(spell_type == "object")
 		for(var/obj/spell/spell_to_remove in src.spell_list)
-			src.spell_list -= spell_to_remove
+			del(spell_to_remove)
 
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/

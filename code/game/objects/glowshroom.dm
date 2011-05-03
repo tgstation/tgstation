@@ -1,6 +1,8 @@
 //separate dm since hydro is getting bloated already
 
 /obj/glowshroom
+	name = "glowshroom"
+	anchored = 1
 	opacity = 0
 	density = 0
 	icon = 'lighting.dmi'
@@ -60,11 +62,7 @@
 
 				for(var/turf/turf in view(3,src))
 					if(!turf.density && !istype(turf,/turf/space))
-						var/isAdjacent = 0
-						if(!spreadsIntoAdjacent)
-							for(var/obj/glowshroom in view(1,turf))
-								isAdjacent = 1
-						if(!isAdjacent)
+						if(spreadsIntoAdjacent || !locate(/obj/glowshroom) in view(1,turf))
 							possibleLocs += turf
 
 				if(!possibleLocs.len)
