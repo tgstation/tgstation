@@ -356,6 +356,10 @@ proc/process_ghost_teleport_locs()
 	name = "Prison Security Quarters"
 	icon_state = "security"
 
+/area/prison/rec_room
+	name = "Prison Rec Room"
+	icon_state = "green"
+
 /area/prison/closet
 	name = "Prison Supply Closet"
 	icon_state = "dk_yellow"
