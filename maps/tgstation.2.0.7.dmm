@@ -814,7 +814,7 @@
 "apH" = (/turf/simulated/wall,/area/maintenance/fpmaint)
 "apI" = (/obj/securearea{name = "EXTERNAL AIRLOCK"; desc = "A warning sign which reads 'EXTERNAL AIRLOCK'"; icon_state = "space"; pixel_x = -1},/turf/simulated/wall,/area/maintenance/fpmaint)
 "apJ" = (/obj/machinery/atmospherics/pipe/simple,/obj/machinery/atmospherics/valve,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor/plating,/area/maintenance/fpmaint)
-"apK" = (/obj/machinery/power/apc{dir = 8; name = "Fore Primary Hallway APC"; pixel_x = -24},/obj/machinery/atmospherics/pipe/manifold{dir = 8},/turf/simulated/floor,/area/hallway/primary/fore)
+"apK" = (/obj/machinery/atmospherics/pipe/manifold{dir = 8},/obj/machinery/vending/cola,/turf/simulated/floor,/area/hallway/primary/fore)
 "apL" = (/obj/machinery/atmospherics/pipe/simple{dir = 9},/turf/simulated/floor,/area/hallway/primary/fore)
 "apM" = (/turf/simulated/floor,/area/hallway/primary/fore)
 "apN" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor,/area/hallway/primary/fore)
