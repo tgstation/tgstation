@@ -605,7 +605,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "-Pest level: \blue [src.pestlevel]/10"
 			user << "-Toxicity level: \blue [src.toxic]/100"
 			user << "-Water level: \blue [src.waterlevel]/100"
-			user << "-Nutrition level: \blue [src.nutrilevel]/100"
+			user << "-Nutrition level: \blue [src.nutrilevel]/10"
 			user << ""
 		else
 			user << "<B>No plant found.</B>"
@@ -613,7 +613,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			user << "-Pest level: \blue [src.pestlevel]/10"
 			user << "-Toxicity level: \blue [src.toxic]/100"
 			user << "-Water level: \blue [src.waterlevel]/100"
-			user << "-Nutrition level: \blue [src.nutrilevel]/100"
+			user << "-Nutrition level: \blue [src.nutrilevel]/10"
 			user << ""
 
 	else if (istype(O, /obj/item/weapon/plantbgone))

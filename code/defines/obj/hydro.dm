@@ -89,6 +89,21 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/bananaseed
+	name = "Banana seeds"
+	icon_state = "seed-banana"
+	mypath = "/obj/item/seeds/bananaseed"
+	species = "banana"
+	plantname = "Banana tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/banana"
+	lifespan = 50
+	endurance = 30
+	maturation = 6
+	production = 6
+	yield = 3
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/eggplantseed
 	name = "Eggplant seeds"
 	icon_state = "seed-eggplant"
@@ -114,7 +129,7 @@
 	lifespan = 75
 	endurance = 15
 	maturation = 6
-	production = 6
+	production = 12
 	yield = 2
 	plant_type = 0
 	growthstages = 6
@@ -179,7 +194,7 @@
 	endurance = 15
 	maturation = 10
 	production = 1
-	yield = 2
+	yield = 4
 	plant_type = 0
 	oneharvest = 1
 	potency = 10
@@ -245,7 +260,7 @@
 	endurance = 15
 	maturation = 10
 	production = 1
-	yield = 4
+	yield = 5
 	potency = 10
 	oneharvest = 1
 	plant_type = 0
@@ -296,7 +311,7 @@
 	endurance = 15
 	maturation = 7
 	production = 1
-	yield = 6
+	yield = 5
 	potency = 15 // Lowish potency at start
 	oneharvest = 1
 	growthstages = 3
@@ -438,6 +453,23 @@
 	growthstages = 4
 	plant_type = 1
 
+/obj/item/seeds/sunflowerseed
+	name = "Sunflower seeds"
+	icon_state = "seed-sunflower"
+	mypath = "/obj/item/seeds/sunflowerseed"
+	species = "sunflower"
+	plantname = "Sunflower"
+	productname = "/obj/item/weapon/grown/sunflower"
+	lifespan = 25
+	endurance = 20
+	maturation = 6
+	production = 1
+	yield = 2
+	potency = -1
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 1
+
 /obj/item/seeds/brownmold
 	name = "Brown Mold"
 	icon_state = "seed"
@@ -550,6 +582,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	seed = "/obj/item/seeds/cornseed"
 	name = "Corn"
+	desc = "I like corm!"
 	icon_state = "corn"
 	New()
 		..()
@@ -594,6 +627,27 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana
+	seed = "/obj/item/seeds/bananaseed"
+	name = "Banana"
+	desc = "A banana."
+	icon = 'items.dmi'
+	icon_state = "banana"
+	item_state = "banana"
+	On_Consume()
+		if(!reagents.total_volume)
+			var/mob/M = usr
+			var/obj/item/weapon/bananapeel/W = new /obj/item/weapon/bananapeel( M )
+			M << "\blue You peel the banana."
+			M.put_in_hand(W)
+			W.add_fingerprint(M)
+	New()
+		..()
+		reagents.add_reagent("banana", 5)
+		bitesize = 5
+		src.pixel_x = rand(-5.0, 5)
+		src.pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = "/obj/item/seeds/chiliseed"
@@ -797,11 +851,110 @@
 	user.sd_SetLuminosity(user.luminosity - potency/10)
 	src.sd_SetLuminosity(potency/10)
 
+// **********************
+// Other harvested materials from plants (that are not food)
+// **********************
+
+/obj/item/weapon/grown // Grown weapons
+	name = "grown_weapon"
+	icon = 'weapons.dmi'
+	var/seed = ""
+	var/plantname = ""
+	var/productname = ""
+	var/species = ""
+	var/lifespan = 20
+	var/endurance = 15
+	var/maturation = 7
+	var/production = 7
+	var/yield = 2
+	var/potency = -1
+	var/plant_type = 0
+	New()
+		var/datum/reagents/R = new/datum/reagents(50)
+		reagents = R
+		R.my_atom = src
+
+/obj/item/weapon/grown/log
+	desc = "This is a log grown from a tower cap mushroom."
+	icon = 'harvest.dmi'
+	name = "Tower Cap Log"
+	icon_state = "logs"
+	force = 5
+	flags = TABLEPASS
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	plant_type = 2
+	origin_tech = "materials=1"
+	seed = "/obj/item/seeds/towermycelium"
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/circular_saw))
+			W.visible_message(" \red <B>You make planks out of the [src]! </B>", 1)
+			for(var/i=0,i<2,i++)
+				new /obj/item/stack/sheet/wood (src.loc)
+			del(src)
+			return
+
+/obj/item/weapon/grown/sunflower // FLOWER POWER!
+	desc = "This is a beautiful sunflower! A certain person might beat you to death if you trample these."
+	icon = 'harvest.dmi'
+	name = "Sunflower"
+	icon_state = "sunflower"
+	damtype = "fire"
+	force = 0
+	flags = TABLEPASS
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	plant_type = 1
+	seed = "/obj/item/seeds/sunflower"
+
+/obj/item/weapon/grown/nettle // -- Skie
+	desc = "This is a nettle. It's probably <B>not</B> wise to touch it with bare hands..."
+	icon = 'weapons.dmi'
+	name = "Nettle"
+	icon_state = "nettle"
+	damtype = "fire"
+	force = 15
+	flags = TABLEPASS
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	plant_type = 1
+	origin_tech = "combat=1"
+	seed = "/obj/item/seeds/nettleseed"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("acid", round(potency, 1))
+
+/obj/item/weapon/grown/deathnettle // -- Skie
+	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
+	icon = 'weapons.dmi'
+	name = "Deathnettle"
+	icon_state = "deathnettle"
+	damtype = "fire"
+	force = 30
+	flags = TABLEPASS
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	plant_type = 1
+	seed = "/obj/item/seeds/deathnettleseed"
+	origin_tech = "combat=3"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("pacid", round(potency, 1))
 
 // *************************************
 // Pestkiller defines for hydroponics
 // *************************************
-
 
 /obj/item/pestkiller
 	name = ""
@@ -847,17 +1000,67 @@
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
+// *************************************
+// Hydroponics Tools
+// *************************************
 
+/obj/item/weapon/plantbgone // -- Skie
+	desc = "Plant-B-Gone! Kill those pesky weeds!"
+	icon = 'hydroponics.dmi'
+	name = "Plant-B-Gone"
+	icon_state = "plantbgone"
+	item_state = "plantbgone"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 3
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 10
+	var/empty = 0
 
+/*			Commented out due to being redundant. - Darem
+/obj/item/weapon/weedspray // -- Skie
+	desc = "Toxic mixture in spray form to kill small weeds."
+	icon = 'hydroponics.dmi'
+	name = "Weed Spray"
+	icon_state = "weedspray"
+	item_state = "spray"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 4
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 10
+	var/toxicity = 4
+	var/WeedKillStr = 2
+*/
+/obj/item/weapon/pestspray // -- Skie
+	desc = "Pest eliminator spray! Do not inhale!"
+	icon = 'hydroponics.dmi'
+	name = "Pest Spray"
+	icon_state = "pestspray"
+	item_state = "spray"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 4
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 10
+	var/toxicity = 4
+	var/PestKillStr = 2
 
-
-
-
+/obj/item/weapon/minihoe // -- Numbers
+	name = "Mini hoe"
+	desc = "Use for removing weeds or scratching your back."
+	icon = 'weapons.dmi'
+	icon_state = "hoe"
+	item_state = "hoe"
+	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	force = 5.0
+	throwforce = 7.0
+	w_class = 2.0
+	m_amt = 50
 
 // *************************************
 // Weedkiller defines for hydroponics
 // *************************************
-
 
 /obj/item/weedkiller
 	name = ""
@@ -891,17 +1094,9 @@
 	toxicity = 8
 	WeedKillStr = 7
 
-
-
-
-
-
-
 // *************************************
 // Nutrient defines for hydroponics
 // *************************************
-
-
 
 /obj/item/nutrient
 	name = ""

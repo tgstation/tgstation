@@ -25,8 +25,8 @@
 
 /obj/item/clothing/glasses/material
 	name = "Optical Material Scanner"
-	icon_state = "blindfold"
-	item_state = "blindfold"
+	icon_state = "material"
+	item_state = "glasses"
 	origin_tech = "magnets=2"
 
 /obj/item/clothing/glasses/regular

@@ -14,7 +14,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = "tomatojuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = "carrotjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = "berryjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/banana  = "banana",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana  = "banana",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = "potato",
 	)
 
@@ -157,13 +157,13 @@
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/banana(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/banana(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/banana(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
 

@@ -45,7 +45,33 @@
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 
 	return 1
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+/datum/game_mode/nuclear/proc/update_all_synd_icons()
+	spawn(0)
+		for(var/datum/mind/synd_mind in syndicates)
+			if(synd_mind.current)
+				if(synd_mind.current.client)
+					for(var/image/I in synd_mind.current.client.images)
+						if(I.icon_state == "synd")
+							del(I)
 
+		for(var/datum/mind/synd_mind in syndicates)
+			if(synd_mind.current)
+				if(synd_mind.current.client)
+					for(var/datum/mind/synd_mind_1 in syndicates)
+						if(synd_mind_1.current)
+							var/I = image('mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
+							synd_mind.current.client.images += I
+
+/datum/game_mode/nuclear/proc/update_synd_icons_added(datum/mind/synd_mind)
+	spawn(0)
+		if(synd_mind.current)
+			if(synd_mind.current.client)
+				var/I = image('mob.dmi', loc = synd_mind.current, icon_state = "synd")
+				synd_mind.current.client.images += I
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/game_mode/nuclear/post_setup()
 	var/obj/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
@@ -84,6 +110,7 @@
 			agent_number++
 
 		equip_syndicate(synd_mind.current)
+		update_synd_icons_added(synd_mind)
 
 	if(nuke_spawn)
 		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)

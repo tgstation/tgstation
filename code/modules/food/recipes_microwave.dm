@@ -11,7 +11,7 @@
 /datum/recipe/bananaphone
 	reagents = list("psilocybin" = 5) //Trippin' balls, man.
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/banana,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 		/obj/item/device/radio
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/bananaphone
@@ -113,7 +113,7 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
 		/obj/item/clothing/mask/gas/clown_hat,
-		/* /obj/item/weapon/reagent_containers/food/snacks/banana, */
+		/* /obj/item/weapon/reagent_containers/food/snacks/grown/banana, */
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/clownburger
 
@@ -213,7 +213,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
-		/obj/item/weapon/reagent_containers/food/snacks/banana
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread
 
@@ -337,7 +337,7 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
-		 /obj/item/weapon/reagent_containers/food/snacks/banana
+		 /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie
 /*

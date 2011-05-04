@@ -63,9 +63,9 @@
 					"/obj/item/weapon/reagent_containers/food/drinks/milk",
 					"/obj/item/kitchen/egg_box",
 					"/obj/item/weapon/reagent_containers/food/condiment/enzyme",
-					"/obj/item/weapon/reagent_containers/food/snacks/banana",
-					"/obj/item/weapon/reagent_containers/food/snacks/banana",
-					"/obj/item/weapon/reagent_containers/food/snacks/banana")
+					"/obj/item/weapon/reagent_containers/food/snacks/grown/banana",
+					"/obj/item/weapon/reagent_containers/food/snacks/grown/banana",
+					"/obj/item/weapon/reagent_containers/food/snacks/grown/banana")
 	cost = 5
 	containertype = "/obj/crate/freezer"
 	containername = "Food crate"
@@ -408,6 +408,7 @@
 	"/obj/item/seeds/soyaseed",
 	"/obj/item/seeds/wheatseed",
 	"/obj/item/seeds/carrotseed",
+	"/obj/item/seeds/sunflowerseed",
 	"/obj/item/seeds/chantermycelium",
 	"/obj/item/seeds/potatoseed")
 	cost = 10
@@ -422,6 +423,7 @@
 	"/obj/item/seeds/plumpmycelium",
 	"/obj/item/seeds/libertymycelium",
 	"/obj/item/seeds/amanitamycelium",
+	"/obj/item/seeds/bananaseed",
 	"/obj/item/seeds/eggyseed")
 	cost = 15
 	containertype = /obj/crate/hydroponics

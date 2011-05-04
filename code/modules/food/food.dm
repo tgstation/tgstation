@@ -26,26 +26,6 @@
 //		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
 //		bitesize = 3													//This is the amount each bite consumes.
 
-/obj/item/weapon/reagent_containers/food/snacks/banana
-	name = "Banana"
-	desc = "A banana."
-	icon = 'items.dmi'
-	icon_state = "banana"
-	item_state = "banana"
-	On_Consume()
-		if(!reagents.total_volume)
-			var/mob/M = usr
-			var/obj/item/weapon/bananapeel/W = new /obj/item/weapon/bananapeel( M )
-			M << "\blue You peel the banana."
-			M.put_in_hand(W)
-			W.add_fingerprint(M)
-	New()
-		..()
-		reagents.add_reagent("banana", 5)
-		bitesize = 5
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
-
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Nougat love it or hate it."

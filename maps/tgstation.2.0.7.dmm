@@ -7908,7 +7908,7 @@
 "cWd" = (/obj/table/woodentable{dir = 1; icon_state = "woodentable"},/obj/item/clothing/shoes/clown_shoes,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
 "cWe" = (/obj/table/woodentable{dir = 1; icon_state = "woodentable"},/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
 "cWf" = (/obj/table/woodentable{dir = 5},/obj/item/clothing/mask/gas/clown_hat,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
-"cWg" = (/obj/item/weapon/reagent_containers/food/snacks/banana,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
+"cWg" = (/obj/item/weapon/reagent_containers/food/snacks/grown/banana,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
 "cWh" = (/obj/table/woodentable{dir = 10; icon_state = "woodentable"},/obj/item/weapon/stamp/clown,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
 "cWi" = (/obj/table/woodentable,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
 "cWj" = (/obj/table/woodentable{dir = 6},/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
