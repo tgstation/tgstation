@@ -97,6 +97,7 @@
 			obj_count++
 
 		if(!leader_selected)
+			spawn(1) NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>\]"
@@ -111,6 +112,8 @@
 
 		equip_syndicate(synd_mind.current)
 		update_synd_icons_added(synd_mind)
+
+	update_all_synd_icons()
 
 	if(nuke_spawn)
 		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
@@ -280,3 +283,30 @@
 
 /datum/game_mode/nuclear/proc/random_radio_frequency()
 	return 1337
+
+/proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
+	var/randomname = pick(last_names)
+	var/newname = input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)
+
+	if (length(newname) == 0)
+		newname = randomname
+
+	if (newname)
+		if (newname == "Unknown")
+			M << "That name is reserved."
+			return nukelastname(M)
+		if (length(newname) >= 26)
+			newname = copytext(newname, 1, 26)
+		newname = dd_replacetext(newname, ">", "'")
+
+	return newname
+
+/proc/NukeNameAssign(var/lastname,var/list/syndicates)
+	for(var/datum/mind/synd_mind in syndicates)
+		switch(synd_mind.current.gender)
+			if("male")
+				synd_mind.current.real_name = "[pick(first_names_male)] [lastname]"
+			if("female")
+				synd_mind.current.real_name = "[pick(first_names_female)] [lastname]"
+
+	return

@@ -206,11 +206,11 @@
 				if(rev.current.client)
 					for(var/datum/mind/head_rev in head_revolutionaries)
 						if(head_rev.current)
-							var/I = image('mob.dmi', loc = head_rev.current, icon_state = "rev")
+							var/I = image('mob.dmi', loc = head_rev.current, icon_state = "rev_head")
 							rev.current.client.images += I
 					for(var/datum/mind/rev_1 in revolutionaries)
 						if(rev_1.current)
-							var/I = image('mob.dmi', loc = rev_1.current, icon_state = "rev_head")
+							var/I = image('mob.dmi', loc = rev_1.current, icon_state = "rev")
 							rev.current.client.images += I
 
 ////////////////////////////////////////////////////
