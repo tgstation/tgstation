@@ -339,6 +339,7 @@
 			src.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/bikehorn(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/stamp/clown(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/toy/crayonbox(src), slot_in_backpack)
 			src.mutations |= 16
 
 		if ("Mime")
@@ -350,6 +351,7 @@
 			src.equip_if_possible(new /obj/item/clothing/mask/gas/mime(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/head/beret(src), slot_head)
 			src.equip_if_possible(new /obj/item/clothing/suit/suspenders(src), slot_wear_suit)
+			src.equip_if_possible(new /obj/item/toy/crayon/mime(src), slot_in_backpack)
 			src.verbs += /client/proc/mimespeak
 			src.verbs += /client/proc/mimewall
 			src.mind.special_verbs += /client/proc/mimespeak

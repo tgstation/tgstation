@@ -262,6 +262,24 @@
 	throw_speed = 4
 	throw_range = 20
 
+/obj/item/weapon/soap
+	name = "Soap"
+	desc = "A cheap bar of soap. Doesn't smell."
+	icon = 'items.dmi'
+	icon_state = "soap"
+	w_class = 1.0
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
+
+/obj/item/weapon/soap/nanotrasen
+	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
+	icon_state = "soapnt"
+
+/obj/item/weapon/soap/deluxe
+	desc = "A deluxe Waffle Co. brand bar of soap. Smells of comdoms."
+	icon_state = "soapdeluxe"
+
 /obj/item/weapon/baton
 	name = "Stun Baton"
 	desc = "A stun baton for hitting people with."

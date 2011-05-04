@@ -2,6 +2,7 @@
 CONTAINS:
 NO MORE BANANA, NOW YOU CAN EAT IT. GO SEE OTHER FOOD STUFFS.
 BANANA PEEL
+SOAP
 BIKE HORN
 
 */
@@ -13,7 +14,19 @@ BIKE HORN
 			return
 
 		M.pulling = null
-		M << "\blue You slipped on the banana peel!"
+		M << "\blue You slipped on the [name]!"
+		playsound(src.loc, 'slip.ogg', 50, 1, -3)
+		M.stunned = 8
+		M.weakened = 5
+
+/obj/item/weapon/soap/HasEntered(AM as mob|obj) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
+	if (istype(AM, /mob/living/carbon))
+		var/mob/M =	AM
+		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
+			return
+
+		M.pulling = null
+		M << "\blue You slipped on the [name]!"
 		playsound(src.loc, 'slip.ogg', 50, 1, -3)
 		M.stunned = 8
 		M.weakened = 5

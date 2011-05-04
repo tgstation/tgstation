@@ -291,6 +291,11 @@ obj/item/toy/blink
 	colour = "DA00FF"
 	shadeColour = "810CFF"
 
+/obj/item/toy/crayon/mime
+	icon_state = "crayonmime"
+	colour = "FFFFFF"
+	shadeColour = "000000"
+
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob)
 	if(istype(target,/turf/simulated/floor))
 		new /obj/crayonrune(target,colour,shadeColour)
@@ -301,6 +306,7 @@ obj/item/toy/blink
 	name = "rune"
 	desc = "A rune drawn in crayon."
 	icon = 'rune.dmi'
+	layer = 2.1
 
 /obj/crayonrune/New(location,main = "FFFFFF",shade = "000000")
 	..()
@@ -310,7 +316,7 @@ obj/item/toy/blink
 	var/icon/mainOverlay = new/icon('rune.dmi',"main[runeShape]",2.1)
 	mainOverlay.Blend("#[main]",ICON_ADD)
 
-	var/icon/shadeOverlay = new/icon('rune.dmi',"shade[runeShape]",3)
+	var/icon/shadeOverlay = new/icon('rune.dmi',"shade[runeShape]",2.1)
 	shadeOverlay.Blend("#[shade]",ICON_ADD)
 
 	overlays += mainOverlay
