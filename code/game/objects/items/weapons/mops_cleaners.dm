@@ -74,7 +74,7 @@ MOP
 		for(var/obj/rune/R in A)
 			del(R)
 		mopcount++
-	else if (istype(A, /obj/decal/cleanable/blood) || istype(A, /obj/overlay) || istype(A, /obj/decal/cleanable/xenoblood) || istype(A, /obj/rune) )
+	else if (istype(A, /obj/decal/cleanable/blood) || istype(A, /obj/overlay) || istype(A, /obj/decal/cleanable/xenoblood) || istype(A, /obj/rune) || istype(A,/obj/crayonrune) )
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red <B>[user] begins to clean [A]</B>"), 1)
 		sleep(20)
