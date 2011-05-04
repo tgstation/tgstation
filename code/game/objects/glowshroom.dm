@@ -10,10 +10,10 @@
 	layer = 2.1
 	var/endurance = 30
 	var/potency = 30
-	var/delay = 600
+	var/delay = 1200
 	var/floor = 0
 	var/yield = 3
-	var/spreadChance = 80
+	var/spreadChance = 40
 	var/spreadIntoAdjacentChance = 60
 	var/evolveChance = 2
 

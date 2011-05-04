@@ -358,7 +358,7 @@
 	species = "glowshroom"
 	plantname = "Glowshroom"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom"
-	lifespan = 60 //ten times that is the delay
+	lifespan = 120 //ten times that is the delay
 	endurance = 30
 	maturation = 15
 	production = 1
@@ -816,7 +816,7 @@
 			pickup(src.loc)
 		else
 			src.sd_SetLuminosity(potency/10)
-	lifespan = 60 //ten times that is the delay
+	lifespan = 120 //ten times that is the delay
 	endurance = 30
 	maturation = 15
 	production = 1

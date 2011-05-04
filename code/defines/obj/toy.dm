@@ -219,3 +219,99 @@ obj/item/toy/blink
 				if (O.client)	O.show_message(text("\red <B>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</B>", user, M), 1, "\red You hear someone fall", 2)
 			user.weakened += 5
 		return
+
+/obj/item/toy/crayonbox
+	name = "box of crayons"
+	desc = "A box of crayons for all your rune drawing needs."
+	icon = 'toy.dmi'
+	icon_state = "crayonbox6"
+
+/obj/item/toy/crayonbox/New()
+	..()
+	new /obj/item/toy/crayon/red(src)
+	new /obj/item/toy/crayon/orange(src)
+	new /obj/item/toy/crayon/yellow(src)
+	new /obj/item/toy/crayon/green(src)
+	new /obj/item/toy/crayon/blue(src)
+	new /obj/item/toy/crayon/purple(src)
+
+/obj/item/toy/crayonbox/attack_hand(mob/user as mob)
+	if(user.r_hand == src || user.l_hand == src)
+		if(!contents.len)
+			user << "\red You're out of crayons!"
+			return
+		else
+			var/crayon = contents[contents.len]
+			user.contents += crayon
+			if(user.hand)
+				user.l_hand = crayon
+			else
+				user.r_hand = crayon
+			crayon:layer = 20
+	else
+		return ..()
+	icon_state = "crayonbox[contents.len]"
+	return
+
+/obj/item/toy/crayon
+	name = "crayon"
+	desc = "A colourful crayon. Looks tasty. Mmmm..."
+	icon = 'toy.dmi'
+	icon_state = "crayonred"
+	var/colour = "000000" //RGB
+	var/shadeColour = "000000" //RGB
+
+/obj/item/toy/crayon/red
+	icon_state = "crayonred"
+	colour = "DA0000"
+	shadeColour = "810C0C"
+
+/obj/item/toy/crayon/orange
+	icon_state = "crayonorange"
+	colour = "FF9300"
+	shadeColour = "A55403"
+
+/obj/item/toy/crayon/yellow
+	icon_state = "crayonyellow"
+	colour = "FFF200"
+	shadeColour = "886422"
+
+/obj/item/toy/crayon/green
+	icon_state = "crayongreen"
+	colour = "A8E61D"
+	shadeColour = "61840F"
+
+/obj/item/toy/crayon/blue
+	icon_state = "crayonblue"
+	colour = "00B7EF"
+	shadeColour = "0082A8"
+
+/obj/item/toy/crayon/purple
+	icon_state = "crayonpurple"
+	colour = "DA00FF"
+	shadeColour = "810CFF"
+
+/obj/item/toy/crayon/afterattack(atom/target, mob/user as mob)
+	if(istype(target,/turf/simulated/floor))
+		new /obj/crayonrune(target,colour,shadeColour)
+		user << "You draw a rune on the [target.name]."
+	return
+
+/obj/crayonrune
+	name = "rune"
+	desc = "A rune drawn in crayon."
+	icon = 'rune.dmi'
+
+/obj/crayonrune/New(location,main = "FFFFFF",shade = "000000")
+	..()
+	loc = location
+	var/runeShape = rand(1,6)
+
+	var/icon/mainOverlay = new/icon('rune.dmi',"main[runeShape]",2.1)
+	mainOverlay.Blend("#[main]",ICON_ADD)
+
+	var/icon/shadeOverlay = new/icon('rune.dmi',"shade[runeShape]",3)
+	shadeOverlay.Blend("#[shade]",ICON_ADD)
+
+	overlays += mainOverlay
+	overlays += shadeOverlay

@@ -520,7 +520,7 @@ datum
 					M.take_organ_damage(15)
 
 			reaction_obj(var/obj/O, var/volume)
-				if(istype(O,/obj/item) && prob(40))
+				if((istype(O,/obj/item) || istype(O,/obj/glowshroom)) && prob(40))
 					var/obj/decal/cleanable/molten_item/I = new/obj/decal/cleanable/molten_item(O.loc)
 					I.desc = "Looks like this was \an [O] some time ago."
 					for(var/mob/M in viewers(5, O))
@@ -575,7 +575,7 @@ datum
 						M.take_organ_damage(15)
 
 			reaction_obj(var/obj/O, var/volume)
-				if(istype(O,/obj/item))
+				if((istype(O,/obj/item) || istype(O,/obj/glowshroom)))
 					var/obj/decal/cleanable/molten_item/I = new/obj/decal/cleanable/molten_item(O.loc)
 					I.desc = "Looks like this was \an [O] some time ago."
 					for(var/mob/M in viewers(5, O))
@@ -796,6 +796,8 @@ datum
 				if(istype(O,/obj/alien/weeds/))
 					O:health -= rand(15,35) // Kills alien weeds pretty fast
 					O:healthcheck()
+				else if(istype(O,/obj/glowshroom)) //even a small amount is enough to kill it
+					del(O)
 				// Damage that is done to growing plants is separately
 				// at code/game/machinery/hydroponics at obj/item/hydroponics
 
@@ -804,6 +806,8 @@ datum
 				if(istype(M, /mob/living/carbon))
 					if(!M.wear_mask) // If not wearing a mask
 						M:toxloss += 2 // 4 toxic damage per application, doubled for some reason
+					if(istype(M,/mob/living/carbon/human) && M:mutantrace == "plant") //plantmen take a LOT of damage
+						M:toxloss += 10
 						//if(prob(10))
 							//M.make_dizzy(1) doesn't seem to do anything
 
