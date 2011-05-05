@@ -209,6 +209,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		target_types += /obj/decal/cleanable/blood/gibs/
 		target_types += /obj/decal/cleanable/oil
 		target_types += /obj/decal/cleanable/robot_debris
+		target_types += /obj/decal/cleanable/crayon
 
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/decal/cleanable/target)
 	src.anchored = 1
