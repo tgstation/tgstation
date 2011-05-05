@@ -157,6 +157,7 @@ CRAYONS
 	desc = "A rune drawn in crayon."
 	icon = 'rune.dmi'
 	layer = 2.1
+	anchored = 1
 
 /obj/decal/cleanable/crayon/New(location,main = "#FFFFFF",shade = "#000000")
 	..()

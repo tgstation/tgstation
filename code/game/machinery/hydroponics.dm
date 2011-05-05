@@ -257,7 +257,7 @@ obj/machinery/hydroponics/proc/hardmutate() // Strongly mutates the current seed
 	src.myseed.lifespan += rand(-4,4)
 	if(src.myseed.lifespan < 10)
 		src.myseed.lifespan = 10
-	else if(src.myseed.lifespan > 30)
+	else if(src.myseed.lifespan > 30 && !istype(myseed,/obj/item/seeds/glowshroom)) //hack to prevent glowshrooms from always resetting to 30 sec delay
 		src.myseed.lifespan = 30
 
 	src.myseed.endurance += rand(-10,10)

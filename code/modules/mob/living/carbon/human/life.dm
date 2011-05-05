@@ -744,6 +744,11 @@
 
 		handle_regular_hud_updates()
 
+			if(client)
+				for(var/image/hud in client.images)
+					if(hud.icon_state in list("healthdead","healthill","healthy","health-100","health0","health1","health10","health25","health40","health60","health80","health100")) //ugly, but icon comparison is worse, I believe
+						del(hud)
+
 			if (src.stat == 2 || src.mutations & 4)
 				src.sight |= SEE_TURFS
 				src.sight |= SEE_MOBS
@@ -788,6 +793,19 @@
 					src.see_invisible = 2
 			else if (istype(src.glasses, /obj/item/clothing/glasses/material))
 				src.sight |= SEE_OBJS
+				if (!src.druggy)
+					src.see_invisible = 0
+			else if (istype(glasses, /obj/item/clothing/glasses/healthscanner))
+				if(client)
+					var/icon/tempHud = 'hud.dmi'
+					for(var/mob/living/carbon/human/patient in view(src))
+						client.images += image(tempHud,patient,RoundHealth(patient.health))
+						if(patient.stat == 2)
+							client.images += image(tempHud,patient,"healthdead")
+						else if(patient.virus)
+							client.images += image(tempHud,patient,"healthill")
+						else
+							client.images += image(tempHud,patient,"healthy")
 				if (!src.druggy)
 					src.see_invisible = 0
 
