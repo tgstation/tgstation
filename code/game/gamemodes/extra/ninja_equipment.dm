@@ -248,19 +248,6 @@
 	dat += "<img src=sos_11.png> Smoke Bombs: [sbombs]<br>"
 	dat += "<br>"
 
-	/*
-	HOW TO USE OR ADAPT THIS CODE:
-	The menu structure should not need to be altered to add new entries. Simply place them after what is already there.
-	As an exception, if there are multiple-tiered windows, for instance, going into medical alerts and then to DNA testing or something,
-	those menus should be added below their parents but have a greater value. The second sub-menu of menu 2 would have the number 22.
-	Another sub-menu of menu 2 would be 23, then 24, and up to 29. If those menus have their own sub-menus a similar format follows.
-	Sub-menu 1 of sub-menu 2(of menu 2) would be 221. Sub-menu 5 of sub-menu 2(of menu 2) would be 225. Menu 0 is a special case (it's the menu hub); you are free to use menus 1-9 (sub menus can be 0-9)
-	to create your own data paths.
-	The Return button, when used, simply removes the final number and navigates to the menu prior. Menu 334, the fourth sub-menu of sub-menu
-	3, in menu 3, would navigate to sub menu 3 in menu 3. Or 33.
-	It is possible to go to a different menu/sub-menu from anywhere. When creating new menus don't forget to add them to Topic proc or else the game
-	will interpret you using the messenger function (the else clause in the switch).
-	Other buttons and functions should be named according to what they do.*/
 	switch(spideros)
 		if(0)
 			/*
@@ -335,13 +322,12 @@
 			for (var/obj/item/device/pda/P in world)
 				if (!P.owner||P.toff)
 					continue
-				dat += "<li><a href='byond://?src=\ref[src];choice=\ref[P]'>[P]</a>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
 				dat += "</li>"
 				count++
 			dat += "</ul>"
 			if (count == 0)
 				dat += "None detected.<br>"
-			//dat += "<a href='byond://?src=\ref[src];choice=31'> Send Virus</a>
 		if(32)
 			dat += "<h4><img src=sos_1.png> Hidden Menu:</h4>"
 			dat += "Please input password: "
@@ -385,30 +371,6 @@
 			dat += "</ul>"
 			dat += "That is all you will need to know. The rest will come with practice and talent. Good luck!"
 			dat += "<h4>Master /N</h4>"
-/*
-			//Sub-menu testing stuff.
-			dat += "<li><a href='byond://?src=\ref[src];choice=49'> To sub-menu 49</a></li>"
-		if(31)
-			dat += "<h4><img src=sos_12.png> Send Virus:</h4>"
-			dat += "<h4><img src=sos_6.png> Detected PDAs:</h4>"
-			dat += "<ul>"
-			var/count = 0
-			for (var/obj/item/device/pda/P in world)
-				if (!P.owner||P.toff)
-					continue
-				dat += "<li><a href='byond://?src=\ref[src];choice=\ref[P]'><i>[P]</i></a>"
-				dat += "</li>"
-				count++
-			dat += "</ul>"
-			if (count == 0)
-				dat += "None detected.<br>"
-		if(49)
-			dat += "<h4><img src=sos_6.png> Other Functions 49:</h4>"
-			dat += "<a href='byond://?src=\ref[src];choice=491'> To sub-menu 491</a>"
-		if(491)
-			dat += "<h4><img src=sos_6.png> Other Functions 491:</h4>"
-			dat += "<a href='byond://?src=\ref[src];choice=0'> To main menu</a>"
-*/
 	dat += "</body></html>"
 
 	U << browse(dat,"window=spideros;size=400x444;border=1;can_resize=0;can_close=0;can_minimize=0")
@@ -493,13 +455,23 @@
 			spideros=32
 		if("4")
 			spideros=4
-		/*Sub-menu testing stuff.
-		if("31")
-			spideros=31
-		if("49")
-			spideros=49
-		if("491")
-			spideros=491 */
+		if("Message")
+			var/obj/item/device/pda/P = locate(href_list["target"])
+			var/t = input(U, "Please enter untraceable message.") as text
+			t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+			if(!t||U.stat||U.wear_suit!=src||!initialize)//Wow, another one of these. Man...
+				return
+			if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
+				U << "\red Error: unable to deliver message."
+				spideros()
+				return
+			P.tnote += "<i><b>&larr; From unknown source:</b></i><br>[t]<br>"
+			if (!P.silent)
+				playsound(P.loc, 'twobeep.ogg', 50, 1)
+				for (var/mob/O in hearers(3, P.loc))
+					O.show_message(text("\icon[P] *[P.ttone]*"))
+			P.overlays = null
+			P.overlays += image('pda.dmi', "pda-r")
 		if("Unlock Kamikaze")
 			if(input(U)=="Divine Wind")
 				if( !(U.stat||U.wear_suit!=src||!initialize) )
@@ -582,38 +554,6 @@
 				reagents.reaction(U, 2)
 				reagents.trans_id_to(U, "nutriment", 5)
 				U << "You feel a tiny prick and a sudden rush of substance in to your veins."
-
-		else
-		/*Leaving this for the messenger because it's an awesome solution. For switch to work, the variable has to be static.
-		Not the case when P is a specific object. The downside, of course, is that there is only one slot.
-		The following switch moves data to the appropriate function based on what screen it was clicked on. For now only uses screen 3.
-		As an example, I added screen 31 to send the silence virus to people in the commented bits.
-		You can do the same with functions that require dynamic tracking.
-		*/
-			switch(spideros)
-				if(3)
-					var/obj/item/device/pda/P = locate(href_list["choice"])
-					var/t = input(U, "Please enter untraceable message.") as text
-					t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-					if(!t||U.stat||U.wear_suit!=src||!initialize)//Wow, another one of these. Man...
-						return
-					if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
-						U << "\red Error: unable to deliver message."
-						spideros()
-						return
-					P.tnote += "<i><b>&larr; From unknown source:</b></i><br>[t]<br>"
-					if (!P.silent)
-						playsound(P.loc, 'twobeep.ogg', 50, 1)
-						for (var/mob/O in hearers(3, P.loc))
-							O.show_message(text("\icon[P] *[P.ttone]*"))
-					P.overlays = null
-					P.overlays += image('pda.dmi', "pda-r")
-			/*	if(31)
-					var/obj/item/device/pda/P = locate(href_list["choice"])
-					if (!P.toff)
-						U.show_message("\blue Virus sent!", 1)
-						P.silent = 1
-						P.ttone = "silence" */
 
 	spideros()//Refreshes the screen by calling it again (which replaces current screen with new screen).
 	return

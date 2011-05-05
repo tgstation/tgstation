@@ -8,8 +8,11 @@
 	if(powerc())
 		var/vent_found = 0
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
-			vent_found = 1
-		if(!vent_found)
+			if(!v.welded)
+				vent_found = v
+			else
+				src << "\red That vent is welded."
+		if(vent_found)
 			var/list/vents = list()
 			for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
 				if(temp_vent.loc == loc)

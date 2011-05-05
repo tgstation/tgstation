@@ -28,7 +28,7 @@
 	var/ttone = "beep" //The ringtone!
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
-	var/note = "Congratulations, your station has chosen the Thinktronic 5100 Personal Data Assistant!" //Current note in the notepad function.
+	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function.
 	var/cart = "" //A place to stick cartridge menu information
 
 	var/obj/item/weapon/integrated_uplink/uplink = null
@@ -135,7 +135,7 @@
 	else
 		switch (mode)
 			if (0)
-				dat += "<h2>PERSONAL DATA ASSISTANT</h2>"
+				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
 				dat += text("ID: <A href='?src=\ref[];choice=Authenticate'>[]</A><br>", src, (id ? "[id.registered], [id.assignment]" : "----------"))
 				dat += "Station Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"//:[world.time / 100 % 6][world.time / 100 % 10]"
@@ -214,13 +214,11 @@
 				dat += "<a href='byond://?src=\ref[src];choice=21'><img src=pda_mail.png> Messages</a><br>"
 
 				if (istype(cartridge, /obj/item/weapon/cartridge/syndicate))
-					dat += "<h4><a href='byond://?src=\ref[src];choice=22'> Hidden Menu</a><h4>"
-
+					dat += "<b>[cartridge:shock_charges] detonation charges left.</b><HR>"
 				if (istype(cartridge, /obj/item/weapon/cartridge/clown))
-					dat += "<h4><a href='byond://?src=\ref[src];choice=23'> Hidden Menu</a><h4>"
-
+					dat += "<b>[cartridge:honk_charges] viral files left.</b><HR>"
 				if (istype(cartridge, /obj/item/weapon/cartridge/mime))
-					dat += "<h4><a href='byond://?src=\ref[src];choice=24'> Hidden Menu</a><h4>"
+					dat += "<b>[cartridge:mime_charges] viral files left.</b><HR>"
 
 				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
 
@@ -231,7 +229,13 @@
 				if (!toff)
 					for (var/obj/item/device/pda/P in world)
 						if (!P.owner||P.toff||P == src)	continue
-						dat += "<li><a href='byond://?src=\ref[src];choice=\ref[P]'>[P]</a>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
+						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate))
+							dat += " (<a href='byond://?src=\ref[src];choice=Detonate;target=\ref[P]'><img src=pda_boom.png>*Detonate*</a>)"
+						if (istype(cartridge, /obj/item/weapon/cartridge/clown))
+							dat += " (<a href='byond://?src=\ref[src];choice=Send Honk;target=\ref[P]'><img src=pda_honk.png>*Send Virus*</a>)"
+						if (istype(cartridge, /obj/item/weapon/cartridge/mime))
+							dat += " (<a href='byond://?src=\ref[src];choice=Send Silence;target=\ref[P]'>*Send Virus*</a>)"
 						dat += "</li>"
 						count++
 				dat += "</ul>"
@@ -246,51 +250,6 @@
 
 				dat += tnote
 				dat += "<br>"
-
-			if(22)
-				dat += "<h4><img src=pda_mail.png> Datomatix</h4>"
-				dat += "<b>[cartridge:shock_charges] detonation charges left.</b><HR>"
-				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
-				dat += "<ul>"
-				var/count = 0
-				for (var/obj/item/device/pda/P in world)
-					if (!P.owner||P.toff||P == src)	continue
-					dat += " (<a href='byond://?src=\ref[src];choice=\ref[P]'><img src=pda_boom.png> <i>[P]</i> *Detonate*</a>)"
-					dat += "</li>"
-					count++
-				dat += "</ul>"
-				if (count == 0)
-					dat += "None detected.<br>"
-
-			if(23)
-				dat += "<h4><img src=pda_mail.png> Honk Attack!!</h4>"
-				dat += "<b>[cartridge:honk_charges] viral files left.</b><HR>"
-				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
-				dat += "<ul>"
-				var/count = 0
-				for (var/obj/item/device/pda/P in world)
-					if (!P.owner||P.toff||P == src)	continue
-					dat += " (<a href='byond://?src=\ref[src];choice=\ref[P]'><img src=pda_honk.png> <i>[P]</i> *Send Virus*</a>)"
-					dat += "</li>"
-					count++
-				dat += "</ul>"
-				if (count == 0)
-					dat += "None detected.<br>"
-
-			if(24)
-				dat += "<h4><img src=pda_mail.png> Silent but Deadly...</h4>"
-				dat += "<b>[cartridge:mime_charges] viral files left.</b><HR>"
-				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
-				dat += "<ul>"
-				var/count = 0
-				for (var/obj/item/device/pda/P in world)
-					if (!P.owner||P.toff||P == src)	continue
-					dat += " (<a href='byond://?src=\ref[src];choice=\ref[P]'> <i>[P]</i> *Send Virus*</a>)"
-					dat += "</li>"
-					count++
-				dat += "</ul>"
-				if (count == 0)
-					dat += "None detected.<br>"
 
 			if (3)
 				dat += "<h4><img src=pda_atmos.png> Atmospheric Readings</h4>"
@@ -324,7 +283,7 @@
 				dat += cart
 
 	dat += "</body></html>"
-	user << browse(dat, "window=pda;size=400x444;border=1;can_resize=0;can_close=0;can_minimize=0")
+	user << browse(dat, "window=pda;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
 	onclose(user, "pda", src)
 
 /obj/item/device/pda/Topic(href, href_list)
@@ -353,7 +312,7 @@
 						mode = round(mode/10)
 						if(mode==4)//Fix for cartridges. Redirects to hub.
 							mode = 0
-						else if(mode==44||mode==45)//Fix for cartridges. Redirects to refresh the menu.
+						else if(mode >= 40 && mode <= 49)//Fix for cartridges. Redirects to refresh the menu.
 							cartridge.mode = mode
 							cartridge.unlock()
 				if ("Authenticate")//Checks for ID
@@ -395,12 +354,6 @@
 					mode = 2
 				if("21")//Read messeges
 					mode = 21
-				if("22")//Detonate PDAs
-					mode = 22
-				if("23")//Send honk virus
-					mode = 23
-				if("24")//Send silence virus
-					mode = 24
 				if("3")//Atmos scan
 					mode = 3
 				if("4")//Redirects to hub
@@ -473,6 +426,70 @@
 					else
 						U << browse(null, "window=pda")
 						return
+				if("Message")
+					var/t = input(U, "Please enter message", name, null) as text
+					t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+					if (!t)
+						return
+					if (!in_range(src, U) && loc != U)
+						return
+
+					var/obj/item/device/pda/P = locate(href_list["target"])
+
+					if (isnull(P)||P.toff || toff)
+						return
+
+					if (last_text && world.time < last_text + 5)
+						return
+
+					last_text = world.time
+
+					for (var/obj/machinery/message_server/MS in world)
+						MS.send_pda_message("[P.owner]","[owner]","[t]")
+
+					tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
+					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];editnote=\ref[src]'>[owner]</a>:</b></i><br>[t]<br>"
+
+					if (prob(15)) //Give the AI a chance of intercepting the message
+						for (var/mob/living/silicon/ai/A in world)
+							A.show_message("<i>Intercepted message from <b>[P:owner]</b>: [t]</i>")
+
+					if (!P.silent)
+						playsound(P.loc, 'twobeep.ogg', 50, 1)
+						for (var/mob/O in hearers(3, P.loc))
+							O.show_message(text("\icon[P] *[P.ttone]*"))
+
+					P.overlays = null
+					P.overlays += image('pda.dmi', "pda-r")
+				if("Send Honk")//Honk virus
+					if(istype(cartridge, /obj/item/weapon/cartridge/clown))
+						var/obj/item/device/pda/P = locate(href_list["target"])
+						if(!isnull(P))
+							if (!P.toff && cartridge:honk_charges > 0)
+								cartridge:honk_charges--
+								U.show_message("\blue Virus sent!", 1)
+								P.honkamt = (rand(15,20))
+							updateUsrDialog()
+						else
+							U << "PDA not found."
+					else
+						U << browse(null, "window=pda")
+						return
+				if("Send Silence")//Silent virus
+					if(istype(cartridge, /obj/item/weapon/cartridge/mime))
+						var/obj/item/device/pda/P = locate(href_list["target"])
+						if(!isnull(P))
+							if (!P.toff && cartridge:mime_charges > 0)
+								cartridge:mime_charges--
+								U.show_message("\blue Virus sent!", 1)
+								P.silent = 1
+								P.ttone = "silence"
+							updateUsrDialog()
+						else
+							U << "PDA not found."
+					else
+						U << browse(null, "window=pda")
+						return
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -491,112 +508,46 @@
 						uplink.active = 0
 						note = uplink.orignote
 						updateUsrDialog()
+				if("Detonate")//Detonate PDA
+					if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
+						var/obj/item/device/pda/P = locate(href_list["target"])
+						if(!isnull(P))
+							if (!P.toff && cartridge:shock_charges > 0)
+								cartridge:shock_charges--
+
+								var/difficulty = 0
+
+								if (!isnull(P.cartridge))
+									difficulty += P.cartridge.access_medical
+									difficulty += P.cartridge.access_security
+									difficulty += P.cartridge.access_engine
+									difficulty += P.cartridge.access_clown
+									difficulty += P.cartridge.access_janitor
+									difficulty += P.cartridge.access_manifest * 2
+								else
+									difficulty += 2
+
+								if ((prob(difficulty * 12)) || (P.uplink))
+									U.show_message("\red An error flashes on your [src].", 1)
+								else if (prob(difficulty * 3))
+									U.show_message("\red Energy feeds back into your [src]!", 1)
+									explode()
+								else
+									U.show_message("\blue Success!", 1)
+									P.explode()
+							updateUsrDialog()
+						else
+							U << "PDA not found."
+					else
+						U << browse(null, "window=pda")
+						return
 
 //LINK FUNCTIONS===================================
 
-				else//Else, redirects based on current menu
-					switch(mode)
-						if(0)//Cartridge menu linking
-							mode = text2num(href_list["choice"])
-							cartridge.mode = mode
-							cartridge.unlock()
-						if(2)//Message people.
-							var/t = input(U, "Please enter message", name, null) as text
-							t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-							if (!t)
-								return
-							if (!in_range(src, U) && loc != U)
-								return
-
-							var/obj/item/device/pda/P = locate(href_list["choice"])
-
-							if (isnull(P)||P.toff || toff)
-								return
-
-							if (last_text && world.time < last_text + 5)
-								return
-
-							last_text = world.time
-
-							for (var/obj/machinery/message_server/MS in world)
-								MS.send_pda_message("[P.owner]","[owner]","[t]")
-
-							tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
-							P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];editnote=\ref[src]'>[owner]</a>:</b></i><br>[t]<br>"
-
-							if (prob(15)) //Give the AI a chance of intercepting the message
-								for (var/mob/living/silicon/ai/A in world)
-									A.show_message("<i>Intercepted message from <b>[P:owner]</b>: [t]</i>")
-
-							if (!P.silent)
-								playsound(P.loc, 'twobeep.ogg', 50, 1)
-								for (var/mob/O in hearers(3, P.loc))
-									O.show_message(text("\icon[P] *[P.ttone]*"))
-
-							P.overlays = null
-							P.overlays += image('pda.dmi', "pda-r")
-						if(22)//Detonate PDA
-							if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
-								var/obj/item/device/pda/P = locate(href_list["choice"])
-								if(!isnull(P))
-									if (!P.toff && cartridge:shock_charges > 0)
-										cartridge:shock_charges--
-
-										var/difficulty = 0
-
-										if (!isnull(P.cartridge))
-											difficulty += P.cartridge.access_medical
-											difficulty += P.cartridge.access_security
-											difficulty += P.cartridge.access_engine
-											difficulty += P.cartridge.access_clown
-											difficulty += P.cartridge.access_janitor
-											difficulty += P.cartridge.access_manifest * 2
-										else
-											difficulty += 2
-
-										if ((prob(difficulty * 12)) || (P.uplink))
-											U.show_message("\red An error flashes on your [src].", 1)
-										else if (prob(difficulty * 3))
-											U.show_message("\red Energy feeds back into your [src]!", 1)
-											explode()
-										else
-											U.show_message("\blue Success!", 1)
-											P.explode()
-									updateUsrDialog()
-								else
-									U << "PDA not found."
-							else
-								U << browse(null, "window=pda")
-								return
-						if(23)//Honk virus
-							if(istype(cartridge, /obj/item/weapon/cartridge/clown))
-								var/obj/item/device/pda/P = locate(href_list["choice"])
-								if(!isnull(P))
-									if (!P.toff && cartridge:honk_charges > 0)
-										cartridge:honk_charges--
-										U.show_message("\blue Virus sent!", 1)
-										P.honkamt = (rand(15,20))
-									updateUsrDialog()
-								else
-									U << "PDA not found."
-							else
-								U << browse(null, "window=pda")
-								return
-						if(24)//Silent virus
-							if(istype(cartridge, /obj/item/weapon/cartridge/mime))
-								var/obj/item/device/pda/P = locate(href_list["choice"])
-								if(!isnull(P))
-									if (!P.toff && cartridge:mime_charges > 0)
-										cartridge:mime_charges--
-										U.show_message("\blue Virus sent!", 1)
-										P.silent = 1
-										P.ttone = "silence"
-									updateUsrDialog()
-								else
-									U << "PDA not found."
-							else
-								U << browse(null, "window=pda")
-								return
+				else//Cartridge menu linking
+					mode = text2num(href_list["choice"])
+					cartridge.mode = mode
+					cartridge.unlock()
 
 //EXTRA FUNCTIONS===================================
 
@@ -610,7 +561,6 @@
 	for (var/mob/M in viewers(1, loc))
 		if (M.client && M.machine == src)
 			attack_self(M)
-//	attack_self(U)
 	return
 
 // access to status display signals

@@ -124,10 +124,8 @@
 		if (!istype(loc, /obj/item/device/pda))
 			return
 
-//		loc:mode = "cart" //Switch right to the notes program
-
 		src.generate_menu()
-		src.print_to_host(src.menu)
+		src.print_to_host(menu)
 		return
 
 	proc/print_to_host(var/text)
@@ -167,20 +165,20 @@
 				menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
 
 				menu += {"
-<a href='byond://?src=\ref[src];ssend=1'>Send Signal</A><BR>
+<a href='byond://?src=\ref[src];choice=Send Signal'>Send Signal</A><BR>
 Frequency:
-<a href='byond://?src=\ref[src];sfreq=-10'>-</a>
-<a href='byond://?src=\ref[src];sfreq=-2'>-</a>
+<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
+<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
 [format_frequency(src.radio:frequency)]
-<a href='byond://?src=\ref[src];sfreq=2'>+</a>
-<a href='byond://?src=\ref[src];sfreq=10'>+</a><br>
+<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
+<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
 <br>
 Code:
-<a href='byond://?src=\ref[src];scode=-5'>-</a>
-<a href='byond://?src=\ref[src];scode=-1'>-</a>
+<a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
+<a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
 [src.radio:code]
-<a href='byond://?src=\ref[src];scode=1'>+</a>
-<a href='byond://?src=\ref[src];scode=5'>+</a><br>"}
+<a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
+<a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
 			if (41) //crew manifest
 
 				menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
@@ -194,15 +192,15 @@ Code:
 			if (42) //status displays
 				menu = "<h4><img src=pda_status.png> Station Status Display Interlink</h4>"
 
-				menu += "\[ <A HREF='?src=\ref[src];statdisp=blank'>Clear</A> \]<BR>"
-				menu += "\[ <A HREF='?src=\ref[src];statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
-				menu += "\[ <A HREF='?src=\ref[src];statdisp=message'>Message</A> \]"
-				menu += "<ul><li> Line 1: <A HREF='?src=\ref[src];statdisp=setmsg1'>[ message1 ? message1 : "(none)"]</A>"
-				menu += "<li> Line 2: <A HREF='?src=\ref[src];statdisp=setmsg2'>[ message2 ? message2 : "(none)"]</A></ul><br>"
-				menu += "\[ Alert: <A HREF='?src=\ref[src];statdisp=alert;alert=default'>None</A> |"
-				menu += " <A HREF='?src=\ref[src];statdisp=alert;alert=redalert'>Red Alert</A> |"
-				menu += " <A HREF='?src=\ref[src];statdisp=alert;alert=lockdown'>Lockdown</A> |"
-				menu += " <A HREF='?src=\ref[src];statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"
+				menu += "\[ <A HREF='?src=\ref[src];choice=Status;statdisp=blank'>Clear</A> \]<BR>"
+				menu += "\[ <A HREF='?src=\ref[src];choice=Status;statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
+				menu += "\[ <A HREF='?src=\ref[src];choice=Status;statdisp=message'>Message</A> \]"
+				menu += "<ul><li> Line 1: <A HREF='?src=\ref[src];choice=Status;statdisp=setmsg1'>[ message1 ? message1 : "(none)"]</A>"
+				menu += "<li> Line 2: <A HREF='?src=\ref[src];choice=Status;statdisp=setmsg2'>[ message2 ? message2 : "(none)"]</A></ul><br>"
+				menu += "\[ Alert: <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=default'>None</A> |"
+				menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=redalert'>Red Alert</A> |"
+				menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=lockdown'>Lockdown</A> |"
+				menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"
 
 			if (43) //Muskets' power monitor
 				menu = "<h4><img src=pda_power.png> Power Monitor</h4>"
@@ -235,7 +233,7 @@ Code:
 			if (44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
 				menu = "<h4><img src=pda_medical.png> Medical Record List</h4>"
 				for (var/datum/data/record/R in data_core.general)
-					menu += "<a href='byond://?src=\ref[src];d_rec=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
+					menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 				menu += "<br>"
 			if(441)
 				menu = "<h4><img src=pda_medical.png> Medical Record</h4>"
@@ -277,7 +275,7 @@ Code:
 				menu = "<h4><img src=pda_cuffs.png> Security Record List</h4>"
 
 				for (var/datum/data/record/R in data_core.general)
-					menu += "<a href='byond://?src=\ref[src];d_rec=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
+					menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=\ref[R]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 
 				menu += "<br>"
 			if(451)
@@ -499,70 +497,65 @@ Code:
 	if (usr.stat || usr.restrained() || !in_range(loc, usr))
 		return
 
-	if (href_list["d_rec"])
+	switch(href_list["choice"])
+		if("Medical Records")
+			var/datum/data/record/R = locate(href_list["target"])
+			var/datum/data/record/M = locate(href_list["target"])
+			loc:mode = 441
+			mode = 441
+			if (data_core.general.Find(R))
+				for (var/datum/data/record/E in data_core.medical)
+					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+						M = E
+						break
+				active1 = R
+				active2 = M
 
-		var/datum/data/record/R = locate(href_list["d_rec"])
-		var/datum/data/record/M = locate(href_list["d_rec"])
-		var/datum/data/record/S = locate(href_list["d_rec"])
+		if("Security Records")
+			var/datum/data/record/R = locate(href_list["target"])
+			var/datum/data/record/S = locate(href_list["target"])
+			loc:mode = 451
+			mode = 451
+			if (data_core.general.Find(R))
+				for (var/datum/data/record/E in data_core.security)
+					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+						S = E
+						break
+				active1 = R
+				active3 = S
 
-		switch(mode)
-			if(44)
-				loc:mode = 441
-				mode = 441
-				if (data_core.general.Find(R))
-					for (var/datum/data/record/E in data_core.medical)
-						if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
-							M = E
-							break
-					active1 = R
-					active2 = M
-					active3 = S
-			if(45)
-				loc:mode = 451
-				mode = 451
-				if (data_core.general.Find(R))
-					for (var/datum/data/record/E in data_core.security)
-						if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
-							S = E
-							break
-					active1 = R
-					active2 = M
-					active3 = S
+		if("Send Signal")
+			for(var/obj/item/assembly/r_i_ptank/R in world) //Bomblist stuff
+				if((R.part1.code == src/radio:code) && (R.part1.frequency == src.radio:frequency))
+					bombers += "[key_name(usr)] has activated a radio bomb (Freq: [format_frequency(src.radio:frequency)], Code: [src.radio:code]). Temp = [R.part3.air_contents.temperature-T0C]."
+			spawn( 0 )
+				src.radio:send_signal("ACTIVATE")
+				return
 
-	else if ((href_list["ssend"]) && (istype(src,/obj/item/weapon/cartridge/signal)))
-		for(var/obj/item/assembly/r_i_ptank/R in world) //Bomblist stuff
-			if((R.part1.code == src/radio:code) && (R.part1.frequency == src.radio:frequency))
-				bombers += "[key_name(usr)] has activated a radio bomb (Freq: [format_frequency(src.radio:frequency)], Code: [src.radio:code]). Temp = [R.part3.air_contents.temperature-T0C]."
-		spawn( 0 )
-			src.radio:send_signal("ACTIVATE")
-			return
+		if("Signal Frequency")
+			var/new_frequency = sanitize_frequency(src.radio:frequency + text2num(href_list["sfreq"]))
+			src.radio:set_frequency(new_frequency)
 
-	else if ((href_list["sfreq"]) && (istype(src,/obj/item/weapon/cartridge/signal)))
-		var/new_frequency = sanitize_frequency(src.radio:frequency + text2num(href_list["sfreq"]))
-		src.radio:set_frequency(new_frequency)
+		if("Signal Code")
+			radio:code += text2num(href_list["scode"])
+			radio:code = round(src.radio:code)
+			radio:code = min(100, src.radio:code)
+			radio:code = max(1, src.radio:code)
 
-	else if ((href_list["scode"]) && (istype(src,/obj/item/weapon/cartridge/signal)))
-		radio:code += text2num(href_list["scode"])
-		radio:code = round(src.radio:code)
-		radio:code = min(100, src.radio:code)
-		radio:code = max(1, src.radio:code)
+		if("Status")
+			switch(href_list["statdisp"])
+				if("message")
+					post_status("message", message1, message2)
+				if("alert")
+					post_status("alert", href_list["alert"])
+				if("setmsg1")
+					message1 = input("Line 1", "Enter Message Text", message1) as text|null
+					src.updateSelfDialog()
+				if("setmsg2")
+					message2 = input("Line 2", "Enter Message Text", message2) as text|null
+					src.updateSelfDialog()
+				else
+					post_status(href_list["statdisp"])
 
-	else if (href_list["statdisp"] && access_status_display)
-
-		switch(href_list["statdisp"])
-			if("message")
-				post_status("message", message1, message2)
-			if("alert")
-				post_status("alert", href_list["alert"])
-
-			if("setmsg1")
-				message1 = input("Line 1", "Enter Message Text", message1) as text|null
-				src.updateSelfDialog()
-			if("setmsg2")
-				message2 = input("Line 2", "Enter Message Text", message2) as text|null
-				src.updateSelfDialog()
-			else
-				post_status(href_list["statdisp"])
-
-	src.generate_menu()
-	src.print_to_host(menu)
+	generate_menu()
+	print_to_host(menu)
