@@ -100,7 +100,6 @@
 			if("botlist")
 				active = null
 
-
 			if("stop", "go")
 				post_signal(control_freq, "command", href_list["op"], "active", active, s_filter = RADIO_SECBOT)
 				post_signal(control_freq, "command", "bot_status", "active", active, s_filter = RADIO_SECBOT)

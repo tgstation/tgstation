@@ -455,42 +455,8 @@
 	if(stat & (BROKEN|MAINT)) return
 
 	if(ishuman(user))
-		var/mob/living/carbon/human/U = user
-		if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja)&&U.gloves:candrain&&!U.gloves:draining)
-			var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
-			var/obj/item/clothing/gloves/space_ninja/G = U.gloves
-			user << "\blue Now charging battery..."
-			if(cell&&cell.charge)
-				var/drain = 0//To drain from battery.
-				var/maxcapacity = 0//Safety check for full battery.
-				var/totaldrain = 0//Total energy drained.
-				G.draining = 1
-				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
-				spark_system.set_up(5, 0, src.loc)
-				while(G.candrain&&cell.charge>0&&!maxcapacity)
-					drain = rand(G.mindrain,G.maxdrain)
-					if(cell.charge<drain)
-						drain = cell.charge
-					if(S.charge+drain>S.maxcharge)
-						drain = S.maxcharge-S.charge
-						maxcapacity = 1//Reached maximum battery capacity.
-					if (do_after(U,10))
-						spark_system.start()
-						playsound(src.loc, "sparks", 50, 1)
-						cell.charge-=drain
-						S.charge+=drain
-						totaldrain+=drain
-					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from the APC."
-				G.draining = 0
-				if(!emagged)
-					flick("apc-spark", src)
-					emagged = 1
-					locked = 0
-					updateicon()
-				return
-			else
-				U << "\red This APC has run dry of power. You must find another source."
+		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
+			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit,user:gloves)
 			return
 	// do APC interaction
 	user.machine = src

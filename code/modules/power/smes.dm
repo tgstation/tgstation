@@ -184,37 +184,8 @@
 	if(stat & BROKEN) return
 
 	if(ishuman(user))
-		var/mob/living/carbon/human/U = user
-		if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja)&&U.gloves:candrain&&!U.gloves:draining)
-			var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
-			var/obj/item/clothing/gloves/space_ninja/G = U.gloves
-			user << "\blue Now charging battery..."
-			if(charge)
-				G.draining = 1
-				var/drain = 0
-				var/maxcapacity = 0
-				var/totaldrain = 0
-				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
-				spark_system.set_up(5, 0, src.loc)
-				while(G.candrain&&charge>0&&!maxcapacity)
-					drain = rand(G.mindrain,G.maxdrain)
-					if(charge<drain)
-						drain = charge
-					if(S.charge+drain>S.maxcharge)
-						drain = S.maxcharge-S.charge
-						maxcapacity = 1
-					if (do_after(U,10))
-						spark_system.start()
-						playsound(src.loc, "sparks", 50, 1)
-						charge-=drain
-						S.charge+=drain
-						totaldrain+=drain
-					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from the SMES cell."
-				G.draining = 0
-				return
-			else
-				U << "\red This SMES cell has run dry of power. You must find another source."
+		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
+			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("SMES",src,user:wear_suit,user:gloves)
 			return
 
 	interact(user)

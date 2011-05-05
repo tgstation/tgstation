@@ -597,38 +597,9 @@
 			src.updateicon()
 
 	if(ishuman(user))
-		var/mob/living/carbon/human/U = user
-		if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja)&&U.gloves:candrain&&!U.gloves:draining)
-			var/obj/item/clothing/suit/space/space_ninja/S = U.wear_suit
-			var/obj/item/clothing/gloves/space_ninja/G = U.gloves
-			user << "\blue Now charging battery..."
-			src << "\red Warning: Unauthorized access through sub-route 12, block C, detected."
-			G.draining = 1
-			if(cell&&cell.charge)
-				var/drain = 0
-				var/maxcapacity = 0
-				var/totaldrain = 0
-				while(G.candrain&&cell.charge>0&&!maxcapacity)
-					drain = rand(G.mindrain,G.maxdrain)
-					if(cell.charge<drain)
-						drain = cell.charge
-					if(S.charge+drain>S.maxcharge)
-						drain = S.maxcharge-S.charge
-						maxcapacity = 1
-					if (do_after(U,10))
-						spark_system.start()
-						playsound(src.loc, "sparks", 50, 1)
-						cell.charge-=drain
-						S.charge+=drain
-						totaldrain+=drain
-					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from [src]."
-				G.draining = 0
-				return
-			else
-				U << "\red Their battery has run dry of power. You must find another source."
+		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
+			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit,user:gloves)
 			return
-
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all

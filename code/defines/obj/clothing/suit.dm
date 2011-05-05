@@ -377,7 +377,7 @@
 	var/charge = 9000.0//Starts at 90% of normal capacity.
 	var/maxcharge = 30000.0//I want the suit upgradable if the ninja is able to find the parts but for now this'll do.
 	var/initialize = 0//Suit starts off.
-	var/spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check clothing.dm for how it all works.
+	var/spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.
 	var/unlock = 0
 	var/sbombs = 10.0//Number of starting ninja smoke bombs.
 	var/aboost = 3.0//Number of adrenaline boosters.
