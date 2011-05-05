@@ -340,6 +340,7 @@
 			src.equip_if_possible(new /obj/item/weapon/bikehorn(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/stamp/clown(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/toy/crayon/rainbow(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/toy/crayonbox(src), slot_in_backpack)
 			src.mutations |= 16
 
 		if ("Mime")

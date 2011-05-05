@@ -136,9 +136,21 @@ CRAYONS
 			if(uses)
 				uses--
 				if(!uses)
-					user << "You used up your crayon!"
+					user << "\red You used up your crayon!"
 					del(src)
 	return
+
+/obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
+	if(M == user)
+		user << "You take a bite of the crayon. Delicious!"
+		user.nutrition += 5
+		if(uses)
+			uses -= 5
+			if(uses <= 0)
+				user << "\red You ate your crayon!"
+				del(src)
+	else
+		..()
 
 /obj/decal/cleanable/crayon
 	name = "rune"
