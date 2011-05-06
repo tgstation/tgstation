@@ -28,7 +28,7 @@
 			src.holder.level = 6
 
 			// Settings
-
+			src.verbs += /obj/admins/proc/view_txt_log
 			src.verbs += /client/proc/colorooc // -- Urist
 			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
 			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
@@ -173,6 +173,7 @@
 
 			// Settings
 			//src.verbs += /client/proc/colorooc 				// -- Urist
+			src.verbs += /obj/admins/proc/view_txt_log
 			src.verbs += /obj/admins/proc/adjump				//toggle admin jumping
 			src.verbs += /obj/admins/proc/adrev					//toggle admin revives
 			src.verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
@@ -1036,6 +1037,7 @@
 	src.verbs -= /client/proc/unstealthadmin
 
 	// Settings
+	src.verbs -= /obj/admins/proc/view_txt_log
 	src.verbs -= /client/proc/colorooc // -- Urist
 	src.verbs -= /obj/admins/proc/adjump				//toggle admin jumping
 	src.verbs -= /obj/admins/proc/adrev					//toggle admin revives

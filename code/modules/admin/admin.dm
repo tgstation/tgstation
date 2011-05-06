@@ -2209,6 +2209,28 @@ var/showadminmessages = 1
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
 	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.", 1)
 
+
+/obj/admins/proc/view_txt_log()
+	set category = "Admin"
+	set desc="Shows todays server log in new window"
+	set name="Show Server Log"
+	var/path = "data/logs/[time2text(world.realtime,"YYYY")]/[time2text(world.realtime,"MM")]-[time2text(world.realtime,"Month")]/[time2text(world.realtime,"DD")]-[time2text(world.realtime,"Day")].log"
+	var/output = {"<html>
+						<head>
+						<title>[time2text(world.realtime,"Day, MMM DD, YYYY")] - Log</title>
+						</head>
+						<body>
+						<pre>
+						[file2text(path)]
+						</pre>
+						</body>
+						</html>"}
+	usr << browse(output,"window=server_logfile")
+	onclose(usr,"server_logfile")
+	return
+
+
+
 //
 //
 //ALL DONE
