@@ -249,3 +249,14 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
+
+
+/obj/item/clothing/head/helmet/cap
+	name = "Captain's cap"
+	icon_state = "capcap"
+	flags = FPRINT|TABLEPASS|SUITSPACE
+
+/obj/item/clothing/head/chaplain_hood
+	name = "Chaplain's hood"
+	icon_state = "chaplain_hood"
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES

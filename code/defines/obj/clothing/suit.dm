@@ -393,3 +393,33 @@
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 0
+
+
+/obj/item/clothing/suit/captunic
+	name = "Captain's parade tunic"
+	icon_state = "captunic"
+	item_state = "bio_suit"
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/nun
+	name = "Nun robe"
+	desc = "Maximum piety in this star system."
+	icon_state = "nun"
+	item_state = "nun"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
+
+/obj/item/clothing/suit/chaplain_hoodie
+	name = "Chaplain hoodie"
+	desc = "This suit says you 'hush'!"
+	icon_state = "chaplain_hoodie"
+	item_state = "chaplain_hoodie"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/imperium_monk
+	name = "Imperium monk everyday outfit"
+	desc = "Are YOU killed a xenos today?"
+	icon_state = "imperium_monk"
+	item_state = "imperium_monk"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+

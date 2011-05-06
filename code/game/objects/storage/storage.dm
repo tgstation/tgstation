@@ -64,20 +64,21 @@
 	src.closer.screen_loc = text("[],[]", mx, my)
 	return
 
+
 /obj/item/weapon/storage/proc/orient2hud(mob/user as mob)
+	var/mob/living/carbon/human/H = user
 	if (src == user.l_hand)
 		src.orient_objs(3, 11, 3, 4)
 	else if(src == user.r_hand)
 		src.orient_objs(1, 11, 1, 4)
 	else if(src == user.back)
 		src.orient_objs(4, 10, 4, 3)
-	else if(istype(user, /mob/living/carbon/human))//only humans have belts
-		var/mob/living/carbon/human/H = user
-		if(src == H.belt)
-			src.orient_objs(1, 3, 8, 3)
-	else
+	else if(istype(user, /mob/living/carbon/human) && src == H.belt)//only humans have belts
+		src.orient_objs(1, 3, 8, 3)
+	else 
 		src.orient_objs(7, 8, 10, 7)
 	return
+
 
 /obj/item/weapon/storage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

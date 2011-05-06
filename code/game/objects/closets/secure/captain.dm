@@ -10,4 +10,6 @@
 	new /obj/item/clothing/glasses/sunglasses( src )
 	new /obj/item/clothing/suit/armor/vest( src )
 	new /obj/item/clothing/head/helmet/swat( src )
+	new /obj/item/clothing/suit/captunic( src )
+	new /obj/item/clothing/head/helmet/cap( src )
 	return
