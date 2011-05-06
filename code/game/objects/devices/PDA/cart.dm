@@ -495,6 +495,8 @@ Code:
 	..()
 
 	if (usr.stat || usr.restrained() || !in_range(loc, usr))
+		usr.machine = null
+		usr << browse(null, "window=pda")
 		return
 
 	switch(href_list["choice"])
@@ -526,15 +528,15 @@ Code:
 
 		if("Send Signal")
 			for(var/obj/item/assembly/r_i_ptank/R in world) //Bomblist stuff
-				if((R.part1.code == src/radio:code) && (R.part1.frequency == src.radio:frequency))
+				if((R.part1.code == src/radio:code) && (R.part1.frequency == radio:frequency))
 					bombers += "[key_name(usr)] has activated a radio bomb (Freq: [format_frequency(src.radio:frequency)], Code: [src.radio:code]). Temp = [R.part3.air_contents.temperature-T0C]."
 			spawn( 0 )
-				src.radio:send_signal("ACTIVATE")
+				radio:send_signal("ACTIVATE")
 				return
 
 		if("Signal Frequency")
 			var/new_frequency = sanitize_frequency(src.radio:frequency + text2num(href_list["sfreq"]))
-			src.radio:set_frequency(new_frequency)
+			radio:set_frequency(new_frequency)
 
 		if("Signal Code")
 			radio:code += text2num(href_list["scode"])
@@ -550,10 +552,10 @@ Code:
 					post_status("alert", href_list["alert"])
 				if("setmsg1")
 					message1 = input("Line 1", "Enter Message Text", message1) as text|null
-					src.updateSelfDialog()
+					updateSelfDialog()
 				if("setmsg2")
 					message2 = input("Line 2", "Enter Message Text", message2) as text|null
-					src.updateSelfDialog()
+					updateSelfDialog()
 				else
 					post_status(href_list["statdisp"])
 

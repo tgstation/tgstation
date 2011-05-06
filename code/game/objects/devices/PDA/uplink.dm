@@ -14,11 +14,11 @@
 /obj/item/weapon/integrated_uplink/proc/print_to_host(var/text)
 	if (isnull(src.hostpda))
 		return
-	src.hostpda.note = text
+	hostpda.note = text
 
 	for (var/mob/M in viewers(1, src.hostpda.loc))
 		if (M.client && M.machine == src.hostpda)
-			src.hostpda.attack_self(M)
+			hostpda.attack_self(M)
 
 	return
 

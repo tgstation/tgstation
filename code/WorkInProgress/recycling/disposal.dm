@@ -402,9 +402,9 @@
 		overlays = null
 		if( !(stat & BROKEN) )
 			if(flush)
-				overlays += image('disposal.dmi',src,"toilet-handle",,dir)
+				overlays += image('disposal.dmi',"toilet-handle",,dir)
 			if( !(stat & NOPOWER) )
-				overlays += image('disposal.dmi',src,"toilet-ready",,dir)
+				overlays += image('disposal.dmi',"toilet-ready",,dir)
 		else
 			icon_state = "toilet-broken"
 			mode = 0

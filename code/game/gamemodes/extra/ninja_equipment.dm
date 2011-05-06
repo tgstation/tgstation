@@ -17,21 +17,24 @@
 	reagents.add_reagent("anti_toxin", 80)
 	reagents.add_reagent("radium", 80)
 	reagents.add_reagent("nutriment", 80)
+	cell = new/obj/item/weapon/cell/high
+	cell.charge = 9000
 
 /obj/item/clothing/suit/space/space_ninja/proc/ntick(var/mob/living/carbon/human/U as mob)
 	set hidden = 1
 	set background = 1
 
-	spawn while(initialize&&charge>=0)//Suit on and has power.
+	spawn while(initialize&&cell.charge>=0)//Suit on and has power.
 		if(!initialize)	return//When turned off the proc stops.
+		if(coold)	coold--//Checks for ability cooldown.
 		var/A = 5//Energy cost each tick.
 		if(!kamikaze)
 			if(istype(U.get_active_hand(), /obj/item/weapon/blade))//Sword check.
-				if(charge<=0)//If no charge left.
+				if(cell.charge<=0)//If no charge left.
 					U.drop_item()//Sword is dropped from active hand (and deleted).
 				else	A += 20//Otherwise, more energy consumption.
 			else if(istype(U.get_inactive_hand(), /obj/item/weapon/blade))
-				if(charge<=0)
+				if(cell.charge<=0)
 					U.swap_hand()//swap hand
 					U.drop_item()//drop sword
 				else	A += 20
@@ -41,13 +44,13 @@
 			if(prob(25))
 				U.bruteloss += 1
 			A = 200
-		charge-=A
-		if(charge<0)
+		cell.charge-=A
+		if(cell.charge<0)
 			if(kamikaze)
 				U.say("I DIE TO LIVE AGAIN!")
 				U.death()
 				return
-			charge=0
+			cell.charge=0
 			active=0
 		sleep(10)//Checks every second.
 
@@ -90,11 +93,15 @@
 			canremove=1
 			verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
 			return
+		icon_state = "s-ninjan"
+		U.gloves.icon_state = "s-ninjan"
+		U.gloves.item_state = "s-ninjan"
+		U.update_clothing()
 		U << "\blue Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation."
 		sleep(40)
 		U << "\blue VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>."
 		sleep(40)
-		U << "\blue Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[src.charge]</B>."
+		U << "\blue Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[cell.charge]</B>."
 		sleep(40)
 		U << "\blue All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name]."
 		U.verbs += /mob/proc/ninjashift
@@ -157,7 +164,6 @@
 		unlock = 0
 		U.incorporeal_move = 0
 		U.density = 1
-		icon_state = "s-ninja"
 	spideros = 0
 	sleep(40)
 	U.verbs -= /mob/proc/ninjashift
@@ -210,6 +216,7 @@
 		U.gloves:draining=0
 		U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/drain_wire
 		U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
+	icon_state = "s-ninja"
 	U.update_clothing()
 	if(istype(U.get_active_hand(), /obj/item/weapon/blade))//Sword check.
 		U.drop_item()
@@ -231,8 +238,6 @@
 
 	var/mob/living/carbon/human/U = usr
 	var/dat = "<html><head><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#DB2929\"><style>a, a:link, a:visited, a:active, a:hover { color: #DB2929; }img {border-style:none;}</style>"
-	/*Here is where you would create a link for the cartridge used if the item has one.
-	As noted below, it's not worth the effort to make the cartridge removable unless it's done from the hub.*/
 	if(spideros==0)
 		dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=sos_7.png> Refresh</a>"
 	else
@@ -244,16 +249,12 @@
 	dat += "Welcome, <b>[U.real_name]</b>.<br>"
 	dat += "<br>"
 	dat += "<img src=sos_10.png> Current Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]<br>"
-	dat += "<img src=sos_9.png> Battery Life: [round(charge/100)]%<br>"
+	dat += "<img src=sos_9.png> Battery Life: [round(cell.charge/100)]%<br>"
 	dat += "<img src=sos_11.png> Smoke Bombs: [sbombs]<br>"
 	dat += "<br>"
 
 	switch(spideros)
 		if(0)
-			/*
-			For items that use cartridges (PDAs), simply switch() their hub function based on the cartridge inserted.
-			For ease of use, allow the removal of the cartidge only on the hub.
-			*/
 			dat += "<h4><img src=sos_1.png> Available Functions:</h4>"
 			dat += "<ul>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=Stealth'><img src=sos_4.png> Toggle Stealth: [active == 1 ? "Disable" : "Enable"]</a></li>"
@@ -349,7 +350,7 @@
 			dat += "<h5>The reason they (you) are here</h5>:"
 			dat += "Space ninjas are renowned throughout the known controlled space as fearless spies, infiltrators, and assassins. They are sent on missions of varying nature by Nanotrasen, the Syndicate, and other shady organizations and people. To hire a space ninja means serious business."
 			dat += "<h5>Their playstyle:</h5>"
-			dat += "A mix of traitor, changeling, and wizard. Ninjas rely on energy, or electricity to be precise, to keep their suits running (when out of energy, a suit hibernates). Suits gain energy from objects or creatures that contain electrical charge. APCs, cell batteries, SMES batteries, cyborgs, mechs, and exposed wires are currently supported. Through energy ninjas gain access to special powers--while all powers are tied to the ninja suit, the most useful of them are verb activated--to help them in their mission.<br>It is a constant struggle for a ninja to remain hidden long enough to recharge the suit and accomplish their objective; despite their arsenal of abilities, ninjas can die like any other. Unlike wizards, ninjas do not possess good crowd control and are typically forced to play more subdued in order to achieve their goals. Some of their abilities are specifically designed to confuse and disorient others.<br>With that said, it should be perfectly possible to completely flip the fuck out and rampage as a ninja."
+			dat += "A mix of traitor, changeling, and wizard. Ninjas rely on energy, or electricity to be precise, to keep their suits running (when out of energy, a suit hibernates). Suits gain energy from objects or creatures that contain electrical charge. APCs, cell batteries, rechargers, SMES batteries, cyborgs, mechs, and exposed wires are currently supported. Through energy ninjas gain access to special powers--while all powers are tied to the ninja suit, the most useful of them are verb activated--to help them in their mission.<br>It is a constant struggle for a ninja to remain hidden long enough to recharge the suit and accomplish their objective; despite their arsenal of abilities, ninjas can die like any other. Unlike wizards, ninjas do not possess good crowd control and are typically forced to play more subdued in order to achieve their goals. Some of their abilities are specifically designed to confuse and disorient others.<br>With that said, it should be perfectly possible to completely flip the fuck out and rampage as a ninja."
 			dat += "<h5>Their powers:</h5>"
 			dat += "There are two primary types: powers that are activated through the suit and powers that are activated through the verb panel. Passive powers are always on. Active powers must be turned on and remain active only when there is energy to do so. All verb powers are active and their cost is listed next to them."
 			dat += "<b>Powers of the suit</b>: cannot be tracked by AI (passive), faster speed (passive), stealth (active), vision switch (passive if toggled), voice masking (passive), SpiderOS (passive if toggled), energy drain (passive if toggled)."
@@ -524,28 +525,28 @@
 				U << "\red Error: the suit cannot perform this function. Out of dylovene."
 			else
 				reagents.reaction(U, 2)
-				reagents.trans_id_to(U, "anti_toxin", amount_per_transfer_from_this)
+				reagents.trans_id_to(U, "anti_toxin", transfera)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 		if("Dexalin Plus")
 			if(!reagents.get_reagent_amount("dexalinp"))
 				U << "\red Error: the suit cannot perform this function. Out of dexalinp."
 			else
 				reagents.reaction(U, 2)
-				reagents.trans_id_to(U, "dexalinp", amount_per_transfer_from_this)
+				reagents.trans_id_to(U, "dexalinp", transfera)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 		if("Tricordazine")
 			if(!reagents.get_reagent_amount("tricordrazine"))
 				U << "\red Error: the suit cannot perform this function. Out of tricordrazine."
 			else
 				reagents.reaction(U, 2)
-				reagents.trans_id_to(U, "tricordrazine", amount_per_transfer_from_this)
+				reagents.trans_id_to(U, "tricordrazine", transfera)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 		if("Spacelin")
 			if(!reagents.get_reagent_amount("spaceacillin"))
 				U << "\red Error: the suit cannot perform this function. Out of spaceacillin."
 			else
 				reagents.reaction(U, 2)
-				reagents.trans_id_to(U, "spaceacillin", amount_per_transfer_from_this)
+				reagents.trans_id_to(U, "spaceacillin", transfera)
 				U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 		if("Nutriment")
 			if(!reagents.get_reagent_amount("nutriment"))
@@ -562,7 +563,7 @@
 	set src in view()
 	..()
 	if(initialize)
-		usr << "All systems operational. Current energy capacity: <B>[src.charge]</B>."
+		usr << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
 		if(!kamikaze)
 			if(active)
 				usr << "The CLOAK-tech device is <B>active</B>."
@@ -609,7 +610,6 @@
 					U << "\red Procedure interrupted. Protocol terminated."
 	return
 
-
 /obj/item/clothing/gloves/space_ninja/proc/drain(var/target_type as text, var/target, var/obj/suit, var/obj/gloves)
 //Var Initialize
 	var/mob/living/carbon/human/U = usr
@@ -625,6 +625,7 @@
 	U << "\blue Now charging battery..."
 
 	switch(target_type)
+
 		if("APC")
 			var/obj/machinery/power/apc/A = target
 			if(A.cell&&A.cell.charge)
@@ -634,14 +635,14 @@
 					drain = rand(G.mindrain,G.maxdrain)
 					if(A.cell.charge<drain)
 						drain = A.cell.charge
-					if(S.charge+drain>S.maxcharge)
-						drain = S.maxcharge-S.charge
+					if(S.cell.charge+drain>S.cell.maxcharge)
+						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1//Reached maximum battery capacity.
 					if (do_after(U,10))
 						spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
 						A.cell.charge-=drain
-						S.charge+=drain
+						S.cell.charge+=drain
 						totaldrain+=drain
 					else	break
 				U << "\blue Gained <B>[totaldrain]</B> energy from the APC."
@@ -662,64 +663,93 @@
 					drain = rand(G.mindrain,G.maxdrain)
 					if(A.charge<drain)
 						drain = A.charge
-					if(S.charge+drain>S.maxcharge)
-						drain = S.maxcharge-S.charge
+					if(S.cell.charge+drain>S.cell.maxcharge)
+						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1
 					if (do_after(U,10))
 						spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
 						A.charge-=drain
-						S.charge+=drain
+						S.cell.charge+=drain
 						totaldrain+=drain
 					else	break
 				U << "\blue Gained <B>[totaldrain]</B> energy from the SMES cell."
 			else
 				U << "\red This SMES cell has run dry of power. You must find another source."
 
-		if("MECHA")
-			var/obj/mecha/A = target
-			A.occupant_message("\red Warning: Unauthorized access through sub-route 4, block H, detected.")
-			if(A.get_charge())
-				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
-					drain = rand(G.mindrain,G.maxdrain)
-					if(A.cell.charge<drain)
-						drain = A.cell.charge
-					if(S.charge+drain>S.maxcharge)
-						drain = S.maxcharge-S.charge
-						maxcapacity = 1
-					if (do_after(U,10))
-						A.spark_system.start()
-						playsound(A.loc, "sparks", 50, 1)
-						A.cell.use(drain)
-						S.charge+=drain
-						totaldrain+=drain
-					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from [src]."
+		if("CELL")
+			var/obj/item/weapon/cell/A = target
+			if(A.maxcharge>S.cell.maxcharge)
+				U << "\blue Higher maximum capacity detected.\nUpgrading..."
+				if (G.candrain&&do_after(U,50))
+					U.drop_item()
+					A.loc = S
+					A.charge = min(A.charge+S.cell.charge, A.maxcharge)
+					var/obj/item/weapon/cell/old_cell = S.cell
+					old_cell.charge = 0
+					U.put_in_hand(old_cell)
+					old_cell.add_fingerprint(U)
+					old_cell.corrupt()
+					old_cell.updateicon()
+					S.cell = A
+					U << "\blue Upgrade complete. Maximum capacity: <b>[round(S.cell.charge/100)]</b>%"
+				else
+					U << "\red Procedure interrupted. Protocol terminated."
 			else
-				U << "\red The exosuit's battery has run dry of power. You must find another source."
+				if(A.charge)
+					if (G.candrain&&do_after(U,30))
+						U << "\blue Gained <B>[A.charge]</B> energy from the cell."
+						if(S.cell.charge+A.charge>S.cell.maxcharge)
+							S.cell.charge=S.cell.maxcharge
+						else
+							S.cell.charge+=A.charge
+						A.charge = 0
+						G.draining = 0
+						A.corrupt()
+						A.updateicon()
+					else
+						U << "\red Procedure interrupted. Protocol terminated."
+				else
+					U << "\red This cell is empty and of no use."
 
-		if("CYBORG")
-			var/mob/living/silicon/robot/A = target
-			A << "\red Warning: Unauthorized access through sub-route 12, block C, detected."
-			G.draining = 1
-			if(A.cell&&A.cell.charge)
-				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
-					drain = rand(G.mindrain,G.maxdrain)
-					if(A.cell.charge<drain)
-						drain = A.cell.charge
-					if(S.charge+drain>S.maxcharge)
-						drain = S.maxcharge-S.charge
-						maxcapacity = 1
-					if (do_after(U,10))
-						A.spark_system.start()
-						playsound(A.loc, "sparks", 50, 1)
-						A.cell.charge-=drain
-						S.charge+=drain
-						totaldrain+=drain
-					else	break
-				U << "\blue Gained <B>[totaldrain]</B> energy from [A]."
+		if("MACHINERY")//Can be applied to generically to all powered machinery.
+			var/obj/machinery/A = target
+			if(A.powered())//If powered.
+
+				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+				spark_system.set_up(5, 0, A.loc)
+
+				var/obj/machinery/power/apc/B = A.loc.loc:get_apc()//Object.turf.area find APC
+				if(B)//If APC exists. Might not if the area is unpowered like CentCom.
+					var/datum/powernet/PN = B.terminal.powernet
+					while(G.candrain&&!maxcapacity&&!isnull(A))//And start a proc similar to drain from wire.
+						drain = rand(G.mindrain,G.maxdrain)
+						var/drained = 0
+						if(PN&&do_after(U,10))
+							drained = min(drain, PN.avail)
+							PN.newload += drained
+							if(drained < drain)//if no power on net, drain apcs
+								for(var/obj/machinery/power/terminal/T in PN.nodes)
+									if(istype(T.master, /obj/machinery/power/apc))
+										var/obj/machinery/power/apc/AP = T.master
+										if(AP.operating && AP.cell && AP.cell.charge>0)
+											AP.cell.charge = max(0, AP.cell.charge - 5)
+											drained += 5
+						else	break
+						S.cell.charge += drained
+						if(S.cell.charge>S.cell.maxcharge)
+							totaldrain += (drained-(S.cell.charge-S.cell.maxcharge))
+							S.cell.charge = S.cell.maxcharge
+							maxcapacity = 1
+						else
+							totaldrain += drained
+						spark_system.start()
+						if(drained==0)	break
+					U << "\blue Gained <B>[totaldrain]</B> energy from the power network."
+				else
+					U << "\red Power network could not be found. Aborting."
 			else
-				U << "\red Their battery has run dry of power. You must find another source."
+				U << "\red This recharger is not providing energy. You must find another source."
 
 		if("WIRE")
 			var/obj/cable/A = target
@@ -738,16 +768,61 @@
 									AP.cell.charge = max(0, AP.cell.charge - 5)
 									drained += 5
 				else	break
-				S.charge += drained
-				if(S.charge>S.maxcharge)
-					totaldrain += (drained-(S.charge-S.maxcharge))
-					S.charge = S.maxcharge
+				S.cell.charge += drained
+				if(S.cell.charge>S.cell.maxcharge)
+					totaldrain += (drained-(S.cell.charge-S.cell.maxcharge))
+					S.cell.charge = S.cell.maxcharge
 					maxcapacity = 1
 				else
 					totaldrain += drained
 				S.spark_system.start()
 				if(drained==0)	break
 			U << "\blue Gained <B>[totaldrain]</B> energy from the power network."
+
+		if("MECHA")
+			var/obj/mecha/A = target
+			A.occupant_message("\red Warning: Unauthorized access through sub-route 4, block H, detected.")
+			if(A.get_charge())
+				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
+					drain = rand(G.mindrain,G.maxdrain)
+					if(A.cell.charge<drain)
+						drain = A.cell.charge
+					if(S.cell.charge+drain>S.cell.maxcharge)
+						drain = S.cell.maxcharge-S.cell.charge
+						maxcapacity = 1
+					if (do_after(U,10))
+						A.spark_system.start()
+						playsound(A.loc, "sparks", 50, 1)
+						A.cell.use(drain)
+						S.cell.charge+=drain
+						totaldrain+=drain
+					else	break
+				U << "\blue Gained <B>[totaldrain]</B> energy from [src]."
+			else
+				U << "\red The exosuit's battery has run dry of power. You must find another source."
+
+		if("CYBORG")
+			var/mob/living/silicon/robot/A = target
+			A << "\red Warning: Unauthorized access through sub-route 12, block C, detected."
+			G.draining = 1
+			if(A.cell&&A.cell.charge)
+				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
+					drain = rand(G.mindrain,G.maxdrain)
+					if(A.cell.charge<drain)
+						drain = A.cell.charge
+					if(S.cell.charge+drain>S.cell.maxcharge)
+						drain = S.cell.maxcharge-S.cell.charge
+						maxcapacity = 1
+					if (do_after(U,10))
+						A.spark_system.start()
+						playsound(A.loc, "sparks", 50, 1)
+						A.cell.charge-=drain
+						S.cell.charge+=drain
+						totaldrain+=drain
+					else	break
+				U << "\blue Gained <B>[totaldrain]</B> energy from [A]."
+			else
+				U << "\red Their battery has run dry of power. You must find another source."
 		else//Else nothing :<
 
 	G.draining = 0
@@ -806,7 +881,6 @@
 					var/mob/picked = pick(names)
 					voice = picked.real_name
 		usr << "You are now mimicking <B>[voice]</B>."
-		return
 	else
 		if(voice!="Unknown")
 			usr << "You deactivate the voice synthesizer."

@@ -82,7 +82,7 @@ When thinking about new stuff, check here to see if there are any slots unfilled
 3	|	Super-Capacity Cell (20,000), Powersink, PACMAN
 4	|	SUPERPACMAN
 5	|	MRSPACMAN, Super Capacitor
-6	|
+6	|	Hyper-Capacity Cell (30,000)
 7	|
 8	|
 9	|

@@ -158,7 +158,7 @@
 			if (timeleft)
 				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
-	if (src.client.statpanel == "Status")
+	if (client.statpanel == "Status")
 		if (src.internal)
 			if (!src.internal.air_contents)
 				del(src.internal)
@@ -170,7 +170,7 @@
 			if (src.mind.special_role == "Changeling")
 				stat("Chemical Storage", src.chem_charges)
 		if (istype(src.wear_suit, /obj/item/clothing/suit/space/space_ninja)&&src.wear_suit:initialize)
-			stat("Energy Charge", round(src.wear_suit:charge/100))
+			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
 /mob/living/carbon/human/bullet_act(flag, A as obj, var/datum/organ/external/def_zone)
 	var/shielded = 0

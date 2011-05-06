@@ -1,4 +1,3 @@
-
 /mob/proc/Cell()
 	set category = "Admin"
 	set hidden = 1

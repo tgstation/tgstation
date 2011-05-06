@@ -1446,10 +1446,16 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	g_amt = 60
 
 /obj/item/weapon/cell/super
-	name = "super-capcity power cell"
+	name = "super-capacity power cell"
 	origin_tech = "powerstorage=3"
 	maxcharge = 20000
 	g_amt = 70
+
+/obj/item/weapon/cell/hyper
+	name = "hyper-capacity power cell"
+	origin_tech = "powerstorage=6"
+	maxcharge = 30000
+	g_amt = 80
 
 /*/obj/item/weapon/cell/potato
 	name = "Potato Battery"

@@ -606,9 +606,6 @@
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
-
-
-
 /obj/machinery/power/apc/proc/update()
 	if(operating && !shorted)
 		area.power_light = (lighting > 1)
@@ -651,7 +648,6 @@
 				src.aidisabled = 1
 			src.updateDialog()
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
-
 
 /obj/machinery/power/apc/proc/mend(var/wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
@@ -707,7 +703,6 @@
 				if (src.aidisabled == 1)
 					src.aidisabled = 0
 				src.updateDialog()
-
 
 /obj/machinery/power/apc/Topic(href, href_list)
 	..()
@@ -1117,7 +1112,6 @@
 	area.power_environ = 0
 	area.power_change()
 	..()
-
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))

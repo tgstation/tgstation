@@ -290,10 +290,8 @@
 	..()
 	var/mob/living/U = usr
 	if (U.contents.Find(src) || U.contents.Find(master) || (istype(loc, /turf) && get_dist(src, U) <= 1))
-		if (U.stat || U.restrained())
-			U << browse(null, "window=pda")
-			return
-		else
+		if ( !(U.stat || U.restrained()) )
+
 			add_fingerprint(U)
 			U.machine = src
 
@@ -302,6 +300,7 @@
 //BASIC FUNCTIONS===================================
 
 				if("Close")//Self explanatory
+					U.machine = null
 					U << browse(null, "window=pda")
 					return
 				if("Refresh")//Refresh, goes to the end of the proc.
@@ -316,23 +315,7 @@
 							cartridge.mode = mode
 							cartridge.unlock()
 				if ("Authenticate")//Checks for ID
-					if (id)
-						if (istype(loc, /mob))
-							var/obj/item/W = loc:equipped()
-							var/emptyHand = (W == null)
-							if(emptyHand)
-								id.DblClick()
-								if(!istype(id.loc, /obj/item/device/pda))
-									id = null
-						else
-							id.loc = loc
-							id = null
-					else
-						var/obj/item/I = U.equipped()
-						if (istype(I, /obj/item/weapon/card/id))
-							U.drop_item()
-							I.loc = src
-							id = I
+					id_check(U, 1)
 				if("Eject")//Ejects the cart, only done from hub.
 					if (!isnull(cartridge))
 						var/turf/T = loc
@@ -363,32 +346,28 @@
 
 				if("Light")
 					fon = (!fon)
-					if (contents.Find(src))
+					if (U.contents.Find(src))
 						if (fon)
-							sd_SetLuminosity(U.luminosity + f_lum)
+							U.sd_SetLuminosity(U.luminosity + f_lum)
 						else
-							sd_SetLuminosity(U.luminosity - f_lum)
+							U.sd_SetLuminosity(U.luminosity - f_lum)
 					else
 						sd_SetLuminosity(fon * f_lum)
-					updateUsrDialog()
 				if("Medical Scan")
 					if(scanmode == 1)
 						scanmode = 0
 					else if((!isnull(cartridge)) && (cartridge.access_medical))
 						scanmode = 1
-					updateUsrDialog()//What is this even used for?
 				if("Forensic Scan")
 					if(scanmode == 2)
 						scanmode = 0
 					else if((!isnull(cartridge)) && (cartridge.access_security))
 						scanmode = 2
-					updateUsrDialog()
 				if("Reagent Scan")
 					if(scanmode == 3)
 						scanmode = 0
 					else if((!isnull(cartridge)) && (cartridge.access_reagent_scanner))
 						scanmode = 3
-					updateUsrDialog()
 				if("Honk")
 					if ( !(last_honk && world.time < last_honk + 20) )
 						playsound(loc, 'bikehorn.ogg', 50, 1)
@@ -409,10 +388,8 @@
 					toff = !toff
 				if("Toggle Ringer")//If viewing texts then erase them, if not then toggle silent status
 					silent = !silent
-					updateUsrDialog()
 				if("Clear")//Clears messages
 					tnote = null
-					updateUsrDialog()
 				if("Ringtone")
 					var/t = input(U, "Please enter new ringtone", name, ttone) as text
 					if (in_range(src, U) && loc == U)
@@ -448,7 +425,7 @@
 						MS.send_pda_message("[P.owner]","[owner]","[t]")
 
 					tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
-					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];editnote=\ref[src]'>[owner]</a>:</b></i><br>[t]<br>"
+					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a>:</b></i><br>[t]<br>"
 
 					if (prob(15)) //Give the AI a chance of intercepting the message
 						for (var/mob/living/silicon/ai/A in world)
@@ -462,14 +439,13 @@
 					P.overlays = null
 					P.overlays += image('pda.dmi', "pda-r")
 				if("Send Honk")//Honk virus
-					if(istype(cartridge, /obj/item/weapon/cartridge/clown))
-						var/obj/item/device/pda/P = locate(href_list["target"])
+					if(istype(cartridge, /obj/item/weapon/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
+						var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
 						if(!isnull(P))
 							if (!P.toff && cartridge:honk_charges > 0)
 								cartridge:honk_charges--
 								U.show_message("\blue Virus sent!", 1)
 								P.honkamt = (rand(15,20))
-							updateUsrDialog()
 						else
 							U << "PDA not found."
 					else
@@ -484,7 +460,6 @@
 								U.show_message("\blue Virus sent!", 1)
 								P.silent = 1
 								P.ttone = "silence"
-							updateUsrDialog()
 						else
 							U << "PDA not found."
 					else
@@ -507,7 +482,6 @@
 					if(uplink)
 						uplink.active = 0
 						note = uplink.orignote
-						updateUsrDialog()
 				if("Detonate")//Detonate PDA
 					if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 						var/obj/item/device/pda/P = locate(href_list["target"])
@@ -535,10 +509,10 @@
 								else
 									U.show_message("\blue Success!", 1)
 									P.explode()
-							updateUsrDialog()
 						else
 							U << "PDA not found."
 					else
+						U.machine = null
 						U << browse(null, "window=pda")
 						return
 
@@ -548,19 +522,61 @@
 					mode = text2num(href_list["choice"])
 					cartridge.mode = mode
 					cartridge.unlock()
+		else//If can't interact.
+			U.machine = null
+			U << browse(null, "window=pda")
+			return
+	else//If not in range or not using the pda.
+		U.machine = null
+		U << browse(null, "window=pda")
+		return
 
 //EXTRA FUNCTIONS===================================
 
-	if (mode == 2||mode == 21)
+	if (mode == 2||mode == 21)//To clear message overlays.
 		overlays = null
 
-	if ((honkamt > 0) && (prob(60)))
+	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'bikehorn.ogg', 30, 1)
 
-	for (var/mob/M in viewers(1, loc))
-		if (M.client && M.machine == src)
-			attack_self(M)
+	if(U.machine == src)//Final safety.
+		attack_self(U)//It auto-closes the menu prior if the user is not in range and so on.
+	else
+		U.machine = null
+		U << browse(null, "window=pda")
+	return
+
+/obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
+	if(choice == 1)
+		if (id)
+			if (istype(loc, /mob))
+				var/obj/item/W = loc:equipped()
+				var/emptyHand = (W == null)
+				if(emptyHand)
+					id.DblClick()
+					if(!istype(id.loc, /obj/item/device/pda))
+						id = null
+			else
+				id.loc = loc
+				id = null
+		else
+			var/obj/item/I = user.equipped()
+			if (istype(I, /obj/item/weapon/card/id))
+				user.drop_item()
+				I.loc = src
+				id = I
+	else
+		var/obj/item/weapon/card/I = user.equipped()
+		if(id)//Get id and replace it.
+			user.drop_item()
+			I.loc = src
+			user.put_in_hand(id)
+			id = I
+		else//Insert id.
+			user.drop_item()
+			I.loc = src
+			id = I
 	return
 
 // access to status display signals
@@ -570,34 +586,30 @@
 		user.drop_item()
 		C.loc = src
 		user << "\blue You insert [C] into [src]."
-		src.cartridge = C
+		cartridge = C
 		if (C:radio)
 			C:radio.hostpda = src
-		src.updateUsrDialog()
+		updateUsrDialog()
 
 	else if (istype(C, /obj/item/weapon/card/id) && C:registered)
-		if(!src.owner)
-			src.owner = C:registered
-			src.ownjob = C:assignment
-			src.name = "PDA-[src.owner] ([src.ownjob])"
+		if(!owner)
+			owner = C:registered
+			ownjob = C:assignment
+			name = "PDA-[owner] ([ownjob])"
 			user << "\blue Card scanned."
-			src.updateSelfDialog()
-			return
-		if(!(src.owner == C:registered))
-			user << "\blue Name on card does not match registered name. Please try again."
-			src.updateSelfDialog()
-			return
-		if((src.owner == C:registered) && (src.ownjob == C:assignment))
-			user << "\blue Rank is up to date."
-			src.updateSelfDialog()
-			return
-		if((src.owner == C:registered) && (src.ownjob != C:assignment))
-			src.ownjob = C:assignment
-			src.name = "PDA-[src.owner] ([src.ownjob])"
-			user << "\blue Rank updated."
-			src.updateSelfDialog()
-			return
-
+		else if(alert("Would you like to inert the card or update owner information?",,"Insert","Update")=="Insert")
+			id_check(user, 2)
+		else
+			if(!(owner == C:registered))
+				user << "\blue Name on card does not match registered name. Please try again."
+			else if((owner == C:registered) && (ownjob == C:assignment))
+				user << "\blue Rank is up to date."
+			else if((owner == C:registered) && (ownjob != C:assignment))
+				ownjob = C:assignment
+				name = "PDA-[owner] ([ownjob])"
+				user << "\blue Rank updated."
+		updateSelfDialog()
+	return
 
 /obj/item/device/pda/attack(mob/C as mob, mob/user as mob)
 	if (istype(C, /mob/living/carbon))
