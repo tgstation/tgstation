@@ -88,7 +88,8 @@ Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[li
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"])
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
-		A.ai_actual_track(target)
+		if(A && target)
+			A.ai_actual_track(target)
 		return
 	else if (href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))

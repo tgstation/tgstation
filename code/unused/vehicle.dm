@@ -206,7 +206,7 @@
 			src.health -= value
 			if(src.health>0)
 				src.spark_system.start()
-				world << "[src] health is [health]"
+//				world << "[src] health is [health]"
 			else
 				src.ex_act(1)
 		return

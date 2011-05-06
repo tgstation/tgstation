@@ -1508,12 +1508,11 @@
 			if(src.muted)
 				src << "You are muted have a nice day"
 				return
-			if (!( ismob(M) ))
+			if (!ismob(M))
 				return
 			var/t = input("Message:", text("Private message to [M.key]"))  as text|null
-			if (!( t ))
+			if (!t || !usr || !M)
 				return
-			if (!usr) return
 			if (usr.client && usr.client.holder)
 				M << "\red Admin PM from-<b>[key_name(usr, M, 0)]</b>: [t]"
 				usr << "\blue Admin PM to-<b>[key_name(M, usr, 1)]</b>: [t]"

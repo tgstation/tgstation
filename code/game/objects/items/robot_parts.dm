@@ -128,30 +128,32 @@
 			user << "\blue You need to attach a flash to it first!"
 
 	if(istype(W, /obj/item/device/mmi))
+		var/obj/item/device/mmi/mmi = W
 		if(src.check_completion())
 			if(!istype(src.loc,/turf))
 				user << "\red You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise."
 				return
-			if(!W:brain)
+			if(!mmi.brain)
 				user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
 				return
-			if(W:brain.brainmob.stat == 2)
+			if(mmi.brain.brainmob.stat == 2)
 				user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
 				return
 			user.drop_item()
-			W.loc = src
-			src.brain = W
+			mmi.loc = src
+			src.brain = mmi
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(src.loc))
+			if(!O) return
 			//O.start = 1
 			O.invisibility = 0
 			O.name = src.created_name
 			O.real_name = src.created_name
 
-			if (W:brain.brainmob)
-				W:brain.brainmob.mind.transfer_to(O)
+			if (mmi.brain.brainmob && mmi.brain.brainmob.mind)
+				mmi.brain.brainmob.mind.transfer_to(O)
 			else
 				for(var/mob/dead/observer/G in world)
-					if(G.corpse == W:brain.brainmob && G.client)
+					if(G.corpse == mmi.brain.brainmob && G.client && G.corpse.mind)
 						G.corpse.mind.transfer_to(O)
 						del(G)
 						break
@@ -169,7 +171,7 @@
 
 			O.cell = src.chest.cell
 			O.cell.loc = O
-			O.brain = W
+			O.brain = mmi
 
 			del(src)
 		else

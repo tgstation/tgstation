@@ -803,6 +803,18 @@
 /obj/mecha/examine()
 	set src in view()
 	..()
+	var/integrity = health/initial(health)*100
+	switch(integrity)
+		if(85 to 100)
+			usr << "It's fully intact."
+		if(65 to 85)
+			usr << "It's slightly damaged."
+		if(45 to 65)
+			usr << "It's badly damaged."
+		if(25 to 45)
+			usr << "It's heavily damaged."
+		else
+			usr << "It's falling apart."
 	if(equipment && equipment.len)
 		usr << "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)

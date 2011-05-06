@@ -169,12 +169,13 @@
 	src.invisibility = 101
 	for(var/t in src.organs)
 		del(src.organs[text("[t]")])
-	//src.client.screen -= main_hud1.contents
-	src.client.screen -= src.hud_used.contents
-	src.client.screen -= src.hud_used.adding
-	src.client.screen -= src.hud_used.mon_blo
-	src.client.screen -= list( src.oxygen, src.throw_icon, src.i_select, src.m_select, src.toxin, src.internals, src.fire, src.hands, src.healths, src.pullin, src.blind, src.flash, src.rest, src.sleep, src.mach )
-	src.client.screen -= list( src.zone_sel, src.oxygen, src.throw_icon, src.i_select, src.m_select, src.toxin, src.internals, src.fire, src.hands, src.healths, src.pullin, src.blind, src.flash, src.rest, src.sleep, src.mach )
+	if(src.client)
+		//src.client.screen -= main_hud1.contents
+		src.client.screen -= src.hud_used.contents
+		src.client.screen -= src.hud_used.adding
+		src.client.screen -= src.hud_used.mon_blo
+		src.client.screen -= list( src.oxygen, src.throw_icon, src.i_select, src.m_select, src.toxin, src.internals, src.fire, src.hands, src.healths, src.pullin, src.blind, src.flash, src.rest, src.sleep, src.mach )
+		src.client.screen -= list( src.zone_sel, src.oxygen, src.throw_icon, src.i_select, src.m_select, src.toxin, src.internals, src.fire, src.hands, src.healths, src.pullin, src.blind, src.flash, src.rest, src.sleep, src.mach )
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( src.loc )
 
 	// cyborgs produced by Robotize get an automatic power cell

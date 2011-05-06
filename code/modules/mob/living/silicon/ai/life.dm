@@ -135,11 +135,17 @@
 								src << "Connection verified. Searching for APC in power network."
 								sleep(50)
 								var/obj/machinery/power/apc/theAPC = null
+/*
 								for (var/something in loc)
 									if (istype(something, /obj/machinery/power/apc))
 										if (!(something:stat & BROKEN))
 											theAPC = something
 											break
+*/
+								for (var/obj/machinery/power/apc/APC in loc)
+									if (!(APC.stat & BROKEN))
+										theAPC = APC
+										break
 								if (theAPC==null)
 									src << "Unable to locate APC!"
 									src:aiRestorePowerRoutine = 2
@@ -152,11 +158,17 @@
 								src << "APC located. Optimizing route to APC to avoid needless power waste."
 								sleep(50)
 								theAPC = null
+/*
 								for (var/something in loc)
 									if (istype(something, /obj/machinery/power/apc))
 										if (!(something:stat & BROKEN))
 											theAPC = something
 											break
+*/
+								for (var/obj/machinery/power/apc/APC in loc)
+									if (!(APC.stat & BROKEN))
+										theAPC = APC
+										break
 								if (theAPC==null)
 									src << "APC connection lost!"
 									src:aiRestorePowerRoutine = 2
@@ -169,11 +181,17 @@
 								src << "Best route identified. Hacking offline APC power port."
 								sleep(50)
 								theAPC = null
+/*
 								for (var/something in loc)
 									if (istype(something, /obj/machinery/power/apc))
 										if (!(something:stat & BROKEN))
 											theAPC = something
 											break
+*/
+								for (var/obj/machinery/power/apc/APC in loc)
+									if (!(APC.stat & BROKEN))
+										theAPC = APC
+										break
 								if (theAPC==null)
 									src << "APC connection lost!"
 									src:aiRestorePowerRoutine = 2
@@ -186,11 +204,17 @@
 								src << "Power port upload access confirmed. Loading control program into APC power port software."
 								sleep(50)
 								theAPC = null
+/*
 								for (var/something in loc)
 									if (istype(something, /obj/machinery/power/apc))
 										if (!(something:stat & BROKEN))
 											theAPC = something
 											break
+*/
+								for (var/obj/machinery/power/apc/APC in loc)
+									if (!(APC.stat & BROKEN))
+										theAPC = APC
+										break
 								if (theAPC==null)
 									src << "APC connection lost!"
 									src:aiRestorePowerRoutine = 2

@@ -30,7 +30,7 @@
 					chassis.cell.use(energy_drain)
 					O.anchored = 1
 					var/T = chassis.loc
-					if(do_after_cooldown())
+					if(do_after_cooldown(target))
 						if(T == chassis.loc && src == chassis.selected)
 							cargo_holder.cargo += O
 							O.loc = chassis
@@ -40,8 +40,6 @@
 						else
 							chassis.occupant_message("<font color='red'>You must hold still while handling objects.</font>")
 							O.anchored = initial(O.anchored)
-						set_ready_state(1)
-
 				else
 					chassis.occupant_message("<font color='red'>Not enough room in cargo compartment.</font>")
 			else
@@ -62,8 +60,7 @@
 				chassis.visible_message("[chassis] pushes [target] out of the way.")
 			set_ready_state(0)
 			chassis.cell.use(energy_drain)
-			if(do_after_cooldown())
-				set_ready_state(1)
+			do_after_cooldown()
 		return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/drill
@@ -81,7 +78,7 @@
 		chassis.occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
 		chassis.cell.use(energy_drain)
 		var/T = chassis.loc
-		if(do_after_cooldown())
+		if(do_after_cooldown(target))
 			if(T == chassis.loc && src == chassis.selected)
 				if(istype(target, /turf/simulated/wall/r_wall))
 					chassis.occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
@@ -99,7 +96,6 @@
 				else
 					chassis.log_message("Drilled through [target]")
 					target.ex_act(2)
-			set_ready_state(1)
 		return 1
 
 
@@ -121,45 +117,44 @@
 		if(!action_checks(target) || get_dist(chassis, target)>3) return
 		if(get_dist(chassis, target)>2) return
 		set_ready_state(0)
-		if(do_after_cooldown())
-			set_ready_state(1)
-		if(istype(target, /obj/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
-			var/obj/o = target
-			o.reagents.trans_to(src, 200)
-			chassis.occupant_message("\blue Extinguisher refilled")
-			playsound(chassis, 'refill.ogg', 50, 1, -6)
-		else
-			if(src.reagents.total_volume > 0)
-				playsound(chassis, 'extinguish.ogg', 75, 1, -3)
-				var/direction = get_dir(chassis,target)
-				var/turf/T = get_turf(target)
-				var/turf/T1 = get_step(T,turn(direction, 90))
-				var/turf/T2 = get_step(T,turn(direction, -90))
+		if(do_after_cooldown(target))
+			if(istype(target, /obj/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
+				var/obj/o = target
+				o.reagents.trans_to(src, 200)
+				chassis.occupant_message("\blue Extinguisher refilled")
+				playsound(chassis, 'refill.ogg', 50, 1, -6)
+			else
+				if(src.reagents.total_volume > 0)
+					playsound(chassis, 'extinguish.ogg', 75, 1, -3)
+					var/direction = get_dir(chassis,target)
+					var/turf/T = get_turf(target)
+					var/turf/T1 = get_step(T,turn(direction, 90))
+					var/turf/T2 = get_step(T,turn(direction, -90))
 
-				var/list/the_targets = list(T,T1,T2)
-				for(var/a=0, a<5, a++)
+					var/list/the_targets = list(T,T1,T2)
 					spawn(0)
-						var/obj/effects/water/W = new /obj/effects/water(get_turf(chassis))
-						if(!W)
-							return
-						var/turf/my_target = pick(the_targets)
-						var/datum/reagents/R = new/datum/reagents(5)
-						W.reagents = R
-						R.my_atom = W
-						src.reagents.trans_to(W,1)
-						for(var/b=0, b<4, b++)
+						for(var/a=0, a<5, a++)
+							var/obj/effects/water/W = new /obj/effects/water(get_turf(chassis))
 							if(!W)
 								return
-							step_towards(W,my_target)
-							if(!W)
-								return
-							var/turf/W_turf = get_turf(W)
-							W.reagents.reaction(W_turf)
-							for(var/atom/atm in W_turf)
-								W.reagents.reaction(atm)
-							if(W.loc == my_target)
-								break
-							sleep(2)
+							var/turf/my_target = pick(the_targets)
+							var/datum/reagents/R = new/datum/reagents(5)
+							W.reagents = R
+							R.my_atom = W
+							src.reagents.trans_to(W,1)
+							for(var/b=0, b<4, b++)
+								if(!W)
+									return
+								step_towards(W,my_target)
+								if(!W)
+									return
+								var/turf/W_turf = get_turf(W)
+								W.reagents.reaction(W_turf)
+								for(var/atom/atm in W_turf)
+									W.reagents.reaction(atm)
+								if(W.loc == my_target)
+									break
+								sleep(2)
 		return 1
 
 	get_equip_info()
@@ -191,66 +186,60 @@
 				if (istype(target, /turf/simulated/wall))
 					chassis.occupant_message("Deconstructing [target]...")
 					set_ready_state(0)
-					if(do_after_cooldown())
+					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
 						target:ReplaceWithFloor()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
-						set_ready_state(1)
 						chassis.cell.give(energy_drain)
 				else if (istype(target, /turf/simulated/floor))
 					chassis.occupant_message("Deconstructing [target]...")
 					set_ready_state(0)
-					if(do_after_cooldown())
+					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
 						target:ReplaceWithSpace()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
-						set_ready_state(1)
 						chassis.cell.give(energy_drain)
 				else if (istype(target, /obj/machinery/door/airlock))
 					chassis.occupant_message("Deconstructing [target]...")
 					set_ready_state(0)
-					if(do_after_cooldown())
+					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
 						del(target)
 						playsound(target, 'Deconstruct.ogg', 50, 1)
-						set_ready_state(1)
 						chassis.cell.give(energy_drain)
 			if(1)
 				if(istype(target, /turf/space))
 					chassis.occupant_message("Building Floor...")
 					set_ready_state(0)
-					if(do_after_cooldown())
+					if(do_after_cooldown(target))
 						if(disabled) return
 						target:ReplaceWithFloor()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
-						set_ready_state(1)
 						chassis.cell.use(energy_drain*3)
 				else if(istype(target, /turf/simulated/floor))
 					chassis.occupant_message("Building Wall...")
 					set_ready_state(0)
-					if(do_after_cooldown())
+					if(do_after_cooldown(target))
 						if(disabled) return
 						target:ReplaceWithWall()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
-						set_ready_state(1)
 						chassis.cell.use(energy_drain*3)
 			if(2)
 				if(istype(target, /turf/simulated/floor))
 					chassis.occupant_message("Building Airlock...")
 					set_ready_state(0)
-					if(do_after_cooldown())
+					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
 						var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock(target)
 						T.autoclose = 1
 						playsound(target, 'Deconstruct.ogg', 50, 1)
 						playsound(target, 'sparks2.ogg', 50, 1)
-						set_ready_state(1)
 						chassis.cell.use(energy_drain*3)
 		return
 
@@ -290,8 +279,7 @@
 			set_ready_state(0)
 			chassis.cell.use(energy_drain)
 			do_teleport(chassis, T, 4)
-			if(do_after_cooldown())
-				set_ready_state(1)
+			do_after_cooldown()
 		return
 
 
@@ -338,8 +326,7 @@
 		P.failchance = 0
 		P.icon_state = "anom"
 		P.name = "wormhole"
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		src = null
 		spawn(rand(150,300))
 			del(P)
@@ -374,8 +361,7 @@
 						locked = null
 						set_ready_state(0)
 						chassis.cell.use(energy_drain)
-						if(do_after_cooldown())
-							set_ready_state(1)
+						do_after_cooldown()
 					else
 						chassis.occupant_message("Lock on [locked] disengaged.")
 						locked = null
@@ -395,8 +381,7 @@
 							sleep(2)
 				set_ready_state(0)
 				chassis.cell.use(energy_drain)
-				if(do_after_cooldown())
-					set_ready_state(1)
+				do_after_cooldown()
 		return
 
 	get_equip_info()
@@ -452,8 +437,7 @@
 			chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		set_ready_state(0)
 		chassis.cell.use(energy_drain)
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 
@@ -510,8 +494,7 @@
 		chassis.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		set_ready_state(0)
 		chassis.cell.use(energy_drain)
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 	proc/dynhitby(atom/movable/A)
@@ -531,8 +514,7 @@
 				chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		set_ready_state(0)
 		chassis.cell.use(energy_drain)
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 

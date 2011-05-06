@@ -33,8 +33,7 @@
 		chassis.cell.use(energy_drain)
 		A.process()
 		chassis.log_message("Fired from [src.name], targeting [target].")
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 
@@ -64,8 +63,7 @@
 		chassis.cell.use(energy_drain)
 		A.process()
 		chassis.log_message("Fired from [src.name], targeting [target].")
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 
@@ -105,8 +103,7 @@
 		spawn()
 			A.process()
 		chassis.log_message("Fired from [src.name], targeting [target].")
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker
@@ -162,8 +159,7 @@
 			*/
 		chassis.cell.use(energy_drain)
 		chassis.log_message("Honked from [src.name]. HONK!")
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic
@@ -229,8 +225,7 @@
 			set_ready_state(0)
 			A.process()
 		chassis.log_message("Fired from [src.name], targeting [target].")
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 
@@ -269,8 +264,7 @@
 			sleep(2)
 		set_ready_state(0)
 		chassis.log_message("Fired from [src.name], targeting [target].")
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
@@ -291,8 +285,7 @@
 		M.throw_at(target, missile_range, missile_speed)
 		projectiles--
 		chassis.log_message("Fired from [src.name], targeting [target].")
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 
@@ -329,8 +322,7 @@
 		chassis.log_message("Fired from [src.name], targeting [target].")
 		spawn(det_time)
 			F.prime()
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 
@@ -358,8 +350,7 @@
 		B.throw_at(target, missile_range, missile_speed)
 		projectiles--
 		chassis.log_message("Bananed from [src.name], targeting [target]. HONK!")
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
 
 
@@ -388,6 +379,5 @@
 		M.throw_at(target, missile_range, missile_speed)
 		projectiles--
 		chassis.log_message("Launched a mouse-trap from [src.name], targeting [target]. HONK!")
-		if(do_after_cooldown())
-			set_ready_state(1)
+		do_after_cooldown()
 		return
