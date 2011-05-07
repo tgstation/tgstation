@@ -164,3 +164,17 @@
 				if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
 					L.Add(t)
 		return L
+
+/turf/simulated/floor/vault
+	icon_state = "rockvault"
+
+	New(location,type)
+		..()
+		icon_state = "[type]vault"
+
+/turf/simulated/wall/vault
+	icon_state = "rockvault"
+
+	New(location,type)
+		..()
+		icon_state = "[type]vault"

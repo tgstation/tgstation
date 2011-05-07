@@ -746,7 +746,7 @@
 
 			if(client)
 				for(var/image/hud in client.images)
-					if(hud.icon_state in list("healthdead","healthill","healthy","health-100","health0","health1","health10","health25","health40","health60","health80","health100")) //ugly, but icon comparison is worse, I believe
+					if(copytext(hud.icon_state,6) == "health") //ugly, but icon comparison is worse, I believe
 						del(hud)
 
 			if (src.stat == 2 || src.mutations & 4)
@@ -802,6 +802,8 @@
 						client.images += image(tempHud,patient,RoundHealth(patient.health))
 						if(patient.stat == 2)
 							client.images += image(tempHud,patient,"healthdead")
+						else if(patient.alien_egg_flag)
+							client.images += image(tempHud,patient,"healthxeno")
 						else if(patient.virus)
 							client.images += image(tempHud,patient,"healthill")
 						else
