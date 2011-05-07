@@ -275,7 +275,7 @@
 	opacity = 0
 	density = 0
 
-/obj/item/weapon/plaque_assembly
+/*/obj/item/weapon/plaque_assembly                       //commenting this out until there's a better rework
 	desc = "Put this on a wall and engrave an epitaph"
 	name = "Plaque Assembly"
 	icon = 'decals.dmi'
@@ -288,7 +288,7 @@
 			var/obj/sign/goldenplaque/gp = new/obj/sign/goldenplaque(A)
 			gp.name = epitaph
 			gp.layer = 2.9
-			del(src)
+			del(src)*/
 
 /obj/sign/maltesefalcon1         //The sign is 64x32, so it needs two tiles. ;3
 	desc = "The Maltese Falcon, Space Bar and Grill"
@@ -343,6 +343,8 @@
 	var/burning = null
 	var/hitsound = null
 	var/w_class = 3.0
+	var/wielded = 0
+	var/twohanded = 0 ///Two handed and wielded off by default, nyoro~n -Agouri
 	flags = FPRINT | TABLEPASS
 	pressure_resistance = 50
 	var/obj/item/master = null

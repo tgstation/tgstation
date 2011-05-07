@@ -2,6 +2,12 @@
 	name = "weapon"
 	icon = 'weapons.dmi'
 
+/obj/item/weapon/offhand
+	name = "Offhand"
+	var/linked_weapon_name = ""
+	w_class = 5.0
+	icon_state = "offhand"
+
 /obj/item/weapon/shield
 	name = "shield"
 
@@ -489,6 +495,15 @@
 /obj/item/weapon/crowbar/red
 	icon = 'items.dmi'
 	icon_state = "red_crowbar"
+
+/obj/item/weapon/fireaxe  // DEM AXES MAN, marker -Agouri
+	icon_state = "fireaxe0"
+	name = "Fire axe"
+	desc = "Truly, the tool of a madman. Who would possibly think to fight fire with an axe?"
+	force = 5
+	w_class = 4.0
+	twohanded = 1
+
 
 /obj/item/weapon/disk
 	name = "disk"

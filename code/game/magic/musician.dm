@@ -4,12 +4,15 @@ datum/song
 		var/list/lines = list()
 
 
+
 /obj/device/piano
 	name = "space piano"
 	icon = 'musician.dmi'
 	icon_state = "piano"
 	anchored = 1
 	density = 1
+	var/hitstaken = 0
+	var/broken = 0
 	var
 		datum/song/song
 		playing = 0
@@ -52,25 +55,28 @@ datum/song
 		src.playing = 0
 
 	attack_hand(var/mob/user as mob)
-		usr.machine = src
-		//var/dat = "<HEAD><TITLE>Piano</TITLE></HEAD><BODY>\n <META HTTP-EQUIV='Refresh' CONTENT='10'>"
-		var/dat
-		var/calctempo = (10/tempo)*60
-		dat += "Tempo : [calctempo] BPM  (<A href='?src=\ref[src];lowertempo=1'>-</A>/<A href='?src=\ref[src];raisetempo=1'>+</A>)"
-		dat += "<A href='?src=\ref[src];newsong=1'>(Start a New Song)</A><BR>"
-		if(src.song)
-			var/linecount = 0
-			for(var/line in song.lines)
-				linecount += 1
-				dat += "Bar [linecount]: [line]<BR>"//<A href='?src=\ref[src];deletebar=[linecount]'>(Delete bar)</A><BR>" // TODO: Replace delimeters with spaces, clean up display
-			dat += "<A href='?src=\ref[src];newbar=1'>(Write a new bar)</A><BR>"
-			if(src.song.lines.len > 0 && !(src.playing))
-				dat += "<A href='?src=\ref[src];play=1'>(Play song)</A><BR>"
-			if(src.playing)
-				dat += "<A href='?src=\ref[src];stop=1'>(Stop playing)</A><BR>"
-		dat += "<I><BR><BR><BR>Bars are a series of notes separated by asterisks (*)<BR><BR>Example: A*B*C*D*E*F*G will play a scale<BR>Chords can be played simply by listing more than one note before a pause : AB*CD*EF*GA<BR><BR>Bars may be up to 30 characters (including pauses)<BR>A song may only contain up to 10 bars<BR></I>"
-		user << browse(dat, "window=piano")
-		onclose(user, "piano")
+		if(src.broken)
+			return
+		else
+			usr.machine = src
+			//var/dat = "<HEAD><TITLE>Piano</TITLE></HEAD><BODY>\n <META HTTP-EQUIV='Refresh' CONTENT='10'>"
+			var/dat
+			var/calctempo = (10/tempo)*60
+			dat += "Tempo : [calctempo] BPM  (<A href='?src=\ref[src];lowertempo=1'>-</A>/<A href='?src=\ref[src];raisetempo=1'>+</A>)"
+			dat += "<A href='?src=\ref[src];newsong=1'>(Start a New Song)</A><BR>"
+			if(src.song)
+				var/linecount = 0
+				for(var/line in song.lines)
+					linecount += 1
+					dat += "Bar [linecount]: [line]<BR>"//<A href='?src=\ref[src];deletebar=[linecount]'>(Delete bar)</A><BR>" // TODO: Replace delimeters with spaces, clean up display
+				dat += "<A href='?src=\ref[src];newbar=1'>(Write a new bar)</A><BR>"
+				if(src.song.lines.len > 0 && !(src.playing))
+					dat += "<A href='?src=\ref[src];play=1'>(Play song)</A><BR>"
+				if(src.playing)
+					dat += "<A href='?src=\ref[src];stop=1'>(Stop playing)</A><BR>"
+			dat += "<I><BR><BR><BR>Bars are a series of notes separated by asterisks (*)<BR><BR>Example: A*B*C*D*E*F*G will play a scale<BR>Chords can be played simply by listing more than one note before a pause : AB*CD*EF*GA<BR><BR>Bars may be up to 30 characters (including pauses)<BR>A song may only contain up to 10 bars<BR></I>"
+			user << browse(dat, "window=piano")
+			onclose(user, "piano")
 
 	Topic(href, href_list)
 		if(href_list["lowertempo"])
@@ -108,6 +114,20 @@ datum/song
 		src.updateUsrDialog()
 		return
 
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/fireaxe) && W.wielded == 1)
+			playsound(src.loc, 'woodhit.ogg', 50, 0)
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red <B> [] forcefully slams the [] with the Fire axe!</B>", user, src), 1)
+			if(!src.broken) //we don't want an already damaged piano to be more damageable
+				src.hitstaken++
+				if(prob(src.hitstaken*8))
+					src.broken = 1
+					src.icon_state = "pianobroken"
+					playsound(src.loc, 'pianocrash.ogg', 50, 0)
+					return
+				return
+		return
 
 
 /*		src.playing = 1

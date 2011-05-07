@@ -867,8 +867,13 @@ About the new airlock wires panel:
 		return src.attack_hand(user)
 	else if (istype(C, /obj/item/device/radio/signaler))
 		return src.attack_hand(user)
-	else if (istype(C, /obj/item/weapon/crowbar))
-		if ((src.density) && ( src.welded ) && !( src.operating ) && src.p_open && (!src.arePowerSystemsOn() || (stat & NOPOWER)) && !src.locked)
+	else if (istype(C, /obj/item/weapon/crowbar) || istype(C, /obj/item/weapon/fireaxe) )
+		var/beingcrowbarred = null
+		if(istype(C, /obj/item/weapon/crowbar) )
+			beingcrowbarred = 1 //derp, Agouri
+		else
+			beingcrowbarred = 0
+		if ( ((src.density) && ( src.welded ) && !( src.operating ) && src.p_open && (!src.arePowerSystemsOn() || (stat & NOPOWER)) && !src.locked) && beingcrowbarred == 1 )
 			playsound(src.loc, 'Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics into the airlock assembly.")
 			if(do_after(user,40))
@@ -898,32 +903,70 @@ About the new airlock wires panel:
 		else if (src.locked)
 			user << "\blue The airlock's bolts prevent it from being pried open."
 		if ((src.density) && (!( src.welded ) && !( src.operating ) && ((!src.arePowerSystemsOn()) || (stat & NOPOWER)) && !( src.locked )))
-			spawn( 0 )
-				src.operating = 1
-				animate("opening")
 
-				sleep(15)
+			if(beingcrowbarred == 0) //being fireaxe'd
+				var/obj/item/weapon/fireaxe/F = C
+				if(F.wielded == 1)
+					spawn( 0 )
+						src.operating = 1
+						animate("opening")
 
-				src.density = 0
-				update_icon()
+						sleep(15)
 
-				if (!istype(src, /obj/machinery/door/airlock/glass))
-					src.sd_SetOpacity(0)
-				src.operating = 0
+						src.density = 0
+						update_icon()
+
+						if (!istype(src, /obj/machinery/door/airlock/glass))
+							src.sd_SetOpacity(0)
+						src.operating = 0
+						return
+				user << "\red You need to be wielding the Fire axe to do that."
 				return
-		else
-			if ((!src.density) && (!( src.welded ) && !( src.operating ) && !( src.locked )))
+			else
 				spawn( 0 )
 					src.operating = 1
-					animate("closing")
+					animate("opening")
 
-					src.density = 1
 					sleep(15)
+
+					src.density = 0
 					update_icon()
 
-					if ((src.visible) && (!istype(src, /obj/machinery/door/airlock/glass)))
-						src.sd_SetOpacity(1)
+					if (!istype(src, /obj/machinery/door/airlock/glass))
+						src.sd_SetOpacity(0)
 					src.operating = 0
+					return
+
+		else
+			if ((!src.density) && (!( src.welded ) && !( src.operating ) && !( src.locked )))
+				if(beingcrowbarred == 0)
+					var/obj/item/weapon/fireaxe/F = C
+					if(F.wielded == 1)
+						spawn( 0 )
+							src.operating = 1
+							animate("closing")
+
+							src.density = 1
+							sleep(15)
+							update_icon()
+
+							if ((src.visible) && (!istype(src, /obj/machinery/door/airlock/glass)))
+								src.sd_SetOpacity(1)
+							src.operating = 0
+					else
+						user << "\red You need to be wielding the Fire axe to do that."
+				else
+					spawn( 0 )
+						src.operating = 1
+						animate("closing")
+
+						src.density = 1
+						sleep(15)
+						update_icon()
+
+						if ((src.visible) && (!istype(src, /obj/machinery/door/airlock/glass)))
+							src.sd_SetOpacity(1)
+						src.operating = 0
 
 	else
 		..()

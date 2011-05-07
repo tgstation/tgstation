@@ -1066,7 +1066,7 @@ proc/move_mining_shuttle()
 		if(1)
 			usr << "The satchel now picks up all ore in a tile at once."
 		if(0)
-			usr << "The satchel now picks up ore one at a time."
+			usr << "The satchel now picks up one ore at a time."
 
 
 /**********************Ore box**************************/
@@ -2634,11 +2634,11 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	..()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	recipes = gold_recipes
+/*	recipes = gold_recipes          //Commenting out until there's a proper sprite. The golden plaque is supposed to be a special item dedicated to a really good player. -Agouri
 
-var/global/list/datum/stack_recipe/gold_recipes = list ( \
+	var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("Plaque", /obj/item/weapon/plaque_assembly, 2), \
-	)
+	)*/
 
 
 /obj/item/stack/sheet/silver

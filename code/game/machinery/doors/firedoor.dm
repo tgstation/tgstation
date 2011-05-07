@@ -25,7 +25,7 @@
 			user << text("\red You [blocked?"welded":"unwelded"] the [src]")
 			update_icon()
 			return
-	if (istype(C, /obj/item/weapon/crowbar))
+	if (istype(C, /obj/item/weapon/crowbar) || (istype(C,/obj/item/weapon/fireaxe) && C.wielded == 1) )
 		if (!src.blocked && !src.operating)
 			if(src.density)
 				spawn( 0 )
