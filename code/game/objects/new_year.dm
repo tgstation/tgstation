@@ -28,14 +28,14 @@
 	/*
 	y1=a*x1+b
 	y2=a*x2+b   	b = y2-a*x2
-	
+
 	y1=a*x1+ y2-a*x2
 	a*(x1-x2)+y2-y1=0
 	a = (y1-y2)/(x1-x2)
 	*/
 	var/a = (top_left_y-bottom_right_y)/(top_left_x-bottom_med_x)
 	var/b = bottom_right_y-a*bottom_med_x
-	
+
 	if (a*x+b < y) //if point is above diagonal top_left -> bottom_median
 		x = bottom_med_x + x - top_left_x
 		y = bottom_right_y - y + top_left_y
@@ -59,7 +59,7 @@
 
 /obj/item/weapon/firbang/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 	if (user.equipped() == src)
-		if ((user.mutations & 16) && prob(50))
+		if ((user.mutations & CLOWN) && prob(50))
 			user << "\red Huh? How does this thing work?!"
 			src.state = 1
 			src.icon_state = "flashbang1"
@@ -107,7 +107,7 @@
 
 /obj/item/weapon/firbang/attack_self(mob/user as mob)
 	if (!src.state)
-		if (user.mutations & 16)
+		if (user.mutations & CLOWN)
 			user << "\red Huh? How does this thing work?!"
 			spawn( 5 )
 				prime()
@@ -121,7 +121,7 @@
 				prime()
 				return
 	return
-	
+
 /*
 /datum/supply_packs/new_year
 	name = "New Year Celebration Equipment"

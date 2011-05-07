@@ -22,7 +22,7 @@
 		src.now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & 32)
+			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 				if(prob(70))
 					for(var/mob/M in viewers(src, null))
 						if(M.client)
@@ -427,7 +427,7 @@
 		else
 			var/damage = rand(1, 9)
 			if (prob(90))
-				if (M.mutations & 8)
+				if (M.mutations & HULK)
 					damage += 5
 					spawn(0)
 						src.paralysis += 1

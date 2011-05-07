@@ -84,7 +84,7 @@
 /mob/living/proc/burn_skin(burn_amount)
 	if(istype(src, /mob/living/carbon/human))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
-		if (src.mutations & 2) //fireproof
+		if (src.mutations & COLD_RESISTANCE) //fireproof
 			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = (burn_amount)/(H.organs.len)
@@ -102,7 +102,7 @@
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
-		if (src.mutations & 2) //fireproof
+		if (src.mutations & COLD_RESISTANCE) //fireproof
 			return 0
 		var/mob/living/carbon/monkey/M = src
 		M.fireloss += burn_amount

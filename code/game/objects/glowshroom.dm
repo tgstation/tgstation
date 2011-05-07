@@ -112,9 +112,9 @@
 
 	var/list/dirList = list()
 
-	for(var/i=0,i<=4,i++)
-		if(direction & 2 ** i)
-			dirList += 2 ** i
+	for(var/i=0,i<=4,i <<= 1)
+		if(direction & i)
+			dirList += i
 
 	if(dirList.len)
 		var/newDir = pick(dirList)

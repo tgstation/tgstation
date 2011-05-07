@@ -2824,7 +2824,7 @@
 "bcp" = (/obj/disposaloutlet{icon_state = "outlet"; dir = 8},/obj/disposalpipe/trunk{dir = 4},/turf/simulated/floor/plating,/area/quartermaster/sorting)
 "bcq" = (/obj/machinery/atmospherics/pipe/simple,/obj/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/turf/simulated/floor/plating,/area/maintenance/port)
 "bcr" = (/obj/disposalpipe/junction{dir = 4; icon_state = "pipe-j2"},/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/locker/locker_toilet)
-"bcs" = (/obj/disposalpipe/segment{dir = 4},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/obj/table,/obj/item/weapon/soap/nanotrasen,/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/locker/locker_toilet)
+"bcs" = (/obj/disposalpipe/segment{dir = 4},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/obj/table,/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/locker/locker_toilet)
 "bct" = (/obj/disposalpipe/sortjunction{sortType = 6},/turf/simulated/wall,/area/maintenance/port)
 "bcu" = (/obj/machinery/atmospherics/pipe/simple{dir = 6},/obj/item/stack/sheet/rglass,/turf/simulated/floor/plating,/area/maintenance/port)
 "bcv" = (/obj/machinery/atmospherics/pipe/simple{dir = 4},/obj/item/weapon/screwdriver,/turf/simulated/floor/plating,/area/maintenance/port)

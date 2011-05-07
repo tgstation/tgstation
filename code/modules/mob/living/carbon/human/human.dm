@@ -78,7 +78,7 @@
 				var/obj/item/weapon/W = src.equipped()
 				if (world.time > src.lastDblClick+2)
 					src.lastDblClick = world.time
-					if((prob(40)) || (prob(95) && src.mutations & 16))
+					if((prob(40)) || (prob(95) && src.mutations & CLOWN))
 						//src << "\red You accidentally stun yourself with the [W.name]."
 						src.visible_message("\red [src] accidentally stun \himself with the [W.name].", \
 							"\red You accidentally stun yourself with the [W.name].")
@@ -92,8 +92,8 @@
 					W:charges--
 					src.now_pushing = 0
 					return
-		if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & 32)
-			if(prob(40) && !(src.mutations & 32))
+		if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
+			if(prob(40) && !(src.mutations & FAT))
 				src.visible_message("\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>", \
 					"\red <B>You fail to push [tmob]'s fat ass out of the way.</B>")
 				src.now_pushing = 0
@@ -136,7 +136,7 @@
 	if(src.shoes)
 		tally += src.shoes.slowdown
 
-	if(src.mutations & 32)
+	if(src.mutations & FAT)
 		tally += 1.5
 	if (src.bodytemperature < 283.222)
 		tally += (283.222 - src.bodytemperature) / 10 * 1.75
@@ -752,7 +752,7 @@
 				return
 			if (!( istype(W, /obj/item/clothing/suit) ))
 				return
-			if (src.mutations & 32 && !(W.flags & ONESIZEFITSALL))
+			if (src.mutations & FAT && !(W.flags & ONESIZEFITSALL))
 				src << "\red You're too fat to wear the [W.name]!"
 				return
 			src.u_equip(W)
@@ -830,7 +830,7 @@
 				return
 			if (!( istype(W, /obj/item/clothing/under) ))
 				return
-			if (src.mutations & 32 && !(W.flags & ONESIZEFITSALL))
+			if (src.mutations & FAT && !(W.flags & ONESIZEFITSALL))
 				src << "\red You're too fat to wear the [W.name]!"
 				return
 			src.u_equip(W)
@@ -1017,16 +1017,16 @@
 
 	// lol
 	var/fat = ""
-	if (src.mutations & 32)
+	if (src.mutations & FAT)
 		fat = "fat"
 
-	if (src.mutations & 8)
+	if (src.mutations & HULK)
 		src.overlays += image("icon" = 'genetics.dmi', "icon_state" = "hulk[fat][!src.lying ? "_s" : "_l"]")
 
-	if (src.mutations & 2)
+	if (src.mutations & COLD_RESISTANCE)
 		src.overlays += image("icon" = 'genetics.dmi', "icon_state" = "fire[fat][!src.lying ? "_s" : "_l"]")
 
-	if (src.mutations & 1)
+	if (src.mutations & PORTALS)
 		src.overlays += image("icon" = 'genetics.dmi', "icon_state" = "telekinesishead[fat][!src.lying ? "_s" : "_l"]")
 
 	if (src.mutantrace)
@@ -1102,7 +1102,7 @@
 
 	// Uniform
 	if (src.w_uniform)
-		if (src.mutations & 32 && !(src.w_uniform.flags & ONESIZEFITSALL))
+		if (src.mutations & FAT && !(src.w_uniform.flags & ONESIZEFITSALL))
 			src << "\red You burst out of the [src.w_uniform.name]!"
 			var/obj/item/clothing/c = src.w_uniform
 			src.u_equip(c)
@@ -1117,7 +1117,7 @@
 			var/t1 = src.w_uniform.color
 			if (!t1)
 				t1 = src.icon_state
-			if (src.mutations & 32)
+			if (src.mutations & FAT)
 				src.overlays += image("icon" = 'uniform_fat.dmi', "icon_state" = "[t1][!src.lying ? "_s" : "_l"]", "layer" = MOB_LAYER)
 			else
 				src.overlays += image("icon" = 'uniform.dmi', "icon_state" = text("[][]",t1, (!(src.lying) ? "_s" : "_l")), "layer" = MOB_LAYER)
@@ -1212,7 +1212,7 @@
 
 
 	if (src.wear_suit)
-		if (src.mutations & 32 && !(src.wear_suit.flags & ONESIZEFITSALL))
+		if (src.mutations & FAT && !(src.wear_suit.flags & ONESIZEFITSALL))
 			src << "\red You burst out of the [src.wear_suit.name]!"
 			var/obj/item/clothing/c = src.wear_suit
 			src.u_equip(c)
@@ -1700,7 +1700,7 @@
 				if (src.organs[text("[]", def_zone)])
 					affecting = src.organs[text("[]", def_zone)]
 				if ((istype(affecting, /datum/organ/external) && prob(90)))
-					if (M.mutations & 8)
+					if (M.mutations & HULK)
 						damage += 5
 						spawn(0)
 							src.paralysis += 1
@@ -1819,8 +1819,8 @@
 	src.stand_icon = new /icon('human.dmi', "blank")
 	src.lying_icon = new /icon('human.dmi', "blank")
 
-	var/husk = (src.mutations & 64)
-	var/obese = (src.mutations & 32)
+	var/husk = (src.mutations & HUSK)
+	var/obese = (src.mutations & FAT)
 
 	if (husk)
 		src.stand_icon.Blend(new /icon('human.dmi', "husk_s"), ICON_OVERLAY)

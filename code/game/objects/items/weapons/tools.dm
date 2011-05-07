@@ -29,7 +29,7 @@ WELDINGTOOOL
 
 	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
 		return ..()
-	if((user.mutations & 16) && prob(50))
+	if((user.mutations & CLOWN) && prob(50))
 		M = user
 	return eyestab(M,user)
 

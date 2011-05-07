@@ -145,7 +145,7 @@ MASS SPECTROMETER
 	return
 
 /obj/item/device/healthanalyzer/attack(mob/M as mob, mob/user as mob)
-	if ((user.mutations & 16 || user.brainloss >= 60) && prob(50))
+	if ((user.mutations & CLOWN || user.brainloss >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)

@@ -181,11 +181,11 @@
 		handle_mutations_and_radiation()
 
 			if(src.fireloss)
-				if(src.mutations & 2 || (prob(1) && prob(75)))
+				if(src.mutations & COLD_RESISTANCE || (prob(1) && prob(75)))
 					src.heal_organ_damage(0,1)
 
-			if (src.mutations & 8 && src.health <= 25)
-				src.mutations &= ~8
+			if (src.mutations & HULK && src.health <= 25)
+				src.mutations &= ~HULK
 				src << "\red You suddenly feel very weak."
 				src.weakened = 3
 				emote("collapse")
@@ -384,7 +384,7 @@
 							spawn(0) emote(pick("giggle", "laugh"))
 
 
-			if(breath.temperature > (T0C+66) && !(src.mutations & 2)) // Hot air hurts :(
+			if(breath.temperature > (T0C+66) && !(src.mutations & COLD_RESISTANCE)) // Hot air hurts :(
 				if(prob(20))
 					src << "\red You feel a searing heat in your lungs!"
 				fire_alert = max(fire_alert, 1)
@@ -530,7 +530,7 @@
 				thermal_protection += 3
 			if(head && (head.flags & HEADSPACE))
 				thermal_protection += 1
-			if(src.mutations & 2)
+			if(src.mutations & COLD_RESISTANCE)
 				thermal_protection += 5
 
 			return thermal_protection
@@ -611,13 +611,13 @@
 					if(oxyloss)
 						oxyloss--
 
-			if(overeatduration > 500 && !(src.mutations & 32))
+			if(overeatduration > 500 && !(src.mutations & FAT))
 				src << "\red You suddenly feel blubbery!"
-				src.mutations |= 32
+				src.mutations |= FAT
 				update_body()
-			if (overeatduration < 100 && src.mutations & 32)
+			if (overeatduration < 100 && src.mutations & FAT)
 				src << "\blue You feel fit again!"
-				src.mutations &= ~32
+				src.mutations &= ~FAT
 				update_body()
 
 			// nutrition decrease
@@ -749,7 +749,7 @@
 					if(copytext(hud.icon_state,6) == "health") //ugly, but icon comparison is worse, I believe
 						del(hud)
 
-			if (src.stat == 2 || src.mutations & 4)
+			if (src.stat == 2 || src.mutations & XRAY)
 				src.sight |= SEE_TURFS
 				src.sight |= SEE_MOBS
 				src.sight |= SEE_OBJS

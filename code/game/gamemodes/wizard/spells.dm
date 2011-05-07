@@ -642,13 +642,13 @@
 	usr.spellvoice()
 
 	usr << text("\blue You feel strong! Your mind expands!")
-	if (!(usr.mutations & 8))
-		usr.mutations |= 8
-	if (!(usr.mutations & 1))
-		usr.mutations |= 1
+	if (!(usr.mutations & HULK))
+		usr.mutations |= HULK
+	if (!(usr.mutations & PORTALS))
+		usr.mutations |= PORTALS
 	spawn (300)
-		if (usr.mutations & 1) usr.mutations &= ~1
-		if (usr.mutations & 8) usr.mutations &= ~8
+		if (usr.mutations & PORTALS) usr.mutations &= ~PORTALS
+		if (usr.mutations & HULK) usr.mutations &= ~HULK
 	return
 
 //BODY SWAP /N

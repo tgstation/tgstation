@@ -246,7 +246,7 @@
 			breath.toxins -= toxins_used
 			breath.oxygen += toxins_used
 
-			if(breath.temperature > (T0C+66) && !(src.mutations & 2)) // Hot air hurts :(
+			if(breath.temperature > (T0C+66) && !(src.mutations & COLD_RESISTANCE)) // Hot air hurts :(
 				if(prob(20))
 					src << "\red You feel a searing heat in your lungs!"
 				fire_alert = max(fire_alert, 1)
@@ -274,15 +274,15 @@
 
 			if(reagents) reagents.metabolize(src)
 
-			if(src.nutrition > 500 && !(src.mutations & 32))
+			if(src.nutrition > 500 && !(src.mutations & FAT))
 				if(prob(5 + round((src.nutrition - 200) / 2)))
 					src << "\red You suddenly feel blubbery!"
-					src.mutations |= 32
+					src.mutations |= FAT
 //					update_body()
-			if (src.nutrition < 100 && src.mutations & 32)
+			if (src.nutrition < 100 && src.mutations & FAT)
 				if(prob(round((50 - src.nutrition) / 100)))
 					src << "\blue You feel fit again!"
-					src.mutations &= ~32
+					src.mutations &= ~FAT
 //					update_body()
 			if (src.nutrition > 0)
 				src.nutrition-= HUNGER_FACTOR
@@ -393,7 +393,7 @@
 
 		handle_regular_hud_updates()
 
-			if (src.stat == 2 || src.mutations & 4)
+			if (src.stat == 2 || src.mutations & XRAY)
 				src.sight |= SEE_TURFS
 				src.sight |= SEE_MOBS
 				src.sight |= SEE_OBJS

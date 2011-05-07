@@ -717,7 +717,7 @@ Made a proc here so it's not repeated several times.*/
 
 //	if (wizard_mob.mind.assigned_role == "Clown")
 //		wizard_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
-//		wizard_mob.mutations &= ~16 No more clowns as wizarrrddsss
+//		wizard_mob.mutations &= ~CLOWN No more clowns as wizarrrddsss
 
 /*Creates random numbers/codes for the uplink.
 	var/freq = 1441

@@ -104,7 +104,7 @@
 
 	T.death(0)
 	T.real_name = "Unknown"
-	T.mutations |= 64
+	T.mutations |= HUSK
 	T.update_body()
 
 	return
@@ -524,7 +524,7 @@
 		usr << "\red We don't have enough stored chemicals to do that!"
 		return
 
-	if(T.stat != 2 || (T.mutations & 64) || (!ishuman(T) && !ismonkey(T)))
+	if(T.stat != 2 || (T.mutations & HUSK) || (!ishuman(T) && !ismonkey(T)))
 		usr << "\red We can't transform that target!"
 		return
 

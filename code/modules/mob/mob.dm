@@ -407,7 +407,7 @@
 				if (src.state < 3)
 					if(istype(src.affecting, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = src.affecting
-						if(H.mutations & 32)
+						if(H.mutations & FAT)
 							src.assailant << "\blue You can't strangle [src.affecting] through all that fat!"
 							return
 
@@ -466,7 +466,7 @@
 			s_click(src.hud1)
 		return
 	if(M == src.assailant && src.state >= 2)
-		if( ( ishuman(user) && (user.mutations & 32) && ismonkey(src.affecting) ) || ( isalien(user) && iscarbon(src.affecting) ) )
+		if( ( ishuman(user) && (user.mutations & FAT) && ismonkey(src.affecting) ) || ( isalien(user) && iscarbon(src.affecting) ) )
 			var/mob/living/carbon/attacker = user
 			for(var/mob/N in viewers(user, null))
 				if(N.client)

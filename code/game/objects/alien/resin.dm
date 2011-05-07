@@ -93,7 +93,7 @@
 	return
 
 /obj/alien/resin/attack_hand()
-	if ((usr.mutations & 8))
+	if ((usr.mutations & HULK))
 		usr << text("\blue You easily destroy the resin wall.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
@@ -103,7 +103,7 @@
 	return
 
 /obj/alien/resin/attack_paw()
-	if ((usr.mutations & 8))
+	if ((usr.mutations & HULK))
 		usr << text("\blue You easily destroy the resin wall.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))

@@ -100,7 +100,7 @@
 	return
 
 /obj/window/attack_hand()
-	if ((usr.mutations & 8))
+	if ((usr.mutations & HULK))
 		usr << text("\blue You smash through the window.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
@@ -113,7 +113,7 @@
 	return
 
 /obj/window/attack_paw()
-	if ((usr.mutations & 8))
+	if ((usr.mutations & HULK))
 		usr << text("\blue You smash through the window.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))

@@ -196,7 +196,7 @@
 		R.part3 = W
 		R.part3.master = R
 		del(src)
-		
+
 /* WTF THIS SHIT? It is working? Shouldn't. --rastaf0
 		W.loc = R
 		R.part1 = W
@@ -1243,7 +1243,7 @@
 		user << "\blue You arm the mousetrap."
 	else
 		icon_state = "mousetrap"
-		if((user.brainloss >= 60 || user.mutations & 16) && prob(50))
+		if((user.brainloss >= 60 || user.mutations & CLOWN) && prob(50))
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"
@@ -1260,7 +1260,7 @@
 
 /obj/item/weapon/mousetrap/attack_hand(mob/user as mob)
 	if(armed)
-		if((user.brainloss >= 60 || user.mutations & 16) && prob(50))
+		if((user.brainloss >= 60 || user.mutations & CLOWN) && prob(50))
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"

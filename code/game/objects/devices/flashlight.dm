@@ -16,7 +16,7 @@
 /obj/item/device/flashlight/attack(mob/M as mob, mob/user as mob)
 	src.add_fingerprint(user)
 	if(src.on && user.zone_sel.selecting == "eyes")
-		if ((user.mutations & 16 || user.brainloss >= 60) && prob(50))//too dumb to use flashlight properly
+		if ((user.mutations & CLOWN || user.brainloss >= 60) && prob(50))//too dumb to use flashlight properly
 			return ..()//just hit them in the head
 			/*user << "\blue You bounce the light spot up and down and drool."
 			for(var/mob/O in viewers(M, null))
@@ -41,7 +41,7 @@
 			if(M.stat > 1 || M.sdisabilities & 1)//mob is dead or fully blind
 				if(M!=user)
 					user.show_message(text("\red [] pupils does not react to the light!", M),1)
-			else if(M.mutations&4)//mob has X-RAY vision
+			else if(M.mutations & XRAY)//mob has X-RAY vision
 				if(M!=user)
 					user.show_message(text("\red [] pupils give an eerie glow!", M),1)
 			else //nothing wrong

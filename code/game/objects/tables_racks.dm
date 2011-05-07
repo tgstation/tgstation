@@ -35,7 +35,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	return
 
 /obj/table/attack_paw(mob/user as mob)
-	if ((usr.mutations & 8))
+	if ((usr.mutations & HULK))
 		usr << text("\blue You destroy the table.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
@@ -74,7 +74,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	return
 
 /obj/table/attack_hand(mob/user as mob)
-	if ((usr.mutations & 8))
+	if ((usr.mutations & HULK))
 		usr << text("\blue You destroy the table.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))

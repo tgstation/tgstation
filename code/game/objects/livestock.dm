@@ -322,7 +322,7 @@
 		special_extra()
 		if(isnull(trg_idle))						//No one to follow? Find one.
 			for(var/mob/living/O in viewers(world.view,src))
-				if(O.mutations == (0 || 16))		//Hates mutants and fatties.
+				if(O.mutations == (0 || CLOWN))		//Hates mutants and fatties.
 					trg_idle = O
 					break
 		if(isnull(trg_idle))						//Still no one to follow? Step in a random direction.

@@ -37,7 +37,7 @@ TELEPORT GUN
 	var/mode = 1//I guess I'll leave this here in case another mode to the weapon is added./N
 
 	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
-		if ((user.mutations & 16) && prob(50))
+		if ((user.mutations & CLOWN) && prob(50))
 			user << "\red The pulse rifle blows up in your face."
 			user.take_organ_damage(0,20)
 			user.drop_item()
@@ -585,7 +585,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 
 
 /obj/item/weapon/gun/energy/laser_gun/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
-	if ((user.mutations & 16) && prob(50))
+	if ((user.mutations & CLOWN) && prob(50))
 		user << "\red The laser gun blows up in your face."
 		user.take_organ_damage(0,20)
 		user.drop_item()
@@ -719,7 +719,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 
 
 /obj/item/weapon/gun/energy/taser_gun/attack(mob/M as mob, mob/living/user as mob)
-	if ((usr.mutations & 16) && prob(50))
+	if ((usr.mutations & CLOWN) && prob(50))
 		usr << "\red The taser gun discharges in your hand."
 		usr.paralysis += 60
 		return
@@ -732,11 +732,11 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 		if (user.a_intent == "hurt")
 			if (!..()) return
 			if (prob(20))
-				if (M.paralysis < 10 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+				if (M.paralysis < 10 && (!(M.mutations & HULK))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 					M.paralysis = 10
-			else if (M.weakened < 10 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+			else if (M.weakened < 10 && (!(M.mutations & HULK))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.weakened = 10
-			if (M.stuttering < 10 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+			if (M.stuttering < 10 && (!(M.mutations & HULK))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stuttering = 10
 
 			if(M.stat != 2)	M.stat = 1
@@ -744,12 +744,12 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 				O.show_message("\red <B>[M] has been knocked unconscious!</B>", 1, "\red You hear someone fall", 2)
 		else
 			if (prob(50))
-				if (M.paralysis < 60 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+				if (M.paralysis < 60 && (!(M.mutations & HULK))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 					M.paralysis = 60
 			else
-				if (M.weakened < 60 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+				if (M.weakened < 60 && (!(M.mutations & HULK))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 					M.weakened = 60
-			if (M.stuttering < 60 && (!(M.mutations & 8))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+			if (M.stuttering < 60 && (!(M.mutations & HULK))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stuttering = 60
 			if(M.stat != 2)	M.stat = 1
 			for(var/mob/O in viewers(M, null))
@@ -764,23 +764,23 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 		if (user.a_intent == "hurt")
 			if (!..()) return
 			if (prob(20))
-				if (M.paralysis < 10 && (!(M.mutations & 8)) )
+				if (M.paralysis < 10 && (!(M.mutations & HULK)) )
 					M.paralysis = 10
-			else if (M.weakened < 10 && (!(M.mutations & 8)) )
+			else if (M.weakened < 10 && (!(M.mutations & HULK)) )
 				M.weakened = 10
-			if (M.stuttering < 10 && (!(M.mutations & 8)) )
+			if (M.stuttering < 10 && (!(M.mutations & HULK)) )
 				M.stuttering = 10
 			if(M.stat != 2)	M.stat = 1
 			for(var/mob/O in viewers(M, null))
 				O.show_message("\red <B>[M] has been knocked unconscious!</B>", 1, "\red You hear someone fall", 2)
 		else
 			if (prob(50))
-				if (M.paralysis < 60 && (!(M.mutations & 8)) )
+				if (M.paralysis < 60 && (!(M.mutations & HULK)) )
 					M.paralysis = 60
 			else
-				if (M.weakened < 60 && (!(M.mutations & 8)) )
+				if (M.weakened < 60 && (!(M.mutations & HULK)) )
 					M.weakened = 60
-			if (M.stuttering < 60 && (!(M.mutations & 8)) )
+			if (M.stuttering < 60 && (!(M.mutations & HULK)) )
 				M.stuttering = 60
 			if(M.stat != 2)	M.stat = 1
 			for(var/mob/O in viewers(M, null))
@@ -935,7 +935,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 	return
 
 /obj/item/weapon/gun/energy/teleport_gun/attack(mob/M as mob, mob/living/user as mob)
-	if ((usr.mutations & 16) && prob(50))
+	if ((usr.mutations & CLOWN) && prob(50))
 		usr << "\red You shoot the teleport gun while holding it backwards."
 		point_blank_teleport(usr)
 		return
@@ -1069,7 +1069,7 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 		src.icon_state = text("energy[]", ratio)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob, flag)
-		if ((user.mutations & 16) && prob(50))
+		if ((user.mutations & CLOWN) && prob(50))
 			user << "\red The energy gun blows up in your face."
 			user.take_organ_damage(0,20)
 			user.drop_item()

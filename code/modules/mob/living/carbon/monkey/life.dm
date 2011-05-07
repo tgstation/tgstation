@@ -118,15 +118,15 @@
 		handle_mutations_and_radiation()
 
 			if(src.fireloss)
-				if(src.mutations & 2 || prob(50))
+				if(src.mutations & COLD_RESISTANCE || prob(50))
 					switch(src.fireloss)
 						if(1 to 50)
 							src.fireloss--
 						if(51 to 100)
 							src.fireloss -= 5
 
-			if (src.mutations & 8 && src.health <= 25)
-				src.mutations &= ~8
+			if (src.mutations & HULK && src.health <= 25)
+				src.mutations &= ~HULK
 				src << "\red You suddenly feel very weak."
 				src.weakened = 3
 				emote("collapse")
@@ -456,7 +456,7 @@
 
 		handle_regular_hud_updates()
 
-			if (src.stat == 2 || src.mutations & 4)
+			if (src.stat == 2 || src.mutations & XRAY)
 				src.sight |= SEE_TURFS
 				src.sight |= SEE_MOBS
 				src.sight |= SEE_OBJS

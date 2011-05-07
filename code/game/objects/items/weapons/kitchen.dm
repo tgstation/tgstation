@@ -37,7 +37,7 @@ KNIFE
 		src.icon_state = "fork"
 		return
 	else
-		if((user.mutations & 16) && prob(50))
+		if((user.mutations & CLOWN) && prob(50))
 			M = user
 		return eyestab(M,user)
 
@@ -47,7 +47,7 @@ KNIFE
 // ROLLING PIN
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/M as mob, mob/living/user as mob)
-	if ((user.mutations & 16) && prob(50))
+	if ((user.mutations & CLOWN) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
 		user.paralysis += 2
@@ -60,10 +60,10 @@ KNIFE
 			return
 		var/time = rand(2, 6)
 		if (prob(75))
-			if (M.paralysis < time && (!(M.mutations & 8)) )
+			if (M.paralysis < time && (!(M.mutations & HULK)) )
 				M.paralysis = time
 		else
-			if (M.stunned < time && (!(M.mutations & 8)) )
+			if (M.stunned < time && (!(M.mutations & HULK)) )
 				M.stunned = time
 		if(M.stat != 2)	M.stat = 1
 		for(var/mob/O in viewers(M, null))
@@ -81,7 +81,7 @@ KNIFE
 // KNIFE
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
-	if ((user.mutations & 16) && prob(50))
+	if ((user.mutations & CLOWN) && prob(50))
 		user << "\red You accidentally cut yourself with the [src]."
 		user.take_organ_damage(20)
 		return
@@ -90,7 +90,7 @@ KNIFE
 ///////////////////////////////// TRAY -Agouri :3   ///////////////////////////////////////////////
 
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if((user.mutations & 16) && prob(50))              //What if he's a clown?
+	if((user.mutations & CLOWN) && prob(50))              //What if he's a clown?
 		M << "\red You accidentally slam yourself with the [src]!"
 		M.weakened += 1
 		user.take_organ_damage(2)

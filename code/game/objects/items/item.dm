@@ -88,7 +88,7 @@
 		if(5.0)
 			t = "huge"
 		else
-	if ((usr.mutations & 16) && prob(50)) t = "funny-looking"
+	if ((usr.mutations & CLOWN) && prob(50)) t = "funny-looking"
 	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA ? "" : "bloody ",src, src.name, t)
 	usr << src.desc
 	return
@@ -198,7 +198,7 @@
 		if (istype(affecting, /datum/organ/external))
 			var/b_dam = (src.damtype == "brute" ? src.force : 0)
 			var/f_dam = (src.damtype == "fire" ? src.force : 0)
-			if (M.mutations & 2)
+			if (M.mutations & COLD_RESISTANCE)
 				f_dam = 0
 			if (def_zone == "head")
 				if (b_dam && H.isarmored(affecting) && prob(80 - src.force))
@@ -325,7 +325,7 @@
 					if (istype(location, /turf/simulated))
 						location.add_blood_floor(M)
 			if("fire")
-				if (!(M.mutations & 2))
+				if (!(M.mutations & COLD_RESISTANCE))
 					M.take_organ_damage(0, power)
 					M << "Aargh it burns!"
 		M.updatehealth()
@@ -358,7 +358,7 @@
 		return
 
 	src.add_fingerprint(user)
-	//if((user.mutations & 16) && prob(50))
+	//if((user.mutations & CLOWN) && prob(50))
 	//	M = user
 		/*
 		M << "\red You stab yourself in the eye."

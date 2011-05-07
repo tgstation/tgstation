@@ -34,7 +34,7 @@
 		user.take_organ_damage(0,10)
 		return
 
-	if ((user.mutations & 16) && prob(50))
+	if ((user.mutations & CLOWN) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
 		user.paralysis += 20
@@ -48,7 +48,7 @@
 			if(M.mind in ticker.mode.cult)
 				if (ticker.mode.name == "cult")
 					ticker.mode:remove_cultist(M.mind)
-				else 
+				else
 					ticker.mode.cult -= M.mind
 		if ((istype(M, /mob/living/carbon/human) && prob(60)))
 			bless(M)

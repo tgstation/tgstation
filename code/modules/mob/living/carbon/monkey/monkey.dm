@@ -45,7 +45,7 @@
 		src.now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & 32)
+			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 				if(prob(70))
 					for(var/mob/M in viewers(src, null))
 						if(M.client)
@@ -147,7 +147,7 @@
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
 			var/damage = rand(1, 5)
-			if (src.mutations & 8) damage += 10
+			if (src.mutations & HULK) damage += 10
 			src.bruteloss += damage
 			src.updatehealth()
 		else

@@ -191,7 +191,7 @@ CLIPBOARDS
 	return
 
 /obj/item/weapon/paper/attack_self(mob/living/user as mob)
-	if ((user.mutations & 16) && prob(50))
+	if ((user.mutations & CLOWN) && prob(50))
 		user << text("\red You cut yourself on the paper.")
 		user.take_organ_damage(3)
 		return
@@ -203,11 +203,11 @@ CLIPBOARDS
 	return
 
 /obj/item/weapon/paper/attack_ai(var/mob/living/silicon/ai/user as mob)
-	var/dist	
+	var/dist
 	if (istype(user) && user.current) //is AI
-		dist = get_dist(src, user.current) 
+		dist = get_dist(src, user.current)
 	else //cyborg or AI not seeing through a camera
-		dist = get_dist(src, user) 
+		dist = get_dist(src, user)
 	if (dist < 2)
 		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", src.name, src.info), text("window=[]", src.name))
 		onclose(usr, "[src.name]")

@@ -286,7 +286,7 @@
 	if (isblockon(getblock(M.dna.struc_enzymes, HULKBLOCK,3),2))
 		if(inj || prob(15))
 			M << "\blue Your muscles hurt."
-			M.mutations |= 8
+			M.mutations |= HULK
 	if (isblockon(getblock(M.dna.struc_enzymes, 3,3),3))
 		M.disabilities |= 2
 		M << "\red You get a headache."
@@ -304,7 +304,7 @@
 		M << "\red You start coughing."
 	if (isblockon(getblock(M.dna.struc_enzymes, CLUMSYBLOCK,3),6))
 		M << "\red You feel lightheaded."
-		M.mutations |= 16
+		M.mutations |= CLOWN
 	if (isblockon(getblock(M.dna.struc_enzymes, 7,3),7))
 		M.disabilities |= 8
 		M << "\red You twitch."
@@ -314,21 +314,21 @@
 			M.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 			M.see_in_dark = 8
 			M.see_invisible = 2
-			M.mutations |= 4
+			M.mutations |= XRAY
 	if (isblockon(getblock(M.dna.struc_enzymes, 9,3),9))
 		M.disabilities |= 16
 		M << "\red You feel nervous."
 	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),10))
 		if(inj || prob(30))
 			M << "\blue Your body feels warm."
-			M.mutations |= 2
+			M.mutations |= COLD_RESISTANCE
 	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),11))
 		M.sdisabilities |= 1
 		M << "\red You cant seem to see anything."
 	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),12))
 		if(inj || prob(15))
 			M << "\blue You feel smarter."
-			M.mutations |= 1
+			M.mutations |= PORTALS
 	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),13))
 		M.sdisabilities |= 4
 		M.ear_deaf = 1

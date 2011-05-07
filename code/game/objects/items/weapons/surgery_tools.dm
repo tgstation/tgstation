@@ -201,7 +201,7 @@ CIRCULAR SAW
 	if(!istype(M))
 		return ..()
 
-	if((user.mutations & 16) && prob(50))
+	if((user.mutations & CLOWN) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -351,7 +351,7 @@ CIRCULAR SAW
 	if(!istype(M))
 		return ..()
 
-	if((user.mutations & 16) && prob(50))
+	if((user.mutations & CLOWN) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -398,7 +398,7 @@ CIRCULAR SAW
 						M.updatehealth()
 					else
 						M.take_organ_damage(40)
-						
+
 				if(istype(M, /mob/living/carbon/human))
 					var/datum/organ/external/affecting = M:organs["head"]
 					affecting.take_damage(7)

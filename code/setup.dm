@@ -123,6 +123,15 @@
 #define ARMS			32
 #define HANDS			64
 
+//bitflags for mutations
+#define PORTALS 1
+#define COLD_RESISTANCE 2
+#define XRAY 4
+#define HULK 8
+#define CLOWN 16
+#define FAT 32
+#define HUSK 64 //changeling-drained
+
 // channel numbers for power
 
 #define EQUIP 1

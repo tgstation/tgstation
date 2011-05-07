@@ -11,7 +11,7 @@
 /obj/item/weapon/storage/briefcase/attack(mob/M as mob, mob/living/user as mob)
 	//..()
 
-	if ((user.mutations & 16) && prob(50))
+	if ((user.mutations & CLOWN) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
 		user.paralysis += 2
@@ -25,10 +25,10 @@
 			return
 		var/time = rand(2, 6)
 		if (prob(75))
-			if (M.paralysis < time && (!(M.mutations & 8)) )
+			if (M.paralysis < time && (!(M.mutations & HULK)) )
 				M.paralysis = time
 		else
-			if (M.stunned < time && (!(M.mutations & 8)) )
+			if (M.stunned < time && (!(M.mutations & HULK)) )
 				M.stunned = time
 		if(M.stat != 2)	M.stat = 1
 		for(var/mob/O in viewers(M, null))

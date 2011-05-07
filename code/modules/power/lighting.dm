@@ -201,7 +201,7 @@
 					continue
 				M.show_message("[user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 			if(on && (W.flags & CONDUCT))
-				//if(!user.mutations & 2)
+				//if(!user.mutations & COLD_RESISTANCE)
 				if (prob(12))
 					electrocute_mob(user, get_area(src), src, 0.3)
 			broken()
@@ -216,7 +216,7 @@
 			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
-			//if(!user.mutations & 2)
+			//if(!user.mutations & COLD_RESISTANCE)
 			if (prob(75))
 				electrocute_mob(user, get_area(src), src, rand(0.7,1.0))
 
@@ -268,7 +268,7 @@
 		else
 			prot = 1
 
-		if(prot > 0 || (user.mutations & 2))
+		if(prot > 0 || (user.mutations & COLD_RESISTANCE))
 			user << "You remove the light [fitting]"
 		else
 			user << "You try to remove the light [fitting], but you burn your hand on it!"
