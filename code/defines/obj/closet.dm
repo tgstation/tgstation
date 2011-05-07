@@ -286,6 +286,10 @@
 	name = "Head Of Security"
 	req_access = list(access_hos)
 
+/obj/secure_closet/injection
+	name = "Lethal Injections"
+	req_access = list(access_hos)
+
 /obj/secure_closet/captains
 	name = "Captain's Closet"
 	req_access = list(access_captain)
