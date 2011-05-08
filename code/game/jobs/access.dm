@@ -170,13 +170,11 @@
 		if("Roboticist")
 			return list(access_robotics, access_tech_storage, access_maint_tunnels)
 		if("Cargo Technician")
-			return list(access_maint_tunnels, access_cargo, access_cargo_bot)
-		if("Mail Sorter")
-			return list(access_maint_tunnels, access_mailsorting)
+			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 		if("Shaft Miner")
 			return list(access_maint_tunnels, access_mining, access_mint, access_mining_station)
 		if("Quartermaster")
-			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining_office, access_mining)
+			return list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining_office, access_mining)
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
@@ -365,5 +363,5 @@
 /proc/get_all_jobs()
 	return list("Assistant", "Station Engineer", "Shaft Miner", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",
 				"Geneticist", "Scientist", "Head of Security", "Head of Personnel", "Atmospheric Technician",
-				"Chaplain", "Barman", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster", "Mail Sorter",
+				"Chaplain", "Barman", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster",
 				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer", "Virologist", "Cargo Technician", "Chief Medical Officer")
