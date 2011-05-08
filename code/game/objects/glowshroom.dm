@@ -112,7 +112,7 @@
 
 	var/list/dirList = list()
 
-	for(var/i=0,i<=4,i <<= 1)
+	for(var/i=1,i<=16,i <<= 1)
 		if(direction & i)
 			dirList += i
 

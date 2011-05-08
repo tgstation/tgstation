@@ -1203,3 +1203,5 @@ turf/simulated/floor/proc/update_icon()
 				new /turf/simulated/wall/vault(locate(i,j,z),type)
 			else
 				new /turf/simulated/floor/vault(locate(i,j,z),type)
+
+	del(src)
