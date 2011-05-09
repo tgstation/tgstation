@@ -26,7 +26,7 @@
 
 	var/list/mob/living/silicon/ai/ailist = list()
 	for (var/mob/living/silicon/ai/A in world)
-		if (!A.stat && A.name != "Inactive AI")
+		if (!A.stat)
 			ailist += A
 	var/mob/living/silicon/ai/aiplayer
 	if (ailist.len)

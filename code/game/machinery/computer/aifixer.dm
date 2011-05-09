@@ -46,9 +46,9 @@
 			user << "This terminal isn't functioning right now, get it working!"
 			return
 		var/obj/item/device/aicard/C = I
-		if(src.contents.len == 0)
+		if(contents.len == 0)
 			if (C.contents.len == 0)
-				user << "No AI to copy over!"
+				user << "No AI to copy over!"//Well duh
 			else for(var/mob/living/silicon/ai/A in C)
 				A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
 				user << "<b>Transfer succesful</b>: [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
@@ -56,51 +56,57 @@
 				C.name = "inteliCard"
 				C.overlays = null
 				A.loc = src
-				src.occupant = A
+				occupant = A
 				A.control_disabled = 1
 				if (A.stat == 2)
-					src.overlays += image('computer.dmi', "ai-fixer-404")
+					overlays += image('computer.dmi', "ai-fixer-404")
 				else
-					src.overlays += image('computer.dmi', "ai-fixer-full")
-				src.overlays -= image('computer.dmi', "ai-fixer-empty")
+					overlays += image('computer.dmi', "ai-fixer-full")
+				overlays -= image('computer.dmi', "ai-fixer-empty")
 
 
 		else
 			if(C.contents.len == 0 && src.occupant && !src.active)
-				C.name = "inteliCard - [src.occupant.name]"
-				src.overlays += image('computer.dmi', "ai-fixer-empty")
+				C.name = "inteliCard - [occupant.name]"
+				overlays += image('computer.dmi', "ai-fixer-empty")
 				if (src.occupant.stat == 2)
 					C.icon_state = "aicard-404"
 					src.overlays -= image('computer.dmi', "ai-fixer-404")
 				else
 					C.icon_state = "aicard-full"
 					src.overlays -= image('computer.dmi', "ai-fixer-full")
-				src.occupant << "You have been downloaded to a mobile storage device. Still no remote access."
-				user << "<b>Transfer succeeded</b>: [src.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
-				src.occupant.loc = C
-				src.occupant = null
+				occupant << "You have been downloaded to a mobile storage device. Still no remote access."
+				user << "<b>Transfer succeeded</b>: [occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+				occupant.loc = C
+				occupant = null
 			else if (C.contents.len)
 				user << "There's already an AI in the reconstructer!"
-			else if (src.active)
+			else if (active)
 				user << "Can't remove an AI during reconstruction!"
-			else if (!src.occupant)
+			else if (!occupant)
 				user << "No AI to remove!"
 
 	//src.attack_hand(user)
 	return
 
-
 /obj/machinery/computer/aifixer/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/computer/aifixer/attack_paw(var/mob/user as mob)
-
-	return src.attack_hand(user)
-	return
+	return attack_hand(user)
 
 /obj/machinery/computer/aifixer/attack_hand(var/mob/user as mob)
 	if(..())
 		return
+
+	if(ishuman(user))//Checks to see if they are ninja
+		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
+			if(user:wear_suit:control)
+				attackby(user:wear_suit:aicard,user)
+			else
+				user << "\red <b>ERROR</b>: \black Remote access channel disabled."
+			return
+
 	user.machine = src
 	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
 

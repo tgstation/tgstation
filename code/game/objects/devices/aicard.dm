@@ -10,85 +10,34 @@
 
 
 	attack(mob/living/silicon/ai/M as mob, mob/user as mob)
-		if (src.flush)
+		if(!istype(M, /mob/living/silicon/ai))//If target is not an AI.
+			return ..()
+
+		if (flush)//Here to prevent being unable to attack with card when wiping an AI.
 			user << "<b>Transfer failed</b>: Cannot transfer while wipe in progress."
 			return
 
-		if(!istype(M, /mob/living/silicon/ai))
-			return ..()
-
-		if(src.contents.len > 0)
-			for(var/mob/living/silicon/ai/A in src)
-
-			// Already have an AI
-				if(M.real_name != "Inactive AI")
-					user << "<b>Transfer failed</b>: Existing AI found on this terminal. Remove existing AI to install a new one."
-					return
-
-				else
-					M.name = A.name
-					M.real_name = A.real_name
-					if(A.mind)
-						A.mind.transfer_to(M)
-						A.mind.original = M
-					M.control_disabled = 0
-					M.laws_object = A.laws_object
-					M.oxyloss = A.oxyloss
-					M.fireloss = A.fireloss
-					M.bruteloss = A.bruteloss
-					M.toxloss = A.toxloss
-					if (!A.stat)
-						M.stat = A.stat
-					M.updatehealth()
-					M << "You have been uploaded to a stationary terminal. Remote device connection restored."
-					user << "<b>Transfer succesful</b>: [M.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
-					del(A)
-					if (!M.stat)
-						M.icon_state = "ai"
-					else
-						M.icon_state = "ai-crash"
-					src.icon_state = "aicard"
-					src.name = "inteliCard"
-					src.overlays = null
-					return
+		if(contents.len > 0)//If there is an AI on card.
+			user << "<b>Transfer failed</b>: Existing AI found on this terminal. Remove existing AI to install a new one."
 		else
-			if (M.real_name != "Inactive AI")
-				if (ticker.mode.name == "AI malfunction")
-					var/datum/game_mode/malfunction/malf = ticker.mode
-					for (var/datum/mind/malfai in malf.malf_ai)
-						if (M.mind == malfai)
-							user << "This AI's download interface has been disabled."
-							return
-				var/mob/living/silicon/ai/O = new /mob/living/silicon/ai( src )
-				O.invisibility = 0
-				O.canmove = 0
-				O.name = M.name
-				O.real_name = M.real_name
-				O.anchored = 1
-				O.aiRestorePowerRoutine = 0
-				O.control_disabled = 1 // Can't control things remotely if you're stuck in a card!
-				O.laws_object = M.laws_object
-				O.stat = M.stat
-				O.oxyloss = M.oxyloss
-				O.fireloss = M.fireloss
-				O.bruteloss = M.bruteloss
-				O.toxloss = M.toxloss
-				O.updatehealth()
-				if(M.mind)
-					M.mind.transfer_to(O)
-					M.mind.original = O
-				src.name = "inteliCard - [M.name]"
-				M.name = "Inactive AI"
-				M.real_name = "Inactive AI"
-				M.icon_state = "ai-empty"
-				if (O.stat == 2)
-					src.icon_state = "aicard-404"
-				else
-					src.icon_state = "aicard-full"
-				O << "You have been downloaded to a mobile storage device. Remote device connection severed."
-				user << "<b>Transfer succeeded</b>: [O.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+			if (ticker.mode.name == "AI malfunction")
+				var/datum/game_mode/malfunction/malf = ticker.mode
+				for (var/datum/mind/malfai in malf.malf_ai)
+					if (M.mind == malfai)
+						user << "This AI's download interface has been disabled."//Do ho ho ho~
+						return
+			new /obj/AIcore/deactivated(M.loc)//Spawns a deactivated terminal at AI location.
+			M.aiRestorePowerRoutine = 0//So the AI initially has power.
+			M.control_disabled = 1//Can't control things remotely if you're stuck in a card!
+			M.loc = src//Throw AI into the card.
+			name = "inteliCard - [M.name]"
+			if (M.stat == 2)
+				src.icon_state = "aicard-404"
 			else
-				user << "There isn't an AI on this terminal."
+				src.icon_state = "aicard-full"
+			M << "You have been downloaded to a mobile storage device. Remote device connection severed."
+			user << "<b>Transfer succeeded</b>: [M.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+		return
 
 	attack(mob/living/silicon/decoy/M as mob, mob/user as mob)
 		if (!istype (M, /mob/living/silicon/decoy))
@@ -96,37 +45,6 @@
 		else
 			M.death()
 			user << "<b>ERROR ERROR ERROR</b>"
-
-	Topic(href, href_list)
-
-		if (href_list["close"])
-			usr << browse(null, "window=aicard")
-			usr.machine = null
-
-		if (href_list["wipe"])
-			var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", "Yes", "No")
-			if(confirm == "Yes")
-				src.flush = 1
-				for(var/mob/living/silicon/ai/A in src)
-					A.suiciding = 1
-					A << "Your core files are being wiped!"
-					while (A.stat != 2)
-						A.oxyloss += 2
-						A.updatehealth()
-						src.attack_self(usr)
-						sleep(10)
-					src.flush = 0
-
-		if (href_list["wireless"])
-			for(var/mob/living/silicon/ai/A in src)
-				A.control_disabled = !A.control_disabled
-				A << "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!"
-				if (A.control_disabled)
-					src.overlays -= image('pda.dmi', "aicard-on")
-				else
-					src.overlays += image('pda.dmi', "aicard-on")
-				src.attack_self(usr)
-
 
 	attack_self(mob/user)
 		if (!in_range(src, user))
@@ -165,15 +83,45 @@
 				dat += "<b>AI nonfunctional</b>"
 			else
 				if (!src.flush)
-					dat += {"<A href='byond://?src=\ref[src];wipe=1'>Wipe AI</A>"}
+					dat += {"<A href='byond://?src=\ref[src];choice=Wipe'>Wipe AI</A>"}
 				else
 					dat += "<b>Wipe in progress</b>"
-				dat += {" <A href='byond://?src=\ref[src];wireless=1'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</A>"}
-				dat += {"<a href='byond://?src=\ref[src];close=1'> Close</a>"}
+				dat += {"<a href='byond://?src=\ref[src];choice=Wireless'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</a>"}
+				dat += "<br>"
+				dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
 		user << browse(dat, "window=aicard")
 		onclose(user, "aicard")
 		return
 
+	Topic(href, href_list)
+		switch(href_list["choice"])
+			if ("Close")
+				usr << browse(null, "window=aicard")
+				usr.machine = null
+				return
+
+			if ("Wipe")
+				var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", "Yes", "No")
+				if(confirm == "Yes")
+					flush = 1
+					for(var/mob/living/silicon/ai/A in src)
+						A.suiciding = 1
+						A << "Your core files are being wiped!"
+						while (A.stat != 2)
+							A.oxyloss += 2
+							A.updatehealth()
+							sleep(10)
+						flush = 0
+
+			if ("Wireless")
+				for(var/mob/living/silicon/ai/A in src)
+					A.control_disabled = !A.control_disabled
+					A << "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!"
+					if (A.control_disabled)
+						overlays -= image('pda.dmi', "aicard-on")
+					else
+						overlays += image('pda.dmi', "aicard-on")
+		attack_self(usr)
 
 
 

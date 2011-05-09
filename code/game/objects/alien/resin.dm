@@ -1,29 +1,8 @@
 // Resin walls improved. /N
 
-/*/obj/alien/resin/ex_act(severity)
-	world << "[severity] - [health]"
-	switch(severity)
-		if(1.0)
-			src.health -= 10
-		if(2.0)
-			src.health -= 5
-		if(3.0)
-			src.health -= 1
-	if(src.health < 1)
-		del(src)
-	return*/
-/*
-/obj/alien/resin/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\red <B>[src] is struck with [src]!</B>"), 1)
-	src.health -= 2
-	if(src.health <= 0)
-		del(src)
-*/
-
 /obj/alien/resin/proc/healthcheck()
 	if(health <=0)
-		src.density = 0
+		density = 0
 		if(affecting)
 			var/mob/living/carbon/M = affecting
 			contents.Remove(affecting)
@@ -31,7 +10,7 @@
 				M.verbs += /mob/living/carbon/human/verb/suicide
 			else
 				M.verbs += /mob/living/carbon/monkey/verb/suicide
-			M.loc = src.loc
+			M.loc = loc
 			M.paralysis += 10
 			for(var/mob/O in viewers(src, 3))
 				O.show_message(text("A body appeared from the dead resin!"), 1, text("You hear faint moaning somewhere about you."), 2)
@@ -67,12 +46,11 @@
 	return
 
 /obj/alien/resin/blob_act()
-	density = 0
-	del(src)
+	health-=50
+	healthcheck()
+	return
 
 /obj/alien/resin/meteorhit()
-	//*****RM
-	//world << "glass at [x],[y],[z] Mhit"
 	health-=50
 	healthcheck()
 	return
@@ -87,7 +65,7 @@
 	else
 		tforce = AM:throwforce
 	playsound(src.loc, 'attackblob.ogg', 100, 1)
-	src.health = max(0, health - tforce)
+	health = max(0, health - tforce)
 	healthcheck()
 	..()
 	return
@@ -95,37 +73,27 @@
 /obj/alien/resin/attack_hand()
 	if ((usr.mutations & HULK))
 		usr << text("\blue You easily destroy the resin wall.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("\red [] destroys the resin wall!", usr)
+		for(var/mob/O in oviewers(src))
+			O.show_message(text("\red [] destroys the resin wall!", usr), 1)
 		health-=50
 	healthcheck()
 	return
 
 /obj/alien/resin/attack_paw()
-	if ((usr.mutations & HULK))
-		usr << text("\blue You easily destroy the resin wall.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("\red [] destroys the resin wall!", usr)
-		health-=50
-	healthcheck()
-	return
+	return attack_hand()
 
 /obj/alien/resin/attack_alien()
-	if (istype(usr, /mob/living/carbon/alien/larva))//Safety check for larva. /N
+	if (islarva(usr))//Safety check for larva. /N
 		return
 	usr << text("\green You claw at the resin wall.")
-	for(var/mob/O in oviewers())
-		if ((O.client && !( O.blinded )))
-			O << text("\red [] claws at the resin wall!", usr)
-	playsound(src.loc, 'attackblob.ogg', 100, 1)
-	src.health -= rand(10, 20)
-	if(src.health <= 0)
+	for(var/mob/O in oviewers(src))
+		O.show_message(text("\red [] claws at the resin!", usr), 1)
+	playsound(loc, 'attackblob.ogg', 100, 1)
+	health -= rand(10, 20)
+	if(health <= 0)
 		usr << text("\green You slice the resin wall to pieces.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("\red [] slices the resin wall apart!", usr)
+		for(var/mob/O in oviewers(src))
+			O.show_message(text("\red [] slices the resin wall apart!", usr), 1)
 	healthcheck()
 	return
 
@@ -138,7 +106,7 @@
 				if(G.state<2)
 					user << "\red You need a better grip to do that!"
 					return
-				G.affecting.loc = src.loc
+				G.affecting.loc = src
 				G.affecting.paralysis = 10
 				for(var/mob/O in viewers(world.view, src))
 					if (O.client)
@@ -152,12 +120,9 @@
 		return
 
 	var/aforce = W.force
-	src.health = max(0, src.health - aforce)
+	health = max(0, health - aforce)
 	playsound(src.loc, 'attackblob.ogg', 100, 1)
-	if (src.health <= 0)
-		src.density = 0
-		del(src)
-		return
+	healthcheck()
 	..()
 	return
 
@@ -174,6 +139,9 @@
 		contents.Add(affecting)
 
 		while(!isnull(M)&&!isnull(src))//While M and wall exist
+			if(prob(90)&& M.mutations & HULK)//If they're the Hulk, they're getting out.
+				M << "You smash your way to freedom!"
+				break
 			if(prob(30))//Let's people know that someone is trapped in the resin wall.
 				M << "\green You feel a strange sense of calm as a flesh-like substance seems to completely envelop you."
 				for(var/mob/O in viewers(src, 3))

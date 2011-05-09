@@ -70,16 +70,11 @@
 
 
 /mob/proc/AIize()
-	src.client.screen.len = null
-	var/mob/living/silicon/ai/O = new /mob/living/silicon/ai( src.loc )
-	O.icon_state = "ai"
+	client.screen.len = null
+	var/mob/living/silicon/ai/O = new /mob/living/silicon/ai(loc, /datum/ai_laws/asimov,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
-	O.canmove = 0
-	O.name = src.name
-	O.real_name = src.real_name
-	O.anchored = 1
 	O.aiRestorePowerRoutine = 0
-	O.lastKnownIP = src.client.address
+	O.lastKnownIP = client.address
 
 	mind.transfer_to(O)
 	O.mind.original = O
@@ -113,8 +108,6 @@
 	O << "To use something, simply double-click it."
 	O << "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI."
 
-
-	O.laws_object = new /datum/ai_laws/asimov
 	O.show_laws()
 	O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
@@ -150,7 +143,6 @@
 
 		spawn(50)
 			world << sound('newAI.ogg')
-
 
 		del(src)
 

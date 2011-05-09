@@ -1,4 +1,10 @@
-//ABILITIES=============================
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++++++++++++++++++++++++++++++++++//                    \\++++++++++++++++++++++++++++++++++
+==================================SPACE NINJA ABILITIES====================================
+___________________________________________________________________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 
 /*X is optional, tells the proc to check for specific stuff. C is also optional.
 All the procs here assume that the character is wearing the ninja suit if they are using the procs.
@@ -236,20 +242,32 @@ In the case that they are not, I imagine the game will run-time error like crazy
 		else
 			src << "\red There are no targets in view."
 	return
-/*
+
 //Energy Net
 //Allows the ninja to capture people, I guess.
-/mob/proc/ninjanet()
+//Must right click on a mob to activate.
+/mob/proc/ninjanet(var/mob/living/carbon/M in oview())//Only living carbon mobs.
 	set name = "Energy Net"
-	set desc = "Captures a fallen opponent in a net of energy."
-	set category = "Ninja"
+	set desc = "Captures a fallen opponent in a net of energy. Will teleport them to a holding facility after 30 seconds."
+	set category = null
 
 	var/C = 200
 	if(!ninjacost(C))
-		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
-		S.cell.charge-=(C*10)
+		if(!locate(/obj/effects/energy_net) in M.loc.contents)//Check if they are already being affected by an energy net.
+			var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
+			M.stunned += 10//So they are stunned initially but conscious.
+			var/obj/effects/energy_net/E = new /obj/effects/energy_net(M.loc)
+			E.layer = M.layer+1//To have it appear one layer above the mob.
+			M.anchored = 1//Anchors them so they can't move.
+			for(var/mob/O in viewers(src, 3))
+				O.show_message(text("\red [] caught [] with an energy net!", src, M), 1)
+			E.affecting = M
+			E.master = src
+			spawn(0)//Parallel processing.
+				E.process(M)
+			S.cell.charge-=(C*10)
 	return
-*/
+
 //Adrenaline Boost
 //Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
 //Movement impairing would indicate drugs and the like.
@@ -287,7 +305,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 	set category = "Ninja"
 
 	if(!usr.incorporeal_move)
-		incorporeal_move = 1
+		incorporeal_move = 2
 		density = 0
 		src << "\blue You will now phase through solid matter."
 	else
@@ -297,7 +315,6 @@ In the case that they are not, I imagine the game will run-time error like crazy
 	return
 
 /*
-Added click-spam protection of 1 second.
 Allows to gib up to five squares in a straight line. Seriously.*/
 /mob/proc/ninjaslayer()
 	set name = "Phase Slayer"
@@ -436,24 +453,3 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 		else
 			src << "\red There are no targets in view."
 	return
-
-/*
-/mob/verb/TestNinjaShadow()
-	set name = "Test Ninja Ability"
-	set category = "Ninja"
-
-	if(client)
-		var/safety = 4
-		for(var/turf/T in oview(5))
-			if(prob(20))
-				var/current_clone = image('mob.dmi',T,"s-ninja",dir)
-				safety--
-				spawn(0)
-					src << current_clone
-					spawn(300)
-						del(current_clone)
-					spawn while(!isnull(current_clone))
-						step_to(current_clone,src,1)
-						sleep(5)
-			if(safety<=0)	break
-	return */

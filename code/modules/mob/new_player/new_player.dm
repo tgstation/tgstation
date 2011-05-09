@@ -86,6 +86,7 @@ mob/new_player
 			src << browse_rsc('sos_10.png')
 			src << browse_rsc('sos_11.png')
 			src << browse_rsc('sos_12.png')
+			src << browse_rsc('sos_13.png')
 
 		//End PDA Resource Initialisation =====================================================>
 
@@ -281,7 +282,7 @@ mob/new_player
 					if (ticker.current_state == GAME_STATE_PLAYING)
 						var/list/mob/living/silicon/ai/ailist = list()
 						for (var/mob/living/silicon/ai/A in world)
-							if (!A.stat && A.name != "Inactive AI")
+							if (!A.stat)
 								ailist += A
 						if (ailist.len)
 							var/mob/living/silicon/ai/announcer = pick(ailist)

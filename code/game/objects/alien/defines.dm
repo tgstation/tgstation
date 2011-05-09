@@ -39,7 +39,7 @@
 	opacity = 1
 	anchored = 1
 	var/health = 50
-	var/affecting = null
+	var/mob/living/affecting = null
 
 /obj/alien/weeds
 	name = "weeds"

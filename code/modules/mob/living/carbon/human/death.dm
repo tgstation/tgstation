@@ -11,33 +11,33 @@
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
 		//For ninjas exploding when they die./N
-		if (istype(src.wear_suit, /obj/item/clothing/suit/space/space_ninja)&&src.wear_suit:initialize)
-			var/location = src.loc
+		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:initialize)
+			var/location = loc
 			explosion(location, 1, 2, 3, 4)
 		//src.flags = 0
 		//reagents.handle_reactions() //No magic stomach for corpses.
-		src.canmove = 0
+		canmove = 0
 		if(src.client)
 			src.blind.layer = 0
-		src.lying = 1
+		lying = 1
 		var/h = src.hand
-		src.hand = 0
+		hand = 0
 		drop_item()
-		src.hand = 1
+		hand = 1
 		drop_item()
-		src.hand = h
-		if (istype(src.wear_suit, /obj/item/clothing/suit/armor/a_i_a_ptank))
-			var/obj/item/clothing/suit/armor/a_i_a_ptank/A = src.wear_suit
-			bombers += "[src.key] has detonated a suicide bomb. Temp = [A.part4.air_contents.temperature-T0C]."
+		hand = h
+		if (istype(wear_suit, /obj/item/clothing/suit/armor/a_i_a_ptank))
+			var/obj/item/clothing/suit/armor/a_i_a_ptank/A = wear_suit
+			bombers += "[key] has detonated a suicide bomb. Temp = [A.part4.air_contents.temperature-T0C]."
 	//		world << "Detected that [src.key] is wearing a bomb" debug stuff
 			if(A.status && prob(90))
 	//			world << "Bomb has ignited?"
 				A.part4.ignite()
 
-		if (src.client)
+		if (client)
 			spawn(10)
-				if(src.client && src.stat == 2)
-					src.verbs += /mob/proc/ghostize
+				if(client && src.stat == 2)
+					verbs += /mob/proc/ghostize
 
 	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 	if(mind)

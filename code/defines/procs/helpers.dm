@@ -518,18 +518,18 @@
 	return "[round(f / 10)].[f % 10]"
 
 /proc/ainame(var/mob/M as mob)
-	var/randomname = pick(ai_names)
+	var/randomname = M.name
 	var/newname = input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)
 
 	if (length(newname) == 0)
 		newname = randomname
 
 	if (newname)
-		if (newname == "Inactive AI")
+		if (newname == "Inactive AI")//Keeping this here to prevent dumb.
 			M << "That name is reserved."
 			return ainame(M)
 		for (var/mob/living/silicon/ai/A in world)
-			if (A.real_name == newname)
+			if (A.real_name == newname&&newname!=randomname)
 				M << "There's already an AI with that name."
 				return ainame(M)
 		if (length(newname) >= 26)
@@ -603,8 +603,6 @@
 	var/list/namecounts = list()
 	for (var/mob/living/silicon/ai/A in world)
 		var/name = A.real_name
-		if (A.real_name == "Inactive AI")
-			continue
 		if (A.stat == 2)
 			continue
 		if (A.control_disabled == 1)

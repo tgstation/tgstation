@@ -9,5 +9,8 @@ var/list/first_names_female = dd_file2list("config/names/first_female.txt")
 var/list/last_names = dd_file2list("config/names/last.txt")
 var/list/loggedsay = dd_file2list("config/names/loggedsay.txt")
 var/list/clown_names = dd_file2list("config/names/clown.txt")
+
+var/list/verbs = dd_file2list("config/names/verbs.txt")
+var/list/adjectives = dd_file2list("config/names/adjectives.txt")
 //loaded on startup because of "
 //would include in rsc if ' was used

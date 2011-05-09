@@ -131,3 +131,17 @@
 			T.hostpda = R
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
+	//Begin code phrase.
+	traitor_mob << "The Syndicate provided you with the following information on how to identify other agents:"
+	if(prob(80))
+		traitor_mob << "\red Code Phrase: \black [syndicate_code_phrase]"
+		traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
+	else
+		traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code phrase."
+	if(prob(80))
+		traitor_mob << "\red Code Response: \black [syndicate_code_response]"
+		traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
+	else
+		traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code response."
+	traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
+	//End code phrase.

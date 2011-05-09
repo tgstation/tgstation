@@ -1,47 +1,52 @@
-/mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B)
-	src.anchored = 1
-	src.canmove = 0
+/mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
+	PickName
+	name = pick(ai_names)
+	for (var/mob/living/silicon/ai/A in world)
+		if (A.real_name == name)
+			goto PickName//It'll get stuck in an infinite loop if all default names are chosen but that's... a remote possibility.
+	real_name = name
+	anchored = 1
+	canmove = 0
 	src.loc = loc
 	if(L)
 		if (istype(L, /datum/ai_laws))
-			src.laws_object = L
+			laws_object = L
 	else
-		src.laws_object = new /datum/ai_laws/asimov
+		laws_object = new /datum/ai_laws/asimov
 
-	src.verbs += /mob/living/silicon/ai/proc/show_laws_verb
+	verbs += /mob/living/silicon/ai/proc/show_laws_verb
 
 	if (istype(loc, /turf))
-		src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
-		src.verbs += /mob/living/silicon/ai/proc/ai_camera_track
-		src.verbs += /mob/living/silicon/ai/proc/ai_camera_list
+		verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
+		verbs += /mob/living/silicon/ai/proc/ai_camera_track
+		verbs += /mob/living/silicon/ai/proc/ai_camera_list
 		//Added ai_network_change by Mord_Sith
-		src.verbs += /mob/living/silicon/ai/proc/ai_network_change
-		src.verbs += /mob/living/silicon/ai/proc/lockdown
-		src.verbs += /mob/living/silicon/ai/proc/disablelockdown
-		src.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-	if (!B)
-		src.name = "Inactive AI"
-		src.real_name = "Inactive AI"
-		src.icon_state = "ai-empty"
-	else
-		if (B.brain.brainmob.mind)
-			B.brain.brainmob.mind.transfer_to(src)
+		verbs += /mob/living/silicon/ai/proc/ai_network_change
+		verbs += /mob/living/silicon/ai/proc/lockdown
+		verbs += /mob/living/silicon/ai/proc/disablelockdown
+		verbs += /mob/living/silicon/ai/proc/ai_statuschange
+	if(!safety)//Only used by AIize() to successfully spawn an AI.
+		if (!B)//If there is no player/brain inside.
+			new/obj/AIcore/deactivated(loc)//New empty terminal.
+			del(src)//Delete AI.
+			return
+		else
+			if (B.brain.brainmob.mind)
+				B.brain.brainmob.mind.transfer_to(src)
 
-		src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
-		src << "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>"
-		src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
-		src << "To use something, simply double-click it."
-		src << "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI."
+			src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
+			src << "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>"
+			src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
+			src << "To use something, simply double-click it."
+			src << "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI."
 
-		src.show_laws()
-		src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+			src.show_laws()
+			src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
-		src.job = "AI"
+			src.job = "AI"
 
-		spawn(0)
-			ainame(src)
-
-
+			spawn(0)
+				ainame(src)
 
 /mob/living/silicon/ai/Stat()
 	..()
@@ -278,6 +283,14 @@
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
 	return
 
+/mob/living/silicon/ai/attack_hand(mob/living/carbon/M as mob)
+	if(ishuman(M))//Checks to see if they are ninja
+		if(istype(M:gloves, /obj/item/clothing/gloves/space_ninja)&&M:gloves:candrain&&!M:gloves:draining)
+			if(M:wear_suit:control)
+				M:wear_suit:aicard.attack(src,M)
+			else
+				M << "\red <b>ERROR</b>: \black Remote access channel disabled."
+	return
 
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 	usr:cameraFollow = null

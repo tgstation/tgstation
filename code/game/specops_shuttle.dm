@@ -37,6 +37,72 @@ var/specops_shuttle_timeleft = 0
 		usr << "\red The Special Operations shuttle is unable to leave."
 		return
 
+	//Begin Marauder launchpad.
+	spawn(0)//So it parallel processes it.
+		for(var/obj/machinery/door/poddoor/M in machines)
+			switch(M.id)
+				if("ASSAULT0")
+					spawn(10)//1 second delay between each.
+						M.open()
+				if("ASSAULT1")
+					spawn(20)
+						M.open()
+				if("ASSAULT2")
+					spawn(30)
+						M.open()
+				if("ASSAULT3")
+					spawn(40)
+						M.open()
+
+		sleep(10)
+
+		var/spawn_marauder[] = new()
+		for(var/obj/landmark/L in world)
+			if(L.name == "Marauder Entry")
+				spawn_marauder.Add(L)
+		for(var/obj/landmark/L in world)
+			if(L.name == "Marauder Exit")
+				var/obj/portal/P = new(L.loc)
+				P.invisibility = 101
+				P.failchance = 0
+				P.target = pick(spawn_marauder)
+				spawn_marauder.Remove(P.target)
+
+		sleep(10)
+
+		for(var/obj/machinery/mass_driver/M in machines)
+			switch(M.id)
+				if("ASSAULT0")
+					spawn(10)
+						M.drive()
+				if("ASSAULT1")
+					spawn(20)
+						M.drive()
+				if("ASSAULT2")
+					spawn(30)
+						M.drive()
+				if("ASSAULT3")
+					spawn(40)
+						M.drive()
+
+		sleep(50)//Doors remain open for 5 seconds.
+
+		for(var/obj/machinery/door/poddoor/M in machines)
+			switch(M.id)//Doors close at the same time.
+				if("ASSAULT0")
+					spawn(0)
+						M.close()
+				if("ASSAULT1")
+					spawn(0)
+						M.close()
+				if("ASSAULT2")
+					spawn(0)
+						M.close()
+				if("ASSAULT3")
+					spawn(0)
+						M.close()
+	//End Marauder launchpad.
+
 	var/area/start_location = locate(/area/shuttle/specops/centcom)
 	var/area/end_location = locate(/area/shuttle/specops/station)
 

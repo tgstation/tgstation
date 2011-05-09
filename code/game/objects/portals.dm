@@ -21,11 +21,11 @@
 /obj/portal/proc/teleport(atom/movable/M as mob|obj)
 	if(istype(M, /obj/effects)) //sparks don't teleport
 		return
-	if (M.anchored)
+	if (M.anchored&&istype(M, /obj/mecha))
 		return
-	if (src.icon_state == "portal1")
+	if (icon_state == "portal1")
 		return
-	if (!( src.target ))
+	if (!( target ))
 		del(src)
 		return
 	if (istype(M, /atom/movable))
@@ -33,5 +33,5 @@
 			src.icon_state = "portal1"
 			do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0)
 		else
-			do_teleport(M, src.target, 1) ///You will appear adjacent to the beacon
+			do_teleport(M, target, 1) ///You will appear adjacent to the beacon
 

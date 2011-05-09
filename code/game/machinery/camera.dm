@@ -285,30 +285,7 @@
 /obj/machinery/camera/attackby(W as obj, user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/wirecutters))
-		src.status = !( src.status )
-		if (!( src.status ))
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] has deactivated []!", user, src), 1)
-				playsound(src.loc, 'Wirecutter.ogg', 100, 1)
-			src.icon_state = "camera1"
-		else
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] has reactivated []!", user, src), 1)
-				playsound(src.loc, 'Wirecutter.ogg', 100, 1)
-			src.icon_state = "camera"
-		// now disconnect anyone using the camera
-		for(var/mob/living/silicon/ai/O in world)
-			if (O.current == src)
-				O.cancel_camera()
-				O << "Your connection to the camera has been lost."
-		for(var/mob/O in world)
-			if (istype(O.machine, /obj/machinery/computer/security))
-				var/obj/machinery/computer/security/S = O.machine
-				if (S.current == src)
-					O.machine = null
-					S.current = null
-					O.reset_view(null)
-					O << "The screen bursts into static."
+		deactivate(user)
 	else if (istype(W, /obj/item/weapon/paper))
 		var/obj/item/weapon/paper/X = W
 		user << "You hold a paper up to the camera ..."
@@ -347,8 +324,56 @@
 		else
 			user << "\blue Camera bugged."
 			src.bugged = 1
+	else if(istype(W, /obj/item/weapon/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
+		deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
+		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+		spark_system.set_up(5, 0, loc)
+		spark_system.start()
+		playsound(loc, 'blade1.ogg', 50, 1)
+		playsound(loc, "sparks", 50, 1)
+
+		var/obj/item/weapon/chem_grenade/case = new /obj/item/weapon/chem_grenade(loc)
+		case.name = "Camera Assembly"
+		case.path = 2
+		case.state = 5
+		case.anchored = 1
+		case.circuit = new /obj/item/device/multitool
+		if (istype(src, /obj/machinery/camera/motion))
+			case.motion = 1
+
+		for(var/mob/O in viewers(user, 3))
+			O.show_message(text("\blue The camera has been sliced apart by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+		del(src)
 	return
 
+/obj/machinery/camera/proc/deactivate(user as mob, var/choice = 1)
+	if(choice==1)
+		status = !( src.status )
+		if (!(src.status))
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red [] has deactivated []!", user, src), 1)
+				playsound(src.loc, 'Wirecutter.ogg', 100, 1)
+			icon_state = "camera1"
+		else
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red [] has reactivated []!", user, src), 1)
+				playsound(src.loc, 'Wirecutter.ogg', 100, 1)
+			icon_state = "camera"
+	// now disconnect anyone using the camera
+	//Apparently, this will disconnect anyone even if the camera was re-activated.
+	//I guess that doesn't matter since they can't use it anyway?
+	for(var/mob/living/silicon/ai/O in world)
+		if (O.current == src)
+			O.cancel_camera()
+			O << "Your connection to the camera has been lost."
+	for(var/mob/O in world)
+		if (istype(O.machine, /obj/machinery/computer/security))
+			var/obj/machinery/computer/security/S = O.machine
+			if (S.current == src)
+				O.machine = null
+				S.current = null
+				O.reset_view(null)
+				O << "The screen bursts into static."
 
 //Return a working camera that can see a given mob
 //or null if none

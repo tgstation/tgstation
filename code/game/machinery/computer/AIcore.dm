@@ -143,3 +143,37 @@
 
 				new /mob/living/silicon/ai ( src.loc, laws, brain )
 				del(src)
+
+/obj/AIcore/deactivated
+	name = "Inactive AI"
+	icon = 'mob.dmi'
+	icon_state = "ai-empty"
+	anchored = 1
+	state = 20//So it doesn't interact based on the above. Not really necessary.
+
+	attackby(var/obj/item/device/aicard/A as obj, var/mob/user as mob)
+		if(istype(A, /obj/item/device/aicard))//Is it?
+			if (!A.flush)//If not wiping.
+				var/mob/living/silicon/ai/AI = locate() in A//I love locate(). Best proc ever.
+				if(AI)//If AI exists on the card. Else nothing since both are empty.
+					AI.control_disabled = 0
+					AI.loc = src.loc//To replace the terminal.
+					AI << "You have been uploaded to a stationary terminal. Remote device connection restored."
+					user << "<b>Transfer succesful</b>: [AI.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
+					A.icon_state = "aicard"
+					A.name = "inteliCard"
+					A.overlays = null
+					del(src)
+			else
+				user << "<b>Transfer failed</b>: Cannot transfer while wipe in progress."
+				return
+		return
+
+	attack_hand(var/mob/user as mob)
+		if(ishuman(user))//Checks to see if they are ninja
+			if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
+				if(user:wear_suit:control)
+					attackby(user:wear_suit:aicard,user)
+				else
+					user << "\red <b>ERROR</b>: \black Remote access channel disabled."
+		return

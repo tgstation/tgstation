@@ -25,7 +25,9 @@ datum/controller/game_controller
 
 		setupgenetics()
 
-		setupcorpses()
+		//setupcorpses() Not used any more.
+		syndicate_code_phrase = generate_code_phrase()//Sets up code phrase for traitors, for the round.
+		syndicate_code_response = generate_code_phrase()
 
 		emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
 

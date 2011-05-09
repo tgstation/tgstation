@@ -42,6 +42,7 @@
 	avnums.Remove(tempnum)
 	BLINDBLOCK = tempnum
 
+/* This was use for something before, I think, but is not worth the effort to process now.
 /proc/setupcorpses()
 	for (var/obj/landmark/A in world)
 		if (A.name == "Corpse")
@@ -138,3 +139,4 @@
 				M.equip_if_possible(new /obj/item/clothing/head/helmet/swat(M), M.slot_head)
 			del(A)
 			continue
+			*/

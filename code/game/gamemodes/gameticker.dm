@@ -30,7 +30,7 @@ var/global/datum/controller/gameticker/ticker
 		else
 			sleep(10)
 			pregame_timeleft--
- 
+
 		if(pregame_timeleft <= 0)
 			current_state = GAME_STATE_SETTING_UP
 
@@ -188,18 +188,17 @@ var/global/datum/controller/gameticker/ticker
 /datum/controller/gameticker/proc/declare_completion()
 
 	for (var/mob/living/silicon/ai/aiPlayer in world)
-		if (aiPlayer.name != "Inactive AI")
-			if (aiPlayer.stat != 2)
-				world << "<b>[aiPlayer.name]'s laws at the end of the game were:</b>"
-			else
-				world << "<b>[aiPlayer.name]'s laws when it was deactivated were:</b>"
-			aiPlayer.show_laws(1)
+		if (aiPlayer.stat != 2)
+			world << "<b>[aiPlayer.name]'s laws at the end of the game were:</b>"
+		else
+			world << "<b>[aiPlayer.name]'s laws when it was deactivated were:</b>"
+		aiPlayer.show_laws(1)
 
-			var/robolist = "<b>The AI's loyal minions were:</b> "
-			for(var/mob/living/silicon/robot/robo in world)
-				if (robo.connected_ai == aiPlayer)
-					robolist += "[robo.name][robo.stat?" (Deactivated), ":", "]"
-			world << "[robolist]"
+		var/robolist = "<b>The AI's loyal minions were:</b> "
+		for(var/mob/living/silicon/robot/robo in world)
+			if (robo.connected_ai == aiPlayer)
+				robolist += "[robo.name][robo.stat?" (Deactivated), ":", "]"
+		world << "[robolist]"
 
 	for (var/mob/living/silicon/robot/robo in world)
 		if (!robo.connected_ai)

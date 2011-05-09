@@ -28,6 +28,11 @@
 		return 1
 	return 0
 
+/proc/islarva(A)
+	if(istype(A, /mob/living/carbon/alien/larva))
+		return 1
+	return 0
+
 /proc/ismonkey(A)
 	if(A && istype(A, /mob/living/carbon/monkey))
 		return 1
@@ -43,6 +48,11 @@
 		return 1
 	return 0
 
+/proc/ishivemainframe(A)
+	if(A && istype(A, /mob/living/silicon/hive_mainframe))
+		return 1
+	return 0
+
 /proc/isAI(A)
 	if(istype(A, /mob/living/silicon/ai))
 		return 1
@@ -55,6 +65,16 @@
 
 /proc/issilicon(A)
 	if(istype(A, /mob/living/silicon))
+		return 1
+	return 0
+
+/proc/isliving(A)
+	if(istype(A, /mob/living))
+		return 1
+	return 0
+
+proc/isobserver(A)
+	if(istype(A, /mob/dead/observer))
 		return 1
 	return 0
 
@@ -306,6 +326,8 @@
 	return null
 
 /obj/item/weapon/grab/proc/synch()
+	if(affecting.anchored)//This will prevent from grabbing people that are anchored.
+		del(src)
 	if (src.assailant.r_hand == src)
 		src.hud1.screen_loc = ui_rhand
 	else
@@ -1655,72 +1677,87 @@
 	return
 
 /client/Move(n, direct)
-	if(src.mob.control_object)					// Hacking in something to control objects -- TLE
-		if(src.mob.control_object.density)
-			step(src.mob.control_object,direct)
-			src.mob.control_object.dir = direct
+	if(mob.control_object)					// Hacking in something to control objects -- TLE
+		if(mob.control_object.density)
+			step(mob.control_object,direct)
+			mob.control_object.dir = direct
 		else
-			src.mob.control_object.loc = get_step(src.mob.control_object,direct)
-	if(istype(src.mob, /mob/dead/observer))
-		return src.mob.Move(n,direct)
-	if (src.moving)
+			mob.control_object.loc = get_step(mob.control_object,direct)
+	if(isobserver(mob))
+		return mob.Move(n,direct)
+	if (moving)
 		return 0
-	if (world.time < src.move_delay)
+	if (world.time < move_delay)
 		return
-	if (!( src.mob ))
+	if (!( mob ))
 		return
-	if (src.mob.stat==2)
+	if (mob.stat==2)
 		return
-	if (mob.incorporeal_move)//For Ninja crazy porting powers. Moves either 1 or 2 tiles.
-		var/turf/mobloc = get_turf(mob.loc)
-		if(prob(50))
-			var/locx
-			var/locy
-			switch(direct)
-				if(NORTH)
-					locx = mobloc.x
-					locy = (mobloc.y+2)
-					if(locy>world.maxy)
-						return
-				if(SOUTH)
-					locx = mobloc.x
-					locy = (mobloc.y-2)
-					if(locy<1)
-						return
-				if(EAST)
-					locy = mobloc.y
-					locx = (mobloc.x+2)
-					if(locx>world.maxx)
-						return
-				if(WEST)
-					locy = mobloc.y
-					locx = (mobloc.x-2)
-					if(locx<1)
-						return
-				else
-					return
-			mob.loc = locate(locx,locy,mobloc.z)
-			spawn(0)
-				var/limit = 2//For only two trailing shadows.
-				for(var/turf/T in getline(mobloc, mob.loc))
-					spawn(0)
-						anim(T,'mob.dmi',mob,"shadow")
-					limit--
-					if(limit<=0)	break
-		else
-			spawn(0)
-				anim(mobloc,'mob.dmi',mob,"shadow")
-			mob.loc = get_step(mob, direct)
-		mob.dir = direct
-		return
-	if(istype(src.mob, /mob/living/silicon/ai))
+	//This breaks AI hologram movement but that was never finished anyway.
+	if(isAI(mob))
 		return AIMove(n,direct,src.mob)
-	if(istype(src.mob, /mob/living/silicon/hive_mainframe))
-		return MainframeMove(n,direct,src.mob)
-	if (src.mob.monkeyizing)
+	if(ishivemainframe(mob))
+		return MainframeMove(n,direct,mob)
+
+	if(mob.anchored)/*If mob is not AI and is anchored. This means most anchored mobs will not be able to move.
+	This is a fix for ninja energy_net to where mobs can not move but can still act to destroy it.
+	If needed, this should be changed in the appropriate manner. I think the only time you would need to anchor a mob
+	is when they are not meant to move.*/
 		return
 
-	var/is_monkey = istype(src.mob, /mob/living/carbon/monkey)
+	if (mob.incorporeal_move)
+		var/turf/mobloc = get_turf(mob.loc)
+		switch(mob.incorporeal_move)//1 is for all mobs. 2 is for ninjas only.
+			if(1)
+				mob.loc = get_step(mob, direct)
+				mob.dir = direct
+			if(2)
+				//For Ninja crazy porting powers. Moves either 1 or 2 tiles.
+				if(prob(50))
+					var/locx
+					var/locy
+					switch(direct)
+						if(NORTH)
+							locx = mobloc.x
+							locy = (mobloc.y+2)
+							if(locy>world.maxy)
+								return
+						if(SOUTH)
+							locx = mobloc.x
+							locy = (mobloc.y-2)
+							if(locy<1)
+								return
+						if(EAST)
+							locy = mobloc.y
+							locx = (mobloc.x+2)
+							if(locx>world.maxx)
+								return
+						if(WEST)
+							locy = mobloc.y
+							locx = (mobloc.x-2)
+							if(locx<1)
+								return
+						else
+							return
+					mob.loc = locate(locx,locy,mobloc.z)
+					spawn(0)
+						var/limit = 2//For only two trailing shadows.
+						for(var/turf/T in getline(mobloc, mob.loc))
+							spawn(0)
+								anim(T,'mob.dmi',mob,"shadow")
+							limit--
+							if(limit<=0)	break
+				else
+					spawn(0)
+						anim(mobloc,'mob.dmi',mob,"shadow")
+					mob.loc = get_step(mob, direct)
+				mob.dir = direct
+		return
+
+	if (mob.monkeyizing)
+		return
+
+	var/is_monkey = ismonkey(mob)
 	if (locate(/obj/item/weapon/grab, locate(/obj/item/weapon/grab, src.mob.grabbed_by.len)))
 		var/list/grabbing = list(  )
 		if (istype(src.mob.l_hand, /obj/item/weapon/grab))
@@ -1749,20 +1786,20 @@
 							del(G)
 						else
 							return
-	if (src.mob.canmove)
+	if (mob.canmove)
 
-		if(src.mob.m_intent == "face")
-			src.mob.dir = direct
+		if(mob.m_intent == "face")
+			mob.dir = direct
 
 		var/j_pack = 0
-		if ((istype(src.mob.loc, /turf/space)))
-			if (!( src.mob.restrained() ))
+		if ((istype(mob.loc, /turf/space)))
+			if (!( mob.restrained() ))
 				if (!( (locate(/obj/grille) in oview(1, src.mob)) || (locate(/turf/simulated) in oview(1, src.mob)) || (locate(/obj/lattice) in oview(1, src.mob)) ))
 					if (istype(src.mob.back, /obj/item/weapon/tank/jetpack))
 						var/obj/item/weapon/tank/jetpack/J = src.mob.back
 						j_pack = J.allow_thrust(0.01, src.mob)
 						if(j_pack)
-							src.mob.inertia_dir = 0
+							mob.inertia_dir = 0
 						if (!( j_pack ))
 							return 0
 					else
@@ -1771,51 +1808,51 @@
 				return 0
 
 
-		if (isturf(src.mob.loc))
-			src.move_delay = world.time
+		if (isturf(mob.loc))
+			move_delay = world.time
 			if ((j_pack && j_pack < 1))
-				src.move_delay += 5
-			switch(src.mob.m_intent)
+				move_delay += 5
+			switch(mob.m_intent)
 				if("run")
-					if (src.mob.drowsyness > 0)
-						src.move_delay += 6
-					src.move_delay += 1
+					if (mob.drowsyness > 0)
+						move_delay += 6
+					move_delay += 1
 				if("face")
-					src.mob.dir = direct
+					mob.dir = direct
 					return
 				if("walk")
-					src.move_delay += 7
+					move_delay += 7
 
 
-			src.move_delay += src.mob.movement_delay()
+			move_delay += mob.movement_delay()
 
-			if (src.mob.restrained())
+			if (mob.restrained())
 				for(var/mob/M in range(src.mob, 1))
-					if (((M.pulling == src.mob && (!( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, src.mob.grabbed_by.len)))
+					if (((M.pulling == mob && (!( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, src.mob.grabbed_by.len)))
 						src << "\blue You're restrained! You can't move!"
 						return 0
-			src.moving = 1
+			moving = 1
 			if (locate(/obj/item/weapon/grab, src.mob))
-				src.move_delay = max(src.move_delay, world.time + 7)
-				var/list/L = src.mob.ret_grab()
+				move_delay = max(move_delay, world.time + 7)
+				var/list/L = mob.ret_grab()
 				if (istype(L, /list))
 					if (L.len == 2)
-						L -= src.mob
+						L -= mob
 						var/mob/M = L[1]
-						if ((get_dist(src.mob, M) <= 1 || M.loc == src.mob.loc))
-							var/turf/T = src.mob.loc
+						if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
+							var/turf/T = mob.loc
 							. = ..()
 							if (isturf(M.loc))
-								var/diag = get_dir(src.mob, M)
+								var/diag = get_dir(mob, M)
 								if ((diag - 1) & diag)
 								else
 									diag = null
-								if ((get_dist(src.mob, M) > 1 || diag))
+								if ((get_dist(mob, M) > 1 || diag))
 									step(M, get_dir(M.loc, T))
 					else
 						for(var/mob/M in L)
 							M.other_mobs = 1
-							if (src.mob != M)
+							if (mob != M)
 								M.animate_movement = 3
 						for(var/mob/M in L)
 							spawn( 0 )
@@ -1826,17 +1863,17 @@
 								M.animate_movement = 2
 								return
 			else
-				if(src.mob.confused)
-					step(src.mob, pick(cardinal))
+				if(mob.confused)
+					step(mob, pick(cardinal))
 				else
 					. = ..()
-			src.moving = null
+			moving = null
 			return .
 		else
-			if (isobj(src.mob.loc) || ismob(src.mob.loc))
-				var/atom/O = src.mob.loc
-				if (src.mob.canmove)
-					return O.relaymove(src.mob, direct)
+			if (isobj(mob.loc) || ismob(mob.loc))
+				var/atom/O = mob.loc
+				if (mob.canmove)
+					return O.relaymove(mob, direct)
 	else
 		return
 	return

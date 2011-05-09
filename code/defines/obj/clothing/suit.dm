@@ -375,6 +375,8 @@
 	var/active = 0//Stealth off.
 	var/kamikaze = 0//Kamikaze on or off.
 	var/obj/item/weapon/cell/cell//Starts out with a high-capacity cell using new proc.
+	var/obj/item/device/aicard/aicard//For the build in AI card.
+	var/control = 1//If in control of the suit.
 	var/initialize = 0//Suit starts off.
 	var/spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.
 	var/unlock = 0
@@ -396,29 +398,29 @@
 
 
 /obj/item/clothing/suit/captunic
-	name = "Captain's parade tunic"
+	name = "captain's parade tunic"
 	icon_state = "captunic"
 	item_state = "bio_suit"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/nun
-	name = "Nun robe"
+	name = "nun robe"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun"
 	item_state = "nun"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
 
 /obj/item/clothing/suit/chaplain_hoodie
-	name = "Chaplain hoodie"
+	name = "chaplain hoodie"
 	desc = "This suit says you 'hush'!"
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/imperium_monk
-	name = "Imperium monk everyday outfit"
-	desc = "Are YOU killed a xenos today?"
+	name = "Imperium monk"
+	desc = "Have YOU killed a xenos today?"
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
