@@ -116,7 +116,7 @@ datum/song
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/fireaxe) && W.wielded == 1)
-			//playsound(src.loc, 'woodhit.ogg', 50, 0) -- Causes Compiling Errors -Superxpdude
+			playsound(src.loc, 'woodhit.ogg', 50, 0)
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red <B> [] forcefully slams the [] with the Fire axe!</B>", user, src), 1)
 			if(!src.broken) //we don't want an already damaged piano to be more damageable
@@ -124,7 +124,7 @@ datum/song
 				if(prob(src.hitstaken*8))
 					src.broken = 1
 					src.icon_state = "pianobroken"
-					//playsound(src.loc, 'pianocrash.ogg', 50, 0) -- Causes Commpiling Errors -Superxpdude
+					playsound(src.loc, 'pianocrash.ogg', 50, 0)
 					return
 				return
 		return
