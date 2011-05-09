@@ -337,8 +337,8 @@
 			O.density = 1
 			O.layer = 5
 			var/turf/simulated/floor/F = ReplaceWithFloor()
-			F.make_plating()
 			F.burn_tile()
+			F.icon_state = "wall_thermite"
 			user << "\red The thermite melts the wall."
 			spawn(100) del(O)
 			F.sd_LumReset()
@@ -403,8 +403,8 @@
 			O.density = 1
 			O.layer = 5
 			var/turf/simulated/floor/F = ReplaceWithFloor()
-			F.make_plating()
 			F.burn_tile()
+			F.icon_state = "wall_thermite"
 			user << "\red The thermite melts the wall."
 			spawn(100) del(O)
 			F.sd_LumReset()
@@ -518,7 +518,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
 				"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
 				"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
-				"light_on_broken","light_off",)
+				"light_on_broken","light_off","wall_thermite")
 
 /turf/simulated/floor
 
