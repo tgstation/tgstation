@@ -371,11 +371,12 @@
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	radiation_protection = 0.75
-	var/affecting = null
+	var/mob/living/carbon/affecting = null
 	var/active = 0//Stealth off.
 	var/kamikaze = 0//Kamikaze on or off.
 	var/obj/item/weapon/cell/cell//Starts out with a high-capacity cell using new proc.
-	var/obj/item/device/aicard/aicard//For the build in AI card.
+	var/mob/living/silicon/AI = null//If there is an AI inside the suit. Paths to target.
+	var/flush = 0//If an AI purge is in progress.
 	var/control = 1//If in control of the suit.
 	var/initialize = 0//Suit starts off.
 	var/spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.

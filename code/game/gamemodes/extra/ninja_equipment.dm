@@ -24,57 +24,25 @@ ________________________________________________________________________________
 	reagents.add_reagent("radium", 120)//AI can inject radium directly. There should be at least 60 units left over after adrenaline boosting.
 	reagents.add_reagent("nutriment", 80)
 	cell = new/obj/item/weapon/cell/high//The suit should *always* have a battery because so many things rely on it.
-	aicard = new/obj/item/device/aicard
 	cell.charge = 9000
 
 /obj/item/clothing/suit/space/space_ninja/Del()
-	if(aicard.contents.len)//If there are AIs present when the ninja kicks the bucket.
-		killai(aicard)
+	if(AI)//If there are AIs present when the ninja kicks the bucket.
+		killai(AI)
 	..()
 	return
 
-/obj/item/clothing/suit/space/space_ninja/proc/killai(var/obj/item/device/aicard/A as obj)
-	for(var/mob/living/silicon/ai/AI in A)//In case intelicards are changes to house more than one AI.
-		AI << "\red Self-destruct protocol dete-- *bzzzzz*"
-		AI.death()//Kill
-		AI.ghostize()//Turn into ghost
-		del(AI)
+/obj/item/clothing/suit/space/space_ninja/proc/killai(var/mob/living/silicon/ai/A as mob)
+	A << "\red Self-destruct protocol dete-- *bzzzzz*"
+	A.death()//Kill
+	A.ghostize()//Turn into ghost
+	del(AI)
 	return
 
 /obj/item/clothing/suit/space/space_ninja/attackby(var/obj/item/device/aicard/aicard_temp as obj, U as mob)//When the suit is attacked by an AI card.
 	if(istype(aicard_temp, /obj/item/device/aicard))//If it's actually an AI card.
 		if(control)
-			if(initialize&&U==affecting)//If the suit is initialized and the actor is the user.
-
-				var/mob/living/silicon/ai/A_T = locate() in aicard_temp//Determine if there is an AI on target card. Saves time when checking later.
-				var/mob/living/silicon/ai/A = locate() in aicard//Deterine if there is an AI on the installed card.
-
-				if(A)//If the installed AI card is not empty.
-					if(A_T)//If there is an AI on the target card.
-						U << "\red <b>ERROR</b>: \black [A_T.name] already installed. Remove [A_T.name] to install a new one."
-					else
-						if(aicard.flush)//If the installed card is purging.
-							U << "\red <b>ERROR</b>: \black [A.name] is purging. Please wait until the process is finished."
-						else
-							A.loc = aicard_temp//Throw them into the target card. Since they are already on a card, transfer is easy.
-							aicard_temp.name = "inteliCard - [A.name]"
-							aicard_temp.icon_state = "aicard-full"
-							A << "You have been uploaded to a mobile storage device."
-							U << "\blue <b>SUCCESS</b>: \black [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory."
-
-				else//If the installed AI card is empty.
-					if(A_T&&A_T.stat!=2)//If there is an AI on the target card and it's not DED.
-						if(aicard_temp.flush)//If the target card is purging.
-							U << "\red <b>ERROR</b>: \black [A_T.name] is wiping. You cannot install this AI until it is repaired."
-						else
-							A_T.loc = aicard//Throw them into the installed card.
-							aicard_temp.icon_state = "aicard"
-							aicard_temp.name = "inteliCard"
-							aicard_temp.overlays = null
-							A_T << "You have been uploaded to a mobile storage device."
-							U << "\blue <b>SUCCESS</b>: \black [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host."
-					else if(A_T.stat==2)//If the target AI is dead. Else just got to return since nothing would happen if both are empty.
-						U << "\red <b>ERROR</b>: \black [A_T.name] is inactive. Unable to install."
+			aicard_temp.transfer_ai("NINJASUIT","AICARD",src,U)
 		else
 			U << "\red <b>ERROR</b>: \black Remote access channel disabled."
 	return
@@ -262,8 +230,8 @@ ________________________________________________________________________________
 			U << "\red #2#"
 		spawn(30)
 			U << "\red #1#: <B>G00DBYE</B>"
-			if(aicard.contents.len)
-				killai(aicard)
+			if(AI)
+				killai(AI)
 			U.gib()
 		return
 	U << "\blue Disconnecting neural-net interface...\green<B>Success</B>\blue."
@@ -326,7 +294,7 @@ ________________________________________________________________________________
 			dat += "<h4><img src=sos_1.png> Available Functions:</h4>"
 			dat += "<ul>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=Stealth'><img src=sos_4.png> Toggle Stealth: [active == 1 ? "Disable" : "Enable"]</a></li>"
-			if(aicard.contents.len)
+			if(AI)
 				dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=sos_13.png> AI Status</a></li>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=sos_3.png> Medical Screen</a></li>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=sos_5.png> Atmos Scan</a></li>"
@@ -446,7 +414,8 @@ ________________________________________________________________________________
 		if(5)
 			var/laws
 			dat += "<h4><img src=sos_13.png> AI Control:</h4>"
-			for(var/mob/living/silicon/ai/A in aicard)
+			var/mob/living/silicon/ai/A = AI
+			if(AI)//If an AI exists, in case it gets purged.
 				dat += "Stored AI: <b>[A.name]</b><br>"
 				dat += "System integrity: [(A.health+100)/2]%<br>"
 
@@ -478,18 +447,18 @@ ________________________________________________________________________________
 				if (A.stat == 2)//If AI dies while inside the card.
 					if(A.client)//If they are still in their body.
 						A.ghostize()//Throw them into a ghost.
+						AI = null
 						del(A)//Delete A.
-						aicard.overlays = null
 					else
 						del(A)
 					U << "Artificial Intelligence has self-terminated. Rebooting..."
 					spideros()//Refresh.
 				else
-					if (!aicard.flush)
-						dat += {"<A href='byond://?src=\ref[src];choice=Purge AI'>Purge AI</A><br>"}
+					if (!flush)
+						dat += {"<A href='byond://?src=\ref[src];choice=Purge AI;target=\ref[A]'>Purge AI</A><br>"}
 					else
 						dat += "<b>Purge in progress...</b><br>"
-					dat += {" <A href='byond://?src=\ref[src];choice=Wireless AI'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</A>"}
+					dat += {" <A href='byond://?src=\ref[src];choice=Wireless AI;target=\ref[A]'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</A>"}
 	dat += "</body></html>"
 
 	U << browse(dat,"window=spideros;size=400x444;border=1;can_resize=0;can_close=0;can_minimize=0")
@@ -688,15 +657,15 @@ ________________________________________________________________________________
 				A.show_laws()
 				U << "\blue Law Override: <b>SUCCESS</b>."
 			if("Purge AI")
-				var/confirm = alert("Are you sure you want to purge the AI? This cannot be undone once started.", "Confirm Purge", "Yes", "No")
-				var/mob/living/silicon/ai/AI = locate() in aicard//Important to place here in case the AI does not exist anymore.
+				var/mob/living/silicon/ai/A = locate(href_list["target"])
+				var/confirm = alert("Are you sure you want to purge the AI? This cannot be undone once started.", "Confirm purge", "Yes", "No")
 				if(U.stat||U.wear_suit!=src||!initialize||!AI)
 					U << browse(null, "window=spideros")
 					return
 				if(confirm == "Yes")
-					if(AI.laws_object.zeroth)
-						AI << "\red <b>WARNING</b>: \black Purge procedure detected. \n Now hacking terminal..."
-						AI.control_disabled = 0
+					if(A.laws_object.zeroth)
+						A << "\red <b>WARNING</b>: \black purge procedure detected. \n Now hacking host..."
+						A.control_disabled = 0
 						U << "\red <b>WARNING</b>: HACKING ATT--TEMPT IN PR0GRESsS!"
 						spideros = 0
 						unlock = 0
@@ -704,23 +673,23 @@ ________________________________________________________________________________
 						control = 0
 						verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
 						verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
+						A.verbs += /mob/living/silicon/ai/proc/ninja_spideros
+						A.verbs += /mob/living/silicon/ai/proc/ninja_return_control
 						U << browse(null, "window=spideros")
 						return
 					else
-						aicard.flush = 1
-						AI.suiciding = 1
-						AI << "Your core files are being purged! This is the end..."
-						while (AI.stat != 2)
-							AI.oxyloss += 2
-							AI.updatehealth()
+						flush = 1
+						A.suiciding = 1
+						A << "Your core files are being purged! This is the end..."
+						while (A.stat != 2)
+							A.oxyloss += 2
+							A.updatehealth()
 							sleep(10)
-						killai(AI)
-						aicard.overlays = null
-						aicard.flush = 0
+						killai(A)
 			if("Wireless AI")
-				for(var/mob/living/silicon/ai/A in aicard)
-					A.control_disabled = !A.control_disabled
-					A << "AI wireless has been [A.control_disabled ? "disabled" : "enabled"]."
+				var/mob/living/silicon/ai/A = locate(href_list["target"])
+				A.control_disabled = !A.control_disabled
+				A << "AI wireless has been [A.control_disabled ? "disabled" : "enabled"]."
 
 		spideros()//Refreshes the screen by calling it again (which replaces current screen with new screen).
 	else//If they are not in control.

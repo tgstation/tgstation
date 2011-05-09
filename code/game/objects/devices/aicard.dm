@@ -13,30 +13,7 @@
 		if(!istype(M, /mob/living/silicon/ai))//If target is not an AI.
 			return ..()
 
-		if (flush)//Here to prevent being unable to attack with card when wiping an AI.
-			user << "<b>Transfer failed</b>: Cannot transfer while wipe in progress."
-			return
-
-		if(contents.len > 0)//If there is an AI on card.
-			user << "<b>Transfer failed</b>: Existing AI found on this terminal. Remove existing AI to install a new one."
-		else
-			if (ticker.mode.name == "AI malfunction")
-				var/datum/game_mode/malfunction/malf = ticker.mode
-				for (var/datum/mind/malfai in malf.malf_ai)
-					if (M.mind == malfai)
-						user << "This AI's download interface has been disabled."//Do ho ho ho~
-						return
-			new /obj/AIcore/deactivated(M.loc)//Spawns a deactivated terminal at AI location.
-			M.aiRestorePowerRoutine = 0//So the AI initially has power.
-			M.control_disabled = 1//Can't control things remotely if you're stuck in a card!
-			M.loc = src//Throw AI into the card.
-			name = "inteliCard - [M.name]"
-			if (M.stat == 2)
-				src.icon_state = "aicard-404"
-			else
-				src.icon_state = "aicard-full"
-			M << "You have been downloaded to a mobile storage device. Remote device connection severed."
-			user << "<b>Transfer succeeded</b>: [M.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+		transfer_ai("AICORE", "AICARD", M, user)
 		return
 
 	attack(mob/living/silicon/decoy/M as mob, mob/user as mob)

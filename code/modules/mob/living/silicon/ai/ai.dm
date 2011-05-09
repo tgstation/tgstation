@@ -287,7 +287,7 @@
 	if(ishuman(M))//Checks to see if they are ninja
 		if(istype(M:gloves, /obj/item/clothing/gloves/space_ninja)&&M:gloves:candrain&&!M:gloves:draining)
 			if(M:wear_suit:control)
-				M:wear_suit:aicard.attack(src,M)
+				M:wear_suit:transfer_ai("AICORE", "NINJASUIT", src, M)
 			else
 				M << "\red <b>ERROR</b>: \black Remote access channel disabled."
 	return

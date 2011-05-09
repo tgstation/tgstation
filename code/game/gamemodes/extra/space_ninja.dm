@@ -100,7 +100,7 @@ mob/proc/create_ninja()
 	set desc = "Hack directly into the Black Widow(tm) neuro-interface."
 	set category = "AI Commands"
 
-	loc.loc:hack_spideros()//aicard.ninjasuit:hack_spideros()
+	loc.loc:hack_spideros()//ninjasuit:hack_spideros()
 
 /mob/living/silicon/ai/proc/ninja_return_control()
 	set name = "Relinquish Control"
@@ -108,16 +108,18 @@ mob/proc/create_ninja()
 	set category = "AI Commands"
 
 	src << browse(null, "window=hack spideros")//Close window
-	loc.loc:control = 0//Return control
-	loc.loc:affecting:verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit//Add back verbs
-	loc.loc:affecting:verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
-	loc.loc:affecting << "<b>UPDATE</b>: [name] has seized hacking attempt. All systems clear."
+	loc:control = 0//Return control
+	loc:affecting:verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit//Add back verbs
+	loc:affecting:verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	verbs -= /mob/living/silicon/ai/proc/ninja_spideros
+	verbs -= /mob/living/silicon/ai/proc/ninja_return_control
+	loc:affecting << "<b>UPDATE</b>: [real_name] has seized hacking attempt. All systems clear."
 
 /obj/item/clothing/suit/space/space_ninja/proc/hack_spideros()
 
+	if(!affecting||!AI)	return//Just in case... something went wrong. Very wrong.
 	var/mob/living/carbon/human/U = affecting
-	var/mob/living/silicon/ai/AI = locate() in aicard
-	if(!affecting||!AI)	return//Just in case... something went wrong.
+	var/mob/living/silicon/ai/A = AI
 
 	var/dat = "<html><head><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#DB2929\"><style>a, a:link, a:visited, a:active, a:hover { color: #DB2929; }img {border-style:none;}</style>"
 	if(spideros==0)
@@ -215,7 +217,7 @@ mob/proc/create_ninja()
 			dat += "Hostile runtime intrusion detected: operation locked. The Spider Clan is watching you, <b>INTRUDER</b>."
 	dat += "</body></html>"
 
-	AI << browse(dat,"window=hack spideros;size=400x444;border=1;can_resize=0;can_close=0;can_minimize=0")
+	A << browse(dat,"window=hack spideros;size=400x444;border=1;can_resize=0;can_close=0;can_minimize=0")
 
 //DEBUG===================================
 
@@ -241,13 +243,12 @@ var/ninja_debug_target//Easiest way to do this. The proc below sets this variabl
 	set name = "Debug Hack Spider OS"
 	set category = "Ninja Debug"
 
-	var/mob/living/carbon/human/H = ninja_debug_target
-	var/mob/living/silicon/ai/AI = locate() in H.wear_suit:aicard
-	if(AI)
-		if(!AI.key)
-			AI.client.mob = H
+	var/mob/living/silicon/ai/A = loc:AI
+	if(A)
+		if(!A.key)
+			A.client.mob = loc:affecting
 		else
-			H.client.mob = AI
+			loc:affecting:client:mob = A
 	return
 
 //Tests the net and what it does.
