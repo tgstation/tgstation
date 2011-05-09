@@ -21,6 +21,8 @@
 	var/newicon = 1 //DEBUG
 
 /obj/rift/New()
+	set background = 1
+
 	..()
 
 	for(var/turf/T in orange(1,src))
@@ -39,6 +41,8 @@
 	..()
 
 /obj/biomass/New()
+	set background = 1
+
 	..()
 	if(!IsValidBiomassLoc(loc,src))
 		del(src)
@@ -59,6 +63,7 @@
 		Spread()
 
 /obj/biomass/proc/Spread(var/direction = dir)
+	set background = 1
 	var/possibleDirsInt = 0
 
 	for(var/newDirection in cardinal)
@@ -99,6 +104,7 @@
 //		NewSpread()
 
 /obj/biomass/proc/NewSpread(maxDistance = 15)
+	set background = 1
 	for(var/turf/T in orange(1,src))
 		if(!IsValidBiomassLoc(T,src))
 			continue
@@ -107,6 +113,7 @@
 		starting.maxDistance = maxDistance
 
 /proc/IsValidBiomassLoc(turf/location,obj/biomass/source = null)
+	set background = 1
 	for(var/obj/biomass/biomass in location)
 		if(biomass != source)
 			return 0

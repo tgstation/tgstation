@@ -21,6 +21,7 @@
 	spreadChance = 0
 
 /obj/glowshroom/New()
+	set background = 1
 	..()
 
 	dir = CalcDir()
@@ -95,6 +96,7 @@
 		sleep(delay)
 
 /obj/glowshroom/proc/CalcDir(turf/location = loc)
+	set background = 1
 	var/direction = 16
 
 	for(var/wallDir in cardinal)
