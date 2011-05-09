@@ -95,10 +95,10 @@ KNIFE
 		M.weakened += 1
 		user.take_organ_damage(2)
 		if(prob(50))
-			//playsound(M, 'trayhit1.wav', 50, 1)
+			playsound(M, 'trayhit1.wav', 50, 1)
 			return
 		else
-			//playsound(M, 'trayhit2.wav', 50, 1) //sound playin'
+			playsound(M, 'trayhit2.wav', 50, 1) //sound playin'
 			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
 
 	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
