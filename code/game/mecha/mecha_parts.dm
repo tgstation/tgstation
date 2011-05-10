@@ -144,49 +144,49 @@
 
 /obj/item/mecha_parts/part/durand_torso
 	name="Durand Torso"
-	icon_state = "gygax_harness"
+	icon_state = "durand_harness"
 	origin_tech = "programming=2;materials=5;biotech=3"
 	construction_time = 300
 	construction_cost = list("metal"=55000,"glass"=20000,"silver"=10000)
 
 /obj/item/mecha_parts/part/durand_head
 	name="Durand Head"
-	icon_state = "gygax_head"
+	icon_state = "durand_head"
 	origin_tech = "programming=2;materials=5;magnets=3"
 	construction_time = 200
 	construction_cost = list("metal"=25000,"glass"=10000,"silver"=5000)
 
 /obj/item/mecha_parts/part/durand_left_arm
 	name="Durand Left Arm"
-	icon_state = "gygax_l_arm"
+	icon_state = "durand_l_arm"
 	origin_tech = "programming=2;materials=5"
 	construction_time = 200
 	construction_cost = list("metal"=35000,"silver"=5000)
 
 /obj/item/mecha_parts/part/durand_right_arm
 	name="Durand Right Arm"
-	icon_state = "gygax_r_arm"
+	icon_state = "durand_r_arm"
 	origin_tech = "programming=2;materials=5"
 	construction_time = 200
 	construction_cost = list("metal"=35000,"silver"=5000)
 
 /obj/item/mecha_parts/part/durand_left_leg
 	name="Durand Left Leg"
-	icon_state = "gygax_l_leg"
+	icon_state = "durand_l_leg"
 	origin_tech = "programming=2;materials=5"
 	construction_time = 200
 	construction_cost = list("metal"=40000,"silver"=5000)
 
 /obj/item/mecha_parts/part/durand_right_leg
 	name="Durand Right Leg"
-	icon_state = "gygax_r_leg"
+	icon_state = "durand_r_leg"
 	origin_tech = "programming=2;materials=5"
 	construction_time = 200
 	construction_cost = list("metal"=40000,"silver"=5000)
 
 /obj/item/mecha_parts/part/durand_armour
 	name="Durand Armour Plates"
-	icon_state = "gygax_armour"
+	icon_state = "durand_armour"
 	origin_tech = "materials=5;combat=4"
 	construction_time = 600
 	construction_cost = list("metal"=50000,"uranium"=10000)
