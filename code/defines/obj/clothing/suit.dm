@@ -180,6 +180,7 @@
 
 /obj/item/clothing/suit/armor
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/revolver,/obj/item/weapon/baton,/obj/item/weapon/handcuffs)
+	armor = list(melee = 80, bullet = 60, laser = 40, taser = 5, bomb = 0, bio = 10)
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"

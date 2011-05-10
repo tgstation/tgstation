@@ -133,6 +133,7 @@
 	icon_state = "helmet"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
 	item_state = "helmet"
+	armor = list(melee = 80, bullet = 60, laser = 40, taser = 5, bomb = 0)
 
 	protective_temperature = 500
 	heat_transfer_coefficient = 0.10

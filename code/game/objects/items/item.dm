@@ -201,7 +201,7 @@
 			if (M.mutations & COLD_RESISTANCE)
 				f_dam = 0
 			if (def_zone == "head")
-				if (b_dam && H.isarmored(affecting) && prob(80 - src.force))
+				if (b_dam && prob(H.isarmored(affecting, "melee") - src.force))
 					if (prob(20))
 						affecting.take_damage(power, 0)
 					else
@@ -246,7 +246,7 @@
 								user2.w_uniform.add_blood(H)
 				affecting.take_damage(b_dam, f_dam)
 			else if (def_zone == "chest" || def_zone == "groin")
-				if (b_dam && H.isarmored(affecting) && prob(90 - src.force))
+				if (b_dam && prob(H.isarmored(affecting, "melee") - src.force))
 					H.show_message("\red You have been protected from a hit to the [affecting.name].")
 					return
 				if (b_dam && ((istype(H.r_hand, /obj/item/weapon/shield/riot))) && prob(90 - src.force))
@@ -290,7 +290,7 @@
 									user2.w_uniform.add_blood(H)
 					affecting.take_damage(b_dam, f_dam)
 			else
-				if (b_dam && H.isarmored(affecting) && prob(80 - src.force))
+				if (b_dam && prob(H.isarmored(affecting, "melee") - src.force))
 					H.show_message("\red You have been protected from a hit to the [affecting.name].")
 					return
 				if (b_dam && prob(25 + (b_dam * 2)))

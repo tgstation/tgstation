@@ -216,21 +216,19 @@
 		if (safe)
 			return safe.bullet_act(flag, A)
 
-	var/armored = src.isarmored(affecting)
 
 	switch(flag)
 		if(PROJECTILE_BULLET)
 			var/d = 51
-			if (armored)
-				if (prob(70))
-					show_message("\red Your armor absorbs the hit!", 4)
-					return
-				else
-					if (prob(40))
-						show_message("\red Your armor only softens the hit!", 4)
-						if (prob(20))
-							d = d / 2
-						d = d / 4
+			if (prob(src.isarmored(affecting, "bullet")))
+				show_message("\red Your armor absorbs the hit!", 4)
+				return
+			else
+				if (prob(src.isarmored(affecting, "bullet")/2))
+					show_message("\red Your armor only softens the hit!", 4)
+					if (prob(20))
+						d = d / 2
+					d = d / 4
 				/*
 			else
 				if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
@@ -272,10 +270,9 @@
 					if(src.weakened <= 5)	src.weakened = 5
 			return
 		if(PROJECTILE_TASER)
-			if (armored)
-				if (prob(5))
-					show_message("\red Your armor absorbs the hit!", 4)
-					return
+			if (prob(src.isarmored(affecting, "taser")))
+				show_message("\red Your armor absorbs the hit!", 4)
+				return
 			/*else
 				if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
 					if (prob(70))
@@ -288,6 +285,9 @@
 			if (src.stuttering < 10)
 				src.stuttering = 10
 		if(PROJECTILE_DART)
+			if (prob(src.isarmored(affecting, "bio")))
+				show_message("\red Your armor absorbs the hit!", 4)
+				return
 			if (istype(src.l_hand, /obj/item/weapon/shield/riot)||istype(src.r_hand, /obj/item/weapon/shield/riot))
 				if (prob(50))
 					show_message("\red Your shield absorbs the hit!", 4)
@@ -296,16 +296,15 @@
 				src.toxloss += 10
 		if(PROJECTILE_LASER)
 			var/d = 20
-			if (armored)
-				if (prob(40))
-					show_message("\red Your armor absorbs the hit!", 4)
-					return
-				else
-					if (prob(40))
-						show_message("\red Your armor only softens the hit!", 4)
-						if (prob(20))
-							d = d / 2
+			if (prob(src.isarmored(affecting, "laser")))
+				show_message("\red Your armor absorbs the hit!", 4)
+				return
+			else
+				if (prob(src.isarmored(affecting, "laser")))
+					show_message("\red Your armor only softens the hit!", 4)
+					if (prob(20))
 						d = d / 2
+					d = d / 2
 			/*else
 				if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
 					if (prob(70))
@@ -329,16 +328,15 @@
 					src.stunned = 1
 		if(PROJECTILE_PULSE)
 			var/d = 40
-			if (istype(src.wear_suit, /obj/item/clothing/suit/armor))
-				if (prob(20))
-					show_message("\red Your armor absorbs the hit!", 4)
-					return
-				else
+			if (prob(src.isarmored(affecting, "laser")/2))
+				show_message("\red Your armor absorbs the hit!", 4)
+				return
+			else
+				if (prob(src.isarmored(affecting, "laser")/2))
+					show_message("\red Your armor only softens the hit!", 4)
 					if (prob(20))
-						show_message("\red Your armor only softens the hit!", 4)
-						if (prob(20))
-							d = d / 2
 						d = d / 2
+					d = d / 2
 			/*else
 				if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
 					if (prob(50))
@@ -357,6 +355,9 @@
 				if (prob(50))
 					src.stunned = min(src.stunned, 5)
 		if(PROJECTILE_BOLT)
+			if (prob(src.isarmored(affecting, "bio")))
+				show_message("\red Your armor absorbs the hit!", 4)
+				return
 			src.toxloss += 3
 			src.radiation += 100
 			src.updatehealth()
@@ -364,16 +365,15 @@
 			src.drowsyness += 5
 		if(PROJECTILE_WEAKBULLET)
 			var/d = 14
-			if (armored)
-				if (prob(70))
-					show_message("\red Your armor absorbs the hit!", 4)
-					return
-				else
-					if (prob(40))
-						show_message("\red Your armor only softens the hit!", 4)
-						if (prob(20))
-							d = d / 2
-						d = d / 4
+			if (prob(src.isarmored(affecting, "bullet")))
+				show_message("\red Your armor absorbs the hit!", 4)
+				return
+			else
+				if (prob(src.isarmored(affecting, "bullet")/2))
+					show_message("\red Your armor only softens the hit!", 4)
+					if (prob(20))
+						d = d / 2
+					d = d / 4
 			/*else
 				if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
 					if (prob(90))
@@ -2826,17 +2826,15 @@ It can still be worn/put on as normal.
 	src.updatehealth()
 	src.UpdateDamageIcon()
 
-/mob/living/carbon/human/proc/isarmored(var/datum/organ/external/def_zone)
+/mob/living/carbon/human/proc/isarmored(var/datum/organ/external/def_zone, var/type)
 	if(def_zone.name == "head")
-		if(src.head && istype(src.head,/obj/item/clothing/head/helmet))
+		if(src.head && istype(src.head,/obj/item/clothing))
 			if(def_zone.body_part & src.head.body_parts_covered)
-				return 1
-				//If targetting the head and there's a helmet there, armored.
+				return src.head.armor[type]
 	else
-		if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit/armor))
+		if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing))
 			if(def_zone.body_part & src.wear_suit.body_parts_covered)
-				return 1
-				//If wearing armor that covers the targetted bodypart, armored.
+				return src.wear_suit.armor[type]
 	return 0
 
 
