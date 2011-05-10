@@ -2558,7 +2558,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		icon_state = "jackhammer"
 		item_state = "jackhammer"
 		digspeed = 30
-		origin_tech = "materials=3; powerstorage=2"
+		origin_tech = "materials=3;powerstorage=2"
 		desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 
 	drill
@@ -2566,7 +2566,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		icon_state = "handdrill"
 		item_state = "jackhammer"
 		digspeed = 30
-		origin_tech = "materials=3; powerstorage=2"
+		origin_tech = "materials=3;powerstorage=2"
 		desc = "Yours is the drill that will pierce through the rock walls."
 
 	gold
@@ -2584,7 +2584,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		w_class = 3.0 //it is smaller than the pickaxe
 		force = 10.0 //Also, weaker
 		digspeed = 20
-		origin_tech = "materials=4; plasmatech=2"
+		origin_tech = "materials=4;plasmatech=2"
 		desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 
 	diamond
@@ -2600,7 +2600,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		icon_state = "diamonddrill"
 		item_state = "jackhammer"
 		digspeed = 0
-		origin_tech = "materials=6; powerstorage=4"
+		origin_tech = "materials=6;powerstorage=4"
 		desc = "Yours is the drill that will pierce the heavens!"
 
 /*****************************Shovel********************************/

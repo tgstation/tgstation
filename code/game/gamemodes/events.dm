@@ -337,7 +337,7 @@
 
 /proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 25) //leave lightsoutAmount as 0 to break ALL lights
 	if(isEvent)
-		command_alert("In order to help fight Space Global Warming and conserve power, the lighting will be deactivated in some areas. Thank you for your understanding.","Budget Cuts Alert")
+		command_alert("An Electrical storm has been detected in your area, please repair potential electronic overloads.","Electrical Storm Alert")
 
 	if(lightsoutAmount)
 		var/list/epicentreList = list()

@@ -25,7 +25,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 	var/obj/item/device/igniter/part3 = null
 	var/obj/item/weapon/tank/plasma/part4 = null
 	m_amt = 500
-	origin_tech = "combat=1; plasmatech=1"
+	origin_tech = "combat=1;plasmatech=1"
 
 
 // PantsNote: Dumping this shit in here until I'm sure it works.

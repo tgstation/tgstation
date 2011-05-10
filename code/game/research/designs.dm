@@ -920,7 +920,7 @@ datum
 		jackhammer
 			name = "Sonic Jackhammer"
 			desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
-			id = "pick_jackhammer"
+			id = "jackhammer"
 			req_tech = list("materials" = 3, "powerstorage" = 2)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 2000, "$glass" = 500, "$silver" = 500)
@@ -930,7 +930,7 @@ datum
 		drill
 			name = "Mining Drill"
 			desc = "Yours is the drill that will pierce through the rock walls."
-			id = "pick_jackhammer"
+			id = "drill"
 			req_tech = list("materials" = 3, "powerstorage" = 2)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 6000, "$glass" = 1000) //expensive, but no need for miners.
@@ -940,7 +940,7 @@ datum
 		plasmacutter
 			name = "Plasma Cutter"
 			desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-			id = "pick_plasmacutter"
+			id = "plasmacutter"
 			req_tech = list("materials" = 4, "plasmatech" = 2)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 1500, "$glass" = 500, "$gold" = 500, "$plasma" = 500)
