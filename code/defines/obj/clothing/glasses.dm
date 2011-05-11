@@ -59,11 +59,21 @@
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 
-/obj/item/clothing/glasses/healthscanner
+/obj/item/clothing/glasses/hud
+	name = "HUD"
+	desc = "A heads-up display that provides important info in (almost) real time."
+	flags = null //doesn't protect eyes because it's a monocle, duh
+
+/obj/item/clothing/glasses/hud/health
 	name = "Health Scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
-	icon_state = "healthscanner"
-	flags = null //doesn't protect eyes because it's a monocle, duh
+	icon_state = "healthhud"
+	var/list/icon/current = list() //the current hud icons
+
+/obj/item/clothing/glasses/hud/security
+	name = "Security HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status."
+	icon_state = "securityhud"
 	var/list/icon/current = list() //the current hud icons
 
 /proc/RoundHealth(health)

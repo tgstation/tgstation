@@ -746,7 +746,7 @@
 
 			if(client)
 				for(var/image/hud in client.images)
-					if(copytext(hud.icon_state,6) == "health") //ugly, but icon comparison is worse, I believe
+					if(copytext(hud.icon_state,4) == "hud") //ugly, but icon comparison is worse, I believe
 						del(hud)
 
 			if (src.stat == 2 || src.mutations & XRAY)
@@ -795,19 +795,45 @@
 				src.sight |= SEE_OBJS
 				if (!src.druggy)
 					src.see_invisible = 0
-			else if (istype(glasses, /obj/item/clothing/glasses/healthscanner))
+			else if (istype(glasses, /obj/item/clothing/glasses/hud/security))
+				if(client)
+					var/icon/tempHud = 'hud.dmi'
+					for(var/mob/living/carbon/human/perp in view(src))
+						if(perp.wear_id)
+							client.images += image(tempHud,perp,"hud[ckey(perp:wear_id:GetJobName())]")
+							for (var/datum/data/record/E in data_core.general)
+								var/perpname = "wot"
+								if(istype(perp.wear_id,/obj/item/weapon/card/id))
+									perpname = perp.wear_id:registered
+								else if(istype(perp.wear_id,/obj/item/device/pda))
+									var/obj/item/device/pda/tempPda = perp.wear_id
+									perpname = tempPda.owner
+								world << "[perpname]"
+								if (E.fields["name"] == perpname)
+									for (var/datum/data/record/R in data_core.security)
+										if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
+											client.images += image(tempHud,perp,"hudwanted")
+											break
+										else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
+											client.images += image(tempHud,perp,"hudprisoner")
+											break
+						else
+							client.images += image(tempHud,perp,"hudunknown")
+				if (!src.druggy)
+					src.see_invisible = 0
+			else if (istype(glasses, /obj/item/clothing/glasses/hud/health))
 				if(client)
 					var/icon/tempHud = 'hud.dmi'
 					for(var/mob/living/carbon/human/patient in view(src))
-						client.images += image(tempHud,patient,RoundHealth(patient.health))
+						client.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
 						if(patient.stat == 2)
-							client.images += image(tempHud,patient,"healthdead")
+							client.images += image(tempHud,patient,"huddead")
 						else if(patient.alien_egg_flag)
-							client.images += image(tempHud,patient,"healthxeno")
+							client.images += image(tempHud,patient,"hudxeno")
 						else if(patient.virus)
-							client.images += image(tempHud,patient,"healthill")
+							client.images += image(tempHud,patient,"hudill")
 						else
-							client.images += image(tempHud,patient,"healthy")
+							client.images += image(tempHud,patient,"hudhealthy")
 				if (!src.druggy)
 					src.see_invisible = 0
 

@@ -365,3 +365,20 @@
 				"Geneticist", "Scientist", "Head of Security", "Head of Personnel", "Atmospheric Technician",
 				"Chaplain", "Barman", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster",
 				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer", "Virologist", "Cargo Technician", "Chief Medical Officer")
+
+/obj/proc/GetJobName()
+	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
+		return
+
+	var/jobName
+
+	if(istype(src, /obj/item/device/pda))
+		if(src:id)
+			jobName = src:id:assignment
+	if(istype(src, /obj/item/weapon/card/id))
+		jobName = src:assignment
+
+	if(jobName in get_all_jobs())
+		return jobName
+	else
+		return "Unknown"
