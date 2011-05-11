@@ -347,6 +347,7 @@
 #include "code\game\jobs\access.dm"
 #include "code\game\jobs\jobprocs.dm"
 #include "code\game\jobs\jobs.dm"
+#include "code\game\jobs\whitelist.dm"
 #include "code\game\machinery\ai_slipper.dm"
 #include "code\game\machinery\airlock_control.dm"
 #include "code\game\machinery\alarm.dm"

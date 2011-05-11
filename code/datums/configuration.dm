@@ -35,6 +35,7 @@
 	var/hostedby = null
 	var/respawn = 1
 	var/guest_jobban = 1
+	var/usewhitelist = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
 
 	var/server
@@ -177,6 +178,9 @@
 
 			if ("guest_jobban")
 				config.guest_jobban = text2num(value)
+
+			if ("usewhitelist")
+				config.usewhitelist = 1
 
 			if ("dont_del_newmob")
 				config.del_new_on_log = 0

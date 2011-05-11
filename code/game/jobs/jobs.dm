@@ -31,3 +31,15 @@ var/list/occupations = list(
 
 var/list/assistant_occupations = list(
 	"Assistant")
+
+var/list/head_positions = list(
+	"Captain",
+	"Head of Personnel",
+	"Head of Security",
+	"Chief Engineer",
+	"Research Director",
+	"Chief Medical Officer",
+)
+
+/proc/is_important_job(var/job)
+	return (job in head_positions) || (job in list("AI", "Cyborg", "Warden", "Detective"))
