@@ -16,22 +16,26 @@ In the case that they are not, I imagine the game will run-time error like crazy
 /mob/proc/ninjacost(var/C = 0,var/X = 0)
 	var/mob/living/carbon/human/U = src
 	var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
-	if(U.stat||U.incorporeal_move&&X!=3)//Will not return if user is using an adrenaline booster since you can use them when stat==1.
+	if( (U.stat||U.incorporeal_move)&&X!=3 )//Will not return if user is using an adrenaline booster since you can use them when stat==1.
 		U << "\red You must be conscious and solid to do this."//It's not a problem of stat==2 since the ninja will explode anyway if they die.
 		return 1
-	else if(C==1&&S.cell.charge<C*10)
+	else if(C&&S.cell.charge<C*10)
 		U << "\red Not enough energy."
 		return 1
-	else if(X==1&&S.active)
-		U << "\red You must deactivate the CLOAK-tech device prior to using this ability."
-		return 1
-	else if(X==2&&S.sbombs<=0)
-		U << "\red There are no more smoke bombs remaining."
-		return 1
-	if(X==3&&S.aboost<=0)
-		U << "\red You do not have any more adrenaline boosters."
-		return 1
-	else	return (S.coold)//Returns the value of the variable which counts down to zero.
+	switch(X)
+		if(1)
+			if(S.active)
+				U << "\red You must deactivate the CLOAK-tech device prior to using this ability."
+				return 1
+		if(2)
+			if(S.sbombs<=0)
+				U << "\red There are no more smoke bombs remaining."
+				return 1
+		if(3)
+			if(S.aboost<=0)
+				U << "\red You do not have any more adrenaline boosters."
+				return 1
+	return (S.coold)//Returns the value of the variable which counts down to zero.
 
 //Smoke
 //Summons smoke in radius of user.

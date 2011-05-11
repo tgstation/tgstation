@@ -96,7 +96,8 @@ mob/proc/create_ninja()
 //AI COUNTER HACKING===================================
 
 //I've tried a lot of stuff but adding verbs to the AI while inside an object, inside another object, did not want to work properly.
-//This the best work-around I could come up with. Uses objects to then display to panel, based on the object spell system.
+//This is the best work-around I could come up with. Uses objects to then display to panel, based on the object spell system.
+//Can be added on to pretty easily.
 /obj/proc_holder/ai_hack_ninja//Generic proc holder to make sure the two verbs below work propely.
 	name = "Hack SpiderOS"
 	desc = "Hack directly into the Black Widow(tm) neuro-interface."
@@ -122,15 +123,14 @@ mob/proc/create_ninja()
 	A << browse(null, "window=hack spideros")//Close window
 	S.control = 1//Return control
 	A << "You have seized your hacking attempt. [S.affecting] has regained control."
-	S.affecting << "<b>UPDATE</b>: [A.real_name] has seized hacking attempt. All systems clear."
-	var/obj/proc_holder/ai_return_control/A_C = locate() in A
+	S.affecting << "<b>UPDATE</b>: [A.real_name] has ceased hacking attempt. All systems clear."
 	var/obj/proc_holder/ai_hack_ninja/B_C = locate() in A
-	A.proc_holder_list -= A_C
+	A.proc_holder_list -= src
 	A.proc_holder_list -= B_C
 	S.verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
 	S.verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
-	del(A_C)//First.
-	del(B_C)//Second, to keep the proc going.
+	del(B_C)//First, to keep the proc going.
+	del(src)
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/hack_spideros()
@@ -238,8 +238,6 @@ mob/proc/create_ninja()
 
 //DEBUG===================================
 
-//Apparently you cannot grant verbs to objects within objects. That is, the verbs won't be recognized.
-//That object/mob won't be able to grant/remove verbs either.
 /*
 /mob/verb/grant_object_panel()
 	set name = "Grant AI Ninja Verbs Debug"

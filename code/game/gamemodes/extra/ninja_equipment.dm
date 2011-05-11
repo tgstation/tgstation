@@ -73,7 +73,7 @@ ________________________________________________________________________________
 				U.bruteloss += 1
 			A = 200
 		cell.charge-=A
-		if(U.stat)//If the ninja falls down,
+		if(U.stat)//If the ninja falls down, they can still try and jaunt away or shift kill their opponent.
 			active=0
 		if(cell.charge<0)
 			if(kamikaze)
@@ -691,7 +691,7 @@ ________________________________________________________________________________
 												A.control_disabled = 0
 												spawn(40)
 													A << "Connection established and secured. Menu updated."
-													U << "\red <b>WARNING</b>: #%@!!WEL4P54@"
+													U << "\red <b>WARNING</b>: #%@!!WEL4P54@ \nUnABBBL3 TO LO-o-LOCAT2 ##$!ERNE0"
 													control = 0
 													var/obj/proc_holder/ai_return_control/A_C = new(A)
 													var/obj/proc_holder/ai_hack_ninja/B_C = new(A)
@@ -1212,7 +1212,7 @@ ________________________________________________________________________________
 /*
 HerpA:
 I'm not really sure what you want this to do.
-For now it will teleport people to the prison after 30 seconds.
+For now it will teleport people to the prison after 30 seconds. (Check the process() proc to change where teleport goes)
 It is possible to destroy the net by the occupant or someone else.
 The sprite for the net is kind of ugly but I couldn't come up with a better one.
 */
@@ -1352,7 +1352,7 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 
 		M.loc = pick(prisonwarp)//Throw mob in prison.
 		invisibility = 101//Make the net invisible so all the animations can play out.
-		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, while() is running.
+		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
 
 		spawn(0)
 			var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
