@@ -34,6 +34,7 @@ ________________________________________________________________________________
 
 /obj/item/clothing/suit/space/space_ninja/proc/killai(var/mob/living/silicon/ai/A as mob)
 	A << "\red Self-destruct protocol dete-- *bzzzzz*"
+	A << browse(null, "window=hack spideros")
 	A.death()//Kill
 	A.ghostize()//Turn into ghost
 	del(AI)
@@ -72,19 +73,23 @@ ________________________________________________________________________________
 				U.bruteloss += 1
 			A = 200
 		cell.charge-=A
+		if(U.stat)//If the ninja falls down,
+			active=0
 		if(cell.charge<0)
 			if(kamikaze)
 				U.say("I DIE TO LIVE AGAIN!")
+				U << browse(null, "window=spideros")//Just in case.
 				U.death()
 				return
 			cell.charge=0
 			active=0
 		sleep(10)//Checks every second.
 
+
 /obj/item/clothing/suit/space/space_ninja/proc/init()
 	set name = "Initialize Suit"
 	set desc = "Initializes the suit for field operation."
-	set category = "Object"
+	set category = "Ninja Equip"
 
 	var/mob/living/carbon/human/U = usr
 	if(U.mind&&U.mind.special_role=="Space Ninja"&&U:wear_suit==src&&!initialize)
@@ -170,14 +175,12 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/deinit()
 	set name = "De-Initialize Suit"
 	set desc = "Begins procedure to remove the suit."
-	set category = "Object"
+	set category = "Ninja Equip"
 
 	if(!initialize)
 		usr << "\red The suit is not initialized."
 		return
 	if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
-		return
-	if(!verbs.Find(/obj/item/clothing/suit/space/space_ninja/proc/spideros))//If the guy engaged kamikaze after clicking on deinit.
 		return
 
 	var/mob/living/carbon/human/U = affecting
@@ -269,7 +272,8 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/spideros()
 	set name = "Display SpiderOS"
 	set desc = "Utilize built-in computer system."
-	set category = "Object"
+	set category = "Ninja Equip"
+	//set src in view()//To have it show up after AI gives back control.
 
 	if(!affecting)	return//If no mob is wearing the suit. I almost forgot about this variable.
 	var/mob/living/carbon/human/U = affecting
@@ -520,14 +524,14 @@ ________________________________________________________________________________
 			if("Stealth")
 				if(active)
 					spawn(0)
-						anim(U.loc,'mob.dmi',U,"uncloak")
+						anim(U.loc,U,'mob.dmi',,"uncloak")
 					active=0
 					U << "\blue You are now visible."
 					for(var/mob/O in oviewers(U, null))
 						O << "[U.name] appears from thin air!"
 				else
 					spawn(0)
-						anim(U.loc,'mob.dmi',U,"cloak")
+						anim(U.loc,U,'mob.dmi',,"cloak")
 					active=1
 					U << "\blue You are now invisible to normal detection."
 					for(var/mob/O in oviewers(U, null))
@@ -566,7 +570,7 @@ ________________________________________________________________________________
 				P.overlays += image('pda.dmi', "pda-r")
 			if("Unlock Kamikaze")
 				if(input(U)=="Divine Wind")
-					if( !(U.stat||U.wear_suit!=src||!initialize) )
+					if( !(U.stat||U.wear_suit!=src||!initialize||cell.charge<=1) )
 						U << "\blue Engaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>"
 						verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
 						sleep(40)
@@ -663,39 +667,74 @@ ________________________________________________________________________________
 					U << browse(null, "window=spideros")
 					return
 				if(confirm == "Yes")
-					if(A.laws_object.zeroth)
-						A << "\red <b>WARNING</b>: \black purge procedure detected. \n Now hacking host..."
-						A.control_disabled = 0
+					if(A.laws_object.zeroth)//Gives a few seconds to re-upload the AI somewhere before it takes full control.
+						A << "\red <b>WARNING</b>: \black purge procedure detected. \nNow hacking host..."
 						U << "\red <b>WARNING</b>: HACKING ATT--TEMPT IN PR0GRESsS!"
 						spideros = 0
 						unlock = 0
-						active = 0
-						control = 0
-						verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
-						verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
-						A.verbs += /mob/living/silicon/ai/proc/ninja_spideros
-						A.verbs += /mob/living/silicon/ai/proc/ninja_return_control
 						U << browse(null, "window=spideros")
+						spawn(40)//Unlimited window spawn works!
+							if(AI==A)
+								A << "Disconnecting neural interface..."
+								U << "\red <b>WARNING</b>: PRO0GRE--S 2&3%"
+								verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
+								verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
+								spawn(40)
+									if(AI==A)
+										A << "Shutting down external protocol..."
+										U << "\red <b>WARNING</b>: PPPFRRROGrESS 677^%"
+										active = 0
+										spawn(40)
+											if(AI==A)
+												A << "Connecting to kernel..."
+												U << "\red <b>WARNING</b>: ER-RR04"
+												A.control_disabled = 0
+												spawn(40)
+													A << "Connection established and secured. Menu updated."
+													U << "\red <b>WARNING</b>: #%@!!WEL4P54@"
+													control = 0
+													var/obj/proc_holder/ai_return_control/A_C = new(A)
+													var/obj/proc_holder/ai_hack_ninja/B_C = new(A)
+													A.proc_holder_list += A_C
+													A.proc_holder_list += B_C
+											else
+												U << "\blue Hacking attempt disconnected. Resuming normal operation."
+												verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+												verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+									else
+										U << "\blue Hacking attempt disconnected. Resuming normal operation."
+										verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+										verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+							else
+								U << "\blue Hacking attempt disconnected. Resuming normal operation."
 						return
 					else
 						flush = 1
 						A.suiciding = 1
 						A << "Your core files are being purged! This is the end..."
+						spawn(0)
+							spideros()//To refresh the screen and let this finish.
 						while (A.stat != 2)
 							A.oxyloss += 2
 							A.updatehealth()
 							sleep(10)
 						killai(A)
+						flush = 0
 			if("Wireless AI")
 				var/mob/living/silicon/ai/A = locate(href_list["target"])
 				A.control_disabled = !A.control_disabled
 				A << "AI wireless has been [A.control_disabled ? "disabled" : "enabled"]."
 
 		spideros()//Refreshes the screen by calling it again (which replaces current screen with new screen).
+
 	else//If they are not in control.
 		var/mob/living/silicon/ai/AI = usr
-
 		//While AI has control, the person can't take off the suit so checking here would be moot.
+		if(isnull(src))//If they AI dies/suit destroyed.
+			AI << browse(null, "window=hack spideros")
+			return
+
+		var/obj/proc_holder/ai_hack_ninja/ninja_spideros = locate() in AI//What is the object granting access to proc? Find it.
 
 		switch(href_list["choice"])
 			if("Close")
@@ -706,13 +745,13 @@ ________________________________________________________________________________
 				if(spideros<=9)
 					spideros=0
 				else
-					spideros = round(spideros/10)//Best way to do this, flooring to nearest integer. As an example, another way of doing it is attached below:
-			if("Shock")
+					spideros = round(spideros/10)
+			if("Shock")//DEBUG TEST
 				var/damage = min(cell.charge, rand(50,150))//Uses either the current energy left over or between 50 and 150.
-				cell.charge -= damage
 				if(damage>1)//So they don't spam it when energy is a factor.
 					spark_system.start()//SPARKS THERE SHALL BE SPARKS
-					U.electrocute_act(damage, src, 0.1)
+					U.electrocute_act(damage, src,0.1,1)//The last argument is a safety for the human proc that checks for gloves.
+					cell.charge -= damage
 				else
 					AI << "\red <b>ERROR</b>: \black Not enough energy remaining."
 			if("0")//Menus are numbers, see note above. 0 is the hub.
@@ -734,7 +773,7 @@ ________________________________________________________________________________
 					return
 				if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
 					AI << "\red Error: unable to deliver message."
-					AI.ninja_spideros()
+					ninja_spideros.Click()
 					return
 				P.tnote += "<i><b>&larr; From [AI]:</b></i><br>[t]<br>"//Oh ai, u so silly
 				if (!P.silent)
@@ -779,10 +818,10 @@ ________________________________________________________________________________
 					U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 			if("Radium")
 				if((reagents.get_reagent_amount("radium"))<=60)//Special case. If there are only 60 radium units left.
-					AI << "\red Error: the suit cannot perform this function. Out of spaceacillin."
+					AI << "\red Error: the suit cannot perform this function. Out of radium."
 				else
 					reagents.reaction(U, 2)
-					reagents.trans_id_to(U, "spaceacillin", transfera)
+					reagents.trans_id_to(U, "radium", transfera)
 					AI << "Injecting..."
 					U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 			if("Nutriment")
@@ -793,7 +832,7 @@ ________________________________________________________________________________
 					reagents.trans_id_to(U, "nutriment", 5)
 					AI << "Injecting..."
 					U << "You feel a tiny prick and a sudden rush of substance in to your veins."
-		AI.ninja_spideros()//Calls spideros for AI.
+		ninja_spideros.Click()//Calls spideros for AI.
 	return
 
 /obj/item/clothing/suit/space/space_ninja/examine()
@@ -819,7 +858,7 @@ ________________________________________________________________________________
 /obj/item/clothing/gloves/space_ninja/proc/toggled()
 	set name = "Toggle Interaction"
 	set desc = "Toggles special interaction on or off."
-	set category = "Object"
+	set category = "Ninja Equip"
 	if(!candrain)
 		candrain=1
 		usr << "You enable special interaction."
@@ -832,7 +871,7 @@ ________________________________________________________________________________
 /obj/item/clothing/gloves/space_ninja/proc/drain_wire()
 	set name = "Drain From Wire"
 	set desc = "Drain energy directly from an exposed wire."
-	set category = "Object"
+	set category = "Ninja Equip"
 
 	var/obj/cable/attached
 	var/mob/living/carbon/human/U = usr
@@ -1089,7 +1128,7 @@ ________________________________________________________________________________
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev()
 	set name = "Toggle Voice"
 	set desc = "Toggles the voice synthesizer on or off."
-	set category = "Object"
+	set category = "Ninja Equip"
 	var/vchange = (alert("Would you like to synthesize a new name or turn off the voice synthesizer?",,"New Name","Turn Off"))
 	if(vchange=="New Name")
 		var/chance = rand(1,100)
@@ -1132,7 +1171,7 @@ ________________________________________________________________________________
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm()
 	set name = "Switch Mode"
 	set desc = "Switches between Night Vision, Meson, or Thermal vision modes."
-	set category = "Object"
+	set category = "Ninja Equip"
 	//Have to reset these manually since life.dm is retarded like that. Go figure.
 	switch(mode)
 		if(1)
@@ -1299,7 +1338,7 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 		check--
 		sleep(10)
 
-	if(isnull(M))//If mob is gone.
+	if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 		if(!isnull(master))//As long as they still exist.
 			master << "\red <b>ERROR</b>: \black unable to locate [affecting]. Procedure terminated."
 		del(src)//Get rid of the net.
@@ -1309,9 +1348,11 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 		//No need to check for countdown here since while() broke, it's implicit that it finished.
 		spawn(0)
 			playsound(M.loc, 'sparks4.ogg', 50, 1)
-			anim(M.loc,'mob.dmi',M,"phaseout")
+			anim(M.loc,M,'mob.dmi',,"phaseout")
 
 		M.loc = pick(prisonwarp)//Throw mob in prison.
+		invisibility = 101//Make the net invisible so all the animations can play out.
+		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, while() is running.
 
 		spawn(0)
 			var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
@@ -1319,7 +1360,7 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 			spark_system.start()
 			playsound(M.loc, 'Deconstruct.ogg', 50, 1)
 			playsound(M.loc, 'sparks2.ogg', 50, 1)
-			anim(M.loc,'mob.dmi',M,"phasein")
+			anim(M.loc,M,'mob.dmi',,"phasein")
 			del(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 
 		for(var/mob/O in viewers(src, 3))

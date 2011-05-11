@@ -13,13 +13,13 @@ In the case that they are not, I imagine the game will run-time error like crazy
 */
 
 //Cooldown ticks off each second based on the suit recharge proc, in seconds. Default of 1 seconds. Some abilities have no cool down.
-/mob/proc/ninjacost(var/C as num,var/X as num)
+/mob/proc/ninjacost(var/C = 0,var/X = 0)
 	var/mob/living/carbon/human/U = src
 	var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
-	if(U.stat||U.incorporeal_move)
-		U << "\red You must be conscious and solid to do this."
+	if(U.stat||U.incorporeal_move&&X!=3)//Will not return if user is using an adrenaline booster since you can use them when stat==1.
+		U << "\red You must be conscious and solid to do this."//It's not a problem of stat==2 since the ninja will explode anyway if they die.
 		return 1
-	else if(C&&S.cell.charge<C*10)
+	else if(C==1&&S.cell.charge<C*10)
 		U << "\red Not enough energy."
 		return 1
 	else if(X==1&&S.active)
@@ -28,7 +28,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 	else if(X==2&&S.sbombs<=0)
 		U << "\red There are no more smoke bombs remaining."
 		return 1
-	else if(X==3&&S.aboost<=0)
+	if(X==3&&S.aboost<=0)
 		U << "\red You do not have any more adrenaline boosters."
 		return 1
 	else	return (S.coold)//Returns the value of the variable which counts down to zero.
@@ -39,7 +39,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 /mob/proc/ninjasmoke()
 	set name = "Smoke Bomb"
 	set desc = "Blind your enemies momentarily with a well-placed smoke bomb."
-	set category = "Ninja"
+	set category = "Ninja Ability"
 
 	if(!ninjacost(,2))
 		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
@@ -57,7 +57,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 /mob/proc/ninjajaunt()
 	set name = "Phase Jaunt (10E)"
 	set desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
-	set category = "Ninja"
+	set category = "Ninja Ability"
 
 	var/C = 100
 	if(!ninjacost(C,1))
@@ -107,20 +107,36 @@ In the case that they are not, I imagine the game will run-time error like crazy
 			picked = pick(turfs)
 			spawn(0)
 				playsound(loc, "sparks", 50, 1)
-				anim(mobloc,'mob.dmi',src,"phaseout")
+				anim(mobloc,src,'mob.dmi',,"phaseout")
 
+			if(istype(get_active_hand(),/obj/item/weapon/grab))//Handles grabbed persons.
+				var/obj/item/weapon/grab/G = get_active_hand()
+				G.affecting.loc = locate(picked.x+rand(-1,1),picked.y+rand(-1,1),picked.z)//variation of position.
+			if(istype(get_inactive_hand(),/obj/item/weapon/grab))
+				var/obj/item/weapon/grab/G = get_inactive_hand()
+				G.affecting.loc = locate(picked.x+rand(-1,1),picked.y+rand(-1,1),picked.z)//variation of position.
 			loc = picked
 
 			spawn(0)
 				S.spark_system.start()
 				playsound(loc, 'Deconstruct.ogg', 50, 1)
 				playsound(loc, "sparks", 50, 1)
-				anim(loc,'mob.dmi',src,"phasein")
+				anim(loc,src,'mob.dmi',,"phasein")
 
-			spawn(0)//Any living mobs in teleport area are gibbed.
+			spawn(0)//Any living mobs in teleport area are gibbed. Added some more types.
 				for(var/mob/living/M in picked)
 					if(M==src)	continue
-					M.gib()
+					spawn(0)
+						M.gib()
+				for(var/obj/mecha/M in picked)
+					spawn(0)
+						M.take_damage(100, "brute")
+				for(var/obj/alien/facehugger/M in picked)//These really need to be mobs.
+					spawn(0)
+						M.death()
+				for(var/obj/livestock/M in picked)
+					spawn(0)
+						M.gib()
 			S.coold = 1
 			S.cell.charge-=(C*10)
 		else
@@ -141,20 +157,36 @@ In the case that they are not, I imagine the game will run-time error like crazy
 			var/turf/mobloc = get_turf(loc)
 			spawn(0)
 				playsound(loc, 'sparks4.ogg', 50, 1)
-				anim(mobloc,'mob.dmi',src,"phaseout")
+				anim(mobloc,src,'mob.dmi',,"phaseout")
 
+			if(istype(get_active_hand(),/obj/item/weapon/grab))//Handles grabbed persons.
+				var/obj/item/weapon/grab/G = get_active_hand()
+				G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
+			if(istype(get_inactive_hand(),/obj/item/weapon/grab))
+				var/obj/item/weapon/grab/G = get_inactive_hand()
+				G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
 			loc = T
 
 			spawn(0)
 				S.spark_system.start()
 				playsound(loc, 'Deconstruct.ogg', 50, 1)
 				playsound(loc, 'sparks2.ogg', 50, 1)
-				anim(loc,'mob.dmi',src,"phasein")
+				anim(loc,src,'mob.dmi',,"phasein")
 
 			spawn(0)//Any living mobs in teleport area are gibbed.
 				for(var/mob/living/M in T)
 					if(M==src)	continue
-					M.gib()
+					spawn(0)
+						M.gib()
+				for(var/obj/mecha/M in T)
+					spawn(0)
+						M.take_damage(100, "brute")
+				for(var/obj/alien/facehugger/M in T)//These really need to be mobs.
+					spawn(0)
+						M.death()
+				for(var/obj/livestock/M in T)
+					spawn(0)
+						M.gib()
 			S.coold = 1
 			S.cell.charge-=(C*10)
 		else
@@ -166,7 +198,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 /mob/proc/ninjapulse()
 	set name = "EM Burst (25E)"
 	set desc = "Disable any nearby technology with a electro-magnetic pulse."
-	set category = "Ninja"
+	set category = "Ninja Ability"
 
 	var/C = 250
 	if(!ninjacost(C,1))
@@ -182,7 +214,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 /mob/proc/ninjablade()
 	set name = "Energy Blade (5E)"
 	set desc = "Create a focused beam of energy in your active hand."
-	set category = "Ninja"
+	set category = "Ninja Ability"
 
 	var/C = 50
 	if(!ninjacost(C))
@@ -214,7 +246,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 /mob/proc/ninjastar()
 	set name = "Energy Star (3E)"
 	set desc = "Launches an energy star at a random living target."
-	set category = "Ninja"
+	set category = "Ninja Ability"
 
 	var/C = 30
 	if(!ninjacost(C))
@@ -254,18 +286,25 @@ In the case that they are not, I imagine the game will run-time error like crazy
 	var/C = 200
 	if(!ninjacost(C))
 		if(!locate(/obj/effects/energy_net) in M.loc.contents)//Check if they are already being affected by an energy net.
-			var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
-			M.stunned += 10//So they are stunned initially but conscious.
-			var/obj/effects/energy_net/E = new /obj/effects/energy_net(M.loc)
-			E.layer = M.layer+1//To have it appear one layer above the mob.
-			M.anchored = 1//Anchors them so they can't move.
-			for(var/mob/O in viewers(src, 3))
-				O.show_message(text("\red [] caught [] with an energy net!", src, M), 1)
-			E.affecting = M
-			E.master = src
-			spawn(0)//Parallel processing.
-				E.process(M)
-			S.cell.charge-=(C*10)
+			if(M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
+				for(var/turf/T in getline(loc, M.loc))
+					if(T==loc||T==M.loc)	continue
+					spawn(0)
+						anim(T,M,'projectiles.dmi',"energy",,,get_dir_to(loc,M.loc))
+				var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
+				M.anchored = 1//Anchors them so they can't move.
+				say("Get over here!")
+				var/obj/effects/energy_net/E = new /obj/effects/energy_net(M.loc)
+				E.layer = M.layer+1//To have it appear one layer above the mob.
+				for(var/mob/O in viewers(src, 3))
+					O.show_message(text("\red [] caught [] with an energy net!", src, M), 1)
+				E.affecting = M
+				E.master = src
+				spawn(0)//Parallel processing.
+					E.process(M)
+				S.cell.charge-=(C*10)
+			else
+				src << "They will bring no honor to your Clan!"
 	return
 
 //Adrenaline Boost
@@ -274,9 +313,9 @@ In the case that they are not, I imagine the game will run-time error like crazy
 /mob/proc/ninjaboost()
 	set name = "Adrenaline Boost"
 	set desc = "Inject a secret chemical that will counteract all movement-impairing effects."
-	set category = "Ninja"
+	set category = "Ninja Ability"
 
-	if(!ninjacost(,3))
+	if(!ninjacost(,3))//Have to make sure stat is not counted for this ability.
 		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
 		//Wouldn't need to track adrenaline boosters if there was a miracle injection to get rid of paralysis and the like instantly.
 		//For now, adrenaline boosters ARE the miracle injection. Well, radium, really.
@@ -288,7 +327,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 		spawn(70)
 			S.reagents.reaction(src, 2)
 			S.reagents.trans_id_to(src, "radium", S.transfera)
-			src << "\red You are beginning to feal the after-effects of the injection."
+			src << "\red You are beginning to feel the after-effects of the injection."
 		S.aboost--
 		S.coold = 3
 	return
@@ -302,7 +341,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 /mob/proc/ninjawalk()
 	set name = "Shadow Walk"
 	set desc = "Combines the VOID-shift and CLOAK-tech devices to freely move between solid matter. Toggle on or off."
-	set category = "Ninja"
+	set category = "Ninja Ability"
 
 	if(!usr.incorporeal_move)
 		incorporeal_move = 2
@@ -319,7 +358,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 /mob/proc/ninjaslayer()
 	set name = "Phase Slayer"
 	set desc = "Utilizes the internal VOID-shift device to mutilate creatures in a straight line."
-	set category = "Ninja"
+	set category = "Ninja Ability"
 
 	if(!ninjacost())
 		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
@@ -355,7 +394,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 			var/turf/picked = locate(locx,locy,mobloc.z)
 			spawn(0)
 				playsound(loc, "sparks", 50, 1)
-				anim(mobloc,'mob.dmi',src,"phaseout")
+				anim(mobloc,src,'mob.dmi',,"phaseout")
 
 			spawn(0)
 				for(var/turf/T in getline(mobloc, picked))
@@ -364,9 +403,18 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 							if(M==src)	continue
 							spawn(0)
 								M.gib()
+						for(var/obj/mecha/M in T)
+							spawn(0)
+								M.take_damage(100, "brute")
+						for(var/obj/alien/facehugger/M in T)//These really need to be mobs.
+							spawn(0)
+								M.death()
+						for(var/obj/livestock/M in T)
+							spawn(0)
+								M.gib()
 					if(T==mobloc||T==picked)	continue
 					spawn(0)
-						anim(T,'mob.dmi',src,"phasein")
+						anim(T,src,'mob.dmi',,"phasein")
 
 			loc = picked
 
@@ -374,7 +422,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 				S.spark_system.start()
 				playsound(loc, 'Deconstruct.ogg', 50, 1)
 				playsound(loc, "sparks", 50, 1)
-				anim(loc,'mob.dmi',src,"phasein")
+				anim(loc,src,'mob.dmi',,"phasein")
 			S.coold = 1
 		else
 			src << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
@@ -385,7 +433,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 /mob/proc/ninjamirage()
 	set name = "Spider Mirage"
 	set desc = "Utilizes the internal VOID-shift device to create decoys and teleport behind a random target."
-	set category = "Ninja"
+	set category = "Ninja Ability"
 
 	if(!ninjacost())//Simply checks for stat.
 		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
@@ -428,14 +476,14 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 				var/turf/picked = locate(locx,locy,mobloc.z)
 				spawn(0)
 					playsound(loc, "sparks", 50, 1)
-					anim(mobloc,'mob.dmi',src,"phaseout")
+					anim(mobloc,src,'mob.dmi',,"phaseout")
 
 				spawn(0)
 					var/limit = 4
 					for(var/turf/T in oview(5))
 						if(prob(20))
 							spawn(0)
-								anim(T,'mob.dmi',src,"phasein")
+								anim(T,src,'mob.dmi',,"phasein")
 							limit--
 						if(limit<=0)	break
 
@@ -446,7 +494,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 					S.spark_system.start()
 					playsound(loc, 'Deconstruct.ogg', 50, 1)
 					playsound(loc, "sparks", 50, 1)
-					anim(loc,'mob.dmi',src,"phasein")
+					anim(loc,src,'mob.dmi',,"phasein")
 				S.coold = 1
 			else
 				src << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."

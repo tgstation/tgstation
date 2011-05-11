@@ -365,6 +365,22 @@
 	if(degree < 315)	return WEST
 	return NORTH|WEST
 
+//Returns direction that the mob or whomever should be facing in relation to the target.
+//This proc does not grant absolute direction and is mostly useful for 8dir sprite positioning.
+//I personally used it with getline() to great effect.
+/proc/get_dir_to(var/turf/start as turf,var/turf/end as turf)//N
+	var/xdiff = start.x - end.x//The sign is important.
+	var/ydiff = start.y - end.y
+
+	var/direction_x = xdiff<1 ? 4:8//East - west
+	var/direction_y = ydiff<1 ? 1:2//North - south
+	var/direction_xy = xdiff==0 ? -4:0//If x is the same, subtract 4.
+	var/direction_yx = ydiff==0 ? -1:0//If y is the same, subtract 1.
+	var/direction_f = direction_x+direction_y+direction_xy+direction_yx//Finally direction tally.
+	direction_f = direction_f==0 ? 1:direction_f//If direction is 0(same spot), return north. Otherwise, direction.
+
+	return direction_f
+
 /proc/angle2text(var/degree)
 	return dir2text(angle2dir(degree))
 
@@ -519,7 +535,11 @@
 
 /proc/ainame(var/mob/M as mob)
 	var/randomname = M.name
+	var/time_passed = world.time//Pretty basic but it'll do. It's still possible to bypass this by return ainame().
 	var/newname = input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)
+	if((world.time-time_passed)>200)//If more than 20 game seconds passed.
+		M << "You took too long to decide. Default name selected."
+		return
 
 	if (length(newname) == 0)
 		newname = randomname
@@ -885,21 +905,22 @@ proc/GaussRand(var/sigma)
 proc/GaussRandRound(var/sigma,var/roundto)
 	return round(GaussRand(sigma),roundto)
 
-proc/anim(a,b,c,d,e)
-//a is location, b is animation icon, c is the layer, d is the flick animation, e is sleep time (optional).
-//Make sure that c actually has a layer or the game will run time error.
-	var/atom/movable/overlay/animation = new(a)
-	animation.icon = b
-	animation.icon_state = "blank"
-	animation.layer = c:layer+1//++ won't work right here.
-	animation.master = a
-	flick(d, animation)
-	if(e)
-		sleep(e)
+proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,flick_anim as text,sleeptime = 0,direction as num)
+//This proc throws up either an icon or an animation for a specified amount of time.
+//The variables should be apparent enough.
+	var/atom/movable/overlay/animation = new(location)
+	if(direction)
+		animation.dir = direction
+	animation.icon = a_icon
+	animation.layer = target:layer+1
+	if(a_icon_state)
+		animation.icon_state = a_icon_state
 	else
-		sleep(15)
+		animation.icon_state = "blank"
+		animation.master = target
+		flick(flick_anim, animation)
+	sleep(max(sleeptime, 15))
 	del(animation)
-
 
 //returns list element or null. Should prevent "index out of bounds" error.
 proc/listgetindex(var/list/list,index)

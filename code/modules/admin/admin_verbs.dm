@@ -1409,7 +1409,7 @@
 	set category = "Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
-	var/obj/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") in spells
+	var/obj/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") in spells
 	T.spell_list += new S
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE

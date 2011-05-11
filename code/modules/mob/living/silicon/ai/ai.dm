@@ -8,6 +8,9 @@
 	anchored = 1
 	canmove = 0
 	src.loc = loc
+
+	proc_holder_list = new()
+
 	if(L)
 		if (istype(L, /datum/ai_laws))
 			laws_object = L
@@ -68,6 +71,10 @@
 			stat(null, text("System integrity: [(src.health+100)/2]%"))
 		else
 			stat(null, text("Systems nonfunctional"))
+
+	if (proc_holder_list.len)//Generic list for proc_holder objects.
+		for(var/obj/proc_holder/P in proc_holder_list)
+			statpanel("[P.panel]","",P)
 
 /mob/living/silicon/ai/proc/ai_alerts()
 	set category = "AI Commands"

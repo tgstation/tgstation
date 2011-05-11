@@ -12,6 +12,7 @@
 
 		//For ninjas exploding when they die./N
 		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:initialize)
+			src << browse(null, "window=spideros")//Just in case.
 			var/location = loc
 			explosion(location, 1, 2, 3, 4)
 		//src.flags = 0

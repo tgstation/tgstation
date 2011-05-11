@@ -1,4 +1,4 @@
-/obj/spell/targeted/turf_teleport
+/obj/proc_holder/spell/targeted/turf_teleport
 	name = "Turf Teleport"
 	desc = "This spell teleports the target to the turf in range."
 
@@ -8,7 +8,7 @@
 	var/include_space = 0 //whether it includes space tiles in possible teleport locations
 	var/include_dense = 0 //whether it includes dense tiles in possible teleport locations
 
-/obj/spell/targeted/turf_teleport/cast(list/targets)
+/obj/proc_holder/spell/targeted/turf_teleport/cast(list/targets)
 	for(var/mob/target in targets)
 		var/list/turfs = new/list()
 		for(var/turf/T in range(target,outer_tele_radius))

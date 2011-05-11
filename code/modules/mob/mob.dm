@@ -1744,12 +1744,12 @@ proc/isobserver(A)
 						var/limit = 2//For only two trailing shadows.
 						for(var/turf/T in getline(mobloc, mob.loc))
 							spawn(0)
-								anim(T,'mob.dmi',mob,"shadow")
+								anim(T,mob,'mob.dmi',,"shadow")
 							limit--
 							if(limit<=0)	break
 				else
 					spawn(0)
-						anim(mobloc,'mob.dmi',mob,"shadow")
+						anim(mobloc,mob,'mob.dmi',,"shadow")
 					mob.loc = get_step(mob, direct)
 				mob.dir = direct
 		return
@@ -2131,9 +2131,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		//if (master_controller)
 		//	stat(null, "Loop: [master_controller.loop_freq]")
 
-	if (src.spell_list.len)
+	if (spell_list.len)
 
-		for(var/obj/spell/S in src.spell_list)
+		for(var/obj/proc_holder/spell/S in src.spell_list)
 			switch(S.charge_type)
 				if("recharge")
 					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)

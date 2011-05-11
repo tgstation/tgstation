@@ -1,4 +1,4 @@
-/obj/spell/aoe_turf/knock
+/obj/proc_holder/spell/aoe_turf/knock
 	name = "Knock"
 	desc = "This spell opens nearby doors and does not require wizard garb."
 
@@ -9,7 +9,7 @@
 	invocation_type = "whisper"
 	range = 3
 
-/obj/spell/aoe_turf/knock/cast(list/targets)
+/obj/proc_holder/spell/aoe_turf/knock/cast(list/targets)
 	for(var/turf/T in targets)
 		for(var/obj/machinery/door/door in T.contents)
 			spawn(1)

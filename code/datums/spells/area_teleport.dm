@@ -1,11 +1,11 @@
-/obj/spell/targeted/area_teleport
+/obj/proc_holder/spell/targeted/area_teleport
 	name = "Area teleport"
 	desc = "This spell teleports you to a type of area of your selection."
 
 	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
 	var/invocation_area = 1 //if the invocation appends the selected area
 
-/obj/spell/targeted/area_teleport/perform(list/targets, recharge = 1)
+/obj/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1)
 	var/thearea = before_cast(targets)
 	if(!thearea || !cast_check(1))
 		revert_cast()
@@ -17,7 +17,7 @@
 	cast(targets,thearea)
 	after_cast(targets)
 
-/obj/spell/targeted/area_teleport/before_cast(list/targets)
+/obj/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)
 	var/A = null
 
 	if(!randomise_selection)
@@ -29,7 +29,7 @@
 
 	return thearea
 
-/obj/spell/targeted/area_teleport/cast(list/targets,area/thearea)
+/obj/proc_holder/spell/targeted/area_teleport/cast(list/targets,area/thearea)
 	for(var/mob/target in targets)
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
@@ -46,7 +46,7 @@
 
 	return
 
-/obj/spell/targeted/area_teleport/invocation(area/chosenarea = null)
+/obj/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null)
 	if(!invocation_area || !chosenarea)
 		..()
 	else

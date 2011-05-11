@@ -1,4 +1,4 @@
-/obj/spell/targeted/ethereal_jaunt
+/obj/proc_holder/spell/targeted/ethereal_jaunt
 	name = "Ethereal Jaunt"
 	desc = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
 
@@ -12,7 +12,7 @@
 
 	var/jaunt_duration = 50 //in deciseconds
 
-/obj/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
+/obj/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	for(var/mob/target in targets)
 		spawn(0)
 			var/mobloc = get_turf(target.loc)

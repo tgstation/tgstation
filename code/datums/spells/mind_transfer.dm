@@ -1,4 +1,4 @@
-/obj/spell/targeted/mind_transfer
+/obj/proc_holder/spell/targeted/mind_transfer
 	name = "Mind Transfer"
 	desc = "This spell allows the user to switch bodies with a target."
 
@@ -17,7 +17,7 @@
 	var/paralysis_amount_caster = 20 //how much the caster is paralysed for after the spell
 	var/paralysis_amount_victim = 20 //how much the victim is paralysed for after the spell
 
-/obj/spell/targeted/mind_transfer/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
+/obj/proc_holder/spell/targeted/mind_transfer/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	if(!targets.len)
 		user << "No mind found"
 		return

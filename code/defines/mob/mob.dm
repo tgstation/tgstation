@@ -162,8 +162,12 @@
 	var/voice_message = null // When you are not understood by others (replaced with just screeches, hisses, chimpers etc.)
 	var/say_message = null // When you are understood by others. Currently only used by aliens and monkeys in their say_quote procs
 
+//Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
+	var/proc_holder_list[] = list()//Right now only displays for the AI.
+	//Also unlike the spell list, this would only store the object in contents, not an object in itself.
+
 //Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button
-	var/obj/spell/list/spell_list = list()
+	var/obj/proc_holder/spell/list/spell_list = list()
 
 //Monkey/infected mode
 	var/list/resistances = list()

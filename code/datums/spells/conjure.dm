@@ -1,4 +1,4 @@
-/obj/spell/aoe_turf/conjure
+/obj/proc_holder/spell/aoe_turf/conjure
 	name = "Conjure"
 	desc = "This spell conjures objs of the specified types in range."
 
@@ -9,7 +9,7 @@
 	var/summon_ignore_prev_spawn_points = 0 //if set to 1, each new object is summoned on a new spawn point
 
 /*
-/obj/spell/conjure
+/obj/proc_holder/spell/conjure
 	name = "Summon Bigger Carp"
 	desc = "This spell conjures an elite carp."
 
@@ -25,7 +25,7 @@
 	var/summon_ignore_density = 0 //if set to 1, adds dense tiles to possible spawn places
 	var/summon_ignore_prev_spawn_points = 0 //if set to 1, each new object is summoned on a new spawn point
 */
-/obj/spell/aoe_turf/conjure/cast(list/targets)
+/obj/proc_holder/spell/aoe_turf/conjure/cast(list/targets)
 
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)

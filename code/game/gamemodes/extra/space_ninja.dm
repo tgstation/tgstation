@@ -95,25 +95,43 @@ mob/proc/create_ninja()
 
 //AI COUNTER HACKING===================================
 
-/mob/living/silicon/ai/proc/ninja_spideros()
-	set name = "Hack SpiderOS"
-	set desc = "Hack directly into the Black Widow(tm) neuro-interface."
-	set category = "AI Commands"
+//I've tried a lot of stuff but adding verbs to the AI while inside an object, inside another object, did not want to work properly.
+//This the best work-around I could come up with. Uses objects to then display to panel, based on the object spell system.
+/obj/proc_holder/ai_hack_ninja//Generic proc holder to make sure the two verbs below work propely.
+	name = "Hack SpiderOS"
+	desc = "Hack directly into the Black Widow(tm) neuro-interface."
+	panel = "AI Hacking"
+	density = 0
+	opacity = 0
 
-	loc.loc:hack_spideros()//ninjasuit:hack_spideros()
+/obj/proc_holder/ai_hack_ninja/Click()//When you click on it.
+	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc//This is so stupid but makes sure certain things work. AI.SUIT
+	S.hack_spideros()
+	return
 
-/mob/living/silicon/ai/proc/ninja_return_control()
-	set name = "Relinquish Control"
-	set desc = "Return control to the user."
-	set category = "AI Commands"
+/obj/proc_holder/ai_return_control
+	name = "Relinquish Control"
+	desc = "Return control to the user."
+	panel = "AI Hacking"
+	density = 0
+	opacity = 0
 
-	src << browse(null, "window=hack spideros")//Close window
-	loc:control = 0//Return control
-	loc:affecting:verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit//Add back verbs
-	loc:affecting:verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
-	verbs -= /mob/living/silicon/ai/proc/ninja_spideros
-	verbs -= /mob/living/silicon/ai/proc/ninja_return_control
-	loc:affecting << "<b>UPDATE</b>: [real_name] has seized hacking attempt. All systems clear."
+/obj/proc_holder/ai_return_control/Click()
+	var/mob/living/silicon/ai/A = loc
+	var/obj/item/clothing/suit/space/space_ninja/S = A.loc
+	A << browse(null, "window=hack spideros")//Close window
+	S.control = 1//Return control
+	A << "You have seized your hacking attempt. [S.affecting] has regained control."
+	S.affecting << "<b>UPDATE</b>: [A.real_name] has seized hacking attempt. All systems clear."
+	var/obj/proc_holder/ai_return_control/A_C = locate() in A
+	var/obj/proc_holder/ai_hack_ninja/B_C = locate() in A
+	A.proc_holder_list -= A_C
+	A.proc_holder_list -= B_C
+	S.verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	S.verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	del(A_C)//First.
+	del(B_C)//Second, to keep the proc going.
+	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/hack_spideros()
 
@@ -144,7 +162,6 @@ mob/proc/create_ninja()
 			dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=sos_3.png> Medical Screen</a></li>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=sos_5.png> Atmos Scan</a></li>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=sos_12.png> Messenger</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=4'><img src=sos_6.png> Other</a></li>"
 			dat += "</ul>"
 		if(1)
 			dat += "<h4><img src=sos_3.png> Medical Report:</h4>"
@@ -165,7 +182,7 @@ mob/proc/create_ninja()
 			dat += "<li><a href='byond://?src=\ref[src];choice=Dexalin Plus'><img src=sos_2.png> Inject Dexalin Plus: [reagents.get_reagent_amount("dexalinp")/20] left</a></li>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=Tricordazine'><img src=sos_2.png> Inject Tricordazine: [reagents.get_reagent_amount("tricordrazine")/20] left</a></li>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=Spacelin'><img src=sos_2.png> Inject Spacelin: [reagents.get_reagent_amount("spaceacillin")/20] left</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=Spacelin'><img src=sos_2.png> Inject Radium: [(reagents.get_reagent_amount("radium")/20)-60] left</a></li>"//There is 120 radium at start. -60 for adrenaline boosts.
+			dat += "<li><a href='byond://?src=\ref[src];choice=Radium'><img src=sos_2.png> Inject Radium: [(reagents.get_reagent_amount("radium")-60)/20] left</a></li>"//There is 120 radium at start. -60 for adrenaline boosts.
 			dat += "<li><a href='byond://?src=\ref[src];choice=Nutriment'><img src=sos_2.png> Inject Nutriment: [reagents.get_reagent_amount("nutriment")/5] left</a></li>"//Special case since it's so freaking potent.
 			dat += "</ul>"
 		if(2)
@@ -221,8 +238,61 @@ mob/proc/create_ninja()
 
 //DEBUG===================================
 
-//Switches keys with AI stored inside suit. Useful for quickly testing things.
+//Apparently you cannot grant verbs to objects within objects. That is, the verbs won't be recognized.
+//That object/mob won't be able to grant/remove verbs either.
 /*
+/mob/verb/grant_object_panel()
+	set name = "Grant AI Ninja Verbs Debug"
+	set category = "Ninja Debug"
+	var/obj/proc_holder/ai_return_control/A_C = new(src)
+	var/obj/proc_holder/ai_hack_ninja/B_C = new(src)
+	usr:proc_holder_list += A_C
+	usr:proc_holder_list += B_C
+
+mob/verb/remove_object_panel()
+	set name = "Remove AI Ninja Verbs Debug"
+	set category = "Ninja Debug"
+	var/obj/proc_holder/ai_return_control/A = locate() in src
+	var/obj/proc_holder/ai_hack_ninja/B = locate() in src
+	usr:proc_holder_list -= A
+	usr:proc_holder_list -= B
+	del(A)//First.
+	del(B)//Second, to keep the proc going.
+	return
+
+/client/verb/grant_verb_ninja_debug1(var/mob/M in view())
+	set name = "Grant AI Ninja Verbs Debug"
+	set category = "Ninja Debug"
+
+	M.verbs += /mob/living/silicon/ai/verb/ninja_return_control
+	M.verbs += /mob/living/silicon/ai/verb/ninja_spideros
+	return
+
+/client/verb/grant_verb_ninja_debug2(var/mob/living/carbon/human/M in view())
+	set name = "Grant Back Ninja Verbs"
+	set category = "Ninja Debug"
+
+	M.wear_suit.verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	M.wear_suit.verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	return
+
+/obj/proc/grant_verb_ninja_debug3(var/mob/living/silicon/ai/A as mob)
+	set name = "Grant AI Ninja Verbs"
+	set category = "null"
+	set hidden = 1
+	A.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	A.verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	return
+
+/mob/verb/get_dir_to_target(var/mob/M in oview())
+	set name = "Get Direction to Target"
+	set category = "Ninja Debug"
+
+	world << "DIR: [get_dir_to(src.loc,M.loc)]"
+	return
+
+//Switches keys with AI stored inside suit. Useful for quickly testing things.
+
 var/ninja_debug_target//Easiest way to do this. The proc below sets this variable to your mob.
 
 /mob/verb/possess_mob(var/mob/M in oview())
@@ -264,10 +334,10 @@ var/ninja_debug_target//Easiest way to do this. The proc below sets this variabl
 	spawn(0)//Parallel processing.
 		E.process(src)
 	return
-*/
-/*
+
 I made this as a test for a possible ninja ability (or perhaps more) for a certain mob to see hallucinations.
 The thing here is that these guys have to be coded to do stuff as they are simply images that you can't even click on.
+Their movement is also awkward and overlaps.
 /mob/verb/TestNinjaShadow()
 	set name = "Test Ninja Ability"
 	set category = "Ninja Debug"
