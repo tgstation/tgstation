@@ -174,6 +174,8 @@
 
 /mob/living/carbon/human/bullet_act(flag, A as obj, var/datum/organ/external/def_zone)
 	var/shielded = 0
+	var/list/armor
+	//Preparing the var for grabbing the armor information, can't grab the values yet because we don't know what kind of bullet was used. --NEO
 	for(var/obj/item/device/shield/S in src)
 		if (S.active)
 			if (flag == "bullet")
@@ -202,7 +204,6 @@
 
 	if(!affecting)
 		return
-
 	if (locate(/obj/item/weapon/grab, src))
 		var/mob/safe = null
 		if (istype(src.l_hand, /obj/item/weapon/grab))
@@ -219,13 +220,14 @@
 
 	switch(flag)
 		if(PROJECTILE_BULLET)
+			armor = src.getarmor(affecting, "bullet")
 			var/d = 51
-			if (prob(src.isarmored(affecting, "bullet")))
-				show_message("\red Your armor absorbs the hit!", 4)
+			if (prob(armor["armor"]))
+				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
 				return
 			else
-				if (prob(src.isarmored(affecting, "bullet")/2))
-					show_message("\red Your armor only softens the hit!", 4)
+				if (prob(armor["armor"]/2))
+					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
 					if (prob(20))
 						d = d / 2
 					d = d / 4
@@ -270,8 +272,9 @@
 					if(src.weakened <= 5)	src.weakened = 5
 			return
 		if(PROJECTILE_TASER)
-			if (prob(src.isarmored(affecting, "taser")))
-				show_message("\red Your armor absorbs the hit!", 4)
+			armor = src.getarmor(affecting, "taser")
+			if (prob(armor["armor"]))
+				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
 				return
 			/*else
 				if (istype(src.wear_suit, /obj/item/clothing/suit/swat_suit))
@@ -285,8 +288,9 @@
 			if (src.stuttering < 10)
 				src.stuttering = 10
 		if(PROJECTILE_DART)
-			if (prob(src.isarmored(affecting, "bio")))
-				show_message("\red Your armor absorbs the hit!", 4)
+			armor = src.getarmor(affecting, "bio")
+			if (prob(armor["armor"]))
+				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
 				return
 			if (istype(src.l_hand, /obj/item/weapon/shield/riot)||istype(src.r_hand, /obj/item/weapon/shield/riot))
 				if (prob(50))
@@ -295,13 +299,14 @@
 				src.weakened += 5
 				src.toxloss += 10
 		if(PROJECTILE_LASER)
+			armor = src.getarmor(affecting, "laser")
 			var/d = 20
-			if (prob(src.isarmored(affecting, "laser")))
-				show_message("\red Your armor absorbs the hit!", 4)
+			if (prob(armor["armor"]))
+				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
 				return
 			else
-				if (prob(src.isarmored(affecting, "laser")))
-					show_message("\red Your armor only softens the hit!", 4)
+				if (prob(armor["armor"]))
+					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
 					if (prob(20))
 						d = d / 2
 					d = d / 2
@@ -327,13 +332,14 @@
 				if (prob(25))
 					src.stunned = 1
 		if(PROJECTILE_PULSE)
+			armor = src.getarmor(affecting, "laser")
 			var/d = 40
-			if (prob(src.isarmored(affecting, "laser")/2))
-				show_message("\red Your armor absorbs the hit!", 4)
+			if (prob(armor["armor"]/2))
+				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
 				return
 			else
-				if (prob(src.isarmored(affecting, "laser")/2))
-					show_message("\red Your armor only softens the hit!", 4)
+				if (armor["armor"]/2)
+					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
 					if (prob(20))
 						d = d / 2
 					d = d / 2
@@ -355,8 +361,9 @@
 				if (prob(50))
 					src.stunned = min(src.stunned, 5)
 		if(PROJECTILE_BOLT)
-			if (prob(src.isarmored(affecting, "bio")))
-				show_message("\red Your armor absorbs the hit!", 4)
+			armor = src.getarmor(affecting, "rad")
+			if (prob(src.getarmor(affecting, "bio")))
+				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
 				return
 			src.toxloss += 3
 			src.radiation += 100
@@ -364,13 +371,14 @@
 			src.stuttering += 5
 			src.drowsyness += 5
 		if(PROJECTILE_WEAKBULLET)
+			armor = src.getarmor(affecting, "bullet")
 			var/d = 14
-			if (prob(src.isarmored(affecting, "bullet")))
-				show_message("\red Your armor absorbs the hit!", 4)
+			if (prob(armor["armor"]))
+				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
 				return
 			else
-				if (prob(src.isarmored(affecting, "bullet")/2))
-					show_message("\red Your armor only softens the hit!", 4)
+				if (prob(armor["armor"]/2))
+					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
 					if (prob(20))
 						d = d / 2
 					d = d / 4
@@ -458,7 +466,7 @@
 	switch (severity)
 		if (1.0)
 			b_loss += 500
-			if (!istype(src.wear_suit, /obj/item/clothing/suit/bomb_suit))
+			if (!prob(src.getarmor(null, "bomb")))
 				src.gib(1)
 				return
 			else
@@ -474,7 +482,7 @@
 
 			f_loss += 60
 
-			if (istype(src.wear_suit, /obj/item/clothing/suit/bomb_suit))
+			if (!prob(src.getarmor(null, "bomb")))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
@@ -484,7 +492,7 @@
 
 		if(3.0)
 			b_loss += 30
-			if (istype(src.wear_suit, /obj/item/clothing/suit/bomb_suit))
+			if (!prob(src.getarmor(null, "bomb")))
 				b_loss = b_loss/2
 			if (!istype(src.ears, /obj/item/clothing/ears/earmuffs))
 				src.ear_damage += 15
@@ -2828,16 +2836,75 @@ It can still be worn/put on as normal.
 	src.updatehealth()
 	src.UpdateDamageIcon()
 
-/mob/living/carbon/human/proc/isarmored(var/datum/organ/external/def_zone, var/type)
-	if(def_zone.name == "head")
-		if(src.head && istype(src.head,/obj/item/clothing))
-			if(def_zone.body_part & src.head.body_parts_covered)
-				return src.head.armor[type]
+/mob/living/carbon/human/proc/getarmor(var/datum/organ/external/def_zone, var/type)
+	var/armorval = 0
+	var/organnum = 0
+
+
+	if(istype(def_zone))
+		return checkarmor(def_zone, type)
+		//If a specific bodypart is targetted, check how that bodypart is protected and return the value. --NEO
+
 	else
-		if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing))
-			if(def_zone.body_part & src.wear_suit.body_parts_covered)
-				return src.wear_suit.armor[type]
+		//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
+		for(var/organ_name in src.organs)
+			var/datum/organ/external/organ = src.organs[organ_name]
+			if (istype(organ))
+				var/list/organarmor = checkarmor(organ, type)
+				armorval += organarmor["armor"]
+				organnum++
+				//world << "Debug text: full body armor check in progress, [organ.name] is best protected against [type] damage by [organarmor["clothes"]], with a value of [organarmor["armor"]]"
+		//world << "Debug text: full body armor check complete, average of [armorval/organnum] protection against [type] damage."
+		return armorval/organnum
+
 	return 0
+
+/mob/living/carbon/human/proc/checkarmor(var/datum/organ/external/def_zone, var/type)
+	if (!type)
+		return
+	var/obj/item/clothing/best
+	var/armorval = 0
+
+	//I don't really like the way this is coded, but I can't think of a better way to check what they're actually wearing as opposed to something they're holding. --NEO
+
+	if(src.head && istype(src.head,/obj/item/clothing))
+		if(def_zone.body_part & src.head.body_parts_covered)
+			if(src.head.armor[type] > armorval)
+				armorval = src.head.armor[type]
+				best = src.head
+
+	if(src.wear_mask && istype(src.wear_mask,/obj/item/clothing))
+		if(def_zone.body_part & src.wear_mask.body_parts_covered)
+			if(src.wear_mask.armor[type] > armorval)
+				armorval = src.wear_mask.armor[type]
+				best = src.wear_mask
+
+	if(src.wear_suit && istype(src.wear_suit,/obj/item/clothing))
+		if(def_zone.body_part & src.wear_suit.body_parts_covered)
+			if(src.wear_suit.armor[type] > armorval)
+				armorval = src.wear_suit.armor[type]
+				best = src.wear_suit
+
+	if(src.w_uniform && istype(src.w_uniform,/obj/item/clothing))
+		if(def_zone.body_part & src.w_uniform.body_parts_covered)
+			if(src.w_uniform.armor[type] > armorval)
+				armorval = src.w_uniform.armor[type]
+				best = src.w_uniform
+
+	if(src.shoes && istype(src.shoes,/obj/item/clothing))
+		if(def_zone.body_part & src.shoes.body_parts_covered)
+			if(src.shoes.armor[type] > armorval)
+				armorval = src.shoes.armor[type]
+				best = src.shoes
+
+	if(src.gloves && istype(src.gloves,/obj/item/clothing))
+		if(def_zone.body_part & src.gloves.body_parts_covered)
+			if(src.gloves.armor[type] > armorval)
+				armorval = src.gloves.armor[type]
+				best = src.gloves
+
+	var/list/result = list(clothes = best, armor = armorval)
+	return result
 
 
 /mob/living/carbon/human/Topic(href, href_list)

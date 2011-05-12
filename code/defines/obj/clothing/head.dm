@@ -17,6 +17,7 @@
 	name = "bomb hood"
 	icon_state = "bombsuit"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 100, bio = 0)
 
 /obj/item/clothing/head/bomb_hood/security
 	icon_state = "bombsuitsec"
