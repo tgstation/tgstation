@@ -205,7 +205,7 @@
 			if (M.mutations & COLD_RESISTANCE)
 				f_dam = 0
 			if (def_zone == "head")
-				if (b_dam && prob(armor["armor"]) - src.force)
+				if (b_dam && prob(armor["armor"] - src.force))
 					if (prob(20))
 						affecting.take_damage(power, 0)
 					else
@@ -250,7 +250,7 @@
 								user2.w_uniform.add_blood(H)
 				affecting.take_damage(b_dam, f_dam)
 			else if (def_zone == "chest" || def_zone == "groin")
-				if (b_dam && prob(armor["armor"]) - src.force)
+				if (b_dam && prob(armor["armor"] - src.force))
 					H.show_message("\red Your [armor["clothes"]] has protected you from a hit to the [affecting.name].")
 					return
 				if (b_dam && ((istype(H.r_hand, /obj/item/weapon/shield/riot))) && prob(90 - src.force))
@@ -294,7 +294,7 @@
 									user2.w_uniform.add_blood(H)
 					affecting.take_damage(b_dam, f_dam)
 			else
-				if (b_dam && prob(armor["armor"]) - src.force)
+				if (b_dam && prob(armor["armor"] - src.force))
 					H.show_message("\red Your [armor["clothes"]] has protected you from a hit to the [affecting.name].")
 					return
 				if (b_dam && prob(25 + (b_dam * 2)))
