@@ -746,7 +746,7 @@
 
 			if(client)
 				for(var/image/hud in client.images)
-					if(copytext(hud.icon_state,4) == "hud") //ugly, but icon comparison is worse, I believe
+					if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
 						del(hud)
 
 			if (src.stat == 2 || src.mutations & XRAY)
@@ -801,14 +801,13 @@
 					for(var/mob/living/carbon/human/perp in view(src))
 						if(perp.wear_id)
 							client.images += image(tempHud,perp,"hud[ckey(perp:wear_id:GetJobName())]")
+							var/perpname = "wot"
+							if(istype(perp.wear_id,/obj/item/weapon/card/id))
+								perpname = perp.wear_id:registered
+							else if(istype(perp.wear_id,/obj/item/device/pda))
+								var/obj/item/device/pda/tempPda = perp.wear_id
+								perpname = tempPda.owner
 							for (var/datum/data/record/E in data_core.general)
-								var/perpname = "wot"
-								if(istype(perp.wear_id,/obj/item/weapon/card/id))
-									perpname = perp.wear_id:registered
-								else if(istype(perp.wear_id,/obj/item/device/pda))
-									var/obj/item/device/pda/tempPda = perp.wear_id
-									perpname = tempPda.owner
-								world << "[perpname]"
 								if (E.fields["name"] == perpname)
 									for (var/datum/data/record/R in data_core.security)
 										if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
