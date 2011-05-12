@@ -101,3 +101,7 @@
 /obj/decal/mecha_wreckage/durand
 	name = "Durand wreckage"
 	icon_state = "durand-broken"
+
+/obj/decal/mecha_wreckage/phazon
+	name = "Phazon wreckage"
+	icon_state = "phazon-broken"

@@ -65,7 +65,11 @@
 						if("fire")
 							temp.take_damage(0, rand(force/2, force))
 						if("tox")
-							H.toxloss += rand(force/2, force)
+							if(H.reagents)
+								if(H.reagents.get_reagent_amount("carpotoxin") + force < force*2)
+									H.reagents.add_reagent("carpotoxin", force)
+								if(H.reagents.get_reagent_amount("cryptobiolin") + force < force*2)
+									H.reagents.add_reagent("cryptobiolin", force)
 						else
 							return
 					H.UpdateDamageIcon()
@@ -79,7 +83,11 @@
 					if("fire")
 						M.take_overall_damage(0, rand(force/2, force))
 					if("tox")
-						M.toxloss += rand(force/2, force)
+						if(M.reagents)
+							if(M.reagents.get_reagent_amount("carpotoxin") + force < force*2)
+								M.reagents.add_reagent("carpotoxin", force)
+							if(M.reagents.get_reagent_amount("cryptobiolin") + force < force*2)
+								M.reagents.add_reagent("cryptobiolin", force)
 					else
 						return
 				M.updatehealth()

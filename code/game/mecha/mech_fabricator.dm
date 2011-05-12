@@ -339,7 +339,7 @@
 				temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
 				src.updateUsrDialog()
 			if(i || tech_output)
-				src.visible_message("<b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\".")
+				src.visible_message("<b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
 		return
 
 	proc/get_resource_cost_w_coeff(var/obj/item/mecha_parts/part as obj,var/resource as text, var/roundto=1)

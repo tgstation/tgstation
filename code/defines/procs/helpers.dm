@@ -931,3 +931,18 @@ proc/listgetindex(var/list/list,index)
 		else if(index in list)
 			return list[index]
 	return
+
+proc/islist(list/list)
+	if(istype(list))
+		return 1
+	return 0
+
+proc/isemptylist(list/list)
+	if(istype(list) && !list.len)
+		return 1
+	return 0
+
+proc/clearlist(list/list)
+	if(istype(list))
+		list.len = 0
+	return

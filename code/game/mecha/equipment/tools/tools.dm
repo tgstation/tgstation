@@ -268,7 +268,7 @@
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	icon_state = "mecha_teleport"
 	origin_tech = "bluespace=10"
-	equip_cooldown = 300
+	equip_cooldown = 150
 	energy_drain = 1000
 	range = RANGED
 
@@ -427,13 +427,13 @@
 		if(!action_checks(user))
 			return chassis.dynattackby(W,user)
 		chassis.log_message("Attacked by [W]. Attacker - [user]")
-		if(prob(chassis.deflect_chance*src.deflect_coeff))
+		if(prob(chassis.deflect_chance*deflect_coeff))
 			user << "\red The [W] bounces off [chassis] armor."
 			chassis.log_append_to_last("Armor saved.")
 		else
 			chassis.occupant_message("<font color='red'><b>[user] hits [chassis] with [W].</b></font>")
 			user.visible_message("<font color='red'><b>[user] hits [chassis] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
-			chassis.take_damage(round(W.force*0.8),W.damtype)
+			chassis.take_damage(round(W.force*damage_coeff),W.damtype)
 			chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		set_ready_state(0)
 		chassis.cell.use(energy_drain)
@@ -526,7 +526,7 @@
 	equip_cooldown = 20
 	energy_drain = 20
 	range = RANGED
-	construction_cost = list("metal"=10000,"gold"=5000,"silver"=5000,"glass"=10000)
+	construction_cost = list("metal"=10000,"gold"=1000,"silver"=2000,"glass"=5000)
 	var/health_boost = 2
 	var/datum/global_iterator/pr_repair_droid
 	var/icon/droid_overlay

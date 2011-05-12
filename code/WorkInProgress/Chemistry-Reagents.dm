@@ -987,9 +987,8 @@ datum
 				M:jitteriness = 0
 				M.virus.spread = "Remissive"
 				M.virus.stage--
-				if(M.virus.stage <= 0)
-					M.resistances += M.virus.type
-					M.virus = null
+				if(M.virus.stage < 1)
+					M.virus.cure()
 				..()
 				return
 

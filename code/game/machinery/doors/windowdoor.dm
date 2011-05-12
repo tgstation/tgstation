@@ -37,6 +37,13 @@
 				open()
 				sleep(50)
 				close()
+		else if(istype(AM, /obj/mecha))
+			var/obj/mecha/mecha = AM
+			if(density)
+				if(mecha.occupant && src.allowed(mecha.occupant))
+					open()
+					sleep(50)
+					close()
 		return
 	if (!( ticker ))
 		return
