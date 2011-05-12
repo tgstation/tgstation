@@ -202,6 +202,15 @@
 
 	O.job = "Cyborg"
 
+	O.brain = new /obj/item/device/mmi(O)
+	O.brain.name = "Man-Machine Interface: [src.name]"
+	O.brain.icon_state = "mmi_full"
+	O.brain.brain = new /obj/item/brain(O.brain)
+	O.brain.brain.name = "[src.name]'s brain"
+	O.brain.brain.brainmob = new /mob/living/carbon/brain(O.brain.brain)
+	O.brain.brain.brainmob.name = "[src.name]"
+	O.brain.brain.brainmob.container = O.brain
+
 
 
 	del(src)

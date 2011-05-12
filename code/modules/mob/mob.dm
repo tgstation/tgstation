@@ -1977,12 +1977,13 @@ proc/isobserver(A)
 		flick("gibbed-r", animation)
 
 	if (src.client)
-		var/mob/dead/observer/newmob
+		if(!isrobot(src))
+			var/mob/dead/observer/newmob
 
-		newmob = new/mob/dead/observer(src)
-		src:client:mob = newmob
-		if (src.mind)
-			src.mind.transfer_to(newmob)
+			newmob = new/mob/dead/observer(src)
+			src:client:mob = newmob
+			if (src.mind)
+				src.mind.transfer_to(newmob)
 
 		var/virus = src.virus
 		if (istype(src, /mob/living/silicon))

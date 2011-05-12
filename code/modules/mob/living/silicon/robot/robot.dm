@@ -41,6 +41,7 @@
 	if(brain)
 		brain.loc = loc
 		mind.transfer_to(brain.brain.brainmob)
+		brain = null
 	..()
 	//If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 

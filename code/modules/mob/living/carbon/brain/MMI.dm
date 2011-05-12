@@ -25,7 +25,7 @@
 			brain.brainmob.container = src
 			brain.brainmob.stat = 0
 			locked = 1
-			name = "Man-Machine Interface:[brain.brainmob.real_name]"
+			name = "Man-Machine Interface: [brain.brainmob.real_name]"
 			icon_state = "mmi_full"
 			return
 
