@@ -18,7 +18,7 @@
 	var/radiation_protection = 0.0 //percentage of radiation it will absorb
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
 
-	var/armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 0)
+	var/armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 0, rad = 0)
 
 
 

@@ -18,7 +18,7 @@
 	heat_transfer_coefficient = 0.30
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
-	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 100, bio = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 100, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/bomb_suit/security
 	icon_state = "bombsuitsec"
@@ -181,7 +181,7 @@
 
 /obj/item/clothing/suit/armor
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/revolver,/obj/item/weapon/baton,/obj/item/weapon/handcuffs)
-	armor = list(melee = 80, bullet = 60, laser = 40, taser = 5, bomb = 0, bio = 10)
+	armor = list(melee = 80, bullet = 60, laser = 40, taser = 5, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
