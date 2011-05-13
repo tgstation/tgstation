@@ -62,9 +62,11 @@
 		if("Service")
 			src.module = new /obj/item/weapon/robot_module/butler(src)
 			src.hands.icon_state = "service"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent")
 			if(icontype== "Waitress")
 				src.icon_state = "Service"
+			else if(icontype == "Kent")
+				src.icon_state = "toiletbot"
 			else if(icontype == "Bro")
 				src.icon_state = "Brobot"
 			else
@@ -637,9 +639,11 @@
 	src.overlays = null
 
 
-
 	if(src.stat == 0)
 		src.overlays += "eyes"
+		if(src.icon_state == "toiletbot")
+			src.overlays = null
+			src.overlays += "eyes-toiletbot"
 	else
 		src.overlays -= "eyes"
 
