@@ -2095,6 +2095,22 @@ var/showadminmessages = 1
 			M:set_zeroth_law(law)
 			for(var/mob/living/silicon/O in world)
 				O << "New law: 0. [law]"
+
+			//Begin code phrase.
+			M << "The Syndicate provided you with the following information on how to identify their agents:"
+			if(prob(80))
+				M << "\red Code Phrase: \black [syndicate_code_phrase]"
+				M.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
+			else
+				M << "Unfortunetly, the Syndicate did not provide you with a code phrase."
+			if(prob(80))
+				M << "\red Code Response: \black [syndicate_code_response]"
+				M.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
+			else
+				M << "Unfortunetly, the Syndicate did not provide you with a code response."
+			M << "Use the code words in the order provided, during regular conversation, to identify their agents. Proceed with caution, however, as everyone is a potential foe."
+			//End code phrase.
+
 			if(mode)
 				log_admin("[key_name(usr)] has made [key_name(M)] a traitor.")
 				message_admins("\blue [key_name_admin(usr)] has made [key_name_admin(M)] a traitor. Objective is: [objective]", 1)

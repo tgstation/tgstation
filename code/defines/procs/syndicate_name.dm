@@ -29,6 +29,7 @@ var/syndicate_name = null
 	return name
 
 //This is referenced in equip_traitor() so it's fairly easy to remove if needed.
+//Added this to traitor AIs.
 var/syndicate_code_phrase//Code phrase for traitors.
 var/syndicate_code_response//Code response for traitors.
 

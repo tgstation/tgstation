@@ -276,6 +276,7 @@ datum/mind
 			var/datum/game_mode/current_mode = ticker.mode
 			switch (href_list["traitorize"])
 				if ("headrev")
+					current_mode.equip_traitor(current,1)
 					current_mode:equip_revolutionary(current)
 					//find first headrev
 					for(var/datum/mind/rev_mind in current_mode:head_revolutionaries)

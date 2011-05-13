@@ -9,18 +9,18 @@ ________________________________________________________________________________
 /client/proc/space_ninja()
 	set category = "Fun"
 	set name = "Spawn Space Ninja"
-	set desc = "Spawns a space ninja for when you need a teenager with attitude."
-	if(!src.authenticated || !src.holder)
+	set desc = "Spawns a space ninja for when you need a teenager with an attitude."
+	if(!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return
-	if(!ticker.mode)//Apparently, this doesn't actually prevent anything. Huh
+	if(!ticker.mode)
 		alert("The game hasn't started yet!")
 		return
 	if(alert("Are you sure you want to send in a space ninja?",,"Yes","No")=="No")
 		return
 
 	TRYAGAIN
-	var/input = input(usr, "Please specify which mission the space ninja shall undertake.", "Specify Mission", "")
+	var/input = input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", "")
 	if(!input)
 		goto TRYAGAIN
 
@@ -38,12 +38,12 @@ ________________________________________________________________________________
 
 	new_ninja.create_ninja()
 
-	var/admin_name = src//In case admins want to spawn themselves as ninjas. Badmins
+	var/admin_name = src
 
 	var/mob/dead/observer/G
 	var/list/candidates = list()
 	for(G in world)
-		if(G.client)
+		if(G.client&&!G.client.holder)
 			if(((G.client.inactivity/10)/60) <= 5)
 				candidates.Add(G)
 	if(candidates.len)
@@ -65,7 +65,7 @@ ________________________________________________________________________________
 	message_admins("\blue [admin_name] has spawned [new_ninja.key] as a Space Ninja. Hide yo children!", 1)
 	log_admin("[admin_name] used Spawn Space Ninja.")
 
-mob/proc/create_ninja()
+/mob/proc/create_ninja()
 	var/mob/living/carbon/human/new_ninja = src
 	var/ninja_title = pick(ninja_titles)
 	var/ninja_name = pick(ninja_names)
@@ -92,6 +92,82 @@ mob/proc/create_ninja()
 	new_ninja.equip_if_possible(new /obj/item/weapon/plastique(new_ninja), new_ninja.slot_r_store)
 	new_ninja.equip_if_possible(new /obj/item/weapon/plastique(new_ninja), new_ninja.slot_l_store)
 	new_ninja.equip_if_possible(new /obj/item/weapon/tank/emergency_oxygen(new_ninja), new_ninja.slot_s_store)
+
+/mob/proc/grant_ninja_verbs()
+	verbs += /mob/proc/ninjashift
+	verbs += /mob/proc/ninjajaunt
+	verbs += /mob/proc/ninjasmoke
+	verbs += /mob/proc/ninjaboost
+	verbs += /mob/proc/ninjapulse
+	verbs += /mob/proc/ninjablade
+	verbs += /mob/proc/ninjastar
+	verbs += /mob/proc/ninjanet
+	mind.special_verbs += /mob/proc/ninjashift
+	mind.special_verbs += /mob/proc/ninjajaunt
+	mind.special_verbs += /mob/proc/ninjasmoke
+	mind.special_verbs += /mob/proc/ninjaboost
+	mind.special_verbs += /mob/proc/ninjapulse
+	mind.special_verbs += /mob/proc/ninjablade
+	mind.special_verbs += /mob/proc/ninjastar
+	mind.special_verbs += /mob/proc/ninjanet
+	return
+
+/mob/proc/remove_ninja_verbs()
+	verbs -= /mob/proc/ninjashift
+	verbs -= /mob/proc/ninjajaunt
+	verbs -= /mob/proc/ninjasmoke
+	verbs -= /mob/proc/ninjaboost
+	verbs -= /mob/proc/ninjapulse
+	verbs -= /mob/proc/ninjablade
+	verbs -= /mob/proc/ninjastar
+	verbs -= /mob/proc/ninjanet
+	mind.special_verbs -= /mob/proc/ninjashift
+	mind.special_verbs -= /mob/proc/ninjajaunt
+	mind.special_verbs -= /mob/proc/ninjasmoke
+	mind.special_verbs -= /mob/proc/ninjaboost
+	mind.special_verbs -= /mob/proc/ninjapulse
+	mind.special_verbs -= /mob/proc/ninjablade
+	mind.special_verbs -= /mob/proc/ninjastar
+	mind.special_verbs -= /mob/proc/ninjanet
+	return
+
+/mob/proc/grant_kamikaze_verbs()
+	verbs -= /mob/proc/ninjashift
+	verbs -= /mob/proc/ninjajaunt
+	verbs -= /mob/proc/ninjapulse
+	verbs -= /mob/proc/ninjastar
+	verbs -= /mob/proc/ninjanet
+	mind.special_verbs -= /mob/proc/ninjashift
+	mind.special_verbs -= /mob/proc/ninjajaunt
+	mind.special_verbs -= /mob/proc/ninjapulse
+	mind.special_verbs -= /mob/proc/ninjastar
+	mind.special_verbs -= /mob/proc/ninjanet
+	verbs += /mob/proc/ninjaslayer
+	verbs += /mob/proc/ninjawalk
+	verbs += /mob/proc/ninjamirage
+	mind.special_verbs += /mob/proc/ninjaslayer
+	mind.special_verbs += /mob/proc/ninjawalk
+	mind.special_verbs += /mob/proc/ninjamirage
+	return
+
+/mob/proc/remove_kamikaze_verbs()
+	verbs += /mob/proc/ninjashift
+	verbs += /mob/proc/ninjajaunt
+	verbs += /mob/proc/ninjapulse
+	verbs += /mob/proc/ninjastar
+	verbs += /mob/proc/ninjanet
+	mind.special_verbs += /mob/proc/ninjashift
+	mind.special_verbs += /mob/proc/ninjajaunt
+	mind.special_verbs += /mob/proc/ninjapulse
+	mind.special_verbs += /mob/proc/ninjastar
+	mind.special_verbs += /mob/proc/ninjanet
+	verbs -= /mob/proc/ninjaslayer
+	verbs -= /mob/proc/ninjawalk
+	verbs -= /mob/proc/ninjamirage
+	mind.special_verbs -= /mob/proc/ninjaslayer
+	mind.special_verbs -= /mob/proc/ninjawalk
+	mind.special_verbs -= /mob/proc/ninjamirage
+	return
 
 //AI COUNTER HACKING===================================
 
@@ -235,6 +311,9 @@ mob/proc/create_ninja()
 	dat += "</body></html>"
 
 	A << browse(dat,"window=hack spideros;size=400x444;border=1;can_resize=0;can_close=0;can_minimize=0")
+
+
+
 
 //DEBUG===================================
 

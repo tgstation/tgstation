@@ -1,22 +1,34 @@
 
+/*
+field_generator power level display
+   The icon used for the field_generator need to have 'num_power_levels' number of icon states
+   named 'Field_Gen +p[num]' where 'num' ranges from 1 to 'num_power_levels'
+
+   The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
+   The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
+   no power level overlay is currently in the overlays list.
+   -Aygar
+*/
+
 #define field_generator_max_power 250
 /obj/machinery/field_generator
 	name = "Field Generator"
 	desc = "A large thermal battery that projects a high amount of energy when powered."
-	icon = 'singularity.dmi'
+	icon = 'field_generator.dmi'
 	icon_state = "Field_Gen"
 	anchored = 0
 	density = 1
 	req_access = list(access_engine)
 	use_power = 0
 	var
+		const/num_power_levels = 15  // Total number of power level icon has
 		Varedit_start = 0
 		Varpower = 0
 		active = 0
-		power = 20
+		power = 20  // Current amount of power
 		state = 0
 		warming_up = 0
-		powerlevel = 0
+		powerlevel = 0  // Current Power level in overlays list
 		list/obj/machinery/containment_field/fields
 		list/obj/machinery/field_generator/connected_gens
 		clean_up = 0
@@ -24,20 +36,33 @@
 
 	update_icon()
 		if (!active)
-			icon_state = "Field_Gen"
-			return
-		var/level = 3
-		switch (power)
-			if(0 to 60)
-				level = 1
-			if(61 to 220)
-				level = 2
-			if(221 to INFINITY)
-				level = 3
-		level = min(level,warming_up)
+			//Set icon_state has not been set, set to "Field_Gen"
+			if (icon_state != "Field_Gen")
+				icon_state = "Field_Gen"
+				warming_up = 0
+			else
+				//If necessary update icon_state to correct value
+				if (warming_up && icon_state != "Field_Gen +a[warming_up]")
+					icon_state = "Field_Gen +a[warming_up]"
+
+		// Power level indicator
+		// Scale % power to % num_power_levels and truncate value
+		var/level = round(num_power_levels * power / field_generator_max_power)
+		// Clamp between 0 and num_power_levels for out of range power values
+		level = between(0, level, num_power_levels)
+
+		// Do nothing unless new level is diffrent the powerlevel
 		if (powerlevel!=level)
+		// If old power overlay exists remove it
+			if (powerlevel)
+			// Remove old powerlevel overlay from overlays
+				overlays -= "Field_Gen +p[powerlevel]"
+
 			powerlevel = level
-			icon_state = "Field_Gen +a[powerlevel]"
+
+			// If new power level exists add it to overlays
+			if (powerlevel)
+				overlays += "Field_Gen +p[powerlevel]"
 
 
 	New()
@@ -48,17 +73,19 @@
 
 
 	process()
-		if(src.Varedit_start == 1)
-			if(src.active == 0)
-				src.active = 1
-				src.state = 2
-				src.power = field_generator_max_power
-				src.anchored = 1
-				src.warming_up = 3
+		if(Varedit_start == 1)
+			if(active == 0)
+				active = 1
+				state = 2
+				power = field_generator_max_power
+				anchored = 1
+				warming_up = 3
 				turn_on()
 			Varedit_start = 0
-		if(src.active == 2)
-			calc_power()
+			if(src.active == 2)
+				calc_power()
+			else
+				update_icon()
 		return
 
 
@@ -170,16 +197,15 @@
 
 	proc
 		turn_off()
-			src.active = 0
+			active = 0
 			spawn(1)
 				src.cleanup()
 			update_icon()
 
 
 		turn_on()
-			src.active = 1
+			active = 1
 			warming_up = 1
-			powerlevel = 0
 			spawn(1)
 				while (warming_up<3 && active)
 					sleep(50)

@@ -66,60 +66,20 @@ In the case that they are not, I imagine the game will run-time error like crazy
 	var/C = 100
 	if(!ninjacost(C,1))
 		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
-		var/list/turfs = new/list()
-		var/turf/picked
-		var/turf/mobloc = get_turf(loc)
-		var/safety = 0
-		var/locx
-		var/locy
-		switch(dir)//Gets rectengular range for target.
-			if(NORTH)
-				locx = mobloc.x
-				locy = (mobloc.y+9)
-				for(var/turf/T in block(locate(locx-3,locy-1,loc.z), locate(locx+3,locy+1,loc.z) ))
-					if(T.density)	continue
-					if(T.x>world.maxx || T.x<1)	continue
-					if(T.y>world.maxy || T.y<1)	continue
-					turfs += T
-			if(SOUTH)
-				locx = mobloc.x
-				locy = (mobloc.y-9)
-				for(var/turf/T in block(locate(locx-3,locy-1,loc.z), locate(locx+3,locy+1,loc.z) ))
-					if(T.density)	continue
-					if(T.x>world.maxx || T.x<1)	continue
-					if(T.y>world.maxy || T.y<1)	continue
-					turfs += T
-			if(EAST)
-				locy = mobloc.y
-				locx = (mobloc.x+9)
-				for(var/turf/T in block(locate(locx-1,locy-3,loc.z), locate(locx+1,locy+3,loc.z) ))
-					if(T.density)	continue
-					if(T.x>world.maxx || T.x<1)	continue
-					if(T.y>world.maxy || T.y<1)	continue
-					turfs += T
-			if(WEST)
-				locy = mobloc.y
-				locx = (mobloc.x-9)
-				for(var/turf/T in block(locate(locx-1,locy-3,loc.z), locate(locx+1,locy+3,loc.z) ))
-					if(T.density)	continue
-					if(T.x>world.maxx || T.x<1)	continue
-					if(T.y>world.maxy || T.y<1)	continue
-					turfs += T
-			else	safety = 1
-
-		if(turfs.len&&!safety)//Cancels the teleportation if no valid turf is found. Usually when teleporting near map edge.
-			picked = pick(turfs)
+		var/turf/destination = get_teleport_loc(loc,src,9,1,3,1,0,1)
+		var/turf/mobloc = get_turf(loc)//To make sure that certain things work properly below.
+		if(destination&&istype(mobloc, /turf))
 			spawn(0)
 				playsound(loc, "sparks", 50, 1)
 				anim(mobloc,src,'mob.dmi',,"phaseout")
 
 			if(istype(get_active_hand(),/obj/item/weapon/grab))//Handles grabbed persons.
 				var/obj/item/weapon/grab/G = get_active_hand()
-				G.affecting.loc = locate(picked.x+rand(-1,1),picked.y+rand(-1,1),picked.z)//variation of position.
+				G.affecting.loc = locate(destination.x+rand(-1,1),destination.y+rand(-1,1),destination.z)//variation of position.
 			if(istype(get_inactive_hand(),/obj/item/weapon/grab))
 				var/obj/item/weapon/grab/G = get_inactive_hand()
-				G.affecting.loc = locate(picked.x+rand(-1,1),picked.y+rand(-1,1),picked.z)//variation of position.
-			loc = picked
+				G.affecting.loc = locate(destination.x+rand(-1,1),destination.y+rand(-1,1),destination.z)//variation of position.
+			loc = destination
 
 			spawn(0)
 				S.spark_system.start()
@@ -127,20 +87,8 @@ In the case that they are not, I imagine the game will run-time error like crazy
 				playsound(loc, "sparks", 50, 1)
 				anim(loc,src,'mob.dmi',,"phasein")
 
-			spawn(0)//Any living mobs in teleport area are gibbed. Added some more types.
-				for(var/mob/living/M in picked)
-					if(M==src)	continue
-					spawn(0)
-						M.gib()
-				for(var/obj/mecha/M in picked)
-					spawn(0)
-						M.take_damage(100, "brute")
-				for(var/obj/alien/facehugger/M in picked)//These really need to be mobs.
-					spawn(0)
-						M.death()
-				for(var/obj/livestock/M in picked)
-					spawn(0)
-						M.gib()
+			spawn(0)
+				destination.kill_creatures(src)//Any living mobs in teleport area are gibbed. Check turf procs for how it does it.
 			S.coold = 1
 			S.cell.charge-=(C*10)
 		else
@@ -157,8 +105,8 @@ In the case that they are not, I imagine the game will run-time error like crazy
 	var/C = 200
 	if(!ninjacost(C,1))
 		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
-		if(!T.density)
-			var/turf/mobloc = get_turf(loc)
+		var/turf/mobloc = get_turf(loc)//To make sure that certain things work properly below.
+		if(!T.density&&istype(mobloc, /turf))
 			spawn(0)
 				playsound(loc, 'sparks4.ogg', 50, 1)
 				anim(mobloc,src,'mob.dmi',,"phaseout")
@@ -178,23 +126,11 @@ In the case that they are not, I imagine the game will run-time error like crazy
 				anim(loc,src,'mob.dmi',,"phasein")
 
 			spawn(0)//Any living mobs in teleport area are gibbed.
-				for(var/mob/living/M in T)
-					if(M==src)	continue
-					spawn(0)
-						M.gib()
-				for(var/obj/mecha/M in T)
-					spawn(0)
-						M.take_damage(100, "brute")
-				for(var/obj/alien/facehugger/M in T)//These really need to be mobs.
-					spawn(0)
-						M.death()
-				for(var/obj/livestock/M in T)
-					spawn(0)
-						M.gib()
+				T.kill_creatures(src)
 			S.coold = 1
 			S.cell.charge-=(C*10)
 		else
-			src << "\red You cannot teleport into solid walls."
+			src << "\red You cannot teleport into solid walls or from solid matter"
 	return
 
 //EMP Pulse
@@ -289,7 +225,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 
 	var/C = 200
 	if(!ninjacost(C))
-		if(!locate(/obj/effects/energy_net) in M.loc.contents)//Check if they are already being affected by an energy net.
+		if(!locate(/obj/effects/energy_net) in M.loc)//Check if they are already being affected by an energy net.
 			if(M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
 				for(var/turf/T in getline(loc, M.loc))
 					if(T==loc||T==M.loc)	continue
@@ -347,7 +283,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 	set desc = "Combines the VOID-shift and CLOAK-tech devices to freely move between solid matter. Toggle on or off."
 	set category = "Ninja Ability"
 
-	if(!usr.incorporeal_move)
+	if(!incorporeal_move)
 		incorporeal_move = 2
 		density = 0
 		src << "\blue You will now phase through solid matter."
@@ -366,61 +302,23 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 
 	if(!ninjacost())
 		var/obj/item/clothing/suit/space/space_ninja/S = src:wear_suit
-		var/locx
-		var/locy
-		var/turf/mobloc = get_turf(loc)
-		var/safety = 0
-
-		switch(dir)
-			if(NORTH)
-				locx = mobloc.x
-				locy = (mobloc.y+5)
-				if(locy>world.maxy)
-					safety = 1
-			if(SOUTH)
-				locx = mobloc.x
-				locy = (mobloc.y-5)
-				if(locy<1)
-					safety = 1
-			if(EAST)
-				locy = mobloc.y
-				locx = (mobloc.x+5)
-				if(locx>world.maxx)
-					safety = 1
-			if(WEST)
-				locy = mobloc.y
-				locx = (mobloc.x-5)
-				if(locx<1)
-					safety = 1
-			else	safety = 1
-		if(!safety)//Cancels the teleportation if no valid turf is found. Usually when teleporting near map edge.
+		var/turf/destination = get_teleport_loc(loc,src,5)
+		var/turf/mobloc = get_turf(loc)//To make sure that certain things work properly below.
+		if(destination&&istype(mobloc, /turf))
 			say("Ai Satsugai!")
-			var/turf/picked = locate(locx,locy,mobloc.z)
 			spawn(0)
 				playsound(loc, "sparks", 50, 1)
 				anim(mobloc,src,'mob.dmi',,"phaseout")
 
 			spawn(0)
-				for(var/turf/T in getline(mobloc, picked))
+				for(var/turf/T in getline(mobloc, destination))
 					spawn(0)
-						for(var/mob/living/M in T)
-							if(M==src)	continue
-							spawn(0)
-								M.gib()
-						for(var/obj/mecha/M in T)
-							spawn(0)
-								M.take_damage(100, "brute")
-						for(var/obj/alien/facehugger/M in T)//These really need to be mobs.
-							spawn(0)
-								M.death()
-						for(var/obj/livestock/M in T)
-							spawn(0)
-								M.gib()
-					if(T==mobloc||T==picked)	continue
+						T.kill_creatures(src)
+					if(T==mobloc||T==destination)	continue
 					spawn(0)
 						anim(T,src,'mob.dmi',,"phasein")
 
-			loc = picked
+			loc = destination
 
 			spawn(0)
 				S.spark_system.start()
@@ -474,8 +372,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 					if(locx>world.maxx)
 						safety = 1
 				else	safety=1
-
-			if(!safety)
+			if(!safety&&istype(mobloc, /turf))
 				say("Kumo no Shinkiro!")
 				var/turf/picked = locate(locx,locy,mobloc.z)
 				spawn(0)

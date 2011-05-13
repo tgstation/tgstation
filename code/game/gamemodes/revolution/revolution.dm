@@ -58,7 +58,7 @@
 			rev_obj.find_target_by_role(head_mind.assigned_role)
 			rev_mind.objectives += rev_obj
 
-		equip_traitor(rev_mind.current) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
+		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 		equip_revolutionary(rev_mind.current)
 		update_rev_icons_added(rev_mind)
 

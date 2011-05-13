@@ -281,26 +281,37 @@
 			//	src.see_invisible = 15 -- Doesn't work as see_invisible is reset every world cycle. -- Skie
 			//The two procs below allow the Chaplain to choose their religion. All it really does is change their bible.
 			spawn(0)
-				var/religion_name = "Imperium"
-				var/new_religion = input(src, "You are the Chaplain. Would you like to change your religion? Default is the Imperial Cult.", "Name change", religion_name)
+				var/religion_name = "Christianity"
+				var/new_religion = input(src, "You are the Chaplain. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)
 
-				if ((length(new_religion) == 0) || (new_religion == "Imperium"))
+				if ((length(new_religion) == 0) || (new_religion == "Christianity"))
 					new_religion = religion_name
 
 				if (new_religion)
 					if (length(new_religion) >= 26)
 						new_religion = copytext(new_religion, 1, 26)
 					new_religion = dd_replacetext(new_religion, ">", "'")
-					if(new_religion == "Imperium")
-						B.name = "Uplifting Primer"
-					else
-						B.name = "The Holy Book of [new_religion]"
+					switch(new_religion)
+						if("Christianity")
+							B.name = pick("The Holy Bible","The Dead Sea Scrolls")
+						if("Satanism")
+							B.name = pick("The Unholy Bible","The Necronomicon")
+						if("Islam")
+							B.name = "Quaran"
+						if("Scientology")
+							B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
+						if("Chaos")
+							B.name = "Space Station 13: The Musical"
+						if("Imperium")
+							B.name = "Uplifting Primer"
+						else
+							B.name = "The Holy Book of [new_religion]"
 
 			spawn(1)
-				var/deity_name = "Emperor"
-				var/new_deity = input(src, "Would you like to change your deity? Default is the God Emperor of Mankind.", "Name change", deity_name)
+				var/deity_name = "Space Jesus"
+				var/new_deity = input(src, "Would you like to change your deity? Default is Space Jesus.", "Name change", deity_name)
 
-				if ( (length(new_deity) == 0) || (new_deity == "God Emperor of Mankind") )
+				if ( (length(new_deity) == 0) || (new_deity == "Space Jesus") )
 					new_deity = deity_name
 
 				if(new_deity)

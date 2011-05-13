@@ -35,6 +35,7 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/killai(var/mob/living/silicon/ai/A as mob)
 	A << "\red Self-destruct protocol dete-- *bzzzzz*"
 	A << browse(null, "window=hack spideros")
+	AI = null
 	A.death()//Kill
 	A.ghostize()//Turn into ghost
 	del(AI)
@@ -73,7 +74,7 @@ ________________________________________________________________________________
 				U.bruteloss += 1
 			A = 200
 		cell.charge-=A
-		if(U.stat)//If the ninja falls down, they can still try and jaunt away or shift kill their opponent.
+		if(U.stat)//If the ninja gets paralyzed, they can still try and jaunt away (since they can adrenaline boost and then jaunt).
 			active=0
 		if(cell.charge<0)
 			if(kamikaze)
@@ -91,7 +92,7 @@ ________________________________________________________________________________
 	set desc = "Initializes the suit for field operation."
 	set category = "Ninja Equip"
 
-	var/mob/living/carbon/human/U = usr
+	var/mob/living/carbon/human/U = loc
 	if(U.mind&&U.mind.special_role=="Space Ninja"&&U:wear_suit==src&&!initialize)
 		verbs -= /obj/item/clothing/suit/space/space_ninja/proc/init
 		U << "\blue Now initializing..."
@@ -110,18 +111,18 @@ ________________________________________________________________________________
 			U << "\red <B>ERROR</B>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING..."
 			return
 		U << "\blue Securing external locking mechanism...\nNeural-net established."
-		U.head:canremove=0
-		U.shoes:canremove=0
-		U.gloves:canremove=0
+		U.head.canremove=0
+		U.shoes.canremove=0
+		U.gloves.canremove=0
 		canremove=0
 		sleep(40)
 		U << "\blue Extending neural-net interface...\nNow monitoring brain wave pattern..."
 		sleep(40)
 		if(U.stat==2||U.health<=0)
 			U << "\red <B>FATAL ERROR</B>: 344--93#&&21 BRAIN WAV3 PATT$RN <B>RED</B>\nA-A-AB0RTING..."
-			U.head:canremove=1
-			U.shoes:canremove=1
-			U.gloves:canremove=1
+			U.head.canremove=1
+			U.shoes.canremove=1
+			U.gloves.canremove=1
 			canremove=1
 			verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
 			return
@@ -136,22 +137,7 @@ ________________________________________________________________________________
 		U << "\blue Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[cell.charge]</B>."
 		sleep(40)
 		U << "\blue All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name]."
-		U.verbs += /mob/proc/ninjashift
-		U.verbs += /mob/proc/ninjajaunt
-		U.verbs += /mob/proc/ninjasmoke
-		U.verbs += /mob/proc/ninjaboost
-		U.verbs += /mob/proc/ninjapulse
-		U.verbs += /mob/proc/ninjablade
-		U.verbs += /mob/proc/ninjastar
-		U.verbs += /mob/proc/ninjanet
-		U.mind.special_verbs += /mob/proc/ninjashift
-		U.mind.special_verbs += /mob/proc/ninjajaunt
-		U.mind.special_verbs += /mob/proc/ninjasmoke
-		U.mind.special_verbs += /mob/proc/ninjaboost
-		U.mind.special_verbs += /mob/proc/ninjapulse
-		U.mind.special_verbs += /mob/proc/ninjablade
-		U.mind.special_verbs += /mob/proc/ninjastar
-		U.mind.special_verbs += /mob/proc/ninjanet
+		U.grant_ninja_verbs()
 		verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
 		verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
 		U.gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/drain_wire
@@ -162,14 +148,14 @@ ________________________________________________________________________________
 		U.shoes:slowdown--
 		ntick(U)
 	else
-		if(usr.mind&&usr.mind.special_role=="Space Ninja")
-			usr << "\red You do not understand how this suit functions."
-		else if(usr:wear_suit!=src)
-			usr << "\red You must be wearing the suit to use this function."
+		if(U.mind&&U.mind.special_role!="Space Ninja")
+			U << "\red You do not understand how this suit functions."
+		else if(U.wear_suit!=src)
+			U << "\red You must be wearing the suit to use this function."
 		else if(initialize)
-			usr << "\red The suit is already functioning."
+			U << "\red The suit is already functioning."
 		else
-			usr << "\red You cannot use this function at this time."
+			U << "\red You cannot use this function at this time."
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/deinit()
@@ -177,45 +163,27 @@ ________________________________________________________________________________
 	set desc = "Begins procedure to remove the suit."
 	set category = "Ninja Equip"
 
+	if(affecting!=loc)
+		return
+	var/mob/living/carbon/human/U = affecting
 	if(!initialize)
-		usr << "\red The suit is not initialized."
+		U << "\red The suit is not initialized."
 		return
 	if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
 		return
 
-	var/mob/living/carbon/human/U = affecting
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
 	U << "\blue Now de-initializing..."
 	if(kamikaze)
 		U << "\blue Disengaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>"
-		U.verbs -= /mob/proc/ninjaslayer
-		U.verbs -= /mob/proc/ninjawalk
-		U.verbs -= /mob/proc/ninjamirage
-		U.mind.special_verbs -= /mob/proc/ninjaslayer
-		U.mind.special_verbs -= /mob/proc/ninjawalk
-		U.mind.special_verbs -= /mob/proc/ninjamirage
+		U.remove_kamikaze_verbs()
 		kamikaze = 0
 		unlock = 0
 		U.incorporeal_move = 0
 		U.density = 1
 	spideros = 0
 	sleep(40)
-	U.verbs -= /mob/proc/ninjashift
-	U.verbs -= /mob/proc/ninjajaunt
-	U.verbs -= /mob/proc/ninjasmoke
-	U.verbs -= /mob/proc/ninjaboost
-	U.verbs -= /mob/proc/ninjapulse
-	U.verbs -= /mob/proc/ninjablade
-	U.verbs -= /mob/proc/ninjastar
-	U.verbs -= /mob/proc/ninjanet
-	U.mind.special_verbs -= /mob/proc/ninjashift
-	U.mind.special_verbs -= /mob/proc/ninjajaunt
-	U.mind.special_verbs -= /mob/proc/ninjasmoke
-	U.mind.special_verbs -= /mob/proc/ninjaboost
-	U.mind.special_verbs -= /mob/proc/ninjapulse
-	U.mind.special_verbs -= /mob/proc/ninjablade
-	U.mind.special_verbs -= /mob/proc/ninjastar
-	U.mind.special_verbs -= /mob/proc/ninjanet
+	U.remove_ninja_verbs()
 	U << "\blue Logging off, [U:real_name]. Shutting down <B>SpiderOS</B>."
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
 	sleep(40)
@@ -233,8 +201,6 @@ ________________________________________________________________________________
 			U << "\red #2#"
 		spawn(30)
 			U << "\red #1#: <B>G00DBYE</B>"
-			if(AI)
-				killai(AI)
 			U.gib()
 		return
 	U << "\blue Disconnecting neural-net interface...\green<B>Success</B>\blue."
@@ -244,7 +210,7 @@ ________________________________________________________________________________
 	if(istype(U.head, /obj/item/clothing/head/helmet/space/space_ninja))
 		U.head.canremove=1
 	if(istype(U.shoes, /obj/item/clothing/shoes/space_ninja))
-		U.shoes:canremove=1
+		U.shoes.canremove=1
 		U.shoes:slowdown++
 	if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
 		U.gloves.icon_state = "s-ninja"
@@ -419,7 +385,7 @@ ________________________________________________________________________________
 			var/laws
 			dat += "<h4><img src=sos_13.png> AI Control:</h4>"
 			var/mob/living/silicon/ai/A = AI
-			if(AI)//If an AI exists, in case it gets purged.
+			if(AI)//If an AI exists, in case it gets purged while on this screen.
 				dat += "Stored AI: <b>[A.name]</b><br>"
 				dat += "System integrity: [(A.health+100)/2]%<br>"
 
@@ -591,22 +557,7 @@ ________________________________________________________________________________
 								U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/drain_wire
 								U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
 							U.update_clothing()
-							U.verbs -= /mob/proc/ninjashift
-							U.verbs -= /mob/proc/ninjajaunt
-							U.verbs -= /mob/proc/ninjapulse
-							U.verbs -= /mob/proc/ninjastar
-							U.verbs -= /mob/proc/ninjanet
-							U.mind.special_verbs -= /mob/proc/ninjashift
-							U.mind.special_verbs -= /mob/proc/ninjajaunt
-							U.mind.special_verbs -= /mob/proc/ninjapulse
-							U.mind.special_verbs -= /mob/proc/ninjastar
-							U.mind.special_verbs -= /mob/proc/ninjanet
-							U.verbs += /mob/proc/ninjaslayer
-							U.verbs += /mob/proc/ninjawalk
-							U.verbs += /mob/proc/ninjamirage
-							U.mind.special_verbs += /mob/proc/ninjaslayer
-							U.mind.special_verbs += /mob/proc/ninjawalk
-							U.mind.special_verbs += /mob/proc/ninjamirage
+							U.grant_kamikaze_verbs()
 							U.ninjablade()
 							message_admins("\blue [U.key] used KAMIKAZE mode.", 1)
 						else
@@ -728,17 +679,17 @@ ________________________________________________________________________________
 		spideros()//Refreshes the screen by calling it again (which replaces current screen with new screen).
 
 	else//If they are not in control.
-		var/mob/living/silicon/ai/AI = usr
+		var/mob/living/silicon/ai/A = AI
 		//While AI has control, the person can't take off the suit so checking here would be moot.
 		if(isnull(src))//If they AI dies/suit destroyed.
-			AI << browse(null, "window=hack spideros")
+			A << browse(null, "window=hack spideros")
 			return
 
-		var/obj/proc_holder/ai_hack_ninja/ninja_spideros = locate() in AI//What is the object granting access to proc? Find it.
+		var/obj/proc_holder/ai_hack_ninja/ninja_spideros = locate() in A//What is the object granting access to proc? Find it.
 
 		switch(href_list["choice"])
 			if("Close")
-				AI << browse(null, "window=hack spideros")
+				A << browse(null, "window=hack spideros")
 				return
 			if("Refresh")//Refresh, goes to the end of the proc.
 			if("Return")//Return
@@ -753,7 +704,7 @@ ________________________________________________________________________________
 					U.electrocute_act(damage, src,0.1,1)//The last argument is a safety for the human proc that checks for gloves.
 					cell.charge -= damage
 				else
-					AI << "\red <b>ERROR</b>: \black Not enough energy remaining."
+					A << "\red <b>ERROR</b>: \black Not enough energy remaining."
 			if("0")//Menus are numbers, see note above. 0 is the hub.
 				spideros=0
 			if("1")//Begin normal menus 1-9.
@@ -769,13 +720,13 @@ ________________________________________________________________________________
 				var/t = input(U, "Please enter untraceable message.") as text
 				t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 				if(!t||affecting!=U||!initialize)//Wow, another one of these. Man...
-					AI << browse(null, "window=hack spideros")
+					A << browse(null, "window=hack spideros")
 					return
 				if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
-					AI << "\red Error: unable to deliver message."
+					A << "\red Error: unable to deliver message."
 					ninja_spideros.Click()
 					return
-				P.tnote += "<i><b>&larr; From [AI]:</b></i><br>[t]<br>"//Oh ai, u so silly
+				P.tnote += "<i><b>&larr; From [A]:</b></i><br>[t]<br>"//Oh ai, u so silly
 				if (!P.silent)
 					playsound(P.loc, 'twobeep.ogg', 50, 1)
 					for (var/mob/O in hearers(3, P.loc))
@@ -783,54 +734,54 @@ ________________________________________________________________________________
 				P.overlays = null
 				P.overlays += image('pda.dmi', "pda-r")
 			if("Unlock Kamikaze")
-				AI << "\red <b>ERROR</b>: \black TARANTULA.v.4.77.12 encryption algorithm detected. Unable to decrypt archive. \n Aborting..."
+				A << "\red <b>ERROR</b>: \black TARANTULA.v.4.77.12 encryption algorithm detected. Unable to decrypt archive. \n Aborting..."
 			if("Dylovene")
 				if(!reagents.get_reagent_amount("anti_toxin"))
-					AI << "\red Error: the suit cannot perform this function. Out of dylovene."
+					A << "\red Error: the suit cannot perform this function. Out of dylovene."
 				else
 					reagents.reaction(U, 2)
 					reagents.trans_id_to(U, "anti_toxin", transfera)
-					AI << "Injecting..."
+					A << "Injecting..."
 					U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 			if("Dexalin Plus")
 				if(!reagents.get_reagent_amount("dexalinp"))
-					AI << "\red Error: the suit cannot perform this function. Out of dexalinp."
+					A << "\red Error: the suit cannot perform this function. Out of dexalinp."
 				else
 					reagents.reaction(U, 2)
 					reagents.trans_id_to(U, "dexalinp", transfera)
-					AI << "Injecting..."
+					A << "Injecting..."
 					U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 			if("Tricordazine")
 				if(!reagents.get_reagent_amount("tricordrazine"))
-					AI << "\red Error: the suit cannot perform this function. Out of tricordrazine."
+					A << "\red Error: the suit cannot perform this function. Out of tricordrazine."
 				else
 					reagents.reaction(U, 2)
 					reagents.trans_id_to(U, "tricordrazine", transfera)
-					AI << "Injecting..."
+					A << "Injecting..."
 					U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 			if("Spacelin")
 				if(!reagents.get_reagent_amount("spaceacillin"))
-					AI << "\red Error: the suit cannot perform this function. Out of spaceacillin."
+					A << "\red Error: the suit cannot perform this function. Out of spaceacillin."
 				else
 					reagents.reaction(U, 2)
 					reagents.trans_id_to(U, "spaceacillin", transfera)
-					AI << "Injecting..."
+					A << "Injecting..."
 					U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 			if("Radium")
 				if((reagents.get_reagent_amount("radium"))<=60)//Special case. If there are only 60 radium units left.
-					AI << "\red Error: the suit cannot perform this function. Out of radium."
+					A << "\red Error: the suit cannot perform this function. Out of radium."
 				else
 					reagents.reaction(U, 2)
 					reagents.trans_id_to(U, "radium", transfera)
-					AI << "Injecting..."
+					A << "Injecting..."
 					U << "You feel a tiny prick and a sudden rush of liquid in to your veins."
 			if("Nutriment")
 				if(!reagents.get_reagent_amount("nutriment"))
-					AI << "\red Error: the suit cannot perform this function. Out of nutriment."
+					A << "\red Error: the suit cannot perform this function. Out of nutriment."
 				else
 					reagents.reaction(U, 2)
 					reagents.trans_id_to(U, "nutriment", 5)
-					AI << "Injecting..."
+					A << "Injecting..."
 					U << "You feel a tiny prick and a sudden rush of substance in to your veins."
 		ninja_spideros.Click()//Calls spideros for AI.
 	return
@@ -839,19 +790,20 @@ ________________________________________________________________________________
 	set src in view()
 	..()
 	if(initialize)
+		var/mob/living/carbon/human/U = affecting
 		if(control)
-			usr << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
+			U << "All systems operational. Current energy capacity: <B>[cell.charge]</B>."
 			if(!kamikaze)
 				if(active)
-					usr << "The CLOAK-tech device is <B>active</B>."
+					U << "The CLOAK-tech device is <B>active</B>."
 				else
-					usr << "The CLOAK-tech device is <B>inactive</B>."
+					U << "The CLOAK-tech device is <B>inactive</B>."
 			else
-				usr << "\red KAMIKAZE MODE ENGAGED!"
-			usr << "There are <B>[sbombs]</B> smoke bombs remaining."
-			usr << "There are <B>[aboost]</B> adrenaline boosters remaining."
+				U << "\red KAMIKAZE MODE ENGAGED!"
+			U << "There are <B>[sbombs]</B> smoke bombs remaining."
+			U << "There are <B>[aboost]</B> adrenaline boosters remaining."
 		else
-			usr <<  "ERR0R DATAA NoT FOUND 3RROR"
+			U <<  "ERR0R DATAA NoT FOUND 3RROR"
 
 //GLOVES===================================
 
@@ -859,12 +811,14 @@ ________________________________________________________________________________
 	set name = "Toggle Interaction"
 	set desc = "Toggles special interaction on or off."
 	set category = "Ninja Equip"
+
+	var/mob/living/carbon/human/U = loc
 	if(!candrain)
 		candrain=1
-		usr << "You enable special interaction."
+		U << "You enable special interaction."
 	else
 		candrain=0
-		usr << "You disable special interaction."
+		U << "You disable special interaction."
 
 //DRAINING PROCS START===================================
 
@@ -874,7 +828,7 @@ ________________________________________________________________________________
 	set category = "Ninja Equip"
 
 	var/obj/cable/attached
-	var/mob/living/carbon/human/U = usr
+	var/mob/living/carbon/human/U = loc
 	if(candrain&&!draining)
 		var/turf/T = U.loc
 		if(isturf(T) && T.is_plating())
@@ -891,7 +845,7 @@ ________________________________________________________________________________
 
 /obj/item/clothing/gloves/space_ninja/proc/drain(var/target_type as text, var/target, var/obj/suit, var/obj/gloves)
 //Var Initialize
-	var/mob/living/carbon/human/U = usr
+	var/mob/living/carbon/human/U = loc
 	var/obj/item/clothing/suit/space/space_ninja/S = suit
 	var/obj/item/clothing/gloves/space_ninja/G = gloves
 
@@ -1114,10 +1068,11 @@ ________________________________________________________________________________
 	set src in view()
 	..()
 	if(!canremove)
+		var/mob/living/carbon/human/U = loc
 		if(candrain)
-			usr << "The energy drain mechanism is: <B>active</B>."
+			U << "The energy drain mechanism is: <B>active</B>."
 		else
-			usr << "The energy drain mechanism is: <B>inactive</B>."
+			U << "The energy drain mechanism is: <B>inactive</B>."
 
 //MASK===================================
 
@@ -1129,6 +1084,8 @@ ________________________________________________________________________________
 	set name = "Toggle Voice"
 	set desc = "Toggles the voice synthesizer on or off."
 	set category = "Ninja Equip"
+
+	var/mob/U = loc//Can't toggle voice when you're not wearing the mask.
 	var/vchange = (alert("Would you like to synthesize a new name or turn off the voice synthesizer?",,"New Name","Turn Off"))
 	if(vchange=="New Name")
 		var/chance = rand(1,100)
@@ -1152,20 +1109,20 @@ ________________________________________________________________________________
 			if(91 to 100)//Small chance of an existing crew name.
 				var/list/names = new()
 				for(var/mob/living/carbon/human/M in world)
-					if(M==usr||!M.client||!M.real_name)	continue
+					if(M==U||!M.client||!M.real_name)	continue
 					names.Add(M)
 				if(!names.len)
 					voice = "Cuban Pete"//Smallest chance to be the man.
 				else
 					var/mob/picked = pick(names)
 					voice = picked.real_name
-		usr << "You are now mimicking <B>[voice]</B>."
+		U << "You are now mimicking <B>[voice]</B>."
 	else
 		if(voice!="Unknown")
-			usr << "You deactivate the voice synthesizer."
+			U << "You deactivate the voice synthesizer."
 			voice = "Unknown"
 		else
-			usr << "The voice synthesizer is already deactivated."
+			U << "The voice synthesizer is already deactivated."
 	return
 
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm()
@@ -1173,24 +1130,27 @@ ________________________________________________________________________________
 	set desc = "Switches between Night Vision, Meson, or Thermal vision modes."
 	set category = "Ninja Equip"
 	//Have to reset these manually since life.dm is retarded like that. Go figure.
+	//This will only work for humans since only they have the appropriate code for the mask.
+	var/mob/U = loc
 	switch(mode)
 		if(1)
 			mode=2
-			usr.see_in_dark = 2
-			usr << "Switching mode to <B>Thermal Scanner</B>."
+			U.see_in_dark = 2
+			U << "Switching mode to <B>Thermal Scanner</B>."
 		if(2)
 			mode=3
-			usr.see_invisible = 0
-			usr.sight &= ~SEE_MOBS
-			usr << "Switching mode to <B>Meson Scanner</B>."
+			U.see_invisible = 0
+			U.sight &= ~SEE_MOBS
+			U << "Switching mode to <B>Meson Scanner</B>."
 		if(3)
 			mode=1
-			usr.sight &= ~SEE_TURFS
-			usr << "Switching mode to <B>Night Vision</B>."
+			U.sight &= ~SEE_TURFS
+			U << "Switching mode to <B>Night Vision</B>."
 
 /obj/item/clothing/mask/gas/voice/space_ninja/examine()
 	set src in view()
 	..()
+
 	var/mode = "Night Vision"
 	var/voice = "inactive"
 	switch(mode)
@@ -1204,7 +1164,7 @@ ________________________________________________________________________________
 		voice = "inactive"
 	else
 		voice = "active"
-	usr << "<B>[mode]</B> is active."
+	usr << "<B>[mode]</B> is active."//Leaving usr here since it may be on the floor or on a person.
 	usr << "Voice mimicking algorithm is set to <B>[voice]</B>."
 
 //ENERGY NET===================================
@@ -1229,7 +1189,7 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 	anchored = 1//Can't drag/grab.
 	var/health = 25//How much health it has.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
-	var/mob/living/master = null//Who shot the net. Will let this person know if net was successful or failed.
+	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
 /obj/effects/energy_net/proc/healthcheck()
 	if(health <=0)
@@ -1351,6 +1311,7 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 			anim(M.loc,M,'mob.dmi',,"phaseout")
 
 		M.loc = pick(prisonwarp)//Throw mob in prison.
+		density = 0//Make the net pass-through.
 		invisibility = 101//Make the net invisible so all the animations can play out.
 		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
 

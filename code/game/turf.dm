@@ -1205,3 +1205,19 @@ turf/simulated/floor/proc/update_icon()
 				new /turf/simulated/floor/vault(locate(i,j,z),type)
 
 	del(src)
+
+/turf/proc/kill_creatures(mob/U = null)//Will kill people/creatures and damage mechs./N
+//Useful to batch-add creatures to the list.
+	for(var/mob/living/M in src)
+		if(M==U)	continue//Will not harm U. Since null != M, can be excluded to kill everyone.
+		spawn(0)
+			M.gib()
+	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
+		spawn(0)
+			M.take_damage(100, "brute")
+	for(var/obj/alien/facehugger/M in src)//These really need to be mobs.
+		spawn(0)
+			M.death()
+	for(var/obj/livestock/M in src)
+		spawn(0)
+			M.gib()

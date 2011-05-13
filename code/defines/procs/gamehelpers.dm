@@ -18,7 +18,6 @@
 	return 0
 
 /proc/get_area_name(N) //get area by it's name
-
 	for(var/area/A in world)
 		if(A.name == N)
 			return A
