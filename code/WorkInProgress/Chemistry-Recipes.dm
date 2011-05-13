@@ -5,6 +5,7 @@ datum
 		var/id = null
 		var/result = null
 		var/list/required_reagents = new/list()
+		var/list/required_catalysts = new/list()
 		var/result_amount = 0
 
 		proc
@@ -46,7 +47,7 @@ datum
 			name = "Sterilizine"
 			id = "sterilizine"
 			result = "sterilizine"
-			required_reagents = list("ethanol" = 1, "anti-toxin" = 1, "chlorine" = 1)
+			required_reagents = list("ethanol" = 1, "anti_toxin" = 1, "chlorine" = 1)
 			result_amount = 3
 
 		inaprovaline
@@ -497,7 +498,8 @@ datum
 			name = "Tofu"
 			id = "tofu"
 			result = null
-			required_reagents = list("soymilk" = 10, "enzyme" = 2)
+			required_reagents = list("soymilk" = 10)
+			required_catalysts = list("enzyme" = 5)
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
@@ -516,26 +518,13 @@ datum
 			name = "Cheesewheel"
 			id = "cheesewheel"
 			result = null
-			required_reagents = list("milk" = 40, "enzyme" = 2)
+			required_reagents = list("milk" = 40)
+			required_catalysts = list("enzyme" = 5)
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
 				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel(location)
 				return
-
-		icetea
-			name = "Iced Tea"
-			id = "icetea"
-			result = "icetea"
-			required_reagents = list("ice" = 1, "tea" = 3)
-			result_amount = 4
-
-		icecoffee
-			name = "Iced Coffee"
-			id = "icecoffee"
-			result = "icecoffee"
-			required_reagents = list("ice" = 1, "coffee" = 3)
-			result_amount = 4
 
 		hot_ramen
 			name = "Hot Ramen"
@@ -554,34 +543,51 @@ datum
 
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////
 
+		icetea
+			name = "Iced Tea"
+			id = "icetea"
+			result = "icetea"
+			required_reagents = list("ice" = 1, "tea" = 3)
+			result_amount = 4
+
+		icecoffee
+			name = "Iced Coffee"
+			id = "icecoffee"
+			result = "icecoffee"
+			required_reagents = list("ice" = 1, "coffee" = 3)
+			result_amount = 4
+
 		moonshine
 			name = "Moonshine"
 			id = "moonshine"
 			result = "moonshine"
-			required_reagents = list("nutriment" = 10, "enzyme" = 2)
+			required_reagents = list("nutriment" = 10)
+			required_catalysts = list("enzyme" = 5)
 			result_amount = 5
 
 		wine
 			name = "Wine"
 			id = "wine"
 			result = "wine"
-			required_reagents = list("berryjuice" = 10, "enzyme" = 2)
+			required_reagents = list("berryjuice" = 10)
+			required_catalysts = list("enzyme" = 5)
 			result_amount = 5
 
 		vodka
 			name = "Vodka"
 			id = "vodka"
 			result = "vodka"
-			required_reagents = list("potato" = 10, "enzyme" = 2)
+			required_reagents = list("potato" = 10)
+			required_catalysts = list("enzyme" = 5)
 			result_amount = 5
 
 		kahlua
 			name = "Kahlua"
 			id = "kahlua"
 			result = "kahlua"
-			required_reagents = list("coffee" = 5, "sugar" = 5, "enzyme" = 2)
-
-
+			required_reagents = list("coffee" = 5, "sugar" = 5)
+			required_catalysts = list("enzyme" = 5)
+			result_amount = 5
 
 		gin_tonic
 			name = "Gin and Tonic"

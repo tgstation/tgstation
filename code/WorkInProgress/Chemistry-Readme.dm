@@ -189,6 +189,12 @@ About Recipes:
 			of that reagent. The handle_reaction proc can detect mutiples of the same recipes
 			so for most cases you want to set the required amount to 1.
 
+		required_catalysts (Added May 2011)
+			This is a list of the ids of the required catalysts.
+			Functionally similar to required_reagents, it is a list of reagents that are required
+			for the reaction. However, unlike required_reagents, catalysts are NOT consumed.
+			They mearly have to be present in the container.
+
 		result_amount
 			This is the amount of the resulting reagent this recipe will produce.
 			I recommend you set this to the total volume of all required reagent.

@@ -156,33 +156,42 @@ datum
 			handle_reactions()
 				if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
 
-				for(var/A in typesof(/datum/chemical_reaction) - /datum/chemical_reaction)
-					var/datum/chemical_reaction/C = new A()
-					var/total_required_reagents = C.required_reagents.len
-					var/total_matching_reagents = 0
-					var/list/multipliers = new/list()
+				var/reaction_occured = 0
+				do
+					reaction_occured = 0
+					for(var/A in typesof(/datum/chemical_reaction) - /datum/chemical_reaction)
+						var/datum/chemical_reaction/C = new A()
+						var/total_required_reagents = C.required_reagents.len
+						var/total_matching_reagents = 0
+						var/total_required_catalysts = C.required_catalysts.len
+						var/total_matching_catalysts= 0
+						var/list/multipliers = new/list()
 
-					for(var/B in C.required_reagents)
-						if(has_reagent(B, C.required_reagents[B]))
-							total_matching_reagents++
-							multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
-
-					if(total_matching_reagents == total_required_reagents)
-						var/multiplier = min(multipliers)
 						for(var/B in C.required_reagents)
-							del_reagent(B)
+							if(has_reagent(B, C.required_reagents[B]))
+								total_matching_reagents++
+								multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
+						for(var/B in C.required_catalysts)
+							if(has_reagent(B, C.required_catalysts[B]))
+								total_matching_catalysts++
 
-						var/created_volume = C.result_amount*multiplier
-						if(C.result)
-							multiplier = max(multiplier, 1) //this shouldnt happen ...
-							add_reagent(C.result, C.result_amount*multiplier)
+						if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts)
+							var/multiplier = min(multipliers)
+							for(var/B in C.required_reagents)
+								remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
 
-						for(var/mob/M in viewers(4, get_turf(my_atom)) )
-							M << "\blue \icon[my_atom] The solution begins to bubble."
-						playsound(get_turf(my_atom), 'bubbles.ogg', 80, 1)
+							var/created_volume = C.result_amount*multiplier
+							if(C.result)
+								multiplier = max(multiplier, 1) //this shouldnt happen ...
+								add_reagent(C.result, C.result_amount*multiplier)
 
-						C.on_reaction(src, created_volume)
+							for(var/mob/M in viewers(4, get_turf(my_atom)) )
+								M << "\blue \icon[my_atom] The solution begins to bubble."
+							playsound(get_turf(my_atom), 'bubbles.ogg', 80, 1)
 
+							C.on_reaction(src, created_volume)
+							reaction_occured = 1
+				while(reaction_occured)
 				update_total()
 				return 0
 
