@@ -815,20 +815,142 @@
 	anchored = 1.0
 	layer = 2.8
 
-/obj/table/onetilethick
-	icon_state = "table_1tilethick"
+	New()
+		..()
+		for(var/obj/table/T in src.loc)
+			if(T != src)
+				del(T)
+		update_icon()
+		for(var/direction in list(1,2,4,8,5,6,9,10))
+			if(locate(/obj/table,get_step(src,direction)))
+				var/obj/table/T = locate(/obj/table,get_step(src,direction))
+				T.update_icon()
+
+	Del()
+		for(var/direction in list(1,2,4,8,5,6,9,10))
+			if(locate(/obj/table,get_step(src,direction)))
+				var/obj/table/T = locate(/obj/table,get_step(src,direction))
+				T.update_icon()
+		..()
+
+	update_icon()
+		spawn(2) //So it properly updates when deleting
+			var/dir_sum = 0
+			for(var/direction in cardinal)
+				var/skip_sum = 0
+				for(var/obj/window/W in src.loc)
+					if(W.dir == direction) //So smooth tables don't go smooth through windows
+						skip_sum = 1
+						continue
+				var/inv_direction //inverse direction
+				switch(direction)
+					if(1)
+						inv_direction = 2
+					if(2)
+						inv_direction = 1
+					if(4)
+						inv_direction = 8
+					if(8)
+						inv_direction = 4
+				for(var/obj/window/W in get_step(src,direction))
+					if(W.dir == inv_direction) //So smooth tables don't go smooth through windows when the window is on the other table's tile
+						skip_sum = 1
+						continue
+				if(!skip_sum) //means there is a window between the two tiles in this direction
+					if(locate(/obj/table,get_step(src,direction)))
+						dir_sum += direction
+
+			//dir_sum:
+			//  1,2,4,8 = endtable
+			//  3,12 = streight 1 tile thick table
+			//  5,6,9,10 = corner, if it finds a table in get_step(src,dir_sum) then it's a full corner table, else it's a 1 tile chick corner table
+			//  7,11,13,14 = three way intersection = full side table piece (north ,south, east or west)
+			//  15 = four way intersection = center (aka middle) table piece
+			//
+			//table_type:
+			//  0 = stand-alone table
+			//  1 = end table (1 tile thick, 1 connection)
+			//  2 = 1 tile thick table (1 tile thick, 2 connections)
+			//  3 = full table (full, 3 connections)
+			//  4 = middle table (full, 4 connections)
+
+			var/table_type = 0 //stand_alone table
+			if(dir_sum in cardinal)
+				table_type = 1 //endtable
+			if(dir_sum in list(3,12))
+				table_type = 2 //1 tile thick, streight table
+				if(dir_sum == 3) //3 doesn't exist as a dir
+					dir_sum = 2
+				if(dir_sum == 12) //12 doesn't exist as a dir.
+					dir_sum = 4
+			if(dir_sum in list(5,6,9,10))
+				if(locate(/obj/table,get_step(src.loc,dir_sum)))
+					table_type = 3 //full table (not the 1 tile thick one, but one of the 'tabledir' tables)
+				else
+					table_type = 2 //1 tile thick, corner table (treated the same as streight tables in code later on)
+			if(dir_sum in list(13,14,7,11)) //Three-way intersection
+				table_type = 3 //full table as three-way intersections are not sprited, would require 64 sprites to handle all combinations
+				switch(dir_sum)
+					if(7)
+						dir_sum = 4
+					if(11)
+						dir_sum = 8
+					if(13)
+						dir_sum = 1
+					if(14)
+						dir_sum = 2 //These translate the dir_sum to the correct dirs from the 'tabledir' icon_state.
+			if(dir_sum == 15)
+				table_type = 4 //4-way intersection, the 'middle' table sprites will be used.
+
+			if(istype(src,/obj/table/reinforced))
+				switch(table_type)
+					if(0)
+						icon_state = "reinf_table"
+					if(1)
+						icon_state = "reinf_1tileendtable"
+					if(2)
+						icon_state = "reinf_1tilethick"
+					if(3)
+						icon_state = "reinf_tabledir"
+					if(4)
+						icon_state = "reinf_middle"
+			else if(istype(src,/obj/table/woodentable))
+				switch(table_type)
+					if(0)
+						icon_state = "wood_table"
+					if(1)
+						icon_state = "wood_1tileendtable"
+					if(2)
+						icon_state = "wood_1tilethick"
+					if(3)
+						icon_state = "wood_tabledir"
+					if(4)
+						icon_state = "wood_middle"
+			else
+				switch(table_type)
+					if(0)
+						icon_state = "table"
+					if(1)
+						icon_state = "table_1tileendtable"
+					if(2)
+						icon_state = "table_1tilethick"
+					if(3)
+						icon_state = "tabledir"
+					if(4)
+						icon_state = "table_middle"
+			if (dir_sum in list(1,2,4,8,5,6,9,10))
+				dir = dir_sum
+			else
+				dir = 2
 
 /obj/table/reinforced
 	name = "reinforced table"
 	icon_state = "reinf_table"
 	var/status = 2
 
-/obj/table/reinforced/onetilethick
-	icon_state = "reinf_1tilethick"
-
 /obj/table/woodentable
 	name = "wooden table"
-	icon_state = "woodentable"
+	icon_state = "wood_table"
 
 /obj/mopbucket
 	desc = "Fill it with water, but don't forget a mop!"

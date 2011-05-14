@@ -18,21 +18,7 @@ RACK PARTS
 		del(src)
 
 /obj/item/weapon/table_parts/attack_self(mob/user as mob)
-	var/state = input(user, "What type of table?", "Assembling Table", null) in list( "sides", "corners", "alone" )
-	var/direct = SOUTH
-	var/i_state
-	if(state == "alone")
-		i_state = "table"
-	else if (state == "corners")
-		direct = input(user, "Direction?", "Assembling Table", null) in list( "NORTHWEST", "NORTHEAST", "SOUTHWEST", "SOUTHEAST" )
-		i_state = "tabledir"
-	else if (state == "sides")
-		direct = input(user, "Direction?", "Assembling Table", null) in list( "NORTH", "EAST", "SOUTH", "WEST" )
-		i_state = "tabledir"
-	var/obj/table/T = new /obj/table( user.loc )
-	T.icon_state = i_state
-	T.dir = text2dir(direct)
-	T.add_fingerprint(user)
+	new /obj/table( user.loc )
 	del(src)
 	return
 
@@ -45,21 +31,7 @@ RACK PARTS
 		del(src)
 
 /obj/item/weapon/table_parts/wood/attack_self(mob/user as mob)
-	var/state = input(user, "What type of table?", "Assembling Table", null) in list( "sides", "corners", "alone" )
-	var/direct = SOUTH
-	var/i_state
-	if(state == "alone")
-		i_state = "woodtable"
-	else if (state == "corners")
-		direct = input(user, "Direction?", "Assembling Table", null) in list( "NORTHWEST", "NORTHEAST", "SOUTHWEST", "SOUTHEAST" )
-		i_state = "woodentable"
-	else if (state == "sides")
-		direct = input(user, "Direction?", "Assembling Table", null) in list( "NORTH", "EAST", "SOUTH", "WEST" )
-		i_state = "woodentable"
-	var/obj/table/T = new /obj/table/woodentable( user.loc )
-	T.icon_state = i_state
-	T.dir = text2dir(direct)
-	T.add_fingerprint(user)
+	new /obj/table/woodentable( user.loc )
 	del(src)
 	return
 
@@ -73,21 +45,7 @@ RACK PARTS
 		del(src)
 
 /obj/item/weapon/table_parts/reinforced/attack_self(mob/user as mob)
-	var/state = input(user, "What type of table?", "Assembling Table", null) in list( "sides", "corners", "alone" )
-	var/direct = SOUTH
-	var/i_state
-	if(state == "alone")
-		i_state = "reinf_table"
-	else if (state == "corners")
-		direct = input(user, "Direction?", "Assembling Table", null) in list( "NORTHWEST", "NORTHEAST", "SOUTHWEST", "SOUTHEAST" )
-		i_state = "reinf_tabledir"
-	else if (state == "sides")
-		direct = input(user, "Direction?", "Assembling Table", null) in list( "NORTH", "EAST", "SOUTH", "WEST" )
-		i_state = "reinf_tabledir"
-	var/obj/table/reinforced/T = new /obj/table/reinforced( user.loc )
-	T.icon_state = i_state
-	T.dir = text2dir(direct)
-	T.add_fingerprint(user)
+	new /obj/table/reinforced( user.loc )
 	del(src)
 	return
 
