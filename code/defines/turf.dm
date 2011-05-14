@@ -28,7 +28,10 @@
 		return 0
 	proc/is_light_floor()
 		return 0
-
+	proc/is_grass_floor()
+		return 0
+	proc/return_siding_icon_state()
+		return 0
 
 /turf/space
 	icon = 'space.dmi'

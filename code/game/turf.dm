@@ -518,7 +518,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
 				"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
 				"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
-				"light_on_broken","light_off","wall_thermite")
+				"light_on_broken","light_off","wall_thermite","grass1","grass2","grass3","grass4")
 
 /turf/simulated/floor
 
@@ -557,6 +557,23 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			spawn(4)
 				update_icon()
 				name = n
+
+	grass
+		name = "Grass patch"
+		icon_state = "grass1"
+		floor_tile = new/obj/item/stack/tile/grass
+
+		New()
+			floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
+			icon_state = "grass[pick("1","2","3","4")]"
+			..()
+			spawn(4)
+				update_icon()
+				for(var/direction in cardinal)
+					if(istype(get_step(src,direction),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src,direction)
+						FF.update_icon() //so siding get updated properly
+
 
 
 /turf/simulated/floor/New()
@@ -627,7 +644,25 @@ turf/simulated/floor/proc/update_icon()
 		else
 			sd_SetLuminosity(0)
 			icon_state = "light_off"
+	if(is_grass_floor())
+		if(!broken && !burnt)
+			if(!(icon_state in list("grass1","grass2","grass3","grass4")))
+				icon_state = "grass[pick("1","2","3","4")]"
+	spawn(1)
+		update_visuals(air)
 
+turf/simulated/floor/return_siding_icon_state()
+	..()
+	if(is_grass_floor())
+		var/dir_sum = 0
+		for(var/direction in cardinal)
+			var/turf/T = get_step(src,direction)
+			if(!(T.is_grass_floor()))
+				dir_sum += direction
+		if(dir_sum)
+			return "wood_siding[dir_sum]"
+		else
+			return 0
 
 
 /turf/simulated/floor/attack_paw(mob/user as mob)
@@ -673,7 +708,8 @@ turf/simulated/floor/proc/update_icon()
 	return
 
 /turf/simulated/floor/proc/break_tile_to_plating()
-	if(!is_plating()) make_plating()
+	if(!is_plating())
+		make_plating()
 	break_tile()
 
 /turf/simulated/floor/is_steel_floor()
@@ -684,6 +720,12 @@ turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/floor/is_light_floor()
 	if(istype(floor_tile,/obj/item/stack/tile/light))
+		return 1
+	else
+		return 0
+
+/turf/simulated/floor/is_grass_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/grass))
 		return 1
 	else
 		return 0
@@ -708,6 +750,9 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_plating())
 		src.icon_state = "platingdmg[pick(1,2,3)]"
 		broken = 1
+	else if(is_grass_floor())
+		src.icon_state = "sand[pick("1","2","3")]"
+		broken = 1
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
@@ -721,10 +766,21 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_plating())
 		src.icon_state = "panelscorched"
 		burnt = 1
+	else if(is_grass_floor())
+		src.icon_state = "sand[pick("1","2","3")]"
+		burnt = 1
 
 //This proc will delete the floor_tile and the update_iocn() proc will then change the icon_state of the turf
+//This proc auto corrects the grass tiles' siding.
 /turf/simulated/floor/proc/make_plating()
 	if(istype(src,/turf/simulated/floor/engine)) return
+
+	if(is_grass_floor())
+		for(var/direction in cardinal)
+			if(istype(get_step(src,direction),/turf/simulated/floor))
+				var/turf/simulated/floor/FF = get_step(src,direction)
+				FF.update_icon() //so siding get updated properly
+
 	if(!floor_tile) return
 	del(floor_tile)
 	sd_SetLuminosity(0)
@@ -752,6 +808,8 @@ turf/simulated/floor/proc/update_icon()
 			else
 				icon_state = "floor"
 				icon_regular_floor = icon_state
+			update_icon()
+			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
 	floor_tile = new/obj/item/stack/tile/steel
@@ -771,9 +829,29 @@ turf/simulated/floor/proc/update_icon()
 	if(T)
 		if(istype(T,/obj/item/stack/tile/light))
 			floor_tile = T
+			update_icon()
+			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
 	floor_tile = new/obj/item/stack/tile/light
+
+	update_icon()
+	levelupdate()
+
+//This proc will make a turf into a grass patch. Fun eh? Insert the grass tile to be used as the argument
+//If no argument is given a new one will be made.
+/turf/simulated/floor/proc/make_grass_floor(var/obj/item/stack/tile/grass/T = null)
+	broken = 0
+	burnt = 0
+	intact = 1
+	if(T)
+		if(istype(T,/obj/item/stack/tile/grass))
+			floor_tile = T
+			update_icon()
+			levelupdate()
+			return
+	//if you gave a valid parameter, it won't get thisf ar.
+	floor_tile = new/obj/item/stack/tile/grass
 
 	update_icon()
 	levelupdate()
@@ -830,6 +908,11 @@ turf/simulated/floor/proc/update_icon()
 			if(istype(T,/obj/item/stack/tile/light))
 				floor_tile:state = T:state
 				floor_tile:on = T:on
+			if(istype(T,/obj/item/stack/tile/grass))
+				for(var/direction in cardinal)
+					if(istype(get_step(src,direction),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src,direction)
+						FF.update_icon() //so siding get updated properly
 			T.use(1)
 			update_icon()
 			levelupdate()
@@ -844,6 +927,15 @@ turf/simulated/floor/proc/update_icon()
 			coil.turf_place(src, user)
 		else
 			user << "\red You must remove the plating first."
+
+	if(istype(C, /obj/item/weapon/shovel))
+		if(is_grass_floor())
+			new /obj/item/weapon/ore/glass(src)
+			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
+			user << "\blue You shovel the grass."
+			make_plating()
+		else
+			user << "\red You cannot shovel this."
 
 /turf/unsimulated/floor/attack_paw(user as mob)
 	return src.attack_hand(user)

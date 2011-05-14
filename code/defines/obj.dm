@@ -1217,14 +1217,27 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	max_amount = 60
 
+/obj/item/stack/tile/grass
+	name = "Grass tile"
+	singular_name = "S	teel floor tile"
+	desc = "A patch of grass like they often use on golf courses"
+	icon_state = "tile_grass"
+	w_class = 3.0
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 5
+	throw_range = 20
+	flags = FPRINT | TABLEPASS | CONDUCT
+	max_amount = 60
+
 /obj/item/stack/light_w
 	name = "Wired glass tile"
 	singular_name = "Wired glass tile"
 	desc = ""
 	icon_state = "glass_wire"
 	w_class = 3.0
-	force = 6.0
-	throwforce = 15.0
+	force = 3.0
+	throwforce = 5.0
 	throw_speed = 5
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1259,8 +1272,8 @@
 	desc = ""
 	icon_state = "tile_e"
 	w_class = 3.0
-	force = 6.0
-	throwforce = 15.0
+	force = 3.0
+	throwforce = 5.0
 	throw_speed = 5
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT

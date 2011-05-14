@@ -132,13 +132,17 @@ turf
 			update_visuals(datum/gas_mixture/model)
 				overlays = null
 
+				var/siding_icon_state = return_siding_icon_state()
+				if(siding_icon_state)
+					overlays += image('floors.dmi',siding_icon_state)
+
 				switch(model.graphic)
 					if("plasma")
 						overlays.Add(plmaster)
 					if("sleeping_agent")
 						overlays.Add(slmaster)
-					else
-						overlays = null
+
+
 
 		New()
 			..()
