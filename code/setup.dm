@@ -118,10 +118,18 @@
 #define HEAD			1
 #define UPPER_TORSO		2
 #define LOWER_TORSO		4
-#define LEGS			8
-#define FEET			16
-#define ARMS			32
-#define HANDS			64
+#define LEG_LEFT		8
+#define LEG_RIGHT		16
+#define LEGS			24
+#define FOOT_LEFT		32
+#define FOOT_RIGHT		64
+#define FEET			96
+#define ARM_LEFT		128
+#define ARM_RIGHT		256
+#define ARMS			384
+#define HAND_LEFT		512
+#define HAND_RIGHT		1024
+#define HANDS			1536
 
 //bitflags for mutations
 #define PORTALS 1

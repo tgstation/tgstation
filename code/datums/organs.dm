@@ -37,49 +37,49 @@
 	name = "l arm"
 	icon_name = "l_arm"
 	max_damage = 75
-	body_part = ARMS
+	body_part = ARM_LEFT
 
 /datum/organ/external/l_foot
 	name = "l foot"
 	icon_name = "l_foot"
 	max_damage = 40
-	body_part = FEET
+	body_part = FOOT_LEFT
 
 /datum/organ/external/l_hand
 	name = "l hand"
 	icon_name = "l_hand"
 	max_damage = 40
-	body_part = HANDS
+	body_part = HAND_LEFT
 
 /datum/organ/external/l_leg
 	name = "l leg"
 	icon_name = "l_leg"
 	max_damage = 75
-	body_part = LEGS
+	body_part = LEG_LEFT
 
 /datum/organ/external/r_arm
 	name = "r arm"
 	icon_name = "r_arm"
 	max_damage = 75
-	body_part = ARMS
+	body_part = ARM_RIGHT
 
 /datum/organ/external/r_foot
 	name = "r foot"
 	icon_name = "r_foot"
 	max_damage = 40
-	body_part = FEET
+	body_part = FOOT_RIGHT
 
 /datum/organ/external/r_hand
 	name = "r hand"
 	icon_name = "r_hand"
 	max_damage = 40
-	body_part = HANDS
+	body_part = HAND_RIGHT
 
 /datum/organ/external/r_leg
 	name = "r leg"
 	icon_name = "r_leg"
 	max_damage = 75
-	body_part = LEGS
+	body_part = LEG_RIGHT
 
 /datum/organ/internal
 	name = "internal"
