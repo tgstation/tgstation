@@ -59,7 +59,17 @@
 		src.icon = src.stand_icon
 		update_clothing()
 		src << "\blue Your icons have been generated!"
+
 	..()
+
+	organStructure = new /obj/organstructure/human(src)
+
+/mob/living/carbon/human/cyborg
+	New()
+		..()
+		if(organStructure) //hacky, but it's not supposed to be in for a long time anyway
+			del(organStructure)
+		organStructure = new /obj/organstructure/cyber(src)
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || src.now_pushing))
@@ -1699,7 +1709,11 @@
 			if (M.a_intent == "hurt" && !(M.gloves && M.gloves.elecgen == 1))
 				if (src.w_uniform)
 					src.w_uniform.add_fingerprint(M)
-				var/damage = rand(1, 9)
+				var/damage = 0
+				if(organStructure && organStructure.arms)
+					damage = rand(organStructure.arms.minDamage,organStructure.arms.maxDamage)
+				else
+					damage = rand(1, 9) //oh boy
 				var/datum/organ/external/affecting = src.organs["chest"]
 				var/t = M.zone_sel.selecting
 				if ((t in list( "eyes", "mouth" )))

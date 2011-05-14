@@ -74,8 +74,11 @@
 
 
 /mob/living/proc/updatehealth()
-	if (src.nodamage == 0)
-		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
+	if (!src.nodamage)
+		if(organStructure && organStructure.chest)
+			health = organStructure.chest.maxHealth - oxyloss - toxloss - fireloss - bruteloss
+		else
+			src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
 	else
 		src.health = 100
 		src.stat = 0

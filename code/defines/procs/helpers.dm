@@ -1037,3 +1037,13 @@ proc/clearlist(list/list)
 	if(istype(list))
 		list.len = 0
 	return
+
+/atom/proc/GetAllContents(searchDepth = 5)
+	var/list/toReturn = list()
+
+	for(var/atom/part in contents)
+		toReturn += part
+		if(part.contents.len && searchDepth)
+			toReturn += part.GetAllContents(searchDepth - 1)
+
+	return toReturn

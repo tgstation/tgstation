@@ -1060,6 +1060,8 @@ proc/isobserver(A)
 	return 0
 
 /mob/proc/Life()
+	if(organStructure)
+		organStructure.ProcessOrgans()
 	return
 
 /mob/proc/update_clothing()
@@ -1816,12 +1818,18 @@ proc/isobserver(A)
 				if("run")
 					if (mob.drowsyness > 0)
 						move_delay += 6
-					move_delay += 1
+					if(mob.organStructure && mob.organStructure.legs)
+						move_delay += mob.organStructure.legs.moveRunDelay
+					else
+						move_delay += 1
 				if("face")
 					mob.dir = direct
 					return
 				if("walk")
-					move_delay += 7
+					if(mob.organStructure && mob.organStructure.legs)
+						move_delay += mob.organStructure.legs.moveWalkDelay
+					else
+						move_delay += 7
 
 
 			move_delay += mob.movement_delay()

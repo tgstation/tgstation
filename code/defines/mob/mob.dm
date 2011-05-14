@@ -197,3 +197,5 @@
 						// This can be used if you want to change the icon on the fly and want it to stay
 
 	var/UI = 'screen1_old.dmi' // For changing the UI from preferences
+
+	var/obj/organstructure/organStructure = null //for dem organs
