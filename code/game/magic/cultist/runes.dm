@@ -151,7 +151,6 @@ var/list/sacrificed = list()
 			var/turf/T = get_turf(U)
 			if(T)
 				T.hotspot_expose(700,125)
-
 			var/rune = src // detaching the proc - in theory
 			empulse(U, (range_red - 2), range_red)
 			del(rune)
@@ -238,7 +237,7 @@ var/list/sacrificed = list()
 				if (corpse_is_target)
 					usr << "\red The Geometer of blood wants this mortal for himself."
 				return fizzle()
-			
+
 
 			var/sacrifice_is_target = 0
 			find_sacrifice:
@@ -258,12 +257,12 @@ var/list/sacrificed = list()
 				else
 					usr << "\red You need a dead corpse as source of energy to put soul in new body."
 				return fizzle()
-			
+
 			for(var/mob/dead/observer/O in src.loc)
 				if(!O.client)
 					continue
 				ghost = O
-				
+
 			if (!ghost)
 				usr << "\red You do not feel an ethernal immaterial soul here."
 				return fizzle()
@@ -379,7 +378,7 @@ var/list/sacrificed = list()
 				break
 			if(!ghost)
 				return this_rune.fizzle()
-			
+
 			usr.say("Gal'h'rfikk harfrandid mud'gib!")
 			var/mob/living/carbon/human/dummy/D = new(this_rune.loc)
 			usr.visible_message("\red A shape forms in the center of the rune. A shape of... a man.", \
@@ -440,7 +439,7 @@ var/list/sacrificed = list()
 				if (unsuitable_newtalisman)
 					usr << "\red The blank is tainted. It is unsuitable."
 				return fizzle()
-		
+
 			var/obj/rune/imbued_from
 			var/obj/item/weapon/paper/talisman/T
 			for(var/obj/rune/R in orange(1,src))
@@ -487,13 +486,17 @@ var/list/sacrificed = list()
 					T.imbue = "communicate"
 					imbued_from = R
 					break
+				if(R.word1==wordjoin && R.word2==wordhide && R.word3==wordtech) //communicat
+					T = new(src.loc)
+					T.imbue = "runestun"
+					imbued_from = R
+					break
 			if (imbued_from)
 				for (var/mob/V in viewers(src))
 					V.show_message("\red The runes turn into dust, which then forms into an arcane image on the paper.", 3)
 				usr.say("H'drak v'loso, mir'kanas verbot!")
 				del(imbued_from)
 				del(newtalisman)
-				del(src)
 			else
 				return fizzle()
 
@@ -867,6 +870,10 @@ var/list/sacrificed = list()
 				for(var/obj/rune/R in view(src))
 					if(prob(10))
 						explosion(R.loc, -1, 0, 1, 5)
+				for(var/mob/living/carbon/human/C in orange(1,src))
+					if(iscultist(C))
+						C.say("Dedo ol'btoh!")
+						C.take_overall_damage(15, 0)
 				del(src)
 			else
 				return fizzle()
@@ -899,3 +906,31 @@ var/list/sacrificed = list()
 							T.hotspot_expose(700,125)
 							del(B)
 				del(src)
+
+//////////             Rune 24 (counting burningblood, which kinda doesnt work yet.)
+
+		runestun(var/mob/living/carbon/T as mob)
+			if(istype(src,/obj/rune))   ///When invoked as rune, flash and stun everyone around.
+				usr.say("Fuu ma'jin!")
+				for(var/mob/living/carbon/C in viewers(src))
+					flick("e_flash", C.flash)
+					if (C.weakened < 1 && (!(C.mutations & HULK)))  //Copied this off baton code
+						C.weakened = 1
+					if (C.stuttering < 1 && (!(C.mutations & HULK)))
+						C.stuttering = 1
+					if (C.stunned < 1 && (!(C.mutations & HULK)))
+						C.stunned = 1
+					C.show_message("\red The rune explodes in a bright flash.", 3)
+				del(src)
+			else                        ///When invoked as talisman, stun and mute the target mob.
+				usr.say("Dream sign ''Evil sealing talisman''!")
+				for(var/mob/O in viewers(T, null))
+					O.show_message(text("\red <B>[] invokes a talisman at []</B>", usr, T), 1)
+				flick("e_flash", T.flash)
+				if (!(T.mutations & HULK))
+					T.silent += 5
+				if (!(T.mutations & HULK))
+					T.weakened += 15
+				if (!(T.mutations & HULK))
+					T.stunned += 15
+			return

@@ -90,7 +90,7 @@ var/runedec = 0
 // destroy see blood - BLOOD BOIL
 
 // self other technology - Communication rune  //was other hear blood
-
+// join hide technology - stun rune. Rune color: bright pink.
 	examine()
 		if(!iscultist(usr))
 			usr << "A strange collection of symbols drawn in blood."
@@ -164,6 +164,8 @@ var/runedec = 0
 			return communicate()
 		if(word1 == wordtravel && word2 == wordother)
 			return itemport(src.word3)
+		if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
+			return runestun()
 		else
 			return fizzle()
 
@@ -260,6 +262,9 @@ var/runedec = 0
 			if(word1 == wordtravel && word2 == wordother)
 				icon_state = "1"
 				src.icon += rgb(200, 0, 0)
+			if(word1 == wordjoin && word2 == wordhide && word3 == wordtech)
+				icon_state = "2"
+				src.icon += rgb(100, 0, 100)
 				return
 			icon_state="[rand(1,6)]" //random shape and color for dummy runes
 			src.icon -= rgb(255,255,255)
@@ -328,35 +333,37 @@ var/runedec = 0
 				<h3>Disable Technology</h3>
 				Invoking this rune creates a strong electromagnetic pulse in a small radius, making it basically analogic to an EMP grenade. You can imbue this rune into a talisman, making it a decent defensive item.<br>
 				<h3>Drain Blood</h3>
-				This rune instantly heals you of some brute damage at the expense a person placed on top of the rune. Whenever you invoke a drain rune, ALL drain runes in very large radius are activated, draining blood from anyone located on top of those runes. This includes yourself, though the blood you drain from yourself just comes back to you. This might help you identify this rune when studying words. One drain gives up to 25HP per each victim, but you can repeat it if you need more. Draining only works on living people, so you might need to recharge your "Battery" once its empty. Drinking too much blood at once might cause blood hunger.<br>
+				This rune instantly heals you of some brute damage at the expense of a person placed on top of the rune. Whenever you invoke a drain rune, ALL drain runes on the station are activated, draining blood from anyone located on top of those runes. This includes yourself, though the blood you drain from yourself just comes back to you. This might help you identify this rune when studying words. One drain gives up to 25HP per each victim, but you can repeat it if you need more. Draining only works on living people, so you might need to recharge your "Battery" once its empty. Drinking too much blood at once might cause blood hunger.<br>
 				<h3>Raise Dead</h3>
-				This rune allows for the resurrection of any dead person. You will need a dead human body and a living human sacrifice. Make 2 raise dead runes. Put a living non-braindead human on top of one, and a dead body on the other one. When you invoke the rune, the life force of the living human will be transferred into the dead body, allowing a ghost standing on top of the dead body will enter it, instantly and fully healing it. Use other runes to ensure there is a ghost ready to be resurrected.<br>
+				This rune allows for the resurrection of any dead person. You will need a dead human body and a living human sacrifice. Make 2 raise dead runes. Put a living non-braindead human on top of one, and a dead body on the other one. When you invoke the rune, the life force of the living human will be transferred into the dead body, allowing a ghost standing on top of the dead body to enter it, instantly and fully healing it. Use other runes to ensure there is a ghost ready to be resurrected.<br>
 				<h3>Hide runes</h3>
 				This rune makes all nearby runes completely invisible. They are still there and will work if activated somehow, but you cannot invoke them directly if you do not see them.<br>
 				<h3>Reveal runes</h3>
 				This rune is made to reverse the process of hiding a rune. It reveals all hidden runes in a rather large area around it.
 				<h3>Leave your body</h3>
-				This rune gently rips your soul out of your body, leaving it intact. You can observe the surroundings as a ghost as well as communicate with other ghosts. Your body takes damage while you are there, so ensure your journey is not too long, or youmight never come back.<br>
+				This rune gently rips your soul out of your body, leaving it intact. You can observe the surroundings as a ghost as well as communicate with other ghosts. Your body takes damage while you are there, so ensure your journey is not too long, or you might never come back.<br>
 				<h3>Manifest a ghost</h3>
-				Unlike the Raise Dead rune, this rune does not require any special preparations or vessels. Instead of using full lifeforce of a sacrifice, it will drain YOUR lifefirce. Stand on the rune and invoke it. If theres a ghost standing over the rune, it will materialise, and will live as long as you dont move off the rune or die. You can put a paper with a name on it on the rune to make the new body look like that person.<br>
+				Unlike the Raise Dead rune, this rune does not require any special preparations or vessels. Instead of using full lifeforce of a sacrifice, it will drain YOUR lifeforce. Stand on the rune and invoke it. If theres a ghost standing over the rune, it will materialise, and will live as long as you dont move off the rune or die. You can put a paper with a name on the rune to make the new body look like that person.<br>
 				<h3>Imbue a talisman</h3>
-				This rune allows you to imbue the magic of some runes into paper talismans. Create an imbue rune, then an appropriate rune beside it. Put an empty piece of paper on the imbue rune and invoke it. ou will now have a 1-use talisman with the power of the target rune. Using a talisman drains alot of health, so be careful with it. You can imbue a talisman with the following powers: summon tome, reveal, conceal, teleport, tisable technology, communicate, deafen and blind.<br>
+				This rune allows you to imbue the magic of some runes into paper talismans. Create an imbue rune, then an appropriate rune beside it. Put an empty piece of paper on the imbue rune and invoke it. You will now have a one-use talisman with the power of the target rune. Using a talisman drains some health, so be careful with it. You can imbue a talisman with power of the following runes: summon tome, reveal, conceal, teleport, tisable technology, communicate, deafen, blind and stun.<br>
 				<h3>Sacrifice</h3>
 				Sacrifice rune allows you to sacrifice a living thing or a body to the Geometer of Blood. Monkeys and dead humans are the most basic sacrifices, they might or might not be enough to gain His favor. A living human is what a real sacrifice should be, however, you will need 3 people chanting the invocation to sacrifice a living person.
 				<h3>Create a wall</h3>
 				Invoking this rune solidifies the air above it, creating an an invisible wall. To remove the wall, simply invoke the rune again.
 				<h3>Summon cultist</h3>
-				This rune allows you to summon a fellow cultist to your location. The target cultist must be unhandcuffed ant not buckled to anything. You also need to have 3 people chanting at the rune to succesfully invoke it.<br>
+				This rune allows you to summon a fellow cultist to your location. The target cultist must be unhandcuffed ant not buckled to anything. You also need to have 3 people chanting at the rune to succesfully invoke it. Invoking it takes heavy strain on the bodies of all chanting cultists.<br>
 				<h3>Free a cultist</h3>
-				This rune unhandcuffs and unbuckles any cultist, no matter where he is. You need to have 3 people invoking the rune for it to work.<br>
+				This rune unhandcuffs and unbuckles any cultist of your choice, no matter where he is. You need to have 3 people invoking the rune for it to work. Invoking it takes heavy strain on the bodies of all chanting cultists.<br>
 				<h3>Deafen</h3>
-				This rune temporarily deafens everyone around you, including your fellow cultists, so be careful.<br>
+				This rune temporarily deafens all non-cultists around you.<br>
 				<h3>Blind</h3>
-				This rune temporarily blinds everyone around you, including your fellow cultists, so be careful.<br>
+				This rune temporarily blinds all non-cultists around you. Very robust. Use together with the deafen rune to leave your enemies completely helpless.<br>
 				<h3>Blood boil</h3>
-				This rune boils the blood of a person on top of it. The damage is enough to instantly critically hurt any person. You need 2 cultists invoking the rune for it to work.<br>
+				This rune boils the blood all non-cultists in visible range. The damage is enough to instantly critically hurt any person. You need 3 cultists invoking the rune for it to work. This rune is unreliable and may cause unpredicted effects when invoked. It also drains significant amount of your health when succesfully invoked.<br>
 				<h3>Communicate</h3>
-				Invoking this rune allows you to relay a message to all cultists on the station.
+				Invoking this rune allows you to relay a message to all cultists on the station and nearby space objects.
+				<h3>Stun</h3>
+				Unlike other runes, this ons is supposed to be used in talisman form. When invoked directly, it simply releases some dark energy, briefly stunning everyone around. When imbued into a talisman, you can force all of its energy into one person, stunning him so hard he cant even speak. However, effect wears off rather fast.<br>
 				</body>
 				</html>
 				"}
@@ -458,7 +465,7 @@ var/runedec = 0
 			var/r
 			if (!istype(user.loc,/turf))
 				user << "\red You do not have enough space to write a proper rune."
-			var/list/runes = list("teleport", "itemport", "tome", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate")
+			var/list/runes = list("teleport", "itemport", "tome", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
 			var/obj/rune/R = new /obj/rune
 			if(istype(user, /mob/living/carbon/human))
@@ -606,7 +613,12 @@ var/runedec = 0
 					R.word3=wordtech
 					R.loc = user.loc
 					R.check_icon()
-
+				if("stun")
+					R.word1=wordjoin
+					R.word2=wordhide
+					R.word3=wordtech
+					R.loc = user.loc
+					R.check_icon()
 /obj/item/weapon/paperscrap
 	name = "scrap of paper"
 	icon_state = "scrap"
@@ -652,11 +664,24 @@ var/runedec = 0
 				call(/obj/rune/proc/deafen)()
 			if("blind")
 				call(/obj/rune/proc/blind)()
+			if("runestun")
+				user << "\red To use this talisman, attack your target directly."
 			if("supply")
 				supply()
-		if(src && src.imbue!="supply")
+		if(src && src.imbue!="supply" && src.imbue!="runestun")
 			del(src)
 		return
+
+	attack(mob/living/carbon/T as mob, mob/living/user as mob)
+		if(imbue == "runestun")
+			user.take_organ_damage(5, 0)
+			call(/obj/rune/proc/runestun)(T)
+			del(src)
+		else
+			..()   ///If its some other talisman, use the generic attack code, is this supposed to work this way?
+
+
+
 
 /obj/item/weapon/paper/talisman/supply
 	imbue = "supply"
