@@ -16,6 +16,8 @@
 		3 = Report location
 		*/
 
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
+
 // Colors
 
 /obj/item/clothing/under/chameleon
@@ -67,9 +69,11 @@
 
 /obj/item/clothing/under/color/red
 	name = "Red Jumpsuit"
+	desc = "Made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection."
 	icon_state = "red"
 	item_state = "r_suit"
 	color = "red"
+	armor = list(melee = 10, bullet = 5, laser = 5, taser = 5, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/clothing/under/color/white
 	desc = "Made of a special fiber that gives special protection against biohazards."
@@ -78,6 +82,7 @@
 	item_state = "w_suit"
 	color = "white"
 	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/color/yellow
 	name = "Yellow Jumpsuit"
@@ -117,6 +122,7 @@
 	icon_state = "engine"
 	item_state = "y_suit"
 	color = "engine"
+	armor = list(melee = 0, bullet = 0, laser = 10, taser = 2, bomb = 0, bio = 0, rad = 10)
 
 /obj/item/clothing/under/rank/forensic_technician
 	desc = "It has a Forensics rank stripe on it."
@@ -131,6 +137,7 @@
 	icon_state = "darkred"
 	item_state = "r_suit"
 	color = "darkred"
+	armor = list(melee = 10, bullet = 5, laser = 5, taser = 5, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/geneticist
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a genetics rank stripe on it."
@@ -139,6 +146,7 @@
 	item_state = "w_suit"
 	color = "geneticswhite"
 	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/chemist
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a chemist rank stripe on it."
@@ -147,6 +155,7 @@
 	item_state = "w_suit"
 	color = "geneticswhite"
 	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/head_of_personnel
 	desc = "It has a Head of Personnel rank stripe on it."
@@ -189,6 +198,7 @@
 	icon_state = "hos"
 	item_state = "r_suit"
 	color = "hosred"
+	armor = list(melee = 10, bullet = 5, laser = 5, taser = 5, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/chief_engineer
 	desc = "It has a Chief Engineer rank stripe on it."
@@ -196,6 +206,7 @@
 	icon_state = "chiefengineer"
 	item_state = "g_suit"
 	color = "chief"
+	armor = list(melee = 0, bullet = 0, laser = 10, taser = 2, bomb = 0, bio = 0, rad = 10)
 
 /obj/item/clothing/under/rank/research_director
 	desc = "It has a Research Director rank stripe on it."
@@ -203,12 +214,14 @@
 	icon_state = "director"
 	item_state = "g_suit"
 	color = "director"
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 10)
 
 /obj/item/clothing/under/rank/janitor
 	desc = "Official clothing of the station's poopscooper. It has a janitor rank stripe on it"
 	name = "Janitor's Jumpsuit"
 	icon_state = "janitor"
 	color = "janitor"
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/scientist
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a toxins rank stripe on it."
@@ -217,6 +230,7 @@
 	item_state = "w_suit"
 	color = "toxinswhite"
 	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 10, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/medical
 	desc = "Made of a special fiber that gives special protection against biohazards. It has a medical rank stripe on it."
@@ -225,6 +239,7 @@
 	item_state = "w_suit"
 	color = "medical"
 	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/chief_medical_officer
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a Chief Medical Officer rank stripe on it."
@@ -233,6 +248,7 @@
 	item_state = "w_suit"
 	color = "medical"
 	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/hydroponics
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a Hydroponics rank stripe on it."
@@ -241,6 +257,7 @@
 	item_state = "g_suit"
 	color = "hydroponics"
 	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/cargo
 	name = "Quartermaster's Jumpsuit"
@@ -275,6 +292,7 @@
 	icon_state = "detective"
 	item_state = "det"
 	color = "detective"
+	armor = list(melee = 10, bullet = 5, laser = 5, taser = 5, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/clothing/under/lawyer
 	desc = "Slick threads."
@@ -310,6 +328,7 @@
 	item_state = "bl_suit"
 	color = "syndicate"
 	has_sensor = 0
+	armor = list(melee = 10, bullet = 5, laser = 5, taser = 5, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/clothing/under/syndicate/tacticool
 	name = "Tacticool Turtleneck"
@@ -317,6 +336,7 @@
 	icon_state = "tactifool"
 	item_state = "bl_suit"
 	color = "tactifool"
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/librarian
 	name = "Sensible Suit"
@@ -345,6 +365,7 @@
 	name = "athletic shorts"
 	desc = "95% Polyester, 5% Spandex!"
 	flags = FPRINT | TABLEPASS
+	body_parts_covered = LOWER_TORSO
 
 /obj/item/clothing/under/shorts/red
 	icon_state = "redshorts"

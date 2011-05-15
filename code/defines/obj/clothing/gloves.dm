@@ -10,6 +10,7 @@
 	var/elecgen = 0
 	var/uses = 0
 	body_parts_covered = HANDS
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/gloves/white
 	name = "White Gloves"
@@ -42,6 +43,7 @@
 	permeability_coefficient = 0.01
 	protective_temperature = 310
 	heat_transfer_coefficient = 0.90
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 20, rad = 20)
 
 /obj/item/clothing/gloves/swat
 	desc = "These tactical gloves are somewhat fire and impact-resistant."
@@ -51,6 +53,7 @@
 	siemens_coefficient = 0.30
 	protective_temperature = 1100
 	heat_transfer_coefficient = 0.05
+	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
 
 /obj/item/clothing/gloves/space_ninja
 	desc = "These nano-enhanced gloves insulate from electricity and provide fire resistance."
@@ -64,6 +67,7 @@
 	var/candrain = 0
 	var/mindrain = 200
 	var/maxdrain = 400
+	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/gloves/stungloves/
 	name = "Stungloves"
@@ -73,6 +77,7 @@
 	siemens_coefficient = 0.30
 	elecgen = 1
 	uses = 10
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 30, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/gloves/yellow
 	desc = "These gloves are electrically insulated."
@@ -83,6 +88,7 @@
 	permeability_coefficient = 0.05
 	protective_temperature = 1000
 	heat_transfer_coefficient = 0.01
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 30, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."

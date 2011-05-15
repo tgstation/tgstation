@@ -6,6 +6,7 @@
 	var/fire_resist = T0C+100
 	flags = FPRINT | TABLEPASS
 	var/list/allowed = list(/obj/item/weapon/tank/emergency_oxygen)
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/bomb_suit
 	name = "bomb suit"
@@ -18,12 +19,14 @@
 	heat_transfer_coefficient = 0.30
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
-	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 20, bullet = 10, laser = 10, taser = 5, bomb = 100, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/bomb_suit/security
+	desc = "A suit designed for safety when handling explosives. Includes light armoring against non-explosive hazards as well."
 	icon_state = "bombsuitsec"
 	item_state = "bombsuitsec"
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/baton,/obj/item/weapon/handcuffs)
+	armor = list(melee = 50, bullet = 40, laser = 20, taser = 5, bomb = 100, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
@@ -36,6 +39,7 @@
 	heat_transfer_coefficient = 0.30
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 1.3
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 100, rad = 20)
 
 /obj/item/clothing/suit/bio_suit/general
 	icon_state = "bio_general"
@@ -45,6 +49,8 @@
 
 /obj/item/clothing/suit/bio_suit/security
 	icon_state = "bio_security"
+	desc = "A suit that protects against biological contamination. Includes basic armoring against non-bio hazards as well."
+	armor = list(melee = 30, bullet = 20, laser = 10, taser = 5, bomb = 20, bio = 100, rad = 20)
 
 /obj/item/clothing/suit/bio_suit/janitor
 	icon_state = "bio_janitor"
@@ -66,6 +72,7 @@
 	item_state = "det_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/gun/detectiverevolver,/obj/item/weapon/gun/revolver,/obj/item/weapon/ammo/a38,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
+	armor = list(melee = 50, bullet = 40, laser = 30, taser = 10, bomb = 20, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
@@ -86,6 +93,7 @@
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen)
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 50, rad = 5)
 
 /obj/item/clothing/suit/labcoat/cmo
 	name = "chief medical officer's labcoat"
@@ -142,7 +150,8 @@
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 0.01
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	body_parts_covered = FULL_BODY //It's magic, I ain't gotta explain shit. --NEO
+	armor = list(melee = 30, bullet = 20, laser = 20, taser = 20, bomb = 20, bio = 20, rad = 20)
 	allowed = list(/obj/item/weapon/teleportation_scroll)
 
 /obj/item/clothing/suit/wizrobe/red
@@ -156,6 +165,8 @@
 	desc = "A rather dull, blue robe one could probably find in Space-Walmart."
 	icon_state = "wizard-fake"
 	item_state = "wizrobe"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS //It's not magic, shit is reasonable. --NEO
+	armor = list(melee = 5, bullet = 5, laser = 5, taser = 5, bomb = 5, bio = 5, rad = 5)
 
 /obj/item/clothing/suit/wizrobe/marisa
 	name = "Witch Robe"
@@ -181,7 +192,6 @@
 
 /obj/item/clothing/suit/armor
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/revolver,/obj/item/weapon/baton,/obj/item/weapon/handcuffs)
-	armor = list(melee = 80, bullet = 60, laser = 40, taser = 5, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -190,14 +200,16 @@
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	armor = list(melee = 75, bullet = 50, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"
 	desc = "A greatcoat enchanced with a special alloy for some protection and style."
 	icon_state = "hos"
 	item_state = "hos"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	armor = list(melee = 80, bullet = 60, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/armor/a_i_a_ptank
 	desc = "A wearable bomb with a health analyzer attached"
@@ -210,8 +222,9 @@
 	var/obj/item/clothing/suit/armor/vest/part3 = null
 	var/status = 0
 	flags = FPRINT | TABLEPASS | CONDUCT | ONESIZEFITSALL
-	body_parts_covered = UPPER_TORSO
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	canremove = 0
+	armor = list(melee = 75, bullet = 50, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/armor/captain
 	name = "Captain's armor"
@@ -225,9 +238,10 @@
 	radiation_protection = 0.25
 	protective_temperature = 1000
 	flags = FPRINT | TABLEPASS | SUITSPACE
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1.5
+	armor = list(melee = 60, bullet = 50, laser = 50, taser = 25, bomb = 50, bio = 20, rad = 20)
 
 /obj/item/clothing/suit/armor/centcomm
 	name = "Cent. Com. armor"
@@ -247,9 +261,11 @@
 	gas_transfer_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 3
+	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	armor = list(melee = 80, bullet = 60, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "Thunderdome suit (red)"
@@ -269,6 +285,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
+	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
 
 // FIRE SUITS
 
@@ -304,6 +321,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1.3
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 100)
 
 /obj/item/clothing/suit/fire/heavy
 	name = "firesuit"
@@ -331,6 +349,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 3
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 25, rad = 25)
 
 /obj/item/clothing/suit/space/rig
 	name = "rig suit"
@@ -339,6 +358,7 @@
 	item_state = "rig_suit"
 	radiation_protection = 0.50
 	slowdown = 2
+	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
@@ -348,6 +368,7 @@
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
+	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/syndicatefake
 	name = "red space suit replica"
@@ -389,6 +410,7 @@
 	var/coold = 0//If the suit is on cooldown. Could be useful to attach different cooldowns to abilities I guess. It ticks down every second.
 	var/datum/effects/system/spark_spread/spark_system
 	slowdown = 1
+	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"
@@ -398,6 +420,7 @@
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 0
+	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
 
 /obj/item/clothing/suit/captunic

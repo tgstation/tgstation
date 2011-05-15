@@ -247,6 +247,7 @@
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
 	color = "blackskirt"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/under/schoolgirl
 	name = "schoolgirl uniform"
@@ -254,6 +255,7 @@
 	icon_state = "schoolgirl"
 	item_state = "schoolgirl"
 	color = "schoolgirl"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/under/gimmick/rank/police
 	name = "Police Uniform"

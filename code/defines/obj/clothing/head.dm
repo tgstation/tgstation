@@ -5,6 +5,7 @@
 	icon = 'hats.dmi'
 	body_parts_covered = HEAD
 	var/list/allowed = list(/obj/item/weapon/pen)
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/radiation
 	name = "Radiation Hood"
@@ -12,16 +13,18 @@
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
 	radiation_protection = 0.35
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 100)
 
 /obj/item/clothing/head/bomb_hood
 	name = "bomb hood"
 	icon_state = "bombsuit"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
-	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 20, bullet = 10, laser = 10, taser = 5, bomb = 100, bio = 0, rad = 0)
 
 /obj/item/clothing/head/bomb_hood/security
 	icon_state = "bombsuitsec"
 	item_state = "bombsuitsec"
+	armor = list(melee = 50, bullet = 40, laser = 20, taser = 5, bomb = 100, bio = 0, rad = 0)
 
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
@@ -29,6 +32,7 @@
 	desc = "Keeps the germs from flying on your face."
 	permeability_coefficient = 0.01
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 100, rad = 20)
 
 /obj/item/clothing/head/bio_hood/general
 	icon_state = "bio_general"
@@ -38,6 +42,7 @@
 
 /obj/item/clothing/head/bio_hood/security
 	icon_state = "bio_security"
+	armor = list(melee = 30, bullet = 20, laser = 10, taser = 5, bomb = 20, bio = 100, rad = 20)
 
 /obj/item/clothing/head/bio_hood/janitor
 	icon_state = "bio_janitor"
@@ -73,6 +78,7 @@
 	desc = "Someone who wears this will look very smart."
 	icon_state = "detective"
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
+	armor = list(melee = 50, bullet = 40, laser = 30, taser = 10, bomb = 20, bio = 0, rad = 0)
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -91,6 +97,7 @@
 	name = "wizard hat"
 	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
 	icon_state = "wizard"
+	//Not given any special protective value since the magic robes are full-body protection --NEO
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -134,7 +141,7 @@
 	icon_state = "helmet"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
 	item_state = "helmet"
-	armor = list(melee = 80, bullet = 60, laser = 40, taser = 5, bomb = 0)
+	armor = list(melee = 75, bullet = 50, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 	protective_temperature = 500
 	heat_transfer_coefficient = 0.10
@@ -147,6 +154,7 @@
 	see_face = 0.0
 	item_state = "space"
 	permeability_coefficient = 0.01
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 25, rad = 25)
 
 /obj/item/clothing/head/helmet/space/capspace
 	name = "space helmet"
@@ -156,6 +164,7 @@
 	see_face = 0.0
 	item_state = "capspace"
 	permeability_coefficient = 0.01
+	armor = list(melee = 60, bullet = 50, laser = 50, taser = 25, bomb = 50, bio = 20, rad = 20)
 
 /obj/item/clothing/head/helmet/space/rig
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
@@ -163,12 +172,14 @@
 	icon_state = "rig"
 	item_state = "rig_helm"
 	radiation_protection = 0.25
+	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."
+	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/head/syndicatefake
 	name = "red space helmet replica"
@@ -191,18 +202,21 @@
 	item_state = "s-ninja_mask"
 	radiation_protection = 0.25
 	see_face = 1
+	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"
 	icon_state = "swat"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES
 	item_state = "swat"
+	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "Thunderdome helmet"
 	icon_state = "thunderdome"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES
 	item_state = "thunderdome"
+	armor = list(melee = 80, bullet = 60, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/head/helmet/hardhat
 	name = "hard hat"
@@ -211,6 +225,7 @@
 	item_state = "hardhat0"
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
+	armor = list(melee = 30, bullet = 30, laser = 20, taser = 10, bomb = 20, bio = 10, rad = 20)
 
 
 /obj/item/clothing/head/helmet/welding
@@ -224,12 +239,14 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = 0
+	armor = list(melee = 10, bullet = 10, laser = 10, taser = 5, bomb = 10, bio = 5, rad = 10)
 
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS helmet"
 	icon_state = "hoscap"
 	desc = "A hat that shows the security grunts who's in charge!"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
+	armor = list(melee = 80, bullet = 60, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/head/helmet/that
 	name = "Sturdy Top hat"
@@ -237,6 +254,7 @@
 	icon_state = "tophat"
 	item_state = "that"
 	flags = FPRINT|TABLEPASS|HEADSPACE
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 
 
@@ -251,12 +269,14 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
+	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
 
 /obj/item/clothing/head/helmet/cap
 	name = "Captain's cap"
 	icon_state = "capcap"
 	flags = FPRINT|TABLEPASS|SUITSPACE
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/chaplain_hood
 	name = "Chaplain's hood"

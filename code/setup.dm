@@ -131,6 +131,8 @@
 #define HAND_RIGHT		1024
 #define HANDS			1536
 
+#define FULL_BODY		2047
+
 //bitflags for mutations
 #define PORTALS 1
 #define COLD_RESISTANCE 2
