@@ -495,7 +495,6 @@
 #include "code\game\objects\alien\facehugger.dm"
 #include "code\game\objects\alien\resin.dm"
 #include "code\game\objects\alien\weeds.dm"
-#include "code\game\objects\closets\bombsuit.dm"
 #include "code\game\objects\closets\emergency.dm"
 #include "code\game\objects\closets\firecloset.dm"
 #include "code\game\objects\closets\gimmick.dm"
