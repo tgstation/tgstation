@@ -63,6 +63,9 @@ DNA INJECTOR
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "\red You don't have the dexterity to do this!"
 		return
+	M.attack_log += text("<font color='orange'>[world.time] - has been injected with [src.name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to inject [M.name] ([M.ckey])</font>")
+
 	if (user)
 		if (istype(M, /mob/living/carbon/human))
 			var/obj/equip_e/human/O = new /obj/equip_e/human(  )

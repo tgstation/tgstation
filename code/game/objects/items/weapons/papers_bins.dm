@@ -456,7 +456,7 @@ CLIPBOARDS
 	usr << text("There is about [] square units of paper left!", src.amount)
 	return
 
-/obj/item/weapon/wrapping_paper/attack(target as mob, mob/user as mob)
+/obj/item/weapon/wrapping_paper/attack(mob/target as mob, mob/user as mob)
 	if (!istype(target, /mob/living/carbon/human)) return
 	if (istype(target:wear_suit, /obj/item/clothing/suit/straight_jacket) || target:stat)
 		if (src.amount > 2)
@@ -468,6 +468,9 @@ CLIPBOARDS
 				target:client:eye = present
 
 			target:loc = present
+			target.attack_log += text("<font color='orange'>[world.time] - has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to wrap [target.name] ([target.ckey])</font>")
+
 		else
 			user << "/blue You need more paper."
 	else

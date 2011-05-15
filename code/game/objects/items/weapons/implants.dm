@@ -301,6 +301,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if (user && src.imp)
 		for (var/mob/O in viewers(M, null))
 			O.show_message("\red [M] has been implanted by [user].", 1)
+		M.attack_log += text("<font color='orange'>[world.time] - has been implanted with [src.name] ([src.imp.name])  by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
 		src.imp.loc = M
 		src.imp.imp_in = M
 		src.imp.implanted = 1

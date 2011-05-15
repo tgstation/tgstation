@@ -197,6 +197,9 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 		playsound(user, 'Gunshot.ogg', 100, 1)
 		for(var/mob/O in viewers(M, null))
 			if(O.client)	O.show_message(text("\red <B>[] has been shot point-blank by []!</B>", M, user), 1, "\red You hear a gunshot", 2)
+		M.attack_log += text("<font color='orange'>[world.time] - has been shot point blank with [src.name] by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to shoot [M.name] ([M.ckey]) at point blank range.</font>")
+
 		M.bullet_act(PROJECTILE_BULLET, src, user.get_organ_target())
 		src.bullets--
 	else
@@ -598,6 +601,11 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 		return
 
 	src.add_fingerprint(user)
+	user.attack_log += text("<font color='red'>[world.time] - has fired the [src.name] at [target.name] at ([target.x], [target.y], [target.z])</font>")
+	if(ismob(target))
+		var/mob/TAR = target
+		TAR.attack_log += text("<font color='orange'>[world.time] - has been fired at by [src.name] by [user.name] at ([user.ckey])</font>")
+
 
 	if(src.charges < 1)
 		user << "\red *click* *click*"
@@ -681,6 +689,12 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 	if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
 		user << "\red You don't have the dexterity to do this!"
 		return
+
+	user.attack_log += text("<font color='red'>[world.time] - has fired the [src.name] at [target.name] at ([target.x], [target.y], [target.z])</font>")
+	if(ismob(target))
+		var/mob/TAR = target
+		TAR.attack_log += text("<font color='orange'>[world.time] - has been fired at by [src.name] by [user.name] at ([user.ckey])</font>")
+
 	src.add_fingerprint(user)
 	if(!isrobot(user) && src.charges < 1)
 		user << "\red *click* *click*";
@@ -724,6 +738,9 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 		usr.paralysis += 60
 		return
 	src.add_fingerprint(user)
+	M.attack_log += text("<font color='orange'>[world.time] - has been ahot at with a [src.name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("<font color='red'>[world.time] - has shot witha [src.name] at [M.name] ([M.ckey])</font>")
+
 	var/mob/living/carbon/human/H = M
 	if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
 		M << "\red The helmet protects you from being hit hard in the head!"
@@ -940,6 +957,9 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 		point_blank_teleport(usr)
 		return
 	src.add_fingerprint(user)
+	M.attack_log += text("<font color='orange'>[world.time] - has been shot at with [src.name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("<font color='red'>[world.time] - has shot with [src.name] at [M.name] ([M.ckey])</font>")
+
 	if(src.charges >= 1)
 		if (prob(95))
 			point_blank_teleport(M)
@@ -1082,6 +1102,10 @@ obj/item/weapon/gun/revolver/attackby(obj/item/weapon/ammo/a357/A as obj, mob/li
 			return
 
 		src.add_fingerprint(user)
+		user.attack_log += text("<font color='red'>[world.time] - has fired the [src.name] at [target.name] at ([target.x], [target.y], [target.z])</font>")
+		if(ismob(target))
+			var/mob/TAR = target
+			TAR.attack_log += text("<font color='orange'>[world.time] - has been fired at by [src.name] by [user.name] ([user.ckey])</font>")
 
 		if(src.charges < 1)
 			user << "\red *click* *click*";

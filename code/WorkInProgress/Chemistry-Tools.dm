@@ -1024,6 +1024,9 @@
 	if (reagents.total_volume)
 		user << "\blue You inject [M] with the hypospray."
 		M << "\red You feel a tiny prick!"
+
+		M.attack_log += text("<font color='orange'>[world.time] - has been injected with [src.name] by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to inject [M.name] ([M.ckey])</font>")
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
@@ -1089,8 +1092,8 @@
 
 				if(!do_mob(user, M)) return
 
-				M.attack_log += text("[] <b>[]/[]</b> feeds <b>[]/[]</b> with <b>[]</b>", world.time, user, user.client, M, M.client, src)
-				user.attack_log += text("[] <b>[]/[]</b> feeds <b>[]/[]</b> with <b>[]</b>", world.time, user, user.client, M, M.client, src)
+				M.attack_log += text("<font color='orange'>[world.time] - has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
+				user.attack_log += text("<font color='red'>[world.time] - has fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
 
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("\red [user] feeds [M] [src].", 1)
@@ -1236,6 +1239,10 @@
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message("\red [user] feeds [M] [src].", 1)
 
+			M.attack_log += text("<font color='orange'>[world.time] - has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
+			user.attack_log += text("<font color='red'>[world.time] - has fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+
+
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
 				spawn(5)
@@ -1353,6 +1360,10 @@
 
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message("\red [user] forces [M] to swallow [src].", 1)
+
+			M.attack_log += text("<font color='orange'>[world.time] - has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
+			user.attack_log += text("<font color='red'>[world.time] - has fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+
 
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
@@ -1800,6 +1811,10 @@
 			if(!do_mob(user, M)) return
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message("\red [user] feeds [M] [src].", 1)
+
+			M.attack_log += text("<font color='orange'>[world.time] - has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
+			user.attack_log += text("<font color='red'>[world.time] - has fed [src.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+
 
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)

@@ -121,6 +121,9 @@ STUN BATON
 	src.add_fingerprint(user)
 	var/mob/living/carbon/human/H = M
 
+	M.attack_log += text("<font color='orange'>[world.time] - has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to attack [M.name] ([M.ckey])</font>")
+
 
 	if (status == 0 || (status == 1 && charges ==0))
 		if(user.a_intent == "hurt")
@@ -214,6 +217,9 @@ STUN BATON
 			user.take_organ_damage(2*force)
 		return
 	src.add_fingerprint(user)
+
+	M.attack_log += text("<font color='orange'>[world.time] - has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
 	if (user.a_intent == "hurt")
 		if(!..()) return

@@ -34,6 +34,9 @@
 		usr << "\red You don't have the dexterity to do this!"
 		return
 	if (istype(M, /mob/living/carbon/human))
+		M.attack_log += text("<font color='orange'>[world.time] - has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("<font color='red'>[world.time] - has attempted to handcuff [M.name] ([M.ckey])</font>")
+
 		var/obj/equip_e/human/O = new /obj/equip_e/human(  )
 		O.source = user
 		O.target = M
@@ -171,6 +174,8 @@
 		//	O.show_message(text("\red [] has been stabbed with [] by [].", M, src, user), 1)
 		user << "\red You stab [M] with the pen."
 		M << "\red You feel a tiny prick!"
+		M.attack_log += text("<font color='orange'>[world.time] - has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to stab [M.name] ([M.ckey])</font>")
 		if(M.reagents) reagents.trans_to(M, 50) //used to be 150
 	return
 
@@ -188,6 +193,8 @@
 	if (reagents.total_volume)
 		user << "\red You stab [M] with the penlight."
 		M << "\red You feel a tiny prick!"
+		M.attack_log += text("<font color='orange'>[world.time] - has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to stab [M.name] ([M.ckey])</font>")
 		if(M.reagents) reagents.trans_to(M, 15)
 	..()
 	return

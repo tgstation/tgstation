@@ -173,6 +173,10 @@
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user
+
+	user.attack_log += "<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name]</font>"
+	M.attack_log += "<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name]</font>"
+
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
