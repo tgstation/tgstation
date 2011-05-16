@@ -23,13 +23,14 @@
 
 /obj/item/weapon/storage/toolbox/electrical/New()
 	..()
+	var/color = pick("red","yellow","green","blue")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/weapon/cable_coil(src)
-	new /obj/item/weapon/cable_coil(src)
+	new /obj/item/weapon/cable_coil(src,30,color)
+	new /obj/item/weapon/cable_coil(src,30,color)
 	if(prob(5))
 		new /obj/item/clothing/gloves/yellow(src)
 	else
-		new /obj/item/weapon/cable_coil(src)
+		new /obj/item/weapon/cable_coil(src,30,color)

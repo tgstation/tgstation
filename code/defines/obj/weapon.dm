@@ -465,21 +465,32 @@
 #define MAXCOIL 30
 /obj/item/weapon/cable_coil
 	name = "cable coil"
-	var/amount = MAXCOIL
 	icon = 'power.dmi'
-	icon_state = "coil"
+	icon_state = "coil_red"
+	var/amount = MAXCOIL
+	var/color = "red"
 	desc = "A coil of power cable."
 	throwforce = 10
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 5
 	flags = TABLEPASS|USEDELAY|FPRINT|CONDUCT
-	item_state = "coil"
+	item_state = "coil_red"
 
 /obj/item/weapon/cable_coil/cut
-	icon = 'power.dmi'
-	icon_state = "coil2"
-	origin_tech = "materials=1"
+	item_state = "coil_red2"
+
+/obj/item/weapon/cable_coil/yellow
+	color = "yellow"
+	icon_state = "coil_yellow"
+
+/obj/item/weapon/cable_coil/blue
+	color = "blue"
+	icon_state = "coil_blue"
+
+/obj/item/weapon/cable_coil/green
+	color = "green"
+	icon_state = "coil_green"
 
 /obj/item/weapon/crowbar
 	name = "crowbar"

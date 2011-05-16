@@ -646,11 +646,24 @@
 	var/netnum = 0
 	name = "power cable"
 	desc = "A flexible superconducting cable for heavy-duty power transfer."
-	icon = 'power_cond.dmi'
+	icon = 'power_cond_red.dmi'
 	icon_state = "0-1"
 	var/d1 = 0
 	var/d2 = 1
 	layer = 2.5
+	var/color="red"
+
+/obj/cable/yellow
+	color="yellow"
+	icon = 'power_cond_yellow.dmi'
+
+/obj/cable/green
+	color="green"
+	icon = 'power_cond_green.dmi'
+
+/obj/cable/blue
+	color="blue"
+	icon = 'power_cond_blue.dmi'
 
 /obj/manifest
 	name = "manifest"

@@ -446,7 +446,7 @@
 /*
 /obj/machinery/wire
 	name = "wire"
-	icon = 'power_cond.dmi'
+	icon = 'power_cond_red.dmi'
 	use_power = 1
 	idle_power_usage = 0
 	active_power_usage = 1

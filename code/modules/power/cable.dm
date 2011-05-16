@@ -25,6 +25,21 @@
 				return
 
 		var/obj/cable/NC = new(T)
+
+		var/color = "red"
+		if(coil.color)
+			color = coil.color
+		NC.color = coil.color
+		switch(color)
+			if("red")
+				NC.icon = 'power_cond_red.dmi'
+			if("yellow")
+				NC.icon = 'power_cond_yellow.dmi'
+			if("green")
+				NC.icon = 'power_cond_green.dmi'
+			if("blue")
+				NC.icon = 'power_cond_blue.dmi'
+
 		NC.d1 = 0
 		NC.d2 = dirn
 		NC.add_fingerprint()
@@ -99,9 +114,9 @@
 			return
 
 		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			new/obj/item/weapon/cable_coil(T, 2)
+			new/obj/item/weapon/cable_coil(T, 2, color)
 		else
-			new/obj/item/weapon/cable_coil(T, 1)
+			new/obj/item/weapon/cable_coil(T, 1, color)
 
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
@@ -155,40 +170,45 @@
 			del(src)
 		if(2.0)
 			if (prob(50))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1)
+				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, color)
 				del(src)
 
 		if(3.0)
 			if (prob(25))
-				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1)
+				new/obj/item/weapon/cable_coil(src.loc, src.d1 ? 2 : 1, color)
 				del(src)
 	return
 
 // the cable coil object, used for laying cable
 
-/obj/item/weapon/cable_coil/New(loc, length = MAXCOIL)
+/obj/item/weapon/cable_coil/New(loc, length = MAXCOIL, var/param_color = null)
+	..()
 	src.amount = length
+	if (param_color)
+		color = param_color
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	updateicon()
-	..(loc)
+
 
 /obj/item/weapon/cable_coil/cut/New(loc)
-	..(loc)
+	..()
 	src.amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	updateicon()
 
 /obj/item/weapon/cable_coil/proc/updateicon()
+	if (!color)
+		color = pick("red", "yellow", "blue", "green")
 	if(amount == 1)
-		icon_state = "coil1"
+		icon_state = "coil_[color]1"
 		name = "cable piece"
 	else if(amount == 2)
-		icon_state = "coil2"
+		icon_state = "coil_[color]2"
 		name = "cable piece"
 	else
-		icon_state = "coil"
+		icon_state = "coil_[color]"
 		name = "cable coil"
 
 /obj/item/weapon/cable_coil/examine()
@@ -205,7 +225,7 @@
 	..()
 	if( istype(W, /obj/item/weapon/wirecutters) && src.amount > 1)
 		src.amount--
-		new/obj/item/weapon/cable_coil(user.loc, 1)
+		new/obj/item/weapon/cable_coil(user.loc, 1,color)
 		user << "You cut a piece off the cable coil."
 		src.updateicon()
 		return
@@ -270,6 +290,21 @@
 				return
 
 		var/obj/cable/C = new(F)
+
+		var/color_n = "red"
+		if(color)
+			color_n = color
+		C.color = color_n
+		switch(color)
+			if("red")
+				C.icon = 'power_cond_red.dmi'
+			if("yellow")
+				C.icon = 'power_cond_yellow.dmi'
+			if("green")
+				C.icon = 'power_cond_green.dmi'
+			if("blue")
+				C.icon = 'power_cond_blue.dmi'
+
 		C.d1 = 0
 		C.d2 = dirn
 		C.add_fingerprint(user)
@@ -315,11 +350,26 @@
 			var/fdirn = turn(dirn, 180)		// the opposite direction
 
 			for(var/obj/cable/LC in U)		// check to make sure there's not a cable there already
-				if(LC.d1 == fdirn && LC.d2 == fdirn)
+				if(LC.d1 == fdirn || LC.d2 == fdirn)
 					user << "There's already a cable at that position."
 					return
 
 			var/obj/cable/NC = new(U)
+
+			var/color_n = "red"
+			if(color)
+				color_n = color
+			NC.color = color_n
+			switch(color)
+				if("red")
+					NC.icon = 'power_cond_red.dmi'
+				if("yellow")
+					NC.icon = 'power_cond_yellow.dmi'
+				if("green")
+					NC.icon = 'power_cond_green.dmi'
+				if("blue")
+					NC.icon = 'power_cond_blue.dmi'
+
 			NC.d1 = 0
 			NC.d2 = fdirn
 			NC.add_fingerprint()
@@ -349,6 +399,21 @@
 		C.shock(user, 25)
 		del(C)
 		var/obj/cable/NC = new(T)
+
+		var/color_n = "red"
+		if(color)
+			color_n = color
+		NC.color = color_n
+		switch(color)
+			if("red")
+				NC.icon = 'power_cond_red.dmi'
+			if("yellow")
+				NC.icon = 'power_cond_yellow.dmi'
+			if("green")
+				NC.icon = 'power_cond_green.dmi'
+			if("blue")
+				NC.icon = 'power_cond_blue.dmi'
+
 		NC.d1 = nd1
 		NC.d2 = nd2
 		NC.add_fingerprint()
