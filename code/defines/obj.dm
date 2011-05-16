@@ -1169,6 +1169,15 @@
 	throw_speed = 3
 	throw_range = 3
 
+/obj/item/stack/sheet/sandstone
+	name = "Sandstone Bricks"
+	singular_name = "sandstone brick"
+	icon_state = "sheet-sandstone"
+	force = 5.0
+	throwforce = 5
+	throw_speed = 4
+	throw_range = 5
+
 /obj/item/stack/sheet/glass
 	name = "glass"
 	singular_name = "glass sheet"

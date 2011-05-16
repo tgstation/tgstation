@@ -129,10 +129,18 @@ CRAYONS
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob)
 	if(istype(target,/turf/simulated/floor))
-		user << "You start drawing a rune on the [target.name]."
+		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
+		switch(drawtype)
+			if("letter")
+				drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+				user << "You start drawing a letter on the [target.name]."
+			if("graffiti")
+				user << "You start drawing graffiti on the [target.name]."
+			if("rune")
+				user << "You start drawing a rune on the [target.name]."
 		if(instant || do_after(user, 50))
-			new /obj/decal/cleanable/crayon(target,colour,shadeColour)
-			user << "You draw a rune on the [target.name]."
+			new /obj/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+			user << "You finish drawing."
 			if(uses)
 				uses--
 				if(!uses)
@@ -159,13 +167,21 @@ CRAYONS
 	layer = 2.1
 	anchored = 1
 
-/obj/decal/cleanable/crayon/New(location,main = "#FFFFFF",shade = "#000000")
+/obj/decal/cleanable/crayon/New(location,main = "#FFFFFF",shade = "#000000",var/type = "rune")
 	..()
 	loc = location
-	var/runeShape = rand(1,6)
 
-	var/icon/mainOverlay = new/icon('rune.dmi',"main[runeShape]",2.1)
-	var/icon/shadeOverlay = new/icon('rune.dmi',"shade[runeShape]",2.1)
+	name = type
+	desc = "A [type] drawn in crayon."
+
+	switch(type)
+		if("rune")
+			type = "rune[rand(1,6)]"
+		if("graffiti")
+			type = pick("amyjon","face","matt","revolution","engie","guy","end")
+
+	var/icon/mainOverlay = new/icon('crayondecal.dmi',"[type]",2.1)
+	var/icon/shadeOverlay = new/icon('crayondecal.dmi',"[type]s",2.1)
 
 	mainOverlay.Blend(main,ICON_ADD)
 	shadeOverlay.Blend(shade,ICON_ADD)

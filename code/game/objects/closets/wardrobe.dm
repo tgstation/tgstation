@@ -76,7 +76,7 @@
 	return
 
 /obj/closet/wardrobe/chaplain_black/New()
-	new /obj/item/clothing/suit/imperium_monk( src )
+	//new /obj/item/clothing/suit/imperium_monk( src ) //No. -- Urist
 	new /obj/item/clothing/under/rank/chaplain( src )
 	new /obj/item/clothing/under/rank/chaplain( src )
 	new /obj/item/clothing/shoes/black( src )

@@ -77,6 +77,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	null, \
 	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2), \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/chem_grenade), \
+	null, \
+	new/datum/stack_recipe("iron door", /obj/mineral_door/iron, 20), \
 	)
 
 /obj/item/stack/sheet/metal
