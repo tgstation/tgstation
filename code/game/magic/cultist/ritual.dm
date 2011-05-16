@@ -649,40 +649,46 @@ var/runedec = 0
 	var/uses = 0
 
 	attack_self(mob/living/user as mob)
-		user.take_organ_damage(5, 0)
-		switch(imbue)
-			if("newtome")
-				call(/obj/rune/proc/tomesummon)()
-			if("emp")
-				call(/obj/rune/proc/emp)(usr.loc,3)
-			if("conceal")
-				call(/obj/rune/proc/obscure)(2)
-			if("revealrunes")
-				call(/obj/rune/proc/revealrunes)(src)
-			if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
-				call(/obj/rune/proc/teleport)(imbue)
-			if("communicate")
-				call(/obj/rune/proc/communicate)()
-			if("deafen")
-				call(/obj/rune/proc/deafen)()
-			if("blind")
-				call(/obj/rune/proc/blind)()
-			if("runestun")
-				user << "\red To use this talisman, attack your target directly."
-			if("supply")
-				supply()
-		if(src && src.imbue!="supply" && src.imbue!="runestun")
-			del(src)
-		return
+		if(iscultist(user))
+			user.take_organ_damage(5, 0)
+			switch(imbue)
+				if("newtome")
+					call(/obj/rune/proc/tomesummon)()
+				if("emp")
+					call(/obj/rune/proc/emp)(usr.loc,3)
+				if("conceal")
+					call(/obj/rune/proc/obscure)(2)
+				if("revealrunes")
+					call(/obj/rune/proc/revealrunes)(src)
+				if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
+					call(/obj/rune/proc/teleport)(imbue)
+				if("communicate")
+					call(/obj/rune/proc/communicate)()
+				if("deafen")
+					call(/obj/rune/proc/deafen)()
+				if("blind")
+					call(/obj/rune/proc/blind)()
+				if("runestun")
+					user << "\red To use this talisman, attack your target directly."
+				if("supply")
+					supply()
+			if(src && src.imbue!="supply" && src.imbue!="runestun")
+				del(src)
+			return
+		else
+			user << "You see strange symbols on the paper. Are they supposed to mean something?"
+			return
 
 	attack(mob/living/carbon/T as mob, mob/living/user as mob)
-		if(imbue == "runestun")
-			user.take_organ_damage(5, 0)
-			call(/obj/rune/proc/runestun)(T)
-			del(src)
+		if(iscultist(user))
+			if(imbue == "runestun")
+				user.take_organ_damage(5, 0)
+				call(/obj/rune/proc/runestun)(T)
+				del(src)
+			else
+				..()   ///If its some other talisman, use the generic attack code, is this supposed to work this way?
 		else
-			..()   ///If its some other talisman, use the generic attack code, is this supposed to work this way?
-
+			..()
 
 
 
