@@ -518,7 +518,10 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
 				"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
 				"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
-				"light_on_broken","light_off","wall_thermite","grass1","grass2","grass3","grass4")
+				"light_on_broken","light_off","wall_thermite","grass1","grass2","grass3","grass4",
+				"asteroid","asteroid_dug","burning","oldburning","light-on-r","light-on-y","light-on-g","light-on-b")
+
+var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug")
 
 /turf/simulated/floor
 
@@ -528,6 +531,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	icon = 'floors.dmi'
 	icon_state = "floor"
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
+	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
 	var/broken = 0
@@ -623,7 +627,7 @@ turf/simulated/floor/proc/update_icon()
 			icon_state = icon_regular_floor
 	if(is_plating())
 		if(!broken && !burnt)
-			icon_state = "plating"
+			icon_state = icon_plating //Because asteroids are 'platings' too.
 	if(is_light_floor())
 		var/obj/item/stack/tile/light/T = floor_tile
 		if(T.on)
@@ -733,8 +737,7 @@ turf/simulated/floor/return_siding_icon_state()
 /turf/simulated/floor/is_plating()
 	if(!floor_tile)
 		return 1
-	else
-		return 0
+	return 0
 
 /turf/simulated/floor/proc/break_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
@@ -783,6 +786,7 @@ turf/simulated/floor/return_siding_icon_state()
 
 	if(!floor_tile) return
 	del(floor_tile)
+	icon_plating = "plating"
 	sd_SetLuminosity(0)
 	floor_tile = null
 	intact = 0

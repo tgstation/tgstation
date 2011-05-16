@@ -24,6 +24,8 @@
 
 	proc/is_plating()
 		return 0
+	proc/is_asteroid_floor()
+		return 0
 	proc/is_steel_floor()
 		return 0
 	proc/is_light_floor()

@@ -377,7 +377,7 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 			if(start_loc.y <= target_loc.y)                                 //GOING NORTH-EAST
 				for(y1 = start_loc.y; y1 <= target_loc.y; y1++)
 					for(x1 = start_loc.x; x1 <= target_loc.x; x1++)
-						new/turf/simulated/floor/airless/asteroid(column)
+						new/turf/simulated/floor/plating/airless/asteroid(column)
 						column = get_step(column,EAST)
 					line_start = get_step(line_start,NORTH)
 					column = line_start
@@ -386,7 +386,7 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 			else                                                            //GOING NORTH-WEST
 				for(y1 = start_loc.y; y1 >= target_loc.y; y1--)
 					for(x1 = start_loc.x; x1 <= target_loc.x; x1++)
-						new/turf/simulated/floor/airless/asteroid(column)
+						new/turf/simulated/floor/plating/airless/asteroid(column)
 						column = get_step(column,WEST)
 					line_start = get_step(line_start,NORTH)
 					column = line_start
@@ -396,7 +396,7 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 			if(start_loc.y <= target_loc.y)                                 //GOING SOUTH-EAST
 				for(y1 = start_loc.y; y1 <= target_loc.y; y1++)
 					for(x1 = start_loc.x; x1 >= target_loc.x; x1--)
-						new/turf/simulated/floor/airless/asteroid(column)
+						new/turf/simulated/floor/plating/airless/asteroid(column)
 						column = get_step(column,EAST)
 					line_start = get_step(line_start,SOUTH)
 					column = line_start
@@ -405,7 +405,7 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 			else                                                            //GOING SOUTH-WEST
 				for(y1 = start_loc.y; y1 >= target_loc.y; y1--)
 					for(x1 = start_loc.x; x1 >= target_loc.x; x1--)
-						new/turf/simulated/floor/airless/asteroid(column)
+						new/turf/simulated/floor/plating/airless/asteroid(column)
 						column = get_step(column,WEST)
 					line_start = get_step(line_start,SOUTH)
 					column = line_start
@@ -747,7 +747,7 @@ proc/move_mining_shuttle()
 
 /turf/simulated/mineral/ReplaceWithFloor()
 	if(!icon_old) icon_old = icon_state
-	var/turf/simulated/floor/airless/asteroid/W
+	var/turf/simulated/floor/plating/airless/asteroid/W
 	var/old_dir = dir
 
 	for(var/direction in cardinal)
@@ -758,7 +758,7 @@ proc/move_mining_shuttle()
 				shroom.pixel_x = 0
 				shroom.pixel_y = 0
 
-	W = new /turf/simulated/floor/airless/asteroid( locate(src.x, src.y, src.z) )
+	W = new /turf/simulated/floor/plating/airless/asteroid( locate(src.x, src.y, src.z) )
 	W.dir = old_dir
 	W.fullUpdateMineralOverlays()
 
@@ -840,18 +840,19 @@ proc/move_mining_shuttle()
 
 /**********************Asteroid**************************/
 
-/turf/simulated/floor/airless/asteroid //floor piece
+/turf/simulated/floor/plating/airless/asteroid //floor piece
 	name = "Asteroid"
 	icon = 'floors.dmi'
 	icon_state = "asteroid"
 	oxygen = 0
 	nitrogen = 0
 	temperature = TCMB
+	icon_plating = "asteroid"
 	var/seedName = "" //Name of the seed it contains
 	var/seedAmt = 0   //Ammount of the seed it contains
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 
-/turf/simulated/floor/airless/asteroid/New()
+/turf/simulated/floor/plating/airless/asteroid/New()
 	..()
 	//if (prob(50))
 	//	seedName = pick(list("1","2","3","4"))
@@ -859,13 +860,13 @@ proc/move_mining_shuttle()
 	spawn(2)
 		updateMineralOverlays()
 
-/turf/simulated/floor/airless/asteroid/ex_act(severity)
+/turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	return
 
-/turf/simulated/floor/airless/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
-		return
+/turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+	if(!W || !user)
+		return 0
 
 	if (istype(W, /obj/item/weapon/shovel))
 		var/turf/T = user.loc
@@ -884,13 +885,13 @@ proc/move_mining_shuttle()
 			user << "\blue You dug a hole."
 			gets_dug()
 			dug = 1
+			icon_plating = "asteroid_dug"
 			icon_state = "asteroid_dug"
-
 	else
-		return attack_hand(user)
+		..(W,user)
 	return
 
-/turf/simulated/floor/airless/asteroid/proc/gets_dug()
+/turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
 	if ((src.seedName != "") && (src.seedAmt > 0) && (src.seedAmt < 11))
 		var/i
 		for (i=0;i<seedAmt;i++)
@@ -910,7 +911,7 @@ proc/move_mining_shuttle()
 	new/obj/item/weapon/ore/glass(src)
 	return
 
-/turf/simulated/floor/airless/asteroid/proc/updateMineralOverlays()
+/turf/simulated/floor/plating/airless/asteroid/proc/updateMineralOverlays()
 
 	src.overlays = null
 
@@ -924,30 +925,30 @@ proc/move_mining_shuttle()
 		src.overlays += image('walls.dmi', "rock_side_w", layer=6)
 
 
-/turf/simulated/floor/airless/asteroid/proc/fullUpdateMineralOverlays()
-	var/turf/simulated/floor/airless/asteroid/A
-	if(istype(get_step(src, WEST), /turf/simulated/floor/airless/asteroid))
+/turf/simulated/floor/plating/airless/asteroid/proc/fullUpdateMineralOverlays()
+	var/turf/simulated/floor/plating/airless/asteroid/A
+	if(istype(get_step(src, WEST), /turf/simulated/floor/plating/airless/asteroid))
 		A = get_step(src, WEST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, EAST), /turf/simulated/floor/airless/asteroid))
+	if(istype(get_step(src, EAST), /turf/simulated/floor/plating/airless/asteroid))
 		A = get_step(src, EAST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, NORTH), /turf/simulated/floor/airless/asteroid))
+	if(istype(get_step(src, NORTH), /turf/simulated/floor/plating/airless/asteroid))
 		A = get_step(src, NORTH)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, NORTHWEST), /turf/simulated/floor/airless/asteroid))
+	if(istype(get_step(src, NORTHWEST), /turf/simulated/floor/plating/airless/asteroid))
 		A = get_step(src, NORTHWEST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, NORTHEAST), /turf/simulated/floor/airless/asteroid))
+	if(istype(get_step(src, NORTHEAST), /turf/simulated/floor/plating/airless/asteroid))
 		A = get_step(src, NORTHEAST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, SOUTHWEST), /turf/simulated/floor/airless/asteroid))
+	if(istype(get_step(src, SOUTHWEST), /turf/simulated/floor/plating/airless/asteroid))
 		A = get_step(src, SOUTHWEST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, SOUTHEAST), /turf/simulated/floor/airless/asteroid))
+	if(istype(get_step(src, SOUTHEAST), /turf/simulated/floor/plating/airless/asteroid))
 		A = get_step(src, SOUTHEAST)
 		A.updateMineralOverlays()
-	if(istype(get_step(src, SOUTH), /turf/simulated/floor/airless/asteroid))
+	if(istype(get_step(src, SOUTH), /turf/simulated/floor/plating/airless/asteroid))
 		A = get_step(src, SOUTH)
 		A.updateMineralOverlays()
 	src.updateMineralOverlays()
