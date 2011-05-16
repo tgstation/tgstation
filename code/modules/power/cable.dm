@@ -19,9 +19,8 @@
 
 		var/dirn = get_dir(user, src)
 
-
 		for(var/obj/cable/LC in T)
-			if(LC.d1 == dirn || LC.d2 == dirn)
+			if( (LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0) )
 				user << "There's already a cable at that position."
 				return
 
@@ -266,7 +265,7 @@
 			dirn = get_dir(F, user)
 
 		for(var/obj/cable/LC in F)
-			if(LC.d1 == dirn || LC.d2 == dirn)
+			if((LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0))
 				user << "There's already a cable at that position."
 				return
 
