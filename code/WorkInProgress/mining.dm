@@ -1052,6 +1052,8 @@ proc/move_mining_shuttle()
 	name = "Mining Satchel"
 	var/mode = 0;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 50; //the number of ore pieces it can carry.
+	flags = FPRINT | TABLEPASS | ONBELT
+	w_class = 1
 
 /obj/item/weapon/satchel/attack_self(mob/user as mob)
 	for (var/obj/item/weapon/ore/O in contents)
