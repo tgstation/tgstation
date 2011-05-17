@@ -15,6 +15,7 @@
 	if (istype(O, /obj/item/stack/sheet/metal))
 		if (src.metal_amount < 150000.0)
 			var/count = 0
+			src.overlays += "fab-load"
 			spawn(15)
 				if(O)
 					if(!O:amount)
@@ -28,6 +29,7 @@
 						del(O)
 
 					user << "You insert [count] metal sheet\s into the fabricator."
+					src.overlays -= "fab-load"
 					updateDialog()
 		else
 			user << "The robot part maker is full. Please remove metal from the robot part maker in order to insert more."
@@ -134,7 +136,7 @@ Please wait until completion...</TT><BR>
 
 					src.being_built = new building(src)
 
-					src.icon_state = "fab-active"
+					src.overlays += "fab-active"
 					src.updateUsrDialog()
 
 					spawn (build_time)
@@ -143,7 +145,7 @@ Please wait until completion...</TT><BR>
 							src.being_built = null
 						src.use_power = 1
 						src.operating = 0
-						src.icon_state = "fab-idle"
+						src.overlays -= "fab-active"
 		return
 
 	for (var/mob/M in viewers(1, src))
