@@ -1,3 +1,97 @@
+/*
+Overview:
+   Used to create objects that need a per step proc call.  Default definition of 'New()'
+   stores a reference to src machine in global 'machines list'.  Default definition
+   of 'Del' removes reference to src machine in global 'machines list'.
+
+Class Variables:
+   use_power (num)
+      current state of auto power use.
+      Possible Values:
+         0 -- no auto power use
+         1 -- machine is using power at its idle power level
+         2 -- machine is using power at its active power level
+
+   active_power_usage (num)
+      Value for the amount of power to use when in active power mode
+
+   idle_power_usage (num)
+      Value for the amount of power to use when in idle power mode
+
+   power_channel (num)
+      What channel to draw from when drawing power for power mode
+      Possible Values:
+         EQUIP:0 -- Equipment Channel
+         LIGHT:2 -- Lighting Channel
+         ENVIRON:3 -- Environment Channel
+
+   component_parts (list)
+      A list of component parts of machine used by frame based machines.
+
+   uid (num)
+      Unique id of machine across all machines.
+
+   gl_uid (global num)
+      Next uid value in sequence
+
+   stat (bitflag)
+      Machine status bit flags.
+      Possible bit flags:
+         BROKEN:1 -- Machine is broken
+         NOPOWER:2 -- No power is being supplied to machine.
+         POWEROFF:4 -- tbd
+         MAINT:8 -- machine is currently under going maintenance.
+         EMPED:16 -- temporary broken by EMP pulse
+
+   manual (num)
+      Currently unused.
+
+Class Procs:
+   New()                     'game/machinery/machine.dm'
+
+   Del()                     'game/machinery/machine.dm'
+
+   auto_use_power()            'game/machinery/machine.dm'
+      This proc determines how power mode power is deducted by the machine.
+      'auto_use_power()' is called by the 'master_controller' game_controller every
+      tick.
+
+      Return Value:
+         return:1 -- if object is powered
+         return:0 -- if object is not powered.
+
+      Default definition uses 'use_power', 'power_channel', 'active_power_usage',
+      'idle_power_usage', 'powered()', and 'use_power()' implement behavior.
+
+   powered(chan = EQUIP)         'modules/power/power.dm'
+      Checks to see if area that contains the object has power available for power
+      channel given in 'chan'.
+
+   use_power(amount, chan=EQUIP)   'modules/power/power.dm'
+      Deducts 'amount' from the power channel 'chan' of the area that contains the object.
+
+   power_change()               'modules/power/power.dm'
+      Called by the area that contains the object when ever that area under goes a
+      power state change (area runs out of power, or area channel is turned off).
+
+   RefreshParts()               'game/machinery/machine.dm'
+      Called to refresh the variables in the machine that are contributed to by parts
+      contained in the component_parts list. (example: glass and material amounts for
+      the autolathe)
+
+      Default definition does nothing.
+
+   assign_uid()               'game/machinery/machine.dm'
+      Called by machine to assign a value to the uid variable.
+
+   process()                  'game/machinery/machine.dm'
+      Called by the 'master_controller' once per game tick for each machine that is listed in the 'machines' list.
+
+
+	Compiled by Aygar
+*/
+
+
 /obj/machinery/New()
 	..()
 	machines.Add(src)

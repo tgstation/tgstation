@@ -18,7 +18,6 @@ field_generator power level display
 	icon_state = "Field_Gen"
 	anchored = 0
 	density = 1
-	req_access = list(access_engine)
 	use_power = 0
 	var
 		const/num_power_levels = 15  // Total number of power level icon has
@@ -40,10 +39,8 @@ field_generator power level display
 			if (icon_state != "Field_Gen")
 				icon_state = "Field_Gen"
 				warming_up = 0
-			else
-				//If necessary update icon_state to correct value
-				if (warming_up && icon_state != "Field_Gen +a[warming_up]")
-					icon_state = "Field_Gen +a[warming_up]"
+			else if (warming_up && icon_state != "Field_Gen +a[warming_up]")
+				icon_state = "Field_Gen +a[warming_up]"
 
 		// Power level indicator
 		// Scale % power to % num_power_levels and truncate value
@@ -53,16 +50,14 @@ field_generator power level display
 
 		// Do nothing unless new level is diffrent the powerlevel
 		if (powerlevel!=level)
-		// If old power overlay exists remove it
-			if (powerlevel)
-			// Remove old powerlevel overlay from overlays
+			if (powerlevel) //Remove old powerlevel overlay from overlays
 				overlays -= "Field_Gen +p[powerlevel]"
-
 			powerlevel = level
-
 			// If new power level exists add it to overlays
 			if (powerlevel)
 				overlays += "Field_Gen +p[powerlevel]"
+
+		return
 
 
 	New()
@@ -82,10 +77,10 @@ field_generator power level display
 				warming_up = 3
 				turn_on()
 			Varedit_start = 0
-			if(src.active == 2)
-				calc_power()
-			else
-				update_icon()
+
+		if(src.active == 2)
+			calc_power()
+			update_icon()
 		return
 
 
@@ -93,11 +88,11 @@ field_generator power level display
 		if(state == 2)
 			if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 				if(src.active >= 1)
-					user << "You are unable to turn off the [src] once it is online."
+					user << "You are unable to turn off the [src.name] once it is online."
 					return 1
 				else
 					user.visible_message("[user.name] turns on the [src.name]", \
-						"You turn on the [src].", \
+						"You turn on the [src.name].", \
 						"You hear heavy droning")
 					turn_on()
 					src.add_fingerprint(user)
@@ -167,6 +162,7 @@ field_generator power level display
 
 	emp_act()
 		return 0
+
 
 	blob_act()
 		if(active)
