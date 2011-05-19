@@ -9,7 +9,6 @@
 	src.sight |= SEE_OBJS
 	src.see_in_dark = 8
 	src.see_invisible = 2
-	src.lying = 1
 	src.icon_state = "ai-crash"
 
 	var/callshuttle = 0
