@@ -10,6 +10,11 @@
 	var/mob/living/silicon/robot = null
 	var/obj/mecha = null
 	var/locked = 0
+
+	var/list/construction_cost = list("metal"=1000,"glass"=500)
+	var/construction_time = 75
+	//these vars are so the mecha fabricator doesn't shit itself anymore. --NEO
+
 	req_access = list(access_robotics)
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
