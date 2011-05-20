@@ -4,38 +4,61 @@
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	var/construction_time = 100
+	var/list/construction_cost = list("metal"=20000,"glass"=5000)
 
 /obj/item/robot_parts/l_arm
-	name = "robot left arm"
+	name = "Cyborg Left Arm"
+	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
+	construction_time = 200
+	construction_cost = list("metal"=18000)
 
 /obj/item/robot_parts/r_arm
-	name = "robot right arm"
+	name = "Cyborg Right Arm"
+	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
+	construction_time = 200
+	construction_cost = list("metal"=18000)
 
 /obj/item/robot_parts/l_leg
-	name = "robot left leg"
+	name = "Cyborg Left Leg"
+	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
+	construction_time = 200
+	construction_cost = list("metal"=15000)
 
 /obj/item/robot_parts/r_leg
-	name = "robot right leg"
+	name = "Cyborg Right Leg"
+	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
+	construction_time = 200
+	construction_cost = list("metal"=15000)
 
 /obj/item/robot_parts/chest
-	name = "robot chest"
+	name = "Cyborg Torso"
+	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
+	construction_time = 350
+	construction_cost = list("metal"=40000)
 	var/wires = 0.0
 	var/obj/item/weapon/cell/cell = null
 
 /obj/item/robot_parts/head
-	name = "robot head"
+	name = "Cyborg Head"
+	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
+	construction_time = 350
+	construction_cost = list("metal"=25000)
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
 
 /obj/item/robot_parts/robot_suit
-	name = "robot suit"
+	name = "Cyborg Endoskeleton"
+	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
 	icon_state = "robo_suit"
+	construction_time = 500
+	construction_cost = list("metal"=50000)
 	var/obj/item/robot_parts/l_arm/l_arm = null
 	var/obj/item/robot_parts/r_arm/r_arm = null
 	var/obj/item/robot_parts/l_leg/l_leg = null

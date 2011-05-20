@@ -1,6 +1,6 @@
 /obj/machinery/robotic_fabricator
 	name = "Robotic Fabricator"
-	icon = 'surgery.dmi'
+	icon = 'robotics.dmi'
 	icon_state = "fab-idle"
 	density = 1
 	anchored = 1
@@ -15,7 +15,7 @@
 	if (istype(O, /obj/item/stack/sheet/metal))
 		if (src.metal_amount < 150000.0)
 			var/count = 0
-			src.overlays += "fab-load"
+			src.overlays += "fab-load-metal"
 			spawn(15)
 				if(O)
 					if(!O:amount)
@@ -29,7 +29,7 @@
 						del(O)
 
 					user << "You insert [count] metal sheet\s into the fabricator."
-					src.overlays -= "fab-load"
+					src.overlays -= "fab-load-metal"
 					updateDialog()
 		else
 			user << "The robot part maker is full. Please remove metal from the robot part maker in order to insert more."

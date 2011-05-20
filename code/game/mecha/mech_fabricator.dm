@@ -3,8 +3,8 @@
 /////////////////////////////
 
 /obj/machinery/mecha_part_fabricator
-	icon = 'stationobjs.dmi'
-	icon_state = "mechfab1"
+	icon = 'robotics.dmi'
+	icon_state = "fab-idle"
 	name = "Exosuit Fabricator"
 	desc = "Nothing is being built."
 	density = 1
@@ -35,6 +35,15 @@
 	var/screen = "main"
 	var/temp
 	var/list/part_sets = list( //set names must be unique
+	"Cyborg"=list(
+						/obj/item/robot_parts/robot_suit,
+						/obj/item/robot_parts/chest,
+						/obj/item/robot_parts/head,
+						/obj/item/robot_parts/l_arm,
+						/obj/item/robot_parts/r_arm,
+						/obj/item/robot_parts/l_leg,
+						/obj/item/robot_parts/r_leg
+					),
 	"Ripley"=list(
 						/obj/item/mecha_parts/chassis/ripley,
 						/obj/item/mecha_parts/part/ripley_torso,
@@ -219,16 +228,16 @@
 		src.being_built = new part.type(src)
 		src.desc = "It's building [src.being_built]."
 		src.remove_resources(part)
-		src.icon_state = "mechfab3" //looks better than 'flick'
+		src.overlays += "fab-active"
 		src.use_power = 2
 		src.updateUsrDialog()
 		sleep(get_construction_time_w_coeff(part))
 		//if(!src) return // you do not need to check it, all sleeping procedires will be terminated when src dies. -- rastaf0
 		src.use_power = 1
-		src.icon_state = initial(src.icon_state)
+		src.overlays -= "fab-active"
 		src.desc = initial(src.desc)
 		if(being_built)
-			src.being_built.Move(get_step(src,EAST))
+			src.being_built.Move(get_step(src,SOUTH))
 			src.visible_message("<b>[src]</b> beeps, \"The [src.being_built] is complete\".")
 			src.being_built = null
 		src.updateUsrDialog()
@@ -509,13 +518,14 @@
 		var/amnt = W.perunit
 		if(src.resources[material] < res_max_amount)
 			var/count = 0
+			src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 			spawn(10)
 				if(W && W.amount)
 					while(src.resources[material] < res_max_amount && W)
 						src.resources[material] += amnt
 						W.use(1)
 						count++
-					flick("mechfab2", src)
+					src.overlays -= "fab-load-[material]"
 					user << "You insert [count] [name] into the fabricator."
 					src.updateUsrDialog()
 		else
