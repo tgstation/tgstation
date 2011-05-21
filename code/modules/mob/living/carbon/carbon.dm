@@ -45,7 +45,6 @@
 				N.show_message(text("\red <B>[M] bursts out of [src]!</B>"), 2)
 	. = ..(give_medal)
 
-
 /mob/living/carbon/attack_hand(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
 	if(src.virus || M.virus)
@@ -113,7 +112,6 @@
 	else
 		src.hands.dir = SOUTH
 	return
-
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if (src.health > 0)

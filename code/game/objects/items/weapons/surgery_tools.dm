@@ -420,11 +420,12 @@ CIRCULAR SAW
 						"\red You sever your brain's connection to the spine with [src]!" \
 					)
 
-				M:brain_op_stage = 4.0
-				M.death()
+				var/obj/item/brain/B = new(M.loc)
+				B.transfer_identity(M)
 
-				var/obj/item/brain/B = new (M.loc)
-				B.owner = M
+				M:brain_op_stage = 4.0
+				M.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
+
 			else
 				..()
 		return

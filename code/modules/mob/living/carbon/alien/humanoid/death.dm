@@ -32,7 +32,7 @@
 		if (src.key)
 			spawn(10)
 				if(src.key && src.stat == 2)
-					src.verbs += /mob/proc/ghostize
+					src.verbs += /mob/proc/ghost
 
 	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 	if (mind) mind.store_memory("Time of death: [tod]", 0)

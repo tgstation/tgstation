@@ -889,6 +889,16 @@ datum
 			reliability_base = 76
 			build_path = "/obj/item/device/mmi"
 
+		mmi_radio
+			name = "Radio-enabled Man-Machine Interface"
+			desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
+			id = "mmi_radio"
+			req_tech = list("biotech" = 4)
+			build_type = PROTOLATHE | MECHFAB
+			materials = list("$metal" = 1200, "$glass" = 500)
+			reliability_base = 74
+			build_path = "/obj/item/device/mmi/radio_enabled"
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////

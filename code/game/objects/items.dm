@@ -292,34 +292,22 @@
 					src.attack_self(M)
 	return
 
-
-
-
 /obj/item/brain/examine() // -- TLE
 	set src in oview(12)
 	if (!( usr ))
 		return
-	usr << "This is \icon[src] \an [src.name]."
+	usr << "This is \icon[src] \an [name]."
 
-	if(src.owner)
-	//if the brain has an owner corpse
-		if(src.owner.client)
-		//if the player hasn't ghosted
-			usr << "You can feel the small spark of life still in this one."
-		else
-		//if the player HAS ghosted
-			for(var/mob/dead/observer/O in world)
-				if(O.corpse == src.owner && O.client)
-				//find their ghost
-					usr << "You can feel the small spark of life still in this one."
+	if(brainmob)//if thar be a brain inside... the brain.
+		usr << "You can feel the small spark of life still left in this one."
 	else
-		usr << "This one seems particularly lifeless. Perhaps it will regain some of its luster later. Perhaps not."
+		usr << "This one seems particularly lifeless. Perhaps it will regain some of its luster later. Probably not."
 
 /obj/item/brain/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
 		return
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 	if(!(user.zone_sel.selecting == ("head")) || !istype(M, /mob/living/carbon/human))
 		return ..()
@@ -330,7 +318,7 @@
 	var/mob/living/carbon/human/H = M
 	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
-		user << "\blue You're going to need to remove that mask/helmet/glasses first."
+		user << "\blue You're going to need to remove their head cover first."
 		return
 
 //since these people will be dead M != usr
@@ -350,27 +338,14 @@
 		else
 			user << "\red You insert [src] into your head!"
 
-		if(M.client)
-			M.client.mob = new/mob/dead/observer(M)
-		//a mob can't have two clients so get rid of one
 		//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
-		src.brainmob.mind.transfer_to(M)
-		src.brainmob = null
-//		if(src.owner)
-		//if the brain has an owner corpse
-//			if(src.owner.client)
-			//if the player hasn't ghosted
-//				src.owner.client.mob = M
-				//then put them in M
-//			else
-			//if the player HAS ghosted
-//				for(var/mob/dead/observer/O in world)
-//					if(O.corpse == src.owner && O.client)
-					//find their ghost
-//						O.client.mob = M
-						//put their mob in M
-//						del(O)
-						//delete thier ghost
+		if(M.key)//Revised. /N
+			M.ghostize(1)
+
+		if(brainmob.mind)
+			brainmob.mind.transfer_to(M)
+		else
+			M.key = brainmob.key
 
 		M:brain_op_stage = 3.0
 
@@ -387,7 +362,6 @@
 
 	..()
 	return
-
 
 /obj/item/weapon/dice/attack_self(mob/user as mob) // Roll the dice -- TLE
 	var/temp_sides

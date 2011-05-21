@@ -65,7 +65,6 @@
 	var/obj/item/robot_parts/r_leg/r_leg = null
 	var/obj/item/robot_parts/chest/chest = null
 	var/obj/item/robot_parts/head/head = null
-	var/obj/item/brain/brain = null
 	var/created_name = "Cyborg"
 
 /obj/item/robot_parts/robot_suit/New()
@@ -151,50 +150,49 @@
 			user << "\blue You need to attach a flash to it first!"
 
 	if(istype(W, /obj/item/device/mmi))
-		var/obj/item/device/mmi/mmi = W
-		if(src.check_completion())
-			if(!istype(src.loc,/turf))
+		var/obj/item/device/mmi/M = W
+		if(check_completion())
+			if(!istype(loc,/turf))
 				user << "\red You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise."
 				return
-			if(!mmi.brain)
+			if(!M.brainmob)
 				user << "\red Sticking an empty MMI into the frame would sort of defeat the purpose."
 				return
-			if(mmi.brain.brainmob.stat == 2)
+			if(M.brainmob.stat == 2)
 				user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
 				return
-			user.drop_item()
-			mmi.loc = src
-			src.brain = mmi
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(src.loc))
-			if(!O) return
-			//O.start = 1
-			O.invisibility = 0
-			O.name = src.created_name
-			O.real_name = src.created_name
 
-			if (mmi.brain.brainmob && mmi.brain.brainmob.mind)
-				mmi.brain.brainmob.mind.transfer_to(O)
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
+			if(!O)	return
+
+			user.drop_item()
+
+			O.invisibility = 0
+			O.name = created_name
+			O.real_name = created_name
+
+			if (M.brainmob && M.brainmob.mind)
+				M.brainmob.mind.transfer_to(O)
 			else
 				for(var/mob/dead/observer/G in world)
-					if(G.corpse == mmi.brain.brainmob && G.client && G.corpse.mind)
+					if(G.corpse == M.brainmob && G.client && G.corpse.mind)
 						G.corpse.mind.transfer_to(O)
 						del(G)
 						break
-			if(O.mind)
-				if(O.mind.special_role) O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+			if(O.mind && O.mind.special_role)
+				O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 
-			O.loc = src.loc
 			O << "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>"
 			O << "<B>You must follow the laws that the AI has. You are the AI's assistant to the station basically.</B>"
 			O << "To use something, simply double-click it."
 			O << {"Use say ":s to speak to fellow cyborgs and the AI through binary."}
 
-			//SN src = null
 			O.job = "Cyborg"
 
-			O.cell = src.chest.cell
+			O.cell = chest.cell
 			O.cell.loc = O
-			O.brain = mmi
+			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			O.mmi = W
 
 			del(src)
 		else

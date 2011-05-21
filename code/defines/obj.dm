@@ -730,6 +730,7 @@
 /obj/overlay
 	name = "overlay"
 	unacidable = 1
+	var/i_attached//Added for possible image attachments to objects. For hallucinations and the like.
 
 /obj/portal
 	name = "portal"
@@ -1008,6 +1009,7 @@
 	anchored = 1
 	unacidable = 1//temporary until I decide whether the borg can be removed. -veyveyr
 
+//BEGIN BRAINS=====================================================
 /obj/item/brain
 	name = "brain"
 	icon = 'surgery.dmi'
@@ -1020,37 +1022,30 @@
 	throw_range = 5
 	origin_tech = "biotech=3"
 
-	var/mob/living/carbon/human/owner = null
-	var/mob/living/carbon/brain/brainmob = null
+	var
+		mob/living/carbon/brain/brainmob = null
 
-
-/obj/item/brain/New()
-	..()
-	spawn(5)
-		if(src.owner)
-			src.name = "[src.owner]'s brain"
-			//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
-			brainmob = new /mob/living/carbon/brain
-			brainmob.loc = src
-			brainmob.name = owner.real_name
-			brainmob.real_name = owner.real_name
-			brainmob.dna = owner.dna
-			if(src.owner.mind)
-				src.owner.mind.transfer_to(brainmob)
-			brainmob.death() //the brain is dead until stuffed into an MMI. In which case it might still be dead if it's been beat up.
-			if(brainmob.client)
+	New()
+		..()
+		//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
+		//WASSSSSUUUPPPP /N
+		spawn(5)
+			if(brainmob&&brainmob.client)
 				brainmob.client.screen.len = null //clear the hud
-			brainmob << "\blue You might feel slightly disoriented. That's normal when your brain gets cut out."
 
-/obj/item/brain/Del()
-	if(src.brainmob)
-		if(src.brainmob.client)
-			var/mob/dead/observer/newmob
-			newmob = new/mob/dead/observer
-			newmob.loc = get_turf(src)
-			src.brainmob:client:mob = newmob
-			newmob:client:eye = newmob
-	..()
+	proc
+		transfer_identity(var/mob/living/carbon/human/H)
+			name = "[H]'s brain"
+			brainmob = new(src)
+			brainmob.name = H.real_name
+			brainmob.real_name = H.real_name
+			brainmob.dna = H.dna
+			if(H.mind)
+				H.mind.transfer_to(brainmob)
+			brainmob << "\blue You might feel slightly disoriented. That's normal when your brain gets cut out."
+			return
+
+//END BRAINS=====================================================
 
 /obj/noticeboard
 	name = "Notice Board"
@@ -1068,8 +1063,6 @@
 	icon_state = "deskclutter"
 	desc = "Some clutter the detective has accumalated over the years..."
 	anchored = 1
-
-
 
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 

@@ -93,103 +93,245 @@ ________________________________________________________________________________
 	new_ninja.equip_if_possible(new /obj/item/weapon/plastique(new_ninja), new_ninja.slot_l_store)
 	new_ninja.equip_if_possible(new /obj/item/weapon/tank/emergency_oxygen(new_ninja), new_ninja.slot_s_store)
 
-/mob/proc/grant_ninja_verbs()
-	verbs += /mob/proc/ninjashift
-	verbs += /mob/proc/ninjajaunt
-	verbs += /mob/proc/ninjasmoke
-	verbs += /mob/proc/ninjaboost
-	verbs += /mob/proc/ninjapulse
-	verbs += /mob/proc/ninjablade
-	verbs += /mob/proc/ninjastar
-	verbs += /mob/proc/ninjanet
-	mind.special_verbs += /mob/proc/ninjashift
-	mind.special_verbs += /mob/proc/ninjajaunt
-	mind.special_verbs += /mob/proc/ninjasmoke
-	mind.special_verbs += /mob/proc/ninjaboost
-	mind.special_verbs += /mob/proc/ninjapulse
-	mind.special_verbs += /mob/proc/ninjablade
-	mind.special_verbs += /mob/proc/ninjastar
-	mind.special_verbs += /mob/proc/ninjanet
+//VERB MODIFIERS===================================
+
+/obj/item/clothing/suit/space/space_ninja/proc/grant_ninja_verbs()
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjasmoke
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjablade
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
+
+	initialize=1
+	slowdown=0
+
+/obj/item/clothing/suit/space/space_ninja/proc/remove_ninja_verbs()
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjasmoke
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjablade
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
+
+/obj/item/clothing/suit/space/space_ninja/proc/grant_kamikaze_verbs()
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
+
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjaslayer
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjawalk
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjamirage
+
+	kamikaze = 1
+	active = 0
+
+/obj/item/clothing/suit/space/space_ninja/proc/remove_kamikaze_verbs()
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
+
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjaslayer
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjawalk
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjamirage
+
+	kamikaze = 0
+	unlock = 0
+
+/*Commented out due to BYOND bugs. Workaround used instead for the time being.
+
+/obj/item/clothing/suit/space/space_ninja/proc/grant_AI_verbs()
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_hack_ninja
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_return_control
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
+
+	control = 0
+
+/obj/item/clothing/suit/space/space_ninja/proc/remove_AI_verbs()
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_hack_ninja
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_return_control
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+
+	control = 1
+*/
+
+/obj/item/clothing/suit/space/space_ninja/proc/grant_AI_verbs()
+	var/obj/proc_holder/ai_return_control/A_C = new(AI)
+	var/obj/proc_holder/ai_hack_ninja/B_C = new(AI)
+	var/obj/proc_holder/ai_instruction/C_C = new(AI)
+	new/obj/proc_holder/ai_holo_clear(AI)
+	AI.proc_holder_list += A_C
+	AI.proc_holder_list += B_C
+	AI.proc_holder_list += C_C
+
+	control = 0
+
+/obj/item/clothing/suit/space/space_ninja/proc/remove_AI_verbs()
+	var/obj/proc_holder/ai_return_control/A_C = locate() in AI
+	var/obj/proc_holder/ai_hack_ninja/B_C = locate() in AI
+	var/obj/proc_holder/ai_instruction/C_C = locate() in AI
+	var/obj/proc_holder/ai_holo_clear/D_C = locate() in AI
+	del(A_C)
+	del(B_C)
+	del(C_C)
+	del(D_C)
+	AI.proc_holder_list = list()
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+
+	control = 1
+
+//AI COUNTER HACKING/SPECIAL FUNCTIONS===================================
+
+/obj/item/clothing/suit/space/space_ninja/proc/ai_holo(var/turf/T in oview(3,affecting))//To have an internal AI display a hologram to the ninja only.
+	set name = "Display Hologram"
+	set desc = "Channel a holographic image directly to the user's field of vision. Others will not see it."
+	set category = null
+	set src = usr.loc
+
+	if(initialize&&affecting&&affecting.client&&istype(affecting.loc, /turf))//If the host exists and they are playing, and their location is a turf.
+		if(!hologram)//If there is not already a hologram.
+			hologram = new(T)//Spawn a blank effect at the location.
+			hologram.invisibility = 101//So that it doesn't show up, ever. This also means one could attach a number of images to a single obj and display them to differently to differnet people.
+			hologram.dir = get_dir_to(T,affecting.loc)
+			var/image/I = image('mob.dmi',hologram,"ai-holo")//Attach an image to object.
+			hologram.i_attached = I//To attach the image in order to later reference.
+			AI << I
+			affecting << I
+			affecting << "<i>An image flicks to life nearby. It appears visible to you only.</i>"
+
+			var/obj/proc_holder/ai_holo_clear/D_C = locate() in AI
+			AI.proc_holder_list += D_C
+			//verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
+
+			ai_holo_process()//Move to initialize
+		else
+			AI << "\red ERROR: \black Image feed in progress."
+	else
+		AI << "\red ERROR: \black Unable to project image."
 	return
 
-/mob/proc/remove_ninja_verbs()
-	verbs -= /mob/proc/ninjashift
-	verbs -= /mob/proc/ninjajaunt
-	verbs -= /mob/proc/ninjasmoke
-	verbs -= /mob/proc/ninjaboost
-	verbs -= /mob/proc/ninjapulse
-	verbs -= /mob/proc/ninjablade
-	verbs -= /mob/proc/ninjastar
-	verbs -= /mob/proc/ninjanet
-	mind.special_verbs -= /mob/proc/ninjashift
-	mind.special_verbs -= /mob/proc/ninjajaunt
-	mind.special_verbs -= /mob/proc/ninjasmoke
-	mind.special_verbs -= /mob/proc/ninjaboost
-	mind.special_verbs -= /mob/proc/ninjapulse
-	mind.special_verbs -= /mob/proc/ninjablade
-	mind.special_verbs -= /mob/proc/ninjastar
-	mind.special_verbs -= /mob/proc/ninjanet
+/obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
+	set background = 1
+
+	spawn while(hologram&&initialize&&AI)//Suit on and there is an AI present.
+		if(!initialize||get_dist(affecting,hologram.loc)>3)//Once suit is de-initialized or hologram reaches out of bounds.
+			del(hologram.i_attached)
+			del(hologram)
+
+			if(!control)//Meant to be used all the time but for now this'll do.
+				var/obj/proc_holder/ai_holo_clear/D_C = locate() in AI
+				AI.proc_holder_list -= D_C
+			//verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
+
+			return
+		sleep(10)//Checks every second.
+
+
+/*I've tried a lot of stuff but adding verbs to the AI while inside an object, inside another object, did not want to work properly.
+This is the best work-around I could come up with. Uses objects to then display to panel, based on the object spell system.
+Can be added on to pretty easily.
+Leaving this commented out until BYOND fixes the verb panel bug.
+
+It would be better to switch to this (from proc_holder) if the bug does get fixed.
+
+/obj/item/clothing/suit/space/space_ninja/proc/ai_instruction()//Let's the AI know what they can do.
+	set name = "Instructions"
+	set desc = "Displays a list of helpful information."
+	set category = "AI Ninja Equip"
+	set src = usr.loc
+
+	AI << "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away."
+
+/obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear()
+	set name = "Clear Hologram"
+	set desc = "Stops projecting the current holographic image."
+	set category = "AI Ninja Equip"
+	set src = usr.loc
+
+	del(hologram.i_attached)
+	del(hologram)
+
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
 	return
 
-/mob/proc/grant_kamikaze_verbs()
-	verbs -= /mob/proc/ninjashift
-	verbs -= /mob/proc/ninjajaunt
-	verbs -= /mob/proc/ninjapulse
-	verbs -= /mob/proc/ninjastar
-	verbs -= /mob/proc/ninjanet
-	mind.special_verbs -= /mob/proc/ninjashift
-	mind.special_verbs -= /mob/proc/ninjajaunt
-	mind.special_verbs -= /mob/proc/ninjapulse
-	mind.special_verbs -= /mob/proc/ninjastar
-	mind.special_verbs -= /mob/proc/ninjanet
-	verbs += /mob/proc/ninjaslayer
-	verbs += /mob/proc/ninjawalk
-	verbs += /mob/proc/ninjamirage
-	mind.special_verbs += /mob/proc/ninjaslayer
-	mind.special_verbs += /mob/proc/ninjawalk
-	mind.special_verbs += /mob/proc/ninjamirage
+/obj/item/clothing/suit/space/space_ninja/proc/ai_hack_ninja()
+	set name = "Hack SpiderOS"
+	set desc = "Hack directly into the Black Widow(tm) neuro-interface."
+	set category = "AI Ninja Equip"
+	set src = usr.loc
+
+	hack_spideros()
 	return
 
-/mob/proc/remove_kamikaze_verbs()
-	verbs += /mob/proc/ninjashift
-	verbs += /mob/proc/ninjajaunt
-	verbs += /mob/proc/ninjapulse
-	verbs += /mob/proc/ninjastar
-	verbs += /mob/proc/ninjanet
-	mind.special_verbs += /mob/proc/ninjashift
-	mind.special_verbs += /mob/proc/ninjajaunt
-	mind.special_verbs += /mob/proc/ninjapulse
-	mind.special_verbs += /mob/proc/ninjastar
-	mind.special_verbs += /mob/proc/ninjanet
-	verbs -= /mob/proc/ninjaslayer
-	verbs -= /mob/proc/ninjawalk
-	verbs -= /mob/proc/ninjamirage
-	mind.special_verbs -= /mob/proc/ninjaslayer
-	mind.special_verbs -= /mob/proc/ninjawalk
-	mind.special_verbs -= /mob/proc/ninjamirage
+/obj/item/clothing/suit/space/space_ninja/proc/ai_return_control()
+	set name = "Relinquish Control"
+	set desc = "Return control to the user."
+	set category = "AI Ninja Equip"
+	set src = usr.loc
+
+	AI << browse(null, "window=hack spideros")//Close window
+	AI << "You have seized your hacking attempt. [affecting] has regained control."
+	affecting << "<b>UPDATE</b>: [AI.real_name] has ceased hacking attempt. All systems clear."
+
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
+
+	return
+*/
+
+//Workaround
+/obj/proc_holder/ai_holo_clear
+	name = "Clear Hologram"
+	desc = "Stops projecting the current holographic image."
+	panel = "AI Ninja Equip"
+	density = 0
+	opacity = 0
+
+
+/obj/proc_holder/ai_holo_clear/Click()
+	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc//This is so stupid but makes sure certain things work. AI.SUIT
+	del(S.hologram.i_attached)
+	del(S.hologram)
+	var/obj/proc_holder/ai_holo_clear/D_C = locate() in S.AI
+	S.AI.proc_holder_list -= D_C
 	return
 
-//AI COUNTER HACKING===================================
+/obj/proc_holder/ai_instruction//Let's the AI know what they can do.
+	name = "Instructions"
+	desc = "Displays a list of helpful information."
+	panel = "AI Ninja Equip"
+	density = 0
+	opacity = 0
 
-//I've tried a lot of stuff but adding verbs to the AI while inside an object, inside another object, did not want to work properly.
-//This is the best work-around I could come up with. Uses objects to then display to panel, based on the object spell system.
-//Can be added on to pretty easily.
+/obj/proc_holder/ai_instruction/Click()
+	loc << "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away."
+
 /obj/proc_holder/ai_hack_ninja//Generic proc holder to make sure the two verbs below work propely.
 	name = "Hack SpiderOS"
 	desc = "Hack directly into the Black Widow(tm) neuro-interface."
-	panel = "AI Hacking"
+	panel = "AI Ninja Equip"
 	density = 0
 	opacity = 0
 
 /obj/proc_holder/ai_hack_ninja/Click()//When you click on it.
-	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc//This is so stupid but makes sure certain things work. AI.SUIT
+	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc
 	S.hack_spideros()
 	return
 
 /obj/proc_holder/ai_return_control
 	name = "Relinquish Control"
 	desc = "Return control to the user."
-	panel = "AI Hacking"
+	panel = "AI Ninja Equip"
 	density = 0
 	opacity = 0
 
@@ -197,16 +339,9 @@ ________________________________________________________________________________
 	var/mob/living/silicon/ai/A = loc
 	var/obj/item/clothing/suit/space/space_ninja/S = A.loc
 	A << browse(null, "window=hack spideros")//Close window
-	S.control = 1//Return control
 	A << "You have seized your hacking attempt. [S.affecting] has regained control."
 	S.affecting << "<b>UPDATE</b>: [A.real_name] has ceased hacking attempt. All systems clear."
-	var/obj/proc_holder/ai_hack_ninja/B_C = locate() in A
-	A.proc_holder_list -= src
-	A.proc_holder_list -= B_C
-	S.verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
-	S.verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
-	del(B_C)//First, to keep the proc going.
-	del(src)
+	S.remove_AI_verbs()
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/hack_spideros()
@@ -235,6 +370,7 @@ ________________________________________________________________________________
 			dat += "<h4><img src=sos_1.png> Available Functions:</h4>"
 			dat += "<ul>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=Shock'><img src=sos_4.png> Shock [U.real_name]</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=4'><img src=sos_6.png> Activate Abilities</a></li>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=sos_3.png> Medical Screen</a></li>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=sos_5.png> Atmos Scan</a></li>"
 			dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=sos_12.png> Messenger</a></li>"
@@ -308,16 +444,28 @@ ________________________________________________________________________________
 		if(32)//Only leaving this in for funnays. CAN'T LET YOU DO THAT STAR FOX
 			dat += "<h4><img src=sos_1.png> Hidden Menu:</h4>"
 			dat += "Hostile runtime intrusion detected: operation locked. The Spider Clan is watching you, <b>INTRUDER</b>."
+		if(4)
+			dat += "<h4><img src=sos_6.png> Activate Abilities:</h4>"
+			dat += "<ul>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Phase Jaunt'><img src=sos_13.png> Phase Jaunt</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Phase Shift'><img src=sos_13.png> Phase Shift</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Energy Blade'><img src=sos_13.png> Energy Blade</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Energy Star'><img src=sos_13.png> Energy Star</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Energy Net'><img src=sos_13.png> Energy Net</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=EM Pulse'><img src=sos_13.png> EM Pulse</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Smoke Bomb'><img src=sos_13.png> Smoke Bomb</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=Adrenaline Boost'><img src=sos_13.png> Adrenaline Boost</a></li>"
+			dat += "</ul>"
+
 	dat += "</body></html>"
 
 	A << browse(dat,"window=hack spideros;size=400x444;border=1;can_resize=0;can_close=0;can_minimize=0")
 
-
-
-
 //DEBUG===================================
 
 /*
+Most of these are at various points of incomplete.
+
 /mob/verb/grant_object_panel()
 	set name = "Grant AI Ninja Verbs Debug"
 	set category = "Ninja Debug"
@@ -367,17 +515,40 @@ mob/verb/remove_object_panel()
 
 	world << "DIR: [get_dir_to(src.loc,M.loc)]"
 	return
-
-//Switches keys with AI stored inside suit. Useful for quickly testing things.
-
-var/ninja_debug_target//Easiest way to do this. The proc below sets this variable to your mob.
-
-/mob/verb/possess_mob(var/mob/M in oview())
-	set name = "Possess Mob"
+//
+/mob/verb/kill_self_debug()
+	set name = "DEBUG Kill Self"
 	set category = "Ninja Debug"
 
-	if(!M.client)
-		client.mob = M
+	src:death()
+
+/client/verb/switch_client_debug()
+	set name = "DEBUG Switch Client"
+	set category = "Ninja Debug"
+
+	mob = mob:loc:loc
+
+/mob/verb/possess_mob(var/mob/M in oview())
+	set name = "DEBUG Possess Mob"
+	set category = "Ninja Debug"
+
+	client.mob = M
+
+/client/verb/switcharoo(var/mob/M in oview())
+	set name = "DEBUG Switch to AI"
+	set category = "Ninja Debug"
+
+	var/mob/last_mob = mob
+	mob = M
+	last_mob:wear_suit:AI:key = key
+//
+/client/verb/ninjaget(var/mob/M in oview())
+	set name = "DEBUG Ninja GET"
+	set category = "Ninja Debug"
+
+	mob = M
+	M.gib()
+	space_ninja()
 
 /mob/verb/set_debug_ninja_target()
 	set name = "Set Debug Target"

@@ -100,18 +100,10 @@
 	src:life()
 
 /obj/bhole/Bumped(atom/A)
-	var/mob/dead/observer/newmob
-	if (istype(A,/mob/living) && A:client)
-		newmob = new/mob/dead/observer(A)
-		A:client:mob = newmob
-		newmob:client:eye = newmob
-		del(A)
-	else if (istype(A,/mob/living) && !A:client)
+	if (istype(A,/mob/living))
 		del(A)
 	else
 		A:ex_act(1.0)
-
-
 
 /obj/bhole/proc/life() //Oh man , this will LAG
 
@@ -167,13 +159,7 @@
 		//if (hascall(D,"blackholed"))
 		//	call(D,"blackholed")(null)
 		//	continue
-		var/mob/dead/observer/newmob
-		if (istype(D,/mob/living) && D:client)
-			newmob = new/mob/dead/observer(D)
-			D:client:mob = newmob
-			newmob:client:eye = newmob
-			del(D)
-		else if (istype(D,/mob/living) && !D:client)
+		if (istype(D,/mob/living))
 			del(D)
 		else
 			D:ex_act(1.0)

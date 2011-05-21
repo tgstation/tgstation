@@ -1,10 +1,18 @@
 /mob/living/carbon/brain
-	var/obj/item/device/mmi/container = null
+	var
+		obj/item/device/mmi/container = null
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(1000)
 		reagents = R
 		R.my_atom = src
+		..()
+
+	Del()
+		if(key)//If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
+			if(stat!=2)//If not dead.
+				death(1)//Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
+			ghostize(1)//Ghostize checks for key so nothing else is necessary. (1) tells that it the original body will be destroyed.
 		..()
 
 	say_understands(var/other)
@@ -17,40 +25,3 @@
 		if (istype(other, /mob/living/carbon/human))
 			return 1
 		return ..()
-
-//	verb
-//		body_jump()
-//			set category = "Special Verbs"
-//			set name = "Check on Original Body"
-
-
-/obj/hud/proc/brain_hud(var/ui_style='screen1_old.dmi')
-	src.station_explosion = new src.h_type( src )
-	src.station_explosion.icon = 'station_explosion.dmi'
-	src.station_explosion.icon_state = "start"
-	src.station_explosion.layer = 20
-	src.station_explosion.mouse_opacity = 0
-	src.station_explosion.screen_loc = "1,3"
-
-	src.blurry = new src.h_type( src )
-	src.blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.blurry.name = "Blurry"
-	src.blurry.icon = ui_style
-	src.blurry.icon_state = "blurry"
-	src.blurry.layer = 17
-	src.blurry.mouse_opacity = 0
-
-	src.druggy = new src.h_type( src )
-	src.druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	src.druggy.name = "Druggy"
-	src.druggy.icon = ui_style
-	src.druggy.icon_state = "druggy"
-	src.druggy.layer = 17
-	src.druggy.mouse_opacity = 0
-
-	mymob.blind = new /obj/screen( null )
-	mymob.blind.icon = ui_style
-	mymob.blind.icon_state = "black"
-	mymob.blind.name = " "
-	mymob.blind.screen_loc = "1,1 to 15,15"
-	mymob.blind.layer = 0

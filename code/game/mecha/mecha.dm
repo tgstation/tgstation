@@ -697,36 +697,39 @@
 		return 0
 
 /obj/mecha/proc/mmi_move_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
-	if(!mmi_as_oc.brain || !mmi_as_oc.brain.brainmob || !mmi_as_oc.brain.brainmob.client)
+	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		user << "Consciousness matrix not detected."
 		return 0
-	if(mmi_as_oc.brain.brainmob.stat)
+	else if(mmi_as_oc.brainmob.stat)
 		user << "Beta-rhythm below acceptable level."
 		return 0
-	if(src.occupant)
+	else if(occupant)
 		return 0
-	if(src.dna && src.dna!=mmi_as_oc.brain.brainmob.dna.unique_enzymes)
+	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
 		user << "Stop it!"
 		return 0
+	//Added a message here since people assume their first click failed or something./N
+	user << "Installing MMI, please stand by."
 	if(do_after(20))
-		if(!src.occupant)
+		if(!occupant)
 			return mmi_moved_inside(mmi_as_oc,user)
+		else
+			user << "Occupant detected."
 	return 0
-
 
 /obj/mecha/proc/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
 	if(mmi_as_oc && user in range(1))
-		if(!mmi_as_oc.brain || !mmi_as_oc.brain.brainmob || !mmi_as_oc.brain.brainmob.client)
+		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			user << "Consciousness matrix not detected."
 			return 0
-		if(mmi_as_oc.brain.brainmob.stat)
+		else if(mmi_as_oc.brainmob.stat)
 			user << "Beta-rhythm below acceptable level."
 			return 0
 		user.drop_from_slot(mmi_as_oc)
-		var/mob/brainmob = mmi_as_oc.brain.brainmob
+		var/mob/brainmob = mmi_as_oc.brainmob
 		brainmob.client.eye = src
 		brainmob.client.perspective = EYE_PERSPECTIVE
-		src.occupant = brainmob
+		occupant = brainmob
 		brainmob.loc = src //should allow relaymove
 		brainmob.canmove = 1
 		mmi_as_oc.loc = src
@@ -741,7 +744,6 @@
 		return 1
 	else
 		return 0
-
 
 /obj/mecha/verb/view_stats()
 	set name = "View Stats"
@@ -776,10 +778,10 @@
 /obj/mecha/proc/go_out()
 	if(!src.occupant) return
 	var/atom/movable/mob_container
-	if(ishuman(src.occupant))
+	if(ishuman(occupant))
 		mob_container = src.occupant
-	else if(istype(src.occupant, /mob/living/carbon/brain))
-		var/mob/living/carbon/brain/brain = src.occupant
+	else if(istype(occupant, /mob/living/carbon/brain))
+		var/mob/living/carbon/brain/brain = occupant
 		mob_container = brain.container
 	else
 		return
@@ -792,8 +794,8 @@
 		src.occupant << browse(null, "window=exosuit")
 		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container
-			if(mmi.brain)
-				src.occupant.loc = mmi.brain
+			if(mmi.brainmob)
+				occupant.loc = mmi
 			mmi.mecha = null
 			src.occupant.canmove = 0
 			src.verbs += /obj/mecha/verb/eject
@@ -907,7 +909,7 @@
 /obj/mecha/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(istype(W, /obj/item/device/mmi))
-		if(src.mmi_move_inside(W,user))
+		if(mmi_move_inside(W,user))
 			user << "[src]-MMI interface initialized successfuly"
 		else
 			user << "[src]-MMI interface initialization failed."

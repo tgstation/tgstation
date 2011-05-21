@@ -493,11 +493,6 @@
 						if(M.stat == 2)
 							M.death(1)
 							stomach_contents.Remove(M)
-							if(M.client)
-								var/mob/dead/observer/newmob = new(M)
-								M:client:mob = newmob
-								M.mind.transfer_to(newmob)
-								newmob.reset_view(null)
 							del(M)
 							continue
 						if(air_master.current_cycle%3==1)

@@ -73,9 +73,15 @@ var/syndicate_code_response//Code response for traitors.
 			if(1)//1 and 2 can only be selected once each to prevent more than two specific names/places/etc.
 				switch(rand(1,2))//Mainly to add more options later.
 					if(1)
-						code_phrase += pick(pick(first_names_male,first_names_female))
-						code_phrase += " "
-						code_phrase += pick(last_names)
+						var/name_list[] = list()
+						for(var/datum/data/record/t in data_core.general)//Picks from crew manifest.
+							name_list.Add(t.fields["name"])
+						if(name_list.len&&prob(70))
+							code_phrase += pick(name_list)
+						else
+							code_phrase += pick(pick(first_names_male,first_names_female))
+							code_phrase += " "
+							code_phrase += pick(last_names)
 					if(2)
 						code_phrase += pick(get_all_jobs())//Returns a job.
 				safety.Remove(1)

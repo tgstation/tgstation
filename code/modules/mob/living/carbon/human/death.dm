@@ -38,7 +38,7 @@
 		if (client)
 			spawn(10)
 				if(client && src.stat == 2)
-					verbs += /mob/proc/ghostize
+					verbs += /mob/proc/ghost
 
 	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 	if(mind)

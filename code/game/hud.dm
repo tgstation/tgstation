@@ -45,7 +45,7 @@
 
 
 obj/hud/New(var/type = 0)
-	src.instantiate(type)
+	instantiate(type)
 	..()
 	return
 
@@ -76,41 +76,37 @@ obj/hud/New(var/type = 0)
 
 /obj/hud/proc/instantiate(var/type = 0)
 
-	mymob = src.loc
+	mymob = loc
 	ASSERT(istype(mymob, /mob))
 
-	if(istype(mymob, /mob/living/carbon/human))
-		src.human_hud(mymob.UI) // Pass the player the UI style chosen in preferences
+	if(ishuman(mymob))
+		human_hud(mymob.UI) // Pass the player the UI style chosen in preferences
 
-		return
+	else if(ismonkey(mymob))
+		monkey_hud(mymob.UI)
 
-	if(istype(mymob, /mob/living/carbon/monkey))
-		src.monkey_hud(mymob.UI)
-		return
+	else if(isbrain(mymob))
+		brain_hud(mymob.UI)
 
-	//aliens
-	if(istype(mymob, /mob/living/carbon/alien/larva))
-		src.larva_hud()
-	else if(istype(mymob, /mob/living/carbon/alien))
-		src.alien_hud()
-		return
+	else if(islarva(mymob))
+		larva_hud()
 
-	if(istype(mymob, /mob/living/silicon/ai))
-		src.ai_hud()
-		return
+	else if(isalien(mymob))
+		alien_hud()
 
-	if(istype(mymob, /mob/living/silicon/robot))
-		src.robot_hud()
-		return
+	else if(isAI(mymob))
+		ai_hud()
 
-	if(istype(mymob, /mob/living/silicon/hivebot))
-		src.hivebot_hud()
-		return
+	else if(isrobot(mymob))
+		robot_hud()
 
-	if(istype(mymob, /mob/living/silicon/hive_mainframe))
-		src.hive_mainframe_hud()
-		return
+	else if(ishivebot(mymob))
+		hivebot_hud()
 
-	if(istype(mymob, /mob/dead/observer))
-		src.ghost_hud()
-		return
+	else if(ishivemainframe(mymob))
+		hive_mainframe_hud()
+
+	else if(isobserver(mymob))
+		ghost_hud()
+
+	return

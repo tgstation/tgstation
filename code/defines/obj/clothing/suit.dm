@@ -395,23 +395,29 @@
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	radiation_protection = 0.75
-	var/mob/living/carbon/affecting = null
-	var/active = 0//Stealth off.
-	var/kamikaze = 0//Kamikaze on or off.
-	var/obj/item/weapon/cell/cell//Starts out with a high-capacity cell using new proc.
-	var/mob/living/silicon/AI = null//If there is an AI inside the suit. Paths to target.
-	var/flush = 0//If an AI purge is in progress.
-	var/control = 1//If in control of the suit.
-	var/initialize = 0//Suit starts off.
-	var/spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.
-	var/unlock = 0
-	var/sbombs = 10.0//Number of starting ninja smoke bombs.
-	var/aboost = 3.0//Number of adrenaline boosters.
-	var/transfera = 20//How much reagent is transferred.
-	var/coold = 0//If the suit is on cooldown. Could be useful to attach different cooldowns to abilities I guess. It ticks down every second.
-	var/datum/effects/system/spark_spread/spark_system
 	slowdown = 1
 	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
+
+	var
+		mob/living/carbon/affecting = null//The wearer.
+		obj/item/weapon/cell/cell//Starts out with a high-capacity cell using New().
+		datum/effects/system/spark_spread/spark_system//To create sparks.
+
+		initialize = 0//Suit starts off.
+		coold = 0//If the suit is on cooldown. Can be used to attach different cooldowns to abilities. Ticks down every second based on suit ntick().
+		spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.
+		active = 0//Stealth off.
+		unlock = 0//To unlock Kamikaze.
+		kamikaze = 0//Kamikaze on or off.
+
+		sbombs = 10.0//Number of starting ninja smoke bombs.
+		aboost = 3.0//Number of adrenaline boosters.
+		transfera = 20//How much reagent is transferred when injecting.
+
+		mob/living/silicon/AI = null//If there is an AI inside the suit. Paths to target.
+		obj/overlay/hologram//Is the AI hologram on or off? Visible only to the wearer of the suit. This works by attaching an image to a blank overlay.
+		flush = 0//If an AI purge is in progress.
+		control = 1//If in control of the suit.
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"

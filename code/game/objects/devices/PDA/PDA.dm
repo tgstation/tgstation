@@ -192,6 +192,8 @@
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
 					if (cartridge.access_reagent_scanner)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Reagent Scan'><img src=pda_reagent.png> [scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
+					if (cartridge.access_engine)
+						dat += "<li><a href='byond://?src=\ref[src];choice=Halogen Counter'><img src=pda_reagent.png> [scanmode == 4 ? "Disable" : "Enable"] Halogen Counter</a></li>"
 					if (cartridge.access_remote_door)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
@@ -289,7 +291,8 @@
 /obj/item/device/pda/Topic(href, href_list)
 	..()
 	var/mob/living/U = usr
-	if (U.contents.Find(src) || U.contents.Find(master) || (istype(loc, /turf) && get_dist(src, U) <= 1))
+	//Looking for master was kind of pointless since PDAs don't appear to have one.
+	if (U.contents.Find(src) || (istype(loc, /turf) && get_dist(src, U) <= 1))
 		if ( !(U.stat || U.restrained()) )
 
 			add_fingerprint(U)
@@ -368,6 +371,11 @@
 						scanmode = 0
 					else if((!isnull(cartridge)) && (cartridge.access_reagent_scanner))
 						scanmode = 3
+				if("Halogen Counter")
+					if(scanmode == 4)
+						scanmode = 0
+					else if((!isnull(cartridge)) && (cartridge.access_engine))
+						scanmode = 4
 				if("Honk")
 					if ( !(last_honk && world.time < last_honk + 20) )
 						playsound(loc, 'bikehorn.ogg', 50, 1)
@@ -589,7 +597,6 @@
 		cartridge = C
 		if (C:radio)
 			C:radio.hostpda = src
-		updateUsrDialog()
 
 	else if (istype(C, /obj/item/weapon/card/id) && C:registered)
 		if(!owner)
@@ -597,18 +604,27 @@
 			ownjob = C:assignment
 			name = "PDA-[owner] ([ownjob])"
 			user << "\blue Card scanned."
-		else if(alert("Would you like to inert the card or update owner information?",,"Insert","Update")=="Insert")
-			id_check(user, 2)
 		else
-			if(!(owner == C:registered))
-				user << "\blue Name on card does not match registered name. Please try again."
-			else if((owner == C:registered) && (ownjob == C:assignment))
-				user << "\blue Rank is up to date."
-			else if((owner == C:registered) && (ownjob != C:assignment))
-				ownjob = C:assignment
-				name = "PDA-[owner] ([ownjob])"
-				user << "\blue Rank updated."
-		updateSelfDialog()
+			var/input=alert("Would you like to inert the card or update owner information?",,"Insert","Update")
+			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
+
+			if ( (user.contents.Find(src) && user.contents.Find(C)) || (istype(loc, /turf) && get_dist(src, user) <= 1 && user.contents.Find(C)) )
+				if ( !(user.stat || user.restrained()) )//If they can still act.
+					if(input=="Insert")
+						id_check(user, 2)
+					else
+						if(!(owner == C:registered))
+							user << "\blue Name on card does not match registered name. Please try again."
+						else if((owner == C:registered) && (ownjob == C:assignment))
+							user << "\blue Rank is up to date."
+						else if((owner == C:registered) && (ownjob != C:assignment))
+							ownjob = C:assignment
+							name = "PDA-[owner] ([ownjob])"
+							user << "\blue Rank updated."
+					updateSelfDialog()//Update self dialog on success.
+			return//Return in case of failed check or when successful.
+
+	updateSelfDialog()//For the non-input related code.
 	return
 
 /obj/item/device/pda/attack(mob/C as mob, mob/user as mob)
@@ -638,6 +654,16 @@
 					user << "\blue Blood found on [C]. Analysing..."
 					spawn(15)
 						user << "\blue Blood type: [C:blood_type]\nDNA: [C:blood_DNA]"
+
+			if(4)
+				for (var/mob/O in viewers(C, null))
+					O.show_message("\red [user] has analyzed [C]'s radiation levels!", 1)
+
+				user.show_message("\blue Analyzing Results for [C]:")
+				if(C.radiation)
+					user.show_message("\green Radiation Level: \black [C.radiation]")
+				else
+					user.show_message("\blue No radiation detected.")
 
 /obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 	switch(scanmode)

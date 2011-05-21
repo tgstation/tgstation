@@ -1,19 +1,19 @@
 /mob/living/carbon/human/proc/monkeyize()
-	if (src.monkeyizing)
+	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		if (W==src.w_uniform) // will be teared
+		if (W==w_uniform) // will be teared
 			continue
 		drop_from_slot(W)
-	src.update_clothing()
-	src.monkeyizing = 1
-	src.canmove = 0
-	src.icon = null
-	src.invisibility = 101
-	for(var/t in src.organs)
-		//src.organs[text("[]", t)] = null
-		del(src.organs[text("[]", t)])
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( src.loc )
+	update_clothing()
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+	for(var/t in organs)
+		//organs[text("[]", t)] = null
+		del(organs[text("[]", t)])
+	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'mob.dmi'
 	animation.master = src
@@ -21,23 +21,23 @@
 	sleep(48)
 	//animation = null
 	del(animation)
-	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( src.loc )
+	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 
 	O.name = "monkey"
-	O.dna = src.dna
-	src.dna = null
+	O.dna = dna
+	dna = null
 	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
 	//O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
 	O.dna.struc_enzymes = "[copytext(O.dna.struc_enzymes,1,1+3*13)]BB8"
-	O.loc = src.loc
-	O.virus = src.virus
-	src.virus = null
+	O.loc = loc
+	O.virus = virus
+	virus = null
 	if (O.virus)
 		O.virus.affected_mob = O
-	if (src.client)
-		src.client.mob = O
-	if(src.mind)
-		src.mind.transfer_to(O)
+	if (client)
+		client.mob = O
+	if(mind)
+		mind.transfer_to(O)
 	O.a_intent = "hurt"
 	O << "<B>You are now a monkey.</B>"
 	var/prev_body = src
@@ -46,38 +46,45 @@
 	return O
 
 /mob/new_player/AIize()
-	src.spawning = 1
+	spawning = 1
 	return ..()
 
 /mob/living/carbon/human/AIize()
-	if (src.monkeyizing)
+	if (monkeyizing)
 		return
-	for(var/t in src.organs)
-		del(src.organs[text("[]", t)])
+	for(var/t in organs)
+		del(organs[text("[]", t)])
 	return ..()
 
 /mob/living/carbon/AIize()
-	if (src.monkeyizing)
+	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	src.update_clothing()
-	src.monkeyizing = 1
-	src.canmove = 0
-	src.icon = null
-	src.invisibility = 101
+	update_clothing()
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
 	return ..()
 
 
 /mob/proc/AIize()
-	client.screen.len = null
+	if(client)
+		client.screen.len = null
 	var/mob/living/silicon/ai/O = new /mob/living/silicon/ai(loc, /datum/ai_laws/asimov,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0
 	O.lastKnownIP = client.address
 
-	mind.transfer_to(O)
-	O.mind.original = O
+	if(mind)
+		mind.transfer_to(O)
+		O.mind.original = O
+	else
+		O.mind = new
+		O.mind.current = O
+		O.mind.assigned_role = "AI"
+		O.key = key
 
 	var/obj/loc_landmark
 	for(var/obj/landmark/start/sloc in world)
@@ -126,19 +133,6 @@
 
 	spawn(0)
 		ainame(O)
-/*		var/randomname = pick(ai_names)
-		var/newname = input(O,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)
-
-		if (length(newname) == 0)
-			newname = randomname
-
-		if (newname)
-			if (length(newname) >= 26)
-				newname = copytext(newname, 1, 26)
-			newname = dd_replacetext(newname, ">", "'")
-			O.real_name = newname
-			O.name = newname
-*/
 		world << text("<b>[O.real_name] is the AI!</b>")
 
 		spawn(50)
@@ -150,25 +144,25 @@
 
 //human -> robot
 /mob/living/carbon/human/proc/Robotize()
-	if (src.monkeyizing)
+	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	src.update_clothing()
-	src.monkeyizing = 1
-	src.canmove = 0
-	src.icon = null
-	src.invisibility = 101
-	for(var/t in src.organs)
-		del(src.organs[text("[t]")])
-	if(src.client)
-		//src.client.screen -= main_hud1.contents
-		src.client.screen -= src.hud_used.contents
-		src.client.screen -= src.hud_used.adding
-		src.client.screen -= src.hud_used.mon_blo
-		src.client.screen -= list( src.oxygen, src.throw_icon, src.i_select, src.m_select, src.toxin, src.internals, src.fire, src.hands, src.healths, src.pullin, src.blind, src.flash, src.rest, src.sleep, src.mach )
-		src.client.screen -= list( src.zone_sel, src.oxygen, src.throw_icon, src.i_select, src.m_select, src.toxin, src.internals, src.fire, src.hands, src.healths, src.pullin, src.blind, src.flash, src.rest, src.sleep, src.mach )
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( src.loc )
+	update_clothing()
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+	for(var/t in organs)
+		del(organs[text("[t]")])
+	if(client)
+		//client.screen -= main_hud1.contents
+		client.screen -= hud_used.contents
+		client.screen -= hud_used.adding
+		client.screen -= hud_used.mon_blo
+		client.screen -= list( oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
+		client.screen -= list( zone_sel, oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
@@ -176,25 +170,25 @@
 	O.cell.charge = 7500
 
 
-	O.gender = src.gender
+	O.gender = gender
 	O.invisibility = 0
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
-	O.lastKnownIP = src.client.address
-	if (src.mind)
-		src.mind.transfer_to(O)
-		if (src.mind.assigned_role == "Cyborg")
-			src.mind.original = O
-		else if (src.mind.special_role) O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+	O.lastKnownIP = client.address
+	if (mind)
+		mind.transfer_to(O)
+		if (mind.assigned_role == "Cyborg")
+			mind.original = O
+		else if (mind.special_role) O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 
 	else //welp
-		src.mind = new /datum/mind(  )
-		src.mind.key = src.key
-		src.mind.current = O
-		src.mind.original = O
-		src.mind.transfer_to(O)
+		mind = new /datum/mind(  )
+		mind.key = key
+		mind.current = O
+		mind.original = O
+		mind.transfer_to(O)
 		ticker.minds += O.mind
-	O.loc = src.loc
+	O.loc = loc
 	O << "<B>You are playing a Robot. A Robot can interact with most electronic objects in its view point.</B>"
 	O << "<B>You must follow the laws that the AI has. You are the AI's assistant to the station basically.</B>"
 	O << "To use something, simply double-click it."
@@ -202,34 +196,26 @@
 
 	O.job = "Cyborg"
 
-	O.brain = new /obj/item/device/mmi(O)
-	O.brain.name = "Man-Machine Interface: [src.name]"
-	O.brain.icon_state = "mmi_full"
-	O.brain.brain = new /obj/item/brain(O.brain)
-	O.brain.brain.name = "[src.name]'s brain"
-	O.brain.brain.brainmob = new /mob/living/carbon/brain(O.brain.brain)
-	O.brain.brain.brainmob.name = "[src.name]"
-	O.brain.brain.brainmob.container = O.brain
-
-
+	O.mmi = new /obj/item/device/mmi(O)
+	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
 	del(src)
 	return O
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
-	if (src.monkeyizing)
+	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	src.update_clothing()
-	src.monkeyizing = 1
-	src.canmove = 0
-	src.icon = null
-	src.invisibility = 101
-	for(var/t in src.organs)
-		del(src.organs[t])
-//	var/atom/movable/overlay/animation = new /atom/movable/overlay( src.loc )
+	update_clothing()
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+	for(var/t in organs)
+		del(organs[t])
+//	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
 //	animation.icon_state = "blank"
 //	animation.icon = 'mob.dmi'
 //	animation.master = src
@@ -241,14 +227,14 @@
 	var/mob/O
 	switch(CASTE)
 		if("Hunter")
-			O = new /mob/living/carbon/alien/humanoid/hunter (src.loc)
+			O = new /mob/living/carbon/alien/humanoid/hunter (loc)
 		if("Sentinel")
-			O = new /mob/living/carbon/alien/humanoid/sentinel (src.loc)
+			O = new /mob/living/carbon/alien/humanoid/sentinel (loc)
 		if("Drone")
-			O = new /mob/living/carbon/alien/humanoid/drone (src.loc)
+			O = new /mob/living/carbon/alien/humanoid/drone (loc)
 
-	O.dna = src.dna
-	src.dna = null
+	O.dna = dna
+	dna = null
 	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
 	O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
 
@@ -256,12 +242,12 @@
 	O.mind.current = O
 	O.mind.assigned_role = "Alien"
 	O.mind.special_role = CASTE
-	O.mind.key = src.key
-	if(src.client)
-		src.client.mob = O
+	O.mind.key = key
+	if(client)
+		client.mob = O
 
 
-	O.loc = src.loc
+	O.loc = loc
 	O << "<B>You are now an alien.</B>"
 	del(src)
 	return

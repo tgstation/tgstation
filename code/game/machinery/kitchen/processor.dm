@@ -36,7 +36,7 @@
 	monkeymeat
 		input = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
-		
+
 	humanmeat
 		input = /obj/item/weapon/reagent_containers/food/snacks/meat/human
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
@@ -48,11 +48,6 @@
 	/* mobs */
 	mob
 		process(loc, what)
-			var/mob/O = what
-			if (O.client)
-				var/mob/dead/observer/newmob = new/mob/dead/observer(O)
-				O.client.mob = newmob
-				newmob.client.eye = newmob
 			..()
 
 
@@ -71,7 +66,7 @@
 					return
 				var/obj/item/weapon/reagent_containers/glass/bucket/bucket_of_blood = new(loc)
 				var/datum/reagent/blood/B = new()
-				B.holder = bucket_of_blood 
+				B.holder = bucket_of_blood
 				B.volume = 70
 				//set reagent data
 				B.data["donor"] = O
@@ -108,7 +103,7 @@
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		what = G.affecting
-	
+
 	var/datum/food_processor_process/P = select_recipe(what)
 	if (!P)
 		user << "\red That probably won't blend."

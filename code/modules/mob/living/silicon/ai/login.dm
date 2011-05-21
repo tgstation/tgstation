@@ -18,7 +18,7 @@
 		src.client.eye = src.loc
 		src.client.perspective = EYE_PERSPECTIVE
 	if (src.stat == 2)
-		src.verbs += /mob/proc/ghostize
+		src.verbs += /mob/proc/ghost
 	else
 		for(var/obj/machinery/ai_status_display/O in world) //change status
 			spawn( 0 )

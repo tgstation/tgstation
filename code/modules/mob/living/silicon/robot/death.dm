@@ -39,5 +39,5 @@
 	if (src.key)
 		spawn(50)
 			if(src.key && src.stat == 2)
-				src.verbs += /mob/proc/ghostize
+				src.verbs += /mob/proc/ghost
 	return ..(gibbed)

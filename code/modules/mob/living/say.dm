@@ -1,6 +1,6 @@
 /mob/living/proc/binarycheck()
-	if (istype(src, /mob/living/silicon)) return 1
-	if (!istype(src, /mob/living/carbon/human)) return
+	if (issilicon(src)) return 1
+	if (!ishuman(src)) return
 	var/mob/living/carbon/human/H = src
 	if (H.ears)
 		var/obj/item/device/radio/headset/dongle = H.ears
@@ -8,8 +8,8 @@
 		if(dongle.translate_binary) return 1
 
 /mob/living/proc/hivecheck()
-	if (istype(src, /mob/living/carbon/alien)) return 1
-	if (!istype(src, /mob/living/carbon/human)) return
+	if (isalien(src)) return 1
+	if (!ishuman(src)) return
 	var/mob/living/carbon/human/H = src
 	if (H.ears)
 		var/obj/item/device/radio/headset/dongle = H.ears
@@ -23,39 +23,39 @@
 		return
 
 	if (length(message) >= 1)
-		if (src.miming && copytext(message, 1, 2) != "*")
+		if (miming && copytext(message, 1, 2) != "*")
 			return
 
-	if (src.stat == 2)
-		return src.say_dead(message)
+	if (stat == 2)
+		return say_dead(message)
 
-	if (src.muted || src.silent)
+	if (muted || silent)
 		return
 
 	// wtf?
-	if (src.stat)
+	if (stat)
 		return
 
 	// Mute disability
-	if (src.sdisabilities & 2)
+	if (sdisabilities & 2)
 		return
 
-	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+	if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 
 	// emotes
-	if (copytext(message, 1, 2) == "*" && !src.stat)
-		return src.emote(copytext(message, 2))
+	if (copytext(message, 1, 2) == "*" && !stat)
+		return emote(copytext(message, 2))
 
 	var/alt_name = ""
-	if (istype(src, /mob/living/carbon/human) && src.name != src.real_name)
+	if (istype(src, /mob/living/carbon/human) && name != real_name)
 		var/mob/living/carbon/human/H = src
 		alt_name = " (as [H.get_visible_name()])"
 	var/italics = 0
 	var/message_range = null
 	var/message_mode = null
 
-	if (src.brainloss >= 60 && prob(50))
+	if (brainloss >= 60 && prob(50))
 		if (ishuman(src))
 			message_mode = "headset"
 	// Special message handling
@@ -114,7 +114,7 @@
 		return
 
 	// :downs:
-	if (src.brainloss >= 60)
+	if (brainloss >= 60)
 		message = dd_replacetext(message, " am ", " ")
 		message = dd_replacetext(message, " is ", " ")
 		message = dd_replacetext(message, " are ", " ")
@@ -126,16 +126,16 @@
 		if(prob(50))
 			message = uppertext(message)
 			message += "[stutter(pick("!", "!!", "!!!"))]"
-		if(!src.stuttering && prob(15))
+		if(!stuttering && prob(15))
 			message = stutter(message)
 
-	if (src.stuttering)
+	if (stuttering)
 		message = stutter(message)
 
 /* //qw do not have beesease atm.
-	if(src.virus)
-		if(src.virus.name=="beesease" && src.virus.stage>=2)
-			if(prob(src.virus.stage*10))
+	if(virus)
+		if(virus.name=="beesease" && virus.stage>=2)
+			if(prob(virus.stage*10))
 				var/bzz = length(message)
 				message = "B"
 				for(var/i=0,i<bzz,i++)
@@ -160,16 +160,16 @@
 			italics = 1
 
 		if ("right hand")
-			if (src.r_hand)
-				src.r_hand.talk_into(src, message)
+			if (r_hand)
+				r_hand.talk_into(src, message)
 				used_radios += src:r_hand
 
 			message_range = 1
 			italics = 1
 
 		if ("left hand")
-			if (src.l_hand)
-				src.l_hand.talk_into(src, message)
+			if (l_hand)
+				l_hand.talk_into(src, message)
 				used_radios += src:l_hand
 
 			message_range = 1
@@ -185,19 +185,19 @@
 
 		//I see no reason to restrict such way of whispering
 		if ("whisper")
-			src.whisper(message)
+			whisper(message)
 			return
 
 		if ("binary")
-			if(src.robot_talk_understand || src.binarycheck())
+			if(robot_talk_understand || binarycheck())
 			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
-				src.robot_talk(message)
+				robot_talk(message)
 			return
 
 		if ("alientalk")
-			if(src.alien_talk_understand || src.hivecheck())
+			if(alien_talk_understand || hivecheck())
 			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
-				src.alien_talk(message)
+				alien_talk(message)
 			return
 
 		if ("department")
@@ -219,8 +219,8 @@
 
 	var/list/listening
 /*
-	if(istype(src.loc, /obj/item/device/aicard)) // -- TLE
-		var/obj/O = src.loc
+	if(istype(loc, /obj/item/device/aicard)) // -- TLE
+		var/obj/O = loc
 		if(istype(O.loc, /mob))
 			var/mob/M = O.loc
 			listening = hearers(message_range, M)
@@ -243,7 +243,7 @@
 	var/turf/T = get_turf(src)
 	listening = hearers(message_range, T)
 	var/list/V = view(message_range, T)
-	//find mobs in lockers, cryo and intellycards
+	//find mobs in lockers, cryo, intellicards, brains, MMIs, and so on.
 	for (var/mob/M in world)
 		if (!M.client)
 			continue //skip monkeys and leavers
@@ -258,10 +258,16 @@
 			if (M.client && M.client.ghost_ears)
 				listening|=M
 
-	for (var/obj/O in ((V | src.contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
+	for (var/obj/O in ((V | contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 		spawn (0)
 			if (O)
 				O.hear_talk(src, message)
+
+	if(isbrain(src))//For brains to properly talk if they are in an MMI..or in a brain. Could be extended to other mobs I guess.
+		for(var/obj/O in loc)//Kinda ugly but whatever.
+			if(O)
+				spawn(0)
+					O.hear_talk(src, message)
 
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
@@ -274,19 +280,19 @@
 
 	var/rendered = null
 	if (length(heard_a))
-		var/message_a = src.say_quote(message)
+		var/message_a = say_quote(message)
 
 		if (italics)
 			message_a = "<i>[message_a]</i>"
 		if (!istype(src, /mob/living/carbon/human))
-			rendered = "<span class='game say'><span class='name'>[src.name]</span> <span class='message'>[message_a]</span></span>"
+			rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
 		else if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
 			if(wear_mask:vchange)
-				rendered = "<span class='game say'><span class='name'>[src.wear_mask:voice]</span> <span class='message'>[message_a]</span></span>"
+				rendered = "<span class='game say'><span class='name'>[wear_mask:voice]</span> <span class='message'>[message_a]</span></span>"
 			else
-				rendered = "<span class='game say'><span class='name'>[src.name]</span> <span class='message'>[message_a]</span></span>"
+				rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
 		else
-			rendered = "<span class='game say'><span class='name'>[src.real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
+			rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 
 		for (var/mob/M in heard_a)
 			M.show_message(rendered, 2)
@@ -301,18 +307,18 @@
 	if (length(heard_b))
 		var/message_b
 
-		if (src.voice_message)
-			message_b = src.voice_message
+		if (voice_message)
+			message_b = voice_message
 		else
 			message_b = stars(message)
-			message_b = src.say_quote(message_b)
+			message_b = say_quote(message_b)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"
 
-		rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> <span class='message'>[message_b]</span></span>"
+		rendered = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
 
 		for (var/mob/M in heard_b)
 			M.show_message(rendered, 2)
 
-	log_say("[src.name]/[src.key] : [message]")
+	log_say("[name]/[key] : [message]")

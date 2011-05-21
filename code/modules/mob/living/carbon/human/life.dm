@@ -766,20 +766,20 @@
 				else
 					seer = 0
 					see_invisible = 0
-			else if (istype(src.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
-				switch(src.wear_mask:mode)
+			else if (istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
+				switch(wear_mask:mode)
 					if(1)
-						src.see_in_dark = 5
-						if(!src.druggy)
-							src.see_invisible = 0
+						see_in_dark = 5
+						if(!druggy)
+							see_invisible = 0
 					if(2)
-						src.sight |= SEE_MOBS
-						if(!src.druggy)
-							src.see_invisible = 2
+						sight |= SEE_MOBS
+						if(!druggy)
+							see_invisible = 2
 					if(3)
-						src.sight |= SEE_TURFS
-						if(!src.druggy)
-							src.see_invisible = 0
+						sight |= SEE_TURFS
+						if(!druggy)
+							see_invisible = 0
 
 			else if (istype(src.glasses, /obj/item/clothing/glasses/meson))
 				src.sight |= SEE_TURFS
@@ -996,11 +996,6 @@
 						if(M.stat == 2)
 							M.death(1)
 							stomach_contents.Remove(M)
-							if(M.client)
-								var/mob/dead/observer/newmob = new(M)
-								M:client:mob = newmob
-								M.mind.transfer_to(newmob)
-								newmob.reset_view(null)
 							del(M)
 							continue
 						if(air_master.current_cycle%3==1)

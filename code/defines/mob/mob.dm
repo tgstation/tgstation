@@ -26,6 +26,12 @@
 
 	// var/list/obj/hallucination/hallucinations = list() - Not used at all - Skie
 
+	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
+	A variable should only be globally attached to turfs/objects/whatever, when they are in fact needed as such.
+	The current method unnecessarily clusters up the variable list, especially for humans.
+	I'll make some notes on where certain variable defines should probably go.
+	Changing this around would probably require a good look-over the pre-existing code.
+	*/
 	var/alien_egg_flag = 0
 	var/last_special = 0
 	var/obj/screen/zone_sel/zone_sel = null
@@ -40,79 +46,79 @@
 	var/other_mobs = null
 	var/memory = ""
 	var/poll_answer = 0.0
-	var/sdisabilities = 0
-	var/disabilities = 0
+	var/sdisabilities = 0//Carbon
+	var/disabilities = 0//Carbon
 	var/atom/movable/pulling = null
 	var/stat = 0.0
 	var/next_move = null
 	var/prev_move = null
-	var/monkeyizing = null
+	var/monkeyizing = null//Human, maybe Carbon
 	var/other = 0.0
 	var/hand = null
-	var/eye_blind = null
-	var/eye_blurry = null
-	var/ear_deaf = null
-	var/ear_damage = null
-	var/stuttering = null
+	var/eye_blind = null//Carbon
+	var/eye_blurry = null//Carbon
+	var/ear_deaf = null//Carbon
+	var/ear_damage = null//Carbon
+	var/stuttering = null//Carbon
 	var/real_name = null
 	var/blinded = null
-	var/bhunger = 0
+	var/bhunger = 0//Carbon
 	var/ajourn = 0
 	var/rejuv = null
-	var/druggy = 0
-	var/confused = 0
+	var/druggy = 0//Carbon
+	var/confused = 0//Carbon
 	var/antitoxs = null
 	var/plasma = null
-	var/sleeping = 0.0
-	var/resting = 0.0
+	var/sleeping = 0.0//Carbon
+	var/resting = 0.0//Carbon
 	var/lying = 0.0
 	var/canmove = 1.0
-	var/eye_stat = null
-	var/oxyloss = 0.0
-	var/toxloss = 0.0
-	var/fireloss = 0.0
-	var/timeofdeath = 0.0
-	var/bruteloss = 0.0
-	var/cpr_time = 1.0
-	var/health = 100
+	var/eye_stat = null//Living, potentially Carbon
+	var/oxyloss = 0.0//Living
+	var/toxloss = 0.0//Living
+	var/fireloss = 0.0//Living
+	var/bruteloss = 0.0//Living
+	var/timeofdeath = 0.0//Living
+	var/cpr_time = 1.0//Carbon
+	var/health = 100//Living
 	var/bodytemperature = 310.055	//98.7 F
-	var/drowsyness = 0.0
-	var/dizziness = 0
+	var/drowsyness = 0.0//Carbon
+	var/dizziness = 0//Carbon
 	var/is_dizzy = 0
 	var/is_jittery = 0
-	var/jitteriness = 0
+	var/jitteriness = 0//Carbon
 	var/charges = 0.0
-	var/nutrition = 400.0
-	var/overeatduration = 0		// How long this guy is overeating
+	var/nutrition = 400.0//Carbon
+	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/paralysis = 0.0
 	var/stunned = 0.0
 	var/weakened = 0.0
-	var/losebreath = 0.0
-	var/metabslow = 0	// Metabolism slowed
-	var/intent = null
+	var/losebreath = 0.0//Carbon
+	var/metabslow = 0	// Metabolism slowed//Carbon
+	var/intent = null//Living
 	var/shakecamera = 0
-	var/a_intent = "help"
-	var/m_int = null
-	var/m_intent = "run"
+	var/a_intent = "help"//Living
+	var/m_int = null//Living
+	var/m_intent = "run"//Living
 	var/lastDblClick = 0
 	var/lastKnownIP = null
-	var/obj/stool/buckled = null
-	var/obj/item/weapon/handcuffs/handcuffed = null
-	var/obj/item/l_hand = null
-	var/obj/item/r_hand = null
-	var/obj/item/weapon/back = null
-	var/obj/item/weapon/tank/internal = null
-	var/obj/item/weapon/storage/s_active = null
-	var/obj/item/clothing/mask/wear_mask = null
+	var/obj/stool/buckled = null//Living, unless you can buckle silicons.
+	var/obj/item/weapon/handcuffs/handcuffed = null//Living, unless you can cuff silicons.
+	var/obj/item/l_hand = null//Living
+	var/obj/item/r_hand = null//Living
+	var/obj/item/weapon/back = null//Human
+	var/obj/item/weapon/tank/internal = null//Human/Monkey
+	var/obj/item/weapon/storage/s_active = null//Carbon
+	var/obj/item/clothing/mask/wear_mask = null//Carbon
 	var/r_epil = 0
 	var/r_ch_cou = 0
-	var/r_Tourette = 0
-	var/cloneloss = 0
-	var/seer = 0 //for cult
+	var/r_Tourette = 0//Carbon
+	var/cloneloss = 0//Carbon
+	var/seer = 0 //for cult//Carbon
 
-	var/miming = null //checks if the guy is a mime
-	var/silent = null //Can't talk. Value goes down every life proc.
-	var/muted = null //Can't talk in any way shape or form (Even OOC or emote). An admin punishment
+	var/miming = null //checks if the guy is a mime//Human
+	var/silent = null //Can't talk. Value goes down every life proc.//Human
+	var/muted = null //Can't talk in any way shape or form (Even OOC or emote). An admin punishment//Human
 
 	var/obj/hud/hud_used = null
 
@@ -131,25 +137,25 @@
 
 	var/music_lastplayed = "null"
 
-	var/job = null
+	var/job = null//Living
 
 	var/knowledge = 0.0
 
 	var/nodamage = 0
 	var/logged_in = 0
 
-	var/underwear = 1
-	var/be_syndicate = 0
+	var/underwear = 1//Human
+	var/be_syndicate = 0//This really should be a client variable.
 	var/be_random_name = 0
-	var/const/blindness = 1
-	var/const/deafness = 2
-	var/const/muteness = 4
-	var/brainloss = 0
+	var/const/blindness = 1//Carbon
+	var/const/deafness = 2//Carbon
+	var/const/muteness = 4//Carbon
+	var/brainloss = 0//Carbon
 
-	var/datum/dna/dna = null
-	var/radiation = 0.0
+	var/datum/dna/dna = null//Carbon
+	var/radiation = 0.0//Carbon
 
-	var/mutations = 0
+	var/mutations = 0//Carbon
 	//telekinesis = 1
 	//firemut = 2
 	//xray = 4
@@ -175,7 +181,7 @@
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-//Changeling mode stuff
+//Changeling mode stuff//Carbon
 	var/changeling_level = 0
 	var/list/absorbed_dna = list()
 	var/changeling_fakedeath = 0
@@ -189,7 +195,10 @@
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
 
-//Ninja stuff. Was originally for Ruby Mode but since that didn't go anywhere, I'm hijacking it.
+/*For ninjas and others. This variable is checked when a mob moves and I guess it was supposed to allow the mob to move
+through dense areas, such as walls. Setting density to 0 does the same thing. The difference here is that
+the mob is also allowed to move without any sort of restriction. For instance, in space or out of holder objects.*/
+//0 is off, 1 is normal, 2 is for ninjas.
 	var/incorporeal_move = 0
 
 

@@ -123,8 +123,8 @@ When thinking about new stuff, check here to see if there are any slots unfilled
 //BIOTECH
 1	|	Bruise Pack, Scalple
 2	|	PANDEMIC Board, Mass Spectrometer
-3	|	AI Core, Brains
-4	|
+3	|	AI Core, Brains (MMI)
+4	|	MMI+Radio
 5	|
 6	|
 7	|

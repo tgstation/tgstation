@@ -87,7 +87,6 @@ mob/new_player
 			src << browse_rsc('sos_11.png')
 			src << browse_rsc('sos_12.png')
 			src << browse_rsc('sos_13.png')
-
 		//End PDA Resource Initialisation =====================================================>
 
 

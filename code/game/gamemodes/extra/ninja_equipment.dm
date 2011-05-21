@@ -11,6 +11,8 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/New()
 	..()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init//suit initialize verb
+	//verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_instruction//for AIs
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo
 	spark_system = new /datum/effects/system/spark_spread()//spark initialize
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -24,7 +26,7 @@ ________________________________________________________________________________
 	reagents.add_reagent("radium", 120)//AI can inject radium directly. There should be at least 60 units left over after adrenaline boosting.
 	reagents.add_reagent("nutriment", 80)
 	cell = new/obj/item/weapon/cell/high//The suit should *always* have a battery because so many things rely on it.
-	cell.charge = 9000
+	cell.charge = 9000//Starting charge should not be higher than maximum charge. It leads to problems with recharging.
 
 /obj/item/clothing/suit/space/space_ninja/Del()
 	if(AI)//If there are AIs present when the ninja kicks the bucket.
@@ -33,11 +35,11 @@ ________________________________________________________________________________
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/killai(var/mob/living/silicon/ai/A as mob)
-	A << "\red Self-destruct protocol dete-- *bzzzzz*"
-	A << browse(null, "window=hack spideros")
+	if(A.client)
+		A << "\red Self-destruct protocol dete-- *bzzzzz*"
+		A << browse(null, "window=hack spideros")
 	AI = null
-	A.death()//Kill
-	A.ghostize()//Turn into ghost
+	A.death(1)//Kill
 	del(AI)
 	return
 
@@ -50,7 +52,6 @@ ________________________________________________________________________________
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/ntick(var/mob/living/carbon/human/U as mob)
-	set hidden = 1
 	set background = 1
 
 	spawn while(initialize&&cell.charge>=0)//Suit on and has power.
@@ -137,14 +138,12 @@ ________________________________________________________________________________
 		U << "\blue Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[cell.charge]</B>."
 		sleep(40)
 		U << "\blue All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name]."
-		U.grant_ninja_verbs()
+		grant_ninja_verbs()
 		verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
 		verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
 		U.gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/drain_wire
 		U.gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/toggled
-		initialize=1
 		affecting=U
-		slowdown=0
 		U.shoes:slowdown--
 		ntick(U)
 	else
@@ -176,14 +175,12 @@ ________________________________________________________________________________
 	U << "\blue Now de-initializing..."
 	if(kamikaze)
 		U << "\blue Disengaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>"
-		U.remove_kamikaze_verbs()
-		kamikaze = 0
-		unlock = 0
+		remove_kamikaze_verbs()
 		U.incorporeal_move = 0
 		U.density = 1
 	spideros = 0
 	sleep(40)
-	U.remove_ninja_verbs()
+	remove_ninja_verbs()
 	U << "\blue Logging off, [U:real_name]. Shutting down <B>SpiderOS</B>."
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
 	sleep(40)
@@ -239,7 +236,6 @@ ________________________________________________________________________________
 	set name = "Display SpiderOS"
 	set desc = "Utilize built-in computer system."
 	set category = "Ninja Equip"
-	//set src in view()//To have it show up after AI gives back control.
 
 	if(!affecting)	return//If no mob is wearing the suit. I almost forgot about this variable.
 	var/mob/living/carbon/human/U = affecting
@@ -351,33 +347,39 @@ ________________________________________________________________________________
 			dat += "<h5>How they relate to other SS13 organizations:</h5>"
 			dat += "<ul>"
 			dat += "<li>*<b>Nanotrasen</b> and the Syndicate are two sides of the same coin and that coin is valuable.</li>"
-			dat += "<li>*<b>The Space Wizard Federation</b> is a problem, mainly because they are an extremely dangerous group of unpredictable individuals--not to mention the wizards hate technology and are in direct opposition of the Spider Clan. Best avoided or left well-enough alone.</li>"
-			dat += "<li>*<b>Changeling Hivemind</b>: extremely dangerous and to be killed on sight.</li>"
-			dat += "<li>*<b>Xeno Hivemind</b>: their skulls make interesting kitchen decorations and are challenging to best, especially in larger nests.</li>"
+			dat += "<li>*<b>The Space Wizard Federation</b> is a problem, mainly because they are an extremely dangerous group of unpredictable individuals--not to mention the wizards hate technology and are in direct opposition of the Spider Clan. Best avoided or left well-enough alone. How to battle: wizards possess several powerful abilities to steer clear off. Blind in particular is a nasty spell--jaunt away if you are blinded and never approach a wizard in melee. Stealth may also work if the wizard is not wearing thermal scanners--don't count on this. Run away if you feel threatened and await a better opportunity.</li>"
+			dat += "<li>*<b>Changeling Hivemind</b>: extremely dangerous and to be killed on sight. How to battle: they will likely try to absorb you. Adrenaline boost, then phase shift into them. If you get stung, use SpiderOS to inject counter-agents. Stealth may also work but detecting a changeling is the real battle.</li>"
+			dat += "<li>*<b>Xeno Hivemind</b>: their skulls make interesting kitchen decorations and are challenging to best, especially in larger nests. How to battle: they can see through your stealth guise and energy stars will not work on them. Best killed with a Phase Shift or at range. If you happen on a projectile stun weapon, use it and then close in to melee.</li>"
 			dat += "</ul>"
 			dat += "<h5>The reason they (you) are here</h5>:"
 			dat += "Space ninjas are renowned throughout the known controlled space as fearless spies, infiltrators, and assassins. They are sent on missions of varying nature by Nanotrasen, the Syndicate, and other shady organizations and people. To hire a space ninja means serious business."
 			dat += "<h5>Their playstyle:</h5>"
 			dat += "A mix of traitor, changeling, and wizard. Ninjas rely on energy, or electricity to be precise, to keep their suits running (when out of energy, a suit hibernates). Suits gain energy from objects or creatures that contain electrical charge. APCs, cell batteries, rechargers, SMES batteries, cyborgs, mechs, and exposed wires are currently supported. Through energy ninjas gain access to special powers--while all powers are tied to the ninja suit, the most useful of them are verb activated--to help them in their mission.<br>It is a constant struggle for a ninja to remain hidden long enough to recharge the suit and accomplish their objective; despite their arsenal of abilities, ninjas can die like any other. Unlike wizards, ninjas do not possess good crowd control and are typically forced to play more subdued in order to achieve their goals. Some of their abilities are specifically designed to confuse and disorient others.<br>With that said, it should be perfectly possible to completely flip the fuck out and rampage as a ninja."
 			dat += "<h5>Their powers:</h5>"
-			dat += "There are two primary types: powers that are activated through the suit and powers that are activated through the verb panel. Passive powers are always on. Active powers must be turned on and remain active only when there is energy to do so. All verb powers are active and their cost is listed next to them."
-			dat += "<b>Powers of the suit</b>: cannot be tracked by AI (passive), faster speed (passive), stealth (active), vision switch (passive if toggled), voice masking (passive), SpiderOS (passive if toggled), energy drain (passive if toggled)."
+			dat += "There are two primary types: Equipment and Abilties. Passive effects are always on. Active effects must be turned on and remain active only when there is energy to do so. Ability costs are listed next to them."
+			dat += "<b>Equipment</b>: cannot be tracked by AI (passive), faster speed (passive), stealth (active), vision switch (passive if toggled), voice masking (passive), SpiderOS (passive if toggled), energy drain (passive if toggled)."
 			dat += "<ul>"
 			dat += "<li><i>Voice masking</i> generates a random name the ninja can use over the radio and in-person. Although, the former use is recommended.</li>"
 			dat += "<li><i>Toggling vision</i> cycles to one of the following: thermal, meson, or darkness vision.</li>"
 			dat += "<li><i>Stealth</i>, when activated, drains more battery charge and works similarly to a syndicate cloak.</li>"
+			dat += "<li><i>On-board AI</i>: The suit is able to download an AI much like an intelicard. Check with SpiderOS for details once downloaded.</li>"
 			dat += "<li><i>SpiderOS</i> is a specialized, PDA-like screen that allows for a small variety of functions, such as injecting healing chemicals directly from the suit. You are using it now, if that was not already obvious. You may also download AI modules directly to the OS.</li>"
 			dat += "</ul>"
-			dat += "<b>Verbpowers</b>:"
+			dat += "<b>Abilities</b>:"
 			dat += "<ul>"
-			dat += "<li>*<b>Phase Shift</b> (<i>2000E</i>) and <b>Phase Jaunt</b> (<i>1000E</i>) are unique powers in that they can both be used for defense and offense. Jaunt launches the ninja forward facing up to 10 squares, somewhat randomly selecting the final destination. Shift can only be used on turf in view but is precise (cannot be used on walls). Any living mob in the area teleported to is instantly gibbed.</li>"
-			dat += "<li>*<b>Energy Blade</b> (<i>500E</i>) is a highly effective weapon. It is summoned directly to the ninja's hand and can also function as an EMAG for certain objects (doors/lockers/etc). You may also use it to cut through walls and disabled doors. Experiment! The blade will crit humans in two hits. This item cannot be placed in containers and when dropped or thrown disappears. Having an energy sword drains more power from the battery each tick.</li>"
+			dat += "<li>*<b>Phase Shift</b> (<i>2000E</i>) and <b>Phase Jaunt</b> (<i>1000E</i>) are unique powers in that they can both be used for defense and offense. Jaunt launches the ninja forward facing up to 9 squares, somewhat randomly selecting the final destination. Shift can only be used on turf in view but is precise (cannot be used on walls). Any living mob in the area teleported to is instantly gibbed (mechs are damaged, huggers and other similar critters are killed). It is possible to teleport with a target, provided you grab them before teleporting.</li>"
+			dat += "<li>*<b>Energy Blade</b> (<i>500E</i>) is a highly effective weapon. It is summoned directly to the ninja's hand and can also function as an EMAG for certain objects (doors/lockers/etc). You may also use it to cut through walls and disabled doors. Experiment! The blade will crit humans in two hits. This item cannot be placed in containers and when dropped or thrown disappears. Having an energy blade drains more power from the battery each tick.</li>"
 			dat += "<li>*<b>EM Pulse</b> (<i>2500E</i>) is a highly useful ability that will create an electromagnetic shockwave around the ninja, disabling technology whenever possible. If used properly it can render a security force effectively useless. Of course, getting beat up with a toolbox is not accounted for.</li>"
 			dat += "<li>*<b>Energy Star</b> (<i>300E</i>) is a ninja star made of green energy AND coated in poison. It works by picking a random living target within range and can be spammed to great effect in incapacitating foes. Just remember that the poison used is also used by the Xeno Hivemind (and will have no effect on them).</li>"
-			dat += "<li>*<b>Energy Net</b> (<i>2000E</i>) traps a right-clicked target in an energy field that will trasport them to a holding facility after 30 seconds. They, or someone else, may break the net in the mean time, cancelling the procedure. Abduction never looked this leet.</li>"
+			dat += "<li>*<b>Energy Net</b> (<i>2000E</i>) is a non-lethal solution to incapacitating humanoids. The net is made of non-harmful phase energy and will halt movement as long as it remains in effect--it can be destroyed. If the net is not destroyed, after a certain time it will teleport the target to a holding facility for the Spider Clan and then vanish. You will be notified if the net fails or succeeds in capturing a target in this manner. Combine with energy stars or stripping to ensure success. Abduction never looked this leet.</li>"
 			dat += "<li>*<b>Adrenaline Boost</b> (<i>1 E. Boost/3</i>) recovers the user from stun, weakness, and paralysis. Also injects 20 units of radium into the bloodstream.</li>"
 			dat += "<li>*<b>Smoke Bomb</b> (<i>1 Sm.Bomb/10</i>) is a weak but potentially useful ability. It creates harmful smoke and can be used in tandem with other powers to confuse enemies.</li>"
 			dat += "<li>*<b>???</b>: unleash the <b>True Ultimate Power!</b></li>"
+			dat += "<h4><img src=sos_6.png> IMPORTANT:</h4>"
+			dat += "<ul>"
+			dat += "<li>*Make sure to toggle Special Interaction from the Ninja Equipment menu to interact differently with certain objects.</li>"
+			dat += "<li>*Your starting power cell can be replaced if you find one with higher maximum energy capacity by clicking on the new cell with the same hand (super and hyper cells).</li>"
+			dat += "<li>*Conserve your energy. Without it, you are very vulnerable.</li>"
 			dat += "</ul>"
 			dat += "That is all you will need to know. The rest will come with practice and talent. Good luck!"
 			dat += "<h4>Master /N</h4>"
@@ -414,13 +416,9 @@ ________________________________________________________________________________
 
 				dat += "<h4>Laws:</h4><ul>[laws]<li><a href='byond://?src=\ref[src];choice=Override Laws;target=\ref[A]'><i>*Override Laws*</i></a></li></ul>"
 
-				if (A.stat == 2)//If AI dies while inside the card.
-					if(A.client)//If they are still in their body.
-						A.ghostize()//Throw them into a ghost.
-						AI = null
-						del(A)//Delete A.
-					else
-						del(A)
+				if (A.stat == 2)//If AI dies while inside the card, such as suiciding.
+					AI = null
+					del(A)//Delete A.
 					U << "Artificial Intelligence has self-terminated. Rebooting..."
 					spideros()//Refresh.
 				else
@@ -546,8 +544,7 @@ ________________________________________________________________________________
 						sleep(10)
 						U << "\red Do or Die, <b>LET'S ROCK!!</b>"
 						if(verbs.Find(/obj/item/clothing/suit/space/space_ninja/proc/deinit))//To hopefully prevent engaging kamikaze and de-initializing at the same time.
-							kamikaze = 1
-							active = 0
+							grant_kamikaze_verbs()
 							icon_state = "s-ninjak"
 							if(istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
 								U.gloves.icon_state = "s-ninjak"
@@ -557,8 +554,7 @@ ________________________________________________________________________________
 								U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/drain_wire
 								U.gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
 							U.update_clothing()
-							U.grant_kamikaze_verbs()
-							U.ninjablade()
+							ninjablade()
 							message_admins("\blue [U.key] used KAMIKAZE mode.", 1)
 						else
 							U << "Nevermind, you cheater."
@@ -568,6 +564,7 @@ ________________________________________________________________________________
 					U << "\red ERROR: WRONG PASSWORD!"
 					unlock = 0
 					spideros = 0
+			//BEGIN MEDICAL//
 			if("Dylovene")//These names really don't matter for specific functions but it's easier to use descriptive names.
 				if(!reagents.get_reagent_amount("anti_toxin"))
 					U << "\red Error: the suit cannot perform this function. Out of dylovene."
@@ -603,7 +600,7 @@ ________________________________________________________________________________
 					reagents.reaction(U, 2)
 					reagents.trans_id_to(U, "nutriment", 5)
 					U << "You feel a tiny prick and a sudden rush of substance in to your veins."
-
+			//BEGIN AI//
 			if("Override Laws")
 				var/mob/living/silicon/ai/A = locate(href_list["target"])
 				var/law_zero = A.laws_object.zeroth//Remembers law zero, if there is one.
@@ -624,41 +621,29 @@ ________________________________________________________________________________
 						spideros = 0
 						unlock = 0
 						U << browse(null, "window=spideros")
-						spawn(40)//Unlimited window spawn works!
+						sleep(40)
+						if(AI==A)
+							A << "Disconnecting neural interface..."
+							U << "\red <b>WARNING</b>: PRO0GRE--S 2&3%"
+							verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
+							verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
+							sleep(40)
 							if(AI==A)
-								A << "Disconnecting neural interface..."
-								U << "\red <b>WARNING</b>: PRO0GRE--S 2&3%"
-								verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
-								verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
-								spawn(40)
-									if(AI==A)
-										A << "Shutting down external protocol..."
-										U << "\red <b>WARNING</b>: PPPFRRROGrESS 677^%"
-										active = 0
-										spawn(40)
-											if(AI==A)
-												A << "Connecting to kernel..."
-												U << "\red <b>WARNING</b>: ER-RR04"
-												A.control_disabled = 0
-												spawn(40)
-													A << "Connection established and secured. Menu updated."
-													U << "\red <b>WARNING</b>: #%@!!WEL4P54@ \nUnABBBL3 TO LO-o-LOCAT2 ##$!ERNE0"
-													control = 0
-													var/obj/proc_holder/ai_return_control/A_C = new(A)
-													var/obj/proc_holder/ai_hack_ninja/B_C = new(A)
-													A.proc_holder_list += A_C
-													A.proc_holder_list += B_C
-											else
-												U << "\blue Hacking attempt disconnected. Resuming normal operation."
-												verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
-												verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
-									else
-										U << "\blue Hacking attempt disconnected. Resuming normal operation."
-										verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
-										verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
-							else
-								U << "\blue Hacking attempt disconnected. Resuming normal operation."
-						return
+								A << "Shutting down external protocol..."
+								U << "\red <b>WARNING</b>: PPPFRRROGrESS 677^%"
+								active = 0
+								sleep(40)
+								if(AI==A)
+									A << "Connecting to kernel..."
+									U << "\red <b>WARNING</b>: ER-RR04"
+									A.control_disabled = 0
+									sleep(40)
+									A << "Connection established and secured. Menu updated."
+									U << "\red <b>WARNING</b>: #%@!!WEL4P54@ \nUnABBBL3 TO LO-o-LOCAT2 ##$!ERNE0"
+									grant_AI_verbs()
+									return
+						U << "\blue Hacking attempt disconnected. Resuming normal operation."
+						remove_AI_verbs()
 					else
 						flush = 1
 						A.suiciding = 1
@@ -685,6 +670,7 @@ ________________________________________________________________________________
 			A << browse(null, "window=hack spideros")
 			return
 
+		//Remove this if verbs work.
 		var/obj/proc_holder/ai_hack_ninja/ninja_spideros = locate() in A//What is the object granting access to proc? Find it.
 
 		switch(href_list["choice"])
@@ -697,7 +683,7 @@ ________________________________________________________________________________
 					spideros=0
 				else
 					spideros = round(spideros/10)
-			if("Shock")//DEBUG TEST
+			if("Shock")
 				var/damage = min(cell.charge, rand(50,150))//Uses either the current energy left over or between 50 and 150.
 				if(damage>1)//So they don't spam it when energy is a factor.
 					spark_system.start()//SPARKS THERE SHALL BE SPARKS
@@ -715,6 +701,10 @@ ________________________________________________________________________________
 				spideros=3
 			if("32")
 				spideros=32
+			if("4")
+				spideros=4
+			if("5")
+				spideros=5
 			if("Message")
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				var/t = input(U, "Please enter untraceable message.") as text
@@ -724,6 +714,8 @@ ________________________________________________________________________________
 					return
 				if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
 					A << "\red Error: unable to deliver message."
+					//hack_spideros()
+					//Remove this if verbs work.
 					ninja_spideros.Click()
 					return
 				P.tnote += "<i><b>&larr; From [A]:</b></i><br>[t]<br>"//Oh ai, u so silly
@@ -735,6 +727,7 @@ ________________________________________________________________________________
 				P.overlays += image('pda.dmi', "pda-r")
 			if("Unlock Kamikaze")
 				A << "\red <b>ERROR</b>: \black TARANTULA.v.4.77.12 encryption algorithm detected. Unable to decrypt archive. \n Aborting..."
+			//BEGIN MEDICAL//
 			if("Dylovene")
 				if(!reagents.get_reagent_amount("anti_toxin"))
 					A << "\red Error: the suit cannot perform this function. Out of dylovene."
@@ -783,7 +776,55 @@ ________________________________________________________________________________
 					reagents.trans_id_to(U, "nutriment", 5)
 					A << "Injecting..."
 					U << "You feel a tiny prick and a sudden rush of substance in to your veins."
-		ninja_spideros.Click()//Calls spideros for AI.
+			//BEGIN ABILITIES//
+			if("Phase Jaunt")
+				A << "You trigger [href_list["choice"]]."
+				U << "[href_list["choice"]] suddenly triggered!"
+				ninjajaunt()
+			if("Phase Shift")
+				var/turfs[] = list()
+				for(var/turf/T in oview(5,loc))
+					turfs.Add(T)
+				if(turfs.len)
+					A << "You trigger [href_list["choice"]]."
+					U << "[href_list["choice"]] suddenly triggered!"
+					ninjashift(pick(turfs))
+				else
+					A << "There are no potential destinations in view."
+			if("Energy Blade")
+				A << "You trigger [href_list["choice"]]."
+				U << "[href_list["choice"]] suddenly triggered!"
+				ninjablade()
+			if("Energy Star")
+				A << "You trigger [href_list["choice"]]."
+				U << "[href_list["choice"]] suddenly triggered!"
+				ninjastar()
+			if("Energy Net")
+				var/targets[] = list()
+				for(var/mob/living/carbon/M in oview(5,loc))
+					targets.Add(M)
+				if(targets.len)
+					A << "You trigger [href_list["choice"]]."
+					U << "[href_list["choice"]] suddenly triggered!"
+					ninjanet(pick(targets))
+				else
+					A << "There are no potential targets in view."
+			if("EM Pulse")
+				A << "You trigger [href_list["choice"]]."
+				U << "[href_list["choice"]] suddenly triggered!"
+				ninjapulse()
+			if("Smoke Bomb")
+				A << "You trigger [href_list["choice"]]."
+				U << "[href_list["choice"]] suddenly triggered!"
+				ninjasmoke()
+			if("Adrenaline Boost")
+				A << "You trigger [href_list["choice"]]."
+				U << "[href_list["choice"]] suddenly triggered!"
+				ninjaboost()
+
+		//hack_spideros()//Calls spideros for AI.
+		//Remove this if verbs work.
+		ninja_spideros.Click()
 	return
 
 /obj/item/clothing/suit/space/space_ninja/examine()
@@ -845,8 +886,8 @@ ________________________________________________________________________________
 
 /obj/item/clothing/gloves/space_ninja/proc/drain(var/target_type as text, var/target, var/obj/suit, var/obj/gloves)
 //Var Initialize
-	var/mob/living/carbon/human/U = loc
 	var/obj/item/clothing/suit/space/space_ninja/S = suit
+	var/mob/living/carbon/human/U = S.affecting
 	var/obj/item/clothing/gloves/space_ninja/G = gloves
 
 	var/drain = 0//To drain from battery.
@@ -1310,10 +1351,10 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 			playsound(M.loc, 'sparks4.ogg', 50, 1)
 			anim(M.loc,M,'mob.dmi',,"phaseout")
 
-		M.loc = pick(prisonwarp)//Throw mob in prison.
 		density = 0//Make the net pass-through.
 		invisibility = 101//Make the net invisible so all the animations can play out.
 		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
+		M.loc = pick(prisonwarp)//Throw mob in prison.
 
 		spawn(0)
 			var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
