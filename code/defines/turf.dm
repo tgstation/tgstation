@@ -94,10 +94,12 @@
 
 /turf/simulated/wall/r_wall
 	name = "r wall"
-	icon = 'walls.dmi'
 	icon_state = "r_wall"
 	opacity = 1
 	density = 1
+
+	walltype = "rwall"
+
 	var/d_state = 0
 
 /turf/simulated/wall
@@ -109,6 +111,8 @@
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m steel wall
+
+	var/walltype = "wall"
 
 /turf/simulated/shuttle
 	name = "shuttle"
@@ -183,3 +187,103 @@
 	New(location,type)
 		..()
 		icon_state = "[type]vault"
+
+/turf/simulated/wall/mineral
+	icon = 'mineral_walls.dmi'
+	walltype = "iron"
+
+	var/oreAmount = 1
+	var/hardness = 1
+
+	New()
+		..()
+		name = "[walltype] wall"
+
+	dismantle_wall(devastated = 0)
+		if(!devastated)
+			var/ore = text2path("/obj/item/weapon/ore/[walltype]")
+			for(var/i = 1, i <= oreAmount, i++)
+				new ore(src)
+			ReplaceWithFloor()
+		else
+			ReplaceWithSpace()
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/weapon/pickaxe))
+			var/obj/item/weapon/pickaxe/digTool = W
+			user << "You start digging the [name]."
+			if(do_after(user,digTool.digspeed*hardness) && src)
+				user << "You finished digging."
+				dismantle_wall()
+		else if(istype(W,/obj/item/weapon)) //not sure, can't not just weapons get passed to this proc?
+			hardness -= W.force/100
+			user << "You hit the [name] with your [W.name]!"
+			CheckHardness()
+		else
+			attack_hand(user)
+		return
+
+	proc/CheckHardness()
+		if(hardness <= 0)
+			dismantle_wall()
+
+/turf/simulated/wall/mineral/iron
+	walltype = "iron"
+	hardness = 3
+
+/turf/simulated/wall/mineral/silver
+	walltype = "silver"
+	hardness = 3
+
+/turf/simulated/wall/mineral/uranium
+	walltype = "uranium"
+	hardness = 3
+
+	New()
+		..()
+		sd_SetLuminosity(3)
+
+/turf/simulated/wall/mineral/gold
+	walltype = "gold"
+
+/turf/simulated/wall/mineral/sand
+	walltype = "sand"
+	hardness = 0.5
+
+/turf/simulated/wall/mineral/transparent
+	opacity = 0
+
+/turf/simulated/wall/mineral/transparent/diamond
+	walltype = "diamond"
+	hardness = 10
+
+/turf/simulated/wall/mineral/transparent/plasma
+	walltype = "plasma"
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/weapon/weldingtool))
+			if(W:welding)
+				return TemperatureAct(100)
+		..()
+
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		if(exposed_temperature > 300)
+			TemperatureAct(exposed_temperature)
+
+	proc/TemperatureAct(temperature)
+		for(var/turf/simulated/floor/target_tile in range(2,loc))
+			if(target_tile.parent && target_tile.parent.group_processing)
+				target_tile.parent.suspend_group_processing()
+
+			var/datum/gas_mixture/napalm = new
+
+			var/toxinsToDeduce = temperature/10
+
+			napalm.toxins = toxinsToDeduce
+			napalm.temperature = 400+T0C
+
+			target_tile.assume_air(napalm)
+			spawn (0) target_tile.hotspot_expose(temperature, 400)
+
+			hardness -= toxinsToDeduce/100
+			CheckHardness()

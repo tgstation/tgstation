@@ -577,6 +577,17 @@ proc/move_mining_shuttle()
 	name = "Mining station Maintenance"
 	icon_state = "maintcentral"
 
+/area/mine/cafeteria
+	name = "Mining station Cafeteria"
+	icon_state = "cafeteria"
+
+/area/mine/hydroponics
+	name = "Mining station Hydroponics"
+	icon_state = "hydro"
+
+/area/mine/sleeper
+	name = "Mining station Emergency Sleeper"
+	icon_state = "medbay"
 
 /**********************Mineral deposits**************************/
 

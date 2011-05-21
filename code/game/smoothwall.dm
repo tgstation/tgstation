@@ -32,9 +32,12 @@
 			if((abs(src.x-W.x)-abs(src.y-W.y)) && (istype(W.loc.loc,/area/shuttle) || istype(W.loc.loc,/area/supply)))
 				junction |= get_dir(src,W)
 
-	if(istype(src,/turf/simulated/wall/r_wall) || istype(src,/obj/falserwall))
+	if(istype(src,/turf/simulated/wall))
+		var/turf/simulated/wall/wall = src
+		wall.icon_state = "[wall.walltype][junction]"
+	else if (istype(src,/obj/falserwall))
 		src.icon_state = "rwall[junction]"
-	else if(istype(src,/turf/simulated/wall) || istype(src,/obj/falsewall) || istype(src,/obj/falserwall))
+	else if (istype(src,/obj/falsewall))
 		src.icon_state = "wall[junction]"
 	else if(istype(src,/turf/simulated/shuttle/wall))
 		var/newicon = icon;

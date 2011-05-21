@@ -829,7 +829,7 @@
 		return
 	var/obj/glowshroom/planted = new /obj/glowshroom(user.loc)
 
-	planted.delay = lifespan * 10
+	planted.delay = lifespan * 50
 	planted.endurance = endurance
 	planted.yield = yield
 	planted.potency = potency

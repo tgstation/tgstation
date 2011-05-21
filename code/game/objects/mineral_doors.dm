@@ -13,10 +13,13 @@
 	var/mineralType = "iron"
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
+	var/hardness = 1
+	var/oreAmount = 7
 
 	New(location)
 		..()
 		icon_state = mineralType
+		name = "[mineralType] door"
 		update_nearby_tiles(need_rebuild=1)
 
 	Del()
@@ -92,6 +95,47 @@
 		else
 			icon_state = mineralType
 
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/weapon/pickaxe))
+			var/obj/item/weapon/pickaxe/digTool = W
+			user << "You start digging the [name]."
+			if(do_after(user,digTool.digspeed*hardness) && src)
+				user << "You finished digging."
+				Dismantle()
+		else if(istype(W,/obj/item/weapon)) //not sure, can't not just weapons get passed to this proc?
+			hardness -= W.force/100
+			user << "You hit the [name] with your [W.name]!"
+			CheckHardness()
+		else
+			attack_hand(user)
+		return
+
+	proc/CheckHardness()
+		if(hardness <= 0)
+			Dismantle(1)
+
+	proc/Dismantle(devastated = 0)
+		if(!devastated)
+			var/ore = text2path("/obj/item/weapon/ore/[mineralType]")
+			for(var/i = 1, i <= oreAmount, i++)
+				new ore(get_turf(src))
+		del(src)
+
+	ex_act(severity = 1)
+		switch(severity)
+			if(1)
+				Dismantle(1)
+			if(2)
+				if(prob(20))
+					Dismantle(1)
+				else
+					hardness--
+					CheckHardness()
+			if(3)
+				hardness -= 0.1
+				CheckHardness()
+		return
+
 	proc/update_nearby_tiles(need_rebuild) //Copypasta from airlock code
 		if(!air_master) return 0
 
@@ -138,18 +182,26 @@
 
 /obj/mineral_door/iron
 	mineralType = "iron"
+	hardness = 3
 
 /obj/mineral_door/silver
 	mineralType = "silver"
+	hardness = 3
 
 /obj/mineral_door/gold
 	mineralType = "gold"
 
 /obj/mineral_door/uranium
 	mineralType = "uranium"
+	hardness = 3
+
+	New()
+		..()
+		sd_SetLuminosity(3)
 
 /obj/mineral_door/sandstone
 	mineralType = "sandstone"
+	hardness = 0.5
 
 /obj/mineral_door/transparent
 	opacity = 0
@@ -161,5 +213,34 @@
 /obj/mineral_door/transparent/plasma
 	mineralType = "plasma"
 
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/weapon/weldingtool))
+			if(W:welding)
+				TemperatureAct(100)
+		..()
+
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		if(exposed_temperature > 300)
+			TemperatureAct(exposed_temperature)
+
+	proc/TemperatureAct(temperature)
+		for(var/turf/simulated/floor/target_tile in range(2,loc))
+			if(target_tile.parent && target_tile.parent.group_processing)
+				target_tile.parent.suspend_group_processing()
+
+			var/datum/gas_mixture/napalm = new
+
+			var/toxinsToDeduce = temperature/10
+
+			napalm.toxins = toxinsToDeduce
+			napalm.temperature = 400+T0C
+
+			target_tile.assume_air(napalm)
+			spawn (0) target_tile.hotspot_expose(temperature, 400)
+
+			hardness -= toxinsToDeduce/100
+			CheckHardness()
+
 /obj/mineral_door/transparent/diamond
 	mineralType = "diamond"
+	hardness = 10
