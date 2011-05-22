@@ -27,8 +27,8 @@
 	// var/list/obj/hallucination/hallucinations = list() - Not used at all - Skie
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
-	A variable should only be globally attached to turfs/objects/whatever, when they are in fact needed as such.
-	The current method unnecessarily clusters up the variable list, especially for humans.
+	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
+	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
@@ -102,11 +102,11 @@
 	var/m_intent = "run"//Living
 	var/lastDblClick = 0
 	var/lastKnownIP = null
-	var/obj/stool/buckled = null//Living, unless you can buckle silicons.
-	var/obj/item/weapon/handcuffs/handcuffed = null//Living, unless you can cuff silicons.
+	var/obj/stool/buckled = null//Living
+	var/obj/item/weapon/handcuffs/handcuffed = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
-	var/obj/item/weapon/back = null//Human
+	var/obj/item/weapon/back = null//Human/Monkey
 	var/obj/item/weapon/tank/internal = null//Human/Monkey
 	var/obj/item/weapon/storage/s_active = null//Carbon
 	var/obj/item/clothing/mask/wear_mask = null//Carbon
@@ -114,11 +114,11 @@
 	var/r_ch_cou = 0
 	var/r_Tourette = 0//Carbon
 	var/cloneloss = 0//Carbon
-	var/seer = 0 //for cult//Carbon
+	var/seer = 0 //for cult//Carbon, probably Human
 
 	var/miming = null //checks if the guy is a mime//Human
 	var/silent = null //Can't talk. Value goes down every life proc.//Human
-	var/muted = null //Can't talk in any way shape or form (Even OOC or emote). An admin punishment//Human
+	var/muted = null //Can't talk in any way shape or form (Even OOC or emote). An admin punishment
 
 	var/obj/hud/hud_used = null
 

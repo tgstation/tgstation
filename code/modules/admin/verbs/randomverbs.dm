@@ -327,97 +327,152 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 If a guy was gibbed and you want to revive him, this is a good way to do so.
 Works kind of like entering the game with a new character. Character receives a new mind if they didn't have one.
 Traitors and the like can also be revived with the previous role mostly intact.
-TO DO: actually integrate random appearance and player preference save.
 /N */
 /client/proc/respawn_character()
 	set category = "Special Verbs"
 	set name = "Respawn Character"
-	set desc = "Re-spawn a person that has been gibbed/deleted. They must be a ghost for this to work."
-	if(!src.authenticated || !src.holder)
+	set desc = "Respawn a person that has been gibbed/dusted/killed. They must be a ghost for this to work and preferably should not have a body to go back into."
+	if(!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = input(src, "Please specify which key will be respawned. Make sure their key is properly capitalized. That person will not retain their traitor/other status when respawned.", "Key", "")
+	var/input = input(src, "Please specify which key will be respawned. Make sure their key is properly capitalized (if that doesn't work, try all lower case).", "Key", "")
 	if(!input)
 		return
 
-	var/mob/dead/observer/G
-	var/mob/G_found
+	var/mob/dead/observer/G_found
+	for(var/mob/dead/observer/G in world)
+		if(G.client&&G.key==input)
+			G_found = G
+			break
 
-	var/GKEY = "null"//To later check if a person was found or not.
-
-	for(G in world)
-		if(G.client)
-			if(G.key==input)
-				G_found = G
-				GKEY = input
-				break
-
-	if(GKEY == "null")
+	if(!G_found)//If a ghost was found.
 		alert("There is no active key like that in the game or the person is not currently a ghost. Aborting command.")
 		return
 
-	var/mob/living/carbon/human/new_character = new(src)
-	var/new_character_gender = MALE //to determine character's gender for few of the other lines.
+	//First we spawn a dude.
+	var/mob/living/carbon/human/new_character = new(src)//The mob being spawned.
 
-	if(alert("Please specify the character's gender.",,"Male","Female")=="Female")
-		new_character_gender = FEMALE
-
-	var/spawn_here = pick(latejoin)//"JoinLate" is a landmark which is deleted on round start. So, latejoin has to be used instead.
-	new_character.gender = new_character_gender
-
-//	if( !( call(/datum/preferences/proc/savefile_load)(G_found, 0) ) )Run time errors.
-//		call(/datum/preferences/proc/copy_to)(new_character)
-
-	var/RANK = input("Please specify which job the character will be respawned as.", "Assigned role") as null|anything in get_all_jobs()
-	if (!RANK)	RANK = "Assistant"
-
-	new_character.loc = spawn_here
-	new_character.real_name = G_found.name
-	new_character.name = G_found.name
-
-	new_character.dna.ready_dna(new_character)
-
+	/*Second, we try and locate a record for the person being respawned through data_core.
+	This isn't an exact science but it does the trick more often than not.*/
+	var/datum/data/record/record_found//Referenced to later to either randomize or not randomize the character.
 	if(G_found.mind)
-		new_character.mind = G_found.mind
-		new_character.mind.current = new_character
-		new_character.mind.assigned_role = RANK
-		new_character.mind.memory = ""//Memory erased so it doesn't get clunkered up with useless info.
-	else
-		new_character.mind = new
-		new_character.mind.key = GKEY
-		new_character.mind.current = new_character
-		new_character.mind.assigned_role = RANK
+		var/id = md5("[G_found.real_name][G_found.mind.assigned_role]")
+		for(var/datum/data/record/t in data_core.locked)
+			if(t.fields["id"]==id)
+				record_found = t//We shall now reference the record.
+				break
 
-	//These procs function with the assumption that the mob is already a traitor based on their mind.
-	//So all they do is re-equip the mob with powers and/or items. Or not, if they have no special role.
+	//Now we do some mind locating to see how to set up the rest of the character.
+	if(G_found.mind)//If they had a previous mind.
+		new_character.mind = G_found.mind
+		new_character.mind.special_verbs = list()//New list because they will receive them again.
+	else
+		new_character.mind = new()
+	if(!record_found)//We have to pick their role if they have no record.
+		var/assigned_role = input("Please specify which job the character will be respawned as.", "Assigned role") as null|anything in get_all_jobs()
+		if(!assigned_role)	new_character.mind.assigned_role = "Assistant"//Defaults to assistant.
+		else	new_character.mind.assigned_role = assigned_role
+
+	if(!new_character.mind.assigned_role)	new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
+	new_character.mind.key = G_found.key//In case it's someone else playing as that character.
+	new_character.mind.current = new_character//So that it can properly reference later if needed.
+	new_character.mind.memory = ""//Memory erased so it doesn't get clunkered up with useless info.
+
+	//Here we either load their saved appearance or randomize it.
+	var/datum/preferences/A = new()
+	if(A.savefile_load(G_found))//If they have a save file. This will automatically load their parameters.
+	//Note: savefile appearances are overwritten later on if the character has a data_core entry. By appearance, I mean the physical appearance.
+		var/name_safety = G_found.real_name//Their saved parameters may include a random name.
+		A.copy_to(new_character)
+		new_character.real_name = name_safety
+		new_character.name = name_safety
+	else
+		if(record_found)//If they have a record we can determine a few things.
+			new_character.real_name = record_found.fields["name"]//Not necessary to reference the record but I like to keep things uniform.
+			new_character.name = record_found.fields["name"]
+			new_character.gender = record_found.fields["sex"]//Sex
+			new_character.age = record_found.fields["age"]//Age
+			new_character.b_type = record_found.fields["b_type"]//Blood type
+			//We will update their appearance when determining DNA.
+		else
+			new_character.gender = MALE
+			if(alert("Save file not detected. Record data not detected. Please specify the character's gender.",,"Male","Female")=="Female")
+				new_character.gender = FEMALE
+			var/name_safety = G_found.real_name//Default is a random name so we want to save this.
+			A.randomize_appearance_for(new_character)//Now we will randomize their appearance since we have no way of knowing what they look/looked like.
+			new_character.real_name = name_safety
+			new_character.name = name_safety
+
+	//After everything above, it's time to initialize their DNA.
+	if(record_found)//Pull up their name from database records if they did have a mind.
+		new_character.dna = new()//Let's first give them a new DNA.
+		new_character.dna.unique_enzymes = record_found.fields["b_dna"]//Enzymes are based on real name but we'll use the record for conformity.
+		new_character.dna.uni_identity = record_found.fields["identity"]//DNA identity is carried over.
+		new_character.dna.struc_enzymes = "2013E85C944C19A4B00185144725785DC6406A4508"//This is the default of enzymes so I think it's safe to go with.
+		updateappearance(new_character,new_character.dna.uni_identity)//Now we configure their appearance based on their unique identity, same as with a DNA machine or somesuch.
+	else//If they have no records, we just do a random DNA for them, based on their random appearance/savefile.
+		new_character.dna.ready_dna(new_character)
+
+	//Here we need to find where to spawn them.
+	var/spawn_here = pick(latejoin)//"JoinLate" is a landmark which is deleted on round start. So, latejoin has to be used instead.
+	new_character.loc = spawn_here
+
+	/*
+	The code below functions with the assumption that the mob is already a traitor if they have a special role.
+	So all it does is re-equip the mob with powers and/or items. Or not, if they have no special role.
+	If they don't have a mind, they obviously don't have a special role.
+	*/
+
+	//Two variables to properly announce later on.
+	var/admin = key_name_admin(src)
+	var/player_key = G_found.key
+
+	new_character.key = player_key//Throw them into the mob.
+
+	//Now for special roles and equipment.
 	switch(new_character.mind.special_role)
 		if("Changeling")
-			new_character.Equip_Rank(RANK, joined_late=1)
+			new_character.Equip_Rank(new_character.mind.assigned_role, joined_late=1)
 			new_character.make_changeling()
 		if("traitor")
-			new_character.Equip_Rank(RANK, joined_late=1)
+			new_character.Equip_Rank(new_character.mind.assigned_role, joined_late=1)
 			ticker.mode.equip_traitor(new_character)
 		if("Wizard","Fake Wizard")
 			new_character.loc = pick(wizardstart)
-			new_character.spellremove(new_character)//to properly clear their special verbs in mind.
 			ticker.mode.equip_wizard(new_character)
 		if("Syndicate")
 			var/obj/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
 			if(synd_spawn)
 				new_character.loc = get_turf(synd_spawn)
-			ticker.mode:equip_syndicate(new_character)
-		else
-			new_character.Equip_Rank(RANK, joined_late=1)
+			call(/datum/game_mode/nuclear/proc/equip_syndicate)(new_character)
+		else//They may also be a cyborg or AI.
+			switch(new_character.mind.assigned_role)
+				if("Cyborg")//More rigging to make em' work and check if they're traitor.
+					new_character = new_character.Robotize()
+					if(new_character.mind.special_role=="traitor")
+						call(/datum/game_mode/traitor/proc/add_law_zero)(new_character)
+				if("AI")
+					new_character = new_character.AIize()
+					if(new_character.mind.special_role=="traitor")
+						call(/datum/game_mode/traitor/proc/add_law_zero)(new_character)
+				else
+					new_character.Equip_Rank(new_character.mind.assigned_role, joined_late=1)//Or we simply equip them.
 
-	//Announces the character on all the systems.
-	if(alert("Should this character be added to various databases, such as medical records? Click yes only if the character was observing prior. Wizards and nuke operatives will not be added.",,"No","Yes")=="Yes")
-		call(/mob/new_player/proc/ManifestLateSpawn)(new_character)
+	//Announces the character on all the systems, based on the record.
+	if(!issilicon(new_character))//If they are not a cyborg/AI.
+		if(!record_found)//If there are no records for them. If they have a record, this info is already in there.
+			if(alert("Warning: No data core entry detected. Would you like to announce the arrival of this character by addeding them to various databases, such as medical records? Wizards and nuke operatives will not be added.",,"No","Yes")=="Yes")
+				call(/mob/new_player/proc/ManifestLateSpawn)(new_character)
 
-	new_character.key = GKEY
-	new_character << "You have been respawned. Enjoy the game."
-	del(G_found)
+			if(alert("Would you like an active AI to announce this character? Wizards and nuke operatives won't be announced.",,"No","Yes")=="Yes")
+				call(/mob/new_player/proc/AnnounceArrival)(new_character)
 
-	message_admins("\blue [key_name_admin(src)] has respawned [GKEY] as [new_character.name].", 1)
+	message_admins("\blue [admin] has respawned [player_key] as [new_character.real_name].", 1)
+
+	new_character << "You have been fully respawned. Enjoy the game."
+
+	del(G_found)//Don't want to leave ghosts around.
+	return
 
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Fun"

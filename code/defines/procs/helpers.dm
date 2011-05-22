@@ -368,7 +368,7 @@
 //Returns direction that the mob or whomever should be facing in relation to the target.
 //This proc does not grant absolute direction and is mostly useful for 8dir sprite positioning.
 //I personally used it with getline() to great effect.
-/proc/get_dir_to(var/turf/start as turf,var/turf/end as turf)//N
+/proc/get_dir_to(turf/start,turf/end)//N
 	var/xdiff = start.x - end.x//The sign is important.
 	var/ydiff = start.y - end.y
 
@@ -382,7 +382,7 @@
 	return direction_f
 
 //Returns location. Returns null if no location was found.
-/proc/get_teleport_loc(var/turf/location as turf,var/mob/target as mob,var/distance = 1, var/density = 0, var/errorx = 0, var/errory = 0, var/eoffsetx = 0, var/eoffsety = 0)
+/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = 0, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 //Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
 //Random error in tile placement x, error in tile placement y, and block offset.
 //Block offset tells the proc how to place the box. Behind teleport location, relative to starting location, forward, etc.

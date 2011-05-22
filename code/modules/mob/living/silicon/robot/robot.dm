@@ -17,7 +17,7 @@
 			connected_ai = activeais()
 		if (connected_ai)
 			connected_ai.connected_robots += src
-//			laws = connected_ai.laws_object //The borg inherits its AI's laws
+//			laws = connected_ai.laws //The borg inherits its AI's laws
 			laws = new /datum/ai_laws
 			lawsync()
 			src << "<b>Unit slaved to [connected_ai.name], downloading laws.</b>"
@@ -613,7 +613,7 @@
 
 	if(ishuman(user))
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit,user:gloves)
+			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CYBORG",src,user:wear_suit)
 			return
 
 /mob/living/silicon/robot/proc/allowed(mob/M)

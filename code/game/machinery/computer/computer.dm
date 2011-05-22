@@ -323,9 +323,10 @@ Pod/Blast Doors computer
 /obj/datacore/proc/manifest()
 	for(var/mob/living/carbon/human/H in world)
 		if (!isnull(H.mind) && (H.mind.assigned_role != "MODE"))
-			var/datum/data/record/G = new /datum/data/record(  )
-			var/datum/data/record/M = new /datum/data/record(  )
-			var/datum/data/record/S = new /datum/data/record(  )
+			var/datum/data/record/G = new()
+			var/datum/data/record/M = new()
+			var/datum/data/record/S = new()
+			var/datum/data/record/L = new()
 			var/obj/item/weapon/card/id/C = H.wear_id
 			if (C)
 				G.fields["rank"] = C.assignment
@@ -362,10 +363,22 @@ Pod/Blast Doors computer
 			S.fields["ma_crim"] = "None"
 			S.fields["ma_crim_d"] = "No major crime convictions."
 			S.fields["notes"] = "No notes."
-			src.general += G
-			src.medical += M
-			src.security += S
-		//Foreach goto(15)
+
+			//Begin locked reporting
+			L.fields["name"] = H.real_name
+			L.fields["sex"] = H.gender
+			L.fields["age"] = H.age
+			L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
+			L.fields["rank"] = H.mind.assigned_role
+			L.fields["b_type"] = H.b_type
+			L.fields["b_dna"] = H.dna.unique_enzymes
+			L.fields["identity"] = H.dna.uni_identity
+			//End locked reporting
+
+			general += G
+			medical += M
+			security += S
+			locked += L
 	return
 
 /obj/machinery/computer/pod/proc/alarm()

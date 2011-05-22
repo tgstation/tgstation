@@ -148,9 +148,11 @@
 
 /obj/datacore
 	name = "datacore"
-	var/list/medical = list(  )
-	var/list/general = list(  )
-	var/list/security = list(  )
+	var/medical[] = list()
+	var/general[] = list()
+	var/security[] = list()
+	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
+	var/locked[] = list()
 
 /obj/equip_e
 	name = "equip e"

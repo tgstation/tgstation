@@ -456,7 +456,7 @@
 
 	if(ishuman(user))
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit,user:gloves)
+			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("APC",src,user:wear_suit)
 			return
 	// do APC interaction
 	user.machine = src

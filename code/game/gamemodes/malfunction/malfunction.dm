@@ -43,7 +43,7 @@
 		world.Reboot()
 		return*/
 		AI_mind.current.verbs += /mob/living/silicon/ai/proc/choose_modules
-		AI_mind.current:laws_object = new /datum/ai_laws/malfunction
+		AI_mind.current:laws = new /datum/ai_laws/malfunction
 		AI_mind.current:malf_picker = new /datum/game_mode/malfunction/AI_Module/module_picker
 		AI_mind.current:show_laws()
 		AI_mind.current << "<b>Kill all.</b>"

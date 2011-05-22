@@ -1,6 +1,6 @@
 /obj/item/device/taperecorder
-	desc = "A device that can record up to a minute of dialogue and play it back."
-	name = "tape recorder"
+	desc = "A device that can record up to a minute of dialogue and play it back. It automatically translates the content in playback."
+	name = "universal recorder"
 	icon_state = "taperecorderidle"
 	item_state = "analyzer"
 	w_class = 1.0
@@ -17,7 +17,7 @@
 	throw_range = 20
 
 /obj/item/device/taperecorder/hear_talk(mob/M as mob, msg)
-	if (src.recording)
+	if (recording)
 		var/ending = copytext(msg, length(msg))
 		if (M.stuttering)
 			src.storedinfo += "[M.name] stammers, \"[msg]\""

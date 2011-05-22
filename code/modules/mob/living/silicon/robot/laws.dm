@@ -54,12 +54,12 @@
 		who << "<b>Obey these laws:</b>"
 
 	connected_ai.laws_sanity_check()
-	connected_ai.laws_object.show_laws(who)
+	connected_ai.laws.show_laws(who)
 
 */
 
 /mob/living/silicon/robot/proc/lawsync()
-	var/datum/ai_laws/master = src.connected_ai.laws_object
+	var/datum/ai_laws/master = src.connected_ai.laws
 	var/temp
 	if (master)
 		src.laws.ion.len = master.ion.len

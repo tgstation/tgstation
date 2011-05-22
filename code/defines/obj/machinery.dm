@@ -588,11 +588,13 @@
 
 /obj/machinery/holopad
 	name = "holopad"
-	desc = "A floor-mounted device for projecting AI holograms."
+	desc = "A floor-mounted device for projecting a holographic image. It will activate remotely."
 	icon_state = "holopad0"
 	anchored = 1
-	var/state = "off"
-	var/slave_holo = null
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
+
+	var
+		obj/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
+		mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.

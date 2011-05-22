@@ -44,6 +44,7 @@ ________________________________________________________________________________
 	var/list/candidates = list()
 	for(G in world)
 		if(G.client&&!G.client.holder)
+		//if(G.client)//Good for testing.
 			if(((G.client.inactivity/10)/60) <= 5)
 				candidates.Add(G)
 	if(candidates.len)
@@ -70,9 +71,11 @@ ________________________________________________________________________________
 	var/ninja_title = pick(ninja_titles)
 	var/ninja_name = pick(ninja_names)
 	new_ninja.gender = pick(MALE, FEMALE)
+
+	var/datum/preferences/A = new()//Randomize appearance for the ninja.
+	A.randomize_appearance_for(new_ninja)
+
 	new_ninja.real_name = "[ninja_title] [ninja_name]"
-	new_ninja.age = rand(17,45)
-	new_ninja.b_type = pick("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
 	new_ninja.dna.ready_dna(new_ninja)
 	new_ninja.mind = new
 	new_ninja.mind.current = new_ninja
@@ -105,7 +108,7 @@ ________________________________________________________________________________
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjastar
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjanet
 
-	initialize=1
+	s_initialized=1
 	slowdown=0
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_ninja_verbs()
@@ -130,7 +133,7 @@ ________________________________________________________________________________
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjamirage
 
 	kamikaze = 1
-	active = 0
+	s_active = 0
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_kamikaze_verbs()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
@@ -144,7 +147,7 @@ ________________________________________________________________________________
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjamirage
 
 	kamikaze = 0
-	unlock = 0
+	k_unlock = 0
 
 /*Commented out due to BYOND bugs. Workaround used instead for the time being.
 
@@ -154,7 +157,7 @@ ________________________________________________________________________________
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
 
-	control = 0
+	s_control = 0
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_AI_verbs()
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_hack_ninja
@@ -162,7 +165,7 @@ ________________________________________________________________________________
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
 
-	control = 1
+	s_control = 1
 */
 
 /obj/item/clothing/suit/space/space_ninja/proc/grant_AI_verbs()
@@ -174,7 +177,7 @@ ________________________________________________________________________________
 	AI.proc_holder_list += B_C
 	AI.proc_holder_list += C_C
 
-	control = 0
+	s_control = 0
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_AI_verbs()
 	var/obj/proc_holder/ai_return_control/A_C = locate() in AI
@@ -189,7 +192,7 @@ ________________________________________________________________________________
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
 
-	control = 1
+	s_control = 1
 
 //AI COUNTER HACKING/SPECIAL FUNCTIONS===================================
 
@@ -199,7 +202,7 @@ ________________________________________________________________________________
 	set category = null
 	set src = usr.loc
 
-	if(initialize&&affecting&&affecting.client&&istype(affecting.loc, /turf))//If the host exists and they are playing, and their location is a turf.
+	if(s_initialized&&affecting&&affecting.client&&istype(affecting.loc, /turf))//If the host exists and they are playing, and their location is a turf.
 		if(!hologram)//If there is not already a hologram.
 			hologram = new(T)//Spawn a blank effect at the location.
 			hologram.invisibility = 101//So that it doesn't show up, ever. This also means one could attach a number of images to a single obj and display them to differently to differnet people.
@@ -224,12 +227,12 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_process()
 	set background = 1
 
-	spawn while(hologram&&initialize&&AI)//Suit on and there is an AI present.
-		if(!initialize||get_dist(affecting,hologram.loc)>3)//Once suit is de-initialized or hologram reaches out of bounds.
+	spawn while(hologram&&s_initialized&&AI)//Suit on and there is an AI present.
+		if(!s_initialized||get_dist(affecting,hologram.loc)>3)//Once suit is de-initialized or hologram reaches out of bounds.
 			del(hologram.i_attached)
 			del(hologram)
 
-			if(!control)//Meant to be used all the time but for now this'll do.
+			if(!s_control)//Meant to be used all the time but for now this'll do.
 				var/obj/proc_holder/ai_holo_clear/D_C = locate() in AI
 				AI.proc_holder_list -= D_C
 			//verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
@@ -362,7 +365,7 @@ It would be better to switch to this (from proc_holder) if the bug does get fixe
 	dat += "<br>"
 	dat += "<img src=sos_10.png> Current Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]<br>"
 	dat += "<img src=sos_9.png> Battery Life: [round(cell.charge/100)]%<br>"
-	dat += "<img src=sos_11.png> Smoke Bombs: [sbombs]<br>"
+	dat += "<img src=sos_11.png> Smoke Bombs: [s_bombs]<br>"
 	dat += "<br>"
 
 	switch(spideros)

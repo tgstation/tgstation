@@ -62,7 +62,7 @@
 
 	if(ishuman(user))//Checks to see if they are ninja
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			if(user:wear_suit:control)
+			if(user:wear_suit:s_control)
 				user:wear_suit.transfer_ai("AIFIXER","NINJASUIT",src,user)
 			else
 				user << "\red <b>ERROR</b>: \black Remote access channel disabled."
@@ -75,18 +75,18 @@
 		var/laws
 		dat += "Stored AI: [src.occupant.name]<br>System integrity: [(src.occupant.health+100)/2]%<br>"
 
-		if (src.occupant.laws_object.zeroth)
-			laws += "0: [src.occupant.laws_object.zeroth]<BR>"
+		if (src.occupant.laws.zeroth)
+			laws += "0: [src.occupant.laws.zeroth]<BR>"
 
 		var/number = 1
-		for (var/index = 1, index <= src.occupant.laws_object.inherent.len, index++)
-			var/law = src.occupant.laws_object.inherent[index]
+		for (var/index = 1, index <= src.occupant.laws.inherent.len, index++)
+			var/law = src.occupant.laws.inherent[index]
 			if (length(law) > 0)
 				laws += "[number]: [law]<BR>"
 				number++
 
-		for (var/index = 1, index <= src.occupant.laws_object.supplied.len, index++)
-			var/law = src.occupant.laws_object.supplied[index]
+		for (var/index = 1, index <= src.occupant.laws.supplied.len, index++)
+			var/law = src.occupant.laws.supplied[index]
 			if (length(law) > 0)
 				laws += "[number]: [law]<BR>"
 				number++

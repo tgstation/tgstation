@@ -276,18 +276,8 @@ mob/new_player
 				if(character.mind.assigned_role != "Cyborg")
 					ManifestLateSpawn(character)
 				if(ticker)
-					if (ticker.current_state == GAME_STATE_PLAYING)
-						var/list/mob/living/silicon/ai/ailist = list()
-						for (var/mob/living/silicon/ai/A in world)
-							if (!A.stat)
-								ailist += A
-						if (ailist.len)
-							var/mob/living/silicon/ai/announcer = pick(ailist)
-							if(character.mind.assigned_role != "Cyborg")
-								announcer.say("[character.real_name] has signed up as [rank].")
-
-					var/starting_loc = pick(latejoin)
-					character.loc = starting_loc
+					character.loc = pick(latejoin)
+					AnnounceArrival(character, rank)
 					if(character.mind.assigned_role == "Cyborg")
 						character.Robotize()
 					del(src)
@@ -295,13 +285,24 @@ mob/new_player
 		else
 			src << alert("[rank] is not available. Please try another.")
 
+	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+		if (ticker.current_state == GAME_STATE_PLAYING)
+			var/ailist[] = list()
+			for (var/mob/living/silicon/ai/A in world)
+				if (!A.stat)
+					ailist += A
+			if (ailist.len)
+				var/mob/living/silicon/ai/announcer = pick(ailist)
+				if(character.mind.assigned_role != "Cyborg"&&character.mind.special_role != "MODE")
+					announcer.say("[character.real_name] has signed up as [rank].")
 
 	proc/ManifestLateSpawn(var/mob/living/carbon/human/H) // Attempted fix to add late joiners to various databases -- TLE
 		// This is basically ripped wholesale from the normal code for adding people to the databases during a fresh round
 		if (!isnull(H.mind) && (H.mind.assigned_role != "MODE"))
-			var/datum/data/record/G = new /datum/data/record(  )
-			var/datum/data/record/M = new /datum/data/record(  )
-			var/datum/data/record/S = new /datum/data/record(  )
+			var/datum/data/record/G = new()
+			var/datum/data/record/M = new()
+			var/datum/data/record/S = new()
+			var/datum/data/record/L = new()
 			var/obj/item/weapon/card/id/C = H.wear_id
 			if (C)
 				G.fields["rank"] = C.assignment
@@ -322,7 +323,7 @@ mob/new_player
 			G.fields["p_stat"] = "Active"
 			G.fields["m_stat"] = "Stable"
 			M.fields["b_type"] = text("[]", H.b_type)
-			M.fields["b_dna"] = "" //H.dna.unique_enzymes //nope. Scan them yourself, detective.
+			M.fields["b_dna"] = ""//H.dna.unique_enzymes
 			M.fields["mi_dis"] = "None"
 			M.fields["mi_dis_d"] = "No minor disabilities have been declared."
 			M.fields["ma_dis"] = "None"
@@ -338,9 +339,22 @@ mob/new_player
 			S.fields["ma_crim"] = "None"
 			S.fields["ma_crim_d"] = "No major crime convictions."
 			S.fields["notes"] = "No notes."
+
+			//Begin locked reporting
+			L.fields["name"] = H.real_name
+			L.fields["sex"] = H.gender
+			L.fields["age"] = H.age
+			L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
+			L.fields["rank"] = H.mind.assigned_role
+			L.fields["b_type"] = H.b_type
+			L.fields["b_dna"] = H.dna.unique_enzymes
+			L.fields["identity"] = H.dna.uni_identity
+			//End locked reporting
+
 			data_core.general += G
 			data_core.medical += M
 			data_core.security += S
+			data_core.locked += L
 		return
 
 // This fxn creates positions for assistants based on existing positions. This could be more elegant.

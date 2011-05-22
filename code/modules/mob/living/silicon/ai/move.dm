@@ -19,6 +19,13 @@
 			S.hologram.dir = direct
 		return//Whatever the case, return since you can't move anyway.
 
+	if(user.client)//To make AI holograms work. They will relay directions as long as they are centered on the object.
+		var/obj/machinery/holopad/T = user.client.eye//Client eye centers on an object.
+		if(istype(T)&&T.hologram&&T.master==user)//If there is a hologram and its master is the user.
+			T.hologram.loc = get_step(T.hologram, direct)
+			T.hologram.dir = direct
+			return//Relay move and then return if that's the case.
+
 	if(!old) return
 
 	var/dx = 0
@@ -31,7 +38,6 @@
 		dx = 1
 	else if(direct & WEST)
 		dx = -1
-
 
 	var/area/A = get_area(old)
 	var/list/old_types = dd_text2list("[A.type]", "/")

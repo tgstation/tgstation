@@ -386,7 +386,7 @@
 	item_state = "void"
 	desc = "A high tech, NASA Centcom branch designed, dark red Space suit. Used for AI satellite maintenance."
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 1.3
+	slowdown = 1.5
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
@@ -399,25 +399,34 @@
 	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
 	var
+		//Important parts of the suit.
 		mob/living/carbon/affecting = null//The wearer.
 		obj/item/weapon/cell/cell//Starts out with a high-capacity cell using New().
 		datum/effects/system/spark_spread/spark_system//To create sparks.
 
-		initialize = 0//Suit starts off.
-		coold = 0//If the suit is on cooldown. Can be used to attach different cooldowns to abilities. Ticks down every second based on suit ntick().
+		//Other articles of ninja gear worn together, used to easily reference them after initializing.
+		obj/item/clothing/head/helmet/space/space_ninja/n_hood
+		obj/item/clothing/shoes/space_ninja/n_shoes
+		obj/item/clothing/gloves/space_ninja/n_gloves
+
+		//Main function variables.
+		s_initialized = 0//Suit starts off.
+		s_coold = 0//If the suit is on cooldown. Can be used to attach different cooldowns to abilities. Ticks down every second based on suit ntick().
 		spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.
-		active = 0//Stealth off.
-		unlock = 0//To unlock Kamikaze.
+		s_active = 0//Stealth off.
+		k_unlock = 0//To unlock Kamikaze.
 		kamikaze = 0//Kamikaze on or off.
 
-		sbombs = 10.0//Number of starting ninja smoke bombs.
-		aboost = 3.0//Number of adrenaline boosters.
-		transfera = 20//How much reagent is transferred when injecting.
+		//Ability function variables.
+		s_bombs = 10.0//Number of starting ninja smoke bombs.
+		a_boost = 3.0//Number of adrenaline boosters.
+		a_transfer = 20//How much reagent is transferred when injecting.
 
-		mob/living/silicon/AI = null//If there is an AI inside the suit. Paths to target.
+		//Onboard AI related variables.
+		mob/living/silicon/AI//If there is an AI inside the suit. Paths to target.
 		obj/overlay/hologram//Is the AI hologram on or off? Visible only to the wearer of the suit. This works by attaching an image to a blank overlay.
 		flush = 0//If an AI purge is in progress.
-		control = 1//If in control of the suit.
+		s_control = 1//If in control of the suit.
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"
@@ -428,7 +437,6 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
-
 
 /obj/item/clothing/suit/captunic
 	name = "captain's parade tunic"

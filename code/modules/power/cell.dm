@@ -66,7 +66,7 @@
 	src.add_fingerprint(user)
 	if(ishuman(user))
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CELL",src,user:wear_suit,user:gloves)
+			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("CELL",src,user:wear_suit)
 	return
 
 //Just because someone gets you occasionally with stun gloves doesn't mean you can put in code to kill everyone who tries to make some.

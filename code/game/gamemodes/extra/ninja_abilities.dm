@@ -12,8 +12,8 @@ They should, as I have made every effort for that to be the case.
 In the case that they are not, I imagine the game will run-time error like crazy.
 */
 
-//Cooldown ticks off each second based on the suit recharge proc, in seconds. Default of 1 seconds. Some abilities have no cool down.
-/obj/item/clothing/suit/space/space_ninja/proc/ninjacost(var/C = 0,var/X = 0)
+//s_cooldown ticks off each second based on the suit recharge proc, in seconds. Default of 1 seconds. Some abilities have no cool down.
+/obj/item/clothing/suit/space/space_ninja/proc/ninjacost(C = 0,X = 0)
 	var/mob/living/carbon/human/U = affecting
 	if( (U.stat||U.incorporeal_move)&&X!=3 )//Will not return if user is using an adrenaline booster since you can use them when stat==1.
 		U << "\red You must be conscious and solid to do this."//It's not a problem of stat==2 since the ninja will explode anyway if they die.
@@ -23,18 +23,18 @@ In the case that they are not, I imagine the game will run-time error like crazy
 		return 1
 	switch(X)
 		if(1)
-			if(active)
+			if(s_active)
 				U << "\red You must deactivate the CLOAK-tech device prior to using this ability."
 				return 1
 		if(2)
-			if(sbombs<=0)
+			if(s_bombs<=0)
 				U << "\red There are no more smoke bombs remaining."
 				return 1
 		if(3)
-			if(aboost<=0)
+			if(a_boost<=0)
 				U << "\red You do not have any more adrenaline boosters."
 				return 1
-	return (coold)//Returns the value of the variable which counts down to zero.
+	return (s_coold)//Returns the value of the variable which counts down to zero.
 
 //Smoke
 //Summons smoke in radius of user.
@@ -47,13 +47,13 @@ In the case that they are not, I imagine the game will run-time error like crazy
 
 	if(!ninjacost(,2))
 		var/mob/living/carbon/human/U = affecting
-		U << "\blue There are <B>[sbombs]</B> smoke bombs remaining."
+		U << "\blue There are <B>[s_bombs]</B> smoke bombs remaining."
 		var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
 		playsound(U.loc, 'bamf.ogg', 50, 2)
-		sbombs--
-		coold = 1
+		s_bombs--
+		s_coold = 1
 	return
 
 //9-10 Tile Teleport
@@ -90,7 +90,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 
 			spawn(0)
 				destination.kill_creatures(U)//Any living mobs in teleport area are gibbed. Check turf procs for how it does it.
-			coold = 1
+			s_coold = 1
 			cell.charge-=(C*10)
 		else
 			U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
@@ -98,7 +98,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 
 //Right Click Teleport
 //Right click to teleport somewhere, almost exactly like admin jump to turf.
-/obj/item/clothing/suit/space/space_ninja/proc/ninjashift(var/turf/T in oview())
+/obj/item/clothing/suit/space/space_ninja/proc/ninjashift(turf/T in oview())
 	set name = "Phase Shift (20E)"
 	set desc = "Utilizes the internal VOID-shift device to rapidly transit to a destination in view."
 	set category = null//So it does not show up on the panel but can still be right-clicked.
@@ -129,7 +129,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 
 			spawn(0)//Any living mobs in teleport area are gibbed.
 				T.kill_creatures(U)
-			coold = 1
+			s_coold = 1
 			cell.charge-=(C*10)
 		else
 			U << "\red You cannot teleport into solid walls or from solid matter"
@@ -148,7 +148,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 		var/mob/living/carbon/human/U = affecting
 		playsound(U.loc, 'EMPulse.ogg', 60, 2)
 		empulse(U, 4, 6) //Procs sure are nice. Slightly weaker than wizard's disable tch.
-		coold = 2
+		s_coold = 2
 		cell.charge-=(C*10)
 	return
 
@@ -181,7 +181,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 				U.put_in_inactive_hand(W)
 			spark_system.start()
 			playsound(U.loc, "sparks", 50, 1)
-			coold = 1
+			s_coold = 1
 	return
 
 //Shoot Ninja Stars
@@ -222,7 +222,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 //Energy Net
 //Allows the ninja to capture people, I guess.
 //Must right click on a mob to activate.
-/obj/item/clothing/suit/space/space_ninja/proc/ninjanet(var/mob/living/carbon/M in oview())//Only living carbon mobs.
+/obj/item/clothing/suit/space/space_ninja/proc/ninjanet(mob/living/carbon/M in oview())//Only living carbon mobs.
 	set name = "Energy Net (20E)"
 	set desc = "Captures a fallen opponent in a net of energy. Will teleport them to a holding facility after 30 seconds."
 	set category = null
@@ -230,10 +230,13 @@ In the case that they are not, I imagine the game will run-time error like crazy
 
 	var/C = 200
 	if(!ninjacost(C)&&iscarbon(M))
-		if(!locate(/obj/effects/energy_net) in M.loc)//Check if they are already being affected by an energy net.
-			var/mob/living/carbon/human/U = affecting
-			if(M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
+		var/mob/living/carbon/human/U = affecting
+		if(M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
+			if(!locate(/obj/effects/energy_net) in M.loc)//Check if they are already being affected by an energy net.
 				for(var/turf/T in getline(U.loc, M.loc))
+					if(T.density)//Don't want them shooting nets through walls. It's kind of cheesy.
+						U << "You may not use an energy net through solid obstacles!"
+						return
 					if(T==U.loc||T==M.loc)	continue
 					spawn(0)
 						anim(T,M,'projectiles.dmi',"energy",,,get_dir_to(U.loc,M.loc))
@@ -249,7 +252,9 @@ In the case that they are not, I imagine the game will run-time error like crazy
 					E.process(M)
 				cell.charge-=(C*10)
 			else
-				U << "They will bring no honor to your Clan!"
+				U << "They are already trapped inside an energy net."
+		else
+			U << "They will bring no honor to your Clan!"
 	return
 
 //Adrenaline Boost
@@ -272,10 +277,10 @@ In the case that they are not, I imagine the game will run-time error like crazy
 			U.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
 		spawn(70)
 			reagents.reaction(U, 2)
-			reagents.trans_id_to(U, "radium", transfera)
+			reagents.trans_id_to(U, "radium", a_transfer)
 			U << "\red You are beginning to feel the after-effects of the injection."
-		aboost--
-		coold = 3
+		a_boost--
+		s_coold = 3
 	return
 
 
@@ -334,7 +339,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 				playsound(U.loc, 'Deconstruct.ogg', 50, 1)
 				playsound(U.loc, "sparks", 50, 1)
 				anim(U.loc,U,'mob.dmi',,"phasein")
-			coold = 1
+			s_coold = 1
 		else
 			U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
 	return
@@ -406,7 +411,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 					playsound(U.loc, 'Deconstruct.ogg', 50, 1)
 					playsound(U.loc, "sparks", 50, 1)
 					anim(U.loc,U,'mob.dmi',,"phasein")
-				coold = 1
+				s_coold = 1
 			else
 				U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
 		else

@@ -64,6 +64,10 @@ var/global/sent_strike_team = 0
 			new_commando.gender = pick(MALE, FEMALE)
 			if (commando_number == 1)
 				leader_selected = 1
+
+			var/datum/preferences/A = new()//Randomize appearance for the commando.
+			A.randomize_appearance_for(new_commando)
+
 			if (leader_selected == 0)
 				new_commando.real_name = "[commando_rank] [commando_name]"
 			else
@@ -72,7 +76,6 @@ var/global/sent_strike_team = 0
 				new_commando.age = rand(23,35)
 			else
 				new_commando.age = rand(35,45)
-			new_commando.b_type = pick("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
 			new_commando.dna.ready_dna(new_commando) //Creates DNA
 			//Creates mind stuff.
 			new_commando.mind = new
@@ -85,9 +88,9 @@ var/global/sent_strike_team = 0
 
 			del(STARTLOC)
 
-			var/obj/machinery/camera/cam = new /obj/machinery/camera(new_commando) //Gives all the commandos internals cameras.
-			cam.network = "CREED"
-			cam.c_tag = new_commando.real_name
+			var/obj/machinery/camera/camera = new /obj/machinery/camera(new_commando) //Gives all the commandos internals cameras.
+			camera.network = "CREED"
+			camera.c_tag = new_commando.real_name
 
 			var/obj/item/device/radio/R = new /obj/item/device/radio/headset(new_commando)
 			R.set_frequency(1441)

@@ -538,7 +538,7 @@
 
 	usr << "\blue We stealthily sting [T]."
 
-	T.visible_message(text("\red <B>[usr] transforms!</B>"))
+	T.visible_message(text("\red <B>[T] transforms!</B>"))
 
 	T.dna = usr.absorbed_dna[S]
 	T.real_name = S

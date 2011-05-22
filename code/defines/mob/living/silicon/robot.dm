@@ -18,14 +18,12 @@
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
 
-
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
 	var/module_active = null
 	var/module_state_1 = null
 	var/module_state_2 = null
 	var/module_state_3 = null
-
 
 	var/obj/item/device/radio/radio = null
 	var/mob/living/silicon/ai/connected_ai = null
@@ -53,6 +51,5 @@
 	var/killswitch_time = 60
 	var/weapon_lock = 0
 	var/weaponlock_time = 120
-	var/datum/ai_laws/laws = null //Making it so borgs can have laws when there isn't an AI.
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
 	var/lockcharge //Used when locking down a borg to preserve cell charge

@@ -309,7 +309,7 @@
 
 	if(ishuman(user))
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("MECHA",src,user:wear_suit,user:gloves)
+			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("MECHA",src,user:wear_suit)
 			return
 
 	if (user.mutations & HULK && !prob(src.deflect_chance))
@@ -1219,7 +1219,7 @@
 		O.anchored = 1
 		O.aiRestorePowerRoutine = 0
 		O.control_disabled = 1 // Can't control things remotely if you're stuck in a card!
-		O.laws_object = AI.laws_object
+		O.laws = AI.laws
 		O.stat = AI.stat
 		O.oxyloss = AI.oxyloss
 		O.fireloss = AI.fireloss
@@ -1238,7 +1238,7 @@
 			if(O.mind)
 				O.mind.transfer_to(AI)
 			AI.control_disabled = 0
-			AI.laws_object = O.laws_object
+			AI.laws = O.laws
 			AI.oxyloss = O.oxyloss
 			AI.fireloss = O.fireloss
 			AI.bruteloss = O.bruteloss

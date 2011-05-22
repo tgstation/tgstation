@@ -49,16 +49,12 @@ Alien plants should do something if theres a lot of poison
 	switch(severity)
 		if(1.0)
 			del(src)
-			return
 		if(2.0)
 			if (prob(50))
 				del(src)
-				return
 		if(3.0)
 			if (prob(5))
 				del(src)
-				return
-		else
 	return
 
 /obj/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)

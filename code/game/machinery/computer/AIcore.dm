@@ -159,7 +159,7 @@
 	attack_hand(var/mob/user as mob)
 		if(ishuman(user))//Checks to see if they are ninja
 			if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-				if(user:wear_suit:control)
+				if(user:wear_suit:s_control)
 					user:wear_suit:transfer_ai("INACTIVE","NINJASUIT",src,user)
 				else
 					user << "\red <b>ERROR</b>: \black Remote access channel disabled."
@@ -322,7 +322,7 @@
 				switch(interaction)
 					if("AICARD")
 						var/obj/item/device/aicard/C = src
-						if(T.initialize&&U==T.affecting)//If the suit is initialized and the actor is the user.
+						if(T.s_initialized&&U==T.affecting)//If the suit is initialized and the actor is the user.
 
 							var/mob/living/silicon/ai/A_T = locate() in C//Determine if there is an AI on target card. Saves time when checking later.
 							var/mob/living/silicon/ai/A = T.AI//Deterine if there is an AI in suit.

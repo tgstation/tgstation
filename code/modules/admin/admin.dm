@@ -1359,10 +1359,10 @@ var/showadminmessages = 1
 				if("showailaws")
 					for(var/mob/living/silicon/ai/ai in world)
 						usr << "[key_name(ai, usr)]'s Laws:"
-						if (ai.laws_object == null)
+						if (ai.laws == null)
 							usr << "[key_name(ai, usr)]'s Laws are null??"
 						else
-							ai.laws_object.show_laws(usr)
+							ai.laws.show_laws(usr)
 				if("showgm")
 					if(!ticker)
 						alert("The game hasn't started yet!")

@@ -33,7 +33,7 @@
 
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
-	desc = "A pair of running shoes, excellent for running and even better for smashing skulls."
+	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
 	icon_state = "s-ninja"
 	slowdown = 0
 	protective_temperature = 700
