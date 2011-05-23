@@ -209,7 +209,29 @@ Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[li
 	if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled))
 		var/part_a = "<span class='radio'><span class='name'>"
 		//var/part_b = "</span><b> \icon[src]\[[format_frequency(frequency)]\]</b> <span class='message'>"
-		var/freq_text = (display_freq!=SYND_FREQ) ? format_frequency(display_freq) : "#unkn"
+		var/freq_text
+		switch(display_freq)
+			if(SYND_FREQ)
+				freq_text = "#unkn"
+			if(COMM_FREQ)
+				freq_text = "Command"
+			if(1351)
+				freq_text = "Science"
+			if(1355)
+				freq_text = "Medical"
+			if(1357)
+				freq_text = "Engineering"
+			if(1359)
+				freq_text = "Security"
+			if(1349)
+				freq_text = "Mining"
+			if(1347)
+				freq_text = "Cargo"
+		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
+
+		if(!freq_text)
+			freq_text = format_frequency(display_freq)
+
 		var/part_b = "</span><b> \icon[src]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/part_c = "</span></span>"
 
