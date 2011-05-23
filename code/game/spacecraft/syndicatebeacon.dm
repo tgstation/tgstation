@@ -97,3 +97,18 @@
 	proc/selfdestruct()
 		selfdestructing = 1
 		spawn() explosion(src.loc, rand(3,8), rand(1,3), 1, 10)
+
+/obj/machinery/singularity_beacon //not the best place for it but it's a hack job anyway -- Urist
+	name = "ominous beacon"
+	desc = "This looks suspicious..."
+	icon = 'device.dmi'
+	icon_state = "syndbeacon"
+
+	anchored = 1
+	density = 1
+
+	New(loc)
+		..()
+
+		for(var/obj/machinery/singularity/singulo in world)
+			singulo.target = src

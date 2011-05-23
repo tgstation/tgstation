@@ -26,6 +26,7 @@ var/global/list/uneatable = list(
 		grav_pull = 4 //How many tiles out do we pull?
 		consume_range = 0 //How many tiles out do we eat
 		event_chance = 15 //Prob for event each tick
+		target = null //its target. moves towards the target if it has one
 
 
 	New(loc, var/starting_energy = 50, var/temp = 0)
@@ -34,6 +35,9 @@ var/global/list/uneatable = list(
 			spawn(temp)
 				del(src)
 		..()
+		for(var/obj/machinery/singularity_beacon/singubeacon in world)
+			target = singubeacon
+			break
 		return
 
 
@@ -252,6 +256,8 @@ var/global/list/uneatable = list(
 				return 0
 			if(!(movement_dir in cardinal))
 				movement_dir = pick(NORTH, SOUTH, EAST, WEST)
+			if(target)
+				movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 			if(current_size >= 9)//The superlarge one does not care about things in its way
 				spawn(0)
 					step(src, movement_dir)

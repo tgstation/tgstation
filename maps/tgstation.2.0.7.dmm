@@ -7665,7 +7665,7 @@
 "cRu" = (/obj/machinery/door/airlock/glass{name = "Emergency Sleeper Room"},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/turf/simulated/floor{icon_state = "white"; dir = 8},/area/mine/lobby)
 "cRv" = (/obj/grille,/obj/window/reinforced,/obj/window/reinforced{dir = 1},/obj/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/mine/lobby)
 "cRw" = (/obj/grille,/obj/window/reinforced,/obj/window/reinforced{dir = 1},/obj/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/mine/lobby)
-"cRx" = (/obj/grille,/obj/window/reinforced,/obj/window/reinforced{dir = 4},/obj/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/mine/lobby)
+"cRx" = (/obj/grille,/obj/window/reinforced,/obj/window/reinforced{dir = 4},/obj/window/reinforced{dir = 1},/obj/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/mine/lobby)
 "cRy" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/obj/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = "90Curve"},/turf/simulated/floor,/area/mine/production)
 "cRz" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"; tag = "Streight"},/turf/simulated/floor{dir = 8; icon_state = "loadingarea"; tag = "loading"},/area/mine/production)
 "cRA" = (/obj/machinery/conveyor{dir = 8; id = "1"},/obj/plasticflaps,/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"; tag = "Streight"},/turf/simulated/floor,/area/mine/production)
