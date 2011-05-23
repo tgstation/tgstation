@@ -372,6 +372,7 @@ Pod/Blast Doors computer
 			L.fields["rank"] = H.mind.assigned_role
 			L.fields["b_type"] = H.b_type
 			L.fields["b_dna"] = H.dna.unique_enzymes
+			L.fields["enzymes"] = H.dna.struc_enzymes
 			L.fields["identity"] = H.dna.uni_identity
 			//End locked reporting
 

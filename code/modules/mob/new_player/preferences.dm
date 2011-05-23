@@ -56,7 +56,7 @@ datum/preferences
 		underwear = pick(0,1)
 		b_type = pick("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
 		age = rand(19,35)
-		copy_to(H)
+		copy_to(H,1)
 
 	proc/randomize_name()
 		if (gender == MALE)
@@ -823,7 +823,7 @@ datum/preferences
 
 		ShowChoices(user)
 
-	proc/copy_to(mob/living/carbon/human/character)
+	proc/copy_to(mob/living/carbon/human/character, safety = 0)
 		if(be_random_name)
 			randomize_name()
 		character.real_name = real_name
@@ -910,11 +910,12 @@ datum/preferences
 		character.update_face()
 		character.update_body()
 
-		spawn(10)
-			if(character)
-				character.client.midis = midis
-				character.client.ooccolor = ooccolor
-				character.client.be_alien = be_alien
+		if(!safety)//To prevent run-time errors due to null datum when using randomize_appearance_for()
+			spawn(10)//as they should already have these set at game spawn.
+				if(character)
+					character.client.midis = midis
+					character.client.ooccolor = ooccolor
+					character.client.be_alien = be_alien
 
 /*
 

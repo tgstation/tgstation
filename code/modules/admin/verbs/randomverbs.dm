@@ -335,13 +335,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = input(src, "Please specify which key will be respawned. Make sure their key is properly capitalized (if that doesn't work, try all lower case).", "Key", "")
+	var/input = input(src, "Please specify which key will be respawned.", "Key", "")
 	if(!input)
 		return
 
 	var/mob/dead/observer/G_found
 	for(var/mob/dead/observer/G in world)
-		if(G.client&&G.key==input)
+		if(G.client&&ckey(G.key)==ckey(input))
 			G_found = G
 			break
 
@@ -355,7 +355,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	/*Second, we try and locate a record for the person being respawned through data_core.
 	This isn't an exact science but it does the trick more often than not.*/
 	var/datum/data/record/record_found//Referenced to later to either randomize or not randomize the character.
-	if(G_found.mind)
+	if(G_found.mind)//They must have a mind to reference the record.
 		var/id = md5("[G_found.real_name][G_found.mind.assigned_role]")
 		for(var/datum/data/record/t in data_core.locked)
 			if(t.fields["id"]==id)
@@ -369,20 +369,23 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		new_character.mind = new()
 	if(!record_found)//We have to pick their role if they have no record.
-		var/assigned_role = input("Please specify which job the character will be respawned as.", "Assigned role") as null|anything in get_all_jobs()
-		if(!assigned_role)	new_character.mind.assigned_role = "Assistant"//Defaults to assistant.
-		else	new_character.mind.assigned_role = assigned_role
+		if(G_found.mind&&G_found.mind.assigned_role)//But they may have an assigned role already.
+			new_character.mind.assigned_role = G_found.mind.assigned_role//Also makes sure our MODE people are equipped right later on.
+		else
+			var/assigned_role = input("Please specify which job the character will be respawned as.", "Assigned role") as null|anything in get_all_jobs()
+			if(!assigned_role)	new_character.mind.assigned_role = "Assistant"//Defaults to assistant.
+			else	new_character.mind.assigned_role = assigned_role
 
 	if(!new_character.mind.assigned_role)	new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
 	new_character.mind.key = G_found.key//In case it's someone else playing as that character.
 	new_character.mind.current = new_character//So that it can properly reference later if needed.
-	new_character.mind.memory = ""//Memory erased so it doesn't get clunkered up with useless info.
+	new_character.mind.memory = ""//Memory erased so it doesn't get clunkered up with useless info. This means they may forget their previous mission--this is usually handled through objective code and recalling memory.
 
 	//Here we either load their saved appearance or randomize it.
 	var/datum/preferences/A = new()
 	if(A.savefile_load(G_found))//If they have a save file. This will automatically load their parameters.
 	//Note: savefile appearances are overwritten later on if the character has a data_core entry. By appearance, I mean the physical appearance.
-		var/name_safety = G_found.real_name//Their saved parameters may include a random name.
+		var/name_safety = G_found.real_name//Their saved parameters may include a random name. Also a safety in case they are playing a character that got their name after round start.
 		A.copy_to(new_character)
 		new_character.real_name = name_safety
 		new_character.name = name_safety
@@ -407,8 +410,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(record_found)//Pull up their name from database records if they did have a mind.
 		new_character.dna = new()//Let's first give them a new DNA.
 		new_character.dna.unique_enzymes = record_found.fields["b_dna"]//Enzymes are based on real name but we'll use the record for conformity.
+		new_character.dna.struc_enzymes = record_found.fields["enzymes"]//This is the default of enzymes so I think it's safe to go with.
 		new_character.dna.uni_identity = record_found.fields["identity"]//DNA identity is carried over.
-		new_character.dna.struc_enzymes = "2013E85C944C19A4B00185144725785DC6406A4508"//This is the default of enzymes so I think it's safe to go with.
 		updateappearance(new_character,new_character.dna.uni_identity)//Now we configure their appearance based on their unique identity, same as with a DNA machine or somesuch.
 	else//If they have no records, we just do a random DNA for them, based on their random appearance/savefile.
 		new_character.dna.ready_dna(new_character)
@@ -416,6 +419,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	//Here we need to find where to spawn them.
 	var/spawn_here = pick(latejoin)//"JoinLate" is a landmark which is deleted on round start. So, latejoin has to be used instead.
 	new_character.loc = spawn_here
+	//If they need to spawn elsewhere, they will be transferred there momentarily.
 
 	/*
 	The code below functions with the assumption that the mob is already a traitor if they have a special role.
@@ -445,6 +449,21 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(synd_spawn)
 				new_character.loc = get_turf(synd_spawn)
 			call(/datum/game_mode/nuclear/proc/equip_syndicate)(new_character)
+		if("Space Ninja")
+			var/ninja_spawn[] = list()
+			for(var/obj/landmark/L in world)
+				if(L.name=="carpspawn")
+					ninja_spawn += L
+			new_character.equip_space_ninja()
+			new_character.internal = new_character.s_store
+			new_character.internals.icon_state = "internal1"
+			if(ninja_spawn.len)
+				var/obj/landmark/ninja_spawn_here = pick(ninja_spawn)
+				new_character.loc = ninja_spawn_here.loc
+		if("Death Commando")//Leaves them at late-join spawn.
+			new_character.equip_death_commando()
+			new_character.internal = new_character.s_store
+			new_character.internals.icon_state = "internal1"
 		else//They may also be a cyborg or AI.
 			switch(new_character.mind.assigned_role)
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
@@ -460,11 +479,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	//Announces the character on all the systems, based on the record.
 	if(!issilicon(new_character))//If they are not a cyborg/AI.
-		if(!record_found)//If there are no records for them. If they have a record, this info is already in there.
-			if(alert("Warning: No data core entry detected. Would you like to announce the arrival of this character by addeding them to various databases, such as medical records? Wizards and nuke operatives will not be added.",,"No","Yes")=="Yes")
+		if(!record_found&&new_character.mind.assigned_role!="MODE")//If there are no records for them. If they have a record, this info is already in there. MODE people are not announced anyway.
+			//Power to the user!
+			if(alert(new_character,"Warning: No data core entry detected. Would you like to announce the arrival of this character by adding them to various databases, such as medical records?",,"No","Yes")=="Yes")
 				call(/mob/new_player/proc/ManifestLateSpawn)(new_character)
 
-			if(alert("Would you like an active AI to announce this character? Wizards and nuke operatives won't be announced.",,"No","Yes")=="Yes")
+			if(alert(new_character,"Would you like an active AI to announce this character?",,"No","Yes")=="Yes")
 				call(/mob/new_player/proc/AnnounceArrival)(new_character)
 
 	message_admins("\blue [admin] has respawned [player_key] as [new_character.real_name].", 1)
@@ -472,7 +492,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	new_character << "You have been fully respawned. Enjoy the game."
 
 	del(G_found)//Don't want to leave ghosts around.
-	return
+	return new_character
 
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Fun"

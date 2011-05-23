@@ -35,7 +35,6 @@ var/global/sent_strike_team = 0
 
 	var/commando_number = 6 //for selecting a leader
 	var/leader_selected = 0 //when the leader is chosen. The last person spawned.
-	var/commando_leader_rank = pick("Lieutenant", "Captain", "Major")
 
 //Code for spawning a nuke auth code.
 	var/nuke_code = "[rand(10000, 99999.0)]"
@@ -58,89 +57,15 @@ var/global/sent_strike_team = 0
 //Spawns commandos and equips them.
 	for (var/obj/landmark/STARTLOC in world)
 		if (STARTLOC.name == "Commando")
-			var/mob/living/carbon/human/new_commando = new(STARTLOC.loc)
-			var/commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
-			var/commando_name = pick(last_names)
-			new_commando.gender = pick(MALE, FEMALE)
-			if (commando_number == 1)
+			if (commando_number == 1)//Leader is always the last guy spawned.
 				leader_selected = 1
 
-			var/datum/preferences/A = new()//Randomize appearance for the commando.
-			A.randomize_appearance_for(new_commando)
-
-			if (leader_selected == 0)
-				new_commando.real_name = "[commando_rank] [commando_name]"
-			else
-				new_commando.real_name = "[commando_leader_rank] [commando_name]"
-			if (leader_selected == 0)
-				new_commando.age = rand(23,35)
-			else
-				new_commando.age = rand(35,45)
-			new_commando.dna.ready_dna(new_commando) //Creates DNA
-			//Creates mind stuff.
-			new_commando.mind = new
-			new_commando.mind.current = new_commando
-			new_commando.mind.assigned_role = "Centcom Contractor"
-			new_commando.mind.special_role = "Death Commando"
-			new_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")//So they don't forget their code or mission.
-			new_commando.mind.store_memory("<B>Mission:</B> \red [input].")
-			new_commando.resistances += "alien_embryo"
-
-			del(STARTLOC)
-
-			var/obj/machinery/camera/camera = new /obj/machinery/camera(new_commando) //Gives all the commandos internals cameras.
-			camera.network = "CREED"
-			camera.c_tag = new_commando.real_name
-
-			var/obj/item/device/radio/R = new /obj/item/device/radio/headset(new_commando)
-			R.set_frequency(1441)
-			new_commando.equip_if_possible(R, new_commando.slot_ears)
-			if (leader_selected == 0)
-				new_commando.equip_if_possible(new /obj/item/clothing/under/color/green(new_commando), new_commando.slot_w_uniform)
-			else
-				new_commando.equip_if_possible(new /obj/item/clothing/under/rank/centcom_officer(new_commando), new_commando.slot_w_uniform)
-			new_commando.equip_if_possible(new /obj/item/clothing/shoes/swat(new_commando), new_commando.slot_shoes)
-			new_commando.equip_if_possible(new /obj/item/clothing/suit/armor/swat(new_commando), new_commando.slot_wear_suit)
-			new_commando.equip_if_possible(new /obj/item/clothing/gloves/swat(new_commando), new_commando.slot_gloves)
-			new_commando.equip_if_possible(new /obj/item/clothing/head/helmet/swat(new_commando), new_commando.slot_head)
-			new_commando.equip_if_possible(new /obj/item/clothing/mask/gas/swat(new_commando), new_commando.slot_wear_mask)
-			new_commando.equip_if_possible(new /obj/item/clothing/glasses/thermal(new_commando), new_commando.slot_glasses)
-
-			new_commando.equip_if_possible(new /obj/item/weapon/storage/backpack(new_commando), new_commando.slot_back)
-
-			new_commando.equip_if_possible(new /obj/item/weapon/ammo/a357(new_commando), new_commando.slot_in_backpack)
-			new_commando.equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(new_commando), new_commando.slot_in_backpack)
-			new_commando.equip_if_possible(new /obj/item/weapon/storage/flashbang_kit(new_commando), new_commando.slot_in_backpack)
-			new_commando.equip_if_possible(new /obj/item/device/flashlight(new_commando), new_commando.slot_in_backpack)
-			if (leader_selected == 0)
-				new_commando.equip_if_possible(new /obj/item/weapon/plastique(new_commando), new_commando.slot_in_backpack)
-			else
-				new_commando.equip_if_possible(new /obj/item/weapon/pinpointer(new_commando), new_commando.slot_in_backpack)
-			if (leader_selected == 1)
-				new_commando.equip_if_possible(new /obj/item/weapon/disk/nuclear(new_commando), new_commando.slot_in_backpack)
-
-			new_commando.equip_if_possible(new /obj/item/weapon/sword(new_commando), new_commando.slot_l_store)
-			new_commando.equip_if_possible(new /obj/item/weapon/flashbang(new_commando), new_commando.slot_r_store)
-			new_commando.equip_if_possible(new /obj/item/weapon/tank/emergency_oxygen(new_commando), new_commando.slot_s_store)
-
-			var/obj/item/weapon/gun/revolver/GUN = new /obj/item/weapon/gun/revolver/mateba(new_commando)
-			GUN.bullets = 7
-			new_commando.equip_if_possible(GUN, new_commando.slot_belt)
-//			new_commando.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle(new_commando), new_commando.slot_l_hand)
-/*Commented out because Commandos now have their rifles spawn in front of them, along with operation manuals.
-Useful for copy pasta since I'm lazy.*/
-
-			var/obj/item/weapon/card/id/W = new(new_commando)
-			W.name = "[new_commando.real_name]'s ID Card"
-			W.access = get_all_accesses()
-			W.assignment = "Death Commando"
-			W.registered = new_commando.real_name
-			new_commando.equip_if_possible(W, new_commando.slot_wear_id)
+			var/mob/living/carbon/human/new_commando = create_death_commando(STARTLOC, leader_selected)
 
 			if(commandos.len)
 				G = pick(commandos)
 				new_commando.mind.key = G.key//For mind stuff.
-				new_commando.client = G.client
+				new_commando.key = G.key
 				new_commando.internal = new_commando.s_store
 				new_commando.internals.icon_state = "internal1"
 				del(G)
@@ -148,12 +73,15 @@ Useful for copy pasta since I'm lazy.*/
 				new_commando.key = "null"
 				new_commando.mind.key = new_commando.key
 
-			commando_number--
+			new_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")//So they don't forget their code or mission.
+			new_commando.mind.store_memory("<B>Mission:</B> \red [input].")
 
-			if (leader_selected == 0)
-				new_commando << "\blue \nYou are a Special Ops. commando in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: \red<B>[input]</B>"
+			if (!leader_selected)
+				new_commando << "\blue You are a Special Ops. commando in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: \red<B>[input]</B>"
 			else
-				new_commando << "\blue \nYou are a Special Ops. <B>LEADER</B> in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: \red<B>[input]</B>"
+				new_commando << "\blue You are a Special Ops. <B>LEADER</B> in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: \red<B>[input]</B>"
+
+			commando_number--
 
 //Targets any nukes in the world and changes their auth code as needed.
 //Bad news for Nuke operatives--or great news.
@@ -175,3 +103,85 @@ Useful for copy pasta since I'm lazy.*/
 
 	message_admins("\blue [key_name_admin(usr)] has spawned a CentCom strike squad.", 1)
 	log_admin("[key_name(usr)] used Spawn Death Squad.")
+
+/client/proc/create_death_commando(obj/spawn_location, leader_selected = 0)
+	var/mob/living/carbon/human/new_commando = new(spawn_location.loc)
+	var/commando_leader_rank = pick("Lieutenant", "Captain", "Major")
+	var/commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
+	var/commando_name = pick(last_names)
+
+	new_commando.gender = pick(MALE, FEMALE)
+
+	var/datum/preferences/A = new()//Randomize appearance for the commando.
+	A.randomize_appearance_for(new_commando)
+
+	if (!leader_selected)
+		new_commando.real_name = "[commando_rank] [commando_name]"
+	else
+		new_commando.real_name = "[commando_leader_rank] [commando_name]"
+	if (!leader_selected)
+		new_commando.age = rand(23,35)
+	else
+		new_commando.age = rand(35,45)
+	new_commando.dna.ready_dna(new_commando)//Creates DNA.
+
+	//Creates mind stuff.
+	new_commando.mind = new
+	new_commando.mind.current = new_commando
+	new_commando.mind.assigned_role = "MODE"
+	new_commando.mind.special_role = "Death Commando"
+	new_commando.equip_death_commando(leader_selected)
+	del(spawn_location)
+	return new_commando
+
+/mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)
+	var/obj/machinery/camera/camera = new /obj/machinery/camera(src) //Gives all the commandos internals cameras.
+	camera.network = "CREED"
+	camera.c_tag = real_name
+
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
+	R.set_frequency(1441)
+	equip_if_possible(R, slot_ears)
+	if (leader_selected == 0)
+		equip_if_possible(new /obj/item/clothing/under/color/green(src), slot_w_uniform)
+	else
+		equip_if_possible(new /obj/item/clothing/under/rank/centcom_officer(src), slot_w_uniform)
+	equip_if_possible(new /obj/item/clothing/shoes/swat(src), slot_shoes)
+	equip_if_possible(new /obj/item/clothing/suit/armor/swat(src), slot_wear_suit)
+	equip_if_possible(new /obj/item/clothing/gloves/swat(src), slot_gloves)
+	equip_if_possible(new /obj/item/clothing/head/helmet/swat(src), slot_head)
+	equip_if_possible(new /obj/item/clothing/mask/gas/swat(src), slot_wear_mask)
+	equip_if_possible(new /obj/item/clothing/glasses/thermal(src), slot_glasses)
+
+	equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
+
+	equip_if_possible(new /obj/item/weapon/ammo/a357(src), slot_in_backpack)
+	equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
+	equip_if_possible(new /obj/item/weapon/storage/flashbang_kit(src), slot_in_backpack)
+	equip_if_possible(new /obj/item/device/flashlight(src), slot_in_backpack)
+	if (!leader_selected)
+		equip_if_possible(new /obj/item/weapon/plastique(src), slot_in_backpack)
+	else
+		equip_if_possible(new /obj/item/weapon/pinpointer(src), slot_in_backpack)
+		equip_if_possible(new /obj/item/weapon/disk/nuclear(src), slot_in_backpack)
+
+	equip_if_possible(new /obj/item/weapon/sword(src), slot_l_store)
+	equip_if_possible(new /obj/item/weapon/flashbang(src), slot_r_store)
+	equip_if_possible(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
+
+	var/obj/item/weapon/gun/revolver/GUN = new /obj/item/weapon/gun/revolver/mateba(src)
+	GUN.bullets = 7
+	equip_if_possible(GUN, slot_belt)
+	//equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle(src), slot_l_hand)
+	/*Commented out because Commandos now have their rifles spawn in front of them, along with operation manuals.
+	Useful for copy pasta since I'm lazy.*/
+
+	var/obj/item/weapon/card/id/W = new(src)
+	W.name = "[real_name]'s ID Card"
+	W.access = get_all_accesses()
+	W.assignment = "Death Commando"
+	W.registered = real_name
+	equip_if_possible(W, slot_wear_id)
+
+	resistances += "alien_embryo"
+	return 1

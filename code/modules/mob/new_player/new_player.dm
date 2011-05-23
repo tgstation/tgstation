@@ -1,7 +1,7 @@
 mob/new_player
 	var/datum/preferences/preferences
 	var/ready = 0
-	var/spawning = 0
+	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
 
 	invisibility = 101
 
@@ -25,8 +25,8 @@ mob/new_player
 
 		new_player_panel()
 		var/starting_loc = pick(newplayer_start)
-		src.loc = starting_loc
-		src.sight |= SEE_TURFS
+		loc = starting_loc
+		sight |= SEE_TURFS
 		var/list/watch_locations = list()
 		for(var/obj/landmark/landmark in world)
 			if(landmark.tag == "landmark*new_player")
@@ -37,12 +37,12 @@ mob/new_player
 
 		if(!preferences.savefile_load(src, 0))
 			preferences.ShowChoices(src)
-			if (src.client.changes)
-				src.changes()
+			if (client.changes)
+				changes()
 		else
 			var/lastchangelog = length('changelog.html')
-			if (!src.client.changes && preferences.lastchangelog!=lastchangelog)
-				src.changes()
+			if (!client.changes && preferences.lastchangelog!=lastchangelog)
+				changes()
 				preferences.lastchangelog = lastchangelog
 				preferences.savefile_save(src)
 		//PDA Resource Initialisation =======================================================>
@@ -93,9 +93,8 @@ mob/new_player
 	Logout()
 		ready = 0
 		..()
-		if(!config.del_new_on_log)
-			return
-		if(!spawning)
+		if(!spawning)//Here so that if they are spawning and log out, the other procs can play out and they will have a mob to come back to.
+			key = null//We null their key before deleting the mob, so they are properly kicked out.
 			del(src)
 		return
 
@@ -105,7 +104,7 @@ mob/new_player
 
 			var/output = "<HR><B>New Player Options</B><BR>"
 			output += "<HR><br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><BR><BR>"
-			//if(istester(src.key))
+			//if(istester(key))
 			if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
 				if(!ready)
 					output += "<a href='byond://?src=\ref[src];ready=1'>Declare Ready</A><BR>"
@@ -161,7 +160,7 @@ mob/new_player
 			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 				var/mob/dead/observer/observer = new()
 
-				src.spawning = 1
+				spawning = 1
 
 				close_spawn_windows()
 				var/obj/O = locate("landmark*Observer-Start")
@@ -348,6 +347,7 @@ mob/new_player
 			L.fields["rank"] = H.mind.assigned_role
 			L.fields["b_type"] = H.b_type
 			L.fields["b_dna"] = H.dna.unique_enzymes
+			L.fields["enzymes"] = H.dna.struc_enzymes
 			L.fields["identity"] = H.dna.uni_identity
 			//End locked reporting
 
@@ -448,8 +448,8 @@ mob/new_player
 		src << browse(dat, "window=latechoices;size=300x640;can_close=0")
 
 	proc/create_character()
-		src.spawning = 1
-		var/mob/living/carbon/human/new_character = new(src.loc)
+		spawning = 1
+		var/mob/living/carbon/human/new_character = new(loc)
 
 		close_spawn_windows()
 
@@ -577,10 +577,10 @@ mob/new_player
 		if (!message)
 			return
 
-		log_say("[src.key] : [message]")
+		log_say("[key] : [message]")
 
-		if (src.muted)
+		if (muted)
 			return
 
-		. = src.say_dead(message)
+		. = say_dead(message)
 */

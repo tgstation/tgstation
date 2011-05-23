@@ -182,9 +182,6 @@
 			if ("usewhitelist")
 				config.usewhitelist = 1
 
-			if ("dont_del_newmob")
-				config.del_new_on_log = 0
-
 			if ("feature_object_spell_system")
 				config.feature_object_spell_system = 1
 
