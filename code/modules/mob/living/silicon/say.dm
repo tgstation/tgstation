@@ -18,11 +18,52 @@
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			robot_talk(message)
+		else if (copytext(message, 1, 3) == ":h")
+			if(isAI(src)&&client)//For patching directly into AI holopads.
+				message = copytext(message, 3)
+				message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+				holopad_talk(message)
+			else//Will not allow anyone by an active AI to use this function.
+				src << "This function is not available to you."
+				return
 		else
 			return ..(message)
 	else
 		return ..(message)
 
+//For holopads only. Usable by AI.
+/mob/living/proc/holopad_talk(var/message)
+
+	log_say("[key_name(src)] : [message]")
+
+	message = trim(message)
+
+	if (!message)
+		return
+
+	var/obj/machinery/holopad/T = client.eye//Client eye centers on an object.
+	if(istype(T)&&T.hologram&&T.master==src)//If there is a hologram and its master is the user.
+		var/message_a = say_quote(message)
+
+		//Human-like, sorta, heard by those who understand humans.
+		var/rendered_a = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
+
+		//Speach distorted, heard by those who do not understand AIs.
+		message = stars(message)
+		var/message_b = say_quote(message)
+		var/rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
+
+		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>[message_a]</span></span></i>"//The AI can "hear" its own message.
+		for(var/mob/M in hearers(T.loc))//The location is the object, default distance.
+			if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
+				M.show_message(rendered_a, 2)
+			else//If they do not.
+				M.show_message(rendered_b, 2)
+		/*Radios "filter out" this conversation channel so we don't need to account for them.
+		This is another way of saying that we won't bother dealing with them.*/
+	else
+		src << "No holopad connected."
+	return
 
 /mob/living/proc/robot_talk(var/message)
 
@@ -33,30 +74,7 @@
 	if (!message)
 		return
 
-	var/message_a = say_quote(message)//Here so I don't have to define it again.
-
-	if(isAI(src)&&client)//For patching directly into AI holopads.
-		var/obj/machinery/holopad/T = client.eye//Client eye centers on an object.
-		if(istype(T)&&T.hologram&&T.master==src)//If there is a hologram and its master is the user.
-
-			//Human-like, sorta, heard by those who understand humans.
-			var/rendered_a = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
-
-			//Speach distorted, heard by those who do not understand AIs.
-			message = stars(message)
-			var/message_b = say_quote(message)
-			var/rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
-
-			src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>[message_a]</span></span></i>"//The AI can "hear" its own message.
-			for(var/mob/M in hearers(T.loc))//The location is the object, default distance.
-				if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
-					M.show_message(rendered_a, 2)
-				else//If they do not.
-					M.show_message(rendered_b, 2)
-			/*Radios "filter out" this conversation channel so we don't need to account for them.
-			This is another way of saying that we won't bother dealing with them.*/
-			return
-
+	var/message_a = say_quote(message)
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 	for (var/mob/living/S in world)
 		if(!S.stat)
