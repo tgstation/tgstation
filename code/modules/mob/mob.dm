@@ -1134,7 +1134,7 @@ proc/isobserver(A)
 
 /mob/proc/drop_item()
 	var/obj/item/W = equipped()
-	if(istype(W,/obj/item/weapon/fireaxe))
+	if(W.twohanded)
 		if(W.wielded)
 			if(hand)
 				var/obj/item/weapon/offhand/O = r_hand
@@ -1143,7 +1143,7 @@ proc/isobserver(A)
 				var/obj/item/weapon/offhand/O = l_hand
 				del O
 		W.wielded = 0          //Kinda crude, but gets the job done with minimal pain -Agouri
-		W.name = "Fire axe" //name reset so people don't see world fireaxes with (unwielded) or (wielded) tags
+		W.name = "[initial(W.name)]" //name reset so people don't see world fireaxes with (unwielded) or (wielded) tags
 		W.update_icon()
 
 	if (W)

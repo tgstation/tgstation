@@ -159,6 +159,38 @@
 			src.loc = P
 			O.amount -= 1
 
+/obj/item/attack_self(mob/user as mob)
+	..()
+	if(twohanded)
+		if(wielded) //Trying to unwield it
+			wielded = 0
+			force = force_unwielded
+			src.name = "[initial(name)] (Unwielded)"
+			src.update_icon() //If needed by the particular item
+			user << "\blue You are now carrying the [initial(name)] with one hand."
+
+			if(istype(user.get_inactive_hand(),/obj/item/weapon/offhand))
+				del user.get_inactive_hand()
+			return
+		else //Trying to wield it
+			if(user.get_inactive_hand())
+				user << "\red You need your other hand to be empty"
+				return
+			wielded = 1
+			force = force_wielded
+			src.name = "[initial(name)] (Wielded)"
+			src.update_icon() //If needed by the particular item
+			user << "\blue You grab the [initial(name)] with both hands, It is ready for use."
+
+			var/obj/item/weapon/offhand/O = new /obj/item/weapon/offhand(user) ////Let's reserve his other hand~
+			O.name = text("[initial(src.name)] - Offhand")
+			O.desc = "Your second grip on the [initial(src.name)]"
+			if(user.hand)
+				user.r_hand = O          ///Place dat offhand in the opposite hand
+			else
+				user.l_hand = O
+			O.layer = 20
+			return
 
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 
@@ -339,7 +371,6 @@
 		M.updatehealth()
 	src.add_fingerprint(user)
 	return 1
-
 
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 

@@ -514,6 +514,8 @@
 	force = 5
 	w_class = 4.0
 	twohanded = 1
+	force_unwielded = 5
+	force_wielded = 30
 
 
 /obj/item/weapon/disk

@@ -347,6 +347,8 @@
 	var/w_class = 3.0
 	var/wielded = 0
 	var/twohanded = 0 ///Two handed and wielded off by default, nyoro~n -Agouri
+	var/force_unwielded = 0
+	var/force_wielded = 0
 	flags = FPRINT | TABLEPASS
 	pressure_resistance = 50
 	var/obj/item/master = null

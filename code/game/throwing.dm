@@ -14,6 +14,7 @@
 
 /mob/living/carbon/proc/throw_item(atom/target)
 	src.throw_mode_off()
+
 	if(usr.stat)
 		return
 	if(target.type == /obj/screen) return
@@ -21,6 +22,19 @@
 	var/atom/movable/item = src.equipped()
 
 	if(!item) return
+
+	if(istype(item,/obj/item))
+		var/obj/item/IT = item
+		if(IT.twohanded)
+			if(IT.wielded)
+				if(hand)
+					var/obj/item/weapon/offhand/O = r_hand
+					del O
+				else
+					var/obj/item/weapon/offhand/O = l_hand
+					del O
+			IT.name = initial(IT.name)
+
 
 	u_equip(item)
 	if(src.client)
