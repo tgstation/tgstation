@@ -4,12 +4,19 @@
 	icon_state = "door1"
 	opacity = 1
 	density = 1
+	layer = 2.7
 	var/secondsElectrified = 0
 	var/visible = 1
 	var/p_open = 0
 	var/operating = 0
 	anchored = 1
 	var/autoclose = 0
+
+	New()
+		if(density)
+			layer = 3.1 //Above most items if closed
+		else
+			layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
 
 /obj/machinery/door/firedoor
 	name = "Firelock"

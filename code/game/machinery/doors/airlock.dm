@@ -913,6 +913,7 @@ About the new airlock wires panel:
 
 						sleep(15)
 
+						layer = 2.7
 						src.density = 0
 						update_icon()
 
@@ -929,6 +930,7 @@ About the new airlock wires panel:
 
 					sleep(15)
 
+					layer = 2.7
 					src.density = 0
 					update_icon()
 
@@ -946,6 +948,7 @@ About the new airlock wires panel:
 							src.operating = 1
 							animate("closing")
 
+							layer = 3.1
 							src.density = 1
 							sleep(15)
 							update_icon()
@@ -960,6 +963,7 @@ About the new airlock wires panel:
 						src.operating = 1
 						animate("closing")
 
+						layer = 3.1
 						src.density = 1
 						sleep(15)
 						update_icon()

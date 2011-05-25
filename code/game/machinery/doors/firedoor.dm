@@ -33,6 +33,7 @@
 
 					animate("opening")
 					sleep(15)
+					layer = 2.7
 					src.density = 0
 					update_icon()
 
@@ -45,6 +46,7 @@
 
 					animate("closing")
 					src.density = 1
+					layer = 3.1
 					sleep(15)
 					update_icon()
 
