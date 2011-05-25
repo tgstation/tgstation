@@ -1134,19 +1134,19 @@ proc/isobserver(A)
 
 /mob/proc/drop_item()
 	var/obj/item/W = equipped()
-	if(W.twohanded)
-		if(W.wielded)
-			if(hand)
-				var/obj/item/weapon/offhand/O = r_hand
-				del O
-			else
-				var/obj/item/weapon/offhand/O = l_hand
-				del O
-		W.wielded = 0          //Kinda crude, but gets the job done with minimal pain -Agouri
-		W.name = "[initial(W.name)]" //name reset so people don't see world fireaxes with (unwielded) or (wielded) tags
-		W.update_icon()
 
 	if (W)
+		if(W.twohanded)
+			if(W.wielded)
+				if(hand)
+					var/obj/item/weapon/offhand/O = r_hand
+					del O
+				else
+					var/obj/item/weapon/offhand/O = l_hand
+					del O
+			W.wielded = 0          //Kinda crude, but gets the job done with minimal pain -Agouri
+			W.name = "[initial(W.name)]" //name reset so people don't see world fireaxes with (unwielded) or (wielded) tags
+			W.update_icon()
 		u_equip(W)
 		if (client)
 			client.screen -= W
