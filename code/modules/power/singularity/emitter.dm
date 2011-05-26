@@ -87,7 +87,7 @@
 			use_power(1000)
 			var/obj/beam/a_laser/A = new /obj/beam/a_laser( src.loc )
 			A.icon_state = "u_laser"
-			playsound(src.loc, 'emitter.ogg', 75, 1)
+			playsound(src.loc, 'emitter.ogg', 25, 1)
 			if(prob(35))
 				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 				s.set_up(5, 1, src)
