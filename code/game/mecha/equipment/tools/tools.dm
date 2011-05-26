@@ -27,7 +27,7 @@
 					chassis.occupant_message("You lift [target] and start to load it into cargo compartment.")
 					chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
 					set_ready_state(0)
-					chassis.cell.use(energy_drain)
+					chassis.use_power(energy_drain)
 					O.anchored = 1
 					var/T = chassis.loc
 					if(do_after_cooldown(target))
@@ -59,7 +59,7 @@
 				chassis.occupant_message("You push [target] out of the way.")
 				chassis.visible_message("[chassis] pushes [target] out of the way.")
 			set_ready_state(0)
-			chassis.cell.use(energy_drain)
+			chassis.use_power(energy_drain)
 			do_after_cooldown()
 		return 1
 
@@ -73,10 +73,10 @@
 	action(atom/target)
 		if(!action_checks(target)) return
 		set_ready_state(0)
-		chassis.cell.use(energy_drain)
+		chassis.use_power(energy_drain)
 		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]</b></font>", "You hear the drill.")
 		chassis.occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
-		chassis.cell.use(energy_drain)
+		chassis.use_power(energy_drain)
 		var/T = chassis.loc
 		if(do_after_cooldown(target))
 			if(T == chassis.loc && src == chassis.selected)
@@ -191,7 +191,7 @@
 						chassis.spark_system.start()
 						target:ReplaceWithFloor()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
-						chassis.cell.give(energy_drain)
+						chassis.give_power(energy_drain)
 				else if (istype(target, /turf/simulated/floor))
 					chassis.occupant_message("Deconstructing [target]...")
 					set_ready_state(0)
@@ -200,7 +200,7 @@
 						chassis.spark_system.start()
 						target:ReplaceWithSpace()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
-						chassis.cell.give(energy_drain)
+						chassis.give_power(energy_drain)
 				else if (istype(target, /obj/machinery/door/airlock))
 					chassis.occupant_message("Deconstructing [target]...")
 					set_ready_state(0)
@@ -209,7 +209,7 @@
 						chassis.spark_system.start()
 						del(target)
 						playsound(target, 'Deconstruct.ogg', 50, 1)
-						chassis.cell.give(energy_drain)
+						chassis.give_power(energy_drain)
 			if(1)
 				if(istype(target, /turf/space))
 					chassis.occupant_message("Building Floor...")
@@ -219,7 +219,7 @@
 						target:ReplaceWithFloor()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
-						chassis.cell.use(energy_drain*3)
+						chassis.use_power(energy_drain*2)
 				else if(istype(target, /turf/simulated/floor))
 					chassis.occupant_message("Building Wall...")
 					set_ready_state(0)
@@ -228,7 +228,7 @@
 						target:ReplaceWithWall()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
-						chassis.cell.use(energy_drain*3)
+						chassis.use_power(energy_drain*2)
 			if(2)
 				if(istype(target, /turf/simulated/floor))
 					chassis.occupant_message("Building Airlock...")
@@ -240,7 +240,7 @@
 						T.autoclose = 1
 						playsound(target, 'Deconstruct.ogg', 50, 1)
 						playsound(target, 'sparks2.ogg', 50, 1)
-						chassis.cell.use(energy_drain*3)
+						chassis.use_power(energy_drain*2)
 		return
 
 
@@ -277,7 +277,7 @@
 		var/turf/T = get_turf(target)
 		if(T)
 			set_ready_state(0)
-			chassis.cell.use(energy_drain)
+			chassis.use_power(energy_drain)
 			do_teleport(chassis, T, 4)
 			do_after_cooldown()
 		return
@@ -317,7 +317,7 @@
 		var/turf/target_turf = pick(L)
 		if(!target_turf)
 			return
-		chassis.cell.use(energy_drain)
+		chassis.use_power(energy_drain)
 		set_ready_state(0)
 		var/obj/portal/P = new /obj/portal(get_turf(target))
 		P.target = target_turf
@@ -360,7 +360,7 @@
 						locked.throw_at(target, 14, 1.5)
 						locked = null
 						set_ready_state(0)
-						chassis.cell.use(energy_drain)
+						chassis.use_power(energy_drain)
 						do_after_cooldown()
 					else
 						chassis.occupant_message("Lock on [locked] disengaged.")
@@ -380,7 +380,7 @@
 							step_away(A,target)
 							sleep(2)
 				set_ready_state(0)
-				chassis.cell.use(energy_drain)
+				chassis.use_power(energy_drain)
 				do_after_cooldown()
 		return
 
@@ -401,7 +401,7 @@
 	origin_tech = "materials=3"
 	equip_cooldown = 10
 	energy_drain = 50
-	range = RANGED
+	range = 0
 	construction_cost = list("metal"=20000,"silver"=5000)
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
@@ -436,7 +436,7 @@
 			chassis.take_damage(round(W.force*damage_coeff),W.damtype)
 			chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		set_ready_state(0)
-		chassis.cell.use(energy_drain)
+		chassis.use_power(energy_drain)
 		do_after_cooldown()
 		return
 
@@ -448,7 +448,7 @@
 	origin_tech = "materials=4"
 	equip_cooldown = 10
 	energy_drain = 50
-	range = RANGED
+	range = 0
 	construction_cost = list("metal"=20000,"gold"=5000)
 	var/damage_coeff = 0.8
 
@@ -493,7 +493,7 @@
 		chassis.take_damage(round(damage*src.damage_coeff))
 		chassis.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		set_ready_state(0)
-		chassis.cell.use(energy_drain)
+		chassis.use_power(energy_drain)
 		do_after_cooldown()
 		return
 
@@ -513,19 +513,19 @@
 				chassis.take_damage(round(O.throwforce*damage_coeff))
 				chassis.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		set_ready_state(0)
-		chassis.cell.use(energy_drain)
+		chassis.use_power(energy_drain)
 		do_after_cooldown()
 		return
 
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid
-	name = "Exosuit Repair Droid"
+	name = "Repair Droid"
 	desc = "Automated repair droid. Scans exosuit for damage and repairs it. Can fix almost all types of external or internal damage."
 	icon_state = "repair_droid"
 	origin_tech = "magnets=3;programming=3"
 	equip_cooldown = 20
 	energy_drain = 20
-	range = RANGED
+	range = 0
 	construction_cost = list("metal"=10000,"gold"=1000,"silver"=2000,"glass"=5000)
 	var/health_boost = 2
 	var/datum/global_iterator/pr_repair_droid
@@ -579,6 +579,7 @@
 
 	process(var/obj/item/mecha_parts/mecha_equipment/repair_droid/RD as obj)
 		if(!RD.chassis)
+			RD.set_ready_state(1)
 			return src.stop()
 		var/repaired = 0
 		if(RD.chassis.health < initial(RD.chassis.health))
@@ -598,11 +599,103 @@
 				RD.chassis.internal_damage &= ~MECHA_INT_CONTROL_LOST
 				repaired = 1
 		if(repaired)
-			RD.chassis.cell.use(RD.energy_drain)
+			RD.chassis.use_power(RD.energy_drain)
 			RD.set_ready_state(0)
 		else
 			RD.set_ready_state(1)
 		return
+
+
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
+	name = "Energy Relay"
+	desc = "Wirelessly drains energy from any available power channel in area. The performance index is quite low."
+	icon_state = "mecha_equip"
+	origin_tech = "magnets=3"
+	equip_cooldown = 10
+	energy_drain = 0
+	range = 0
+	construction_cost = list("metal"=10000,"gold"=5000,"silver"=5000,"glass"=2000)
+	var/datum/global_iterator/pr_energy_relay
+	var/coeff = 100
+
+	New()
+		..()
+		pr_energy_relay = new /datum/global_iterator/mecha_energy_relay(list(src),0)
+		pr_energy_relay.set_delay(equip_cooldown)
+		return
+
+	detach()
+		pr_energy_relay.stop()
+		chassis.proc_res["dynusepower"] = null
+		..()
+		return
+
+	attach(obj/mecha/M)
+		..()
+		chassis.proc_res["dynusepower"] = src
+		return
+
+	can_attach(obj/mecha/M)
+		if(..())
+			if(!M.proc_res["dynusepower"])
+				return 1
+		return 0
+
+	Topic(href, href_list)
+		..()
+		if(href_list["toggle_relay"])
+			if(pr_energy_relay.toggle())
+				set_ready_state(0)
+				chassis.log_message("[src] activated.")
+			else
+				set_ready_state(1)
+				chassis.log_message("[src] deactivated.")
+		return
+
+	get_equip_info()
+		var/output = ..()
+		output += " - <a href='?src=\ref[src];toggle_relay=1'>[pr_energy_relay.active()?"Dea":"A"]ctivate</a>"
+		return output
+
+	proc/dynusepower(amount)
+		if(equip_ready) //disabled
+			return chassis.dynusepower(amount)
+		var/area/A = get_area(chassis)
+		var/pow_chan
+		for(var/c in list(EQUIP,ENVIRON,LIGHT))
+			if(A.master.powered(c))
+				pow_chan = c
+				break
+		if(pow_chan)
+			A.master.use_power(amount*coeff, pow_chan)
+			return 1
+		return 0
+
+/datum/global_iterator/mecha_energy_relay
+
+	process(var/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/ER)
+		if(!ER.chassis)
+			ER.set_ready_state(1)
+			return stop()
+		var/cur_charge = ER.chassis.get_charge()
+		if(isnull(cur_charge))
+			ER.set_ready_state(1)
+			ER.chassis.occupant_message("No powercell detected.")
+			return stop()
+		if(cur_charge<ER.chassis.cell.maxcharge)
+			var/area/A = get_area(ER.chassis)
+			if(A)
+				var/pow_chan
+				for(var/c in list(EQUIP,ENVIRON,LIGHT))
+					if(A.master.powered(c))
+						pow_chan = c
+						break
+				if(pow_chan)
+					var/delta = min(1, ER.chassis.cell.maxcharge-cur_charge)
+					ER.chassis.give_power(delta)
+					A.master.use_power(delta*ER.coeff, pow_chan)
+		return
+
 
 /*
 /obj/item/mecha_parts/mecha_equipment/defence_shocker

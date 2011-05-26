@@ -67,21 +67,22 @@ Data storage vars:
 		return
 
 	proc/main()
-		src.state = 1
+		state = 1
 		while(src && control_switch)
 			last_exec = world.timeofday
 			if(check_for_null && has_null_args())
-				src.stop()
+				spawn(-1) //don't wait for state_check() in stop()
+					stop()
 				return 0
-			result = src.process(arglist(arg_list))
-			for(var/sleep_time=src.delay;sleep_time>0;sleep_time--) //uhh, this is ugly. But I see no other way to terminate sleeping proc. Such disgrace.
-				if(!src.control_switch)
+			result = process(arglist(arg_list))
+			for(var/sleep_time=delay;sleep_time>0;sleep_time--) //uhh, this is ugly. But I see no other way to terminate sleeping proc. Such disgrace.
+				if(!control_switch)
 					return 0
 				sleep(1)
 		return 0
 
 	proc/start(list/arguments=null)
-		if(src.active())
+		if(active())
 			return
 		if(arguments)
 			if(!set_process_args(arguments))
@@ -90,11 +91,11 @@ Data storage vars:
 			return
 		control_switch = 1
 		spawn()
-			src.state = src.main()
+			state = main()
 		return 1
 
 	proc/stop()
-		if(!src.active())
+		if(!active())
 			return
 		control_switch = 0
 		if(!state_check())
@@ -103,11 +104,10 @@ Data storage vars:
 
 	proc/state_check()
 		var/lag = 0
-		while(src.state)
+		while(state)
 			sleep(1)
 			if(++lag>10)
-				log_game("The global_iterator loop \ref[src] failed to terminate in designated timeframe. The supplied arguments were {[list2params(arg_list)]}")
-				return 0
+				CRASH("The global_iterator loop \ref[src] failed to terminate in designated timeframe. Last exec - [get_last_exec_time_as_text()].")
 		return 1
 
 	proc/process()
@@ -144,12 +144,12 @@ Data storage vars:
 			return 0
 
 	proc/toggle_null_checks()
-		src.check_for_null = !src.check_for_null
-		return src.check_for_null
+		check_for_null = !check_for_null
+		return check_for_null
 
 	proc/toggle()
-		if(!src.stop())
-			src.start()
-		return src.active()
+		if(!stop())
+			start()
+		return active()
 
 

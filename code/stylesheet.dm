@@ -111,4 +111,10 @@ h1.alert, h2.alert
 {
 	color: #000000;
 }
+
+.attack
+{
+	font-weight: bold;
+	color: #f00;
+}
 </style>"}

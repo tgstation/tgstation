@@ -42,7 +42,7 @@
 	desc="A torso part of Ripley APLU. Contains power unit, processing core and life support systems."
 	icon_state = "ripley_harness"
 	origin_tech = "programming=2;materials=3;biotech=2"
-	construction_time = 300
+	construction_time = 200
 	construction_cost = list("metal"=40000,"glass"=15000)
 
 /obj/item/mecha_parts/part/ripley_left_arm
@@ -50,7 +50,7 @@
 	desc="A Ripley APLU left arm. Data and power sockets are compatible with most exosuit tools."
 	icon_state = "ripley_l_arm"
 	origin_tech = "programming=2;materials=3"
-	construction_time = 200
+	construction_time = 150
 	construction_cost = list("metal"=25000)
 
 /obj/item/mecha_parts/part/ripley_right_arm
@@ -58,7 +58,7 @@
 	desc="A Ripley APLU right arm. Data and power sockets are compatible with most exosuit tools."
 	icon_state = "ripley_r_arm"
 	origin_tech = "programming=2;materials=3"
-	construction_time = 200
+	construction_time = 150
 	construction_cost = list("metal"=25000)
 
 /obj/item/mecha_parts/part/ripley_left_leg
@@ -66,7 +66,7 @@
 	desc="A Ripley APLU left leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_l_leg"
 	origin_tech = "programming=2;materials=3"
-	construction_time = 200
+	construction_time = 150
 	construction_cost = list("metal"=30000)
 
 /obj/item/mecha_parts/part/ripley_right_leg
@@ -74,7 +74,7 @@
 	desc="A Ripley APLU right leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_r_leg"
 	origin_tech = "programming=2;materials=3"
-	construction_time = 200
+	construction_time = 150
 	construction_cost = list("metal"=30000)
 
 ///////// Gygax
@@ -277,6 +277,61 @@
 	construction_time = 200
 	construction_cost = list("metal"=20000,"bananium"=5000)
 
+
+////////// Phazon
+
+/obj/item/mecha_parts/chassis/phazon
+	name = "Phazon Chassis"
+	origin_tech = "materials=7"
+
+	New()
+		..()
+		construct = new /datum/construction/mecha/phazon_chassis(src)
+
+/obj/item/mecha_parts/part/phazon_torso
+	name="Phazon Torso"
+	icon_state = "phazon_harness"
+	construction_time = 300
+	construction_cost = list("metal"=35000,"glass"=10000,"plasma"=20000)
+	origin_tech = "programming=5;materials=7;bluespace=6;powerstorage=6"
+
+/obj/item/mecha_parts/part/phazon_head
+	name="Phazon Head"
+	icon_state = "phazon_head"
+	construction_time = 200
+	construction_cost = list("metal"=15000,"glass"=5000,"plasma"=10000)
+	origin_tech = "programming=4;materials=5;magnets=6"
+
+/obj/item/mecha_parts/part/phazon_left_arm
+	name="Phazon Left Arm"
+	icon_state = "phazon_l_arm"
+	construction_time = 200
+	construction_cost = list("metal"=20000,"plasma"=10000)
+	origin_tech = "materials=5;bluespace=2;magnets=2"
+
+/obj/item/mecha_parts/part/phazon_right_arm
+	name="Phazon Right Arm"
+	icon_state = "phazon_r_arm"
+	construction_time = 200
+	construction_cost = list("metal"=20000,"plasma"=10000)
+	origin_tech = "materials=5;bluespace=2;magnets=2"
+
+/obj/item/mecha_parts/part/phazon_left_leg
+	name="Phazon Left Leg"
+	icon_state = "phazon_l_leg"
+	construction_time = 200
+	construction_cost = list("metal"=20000,"plasma"=10000)
+	origin_tech = "materials=5;bluespace=3;magnets=3"
+
+/obj/item/mecha_parts/part/phazon_right_leg
+	name="Phazon Right Leg"
+	icon_state = "phazon_r_leg"
+	construction_time = 200
+	construction_cost = list("metal"=20000,"plasma"=10000)
+	origin_tech = "materials=5;bluespace=3;magnets=3"
+
+
+///////// Circuitboards
 
 /obj/item/mecha_parts/circuitboard
 	name = "Exosuit Circuit board"

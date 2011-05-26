@@ -89,11 +89,11 @@
 	src.verbs -= /obj/mecha/verb/disconnect_from_port
 	src.verbs -= /atom/movable/verb/pull
 	src.log_message("[src.name] created.")
+	src.loc.Entered(src)
 	return
 
 /obj/mecha/Del()
 	src.go_out()
-	src.loc.Exited(src)
 	..()
 	return
 
@@ -194,7 +194,7 @@
 		move_result	= step(src,direction)
 	if(move_result)
 		can_move = 0
-		cell.use(src.step_energy_drain)
+		use_power(step_energy_drain)
 		if(istype(src.loc, /turf/space))
 			if(!src.check_for_support())
 				src.pr_inertial_movement.start(list(src,direction))
@@ -401,7 +401,7 @@
 		if(PROJECTILE_LASER)
 			damage = 20
 		if(PROJECTILE_TASER)
-			src.cell.use(500)
+			use_power(500)
 		if(PROJECTILE_WEAKBULLET)
 			damage = 8
 		if(PROJECTILE_BULLET)
@@ -419,36 +419,31 @@
 
 /obj/mecha/proc/destroy()
 	spawn()
-		var/obj/mecha/mecha = src
-	//	var/mob/M = src.occupant
 		var/turf/T = get_turf(src)
-		var/wreckage = src.wreckage
-		var/list/r_equipment = src.equipment
-		var/obj/item/weapon/cell/r_cell = src.cell
-		var/obj/machinery/portable_atmospherics/canister/r_canister = src.internal_tank
-		src = null
-		del(mecha)
+		tag = "\ref[src]" //better safe then sorry
+		loc.Exited(src)
+		loc = null
 		if(prob(40))
 			explosion(T, 0, 0, 1, 3)
-		spawn(0)
-			if(wreckage)
-				var/obj/decal/mecha_wreckage/WR = new wreckage(T)
-				for(var/obj/item/mecha_parts/mecha_equipment/E in r_equipment)
-					if(prob(30))
-						WR.salvage += E
-						E.loc = WR
-						E.equip_ready = 1
-						E.reliability = rand(30,100)
-					else
-						E.loc = T
-						E.destroy()
-				if(r_cell)
-					WR.salvage += r_cell
-					r_cell.loc = WR
-					r_cell.charge = rand(0, r_cell.charge)
-				if(r_canister)
-					WR.salvage += r_canister
-					r_canister.loc = WR
+		if(wreckage)
+			var/obj/decal/mecha_wreckage/WR = new wreckage(T)
+			for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+				if(prob(30))
+					WR.crowbar_salvage += E
+					E.loc = WR
+					E.equip_ready = 1
+					E.reliability = rand(30,100)
+				else
+					E.loc = T
+					E.destroy()
+			if(cell)
+				WR.crowbar_salvage += cell
+				cell.loc = WR
+				cell.charge = rand(0, cell.charge)
+			if(internal_tank)
+				WR.crowbar_salvage += internal_tank
+				internal_tank.loc = WR
+			del(src)
 	return
 
 /obj/mecha/ex_act(severity)
@@ -481,7 +476,8 @@
 	return ex_act(rand(1,3))//should do for now
 
 /obj/mecha/emp_act(severity)
-	cell.use(min(cell.charge, cell.maxcharge/severity))
+	if(get_charge())
+		use_power(min(cell.charge, cell.maxcharge/severity))
 	src.log_message("EMP detected")
 	take_damage(100 / severity)
 	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST),1)
@@ -1108,6 +1104,7 @@
 						<a href='?src=\ref[src];unlock_id_upload=1'>Unlock ID upload panel</a><br>
 						<a href='?src=\ref[src];dna_lock=1'>DNA-lock</a><br>
 						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
+						<a href='?src=\ref[src];change_name=1'>Change exosuit name</a><br>
 						</div>
 						</div>
 						<div id='equipment_menu'>[get_equipment_menu()]</div>
@@ -1116,7 +1113,7 @@
 						"}
 	return output
 
-/obj/mecha/proc/get_equipment_menu()
+/obj/mecha/proc/get_equipment_menu() //outputs mecha html equipment menu
 	var/output
 	if(equipment.len)
 		output += {"<div class='wr'>
@@ -1128,7 +1125,7 @@
 		output += "</div></div>"
 	return output
 
-/obj/mecha/proc/get_equipment_list()
+/obj/mecha/proc/get_equipment_list() //outputs mecha equipment list in html
 	if(!equipment.len)
 		return
 	var/output = "<b>Equipment:</b><div style=\"margin-left: 15px;\">"
@@ -1163,6 +1160,9 @@
 	if (href_list["view_log"])
 		src.occupant << browse(src.get_log_html(), "window=exosuit_log")
 		onclose(occupant, "exosuit_log")
+		return
+	if (href_list["change_name"])
+		name = input(occupant,"Choose new exosuit name","Rename exosuit",initial(name))
 		return
 	if (href_list["repair_int_control_lost"])
 		src.occupant_message("Recalibrating coordination system.")
@@ -1280,6 +1280,22 @@
 /obj/mecha/proc/get_charge()//returns null if no powercell, else returns cell.charge
 	if(!src.cell) return
 	return max(0, src.cell.charge)
+
+/obj/mecha/proc/use_power(amount)
+	return call((proc_res["dynusepower"]||src), "dynusepower")(amount)
+
+/obj/mecha/proc/dynusepower(amount)
+	if(get_charge()>=amount)
+		cell.use(amount)
+		return 1
+	return 0
+
+/obj/mecha/proc/give_power(amount)
+	if(!isnull(get_charge()))
+		cell.give(amount)
+		return 1
+	return 0
+
 
 
 /obj/mecha/proc/output_access_dialog(obj/item/weapon/card/id/id_card, mob/user)

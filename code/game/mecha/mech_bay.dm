@@ -6,10 +6,9 @@
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	var/obj/mecha/recharging_mecha = null
 
-	Entered(atom as obj)
+	Entered(var/obj/mecha/mecha)
 		. = ..()
-		if(istype(atom, /obj/mecha))
-			var/obj/mecha/mecha = atom
+		if(istype(mecha))
 			mecha.occupant_message("<b>Initializing power control devices.</b>")
 			init_devices()
 			if(recharge_console && recharge_port)
@@ -22,7 +21,7 @@
 				mecha.occupant_message("<font color='red'>Power port not found. Terminating.</font>")
 		return
 
-	Exited(atom as obj)
+	Exited(atom)
 		. = ..()
 		if(atom == recharging_mecha)
 			recharging_mecha = null
@@ -105,12 +104,13 @@
 /datum/global_iterator/mech_bay_recharger
 	delay = 20
 	var/max_charge = 45
+	check_for_null = 0 //since port.stop_charge() must be called. The checks are made in process()
 
 	process(var/obj/machinery/mech_bay_recharge_port/port, var/obj/mecha/mecha)
-		if(mecha in port.recharge_floor)
+		if(port && mecha && mecha in port.recharge_floor)
 			var/delta = min(max_charge, mecha.cell.maxcharge - mecha.cell.charge)
 			if(delta>0)
-				mecha.cell.give(delta)
+				mecha.give_power(delta)
 				port.use_power(delta*150)
 			else
 				mecha.occupant_message("<font color='blue'><b>Fully charged.</b></font>")

@@ -71,7 +71,7 @@
 
 		can_move = 0
 		spawn(tmp_step_in) can_move = 1
-		cell.use(tmp_step_energy_drain)
+		use_power(tmp_step_energy_drain)
 		return 1
 	return 0
 

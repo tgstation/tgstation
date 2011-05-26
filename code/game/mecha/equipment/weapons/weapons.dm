@@ -30,7 +30,7 @@
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
-		chassis.cell.use(energy_drain)
+		chassis.use_power(energy_drain)
 		A.process()
 		chassis.log_message("Fired from [src.name], targeting [target].")
 		do_after_cooldown()
@@ -60,7 +60,7 @@
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
 		set_ready_state(0)
-		chassis.cell.use(energy_drain)
+		chassis.use_power(energy_drain)
 		A.process()
 		chassis.log_message("Fired from [src.name], targeting [target].")
 		do_after_cooldown()
@@ -99,7 +99,7 @@
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
 		set_ready_state(0)
-		chassis.cell.use(energy_drain)
+		chassis.use_power(energy_drain)
 		spawn()
 			A.process()
 		chassis.log_message("Fired from [src.name], targeting [target].")
@@ -157,7 +157,7 @@
 						if(thingy)
 							walk(thingy,0)
 			*/
-		chassis.cell.use(energy_drain)
+		chassis.use_power(energy_drain)
 		chassis.log_message("Honked from [src.name]. HONK!")
 		do_after_cooldown()
 		return
@@ -182,7 +182,7 @@
 			while(chassis.get_charge() >= projectile_energy_cost && projectiles_to_add)
 				projectiles++
 				projectiles_to_add--
-				chassis.cell.use(projectile_energy_cost)
+				chassis.use_power(projectile_energy_cost)
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 		chassis.log_message("Rearmed [src.name].")
 		return

@@ -45,7 +45,7 @@
 /obj/mecha/combat/gygax/relaymove(mob/user,direction)
 	if(!..()) return
 	if(overload)
-		cell.use(step_energy_drain)
+		use_power(step_energy_drain)
 		health--
 		if(health < initial(health) - initial(health)/3)
 			overload = 0

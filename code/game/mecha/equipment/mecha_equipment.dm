@@ -104,5 +104,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/set_ready_state(state)
 	equip_ready = state
-	send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+	if(chassis)
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 	return
