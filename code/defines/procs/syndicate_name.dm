@@ -90,7 +90,10 @@ var/syndicate_code_response//Code response for traitors.
 					if(1)
 						code_phrase += pick("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepksy Smash","tequilla sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
 					if(2)
-						code_phrase += "[pick(teleportlocs)]"//Returns a place.
+						if(teleportlocs.len) //tired of those runtime errors -- Urist
+							code_phrase += "[pick(teleportlocs)]"//Returns a place.
+						else
+							code_phrase += pick("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepksy Smash","tequilla sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
 				safety.Remove(2)
 			if(3)
 				switch(rand(1,3))//Nouns, adjectives, verbs. Can be selected more than once.

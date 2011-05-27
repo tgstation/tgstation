@@ -868,6 +868,8 @@ proc/move_mining_shuttle()
 	//if (prob(50))
 	//	seedName = pick(list("1","2","3","4"))
 	//	seedAmt = rand(1,4)
+	if(prob(20))
+		icon_state = "asteroid[rand(0,8)]"
 	spawn(2)
 		updateMineralOverlays()
 
