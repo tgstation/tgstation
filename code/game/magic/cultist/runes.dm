@@ -128,12 +128,7 @@ var/list/sacrificed = list()
 					M.say("Tok-lyr rqa'nap g'lt-ulotf!")
 					cultist_count += 1
 			if(cultist_count >= 9)
-				var/obj/machinery/singularity/S = new /obj/machinery/singularity/(src.loc)
-				S.icon = 'magic_terror.dmi'
-				S.name = "Tear in the Fabric of Reality"
-				S.desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
-				S.pixel_x = -89
-				S.pixel_y = -85
+				new /obj/machinery/singularity/narsie(src.loc)
 				if(ticker.mode.name == "cult")
 					ticker.mode:eldergod = 0
 				return
