@@ -19,29 +19,31 @@ ________________________________________________________________________________
 	if(alert("Are you sure you want to send in a space ninja?",,"Yes","No")=="No")
 		return
 
-	TRYAGAIN
-	var/input = input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", "")
-	if(!input)
-		goto TRYAGAIN
+	var/input = null
+	while(!input)
+		input = input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", "")
+		if(!input)
+			if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
+				return
 
-	var/list/LOCLIST = list()
+	var/list/locList = list()
 	for(var/obj/landmark/X in world)
 		if (X.name == "carpspawn")
-			LOCLIST.Add(X)
-	if(!LOCLIST.len)
+			locList.Add(X)
+	if(!locList.len)
 		alert("No spawn location could be found. Aborting.")
 		return
 
 	var/admin_name = src
-	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(LOCLIST))
+	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(locList))
 
 	var/mob/dead/observer/G
 	var/list/candidates = list()
 	for(G in world)
-		if(G.client&&!G.client.holder)
-		//if(G.client)//Good for testing.
-			if(((G.client.inactivity/10)/60) <= 5)
-				candidates.Add(G)
+		if(G.client) //Was restricted to non-admins before. Removed the admin check, as it is retarded. -- Urist
+		//if(((G.client.inactivity/10)/60) <= 5) //Again, removed a check. Usually when an admin makes a ninja, they ask that person first, so the check is redundant.
+		//I've also got reports of even non-admins that asked for ninjaification being exempt from the ninja list, which I believe that check is responsible for.
+			candidates.Add(G)
 	if(candidates.len)
 		G = input("Pick character to spawn as the Space Ninja", "Active Players", G) in candidates//It will auto-pick a person when there is only one candidate.
 		new_ninja.mind.key = G.key
