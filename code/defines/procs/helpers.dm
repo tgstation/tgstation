@@ -11,8 +11,7 @@
 		var/char = copytext(hex, i, i + 1)
 		switch(char)
 			if("0")
-				power++
-				goto Label_290
+				//Apparently, switch works with empty statements, yay! If that doesn't work, blame me, though. -- Urist
 			if("9", "8", "7", "6", "5", "4", "3", "2", "1")
 				num += text2num(char) * 16 ** power
 			if("a", "A")
@@ -31,7 +30,6 @@
 				CRASH("hex2num given non-hexadecimal string (user error)")
 				return
 		power++
-		Label_290:
 		i--
 	return num
 

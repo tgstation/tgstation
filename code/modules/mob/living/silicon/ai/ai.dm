@@ -1,10 +1,16 @@
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
-	PickName
-	name = pick(ai_names)
-	for (var/mob/living/silicon/ai/A in world)
-		if (A.real_name == name)
-			goto PickName//It'll get stuck in an infinite loop if all default names are chosen but that's... a remote possibility.
-	real_name = name
+	var/list/possibleNames = ai_names
+
+	var/pickedName = null
+	while(!pickedName)
+		pickedName = pick(ai_names)
+		for (var/mob/living/silicon/ai/A in world)
+			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
+				possibleNames -= pickedName
+				pickedName = null
+
+	real_name = pickedName
+	name = real_name
 	anchored = 1
 	canmove = 0
 	loc = loc

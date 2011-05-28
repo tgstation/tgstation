@@ -1,13 +1,13 @@
 /mob/living/silicon/ai/Life()
-	//Being dead doesn't mean your temperature never changes
-	var/turf/T = get_turf(src)
-
-//	if (isturf(T))	//let cryo/sleeper handle adjusting body temp in their respective alter_health procs
-//		src.bodytemperature = adjustBodyTemp(src.bodytemperature, (shuttlefloor ? shuttlefloor.temp : T.temp), 1.0) //TODO: DEFERRED
-
 	if (src.stat == 2)
 		return
-	else
+	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
+		//Being dead doesn't mean your temperature never changes
+		var/turf/T = get_turf(src)
+
+		//	if (isturf(T))	//let cryo/sleeper handle adjusting body temp in their respective alter_health procs
+		//		src.bodytemperature = adjustBodyTemp(src.bodytemperature, (shuttlefloor ? shuttlefloor.temp : T.temp), 1.0) //TODO: DEFERRED
+
 		if (src.stat!=0)
 			src:cameraFollow = null
 			src:current = null
@@ -37,8 +37,8 @@
 		if (src.health <= -100.0)
 			death()
 			return
-		else if (src.health < 0 && !istype(src.loc, /obj/machinery/computer/aifixer))
-			src.oxyloss++
+//		else if (src.health < 0 && !istype(src.loc, /obj/machinery/computer/aifixer)) //Removing this for now, as it's bloody annoying. We'll see how it works -- Urist
+//			src.oxyloss++
 
 		if (src.machine)
 			if (!( src.machine.check_eye(src) ))

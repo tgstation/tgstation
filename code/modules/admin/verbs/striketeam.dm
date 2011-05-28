@@ -22,11 +22,13 @@ var/global/sent_strike_team = 0
 		return
 	alert("This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned commandos have internals cameras which are viewable through a monitor inside the Spec. Ops. Office. Assigning the team's detailed task is recommended from there. While you will be able to manually pick the candidates from active ghosts, their assignment in the squad will be random.")
 
-	TRYAGAIN
+	var/input = null
+	while(!input)
+		input = input(src, "Please specify which mission the death commando squad shall undertake.", "Specify Mission", "")
+		if(!input)
+			if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
+				return
 
-	var/input = input(usr, "Please specify which mission the death commando squad shall undertake.", "Specify Mission", "")
-	if(!input)
-		goto TRYAGAIN
 	sent_strike_team = 1
 
 	if (emergency_shuttle.direction == 1 && emergency_shuttle.online == 1)
