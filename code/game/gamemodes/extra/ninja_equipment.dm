@@ -34,9 +34,16 @@ ________________________________________________________________________________
 	..()
 	return
 
+/obj/item/clothing/suit/space/space_ninja/proc/terminate()
+//Simply deletes all the attachments and self, killing all related procs.
+	del(n_hood)
+	del(n_gloves)
+	del(n_shoes)
+	del(src)
+
 /obj/item/clothing/suit/space/space_ninja/proc/killai(var/mob/living/silicon/ai/A as mob)
 	if(A.client)
-		A << "\red Self-destruct protocol dete-- *bzzzzz*"
+		A << "\red Self-erase protocol dete-- *bzzzzz*"
 		A << browse(null, "window=hack spideros")
 	AI = null
 	A.death(1)//Kill
@@ -51,11 +58,63 @@ ________________________________________________________________________________
 			U << "\red <b>ERROR</b>: \black Remote access channel disabled."
 	return
 
+/obj/item/clothing/suit/space/space_ninja/proc/stealth()
+	set name = "Toggle Stealth"
+	set desc = "Utilize the internal CLOAK-tech device to activate or deactivate stealth-camo."
+	set category = "Ninja Equip"
+
+	toggle_stealth()
+	return
+
+/obj/item/clothing/suit/space/space_ninja/proc/toggle_stealth()
+	var/mob/living/carbon/human/U = affecting
+
+	/* This was a test for a new cloaking system. WIP.
+	if(!s_active)
+		spawn(0)
+			anim(U.loc,U,'mob.dmi',,"cloak")
+		var/image/I = image('mob.dmi',affecting,"ninjatest2")
+		for(var/mob/O in oviewers(U, null))
+			O << "[U.name] vanishes into thin air!"
+		I.override = 1
+		affecting << I
+		s_active = !s_active
+	else
+		spawn(0)
+			anim(U.loc,U,'mob.dmi',,"uncloak")
+		for(var/mob/O in oviewers(U, null))
+			O << "[U.name] appears from thin air!"
+		s_active = !s_active
+	*/
+
+	if(s_active)
+		cancel_stealth()
+	else
+		spawn(0)
+			anim(U.loc,U,'mob.dmi',,"cloak")
+		s_active=!s_active
+		U << "\blue You are now invisible to normal detection."
+		for(var/mob/O in oviewers(U))
+			O.show_message("[U.name] vanishes into thin air!",1)
+	return
+
+/obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
+	var/mob/living/carbon/human/U = affecting
+	if(s_active)
+		spawn(0)
+			anim(U.loc,U,'mob.dmi',,"uncloak")
+		s_active=!s_active
+		U << "\blue You are now visible."
+		for(var/mob/O in oviewers(U))
+			O.show_message("[U.name] appears from thin air!",1)
+		return 1
+	return 0
+
 /obj/item/clothing/suit/space/space_ninja/proc/ntick(var/mob/living/carbon/human/U as mob)
 	set background = 1
 
 	spawn while(cell.charge>=0)//Runs in the background while the suit is initialized.
-		if(affecting.monkeyizing)	terminate()//Kills the suit and attached objects.
+		if(affecting&&affecting.monkeyizing)	terminate()//Kills the suit and attached objects.
 		if(!s_initialized)	return//When turned off the proc stops.
 		if(s_coold)	s_coold--//Checks for ability s_cooldown.
 		var/A = 5//Energy cost each tick.
@@ -69,15 +128,13 @@ ________________________________________________________________________________
 					U.swap_hand()//swap hand
 					U.drop_item()//drop sword
 				else	A += 20
-			if(s_active)
+			if(s_active)//If stealth is active.
 				A += 25
 		else
 			if(prob(25))
 				U.bruteloss += 1
 			A = 200
 		cell.charge-=A
-		if(U.stat)//If the ninja gets paralyzed, they can still try and jaunt away (since they can adrenaline boost and then jaunt).
-			s_active=0
 		if(cell.charge<=0)
 			if(kamikaze)
 				U.say("I DIE TO LIVE AGAIN!")
@@ -85,15 +142,8 @@ ________________________________________________________________________________
 				U.death()
 				return
 			cell.charge=0
-			s_active=0
+			cancel_stealth()
 		sleep(10)//Checks every second.
-
-/obj/item/clothing/suit/space/space_ninja/proc/terminate()
-//Simply deletes all the attachments and self.
-	del(n_hood)
-	del(n_gloves)
-	del(n_shoes)
-	del(src)
 
 /obj/item/clothing/suit/space/space_ninja/proc/init()
 	set name = "Initialize Suit"
@@ -140,7 +190,10 @@ ________________________________________________________________________________
 			canremove=1
 			verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
 			return
-		icon_state = "s-ninjan"
+		if(U.gender==FEMALE)
+			icon_state = "s-ninjanf"
+		else
+			icon_state = "s-ninjan"
 		U.gloves.icon_state = "s-ninjan"
 		U.gloves.item_state = "s-ninjan"
 		U.update_clothing()
@@ -154,6 +207,7 @@ ________________________________________________________________________________
 		grant_ninja_verbs()
 		verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
 		verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+		verbs += /obj/item/clothing/suit/space/space_ninja/proc/stealth
 		n_gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/drain_wire
 		n_gloves.verbs += /obj/item/clothing/gloves/space_ninja/proc/toggled
 		affecting=U
@@ -200,7 +254,7 @@ ________________________________________________________________________________
 	sleep(40)
 	U << "\blue VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>."
 	if(s_active)//Shutdowns stealth.
-		s_active=!s_active
+		cancel_stealth()
 	sleep(40)
 	if(U.stat||U.health<=0)
 		U << "\red <B>FATAL ERROR</B>: 412--GG##&77 BRAIN WAV3 PATT$RN <B>RED</B>\nI-I-INITIATING S-SELf DeStrCuCCCT%$#@@!!$^#!..."
@@ -235,6 +289,7 @@ ________________________________________________________________________________
 	affecting=null
 	slowdown=1
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/stealth
 	icon_state = "s-ninja"
 	U.update_clothing()
 
@@ -376,7 +431,7 @@ ________________________________________________________________________________
 			dat += "<ul>"
 			dat += "<li><i>Voice masking</i> generates a random name the ninja can use over the radio and in-person. Although, the former use is recommended.</li>"
 			dat += "<li><i>Toggling vision</i> cycles to one of the following: thermal, meson, or darkness vision. The starting mode allows one to scout the identity of those in view, revealing their role. Traitors, revolutionaries, wizards, and other such people will be made known to you.</li>"
-			dat += "<li><i>Stealth</i>, when activated, drains more battery charge and works similarly to a syndicate cloak.</li>"
+			dat += "<li><i>Stealth</i>, when activated, drains more battery charge and works similarly to a syndicate cloak. The cloak will deactivate when most Abilities are utilized.</li>"
 			dat += "<li><i>On-board AI</i>: The suit is able to download an AI much like an intelicard. Check with SpiderOS for details once downloaded.</li>"
 			dat += "<li><i>SpiderOS</i> is a specialized, PDA-like screen that allows for a small variety of functions, such as injecting healing chemicals directly from the suit. You are using it now, if that was not already obvious. You may also download AI modules directly to the OS.</li>"
 			dat += "</ul>"
@@ -432,8 +487,7 @@ ________________________________________________________________________________
 				dat += "<h4>Laws:</h4><ul>[laws]<li><a href='byond://?src=\ref[src];choice=Override Laws;target=\ref[A]'><i>*Override Laws*</i></a></li></ul>"
 
 				if (A.stat == 2)//If AI dies while inside the card, such as suiciding.
-					AI = null
-					del(A)//Delete A.
+					killai(A)
 					U << "Artificial Intelligence has self-terminated. Rebooting..."
 					spideros()//Refresh.
 				else
@@ -501,20 +555,8 @@ ________________________________________________________________________________
 		//			var/return_to = copytext(temp, 1, (length(temp)))//length has to be to the length of the thing because by default it's length+1
 		//			spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to specify larger strings if needed.
 			if("Stealth")
-				if(s_active)
-					spawn(0)
-						anim(U.loc,U,'mob.dmi',,"uncloak")
-					s_active=!s_active
-					U << "\blue You are now visible."
-					for(var/mob/O in oviewers(U, null))
-						O << "[U.name] appears from thin air!"
-				else
-					spawn(0)
-						anim(U.loc,U,'mob.dmi',,"cloak")
-					s_active=!s_active
-					U << "\blue You are now invisible to normal detection."
-					for(var/mob/O in oviewers(U, null))
-						O << "[U.name] vanishes into thin air!"
+				toggle_stealth()
+
 			if("0")//Menus are numbers, see note above. 0 is the hub.
 				spideros=0
 			if("1")//Begin normal menus 1-9.
@@ -560,7 +602,10 @@ ________________________________________________________________________________
 						U << "\red Do or Die, <b>LET'S ROCK!!</b>"
 						if(verbs.Find(/obj/item/clothing/suit/space/space_ninja/proc/deinit))//To hopefully prevent engaging kamikaze and de-initializing at the same time.
 							grant_kamikaze_verbs()
-							icon_state = "s-ninjak"
+							if(U.gender==FEMALE)
+								icon_state = "s-ninjakf"
+							else
+								icon_state = "s-ninjak"
 							if(n_gloves)
 								n_gloves.icon_state = "s-ninjak"
 								n_gloves.item_state = "s-ninjak"
@@ -642,11 +687,12 @@ ________________________________________________________________________________
 							U << "\red <b>WARNING</b>: PRO0GRE--S 2&3%"
 							verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
 							verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
+							verbs -= /obj/item/clothing/suit/space/space_ninja/proc/stealth
 							sleep(40)
 							if(AI==A)
 								A << "Shutting down external protocol..."
 								U << "\red <b>WARNING</b>: PPPFRRROGrESS 677^%"
-								s_active = 0
+								cancel_stealth()
 								sleep(40)
 								if(AI==A)
 									A << "Connecting to kernel..."
@@ -684,9 +730,6 @@ ________________________________________________________________________________
 		if(isnull(src))//If they AI dies/suit destroyed.
 			A << browse(null, "window=hack spideros")
 			return
-
-		//Remove this if verbs work.
-		var/obj/proc_holder/ai_hack_ninja/ninja_spideros = locate() in A//What is the object granting access to proc? Find it.
 
 		switch(href_list["choice"])
 			if("Close")
@@ -729,9 +772,7 @@ ________________________________________________________________________________
 					return
 				if(isnull(P)||P.toff)//So it doesn't freak out if the object no-longer exists.
 					A << "\red Error: unable to deliver message."
-					//hack_spideros()
-					//Remove this if verbs work.
-					ninja_spideros.Click()
+					hack_spideros()
 					return
 				P.tnote += "<i><b>&larr; From [A]:</b></i><br>[t]<br>"//Oh ai, u so silly
 				if (!P.silent)
@@ -837,9 +878,7 @@ ________________________________________________________________________________
 				U << "[href_list["choice"]] suddenly triggered!"
 				ninjaboost()
 
-		//hack_spideros()//Calls spideros for AI.
-		//Remove this if verbs work.
-		ninja_spideros.Click()
+		hack_spideros()
 	return
 
 /obj/item/clothing/suit/space/space_ninja/examine()
@@ -1246,8 +1285,8 @@ ________________________________________________________________________________
 	set src in view()
 	..()
 
-	var/mode = "Night Vision"
-	var/voice = "inactive"
+	var/mode
+	var/voice
 	switch(mode)
 		if(0)
 			mode = "Scouter"
@@ -1316,17 +1355,14 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 	switch(severity)
 		if(1.0)
 			health-=50
-			healthcheck()
 		if(2.0)
 			health-=50
-			healthcheck()
 		if(3.0)
 			if (prob(50))
 				health-=50
-				healthcheck()
 			else
 				health-=25
-				healthcheck()
+	healthcheck()
 	return
 
 /obj/effects/energy_net/blob_act()

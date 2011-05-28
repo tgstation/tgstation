@@ -1353,8 +1353,6 @@
 
 		l_hand.screen_loc = ui_lhand
 
-
-
 	var/shielded = 0
 	for (var/obj/item/device/shield/S in src)
 		if (S.active)
@@ -1366,10 +1364,8 @@
 			shielded = 2
 			break
 
-	for (var/obj/item/clothing/suit/space/space_ninja/S in src)//Same as a regular cloaking device but more ninja./N
-		if (S.s_active)
-			shielded = 2
-			break
+	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_active)
+		shielded = 2
 
 	if (shielded == 2)
 		invisibility = 2

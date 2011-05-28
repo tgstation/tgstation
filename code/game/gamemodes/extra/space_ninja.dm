@@ -6,7 +6,35 @@ ________________________________________________________________________________
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-/client/proc/space_ninja()
+/proc/space_ninja_arrival()//This is the random event proc. WIP
+	/*
+	var/datum/game_mode/current_mode = ticker.mode
+	switch (current_mode.config_tag)
+		if ("revolution")
+
+
+		if ("cult")
+			if (src in current_mode:cult)
+
+
+		if ("wizard")
+			if (current_mode:wizard && src == current_mode:wizard)
+
+
+		if ("changeling")
+			if (src in current_mode:changelings)
+
+
+		if ("malfunction")
+			if (src in current_mode:malf_ai)
+
+
+		if ("nuclear")
+			if(src in current_mode:syndicates)
+	*/
+	return
+
+/client/proc/space_ninja()//This is the admin button.
 	set category = "Fun"
 	set name = "Spawn Space Ninja"
 	set desc = "Spawns a space ninja for when you need a teenager with an attitude."
@@ -19,31 +47,31 @@ ________________________________________________________________________________
 	if(alert("Are you sure you want to send in a space ninja?",,"Yes","No")=="No")
 		return
 
-	var/input = null
+	var/input
 	while(!input)
 		input = input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", "")
 		if(!input)
 			if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
 				return
 
-	var/list/locList = list()
+	var/list/spawn_list = list()
 	for(var/obj/landmark/X in world)
 		if (X.name == "carpspawn")
-			locList.Add(X)
-	if(!locList.len)
+			spawn_list.Add(X)
+	if(!spawn_list.len)
 		alert("No spawn location could be found. Aborting.")
 		return
 
 	var/admin_name = src
-	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(locList))
+	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list))
 
 	var/mob/dead/observer/G
 	var/list/candidates = list()
 	for(G in world)
-		if(G.client) //Was restricted to non-admins before. Removed the admin check, as it is retarded. -- Urist
-		//if(((G.client.inactivity/10)/60) <= 5) //Again, removed a check. Usually when an admin makes a ninja, they ask that person first, so the check is redundant.
-		//I've also got reports of even non-admins that asked for ninjaification being exempt from the ninja list, which I believe that check is responsible for.
-			candidates.Add(G)
+		if(G.client&&!G.client.holder)
+		//if(G.client)//Good for testing. Admins can spawn ninja equipment if they want to.
+			if(((G.client.inactivity/10)/60) <= 5)
+				candidates.Add(G)
 	if(candidates.len)
 		G = input("Pick character to spawn as the Space Ninja", "Active Players", G) in candidates//It will auto-pick a person when there is only one candidate.
 		new_ninja.mind.key = G.key
@@ -134,8 +162,10 @@ client/proc/create_space_ninja(obj/spawn_point)
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjawalk
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjamirage
 
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/stealth
+
 	kamikaze = 1
-	s_active = 0
+	cancel_stealth()
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_kamikaze_verbs()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ninjashift
@@ -148,16 +178,17 @@ client/proc/create_space_ninja(obj/spawn_point)
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjawalk
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ninjamirage
 
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/stealth
+
 	kamikaze = 0
 	k_unlock = 0
-
-/*Commented out due to BYOND bugs. Workaround used instead for the time being.
 
 /obj/item/clothing/suit/space/space_ninja/proc/grant_AI_verbs()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_hack_ninja
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_return_control
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/deinit
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/stealth
 
 	s_control = 0
 
@@ -166,33 +197,7 @@ client/proc/create_space_ninja(obj/spawn_point)
 	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_return_control
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
-
-	s_control = 1
-*/
-
-/obj/item/clothing/suit/space/space_ninja/proc/grant_AI_verbs()
-	var/obj/proc_holder/ai_return_control/A_C = new(AI)
-	var/obj/proc_holder/ai_hack_ninja/B_C = new(AI)
-	var/obj/proc_holder/ai_instruction/C_C = new(AI)
-	new/obj/proc_holder/ai_holo_clear(AI)
-	AI.proc_holder_list += A_C
-	AI.proc_holder_list += B_C
-	AI.proc_holder_list += C_C
-
-	s_control = 0
-
-/obj/item/clothing/suit/space/space_ninja/proc/remove_AI_verbs()
-	var/obj/proc_holder/ai_return_control/A_C = locate() in AI
-	var/obj/proc_holder/ai_hack_ninja/B_C = locate() in AI
-	var/obj/proc_holder/ai_instruction/C_C = locate() in AI
-	var/obj/proc_holder/ai_holo_clear/D_C = locate() in AI
-	del(A_C)
-	del(B_C)
-	del(C_C)
-	del(D_C)
-	AI.proc_holder_list = list()
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/stealth
 
 	s_control = 1
 
@@ -215,9 +220,7 @@ client/proc/create_space_ninja(obj/spawn_point)
 			affecting << I
 			affecting << "<i>An image flicks to life nearby. It appears visible to you only.</i>"
 
-			var/obj/proc_holder/ai_holo_clear/D_C = locate() in AI
-			AI.proc_holder_list += D_C
-			//verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
+			verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
 
 			ai_holo_process()//Move to initialize
 		else
@@ -234,21 +237,9 @@ client/proc/create_space_ninja(obj/spawn_point)
 			del(hologram.i_attached)
 			del(hologram)
 
-			if(!s_control)//Meant to be used all the time but for now this'll do.
-				var/obj/proc_holder/ai_holo_clear/D_C = locate() in AI
-				AI.proc_holder_list -= D_C
-			//verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
-
+			verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
 			return
 		sleep(10)//Checks every second.
-
-
-/*I've tried a lot of stuff but adding verbs to the AI while inside an object, inside another object, did not want to work properly.
-This is the best work-around I could come up with. Uses objects to then display to panel, based on the object spell system.
-Can be added on to pretty easily.
-Leaving this commented out until BYOND fixes the verb panel bug.
-
-It would be better to switch to this (from proc_holder) if the bug does get fixed.
 
 /obj/item/clothing/suit/space/space_ninja/proc/ai_instruction()//Let's the AI know what they can do.
 	set name = "Instructions"
@@ -289,64 +280,7 @@ It would be better to switch to this (from proc_holder) if the bug does get fixe
 	AI << "You have seized your hacking attempt. [affecting] has regained control."
 	affecting << "<b>UPDATE</b>: [AI.real_name] has ceased hacking attempt. All systems clear."
 
-	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_holo_clear
-
-	return
-*/
-
-//Workaround
-/obj/proc_holder/ai_holo_clear
-	name = "Clear Hologram"
-	desc = "Stops projecting the current holographic image."
-	panel = "AI Ninja Equip"
-	density = 0
-	opacity = 0
-
-
-/obj/proc_holder/ai_holo_clear/Click()
-	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc//This is so stupid but makes sure certain things work. AI.SUIT
-	del(S.hologram.i_attached)
-	del(S.hologram)
-	var/obj/proc_holder/ai_holo_clear/D_C = locate() in S.AI
-	S.AI.proc_holder_list -= D_C
-	return
-
-/obj/proc_holder/ai_instruction//Let's the AI know what they can do.
-	name = "Instructions"
-	desc = "Displays a list of helpful information."
-	panel = "AI Ninja Equip"
-	density = 0
-	opacity = 0
-
-/obj/proc_holder/ai_instruction/Click()
-	loc << "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away."
-
-/obj/proc_holder/ai_hack_ninja//Generic proc holder to make sure the two verbs below work propely.
-	name = "Hack SpiderOS"
-	desc = "Hack directly into the Black Widow(tm) neuro-interface."
-	panel = "AI Ninja Equip"
-	density = 0
-	opacity = 0
-
-/obj/proc_holder/ai_hack_ninja/Click()//When you click on it.
-	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc
-	S.hack_spideros()
-	return
-
-/obj/proc_holder/ai_return_control
-	name = "Relinquish Control"
-	desc = "Return control to the user."
-	panel = "AI Ninja Equip"
-	density = 0
-	opacity = 0
-
-/obj/proc_holder/ai_return_control/Click()
-	var/mob/living/silicon/ai/A = loc
-	var/obj/item/clothing/suit/space/space_ninja/S = A.loc
-	A << browse(null, "window=hack spideros")//Close window
-	A << "You have seized your hacking attempt. [S.affecting] has regained control."
-	S.affecting << "<b>UPDATE</b>: [A.real_name] has ceased hacking attempt. All systems clear."
-	S.remove_AI_verbs()
+	verbs -= /obj/item/clothing/suit/space/space_ninja/proc/ai_return_control
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/hack_spideros()
@@ -465,6 +399,99 @@ It would be better to switch to this (from proc_holder) if the bug does get fixe
 	dat += "</body></html>"
 
 	A << browse(dat,"window=hack spideros;size=400x444;border=1;can_resize=0;can_close=0;can_minimize=0")
+
+
+//OLD & UNUSED===================================
+
+/*
+I've tried a lot of stuff but adding verbs to the AI while inside an object, inside another object, did not want to work properly.
+This was the best work-around I could come up with at the time. Uses objects to then display to panel, based on the object spell system.
+Can be added on to pretty easily.
+
+BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
+
+/obj/item/clothing/suit/space/space_ninja/proc/grant_AI_verbs()
+	var/obj/proc_holder/ai_return_control/A_C = new(AI)
+	var/obj/proc_holder/ai_hack_ninja/B_C = new(AI)
+	var/obj/proc_holder/ai_instruction/C_C = new(AI)
+	new/obj/proc_holder/ai_holo_clear(AI)
+	AI.proc_holder_list += A_C
+	AI.proc_holder_list += B_C
+	AI.proc_holder_list += C_C
+
+	s_control = 0
+
+/obj/item/clothing/suit/space/space_ninja/proc/remove_AI_verbs()
+	var/obj/proc_holder/ai_return_control/A_C = locate() in AI
+	var/obj/proc_holder/ai_hack_ninja/B_C = locate() in AI
+	var/obj/proc_holder/ai_instruction/C_C = locate() in AI
+	var/obj/proc_holder/ai_holo_clear/D_C = locate() in AI
+	del(A_C)
+	del(B_C)
+	del(C_C)
+	del(D_C)
+	AI.proc_holder_list = list()
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/deinit
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/spideros
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/stealth
+
+	s_control = 1
+
+//Workaround
+/obj/proc_holder/ai_holo_clear
+	name = "Clear Hologram"
+	desc = "Stops projecting the current holographic image."
+	panel = "AI Ninja Equip"
+	density = 0
+	opacity = 0
+
+
+/obj/proc_holder/ai_holo_clear/Click()
+	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc//This is so stupid but makes sure certain things work. AI.SUIT
+	del(S.hologram.i_attached)
+	del(S.hologram)
+	var/obj/proc_holder/ai_holo_clear/D_C = locate() in S.AI
+	S.AI.proc_holder_list -= D_C
+	return
+
+/obj/proc_holder/ai_instruction//Let's the AI know what they can do.
+	name = "Instructions"
+	desc = "Displays a list of helpful information."
+	panel = "AI Ninja Equip"
+	density = 0
+	opacity = 0
+
+/obj/proc_holder/ai_instruction/Click()
+	loc << "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away."
+
+/obj/proc_holder/ai_hack_ninja//Generic proc holder to make sure the two verbs below work propely.
+	name = "Hack SpiderOS"
+	desc = "Hack directly into the Black Widow(tm) neuro-interface."
+	panel = "AI Ninja Equip"
+	density = 0
+	opacity = 0
+
+/obj/proc_holder/ai_hack_ninja/Click()//When you click on it.
+	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc
+	S.hack_spideros()
+	return
+
+/obj/proc_holder/ai_return_control
+	name = "Relinquish Control"
+	desc = "Return control to the user."
+	panel = "AI Ninja Equip"
+	density = 0
+	opacity = 0
+
+/obj/proc_holder/ai_return_control/Click()
+	var/mob/living/silicon/ai/A = loc
+	var/obj/item/clothing/suit/space/space_ninja/S = A.loc
+	A << browse(null, "window=hack spideros")//Close window
+	A << "You have seized your hacking attempt. [S.affecting] has regained control."
+	S.affecting << "<b>UPDATE</b>: [A.real_name] has ceased hacking attempt. All systems clear."
+	S.remove_AI_verbs()
+	return
+*/
 
 //DEBUG===================================
 
@@ -590,7 +617,7 @@ mob/verb/remove_object_panel()
 
 I made this as a test for a possible ninja ability (or perhaps more) for a certain mob to see hallucinations.
 The thing here is that these guys have to be coded to do stuff as they are simply images that you can't even click on.
-Their movement is also awkward and overlaps.
+That is why you attached them to objects.
 /mob/verb/TestNinjaShadow()
 	set name = "Test Ninja Ability"
 	set category = "Ninja Debug"
@@ -599,7 +626,7 @@ Their movement is also awkward and overlaps.
 		var/safety = 4
 		for(var/turf/T in oview(5))
 			if(prob(20))
-				var/current_clone = image('mob.dmi',T,"s-ninja",dir)
+				var/current_clone = image('mob.dmi',T,"s-ninja")
 				safety--
 				spawn(0)
 					src << current_clone

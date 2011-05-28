@@ -169,8 +169,17 @@
 	var/say_message = null // When you are understood by others. Currently only used by aliens and monkeys in their say_quote procs
 
 //Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
-	var/proc_holder_list[] = list()//Right now only displays for the AI.
+	var/proc_holder_list[] = list()//Right now unused.
 	//Also unlike the spell list, this would only store the object in contents, not an object in itself.
+
+	/* Add this line to whatever stat module you need in order to use the proc holder list.
+	Unlike the object spell system, it's also possible to attach verb procs from these objects to right-click menus.
+	This requires creating a verb for the object proc holder.
+
+	if (proc_holder_list.len)//Generic list for proc_holder objects.
+		for(var/obj/proc_holder/P in proc_holder_list)
+			statpanel("[P.panel]","",P)
+	*/
 
 //Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button
 	var/obj/proc_holder/spell/list/spell_list = list()

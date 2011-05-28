@@ -23,9 +23,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 		return 1
 	switch(X)
 		if(1)
-			if(s_active)
-				U << "\red You must deactivate the CLOAK-tech device prior to using this ability."
-				return 1
+			cancel_stealth()//Get rid of it.
 		if(2)
 			if(s_bombs<=0)
 				U << "\red There are no more smoke bombs remaining."
@@ -84,7 +82,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 
 			spawn(0)
 				spark_system.start()
-				playsound(U.loc, 'Deconstruct.ogg', 50, 1)
+				playsound(U.loc, 'phasein.ogg', 25, 1)
 				playsound(U.loc, "sparks", 50, 1)
 				anim(U.loc,U,'mob.dmi',,"phasein")
 
@@ -123,7 +121,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 
 			spawn(0)
 				spark_system.start()
-				playsound(U.loc, 'Deconstruct.ogg', 50, 1)
+				playsound(U.loc, 'phasein.ogg', 25, 1)
 				playsound(U.loc, 'sparks2.ogg', 50, 1)
 				anim(U.loc,U,'mob.dmi',,"phasein")
 
@@ -336,7 +334,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 
 			spawn(0)
 				spark_system.start()
-				playsound(U.loc, 'Deconstruct.ogg', 50, 1)
+				playsound(U.loc, 'phasein.ogg', 25, 1)
 				playsound(U.loc, "sparks", 50, 1)
 				anim(U.loc,U,'mob.dmi',,"phasein")
 			s_coold = 1
@@ -408,7 +406,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 
 				spawn(0)
 					spark_system.start()
-					playsound(U.loc, 'Deconstruct.ogg', 50, 1)
+					playsound(U.loc, 'phasein.ogg', 25, 1)
 					playsound(U.loc, "sparks", 50, 1)
 					anim(U.loc,U,'mob.dmi',,"phasein")
 				s_coold = 1
