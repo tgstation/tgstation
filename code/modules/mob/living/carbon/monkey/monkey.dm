@@ -105,42 +105,52 @@
 			src.fireloss += 40
 		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
 	return
-/*
+
 /mob/living/carbon/monkey/bullet_act(flag)
 
 	if (flag == PROJECTILE_BULLET)
-		if (src.stat != 2)
-			src.bruteloss += 60
-			src.updatehealth()
-			src.weakened = 10
+		if (stat != 2)
+			take_organ_damage(60, 0)
+			updatehealth()
+			if (prob(50))
+				if(weakened <= 5)	weakened = 5
 	else if (flag == PROJECTILE_TASER)
-		if (prob(75))
-			src.stunned = 15
+		if (prob(75) && stunned <= 10)
+			stunned = 10
 		else
-			src.weakened = 15
+			weakened = 10
+		if (stuttering < 10)
+			stuttering = 10
 	else if (flag == PROJECTILE_DART)
 		src.weakened += 5
 		src.toxloss += 10
 	else if(flag == PROJECTILE_LASER)
-		if (src.stat != 2)
-			src.bruteloss += 20
-			src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
+		if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff.
+		if (prob(25)) stunned++
+		if (stat != 2)
+			take_organ_damage(0, 20)
+			updatehealth()
 			if (prob(25))
-				src.stunned = 1
+				stunned = 1
 	else if(flag == PROJECTILE_PULSE)
-		if (src.stat != 2)
-			src.bruteloss += 40
-			src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
-			if (prob(25))
-				src.stunned = min(src.stunned, 5)
+		if (stat != 2)
+			take_organ_damage(0, 40)
+			updatehealth()
+			if (prob(50))
+				stunned = min(stunned, 5)
 	else if(flag == PROJECTILE_BOLT)
-		src.toxloss += 3
-		src.radiation += 100
-		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
-		src.stuttering += 5
-		src.drowsyness += 5
+		toxloss += 3
+		radiation += 100
+		updatehealth()
+		stuttering += 5
+		drowsyness += 5
+	else if (flag == PROJECTILE_WEAKBULLET)
+		if (stat != 2)
+			take_organ_damage(10, 0)
+			updatehealth()
+			if(weakened <= 5)	weakened = 5
 	return
-*/
+
 /mob/living/carbon/monkey/hand_p(mob/M as mob)
 	if ((M.a_intent == "hurt" && !( istype(src.wear_mask, /obj/item/clothing/mask/muzzle) )))
 		if ((prob(75) && src.health > 0))

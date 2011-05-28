@@ -155,7 +155,7 @@
 			            access_theatre, access_research, access_mining_office, access_mining, access_heads_vault, access_mining_station, access_hop)
 		if("Atmospheric Technician")
 			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage)
-		if("Barman")
+		if("Bartender")
 			return list(access_bar)
 		if("Chemist")
 			return list(access_medical, access_chemistry)
@@ -363,7 +363,7 @@
 /proc/get_all_jobs()
 	return list("Assistant", "Station Engineer", "Shaft Miner", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",
 				"Geneticist", "Scientist", "Head of Security", "Head of Personnel", "Atmospheric Technician",
-				"Chaplain", "Barman", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster",
+				"Chaplain", "Bartender", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster",
 				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer", "Virologist", "Cargo Technician", "Chief Medical Officer")
 
 /obj/proc/GetJobName()

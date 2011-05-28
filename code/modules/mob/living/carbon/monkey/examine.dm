@@ -21,11 +21,11 @@
 				usr << text("\red [] looks slightly bruised!", src.name)
 			else
 				usr << text("\red <B>[] looks severely bruised!</B>", src.name)
-			if (src.fireloss)
-				if (src.fireloss < 30)
-					usr << text("\red [] looks slightly burnt!", src.name)
-				else
-					usr << text("\red <B>[] looks severely burnt!</B>", src.name)
-				if (src.stat == 1)
-					usr << text("\red [] doesn't seem to be responding to anything around them, their eyes closed as though asleep.", src.name)
+		if (src.fireloss)
+			if (src.fireloss < 30)
+				usr << text("\red [] looks slightly burnt!", src.name)
+			else
+				usr << text("\red <B>[] looks severely burnt!</B>", src.name)
+		if (src.stat == 1)
+			usr << text("\red [] doesn't seem to be responding to anything around them, their eyes closed as though asleep.", src.name)
 	return

@@ -700,6 +700,35 @@ datum
 				return
 */
 
+		gold
+			name = "gold"
+			id = "gold"
+			description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
+			reagent_state = SOLID
+
+		silver
+			name = "silver"
+			id = "silver"
+			description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
+			reagent_state = SOLID
+
+		uranium
+			name ="uranium"
+			id = "uranium"
+			description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
+			reagent_state = SOLID
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.radiation += 1
+				..()
+				return
+
+
+			reaction_turf(var/turf/T, var/volume)
+				src = null
+				if(!istype(T, /turf/space))
+					new /obj/decal/cleanable/greenglow(T)
+
 		aluminum
 			name = "aluminum"
 			id = "aluminum"

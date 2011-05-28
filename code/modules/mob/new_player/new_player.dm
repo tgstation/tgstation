@@ -197,7 +197,7 @@ mob/new_player
 				if ("4")
 					AttemptLateSpawn("Station Engineer", engineerMax)
 				if ("5")
-					AttemptLateSpawn("Barman", barmanMax)
+					AttemptLateSpawn("Bartender", barmanMax)
 				if ("6")
 					AttemptLateSpawn("Scientist", scientistMax)
 				if ("7")
@@ -379,8 +379,8 @@ mob/new_player
 		if (IsJobAvailable("Station Engineer",engineerMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=4'>Station Engineer</a><br>"
 
-		if (IsJobAvailable("Barman",barmanMax))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=5'>Barman</a><br>"
+		if (IsJobAvailable("Bartender",barmanMax))
+			dat += "<a href='byond://?src=\ref[src];SelectedJob=5'>Bartender</a><br>"
 
 		if (IsJobAvailable("Scientist",scientistMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=6'>Scientist</a><br>"

@@ -875,7 +875,7 @@
 		R.my_atom = src
 
 /obj/item/weapon/grown/log
-	desc = "This is a log grown from a tower cap mushroom."
+	desc = "It's better than bad, it's good!"
 	icon = 'harvest.dmi'
 	name = "Tower Cap Log"
 	icon_state = "logs"
