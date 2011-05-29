@@ -37,7 +37,7 @@
 				var/N = new type(get_turf(user))
 				user.visible_message("[user] cuts [N] from [src]", "You cut [N] from [src]", "You hear a sound of welder nearby")
 				if(istype(N, /obj/item/mecha_parts/part))
-					welder_salvage -= N
+					welder_salvage -= type
 				salvage_num--
 			else
 				user << "You failed to salvage anything valuable from [src]."

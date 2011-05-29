@@ -614,7 +614,7 @@
 	equip_cooldown = 10
 	energy_drain = 0
 	range = 0
-	construction_cost = list("metal"=10000,"gold"=5000,"silver"=5000,"glass"=2000)
+	construction_cost = list("metal"=10000,"gold"=2000,"silver"=3000,"glass"=2000)
 	var/datum/global_iterator/pr_energy_relay
 	var/coeff = 100
 
@@ -658,18 +658,18 @@
 		return output
 
 	proc/dynusepower(amount)
-		if(equip_ready) //disabled
-			return chassis.dynusepower(amount)
-		var/area/A = get_area(chassis)
-		var/pow_chan
-		for(var/c in list(EQUIP,ENVIRON,LIGHT))
-			if(A.master.powered(c))
-				pow_chan = c
-				break
-		if(pow_chan)
-			A.master.use_power(amount*coeff, pow_chan)
-			return 1
-		return 0
+		if(!equip_ready) //enabled
+			var/area/A = get_area(chassis)
+			if(A)
+				var/pow_chan
+				for(var/c in list(EQUIP,ENVIRON,LIGHT))
+					if(A.master.powered(c))
+						pow_chan = c
+						break
+				if(pow_chan)
+					A.master.use_power(amount*coeff, pow_chan)
+					return 1
+		return chassis.dynusepower(amount)
 
 /datum/global_iterator/mecha_energy_relay
 
@@ -691,7 +691,7 @@
 						pow_chan = c
 						break
 				if(pow_chan)
-					var/delta = min(1, ER.chassis.cell.maxcharge-cur_charge)
+					var/delta = min(2, ER.chassis.cell.maxcharge-cur_charge)
 					ER.chassis.give_power(delta)
 					A.master.use_power(delta*ER.coeff, pow_chan)
 		return

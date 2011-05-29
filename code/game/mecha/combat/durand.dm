@@ -2,7 +2,7 @@
 	desc = "Combat exosuit."
 	name = "Durand"
 	icon_state = "durand"
-	step_in = 6
+	step_in = 4
 	health = 400
 	deflect_chance = 20
 	max_temperature = 3000

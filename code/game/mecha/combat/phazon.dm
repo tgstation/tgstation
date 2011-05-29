@@ -2,7 +2,7 @@
 	desc = "An exosuit which can only be described as 'WTF?'."
 	name = "Phazon"
 	icon_state = "phazon"
-	step_in = 2
+	step_in = 1
 	step_energy_drain = 3
 	health = 200
 	deflect_chance = 30
@@ -13,8 +13,8 @@
 	internal_damage_threshold = 25
 	force = 15
 	var/phasing = 0
-	var/phasing_energy_drain = 300
-	max_equip = 3
+	var/phasing_energy_drain = 200
+	max_equip = 4
 
 
 /obj/mecha/combat/phazon/New()
@@ -33,7 +33,7 @@
 				flick("phazon-phase", src)
 				src.loc = get_step(src,src.dir)
 				src.use_power(phasing_energy_drain)
-				sleep(step_in)
+				sleep(step_in*3)
 				can_move = 1
 	else
 		. = ..()
@@ -82,5 +82,5 @@
 	if (href_list["phasing"])
 		phasing = !phasing
 		send_byjax(src.occupant,"exosuit.browser","phasing_command","[phasing?"Dis":"En"]able phasing")
-		src.occupant_message()
+		src.occupant_message("<font color=\"[phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
 	return

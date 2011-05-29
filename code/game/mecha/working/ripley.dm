@@ -2,7 +2,7 @@
 	desc = "Autonomous Power Loader Unit."
 	name = "APLU \"Ripley\""
 	icon_state = "ripley"
-	step_in = 8
+	step_in = 6
 	max_temperature = 1000
 	health = 200
 	wreckage = "/obj/decal/mecha_wreckage/ripley"

@@ -2,7 +2,7 @@
 	desc = "Standart APLU chassis was refitted with additional thermal protection and cistern."
 	name = "Ripley-on-Fire"
 	icon_state = "ripley"
-	step_in = 8
+	step_in = 6
 	max_temperature = 6000
 	health = 250
 	internal_damage_threshold = 40

@@ -97,7 +97,6 @@
 	..()
 	return
 
-///client/var/mech_click
 
 /client/Click(object,location,control,params)
 	var/mob/M = src.mob
@@ -501,8 +500,8 @@
 */
 
 /obj/mecha/remove_air(amount)
-	if(src.use_internal_tank && src.internal_tank)
-		return src.internal_tank.air_contents.remove(amount)
+	if(use_internal_tank && internal_tank)
+		return internal_tank.air_contents.remove(amount)
 	else
 		var/turf/T = get_turf(src)
 		if(T)
@@ -510,18 +509,18 @@
 	return
 
 /obj/mecha/return_air()
-	if(src.internal_tank)
-		return src.internal_tank.return_air()
+	if(internal_tank)
+		return internal_tank.return_air()
 	return
 
 /obj/mecha/proc/return_pressure()
-	if(src.internal_tank)
-		return src.internal_tank.return_pressure()
+	if(internal_tank)
+		return internal_tank.return_pressure()
 	return 0
 
 /obj/mecha/proc/return_temperature()
-	if(src.internal_tank)
-		return src.internal_tank.return_temperature()
+	if(internal_tank)
+		return internal_tank.return_temperature()
 	return 0
 
 
@@ -539,7 +538,7 @@
 
 /obj/mecha/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)
 	//Make sure not already connected to something else
-	if(src.connected_port || !new_port || new_port.connected_device)
+	if(connected_port || !new_port || new_port.connected_device)
 		return 0
 
 	//Make sure are close enough for a valid connection
@@ -547,14 +546,14 @@
 		return 0
 
 	//Perform the connection
-	src.connected_port = new_port
-	src.connected_port.connected_device = src
+	connected_port = new_port
+	connected_port.connected_device = src
 
 	//Actually enforce the air sharing
 	var/datum/pipe_network/network = connected_port.return_network(src)
-	if(network && !(src.return_air() in network.gases))
-		network.gases += src.return_air()
-	src.log_message("Connected to gas port.")
+	if(network && !(return_air() in network.gases))
+		network.gases += return_air()
+	log_message("Connected to gas port.")
 	return 1
 
 /obj/mecha/proc/disconnect()

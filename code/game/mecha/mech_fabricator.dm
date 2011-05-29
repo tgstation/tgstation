@@ -92,7 +92,8 @@
 						/obj/item/mecha_parts/mecha_equipment/weapon/honker,
 						/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
 						/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
-						/obj/item/mecha_parts/mecha_equipment/repair_droid
+						/obj/item/mecha_parts/mecha_equipment/repair_droid,
+						/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
 									),
 
 	"Misc"=list(/obj/item/mecha_tracking)
@@ -468,7 +469,7 @@
 		if(href_list["clear_queue"])
 			queue = list()
 			return update_queue_on_page()
-		if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
+		if(href_list["sync"])
 			src.sync()
 		if(href_list["auto_sync"])
 			src.sync = !src.sync
@@ -519,15 +520,15 @@
 		if(src.resources[material] < res_max_amount)
 			var/count = 0
 			src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
-			spawn(10)
-				if(W && W.amount)
-					while(src.resources[material] < res_max_amount && W)
-						src.resources[material] += amnt
-						W.use(1)
-						count++
-					src.overlays -= "fab-load-[material]"
-					user << "You insert [count] [name] into the fabricator."
-					src.updateUsrDialog()
+			sleep(10)
+			if(W && W.amount)
+				while(src.resources[material] < res_max_amount && W)
+					src.resources[material] += amnt
+					W.use(1)
+					count++
+				src.overlays -= "fab-load-[material]"
+				user << "You insert [count] [name] into the fabricator."
+				src.updateUsrDialog()
 		else
 			user << "The fabricator cannot hold more [name]."
 		return

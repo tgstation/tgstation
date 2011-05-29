@@ -2,7 +2,7 @@
 	desc = "Heavy duty combat exosuit."
 	name = "Marauder"
 	icon_state = "marauder"
-	step_in = 7
+	step_in = 5
 	health = 500
 	deflect_chance = 25
 	max_temperature = 5000
