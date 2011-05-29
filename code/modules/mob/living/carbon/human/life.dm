@@ -830,6 +830,10 @@
 											break
 						else
 							client.images += image(tempHud,perp,"hudunknown")
+						for(var/obj/item/weapon/implant/tracking/tracker in perp)
+							if(tracker.implanted)
+								client.images += image(tempHud,perp,"hudtracking")
+								break
 				if (!druggy)
 					see_invisible = 0
 			else if (istype(glasses, /obj/item/clothing/glasses/hud/health))
