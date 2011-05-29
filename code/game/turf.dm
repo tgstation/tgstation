@@ -542,6 +542,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/steel
 
 	airless
+		icon_state = "floor"
 		name = "airless floor"
 		oxygen = 0.01
 		nitrogen = 0.01
@@ -581,7 +582,53 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 						var/turf/simulated/floor/FF = get_step(src,direction)
 						FF.update_icon() //so siding get updated properly
 
+/turf/simulated/floor/vault
+	icon_state = "rockvault"
 
+	New(location,type)
+		..()
+		icon_state = "[type]vault"
+
+/turf/simulated/wall/vault
+	icon_state = "rockvault"
+
+	New(location,type)
+		..()
+		icon_state = "[type]vault"
+
+/turf/simulated/floor/engine
+	name = "reinforced floor"
+	icon_state = "engine"
+	thermal_conductivity = 0.025
+	heat_capacity = 325000
+
+/turf/simulated/floor/engine/vacuum
+	name = "vacuum floor"
+	icon_state = "engine"
+	oxygen = 0
+	nitrogen = 0.001
+	temperature = TCMB
+
+/turf/simulated/floor/plating
+	name = "plating"
+	icon_state = "plating"
+	floor_tile = null
+	intact = 0
+
+/turf/simulated/floor/plating/airless
+	icon_state = "plating"
+	name = "airless plating"
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
+	New()
+		..()
+		name = "plating"
+
+/turf/simulated/floor/grid
+	icon = 'floors.dmi'
+	icon_state = "circuit"
 
 /turf/simulated/floor/New()
 	..()

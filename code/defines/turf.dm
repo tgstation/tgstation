@@ -59,38 +59,7 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
-/turf/simulated/floor/engine
-	name = "reinforced floor"
-	icon_state = "engine"
-	thermal_conductivity = 0.025
-	heat_capacity = 325000
 
-/turf/simulated/floor/engine/vacuum
-	name = "vacuum floor"
-	icon_state = "engine"
-	oxygen = 0
-	nitrogen = 0.001
-	temperature = TCMB
-
-/turf/simulated/floor/plating
-	name = "plating"
-	icon_state = "plating"
-	floor_tile = null
-	intact = 0
-
-/turf/simulated/floor/plating/airless
-	name = "airless plating"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
-
-	New()
-		..()
-		name = "plating"
-
-/turf/simulated/floor/grid
-	icon = 'floors.dmi'
-	icon_state = "circuit"
 
 /turf/simulated/wall/r_wall
 	name = "r wall"
@@ -132,6 +101,7 @@
 	icon_state = "floor"
 
 /turf/unsimulated
+	intact = 1
 	name = "command"
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
@@ -174,19 +144,7 @@
 					L.Add(t)
 		return L
 
-/turf/simulated/floor/vault
-	icon_state = "rockvault"
 
-	New(location,type)
-		..()
-		icon_state = "[type]vault"
-
-/turf/simulated/wall/vault
-	icon_state = "rockvault"
-
-	New(location,type)
-		..()
-		icon_state = "[type]vault"
 
 /turf/simulated/wall/mineral
 	icon = 'mineral_walls.dmi'

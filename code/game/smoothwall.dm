@@ -46,6 +46,12 @@
 			src.icon_state = "swall[junction]"
 		else //if it's diagonal, we need to figure out if we're using the floor diagonal or the space diagonal sprite
 			var/is_floor = 0
+			for(var/turf/unsimulated/floor/F in orange(src,1))
+				if(abs(src.x-F.x)-abs(src.y-F.y))
+					if((15-junction) & get_dir(src,F)) //if there's a floor in at least one of the empty space directions, return 1
+						is_floor = 1
+						newicon = F.icon
+						newiconstate = F.icon_state //we'll save these for later
 			for(var/turf/simulated/floor/F in orange(src,1))
 				if(abs(src.x-F.x)-abs(src.y-F.y))
 					if((15-junction) & get_dir(src,F)) //if there's a floor in at least one of the empty space directions, return 1
