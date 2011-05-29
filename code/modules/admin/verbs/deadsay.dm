@@ -17,7 +17,7 @@
 	if (!msg)
 		return
 
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([src.stealth ? pick("BADMIN", "ViktoriaSA", "Drunkwaffel", "Android Datuhh") : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([src.stealth ? pick("BADMIN", "hornygranny", "TLF", "scaredforshadows") : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
 
 	for (var/mob/M in world)
 		if(M.stat == 2 || (M.client && M.client.holder))
