@@ -769,7 +769,6 @@
 #include "code\modules\power\terminal.dm"
 #include "code\modules\power\tracker.dm"
 #include "code\modules\power\turbine.dm"
-#include "code\modules\power\Ultralight.dm"
 #include "code\modules\power\antimatter\computer.dm"
 #include "code\modules\power\antimatter\engine.dm"
 #include "code\modules\power\antimatter\fuel.dm"

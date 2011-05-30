@@ -30,6 +30,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				card.pai = pai
 				card.looking_for_personality = 0
 				pai_candidates.Remove(candidate)
+				usr << browse(null, "window=findPai")
 		if(href_list["new"])
 			var/datum/paiCandidate/candidate = locate(href_list["candidate"])			//pai_candidates.Find(href_list["candidate"])
 			var/option = href_list["option"]
@@ -43,10 +44,13 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				if("ooc")
 					candidate.comments = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
 				if("submit")
-					candidate.ready = 1
-					for(var/obj/item/device/paicard/p in world)
-						if(p.looking_for_personality == 1)
-							p.alertUpdate()
+					if(candidate)
+						candidate.ready = 1
+						for(var/obj/item/device/paicard/p in world)
+							if(p.looking_for_personality == 1)
+								p.alertUpdate()
+					usr << browse(null, "window=paiRecruit")
+					return
 			recruitWindow(usr)
 
 	proc/recruitWindow(var/mob/M as mob)
@@ -150,7 +154,12 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				if(asked[O] < world.time + askDelay)
 					continue
 			if(O.client)
-				spawn question(O.client)
+				var/hasSubmitted = 0
+				for(var/datum/paiCandidate/c in paiController.pai_candidates)
+					if(c.key == O.key)
+						hasSubmitted = 1
+				if(!hasSubmitted)
+					spawn question(O.client)
 
 	proc/question(var/client/C)
 		asked.Add(C.key)

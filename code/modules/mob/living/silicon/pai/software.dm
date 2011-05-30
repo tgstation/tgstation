@@ -152,8 +152,8 @@
 				spawn CheckDNA(M, src)
 
 		if("pdamessage")
-			if(href_list["target"])
-				var/t = input("Please enter message", name, null) as text
+			if(href_list["send"])
+				var/t = input(usr, "Please enter message", name, null) as text
 				t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 				if (!t)
 					return
@@ -535,17 +535,10 @@
 
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
-	var/area/A = src.loc
-	var/loopcount = 0
-	while(!istype(src.loc, /area))
-		A = A.loc
-		if(loopcount >= 6)
-			A = null
-			break
-		loopcount++
+	var/turf/T = get_turf_or_move(src.loc)
 	for(var/mob/living/silicon/ai/AI in world)
-		if(A)
-			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [A.name].</b></font>"
+		if(T.loc)
+			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>"
 		else
 			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>"
 	while(src.hackprogress < 100)
@@ -571,11 +564,11 @@
 	dat += "<ul>"
 	for (var/obj/item/device/pda/P in world)
 		if (!P.owner||P.toff||P == src)	continue
-		dat += "<li><a href='byond://?src=\ref[src];choice=pdamessage;target=\ref[P]'>[P]</a>"
+		dat += "<li><a href='byond://?src=\ref[src];choice=pdamessage;send=1;target=\ref[P]'>[P]</a>"
 		dat += "</li>"
 	for (var/mob/living/silicon/pai/P in world)
 		if(P.stat != 2)
-			dat += "<li><a href='byond://?src=\ref[src];choice=pdamessage;target=\ref[P]'>[P]</a>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=pdamessage;send=1;target=\ref[P]'>[P]</a>"
 			dat += "</li>"
 	dat += "</ul>"
 	return dat
