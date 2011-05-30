@@ -1834,6 +1834,13 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	icon_state = "d20"
 	item_state = "dice"
 
+/obj/item/weapon/pai_cable
+	desc = "A flexible coated cable with a universal jack on one end."
+	name = "data cable"
+	icon = 'power.dmi'
+	icon_state = "wire1"
+	var/obj/machinery/machine
+
 /obj/item/weapon/plastique
 	name = "Plastic Explosives"
 	desc = "Used to put holes in specific areas without too much extra hole."

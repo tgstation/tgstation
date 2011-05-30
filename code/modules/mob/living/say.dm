@@ -62,6 +62,8 @@
 	else if (copytext(message, 1, 2) == ";")
 		if (ishuman(src))
 			message_mode = "headset"
+		else if(istype(src, /mob/living/silicon/pai))
+			message_mode = "pAI"
 		message = copytext(message, 2)
 
 	else if (length(message) >= 2)
@@ -204,6 +206,12 @@
 			if (src:ears)
 				src:ears.talk_into(src, message, message_mode)
 				used_radios += src:ears
+			message_range = 1
+			italics = 1
+		if ("pAI")
+			if (src:radio)
+				src:radio.talk_into(src, message)
+				used_radios += src:radio
 			message_range = 1
 			italics = 1
 /////SPECIAL HEADSETS START

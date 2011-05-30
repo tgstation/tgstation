@@ -867,6 +867,9 @@ About the new airlock wires panel:
 		return src.attack_hand(user)
 	else if (istype(C, /obj/item/device/radio/signaler))
 		return src.attack_hand(user)
+	else if (istype(C, /obj/item/weapon/pai_cable))	// -- TLE
+		var/obj/item/weapon/pai_cable/cable = C
+		cable.plugin(src, user)
 	else if (istype(C, /obj/item/weapon/crowbar) || istype(C, /obj/item/weapon/fireaxe) )
 		var/beingcrowbarred = null
 		if(istype(C, /obj/item/weapon/crowbar) )

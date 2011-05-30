@@ -371,6 +371,14 @@ datum
 			materials = list("$glass" = 1000, "$gold" = 200)
 			build_path = "/obj/item/device/aicard"
 
+		paicard
+			name = "Personal Artificial Intelligence Card"
+			desc = "Allows for the construction of a pAI Card"
+			id = "paicard"
+			req_tech = list("prgramming" = 3)
+			build_type = PROTOLATHE
+			materials = list("$glass" = 500, "$metal" = 500)
+			build_path = "/obj/item/device/paicard"
 
 ///////////////////////////////////
 //////////Mecha Module Disks///////

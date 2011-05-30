@@ -94,6 +94,8 @@
 	//main_hud1 = new /obj/hud()
 	data_core = new /obj/datacore()
 
+	paiController = new /datum/paiController()
+
 	..()
 
 	sleep(50)

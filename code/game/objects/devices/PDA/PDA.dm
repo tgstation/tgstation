@@ -36,6 +36,8 @@
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
 
+	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
+
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-m"
@@ -198,6 +200,12 @@
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [fon ? "Disable" : "Enable"] Flashlight</a></li>"
+				if (pai)
+					if(pai.loc != src)
+						pai = null
+					else
+						dat += "<li><a href='byond://?src=\ref[src];choice=pai;option=1'>pAI Device Configuration</a></li>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=pai;option=2'>Eject pAI Device</a></li>"
 				dat += "</ul>"
 
 			if (1)
@@ -345,6 +353,7 @@
 				if("4")//Redirects to hub
 					mode = 0
 
+
 //MAIN FUNCTIONS===================================
 
 				if("Light")
@@ -474,6 +483,7 @@
 						U << browse(null, "window=pda")
 						return
 
+
 //SYNDICATE FUNCTIONS===================================
 
 				if("Door")
@@ -523,6 +533,15 @@
 						U.machine = null
 						U << browse(null, "window=pda")
 						return
+
+//pAI FUNCTIONS===================================
+				if("pai")
+					if(href_list["option"] == "1")		// Configure pAI device
+						pai.attack_self(U)
+					if(href_list["option"] == "2")		// Eject pAI device
+						var/turf/T = get_turf_or_move(src.loc)
+						if(T)
+							pai.loc = T
 
 //LINK FUNCTIONS===================================
 
@@ -588,7 +607,7 @@
 	return
 
 // access to status display signals
-/obj/item/device/pda/attackby(obj/item/weapon/C as obj, mob/user as mob)
+/obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob)
 	..()
 	if (istype(C, /obj/item/weapon/cartridge) && isnull(src.cartridge))
 		user.drop_item()
@@ -623,8 +642,13 @@
 							user << "\blue Rank updated."
 					updateSelfDialog()//Update self dialog on success.
 			return//Return in case of failed check or when successful.
-
-	updateSelfDialog()//For the non-input related code.
+		updateSelfDialog()//For the non-input related code.
+	else if (istype(C, /obj/item/device/paicard) && !src.pai)
+		user.drop_item()
+		C.loc = src
+		pai = C
+		user << "\blue You slot \the [C] into [src]."
+		updateUsrDialog()
 	return
 
 /obj/item/device/pda/attack(mob/C as mob, mob/user as mob)
