@@ -554,7 +554,7 @@ proc/move_mining_shuttle()
 	music = null
 
 /area/mine/lobby
-	name = "Mining station Hallways"
+	name = "Mining station"
 	icon_state = "mine"
 
 /area/mine/storage
@@ -566,7 +566,7 @@ proc/move_mining_shuttle()
 	icon_state = "janitor"
 
 /area/mine/living_quarters
-	name = "Mining station Living Quarters"
+	name = "Abandoned Mining Station"
 	icon_state = "yellow"
 
 /area/mine/eva
@@ -1372,7 +1372,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 /obj/machinery/mineral/processing_unit_console/New()
 	..()
 	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, EAST))
+		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, SOUTH))
 		if (machine)
 			machine.CONSOLE = src
 		else
@@ -1754,7 +1754,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 /obj/machinery/mineral/stacking_unit_console/New()
 	..()
 	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, SOUTHEAST))
+		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, SOUTHWEST))
 		if (machine)
 			machine.CONSOLE = src
 		else
