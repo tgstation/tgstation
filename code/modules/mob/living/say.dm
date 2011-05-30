@@ -250,7 +250,7 @@
 */
 	var/turf/T = get_turf(src)
 	listening = hearers(message_range, T)
-	var/list/V = view(message_range, T)
+	var/list/V = hearers(message_range, T)
 	//find mobs in lockers, cryo, intellicards, brains, MMIs, and so on.
 	for (var/mob/M in world)
 		if (!M.client)

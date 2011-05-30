@@ -3,6 +3,9 @@
 	voice_name = "synthesized voice"
 	icon = 'mob.dmi'//
 	icon_state = "shadow"
+
+	robot_talk_understand = 0
+
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 
