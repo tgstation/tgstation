@@ -180,6 +180,20 @@
 	src.machine = null
 	src:cameraFollow = null
 
+
+/mob/living/silicon/pai/verb/suicide()
+	set category = "pAI Commands"
+	set name = "Suicide"
+	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
+	if(answer == "Yes")
+		var/obj/item/device/paicard/card = src.loc
+		card.pai = null
+		var/turf/T = get_turf_or_move(card.loc)
+		for (var/mob/M in viewers(T))
+			M.show_message("\blue [src] flashes a message across its screen, \"Wiping core files. Please a new personality to continue using pAI device functions.\"", 3, "\blue [src] bleeps electronically.", 2)
+		src.death(0)
+		del(src)
+
 //Addition by Mord_Sith to define AI's network change ability
 /*
 /mob/living/silicon/pai/proc/pai_network_change()

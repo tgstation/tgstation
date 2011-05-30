@@ -221,8 +221,9 @@
 				src.universal_speak = !src.universal_speak
 		if("doorjack")
 			if(href_list["jack"])
-				src.hackdoor = src.cable.machine
-				src.hackloop()
+				if(src.cable && src.cable.machine)
+					src.hackdoor = src.cable.machine
+					src.hackloop()
 			if(href_list["cancel"])
 				src.hackdoor = null
 			if(href_list["cable"])

@@ -439,7 +439,6 @@
 #include "code\game\magic\cultist\ritual.dm"
 #include "code\game\magic\cultist\runes.dm"
 #include "code\game\magic\cultist\specialtalisman.dm"
-#include "code\game\magic\playerpower\pp.dm"
 #include "code\game\mecha\mech_bay.dm"
 #include "code\game\mecha\mech_fabricator.dm"
 #include "code\game\mecha\mecha.dm"
@@ -808,5 +807,5 @@
 #include "code\WorkInProgress\recycling\scrap.dm"
 #include "code\WorkInProgress\recycling\sortingmachinery.dm"
 #include "interface\skin.dmf"
-#include "maps\tgstation.2.0.7.dmm"
+#include "maps\testmap.dmm"
 // END_INCLUDE
