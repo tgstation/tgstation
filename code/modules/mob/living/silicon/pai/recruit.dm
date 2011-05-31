@@ -48,10 +48,8 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 					candidate.comments = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
 
 				if("save")
-					world << "saving personality"
 					candidate.savefile_save(usr)
 				if("load")
-					world << "loading personality"
 					candidate.savefile_load(usr)
 
 				if("submit")
