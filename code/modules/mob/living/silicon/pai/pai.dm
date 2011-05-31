@@ -48,8 +48,11 @@
 	return 0
 
 /mob/living/silicon/pai/emp_act(severity)
-	/*
 	if (prob(30))
+		src.master = null
+		src.master_dna = null
+		src << "<font color=green>You feel unbound.</font>"
+		/*
 		switch(pick(1,2,3)) //Add Random laws.
 			if(1)
 				src.cancel_camera()
@@ -57,7 +60,7 @@
 				src.lockdown()
 			if(3)
 				src.ai_call_shuttle()
-	*/
+		*/
 	..()
 
 /mob/living/silicon/pai/ex_act(severity)
@@ -190,9 +193,8 @@
 		card.pai = null
 		var/turf/T = get_turf_or_move(card.loc)
 		for (var/mob/M in viewers(T))
-			M.show_message("\blue [src] flashes a message across its screen, \"Wiping core files. Please a new personality to continue using pAI device functions.\"", 3, "\blue [src] bleeps electronically.", 2)
+			M.show_message("\blue [src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"", 3, "\blue [src] bleeps electronically.", 2)
 		src.death(0)
-		del(src)
 
 //Addition by Mord_Sith to define AI's network change ability
 /*

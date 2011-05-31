@@ -1444,6 +1444,8 @@ var/showadminmessages = 1
 				dat += "<tr><td>[M.name]</td>"
 				if(istype(M, /mob/living/silicon/ai))
 					dat += "<td>AI</td>"
+				if(istype(M, /mob/living/silicon/pai))
+					dat += "<td>pAI</td>"
 				if(istype(M, /mob/living/silicon/robot))
 					dat += "<td>Cyborg</td>"
 				if(istype(M, /mob/living/carbon/human))
@@ -1481,6 +1483,8 @@ var/showadminmessages = 1
 				dat += "<tr><td>[M.name]</td>"
 				if(istype(M, /mob/living/silicon/ai))
 					dat += "<td>AI</td>"
+				if(istype(M, /mob/living/silicon/pai))
+					dat += "<td>pAI</td>"
 				if(istype(M, /mob/living/silicon/robot))
 					dat += "<td>Cyborg</td>"
 				if(istype(M, /mob/living/carbon/human))

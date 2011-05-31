@@ -23,9 +23,12 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		if(href_list["download"])
 			var/datum/paiCandidate/candidate = locate(href_list["candidate"])			//pai_candidates.Find(href_list["candidate"])
 			var/obj/item/device/paicard/card = locate(href_list["device"])
+			if(card.pai)
+				return
 			if(card && candidate)
 				var/mob/living/silicon/pai/pai = new(card)
 				pai.name = candidate.name
+				pai.real_name = pai.name
 				pai.key = candidate.key
 				card.pai = pai
 				card.looking_for_personality = 0
@@ -43,6 +46,14 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 					candidate.role = input("Enter a role for your pAI", "pAI Role", candidate.role) as text
 				if("ooc")
 					candidate.comments = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
+
+				if("save")
+					world << "saving personality"
+					candidate.savefile_save(usr)
+				if("load")
+					world << "loading personality"
+					candidate.savefile_load(usr)
+
 				if("submit")
 					if(candidate)
 						candidate.ready = 1
@@ -98,7 +109,9 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		dat += "</table>"
 
 		dat += "<br>"
-		dat += "<h3><a href='byond://?src=\ref[src];option=submit;new=1;candidate=\ref[candidate]'>Submit Personality</a></h3>"
+		dat += "<h3><a href='byond://?src=\ref[src];option=submit;new=1;candidate=\ref[candidate]'>Submit Personality</a></h3><br>"
+		dat += "<a href='byond://?src=\ref[src];option=save;new=1;candidate=\ref[candidate]'>Save Personality</a><br>"
+		dat += "<a href='byond://?src=\ref[src];option=load;new=1;candidate=\ref[candidate]'>Load Personality</a><br>"
 
 		M << browse(dat, "window=paiRecruit")
 

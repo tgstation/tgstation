@@ -755,6 +755,8 @@
 	var/list/mob_list = list()
 	for(var/mob/living/silicon/ai/M in world)
 		mob_list.Add(M)
+	for(var/mob/living/silicon/pai/M in world)
+		mob_list.Add(M)
 	for(var/mob/living/silicon/robot/M in world)
 		mob_list.Add(M)
 	for(var/mob/living/carbon/human/M in world)

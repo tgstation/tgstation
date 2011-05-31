@@ -104,7 +104,7 @@
 				</div>
 			</body>
 			</html>"}
-	usr << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=0;can_minimize=0;titlebar=1")
+	usr << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 	onclose(usr, "pai")
 	temp = null
 	return
@@ -152,34 +152,53 @@
 				spawn CheckDNA(M, src)
 
 		if("pdamessage")
-			if(href_list["send"])
+			if(href_list["target"])
 				var/t = input(usr, "Please enter message", name, null) as text
 				t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 				if (!t)
 					return
-				var/obj/item/device/pda/P = locate(href_list["target"])
+				var/target = locate(href_list["target"])
 
-				if (isnull(P)||P.toff)
-					return
+				// PDA Message
+				if(istype(target, /obj/item/device/pda))
+					var/obj/item/device/pda/P = target
+					if (isnull(P)||P.toff)
+						return
+
+					for (var/obj/machinery/message_server/MS in world)
+						MS.send_pda_message("[P.owner]","[src]","[t]")
+
+					tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
+					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
+
+					if (prob(15)) //Give the AI a chance of intercepting the message
+						for (var/mob/living/silicon/ai/ai in world)
+							ai.show_message("<i>Intercepted message from <b>[P:owner]</b>: [t]</i>")
+
+					if (!P.silent)
+						playsound(P.loc, 'twobeep.ogg', 50, 1)
+						for (var/mob/O in hearers(3, P.loc))
+							O.show_message(text("\icon[P] *[P.ttone]*"))
+
+					P.overlays = null
+					P.overlays += image('pda.dmi', "pda-r")
+
+				// pAI Message
+				else
+					var/mob/living/silicon/pai/P = target
+
+					tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
+					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
 
 
-				for (var/obj/machinery/message_server/MS in world)
-					MS.send_pda_message("[P.owner]","[src]","[t]")
+					for (var/obj/machinery/message_server/MS in world)
+						MS.send_pda_message("[P]","[src]","[t]")
 
-				tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
-				P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
+					if (prob(15)) //Give the AI a chance of intercepting the message
+						for (var/mob/living/silicon/ai/ai in world)
+							ai.show_message("<i>Intercepted message from <b>[P]</b>: [t]</i>")
 
-				if (prob(15)) //Give the AI a chance of intercepting the message
-					for (var/mob/living/silicon/ai/A in world)
-						A.show_message("<i>Intercepted message from <b>[P:owner]</b>: [t]</i>")
-
-				if (!P.silent)
 					playsound(P.loc, 'twobeep.ogg', 50, 1)
-					for (var/mob/O in hearers(3, P.loc))
-						O.show_message(text("\icon[P] *[P.ttone]*"))
-
-				P.overlays = null
-				P.overlays += image('pda.dmi', "pda-r")
 
 		// Accessing medical records
 		if("medicalrecord")
@@ -565,11 +584,13 @@
 	dat += "<ul>"
 	for (var/obj/item/device/pda/P in world)
 		if (!P.owner||P.toff||P == src)	continue
-		dat += "<li><a href='byond://?src=\ref[src];choice=pdamessage;send=1;target=\ref[P]'>[P]</a>"
+		dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
 		dat += "</li>"
 	for (var/mob/living/silicon/pai/P in world)
 		if(P.stat != 2)
-			dat += "<li><a href='byond://?src=\ref[src];choice=pdamessage;send=1;target=\ref[P]'>[P]</a>"
+			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
 			dat += "</li>"
 	dat += "</ul>"
+	dat += "<br><br>"
+	dat += "Messages: <hr> [tnote]"
 	return dat
