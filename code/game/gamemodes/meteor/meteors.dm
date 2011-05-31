@@ -24,7 +24,6 @@
 
 /proc/spawn_meteor()
 
-	var/startside = pick(cardinal)
 	var/startx
 	var/starty
 	var/endx
@@ -35,23 +34,23 @@
 
 
 	do
-		switch(startside)
-			if(NORTH)
+		switch(pick(1,2,3,4))
+			if(1) //NORTH
 				starty = world.maxy-1
 				startx = rand(1, world.maxx-1)
 				endy = 1
 				endx = rand(1, world.maxx-1)
-			if(EAST)
+			if(2) //EAST
 				starty = rand(1,world.maxy-1)
 				startx = world.maxx-1
 				endy = rand(1, world.maxy-1)
 				endx = 1
-			if(SOUTH)
+			if(3) //SOUTH
 				starty = 1
 				startx = rand(1, world.maxx-1)
 				endy = world.maxy-1
 				endx = rand(1, world.maxx-1)
-			if(WEST)
+			if(4) //WEST
 				starty = rand(1, world.maxy-1)
 				startx = 1
 				endy = rand(1,world.maxy-1)
@@ -111,7 +110,7 @@
 			playsound(src.loc, 'meteorimpact.ogg', 40, 1)
 		if (--src.hits <= 0)
 			if(prob(15))// && !istype(A, /obj/grille))
-				explosion(src.loc, 0, 5, 6, 7, 0)
+				explosion(src.loc, 4, 5, 6, 7, 0)
 				playsound(src.loc, "explosion", 50, 1)
 			del(src)
 	return
