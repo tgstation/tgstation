@@ -855,8 +855,8 @@ proc/move_mining_shuttle()
 	name = "Asteroid"
 	icon = 'floors.dmi'
 	icon_state = "asteroid"
-	oxygen = 0
-	nitrogen = 0
+	oxygen = 0.01
+	nitrogen = 0.01
 	temperature = TCMB
 	icon_plating = "asteroid"
 	var/seedName = "" //Name of the seed it contains
