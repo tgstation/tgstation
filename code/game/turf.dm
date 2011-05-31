@@ -602,6 +602,18 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
 
+/turf/simulated/floor/engine/n20
+	New()
+		..()
+		var/datum/gas_mixture/adding = new
+		var/datum/gas/sleeping_agent/trace_gas = new
+
+		trace_gas.moles = 2000
+		adding.trace_gases += trace_gas
+		adding.temperature = T20C
+
+		assume_air(adding)
+
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"
