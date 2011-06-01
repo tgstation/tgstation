@@ -935,6 +935,20 @@ proc/isobserver(A)
 						usr << "\blue You successfully remove your handcuffs."
 						usr:handcuffed:loc = usr:loc
 						usr:handcuffed = null
+
+			if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
+				usr.next_move = world.time + 100
+				usr.last_special = world.time + 100
+				usr << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
+				for(var/mob/O in viewers(usr))
+					O.show_message(text("\red <B>[] attempts to unbuckle themself!</B>", usr), 1)
+				spawn(0)
+					if(do_after(usr, 1200))
+						if(!usr:buckled) return
+						for(var/mob/O in viewers(usr))
+							O.show_message(text("\red <B>[] manages to unbuckle themself!</B>", usr), 1)
+						usr << "\blue You successfully unbuckle yourself."
+						usr:buckled.manual_unbuckle_all(usr)
 		if("module")
 			if(istype(usr, /mob/living/silicon/robot)||istype(usr, /mob/living/silicon/hivebot))
 				if(usr:module)
