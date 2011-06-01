@@ -160,3 +160,107 @@
 	sleep(10)
 	src.operating = 0
 	return
+
+/obj/machinery/door/poddoor/two_tile_ver/open()
+	if (src.operating == 1) //doors can still open when emag-disabled
+		return
+	if (!ticker)
+		return 0
+	if(!src.operating) //in case of emag
+		src.operating = 1
+	flick("pdoorc0", src)
+	src.icon_state = "pdoor0"
+	sleep(10)
+	src.density = 0
+	src.sd_SetOpacity(0)
+
+	f1.density = 0
+	f1.sd_SetOpacity(0)
+	f2.density = 0
+	f2.sd_SetOpacity(0)
+
+	update_nearby_tiles()
+
+	if(operating == 1) //emag again
+		src.operating = 0
+	if(autoclose)
+		spawn(150)
+			autoclose()
+	return 1
+
+/obj/machinery/door/poddoor/two_tile_ver/close()
+	if (src.operating)
+		return
+	src.operating = 1
+	flick("pdoorc1", src)
+	src.icon_state = "pdoor1"
+	src.density = 1
+
+	f1.density = 1
+	f1.sd_SetOpacity(1)
+	f2.density = 1
+	f2.sd_SetOpacity(1)
+
+	if (src.visible)
+		src.sd_SetOpacity(1)
+	update_nearby_tiles()
+
+	sleep(10)
+	src.operating = 0
+	return
+
+/obj/machinery/door/poddoor/four_tile_ver/open()
+	if (src.operating == 1) //doors can still open when emag-disabled
+		return
+	if (!ticker)
+		return 0
+	if(!src.operating) //in case of emag
+		src.operating = 1
+	flick("pdoorc0", src)
+	src.icon_state = "pdoor0"
+	sleep(10)
+	src.density = 0
+	src.sd_SetOpacity(0)
+
+	f1.density = 0
+	f1.sd_SetOpacity(0)
+	f2.density = 0
+	f2.sd_SetOpacity(0)
+	f3.density = 0
+	f3.sd_SetOpacity(0)
+	f4.density = 0
+	f4.sd_SetOpacity(0)
+
+	update_nearby_tiles()
+
+	if(operating == 1) //emag again
+		src.operating = 0
+	if(autoclose)
+		spawn(150)
+			autoclose()
+	return 1
+
+/obj/machinery/door/poddoor/four_tile_ver/close()
+	if (src.operating)
+		return
+	src.operating = 1
+	flick("pdoorc1", src)
+	src.icon_state = "pdoor1"
+	src.density = 1
+
+	f1.density = 1
+	f1.sd_SetOpacity(1)
+	f2.density = 1
+	f2.sd_SetOpacity(1)
+	f3.density = 1
+	f3.sd_SetOpacity(1)
+	f4.density = 1
+	f4.sd_SetOpacity(1)
+
+	if (src.visible)
+		src.sd_SetOpacity(1)
+	update_nearby_tiles()
+
+	sleep(10)
+	src.operating = 0
+	return
