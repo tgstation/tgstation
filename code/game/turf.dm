@@ -358,6 +358,50 @@
 			user << "\blue You need more welding fuel to complete this task."
 			return
 
+	else if (istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		var/turf/T = user.loc
+		if (!( istype(T, /turf) ))
+			return
+
+		if (thermite)
+			var/obj/overlay/O = new/obj/overlay( src )
+			O.name = "Thermite"
+			O.desc = "Looks hot."
+			O.icon = 'fire.dmi'
+			O.icon_state = "2"
+			O.anchored = 1
+			O.density = 1
+			O.layer = 5
+			var/turf/simulated/floor/F = ReplaceWithFloor()
+			F.burn_tile()
+			F.icon_state = "wall_thermite"
+			user << "\red The thermite melts the wall."
+			spawn(100) del(O)
+			F.sd_LumReset()
+			return
+
+		else
+			user << "\blue Now disassembling the outer wall plating."
+			playsound(src.loc, 'Welder.ogg', 100, 1)
+			sleep(60)
+			if (istype(src, /turf/simulated/wall))
+				if ((get_turf(user) == T && user.equipped() == W))
+					user << "\blue You disassembled the outer wall plating."
+					dismantle_wall()
+					for(var/mob/O in viewers(user, 5))
+						O.show_message(text("\blue The wall was sliced apart by []!", user), 1, text("\red You hear metal being sliced apart."), 2)
+		return
+
+	else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+		var/turf/T = user.loc
+		user << "\blue Now drilling through wall."
+		sleep(60)
+		if ((user.loc == T && user.equipped() == W))
+			dismantle_wall(1)
+			for(var/mob/O in viewers(user, 5))
+				O.show_message(text("\blue The wall was drilled apart by []!", user), 1, text("\red You hear metal being drilled appart."), 2)
+		return
+
 	else if(istype(W, /obj/item/weapon/blade))
 		var/turf/T = user.loc
 		user << "\blue Now slicing through wall."
@@ -431,6 +475,45 @@
 				user << "\blue You removed the support rods."
 			W:welding = 1
 
+	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		var/turf/T = user.loc
+		if (!( istype(T, /turf) ))
+			return
+
+		if (thermite)
+			var/obj/overlay/O = new/obj/overlay( src )
+			O.name = "Thermite"
+			O.desc = "Looks hot."
+			O.icon = 'fire.dmi'
+			O.icon_state = "2"
+			O.anchored = 1
+			O.density = 1
+			O.layer = 5
+			var/turf/simulated/floor/F = ReplaceWithFloor()
+			F.burn_tile()
+			F.icon_state = "wall_thermite"
+			user << "\red The thermite melts the wall."
+			spawn(100) del(O)
+			F.sd_LumReset()
+			return
+
+		if (src.d_state == 2)
+			user << "\blue Slicing metal cover."
+			playsound(src.loc, 'Welder.ogg', 100, 1)
+			sleep(40)
+			if ((user.loc == T && user.equipped() == W))
+				src.d_state = 3
+				user << "\blue You removed the metal cover."
+
+		else if (src.d_state == 5)
+			user << "\blue Removing support rods."
+			playsound(src.loc, 'Welder.ogg', 100, 1)
+			sleep(70)
+			if ((user.loc == T && user.equipped() == W))
+				src.d_state = 6
+				new /obj/item/stack/rods( src )
+				user << "\blue You removed the support rods."
+
 	else if(istype(W, /obj/item/weapon/blade))
 		user << "\blue This wall is too thick to slice through. You will need to find a different path."
 		return
@@ -481,6 +564,15 @@
 				user << "\blue You removed the outer sheath."
 				dismantle_wall()
 				return
+
+	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+		var/turf/T = user.loc
+		user << "\blue You begin to drill though, this will take some time."
+		sleep(200)
+		if ((user.loc == T && user.equipped() == W))
+			user << "\blue Your drill tears though the reinforced plating."
+			dismantle_wall()
+			return
 
 	else if ((istype(W, /obj/item/stack/sheet/metal)) && (src.d_state))
 		var/turf/T = user.loc

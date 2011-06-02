@@ -66,7 +66,7 @@
 	throw_range = 5
 	w_class = 3.0
 	m_amt = 50000
-	origin_tech = "materials=4"
+	origin_tech = "engineering=4;materials=2"
 	var/datum/effects/system/spark_spread/spark_system
 
 /obj/item/weapon/rsf
@@ -135,6 +135,7 @@
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 20
+	origin_tech = "materials=2;combat=1"
 
 /obj/item/weapon/ammo/a357
 	desc = "There are 7 rounds left!"
@@ -206,20 +207,6 @@
 	icon_state = "38-7"
 	amount_left = 7.0
 	m_amt = 10000
-
-/obj/item/device/analyzer
-	desc = "A hand-held environmental scanner which reports current gas levels."
-	name = "analyzer"
-	icon_state = "atmos"
-	item_state = "analyzer"
-	w_class = 2.0
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	throwforce = 5
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 30
-	g_amt = 20
-	origin_tech = "magnets=1"
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
@@ -502,6 +489,7 @@
 	item_state = "wrench"
 	w_class = 2.0
 	m_amt = 50
+	origin_tech = "engineering=1"
 
 /obj/item/weapon/crowbar/red
 	icon = 'items.dmi'
@@ -1423,7 +1411,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 9
 	w_class = 2.0
 	m_amt = 80
-	origin_tech = "materials=1"
+	origin_tech = "materials=1;engineering=1"
 
 	New()
 		if(prob(50))
@@ -1444,7 +1432,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throwforce = 7.0
 	w_class = 2.0
 	m_amt = 150
-	origin_tech = "materials=1"
+	origin_tech = "materials=1;engineering=1"
 
 /obj/item/weapon/cell
 	name = "power cell"

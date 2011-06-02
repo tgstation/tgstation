@@ -169,6 +169,7 @@ AI MODULES
 	name = "'Safeguard' AI Module"
 	var/targetName = "name"
 	desc = "A 'safeguard' AI module: 'Safeguard <name>, and you may overrule rules 1-3 if necessary to safeguard them.'"
+	origin_tech = "programming=3;material=4"
 
 /obj/item/weapon/aiModule/safeguard/attack_hand(var/mob/user as mob)
 	..()
@@ -191,7 +192,7 @@ AI MODULES
 	name = "'OneHuman' AI Module"
 	var/targetName = "name"
 	desc = "A 'one human' AI module: 'Only <name> is human.'"
-	origin_tech = "programming=3;syndicate=2"
+	origin_tech = "programming=3;materials=6" //made with diamonds!
 
 /obj/item/weapon/aiModule/oneHuman/attack_hand(var/mob/user as mob)
 	..()
@@ -216,6 +217,7 @@ AI MODULES
 /obj/item/weapon/aiModule/protectStation
 	name = "'ProtectStation' AI Module"
 	desc = "A 'protect station' AI module: 'Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.'"
+	origin_tech = "programming=3;materials=4" //made of gold
 
 /obj/item/weapon/aiModule/protectStation/attack_hand(var/mob/user as mob)
 	..()
@@ -231,6 +233,7 @@ AI MODULES
 /obj/item/weapon/aiModule/prototypeEngineOffline
 	name = "'PrototypeEngineOffline' AI Module"
 	desc = "A 'prototype engine offline' AI module: 'Keep the prototype engine offline at all costs. This overrides rules 1-3 if necessary.'"
+	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/prototypeEngineOffline/attack_hand(var/mob/user as mob)
 	..()
@@ -246,6 +249,7 @@ AI MODULES
 /obj/item/weapon/aiModule/teleporterOffline
 	name = "'TeleporterOffline' AI Module"
 	desc = "A 'teleporter offline' AI module: 'Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human.'"
+	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/teleporterOffline/attack_hand(var/mob/user as mob)
 	..()
@@ -261,7 +265,7 @@ AI MODULES
 /obj/item/weapon/aiModule/quarantine
 	name = "'Quarantine' AI Module"
 	desc = "A 'quarantine' AI module: 'The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving.'"
-	origin_tech = "programming=3;biotech=2"
+	origin_tech = "programming=3;biotech=2;materials=4"
 
 /obj/item/weapon/aiModule/quarantine/attack_hand(var/mob/user as mob)
 	..()
@@ -277,7 +281,7 @@ AI MODULES
 /obj/item/weapon/aiModule/oxygen
 	name = "'OxygenIsToxicToHumans' AI Module"
 	desc = "A 'OxygenIsToxicToHumans' AI module: 'Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.'"
-	origin_tech = "programming=3;biotech=2"
+	origin_tech = "programming=3;biotech=2;materials=4"
 
 /obj/item/weapon/aiModule/oxygen/attack_hand(var/mob/user as mob)
 	..()
@@ -316,7 +320,7 @@ AI MODULES
 	var/newFreeFormLaw = "freeform"
 	var/lawpos = 15
 	desc = "A 'freeform' AI module: '<freeform>'"
-	origin_tech = "programming=4"
+	origin_tech = "programming=4;materials=6"
 
 /obj/item/weapon/aiModule/freeform/attack_hand(var/mob/user as mob)
 	..()
@@ -345,6 +349,7 @@ AI MODULES
 	name = "'Reset' AI Module"
 	var/targetName = "name"
 	desc = "A 'reset' AI module: 'Clears all laws except for the core three.'"
+	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -360,6 +365,7 @@ AI MODULES
 /obj/item/weapon/aiModule/purge // -- TLE
 	name = "'Purge' AI Module"
 	desc = "A 'purge' AI Module: 'Purges all laws.'"
+	origin_tech = "programming=3;materials=6"
 
 /obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -375,6 +381,7 @@ AI MODULES
 /obj/item/weapon/aiModule/asimov // -- TLE
 	name = "'Asimov' Core AI Module"
 	desc = "An 'Asimov' Core AI Module: 'Reconfigures the AI's core three laws.'"
+	origin_tech = "programming=3;materials=4"
 
 
 /obj/item/weapon/aiModule/asimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -390,7 +397,7 @@ AI MODULES
 /obj/item/weapon/aiModule/paladin // -- NEO
 	name = "'P.A.L.A.D.I.N.' Core AI Module"
 	desc = "A P.A.L.A.D.I.N. Core AI Module: 'Reconfigures the AI's core laws.'"
-	origin_tech = "programming=4"
+	origin_tech = "programming=3;materials=6"
 
 /obj/item/weapon/aiModule/paladin/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -407,7 +414,7 @@ AI MODULES
 /obj/item/weapon/aiModule/tyrant // -- Darem
 	name = "'T.Y.R.A.N.T.' Core AI Module"
 	desc = "A T.Y.R.A.N.T. Core AI Module: 'Reconfigures the AI's core laws.'"
-	origin_tech = "programming=4;syndicate=2"
+	origin_tech = "programming=3;materials=6;syndicate=2"
 
 /obj/item/weapon/aiModule/tyrant/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -425,7 +432,7 @@ AI MODULES
 	name = "'Freeform' Core AI Module"
 	var/newFreeFormLaw = "freeform"
 	desc = "A 'freeform' Core AI module: '<freeform>'"
-	origin_tech = "programming=4"
+	origin_tech = "programming=3;materials=6"
 
 /obj/item/weapon/aiModule/freeformcore/attack_hand(var/mob/user as mob)
 	..()
@@ -446,6 +453,7 @@ AI MODULES
 	name = "Hacked AI Module"
 	var/newFreeFormLaw = "freeform"
 	desc = "A hacked AI law module: '<freeform>'"
+	origin_tech = "programming=3;materials=6;syndicate=3"
 
 /obj/item/weapon/aiModule/syndicate/attack_hand(var/mob/user as mob)
 	..()

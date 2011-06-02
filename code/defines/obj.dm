@@ -379,6 +379,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"
 	var/status = 1
+	origin_tech = "magnets=2;combat=1"
 
 /obj/item/device/flashlight
 	name = "flashlight"
@@ -404,6 +405,20 @@
 	icon_off = "plight0"
 	brightness_on = 3
 
+/obj/item/device/analyzer
+	desc = "A hand-held environmental scanner which reports current gas levels."
+	name = "analyzer"
+	icon_state = "atmos"
+	item_state = "analyzer"
+	w_class = 2.0
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	throwforce = 5
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 30
+	g_amt = 20
+	origin_tech = "magnets=1;engineering=1"
+
 /obj/item/device/healthanalyzer
 	name = "Health Analyzer"
 	icon_state = "health"
@@ -415,6 +430,7 @@
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
+	origin_tech = "magnets=1;biotech=1"
 
 /obj/item/device/igniter
 	name = "igniter"
@@ -429,7 +445,6 @@
 	throw_speed = 3
 	throw_range = 10
 
-
 /obj/item/device/infra
 	name = "Infrared Beam (Security)"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
@@ -441,6 +456,7 @@
 	w_class = 2.0
 	item_state = "electronic"
 	m_amt = 150
+	origin_tech = "magnets=2"
 
 /obj/item/device/infra_sensor
 	name = "Infrared Sensor"
@@ -450,6 +466,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"
 	m_amt = 150
+	origin_tech = "magnets=2"
 
 /obj/item/device/t_scanner
 	name = "T-ray scanner"
@@ -460,6 +477,7 @@
 	w_class = 2
 	item_state = "electronic"
 	m_amt = 150
+	origin_tech = "magnets=1;engineering=1"
 
 
 /obj/item/device/multitool
@@ -474,6 +492,7 @@
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
 	m_amt = 50
 	g_amt = 20
+	origin_tech = "magnets=1;engineering=1"
 
 
 /obj/item/device/prox_sensor
@@ -486,6 +505,7 @@
 	w_class = 2.0
 	item_state = "electronic"
 	m_amt = 300
+	origin_tech = "magnets=1"
 
 
 /obj/item/device/shield
@@ -1165,6 +1185,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 3
+	origin_tech = "materials=1;biotech=1"
 
 /obj/item/stack/sheet/sandstone
 	name = "Sandstone Bricks"
@@ -1174,6 +1195,7 @@
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 5
+	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/glass
 	name = "glass"
@@ -1184,7 +1206,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 3
-
+	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/rglass
 	name = "reinforced glass"
@@ -1196,6 +1218,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 3
+	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/metal
 	name = "metal"
@@ -1208,6 +1231,7 @@
 	throw_speed = 1
 	throw_range = 4
 	flags = FPRINT | TABLEPASS | CONDUCT
+	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/r_metal
 	name = "reinforced metal"
@@ -1221,6 +1245,7 @@
 	throw_speed = 1
 	throw_range = 4
 	flags = FPRINT | TABLEPASS | CONDUCT
+	origin_tech = "materials=2"
 
 /obj/item/stack/tile/steel
 	name = "Steel floor tile"
@@ -1248,6 +1273,7 @@
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT
 	max_amount = 60
+	origin_tech = "biotech=1"
 
 /obj/item/stack/light_w
 	name = "Wired glass tile"

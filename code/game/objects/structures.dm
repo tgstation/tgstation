@@ -24,6 +24,18 @@ obj/structure
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			del(src)
 
+	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		user << "\blue Now slicing apart the girder"
+		if(do_after(user,30))
+			user << "\blue You slice apart the girder!"
+		new /obj/item/stack/sheet/metal(get_turf(src))
+		del(src)
+
+	else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+		user << "\blue You drill through the girder!"
+		new /obj/item/stack/sheet/metal(get_turf(src))
+		del(src)
+
 	else if((istype(W, /obj/item/stack/sheet/metal)) && (W:amount >= 2) && istype(src,/obj/structure/girder/displaced))
 		W:use(2)
 		user << "\blue You create a false wall! Push on it to open or close the passage."

@@ -49,6 +49,7 @@ WELDINGTOOOL
 	w_class = 2.0
 	m_amt = 70
 	g_amt = 30
+	origin_tech = "engineering=1"
 	var
 		welding = 0
 		status = 0
@@ -273,6 +274,7 @@ WELDINGTOOOL
 	max_fuel = 40
 	m_amt = 70
 	g_amt = 60
+	origin_tech = "engineering=2"
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "Upgraded Welding Tool"
@@ -280,6 +282,7 @@ WELDINGTOOOL
 	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
+	origin_tech = "engineering=3"
 
 /obj/item/weapon/weldingtool/experimental
 	name = "Experimental Welding Tool"

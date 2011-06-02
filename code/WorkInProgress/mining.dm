@@ -881,7 +881,7 @@ proc/move_mining_shuttle()
 	if(!W || !user)
 		return 0
 
-	if (istype(W, /obj/item/weapon/shovel))
+	if ((istype(W, /obj/item/weapon/shovel))||(istype(W,/obj/item/weapon/pickaxe/drill))||(istype(W,/obj/item/weapon/pickaxe/diamonddrill)))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -2563,8 +2563,9 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throwforce = 4.0
 	item_state = "pickaxe"
 	w_class = 4.0
-	m_amt = 3000 //making them on par with the require materials to make silver, gold, and diamond picks
+	m_amt = 3750 //one sheet, but where can you make them?
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
+	origin_tech = "materials=1;engineering=1"
 
 	hammer
 		name = "Mining Sledge Hammer"
@@ -2578,21 +2579,21 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		origin_tech = "materials=3"
 		desc = "This makes no metallurgic sense."
 
+	drill
+		name = "Mining Drill" // Can dig sand as well!
+		icon_state = "handdrill"
+		item_state = "jackhammer"
+		digspeed = 30
+		origin_tech = "materials=2;powerstorage=3;engineering=2"
+		desc = "Yours is the drill that will pierce through the rock walls."
+
 	jackhammer
 		name = "Sonic Jackhammer"
 		icon_state = "jackhammer"
 		item_state = "jackhammer"
-		digspeed = 30
-		origin_tech = "materials=3;powerstorage=2"
+		digspeed = 20 //faster than drill, but cannot dig
+		origin_tech = "materials=3;powerstorage=2;engineering=2"
 		desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
-
-	drill
-		name = "Mining Drill"
-		icon_state = "handdrill"
-		item_state = "jackhammer"
-		digspeed = 30
-		origin_tech = "materials=3;powerstorage=2"
-		desc = "Yours is the drill that will pierce through the rock walls."
 
 	gold
 		name = "Golden Pickaxe"
@@ -2607,9 +2608,9 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		icon_state = "plasmacutter"
 		item_state = "gun"
 		w_class = 3.0 //it is smaller than the pickaxe
-		force = 10.0 //Also, weaker
-		digspeed = 20
-		origin_tech = "materials=4;plasmatech=2"
+		damtype = "fire"
+		digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
+		origin_tech = "materials=4;plasmatech=3;engineering=3"
 		desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 
 	diamond
@@ -2617,15 +2618,15 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		icon_state = "dpickaxe"
 		item_state = "dpickaxe"
 		digspeed = 10
-		origin_tech = "materials=6"
+		origin_tech = "materials=6;engineering=4"
 		desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
 	diamonddrill //When people ask about the badass leader of the mining tools, they are talking about ME!
 		name = "Diamond Mining Drill"
 		icon_state = "diamonddrill"
 		item_state = "jackhammer"
-		digspeed = 0
-		origin_tech = "materials=6;powerstorage=4"
+		digspeed = 0 //Digs through walls, girders, and can dig up sand
+		origin_tech = "materials=6;powerstorage=4;engineering=5"
 		desc = "Yours is the drill that will pierce the heavens!"
 
 /*****************************Shovel********************************/
@@ -2640,6 +2641,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	item_state = "shovel"
 	w_class = 3.0
 	m_amt = 50
+	origin_tech = "materials=1;engineering=1"
 
 
 /******************************Materials****************************/

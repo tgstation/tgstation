@@ -250,11 +250,11 @@
 			mode = text2num(href_list["mode"])
 			switch(mode)
 				if(0)
-					chassis.occupant_message("Swithed RCD to Deconstruct.")
+					chassis.occupant_message("Switched RCD to Deconstruct.")
 				if(1)
-					chassis.occupant_message("Swithed RCD to Construct.")
+					chassis.occupant_message("Switched RCD to Construct.")
 				if(2)
-					chassis.occupant_message("Swithed RCD to Construct Airlock.")
+					chassis.occupant_message("Switched RCD to Construct Airlock.")
 		return
 
 	get_equip_info()

@@ -15,7 +15,7 @@
 	name = "Optical Meson Scanner"
 	icon_state = "meson"
 	item_state = "glasses"
-	origin_tech = "magnets=2"
+	origin_tech = "magnets=2;engineering=2"
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
@@ -27,7 +27,7 @@
 	name = "Optical Material Scanner"
 	icon_state = "material"
 	item_state = "glasses"
-	origin_tech = "magnets=2"
+	origin_tech = "magnets=3;engineering=3"
 
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
