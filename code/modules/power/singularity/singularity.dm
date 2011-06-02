@@ -446,6 +446,8 @@ var/global/list/uneatable = list(
 
 		process()
 			eat()
+			if(!target || prob(5))
+				pickcultist()
 			move()
 			if(prob(25))
 				mezzer()
@@ -471,3 +473,40 @@ var/global/list/uneatable = list(
 
 		ex_act() //No throwing bombs at it either. --NEO
 			return
+
+		proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
+			var/list/cultists = list()
+			for(var/datum/mind/cult_nh_mind in ticker.mode.cult)
+				if(!cult_nh_mind.current)
+					continue
+				if(cult_nh_mind.current.stat)
+					continue
+				cultists += cult_nh_mind.current
+			if(cultists.len)
+				acquire(pick(cultists))
+				return
+				//If there was living cultists, it picks one to follow.
+			for(var/mob/living/carbon/human/food in world)
+				if(food.stat)
+					continue
+				cultists += food
+			if(cultists.len)
+				acquire(pick(cultists))
+				return
+				//no living cultists, pick a living human instead.
+			for(var/mob/dead/observer/ghost in world)
+				if(!ghost.client)
+					continue
+				cultists += ghost
+			if(cultists.len)
+				acquire(pick(cultists))
+				return
+				//no living humans, follow a ghost instead.
+
+		proc/acquire(var/mob/food)
+			target << "\blue <b>NAR-SIE HAS LOST INTEREST IN YOU</b>"
+			target = food
+			if(ishuman(target))
+				target << "\red <b>NAR-SIE HUNGERS FOR YOUR SOUL</b>"
+			else
+				target << "\red <b>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
