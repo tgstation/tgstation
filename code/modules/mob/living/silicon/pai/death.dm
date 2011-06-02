@@ -13,9 +13,6 @@
 	//var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 	//mind.store_memory("Time of death: [tod]", 0)
 
-	if(key)
-		spawn(50)
-			src.ghost()
 	for(var/mob/M in world)
 		if ((M.client && !( M.stat )))
 			cancel = 1
@@ -26,4 +23,7 @@
 			log_game("Rebooting because of no live players")
 			world.Reboot()
 			return
-	return ..(gibbed)
+	if(key)
+		spawn(50)
+			src.ghostize(1)
+	del(src)

@@ -70,7 +70,6 @@
 					M << "<font color = #ff8787><h4>Your mental faculties leave you.</h4></font>"
 					M << "<font color = #ffc4c4><h5>oblivion... </h5></font>"
 					M.death(0)
-					del(M)
 				src.pai = null
 		if(href_list["wires"])
 			var/t1 = text2num(href_list["wires"])

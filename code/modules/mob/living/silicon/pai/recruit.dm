@@ -21,7 +21,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 
 	Topic(href, href_list[])
 		if(href_list["download"])
-			var/datum/paiCandidate/candidate = locate(href_list["candidate"])			//pai_candidates.Find(href_list["candidate"])
+			var/datum/paiCandidate/candidate = locate(href_list["candidate"])
 			var/obj/item/device/paicard/card = locate(href_list["device"])
 			if(card.pai)
 				return
@@ -35,7 +35,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				pai_candidates.Remove(candidate)
 				usr << browse(null, "window=findPai")
 		if(href_list["new"])
-			var/datum/paiCandidate/candidate = locate(href_list["candidate"])			//pai_candidates.Find(href_list["candidate"])
+			var/datum/paiCandidate/candidate = locate(href_list["candidate"])
 			var/option = href_list["option"]
 			switch(option)
 				if("name")
@@ -162,8 +162,10 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 	proc/requestRecruits()
 		for(var/mob/dead/observer/O in world)
 			if(asked.Find(O.key))
-				if(asked[O] < world.time + askDelay)
+				if(world.time < asked[O.key] + askDelay)
 					continue
+				else
+					asked.Remove(O.key)
 			if(O.client)
 				var/hasSubmitted = 0
 				for(var/datum/paiCandidate/c in paiController.pai_candidates)
