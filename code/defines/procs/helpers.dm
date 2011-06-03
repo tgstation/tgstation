@@ -381,11 +381,13 @@
 
 //Returns location. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = 0, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
-//Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
-//Random error in tile placement x, error in tile placement y, and block offset.
-//Block offset tells the proc how to place the box. Behind teleport location, relative to starting location, forward, etc.
-//Negative values for offset are accepted, think of it in relation to North, -x is west, -y is south. Error defaults to positive.
-//Turf and target are seperate in case you want to teleport some distance from a turf the target is not standing on or something.
+/*
+Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
+Random error in tile placement x, error in tile placement y, and block offset.
+Block offset tells the proc how to place the box. Behind teleport location, relative to starting location, forward, etc.
+Negative values for offset are accepted, think of it in relation to North, -x is west, -y is south. Error defaults to positive.
+Turf and target are seperate in case you want to teleport some distance from a turf the target is not standing on or something.
+*/
 
 	var/dirx = 0//Generic location finding variable.
 	var/diry = 0

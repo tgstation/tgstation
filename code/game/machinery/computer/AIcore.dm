@@ -165,8 +165,11 @@
 					user << "\red <b>ERROR</b>: \black Remote access channel disabled."
 		return
 
-//This is a good place for AI-related object verbs so I'm sticking it here.
-
+/*
+This is a good place for AI-related object verbs so I'm sticking it here.
+If adding stuff to this, don't forget that an AI need to cancel_camera() whenever it physically moves to a different location.
+That prevents a few funky behaviors.
+*/
 //What operation to perform based on target, what ineraction to perform based on object used, target itself, user. The object used is src and calls this proc.
 /obj/item/proc/transfer_ai(var/choice as text, var/interaction as text, var/target, var/mob/U as mob)
 	if(!src:flush)
@@ -194,6 +197,7 @@
 								C.icon_state = "aicard-404"
 							else
 								C.icon_state = "aicard-full"
+							T.cancel_camera()
 							T << "You have been downloaded to a mobile storage device. Remote device connection severed."
 							U << "\blue <b>Transfer successful</b>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 					if("NINJASUIT")
@@ -215,6 +219,7 @@
 								T.control_disabled = 1
 								T.loc = C
 								C.AI = T
+								T.cancel_camera()
 								T << "You have been downloaded to a mobile storage device. Remote device connection severed."
 								U << "\blue <b>Transfer successful</b>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 
@@ -227,11 +232,12 @@
 						if(A)//If AI exists on the card. Else nothing since both are empty.
 							A.control_disabled = 0
 							A.loc = T.loc//To replace the terminal.
-							A << "You have been uploaded to a stationary terminal. Remote device connection restored."
-							U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
 							C.icon_state = "aicard"
 							C.name = "inteliCard"
 							C.overlays = null
+							A.cancel_camera()
+							A << "You have been uploaded to a stationary terminal. Remote device connection restored."
+							U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
 							del(T)
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
@@ -240,6 +246,7 @@
 							A.control_disabled = 0
 							C.AI = null
 							A.loc = T.loc
+							A.cancel_camera()
 							A << "You have been uploaded to a stationary terminal. Remote device connection restored."
 							U << "\blue <b>Transfer succesful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
 							del(T)
@@ -252,8 +259,6 @@
 							if (!C.contents.len)
 								U << "No AI to copy over!"//Well duh
 							else for(var/mob/living/silicon/ai/A in C)
-								A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
-								U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
 								C.icon_state = "aicard"
 								C.name = "inteliCard"
 								C.overlays = null
@@ -265,6 +270,9 @@
 								else
 									T.overlays += image('computer.dmi', "ai-fixer-full")
 								T.overlays -= image('computer.dmi', "ai-fixer-empty")
+								A.cancel_camera()
+								A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
+								U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
 						else
 							if(!C.contents.len && T.occupant && !T.active)
 								C.name = "inteliCard - [T.occupant.name]"
@@ -278,6 +286,7 @@
 								T.occupant << "You have been downloaded to a mobile storage device. Still no remote access."
 								U << "\blue <b>Transfer succesful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 								T.occupant.loc = C
+								T.occupant.cancel_camera()
 								T.occupant = null
 							else if (C.contents.len)
 								U << "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal."
@@ -292,14 +301,15 @@
 								U << "No AI to copy over!"
 							else
 								var/mob/living/silicon/ai/A = C.AI
-								A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
-								U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
 								A.loc = T
 								T.occupant = A
 								C.AI = null
 								A.control_disabled = 1
 								T.overlays += image('computer.dmi', "ai-fixer-full")
 								T.overlays -= image('computer.dmi', "ai-fixer-empty")
+								A.cancel_camera()
+								A << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
+								U << "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed."
 						else
 							if(!C.AI && T.occupant && !T.active)
 								if (T.occupant.stat)
@@ -310,6 +320,7 @@
 									T.occupant << "You have been downloaded to a mobile storage device. Still no remote access."
 									U << "\blue <b>Transfer successful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 									T.occupant.loc = C
+									T.occupant.cancel_camera()
 									T.occupant = null
 							else if (C.AI)
 								U << "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal."
@@ -335,6 +346,7 @@
 									C.name = "inteliCard - [A.name]"
 									C.icon_state = "aicard-full"
 									T.AI = null
+									A.cancel_camera()
 									A << "You have been uploaded to a mobile storage device."
 									U << "\blue <b>SUCCESS</b>: \black [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory."
 							else//If host AI is empty.
@@ -347,6 +359,7 @@
 										C.name = "inteliCard"
 										C.overlays = null
 										T.AI = A_T
+										A_T.cancel_camera()
 										A_T << "You have been uploaded to a mobile storage device."
 										U << "\blue <b>SUCCESS</b>: \black [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host."
 									else if(A_T)//If the target AI is dead. Else just go to return since nothing would happen if both are empty.

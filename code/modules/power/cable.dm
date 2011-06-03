@@ -102,6 +102,12 @@
 		PN = powernets[netnum]
 	return PN
 
+/obj/cable/attack_hand(mob/user)
+	if(ishuman(user))
+		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
+			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("WIRE",src,user:wear_suit)
+	return
+
 /obj/cable/attackby(obj/item/W, mob/user)
 
 	var/turf/T = src.loc

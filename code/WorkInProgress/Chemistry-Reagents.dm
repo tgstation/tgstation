@@ -701,19 +701,19 @@ datum
 */
 
 		gold
-			name = "gold"
+			name = "Gold"
 			id = "gold"
 			description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
 			reagent_state = SOLID
 
 		silver
-			name = "silver"
+			name = "Silver"
 			id = "silver"
 			description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 			reagent_state = SOLID
 
 		uranium
-			name ="uranium"
+			name ="Uranium"
 			id = "uranium"
 			description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 			reagent_state = SOLID
@@ -730,7 +730,7 @@ datum
 					new /obj/decal/cleanable/greenglow(T)
 
 		aluminum
-			name = "aluminum"
+			name = "Aluminum"
 			id = "aluminum"
 			description = "A silvery white and ductile member of the boron group of chemical elements."
 			reagent_state = SOLID
@@ -1065,9 +1065,9 @@ datum
 			id = "arithrazine"
 			description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 			reagent_state = LIQUID
-			on_mob_life(var/mob/living/M)
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:radiation = 0
+				M:radiation = max(M:radiation-7,0)
 				if(M:toxloss) M:toxloss--
 				if(prob(15))
 					M.take_organ_damage(1, 0)
@@ -1096,20 +1096,6 @@ datum
 				M:eye_blind = max(M:eye_blind-5 , 0)
 				M:disabilities &= ~1
 //				M:sdisabilities &= ~1		Replaced by eye surgery
-				..()
-				return
-
-		arithrazine
-			name = "Arithrazine"
-			id = "arithrazine"
-			description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				M:radiation = max(M:radiation-3,0)
-				if(M:toxloss) M:toxloss--
-				if(prob(15))
-					M.take_organ_damage(1, 0)
 				..()
 				return
 

@@ -1,18 +1,19 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+++++++++++++++++++++++++++++++++//                    \\++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++//                    //++++++++++++++++++++++++++++++++++
 ==================================SPACE NINJA ABILITIES====================================
 ___________________________________________________________________________________________
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-/*X is optional, tells the proc to check for specific stuff. C is also optional.
+//=======//SAFETY CHECK//=======//
+/*
+X is optional, tells the proc to check for specific stuff. C is also optional.
 All the procs here assume that the character is wearing the ninja suit if they are using the procs.
 They should, as I have made every effort for that to be the case.
 In the case that they are not, I imagine the game will run-time error like crazy.
+s_cooldown ticks off each second based on the suit recharge proc, in seconds. Default of 1 seconds. Some abilities have no cool down.
 */
-
-//s_cooldown ticks off each second based on the suit recharge proc, in seconds. Default of 1 seconds. Some abilities have no cool down.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjacost(C = 0,X = 0)
 	var/mob/living/carbon/human/U = affecting
 	if( (U.stat||U.incorporeal_move)&&X!=3 )//Will not return if user is using an adrenaline booster since you can use them when stat==1.
@@ -34,9 +35,19 @@ In the case that they are not, I imagine the game will run-time error like crazy
 				return 1
 	return (s_coold)//Returns the value of the variable which counts down to zero.
 
-//Smoke
-//Summons smoke in radius of user.
-//Not sure why this would be useful (it's not) but whatever. Ninjas need their smoke bombs.
+//=======//TELEPORT GRAB CHECK//=======//
+/obj/item/clothing/suit/space/space_ninja/proc/handle_teleport_grab(turf/T, mob/living/U)
+	if(istype(U.get_active_hand(),/obj/item/weapon/grab))//Handles grabbed persons.
+		var/obj/item/weapon/grab/G = U.get_active_hand()
+		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
+	if(istype(U.get_inactive_hand(),/obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = U.get_inactive_hand()
+		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
+	return
+
+//=======//SMOKE//=======//
+/*Summons smoke in radius of user.
+Not sure why this would be useful (it's not) but whatever. Ninjas need their smoke bombs.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjasmoke()
 	set name = "Smoke Bomb"
 	set desc = "Blind your enemies momentarily with a well-placed smoke bomb."
@@ -54,7 +65,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 		s_coold = 1
 	return
 
-//9-10 Tile Teleport
+//=======//9-8 TILE TELEPORT//=======//
 //Click to to teleport 9-10 tiles in direction facing.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt()
 	set name = "Phase Jaunt (10E)"
@@ -72,12 +83,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 				playsound(U.loc, "sparks", 50, 1)
 				anim(mobloc,src,'mob.dmi',,"phaseout")
 
-			if(istype(U.get_active_hand(),/obj/item/weapon/grab))//Handles grabbed persons.
-				var/obj/item/weapon/grab/G = U.get_active_hand()
-				G.affecting.loc = locate(destination.x+rand(-1,1),destination.y+rand(-1,1),destination.z)//variation of position.
-			if(istype(U.get_inactive_hand(),/obj/item/weapon/grab))
-				var/obj/item/weapon/grab/G = U.get_inactive_hand()
-				G.affecting.loc = locate(destination.x+rand(-1,1),destination.y+rand(-1,1),destination.z)//variation of position.
+			handle_teleport_grab(destination, U)
 			U.loc = destination
 
 			spawn(0)
@@ -94,7 +100,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 			U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
 	return
 
-//Right Click Teleport
+//=======//RIGHT CLICK TELEPORT//=======//
 //Right click to teleport somewhere, almost exactly like admin jump to turf.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjashift(turf/T in oview())
 	set name = "Phase Shift (20E)"
@@ -111,12 +117,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 				playsound(U.loc, 'sparks4.ogg', 50, 1)
 				anim(mobloc,src,'mob.dmi',,"phaseout")
 
-			if(istype(U.get_active_hand(),/obj/item/weapon/grab))//Handles grabbed persons.
-				var/obj/item/weapon/grab/G = U.get_active_hand()
-				G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
-			if(istype(U.get_inactive_hand(),/obj/item/weapon/grab))
-				var/obj/item/weapon/grab/G = U.get_inactive_hand()
-				G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
+			handle_teleport_grab(T, U)
 			U.loc = T
 
 			spawn(0)
@@ -133,7 +134,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 			U << "\red You cannot teleport into solid walls or from solid matter"
 	return
 
-//EMP Pulse
+//=======//EM PULSE//=======//
 //Disables nearby tech equipment.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse()
 	set name = "EM Burst (25E)"
@@ -150,7 +151,7 @@ In the case that they are not, I imagine the game will run-time error like crazy
 		cell.charge-=(C*10)
 	return
 
-//Summon Energy Blade
+//=======//ENERGY BLADE//=======//
 //Summons a blade of energy in active hand.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjablade()
 	set name = "Energy Blade (5E)"
@@ -182,16 +183,16 @@ In the case that they are not, I imagine the game will run-time error like crazy
 			s_coold = 1
 	return
 
-//Shoot Ninja Stars
-//Shoots ninja stars at random people.
-//This could be a lot better but I'm too tired atm.
+//=======//NINJA STARS//=======//
+/*Shoots ninja stars at random people.
+This could be a lot better but I'm too tired atm.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjastar()
-	set name = "Energy Star (3E)"
+	set name = "Energy Star (5E)"
 	set desc = "Launches an energy star at a random living target."
 	set category = "Ninja Ability"
 	set popup_menu = 0
 
-	var/C = 30
+	var/C = 50
 	if(!ninjacost(C))
 		var/mob/living/carbon/human/U = affecting
 		var/targets[] = list()//So yo can shoot while yo throw dawg
@@ -217,9 +218,9 @@ In the case that they are not, I imagine the game will run-time error like crazy
 			U << "\red There are no targets in view."
 	return
 
-//Energy Net
-//Allows the ninja to capture people, I guess.
-//Must right click on a mob to activate.
+//=======//ENERGY NET//=======//
+/*Allows the ninja to capture people, I guess.
+Must right click on a mob to activate.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjanet(mob/living/carbon/M in oview())//Only living carbon mobs.
 	set name = "Energy Net (20E)"
 	set desc = "Captures a fallen opponent in a net of energy. Will teleport them to a holding facility after 30 seconds."
@@ -255,9 +256,9 @@ In the case that they are not, I imagine the game will run-time error like crazy
 			U << "They will bring no honor to your Clan!"
 	return
 
-//Adrenaline Boost
-//Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
-//Movement impairing would indicate drugs and the like.
+//=======//ADRENALINE BOOST//=======//
+/*Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
+Movement impairing would indicate drugs and the like.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
 	set name = "Adrenaline Boost"
 	set desc = "Inject a secret chemical that will counteract all movement-impairing effects."
@@ -282,10 +283,14 @@ In the case that they are not, I imagine the game will run-time error like crazy
 	return
 
 
-//KAMIKAZE=============================
-//Or otherwise known as anime mode. Which also happens to be ridiculously powerful.
+/*
+===================================================================================
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<KAMIKAZE MODE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+===================================================================================
+Or otherwise known as anime mode. Which also happens to be ridiculously powerful.
+*/
 
-//Allows for incorporeal movement.
+//=======//NINJA MOVEMENT//=======//
 //Also makes you move like you're on crack.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjawalk()
 	set name = "Shadow Walk"
@@ -304,8 +309,8 @@ In the case that they are not, I imagine the game will run-time error like crazy
 		U << "\blue You will no-longer phase through solid matter."
 	return
 
-/*
-Allows to gib up to five squares in a straight line. Seriously.*/
+//=======//5 TILE TELEPORT/GIB//=======//
+//Allows to gib up to five squares in a straight line. Seriously.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaslayer()
 	set name = "Phase Slayer"
 	set desc = "Utilizes the internal VOID-shift device to mutilate creatures in a straight line."
@@ -330,6 +335,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 					spawn(0)
 						anim(T,U,'mob.dmi',,"phasein")
 
+			handle_teleport_grab(destination, U)
 			U.loc = destination
 
 			spawn(0)
@@ -342,8 +348,9 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 			U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
 	return
 
-//Appear behind a randomly chosen mob while a few decoy teleports appear.
-//This is so anime it hurts. But that's the point.
+//=======//TELEPORT BEHIND MOB//=======//
+/*Appear behind a randomly chosen mob while a few decoy teleports appear.
+This is so anime it hurts. But that's the point.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjamirage()
 	set name = "Spider Mirage"
 	set desc = "Utilizes the internal VOID-shift device to create decoys and teleport behind a random target."
@@ -401,6 +408,7 @@ Allows to gib up to five squares in a straight line. Seriously.*/
 							limit--
 						if(limit<=0)	break
 
+				handle_teleport_grab(picked, U)
 				U.loc = picked
 				U.dir = target.dir
 

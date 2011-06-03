@@ -47,6 +47,7 @@
 		return
 
 	Topic(href, href_list)
+
 		if(href_list["setdna"])
 			if(pai.master_dna)
 				return

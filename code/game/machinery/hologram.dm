@@ -57,6 +57,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.icon = 'mob.dmi'
 	hologram.icon_state = "ai-holo"
 	hologram.mouse_opacity = 0//So you can't click on it.
+	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	hologram.sd_SetLuminosity(1)//To make it glowy.
 	sd_SetLuminosity(1)//To make the pad glowy.
 	icon_state = "holopad1"

@@ -46,9 +46,12 @@ mob/new_player
 				preferences.lastchangelog = lastchangelog
 				preferences.savefile_save(src)
 		//PDA Resource Initialisation =======================================================>
-
-
-		if (client) //load the PDA iconset into the client
+		/*
+		Quick note: local dream daemon instances don't seem to cache images right. Might be
+		a local problem with my machine but it's annoying nontheless.
+		*/
+		if (client)
+			//load the PDA iconset into the client
 			src << browse_rsc('pda_atmos.png')
 			src << browse_rsc('pda_back.png')
 			src << browse_rsc('pda_bell.png')
@@ -87,8 +90,8 @@ mob/new_player
 			src << browse_rsc('sos_11.png')
 			src << browse_rsc('sos_12.png')
 			src << browse_rsc('sos_13.png')
+			src << browse_rsc('sos_14.png')
 		//End PDA Resource Initialisation =====================================================>
-
 
 	Logout()
 		ready = 0

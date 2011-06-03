@@ -101,7 +101,7 @@ datum
 				src.update_total()
 				R.update_total()
 				R.handle_reactions()
-				//src.handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating) and transferring a specific reagent.
+				//src.handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating and) transferring a specific reagent.
 				return amount
 
 /*
@@ -315,9 +315,9 @@ datum
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
 					if (R.id == reagent)
-						if(!amount) return 1
+						if(!amount) return R
 						else
-							if(R.volume >= amount) return 1
+							if(R.volume >= amount) return R
 							else return 0
 
 				return 0

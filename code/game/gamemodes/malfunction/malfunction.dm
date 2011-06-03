@@ -66,6 +66,9 @@
 		AI_mind.current << "When you feel you have enough APCs under your control, you may begin the takeover attempt."
 		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/takeover
 		AI_mind.current.icon_state = "ai-malf"
+		spawn(10)
+			if(alert(AI_mind.current,"Do you want to use an alternative sprite for your real core?",,"Yes","No")=="Yes")
+				AI_mind.current.icon_state = "ai-malf2"
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()

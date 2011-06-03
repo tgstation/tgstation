@@ -54,7 +54,6 @@
 #define FILE_DIR "code/game/machinery/pipe"
 #define FILE_DIR "code/game/magic"
 #define FILE_DIR "code/game/magic/cultist"
-#define FILE_DIR "code/game/magic/playerpower"
 #define FILE_DIR "code/game/mecha"
 #define FILE_DIR "code/game/mecha/combat"
 #define FILE_DIR "code/game/mecha/equipment"
@@ -148,7 +147,6 @@
 #define DEBUG
 // END_PREFERENCES
 // BEGIN_INCLUDE
-#include <shadowdarke\sd_mapsuite\sd_MapSuite.dme>
 #include "code\names.dm"
 #include "code\setup.dm"
 #include "code\stylesheet.dm"

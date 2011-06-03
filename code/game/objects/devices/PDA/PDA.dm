@@ -300,7 +300,7 @@
 	..()
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
-	if (U.contents.Find(src) || (istype(loc, /turf) && get_dist(src, U) <= 1))
+	if ( U.contents.Find(src) || ( istype(loc, /turf) && in_range(src, U) ) )
 		if ( !(U.stat || U.restrained()) )
 
 			add_fingerprint(U)
@@ -627,7 +627,7 @@
 			var/input=alert("Would you like to inert the card or update owner information?",,"Insert","Update")
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 
-			if ( (user.contents.Find(src) && user.contents.Find(C)) || (istype(loc, /turf) && get_dist(src, user) <= 1 && user.contents.Find(C)) )
+			if ( (user.contents.Find(src) && user.contents.Find(C)) || (istype(loc, /turf) && in_range(src, user) && user.contents.Find(C)) )
 				if ( !(user.stat || user.restrained()) )//If they can still act.
 					if(input=="Insert")
 						id_check(user, 2)

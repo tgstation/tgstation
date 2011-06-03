@@ -63,35 +63,52 @@
 				dat += "<b>AI nonfunctional</b>"
 			else
 				if (!src.flush)
-					dat += {"<A href='byond://?src=\ref[src];choice=Wipe'>Wipe AI</A>"}
+					dat += {"<A href='byond://?src=\ref[src];choice=Wipe;user=\ref[user]'>Wipe AI</A>"}
 				else
 					dat += "<b>Wipe in progress</b>"
-				dat += {"<a href='byond://?src=\ref[src];choice=Wireless'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</a>"}
 				dat += "<br>"
-				dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
+				dat += {"<a href='byond://?src=\ref[src];choice=Wireless;user=\ref[user]'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</a>"}
+				dat += "<br>"
+				dat += {"<a href='byond://?src=\ref[src];choice=Close;user=\ref[user]'> Close</a>"}
 		user << browse(dat, "window=aicard")
 		onclose(user, "aicard")
 		return
 
 	Topic(href, href_list)
-		switch(href_list["choice"])
+	/*Let's define the user. It's safer to do it this way, rather than defaulting to usr.
+	For very long menu lines, usr is probably a lot more convenient.*/
+		var/mob/U = href_list["user"]
+		if (!in_range(src, U)||U.machine!=src)//If they are not in range of 1 or less or their machine is not the card (ie, clicked on something else).
+			U << browse(null, "window=aicard")
+			U.machine = null
+			return
+
+		add_fingerprint(U)
+		U.machine = src
+
+		switch(href_list["choice"])//Now we switch based on choice.
 			if ("Close")
-				usr << browse(null, "window=aicard")
-				usr.machine = null
+				U << browse(null, "window=aicard")
+				U.machine = null
 				return
 
 			if ("Wipe")
 				var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", "Yes", "No")
 				if(confirm == "Yes")
-					flush = 1
-					for(var/mob/living/silicon/ai/A in src)
-						A.suiciding = 1
-						A << "Your core files are being wiped!"
-						while (A.stat != 2)
-							A.oxyloss += 2
-							A.updatehealth()
-							sleep(10)
-						flush = 0
+					if(isnull(src)||!in_range(src, U)||U.machine!=src)
+						U << browse(null, "window=aicard")
+						U.machine = null
+						return
+					else
+						flush = 1
+						for(var/mob/living/silicon/ai/A in src)
+							A.suiciding = 1
+							A << "Your core files are being wiped!"
+							while (A.stat != 2)
+								A.oxyloss += 2
+								A.updatehealth()
+								sleep(10)
+							flush = 0
 
 			if ("Wireless")
 				for(var/mob/living/silicon/ai/A in src)
@@ -101,7 +118,7 @@
 						overlays -= image('pda.dmi', "aicard-on")
 					else
 						overlays += image('pda.dmi', "aicard-on")
-		attack_self(usr)
+		attack_self(U)
 
 
 
