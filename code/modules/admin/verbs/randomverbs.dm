@@ -837,3 +837,31 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	usr << text("\red <b>Attack Log для []</b>", mob)
 	for(var/t in M.attack_log)
 		usr << "[t]"
+
+
+/client/proc/makepAI(var/turf/T in world)
+	set category = "Admin"
+	set name = "Make pAI"
+	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
+
+	var/list/available = list()
+	for(var/mob/C in world)
+		if(C.key)
+			available.Add(C)
+	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
+	if(!choice)
+		return 0
+	if(!istype(choice, /mob/dead/observer))
+		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
+		if(confirm != "Yes")
+			return 0
+	var/obj/item/device/paicard/card = new(T)
+	var/mob/living/silicon/pai/pai = new(card)
+	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text
+	pai.real_name = pai.name
+	pai.key = choice.key
+	card.pai = pai
+	for(var/datum/paiCandidate/candidate in paiController.pai_candidates)
+		if(candidate.key == choice.key)
+			paiController.pai_candidates.Remove(candidate)
+

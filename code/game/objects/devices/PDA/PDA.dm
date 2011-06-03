@@ -847,3 +847,9 @@
 			new /obj/item/weapon/cartridge/head(src)
 
 	new /obj/item/weapon/cartridge/signal/toxins(src)
+
+
+// Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
+/obj/item/device/pda/emp_act(severity)
+	for(var/atom/A in src)
+		A.emp_act(severity)

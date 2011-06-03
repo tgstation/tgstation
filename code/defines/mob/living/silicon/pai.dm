@@ -28,6 +28,8 @@
 	var/pai_law0 = "Serve your master."
 	var/pai_laws				// String for additional operating instructions our master might give us
 
+	var/silence_time			// Timestamp when we were silenced (normally via EMP burst), set to null after silence has faded
+
 // Various software-specific vars
 
 	var/temp				// General error reporting text contained here will typically be shown once and cleared
@@ -46,4 +48,4 @@
 	var/datum/data/record/securityActive2
 
 	var/obj/machinery/door/hackdoor		// The airlock being hacked
-	var/hackprogress = 0
+	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check

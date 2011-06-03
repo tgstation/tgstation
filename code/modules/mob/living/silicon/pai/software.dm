@@ -114,6 +114,8 @@
 /mob/living/silicon/pai/Topic(href, href_list)
 	..()
 
+	if(href_list["priv_msg"])	// Admin-PMs were triggering the interface popup. Hopefully this will stop it.
+		return
 	var/soft = href_list["software"]
 	var/sub = href_list["sub"]
 	if(soft)
@@ -153,6 +155,9 @@
 
 		if("pdamessage")
 			if(href_list["target"])
+				if(silence_time)
+					return alert("Communications circuits remain unitialized.")
+
 				var/t = input(usr, "Please enter message", name, null) as text
 				t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 				if (!t)

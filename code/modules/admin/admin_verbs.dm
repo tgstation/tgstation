@@ -120,6 +120,7 @@
 			src.verbs += /client/proc/cmd_admin_monkeyize
 			src.verbs += /client/proc/cmd_admin_robotize
 			src.verbs += /client/proc/make_cultist 				// -- TLE
+			src.verbs += /client/proc/makepAI					// -- TLE
 			src.verbs += /client/proc/respawn_character			//N
 
 			src.verbs += /client/proc/Getmob
@@ -254,6 +255,7 @@
 			src.verbs += /client/proc/cmd_admin_monkeyize
 			src.verbs += /client/proc/cmd_admin_robotize
 			src.verbs += /client/proc/make_cultist 				// -- TLE
+			src.verbs += /client/proc/makepAI					// -- TLE
 			src.verbs += /client/proc/respawn_character			//N
 
 			src.verbs += /client/proc/Getmob

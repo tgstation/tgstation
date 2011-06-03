@@ -13,6 +13,10 @@
 		src.securityHUD()
 	if(src.medHUD == 1)
 		src.medicalHUD()
+	if(silence_time)
+		if(world.timeofday >= silence_time)
+			silence_time = null
+			src << "<font color=green>Communication circuit reinitialized. Speech and messaging functionality restored.</font>"
 
 /mob/living/silicon/pai/updatehealth()
 	if(src.nodamage)

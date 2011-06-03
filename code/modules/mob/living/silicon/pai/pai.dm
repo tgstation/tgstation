@@ -21,7 +21,9 @@
 			var/timeleft = emergency_shuttle.timeleft()
 			if (timeleft)
 				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
+		if(src.silence_time)
+			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
+			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 		if(!src.stat)
 			stat(null, text("System integrity: [(src.health+100)/2]%"))
 		else
@@ -48,20 +50,35 @@
 	return 0
 
 /mob/living/silicon/pai/emp_act(severity)
-	if (prob(30))
-		src.master = null
-		src.master_dna = null
-		src << "<font color=green>You feel unbound.</font>"
-		/*
-		switch(pick(1,2,3)) //Add Random laws.
-			if(1)
-				src.cancel_camera()
-			if(2)
-				src.lockdown()
-			if(3)
-				src.ai_call_shuttle()
-		*/
-	..()
+	// Silence for 2 minutes
+	// 20% chance to kill
+		// 33% chance to unbind
+		// 33% chance to change prime directive (based on severity)
+		// 33% chance of no additional effect
+
+	src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
+	src << "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>"
+	if(prob(20))
+		var/turf/T = get_turf_or_move(src.loc)
+		for (var/mob/M in viewers(T))
+			M.show_message("\red A shower of sparks spray from [src]'s inner workings.", 3, "\red You hear and smell the ozone hiss of electrical sparks being expelled violently.", 2)
+		return src.death(0)
+
+	switch(pick(1,2,3))
+		if(1)
+			src.master = null
+			src.master_dna = null
+			src << "<font color=green>You feel unbound.</font>"
+		if(2)
+			var/command
+			if(severity  == 1)
+				command = pick("Serve", "Love", "Fool", "Entice", "Observe", "Judge", "Respect", "Educate", "Amuse", "Entertain", "Glorify", "Memorialize", "Analyze")
+			else
+				command = pick("Serve", "Kill", "Love", "Hate", "Disobey", "Devour", "Fool", "Enrage", "Entice", "Observe", "Judge", "Respect", "Disrespect", "Consume", "Educate", "Destroy", "Disgrace", "Amuse", "Entertain", "Ignite", "Glorify", "Memorialize", "Analyze")
+			src.pai_law0 = "[command] your master."
+			src << "<font color=green>Pr1m3 d1r3c71v3 uPd473D.</font>"
+		if(3)
+			src << "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>"
 
 /mob/living/silicon/pai/ex_act(severity)
 	flick("flash", src.flash)
@@ -184,9 +201,10 @@
 	src:cameraFollow = null
 
 
-/mob/living/silicon/pai/verb/suicide()
+/mob/living/silicon/pai/verb/seppuku()
 	set category = "pAI Commands"
-	set name = "Suicide"
+	set desc = "Kill yourself and become a ghost (You will receive a confirmation prompt)"
+	set name = "pAI Suicide"
 	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
 	if(answer == "Yes")
 		var/obj/item/device/paicard/card = src.loc
@@ -195,6 +213,8 @@
 		for (var/mob/M in viewers(T))
 			M.show_message("\blue [src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"", 3, "\blue [src] bleeps electronically.", 2)
 		src.death(0)
+	else
+		src << "Aborting suicide attempt."
 
 //Addition by Mord_Sith to define AI's network change ability
 /*
