@@ -308,7 +308,7 @@
 
 		if (locate(/obj/item/weapon/gun/energy, M))
 			for(var/obj/item/weapon/gun/energy/G in M)
-				G.charges = 0
+				G.power_supply.charge = 0
 				G.update_icon()
 
 		if ((istype(M, /mob/living/carbon/human)) && (istype(M:glasses, /obj/item/clothing/glasses/thermal)))

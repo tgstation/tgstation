@@ -188,12 +188,12 @@
 	var/turf/U = get_turf(target)
 	if (!istype(T) || !istype(U))
 		return
-	var/obj/beam/a_laser/A
+	var/obj/item/projectile/A
 	if (src.lasers)
-		A = new /obj/beam/a_laser( loc )
+		A = new /obj/item/projectile/beam( loc )
 		use_power(500)
 	else
-		A = new /obj/bullet/electrode( loc )
+		A = new /obj/item/projectile/electrode( loc )
 		use_power(200)
 	A.current = T
 	A.yo = U.y - T.y
@@ -559,7 +559,7 @@
 			if (targloc == curloc)
 				continue
 			playsound(src, 'Gunshot.ogg', 50, 1)
-			var/obj/bullet/A = new /obj/bullet(curloc)
+			var/obj/item/projectile/A = new /obj/item/projectile(curloc)
 			src.projectiles--
 			A.current = curloc
 			A.yo = targloc.y - curloc.y

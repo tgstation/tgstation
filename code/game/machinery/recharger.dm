@@ -15,7 +15,7 @@ obj/machinery/recharger
 	if (src.charging || src.charging2)
 		return
 	if (istype(G, /obj/item/weapon/gun/energy))
-		if (istype(G, /obj/item/weapon/gun/energy/general/nuclear))
+		if (istype(G, /obj/item/weapon/gun/energy/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
 			user << "Your gun's recharge port was removed to make room for a miniaturized reactor."
 			return
 		user.drop_item()
@@ -52,8 +52,8 @@ obj/machinery/recharger
 
 /obj/machinery/recharger/process()
 	if ((src.charging) && ! (stat & NOPOWER) )
-		if (src.charging.charges < src.charging.maximum_charges)
-			src.charging.charges++
+		if (src.charging.power_supply.charge < src.charging.power_supply.maxcharge)
+			src.charging.power_supply.give(100)
 			src.icon_state = "recharger1"
 			use_power(250)
 		else

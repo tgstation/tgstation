@@ -529,7 +529,7 @@
 	if ((istype(mover, /obj/item/weapon/dummy) || istype(mover, /obj/beam)))
 		return prob(20)
 	else
-		if (istype(mover, /obj/bullet))
+		if (istype(mover, /obj/item/projectile))
 			return prob(10)
 		else
 			return !src.density

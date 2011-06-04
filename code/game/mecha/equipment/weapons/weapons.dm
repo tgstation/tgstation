@@ -26,7 +26,7 @@
 			return
 		set_ready_state(0)
 		playsound(chassis, 'Laser.ogg', 50, 1)
-		var/obj/beam/a_laser/A = new /obj/beam/a_laser(curloc)
+		var/obj/item/projectile/beam/A = new /obj/item/projectile/beam(curloc)
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -55,7 +55,7 @@
 			return
 
 		playsound(chassis, 'marauder.ogg', 50, 1)
-		var/obj/beam/a_laser/A = new /obj/beam/a_laser/pulse_laser/heavy_pulse(curloc)
+		var/obj/item/projectile/beam/pulse/A = new /obj/item/projectile/beam/pulse/heavy(curloc)
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -67,14 +67,16 @@
 		return
 
 
-/obj/beam/a_laser/pulse_laser/heavy_pulse
+/obj/item/projectile/beam/pulse/heavy
 	name = "heavy pulse laser"
 	icon_state = "pulse1_bl"
-	life = 20
+	var/life = 20
 
 	Bump(atom/A)
 		A.bullet_act(PROJECTILE_PULSE, src, def_zone)
 		src.life -= 10
+		if(life <= 0)
+			del(src)
 		return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/taser
@@ -94,7 +96,7 @@
 			return
 
 		playsound(chassis, 'Laser.ogg', 50, 1)
-		var/obj/bullet/electrode/A = new /obj/bullet/electrode(curloc)
+		var/obj/item/projectile/electrode/A = new /obj/item/projectile/electrode(curloc)
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -217,7 +219,7 @@
 			if(!targloc || targloc == curloc)
 				break
 			playsound(chassis, 'Gunshot.ogg', 80, 1)
-			var/obj/bullet/A = new /obj/bullet(curloc)
+			var/obj/item/projectile/A = new /obj/item/projectile(curloc)
 			src.projectiles--
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
@@ -255,7 +257,7 @@
 			if (targloc == curloc)
 				continue
 			playsound(chassis, 'Gunshot.ogg', 50, 1)
-			var/obj/bullet/weakbullet/A = new /obj/bullet/weakbullet(curloc)
+			var/obj/item/projectile/weakbullet/A = new /obj/item/projectile/weakbullet(curloc)
 			src.projectiles--
 			A.current = curloc
 			A.yo = targloc.y - curloc.y

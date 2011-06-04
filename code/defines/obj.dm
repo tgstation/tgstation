@@ -72,18 +72,6 @@
 	unacidable = 1//Just to be sure.
 	var/def_zone
 
-/obj/beam/a_laser
-	name = "a laser"
-	icon = 'projectiles.dmi'
-	icon_state = "laser"
-	density = 1
-	var/yo = null
-	var/xo = null
-	var/current = null
-	var/life = 50.0
-	anchored = 1.0
-	flags = TABLEPASS
-
 /obj/beam/i_beam
 	name = "i beam"
 	icon = 'projectiles.dmi'
@@ -111,40 +99,6 @@
 	icon_state = "begin"
 	anchored = 1.0
 	unacidable = 1
-
-/obj/bullet
-	name = "bullet"
-	icon = 'projectiles.dmi'
-	icon_state = "bullet"
-	density = 1
-	throwforce = 0.1 //an attempt to make it possible to shoot your way through space
-	unacidable = 1//Just to be sure.
-	var/yo = null
-	var/xo = null
-	var/current = null
-	anchored = 1.0
-	flags = TABLEPASS
-	var/def_zone
-
-/obj/bullet/weakbullet
-
-/obj/bullet/electrode
-	name = "electrode"
-	icon_state = "spark"
-
-/obj/bullet/teleshot
-	name = "teleshot"
-	icon_state = "spark"
-	var/failchance = 5
-	var/obj/item/target = null
-
-/obj/bullet/cbbolt
-	name = "crossbow bolt"
-	icon_state = "cbbolt"
-
-/obj/bullet/neurodart
-	name = "acid"
-	icon_state = "toxin"
 
 /obj/datacore
 	name = "datacore"

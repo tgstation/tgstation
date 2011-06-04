@@ -83,12 +83,11 @@
 			if("revolver")
 				if (src.uses >= 6)
 					src.uses -= 6
-					var/obj/item/weapon/gun/revolver/O = new /obj/item/weapon/gun/revolver(get_turf(src.hostpda))
-					O.bullets = 7
+					new /obj/item/weapon/gun/projectile(get_turf(src.hostpda))
 			if("revolver_ammo")
 				if (src.uses >= 2)
 					src.uses -= 2
-					new /obj/item/weapon/ammo/a357(get_turf(src.hostpda))
+					new /obj/item/ammo_magazine(get_turf(src.hostpda))
 			if("xbow")
 				if (src.uses >= 5)
 					src.uses -= 5

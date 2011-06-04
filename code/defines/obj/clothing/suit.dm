@@ -71,7 +71,7 @@
 	icon_state = "detective"
 	item_state = "det_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	allowed = list(/obj/item/weapon/gun/detectiverevolver,/obj/item/weapon/gun/revolver,/obj/item/weapon/ammo/a38,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
+	allowed = list(/obj/item/weapon/gun/projectile/detective,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	armor = list(melee = 50, bullet = 40, laser = 30, taser = 10, bomb = 20, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/judgerobe
@@ -191,7 +191,7 @@
 // ARMOR
 
 /obj/item/clothing/suit/armor
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/revolver,/obj/item/weapon/baton,/obj/item/weapon/handcuffs)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/weapon/baton,/obj/item/weapon/handcuffs)
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -283,7 +283,7 @@
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
 
@@ -367,7 +367,7 @@
 	item_state = "space_suit_syndicate"
 	desc = "Has a tag on it: Totally not property of of a hostile corporation, honest!"
 	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
@@ -393,7 +393,7 @@
 	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
-	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	radiation_protection = 0.75
 	slowdown = 1
 	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
@@ -445,7 +445,7 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/ammo,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 

@@ -135,9 +135,8 @@ obj/item/weapon/robot_module/syndicate
 	..()
 	src.modules += new /obj/item/weapon/baton(src)
 	src.modules += new /obj/item/weapon/handcuffs(src)
-	src.modules += new /obj/item/weapon/gun/energy/taser_gun(src)
-	src.emag = new /obj/item/weapon/gun/energy/laser_gun(src)
-	src.emag:shot_delay = 7
+	src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
+	src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 
 
 /obj/item/weapon/robot_module/janitor/New()
@@ -175,7 +174,7 @@ obj/item/weapon/robot_module/syndicate
 */ //Merged with Service borg, not a death, just a transformation
 
 obj/item/weapon/robot_module/syndicate/New()
-	src.modules += new /obj/item/weapon/gun/energy/crossbow(src)
+	src.modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 	src.modules += new /obj/item/weapon/card/emag(src)
 
 

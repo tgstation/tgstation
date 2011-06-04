@@ -75,7 +75,7 @@
 		src.orient_objs(4, 10, 4, 3)
 	else if(istype(user, /mob/living/carbon/human) && src == H.belt)//only humans have belts
 		src.orient_objs(1, 3, 8, 3)
-	else 
+	else
 		src.orient_objs(7, 8, 10, 7)
 	return
 

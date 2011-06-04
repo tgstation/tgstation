@@ -594,10 +594,10 @@ Auto Patrol: []"},
 		if(src.allowed(perp)) //Corrupt cops cannot exist beep boop
 			return 0
 
-		if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/shotgun)) || istype(perp.l_hand, /obj/item/weapon/baton))
+		if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.l_hand, /obj/item/weapon/baton))
 			threatcount += 4
 
-		if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/shotgun)) || istype(perp.r_hand, /obj/item/weapon/baton))
+		if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.r_hand, /obj/item/weapon/baton))
 			threatcount += 4
 
 		if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/baton))

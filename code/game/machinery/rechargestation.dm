@@ -100,9 +100,9 @@
 						if(istype(O,/obj/item/device/flash))
 							if(O:shots < 5)
 								O:shots += 1
-						if(istype(O,/obj/item/weapon/gun/energy/taser_gun))
-							if(O:charges < 4)
-								O:charges += 1
+						if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
+							if(O:power_supply.charge < O:power_supply.maxcharge)
+								O:power_supply.give(100)
 						if(istype(O,/obj/item/weapon/baton))
 							if(O:charges < 10)
 								O:charges += 1

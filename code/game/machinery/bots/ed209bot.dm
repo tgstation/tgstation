@@ -613,10 +613,10 @@ Auto Patrol: []"},
 		if(src.allowed(perp)) //Corrupt cops cannot exist beep boop
 			return 0
 
-		if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/shotgun)) || istype(perp.l_hand, /obj/item/weapon/baton))
+		if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.l_hand, /obj/item/weapon/baton))
 			threatcount += 4
 
-		if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/shotgun)) || istype(perp.r_hand, /obj/item/weapon/baton))
+		if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.r_hand, /obj/item/weapon/baton))
 			threatcount += 4
 
 		if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/baton))
@@ -719,11 +719,11 @@ Auto Patrol: []"},
 	//if(lastfired && world.time - lastfired < 100)
 	//	playsound(src.loc, 'ed209_shoot.ogg', 50, 0)
 
-	var/obj/beam/a_laser/A
+	var/obj/item/projectile/A
 	if (src.emagged)
-		A = new /obj/beam/a_laser( loc )
+		A = new /obj/item/projectile/beam( loc )
 	else
-		A = new /obj/bullet/electrode( loc )
+		A = new /obj/item/projectile/electrode( loc )
 
 	if (!( istype(U, /turf) ))
 		//A = null
@@ -835,7 +835,7 @@ Auto Patrol: []"},
 			src.build_step++
 			user << "\blue You wire the ED-209 assembly!"
 			src.name = "Wired ED-209 Assembly"
-	else if (istype(W, /obj/item/weapon/gun/energy/taser_gun) && (src.build_step == 7))
+	else if (istype(W, /obj/item/weapon/gun/energy/taser) && (src.build_step == 7))
 		src.build_step++
 		user << "You add the taser gun to [src]!"
 		src.name = "Taser/Wired ED-209 Assembly"

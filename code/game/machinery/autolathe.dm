@@ -243,7 +243,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/circular_saw(), \
 		new /obj/item/device/t_scanner(), \
 		new /obj/item/weapon/reagent_containers/glass/bucket(), \
-		new /obj/item/weapon/ammo/shell/blank(), \
+		new /obj/item/ammo_casing/shotgun/blank(), \
 		new /obj/item/device/taperecorder(), \
 		new /obj/item/weapon/stock_parts/console_screen(), \
 	)
@@ -257,11 +257,11 @@ var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/weapon/weldingtool/largetank(), \
 		new /obj/item/device/infra_sensor(), \
 		new /obj/item/weapon/handcuffs(), \
-		new /obj/item/weapon/ammo/a357(), \
-		new /obj/item/weapon/ammo/shell/gauge(), \
-		new /obj/item/weapon/ammo/a38(), \
-		new /obj/item/weapon/ammo/shell/beanbag(), \
-		new /obj/item/weapon/ammo/shell/dart(), \
+		new /obj/item/ammo_magazine(), \
+		new /obj/item/ammo_casing/shotgun(), \
+		new /obj/item/ammo_magazine/c38(), \
+		new /obj/item/ammo_casing/shotgun/beanbag(), \
+		new /obj/item/ammo_casing/shotgun/dart(), \
 		/* new /obj/item/weapon/shield/riot(), */ \
 	)
 

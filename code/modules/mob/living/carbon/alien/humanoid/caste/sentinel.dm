@@ -189,7 +189,7 @@
 			if(!istype(U, /turf))
 				return
 
-			var/obj/bullet/neurodart/A = new /obj/bullet/neurodart(usr.loc)
+			var/obj/item/projectile/dart/A = new /obj/item/projectile/dart(usr.loc)
 
 			A.current = U
 			A.yo = U.y - T.y

@@ -151,7 +151,7 @@ var/global/list/space_surprises = list(/obj/alien/facehugger,
 													/obj/item/weapon/rcd_ammo,
 													/obj/item/weapon/spacecash,
 													/obj/item/weapon/cloaking_device,
-													/obj/item/weapon/gun/energy/teleport_gun,
+												//	/obj/item/weapon/gun/energy/teleport_gun,
 													/obj/item/weapon/rubber_chicken,
 													/obj/item/weapon/sword/pirate
 													)

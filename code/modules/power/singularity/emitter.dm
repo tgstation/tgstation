@@ -85,7 +85,7 @@
 				src.fire_delay = rand(20,100)
 				src.shot_number = 0
 			use_power(1000)
-			var/obj/beam/a_laser/A = new /obj/beam/a_laser( src.loc )
+			var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( src.loc )
 			A.icon_state = "u_laser"
 			playsound(src.loc, 'emitter.ogg', 25, 1)
 			if(prob(35))

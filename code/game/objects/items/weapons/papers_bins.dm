@@ -538,7 +538,7 @@ CLIPBOARDS
 			del(src)
 			return
 		if("l_gun")
-			var/obj/item/weapon/gun/energy/laser_gun/W = new /obj/item/weapon/gun/energy/laser_gun( M )
+			var/obj/item/weapon/gun/energy/laser/W = new /obj/item/weapon/gun/energy/laser( M )
 			if (M.hand)
 				M.l_hand = W
 			else
@@ -549,7 +549,7 @@ CLIPBOARDS
 			del(src)
 			return
 		if("t_gun")
-			var/obj/item/weapon/gun/energy/taser_gun/W = new /obj/item/weapon/gun/energy/taser_gun( M )
+			var/obj/item/weapon/gun/energy/taser/W = new /obj/item/weapon/gun/energy/taser( M )
 			if (M.hand)
 				M.l_hand = W
 			else

@@ -116,7 +116,7 @@ datum
 			var/obj/item/steal_target
 			var/target_name
 			var/global/list/possible_items = list(
-				"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser_gun/captain,
+				"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/captain,
 				"a hand teleporter" = /obj/item/weapon/hand_tele,
 				"an RCD" = /obj/item/weapon/rcd,
 				"a jetpack" = /obj/item/weapon/tank/jetpack,

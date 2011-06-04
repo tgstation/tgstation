@@ -455,7 +455,7 @@
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/clothing/mask/gas/emergency(src), slot_wear_mask)
-			src.equip_if_possible(new /obj/item/weapon/gun/energy/taser_gun(src), slot_s_store)
+			src.equip_if_possible(new /obj/item/weapon/gun/energy/taser(src), slot_s_store)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/device/flash(src), slot_l_store)
 
@@ -479,7 +479,7 @@
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/security (src), slot_back)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_in_backpack)
-			src.equip_if_possible(new /obj/item/weapon/gun/energy/general(src), slot_s_store)
+			src.equip_if_possible(new /obj/item/weapon/gun/energy(src), slot_s_store)
 			src.equip_if_possible(new /obj/item/device/flash(src), slot_l_store)
 
 		if ("Head of Personnel")
@@ -503,10 +503,10 @@
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/ammo/shell/beanbag(src), slot_in_backpack)
-			src.equip_if_possible(new /obj/item/weapon/ammo/shell/beanbag(src), slot_in_backpack)
-			src.equip_if_possible(new /obj/item/weapon/ammo/shell/beanbag(src), slot_in_backpack)
-			src.equip_if_possible(new /obj/item/weapon/ammo/shell/beanbag(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(src), slot_in_backpack)
 
 		if ("Chef")
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chef(src), slot_w_uniform)

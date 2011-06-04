@@ -157,7 +157,7 @@ var/global/sent_strike_team = 0
 
 	equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
 
-	equip_if_possible(new /obj/item/weapon/ammo/a357(src), slot_in_backpack)
+	equip_if_possible(new /obj/item/ammo_magazine(src), slot_in_backpack)
 	equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
 	equip_if_possible(new /obj/item/weapon/storage/flashbang_kit(src), slot_in_backpack)
 	equip_if_possible(new /obj/item/device/flashlight(src), slot_in_backpack)
@@ -170,10 +170,8 @@ var/global/sent_strike_team = 0
 	equip_if_possible(new /obj/item/weapon/sword(src), slot_l_store)
 	equip_if_possible(new /obj/item/weapon/flashbang(src), slot_r_store)
 	equip_if_possible(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
+	equip_if_possible(new /obj/item/weapon/gun/projectile/mateba(src), slot_belt)
 
-	var/obj/item/weapon/gun/revolver/GUN = new /obj/item/weapon/gun/revolver/mateba(src)
-	GUN.bullets = 7
-	equip_if_possible(GUN, slot_belt)
 	//equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle(src), slot_l_hand)
 	/*Commented out because Commandos now have their rifles spawn in front of them, along with operation manuals.
 	Useful for copy pasta since I'm lazy.*/

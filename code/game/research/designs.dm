@@ -919,7 +919,7 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 500)
 			reliability_base = 76
-			build_path = "/obj/item/weapon/gun/energy/general/nuclear"
+			build_path = "/obj/item/weapon/gun/energy/nuclear"
 
 		large_grenade
 			name = "Large Grenade"

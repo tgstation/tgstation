@@ -124,6 +124,7 @@
 /obj/item/weapon/spacecash/c1000
 	icon_state = "spacecash1000"
 
+/*
 /obj/item/weapon/ammo
 	name = "ammo"
 	icon = 'ammo.dmi'
@@ -207,7 +208,7 @@
 	icon_state = "38-7"
 	amount_left = 7.0
 	m_amt = 10000
-
+*/
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
 	name = "mass-spectrometer"
@@ -644,7 +645,7 @@
 	abstract = 1.0
 	item_state = "nothing"
 	w_class = 5.0
-
+/*
 /obj/item/weapon/gun
 	name = "gun"
 	icon = 'gun.dmi'
@@ -850,7 +851,7 @@
 	force = 14.0
 	m_amt = 1000
 	origin_tech = "combat=2;materials=2"
-
+*/
 /obj/item/weapon/hand_tele
 	name = "hand tele"
 	icon = 'device.dmi'
@@ -1454,6 +1455,13 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	g_amt = 50
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
+
+/obj/item/weapon/cell/crap
+	name = "Nanotrassen Brand Rechargable AA Battery"
+	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
+	origin_tech = "powerstorage=0"
+	maxcharge = 500
+	g_amt = 40
 
 /obj/item/weapon/cell/high
 	name = "high-capacity power cell"
