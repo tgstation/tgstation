@@ -399,7 +399,9 @@
 			src.equip_if_possible(new /obj/item/clothing/under/det(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/head/det_hat(src), slot_head)
-			src.equip_if_possible(new /obj/item/clothing/mask/cigarette(src), slot_wear_mask) // Erro got mad at me so it is Cigerette now - micro
+			var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(src)
+			CIG.light("")
+			src.equip_if_possible(CIG, slot_wear_mask) // sorry, no more cigar
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/weapon/storage/fcard_kit(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/fcardholder(src), slot_in_backpack)
@@ -564,7 +566,10 @@
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves) //changed to black as part of dangercon 2011, approved by Urist_McDorf --Errorage
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/head/helmet/hardhat(src), slot_head)
-			src.equip_if_possible(new /obj/item/clothing/mask/cigarette(src), slot_wear_mask) // sorry, no more cigar
+			src.equip_if_possible(new /obj/item/weapon/storage/utilitybelt/full(src), slot_l_hand) //currently spawns in hand due to traitor assignment requiring a PDA to be on the belt. --Errorage
+			var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(src)
+			CIG.light("")
+			src.equip_if_possible(CIG, slot_wear_mask) // sorry, no more cigar
 			//src.equip_if_possible(new /obj/item/clothing/glasses/meson(src), slot_glasses) Removed as part of DangerCon 2011, approved by Urist_McDorf, --Errorage
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chief_engineer(src), slot_w_uniform)
 
