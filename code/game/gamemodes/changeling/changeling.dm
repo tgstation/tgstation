@@ -133,7 +133,7 @@
 		for(var/datum/objective/objective in changeling.objectives)
 			changeling.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
-
+		modePlayer = changelings
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept()
 
@@ -150,37 +150,6 @@
 					candidates += player.mind
 
 		return candidates
-
-//Centcom Update - in testing, copied mostly from Wizard.
-
-	send_intercept()
-		var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
-		intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
-
-		var/list/possible_modes = list()
-		possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf", "changeling", "cult")
-		possible_modes -= "[ticker.mode]"
-		var/number = pick(2, 3)
-		var/i = 0
-		for(i = 0, i < number, i++)
-			possible_modes.Remove(pick(possible_modes))
-		possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-		var/datum/intercept_text/i_text = new /datum/intercept_text
-		for(var/A in possible_modes)
-			intercepttext += i_text.build(A, changeling)
-
-		for (var/obj/machinery/computer/communications/comm in world)
-			if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
-				var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
-				intercept.name = "paper- 'Cent. Com. Status Summary'"
-				intercept.info = intercepttext
-
-				comm.messagetitle.Add("Cent. Com. Status Summary")
-				comm.messagetext.Add(intercepttext)
-
-		command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-		world << sound('intercept.ogg')
 
 	check_finished()
 		if(!changeling)
