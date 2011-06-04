@@ -807,7 +807,9 @@ turf/simulated/floor/proc/update_icon()
 			if(!(icon_state in list("grass1","grass2","grass3","grass4")))
 				icon_state = "grass[pick("1","2","3","4")]"
 	spawn(1)
-		update_visuals(air)
+		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
+			if(air)
+				update_visuals(air)
 
 turf/simulated/floor/return_siding_icon_state()
 	..()
