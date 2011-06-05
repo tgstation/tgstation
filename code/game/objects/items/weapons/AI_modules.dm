@@ -169,7 +169,7 @@ AI MODULES
 	name = "'Safeguard' AI Module"
 	var/targetName = "name"
 	desc = "A 'safeguard' AI module: 'Safeguard <name>, and you may overrule rules 1-3 if necessary to safeguard them.'"
-	origin_tech = "programming=3;material=4"
+	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/safeguard/attack_hand(var/mob/user as mob)
 	..()

@@ -125,7 +125,7 @@ to destroy them and players will be able to make replacements.
 	name = "Circuit board (Destructive Analyzer)"
 	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
 	board_type = "machine"
-	origin_tech = "magnets=2;engineering=2;programing=2"
+	origin_tech = "magnets=2;engineering=2;programming=2"
 	frame_desc = "Requires 2 Scanning Modules, 1 Manipulator, and 1 Micro-Laser."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
@@ -136,7 +136,7 @@ to destroy them and players will be able to make replacements.
 	name = "Circuit board (Autolathe)"
 	build_path = "/obj/machinery/autolathe"
 	board_type = "machine"
-	origin_tech = "engineering=2;programing=2"
+	origin_tech = "engineering=2;programming=2"
 	frame_desc = "Requires 3 Matter Bins, 1 Manipulator, and 1 Console Screen."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 3,
@@ -147,7 +147,7 @@ to destroy them and players will be able to make replacements.
 	name = "Circuit board (Protolathe)"
 	build_path = "/obj/machinery/r_n_d/protolathe"
 	board_type = "machine"
-	origin_tech = "engineering=2;programing=2"
+	origin_tech = "engineering=2;programming=2"
 	frame_desc = "Requires 2 Matter Bins, 2 Manipulators, and 2 Beakers."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 2,
