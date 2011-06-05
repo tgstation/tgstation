@@ -460,6 +460,8 @@ proc/isobserver(A)
 					icon_state = "grabbed+1"
 					if (!( affecting.buckled ))
 						affecting.loc = assailant.loc
+					affecting.attack_log += text("<font color='orange'>[world.time] - has had their neck grabbed by [assailant.name] ([assailant.ckey])</font>")
+					assailant.attack_log += text("<font color='red'>[world.time] - has grabbed the neck of [affecting.name] ([affecting.ckey])</font>")
 					hud1.icon_state = "disarm/kill"
 					hud1.name = "disarm/kill"
 				else
@@ -468,6 +470,8 @@ proc/isobserver(A)
 						if (killing)
 							for(var/mob/O in viewers(assailant, null))
 								O.show_message(text("\red [] has tightened his grip on []'s neck!", assailant, affecting), 1)
+							affecting.attack_log += text("<font color='orange'>[world.time] - has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>")
+							assailant.attack_log += text("<font color='red'>[world.time] - has attempted to strangle (kill intent) [affecting.name] ([affecting.ckey])</font>")
 							assailant.next_move = world.time + 10
 							affecting.stunned = max(2, affecting.stunned)
 							affecting.paralysis = max(1, affecting.paralysis)
