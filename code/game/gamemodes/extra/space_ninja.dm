@@ -178,7 +178,10 @@ client/proc/create_space_ninja(obj/spawn_point)
 /mob/living/carbon/human/proc/equip_space_ninja()
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
 	equip_if_possible(R, slot_ears)
-	equip_if_possible(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
+	if(gender==FEMALE)
+		equip_if_possible(new /obj/item/clothing/under/color/blackf(src), slot_w_uniform)
+	else
+		equip_if_possible(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
 	equip_if_possible(new /obj/item/clothing/shoes/space_ninja(src), slot_shoes)
 	equip_if_possible(new /obj/item/clothing/suit/space/space_ninja(src), slot_wear_suit)
 	equip_if_possible(new /obj/item/clothing/gloves/space_ninja(src), slot_gloves)
@@ -257,6 +260,35 @@ client/proc/create_space_ninja(obj/spawn_point)
 		n_gloves.canremove=1
 		n_gloves.candrain=0
 		n_gloves.draining=0
+
+//Allows the mob to grab a stealth icon.
+/mob/proc/NinjaStealthActive(atom/A)//A is the atom which we are using as the overlay.
+	invisibility = 2//Set ninja invis to 2.
+	var/icon/opacity_icon = new(A.icon, A.icon_state)
+	var/icon/alpha_mask = getIconMask(src)
+	var/icon/alpha_mask_2 = new('effects.dmi', "wave1")
+	alpha_mask.AddAlphaMask(alpha_mask_2)
+	opacity_icon.AddAlphaMask(alpha_mask)
+	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
+		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
+		switch(i)//Now to determine offset so the result is somewhat blurred.
+			if(1)
+				I.pixel_x -= 1
+			if(2)
+				I.pixel_x += 1
+			if(3)
+				I.pixel_y -= 1
+			if(4)
+				I.pixel_y += 1
+
+		overlays += I//And finally add the overlay.
+	overlays += image("icon"='effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
+
+//When ninja steal malfunctions.
+/mob/proc/NinjaStealthMalf()
+	invisibility = 0//Set ninja invis to 0.
+	overlays += image("icon"='effects.dmi',"icon_state" ="electricity","layer" = layer+0.9)
+	playsound(loc, 'stealthoff.ogg', 75, 1)
 
 //=======//GENERIC VERB MODIFIERS//=======//
 
@@ -352,7 +384,6 @@ client/proc/create_space_ninja(obj/spawn_point)
 			n_gloves.verbs -= /obj/item/clothing/gloves/space_ninja/proc/toggled
 
 		U.incorporeal_move = 0
-		U.density = 1
 		kamikaze = 0
 		k_unlock = 0
 		U << "\blue Disengaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>"
@@ -375,6 +406,29 @@ client/proc/create_space_ninja(obj/spawn_point)
 //=======//OLD & UNUSED//=======//
 
 /*
+
+Deprecated. get_dir() does the same thing. Still a nice proc.
+Returns direction that the mob or whomever should be facing in relation to the target.
+This proc does not grant absolute direction and is mostly useful for 8dir sprite positioning.
+I personally used it with getline() to great effect.
+/proc/get_dir_to(turf/start,turf/end)//N
+	var/xdiff = start.x - end.x//The sign is important.
+	var/ydiff = start.y - end.y
+
+	var/direction_x = xdiff<1 ? 4:8//East - west
+	var/direction_y = ydiff<1 ? 1:2//North - south
+	var/direction_xy = xdiff==0 ? -4:0//If x is the same, subtract 4.
+	var/direction_yx = ydiff==0 ? -1:0//If y is the same, subtract 1.
+	var/direction_f = direction_x+direction_y+direction_xy+direction_yx//Finally direction tally.
+	direction_f = direction_f==0 ? 1:direction_f//If direction is 0(same spot), return north. Otherwise, direction.
+
+	return direction_f
+
+Alternative and inferior method of calculating spideros.
+var/temp = num2text(spideros)
+var/return_to = copytext(temp, 1, (length(temp)))//length has to be to the length of the thing because by default it's length+1
+spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to specify larger strings if needed.
+
 //Old way of draining from wire.
 /obj/item/clothing/gloves/space_ninja/proc/drain_wire()
 	set name = "Drain From Wire"
@@ -487,6 +541,14 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 */
 
 //=======//DEBUG//=======//
+
+/obj/item/clothing/suit/space/space_ninja/proc/display_verb_procs()
+//DEBUG
+//Does nothing at the moment. I am trying to see if it's possible to mess around with verbs as variables.
+	//for(var/P in verbs)
+//		if(P.set.name)
+//			usr << "[P.set.name], path: [P]"
+	return
 
 /*
 Most of these are at various points of incomplete.

@@ -81,7 +81,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		if(destination&&istype(mobloc, /turf))
 			spawn(0)
 				playsound(U.loc, "sparks", 50, 1)
-				anim(mobloc,src,'mob.dmi',,"phaseout")
+				anim(mobloc,src,'mob.dmi',,"phaseout",,U.dir)
 
 			handle_teleport_grab(destination, U)
 			U.loc = destination
@@ -90,7 +90,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				spark_system.start()
 				playsound(U.loc, 'phasein.ogg', 25, 1)
 				playsound(U.loc, "sparks", 50, 1)
-				anim(U.loc,U,'mob.dmi',,"phasein")
+				anim(U.loc,U,'mob.dmi',,"phasein",,U.dir)
 
 			spawn(0)
 				destination.kill_creatures(U)//Any living mobs in teleport area are gibbed. Check turf procs for how it does it.
@@ -115,7 +115,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		if(!T.density&&istype(mobloc, /turf))
 			spawn(0)
 				playsound(U.loc, 'sparks4.ogg', 50, 1)
-				anim(mobloc,src,'mob.dmi',,"phaseout")
+				anim(mobloc,src,'mob.dmi',,"phaseout",,U.dir)
 
 			handle_teleport_grab(T, U)
 			U.loc = T
@@ -124,7 +124,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				spark_system.start()
 				playsound(U.loc, 'phasein.ogg', 25, 1)
 				playsound(U.loc, 'sparks2.ogg', 50, 1)
-				anim(U.loc,U,'mob.dmi',,"phasein")
+				anim(U.loc,U,'mob.dmi',,"phasein",,U.dir)
 
 			spawn(0)//Any living mobs in teleport area are gibbed.
 				T.kill_creatures(U)
@@ -228,17 +228,17 @@ Must right click on a mob to activate.*/
 	set src = usr.contents
 
 	var/C = 200
-	if(!ninjacost(C)&&iscarbon(M))
+	if(!ninjacost(C,1)&&iscarbon(M))
 		var/mob/living/carbon/human/U = affecting
 		if(M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
+		//if(M)//DEBUG
 			if(!locate(/obj/effects/energy_net) in M.loc)//Check if they are already being affected by an energy net.
 				for(var/turf/T in getline(U.loc, M.loc))
 					if(T.density)//Don't want them shooting nets through walls. It's kind of cheesy.
 						U << "You may not use an energy net through solid obstacles!"
 						return
-					if(T==U.loc||T==M.loc)	continue
-					spawn(0)
-						anim(T,M,'projectiles.dmi',"energy",,,get_dir_to(U.loc,M.loc))
+				spawn(0)
+					U.Beam(M,"n_beam",,15)
 				M.anchored = 1//Anchors them so they can't move.
 				U.say("Get over here!")
 				var/obj/effects/energy_net/E = new /obj/effects/energy_net(M.loc)
@@ -301,11 +301,9 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 	var/mob/living/carbon/human/U = affecting
 	if(!U.incorporeal_move)
 		U.incorporeal_move = 2
-		U.density = 0
 		U << "\blue You will now phase through solid matter."
 	else
 		U.incorporeal_move = 0
-		U.density = 1
 		U << "\blue You will no-longer phase through solid matter."
 	return
 
@@ -325,7 +323,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 			U.say("Ai Satsugai!")
 			spawn(0)
 				playsound(U.loc, "sparks", 50, 1)
-				anim(mobloc,U,'mob.dmi',,"phaseout")
+				anim(mobloc,U,'mob.dmi',,"phaseout",,U.dir)
 
 			spawn(0)
 				for(var/turf/T in getline(mobloc, destination))
@@ -333,7 +331,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 						T.kill_creatures(U)
 					if(T==mobloc||T==destination)	continue
 					spawn(0)
-						anim(T,U,'mob.dmi',,"phasein")
+						anim(T,U,'mob.dmi',,"phasein",,U.dir)
 
 			handle_teleport_grab(destination, U)
 			U.loc = destination
@@ -342,7 +340,7 @@ Or otherwise known as anime mode. Which also happens to be ridiculously powerful
 				spark_system.start()
 				playsound(U.loc, 'phasein.ogg', 25, 1)
 				playsound(U.loc, "sparks", 50, 1)
-				anim(U.loc,U,'mob.dmi',,"phasein")
+				anim(U.loc,U,'mob.dmi',,"phasein",,U.dir)
 			s_coold = 1
 		else
 			U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."
@@ -397,14 +395,14 @@ This is so anime it hurts. But that's the point.*/
 				var/turf/picked = locate(locx,locy,mobloc.z)
 				spawn(0)
 					playsound(U.loc, "sparks", 50, 1)
-					anim(mobloc,U,'mob.dmi',,"phaseout")
+					anim(mobloc,U,'mob.dmi',,"phaseout",,U.dir)
 
 				spawn(0)
 					var/limit = 4
 					for(var/turf/T in oview(5))
 						if(prob(20))
 							spawn(0)
-								anim(T,U,'mob.dmi',,"phasein")
+								anim(T,U,'mob.dmi',,"phasein",,U.dir)
 							limit--
 						if(limit<=0)	break
 
@@ -416,7 +414,7 @@ This is so anime it hurts. But that's the point.*/
 					spark_system.start()
 					playsound(U.loc, 'phasein.ogg', 25, 1)
 					playsound(U.loc, "sparks", 50, 1)
-					anim(U.loc,U,'mob.dmi',,"phasein")
+					anim(U.loc,U,'mob.dmi',,"phasein",,U.dir)
 				s_coold = 1
 			else
 				U << "\red The VOID-shift device is malfunctioning, <B>teleportation failed</B>."

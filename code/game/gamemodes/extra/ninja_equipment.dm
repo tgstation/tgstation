@@ -19,6 +19,7 @@ ________________________________________________________________________________
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init//suit initialize verb
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_instruction//for AIs
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo
+	//verbs += /obj/item/clothing/suit/space/space_ninja/proc/display_verb_procs//DEBUG. Doesn't work.
 	spark_system = new /datum/effects/system/spark_spread()//spark initialize
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -147,7 +148,7 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize(delay = s_delay, mob/living/carbon/human/U = loc)
 	if(U.mind&&U.mind.assigned_role=="MODE"&&!s_initialized&&!s_busy)//Shouldn't be busy... but anything is possible I guess.
 		s_busy = 1
-		for(var/i = 0,i<7,i++)
+		for(var/i,i<7,i++)
 			switch(i)
 				if(0)
 					U << "\blue Now initializing..."
@@ -489,10 +490,7 @@ ________________________________________________________________________________
 			if(spideros<=9)
 				spideros=0
 			else
-				spideros = round(spideros/10)//Best way to do this, flooring to nearest integer. As an example, another way of doing it is attached below:
-	//			var/temp = num2text(spideros)
-	//			var/return_to = copytext(temp, 1, (length(temp)))//length has to be to the length of the thing because by default it's length+1
-	//			spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to specify larger strings if needed.
+				spideros = round(spideros/10)//Best way to do this, flooring to nearest integer.
 
 		if("Stealth")
 			toggle_stealth()
@@ -563,7 +561,7 @@ ________________________________________________________________________________
 				if( !(U.stat||U.wear_suit!=src||!s_initialized) )
 					if( !(cell.charge<=1||s_busy) )
 						s_busy = 1
-						for(var/i = 0, i<4, i++)
+						for(var/i, i<4, i++)
 							switch(i)
 								if(0)
 									U << "\blue Engaging mode...\n\black<b>CODE NAME</b>: \red <b>KAMIKAZE</b>"
@@ -617,7 +615,7 @@ ________________________________________________________________________________
 			if(confirm == "Yes"&&AI)
 				if(A.laws.zeroth)//Gives a few seconds to re-upload the AI somewhere before it takes full control.
 					s_busy = 1
-					for(var/i=0,i<5,i++)
+					for(var/i,i<5,i++)
 						if(AI==A)
 							switch(i)
 								if(0)
@@ -681,7 +679,7 @@ ________________________________________________________________________________
 		if(!hologram)//If there is not already a hologram.
 			hologram = new(T)//Spawn a blank effect at the location.
 			hologram.invisibility = 101//So that it doesn't show up, ever. This also means one could attach a number of images to a single obj and display them differently to differnet people.
-			hologram.dir = get_dir_to(T,affecting.loc)
+			hologram.dir = get_dir(T,affecting.loc)
 			var/image/I = image('mob.dmi',hologram,"ai-holo")//Attach an image to object.
 			hologram.i_attached = I//To attach the image in order to later reference.
 			AI << I
@@ -772,14 +770,6 @@ ________________________________________________________________________________
 			var/total_reagent_transfer//Keep track of this stuff.
 			for(var/reagent_id in reagent_list)
 				var/datum/reagent/R = I.reagents.has_reagent(reagent_id)//Mostly to pull up the name of the reagent after calculating. Also easier to use than writing long proc paths.
-/*				if(reagents.get_reagent_amount(reagent_id)<r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)&&I.reagents.get_reagent_amount(reagent_id)>=a_transfer)//Radium is always special.
-					//Here we determine how much reagent will actually transfer if there is enough to transfer or there is a need of transfer. Minimum of max amount available (using a_transfer) or amount needed.
-					var/amount_to_transfer = min( (r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)-reagents.get_reagent_amount(reagent_id)) ,(round(I.reagents.get_reagent_amount(reagent_id)/a_transfer))*a_transfer)//In the end here, we round the amount available, then multiply it again.
-					total_reagent_transfer += amount_to_transfer//Add to total reagent trans.
-					I.reagents.remove_reagent(reagent_id, amount_to_transfer)//Remove from beaker.
-					reagents.add_reagent(reagent_id, amount_to_transfer)//Add to suit. Reactions are not important.
-					U << "Added [amount_to_transfer] units of [reagent_id]."//Fix the id label.
-*/
 				if(R&&reagents.get_reagent_amount(reagent_id)<r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)&&R.volume>=a_transfer)//Radium is always special.
 					//Here we determine how much reagent will actually transfer if there is enough to transfer or there is a need of transfer. Minimum of max amount available (using a_transfer) or amount needed.
 					var/amount_to_transfer = min( (r_maxamount+(reagent_id == "radium"?(a_boost*a_transfer):0)-reagents.get_reagent_amount(reagent_id)) ,(round(R.volume/a_transfer))*a_transfer)//In the end here, we round the amount available, then multiply it again.
@@ -795,30 +785,11 @@ ________________________________________________________________________________
 
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_stealth()
 	var/mob/living/carbon/human/U = affecting
-
-	/* This was a test for a new cloaking system. WIP.
-	if(!s_active)
-		spawn(0)
-			anim(U.loc,U,'mob.dmi',,"cloak")
-		var/image/I = image('mob.dmi',affecting,"ninjatest2")
-		for(var/mob/O in oviewers(U, null))
-			O << "[U.name] vanishes into thin air!"
-		I.override = 1
-		affecting << I
-		s_active = !s_active
-	else
-		spawn(0)
-			anim(U.loc,U,'mob.dmi',,"uncloak")
-		for(var/mob/O in oviewers(U, null))
-			O << "[U.name] appears from thin air!"
-		s_active = !s_active
-	*/
-
 	if(s_active)
 		cancel_stealth()
 	else
 		spawn(0)
-			anim(U.loc,U,'mob.dmi',,"cloak")
+			anim(U.loc,U,'mob.dmi',,"cloak",,U.dir)
 		s_active=!s_active
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
@@ -829,7 +800,7 @@ ________________________________________________________________________________
 	var/mob/living/carbon/human/U = affecting
 	if(s_active)
 		spawn(0)
-			anim(U.loc,U,'mob.dmi',,"uncloak")
+			anim(U.loc,U,'mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
 		U << "\blue You are now visible."
 		for(var/mob/O in oviewers(U))
@@ -1174,38 +1145,21 @@ ________________________________________________________________________________
 		var/chance = rand(1,100)
 		switch(chance)
 			if(1 to 50)//High chance of a regular name.
-				var/g = pick(0,1)
-				var/first = null
-				var/last = pick(last_names)
-				if(g==0)
-					first = pick(first_names_female)
-				else
-					first = pick(first_names_male)
-				voice = "[first] [last]"
+				voice = "[rand(0,1)==1?pick(first_names_female):pick(first_names_male)] [pick(last_names)]"
 			if(51 to 80)//Smaller chance of a clown name.
-				var/first = pick(clown_names)
-				voice = "[first]"
+				voice = "[pick(clown_names)]"
 			if(81 to 90)//Small chance of a wizard name.
-				var/first = pick(wizard_first)
-				var/last = pick(wizard_second)
-				voice = "[first] [last]"
+				voice = "[pick(wizard_first)] [pick(wizard_second)]"
 			if(91 to 100)//Small chance of an existing crew name.
-				var/list/names = new()
+				var/names[] = new()
 				for(var/mob/living/carbon/human/M in world)
 					if(M==U||!M.client||!M.real_name)	continue
-					names.Add(M)
-				if(!names.len)
-					voice = "Cuban Pete"//Smallest chance to be the man.
-				else
-					var/mob/picked = pick(names)
-					voice = picked.real_name
+					names.Add(M.real_name)
+				voice = !names.len ? "Cuban Pete" : pick(names)
 		U << "You are now mimicking <B>[voice]</B>."
 	else
-		if(voice!="Unknown")
-			U << "You deactivate the voice synthesizer."
-			voice = "Unknown"
-		else
-			U << "The voice synthesizer is already deactivated."
+		U << "The voice synthesizer is [voice!="Unknown"?"now":"already"] deactivated."
+		voice = "Unknown"
 	return
 
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm()
@@ -1238,7 +1192,6 @@ ________________________________________________________________________________
 	..()
 
 	var/mode
-	var/voice
 	switch(mode)
 		if(0)
 			mode = "Scouter"
@@ -1248,12 +1201,8 @@ ________________________________________________________________________________
 			mode = "Thermal Scanner"
 		if(3)
 			mode = "Meson Scanner"
-	if(vchange==0)
-		voice = "inactive"
-	else
-		voice = "active"
 	usr << "<B>[mode]</B> is active."//Leaving usr here since it may be on the floor or on a person.
-	usr << "Voice mimicking algorithm is set to <B>[voice]</B>."
+	usr << "Voice mimicking algorithm is set <B>[!vchange?"inactive":"active"]</B>."
 
 /*
 ===================================================================================
@@ -1262,11 +1211,8 @@ ________________________________________________________________________________
 */
 
 /*
-HerpA:
-I'm not really sure what you want this to do.
-For now it will teleport people to the prison after 30 seconds. (Check the process() proc to change where teleport goes)
+It will teleport people to the prison after 30 seconds. (Check the process() proc to change where teleport goes)
 It is possible to destroy the net by the occupant or someone else.
-The sprite for the net is kind of ugly but I couldn't come up with a better one.
 */
 
 /obj/effects/energy_net
@@ -1300,6 +1246,7 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 
 		process(var/mob/living/carbon/M as mob)
 			var/check = 30//30 seconds before teleportation. Could be extended I guess.
+			var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
 			//The person can still try and attack the net when inside.
 			while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 30 seconds have not passed.
 				check--
@@ -1307,7 +1254,7 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 
 			if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
 				if(!isnull(master))//As long as they still exist.
-					master << "\red <b>ERROR</b>: \black unable to locate [affecting]. Procedure terminated."
+					master << "\red <b>ERROR</b>: \black unable to locate [mob_name]. Procedure terminated."
 				del(src)//Get rid of the net.
 				return
 
@@ -1315,7 +1262,7 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 				//No need to check for countdown here since while() broke, it's implicit that it finished.
 				spawn(0)
 					playsound(M.loc, 'sparks4.ogg', 50, 1)
-					anim(M.loc,M,'mob.dmi',,"phaseout")
+					anim(M.loc,M,'mob.dmi',,"phaseout",,M.dir)
 
 				density = 0//Make the net pass-through.
 				invisibility = 101//Make the net invisible so all the animations can play out.
@@ -1326,9 +1273,9 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 					var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 					spark_system.set_up(5, 0, M.loc)
 					spark_system.start()
-					playsound(M.loc, 'Deconstruct.ogg', 50, 1)
+					playsound(M.loc, 'phasein.ogg', 25, 1)
 					playsound(M.loc, 'sparks2.ogg', 50, 1)
-					anim(M.loc,M,'mob.dmi',,"phasein")
+					anim(M.loc,M,'mob.dmi',,"phasein",,M.dir)
 					del(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
 
 				for(var/mob/O in viewers(src, 3))
@@ -1361,10 +1308,7 @@ The sprite for the net is kind of ugly but I couldn't come up with a better one.
 			if(2.0)
 				health-=50
 			if(3.0)
-				if (prob(50))
-					health-=50
-				else
-					health-=25
+				health-=prob(50)?50:25
 		healthcheck()
 		return
 

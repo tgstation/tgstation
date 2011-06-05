@@ -37,6 +37,13 @@
 	item_state = "bl_suit"
 	color = "black"
 
+/obj/item/clothing/under/color/blackf
+	name = "Female Black Jumpsuit"
+	desc = "This one is a lady-size!"
+	icon_state = "black"
+	item_state = "bl_suit"
+	color = "blackf"
+
 /obj/item/clothing/under/color/blue
 	name = "Blue Jumpsuit"
 	icon_state = "blue"

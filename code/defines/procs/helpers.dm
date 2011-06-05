@@ -363,21 +363,22 @@
 	if(degree < 315)	return WEST
 	return NORTH|WEST
 
-//Returns direction that the mob or whomever should be facing in relation to the target.
-//This proc does not grant absolute direction and is mostly useful for 8dir sprite positioning.
-//I personally used it with getline() to great effect.
-/proc/get_dir_to(turf/start,turf/end)//N
-	var/xdiff = start.x - end.x//The sign is important.
-	var/ydiff = start.y - end.y
+/proc/angle2text(var/degree)
+	return dir2text(angle2dir(degree))
 
-	var/direction_x = xdiff<1 ? 4:8//East - west
-	var/direction_y = ydiff<1 ? 1:2//North - south
-	var/direction_xy = xdiff==0 ? -4:0//If x is the same, subtract 4.
-	var/direction_yx = ydiff==0 ? -1:0//If y is the same, subtract 1.
-	var/direction_f = direction_x+direction_y+direction_xy+direction_yx//Finally direction tally.
-	direction_f = direction_f==0 ? 1:direction_f//If direction is 0(same spot), return north. Otherwise, direction.
-
-	return direction_f
+/proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
+	if(!start || !end) return 0
+	var/dy
+	var/dx
+	dy=(32*end.y+end.pixel_y)-(32*start.y+start.pixel_y)
+	dx=(32*end.x+end.pixel_x)-(32*start.x+start.pixel_x)
+	if(!dy)
+		return (dx>=0)?90:270
+	.=arctan(dx/dy)
+	if(dy<0)
+		.+=180
+	else if(dx<0)
+		.+=360
 
 //Returns location. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = 0, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
@@ -471,9 +472,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else	return
 
 	return destination
-
-/proc/angle2text(var/degree)
-	return dir2text(angle2dir(degree))
 
 /proc/text_input(var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
 	return sanitize(input(Message, Title, Default) as text, length)
@@ -983,6 +981,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Makes sure MIDDLE is between LOW and HIGH. If not, it adjusts it. Returns the adjusted value.
 /proc/between(var/low, var/middle, var/high)
 	return max(min(middle, high), low)
+
+proc/arctan(x)
+	var/y=arcsin(x/sqrt(1+x*x))
+	return y
 
 //returns random gauss number
 proc/GaussRand(var/sigma)

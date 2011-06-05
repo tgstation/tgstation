@@ -1365,15 +1365,24 @@
 			break
 
 	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_active)
-		shielded = 2
+		shielded = 3
 
-	if (shielded == 2)
-		invisibility = 2
-	else
-		invisibility = 0
-
-	if (shielded)
-		overlays += image("icon" = 'mob.dmi', "icon_state" = "shield", "layer" = MOB_LAYER)
+	switch(shielded)
+		if(1)
+			overlays += image("icon" = 'effects.dmi', "icon_state" = "shield", "layer" = MOB_LAYER+1)
+		if(2)
+			invisibility = 2
+			//New stealth. Hopefully doesn't lag too much. /N
+			if(istype(loc, /turf))//If they are standing on a turf.
+				AddCamoOverlay(loc)//Overlay camo.
+		if(3)
+			if(istype(loc, /turf))
+				if(prob(90))//Ninjas may flick into view once in a while if they are stealthed.
+					NinjaStealthActive(loc)
+				else
+					NinjaStealthMalf()
+		else
+			invisibility = 0
 
 	for (var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
