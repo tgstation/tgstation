@@ -67,7 +67,7 @@ var/global/list/cached_icons = list()
 				color = "FFFFFF"
 			if("black")
 				color = "333333"
-		src.icon_state = "paint_[t1]"
+		icon_state = "paint_[t1]"
 		add_fingerprint(user)
 		return
 
@@ -97,7 +97,7 @@ var/global/list/cached_icons = list()
 
 
 /obj/item/weapon/dnainjector/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 
 /obj/item/weapon/dnainjector/proc/inject(mob/M as mob)
@@ -138,8 +138,8 @@ var/global/list/cached_icons = list()
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "\red You don't have the dexterity to do this!"
 		return
-	M.attack_log += text("<font color='orange'>[world.time] - has been injected with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to inject [M.name] ([M.ckey])</font>")
+	M.attack_log += text("<font color='orange'>[world.time] - has been injected with [name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("<font color='red'>[world.time] - has used the [name] to inject [M.name] ([M.ckey])</font>")
 
 	if (user)
 		if (istype(M, /mob/living/carbon/human))
@@ -153,14 +153,14 @@ var/global/list/cached_icons = list()
 			M.requests += O
 			if (dnatype == "se")
 				if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name] \red(MONKEY)")
-					log_game("[key_name(user)] injected [key_name(M)] with the [src.name] (MONKEY)")
+					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+					log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
 				else
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
-					log_game("[key_name(user)] injected [key_name(M)] with the [src.name]")
+					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+					log_game("[key_name(user)] injected [key_name(M)] with the [name]")
 			else
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
-				log_game("[key_name(user)] injected [key_name(M)] with the [src.name]")
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+				log_game("[key_name(user)] injected [key_name(M)] with the [name]")
 
 			spawn( 0 )
 				O.process()
@@ -172,16 +172,22 @@ var/global/list/cached_icons = list()
 			if (!(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey)))
 				user << "\red Apparently it didn't work."
 				return
-			inject(M)
 			if (dnatype == "se")
 				if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name] \red(MONKEY)")
-					log_game("[key_name(user)] injected [key_name(M)] with the [src.name] (MONKEY)")
+					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+					log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
 				else
-					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
-					log_game("[key_name(user)] injected [key_name(M)] with the [src.name]")
+					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+					log_game("[key_name(user)] injected [key_name(M)] with the [name]")
 			else
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [src.name]")
-				log_game("[key_name(user)] injected [key_name(M)] with the [src.name]")
-			user.show_message(text("\red You inject [M]"))
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+				log_game("[key_name(user)] injected [key_name(M)] with the [name]")
+			inject(M)//Now we actually do the heavy lifting.
+			/*
+			A user injecting themselves could mean their own transformation and deletion of mob.
+			I don't have the time to figure out how this code works so this will do for now.
+			I did rearrange things a bit.
+			*/
+			if(!isnull(user))//If the user still exists. Their mob may not.
+				user.show_message(text("\red You inject [M]"))
 	return

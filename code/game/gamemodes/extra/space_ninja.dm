@@ -47,7 +47,7 @@ ________________________________________________________________________________
 	xenos, death squads, and cyborgs. Ninjas are not admin PCs--please do not use them for that purpose.
 	I'm currently looking for feedback from regular players since beta testing is largely done. I would appreciate if
 	you spawned regular players as ninjas when rounds are boring. Or exciting, it's all good as long as there is feedback.
-	Admin quick-spawning as ninjas is disabled for that reason. You can spawn ninja gear manually if you want to.
+	You can also spawn ninja gear manually if you want to.
 
 	How to do that:
 	Make sure your character has a mind.
@@ -128,8 +128,7 @@ ________________________________________________________________________________
 	var/mob/dead/observer/G
 	var/list/candidates = list()
 	for(G in world)
-		if(G.client&&!G.client.holder)
-		//if(G.client)//Good for testing.
+		if(G.client)//Now everyone can ninja!
 			if(((G.client.inactivity/10)/60) <= 5)
 				candidates.Add(G)
 	if(candidates.len)
@@ -209,10 +208,7 @@ client/proc/create_space_ninja(obj/spawn_point)
 //This proc prevents the suit from being taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/U, X = 0)
 	if(X)//If you want to check for icons.
-		if(U.gender==FEMALE)
-			icon_state = "s-ninjanf"
-		else
-			icon_state = "s-ninjan"
+		icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 		U:gloves.icon_state = "s-ninjan"
 		U:gloves.item_state = "s-ninjan"
 	else
@@ -266,7 +262,7 @@ client/proc/create_space_ninja(obj/spawn_point)
 	invisibility = 2//Set ninja invis to 2.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)
 	var/icon/alpha_mask = getIconMask(src)
-	var/icon/alpha_mask_2 = new('effects.dmi', "wave1")
+	var/icon/alpha_mask_2 = new('effects.dmi', "at_shield1")
 	alpha_mask.AddAlphaMask(alpha_mask_2)
 	opacity_icon.AddAlphaMask(alpha_mask)
 	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
@@ -351,10 +347,7 @@ client/proc/create_space_ninja(obj/spawn_point)
 
 	kamikaze = 1
 
-	if(U.gender==FEMALE)
-		icon_state = "s-ninjakf"
-	else
-		icon_state = "s-ninjak"
+	icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninjak"
 		n_gloves.item_state = "s-ninjak"

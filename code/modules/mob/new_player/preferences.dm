@@ -902,17 +902,14 @@ datum/preferences
 			else
 				character.face_icon_state = "bald"
 
-		if (underwear == 1)
-			character.underwear = pick(1,2,3,4,5)
-		else
-			character.underwear = 0
+		character.underwear = underwear == 1 ? pick(1,2,3,4,5) : 0
 
 		character.update_face()
 		character.update_body()
 
 		if(!safety)//To prevent run-time errors due to null datum when using randomize_appearance_for()
-			spawn(10)//as they should already have these set at game spawn.
-				if(character)
+			spawn(10)
+				if(character&&character.client)
 					character.client.midis = midis
 					character.client.ooccolor = ooccolor
 					character.client.be_alien = be_alien

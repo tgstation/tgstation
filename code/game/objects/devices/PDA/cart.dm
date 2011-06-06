@@ -124,8 +124,8 @@
 		if (!istype(loc, /obj/item/device/pda))
 			return
 
-		src.generate_menu()
-		src.print_to_host(menu)
+		generate_menu()
+		print_to_host(menu)
 		return
 
 	proc/print_to_host(var/text)
@@ -169,14 +169,14 @@
 Frequency:
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
-[format_frequency(src.radio:frequency)]
+[format_frequency(radio:frequency)]
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
 <br>
 Code:
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
-[src.radio:code]
+[radio:code]
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
 			if (41) //crew manifest
@@ -239,7 +239,7 @@ Code:
 				menu = "<h4><img src=pda_medical.png> Medical Record</h4>"
 
 				if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
-					menu += "Name: [active1.fields["name"]] ID: [src.active1.fields["id"]]<br>"
+					menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 					menu += "Sex: [active1.fields["sex"]]<br>"
 					menu += "Age: [active1.fields["age"]]<br>"
 					menu += "Fingerprint: [active1.fields["fingerprint"]]<br>"
@@ -251,7 +251,7 @@ Code:
 				menu += "<br>"
 
 				menu += "<h4><img src=pda_medical.png> Medical Data</h4>"
-				if (istype(src.active2, /datum/data/record) && data_core.medical.Find(src.active2))
+				if (istype(active2, /datum/data/record) && data_core.medical.Find(active2))
 					menu += "Blood Type: [active2.fields["b_type"]]<br><br>"
 
 					menu += "Minor Disabilities: [active2.fields["mi_dis"]]<br>"
@@ -281,8 +281,8 @@ Code:
 			if(451)
 				menu = "<h4><img src=pda_cuffs.png> Security Record</h4>"
 
-				if (istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1))
-					menu += "Name: [active1.fields["name"]] ID: [src.active1.fields["id"]]<br>"
+				if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
+					menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 					menu += "Sex: [active1.fields["sex"]]<br>"
 					menu += "Age: [active1.fields["age"]]<br>"
 					menu += "Fingerprint: [active1.fields["fingerprint"]]<br>"
@@ -294,7 +294,7 @@ Code:
 				menu += "<br>"
 
 				menu += "<h4><img src=pda_cuffs.png> Security Data</h4>"
-				if (istype(src.active3, /datum/data/record) && data_core.security.Find(src.active3))
+				if (istype(active3, /datum/data/record) && data_core.security.Find(active3))
 					menu += "Criminal Status: [active3.fields["criminal"]]<br>"
 
 					menu += "Minor Crimes: [active3.fields["mi_crim"]]<br>"
@@ -304,7 +304,7 @@ Code:
 					menu += "Details: [active3.fields["ma_crim_d"]]<br><br>"
 
 					menu += "Important Notes:<br>"
-					menu += "[src.active3.fields["notes"]]"
+					menu += "[active3.fields["notes"]]"
 				else
 					menu += "<b>Record Lost!</b><br>"
 
@@ -529,20 +529,20 @@ Code:
 		if("Send Signal")
 			for(var/obj/item/assembly/r_i_ptank/R in world) //Bomblist stuff
 				if((R.part1.code == src/radio:code) && (R.part1.frequency == radio:frequency))
-					bombers += "[key_name(usr)] has activated a radio bomb (Freq: [format_frequency(src.radio:frequency)], Code: [src.radio:code]). Temp = [R.part3.air_contents.temperature-T0C]."
+					bombers += "[key_name(usr)] has activated a radio bomb (Freq: [format_frequency(radio:frequency)], Code: [radio:code]). Temp = [R.part3.air_contents.temperature-T0C]."
 			spawn( 0 )
 				radio:send_signal("ACTIVATE")
 				return
 
 		if("Signal Frequency")
-			var/new_frequency = sanitize_frequency(src.radio:frequency + text2num(href_list["sfreq"]))
+			var/new_frequency = sanitize_frequency(radio:frequency + text2num(href_list["sfreq"]))
 			radio:set_frequency(new_frequency)
 
 		if("Signal Code")
 			radio:code += text2num(href_list["scode"])
-			radio:code = round(src.radio:code)
-			radio:code = min(100, src.radio:code)
-			radio:code = max(1, src.radio:code)
+			radio:code = round(radio:code)
+			radio:code = min(100, radio:code)
+			radio:code = max(1, radio:code)
 
 		if("Status")
 			switch(href_list["statdisp"])

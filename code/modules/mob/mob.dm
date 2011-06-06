@@ -2166,8 +2166,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/mob/M = mob
 		M.loc = null // HACK, but whatever, this works
 
-		var/obj/screen/boom = M.hud_used.station_explosion
-		if (M.client)
+		if (M.client&&M.hud_used)//They may some times not have a hud, apparently.
+			var/obj/screen/boom = M.hud_used.station_explosion
 			M.client.screen += boom
 			if(ticker)
 				switch(ticker.mode.name)

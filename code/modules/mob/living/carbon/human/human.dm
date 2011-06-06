@@ -1377,7 +1377,8 @@
 				AddCamoOverlay(loc)//Overlay camo.
 		if(3)
 			if(istype(loc, /turf))
-				if(prob(90))//Ninjas may flick into view once in a while if they are stealthed.
+			//Ninjas may flick into view once in a while if they are stealthed.
+				if(prob(90))
 					NinjaStealthActive(loc)
 				else
 					NinjaStealthMalf()
