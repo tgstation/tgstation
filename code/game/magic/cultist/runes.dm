@@ -923,9 +923,9 @@ var/list/sacrificed = list()
 					O.show_message(text("\red <B>[] invokes a talisman at []</B>", usr, T), 1)
 				flick("e_flash", T.flash)
 				if (!(T.mutations & HULK))
-					T.silent += 5
+					T.silent += 15
 				if (!(T.mutations & HULK))
-					T.weakened += 15
+					T.weakened += 25
 				if (!(T.mutations & HULK))
-					T.stunned += 15
+					T.stunned += 25
 			return

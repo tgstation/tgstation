@@ -12,6 +12,7 @@ var/wordother = null
 //var/wordfree = null
 var/wordhide = null
 var/runedec = 0
+var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
 
 /client/proc/check_words() // -- Urist
 	set category = "Special Verbs"
@@ -65,7 +66,7 @@ var/runedec = 0
 // Places these combos are mentioned: this file - twice in the rune code, once in imbued tome, once in tome's HTML runes.dm - in the imbue rune code. If you change a combination - dont forget to change it everywhere.
 
 // travel self [word] - Teleport to random [rune with word destination matching]
-// travel other [word] - Portal to rune with word destination matching
+// travel other [word] - Portal to rune with word destination matching - kinda doesnt work. At least the icon. No idea why.
 // see blood Hell - Create a new tome
 // join blood self - Incorporate person over the rune into the group
 // Hell join self - Summon TERROR
@@ -277,9 +278,11 @@ var/runedec = 0
 	throw_range = 5
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS
-	var/dat
+	var/notedat = ""
+	var/tomedat = ""
+	var/list/words = list("ire" = "ire", "ego" = "ego", "nahlizet" = "nahlizet", "certum" = "certum", "veri" = "veri", "jatkaa" = "jatkaa", "balaq" = "balaq", "mgar" = "mgar", "karazet" = "karazet", "geeri" = "geeri")
 
-	dat = {"<html>
+	tomedat = {"<html>
 				<head>
 				<style>
 				h1 {font-size: 25px; margin: 15px 0px 5px;}
@@ -293,7 +296,7 @@ var/runedec = 0
 				<h1>The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood.</h1>
 
 				<i>The book is written in an unknown dialect, there are lots of pictures of various complex geometric shapes. You find some notes in english that give you basic understanding of the many runes written in the book. The notes give you an understanding what the words for the runes should be. However, you do not know how to write all these words in this dialect.</i><br>
-				<i>Below is the summary of the runes.</i>
+				<i>Below is the summary of the runes.</i> <br>
 
 				<h2>Contents</h2>
 				<p>
@@ -318,6 +321,7 @@ var/runedec = 0
 				<b>Blind: </b>Destroy See Other<br>
 				<b>Blood Boil: </b>Destroy See Blood<br>
 				<b>Communicate: </b>Self other technology<br>
+				<b>Stun: </b>join hide technology<br>
 				</p>
 				<h2>Rune Descriptions</h2>
 				<h3>Teleport self</h3>
@@ -369,6 +373,57 @@ var/runedec = 0
 				"}
 
 
+	Topic(href,href_list[])
+		if (src.loc == usr)
+			var/number = text2num(href_list["number"])
+			if (usr.stat|| usr.restrained())
+				return
+			switch(href_list["action"])
+				if("clear")
+					words[words[number]] = words[number]
+				if("change")
+					words[words[number]] = input("Enter the translation for [words[number]]", "Word notes") in engwords
+					for (var/w in words)
+						if ((words[w] == words[words[number]]) && (w != words[number]))
+							words[w] = w
+			notedat = {"
+						<br><b>Word translation notes</b> <br>
+						[words[1]] is <a href='byond://?src=\ref[src];number=1;action=change'>[words[words[1]]]</A> <A href='byond://?src=\ref[src];number=1;action=clear'>Clear</A><BR>
+						[words[2]] is <A href='byond://?src=\ref[src];number=2;action=change'>[words[words[2]]]</A> <A href='byond://?src=\ref[src];number=2;action=clear'>Clear</A><BR>
+						[words[3]] is <a href='byond://?src=\ref[src];number=3;action=change'>[words[words[3]]]</A> <A href='byond://?src=\ref[src];number=3;action=clear'>Clear</A><BR>
+						[words[4]] is <a href='byond://?src=\ref[src];number=4;action=change'>[words[words[4]]]</A> <A href='byond://?src=\ref[src];number=4;action=clear'>Clear</A><BR>
+						[words[5]] is <a href='byond://?src=\ref[src];number=5;action=change'>[words[words[5]]]</A> <A href='byond://?src=\ref[src];number=5;action=clear'>Clear</A><BR>
+						[words[6]] is <a href='byond://?src=\ref[src];number=6;action=change'>[words[words[6]]]</A> <A href='byond://?src=\ref[src];number=6;action=clear'>Clear</A><BR>
+						[words[7]] is <a href='byond://?src=\ref[src];number=7;action=change'>[words[words[7]]]</A> <A href='byond://?src=\ref[src];number=7;action=clear'>Clear</A><BR>
+						[words[8]] is <a href='byond://?src=\ref[src];number=8;action=change'>[words[words[8]]]</A> <A href='byond://?src=\ref[src];number=8;action=clear'>Clear</A><BR>
+						[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
+						[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
+						"}
+			usr << browse("[notedat]", "window=notes")
+//		call(/obj/item/weapon/tome/proc/edit_notes)()
+		else
+			usr << browse(null, "window=notes")
+			return
+
+
+//	proc/edit_notes()     FUCK IT. Cant get it to work properly. - K0000
+//		world << "its been called! [usr]"
+//		notedat = {"
+//		<br><b>Word translation notes</b> <br>
+//			[words[1]] is <a href='byond://?src=\ref[src];number=1;action=change'>[words[words[1]]]</A> <A href='byond://?src=\ref[src];number=1;action=clear'>Clear</A><BR>
+//			[words[2]] is <A href='byond://?src=\ref[src];number=2;action=change'>[words[words[2]]]</A> <A href='byond://?src=\ref[src];number=2;action=clear'>Clear</A><BR>
+//			[words[3]] is <a href='byond://?src=\ref[src];number=3;action=change'>[words[words[3]]]</A> <A href='byond://?src=\ref[src];number=3;action=clear'>Clear</A><BR>
+//			[words[4]] is <a href='byond://?src=\ref[src];number=4;action=change'>[words[words[4]]]</A> <A href='byond://?src=\ref[src];number=4;action=clear'>Clear</A><BR>
+//			[words[5]] is <a href='byond://?src=\ref[src];number=5;action=change'>[words[words[5]]]</A> <A href='byond://?src=\ref[src];number=5;action=clear'>Clear</A><BR>
+//			[words[6]] is <a href='byond://?src=\ref[src];number=6;action=change'>[words[words[6]]]</A> <A href='byond://?src=\ref[src];number=6;action=clear'>Clear</A><BR>
+//			[words[7]] is <a href='byond://?src=\ref[src];number=7;action=change'>[words[words[7]]]</A> <A href='byond://?src=\ref[src];number=7;action=clear'>Clear</A><BR>
+//			[words[8]] is <a href='byond://?src=\ref[src];number=8;action=change'>[words[words[8]]]</A> <A href='byond://?src=\ref[src];number=8;action=clear'>Clear</A><BR>
+//			[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
+//			[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
+//					"}
+//		usr << "whatev"
+//		usr << browse(null, "window=tank")
+
 	attack(mob/living/M as mob, mob/living/user as mob)
 		M.attack_log += text("<font color='orange'>[world.time] - has has had the [src.name] used on him by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("<font color='red'>[world.time] - has used [src.name] on [M.name] ([M.ckey])</font>")
@@ -394,6 +449,7 @@ var/runedec = 0
 
 
 	attack_self(mob/living/user as mob)
+		usr = user
 		if(!wordtravel)
 			runerandom()
 		if(iscultist(user))
@@ -414,22 +470,50 @@ var/runedec = 0
 					if("No")
 						return
 			else
-				switch(alert("You open the tome",,"Read it","Scribe a rune","Cancel"))
+				switch(alert("You open the tome",,"Read it","Scribe a rune", "Notes")) //Fuck the "Cancel" option. Rewrite the whole tome interface yourself if you want it to work better. And input() is just ugly. - K0000
 					if("Cancel")
 						return
 					if("Read it")
-						user << browse("[dat]", "window=book")
+						user << browse("[tomedat]", "window=Arcane Tome")
 						return
-			var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
+					if("Notes")
+						notedat = {"
+					<br><b>Word translation notes</b> <br>
+					[words[1]] is <a href='byond://?src=\ref[src];number=1;action=change'>[words[words[1]]]</A> <A href='byond://?src=\ref[src];number=1;action=clear'>Clear</A><BR>
+					[words[2]] is <A href='byond://?src=\ref[src];number=2;action=change'>[words[words[2]]]</A> <A href='byond://?src=\ref[src];number=2;action=clear'>Clear</A><BR>
+					[words[3]] is <a href='byond://?src=\ref[src];number=3;action=change'>[words[words[3]]]</A> <A href='byond://?src=\ref[src];number=3;action=clear'>Clear</A><BR>
+					[words[4]] is <a href='byond://?src=\ref[src];number=4;action=change'>[words[words[4]]]</A> <A href='byond://?src=\ref[src];number=4;action=clear'>Clear</A><BR>
+					[words[5]] is <a href='byond://?src=\ref[src];number=5;action=change'>[words[words[5]]]</A> <A href='byond://?src=\ref[src];number=5;action=clear'>Clear</A><BR>
+					[words[6]] is <a href='byond://?src=\ref[src];number=6;action=change'>[words[words[6]]]</A> <A href='byond://?src=\ref[src];number=6;action=clear'>Clear</A><BR>
+					[words[7]] is <a href='byond://?src=\ref[src];number=7;action=change'>[words[words[7]]]</A> <A href='byond://?src=\ref[src];number=7;action=clear'>Clear</A><BR>
+					[words[8]] is <a href='byond://?src=\ref[src];number=8;action=change'>[words[words[8]]]</A> <A href='byond://?src=\ref[src];number=8;action=clear'>Clear</A><BR>
+					[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
+					[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
+					"}
+//						call(/obj/item/weapon/tome/proc/edit_notes)()
+						user << browse("[notedat]", "window=notes")
+						return
 			var/w1
 			var/w2
 			var/w3
+			var/list/english = list()
+			for (var/w in words)
+				english+=words[w]
 			if(usr)
-				w1 = input("Write your first rune:", "Rune Scribing") in words
+				w1 = input("Write your first rune:", "Rune Scribing") in english
+				for (var/w in words)
+					if (words[w] == w1)
+						w1 = w
 			if(usr)
-				w2 = input("Write your second rune:", "Rune Scribing") in words
+				w2 = input("Write your second rune:", "Rune Scribing") in english
+				for (var/w in words)
+					if (words[w] == w2)
+						w2 = w
 			if(usr)
-				w3 = input("Write your third rune:", "Rune Scribing") in words
+				w3 = input("Write your third rune:", "Rune Scribing") in english
+				for (var/w in words)
+					if (words[w] == w3)
+						w3 = w
 			for (var/mob/V in viewers(src))
 				V.show_message("\red [user] slices open a finger and begins to chant and paint symbols on the floor.", 3, "\red You hear chanting.", 2)
 			user << "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world."
@@ -448,6 +532,20 @@ var/runedec = 0
 		else
 			user << "The book seems full of illegible scribbles. Is this a joke?"
 			return
+
+	attackby(obj/item/weapon/tome/T as obj, mob/living/user as mob)
+		switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
+			if("cancel")
+				return
+//		var/list/nearby = viewers(1,src) //- Fuck this as well. No clue why this doesnt work. -K0000
+//			if (T.loc != user)
+//				return
+//		for(var/mob/M in nearby)
+//			if(M == user)
+		for(var/w in words)
+			words[w] = T.words[w]
+		user << "You copy the translation notes from your tome."
+
 
 	examine()
 		set src in usr
@@ -650,7 +748,6 @@ var/runedec = 0
 
 	attack_self(mob/living/user as mob)
 		if(iscultist(user))
-			user.take_organ_damage(5, 0)
 			switch(imbue)
 				if("newtome")
 					call(/obj/rune/proc/tomesummon)()
@@ -670,8 +767,10 @@ var/runedec = 0
 					call(/obj/rune/proc/blind)()
 				if("runestun")
 					user << "\red To use this talisman, attack your target directly."
+					return
 				if("supply")
 					supply()
+			user.take_organ_damage(5, 0)
 			if(src && src.imbue!="supply" && src.imbue!="runestun")
 				del(src)
 			return
