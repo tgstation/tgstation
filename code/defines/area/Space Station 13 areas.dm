@@ -233,43 +233,30 @@ proc/process_ghost_teleport_locs()
 
 /area/centcom/evac
 	name = "Centcom Emergency Shuttle"
-	icon_state = "purple"
-	requires_power = 0
 
 /area/centcom/suppy
 	name = "Centcom Supply Shuttle"
-	icon_state = "purple"
-	requires_power = 0
 
 /area/centcom/ferry
 	name = "Centcom Transport Shuttle"
-	icon_state = "purple"
-	requires_power = 0
 
 /area/centcom/shuttle
 	name = "Centcom Administration Shuttle"
-	icon_state = "purple"
-	requires_power = 0
 
 /area/centcom/test
 	name = "Centcom Testing Facility"
-	icon_state = "purple"
-	requires_power = 0
 
 /area/centcom/living
 	name = "Centcom Living Quarters"
-	icon_state = "purple"
-	requires_power = 0
 
 /area/centcom/specops
 	name = "Centcom Special Ops"
-	icon_state = "purple"
-	requires_power = 0
 
 /area/centcom/creed
 	name = "Creed's Office"
-	icon_state = "purple"
-	requires_power = 0
+
+/area/centcom/holding
+	name = "Holding Facility"
 
 //EXTRA
 
@@ -820,7 +807,7 @@ proc/process_ghost_teleport_locs()
 
 /area/quartermaster/miningdock
 	name = "Mining Dock"
-	icon_state = "yellow"
+	icon_state = "mining"
 
 /area/quartermaster/miningstorage
 	name = "Mining Storage"

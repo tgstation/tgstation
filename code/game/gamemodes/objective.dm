@@ -5,7 +5,7 @@ datum
 
 		New(var/text)
 			if(text)
-				src.explanation_text = text
+				explanation_text = text
 
 		proc
 			check_completion()
@@ -31,9 +31,9 @@ datum
 
 				return target
 
-			proc/find_target_by_role(var/role)
+			proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
 				for(var/datum/mind/possible_target in ticker.minds)
-					if((possible_target != owner) && istype(possible_target.current, /mob/living/carbon/human) && (possible_target.assigned_role == role))
+					if((possible_target != owner) && istype(possible_target.current, /mob/living/carbon/human) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
 						target = possible_target
 						break
 
@@ -134,12 +134,12 @@ datum
 			)
 
 			proc/set_target(var/target_name as text)
-				src.target_name = target_name
-				src.steal_target = possible_items[target_name]
-				if (!src.steal_target )
-					src.steal_target = possible_items_special[target_name]
-				src.explanation_text = "Steal [target_name]."
-				return src.steal_target
+				target_name = target_name
+				steal_target = possible_items[target_name]
+				if (!steal_target )
+					steal_target = possible_items_special[target_name]
+				explanation_text = "Steal [target_name]."
+				return steal_target
 
 			proc/find_target()
 				return set_target(pick(possible_items))
@@ -158,14 +158,14 @@ datum
 					new_target = input("Enter target name:", "Objective target", new_target) as text|null
 					if (!new_target) return
 
-					src.target_name = new_target
-					src.steal_target = steal_target
-					src.explanation_text = "Steal [new_target]."
+					target_name = new_target
+					steal_target = steal_target
+					explanation_text = "Steal [new_target]."
 
 				else
 					set_target(new_target)
 
-				return src.steal_target
+				return steal_target
 
 			check_completion()
 				if(!steal_target || !owner.current)
@@ -209,6 +209,9 @@ datum
 					return 1
 				else
 					return 0
+
+		//capture
+			//WIP
 
 /* Isn't suited for global objectives
 /*---------CULTIST----------*/

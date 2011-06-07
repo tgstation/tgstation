@@ -43,8 +43,8 @@ ________________________________________________________________________________
 
 	Admin Notes:
 
-	Ninjas are meant for players to respawn as, not admins. They are another way to participate in the game post-death, like pais,
-	xenos, death squads, and cyborgs. Ninjas are not admin PCs--please do not use them for that purpose.
+	Ninjas are not admin PCs--please do not use them for that purpose. They are another way to participate in the game post-death,
+	like pais, xenos, death squads, and cyborgs.
 	I'm currently looking for feedback from regular players since beta testing is largely done. I would appreciate if
 	you spawned regular players as ninjas when rounds are boring. Or exciting, it's all good as long as there is feedback.
 	You can also spawn ninja gear manually if you want to.
@@ -67,28 +67,132 @@ ________________________________________________________________________________
 /proc/space_ninja_arrival()
 	/*
 	var/datum/game_mode/current_mode = ticker.mode
+	var/datum/mind/current_mind = new()
+	var/antagonist_list[] = list()//The bad guys.
+	var/protagonist_list[] = current_mode:get_living_heads()//The good guys. Mostly Heads. Who are alive.
+	var/xeno_list[] = list()//Aliums.
+
+	//First we determine what mode it is and add the bad guys approprietly.
 	switch (current_mode.config_tag)
-		if ("revolution")
+		if("traitor")
+			if(current_mode:traitors.len)
+				for(var/datum/mind/current_mind in current_mode:traitors)//For traitor minds in in the traitors list.
+					if(current_mind.current&&current_mind.current.stat!=2)//If the traitor mob exists and they are not dead.
+						antagonist_list += current_mind//Add them to the list.
 
+		if ("revolution")//Rev is divided into regular and head cultists. There are also heads of staff to consider.
+			if(current_mode:head_revolutionaries.len)
+				for(var/datum/mind/current_mind in current_mode:head_revolutionaries)
+					if(current_mind.current&&current_mind.current.stat!=2)
+						antagonist_list += current_mind
 
-		if ("cult")
-			if (src in current_mode:cult)
+			//if(current_mode:revolutionaries.len)//We don't need to worry about regular revs as they are of no particular importance.
 
+			if(current_mode:heads_of_staff.len)
+				heads_list = list()//Now we manually override the list made prior. Target Heads take priority.
+				for(var/datum/mind/current_mind in current_mode:heads_of_staff)
+					if(current_mind.current&&current_mind.current.stat!=2)
+						protagonist_list += current_mind
+				if(heads_list.len)//Or not, if there are none.
+					protagonist_list = heads_list
 
-		if ("wizard")
-			if (current_mode:wizard && src == current_mode:wizard)
+		if ("cult")//Always a few of these around.
+			if(current_mode:cult.len)
+				for(var/datum/mind/current_mind in current_mode:cult)
+					if(current_mind.current&&current_mind.current.stat!=2)
+						antagonist_list += current_mind
 
+		if ("wizard")//There can be only one mode wizard. Other wizards aren't too important.
+			if(current_mode:wizard)
+				antagonist_list += wizard//The round will end if the wizard dies so checking for it is unnecessary.
 
-		if ("changeling")
-			if (src in current_mode:changelings)
+		if ("changeling")//While only one changeling counts for being alive or dead, it's possible there are more.
+			if(current_mode:changelings.len)
+				for(var/datum/mind/current_mind in current_mode:changelings)
+					if(current_mind.current&&current_mind.current.stat!=2)
+						antagonist_list += current_mind
 
+		if ("malfunction")//Only one malf AI.
+			if(current_mode:malf_ai)
+				antagonist_list += malf_ai
 
-		if ("malfunction")
-			if (src in current_mode:malf_ai)
+		if ("nuclear")//Can be a few of these guys.
+			if(current_mode:syndicates.len)
+				for(var/datum/mind/current_mind in current_mode:syndicates)
+					if(current_mind.current&&current_mind.current.stat!=2)
+						antagonist_list += current_mind
+		else
+			return//Don't want to summon a ninja during meteor or extended, or something.
 
+//Here we pick a location and spawn the ninja.
+	var/list/spawn_list = list()
+	for(var/obj/landmark/L in world)
+		if (L.name == "carpspawn")
+			spawn_list.Add(L)
 
-		if ("nuclear")
-			if(src in current_mode:syndicates)
+	var/mob/dead/observer/G
+	var/list/candidates = list()
+	for(G in world)
+		if(G.client)//Now everyone can ninja!
+			if(((G.client.inactivity/10)/60) <= 5)
+				candidates.Add(G)
+
+	//The ninja will be created on the right spawn point or at late join.
+	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list.len ? spawn_list : latejoin ))
+
+	if(candidates.len)
+		var/mob/G = pick(candidates)
+		new_ninja.key = G.key
+		new_ninja.mind.key = key
+		new_ninja.wear_suit:randomize_param()//Give them a random set of suit parameters.
+		new_ninja.internal = new_ninja.s_store //So the poor ninja has something to breath when they spawn in spess.
+		new_ninja.internals.icon_state = "internal1"
+		del(G)
+	else
+		del(new_ninja)
+		return
+//Now for the rest of the stuff.
+
+	var/datum/mind/ninja_mind = new_ninja.mind//For easier reference.
+
+	//Xenos and deathsquads take precedence over everything else.
+	for(var/mob/living/carbon/alien/humanoid/xeno in world)//Unless the xenos are hiding in a locker somewhere, this'll find em.
+		if(istype(xeno))
+			xeno_list += xeno
+
+	//if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
+	//if(sent_strike_team)//If a strike team was sent.
+		for(var/mob/living/carbon/human/commando in world)//Search and destroy.
+			if(commando.mind&&commando.mind.special_role=="Death Commando")
+				var/datum/objective/assassinate/ninja_objective = new
+				ninja_objective.owner = ninja_mind
+				ninja_objective.find_target_by_role(commando.mind.special_role,1)
+				ninja_mind.objectives += ninja_objective
+
+	if(!antagonist_list.len)//If all of em' are dead/destroyed, we want to give the ninja a random objective.
+		switch(rand(1,3))
+			if(1)
+				if(protagonist_list.len)//If we have surviving heads.
+					for(var/datum/mind/head_mind in protagonist_list)//Search and destroy.
+						var/datum/objective/assassinate/ninja_objective = new
+						ninja_objective.owner = ninja_mind
+						ninja_objective.find_target_by_role(head_mind.assigned_role)
+						ninja_mind.objectives += ninja_objective
+
+		//TO DO: add ninja-net point-based system objective.
+		//TO DO: upgrade cell objective.
+
+	else//Else, we need to give them an objective based on round type.
+
+	//if(!ninja_mind.objectives.len)//If they somehow did not get an objective.
+	//Let em know.
+
+	//Finally add a survival objective.
+	var/datum/objective/survive/ninja_objective = new
+	ninja_objective.owner = ninja_mind
+	ninja_mind.objectives += ninja_objective
+
+	//new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current mission is: \red <B>[input]</B>"
 	*/
 	return
 
@@ -115,15 +219,12 @@ ________________________________________________________________________________
 				return
 
 	var/list/spawn_list = list()
-	for(var/obj/landmark/X in world)
-		if (X.name == "carpspawn")
-			spawn_list.Add(X)
-	if(!spawn_list.len)
-		alert("No spawn location could be found. Aborting.")
-		return
+	for(var/obj/landmark/L in world)
+		if (L.name == "carpspawn")
+			spawn_list.Add(L)
 
 	var/admin_name = src
-	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list))
+	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list.len ? spawn_list : latejoin ))
 
 	var/mob/dead/observer/G
 	var/list/candidates = list()
@@ -156,7 +257,7 @@ ________________________________________________________________________________
 
 //=======//NINJA CREATION PROCS//=======//
 
-client/proc/create_space_ninja(obj/spawn_point)
+/proc/create_space_ninja(obj/spawn_point)
 	var/mob/living/carbon/human/new_ninja = new(spawn_point.loc)
 	var/ninja_title = pick(ninja_titles)
 	var/ninja_name = pick(ninja_names)

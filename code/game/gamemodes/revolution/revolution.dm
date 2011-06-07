@@ -13,6 +13,7 @@
 
 	var/list/datum/mind/head_revolutionaries = list()
 	var/list/datum/mind/revolutionaries = list()
+	var/list/datum/mind/heads_of_staff = list()//This was annoying to check manually. Now I won't have to.
 	var/finished = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -57,6 +58,7 @@
 			rev_obj.owner = rev_mind
 			rev_obj.find_target_by_role(head_mind.assigned_role)
 			rev_mind.objectives += rev_obj
+			heads_of_staff += head_mind
 
 		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 		equip_revolutionary(rev_mind.current)

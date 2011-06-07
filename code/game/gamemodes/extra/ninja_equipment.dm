@@ -781,6 +781,24 @@ ________________________________________________________________________________
 
 			U << "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units."//Let the player know how much total volume was added.
 			return
+		else if(istype(I, /obj/item/weapon/cell))
+			if(I:maxcharge>cell.maxcharge)
+				U << "\blue Higher maximum capacity detected.\nUpgrading..."
+				if (n_gloves&&n_gloves.candrain&&do_after(U,50))
+					U.drop_item()
+					I.loc = src
+					I:charge = min(I:charge+cell.charge, I:maxcharge)
+					var/obj/item/weapon/cell/old_cell = cell
+					old_cell.charge = 0
+					U.put_in_hand(old_cell)
+					old_cell.add_fingerprint(U)
+					old_cell.corrupt()
+					old_cell.updateicon()
+					cell = I
+					U << "\blue Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%"
+				else
+					U << "\red Procedure interrupted. Protocol terminated."
+			return
 	..()
 
 /obj/item/clothing/suit/space/space_ninja/proc/toggle_stealth()
@@ -921,38 +939,21 @@ ________________________________________________________________________________
 
 		if("CELL")
 			var/obj/item/weapon/cell/A = target
-			if(A.maxcharge>S.cell.maxcharge)
-				U << "\blue Higher maximum capacity detected.\nUpgrading..."
-				if (G.candrain&&do_after(U,50))
-					U.drop_item()
-					A.loc = S
-					A.charge = min(A.charge+S.cell.charge, A.maxcharge)
-					var/obj/item/weapon/cell/old_cell = S.cell
-					old_cell.charge = 0
-					U.put_in_hand(old_cell)
-					old_cell.add_fingerprint(U)
-					old_cell.corrupt()
-					old_cell.updateicon()
-					S.cell = A
-					U << "\blue Upgrade complete. Maximum capacity: <b>[round(S.cell.charge/100)]</b>%"
+			if(A.charge)
+				if (G.candrain&&do_after(U,30))
+					U << "\blue Gained <B>[A.charge]</B> energy from the cell."
+					if(S.cell.charge+A.charge>S.cell.maxcharge)
+						S.cell.charge=S.cell.maxcharge
+					else
+						S.cell.charge+=A.charge
+					A.charge = 0
+					G.draining = 0
+					A.corrupt()
+					A.updateicon()
 				else
 					U << "\red Procedure interrupted. Protocol terminated."
 			else
-				if(A.charge)
-					if (G.candrain&&do_after(U,30))
-						U << "\blue Gained <B>[A.charge]</B> energy from the cell."
-						if(S.cell.charge+A.charge>S.cell.maxcharge)
-							S.cell.charge=S.cell.maxcharge
-						else
-							S.cell.charge+=A.charge
-						A.charge = 0
-						G.draining = 0
-						A.corrupt()
-						A.updateicon()
-					else
-						U << "\red Procedure interrupted. Protocol terminated."
-				else
-					U << "\red This cell is empty and of no use."
+				U << "\red This cell is empty and of no use."
 
 		if("MACHINERY")//Can be applied to generically to all powered machinery. I'm leaving this alone for now.
 			var/obj/machinery/A = target
@@ -1211,7 +1212,7 @@ ________________________________________________________________________________
 */
 
 /*
-It will teleport people to the prison after 30 seconds. (Check the process() proc to change where teleport goes)
+It will teleport people to a holding facility after 30 seconds. (Check the process() proc to change where teleport goes)
 It is possible to destroy the net by the occupant or someone else.
 */
 
@@ -1267,7 +1268,7 @@ It is possible to destroy the net by the occupant or someone else.
 				density = 0//Make the net pass-through.
 				invisibility = 101//Make the net invisible so all the animations can play out.
 				health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
-				M.loc = pick(prisonwarp)//Throw mob in prison.
+				M.loc = pick(holdingfacility)//Throw mob in to the holding facility.
 
 				spawn(0)
 					var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()

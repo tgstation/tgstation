@@ -181,13 +181,13 @@
 			mind.original = O
 		else if (mind.special_role) O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 
-	else //welp
+	else
 		mind = new /datum/mind(  )
 		mind.key = key
 		mind.current = O
 		mind.original = O
 		mind.transfer_to(O)
-		ticker.minds += O.mind
+		//ticker.minds += O.mind//Robutts aren't added to minds since it would be screwy. Assassinate that robot!
 	O.loc = loc
 	O << "<B>You are playing a Robot. A Robot can interact with most electronic objects in its view point.</B>"
 	O << "<B>You must follow the laws that the AI has. You are the AI's assistant to the station basically.</B>"

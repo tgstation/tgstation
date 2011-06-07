@@ -128,6 +128,7 @@ var
 	list/newplayer_start = list()
 	list/latejoin = list()
 	list/prisonwarp = list()	//prisoners go to these
+	list/holdingfacility = list()	//captured people go here
 	list/mazewarp = list()
 	list/tdome1 = list()
 	list/tdome2 = list()

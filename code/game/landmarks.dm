@@ -1,65 +1,67 @@
 /obj/landmark/New()
 
 	..()
-	src.tag = text("landmark*[]", src.name)
-	src.invisibility = 101
+	tag = text("landmark*[]", name)
+	invisibility = 101
 
 	if (name == "shuttle")
-		shuttle_z = src.z
+		shuttle_z = z
 		del(src)
 
 	if (name == "airtunnel_stop")
-		airtunnel_stop = src.x
+		airtunnel_stop = x
 
 	if (name == "airtunnel_start")
-		airtunnel_start = src.x
+		airtunnel_start = x
 
 	if (name == "airtunnel_bottom")
-		airtunnel_bottom = src.y
+		airtunnel_bottom = y
 
 	if (name == "monkey")
-		monkeystart += src.loc
+		monkeystart += loc
 		del(src)
 	if (name == "start")
-		newplayer_start += src.loc
+		newplayer_start += loc
 		del(src)
 
 	if (name == "wizard")
-		wizardstart += src.loc
+		wizardstart += loc
 		del(src)
 
 	if (name == "JoinLate")
-		latejoin += src.loc
+		latejoin += loc
 		del(src)
 
 	//prisoners
 	if (name == "prisonwarp")
-		prisonwarp += src.loc
+		prisonwarp += loc
 		del(src)
 	if (name == "mazewarp")
-		mazewarp += src.loc
+		mazewarp += loc
+	if (name == "Holding Facility")
+		holdingfacility += loc
 	if (name == "tdome1")
-		tdome1	+= src.loc
+		tdome1	+= loc
 	if (name == "tdome2")
-		tdome2 += src.loc
+		tdome2 += loc
 	if (name == "tdomeadmin")
-		tdomeadmin	+= src.loc
+		tdomeadmin	+= loc
 	if (name == "tdomeobserve")
-		tdomeobserve += src.loc
+		tdomeobserve += loc
 	//not prisoners
 	if (name == "prisonsecuritywarp")
-		prisonsecuritywarp += src.loc
+		prisonsecuritywarp += loc
 		del(src)
 
 	if (name == "blobstart")
-		blobstart += src.loc
+		blobstart += loc
 		del(src)
 
 	return 1
 
 /obj/landmark/start/New()
 	..()
-	src.tag = "start*[src.name]"
-	src.invisibility = 101
+	tag = "start*[name]"
+	invisibility = 101
 
 	return 1

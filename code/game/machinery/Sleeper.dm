@@ -113,6 +113,9 @@
 	var/mob/occupant = null
 	anchored = 1
 
+/obj/machinery/sleeper/dummy//For effects only.
+	icon_state = "sleeper_1"
+
 /obj/machinery/sleeper/allow_drop()
 	return 0
 
@@ -171,6 +174,9 @@
 		src.add_fingerprint(user)
 		del(G)
 		return
+	return
+
+/obj/machinery/sleeper/dummy/attackby()
 	return
 
 /obj/machinery/sleeper/ex_act(severity)
@@ -289,6 +295,12 @@
 	occupied = 0
 	return
 
+/obj/machinery/sleeper/dummy/eject()
+	set category = null
+	set hidden = 1
+
+	return
+
 /obj/machinery/sleeper/verb/move_inside()
 	set name = "Enter Sleeper"
 	set category = "Object"
@@ -319,4 +331,10 @@
 		return
 	else
 		occupied = 0
+	return
+
+/obj/machinery/sleeper/dummy/move_inside()
+	set category = null
+	set hidden = 1
+
 	return

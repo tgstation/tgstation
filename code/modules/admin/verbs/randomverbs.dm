@@ -368,6 +368,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.mind.special_verbs = list()//New list because they will receive them again.
 	else
 		new_character.mind = new()
+		ticker.minds += new_character.mind//And we'll add it to the minds database.
 	if(!record_found)//We have to pick their role if they have no record.
 		if(G_found.mind&&G_found.mind.assigned_role)//But they may have an assigned role already.
 			new_character.mind.assigned_role = G_found.mind.assigned_role//Also makes sure our MODE people are equipped right later on.

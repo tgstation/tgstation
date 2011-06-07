@@ -65,6 +65,7 @@
 	if(istype(wizard))
 		wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		wizard.special_role = "Wizard"
+		wizard.original = wizard.current
 
 	if(wizardstart.len == 0)
 		wizard.current << "<B>\red A starting location for you could not be found, please report this bug!</B>"
@@ -208,7 +209,12 @@
 
 	var/wizard_name
 	if(wizard.current)
-		wizard_name = "[wizard.current.real_name] (played by [wizard.key])"
+		if(wizard.current == wizard.original)
+			wizard_name = "[wizard.current.real_name] (played by [wizard.key])"
+		else if (wizard.original)
+			wizard_name = "[wizard.current.real_name] (originally [wizard.original.real_name]) (played by [wizard.key])"
+		else
+			wizard_name = "[wizard.current.real_name] (original character destroyed) (played by [wizard.key])"
 	else
 		wizard_name = "[wizard.key] (character destroyed)"
 	world << "<B>The wizard was [wizard_name]</B>"

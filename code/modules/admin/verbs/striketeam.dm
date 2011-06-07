@@ -124,6 +124,7 @@ var/global/sent_strike_team = 0
 	new_commando.mind.current = new_commando
 	new_commando.mind.assigned_role = "MODE"
 	new_commando.mind.special_role = "Death Commando"
+	ticker.minds += new_commando.mind
 	new_commando.equip_death_commando(leader_selected)
 	del(spawn_location)
 	return new_commando

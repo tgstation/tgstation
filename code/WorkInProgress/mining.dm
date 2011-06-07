@@ -543,51 +543,45 @@ proc/move_mining_shuttle()
 
 /**********************Mine areas**************************/
 
+/area/mine
+	icon_state = "mining"
+
 /area/mine/explored
 	name = "Mine"
-	icon_state = "janitor"
+	icon_state = "explored"
 	music = null
 
 /area/mine/unexplored
 	name = "Mine"
-	icon_state = "captain"
+	icon_state = "unexplored"
 	music = null
 
 /area/mine/lobby
 	name = "Mining station"
-	icon_state = "mine"
 
 /area/mine/storage
 	name = "Mining station Storage"
-	icon_state = "green"
 
 /area/mine/production
 	name = "Mining station Production Area"
-	icon_state = "janitor"
 
 /area/mine/living_quarters
 	name = "Abandoned Mining Station"
-	icon_state = "yellow"
 
 /area/mine/eva
 	name = "Mining station EVA"
-	icon_state = "eva"
 
 /area/mine/maintenance
 	name = "Mining station Maintenance"
-	icon_state = "maintcentral"
 
 /area/mine/cafeteria
 	name = "Mining station Cafeteria"
-	icon_state = "cafeteria"
 
 /area/mine/hydroponics
 	name = "Mining station Hydroponics"
-	icon_state = "hydro"
 
 /area/mine/sleeper
 	name = "Mining station Emergency Sleeper"
-	icon_state = "medbay"
 
 /**********************Mineral deposits**************************/
 
