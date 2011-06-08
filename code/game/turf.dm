@@ -1397,6 +1397,7 @@ turf/simulated/floor/return_siding_icon_state()
 				var/move_to_z = text2num(move_to_z_str)
 
 				if(!move_to_z)
+					return
 
 				A.z = move_to_z
 				A.y = world.maxy - 2
@@ -1414,6 +1415,7 @@ turf/simulated/floor/return_siding_icon_state()
 				var/move_to_z = text2num(move_to_z_str)
 
 				if(!move_to_z)
+					return
 
 				A.z = move_to_z
 				A.y = 3
