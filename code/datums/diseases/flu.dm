@@ -6,7 +6,7 @@
 	cure_id = "spaceacillin"
 	cure_chance = 10
 	agent = "H13N1 flu virion"
-	affected_species = list("Human")
+	affected_species = list("Human", "Monkey")
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will feel quite unwell."
 	severity = "Medium"

@@ -6,7 +6,7 @@
 	cure = "Synaptizine & Sulfur"
 	cure_id = list("synaptizine","sulfur")
 	agent = "Gravitokinetic Bipotential SADS-"
-	affected_species = list("Human")
+	affected_species = list("Human", "Monkey")
 	desc = "If left untreated death will occur."
 	severity = "Major"
 

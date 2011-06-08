@@ -151,7 +151,7 @@
 			            access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab, access_engine,
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer, access_virology, access_surgery,
+			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer,
 			            access_theatre, access_research, access_mining_office, access_mining, access_heads_vault, access_mining_station, access_hop)
 		if("Atmospheric Technician")
 			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage)
@@ -180,10 +180,10 @@
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_ai_upload, access_construction, access_robotics,
 			            access_mint, access_ce)
-		if("Research Director") // added hydroponics access -- Skie
+		if("Research Director") // removed hydroponics access, they are a supply field, not science
 			return list(access_medical, access_morgue, access_medlab, access_rd,
 			            access_tech_storage, access_maint_tunnels, access_heads, access_tox,
-			            access_tox_storage, access_chemistry, access_teleporter, access_hydroponics, access_virology, access_research, access_robotics, access_xenobiology)
+			            access_tox_storage, access_chemistry, access_teleporter, access_virology, access_research, access_robotics, access_xenobiology)
 		if("Virologist")
 			return list(access_medical, access_morgue, access_virology, access_research)
 		if("Chief Medical Officer")

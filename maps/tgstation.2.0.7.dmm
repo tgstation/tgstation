@@ -2885,7 +2885,7 @@
 "bdy" = (/obj/stool/chair{dir = 1},/obj/item/device/radio/intercom{pixel_x = -25},/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
 "bdz" = (/obj/machinery/chem_dispenser,/obj/cable{icon_state = "0-2"; d2 = 2},/obj/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
 "bdA" = (/obj/machinery/chem_master,/obj/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
-"bdB" = (/obj/secure_closet/chemical,/obj/machinery/camera{c_tag = "Chemistry"},/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
+"bdB" = (/obj/machinery/camera{c_tag = "Chemistry"},/obj/machinery/reagentgrinder,/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
 "bdC" = (/obj/table{dir = 10; icon_state = "tabledir"},/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
 "bdD" = (/obj/table{dir = 2; icon_state = "tabledir"},/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
 "bdE" = (/obj/table{dir = 2; icon_state = "tabledir"},/obj/machinery/alarm{frequency = 1437; pixel_y = 23},/turf/simulated/floor{icon_state = "white"},/area/medical/chemistry)
