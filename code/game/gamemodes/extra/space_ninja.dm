@@ -68,8 +68,12 @@ ________________________________________________________________________________
 	/*
 	var/datum/game_mode/current_mode = ticker.mode
 	var/datum/mind/current_mind = new()
-	var/antagonist_list[] = list()//The bad guys.
+	var/antagonist_list[] = list()//The main bad guys.
+	var/sec_antagonist_list[] = current_mode.traitors//The OTHER bad guys. Mostly admin made.
+	var/tet_antagonist_list[] = list()//The bad guys no-one really cares about. For now just revs.
+
 	var/protagonist_list[] = current_mode:get_living_heads()//The good guys. Mostly Heads. Who are alive.
+
 	var/xeno_list[] = list()//Aliums.
 
 	//First we determine what mode it is and add the bad guys approprietly.
@@ -86,7 +90,9 @@ ________________________________________________________________________________
 					if(current_mind.current&&current_mind.current.stat!=2)
 						antagonist_list += current_mind
 
-			//if(current_mode:revolutionaries.len)//We don't need to worry about regular revs as they are of no particular importance.
+				for(var/datum/mind/current_mind in current_mode:revolutionaries)
+					if(current_mind.current&&current_mind.current.stat!=2)
+						tet_antagonist_list += current_mind
 
 			if(current_mode:heads_of_staff.len)
 				heads_list = list()//Now we manually override the list made prior. Target Heads take priority.
@@ -169,7 +175,13 @@ ________________________________________________________________________________
 				ninja_objective.find_target_by_role(commando.mind.special_role,1)
 				ninja_mind.objectives += ninja_objective
 
-	if(!antagonist_list.len)//If all of em' are dead/destroyed, we want to give the ninja a random objective.
+/*
+If there are no antogonists left it could mean one of two things:
+	A) The round is about to end. No harm in spawning the ninja here since it has done all the reporting more likely than not.
+	B) The round is still going and ghosts are probably rioting for something to happen.
+In either case, it's a good idea to spawn the ninja with a semi-random set of objectives.
+*/
+	if(!antagonist_list.len)
 		switch(rand(1,3))
 			if(1)
 				if(protagonist_list.len)//If we have surviving heads.
@@ -183,6 +195,10 @@ ________________________________________________________________________________
 		//TO DO: upgrade cell objective.
 
 	else//Else, we need to give them an objective based on round type.
+		if(sec_antagonist_list.len)
+
+		if(tet_antagonist_list.len)//Not gonna happen but maybe in the future.
+
 
 	//if(!ninja_mind.objectives.len)//If they somehow did not get an objective.
 	//Let em know.
@@ -192,9 +208,47 @@ ________________________________________________________________________________
 	ninja_objective.owner = ninja_mind
 	ninja_mind.objectives += ninja_objective
 
-	//new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current mission is: \red <B>[input]</B>"
+	var/directive = generate_ninja_directive()
+	new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: \red <B>[directive]</B>"
+	new_ninja.mind.store_memory("<B>Directive:</B> \red [directive].")
 	*/
 	return
+
+/*
+This proc will give the ninja a directive to follow. They are not obligated to do so but it's a fun roleplay reminder.
+Making this random or semi-random will probably not work without it also being incredibly silly.
+As such, it's hard-coded for now. No reason for it not to be, really.
+*/
+/proc/generate_ninja_directive()
+	var/directive
+	switch(rand(1,12))
+		if(1)
+			directive = "The Spider Clan must not be linked to this operation. Remain as hidden and covert as possible."
+		if(2)
+			directive = "[station_name] is financed by an enemy of the Spider Clan. Cause as much structural damage as possible."
+		if(3)
+			directive = "A wealthy animal rights activist has made a request we cannot refuse. Prioritize saving animal lives whenever possible."
+		if(4)
+			directive = "The Spider Clan absolutely cannot be linked to this operation. Eliminate all witnesses with most extreme prejudice."
+		if(5)
+			directive = "We are currently negotiating with Nanotrasen command. Prioritize saving human lives over ending them."
+		if(6)
+			directive = "We are engaged in a legal dispute over [station_name]. If a laywer is present on board, force their cooperation in the matter."
+		if(7)
+			directive = "A financial backer has made an offer we cannot refuse. Implicate Syndicate involvement in the operation."
+		if(8)
+			directive = "Let no one question the mercy of the Spider Clan. Ensure the safety of all non-essential personnel you encounter."
+		if(9)
+			directive = "A free agent has proposed a lucrative business deal. Implicate Nanotrasen involvement in the operation."
+		if(10)
+			directive = "Our reputation is on the line. Harm as few civilians or innocents as possible."
+		if(11)
+			directive = "Our honor is on the line. Utilize only honorable tactics when dealing with opponents."
+		if(12)
+			directive = "We are currently negotiating with a Syndicate leader. Disguise assassinations as suicide or another natural cause."
+		else
+			directive = "There are no special directives at this time."
+	return directive
 
 //=======//ADMIN VERB//=======//
 

@@ -238,7 +238,7 @@ Code:
 			if(441)
 				menu = "<h4><img src=pda_medical.png> Medical Record</h4>"
 
-				if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
+				if (istype(active1, /datum/data/record) && (active1 in data_core.general))
 					menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 					menu += "Sex: [active1.fields["sex"]]<br>"
 					menu += "Age: [active1.fields["age"]]<br>"
@@ -251,7 +251,7 @@ Code:
 				menu += "<br>"
 
 				menu += "<h4><img src=pda_medical.png> Medical Data</h4>"
-				if (istype(active2, /datum/data/record) && data_core.medical.Find(active2))
+				if (istype(active2, /datum/data/record) && (active2 in data_core.medical))
 					menu += "Blood Type: [active2.fields["b_type"]]<br><br>"
 
 					menu += "Minor Disabilities: [active2.fields["mi_dis"]]<br>"
@@ -281,7 +281,7 @@ Code:
 			if(451)
 				menu = "<h4><img src=pda_cuffs.png> Security Record</h4>"
 
-				if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
+				if (istype(active1, /datum/data/record) && (active1 in data_core.general))
 					menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 					menu += "Sex: [active1.fields["sex"]]<br>"
 					menu += "Age: [active1.fields["age"]]<br>"
@@ -294,7 +294,7 @@ Code:
 				menu += "<br>"
 
 				menu += "<h4><img src=pda_cuffs.png> Security Data</h4>"
-				if (istype(active3, /datum/data/record) && data_core.security.Find(active3))
+				if (istype(active3, /datum/data/record) && (active3 in data_core.security))
 					menu += "Criminal Status: [active3.fields["criminal"]]<br>"
 
 					menu += "Minor Crimes: [active3.fields["mi_crim"]]<br>"
@@ -505,7 +505,7 @@ Code:
 			var/datum/data/record/M = locate(href_list["target"])
 			loc:mode = 441
 			mode = 441
-			if (data_core.general.Find(R))
+			if (R in data_core.general)
 				for (var/datum/data/record/E in data_core.medical)
 					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 						M = E
@@ -518,7 +518,7 @@ Code:
 			var/datum/data/record/S = locate(href_list["target"])
 			loc:mode = 451
 			mode = 451
-			if (data_core.general.Find(R))
+			if (R in data_core.general)
 				for (var/datum/data/record/E in data_core.security)
 					if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 						S = E

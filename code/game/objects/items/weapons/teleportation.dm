@@ -116,7 +116,9 @@ Frequency:
 		if(T.x>world.maxx-4 || T.x<4)	continue	//putting them at the edge is dumb
 		if(T.y>world.maxy-4 || T.y<4)	continue
 		turfs += T
-	if(turfs)	L["None (Dangerous)"] = pick(turfs)
+	var/turf/current_location = locate(user.x,user.y,user.z)//Can't teleport randomly on clown-planet z-level.
+	if(turfs&&current_location.z!=6)//Which is z level 6.
+		L["None (Dangerous)"] = pick(turfs)
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") in L
 	if ((user.equipped() != src || user.stat || user.restrained()))
 		return
