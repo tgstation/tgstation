@@ -89,7 +89,9 @@ datum
 				return moles
 
 			return_pressure()
-				return total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume
+				if(volume>0)
+					return total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume
+				return 0
 
 			thermal_energy()
 				return temperature*heat_capacity()
