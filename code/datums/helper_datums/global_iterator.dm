@@ -98,8 +98,10 @@ Data storage vars:
 		if(!active())
 			return
 		control_switch = 0
+/* //always fails if called inside process()
 		if(!state_check())
 			return
+*/
 		return 1
 
 	proc/state_check()
