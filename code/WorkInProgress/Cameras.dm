@@ -3,6 +3,7 @@
 	icon = 'items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
+	can_hold = list("/obj/item/weapon/photo",)
 
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
 
@@ -32,31 +33,7 @@
 	return
 
 /obj/item/weapon/storage/photo_album/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	//..()
-
-	if (src.contents.len >= 7)
-		return
-
-	if (!istype(W,/obj/item/weapon/photo))
-		user << "\red You can only put photos in a photo album."
-		return
-
-	var/t
-	for(var/obj/item/weapon/O in src)
-		t += O.w_class
-
-	playsound(src.loc, "rustle", 50, 1, -5)
-	user.u_equip(W)
-	W.loc = src
-	if ((user.client && user.s_active != src))
-		user.client.screen -= W
-	src.orient2hud(user)
-	W.dropped(user)
-	add_fingerprint(user)
-	for(var/mob/O in viewers(user, null))
-		O.show_message(text("\blue [] has added [] to []!", user, W, src), 1)
-
-	return
+	..()
 
 /obj/item/weapon/camera_test
 	name = "camera"

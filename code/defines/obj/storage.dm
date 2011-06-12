@@ -49,19 +49,13 @@
 	)
    flags = FPRINT | TABLEPASS | ONBELT
 
-/obj/item/weapon/storage
-	icon = 'storage.dmi'
-	name = "storage"
-	var/list/can_hold = new/list()
-	var/obj/screen/storage/boxes = null
-	var/obj/screen/close/closer = null
-	w_class = 3.0
-
 /obj/item/weapon/storage/backpack
 	name = "backpack"
 	icon_state = "backpack"
 	w_class = 4.0
 	flags = 259.0
+	max_w_class = 3
+	max_combined_w_class = 20
 
 /obj/item/weapon/storage/pill_bottle
 	name = "pill bottle"
@@ -114,6 +108,8 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = 4.0
+	max_w_class = 3
+	max_combined_w_class = 16
 
 /obj/item/weapon/storage/disk_kit
 	name = "data disks"
@@ -144,7 +140,7 @@
 /obj/item/weapon/storage/firstaid/regular
 	icon_state = "firstaid"
 
-/obj/item/weapon/storage/firstaid/syringes
+/obj/item/weapon/storage/syringes
 	name = "Syringes"
 	desc = "A biohazard alert warning is printed on the box"
 	icon_state = "syringe"

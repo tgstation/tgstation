@@ -48,54 +48,87 @@
 	user.s_active = null
 	return
 
+//This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
+//The numbers are calculated from the bottom-left (Right hand slot on the map) being 1,1.
 /obj/item/weapon/storage/proc/orient_objs(tx, ty, mx, my)
-
 	var/cx = tx
 	var/cy = ty
-	src.boxes.screen_loc = text("[],[] to [],[]", tx, ty, mx, my)
+	src.boxes.screen_loc = text("[tx],[ty] to [mx],[my]")
 	for(var/obj/O in src.contents)
-		O.screen_loc = text("[],[]", cx, cy)
+		O.screen_loc = text("[cx],[cy]")
 		O.layer = 20
 		cx++
 		if (cx > mx)
 			cx = tx
 			cy--
-		//Foreach goto(56)
-	src.closer.screen_loc = text("[],[]", mx, my)
+	src.closer.screen_loc = text("[mx+1],[my]")
 	return
 
-
+//This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /obj/item/weapon/storage/proc/orient2hud(mob/user as mob)
 	var/mob/living/carbon/human/H = user
+	var/col_num = 0
+	var/row_count = min(7,storage_slots) -1
+	if (contents.len > 7)
+		if(contents.len % 7) //So having 14 items keeps them in 2 wors instead of 3
+			col_num = round(contents.len / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
 	if (src == user.l_hand)
-		src.orient_objs(3, 11, 3, 4)
+		src.orient_objs(3-col_num, 3+row_count, 3, 3)
 	else if(src == user.r_hand)
-		src.orient_objs(1, 11, 1, 4)
+		src.orient_objs(1, 3+row_count, 1+col_num, 3)
 	else if(src == user.back)
-		src.orient_objs(4, 10, 4, 3)
+		src.orient_objs(4-col_num, 3+row_count, 4, 3)
 	else if(istype(user, /mob/living/carbon/human) && src == H.belt)//only humans have belts
 		src.orient_objs(1, 3, 8, 3)
 	else
-		src.orient_objs(7, 8, 10, 7)
+		src.orient_objs(5, 10, 11, 10)
 	return
 
-
+//This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(isrobot(user))
-		return
+		user << "\blue You're a robot. No."
+		return //Robots can't interact with storage items.
+
+	if(src.loc == W)
+		return //Means the item is already in the storage item
+
+	if(contents.len >= storage_slots)
+		user << "\red The [src] is full, make some space."
+		return //Storage item is full
+
 	if(can_hold.len)
 		var/ok = 0
 		for(var/A in can_hold)
-			if(istype(W, text2path(A) )) ok = 1
+			if(istype(W, text2path(A) ))
+				ok = 1
+				break
 		if(!ok)
-			user << "\red This container cannot hold [W]."
+			user << "\red This [src] cannot hold [W]."
 			return
 
-	if (src.contents.len >= 7)
+	for(var/A in cant_hold) //Check for specific items which this container can't hold.
+		if(istype(W, text2path(A) ))
+			user << "\red This [src] cannot hold [W]."
+			return
+
+	if (W.w_class > max_w_class)
+		user << "\red This [W] is too big for this [src]"
 		return
-	if ((W.w_class >= 3 || (istype(W, /obj/item/weapon/storage) && !istype(W, /obj/item/weapon/storage/pill_bottle)) || src.loc == W))
+
+	var/sum_w_class = W.w_class
+	for(var/obj/item/I in contents)
+		sum_w_class += I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
+
+	if(sum_w_class > max_combined_w_class)
+		user << "\red The [W] cannot fit in the [src]. Remove some items or add a smaller one.."
 		return
+
+	if ( W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
+		user << "\red The [src] cannot hold  [W] as it's a storage item of the same size."
+		return //To prevent the stacking of the same sized items.
+
 	user.u_equip(W)
 	W.loc = src
 	if ((user.client && user.s_active != src))
@@ -105,13 +138,12 @@
 	add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
 	for(var/mob/O in viewers(user, null))
-		O.show_message(text("\blue [] has added [] to []!", user, W, src), 1)
+		O.show_message(text("\blue [user] has added [W] to [src]!"))
 		//Foreach goto(139)
 	return
 
 /obj/item/weapon/storage/dropped(mob/user as mob)
-
-	src.orient_objs(7, 8, 10, 7)
+	src.orient_objs(5,10,12,10)
 	return
 
 /obj/item/weapon/storage/MouseDrop(over_object, src_location, over_location)
@@ -125,7 +157,6 @@
 /obj/item/weapon/storage/attack_paw(mob/user as mob)
 	playsound(src.loc, "rustle", 50, 1, -5)
 	return src.attack_hand(user)
-	return
 
 /obj/item/weapon/storage/attack_hand(mob/user as mob)
 	playsound(src.loc, "rustle", 50, 1, -5)
@@ -138,7 +169,6 @@
 		for(var/mob/M in range(1))
 			if (M.s_active == src)
 				src.close(M)
-			//Foreach goto(76)
 	src.orient2hud(user)
 	src.add_fingerprint(user)
 	return
@@ -156,7 +186,7 @@
 	src.closer.icon_state = "x"
 	src.closer.layer = 20
 	spawn( 5 )
-		src.orient_objs(7, 8, 10, 7)
+		src.orient_objs(5, 10, 12, 10)
 		return
 	return
 

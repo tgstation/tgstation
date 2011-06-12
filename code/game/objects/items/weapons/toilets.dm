@@ -2,7 +2,6 @@
 CONTAINS:
 TOILET
 
-*/
 /obj/item/weapon/storage/toilet
 	name = "toilet"
 	w_class = 4.0
@@ -92,3 +91,6 @@ TOILET
 		for(var/mob/O in viewers(user, null))
 			O << text("\blue The toilet is clogged!")
 	return
+
+
+*/

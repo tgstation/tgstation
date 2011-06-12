@@ -11,9 +11,8 @@
 	new /obj/item/weapon/reagent_containers/pill/kelotane( src ) //Replaced ointment with these since they actually work --Errorage
 	return
 
-/obj/item/weapon/storage/firstaid/syringes/New()
+/obj/item/weapon/storage/syringes/New()
 	..()
-	if (empty) return
 	new /obj/item/weapon/reagent_containers/syringe( src )
 	new /obj/item/weapon/reagent_containers/syringe( src )
 	new /obj/item/weapon/reagent_containers/syringe( src )

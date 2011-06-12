@@ -1068,6 +1068,20 @@
 		src.pixel_x = rand(-5, 5)
 		src.pixel_y = rand(-5, 5)
 
+/obj/item/weapon/storage
+	icon = 'storage.dmi'
+	name = "storage"
+	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
+	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
+	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
+	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
+	var/storage_slots = 7 //The number of storage slots in this container.
+	var/obj/screen/storage/boxes = null
+	var/obj/screen/close/closer = null
+	w_class = 3.0
+
+
+/*
 /obj/item/weapon/storage/glassbox
 	name = "Glassware Box"
 	icon_state = "beakerbox"
@@ -1081,6 +1095,7 @@
 		new /obj/item/weapon/glass( src )
 		new /obj/item/weapon/glass( src )
 		new /obj/item/weapon/glass( src )
+*/
 
 /obj/item/weapon/storage/cupbox
 	name = "Paper-cup Box"

@@ -523,42 +523,36 @@
  */
 
 /obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob)
-	//..()
+
 	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
-		if (src.contents.len >= 7)
-			return
-		if ((S.w_class >= 2 || istype(S, /obj/item/weapon/storage)))
-			return
 		..()
 		return
 
-	//Syringekit doesn't count EVER.
-	if(src.type == /obj/item/weapon/storage/firstaid/syringes)
-		return
-
+	//Making a medibot!
 	if(src.contents.len >= 1)
 		user << "\red You need to empty [src] out first!"
 		return
-	else
-		var/obj/item/weapon/firstaid_arm_assembly/A = new /obj/item/weapon/firstaid_arm_assembly
-		if(istype(src,/obj/item/weapon/storage/firstaid/fire))
-			A.skin = "ointment"
-		else if(istype(src,/obj/item/weapon/storage/firstaid/toxin))
-			A.skin = "tox"
-		else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
-			A.skin = "o2"
 
-		A.loc = user
-		if (user.r_hand == S)
-			user.u_equip(S)
-			user.r_hand = A
-		else
-			user.u_equip(S)
-			user.l_hand = A
-		A.layer = 20
-		user << "You add the robot arm to the first aid kit"
-		del(S)
-		del(src)
+	var/obj/item/weapon/firstaid_arm_assembly/A = new /obj/item/weapon/firstaid_arm_assembly
+	if(istype(src,/obj/item/weapon/storage/firstaid/fire))
+		A.skin = "ointment"
+	else if(istype(src,/obj/item/weapon/storage/firstaid/toxin))
+		A.skin = "tox"
+	else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
+		A.skin = "o2"
+
+	A.loc = user
+	if (user.r_hand == S)
+		user.u_equip(S)
+		user.r_hand = A
+	else
+		user.u_equip(S)
+		user.l_hand = A
+	A.layer = 20
+	user << "You add the robot arm to the first aid kit"
+	del(S)
+	del(src)
+
 
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

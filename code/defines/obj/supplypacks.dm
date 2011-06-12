@@ -148,7 +148,7 @@
 					"/obj/item/weapon/reagent_containers/glass/bottle/antitoxin",
 					"/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline",
 					"/obj/item/weapon/reagent_containers/glass/bottle/stoxin",
-					"/obj/item/weapon/storage/firstaid/syringes")
+					"/obj/item/weapon/storage/syringes")
 	cost = 10
 	containertype = "/obj/crate/medical"
 	containername = "Medical crate"
@@ -164,7 +164,7 @@
 //					"/obj/item/weapon/reagent_containers/glass/bottle/gbs", No. Just no.
 					"/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat",
 					"/obj/item/weapon/reagent_containers/glass/bottle/brainrot",
-					"/obj/item/weapon/storage/firstaid/syringes",
+					"/obj/item/weapon/storage/syringes",
 					"/obj/item/weapon/storage/beakerbox")
 	cost = 20
 	containertype = "/obj/crate/secure/weapon"

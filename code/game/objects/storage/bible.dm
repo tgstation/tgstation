@@ -81,29 +81,5 @@
 			call(/obj/rune/proc/revealrunes)(src)
 
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	//..()
-	if (istype(W, /obj/item/weapon/storage/bible))
-		return
-	if (src.contents.len >= 7)
-		return
-	if (W.w_class > 3)
-		return
-	var/t
-	for(var/obj/item/weapon/O in src)
-		t += O.w_class
-		//Foreach goto(46)
-	t += W.w_class
-	if (t > 5)
-
-		user << "You cannot fit the item inside. (Remove larger classed items)"
-		return
 	playsound(src.loc, "rustle", 50, 1, -5)
-	user.u_equip(W)
-	W.loc = src
-	if ((user.client && user.s_active != src))
-		user.client.screen -= W
-	src.orient2hud(user)
-	W.dropped(user)
-	add_fingerprint(user)
-	return
-
+	..()

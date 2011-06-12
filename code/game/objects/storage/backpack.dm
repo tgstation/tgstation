@@ -35,35 +35,9 @@
 	return
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	//..()
-
-	if (src.contents.len >= 7)
-		return
-	if (W.w_class > 3 || src.loc == W)
-		if(W.w_class > 3)
-			user << "[W] is too big to fit into the backpack."
-		return
-	var/t
-	for(var/obj/item/weapon/O in src)
-		t += O.w_class
-		//Foreach goto(46)
-	t += W.w_class
-	if (t > 20)
-		user << "You cannot fit the item inside. (Remove larger classed items)"
-		return
 	playsound(src.loc, "rustle", 50, 1, -5)
-	user.u_equip(W)
-	W.loc = src
-	if ((user.client && user.s_active != src))
-		user.client.screen -= W
-	src.orient2hud(user)
-	W.dropped(user)
-	if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
-	add_fingerprint(user)
-	for(var/mob/O in viewers(user, null))
-		O.show_message(text("\blue [] has added [] to []!", user, W, src), 1)
-		//Foreach goto(206)
-	return
+	..()
+
 
 /obj/item/weapon/storage/backpack/holding
 	name = "Bag of Holding"
@@ -79,39 +53,13 @@
 		if(crit_fail)
 			user << "\red The Bluespace generator isn't working."
 			return
-
 		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
 			del(W)
 			new /obj/machinery/singularity (get_turf(src))
 			del(src)
 			return
-
-		if (src.contents.len >= 7)
-			user << "\red The Bluespace interface currently does not allow for more than 7 items to be stored. We're working on it! --R&D"
-			return
-		if (W.w_class > 3 || src.loc == W)
-			if(!failcheck(user))
-				return
-		var/t
-		for(var/obj/item/weapon/O in src)
-			t += O.w_class
-			//Foreach goto(46)
-		t += W.w_class
-		if (t > 20)
-			if(!failcheck(user))
-				return
-		playsound(src.loc, "rustle", 50, 1, -5)
-		user.u_equip(W)
-		W.loc = src
-		if ((user.client && user.s_active != src))
-			user.client.screen -= W
-		src.orient2hud(user)
-		W.dropped(user)
-		if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
-		add_fingerprint(user)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\blue [] has added [] to []!", user, W, src), 1)
+		..()
 
 	proc/failcheck(mob/user as mob)
 		if (prob(src.reliability)) return 1 //No failure

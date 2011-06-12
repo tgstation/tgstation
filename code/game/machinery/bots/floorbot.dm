@@ -362,7 +362,6 @@
 
 
 /obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/steel/T, mob/user as mob)
-	..()
 	if(!istype(T, /obj/item/stack/tile/steel))
 		..()
 		return
