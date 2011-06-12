@@ -8,6 +8,7 @@
 		return
 
 	var/sound/uploaded_sound = sound(S,0,1,0)
+	uploaded_sound.channel = 777
 	uploaded_sound.priority = 255
 	uploaded_sound.wait = 1
 

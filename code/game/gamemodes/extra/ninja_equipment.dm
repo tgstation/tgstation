@@ -940,7 +940,8 @@ ________________________________________________________________________________
 
 	G.draining = 1
 
-	U << "\blue Now charging battery..."
+	if(target_type!="RESEARCH")//I lumped research downloading here for ease of use.
+		U << "\blue Now charging battery..."
 
 	switch(target_type)
 
@@ -1052,6 +1053,29 @@ ________________________________________________________________________________
 			else
 				U << "\red This recharger is not providing energy. You must find another source."
 
+		if("RESEARCH")
+			var/obj/machinery/A = target
+			U << "\blue Hacking \the [A]..."
+			spawn(0)
+				for(var/mob/living/silicon/ai/AI in world)
+					if(U.loc)
+						AI << "\red <b>Network Alert: Hacking attempt detected in [U.loc]</b>."
+					else
+						AI << "\red <b>Network Alert: Hacking attempt detected. Unable to pinpoint location</b>."
+			if(A:files&&A:files.known_tech.len))
+				while(G.candrain&&!isnull(A))
+					for(var/datum/tech/current_data in S.stored_research)
+						U << "\blue Checking \the [current_data.name] database."
+						if(do_after(U,S.s_delay)
+							for(var/datum/tech/analyzing_data in A:files.known_tech)
+								if(current_data.id==analyzing_data.id)
+									if(analyzing_data.level>current_data.level)
+										U << "\blue Database: \black <b>UPDATED</b>."
+										current_data.level = analyzing_data.level
+									break
+					break
+			U << "\blue Data analyzed. Process finished."
+
 		if("WIRE")
 			var/obj/cable/A = target
 			var/datum/powernet/PN = A.get_powernet()
@@ -1124,6 +1148,7 @@ ________________________________________________________________________________
 				U << "\blue Gained <B>[totaldrain]</B> energy from [A]."
 			else
 				U << "\red Their battery has run dry of power. You must find another source."
+
 		else//Else nothing :<
 
 	G.draining = 0
