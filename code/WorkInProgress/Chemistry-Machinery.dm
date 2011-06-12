@@ -508,7 +508,9 @@
 	)
 
 /obj/machinery/reagentgrinder/New()
+	..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/large(src)
+	return
 
 /obj/machinery/reagentgrinder/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))
