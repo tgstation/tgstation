@@ -324,7 +324,7 @@ THERMAL GLASSES
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/gun,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 9
 	var/fuel = 0
-	var/list/togglearmor = list(melee = 90, bullet = 30, laser = 60, taser = 40, bomb = 75, bio = 75, rad = 75)
+	var/list/togglearmor = list(melee = 90, bullet = 70, laser = 60, taser = 40, bomb = 75, bio = 75, rad = 75)
 	var/active = 0
 	var/obj/item/clothing/head/helmet/powered/helm = null
 
