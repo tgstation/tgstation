@@ -71,7 +71,10 @@
 									candidates.Add(G)
 				if(candidates.len)
 					var/mob/dead/observer/G = pick(candidates)
-					G.client.mob = new/mob/living/carbon/alien/larva(affected_mob.loc)
+					var/mob/living/carbon/alien/larva/new_xeno = new(affected_mob.loc)
+					new_xeno.mind_initialize(G,"Larva")
+					new_xeno.key = G.key
+					del(G)
 				else
 					if(affected_mob.client)
 						affected_mob.client.mob = new/mob/living/carbon/alien/larva(affected_mob.loc)

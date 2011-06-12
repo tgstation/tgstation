@@ -40,9 +40,8 @@
 		mind.transfer_to(O)
 	O.a_intent = "hurt"
 	O << "<B>You are now a monkey.</B>"
-	var/prev_body = src
-	src = null //prevent terminating proc due to folowing del()
-	del(prev_body)
+	spawn(0)//To prevent the proc from returning null.
+		del(src)
 	return O
 
 /mob/new_player/AIize()
@@ -174,7 +173,7 @@
 	O.invisibility = 0
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
-	O.lastKnownIP = client.address
+	O.lastKnownIP = client.address ? client.address : null
 	if (mind)
 		mind.transfer_to(O)
 		if (mind.assigned_role == "Cyborg")
@@ -199,7 +198,8 @@
 	O.mmi = new /obj/item/device/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
 
-	del(src)
+	spawn(0)//To prevent the proc from returning null.
+		del(src)
 	return O
 
 //human -> alien
@@ -215,39 +215,30 @@
 	invisibility = 101
 	for(var/t in organs)
 		del(organs[t])
-//	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
-//	animation.icon_state = "blank"
-//	animation.icon = 'mob.dmi'
-//	animation.master = src
-//	flick("h2alien", animation)
-//	sleep(48)
-//	del(animation)
 
-	var/CASTE = pick("Hunter","Sentinel","Drone")
-	var/mob/O
-	switch(CASTE)
+	var/alien_caste = pick("Hunter","Sentinel","Drone")
+	var/mob/living/carbon/alien/humanoid/new_xeno
+	switch(alien_caste)
 		if("Hunter")
-			O = new /mob/living/carbon/alien/humanoid/hunter (loc)
+			new_xeno = new /mob/living/carbon/alien/humanoid/hunter (loc)
 		if("Sentinel")
-			O = new /mob/living/carbon/alien/humanoid/sentinel (loc)
+			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel (loc)
 		if("Drone")
-			O = new /mob/living/carbon/alien/humanoid/drone (loc)
+			new_xeno = new /mob/living/carbon/alien/humanoid/drone (loc)
 
-	O.dna = dna
+	//Honestly not sure why it's giving them DNA.
+	/*
+	new_xeno.dna = dna
 	dna = null
-	O.dna.uni_identity = "00600200A00E0110148FC01300B009"
-	O.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
+	new_xeno.dna.uni_identity = "00600200A00E0110148FC01300B009"
+	new_xeno.dna.struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4BB8"
+	*/
 
-	O.mind = new//Mind initialize stuff.
-	O.mind.current = O
-	O.mind.assigned_role = "Alien"
-	O.mind.special_role = CASTE
-	O.mind.key = key
-	if(client)
-		client.mob = O
+	new_xeno.mind_initialize(src, alien_caste)
+	new_xeno.key = key
 
-
-	O.loc = loc
-	O << "<B>You are now an alien.</B>"
-	del(src)
+	new_xeno.a_intent = "hurt"
+	new_xeno << "<B>You are now an alien.</B>"
+	spawn(0)//To prevent the proc from returning null.
+		del(src)
 	return

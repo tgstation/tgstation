@@ -42,6 +42,11 @@
 		return 1
 	return 0
 
+/proc/isalienadult(A)
+	if(istype(A, /mob/living/carbon/alien/humanoid))
+		return 1
+	return 0
+
 /proc/islarva(A)
 	if(istype(A, /mob/living/carbon/alien/larva))
 		return 1
@@ -279,9 +284,11 @@ proc/isobserver(A)
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 /proc/ninjaspeak(n)
-//The difference with stutter is that this proc can stutter more than 1 letter
-//The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
-//It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
+/*
+The difference with stutter is that this proc can stutter more than 1 letter
+The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
+It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
+*/
 	var/te = html_decode(n)
 	var/t = ""
 	n = length(n)
@@ -928,17 +935,30 @@ proc/isobserver(A)
 			if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
 				usr.next_move = world.time + 100
 				usr.last_special = world.time + 100
-				usr << "\red You attempt to remove your handcuffs. (This will take around 2 minutes and you need to stand still)"
-				for(var/mob/O in viewers(usr))
-					O.show_message(text("\red <B>[] attempts to remove the handcuffs!</B>", usr), 1)
-				spawn(0)
-					if(do_after(usr, 1200))
-						if(!usr:handcuffed) return
-						for(var/mob/O in viewers(usr))
-							O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
-						usr << "\blue You successfully remove your handcuffs."
-						usr:handcuffed:loc = usr:loc
-						usr:handcuffed = null
+				if(isalienadult(usr))//Don't want to do a lot of logic gating here.
+					usr << "\green You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
+					for(var/mob/O in viewers(usr))
+						O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", usr), 1)
+					spawn(0)
+						if(do_after(usr, 50))
+							if(!usr:handcuffed) return
+							for(var/mob/O in viewers(usr))
+								O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", usr), 1)
+							usr << "\green You successfully break your handcuffs."
+							del(usr:handcuffed)
+							usr:handcuffed = null
+				else
+					usr << "\red You attempt to remove your handcuffs. (This will take around 2 minutes and you need to stand still)"
+					for(var/mob/O in viewers(usr))
+						O.show_message(text("\red <B>[] attempts to remove the handcuffs!</B>", usr), 1)
+					spawn(0)
+						if(do_after(usr, 1200))
+							if(!usr:handcuffed) return
+							for(var/mob/O in viewers(usr))
+								O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
+							usr << "\blue You successfully remove your handcuffs."
+							usr:handcuffed:loc = usr:loc
+							usr:handcuffed = null
 
 			if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
 				usr.next_move = world.time + 100

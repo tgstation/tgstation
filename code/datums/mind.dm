@@ -97,14 +97,21 @@ datum/mind
 
 		if (cantoggle)
 			if(src in current_mode.traitors)
-				if (special_role == "Fake Wizard")
-					out += "<a href='?src=\ref[src];traitorize=traitor'>Traitor</a> "
-					out += "<font color=red>Fake Wizard</font> "
-					srole = "Fake Wizard"
-				else
-					out += "<b>Traitor</b> "
-					out += "<a href='?src=\ref[src];traitorize=fakewizard'>Fake Wizard</a> "
-					srole = "Traitor"
+				switch(special_role)
+					if ("Fake Wizard")
+						out += "<a href='?src=\ref[src];traitorize=traitor'>Traitor</a> "
+						out += "<font color=red>[special_role]/font> "
+						srole = special_role
+					if ("Death Commando")
+						out += "<font color=red>[special_role]</font> "
+						srole = special_role
+					if ("Space Ninja")
+						out += "<font color=red>[special_role]</font> "
+						srole = special_role
+					else
+						out += "<b>Traitor</b> "
+						out += "<a href='?src=\ref[src];traitorize=fakewizard'>Fake Wizard</a> "
+						srole = "Traitor"
 			else
 				out += "<a href='?src=\ref[src];traitorize=traitor'>Traitor</a> "
 				out += "<a href='?src=\ref[src];traitorize=fakewizard'>Fake Wizard</a> "

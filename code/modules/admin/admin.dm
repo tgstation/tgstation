@@ -570,7 +570,7 @@ var/showadminmessages = 1
 	if (href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
 		if(!M)
-			usr << "You seem to be selecting a mob that doesn't exist."
+			usr << "You seem to be selecting a mob that doesn't exist anymore."
 			return
 		var/dat = "<html><head><title>Options for [M.key]</title></head>"
 		var/foo = "\[ "
@@ -581,13 +581,13 @@ var/showadminmessages = 1
 				foo += text("<B>Authorized</B> | ")
 			foo += text("<A HREF='?src=\ref[src];prom_demot=\ref[M.client]'>Promote/Demote</A> | ")
 			if(!istype(M, /mob/new_player))
-				if(!istype(M, /mob/living/carbon/monkey))
+				if(!ismonkey(M))
 					foo += text("<A HREF='?src=\ref[src];monkeyone=\ref[M]'>Monkeyize</A> | ")
 				else
 					foo += text("<B>Monkeyized</B> | ")
-				if(istype(M, /mob/living/silicon/ai))
+				if(isAI(M))
 					foo += text("<B>Is an AI</B> | ")
-				else if(istype(M, /mob/living/carbon/human))
+				else if(ishuman(M))
 					foo += text("<A HREF='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | ")
 				foo += text("<A HREF='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> | ")
 				foo += text("<A HREF='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | ")
@@ -595,25 +595,61 @@ var/showadminmessages = 1
 				foo += text("<A HREF='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | ")
 				foo += text("<A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | ")
 				foo += text("<A HREF='?src=\ref[src];sendtomaze=\ref[M]'>Maze</A> | ")
-
 				foo += text("<A HREF='?src=\ref[src];revive=\ref[M]'>Heal/Revive</A> | ")
 			else
 				foo += text("<B>Hasn't Entered Game</B> | ")
-			foo += text("<A HREF='?src=\ref[src];forcespeech=\ref[M]'>Say</A> | ")
+			foo += text("<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> | ")
 			foo += text("<A href='?src=\ref[src];mute2=\ref[M]'>Mute: [(M.muted ? "Muted" : "Voiced")]</A> | ")
-			foo += text("<A href='?src=\ref[src];boot2=\ref[M]'>Boot</A> | ")
+			foo += text("<A href='?src=\ref[src];boot2=\ref[M]'>Boot</A>")
+		foo += text("<br>")
 		foo += text("<A href='?src=\ref[src];jumpto=\ref[M]'>Jump to</A> | ")
-		foo += text("<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> \]")
-		foo += text("<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> | ")
+		foo += text("<A href='?src=\ref[src];getmob=\ref[M]'>Get</A> | ")
+		foo += text("<A href='?src=\ref[src];sendmob=\ref[M]'>Send</A>")
+		foo += text("<br>")
+		foo += text("<A href='?src=\ref[src];traitor=\ref[M]'>Traitor?</A> | ")
+		foo += text("<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> | ")
+		foo += text("<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>")
+		foo += text("<br>")
+		foo += text("<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | ")
+		foo += text("<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A>")
 		dat += text("<body>[foo]</body></html>")
-		usr << browse(dat, "window=adminplayeropts;size=480x100")
+		usr << browse(dat, "window=adminplayeropts;size=480x150")
 
 	if (href_list["jumpto"])
-		if(( src.level in list(6, 5, 4) ) || ((src.level in list(3, 2)) && (src.state == 2)))
+		if(rank in list("Badmin", "Game Admin", "Game Master"))
 			var/mob/M = locate(href_list["jumpto"])
 			usr.client.jumptomob(M)
 		else
-			alert("You are not a high enough administrator or you aren't observing!")
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
+	if (href_list["getmob"])
+		if(rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+			var/mob/M = locate(href_list["getmob"])
+			usr.client.Getmob(M)
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
+	if (href_list["sendmob"])
+		if(rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+			var/mob/M = locate(href_list["sendmob"])
+			usr.client.sendmob(M)
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
+	if (href_list["narrateto"])
+		if(rank in list("Game Admin", "Game Master"))
+			var/mob/M = locate(href_list["narrateto"])
+			usr.client.cmd_admin_direct_narrate(M)
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
+	if (href_list["subtlemessage"])
+		var/mob/M = locate(href_list["subtlemessage"])
+		usr.client.cmd_admin_subtle_message(M)
 
 	if (href_list["traitor"])
 		if(!ticker || !ticker.mode)
@@ -622,7 +658,7 @@ var/showadminmessages = 1
 		var/mob/M = locate(href_list["traitor"])
 		var/datum/game_mode/current_mode = ticker.mode
 
-		if (istype(M, /mob/living/carbon/human) && M:mind)
+		if (ishuman(M) && M:mind)
 			M:mind.edit_memory()
 			return
 
@@ -665,11 +701,17 @@ var/showadminmessages = 1
 				if(M.mind in current_mode:syndicates)
 					alert("Is a Syndicate operative!", "[M.key]")
 					return
-		if(istype(M,/mob/living/silicon/robot))
+
+		if(isrobot(M))
 			var/mob/living/silicon/robot/R = M
 			if(R.emagged)
 				alert("Is emagged!\n0th law: [R.laws.zeroth]", "[R.key]")
 				return
+
+		if(isalien(M))
+			alert("Is an [M.mind ? M.mind.special_role : "Alien"]!", "[M.key]")
+			return
+
 		// traitor, or other modes where traitors/counteroperatives would be.
 		if(M.mind in current_mode.traitors)
 			var/datum/mind/antagonist = M.mind
@@ -683,13 +725,12 @@ var/showadminmessages = 1
 				return
 
 		//they're nothing so turn them into a traitor!
-		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/silicon/ai))
+		if(ishuman(M) || issilicon(M))
 			var/traitorize = alert("Is not a traitor, make Traitor?", "Traitor", "Yes", "Cancel")
 			if(traitorize == "Cancel")
 				return
 			if(traitorize == "Yes")
 				traitorize(M,,1)
-		//they're a ghost/monkey
 		else
 			alert("Cannot make this mob a traitor")
 	if (href_list["create_object"])
@@ -1481,21 +1522,21 @@ var/showadminmessages = 1
 					currentkarma = query.item[1]
 
 				dat += "<tr><td>[M.name]</td>"
-				if(istype(M, /mob/living/silicon/ai))
+				if(isAI(M))
 					dat += "<td>AI</td>"
-				if(istype(M, /mob/living/silicon/robot))
+				if(isrobot(M))
 					dat += "<td>Cyborg</td>"
-				if(istype(M, /mob/living/carbon/human))
+				if(ishuman(M))
 					dat += "<td>[M.real_name]</td>"
 				if(istype(M, /mob/living/silicon/pai))
 					dat += "<td>pAI</td>"
 				if(istype(M, /mob/new_player))
 					dat += "<td>New Player</td>"
-				if(istype(M, /mob/dead/observer))
+				if(isobserver(M))
 					dat += "<td>Ghost</td>"
-				if(istype(M, /mob/living/carbon/monkey))
+				if(ismonkey(M))
 					dat += "<td>Monkey</td>"
-				if(istype(M, /mob/living/carbon/alien))
+				if(isalien(M))
 					dat += "<td>Alien</td>"
 				dat += {"<td>[(M.client ? "[(M.client.goon ? "<font color=red>" : "<font>")][M.client]</font>" : "No client")]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
@@ -2023,11 +2064,11 @@ var/showadminmessages = 1
 		if("changeling")
 			if(M.mind in ticker.mode:changelings)
 				return 1
-	if(istype(M,/mob/living/silicon/robot))
+	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(R.emagged)
 			return 1
-	if(M.mind in ticker.mode.traitors)
+	if(M.mind&&M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
 		return 1
 
 	return 0

@@ -404,6 +404,8 @@
 		obj/item/weapon/cell/cell//Starts out with a high-capacity cell using New().
 		datum/effects/system/spark_spread/spark_system//To create sparks.
 		reagent_list[] = list("tricordrazine","dexalinp","spaceacillin","anti_toxin","nutriment","radium","hyronalin")//The reagents ids which are added to the suit at New().
+		stored_research[]//For stealing station research.
+		obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
 
 		//Other articles of ninja gear worn together, used to easily reference them after initializing.
 		obj/item/clothing/head/helmet/space/space_ninja/n_hood

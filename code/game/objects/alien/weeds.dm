@@ -1,12 +1,12 @@
 /obj/alien/weeds/New()
 	..()
-	if(istype(src.loc, /turf/space))
+	if(istype(loc, /turf/space))
 		del(src)
 		return
-	src.icon_state = pick("weeds", "weeds1", "weeds2")
+	icon_state = pick("weeds", "weeds1", "weeds2")
 	spawn(rand(150,300))
 		if(src)
-			src.Life()
+			Life()
 	return
 
 /obj/alien/weeds/proc/Life()
@@ -20,8 +20,8 @@
 
 Alien plants should do something if theres a lot of poison
 	if(U.poison> 200000)
-		src.health -= round(U.poison/200000)
-		src.update()
+		health -= round(U.poison/200000)
+		update()
 		return
 */
 	if (istype(U, /turf/space))
@@ -58,7 +58,7 @@ Alien plants should do something if theres a lot of poison
 	return
 
 /obj/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
-	src.visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
+	visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
 
 	var/damage = W.force / 4.0
 
@@ -67,10 +67,10 @@ Alien plants should do something if theres a lot of poison
 
 		if(WT.welding)
 			damage = 15
-			playsound(src.loc, 'Welder.ogg', 100, 1)
+			playsound(loc, 'Welder.ogg', 100, 1)
 
-	src.health -= damage
-	src.healthcheck()
+	health -= damage
+	healthcheck()
 
 /obj/alien/weeds/proc/healthcheck()
 	if(health <= 0)

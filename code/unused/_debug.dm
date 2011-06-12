@@ -516,6 +516,7 @@ Doing this because FindTurfs() isn't even used
 		log_admin("[src.key] set the random event chance to [eventchance]%")
 		message_admins("[src.key] set the random event chance to [eventchance]%")
 
+/* Does nothing but blow up the station.
 /mob/verb/funbutton()
 	set category = "Admin"
 	set name = "Random Expl.(REMOVE ME)"
@@ -538,6 +539,7 @@ Doing this because FindTurfs() isn't even used
 						P.tmpoxy = 755985
 	usr << "\blue Blowing up station ..."
 	world << "[usr.key] has used boom boom boom shake the room"
+*/
 
 /mob/verb/removeplasma()
 	set category = "Debug"

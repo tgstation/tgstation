@@ -32,7 +32,7 @@
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
-	var/alien_egg_flag = 0
+	var/alien_egg_flag = 0//Have you been infected?
 	var/last_special = 0
 	var/obj/screen/zone_sel/zone_sel = null
 
@@ -52,7 +52,7 @@
 	var/stat = 0.0
 	var/next_move = null
 	var/prev_move = null
-	var/monkeyizing = null//Human, maybe Carbon
+	var/monkeyizing = null//Carbon
 	var/other = 0.0
 	var/hand = null
 	var/eye_blind = null//Carbon

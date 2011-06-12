@@ -129,7 +129,7 @@ I kind of like the right click only--the window version can get a little confusi
 //		return
 
 	if(powerc())
-		var/vent_found = 0
+		var/obj/machinery/atmospherics/unary/vent_pump/vent_found
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
 			if(!v.welded)
 				vent_found = v
@@ -137,52 +137,56 @@ I kind of like the right click only--the window version can get a little confusi
 				src << "\red That vent is welded."
 		if(vent_found)
 			var/list/vents = list()
-			for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
-				if(temp_vent.loc == loc)
-					continue
-				if(temp_vent.welded)
-					continue
-				vents.Add(temp_vent)
-			var/list/choices = list()
-			for(var/obj/machinery/atmospherics/unary/vent_pump/vent in vents)
-				if(vent.loc.z != loc.z)
-					continue
-				if(vent.welded)
-					continue
-				var/atom/a = get_turf_loc(vent)
-				choices.Add(a.loc)
-			var/turf/startloc = loc
-			var/obj/selection = input("Select a destination.", "Duct System") in choices
-			var/selection_position = choices.Find(selection)
-			if(loc==startloc)
-				var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection_position]
-				if(target_vent)
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
-					var/list/huggers = list()
-					for(var/obj/alien/facehugger/F in view(3, src))
-						if(istype(F, /obj/alien/facehugger))
-							huggers.Add(F)
-					loc = vent_found
+			if(vent_found.network&&vent_found.network.normal_members.len)
+				for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in vent_found.network.normal_members)
+					if(temp_vent.loc == loc)
+						continue
+					if(temp_vent.welded)
+						continue
+					vents.Add(temp_vent)
+				var/list/choices = list()
+				for(var/obj/machinery/atmospherics/unary/vent_pump/vent in vents)
+					if(vent.loc.z != loc.z)
+						continue
+					if(vent.welded)
+						continue
+					var/atom/a = get_turf_loc(vent)
+					choices.Add(a.loc)
+				var/turf/startloc = loc
+				var/obj/selection = input("Select a destination.", "Duct System") in choices
+				var/selection_position = choices.Find(selection)
+				if(loc==startloc)
+					var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection_position]
+					if(target_vent)
+						for(var/mob/O in viewers(src, null))
+							O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
+						var/list/huggers = list()
+						for(var/obj/alien/facehugger/F in view(3, src))
+							if(istype(F, /obj/alien/facehugger))
+								huggers.Add(F)
+						loc = vent_found
 
-					for(var/obj/alien/facehugger/F in huggers)
-						F.loc = vent_found
-					var/travel_time = get_dist(loc, target_vent.loc)
-
-					spawn(round(travel_time/2))//give sound warning to anyone near the target vent
-						if(!target_vent.welded)
-							for(var/mob/O in hearers(target_vent, null))
-								O.show_message("You hear something crawling trough the ventilation pipes.")
-
-					spawn(travel_time)
-						if(target_vent.welded)//the vent can be welded while alien scrolled through the list or travelled.
-							target_vent = vent_found //travel back. No additional time required.
-							src << "\red The vent you were heading to appears to be welded."
-						loc = target_vent.loc
 						for(var/obj/alien/facehugger/F in huggers)
-							F.loc = loc
+							F.loc = vent_found
+						var/travel_time = get_dist(loc, target_vent.loc)
+
+						spawn(round(travel_time/2))//give sound warning to anyone near the target vent
+							if(!target_vent.welded)
+								for(var/mob/O in hearers(target_vent, null))
+									O.show_message("You hear something crawling trough the ventilation pipes.",2)
+
+						spawn(travel_time)
+							if(target_vent.welded)//the vent can be welded while alien scrolled through the list or travelled.
+								target_vent = vent_found //travel back. No additional time required.
+								src << "\red The vent you were heading to appears to be welded."
+							loc = target_vent.loc
+							for(var/obj/alien/facehugger/F in huggers)
+								F.loc = loc
+
+				else
+					src << "\green You need to remain still while entering a vent."
 			else
-				src << "\green You need to remain still while entering a vent."
+				src << "\green This vent is not connected to anything."
 		else
 			src << "\green You must be standing on or beside an open air vent to enter it."
 	return

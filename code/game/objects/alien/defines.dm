@@ -22,14 +22,6 @@
 	density = 0
 	anchored = 0
 
-/obj/alien/skin_suit
-	name = "skin"
-	desc = "a persons skin, disgusting"
-	icon_state = "weeds"
-
-	density = 0
-	anchored = 0
-
 /obj/alien/resin
 	name = "resin"
 	desc = "Looks like some kind of slimy growth."

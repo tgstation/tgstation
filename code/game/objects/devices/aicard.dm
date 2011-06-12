@@ -63,21 +63,19 @@
 				dat += "<b>AI nonfunctional</b>"
 			else
 				if (!src.flush)
-					dat += {"<A href='byond://?src=\ref[src];choice=Wipe;user=\ref[user]'>Wipe AI</A>"}
+					dat += {"<A href='byond://?src=\ref[src];choice=Wipe'>Wipe AI</A>"}
 				else
 					dat += "<b>Wipe in progress</b>"
 				dat += "<br>"
-				dat += {"<a href='byond://?src=\ref[src];choice=Wireless;user=\ref[user]'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</a>"}
+				dat += {"<a href='byond://?src=\ref[src];choice=Wireless'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</a>"}
 				dat += "<br>"
-				dat += {"<a href='byond://?src=\ref[src];choice=Close;user=\ref[user]'> Close</a>"}
+				dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
 		user << browse(dat, "window=aicard")
 		onclose(user, "aicard")
 		return
 
 	Topic(href, href_list)
-	/*Let's define the user. It's safer to do it this way, rather than defaulting to usr.
-	For very long menu lines, usr is probably a lot more convenient.*/
-		var/mob/U = href_list["user"]
+		var/mob/U = usr
 		if (!in_range(src, U)||U.machine!=src)//If they are not in range of 1 or less or their machine is not the card (ie, clicked on something else).
 			U << browse(null, "window=aicard")
 			U.machine = null

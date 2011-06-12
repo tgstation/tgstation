@@ -1,4 +1,3 @@
-
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -16,6 +15,12 @@
 		src << "\blue Your icons have been generated!"
 	..()
 
+/mob/living/carbon/alien/humanoid/proc/mind_initialize(mob/G, alien_caste)
+	mind = new
+	mind.current = src
+	mind.assigned_role = "Alien"
+	mind.special_role = alien_caste
+	mind.key = G.key
 
 //This is fine, works the same as a human
 /mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)
@@ -240,11 +245,6 @@
 			if (wear_suit)
 				if (emptyHand)
 					wear_suit.DblClick()
-				return
-			if (( istype(W, /obj/alien/skin_suit) ))
-				u_equip(W)
-				head = W
-				return
 			return
 /*			if (!( istype(W, /obj/item/clothing/suit) ))
 				return

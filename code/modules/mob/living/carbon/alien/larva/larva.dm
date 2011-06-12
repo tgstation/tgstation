@@ -12,6 +12,12 @@
 //	spawn(1200) grow()  Grow after 120 seconds -- TLE Commented out because life.dm has better version -- Urist
 	..()
 
+/mob/living/carbon/alien/larva/proc/mind_initialize(mob/G, alien_caste)
+	mind = new
+	mind.current = src
+	mind.assigned_role = "Alien"
+	mind.special_role = alien_caste
+	mind.key = G.key
 
 //This is fine, works the same as a human
 /mob/living/carbon/alien/larva/Bump(atom/movable/AM as mob|obj, yes)

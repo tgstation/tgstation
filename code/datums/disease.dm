@@ -7,7 +7,7 @@
 /*
 
 IMPORTANT NOTE: Please delete the diseases by using cure() proc or del() instruction.
-Diseases are referenced in global list, so simply setting mob or obj vars
+Diseases are referenced in a global list, so simply setting mob or obj vars
 to null does not delete the object itself. Thank you.
 
 */
@@ -53,9 +53,9 @@ to null does not delete the object itself. Thank you.
 		stage++
 	if(stage != 1 && (prob(1) || (cure_present && prob(cure_chance))))
 		stage--
-	else if(stage <= 1 && ((prob(1) && src.curable) || (cure_present && prob(cure_chance))))
+	else if(stage <= 1 && ((prob(1) && curable) || (cure_present && prob(cure_chance))))
 //		world << "Cured as stage act"
-		src.cure()
+		cure()
 		return
 	return
 
@@ -83,7 +83,7 @@ to null does not delete the object itself. Thank you.
 
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)
 //	world << "Contract_disease called by [src] with virus [virus]"
-	if(src.stat >=2) return
+	if(stat >=2) return
 
 
 	if(force_species_check)
@@ -96,21 +96,21 @@ to null does not delete the object itself. Thank you.
 		if(fail) return
 
 	if(skip_this == 1)//be wary, it replaces the current disease...
-		if(src.virus)
-			src.virus.cure(0)
-		src.virus = new virus.type
-		src.virus.affected_mob = src
-		src.virus.strain_data = virus.strain_data.Copy()
-		src.virus.holder = src
+		if(virus)
+			virus.cure(0)
+		virus = new virus.type
+		virus.affected_mob = src
+		virus.strain_data = virus.strain_data.Copy()
+		virus.holder = src
 		if(prob(5))
-			src.virus.carrier = 1
+			virus.carrier = 1
 		return
 
-	if(src.virus) return
+	if(virus) return
 
-	if(virus.type in src.resistances)
+	if(virus.type in resistances)
 		if(prob(99.9)) return
-		src.resistances.Remove(virus.type)//the resistance is futile
+		resistances.Remove(virus.type)//the resistance is futile
 
 
 /*
@@ -218,7 +218,7 @@ to null does not delete the object itself. Thank you.
 					passed = prob(Cl.permeability_coefficient*100+virus.permeability_mod)
 					//world << "Mask pass [passed]"
 
-	if(passed && virus.spread_type == AIRBORNE && src.internals)
+	if(passed && virus.spread_type == AIRBORNE && internals)
 		passed = (prob(50*virus.permeability_mod))
 
 	if(passed)
@@ -233,11 +233,11 @@ to null does not delete the object itself. Thank you.
 		if(istype(src:wear_suit, /obj/item/clothing/suit/bio_suit)) score += 10
 		if(istype(src:head, /obj/item/clothing/head/helmet/space)) score += 5
 		if(istype(src:head, /obj/item/clothing/head/bio_hood)) score += 5
-	if(src.wear_mask)
+	if(wear_mask)
 		score += 5
-		if((istype(src:wear_mask, /obj/item/clothing/mask) || istype(src:wear_mask, /obj/item/clothing/mask/surgical)) && !src.internal)
+		if((istype(src:wear_mask, /obj/item/clothing/mask) || istype(src:wear_mask, /obj/item/clothing/mask/surgical)) && !internal)
 			score += 5
-		if(src.internal)
+		if(internal)
 			score += 5
 	if(score > 20)
 		return
@@ -252,33 +252,33 @@ to null does not delete the object itself. Thank you.
 	else if(prob(15))
 		return
 	else*/
-		src.virus = new virus.type
-		src.virus.strain_data = virus.strain_data.Copy()
-		src.virus.affected_mob = src
-		src.virus.holder = src
+		virus = new virus.type
+		virus.strain_data = virus.strain_data.Copy()
+		virus.affected_mob = src
+		virus.holder = src
 		if(prob(5))
-			src.virus.carrier = 1
+			virus.carrier = 1
 		return
 	return
 
 
 /datum/disease/proc/spread(var/source=null)
 	//world << "Disease [src] proc spread was called from holder [source]"
-	if(src.spread_type == SPECIAL)//does not spread
+	if(spread_type == SPECIAL)//does not spread
 		return
 
-	if(src.stage < src.contagious_period) //the disease is not contagious at this stage
+	if(stage < contagious_period) //the disease is not contagious at this stage
 		return
 
 	if(!source)//no holder specified
-		if(src.affected_mob)//no mob affected holder
-			source = src.affected_mob
+		if(affected_mob)//no mob affected holder
+			source = affected_mob
 		else //no source and no mob affected. Rogue disease. Break
 			return
 
 
 	var/check_range = AIRBORNE//defaults to airborne - range 4
-	if(src.spread_type != AIRBORNE)
+	if(spread_type != AIRBORNE)
 		check_range = 0
 
 	for(var/mob/living/carbon/M in oviewers(check_range, source))
@@ -288,27 +288,29 @@ to null does not delete the object itself. Thank you.
 
 
 /datum/disease/proc/process()
-	if(!src.holder) return
+	if(!holder) return
 	if(prob(40))
-		src.spread(holder)
-	if(src.holder == src.affected_mob)
+		spread(holder)
+	if(holder == affected_mob)
 		if(affected_mob.stat < 2) //he's alive
-			src.stage_act()
+			stage_act()
 		else //he's dead.
-			if(src.spread_type!=SPECIAL)
-				src.spread_type = CONTACT_GENERAL
-			src.affected_mob = null
-	if(!src.affected_mob) //the virus is in inanimate obj
-//		world << "[src] longevity = [src.longevity]"
-		if(--src.longevity<=0)
-			src.cure(0)
+			if(spread_type!=SPECIAL)
+				spread_type = CONTACT_GENERAL
+			affected_mob = null
+	if(!affected_mob) //the virus is in inanimate obj
+//		world << "[src] longevity = [longevity]"
+		if(--longevity<=0)
+			cure(0)
 	return
 
 /datum/disease/proc/cure(var/resistance=1)//if resistance = 0, the mob won't develop resistance to disease
-	if(resistance && src.affected_mob && !(src.type in affected_mob.resistances))
+	if(resistance && affected_mob && !(type in affected_mob.resistances))
 //		world << "Setting res to [src]"
-		var/type = "[src.type]"//copy the value, not create the reference to it, so when the object is deleted, the value remains.
-		affected_mob.resistances += text2path(type)
+		var/saved_type = "[type]"//copy the value, not create the reference to it, so when the object is deleted, the value remains.
+		affected_mob.resistances += text2path(saved_type)
+	if(istype(src, /datum/disease/alien_embryo))//Get rid of the flag.
+		affected_mob.alien_egg_flag = 0
 //	world << "Removing [src]"
 	spawn(0)
 		del(src)

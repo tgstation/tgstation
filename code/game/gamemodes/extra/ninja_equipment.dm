@@ -20,9 +20,12 @@ ________________________________________________________________________________
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_instruction//for AIs
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo
 	//verbs += /obj/item/clothing/suit/space/space_ninja/proc/display_verb_procs//DEBUG. Doesn't work.
-	spark_system = new /datum/effects/system/spark_spread()//spark initialize
+	spark_system = new()//spark initialize
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+	stored_research = new()//Stolen research initialize.
+	for(var/T in typesof(/datum/tech) - /datum/tech)//Store up on research.
+		stored_research += new T(src)
 	var/reagent_amount//reagent initialize
 	for(var/reagent_id in reagent_list)
 		reagent_amount += reagent_id == "radium" ? r_maxamount+(a_boost*a_transfer) : r_maxamount//AI can inject radium directly.
@@ -113,7 +116,7 @@ ________________________________________________________________________________
 	spawn while(cell.charge>=0)
 
 		//Let's check for some safeties.
-		if(affecting&&affecting.monkeyizing)	terminate()//Kills the suit and attached objects.
+		if(s_initialized&&!affecting)	terminate()//Kills the suit and attached objects.
 		if(!s_initialized)	return//When turned off the proc stops.
 		if(AI&&AI.stat==2)//If there is an AI and it's ded. Shouldn't happen without purging, could happen.
 			if(!s_control)
@@ -266,20 +269,20 @@ ________________________________________________________________________________
 		if(0)
 			dat += "<h4><img src=sos_1.png> Available Functions:</h4>"
 			dat += "<ul>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=7'><img src=sos_4.png> Research Stored</a></li>"
 			if(s_control)
-				dat += "<li><a href='byond://?src=\ref[src];choice=Stealth'><img src=sos_4.png> Toggle Stealth: [s_active == 1 ? "Disable" : "Enable"]</a></li>"
 				if(AI)
 					dat += "<li><a href='byond://?src=\ref[src];choice=5'><img src=sos_13.png> AI Status</a></li>"
 			else
 				dat += "<li><a href='byond://?src=\ref[src];choice=Shock'><img src=sos_4.png> Shock [U.real_name]</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=6'><img src=sos_6.png> Activate Abilities</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=sos_3.png> Medical Screen</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=sos_5.png> Atmos Scan</a></li>"
-			dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=sos_12.png> Messenger</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=sos_3.png> Medical Screen</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=sos_5.png> Atmos Scan</a></li>"
+			dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=sos_12.png> Messenger</a></li>"
 			if(s_control)
 				dat += "<li><a href='byond://?src=\ref[src];choice=4'><img src=sos_6.png> Other</a></li>"
 			dat += "</ul>"
-		if(1)
+		if(3)
 			dat += "<h4><img src=sos_3.png> Medical Report:</h4>"
 			if(U.dna)
 				dat += "<b>Fingerprints</b>: <i>[md5(U.dna.uni_identity)]</i><br>"
@@ -300,7 +303,7 @@ ________________________________________________________________________________
 					continue
 				dat += "<li><a href='byond://?src=\ref[src];choice=Inject;name=[R.name];tag=[R.id]'><img src=sos_2.png> Inject [R.name]: [(reagents.get_reagent_amount(R.id)-(R.id=="radium"?(a_boost*a_transfer):0))/(R.id=="nutriment"?5:a_transfer)] left</a></li>"
 			dat += "</ul>"
-		if(2)
+		if(1)
 			dat += "<h4><img src=sos_5.png> Atmospheric Scan:</h4>"//Headers don't need breaks. They are automatically placed.
 			var/turf/T = get_turf_or_move(U.loc)
 			if (isnull(T))
@@ -329,7 +332,7 @@ ________________________________________________________________________________
 						dat += "OTHER: [round(unknown_level)]%<br>"
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C"
-		if(3)
+		if(2)
 			if(k_unlock==7||!s_control)
 				dat += "<a href='byond://?src=\ref[src];choice=32'><img src=sos_1.png> Hidden Menu</a>"
 			dat += "<h4><img src=sos_12.png> Anonymous Messenger:</h4>"//Anonymous because the receiver will not know the sender's identity.
@@ -436,10 +439,10 @@ ________________________________________________________________________________
 				dat += "<h4>Laws:</h4><ul>[laws]<li><a href='byond://?src=\ref[src];choice=Override AI Laws'><i>*Override Laws*</i></a></li></ul>"
 
 				if (!flush)
-					dat += {"<A href='byond://?src=\ref[src];choice=Purge AI'>Purge AI</A><br>"}
+					dat += "<A href='byond://?src=\ref[src];choice=Purge AI'>Purge AI</A><br>"
 				else
 					dat += "<b>Purge in progress...</b><br>"
-				dat += {" <A href='byond://?src=\ref[src];choice=Wireless AI'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</A>"}
+				dat += " <A href='byond://?src=\ref[src];choice=Wireless AI'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</A>"
 		if(6)
 			dat += {"
 					<h4><img src=sos_6.png> Activate Abilities:</h4>
@@ -454,10 +457,23 @@ ________________________________________________________________________________
 					<li><a href='byond://?src=\ref[src];choice=Trigger Ability;name=Adrenaline Boost;cost='><img src=sos_13.png> Adrenaline Boost</a></li>
 					</ul>
 					"}
+		if(7)
+			dat += "<h4><img src=sos_4.png> Research Stored:</h4>"
+			if(t_disk)
+				dat += "<a href='byond://?src=\ref[src];choice=Eject Disk'>Eject Disk</a><br>"
+			dat += "<ul>"
+			if(stored_research.len)//If there is stored research. Should be.
+				for(var/datum/tech/current_data in stored_research)
+					dat += "<li>"
+					dat += "[current_data.name]: [current_data.level]"
+					if(t_disk)//If there is a disk inserted. We can either write or overwrite.
+						dat += " <a href='byond://?src=\ref[src];choice=Copy to Disk;target=\ref[current_data]'><i>*Copy to Disk</i></a><br>"
+					dat += "</li>"
+			dat += "</ul>"
 	dat += "</body></html>"
 
 	//Setting the can>resize etc to 0 remove them from the drag bar but still allows the window to be draggable.
-	display_to << browse(dat,"window=spideros;size=400x444;border=1;can_resize=0;can_close=0;can_minimize=0")
+	display_to << browse(dat,"window=spideros;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
 
 //=======//SPIDEROS TOPIC PROC//=======//
 
@@ -495,9 +511,6 @@ ________________________________________________________________________________
 				spideros=0
 			else
 				spideros = round(spideros/10)//Best way to do this, flooring to nearest integer.
-
-		if("Stealth")
-			toggle_stealth()
 
 		if("Shock")
 			var/damage = min(cell.charge, rand(50,150))//Uses either the current energy left over or between 50 and 150.
@@ -593,16 +606,39 @@ ________________________________________________________________________________
 				spideros = 0
 			s_busy = 0
 
+		if("Eject Disk")
+			var/turf/T = get_turf(loc)
+			if(!U.get_active_hand())
+				U.put_in_hand(t_disk)
+				t_disk.add_fingerprint(U)
+				t_disk = null
+			else
+				if(T)
+					t_disk.loc = T
+					t_disk = null
+				else
+					U << "\red <b>ERROR<b>: \black Could not eject disk."
+
+		if("Copy to Disk")
+			var/datum/tech/current_data = locate(href_list["target"])
+			U << "[current_data.name] successfully [(!t_disk.stored) ? "copied" : "overwritten"] to disk."
+			t_disk.stored = current_data
+
 		if("Configure pAI")
 			pai.attack_self(U)
 
 		if("Eject pAI")
 			var/turf/T = get_turf(loc)
-			if(T)
-				pai.loc = T
+			if(!U.get_active_hand())
+				U.put_in_hand(pai)
+				pai.add_fingerprint(U)
 				pai = null
 			else
-				U << "\red <b>ERROR<b>: \black Could not eject pAI card."
+				if(T)
+					pai.loc = T
+					pai = null
+				else
+					U << "\red <b>ERROR<b>: \black Could not eject pAI card."
 
 		if("Override AI Laws")
 			var/law_zero = A.laws.zeroth//Remembers law zero, if there is one.
@@ -767,7 +803,7 @@ ________________________________________________________________________________
 			U:drop_item()
 			I.loc = src
 			pai = I
-			U << "\blue You slot \the [I] into [src]."
+			U << "\blue You slot \the [I] into \the [src]."
 			updateUsrDialog()
 			return
 		else if(istype(I, /obj/item/weapon/reagent_containers/glass))//If it's a glass beaker.
@@ -802,6 +838,24 @@ ________________________________________________________________________________
 					U << "\blue Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%"
 				else
 					U << "\red Procedure interrupted. Protocol terminated."
+			return
+		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
+			if(I:stored)//If it has something on it.
+				U << "Research information detected, processing..."
+				if(do_after(U,s_delay))
+					for(var/datum/tech/current_data in stored_research)
+						if(current_data.id==I:stored.id)
+							if(current_data.level<I:stored.level)
+								current_data.level=I:stored.level
+							break
+					I:stored = null
+					U << "\blue Data analyzed and updated. Disk erased."
+				else
+					U << "\red <b>ERROR</b>: \black Procedure interrupted. Process terminated."
+			else
+				I.loc = src
+				t_disk = I
+				U << "\blue You slot \the [I] into \the [src]."
 			return
 	..()
 

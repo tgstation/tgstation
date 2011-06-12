@@ -78,7 +78,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 		var/mob/living/carbon/human/U = affecting
 		var/turf/destination = get_teleport_loc(U.loc,U,9,1,3,1,0,1)
 		var/turf/mobloc = get_turf(U.loc)//To make sure that certain things work properly below.
-		if(destination&&istype(mobloc, /turf))
+		if(destination&&istype(mobloc, /turf))//The turf check prevents unusual behavior. Like teleporting out of cryo pods, cloners, mechs, etc.
 			spawn(0)
 				playsound(U.loc, "sparks", 50, 1)
 				anim(mobloc,src,'mob.dmi',,"phaseout",,U.dir)
@@ -112,7 +112,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 	if(!ninjacost(C,1))
 		var/mob/living/carbon/human/U = affecting
 		var/turf/mobloc = get_turf(U.loc)//To make sure that certain things work properly below.
-		if(!T.density&&istype(mobloc, /turf))
+		if((!T.density)&&istype(mobloc, /turf))
 			spawn(0)
 				playsound(U.loc, 'sparks4.ogg', 50, 1)
 				anim(mobloc,src,'mob.dmi',,"phaseout",,U.dir)

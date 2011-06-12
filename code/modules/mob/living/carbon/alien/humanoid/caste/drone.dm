@@ -27,16 +27,10 @@
 		src << "\green You begin to evolve!"
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
-		var/mob/living/carbon/alien/humanoid/queen/Q = new (loc)
+		var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (loc)
 
-		Q.mind = new//Mind initialize stuff.
-		Q.mind.current = Q
-		Q.mind.assigned_role = "Alien"
-		Q.mind.special_role = "Queen"
-		Q.mind.key = key
-
-		if(client)
-			client.mob = Q
+		new_xeno.mind_initialize(src, "Queen")
+		new_xeno.key = key
 		del(src)
 	return
 

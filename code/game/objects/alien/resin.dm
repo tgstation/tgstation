@@ -32,17 +32,14 @@
 	switch(severity)
 		if(1.0)
 			health-=50
-			healthcheck()
 		if(2.0)
 			health-=50
-			healthcheck()
 		if(3.0)
 			if (prob(50))
 				health-=50
-				healthcheck()
 			else
 				health-=25
-				healthcheck()
+	healthcheck()
 	return
 
 /obj/alien/resin/blob_act()
@@ -64,7 +61,7 @@
 		tforce = 10
 	else
 		tforce = AM:throwforce
-	playsound(src.loc, 'attackblob.ogg', 100, 1)
+	playsound(loc, 'attackblob.ogg', 100, 1)
 	health = max(0, health - tforce)
 	healthcheck()
 	..()
@@ -121,7 +118,7 @@
 
 	var/aforce = W.force
 	health = max(0, health - aforce)
-	playsound(src.loc, 'attackblob.ogg', 100, 1)
+	playsound(loc, 'attackblob.ogg', 100, 1)
 	healthcheck()
 	..()
 	return

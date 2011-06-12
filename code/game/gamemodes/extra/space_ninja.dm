@@ -221,7 +221,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 */
 /proc/generate_ninja_directive()
 	var/directive
-	switch(rand(1,12))
+	switch(rand(1,13))
 		if(1)
 			directive = "The Spider Clan must not be linked to this operation. Remain as hidden and covert as possible."
 		if(2)
@@ -229,7 +229,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		if(3)
 			directive = "A wealthy animal rights activist has made a request we cannot refuse. Prioritize saving animal lives whenever possible."
 		if(4)
-			directive = "The Spider Clan absolutely cannot be linked to this operation. Eliminate all witnesses with most extreme prejudice."
+			directive = "The Spider Clan absolutely cannot be linked to this operation. Eliminate all witnesses using most extreme prejudice."
 		if(5)
 			directive = "We are currently negotiating with Nanotrasen command. Prioritize saving human lives over ending them."
 		if(6)
@@ -250,12 +250,35 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 			directive = "There are no special directives at this time."
 	return directive
 
-//=======//ADMIN VERB//=======//
+//=======//CURRENT PLAYER VERB//=======//
 
-/client/proc/space_ninja()
+/client/proc/cmd_admin_ninjafy(var/mob/M in world)
+	set category = null
+	set name = "Make Space Ninja"
+
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+	if(ishuman(M))
+		log_admin("[key_name(src)] turned [M.key] into a Space Ninja.")
+		spawn(10)
+			M:create_mind_space_ninja()
+			M:equip_space_ninja(1)
+			if(istype(M:wear_suit, /obj/item/clothing/suit/space/space_ninja))
+				M:wear_suit:randomize_param()
+				spawn(0)
+					M:wear_suit:ninitialize(10,M)
+	else
+		alert("Invalid mob")
+
+//=======//CURRENT GHOST VERB//=======//
+
+/client/proc/send_space_ninja()
 	set category = "Fun"
 	set name = "Spawn Space Ninja"
 	set desc = "Spawns a space ninja for when you need a teenager with an attitude."
+	set popup_menu = 0
+
 	if(!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return
@@ -265,10 +288,10 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	if(alert("Are you sure you want to send in a space ninja?",,"Yes","No")=="No")
 		return
 
-	var/input
-	while(!input)
-		input = input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", "")
-		if(!input)
+	var/mission
+	while(!mission)
+		mission = input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", "")
+		if(!mission)
 			if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
 				return
 
@@ -277,25 +300,28 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		if (L.name == "carpspawn")
 			spawn_list.Add(L)
 
-	var/admin_name = src
-	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list.len ? spawn_list : latejoin ))
+
+	var/input = input("Pick character to spawn as the Space Ninja", "Key", "")
+	if(!input)
+		return
 
 	var/mob/dead/observer/G
-	var/list/candidates = list()
-	for(G in world)
-		if(G.client)//Now everyone can ninja!
-			if(((G.client.inactivity/10)/60) <= 5)
-				candidates.Add(G)
-	if(candidates.len)
-		G = input("Pick character to spawn as the Space Ninja", "Active Players", G) in candidates//It will auto-pick a person when there is only one candidate.
-		new_ninja.mind.key = G.key
-		new_ninja.client = G.client
-		new_ninja.mind.store_memory("<B>Mission:</B> \red [input].")
-		del(G)
-	else
-		alert("Could not locate a suitable ghost. Aborting.")
-		del(new_ninja)
+	for(var/mob/dead/observer/G_find in world)
+		if(G_find.client&&ckey(G_find.key)==ckey(input))
+			G = G_find
+			break
+
+	if(!G)//If a ghost was not found.
+		alert("There is no active key like that in the game or the person is not currently a ghost. Aborting command.")
 		return
+
+	var/admin_name = src
+	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list.len ? spawn_list : latejoin ))
+	new_ninja.wear_suit:randomize_param()
+
+	new_ninja.mind.key = G.key
+	new_ninja.key = G.key
+	new_ninja.mind.store_memory("<B>Mission:</B> \red [mission].")
 
 	new_ninja.internal = new_ninja.s_store //So the poor ninja has something to breath when they spawn in spess.
 	new_ninja.internals.icon_state = "internal1"
@@ -303,11 +329,13 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		new_ninja.wear_suit:ninitialize(10,new_ninja)//If you're wondering why I'm passing the argument to the proc when the default should suffice,
 		//I'm also wondering that same thing. This makes sure it does not run time error though.
 
-	new_ninja.mind.store_memory("<B>Mission:</B> \red [input].")
-	new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current mission is: \red <B>[input]</B>"
+	new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current mission is: \red <B>[mission]</B>"
 
-	message_admins("\blue [admin_name] has spawned [new_ninja.key] as a Space Ninja. Hide yo children!", 1)
+	message_admins("\blue [admin_name] has spawned [new_ninja.key] as a Space Ninja. Hide yo children! \nTheir <b>mission</b> is: [mission]", 1)
 	log_admin("[admin_name] used Spawn Space Ninja.")
+
+	del(G)
+	return
 
 //=======//NINJA CREATION PROCS//=======//
 
@@ -319,17 +347,36 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
 	A.randomize_appearance_for(new_ninja)
-
 	new_ninja.real_name = "[ninja_title] [ninja_name]"
 	new_ninja.dna.ready_dna(new_ninja)
-	new_ninja.mind = new
-	new_ninja.mind.current = new_ninja
-	new_ninja.mind.assigned_role = "MODE"
-	new_ninja.mind.special_role = "Space Ninja"
+	new_ninja.create_mind_space_ninja()
 	new_ninja.equip_space_ninja()
 	return new_ninja
 
-/mob/living/carbon/human/proc/equip_space_ninja()
+/mob/living/carbon/human/proc/create_mind_space_ninja()
+	if(mind)
+		mind.assigned_role = "MODE"
+		mind.special_role = "Space Ninja"
+	else
+		mind = new
+		mind.current = src
+		mind.assigned_role = "MODE"
+		mind.special_role = "Space Ninja"
+	if(!(mind in ticker.minds))
+		ticker.minds += mind//Adds them to regular mind list.
+	if(!(mind in ticker.mode.traitors))//If they weren't already an extra traitor.
+		ticker.mode.traitors += mind//Adds them to current traitor list. Which is really the extra antagonist list.
+	return 1
+
+/mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.
+	if(safety)
+		del(w_uniform)
+		del(wear_suit)
+		del(wear_mask)
+		del(head)
+		del(shoes)
+		del(gloves)
+
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
 	equip_if_possible(R, slot_ears)
 	if(gender==FEMALE)

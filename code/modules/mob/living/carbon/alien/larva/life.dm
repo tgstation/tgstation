@@ -11,10 +11,10 @@
 	set invisibility = 0
 	set background = 1
 
-	if (src.monkeyizing)
+	if (monkeyizing)
 		return
 
-	if (src.stat != 2) //still breathing
+	if (stat != 2) //still breathing
 
 		//First, resolve location and get a breath
 
@@ -31,7 +31,7 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
-	src.blinded = null
+	blinded = null
 
 	//Disease Check
 	handle_virus_updates()
@@ -86,83 +86,78 @@
 
 		handle_mutations_and_radiation()
 
-			if(src.amount_grown == 200)
+			if(amount_grown == 200)
 				src << "\green You are growing into a beautiful alien! It is time to choose a caste."
 				src << "\green There are three to choose from:"
 				src << "\green <B>Hunters</B> are strong and agile, able to hunt away from the hive and rapidly move through ventilation shafts. Hunters generate plasma slowly and have low reserves."
 				src << "\green <B>Sentinels</B> are tasked with protecting the hive and are deadly up close and at a range. They are not as physically imposing nor fast as the hunters."
 				src << "\green <B>Drones</B> are the working class, offering the largest plasma storage and generation. They are the only caste which may evolve again, turning into the dreaded alien queen."
-				var/CASTE = alert(src, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
+				var/alien_caste = alert(src, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
 
-				var/mob/H
-				switch(CASTE)
+				var/mob/living/carbon/alien/humanoid/new_xeno
+				switch(alien_caste)
 					if("Hunter")
-						H = new /mob/living/carbon/alien/humanoid/hunter (src.loc)
+						new_xeno = new /mob/living/carbon/alien/humanoid/hunter (loc)
 					if("Sentinel")
-						H = new /mob/living/carbon/alien/humanoid/sentinel (src.loc)
+						new_xeno = new /mob/living/carbon/alien/humanoid/sentinel (loc)
 					if("Drone")
-						H = new /mob/living/carbon/alien/humanoid/drone (src.loc)
+						new_xeno = new /mob/living/carbon/alien/humanoid/drone (loc)
 
-				H.mind = new//Mind initialize stuff.
-				H.mind.current = src
-				H.mind.assigned_role = "Alien"
-				H.mind.special_role = CASTE
-				H.mind.key = src.key
-				if(src.client)
-					src.client.mob = H
+				new_xeno.mind_initialize(src, alien_caste)
+				new_xeno.key = key
 
 				del(src)
 				return
 			//grow!! but not if metroid or dead
-			if(!istype(src,/mob/living/carbon/alien/larva/metroid) && src.health>-100)
-				src.amount_grown++
+			if(!istype(src,/mob/living/carbon/alien/larva/metroid) && health>-100)
+				amount_grown++
 
-			if (src.radiation)
-				if (src.radiation > 100)
-					src.radiation = 100
-					src.weakened = 10
+			if (radiation)
+				if (radiation > 100)
+					radiation = 100
+					weakened = 10
 					src << "\red You feel weak."
 					emote("collapse")
 
-				if (src.radiation < 0)
-					src.radiation = 0
+				if (radiation < 0)
+					radiation = 0
 
-				switch(src.radiation)
+				switch(radiation)
 					if(1 to 49)
-						src.radiation--
+						radiation--
 						if(prob(25))
-							src.toxloss++
-							src.updatehealth()
+							toxloss++
+							updatehealth()
 
 					if(50 to 74)
-						src.radiation -= 2
-						src.toxloss++
+						radiation -= 2
+						toxloss++
 						if(prob(5))
-							src.radiation -= 5
-							src.weakened = 3
+							radiation -= 5
+							weakened = 3
 							src << "\red You feel weak."
 							emote("collapse")
-						src.updatehealth()
+						updatehealth()
 
 					if(75 to 100)
-						src.radiation -= 3
-						src.toxloss += 3
-						src.updatehealth()
+						radiation -= 3
+						toxloss += 3
+						updatehealth()
 
 
 		breathe()
 
-			if(src.reagents.has_reagent("lexorin")) return
+			if(reagents.has_reagent("lexorin")) return
 			if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 			var/datum/gas_mixture/environment = loc.return_air()
 			var/datum/air_group/breath
 			// HACK NEED CHANGING LATER
-			if(src.health < 0)
-				src.losebreath++
+			if(health < 0)
+				losebreath++
 
 			if(losebreath>0) //Suffocating so do not take a breath
-				src.losebreath--
+				losebreath--
 				if (prob(75)) //High chance of gasping for air
 					spawn emote("gasp")
 				if(istype(loc, /obj/))
@@ -201,17 +196,17 @@
 
 		get_breath_from_internal(volume_needed)
 			if(internal)
-				if (!contents.Find(src.internal))
+				if (!contents.Find(internal))
 					internal = null
 				if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 					internal = null
 				if(internal)
-					if (src.internals)
-						src.internals.icon_state = "internal1"
+					if (internals)
+						internals.icon_state = "internal1"
 					return internal.remove_air_volume(volume_needed)
 				else
-					if (src.internals)
-						src.internals.icon_state = "internal0"
+					if (internals)
+						internals.icon_state = "internal0"
 			return null
 
 		update_canmove()
@@ -219,7 +214,7 @@
 			else canmove = 1
 
 		handle_breath(datum/gas_mixture/breath)
-			if(src.nodamage)
+			if(nodamage)
 				return
 
 			if(!breath || (breath.total_moles() == 0))
@@ -246,7 +241,7 @@
 			breath.toxins -= toxins_used
 			breath.oxygen += toxins_used
 
-			if(breath.temperature > (T0C+66) && !(src.mutations & COLD_RESISTANCE)) // Hot air hurts :(
+			if(breath.temperature > (T0C+66) && !(mutations & COLD_RESISTANCE)) // Hot air hurts :(
 				if(prob(20))
 					src << "\red You feel a searing heat in your lungs!"
 				fire_alert = max(fire_alert, 1)
@@ -274,25 +269,25 @@
 
 			if(reagents) reagents.metabolize(src)
 
-			if(src.nutrition > 500 && !(src.mutations & FAT))
-				if(prob(5 + round((src.nutrition - 200) / 2)))
+			if(nutrition > 500 && !(mutations & FAT))
+				if(prob(5 + round((nutrition - 200) / 2)))
 					src << "\red You suddenly feel blubbery!"
-					src.mutations |= FAT
+					mutations |= FAT
 //					update_body()
-			if (src.nutrition < 100 && src.mutations & FAT)
-				if(prob(round((50 - src.nutrition) / 100)))
+			if (nutrition < 100 && mutations & FAT)
+				if(prob(round((50 - nutrition) / 100)))
 					src << "\blue You feel fit again!"
-					src.mutations &= ~FAT
+					mutations &= ~FAT
 //					update_body()
-			if (src.nutrition > 0)
-				src.nutrition-= HUNGER_FACTOR
+			if (nutrition > 0)
+				nutrition-= HUNGER_FACTOR
 
-			if (src.drowsyness)
-				src.drowsyness--
-				src.eye_blurry = max(2, src.eye_blurry)
+			if (drowsyness)
+				drowsyness--
+				eye_blurry = max(2, eye_blurry)
 				if (prob(5))
-					src.sleeping = 1
-					src.paralysis = 5
+					sleeping = 1
+					paralysis = 5
 
 			confused = max(0, confused - 1)
 			// decrement dizziness counter, clamped to 0
@@ -303,7 +298,7 @@
 				dizziness = max(0, dizziness - 1)
 				jitteriness = max(0, jitteriness - 1)
 
-			src.updatehealth()
+			updatehealth()
 
 			return //TODO: DEFERRED
 
@@ -313,153 +308,153 @@
 
 			if(oxyloss > 50) paralysis = max(paralysis, 3)
 
-			if(src.sleeping)
-				src.paralysis = max(src.paralysis, 3)
+			if(sleeping)
+				paralysis = max(paralysis, 3)
 				if (prob(10) && health) spawn(0) emote("snore")
-				src.sleeping--
+				sleeping--
 
-			if(src.resting)
-				src.weakened = max(src.weakened, 5)
+			if(resting)
+				weakened = max(weakened, 5)
 
-			if(health < -100 || src.brain_op_stage == 4.0)
+			if(health < -100 || brain_op_stage == 4.0)
 				death()
-			else if(src.health < 0)
-				if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
+			else if(health < 0)
+				if(health <= 20 && prob(1)) spawn(0) emote("gasp")
 
-				//if(!src.rejuv) src.oxyloss++
-				if(!src.reagents.has_reagent("inaprovaline")) src.oxyloss++
+				//if(!rejuv) oxyloss++
+				if(!reagents.has_reagent("inaprovaline")) oxyloss++
 
-				if(src.stat != 2)	src.stat = 1
-				src.paralysis = max(src.paralysis, 5)
+				if(stat != 2)	stat = 1
+				paralysis = max(paralysis, 5)
 
-			if (src.stat != 2) //Alive.
+			if (stat != 2) //Alive.
 
-				if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
-					if (src.stunned > 0)
-						src.stunned--
-						src.stat = 0
-					if (src.weakened > 0)
-						src.weakened--
-						src.lying = 1
-						src.stat = 0
-					if (src.paralysis > 0)
-						src.paralysis--
-						src.blinded = 1
-						src.lying = 1
-						src.stat = 1
-					var/h = src.hand
-					src.hand = 0
+				if (paralysis || stunned || weakened) //Stunned etc.
+					if (stunned > 0)
+						stunned--
+						stat = 0
+					if (weakened > 0)
+						weakened--
+						lying = 1
+						stat = 0
+					if (paralysis > 0)
+						paralysis--
+						blinded = 1
+						lying = 1
+						stat = 1
+					var/h = hand
+					hand = 0
 					drop_item()
-					src.hand = 1
+					hand = 1
 					drop_item()
-					src.hand = h
+					hand = h
 
 				else	//Not stunned.
-					src.lying = 0
-					src.stat = 0
+					lying = 0
+					stat = 0
 
 			else //Dead.
-				src.lying = 1
-				src.blinded = 1
-				src.stat = 2
+				lying = 1
+				blinded = 1
+				stat = 2
 
-			if (src.stuttering) src.stuttering--
+			if (stuttering) stuttering--
 
-			if (src.eye_blind)
-				src.eye_blind--
-				src.blinded = 1
+			if (eye_blind)
+				eye_blind--
+				blinded = 1
 
-			if (src.ear_deaf > 0) src.ear_deaf--
-			if (src.ear_damage < 25)
-				src.ear_damage -= 0.05
-				src.ear_damage = max(src.ear_damage, 0)
+			if (ear_deaf > 0) ear_deaf--
+			if (ear_damage < 25)
+				ear_damage -= 0.05
+				ear_damage = max(ear_damage, 0)
 
-			src.density = !( src.lying )
+			density = !( lying )
 
-			if ((src.sdisabilities & 1))
-				src.blinded = 1
-			if ((src.sdisabilities & 4))
-				src.ear_deaf = 1
+			if ((sdisabilities & 1))
+				blinded = 1
+			if ((sdisabilities & 4))
+				ear_deaf = 1
 
-			if (src.eye_blurry > 0)
-				src.eye_blurry--
-				src.eye_blurry = max(0, src.eye_blurry)
+			if (eye_blurry > 0)
+				eye_blurry--
+				eye_blurry = max(0, eye_blurry)
 
-			if (src.druggy > 0)
-				src.druggy--
-				src.druggy = max(0, src.druggy)
+			if (druggy > 0)
+				druggy--
+				druggy = max(0, druggy)
 
 			return 1
 
 		handle_regular_hud_updates()
 
-			if (src.stat == 2 || src.mutations & XRAY)
-				src.sight |= SEE_TURFS
-				src.sight |= SEE_MOBS
-				src.sight |= SEE_OBJS
-				src.see_in_dark = 8
-				src.see_invisible = 2
-			else if (src.stat != 2)
-				src.sight |= SEE_MOBS
-				src.sight &= ~SEE_TURFS
-				src.sight &= ~SEE_OBJS
-				src.see_in_dark = 4
-				src.see_invisible = 2
+			if (stat == 2 || mutations & XRAY)
+				sight |= SEE_TURFS
+				sight |= SEE_MOBS
+				sight |= SEE_OBJS
+				see_in_dark = 8
+				see_invisible = 2
+			else if (stat != 2)
+				sight |= SEE_MOBS
+				sight &= ~SEE_TURFS
+				sight &= ~SEE_OBJS
+				see_in_dark = 4
+				see_invisible = 2
 
-			if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
-			if (src.rest) src.rest.icon_state = text("rest[]", src.resting)
+			if (sleep) sleep.icon_state = text("sleep[]", sleeping)
+			if (rest) rest.icon_state = text("rest[]", resting)
 
-			if (src.healths)
-				if (src.stat != 2)
+			if (healths)
+				if (stat != 2)
 					switch(health)
 						if(25 to INFINITY)
-							src.healths.icon_state = "health0"
+							healths.icon_state = "health0"
 						if(19 to 25)
-							src.healths.icon_state = "health1"
+							healths.icon_state = "health1"
 						if(13 to 19)
-							src.healths.icon_state = "health2"
+							healths.icon_state = "health2"
 						if(7 to 13)
-							src.healths.icon_state = "health3"
+							healths.icon_state = "health3"
 						if(0 to 7)
-							src.healths.icon_state = "health4"
+							healths.icon_state = "health4"
 						else
-							src.healths.icon_state = "health5"
+							healths.icon_state = "health5"
 				else
-					src.healths.icon_state = "health6"
+					healths.icon_state = "health6"
 
-			if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"
+			if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
 
 
-			if (src.toxin)	src.toxin.icon_state = "tox[src.toxins_alert ? 1 : 0]"
-			if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
-			if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
+			if (toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
+			if (oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
+			if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
 			//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 			//blame the person who coded them. Temporary fix added.
 
 
-			src.client.screen -= src.hud_used.blurry
-			src.client.screen -= src.hud_used.druggy
-			src.client.screen -= src.hud_used.vimpaired
+			client.screen -= hud_used.blurry
+			client.screen -= hud_used.druggy
+			client.screen -= hud_used.vimpaired
 
-			if ((src.blind && src.stat != 2))
-				if ((src.blinded))
-					src.blind.layer = 18
+			if ((blind && stat != 2))
+				if ((blinded))
+					blind.layer = 18
 				else
-					src.blind.layer = 0
+					blind.layer = 0
 
-					if (src.disabilities & 1)
-						src.client.screen += src.hud_used.vimpaired
+					if (disabilities & 1)
+						client.screen += hud_used.vimpaired
 
-					if (src.eye_blurry)
-						src.client.screen += src.hud_used.blurry
+					if (eye_blurry)
+						client.screen += hud_used.blurry
 
-					if (src.druggy)
-						src.client.screen += src.hud_used.druggy
+					if (druggy)
+						client.screen += hud_used.druggy
 
-			if (src.stat != 2)
-				if (src.machine)
-					if (!( src.machine.check_eye(src) ))
-						src.reset_view(null)
+			if (stat != 2)
+				if (machine)
+					if (!( machine.check_eye(src) ))
+						reset_view(null)
 				else
 					if(!client.adminobs)
 						reset_view(null)
@@ -470,18 +465,18 @@
 			return
 
 		handle_virus_updates()
-			if(src.bodytemperature > 406  && src.virus)
-				src.virus.cure()
+			if(bodytemperature > 406  && virus)
+				virus.cure()
 			return
 
 		check_if_buckled()
-			if (src.buckled)
-				src.lying = (istype(src.buckled, /obj/stool/bed) ? 1 : 0)
-				if(src.lying)
-					src.drop_item()
-				src.density = 1
+			if (buckled)
+				lying = (istype(buckled, /obj/stool/bed) ? 1 : 0)
+				if(lying)
+					drop_item()
+				density = 1
 			else
-				src.density = !src.lying
+				density = !lying
 
 		handle_stomach()
 			spawn(0)
@@ -489,7 +484,7 @@
 					if(M.loc != src)
 						stomach_contents.Remove(M)
 						continue
-					if(istype(M, /mob/living/carbon) && src.stat != 2)
+					if(istype(M, /mob/living/carbon) && stat != 2)
 						if(M.stat == 2)
 							M.death(1)
 							stomach_contents.Remove(M)
@@ -498,4 +493,4 @@
 						if(air_master.current_cycle%3==1)
 							if(!M.nodamage)
 								M.bruteloss += 5
-							src.nutrition += 10
+							nutrition += 10

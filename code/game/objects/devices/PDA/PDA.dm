@@ -486,7 +486,7 @@
 
 //SYNDICATE FUNCTIONS===================================
 
-				if("Door")
+				if("Toggle Door")
 					if(!isnull(cartridge) && cartridge.access_remote_door)
 						for(var/obj/machinery/door/poddoor/M in machines)
 							if(M.id == cartridge.remote_door_id)
@@ -536,12 +536,13 @@
 
 //pAI FUNCTIONS===================================
 				if("pai")
-					if(href_list["option"] == "1")		// Configure pAI device
-						pai.attack_self(U)
-					if(href_list["option"] == "2")		// Eject pAI device
-						var/turf/T = get_turf_or_move(src.loc)
-						if(T)
-							pai.loc = T
+					switch(href_list["option"])
+						if("1")		// Configure pAI device
+							pai.attack_self(U)
+						if("2")		// Eject pAI device
+							var/turf/T = get_turf_or_move(src.loc)
+							if(T)
+								pai.loc = T
 
 //LINK FUNCTIONS===================================
 
