@@ -206,17 +206,21 @@
 	var/network = "SS13"
 	var/maplevel = 1
 
-/obj/machinery/computer/security/wooden_tv
-	name = "Security Cameras"
-	icon_state = "security_det"
-
-
 /obj/machinery/computer/security/telescreen
 	name = "Telescreen"
 	icon = 'stationobjs.dmi'
 	icon_state = "telescreen"
 	network = "thunder"
 	density = 0
+
+/obj/machinery/computer/security/wooden_tv
+	name = "Security Cameras"
+	icon_state = "security_det"
+
+/obj/machinery/computer/security/mining
+	name = "Outpost Status Display"
+	icon_state = "miningcameras"
+	network = "mining"
 
 /obj/machinery/computer/shuttle
 	name = "Shuttle"
