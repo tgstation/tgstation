@@ -177,6 +177,7 @@ proc/check_craftlathe_recipe(var/list/param_recipe)
 	CRAFT_ITEMS += new/datum/craftlathe_item("PLASMA","Plasma",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/plasma)
 	CRAFT_ITEMS += new/datum/craftlathe_item("URANIUM","Uranium",1,1,list("","","","","","","","",""),/obj/item/weapon/ore/uranium)
 	CRAFT_ITEMS += new/datum/craftlathe_item("CLOWN","Bananium",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/clown)
+	CRAFT_ITEMS += new/datum/craftlathe_item("ADMAMANTINE","Adamantine",1,1,list("","","","","","","","",""),/obj/item/stack/sheet/adamantine)
 	CRAFT_ITEMS += new/datum/craftlathe_item("SCREWS","Screws",9,9,list("","","","","METAL","","","METAL",""))
 	CRAFT_ITEMS += new/datum/craftlathe_item("COGS","Cogs",9,9,list("","METAL","","METAL","METAL","METAL","","METAL",""))
 	CRAFT_ITEMS += new/datum/craftlathe_item("SWITCH","Switch",12,12,list("METAL","","METAL","METAL","METAL","","METAL","",""))
@@ -654,8 +655,8 @@ proc/move_mining_shuttle()
 
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
-	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5)
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25)
+	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5/*, "Adamantine" = 5*/)
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25/*, "Adamantine" =5*/)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/simulated/mineral/random/New()
@@ -678,6 +679,8 @@ proc/move_mining_shuttle()
 					M = new/turf/simulated/mineral/silver(src)
 				if("Plasma")
 					M = new/turf/simulated/mineral/plasma(src)
+				/*if("Adamantine")
+					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
 				src = M
 				M.levelupdate()
@@ -739,6 +742,15 @@ proc/move_mining_shuttle()
 	mineralAmt = 5
 	spreadChance = 25
 	spread = 1
+
+
+/turf/simulated/mineral/adamantine
+	name = "Adamantine deposit"
+	icon_state = "rock_Adamantine"
+	mineralName = "Adamantine"
+	mineralAmt = 3
+	spreadChance = 0
+	spread = 0 //It shouldn't spawn yet; will change these to match diamond once it's fully implemented. -Durandan
 
 
 /turf/simulated/mineral/clown
@@ -825,6 +837,8 @@ proc/move_mining_shuttle()
 				new /obj/item/weapon/ore/diamond(src)
 			if (src.mineralName == "Clown")
 				new /obj/item/weapon/ore/clown(src)
+			if (src.mineralName == "Adamantine")
+				new /obj/item/weapon/ore/adamantine(src)
 	ReplaceWithFloor()
 	return
 
@@ -1035,6 +1049,11 @@ proc/move_mining_shuttle()
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
 
+/obj/item/weapon/ore/adamantine
+	name = "Adamantine ore"
+	icon_state = "Adamantine ore"
+	origin_tech = "materials=5"
+
 /obj/item/weapon/ore/slag
 	name = "Slag"
 	desc = "Completely useless"
@@ -1114,6 +1133,7 @@ proc/move_mining_shuttle()
 	var/amt_plasma = 0
 	var/amt_uranium = 0
 	var/amt_clown = 0
+	var/amt_adamantine = 0
 
 	for (var/obj/item/weapon/ore/C in contents)
 		if (istype(C,/obj/item/weapon/ore/diamond))
@@ -1132,6 +1152,8 @@ proc/move_mining_shuttle()
 			amt_uranium++;
 		if (istype(C,/obj/item/weapon/ore/clown))
 			amt_clown++;
+		if (istype(C,/obj/item/weapon/ore/adamantine))
+			amt_adamantine++;
 
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
 	if (amt_gold)
@@ -1150,6 +1172,8 @@ proc/move_mining_shuttle()
 		dat += text("Uranium ore: [amt_uranium]<br>")
 	if (amt_clown)
 		dat += text("Bananium ore: [amt_clown]<br>")
+	if (amt_adamantine)
+		dat += text("Adamantine ore: [amt_adamantine]<br>")
 
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
 	user << browse("[dat]", "window=orebox")
@@ -1309,6 +1333,9 @@ proc/move_mining_shuttle()
 				if (istype(O,/obj/item/weapon/ore/uranium))
 					new /obj/item/weapon/ore/uranium(output.loc)
 					del(O)
+				/*if (istype(O,/obj/item/weapon/ore/adamantine))
+					new /obj/item/weapon/ore/adamantine(output.loc)
+					del(O)*/ //Dunno what this area does so I'll keep it commented out for now -Durandan
 				processed++
 				sleep(5);
 			processing = 0;
@@ -1350,7 +1377,8 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		new/datum/material_recipe("Silver",list(/obj/item/weapon/ore/silver),/obj/item/stack/sheet/silver),
 		new/datum/material_recipe("Diamond",list(/obj/item/weapon/ore/diamond),/obj/item/stack/sheet/diamond),
 		new/datum/material_recipe("Plasma",list(/obj/item/weapon/ore/plasma),/obj/item/stack/sheet/plasma),
-		new/datum/material_recipe("Bananium",list(/obj/item/weapon/ore/clown),/obj/item/stack/sheet/clown)
+		new/datum/material_recipe("Bananium",list(/obj/item/weapon/ore/clown),/obj/item/stack/sheet/clown),
+		new/datum/material_recipe("Adamantine",list(/obj/item/weapon/ore/adamantine),/obj/item/stack/sheet/adamantine)
 	)
 
 /**********************Mineral processing unit console**************************/
@@ -1376,7 +1404,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 
 	var/dat = "<b>Smelter control console</b><br><br>"
 	//iron
-	if(machine.ore_iron || machine.ore_glass || machine.ore_plasma || machine.ore_uranium || machine.ore_gold || machine.ore_silver || machine.ore_diamond || machine.ore_clown)
+	if(machine.ore_iron || machine.ore_glass || machine.ore_plasma || machine.ore_uranium || machine.ore_gold || machine.ore_silver || machine.ore_diamond || machine.ore_clown || machine.ore_adamantine)
 		if(machine.ore_iron)
 			if (machine.selected_iron==1)
 				dat += text("<A href='?src=\ref[src];sel_iron=no'><font color='green'>Smelting</font></A> ")
@@ -1456,6 +1484,17 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		else
 			machine.selected_clown = 0
 
+		//adamantine
+		if(machine.ore_adamantine)
+			if (machine.selected_adamantine==1)
+				dat += text("<A href='?src=\ref[src];sel_adamantine=no'><font color='green'>Smelting</font></A> ")
+			else
+				dat += text("<A href='?src=\ref[src];sel_adamantine=yes'><font color='red'>Not smelting</font></A> ")
+			dat += text("Adamantine: [machine.ore_adamantine]<br>")
+		else
+			machine.selected_adamantine = 0
+
+
 		//On or off
 		dat += text("Machine is currently ")
 		if (machine.on==1)
@@ -1515,6 +1554,11 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 			machine.selected_clown = 1
 		else
 			machine.selected_clown = 0
+	if(href_list["sel_adamantine"])
+		if (href_list["sel_adamantine"] == "yes")
+			machine.selected_adamantine = 1
+		else
+			machine.selected_adamantine =0
 	if(href_list["set_on"])
 		if (href_list["set_on"] == "on")
 			machine.on = 1
@@ -1543,6 +1587,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	var/ore_uranium = 0;
 	var/ore_iron = 0;
 	var/ore_clown = 0;
+	var/ore_adamantine = 0;
 	var/selected_gold = 0
 	var/selected_silver = 0
 	var/selected_diamond = 0
@@ -1551,6 +1596,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	var/selected_uranium = 0
 	var/selected_iron = 0
 	var/selected_clown = 0
+	var/selected_adamantine = 0
 	var/on = 0 //0 = off, 1 =... oh you know!
 
 /obj/machinery/mineral/processing_unit/New()
@@ -1571,77 +1617,82 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		var/i
 		for (i = 0; i < 10; i++)
 			if (on)
-				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
 					if (ore_glass > 0)
 						ore_glass--;
 						new /obj/item/stack/sheet/glass(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
 					if (ore_gold > 0)
 						ore_gold--;
 						new /obj/item/stack/sheet/gold(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
 					if (ore_silver > 0)
 						ore_silver--;
 						new /obj/item/stack/sheet/silver(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
 					if (ore_diamond > 0)
 						ore_diamond--;
 						new /obj/item/stack/sheet/diamond(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
 					if (ore_plasma > 0)
 						ore_plasma--;
 						new /obj/item/stack/sheet/plasma(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
 					if (ore_uranium > 0)
 						ore_uranium--;
 						new /obj/item/stack/sheet/uranium(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_adamantine == 0)
 					if (ore_iron > 0)
 						ore_iron--;
 						new /obj/item/stack/sheet/metal(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_adamantine == 0)
 					if (ore_iron > 0)
 						ore_iron--;
 						new /obj/item/stack/sheet/metal(output.loc)
 					else
 						on = 0
 					continue
-
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1 && selected_adamantine == 0)
 					if (ore_clown > 0)
 						ore_clown--;
 						new /obj/item/stack/sheet/clown(output.loc)
 					else
 						on = 0
 					continue
-
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 1)
+					if (ore_adamantine > 0)
+						ore_adamantine--;
+						new /obj/item/stack/sheet/adamantine(output.loc)
+					else
+						on = 0
+					continue
 
 				//if a non valid combination is selected
 
 				var/b = 1 //this part checks if all required ores are available
 
-				if (!(selected_gold || selected_silver ||selected_diamond || selected_uranium | selected_plasma || selected_iron))
+				if (!(selected_gold || selected_silver ||selected_diamond || selected_uranium | selected_plasma || selected_iron || selected_iron))
 					b = 0
 
 				if (selected_gold == 1)
@@ -1668,6 +1719,9 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 				if (selected_clown == 1)
 					if (ore_clown <= 0)
 						b = 0
+				if (selected_adamantine == 1)
+					if (ore_adamantine <= 0)
+						b = 0
 
 				if (b) //if they are, deduct one from each, produce slag and shut the machine off
 					if (selected_gold == 1)
@@ -1684,6 +1738,8 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 						ore_iron--
 					if (selected_clown == 1)
 						ore_clown--
+					if (selected_adamantine == 1)
+						ore_adamantine--
 					new /obj/item/weapon/ore/slag(output.loc)
 					on = 0
 				else
@@ -1726,6 +1782,10 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 					continue
 				if (istype(O,/obj/item/weapon/ore/clown))
 					ore_clown++
+					del(O)
+					continue
+				if (istype(O,/obj/item/weapon/ore/adamantine))
+					ore_adamantine++
 					del(O)
 					continue
 				O.loc = src.output.loc
@@ -1780,6 +1840,8 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		dat += text("Diamond: [machine.ore_diamond] <A href='?src=\ref[src];release=diamond'>Release</A><br>")
 	if(machine.ore_clown)
 		dat += text("Bananium: [machine.ore_clown] <A href='?src=\ref[src];release=clown'>Release</A><br><br>")
+	if(machine.ore_adamantine)
+		dat += text ("Adamantine: [machine.ore_adamantine] <A href='?src=\ref[src];release=adamantine'>Release</A><br><br>")
 
 	dat += text("Stacking: [machine.stack_amt]<br><br>")
 
@@ -1852,6 +1914,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 					G.amount = machine.ore_clown
 					G.loc = machine.output.loc
 					machine.ore_clown = 0
+			if ("adamantine")
+				if (machine.ore_adamantine > 0)
+					var/obj/item/stack/sheet/adamantine/G = new /obj/item/stack/sheet/adamantine
+					G.amount = machine.ore_adamantine
+					G.loc = machine.output.loc
+					machine.ore_adamantine = 0
 	src.updateUsrDialog()
 	return
 
@@ -1880,6 +1948,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	var/ore_glass = 0;
 	var/ore_rglass = 0;
 	var/ore_steel = 0;
+	var/ore_adamantine = 0;
 	var/stack_amt = 50; //ammount to stack before releassing
 
 /obj/machinery/mineral/stacking_machine/New()
@@ -1938,6 +2007,10 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 				continue
 			if (istype(O,/obj/item/stack/sheet/r_metal))
 				ore_steel+= O:amount
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/adamantine))
+				ore_adamantine+= O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/weapon/ore/slag))
@@ -2003,6 +2076,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		G.amount = stack_amt
 		G.loc = output.loc
 		ore_steel -= stack_amt
+		return
+	if (ore_adamantine >= stack_amt)
+		var/obj/item/stack/sheet/adamantine/G = new /obj/item/stack/sheet/adamantine
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_adamantine -= stack_amt
 		return
 	return
 
@@ -2074,6 +2153,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	var/amt_plasma = 0
 	var/amt_uranium = 0
 	var/amt_clown = 0
+	var/amt_adamantine = 0
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = 0
 	var/chosen = "metal" //which material will be used to make coins
@@ -2120,9 +2200,12 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 			if (istype(O,/obj/item/stack/sheet/clown))
 				amt_clown += 100 * O.amount
 				del(O)
+			if (istype(O,/obj/item/stack/sheet/adamantine))
+				amt_adamantine += 100 * O.amount
+				del(O) //Commented out for now. -Durandan
 
 
-/obj/machinery/mineral/mint/attack_hand(user as mob)
+/obj/machinery/mineral/mint/attack_hand(user as mob) //TODO: Adamantine coins! -Durandan
 
 	var/dat = "<b>Coin Press</b><br>"
 
@@ -2169,6 +2252,11 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 			dat += text("chosen")
 		else
 			dat += text("<A href='?src=\ref[src];choose=clown'>Choose</A>")
+	dat += text("<br><font color='#888888'><b>Adamantine inserted: </b>[amt_adamantine]</font> ")//I don't even know these color codes, so fuck it.
+	if (chosen == "adamantine")
+		dat += text("chosen")
+	else
+		dat += text("<A href='?src=\ref[src];choose=adamantine'>Choose</A>")
 
 	dat += text("<br><br>Will produce [coinsToProduce] [chosen] coins if enough materials are available.<br>")
 	//dat += text("The dial which controls the number of conins to produce seems to be stuck. A technician has already been dispatched to fix this.")
@@ -2286,6 +2374,18 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 						newCoins++
 						src.updateUsrDialog()
 						sleep(5);
+				if("adamantine")
+					while(amt_adamantine > 0 && coinsToProduce > 0)
+						if (locate(/obj/item/weapon/moneybag,output.loc))
+							M = locate(/obj/item/weapon/moneybag,output.loc)
+						else
+							M = new/obj/item/weapon/moneybag(output.loc)
+						new /obj/item/weapon/coin/adamantine(M)
+						amt_adamantine -= 20
+						coinsToProduce--
+						newCoins++
+						src.updateUsrDialog()
+						sleep(5);
 			icon_state = "coinpress0"
 			processing = 0;
 			coinsToProduce = temp_coins
@@ -2336,6 +2436,10 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	name = "Bananaium coin"
 	icon_state = "coin_clown"
 
+/obj/item/weapon/coin/adamantine
+	name = "Adamantine coin"
+	icon_state = "coin_adamantine"
+
 /*****************************Money bag********************************/
 
 /obj/item/weapon/moneybag
@@ -2355,6 +2459,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	var/amt_plasma = 0
 	var/amt_uranium = 0
 	var/amt_clown = 0
+	var/amt_adamantine = 0
 
 	for (var/obj/item/weapon/coin/C in contents)
 		if (istype(C,/obj/item/weapon/coin/diamond))
@@ -2371,6 +2476,8 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 			amt_uranium++;
 		if (istype(C,/obj/item/weapon/coin/clown))
 			amt_clown++;
+		if (istype(C,/obj/item/weapon/coin/adamantine))
+			amt_adamantine++;
 
 	var/dat = text("<b>The contents of the moneybag reveal...</b><br>")
 	if (amt_gold)
@@ -2387,6 +2494,8 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 		dat += text("Uranium coins: [amt_uranium] <A href='?src=\ref[src];remove=uranium'>Remove one</A><br>")
 	if (amt_clown)
 		dat += text("Bananium coins: [amt_clown] <A href='?src=\ref[src];remove=clown'>Remove one</A><br>")
+	if (amt_adamantine)
+		dat += text("Adamantine coins: [amt_adamantine] <A href='?src=\ref[src];remove=adamantine'>Remove one</A><br>")
 	user << browse("[dat]", "window=moneybag")
 
 /obj/item/weapon/moneybag/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -2425,6 +2534,8 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 				COIN = locate(/obj/item/weapon/coin/uranium,src.contents)
 			if("clown")
 				COIN = locate(/obj/item/weapon/coin/clown,src.contents)
+			if("adamantine")
+				COIN = locate(/obj/item/weapon/coin/adamantine,src.contents)
 		if(!COIN)
 			return
 		COIN.loc = src.loc
@@ -2442,6 +2553,7 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	new /obj/item/weapon/coin/silver(src)
 	new /obj/item/weapon/coin/gold(src)
 	new /obj/item/weapon/coin/gold(src)
+	new /obj/item/weapon/coin/adamantine(src)
 
 
 /**********************Gas extractor**************************/
@@ -2724,6 +2836,17 @@ var/list/datum/material_recipe/MATERIAL_RECIPES = list(
 	throw_speed = 3
 	throw_range = 3
 	origin_tech = "plasmatech=2;materials=2"
+	perunit = 2000
+
+/obj/item/stack/sheet/adamantine
+	name = "adamantine"
+	icon_state = "sheet-adamantine"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=4"
 	perunit = 2000
 
 /obj/item/stack/sheet/clown

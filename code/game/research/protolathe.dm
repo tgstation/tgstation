@@ -21,6 +21,7 @@ Note: Must be placed west/left of and R&D console to function.
 		uranium_amount = 0.0
 		diamond_amount = 0.0
 		clown_amount = 0.0
+		adamantine_amount = 0.0
 
 
 	New()
@@ -104,6 +105,9 @@ Note: Must be placed west/left of and R&D console to function.
 				if(clown_amount >= 3750)
 					var/obj/item/stack/sheet/clown/G = new /obj/item/stack/sheet/clown(src.loc)
 					G.amount = round(clown_amount / 3750)
+				if(adamantine_amount >= 3750)
+					var/obj/item/stack/sheet/adamantine/G = new /obj/item/stack/sheet/adamantine(src.loc)
+					G.amount = round(adamantine_amount / 3750)
 				del(src)
 				return 1
 			else
@@ -165,6 +169,8 @@ Note: Must be placed west/left of and R&D console to function.
 				diamond_amount += amount * 3750
 			else if(istype(stack, /obj/item/stack/sheet/clown))
 				clown_amount += amount * 3750
+			else if(istype(stack, /obj/item/stack/sheet/adamantine))
+				adamantine_amount += amount * 3750
 			stack.use(amount)
 			busy = 0
 			src.updateUsrDialog()
