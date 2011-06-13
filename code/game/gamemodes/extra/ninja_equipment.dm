@@ -1057,16 +1057,14 @@ ________________________________________________________________________________
 			var/obj/machinery/A = target
 			U << "\blue Hacking \the [A]..."
 			spawn(0)
+				var/turf/location = get_turf(U)
 				for(var/mob/living/silicon/ai/AI in world)
-					if(U.loc)
-						AI << "\red <b>Network Alert: Hacking attempt detected in [U.loc]</b>."
-					else
-						AI << "\red <b>Network Alert: Hacking attempt detected. Unable to pinpoint location</b>."
-			if(A:files&&A:files.known_tech.len))
+					AI << "\red <b>Network Alert: Hacking attempt detected [location?"in [location]":"Unable to pinpoint location"]</b>."
+			if(A:files&&A:files.known_tech.len)
 				while(G.candrain&&!isnull(A))
 					for(var/datum/tech/current_data in S.stored_research)
 						U << "\blue Checking \the [current_data.name] database."
-						if(do_after(U,S.s_delay)
+						if(do_after(U,S.s_delay))
 							for(var/datum/tech/analyzing_data in A:files.known_tech)
 								if(current_data.id==analyzing_data.id)
 									if(analyzing_data.level>current_data.level)
