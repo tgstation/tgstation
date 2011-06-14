@@ -195,23 +195,13 @@
 			var/obj/cable/C = O
 
 			C.netnum = num
-
-		else if( istype(O, /obj/machinery/power) )
-
-			var/obj/machinery/power/M = O
-
-			M.netnum = num
-
-
-		if( istype(O, /obj/cable) )
-			var/obj/cable/C = O
-
 			P = C.get_connections()
 
 		else if( istype(O, /obj/machinery/power) )
 
 			var/obj/machinery/power/M = O
 
+			M.netnum = num
 			P = M.get_connections()
 
 		if(P.len == 0)
