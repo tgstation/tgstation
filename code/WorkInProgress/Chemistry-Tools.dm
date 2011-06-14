@@ -18,8 +18,7 @@
 	var/direct = "SOUTH"
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/list/beakers = new/list()
-	var/list/allowed_containers = list("/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/reagent_containers/glass/dispenser")
-	var/list/disallowed_container = "/obj/item/weapon/reagent_containers/glass/large"
+	var/list/allowed_containers = list("/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/reagent_containers/glass/dispenser", "/obj/item/weapon/reagent_containers/glass/bottle")
 	var/affected_area = 3
 	throw_speed = 4
 	throw_range = 20
@@ -48,7 +47,7 @@
 				stage = 2
 			else
 				user << "\red You need to add at least one beaker before locking the assembly."
-		else if (istype(W,/obj/item/weapon/reagent_containers/glass/beaker) && stage == 1 && path != 2)
+		else if ((istype(W,/obj/item/weapon/reagent_containers/glass/beaker)||istype(W,/obj/item/weapon/reagent_containers/glass/dispenser)||istype(W,/obj/item/weapon/reagent_containers/glass/bottle)) && stage == 1 && path != 2)
 			path = 1
 			if(beakers.len == 2)
 				user << "\red The grenade can not hold more containers."
@@ -250,7 +249,6 @@
 	desc = "An oversized grenade that affects a larger area."
 	icon_state = "large_grenade"
 	allowed_containers = list("/obj/item/weapon/reagent_containers/glass")
-	disallowed_container = "/obj/item/weapon/reagent_containers/glass/blender_jug"
 	origin_tech = "combat=3;materials=3"
 	affected_area = 4
 
