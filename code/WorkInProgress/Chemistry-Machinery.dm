@@ -500,7 +500,7 @@
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/global/list/allowed_items = list (
 		/obj/item/stack/sheet/plasma = "plasma",
-		/obj/item/stack/sheet/plasma = "uranium",
+		/obj/item/stack/sheet/uranium = "uranium",
 		/obj/item/stack/sheet/clown = "banana",
 		/obj/item/stack/sheet/silver = "silver",
 		/obj/item/stack/sheet/gold = "gold",
@@ -572,7 +572,7 @@
 		beaker_contents = "\The [src]  has attached a beaker with something."
 		is_beaker_ready = 1
 	else
-		beaker_contents = "\The [src]  has attached a beaker and beaker is full!"
+		beaker_contents = "\The [src]  has attached a beaker and the beaker is full!"
 
 	var/dat = {"
 <b>Processing chamber contains:</b><br>

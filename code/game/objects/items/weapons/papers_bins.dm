@@ -774,7 +774,24 @@ CLIPBOARDS
 	return
 
 
-
+/obj/item/weapon/clipboard/MouseDrop(obj/over_object as obj) //Quick clipboard fix. -Agouri
+	if (ishuman(usr) || ismonkey(usr)) //Can monkeys even place items in the pocket slots? Leaving this in just in case~
+		var/mob/M = usr
+		if (!( istype(over_object, /obj/screen) ))
+			return ..()
+		if ((!( M.restrained() ) && !( M.stat ) /*&& M.pocket == src*/))
+			if (over_object.name == "r_hand")
+				if (!( M.r_hand ))
+					M.u_equip(src)
+					M.r_hand = src
+			else
+				if (over_object.name == "l_hand")
+					if (!( M.l_hand ))
+						M.u_equip(src)
+						M.l_hand = src
+			M.update_clothing()
+			src.add_fingerprint(usr)
+			return //
 
 
 // PHOTOGRAPH

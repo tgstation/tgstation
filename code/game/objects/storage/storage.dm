@@ -223,6 +223,32 @@
 	..()
 	return
 
+/obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object as obj) //Quick pillbottle fix. -Agouri
+
+	if (ishuman(usr) || ismonkey(usr)) //Can monkeys even place items in the pocket slots? Leaving this in just in case~
+		var/mob/M = usr
+		if (!( istype(over_object, /obj/screen) ))
+			return ..()
+		if ((!( M.restrained() ) && !( M.stat ) /*&& M.pocket == src*/))
+			if (over_object.name == "r_hand")
+				if (!( M.r_hand ))
+					M.u_equip(src)
+					M.r_hand = src
+			else
+				if (over_object.name == "l_hand")
+					if (!( M.l_hand ))
+						M.u_equip(src)
+						M.l_hand = src
+			M.update_clothing()
+			src.add_fingerprint(usr)
+			return
+		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
+			if (usr.s_active)
+				usr.s_active.close(usr)
+			src.show_to(usr)
+			return
+	return   ///////////////////////////////////////////////////////Alright, that should do it. *MARKER* for any possible runtimes
+
 /obj/item/weapon/storage/pillbottlebox/New()
 	new /obj/item/weapon/storage/pill_bottle( src )
 	new /obj/item/weapon/storage/pill_bottle( src )
