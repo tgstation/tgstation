@@ -1167,6 +1167,10 @@ var/showadminmessages = 1
 					if(aliens_allowed)
 						alien_infestation()
 						message_admins("[key_name_admin(usr)] has spawned aliens", 1)
+				if("spaceninja")
+					if(toggle_space_ninja)
+						if(space_ninja_arrival())//If the ninja is actually spawned. They may not be depending on a few factors.
+							message_admins("[key_name_admin(usr)] has sent in a space ninja", 1)
 				if("carp")
 					var/choice = input("You sure you want to spawn carp?") in list("Badmin", "Cancel")
 					if(choice == "Badmin")
@@ -1329,7 +1333,7 @@ var/showadminmessages = 1
 										dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 										dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
 								dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
-								for(var/datum/mind/N in ticker.mode:get_living_heads())
+								for(var/datum/mind/N in ticker.mode.get_living_heads())
 									var/mob/M = N.current
 									if(M)
 										dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -1657,6 +1661,7 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes (Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=goblob'>Spawn magma(Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
+<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
 <A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
 <A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
 <A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
@@ -1951,6 +1956,14 @@ var/showadminmessages = 1
 	aliens_allowed = !aliens_allowed
 	log_admin("[key_name(usr)] toggled Aliens to [aliens_allowed].")
 	message_admins("[key_name_admin(usr)] toggled Aliens [aliens_allowed ? "on" : "off"].", 1)
+
+/obj/admins/proc/toggle_space_ninja()
+	set category = "Server"
+	set desc="Toggle space ninjas spawning."
+	set name="Toggle Space Ninjas"
+	toggle_space_ninja = !toggle_space_ninja
+	log_admin("[key_name(usr)] toggled Space Ninjas to [toggle_space_ninja].")
+	message_admins("[key_name_admin(usr)] toggled Space Ninjas [toggle_space_ninja ? "on" : "off"].", 1)
 
 /obj/admins/proc/delay()
 	set category = "Server"

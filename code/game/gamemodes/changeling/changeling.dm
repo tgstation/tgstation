@@ -76,7 +76,7 @@
 
 				var/datum/objective/absorb/absorb_objective = new
 				absorb_objective.owner = changeling
-				absorb_objective.gen_num_to_eat()
+				absorb_objective.gen_amount_goal()
 				changeling.objectives += absorb_objective
 
 				var/datum/objective/assassinate/kill_objective = new
@@ -92,7 +92,7 @@
 
 				var/datum/objective/absorb/absorb_objective = new
 				absorb_objective.owner = changeling
-				absorb_objective.gen_num_to_eat()
+				absorb_objective.gen_amount_goal()
 				changeling.objectives += absorb_objective
 
 				var/datum/objective/steal/steal_objective = new
@@ -108,7 +108,7 @@
 
 				var/datum/objective/absorb/absorb_objective = new
 				absorb_objective.owner = changeling
-				absorb_objective.gen_num_to_eat()
+				absorb_objective.gen_amount_goal()
 				changeling.objectives += absorb_objective
 
 				var/datum/objective/assassinate/kill_objective = new

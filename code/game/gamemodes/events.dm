@@ -13,7 +13,7 @@
 /proc/event()
 	event = 1
 
-	switch(pick(1,2,4,5,6,7,8,9,10,11))
+	switch(rand(1,11))
 		if(1)
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			world << sound('meteors.ogg')
@@ -31,7 +31,7 @@
 			var/obj/bhole/bh = new /obj/bhole( T.loc, 30 )
 			spawn(rand(50, 300))
 				del(bh)
-
+		/*
 		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('spanomalies.ogg')
@@ -53,6 +53,10 @@
 						P.name = "wormhole"
 						spawn(rand(300,600))
 							del(P)
+		*/
+		if(3)
+			if((world.time/10)>=3600&&toggle_space_ninja&&!sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
+				space_ninja_arrival()//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
 		if(4)
 			command_alert("Confirmed anomaly type SPC-MGM-152 aboard [station_name()]. All personnel must destroy the anomaly.", "Anomaly Alert")
 			world << sound('outbreak5.ogg')

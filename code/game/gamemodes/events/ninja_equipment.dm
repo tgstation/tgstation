@@ -240,10 +240,8 @@ ________________________________________________________________________________
 	var/display_to = s_control ? U : A//Who do we want to display certain messages to?
 
 	var/dat = "<html><head><title>SpiderOS</title></head><body bgcolor=\"#3D5B43\" text=\"#DB2929\"><style>a, a:link, a:visited, a:active, a:hover { color: #DB2929; }img {border-style:none;}</style>"
-	if(spideros==0)
-		dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=sos_7.png> Refresh</a>"
-	else
-		dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=sos_7.png> Refresh</a>"
+	dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=sos_7.png> Refresh</a>"
+	if(spideros)
 		dat += " | <a href='byond://?src=\ref[src];choice=Return'><img src=sos_1.png> Return</a>"
 	dat += " | <a href='byond://?src=\ref[src];choice=Close'><img src=sos_8.png> Close</a>"
 	dat += "<br>"
@@ -413,15 +411,15 @@ ________________________________________________________________________________
 				dat += "Stored AI: <b>[A.name]</b><br>"
 				dat += "System integrity: [(A.health+100)/2]%<br>"
 
+				//I personally think this makes things a little more fun. Ninjas can override all but law 0.
+				//if (A.laws.zeroth)
+				//	laws += "<li>0: [A.laws.zeroth]</li>"
+
 				for (var/index = 1, index <= A.laws.ion.len, index++)
 					var/law = A.laws.ion[index]
 					if (length(law) > 0)
 						var/num = ionnum()
 						laws += "<li>[num]. [law]</li>"
-
-				//I personally think this makes things a little more fun. Ninjas can override all but law 0.
-				//if (A.laws.zeroth)
-				//	laws += "<li>0: [A.laws.zeroth]</li>"
 
 				var/number = 1
 				for (var/index = 1, index <= A.laws.inherent.len, index++)
@@ -462,7 +460,7 @@ ________________________________________________________________________________
 			if(t_disk)
 				dat += "<a href='byond://?src=\ref[src];choice=Eject Disk'>Eject Disk</a><br>"
 			dat += "<ul>"
-			if(stored_research.len)//If there is stored research. Should be.
+			if(stored_research.len)//If there is stored research. Should be but just in case.
 				for(var/datum/tech/current_data in stored_research)
 					dat += "<li>"
 					dat += "[current_data.name]: [current_data.level]"
@@ -824,7 +822,7 @@ ________________________________________________________________________________
 		else if(istype(I, /obj/item/weapon/cell))
 			if(I:maxcharge>cell.maxcharge)
 				U << "\blue Higher maximum capacity detected.\nUpgrading..."
-				if (n_gloves&&n_gloves.candrain&&do_after(U,50))
+				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay))
 					U.drop_item()
 					I.loc = src
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
@@ -1059,19 +1057,18 @@ ________________________________________________________________________________
 			spawn(0)
 				var/turf/location = get_turf(U)
 				for(var/mob/living/silicon/ai/AI in world)
-					AI << "\red <b>Network Alert: Hacking attempt detected [location?"in [location]":"Unable to pinpoint location"]</b>."
+					AI << "\red <b>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</b>."
 			if(A:files&&A:files.known_tech.len)
-				while(G.candrain&&!isnull(A))
-					for(var/datum/tech/current_data in S.stored_research)
-						U << "\blue Checking \the [current_data.name] database."
-						if(do_after(U,S.s_delay))
-							for(var/datum/tech/analyzing_data in A:files.known_tech)
-								if(current_data.id==analyzing_data.id)
-									if(analyzing_data.level>current_data.level)
-										U << "\blue Database: \black <b>UPDATED</b>."
-										current_data.level = analyzing_data.level
-									break
-					break
+				for(var/datum/tech/current_data in S.stored_research)
+					U << "\blue Checking \the [current_data.name] database."
+					if(do_after(U, S.s_delay)&&G.candrain&&!isnull(A))
+						for(var/datum/tech/analyzing_data in A:files.known_tech)
+							if(current_data.id==analyzing_data.id)
+								if(analyzing_data.level>current_data.level)
+									U << "\blue Database: \black <b>UPDATED</b>."
+									current_data.level = analyzing_data.level
+								break//Move on to next.
+					else	break//Otherwise, quit processing.
 			U << "\blue Data analyzed. Process finished."
 
 		if("WIRE")
@@ -1306,7 +1303,8 @@ It is possible to destroy the net by the occupant or someone else.
 	density = 1//Can't pass through.
 	opacity = 0//Can see through.
 	mouse_opacity = 1//So you can hit it with stuff.
-	anchored = 1//Can't drag/grab.
+	anchored = 1//Can't drag/grab the trapped mob.
+
 	var
 		health = 25//How much health it has.
 		mob/living/affecting = null//Who it is currently affecting, if anyone.

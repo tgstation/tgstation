@@ -123,6 +123,7 @@ var/global/sent_strike_team = 0
 	//Creates mind stuff.
 	new_commando.mind = new
 	new_commando.mind.current = new_commando
+	new_commando.mind.original = new_commando
 	new_commando.mind.assigned_role = "MODE"
 	new_commando.mind.special_role = "Death Commando"
 	if(!(new_commando.mind in ticker.minds))

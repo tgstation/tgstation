@@ -24,8 +24,10 @@
 	return 0
 
 /datum/game_mode/proc/declare_completion()
+	return
+
+/datum/game_mode/proc/declare_extra_completion()
 	for(var/datum/mind/traitor in traitors)
-		var/traitorwin = 1
 		var/traitor_name
 
 		if(traitor.current)
@@ -38,20 +40,22 @@
 		else
 			traitor_name = "[traitor.key] (character destroyed)"
 
-		world << "<B>The syndicate traitor was [traitor_name]</B>"
-		var/count = 1
-		for(var/datum/objective/objective in traitor.objectives)
-			if(objective.check_completion())
-				world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
-			else
-				world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
-				traitorwin = 0
-			count++
+		world << "<B>The [traitor.special_role?(lowertext(traitor.special_role)):"antagonist"] was [traitor_name]</B>"
+		if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
+			var/traitorwin = 1
+			var/count = 1
+			for(var/datum/objective/objective in traitor.objectives)
+				if(objective.check_completion())
+					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+				else
+					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+					traitorwin = 0
+				count++
 
-		if(traitorwin)
-			world << "<B>The traitor was successful!<B>"
-		else
-			world << "<B>The traitor has failed!<B>"
+			if(traitorwin)
+				world << "<B>The antagonist was successful!<B>"
+			else
+				world << "<B>The antagonist has failed!<B>"
 	return 1
 
 /datum/game_mode/proc/check_win()
@@ -184,3 +188,15 @@ Rev-heads won't get them. Can be expanded otherwise.*/
 			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code response."
 		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 	//End code phrase.
+
+
+/datum/game_mode/proc/get_living_heads()
+	var/list/heads = list()
+
+	for(var/mob/living/carbon/human/player in world)
+		if(player.mind)
+			var/role = player.mind.assigned_role
+			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer"))
+				heads += player.mind
+
+	return heads

@@ -58,45 +58,81 @@ ________________________________________________________________________________
 
 	Miscellaneous Notes:
 
-	Right now I am focused on creating a dynamic objective tree based on round type, in order to create a ninja random event.
-	I'll update when possible.
+	Potential Upgrade Tree:
+		Energy Shield:
+			Extra Ability
+			Syndicate Shield device?
+				Works like the force wall spell, except can be kept indefinitely as long as energy remains. Toggled on or off.
+				Would block bullets and the like.
+		Phase Shift
+			Extra Ability
+			Advanced Sensors?
+				Instead of being unlocked at the start, Phase Shieft would become available once requirements are met.
+		Uranium-based Recharger:
+			Suit Upgrade
+			Unsure
+				Instead of losing energy each second, the suit would regain the same amount of energy.
+				This would not count in activating stealth and smiliar.
+		Extended Battery Life:
+			Suit Upgrade
+			Battery of higher capacity
+				Already implemented. Replace current battery with one of higher capacity.
+		Advanced Cloak-Tech device.
+			Suit Upgrade
+			Syndicate Cloaking Device?
+				Remove cloak failure rate.
+
 */
 
 //=======//RANDOM EVENT//=======//
+/*
+Also a dynamic ninja mission generator.
+I decided to scrap round-specific objectives since keeping track of them would require some form of tracking.
+When I already created about 4 new objectives, this doesn't terribly important or needed.
+*/
+
+/var/global/toggle_space_ninja = 1//If ninjas can spawn or not.
+/var/global/sent_ninja_to_station = 0//If a ninja is already on the station.
 
 /proc/space_ninja_arrival()
-	/*
+
 	var/datum/game_mode/current_mode = ticker.mode
 	var/datum/mind/current_mind = new()
-	var/antagonist_list[] = list()//The main bad guys.
+
+	/*Is the ninja playing for the good or bad guys? Is the ninja helping or hurting the station?
+	Their directives also influence behavior. At least in theory.*/
+	var/side = pick("face","heel")
+
+	var/antagonist_list[] = list()//The main bad guys. Evil minds that plot destruction.
 	var/sec_antagonist_list[] = current_mode.traitors//The OTHER bad guys. Mostly admin made.
-	var/tet_antagonist_list[] = list()//The bad guys no-one really cares about. For now just revs.
+	var/ter_antagonist_list[] = list()//The bad guys no-one really cares about. For now just revs.
 
-	var/protagonist_list[] = current_mode:get_living_heads()//The good guys. Mostly Heads. Who are alive.
+	var/protagonist_list[] = current_mode.get_living_heads()//The good guys. Mostly Heads. Who are alive.
 
-	var/xeno_list[] = list()//Aliums.
+	var/xeno_list[] = list()//Aliens.
+	var/commando_list[] = list()//Commandos.
 
 	//First we determine what mode it is and add the bad guys approprietly.
 	switch (current_mode.config_tag)
 		if("traitor")
 			if(current_mode:traitors.len)
-				for(var/datum/mind/current_mind in current_mode:traitors)//For traitor minds in in the traitors list.
+				for(current_mind in current_mode:traitors)//For traitor minds in in the traitors list.
 					if(current_mind.current&&current_mind.current.stat!=2)//If the traitor mob exists and they are not dead.
 						antagonist_list += current_mind//Add them to the list.
 
-		if ("revolution")//Rev is divided into regular and head cultists. There are also heads of staff to consider.
+		if ("revolution")//Rev is divided into regular and heads. There are also heads of staff to consider.
 			if(current_mode:head_revolutionaries.len)
-				for(var/datum/mind/current_mind in current_mode:head_revolutionaries)
+				for(current_mind in current_mode:head_revolutionaries)
 					if(current_mind.current&&current_mind.current.stat!=2)
 						antagonist_list += current_mind
 
-				for(var/datum/mind/current_mind in current_mode:revolutionaries)
+				for(current_mind in current_mode:revolutionaries)
 					if(current_mind.current&&current_mind.current.stat!=2)
-						tet_antagonist_list += current_mind
+						ter_antagonist_list += current_mind
 
 			if(current_mode:heads_of_staff.len)
-				heads_list = list()//Now we manually override the list made prior. Target Heads take priority.
-				for(var/datum/mind/current_mind in current_mode:heads_of_staff)
+				var/heads_list[] = list()//Now we manually override the list made prior. Target Heads take priority.
+				for(current_mind in current_mode:heads_of_staff)
 					if(current_mind.current&&current_mind.current.stat!=2)
 						protagonist_list += current_mind
 				if(heads_list.len)//Or not, if there are none.
@@ -104,33 +140,39 @@ ________________________________________________________________________________
 
 		if ("cult")//Always a few of these around.
 			if(current_mode:cult.len)
-				for(var/datum/mind/current_mind in current_mode:cult)
+				for(current_mind in current_mode:cult)
 					if(current_mind.current&&current_mind.current.stat!=2)
 						antagonist_list += current_mind
 
 		if ("wizard")//There can be only one mode wizard. Other wizards aren't too important.
 			if(current_mode:wizard)
-				antagonist_list += wizard//The round will end if the wizard dies so checking for it is unnecessary.
+				antagonist_list += current_mode:wizard//The round will end if the wizard dies so checking for it is unnecessary.
 
 		if ("changeling")//While only one changeling counts for being alive or dead, it's possible there are more.
 			if(current_mode:changelings.len)
-				for(var/datum/mind/current_mind in current_mode:changelings)
+				for(current_mind in current_mode:changelings)
 					if(current_mind.current&&current_mind.current.stat!=2)
 						antagonist_list += current_mind
+/*
+I originally intended for space ninjas to appear in Malfunction but after some consideration
+this is not worth the trouble. Particularly with how objective mind completion is tracked.
+Not to mention that Malfunction does not use declare_completion (at least, not in the way the other modes do).
+With that said, a ninja on the side of the station would murder the AI very quickly--and the rounds usually
+last long enough for the ninja to appear, too.
 
 		if ("malfunction")//Only one malf AI.
 			if(current_mode:malf_ai)
-				antagonist_list += malf_ai
-
+				antagonist_list += current_mode:malf_ai
+*/
 		if ("nuclear")//Can be a few of these guys.
 			if(current_mode:syndicates.len)
-				for(var/datum/mind/current_mind in current_mode:syndicates)
+				for(current_mind in current_mode:syndicates)
 					if(current_mind.current&&current_mind.current.stat!=2)
 						antagonist_list += current_mind
 		else
 			return//Don't want to summon a ninja during meteor or extended, or something.
 
-//Here we pick a location and spawn the ninja.
+	//Here we pick a location and spawn the ninja.
 	var/list/spawn_list = list()
 	for(var/obj/landmark/L in world)
 		if (L.name == "carpspawn")
@@ -147,9 +189,9 @@ ________________________________________________________________________________
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(spawn_list.len ? spawn_list : latejoin ))
 
 	if(candidates.len)
-		var/mob/G = pick(candidates)
+		G = pick(candidates)
 		new_ninja.key = G.key
-		new_ninja.mind.key = key
+		new_ninja.mind.key = new_ninja.key
 		new_ninja.wear_suit:randomize_param()//Give them a random set of suit parameters.
 		new_ninja.internal = new_ninja.s_store //So the poor ninja has something to breath when they spawn in spess.
 		new_ninja.internals.icon_state = "internal1"
@@ -157,97 +199,210 @@ ________________________________________________________________________________
 	else
 		del(new_ninja)
 		return
-//Now for the rest of the stuff.
+	//Now for the rest of the stuff.
 
 	var/datum/mind/ninja_mind = new_ninja.mind//For easier reference.
-
+	var/mission_set = 0//To determine if we need to do further processing.
 	//Xenos and deathsquads take precedence over everything else.
-	for(var/mob/living/carbon/alien/humanoid/xeno in world)//Unless the xenos are hiding in a locker somewhere, this'll find em.
+
+	//Unless the xenos are hiding in a locker somewhere, this'll find em.
+	for(var/mob/living/carbon/alien/humanoid/xeno in world)
 		if(istype(xeno))
 			xeno_list += xeno
 
-	//if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
-	//if(sent_strike_team)//If a strike team was sent.
-		for(var/mob/living/carbon/human/commando in world)//Search and destroy.
-			if(commando.mind&&commando.mind.special_role=="Death Commando")
+	if(xeno_list.len>3)//If there are more than three humanoid xenos on the station, time to get dangerous.
+		//Here we want the ninja to murder all the queens. The other aliens don't really matter.
+		var/xeno_queen_list[] = list()
+		for(var/mob/living/carbon/alien/humanoid/queen/xeno_queen in xeno_list)
+			if(xeno_queen.mind&&xeno_queen.stat!=2)
+				xeno_queen_list += xeno_queen
+		if(xeno_queen_list.len&&side=="face")//If there are queen about and the probability is 50.
+			for(var/mob/living/carbon/alien/humanoid/queen/xeno_queen in xeno_queen_list)
+				var/datum/objective/assassinate/ninja_objective = new
+				//We'll do some manual overrides to properly set it up.
+				ninja_objective.owner = ninja_mind
+				ninja_objective.target = xeno_queen.mind
+				ninja_objective.explanation_text = "Kill \the [xeno_queen]."
+				ninja_mind.objectives += ninja_objective
+			mission_set = 1
+
+	if(sent_strike_team&&side=="heel")//If a strike team was sent, murder them all like a champ.
+		for(current_mind in ticker.minds)//Search and destroy.
+			if(current_mind.special_role=="Death Commando"&&current_mind.current&&current_mind.current.stat!=2)
+				commando_list += current_mind
+		if(commando_list.len)//If there are living commandos still in play.
+			for(var/mob/living/carbon/human/commando in commando_list)
 				var/datum/objective/assassinate/ninja_objective = new
 				ninja_objective.owner = ninja_mind
 				ninja_objective.find_target_by_role(commando.mind.special_role,1)
 				ninja_mind.objectives += ninja_objective
-
+			mission_set = 1
 /*
 If there are no antogonists left it could mean one of two things:
-	A) The round is about to end. No harm in spawning the ninja here since it has done all the reporting more likely than not.
+	A) The round is about to end. No harm in spawning the ninja here.
 	B) The round is still going and ghosts are probably rioting for something to happen.
 In either case, it's a good idea to spawn the ninja with a semi-random set of objectives.
 */
-	if(!antagonist_list.len)
-		switch(rand(1,3))
-			if(1)
-				if(protagonist_list.len)//If we have surviving heads.
-					for(var/datum/mind/head_mind in protagonist_list)//Search and destroy.
-						var/datum/objective/assassinate/ninja_objective = new
-						ninja_objective.owner = ninja_mind
-						ninja_objective.find_target_by_role(head_mind.assigned_role)
-						ninja_mind.objectives += ninja_objective
+	if(!mission_set)//If mission was not set.
 
-		//TO DO: add ninja-net point-based system objective.
-		//TO DO: upgrade cell objective.
+		//To pick a person for each list.
+		var/datum/mind/antagonist_target
+		if(antagonist_list.len)
+			antagonist_target = pick(antagonist_list)
 
-	else//Else, we need to give them an objective based on round type.
+		var/datum/mind/secondary_target
 		if(sec_antagonist_list.len)
+			secondary_target = pick(sec_antagonist_list)
 
-		if(tet_antagonist_list.len)//Not gonna happen but maybe in the future.
+		var/datum/mind/tertiary_target
+		if(ter_antagonist_list.len)
+			tertiary_target = pick(ter_antagonist_list)
 
+		var/datum/mind/protagonist_target
+		if(protagonist_list.len)
+			protagonist_target = pick(protagonist_list)
 
-	//if(!ninja_mind.objectives.len)//If they somehow did not get an objective.
-	//Let em know.
+		var/hostile_targets[] = list()//The guys actually picked for the assassination or whatever.
+		var/friendly_targets[] = list()//The guys the ninja must protect.
 
-	//Finally add a survival objective.
+		if(side=="face")
+			friendly_targets += protagonist_target//Will add null if the variable is empty.
+			hostile_targets += antagonist_target
+			hostile_targets += secondary_target
+			hostile_targets += tertiary_target
+		else
+			hostile_targets += protagonist_target
+			friendly_targets += antagonist_target
+			friendly_targets += secondary_target
+			friendly_targets += tertiary_target
+
+		var/objective_list[] = list(1,2,3,4,5,6)//To remove later.
+		for(var/i=rand(1,3),i>0,i--)//Want to get a few random objectives. Currently up to 3.
+			if(!hostile_targets.len)//Remove appropriate choices from switch list if the target lists are empty.
+				objective_list -= 1
+				objective_list -= 4
+			if(!friendly_targets.len)
+				objective_list -= 3
+			switch(pick(objective_list))
+				if(1)//kill
+					current_mind = pick(hostile_targets)
+
+					var/datum/objective/assassinate/ninja_objective = new
+					ninja_objective.owner = ninja_mind
+					ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))//If they have a special role, use that instead to find em.
+					ninja_mind.objectives += ninja_objective
+
+					hostile_targets -= current_mind//Remove them from the list.
+				if(2)//Steal
+					var/datum/objective/steal/ninja_objective = new
+					var/target_item = pick(ninja_objective.possible_items_special)
+					ninja_objective.set_target(target_item)
+					ninja_mind.objectives += ninja_objective
+
+					objective_list -= 2
+				if(3)//Protect. Keeping people alive can be pretty difficult.
+					current_mind = pick(friendly_targets)
+
+					var/datum/objective/protect/ninja_objective = new
+					ninja_objective.owner = ninja_mind
+					ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))
+					ninja_mind.objectives += ninja_objective
+
+					friendly_targets -= current_mind
+				if(4)//Debrain
+					current_mind = pick(hostile_targets)
+
+					var/datum/objective/debrain/ninja_objective = new
+					ninja_objective.owner = ninja_mind
+					ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))
+					ninja_mind.objectives += ninja_objective
+
+					hostile_targets -= current_mind//Remove them from the list.
+				if(5)//Download research
+					var/datum/objective/download/ninja_objective = new
+					ninja_objective.gen_amount_goal()
+					ninja_mind.objectives += ninja_objective
+
+					objective_list -= 5
+				if(6)//Capture
+					var/datum/objective/capture/ninja_objective = new
+					ninja_objective.gen_amount_goal()
+					ninja_mind.objectives += ninja_objective
+
+					objective_list -= 6
+
+		if(ninja_mind.objectives.len)//If they got some objectives out of that.
+			mission_set = 1
+
+	if(!ninja_mind.objectives.len||!mission_set)//If they somehow did not get an objective at this point, time to destroy the station.
+		var/nuke_code
+		if(current_mode.config_tag == "nuclear"||sent_strike_team)//If it's nuclear, there is a nuke with a code already set. Or if commandos were sent in.
+			var/temp_code
+			for(var/obj/machinery/nuclearbomb/N in world)
+				temp_code = text2num(N.r_code)
+				if(temp_code)//if it's actually a number. It won't convert any non-numericals.
+					nuke_code = N.r_code
+					break
+		if(!nuke_code)//If there is still no code.
+			nuke_code = "[rand(10000, 99999.0)]"
+			for(var/obj/machinery/nuclearbomb/N in world)
+				N.r_code = nuke_code
+		var/datum/objective/nuclear/ninja_objective = new//Fun.
+		ninja_objective.owner = ninja_mind
+		ninja_objective.explanation_text = "Destroy the station with a nuclear device. The code is [nuke_code]." //Let them know what the code is.
+
+	//Finally add a survival objective since it's usually broad enough for any round type.
 	var/datum/objective/survive/ninja_objective = new
 	ninja_objective.owner = ninja_mind
 	ninja_mind.objectives += ninja_objective
 
-	var/directive = generate_ninja_directive()
+	var/directive = generate_ninja_directive(side)
 	new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: \red <B>[directive]</B>"
-	new_ninja.mind.store_memory("<B>Directive:</B> \red [directive].")
-	*/
-	return
+	new_ninja.mind.store_memory("<B>Directive:</B> \red [directive]<br>")
+
+	var/obj_count = 1
+	new_ninja << "\blue Your current objectives:"
+	for(var/datum/objective/objective in ninja_mind.objectives)
+		new_ninja << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		obj_count++
+
+	sent_ninja_to_station = 1//And we're done.
+	return new_ninja//Return the ninja in case we need to reference them later.
 
 /*
 This proc will give the ninja a directive to follow. They are not obligated to do so but it's a fun roleplay reminder.
 Making this random or semi-random will probably not work without it also being incredibly silly.
 As such, it's hard-coded for now. No reason for it not to be, really.
 */
-/proc/generate_ninja_directive()
-	var/directive
+/proc/generate_ninja_directive(side)
+	var/directive = "[side=="face"?"Nanotrasen":"The Syndicate"] is your employer. "//Let them know which side they're on.
 	switch(rand(1,13))
 		if(1)
-			directive = "The Spider Clan must not be linked to this operation. Remain as hidden and covert as possible."
+			directive += "The Spider Clan must not be linked to this operation. Remain as hidden and covert as possible."
 		if(2)
-			directive = "[station_name] is financed by an enemy of the Spider Clan. Cause as much structural damage as possible."
+			directive += "[station_name] is financed by an enemy of the Spider Clan. Cause as much structural damage as possible."
 		if(3)
-			directive = "A wealthy animal rights activist has made a request we cannot refuse. Prioritize saving animal lives whenever possible."
+			directive += "A wealthy animal rights activist has made a request we cannot refuse. Prioritize saving animal lives whenever possible."
 		if(4)
-			directive = "The Spider Clan absolutely cannot be linked to this operation. Eliminate all witnesses using most extreme prejudice."
+			directive += "The Spider Clan absolutely cannot be linked to this operation. Eliminate all witnesses using most extreme prejudice."
 		if(5)
-			directive = "We are currently negotiating with Nanotrasen command. Prioritize saving human lives over ending them."
+			directive += "We are currently negotiating with Nanotrasen command. Prioritize saving human lives over ending them."
 		if(6)
-			directive = "We are engaged in a legal dispute over [station_name]. If a laywer is present on board, force their cooperation in the matter."
+			directive += "We are engaged in a legal dispute over [station_name]. If a laywer is present on board, force their cooperation in the matter."
 		if(7)
-			directive = "A financial backer has made an offer we cannot refuse. Implicate Syndicate involvement in the operation."
+			directive += "A financial backer has made an offer we cannot refuse. Implicate Syndicate involvement in the operation."
 		if(8)
-			directive = "Let no one question the mercy of the Spider Clan. Ensure the safety of all non-essential personnel you encounter."
+			directive += "Let no one question the mercy of the Spider Clan. Ensure the safety of all non-essential personnel you encounter."
 		if(9)
-			directive = "A free agent has proposed a lucrative business deal. Implicate Nanotrasen involvement in the operation."
+			directive += "A free agent has proposed a lucrative business deal. Implicate Nanotrasen involvement in the operation."
 		if(10)
-			directive = "Our reputation is on the line. Harm as few civilians or innocents as possible."
+			directive += "Our reputation is on the line. Harm as few civilians or innocents as possible."
 		if(11)
-			directive = "Our honor is on the line. Utilize only honorable tactics when dealing with opponents."
+			directive += "Our honor is on the line. Utilize only honorable tactics when dealing with opponents."
 		if(12)
-			directive = "We are currently negotiating with a Syndicate leader. Disguise assassinations as suicide or another natural cause."
+			directive += "We are currently negotiating with a Syndicate leader. Disguise assassinations as suicide or another natural cause."
 		else
-			directive = "There are no special directives at this time."
+			directive += "There are no special supplemental instructions at this time."
 	return directive
 
 //=======//CURRENT PLAYER VERB//=======//
@@ -258,6 +413,9 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	if(!ticker)
 		alert("Wait until the game starts")
+		return
+	if(!toggle_space_ninja)
+		alert("Space Ninjas spawning is disabled.")
 		return
 	if(ishuman(M))
 		log_admin("[key_name(src)] turned [M.key] into a Space Ninja.")
@@ -276,7 +434,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 /client/proc/send_space_ninja()
 	set category = "Fun"
 	set name = "Spawn Space Ninja"
-	set desc = "Spawns a space ninja for when you need a teenager with an attitude."
+	set desc = "Spawns a space ninja for when you need a teenager with attitude."
 	set popup_menu = 0
 
 	if(!authenticated || !holder)
@@ -284,6 +442,9 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		return
 	if(!ticker.mode)
 		alert("The game hasn't started yet!")
+		return
+	if(!toggle_space_ninja)
+		alert("Space Ninjas spawning is disabled.")
 		return
 	if(alert("Are you sure you want to send in a space ninja?",,"Yes","No")=="No")
 		return
@@ -321,7 +482,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 
 	new_ninja.mind.key = G.key
 	new_ninja.key = G.key
-	new_ninja.mind.store_memory("<B>Mission:</B> \red [mission].")
+	new_ninja.mind.store_memory("<B>Mission:</B> \red [mission].<br>")
 
 	new_ninja.internal = new_ninja.s_store //So the poor ninja has something to breath when they spawn in spess.
 	new_ninja.internals.icon_state = "internal1"
@@ -329,7 +490,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 		new_ninja.wear_suit:ninitialize(10,new_ninja)//If you're wondering why I'm passing the argument to the proc when the default should suffice,
 		//I'm also wondering that same thing. This makes sure it does not run time error though.
 
-	new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current mission is: \red <B>[mission]</B>"
+	new_ninja << "\blue \nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded \red <B>SPACE NINJA</B>!\blue You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: \red <B>[mission]</B>"
 
 	message_admins("\blue [admin_name] has spawned [new_ninja.key] as a Space Ninja. Hide yo children! \nTheir <b>mission</b> is: [mission]", 1)
 	log_admin("[admin_name] used Spawn Space Ninja.")
@@ -360,6 +521,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	else
 		mind = new
 		mind.current = src
+		mind.original = src
 		mind.assigned_role = "MODE"
 		mind.special_role = "Space Ninja"
 	if(!(mind in ticker.minds))
@@ -736,7 +898,7 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 */
 
 //=======//DEBUG//=======//
-
+/*
 /obj/item/clothing/suit/space/space_ninja/proc/display_verb_procs()
 //DEBUG
 //Does nothing at the moment. I am trying to see if it's possible to mess around with verbs as variables.
@@ -745,7 +907,7 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 //			usr << "[P.set.name], path: [P]"
 	return
 
-/*
+
 Most of these are at various points of incomplete.
 
 /mob/verb/grant_object_panel()

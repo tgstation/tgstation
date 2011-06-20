@@ -84,6 +84,13 @@
 /datum/game_mode/malfunction/check_win()
 	if (AI_win_timeleft <= 0 && !win)
 		win = 1
+		declare_completion()
+		return 1
+	else
+		return 0
+
+/datum/game_mode/malfunction/declare_completion()
+	if(win==1)//If the AI won.
 		world << "<FONT size = 3><B>The AI has won!</B></FONT>"
 		world << "<B>It has fully taken control of all of [station_name()]'s systems.</B>"
 
@@ -100,9 +107,12 @@
 					sleep(300)
 					log_game("Rebooting due to round end")
 					world.Reboot()
-		return 1
 	else
-		return 0
+		world << "<FONT size = 3><B>Human Victory</B></FONT>"
+		world << "<B>The AI has been killed!</B> The staff is victorious."
+		sleep(100)
+		world << "\blue Rebooting due to end of game"
+		world.Reboot()
 
 /datum/game_mode/malfunction/Topic(href, href_list)
 	..()

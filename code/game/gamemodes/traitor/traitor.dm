@@ -153,7 +153,7 @@
 	return candidates
 
 /datum/game_mode/traitor/declare_completion()
-	. = ..()
+	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
 
 /datum/game_mode/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."

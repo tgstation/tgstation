@@ -257,21 +257,6 @@
 	else
 		return candidates
 
-///////////////////////////////////
-//Keeps track of all living heads//
-///////////////////////////////////
-/datum/game_mode/revolution/proc/get_living_heads()
-	var/list/heads = list()
-
-	for(var/mob/living/carbon/human/player in world)
-		if(player.mind)
-			var/role = player.mind.assigned_role
-			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer"))
-				heads += player.mind
-
-	return heads
-
-
 ////////////////////////////
 //Keeps track of all heads//
 ////////////////////////////

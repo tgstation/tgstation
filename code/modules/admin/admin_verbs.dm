@@ -41,7 +41,8 @@
 			verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
-			verbs += /obj/admins/proc/toggle_aliens
+			verbs += /obj/admins/proc/toggle_aliens			//toggle aliens
+			verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /proc/toggle_adminmsg
@@ -188,6 +189,7 @@
 			verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /proc/toggle_adminmsg
@@ -324,6 +326,7 @@
 			verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /proc/toggle_adminmsg
@@ -482,6 +485,7 @@
 			//verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /proc/toggle_adminmsg
@@ -630,6 +634,7 @@
 			//verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			//verbs += /proc/toggle_adminmsg
@@ -774,6 +779,7 @@
 			//verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			//verbs += /proc/toggle_adminmsg
@@ -901,6 +907,7 @@
 			verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /proc/toggle_adminmsg
@@ -1060,6 +1067,7 @@
 	verbs -= /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 	verbs -= /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 	verbs -= /obj/admins/proc/toggle_aliens
+	verbs -= /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 	verbs -= /obj/admins/proc/voteres 				//toggle votes
 	verbs -= /client/proc/deadchat					//toggles deadchat
 	verbs -= /proc/toggle_adminmsg
@@ -1496,6 +1504,7 @@
 			verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			verbs += /obj/admins/proc/toggle_aliens
+			verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /proc/toggle_adminmsg
@@ -1527,6 +1536,7 @@
 			verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /proc/toggle_adminmsg
@@ -1558,6 +1568,7 @@
 			verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /proc/toggle_adminmsg
@@ -1596,6 +1607,7 @@
 			//verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /proc/toggle_adminmsg
@@ -1634,6 +1646,7 @@
 			//verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /proc/toggle_adminmsg
@@ -1660,6 +1673,7 @@
 			//verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			//verbs += /proc/toggle_adminmsg
@@ -1691,6 +1705,7 @@
 			verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			//verbs += /obj/admins/proc/toggletraitorscaling	//toggle traitor scaling
 			//verbs += /obj/admins/proc/toggle_aliens
+			//verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /proc/toggle_adminmsg

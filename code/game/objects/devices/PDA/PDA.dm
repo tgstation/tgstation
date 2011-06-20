@@ -523,6 +523,7 @@
 									U.show_message("\red An error flashes on your [src].", 1)
 								else if (prob(difficulty * 3))
 									U.show_message("\red Energy feeds back into your [src]!", 1)
+									U << browse(null, "window=pda")
 									explode()
 								else
 									U.show_message("\blue Success!", 1)

@@ -178,6 +178,7 @@
 
 	sleep(110)
 	if (ticker.mode.name != "nuclear emergency" || !derp || !herp)
+		ticker.mode.declare_extra_completion()//Declaring regular completion could cause issues.
 		world << "<B>The station was destoyed by the nuclear blast! Resetting in 30 seconds!</B>"
 
 		sleep(300)

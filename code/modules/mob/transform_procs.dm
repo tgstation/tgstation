@@ -67,7 +67,6 @@
 	invisibility = 101
 	return ..()
 
-
 /mob/proc/AIize()
 	if(client)
 		client.screen.len = null
@@ -82,8 +81,12 @@
 	else
 		O.mind = new
 		O.mind.current = O
+		O.mind.original = O
 		O.mind.assigned_role = "AI"
 		O.key = key
+
+	if(!(O.mind in ticker.minds))
+		ticker.minds += O.mind//Adds them to regular mind list.
 
 	var/obj/loc_landmark
 	for(var/obj/landmark/start/sloc in world)
@@ -179,14 +182,16 @@
 		if (mind.assigned_role == "Cyborg")
 			mind.original = O
 		else if (mind.special_role) O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
-
 	else
 		mind = new /datum/mind(  )
 		mind.key = key
 		mind.current = O
 		mind.original = O
 		mind.transfer_to(O)
-		//ticker.minds += O.mind//Robutts aren't added to minds since it would be screwy. Assassinate that robot!
+
+	if(!(O.mind in ticker.minds))
+		ticker.minds += O.mind//Adds them to regular mind list.
+
 	O.loc = loc
 	O << "<B>You are playing a Robot. A Robot can interact with most electronic objects in its view point.</B>"
 	O << "<B>You must follow the laws that the AI has. You are the AI's assistant to the station basically.</B>"

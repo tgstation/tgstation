@@ -282,6 +282,8 @@ mob/new_player
 					AnnounceArrival(character, rank)
 					if(character.mind.assigned_role == "Cyborg")
 						character.Robotize()
+					else//Adds late joiners to minds so they can be linked to objectives.
+						ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.
 					del(src)
 
 		else

@@ -13,7 +13,7 @@ var/global/datum/controller/gameticker/ticker
 	var/event_time = null
 	var/event = 0
 
-	var/list/datum/mind/minds = list()
+	var/list/datum/mind/minds = list()//The people in the game. Used for objective tracking.
 
 	var/pregame_timeleft = 0
 
@@ -208,7 +208,8 @@ var/global/datum/controller/gameticker/ticker
 				world << "<b>[robo.name] was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
 			robo.laws.show_laws(world)
 
-	mode.declare_completion()
+	mode.declare_completion()//To declare normal completion.
+	mode.declare_extra_completion()//To declare extra traitors/special roles for rounds.
 
 	return 1
 
