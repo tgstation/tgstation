@@ -9,6 +9,8 @@
 	requires_power = 0 				(defaults to 1)
 	music = "music/music.ogg"		(defaults to "music/music.ogg")
 
+NOTE: there are two lists of areas in the end of this file: centcom and station itself. Please maintain these lists valid. --rastaf0
+
 */
 
 
@@ -378,10 +380,6 @@ proc/process_ghost_teleport_locs()
 /area/prison/medical
 	name = "Prison Medbay"
 	icon_state = "medbay"
-
-/area/medical/mechbay
-	name = "Mech Bay"
-	icon_state = "mechbay"
 
 /area/prison/solar
 	name = "Prison Solar Array"
@@ -1087,3 +1085,58 @@ proc/process_ghost_teleport_locs()
 /area/turret_protected/NewAIMain
 	name = "AI Main New"
 	icon_state = "storage"
+
+/////////////////////////////////////////////////////////////////////
+/*
+ Lists of areas to be used with is_type_in_list.
+ Used in gamemodes code at the moment. --rastaf0
+*/
+
+// CENTCOM
+var/list/centcom_areas = list (
+	/area/centcom,
+	/area/shuttle/escape/centcom,
+	/area/shuttle/transport1/centcom,
+	/area/shuttle/transport2/centcom,
+	/area/shuttle/administration/centcom,
+	/area/shuttle/specops/centcom,
+)
+
+//SPACE STATION 13
+var/list/the_station_areas = list (
+	/area/shuttle/arrival,
+	/area/shuttle/escape/station,
+	/area/shuttle/mining/station,
+	/area/shuttle/transport1/station,
+	// /area/shuttle/transport2/station,
+	/area/shuttle/prison/station,
+	/area/shuttle/administration/station,
+	/area/shuttle/specops/station,
+	/area/atmos,
+	/area/maintenance,
+	/area/hallway,
+	/area/bridge,
+	/area/crew_quarters,
+	/area/mint,
+	/area/library,
+	/area/chapel,
+	/area/lawoffice,
+	/area/engine,
+	/area/solar,
+	/area/assembly,
+	/area/teleporter,
+	/area/medical,
+	/area/security,
+	/area/quartermaster,
+	/area/janitor,
+	/area/hydroponics,
+	/area/toxins,
+	/area/storage,
+	/area/construction,
+	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
+	/area/ai_monitored/storage/secure,
+	/area/ai_monitored/storage/emergency,
+	/area/turret_protected/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0
+	/area/turret_protected/ai_upload_foyer,
+	/area/turret_protected/ai,
+)

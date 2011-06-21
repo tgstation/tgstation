@@ -338,9 +338,11 @@
 	if (isblockon(getblock(M.dna.struc_enzymes, 14,3),14) && istype(M, /mob/living/carbon/human))
 	// human > monkey
 		var/mob/living/carbon/human/H = M
+		H.monkeyizing = 1
 		var/list/implants = list() //Try to preserve implants.
 		for(var/obj/item/weapon/implant/W in H)
 			implants += W
+			W.loc = null
 
 		if(!connected)
 			for(var/obj/item/W in (H.contents-implants))
@@ -402,9 +404,11 @@
 	if (!isblockon(getblock(M.dna.struc_enzymes, 14,3),14) && !istype(M, /mob/living/carbon/human))
 	// monkey > human,
 		var/mob/living/carbon/monkey/Mo = M
+		Mo.monkeyizing = 1
 		var/list/implants = list() //Still preserving implants
 		for(var/obj/item/weapon/implant/W in Mo)
 			implants += W
+			W.loc = null
 		if(!connected)
 			for(var/obj/item/W in (Mo.contents-implants))
 				Mo.drop_from_slot(W)

@@ -20,8 +20,8 @@
 	flick("h2monkey", animation)
 	sleep(48)
 	//animation = null
-	del(animation)
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
+	del(animation)
 
 	O.name = "monkey"
 	O.dna = dna
@@ -116,9 +116,9 @@
 	O << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
 	O << "To use something, simply double-click it."
 	O << "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI."
-
-	O.show_laws()
-	O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
+		O.show_laws()
+		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb

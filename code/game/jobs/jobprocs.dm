@@ -1,37 +1,32 @@
-/proc/SetupOccupationsList()
-	var/list/new_occupations = list()
-
-	for(var/occupation in occupations)
-		if (!(new_occupations.Find(occupation)))
-			new_occupations[occupation] = 1
-		else
-			new_occupations[occupation] += 1
-
-	occupations = new_occupations
-	return
 
 /proc/FindOccupationCandidates(list/unassigned, job, level)
 	var/list/candidates = list()
 
 	for (var/mob/new_player/player in unassigned)
-		if (level == 1 && player.preferences.occupation1 == job && !jobban_isbanned(player, job))
-			candidates += player
-
-		if (level == 2 && player.preferences.occupation2 == job && !jobban_isbanned(player, job))
-			candidates += player
-
-		if (level == 3 && player.preferences.occupation3 == job && !jobban_isbanned(player, job))
+		if (  player.preferences.occupation[level] == job && \
+			! jobban_isbanned(player, job) && \
+			! ((player.mind in ticker.mode.must_be_human) && (job in nonhuman_positions)) && \
+			! ((player.mind in ticker.mode.can_not_be_head) && (job in head_positions)))
 			candidates += player
 
 	return candidates
 
 /proc/PickOccupationCandidate(list/candidates)
 	if (candidates.len > 0)
-		var/list/randomcandidates = shuffle(candidates)
-		candidates -= randomcandidates[1]
-		return randomcandidates[1]
-
+		var/picked = pick(candidates)
+		candidates -= picked
+		return picked
 	return null
+
+/proc/ResetOccupations()
+	for (var/mob/new_player/player in world)
+		player.mind.assigned_role = null
+	return
+
+/** Proc DivideOccupations
+ *  fills var "assigned_role" for all ready players.
+ *  This proc must not have any side effects besides of modifying "assigned_role".
+ **/
 
 /proc/DivideOccupations()
 	var/list/unassigned = list()
@@ -47,18 +42,18 @@
 			// on a game that now lacks it, this will make sure they don't become the AI,
 			// by changing that choice to Captain.
 			if (!config.allow_ai)
-				if (player.preferences.occupation1 == "AI")
-					player.preferences.occupation1 = "Captain"
-				if (player.preferences.occupation2 == "AI")
-					player.preferences.occupation2 = "Captain"
-				if (player.preferences.occupation3 == "AI")
-					player.preferences.occupation3 = "Captain"
-			if (jobban_isbanned(player, player.preferences.occupation1))
-				player.preferences.occupation1 = "Assistant"
-			if (jobban_isbanned(player, player.preferences.occupation2))
-				player.preferences.occupation2 = "Assistant"
-			if (jobban_isbanned(player, player.preferences.occupation3))
-				player.preferences.occupation3 = "Assistant"
+				if (player.preferences.occupation[1] == "AI")
+					player.preferences.occupation[1] = "Captain"
+				if (player.preferences.occupation[2] == "AI")
+					player.preferences.occupation[2] = "Captain"
+				if (player.preferences.occupation[3] == "AI")
+					player.preferences.occupation[3] = "Captain"
+			if (jobban_isbanned(player, player.preferences.occupation[1]))
+				player.preferences.occupation[1] = "Assistant"
+			if (jobban_isbanned(player, player.preferences.occupation[2]))
+				player.preferences.occupation[2] = "Assistant"
+			if (jobban_isbanned(player, player.preferences.occupation[3]))
+				player.preferences.occupation[3] = "Assistant"
 
 	if (unassigned.len == 0)
 		return 0
@@ -90,37 +85,9 @@
 
 
 	if (captain_choice == null)
-		world << "Captainship not forced on anyone."
+		//world << "Captainship not forced on anyone."//moved to gameticker/proc/distribute_jobs
 	else
 		captain_choice.mind.assigned_role = "Captain"
-
-	//so that an AI is chosen during this game mode
-	if(ticker.mode.name == "AI malfunction" && unassigned.len > 0)
-		var/mob/new_player/ai_choice = null
-
-		for (var/level = 1 to 3)
-			var/list/ais = FindOccupationCandidates(unassigned, "AI", level)
-			var/mob/new_player/candidate = PickOccupationCandidate(ais)
-
-			if (candidate != null)
-				ai_choice = candidate
-				unassigned -= ai_choice
-				break
-
-		if (ai_choice == null && unassigned.len > 0)
-			unassigned = shuffle(unassigned)
-			for(var/mob/new_player/player in unassigned)
-				if(jobban_isbanned(player, "AI"))
-					continue
-				else
-					ai_choice = player
-					break
-			unassigned -= ai_choice
-
-		if (ai_choice != null)
-			ai_choice.mind.assigned_role = "AI"
-		else
-			world << "It is [ticker.mode.name] and there is no AI, someone should fix this"
 
 	for (var/level = 1 to 3)
 		if (unassigned.len == 0)	//everyone is assigned
@@ -161,8 +128,18 @@
 			if(ticker.mode.name == "AI malfunction" && occupation == "AI")
 				continue
 			var/eligible = occupation_eligible[occupation]
+				
 			while (eligible-- && unassigned.len > 0)
+				var/n = 1
 				var/mob/new_player/candidate = unassigned[1]
+				if (occupation in nonhuman_positions)
+					while (candidate.mind in ticker.mode.must_be_human)
+						n++
+						if (n <= unassigned.len)
+							candidate = unassigned[n]
+						else
+							candidate = null
+							break
 				if (candidate == null)
 					break
 				candidate.mind.assigned_role = occupation
@@ -291,18 +268,18 @@
 					if (length(new_religion) >= 26)
 						new_religion = copytext(new_religion, 1, 26)
 					new_religion = dd_replacetext(new_religion, ">", "'")
-					switch(new_religion)
-						if("Christianity")
+					switch(lowertext(new_religion))
+						if("christianity")
 							B.name = pick("The Holy Bible","The Dead Sea Scrolls")
-						if("Satanism")
+						if("satanism")
 							B.name = pick("The Unholy Bible","The Necronomicon")
-						if("Islam")
+						if("islam")
 							B.name = "Quaran"
-						if("Scientology")
+						if("scientology")
 							B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
-						if("Chaos")
+						if("chaos")
 							B.name = "Space Station 13: The Musical"
-						if("Imperium")
+						if("imperium")
 							B.name = "Uplifting Primer"
 						else
 							B.name = "The Holy Book of [new_religion]"
@@ -609,9 +586,6 @@
 		else
 			src << "RUH ROH! Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
 
-	src.equip_if_possible(new /obj/item/device/radio/headset(src), slot_ears)
-	src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-
 	spawnId(rank)
 	if(rank == "Captain")
 		world << "<b>[src] is the captain!</b>"
@@ -655,6 +629,10 @@
 	if(src.mind.assigned_role == "Cyborg")
 		src << "YOU ARE GETTING BORGED NOW"
 		src.Robotize()
+	else
+		src.equip_if_possible(new /obj/item/device/radio/headset(src), slot_ears)
+		src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
+
 
 	/*
 	spawn(10)

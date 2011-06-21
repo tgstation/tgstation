@@ -2,11 +2,12 @@
 	..()
 
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
-	diary << ""
-	diary << ""
-	diary << "Starting up. [time2text(world.timeofday, "hh:mm.ss")]"
-	diary << "---------------------"
-	diary << ""
+	diary << {"
+
+Starting up. [time2text(world.timeofday, "hh:mm.ss")]
+---------------------
+
+"}
 
 	jobban_loadbanfile()
 	jobban_updatelegacybans()
@@ -23,9 +24,6 @@
 			Optimize()
 			//EXPERIMENTAL
 
-	spawn(0)
-		SetupOccupationsList()
-		return
 
 
 /// EXPERIMENTAL STUFF
@@ -81,7 +79,15 @@ proc/countJob(rank)
 	slot_in_backpack = 18
 	slot_h_store = 19
 
-/mob/living/carbon/human/proc/equip_if_possible(obj/item/weapon/W, slot) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
+/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, del_on_fail = 1)
+	for (var/slot in slots)
+		if (equip_if_possible(W, slots[slot], del_on_fail = 0))
+			return slot
+	if (del_on_fail)
+		del(W)
+	return null
+
+/mob/living/carbon/human/proc/equip_if_possible(obj/item/W, slot, del_on_fail = 1) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
 	//warning: icky code
 	var/equipped = 0
 	if((slot == l_store || slot == r_store || slot == belt || slot == wear_id) && !src.w_uniform)
@@ -176,7 +182,9 @@ proc/countJob(rank)
 	if(equipped)
 		W.layer = 20
 	else
-		del(W)
+		if (del_on_fail)
+			del(W)
+	return equipped
 
 /proc/AutoUpdateAI(obj/subject)
 	if (subject!=null)

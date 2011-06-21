@@ -7,14 +7,15 @@
 // If the rev icons start going wrong for some reason, ticker.mode:update_all_rev_icons() can be called to correct them.
 // If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
 
+/datum/game_mode
+	var/list/datum/mind/head_revolutionaries = list()
+	var/list/datum/mind/revolutionaries = list()
+
 /datum/game_mode/revolution
 	name = "revolution"
 	config_tag = "revolution"
-
-	var/list/datum/mind/head_revolutionaries = list()
-	var/list/datum/mind/revolutionaries = list()
-	var/list/datum/mind/heads_of_staff = list()//This was annoying to check manually. Now I won't have to.
 	var/finished = 0
+	var/const/max_headrevs = 3
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
@@ -25,74 +26,123 @@
 	world << "<B>The current game mode is - Revolution!</B>"
 	world << "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, HoS, CE, RD and CMO. Convert other crewmembers (excluding the heads of staff, and security officers) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>"
 
+
+/datum/game_mode/revolution/can_start() //this proc can not do its job properly for this gamemode, pre_setup can fail even whe can_start told everything is okay. --rastaf0
+	var/list/mob/new_player/possible_headrevs = new
+	var/list/mob/new_player/possible_heads = new
+	for(var/mob/new_player/P in world)
+		if (!P.client || !P.ready)
+			continue
+		if(!jobban_isbanned(P, "Syndicate"))
+			possible_headrevs += P
+		for (var/i in head_positions)
+			if(!jobban_isbanned(P, i))
+				possible_heads += P
+				break
+	//lets do as best as we can
+	if (possible_headrevs.len==0)
+		return 0
+	if (possible_heads.len==0)
+		return 0
+	if (possible_headrevs.len<=max_headrevs)
+		var/list/rest_heads = possible_heads - possible_headrevs
+		return (rest_heads.len>0)
+	return 1 //read as "maybe"
+
+
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
+/datum/game_mode/revolution/pre_setup()
+	var/list/datum/mind/possible_headrevs = get_players_for_role(BE_REV)
+	
+	for (var/i=1 to max_headrevs)
+		if (possible_headrevs.len==0)
+			break
+		var/datum/mind/lenin = pick(possible_headrevs)
+		possible_headrevs -= lenin
+		head_revolutionaries += lenin
+		must_be_human += lenin
+		can_not_be_head += lenin
+	
+	if(head_revolutionaries.len==0)
+		return 0
+
+	DivideOccupations()
+	var/headless=1
+	for(var/mob/new_player/player in world)
+		if(player.mind && player.mind.assigned_role in head_positions)
+			headless=0
+			break
+	if (headless)
+		head_revolutionaries.len = 0
+		must_be_human.len = 0
+		can_not_be_head.len = 0
+		ResetOccupations() //clean up
+		return 0
+	return 1
+
 /datum/game_mode/revolution/post_setup()
-
-	var/list/revs_possible = list()
-	revs_possible = get_possible_revolutionaries()
-	var/list/heads = list()
-	heads = get_living_heads()
-	var/rev_number = 0
-
-	if(!revs_possible || !heads)
-		world << "<B> \red Not enough players for revolution game mode. Restarting world in 5 seconds."
-		sleep(50)
-		world.Reboot()
-		return
-
-	if(revs_possible.len >= 3)
-		rev_number = 3
-	else
-		rev_number = revs_possible.len
-
-	while(rev_number > 0)
-		head_revolutionaries += pick(revs_possible)
-		revs_possible -= head_revolutionaries
-		rev_number--
+	var/list/heads = get_living_heads()
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/mind/head_mind in heads)
 			var/datum/objective/assassinate/rev_obj = new
 			rev_obj.owner = rev_mind
-			rev_obj.find_target_by_role(head_mind.assigned_role)
+			rev_obj.target = head_mind
+			rev_obj.explanation_text = "Assassinate [head_mind.current.real_name], the [head_mind.assigned_role]."
 			rev_mind.objectives += rev_obj
-			heads_of_staff += head_mind
 
 		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 		equip_revolutionary(rev_mind.current)
 		update_rev_icons_added(rev_mind)
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		var/obj_count = 1
-		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"
-		for(var/datum/objective/objective in rev_mind.objectives)
-			rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			rev_mind.special_role = "Head Revolutionary"
-			obj_count++
-	modePlayer = head_revolutionaries
+		greet_revolutionary(rev_mind)
+	modePlayer += head_revolutionaries
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
+	..()
+
+/datum/game_mode/proc/forge_revolutionary_objectives(var/datum/mind/rev_mind)
+	var/list/heads = get_living_heads()
+	for(var/datum/mind/head_mind in heads)
+		var/datum/objective/assassinate/rev_obj = new
+		rev_obj.owner = rev_mind
+		rev_obj.target = head_mind
+		rev_obj.explanation_text = "Assassinate [head_mind.current.real_name], the [head_mind.assigned_role]."
+		rev_mind.objectives += rev_obj
+
+/datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
+	var/obj_count = 1
+	if (you_are)
+		rev_mind.current << "\blue You are a member of the revolutionaries' leadership!"
+	for(var/datum/objective/objective in rev_mind.objectives)
+		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		rev_mind.special_role = "Head Revolutionary"
+		obj_count++
 
 /////////////////////////////////////////////////////////////////////////////////
 //This are equips the rev heads with their gear, and makes the clown not clumsy//
 /////////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
-	if(!istype(rev_mob))
+/datum/game_mode/proc/equip_revolutionary(mob/living/carbon/human/mob)
+	if(!istype(mob))
 		return
-	var/flashspawned = 0
-	if (rev_mob.r_store && !flashspawned)
-		rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_l_store)
-		flashspawned = 1
-	if (rev_mob.l_store && !flashspawned)
-		rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_r_store)
-		flashspawned = 1
-	if (istype(rev_mob.back, /obj/item/weapon/storage) && !flashspawned)
-		rev_mob.equip_if_possible(new /obj/item/device/flash(rev_mob), rev_mob.slot_in_backpack)
-		flashspawned = 1
-	if (!flashspawned)
-		rev_mob << "The Syndicate were unfortunately unable to get you a flash."
+	var/obj/item/device/flash/T = new(mob)
+	
+	var/list/slots = list (
+		"backpack" = mob.slot_in_backpack,
+		"left pocket" = mob.slot_l_store,
+		"right pocket" = mob.slot_r_store,
+		"left hand" = mob.slot_l_hand,
+		"right hand" = mob.slot_r_hand,
+	)
+	var/where = mob.equip_in_one_of_slots(T, slots)
+	if (!where)
+		mob << "The Syndicate were unfortunately unable to get you a flash."
+	else
+		mob << "The flash in your [where] would help you to use your extremal persuade skill."
+		return 1
 
 //////////////////////////////////////
 //Checks if the revs have won or not//
@@ -116,18 +166,20 @@
 ///////////////////////////////////////////////////
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
-/datum/game_mode/revolution/proc/add_revolutionary(datum/mind/rev_mind)
-	var/list/uncons = get_unconvertables()
-	if(!(rev_mind in revolutionaries) && !(rev_mind in head_revolutionaries) && !(rev_mind in uncons))
-		revolutionaries += rev_mind
-		rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
-		rev_mind.special_role = "Revolutionary"
-		update_rev_icons_added(rev_mind)
-
+/datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
+	if((rev_mind.assigned_role in head_positions) || (rev_mind.assigned_role in list("Security Officer", "Detective", "Warden")))
+		return 0
+	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
+		return 0
+	revolutionaries += rev_mind
+	rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
+	rev_mind.special_role = "Revolutionary"
+	update_rev_icons_added(rev_mind)
+	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//
 //////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/revolution/proc/remove_revolutionary(datum/mind/rev_mind)
+/datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind)
 	if(rev_mind in revolutionaries)
 		revolutionaries -= rev_mind
 		rev_mind.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT>"
@@ -142,7 +194,7 @@
 // -Possibly caused by cloning of a standard rev/////////////////////////////////////////////////
 //-UNCONFIRMED: DECONVERTED REVS NOT LOSING THEIR ICON PROPERLY//////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/revolution/proc/update_all_rev_icons()
+/datum/game_mode/proc/update_all_rev_icons()
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
 			if(head_rev_mind.current)
@@ -186,7 +238,7 @@
 //Keeps track of converted revs icons///////////////
 //Refer to above bugs. They may apply here as well//
 ////////////////////////////////////////////////////
-/datum/game_mode/revolution/proc/update_rev_icons_added(datum/mind/rev_mind)
+/datum/game_mode/proc/update_rev_icons_added(datum/mind/rev_mind)
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
 			if(head_rev_mind.current)
@@ -211,78 +263,26 @@
 ///////////////////////////////////
 //Keeps track of deconverted revs//
 ///////////////////////////////////
-/datum/game_mode/revolution/proc/update_rev_icons_removed(datum/mind/rev_mind)
+/datum/game_mode/proc/update_rev_icons_removed(datum/mind/rev_mind)
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
 			if(head_rev_mind.current)
 				if(head_rev_mind.current.client)
 					for(var/image/I in head_rev_mind.current.client.images)
-						if(I.loc == rev_mind.current)
+						if((I.icon_state == "cult"|| I.icon_state == "rev_head") && I.loc == rev_mind.current)
 							del(I)
 
 		for(var/datum/mind/rev_mind_1 in revolutionaries)
 			if(rev_mind_1.current)
 				if(rev_mind_1.current.client)
 					for(var/image/I in rev_mind_1.current.client.images)
-						if(I.loc == rev_mind.current)
+						if((I.icon_state == "cult"|| I.icon_state == "rev_head") && I.loc == rev_mind.current)
 							del(I)
 		if(rev_mind.current)
 			if(rev_mind.current.client)
 				for(var/image/I in rev_mind.current.client.images)
 					if(I.icon_state == "rev" || I.icon_state == "rev_head")
 						del(I)
-
-//////////////////////////////////////////////////
-//Creates a list of anyone that can be converted//
-//////////////////////////////////////////////////
-/datum/game_mode/revolution/proc/get_possible_revolutionaries()
-	var/list/candidates = list()
-
-	for(var/mob/living/carbon/human/player in world)
-		if(player.client)
-			if(player.be_syndicate)
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		for(var/mob/living/carbon/human/player in world)
-			if(player.client)
-				candidates += player.mind
-
-	var/list/uncons = get_unconvertables()
-	for(var/datum/mind/mind in uncons)
-		candidates -= mind
-
-	if(candidates.len < 1)
-		return null
-	else
-		return candidates
-
-////////////////////////////
-//Keeps track of all heads//
-////////////////////////////
-/datum/game_mode/revolution/proc/get_all_heads()
-	var/list/heads = list()
-
-	for(var/mob/player in world)
-		if(player.mind)
-			var/role = player.mind.assigned_role
-			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer"))
-				heads += player.mind
-
-	return heads
-
-/////////////////////////////////////////////////////
-//Defines the list of jobs that cannot be converted//
-/////////////////////////////////////////////////////
-/datum/game_mode/revolution/proc/get_unconvertables()
-	var/list/ucs = list()
-	for(var/mob/living/carbon/human/player in world)
-		if(player.mind)
-			var/role = player.mind.assigned_role
-			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Security Officer", "Detective", "Warden", "AI", "Chief Medical Officer"))
-				ucs += player.mind
-
-	return ucs
 
 //////////////////////////
 //Checks for rev victory//
@@ -308,56 +308,58 @@
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
-
-	var/text = ""
 	if(finished == 1)
 		world << "\red <FONT size = 3><B> The heads of staff were killed! The revolutionaries win!</B></FONT>"
 	else if(finished == 2)
 		world << "\red <FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT>"
-
-	world << "<FONT size = 2><B>The head revolutionaries were: </B></FONT>"
-	for(var/datum/mind/rev_mind in head_revolutionaries)
-		text = ""
-		if(rev_mind.current)
-			text += "[rev_mind.current.real_name]"
-			if(rev_mind.current.stat == 2)
-				text += " (Dead)"
-			else
-				text += " (Survived!)"
-		else
-			text += "[rev_mind.key] (character destroyed)"
-
-		world << text
-
-	text = ""
-	world << "<FONT size = 2><B>The converted revolutionaries were: </B></FONT>"
-	for(var/datum/mind/rev_nh_mind in revolutionaries)
-		if(rev_nh_mind.current)
-			text += "[rev_nh_mind.current.real_name]"
-			if(rev_nh_mind.current.stat == 2)
-				text += " (Dead)"
-			else
-				text += " (Survived!)"
-		else
-			text += "[rev_nh_mind.key] (character destroyed)"
-		text += ", "
-
-	world << text
-
-	world << "<FONT size = 2><B>The heads of staff were: </B></FONT>"
-	var/list/heads = list()
-	heads = get_all_heads()
-	for(var/datum/mind/head_mind in heads)
-		text = ""
-		if(head_mind.current)
-			text += "[head_mind.current.real_name]"
-			if(head_mind.current.stat == 2)
-				text += " (Dead)"
-			else
-				text += " (Survived!)"
-		else
-			text += "[head_mind.key] (character destroyed)"
-
-		world << text
-
+	..()
 	return 1
+
+/datum/game_mode/proc/auto_declare_completion_revolution()
+	if (head_revolutionaries.len!=0 || istype(ticker.mode,/datum/game_mode/revolution))
+		var/list/names = new
+		for(var/datum/mind/i in head_revolutionaries)
+			if(i.current)
+				names += i.current.real_name + ((i.current.stat==2)?" (Dead)":"")
+			else
+				names += "[i.key] (character destroyed)"
+		world << "<FONT size = 2><B>The head revolutionaries were: </B></FONT>"
+		world << english_list(names)
+	if (revolutionaries.len!=0 || istype(ticker.mode,/datum/game_mode/revolution))
+		var/list/names = new
+		for(var/datum/mind/i in revolutionaries)
+			if(i.current)
+				names += i.current.real_name + ((i.current.stat==2)?" (Dead)":"")
+			else
+				names += "[i.key] (character destroyed)"
+		if (revolutionaries.len!=0)
+			world << "<FONT size = 2><B>The ordinary revolutionaries were: </B></FONT>"
+			world << english_list(names)
+		else
+			world << "The head revolutionaries failed to enlist any <FONT size = 2><B>ordinary revolutionaries</B></FONT>"
+	var/list/heads = get_all_heads()
+	var/list/targets = new
+	for (var/datum/mind/i in head_revolutionaries)
+		for (var/datum/objective/assassinate/o in i.objectives)
+			targets |= o.target
+	if (head_revolutionaries.len!=0                      || \
+		revolutionaries.len!=0                           || \
+		istype(ticker.mode,/datum/game_mode/revolution))
+
+		var/list/names = new
+		for(var/datum/mind/i in heads)
+			if(i.current)
+				names += i.current.real_name + ((i.current.stat==2)?" (Dead)":"") + ((i in targets)?"(target)":"")
+			else
+				names += "[i.key] (character destroyed)" + ((i in targets)?"(target)":"")
+		if (heads.len!=0)
+			world << "<FONT size = 2><B>The heads of staff were: </B></FONT>"
+			world << english_list(names)
+		else
+			world << "There were no any <FONT size = 2><B>heads of staff</B></FONT> on the station."
+
+/proc/is_convertable_to_rev(datum/mind/mind)
+	return istype(mind) && \
+		istype(mind.current, /mob/living/carbon/human) && \
+		!(mind.assigned_role in head_positions) && \
+		!(mind.assigned_role in list("Security Officer", "Detective", "Warden"))

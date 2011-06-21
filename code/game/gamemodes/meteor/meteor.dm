@@ -51,6 +51,7 @@
 	else
 		world << "\blue <B>No one survived the meteor attack!</B>"
 
+	..()
 	return 1
 
 /datum/game_mode/meteor/send_intercept()

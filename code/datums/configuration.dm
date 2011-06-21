@@ -102,7 +102,7 @@
 				config.log_access = 1
 
 			if ("sql_enabled")
-				config.sql_enabled = 1
+				config.sql_enabled = text2num(value)
 
 			if ("log_say")
 				config.log_say = 1
@@ -319,38 +319,20 @@
 		if (M.config_tag && M.config_tag == mode_name)
 			return M
 		del(M)
-
 	return null
 
-/datum/configuration/proc/pick_random_mode()
-	var/total = 0
-	var/list/accum = list()
-
-	for(var/M in src.modes)
-		total += src.probabilities[M]
-		accum[M] = total
-
-	var/r = total - (rand() * total)
-
-	var/mode_name = null
-	for (var/M in modes)
-		if (src.probabilities[M] > 0 && accum[M] >= r)
-			mode_name = M
-			break
-
-	if (!mode_name)
-		world << "Failed to pick a random game mode."
-		return null
-
-	//world << "Returning mode [mode_name]"
-
-	return src.pick_mode(mode_name)
-
-/datum/configuration/proc/get_used_mode_names()
-	var/list/names = list()
-
-	for (var/M in src.modes)
-		if (src.probabilities[M] > 0)
-			names += src.mode_names[M]
-
-	return names
+/datum/configuration/proc/get_runnable_modes()
+	var/list/datum/game_mode/runnable_modes = new
+	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
+		var/datum/game_mode/M = new T()
+		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
+		if (!(M.config_tag in modes))
+			del(M)
+			continue
+		if (probabilities[M.config_tag]<=0)
+			del(M)
+			continue
+		if (M.can_start())
+			runnable_modes[M] = probabilities[M.config_tag]
+			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+	return runnable_modes

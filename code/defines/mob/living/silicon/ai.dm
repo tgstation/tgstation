@@ -16,9 +16,9 @@
 	var/ioncheck[1]
 
 
-	var/datum/game_mode/malfunction/AI_Module/module_picker/malf_picker
+	var/datum/AI_Module/module_picker/malf_picker
 	var/processing_time = 100
-	var/list/datum/game_mode/malfunction/AI_Module/current_modules = list()
+	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
 
 	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click() -- TLE

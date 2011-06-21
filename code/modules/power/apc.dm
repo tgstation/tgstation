@@ -584,17 +584,14 @@
 
 		if (istype(user, /mob/living/silicon))
 			t += "<BR><HR><A href='?src=\ref[src];overload=1'><I>Overload lighting circuit</I></A><BR>"
-		if (ticker)
+		if (ticker && ticker.mode)
 //		 world << "there's a ticker"
-			if(ticker.mode.name == "AI malfunction")
+			if(user.mind in ticker.mode.malf_ai)
 //				world << "ticker says its malf"
-				var/datum/game_mode/malfunction/malf = ticker.mode
-				for (var/datum/mind/B in malf.malf_ai)
-					if (user == B.current)
-						if (!src.malfai)
-							t += "<BR><HR><A href='?src=\ref[src];malfhack=1'><I>Override Programming</I></A><BR>"
-						else
-							t += "<BR><HR><I>APC Hacked</I><BR>"
+				if (!src.malfai)
+					t += "<BR><HR><A href='?src=\ref[src];malfhack=1'><I>Override Programming</I></A><BR>"
+				else
+					t += "<BR><HR><I>APC Hacked</I><BR>"
 
 	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
@@ -789,8 +786,9 @@
 				if (!src.aidisabled)
 					malfai.malfhack = null
 					malfai.malfhacking = 0
-					if (src.z == 1)
-						ticker.mode:apcs++
+					if (ticker.mode.config_tag == "malfunction")
+						if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+							ticker.mode:apcs++
 					src.malfai = usr
 					src.locked = 1
 					if (src.cell)

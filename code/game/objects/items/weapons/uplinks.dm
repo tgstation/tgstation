@@ -126,8 +126,9 @@ SYNDICATE UPLINK
 						new /obj/item/device/chameleon(get_turf(src))
 				if("cloak")
 					if (src.uses >= 4)
-						var/choice = input("Spawning a cloak in nuke is generally regarded as entirely dumb, are you sure?") in list("Confirm", "Abort")
-						if(choice == "Confirm")
+						if (ticker.mode.config_tag!="nuclear" || \
+							(input("Spawning a cloak in nuke is generally regarded as entirely dumb, are you sure?") in list("Confirm", "Abort")) == "Confirm" \
+						)
 							if (src.uses >= 4)
 								src.uses -= 4
 								new /obj/item/weapon/cloaking_device(get_turf(src))
@@ -162,26 +163,7 @@ SYNDICATE UPLINK
 						new /obj/item/device/radio/headset/traitor(get_turf(src))
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
-			usr.machine = null
-			usr << browse(null, "window=radio")
-			var/obj/item/device/radio/T = src.origradio
-			var/obj/item/weapon/syndicate_uplink/R = src
-			R.loc = T
-			T.loc = usr
-			// R.layer = initial(R.layer)
-			R.layer = 0
-			if (usr.client)
-				usr.client.screen -= R
-			if (usr.r_hand == R)
-				usr.u_equip(R)
-				usr.r_hand = T
-			else
-				usr.u_equip(R)
-				usr.l_hand = T
-			R.loc = T
-			T.layer = 20
-			T.set_frequency(initial(T.frequency))
-			T.attack_self(usr)
+			shutdown_uplink()
 			return
 		else if (href_list["selfdestruct"])
 			src.temp = "<A href='byond://?src=\ref[src];selfdestruct2=1'>Self-Destruct</A>"
@@ -199,4 +181,33 @@ SYNDICATE UPLINK
 			for(var/mob/M in viewers(1, src))
 				if (M.client)
 					src.attack_self(M)
+	return
+
+/obj/item/weapon/syndicate_uplink/proc/shutdown_uplink()
+	if (!src.origradio)
+		return
+	var/list/nearby = viewers(1, src)
+	for(var/mob/M in nearby)
+		if (M.client && M.machine == src)
+			M << browse(null, "window=radio")
+			M.machine = null
+
+	var/obj/item/device/radio/T = src.origradio
+	var/obj/item/weapon/syndicate_uplink/R = src
+	var/mob/L = src.loc
+	R.loc = T
+	T.loc = L
+	// R.layer = initial(R.layer)
+	R.layer = 0
+	if (istype(L))
+		if (L.client)
+			L.client.screen -= R
+		if (L.r_hand == R)
+			L.u_equip(R)
+			L.r_hand = T
+		else
+			L.u_equip(R)
+			L.l_hand = T
+		T.layer = 20
+	T.set_frequency(initial(T.frequency))
 	return

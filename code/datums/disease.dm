@@ -96,17 +96,18 @@ to null does not delete the object itself. Thank you.
 		if(fail) return
 
 	if(skip_this == 1)//be wary, it replaces the current disease...
-		if(virus)
-			virus.cure(0)
-		virus = new virus.type
-		virus.affected_mob = src
-		virus.strain_data = virus.strain_data.Copy()
-		virus.holder = src
+		if(src.virus)
+			src.virus.cure(0)
+		src.virus = new virus.type
+		src.virus.affected_mob = src
+		src.virus.strain_data = virus.strain_data.Copy()
+		src.virus.holder = src
 		if(prob(5))
-			virus.carrier = 1
+			src.virus.carrier = 1
 		return
 
-	if(virus) return
+	if(src.virus)
+		return
 
 	if(virus.type in resistances)
 		if(prob(99.9)) return
@@ -252,12 +253,12 @@ to null does not delete the object itself. Thank you.
 	else if(prob(15))
 		return
 	else*/
-		virus = new virus.type
-		virus.strain_data = virus.strain_data.Copy()
-		virus.affected_mob = src
-		virus.holder = src
+		src.virus = new virus.type
+		src.virus.strain_data = virus.strain_data.Copy()
+		src.virus.affected_mob = src
+		src.virus.holder = src
 		if(prob(5))
-			virus.carrier = 1
+			src.virus.carrier = 1
 		return
 	return
 

@@ -500,12 +500,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			ticker.mode.equip_traitor(new_character)
 		if("Wizard","Fake Wizard")
 			new_character.loc = pick(wizardstart)
+			ticker.mode.learn_basic_spells(new_character)
 			ticker.mode.equip_wizard(new_character)
 		if("Syndicate")
 			var/obj/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
 			if(synd_spawn)
 				new_character.loc = get_turf(synd_spawn)
-			call(/datum/game_mode/nuclear/proc/equip_syndicate)(new_character)
+			call(/datum/game_mode/proc/equip_syndicate)(new_character)
 		if("Space Ninja")
 			var/ninja_spawn[] = list()
 			for(var/obj/landmark/L in world)
@@ -526,11 +527,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
 					new_character = new_character.Robotize()
 					if(new_character.mind.special_role=="traitor")
-						call(/datum/game_mode/traitor/proc/add_law_zero)(new_character)
+						call(/datum/game_mode/proc/add_law_zero)(new_character)
 				if("AI")
 					new_character = new_character.AIize()
 					if(new_character.mind.special_role=="traitor")
-						call(/datum/game_mode/traitor/proc/add_law_zero)(new_character)
+						call(/datum/game_mode/proc/add_law_zero)(new_character)
 				//Add aliens.
 				else
 					new_character.Equip_Rank(new_character.mind.assigned_role, joined_late=1)//Or we simply equip them.

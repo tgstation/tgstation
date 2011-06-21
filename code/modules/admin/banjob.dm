@@ -19,6 +19,19 @@ var
 		else
 			return 0
 
+/*
+working but not needed
+/proc/jobban_isbanned_for_heads(mob/M)
+	if(config.guest_jobban && IsGuestKey(M.key))
+		return 1
+	if(config.usewhitelist && check_whitelist(M))
+		return 1
+	for (var/rank in head_positions)
+		if (!jobban_keylist.Find(text("[M.ckey] - [rank]")))
+			return 0
+	return 1
+*/
+
 /proc/jobban_loadbanfile()
 	var/savefile/S=new("data/job_full.ban")
 	S["keys[0]"] >> jobban_keylist

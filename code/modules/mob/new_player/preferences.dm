@@ -1,38 +1,65 @@
+#define UI_OLD 0
+#define UI_NEW 1
+
+var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
+//some autodetection here.
+	"traitor" = IS_MODE_COMPILED("traitor"),
+	"operative" = IS_MODE_COMPILED("nuclear"),
+	"changeling" = IS_MODE_COMPILED("changeling"),
+	"wizard" = IS_MODE_COMPILED("wizard"),
+	"malf AI" = IS_MODE_COMPILED("malfunction"),
+	"revolutionary" = IS_MODE_COMPILED("revolution"),
+	"alien candidate" = 1, //always show
+	"cultist" = IS_MODE_COMPILED("cult"),
+	"infested monkey" = IS_MODE_COMPILED("monkey"),
+)
+/*
+var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
+//some autodetection here.
+	"traitor" = ispath(text2path("/datum/game_mode/traitor")),
+	"operative" = ispath(text2path("/datum/game_mode/nuclear")),
+	"changeling" = ispath(text2path("/datum/game_mode/changeling")),
+	"wizard" = ispath(text2path("/datum/game_mode/wizard")),
+	"malf AI" = ispath(text2path("/datum/game_mode/malfunction")),
+	"revolutionary" = ispath(text2path("/datum/game_mode/revolution")),
+	"alien candidate" = 1, //always show
+	"cultist" = ispath(text2path("/datum/game_mode/cult")),
+	"infested monkey" = ispath(text2path("/datum/game_mode/monkey")),
+)
+*/
+
 datum/preferences
 	var/real_name
 	var/gender = MALE
 	var/age = 30.0
 	var/b_type = "A+"
 
-	var/be_syndicate
+	var/be_special //bitfields. See defines in setup.dm. --rastaf0
 	var/midis = 1
-	var/be_alien = 1
-	var/lastchangelog = 0 // size of last seen changelog file -- rastaf0 -- rastaf0
+	var/lastchangelog = 0 // size of last seen changelog file -- rastaf0
 	var/ooccolor = "#b82e00"
 	var/be_random_name = 0
 	var/underwear = 1
 
-	var/occupation1 = "No Preference"
-	var/occupation2 = "No Preference"
-	var/occupation3 = "No Preference"
+	var/occupation[] = list("No Preference", "No Preference", "No Preference")
 
 	var/h_style = "Short Hair"
 	var/f_style = "Shaved"
 
-	var/r_hair = 0.0
-	var/g_hair = 0.0
-	var/b_hair = 0.0
+	var/r_hair = 0
+	var/g_hair = 0
+	var/b_hair = 0
 
-	var/r_facial = 0.0
-	var/g_facial = 0.0
-	var/b_facial = 0.0
+	var/r_facial = 0
+	var/g_facial = 0
+	var/b_facial = 0
 
-	var/s_tone = 0.0
-	var/r_eyes = 0.0
-	var/g_eyes = 0.0
-	var/b_eyes = 0.0
+	var/s_tone = 0
+	var/r_eyes = 0
+	var/g_eyes = 0
+	var/b_eyes = 0
 
-	var/UI = 'screen1_old.dmi' // Skie
+	var/UI = UI_OLD // saving the whole .DMI in preferences is not a good idea. --rastaf0 //'screen1_old.dmi' // Skie
 
 	var/icon/preview_icon = null
 
@@ -361,35 +388,35 @@ datum/preferences
 		dat += "<b>Age:</b> <a href='byond://?src=\ref[user];preferences=1;age=input'>[age]</a>"
 
 		dat += "<br>"
-		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == 'screen1.dmi' ? "New" : "Old"]</b></a><br>"
+		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
 
 		if(user.client.holder)
 			if(user.client.holder.rank)
 				if(user.client.holder.rank == "Game Master")
 					dat += "<hr><b>OOC</b><br>"
-					dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table bgcolor=\"[ooccolor]\"><tr><td>IM</td></tr></table></font>"
+					dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font>"
 
 		dat += "<hr><b>Occupation Choices</b><br>"
-		if (destructive.Find(occupation1))
-			dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>[occupation1]</b></a><br>"
+		if (destructive.Find(occupation[1]))
+			dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>[occupation[1]]</b></a><br>"
 		else
-			if (jobban_isbanned(user, occupation1))
-				occupation1 = "Assistant"
-			if (jobban_isbanned(user, occupation2))
-				occupation2 = "Assistant"
-			if (jobban_isbanned(user, occupation3))
-				occupation3 = "Assistant"
-			if (occupation1 != "No Preference")
-				dat += "\tFirst Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>[occupation1]</b></a><br>"
+			if (jobban_isbanned(user, occupation[1]))
+				occupation[1] = "Assistant"
+			if (jobban_isbanned(user, occupation[2]))
+				occupation[2] = "Assistant"
+			if (jobban_isbanned(user, occupation[3]))
+				occupation[3] = "Assistant"
+			if (occupation[1] != "No Preference")
+				dat += "\tFirst Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>[occupation[1]]</b></a><br>"
 
-				if (destructive.Find(occupation2))
-					dat += "\tSecond Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=2\"><b>[occupation2]</b></a><BR>"
+				if (destructive.Find(occupation[2]))
+					dat += "\tSecond Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=2\"><b>[occupation[2]]</b></a><BR>"
 
 				else
-					if (occupation2 != "No Preference")
-						dat += "\tSecond Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=2\"><b>[occupation2]</b></a><BR>"
-						dat += "\tLast Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=3\"><b>[occupation3]</b></a><BR>"
+					if (occupation[2] != "No Preference")
+						dat += "\tSecond Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=2\"><b>[occupation[2]]</b></a><BR>"
+						dat += "\tLast Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=3\"><b>[occupation[3]]</b></a><BR>"
 
 					else
 						dat += "\tSecond Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=2\">No Preference</a><br>"
@@ -408,7 +435,7 @@ datum/preferences
 
 		dat += "<hr><b>Hair</b><br>"
 
-		dat += "<a href='byond://?src=\ref[user];preferences=1;hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]\"><table bgcolor=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]\"><tr><td>IM</td></tr></table></font>"
+		dat += "<a href='byond://?src=\ref[user];preferences=1;hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]\"><table style='display:inline;' bgcolor=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]\"><tr><td>__</td></tr></table></font> "
 /*
 		dat += " <font color=\"#[num2hex(r_hair, 2)]0000\">Red</font> - <a href='byond://?src=\ref[user];preferences=1;r_hair=input'>[r_hair]</a>"
 		dat += " <font color=\"#00[num2hex(g_hair, 2)]00\">Green</font> - <a href='byond://?src=\ref[user];preferences=1;g_hair=input'>[g_hair]</a>"
@@ -418,7 +445,7 @@ datum/preferences
 
 		dat += "<hr><b>Facial</b><br>"
 
-		dat += "<a href='byond://?src=\ref[user];preferences=1;facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]\"><table bgcolor=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]\"><tr><td>GO</td></tr></table></font>"
+		dat += "<a href='byond://?src=\ref[user];preferences=1;facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]\"><tr><td>__</td></tr></table></font> "
 /*
 		dat += " <font color=\"#[num2hex(r_facial, 2)]0000\">Red</font> - <a href='byond://?src=\ref[user];preferences=1;r_facial=input'>[r_facial]</a>"
 		dat += " <font color=\"#00[num2hex(g_facial, 2)]00\">Green</font> - <a href='byond://?src=\ref[user];preferences=1;g_facial=input'>[g_facial]</a>"
@@ -427,19 +454,22 @@ datum/preferences
 		dat += "Style: <a href='byond://?src=\ref[user];preferences=1;f_style=input'>[f_style]</a>"
 
 		dat += "<hr><b>Eyes</b><br>"
-		dat += "<a href='byond://?src=\ref[user];preferences=1;eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>KU</td></tr></table></font>"
+		dat += "<a href='byond://?src=\ref[user];preferences=1;eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>__</td></tr></table></font>"
 /*
 		dat += " <font color=\"#[num2hex(r_eyes, 2)]0000\">Red</font> - <a href='byond://?src=\ref[user];preferences=1;r_eyes=input'>[r_eyes]</a>"
 		dat += " <font color=\"#00[num2hex(g_eyes, 2)]00\">Green</font> - <a href='byond://?src=\ref[user];preferences=1;g_eyes=input'>[g_eyes]</a>"
 		dat += " <font color=\"#0000[num2hex(b_eyes, 2)]\">Blue</font> - <a href='byond://?src=\ref[user];preferences=1;b_eyes=input'>[b_eyes]</a>"
 */
 		dat += "<hr>"
-		dat += "<b>Be alien candidate:</b> <a href=\"byond://?src=\ref[user];preferences=1;be_alien=input\"><b>[be_alien == 1 ? "Yes" : "No"]</b></a><br>"
 		if(!jobban_isbanned(user, "Syndicate"))
-			dat += "<b>Be syndicate?:</b> <a href =\"byond://?src=\ref[user];preferences=1;b_syndicate=1\"><b>[(be_syndicate ? "Yes" : "No")]</b></a><br>"
+			var/n = 0
+			for (var/i in special_roles)
+				if (special_roles[i]) //if mode is available on the server
+					dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preferences=1;be_special=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
+				n++
 		else
-			dat += "<b> You are banned from being syndicate.</b>"
-			be_syndicate = 0
+			dat += "<b>You are banned from being syndicate.</b>"
+			src.be_special = 0
 		dat += "<hr>"
 
 		if (!IsGuestKey(user.key))
@@ -487,75 +517,75 @@ datum/preferences
 
 		switch(occ)
 			if(1.0)
-				if (job == occupation1)
+				if (job == occupation[1])
 					user << browse(null, "window=mob_occupation")
 					return
 				else
 					if (job == "No Preference")
-						occupation1 = "No Preference"
+						occupation[1] = "No Preference"
 					else
-						if (job == occupation2)
-							job = occupation1
-							occupation1 = occupation2
-							occupation2 = job
+						if (job == occupation[2])
+							job = occupation[1]
+							occupation[1] = occupation[2]
+							occupation[2] = job
 						else
-							if (job == occupation3)
-								job = occupation1
-								occupation1 = occupation3
-								occupation3 = job
+							if (job == occupation[3])
+								job = occupation[1]
+								occupation[1] = occupation[3]
+								occupation[3] = job
 							else
-								occupation1 = job
+								occupation[1] = job
 			if(2.0)
-				if (job == occupation2)
+				if (job == occupation[2])
 					user << browse(null, "window=mob_occupation")
 					return
 				else
 					if (job == "No Preference")
-						if (occupation3 != "No Preference")
-							occupation2 = occupation3
-							occupation3 = "No Preference"
+						if (occupation[3] != "No Preference")
+							occupation[2] = occupation[3]
+							occupation[3] = "No Preference"
 						else
-							occupation2 = "No Preference"
+							occupation[2] = "No Preference"
 					else
-						if (job == occupation1)
-							if (occupation2 == "No Preference")
+						if (job == occupation[1])
+							if (occupation[2] == "No Preference")
 								user << browse(null, "window=mob_occupation")
 								return
-							job = occupation2
-							occupation2 = occupation1
-							occupation1 = job
+							job = occupation[2]
+							occupation[2] = occupation[1]
+							occupation[1] = job
 						else
-							if (job == occupation3)
-								job = occupation2
-								occupation2 = occupation3
-								occupation3 = job
+							if (job == occupation[3])
+								job = occupation[2]
+								occupation[2] = occupation[3]
+								occupation[3] = job
 							else
-								occupation2 = job
+								occupation[2] = job
 			if(3.0)
-				if (job == occupation3)
+				if (job == occupation[3])
 					user << browse(null, "window=mob_occupation")
 					return
 				else
 					if (job == "No Preference")
-						occupation3 = "No Preference"
+						occupation[3] = "No Preference"
 					else
-						if (job == occupation1)
-							if (occupation3 == "No Preference")
+						if (job == occupation[1])
+							if (occupation[3] == "No Preference")
 								user << browse(null, "window=mob_occupation")
 								return
-							job = occupation3
-							occupation3 = occupation1
-							occupation1 = job
+							job = occupation[3]
+							occupation[3] = occupation[1]
+							occupation[1] = job
 						else
-							if (job == occupation2)
-								if (occupation3 == "No Preference")
+							if (job == occupation[2])
+								if (occupation[3] == "No Preference")
 									user << browse(null, "window=mob_occupation")
 									return
-								job = occupation3
-								occupation3 = occupation2
-								occupation2 = job
+								job = occupation[3]
+								occupation[3] = occupation[2]
+								occupation[2] = job
 							else
-								occupation3 = job
+								occupation[3] = job
 
 		user << browse(null, "window=mob_occupation")
 		ShowChoices(user)
@@ -733,7 +763,7 @@ datum/preferences
 			var/ooccolor = input(user, "Please select OOC colour.", "OOC colour") as color
 
 			if(ooccolor)
-				ooccolor = ooccolor
+				src.ooccolor = ooccolor
 
 		if (link_tags["f_style"])
 			switch(link_tags["f_style"])
@@ -754,16 +784,13 @@ datum/preferences
 				gender = MALE
 
 		if (link_tags["UI"])
-			if (UI == 'screen1.dmi')
-				UI = 'screen1_old.dmi'
+			if (UI == UI_OLD)
+				UI = UI_NEW
 			else
-				UI = 'screen1.dmi'
+				UI = UI_OLD
 
 		if (link_tags["midis"])
 			midis = (midis+1)%2
-
-		if (link_tags["be_alien"])
-			be_alien = (be_alien+1)%2
 
 		if (link_tags["underwear"])
 			if(!IsGuestKey(user.key))
@@ -779,8 +806,8 @@ datum/preferences
 						else
 							underwear = 1
 
-		if (link_tags["b_syndicate"])
-			be_syndicate = !( be_syndicate )
+		if (link_tags["be_special"])
+			src.be_special^=(1<<text2num(link_tags["be_special"])) //bitwize magic, sorry for that. --rastaf0
 
 		if (link_tags["b_random_name"])
 			be_random_name = !be_random_name
@@ -798,11 +825,12 @@ datum/preferences
 			randomize_name()
 
 			age = 30
-			occupation1 = "No Preference"
-			occupation2 = "No Preference"
-			occupation3 = "No Preference"
+			occupation[1] = "No Preference"
+			occupation[2] = "No Preference"
+			occupation[3] = "No Preference"
 			underwear = 1
-			be_syndicate = 0
+			//be_syndicate = 0
+			be_special = 0
 			be_random_name = 0
 			r_hair = 0.0
 			g_hair = 0.0
@@ -817,7 +845,7 @@ datum/preferences
 			b_eyes = 0.0
 			s_tone = 0.0
 			b_type = "A+"
-			UI = 'screen1_old.dmi'
+			UI = UI_OLD
 			midis = 1
 
 
@@ -850,7 +878,11 @@ datum/preferences
 		character.h_style = h_style
 		character.f_style = f_style
 
-		character.UI = UI
+		switch (UI)
+			if (UI_OLD)
+				character.UI = 'screen1_old.dmi'
+			if (UI_NEW)
+				character.UI = 'screen1.dmi'
 
 		switch(h_style)
 			if("Short Hair")
@@ -912,7 +944,7 @@ datum/preferences
 				if(character&&character.client)
 					character.client.midis = midis
 					character.client.ooccolor = ooccolor
-					character.client.be_alien = be_alien
+					character.client.be_alien = be_special&BE_ALIEN
 
 /*
 
@@ -930,3 +962,5 @@ datum/preferences
 		return
 
 */
+#undef UI_OLD
+#undef UI_NEW

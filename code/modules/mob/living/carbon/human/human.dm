@@ -1441,7 +1441,11 @@
 						UpdateDamage()
 				updatehealth()
 				if(istype(M.virus, /datum/disease/jungle_fever))
-					monkeyize()
+					var/mob/living/carbon/human/H = src
+					src = null
+					src = H.monkeyize()
+					contract_disease(M.virus,1,0)
+					
 	return
 
 /mob/living/carbon/human/attack_paw(mob/M as mob)
@@ -1490,7 +1494,10 @@
 						UpdateDamage()
 				updatehealth()
 				if(istype(M.virus, /datum/disease/jungle_fever))
-					monkeyize()
+					var/mob/living/carbon/human/H = src
+					src = null
+					src = H.monkeyize()
+					contract_disease(M.virus,1,0)
 	return
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M as mob)

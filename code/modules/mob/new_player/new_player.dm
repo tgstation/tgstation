@@ -37,7 +37,7 @@ mob/new_player
 
 		if(!preferences.savefile_load(src, 0))
 			preferences.ShowChoices(src)
-			if (client.changes)
+			if (!client.changes)
 				changes()
 		else
 			var/lastchangelog = length('changelog.html')

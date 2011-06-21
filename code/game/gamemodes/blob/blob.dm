@@ -20,6 +20,7 @@
 
 		blobs = list()
 		new /obj/blob(location)
+	..()
 
 /datum/game_mode/blob/process()
 	if (prob(2))
@@ -180,4 +181,5 @@
 
 		world << "\blue Rebooting in 30s"
 
+	..()
 	return 1

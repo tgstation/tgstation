@@ -54,9 +54,11 @@
 	..()
 	if (usr.stat || usr.restrained())
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if ( ! (istype(usr, /mob/living/carbon/human) || \
+			istype(usr, /mob/living/silicon) || \
+			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
 		usr << "\red You don't have the dexterity to do this!"
-		return
+		return 1
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
 		usr.machine = src
 		if (href_list["auth"])
@@ -136,6 +138,8 @@
 	src.safety = 1
 	src.icon_state = "nuclearbomb3"
 	playsound(src,'Alarm.ogg',100,0,5)
+	if (ticker && ticker.mode)
+		ticker.mode.explosion_in_progress = 1
 	sleep(100)
 
 /*
@@ -145,62 +149,34 @@
 */
 	enter_allowed = 0
 	var/derp = 0
-	var/herp = 0
-	var/area/A = src.loc.loc
-	if (istype( A, /area))
-		if (A.name == "Space")
+	for (var/turf/T in range(1,src))
+		if (!is_type_in_list(T.loc, the_station_areas))
 			derp = 1
-		if (istype(A, /area/syndicate_station))
-			derp = 1
-		if (A.name == "Wizard's Den")
-			derp = 1
-	if (!derp)
-		for(var/direction in cardinal)
-			for(var/area/target in get_step(src,direction))
-				if (target.name == "Space")
-					derp = 1
-				if (istype(target, /area/syndicate_station))
-					derp = 1
-				if (target.name == "Wizard's Den")
-					derp = 1
-	if (syndicate_station_at_station)
-		herp = 1
+			break
+	if (ticker && ticker.mode && ticker.mode.name == "nuclear emergency")
+		ticker.mode:herp = syndicate_station_at_station
+		ticker.mode:derp = derp
+
 	for(var/mob/M in world)
 		if(M.client)
 			spawn(0)
 				M.client.station_explosion_cinematic(derp)
-
-	if(ticker.mode.name == "nuclear emergency")
-		ticker.mode:nuke_detonated = 1
-		if (derp) ticker.mode:derp = 1
-		ticker.mode.check_win()
-		ticker.mode.declare_completion()
-
 	sleep(110)
-	if (ticker.mode.name != "nuclear emergency" || !derp || !herp)
-		ticker.mode.declare_extra_completion()//Declaring regular completion could cause issues.
-		world << "<B>The station was destoyed by the nuclear blast! Resetting in 30 seconds!</B>"
 
-		sleep(300)
-		log_game("Rebooting due to nuclear destruction of station")
-		world.Reboot()
-		return
+	if (ticker && ticker.mode)
+		ticker.mode.explosion_in_progress = 0
+		if(ticker.mode.name == "nuclear emergency")
+			ticker.mode:nukes_left --
+			ticker.mode.station_was_nuked = (derp==0)
 
-	else if (ticker.mode.name == "nuclear emergency" && herp)
-		world << "<B>Everyone died in the blast, including the Syndicate Agents. Resetting in 30 seconds!</B>"
+		else
+			world << "<B>The station was destoyed by the nuclear blast!</B>"
+			ticker.mode.station_was_nuked = 1
+			//TODO: derped blast should partially damage nearest objects 
+			// and do not reboot the game. Also make it work properly on other z-levels --rastaf0
 
-		sleep(300)
-		log_game("Rebooting due to nuclear detonation")
-		world.Reboot()
-		return
+		ticker.mode.check_win()
 
-	else if (ticker.mode.name == "nuclear emergency" && derp)
-		world << "<B>Resetting in 30 seconds!</B>"
-
-		sleep(300)
-		log_game("Rebooting due to nuclear detonation")
-		world.Reboot()
-		return
 
 /obj/item/weapon/disk/nuclear/Del()
 	if (ticker.mode && ticker.mode.name == "nuclear emergency")

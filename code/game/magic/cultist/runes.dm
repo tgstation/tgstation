@@ -103,11 +103,8 @@ var/list/sacrificed = list()
 					continue
 				if(M.stat==2)
 					continue
-				if(ticker && ticker.mode && ticker.mode.name == "cult")
-					var/list/uncons = ticker.mode:get_unconvertables()
-					if(M.mind in uncons)
-						continue
-					ticker.mode:add_cultist(M.mind)
+				if(is_convertable_to_cult(M.mind))
+					ticker.mode.add_cultist(M.mind)
 				usr.say("Mah'weyh pleggh at e'ntrath!")
 				M.visible_message("\red [M] writhes in pain as the markings below him glow a bloody red.", \
 				"\red AAAAAAHHHH!.", \

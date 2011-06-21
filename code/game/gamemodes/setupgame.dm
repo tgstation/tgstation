@@ -139,4 +139,5 @@
 				M.equip_if_possible(new /obj/item/clothing/head/helmet/swat(M), M.slot_head)
 			del(A)
 			continue
-			*/
+*/
+

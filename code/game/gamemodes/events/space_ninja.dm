@@ -106,7 +106,7 @@ When I already created about 4 new objectives, this doesn't terribly important o
 	var/antagonist_list[] = list()//The main bad guys. Evil minds that plot destruction.
 	var/sec_antagonist_list[] = current_mode.traitors//The OTHER bad guys. Mostly admin made.
 	var/ter_antagonist_list[] = list()//The bad guys no-one really cares about. For now just revs.
-
+	var/living_heads_of_staff[] = current_mode.get_living_heads()
 	var/protagonist_list[] = current_mode.get_living_heads()//The good guys. Mostly Heads. Who are alive.
 
 	var/xeno_list[] = list()//Aliens.
@@ -115,44 +115,40 @@ When I already created about 4 new objectives, this doesn't terribly important o
 	//First we determine what mode it is and add the bad guys approprietly.
 	switch (current_mode.config_tag)
 		if("traitor")
-			if(current_mode:traitors.len)
-				for(current_mind in current_mode:traitors)//For traitor minds in in the traitors list.
-					if(current_mind.current&&current_mind.current.stat!=2)//If the traitor mob exists and they are not dead.
-						antagonist_list += current_mind//Add them to the list.
+			for(current_mind in current_mode:traitors)//For traitor minds in in the traitors list.
+				if(current_mind.current&&current_mind.current.stat!=2)//If the traitor mob exists and they are not dead.
+					antagonist_list += current_mind//Add them to the list.
 
 		if ("revolution")//Rev is divided into regular and heads. There are also heads of staff to consider.
-			if(current_mode:head_revolutionaries.len)
-				for(current_mind in current_mode:head_revolutionaries)
-					if(current_mind.current&&current_mind.current.stat!=2)
-						antagonist_list += current_mind
+			for(current_mind in current_mode:head_revolutionaries)
+				if(current_mind.current&&current_mind.current.stat!=2)
+					antagonist_list += current_mind
 
-				for(current_mind in current_mode:revolutionaries)
-					if(current_mind.current&&current_mind.current.stat!=2)
-						ter_antagonist_list += current_mind
+			for(current_mind in current_mode:revolutionaries)
+				if(current_mind.current&&current_mind.current.stat!=2)
+					ter_antagonist_list += current_mind
 
-			if(current_mode:heads_of_staff.len)
+			protagonist_list |= living_heads_of_staff
+				/* seems unused or infinished --rastaf0
 				var/heads_list[] = list()//Now we manually override the list made prior. Target Heads take priority.
-				for(current_mind in current_mode:heads_of_staff)
-					if(current_mind.current&&current_mind.current.stat!=2)
-						protagonist_list += current_mind
 				if(heads_list.len)//Or not, if there are none.
 					protagonist_list = heads_list
+				*/
 
 		if ("cult")//Always a few of these around.
-			if(current_mode:cult.len)
-				for(current_mind in current_mode:cult)
-					if(current_mind.current&&current_mind.current.stat!=2)
-						antagonist_list += current_mind
+			for(current_mind in current_mode.cult)
+				if(current_mind.current&&current_mind.current.stat!=2)
+					antagonist_list += current_mind
 
-		if ("wizard")//There can be only one mode wizard. Other wizards aren't too important.
-			if(current_mode:wizard)
-				antagonist_list += current_mode:wizard//The round will end if the wizard dies so checking for it is unnecessary.
+		if ("wizard")
+			for(current_mind in current_mode.wizards)
+				if(current_mind.current&&current_mind.current.stat!=2)
+					antagonist_list += current_mind
 
-		if ("changeling")//While only one changeling counts for being alive or dead, it's possible there are more.
-			if(current_mode:changelings.len)
-				for(current_mind in current_mode:changelings)
-					if(current_mind.current&&current_mind.current.stat!=2)
-						antagonist_list += current_mind
+		if ("changeling")
+			for(current_mind in current_mode.changelings)
+				if(current_mind.current&&current_mind.current.stat!=2)
+					antagonist_list += current_mind
 /*
 I originally intended for space ninjas to appear in Malfunction but after some consideration
 this is not worth the trouble. Particularly with how objective mind completion is tracked.
@@ -160,15 +156,14 @@ Not to mention that Malfunction does not use declare_completion (at least, not i
 With that said, a ninja on the side of the station would murder the AI very quickly--and the rounds usually
 last long enough for the ninja to appear, too.
 
-		if ("malfunction")//Only one malf AI.
+		if ("malfunction")//Only one malf AI. //not only one anymore. --rastaf0
 			if(current_mode:malf_ai)
 				antagonist_list += current_mode:malf_ai
 */
 		if ("nuclear")//Can be a few of these guys.
-			if(current_mode:syndicates.len)
-				for(current_mind in current_mode:syndicates)
-					if(current_mind.current&&current_mind.current.stat!=2)
-						antagonist_list += current_mind
+			for(current_mind in current_mode:syndicates)
+				if(current_mind.current&&current_mind.current.stat!=2)
+					antagonist_list += current_mind
 		else
 			return//Don't want to summon a ninja during meteor or extended, or something.
 

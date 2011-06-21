@@ -2180,7 +2180,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
 				if("charges")
 					statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
-
+#if 1
 /client/proc/station_explosion_cinematic(var/derp)
 	if(mob)
 		var/mob/M = mob
@@ -2212,3 +2212,44 @@ note dizziness decrements automatically in the mob's Life() proc.
 						boom.icon_state = "loss_malf"
 					else
 						boom.icon_state = "loss_general"
+#elif
+/client/proc/station_explosion_cinematic(var/derp)
+	if(!src.mob)
+		return
+	
+	var/mob/M = src.mob
+	M.loc = null // HACK, but whatever, this works
+
+	if(!M.hud_used)
+		return
+
+	var/obj/screen/boom = M.hud_used.station_explosion
+	src.screen += boom
+	if(ticker)
+		switch(ticker.mode.name)
+			if("nuclear emergency")
+				flick("start_nuke", boom)
+			if("AI malfunction")
+				flick("start_malf", boom)
+			else
+				boom.icon_state = "start"
+	sleep(40)
+	M << sound('explosionfar.ogg')
+	boom.icon_state = "end"
+	if(!derp)
+		flick("explode", boom)
+	else
+		flick("explode2", boom)
+	sleep(40)
+	if(ticker)
+		switch(ticker.mode.name)
+			if("nuclear emergency")
+				if (!derp)
+					boom.icon_state = "loss_nuke"
+				else
+					boom.icon_state = "loss_nuke2"
+			if("AI malfunction")
+				boom.icon_state = "loss_malf"
+			else
+				boom.icon_state = "loss_general"
+#endif

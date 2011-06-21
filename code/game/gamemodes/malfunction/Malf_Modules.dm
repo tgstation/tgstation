@@ -14,7 +14,7 @@ rcd light flash thingy on matter drain
 
 */
 
-/datum/game_mode/malfunction/AI_Module
+/datum/AI_Module
 	var/uses = 0
 	var/module_name
 	var/mod_pick_name
@@ -22,14 +22,14 @@ rcd light flash thingy on matter drain
 	var/engaged = 0
 
 
-/datum/game_mode/malfunction/AI_Module/large/
+/datum/AI_Module/large/
 	uses = 1
 
-/datum/game_mode/malfunction/AI_Module/small/
+/datum/AI_Module/small/
 	uses = 5
 
 
-/datum/game_mode/malfunction/AI_Module/large/fireproof_core
+/datum/AI_Module/large/fireproof_core
 	module_name = "Core upgrade"
 	mod_pick_name = "coreup"
 
@@ -41,7 +41,7 @@ rcd light flash thingy on matter drain
 	usr.verbs -= /client/proc/fireproof_core
 	usr << "\red Core fireproofed."
 
-/datum/game_mode/malfunction/AI_Module/large/upgrade_turrets
+/datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"
 	mod_pick_name = "turret"
 
@@ -53,14 +53,14 @@ rcd light flash thingy on matter drain
 		turret.health += 30
 		turret.shot_delay = 20
 
-/datum/game_mode/malfunction/AI_Module/large/disable_rcd
+/datum/AI_Module/large/disable_rcd
 	module_name = "RCD disable"
 	mod_pick_name = "rcd"
 
 /client/proc/disable_rcd()
 	set category = "Malfunction"
 	set name = "Disable RCDs"
-	for(var/datum/game_mode/malfunction/AI_Module/large/disable_rcd/rcdmod in usr:current_modules)
+	for(var/datum/AI_Module/large/disable_rcd/rcdmod in usr:current_modules)
 		if(rcdmod.uses > 0)
 			rcdmod.uses --
 			for(var/obj/item/weapon/rcd/rcd in world)
@@ -70,7 +70,7 @@ rcd light flash thingy on matter drain
 			usr << "RCD-disabling pulse emitted."
 		else usr << "Out of uses."
 
-/datum/game_mode/malfunction/AI_Module/small/overload_machine
+/datum/AI_Module/small/overload_machine
 	module_name = "Machine overload"
 	mod_pick_name = "overload"
 	uses = 2
@@ -79,7 +79,7 @@ rcd light flash thingy on matter drain
 	set name = "Overload Machine"
 	set category = "Malfunction"
 	if (istype(M, /obj/machinery))
-		for(var/datum/game_mode/malfunction/AI_Module/small/overload_machine/overload in usr:current_modules)
+		for(var/datum/AI_Module/small/overload_machine/overload in usr:current_modules)
 			if(overload.uses > 0)
 				overload.uses --
 				for(var/mob/V in hearers(M, null))
@@ -90,7 +90,7 @@ rcd light flash thingy on matter drain
 			else usr << "Out of uses."
 	else usr << "That's not a machine."
 
-/datum/game_mode/malfunction/AI_Module/small/blackout
+/datum/AI_Module/small/blackout
 	module_name = "Blackout"
 	mod_pick_name = "blackout"
 	uses = 3
@@ -98,7 +98,7 @@ rcd light flash thingy on matter drain
 /client/proc/blackout()
 	set category = "Malfunction"
 	set name = "Blackout"
-	for(var/datum/game_mode/malfunction/AI_Module/small/blackout/blackout in usr:current_modules)
+	for(var/datum/AI_Module/small/blackout/blackout in usr:current_modules)
 		if(blackout.uses > 0)
 			blackout.uses --
 			for(var/obj/machinery/power/apc/apc in world)
@@ -107,7 +107,7 @@ rcd light flash thingy on matter drain
 				else apc.overload++
 		else usr << "Out of uses."
 
-/datum/game_mode/malfunction/AI_Module/small/interhack
+/datum/AI_Module/small/interhack
 	module_name = "Hack intercept"
 	mod_pick_name = "interhack"
 
@@ -117,7 +117,7 @@ rcd light flash thingy on matter drain
 	usr.verbs -= /client/proc/interhack
 	ticker.mode:hack_intercept()
 
-/datum/game_mode/malfunction/AI_Module/small/reactivate_camera
+/datum/AI_Module/small/reactivate_camera
 	module_name = "Reactivate camera"
 	mod_pick_name = "recam"
 	uses = 10
@@ -126,7 +126,7 @@ rcd light flash thingy on matter drain
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
 	if (istype (C, /obj/machinery/camera))
-		for(var/datum/game_mode/malfunction/AI_Module/small/reactivate_camera/camera in usr:current_modules)
+		for(var/datum/AI_Module/small/reactivate_camera/camera in usr:current_modules)
 			if(camera.uses > 0)
 				if(!C.status)
 					C.status = !C.status
@@ -139,21 +139,21 @@ rcd light flash thingy on matter drain
 	else usr << "That's not a camera."
 
 
-/datum/game_mode/malfunction/AI_Module/module_picker
+/datum/AI_Module/module_picker
 	var/temp = null
 	var/processing_time = 100
 	var/list/possible_modules = list()
 
-/datum/game_mode/malfunction/AI_Module/module_picker/New()
-	src.possible_modules += new /datum/game_mode/malfunction/AI_Module/large/fireproof_core
-	src.possible_modules += new /datum/game_mode/malfunction/AI_Module/large/upgrade_turrets
-	src.possible_modules += new /datum/game_mode/malfunction/AI_Module/large/disable_rcd
-	src.possible_modules += new /datum/game_mode/malfunction/AI_Module/small/overload_machine
-	src.possible_modules += new /datum/game_mode/malfunction/AI_Module/small/interhack
-	src.possible_modules += new /datum/game_mode/malfunction/AI_Module/small/blackout
-	src.possible_modules += new /datum/game_mode/malfunction/AI_Module/small/reactivate_camera
+/datum/AI_Module/module_picker/New()
+	src.possible_modules += new /datum/AI_Module/large/fireproof_core
+	src.possible_modules += new /datum/AI_Module/large/upgrade_turrets
+	src.possible_modules += new /datum/AI_Module/large/disable_rcd
+	src.possible_modules += new /datum/AI_Module/small/overload_machine
+	src.possible_modules += new /datum/AI_Module/small/interhack
+	src.possible_modules += new /datum/AI_Module/small/blackout
+	src.possible_modules += new /datum/AI_Module/small/reactivate_camera
 
-/datum/game_mode/malfunction/AI_Module/module_picker/proc/use(user as mob)
+/datum/AI_Module/module_picker/proc/use(user as mob)
 	var/dat
 	if (src.temp)
 		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
@@ -164,9 +164,9 @@ rcd light flash thingy on matter drain
 		dat += "<HR>"
 		dat += "<B>Install Module:</B><BR>"
 		dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
-		for(var/datum/game_mode/malfunction/AI_Module/large/module in src.possible_modules)
+		for(var/datum/AI_Module/large/module in src.possible_modules)
 			dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A> (50)<BR>"
-		for(var/datum/game_mode/malfunction/AI_Module/small/module in src.possible_modules)
+		for(var/datum/AI_Module/small/module in src.possible_modules)
 			dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A> (15)<BR>"
 		dat += "<HR>"
 
@@ -174,40 +174,40 @@ rcd light flash thingy on matter drain
 	onclose(user, "modpicker")
 	return
 
-/datum/game_mode/malfunction/AI_Module/module_picker/Topic(href, href_list)
+/datum/AI_Module/module_picker/Topic(href, href_list)
 	..()
 	if (href_list["coreup"])
 		var/already
-		for (var/datum/game_mode/malfunction/AI_Module/mod in usr:current_modules)
-			if(istype(mod, /datum/game_mode/malfunction/AI_Module/large/fireproof_core))
+		for (var/datum/AI_Module/mod in usr:current_modules)
+			if(istype(mod, /datum/AI_Module/large/fireproof_core))
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/fireproof_core
-			usr:current_modules += new /datum/game_mode/malfunction/AI_Module/large/fireproof_core
+			usr:current_modules += new /datum/AI_Module/large/fireproof_core
 			src.temp = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
 			src.processing_time -= 50
 		else src.temp = "This module is only needed once."
 
 	else if (href_list["turret"])
 		var/already
-		for (var/datum/game_mode/malfunction/AI_Module/mod in usr:current_modules)
-			if(istype(mod, /datum/game_mode/malfunction/AI_Module/large/upgrade_turrets))
+		for (var/datum/AI_Module/mod in usr:current_modules)
+			if(istype(mod, /datum/AI_Module/large/upgrade_turrets))
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/upgrade_turrets
-			usr:current_modules += new /datum/game_mode/malfunction/AI_Module/large/upgrade_turrets
+			usr:current_modules += new /datum/AI_Module/large/upgrade_turrets
 			src.temp = "Improves the firing speed and health of all AI turrets. This effect is permanent."
 			src.processing_time -= 50
 		else src.temp = "This module is only needed once."
 
 	else if (href_list["rcd"])
 		var/already
-		for (var/datum/game_mode/malfunction/AI_Module/mod in usr:current_modules)
-			if(istype(mod, /datum/game_mode/malfunction/AI_Module/large/disable_rcd))
+		for (var/datum/AI_Module/mod in usr:current_modules)
+			if(istype(mod, /datum/AI_Module/large/disable_rcd))
 				mod:uses += 1
 				already = 1
 		if (!already)
-			usr:current_modules += new /datum/game_mode/malfunction/AI_Module/large/disable_rcd
+			usr:current_modules += new /datum/AI_Module/large/disable_rcd
 			usr.verbs += /client/proc/disable_rcd
 			src.temp = 	"Send a specialised pulse to break all RCD devices on the station."
 		else src.temp = "Additional use added to RCD disabler."
@@ -215,52 +215,52 @@ rcd light flash thingy on matter drain
 
 	else if (href_list["overload"])
 		var/already
-		for (var/datum/game_mode/malfunction/AI_Module/mod in usr:current_modules)
-			if(istype(mod, /datum/game_mode/malfunction/AI_Module/small/overload_machine))
+		for (var/datum/AI_Module/mod in usr:current_modules)
+			if(istype(mod, /datum/AI_Module/small/overload_machine))
 				mod:uses += 2
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/overload_machine
-			usr:current_modules += new /datum/game_mode/malfunction/AI_Module/small/overload_machine
+			usr:current_modules += new /datum/AI_Module/small/overload_machine
 			src.temp = "Overloads an electrical machine, causing a small explosion. 2 uses."
 		else src.temp = "Two additional uses added to Overload module."
 		src.processing_time -= 15
 
 	else if (href_list["blackout"])
 		var/already
-		for (var/datum/game_mode/malfunction/AI_Module/mod in usr:current_modules)
-			if(istype(mod, /datum/game_mode/malfunction/AI_Module/small/blackout))
+		for (var/datum/AI_Module/mod in usr:current_modules)
+			if(istype(mod, /datum/AI_Module/small/blackout))
 				mod:uses += 3
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/blackout
 			src.temp = "Attempts to overload the lighting circuits on the station, destroying some bulbs. 3 uses."
-			usr:current_modules += new /datum/game_mode/malfunction/AI_Module/small/blackout
+			usr:current_modules += new /datum/AI_Module/small/blackout
 		else src.temp = "Three additional uses added to Blackout module."
 		src.processing_time -= 15
 
 	else if (href_list["interhack"])
 		var/already
-		for (var/datum/game_mode/malfunction/AI_Module/mod in usr:current_modules)
-			if(istype(mod, /datum/game_mode/malfunction/AI_Module/small/interhack))
+		for (var/datum/AI_Module/mod in usr:current_modules)
+			if(istype(mod, /datum/AI_Module/small/interhack))
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/interhack
 			src.temp = "Hacks the status upgrade from Cent. Com, removing any information about malfunctioning electrical systems."
-			usr:current_modules += new /datum/game_mode/malfunction/AI_Module/small/interhack
+			usr:current_modules += new /datum/AI_Module/small/interhack
 			src.processing_time -= 15
 		else src.temp = "This module is only needed once."
 
 	else if (href_list["recam"])
 		var/already
-		for (var/datum/game_mode/malfunction/AI_Module/mod in usr:current_modules)
-			if(istype(mod, /datum/game_mode/malfunction/AI_Module/small/reactivate_camera))
+		for (var/datum/AI_Module/mod in usr:current_modules)
+			if(istype(mod, /datum/AI_Module/small/reactivate_camera))
 				mod:uses += 10
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/reactivate_camera
 			src.temp = "Reactivates a currently disabled camera. 10 uses."
-			usr:current_modules += new /datum/game_mode/malfunction/AI_Module/small/reactivate_camera
+			usr:current_modules += new /datum/AI_Module/small/reactivate_camera
 		else src.temp = "Ten additional uses added to ReCam module."
 		src.processing_time -= 15
 

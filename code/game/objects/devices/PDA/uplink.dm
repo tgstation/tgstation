@@ -168,3 +168,13 @@
 		return
 
 	return
+
+/obj/item/weapon/integrated_uplink/proc/shutdown_uplink()
+	if (isnull(src.hostpda))
+		return
+	active = 0
+	hostpda.note = orignote
+	if (hostpda.mode==1)
+		hostpda.mode = 0
+		hostpda.updateDialog()
+	return

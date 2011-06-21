@@ -23,7 +23,9 @@
 	src.verbs += /client/proc/changeling_boost_range
 
 	src.changeling_level = 2
-	if (src.absorbed_dna.len <= 0)
+	if (!src.absorbed_dna)
+		src.absorbed_dna = list()
+	if (src.absorbed_dna.len == 0)
 		src.absorbed_dna[src.real_name] = src.dna
 	return
 
