@@ -132,10 +132,12 @@
 		var/title as text
 		var/can_build = 1
 		can_build = can_build && (max_multiplier>0)
+		/*
 		if (R.one_per_turf)
 			can_build = can_build && !(locate(R.result_type) in usr.loc)
 		if (R.on_floor)
 			can_build = can_build && istype(usr.loc, /turf/simulated/floor)
+		*/
 		if (R.res_amount>1)
 			title+= "[R.res_amount]x [R.title]\s"
 		else
@@ -147,8 +149,15 @@
 			t1 += text("[]", title)
 			continue
 		if (R.max_res_amount>1 && max_multiplier>1)
-			var/multiplier = min(max_multiplier, round(R.max_res_amount/R.res_amount))
-			t1 += text(" | <A href='?src=\ref[];make=[];multiplier=[]'>[]x</A>  ", src, i, multiplier, multiplier*R.res_amount)
+			max_multiplier = min(max_multiplier, round(R.max_res_amount/R.res_amount))
+			t1 += " |"
+			var/list/multipliers = list(5,10,25)
+			for (var/n in multipliers)
+				if (max_multiplier>=n)
+					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
+			if (!(max_multiplier in multipliers))
+				t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
+				
 	t1 += "</TT></body></HTML>"
 	user << browse(t1, "window=stack")
 	onclose(user, "stack")

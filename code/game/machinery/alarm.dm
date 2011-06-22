@@ -514,7 +514,7 @@ table tr:first-child th:first-child { border: none;}
 				var/varname = href_list["var"]
 				var/datum/tlv/tlv = TLV[env]
 				var/newval = input("Enter [varname] for env", "Alarm triggers", tlv.vars[varname]) as num|null
-				if (isnull(newval) || ..() || locked)
+				if (isnull(newval) || ..() || (locked && issilicon(usr)))
 					return
 				if (newval<0)
 					tlv.vars[varname] = -1.0

@@ -327,7 +327,7 @@ mob/new_player
 			G.fields["p_stat"] = "Active"
 			G.fields["m_stat"] = "Stable"
 			M.fields["b_type"] = text("[]", H.b_type)
-			M.fields["b_dna"] = ""//H.dna.unique_enzymes
+			M.fields["b_dna"] = H.dna.unique_enzymes
 			M.fields["mi_dis"] = "None"
 			M.fields["mi_dis_d"] = "No minor disabilities have been declared."
 			M.fields["ma_dis"] = "None"

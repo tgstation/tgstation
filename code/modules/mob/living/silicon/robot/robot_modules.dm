@@ -16,6 +16,9 @@
 			emag.emp_act(severity)
 		..()
 
+	proc/respawn_consumable(var/mob/living/silicon/robot/R)
+		return
+	
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
 /*
@@ -91,6 +94,20 @@ obj/item/weapon/robot_module/syndicate
 	src.modules += new /obj/item/weapon/borg/sight/meson(src)
 
 	src.emag = new /obj/item/weapon/borg/stun(src)
+
+
+/obj/item/weapon/robot_module/engineering/respawn_consumable(var/mob/living/silicon/robot/R)
+	var/list/what = list (
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/rglass,
+		/obj/item/weapon/cable_coil,
+	)
+	for (var/T in what)
+		if (!(locate(T) in src.modules))
+			src.modules -= null
+			var/O = new T(src)
+			src.modules += O
+			O:amount = 1
 
 /*
 /obj/item/weapon/robot_module/medical/New()

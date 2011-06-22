@@ -9,6 +9,7 @@
 	layer = TURF_LAYER
 	var/area_uid
 	var/id_tag = null
+	power_channel = ENVIRON
 
 	var/on = 0
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
@@ -44,6 +45,7 @@
 
 	high_volume
 		name = "Large Air Vent"
+		power_channel = EQUIP
 		New()
 			..()
 			air_contents.volume = 1000
@@ -268,10 +270,10 @@
 			usr << "It seems welded shut."
 
 	power_change()
-//		if(powered(EVNIRON))
-//			stat &= ~NOPOWER
-//		else
-//			stat |= NOPOWER
+		if(powered(power_channel))
+			stat &= ~NOPOWER
+		else
+			stat |= NOPOWER
 		update_icon()
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)

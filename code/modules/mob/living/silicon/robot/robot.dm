@@ -709,7 +709,9 @@
 
 
 	for (var/obj in module.modules)
-		if(activated(obj))
+		if (!obj)
+			dat += text("<B>Resource depleted</B><BR>")
+		else if(activated(obj))
 			dat += text("[obj]: <B>Activated</B><BR>")
 		else
 			dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Activate</A><BR>")

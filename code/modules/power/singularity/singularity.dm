@@ -219,6 +219,9 @@ var/global/list/uneatable = list(
 
 		consume(var/atom/A)
 			if (istype(A,/obj/item/weapon/storage/backpack/holding))
+				var/log_str = "\The [src] was exploded in [get_area(src)] due to consumption of [A], last touched by: [A.fingerprintslast]"
+				message_admins(log_str)
+				log_game(log_str)
 				del(A)
 				explosion(src.loc,10,15,20,40)
 				if(src) del(src)

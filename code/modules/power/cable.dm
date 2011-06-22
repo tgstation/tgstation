@@ -317,6 +317,10 @@
 		C.updateicon()
 		C.update_network()
 		use(1)
+		if (C.shock(user, 50))
+			if (prob(50))
+				new/obj/item/weapon/cable_coil(C.loc, C.d1 ? 2 : 1, C.color)
+				del(C)
 		//src.laying = 1
 		//last = C
 
@@ -382,7 +386,10 @@
 			NC.updateicon()
 			NC.update_network()
 			use(1)
-			C.shock(user, 25)
+			if (NC.shock(user, 50))
+				if (prob(50))
+					new/obj/item/weapon/cable_coil(NC.loc, NC.d1 ? 2 : 1, NC.color)
+					del(NC)
 
 			return
 	else if(C.d1 == 0)		// exisiting cable doesn't point at our position, so see if it's a stub
@@ -427,6 +434,10 @@
 		NC.update_network()
 
 		use(1)
+		if (NC.shock(user, 50))
+			if (prob(50))
+				new/obj/item/weapon/cable_coil(NC.loc, NC.d1 ? 2 : 1, NC.color)
+				del(NC)
 
 		return
 

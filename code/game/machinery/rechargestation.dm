@@ -106,7 +106,7 @@
 						if(istype(O,/obj/item/weapon/baton))
 							if(O:charges < 10)
 								O:charges += 1
-
+					R.module.respawn_consumable(R)
 
 
 	verb
