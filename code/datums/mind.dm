@@ -54,7 +54,7 @@ datum/mind
 			"malfunction",
 		)
 		var/text = ""
-		
+
 		if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
 			/** REVOLUTION ***/
 			text = "revolution"
@@ -68,7 +68,7 @@ datum/mind
 			else if (src in ticker.mode.head_revolutionaries)
 				text = "head|officer|<a href='?src=\ref[src];revolution=clear'>employer</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 				text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
-				
+
 				var/list/L = src.current.get_contents()
 				var/obj/item/device/flash/flash = locate() in L
 				if (flash)
@@ -431,7 +431,7 @@ datum/mind
 					ticker.mode.revolutionaries += src
 					ticker.mode.update_rev_icons_added(src)
 					special_role = "Revolutionary"
-					
+
 				if("headrev")
 					if(src in ticker.mode.revolutionaries)
 						ticker.mode.revolutionaries -= src
@@ -471,7 +471,7 @@ datum/mind
 					if (!flash)
 						usr << "\red Deleting flash failed!"
 					del(flash)
-					
+
 				if("repairflash")
 					var/list/L = src.current.get_contents()
 					var/obj/item/device/flash/flash = locate() in L
@@ -517,7 +517,7 @@ datum/mind
 					var/mob/living/carbon/human/H = current
 					if (istype(H))
 						var/obj/item/weapon/tome/T = new(H)
-						
+
 						var/list/slots = list (
 							"backpack" = H.slot_in_backpack,
 							"left pocket" = H.slot_l_store,
@@ -722,9 +722,9 @@ datum/mind
 						del(current:malf_picker)
 						current:show_laws()
 						current.icon_state = "ai"
-	
+
 						current << "\red <FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT>"
-					
+
 				if("malf")
 					if(!(src in ticker.mode.malf_ai))
 						ticker.mode.malf_ai += src
@@ -884,4 +884,4 @@ datum/mind
 			del(suplink)
 		return
 
-			
+

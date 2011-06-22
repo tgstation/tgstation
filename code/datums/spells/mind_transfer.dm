@@ -8,7 +8,7 @@
 	invocation = "GIN'YU CAPAN"
 	invocation_type = "whisper"
 	range = 7
-	var/list/protected_roles = list("Wizard","Fake Wizard","Changeling","Cultist") //which roles are immune to the spell
+	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
 	var/list/compatible_mobs = list(/mob/living/carbon/human,/mob/living/carbon/monkey) //which types of mobs are affected by the spell. NOTE: change at your own risk
 	var/base_spell_loss_chance = 20 //base probability of the wizard losing a spell in the process
 	var/spell_loss_chance_modifier = 7 //amount of probability of losing a spell added per spell (mind_transfer included)

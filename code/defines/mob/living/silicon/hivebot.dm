@@ -1,6 +1,5 @@
 /mob/living/silicon/hivebot
 	name = "Robot"
-	voice_name = "synthesized voice"
 	icon = 'hivebot.dmi'
 	icon_state = "basic"
 	health = 80

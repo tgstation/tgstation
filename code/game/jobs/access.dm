@@ -58,6 +58,19 @@
 	access_hop = 57
 	access_hos = 58
 
+	//BEGIN CENTCOM ACCESS
+	/*Should leave plenty of room if we need to add more access levels.
+	Mostly for admin fun times.*/
+	access_cent_general = 101//General facilities.
+	access_cent_thunder = 102//Thunderdome.
+	access_cent_specops = 103//Special Ops.
+	access_cent_medical = 104//Medical/Research
+	access_cent_living = 105//Living quarters.
+	access_cent_storage = 106//Generic storage areas.
+	access_cent_teleporter = 107//Teleporter.
+	access_cent_creed = 108//Creed's office.
+	access_cent_captain = 109//Captain's office/ID comp/AI.
+
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
 /obj/New()
@@ -191,6 +204,27 @@
 		else
 			return list()
 
+/proc/get_centcom_access(job)
+	switch(job)
+		if("VIP Guest")
+			return list(access_cent_general)
+		if("Custodian")
+			return list(access_cent_general, access_cent_living, access_cent_storage)
+		if("Thunderdome Overseer")
+			return list(access_cent_general, access_cent_thunder)
+		if("Intel Officer")
+			return list(access_cent_general, access_cent_living)
+		if("Medical Officer")
+			return list(access_cent_general, access_cent_living, access_cent_medical)
+		if("Death Commando")
+			return list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)
+		if("Research Officer")
+			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_teleporter, access_cent_storage)
+		if("BlackOps Commander")
+			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage, access_cent_creed)
+		if("Supreme Commander")
+			return get_all_centcom_access()
+
 /proc/get_all_accesses()
 	return list(access_security, access_brig, access_armory, access_forensics_lockers, access_court,
 	            access_medical, access_medlab, access_morgue, access_rd,
@@ -202,6 +236,9 @@
 	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mining_office, access_mailsorting, access_mint_vault, access_mint,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos)
+
+/proc/get_all_centcom_access()
+	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
 
 /proc/get_region_accesses(var/code)
 	switch(code)
@@ -359,12 +396,35 @@
 		if(access_ce)
 			return "CE Private"
 
+/proc/get_centcom_access_desc(A)
+	switch(A)
+		if(access_cent_general)
+			return "Code Grey"
+		if(access_cent_thunder)
+			return "Code Yellow"
+		if(access_cent_storage)
+			return "Code Orange"
+		if(access_cent_living)
+			return "Code Green"
+		if(access_cent_medical)
+			return "Code White"
+		if(access_cent_teleporter)
+			return "Code Blue"
+		if(access_cent_specops)
+			return "Code Black"
+		if(access_cent_creed)
+			return "Code Silver"
+		if(access_cent_captain)
+			return "Code Gold"
 
 /proc/get_all_jobs()
 	return list("Assistant", "Station Engineer", "Shaft Miner", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",
 				"Geneticist", "Scientist", "Head of Security", "Head of Personnel", "Atmospheric Technician",
 				"Chaplain", "Bartender", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster",
 				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer", "Virologist", "Cargo Technician", "Chief Medical Officer")
+
+/proc/get_all_centcom_jobs()
+	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")
 
 /obj/proc/GetJobName()
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))

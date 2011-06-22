@@ -230,8 +230,11 @@ proc/process_ghost_teleport_locs()
 
 /area/centcom
 	name = "Centcom"
-	icon_state = "purple"
+	icon_state = "centcom"
 	requires_power = 0
+
+/area/centcom/control
+	name = "Centcom Control"
 
 /area/centcom/evac
 	name = "Centcom Emergency Shuttle"
@@ -279,7 +282,7 @@ proc/process_ghost_teleport_locs()
 
 /area/tdome
 	name = "Thunderdome"
-	icon_state = "medbay"
+	icon_state = "thunder"
 	requires_power = 0
 
 /area/tdome/tdome1

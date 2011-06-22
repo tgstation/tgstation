@@ -1,6 +1,5 @@
 /mob/living/silicon/robot
 	name = "Robot"
-	voice_name = "synthesized voice"
 	icon = 'robots.dmi'//
 	icon_state = "robot"
 	health = 300

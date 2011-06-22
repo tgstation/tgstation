@@ -1,3 +1,7 @@
+/obj/machinery/nuclearbomb/New()
+	..()
+	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
+
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
 		src.timeleft--
@@ -172,8 +176,13 @@
 		else
 			world << "<B>The station was destoyed by the nuclear blast!</B>"
 			ticker.mode.station_was_nuked = 1
-			//TODO: derped blast should partially damage nearest objects 
-			// and do not reboot the game. Also make it work properly on other z-levels --rastaf0
+			/*
+			TODO: derped blast should partially damage nearest objects
+			and do not reboot the game. Also make it work properly on other z-levels --rastaf0
+			Further TODO: make nuke detonation work with objectives. Right now, you can't track player
+			location because they are viewing the cinematic (can't get_turf on them to determine z_level
+			as it will return null). Leaving this for you since you apparently plan to work this further. /N
+			*/
 
 		ticker.mode.check_win()
 

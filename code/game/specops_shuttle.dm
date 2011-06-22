@@ -14,19 +14,42 @@ var/specops_shuttle_timeleft = 0
 	name = "Spec. Ops. Shuttle Console"
 	icon = 'computer.dmi'
 	icon_state = "shuttle"
-	req_access = list()
+	req_access = list(access_cent_specops)
 	var/temp = null
 	var/hacked = 0
 	var/allowedtocall = 0
 
 /proc/specops_process()
+	var/area/centcom/control/cent_com = locate()//To find announcer. This area should exist for this proc to work.
+	var/area/centcom/specops/special_ops = locate()//Where is the specops area located?
+	var/mob/living/silicon/decoy/announcer = locate() in cent_com//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
+
+	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
+	var/message = "THE SPECIAL OPERATIONS SHUTTLE IS PREPARING FOR LAUNCH"//Initial message shown.
+	if(announcer)
+		announcer.say(message)
+		//world << "Should be hearing a message here."
+
 	while(specops_shuttle_time - world.timeofday > 0)
 		var/ticksleft = specops_shuttle_time - world.timeofday
 
 		if(ticksleft > 1e5)
 			specops_shuttle_time = world.timeofday + 10	// midnight rollover
 		specops_shuttle_timeleft = (ticksleft / 10)
+
+		//All this does is announce the time before launch.
+		if(announcer)
+			var/rounded_time_left = round(specops_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
+			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
+				message = "ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN"
+				if(rounded_time_left==0)
+					message = "ALERT: TAKEOFF"
+				announcer.say(message)
+				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
+				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
+
 		sleep(5)
+
 	specops_shuttle_moving_to_station = 0
 	specops_shuttle_moving_to_centcom = 0
 
@@ -39,7 +62,7 @@ var/specops_shuttle_timeleft = 0
 
 	//Begin Marauder launchpad.
 	spawn(0)//So it parallel processes it.
-		for(var/obj/machinery/door/poddoor/M in machines)
+		for(var/obj/machinery/door/poddoor/M in special_ops)
 			switch(M.id)
 				if("ASSAULT0")
 					spawn(10)//1 second delay between each.
@@ -63,14 +86,14 @@ var/specops_shuttle_timeleft = 0
 		for(var/obj/landmark/L in world)
 			if(L.name == "Marauder Exit")
 				var/obj/portal/P = new(L.loc)
-				P.invisibility = 101
-				P.failchance = 0
-				P.target = pick(spawn_marauder)
+				P.invisibility = 101//So it is not seen by anyone.
+				P.failchance = 0//So it has no fail chance when teleporting.
+				P.target = pick(spawn_marauder)//Where the marauder will arrive.
 				spawn_marauder.Remove(P.target)
 
 		sleep(10)
 
-		for(var/obj/machinery/mass_driver/M in machines)
+		for(var/obj/machinery/mass_driver/M in special_ops)
 			switch(M.id)
 				if("ASSAULT0")
 					spawn(10)
@@ -87,7 +110,7 @@ var/specops_shuttle_timeleft = 0
 
 		sleep(50)//Doors remain open for 5 seconds.
 
-		for(var/obj/machinery/door/poddoor/M in machines)
+		for(var/obj/machinery/door/poddoor/M in special_ops)
 			switch(M.id)//Doors close at the same time.
 				if("ASSAULT0")
 					spawn(0)
@@ -101,6 +124,7 @@ var/specops_shuttle_timeleft = 0
 				if("ASSAULT3")
 					spawn(0)
 						M.close()
+		special_ops.readyreset()//Reset firealarm after the team launched.
 	//End Marauder launchpad.
 
 	var/area/start_location = locate(/area/shuttle/specops/centcom)
@@ -135,22 +159,22 @@ var/specops_shuttle_timeleft = 0
 	else return 1
 
 /obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/computer/specops_shuttle/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/computer/specops_shuttle/attack_paw(var/mob/user as mob)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag))
 		user << "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals."
 	else
-		return src.attack_hand(user)
+		return attack_hand(user)
 
 /obj/machinery/computer/specops_shuttle/attack_hand(var/mob/user as mob)
-	if(!src.allowed(user))
+	if(!allowed(user))
 		user << "\red Access Denied."
 		return
 
@@ -163,8 +187,8 @@ var/specops_shuttle_timeleft = 0
 
 	user.machine = src
 	var/dat
-	if (src.temp)
-		dat = src.temp
+	if (temp)
+		dat = temp
 	else
 		dat += {"<BR><B>Special Operations Shuttle</B><HR>
 		\nLocation: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Departing for [station_name] in ([specops_shuttle_timeleft] seconds.)":specops_shuttle_at_station ? "Station":"Dock"]<BR>
@@ -179,7 +203,7 @@ var/specops_shuttle_timeleft = 0
 	if(..())
 		return
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.machine = src
 
 	if (href_list["sendtodock"])
@@ -197,9 +221,12 @@ var/specops_shuttle_timeleft = 0
 
 		usr << "\blue The Special Operations shuttle will arrive on [station_name] in [(SPECOPS_MOVETIME/10)] seconds."
 
-		src.temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
-		src.updateUsrDialog()
+		temp += "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		updateUsrDialog()
 
+		var/area/centcom/specops/special_ops = locate()
+		if(special_ops)
+			special_ops.readyalert()//Trigger alarm for the spec ops area.
 		specops_shuttle_moving_to_station = 1
 
 		specops_shuttle_time = world.timeofday + SPECOPS_MOVETIME
@@ -207,8 +234,8 @@ var/specops_shuttle_timeleft = 0
 			specops_process()
 
 	else if (href_list["mainmenu"])
-		src.temp = null
+		temp = null
 
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
+	add_fingerprint(usr)
+	updateUsrDialog()
 	return

@@ -318,7 +318,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				id = pda.id
 			log_admin("[key_name(src)] has granted [M.key] full access.")
 			id.icon_state = "gold"
-			id:access = get_all_accesses()
+			id:access = get_all_accesses()+get_all_centcom_access()
 		else
 			alert("Invalid ID card")
 	else

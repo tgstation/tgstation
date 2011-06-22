@@ -55,6 +55,9 @@
 /obj/item/weapon/circuitboard/card
 	name = "Circuit board (ID Computer)"
 	build_path = "/obj/machinery/computer/card"
+/obj/item/weapon/circuitboard/card/centcom
+	name = "Circuit board (CentCom ID Computer)"
+	build_path = "/obj/machinery/computer/card/centcom"
 //obj/item/weapon/circuitboard/shield
 //	name = "Circuit board (Shield Control)"
 //	build_path = "/obj/machinery/computer/stationshield"

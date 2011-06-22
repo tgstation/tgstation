@@ -85,6 +85,11 @@
 	var/printing = null
 	req_access = list(access_change_ids)
 
+//ID changing computer for CentCom.
+/obj/machinery/computer/card/centcom
+	name = "CentCom Identification Computer"
+	req_access = list(access_cent_captain)
+
 /obj/machinery/computer/communications
 	name = "Communications Console"
 	icon_state = "comm"

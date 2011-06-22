@@ -149,6 +149,20 @@
 			a.cancelAlarm("Fire", src, src)
 	return
 
+/area/proc/readyalert()
+	if(name == "Space")
+		return
+	if(!eject)
+		eject = 1
+		updateicon()
+	return
+
+/area/proc/readyreset()
+	if(eject)
+		eject = 0
+		updateicon()
+	return
+
 /area/proc/partyalert()
 	if(src.name == "Space") //no parties in space!!!
 		return
@@ -173,7 +187,7 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && power_environ)
+	if ((fire || eject || party) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
 		if(fire && !eject && !party)
 			icon_state = "blue"
 		/*else if(atmosalm && !fire && !eject && !party)

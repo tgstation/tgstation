@@ -88,7 +88,7 @@ ________________________________________________________________________________
 /*
 Also a dynamic ninja mission generator.
 I decided to scrap round-specific objectives since keeping track of them would require some form of tracking.
-When I already created about 4 new objectives, this doesn't terribly important or needed.
+When I already created about 4 new objectives, this doesn't seem terribly important or needed.
 */
 
 /var/global/toggle_space_ninja = 1//If ninjas can spawn or not.
@@ -156,7 +156,8 @@ Not to mention that Malfunction does not use declare_completion (at least, not i
 With that said, a ninja on the side of the station would murder the AI very quickly--and the rounds usually
 last long enough for the ninja to appear, too.
 
-		if ("malfunction")//Only one malf AI. //not only one anymore. --rastaf0
+		//not only one anymore. --rastaf0
+		if ("malfunction")
 			if(current_mode:malf_ai)
 				antagonist_list += current_mode:malf_ai
 */
@@ -331,20 +332,16 @@ In either case, it's a good idea to spawn the ninja with a semi-random set of ob
 
 	if(!ninja_mind.objectives.len||!mission_set)//If they somehow did not get an objective at this point, time to destroy the station.
 		var/nuke_code
-		if(current_mode.config_tag == "nuclear"||sent_strike_team)//If it's nuclear, there is a nuke with a code already set. Or if commandos were sent in.
-			var/temp_code
-			for(var/obj/machinery/nuclearbomb/N in world)
-				temp_code = text2num(N.r_code)
-				if(temp_code)//if it's actually a number. It won't convert any non-numericals.
-					nuke_code = N.r_code
-					break
-		if(!nuke_code)//If there is still no code.
-			nuke_code = "[rand(10000, 99999.0)]"
-			for(var/obj/machinery/nuclearbomb/N in world)
-				N.r_code = nuke_code
-		var/datum/objective/nuclear/ninja_objective = new//Fun.
-		ninja_objective.owner = ninja_mind
-		ninja_objective.explanation_text = "Destroy the station with a nuclear device. The code is [nuke_code]." //Let them know what the code is.
+		var/temp_code
+		for(var/obj/machinery/nuclearbomb/N in world)
+			temp_code = text2num(N.r_code)
+			if(temp_code)//if it's actually a number. It won't convert any non-numericals.
+				nuke_code = N.r_code
+				break
+		if(nuke_code)//If there is a nuke device in world and we got the code.
+			var/datum/objective/nuclear/ninja_objective = new//Fun.
+			ninja_objective.owner = ninja_mind
+			ninja_objective.explanation_text = "Destroy the station with a nuclear device. The code is [nuke_code]." //Let them know what the code is.
 
 	//Finally add a survival objective since it's usually broad enough for any round type.
 	var/datum/objective/survive/ninja_objective = new

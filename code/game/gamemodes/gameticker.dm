@@ -56,7 +56,7 @@ var/global/datum/controller/gameticker/ticker
 
 	//Configure mode and assign player to special mode stuff
 	var/can_continue
-	
+
 	if (src.mode.config_tag == "revolution")
 		var/tries=5
 		do

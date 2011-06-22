@@ -3,6 +3,8 @@
 		return 1
 	if (istype(other, /mob/living/silicon/robot))
 		return 1
+	if (istype(other, /mob/living/silicon/decoy))
+		return 1
 	return ..()
 
 /mob/living/silicon/ai/say_quote(var/text)

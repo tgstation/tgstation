@@ -1608,7 +1608,6 @@ var/showadminmessages = 1
 <A href='?src=\ref[src];secretsfun=prisonwarp'>Warp all Players to Prison</A><BR>
 <A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
 <A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
-<A href='?src=\ref[src];secretsfun=cleanexcrement'>Remove all urine/poo from station</A><BR>
 <A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 <A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
 <A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>

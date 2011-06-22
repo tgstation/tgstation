@@ -1,6 +1,5 @@
 /mob/living/silicon/pai
 	name = "pAI"
-	voice_name = "synthesized voice"
 	icon = 'mob.dmi'//
 	icon_state = "shadow"
 

@@ -84,7 +84,7 @@ datum
 			check_completion()
 				if(!target)//If it's a free objective.
 					return 1
-				if(!owner.current||owner.current.stat==2)//If they're dead.
+				if(!owner.current||owner.current.stat==2)//If you're otherwise dead.
 					return 0
 				var/list/all_items = owner.current.get_contents()
 				for(var/obj/item/device/mmi/mmi in all_items)
@@ -172,14 +172,13 @@ datum
 					return 0
 
 		survive
-			explanation_text = "Stay alive until the end"
+			explanation_text = "Stay alive until the end."
 
 			check_completion()
 				if(issilicon(owner.current) && owner.current != owner.original)
 					return 0
 				if(!owner.current || owner.current.stat == 2)
 					return 0
-
 				return 1
 
 		nuclear
@@ -195,11 +194,13 @@ datum
 				"an RCD" = /obj/item/weapon/rcd,
 				"a jetpack" = /obj/item/weapon/tank/jetpack,
 				"a captains jumpsuit" = /obj/item/clothing/under/rank/captain,
+				"the captain's armor" = /obj/item/clothing/suit/armor/captain,
 				"functional ai" = /obj/item/device/aicard,
 				"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 				"the station blueprints" = /obj/item/blueprints,
 				"thermal optics" = /obj/item/clothing/glasses/thermal,
-				"the engineers rig suit" = /obj/item/clothing/suit/space/rig,
+				"a engineers rig suit" = /obj/item/clothing/suit/space/rig,
+				"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
 				"28 moles of plasma (full tank)" = /obj/item/weapon/tank,
 			)
 

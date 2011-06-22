@@ -414,6 +414,15 @@
 		access = get_access("Captain")
 		..()
 
+/obj/item/weapon/card/id/centcom
+	name = "CentCom ID"
+	icon_state = "centcom"
+	registered = "Central Command"
+	assignment = "General"
+	New()
+		access = get_all_centcom_access()
+		..()
+
 /obj/item/weapon/cleaner
 	desc = "Space Cleaner!"
 	icon = 'janitor.dmi'

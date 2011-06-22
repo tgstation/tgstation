@@ -498,7 +498,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if("traitor")
 			new_character.Equip_Rank(new_character.mind.assigned_role, joined_late=1)
 			ticker.mode.equip_traitor(new_character)
-		if("Wizard","Fake Wizard")
+		if("Wizard")
 			new_character.loc = pick(wizardstart)
 			ticker.mode.learn_basic_spells(new_character)
 			ticker.mode.equip_wizard(new_character)
