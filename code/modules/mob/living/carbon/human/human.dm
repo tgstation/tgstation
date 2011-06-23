@@ -1445,7 +1445,7 @@
 					src = null
 					src = H.monkeyize()
 					contract_disease(M.virus,1,0)
-					
+
 	return
 
 /mob/living/carbon/human/attack_paw(mob/M as mob)
@@ -2523,16 +2523,14 @@ It can still be worn/put on as normal.
 				//SN src = null
 				del(src)
 				return
-			if ((target.health >= -75.0 && target.health < 0))
+			if ((target.health >= -99.0 && target.health < 0))
 				target.cpr_time = world.time
-				if (target.health >= -40.0)
-					var/suff = min(target.oxyloss, 5)
-					target.oxyloss -= suff
-					target.updatehealth()
-				if(target.reagents.get_reagent_amount("inaprovaline") < 10)
-					target.reagents.add_reagent("inaprovaline", 10)
+				var/suff = min(target.oxyloss, 7)
+				target.oxyloss -= suff
+				target.updatehealth()
 				for(var/mob/O in viewers(source, null))
 					O.show_message(text("\red [] performs CPR on []!", source, target), 1)
+				target << "\blue <b>You feel a breath of fresh air enter your lungs. It feels good.</b>"
 				source << "\red Repeat every 7 seconds AT LEAST."
 		if("fuel")
 			var/obj/item/weapon/fuel/S = item
