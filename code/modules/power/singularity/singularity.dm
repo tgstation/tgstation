@@ -1,7 +1,11 @@
 var/global/list/uneatable = list(
 	/obj/machinery/singularity,
-	/turf/space,/obj/effects,
-	/obj/overlay)
+	/turf/space,
+	/obj/effects,
+	/obj/overlay,
+	/obj/decal/cleanable,
+	/obj/rune,
+	)
 
 /obj/machinery/singularity/
 	name = "Gravitational Singularity"

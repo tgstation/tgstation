@@ -11,3 +11,5 @@
 	spawn_exporation_packs()
 	return 1
 
+/datum/game_mode/extended/can_start()
+	return (num_players() > 0)

@@ -62,11 +62,11 @@ datum/mind
 				text = uppertext(text)
 			text = "<i><b>[text]</b></i>: "
 			if (src.assigned_role in head_positions)
-				text += "<b>HEAD</b>|officer|employer|headrev|rev"
+				text += "<b>HEAD</b>|officer|employee|headrev|rev"
 			else if (src.assigned_role in list("Security Officer", "Detective", "Warden"))
-				text += "head|<b>OFFICER</b>|employer|headre|rev"
+				text += "head|<b>OFFICER</b>|employee|headre|rev"
 			else if (src in ticker.mode.head_revolutionaries)
-				text = "head|officer|<a href='?src=\ref[src];revolution=clear'>employer</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+				text = "head|officer|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 				text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
 
 				var/list/L = src.current.get_contents()
@@ -83,7 +83,7 @@ datum/mind
 				if (objectives.len==0)
 					text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
 			else if (src in ticker.mode.revolutionaries)
-				text += "head|officer|<a href='?src=\ref[src];revolution=clear'>employer</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
+				text += "head|officer|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
 			else
 				text += "head|officer|<b>EMPLOYER</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 			sections["revolution"] = text
@@ -94,11 +94,11 @@ datum/mind
 				text = uppertext(text)
 			text = "<i><b>[text]</b></i>: "
 			if (src.assigned_role in head_positions)
-				text += "<b>HEAD</b>|officer|employer|cultist"
+				text += "<b>HEAD</b>|officer|employee|cultist"
 			else if (src.assigned_role in list("Security Officer", "Detective", "Warden"))
-				text += "head|<b>OFFICER</b>|employer|cultist"
+				text += "head|<b>OFFICER</b>|employee|cultist"
 			else if (src in ticker.mode.cult)
-				text += "head|officer|<a href='?src=\ref[src];cult=clear'>employer</a>|<b>CULTIST</b>"
+				text += "head|officer|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
 				text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
 /*
 				if (objectives.len==0)

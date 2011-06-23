@@ -17,3 +17,6 @@
 
 /datum/game_mode/sandbox/check_finished()
 	return 0
+
+/datum/game_mode/extended/can_start()
+	return 1
