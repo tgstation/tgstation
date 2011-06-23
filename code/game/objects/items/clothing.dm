@@ -284,6 +284,18 @@ THERMAL GLASSES
 		state = "enabled"
 	usr << "Its mag-pulse traction system appears to be [state]."
 
+/obj/item/clothing/suit/suit/verb/toggle()
+	set name = "Toggle Jacket Buttons"
+	set category = "Object"
+	if(src.icon_state == "suitjacket_blue_open")
+		src.icon_state = "suitjacket_blue"
+		src.item_state = "suitjacket_blue"
+		usr << "You button up the suit jacket."
+	else
+		src.icon_state = "suitjacket_blue_open"
+		src.item_state = "suitjacket_blue_open"
+		usr << "You unbutton the suit jacket."
+
 /obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
 	if(src.icon_state == "ushankadown")
 		src.icon_state = "ushankaup"

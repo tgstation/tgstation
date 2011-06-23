@@ -74,6 +74,15 @@
 	allowed = list(/obj/item/weapon/gun/projectile/detective,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	armor = list(melee = 50, bullet = 40, laser = 30, taser = 10, bomb = 20, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/det_suit/armor
+	name = "armor"
+	desc = "An armored vest with a detective's badge on it."
+	icon_state = "detective-armor"
+	item_state = "armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	allowed = list(/obj/item/weapon/gun/projectile/detective,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
+	armor = list(melee = 75, bullet = 50, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
+
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
 	desc = "This robe commands authority."
@@ -287,6 +296,15 @@
 	slowdown = 1
 	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
 
+/obj/item/clothing/suit/armor/riot
+	name = "Riot Suit"
+	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
+	icon_state = "swat"
+	item_state = "swat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	slowdown = 2.5
+	armor = list(melee = 85, bullet = 5, laser = 2, taser = 2, bomb = 5, bio = 0, rad = 0)
+
 // FIRE SUITS
 
 /obj/item/clothing/suit/fire
@@ -370,6 +388,61 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
+
+/obj/item/clothing/suit/space/syndicate/green
+	name = "Green Space Suit"
+	icon_state = "syndicate-green"
+	item_state = "syndicate-green"
+
+/obj/item/clothing/suit/space/syndicate/green/dark
+	name = "Dark Green Space Suit"
+	icon_state = "syndicate-green-dark"
+	item_state = "syndicate-green-dark"
+
+/obj/item/clothing/suit/space/syndicate/orange
+	name = "Orange Space Suit"
+	icon_state = "syndicate-orange"
+	item_state = "syndicate-orange"
+
+/obj/item/clothing/suit/space/syndicate/blue
+	name = "Blue Space Suit"
+	icon_state = "syndicate-blue"
+	item_state = "syndicate-blue"
+
+/obj/item/clothing/suit/space/syndicate/black
+	name = "Black Space Suit"
+	icon_state = "syndicate-black"
+	item_state = "syndicate-black"
+
+/obj/item/clothing/suit/space/syndicate/black/green
+	name = "Black and Green Space Suit"
+	icon_state = "syndicate-black-green"
+	item_state = "syndicate-black-green"
+
+/obj/item/clothing/suit/space/syndicate/black/blue
+	name = "Black and Blue Space Suit"
+	icon_state = "syndicate-black-blue"
+	item_state = "syndicate-black-blue"
+
+/obj/item/clothing/suit/space/syndicate/black/med
+	name = "Green Space Suit"
+	icon_state = "syndicate-black-med"
+	item_state = "syndicate-black"
+
+/obj/item/clothing/suit/space/syndicate/black/orange
+	name = "Black and Orange Space Suit"
+	icon_state = "syndicate-black-orange"
+	item_state = "syndicate-black"
+
+/obj/item/clothing/suit/space/syndicate/black/red
+	name = "Black and Red Space Suit"
+	icon_state = "syndicate-black-red"
+	item_state = "syndicate-black-red"
+
+/obj/item/clothing/suit/space/syndicate/black/engie
+	name = "Black Engineering Space Suit"
+	icon_state = "syndicate-black-engie"
+	item_state = "syndicate-black"
 
 /obj/item/clothing/suit/syndicatefake
 	name = "red space suit replica"
@@ -478,4 +551,12 @@
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/suit
+	name = "Blue Suit Jacket"
+	desc = "A snappy dress jacket."
+	icon_state = "suitjacket_blue_open"
+	item_state = "suitjacket_blue_open"
+	body_parts_covered = UPPER_TORSO|ARMS
+	armor = list(melee = 5, bullet = 2, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 

@@ -181,6 +181,61 @@
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."
 	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
+/obj/item/clothing/head/helmet/space/syndicate/green
+	name = "Green Space Helmet"
+	icon_state = "syndicate-helm-green"
+	item_state = "syndicate-helm-green"
+
+/obj/item/clothing/head/helmet/space/syndicate/green/dark
+	name = "Dark Green Space Helmet"
+	icon_state = "syndicate-helm-green-dark"
+	item_state = "syndicate-helm-green-dark"
+
+/obj/item/clothing/head/helmet/space/syndicate/orange
+	name = "Orange Space Helmet"
+	icon_state = "syndicate-helm-orange"
+	item_state = "syndicate-helm-orange"
+
+/obj/item/clothing/head/helmet/space/syndicate/blue
+	name = "Blue Space Helmet"
+	icon_state = "syndicate-helm-blue"
+	item_state = "syndicate-helm-blue"
+
+/obj/item/clothing/head/helmet/space/syndicate/black
+	name = "Black Space Helmet"
+	icon_state = "syndicate-helm-black"
+	item_state = "syndicate-helm-black"
+
+/obj/item/clothing/head/helmet/space/syndicate/black/green
+	name = "Black Space Helmet"
+	icon_state = "syndicate-helm-black-green"
+	item_state = "syndicate-helm-black-green"
+
+/obj/item/clothing/head/helmet/space/syndicate/black/blue
+	name = "Black Space Helmet"
+	icon_state = "syndicate-helm-black-blue"
+	item_state = "syndicate-helm-black-blue"
+
+/obj/item/clothing/head/helmet/space/syndicate/black/med
+	name = "Black Space Helmet"
+	icon_state = "syndicate-helm-black-med"
+	item_state = "syndicate-helm-black"
+
+/obj/item/clothing/head/helmet/space/syndicate/black/orange
+	name = "Black Space Helmet"
+	icon_state = "syndicate-helm-black-orange"
+	item_state = "syndicate-helm-black"
+
+/obj/item/clothing/head/helmet/space/syndicate/black/red
+	name = "Black Space Helmet"
+	icon_state = "syndicate-helm-black-red"
+	item_state = "syndicate-helm-black-red"
+
+/obj/item/clothing/head/helmet/space/syndicate/black/engie
+	name = "Black Space Helmet"
+	icon_state = "syndicate-helm-black-engie"
+	item_state = "syndicate-helm-black"
+
 /obj/item/clothing/head/syndicatefake
 	name = "red space helmet replica"
 	icon_state = "syndicate"
@@ -255,6 +310,14 @@
 	item_state = "that"
 	flags = FPRINT|TABLEPASS|HEADSPACE
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/riot
+	name = "Riot Helmet"
+	desc = "A helmet specifically designed to protect against close range attacks."
+	icon_state = "riot"
+	item_state = "helmet"
+	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
+	armor = list(melee = 85, bullet = 10, laser = 5, taser = 5, bomb = 5, bio = 2, rad = 0)
 
 
 

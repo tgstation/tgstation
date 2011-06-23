@@ -28,6 +28,7 @@
 	new /obj/item/clothing/shoes/brown( src )
 	new /obj/item/clothing/head/det_hat( src )
 	new /obj/item/clothing/suit/det_suit( src )
+	new /obj/item/clothing/suit/det_suit/armor( src )
 	new /obj/item/weapon/storage/fcard_kit( src )
 	new /obj/item/weapon/storage/fcard_kit( src )
 	new /obj/item/weapon/storage/fcard_kit( src )

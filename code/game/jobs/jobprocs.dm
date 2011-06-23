@@ -128,7 +128,7 @@
 			if(ticker.mode.name == "AI malfunction" && occupation == "AI")
 				continue
 			var/eligible = occupation_eligible[occupation]
-				
+
 			while (eligible-- && unassigned.len > 0)
 				var/n = 1
 				var/mob/new_player/candidate = unassigned[1]
@@ -515,8 +515,9 @@
 			src.equip_if_possible(new /obj/item/weapon/barcodescanner(src), slot_l_hand)
 
 		if ("Lawyer")  //muskets 160910
-			src.equip_if_possible(new /obj/item/clothing/under/lawyer/blue(src), slot_w_uniform)
-			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
+			src.equip_if_possible(new /obj/item/clothing/under/bluesuit(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
+			src.equip_if_possible(new /obj/item/clothing/suit/suit(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
 			src.equip_if_possible(new /obj/item/device/detective_scanner(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/storage/briefcase(src), slot_l_hand)

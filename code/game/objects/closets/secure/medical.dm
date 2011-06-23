@@ -24,9 +24,9 @@
 	new /obj/item/weapon/tank/anesthetic( src )
 	new /obj/item/weapon/tank/anesthetic( src )
 	new /obj/item/weapon/tank/anesthetic( src )
-	new /obj/item/clothing/mask/breath( src )
-	new /obj/item/clothing/mask/breath( src )
-	new /obj/item/clothing/mask/breath( src )
+	new /obj/item/clothing/mask/medical( src )
+	new /obj/item/clothing/mask/medical( src )
+	new /obj/item/clothing/mask/medical( src )
 	return
 
 /obj/secure_closet/medical3/New()

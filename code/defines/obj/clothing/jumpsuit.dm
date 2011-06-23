@@ -64,9 +64,12 @@
 
 /obj/item/clothing/under/color/orange
 	name = "Orange Jumpsuit"
+	desc = "Standard Nanotrasen prisoner wear. It's suit sensors are stuck in the Fully On position."
 	icon_state = "orange"
 	item_state = "o_suit"
 	color = "orange"
+	has_sensor = 2
+	sensor_mode = 3
 
 /obj/item/clothing/under/color/pink
 	name = "Pink Jumpsuit"
@@ -291,6 +294,43 @@
 	name = "Chef's Uniform"
 	icon_state = "chef"
 	color = "chef"
+
+/obj/item/clothing/under/rank/geneticist_new
+	desc = "Made of a special fiber that gives special protection against biohazards."
+	name = "Genetics Jumpsuit"
+	icon_state = "genetics_new"
+	item_state = "w_suit"
+	color = "geneticsblue"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/under/rank/chemist_new
+	desc = "Made of a special fiber that gives special protection against biohazards."
+	name = "Chemist Jumpsuit"
+	icon_state = "chemist_new"
+	item_state = "w_suit"
+	color = "chemistorange"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/under/rank/scientist_new
+	desc = "Made of a special fiber that gives special protection against biohazards and small explosions."
+	name = "Scientist Jumpsuit"
+	icon_state = "scientist_new"
+	item_state = "w_suit"
+	color = "sciencepurple"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 10, bio = 10, rad = 0)
+
+/obj/item/clothing/under/rank/virologist_new
+	desc = "Made of a special fiber that gives increased protection against biohazards."
+	name = "Virologist Jumpsuit"
+	icon_state = "virologist_new"
+	item_state = "w_suit"
+	color = "medical"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 15, rad = 0)
+
 
 // OTHER NONRANKED STATION JOBS
 /obj/item/clothing/under/det
