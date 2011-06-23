@@ -36,8 +36,9 @@ var/global/list/uneatable = list(
 				del(src)
 		..()
 		for(var/obj/machinery/singularity_beacon/singubeacon in world)
-			target = singubeacon
-			break
+			if(singubeacon.active)
+				target = singubeacon
+				break
 		return
 
 
@@ -195,25 +196,22 @@ var/global/list/uneatable = list(
 
 
 		eat()
-			for(var/atom/X in orange(consume_range,src))
-				if(isarea(X))
-					continue
+			for(var/atom/movable/X in orange(consume_range,src))
 				consume(X)
-			for(var/atom/X in orange(grav_pull,src))
-				if(isarea(X))
-					continue
+			for(var/turf/X in orange(consume_range,src))
+				consume(X)
+			for(var/atom/movable/X in orange(grav_pull,src))
 				if(is_type_in_list(X, uneatable))
 					continue
-				if(!isturf(X))
-					if((!X:anchored && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
-						step_towards(X,src)
-					else if(istype(X,/mob/living/carbon/human))
-						var/mob/living/carbon/human/H = X
-						if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-							var/obj/item/clothing/shoes/magboots/M = H.shoes
-							if(M.magpulse)
-								continue
-						step_towards(H,src)
+				if((!X:anchored && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
+					step_towards(X,src)
+				else if(istype(X,/mob/living/carbon/human))
+					var/mob/living/carbon/human/H = X
+					if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
+						var/obj/item/clothing/shoes/magboots/M = H.shoes
+						if(M.magpulse)
+							continue
+					step_towards(H,src)
 			return
 
 

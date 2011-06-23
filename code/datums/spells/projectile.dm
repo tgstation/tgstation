@@ -45,6 +45,7 @@
 
 				if(proj_homing)
 					if(proj_insubstantial)
+						projectile.dir = get_dir(projectile,target)
 						projectile.loc = get_step_to(projectile,target)
 					else
 						step_to(projectile,target)

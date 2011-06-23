@@ -31,6 +31,8 @@ var/list/spells = typesof(/obj/proc_holder/spell) //needed for the badmin verb f
 	var/smoke_spread = 0 //1 - harmless, 2 - harmful
 	var/smoke_amt = 0 //cropped at 10
 
+	var/critfailchance = 0
+
 /obj/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
 	if(!(src in usr.spell_list))
@@ -111,7 +113,10 @@ var/list/spells = typesof(/obj/proc_holder/spell) //needed for the badmin verb f
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
-	cast(targets)
+	if(prob(critfailchance))
+		critfail(targets)
+	else
+		cast(targets)
 	after_cast(targets)
 
 /obj/proc_holder/spell/proc/before_cast(list/targets)
@@ -154,6 +159,9 @@ var/list/spells = typesof(/obj/proc_holder/spell) //needed for the badmin verb f
 				smoke.start()
 
 /obj/proc_holder/spell/proc/cast(list/targets)
+	return
+
+/obj/proc_holder/spell/proc/critfail(list/targets)
 	return
 
 /obj/proc_holder/spell/proc/revert_cast() //resets recharge or readds a charge

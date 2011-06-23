@@ -29,7 +29,7 @@
 			continue
 		//damage
 		if(amt_dam_brute > 0)
-			if(amt_dam_fire > 0)
+			if(amt_dam_fire >= 0)
 				target.take_overall_damage(amt_dam_brute,amt_dam_fire)
 			else if (amt_dam_fire < 0)
 				target.take_overall_damage(amt_dam_brute,0)
@@ -38,7 +38,7 @@
 			if(amt_dam_fire > 0)
 				target.take_overall_damage(0,amt_dam_fire)
 				target.heal_overall_damage(amt_dam_brute,0)
-			else if (amt_dam_fire < 0)
+			else if (amt_dam_fire <= 0)
 				target.heal_overall_damage(amt_dam_brute,amt_dam_fire)
 		target.toxloss += amt_dam_tox
 		target.oxyloss += amt_dam_oxy
