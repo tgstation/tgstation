@@ -895,7 +895,7 @@
 "ark" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"; tag = "Streight"},/obj/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = "90Curve"},/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
 "arl" = (/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = "90Curve"},/obj/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = "90Curve"},/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
 "arm" = (/obj/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = "90Curve"},/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
-"arn" = (/obj/rack{dir = 8},/obj/item/weapon/storage/briefcase,/obj/machinery/light_switch{pixel_y = 28},/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
+"arn" = (/obj/rack{dir = 8},/obj/item/weapon/storage/briefcase,/obj/item/ammo_magazine/c38,/obj/item/weapon/gun/projectile/detective,/obj/machinery/light_switch{pixel_y = 28},/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
 "aro" = (/obj/machinery/atmospherics/pipe/simple,/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "arp" = (/obj/machinery/power/apc{dir = 1; name = "Law Office APC"; pixel_y = 24},/obj/machinery/light_switch{pixel_x = -20; pixel_y = 0},/obj/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor{icon_state = "wood"},/area/lawoffice)
 "arq" = (/obj/machinery/alarm{pixel_y = 23},/turf/simulated/floor{icon_state = "wood"},/area/lawoffice)

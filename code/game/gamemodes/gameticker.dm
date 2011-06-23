@@ -99,7 +99,6 @@ var/global/datum/controller/gameticker/ticker
 		if (S.name != "AI")
 			del(S)
 
-	//Start master_controller.process()
 	world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
 	world << sound('welcome.ogg') // Skie
 
@@ -109,6 +108,7 @@ var/global/datum/controller/gameticker/ticker
 		event()
 	spawn() supply_ticker() // Added to kick-off the supply shuttle regenerating points -- TLE
 
+	//Start master_controller.process()
 	spawn master_controller.process()
 	if (config.sql_enabled)
 		spawn(3000)

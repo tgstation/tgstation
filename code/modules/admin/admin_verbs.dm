@@ -1375,9 +1375,9 @@
 	else
 		AddBan(M.ckey, M.computer_id, "Autobanning due to previous warn", ckey, 1, AUTOBATIME)
 		M << "\red<BIG><B>You have been autobanned by [ckey]. This is what we in the biz like to call a \"second warning\".</B></BIG>"
-		M << "\red This is a temporary ban; it will automatically be removed in AUTOBATIME minutes."
-		log_admin("[ckey] warned [M.ckey], resulting in a AUTOBATIME minute autoban.")
-		message_admins("\blue [ckey] warned [M.ckey], resulting in a AUTOBATIME minute autoban.")
+		M << "\red This is a temporary ban; it will automatically be removed in [AUTOBATIME] minutes."
+		log_admin("[ckey] warned [M.ckey], resulting in a [AUTOBATIME] minute autoban.")
+		message_admins("\blue [ckey] warned [M.ckey], resulting in a [AUTOBATIME] minute autoban.")
 
 		del(M.client)
 		//del(M)

@@ -298,12 +298,12 @@ var/const/PROJECTILE_DART = 8
 			caliber = "38"
 
 			New()
-				for(var/i = 1, i <= 5, i++)
+				for(var/i = 1, i <= 7, i++)
 					loaded += new /obj/item/ammo_casing/c38(src)
 				update_icon()
 
 			special_check(var/mob/living/carbon/human/M)
-				if(istype(M) && M)
+				if(istype(M))
 					if(istype(M.w_uniform, /obj/item/clothing/under/det) && istype(M.head, /obj/item/clothing/head/det_hat) && istype(M.wear_suit, /obj/item/clothing/suit/det_suit))
 						return 1
 					M << "\red You just don't feel cool enough to use this gun looking like that."
@@ -637,7 +637,9 @@ var/const/PROJECTILE_DART = 8
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
-	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj)
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+		if (flag)
+			return //we're placing gun on a table or in backpack --rastaf0
 		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))
 			return
 		if(istype(user, /mob/living))
@@ -648,20 +650,22 @@ var/const/PROJECTILE_DART = 8
 				M.drop_item()
 				del(src)
 				return
-		if ((istype(user, /mob/living/carbon/monkey)) && ticker.mode != "monkey")
-			user << "\red You don't have the dexterity to do this!"
+		if ( ! (istype(usr, /mob/living/carbon/human) || \
+			istype(usr, /mob/living/silicon/robot) || \
+			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+			usr << "\red You don't have the dexterity to do this!"
 			return
 
 		add_fingerprint(user)
 
 		var/turf/curloc = user.loc
-		var/atom/targloc = get_turf(target)
-		if (!targloc || !istype(targloc, /turf) || !curloc)
+		var/turf/targloc = get_turf(target)
+		if (!istype(targloc) || !istype(curloc))
 			return
 
 		if(badmin)
 			badmin_ammo()
-		else if(!special_check())
+		else if(!special_check(user))
 			return
 		else if(!load_into_chamber())
 			user << "\red *click* *click*";
