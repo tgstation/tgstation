@@ -194,7 +194,6 @@ datum
 				"an RCD" = /obj/item/weapon/rcd,
 				"a jetpack" = /obj/item/weapon/tank/jetpack,
 				"a captains jumpsuit" = /obj/item/clothing/under/rank/captain,
-				"the captain's armor" = /obj/item/clothing/suit/armor/captain,
 				"functional ai" = /obj/item/device/aicard,
 				"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 				"the station blueprints" = /obj/item/blueprints,
