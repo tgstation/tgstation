@@ -45,7 +45,7 @@
 /obj/secure_closet/CMO/New()
 	..()
 	sleep(2)
-	new /obj/item/clothing/suit/labcoat/cmo( src )
+	new /obj/item/clothing/suit/labcoat_cmo( src )
 	new /obj/item/clothing/under/rank/chief_medical_officer( src )
 	new /obj/item/clothing/suit/bio_suit/general( src )
 	new /obj/item/clothing/shoes/brown	( src )

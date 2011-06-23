@@ -567,7 +567,7 @@
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (src), slot_back)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chief_medical_officer(src), slot_w_uniform)
-			src.equip_if_possible(new /obj/item/clothing/suit/labcoat/cmo(src), slot_wear_suit)
+			src.equip_if_possible(new /obj/item/clothing/suit/labcoat_cmo(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
 

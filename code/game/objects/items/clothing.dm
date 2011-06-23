@@ -296,6 +296,26 @@ THERMAL GLASSES
 		src.item_state = "suitjacket_blue_open"
 		usr << "You unbutton the suit jacket."
 
+/obj/item/clothing/suit/labcoat/verb/toggle()
+	set name = "Toggle Labcoat Buttons"
+	set category = "Object"
+	if(src.icon_state == "labcoat_open")
+		src.icon_state = "labcoat"
+		usr << "You button up the labcoat."
+	else
+		src.icon_state = "labcoat_open"
+		usr << "You unbutton the labcoat."
+
+/obj/item/clothing/suit/labcoat_cmo/verb/toggle()
+	set name = "Toggle Labcoat Buttons"
+	set category = "Object"
+	if(src.icon_state == "labcoat_cmo_open")
+		src.icon_state = "labcoat_cmo"
+		usr << "You button up the labcoat."
+	else
+		src.icon_state = "labcoat_cmo_open"
+		usr << "You unbutton the labcoat."
+
 /obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
 	if(src.icon_state == "ushankadown")
 		src.icon_state = "ushankaup"
