@@ -448,3 +448,10 @@
 	protective_temperature = 1000
 	flags = FPRINT | TABLEPASS | SUITSPACE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+
+/obj/item/clothing/under/bluesuit
+	name = "Blue Suit"
+	icon_state = "bluesuit"
+	item_state = "bluesuit"
+	color = "suit_blue"
+	desc = "A classy suit and tie"
