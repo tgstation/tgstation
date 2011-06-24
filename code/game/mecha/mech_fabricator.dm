@@ -94,7 +94,7 @@
 						/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
 						/obj/item/mecha_parts/mecha_equipment/repair_droid,
 						/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
-									),
+						),
 
 	"Misc"=list(/obj/item/mecha_tracking)
 
@@ -105,10 +105,12 @@
 		for(var/part_set in part_sets)
 			convert_part_set(part_set)
 		files = new /datum/research(src) //Setup the research data holder.
+		/*
 		if(!id)
 			for(var/obj/machinery/r_n_d/server/centcom/S in world)
 				S.initialize()
 				break
+		*/
 		return
 
 	Del()
@@ -251,8 +253,9 @@
 	proc/add_part_set_to_queue(set_name)
 		if(set_name in part_sets)
 			var/list/part_set = part_sets[set_name]
-			for(var/part in part_set)
-				add_to_queue(part)
+			if(islist(part_set))
+				for(var/part in part_set)
+					add_to_queue(part)
 		return
 
 	proc/add_to_queue(part)
@@ -332,7 +335,7 @@
 		if(!silent)
 			temp = "Updating local R&D database..."
 			src.updateUsrDialog()
-		sleep(30)
+			sleep(30) //only sleep if called by user
 		for(var/obj/machinery/computer/rdconsole/RDC in get_area(src))
 			if(!RDC.sync)
 				continue
@@ -448,9 +451,10 @@
 		if(href_list["process_queue"])
 			if(processing_queue || being_built)
 				return 0
-			processing_queue = 1
-			process_queue()
-			processing_queue = 0
+			spawn(-1) //don't wait for process_queue() to finish
+				processing_queue = 1
+				process_queue()
+				processing_queue = 0
 /*
 		if(href_list["list_queue"])
 			list_queue()
@@ -463,7 +467,7 @@
 			var/index = text2num(href_list["index"])
 			var/new_index = index + text2num(href_list["queue_move"])
 			if(isnum(index) && isnum(new_index))
-				if(new_index>0&&new_index<=queue.len)
+				if(InRange(new_index,1,queue.len))
 					queue.Swap(index,new_index)
 			return update_queue_on_page()
 		if(href_list["clear_queue"])
@@ -487,7 +491,8 @@
 		if (stat & (NOPOWER|BROKEN))
 			return
 		if(sync)
-			src.sync(1)
+			spawn(-1)
+				sync(1)
 		return
 
 	attackby(obj/item/stack/sheet/W as obj, mob/user as mob)

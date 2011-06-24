@@ -526,7 +526,7 @@
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
-	if ((istype(mover, /obj/item/weapon/dummy) || istype(mover, /obj/beam)))
+	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return prob(20)
 	else
 		if (istype(mover, /obj/item/projectile))

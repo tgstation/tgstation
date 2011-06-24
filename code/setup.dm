@@ -113,6 +113,11 @@
 
 #define	NOREACT	16384 //Reagents dont' react inside this container.
 
+//flags for pass_flags
+#define PASSTABLE 1
+#define PASSGLASS 2
+#define PASSGRILLE 4
+
 
 // bitflags for clothing parts
 #define HEAD			1

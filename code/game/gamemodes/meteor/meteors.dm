@@ -88,10 +88,12 @@
 	anchored = 1.0
 	var/hits = 1
 	var/dest
+	pass_flags = PASSTABLE
 
 /obj/meteor/small
 	name = "small meteor"
 	icon_state = "smallf"
+	pass_flags = PASSTABLE | PASSGRILLE
 
 /obj/meteor/Move()
 	var/turf/T = src.loc

@@ -94,7 +94,7 @@ TABLE AND RACK OBJECT INTERATIONS
 /obj/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
-	if ((mover.flags & 2 || istype(mover, /obj/meteor)) )
+	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
 		return 0
@@ -293,8 +293,7 @@ TABLE AND RACK OBJECT INTERATIONS
 
 /obj/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
-
-	if (mover.flags & 2)
+	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
 		return 0

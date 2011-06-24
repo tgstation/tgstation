@@ -36,6 +36,7 @@ var/const/PROJECTILE_DART = 8
 		name = "laser"
 		damage_type = PROJECTILE_LASER
 		icon_state = "laser"
+		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
 		pulse
 			name = "pulse"

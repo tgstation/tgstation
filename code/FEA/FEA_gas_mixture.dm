@@ -93,6 +93,12 @@ datum
 					return total_moles()*R_IDEAL_GAS_EQUATION*temperature/volume
 				return 0
 
+			return_temperature()
+				return temperature
+
+			return_volume()
+				return max(0, volume)
+
 			thermal_energy()
 				return temperature*heat_capacity()
 

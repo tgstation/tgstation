@@ -64,7 +64,7 @@
 
 	var/list/equipment = new
 	var/obj/item/mecha_parts/mecha_equipment/selected
-	var/max_equip = 2
+	var/max_equip = 3
 
 /obj/mecha/New()
 	..()
@@ -418,31 +418,33 @@
 
 /obj/mecha/proc/destroy()
 	spawn()
+		go_out()
 		var/turf/T = get_turf(src)
 		tag = "\ref[src]" //better safe then sorry
 		loc.Exited(src)
 		loc = null
-		if(prob(40))
-			explosion(T, 0, 0, 1, 3)
-		if(wreckage)
-			var/obj/decal/mecha_wreckage/WR = new wreckage(T)
-			for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-				if(prob(30))
-					WR.crowbar_salvage += E
-					E.loc = WR
-					E.equip_ready = 1
-					E.reliability = rand(30,100)
-				else
-					E.loc = T
-					E.destroy()
-			if(cell)
-				WR.crowbar_salvage += cell
-				cell.loc = WR
-				cell.charge = rand(0, cell.charge)
-			if(internal_tank)
-				WR.crowbar_salvage += internal_tank
-				internal_tank.loc = WR
-			del(src)
+		if(T)
+			if(prob(40))
+				explosion(T, 0, 0, 1, 3)
+			if(wreckage)
+				var/obj/decal/mecha_wreckage/WR = new wreckage(T)
+				for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+					if(prob(30))
+						WR.crowbar_salvage += E
+						E.loc = WR
+						E.equip_ready = 1
+						E.reliability = rand(30,100)
+					else
+						E.loc = T
+						E.destroy()
+				if(cell)
+					WR.crowbar_salvage += cell
+					cell.loc = WR
+					cell.charge = rand(0, cell.charge)
+				if(internal_tank)
+					WR.crowbar_salvage += internal_tank
+					internal_tank.loc = WR
+		del(src)
 	return
 
 /obj/mecha/ex_act(severity)
@@ -1161,7 +1163,7 @@
 		onclose(occupant, "exosuit_log")
 		return
 	if (href_list["change_name"])
-		name = input(occupant,"Choose new exosuit name","Rename exosuit",initial(name))
+		name = strip_html_simple(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)))
 		return
 	if (href_list["repair_int_control_lost"])
 		src.occupant_message("Recalibrating coordination system.")
@@ -1362,5 +1364,8 @@
 		if(mecha.internal_damage & MECHA_INT_TANK_BREACH) //remove some air from internal tank
 			if(int_tank_air)
 				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.25)
-				mecha.loc.assume_air(leaked_gas)
+				if(mecha.loc && hascall(mecha.loc,"assume_air"))
+					mecha.loc.assume_air(leaked_gas)
+				else
+					del(leaked_gas)
 		return

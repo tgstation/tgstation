@@ -50,7 +50,7 @@
 			if(istype(used_atom, text2path(L["key"])))
 				if(custom_action(i, used_atom, user))
 					steps[i]=null;//stupid byond list from list removal...
-					clear_nulls(steps);
+					listclearnulls(steps);
 					if(!steps.len)
 						spawn_result()
 					return 1
@@ -62,11 +62,6 @@
 			new result(get_turf(holder))
 			spawn()
 				del holder
-		return
-
-	proc/clear_nulls(list/L)
-		while(null in L)
-			L -= null
 		return
 
 	proc/set_desc(index as num)

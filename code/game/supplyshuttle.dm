@@ -45,7 +45,9 @@ var/ordernum=0
 	layer = 4
 
 /obj/plasticflaps/CanPass(atom/A, turf/T)
-	if (istype(A, /mob/living)) // You Shall Not Pass!
+	if(istype(A) && A.checkpass(PASSGLASS))
+		return prob(60)
+	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if(!M.lying)			// unless you're lying down
 			return 0

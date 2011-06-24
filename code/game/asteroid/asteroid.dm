@@ -1,4 +1,4 @@
-proc/spawn_asteroid(var/atom/start_loc,var/type,var/size,var/richness)//type: 0 or null - random, 1 - nothing,  2 - iron, 3 - silicon
+proc/spawn_asteroid(var/turf/start_loc,var/type,var/size,var/richness)//type: 0 or null - random, 1 - nothing,  2 - iron, 3 - silicon
 	if(!size)
 		size = pick(100;2,50;3,35;4,25;6,10;12)
 	if(start_loc.x - size < 5 || start_loc.x + size >= world.maxx - 5 || start_loc.y - size < 5 || start_loc.y + size > world.maxy -5)
@@ -9,6 +9,8 @@ proc/spawn_asteroid(var/atom/start_loc,var/type,var/size,var/richness)//type: 0 
 		richness = rand(10,40)
 //	world << "Asteroid size: [size]; Asteroid type: [type]"
 	var/list/turfs = circlerangeturfs(start_loc,size)
+	if(!islist(turfs) || isemptylist(turfs))
+		return 0
 	var/area/asteroid/AstAr = new
 	AstAr.name = "Asteroid #[start_loc.x][start_loc.y][start_loc.z]"
 	for(var/turf/T in turfs)
@@ -45,7 +47,7 @@ proc/spawn_asteroid(var/atom/start_loc,var/type,var/size,var/richness)//type: 0 
 		var/y = rand(1,world.maxy)
 //		world << "Asteroid coords: [x], [y], [z]"
 		var/start_loc = locate(x,y,z)
-		if(spawn_asteroid(start_loc))
+		if(start_loc && spawn_asteroid(start_loc))
 			density--
 	return
 

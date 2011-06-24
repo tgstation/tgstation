@@ -63,13 +63,7 @@
 
 
 /obj/machinery/optable/CanPass(atom/movable/O as mob|obj, target as turf)
-	if(!O)
-		return 0
-	if ((O.flags & 2 || istype(O, /obj/meteor)))
-		return 1
-	else
-		return 0
-	return
+	return (istype(O) && O.checkpass(PASSTABLE))
 
 /obj/machinery/optable/MouseDrop_T(obj/O as obj, mob/user as mob)
 

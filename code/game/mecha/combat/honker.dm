@@ -11,10 +11,12 @@
 	operation_req_access = list(access_clown)
 	add_req_access = 0
 	max_equip = 3
+	var/squeak = 0
 
+/*
 /obj/mecha/combat/honker/New()
 	..()
-/*
+
 	weapons += new /datum/mecha_weapon/honker(src)
 	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar(src)
 	weapons += new /datum/mecha_weapon/missile_rack/mousetrap_mortar(src)
@@ -38,6 +40,7 @@
 						[internal_damage&MECHA_INT_CONTROL_LOST?"<font color='red'><b>HONK-A-DOODLE</b></font> - <a href='?src=\ref[src];repair_int_control_lost=1'>Recalibrate</a><br>":null]
 						<b>IntegriHONK: </b> [health/initial(health)*100] %) <br>
 						<b>PowerHONK charge: </b>[isnull(cell_charge)?"Someone HONKed powerHonk!!!":"[cell.percent()]%"])<br>
+						<b>Air source: </b>[use_internal_tank?"Internal AirHONK":"EnvironHONK"]<br>
 						<b>AirHONK pressure: </b>[src.return_pressure()]HoNKs<br>
 						<b>Internal HONKature: </b> [src.return_temperature()]&deg;honK|[src.return_temperature() - T0C]&deg;honCk<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
@@ -120,9 +123,13 @@
 
 
 /obj/mecha/combat/honker/relaymove(mob/user,direction)
-	var/result = ..(user,direction)
+	var/result = ..()
 	if(result)
-		playsound(src, "clownstep", 70, 1)
+		if(!squeak)
+			playsound(src, "clownstep", 70, 1)
+			squeak = 1
+		else
+			squeak = 0
 	return result
 
 

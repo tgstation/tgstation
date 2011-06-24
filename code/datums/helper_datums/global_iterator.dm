@@ -71,8 +71,7 @@ Data storage vars:
 		while(src && control_switch)
 			last_exec = world.timeofday
 			if(check_for_null && has_null_args())
-				spawn(-1) //don't wait for state_check() in stop()
-					stop()
+				stop()
 				return 0
 			result = process(arglist(arg_list))
 			for(var/sleep_time=delay;sleep_time>0;sleep_time--) //uhh, this is ugly. But I see no other way to terminate sleeping proc. Such disgrace.
@@ -98,10 +97,8 @@ Data storage vars:
 		if(!active())
 			return
 		control_switch = 0
-/* //always fails if called inside process()
-		if(!state_check())
-			return
-*/
+		spawn(-1) //report termination error but don't wait for state_check().
+			state_check()
 		return 1
 
 	proc/state_check()

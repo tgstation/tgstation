@@ -404,7 +404,7 @@
 
 
 /atom/proc/get_global_map_pos()
-	if(!global_map.len) return
+	if(!islist(global_map) || isemptylist(global_map)) return
 	var/cur_x = null
 	var/cur_y = null
 	var/list/y_arr = null
@@ -418,3 +418,6 @@
 		return list("x"=cur_x,"y"=cur_y)
 	else
 		return 0
+
+/atom/proc/checkpass(passflag)
+	return pass_flags&passflag

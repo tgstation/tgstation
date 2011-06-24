@@ -8,6 +8,7 @@
 	var/blood_DNA = null
 	var/blood_type = null
 	var/last_bumped = 0
+	var/pass_flags = 0
 
 	///Chemistry.
 	var/datum/reagents/reagents = null

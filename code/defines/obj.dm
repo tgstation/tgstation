@@ -71,6 +71,7 @@
 	name = "beam"
 	unacidable = 1//Just to be sure.
 	var/def_zone
+	pass_flags = PASSTABLE
 
 /obj/beam/i_beam
 	name = "i beam"
@@ -304,6 +305,7 @@
 	var/force_unwielded = 0
 	var/force_wielded = 0
 	flags = FPRINT | TABLEPASS
+	pass_flags = PASSTABLE
 	pressure_resistance = 50
 	var/obj/item/master = null
 
