@@ -56,7 +56,9 @@
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=botchat'>Binary Translator</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=lawmod'>Hacked AI Module</A> (7)<BR>"
 	menu_message += "<BR>"
-	menu_message += "<A href='byond://?src=\ref[src];buy_item=singubeacon'>Singularity Beacon</A> (does not include a screwdriver) (1)<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=singubeacon'>Singularity Beacon</A> (does not include a screwdriver) (8)<BR>"
+	menu_message += "<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=toolbox'>Syndicate Toolbox</A> (Includes various tools) (1)<BR>"
 
 	menu_message += "<HR>"
 	return
@@ -165,9 +167,14 @@
 					uses -= 3
 					new /obj/item/device/radio/headset/traitor(get_turf(hostpda))
 			if("singubeacon")
+				if(uses >= 8)
+					uses -= 8
+					new /obj/machinery/singularity_beacon/syndicate(get_turf(hostpda))
+
+			if("toolbox")
 				if(uses)
 					uses--
-					new /obj/machinery/singularity_beacon/syndicate(get_turf(hostpda))
+					new /obj/item/weapon/storage/toolbox/syndicate(get_turf(hostpda))
 
 		generate_menu()
 		print_to_host(menu_message)

@@ -235,6 +235,11 @@
 	icon_state = "yellow"
 	item_state = "toolbox_yellow"
 
+/obj/item/weapon/storage/toolbox/syndicate
+	name = "Suspicious looking toolbox"
+	icon_state = "red"
+	item_state = "toolbox_red"
+
 /obj/item/weapon/storage/bible
 	name = "bible"
 	icon_state ="bible"
