@@ -259,9 +259,9 @@ var/global/list/uneatable = list(
 		move(var/movement_dir = 0)
 			if(!move_self)
 				return 0
-			if(!(movement_dir in cardinal))
+			if(!target && !(movement_dir in cardinal))
 				movement_dir = pick(NORTH, SOUTH, EAST, WEST)
-			if(target)
+			else if(target)
 				movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 			if(current_size >= 9)//The superlarge one does not care about things in its way
 				spawn(0)

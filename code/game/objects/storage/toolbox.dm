@@ -37,6 +37,7 @@
 
 /obj/item/weapon/storage/toolbox/syndicate/New()
 	..()
+	var/color = pick("red","yellow","green","blue")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
