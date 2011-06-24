@@ -626,7 +626,7 @@
 			name = "PDA-[owner] ([ownjob])"
 			user << "\blue Card scanned."
 		else
-			var/input=alert("Would you like to inert the card or update owner information?",,"Insert","Update")
+			var/input=alert("Would you like to insert the card or update owner information?",,"Insert","Update")
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 
 			if ( ( (src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )

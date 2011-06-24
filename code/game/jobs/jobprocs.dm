@@ -609,7 +609,7 @@
 			src.loc = S.loc
 //			if(S.name == "Cyborg")
 //				src.Robotize()
-	else
+	/*else
 		var/list/L = list()
 		for(var/area/arrival/start/S in world)
 			L += S
@@ -627,6 +627,7 @@
 				if(clear)
 					NL += T
 		src.loc = pick(NL)
+		*/
 	if(src.mind.assigned_role == "Cyborg")
 		src << "YOU ARE GETTING BORGED NOW"
 		src.Robotize()

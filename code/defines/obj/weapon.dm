@@ -862,19 +862,6 @@
 	origin_tech = "combat=2;materials=2"
 */
 
-/obj/item/weapon/gun/projectile/detective
-	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
-	name = ".38 revolver"
-	icon_state = "detective"
-	w_class = 3.0
-	throw_speed = 2
-	throw_range = 10
-	force = 14.0
-	m_amt = 1000
-	origin_tech = "combat=2;materials=2"
-
-
-
 /obj/item/weapon/hand_tele
 	name = "hand tele"
 	icon = 'device.dmi'

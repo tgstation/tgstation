@@ -439,7 +439,9 @@
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/attack_hand(mob/user)
-	add_fingerprint(user)
+	if (!can_use())
+		return
+	src.add_fingerprint(user)
 	if(opened && (!istype(user, /mob/living/silicon)))
 		if(cell)
 			usr.put_in_hand(cell)
@@ -452,7 +454,8 @@
 			charging = 0
 			src.updateicon()
 			return
-	if(stat & (BROKEN|MAINT)) return
+	if(stat & (BROKEN|MAINT))
+		return
 
 	if(ishuman(user))
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
@@ -701,126 +704,169 @@
 					src.aidisabled = 0
 				src.updateDialog()
 
-/obj/machinery/power/apc/Topic(href, href_list)
-	..()
-	if (((in_range(src, usr) && istype(src.loc, /turf))) || ((istype(usr, /mob/living/silicon) && !(src.aidisabled))))
-		usr.machine = src
-		if (href_list["apcwires"])
-			var/t1 = text2num(href_list["apcwires"])
-			if (!( istype(usr.equipped(), /obj/item/weapon/wirecutters) ))
-				usr << "You need wirecutters!"
-				return
-			if (src.isWireColorCut(t1))
-				src.mend(t1)
-			else
-				src.cut(t1)
-		else if (href_list["pulse"])
-			var/t1 = text2num(href_list["pulse"])
-			if (!istype(usr.equipped(), /obj/item/device/multitool))
-				usr << "You need a multitool!"
-				return
-			if (src.isWireColorCut(t1))
-				usr << "You can't pulse a cut wire."
-				return
-			else
-				src.pulse(t1)
-		else if (href_list["lock"])
-			coverlocked = !coverlocked
-
-		else if (href_list["breaker"])
-			operating = !operating
-			src.update()
-			updateicon()
-
-		else if (href_list["cmode"])
-			chargemode = !chargemode
-			if(!chargemode)
-				charging = 0
-				updateicon()
-
-		else if (href_list["eqp"])
-			var/val = text2num(href_list["eqp"])
-
-			equipment = (val==1) ? 0 : val
-
-			updateicon()
-			update()
-
-		else if (href_list["lgt"])
-			var/val = text2num(href_list["lgt"])
-
-			lighting = (val==1) ? 0 : val
-
-			updateicon()
-			update()
-		else if (href_list["env"])
-			var/val = text2num(href_list["env"])
-
-			environ = (val==1) ? 0 :val
-
-			updateicon()
-			update()
-		else if( href_list["close"] )
-			usr << browse(null, "window=apc")
-			usr.machine = null
-			return
-		else if (href_list["close2"])
-			usr << browse(null, "window=apcwires")
-			usr.machine = null
-			return
-
-		else if (href_list["overload"])
-			if( istype(usr, /mob/living/silicon) && !src.aidisabled )
-				src.overload_lighting()
-
-		else if (href_list["malfhack"])
-			var/mob/living/silicon/ai/malfai = usr
-			if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled )
-				if (malfai.malfhacking)
-					malfai << "You are already hacking an APC."
-					return
-				malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
-				malfai.malfhack = src
-				malfai.malfhacking = 1
-				sleep(600)
-				if (!src.aidisabled)
-					malfai.malfhack = null
-					malfai.malfhacking = 0
-					if (ticker.mode.config_tag == "malfunction")
-						if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
-							ticker.mode:apcs++
-					src.malfai = usr
-					src.locked = 1
-					if (src.cell)
-						if (src.cell.charge > 0)
-							src.cell.charge = 0
-							cell.corrupt()
-							src.malfhack = 1
-							malfai << "Hack complete. The APC is now under your exclusive control. Discharging cell to fuse interface."
-							updateicon()
-
-							var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-							smoke.set_up(3, 0, src.loc)
-							smoke.attach(src)
-							smoke.start()
-							var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-							s.set_up(3, 1, src)
-							s.start()
-							for(var/mob/M in viewers(src))
-								M.show_message("\red The [src.name] suddenly lets out a blast of smoke and some sparks!", 3, "\red You hear sizzling electronics.", 2)
-						else
-							malfai << "Hack complete. The APC is now under your exclusive control. Unable to fuse interface due to insufficient cell charge."
-					else
-						malfai << "Hack complete. The APC is now under your exclusive control. Unable to fuse interface due to lack of cell to discharge."
-
-
-		src.updateDialog()
-		return
-
-	else
+/obj/machinery/power/apc/proc/can_use() //used by attack_hand() and Topic()
+	if (usr.stat)
+		usr << "\red You must be conscious to use this [src]!"
+		return 0
+	if ( ! (istype(usr, /mob/living/carbon/human) || \
+			istype(usr, /mob/living/silicon) || \
+			istype(usr, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
+		usr << "\red You don't have the dexterity to use this [src]!"
 		usr << browse(null, "window=apc")
 		usr.machine = null
+		return 0
+	if(usr.restrained())
+		usr << "\red You must have free hands to use this [src]"
+		return 0
+	if(usr.lying)
+		usr << "\red You must stand to use this [src]!"
+		return 0
+	if (istype(usr, /mob/living/silicon))
+		var/mob/living/silicon/ai/AI = usr
+		var/mob/living/silicon/robot/robot = usr
+		if (                                                             \
+			src.aidisabled ||                                            \
+			malfhack && istype(malfai) &&                                \
+			(                                                            \
+				(istype(AI) && malfai!=AI) ||                            \
+				(istype(robot) && (robot in malfai.connected_robots))    \
+			)                                                            \
+		)
+			usr << "\red \The [src] have AI control disabled!"
+			usr << browse(null, "window=apc")
+			usr.machine = null
+			return 0
+	else
+		if ((!in_range(src, usr) || !istype(src.loc, /turf)))
+			usr << browse(null, "window=apc")
+			usr.machine = null
+			return 0
+	var/mob/living/carbon/human/H = usr
+	if (istype(H))
+		if(H.brainloss >= 60)
+			for(var/mob/M in viewers(src, null))
+				M << "\red [H] stares cluelessly at [src] and drools."
+			return 0
+		else if(prob(H.brainloss))
+			usr << "\red You momentarily forget how to use [src]."
+			return 0
+	return 1
 
+/obj/machinery/power/apc/Topic(href, href_list)
+	if (!can_use())
+		return
+	src.add_fingerprint(usr)
+	usr.machine = src
+	if (href_list["apcwires"])
+		var/t1 = text2num(href_list["apcwires"])
+		if (!( istype(usr.equipped(), /obj/item/weapon/wirecutters) ))
+			usr << "You need wirecutters!"
+			return
+		if (src.isWireColorCut(t1))
+			src.mend(t1)
+		else
+			src.cut(t1)
+	else if (href_list["pulse"])
+		var/t1 = text2num(href_list["pulse"])
+		if (!istype(usr.equipped(), /obj/item/device/multitool))
+			usr << "You need a multitool!"
+			return
+		if (src.isWireColorCut(t1))
+			usr << "You can't pulse a cut wire."
+			return
+		else
+			src.pulse(t1)
+	else if (href_list["lock"])
+		coverlocked = !coverlocked
+
+	else if (href_list["breaker"])
+		operating = !operating
+		src.update()
+		updateicon()
+
+	else if (href_list["cmode"])
+		chargemode = !chargemode
+		if(!chargemode)
+			charging = 0
+			updateicon()
+
+	else if (href_list["eqp"])
+		var/val = text2num(href_list["eqp"])
+
+		equipment = (val==1) ? 0 : val
+
+		updateicon()
+		update()
+
+	else if (href_list["lgt"])
+		var/val = text2num(href_list["lgt"])
+
+		lighting = (val==1) ? 0 : val
+
+		updateicon()
+		update()
+	else if (href_list["env"])
+		var/val = text2num(href_list["env"])
+
+		environ = (val==1) ? 0 :val
+
+		updateicon()
+		update()
+	else if( href_list["close"] )
+		usr << browse(null, "window=apc")
+		usr.machine = null
+		return
+	else if (href_list["close2"])
+		usr << browse(null, "window=apcwires")
+		usr.machine = null
+		return
+
+	else if (href_list["overload"])
+		if( istype(usr, /mob/living/silicon) && !src.aidisabled )
+			src.overload_lighting()
+
+	else if (href_list["malfhack"])
+		var/mob/living/silicon/ai/malfai = usr
+		if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled )
+			if (malfai.malfhacking)
+				malfai << "You are already hacking an APC."
+				return
+			malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
+			malfai.malfhack = src
+			malfai.malfhacking = 1
+			sleep(600)
+			if (!src.aidisabled)
+				malfai.malfhack = null
+				malfai.malfhacking = 0
+				if (ticker.mode.config_tag == "malfunction")
+					if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+						ticker.mode:apcs++
+				src.malfai = usr
+				src.locked = 1
+				if (src.cell)
+					if (src.cell.charge > 0)
+						src.cell.charge = 0
+						cell.corrupt()
+						src.malfhack = 1
+						malfai << "Hack complete. The APC is now under your exclusive control. Discharging cell to fuse interface."
+						updateicon()
+
+						var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+						smoke.set_up(3, 0, src.loc)
+						smoke.attach(src)
+						smoke.start()
+						var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+						s.set_up(3, 1, src)
+						s.start()
+						for(var/mob/M in viewers(src))
+							M.show_message("\red The [src.name] suddenly lets out a blast of smoke and some sparks!", 3, "\red You hear sizzling electronics.", 2)
+					else
+						malfai << "Hack complete. The APC is now under your exclusive control. Unable to fuse interface due to insufficient cell charge."
+				else
+					malfai << "Hack complete. The APC is now under your exclusive control. Unable to fuse interface due to lack of cell to discharge."
+
+
+	src.updateDialog()
 	return
 
 /obj/machinery/power/apc/proc/ion_act()
