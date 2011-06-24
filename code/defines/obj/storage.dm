@@ -237,8 +237,8 @@
 
 /obj/item/weapon/storage/toolbox/syndicate
 	name = "Suspicious looking toolbox"
-	icon_state = "red"
-	item_state = "toolbox_red"
+	icon_state = "syndicate"
+	item_state = "toolbox_syndi"
 
 /obj/item/weapon/storage/bible
 	name = "bible"
