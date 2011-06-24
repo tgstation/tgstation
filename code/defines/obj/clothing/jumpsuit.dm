@@ -453,5 +453,5 @@
 	name = "Blue Suit"
 	icon_state = "bluesuit"
 	item_state = "bluesuit"
-	color = "suit_blue"
+	color = "bluesuit"
 	desc = "A classy suit and tie"
