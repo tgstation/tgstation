@@ -26,25 +26,32 @@
 
 		var/obj/cable/NC = new(T)
 
-		var/color = "red"
-		if(coil.color)
-			color = coil.color
-		NC.color = coil.color
-		switch(color)
-			if("red")
-				NC.icon = 'power_cond_red.dmi'
-			if("yellow")
-				NC.icon = 'power_cond_yellow.dmi'
-			if("green")
-				NC.icon = 'power_cond_green.dmi'
-			if("blue")
-				NC.icon = 'power_cond_blue.dmi'
+		NC.cableColor(coil.color)
 
 		NC.d1 = 0
 		NC.d2 = dirn
 		NC.add_fingerprint()
 		NC.updateicon()
-		NC.update_network()
+
+		NC.mergeConnectedNetworks(NC.d2)
+		NC.mergeConnectedNetworksOnTurf()
+		if(netnum == 0 && NC.netnum == 0)
+			var/datum/powernet/PN = new()
+
+			PN.number = powernets.len + 1
+			powernets += PN
+			NC.netnum = PN.number
+			netnum = PN.number
+			PN.cables += NC
+			PN.nodes += src
+			powernet = PN
+		else if(netnum == 0)
+			netnum = NC.netnum
+			var/datum/powernet/PN = powernets[netnum]
+			powernet = PN
+			PN.nodes += src
+		NC.mergeConnectedNetworksOnTurf()
+
 		coil.use(1)
 		return
 	else
@@ -297,30 +304,33 @@
 
 		var/obj/cable/C = new(F)
 
-		var/color_n = "red"
-		if(color)
-			color_n = color
-		C.color = color_n
-		switch(color)
-			if("red")
-				C.icon = 'power_cond_red.dmi'
-			if("yellow")
-				C.icon = 'power_cond_yellow.dmi'
-			if("green")
-				C.icon = 'power_cond_green.dmi'
-			if("blue")
-				C.icon = 'power_cond_blue.dmi'
+		C.cableColor(color)
 
 		C.d1 = 0
 		C.d2 = dirn
 		C.add_fingerprint(user)
 		C.updateicon()
-		C.update_network()
+		C.mergeConnectedNetworks(C.d2)
+		C.mergeConnectedNetworksOnTurf()
+		if(C.netnum == 0)
+			var/counter = 1
+			while(counter < powernets.len + 1)
+				if(!powernets[counter])
+					C.netnum = counter
+					var/datum/powernet/PN = powernets[counter]
+					PN.cables += C
+					break
+				counter++
+			if(C.netnum == 0)
+				var/datum/powernet/PN = new()
+
+				PN.number = powernets.len + 1
+				powernets += PN
+				C.netnum = PN.number
+				PN.cables += C
+
+
 		use(1)
-		if (C.shock(user, 50))
-			if (prob(50))
-				new/obj/item/weapon/cable_coil(C.loc, C.d1 ? 2 : 1, C.color)
-				del(C)
 		//src.laying = 1
 		//last = C
 
@@ -328,7 +338,6 @@
 // called when cable_coil is click on an installed obj/cable
 
 /obj/item/weapon/cable_coil/proc/cable_join(obj/cable/C, mob/user)
-
 
 	var/turf/U = user.loc
 	if(!isturf(U))
@@ -365,38 +374,26 @@
 					return
 
 			var/obj/cable/NC = new(U)
-
-			var/color_n = "red"
-			if(color)
-				color_n = color
-			NC.color = color_n
-			switch(color)
-				if("red")
-					NC.icon = 'power_cond_red.dmi'
-				if("yellow")
-					NC.icon = 'power_cond_yellow.dmi'
-				if("green")
-					NC.icon = 'power_cond_green.dmi'
-				if("blue")
-					NC.icon = 'power_cond_blue.dmi'
+			NC.cableColor(color)
 
 			NC.d1 = 0
 			NC.d2 = fdirn
 			NC.add_fingerprint()
 			NC.updateicon()
-			NC.update_network()
+
+			NC.netnum = C.netnum
+			var/datum/powernet/PN = powernets[C.netnum]
+			PN.cables += NC
+			NC.mergeConnectedNetworksOnTurf()
 			use(1)
-			if (NC.shock(user, 50))
-				if (prob(50))
-					new/obj/item/weapon/cable_coil(NC.loc, NC.d1 ? 2 : 1, NC.color)
-					del(NC)
+			C.shock(user, 25)
 
 			return
 	else if(C.d1 == 0)		// exisiting cable doesn't point at our position, so see if it's a stub
 							// if so, make it a full cable pointing from it's old direction to our dirn
-
 		var/nd1 = C.d2	// these will be the new directions
 		var/nd2 = dirn
+
 
 		if(nd1 > nd2)		// swap directions to match icons/states
 			nd1 = dirn
@@ -410,48 +407,163 @@
 				user << "There's already a cable at that position."
 				return
 		C.shock(user, 25)
-		del(C)
-		var/obj/cable/NC = new(T)
 
-		var/color_n = "red"
-		if(color)
-			color_n = color
-		NC.color = color_n
-		switch(color)
-			if("red")
-				NC.icon = 'power_cond_red.dmi'
-			if("yellow")
-				NC.icon = 'power_cond_yellow.dmi'
-			if("green")
-				NC.icon = 'power_cond_green.dmi'
-			if("blue")
-				NC.icon = 'power_cond_blue.dmi'
 
-		NC.d1 = nd1
-		NC.d2 = nd2
-		NC.add_fingerprint()
-		NC.updateicon()
-		NC.update_network()
+		C.cableColor(color)
+
+		C.d1 = nd1
+		C.d2 = nd2
+
+		C.add_fingerprint()
+		C.updateicon()
+
+
+		C.mergeConnectedNetworks(C.d1)
+		C.mergeConnectedNetworks(C.d2)
+
 
 		use(1)
-		if (NC.shock(user, 50))
-			if (prob(50))
-				new/obj/item/weapon/cable_coil(NC.loc, NC.d1 ? 2 : 1, NC.color)
-				del(NC)
 
 		return
 
+/obj/cable/proc/mergeConnectedNetworks(var/direction)
+	var/turf/TB
+	if((d1 == direction || d2 == direction) != 1)
+		return
+	TB = get_step(src, direction)
 
-// called when a new cable is created
-// can be 1 of 3 outcomes:
-// 1. Isolated cable (or only connects to isolated machine) -> create new powernet
-// 2. Joins to end or bridges loop of a single network (may also connect isolated machine) -> add to old network
-// 3. Bridges gap between 2 networks -> merge the networks (must rebuild lists also)
+	for(var/obj/cable/TC in TB)
+		if(src == TC)
+			continue
 
+		var/fdir = (!direction)? 0 : turn(direction, 180)
 
+		if(TC.d1 == fdir || TC.d2 == fdir)
 
-/obj/cable/proc/update_network()
-	// easy way: do /makepowernets again
-	makepowernets()
-	// do things more logically if this turns out to be too slow
-	// may just do this for case 3 anyway (simpler than refreshing list)
+			if(!netnum)
+				var/datum/powernet/PN = powernets[TC.netnum]
+				netnum = TC.netnum
+				PN = powernets[netnum]
+				PN.cables += src
+				continue
+
+			if(TC.netnum != netnum)
+				var/datum/powernet/PN = powernets[netnum]
+				var/datum/powernet/TPN = powernets[TC.netnum]
+				var/kingNetnum = netnum
+				if(PN.cables.len + PN.nodes.len < TPN.cables.len + TPN.nodes.len)
+					kingNetnum = TC.netnum
+					var/datum/powernet/temp = PN
+					PN = TPN
+					TPN = temp
+				for(var/obj/cable/C in TPN.cables)
+					TPN.cables -= C
+					PN.cables += C
+					C.netnum = kingNetnum
+				for(var/obj/machinery/power/M in TPN.nodes)
+					if(M.netnum < 0)		// APCs have netnum=-1 so they don't count as network nodes directly
+						continue
+					TPN.nodes -= M
+					PN.nodes += M
+					M.netnum = kingNetnum
+					M.powernet = powernets[M.netnum]
+				TC.netnum = kingNetnum
+				TPN.cables -= TC
+				PN.cables += TC
+	for(var/obj/machinery/power/M in TB)
+		if(!netnum)
+			if(!M.netnum)
+				continue
+			else
+				netnum = M.netnum
+				var/datum/powernet/PN = powernets[netnum]
+				PN.nodes += src
+
+/obj/cable/proc/mergeConnectedNetworksOnTurf()
+	var/turf/TB
+	TB = loc
+
+	for(var/obj/cable/C in TB)
+		if(C == src)
+			continue
+		if(netnum == 0)
+			var/datum/powernet/PN = powernets[C.netnum]
+			netnum = C.netnum
+			PN.cables += src
+			continue
+		var/datum/powernet/PN = powernets[netnum]
+		var/datum/powernet/TPN = powernets[C.netnum]
+		var/kingNetnum = netnum
+		if(PN.cables.len + PN.nodes.len < TPN.cables.len + TPN.nodes.len)
+			kingNetnum = C.netnum
+			var/datum/powernet/temp = PN
+			PN = TPN
+			TPN = temp
+
+		TPN.cables -= C
+		PN.cables += C
+		C.netnum = kingNetnum
+	for(var/obj/machinery/power/M in TB)
+
+		if(M.netnum < 0)
+			continue
+		if(M.netnum == 0)
+			var/datum/powernet/PN = powernets[netnum]
+			PN.nodes += M
+			M.netnum = netnum
+			M.powernet = powernets[M.netnum]
+
+		var/datum/powernet/PN = powernets[netnum]
+		var/datum/powernet/TPN = powernets[M.netnum]
+		var/kingNetnum = netnum
+		if(PN.cables.len + PN.nodes.len < TPN.cables.len + TPN.nodes.len)
+			kingNetnum = M.netnum
+			var/datum/powernet/temp = PN
+			PN = TPN
+			TPN = temp
+
+		TPN.nodes -= M
+		PN.nodes += M
+		M.netnum = kingNetnum
+		M.powernet = powernets[M.netnum]
+	for(var/obj/machinery/power/apc/N in TB)
+		var/obj/machinery/power/M
+		M = N.terminal
+
+		if(M.netnum == 0)
+			if(netnum == 0)
+				continue
+			var/datum/powernet/PN = powernets[netnum]
+			PN.nodes += M
+			M.netnum = netnum
+			M.powernet = powernets[M.netnum]
+			continue
+
+		var/datum/powernet/PN = powernets[netnum]
+		var/datum/powernet/TPN = powernets[M.netnum]
+		var/kingNetnum = netnum
+		if(PN.cables.len + PN.nodes.len < TPN.cables.len + TPN.nodes.len)
+			kingNetnum = M.netnum
+			var/datum/powernet/temp = PN
+			PN = TPN
+			TPN = temp
+
+		TPN.nodes -= M
+		PN.nodes += M
+		M.netnum = kingNetnum
+		M.powernet = powernets[M.netnum]
+
+obj/cable/proc/cableColor(var/colorC)
+	var/color_n = "red"
+	if(colorC)
+		color_n = colorC
+	color = color_n
+	switch(colorC)
+		if("red")
+			icon = 'power_cond_red.dmi'
+		if("yellow")
+			icon = 'power_cond_yellow.dmi'
+		if("green")
+			icon = 'power_cond_green.dmi'
+		if("blue")
+			icon = 'power_cond_blue.dmi'

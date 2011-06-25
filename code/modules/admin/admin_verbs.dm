@@ -79,6 +79,7 @@
 			verbs += /client/proc/modifytemperature
 			verbs += /client/proc/callproc
 			verbs += /client/proc/Cell
+			verbs += /client/proc/cmd_debug_make_powernets
 			verbs += /client/proc/cmd_debug_del_all
 			verbs += /client/proc/cmd_debug_tog_aliens
 			verbs += /client/proc/Debug2					//debug toggle switch

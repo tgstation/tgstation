@@ -236,7 +236,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has made [M.key] an abomination.")
-	
+
 	//	spawn(10)
 	//		M.make_abomination()
 
@@ -295,6 +295,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				del(O)
 		log_admin("[key_name(src)] has deleted all instances of [hsbitem].")
 		message_admins("[key_name_admin(src)] has deleted all instances of [hsbitem].", 0)
+
+/client/proc/cmd_debug_make_powernets()
+	set category = "Debug"
+	set name = "Make Powernets"
+	makepowernets()
+	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
+	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
 
 /client/proc/cmd_debug_tog_aliens()
 	set category = "Server"
@@ -361,18 +368,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(M), M.slot_r_hand)
 			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_l_hand)
 			M.equip_if_possible(new /obj/item/weapon/smokebomb(M), M.slot_r_store)
-			
-			
+
+
 		if ("tournament gangster") //gangster are supposed to fight each other. --rastaf0
 			M.equip_if_possible(new /obj/item/clothing/under/det(M), M.slot_w_uniform)
 			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
-			
+
 			M.equip_if_possible(new /obj/item/clothing/suit/det_suit(M), M.slot_wear_suit)
 			M.equip_if_possible(new /obj/item/clothing/glasses/thermal/monocle(M), M.slot_glasses)
 			M.equip_if_possible(new /obj/item/clothing/head/det_hat(M), M.slot_head)
-			
+
 			M.equip_if_possible(new /obj/item/weapon/cloaking_device(M), M.slot_r_store)
-			
+
 			M.equip_if_possible(new /obj/item/weapon/gun/projectile(M), M.slot_r_hand)
 			M.equip_if_possible(new /obj/item/ammo_magazine(M), M.slot_l_store)
 
@@ -381,13 +388,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/suit/chef(M), M.slot_wear_suit)
 			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
 			M.equip_if_possible(new /obj/item/clothing/head/chefhat(M), M.slot_head)
-			
-			
+
+
 			M.equip_if_possible(new /obj/item/weapon/kitchen/rollingpin(M), M.slot_r_hand)
 			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_l_hand)
 			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_r_store)
 			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_s_store)
-			
+
 		if ("tournament janitor")
 			M.equip_if_possible(new /obj/item/clothing/under/rank/janitor(M), M.slot_w_uniform)
 			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
@@ -395,12 +402,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			for(var/obj/item/I in backpack)
 				del(I)
 			M.equip_if_possible(backpack, M.slot_back)
-	
+
 			M.equip_if_possible(new /obj/item/weapon/mop(M), M.slot_r_hand)
 			var/obj/item/weapon/reagent_containers/glass/bucket/bucket = new(M)
 			bucket.reagents.add_reagent("water", 70)
 			M.equip_if_possible(bucket, M.slot_l_hand)
-			
+
 			M.equip_if_possible(new /obj/item/weapon/chem_grenade/cleaner(M), M.slot_r_store)
 			M.equip_if_possible(new /obj/item/weapon/chem_grenade/cleaner(M), M.slot_l_store)
 			M.equip_if_possible(new /obj/item/stack/tile/steel(M), M.slot_in_backpack)
