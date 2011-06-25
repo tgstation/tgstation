@@ -82,6 +82,7 @@
 	src.load_admins()
 	if (config.usewhitelist)
 		load_whitelist()
+	LoadBansjob()
 	src.update_status()
 
 	makepowernets()

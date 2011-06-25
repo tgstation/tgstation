@@ -238,6 +238,112 @@ var/showadminmessages = 1
 					//del(M)
 				if("Cancel")
 					return
+	if (href_list["newjobban1"])
+		var/mob/M = locate(href_list["newjobban1"])
+		var/dat = ""
+		var/header = "<b>Pick Job to ban this guy from.<br>"
+		var/body
+//		var/list/alljobs = get_all_jobs()
+		var/jobs = ""
+		jobs += "<a href='?src=\ref[src];newjobban2=Heads;jobban4=\ref[M]'>Heads</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=Security;jobban4=\ref[M]'>Security</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=Engineering;jobban4=\ref[M]'>Engineering</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=Research;jobban4=\ref[M]'>Research</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=Medical;jobban4=\ref[M]'>Medical</a> <br><br>"
+
+		jobs += "<a href='?src=\ref[src];newjobban2=CE_Station_Engineer;jobban4=\ref[M]'>CE+Station Engineer</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=CE_Atmospheric_Tech;jobban4=\ref[M]'>CE+Atmospheric Tech</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=CE_Shaft_Miner;jobban4=\ref[M]'>CE+Shaft Miner</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=Chemist_RD_CMO;jobban4=\ref[M]'>Chemist+RD+CMO</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=Geneticist_RD_CMO;jobban4=\ref[M]'>Geneticist+RD+CMO</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=MD_CMO;jobban4=\ref[M]'>MD+CMO</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=Virologist_RD_CMO;jobban4=\ref[M]'>Virologist+RD+CMO</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=Scientist_RD;jobban4=\ref[M]'>Scientist+RD</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=AI_Cyborg;jobban4=\ref[M]'>AI+Cyborg</a> <br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=Detective_HoS;jobban4=\ref[M]'>Detective+HoS</a> <br><br>"
+		for(var/job in uniquelist(occupations + assistant_occupations))
+			if(job == "Tourist")
+				continue
+			if(jobban_isbanned(M, job))
+				jobs += "<a href='?src=\ref[src];newjobban2=[job];jobban4=\ref[M]'><font color=red>[dd_replacetext(job, " ", "&nbsp")]</font></a> "
+			else
+				jobs += "<a href='?src=\ref[src];newjobban2=[job];jobban4=\ref[M]'>[dd_replacetext(job, " ", "&nbsp")]</a> " //why doesn't this work the stupid cunt
+
+		if(jobban_isbanned(M, "Captain"))
+			jobs += "<a href='?src=\ref[src];newjobban2=Captain;jobban4=\ref[M]'><font color=red>Captain</font></a> "
+		else
+			jobs += "<a href='?src=\ref[src];newjobban2=Captain;jobban4=\ref[M]'>Captain</a> " //why doesn't this work the stupid cunt
+		if(jobban_isbanned(M, "Syndicate"))
+			jobs += "<BR><a href='?src=\ref[src];newjobban2=Syndicate;jobban4=\ref[M]'><font color=red>[dd_replacetext("Syndicate", " ", "&nbsp")]</font></a> "
+		else
+			jobs += "<BR><a href='?src=\ref[src];newjobban2=Syndicate;jobban4=\ref[M]'>[dd_replacetext("Syndicate", " ", "&nbsp")]</a> " //why doesn't this work the stupid cunt
+
+		body = "<br>[jobs]<br><br>"
+		dat = "<tt>[header][body]</tt>"
+		usr << browse(dat, "window=jobban2;size=600x250")
+		return
+	if(href_list["newjobban2"])
+		if ((src.rank in list("Moderator", "Administrator", "Badmin", "Tyrant"  )))
+			var/mob/M = locate(href_list["jobban4"])
+			var/job = href_list["newjobban2"]
+			if(!ismob(M)) return
+			//if ((M.client && M.client.holder && (M.client.holder.level >= src.level)))
+			//	alert("You cannot perform this action. You must be of a higher administrative rank!")
+			//	return
+			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
+				if("Yes")
+					var/mins = input(usr,"How long (in days)?","Ban time",7) as num
+					mins = mins * 24 * 60
+					if(!mins)
+						return
+					if(mins >= 525600) mins = 525599
+					var/reason = input(usr,"Reason?","reason","Griefer") as text
+					if(!reason)
+						return
+					if(AddBanjob(M.ckey, M.computer_id, reason, usr.ckey, 1, mins, job))
+						M << "\red<BIG><B>You have been jobbanned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+						M << "\red This is a temporary ban, it will be removed in [mins] minutes."
+						if(config.banappeals)
+							M << "\red To try to resolve this matter head to [config.banappeals]"
+						else
+							M << "\red No ban appeals URL has been set."
+						log_admin("[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis will be removed in [mins] minutes.")
+						message_admins("\blue[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis will be removed in [mins] minutes.")
+
+					//del(M.client)
+					//del(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
+				if("No")
+					var/reason = input(usr,"Reason?","reason","Griefer") as text
+					if(!reason)
+						return
+					if(AddBanjob(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, job))
+						M << "\red<BIG><B>You have been banned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+						M << "\red This is a permanent ban."
+						if(config.banappeals)
+							M << "\red To try to resolve this matter head to [config.banappeals]"
+						else
+							M << "\red No ban appeals URL has been set."
+						log_admin("[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis is a permanent ban.")
+						message_admins("\blue[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis is a permanent ban.")
+
+					//del(M.client)
+					//del(M)
+				if("Cancel")
+					return
+
+	if(href_list["unjobbanf"])
+		var/banfolder = href_list["unjobbanf"]
+		Banlist.cd = "/base/[banfolder]"
+		var/key = Banlist["key"]
+		if(alert(usr, "Are you sure you want to unban [key]?", "Confirmation", "Yes", "No") == "Yes")
+			if (RemoveBanjob(banfolder))
+				unjobbanpanel()
+			else
+				alert(usr,"This ban has already been lifted / does not exist.","Error","Ok")
+				unjobbanpanel()
+
+	if(href_list["unjobbane"])
+		return
 /*
 	if (href_list["remove"])
 		if ((src.rank in list( "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
@@ -2170,6 +2276,12 @@ var/showadminmessages = 1
 	onclose(usr,"server_logfile")
 	return
 
+/client/proc/unjobban_panel()
+	set name = "Unjobban Panel"
+	set category = "Admin"
+	if (src.holder)
+		src.holder.unjobbanpanel()
+	return
 
 
 //

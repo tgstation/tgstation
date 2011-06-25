@@ -326,6 +326,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
+
 /client/proc/cmd_admin_dress(var/mob/living/carbon/human/M in world)
 	set category = "Fun"
 	set name = "Select equipment"
