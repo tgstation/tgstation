@@ -508,7 +508,7 @@ datum/mind
 						ticker.mode.cult += src
 						ticker.mode.update_cult_icons_added(src)
 						special_role = "Cultist"
-						current << "<font color=\"purple\"><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</b></i></font>"
+						current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 						current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
 						var/datum/game_mode/cult/cult = ticker.mode
 						if (istype(cult))
@@ -668,6 +668,8 @@ datum/mind
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
+							log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
+							message_admins("\blue [key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]", 1)
 							src = null
 							M = H.monkeyize()
 							src = M.mind
@@ -680,6 +682,8 @@ datum/mind
 						var/mob/living/carbon/human/H = current
 						var/mob/living/carbon/monkey/M = current
 						if (istype(H))
+							log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
+							message_admins("\blue [key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]", 1)
 							src = null
 							M = H.monkeyize()
 							src = M.mind
@@ -692,6 +696,8 @@ datum/mind
 						if (istype(M.virus,/datum/disease/jungle_fever))
 							M.virus.cure(0)
 							sleep(0) //because deleting of virus is doing throught spawn(0)
+						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
+						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]", 1)
 						var/obj/item/weapon/dnainjector/m2h/m2h = new
 						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
 						src = null

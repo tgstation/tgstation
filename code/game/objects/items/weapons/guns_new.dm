@@ -464,6 +464,17 @@ var/const/PROJECTILE_DART = 8
 				power_supply.give(power_supply.maxcharge)
 				update_icon()
 
+			destroyer
+				name = "pulse destroyer"
+				desc = "A heavy-duty, pulse-based energy weapon. The mode is set to DESRTOY. Always destroy."
+				mode = 2
+				New()
+					power_supply = new /obj/item/weapon/cell/infinite(src)
+					power_supply.give(power_supply.maxcharge)
+					update_icon()
+				attack_self(mob/living/user as mob)
+					return
+
 		nuclear
 			name = "Advanced Energy Gun"
 			desc = "An energy gun with an experimental miniaturized reactor."

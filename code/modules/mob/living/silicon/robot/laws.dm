@@ -68,7 +68,7 @@
 			if (length(temp) > 0)
 				laws.ion[index] = temp
 
-		if (!checktraitor(src) || mind.original != src)
+		if (!is_special_character(src) || mind.original != src)
 			temp = master.zeroth
 			laws.zeroth = temp
 

@@ -9,7 +9,7 @@
 		return
 	for(var/mob/living/carbon/human/H in world)
 		if(H.stat == 2 || !(H.client)) continue
-		if(checktraitor(H)) continue
+		if(is_special_character(H)) continue
 
 		ticker.mode.equip_traitor(H)
 		ticker.mode.traitors += H.mind

@@ -115,14 +115,17 @@
 			verbs += /obj/admins/proc/votekill 				//abort vote
 
 			verbs += /client/proc/give_spell
-			verbs += /client/proc/cmd_admin_alienize
-			verbs += /client/proc/cmd_admin_changelinginize
+			verbs += /obj/admins/proc/edit_memory
+			verbs += /obj/admins/proc/edit_player
+			verbs += /client/proc/cmd_admin_dress
+			//verbs += /client/proc/cmd_admin_alienize
+			//verbs += /client/proc/cmd_admin_changelinginize
 			//verbs += /client/proc/cmd_admin_abominize 		// -- TLE
-			verbs += /client/proc/cmd_admin_monkeyize
-			verbs += /client/proc/cmd_admin_robotize
-			verbs += /client/proc/make_cultist 				// -- TLE
+			//verbs += /client/proc/cmd_admin_monkeyize
+			//verbs += /client/proc/cmd_admin_robotize
+			//verbs += /client/proc/make_cultist 				// -- TLE
 			verbs += /client/proc/cmd_admin_ninjafy 			//N
-			verbs += /client/proc/makepAI					// -- TLE
+			//verbs += /client/proc/makepAI					// -- TLE
 			verbs += /client/proc/respawn_character			//N
 
 			verbs += /client/proc/Getmob
@@ -252,14 +255,17 @@
 			verbs += /obj/admins/proc/votekill 				//abort vote
 
 			verbs += /client/proc/give_spell
-			verbs += /client/proc/cmd_admin_alienize
-			verbs += /client/proc/cmd_admin_changelinginize
+			verbs += /obj/admins/proc/edit_memory
+			verbs += /obj/admins/proc/edit_player
+			verbs += /client/proc/cmd_admin_dress
+			//verbs += /client/proc/cmd_admin_alienize
+			//verbs += /client/proc/cmd_admin_changelinginize
 			//verbs += /client/proc/cmd_admin_abominize 		// -- TLE
-			verbs += /client/proc/cmd_admin_monkeyize
-			verbs += /client/proc/cmd_admin_robotize
-			verbs += /client/proc/make_cultist 				// -- TLE
+			//verbs += /client/proc/cmd_admin_monkeyize
+			//verbs += /client/proc/cmd_admin_robotize
+			//verbs += /client/proc/make_cultist 				// -- TLE
 			verbs += /client/proc/cmd_admin_ninjafy 			//N
-			verbs += /client/proc/makepAI					// -- TLE
+			//verbs += /client/proc/makepAI					// -- TLE
 			verbs += /client/proc/respawn_character			//N
 
 			verbs += /client/proc/Getmob
@@ -385,11 +391,13 @@
 			verbs += /obj/admins/proc/vmode   				//start vote
 			verbs += /obj/admins/proc/votekill 				//abort vote
 
+			verbs += /obj/admins/proc/edit_memory
+			verbs += /obj/admins/proc/edit_player
 			//verbs += /client/proc/cmd_admin_alienize
 			//verbs += /client/proc/cmd_admin_changelinginize
-			//verbs += /client/proc/cmd_admin_abominize 	// -- TLE
-			verbs += /client/proc/cmd_admin_monkeyize
-			verbs += /client/proc/cmd_admin_robotize
+			//verbs += /client/proc/cmd_admin_abominize 		// -- TLE
+			//verbs += /client/proc/cmd_admin_monkeyize
+			//verbs += /client/proc/cmd_admin_robotize
 			//verbs += /client/proc/make_cultist 				// -- TLE
 			//verbs += /client/proc/cmd_admin_ninjafy 		//N
 			verbs += /client/proc/respawn_character			//N
@@ -544,11 +552,13 @@
 			verbs += /obj/admins/proc/vmode   				//start vote
 			verbs += /obj/admins/proc/votekill 				//abort vote
 
+			verbs += /obj/admins/proc/edit_memory
+			verbs += /obj/admins/proc/edit_player
 			//verbs += /client/proc/cmd_admin_alienize
 			//verbs += /client/proc/cmd_admin_changelinginize
 			//verbs += /client/proc/cmd_admin_abominize 	// -- TLE
-			verbs += /client/proc/cmd_admin_monkeyize
-			verbs += /client/proc/cmd_admin_robotize
+			//verbs += /client/proc/cmd_admin_monkeyize
+			//verbs += /client/proc/cmd_admin_robotize
 			//verbs += /client/proc/make_cultist 				// -- TLE
 			//verbs += /client/proc/cmd_admin_ninjafy 		//N
 			verbs += /client/proc/respawn_character			//N
@@ -693,6 +703,8 @@
 			verbs += /obj/admins/proc/vmode   				//start vote
 			verbs += /obj/admins/proc/votekill 				//abort vote
 
+			//verbs += /obj/admins/proc/edit_memory
+			verbs += /obj/admins/proc/edit_player
 			//verbs += /client/proc/cmd_admin_alienize
 			//verbs += /client/proc/cmd_admin_changelinginize
 			//verbs += /client/proc/cmd_admin_abominize 	// -- TLE
@@ -837,6 +849,8 @@
 			verbs += /obj/admins/proc/vmode   				//start vote
 			verbs += /obj/admins/proc/votekill 				//abort vote
 
+			//verbs += /obj/admins/proc/edit_memory
+			verbs += /obj/admins/proc/edit_player
 			//verbs += /client/proc/cmd_admin_alienize
 			//verbs += /client/proc/cmd_admin_changelinginize
 			//verbs += /client/proc/cmd_admin_abominize 	// -- TLE
@@ -965,6 +979,8 @@
 			verbs += /obj/admins/proc/vmode   				//start vote
 			verbs += /obj/admins/proc/votekill 				//abort vote
 
+			//verbs += /obj/admins/proc/edit_memory
+			verbs += /obj/admins/proc/edit_player
 			//verbs += /client/proc/cmd_admin_alienize
 			//verbs += /client/proc/cmd_admin_changelinginize
 			//verbs += /client/proc/cmd_admin_abominize 	// -- TLE
@@ -1134,14 +1150,17 @@
 	verbs -= /obj/admins/proc/votekill 				//abort vote
 
 	verbs -= /client/proc/give_spell
-	verbs -= /client/proc/cmd_admin_alienize
-	verbs -= /client/proc/cmd_admin_changelinginize
+	verbs -= /obj/admins/proc/edit_memory
+	verbs -= /obj/admins/proc/edit_player
+	verbs -= /client/proc/cmd_admin_dress
+	//verbs -= /client/proc/cmd_admin_alienize
+	//verbs -= /client/proc/cmd_admin_changelinginize
 	//verbs -= /client/proc/cmd_admin_abominize 		// -- TLE
-	verbs -= /client/proc/cmd_admin_monkeyize
-	verbs -= /client/proc/cmd_admin_robotize
-	verbs -= /client/proc/make_cultist 				// -- TLE
+	//verbs -= /client/proc/cmd_admin_monkeyize
+	//verbs -= /client/proc/cmd_admin_robotize
+	//verbs -= /client/proc/make_cultist 				// -- TLE
 	verbs -= /client/proc/cmd_admin_ninjafy 		//N
-	verbs -= /client/proc/makepAI
+	//verbs -= /client/proc/makepAI
 	verbs -= /client/proc/respawn_character			//N
 
 	verbs -= /client/proc/Getmob

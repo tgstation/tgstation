@@ -651,14 +651,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/cmd_admin_list_occ()
 	set category = "Admin"
-	set name = "List OOC"
+	set name = "List free slots"
 
 	if (!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return
 
 	for(var/t in occupations)
-		src << "[t]<br>"
+		src << "[t]: [occupations[t]]"
 
 /client/proc/cmd_admin_explosion(atom/O as obj|mob|turf in world)
 	set category = "Special Verbs"
@@ -889,8 +889,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Attack Log"
 
-	//var/list/L = M.get_contents()
-	usr << text("\red <b>Attack Log для []</b>", mob)
+	usr << text("\red <b>Attack Log for []</b>", mob)
 	for(var/t in M.attack_log)
-		usr << "[t]"
+		usr << t
 

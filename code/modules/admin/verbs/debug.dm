@@ -191,7 +191,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M:Alienize()
 	else
 		alert("Invalid mob")
-
+/*
 /client/proc/cmd_admin_monkeyize(var/mob/M in world)
 	set category = "Fun"
 	set name = "Make Monkey"
@@ -223,7 +223,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				M.mind.special_role = "Changeling"
 	else
 		alert("Invalid mob")
-
+*/
 /*
 /client/proc/cmd_admin_abominize(var/mob/M in world)
 	set category = null
@@ -236,11 +236,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has made [M.key] an abomination.")
-	/*
-		spawn(10)
-			M.make_abomination()
-		*/
+	
+	//	spawn(10)
+	//		M.make_abomination()
+
 */
+/*
 /client/proc/make_cultist(var/mob/M in world) // -- TLE, modified by Urist
 	set category = "Fun"
 	set name = "Make Cultist"
@@ -279,6 +280,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				M.mind.special_role = "Cultist"
 				ticker.mode.cult += M.mind
 			src << "Made [M] a cultist."
+*/
 
 /client/proc/cmd_debug_del_all()
 	set category = "Debug"
@@ -323,3 +325,93 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			alert("Invalid ID card")
 	else
 		alert("Invalid mob")
+
+/client/proc/cmd_admin_dress(var/mob/living/carbon/human/M in world)
+	set category = "Fun"
+	set name = "Select equipment"
+	if(!ishuman(M))
+		alert("Invalid mob")
+		return
+	//log_admin("[key_name(src)] has alienized [M.key].")
+	var/list/dresspacks = list(
+		"strip",
+		"tournament standard",
+		"tournament gangster",
+		"tournament chef",
+		"tournament janitor",
+		)
+	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
+	if (isnull(dresscode))
+		return
+	for (var/obj/item/I in M)
+		if (istype(I, /obj/item/weapon/implant))
+			continue
+		del(I)
+	switch(dresscode)
+		if ("strip")
+			//do nothing
+		if ("tournament standard") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
+			M.equip_if_possible(new /obj/item/clothing/under/color/blue(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
+
+			M.equip_if_possible(new /obj/item/clothing/suit/armor/vest(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/head/helmet/thunderdome(M), M.slot_head)
+
+			M.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(M), M.slot_r_hand)
+			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_l_hand)
+			M.equip_if_possible(new /obj/item/weapon/smokebomb(M), M.slot_r_store)
+			
+			
+		if ("tournament gangster") //gangster are supposed to fight each other. --rastaf0
+			M.equip_if_possible(new /obj/item/clothing/under/det(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
+			
+			M.equip_if_possible(new /obj/item/clothing/suit/det_suit(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/glasses/thermal/monocle(M), M.slot_glasses)
+			M.equip_if_possible(new /obj/item/clothing/head/det_hat(M), M.slot_head)
+			
+			M.equip_if_possible(new /obj/item/weapon/cloaking_device(M), M.slot_r_store)
+			
+			M.equip_if_possible(new /obj/item/weapon/gun/projectile(M), M.slot_r_hand)
+			M.equip_if_possible(new /obj/item/ammo_magazine(M), M.slot_l_store)
+
+		if ("tournament chef") //Steven Seagal FTW
+			M.equip_if_possible(new /obj/item/clothing/under/rank/chef(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/suit/chef(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
+			M.equip_if_possible(new /obj/item/clothing/head/chefhat(M), M.slot_head)
+			
+			
+			M.equip_if_possible(new /obj/item/weapon/kitchen/rollingpin(M), M.slot_r_hand)
+			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_l_hand)
+			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_r_store)
+			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_s_store)
+			
+		if ("tournament janitor")
+			M.equip_if_possible(new /obj/item/clothing/under/rank/janitor(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
+			var/obj/item/weapon/storage/backpack/backpack = new(M)
+			for(var/obj/item/I in backpack)
+				del(I)
+			M.equip_if_possible(backpack, M.slot_back)
+	
+			M.equip_if_possible(new /obj/item/weapon/mop(M), M.slot_r_hand)
+			var/obj/item/weapon/reagent_containers/glass/bucket/bucket = new(M)
+			bucket.reagents.add_reagent("water", 70)
+			M.equip_if_possible(bucket, M.slot_l_hand)
+			
+			M.equip_if_possible(new /obj/item/weapon/chem_grenade/cleaner(M), M.slot_r_store)
+			M.equip_if_possible(new /obj/item/weapon/chem_grenade/cleaner(M), M.slot_l_store)
+			M.equip_if_possible(new /obj/item/stack/tile/steel(M), M.slot_in_backpack)
+			M.equip_if_possible(new /obj/item/stack/tile/steel(M), M.slot_in_backpack)
+			M.equip_if_possible(new /obj/item/stack/tile/steel(M), M.slot_in_backpack)
+			M.equip_if_possible(new /obj/item/stack/tile/steel(M), M.slot_in_backpack)
+			M.equip_if_possible(new /obj/item/stack/tile/steel(M), M.slot_in_backpack)
+			M.equip_if_possible(new /obj/item/stack/tile/steel(M), M.slot_in_backpack)
+			M.equip_if_possible(new /obj/item/stack/tile/steel(M), M.slot_in_backpack)
+
+			var/obj/mopbucket/mopbucket = new(M.loc)
+			mopbucket.reagents.add_reagent("water", 100)
+
+	M.update_clothing()
+	return

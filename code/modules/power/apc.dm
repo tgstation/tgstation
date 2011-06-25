@@ -439,7 +439,7 @@
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/attack_hand(mob/user)
-	if (!can_use())
+	if (!can_use(user))
 		return
 	src.add_fingerprint(user)
 	if(opened && (!istype(user, /mob/living/silicon)))
@@ -704,26 +704,26 @@
 					src.aidisabled = 0
 				src.updateDialog()
 
-/obj/machinery/power/apc/proc/can_use() //used by attack_hand() and Topic()
-	if (usr.stat)
-		usr << "\red You must be conscious to use this [src]!"
+/obj/machinery/power/apc/proc/can_use(mob/user as mob) //used by attack_hand() and Topic()
+	if (user.stat)
+		user << "\red You must be conscious to use this [src]!"
 		return 0
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
-		usr << "\red You don't have the dexterity to use this [src]!"
-		usr << browse(null, "window=apc")
-		usr.machine = null
+	if ( ! (istype(user, /mob/living/carbon/human) || \
+			istype(user, /mob/living/silicon) || \
+			istype(user, /mob/living/carbon/monkey) /*&& ticker && ticker.mode.name == "monkey"*/) )
+		user << "\red You don't have the dexterity to use this [src]!"
+		user << browse(null, "window=apc")
+		user.machine = null
 		return 0
-	if(usr.restrained())
-		usr << "\red You must have free hands to use this [src]"
+	if(user.restrained())
+		user << "\red You must have free hands to use this [src]"
 		return 0
-	if(usr.lying)
-		usr << "\red You must stand to use this [src]!"
+	if(user.lying)
+		user << "\red You must stand to use this [src]!"
 		return 0
-	if (istype(usr, /mob/living/silicon))
-		var/mob/living/silicon/ai/AI = usr
-		var/mob/living/silicon/robot/robot = usr
+	if (istype(user, /mob/living/silicon))
+		var/mob/living/silicon/ai/AI = user
+		var/mob/living/silicon/robot/robot = user
 		if (                                                             \
 			src.aidisabled ||                                            \
 			malfhack && istype(malfai) &&                                \
@@ -732,28 +732,28 @@
 				(istype(robot) && (robot in malfai.connected_robots))    \
 			)                                                            \
 		)
-			usr << "\red \The [src] have AI control disabled!"
-			usr << browse(null, "window=apc")
-			usr.machine = null
+			user << "\red \The [src] have AI control disabled!"
+			user << browse(null, "window=apc")
+			user.machine = null
 			return 0
 	else
-		if ((!in_range(src, usr) || !istype(src.loc, /turf)))
-			usr << browse(null, "window=apc")
-			usr.machine = null
+		if ((!in_range(src, user) || !istype(src.loc, /turf)))
+			user << browse(null, "window=apc")
+			user.machine = null
 			return 0
-	var/mob/living/carbon/human/H = usr
+	var/mob/living/carbon/human/H = user
 	if (istype(H))
 		if(H.brainloss >= 60)
 			for(var/mob/M in viewers(src, null))
 				M << "\red [H] stares cluelessly at [src] and drools."
 			return 0
 		else if(prob(H.brainloss))
-			usr << "\red You momentarily forget how to use [src]."
+			user << "\red You momentarily forget how to use [src]."
 			return 0
 	return 1
 
 /obj/machinery/power/apc/Topic(href, href_list)
-	if (!can_use())
+	if (!can_use(usr))
 		return
 	src.add_fingerprint(usr)
 	usr.machine = src

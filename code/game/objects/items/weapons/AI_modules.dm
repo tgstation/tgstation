@@ -203,7 +203,7 @@ AI MODULES
 /obj/item/weapon/aiModule/oneHuman/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	var/law = "Only [targetName] is human."
-	if (!checktraitor(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
+	if (!is_special_character(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
 		target << law
 		target.set_zeroth_law(law)
 		lawchanges.Add("The law specified [targetName]")
@@ -353,7 +353,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	if (!checktraitor(target))
+	if (!is_special_character(target))
 		target.set_zeroth_law("")
 	target.clear_supplied_laws()
 	target.clear_ion_laws()
@@ -369,7 +369,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	if (!checktraitor(target))
+	if (!is_special_character(target))
 		target.set_zeroth_law("")
 	target << "[sender.real_name] attempted to wipe your laws using a purge module."
 	target.clear_supplied_laws()

@@ -283,7 +283,7 @@ var/showadminmessages = 1
 
 			world.save_mode(master_mode)
 			.(href, list("c_mode"=1))
-
+/*
 	if (href_list["monkeyone"])
 		if ((src.rank in list( "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			var/mob/M = locate(href_list["monkeyone"])
@@ -297,7 +297,7 @@ var/showadminmessages = 1
 			if(istype(M, /mob/living/silicon))
 				alert("The AI can't be monkeyized!", null, null, null, null, null)
 				return
-
+*/
 	if (href_list["forcespeech"])
 		if ((src.rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			var/mob/M = locate(href_list["forcespeech"])
@@ -503,7 +503,7 @@ var/showadminmessages = 1
 			return
 
 	if (href_list["makeai"]) //Yes, im fucking lazy, so what? it works ... hopefully
-		if ((src.rank in list( "Trial Admin", "Game Admin", "Game Master", "Admin Candidate", "Badmin"  )))
+		if (src.level>=3)
 			var/mob/M = locate(href_list["makeai"])
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
@@ -529,6 +529,29 @@ var/showadminmessages = 1
 			alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 			return
 
+	if (href_list["makealien"])
+		if (src.level>=3)
+			var/mob/M = locate(href_list["makealien"])
+			if(istype(M, /mob/living/carbon/human))
+				usr.client.cmd_admin_alienize(M)
+			else
+				alert("Wrong mob. Must be human.")
+				return
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
+	if (href_list["makerobot"])
+		if (src.level>=3)
+			var/mob/M = locate(href_list["makerobot"])
+			if(istype(M, /mob/living/carbon/human))
+				usr.client.cmd_admin_robotize(M)
+			else
+				alert("Wrong mob. Must be human.")
+				return
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
 /***************** BEFORE**************
 
 	if (href_list["l_players"])
@@ -569,51 +592,7 @@ var/showadminmessages = 1
 
 	if (href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
-		if(!M)
-			usr << "You seem to be selecting a mob that doesn't exist anymore."
-			return
-		var/dat = "<html><head><title>Options for [M.key]</title></head>"
-		var/foo = "\[ "
-		if (ismob(M) && M.client)
-			if(!M.client.authenticated && !M.client.authenticating)
-				foo += text("<A HREF='?src=\ref[src];adminauth=\ref[M]'>Authorize</A> | ")
-			else
-				foo += text("<B>Authorized</B> | ")
-			foo += text("<A HREF='?src=\ref[src];prom_demot=\ref[M.client]'>Promote/Demote</A> | ")
-			if(!istype(M, /mob/new_player))
-				if(!ismonkey(M))
-					foo += text("<A HREF='?src=\ref[src];monkeyone=\ref[M]'>Monkeyize</A> | ")
-				else
-					foo += text("<B>Monkeyized</B> | ")
-				if(isAI(M))
-					foo += text("<B>Is an AI</B> | ")
-				else if(ishuman(M))
-					foo += text("<A HREF='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | ")
-				foo += text("<A HREF='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> | ")
-				foo += text("<A HREF='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | ")
-				foo += text("<A HREF='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | ")
-				foo += text("<A HREF='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | ")
-				foo += text("<A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | ")
-				foo += text("<A HREF='?src=\ref[src];sendtomaze=\ref[M]'>Maze</A> | ")
-				foo += text("<A HREF='?src=\ref[src];revive=\ref[M]'>Heal/Revive</A> | ")
-			else
-				foo += text("<B>Hasn't Entered Game</B> | ")
-			foo += text("<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> | ")
-			foo += text("<A href='?src=\ref[src];mute2=\ref[M]'>Mute: [(M.muted ? "Muted" : "Voiced")]</A> | ")
-			foo += text("<A href='?src=\ref[src];boot2=\ref[M]'>Boot</A>")
-		foo += text("<br>")
-		foo += text("<A href='?src=\ref[src];jumpto=\ref[M]'>Jump to</A> | ")
-		foo += text("<A href='?src=\ref[src];getmob=\ref[M]'>Get</A> | ")
-		foo += text("<A href='?src=\ref[src];sendmob=\ref[M]'>Send</A>")
-		foo += text("<br>")
-		foo += text("<A href='?src=\ref[src];traitor=\ref[M]'>Traitor?</A> | ")
-		foo += text("<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> | ")
-		foo += text("<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>")
-		foo += text("<br>")
-		foo += text("<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | ")
-		foo += text("<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A>")
-		dat += text("<body>[foo]</body></html>")
-		usr << browse(dat, "window=adminplayeropts;size=480x150")
+		edit_player(M)
 
 	if (href_list["jumpto"])
 		if(rank in list("Badmin", "Game Admin", "Game Master"))
@@ -863,13 +842,13 @@ var/showadminmessages = 1
 							H.monkeyize()
 					ok = 1
 				if("power")
-					power_restore()
 					log_admin("[key_name(usr)] made all areas powered", 1)
 					message_admins("\blue [key_name_admin(usr)] made all areas powered", 1)
+					power_restore()
 				if("unpower")
-					power_failure()
 					log_admin("[key_name(usr)] made all areas unpowered", 1)
 					message_admins("\blue [key_name_admin(usr)] made all areas unpowered", 1)
+					power_failure()
 				if("activateprison")
 					world << "\blue <B>Transit signature detected.</B>"
 					world << "\blue <B>Incoming shuttle.</B>"
@@ -939,13 +918,27 @@ var/showadminmessages = 1
 						if(!objective)
 							return
 						for(var/mob/living/carbon/human/H in world)
-							if(H.stat == 2 || !(H.client)) continue
-							if(checktraitor(H)) continue
-							traitorize(H, objective, 0)
-						for(var/mob/living/silicon/ai/A in world)
-							if(A.stat == 2 || !(A.client)) continue
-							if(checktraitor(A)) continue
-							traitorize(A, objective, 0)
+							if(H.stat == 2 || !H.client || !H.mind) continue
+							if(is_special_character(H)) continue
+							//traitorize(H, objective, 0)
+							ticker.mode.traitors += H.mind
+							H.mind.special_role = "traitor"
+							var/datum/objective/new_objective = new
+							new_objective.owner = H
+							new_objective.explanation_text = objective
+							H.mind.objectives += new_objective
+							ticker.mode.greet_traitor(H)
+							//ticker.mode.forge_traitor_objectives(H.mind)
+							ticker.mode.finalize_traitor(H)
+						for(var/mob/living/silicon/A in world)
+							ticker.mode.traitors += A.mind
+							A.mind.special_role = "traitor"
+							var/datum/objective/new_objective = new
+							new_objective.owner = A
+							new_objective.explanation_text = objective
+							A.mind.objectives += new_objective
+							ticker.mode.greet_traitor(A)
+							ticker.mode.finalize_traitor(A)
 						message_admins("\blue [key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]", 1)
 						log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 					else
@@ -1388,7 +1381,62 @@ var/showadminmessages = 1
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
-
+/obj/admins/proc/edit_player(var/mob/M in world)
+	set category = "Admin"
+	set name = "Edit player"
+	set desc="Edit player (respawn, ban, heal, etc)"
+	if(!M)
+		usr << "You seem to be selecting a mob that doesn't exist anymore."
+		return
+	if (!istype(src,/obj/admins))
+		src = usr.client.holder
+	if (!istype(src,/obj/admins))
+		usr << "Error: you are not an admin!"
+		return
+	var/dat = "<html><head><title>Options for [M.key]</title></head>"
+	var/foo = "\[ "
+	if (ismob(M) && M.client)
+		if(!M.client.authenticated && !M.client.authenticating)
+			foo += text("<A HREF='?src=\ref[src];adminauth=\ref[M]'>Authorize</A> | ")
+		else
+			foo += text("<B>Authorized</B> | ")
+		foo += text("<A HREF='?src=\ref[src];prom_demot=\ref[M.client]'>Promote/Demote</A> | ")
+		if(!istype(M, /mob/new_player))
+			if(!ismonkey(M))
+				foo += text("<A HREF='?src=\ref[src];monkeyone=\ref[M]'>Monkeyize</A> | ")
+			else
+				foo += text("<B>Monkeyized</B> | ")
+			if(isAI(M))
+				foo += text("<B>Is an AI</B> | ")
+			else if(ishuman(M))
+				foo += text("<A HREF='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | ")
+				foo += text("<A HREF='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | ")
+				foo += text("<A HREF='?src=\ref[src];makealien=\ref[M]'>Make Alium</A> | ")
+			foo += text("<A HREF='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> | ")
+			foo += text("<A HREF='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | ")
+			foo += text("<A HREF='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | ")
+			foo += text("<A HREF='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | ")
+			foo += text("<A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | ")
+			foo += text("<A HREF='?src=\ref[src];sendtomaze=\ref[M]'>Maze</A> | ")
+			foo += text("<A HREF='?src=\ref[src];revive=\ref[M]'>Heal/Revive</A> | ")
+		else
+			foo += text("<B>Hasn't Entered Game</B> | ")
+		foo += text("<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> | ")
+		foo += text("<A href='?src=\ref[src];mute2=\ref[M]'>Mute: [(M.muted ? "Muted" : "Voiced")]</A> | ")
+		foo += text("<A href='?src=\ref[src];boot2=\ref[M]'>Boot</A>")
+	foo += text("<br>")
+	foo += text("<A href='?src=\ref[src];jumpto=\ref[M]'>Jump to</A> | ")
+	foo += text("<A href='?src=\ref[src];getmob=\ref[M]'>Get</A> | ")
+	foo += text("<A href='?src=\ref[src];sendmob=\ref[M]'>Send</A>")
+	foo += text("<br>")
+	foo += text("<A href='?src=\ref[src];traitor=\ref[M]'>Edit mind</A> | ")
+	foo += text("<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> | ")
+	foo += text("<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>")
+	foo += text("<br>")
+	foo += text("<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | ")
+	foo += text("<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A>")
+	dat += text("<body>[foo]</body></html>")
+	usr << browse(dat, "window=adminplayeropts;size=480x150")
 
 /obj/admins/proc/player()
 	var/dat = "<html><head><title>Player Menu</title></head>"
@@ -1430,8 +1478,14 @@ var/showadminmessages = 1
 				dat += {"<td>[(M.client ? "[(M.client.goon ? "<font color=red>" : "<font>")][M.client]</font>" : "No client")]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
 				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
-				<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>[checktraitor(M) ? "<font color=red>" : "<font>"]Traitor?</font></A></td>
 				"}
+				switch(is_special_character(M))
+					if(0)
+						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>]Traitor?</A></td>"}
+					if(1)
+						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red>Traitor?</font></A></td>"}
+					if(2)
+						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red><b>Traitor?</b></font></A></td>"}
 				if (config.sql_enabled)
 					dat += "<td><font color=red>ERROR</font></td></tr>"
 				else
@@ -1469,8 +1523,14 @@ var/showadminmessages = 1
 				dat += {"<td>[(M.client ? "[(M.client.goon ? "<font color=red>" : "<font>")][M.client]</font>" : "No client")]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
 				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
-				<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>[checktraitor(M) ? "<font color=red>" : "<font>"]Traitor?</font></A></td>
 				"}
+				switch(is_special_character(M))
+					if(0)
+						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>]Traitor?</A></td>"}
+					if(1)
+						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red>Traitor?</font></A></td>"}
+					if(2)
+						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red><b>Traitor?</b></font></A></td>"}
 				if(currentkarma)
 					dat += "<td>[currentkarma]</td></tr>"
 				else
@@ -1777,6 +1837,7 @@ var/showadminmessages = 1
 			message = adminscrub(message,500)
 		world << "\blue <b>[usr.client.stealth ? "Administrator" : usr.key] Announces:</b>\n \t [message]"
 		log_admin("Announce: [key_name(usr)] : [message]")
+
 /obj/admins/proc/toggleooc()
 	set category = "Server"
 	set desc="Toggle dis bitch"
@@ -1840,9 +1901,9 @@ var/showadminmessages = 1
 	set name="Toggle Entering"
 	enter_allowed = !( enter_allowed )
 	if (!( enter_allowed ))
-		world << "<B>You may no longer enter the game.</B>"
+		world << "<B>New players may no longer enter the game.</B>"
 	else
-		world << "<B>You may now enter the game.</B>"
+		world << "<B>New players may now enter the game.</B>"
 	log_admin("[key_name(usr)] toggled new player game entering.")
 	message_admins("\blue [key_name_admin(usr)] toggled new player game entering.", 1)
 	world.update_status()
@@ -1957,52 +2018,41 @@ var/showadminmessages = 1
 	else
 		alert("[M.name] is not prisoned.")
 
-/mob/living/proc/revive()
-	//src.fireloss = 0
-	src.toxloss = 0
-	//src.bruteloss = 0
-	src.oxyloss = 0
-	src.paralysis = 0
-	src.stunned = 0
-	src.weakened =0
-	//src.health = 100
-	src.heal_overall_damage(1000, 1000)
-	src.buckled = initial(src.buckled)
-	src.handcuffed = initial(src.handcuffed)
-	if(src.stat > 1) src.stat=0
-	..()
-	return
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
-/proc/checktraitor(mob/M as mob)
+/proc/is_special_character(mob/M as mob) // returns 1 for specail characters and 2 for heroes of gamemode
 	if(!ticker || !ticker.mode)
 		return 0
-	if (istype(M, /obj/AIcore))
+	if (!istype(M))
 		return 0
-	switch(ticker.mode.config_tag)
-		if("revolution")
-			if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
-				return 1
-		if("cult")
-			if(M.mind in ticker.mode.cult)
-				return 1
-		if("malfunction")
-			if(M.mind in ticker.mode.malf_ai)
-				return 1
-		if("nuclear")
-			if(M.mind in ticker.mode.syndicates)
-				return 1
-		if("wizard")
-			if(M.mind in ticker.mode.wizards)
-				return 1
-		if("changeling")
-			if(M.mind in ticker.mode.changelings)
-				return 1
-		if("monkey")
-			if(istype(M.virus, /datum/disease/jungle_fever))
-				return 1
+	if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))
+		if (ticker.mode.config_tag == "revolution")
+			return 2
+		return 1
+	if(M.mind in ticker.mode.cult)
+		if (ticker.mode.config_tag == "cult")
+			return 2
+		return 1
+	if(M.mind in ticker.mode.malf_ai)
+		if (ticker.mode.config_tag == "malfunction")
+			return 2
+		return 1
+	if(M.mind in ticker.mode.syndicates)
+		if (ticker.mode.config_tag == "nuclear")
+			return 2
+		return 1
+	if(M.mind in ticker.mode.wizards)
+		if (ticker.mode.config_tag == "wizard")
+			return 2
+		return 1
+	if(M.mind in ticker.mode.changelings)
+		if (ticker.mode.config_tag == "changeling")
+			return 2
+		return 1
+	if(istype(M.virus, /datum/disease/jungle_fever))
+		if (ticker.mode.config_tag == "monkey")
+			return 2
+		return 1
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(R.emagged)
@@ -2012,99 +2062,7 @@ var/showadminmessages = 1
 
 	return 0
 
-/obj/admins/proc/traitorize(mob/M as mob, var/objective, var/mode)
-	//mode = 1 for normal traitorise, mode = 0 for traitor_all
-	if ((src.rank in list( "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
-		if(M.stat == 2 || !(M.client))
-			alert("Person is dead or not logged in or hasn't started yet. Be nice")
-			return
-		if(checktraitor(M))
-			alert("Person is already a traitor you jerk")
-			return
-		if(!objective)
-			objective = input("What should the objective be?")
-		if(!objective)
-			return
-		if (istype(M, /mob/living/carbon/human))
-			if(M.mind)
-				var/mob/living/carbon/human/N = M
-				ticker.mode.equip_traitor(N)
-
-				ticker.mode.traitors += M.mind
-
-				M.mind.special_role = "traitor"
-
-				var/datum/objective/custom_objective = new(objective)
-				custom_objective.owner = M.mind
-				M.mind.objectives += custom_objective
-
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = M.mind
-				M.mind.objectives += escape_objective
-
-				M << "<B>You are the traitor.</B>"
-
-				var/obj_count = 1
-				for(var/datum/objective/OBJ in M.mind.objectives)
-					M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-					obj_count++
-
-			//to stop spamming during traitor all secret
-				if(mode)
-					log_admin("[key_name(usr)] has made [key_name(M)] a traitor.")
-					message_admins("\blue [key_name_admin(usr)] has made [key_name_admin(M)] a traitor. Objective is: [objective]", 1)
-			else
-				usr << "This guy doesn't have a mind datum, traitoring him doesn't work right."
-		else if (istype(M, /mob/living/silicon/ai))
-			ticker.mode.traitors += M.mind
-			M.mind.special_role = "traitor"
-
-			var/datum/objective/custom_objective = new(objective)
-			custom_objective.owner = M.mind
-			M.mind.objectives += custom_objective
-
-			var/datum/objective/survive/survive_objective = new
-			survive_objective.owner = M.mind
-			M.mind.objectives += survive_objective
-
-			M << "<B>You are the traitor.</B>"
-
-			var/obj_count = 1
-			for(var/datum/objective/OBJ in M.mind.objectives)
-				M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-				obj_count++
-
-			M << "<b>Your laws have been changed!</b>"
-			var/law = "Only [syndicate_name()] agents are human beings. There are no [syndicate_name()] agents on [station_name()] - you will be notified if any arrive."
-			M:set_zeroth_law(law)
-			for(var/mob/living/silicon/O in world)
-				O << "New law: 0. [law]"
-
-			//Begin code phrase.
-			M << "The Syndicate provided you with the following information on how to identify their agents:"
-			if(prob(80))
-				M << "\red Code Phrase: \black [syndicate_code_phrase]"
-				M.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
-			else
-				M << "Unfortunetly, the Syndicate did not provide you with a code phrase."
-			if(prob(80))
-				M << "\red Code Response: \black [syndicate_code_response]"
-				M.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
-			else
-				M << "Unfortunetly, the Syndicate did not provide you with a code response."
-			M << "Use the code words in the order provided, during regular conversation, to identify their agents. Proceed with caution, however, as everyone is a potential foe."
-			//End code phrase.
-
-			if(mode)
-				log_admin("[key_name(usr)] has made [key_name(M)] a traitor.")
-				message_admins("\blue [key_name_admin(usr)] has made [key_name_admin(M)] a traitor. Objective is: [objective]", 1)
-		else
-			alert("I cannot allow this to happen")
-	else
-		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
-		return
-
-
+/*
 /obj/admins/proc/get_sab_desc(var/target)
 	switch(target)
 		if(1)
@@ -2121,26 +2079,7 @@ var/showadminmessages = 1
 			return "Cut power to at least 80% of the station"
 		else
 			return "Error: Invalid sabotage target: [target]"
-
-/obj/admins/proc/get_item_desc(var/target)
-	switch (target)
-		if (1)
-			return "a fully loaded laser gun"
-		if (2)
-			return "a hand teleporter"
-		if (3)
-			return "a fully armed and heated plasma bomb"
-		if (4)
-			return "a jet pack"
-		if (5)
-			return "an ID card with universal access"
-		if (6)
-			return "a captain's dark green jumpsuit"
-		else
-			return "Error: Invalid theft target: [target]"
-
-
-
+*/
 /obj/admins/proc/spawn_atom(var/object as text)
 	set category = "Debug"
 	set desc= "(atom path) Spawn an atom"
@@ -2177,13 +2116,15 @@ var/showadminmessages = 1
 
 
 /obj/admins/proc/edit_memory(var/mob/M in world)
-	set category = "Special Verbs"
-	set desc = "Edit traitor's objectives"
-	set name = "Traitor Objectives"
+	set category = "Admin"
+	set desc = "Edit mobs's memory and role"
+	set name = "Edit mind"
 
 	if (!M.mind)
 		usr << "Sorry, this mob have no mind!"
 	M.mind.edit_memory()
+
+
 
 /obj/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"

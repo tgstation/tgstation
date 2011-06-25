@@ -1725,6 +1725,22 @@
 		..()
 		reagents.add_reagent("cryoxadone", 30)
 
+/obj/item/weapon/reagent_containers/glass/golden_cup
+	desc = "A golden cup"
+	name = "golden cup"
+	icon = 'drinks.dmi'
+	icon_state = "golden_cup"
+	item_state = "" //nope :(
+	w_class = 4
+	force = 14
+	throwforce = 10
+	amount_per_transfer_from_this = 20
+	possible_transfer_amounts = null
+	volume = 100
+	flags = FPRINT | CONDUCT | TABLEPASS | OPENCONTAINER
+
+/obj/item/weapon/reagent_containers/glass/golden_cup/tournament_26_06_2011
+	desc = "A golden cup. It will be presented to a winner of tournament 26 june and name of the winner will be graved on it."
 
 //Syringes
 /obj/item/weapon/reagent_containers/syringe/robot

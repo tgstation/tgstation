@@ -1497,6 +1497,14 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	maxcharge = 30000
 	g_amt = 80
 
+/obj/item/weapon/cell/infinite
+	name = "infinite-capacity power cell!"
+	origin_tech =  null
+	maxcharge = 30000
+	g_amt = 80
+	use()
+		return
+
 /*/obj/item/weapon/cell/potato
 	name = "Potato Battery"
 	desc = "A rechargable starch based power cell."

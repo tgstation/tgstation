@@ -22,7 +22,7 @@
 		usr.machine = src
 		var/dat = "<font color=#005500><i>Scanning [pick("retina pattern", "voice print", "fingerprints", "dna sequence")]...<br>Identity confirmed,<br></i></font>"
 		if(istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
-			if(checktraitor(user))
+			if(is_special_character(user))
 				dat += "<font color=#07700><i>Operative record found. Greetings, Agent [user.name].</i></font><br>"
 			else if(charges < 1)
 				dat += "<TT>Connection severed.</TT><BR>"

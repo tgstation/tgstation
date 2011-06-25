@@ -106,7 +106,7 @@
 
 							src << "You've lost power!"
 //							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
-							if (!checktraitor(src))
+							if (!is_special_character(src))
 								src.set_zeroth_law("")
 							src.clear_supplied_laws()
 							var/time = time2text(world.realtime,"hh:mm:ss")
