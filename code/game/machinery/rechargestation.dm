@@ -120,13 +120,18 @@
 
 		move_inside()
 			set src in oview(1)
-			if (usr.stat != 0 || stat & (NOPOWER|BROKEN))
+			if (usr.stat == 2)
+				//Whoever had it so that a borg with a dead cell can't enter this thing should be shot. --NEO
 				return
 			if (!(istype(usr, /mob/living/silicon/)))
 				usr << "\blue <B>Only non-organics may enter the recharger!</B>"
 				return
 			if (src.occupant)
 				usr << "\blue <B>The cell is already occupied!</B>"
+				return
+			if (!usr:cell)
+				usr<<"\blue Without a powercell, you can't be recharged."
+				//Make sure they actually HAVE a cell, now that they can get in while powerless. --NEO
 				return
 			usr.pulling = null
 			usr.client.perspective = EYE_PERSPECTIVE
