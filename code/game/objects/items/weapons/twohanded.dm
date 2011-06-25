@@ -4,7 +4,6 @@
 
 ///General Offhand object properties///
 
-
 ////////////FIREAXE!//////////////
 
 
@@ -15,7 +14,6 @@
 /obj/item/weapon/fireaxe/pickup(mob/user)
 	src.wielded = 0
 	src.name = "Fire Axe (Unwielded)"
-
 
 /obj/item/weapon/fireaxe/attack_self(mob/user as mob)
 	if( istype(user,/mob/living/carbon/monkey) )
