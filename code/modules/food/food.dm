@@ -802,7 +802,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread
 	name = "Banana-nut bread"
 	desc = "A heavenly and filling treat."
-	icon_state = "tofubread" //TODO: filler sprite till there is a banana bread sprite
+	icon_state = "bananabread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice
 	slices_num = 5
 	New()
@@ -814,7 +814,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice
 	name = "Banana-nut bread slice"
 	desc = "A slice of delicious banana bread."
-	icon_state = "tofubreadslice" //TODO: Filler sprite
+	icon_state = "bananabreadslice"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/tofubread
@@ -978,4 +978,29 @@
 	icon_state = "vegetablepizzaslice"
 	bitesize = 2
 
+
+/obj/item/weapon/reagent_containers/food/snacks/amanita_pie
+	name = "amanita pie"
+	desc = "Sweet and tasty hallucinogenic pie."
+	icon_state = "amanita_pie"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("psilocybin", 5)
+		bitesize = 2
+		
+/obj/item/weapon/reagent_containers/food/snacks/plump_pie
+	name = "plump pie"
+	desc = "I bet you love stuff made out of plump helmets!"
+	icon_state = "plump_pie"
+	New()
+		..()
+		if(prob(10))
+			name = "exceptional plump pie"
+			desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
+			reagent.add_reagent("nutriment", 15)
+			bitesize = 2
+		else
+			reagents.add_reagent("nutriment", 10)
+			bitesize = 2
 
