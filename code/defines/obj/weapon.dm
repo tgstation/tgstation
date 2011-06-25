@@ -1298,6 +1298,12 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	origin_tech = "magnets=3;syndicate=3"
 
+/obj/item/weapon/sword/chainsword
+	color = "chain"
+	New()
+		return
+
+
 /obj/item/weapon/sword/pirate
 	name = "energy cutlass"
 	icon_state = "cutlass0"
