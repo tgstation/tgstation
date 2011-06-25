@@ -1545,6 +1545,8 @@ var/showadminmessages = 1
 	usr << browse(dat, "window=adminplayeropts;size=480x150")
 
 /obj/admins/proc/player()
+	if (!usr.client.holder)
+		return
 	var/dat = "<html><head><title>Player Menu</title></head>"
 	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th><th>Karma</th></tr></B>"
 	//add <th>IP:</th> to this if wanting to add back in IP checking
@@ -1587,7 +1589,7 @@ var/showadminmessages = 1
 				"}
 				switch(is_special_character(M))
 					if(0)
-						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>]Traitor?</A></td>"}
+						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>Traitor?</A></td>"}
 					if(1)
 						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red>Traitor?</font></A></td>"}
 					if(2)
@@ -1632,7 +1634,7 @@ var/showadminmessages = 1
 				"}
 				switch(is_special_character(M))
 					if(0)
-						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>]Traitor?</A></td>"}
+						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>Traitor?</A></td>"}
 					if(1)
 						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red>Traitor?</font></A></td>"}
 					if(2)
@@ -1709,6 +1711,8 @@ var/showadminmessages = 1
 	usr << browse(dat, "window=ban;size=300x400")
 */
 /obj/admins/proc/Secrets()
+	if (!usr.client.holder)
+		return
 
 	var/lvl = 0
 	switch(src.rank)
@@ -1840,6 +1844,8 @@ var/showadminmessages = 1
 	set category = "Server"
 	set name = "Start Vote"
 	set desc="Starts vote"
+	if (!usr.client.holder)
+		return
 	var/confirm = alert("What vote would you like to start?", "Vote", "Restart", "Change Game Mode", "Cancel")
 	if(confirm == "Cancel")
 		return
@@ -1923,6 +1929,8 @@ var/showadminmessages = 1
 	set category = "Server"
 	set name = "Restart"
 	set desc="Restarts the world"
+	if (!usr.client.holder)
+		return
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
 		return
