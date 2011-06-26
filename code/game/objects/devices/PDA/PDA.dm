@@ -210,7 +210,7 @@
 
 			if (1)
 				dat += "<h4><img src=pda_notes.png> Notekeeper V2.1</h4>"
-				if ((!isnull(uplink)) && (uplink.active))
+				if ((!isnull(uplink)) && uplink.active)
 					dat += "<a href='byond://?src=\ref[src];choice=Lock'> Lock</a><br>"
 				else
 					dat += "<a href='byond://?src=\ref[src];choice=Edit'> Edit</a><br>"
@@ -411,9 +411,13 @@
 					var/t = input(U, "Please enter new ringtone", name, ttone) as text
 					if (in_range(src, U) && loc == U)
 						if (t)
-							if ((uplink) && (cmptext(t,uplink.lock_code)) && (!uplink.active))
-								U << "The PDA softly beeps."
-								uplink.unlock()
+							if ((uplink) && (cmptext(t,uplink.lock_code)))
+								if(uplink.active)
+									U << "The PDA uplink is already unlocked."
+									mode = 1
+								else
+									U << "The PDA softly beeps."
+									uplink.unlock()
 							else
 								t = copytext(sanitize(t), 1, 20)
 								ttone = t

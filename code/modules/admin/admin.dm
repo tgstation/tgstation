@@ -1517,7 +1517,7 @@ var/showadminmessages = 1
 			else if(ishuman(M))
 				foo += text("<A HREF='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | ")
 				foo += text("<A HREF='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | ")
-				foo += text("<A HREF='?src=\ref[src];makealien=\ref[M]'>Make Alium</A> | ")
+				foo += text("<A HREF='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | ")
 			foo += text("<A HREF='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> | ")
 			foo += text("<A HREF='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | ")
 			foo += text("<A HREF='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | ")

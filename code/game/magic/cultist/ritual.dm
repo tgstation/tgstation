@@ -425,8 +425,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 //		usr << browse(null, "window=tank")
 
 	attack(mob/living/M as mob, mob/living/user as mob)
-		M.attack_log += text("<font color='orange'>[world.time] - has has had the [src.name] used on him by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("<font color='red'>[world.time] - has used [src.name] on [M.name] ([M.ckey])</font>")
+		M.attack_log += text("<font color='orange'>[world.time] - has had the [name] used on him by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("<font color='red'>[world.time] - has used [name] on [M.name] ([M.ckey])</font>")
 
 		if(istype(M,/mob/dead))
 			M.invisibility = 0

@@ -61,15 +61,15 @@ datum/mind
 			if (ticker.mode.config_tag=="revolution")
 				text = uppertext(text)
 			text = "<i><b>[text]</b></i>: "
-			if (src.assigned_role in head_positions)
+			if (assigned_role in head_positions)
 				text += "<b>HEAD</b>|officer|employee|headrev|rev"
-			else if (src.assigned_role in list("Security Officer", "Detective", "Warden"))
+			else if (assigned_role in list("Security Officer", "Detective", "Warden"))
 				text += "head|<b>OFFICER</b>|employee|headre|rev"
 			else if (src in ticker.mode.head_revolutionaries)
 				text = "head|officer|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 				text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
 
-				var/list/L = src.current.get_contents()
+				var/list/L = current.get_contents()
 				var/obj/item/device/flash/flash = locate() in L
 				if (flash)
 					if (flash.status)
@@ -93,9 +93,9 @@ datum/mind
 			if (ticker.mode.config_tag=="cult")
 				text = uppertext(text)
 			text = "<i><b>[text]</b></i>: "
-			if (src.assigned_role in head_positions)
+			if (assigned_role in head_positions)
 				text += "<b>HEAD</b>|officer|employee|cultist"
-			else if (src.assigned_role in list("Security Officer", "Detective", "Warden"))
+			else if (assigned_role in list("Security Officer", "Detective", "Warden"))
 				text += "head|<b>OFFICER</b>|employee|cultist"
 			else if (src in ticker.mode.cult)
 				text += "head|officer|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
@@ -167,7 +167,7 @@ datum/mind
 		if (src in ticker.mode.traitors)
 			text += "<b>TRAITOR</b>|<a href='?src=\ref[src];traitor=clear'>loyal</a>"
 			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];traitor=autoobjectives'>Randomize!</a>."
+				text += "<br>Objectives are empty! <a href='?src=\ref[src];traitor=autoobjectives'>Randomize</a>!"
 		else
 			text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>LOYAL</b>"
 		sections["traitor"] = text
@@ -466,14 +466,14 @@ datum/mind
 						usr << "\red Spawning flash failed!"
 
 				if("takeflash")
-					var/list/L = src.current.get_contents()
+					var/list/L = current.get_contents()
 					var/obj/item/device/flash/flash = locate() in L
 					if (!flash)
 						usr << "\red Deleting flash failed!"
 					del(flash)
 
 				if("repairflash")
-					var/list/L = src.current.get_contents()
+					var/list/L = current.get_contents()
 					var/obj/item/device/flash/flash = locate() in L
 					if (!flash)
 						usr << "\red Repairing flash failed!"
@@ -481,7 +481,7 @@ datum/mind
 						flash.status = 1
 
 				if("reequip")
-					var/list/L = src.current.get_contents()
+					var/list/L = current.get_contents()
 					var/obj/item/device/flash/flash = locate() in L
 					del(flash)
 					take_uplink()
@@ -532,7 +532,7 @@ datum/mind
 							H << "A tome, a message from your new master, appears in your [where]."
 
 				if("amulet")
-					if (!ticker.mode.equip_cultist(src.current))
+					if (!ticker.mode.equip_cultist(current))
 						usr << "\red Spawning amulet failed!"
 
 		else if (href_list["wizard"])
@@ -542,7 +542,7 @@ datum/mind
 						ticker.mode.wizards -= src
 						special_role = null
 						current.spellremove(current, config.feature_object_spell_system? "object":"verb")
-						src.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT>"
+						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT>"
 				if("wizard")
 					if(!(src in ticker.mode.wizards))
 						ticker.mode.wizards += src
@@ -647,7 +647,8 @@ datum/mind
 					if(src in ticker.mode.traitors)
 						ticker.mode.traitors -= src
 						special_role = null
-						src.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>"
+						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT>"
+
 				if("traitor")
 					if(!(src in ticker.mode.traitors))
 						ticker.mode.traitors += src
@@ -785,6 +786,7 @@ datum/mind
 						current.drop_from_slot(W)
 				if("takeuplink")
 					take_uplink()
+					memory = null//Remove any memory they may have had.
 				if("crystals")
 					if (usr.client.holder.level >= 3)
 						var/obj/item/weapon/syndicate_uplink/suplink = find_syndicate_uplink()
@@ -846,7 +848,7 @@ datum/mind
 
 	proc/find_syndicate_uplink()
 		var/obj/item/weapon/syndicate_uplink/uplink = null
-		var/list/L = src.current.get_contents()
+		var/list/L = current.get_contents()
 		for (var/obj/item/device/radio/radio in L)
 			uplink = radio.traitorradio
 			if (uplink)
@@ -857,7 +859,7 @@ datum/mind
 	proc/find_integrated_uplink()
 		//world << "DEBUG: find_integrated_uplink()"
 		var/obj/item/weapon/integrated_uplink/uplink = null
-		var/list/L = src.current.get_contents()
+		var/list/L = current.get_contents()
 		for (var/obj/item/device/pda/pda in L)
 			uplink = pda.uplink
 			if (uplink)
@@ -865,7 +867,7 @@ datum/mind
 		return uplink
 
 	proc/take_uplink() //assuming only one uplink because I am tired of all this uplink shit --rastaf0
-		var/list/L = src.current.get_contents()
+		var/list/L = current.get_contents()
 		var/obj/item/weapon/syndicate_uplink/suplink = null
 		var/obj/item/weapon/integrated_uplink/iuplink = null
 		for (var/obj/item/device/radio/radio in L)

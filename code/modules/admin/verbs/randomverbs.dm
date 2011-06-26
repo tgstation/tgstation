@@ -363,15 +363,19 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/mob/living/carbon/human/new_character = new(src)//The mob being spawned.
 
 	//Second, we check if they are an alien or monkey.
-	var/adj_name = copytext(G_found.name,1,7)//What is their name?
+	var/adj_name = copytext(G_found.real_name,1,7)//What is their name?
 	if(G_found.mind&&G_found.mind.special_role=="Alien")//If they have a mind, are they an alien?
 		adj_name="alien "
 	if( adj_name==("alien "||"monkey"))
 		if(alert("This character appears to either be an an alien or monkey. Would you like to respawn them as such?",,"Yes","No")=="Yes")//If you do.
 			switch(adj_name)//Let's check based on adjusted name.
 				if("monkey")//A monkey. Monkeys don't have a mind, so we can safely spawn them here if needed.
+					//TO DO: Monkeys may have a mind now. May need retooling.
 					var/mob/living/carbon/monkey/M = new(pick(latejoin))//Spawn a monkey at latejoin.
-					M.key = G_found.key//They are now a monkey. Nothing else needs doing.
+					M.mind = G_found.mind
+					if(M.mind)//If the mind is not null.
+						M.mind.current = M
+						M.key = G_found.key//They are now a monkey. Nothing else needs doing.
 				if("alien ")//An alien. Aliens can have a mind which can be used to determine a few things.
 					if(G_found.mind)
 						var/turf/location = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)//Location where they will be spawned.
@@ -544,7 +548,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				call(/mob/new_player/proc/ManifestLateSpawn)(new_character)
 
 			if(alert(new_character,"Would you like an active AI to announce this character?",,"No","Yes")=="Yes")
-				call(/mob/new_player/proc/AnnounceArrival)(new_character)
+				call(/mob/new_player/proc/AnnounceArrival)(new_character, new_character.mind.assigned_role)
 
 	message_admins("\blue [admin] has respawned [player_key] as [new_character.real_name].", 1)
 

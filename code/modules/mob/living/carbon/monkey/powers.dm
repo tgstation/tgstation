@@ -1,11 +1,11 @@
-/mob/living/carbon/alien/larva/verb/ventcrawl() // -- TLE
+/mob/living/carbon/monkey/verb/ventcrawl()
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
-	set category = "Alien"
+	set category = "Monkey"
 
 //	if(!istype(V,/obj/machinery/atmoalter/siphs/fullairsiphon/air_vent))
 //		return
-	if(powerc())
+	if(!stat)
 		var/obj/machinery/atmospherics/unary/vent_pump/vent_found
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
 			if(!v.welded)
@@ -36,27 +36,11 @@
 								O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
 						loc = target_vent.loc
 				else
-					src << "\green You need to remain still while entering a vent."
+					src << "You need to remain still while entering a vent."
 			else
-				src << "\green This vent is not connected to anything."
+				src << "This vent is not connected to anything."
 		else
-			src << "\green You must be standing on or beside an air vent to enter it."
-	return
-
-/mob/living/carbon/alien/larva/verb/hide()
-	set name = "Hide"
-	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
-	set category = "Alien"
-
-	if (layer != TURF_LAYER)
-		layer = TURF_LAYER
-		src << text("\green You are now hiding.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("<B>[] scurries to the ground!</B>", src)
+			src << "You must be standing on or beside an air vent to enter it."
 	else
-		layer = MOB_LAYER
-		src << text("\green You have stopped hiding.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("[] slowly peaks up from the ground...", src)
+		src << "You must be conscious to do this!"
+	return

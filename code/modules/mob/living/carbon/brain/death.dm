@@ -31,5 +31,6 @@
 	if (key)
 		spawn(50)
 			if(key && stat == 2)
+				src << "You are now dead. If you cannot ghost at this point, relog into the game."
 				verbs += /mob/proc/ghost
 	return ..(gibbed)

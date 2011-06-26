@@ -5,7 +5,7 @@
 
 /datum/game_mode/traitor/changeling/announce()
 	world << "<B>The current game mode is - Traitor+Changeling!</B>"
-	world << "<B>There is an alien changeling on the station. Also there are traitors pursuing tyeir own interests. Do not let the changeling and the traitors succeed!</B>"
+	world << "<B>There is an alien creature on the station along with some syndicate operatives out for their own gain! Do not let the changeling and the traitors succeed!</B>"
 
 /datum/game_mode/traitor/changeling/can_start()
 	var/count = 0

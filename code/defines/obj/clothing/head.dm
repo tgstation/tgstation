@@ -257,6 +257,7 @@
 	item_state = "s-ninja_mask"
 	radiation_protection = 0.25
 	see_face = 1
+	allowed = list(/obj/item/weapon/cell)
 	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/swat
@@ -297,11 +298,18 @@
 	armor = list(melee = 10, bullet = 10, laser = 10, taser = 5, bomb = 10, bio = 5, rad = 10)
 
 /obj/item/clothing/head/helmet/HoS
-	name = "HoS helmet"
+	name = "HoS Hat"
 	icon_state = "hoscap"
 	desc = "A hat that shows the security grunts who's in charge!"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
 	armor = list(melee = 80, bullet = 60, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
+
+/obj/item/clothing/head/helmet/warden
+	name = "Warden Hat"
+	desc = "Stop right there, criminal scum!"
+	icon_state = "policehelm"
+	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
+	armor = list(melee = 70, bullet = 50, laser = 40, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/head/helmet/that
 	name = "Sturdy Top hat"

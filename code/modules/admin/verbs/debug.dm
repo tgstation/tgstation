@@ -1,15 +1,15 @@
 /client/proc/Debug2()
 	set category = "Debug"
 	set name = "Debug-Game"
-	if(!src.authenticated || !src.holder)
+	if(!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return
-	if(src.holder.rank == "Game Admin")
+	if(holder.rank == "Game Admin")
 		Debug2 = !Debug2
 
 		world << "Debugging [Debug2 ? "On" : "Off"]"
 		log_admin("[key_name(src)] toggled debugging to [Debug2]")
-	else if(src.holder.rank == "Game Master")
+	else if(holder.rank == "Game Master")
 		Debug2 = !Debug2
 
 		world << "Debugging [Debug2 ? "On" : "Off"]"
@@ -32,7 +32,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/callproc()
 	set category = "Debug"
 	set name = "Advanced ProcCall"
-	if(!src.authenticated || !src.holder)
+	if(!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return
 	var/target = null
@@ -120,9 +120,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/Cell()
 	set category = "Debug"
 	set name = "Air Status in Location"
-	if(!src.mob)
+	if(!mob)
 		return
-	var/turf/T = src.mob.loc
+	var/turf/T = mob.loc
 
 	if (!( istype(T, /turf) ))
 		return
@@ -351,6 +351,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"pirate",
 		"space pirate",
 		//"soviet soldier",
+		"tunnel clown",
+		"death commando",
 		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
@@ -429,7 +431,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/shoes/brown(M), M.slot_shoes)
 			M.equip_if_possible(new /obj/item/clothing/head/bandana(M), M.slot_head)
 			M.equip_if_possible(new /obj/item/clothing/glasses/eyepatch(M), M.slot_glasses)
-
 			M.equip_if_possible(new /obj/item/weapon/sword/pirate(M), M.slot_r_hand)
 
 		if ("space pirate")
@@ -446,6 +447,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
 			M.equip_if_possible(new /obj/item/clothing/head/ushanka(M), M.slot_head)
 */
+
+		if("tunnel clown")//Tunnel clowns rule!
+			M.equip_if_possible(new /obj/item/clothing/under/rank/clown(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/clown_shoes(M), M.slot_shoes)
+			M.equip_if_possible(new /obj/item/clothing/mask/gas/clown_hat(M), M.slot_wear_mask)
+			M.equip_if_possible(new /obj/item/clothing/head/chaplain_hood(M), M.slot_head)
+			M.equip_if_possible(new /obj/item/clothing/suit/chaplain_hoodie(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(M), M.slot_l_store)
+			M.equip_if_possible(new /obj/item/weapon/bikehorn(M), M.slot_r_store)
+			M.equip_if_possible(new /obj/item/device/pda/clown(M), M.slot_belt)
+
+			var/obj/item/weapon/fireaxe/fire_axe = new(M)
+			fire_axe.name = "Fire Axe (Unwielded)"
+			M.equip_if_possible(fire_axe, M.slot_r_hand)
+
+		if("death commando")//Was looking to add this for a while.
+			M.equip_death_commando()
 
 	M.update_clothing()
 	return

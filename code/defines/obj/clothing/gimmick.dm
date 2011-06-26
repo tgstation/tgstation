@@ -264,12 +264,6 @@
 	item_state = "b_suit"
 	color = "police"
 
-/obj/item/clothing/head/helmet/bobby
-	name = "Custodian Helmet"
-	desc = "Heh. Lookit dat fukken helmet."
-	icon_state = "policehelm"
-	item_state = "helmet"
-
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."

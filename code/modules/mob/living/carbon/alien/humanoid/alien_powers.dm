@@ -123,7 +123,7 @@ I kind of like the right click only--the window version can get a little confusi
 
 /mob/living/carbon/alien/humanoid/verb/ventcrawl() // -- TLE
 	set name = "Crawl through Vent"
-	set desc = "Enter an air vent and appear at a random one"
+	set desc = "Enter an air vent and crawl through the pipes."
 	set category = "Alien"
 //	if(!istype(V,/obj/machinery/atmoalter/siphs/fullairsiphon/air_vent))
 //		return

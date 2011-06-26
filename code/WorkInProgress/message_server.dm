@@ -44,7 +44,7 @@
 /obj/machinery/message_server
 	icon = 'stationobjs.dmi'
 	icon_state = "server"
-	name = "Messanging Server"
+	name = "Messaging Server"
 	density = 1
 	anchored = 1.0
 	use_power = 1

@@ -72,7 +72,7 @@ ________________________________________________________________________________
 			Suit Upgrade
 			Unsure
 				Instead of losing energy each second, the suit would regain the same amount of energy.
-				This would not count in activating stealth and smiliar.
+				This would not count in activating stealth and similar.
 		Extended Battery Life:
 			Suit Upgrade
 			Battery of higher capacity
@@ -81,7 +81,6 @@ ________________________________________________________________________________
 			Suit Upgrade
 			Syndicate Cloaking Device?
 				Remove cloak failure rate.
-
 */
 
 //=======//RANDOM EVENT//=======//
@@ -97,76 +96,40 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 /proc/space_ninja_arrival()
 
 	var/datum/game_mode/current_mode = ticker.mode
-	var/datum/mind/current_mind = new()
+	var/datum/mind/current_mind
 
 	/*Is the ninja playing for the good or bad guys? Is the ninja helping or hurting the station?
 	Their directives also influence behavior. At least in theory.*/
 	var/side = pick("face","heel")
 
 	var/antagonist_list[] = list()//The main bad guys. Evil minds that plot destruction.
-	var/sec_antagonist_list[] = current_mode.traitors//The OTHER bad guys. Mostly admin made.
-	var/ter_antagonist_list[] = list()//The bad guys no-one really cares about. For now just revs.
-	var/living_heads_of_staff[] = current_mode.get_living_heads()
 	var/protagonist_list[] = current_mode.get_living_heads()//The good guys. Mostly Heads. Who are alive.
 
 	var/xeno_list[] = list()//Aliens.
 	var/commando_list[] = list()//Commandos.
 
-	//First we determine what mode it is and add the bad guys approprietly.
-	switch (current_mode.config_tag)
-		if("traitor")
-			for(current_mind in current_mode:traitors)//For traitor minds in in the traitors list.
-				if(current_mind.current&&current_mind.current.stat!=2)//If the traitor mob exists and they are not dead.
-					antagonist_list += current_mind//Add them to the list.
+	//We want the ninja to appear only in certain modes.
+	var/acceptable_modes_list[] = list("traitor","revolution","cult","wizard","changeling","traitorchan","nuclear","malfunction","monkey")
+	if((!current_mode.config_tag) in acceptable_modes_list)
+		return
 
-		if ("revolution")//Rev is divided into regular and heads. There are also heads of staff to consider.
-			for(current_mind in current_mode:head_revolutionaries)
-				if(current_mind.current&&current_mind.current.stat!=2)
-					antagonist_list += current_mind
+	/*No longer need to determine what mode it is since bad guys are basically universal.
+	And there is now a mode with two types of bad guys.*/
 
-			for(current_mind in current_mode:revolutionaries)
-				if(current_mind.current&&current_mind.current.stat!=2)
-					ter_antagonist_list += current_mind
+	var/possible_bad_dudes[] = list(current_mode.traitors,current_mode.head_revolutionaries,current_mode.head_revolutionaries,
+	                                current_mode.cult,current_mode.wizards,current_mode.changelings,current_mode.syndicates)
+	for(var/list in possible_bad_dudes)//For every possible antagonist type.
+		for(current_mind in list)//For each mind in that list.
+			if(current_mind.current&&current_mind.current.stat!=2)//If they are not destroyed and not dead.
+				antagonist_list += current_mind//Add them.
 
-			protagonist_list |= living_heads_of_staff
-				/* seems unused or infinished --rastaf0
-				var/heads_list[] = list()//Now we manually override the list made prior. Target Heads take priority.
-				if(heads_list.len)//Or not, if there are none.
-					protagonist_list = heads_list
-				*/
-
-		if ("cult")//Always a few of these around.
-			for(current_mind in current_mode.cult)
-				if(current_mind.current&&current_mind.current.stat!=2)
-					antagonist_list += current_mind
-
-		if ("wizard")
-			for(current_mind in current_mode.wizards)
-				if(current_mind.current&&current_mind.current.stat!=2)
-					antagonist_list += current_mind
-
-		if ("changeling")
-			for(current_mind in current_mode.changelings)
-				if(current_mind.current&&current_mind.current.stat!=2)
-					antagonist_list += current_mind
+	if(protagonist_list.len)//If the mind is both a protagonist and antagonist.
+		for(current_mind in protagonist_list)
+			if(current_mind in antagonist_list)
+				protagonist_list -= current_mind//We only want it in one list.
 /*
-I originally intended for space ninjas to appear in Malfunction but after some consideration
-this is not worth the trouble. Particularly with how objective mind completion is tracked.
-Not to mention that Malfunction does not use declare_completion (at least, not in the way the other modes do).
-With that said, a ninja on the side of the station would murder the AI very quickly--and the rounds usually
-last long enough for the ninja to appear, too.
-
-		//not only one anymore. --rastaf0
-		if ("malfunction")
-			if(current_mode:malf_ai)
-				antagonist_list += current_mode:malf_ai
+Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective completion. Only humans are added.
 */
-		if ("nuclear")//Can be a few of these guys.
-			for(current_mind in current_mode:syndicates)
-				if(current_mind.current&&current_mind.current.stat!=2)
-					antagonist_list += current_mind
-		else
-			return//Don't want to summon a ninja during meteor or extended, or something.
 
 	//Here we pick a location and spawn the ninja.
 	var/list/spawn_list = list()
@@ -222,9 +185,9 @@ last long enough for the ninja to appear, too.
 				ninja_mind.objectives += ninja_objective
 			mission_set = 1
 
-	if(sent_strike_team&&side=="heel")//If a strike team was sent, murder them all like a champ.
-		for(current_mind in ticker.minds)//Search and destroy.
-			if(current_mind.special_role=="Death Commando"&&current_mind.current&&current_mind.current.stat!=2)
+	if(sent_strike_team&&side=="heel"&&antagonist_list.len)//If a strike team was sent, murder them all like a champ.
+		for(current_mind in antagonist_list)//Search and destroy. Since we already have an antagonist list, they should appear there.
+			if(current_mind.special_role=="Death Commando")
 				commando_list += current_mind
 		if(commando_list.len)//If there are living commandos still in play.
 			for(var/mob/living/carbon/human/commando in commando_list)
@@ -241,36 +204,22 @@ In either case, it's a good idea to spawn the ninja with a semi-random set of ob
 */
 	if(!mission_set)//If mission was not set.
 
-		//To pick a person for each list.
-		var/datum/mind/antagonist_target
-		if(antagonist_list.len)
-			antagonist_target = pick(antagonist_list)
-
-		var/datum/mind/secondary_target
-		if(sec_antagonist_list.len)
-			secondary_target = pick(sec_antagonist_list)
-
-		var/datum/mind/tertiary_target
-		if(ter_antagonist_list.len)
-			tertiary_target = pick(ter_antagonist_list)
-
-		var/datum/mind/protagonist_target
-		if(protagonist_list.len)
-			protagonist_target = pick(protagonist_list)
-
+		var/current_minds[]//List being looked on in the following code.
+		var/side_list = side=="face" ? 2 : 1//For logic gating.
 		var/hostile_targets[] = list()//The guys actually picked for the assassination or whatever.
 		var/friendly_targets[] = list()//The guys the ninja must protect.
 
-		if(side=="face")
-			friendly_targets += protagonist_target//Will add null if the variable is empty.
-			hostile_targets += antagonist_target
-			hostile_targets += secondary_target
-			hostile_targets += tertiary_target
-		else
-			hostile_targets += protagonist_target
-			friendly_targets += antagonist_target
-			friendly_targets += secondary_target
-			friendly_targets += tertiary_target
+		for(var/i=2,i>0,i--)//Two lists.
+			current_minds = i==2 ? antagonist_list : protagonist_list//Which list are we looking at?
+			for(var/t=3,(current_minds.len&&t>0),t--)//While the list is not empty and targets remain. Also, 3 targets is good.
+				current_mind = pick(current_minds)//Pick a random person.
+				/*I'm creating a logic gate here based on the ninja affiliation that compares the list being
+				looked at to the affiliation. Affiliation is just a number used to compare. Meaning comes from the logic involved.
+				If the list being looked at is equal to the ninja's affiliation, add the mind to hostiles.
+				If not, add the mind to friendlies. Since it can't be both, it will be added only to one or the other.*/
+				hostile_targets += i==side_list ? current_mind : null//Adding null doesn't add anything.
+				friendly_targets += i!=side_list ? current_mind : null
+				current_minds -= current_mind//Remove the mind so it's not picked again.
 
 		var/objective_list[] = list(1,2,3,4,5,6)//To remove later.
 		for(var/i=rand(1,3),i>0,i--)//Want to get a few random objectives. Currently up to 3.
