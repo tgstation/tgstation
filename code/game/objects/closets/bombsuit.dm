@@ -10,6 +10,6 @@
 	..()
 	sleep(2)
 	new /obj/item/clothing/suit/bomb_suit/security( src )
-	new /obj/item/clothing/under/color/red( src )
+	new /obj/item/clothing/under/rank/security( src )
 	new /obj/item/clothing/shoes/brown( src )
 	new /obj/item/clothing/head/bomb_hood/security( src )

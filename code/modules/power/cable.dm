@@ -53,6 +53,10 @@
 		NC.mergeConnectedNetworksOnTurf()
 
 		coil.use(1)
+		if (NC.shock(user, 50))
+			if (prob(50)) //fail
+				new/obj/item/weapon/cable_coil(NC.loc, 1, NC.color)
+				del(NC)
 		return
 	else
 		..()
@@ -141,8 +145,6 @@
 
 
 	else if(istype(W, /obj/item/weapon/cable_coil))
-		if (shock(user, 50))
-			return
 		var/obj/item/weapon/cable_coil/coil = W
 		coil.cable_join(src, user)
 
@@ -331,6 +333,10 @@
 
 
 		use(1)
+		if (C.shock(user, 50))
+			if (prob(50)) //fail
+				new/obj/item/weapon/cable_coil(C.loc, 1, C.color)
+				del(C)
 		//src.laying = 1
 		//last = C
 
@@ -386,7 +392,10 @@
 			PN.cables += NC
 			NC.mergeConnectedNetworksOnTurf()
 			use(1)
-			C.shock(user, 25)
+			if (NC.shock(user, 50))
+				if (prob(50)) //fail
+					new/obj/item/weapon/cable_coil(NC.loc, 1, NC.color)
+					del(NC)
 
 			return
 	else if(C.d1 == 0)		// exisiting cable doesn't point at our position, so see if it's a stub
@@ -406,7 +415,6 @@
 			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no cable matches either direction
 				user << "There's already a cable at that position."
 				return
-		C.shock(user, 25)
 
 
 		C.cableColor(color)
@@ -421,8 +429,11 @@
 		C.mergeConnectedNetworks(C.d1)
 		C.mergeConnectedNetworks(C.d2)
 
-
 		use(1)
+		if (C.shock(user, 50))
+			if (prob(50)) //fail
+				new/obj/item/weapon/cable_coil(C.loc, 2, C.color)
+				del(C)
 
 		return
 

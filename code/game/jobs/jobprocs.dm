@@ -413,7 +413,7 @@
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sec (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/security (src), slot_back)
 			src.equip_if_possible(new /obj/item/device/pda/security(src), slot_belt)
-			src.equip_if_possible(new /obj/item/clothing/under/color/red(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/under/rank/security(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/clothing/head/helmet(src), slot_head)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)

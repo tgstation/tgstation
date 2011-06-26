@@ -8,7 +8,7 @@
 	new /obj/item/weapon/handcuffs(src)
 	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/device/flash(src)
-	new /obj/item/clothing/under/color/red(src)
+	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/clothing/head/helmet(src)

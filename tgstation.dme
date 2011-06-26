@@ -41,6 +41,7 @@
 #define FILE_DIR "code/game/gamemodes/revolution"
 #define FILE_DIR "code/game/gamemodes/sandbox"
 #define FILE_DIR "code/game/gamemodes/traitor"
+#define FILE_DIR "code/game/gamemodes/traitor_pair"
 #define FILE_DIR "code/game/gamemodes/wizard"
 #define FILE_DIR "code/game/jobs"
 #define FILE_DIR "code/game/machinery"

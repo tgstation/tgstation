@@ -343,10 +343,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	//log_admin("[key_name(src)] has alienized [M.key].")
 	var/list/dresspacks = list(
 		"strip",
-		"tournament standard",
+		"tournament standard red",
+		"tournament standard green",
 		"tournament gangster",
 		"tournament chef",
 		"tournament janitor",
+		"pirate",
+		"space pirate",
+		//"soviet soldier",
 		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
@@ -358,8 +362,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	switch(dresscode)
 		if ("strip")
 			//do nothing
-		if ("tournament standard") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
-			M.equip_if_possible(new /obj/item/clothing/under/color/blue(M), M.slot_w_uniform)
+		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
+			if (dresscode=="tournament standard red")
+				M.equip_if_possible(new /obj/item/clothing/under/color/red(M), M.slot_w_uniform)
+			else
+				M.equip_if_possible(new /obj/item/clothing/under/color/green(M), M.slot_w_uniform)
 			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
 
 			M.equip_if_possible(new /obj/item/clothing/suit/armor/vest(M), M.slot_wear_suit)
@@ -389,7 +396,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
 			M.equip_if_possible(new /obj/item/clothing/head/chefhat(M), M.slot_head)
 
-
 			M.equip_if_possible(new /obj/item/weapon/kitchen/rollingpin(M), M.slot_r_hand)
 			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_l_hand)
 			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_r_store)
@@ -418,8 +424,28 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/stack/tile/steel(M), M.slot_in_backpack)
 			M.equip_if_possible(new /obj/item/stack/tile/steel(M), M.slot_in_backpack)
 
-			var/obj/mopbucket/mopbucket = new(M.loc)
-			mopbucket.reagents.add_reagent("water", 100)
+		if ("pirate")
+			M.equip_if_possible(new /obj/item/clothing/under/pirate(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/brown(M), M.slot_shoes)
+			M.equip_if_possible(new /obj/item/clothing/head/bandana(M), M.slot_head)
+			M.equip_if_possible(new /obj/item/clothing/glasses/eyepatch(M), M.slot_glasses)
+
+			M.equip_if_possible(new /obj/item/weapon/sword/pirate(M), M.slot_r_hand)
+
+		if ("space pirate")
+			M.equip_if_possible(new /obj/item/clothing/under/pirate(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/brown(M), M.slot_shoes)
+			M.equip_if_possible(new /obj/item/clothing/suit/space/pirate(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/head/space/pirate(M), M.slot_head)
+			M.equip_if_possible(new /obj/item/clothing/glasses/eyepatch(M), M.slot_glasses)
+
+			M.equip_if_possible(new /obj/item/weapon/sword/pirate(M), M.slot_r_hand)
+/*
+		if ("soviet soldier")
+			M.equip_if_possible(new /obj/item/clothing/under/soviet(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
+			M.equip_if_possible(new /obj/item/clothing/head/ushanka(M), M.slot_head)
+*/
 
 	M.update_clothing()
 	return
