@@ -436,7 +436,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/under/pirate(M), M.slot_w_uniform)
 			M.equip_if_possible(new /obj/item/clothing/shoes/brown(M), M.slot_shoes)
 			M.equip_if_possible(new /obj/item/clothing/suit/space/pirate(M), M.slot_wear_suit)
-			M.equip_if_possible(new /obj/item/clothing/head/space/pirate(M), M.slot_head)
+			M.equip_if_possible(new /obj/item/clothing/head/helmet/space/pirate(M), M.slot_head)
 			M.equip_if_possible(new /obj/item/clothing/glasses/eyepatch(M), M.slot_glasses)
 
 			M.equip_if_possible(new /obj/item/weapon/sword/pirate(M), M.slot_r_hand)
