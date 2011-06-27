@@ -110,7 +110,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 	//We want the ninja to appear only in certain modes.
 	var/acceptable_modes_list[] = list("traitor","revolution","cult","wizard","changeling","traitorchan","nuclear","malfunction","monkey")
-	if((!current_mode.config_tag) in acceptable_modes_list)
+	if(!(current_mode.config_tag in acceptable_modes_list))
 		return
 
 	/*No longer need to determine what mode it is since bad guys are basically universal.

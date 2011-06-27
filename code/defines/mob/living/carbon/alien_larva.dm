@@ -1,7 +1,7 @@
 /mob/living/carbon/alien/larva
 	name = "alien larva"
 	icon_state = "larva"
-	flags = 258.0
+	pass_flags = PASSTABLE
 
 	health = 25
 
