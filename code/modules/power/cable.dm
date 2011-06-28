@@ -312,24 +312,15 @@
 		C.d2 = dirn
 		C.add_fingerprint(user)
 		C.updateicon()
+
+		var/datum/powernet/PN = new()
+		PN.number = powernets.len + 1
+		powernets += PN
+		C.netnum = PN.number
+		PN.cables += C
+
 		C.mergeConnectedNetworks(C.d2)
 		C.mergeConnectedNetworksOnTurf()
-		if(C.netnum == 0)
-			var/counter = 1
-			while(counter < powernets.len + 1)
-				if(!powernets[counter])
-					C.netnum = counter
-					var/datum/powernet/PN = powernets[counter]
-					PN.cables += C
-					break
-				counter++
-			if(C.netnum == 0)
-				var/datum/powernet/PN = new()
-
-				PN.number = powernets.len + 1
-				powernets += PN
-				C.netnum = PN.number
-				PN.cables += C
 
 
 		use(1)
