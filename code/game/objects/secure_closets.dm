@@ -167,12 +167,12 @@
 	else if(src.broken)
 		user << "\red It appears to be broken."
 		return
-	else if( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/blade)) && !src.broken)
+	else if( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
 		broken = 1
 		locked = 0
 		desc = "It appears to be broken."
 		icon_state = src.icon_broken
-		if(istype(W, /obj/item/weapon/blade))
+		if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()

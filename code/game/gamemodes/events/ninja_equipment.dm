@@ -886,19 +886,19 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/blade_check(mob/living/carbon/U, X = 1)//Default to checking for blade energy.
 	switch(X)
 		if(1)
-			if(istype(U.get_active_hand(), /obj/item/weapon/blade))
+			if(istype(U.get_active_hand(), /obj/item/weapon/melee/energy/blade))
 				if(cell.charge<=0)//If no charge left.
 					U.drop_item()//Blade is dropped from active hand (and deleted).
 				else	return 1
-			else if(istype(U.get_inactive_hand(), /obj/item/weapon/blade))
+			else if(istype(U.get_inactive_hand(), /obj/item/weapon/melee/energy/blade))
 				if(cell.charge<=0)
 					U.swap_hand()//swap hand
 					U.drop_item()//drop blade
 				else	return 1
 		if(2)
-			if(istype(U.get_active_hand(), /obj/item/weapon/blade))
+			if(istype(U.get_active_hand(), /obj/item/weapon/melee/energy/blade))
 				U.drop_item()
-			if(istype(U.get_inactive_hand(), /obj/item/weapon/blade))
+			if(istype(U.get_inactive_hand(), /obj/item/weapon/melee/energy/blade))
 				U.swap_hand()
 				U.drop_item()
 	return 0

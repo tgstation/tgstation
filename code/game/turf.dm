@@ -402,7 +402,7 @@
 				O.show_message(text("\blue The wall was drilled apart by []!", user), 1, text("\red You hear metal being drilled appart."), 2)
 		return
 
-	else if(istype(W, /obj/item/weapon/blade))
+	else if(istype(W, /obj/item/weapon/melee/energy/blade))
 		var/turf/T = user.loc
 		user << "\blue Now slicing through wall."
 		W:spark_system.start()
@@ -514,7 +514,7 @@
 				new /obj/item/stack/rods( src )
 				user << "\blue You removed the support rods."
 
-	else if(istype(W, /obj/item/weapon/blade))
+	else if(istype(W, /obj/item/weapon/melee/energy/blade))
 		user << "\blue This wall is too thick to slice through. You will need to find a different path."
 		return
 

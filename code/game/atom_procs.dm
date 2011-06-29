@@ -91,7 +91,7 @@
 	if (!( src.flags ) & 256)
 		return
 	if (!( src.blood_DNA ))
-		if (istype(src, /obj/item))
+		if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
 			var/obj/item/source2 = src
 			source2.icon_old = src.icon
 			var/icon/I = new /icon(src.icon, src.icon_state)

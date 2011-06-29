@@ -132,7 +132,7 @@
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "Cohiba Cigar"
 	desc = "There's little more you could want from a cigar."
-	icon_state = "cigaroff"
-	icon_on = "cigaron"
-	icon_off = "cigaroff"
+	icon_state = "cigar2off"
+	icon_on = "cigar2on"
+	icon_off = "cigar2off"
 	icon_butt = "cigarbutt"

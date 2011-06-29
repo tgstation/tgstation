@@ -153,11 +153,11 @@ var/global/sent_strike_team = 0
 	equip_if_possible(new /obj/item/clothing/shoes/swat(src), slot_shoes)
 	equip_if_possible(new /obj/item/clothing/suit/armor/swat(src), slot_wear_suit)
 	equip_if_possible(new /obj/item/clothing/gloves/swat(src), slot_gloves)
-	equip_if_possible(new /obj/item/clothing/head/helmet/swat(src), slot_head)
+	equip_if_possible(new /obj/item/clothing/head/helmet/space/deathsquad(src), slot_head)
 	equip_if_possible(new /obj/item/clothing/mask/gas/swat(src), slot_wear_mask)
 	equip_if_possible(new /obj/item/clothing/glasses/thermal(src), slot_glasses)
 
-	equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
+	equip_if_possible(new /obj/item/weapon/storage/backpack/security(src), slot_back)
 
 	equip_if_possible(new /obj/item/ammo_magazine(src), slot_in_backpack)
 	equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
@@ -169,7 +169,7 @@ var/global/sent_strike_team = 0
 		equip_if_possible(new /obj/item/weapon/pinpointer(src), slot_in_backpack)
 		equip_if_possible(new /obj/item/weapon/disk/nuclear(src), slot_in_backpack)
 
-	equip_if_possible(new /obj/item/weapon/sword(src), slot_l_store)
+	equip_if_possible(new /obj/item/weapon/melee/energy/sword(src), slot_l_store)
 	equip_if_possible(new /obj/item/weapon/flashbang(src), slot_r_store)
 	equip_if_possible(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
 	equip_if_possible(new /obj/item/weapon/gun/projectile/mateba(src), slot_belt)

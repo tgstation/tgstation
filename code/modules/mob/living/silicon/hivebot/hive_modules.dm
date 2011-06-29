@@ -19,7 +19,7 @@
 
 /obj/item/weapon/hive_module/standard/New()
 	..()
-	src.modules += new /obj/item/weapon/baton(src)
+	src.modules += new /obj/item/weapon/melee/baton(src)
 	src.modules += new /obj/item/weapon/extinguisher(src)
 	//var/obj/item/weapon/gun/mp5/M = new /obj/item/weapon/gun/mp5(src)
 	//M.weapon_lock = 0

@@ -3,6 +3,7 @@
 	name = "Phazon"
 	icon_state = "phazon"
 	step_in = 1
+	dir_in = 1 //Facing North.
 	step_energy_drain = 3
 	health = 200
 	deflect_chance = 30

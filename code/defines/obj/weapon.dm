@@ -232,11 +232,27 @@
 	details = 1
 	origin_tech = "magnets=4;biotech=2"
 
-/obj/item/weapon/axe
+/obj/item/weapon/melee/baton
+	name = "Stun Baton"
+	desc = "A stun baton for hitting people with."
+	icon_state = "stunbaton"
+	item_state = "baton"
+	flags = FPRINT | ONBELT | TABLEPASS
+	force = 10
+	throwforce = 7
+	w_class = 3
+	var/charges = 10.0
+	var/maximum_charges = 10.0
+	var/status = 1
+	origin_tech = "combat=2"
+
+/obj/item/weapon/melee/energy
+	var/active = 0
+
+/obj/item/weapon/melee/energy/axe
 	name = "Axe"
 	desc = "An energised battle axe."
 	icon_state = "axe0"
-	var/active = 0.0
 	force = 40.0
 	throwforce = 25.0
 	throw_speed = 1
@@ -244,6 +260,39 @@
 	w_class = 3.0
 	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS
 	origin_tech = "combat=3"
+
+/obj/item/weapon/melee/energy/sword
+	var/color
+	name = "energy sword"
+	icon_state = "sword0"
+	force = 3.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = 2.0
+	flags = FPRINT | TABLEPASS | NOSHIELD
+	origin_tech = "magnets=3;syndicate=3"
+
+/obj/item/weapon/melee/energy/sword/chainsword
+	color = "chain"
+	New()
+		return
+
+/obj/item/weapon/melee/energy/sword/pirate
+	name = "energy cutlass"
+	icon_state = "cutlass0"
+
+/obj/item/weapon/melee/energy/blade
+	name = "energy blade"
+	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
+	icon_state = "blade"
+	force = 70.0//Normal attacks deal very high damage.
+	throwforce = 1//Throwing or dropping the item deletes it.
+	throw_speed = 1
+	throw_range = 1
+	w_class = 4.0//So you can't hide it in your pocket or some such.
+	flags = FPRINT | TABLEPASS | NOSHIELD
+	var/datum/effects/system/spark_spread/spark_system
 
 /obj/item/weapon/bananapeel
 	name = "Banana Peel"
@@ -273,20 +322,6 @@
 /obj/item/weapon/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of comdoms."
 	icon_state = "soapdeluxe"
-
-/obj/item/weapon/baton
-	name = "Stun Baton"
-	desc = "A stun baton for hitting people with."
-	icon_state = "stunbaton"
-	item_state = "baton"
-	flags = FPRINT | ONBELT | TABLEPASS
-	force = 10
-	throwforce = 7
-	w_class = 3
-	var/charges = 10.0
-	var/maximum_charges = 10.0
-	var/status = 1
-	origin_tech = "combat=2"
 
 /obj/item/weapon/bedsheet
 	name = "bedsheet"
@@ -1284,41 +1319,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throw_range = 5
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
-
-/obj/item/weapon/sword
-	var/color
-	name = "energy sword"
-	icon_state = "sword0"
-	var/active = 0.0
-	force = 3.0
-	throwforce = 5.0
-	throw_speed = 1
-	throw_range = 5
-	w_class = 2.0
-	flags = FPRINT | TABLEPASS | NOSHIELD
-	origin_tech = "magnets=3;syndicate=3"
-
-/obj/item/weapon/sword/chainsword
-	color = "chain"
-	New()
-		return
-
-
-/obj/item/weapon/sword/pirate
-	name = "energy cutlass"
-	icon_state = "cutlass0"
-
-/obj/item/weapon/blade
-	name = "energy blade"
-	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
-	icon_state = "blade"
-	force = 70.0//Normal attacks deal very high damage.
-	throwforce = 1//Throwing or dropping the item deletes it.
-	throw_speed = 1
-	throw_range = 1
-	w_class = 4.0//So you can't hide it in your pocket or some such.
-	flags = FPRINT | TABLEPASS | NOSHIELD
-	var/datum/effects/system/spark_spread/spark_system
 
 /obj/item/weapon/table_parts
 	name = "table parts"

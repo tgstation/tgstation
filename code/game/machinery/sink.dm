@@ -33,8 +33,8 @@
 
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if (istype(O, /obj/item/weapon/baton))
-			var/obj/item/weapon/baton/B = O
+		if (istype(O, /obj/item/weapon/melee/baton))
+			var/obj/item/weapon/melee/baton/B = O
 			if (B.charges > 0 && B.status == 1)
 				flick("baton_active", src)
 				user.stunned = 10

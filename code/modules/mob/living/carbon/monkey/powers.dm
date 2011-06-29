@@ -3,8 +3,12 @@
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Monkey"
 
-//	if(!istype(V,/obj/machinery/atmoalter/siphs/fullairsiphon/air_vent))
-//		return
+	if(contents.len)
+		for(var/obj/item/carried_item in contents)//If the monkey got on objects.
+			if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant.
+				src << "\red You can't be carrying items or have items equipped when vent crawling!"
+				return
+
 	if(!stat)
 		var/obj/machinery/atmospherics/unary/vent_pump/vent_found
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))

@@ -41,7 +41,7 @@
 		if(stat & BROKEN)
 			return
 
-		if(istype(I, /obj/item/weapon/blade))
+		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			user << "You can't place that item inside the disposal unit."
 			return
 

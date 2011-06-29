@@ -138,7 +138,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	if(isrobot(user))
 		return
 
-	if(istype(W, /obj/item/weapon/blade))
+	if(istype(W, /obj/item/weapon/melee/energy/blade))
 		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
@@ -179,7 +179,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		return
 	if(isrobot(user))
 		return
-	if(istype(W, /obj/item/weapon/blade))
+	if(istype(W, /obj/item/weapon/melee/energy/blade))
 		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
@@ -248,7 +248,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	if(isrobot(user))
 		return
 
-	if(istype(W, /obj/item/weapon/blade))
+	if(istype(W, /obj/item/weapon/melee/energy/blade))
 		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()

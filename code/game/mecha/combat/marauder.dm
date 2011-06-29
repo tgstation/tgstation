@@ -1,5 +1,5 @@
 /obj/mecha/combat/marauder
-	desc = "Heavy duty combat exosuit."
+	desc = "Heavy-duty, combat exosuit."
 	name = "Marauder"
 	icon_state = "marauder"
 	step_in = 5
@@ -13,12 +13,23 @@
 	var/smoke_ready = 1
 	var/smoke_cooldown = 100
 	var/datum/effects/system/harmless_smoke_spread/smoke_system = new
-	operation_req_access = list(access_heads)
+	operation_req_access = list(access_cent_specops)
 	wreckage = "/obj/decal/mecha_wreckage/marauder"
 	add_req_access = 0
 	internal_damage_threshold = 25
 	force = 45
 
+/obj/mecha/combat/marauder/seraph
+	desc = "Heavy-duty, command-type exosuit."
+	name = "Seraph"
+	icon_state = "seraph"
+	operation_req_access = list(access_cent_creed)
+	step_in = 3
+	health = 550
+	wreckage = "/obj/decal/mecha_wreckage/seraph"
+	internal_damage_threshold = 20
+	force = 55
+	max_equip = 4
 
 /obj/mecha/combat/marauder/New()
 	..()
@@ -26,8 +37,27 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
+	ME.attach(src)
 	src.smoke_system.set_up(3, 0, src)
 	src.smoke_system.attach(src)
+	return
+
+/obj/mecha/combat/marauder/seraph/New()
+	..()//Let it equip whatever is needed.
+	var/obj/item/mecha_parts/mecha_equipment/ME
+	if(equipment.len)//Now to remove it and equip anew.
+		for(ME in equipment)
+			equipment -= ME
+			del(ME)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
+	ME.attach(src)
 	return
 
 /obj/mecha/combat/marauder/relaymove(mob/user,direction)

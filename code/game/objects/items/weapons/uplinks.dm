@@ -135,7 +135,7 @@ SYNDICATE UPLINK
 				if("sword")
 					if (src.uses >= 4)
 						src.uses -= 4
-						new /obj/item/weapon/sword(get_turf(src))
+						new /obj/item/weapon/melee/energy/sword(get_turf(src))
 				if("bomb")
 					if (src.uses >= 2)
 						src.uses -= 2

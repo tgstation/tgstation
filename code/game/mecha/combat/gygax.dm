@@ -3,6 +3,7 @@
 	name = "Gygax"
 	icon_state = "gygax"
 	step_in = 3
+	dir_in = 1 //Facing North.
 	health = 300
 	deflect_chance = 15
 	max_temperature = 3500

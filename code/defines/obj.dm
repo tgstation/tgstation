@@ -289,7 +289,7 @@
 /obj/item
 	name = "item"
 	icon = 'items.dmi'
-	var/icon_old = null
+	var/icon_old = null//For when weapons get bloodied this saves their old icon.
 	var/abstract = 0.0
 	var/force = null
 	var/item_state = null

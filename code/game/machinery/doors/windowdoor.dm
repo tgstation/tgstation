@@ -120,9 +120,9 @@
 	if (!src.requiresID())
 		//don't care who they are or what they have, act as if they're NOTHING
 		user = null
-	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/blade)))
+	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		src.operating = -1
-		if(istype(I, /obj/item/weapon/blade))
+		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()

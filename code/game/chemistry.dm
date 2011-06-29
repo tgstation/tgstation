@@ -215,7 +215,7 @@
 	if (src.contents.len >= 7)
 		user << "The trashcan is full!"
 		return
-	if (istype(W, /obj/item/weapon/disk/nuclear)||istype(W, /obj/item/weapon/blade))
+	if (istype(W, /obj/item/weapon/disk/nuclear)||istype(W, /obj/item/weapon/melee/energy/blade))
 		user << "This is far too important to throw away!"
 		return
 	if (istype(W, /obj/item/weapon/storage/))

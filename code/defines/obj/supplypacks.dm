@@ -227,8 +227,8 @@
 
 /datum/supply_packs/weapons
 	name = "Weapons crate"
-	contains = list("/obj/item/weapon/baton",
-					"/obj/item/weapon/baton",
+	contains = list("/obj/item/weapon/melee/baton",
+					"/obj/item/weapon/melee/baton",
 					"/obj/item/weapon/gun/energy/laser_gun",
 					"/obj/item/weapon/gun/energy/laser_gun",
 					"/obj/item/weapon/gun/energy/taser_gun",
@@ -257,8 +257,8 @@
 
 /datum/supply_packs/riot
 	name = "Riot crate"
-	contains = list("/obj/item/weapon/baton",
-					"/obj/item/weapon/baton",
+	contains = list("/obj/item/weapon/melee/baton",
+					"/obj/item/weapon/melee/baton",
 					"/obj/item/weapon/shield/riot",
 					"/obj/item/weapon/shield/riot",
 					"/obj/item/weapon/storage/flashbang_kit",

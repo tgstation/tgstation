@@ -352,6 +352,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"space pirate",
 		//"soviet soldier",
 		"tunnel clown",
+		"masked killer",
+		"assassin",
 		"death commando",
 		"centcom official",
 		"centcom commander",
@@ -433,7 +435,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/shoes/brown(M), M.slot_shoes)
 			M.equip_if_possible(new /obj/item/clothing/head/bandana(M), M.slot_head)
 			M.equip_if_possible(new /obj/item/clothing/glasses/eyepatch(M), M.slot_glasses)
-			M.equip_if_possible(new /obj/item/weapon/sword/pirate(M), M.slot_r_hand)
+			M.equip_if_possible(new /obj/item/weapon/melee/energy/sword/pirate(M), M.slot_r_hand)
 
 		if ("space pirate")
 			M.equip_if_possible(new /obj/item/clothing/under/pirate(M), M.slot_w_uniform)
@@ -442,7 +444,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/head/helmet/space/pirate(M), M.slot_head)
 			M.equip_if_possible(new /obj/item/clothing/glasses/eyepatch(M), M.slot_glasses)
 
-			M.equip_if_possible(new /obj/item/weapon/sword/pirate(M), M.slot_r_hand)
+			M.equip_if_possible(new /obj/item/weapon/melee/energy/sword/pirate(M), M.slot_r_hand)
+
 /*
 		if ("soviet soldier")
 			M.equip_if_possible(new /obj/item/clothing/under/soviet(M), M.slot_w_uniform)
@@ -473,6 +476,61 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			fire_axe.name = "Fire Axe (Unwielded)"
 			M.equip_if_possible(fire_axe, M.slot_r_hand)
 
+		if("masked killer")
+			M.equip_if_possible(new /obj/item/clothing/under/overalls(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/white(M), M.slot_shoes)
+			M.equip_if_possible(new /obj/item/clothing/gloves/latex(M), M.slot_gloves)
+			M.equip_if_possible(new /obj/item/clothing/mask/surgical(M), M.slot_wear_mask)
+			M.equip_if_possible(new /obj/item/clothing/head/helmet/welding(M), M.slot_head)
+			M.equip_if_possible(new /obj/item/device/radio/headset(M), M.slot_ears)
+			M.equip_if_possible(new /obj/item/clothing/glasses/thermal/monocle(M), M.slot_glasses)
+			M.equip_if_possible(new /obj/item/clothing/suit/apron(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_l_store)
+			M.equip_if_possible(new /obj/item/weapon/scalpel(M), M.slot_r_store)
+
+			var/obj/item/weapon/fireaxe/fire_axe = new(M)
+			fire_axe.name = "Fire Axe (Unwielded)"
+			M.equip_if_possible(fire_axe, M.slot_r_hand)
+
+			for(var/obj/item/carried_item in M.contents)
+				if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant.
+					carried_item.add_blood(M)//Oh yes, there will be blood...
+
+		if("assassin")
+			M.equip_if_possible(new /obj/item/clothing/under/suit_jacket(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/shoes/swat(M), M.slot_shoes)
+			M.equip_if_possible(new /obj/item/clothing/gloves/swat(M), M.slot_gloves)
+			M.equip_if_possible(new /obj/item/device/radio/headset(M), M.slot_ears)
+			M.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(M), M.slot_glasses)
+			M.equip_if_possible(new /obj/item/clothing/suit/wcoat(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/weapon/melee/energy/sword(M), M.slot_l_store)
+			M.equip_if_possible(new /obj/item/weapon/cloaking_device(M), M.slot_r_store)
+
+			var/obj/item/weapon/secstorage/sbriefcase/sec_briefcase = new(M)
+			for(var/obj/item/briefcase_item in sec_briefcase)
+				del(briefcase_item)
+			for(var/i=3, i>0, i--)
+				sec_briefcase.contents += new /obj/item/weapon/spacecash/c1000
+			sec_briefcase.contents += new /obj/item/weapon/gun/energy/crossbow
+			sec_briefcase.contents += new /obj/item/weapon/gun/projectile/mateba
+			sec_briefcase.contents += new /obj/item/ammo_magazine
+			sec_briefcase.contents += new /obj/item/weapon/plastique
+			M.equip_if_possible(sec_briefcase, M.slot_l_hand)
+
+			var/obj/item/device/pda/heads/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Reaper"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+
+			M.equip_if_possible(pda, M.slot_belt)
+
+			var/obj/item/weapon/card/id/syndicate/W = new(M)
+			W.name = "[M.real_name]'s ID Card"
+			W.access = get_all_accesses()
+			W.assignment = "Reaper"
+			W.registered = M.real_name
+			M.equip_if_possible(W, M.slot_wear_id)
+
 		if("death commando")//Was looking to add this for a while.
 			M.equip_death_commando()
 
@@ -482,7 +540,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/gloves/black(M), M.slot_gloves)
 			M.equip_if_possible(new /obj/item/device/radio/headset/heads/hop(M), M.slot_ears)
 			M.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(M), M.slot_glasses)
-			M.equip_if_possible(new /obj/item/weapon/gun/projectile/mateba(M), M.slot_belt)
+			M.equip_if_possible(new /obj/item/weapon/gun/energy(M), M.slot_belt)
 			M.equip_if_possible(new /obj/item/weapon/pen(M), M.slot_l_store)
 
 			var/obj/item/device/pda/heads/pda = new(M)
@@ -509,11 +567,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/gloves/swat(M), M.slot_gloves)
 			M.equip_if_possible(new /obj/item/device/radio/headset/heads/captain(M), M.slot_ears)
 			M.equip_if_possible(new /obj/item/clothing/glasses/eyepatch(M), M.slot_glasses)
-			M.equip_if_possible(new /obj/item/clothing/mask/cigarette(M), M.slot_wear_mask)
+			M.equip_if_possible(new /obj/item/clothing/mask/cigarette/cigar/cohiba(M), M.slot_wear_mask)
 			M.equip_if_possible(new /obj/item/clothing/head/centhat(M), M.slot_head)
 			M.equip_if_possible(new /obj/item/weapon/gun/projectile/mateba(M), M.slot_belt)
 			M.equip_if_possible(new /obj/item/weapon/zippo(M), M.slot_r_store)
-			M.equip_if_possible(new /obj/item/weapon/cigpacket(M), M.slot_l_store)
+			M.equip_if_possible(new /obj/item/ammo_magazine(M), M.slot_l_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"

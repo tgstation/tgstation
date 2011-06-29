@@ -29,7 +29,7 @@ Frequency:
 	if (usr.stat || usr.restrained())
 		return
 	var/turf/current_location = get_turf(usr)//What turf is the user on?
-	if(!current_location||current_location.z==6)//If turf was not found or they're on z level 6.
+	if(!current_location||current_location.z==2)//If turf was not found or they're on z level 2.
 		usr << "The [src] is malfunctioning."
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
@@ -104,7 +104,7 @@ Frequency:
 
 /obj/item/weapon/hand_tele/attack_self(mob/user as mob)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
-	if(!current_location||current_location.z==6)//If turf was not found or they're on z level 6.
+	if(!current_location||current_location.z==2)//If turf was not found or they're on z level 2.
 		user << "The [src] is malfunctioning."
 		return
 	var/list/L = list(  )

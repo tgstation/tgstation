@@ -328,8 +328,8 @@
 			for(var/obj/item/device/flash/F in M) //Add something for the intercoms.
 				F.attack_self()
 
-		if (locate(/obj/item/weapon/baton, M))
-			for(var/obj/item/weapon/baton/B in M) //Add something for the intercoms.
+		if (locate(/obj/item/weapon/melee/baton, M))
+			for(var/obj/item/weapon/melee/baton/B in M) //Add something for the intercoms.
 				B.charges = 0
 
 		if(locate(/obj/item/clothing/under/chameleon, M))

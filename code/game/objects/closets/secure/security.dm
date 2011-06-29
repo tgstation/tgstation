@@ -13,7 +13,7 @@
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/weapon/baton(src)
+	new /obj/item/weapon/melee/baton(src)
 	return
 
 /obj/secure_closet/security1/proc/prison_break()
@@ -73,7 +73,7 @@
 	new /obj/item/weapon/storage/id_kit( src )
 	new /obj/item/weapon/storage/flashbang_kit(src)
 	new /obj/item/weapon/handcuffs(src)
-	new /obj/item/weapon/baton(src)
+	new /obj/item/weapon/melee/baton(src)
 	return
 
 /obj/secure_closet/injection/New()

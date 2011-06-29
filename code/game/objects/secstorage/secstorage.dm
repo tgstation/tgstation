@@ -94,14 +94,14 @@
 
 /obj/item/weapon/secstorage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/blade)) && (src.locked == 1) && (!src.emagged))
+	if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (src.locked == 1) && (!src.emagged))
 		emagged = 1
 		src.overlays += image('storage.dmi', icon_sparking)
 		sleep(6)
 		src.overlays = null
 		overlays += image('storage.dmi', icon_locking)
 		locked = 0
-		if(istype(W, /obj/item/weapon/blade))
+		if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()

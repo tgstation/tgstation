@@ -318,6 +318,25 @@ var/const/PROJECTILE_DART = 8
 						return 1
 					M << "\red You just don't feel cool enough to use this gun looking like that."
 				return 0
+
+			verb
+				rename_gun()
+					set name = "Name Gun"
+					set desc = "Click to rename your gun. If you're the detective."
+
+					var/mob/U = usr
+					if(ishuman(U)&&U.mind&&U.mind.assigned_role=="Detective")
+						var/input = input("What do you want to name the gun?",,"")
+						input = sanitize(input)
+						if(input)
+							if(in_range(U,src)&&(!isnull(src))&&!U.stat)
+								name = input
+								U << "You name the gun [input]. Say hello to your new friend."
+							else
+								U << "\red Can't let you do that, detective!"
+					else
+						U << "\red You don't feel cool enough to name this gun, chump."
+
 		mateba
 			name = "mateba"
 			desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."

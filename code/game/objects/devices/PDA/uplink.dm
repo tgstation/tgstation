@@ -140,7 +140,7 @@
 			if("sword")
 				if (uses >= 4)
 					uses -= 4
-					new /obj/item/weapon/sword(get_turf(hostpda))
+					new /obj/item/weapon/melee/energy/sword(get_turf(hostpda))
 			if("bomb")
 				if (uses >= 2)
 					uses -= 2

@@ -277,7 +277,7 @@
 	item_state = "lb_suit"
 	color = "overalls"
 
-/obj/item/weapon/classic_baton
+/obj/item/weapon/melee/classic_baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
 	icon = 'weapons.dmi'

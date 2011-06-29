@@ -10,43 +10,43 @@ STUN BATON
 
 
 // SWORD
-/obj/item/weapon/sword/attack(target as mob, mob/user as mob)
+/obj/item/weapon/melee/energy/sword/attack(target as mob, mob/user as mob)
 	..()
 
-/obj/item/weapon/sword/New()
+/obj/item/weapon/melee/energy/sword/New()
 	color = pick("red","blue","green","purple")
 
-/obj/item/weapon/sword/attack_self(mob/living/user as mob)
+/obj/item/weapon/melee/energy/sword/attack_self(mob/living/user as mob)
 	if ((user.mutations & CLOWN) && prob(50))
 		user << "\red You accidentally cut yourself with [src]."
 		user.take_organ_damage(5,5)
-	src.active = !( src.active )
-	if (src.active)
-		user << "\blue [src] is now active."
-		src.force = 30
-		if(istype(src,/obj/item/weapon/sword/pirate))
-			src.icon_state = "cutlass1"
+	active = !active
+	if (active)
+		force = 30
+		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
+			icon_state = "cutlass1"
 		else
-			src.icon_state = "sword[color]"
-		src.w_class = 4
+			icon_state = "sword[color]"
+		w_class = 4
 		playsound(user, 'saberon.ogg', 50, 1)
+		user << "\blue [src] is now active."
 	else
-		user << "\blue [src] can now be concealed."
-		src.force = 3
-		if(istype(src,/obj/item/weapon/sword/pirate))
-			src.icon_state = "cutlass0"
+		force = 3
+		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
+			icon_state = "cutlass0"
 		else
-			src.icon_state = "sword0"
-		src.w_class = 2
+			icon_state = "sword0"
+		w_class = 2
 		playsound(user, 'saberoff.ogg', 50, 1)
-	src.add_fingerprint(user)
+		user << "\blue [src] can now be concealed."
+	add_fingerprint(user)
 	return
 
-/obj/item/weapon/sword/green
+/obj/item/weapon/melee/energy/sword/green
 	New()
 		color = "green"
 
-/obj/item/weapon/sword/red
+/obj/item/weapon/melee/energy/sword/red
 	New()
 		color = "red"
 
@@ -54,26 +54,26 @@ STUN BATON
 // BLADE
 //Most of the other special functions are handled in their own files.
 
-/obj/item/weapon/blade/New()
+/obj/item/weapon/melee/energy/blade/New()
 	spark_system = new /datum/effects/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	return
 
-/obj/item/weapon/blade/dropped()
+/obj/item/weapon/melee/energy/blade/dropped()
 	del(src)
 	return
 
-/obj/item/weapon/blade/proc/throw()
+/obj/item/weapon/melee/energy/blade/proc/throw()
 	del(src)
 	return
 
 // AXE
 
-/obj/item/weapon/axe/attack(target as mob, mob/user as mob)
+/obj/item/weapon/melee/energy/axe/attack(target as mob, mob/user as mob)
 	..()
 
-/obj/item/weapon/axe/attack_self(mob/user as mob)
+/obj/item/weapon/melee/energy/axe/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
 		user << "\blue The axe is now energised."
@@ -90,13 +90,13 @@ STUN BATON
 
 // STUN BATON
 
-/obj/item/weapon/baton/update_icon()
+/obj/item/weapon/melee/baton/update_icon()
 	if(src.status)
 		icon_state = "stunbaton_active"
 	else
 		icon_state = "stunbaton"
 
-/obj/item/weapon/baton/attack_self(mob/user as mob)
+/obj/item/weapon/melee/baton/attack_self(mob/user as mob)
 	src.status = !( src.status )
 	if ((usr.mutations & CLOWN) && prob(50))
 		usr << "\red You grab the stunbaton on the wrong side."
@@ -113,7 +113,7 @@ STUN BATON
 	src.add_fingerprint(user)
 	return
 
-/obj/item/weapon/baton/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/melee/baton/attack(mob/M as mob, mob/user as mob)
 	if ((usr.mutations & CLOWN) && prob(50))
 		usr << "\red You grab the stunbaton on the wrong side."
 		usr.weakened += 30
@@ -199,14 +199,14 @@ STUN BATON
 		for(var/mob/O in viewers(M))
 			if (O.client)	O.show_message("\red <B>[M] has been stunned with the stun baton by [user]!</B>", 1, "\red You hear someone fall", 2)
 
-/obj/item/weapon/baton/emp_act(severity)
+/obj/item/weapon/melee/baton/emp_act(severity)
 	switch(severity)
 		if(1)
 			src.charges = 0
 		if(2)
 			charges -= 5
 
-/obj/item/weapon/classic_baton/attack(mob/M as mob, mob/living/user as mob)
+/obj/item/weapon/melee/classic_baton/attack(mob/M as mob, mob/living/user as mob)
 	if ((user.mutations & CLOWN) && prob(50))
 		user << "\red You club yourself over the head."
 		user.weakened = max(3 * force, user.weakened)

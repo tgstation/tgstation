@@ -18,7 +18,7 @@
 
 	proc/respawn_consumable(var/mob/living/silicon/robot/R)
 		return
-	
+
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
 /*
@@ -55,12 +55,12 @@ obj/item/weapon/robot_module/syndicate
 
 /obj/item/weapon/robot_module/standard/New()
 	..()
-	src.modules += new /obj/item/weapon/baton(src)
+	src.modules += new /obj/item/weapon/melee/baton(src)
 	src.modules += new /obj/item/weapon/extinguisher(src)
 	src.modules += new /obj/item/weapon/wrench(src)
 	src.modules += new /obj/item/weapon/crowbar(src)
 	src.modules += new /obj/item/device/healthanalyzer(src)
-	src.emag = new /obj/item/weapon/sword(src)
+	src.emag = new /obj/item/weapon/melee/energy/sword(src)
 
 /obj/item/weapon/robot_module/engineering/New()
 	..()
@@ -150,7 +150,7 @@ obj/item/weapon/robot_module/syndicate
 
 /obj/item/weapon/robot_module/security/New()
 	..()
-	src.modules += new /obj/item/weapon/baton(src)
+	src.modules += new /obj/item/weapon/melee/baton(src)
 	src.modules += new /obj/item/weapon/handcuffs(src)
 	src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 	src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)

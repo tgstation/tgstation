@@ -571,7 +571,7 @@ CLIPBOARDS
 			del(src)
 			return
 		if("sword")
-			var/obj/item/weapon/sword/W = new /obj/item/weapon/sword( M )
+			var/obj/item/weapon/melee/energy/sword/W = new /obj/item/weapon/melee/energy/sword( M )
 			if (M.hand)
 				M.l_hand = W
 			else
@@ -582,7 +582,7 @@ CLIPBOARDS
 			del(src)
 			return
 		if("axe")
-			var/obj/item/weapon/axe/W = new /obj/item/weapon/axe( M )
+			var/obj/item/weapon/melee/energy/axe/W = new /obj/item/weapon/melee/energy/axe( M )
 			if (M.hand)
 				M.l_hand = W
 			else

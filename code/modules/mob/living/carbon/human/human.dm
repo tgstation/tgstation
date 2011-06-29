@@ -83,7 +83,7 @@
 			tmob.loc = oldloc
 			now_pushing = 0
 			return
-		if(istype(equipped(), /obj/item/weapon/baton)) // add any other item paths you think are necessary
+		if(istype(equipped(), /obj/item/weapon/melee/baton)) // add any other item paths you think are necessary
 			if(loc:sd_lumcount < 3 || blinded)
 				var/obj/item/weapon/W = equipped()
 				if (world.time > lastDblClick+2)

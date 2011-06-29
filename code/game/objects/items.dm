@@ -441,8 +441,8 @@
 		istype(W, /obj/item/clothing/mask/cigarette) && W:lit     || \
 		istype(W, /obj/item/weapon/wirecutters)                   || \
 		istype(W, /obj/item/weapon/circular_saw)                  || \
-		istype(W, /obj/item/weapon/sword)            && W:active  || \
-		istype(W, /obj/item/weapon/blade)                         || \
+		istype(W, /obj/item/weapon/melee/energy/sword)            && W:active  || \
+		istype(W, /obj/item/weapon/melee/energy/blade)                         || \
 		istype(W, /obj/item/weapon/shovel)                        || \
 		istype(W, /obj/item/weapon/kitchenknife)                  || \
 		istype(W, /obj/item/weapon/scalpel)                       || \

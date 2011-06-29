@@ -97,6 +97,10 @@
 	icon_state = "marauder-broken"
 
 
+/obj/decal/mecha_wreckage/seraph
+	name = "Seraph wreckage"
+	icon_state = "seraph-broken"
+
 /obj/decal/mecha_wreckage/ripley
 	name = "Ripley wreckage"
 	icon_state = "ripley-broken"

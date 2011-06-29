@@ -429,6 +429,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		new_character.mind = new()
 		ticker.minds += new_character.mind//And we'll add it to the minds database.
+		new_character.mind.original = new_character//If they are respawning with a new character.
 	if(!record_found)//We have to pick their role if they have no record.
 		if(G_found.mind&&G_found.mind.assigned_role)//But they may have an assigned role already.
 			new_character.mind.assigned_role = G_found.mind.assigned_role//Also makes sure our MODE people are equipped right later on.
