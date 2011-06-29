@@ -73,6 +73,12 @@
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 
+/obj/decal/cleanable/blood/gibs/up
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
+
+/obj/decal/cleanable/blood/gibs/down
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibdown1","gibdown1","gibdown1")
+
 /obj/decal/cleanable/blood/gibs/body
 	random_icon_states = list("gibhead", "gibtorso")
 
@@ -110,6 +116,12 @@
 	icon_state = "xgib1"
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 
+/obj/decal/cleanable/xenoblood/xgibs/up
+	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")
+
+/obj/decal/cleanable/xenoblood/xgibs/down
+	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibdown1","xgibdown1","xgibdown1")
+
 /obj/decal/cleanable/xenoblood/xgibs/body
 	random_icon_states = list("xgibhead", "xgibtorso")
 
@@ -137,6 +149,12 @@
 
 /obj/decal/cleanable/robot_debris/limb
 	random_icon_states = list("gibarm", "gibleg")
+
+/obj/decal/cleanable/robot_debris/up
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7","gibup1","gibup1") //2:7 is close enough to 1:4
+
+/obj/decal/cleanable/robot_debris/down
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7","gibdown1","gibdown1") //2:7 is close enough to 1:4
 
 /obj/decal/cleanable/oil
 	name = "motor oil"

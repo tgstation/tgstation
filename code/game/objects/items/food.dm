@@ -165,4 +165,34 @@ YOUR MUMS BOX
 			usr << text("There are [] eggs in the box.", n)
 	return
 
+/obj/item/weapon/monkeycube_box
+	name = "monkey cube box"
+	desc = "Drymate brand monkey cubes. Just add water!"
+	icon = 'food.dmi'
+	icon_state = "monkeycubebox"
+	var/amount = 5
 
+	attack_hand(mob/user as mob, unused, flag)
+		add_fingerprint(user)
+
+		if(user.r_hand == src || user.l_hand == src)
+			if(amount)
+				var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
+				if (user.hand)
+					user.l_hand = M
+				else
+					user.r_hand = M
+				M.loc = user
+				M.layer = 20
+				user.update_clothing()
+				user << "You take a monkey cube out of the box."
+				amount--
+			else
+				user << "There are no monkey cubes left in the box."
+		else
+			..()
+
+		return
+
+	attack_paw(mob/user as mob)
+		return attack_hand(user)

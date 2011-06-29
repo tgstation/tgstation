@@ -202,6 +202,10 @@ datum
 					lowertemp.react()
 					T.assume_air(lowertemp)
 					del(hotspot)
+				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+					var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
+					if(!cube.wrapped)
+						cube.Expand()
 				return
 
 		lube

@@ -34,6 +34,8 @@
 	var/obj/item/weapon/card/id/anicard		//By default, animals can open doors but not any with access restrictions.
 	var/intelligence = null					// the intelligence var allows for additional access (by job).
 
+	var/species = "animal" //affects icon_state
+
 	New()			//Initializes the livestock's AI and access
 		..()
 		anicard = new(src)
@@ -307,6 +309,7 @@
 				if (get_dist(src, src.target) >= distance) src.frustration++ //If it hasn't reached the target yet, get a little angry.
 				else src.frustration--			//It reached the target! Get less angry.
 				if(frustration >= patience) set_null()		//If too angry? Fuck this shit.
+		special_extra()
 		if(target || flee_from.len)
 			spawn(cycle_pause / 3)
 				src.process()
@@ -364,7 +367,7 @@
 		if(!alive) return
 		alive = 0
 		density = 0
-		icon_state = "[initial(icon_state)]_d"
+		icon_state = "[species]_d"
 		set_null()
 		if(!messy)
 			for(var/mob/O in hearers(src, null))
@@ -410,6 +413,7 @@
 	name = "Spess Carp"
 	desc = "Oh shit, you're really fucked now."
 	icon_state = "spesscarp"
+	species = "spesscarp"
 	aggressive = 1
 	health = 25
 	maxhealth = 25
@@ -439,6 +443,7 @@
 	name = "Lizard"
 	desc = "A cute tiny lizard."
 	icon_state = "lizard"
+	species = "lizard"
 	cowardly = 1
 	health = 10
 	maxhealth = 10
@@ -446,6 +451,47 @@
 	cycle_pause = 10
 	patience = 50
 	view_range = 7
+
+/obj/livestock/bear
+	name = "ninja space bear"
+	desc = "Its sight is unbearable to your eye."
+	icon_state = "bear"
+	species = "bear"
+	aggressive = 1
+	health = 100
+	maxhealth = 100
+	cycle_pause = 15
+	patience = 75
+	strength = 30
+	intelligence = "Captain"
+
+	var/adaptationChance = 10 //the chance per tick the bear will change its camouflage
+	var/camouflage = "space" //"", "space" or "floor"
+
+	New()
+		..()
+		//new /obj/item/clothing/suit/bearpelt(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/bearmeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/bearmeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/bearmeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/bearmeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/bearmeat(src)
+		//new /obj/item/weapon/reagent_containers/food/snacks/bearinnards(src)
+
+	special_extra() //camouflage check
+		if(prob(adaptationChance))
+			if(istype(loc,/turf/simulated/floor))
+				if(camouflage != "floor")
+					camouflage = "floor"
+			else if(istype(loc,/turf/space))
+				if(camouflage != "space")
+					camouflage = "space"
+			else if(camouflage != "")
+				camouflage = ""
+		update_icon()
+
+	update_icon()
+		icon_state = "[species][camouflage][alive?"":"_d"]"
 
 /* 		Commented out because of Filthy Xeno-lovers.
 /obj/livestock/cow
