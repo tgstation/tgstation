@@ -14,13 +14,6 @@ datum
 
 		//I recommend you set the result amount to the total volume of all components.
 
-		bilk
-			name = "Bilk"
-			id = "bilk"
-			result = "bilk"
-			required_reagents = list("milk" = 1, "beer" = 1)
-			result_amount = 2
-
 		explosion_potassium
 			name = "Explosion"
 			id = "explosion_potassium"
@@ -152,7 +145,8 @@ datum
 			name = "Leporazine"
 			id = "leporazine"
 			result = "leporazine"
-			required_reagents = list("silicon" = 1, "plasma" = 1, )
+			required_reagents = list("silicon" = 1, "copper" = 1)
+			required_catalysts = list("plasma" = 5)
 			result_amount = 2
 
 		cryptobiolin
@@ -180,8 +174,9 @@ datum
 			name = "Dexalin"
 			id = "dexalin"
 			result = "dexalin"
-			required_reagents = list("plasma" = 1, "oxygen" = 1)
-			result_amount = 2
+			required_reagents = list("oxygen" = 2)
+			required_catalysts = list("plasma" = 5)
+			result_amount = 1
 
 		dexalinp
 			name = "Dexalin Plus"
@@ -216,14 +211,15 @@ datum
 			id = "cryoxadone"
 			result = "cryoxadone"
 			required_reagents = list("dexalin" = 1, "water" = 1, "oxygen" = 1)
-			result_amount = 10
+			result_amount = 3
 
 		clonexadone
 			name = "Clonexadone"
 			id = "clonexadone"
 			result = "clonexadone"
-			required_reagents = list("plasma" = 1, "cryoxadone" = 1, "sodium" = 1)
-			result_amount = 10
+			required_reagents = list("cryoxadone" = 1, "sodium" = 1)
+			required_catalysts = list("plasma" = 5)
+			result_amount = 2
 
 		spaceacillin
 			name = "Spaceacillin"
@@ -526,6 +522,18 @@ datum
 				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel(location)
 				return
 
+		syntiflesh
+			name = "Syntiflesh"
+			id = "syntiflesh"
+			result = null
+			required_reagents = list("blood" = 5)
+			required_catalysts = list("clonexadone" = 1)
+			result_amount = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+				new /obj/item/weapon/syntiflesh(location)
+				return
+
 		hot_ramen
 			name = "Hot Ramen"
 			id = "hot_ramen"
@@ -542,6 +550,27 @@ datum
 
 
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////
+
+		goldschlager
+			name = "Goldschlager"
+			id = "goldschlager"
+			result = "goldschlager"
+			required_reagents = list("vodka" = 10, "gold" = 1)
+			result_amount = 10
+
+		patron
+			name = "Patron"
+			id = "patron"
+			result = "patron"
+			required_reagents = list("tequilla" = 10, "silver" = 1)
+			result_amount = 10
+
+		bilk
+			name = "Bilk"
+			id = "bilk"
+			result = "bilk"
+			required_reagents = list("milk" = 1, "beer" = 1)
+			result_amount = 2
 
 		icetea
 			name = "Iced Tea"
@@ -724,6 +753,13 @@ datum
 			required_reagents = list("irishcream" = 1, "kahlua" = 1, "cognac" = 1)
 			result_amount = 3
 
+		atomicbomb
+			name = "Atomic Bomb"
+			id = "atomicbomb"
+			result = "atomicbomb"
+			required_reagents = list("b52" = 10, "uranium" = 1)
+			result_amount = 10
+
 		margarita
 			name = "Margarita"
 			id = "margarita"
@@ -737,6 +773,13 @@ datum
 			result = "longislandicedtea"
 			required_reagents = list("vodka" = 1, "gin" = 1, "tequilla" = 1, "cubalibre" = 1)
 			result_amount = 4
+
+		threemileisland
+			name = "Three Mile Island Iced Tea"
+			id = "threemileisland"
+			result = "threemileisland"
+			required_reagents = list("longislandicedtea" = 10, "uranium" = 1)
+			result_amount = 10
 
 		whiskeysoda
 			name = "Whiskey Soda"

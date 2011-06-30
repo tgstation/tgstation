@@ -227,27 +227,6 @@ datum
 						T.wet_overlay = null
 					return
 
-		bilk
-			name = "Bilk"
-			id = "bilk"
-			description = "This appears to be beer mixed with milk. Disgusting."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/living/M as mob)
-				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
-				M:nutrition += 2
-				if(!data) data = 1
-				data++
-				M.make_dizzy(3)
-				M:jitteriness = max(M:jitteriness-3,0)
-				if(data >= 25)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 3
-				if(data >= 40 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 2
-				..()
-				return
-
 		anti_toxin
 			name = "Anti-Toxin (Dylovene)"
 			id = "anti_toxin"
@@ -1134,6 +1113,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
+					if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-1)
 					if(M:oxyloss) M:oxyloss = max(0, M:oxyloss-3)
 					M:heal_organ_damage(3,3)
 					if(M:toxloss) M:toxloss = max(0, M:toxloss-3)
@@ -1291,6 +1271,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
+				data++
 				switch(data)
 					if(1)
 						M:confused += 2
@@ -1300,7 +1281,6 @@ datum
 					if(51 to INFINITY)
 						M:sleeping += 1
 						M:toxloss += (data - 50)
-				data++
 				..()
 				return
 
@@ -2099,6 +2079,97 @@ datum
 
 /////////////////////////////////////////////////////////////////cocktail entities//////////////////////////////////////////////
 
+		bilk
+			name = "Bilk"
+			id = "bilk"
+			description = "This appears to be beer mixed with milk. Disgusting."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
+				M:nutrition += 2
+				if(!data) data = 1
+				data++
+				M.make_dizzy(3)
+				M:jitteriness = max(M:jitteriness-3,0)
+				if(data >= 25)
+					if (!M:stuttering) M:stuttering = 1
+					M:stuttering += 3
+				if(data >= 40 && prob(33))
+					if (!M:confused) M:confused = 1
+					M:confused += 2
+				..()
+				return
+
+		atomicbomb
+			name = "Atomic Bomb"
+			id = "atomicbomb"
+			description = "Nuclear proliferation never tasted so good."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				M.druggy = max(M.druggy, 50)
+				M.confused = max(M:confused+2,0)
+				M.make_dizzy(10)
+				if (!M.stuttering) M.stuttering = 1
+				M.stuttering += 3
+				if(!data) data = 1
+				data++
+				switch(data)
+					if(51 to INFINITY)
+						M:sleeping += 1
+				..()
+				return
+
+		threemileisland
+			name = "THree Mile Island Iced Tea"
+			id = "threemileisland"
+			description = "Made for a woman, strong enough for a man."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=3
+				M.druggy = max(M.druggy, 50)
+				if(data >= 35 && data <90)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 90)
+					M.confused = max(M:confused+2,0)
+				..()
+				return
+
+		goldschlager
+			name = "Goldschlager"
+			id = "goldschlager"
+			description = "100 proof cinnamon schnapps, made for alcoholic teen girls on spring break."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=3
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
+				..()
+				return
+
+		patron
+			name = "Patron"
+			id = "patron"
+			description = "Tequila with silver in it, a favorite of alcoholic women in the club scene."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=3
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+2,0)
+				..()
+				return
 
 		gintonic
 			name = "Gin and Tonic"

@@ -32,6 +32,10 @@
 	meat
 		input = /obj/item/weapon/reagent_containers/food/snacks/meat
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
+
+	meat2
+		input = /obj/item/weapon/syntiflesh
+		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 /*
 	monkeymeat
 		input = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey

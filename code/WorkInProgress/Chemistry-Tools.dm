@@ -2162,6 +2162,14 @@
 		..()
 		reagents.add_reagent("tequilla", 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/patron
+	name = "Wrapp Artiste Patron"
+	desc = "Silver laced tequilla, served in space night clubs across the galaxy."
+	icon_state = "patronbottle"
+	New()
+		..()
+		reagents.add_reagent("patron", 100)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/rum
 	name = "Captain Pete's Cuban Spiced Rum"
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
@@ -2185,6 +2193,14 @@
 	New()
 		..()
 		reagents.add_reagent("kahlua", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager
+	name = "College Girl Goldschlager"
+	desc = "Because they are the only ones who will drink 100 proof cinnamon schnapps."
+	icon_state = "goldschlagerbottle"
+	New()
+		..()
+		reagents.add_reagent("goldschlager", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac
 	name = "Chateau De Baton Premium Cognac"
@@ -2451,6 +2467,10 @@
 					icon_state = "glass_red"
 					name = "Glass of Tomato juice"
 					desc = "Are you sure this is tomato juice?"
+				if("blood")
+					icon_state = "glass_red"
+					name = "Glass of Tomato juice"
+					desc = "Are you sure this is tomato juice?"
 				if("limejuice")
 					icon_state = "glass_green"
 					name = "Glass of Lime juice"
@@ -2467,6 +2487,10 @@
 					icon_state = "ginvodkaglass"
 					name = "Glass of vodka"
 					desc = "The glass contain wodka. Xynta."
+				if("goldschlager")
+					icon_state = "ginvodkaglass"
+					name = "Glass of goldschlager"
+					desc = "100 proof that teen girls will drink anything with gold in it."
 				if("wine")
 					icon_state = "wineglass"
 					name = "Glass of wine"
@@ -2487,6 +2511,10 @@
 					icon_state = "tequillaglass"
 					name = "Glass of Tequilla"
 					desc = "Now all that's missing is the weird colored shades!"
+				if("patron")
+					icon_state = "patronglass"
+					name = "Glass of Patron"
+					desc = "Drinking patron in the bar, with all the subpar ladies."
 				if("rum")
 					icon_state = "rumglass"
 					name = "Glass of Rum"
@@ -2567,10 +2595,18 @@
 					icon_state = "b52glass"
 					name = "B-52"
 					desc = "Kahlua, Irish Cream, and congac. You will get bombed."
+				if("atomicbomb")
+					icon_state = "atomicbombglass"
+					name = "Atomic Bomb"
+					desc = "Nanotrasen cannot take legal responsibility for your actions after imbibing."
 				if("longislandicedtea")
 					icon_state = "longislandicedteaglass"
 					name = "Long Island Iced Tea"
 					desc = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
+				if("threemileisland")
+					icon_state = "threemileislandglass"
+					name = "Three Mile Island Ice Tea"
+					desc = "A glass of this is sure to prevent a melt down."
 				if("margarita")
 					icon_state = "margaritaglass"
 					name = "Margarita"

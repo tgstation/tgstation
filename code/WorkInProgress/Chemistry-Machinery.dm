@@ -504,7 +504,14 @@
 		/obj/item/stack/sheet/clown = "banana",
 		/obj/item/stack/sheet/silver = "silver",
 		/obj/item/stack/sheet/gold = "gold",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = "banana",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = "imidazoline",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = "cornoil",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap = "psilocybin",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chili = "capsaicin",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper = "frostoil",
+		/obj/item/weapon/grown/nettle = "acid",
+		/obj/item/weapon/grown/deathnettle = "pacid",
 	)
 
 /obj/machinery/reagentgrinder/New()
@@ -625,7 +632,20 @@
 	else if (O.potency == -1)
 		return 5
 	else
-		return round(5*sqrt(O.potency))
+		return round(O.potency / 5)
+
+/obj/machinery/reagentgrinder/proc/get_grownweapon_id(var/obj/item/weapon/grown/O)
+	for (var/i in allowed_items)
+		if (istype(O, i))
+			return allowed_items[i]
+
+/obj/machinery/reagentgrinder/proc/get_grownweapon_amount(var/obj/item/weapon/grown/O)
+	if (!istype(O))
+		return 5
+	else if (O.potency == -1)
+		return 5
+	else
+		return round(O.potency)
 
 /obj/machinery/reagentgrinder/proc/get_grind_id(var/obj/item/stack/sheet/O)
 	for (var/i in allowed_items)
@@ -636,12 +656,12 @@
 	return 20
 
 /obj/machinery/reagentgrinder/proc/grind()
-	power_change() //it is a portable machine
+	power_change()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!beaker || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
-	playsound(src.loc, 'juicer.ogg', 50, 1)
+	playsound(src.loc, 'juicer.ogg', 20, 1)
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in src.contents)
 		var/r_id = get_juice_id(O)
 		beaker.reagents.add_reagent(r_id,get_juice_amount(O))
@@ -651,6 +671,12 @@
 	for (var/obj/item/stack/sheet/O in src.contents)
 		var/g_id = get_grind_id(O)
 		beaker.reagents.add_reagent(g_id,get_grind_amount(O))
+		del(O)
+		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+			break
+	for (var/obj/item/weapon/grown/O in src.contents)
+		var/g_id = get_grownweapon_id(O)
+		beaker.reagents.add_reagent(g_id,get_grownweapon_amount(O))
 		del(O)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break

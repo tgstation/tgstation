@@ -1735,6 +1735,14 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	g_amt = 10000
 	origin_tech = "materials=1;biotech=1"
 
+/obj/item/weapon/syntiflesh
+	name = "Syntiflesh"
+	icon = 'food.dmi'
+	icon_state = "meat"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
+	origin_tech = "biotech=2"
+
 /obj/item/weapon/stamp
 	desc = "A rubber stamp for stamping important documents."
 	name = "rubber stamp"
