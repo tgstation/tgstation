@@ -244,7 +244,7 @@ var/const/PROJECTILE_DART = 8
 		name = "revolver"
 		icon_state = "revolver"
 		caliber = "357"
-		origin_tech = "combat=2;materials=2"
+		origin_tech = "combat=2;materials=2;syndicate=6"
 		w_class = 3.0
 		throw_speed = 2
 		throw_range = 10
@@ -306,6 +306,7 @@ var/const/PROJECTILE_DART = 8
 			icon_state = "detective"
 			force = 14.0
 			caliber = "38"
+			origin_tech = "combat=2;materials=2"
 
 			New()
 				for(var/i = 1, i <= max_shells, i++)
@@ -341,6 +342,7 @@ var/const/PROJECTILE_DART = 8
 			name = "mateba"
 			desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."
 			icon_state = "mateba"
+			origin_tech = "combat=2;materials=2"
 
 		shotgun
 			name = "shotgun"
@@ -349,7 +351,9 @@ var/const/PROJECTILE_DART = 8
 			max_shells = 2
 			w_class = 4.0
 			force = 7.0
+			flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 			caliber = "shotgun"
+			origin_tech = "combat=2;materials=2"
 
 			New()
 				for(var/i = 1, i <= max_shells, i++)
@@ -425,6 +429,10 @@ var/const/PROJECTILE_DART = 8
 			force = 7.0
 			m_amt = 2000
 			origin_tech = "combat=3;magnets=2"
+			mode = 1 //We don't want laser guns to be on a stun setting. --Superxpdude
+
+			attack_self(mob/living/user as mob)
+				return // We don't want laser guns to be able to change to a stun setting. --Superxpdude
 
 			captain
 				icon_state = "caplaser"
@@ -485,7 +493,7 @@ var/const/PROJECTILE_DART = 8
 
 			destroyer
 				name = "pulse destroyer"
-				desc = "A heavy-duty, pulse-based energy weapon. The mode is set to DESRTOY. Always destroy."
+				desc = "A heavy-duty, pulse-based energy weapon. The mode is set to DESTROY. Always destroy."
 				mode = 2
 				New()
 					power_supply = new /obj/item/weapon/cell/infinite(src)
@@ -612,7 +620,7 @@ var/const/PROJECTILE_DART = 8
 			throw_speed = 2
 			throw_range = 10
 			m_amt = 2000
-			origin_tech = "combat=2;magnets=2;syndicate=2"
+			origin_tech = "combat=2;magnets=2;syndicate=5"
 			silenced = 1
 			fire_sound = 'Genhit.ogg'
 

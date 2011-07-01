@@ -93,6 +93,15 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/aiupload"
 
+		borgupload
+			name = "Circuit Design (Cyborg Upload)"
+			desc = "Allows for the construction of circuit boards used to build a Cyborg Upload Console."
+			id = "borgupload"
+			req_tech = list("programming" = 4)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/borgupload"
+
 		med_data
 			name = "Circuit Design (Medical Records)"
 			desc = "Allows for the construction of circuit boards used to build a medical records console."

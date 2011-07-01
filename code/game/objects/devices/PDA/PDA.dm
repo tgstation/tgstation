@@ -76,6 +76,26 @@
 	default_cartridge = /obj/item/weapon/cartridge/head
 	icon_state = "pda-h"
 
+/obj/item/device/pda/heads/hop
+	default_cartridge = /obj/item/weapon/cartridge/hop
+	icon_state = "pda-hop"
+
+/obj/item/device/pda/heads/hos
+	default_cartridge = /obj/item/weapon/cartridge/hos
+	icon_state = "pda-hos"
+
+/obj/item/device/pda/heads/ce
+	default_cartridge = /obj/item/weapon/cartridge/ce
+	icon_state = "pda-ce"
+
+/obj/item/device/pda/heads/cmo
+	default_cartridge = /obj/item/weapon/cartridge/cmo
+	icon_state = "pda-cmo"
+
+/obj/item/device/pda/heads/rd
+	default_cartridge = /obj/item/weapon/cartridge/rd
+	icon_state = "pda-rd"
+
 /obj/item/device/pda/captain
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	icon_state = "pda-c"

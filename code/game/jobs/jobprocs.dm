@@ -446,7 +446,7 @@
 
 		if ("Head of Security") //ready to come in game and kick ass - Microwave
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/hos (src), slot_ears)
-			src.equip_if_possible(new /obj/item/device/pda/heads(src), slot_belt)
+			src.equip_if_possible(new /obj/item/device/pda/heads/hos(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/head_of_security(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/hos(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
@@ -462,7 +462,7 @@
 		if ("Head of Personnel")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/hop (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/device/pda/heads(src), slot_belt)
+			src.equip_if_possible(new /obj/item/device/pda/heads/hop(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/head_of_personnel(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
@@ -540,7 +540,7 @@
 
 		if ("Chief Engineer")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/ce (src), slot_ears)
-			src.equip_if_possible(new /obj/item/device/pda/heads(src), slot_belt)
+			src.equip_if_possible(new /obj/item/device/pda/heads/ce(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves) //changed to black as part of dangercon 2011, approved by Urist_McDorf --Errorage
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/head/helmet/hardhat(src), slot_head)
@@ -553,7 +553,7 @@
 
 		if ("Research Director")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/rd (src), slot_ears)
-			src.equip_if_possible(new /obj/item/device/pda/heads(src), slot_belt)
+			src.equip_if_possible(new /obj/item/device/pda/heads/rd(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/research_director(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
@@ -563,7 +563,7 @@
 
 		if ("Chief Medical Officer")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/cmo (src), slot_ears)
-			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
+			src.equip_if_possible(new /obj/item/device/pda/heads/cmo(src), slot_belt)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (src), slot_back)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chief_medical_officer(src), slot_w_uniform)

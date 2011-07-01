@@ -271,7 +271,7 @@
 	throw_range = 5
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | NOSHIELD
-	origin_tech = "magnets=3;syndicate=3"
+	origin_tech = "magnets=3;syndicate=4"
 
 /obj/item/weapon/melee/energy/sword/chainsword
 	color = "chain"
@@ -437,7 +437,7 @@
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels)
-	origin_tech = "syndicate=2"
+	origin_tech = "syndicate=3"
 
 /obj/item/weapon/card/id/captains_spare
 	name = "Captain's spare ID"
@@ -492,7 +492,7 @@
 	throw_speed = 2
 	throw_range = 10
 	w_class = 2.0
-	origin_tech = "magnets=3;syndicate=3"
+	origin_tech = "magnets=3;syndicate=4"
 
 #define MAXCOIL 30
 /obj/item/weapon/cable_coil
@@ -1219,7 +1219,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 /obj/item/weapon/pen/sleepypen
 	desc = "It's a normal black ink pen with a sharp point."
 	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
-	origin_tech = "materials=2;biotech=1;syndicate=2"
+	origin_tech = "materials=2;biotech=1;syndicate=5"
 
 /obj/item/weapon/rack_parts
 	name = "rack parts"
@@ -1882,6 +1882,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	item_state = "plasticx"
 	flags = FPRINT | TABLEPASS | USEDELAY
 	w_class = 2.0
+	origin_tech = "syndicate=2"
 	var/timer = 10
 	var/atom/target = null
 

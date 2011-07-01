@@ -1082,7 +1082,7 @@
 "auP" = (/obj/grille,/obj/window/reinforced{dir = 4},/obj/window/reinforced{dir = 8},/obj/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/maintenance/auxsolarport)
 "auQ" = (/obj/machinery/door/airlock/external{name = "West Auxillary Solar Maintenance"; req_access = null; req_access_txt = "13"},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor/plating,/area/maintenance/auxsolarport)
 "auR" = (/obj/grille,/obj/window/reinforced{dir = 4},/obj/window/reinforced{dir = 1},/obj/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/storage/tech)
-"auS" = (/obj/rack{dir = 8},/obj/item/weapon/circuitboard/aiupload,/turf/simulated/floor,/area/storage/tech)
+"auS" = (/obj/rack{dir = 8},/obj/item/weapon/circuitboard/borgupload{pixel_x = -1; pixel_y = 1},/obj/item/weapon/circuitboard/aiupload{pixel_x = 2; pixel_y = -2},/turf/simulated/floor,/area/storage/tech)
 "auT" = (/obj/rack{dir = 8},/obj/item/weapon/circuitboard/robotics{pixel_x = -2; pixel_y = 2},/obj/item/weapon/circuitboard/mecha_control{pixel_x = 1; pixel_y = -1},/turf/simulated/floor,/area/storage/tech)
 "auU" = (/obj/machinery/atmospherics/pipe/simple{dir = 9},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/obj/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = "90Curve"},/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "auV" = (/obj/cable{d1 = 4; d2 = 8; icon_state = "4-8"; tag = "Streight"},/turf/simulated/floor/plating,/area/maintenance/fpmaint)

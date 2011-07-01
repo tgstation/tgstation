@@ -83,6 +83,7 @@
 /obj/item/device/radio/headset/traitor
 	translate_binary = 1
 	channels = list("Syndicate" = 1)
+	origin_tech = "syndicate=3"
 
 /obj/item/device/radio/headset/headset_sec // -- TLE
 	name = "Security Radio Headset"

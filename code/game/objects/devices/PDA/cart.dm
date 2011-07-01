@@ -98,9 +98,57 @@
 		name = "Easy-Record DELUXE"
 		icon_state = "cart-h"
 		access_manifest = 1
-		access_engine = 1
-		access_security = 1
 		access_status_display = 1
+
+	hop
+		name = "HumanResources9001"
+		icon_state = "cart-h"
+		access_manifest = 1
+		access_status_display = 1
+		access_quartermaster = 1
+
+		New()
+			..()
+			spawn(5)
+				radio = new /obj/item/radio/integrated/mule(src)
+
+	hos
+		name = "R.O.B.U.S.T. DELUXE"
+		icon_state = "cart-hos"
+		access_manifest = 1
+		access_status_display = 1
+		access_security = 1
+
+		New()
+			..()
+			spawn(5)
+				radio = new /obj/item/radio/integrated/beepsky(src)
+
+	ce
+		name = "Power-On DELUXE"
+		icon_state = "cart-ce"
+		access_manifest = 1
+		access_status_display = 1
+		access_engine = 1
+
+	cmo
+		name = "Med-U DELUXE"
+		icon_state = "cart-cmo"
+		access_manifest = 1
+		access_status_display = 1
+		access_medical = 1
+
+	rd
+		name = "Signal Ace DELUXE"
+		icon_state = "cart-rd"
+		access_manifest = 1
+		access_status_display = 1
+		access_reagent_scanner = 1
+
+		New()
+			..()
+			spawn(5)
+				radio = new /obj/item/radio/integrated/signal(src)
 
 	captain
 		name = "Value-PAK Cartridge"
