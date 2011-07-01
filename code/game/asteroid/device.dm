@@ -81,6 +81,6 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/chips(src)
 	new /obj/item/weapon/cigpacket(src)
 	var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src)
-	P.reagents.add_reagent("cyanide", 30)
+	P.reagents.add_reagent("nutriment", 500)
 	P.name = "Cyanide pill"
 	return

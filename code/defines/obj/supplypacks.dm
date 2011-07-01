@@ -264,8 +264,10 @@
 					"/obj/item/weapon/storage/flashbang_kit",
 					"/obj/item/weapon/storage/flashbang_kit",
 					"/obj/item/weapon/handcuffs",
-					"/obj/item/weapon/handcuffs")
-	cost = 20
+					"/obj/item/weapon/handcuffs",
+					"/obj/item/clothing/head/helmet/riot",
+					"/obj/item/clothing/suit/armor/riot",)
+	cost = 25
 	containertype = "/obj/crate/secure/gear"
 	containername = "Riot crate"
 	access = access_security
@@ -296,8 +298,10 @@
 					"/obj/item/weapon/shield/riot",
 					"/obj/item/weapon/shield/riot",
 					"/obj/item/clothing/suit/armor/vest",
-					"/obj/item/clothing/suit/armor/vest",)
-	cost = 20
+					"/obj/item/clothing/suit/armor/vest",
+					"/obj/item/clothing/head/helmet/riot",
+					"/obj/item/clothing/suit/armor/riot",)
+	cost = 25
 	containertype = "/obj/crate/secure/gear"
 	containername = "Armor crate"
 	access = access_security

@@ -41,13 +41,13 @@
 
 /obj/machinery/computer/aiupload
 	name = "AI Upload"
-	icon_state = "aiupload"
+	icon_state = "command"
 	var/mob/living/silicon/ai/current = null
 	var/opened = 0
 
 /obj/machinery/computer/borgupload
 	name = "Cyborg Upload"
-	icon_state = "aiupload"
+	icon_state = "command"
 	var/mob/living/silicon/robot/current = null
 
 /obj/machinery/computer/atmosphere
@@ -163,6 +163,10 @@
 	var/a_id = null
 	var/temp = null
 	var/printing = null
+
+/obj/machinery/computer/med_data/laptop
+	name = "Medical Laptop"
+	icon_state = "medlaptop"
 
 /obj/machinery/computer/pod
 	name = "Pod Launch Control"

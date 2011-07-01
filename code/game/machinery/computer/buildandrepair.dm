@@ -37,6 +37,10 @@
 	name = "Circuit board (AI Upload)"
 	build_path = "/obj/machinery/computer/aiupload"
 	origin_tech = "programming=4"
+/obj/item/weapon/circuitboard/borgupload
+	name = "Circuit board (Cyborg Upload)"
+	build_path = "/obj/machinery/computer/borgupload"
+	origin_tech = "programming=4"
 /obj/item/weapon/circuitboard/med_data
 	name = "Circuit board (Medical Records)"
 	build_path = "/obj/machinery/computer/med_data"

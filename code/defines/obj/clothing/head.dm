@@ -332,7 +332,7 @@
 	icon_state = "riot"
 	item_state = "helmet"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
-	armor = list(melee = 85, bullet = 10, laser = 5, taser = 5, bomb = 5, bio = 2, rad = 0)
+	armor = list(melee = 82, bullet = 10, laser = 5, taser = 5, bomb = 5, bio = 2, rad = 0)
 
 
 

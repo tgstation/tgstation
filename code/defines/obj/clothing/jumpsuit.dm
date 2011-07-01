@@ -306,7 +306,7 @@
 	name = "Genetics Jumpsuit"
 	icon_state = "genetics_new"
 	item_state = "w_suit"
-	color = "geneticsblue"
+	color = "genetics_new"
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 0)
 
@@ -315,7 +315,7 @@
 	name = "Chemist Jumpsuit"
 	icon_state = "chemist_new"
 	item_state = "w_suit"
-	color = "chemistorange"
+	color = "chemist_new"
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 10, rad = 0)
 
@@ -324,7 +324,7 @@
 	name = "Scientist Jumpsuit"
 	icon_state = "scientist_new"
 	item_state = "w_suit"
-	color = "sciencepurple"
+	color = "scientist_new"
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 10, bio = 10, rad = 0)
 
@@ -333,7 +333,7 @@
 	name = "Virologist Jumpsuit"
 	icon_state = "virologist_new"
 	item_state = "w_suit"
-	color = "medical"
+	color = "virologist_new"
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 15, rad = 0)
 
