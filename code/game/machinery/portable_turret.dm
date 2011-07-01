@@ -710,12 +710,6 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 
 
-mob/verb/Debugturrets()
-	for(var/obj/machinery/porta_turret/P in world)
-		world << "Porta turret!"
-	for(var/obj/machinery/porta_turret_cover/C in world)
-		world << "Porta turret cover!"
-
 
 /obj/machinery/porta_turret_cover
 	name = "turret"
