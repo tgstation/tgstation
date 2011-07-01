@@ -1147,7 +1147,7 @@
 "awc" = (/obj/table/reinforced{dir = 8; icon_state = "reinf_tabledir"},/turf/unsimulated/floor{icon_state = "floor"},/area/tdome)
 "awd" = (/obj/stool/chair{dir = 8},/turf/unsimulated/floor{icon_state = "floor"},/area/tdome)
 "awe" = (/obj/item/weapon/storage/firstaid/regular{pixel_x = 6; pixel_y = -5},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/shuttle/escape/centcom)
-"awf" = (/obj/rack,/obj/item/clothing/head/flatcap,/obj/item/clothing/under/gimmick/rank/captain/suit,/obj/item/clothing/suit/labcoat/mad,/obj/item/clothing/glasses/gglasses,/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
+"awf" = (/obj/rack,/obj/item/clothing/head/flatcap,/obj/item/clothing/under/gimmick/rank/captain/suit,/obj/item/clothing/glasses/gglasses,/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
 "awg" = (/obj/stool{pixel_y = 8},/obj/machinery/computer/security/telescreen{name = "Entertainment monitor"; desc = "Damn, they better have /tg/thechannel on these things."; icon = 'status_display.dmi'; icon_state = "entertainment"; pixel_y = -30},/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
 "awh" = (/obj/machinery/vending/snack,/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
 "awi" = (/obj/window/reinforced{dir = 8},/turf/unsimulated/floor{icon = 'beach.dmi'; icon_state = "water"; name = "water"},/area/centcom/holding)
