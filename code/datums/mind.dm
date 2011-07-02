@@ -181,10 +181,15 @@ datum/mind
 			if (istype(current, /mob/living/carbon/human))
 				text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<b>HUMAN</b>|other"
 			else if (istype(current, /mob/living/carbon/monkey))
-				if(istype(current.virus, /datum/disease/jungle_fever))
+				var/found = 0
+				for(var/datum/disease/D in current.viruses)
+					if(istype(D, /datum/disease/jungle_fever)) found = 1
+
+				if(found)
 					text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<b>INFECTED</b>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
 				else
 					text += "<b>HEALTHY</b>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
+
 			else
 				text += "healthy|infected|human|<b>OTHER</b>"
 			sections["monkey"] = text
@@ -675,9 +680,10 @@ datum/mind
 							M = H.monkeyize()
 							src = M.mind
 							//world << "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!"
-						else if (istype(M) && M.virus)
-							M.virus.cure(0)
-							sleep(0) //because deleting of virus is doing throught spawn(0)
+						else if (istype(M) && length(M.viruses))
+							for(var/datum/disease/D in M.viruses)
+								D.cure(0)
+							sleep(0) //because deleting of virus is done through spawn(0)
 				if("infected")
 					if (usr.client.holder.level >= 3)
 						var/mob/living/carbon/human/H = current
@@ -694,9 +700,10 @@ datum/mind
 				if("human")
 					var/mob/living/carbon/monkey/M = current
 					if (istype(M))
-						if (istype(M.virus,/datum/disease/jungle_fever))
-							M.virus.cure(0)
-							sleep(0) //because deleting of virus is doing throught spawn(0)
+						for(var/datum/disease/D in M.viruses)
+							if (istype(D,/datum/disease/jungle_fever))
+								D.cure(0)
+								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]", 1)
 						var/obj/item/weapon/dnainjector/m2h/m2h = new

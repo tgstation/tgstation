@@ -2163,10 +2163,12 @@ var/showadminmessages = 1
 		if (ticker.mode.config_tag == "changeling")
 			return 2
 		return 1
-	if(istype(M.virus, /datum/disease/jungle_fever))
-		if (ticker.mode.config_tag == "monkey")
-			return 2
-		return 1
+
+	for(var/datum/disease/D in M.viruses)
+		if(istype(D, /datum/disease/jungle_fever))
+			if (ticker.mode.config_tag == "monkey")
+				return 2
+			return 1
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(R.emagged)

@@ -66,11 +66,13 @@
 /datum/game_mode/monkey/proc/is_important_monkey(var/mob/living/carbon/monkey/M as mob)
 	var/turf/T = get_turf(M)
 	var/area/A = get_area(M)
-	return \
-		M.stat!=2 && \
-		istype(M.virus, /datum/disease/jungle_fever) && \
-		( T.z==1 || is_type_in_list(A, centcom_areas))
-	
+	if(M.stat!=2)
+
+		for(var/datum/disease/D in M.viruses)
+			if(istype(D, /datum/disease/jungle_fever) && ( T.z==1 || is_type_in_list(A, centcom_areas)))
+				return 1
+
+
 /datum/game_mode/monkey/check_win()
 	if (state==MONKEY_MODE_SHUTTLE_CAPTURED || state==MONKEY_MODE_SHUTTLE_WITH_HUMANS)
 		return
@@ -117,8 +119,9 @@
 
 /datum/game_mode/proc/auto_declare_completion_monkey()
 	for(var/mob/living/carbon/monkey/monkey_player in world)
-		if (istype(monkey_player.virus, /datum/disease/jungle_fever) && monkey_player.ckey)
-			world << "<B>[monkey_player.ckey] was played infested [monkey_player]. [monkey_player.stat == 2 ? "(DEAD)" : ""]</B>"
+		for(var/datum/disease/D in monkey_player.viruses)
+			if (istype(D, /datum/disease/jungle_fever) && monkey_player.ckey)
+				world << "<B>[monkey_player.ckey] was played infested [monkey_player]. [monkey_player.stat == 2 ? "(DEAD)" : ""]</B>"
 	return 1
 
 #undef MONKEY_MODE_RUNNING

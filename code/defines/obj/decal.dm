@@ -47,13 +47,13 @@
 	icon = 'blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
-	var/datum/disease/virus = null
+	var/list/viruses = list()
 	blood_DNA = null
 	blood_type = null
 
 	Del()
-		if(virus)
-			virus.cure(0)
+		for(var/datum/disease/D in viruses)
+			D.cure(0)
 		..()
 
 /obj/decal/cleanable/blood/splatter
@@ -99,11 +99,11 @@
 	icon = 'blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	var/datum/disease/virus = null
+	var/list/viruses = list()
 
 	Del()
-		if(virus)
-			virus.cure(0)
+		for(var/datum/disease/D in viruses)
+			D.cure(0)
 		..()
 
 /obj/decal/cleanable/xenoblood/xsplatter
@@ -164,12 +164,12 @@
 	layer = 2
 	icon = 'robots.dmi'
 	icon_state = "floor1"
-	var/datum/disease/virus = null
+	var/viruses = list()
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 
 	Del()
-		if(virus)
-			virus.cure(0)
+		for(var/datum/disease/D in viruses)
+			D.cure(0)
 		..()
 
 /obj/decal/cleanable/oil/streak

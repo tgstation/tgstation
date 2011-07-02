@@ -725,8 +725,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]", 1)
 
 	if (istype(M, /mob/dead/observer))
-		var/virus = M.virus
-		gibs(M.loc, virus)
+		gibs(M.loc, M.viruses)
 		return
 
 	M.gib()

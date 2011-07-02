@@ -355,17 +355,17 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		if (istype(t, /mob/living)) // if a mob
 			var/mob/living/M = t // simple typecasting
 			if (M.stat!=2) // if the target is not dead
-				popUp() // pop the turret up if it's not already up.
+				spawn() popUp() // pop the turret up if it's not already up.
 				dir=get_dir(src,M) // even if you can't shoot, follow the target
-				shootAt(M) // shoot the target, finally
+				spawn() shootAt(M) // shoot the target, finally
 		else
 
 			if (istype(t, /obj/livestock)) // shoot other things, same process as above
 				var/obj/livestock/L = t
 				if (L.alive==1)
-					popUp()
+					spawn() popUp()
 					dir=get_dir(src,L)
-					shootAt(L)
+					spawn() shootAt(L)
 
 
 	else
@@ -373,11 +373,11 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			var/mob/t = pick(secondarytargets)
 			if (istype(t, /mob/living))
 				if (t.stat!=2)
-					popUp()
+					spawn() popUp()
 					dir=get_dir(src,t)
 					shootAt(t)
 		else
-			popDown()
+			spawn() popDown()
 
 /obj/machinery/porta_turret/proc
 	popUp() // pops the turret up
@@ -396,6 +396,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	popDown() // pops the turret down
 		if(raising || !raised) return
 		if(stat & BROKEN) return
+		layer=3
 		raising=1
 		flick("popdown",cover)
 		sleep(10)
@@ -404,7 +405,6 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		raised=0
 		invisibility=2
 		icon_state="grey_target_prism"
-		layer=3
 
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp as mob)
@@ -466,6 +466,9 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	if (!istype(T) || !istype(U))
 		return
 
+	if (!raised) // the turret has to be raised in order to fire - makes sense, right?
+		return
+
 
 	// any emagged turrets will shoot extremely fast! This not only is deadly, but drains a lot power!
 
@@ -475,6 +478,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		A = new /obj/item/projectile/electrode( loc )
 		use_power(200)
 		playsound(src.loc, 'Taser.ogg', 75, 1)
+		icon_state = "orange_target_prism"
 	else
 		// Shooting Code:
 		var/obj/item/weapon/gun/energy/E=new installation
@@ -492,7 +496,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 		else if(istype(E, /obj/item/weapon/gun/energy/taser))
 			A = new /obj/item/projectile/electrode( loc )
-			icon_state = "target_prism"
+			icon_state = "orange_target_prism"
 			use_power(200)
 
 		else // Energy gun shots
@@ -511,7 +515,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 0 )
+	spawn( 1 )
 		A.process()
 	return
 

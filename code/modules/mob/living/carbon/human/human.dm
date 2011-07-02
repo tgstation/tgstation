@@ -459,7 +459,7 @@
 		return
 
 	else if (stat == 2 && !client)
-		gibs(loc, virus)
+		gibs(loc, viruses)
 		del(src)
 		return
 
@@ -1440,11 +1440,13 @@
 					else
 						UpdateDamage()
 				updatehealth()
-				if(istype(M.virus, /datum/disease/jungle_fever))
-					var/mob/living/carbon/human/H = src
-					src = null
-					src = H.monkeyize()
-					contract_disease(M.virus,1,0)
+
+				for(var/datum/disease/D in M.viruses)
+					if(istype(D, /datum/disease/jungle_fever))
+						var/mob/living/carbon/human/H = src
+						src = null
+						src = H.monkeyize()
+						contract_disease(D,1,0)
 
 	return
 
@@ -1493,11 +1495,13 @@
 					else
 						UpdateDamage()
 				updatehealth()
-				if(istype(M.virus, /datum/disease/jungle_fever))
-					var/mob/living/carbon/human/H = src
-					src = null
-					src = H.monkeyize()
-					contract_disease(M.virus,1,0)
+
+				for(var/datum/disease/D in M.viruses)
+					if(istype(D, /datum/disease/jungle_fever))
+						var/mob/living/carbon/human/H = src
+						src = null
+						src = H.monkeyize()
+						contract_disease(D,1,0)
 	return
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M as mob)

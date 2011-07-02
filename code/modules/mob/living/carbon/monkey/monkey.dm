@@ -160,8 +160,10 @@
 			if (mutations & HULK) damage += 10
 			bruteloss += damage
 			updatehealth()
-			if(istype(M.virus, /datum/disease/jungle_fever))
-				contract_disease(M.virus,1,0)
+
+			for(var/datum/disease/D in M.viruses)
+				if(istype(D, /datum/disease/jungle_fever))
+					contract_disease(D,1,0)
 		else
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
@@ -181,8 +183,9 @@
 				var/damage = rand(1, 5)
 				bruteloss += damage
 				health = 100 - oxyloss - toxloss - fireloss - bruteloss
-				if(istype(M.virus, /datum/disease/jungle_fever))
-					contract_disease(M.virus,1,0)
+				for(var/datum/disease/D in M.viruses)
+					if(istype(D, /datum/disease/jungle_fever))
+						contract_disease(D,1,0)
 			else
 				for(var/mob/O in viewers(src, null))
 					O.show_message("\red <B>[M.name] has attempted to bite [name]!</B>", 1)

@@ -242,8 +242,13 @@
 			if("pierrot's throat")
 				virus_type = /datum/disease/pierrot_throat
 	for(var/mob/living/carbon/human/H in world)
-		if((H.virus) || (H.stat == 2))
+
+		var/foundAlready = 0 // don't infect someone that already has the virus
+		for(var/datum/disease/D in H.viruses)
+			foundAlready = 1
+		if(H.stat == 2 || foundAlready)
 			continue
+
 		if(virus_type == /datum/disease/dnaspread) //Dnaspread needs strain_data set to work.
 			if((!H.dna) || (H.sdisabilities & 1)) //A blindness disease would be the worst.
 				continue
@@ -254,13 +259,14 @@
 			D.carrier = 1
 			D.holder = H
 			D.affected_mob = H
-			H.virus = D
+			H.viruses += D
 			break
 		else
-			H.virus = new virus_type
-			H.virus.affected_mob = H
-			H.virus.holder = H
-			H.virus.carrier = 1
+			var/datum/disease/D = new virus_type
+			D.carrier = 1
+			D.holder = H
+			D.affected_mob = H
+			H.viruses += D
 			break
 
 /proc/alien_infestation() // -- TLE

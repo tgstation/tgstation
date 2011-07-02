@@ -15,6 +15,7 @@ datum
 		var/data = null
 		var/volume = 0
 		var/nutriment_factor = 0
+		//var/list/viruses = list()
 
 		proc
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
@@ -68,15 +69,22 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"virus"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
+			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				if(M.virus) return //to prevent the healing of some serious shit with common cold injection.
 				var/datum/reagent/blood/self = src
 				src = null
+				for(var/datum/disease/D in self.data["viruses"])
+					var/datum/disease/virus = new D.type
+					if(method == TOUCH)
+						M.contract_disease(virus)
+
+					else //injected
+						M.contract_disease(virus, 1, 0)
+				/*
 				if(self.data["virus"])
 					var/datum/disease/V = self.data["virus"]
 					if(M.resistances.Find(V.type)) return
@@ -85,52 +93,67 @@ datum
 					else //injected
 						M.contract_disease(V, 1, 0)
 				return
+				*/
 
 
 			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
 				if(!istype(T)) return
 				var/datum/reagent/blood/self = src
 				src = null
-				var/datum/disease/D = self.data["virus"]
+				//var/datum/disease/D = self.data["virus"]
 				if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
 					var/obj/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
 					if(!blood_prop) //first blood!
 						blood_prop = new(T)
 						blood_prop.blood_DNA = self.data["blood_DNA"]
 						blood_prop.blood_type = self.data["blood_type"]
-					if(D && !blood_prop.virus) //TODO: multiple viruses
-						blood_prop.virus = new D.type
-						blood_prop.virus.holder = blood_prop
+
+					for(var/datum/disease/D in self.data["viruses"])
+						var/datum/disease/newVirus = new D.type
+						blood_prop.viruses += newVirus
+						newVirus.holder = blood_prop
+
+						// this makes it almost impossible for airborne diseases to spread
+						// THIS SHIT HAS TO GO, SORRY!
+						/*
 						if(T.density==0)
-							blood_prop.virus.spread_type = CONTACT_FEET
+							newVirus.spread_type = CONTACT_FEET
 						else
-							blood_prop.virus.spread_type = CONTACT_HANDS
+							newVirus.spread_type = CONTACT_HANDS
+						*/
 
 				else if(istype(self.data["donor"], /mob/living/carbon/monkey))
 					var/obj/decal/cleanable/blood/blood_prop = locate() in T
 					if(!blood_prop)
 						blood_prop = new(T)
 						blood_prop.blood_DNA = self.data["blood_DNA"]
-					if(D && !blood_prop.virus)
-						blood_prop.virus = new D.type
-						blood_prop.virus.holder = blood_prop
+					for(var/datum/disease/D in self.data["viruses"])
+						var/datum/disease/newVirus = new D.type
+						blood_prop.viruses += newVirus
+						newVirus.holder = blood_prop
+
+						/*
 						if(T.density==0)
-							blood_prop.virus.spread_type = CONTACT_FEET
+							newVirus.spread_type = CONTACT_FEET
 						else
-							blood_prop.virus.spread_type = CONTACT_HANDS
+							newVirus.spread_type = CONTACT_HANDS
+						*/
 
 				else if(istype(self.data["donor"], /mob/living/carbon/alien))
 					var/obj/decal/cleanable/xenoblood/blood_prop = locate() in T
 					if(!blood_prop)
 						blood_prop = new(T)
 						blood_prop.blood_DNA = self.data["blood_DNA"]
-					if(D && !blood_prop.virus)
-						blood_prop.virus = new D.type
-						blood_prop.virus.holder = blood_prop
+					for(var/datum/disease/D in self.data["viruses"])
+						var/datum/disease/newVirus = new D.type
+						blood_prop.viruses += newVirus
+						newVirus.holder = blood_prop
+						/*
 						if(T.density==0)
-							blood_prop.virus.spread_type = CONTACT_FEET
+							newVirus.spread_type = CONTACT_FEET
 						else
-							blood_prop.virus.spread_type = CONTACT_HANDS
+							newVirus.spread_type = CONTACT_HANDS
+						*/
 				return
 
 /* Must check the transfering of reagents and their data first. They all can point to one disease datum.
@@ -151,10 +174,11 @@ datum
 				var/datum/reagent/vaccine/self = src
 				src = null
 				if(self.data&&method == INGEST)
-					if(M.virus && M.virus.type == self.data)
-						M.virus.cure()
-					else if(!(self.data in M.resistances))
-						M.resistances += self.data
+					for(var/datum/disease/D in M.viruses)
+						if(M.virus && D.type == self.data["viruses"])
+							D.cure()
+
+					M.resistances += self.data
 				return
 
 
@@ -997,10 +1021,11 @@ datum
 				M:confused = 0
 				M:sleeping = 0
 				M:jitteriness = 0
-				M.virus.spread = "Remissive"
-				M.virus.stage--
-				if(M.virus.stage < 1)
-					M.virus.cure()
+				for(var/datum/disease/D in M.viruses)
+					D.spread = "Remissive"
+					D.stage--
+					if(D.stage < 1)
+						D.cure()
 				..()
 				return
 
@@ -1532,7 +1557,9 @@ datum
 					M:heal_organ_damage(1,1)
 					..()
 					return
+
 				..()
+
 
 		dry_ramen
 			name = "Dry Ramen"
@@ -1775,6 +1802,7 @@ datum
 				if(data >= 40 && prob(33))
 					if (!M:confused) M:confused = 1
 					M:confused += 2
+
 				..()
 				return
 
@@ -1960,6 +1988,9 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
+				if(M:oxyloss && prob(20)) M:oxyloss--
+				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
+				if(M:fireloss && prob(20)) M:heal_organ_damage(0,1)
 				if(M:toxloss && prob(20)) M:toxloss--
 				M:nutrition++
 				..()
@@ -2026,6 +2057,12 @@ datum
 					M.confused = max(M:confused+2,0)
 				..()
 				return
+
+		cream
+			name = "Cream"
+			id = "cream"
+			description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
+			reagent_state = LIQUID
 
 		hooch
 			name = "Hooch"

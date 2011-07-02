@@ -2008,8 +2008,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/gib()
 
 	if (istype(src, /mob/dead/observer))
-		var/V = virus
-		gibs(loc, V)
+		gibs(loc, viruses)
 		return
 	if(!isrobot(src))//Cyborgs no-longer "die" when gibbed.
 		death(1)
@@ -2033,22 +2032,20 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		flick("gibbed-r", animation)
 
 	if(key)
-		var/V = virus
 		if (istype(src, /mob/living/silicon))
-			robogibs(loc, V)
+			robogibs(loc, viruses)
 		else if (istype(src, /mob/living/carbon/alien))
-			xgibs(loc, V)
+			xgibs(loc, viruses)
 		else
-			gibs(loc, V)
+			gibs(loc, viruses)
 
 	else
-		var/V = virus
 		if (istype(src, /mob/living/silicon))
-			robogibs(loc, V)
+			robogibs(loc, viruses)
 		else if (istype(src, /mob/living/carbon/alien))
-			xgibs(loc, V)
+			xgibs(loc, viruses)
 		else
-			gibs(loc, V)
+			gibs(loc, viruses)
 	sleep(15)
 	del(src)
 
@@ -2216,7 +2213,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /client/proc/station_explosion_cinematic(var/derp)
 	if(!src.mob)
 		return
-	
+
 	var/mob/M = src.mob
 	M.loc = null // HACK, but whatever, this works
 

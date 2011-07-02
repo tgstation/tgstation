@@ -838,14 +838,20 @@
 					see_invisible = 0
 			else if (istype(glasses, /obj/item/clothing/glasses/hud/health))
 				if(client)
+
 					var/icon/tempHud = 'hud.dmi'
 					for(var/mob/living/carbon/human/patient in view(src))
+
+						var/foundVirus = 0
+						for(var/datum/disease/D in patient.viruses)
+							foundVirus++
+
 						client.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
 						if(patient.stat == 2)
 							client.images += image(tempHud,patient,"huddead")
 						else if(patient.alien_egg_flag)
 							client.images += image(tempHud,patient,"hudxeno")
-						else if(patient.virus)
+						else if(foundVirus)
 							client.images += image(tempHud,patient,"hudill")
 						else
 							client.images += image(tempHud,patient,"hudhealthy")
@@ -986,8 +992,9 @@
 					return
 
 		handle_virus_updates()
-			if(bodytemperature > 406 && virus)
-				virus.cure()
+			if(bodytemperature > 406)
+				for(var/datum/disease/D in viruses)
+					D.cure()
 			return
 
 

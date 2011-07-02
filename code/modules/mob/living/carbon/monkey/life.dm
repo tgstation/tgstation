@@ -558,8 +558,9 @@
 					return
 
 		handle_virus_updates()
-			if(src.bodytemperature > 406 && src.virus)
-				src.virus.cure()
+			if(src.bodytemperature > 406)
+				for(var/datum/disease/D in viruses)
+					D.cure()
 			return
 
 		check_if_buckled()

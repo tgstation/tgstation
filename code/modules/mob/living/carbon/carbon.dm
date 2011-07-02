@@ -47,6 +47,24 @@
 
 /mob/living/carbon/attack_hand(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
+
+	for(var/datum/disease/D in viruses)
+		var/s_spread_type
+		if(D.spread_type!=SPECIAL && D.spread_type!=AIRBORNE)
+			s_spread_type = D.spread_type
+			D.spread_type = CONTACT_HANDS
+			M.contract_disease(D)
+			D.spread_type = s_spread_type
+
+	for(var/datum/disease/D in M.viruses)
+		var/s_spread_type
+		if(D.spread_type!=SPECIAL && D.spread_type!=AIRBORNE)
+			s_spread_type = D.spread_type
+			D.spread_type = CONTACT_HANDS
+			contract_disease(D)
+			D.spread_type = s_spread_type
+
+	/*		// old code: doesn't support multiple viruses
 	if(src.virus || M.virus)
 		var/s_spread_type
 		if(src.virus && src.virus.spread_type!=SPECIAL && src.virus.spread_type!=AIRBORNE)
@@ -60,11 +78,32 @@
 			M.virus.spread_type = CONTACT_GENERAL
 			src.contract_disease(M.virus)
 			M.virus.spread_type = s_spread_type
+	*/
 	return
 
 
 /mob/living/carbon/attack_paw(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
+
+
+	for(var/datum/disease/D in viruses)
+		var/s_spread_type
+		if(D.spread_type!=SPECIAL && D.spread_type!=AIRBORNE)
+			s_spread_type = D.spread_type
+			D.spread_type = CONTACT_HANDS
+			M.contract_disease(D)
+			D.spread_type = s_spread_type
+
+	for(var/datum/disease/D in M.viruses)
+		var/s_spread_type
+		if(D.spread_type!=SPECIAL && D.spread_type!=AIRBORNE)
+			s_spread_type = D.spread_type
+			D.spread_type = CONTACT_HANDS
+			contract_disease(D)
+			D.spread_type = s_spread_type
+
+	/*
+
 	if(src.virus || M.virus)
 		var/s_spread_type
 		if(src.virus && src.virus.spread_type!=SPECIAL && src.virus.spread_type!=AIRBORNE)
@@ -78,6 +117,7 @@
 			M.virus.spread_type = CONTACT_GENERAL
 			src.contract_disease(M.virus)
 			M.virus.spread_type = s_spread_type
+	*/
 	return
 
 /mob/living/carbon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)

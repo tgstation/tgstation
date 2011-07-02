@@ -340,9 +340,12 @@
 	if((C.toxloss >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_tox)))
 		return 1
 
-	if(C.virus && ((C.virus.stage > 1) || (C.virus.spread_type == AIRBORNE)))
-		if (!C.reagents.has_reagent(src.treatment_virus))
-			return 1 //STOP DISEASE FOREVER
+
+	for(var/datum/disease/D in C.viruses)
+		if((D.stage > 1) || (D.spread_type == AIRBORNE))
+
+			if (!C.reagents.has_reagent(src.treatment_virus))
+				return 1 //STOP DISEASE FOREVER
 
 	return 0
 
@@ -375,7 +378,11 @@
 	if(src.emagged) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
 
-	if (!reagent_id && (C.virus))
+	var/virus = 0
+	for(var/datum/disease/D in C.viruses)
+		virus = 1
+
+	if (!reagent_id && (virus))
 		if(!C.reagents.has_reagent(src.treatment_virus))
 			reagent_id = src.treatment_virus
 

@@ -84,6 +84,13 @@ to null does not delete the object itself. Thank you.
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)
 //	world << "Contract_disease called by [src] with virus [virus]"
 	if(stat >=2) return
+	if(virus.type in resistances)
+		if(prob(99.9)) return
+		resistances.Remove(virus.type)//the resistance is futile
+
+	for(var/datum/disease/D in viruses)
+		if(istype(D, virus.type))
+			return // two viruses of the same kind can't infect a body at once!!
 
 
 	if(force_species_check)
@@ -95,23 +102,21 @@ to null does not delete the object itself. Thank you.
 				break
 		if(fail) return
 
-	if(skip_this == 1)//be wary, it replaces the current disease...
-		if(src.virus)
-			src.virus.cure(0)
-		src.virus = new virus.type
-		src.virus.affected_mob = src
-		src.virus.strain_data = virus.strain_data.Copy()
-		src.virus.holder = src
+	if(skip_this == 1)
+		//if(src.virus)				< -- this used to replace the current disease. Not anymore!
+			//src.virus.cure(0)
+
+		var/datum/disease/v = new virus.type
+		src.viruses += v
+		v.affected_mob = src
+		v.strain_data = v.strain_data.Copy()
+		v.holder = src
 		if(prob(5))
-			src.virus.carrier = 1
+			v.carrier = 1
 		return
 
-	if(src.virus)
-		return
-
-	if(virus.type in resistances)
-		if(prob(99.9)) return
-		resistances.Remove(virus.type)//the resistance is futile
+	//if(src.virus) //
+		//return //
 
 
 /*
@@ -223,7 +228,7 @@ to null does not delete the object itself. Thank you.
 		passed = (prob(50*virus.permeability_mod))
 
 	if(passed)
-//		world << "Infection in the mob [src]. YAY"
+		//world << "Infection in the mob [src]. YAY"
 
 
 /*
@@ -253,18 +258,20 @@ to null does not delete the object itself. Thank you.
 	else if(prob(15))
 		return
 	else*/
-		src.virus = new virus.type
-		src.virus.strain_data = virus.strain_data.Copy()
-		src.virus.affected_mob = src
-		src.virus.holder = src
+		var/datum/disease/v = new virus.type
+		src.viruses += v
+		v.affected_mob = src
+		v.strain_data = v.strain_data.Copy()
+		v.holder = src
 		if(prob(5))
-			src.virus.carrier = 1
+			v.carrier = 1
 		return
 	return
 
 
-/datum/disease/proc/spread(var/source=null)
+/datum/disease/proc/spread(var/atom/source=null)
 	//world << "Disease [src] proc spread was called from holder [source]"
+
 	if(spread_type == SPECIAL)//does not spread
 		return
 
@@ -279,8 +286,9 @@ to null does not delete the object itself. Thank you.
 
 
 	var/check_range = AIRBORNE//defaults to airborne - range 4
+
 	if(spread_type != AIRBORNE)
-		check_range = 0
+		check_range = 0 // everything else, like infect-on-contact things, only infect things on top of it
 
 	for(var/mob/living/carbon/M in oviewers(check_range, source))
 		M.contract_disease(src)
@@ -290,8 +298,15 @@ to null does not delete the object itself. Thank you.
 
 /datum/disease/proc/process()
 	if(!holder) return
-	if(prob(40))
+	if(prob(65))
 		spread(holder)
+
+	if(affected_mob)
+		for(var/datum/disease/D in affected_mob.viruses)
+			if(D != src)
+				if(istype(src, D.type))
+					del(D) // if there are somehow two viruses of the same kind in the system, delete the other one
+
 	if(holder == affected_mob)
 		if(affected_mob.stat < 2) //he's alive
 			stage_act()
@@ -301,8 +316,19 @@ to null does not delete the object itself. Thank you.
 			affected_mob = null
 	if(!affected_mob) //the virus is in inanimate obj
 //		world << "[src] longevity = [longevity]"
-		if(--longevity<=0)
-			cure(0)
+		/*
+		if(holder)
+
+			// spreads the love. Why hasn't anyone coded this in yet?!?!?!?
+			for(var/mob/living/M in view(1, holder))
+				if(M.stat != 2)
+					if(prob(90))
+						M.contract_disease(src)
+		*/
+
+		if(prob(70))
+			if(--longevity<=0)
+				cure(0)
 	return
 
 /datum/disease/proc/cure(var/resistance=1)//if resistance = 0, the mob won't develop resistance to disease

@@ -90,11 +90,11 @@
 	O2.icon = 'objects.dmi'
 	O2.icon_state = "shards"
 	for(var/mob/living/carbon/human/H in view(5, sourceloc))
-		if(!H.virus) H.contract_disease(new /datum/disease/gbs,1)
+		H.contract_disease(new /datum/disease/gbs,1)
 	var/i
 	for(i=0, i<5, i++)
 		for(var/mob/living/carbon/human/H in view(5, sourceloc))
-			if(!H.virus) H.contract_disease(new /datum/disease/gbs,1)
+			H.contract_disease(new /datum/disease/gbs,1)
 		sleep(20)
 	flick("greenshatter2",O)
 	O.icon_state = "nothing"

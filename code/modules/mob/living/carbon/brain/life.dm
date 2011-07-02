@@ -295,6 +295,7 @@
 			return 1
 
 		handle_virus_updates()
-			if(bodytemperature > 406 && virus)
-				virus.cure()
+			if(bodytemperature > 409)
+				for(var/datum/disease/D in viruses)
+					D.cure()
 			return

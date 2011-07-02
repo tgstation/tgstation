@@ -783,8 +783,20 @@
 						B.volume = amount
 						//set reagent data
 						B.data["donor"] = T
+						/*
 						if(T.virus && T.virus.spread_type != SPECIAL)
 							B.data["virus"] = new T.virus.type(0)
+						*/
+
+
+
+						for(var/datum/disease/D in T.viruses)
+							if(!B.data["viruses"])
+								B.data["viruses"] = list()
+
+
+							B.data["virus"] += new D.type
+
 						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
 						if(T.resistances&&T.resistances.len)
 							B.data["resistances"] = T.resistances.Copy()
@@ -1611,7 +1623,7 @@
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/flu(0)
-		var/list/data = list("virus"= F)
+		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat
@@ -1622,7 +1634,7 @@
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/pierrot_throat(0)
-		var/list/data = list("virus"= F)
+		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/cold
@@ -1633,7 +1645,7 @@
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/cold(0)
-		var/list/data = list("virus"= F)
+		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
 /*
@@ -1660,7 +1672,7 @@
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/fake_gbs(0)
-		var/list/data = list("virus"= F)
+		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 /*
 /obj/item/weapon/reagent_containers/glass/bottle/rhumba_beat
@@ -1687,7 +1699,7 @@
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/brainrot(0)
-		var/list/data = list("virus"= F)
+		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/magnitis
@@ -1698,7 +1710,7 @@
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/magnitis(0)
-		var/list/data = list("virus"= F)
+		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
 
@@ -1710,7 +1722,7 @@
 	New()
 		..()
 		var/datum/disease/F = new /datum/disease/wizarditis(0)
-		var/list/data = list("virus"= F)
+		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
 

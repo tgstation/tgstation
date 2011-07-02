@@ -74,8 +74,11 @@
 				B.volume = 70
 				//set reagent data
 				B.data["donor"] = O
-				if(O.virus && O.virus.spread_type != SPECIAL)
-					B.data["virus"] = new O.virus.type(0)
+
+				for(var/datum/disease/D in O.viruses)
+					if(D.spread_type != SPECIAL)
+						B.data["viruses"] = new D.type(0)
+
 				B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
 				if(O.resistances&&O.resistances.len)
 					B.data["resistances"] = O.resistances.Copy()

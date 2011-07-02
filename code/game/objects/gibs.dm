@@ -1,13 +1,13 @@
 //HUMANS
 
-/proc/gibs(atom/location, var/datum/disease/virus)
-	new /obj/gibspawner/human(get_turf(location),virus)
+/proc/gibs(atom/location, var/list/viruses)
+	new /obj/gibspawner/human(get_turf(location),viruses)
 
-/proc/xgibs(atom/location, var/datum/disease/virus)
-	new /obj/gibspawner/xeno(get_turf(location),virus)
+/proc/xgibs(atom/location, var/list/viruses)
+	new /obj/gibspawner/xeno(get_turf(location),viruses)
 
-/proc/robogibs(atom/location, var/datum/disease/virus)
-	new /obj/gibspawner/robot(get_turf(location),virus)
+/proc/robogibs(atom/location, var/list/viruses)
+	new /obj/gibspawner/robot(get_turf(location),viruses)
 
 /obj/gibspawner
 	var/sparks = 0 //whether sparks spread on Gib()
@@ -16,20 +16,21 @@
 	var/list/gibamounts = list()
 	var/list/gibdirections = list() //of lists
 
-	New(location, var/datum/disease/virus = null)
+	New(location, var/list/viruses)
 		..()
 
 		if(istype(loc,/turf)) //basically if a badmin spawns it
-			Gib(loc,virus)
+			Gib(loc,viruses)
 
-	proc/Gib(atom/location, var/datum/disease/virus = null)
+	proc/Gib(atom/location, var/list/viruses = list())
 		if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
 			world << "\red Gib list length mismatch!"
 			return
 
 		var/obj/decal/cleanable/blood/gibs/gib = null
-		if(virus && virus.spread_type == SPECIAL)
-			virus = null
+		for(var/datum/disease/D in viruses)
+			if(D.spread_type == SPECIAL)
+				del(D)
 
 		if(sparks)
 			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
@@ -41,13 +42,17 @@
 				for(var/j = 1, j<= gibamounts[i], j++)
 					var/gibType = gibtypes[i]
 					gib = new gibType(location)
-					if(virus && prob(virusProb))
-						gib.virus = new virus.type
-						gib.virus.holder = gib
-						gib.virus.spread_type = CONTACT_FEET
-					var/list/directions = gibdirections[i]
-					if(directions.len)
-						gib.streak(directions)
+
+					if(viruses.len > 0)
+						for(var/datum/disease/D in viruses)
+							if(prob(virusProb))
+								var/datum/disease/viruus = new D.type
+								gib.viruses += viruus
+								viruus.holder = gib
+								viruus.spread_type = CONTACT_FEET
+							var/list/directions = gibdirections[i]
+							if(directions.len)
+								gib.streak(directions)
 
 		del(src)
 

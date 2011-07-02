@@ -251,11 +251,12 @@
 						if (!lamarr)
 							var/mob/trg = target
 							death()
-							if(trg.virus)//Viruses are stored in a global database.
-								trg.virus.cure(0)//You need to either cure() or del() them to stop their processing.
+							//if(trg.virus)//Viruses are stored in a global database.
+								//trg.virus.cure(0)//You need to either cure() or del() them to stop their processing.
 							trg.contract_disease(new /datum/disease/alien_embryo(0))//So after that you need to infect the target anew.
-							if(target.virus)//If they actually get infected. They may not.
-								target.alien_egg_flag = 1//We finally set their flag to 1.
+							for(var/datum/disease/alien_embryo/A in trg.viruses)
+								if(target.virus)//If they actually get infected. They may not.
+									target.alien_egg_flag = 1//We finally set their flag to 1.
 							return
 						else
 							sleep(50)

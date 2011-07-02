@@ -469,12 +469,12 @@
 		Structural Integrity: [M.bruteloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.bruteloss]</font><br>
 		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
 		"}
-		if(M.virus)
+		for(var/datum/disease/D in M.viruses)
 			dat += {"<h4>Infection Detected.</h4><br>
-					 Name: [M.virus.name]<br>
-					 Type: [M.virus.spread]<br>
-					 Stage: [M.virus.stage]/[M.virus.max_stages]<br>
-					 Possible Cure: [M.virus.cure]<br>
+					 Name: [D.name]<br>
+					 Type: [D.spread]<br>
+					 Stage: [D.stage]/[D.max_stages]<br>
+					 Possible Cure: [D.cure]<br>
 					"}
 		dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
 	return dat

@@ -368,10 +368,10 @@
 			M.dna = null
 
 
-		O.virus = M.virus
-		M.virus = null
-		if (O.virus)
-			O.virus.affected_mob = O
+		for(var/datum/disease/D in M.viruses)
+			O.viruses += D
+			D.affected_mob = O
+			M.viruses -= D
 
 
 		for(var/obj/T in (M.contents-implants))
@@ -433,10 +433,10 @@
 		O.dna = M.dna
 		M.dna = null
 
-		O.virus = M.virus
-		M.virus = null
-		if (O.virus)
-			O.virus.affected_mob = O
+		for(var/datum/disease/D in M.viruses)
+			O.viruses += D
+			D.affected_mob = O
+			M.viruses -= D
 
 		//for(var/obj/T in M)
 		//	del(T)

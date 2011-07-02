@@ -20,8 +20,8 @@
 			sleep(3)
 			if (i > 0)
 				var/obj/decal/cleanable/blood/b = new /obj/decal/cleanable/blood/splatter(src.loc)
-				if (src.virus)
-					b.virus = src.virus
+				for(var/datum/disease/D in src.viruses)
+					b.viruses += D
 			if (step_to(src, get_step(src, direction), 0))
 				break
 
@@ -32,8 +32,8 @@
 			sleep(3)
 			if (i > 0)
 				var/obj/decal/cleanable/xenoblood/b = new /obj/decal/cleanable/xenoblood/xsplatter(src.loc)
-				if (src.virus)
-					b.virus = src.virus
+				for(var/datum/disease/D in src.viruses)
+					b.viruses += D
 			if (step_to(src, get_step(src, direction), 0))
 				break
 
