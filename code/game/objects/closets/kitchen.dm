@@ -44,12 +44,8 @@
 	new /obj/item/kitchen/egg_box(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
-	if(prob(95))
-		new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
-	else
-		new /obj/item/weapon/reagent_containers/food/snacks/xenomeat(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/xenomeat(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
 
 /obj/secure_closet/fridge/New()
 	..()

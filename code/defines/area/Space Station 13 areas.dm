@@ -766,6 +766,7 @@ proc/process_ghost_teleport_locs()
 	name = "Detectives Office"
 	icon_state = "detective"
 
+/*
 	New()
 		..()
 
@@ -780,6 +781,7 @@ proc/process_ghost_teleport_locs()
 						var/icon/newIcon = icon(objectToGrayscale.icon)
 						newIcon.GrayScale()
 						objectToGrayscale.icon = newIcon
+*/
 
 /area/security/nuke_storage
 	name = "Vault"
