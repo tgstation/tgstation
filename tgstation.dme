@@ -814,5 +814,4 @@
 #include "code\WorkInProgress\recycling\scrap.dm"
 #include "code\WorkInProgress\recycling\sortingmachinery.dm"
 #include "interface\skin.dmf"
-#include "maps\TestingMap.dmm"
 // END_INCLUDE

@@ -18,7 +18,7 @@
 
 /* Commenting this out for now until we figure out what to do with shuttle smooth walls, if anything.
    As they are now, they sort of work screwy and may need further coding. Or just be scrapped.*/
-	else
+	/*else
 		for(var/turf/simulated/shuttle/wall/W in orange(src,1))
 			if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
 				junction |= get_dir(src,W)
@@ -30,7 +30,7 @@
 				junction |= get_dir(src,W)
 		for(var/obj/grille/W in orange(src,1)) //same for grilles. checking if area is shuttle so it won't merge with the station
 			if((abs(src.x-W.x)-abs(src.y-W.y)) && (istype(W.loc.loc,/area/shuttle) || istype(W.loc.loc,/area/supply)))
-				junction |= get_dir(src,W)
+				junction |= get_dir(src,W)*/
 
 	if(istype(src,/turf/simulated/wall))
 		var/turf/simulated/wall/wall = src
@@ -39,7 +39,7 @@
 		src.icon_state = "rwall[junction]"
 	else if (istype(src,/obj/falsewall))
 		src.icon_state = "wall[junction]"
-	else if(istype(src,/turf/simulated/shuttle/wall))
+/*	else if(istype(src,/turf/simulated/shuttle/wall))
 		var/newicon = icon;
 		var/newiconstate = icon_state;
 		if(junction!=5 && junction!=6 && junction!=9 && junction!=10) //if it's not diagonal, all is well, no additional calculations needed
@@ -69,7 +69,7 @@
 				src.icon_state = newiconstate; //
 				src.overlays += icon('shuttle.dmi',"swall_f[junction]")
 			else //otherwise, the space one
-				src.icon_state = "swall_s[junction]"
+				src.icon_state = "swall_s[junction]"*/
 
 	return
 
@@ -93,14 +93,14 @@
 
 	..()
 
-/turf/simulated/shuttle/wall/New()
+/*/turf/simulated/shuttle/wall/New()
 
 	spawn(20) //testing if this will make /obj/machinery/shuttle and /door count - It does, it stays.
 		if(src.icon_state in list("wall1", "wall", "diagonalWall", "wall_floor", "wall_space")) //so wizard den, syndie shuttle etc will remain black
 			for(var/turf/simulated/shuttle/wall/W in range(src,1))
 				W.relativewall()
 
-	..()
+	..()*/
 
 /turf/simulated/wall/Del()
 
@@ -136,7 +136,7 @@
 
 	..()
 
-/turf/simulated/shuttle/wall/Del()
+/*/turf/simulated/shuttle/wall/Del()
 
 	var/temploc = src.loc
 
@@ -144,4 +144,4 @@
 		for(var/turf/simulated/shuttle/wall/W in range(temploc,1))
 			W.relativewall()
 
-	..()
+	..()*/

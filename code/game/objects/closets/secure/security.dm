@@ -9,7 +9,7 @@
 	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/shoes/brown(src)
+	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/clothing/glasses/sunglasses(src)

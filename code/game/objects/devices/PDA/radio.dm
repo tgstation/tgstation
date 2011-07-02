@@ -115,7 +115,7 @@
 	var/list/botstatus			// the status signal sent by the bot
 	var/list/beacons
 
-	var/beacon_freq = 1445
+	var/beacon_freq = 1400
 	var/control_freq = 1447
 
 	// create a new QM cartridge, and register to receive bot control & beacon message

@@ -80,3 +80,9 @@
 	icon_state = "clown"
 	item_state = "clown_shoes"
 	slowdown = 0
+
+/obj/item/clothing/shoes/jackboots
+	name = "Jackboots"
+	desc = "Formerly owned by Officer Jack."
+	icon_state = "jackboots"
+	item_state = "jackboots"

@@ -18,7 +18,7 @@
 	var/locked = 1
 	var/atom/movable/load = null		// the loaded crate (usually)
 
-	var/beacon_freq = 1445
+	var/beacon_freq = 1400
 	var/control_freq = 1447
 
 	suffix = ""

@@ -318,6 +318,22 @@
 	slowdown = 2.5
 	armor = list(melee = 82, bullet = 5, laser = 2, taser = 2, bomb = 5, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/armor/bulletproof
+	name = "Bulletproof Vest"
+	desc = "A vest that excels in protecting the wearer against high-velocity solid projectiles."
+	icon_state = "bulletproof"
+	item_state = "armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	armor = list(melee = 15, bullet = 70, laser = 20, taser = 10, bomb = 5, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/armor/laserproof
+	name = "Ablative Armor Vest"
+	desc = "A vest that excels in protecting the wearer against energy projectiles."
+	icon_state = "armor_reflec"
+	item_state = "armor_reflec"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	armor = list(melee = 10, bullet = 5, laser = 65, taser = 25, bomb = 5, bio = 0, rad = 0)
+
 // FIRE SUITS
 
 /obj/item/clothing/suit/fire
