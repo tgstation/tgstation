@@ -609,7 +609,7 @@
 */
 
 /datum/recipe/meatballsoup
-	reagents = list("water" = 20)
+	reagents = list("water" = 10)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/faggot ,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
@@ -618,7 +618,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatballsoup
 
 /datum/recipe/vegetablesoup
-	reagents = list("water" = 20)
+	reagents = list("water" = 10)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn,
@@ -628,13 +628,17 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/vegetablesoup
 
 /datum/recipe/nettlesoup
-	reagents = list("water" = 20)
+	reagents = list("water" = 10)
 	items = list(
 		/obj/item/weapon/grown/nettle,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/nettlesoup
+
+/datum/recipe/wishsoup
+	reagents = list("water" = 20)
+	result= /obj/item/weapon/reagent_containers/food/snacks/wishsoup
 
 /datum/recipe/hotchili
 	items = list(

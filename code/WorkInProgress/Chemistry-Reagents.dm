@@ -1382,14 +1382,12 @@ datum
 			id = "sodiumchloride"
 			description = "A salt made of sodium chloride. Commonly used to season food."
 			reagent_state = SOLID
-			nutriment_factor = 1 * REAGENTS_METABOLISM
 
 		blackpepper
 			name = "Black Pepper"
 			id = "blackpepper"
 			description = "A power ground from peppercorns. *AAAACHOOO*"
 			reagent_state = SOLID
-			nutriment_factor = 1 * REAGENTS_METABOLISM
 
 		amatoxin
 			name = "Amatoxin"
@@ -1522,6 +1520,19 @@ datum
 			id = "banana"
 			description = "The raw essence of a banana. HONK"
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				if(istype(M, /mob/living/carbon/human) && M.job in list("Clown"))
+					if(!M) M = holder.my_atom
+					M:heal_organ_damage(1,1)
+					..()
+					return
+				if(istype(M, /mob/living/carbon/monkey))
+					if(!M) M = holder.my_atom
+					M:heal_organ_damage(1,1)
+					..()
+					return
+				..()
 
 		dry_ramen
 			name = "Dry Ramen"
@@ -1541,6 +1552,7 @@ datum
 			nutriment_factor = 5 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/living/M as mob)
 				..()
+				M:nutrition += nutriment_factor
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+10)
 				return
@@ -1553,6 +1565,7 @@ datum
 			nutriment_factor = 5 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/living/M as mob)
 				..()
+				M:nutrition += nutriment_factor
 				M:bodytemperature += 10
 				return
 
@@ -1574,7 +1587,7 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
+				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
 				M:nutrition++
 				..()
 				return
@@ -1586,7 +1599,7 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
+				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
 				M:nutrition++
 				..()
 				return
@@ -1651,7 +1664,8 @@ datum
 				M.dizziness = max(0,M.dizziness-2)
 				M:drowsyness = max(0,M:drowsyness-1)
 				M:sleeping = 0
-				if(M:toxloss && prob(50)) M:toxloss--
+				if(M:toxloss && prob(50))
+					M:toxloss--
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature-5)
 				return
@@ -1754,13 +1768,13 @@ datum
 				data++
 				M.make_dizzy(3)
 				M:jitteriness = max(M:jitteriness-3,0)
+				M:nutrition += 2
 				if(data >= 25)
 					if (!M:stuttering) M:stuttering = 1
 					M:stuttering += 3
 				if(data >= 40 && prob(33))
 					if (!M:confused) M:confused = 1
 					M:confused += 2
-					M:nutrition += 2
 				..()
 				return
 
@@ -1923,9 +1937,6 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(30)) M:oxyloss--
-				if(M:bruteloss && prob(30)) M:heal_organ_damage(1,0)
-				if(M:fireloss && prob(30)) M:heal_organ_damage(0,1)
-				if(M:toxloss && prob(30)) M:toxloss--
 				M:nutrition++
 				..()
 				return
@@ -1937,10 +1948,7 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(M:oxyloss && prob(20)) M:oxyloss--
-				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
 				if(M:fireloss && prob(20)) M:heal_organ_damage(0,1)
-				if(M:toxloss && prob(20)) M:toxloss--
 				M:nutrition++
 				..()
 				return
@@ -1952,11 +1960,18 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(M:oxyloss && prob(20)) M:oxyloss--
-				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
-				if(M:fireloss && prob(20)) M:heal_organ_damage(0,1)
 				if(M:toxloss && prob(20)) M:toxloss--
 				M:nutrition++
+				..()
+				return
+
+		cream
+			name = "Cream"
+			id = "cream"
+			description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
 				..()
 				return
 
@@ -2011,12 +2026,6 @@ datum
 					M.confused = max(M:confused+2,0)
 				..()
 				return
-
-		cream
-			name = "Cream"
-			id = "cream"
-			description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
-			reagent_state = LIQUID
 
 		hooch
 			name = "Hooch"

@@ -526,8 +526,7 @@ datum
 			name = "Syntiflesh"
 			id = "syntiflesh"
 			result = null
-			required_reagents = list("blood" = 5)
-			required_catalysts = list("clonexadone" = 1)
+			required_reagents = list("blood" = 5, "clonexadone" = 1)
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)

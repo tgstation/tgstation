@@ -1068,7 +1068,7 @@
 			user << "\red None of [src] left, oh no!"
 			del(src)
 			return 0
-		if(istype(M, /mob/living/carbon/human))
+		if(istype(M, /mob/living/carbon))
 			if(M == user)								//If you're eating it yourself.
 				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 				if (fullness <= 50)
