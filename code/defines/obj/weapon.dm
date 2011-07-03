@@ -1266,6 +1266,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	var/uses = 10.0
 	var/selfdestruct = 0.0
 	var/traitor_frequency = 0.0
+	var/mob/currentUser = null
 	var/obj/item/device/radio/origradio = null
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	w_class = 2.0

@@ -3,6 +3,9 @@ CONTAINS:
 SYNDICATE UPLINK
 */
 
+/obj/item/weapon/syndicate_uplink/implanted
+	uses = 4
+
 /obj/item/weapon/syndicate_uplink/proc/explode()
 	var/turf/location = get_turf(src.loc)
 	if(location)
@@ -15,6 +18,7 @@ SYNDICATE UPLINK
 	return
 
 /obj/item/weapon/syndicate_uplink/attack_self(mob/user as mob)
+	currentUser = user
 	user.machine = src
 	var/dat
 	if (src.selfdestruct)
@@ -54,6 +58,8 @@ SYNDICATE UPLINK
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=botchat'>Binary Translator</A> (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=lawmod'>Hacked AI Module</A> (7)<BR>"
+			dat += "<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=toolbox'>Syndicate Toolbox</A> (Includes various tools) (1)<BR>"
 
 			dat += "<HR>"
 			if (src.origradio)
@@ -66,13 +72,14 @@ SYNDICATE UPLINK
 
 /obj/item/weapon/syndicate_uplink/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained())
+	if(!currentUser)
 		return
-	var/mob/living/carbon/human/H = usr
-	if (!( istype(H, /mob/living/carbon/human)))
-		return 1
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
-		usr.machine = src
+	if (currentUser.stat || currentUser.restrained())
+		return
+	if (!( istype(currentUser, /mob/living/carbon/human)))
+		return
+	if ((currentUser.contents.Find(src) || (in_range(src, currentUser) && istype(src.loc, /turf))) || istype(src,/obj/item/weapon/syndicate_uplink/implanted))
+		currentUser.machine = src
 		if (href_list["buy_item"])
 			switch(href_list["buy_item"])
 				if("revolver")
@@ -127,7 +134,7 @@ SYNDICATE UPLINK
 				if("cloak")
 					if (src.uses >= 4)
 						if (ticker.mode.config_tag!="nuclear" || \
-							(input("Spawning a cloak in nuke is generally regarded as entirely dumb, are you sure?") in list("Confirm", "Abort")) == "Confirm" \
+							(input(currentUser,"Spawning a cloak in nuke is generally regarded as entirely dumb, are you sure?") in list("Confirm", "Abort")) == "Confirm" \
 						)
 							if (src.uses >= 4)
 								src.uses -= 4
@@ -161,6 +168,10 @@ SYNDICATE UPLINK
 					if (src.uses >= 3)
 						src.uses -= 3
 						new /obj/item/device/radio/headset/traitor(get_turf(src))
+				if("toolbox")
+					if(uses)
+						uses--
+						new /obj/item/weapon/storage/toolbox/syndicate(get_turf(src))
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
 			shutdown_uplink()

@@ -310,3 +310,21 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		src.imp = null
 		user.show_message("\red You implanted the implant into [M].")
 		src.icon_state = "implanter0"
+
+
+/obj/item/weapon/implant/uplink
+	var/activation_emote = "chuckle"
+	var/obj/item/weapon/syndicate_uplink/uplink = null
+
+	New()
+		activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+		uplink = new /obj/item/weapon/syndicate_uplink/implanted(src)
+		..()
+
+	implanted(mob/source as mob)
+		source.mind.store_memory("Uplink implant can be activated by using the [activation_emote] emote, <B>say *[activation_emote]</B> to attempt to activate.", 0, 0)
+		source << "The implanted uplink implant can be activated by using the [activation_emote] emote, <B>say *[activation_emote]</B> to attempt to activate."
+
+	trigger(emote, mob/source as mob)
+		if(emote == activation_emote)
+			uplink.attack_self(source)

@@ -40,6 +40,7 @@
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=voice'>Voice-Changer</A> (4)<BR>"
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_freedom'>Freedom Implant (with injector)</A> (3)<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_uplink'>Uplink Implant (4 crystals inside)</A> (10)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>"
 	menu_message += "<BR>"
@@ -121,6 +122,11 @@
 					uses -= 3
 					var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(hostpda))
 					O.imp = new /obj/item/weapon/implant/freedom(O)
+			if("imp_uplink")
+				if (uses >= 10)
+					uses -= 10
+					var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(hostpda))
+					O.imp = new /obj/item/weapon/implant/uplink(O)
 			if("sleepypen")
 				if (uses >= 5)
 					uses -= 5
@@ -170,7 +176,6 @@
 				if(uses >= 3)
 					uses -= 3
 					new /obj/machinery/singularity_beacon/syndicate(get_turf(hostpda))
-
 			if("toolbox")
 				if(uses)
 					uses--
