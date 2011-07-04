@@ -329,7 +329,7 @@
 	icon_closed = "extinguisher10"
 	opened = 1
 	var/localopened = 1
-	desc = "Sure was nice of CentCom to install these everywhere."
+	desc = "Sure was nice of CentCom to install these everywhere. Foam in them would have been nicer."
 	anchored = 1
 
 	open()
@@ -470,79 +470,94 @@
 
 /obj/closet/wardrobe/black
 	name = "Black Wardrobe"
+	desc = "This contains clothes which appears to be black."
 	icon_state = "black"
 	icon_closed = "black"
 
 /obj/closet/wardrobe/chaplain_black
 	name = "Chaplain Wardrobe"
+	desc = "Closet of chaplain clothes. Looks meh."
 	icon_state = "black"
 	icon_closed = "black"
 
 /obj/closet/wardrobe/green
 	name = "Green Wardrobe"
+	desc = "Green is the new green."
 	icon_state = "green"
 	icon_closed = "green"
 
 /obj/closet/wardrobe/mixed
 	name = "Mixed Wardrobe"
+	desc = "This appears to contain two different sets of clothing."
 	icon_state = "mixed"
 	icon_closed = "mixed"
 
 /obj/closet/wardrobe/orange
 	name = "Prisoners Wardrobe"
+	desc = "Prisoners now wear orange. The Security Officers kept thinking the Mime was an escapee."
 	icon_state = "orange"
 	icon_closed = "orange"
 
 /obj/closet/wardrobe/pink
 	name = "Pink Wardrobe"
+	desc = "Closet of of soft clothing."
 	icon_state = "pink"
 	icon_closed = "pink"
 
 /obj/closet/wardrobe/red
 	name = "Red Wardrobe"
+	desc = "This closer appears to contain clothing which are red."
 	icon_state = "red"
 	icon_closed = "red"
 
 /obj/closet/wardrobe/forensics_red
 	name = "Forensics Wardrobe"
+	desc = "Used by your local Forensics."
 	icon_state = "red"
 	icon_closed = "red"
 
 
 /obj/closet/wardrobe/white
 	name = "White Wardrobe"
+	desc = "Basic plain white clothing. Boring..."
 	icon_state = "white"
 	icon_closed = "white"
 
 /obj/closet/wardrobe/toxins_white
 	name = "Toxins Wardrobe"
+	desc = "Clothes for toxins."
 	icon_state = "white"
 	icon_closed = "white"
 
 /obj/closet/wardrobe/genetics_white
 	name = "Genetics Wardrobe"
+	desc = "Clothes for genetics. They will need this when they are human."
 	icon_state = "white"
 	icon_closed = "white"
 
 
 /obj/closet/wardrobe/yellow
 	name = "Yellow Wardrobe"
+	desc = "Basic yellow clothing."
 	icon_state = "wardrobe-y"
 	icon_closed = "wardrobe-y"
 
 /obj/closet/wardrobe/engineering_yellow
 	name = "Engineering Wardrobe"
+	desc = "The yellow Engineers loves."
 	icon_state = "yellow"
 	icon_closed = "yellow"
 
 /obj/closet/wardrobe/atmospherics_yellow
 	name = "Atmospherics Wardrobe"
+	desc = "Clothing for the most dangerous job."
 	icon_state = "yellow"
 	icon_closed = "yellow"
 
 
 /obj/closet/wardrobe/grey
 	name = "Grey Wardrobe"
+	desc = "This contains the clothing of the Grey Shirts."
 	icon_state = "grey"
 	icon_closed = "grey"
 
@@ -594,6 +609,7 @@
 
 /obj/secure_closet/medical1
 	name = "Medicine Closet"
+	desc = "Filled with medical junk."
 	icon_state = "medical1"
 	icon_closed = "medical"
 	icon_locked = "medical1"
@@ -604,6 +620,7 @@
 
 /obj/secure_closet/chemical
 	name = "Chemical Closet"
+	desc = "Store dangerous chemicals in here. This closet is full of cobwebs."
 	icon_state = "medical1"
 	icon_closed = "medical"
 	icon_locked = "medical1"
@@ -614,6 +631,7 @@
 
 /obj/secure_closet/medical2
 	name = "Anesthetic"
+	desc = "Used to knock people out, but who uses this trash?"
 	icon_state = "medical1"
 	icon_closed = "medical"
 	icon_locked = "medical1"

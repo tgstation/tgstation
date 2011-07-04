@@ -26,6 +26,7 @@
 
 /obj/item/clothing/head/helmet/space/santahat
 	name = "Santa's hat"
+	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
 
 /obj/item/clothing/suit/space/santa
@@ -38,6 +39,7 @@
 
 /obj/item/clothing/shoes/red
 	name = "red shoes"
+	desc = "Stylish red shoes."
 	icon_state = "red"
 
 /obj/item/clothing/mask/owl_mask
@@ -65,10 +67,12 @@
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
+	desc = "Shoes for a cyborg costume"
 	icon_state = "boots"
 
 /obj/item/clothing/suit/cyborg_suit
 	name = "cyborg suit"
+	desc = "Suit for a cyborg costume."
 	icon_state = "death"
 	item_state = "death"
 	flags = FPRINT | TABLEPASS | CONDUCT

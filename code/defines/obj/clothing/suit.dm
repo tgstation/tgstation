@@ -145,6 +145,7 @@
 
 /obj/item/clothing/suit/apron
 	name = "apron"
+	desc = "A basic blue apron."
 	icon_state = "apron"
 	item_state = "apron"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
@@ -153,6 +154,7 @@
 
 /obj/item/clothing/suit/chef
 	name = "Chef's apron"
+	desc = "An Apron used by a high class chef. The chef unfortunately retired."
 	icon_state = "chef"
 	item_state = "chef"
 	gas_transfer_coefficient = 0.90
@@ -291,11 +293,13 @@
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "Thunderdome suit (red)"
+	desc = "Reddish armor."
 	icon_state = "tdred"
 	item_state = "tdred"
 
 /obj/item/clothing/suit/armor/tdome/green
 	name = "Thunderdome suit (green)"
+	desc = "Pukish armor."
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
 
@@ -555,6 +559,7 @@
 
 /obj/item/clothing/suit/captunic
 	name = "captain's parade tunic"
+	desc = "Used by irresponsible captains."
 	icon_state = "captunic"
 	item_state = "bio_suit"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL

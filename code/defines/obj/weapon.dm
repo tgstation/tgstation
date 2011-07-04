@@ -264,6 +264,7 @@
 /obj/item/weapon/melee/energy/sword
 	var/color
 	name = "energy sword"
+	desc = "May the force be within you."
 	icon_state = "sword0"
 	force = 3.0
 	throwforce = 5.0
@@ -280,6 +281,7 @@
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"
+	desc = "Arrrr matey."
 	icon_state = "cutlass0"
 
 /obj/item/weapon/melee/energy/blade
@@ -325,6 +327,7 @@
 
 /obj/item/weapon/bedsheet
 	name = "bedsheet"
+	desc = "Nice, linen, bedsheet. Perfect to put on."
 	icon = 'items.dmi'
 	icon_state = "sheet"
 	layer = 4.0
@@ -368,6 +371,7 @@
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
+	desc = "Used to treat those nasty burns."
 	singular_name = "ointment"
 	icon_state = "ointment"
 	heal_burn = 40
@@ -375,6 +379,7 @@
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
+	desc = "A tube...of cardboard."
 	icon = 'items.dmi'
 	icon_state = "c_tube"
 	throwforce = 1
@@ -384,6 +389,7 @@
 
 /obj/item/weapon/camera
 	name = "camera"
+	desc = "Use this to take pictures."
 	icon_state = "camera"
 	var/last_pic = 1.0
 	item_state = "wrench"
@@ -392,6 +398,7 @@
 
 /obj/item/weapon/card
 	name = "card"
+	desc = "Does card things."
 	icon = 'card.dmi'
 	w_class = 1.0
 
@@ -399,6 +406,7 @@
 
 /obj/item/weapon/card/data
 	name = "data disk"
+	desc = "A disk of data."
 	icon_state = "data"
 	var/function = "storage"
 	var/data = "null"
@@ -422,6 +430,7 @@
 
 /obj/item/weapon/card/id
 	name = "identification card"
+	desc = "An identification card. No shit."
 	icon_state = "id"
 	item_state = "card-id"
 	var/access = list()
@@ -431,16 +440,19 @@
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"
+	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
+	desc = "Shhhhh."
 	access = list(access_maint_tunnels)
 	origin_tech = "syndicate=3"
 
 /obj/item/weapon/card/id/captains_spare
 	name = "Captain's spare ID"
+	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
 	item_state = "gold_id"
 	registered = "Captain"
@@ -451,6 +463,7 @@
 
 /obj/item/weapon/card/id/centcom
 	name = "CentCom ID"
+	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
 	registered = "Central Command"
 	assignment = "General"
@@ -472,6 +485,7 @@
 
 /obj/item/weapon/clipboard
 	name = "clipboard"
+	desc = "Apply paper to this to write better. Can also hold pens."
 	icon = 'items.dmi'
 	icon_state = "clipboard00"
 	var/obj/item/weapon/pen/pen = null
@@ -483,6 +497,7 @@
 
 /obj/item/weapon/cloaking_device
 	name = "cloaking device"
+	desc = "Use this to become invisible to the human eyesocket."
 	icon = 'device.dmi'
 	icon_state = "shield0"
 	var/active = 0.0
@@ -526,6 +541,7 @@
 
 /obj/item/weapon/crowbar
 	name = "crowbar"
+	desc = "Used to hit floors"
 	icon = 'items.dmi'
 	icon_state = "crowbar"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -557,6 +573,7 @@
 
 /obj/item/weapon/disk/nuclear
 	name = "Nuclear Authentication Disk"
+	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 	item_state = "card-id"
 	w_class = 1.0
@@ -569,6 +586,7 @@
 
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
+	desc = "Contains water....dangit..."
 	icon = 'items.dmi'
 	icon_state = "fire_extinguisher0"
 	var/last_use = 1.0
@@ -585,6 +603,7 @@
 
 /obj/item/weapon/f_card
 	name = "Finger Print Card"
+	desc = "Used to take fingerprints."
 	icon = 'card.dmi'
 	icon_state = "fingerprint0"
 	var/amount = 10.0
@@ -597,6 +616,7 @@
 
 /obj/item/weapon/fcardholder
 	name = "Finger Print Case"
+	desc = "Apply finger print card."
 	icon = 'items.dmi'
 	icon_state = "fcardholder0"
 	item_state = "clipboard"
@@ -667,6 +687,7 @@
 
 /obj/item/weapon/gift
 	name = "gift"
+	desc = "A wrapped item."
 	icon = 'items.dmi'
 	icon_state = "gift3"
 	var/size = 3.0
@@ -899,6 +920,7 @@
 
 /obj/item/weapon/hand_tele
 	name = "hand tele"
+	desc = "A portable item using blue-space technology."
 	icon = 'device.dmi'
 	icon_state = "hand_tele"
 	item_state = "electronic"
@@ -911,6 +933,7 @@
 
 /obj/item/weapon/handcuffs
 	name = "handcuffs"
+	desc = "Use this to keep prisoners in line."
 	icon = 'items.dmi'
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
@@ -930,23 +953,27 @@
 
 /obj/item/weapon/implant/freedom
 	name = "freedom"
+	desc = "Use this to escape from those evil Red Shirts."
 	var/uses = 1.0
 	color = "r"
 	var/activation_emote = "chuckle"
 
 /obj/item/weapon/implant/tracking
 	name = "tracking"
+	desc = "Track with this."
 	var/frequency = 1451
 	var/id = 1.0
 
 /obj/item/weapon/implant/explosive
 	name = "explosive"
+	desc = "And boom goes the weasel."
 
 /obj/item/weapon/implant/chem
 	name = "chem"
 
 /obj/item/weapon/implantcase
 	name = "Glass Case"
+	desc = "A case containing an implant."
 	icon_state = "implantcase-0"
 	var/obj/item/weapon/implant/imp = null
 	item_state = "implantcase"
@@ -956,16 +983,19 @@
 
 /obj/item/weapon/implantcase/tracking
 	name = "Glass Case- 'Tracking'"
+	desc = "A case containing a tracking implant."
 	icon = 'items.dmi'
 	icon_state = "implantcase-b"
 
 /obj/item/weapon/implantcase/explosive
 	name = "Glass Case- 'Explosive'"
+	desc = "A case containing an explosive implant."
 	icon = 'items.dmi'
 	icon_state = "implantcase-r"
 
 /obj/item/weapon/implantcase/chem
 	name = "Glass Case- 'Chem'"
+	desc = "A case containing a chemical implant."
 	icon = 'items.dmi'
 	icon_state = "implantcase-b"
 
@@ -981,6 +1011,7 @@
 
 /obj/item/weapon/implantpad
 	name = "implantpad"
+	desc = "Used to modify implants."
 	icon = 'items.dmi'
 	icon_state = "implantpad-0"
 	var/obj/item/weapon/implantcase/case = null
@@ -994,6 +1025,7 @@
 
 /obj/item/weapon/locator
 	name = "locator"
+	desc = "Used to track those with locater implants."
 	icon = 'device.dmi'
 	icon_state = "locator"
 	var/temp = null
@@ -1039,6 +1071,7 @@
 
 /obj/item/weapon/paint
 	name = "Paint Can"
+	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
 	icon = 'items.dmi'
 	icon_state = "paint_neutral"
 	var/color = "neutral"
@@ -1047,6 +1080,7 @@
 
 /obj/item/weapon/paper
 	name = "Paper"
+	desc = "It is made from wood."
 	icon = 'items.dmi'
 	icon_state = "paper"
 	var/info = null
@@ -1066,6 +1100,7 @@
 
 /obj/item/weapon/directions
 	name = "Crumpled Paper"
+	desc = "This is a crumpled piece fo paper."
 	icon = 'weapons.dmi'
 	icon_state = "crumpled"
 	throwforce = 0
@@ -1178,6 +1213,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/paper_bin
 	name = "Paper Bin"
+	desc = "This contains many papers."
 	icon = 'items.dmi'
 	icon_state = "paper_bin1"
 	var/amount = 30.0
@@ -1223,6 +1259,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/rack_parts
 	name = "rack parts"
+	desc = "Parts of a rack."
 	icon = 'items.dmi'
 	icon_state = "rack_parts"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -1238,6 +1275,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/screwdriver
 	name = "screwdriver"
+	desc = "You can be totally screwwy with this."
 	icon = 'items.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -1260,6 +1298,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
+	desc = "Remain silent about this..."
 	icon = 'radio.dmi'
 	icon_state = "radio"
 	var/temp = null
@@ -1278,6 +1317,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/SWF_uplink
 	name = "station bounced radio"
+	desc = "used to comunicate it appears."
 	icon = 'radio.dmi'
 	icon_state = "radio"
 	var/temp = null
@@ -1296,6 +1336,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/spellbook
 	name = "Spell Book"
+	desc = "The legendary book of spells of the wizard."
 	icon = 'library.dmi'
 	icon_state ="book"
 	throw_speed = 1
@@ -1312,6 +1353,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/staff
 	name = "wizards staff"
+	desc = "Apparently a staff used by the wizard."
 	icon = 'wizard.dmi'
 	icon_state = "staff"
 	force = 3.0
@@ -1323,6 +1365,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/table_parts
 	name = "table parts"
+	desc = "Parts of a table. Poor table."
 	icon = 'items.dmi'
 	icon_state = "table_parts"
 	m_amt = 3750
@@ -1330,6 +1373,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
+	desc = "Hard table parts. Well...harder..."
 	icon = 'items.dmi'
 	icon_state = "reinf_tableparts"
 	m_amt = 7500
@@ -1337,6 +1381,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
+	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
 
 /obj/item/weapon/tank
@@ -1357,11 +1402,13 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/tank/anesthetic
 	name = "Gas Tank (Sleeping Agent)"
+	desc = "Seriously, who uses this anymore?"
 	icon_state = "anesthetic"
 	item_state = "an_tank"
 
 /obj/item/weapon/tank/jetpack
 	name = "Jetpack (Oxygen)"
+	desc = "A pack of jets it appears."
 	icon_state = "jetpack0"
 	var/on = 0.0
 	w_class = 4.0
@@ -1372,29 +1419,35 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/tank/jetpack/void_jetpack
 	name = "Void Jetpack (oxygen)"
+	desc = "It works well in a void."
 	icon_state = "voidjetpack0"
 	item_state =  "jetpack"
 
 /obj/item/weapon/tank/jetpack/black_jetpack
 	name = "Black Jetpack (oxygen)"
+	desc = "A black model of jetpacks."
 	icon_state = "black_jetpack0"
 	item_state =  "black_jetpack"
 
 /obj/item/weapon/tank/oxygen
 	name = "Gas Tank (Oxygen)"
+	desc = "A tank of oxygen"
 	icon_state = "oxygen"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
 /obj/item/weapon/tank/air
 	name = "Gas Tank (Air Mix)"
+	desc = "Mixed anyone?"
 	icon_state = "oxygen"
 
 /obj/item/weapon/tank/plasma
 	name = "Gas Tank (BIOHAZARD)"
+	desc = "Contains dangerous plasma. When inhaled."
 	icon_state = "plasma"
 
 /obj/item/weapon/tank/emergency_oxygen
 	name = "emergency oxygentank"
+	desc = "Used for emergencies."
 	icon_state = "emergency"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	w_class = 2.5
@@ -1404,6 +1457,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/teleportation_scroll
 	name = "Teleportation Scroll"
+	desc = "A scroll for moving around."
 	icon = 'wizard.dmi'
 	icon_state = "scroll"
 	var/uses = 4.0
@@ -1426,6 +1480,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/wirecutters
 	name = "wirecutters"
+	desc = "This cuts wires."
 	icon = 'items.dmi'
 	icon_state = "cutters"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -1442,12 +1497,14 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/wrapping_paper
 	name = "wrapping paper"
+	desc = "You can use this to wrap items in."
 	icon = 'items.dmi'
 	icon_state = "wrap_paper"
 	var/amount = 20.0
 
 /obj/item/weapon/wrench
 	name = "wrench"
+	desc = "A wrench with common uses. Can be found in your hand."
 	icon = 'items.dmi'
 	icon_state = "wrench"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -1582,6 +1639,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/a_gift
 	name = "gift"
+	desc = "A gift it appears."
 	icon = 'items.dmi'
 	icon_state = "gift"
 	item_state = "gift"
@@ -1603,6 +1661,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/kitchen/rollingpin
 	name = "rolling pin"
+	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
 	force = 8.0
 	throwforce = 10.0
@@ -1663,10 +1722,12 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/kitchen/utensil/fork
 	name = "fork"
+	desc = "Pointy."
 	icon_state = "fork"
 
 /obj/item/weapon/kitchen/utensil/knife
 	name = "knife"
+	desc = "Can cut through any food."
 	icon_state = "knife"
 	force = 10.0
 	throwforce = 10.0
@@ -1678,6 +1739,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/scalpel
 	name = "scalpel"
+	desc = "Cut, cut, and once more cut."
 	icon = 'surgery.dmi'
 	icon_state = "scalpel"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1692,6 +1754,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/retractor
 	name = "retractor"
+	desc = "Retracts stuff."
 	icon = 'surgery.dmi'
 	icon_state = "retractor"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1700,6 +1763,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/hemostat
 	name = "hemostat"
+	desc = "You think you have seen this before."
 	icon = 'surgery.dmi'
 	icon_state = "hemostat"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1708,6 +1772,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/cautery
 	name = "cautery"
+	desc = "This stops bleeding."
 	icon = 'surgery.dmi'
 	icon_state = "cautery"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1716,6 +1781,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/surgicaldrill
 	name = "surgical drill"
+	desc = "You can drill using this item. You dig?"
 	icon = 'surgery.dmi'
 	icon_state = "drill"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1724,6 +1790,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/circular_saw
 	name = "circular saw"
+	desc = "For heavy duty cutting."
 	icon = 'surgery.dmi'
 	icon_state = "saw"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1738,6 +1805,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/syntiflesh
 	name = "Syntiflesh"
+	desc = "Meat that appears...strange..."
 	icon = 'food.dmi'
 	icon_state = "meat"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -1858,18 +1926,21 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/dice // -- TLE
 	name = "d6"
+	desc = "A dice with six sides."
 	var/sides = 6
 	icon_state = "dice"
 	item_state = "dice"
 
 /obj/item/weapon/dice/d20 // -- TLE
 	name = "d20"
+	desc = "A dice with...hell that is many sides."
 	sides = 20
 	icon_state = "d20"
 	item_state = "dice"
 
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
+	desc = "Some spacey cable."
 	name = "data cable"
 	icon = 'power.dmi'
 	icon_state = "wire1"

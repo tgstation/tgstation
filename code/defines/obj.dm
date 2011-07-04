@@ -88,7 +88,7 @@
 
 /obj/bedsheetbin
 	name = "linen bin"
-	desc = "A bin for containing bedsheets."
+	desc = "A bin for containing bedsheets. It looks rather cosy."
 	icon = 'items.dmi'
 	icon_state = "bedbin"
 	var/amount = 23.0
@@ -126,7 +126,7 @@
 	var/mob/living/carbon/monkey/target = null
 
 /obj/grille
-	desc = "A piece of metal with evenly spaced gridlike holes in it. Blocks large object but lets small items, gas, or energy beams through."
+	desc = "A piece of metal with evenly spaced gridlike holes in it. Blocks large object but lets small items, gas, or energy beams through. Strangely enough these grilles also lets meteors pass through them, whether they be small or huge station breaking death stones."
 	name = "grille"
 	icon = 'structures.dmi'
 	icon_state = "grille"
@@ -139,7 +139,7 @@
 	layer = 2.9
 
 /obj/securearea
-	desc = "A warning sign which reads 'SECURE AREA'"
+	desc = "A warning sign which reads 'SECURE AREA'. This obviously applies to a nun-Clown."
 	name = "SECURE AREA"
 	icon = 'decals.dmi'
 	icon_state = "securearea"
@@ -248,7 +248,7 @@
 			del(src)*/
 
 /obj/sign/maltesefalcon1         //The sign is 64x32, so it needs two tiles. ;3
-	desc = "The Maltese Falcon, Space Bar and Grill"
+	desc = "The Maltese Falcon, Space Bar and Grill. Now with added monkey."
 	name = "The Maltese Falcon"
 	icon = 'decals.dmi'
 	icon_state = "maltesefalcon1"
@@ -257,7 +257,7 @@
 	density = 0
 
 /obj/sign/maltesefalcon2
-	desc = "The Maltese Falcon, Space Bar and Grill"
+	desc = "The Maltese Falcon, Space Bar and Grill. Now with added monkey."
 	name = "The Maltese Falcon"
 	icon = 'decals.dmi'
 	icon_state = "maltesefalcon2"
@@ -314,7 +314,7 @@
 
 /obj/item/device/detective_scanner
 	name = "Scanner"
-	desc = "Used to scan objects for DNA and fingerprints"
+	desc = "Used to scan objects for DNA and fingerprints."
 	icon_state = "forensic0"
 	var/amount = 20.0
 	var/printing = 0.0
@@ -325,6 +325,7 @@
 
 /obj/item/device/flash
 	name = "flash"
+	desc = "Used for blinding and being an asshole."
 	icon_state = "flash"
 	var/l_time = 1.0
 	var/shots = 5.0
@@ -353,7 +354,7 @@
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
-	desc = "A pen-sized light."
+	desc = "A pen-sized light. It shines as well as a flashlight."
 	icon_state = "plight0"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	item_state = ""
@@ -390,7 +391,7 @@
 
 /obj/item/device/igniter
 	name = "igniter"
-	desc = "A small electronic device able to ignite combustable substances."
+	desc = "A small electronic device able to ignite combustable substances. Does not function well as a lighter."
 	icon_state = "igniter"
 	var/status = 1.0
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -438,6 +439,7 @@
 
 /obj/item/device/multitool
 	name = "multitool"
+	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
 	icon_state = "multitool"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
@@ -453,6 +455,7 @@
 
 /obj/item/device/prox_sensor
 	name = "Proximity Sensor"
+	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "motion0"
 	var/state = 0.0
 	var/timing = 0.0
@@ -466,6 +469,7 @@
 
 /obj/item/device/shield
 	name = "shield"
+	desc = "This is an item which is specially crafted to shield you. It is much like a visible version of the outdated cloaking device."
 	icon_state = "shield0"
 	var/active = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -477,6 +481,7 @@
 
 /obj/item/device/timer
 	name = "timer"
+	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer0"
 	item_state = "electronic"
 	var/timing = 0.0
@@ -510,6 +515,7 @@
 
 /obj/laser
 	name = "laser"
+	desc = "IT BURNS!!!"
 	icon = 'projectiles.dmi'
 	var/damage = 0.0
 	var/range = 10.0
@@ -600,6 +606,7 @@
 
 /obj/m_tray
 	name = "morgue tray"
+	desc = "Apply corpse before closing."
 	icon = 'stationobjs.dmi'
 	icon_state = "morguet"
 	density = 1
@@ -609,6 +616,7 @@
 
 /obj/c_tray
 	name = "crematorium tray"
+	desc = "Apply body before burning."
 	icon = 'stationobjs.dmi'
 	icon_state = "cremat"
 	density = 1
@@ -625,7 +633,7 @@
 	anchored =1
 	var/netnum = 0
 	name = "power cable"
-	desc = "A flexible superconducting cable for heavy-duty power transfer."
+	desc = "A flexible superconducting cable for heavy-duty power transfer. Comes in clown colors now."
 	icon = 'power_cond_red.dmi'
 	icon_state = "0-1"
 	var/d1 = 0
@@ -653,6 +661,7 @@
 
 /obj/morgue
 	name = "morgue"
+	desc = "Used to keep bodies in untill someone fetches them."
 	icon = 'stationobjs.dmi'
 	icon_state = "morgue1"
 	density = 1
@@ -661,7 +670,7 @@
 
 /obj/crematorium
 	name = "crematorium"
-	desc = "A human incinerator."
+	desc = "A human incinerator. Works well on barbeque nights."
 	icon = 'stationobjs.dmi'
 	icon_state = "crema1"
 	density = 1
@@ -723,6 +732,7 @@
 
 /obj/portal
 	name = "portal"
+	desc = "Looks unstable. Best to test it with the clown."
 	icon = 'stationobjs.dmi'
 	icon_state = "portal"
 	density = 1
@@ -734,10 +744,12 @@
 
 /obj/projection
 	name = "Projection"
+	desc = "This looks like a projection of something."
 	anchored = 1.0
 
 /obj/rack
 	name = "rack"
+	desc = "Different from the Middle Ages version."
 	icon = 'objects.dmi'
 	icon_state = "rack"
 	density = 1
@@ -784,6 +796,7 @@
 
 /obj/stool
 	name = "stool"
+	desc = "Apply butt."
 	icon = 'objects.dmi'
 	icon_state = "stool"
 	flags = FPRINT
@@ -791,12 +804,14 @@
 
 /obj/stool/bed
 	name = "bed"
+	desc = "This is used to lie in, sleep in or strap on."
 	icon_state = "bed"
 	anchored = 1.0
 	var/list/buckled_mobs = list(  )
 
 /obj/stool/chair
 	name = "chair"
+	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
 	var/status = 0.0
 	anchored = 1.0
@@ -804,6 +819,7 @@
 
 /obj/stool/chair/e_chair
 	name = "electrified chair"
+	desc = "Looks absolutely SHOCKING!"
 	icon_state = "e_chair0"
 	var/atom/movable/overlay/overl = null
 	var/on = 0.0
@@ -812,6 +828,7 @@
 
 /obj/table
 	name = "table"
+	desc = "A square piece of metal standing on four metal legs. It can not move."
 	icon = 'structures.dmi'
 	icon_state = "table"
 	density = 1
@@ -948,11 +965,13 @@
 
 /obj/table/reinforced
 	name = "reinforced table"
+	desc = "A version of the four legged table. It is stronger."
 	icon_state = "reinf_table"
 	var/status = 2
 
 /obj/table/woodentable
 	name = "wooden table"
+	desc = "Do not apply fire to this. Rumour says it burns easily."
 	icon_state = "wood_table"
 
 /obj/mopbucket
@@ -981,7 +1000,7 @@
 	name = "Display Case"
 	icon = 'stationobjs.dmi'
 	icon_state = "glassbox1"
-	desc = "A display case for prized possessions."
+	desc = "A display case for prized possessions. It taunts you to kick it."
 	density = 1
 	anchored = 1
 	unacidable = 1//Dissolving the case would also delete the gun.
@@ -1001,6 +1020,7 @@
 //BEGIN BRAINS=====================================================
 /obj/item/brain
 	name = "brain"
+	desc = "A piece of juicy meat found in a persons head."
 	icon = 'surgery.dmi'
 	icon_state = "brain2"
 	flags = TABLEPASS
@@ -1058,6 +1078,7 @@
 // TODO: robust mixology system! (and merge with beakers, maybe)
 /obj/item/weapon/glass
 	name = "empty glass"
+	desc = "Emptysville."
 	icon = 'kitchen.dmi'
 	icon_state = "glass_empty"
 	item_state = "beaker"
@@ -1115,6 +1136,7 @@
 
 /obj/falsewall
 	name = "wall"
+	desc = "A huge chunk of metal used to seperate rooms."
 	icon = 'walls.dmi'
 	icon_state = ""
 	density = 1
@@ -1123,6 +1145,7 @@
 
 /obj/falserwall
 	name = "r wall"
+	desc = "A huge chunk of reinforced metal used to seperate rooms."
 	icon = 'walls.dmi'
 	icon_state = "r_wall"
 	density = 1
@@ -1136,6 +1159,7 @@
 
 /obj/item/stack/rods
 	name = "metal rods"
+	desc = "Some rods. Can be used for building, or something."
 	singular_name = "metal rod"
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -1159,6 +1183,7 @@
 
 /obj/item/stack/sheet/wood
 	name = "Wood Planks"
+	desc = "One can only guess that this is a bunch of wood."
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 	force = 5.0
@@ -1169,6 +1194,7 @@
 
 /obj/item/stack/sheet/sandstone
 	name = "Sandstone Bricks"
+	desc = "This appears to be a combination of both sand and stone."
 	singular_name = "sandstone brick"
 	icon_state = "sheet-sandstone"
 	force = 5.0
@@ -1179,6 +1205,7 @@
 
 /obj/item/stack/sheet/glass
 	name = "glass"
+	desc = "HOLY HELL! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
 	force = 5.0
@@ -1190,6 +1217,7 @@
 
 /obj/item/stack/sheet/rglass
 	name = "reinforced glass"
+	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
 	force = 6.0
@@ -1202,8 +1230,8 @@
 
 /obj/item/stack/sheet/metal
 	name = "metal"
+	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
 	singular_name = "metal sheet"
-	desc = "A heavy sheet of metal."
 	icon_state = "sheet-metal"
 	force = 5.0
 	m_amt = 3750
@@ -1258,7 +1286,7 @@
 /obj/item/stack/light_w
 	name = "Wired glass tile"
 	singular_name = "Wired glass tile"
-	desc = ""
+	desc = "A glass tile, which is wired, somehow."
 	icon_state = "glass_wire"
 	w_class = 3.0
 	force = 3.0
@@ -1294,7 +1322,7 @@
 /obj/item/stack/tile/light
 	name = "Light floor tile"
 	singular_name = "Light floor tile"
-	desc = ""
+	desc = "A floor tile, made out off glass. It produces light."
 	icon_state = "tile_e"
 	w_class = 3.0
 	force = 3.0

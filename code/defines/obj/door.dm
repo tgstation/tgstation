@@ -1,5 +1,6 @@
 /obj/machinery/door
 	name = "Door"
+	desc = "It opens and closes."
 	icon = 'doorint.dmi'
 	icon_state = "door1"
 	opacity = 1
@@ -16,6 +17,7 @@
 
 /obj/machinery/door/firedoor
 	name = "Firelock"
+	desc = "Apply crowbar"
 	icon = 'Doorfire.dmi'
 	icon_state = "door0"
 	var/blocked = null
@@ -25,11 +27,13 @@
 
 /obj/machinery/door/firedoor/border_only
 	name = "Firelock"
+	desc = "Apply crowbar."
 	icon = 'door_fire2.dmi'
 	icon_state = "door0"
 
 /obj/machinery/door/poddoor
 	name = "Podlock"
+	desc = "Why it no open!!!"
 	icon = 'rapid_pdoor.dmi'
 	icon_state = "pdoor1"
 	var/id = 1.0
@@ -136,6 +140,7 @@
 
 /obj/machinery/door/window
 	name = "interior door"
+	desc = "A door made from a window, yet it can not break nor be depowered."
 	icon = 'windoor.dmi'
 	icon_state = "left"
 	var/base_state = "left"
@@ -145,6 +150,7 @@
 
 /obj/machinery/door/window/brigdoor
 	name = "Brig Door"
+	desc = "A stronger door made from window, even though it can not break."
 	icon = 'windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"

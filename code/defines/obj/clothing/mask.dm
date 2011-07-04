@@ -32,6 +32,7 @@
 
 /obj/item/clothing/mask/muzzle
 	name = "muzzle"
+	desc = "To stop that awful noise."
 	icon_state = "muzzle"
 	item_state = "muzzle"
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
@@ -40,6 +41,7 @@
 
 /obj/item/clothing/mask/surgical
 	name = "Sterile Mask"
+	desc = "These masks are unable to mate."
 	icon_state = "sterile"
 	item_state = "sterile"
 	w_class = 1
@@ -70,6 +72,7 @@
 
 /obj/item/clothing/mask/gas/emergency
 	name = "emergency gas mask"
+	desc = "Gas mask mooks for emergencies."
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
 
@@ -107,6 +110,7 @@
 
 /obj/item/clothing/mask/cigarette
 	name = "Cigarette"
+	desc = "Tasty"
 	icon_state = "cigoff"
 	var/lit = 0
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi

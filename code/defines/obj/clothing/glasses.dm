@@ -8,29 +8,34 @@
 
 /obj/item/clothing/glasses/blindfold
 	name = "blindfold"
+	desc = "Makes you like...blind."
 	icon_state = "blindfold"
 	item_state = "blindfold"
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
+	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "meson"
 	item_state = "glasses"
 	origin_tech = "magnets=2;engineering=2"
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
+	desc = "You can totally see in the dark now!."
 	icon_state = "night"
 	item_state = "glasses"
 	origin_tech = "magnets=2"
 
 /obj/item/clothing/glasses/material
 	name = "Optical Material Scanner"
+	desc = "Veru confusing glasses."
 	icon_state = "material"
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
 
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
+	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
 	item_state = "glasses"
 
@@ -50,12 +55,14 @@
 
 /obj/item/clothing/glasses/thermal
 	name = "Optical Thermal Scanner"
+	desc = "Thermals in the shape of glasses."
 	icon_state = "thermal"
 	item_state = "glasses"
 	origin_tech = "magnets=3"
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "Thermoncle"
+	desc = "A monocle thermal."
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 

@@ -17,6 +17,7 @@
 
 /obj/item/clothing/head/bomb_hood
 	name = "bomb hood"
+	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
 	armor = list(melee = 20, bullet = 10, laser = 10, taser = 5, bomb = 100, bio = 0, rad = 0)
@@ -123,6 +124,7 @@
 
 /obj/item/clothing/head/plaguedoctorhat
 	name = "Plague doctor's hat"
+	desc = "Once used by Plague doctors. Now useless."
 	icon_state = "plaguedoctor"
 	flags = FPRINT | TABLEPASS | HEADSPACE
 	permeability_coefficient = 0.01
@@ -138,6 +140,7 @@
 
 /obj/item/clothing/head/helmet
 	name = "helmet"
+	desc = "Standard Security gear."
 	icon_state = "helmet"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
 	item_state = "helmet"
@@ -176,6 +179,7 @@
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
+	desc = "Top secret Spess Helmet."
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."
@@ -269,6 +273,7 @@
 
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"
+	desc = "Used by highly trained Swat Members."
 	icon_state = "swat"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES
 	item_state = "swat"
@@ -276,6 +281,7 @@
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "Thunderdome helmet"
+	desc = "Let the battle commence!"
 	icon_state = "thunderdome"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES
 	item_state = "thunderdome"
@@ -283,6 +289,7 @@
 
 /obj/item/clothing/head/helmet/hardhat
 	name = "hard hat"
+	desc = "A hat which appears to be very hard."
 	icon_state = "hardhat0"
 	flags = FPRINT | TABLEPASS | SUITSPACE
 	item_state = "hardhat0"
@@ -306,6 +313,7 @@
 
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS Hat"
+	desc = "The hat of the HoS. Very secure, for he always gets assassinated."
 	icon_state = "hoscap"
 	desc = "A hat that shows the security grunts who's in charge!"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
@@ -352,11 +360,13 @@
 
 /obj/item/clothing/head/helmet/cap
 	name = "Captain's cap"
+	desc = "For irresponsible Captains."
 	icon_state = "capcap"
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/chaplain_hood
 	name = "Chaplain's hood"
+	desc = "A hoodie for the chaplain!!!"
 	icon_state = "chaplain_hood"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES

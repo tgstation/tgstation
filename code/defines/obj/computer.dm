@@ -28,6 +28,7 @@
 
 /obj/machinery/computer/arcade
 	name = "arcade machine"
+	desc = "Does not support Pin ball."
 	icon = 'computer.dmi'
 	icon_state = "arcade"
 	var/enemy_name = "Space Villian"
@@ -41,25 +42,30 @@
 
 /obj/machinery/computer/aiupload
 	name = "AI Upload"
+	desc = "It is said that you can upload silly laws to AI's with this."
 	icon_state = "command"
 	var/mob/living/silicon/ai/current = null
 	var/opened = 0
 
 /obj/machinery/computer/borgupload
 	name = "Cyborg Upload"
+	desc = "Used for uploading responsible laws to Cyborg. Right..."
 	icon_state = "command"
 	var/mob/living/silicon/robot/current = null
 
 /obj/machinery/computer/atmosphere
 	name = "atmos"
+	desc = "A computer for Atmospherics."
 
 /obj/machinery/computer/station_alert
 	name = "Station Alert Computer"
+	desc = "Alert. Alert. ALERT!!!"
 	icon_state = "alert:0"
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
 
 /obj/machinery/computer/atmos_alert
 	name = "Atmospheric Alert Computer"
+	desc = "Used to detect where they messed up this time."
 	icon_state = "alert:0"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
@@ -68,6 +74,7 @@
 
 /obj/machinery/computer/atmosphere/siphonswitch
 	name = "Area Air Control"
+	desc = "Nanotrasen provided this, barely."
 	icon_state = "atmos"
 	var/otherarea
 	var/area/area
@@ -77,6 +84,7 @@
 
 /obj/machinery/computer/card
 	name = "Identification Computer"
+	desc = "You can use this to change ID's. YOU ARE GOD!"
 	icon_state = "id"
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
@@ -88,10 +96,12 @@
 //ID changing computer for CentCom.
 /obj/machinery/computer/card/centcom
 	name = "CentCom Identification Computer"
+	desc = "You are the Gods's God."
 	req_access = list(access_cent_captain)
 
 /obj/machinery/computer/communications
 	name = "Communications Console"
+	desc = "This can be used for various important functions. Still under developement."
 	icon_state = "comm"
 	req_access = list(access_heads)
 	var/prints_intercept = 1
@@ -132,6 +142,7 @@
 
 /obj/machinery/computer/dna
 	name = "DNA operations computer"
+	desc = "A Computer used to advanced DNA stuff."
 	icon_state = "dna"
 	var/obj/item/weapon/card/data/scan = null
 	var/obj/item/weapon/card/data/modify = null
@@ -141,6 +152,7 @@
 
 /obj/machinery/computer/hologram_comp
 	name = "Hologram Computer"
+	desc = "Rumoured to control holograms."
 	icon = 'stationobjs.dmi'
 	icon_state = "holo_console0"
 	var/obj/machinery/hologram_proj/projector = null
@@ -152,6 +164,7 @@
 
 /obj/machinery/computer/med_data
 	name = "Medical Records"
+	desc = "This can be used to check medical records."
 	icon_state = "dna"
 	req_access = list(access_medical)
 	var/obj/item/weapon/card/id/scan = null
@@ -166,10 +179,12 @@
 
 /obj/machinery/computer/med_data/laptop
 	name = "Medical Laptop"
+	desc = "Cheap Nanotrasen Laptop."
 	icon_state = "medlaptop"
 
 /obj/machinery/computer/pod
 	name = "Pod Launch Control"
+	desc = "A controll for launching pods. Some people prefer firing Mechas."
 	icon_state = "computer_generic"
 	var/id = 1.0
 	var/obj/machinery/mass_driver/connected = null
@@ -190,6 +205,7 @@
 
 /obj/machinery/computer/secure_data
 	name = "Security Records"
+	desc = "Beepsky. ARREST!!!"
 	icon_state = "security"
 	req_access = list(access_security)
 	var/obj/item/weapon/card/id/scan = null
@@ -209,6 +225,7 @@
 
 /obj/machinery/computer/security
 	name = "Security Cameras"
+	desc = "Better than Television."
 	icon_state = "cameras"
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
@@ -217,6 +234,7 @@
 
 /obj/machinery/computer/security/telescreen
 	name = "Telescreen"
+	desc = "Used for watching an empty arena."
 	icon = 'stationobjs.dmi'
 	icon_state = "telescreen"
 	network = "thunder"
@@ -224,27 +242,32 @@
 
 /obj/machinery/computer/security/wooden_tv
 	name = "Security Cameras"
+	desc = "Nanotrasen gave the detective this for Noir feeling."
 	icon_state = "security_det"
 
 /obj/machinery/computer/security/mining
 	name = "Outpost Status Display"
+	desc = "To view limited cameras on a tiny station."
 	icon_state = "miningcameras"
 	network = "mining"
 
 /obj/machinery/computer/shuttle
 	name = "Shuttle"
+	desc = "For shuttle controll."
 	icon_state = "shuttle"
 	var/auth_need = 3.0
 	var/list/authorized = list(  )
 
 /obj/machinery/computer/teleporter
 	name = "Teleporter"
+	desc = "Use this to set your destination...hopefully..."
 	icon_state = "teleport"
 	var/obj/item/locked = null
 	var/id = null
 
 /obj/machinery/computer/teleporter/security
 	name = "Teleporter"
+	desc = "Use this to set your destination...hopefully..."
 	icon_state = "teleport"
 	locked = null
 	id = null

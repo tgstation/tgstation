@@ -37,6 +37,7 @@
 
 /obj/item/clothing/gloves/latex
 	name = "Latex Gloves"
+	desc = "Gloves of the Latex nature."
 	icon_state = "latex"
 	item_state = "lgloves"
 	siemens_coefficient = 0.30

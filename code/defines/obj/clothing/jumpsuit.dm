@@ -26,7 +26,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	color = "black"
-	desc = null
+	desc = "Changes colors."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
