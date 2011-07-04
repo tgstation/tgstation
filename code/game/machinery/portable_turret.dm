@@ -323,30 +323,26 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			if(emagged) // if emagged, HOLY SHIT EVERYONE IS DANGEROUS beep boop beep
 				targets += C
 			else
-				if((stun_all && !src.allowed(C)) || attacked && !src.allowed(C))
-					// if the turret has been attacked or is angry, target all non-sec people
-					targets += C
 
-				else
 
-					if (C.stat || C.handcuffed) // if the perp is handcuffed or dead/dying, no need to bother really
-						continue // move onto next potential victim!
+				if (C.stat || C.handcuffed) // if the perp is handcuffed or dead/dying, no need to bother really
+					continue // move onto next potential victim!
 
-					if (C.lying) // if the perp is lying down, it's still a target but a less-important target
-						secondarytargets += C
+				if (C.lying) // if the perp is lying down, it's still a target but a less-important target
+					secondarytargets += C
 
-					if (istype(C, /mob/living/carbon/human)) // if the target is a human, analyze threat level
-						if(src.assess_perp(C)<4)
-							continue // if threat level < 4, keep going
+				if (istype(C, /mob/living/carbon/human)) // if the target is a human, analyze threat level
+					if(src.assess_perp(C)<4)
+						continue // if threat level < 4, keep going
 
-					else if ((istype(C, /mob/living/carbon/monkey)) && (C.client) && (ticker.mode.name == "monkey"))
-						continue // WHY WOULD YOU TARGET MONKIES???? Skip all monkies, jesus, don't waste your time bro
+				else if ((istype(C, /mob/living/carbon/monkey)) && (C.client) && (ticker.mode.name == "monkey"))
+					continue // WHY WOULD YOU TARGET MONKIES???? Skip all monkies, jesus, don't waste your time bro
 
-					var/dst = get_dist(src, C) // if it's too far away, why bother?
-					if (dst > 12)
-						continue
+				var/dst = get_dist(src, C) // if it's too far away, why bother?
+				if (dst > 12)
+					continue
 
-					targets += C // if the perp has passed all previous tests, congrats, it is now a "shoot-me!" nominee
+				targets += C // if the perp has passed all previous tests, congrats, it is now a "shoot-me!" nominee
 
 	if (targets.len>0) // if there are targets to shoot
 
@@ -411,6 +407,11 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	var/threatcount = 0 // the integer returned
 
 	if(src.emagged) return 10 // if emagged, always return 10.
+
+	if((stun_all && !src.allowed(perp)) || attacked && !src.allowed(perp))
+		// if the turret has been attacked or is angry, target all non-sec people
+		if(!src.allowed(perp))
+			return 10
 
 	if(auth_weapons) // check for weapon authorization
 		if((isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/weapon/card/id/syndicate)))
@@ -692,12 +693,12 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			if(!installation) return
 			build_step = 3
 
-			user << "You remove \the [installation] from the turret frame."
 			var/obj/item/weapon/gun/energy/Gun = new installation(src.loc)
 			Gun.power_supply.charge=gun_charge
 			Gun.update_icon()
 			installation = null
 			gun_charge = 0
+			user << "You remove \the [Gun] from the turret frame."
 
 		if(5)
 			user << "You remove the prox sensor from the turret frame."
@@ -729,7 +730,36 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 // The below code is pretty much just recoded from the initial turret object. It's necessary but uncommented because it's exactly the same!
 
 /obj/machinery/porta_turret_cover/attack_ai(mob/user as mob)
-	return attack_hand(user)
+	. = ..()
+	if (.)
+		return
+	var/dat
+
+	dat += text({"
+<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
+Status: []<BR>
+Behaviour controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
+
+"<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
+
+
+	dat += text({"<BR>
+Check for Weapon Authorization: []<BR>
+Check Security Records: []<BR>
+Neutralize Identified Criminals: []<BR>
+Neutralize All Non-Security and Non-Command Personnel: []<BR>
+Neutralize All Unidentified Life Signs: []<BR>"},
+
+"<A href='?src=\ref[src];operation=authweapon'>[Parent_Turret.auth_weapons ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=checkrecords'>[Parent_Turret.check_records ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=shootcrooks'>[Parent_Turret.criminals ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=shootall'>[Parent_Turret.stun_all ? "Yes" : "No"]</A>" ,
+"<A href='?src=\ref[src];operation=checkxenos'>[Parent_Turret.check_anomalies ? "Yes" : "No"]</A>" )
+
+
+	user << browse("<HEAD><TITLE>Automatic Portable Turret Installation</TITLE></HEAD>[dat]", "window=autosec")
+	onclose(user, "autosec")
+	return
 
 /obj/machinery/porta_turret_cover/attack_hand(mob/user as mob)
 	. = ..()

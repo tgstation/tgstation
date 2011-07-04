@@ -248,3 +248,27 @@
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
 	return
+
+/mob/living/carbon/human/proc/Metroidize()
+	if (monkeyizing)
+		return
+	for(var/obj/item/W in src)
+		drop_from_slot(W)
+	update_clothing()
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+	for(var/t in organs)
+		del(organs[t])
+
+	var/mob/living/carbon/metroid/new_metroid = new /mob/living/carbon/metroid (loc)
+
+	new_metroid.mind_initialize(src)
+	new_metroid.key = key
+
+	new_metroid.a_intent = "hurt"
+	new_metroid << "<B>You are now a Metroid.</B>"
+	spawn(0)//To prevent the proc from returning null.
+		del(src)
+	return

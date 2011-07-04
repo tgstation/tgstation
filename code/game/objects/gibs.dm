@@ -50,9 +50,9 @@
 								gib.viruses += viruus
 								viruus.holder = gib
 								viruus.spread_type = CONTACT_FEET
-							var/list/directions = gibdirections[i]
-							if(directions.len)
-								gib.streak(directions)
+					var/list/directions = gibdirections[i]
+					if(directions.len)
+						gib.streak(directions)
 
 		del(src)
 

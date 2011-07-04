@@ -56,7 +56,7 @@
 
 
 		metroid
-			input = /mob/living/carbon/alien/larva/metroid
+			input = /mob/living/carbon/metroid
 			output = /obj/item/weapon/reagent_containers/food/drinks/jar
 
 		monkey

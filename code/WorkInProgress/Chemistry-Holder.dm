@@ -281,6 +281,10 @@ datum
 							var/list/that = data["viruses"]
 							this += that // combine the two
 
+							for(var/datum/disease/D in this) // makes sure no two viruses are in the reagent at the same time
+								for(var/datum/disease/d in this)
+									d.cure(0)
+
 						return 0
 
 				for(var/A in typesof(/datum/reagent) - /datum/reagent)

@@ -109,7 +109,7 @@
 				del(src)
 				return
 			//grow!! but not if metroid or dead
-			if(!istype(src,/mob/living/carbon/alien/larva/metroid) && health>-100)
+			if(health>-100)
 				amount_grown++
 
 			if (radiation)

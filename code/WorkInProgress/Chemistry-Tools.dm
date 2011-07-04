@@ -769,6 +769,9 @@
 					return
 
 				if(ismob(target))//Blood!
+					if(istype(src, /mob/living/carbon/metroid))
+						user << "\red You are unable to locate any blood."
+						return
 					if(src.reagents.has_reagent("blood"))
 						user << "\red There is already a blood sample in this syringe"
 						return
@@ -795,7 +798,7 @@
 								B.data["viruses"] = list()
 
 
-							B.data["virus"] += new D.type
+							B.data["viruses"] += new D.type
 
 						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
 						if(T.resistances&&T.resistances.len)
