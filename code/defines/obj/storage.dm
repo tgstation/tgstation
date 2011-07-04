@@ -109,6 +109,11 @@
 	desc = "A very robust backpack."
 	icon_state = "securitypack"
 
+/obj/item/weapon/storage/backpack/industrial
+	name = "industrial backpack"
+	desc = "A tough backpack for the daily grind"
+	icon_state = "engiepack"
+
 /obj/item/weapon/storage/briefcase
 	name = "briefcase"
 	desc = "Used by the lawyer to robust security in the court room."

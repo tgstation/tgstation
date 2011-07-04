@@ -348,6 +348,7 @@
 			src.miming = 1
 
 		if ("Station Engineer")
+			src.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (src), slot_back)
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_eng (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/device/pda/engineering(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/engineer(src), slot_w_uniform)
@@ -358,6 +359,7 @@
 			src.equip_if_possible(new /obj/item/device/t_scanner(src), slot_r_store)
 
 		if ("Shaft Miner")
+			src.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (src), slot_back)
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_mine (src), slot_ears)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/miner(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
