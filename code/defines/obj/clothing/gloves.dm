@@ -100,3 +100,51 @@
 	permeability_coefficient = 0.9
 	protective_temperature = 400
 	heat_transfer_coefficient = 0.70
+
+/obj/item/clothing/gloves/orange
+	name = "Orange Gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "orange"
+	item_state = "orangegloves"
+
+/obj/item/clothing/gloves/red
+	name = "Red Gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "red"
+	item_state = "redgloves"
+
+/obj/item/clothing/gloves/blue
+	name = "Blue Gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "blue"
+	item_state = "bluegloves"
+
+/obj/item/clothing/gloves/purple
+	name = "Purple Gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "purple"
+	item_state = "purplegloves"
+
+/obj/item/clothing/gloves/green
+	name = "Green Gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "green"
+	item_state = "greengloves"
+
+/obj/item/clothing/gloves/gray
+	name = "Gray Gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "gray"
+	item_state = "graygloves"
+
+/obj/item/clothing/gloves/light_brown
+	name = "Light Brown Gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "lightbrown"
+	item_state = "lightbrowngloves"
+
+/obj/item/clothing/gloves/brown
+	name = "Brown Gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "brown"
+	item_state = "browngloves"

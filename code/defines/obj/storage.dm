@@ -109,6 +109,11 @@
 	desc = "A very robust backpack."
 	icon_state = "securitypack"
 
+/obj/item/weapon/storage/backpack/satchel
+	name = "Satchel"
+	desc = "A very robust satchel to wear on your back."
+	icon_state = "satchel"
+
 /obj/item/weapon/storage/backpack/industrial
 	name = "industrial backpack"
 	desc = "A tough backpack for the daily grind"

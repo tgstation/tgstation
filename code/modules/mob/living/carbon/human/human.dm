@@ -1748,6 +1748,8 @@
 					playsound(loc, "punch", 25, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
+					M.attack_log += text("<font color='red'>[world.time] - has punched [src.name] ([src.ckey])</font>")
+					src.attack_log += text("<font color='orange'>[world.time] - has been punched by [M.name] ([M.ckey])</font>")
 
 					if (def_zone == "head")
 						if ((((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD)) && prob(99)))
