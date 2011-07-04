@@ -911,6 +911,8 @@ datum
 			description = "Lexorin temporarily stops respiration. Causes tissue damage."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
+				if(M.stat == 2.0)
+					return
 				if(!M) M = holder.my_atom
 				if(prob(33))
 					M.take_organ_damage(1, 0)
@@ -925,8 +927,23 @@ datum
 			description = "Kelotane is a drug used to treat burns."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
+				if(M.stat == 2.0)
+					return
 				if(!M) M = holder.my_atom
 				M:heal_organ_damage(0,2)
+				..()
+				return
+
+		dermaline
+			name = "Dermaline"
+			id = "dermaline"
+			description = "Dermaline is the next step in burn medication. Works twice as good as kelotane and enables the body to restore even the direst heat-damaged tissue."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(M.stat == 2.0) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
+					return
+				if(!M) M = holder.my_atom
+				M:heal_organ_damage(0,3)
 				..()
 				return
 
@@ -936,6 +953,8 @@ datum
 			description = "Dexalin is used in the treatment of oxygen deprivation."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
+				if(M.stat == 2.0)
+					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
 				M:oxyloss = max(M:oxyloss-2, 0)
 				if(holder.has_reagent("lexorin"))
@@ -949,6 +968,8 @@ datum
 			description = "Dexalin Plus is used in the treatment of oxygen deprivation. Its highly effective."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
+				if(M.stat == 2.0)
+					return
 				if(!M) M = holder.my_atom
 				M:oxyloss = 0
 				if(holder.has_reagent("lexorin"))
@@ -962,6 +983,8 @@ datum
 			description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
+				if(M.stat == 2.0)
+					return
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(40)) M:oxyloss--
 				if(M:bruteloss && prob(40)) M:heal_organ_damage(1,0)
@@ -976,7 +999,7 @@ datum
 			description = "It's magic. We don't have to explain it."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
+				if(!M) M = holder.my_atom ///This can even heal dead people.
 				M:cloneloss = 0
 				M:oxyloss = 0
 				M:radiation = 0
@@ -1074,6 +1097,8 @@ datum
 			description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
+				if(M.stat == 2.0)
+					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
 				M:radiation = max(M:radiation-7,0)
 				if(M:toxloss) M:toxloss--
@@ -1113,6 +1138,8 @@ datum
 			description = "Bicaridine is an analgesic medication and can be used to treat blunt trauma."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
+				if(M.stat == 2.0)
+					return
 				if(!M) M = holder.my_atom
 				M:heal_organ_damage(2,0)
 				..()

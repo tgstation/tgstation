@@ -59,9 +59,12 @@
 			dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.toxloss < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.toxloss)
 			dat += text("[]\t-Burn Severity %: []</FONT><BR>", (occupant.fireloss < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.fireloss)
 			dat += text("<HR>Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
-			dat += text("Rejuvenation chemicals: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
+			dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
 			dat += text("Soporific: [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
-			dat += text("<HR><A href='?src=\ref[];refresh=1'>Refresh meter readings each second</A><BR><A href='?src=\ref[];rejuv=1'>Inject Rejuvenators</A><BR><A href='?src=\ref[];stox=1'>Inject Soporific</A>", src, src, src)
+			dat += text("Dermaline: [] units<BR>", occupant.reagents.get_reagent_amount("dermaline"))
+			dat += text("Bicaridine: [] units<BR>", occupant.reagents.get_reagent_amount("bicaridine"))
+			dat += text("Dexalin: [] units<BR>", occupant.reagents.get_reagent_amount("dexalin"))
+			dat += text("<HR><A href='?src=\ref[];refresh=1'>Refresh meter readings each second</A><BR><A href='?src=\ref[];inap=1'>Inject Inaprovaline</A><BR><A href='?src=\ref[];stox=1'>Inject Soporific</A><BR><A href='?src=\ref[];derm=1'>Inject Dermaline</A><BR><A href='?src=\ref[];bic=1'>Inject Bicaridine</A><BR><A href='?src=\ref[];dex=1'>Inject Dexalin</A>", src, src, src, src, src, src)
 		else
 			dat += "The sleeper is empty."
 		dat += text("<BR><BR><A href='?src=\ref[];mach_close=sleeper'>Close</A>", user)
@@ -75,10 +78,16 @@
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
 		usr.machine = src
 		if (src.connected)
-			if (href_list["rejuv"])
-				src.connected.inject(usr)
+			if (href_list["inap"])
+				src.connected.inject_inap(usr)
 			if (href_list["stox"])
 				src.connected.inject_stox(usr)
+			if (href_list["derm"])
+				src.connected.inject_dermaline(usr)
+			if (href_list["bic"])
+				src.connected.inject_bicaridine(usr)
+			if (href_list["dex"])
+				src.connected.inject_dexalin(usr)
 		if (href_list["refresh"])
 			src.updateUsrDialog()
 		src.add_fingerprint(usr)
@@ -239,24 +248,50 @@
 	src.icon_state = "sleeper_0"
 	return
 
-/obj/machinery/sleeper/proc/inject(mob/user as mob)
+/obj/machinery/sleeper/proc/inject_inap(mob/user as mob)
 	if (src.occupant)
-		if (src.occupant.reagents.get_reagent_amount("inaprovaline") + 30 < 60)
+		if (src.occupant.reagents.get_reagent_amount("inaprovaline") + 30 <= 60)
 			src.occupant.reagents.add_reagent("inaprovaline", 30)
-		user << text("Occupant now has [] units of rejuvenation in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("inaprovaline"))
+		user << text("Occupant now has [] units of Inaprovaline in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("inaprovaline"))
 	else
 		user << "No occupant!"
 	return
 
 /obj/machinery/sleeper/proc/inject_stox(mob/user as mob)
 	if (src.occupant)
-		if (src.occupant.reagents.get_reagent_amount("stoxin") + 20 < 40)
+		if (src.occupant.reagents.get_reagent_amount("stoxin") + 20 <= 40)
 			src.occupant.reagents.add_reagent("stoxin", 20)
-		user << text("Occupant now has [] units of soporific in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("stoxin"))
+		user << text("Occupant now has [] units of soporifics in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("stoxin"))
 	else
 		user << "No occupant!"
 	return
 
+/obj/machinery/sleeper/proc/inject_dermaline(mob/user as mob)
+	if (src.occupant)
+		if (src.occupant.reagents.get_reagent_amount("dermaline") + 20 <= 40)
+			src.occupant.reagents.add_reagent("dermaline", 20)
+		user << text("Occupant now has [] units of Dermaline in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("dermaline"))
+	else
+		user << "No occupant!"
+	return
+
+/obj/machinery/sleeper/proc/inject_bicaridine(mob/user as mob)  //GRAND AGOURI MARKER
+	if (src.occupant)
+		if (src.occupant.reagents.get_reagent_amount("bicaridine") + 10 <= 20)
+			src.occupant.reagents.add_reagent("bicaridine", 10)
+		user << text("Occupant now has [] units of Bicaridine in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("bicaridine"))
+	else
+		user << "No occupant!"
+	return
+
+/obj/machinery/sleeper/proc/inject_dexalin(mob/user as mob)  //GRAND AGOURI MARKER
+	if (src.occupant)
+		if (src.occupant.reagents.get_reagent_amount("dexalin") + 20 <= 40)
+			src.occupant.reagents.add_reagent("dexalin", 20)
+		user << text("Occupant now has [] units of Dexalin in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("dexalin"))
+	else
+		user << "No occupant!"
+	return
 
 /obj/machinery/sleeper/proc/check(mob/user as mob)
 	if (src.occupant)

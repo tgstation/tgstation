@@ -543,7 +543,7 @@
 			src.occupant.paralysis = 4
 
 			 //Slowly get that clone healed and finished.
-			src.occupant.cloneloss = max(src.occupant.cloneloss-1, 0)
+			src.occupant.cloneloss = max(src.occupant.cloneloss-2, 0)
 
 			//Premature clones may have brain damage.
 			src.occupant.brainloss = max(src.occupant.brainloss-1, 0)
@@ -553,7 +553,7 @@
 				src.occupant.reagents.add_reagent("inaprovaline", 60)
 
 			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
-			src.occupant.oxyloss = max(src.occupant.oxyloss-2, 0)
+			src.occupant.oxyloss = max(src.occupant.oxyloss-4, 0)
 
 			use_power(7500) //This might need tweaking.
 			return

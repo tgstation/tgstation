@@ -178,6 +178,13 @@ datum
 			required_catalysts = list("plasma" = 5)
 			result_amount = 1
 
+		dermaline
+			name = "Dermaline"
+			id = "dermaline"
+			result = "dermaline"
+			required_reagents = list("oxygen" = 1, "phosphorus" = 1, "kelotane" = 1)
+			result_amount = 3
+
 		dexalinp
 			name = "Dexalin Plus"
 			id = "dexalinp"
