@@ -247,9 +247,9 @@
 
 /obj/machinery/computer/security/mining
 	name = "Outpost Status Display"
-	desc = "To view limited cameras on a tiny station."
+	desc = "It's better than reality TV."
 	icon_state = "miningcameras"
-	network = "mining"
+	network = "MINE"
 
 /obj/machinery/computer/shuttle
 	name = "Shuttle"

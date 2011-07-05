@@ -47,7 +47,7 @@
 	access_theatre = 46
 	access_research = 47
 	access_mining = 48
-	access_mining_office = 49
+	access_mining_office = 49 //not in use
 	access_mailsorting = 50
 	access_mint = 51
 	access_mint_vault = 52
@@ -166,7 +166,7 @@
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer,
-			            access_theatre, access_research, access_mining_office, access_mining, access_heads_vault, access_mining_station,
+			            access_theatre, access_research, access_mining, access_heads_vault, access_mining_station,
 			            access_hop, access_RC_announce)
 		if("Atmospheric Technician")
 			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage)
@@ -189,7 +189,7 @@
 		if("Shaft Miner")
 			return list(access_maint_tunnels, access_mining, access_mint, access_mining_station)
 		if("Quartermaster")
-			return list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining_office, access_mining)
+			return list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining)
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
@@ -239,7 +239,7 @@
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
 	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
-	            access_theatre, access_research, access_mining, access_mining_office, access_mailsorting, access_mint_vault, access_mint,
+	            access_theatre, access_research, access_mining, access_mailsorting, access_mint_vault, access_mint,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce)
 
 /proc/get_all_centcom_access()
@@ -262,7 +262,7 @@
 		if(6) //station general
 			return list(access_chapel_office, access_kitchen,access_bar, access_janitor, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
 		if(7) //supply
-			return list(access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_office, access_mining_station, access_mailsorting, access_mint)
+			return list(access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mailsorting, access_mint)
 
 /proc/get_region_accesses_name(var/code)
 	switch(code)

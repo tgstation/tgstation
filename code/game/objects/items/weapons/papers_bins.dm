@@ -190,16 +190,23 @@ CLIPBOARDS
 	attack_self(usr)
 	return
 
-/obj/item/weapon/paper/attack_self(mob/living/user as mob)
-	if ((user.mutations & CLOWN) && prob(50))
-		user << text("\red You cut yourself on the paper.")
-		user.take_organ_damage(3)
+/obj/item/weapon/paper/verb/rename()
+	set name = "Rename paper"
+	set category = "Object"
+	set src in usr
+
+	if ((usr.mutations & CLOWN) && prob(50))
+		usr << text("\red You cut yourself on the paper.")
 		return
-	var/n_name = input(user, "What would you like to label the paper?", "Paper Labelling", null)  as text
+	var/n_name = input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text
 	n_name = copytext(n_name, 1, 32)
-	if ((src.loc == user && user.stat == 0))
-		src.name = text("paper[]", (n_name ? text("- '[]'", n_name) : null))
-	src.add_fingerprint(user)
+	if ((src.loc == usr && usr.stat == 0))
+		src.name = text("paper[]", (n_name ? text("- '[n_name]'") : null))
+	src.add_fingerprint(usr)
+	return
+
+/obj/item/weapon/paper/attack_self(mob/living/user as mob)
+	examine()
 	return
 
 /obj/item/weapon/paper/attack_ai(var/mob/living/silicon/ai/user as mob)
