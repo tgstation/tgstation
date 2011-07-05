@@ -6131,7 +6131,7 @@
 "cnU" = (/obj/bookcase{name = "bookcase (Tactics)"},/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cnV" = (/obj/secure_closet/hos,/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cnW" = (/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
-"cnX" = (/obj/rack,/obj/item/weapon/secstorage/sbriefcase,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/weapon/gun/energy/pulse_rifle{icon_state = "m1911"; name = "M1911-P"},/obj/item/weapon/storage/utilitybelt,/obj/item/weapon/storage/backpack/security,/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
+"cnX" = (/obj/rack,/obj/item/weapon/secstorage/sbriefcase,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/weapon/gun/energy/pulse_rifle/M1911,/obj/item/weapon/storage/utilitybelt,/obj/item/weapon/storage/backpack/security,/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cnY" = (/obj/bookcase{name = "bookcase (Reports)"},/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cnZ" = (/obj/machinery/vending/snack,/turf/unsimulated/floor{icon_state = "green"; dir = 8},/area/centcom/control)
 "coa" = (/obj/grille,/obj/window/reinforced,/obj/window/reinforced{dir = 4},/obj/window/reinforced{dir = 1},/turf/unsimulated/floor{name = "plating"},/area/centcom/control)

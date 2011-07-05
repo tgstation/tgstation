@@ -126,6 +126,29 @@ var/const/PROJECTILE_DART = 8
 			pixel_y = rand(-10.0, 10)
 			dir = pick(cardinal)
 
+	c9mm
+		name = "bullet casing (9mm)"
+		desc = "A 9mm bullet casing."
+		caliber = "9mm"
+
+		New()
+			BB = new /obj/item/projectile/weakbullet(src)
+			pixel_x = rand(-10.0, 10)
+			pixel_y = rand(-10.0, 10)
+			dir = pick(cardinal)
+
+	c45
+		name = "bullet casing (.45)"
+		desc = "A .45 bullet casing."
+		caliber = ".45"
+
+		New()
+			BB = new /obj/item/projectile(src)
+			pixel_x = rand(-10.0, 10)
+			pixel_y = rand(-10.0, 10)
+			dir = pick(cardinal)
+
+
 	shotgun
 		desc = "A 12gauge shell."
 		name = "12 gauge shell"
@@ -200,6 +223,29 @@ var/const/PROJECTILE_DART = 8
 			for(var/i = 1, i <= 7, i++)
 				stored_ammo += new /obj/item/ammo_casing/c38(src)
 			update_icon()
+
+	c9mm
+		name = "Ammunition Box (9mm)"
+		icon_state = "9mm"
+		New()
+			for(var/i = 1, i <= 30, i++)
+				stored_ammo += new /obj/item/ammo_casing/c9mm(src)
+			update_icon()
+
+		update_icon()
+			desc = text("There are [] round\s left!", stored_ammo.len)
+
+	c45
+		name = "Ammunition Box (.45)"
+		icon_state = "9mm"
+		New()
+			for(var/i = 1, i <= 30, i++)
+				stored_ammo += new /obj/item/ammo_casing/c45(src)
+			update_icon()
+
+		update_icon()
+			desc = text("There are [] round\s left!", stored_ammo.len)
+
 /*
 	shotgun
 		name = "ammo box (12gauge)"
@@ -373,6 +419,34 @@ var/const/PROJECTILE_DART = 8
 						loaded += new /obj/item/ammo_casing/shotgun(src)
 					update_icon()
 
+		automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
+			name = "Submachine Gun"
+			desc = "A lightweight, fast firing gun. Uses 9mm rounds."
+			icon_state = "saber"
+			w_class = 3.0
+			force = 14.0
+			max_shells = 18
+			caliber = "9mm"
+
+			New()
+				for(var/i = 1, i <= max_shells, i++)
+					loaded += new /obj/item/ammo_casing/c9mm(src)
+				update_icon()
+
+			mini_uzi
+				name = "Mini-Uzi"
+				desc = "A lightweight, fast firing gun, for when you REALLY need someone dead. Uses .45 rounds."
+				icon_state = "mini-uzi"
+				w_class = 3.0
+				force = 14.0
+				max_shells = 20
+				caliber = ".45"
+
+				New()
+					for(var/i = 1, i <= max_shells, i++)
+						loaded += new /obj/item/ammo_casing/c45(src)
+					update_icon()
+
 	energy
 		icon_state = "energy"
 		name = "energy"
@@ -501,6 +575,14 @@ var/const/PROJECTILE_DART = 8
 					update_icon()
 				attack_self(mob/living/user as mob)
 					return
+			M1911
+				name = "M1911-P"
+				desc = "It's not the size of the gun, it's the size of the hole it puts through people."
+				icon_state = "m1911-p"
+				New()
+					power_supply = new /obj/item/weapon/cell/infinite(src)
+					power_supply.give(power_supply.maxcharge)
+					update_icon()
 
 		nuclear
 			name = "Advanced Energy Gun"

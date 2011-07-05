@@ -45,7 +45,7 @@
 	var/n_players = num_players()
 	if(agent_number > n_players)
 		agent_number = n_players/2
-		
+
 	while(agent_number > 0)
 		var/datum/mind/new_syndicate = pick(possible_syndicates)
 		syndicates += new_syndicate
@@ -214,9 +214,9 @@
 	synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/swat(synd_mob), synd_mob.slot_head)
 	synd_mob.equip_if_possible(new /obj/item/weapon/card/id/syndicate(synd_mob), synd_mob.slot_wear_id)
 	synd_mob.equip_if_possible(new /obj/item/weapon/storage/backpack(synd_mob), synd_mob.slot_back)
-	synd_mob.equip_if_possible(new /obj/item/ammo_magazine(synd_mob), synd_mob.slot_in_backpack)
+	synd_mob.equip_if_possible(new /obj/item/ammo_magazine/c45(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), synd_mob.slot_in_backpack) //Because it needed to be upgraded by someone - Micro
-	synd_mob.equip_if_possible(new /obj/item/weapon/gun/projectile(synd_mob), synd_mob.slot_belt)
+	synd_mob.equip_if_possible(new /obj/item/weapon/gun/projectile/automatic/mini_uzi(synd_mob), synd_mob.slot_belt)
 	return 1
 
 /datum/game_mode/nuclear/check_win()
@@ -240,7 +240,7 @@
 	var/crew_evacuated = (emergency_shuttle.location==2)
 	//var/operatives_are_dead = is_operatives_are_dead()
 
-		
+
 	//nukes_left
 	//station_was_nuked
 	//derp //Used for tracking if the syndies actually haul the nuke to the station
