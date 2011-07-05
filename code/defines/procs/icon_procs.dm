@@ -502,17 +502,17 @@ proc
 			if(I:icon)
 				if(I:icon_state)
 					// Has icon and state set
-					add = icon(I:icon, I:icon_state, dir, 1, 0)
+					add = icon(I:icon, I:icon_state)
 				else
 					if(A.icon_state in icon_states(I:icon))
 						// Inherits icon_state from atom
-						add = icon(I:icon, A.icon_state, dir, 1, 0)
+						add = icon(I:icon, A.icon_state)
 					else
 						// Uses default state ("")
-						add = icon(I:icon, null, dir, 1, 0)
+						add = icon(I:icon)
 			else if(I:icon_state)
 				// Inherits icon from atom
-				add = icon(A.icon, I:icon_state, dir, 1, 0)
+				add = icon(A.icon, I:icon_state)
 			else
 				// Unknown
 				continue
@@ -566,3 +566,19 @@ proc
 			if(4)
 				I.pixel_y += 1
 		overlays += I//And finally add the overlay.
+
+/proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
+	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
+	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
+	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
+	var/icon/alpha_mask = new('effects.dmi', "scanline")//Scanline effect.
+	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
+	return flat_icon
+
+//For photo camera.
+/proc/build_composite_icon(atom/A)
+	var/icon/composite = icon(A.icon, A.icon_state, A.dir, 1)
+	for(var/O in A.overlays)
+		var/image/I = O
+		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
+	return composite

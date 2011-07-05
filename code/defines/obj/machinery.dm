@@ -131,35 +131,6 @@
 	active_power_usage = 6
 
 
-/obj/machinery/hologram_proj
-	name = "Hologram Projector"
-	desc = "Makes a hologram appear...somehow..."
-	icon = 'stationobjs.dmi'
-	icon_state = "hologram0"
-	var/atom/projection = null
-	anchored = 1.0
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 5
-
-
-/obj/machinery/hologram_ai
-	name = "Hologram Projector Platform"
-	desc = "Used for the fun of the diabolical AI."
-	icon = 'stationobjs.dmi'
-	icon_state = "hologram0"
-	var/atom/projection = null
-	var/temp = null
-	var/lumens = 0.0
-	var/h_r = 245.0
-	var/h_g = 245.0
-	var/h_b = 245.0
-	anchored = 1.0
-	use_power = 1
-	idle_power_usage = 5
-	active_power_usage = 10
-
-
 /obj/machinery/igniter
 	name = "igniter"
 	desc = "Fun for igniting plasma."
@@ -611,15 +582,35 @@
 	var/otherarea = null
 	var/id = 1
 
-/obj/machinery/holopad
-	name = "holopad"
-	desc = "A floor-mounted device for projecting a holographic image. It will activate remotely."
-	icon_state = "holopad0"
+/obj/machinery/hologram
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-
 	var
 		obj/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
+
+/obj/machinery/hologram/holopad
+	name = "AI holopad"
+	desc = "A floor-mounted device for projecting a holographic image. It will activate remotely."
+	icon_state = "holopad0"
+	var
 		mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
+
+/obj/machinery/hologram/projector
+	name = "Hologram Projector"
+	desc = "Makes a hologram appear...somehow..."
+	icon = 'stationobjs.dmi'
+	icon_state = "hologram0"
+
+/obj/machinery/hologram/proj_ai
+	name = "Hologram Projector Platform"
+	desc = "Used for the fun of the diabolical AI."
+	icon = 'stationobjs.dmi'
+	icon_state = "hologram0"
+	var
+		temp = null
+		lumens = 0.0
+		h_r = 245.0
+		h_g = 245.0
+		h_b = 245.0

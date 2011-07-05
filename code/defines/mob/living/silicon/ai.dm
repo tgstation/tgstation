@@ -1,6 +1,6 @@
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'mob.dmi'//
+	icon = 'AI.dmi'//
 	icon_state = "ai"
 	anchored = 1 // -- TLE
 	density = 1
@@ -13,8 +13,9 @@
 	var/viewalerts = 0
 	var/lawcheck[1]
 	var/ioncheck[1]
+	var/icon/holo_icon//Default is assigned when AI is created.
 
-
+	//MALFUNCTION
 	var/datum/AI_Module/module_picker/malf_picker
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
@@ -22,5 +23,4 @@
 
 	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click() -- TLE
 	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
-
 	var/obj/machinery/power/apc/malfhack = null

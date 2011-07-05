@@ -2,7 +2,7 @@
 	density = 1
 	anchored = 0
 	name = "AI core"
-	icon = 'AIcore.dmi'
+	icon = 'AI.dmi'
 	icon_state = "0"
 	var/state = 0
 	var/datum/ai_laws/laws = new /datum/ai_laws/asimov
@@ -146,7 +146,7 @@
 
 /obj/AIcore/deactivated
 	name = "Inactive AI"
-	icon = 'mob.dmi'
+	icon = 'AI.dmi'
 	icon_state = "ai-empty"
 	anchored = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.

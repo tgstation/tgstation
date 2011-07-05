@@ -272,7 +272,14 @@ Movement impairing would indicate drugs and the like.*/
 		U.paralysis = 0
 		U.stunned = 0
 		U.weakened = 0
-		spawn(30)
+	/*
+	Due to lag, it was possible to adrenaline boost but remain helpless while life.dm resets player stat.
+	This lead to me and others spamming adrenaline boosters because they failed to kick in on time.
+	It's technically possible to come back from crit with this but it is very temporary.
+	Life.dm will kick the player back into unconsciosness the next process loop.
+	*/
+		U.stat = 0//At least now you should be able to teleport away or shoot ninja stars.
+		spawn(30)//Slight delay so the enemy does not immedietly know the ability was used. Due to lag, this often came before waking up.
 			U.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
 		spawn(70)
 			reagents.reaction(U, 2)

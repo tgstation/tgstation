@@ -155,7 +155,7 @@
 	desc = "Rumoured to control holograms."
 	icon = 'stationobjs.dmi'
 	icon_state = "holo_console0"
-	var/obj/machinery/hologram_proj/projector = null
+	var/obj/machinery/hologram/projector/projector = null
 	var/temp = null
 	var/lumens = 0.0
 	var/h_r = 245.0

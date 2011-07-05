@@ -43,7 +43,7 @@
 	if (!message)
 		return
 
-	var/obj/machinery/holopad/T = client.eye//Client eye centers on an object.
+	var/obj/machinery/hologram/holopad/T = client.eye//Client eye centers on an object.
 	if(istype(T)&&T.hologram&&T.master==src)//If there is a hologram and its master is the user.
 		var/message_a = say_quote(message)
 

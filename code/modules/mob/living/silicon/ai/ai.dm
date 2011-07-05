@@ -14,6 +14,7 @@
 	anchored = 1
 	canmove = 0
 	loc = loc
+	holo_icon = getHologramIcon(icon('AI.dmi',"holo1"))
 
 	proc_holder_list = new()
 
@@ -34,6 +35,9 @@
 		verbs += /mob/living/silicon/ai/proc/lockdown
 		verbs += /mob/living/silicon/ai/proc/disablelockdown
 		verbs += /mob/living/silicon/ai/proc/ai_statuschange
+		//Hologram verb./N
+		verbs += /mob/living/silicon/ai/proc/ai_hologram_change
+
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
 			new/obj/AIcore/deactivated(loc)//New empty terminal.
@@ -416,6 +420,44 @@
 	set name = "Choose Module"
 
 	malf_picker.use(src)
+
+//I am the icon meister. Bow fefore me.
+/mob/living/silicon/ai/proc/ai_hologram_change()
+	set name = "Change Hologram"
+	set desc = "Change the default hologram available to AI to something else."
+	set category = "AI Commands"
+
+	var/input
+	if(alert("Would you like to select a hologram based on a crew member or switch to unique avatar?",,"Crew Member","Unique")=="Crew Member")
+
+		var/personnel_list[] = list()
+
+		for(var/datum/data/record/t in data_core.locked)//Look in data core locked.
+			personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
+
+		if(personnel_list.len)
+			input = input("Select a crew member:") as null|anything in personnel_list
+			var/icon/character_icon = personnel_list[input]
+			if(character_icon)
+				del(holo_icon)//Clear old icon so we're not storing it in memory.
+				holo_icon = getHologramIcon(icon(character_icon))
+		else
+			alert("No suitable records found. Aborting.")
+
+	else
+		var/icon_list[] = list(
+		"default",
+		"floating face"
+		)
+		input = input("Please select a hologram:") as null|anything in icon_list
+		if(input)
+			del(holo_icon)
+			switch(input)
+				if("default")
+					holo_icon = getHologramIcon(icon('AI.dmi',"holo1"))
+				if("floating face")
+					holo_icon = getHologramIcon(icon('AI.dmi',"holo2"))
+	return
 
 
 

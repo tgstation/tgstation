@@ -11,7 +11,7 @@ Possible to do for anyone motivated enough:
 	Give an AI variable for different hologram icons.
 	Itegrate EMP effects to disable the unit.
 */
-/obj/machinery/holopad/attack_ai(mob/living/silicon/ai/user)
+/obj/machinery/hologram/holopad/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
 	/*There are pretty much only three ways to interact here.
@@ -26,7 +26,7 @@ Possible to do for anyone motivated enough:
 		clear_holo()
 	return
 
-/obj/machinery/holopad/proc/activate_holo(mob/living/silicon/ai/user)
+/obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
 	if(!(stat & NOPOWER)&&user.client.eye==src)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
@@ -40,7 +40,7 @@ Possible to do for anyone motivated enough:
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
-/obj/machinery/holopad/hear_talk(mob/M, text)
+/obj/machinery/hologram/holopad/hear_talk(mob/M, text)
 	if(M&&hologram&&master)//Master is mostly a safety in case lag hits or something.
 		if(!master.say_understands(M))//The AI will be able to understand most mobs talking through the holopad.
 			text = stars(text)
@@ -52,21 +52,21 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		master.show_message(rendered, 2)
 	return
 
-/obj/machinery/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)
+/obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)
 	hologram = new(T)//Spawn a blank effect at the location.
-	hologram.icon = 'mob.dmi'
-	hologram.icon_state = "ai-holo"
+	hologram.icon = A.holo_icon
 	hologram.mouse_opacity = 0//So you can't click on it.
 	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	hologram.sd_SetLuminosity(1)//To make it glowy.
 	hologram.anchored = 1//So space wind cannot drag it.
+	hologram.name = "AI hologram"//If someone decides to right click.
 	sd_SetLuminosity(1)//To make the pad glowy.
 	icon_state = "holopad1"
 	master = A//AI is the master.
 	use_power = 2//Active power usage.
 	return 1
 
-/obj/machinery/holopad/proc/clear_holo()
+/obj/machinery/hologram/holopad/proc/clear_holo()
 	hologram.sd_SetLuminosity(0)//Clear lighting.
 	del(hologram)//Get rid of hologram.
 	master = null//Null the master, since no-one is using it now.
@@ -75,7 +75,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	use_power = 1//Passive power usage.
 	return 1
 
-/obj/machinery/holopad/process()
+/obj/machinery/hologram/holopad/process()
 	if(hologram)//If there is a hologram.
 		if(master&&!master.stat&&master.client&&master.client.eye==src)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
 			if( !(get_dist(src,hologram.loc)>3||stat & NOPOWER) )//If the hologram is not out of bounds and the machine has power.
@@ -83,14 +83,14 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		clear_holo()//If not, we want to get rid of the hologram.
 	return 1
 
-/obj/machinery/holopad/power_change()
+/obj/machinery/hologram/power_change()
 	if (powered())
 		stat &= ~NOPOWER
 	else
 		stat |= ~NOPOWER
 
 //Destruction procs.
-/obj/machinery/holopad/ex_act(severity)
+/obj/machinery/hologram/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			del(src)
@@ -102,38 +102,36 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 				del(src)
 	return
 
-/obj/machinery/holopad/blob_act()
+/obj/machinery/hologram/blob_act()
 	del(src)
 	return
 
-/obj/machinery/holopad/meteorhit()
+/obj/machinery/hologram/meteorhit()
 	del(src)
 	return
 
-/obj/machinery/holopad/Del()
+/obj/machinery/hologram/Del()
 	if(hologram)
-		clear_holo()
+		src:clear_holo()
 	..()
 
 /*
 Holographic project of everything else.
 
+/mob/verb/hologram_test()
+	set name = "Hologram Debug New"
+	set category = "CURRENT DEBUG"
 
-/obj/machinery/holoprojector/attack_hand()
+	var/obj/overlay/hologram = new(loc)//Spawn a blank effect at the location.
+	var/icon/flat_icon = icon(getFlatIcon(src,0))//Need to make sure it's a new icon so the old one is not reused.
+	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
+	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
+	var/input = input("Select what icon state to use in effects.",,"")
+	if(input)
+		var/icon/alpha_mask = new('effects.dmi', "[input]")
+		flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
+		hologram.icon = flat_icon
 
-/obj/machinery/holoprojector/create_holo(turf/T = loc, mob/living/M)
-	hologram = new(T)//Spawn a blank effect at the location.
-	//Here we don't want to actually change icon directly. We're looking to create an image.
-	var/flat_image = getFlatIcon(M,2)//Get the flat icon facing south. Respect cache.
-
-	hologram.overlay += flat_image
-	hologram.mouse_opacity = 0//So you can't click on it.
-	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	hologram.sd_SetLuminosity(1)//To make it glowy.
-	sd_SetLuminosity(1)//To make the pad glowy.
-	icon_state = "holopad1"
-	use_power = 2//Active power usage.
-	return 1
-
-/obj/machinery/holoprojector/clear_holo()
+		world << "Your icon should appear now."
+	return
 */

@@ -29,14 +29,12 @@
 	name = "SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "swat"
-	slowdown = 0
 	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
 
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
 	icon_state = "s-ninja"
-	slowdown = 0
 	protective_temperature = 700
 	permeability_coefficient = 0.01
 	flags = NOSLIP
@@ -63,7 +61,7 @@
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
-	slowdown = 0
+	slowdown = SHOES_SLOWDOWN+1
 
 /obj/item/clothing/shoes/magboots
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
@@ -79,7 +77,7 @@
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
-	slowdown = 0
+	slowdown = SHOES_SLOWDOWN+1
 
 /obj/item/clothing/shoes/jackboots
 	name = "Jackboots"

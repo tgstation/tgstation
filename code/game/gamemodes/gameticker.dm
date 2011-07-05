@@ -88,8 +88,8 @@ var/global/datum/controller/gameticker/ticker
 	distribute_jobs() //Distribute jobs and announce the captain
 	create_characters() //Create player characters and transfer them
 	collect_minds()
-	equip_characters()
 	data_core.manifest()
+	equip_characters()
 	current_state = GAME_STATE_PLAYING
 	mode.post_setup()
 

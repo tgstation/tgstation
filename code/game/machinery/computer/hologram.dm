@@ -1,7 +1,7 @@
 /obj/machinery/computer/hologram_comp/New()
 	..()
 	spawn( 10 )
-		src.projector = locate(/obj/machinery/hologram_proj, get_step(src.loc, NORTH))
+		src.projector = locate(/obj/machinery/hologram/projector, get_step(src.loc, NORTH))
 		return
 	return
 
@@ -27,7 +27,7 @@
 
 	I.Blend(U, ICON_OVERLAY)
 
-	src.projector.projection.icon = I
+	src.projector.hologram.icon = I
 
 /obj/machinery/computer/hologram_comp/proc/show_console(var/mob/user as mob)
 	var/dat
@@ -35,7 +35,7 @@
 	if (src.temp)
 		dat = text("[]<BR><BR><A href='?src=\ref[];temp=1'>Clear</A>", src.temp, src)
 	else
-		dat = text("<B>Hologram Status:</B><HR>\nPower: <A href='?src=\ref[];power=1'>[]</A><HR>\n<B>Hologram Control:</B><BR>\nColor Luminosity: []/220 <A href='?src=\ref[];reset=1'>\[Reset\]</A><BR>\nLighten: <A href='?src=\ref[];light=1'>1</A> <A href='?src=\ref[];light=10'>10</A><BR>\nDarken: <A href='?src=\ref[];light=-1'>1</A> <A href='?src=\ref[];light=-10'>10</A><BR>\n<BR>\nHair Color: ([],[],[]) <A href='?src=\ref[];h_reset=1'>\[Reset\]</A><BR>\nRed (0-255): <A href='?src=\ref[];h_r=-300'>\[0\]</A> <A href='?src=\ref[];h_r=-10'>-10</A> <A href='?src=\ref[];h_r=-1'>-1</A> [] <A href='?src=\ref[];h_r=1'>1</A> <A href='?src=\ref[];h_r=10'>10</A> <A href='?src=\ref[];h_r=300'>\[255\]</A><BR>\nGreen (0-255): <A href='?src=\ref[];h_g=-300'>\[0\]</A> <A href='?src=\ref[];h_g=-10'>-10</A> <A href='?src=\ref[];h_g=-1'>-1</A> [] <A href='?src=\ref[];h_g=1'>1</A> <A href='?src=\ref[];h_g=10'>10</A> <A href='?src=\ref[];h_g=300'>\[255\]</A><BR>\nBlue (0-255): <A href='?src=\ref[];h_b=-300'>\[0\]</A> <A href='?src=\ref[];h_b=-10'>-10</A> <A href='?src=\ref[];h_b=-1'>-1</A> [] <A href='?src=\ref[];h_b=1'>1</A> <A href='?src=\ref[];h_b=10'>10</A> <A href='?src=\ref[];h_b=300'>\[255\]</A><BR>", src, (src.projector.projection ? "On" : "Off"),  -src.lumens + 35, src, src, src, src, src, src.h_r, src.h_g, src.h_b, src, src, src, src, src.h_r, src, src, src, src, src, src, src.h_g, src, src, src, src, src, src, src.h_b, src, src, src)
+		dat = text("<B>Hologram Status:</B><HR>\nPower: <A href='?src=\ref[];power=1'>[]</A><HR>\n<B>Hologram Control:</B><BR>\nColor Luminosity: []/220 <A href='?src=\ref[];reset=1'>\[Reset\]</A><BR>\nLighten: <A href='?src=\ref[];light=1'>1</A> <A href='?src=\ref[];light=10'>10</A><BR>\nDarken: <A href='?src=\ref[];light=-1'>1</A> <A href='?src=\ref[];light=-10'>10</A><BR>\n<BR>\nHair Color: ([],[],[]) <A href='?src=\ref[];h_reset=1'>\[Reset\]</A><BR>\nRed (0-255): <A href='?src=\ref[];h_r=-300'>\[0\]</A> <A href='?src=\ref[];h_r=-10'>-10</A> <A href='?src=\ref[];h_r=-1'>-1</A> [] <A href='?src=\ref[];h_r=1'>1</A> <A href='?src=\ref[];h_r=10'>10</A> <A href='?src=\ref[];h_r=300'>\[255\]</A><BR>\nGreen (0-255): <A href='?src=\ref[];h_g=-300'>\[0\]</A> <A href='?src=\ref[];h_g=-10'>-10</A> <A href='?src=\ref[];h_g=-1'>-1</A> [] <A href='?src=\ref[];h_g=1'>1</A> <A href='?src=\ref[];h_g=10'>10</A> <A href='?src=\ref[];h_g=300'>\[255\]</A><BR>\nBlue (0-255): <A href='?src=\ref[];h_b=-300'>\[0\]</A> <A href='?src=\ref[];h_b=-10'>-10</A> <A href='?src=\ref[];h_b=-1'>-1</A> [] <A href='?src=\ref[];h_b=1'>1</A> <A href='?src=\ref[];h_b=10'>10</A> <A href='?src=\ref[];h_b=300'>\[255\]</A><BR>", src, (src.projector.hologram ? "On" : "Off"),  -src.lumens + 35, src, src, src, src, src, src.h_r, src.h_g, src.h_b, src, src, src, src, src.h_r, src, src, src, src, src, src, src.h_g, src, src, src, src, src, src, src.h_b, src, src, src)
 	user << browse(dat, "window=hologram_console")
 	onclose(user, "hologram_console")
 	return
@@ -46,43 +46,43 @@
 	if (in_range(src, usr))
 		flick("holo_console1", src)
 		if (href_list["power"])
-			if (src.projector.projection)
+			if (src.projector.hologram)
 				src.projector.icon_state = "hologram0"
-				//src.projector.projection = null
-				del(src.projector.projection)
+				//src.projector.hologram = null
+				del(src.projector.hologram)
 			else
-				src.projector.projection = new /obj/projection(src.projector.loc)
-				src.projector.projection.icon = 'human.dmi'
-				src.projector.projection.icon_state = "body_m_s"
+				src.projector.hologram = new(src.projector.loc)
+				src.projector.hologram.icon = 'human.dmi'
+				src.projector.hologram.icon_state = "body_m_s"
 				src.projector.icon_state = "hologram1"
 				src.render()
 		else
 			if (href_list["h_r"])
-				if (src.projector.projection)
+				if (src.projector.hologram)
 					src.h_r += text2num(href_list["h_r"])
 					src.h_r = min(max(src.h_r, 0), 255)
 					render()
 			else
 				if (href_list["h_g"])
-					if (src.projector.projection)
+					if (src.projector.hologram)
 						src.h_g += text2num(href_list["h_g"])
 						src.h_g = min(max(src.h_g, 0), 255)
 						render()
 				else
 					if (href_list["h_b"])
-						if (src.projector.projection)
+						if (src.projector.hologram)
 							src.h_b += text2num(href_list["h_b"])
 							src.h_b = min(max(src.h_b, 0), 255)
 							render()
 					else
 						if (href_list["light"])
-							if (src.projector.projection)
+							if (src.projector.hologram)
 								src.lumens += text2num(href_list["light"])
 								src.lumens = min(max(src.lumens, -185.0), 35)
 								render()
 						else
 							if (href_list["reset"])
-								if (src.projector.projection)
+								if (src.projector.hologram)
 									src.lumens = 0
 									render()
 							else

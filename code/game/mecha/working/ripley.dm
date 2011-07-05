@@ -1,5 +1,5 @@
 /obj/mecha/working/ripley
-	desc = "Autonomous Power Loader Unit."
+	desc = "Autonomous Power Loader Unit. The workhorse of the exosuit world."
 	name = "APLU \"Ripley\""
 	icon_state = "ripley"
 	step_in = 6

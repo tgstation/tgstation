@@ -57,13 +57,7 @@
 	item_state = "clipboard"
 	w_class = 1.0
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-/obj/item/weapon/camera_test/proc/build_composite_icon(var/atom/C)
-	var/icon/composite = icon(C.icon, C.icon_state, C.dir, 1)
-	for(var/O in C.overlays)
-		var/image/I = O
-		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
-	return composite
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/camera_test/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return

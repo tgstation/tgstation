@@ -268,6 +268,7 @@ mob/new_player
 	proc/AttemptLateSpawn(rank, maxAllowed)
 		if(IsJobAvailable(rank, maxAllowed))
 			var/mob/living/carbon/human/character = create_character()
+			var/icon/char_icon = getFlatIcon(character,0)//We're creating out own cache so it's not needed.
 			if (character)
 				character.Equip_Rank(rank, joined_late=1)
 
@@ -276,7 +277,7 @@ mob/new_player
 			//	if((t.fields["name"] == character.real_name) && (t.fields["rank"] == "Unassigned"))
 			//		t.fields["rank"] = rank
 				if(character.mind.assigned_role != "Cyborg")
-					ManifestLateSpawn(character)
+					ManifestLateSpawn(character,char_icon)
 				if(ticker)
 					character.loc = pick(latejoin)
 					AnnounceArrival(character, rank)
@@ -300,7 +301,7 @@ mob/new_player
 				if(character.mind.assigned_role != "Cyborg"&&character.mind.special_role != "MODE")
 					announcer.say("[character.real_name], the [rank], has awoken from cryo sleep.")
 
-	proc/ManifestLateSpawn(var/mob/living/carbon/human/H) // Attempted fix to add late joiners to various databases -- TLE
+	proc/ManifestLateSpawn(var/mob/living/carbon/human/H, icon/H_icon) // Attempted fix to add late joiners to various databases -- TLE
 		// This is basically ripped wholesale from the normal code for adding people to the databases during a fresh round
 		if (!isnull(H.mind) && (H.mind.assigned_role != "MODE"))
 			var/datum/data/record/G = new()
@@ -354,6 +355,7 @@ mob/new_player
 			L.fields["b_dna"] = H.dna.unique_enzymes
 			L.fields["enzymes"] = H.dna.struc_enzymes
 			L.fields["identity"] = H.dna.uni_identity
+			L.fields["image"] = H_icon//What the person looks like. Naked, in this case.
 			//End locked reporting
 
 			data_core.general += G

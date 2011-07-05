@@ -381,6 +381,7 @@ Pod/Blast Doors computer
 			L.fields["b_dna"] = H.dna.unique_enzymes
 			L.fields["enzymes"] = H.dna.struc_enzymes
 			L.fields["identity"] = H.dna.uni_identity
+			L.fields["image"] = getFlatIcon(H,0)
 			//End locked reporting
 
 			general += G

@@ -1,5 +1,5 @@
 /obj/mecha/combat/durand
-	desc = "Combat exosuit."
+	desc = "An aging combat exosuit utilized by the Nanotrasen corporation. Originally developed to combat hostile alien lifeforms."
 	name = "Durand"
 	icon_state = "durand"
 	step_in = 4
