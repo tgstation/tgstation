@@ -86,15 +86,19 @@
 				if(!istype(C, /mob/living/carbon/metroid)) // does not eat his bros! BROSBROSBROSBROS
 					if(C.stat != 2 && C.health > 0) // chooses only healthy targets
 						var/notarget = 0
+						if(istype(C, /mob/living/carbon/human))
+							var/mob/living/carbon/human/H = C
+							if(H.mutantrace == "metroid")
+								notarget = 1 // don't hurt metroidmen!
+
 						if(!C.canmove)
 							for(var/mob/living/carbon/metroid/M in view(1,C))
 								if(M.Victim == C)
 									notarget = 1
 									break // They don't go for prey already being eaten
 
-
-
 						if(!notarget) targets += C
+
 
 
 

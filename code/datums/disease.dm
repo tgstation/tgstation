@@ -287,7 +287,7 @@ to null does not delete the object itself. Thank you.
 
 	var/check_range = AIRBORNE//defaults to airborne - range 4
 
-	if(spread_type != AIRBORNE)
+	if(spread_type != AIRBORNE && spread_type != SPECIAL)
 		check_range = 0 // everything else, like infect-on-contact things, only infect things on top of it
 
 	for(var/mob/living/carbon/M in oviewers(check_range, source))
