@@ -394,6 +394,7 @@
 
 			verbs += /obj/admins/proc/edit_memory
 			verbs += /obj/admins/proc/edit_player
+			verbs += /client/proc/cmd_admin_dress
 			//verbs += /client/proc/cmd_admin_alienize
 			//verbs += /client/proc/cmd_admin_changelinginize
 			//verbs += /client/proc/cmd_admin_abominize 		// -- TLE
@@ -555,6 +556,7 @@
 
 			verbs += /obj/admins/proc/edit_memory
 			verbs += /obj/admins/proc/edit_player
+			verbs += /client/proc/cmd_admin_dress
 			//verbs += /client/proc/cmd_admin_alienize
 			//verbs += /client/proc/cmd_admin_changelinginize
 			//verbs += /client/proc/cmd_admin_abominize 	// -- TLE

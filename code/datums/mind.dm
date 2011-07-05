@@ -85,7 +85,7 @@ datum/mind
 			else if (src in ticker.mode.revolutionaries)
 				text += "head|officer|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
 			else
-				text += "head|officer|<b>EMPLOYER</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+				text += "head|officer|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 			sections["revolution"] = text
 
 			/** CULT ***/
@@ -105,7 +105,7 @@ datum/mind
 					text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
 */
 			else
-				text += "head|officer|<b>EMPLOYER</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
+				text += "head|officer|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 			sections["cult"] = text
 
 			/** WIZARD ***/

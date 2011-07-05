@@ -56,6 +56,7 @@ PE|PE|PE
 
 	verb/rotate()
 		set name = "Rotate"
+		set category = "Object"
 		set src in oview(1)
 
 		if (src.anchored || usr:stat)
@@ -185,6 +186,7 @@ PE|PE|PE
 
 	verb/rotate()
 		set name = "Rotate"
+		set category = "Object"
 		set src in oview(1)
 
 		if (src.anchored || usr:stat)

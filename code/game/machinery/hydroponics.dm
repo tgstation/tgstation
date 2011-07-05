@@ -1,7 +1,7 @@
 /obj/machinery/hydroponics
 	name = "Hydroponics Tray"
 	icon = 'hydroponics.dmi'
-	icon_state = "hydrotraynew"
+	icon_state = "hydrotray3"
 	density = 1
 	anchored = 1
 	var/waterlevel = 100 // The amount of water in the tray (max 100)
@@ -154,19 +154,19 @@ obj/machinery/hydroponics/proc/updateicon()
 			overlays += image('hydroponics.dmi', icon_state="[src.myseed.species]-grow[src.myseed.growthstages]") // Same
 
 		if(src.waterlevel <= 10)
-			overlays += image('hydroponics.dmi', icon_state="over_lowwater")
+			overlays += image('hydroponics.dmi', icon_state="over_lowwater3")
 		if(src.nutrilevel <= 2)
-			overlays += image('hydroponics.dmi', icon_state="over_lownutri")
+			overlays += image('hydroponics.dmi', icon_state="over_lownutri3")
 		if(src.health <= (src.myseed.endurance / 2))
-			overlays += image('hydroponics.dmi', icon_state="over_lowhealth")
+			overlays += image('hydroponics.dmi', icon_state="over_lowhealth3")
 		if(src.weedlevel >= 5)
-			overlays += image('hydroponics.dmi', icon_state="over_alert")
+			overlays += image('hydroponics.dmi', icon_state="over_alert3")
 		if(src.pestlevel >= 5)
-			overlays += image('hydroponics.dmi', icon_state="over_alert")
+			overlays += image('hydroponics.dmi', icon_state="over_alert3")
 		if(src.toxic >= 40)
-			overlays += image('hydroponics.dmi', icon_state="over_alert")
+			overlays += image('hydroponics.dmi', icon_state="over_alert3")
 		if(src.harvest)
-			overlays += image('hydroponics.dmi', icon_state="over_harvest")
+			overlays += image('hydroponics.dmi', icon_state="over_harvest3")
 
 	if(myseed)
 		if(luminosity && !istype(myseed,/obj/item/seeds/glowshroom)) //revert luminosity to 0
