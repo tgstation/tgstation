@@ -57,8 +57,6 @@
 		src.sd_SetLuminosity(0)
 		user.sd_SetLuminosity(user.luminosity + brightness_on)
 
-
-
 /obj/item/device/flashlight/dropped(mob/user)
 	if(on)
 		user.sd_SetLuminosity(user.luminosity - brightness_on)
@@ -66,8 +64,8 @@
 
 /obj/item/clothing/head/helmet/hardhat/attack_self(mob/user)
 	on = !on
-	icon_state = "hardhat[on]"
-	item_state = "hardhat[on]"
+	icon_state = "hardhat[on]_[color]"
+	item_state = "hardhat[on]_[color]"
 
 	if(on)
 		user.sd_SetLuminosity(user.luminosity + brightness_on)

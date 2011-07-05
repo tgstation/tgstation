@@ -1063,13 +1063,6 @@ proc/move_mining_shuttle()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
-/**********************Ore pile (not used)**************************/
-
-/obj/item/weapon/ore_pile
-	name = "Pile of ores"
-	icon = 'Mining.dmi'
-	icon_state = "orepile"
-
 /**********************Satchel**************************/
 
 /obj/item/weapon/satchel

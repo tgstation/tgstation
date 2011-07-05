@@ -77,10 +77,19 @@
 	can_hold = list("/obj/item/weapon/dice")
 
 /obj/item/weapon/storage/box
-	name = "box"
+	name = "Box"
 	desc = "A nice looking box."
 	icon_state = "box"
 	item_state = "syringe_kit"
+
+/obj/item/weapon/storage/survival_kit
+	name = "Centcom Survival Kit"
+	desc = "How nice of CentCom to provide us with some stuff to make our lives easier."
+	icon_state = "box"
+	item_state = "syringe_kit"
+
+/obj/item/weapon/storage/survival_kit/engineer
+	name = "Centcom Engineer Kit"
 
 /obj/item/weapon/storage/pillbottlebox
 	name = "pill bottles"

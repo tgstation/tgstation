@@ -1435,6 +1435,16 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	icon_state = "oxygen"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
+/obj/item/weapon/tank/oxygen/yellow
+	name = "Gas Tank (Oxygen)"
+	desc = "A tank of oxygen meant for firefighters."
+	icon_state = "oxygen_f"
+
+/obj/item/weapon/tank/oxygen/red
+	name = "Gas Tank (Oxygen)"
+	desc = "A tank of oxygen meant for firefighters."
+	icon_state = "oxygen_fr"
+
 /obj/item/weapon/tank/air
 	name = "Gas Tank (Air Mix)"
 	desc = "Mixed anyone?"
@@ -1442,18 +1452,28 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/tank/plasma
 	name = "Gas Tank (BIOHAZARD)"
-	desc = "Contains dangerous plasma. When inhaled."
+	desc = "Contains dangerous plasma. Do not inhale."
 	icon_state = "plasma"
 
 /obj/item/weapon/tank/emergency_oxygen
-	name = "emergency oxygentank"
-	desc = "Used for emergencies."
+	name = "Emergency Oxygen Tank"
+	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actualy need it."
 	icon_state = "emergency"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
-	w_class = 2.5
+	w_class = 2.0
 	force = 4.0
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
-	volume = 10 //yeah, SO tiny
+	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
+
+/obj/item/weapon/tank/emergency_oxygen/engi
+	icon_state = "emergency_engi"
+	name = "Engineering Emergency Oxygen Tank"
+	volume = 6 //Engineers are always superior. -errorage (dangercon 2011)
+
+/obj/item/weapon/tank/emergency_oxygen/double
+	icon_state = "emergency_double"
+	name = "Double Emergency Oxygen Tank"
+	volume = 10 //These have the same emoung of gas in them as air tanks, but can be worn on your belt -errorage (dangercon 2011)
 
 /obj/item/weapon/teleportation_scroll
 	name = "Teleportation Scroll"

@@ -14,7 +14,7 @@
 	new /obj/item/clothing/suit/hazardvest( src )
 	new /obj/item/clothing/mask/gas( src )
 	new /obj/item/clothing/head/helmet/welding( src )
-	new /obj/item/clothing/head/helmet/hardhat( src )
+	new /obj/item/clothing/head/helmet/hardhat/white( src )
 	new /obj/item/device/multitool( src )
 	new /obj/item/device/flash( src )
 	return

@@ -142,6 +142,7 @@
 		new /obj/item/weapon/book/manual/engineering_hacking(src)
 		new /obj/item/weapon/book/manual/engineering_guide(src)
 		new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
+		new /obj/item/weapon/book/manual/robotics_cyborgs(src)
 
 /obj/bookcase/manuals/research_and_development
 	name = "R&D Manuals bookcase"

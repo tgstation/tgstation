@@ -6,17 +6,18 @@
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/flashlight(src)
-	new /obj/item/weapon/tank/emergency_oxygen(src)
+	new /obj/item/weapon/tank/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
-	new /obj/item/clothing/head/helmet/hardhat(src)
+	new /obj/item/clothing/head/helmet/hardhat/red(src)
 
 /obj/closet/firecloset/New()
 	..()
 
-	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/weapon/tank/emergency_oxygen(src)
-	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/suit/fire/firefighter(src)
+	new /obj/item/clothing/mask/gas(src)
+	new /obj/item/weapon/tank/oxygen/red(src)
+	new /obj/item/weapon/extinguisher(src)
+	new /obj/item/clothing/head/helmet/hardhat/red(src)
 
 	/*switch (pickweight(list("nothing" = 5, "bare-bones" = 35, "basic" = 40, "pickpocketed" = 10, "untouched" = 10)))
 		if ("nothing")
@@ -31,13 +32,13 @@
 			new /obj/item/clothing/mask/breath(src)
 			new /obj/item/weapon/tank/oxygen(src)
 			new /obj/item/weapon/extinguisher(src)
-			new /obj/item/clothing/head/helmet/hardhat(src)
+			new /obj/item/clothing/head/helmet/hardhat/red(src)
 		if ("untouched")
 			new /obj/item/clothing/mask/breath(src)
 			new /obj/item/weapon/tank/oxygen(src)
 			new /obj/item/weapon/extinguisher(src)
 			new /obj/item/clothing/suit/fire/firefighter(src)
-			new /obj/item/clothing/head/helmet/hardhat(src)*/
+			new /obj/item/clothing/head/helmet/hardhat/red(src)*/
 
 /obj/closet/toolcloset/New()
 	if(prob(60))

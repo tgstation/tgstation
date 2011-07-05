@@ -1,9 +1,3 @@
-/obj/item/weapon/storage/backpack/New()
-	if (!istype(src, /obj/item/weapon/storage/backpack/holding))
-		new /obj/item/weapon/storage/box( src )
-	..()
-	return
-
 /obj/item/weapon/storage/backpack/MouseDrop(obj/over_object as obj)
 
 //	if (src.loc != usr)

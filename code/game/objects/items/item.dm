@@ -31,6 +31,7 @@
 //
 
 /obj/item/proc/afterattack()
+
 	return
 
 /obj/item/weapon/dummy/ex_act()

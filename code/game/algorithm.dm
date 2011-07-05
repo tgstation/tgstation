@@ -171,7 +171,7 @@ proc/countJob(rank)
 		if(slot_in_backpack)
 			if (src.back && istype(src.back, /obj/item/weapon/storage/backpack))
 				var/obj/item/weapon/storage/backpack/B = src.back
-				if(B.contents.len < 7 && W.w_class <= 3)
+				if(B.contents.len < B.storage_slots && W.w_class <= B.max_w_class)
 					W.loc = B
 					equipped = 1
 		if(slot_h_store)
