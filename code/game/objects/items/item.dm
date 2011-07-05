@@ -212,10 +212,49 @@
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
+
+	var/power = src.force
 	if(!istype(M, /mob/living/carbon/human))
+		if(istype(src, /mob/living/carbon/metroid))
+			var/mob/living/carbon/metroid/Metroid = M
+			if(prob(25))
+				user << "\red [src] passes right through [M]!"
+				return
+
+			if(power > 0)
+				Metroid.attacked += 10
+
+
 		for(var/mob/O in viewers(messagesource, null))
 			O.show_message(text("\red <B>[] has been attacked with [][] </B>", M, src, (user ? text(" by [].", user) : ".")), 1)
-	var/power = src.force
+
+
+		if(power >= 3)
+			var/mob/living/carbon/metroid/Metroid = M
+			if(istype(Metroid, /mob/living/carbon/metroid/adult))
+				if(prob(5 + round(power/2)))
+					Metroid.Victim = null
+					spawn(0)
+						Metroid.canmove = 0
+						step_away(Metroid, user)
+						if(prob(25 + power*2))
+							sleep(2)
+							step_away(Metroid, user)
+						Metroid.canmove = 1
+
+			else
+				if(prob(10 + power*2))
+					Metroid.Victim = null
+					spawn(0)
+						step_away(Metroid, user)
+						Metroid.canmove = 0
+						if(prob(25 + power*4))
+							sleep(2)
+							step_away(Metroid, user)
+						Metroid.canmove = 1
+
+
+
 	if (istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if (ishuman(user) || isrobot(user) || ishivebot(user) || ismonkey(user) || isalien(user))
@@ -359,11 +398,16 @@
 	else
 		switch(src.damtype)
 			if("brute")
-				M.take_organ_damage(power)
-				if (prob(33)) // Added blood for whacking non-humans too
-					var/turf/location = M.loc
-					if (istype(location, /turf/simulated))
-						location.add_blood_floor(M)
+				if(istype(src, /mob/living/carbon/metroid))
+					M.bruteloss += power
+
+				else
+
+					M.take_organ_damage(power)
+					if (prob(33)) // Added blood for whacking non-humans too
+						var/turf/location = M.loc
+						if (istype(location, /turf/simulated))
+							location.add_blood_floor(M)
 			if("fire")
 				if (!(M.mutations & COLD_RESISTANCE))
 					M.take_organ_damage(0, power)
@@ -392,7 +436,7 @@
 		user << "\red You're going to need to remove that mask/helmet/glasses first."
 		return
 
-	if(istype(M, /mob/living/carbon/alien))//Aliens don't have eyes./N
+	if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N     Metroids also don't have eyes!
 		user << "\red You cannot locate any eyes on this creature!"
 		return
 
@@ -405,7 +449,6 @@
 		M.weakened += 4
 		M.bruteloss += 10
 		*/
-
 	if(M != user)
 		for(var/mob/O in (viewers(M) - user - M))
 			O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)

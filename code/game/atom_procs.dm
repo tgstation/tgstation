@@ -18,6 +18,13 @@
 	src.attack_paw(user)
 	return
 
+
+// for metroids
+/atom/proc/attack_metroid(mob/user as mob)
+	return
+
+
+
 /atom/proc/hand_h(mob/user as mob)
 	return
 
@@ -360,6 +367,10 @@
 						else
 							if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot)|| istype(usr, /mob/living/silicon/hivebot))
 								src.attack_ai(usr, usr.hand)
+
+							else
+								if(istype(usr, /mob/living/carbon/metroid))
+									src.attack_metroid(usr)
 		else
 			if (istype(usr, /mob/living/carbon/human))
 				src.hand_h(usr, usr.hand)

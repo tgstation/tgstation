@@ -191,6 +191,21 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M:Alienize()
 	else
 		alert("Invalid mob")
+
+/client/proc/cmd_admin_metroidize(var/mob/M in world)
+	set category = "Fun"
+	set name = "Make Metroid"
+
+	if(!ticker)
+		alert("Wait until the game starts")
+		return
+	if(ishuman(M))
+		log_admin("[key_name(src)] has metroidized [M.key].")
+		spawn(10)
+			M:Metroidize()
+	else
+		alert("Invalid mob")
+
 /*
 /client/proc/cmd_admin_monkeyize(var/mob/M in world)
 	set category = "Fun"

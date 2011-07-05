@@ -174,7 +174,7 @@
 					else
 						M.inertia_dir = 0
 						return
-				else
+				else if(!istype(M, /mob/living/carbon/metroid))
 					if (M.m_intent == "run")
 						M.pulling = null
 						step(M, M.dir)
@@ -187,16 +187,17 @@
 						return
 
 			if(2) //lube
-				M.pulling = null
-				step(M, M.dir)
-				spawn(1) step(M, M.dir)
-				spawn(2) step(M, M.dir)
-				spawn(3) step(M, M.dir)
-				spawn(4) step(M, M.dir)
-				M.take_organ_damage(2) // Was 5 -- TLE
-				M << "\blue You slipped on the floor!"
-				playsound(src.loc, 'slip.ogg', 50, 1, -3)
-				M.weakened = 10
+				if(!istype(M, /mob/living/carbon/metroid))
+					M.pulling = null
+					step(M, M.dir)
+					spawn(1) step(M, M.dir)
+					spawn(2) step(M, M.dir)
+					spawn(3) step(M, M.dir)
+					spawn(4) step(M, M.dir)
+					M.take_organ_damage(2) // Was 5 -- TLE
+					M << "\blue You slipped on the floor!"
+					playsound(src.loc, 'slip.ogg', 50, 1, -3)
+					M.weakened = 10
 
 	..()
 

@@ -647,6 +647,18 @@ var/showadminmessages = 1
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
 
+	if (href_list["makemetroid"])
+		if (src.level>=3)
+			var/mob/M = locate(href_list["makemetroid"])
+			if(istype(M, /mob/living/carbon/human))
+				usr.client.cmd_admin_metroidize(M)
+			else
+				alert("Wrong mob. Must be human.")
+				return
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
 	if (href_list["makerobot"])
 		if (src.level>=3)
 			var/mob/M = locate(href_list["makerobot"])
@@ -1518,6 +1530,7 @@ var/showadminmessages = 1
 				foo += text("<A HREF='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | ")
 				foo += text("<A HREF='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | ")
 				foo += text("<A HREF='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | ")
+				foo += text("<A HREF='?src=\ref[src];makemetroid=\ref[M]'>Make Metroid</A> | ")
 			foo += text("<A HREF='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> | ")
 			foo += text("<A HREF='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | ")
 			foo += text("<A HREF='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | ")

@@ -20,6 +20,10 @@
 	//Disease Check
 	handle_virus_updates()
 
+
+	// Basically just deletes any screen objects :<
+	regular_hud_updates()
+
 	//Handle temperature/pressure differences between body and environment
 	/*
 	if(environment)	// More error checking -- TLE
@@ -38,21 +42,176 @@
 
 	handle_nutrition()
 
+	if(attacked > 50) attacked = 50
+
+	if(attacked > 0)
+		if(prob(85))
+			attacked--
+
 
 	// Grabbing
 
-	if(!client && !stat)
+	if(!client && stat != 2)
 
 		// DO AI STUFF HERE
-		if(prob(33) && canmove && isturf(loc))
-			step(src, pick(cardinal))
-		if(prob(1))
-			emote(pick("scratch","jump","roll","tail"))
+
+
+
+		if(Victim) return // if it's eating someone already, continue eating!
+
+
+		if(prob(5))
+			emote(pick("click","chatter","sway","light","vibrate","chatter","shriek"))
+
+		if(AIproc) return
+
+
+		var/hungry = 0 // determines if the metroid is hungry
+		var/starving = 0 // determines if the metroid is starving-hungry
+		if(istype(src, /mob/living/carbon/metroid/adult))
+			switch(nutrition)
+				if(200 to 600) hungry = 1
+				if(0 to 199) starving = 1
+
+		else
+			switch(nutrition)
+				if(150 to 500) hungry = 1
+				if(0 to 149) starving = 1
+
+
+		if(!Target)
+			var/list/targets = list()
+
+			for(var/mob/living/carbon/C in view(12,src))
+				if(!istype(C, /mob/living/carbon/metroid)) // does not eat his bros! BROSBROSBROSBROS
+					if(C.stat != 2 && C.health > 0) // chooses only healthy targets
+						var/notarget = 0
+						if(!C.canmove)
+							for(var/mob/living/carbon/metroid/M in view(1,C))
+								if(M.Victim == C)
+									notarget = 1
+									break // They don't go for prey already being eaten
+
+
+
+						if(!notarget) targets += C
+
+
+
+
+			if((hungry || starving) && targets.len > 0)
+				if(!istype(src, /mob/living/carbon/metroid/adult))
+					if(!starving)
+						for(var/mob/living/carbon/monkey/M in targets)
+							Target = M
+							break
+						for(var/mob/living/carbon/alien/larva/L in targets)
+							Target = L
+							break
+						if(prob(1))
+							for(var/mob/living/carbon/alien/humanoid/H in targets)
+								Target = H
+								break
+							for(var/mob/living/carbon/human/H in targets)
+								Target = H
+								break
+
+					else
+						Target = pick(targets)
+
+				else
+					Target = pick(targets)
+
+			if(attacked > 0 && targets.len > 0)
+				Target = targets[1] // should be the closest target
+
+
+
+
+		if(!Target)
+
+			if(prob(33) && canmove && isturf(loc))
+				step(src, pick(cardinal))
+
+
+		else
+			if(!AIproc)
+				spawn() AIprocess()
+
+
+
+
 
 
 
 /mob/living/carbon/metroid
+	var/AIproc = 0 // determines if the AI loop is activated
+	var/Atkcool = 0 // attack cooldown
 	proc
+
+		AIprocess()  // the master AI process
+
+			AIproc = 1
+			while(AIproc)
+				if(Victim) // can't eat AND have this little process at the same time
+					break
+
+				if(Target.health <= -70 || Target.stat == 2)
+					Target = null
+					AIproc = 0
+					break
+
+				if(Target)
+					for(var/mob/living/carbon/metroid/M in view(1,Target))
+						if(M.Victim == Target)
+							Target = null
+							AIproc = 0
+							break
+					if(!AIproc)
+						break
+
+					if(Target in view(1,src))
+
+						if(prob(80) && !Target.lying)
+
+							if(Target.client && Target.health >= rand(10,30))
+								if(!Atkcool)
+									spawn()
+										Atkcool = 1
+										sleep(10)
+										Atkcool = 0
+
+									Target.attack_metroid(src)
+
+
+								if(prob(30))
+									step_to(src, Target)
+
+							else
+
+								Feedon(Target)
+
+						else
+							Feedon(Target)
+
+					else
+						if(Target in view(30, src))
+							step_to(src, Target)
+
+						else
+							Target = null
+							AIproc = 0
+							break
+
+				var/sleeptime = movement_delay()
+				if(sleeptime <= 0) sleeptime = 1
+
+				sleep(sleeptime + 1) // this is about as fast as a player Metroid can go
+
+			AIproc = 0
+
+
+
 
 		handle_environment(datum/gas_mixture/environment)
 			if(!environment)
@@ -90,9 +249,9 @@
 		handle_regular_status_updates()
 
 			if(istype(src, /mob/living/carbon/metroid/adult))
-				health = 300 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
+				health = 200 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
 			else
-				health = 250 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
+				health = 150 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
 
 
 
@@ -109,9 +268,12 @@
 
 				if(src.stat != 2)	src.stat = 1
 
-			if(prob(80))
-				oxyloss = max(oxyloss-5, 0)
-				toxloss = max(toxloss-5, 0)
+			if(prob(30))
+				if(oxyloss>0) oxyloss = max(oxyloss-1, 0)
+				if(toxloss>0) toxloss = max(toxloss-1, 0)
+				if(fireloss>0) fireloss = max(fireloss-1,0)
+				if(cloneloss>0) cloneloss = max(cloneloss-1,0)
+				if(bruteloss>0) bruteloss = max(bruteloss-1,0)
 
 
 			if (src.stat == 2)
@@ -150,7 +312,10 @@
 
 
 		handle_nutrition()
-			if(prob(25)) nutrition--
+			if(prob(30))
+				if(istype(src, /mob/living/carbon/metroid/adult)) nutrition-=rand(2,6)
+				else nutrition-=rand(1,4)
+
 			if(nutrition <= 0)
 				nutrition = 0
 				if(prob(75))
@@ -159,12 +324,30 @@
 
 			else
 				if(istype(src, /mob/living/carbon/metroid/adult))
-					if(nutrition >= 350)
+					if(nutrition >= 1100)
 						if(prob(40)) amount_grown++
 
 				else
-					if(nutrition >= 250)
+					if(nutrition >= 900)
 						if(prob(40)) amount_grown++
+
+			if(amount_grown >= 10 && !Victim && !Target)
+				if(istype(src, /mob/living/carbon/metroid/adult))
+					if(!client)
+						var/number = pick(2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4)
+						for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
+							var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
+							M.nutrition = round(nutrition/number)
+							step_away(M,src)
+
+						del(src)
+
+				else
+					if(!client)
+						var/mob/living/carbon/metroid/adult/A = new/mob/living/carbon/metroid/adult(src.loc)
+						A.nutrition = nutrition
+						del(src)
+
 
 		handle_virus_updates()
 			if(bodytemperature > 406)

@@ -9,6 +9,8 @@
 	var/obj/machinery/sleeper/connected = null
 	anchored = 1 //About time someone fixed this.
 	density = 1
+	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
+
 
 /obj/machinery/sleep_console/ex_act(severity)
 	switch(severity)
@@ -27,7 +29,12 @@
 /obj/machinery/sleep_console/New()
 	..()
 	spawn( 5 )
-		src.connected = locate(/obj/machinery/sleeper, get_step(src, WEST))
+		if(orient == "RIGHT")
+			icon_state = "sleeperconsole-r"
+			src.connected = locate(/obj/machinery/sleeper, get_step(src, EAST))
+		else
+			src.connected = locate(/obj/machinery/sleeper, get_step(src, WEST))
+
 		return
 	return
 
@@ -121,6 +128,17 @@
 	var/occupied = 0 // So there won't be multiple persons trying to get into one sleeper
 	var/mob/occupant = null
 	anchored = 1
+	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
+
+
+/obj/machinery/sleeper/New()
+	..()
+	spawn( 5 )
+		if(orient == "RIGHT")
+			icon_state = "sleeper_0-r"
+
+		return
+	return
 
 /obj/machinery/sleeper/dummy//For effects only.
 	icon_state = "sleeper_1"
@@ -178,6 +196,9 @@
 		M.loc = src
 		src.occupant = M
 		src.icon_state = "sleeper_1"
+		if(orient == "RIGHT")
+			icon_state = "sleeper_1-r"
+
 		for(var/obj/O in src)
 			O.loc = src.loc
 		src.add_fingerprint(user)
@@ -245,7 +266,9 @@
 	src.occupant.loc = src.loc
 	src.occupant.metabslow = 0
 	src.occupant = null
-	src.icon_state = "sleeper_0"
+
+	if(orient == "RIGHT")
+		icon_state = "sleeper_0-r"
 	return
 
 /obj/machinery/sleeper/proc/inject_inap(mob/user as mob)
@@ -360,6 +383,9 @@
 		usr.metabslow = 1
 		src.occupant = usr
 		src.icon_state = "sleeper_1"
+		if(orient == "RIGHT")
+			icon_state = "sleeper_1-r"
+
 		for(var/obj/O in src)
 			del(O)
 		src.add_fingerprint(usr)

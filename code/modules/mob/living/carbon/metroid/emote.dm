@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/larva/emote(var/act)
+/mob/living/carbon/metroid/emote(var/act)
 
 
 	if (findtext(act, "-", 1, null))
@@ -10,55 +10,40 @@
 	var/message
 
 	switch(act)
-		if ("burp")
-			message = "<B>The [src]</B> burps."
-			m_type = 2
-		if("scratch")
-			if (!src.restrained())
-				message = "<B>The [src.name]</B> scratches."
-				m_type = 1
-		if("whimper")
-			message = "<B>The [src.name]</B> whimpers."
+		if("moan")
+			message = "<B>The [src.name]</B> moans."
 			m_type = 2
 //		if("roar")
 //			if (!muzzled)
 //				message = "<B>The [src.name]</B> roars." Commenting out since larva shouldn't roar /N
 //				m_type = 2
-		if("gasp")
-			message = "<B>The [src.name]</B> gasps."
-			m_type = 2
+
 		if("shiver")
 			message = "<B>The [src.name]</B> shivers."
 			m_type = 2
-		if("drool")
-			message = "<B>The [src.name]</B> drools."
-			m_type = 1
-		if("scretch")
-			message = "<B>The [src.name]</B> scretches."
-			m_type = 2
-		if("choke")
-			message = "<B>The [src.name]</B> chokes."
-			m_type = 2
-		if("moan")
-			message = "<B>The [src.name]</B> moans!"
-			m_type = 2
-		if("nod")
-			message = "<B>The [src.name]</B> nods its head."
-			m_type = 1
 		if("sway")
 			message = "<B>The [src.name]</B> sways around dizzily."
 			m_type = 1
-		if("sulk")
-			message = "<B>The [src.name]</B> sulks down sadly."
-			m_type = 1
 		if("twitch")
-			message = "<B>The [src.name]</B> twitches violently."
+			message = "<B>The [src.name]</B> twitches."
 			m_type = 1
-		if("shake")
-			message = "<B>The [src.name]</B> shakes its head."
+		if("vibrate")
+			message = "<B>The [src.name]</B> vibrates!"
 			m_type = 1
-		if("jump")
-			message = "<B>The [src.name]</B> jumps!"
+		if("light")
+			message = "<B>The [src.name]</B> lights up for a bit, then stops."
+			m_type = 1
+		if("click")
+			message = "<B>The [src.name]</B> makes a clicking noise!"
+			m_type = 1
+		if("chatter")
+			message = "<B>The [src.name]</B> makes a noisy chattering sound!"
+			m_type = 1
+		if("growl")
+			message = "<B>The [src.name]</B> growls!"
+			m_type = 1
+		if("shriek")
+			message = "<B>The [src.name]</B> makes a high-pitched shriek!"
 			m_type = 1
 		else
 			src << text("Invalid Emote: []", act)

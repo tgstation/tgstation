@@ -1,5 +1,10 @@
 
+/mob/living/carbon/metroid/proc/regular_hud_updates()
+	if(client)
+		for(var/hud in client.screen)
+			del(hud)
 
+/*
 /obj/hud/proc/metroid_hud()
 
 	src.adding = list(  )
@@ -47,3 +52,4 @@
 	src.station_explosion.mouse_opacity = 0
 	src.station_explosion.screen_loc = "1,3"
 
+*/

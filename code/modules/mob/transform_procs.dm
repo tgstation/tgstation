@@ -249,7 +249,7 @@
 		del(src)
 	return
 
-/mob/living/carbon/human/proc/Metroidize()
+/mob/living/carbon/human/proc/Metroidize(adult as num, reproduce as num)
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
@@ -262,13 +262,40 @@
 	for(var/t in organs)
 		del(organs[t])
 
-	var/mob/living/carbon/metroid/new_metroid = new /mob/living/carbon/metroid (loc)
+	if(reproduce)
+		var/number = pick(2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4)
+		var/list/babies = list()
+		for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
+			var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
+			M.nutrition = round(nutrition/number)
+			step_away(M,src)
+			babies += M
 
-	new_metroid.mind_initialize(src)
-	new_metroid.key = key
 
-	new_metroid.a_intent = "hurt"
-	new_metroid << "<B>You are now a Metroid.</B>"
+		var/mob/living/carbon/metroid/new_metroid = pick(babies)
+
+		new_metroid.mind_initialize(src)
+		new_metroid.key = key
+
+		new_metroid.a_intent = "hurt"
+		new_metroid << "<B>You are now a baby Metroid.</B>"
+
+	if(adult)
+		var/mob/living/carbon/metroid/adult/new_metroid = new /mob/living/carbon/metroid/adult (loc)
+		new_metroid.mind_initialize(src)
+		new_metroid.key = key
+
+		new_metroid.a_intent = "hurt"
+		new_metroid << "<B>You are now an adult Metroid.</B>"
+
+	else
+		var/mob/living/carbon/metroid/new_metroid = new /mob/living/carbon/metroid (loc)
+
+		new_metroid.mind_initialize(src)
+		new_metroid.key = key
+
+		new_metroid.a_intent = "hurt"
+		new_metroid << "<B>You are now a baby Metroid.</B>"
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
 	return

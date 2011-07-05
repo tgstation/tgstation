@@ -13,19 +13,18 @@
 			for(var/i = 0,i<imax,i++)
 				message += "E"
 
-	for(var/datum/disease/D in viruses)
-		if(istype(D, /datum/disease/pierrot_throat))
-			var/list/temp_message = dd_text2list(message, " ")
-			var/list/pick_list = list()
-			for(var/i = 1, i <= temp_message.len, i++)
-				pick_list += i
-			for(var/i=1, ((i <= src.virus.stage) && (i <= temp_message.len)), i++)
-				if(prob(5 * src.virus.stage))
-					var/H = pick(pick_list)
-					if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
-					temp_message[H] = "HONK"
-					pick_list -= H
-				message = dd_list2text(temp_message, " ")
+	for(var/datum/disease/pierrot_throat/D in viruses)
+		var/list/temp_message = dd_text2list(message, " ")
+		var/list/pick_list = list()
+		for(var/i = 1, i <= temp_message.len, i++)
+			pick_list += i
+		for(var/i=1, ((i <= D.stage) && (i <= temp_message.len)), i++)
+			if(prob(5 * D.stage))
+				var/H = pick(pick_list)
+				if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
+				temp_message[H] = "HONK"
+				pick_list -= H
+			message = dd_list2text(temp_message, " ")
 
 	//Ninja mask obscures text and voice if set to do so.
 	//Would make it more global but it's sort of ninja specific.
@@ -86,5 +85,7 @@
 	if (istype(other, /mob/living/silicon/robot))
 		return 1
 	if (istype(other, /mob/living/carbon/brain))
+		return 1
+	if (istype(other, /mob/living/carbon/metroid))
 		return 1
 	return ..()

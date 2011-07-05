@@ -73,6 +73,20 @@
 		healthcheck()
 		return
 
+/obj/grille/attack_metroid(var/obj/M)
+	if(!istype(usr, /mob/living/carbon/metroid/adult))
+		return
+
+	usr<< text("\green You smash against the grille.")
+	for(var/mob/O in oviewers())
+		if ((O.client && !( O.blinded )))
+			O << text("\red [] smashes against the grille.", usr)
+	playsound(src.loc, 'grillehit.ogg', 80, 1)
+	src.health -= rand(2,3)
+	healthcheck()
+	return
+	return
+
 /obj/grille/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 	if(istype(mover) && mover.checkpass(PASSGRILLE))

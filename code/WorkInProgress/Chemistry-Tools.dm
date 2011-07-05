@@ -1097,23 +1097,29 @@
 				if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 					M << "\red You cannot force any more of [src] to go down your throat."
 					return 0
-			else										//If you're feeding it to someone else.
-				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
-				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
+			else
+				if(!istype(M, /mob/living/carbon/metroid))		//If you're feeding it to someone else.
+					var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
+					if (fullness <= (550 * (1 + M.overeatduration / 1000)))
+						for(var/mob/O in viewers(world.view, user))
+							O.show_message("\red [user] attempts to feed [M] [src].", 1)
+					else
+						for(var/mob/O in viewers(world.view, user))
+							O.show_message("\red [user] cannot force anymore of [src] down [M]'s throat.", 1)
+							return 0
+
+					if(!do_mob(user, M)) return
+
+					M.attack_log += text("<font color='orange'>[world.time] - has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
+					user.attack_log += text("<font color='red'>[world.time] - has fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+
 					for(var/mob/O in viewers(world.view, user))
-						O.show_message("\red [user] attempts to feed [M] [src].", 1)
+						O.show_message("\red [user] feeds [M] [src].", 1)
+
 				else
-					for(var/mob/O in viewers(world.view, user))
-						O.show_message("\red [user] cannot force anymore of [src] down [M]'s throat.", 1)
-						return 0
+					user << "This creature does not seem to have a mouth!"
+					return
 
-				if(!do_mob(user, M)) return
-
-				M.attack_log += text("<font color='orange'>[world.time] - has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
-				user.attack_log += text("<font color='red'>[world.time] - has fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
-
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message("\red [user] feeds [M] [src].", 1)
 			if(reagents)								//Handle ingestion of the reagent.
 				if(reagents.total_volume)
 					reagents.reaction(M, INGEST)
@@ -2035,7 +2041,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
 	desc = "Just add 10ml water, self heats! A taste that reminds you of your shcool years."
-	icon_state = "coffee"
+	icon_state = "ramen"
 	New()
 		..()
 		reagents.add_reagent("dry_ramen", 30)

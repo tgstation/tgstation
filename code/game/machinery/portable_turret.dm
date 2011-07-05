@@ -477,9 +477,10 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	var/obj/item/projectile/A
 	if(!installation) // if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
 		A = new /obj/item/projectile/electrode( loc )
-		use_power(200)
+		if(!emagged) use_power(200)
+		else use_power(400)
 		playsound(src.loc, 'Taser.ogg', 75, 1)
-		icon_state = "orange_target_prism"
+		icon_state = "target_prism"
 	else
 		// Shooting Code:
 		var/obj/item/weapon/gun/energy/E=new installation
@@ -489,16 +490,19 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		if (istype(E, /obj/item/weapon/gun/energy/laser))
 			A = new /obj/item/projectile/beam( loc )
 			icon_state = "orange_target_prism"
-			use_power(500)
+			if(!emagged) use_power(500)
+			else use_power(1000)
 		else if(istype(E, /obj/item/weapon/gun/energy/pulse_rifle))
 			A = new /obj/item/projectile/beam/pulse( loc )
 			icon_state = "orange_target_prism"
-			use_power(700)
+			if(!emagged) use_power(700)
+			else use_power(1400)
 
 		else if(istype(E, /obj/item/weapon/gun/energy/taser))
 			A = new /obj/item/projectile/electrode( loc )
-			icon_state = "orange_target_prism"
-			use_power(200)
+			icon_state = "target_prism"
+			if(!emagged) use_power(200)
+			else use_power(400)
 
 		else // Energy gun shots
 
@@ -510,7 +514,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			else // if it has been emagged, use laser shots
 				A = new /obj/item/projectile/beam( loc )
 				icon_state = "orange_target_prism"
-				use_power(500)
+				use_power(1000)
 
 		del(E)
 	A.current = T

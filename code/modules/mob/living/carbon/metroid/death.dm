@@ -23,6 +23,7 @@
 	if (src.blind)
 		src.blind.layer = 0
 	src.lying = 1
+	src.icon_state = "baby metroid dead"
 
 	var/h = src.hand
 	src.hand = 0

@@ -208,6 +208,9 @@ datum
 							T.overlays -= T.wet_overlay
 							T.wet_overlay = null
 
+				for(var/mob/living/carbon/metroid/M in T)
+					M.toxloss+=rand(10,50)
+
 				var/hotspot = (locate(/obj/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
@@ -645,6 +648,8 @@ datum
 					T.overlays = image('effects.dmi',icon_state = "thermite")
 				return
 
+
+
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -791,6 +796,10 @@ datum
 				T.clean_blood()
 				for(var/obj/decal/cleanable/C in src)
 					del(C)
+
+				for(var/mob/living/carbon/metroid/M in T)
+					M.toxloss+=rand(10,50)
+
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				M.clean_blood()
 				if(istype(M, /mob/living/carbon))

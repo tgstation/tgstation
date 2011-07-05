@@ -7,23 +7,23 @@
 		usr << text("\red [] is limp and unresponsive.", src.name)
 	else
 		if (src.bruteloss)
-			if (src.bruteloss < 30)
-				usr << text("\red [] looks slightly damaged!", src.name)
+			if (src.bruteloss < 40)
+				usr << text("\red [] has some punctures in its flesh!", src.name)
 			else
-				usr << text("\red <B>[] looks severely damaged!</B>", src.name)
+				usr << text("\red <B>[] has a lot of punctures and tears in its flesh!</B>", src.name)
 
 		switch(powerlevel)
 
 			if(2 to 3)
-				usr << text("[] seems to have very little electrical activity inside it.", src.name)
+				usr << text("\blue [] seems to have little bit of electrical activity inside it.", src.name)
 
 			if(4 to 5)
-				usr << text("[] seems to some electricity inside of it.", src.name)
+				usr << text("\blue [] seems to some electricity inside of it.", src.name)
 
 			if(6 to 9)
-				usr << text("[] seems to have a lot of electricity inside of it.", src.name)
+				usr << text("\blue [] seems to have a lot of electricity inside of it.", src.name)
 
 			if(10)
-				usr << text("<B>[] seems to have extreme electrical activity inside it!</B>", src.name)
+				usr << text("\blue <B>[] seems to have extreme electrical activity inside it!</B>", src.name)
 
 	return

@@ -28,6 +28,7 @@
 
 	if (bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
+		toxloss+=rand(5,20)
 
 	if(reagents)
 		if(reagents.has_reagent("hyperzine")) // hyperzine slows Metroids down
@@ -47,6 +48,36 @@
 		if ((!( yes ) || now_pushing))
 			return
 		now_pushing = 1
+
+		if(isobj(AM))
+			if(!client && powerlevel > 0)
+				var/probab = 10
+				switch(powerlevel)
+					if(1 to 2) probab = 20
+					if(3 to 4) probab = 30
+					if(5 to 6) probab = 40
+					if(7 to 8) probab = 60
+					if(9) 	   probab = 70
+					if(10) 	   probab = 95
+				if(prob(probab))
+					if(istype(AM, /obj/window) || istype(AM, /obj/grille))
+						if(istype(src, /mob/living/carbon/metroid/adult))
+							if(nutrition <= 600 && !Atkcool)
+								AM.attack_metroid(src)
+								spawn()
+									Atkcool = 1
+									sleep(15)
+									Atkcool = 0
+						else
+							if(nutrition <= 500 && !Atkcool)
+								if(prob(5))
+									if(prob(50))
+										AM.attack_metroid(src)
+										spawn()
+											Atkcool = 1
+											sleep(15)
+											Atkcool = 0
+
 		if(ismob(AM))
 			var/mob/tmob = AM
 
@@ -85,53 +116,59 @@
 	statpanel("Status")
 	if (client && client.holder)
 		if(istype(src, /mob/living/carbon/metroid/adult))
-			stat(null, "Health: [round(health)]/300")
+			stat(null, "Health: [round(health)]/200")
 		else
-			stat(null, "Health: [round(health)]/250")
+			stat(null, "Health: [round(health)]/150")
 
 
 	if (client.statpanel == "Status")
 		if(istype(src,/mob/living/carbon/metroid/adult))
-			stat(null, "Nutrition: [nutrition]/400")
-			if(amount_grown == 10)
+			stat(null, "Nutrition: [nutrition]/1200")
+			if(amount_grown >= 10)
 				stat(null, "You can reproduce!")
 		else
-			stat(null, "Nutrition: [nutrition]/300")
+			stat(null, "Nutrition: [nutrition]/1000")
+			if(amount_grown >= 10)
+				stat(null, "You can evolve!")
+
+		stat(null,"Power Level: [powerlevel]")
 
 
 /mob/living/carbon/metroid/bullet_act(flag, A as obj)
-	if (locate(/obj/item/weapon/grab, src))
-		var/mob/safe = null
-		if (istype(l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = l_hand
-			if ((G.state == 3 && get_dir(src, A) == dir))
-				safe = G.affecting
-		if (istype(r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon.grab/G = r_hand
-			if ((G.state == 3 && get_dir(src, A) == dir))
-				safe = G.affecting
-		if (safe)
-			return safe.bullet_act(flag, A)
+	if(A)
+		if (locate(/obj/item/weapon/grab, src))
+			var/mob/safe = null
+			if (istype(l_hand, /obj/item/weapon/grab))
+				var/obj/item/weapon/grab/G = l_hand
+				if ((G.state == 3 && get_dir(src, A) == dir))
+					safe = G.affecting
+			if (istype(r_hand, /obj/item/weapon/grab))
+				var/obj/item/weapon.grab/G = r_hand
+				if ((G.state == 3 && get_dir(src, A) == dir))
+					safe = G.affecting
+			if (safe)
+				return safe.bullet_act(flag, A)
 
 	switch(flag)
 		if(PROJECTILE_BULLET)
 			var/d = 1
 
+			attacked += 10
 			if (stat != 2)
 				bruteloss += d
 
 				updatehealth()
 			return
 		if(PROJECTILE_TASER)
-			if (prob(10))
-				if(stunned <= 10)
-					stunned = 10
+			if (prob(70))
+				powerlevel++
+				if(powerlevel > 10) powerlevel = 10
 
 		if(PROJECTILE_LASER)
 			var/d = 30
 
+			attacked += 10
 	//		if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff./ It really doesn't make any sense. /N
-			if (prob(25)) stunned++
 
 			if (stat != 2)
 				bruteloss += d
@@ -140,6 +177,7 @@
 		if(PROJECTILE_PULSE)
 			var/d = 100
 
+			attacked += 10
 			if (stat != 2)
 				bruteloss += d
 
@@ -322,29 +360,31 @@
 
 
 
-/mob/living/carbon/metroid/hand_p(mob/M as mob)
+/mob/living/carbon/metroid/attack_metroid(mob/living/carbon/metroid/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
 		return
 
-	if (M.a_intent == "hurt")
-		if (health > 0)
+	if(Victim) return // can't attack while eating!
 
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red <B>[M.name] has [pick("bit","slashed")] []!</B>", src), 1)
+	if (health > -100)
 
-			var/damage = rand(1, 3)
+		for(var/mob/O in viewers(src, null))
+			if ((O.client && !( O.blinded )))
+				O.show_message(text("\red <B>The [M.name] has bit []!</B>", src), 1)
 
-			if(istype(src, /mob/living/carbon/metroid/adult))
-				damage = rand(20, 60)
-			else
-				damage = rand(5, 45)
+		var/damage = rand(1, 3)
+		attacked += 5
 
-			bruteloss += damage
+		if(istype(src, /mob/living/carbon/metroid/adult))
+			damage = rand(1, 6)
+		else
+			damage = rand(1, 3)
+
+		bruteloss += damage
 
 
-			updatehealth()
+		updatehealth()
 
 	return
 
@@ -368,6 +408,7 @@
 			if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
 				return
 			if (health > 0)
+				attacked += 10
 				playsound(loc, 'bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -387,6 +428,45 @@
 		return
 
 	..()
+
+	if(Victim)
+		if(Victim == M)
+			if(prob(90))
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message("\red [M] attempts to wrestle \the [name] off!", 1)
+				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+
+			else
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message("\red [M] manages to wrestle \the [name] off!", 1)
+				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+
+				Victim = null
+				step_away(src,M)
+
+			return
+
+		else
+			if(prob(80))
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message("\red [M] attempts to wrestle \the [name] off of [Victim]!", 1)
+				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+
+			else
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message("\red [M] manages to wrestle \the [name] off of [Victim]!", 1)
+				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+
+				Victim = null
+				step_away(src,M)
+
+			return
+
+
 
 	if(M.gloves && M.gloves.elecgen == 1)//Stungloves. Any contact will stun the alien.
 		if(M.gloves.uses > 0)
@@ -420,10 +500,14 @@
 
 		else
 			var/damage = rand(1, 9)
+
+			attacked += 10
 			if (prob(90))
 				if (M.mutations & HULK)
 					damage += 5
+					if(Victim) Victim = null
 					spawn(0)
+
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
@@ -431,10 +515,7 @@
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
-				if (damage > 4.9)
-					for(var/mob/O in viewers(M, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
+
 				bruteloss += damage
 				updatehealth()
 			else
@@ -462,7 +543,9 @@
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 
 		if ("hurt")
+
 			if ((prob(95) && health > 0))
+				attacked += 10
 				playsound(loc, 'slice.ogg', 25, 1, -1)
 				var/damage = rand(15, 30)
 				if (damage >= 25)
@@ -502,10 +585,20 @@
 		if ("disarm")
 			playsound(loc, 'pierce.ogg', 25, 1, -1)
 			var/damage = 5
+			attacked += 10
+
 			if(prob(95))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has tackled down [name]!</B>", M), 1)
+						O.show_message(text("\red <B>[] has tackled [name]!</B>", M), 1)
+
+				if(Victim) Victim = null
+				spawn(0)
+
+					step_away(src,M,15)
+					sleep(3)
+					step_away(src,M,15)
+
 			else
 				drop_item()
 				for(var/mob/O in viewers(src, null))

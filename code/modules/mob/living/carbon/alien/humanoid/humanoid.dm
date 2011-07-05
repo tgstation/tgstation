@@ -71,6 +71,14 @@
 
 /mob/living/carbon/alien/humanoid/bullet_act(flag, A as obj)
 	var/shielded = 0
+
+	if(prob(50))
+		for(var/mob/living/carbon/metroid/M in view(1,src))
+			if(M.Victim == src)
+				M.bullet_act(flag, A)
+				return
+
+
 	for(var/obj/item/device/shield/S in src)
 		if (S.active)
 			if (flag == "bullet")
@@ -370,6 +378,10 @@
 		. = ..()
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)
+
+	for(var/mob/living/carbon/metroid/M in view(1,src))
+		M.UpdateFeed(src)
+
 	return
 
 /mob/living/carbon/alien/humanoid/update_clothing()
@@ -566,6 +578,34 @@
 						O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
 				bruteloss  += rand(1, 3)
 				updatehealth()
+	return
+
+
+/mob/living/carbon/alien/humanoid/attack_metroid(mob/living/carbon/metroid/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
+
+	if(M.Victim) return // can't attack while eating!
+
+	if (health > -100)
+
+		for(var/mob/O in viewers(src, null))
+			if ((O.client && !( O.blinded )))
+				O.show_message(text("\red <B>The [M.name] has [pick("bit","slashed")] []!</B>", src), 1)
+
+		var/damage = rand(1, 3)
+
+		if(istype(src, /mob/living/carbon/metroid/adult))
+			damage = rand(20, 40)
+		else
+			damage = rand(5, 35)
+
+		bruteloss += damage
+
+
+		updatehealth()
+
 	return
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)

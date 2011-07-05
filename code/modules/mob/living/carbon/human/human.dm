@@ -186,6 +186,14 @@
 	var/shielded = 0
 	var/list/armor
 	//Preparing the var for grabbing the armor information, can't grab the values yet because we don't know what kind of bullet was used. --NEO
+
+	if(prob(50))
+		for(var/mob/living/carbon/metroid/M in view(1,src))
+			if(M.Victim == src)
+				M.bullet_act(flag, A) // the bullet hits them, not src!
+				return
+
+
 	for(var/obj/item/device/shield/S in src)
 		if (S.active)
 			if (flag == "bullet")
@@ -952,6 +960,7 @@
 	if (restrained())
 		pulling = null
 
+
 	var/t7 = 1
 	if (restrained())
 		for(var/mob/M in range(src, 1))
@@ -1022,6 +1031,10 @@
 		. = ..()
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)
+
+	for(var/mob/living/carbon/metroid/M in view(1,src))
+		M.UpdateFeed(src)
+
 	return
 
 /mob/living/carbon/human/update_clothing()
@@ -1656,6 +1669,83 @@
 							O.show_message(text("\red <B>[] has tried to disarm []!</B>", M, src), 1)
 	return
 
+
+/mob/living/carbon/human/attack_metroid(mob/living/carbon/metroid/M as mob)
+	if (!ticker)
+		M << "You cannot attack people before the game has started."
+		return
+
+	if(M.Victim) return // can't attack while eating!
+
+	if (health > -100)
+
+		for(var/mob/O in viewers(src, null))
+			if ((O.client && !( O.blinded )))
+				O.show_message(text("\red <B>The [M.name] has [pick("bit","slashed")] []!</B>", src), 1)
+
+		var/damage = rand(1, 3)
+
+		if(istype(src, /mob/living/carbon/metroid/adult))
+			damage = rand(20, 40)
+		else
+			damage = rand(5, 35)
+
+
+		var/dam_zone = pick("head", "chest", "l_hand", "r_hand", "l_leg", "r_leg", "groin")
+
+
+		if (dam_zone == "chest")
+			if ((((wear_suit && wear_suit.body_parts_covered & UPPER_TORSO) || (w_uniform && w_uniform.body_parts_covered & LOWER_TORSO)) && prob(10)))
+				if(prob(20))
+					show_message("\blue You have been protected from a hit to the chest.")
+					return
+
+
+
+		if (istype(organs[text("[]", dam_zone)], /datum/organ/external))
+			var/datum/organ/external/temp = organs[text("[]", dam_zone)]
+			if (temp.take_damage(damage, 0))
+				UpdateDamageIcon()
+			else
+				UpdateDamage()
+
+
+		if(M.powerlevel > 0)
+			var/stunprob = 10
+			var/power = M.powerlevel + rand(0,3)
+
+			switch(M.powerlevel)
+				if(1 to 2) stunprob = 20
+				if(3 to 4) stunprob = 30
+				if(5 to 6) stunprob = 40
+				if(7 to 8) stunprob = 60
+				if(9) 	   stunprob = 70
+				if(10) 	   stunprob = 95
+
+			if(prob(stunprob))
+				M.powerlevel -= 3
+				if(M.powerlevel < 0)
+					M.powerlevel = 0
+
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>The [M.name] has [pick("bit","slashed")] []!</B>", src), 1)
+
+				if (weakened < power)
+					weakened = power
+				if (stuttering < power)
+					stuttering = power
+				if (stunned < power)
+					stunned = power
+
+				if (prob(stunprob) && M.powerlevel >= 8)
+					fireloss += M.powerlevel * rand(6,10)
+
+
+		updatehealth()
+
+	return
+
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
@@ -1750,6 +1840,10 @@
 						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
 					M.attack_log += text("<font color='red'>[world.time] - has punched [src.name] ([src.ckey])</font>")
 					src.attack_log += text("<font color='orange'>[world.time] - has been punched by [M.name] ([M.ckey])</font>")
+
+					M.attack_log += text("<font color='red'>[world.time] - has punched [src.name] ([src.ckey])</font>")
+					src.attack_log += text("<font color='orange'>[world.time] - has been punched by [M.name] ([M.ckey])</font>")
+
 
 					if (def_zone == "head")
 						if ((((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD)) && prob(99)))
