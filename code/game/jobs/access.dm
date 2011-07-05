@@ -57,6 +57,7 @@
 	access_ce = 56
 	access_hop = 57
 	access_hos = 58
+	access_RC_announce = 59 //Request console announcements
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -158,14 +159,15 @@
 			return list(access_medical, access_morgue, access_tox, access_tox_storage, access_chemistry, access_medlab, access_court,
 			            access_teleporter, access_heads, access_tech_storage, access_security, access_brig, access_atmospherics,
 			            access_maint_tunnels, access_bar, access_janitor, access_kitchen, access_robotics, access_armory, access_hydroponics,
-			            access_theatre, access_research, access_hos)
+			            access_theatre, access_research, access_hos, access_RC_announce)
 		if("Head of Personnel")
 			return list(access_security, access_brig, access_court, access_forensics_lockers,
 			            access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab, access_engine,
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer,
-			            access_theatre, access_research, access_mining_office, access_mining, access_heads_vault, access_mining_station, access_hop)
+			            access_theatre, access_research, access_mining_office, access_mining, access_heads_vault, access_mining_station,
+			            access_hop, access_RC_announce)
 		if("Atmospheric Technician")
 			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage)
 		if("Bartender")
@@ -192,15 +194,18 @@
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_ai_upload, access_construction, access_robotics,
-			            access_mint, access_ce)
+			            access_mint, access_ce, access_RC_announce)
 		if("Research Director") // removed hydroponics access, they are a supply field, not science
 			return list(access_medical, access_morgue, access_medlab, access_rd,
 			            access_tech_storage, access_maint_tunnels, access_heads, access_tox,
-			            access_tox_storage, access_chemistry, access_teleporter, access_virology, access_research, access_robotics, access_xenobiology)
+			            access_tox_storage, access_chemistry, access_teleporter, access_virology,
+			            access_research, access_robotics, access_xenobiology, access_RC_announce)
 		if("Virologist")
 			return list(access_medical, access_morgue, access_virology, access_research)
 		if("Chief Medical Officer")
-			return list(access_medical, access_morgue, access_medlab, access_heads, access_chemistry, access_virology, access_cmo, access_surgery, access_research)
+			return list(access_medical, access_morgue, access_medlab, access_heads,
+			access_chemistry, access_virology, access_cmo, access_surgery,
+			access_research, access_RC_announce)
 		else
 			return list()
 
@@ -235,7 +240,7 @@
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_cargo_bot, access_construction,
 	            access_hydroponics, access_library, access_manufacturing, access_lawyer, access_virology, access_cmo, access_qm, access_clown, access_mime, access_surgery,
 	            access_theatre, access_research, access_mining, access_mining_office, access_mailsorting, access_mint_vault, access_mint,
-	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos)
+	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
@@ -253,7 +258,7 @@
 		if(4) //engineering and maintenance
 			return list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_emergency_storage, access_tech_storage, access_atmospherics, access_construction, access_robotics, access_ce)
 		if(5) //command
-			return list(access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_mint_vault, access_heads_vault, access_hop)
+			return list(access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_mint_vault, access_heads_vault, access_hop, access_RC_announce)
 		if(6) //station general
 			return list(access_chapel_office, access_kitchen,access_bar, access_janitor, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
 		if(7) //supply
@@ -395,6 +400,8 @@
 			return "HoS Private"
 		if(access_ce)
 			return "CE Private"
+		if(access_RC_announce)
+			return "Request console announcements"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
