@@ -1,7 +1,7 @@
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
 //NOTE: hidden packs only show up when the computer has been hacked.
-
+//BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 /datum/supply_packs/specialops
 	name = "Special Ops supplies"
 	contains = list("/obj/item/weapon/storage/emp_kit",
@@ -21,6 +21,7 @@
 					"/obj/item/weapon/reagent_containers/food/snacks/flour",
 					"/obj/item/weapon/reagent_containers/food/snacks/flour",
 					"/obj/item/weapon/reagent_containers/food/snacks/flour",
+					"/obj/item/weapon/reagent_containers/food/snacks/flour",
 					"/obj/item/weapon/reagent_containers/food/drinks/milk",
 					"/obj/item/weapon/reagent_containers/food/drinks/milk",
 					"/obj/item/kitchen/egg_box",
@@ -32,29 +33,22 @@
 	containertype = "/obj/crate/freezer"
 	containername = "Food crate"
 
-/datum/supply_packs/meat
-	name = "Meat crate"
-	contains = list("/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
-					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
-					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
-					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
-					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
-					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
-					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
-					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey",
-					"/obj/item/weapon/reagent_containers/food/snacks/meat/monkey")
+/datum/supply_packs/monkey
+	name = "Monkey crate"
+	contains = list ("/obj/item/weapon/monkeycube_box",
+					 "/obj/item/weapon/monkeycube_box")
 	cost = 10
 	containertype = "/obj/crate/freezer"
-	containername = "Meat crate"
-
-// Don't add living things to crates, that's bad, it will break the shuttle.
+	containername = "Monkey crate"
 
 /datum/supply_packs/party
 	name = "Party equipment"
-	contains = list("/obj/item/weapon/reagent_containers/food/drinks/beer",
-	"/obj/item/weapon/reagent_containers/food/drinks/beer",
-	"/obj/item/weapon/reagent_containers/food/drinks/beer",
-	"/obj/item/weapon/reagent_containers/food/drinks/beer",
+	contains = list("/obj/item/weapon/storage/drinkingglasses",
+	"/obj/item/weapon/reagent_containers/food/drinks/shaker",
+	"/obj/item/weapon/reagent_containers/food/drinks/bottle/patron",
+	"/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager",
+	"/obj/item/weapon/reagent_containers/food/drinks/ale",
+	"/obj/item/weapon/reagent_containers/food/drinks/ale",
 	"/obj/item/weapon/reagent_containers/food/drinks/beer",
 	"/obj/item/weapon/reagent_containers/food/drinks/beer",
 	"/obj/item/weapon/reagent_containers/food/drinks/beer",
@@ -131,11 +125,11 @@
 
 /datum/supply_packs/costume
 	name = "Standard Costume crate"
-	contains = list("/obj/item/weapon/stamp/clown",
-					"/obj/item/weapon/storage/backpack/clown",
+	contains = list("/obj/item/weapon/storage/backpack/clown",
 					"/obj/item/clothing/shoes/clown_shoes",
 					"/obj/item/clothing/mask/gas/clown_hat",
 					"/obj/item/clothing/under/rank/clown",
+					"/obj/item/weapon/bikehorn",
 					"/obj/item/clothing/under/mime",
 					"/obj/item/clothing/shoes/black",
 					"/obj/item/clothing/gloves/white",
@@ -143,8 +137,8 @@
 					"/obj/item/clothing/head/beret",
 					"/obj/item/clothing/suit/suspenders",)
 	cost = 10
-	containertype = "/obj/crate/secure/gear"
-	containername = "Standard Costume"
+	containertype = "/obj/crate/secure"
+	containername = "Standard Costumes"
 	access = access_theatre
 
 /datum/supply_packs/wizard
@@ -201,6 +195,9 @@
 /datum/supply_packs/exoticseeds
 	name = "Exotic Seeds Crate"
 	contains = list("/obj/item/seeds/nettleseed",
+	"/obj/item/seeds/replicapod",
+	"/obj/item/seeds/replicapod",
+	"/obj/item/seeds/replicapod",
 	"/obj/item/seeds/plumpmycelium",
 	"/obj/item/seeds/libertymycelium",
 	"/obj/item/seeds/amanitamycelium",
@@ -297,7 +294,9 @@
 
 /datum/supply_packs/engine/collector
 	name = "Collector crate"
-	contains = list("/obj/machinery/power/rad_collector")
+	contains = list("/obj/machinery/power/rad_collector",
+					"/obj/machinery/power/rad_collector",
+					"/obj/machinery/power/rad_collector")
 	containername = "Collector crate"
 
 /datum/supply_packs/engine/PA

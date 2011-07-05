@@ -162,6 +162,17 @@
 	..()
 	return
 
+/obj/item/weapon/storage/drinkingglasses/New()
+
+	new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( src )
+	..()
+	return
+
 /*
 /obj/item/weapon/storage/disk_kit/disks/New()
 
