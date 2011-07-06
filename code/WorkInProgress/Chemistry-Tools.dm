@@ -2712,6 +2712,38 @@
 					icon_state = "bahama_mama"
 					name = "Bahama Mama"
 					desc = "Tropic cocktail"
+				if("sbiten")
+					icon_state = "sbitenglass"
+					name = "Sbiten"
+					desc = "A spicy mix of Vodka and Spice. Very hot."
+				if("red_mead")
+					icon_state = "red_meadglass"
+					name = "Red Mead"
+					desc = "A True Vikings Beverage, though its color is strange."
+				if("mead")
+					icon_state = "meadglass"
+					name = "Mead"
+					desc = "A Vikings Beverage, though a cheap one."
+				if("iced_beer")
+					icon_state = "iced_beerglass"
+					name = "Iced Beer"
+					desc = "A beer so frosty, the air around it freezes."
+				if("grog")
+					icon_state = "grogglass"
+					name = "Grog"
+					desc = "A fine and cepa drink for Space."
+				if("nuka_cola")
+					icon_state = "nuka_colaglass"
+					name = "Nuka Cola"
+					desc = "A high quality Cola promised to make you jitter."
+				if("soy_latte")
+					icon_state = "soy_latte"
+					name = "Soy Latte"
+					desc = "A nice and refrshing beverage while you are reading."
+				if("cafe_latte")
+					icon_state = "cafe_latte"
+					name = "Cafe Latte"
+					desc = "A nice, strong and refreshing beverage while you are reading."
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"

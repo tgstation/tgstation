@@ -2717,3 +2717,144 @@ datum
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				..()
 				return
+
+		sbiten
+			name = "Sbiten"
+			id = "sbiten"
+			description = "A spicy Vodka! Might be a little hot for the little guys!"
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if (M.bodytemperature < 360)
+					M.bodytemperature = min(360, M.bodytemperature+50) //310 is the normal bodytemp. 310.055
+				if(!data) data = 1
+				data++
+				M.dizziness +=6
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 6
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+5,5)
+				..()
+				return
+
+		red_mead
+			name = "Red Mead"
+			id = "red_mead"
+			description = "The true Viking drink! Even though it has a strange red color."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=5
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 4
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+4,4)
+				..()
+				return
+
+		mead
+			name = "Mead"
+			id = "mead"
+			description = "A Vikings drink, though a cheap one."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=4
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 4
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+3,3)
+				..()
+				return
+
+
+		iced_beer
+			name = "Iced Beer"
+			id = "iced_beer"
+			description = "A beer which is so cold the air around it freezes."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if (M.bodytemperature < 270)
+					M.bodytemperature = min(270, M.bodytemperature-40) //310 is the normal bodytemp. 310.055
+				if(!data) data = 1
+				data++
+				M.dizziness +=5
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 6
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+4,5)
+				..()
+				return
+
+		grog
+			name = "Grog"
+			id = "grog"
+			description = "A fine drink for Space."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=7
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 7
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+7,7)
+				..()
+				return
+
+		nuka_cola
+			name = "Nuka Cola"
+			id = "nuka_cola"
+			description = "A high quality drink promising to jitter you."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				M.druggy = max(M.druggy, 30)
+				M.confused = max(M:confused+3,0)
+				M.make_dizzy(10)
+				if (!M.stuttering) M.stuttering = 1
+				M.stuttering += 3
+				if(!data) data = 1
+				data++
+				switch(data)
+					if(51 to INFINITY)
+						M:sleeping += 2
+				..()
+				return
+
+		soy_latte
+			name = "Soy Latte"
+			id = "soy_latte"
+			description = "A nice and tasty beverage while you are reading."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				..()
+				M.dizziness = max(0,M.dizziness-20)
+				M:drowsyness = max(0,M:drowsyness-20)
+				M:sleeping = 0
+				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature+5)
+				M.make_jittery(5)
+				..()
+				return
+
+		cafe_latte
+			name = "Cafe Latte"
+			id = "cafe_latte"
+			description = "A nice, strong and tasty beverage while you are reading."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				..()
+				M.dizziness = max(0,M.dizziness-30)
+				M:drowsyness = max(0,M:drowsyness-30)
+				M:sleeping = 0
+				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature+10)
+				M.make_jittery(10)
+				..()
+				return

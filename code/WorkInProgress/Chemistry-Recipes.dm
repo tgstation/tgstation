@@ -828,3 +828,59 @@ datum
 			result = "bahama_mama"
 			required_reagents = list("rum" = 2, "orangejuice" = 2, "limejuice" = 1, "ice" = 1)
 			result_amount = 6
+
+		sbiten
+			name = "Sbiten"
+			id = "sbiten"
+			result = "sbiten"
+			required_reagents = list("vodka" = 10, "capsaicin" = 1)
+			result_amount = 10
+
+		red_mead
+			name = "Red Mead"
+			id = "red_mead"
+			result = "red_mead"
+			required_reagents = list("blood" = 1, "water" = 1, "wine" = 1)
+			result_amount = 3
+
+		mead
+			name = "Mead"
+			id = "mead"
+			result = "mead"
+			required_reagents = list("orangejuice" = 1, "wine" = 1)
+			result_amount = 2
+
+		iced_beer
+			name = "Iced Beer"
+			id = "iced_beer"
+			result = "iced_beer"
+			required_reagents = list("beer" = 10, "frostoil" = 1)
+			result_amount = 10
+
+		grog
+			name = "Grog"
+			id = "grog"
+			result = "grog"
+			required_reagents = list("rum" = 1, "water" = 1)
+			result_amount = 2
+
+		nuka_cola
+			name = "Nuka Cola"
+			id = "nuka_cola"
+			result = "nuka_cola"
+			required_reagents = list("radium" = 1, "cola" = 1)
+			result_amount = 2
+
+		soy_latte
+			name = "Soy Latte"
+			id = "soy_latte"
+			result = "soy_latte"
+			required_reagents = list("coffee" = 1, "soymilk" = 1)
+			result_amount = 2
+
+		cafe_latte
+			name = "Cafe Latte"
+			id = "cafe_latte"
+			result = "cafe_latte"
+			required_reagents = list("coffee" = 1, "milk" = 1, "cream" = 1)
+			result_amount = 3
