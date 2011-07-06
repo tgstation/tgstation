@@ -154,7 +154,7 @@ These should not block bullets/N */
 
 //Actual Deployable machinery stuff
 
-/obj/machinery/depolyable
+/obj/machinery/deployable
 	name = "deployable"
 	desc = "deployable"
 	icon = 'objects.dmi'
