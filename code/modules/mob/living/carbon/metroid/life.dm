@@ -156,7 +156,7 @@
 		AIprocess()  // the master AI process
 
 			AIproc = 1
-			while(AIproc)
+			while(AIproc && stat != 2)
 				if(Victim) // can't eat AND have this little process at the same time
 					break
 
