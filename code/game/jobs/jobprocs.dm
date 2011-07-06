@@ -655,7 +655,7 @@
 	else
 		src.equip_if_possible(new /obj/item/device/radio/headset(src), slot_ears)
 		var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(src)
-		BPK.contents += new /obj/item/weapon/storage/survival_kit(src)
+		new /obj/item/weapon/storage/survival_kit(BPK)
 		src.equip_if_possible(BPK, slot_back)
 
 
