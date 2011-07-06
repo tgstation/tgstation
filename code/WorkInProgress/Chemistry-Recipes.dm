@@ -884,3 +884,31 @@ datum
 			result = "cafe_latte"
 			required_reagents = list("coffee" = 1, "milk" = 1, "cream" = 1)
 			result_amount = 3
+
+		acidspit
+			name = "Acid Spit"
+			id = "acidspit"
+			result = "acidspit"
+			required_reagents = list("radium" = 1, "plasma" = 1, "wine" = 1)
+			result_amount = 3
+
+		amasec
+			name = "Amasec"
+			id = "amasec"
+			result = "amasec"
+			required_reagents = list("iron" = 1, "wine" = 1, "vodka" = 1)
+			result_amount = 3
+
+		neurotoxin
+			name = "Neurotoxin"
+			id = "neurotoxin"
+			result = "neurotoxin"
+			required_reagents = list("gargleblaster" = 1, "fuel" = 1, "acid" = 1)
+			result_amount = 3
+
+		hippiesdelight
+			name = "Hippies Delight"
+			id = "hippiesdelight"
+			result = "hippiesdelight"
+			required_reagents = list("psilocybin" = 1, "gargleblaster" = 1, "space_drugs" = 1)
+			result_amount = 3

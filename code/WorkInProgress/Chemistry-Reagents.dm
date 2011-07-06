@@ -2858,3 +2858,97 @@ datum
 				M.make_jittery(10)
 				..()
 				return
+
+		acid_spit
+			name = "Acid Spit"
+			id = "acidspit"
+			description = "A drink by Nanotrasen. Made from live aliens."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=10
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 10
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+10,0)
+				..()
+				return
+
+		amasec
+			name = "Amasec"
+			id = "amasec"
+			description = "Always before COMBAT!!!"
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				M.stunned = 4
+				if(!data) data = 1
+				data++
+				M.dizziness +=4
+				if(data >= 55 && data <165)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 4
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+5,0)
+				..()
+				return
+
+		neurotoxin
+			name = "Neurotoxin"
+			id = "neurotoxin"
+			description = "A strong neurotoxin that puts the subject into a death-like state."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:oxyloss += 0.5
+				M:toxloss += 0.5
+				M:weakened = max(M:weakened, 15)
+				M:silent = max(M:silent, 15)
+				if(!data) data = 1
+				data++
+				M.dizziness +=6
+				if(data >= 15 && data <45)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 45 && prob(50) && data <55)
+					M.confused = max(M:confused+3,0)
+				else if(data >=55)
+					M.druggy = max(M.druggy, 55)
+				..()
+
+				return
+
+
+		hippies_delight
+			name = "Hippies Delight"
+			id = "hippiesdelight"
+			description = "A drink enjoyed by people during the 1960's."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M.druggy = max(M.druggy, 50)
+				if(!data) data = 1
+				switch(data)
+					if(1 to 5)
+						if (!M:stuttering) M:stuttering = 1
+						M.make_dizzy(10)
+						if(prob(10)) M:emote(pick("twitch","giggle"))
+					if(5 to 10)
+						if (!M:stuttering) M:stuttering = 1
+						M.make_jittery(20)
+						M.make_dizzy(20)
+						M.druggy = max(M.druggy, 45)
+						if(prob(20)) M:emote(pick("twitch","giggle"))
+					if (10 to INFINITY)
+						if (!M:stuttering) M:stuttering = 1
+						M.make_jittery(40)
+						M.make_dizzy(40)
+						M.druggy = max(M.druggy, 60)
+						if(prob(30)) M:emote(pick("twitch","giggle"))
+				holder.remove_reagent(src.id, 0.2)
+				data++
+				..()
+				return
+
+

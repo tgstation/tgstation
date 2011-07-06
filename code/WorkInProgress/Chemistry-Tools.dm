@@ -2744,6 +2744,22 @@
 					icon_state = "cafe_latte"
 					name = "Cafe Latte"
 					desc = "A nice, strong and refreshing beverage while you are reading."
+				if("acidspit")
+					icon_state = "acidspitglass"
+					name = "Acid Spit"
+					desc = "A drink from Nanotrasen. Made from live aliens."
+				if("amasec")
+					icon_state = "amasecglass"
+					name = "Amasec"
+					desc = "Always handy before COMBAT!!!"
+				if("neurotoxin")
+					icon_state = "neurotoxinglass"
+					name = "Neurotoxin"
+					desc = "A drink that is guaranteed to knock you silly."
+				if("hippiesdelight")
+					icon_state = "hippiesdelightglass"
+					name = "Hippiesdelight"
+					desc = "A drink enjoyed by people during the 1960's."
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"
