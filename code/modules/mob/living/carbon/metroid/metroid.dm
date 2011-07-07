@@ -26,9 +26,8 @@
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45) tally += (health_deficiency / 25)
 
-	if (bodytemperature < 283.222)
+	if (bodytemperature < 183.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
-		toxloss+=rand(5,20)
 
 	if(reagents)
 		if(reagents.has_reagent("hyperzine")) // hyperzine slows Metroids down

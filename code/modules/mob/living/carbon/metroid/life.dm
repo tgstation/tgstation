@@ -218,6 +218,7 @@
 
 		handle_environment(datum/gas_mixture/environment)
 			if(!environment)
+				fireloss += rand(10,20)
 				return
 
 			var/environment_heat_capacity = environment.heat_capacity()

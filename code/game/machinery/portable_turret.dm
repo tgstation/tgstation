@@ -335,7 +335,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 					if(src.assess_perp(C)<4)
 						continue // if threat level < 4, keep going
 
-				else if ((istype(C, /mob/living/carbon/monkey)) && (C.client) && (ticker.mode.name == "monkey"))
+				else if (istype(C, /mob/living/carbon/monkey))
 					continue // WHY WOULD YOU TARGET MONKIES???? Skip all monkies, jesus, don't waste your time bro
 
 				var/dst = get_dist(src, C) // if it's too far away, why bother?
