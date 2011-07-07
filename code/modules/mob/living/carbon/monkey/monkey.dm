@@ -398,7 +398,7 @@
 
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>The [M.name] has [pick("bit","slashed")] []!</B>", src), 1)
+						O.show_message(text("\red <B>The [M.name] has shocked []!</B>", src), 1)
 
 				if (weakened < power)
 					weakened = power
@@ -406,6 +406,10 @@
 					stuttering = power
 				if (stunned < power)
 					stunned = power
+
+				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				s.set_up(5, 1, src)
+				s.start()
 
 				if (prob(stunprob) && M.powerlevel >= 8)
 					fireloss += M.powerlevel * rand(6,10)

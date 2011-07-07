@@ -34,6 +34,9 @@
 		if(reagents.has_reagent("hyperzine")) // hyperzine slows Metroids down
 			tally *= 2 // moves twice as slow
 
+		if(reagents.has_reagent("frostoil")) // frostoil also makes them move pretty slow
+			tally *= 3
+
 	if(health <= 0) // if damaged, the metroid moves twice as slow
 		tally *= 2
 
@@ -114,11 +117,10 @@
 	..()
 
 	statpanel("Status")
-	if (client && client.holder)
-		if(istype(src, /mob/living/carbon/metroid/adult))
-			stat(null, "Health: [round(health)]/200")
-		else
-			stat(null, "Health: [round(health)]/150")
+	if(istype(src, /mob/living/carbon/metroid/adult))
+		stat(null, "Health: [round((health / 200) * 100)]%")
+	else
+		stat(null, "Health: [round((health / 150) * 100)]%")
 
 
 	if (client.statpanel == "Status")

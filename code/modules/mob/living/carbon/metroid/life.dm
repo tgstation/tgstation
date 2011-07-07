@@ -95,7 +95,6 @@
 							for(var/mob/living/carbon/metroid/M in view(1,C))
 								if(M.Victim == C)
 									notarget = 1
-									break // They don't go for prey already being eaten
 
 						if(!notarget) targets += C
 
@@ -225,6 +224,9 @@
 			if(istype(loc, /turf/space))
 				environment_heat_capacity = loc:heat_capacity
 
+			if(environment.temperature < (T0C + 10))
+				fireloss += rand(10,20)
+
 			if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
 				var/transfer_coefficient
 
@@ -268,7 +270,7 @@
 				// if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 				//if(!src.rejuv) src.oxyloss++
-				if(!src.reagents.has_reagent("inaprovaline")) src.oxyloss+=8
+				if(!src.reagents.has_reagent("inaprovaline")) src.oxyloss+=10
 
 				if(src.stat != 2)	src.stat = 1
 
@@ -286,16 +288,34 @@
 				src.blinded = 1
 				src.stat = 2
 
-			if (src.stuttering) src.stuttering--
+			else
+				if (src.paralysis || src.stunned || src.weakened || changeling_fakedeath) //Stunned etc.
+					if (src.stunned > 0)
+						src.stunned = 0
+						src.stat = 0
+					if (src.weakened > 0)
+						src.weakened = 0
+						src.lying = 0
+						src.stat = 0
+					if (src.paralysis > 0)
+						src.paralysis = 0
+						src.blinded = 0
+						src.lying = 0
+						src.stat = 0
+
+				else
+					src.lying = 0
+					src.stat = 0
+
+			if (src.stuttering) src.stuttering = 0
 
 			if (src.eye_blind)
-				src.eye_blind--
+				src.eye_blind = 0
 				src.blinded = 1
 
-			if (src.ear_deaf > 0) src.ear_deaf--
+			if (src.ear_deaf > 0) src.ear_deaf = 0
 			if (src.ear_damage < 25)
-				src.ear_damage -= 0.05
-				src.ear_damage = max(src.ear_damage, 0)
+				src.ear_damage = 0
 
 			src.density = !( src.lying )
 
@@ -305,12 +325,10 @@
 				src.ear_deaf = 1
 
 			if (src.eye_blurry > 0)
-				src.eye_blurry--
-				src.eye_blurry = max(0, src.eye_blurry)
+				src.eye_blurry = 0
 
 			if (src.druggy > 0)
-				src.druggy--
-				src.druggy = max(0, src.druggy)
+				src.druggy = 0
 
 			return 1
 
