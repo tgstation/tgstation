@@ -2957,4 +2957,31 @@ datum
 				..()
 				return
 
+		bananahonk
+			name = "Banana Honk"
+			id = "bananahonk"
+			description = "A drink from Clown Heaven."
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				if(istype(M, /mob/living/carbon/human) && M.job in list("Clown"))
+					if(!M) M = holder.my_atom
+					M:heal_organ_damage(1,1)
+					..()
+					return
+				if(istype(M, /mob/living/carbon/monkey))
+					if(!M) M = holder.my_atom
+					M:heal_organ_damage(1,1)
+					M.stunned = 4
+				if(!data) data = 1
+				data++
+				M.dizziness +=5
+				if(data >= 55 && data <165)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 5
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+5,0)
+					..()
+					return
+
 

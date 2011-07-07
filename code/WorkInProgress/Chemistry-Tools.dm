@@ -2765,6 +2765,10 @@
 					icon_state = "hippiesdelightglass"
 					name = "Hippiesdelight"
 					desc = "A drink enjoyed by people during the 1960's."
+				if("bananahonk")
+					icon_state = "bananahonkglass"
+					name = "Banana Honk"
+					desc = "A drink from Clown Heaven."
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"

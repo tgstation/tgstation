@@ -925,3 +925,10 @@ datum
 			result = "hippiesdelight"
 			required_reagents = list("psilocybin" = 1, "gargleblaster" = 1, "space_drugs" = 1)
 			result_amount = 3
+
+		bananahonk
+			name = "Banana Honk"
+			id = "bananahonk"
+			result = "bananahonk"
+			required_reagents = list("banana" = 1, "cream" = 1, "sugar" = 1)
+			result_amount = 3

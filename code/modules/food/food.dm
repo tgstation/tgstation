@@ -833,6 +833,125 @@
 		icon_state = "monkeycubewrap"
 		wrapped = 1
 
+/obj/item/weapon/reagent_containers/food/snacks/spellburger
+	name = "Spell Burger"
+	desc = "This is absolutely Ei Nath."
+	icon_state = "spellburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/bigbiteburger
+	name = "Big Bite Burger"
+	desc = "Forget the Big Mac. THIS is the future!"
+	icon_state = "bigbiteburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 50)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/enchiladas
+	name = "Enchiladas"
+	desc = "Viva La Mexico!"
+	icon_state = "enchiladas"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("capsaicin", 10)
+		reagents.add_reagent("blackpepper", 10)
+		bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/monkiesdelight
+	name = "Monkie's Delight"
+	desc = "Eeee Eee!"
+	icon_state = "monkiesdelight"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 50)
+		reagents.add_reagent("blackpepper", 1)
+		reagents.add_reagent("sodiumchloride", 1)
+		bitesize = 6
+
+/obj/item/weapon/reagent_containers/food/snacks/baguette
+	name = "Baguette"
+	desc = "Bon appetit!"
+	icon_state = "baguette"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 25)
+		reagents.add_reagent("blackpepper", 1)
+		reagents.add_reagent("sodiumchloride", 1)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/fishandchips
+	name = "Fish and Chips"
+	desc = "I do say so myself chap."
+	icon_state = "fishandchips"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 15)
+		reagents.add_reagent("carpotoxin", 4)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/sandwich
+	name = "Sandwich"
+	desc = "This comes from your local Deli...or chef if you are poor."
+	icon_state = "sandwich"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 30)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/toastedsandwich
+	name = "Toasted Sandwich"
+	desc = "A nice, warm and toasted sandwich."
+	icon_state = "toastedsandwich"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 40)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/tomatosoup
+	name = "Tomato Soup"
+	desc = "A nice and red soup to fill your day."
+	icon_state = "tomatosoup"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 20)
+		reagents.add_reagent("water", 7)
+		bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/rofflewaffles
+	name = "Roffle Waffles"
+	desc = "Waffles from Roffle. Co."
+	icon_state = "rofflewaffles"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 25)
+		reagents.add_reagent("psilocybin", 7)
+		bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/stew
+	name = "Stew"
+	desc = "A nice and warm stew. Healthy and strong."
+	icon_state = "stew"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 50)
+		reagents.add_reagent("water", 10)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/metroidtoast
+	name = "Metroid Toast"
+	desc = "A slice of bread covered with delicious jam."
+	icon_state = "metroidtoast"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 20)
+		reagents.add_reagent("toxin", 10)
+		bitesize = 3
+
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
@@ -976,6 +1095,40 @@
 	icon_state = "cheesewedge"
 	bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/birthdaycake
+	name = "Birthday Cake"
+	desc = "Happy Birthday little clown..."
+	icon_state = "birthdaycake"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/birthdaycakeslice
+	slices_num = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 50)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/birthdaycakeslice
+	name = "Birthday Cake slice"
+	desc = "A slice of your birthday"
+	icon_state = "birthdaycakeslice"
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread
+	name = "Bread"
+	icon_state = "Some plain old Earthen bread."
+	icon_state = "bread"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice
+	slices_num = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 30)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/breadslice
+	name = "Bread slice"
+	desc = "A slice of home."
+	icon_state = "breadslice"
+	bitesize = 2
+
 
 /////////////////////////////////////////////////PIZZA////////////////////////////////////////
 
@@ -1049,3 +1202,21 @@
 	desc = "A slice of the most green pizza of all pizzas not containing green ingredients "
 	icon_state = "vegetablepizzaslice"
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread
+	name = "Cream Cheese Bread"
+	desc = "Yum yum yum!"
+	icon_state = "creamcheesebread"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
+	slices_num = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 40)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
+	name = "Cream Cheese Bread slice"
+	desc = "A slice of yum!"
+	icon_state = "creamcheesebreadslice"
+	bitesize = 2
+
