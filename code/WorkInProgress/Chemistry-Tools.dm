@@ -828,7 +828,7 @@
 						user << "\red [target] is empty."
 						return
 
-					if(!target.is_open_container() && !istype(target,/obj/reagent_dispensers))
+					if(!target.is_open_container() && !istype(target,/obj/reagent_dispensers) && !istype(target,/obj/item/metroid_core))
 						user << "\red You cannot directly remove reagents from this object."
 						return
 
@@ -845,12 +845,17 @@
 					return
 				if(istype(target, /obj/item/weapon/implantcase/chem))
 					return
-				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food))
+
+				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/metroid_core))
 					user << "\red You cannot directly fill this object."
 					return
 				if(target.reagents.total_volume >= target.reagents.maximum_volume)
 					user << "\red [target] is full."
 					return
+
+				if(istype(target, /obj/item/metroid_core))
+					var/obj/item/metroid_core/core = target
+					core.Flush = 30
 
 				if(ismob(target) && target != user)
 					for(var/mob/O in viewers(world.view, user))

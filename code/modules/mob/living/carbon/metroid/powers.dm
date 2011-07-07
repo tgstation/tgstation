@@ -41,6 +41,7 @@
 	Victim = M
 	src.loc = M.loc
 	canmove = 0
+	anchored = 1
 	var/lastnut = nutrition
 	//if(M.client) M << "\red You legs become paralyzed!"
 	if(istype(src, /mob/living/carbon/metroid/adult))
@@ -63,7 +64,7 @@
 		Victim.cloneloss += rand(1,10)
 		Victim.toxloss += rand(1,2)
 		if(Victim.health <= 0)
-			Victim.toxloss += rand(2,5)
+			Victim.toxloss += rand(2,4)
 
 		if(toxloss > 0)
 			toxloss -= 5
@@ -109,7 +110,7 @@
 		Victim.updatehealth()
 		updatehealth()
 
-		sleep(rand(5,25))
+		sleep(rand(15,45))
 
 
 	if(istype(src, /mob/living/carbon/metroid/adult))
@@ -119,6 +120,7 @@
 
 	Victim = null
 	canmove = 1
+	anchored = 0
 
 	if(M.health <= -70)
 		M.canmove = 0

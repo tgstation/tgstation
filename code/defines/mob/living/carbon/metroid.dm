@@ -27,6 +27,8 @@
 
 	var/attacked = 0 // determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
 
+	var/cores = 3 // the number of /obj/item/metroid_core's the metroid has left inside
+
 /mob/living/carbon/metroid/adult
 	name = "adult metroid"
 	icon = 'mob.dmi'

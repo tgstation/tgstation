@@ -82,6 +82,10 @@
 			loc = tmob.loc
 			tmob.loc = oldloc
 			now_pushing = 0
+			for(var/mob/living/carbon/metroid/Metroid in view(1,tmob))
+				if(Metroid.Victim == tmob)
+					Metroid.UpdateFeed()
+
 			return
 		if(istype(equipped(), /obj/item/weapon/melee/baton)) // add any other item paths you think are necessary
 			if(loc:sd_lumcount < 3 || blinded)

@@ -6,6 +6,11 @@ datum
 		var/result = null
 		var/list/required_reagents = new/list()
 		var/list/required_catalysts = new/list()
+
+		// Both of these variables are mostly going to be used with Metroid cores - but if you want to, you can use them for other things
+		var/atom/required_container = null // the container required for the reaction to happen
+		var/required_other = 0 // an integer required for the reaction to happen
+
 		var/result_amount = 0
 
 		proc
@@ -493,6 +498,14 @@ datum
 			result = "plantbgone"
 			required_reagents = list("toxin" = 1, "water" = 4)
 			result_amount = 5
+
+
+/////////////////////////////////////METROID CORE REACTIONS ///////////////////////////////
+
+
+		// TODO
+
+
 
 
 //////////////////////////////////////////FOOD MIXTURES////////////////////////////////////

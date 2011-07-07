@@ -37,7 +37,7 @@ CIRCULAR SAW
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
 
-		if(istype(M, /mob/living/carbon/alien))//Aliens don't have eyes./N
+		if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N
 			user << "\red You cannot locate any eyes on this creature!"
 			return
 
@@ -230,6 +230,15 @@ CIRCULAR SAW
 
 		switch(M:brain_op_stage)
 			if(0.0)
+				if(istype(M, /mob/living/carbon/metroid))
+					if(M.stat == 2)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [M.name] is beginning to have its flesh cut open with [src] by [user].", 1)
+						M << "\red [user] begins to cut open your flesh with [src]!"
+						user << "\red You cut [M]'s flesh open with [src]!"
+						M:brain_op_stage = 1.0
+						return
+
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
 						O.show_message("\red [M] is beginning to have his head cut open with [src] by [user].", 1)
@@ -257,7 +266,25 @@ CIRCULAR SAW
 
 				M.updatehealth()
 				M:brain_op_stage = 1.0
+
+			if(1)
+				if(istype(M, /mob/living/carbon/metroid))
+					if(M.stat == 2)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [M.name] is having its silky inndards cut apart with [src] by [user].", 1)
+						M << "\red [user] begins to cut apart your innards with [src]!"
+						user << "\red You cut [M]'s silky innards apart with [src]!"
+						M:brain_op_stage = 2.0
+						return
 			if(2.0)
+				if(istype(M, /mob/living/carbon/metroid))
+					if(M.stat == 2)
+						var/mob/living/carbon/metroid/Metroid = M
+						if(Metroid.cores > 0)
+							if(istype(M, /mob/living/carbon/metroid))
+								user << "\red You attempt to remove [M]'s core, but your [src] is ineffective!"
+								return
+
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
 						O.show_message("\red [M] is having his connections to the brain delicately severed with [src] by [user].", 1)
@@ -307,7 +334,7 @@ CIRCULAR SAW
 			user << "\red You're going to need to remove that mask/helmet/glasses first."
 			return
 
-		if(istype(M, /mob/living/carbon/alien))//Aliens don't have eyes./N
+		if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N
 			user << "\red You cannot locate any eyes on this creature!"
 			return
 
@@ -380,6 +407,8 @@ CIRCULAR SAW
 
 		switch(M:brain_op_stage)
 			if(1.0)
+				if(istype(M, /mob/living/carbon/metroid))
+					return
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
 						O.show_message("\red [M] has his skull sawed open with [src] by [user].", 1)
@@ -407,6 +436,25 @@ CIRCULAR SAW
 
 				M.updatehealth()
 				M:brain_op_stage = 2.0
+
+			if(2.0)
+				if(istype(M, /mob/living/carbon/metroid))
+					if(M.stat == 2)
+						var/mob/living/carbon/metroid/Metroid = M
+						if(Metroid.cores > 0)
+							for(var/mob/O in (viewers(M) - user - M))
+								O.show_message("\red [M.name] is having one of its cores sawed out with [src] by [user].", 1)
+
+							Metroid.cores--
+							M << "\red [user] begins to remove one of your cores with [src]! ([Metroid.cores] cores remaining)"
+							user << "\red You cut one of [M]'s cores out with [src]! ([Metroid.cores] cores remaining)"
+
+							new/obj/item/metroid_core(M.loc)
+
+							if(Metroid.cores <= 0)
+								M.icon_state = "baby metroid dead-nocore"
+
+							return
 
 			if(3.0)
 				if(M != user)

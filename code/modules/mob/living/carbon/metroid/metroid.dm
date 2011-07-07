@@ -431,7 +431,7 @@
 
 	if(Victim)
 		if(Victim == M)
-			if(prob(90))
+			if(prob(60))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message("\red [M] attempts to wrestle \the [name] off!", 1)
@@ -444,12 +444,13 @@
 				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 
 				Victim = null
+				anchored = 0
 				step_away(src,M)
 
 			return
 
 		else
-			if(prob(80))
+			if(prob(30))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message("\red [M] attempts to wrestle \the [name] off of [Victim]!", 1)
@@ -462,6 +463,7 @@
 				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 
 				Victim = null
+				anchored = 0
 				step_away(src,M)
 
 			return
@@ -505,7 +507,9 @@
 			if (prob(90))
 				if (M.mutations & HULK)
 					damage += 5
-					if(Victim) Victim = null
+					if(Victim)
+						Victim = null
+						anchored = 0
 					spawn(0)
 
 						step_away(src,M,15)
@@ -592,7 +596,10 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has tackled [name]!</B>", M), 1)
 
-				if(Victim) Victim = null
+				if(Victim)
+					Victim = null
+					anchored = 0
+
 				spawn(0)
 
 					step_away(src,M,15)
