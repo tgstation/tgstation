@@ -39,7 +39,7 @@
 	if(health <= 0) // if damaged, the metroid moves twice as slow
 		tally *= 2
 
-	if (bodytemperature > 330.23) // 135 F
+	if (bodytemperature >= 330.23) // 135 F
 		return -1	// Metroids become supercharged at high temperatures
 
 	return tally

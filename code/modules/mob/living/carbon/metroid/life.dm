@@ -5,10 +5,10 @@
 	if (src.monkeyizing)
 		return
 
-	/*
+
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(src.loc)
-		environment = loc.return_air() */
+		environment = loc.return_air()
 
 
 	//Apparently, the person who wrote this code designed it so that
@@ -25,9 +25,9 @@
 	regular_hud_updates()
 
 	//Handle temperature/pressure differences between body and environment
-	/*
-	if(environment)	// More error checking -- TLE
-		handle_environment(environment) */
+
+	if(environment)
+		handle_environment(environment)
 
 
 	//Chemicals in the body
@@ -42,6 +42,11 @@
 
 	handle_nutrition()
 
+	if(Tempstun)
+		canmove = 0
+	else
+		canmove = 1
+
 	if(attacked > 50) attacked = 50
 
 	if(attacked > 0)
@@ -52,6 +57,8 @@
 	// Grabbing
 
 	if(!client && stat != 2)
+
+		if(!canmove) return
 
 		// DO AI STUFF HERE
 
@@ -150,6 +157,7 @@
 /mob/living/carbon/metroid
 	var/AIproc = 0 // determines if the AI loop is activated
 	var/Atkcool = 0 // attack cooldown
+	var/Tempstun = 0 // temporary temperature stuns
 	proc
 
 		AIprocess()  // the master AI process
@@ -221,13 +229,17 @@
 				fireloss += rand(10,20)
 				return
 
-			var/environment_heat_capacity = environment.heat_capacity()
+			//var/environment_heat_capacity = environment.heat_capacity()
+			var/loc_temp = T0C
 			if(istype(loc, /turf/space))
-				environment_heat_capacity = loc:heat_capacity
+				//environment_heat_capacity = loc:heat_capacity
+				loc_temp = 2.7
+			else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+				loc_temp = loc:air_contents.temperature
+			else
+				loc_temp = environment.temperature
 
-			if(environment.temperature < (T0C + 10))
-				fireloss += rand(10,20)
-
+			/*
 			if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
 				var/transfer_coefficient
 
@@ -236,12 +248,52 @@
 					transfer_coefficient *= wear_mask.heat_transfer_coefficient
 
 				// handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
+			*/
 
+
+			if(loc_temp < 310.15) // a cold place
+				bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
+			else // a hot place
+				bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
+
+			/*
 			if(stat==2)
 				bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
 
+			*/
 			//Account for massive pressure differences
+
+			if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
+				if(bodytemperature <= (T0C - 40)) // stun temperature
+					Tempstun = 1
+
+				if(bodytemperature <= (T0C - 50)) // hurt temperature
+					fireloss += round(sqrt(bodytemperature)) * 2
+
+			else
+				Tempstun = 0
+
+			updatehealth()
+
 			return //TODO: DEFERRED
+
+
+		adjust_body_temperature(current, loc_temp, boost)
+			var/temperature = current
+			var/difference = abs(current-loc_temp)	//get difference
+			var/increments// = difference/10			//find how many increments apart they are
+			if(difference > 50)
+				increments = difference/5
+			else
+				increments = difference/10
+			var/change = increments*boost	// Get the amount to change by (x per increment)
+			var/temp_change
+			if(current < loc_temp)
+				temperature = min(loc_temp, temperature+change)
+			else if(current > loc_temp)
+				temperature = max(loc_temp, temperature-change)
+			temp_change = (temperature - current)
+			return temp_change
 
 		handle_chemicals_in_body()
 

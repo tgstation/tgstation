@@ -1841,7 +1841,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			mob.dir = direct
 
 		var/j_pack = 0
-		if ((istype(mob.loc, /turf/space)))
+		if ((istype(mob.loc, /turf/space) && !istype(mob, /mob/living/carbon/metroid)))
 			if (!( mob.restrained() ))
 				if (!( (locate(/obj/grille) in oview(1, mob)) || (locate(/turf/simulated) in oview(1, mob)) || (locate(/obj/lattice) in oview(1, mob)) ))
 					if (istype(mob.back, /obj/item/weapon/tank/jetpack))
