@@ -61,7 +61,7 @@ var/global/datum/controller/gameticker/ticker
 		var/tries=5
 		do
 			can_continue = src.mode.pre_setup()
-		while (tries && !can_continue)
+		while (tries-- && !can_continue)
 		if (!can_continue)
 			del(mode)
 			current_state = GAME_STATE_PREGAME

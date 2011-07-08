@@ -248,15 +248,12 @@
 
 		var/hairnum = hex2num(getblock(structure,13,3))
 
-
 		var/list/styles = list("bald", "hair_a", "hair_b", "hair_c", "hair_d", "hair_e", "hair_f", "hair_bedhead", "hair_dreads" )
-		var/hrange = round(4095 / styles.len)
 
-		var/style = round(hairnum / hrange)
+		var/style = round(1 +(hairnum / 4096)*styles.len)
 
 		H.hair_icon_state = styles[style]
 		H.h_style = H.hair_icon_state
-
 
 		H.update_face()
 		H.update_body()

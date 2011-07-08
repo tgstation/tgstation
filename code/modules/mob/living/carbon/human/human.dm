@@ -163,7 +163,7 @@
 
 	stat(null, "Intent: [a_intent]")
 	stat(null, "Move Mode: [m_intent]")
-	if(ticker.mode.name == "AI malfunction")
+	if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
 		if(ticker.mode:malf_mode_declared)
 			stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
 	if(emergency_shuttle)
@@ -905,12 +905,12 @@
 				if(!wear_suit.allowed)
 					usr << "You somehow have a suit with no defined allowed items for suit storage, stop that."
 					return
-				for(var/i=1, i<=wear_suit.allowed.len, i++)
-					if(!W) return
-		//			world << "[wear_suit.allowed[i]] and [W.type]"
-					if (findtext("[W.type]","[wear_suit.allowed[i]]") || istype(W, /obj/item/device/pda) || istype(W, /obj/item/weapon/pen))
-						confirm = 1
-						break
+				if (istype(W, /obj/item/device/pda) || istype(W, /obj/item/weapon/pen))
+					confirm = 1
+					break
+				if (is_type_in_list(W, wear_suit.allowed))
+					confirm = 1
+					break
 			if (!confirm) return
 			else
 				u_equip(W)
@@ -923,14 +923,12 @@
 				return
 			var/confirm
 			if (head)
-				for(var/i=1, i<=head.allowed.len, i++)
-			//		world << "[head.allowed[i]] and [W.type]"
-					if(!W)
-						src << "The code is under the impression that the item you're trying to stick in your hat doesn't exist."
-						return
-					if (findtext("[W.type]","[head.allowed[i]]") || istype(W, /obj/item/weapon/pen))
-						confirm = 1
-						break
+				if (istype(W, /obj/item/weapon/pen))
+					confirm = 1
+					break
+				if (istype(head) && is_type_in_list(W, head.allowed)) // NOTE: head is /obj/item/clothing/head/ and parer hat is not /obj/item/clothing/ and does not have "allowed" --rastaf0
+					confirm = 1
+					break
 			if (!confirm) return
 			else
 				u_equip(W)
