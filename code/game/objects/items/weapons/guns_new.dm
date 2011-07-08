@@ -227,6 +227,7 @@ var/const/PROJECTILE_DART = 8
 	c9mm
 		name = "Ammunition Box (9mm)"
 		icon_state = "9mm"
+		origin_tech = "combat=3;materials=2"
 		New()
 			for(var/i = 1, i <= 30, i++)
 				stored_ammo += new /obj/item/ammo_casing/c9mm(src)
@@ -238,6 +239,7 @@ var/const/PROJECTILE_DART = 8
 	c45
 		name = "Ammunition Box (.45)"
 		icon_state = "9mm"
+		origin_tech = "combat=3;materials=2"
 		New()
 			for(var/i = 1, i <= 30, i++)
 				stored_ammo += new /obj/item/ammo_casing/c45(src)
@@ -424,9 +426,10 @@ var/const/PROJECTILE_DART = 8
 			desc = "A lightweight, fast firing gun. Uses 9mm rounds."
 			icon_state = "saber"
 			w_class = 3.0
-			force = 14.0
+			force = 7
 			max_shells = 18
 			caliber = "9mm"
+			origin_tech = "combat=4;materials=2"
 
 			New()
 				for(var/i = 1, i <= max_shells, i++)
@@ -438,20 +441,37 @@ var/const/PROJECTILE_DART = 8
 				desc = "A lightweight, fast firing gun, for when you REALLY need someone dead. Uses .45 rounds."
 				icon_state = "mini-uzi"
 				w_class = 3.0
-				force = 14.0
+				force = 16
 				max_shells = 20
 				caliber = ".45"
+				origin_tech = "combat=5;materials=2;syndicate=8"
 
 				New()
 					for(var/i = 1, i <= max_shells, i++)
 						loaded += new /obj/item/ammo_casing/c45(src)
 					update_icon()
 
+		silenced
+			name = "Silenced Pistol"
+			desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
+			icon_state = "silenced_pistol"
+			w_class = 3.0
+			force = 14.0
+			max_shells = 12
+			caliber = ".45"
+			silenced = 1
+			origin_tech = "combat=2;materials=2;syndicate=8"
+
+			New()
+				for(var/i = 1, i <= max_shells, i++)
+					loaded += new /obj/item/ammo_casing/c45(src)
+				update_icon()
+
 	energy
 		icon_state = "energy"
-		name = "energy"
+		name = "Energy Gun"
 		desc = "A basic energy-based gun with two settings: Stun and kill."
-		fire_sound = 'Laser.ogg'
+		fire_sound = 'Taser.ogg'
 		var
 			var/obj/item/weapon/cell/power_supply
 			mode = 0 //0 = stun, 1 = kill
@@ -481,10 +501,12 @@ var/const/PROJECTILE_DART = 8
 				if(0)
 					mode = 1
 					charge_cost = 100
+					fire_sound = 'Laser.ogg'
 					user << "\red [src.name] is now set to kill."
 				if(1)
 					mode = 0
 					charge_cost = 100
+					fire_sound = 'Taser.ogg'
 					user << "\red [src.name] is now set to stun."
 			update_icon()
 			return
@@ -552,13 +574,16 @@ var/const/PROJECTILE_DART = 8
 				switch(mode)
 					if(1)
 						user << "\red [src.name] is now set to kill."
+						fire_sound = 'Laser.ogg'
 						charge_cost = 100
 					if(2)
 						user << "\red [src.name] is now set to destroy."
+						fire_sound = 'pulse.ogg'
 						charge_cost = 200
 					else
 						mode = 0
 						user << "\red [src.name] is now set to stun."
+						fire_sound = 'Taser.ogg'
 						charge_cost = 50
 			New()
 				power_supply = new /obj/item/weapon/cell/super(src)

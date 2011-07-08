@@ -304,7 +304,7 @@
 			src.equip_if_possible(new /obj/item/weapon/storage/survival_kit(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/geneticist(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
-			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
+			src.equip_if_possible(new /obj/item/clothing/suit/labcoat/genetics(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
 
 		if ("Chemist")
@@ -312,7 +312,7 @@
 			src.equip_if_possible(new /obj/item/device/pda/toxins(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chemist(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
-			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
+			src.equip_if_possible(new /obj/item/clothing/suit/labcoat/chemist(src), slot_wear_suit)
 
 		if ("Janitor")
 			src.equip_if_possible(new /obj/item/device/pda/janitor(src), slot_belt)
@@ -452,6 +452,7 @@
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sci (src), slot_ears)
 			src.equip_if_possible(new /obj/item/device/pda/toxins(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/scientist(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/clothing/suit/labcoat/science(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/mask/gas(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/weapon/tank/oxygen(src), slot_l_hand)
@@ -587,7 +588,7 @@
 			src.equip_if_possible(new /obj/item/weapon/storage/survival_kit(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chief_medical_officer(src), slot_w_uniform)
-			src.equip_if_possible(new /obj/item/clothing/suit/labcoat_cmo(src), slot_wear_suit)
+			src.equip_if_possible(new /obj/item/clothing/suit/labcoat/cmo(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
 
@@ -599,7 +600,7 @@
 			src.equip_if_possible(new /obj/item/clothing/under/rank/medical(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/mask/surgical(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
-			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
+			src.equip_if_possible(new /obj/item/clothing/suit/labcoat/virologist(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
 
 		if ("Cyborg")

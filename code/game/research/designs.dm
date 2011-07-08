@@ -940,6 +940,24 @@ datum
 			reliability_base = 79
 			build_path = "/obj/item/weapon/chem_grenade/large"
 
+		smg
+			name = "Submachine Gun"
+			desc = "A lightweight, fast firing gun."
+			id = "smg"
+			req_tech = list("combat" = 5, "materials" = 2)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 8000, "$silver" = 2000, "$diamond" = 1000)
+			build_path = "/obj/item/weapon/gun/projectile/automatic"
+
+		ammo_9mm
+			name = "Ammunition Box (9mm)"
+			desc = "A box of prototype 9mm ammunition."
+			id = "ammo_9mm"
+			req_tech = list("combat" = 4, "materials" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 3750, "$silver" = 100)
+			build_path = "obj/item/ammo_magazine/c9mm"
+
 /////////////////////////////////////////
 /////////////////Mining//////////////////
 /////////////////////////////////////////

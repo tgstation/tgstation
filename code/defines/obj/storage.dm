@@ -57,7 +57,14 @@
 	flags = 259.0
 	max_w_class = 3
 	max_combined_w_class = 20
-
+/*
+/obj/item/weapon/storage/lbe
+	name = "Load Bearing Equipment"
+	desc = "You wear these on your thighs, they help carry heavy loads."
+	icon_state = "backpack" //PLACEHOLDER
+	w_class = 2.0
+	max_combined_w_class = 17
+*/
 /obj/item/weapon/storage/pill_bottle
 	name = "pill bottle"
 	desc = "This is told to hold untold horrors of pulls."
