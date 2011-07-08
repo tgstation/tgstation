@@ -907,10 +907,8 @@
 					return
 				if (istype(W, /obj/item/device/pda) || istype(W, /obj/item/weapon/pen))
 					confirm = 1
-					break
 				if (is_type_in_list(W, wear_suit.allowed))
 					confirm = 1
-					break
 			if (!confirm) return
 			else
 				u_equip(W)
@@ -925,10 +923,8 @@
 			if (head)
 				if (istype(W, /obj/item/weapon/pen))
 					confirm = 1
-					break
 				if (istype(head) && is_type_in_list(W, head.allowed)) // NOTE: head is /obj/item/clothing/head/ and parer hat is not /obj/item/clothing/ and does not have "allowed" --rastaf0
 					confirm = 1
-					break
 			if (!confirm) return
 			else
 				u_equip(W)
