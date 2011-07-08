@@ -391,3 +391,9 @@
 	desc = "A hoodie for the chaplain!!!"
 	icon_state = "chaplain_hood"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES
+
+/obj/item/clothing/head/nursehat
+	name = "Nurse Hat"
+	desc = "Smokin'"
+	icon_state = "nursehat"
+	flags = FPRINT|TABLEPASS|HEADSPACE

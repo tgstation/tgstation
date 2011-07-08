@@ -1028,6 +1028,15 @@
 		reagents.add_reagent("nutriment", 3)
 		bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/carrotfries
+	name = "Carrot Fries"
+	desc = "Tasty fries from fresh Carrots."
+	icon_state = "carrotfries"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 2
+
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 

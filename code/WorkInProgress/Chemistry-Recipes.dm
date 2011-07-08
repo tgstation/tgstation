@@ -932,3 +932,10 @@ datum
 			result = "bananahonk"
 			required_reagents = list("banana" = 1, "cream" = 1, "sugar" = 1)
 			result_amount = 3
+
+		singulo
+			name = "Singulo"
+			id = "singulo"
+			result = "singulo"
+			required_reagents = list("vodka" = 1, "cream" = 1, "milk" = 1, "wine" = 1)
+			result_amount = 4

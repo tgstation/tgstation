@@ -848,7 +848,6 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 
 /datum/recipe/poppypretzel
-	reagents = list("water" = 20)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
 		/obj/item/seeds/poppyseed,
@@ -857,3 +856,20 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
+
+/datum/recipe/meatballspagetti
+	reagents = list("water" = 20)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
+
+/datum/recipe/carrotfries
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/carrotfries
+

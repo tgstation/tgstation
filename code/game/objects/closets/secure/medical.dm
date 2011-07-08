@@ -40,6 +40,8 @@
 	new /obj/item/weapon/cartridge/medical( src )
 	new /obj/item/device/radio/headset/headset_med( src )
 	new /obj/item/weapon/storage/utilitybelt/medical( src )
+	new /obj/item/clothing/under/rank/nursesuit ( src )
+	new /obj/item/clothing/head/nursehat ( src )
 	return
 
 /obj/secure_closet/CMO/New()
@@ -54,4 +56,6 @@
 	new /obj/item/clothing/suit/labcoat(src)
 	new /obj/item/clothing/mask/gas( src )
 	new /obj/item/device/radio/headset/heads/cmo( src )
+	new /obj/item/clothing/under/rank/nursesuit ( src )
+	new /obj/item/clothing/head/nursehat ( src )
 	return

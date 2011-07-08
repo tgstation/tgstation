@@ -2984,4 +2984,21 @@ datum
 					..()
 					return
 
+		singulo
+			name = "Singulo"
+			id = "singulo"
+			description = "A blue-space beverage!"
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=15
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 15
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+15,15)
+				..()
+				return
+
 

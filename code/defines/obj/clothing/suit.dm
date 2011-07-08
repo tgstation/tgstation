@@ -604,3 +604,20 @@
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 5, bullet = 2, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/suit
+	name = "Chicken Suit"
+	desc = "A suit made long ago by the ancient empire KFC."
+	icon_state = "chickensuit"
+	item_state = "chickensuit"
+	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HEAD
+	armor = list(melee = 5, bullet = 2, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/holidaypriest
+	name = "Holiday Priest"
+	desc = "This is a nice holiday my son."
+	icon_state = "holidaypriest"
+	item_state = "holidaypriest"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+
+
