@@ -49,6 +49,14 @@
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 		output = /obj/item/weapon/reagent_containers/food/snacks/fries
 
+	soybeans
+		input = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
+		output = /obj/item/weapon/reagent_containers/food/snacks/soydope
+
+	flour
+		input = /obj/item/weapon/reagent_containers/food/snacks/flour
+		output = /obj/item/weapon/reagent_containers/food/snacks/spagetti
+
 	/* mobs */
 	mob
 		process(loc, what)

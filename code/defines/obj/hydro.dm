@@ -173,7 +173,7 @@
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 3
-/*
+
 /obj/item/seeds/poppyseed
 	name = "Poppy seeds"
 	icon_state = "seed-poppy"
@@ -186,11 +186,11 @@
 	potency = 20
 	maturation = 8
 	production = 6
-	yield = 3
+	yield = 6
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 3
-*/
+
 /obj/item/seeds/potatoseed
 	name = "Potato Seeds"
 	desc = "This will one day grow into potatoes."
@@ -511,6 +511,22 @@
 	growthstages = 3
 	plant_type = 2
 
+/obj/item/seeds/appleseed
+	name = "Apple seeds"
+	desc = "A tasty fruit."
+	icon_state = "seed-apple"
+	mypath = "/obj/item/seeds/appleseed"
+	species = "apple"
+	plantname = "Apple tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/apple"
+	lifespan = 55
+	endurance = 35
+	maturation = 6
+	production = 6
+	yield = 5
+	plant_type = 0
+	growthstages = 6
+
 /*
 /obj/item/seeds/
 	name = ""
@@ -611,7 +627,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
-/*
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	seed = "/obj/item/seeds/poppyseed"
 	name = "Poppy"
@@ -621,7 +637,7 @@
 		reagents.add_reagent("nutriment", 1)
 		reagents.add_reagent("opium", max(round((potency / 5), 1), 2))
 		bitesize = reagents.total_volume
-*/
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	seed = "/obj/item/seeds/potatoseed"
@@ -651,6 +667,16 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/apple
+	seed = "/obj/item/seeds/appleseed"
+	name = "Apple"
+	desc = "A piece of Eden."
+	icon_state = "apple"
+	potency = 15
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	seed = "/obj/item/seeds/bananaseed"

@@ -611,6 +611,24 @@
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/soydope
+	name = "Soy Dope"
+	desc = "Dope from a soy."
+	icon_state = "soydope"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/spagetti
+	name = "Spagetti"
+	desc = "Now thats a nice pasta!"
+	icon_state = "spagetti"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		bitesize = 1
+
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries
 	name = "Cheesy Fries"
 	desc = "Fries. Covered in cheese. Duh."
@@ -839,7 +857,7 @@
 	icon_state = "spellburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/bigbiteburger
@@ -857,8 +875,8 @@
 	icon_state = "enchiladas"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
-		reagents.add_reagent("capsaicin", 10)
+		reagents.add_reagent("nutriment",5)
+		reagents.add_reagent("capsaicin", 5)
 		reagents.add_reagent("blackpepper", 10)
 		bitesize = 5
 
@@ -868,7 +886,7 @@
 	icon_state = "monkiesdelight"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 50)
+		reagents.add_reagent("nutriment", 15)
 		reagents.add_reagent("blackpepper", 1)
 		reagents.add_reagent("sodiumchloride", 1)
 		bitesize = 6
@@ -879,7 +897,7 @@
 	icon_state = "baguette"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 25)
+		reagents.add_reagent("nutriment", 5)
 		reagents.add_reagent("blackpepper", 1)
 		reagents.add_reagent("sodiumchloride", 1)
 		bitesize = 3
@@ -890,7 +908,7 @@
 	icon_state = "fishandchips"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 15)
+		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("carpotoxin", 4)
 		bitesize = 3
 
@@ -900,7 +918,7 @@
 	icon_state = "sandwich"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 30)
+		reagents.add_reagent("nutriment", 3)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich
@@ -909,7 +927,7 @@
 	icon_state = "toastedsandwich"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 40)
+		reagents.add_reagent("nutriment", 5)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatosoup
@@ -918,7 +936,7 @@
 	icon_state = "tomatosoup"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 20)
+		reagents.add_reagent("nutriment", 4)
 		reagents.add_reagent("water", 7)
 		bitesize = 5
 
@@ -928,7 +946,7 @@
 	icon_state = "rofflewaffles"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 25)
+		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("psilocybin", 7)
 		bitesize = 5
 
@@ -938,7 +956,7 @@
 	icon_state = "stew"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 50)
+		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("water", 10)
 		bitesize = 3
 
@@ -948,8 +966,66 @@
 	icon_state = "metroidtoast"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 20)
+		reagents.add_reagent("nutriment", 5)
 		reagents.add_reagent("toxin", 10)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/milosoup
+	name = "Milosoup"
+	desc = "The universes best soup! Yum!!!"
+	icon_state = "milosoup"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("water", 20)
+		bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat
+	name = "Stewed Soy Meat"
+	desc = "Even non-vegetarians will LOVE this!"
+	icon_state = "stewedsoymeat"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledspagetti
+	name = "Boiled Spagetti"
+	desc = "Spagetti boiled in 100 degree celcius water until it is soft."
+	icon_state = "spagettiboiled"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("water", 5)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/pastatomato
+	name = "Pasta Tomato"
+	desc = "Spagetti boiled in 100 degree celcius water until it is soft, with a bit of red tomato on it."
+	icon_state = "pastatomato"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("water", 5)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
+	name = "Meatball Spagetti"
+	desc = "Now thats a nic'e meatball!"
+	icon_state = "meatballspagetti"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("water", 5)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/poppypretzel
+	name = "Poppy Pretzel"
+	desc = "A pretzel full of POP!"
+	icon_state = "poppypretzel"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
 		bitesize = 3
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
