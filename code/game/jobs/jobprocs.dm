@@ -3,70 +3,57 @@
 	var/list/candidates = list()
 
 	for (var/mob/new_player/player in unassigned)
-		if (  player.preferences.occupation[level] == job && \
-			! jobban_isbanned(player, job) && \
-			! ((player.mind in ticker.mode.must_be_human) && (job in nonhuman_positions)) && \
-			! ((player.mind in ticker.mode.can_not_be_head) && (job in head_positions)))
+		if (player.preferences.occupation[level] == job)
+			if (jobban_isbanned(player, job))
+				continue
+			if (player.jobs_restricted_by_gamemode && (job in player.jobs_restricted_by_gamemode))
+				continue
 			candidates += player
 
 	return candidates
 
-/proc/PickOccupationCandidate(list/candidates)
-	if (candidates.len > 0)
-		var/picked = pick(candidates)
-		candidates -= picked
-		return picked
-	return null
-
 /proc/ResetOccupations()
 	for (var/mob/new_player/player in world)
 		player.mind.assigned_role = null
+		player.jobs_restricted_by_gamemode = null
 	return
 
 /** Proc DivideOccupations
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effects besides of modifying "assigned_role".
  **/
-
 /proc/DivideOccupations()
 	var/list/unassigned = list()
-	var/list/occupation_choices = occupations.Copy()
 	var/list/occupation_eligible = occupations.Copy()
-	occupation_choices = shuffle(occupation_choices)
+
+	if(ticker.mode.name == "AI malfunction")
+		occupation_eligible["AI"] = 0
 
 	for (var/mob/new_player/player in world)
 		if (player.client && player.ready && !player.mind.assigned_role)
 			unassigned += player
+			for (var/level = 1 to 3)
+				if (jobban_isbanned(player, player.preferences.occupation[level]))
+					player.preferences.occupation[level] = "Assistant"
 
 			// If someone picked AI before it was disabled, or has a saved profile with it
 			// on a game that now lacks it, this will make sure they don't become the AI,
 			// by changing that choice to Captain.
 			if (!config.allow_ai)
-				if (player.preferences.occupation[1] == "AI")
-					player.preferences.occupation[1] = "Captain"
-				if (player.preferences.occupation[2] == "AI")
-					player.preferences.occupation[2] = "Captain"
-				if (player.preferences.occupation[3] == "AI")
-					player.preferences.occupation[3] = "Captain"
-			if (jobban_isbanned(player, player.preferences.occupation[1]))
-				player.preferences.occupation[1] = "Assistant"
-			if (jobban_isbanned(player, player.preferences.occupation[2]))
-				player.preferences.occupation[2] = "Assistant"
-			if (jobban_isbanned(player, player.preferences.occupation[3]))
-				player.preferences.occupation[3] = "Assistant"
+				for (var/level = 1 to 3)
+					if (player.preferences.occupation[level] == "AI")
+						player.preferences.occupation[level] = "Captain"
 
 	if (unassigned.len == 0)
 		return 0
 
-	var/mob/new_player/captain_choice = null
-
 	for (var/level = 1 to 3)
-		var/list/captains = FindOccupationCandidates(unassigned, "Captain", level)
-		var/mob/new_player/candidate = PickOccupationCandidate(captains)
+		var/list/candidates = FindOccupationCandidates(unassigned, "Captain", level)
 
-		if (candidate != null)
-			captain_choice = candidate
-			unassigned -= captain_choice
+		if (candidates.len)
+			var/mob/new_player/candidate = pick(candidates)
+			unassigned -= candidate
+			candidate.mind.assigned_role = "Captain"
 			break
 	/*
 	// Not forcing a Captain -- TLE
@@ -80,19 +67,7 @@
 				break
 		unassigned -= captain_choice
 		*/
-
-
-
-
-	if (captain_choice == null)
-		//world << "Captainship not forced on anyone."//moved to gameticker/proc/distribute_jobs
-	else
-		captain_choice.mind.assigned_role = "Captain"
-
-	for (var/level = 1 to 3)
-		if (unassigned.len == 0)	//everyone is assigned
-			break
-
+	for (var/level = 1 to 3) //players with preferences set
 		for (var/occupation in assistant_occupations)
 			if (unassigned.len == 0)
 				break
@@ -101,52 +76,31 @@
 				candidate.mind.assigned_role = occupation
 				unassigned -= candidate
 
-		for (var/occupation in occupation_choices)
+		for (var/occupation in occupation_eligible)
 			if (unassigned.len == 0)
 				break
-			if(ticker.mode.name == "AI malfunction" && occupation == "AI")
-				continue
-			var/eligible = occupation_eligible[occupation]
-			if (eligible == 0)
+			if (occupation_eligible[occupation] == 0)
 				continue
 			var/list/candidates = FindOccupationCandidates(unassigned, occupation, level)
-			var/eligiblechange = 0
-			while (eligible--)
-				var/mob/new_player/candidate = PickOccupationCandidate(candidates)
-				if (candidate == null)
-					break
+			while (candidates.len && occupation_eligible[occupation])
+				occupation_eligible[occupation]--
+				var/mob/new_player/candidate = pick_n_take(candidates)
 				candidate.mind.assigned_role = occupation
 				unassigned -= candidate
-				eligiblechange++
-			occupation_eligible[occupation] -= eligiblechange
+	
+	if (unassigned.len) //unlucky players with preferences and players without preferences
+		var/list/vacancies = list()
+		for (var/occ in occupation_eligible)
+			for (var/i = 1 to occupation_eligible[occ])
+				vacancies += occ
+		
+		while (unassigned.len && vacancies.len)
+			var/mob/new_player/candidate = pick_n_take(unassigned)
+			var/occupation = pick_n_take(vacancies)
+			candidate.mind.assigned_role = occupation
 
-	if (unassigned.len)
-		unassigned = shuffle(unassigned)
-		for (var/occupation in occupation_choices)
-			if (unassigned.len == 0)
-				break
-			if(ticker.mode.name == "AI malfunction" && occupation == "AI")
-				continue
-			var/eligible = occupation_eligible[occupation]
-
-			while (eligible-- && unassigned.len > 0)
-				var/n = 1
-				var/mob/new_player/candidate = unassigned[1]
-				if (occupation in nonhuman_positions)
-					while (candidate.mind in ticker.mode.must_be_human)
-						n++
-						if (n <= unassigned.len)
-							candidate = unassigned[n]
-						else
-							candidate = null
-							break
-				if (candidate == null)
-					break
-				candidate.mind.assigned_role = occupation
-				unassigned -= candidate
-
-	for (var/mob/new_player/player in unassigned)
-		player.mind.assigned_role = pick(assistant_occupations)
+		for (var/mob/new_player/player in unassigned)
+			player.mind.assigned_role = pick(assistant_occupations)
 
 	return 1
 

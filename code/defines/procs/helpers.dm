@@ -1139,3 +1139,17 @@ proc/listclearnulls(list/list)
 	else
 		result = first ^ second
 	return result
+
+/proc/pick_n_take(list/listfrom)
+	if (listfrom.len > 0)
+		var/picked = pick(listfrom)
+		listfrom -= picked
+		return picked
+	return null
+
+/proc/pop(list/listfrom)
+	if (listfrom.len > 0)
+		var/picked = listfrom[listfrom.len]
+		listfrom.len--
+		return picked
+	return null

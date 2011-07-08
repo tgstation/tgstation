@@ -61,10 +61,11 @@
 /datum/game_mode/changeling/pre_setup()
 	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
 	if(possible_changelings.len>0)
-		var/changeling = pick(possible_changelings)
+		var/datum/mind/changeling = pick(possible_changelings)
 		//possible_changelings-=changeling
 		changelings += changeling
-		must_be_human += changeling
+		var/mob/new_player/player = changeling.current
+		player.jobs_restricted_by_gamemode = nonhuman_positions
 		modePlayer += changelings
 		return 1
 	else

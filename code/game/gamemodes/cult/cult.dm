@@ -59,11 +59,11 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 	
 	var/list/cultists_possible = get_players_for_role(BE_CULTIST)
 	for(var/cultists_number = 1 to max_cultists_to_start)
-		var/cultist = pick(cultists_possible)
+		var/datum/mind/cultist = pick(cultists_possible)
 		cultists_possible -= cultist
 		cult += cultist
-		must_be_human += cultist
-		can_not_be_head += cultist
+		var/mob/new_player/player = cultist.current
+		player.jobs_restricted_by_gamemode = list("Chaplain", "Security Officer", "Warden", "Detective")+nonhuman_positions+head_positions
 	return (cult.len>0)
 
 /datum/game_mode/cult/post_setup()

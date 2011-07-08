@@ -19,8 +19,6 @@
 	var/probability = 1
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
-	var/tmp/list/datum/mind/must_be_human = new
-	var/tmp/list/datum/mind/can_not_be_head = new
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
@@ -32,8 +30,7 @@
 	return 1
 
 /datum/game_mode/proc/post_setup() //do irreversible preparations
-	del(must_be_human) //free some memory
-	del(can_not_be_head)
+	return 1
 
 /datum/game_mode/proc/process()
 
@@ -88,7 +85,8 @@
 	for(var/mob/new_player/player in world)
 		if (player.client && player.ready)
 			if(player.preferences.be_special & role)
-				candidates += player.mind
+				if(!jobban_isbanned(player, "Syndicate"))
+					candidates += player.mind
 
 	if(candidates.len == 0)
 		for(var/mob/new_player/player in world)

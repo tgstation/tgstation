@@ -62,8 +62,8 @@
 		var/datum/mind/lenin = pick(possible_headrevs)
 		possible_headrevs -= lenin
 		head_revolutionaries += lenin
-		must_be_human += lenin
-		can_not_be_head += lenin
+		var/mob/new_player/player = lenin.current
+		player.jobs_restricted_by_gamemode = list("Security Officer", "Warden", "Detective")+nonhuman_positions+head_positions
 	
 	if(head_revolutionaries.len==0)
 		return 0
@@ -76,8 +76,6 @@
 			break
 	if (headless)
 		head_revolutionaries.len = 0
-		must_be_human.len = 0
-		can_not_be_head.len = 0
 		ResetOccupations() //clean up
 		return 0
 	return 1
