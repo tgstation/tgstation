@@ -267,7 +267,7 @@
 	item_state = "caparmor"
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
-	permeability_coefficient = 0.02
+	//permeability_coefficient = 0.02     // HAHAHA no captain's armor is not a bio suit
 	heat_transfer_coefficient = 0.02
 	radiation_protection = 0.25
 	protective_temperature = 1000

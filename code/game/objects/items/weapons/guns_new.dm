@@ -28,6 +28,10 @@ var/const/PROJECTILE_DART = 8
 		yo = null
 		xo = null
 		current = null
+		turf/original = null
+
+		bumped = 0
+
 
 	weakbullet
 		damage_type = PROJECTILE_WEAKBULLET
@@ -59,10 +63,20 @@ var/const/PROJECTILE_DART = 8
 		icon_state = "cbbolt"
 
 	Bump(atom/A as mob|obj|turf|area)
+		if(A == firer)
+			loc = A.loc
+			return // cannot shoot yourself! NO!
+		if(bumped) return
+
+		bumped = 1
 		if(firer && istype(A, /mob))
 			var/mob/M = A
 			if(!silenced)
-				visible_message("\red [A.name] has been shot by [firer.name].", "\blue You hear a [istype(src, /obj/item/projectile/beam) ? "gunshot" : "laser blast"].")
+				/*
+				for(var/mob/O in viewers(M))
+					O.show_message("\red [A.name] has been shot by [firer.name]!", 1) */
+
+				visible_message("\red [A.name] has been shot by [firer.name]!", "\blue You hear a [istype(src, /obj/item/projectile/beam) ? "gunshot" : "laser blast"]!")
 			else
 				M << "\red You've been shot!"
 			if(istype(firer, /mob))
@@ -89,13 +103,22 @@ var/const/PROJECTILE_DART = 8
 
 	process()
 		spawn while(src)
+
 			if ((!( current ) || loc == current))
 				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
 			if ((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 				del(src)
 				return
 			step_towards(src, current)
+
 			sleep( 1 )
+
+			if(!bumped)
+				if(loc == original)
+					for(var/mob/M in original)
+						Bump(M)
+						sleep( 1 )
+
 		return
 
 /obj/item/ammo_casing
@@ -468,8 +491,8 @@ var/const/PROJECTILE_DART = 8
 				update_icon()
 
 	energy
-		icon_state = "energy"
-		name = "Energy Gun"
+		icon_state = "energy gun"
+		name = "energy gun"
 		desc = "A basic energy-based gun with two settings: Stun and kill."
 		fire_sound = 'Taser.ogg'
 		var
@@ -718,6 +741,16 @@ var/const/PROJECTILE_DART = 8
 						return 1
 					return 0
 
+		freeze
+			name = "freeze gun"
+			icon_state = "freezegun100"
+			fire_sound = 'pulse3.ogg'
+
+			attack_self(mob/living/user as mob)
+				return
+
+
+
 		crossbow
 			name = "mini energy-crossbow"
 			desc = "A weapon favored by many of the syndicates stealth specialists."
@@ -767,6 +800,7 @@ var/const/PROJECTILE_DART = 8
 						in_chamber = new /obj/item/projectile/electrode(src)
 						return 1
 					return 0
+
 	proc
 		load_into_chamber()
 			in_chamber = new /obj/item/projectile/weakbullet(src)
@@ -847,6 +881,7 @@ var/const/PROJECTILE_DART = 8
 			user.bullet_act(in_chamber.damage_type)
 			del(in_chamber)
 		else
+			in_chamber.original = targloc
 			in_chamber.loc = get_turf(user)
 			user.next_move = world.time + 4
 			in_chamber.silenced = silenced

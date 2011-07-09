@@ -151,3 +151,25 @@
 		//put em at -175
 		oxyloss = max(100 - fireloss - bruteloss, oxyloss)
 		updatehealth()
+
+
+/mob/living/carbon/metroid/verb/suicide()
+	set hidden = 1
+	if (stat == 2)
+		src << "You're already dead!"
+		return
+
+	if (suiciding)
+		src << "You're already committing suicide! Be patient!"
+		return
+
+	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+
+	if(confirm == "Yes")
+		suiciding = 1
+		oxyloss = 100
+		bruteloss = 100
+		toxloss = 100
+		cloneloss = 100
+
+		updatehealth()

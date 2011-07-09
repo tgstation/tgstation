@@ -27,6 +27,7 @@
 		set_ready_state(0)
 		playsound(chassis, 'Laser.ogg', 50, 1)
 		var/obj/item/projectile/beam/A = new /obj/item/projectile/beam(curloc)
+		A.original = targloc
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -56,6 +57,7 @@
 
 		playsound(chassis, 'marauder.ogg', 50, 1)
 		var/obj/item/projectile/beam/pulse/A = new /obj/item/projectile/beam/pulse/heavy(curloc)
+		A.original = targloc
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -97,6 +99,7 @@
 
 		playsound(chassis, 'Laser.ogg', 50, 1)
 		var/obj/item/projectile/electrode/A = new /obj/item/projectile/electrode(curloc)
+		A.original = targloc
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
@@ -221,6 +224,7 @@
 			playsound(chassis, 'Gunshot.ogg', 80, 1)
 			var/obj/item/projectile/A = new /obj/item/projectile(curloc)
 			src.projectiles--
+			A.original = targloc
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
@@ -259,6 +263,7 @@
 			playsound(chassis, 'Gunshot.ogg', 50, 1)
 			var/obj/item/projectile/weakbullet/A = new /obj/item/projectile/weakbullet(curloc)
 			src.projectiles--
+			A.original = targloc
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x

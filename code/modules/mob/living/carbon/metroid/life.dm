@@ -53,6 +53,14 @@
 		if(prob(85))
 			attacked--
 
+	if(Discipline > 0)
+
+		if(Discipline >= 5 && rabid)
+			if(prob(60)) rabid = 0
+
+		if(prob(20))
+			Discipline--
+
 
 	// Grabbing
 
@@ -77,14 +85,20 @@
 		var/starving = 0 // determines if the metroid is starving-hungry
 		if(istype(src, /mob/living/carbon/metroid/adult))
 			switch(nutrition)
-				if(200 to 600) hungry = 1
-				if(0 to 199) starving = 1
+				if(400 to 800) hungry = 1
+				if(0 to 399)
+					starving = 1
 
 		else
 			switch(nutrition)
 				if(150 to 500) hungry = 1
 				if(0 to 149) starving = 1
 
+
+		if(starving && !client) // if a metroid is starving, it starts losing its friends
+			if(prob(45))
+				var/mob/nofriend = pick(Friends)
+				Friends -= nofriend
 
 		if(!Target)
 			var/list/targets = list()
@@ -98,10 +112,23 @@
 							if(H.mutantrace == "metroid")
 								notarget = 1 // don't hurt metroidmen!
 
+						if(!istype(src, /mob/living/carbon/metroid/adult))
+							if(!starving && Discipline > 0)
+								notarget = 1
+								break
+
 						if(!C.canmove)
 							for(var/mob/living/carbon/metroid/M in view(1,C))
 								if(M.Victim == C)
 									notarget = 1
+
+						if(C in Friends)
+							notarget = 1
+
+						if(tame && istype(C, /mob/living/carbon/human))
+							notarget = 1
+
+
 
 						if(!notarget) targets += C
 
@@ -118,7 +145,7 @@
 						for(var/mob/living/carbon/alien/larva/L in targets)
 							Target = L
 							break
-						if(prob(1))
+						if(prob(5))
 							for(var/mob/living/carbon/alien/humanoid/H in targets)
 								Target = H
 								break
@@ -132,8 +159,9 @@
 				else
 					Target = pick(targets)
 
-			if(attacked > 0 && targets.len > 0)
-				Target = targets[1] // should be the closest target
+			if(targets.len > 0)
+				if(attacked > 0 || rabid)
+					Target = targets[1] // should be the closest target
 
 
 
@@ -158,6 +186,8 @@
 	var/AIproc = 0 // determines if the AI loop is activated
 	var/Atkcool = 0 // attack cooldown
 	var/Tempstun = 0 // temporary temperature stuns
+	var/Discipline = 0 // if a metroid has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
+	var/turf/Charging = null // turf a metroid is "charging" at
 	proc
 
 		AIprocess()  // the master AI process
@@ -166,6 +196,23 @@
 			while(AIproc && stat != 2)
 				if(Victim) // can't eat AND have this little process at the same time
 					break
+
+
+				if(Charging)
+					step_to(src,Charging)
+					if(Charging == loc)
+						Charging = null
+						sleep(15)
+
+					if(Target in view(1,src))
+						Charging = null
+						if(prob(90)) Feedon(Target)
+						else
+							Target.attack_metroid(src)
+							sleep(5)
+
+					sleep(2)
+					continue
 
 				if(Target.health <= -70 || Target.stat == 2)
 					Target = null
@@ -207,7 +254,14 @@
 
 					else
 						if(Target in view(30, src))
-							step_to(src, Target)
+							if(get_dist(Target,src) >= 5 && prob(45))
+								Charging = Target.loc
+								for(var/mob/O in viewers(src, null))
+									O.show_message("<b>The [src.name] lunges swiftly at [Target]!</b>", 1)
+								continue
+
+							else
+								step_to(src, Target)
 
 						else
 							Target = null
@@ -319,7 +373,7 @@
 				death()
 				return
 
-			else if(src.health < 0)
+			else if(src.health < -50)
 				// if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 				//if(!src.rejuv) src.oxyloss++
@@ -388,7 +442,7 @@
 
 		handle_nutrition()
 			if(prob(30))
-				if(istype(src, /mob/living/carbon/metroid/adult)) nutrition-=rand(2,6)
+				if(istype(src, /mob/living/carbon/metroid/adult)) nutrition-=rand(4,7)
 				else nutrition-=rand(1,4)
 
 			if(nutrition <= 0)
@@ -413,7 +467,11 @@
 						for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
 							var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
 							M.nutrition = round(nutrition/number)
-							step_away(M,src)
+							M.powerlevel = round(powerlevel / number)
+							M.Friends = Friends
+							M.tame = tame
+							M.rabid = rabid
+							if(i != 1) step_away(M,src)
 
 						del(src)
 
@@ -421,6 +479,10 @@
 					if(!client)
 						var/mob/living/carbon/metroid/adult/A = new/mob/living/carbon/metroid/adult(src.loc)
 						A.nutrition = nutrition
+						A.powerlevel = max(0, powerlevel-1)
+						A.Friends = Friends
+						A.tame = tame
+						A.rabid = rabid
 						del(src)
 
 

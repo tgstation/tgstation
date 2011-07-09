@@ -52,6 +52,8 @@
 							M << "\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
+
+			tmob.LAssailant = src
 		now_pushing = 0
 		..()
 		if (!( istype(AM, /atom/movable) ))
@@ -254,6 +256,7 @@
 			if (M.a_intent == "grab")
 				if (M == src)
 					return
+
 				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
 				G.assailant = M
 				if (M.hand)
@@ -264,6 +267,9 @@
 				G.affecting = src
 				grabbed_by += G
 				G.synch()
+
+				LAssailant = M
+
 				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
@@ -334,6 +340,9 @@
 			G.affecting = src
 			grabbed_by += G
 			G.synch()
+
+			LAssailant = M
+
 			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red [] has grabbed [name] passively!", M), 1)

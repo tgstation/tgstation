@@ -33,8 +33,8 @@
 		if(reagents.has_reagent("hyperzine")) // hyperzine slows Metroids down
 			tally *= 2 // moves twice as slow
 
-		if(reagents.has_reagent("frostoil")) // frostoil also makes them move pretty slow
-			tally *= 3
+		if(reagents.has_reagent("frostoil")) // frostoil also makes them move VEEERRYYYYY slow
+			tally *= 5
 
 	if(health <= 0) // if damaged, the metroid moves twice as slow
 		tally *= 2
@@ -61,7 +61,9 @@
 					if(7 to 8) probab = 60
 					if(9) 	   probab = 70
 					if(10) 	   probab = 95
-				if(prob(probab))
+				if(prob(probab) || Charging)
+					if(Charging) Charging = null
+
 					if(istype(AM, /obj/window) || istype(AM, /obj/grille))
 						if(istype(src, /mob/living/carbon/metroid/adult))
 							if(nutrition <= 600 && !Atkcool)
@@ -444,6 +446,9 @@
 						O.show_message("\red [M] manages to wrestle \the [name] off!", 1)
 				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 
+				if(prob(90) && !client)
+					Discipline++
+
 				Victim = null
 				anchored = 0
 				step_away(src,M)
@@ -462,6 +467,9 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message("\red [M] manages to wrestle \the [name] off of [Victim]!", 1)
 				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
+
+				if(prob(50) && !client)
+					Discipline++
 
 				Victim = null
 				anchored = 0
@@ -496,6 +504,9 @@
 			G.affecting = src
 			grabbed_by += G
 			G.synch()
+
+			LAssailant = M
+
 			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
@@ -511,11 +522,15 @@
 					if(Victim)
 						Victim = null
 						anchored = 0
+						if(prob(80) && !client)
+							Discipline++
 					spawn(0)
 
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
+
+
 				playsound(loc, "punch", 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -583,6 +598,9 @@
 			G.affecting = src
 			grabbed_by += G
 			G.synch()
+
+			LAssailant = M
+
 			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
@@ -600,6 +618,8 @@
 				if(Victim)
 					Victim = null
 					anchored = 0
+					if(prob(80) && !client)
+						Discipline++
 
 				spawn(0)
 
@@ -640,7 +660,13 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 /mob/living/carbon/metroid/updatehealth()
 	if (nodamage == 0)
 		// metroids can't suffocate unless they suicide. They are also not harmed by fire
-		health = 25 - oxyloss - bruteloss
+		if(istype(src, /mob/living/carbon/metroid/adult))
+			health = 200 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
+		else
+			health = 150 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
 	else
-		health = 25
+		if(istype(src, /mob/living/carbon/metroid/adult))
+			health = 200
+		else
+			health = 150
 		stat = 0

@@ -210,7 +210,7 @@ CIRCULAR SAW
 
 	src.add_fingerprint(user)
 
-	if(user.zone_sel.selecting == "head")
+	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/metroid))
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
@@ -237,7 +237,8 @@ CIRCULAR SAW
 						M << "\red [user] begins to cut open your flesh with [src]!"
 						user << "\red You cut [M]'s flesh open with [src]!"
 						M:brain_op_stage = 1.0
-						return
+
+					return
 
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
@@ -275,15 +276,15 @@ CIRCULAR SAW
 						M << "\red [user] begins to cut apart your innards with [src]!"
 						user << "\red You cut [M]'s silky innards apart with [src]!"
 						M:brain_op_stage = 2.0
-						return
+					return
 			if(2.0)
 				if(istype(M, /mob/living/carbon/metroid))
 					if(M.stat == 2)
 						var/mob/living/carbon/metroid/Metroid = M
 						if(Metroid.cores > 0)
 							if(istype(M, /mob/living/carbon/metroid))
-								user << "\red You attempt to remove [M]'s core, but your [src] is ineffective!"
-								return
+								user << "\red You attempt to remove [M]'s core, but [src] is ineffective!"
+					return
 
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
@@ -387,7 +388,7 @@ CIRCULAR SAW
 
 	src.add_fingerprint(user)
 
-	if(user.zone_sel.selecting == "head")
+	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/metroid))
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
@@ -454,7 +455,7 @@ CIRCULAR SAW
 							if(Metroid.cores <= 0)
 								M.icon_state = "baby metroid dead-nocore"
 
-							return
+					return
 
 			if(3.0)
 				if(M != user)

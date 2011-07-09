@@ -35,6 +35,8 @@
 							M << "\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
+			tmob.LAssailant = src
+
 		now_pushing = 0
 		..()
 		if (!( istype(AM, /atom/movable) ))
@@ -464,6 +466,9 @@
 			G.affecting = src
 			grabbed_by += G
 			G.synch()
+
+			LAssailant = M
+
 			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))

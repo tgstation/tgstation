@@ -1675,6 +1675,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return
 	if (!( anchored ))
 		usr.pulling = src
+		if(ismob(src))
+			var/mob/M = src
+			if(!istype(usr, /mob/living/carbon))
+				M.LAssailant = null
+			else
+				M.LAssailant = usr
 	return
 
 /atom/verb/examine()

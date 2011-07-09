@@ -855,7 +855,7 @@
 
 				if(istype(target, /obj/item/metroid_core))
 					var/obj/item/metroid_core/core = target
-					core.Flush = 30
+					core.Flush = 30 // reset flush counter
 
 				if(ismob(target) && target != user)
 					for(var/mob/O in viewers(world.view, user))

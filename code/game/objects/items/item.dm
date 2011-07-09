@@ -237,6 +237,10 @@
 					if(prob(5 + round(power/2)))
 						Metroid.Victim = null
 						Metroid.anchored = 0
+
+						if(prob(80) && !Metroid.client)
+							Metroid.Discipline++
+
 						spawn(0)
 							Metroid.canmove = 0
 							step_away(Metroid, user)
@@ -249,6 +253,13 @@
 					if(prob(10 + power*2))
 						Metroid.Victim = null
 						Metroid.anchored = 0
+
+						if(prob(80) && !Metroid.client)
+							Metroid.Discipline++
+
+						if(Metroid.Discipline == 1)
+							Metroid.attacked = 0
+
 						spawn(0)
 							step_away(Metroid, user)
 							Metroid.canmove = 0

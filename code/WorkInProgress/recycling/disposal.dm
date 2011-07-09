@@ -83,6 +83,7 @@
 			if(target == user && !user.stat)
 				V.show_message("[usr] starts climbing into the disposal.", 3)
 			if(target != user && !user.restrained())
+				if(target.anchored) return
 				V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
 		if(!do_after(usr, 20))
 			return

@@ -175,8 +175,9 @@ datum
 				src = null
 				if(self.data&&method == INGEST)
 					for(var/datum/disease/D in M.viruses)
-						if(M.virus && D.type == self.data["viruses"])
-							D.cure()
+						if(D.type == self.data)
+							D.stage--
+							if(D.stage <= 0) D.cure()
 
 					M.resistances += self.data
 				return

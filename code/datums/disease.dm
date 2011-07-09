@@ -28,9 +28,9 @@ to null does not delete the object itself. Thank you.
 	var/mob/living/carbon/affected_mob = null //the mob which is affected by disease.
 	var/holder = null //the atom containing the disease (mob or obj)
 	var/carrier = 0.0 //there will be a small chance that the person will be a carrier
-	var/curable = 1 //can this disease be cured? (By itself...)
+	var/curable = 0 //can this disease be cured? (By itself...)
 	var/list/strain_data = list() //This is passed on to infectees
-	var/stage_prob = 5		// probability of advancing to next stage, default 5% per check
+	var/stage_prob = 4		// probability of advancing to next stage, default 5% per check
 	var/agent = "some microbes"//name of the disease agent
 	var/permeability_mod = 1//permeability modifier coefficient.
 	var/desc = null//description. Leave it null and this disease won't show in med records.
@@ -49,7 +49,7 @@ to null does not delete the object itself. Thank you.
 
 	if(stage > max_stages)
 		stage = max_stages
-	if(prob(stage_prob) && stage != max_stages && !cure_present) //now the disease shouldn't get back up to stage 4 in no time
+	if(stage_prob != 0 && prob(stage_prob) && stage != max_stages && !cure_present) //now the disease shouldn't get back up to stage 4 in no time
 		stage++
 	if(stage != 1 && (prob(1) || (cure_present && prob(cure_chance))))
 		stage--

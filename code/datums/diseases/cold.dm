@@ -33,7 +33,7 @@
 		if(3)
 			if(affected_mob.sleeping && prob(25))
 				affected_mob << "\blue You feel better."
-				affected_mob.virus.cure()
+				src.cure()
 				return
 			if(prob(1) && prob(10))
 				affected_mob << "\blue You feel better."

@@ -112,6 +112,9 @@
 					"\red <B>You fail to push [tmob]'s fat ass out of the way.</B>")
 				now_pushing = 0
 				return
+
+		tmob.LAssailant = src
+
 	now_pushing = 0
 	spawn(0)
 		..()
@@ -119,6 +122,7 @@
 			return
 		if (!now_pushing)
 			now_pushing = 1
+
 			if (!AM.anchored)
 				var/t = get_dir(src, AM)
 				if (istype(AM, /obj/window))
@@ -1546,6 +1550,9 @@
 			G.affecting = src
 			grabbed_by += G
 			G.synch()
+
+			LAssailant = M
+
 			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
@@ -1810,6 +1817,9 @@
 			G.affecting = src
 			grabbed_by += G
 			G.synch()
+
+			LAssailant = M
+
 			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)

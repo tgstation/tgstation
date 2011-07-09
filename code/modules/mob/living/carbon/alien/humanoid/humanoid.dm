@@ -31,6 +31,11 @@
 		..()
 		if (!istype(AM, /atom/movable))
 			return
+
+		if (ismob(AM))
+			var/mob/tmob = AM
+			tmob.LAssailant = src
+
 		if (!now_pushing)
 			now_pushing = 1
 			if (!AM.anchored)
@@ -701,6 +706,9 @@
 			G.affecting = src
 			grabbed_by += G
 			G.synch()
+
+			LAssailant = M
+
 			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))

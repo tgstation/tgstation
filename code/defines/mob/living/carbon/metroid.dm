@@ -31,9 +31,12 @@
 
 	var/tame = 0 // if set to 1, the Metroid will not eat humans ever, or attack them
 
-	var/list/Friends = list() // Anything on this list the Metroid will never eat, or attack
+	var/rabid = 0 // if set to 1, the Metroid will attack and eat anything it comes in contact with
 
-	// Metroids pass on genetic data, so all their offspring have the same "Friends"
+	var/list/Friends = list() // A list of potential friends
+	var/list/FriendsWeight = list() // A list containing values respective to Friends. This determines how many times a Metroid "likes" something. If the Metroid likes it more than 2 times, it becomes a friend
+
+	// Metroids pass on genetic data, so all their offspring have the same "Friends",
 
 /mob/living/carbon/metroid/adult
 	name = "adult metroid"
