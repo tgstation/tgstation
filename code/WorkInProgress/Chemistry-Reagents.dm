@@ -2654,6 +2654,24 @@ datum
 				..()
 				return
 
+		manhattan_proj
+			name = "Manhattan Project"
+			id = "manhattan_proj"
+			description = "A scienitst drink of choice, for thinking how to blow up the station."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=4
+				M.druggy = max(M.druggy, 30)
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 3
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+2,0)
+				..()
+				return
+
 		whiskeysoda
 			name = "Whiskey Soda"
 			id = "whiskeysoda"
@@ -2768,15 +2786,18 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
-				M.dizziness +=4
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 4
-				else if(data >= 115 && prob(33))
-					M.confused = max(M:confused+3,3)
+				M.make_dizzy(3)
+				M:jitteriness = max(M:jitteriness-3,0)
+				M:nutrition += 2
+				if(data >= 25)
+					if (!M:stuttering) M:stuttering = 1
+					M:stuttering += 3
+				if(data >= 40 && prob(33))
+					if (!M:confused) M:confused = 1
+					M:confused += 2
+
 				..()
 				return
-
 
 		iced_beer
 			name = "Iced Beer"
@@ -2788,64 +2809,68 @@ datum
 					M.bodytemperature = min(270, M.bodytemperature-40) //310 is the normal bodytemp. 310.055
 				if(!data) data = 1
 				data++
-				M.dizziness +=5
-				if(data >= 45 && data <125)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 6
-				else if(data >= 125 && prob(33))
-					M.confused = max(M:confused+4,5)
+				M.make_dizzy(3)
+				M:jitteriness = max(M:jitteriness-3,0)
+				M:nutrition += 2
+				if(data >= 25)
+					if (!M:stuttering) M:stuttering = 1
+					M:stuttering += 3
+				if(data >= 40 && prob(33))
+					if (!M:confused) M:confused = 1
+					M:confused += 2
+
 				..()
 				return
 
 		grog
 			name = "Grog"
 			id = "grog"
-			description = "A fine drink for Space."
+			description = "Watered down rum, Nanotrasen approves!"
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
-				M.dizziness +=7
-				if(data >= 55 && data <115)
+				M.dizziness +=2
+				if(data >= 90 && data <250)
 					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 7
-				else if(data >= 115 && prob(33))
-					M.confused = max(M:confused+7,7)
+					M.stuttering += 2
+				else if(data >= 250 && prob(33))
+					M.confused = max(M:confused+2,0)
 				..()
 				return
 
 		nuka_cola
 			name = "Nuka Cola"
 			id = "nuka_cola"
-			description = "A high quality drink promising to jitter you."
+			description = "Cola, cola never changes."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
+				M.make_jittery(20)
 				M.druggy = max(M.druggy, 30)
-				M.confused = max(M:confused+3,0)
-				M.make_dizzy(10)
-				if (!M.stuttering) M.stuttering = 1
-				M.stuttering += 3
-				if(!data) data = 1
-				data++
-				switch(data)
-					if(51 to INFINITY)
-						M:sleeping += 2
+				M.dizziness +=5
+				M:drowsyness = 0
+				M:sleeping = 0
+				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = max(310, M.bodytemperature-5)
+				M:nutrition += 1
 				..()
 				return
 
 		soy_latte
 			name = "Soy Latte"
 			id = "soy_latte"
-			description = "A nice and tasty beverage while you are reading."
+			description = "A nice and tasty beverage while you are reading your hippie books."
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
 				..()
-				M.dizziness = max(0,M.dizziness-20)
-				M:drowsyness = max(0,M:drowsyness-20)
+				M.dizziness = max(0,M.dizziness-5)
+				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+5)
 				M.make_jittery(5)
+				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
+				M:nutrition++
 				..()
 				return
 
@@ -2856,12 +2881,14 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
 				..()
-				M.dizziness = max(0,M.dizziness-30)
-				M:drowsyness = max(0,M:drowsyness-30)
+				M.dizziness = max(0,M.dizziness-5)
+				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature+10)
-				M.make_jittery(10)
+					M.bodytemperature = min(310, M.bodytemperature+5)
+				M.make_jittery(5)
+				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
+				M:nutrition++
 				..()
 				return
 
@@ -2964,23 +2991,28 @@ datum
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
+				if(!data) data = 1
+				data++
 				if(istype(M, /mob/living/carbon/human) && M.job in list("Clown"))
 					if(!M) M = holder.my_atom
 					M:heal_organ_damage(1,1)
+					M.dizziness +=5
+					if(data >= 55 && data <165)
+						if (!M.stuttering) M.stuttering = 1
+						M.stuttering += 5
+					else if(data >= 165 && prob(33))
+						M.confused = max(M:confused+5,0)
 					..()
 					return
 				if(istype(M, /mob/living/carbon/monkey))
 					if(!M) M = holder.my_atom
 					M:heal_organ_damage(1,1)
-					M.stunned = 4
-				if(!data) data = 1
-				data++
-				M.dizziness +=5
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 5
-				else if(data >= 165 && prob(33))
-					M.confused = max(M:confused+5,0)
+					M.dizziness +=5
+					if(data >= 55 && data <165)
+						if (!M.stuttering) M.stuttering = 1
+						M.stuttering += 5
+					else if(data >= 165 && prob(33))
+						M.confused = max(M:confused+5,0)
 					..()
 					return
 

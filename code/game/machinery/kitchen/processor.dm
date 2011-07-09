@@ -49,6 +49,10 @@
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 		output = /obj/item/weapon/reagent_containers/food/snacks/fries
 
+	carrot
+		input = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
+		output = /obj/item/weapon/reagent_containers/food/snacks/carrotfries
+
 	soybeans
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 		output = /obj/item/weapon/reagent_containers/food/snacks/soydope

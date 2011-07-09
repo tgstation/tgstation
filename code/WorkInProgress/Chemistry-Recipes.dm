@@ -821,6 +821,13 @@ datum
 			required_reagents = list("whiskey" = 2, "vermouth" = 1)
 			result_amount = 3
 
+		manhattan_proj
+			name = "Manhattan Project"
+			id = "manhattan_proj"
+			result = "manhattan_proj"
+			required_reagents = list("manhattan" = 10, "uranium" = 1)
+			result_amount = 10
+
 		vodka_tonic
 			name = "Vodka and Tonic"
 			id = "vodkatonic"
@@ -853,14 +860,15 @@ datum
 			name = "Red Mead"
 			id = "red_mead"
 			result = "red_mead"
-			required_reagents = list("blood" = 1, "water" = 1, "wine" = 1)
-			result_amount = 3
+			required_reagents = list("blood" = 1, "mead" = 1)
+			result_amount = 2
 
 		mead
 			name = "Mead"
 			id = "mead"
 			result = "mead"
-			required_reagents = list("orangejuice" = 1, "wine" = 1)
+			required_reagents = list("sugar" = 1, "water" = 1)
+			required_catalysts = list("enzyme" = 5)
 			result_amount = 2
 
 		iced_beer
@@ -869,6 +877,13 @@ datum
 			result = "iced_beer"
 			required_reagents = list("beer" = 10, "frostoil" = 1)
 			result_amount = 10
+
+		iced_beer2
+			name = "Iced Beer"
+			id = "iced_beer"
+			result = "iced_beer"
+			required_reagents = list("beer" = 5, "ice" = 1)
+			result_amount = 6
 
 		grog
 			name = "Grog"
@@ -881,8 +896,8 @@ datum
 			name = "Nuka Cola"
 			id = "nuka_cola"
 			result = "nuka_cola"
-			required_reagents = list("radium" = 1, "cola" = 1)
-			result_amount = 2
+			required_reagents = list("uranium" = 1, "cola" = 5)
+			result_amount = 5
 
 		soy_latte
 			name = "Soy Latte"
@@ -895,36 +910,36 @@ datum
 			name = "Cafe Latte"
 			id = "cafe_latte"
 			result = "cafe_latte"
-			required_reagents = list("coffee" = 1, "milk" = 1, "cream" = 1)
-			result_amount = 3
+			required_reagents = list("coffee" = 1, "milk" = 1)
+			result_amount = 2
 
 		acidspit
 			name = "Acid Spit"
 			id = "acidspit"
 			result = "acidspit"
-			required_reagents = list("radium" = 1, "plasma" = 1, "wine" = 1)
-			result_amount = 3
+			required_reagents = list("acid" = 1, "wine" = 5)
+			result_amount = 6
 
 		amasec
 			name = "Amasec"
 			id = "amasec"
 			result = "amasec"
-			required_reagents = list("iron" = 1, "wine" = 1, "vodka" = 1)
-			result_amount = 3
+			required_reagents = list("iron" = 1, "wine" = 5, "vodka" = 5)
+			result_amount = 10
 
 		neurotoxin
 			name = "Neurotoxin"
 			id = "neurotoxin"
 			result = "neurotoxin"
-			required_reagents = list("gargleblaster" = 1, "fuel" = 1, "acid" = 1)
-			result_amount = 3
+			required_reagents = list("gargleblaster" = 1, "stoxin" = 1)
+			result_amount = 2
 
 		hippiesdelight
 			name = "Hippies Delight"
 			id = "hippiesdelight"
 			result = "hippiesdelight"
-			required_reagents = list("psilocybin" = 1, "gargleblaster" = 1, "space_drugs" = 1)
-			result_amount = 3
+			required_reagents = list("psilocybin" = 1, "gargleblaster" = 1)
+			result_amount = 2
 
 		bananahonk
 			name = "Banana Honk"
@@ -937,5 +952,5 @@ datum
 			name = "Singulo"
 			id = "singulo"
 			result = "singulo"
-			required_reagents = list("vodka" = 1, "cream" = 1, "milk" = 1, "wine" = 1)
-			result_amount = 4
+			required_reagents = list("vodka" = 5, "radium" = 1, "plasma" = 1, "wine" = 5)
+			result_amount = 10

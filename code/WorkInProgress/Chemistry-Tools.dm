@@ -2649,6 +2649,10 @@
 					icon_state = "manhattanglass"
 					name = "Manhattan"
 					desc = "The Detective's undercover drink of choice. He never could stomach gin..."
+				if("manhattan_proj")
+					icon_state = "proj_manhattanglass"
+					name = "Manhattan Project"
+					desc = "A scienitst drink of choice, for thinking how to blow up the station."
 				if("ginfizz")
 					icon_state = "ginfizzglass"
 					name = "Gin Fizz"
