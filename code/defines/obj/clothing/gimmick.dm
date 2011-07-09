@@ -351,3 +351,17 @@
 	color = "luigi"
 */
 
+/obj/item/clothing/under/kilt
+	name = "kilt"
+	desc = "Includes shoes and plaid"
+	icon_state = "kilt"
+	item_state = "kilt"
+	color = "kilt"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|FEET
+
+/obj/item/clothing/head/bowler
+	name = "bowler-hat"
+	desc = "Gentleman, elite aboard!"
+	icon_state = "bowler"
+	item_state = "bowler"
+	flags = FPRINT | TABLEPASS | HEADSPACE

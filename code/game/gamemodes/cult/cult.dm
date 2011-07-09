@@ -255,10 +255,12 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 	return cult_fail //if any objectives aren't met, failure
 
 /datum/game_mode/cult/proc/check_survive()
-	var/area/shuttle = locate(/area/shuttle/escape/centcom)
-	for(var/mob/living/carbon/human/C in shuttle)
-		if(C.stat!=2 && cult.Find(C.mind))
-			acolytes_survived++
+	acolytes_survived = 0
+	for(var/datum/mind/cult_mind in cult)
+		if (cult_mind.current && cult_mind.current.stat!=2)
+			var/area/A = get_area(cult_mind.current )
+			if ( is_type_in_list(A, centcom_areas))
+				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0
 	else

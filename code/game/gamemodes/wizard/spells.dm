@@ -59,6 +59,8 @@
 			A.layer = 4
 			var/i
 			for(i=0, i<20, i++)
+				if (!istype(M)) //it happens sometimes --rastaf0
+					break
 				var/obj/overlay/B = new /obj/overlay( A.loc )
 				B.icon_state = "magicmd"
 				B.icon = 'wizard.dmi'

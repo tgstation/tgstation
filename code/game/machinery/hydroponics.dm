@@ -866,7 +866,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 		for(var/datum/reagent/blood/bloodSample in W:reagents.reagent_list)
 			var/mob/living/carbon/human/source = bloodSample.data["donor"] //hacky, since it gets the CURRENT condition of the mob, not how it was when the blood sample was taken
-
+			if (!istype(source))
+				continue
 			//ui = bloodSample.data["blood_dna"] doesn't work for whatever reason
 			ui = source.dna.uni_identity
 			se = source.dna.struc_enzymes
