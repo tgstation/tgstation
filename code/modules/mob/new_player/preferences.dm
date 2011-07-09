@@ -42,6 +42,7 @@ datum/preferences
 	var/underwear = 1
 
 	var/occupation[] = list("No Preference", "No Preference", "No Preference")
+	var/datum/jobs/wanted_jobs = list()
 
 	var/h_style = "Short Hair"
 	var/f_style = "Shaved"
