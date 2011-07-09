@@ -72,6 +72,9 @@
 	access_cent_creed = 108//Creed's office.
 	access_cent_captain = 109//Captain's office/ID comp/AI.
 
+	//MONEY
+	access_crate_cash = 200
+
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
 /obj/New()

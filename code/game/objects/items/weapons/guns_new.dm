@@ -519,6 +519,7 @@ var/const/PROJECTILE_DART = 8
 		laser
 			name = "laser gun"
 			icon_state = "laser"
+			fire_sound = 'Laser.ogg'
 			w_class = 3.0
 			throw_speed = 2
 			throw_range = 10

@@ -335,6 +335,65 @@
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
 
+/obj/item/clothing/head/collectable			//Hat Station 13
+	name = "Collectable Hat"
+	desc = "A rare collectable hat."
+
+/obj/item/clothing/head/collectable/chef
+	name = "Collectable Chef's Hat"
+	desc = "A rare chef's hat meant for hat collectors."
+	icon_state = "chef"
+	item_state = "chef"
+
+/obj/item/clothing/head/collectable/paper
+	name = "Collectable Paper Hat"
+	desc = "What looks like an ordinary paper hat, is actually a rare and valuable collector's edition paper hat. Keep away from water."
+	icon_state = "paper"
+
+/obj/item/clothing/head/collectable/swat
+	name = "Collectable SWAT Helmet"
+	desc = "Has a tag on the inside 'A genuine Collector's SWAT Helmet. Not for use as protective headgear.'"
+	icon_state = "swat"
+	item_state = "swat"
+
+/obj/item/clothing/head/collectable/tophat
+	name = "Collectable Top Hat"
+	desc = "A top hat worn by only the most prestigious hat collectors."
+	icon_state = "tophat"
+	item_state = "that"
+
+/obj/item/clothing/head/collectable/captain
+	name = "Collectable Captain's Hat"
+	desc = "A Collectable Hat that'll make you look just like a real comdom!"
+	icon_state = "captain"
+	item_state = "caphat"
+
+/obj/item/clothing/head/collectable/centcom
+	name = "Collectable Centcom Hat"
+	desc = "A Collectable replica of a centcom official's hat."
+	icon_state = "centcom"
+	item_state = "centhat"
+
+/obj/item/clothing/head/collectable/police
+	name = "Collectable Police Officer's Hat"
+	desc = "A Collectable Police Officer's Hat. This hat emphasizes that you are THE LAW."
+	icon_state = "policehelm"
+
+/obj/item/clothing/head/collectable/beret
+	name = "Collectable Beret"
+	desc = "A Collectable red beret."
+	icon_state = "beret"
+
+/obj/item/clothing/head/collectable/welding
+	name = "Collectable Welding Helmet"
+	desc = "A Collectable Welding Helmet. Now with 80% less lead! Not for actual welding."
+	icon_state = "welding"
+	item_state = "welding"
+
+//obj/item/clothing/head/collectable
+
+
+
 /* no left/right sprites
 /obj/item/clothing/under/mario
 	name = "Mario costume"
