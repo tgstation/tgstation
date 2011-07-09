@@ -851,3 +851,57 @@
 		/obj/item/weapon/reagent_containers/food/snacks/faggot,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
+
+/datum/recipe/superbiteburger
+	reagents = list("sodiumchloride" = 5, "blackpepper" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/superbiteburger
+
+/datum/recipe/candiedapple
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+		/obj/item/weapon/reagent_containers/food/snacks/sugar,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/candiedapple
+
+/datum/recipe/applepie
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/applepie
+
+/datum/recipe/applecake
+	reagents = list("milk" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/applecake

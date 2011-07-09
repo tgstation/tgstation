@@ -14,8 +14,8 @@
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/melee/baton(src)
-	new /obj/item/clothing/head/seccoft(src)
-	new /obj/item/clothing/head/seccoft(src)
+	new /obj/item/clothing/head/secsoft(src)
+	new /obj/item/clothing/head/secsoft(src)
 	return
 
 /obj/secure_closet/security1/proc/prison_break()
@@ -43,7 +43,6 @@
 	new /obj/item/device/detective_scanner( src )
 	new /obj/item/device/detective_scanner( src )
 	new /obj/item/device/detective_scanner( src )
-	new /obj/item/clothing/head/seccoft( src )
 	return
 
 /obj/secure_closet/highsec/New()
@@ -58,7 +57,7 @@
 	new /obj/item/clothing/glasses/sunglasses( src )
 	new /obj/item/clothing/suit/armor/vest( src )
 	new /obj/item/clothing/head/helmet( src )
-	new /obj/item/clothing/head/seccoft( src )
+	new /obj/item/clothing/head/secsoft( src )
 	return
 
 /obj/secure_closet/hos/New()
@@ -78,7 +77,6 @@
 	new /obj/item/weapon/storage/flashbang_kit(src)
 	new /obj/item/weapon/handcuffs(src)
 	new /obj/item/weapon/melee/baton(src)
-	new /obj/item/clothing/head/seccoft(src)
 	return
 
 /obj/secure_closet/injection/New()

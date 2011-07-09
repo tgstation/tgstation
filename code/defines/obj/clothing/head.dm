@@ -149,10 +149,10 @@
 	protective_temperature = 500
 	heat_transfer_coefficient = 0.10
 
-/obj/item/clothing/head/seccoft
+/obj/item/clothing/head/secsoft
 	name = "Security Coft Hat"
 	desc = "An armored baseball hat."
-	icon_state = "seccoft"
+	icon_state = "secsoft"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
 	item_state = "helmet"
 	armor = list(melee = 60, bullet = 40, laser = 40, taser = 10, bomb = 15, bio = 10, rad = 0)

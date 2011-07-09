@@ -559,6 +559,22 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/watermelonseed
+	name = "Watermelon Seed"
+	desc = "Some promising seeds."
+	icon_state = "seed-watermelon"
+	mypath = "/obj/item/seeds/watermelonseed"
+	species = "watermelon"
+	plantname = "Watermelon"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon"
+	lifespan = 50
+	endurance = 40
+	maturation = 6
+	production = 6
+	yield = 3
+	plant_type = 0
+	growthstages = 6
+
 /*
 /obj/item/seeds/
 	name = ""
@@ -725,6 +741,16 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
+	seed = "/obj/item/seeds/watermelonseed"
+	name = "Watermelon"
+	desc = "A melon full of watery goodness"
+	icon_state = "watermelon"
+	potency = 10
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
 	seed = "/obj/item/seeds/whitebeetseed"

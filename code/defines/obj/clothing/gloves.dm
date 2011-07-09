@@ -91,6 +91,16 @@
 	heat_transfer_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 30, bomb = 0, bio = 0, rad = 0)
 
+/obj/item/clothing/gloves/captain
+	desc = "Regal blue gloves, with a nice gold trim. Swanky."
+	name = "Captain Gloves"
+	icon_state = "captain"
+	item_state = "egloves"
+	siemens_coefficient = 0.30
+	protective_temperature = 1100
+	heat_transfer_coefficient = 0.05
+	armor = list(melee = 80, bullet = 60, laser = 50, taser = 30, bomb = 50, bio = 15, rad = 5)
+
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
 	name = "botanic leather gloves"

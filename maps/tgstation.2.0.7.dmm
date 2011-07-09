@@ -548,7 +548,7 @@
 "akB" = (/obj/machinery/atmospherics/pipe/simple,/obj/grille,/obj/window/reinforced,/obj/window/reinforced{dir = 1},/obj/window/reinforced{dir = 4},/obj/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/security/hos)
 "akC" = (/obj/disposalpipe/segment,/turf/simulated/wall/r_wall,/area/security/hos)
 "akD" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor,/area/security/main)
-"akE" = (/obj/table,/obj/item/weapon/paper_bin{pixel_x = -3; pixel_y = 7},/obj/item/clothing/head/seccoft,/turf/simulated/floor,/area/security/main)
+"akE" = (/obj/table,/obj/item/weapon/paper_bin{pixel_x = -3; pixel_y = 7},/obj/item/clothing/head/secsoft,/turf/simulated/floor,/area/security/main)
 "akF" = (/obj/table,/obj/item/clothing/glasses/sunglasses,/obj/item/weapon/crowbar,/turf/simulated/floor,/area/security/main)
 "akG" = (/obj/machinery/vending/security,/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor,/area/security/main)
 "akH" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating,/area/maintenance/fsmaint)

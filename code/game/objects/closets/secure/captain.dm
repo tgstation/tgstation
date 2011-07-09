@@ -12,4 +12,5 @@
 	new /obj/item/clothing/head/helmet/swat( src )
 	new /obj/item/clothing/suit/captunic( src )
 	new /obj/item/clothing/head/helmet/cap( src )
+	new /obj/item/clothing/gloves/captain( src )
 	return

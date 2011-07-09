@@ -1168,7 +1168,7 @@
 		else
 			usr << "\blue \The [src] was bitten multiple times!"
 
-/obj/item/weapon/reagent_containers/food/snacks/sliceable
+/obj/item/weapon/reagent_containers/food/snacks
 	var/slice_path
 	var/slices_num
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
