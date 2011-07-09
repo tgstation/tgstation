@@ -149,6 +149,17 @@
 	protective_temperature = 500
 	heat_transfer_coefficient = 0.10
 
+/obj/item/clothing/head/seccoft
+	name = "Security Coft Hat"
+	desc = "An armored baseball hat."
+	icon_state = "seccoft"
+	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
+	item_state = "helmet"
+	armor = list(melee = 60, bullet = 40, laser = 40, taser = 10, bomb = 15, bio = 10, rad = 0)
+
+	protective_temperature = 500
+	heat_transfer_coefficient = 0.10
+
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
 	icon_state = "space"
@@ -354,6 +365,14 @@
 	item_state = "that"
 	flags = FPRINT|TABLEPASS|HEADSPACE
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/greenbandana
+	name = "Green Bandana"
+	desc = "A green bandana with some fine nanotech lining."
+	icon_state = "greenbandana"
+	item_state = "greenbandana"
+	flags = FPRINT|TABLEPASS|HEADSPACE
+	armor = list(melee = 5, bullet = 5, laser = 5, taser = 5, bomb = 15, bio = 15, rad = 15)
 
 /obj/item/clothing/head/helmet/riot
 	name = "Riot Helmet"

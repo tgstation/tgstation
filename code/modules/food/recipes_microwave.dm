@@ -241,7 +241,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/banana
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread
 
@@ -372,7 +372,7 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
-		 /obj/item/weapon/reagent_containers/food/snacks/grown/banana
+		 /obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie
 /*

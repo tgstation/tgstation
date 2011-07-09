@@ -1311,7 +1311,7 @@
 
 /obj/item/stack/tile/grass
 	name = "Grass tile"
-	singular_name = "S	teel floor tile"
+	singular_name = "Grass floor tile"
 	desc = "A patch of grass like they often use on golf courses"
 	icon_state = "tile_grass"
 	w_class = 3.0

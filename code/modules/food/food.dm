@@ -84,6 +84,27 @@
 		..()
 		reagents.add_reagent("nutriment", 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/sugar
+	name = "sugar"
+	desc = "Give me some sugar honey!"
+	icon_state = "sugar"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/athelasmorganstearscrushed
+	name = "Crushed Athelas Morgan's Tears"
+	desc = "Crushed herbs with healing properties"
+	icon_state = "athelasmorganstearscrushed"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("leporazine", 8)
+		reagents.add_reagent("kelotane", 8)
+		reagents.add_reagent("bicaridine", 8)
+		reagents.add_reagent("anti_toxin", 5)
+		reagents.add_reagent("psilocybin", 10)
+
 /obj/item/weapon/reagent_containers/food/snacks/meat
 	name = "meat"
 	desc = "A slab of meat"

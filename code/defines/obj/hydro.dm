@@ -527,6 +527,38 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/athelasmorganstearsseed
+	name = "Athelas Morgan's Tears seeds"
+	desc = "A plant grown from the tears of Morgan."
+	icon_state = "seed-athelas-morganstears"
+	mypath = "/obj/item/seeds/athelasmorganstearsseed"
+	species = "athelas-morganstears"
+	plantname = "Athelas Morgan's Tears"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/athelasmorganstears"
+	lifespan = 60
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 8
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/whitebeetseed
+	name = "White Beet seed"
+	desc = "A sugary beet."
+	icon_state = "seed-whitebeet"
+	mypath = "/obj/item/seeds/whitebeetseed"
+	species = "beet"
+	plantname = "White Beet"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet"
+	lifespan = 60
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 4
+	plant_type = 0
+	growthstages = 6
+
 /*
 /obj/item/seeds/
 	name = ""
@@ -668,6 +700,22 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/athelasmorganstears
+	seed = "/obj/item/seeds/athelasmorganstearsseed"
+	name = "Morgan's Tears"
+	desc = "A tear of Morgan. Used for healing."
+	icon_state = "athelas-morganstears"
+	potency = 10
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("space_drugs", 10)
+		reagents.add_reagent("leporazine", 5)
+		reagents.add_reagent("kelotane", 5)
+		reagents.add_reagent("bicaridine", 5)
+		reagents.add_reagent("toxin", 5)
+		reagents.add_reagent("psilocybin", 10)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	seed = "/obj/item/seeds/appleseed"
 	name = "Apple"
@@ -676,7 +724,17 @@
 	potency = 15
 	New()
 		..()
-		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
+	seed = "/obj/item/seeds/whitebeetseed"
+	name = "White Beet"
+	desc = "A beeting of white."
+	icon_state = "whitebeet"
+	potency = 15
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	seed = "/obj/item/seeds/bananaseed"
