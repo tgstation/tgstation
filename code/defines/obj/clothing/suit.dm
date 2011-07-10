@@ -604,7 +604,7 @@
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 5, bullet = 2, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/suit
+/obj/item/clothing/suit/chickensuit
 	name = "Chicken Suit"
 	desc = "A suit made long ago by the ancient empire KFC."
 	icon_state = "chickensuit"
