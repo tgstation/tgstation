@@ -468,8 +468,13 @@
 						O.show_message("\red [M] manages to wrestle \the [name] off of [Victim]!", 1)
 				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 
-				if(prob(50) && !client)
+				if(prob(80) && !client)
 					Discipline++
+
+					if(!istype(src, /mob/living/carbon/metroid/adult))
+						if(Discipline == 1)
+							attacked = 0
+
 
 				Victim = null
 				anchored = 0
@@ -620,6 +625,9 @@
 					anchored = 0
 					if(prob(80) && !client)
 						Discipline++
+						if(!istype(src, /mob/living/carbon/metroid))
+							if(Discipline == 1)
+								attacked = 0
 
 				spawn(0)
 

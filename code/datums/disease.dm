@@ -1,8 +1,10 @@
+#define NON_CONTAGIOUS -1
 #define SPECIAL 0
 #define CONTACT_GENERAL 1
 #define CONTACT_HANDS 2
 #define CONTACT_FEET 3
 #define AIRBORNE 4
+#define BLOOD 5
 
 /*
 

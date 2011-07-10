@@ -216,7 +216,7 @@
 
 	var/power = src.force
 	if(!istype(M, /mob/living/carbon/human))
-		if(istype(src, /mob/living/carbon/metroid))
+		if(istype(M, /mob/living/carbon/metroid))
 			var/mob/living/carbon/metroid/Metroid = M
 			if(prob(25))
 				user << "\red [src] passes right through [M]!"
@@ -225,16 +225,13 @@
 			if(power > 0)
 				Metroid.attacked += 10
 
-
-		for(var/mob/O in viewers(messagesource, null))
-			O.show_message(text("\red <B>[] has been attacked with [][] </B>", M, src, (user ? text(" by [].", user) : ".")), 1)
-
-
-		if(power >= 3)
-			var/mob/living/carbon/metroid/Metroid = M
-			if (istype(M))
+			if(power >= 3)
 				if(istype(Metroid, /mob/living/carbon/metroid/adult))
 					if(prob(5 + round(power/2)))
+
+						if(Metroid.Victim)
+							if(prob(80) && !Metroid.client)
+								Metroid.Discipline++
 						Metroid.Victim = null
 						Metroid.anchored = 0
 
@@ -251,14 +248,17 @@
 
 				else
 					if(prob(10 + power*2))
+
+						if(Metroid.Victim)
+							if(prob(80) && !Metroid.client)
+								Metroid.Discipline++
+
+								if(Metroid.Discipline == 1)
+									Metroid.attacked = 0
+
 						Metroid.Victim = null
 						Metroid.anchored = 0
 
-						if(prob(80) && !Metroid.client)
-							Metroid.Discipline++
-
-						if(Metroid.Discipline == 1)
-							Metroid.attacked = 0
 
 						spawn(0)
 							step_away(Metroid, user)
@@ -267,6 +267,10 @@
 								sleep(2)
 								step_away(Metroid, user)
 							Metroid.canmove = 1
+
+
+		for(var/mob/O in viewers(messagesource, null))
+			O.show_message(text("\red <B>[] has been attacked with [][] </B>", M, src, (user ? text(" by [].", user) : ".")), 1)
 
 
 

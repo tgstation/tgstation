@@ -70,7 +70,9 @@
 
 		// DO AI STUFF HERE
 
-
+		if(Target)
+			if(attacked <= 0)
+				Target = null
 
 		if(Victim) return // if it's eating someone already, continue eating!
 
@@ -145,7 +147,7 @@
 						for(var/mob/living/carbon/alien/larva/L in targets)
 							Target = L
 							break
-						if(prob(5))
+						if(prob(5) && !Discipline)
 							for(var/mob/living/carbon/alien/humanoid/H in targets)
 								Target = H
 								break
@@ -193,26 +195,13 @@
 		AIprocess()  // the master AI process
 
 			AIproc = 1
-			while(AIproc && stat != 2)
+			while(AIproc && stat != 2 && attacked > 0)
 				if(Victim) // can't eat AND have this little process at the same time
 					break
 
+				if(attacked <= 0)
+					break
 
-				if(Charging)
-					step_to(src,Charging)
-					if(Charging == loc)
-						Charging = null
-						sleep(15)
-
-					if(Target in view(1,src))
-						Charging = null
-						if(prob(90)) Feedon(Target)
-						else
-							Target.attack_metroid(src)
-							sleep(5)
-
-					sleep(2)
-					continue
 
 				if(Target.health <= -70 || Target.stat == 2)
 					Target = null
@@ -254,14 +243,7 @@
 
 					else
 						if(Target in view(30, src))
-							if(get_dist(Target,src) >= 5 && prob(45))
-								Charging = Target.loc
-								for(var/mob/O in viewers(src, null))
-									O.show_message("<b>The [src.name] lunges swiftly at [Target]!</b>", 1)
-								continue
-
-							else
-								step_to(src, Target)
+							step_to(src, Target)
 
 						else
 							Target = null
