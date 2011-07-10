@@ -87,13 +87,13 @@
 				var/mob/new_player/candidate = pick_n_take(candidates)
 				candidate.mind.assigned_role = occupation
 				unassigned -= candidate
-	
+
 	if (unassigned.len) //unlucky players with preferences and players without preferences
 		var/list/vacancies = list()
 		for (var/occ in occupation_eligible)
 			for (var/i = 1 to occupation_eligible[occ])
 				vacancies += occ
-		
+
 		while (unassigned.len && vacancies.len)
 			var/mob/new_player/candidate = pick_n_take(unassigned)
 			var/occupation = pick_n_take(vacancies)
@@ -351,12 +351,12 @@
 
 		if ("Medical Doctor")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears) // -- TLE
-			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (src), slot_back)
 			src.equip_if_possible(new /obj/item/weapon/storage/survival_kit(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/medical(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
+			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
 			src.equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
 
