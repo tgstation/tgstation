@@ -548,7 +548,7 @@
 	desc = "A sugary beet."
 	icon_state = "seed-whitebeet"
 	mypath = "/obj/item/seeds/whitebeetseed"
-	species = "beet"
+	species = "whitebeet"
 	plantname = "White Beet"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet"
 	lifespan = 60
@@ -558,6 +558,22 @@
 	yield = 4
 	plant_type = 0
 	growthstages = 6
+
+/obj/item/seeds/sugarcaneseed
+	name = "Sugarcane seed"
+	desc = "A cane of sugar"
+	icon_state = "seed-sugarcane"
+	mypath = "/obj/item/seeds/sugarcaneseed"
+	species = "sugarcane"
+	plantname = "Sugarcane"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane"
+	lifespan = 60
+	endurance = 50
+	maturation = 3
+	production = 6
+	yield = 4
+	plant_type = 0
+	growthstages = 3
 
 /obj/item/seeds/watermelonseed
 	name = "Watermelon Seed"
@@ -574,6 +590,89 @@
 	yield = 3
 	plant_type = 0
 	growthstages = 6
+
+
+/obj/item/seeds/limeseed
+	name = "Lime Seed"
+	desc = "Very sour seeds."
+	icon_state = "seed-lime"
+	mypath = "/obj/item/seeds/limeseed"
+	species = "lime"
+	plantname = "Lime"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/lime"
+	lifespan = 55
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 4
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/lemonseed
+	name = "Lemon Seed"
+	desc = "Sour seeds."
+	icon_state = "seed-lemon"
+	mypath = "/obj/item/seeds/lemonseed"
+	species = "lemon"
+	plantname = "Lemon"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/lemon"
+	lifespan = 55
+	endurance = 45
+	maturation = 6
+	production = 6
+	yield = 4
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/orangeseed
+	name = "Orange Seed"
+	desc = "Sour seeds."
+	icon_state = "seed-orange"
+	mypath = "/obj/item/seeds/orangeseed"
+	species = "orange"
+	plantname = "Orange"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/orange"
+	lifespan = 60
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 5
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/poisonberryseed
+	name = "Poison Berry seeds"
+	desc = "Seeds that grows into poison berries."
+	icon_state = "seed-poisonberry"
+	mypath = "/obj/item/seeds/poisonberryseed"
+	species = "poisonberry"
+	plantname = "Poison Berry bush"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries"
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 2
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/grassseed
+	name = "Grass seeds"
+	desc = "Seeds that will one day become sheep food."
+	icon_state = "seed-grass"
+	mypath = "/obj/item/seeds/grassseed"
+	species = "grass"
+	plantname = "Grass"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/grass"
+	lifespan = 60
+	endurance = 50
+	maturation = 2
+	production = 5
+	yield = 5
+	potency = 10
+	plant_type = 0
+	growthstages = 2
 
 /*
 /obj/item/seeds/
@@ -716,6 +815,38 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/grass
+	seed = "/obj/item/seeds/grassseed"
+	name = "Grass"
+	desc = "Greeny"
+	icon_state = "grass"
+	potency = 10
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
+	seed = "/obj/item/seeds/sugarcaneseed"
+	name = "Sugarcane"
+	desc = "Sugary"
+	icon_state = "sugarcane"
+	potency = 10
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("sugar", 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries
+	seed = "/obj/item/seeds/poisonberryseed"
+	name = "Poison Berries"
+	desc = "Nutritious in a deadly way."
+	icon_state = "poisonberrypile"
+	potency = 15
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("toxin", 15)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/athelasmorganstears
 	seed = "/obj/item/seeds/athelasmorganstearsseed"
 	name = "Morgan's Tears"
@@ -725,11 +856,11 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("space_drugs", 10)
+		reagents.add_reagent("space_drugs", 5)
 		reagents.add_reagent("leporazine", 5)
 		reagents.add_reagent("kelotane", 5)
 		reagents.add_reagent("bicaridine", 5)
-		reagents.add_reagent("toxin", 5)
+		reagents.add_reagent("toxin", 10)
 		reagents.add_reagent("psilocybin", 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
@@ -750,7 +881,37 @@
 	potency = 10
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent("nutriment", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/lime
+	seed = "/obj/item/seeds/limeseed"
+	name = "Lime"
+	desc = "A fruit so sour it twists your face."
+	icon_state = "lime"
+	potency = 20
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/lemon
+	seed = "/obj/item/seeds/lemonseed"
+	name = "Lemon"
+	desc = "A sour fruit that makes your mouth bleed."
+	icon_state = "lemon"
+	potency = 20
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/orange
+	seed = "/obj/item/seeds/orangeseed"
+	name = "Orange"
+	desc = "A sweet and sour fruit."
+	icon_state = "orange"
+	potency = 20
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
 	seed = "/obj/item/seeds/whitebeetseed"
@@ -761,6 +922,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("sugar", 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	seed = "/obj/item/seeds/bananaseed"

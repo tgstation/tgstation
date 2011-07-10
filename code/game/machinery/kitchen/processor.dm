@@ -69,6 +69,10 @@
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/athelasmorganstears
 		output = /obj/item/weapon/reagent_containers/food/snacks/athelasmorganstearscrushed
 
+	sugarcane
+		input = /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
+		output = /obj/item/weapon/reagent_containers/food/snacks/sugar
+
 	/* mobs */
 	mob
 		process(loc, what)
