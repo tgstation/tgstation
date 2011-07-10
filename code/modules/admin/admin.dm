@@ -2314,3 +2314,44 @@ var/showadminmessages = 1
 //TO-DO:
 //
 //
+
+
+/**********************Administration Shuttle**************************/
+
+var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
+
+proc/move_admin_shuttle()
+	var/area/fromArea
+	var/area/toArea
+	if (admin_shuttle_location == 1)
+		fromArea = locate(/area/shuttle/administration/station)
+		toArea = locate(/area/shuttle/administration/centcom)
+	else
+		fromArea = locate(/area/shuttle/administration/centcom)
+		toArea = locate(/area/shuttle/administration/station)
+	fromArea.move_contents_to(toArea)
+	if (admin_shuttle_location)
+		admin_shuttle_location = 0
+	else
+		admin_shuttle_location = 1
+	return
+
+/**********************Centcom Ferry**************************/
+
+var/ferry_location = 0 // 0 = centcom , 1 = station
+
+proc/move_ferry()
+	var/area/fromArea
+	var/area/toArea
+	if (ferry_location == 1)
+		fromArea = locate(/area/shuttle/transport1/station)
+		toArea = locate(/area/shuttle/transport1/centcom)
+	else
+		fromArea = locate(/area/shuttle/transport1/centcom)
+		toArea = locate(/area/shuttle/transport1/station)
+	fromArea.move_contents_to(toArea)
+	if (ferry_location)
+		ferry_location = 0
+	else
+		ferry_location = 1
+	return
