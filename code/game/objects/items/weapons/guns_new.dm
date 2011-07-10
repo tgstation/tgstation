@@ -491,7 +491,7 @@ var/const/PROJECTILE_DART = 8
 				update_icon()
 
 	energy
-		icon_state = "energy gun"
+		icon_state = "energy"
 		name = "energy gun"
 		desc = "A basic energy-based gun with two settings: Stun and kill."
 		fire_sound = 'Taser.ogg'
