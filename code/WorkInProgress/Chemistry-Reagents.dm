@@ -1456,6 +1456,12 @@ datum
 			description = "A power ground from peppercorns. *AAAACHOOO*"
 			reagent_state = SOLID
 
+		crushedchocolate
+			name = "Crushed Chocolate"
+			id = "crushedchocolate"
+			description = "Crushed goodness"
+			reagent_state = SOLID
+
 		amatoxin
 			name = "Amatoxin"
 			id = "amatoxin"
@@ -1579,6 +1585,56 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:nutrition += nutriment_factor
+				..()
+				return
+
+		watermelonjuice
+			name = "Watermelon Juice"
+			id = "watermelonjuice"
+			description = "Delicious juice made from watermelon."
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:nutrition += nutriment_factor
+				..()
+				return
+
+		limejuice
+			name = "Lime Juice"
+			id = "limejuice"
+			description = "Some very sour juice, enough to make your face twitch."
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:nutrition += nutriment_factor
+				..()
+				return
+
+		lemonjuice
+			name = "Lemon Juice"
+			id = "lemonjuice"
+			description = "This juice is VERY sour."
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:nutrition += nutriment_factor
+				..()
+				return
+
+		poisonberryjuice
+			name = "Poison Berry Juice"
+			id = "poisonberryjuice"
+			description = "A tasty juice blended from various kinds of very deadly and toxic berries."
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:nutrition += nutriment_factor
+				if(!M) M = holder.my_atom
+				M:toxloss += 2.5
 				..()
 				return
 

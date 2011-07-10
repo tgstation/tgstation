@@ -94,6 +94,8 @@ the blender or the processor: Processor items are solid objects and Blender resu
 			src.reagents.add_reagent("ketchup", 5)
 		else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/corn))
 			src.reagents.add_reagent("cornoil", 5)
+		else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/chocolatebar))
+			src.reagents.add_reagent("crushedchocolate", 5)
 		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))	//This is intentionally not an "else if"
 			O.reagents.trans_to(src, O.reagents.total_volume)			//Think of it as the "pulp" leftover.
 			del(O)

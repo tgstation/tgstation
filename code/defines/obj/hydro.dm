@@ -549,7 +549,7 @@
 	icon_state = "seed-whitebeet"
 	mypath = "/obj/item/seeds/whitebeetseed"
 	species = "whitebeet"
-	plantname = "White Beet"
+	plantname = "White Beet Plant"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet"
 	lifespan = 60
 	endurance = 50
@@ -581,7 +581,7 @@
 	icon_state = "seed-watermelon"
 	mypath = "/obj/item/seeds/watermelonseed"
 	species = "watermelon"
-	plantname = "Watermelon"
+	plantname = "Watermelon Plant"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon"
 	lifespan = 50
 	endurance = 40
@@ -598,7 +598,7 @@
 	icon_state = "seed-lime"
 	mypath = "/obj/item/seeds/limeseed"
 	species = "lime"
-	plantname = "Lime"
+	plantname = "Lime Tree"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/lime"
 	lifespan = 55
 	endurance = 50
@@ -614,7 +614,7 @@
 	icon_state = "seed-lemon"
 	mypath = "/obj/item/seeds/lemonseed"
 	species = "lemon"
-	plantname = "Lemon"
+	plantname = "Lemon Tree"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/lemon"
 	lifespan = 55
 	endurance = 45
@@ -630,7 +630,7 @@
 	icon_state = "seed-orange"
 	mypath = "/obj/item/seeds/orangeseed"
 	species = "orange"
-	plantname = "Orange"
+	plantname = "Orange Tree"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/orange"
 	lifespan = 60
 	endurance = 50
@@ -673,6 +673,42 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 2
+
+/obj/item/seeds/cocoapodseed
+	name = "Cocoa Pod seeds"
+	desc = "Looks fattening these seeds."
+	icon_state = "seed-cocoapod"
+	mypath = "/obj/item/seeds/cocoapodseed"
+	species = "cocoapod"
+	plantname = "Cocoa Pod Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod"
+	lifespan = 20
+	endurance = 15
+	maturation = 5
+	production = 5
+	yield = 2
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
+/*  // Maybe one day when I get it to work like a grenade which exlodes gibs.
+/obj/item/seeds/gibtomatoseed
+	name = "Gib Tomato seeds"
+	desc = "Used to grow gib tomotoes."
+	icon_state = "seed-gibtomato"
+	mypath = "/obj/item/seeds/gibtomatoseed"
+	species = "gibtomato"
+	plantname = "Gib Tomato plant"
+	productname = "/obj/item/weapon/grown/gibtomato"
+	lifespan = 35
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+*/
 
 /*
 /obj/item/seeds/
@@ -810,6 +846,16 @@
 	name = "Berries"
 	desc = "Nutritious!"
 	icon_state = "berrypile"
+	potency = 10
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
+	seed = "/obj/item/seeds/cocoapodseed"
+	name = "Cocoa Pod"
+	desc = "Fattening"
+	icon_state = "cocoapod"
 	potency = 10
 	New()
 		..()
@@ -1207,7 +1253,31 @@
 	throw_range = 3
 	plant_type = 1
 	seed = "/obj/item/seeds/sunflower"
+/*
+/obj/item/weapon/grown/gibtomato
+	desc = "A plump tomato."
+	icon = 'harvest.dmi'
+	name = "Gib Tomato"
+	icon_state = "gibtomato"
+	damtype = "fire"
+	force = 0
+	flags = TABLEPASS
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	plant_type = 1
+	seed = "/obj/item/seeds/gibtomato"
+	New()
+		..()
 
+
+/obj/item/weapon/grown/gibtomato/New()
+	..()
+	src.gibs = new /obj/gibspawner/human(get_turf(src))
+	src.gibs.attach(src)
+	src.smoke.set_up(10, 0, usr.loc)
+*/
 /obj/item/weapon/grown/nettle // -- Skie
 	desc = "This is a nettle. It's probably <B>not</B> wise to touch it with bare hands..."
 	icon = 'weapons.dmi'

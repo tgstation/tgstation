@@ -2480,6 +2480,14 @@
 					icon_state  = "glass_white"
 					name = "Glass of cream"
 					desc = "Ewwww..."
+				if("chocolate")
+					icon_state  = "chocolateglass"
+					name = "Glass of chocolate"
+					desc = "Tasty"
+				if("lemon")
+					icon_state  = "lemonglass"
+					name = "Glass of lemon"
+					desc = "Sour..."
 				if("cola")
 					icon_state  = "glass_brown"
 					name = "Glass of Space Cola"
@@ -2708,6 +2716,10 @@
 					icon_state = "berryjuice"
 					name = "Glass of berry juice"
 					desc = "Berry juice. Or maybe its jam. Who cares?"
+				if("poisonberryjuice")
+					icon_state = "poisonberryjuice"
+					name = "Glass of poison berry juice"
+					desc = "A glass of deadly juice."
 				if("carrotjuice")
 					icon_state = "carrotjuice"
 					name = "Glass of  carrot juice"

@@ -54,6 +54,24 @@
 		reagents.add_reagent("nutriment", 3)
 		bitesize = 1
 
+/obj/item/weapon/reagent_containers/food/snacks/cocoa
+	name = "cocoa"
+	desc = "Such, sweet, fattening food."
+	icon_state = "cocoa"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/chocolatebar
+	name = "Chocolate Bar"
+	desc = "Such, sweet, fattening food."
+	icon_state = "chocolatebar"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 1
+
 /obj/item/weapon/reagent_containers/food/snacks/donut
 	name = "donut"
 	desc = "Goes great with Robust Coffee."
@@ -1067,7 +1085,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 40)
-		bitesize = 3
+		bitesize = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple
 	name = "Candied Apple"
