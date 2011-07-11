@@ -209,7 +209,7 @@ datum
 							T.wet_overlay = null
 
 				for(var/mob/living/carbon/metroid/M in T)
-					M.toxloss+=rand(10,50)
+					M.toxloss+=rand(5,10)
 
 				var/hotspot = (locate(/obj/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
@@ -798,7 +798,7 @@ datum
 					del(C)
 
 				for(var/mob/living/carbon/metroid/M in T)
-					M.toxloss+=rand(10,50)
+					M.toxloss+=rand(5,10)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				M.clean_blood()
@@ -1423,7 +1423,7 @@ datum
 					M.take_organ_damage(0, 1)
 
 				if(istype(M, /mob/living/carbon/metroid))
-					M:bodytemperature += rand(5,10)
+					M:bodytemperature += rand(5,20)
 				..()
 				return
 
@@ -1439,10 +1439,14 @@ datum
 				if(prob(40))
 					M.take_organ_damage(0, 1)
 				if(prob(80) && istype(M, /mob/living/carbon/metroid))
-					M.fireloss += rand(15,30)
+					M.fireloss += rand(5,20)
 					if(prob(5)) M << "\red You feel a terrible chill inside your body!"
 				..()
 				return
+
+			reaction_turf(var/turf/simulated/T, var/volume)
+				for(var/mob/living/carbon/metroid/M in T)
+					M.toxloss+=rand(15,30)
 
 		sodiumchloride
 			name = "Table Salt"

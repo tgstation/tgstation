@@ -503,7 +503,155 @@ datum
 /////////////////////////////////////METROID CORE REACTIONS ///////////////////////////////
 
 
-		// TODO
+		metroid_explosion
+			name = "Explosion"
+			id = "m_explosion"
+			result = null
+			required_reagents = list("blood" = 1)
+			result_amount = 2
+			required_container = /obj/item/metroid_core
+			required_other = 2
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+				var/datum/effects/system/reagents_explosion/e = new()
+				e.set_up(round (created_volume/10, 1), location, 0, 0)
+				e.start()
+
+				holder.clear_reagents()
+				return
+		metroidjam
+			name = "Metroid Jam"
+			id = "m_jam"
+			result = "metroid"
+			required_reagents = list("water" = 1)
+			result_amount = 1
+			required_container = /obj/item/metroid_core
+			required_other = 2
+		metroidsynthi
+			name = "Metroid Synthetic Flesh"
+			id = "m_flesh"
+			result = null
+			required_reagents = list("sugar" = 1)
+			result_amount = 1
+			required_container = /obj/item/metroid_core
+			required_other = 2
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+				new /obj/item/weapon/syntiflesh(location)
+				return
+
+
+
+
+		metroidenzyme
+			name = "Metroid Enzyme"
+			id = "m_enzyme"
+			result = "enzyme"
+			required_reagents = list("blood" = 1, "water" = 1)
+			result_amount = 2
+			required_container = /obj/item/metroid_core
+			required_other = 3
+		metroidplasma
+			name = "Metroid Plasma"
+			id = "m_plasma"
+			result = "plasma"
+			required_reagents = list("sugar" = 1, "blood" = 2)
+			result_amount = 2
+			required_container = /obj/item/metroid_core
+			required_other = 3
+		metroidvirus
+			name = "Metroid Virus"
+			id = "m_virus"
+			result = null
+			required_reagents = list("sugar" = 1, "acid" = 1)
+			result_amount = 2
+			required_container = /obj/item/metroid_core
+			required_other = 3
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				holder.clear_reagents()
+
+				var/virus = pick(/datum/disease/flu, /datum/disease/cold, \
+				 /datum/disease/pierrot_throat, /datum/disease/fake_gbs, \
+				 /datum/disease/brainrot, /datum/disease/wizarditis, \
+				 /datum/disease/magnitis)
+
+
+				var/datum/disease/F = new virus(0)
+				var/list/data = list("viruses"= list(F))
+				holder.add_reagent("blood", 20, data)
+
+				holder.add_reagent("cyanide", rand(1,10))
+
+				var/location = get_turf(holder.my_atom)
+				var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread
+				S.attach(location)
+				S.set_up(10, 0, location)
+				playsound(location, 'smoke.ogg', 50, 1, -3)
+				spawn(0)
+					S.start()
+					sleep(10)
+					S.start()
+					sleep(10)
+					S.start()
+					sleep(10)
+					S.start()
+					sleep(10)
+					S.start()
+				return
+
+
+
+		metroidchloral
+			name = "Metroid Chloral"
+			id = "m_bunch"
+			result = "chloralhydrate"
+			required_reagents = list("blood" = 1, "water" = 2)
+			result_amount = 2
+			required_container = /obj/item/metroid_core
+			required_other = 5
+		metroidxeno
+			name = "Metroid Xeno"
+			id = "m_xeno"
+			result = "xenomicrobes"
+			required_reagents = list("sugar" = 1)
+			result_amount = 1
+			required_container = /obj/item/metroid_core
+			required_other = 5
+		metroidfoam
+			name = "Metroid Foam"
+			id = "m_foam"
+			result = null
+			required_reagents = list("acid" = 1)
+			result_amount = 2
+			required_container = /obj/item/metroid_core
+			required_other = 5
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+
+
+				var/location = get_turf(holder.my_atom)
+				for(var/mob/M in viewers(5, location))
+					M << "\red The solution violently bubbles!"
+
+				location = get_turf(holder.my_atom)
+
+				for(var/mob/M in viewers(5, location))
+					M << "\red The solution spews out foam!"
+
+				//world << "Holder volume is [holder.total_volume]"
+				//for(var/datum/reagent/R in holder.reagent_list)
+				//	world << "[R.name] = [R.volume]"
+
+				var/datum/effects/system/foam_spread/s = new()
+				s.set_up(created_volume, location, holder, 0)
+				s.start()
+				holder.clear_reagents()
+				return
+
+
+
+
+
 
 
 

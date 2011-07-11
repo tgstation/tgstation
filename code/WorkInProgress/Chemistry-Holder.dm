@@ -165,6 +165,8 @@ datum
 						var/total_matching_reagents = 0
 						var/total_required_catalysts = C.required_catalysts.len
 						var/total_matching_catalysts= 0
+						var/matching_container = 0
+						var/matching_other = 0
 						var/list/multipliers = new/list()
 
 						for(var/B in C.required_reagents)
@@ -175,7 +177,27 @@ datum
 							if(has_reagent(B, C.required_catalysts[B]))
 								total_matching_catalysts++
 
-						if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts)
+						if(!C.required_container)
+							matching_container = 1
+
+						else
+							if(my_atom.type == C.required_container)
+								matching_container = 1
+
+						if(!C.required_other)
+							matching_other = 1
+
+						else
+							if(istype(my_atom, /obj/item/metroid_core))
+								var/obj/item/metroid_core/M = my_atom
+
+								if(M.POWERFLAG == C.required_other)
+									matching_other = 1
+
+
+
+
+						if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
 							var/multiplier = min(multipliers)
 							for(var/B in C.required_reagents)
 								remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)

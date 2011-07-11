@@ -930,6 +930,15 @@ datum
 			reliability_base = 76
 			build_path = "/obj/item/weapon/gun/energy/nuclear"
 
+		freeze_gun
+			name = "Freeze Gun"
+			desc = "A gun that shoots supercooled hydrogen particles to drastically chill a target's body temperature."
+			id = "freeze_gun"
+			req_tech = list("comabat" = 3, "materials" = 4, "powerstorage" = 3, "magnets" = 2)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 5000, "$glass" = 500, "$silver" = 3000)
+			build_path = "/obj/item/weapon/gun/energy/freeze"
+
 		large_grenade
 			name = "Large Grenade"
 			desc = "A grenade that affects a larger area and use larger containers."

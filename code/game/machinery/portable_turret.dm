@@ -504,6 +504,14 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			if(!emagged) use_power(200)
 			else use_power(400)
 
+		else if(istype(E, /obj/item/weapon/gun/energy/freeze))
+			A = new /obj/item/projectile/freeze( loc )
+			var/obj/item/projectile/freeze/F = A
+			F.temperature = rand(0, 200)
+			icon_state = "target_prism"
+			if(!emagged) use_power(300)
+			else use_power(600)
+
 		else // Energy gun shots
 
 			if(!emagged) // if it hasn't been emagged, it uses normal taser shots
@@ -621,7 +629,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		if(4)
 			if(istype(W, /obj/item/device/prox_sensor))
 				build_step = 5
-				user << "\blue You add prox sensor to the turret."
+				user << "\blue You add the prox sensor to the turret."
 				del(W)
 				return
 

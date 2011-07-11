@@ -1096,7 +1096,7 @@
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
 		R.my_atom = src
-		POWERFLAG = rand(-5,15)
+		POWERFLAG = rand(1,10)
 		//flags |= NOREACT
 
 		spawn()
