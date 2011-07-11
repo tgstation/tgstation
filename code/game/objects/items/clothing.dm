@@ -291,10 +291,12 @@ THERMAL GLASSES
 		src.icon_state = "suitjacket_blue"
 		src.item_state = "suitjacket_blue"
 		usr << "You button up the suit jacket."
-	else
+	else if(src.icon_state == "suitjacket_blue")
 		src.icon_state = "suitjacket_blue_open"
 		src.item_state = "suitjacket_blue_open"
 		usr << "You unbutton the suit jacket."
+	else
+		usr << "Sorry! The suit you're wearing doesn't have buttons!"
 
 /obj/item/clothing/suit/labcoat/verb/toggle()
 	set name = "Toggle Labcoat Buttons"
