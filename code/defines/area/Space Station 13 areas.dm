@@ -708,6 +708,10 @@ proc/process_ghost_teleport_locs()
 	icon_state = "medbay"
 	music = 'signal.ogg'
 
+/area/medical/patients_rooms
+	name = "Patients Rooms"
+	icon_state = "patients"
+
 /area/medical/cmo
 	name = "Chief Medical Officer's office"
 	icon_state = "CMO"
@@ -735,6 +739,10 @@ proc/process_ghost_teleport_locs()
 /area/medical/surgery
 	name = "Surgery"
 	icon_state = "surgery"
+
+/area/medical/cryo
+	name = "Cryo"
+	icon_state = "cryo"
 
 /area/medical/exam_room
 	name = "Exam Room"
