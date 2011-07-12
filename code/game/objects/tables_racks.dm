@@ -26,6 +26,10 @@ TABLE AND RACK OBJECT INTERATIONS
 /obj/table/blob_act()
 
 	if(prob(75))
+		if(istype(src, /obj/table/woodentable))
+			new /obj/item/weapon/table_parts/wood( src.loc )
+			del(src)
+
 		new /obj/item/weapon/table_parts( src.loc )
 		del(src)
 

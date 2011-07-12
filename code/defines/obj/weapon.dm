@@ -1406,6 +1406,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "wooden table parts"
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
+	flags = null
 
 /obj/item/weapon/tank
 	name = "tank"

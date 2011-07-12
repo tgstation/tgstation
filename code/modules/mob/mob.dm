@@ -935,7 +935,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
 				usr.next_move = world.time + 100
 				usr.last_special = world.time + 100
-				if(isalienadult(usr))//Don't want to do a lot of logic gating here.
+				if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
 					usr << "\green You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
 					for(var/mob/O in viewers(usr))
 						O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", usr), 1)
