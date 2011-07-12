@@ -1038,3 +1038,108 @@
         </body>
 		</html>
 		"}
+
+
+/obj/item/weapon/book/manual/chef_recipes
+	name = "Chef Recipes"
+	icon_state = "chefbook"
+	author = "Lord Frenrir Cageth"
+
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 18px; margin: 15px 0px 5px;}
+				h2 {font-size: 15px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {list-style: none; margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				</style>
+				</head>
+				<body>
+
+				<h1>Food for Dummies</h1>
+				Here is a guide on basic food recipes and also how to not poison your customers accidentally.
+
+				<h2>Burger:<h2>
+				Put 1 meat and 1 flour into the microwave and turn it on. Then wait.
+
+				<h2>Bread:<h2>
+				Put 3 flour into the microwave and then wait.
+
+				<h2>Waffles:<h2>
+				Add 2 flour and 2 egg to the microwave and then wait.
+
+				<h2>Popcorn:<h2>
+				Add 1 corn to the microwave and wait.
+
+				<h2>Meat Steak:<h2>
+				Put 1 meat, 1 unit of salt and 1 unit of pepper into the microwave and wait.
+
+				<h2>Meat Pie:<h2>
+				Put 1 meat and 2 flour into the microwave and wait.
+
+				<h2>Boiled Spagetti:<h2>
+				Put 1 spagetti and 5 units of water into the microwave and wait.
+
+				<h2>Donuts:<h2>
+				Add 1 egg and 1 flour to the microwave and wait.
+
+				<h2>Fries:<h2>
+				Add one potato to the processor and wait.
+
+
+				</body>
+				</html>
+			"}
+
+/obj/item/weapon/book/manual/barman_recipes
+	name = "Barman Recipes"
+	icon_state = "barbook"
+	author = "Sir John Rose"
+
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 18px; margin: 15px 0px 5px;}
+				h2 {font-size: 15px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {list-style: none; margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				</style>
+				</head>
+				<body>
+
+				<h1>Drinks for dummies</h1>
+				Heres a guide for some basic drinks.
+
+				<h2>Manly Dorf:</h2>
+				Mix ale and beer into a glass.
+
+				<h2>Grog:</h2>
+				Mix rum and water into a glass.
+
+				<h2>Black Russian:</h2>
+				Mix vodka and kahlua into a glass.
+
+				<h2>Irish Cream:</h2>
+				Mix cream and whiskey into a glass.
+
+				<h2>Screwdriver:</h2>
+				Mix vodka and orange juice into a glass.
+
+				<h2>Cafe Latte:</h2>
+				Mix milk and coffee into a glass.
+
+				<h2>Mead:</h2>
+				Mix Enzyme, water and sugar into a glass.
+
+				<h2>Gin Tonic:</h2>
+				Mix gin and tonic into a glass.
+
+				<h2>Classic Martini:</h2>
+				Mix vermouth and gin into a glass.
+
+
+				</body>
+				</html>
+			"}

@@ -283,6 +283,7 @@
 #include "code\defines\procs\gamehelpers.dm"
 #include "code\defines\procs\helpers.dm"
 #include "code\defines\procs\icon_procs.dm"
+#include "code\defines\procs\icon_procs_readme.dm"
 #include "code\defines\procs\logging.dm"
 #include "code\defines\procs\religion_name.dm"
 #include "code\defines\procs\station_name.dm"

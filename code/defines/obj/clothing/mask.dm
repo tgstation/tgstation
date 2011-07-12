@@ -108,6 +108,11 @@
 	desc = "It looks a little creepy"
 	icon_state = "mime"
 
+/obj/item/clothing/mask/gas/fakemoustache
+	name = "fake moustache"
+	desc = "For ages 0 and under."
+	icon_state = "fake-moustache"
+
 /obj/item/clothing/mask/cigarette
 	name = "Cigarette"
 	desc = "Tasty"
