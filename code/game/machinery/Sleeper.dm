@@ -347,6 +347,10 @@
 
 	if (usr.stat != 0)
 		return
+	if(orient == "RIGHT")
+		icon_state = "sleeper_0-r"
+	src.icon_state = "sleeper_0"
+
 	src.go_out()
 	add_fingerprint(usr)
 
