@@ -934,7 +934,7 @@ datum
 			name = "Freeze Gun"
 			desc = "A gun that shoots supercooled hydrogen particles to drastically chill a target's body temperature."
 			id = "freeze_gun"
-			req_tech = list("comabat" = 3, "materials" = 4, "powerstorage" = 3, "magnets" = 2)
+			req_tech = list("combat" = 3, "materials" = 4, "powerstorage" = 3, "magnets" = 2)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 500, "$silver" = 3000)
 			build_path = "/obj/item/weapon/gun/energy/freeze"
