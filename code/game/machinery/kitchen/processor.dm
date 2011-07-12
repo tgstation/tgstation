@@ -61,26 +61,6 @@
 		input = /obj/item/weapon/reagent_containers/food/snacks/flour
 		output = /obj/item/weapon/reagent_containers/food/snacks/spagetti
 
-	whitebeet
-		input = /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
-		output = /obj/item/weapon/reagent_containers/food/snacks/sugar
-
-	athelasmorganstears
-		input = /obj/item/weapon/reagent_containers/food/snacks/grown/athelasmorganstears
-		output = /obj/item/weapon/reagent_containers/food/snacks/athelasmorganstearscrushed
-
-	sugarcane
-		input = /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
-		output = /obj/item/weapon/reagent_containers/food/snacks/sugar
-
-	cocoapod
-		input = /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
-		output = /obj/item/weapon/reagent_containers/food/snacks/cocoa
-
-	cocoa
-		input = /obj/item/weapon/reagent_containers/food/snacks/cocoa
-		output = /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
-
 	/* mobs */
 	mob
 		process(loc, what)

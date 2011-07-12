@@ -860,6 +860,8 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("coco", 5)
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass
 	seed = "/obj/item/seeds/grassseed"
@@ -879,8 +881,7 @@
 	potency = 10
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("sugar", 10)
+		reagents.add_reagent("sugar", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries
 	seed = "/obj/item/seeds/poisonberryseed"
@@ -891,7 +892,8 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("toxin", 15)
+		reagents.add_reagent("toxin", max(round(potency / 5, 1), 4))
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/athelasmorganstears
 	seed = "/obj/item/seeds/athelasmorganstearsseed"
@@ -902,12 +904,11 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("space_drugs", 5)
-		reagents.add_reagent("leporazine", 5)
-		reagents.add_reagent("kelotane", 5)
-		reagents.add_reagent("bicaridine", 5)
-		reagents.add_reagent("toxin", 10)
-		reagents.add_reagent("psilocybin", 10)
+		reagents.add_reagent("space_drugs", max(round(potency / 5, 1), 4))
+		reagents.add_reagent("kelotane", max(round(potency / 5, 1), 4))
+		reagents.add_reagent("bicaridine", max(round(potency / 5, 1), 4))
+		reagents.add_reagent("toxin", max(round(potency / 5, 1), 4))
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	seed = "/obj/item/seeds/appleseed"
@@ -968,7 +969,8 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("sugar", 10)
+		reagents.add_reagent("sugar", 5)
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	seed = "/obj/item/seeds/bananaseed"
@@ -1071,6 +1073,7 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("imidazoline", max(round(potency / 5, 1), 4))
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = "/obj/item/seeds/amanitamycelium"

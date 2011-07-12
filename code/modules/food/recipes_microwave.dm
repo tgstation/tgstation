@@ -877,10 +877,9 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/superbiteburger
 
 /datum/recipe/candiedapple
-	reagents = list("water" = 5)
+	reagents = list("water" = 5, "sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
-		/obj/item/weapon/reagent_containers/food/snacks/sugar,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candiedapple
 

@@ -1933,6 +1933,9 @@
 					name = "Corn Oil"
 					desc = "A delicious oil used in cooking. Made from corn."
 					icon_state = "oliveoil"
+				if("sugar")
+					name = "Sugar"
+					desc = "Tastey space sugar!"
 				else
 					name = "Misc Condiment Bottle"
 					if (reagents.reagent_list.len==1)
@@ -1953,6 +1956,11 @@
 	New()
 		..()
 		reagents.add_reagent("enzyme", 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/sugar
+	New()
+		..()
+		reagents.add_reagent("sugar", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
 	name = "Salt Shaker"											//	a large one.
@@ -2038,13 +2046,13 @@
 	icon_state = "tea"
 	New()
 		..()
-		reagents.add_reagent("h_chocolate", 30)
+		reagents.add_reagent("hot_coco", 30)
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
-	desc = "Just add 10ml water, self heats! A taste that reminds you of your shcool years."
+	desc = "Just add 10ml water, self heats! A taste that reminds you of your school years."
 	icon_state = "ramen"
 	New()
 		..()

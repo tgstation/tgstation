@@ -671,6 +671,37 @@ datum
 					new /obj/item/weapon/reagent_containers/food/snacks/tofu(location)
 				return
 
+		chocolate_bar
+			name = "Chocolate Bar"
+			id = "chocolate_bar"
+			result = null
+			required_reagents = list("soymilk" = 2, "coco" = 2, "sugar" = 2)
+			result_amount = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+				for(var/i = 1, i <= created_volume, i++)
+					new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(location)
+				return
+
+		chocolate_bar2
+			name = "Chocolate Bar"
+			id = "chocolate_bar"
+			result = null
+			required_reagents = list("milk" = 2, "coco" = 2, "sugar" = 2)
+			result_amount = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+				for(var/i = 1, i <= created_volume, i++)
+					new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(location)
+				return
+
+		hot_coco
+			name = "Hot Coco"
+			id = "hot_coco"
+			result = "hot_coco"
+			required_reagents = list("water" = 5, "coco" = 1)
+			result_amount = 5
+
 		soysauce
 			name = "Soy Sauce"
 			id = "soysauce"

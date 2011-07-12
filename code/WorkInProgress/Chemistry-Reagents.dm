@@ -290,7 +290,6 @@ datum
 			id = "toxin"
 			description = "A Toxic chemical."
 			reagent_state = LIQUID
-
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss += 1.5
@@ -315,7 +314,6 @@ datum
 			id = "stoxin"
 			description = "An effective hypnotic used to treat insomnia."
 			reagent_state = LIQUID
-
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
@@ -328,6 +326,37 @@ datum
 						M:paralysis = max(M:paralysis, 20)
 						M:drowsyness  = max(M:drowsyness, 30)
 				data++
+				..()
+				return
+
+		srejuvinate
+			name = "Sleep Rejuvinate"
+			id = "stoxin"
+			description = "Put people to sleep, and heals them."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if(!data) data = 1
+				data++
+				if(M.losebreath >= 10)
+					M.losebreath = max(10, M.losebreath-10)
+				holder.remove_reagent(src.id, 0.2)
+				switch(data)
+					if(1 to 15)
+						M.eye_blurry = max(M.eye_blurry, 10)
+					if(15 to 25)
+						M:drowsyness  = max(M:drowsyness, 20)
+					if(25 to INFINITY)
+						M:sleeping = 1
+						M:oxyloss = 0
+						M:weakened = 0
+						M:stunned = 0
+						M:paralysis = 0
+						M.dizziness = 0
+						M:drowsyness = 0
+						M:stuttering = 0
+						M:confused = 0
+						M:jitteriness = 0
 				..()
 				return
 
@@ -1410,12 +1439,12 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 5 * REAGENTS_METABOLISM
 
+
 		capsaicin
 			name = "Capsaicin Oil"
 			id = "capsaicin"
 			description = "This is what makes chilis hot."
 			reagent_state = LIQUID
-			nutriment_factor = 5 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:bodytemperature += 5
@@ -1432,7 +1461,6 @@ datum
 			id = "frostoil"
 			description = "A special oil that noticably chills the body. Extraced from Icepeppers."
 			reagent_state = LIQUID
-			nutriment_factor = 5 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:bodytemperature -= 5
@@ -1440,7 +1468,7 @@ datum
 					M.take_organ_damage(0, 1)
 				if(prob(80) && istype(M, /mob/living/carbon/metroid))
 					M.fireloss += rand(5,20)
-					if(prob(5)) M << "\red You feel a terrible chill inside your body!"
+					M << "\red You feel a terrible chill inside your body!"
 				..()
 				return
 
@@ -1460,11 +1488,29 @@ datum
 			description = "A power ground from peppercorns. *AAAACHOOO*"
 			reagent_state = SOLID
 
-		crushedchocolate
-			name = "Crushed Chocolate"
-			id = "crushedchocolate"
-			description = "Crushed goodness"
+		coco
+			name = "Coco Powder"
+			id = "Coco Powder"
+			description = "A fatty, bitter paste made from coco beans."
 			reagent_state = SOLID
+			nutriment_factor = 5 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				..()
+				return
+
+		hot_coco
+			name = "Hot Chocolate"
+			id = "hot_coco"
+			description = "Made with love! And coco beans."
+			reagent_state = LIQUID
+			nutriment_factor = 2 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature+5)
+				M:nutrition += nutriment_factor
+				..()
+				return
 
 		amatoxin
 			name = "Amatoxin"
@@ -1580,6 +1626,111 @@ datum
 			description = "A universal enzyme used in the preperation of certain chemicals and foods."
 			reagent_state = LIQUID
 
+		dry_ramen
+			name = "Dry Ramen"
+			id = "dry_ramen"
+			description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
+			reagent_state = SOLID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				..()
+				return
+
+		hot_ramen
+			name = "Hot Ramen"
+			id = "hot_ramen"
+			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
+			reagent_state = LIQUID
+			nutriment_factor = 5 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = min(310, M.bodytemperature+10)
+				..()
+				return
+
+		hell_ramen
+			name = "Hell Ramen"
+			id = "hell_ramen"
+			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
+			reagent_state = LIQUID
+			nutriment_factor = 5 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				M:bodytemperature += 10
+				..()
+				return
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		orangejuice
+			name = "Orange juice"
+			id = "orangejuice"
+			description = "Both delicious AND rich in Vitamin C, what more do you need?"
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				if(!M) M = holder.my_atom
+				if(M:oxyloss && prob(30)) M:oxyloss--
+				M:nutrition++
+				..()
+				return
+
+		tomatojuice
+			name = "Tomato Juice"
+			id = "tomatojuice"
+			description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				if(!M) M = holder.my_atom
+				if(M:fireloss && prob(20)) M:heal_organ_damage(0,1)
+				M:nutrition++
+				..()
+				return
+
+		limejuice
+			name = "Lime Juice"
+			id = "limejuice"
+			description = "The sweet-sour juice of limes."
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				if(!M) M = holder.my_atom
+				if(M:toxloss && prob(20)) M:toxloss--
+				M:nutrition++
+				..()
+				return
+
+		carrotjuice
+			name = "Carrot juice"
+			id = "carrotjuice"
+			description = "It is just like a carrot but without crunching."
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:nutrition += nutriment_factor
+				M:eye_blurry = max(M:eye_blurry-1 , 0)
+				M:eye_blind = max(M:eye_blind-1 , 0)
+				if(!data) data = 1
+				switch(data)
+					if(1 to 20)
+						//nothing
+					if(21 to INFINITY)
+						if (prob(data-10))
+							M:disabilities &= ~1
+				data++
+				..()
+				return
+
 		berryjuice
 			name = "Berry Juice"
 			id = "berryjuice"
@@ -1592,22 +1743,23 @@ datum
 				..()
 				return
 
-		watermelonjuice
-			name = "Watermelon Juice"
-			id = "watermelonjuice"
-			description = "Delicious juice made from watermelon."
+		poisonberryjuice
+			name = "Poison Berry Juice"
+			id = "poisonberryjuice"
+			description = "A tasty juice blended from various kinds of very deadly and toxic berries."
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:nutrition += nutriment_factor
+				M:toxloss += 1
 				..()
 				return
 
-		limejuice
-			name = "Lime Juice"
-			id = "limejuice"
-			description = "Some very sour juice, enough to make your face twitch."
+		watermelonjuice
+			name = "Watermelon Juice"
+			id = "watermelonjuice"
+			description = "Delicious juice made from watermelon."
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
 			on_mob_life(var/mob/living/M as mob)
@@ -1628,20 +1780,6 @@ datum
 				..()
 				return
 
-		poisonberryjuice
-			name = "Poison Berry Juice"
-			id = "poisonberryjuice"
-			description = "A tasty juice blended from various kinds of very deadly and toxic berries."
-			reagent_state = LIQUID
-			nutriment_factor = 1 * REAGENTS_METABOLISM
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				M:nutrition += nutriment_factor
-				if(!M) M = holder.my_atom
-				M:toxloss += 2.5
-				..()
-				return
-
 		banana
 			name = "Banana Juice"
 			id = "banana"
@@ -1659,44 +1797,7 @@ datum
 					M:heal_organ_damage(1,1)
 					..()
 					return
-
 				..()
-
-
-		dry_ramen
-			name = "Dry Ramen"
-			id = "dry_ramen"
-			description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
-			reagent_state = SOLID
-			on_mob_life(var/mob/living/M as mob)
-				..()
-				M:nutrition += 1
-				return
-
-		hot_ramen
-			name = "Hot Ramen"
-			id = "hot_ramen"
-			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
-			reagent_state = LIQUID
-			nutriment_factor = 5 * REAGENTS_METABOLISM
-			on_mob_life(var/mob/living/M as mob)
-				..()
-				M:nutrition += nutriment_factor
-				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature+10)
-				return
-
-		hell_ramen
-			name = "Hell Ramen"
-			id = "hell_ramen"
-			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
-			reagent_state = LIQUID
-			nutriment_factor = 5 * REAGENTS_METABOLISM
-			on_mob_life(var/mob/living/M as mob)
-				..()
-				M:nutrition += nutriment_factor
-				M:bodytemperature += 10
-				return
 
 		potato_juice
 			name = "Potato Juice"
@@ -1704,11 +1805,11 @@ datum
 			description = "Juice of the potato. Bleh."
 			reagent_state = LIQUID
 			nutriment_factor = 2 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				..()
+				return
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		milk
 			name = "Milk"
 			id = "milk"
@@ -1730,6 +1831,18 @@ datum
 				if(!M) M = holder.my_atom
 				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
 				M:nutrition++
+				..()
+				return
+
+		cream
+			name = "Cream"
+			id = "cream"
+			description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
 				..()
 				return
 
@@ -1760,7 +1873,7 @@ datum
 				M:drowsyness = max(0,M:drowsyness-1)
 				M:jitteriness = max(0,M:jitteriness-3)
 				M:sleeping = 0
-				if(M:toxloss && prob(50))
+				if(M:toxloss && prob(20))
 					M:toxloss--
 				if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+5)
@@ -1793,22 +1906,10 @@ datum
 				M.dizziness = max(0,M.dizziness-2)
 				M:drowsyness = max(0,M:drowsyness-1)
 				M:sleeping = 0
-				if(M:toxloss && prob(50))
+				if(M:toxloss && prob(20))
 					M:toxloss--
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature-5)
-				return
-
-		h_chocolate
-			name = "Hot Chocolate"
-			id = "h_chocolate"
-			description = "Made with love! And coco beans."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/living/M as mob)
-				..()
-				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = min(310, M.bodytemperature+5)
-				M:nutrition += 1
 				return
 
 		space_cola
@@ -1818,6 +1919,23 @@ datum
 			reagent_state = LIQUID
 			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-5)
+				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
+					M.bodytemperature = max(310, M.bodytemperature-5)
+				M:nutrition += 1
+				..()
+				return
+
+		nuka_cola
+			name = "Nuka Cola"
+			id = "nuka_cola"
+			description = "Cola, cola never changes."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				M.make_jittery(20)
+				M.druggy = max(M.druggy, 30)
+				M.dizziness +=5
+				M:drowsyness = 0
+				M:sleeping = 0
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				M:nutrition += 1
@@ -2059,76 +2177,6 @@ datum
 				..()
 				return
 
-		orangejuice
-			name = "Orange juice"
-			id = "orangejuice"
-			description = "Both delicious AND rich in Vitamin C, what more do you need?"
-			reagent_state = LIQUID
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				if(M:oxyloss && prob(30)) M:oxyloss--
-				M:nutrition++
-				..()
-				return
-
-		tomatojuice
-			name = "Tomato Juice"
-			id = "tomatojuice"
-			description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
-			reagent_state = LIQUID
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				if(M:fireloss && prob(20)) M:heal_organ_damage(0,1)
-				M:nutrition++
-				..()
-				return
-
-		limejuice
-			name = "Lime Juice"
-			id = "limejuice"
-			description = "The sweet-sour juice of limes."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				if(M:oxyloss && prob(20)) M:oxyloss--
-				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
-				if(M:fireloss && prob(20)) M:heal_organ_damage(0,1)
-				if(M:toxloss && prob(20)) M:toxloss--
-				M:nutrition++
-				..()
-				return
-
-		cream
-			name = "Cream"
-			id = "cream"
-			description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
-			reagent_state = LIQUID
-			on_mob_life(var/mob/living/M as mob)
-				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
-				..()
-				return
-
-		carrotjuice
-			name = "Carrot juice"
-			id = "carrotjuice"
-			description = "It is just like a carrot but without crunching."
-			reagent_state = LIQUID
-			nutriment_factor = 0.3 * REAGENTS_METABOLISM
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				M:eye_blurry = max(M:eye_blurry-1 , 0)
-				M:eye_blind = max(M:eye_blind-1 , 0)
-				if(!data) data = 1
-				switch(data)
-					if(1 to 20)
-						//nothing
-					if(21 to INFINITY)
-						if (prob(data-10))
-							M:disabilities &= ~1
-				data++
-				..()
-				return
-
 		kahlua
 			name = "Kahlua"
 			id = "kahlua"
@@ -2159,12 +2207,6 @@ datum
 					M.confused = max(M:confused+2,0)
 				..()
 				return
-
-		cream
-			name = "Cream"
-			id = "cream"
-			description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
-			reagent_state = LIQUID
 
 		hooch
 			name = "Hooch"
@@ -2896,23 +2938,6 @@ datum
 					M.stuttering += 2
 				else if(data >= 250 && prob(33))
 					M.confused = max(M:confused+2,0)
-				..()
-				return
-
-		nuka_cola
-			name = "Nuka Cola"
-			id = "nuka_cola"
-			description = "Cola, cola never changes."
-			reagent_state = LIQUID
-			on_mob_life(var/mob/living/M as mob)
-				M.make_jittery(20)
-				M.druggy = max(M.druggy, 30)
-				M.dizziness +=5
-				M:drowsyness = 0
-				M:sleeping = 0
-				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
-					M.bodytemperature = max(310, M.bodytemperature-5)
-				M:nutrition += 1
 				..()
 				return
 
