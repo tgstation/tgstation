@@ -73,6 +73,17 @@ var/const/PROJECTILE_DART = 8
 				if(M.bodytemperature > temperature)
 					M.bodytemperature = temperature
 
+	plasma
+		name = "plasma blast"
+		icon_state = "plasma_2"
+		var/temperature = 800
+
+		proc/Heat(atom/A as mob|obj|turf|area)
+			if(istype(A, /mob))
+				var/mob/M = A
+				if(M.bodytemperature < temperature)
+					M.bodytemperature = temperature
+
 
 
 
@@ -104,6 +115,9 @@ var/const/PROJECTILE_DART = 8
 				if(istype(src, /obj/item/projectile/freeze))
 					var/obj/item/projectile/freeze/F = src
 					F.Freeze(A)
+				if(istype(src, /obj/item/projectile/plasma))
+					var/obj/item/projectile/plasma/P = src
+					P.Heat(A)
 				else
 
 					A.bullet_act(damage_type, src, def_zone)
@@ -834,6 +848,91 @@ var/const/PROJECTILE_DART = 8
 
 					if(current_temperature != temperature)
 						var/difference = abs(current_temperature - temperature)
+						if(difference >= 10)
+							if(current_temperature < temperature)
+								temperature -= 10
+							else
+								temperature += 10
+
+						else
+							temperature = current_temperature
+
+						if (istype(src.loc, /mob))
+							attack_self(src.loc)
+
+		plasma
+			name = "plasma gun"
+			icon_state = "plasmagun"
+			fire_sound = 'pulse3.ogg'
+			desc = "A gun that fires super heated plasma at targets, thus increasing their overal body temparature and also harming them."
+			var/temperature = T20C
+			var/current_temperature = T20C
+			charge_cost = 100
+			origin_tech = "combat=3;materials=4;powerstorage=3;magnets=2"
+
+
+			New()
+				power_supply = new /obj/item/weapon/cell/crap(src)
+				power_supply.give(power_supply.maxcharge)
+				spawn()
+					Life()
+
+
+			load_into_chamber()
+				if(in_chamber)
+					return 1
+				if(power_supply.charge < charge_cost)
+					return 0
+				in_chamber = new /obj/item/projectile/plasma(src)
+				power_supply.use(charge_cost)
+				return 1
+
+			attack_self(mob/living/user as mob)
+				user.machine = src
+				var/temp_text = ""
+				if(temperature > (T0C + 50))
+					temp_text = "<FONT color=black>[temperature] ([round(temperature+T0C)]&deg;C) ([round(temperature*1.8+459.67)]&deg;F)</FONT>"
+				else
+					temp_text = "<FONT color=blue>[temperature] ([round(temperature+T0C)]&deg;C) ([round(temperature*1.8+459.67)]&deg;F)</FONT>"
+
+				var/dat = {"<B>Plasma Gun Configuration: </B><BR>
+				Current output temperature: [temp_text]<BR>
+				Target output temperature: <A href='?src=\ref[src];temp=-100'>-</A> <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> [current_temperature] <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A> <A href='?src=\ref[src];temp=100'>+</A><BR>
+				"}
+
+				user << browse(dat, "window=plasmagun;size=450x300")
+				onclose(user, "plasmagun")
+
+			Topic(href, href_list)
+				if (..())
+					return
+				usr.machine = src
+				src.add_fingerprint(usr)
+				if(href_list["temp"])
+					var/amount = text2num(href_list["temp"])
+					if(amount > 0)
+						src.current_temperature = min(T20C, src.current_temperature+amount)
+					else
+						src.current_temperature = max(800, src.current_temperature+amount)
+				if (istype(src.loc, /mob))
+					attack_self(src.loc)
+				src.add_fingerprint(usr)
+				return
+
+			proc/Life()
+				while(src)
+					sleep(10)
+
+					switch(temperature)
+						if(601 to 800) charge_cost = 500
+						if(401 to 600) charge_cost = 150
+						if(201 to 400) charge_cost = 100
+						if(101 to 200) charge_cost = 75
+						if(51 to 100) charge_cost = 50
+						if(0 to 50) charge_cost = 25
+
+					if(current_temperature != temperature)
+						var/difference = abs(current_temperature + temperature)
 						if(difference >= 10)
 							if(current_temperature < temperature)
 								temperature -= 10

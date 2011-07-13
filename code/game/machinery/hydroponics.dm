@@ -301,6 +301,10 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 		del(src.myseed)
 		src.myseed = new /obj/item/seeds/angelmycelium
 
+	else if ( istype(src.myseed, /obj/item/seeds/plumpmycelium ))
+		del(src.myseed)
+		src.myseed = new /obj/item/seeds/walkingmushroommycelium
+
 	else if ( istype(src.myseed, /obj/item/seeds/chiliseed ))
 		del(src.myseed)
 		src.myseed = new /obj/item/seeds/icepepperseed
@@ -308,6 +312,22 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	else if ( istype(src.myseed, /obj/item/seeds/berryseed ))
 		del(src.myseed)
 		src.myseed = new /obj/item/seeds/poisonberryseed
+
+	else if ( istype(src.myseed, /obj/item/seeds/berryseed ))
+		del(src.myseed)
+		src.myseed = new /obj/item/seeds/glowberryseed
+
+	else if ( istype(src.myseed, /obj/item/seeds/poisonberryseed ))
+		del(src.myseed)
+		src.myseed = new /obj/item/seeds/deathberryseed
+
+	else if ( istype(src.myseed, /obj/item/seeds/tomatoseed ))
+		del(src.myseed)
+		src.myseed = new /obj/item/seeds/bluetomatoseed
+
+	else if ( istype(src.myseed, /obj/item/seeds/tomatoseed ))
+		del(src.myseed)
+		src.myseed = new /obj/item/seeds/bloodtomatoseed
 /*
 	else if ( istype(src.myseed, /obj/item/seeds/tomatoseed ))
 		del(src.myseed)

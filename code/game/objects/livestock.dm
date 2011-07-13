@@ -439,6 +439,26 @@
 	stun_chance = 40
 	intelligence = "Assistant"
 
+/obj/livestock/walkingmushroom
+	name = "Walking Mushroom"
+	desc = "A...huge...mushroom...with legs!?"
+	icon_state = "walkingmushroom"
+	species = "walkingmushroom"
+	cowardly = 1
+	health = 50
+	maxhealth = 50
+	strength = 0
+	cycle_pause = 10
+	patience = 25
+	view_range = 8
+	intelligence = "Captain"
+	var/stun_chance = 0
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice(src)
+
 /obj/livestock/lizard
 	name = "Lizard"
 	desc = "A cute tiny lizard."

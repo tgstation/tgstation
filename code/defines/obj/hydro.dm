@@ -92,6 +92,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/glowberryseed
+	name = "Glow Berry seeds"
+	desc = "Seeds that grows into glow berries."
+	icon_state = "seed-glowberry"
+	mypath = "/obj/item/seeds/glowberryseed"
+	species = "glowberry"
+	plantname = "Glow Berry bush"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries"
+	lifespan = 30
+	endurance = 25
+	maturation = 5
+	production = 5
+	yield = 2
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/bananaseed
 	name = "Banana seeds"
 	desc = "When grown, keep away from clown."
@@ -140,6 +157,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/bloodtomatoseed
+	name = "Blood Tomato seeds"
+	desc = "Used to grow blood tomotoes."
+	icon_state = "seed-bloodtomato"
+	mypath = "/obj/item/seeds/bloodtomatoseed"
+	species = "bloodtomato"
+	plantname = "Blood Tomato plant"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato"
+	lifespan = 25
+	endurance = 20
+	maturation = 8
+	production = 6
+	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/tomatoseed
 	name = "Tomato seeds"
 	desc = "Used to grow tomotoes."
@@ -148,6 +182,23 @@
 	species = "tomato"
 	plantname = "Tomato plant"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/tomato"
+	lifespan = 25
+	endurance = 15
+	maturation = 8
+	production = 6
+	yield = 2
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/bluetomatoseed
+	name = "Blue Tomato seeds"
+	desc = "Used to grow blue tomotoes."
+	icon_state = "seed-bluetomato"
+	mypath = "/obj/item/seeds/bluetomatoseed"
+	species = "bluetomato"
+	plantname = "Blue Tomato plant"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato"
 	lifespan = 25
 	endurance = 15
 	maturation = 8
@@ -397,6 +448,24 @@
 	lifespan = 25
 	endurance = 15
 	maturation = 8
+	production = 1
+	yield = 4
+	potency = 0
+	oneharvest = 1
+	growthstages = 3
+	plant_type = 2
+
+/obj/item/seeds/walkingmushroommycelium
+	name = "Walking Mushroom mycelium"
+	desc = "These seeds will grow into huge stuff."
+	icon_state = "mycelium-walkingmushroom"
+	mypath = "/obj/item/seeds/walkingmushroommycelium"
+	species = "walkingmushroom"
+	plantname = "Walking Mushroom"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom"
+	lifespan = 30
+	endurance = 30
+	maturation = 5
 	production = 1
 	yield = 4
 	potency = 0
@@ -657,6 +726,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/deathberryseed
+	name = "Death Berry seeds"
+	desc = "Seeds that grows into death berries."
+	icon_state = "seed-deathberry"
+	mypath = "/obj/item/seeds/deathberryseed"
+	species = "deathberry"
+	plantname = "Death Berry bush"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/deathberries"
+	lifespan = 30
+	endurance = 20
+	maturation = 5
+	production = 5
+	yield = 3
+	potency = 50
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/grassseed
 	name = "Grass seeds"
 	desc = "Seeds that will one day become sheep food."
@@ -851,6 +937,33 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
+	seed = "/obj/item/seeds/glowberryseed"
+	name = "Glow Berries"
+	desc = "Nutritious!"
+	var/on = 1
+	var/brightness_on = 2 //luminosity when on
+	icon_state = "glowberrypile"
+	potency = 10
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("radium", max(round(potency / 5, 1), 4))
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Del()
+	if(istype(loc,/mob))
+		loc.sd_SetLuminosity(loc.luminosity - potency/5)
+	..()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
+	src.sd_SetLuminosity(0)
+	user.sd_SetLuminosity(user.luminosity + potency/5)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
+	user.sd_SetLuminosity(user.luminosity - potency/5)
+	src.sd_SetLuminosity(potency/5)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed = "/obj/item/seeds/cocoapodseed"
 	name = "Cocoa Pod"
@@ -893,6 +1006,18 @@
 		..()
 		reagents.add_reagent("nutriment", 1)
 		reagents.add_reagent("toxin", max(round(potency / 5, 1), 4))
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/deathberries
+	seed = "/obj/item/seeds/deathberryseed"
+	name = "Death Berries"
+	desc = "Nutritious in a deadly way."
+	icon_state = "deathberrypile"
+	potency = 50
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("toxin", max(round(potency / 3, 1), 4))
 		bitesize = max(round(reagents.total_volume / 2, 1), 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/athelasmorganstears
@@ -1037,6 +1162,31 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
+	seed = "/obj/item/seeds/bloodtomatoseed"
+	name = "Blood Tomato"
+	desc = "So bloody...so...very...bloody....AHHHH!!!!"
+	icon_state = "bloodtomato"
+	potency = 10
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("blood", max(round(potency / 2, 1), 4))
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
+	seed = "/obj/item/seeds/bluetomatoseed"
+	name = "Blue Tomato"
+	desc = "Tom-mae-to or to-mah-to? You decide."
+	icon_state = "bluetomato"
+	potency = 10
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("lube", max(round(potency / 5, 1), 4))
+		bitesize = max(round(reagents.total_volume / 2, 1), 1)
+
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed = "/obj/item/seeds/wheatseed"
 	name = "Wheat"
@@ -1139,6 +1289,34 @@
 		..()
 		reagents.add_reagent("nutriment", 4)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
+	seed = "/obj/item/seeds/walkingmushroom"
+	name = "Walking Mushroom"
+	desc = "The beginging of the great walk."
+	icon_state = "walkingmushroom"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+		bitesize = 2
+		if(istype(src.loc,/mob))
+			pickup(src.loc)
+	lifespan = 120
+	endurance = 30
+	maturation = 15
+	production = 1
+	yield = 3
+	potency = 30
+	plant_type = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user as mob)
+	if(istype(user.loc,/turf/space))
+		return
+	new /obj/livestock/walkingmushroom(user.loc)
+
+	del(src)
+
+	user << "You plant the walking mushroom."
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	seed = "/obj/item/seeds/chantermycelium"
