@@ -291,6 +291,8 @@
 	name = "Suspicious looking toolbox"
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
+	origin_tech = "combat=1;syndicate=1"
+	force = 7.0
 
 /obj/item/weapon/storage/bible
 	name = "bible"

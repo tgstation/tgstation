@@ -537,11 +537,11 @@
 
 		if ("Chief Medical Officer")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/cmo (src), slot_ears)
-			src.equip_if_possible(new /obj/item/device/pda/heads/cmo(src), slot_belt)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (src), slot_back)
 			src.equip_if_possible(new /obj/item/weapon/storage/survival_kit(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chief_medical_officer(src), slot_w_uniform)
+			src.equip_if_possible(new /obj/item/device/pda/heads/cmo(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat/cmo(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
