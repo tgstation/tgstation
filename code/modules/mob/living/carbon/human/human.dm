@@ -333,7 +333,7 @@
 				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
 				return
 			else
-				if (prob(armor["armor"]))
+				if (prob(armor["armor"])/2)
 					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
 					if (prob(20))
 						d = d / 2
@@ -366,7 +366,7 @@
 				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
 				return
 			else
-				if (armor["armor"]/2)
+				if (prob(armor["armor"])/2)
 					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
 					if (prob(20))
 						d = d / 2

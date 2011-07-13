@@ -489,11 +489,13 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		// All energy-based weapons are applicable
 		if (istype(E, /obj/item/weapon/gun/energy/laser))
 			A = new /obj/item/projectile/beam( loc )
+			A.original = target.loc
 			icon_state = "orange_target_prism"
 			if(!emagged) use_power(500)
 			else use_power(1000)
 		else if(istype(E, /obj/item/weapon/gun/energy/pulse_rifle))
 			A = new /obj/item/projectile/beam/pulse( loc )
+			A.original = target.loc
 			icon_state = "orange_target_prism"
 			if(!emagged) use_power(700)
 			else use_power(1400)
@@ -506,6 +508,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 		else if(istype(E, /obj/item/weapon/gun/energy/freeze))
 			A = new /obj/item/projectile/freeze( loc )
+			A.original = target.loc
 			var/obj/item/projectile/freeze/F = A
 			F.temperature = rand(0, 200)
 			icon_state = "target_prism"
@@ -521,6 +524,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 			else // if it has been emagged, use laser shots
 				A = new /obj/item/projectile/beam( loc )
+				A.original = target.loc
 				icon_state = "orange_target_prism"
 				use_power(1000)
 

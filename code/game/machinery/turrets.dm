@@ -191,6 +191,7 @@
 	var/obj/item/projectile/A
 	if (src.lasers)
 		A = new /obj/item/projectile/beam( loc )
+		A.original = target.loc
 		use_power(500)
 	else
 		A = new /obj/item/projectile/electrode( loc )
