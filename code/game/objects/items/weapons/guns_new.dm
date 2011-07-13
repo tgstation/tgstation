@@ -659,7 +659,7 @@ var/const/PROJECTILE_DART = 8
 				attack_self(mob/living/user as mob)
 					return
 			M1911
-				name = "M1911-P"
+				name = "m1911-P"
 				desc = "It's not the size of the gun, it's the size of the hole it puts through people."
 				icon_state = "m1911-p"
 				New()
