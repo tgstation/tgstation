@@ -81,12 +81,6 @@
 	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "swat"
 
-/obj/item/clothing/mask/gas/swat/cigar
-	name = "Premium Havanian Cigar"
-	desc = "Only for the best of centcom officers."
-	icon_state = "cigaron"
-	item_state = "cigaroff"
-
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
@@ -152,3 +146,12 @@
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
 	icon_butt = "cigarbutt"
+
+/obj/item/clothing/mask/cigarette/cigar/havanian
+	name = "Premium Havanian Cigar"
+	desc = "Only the best for the best."
+	icon_state = "cigar2off"
+	icon_on = "cigar2on"
+	icon_off = "cigar2off"
+	icon_butt = "cigarbutt"
+	smoketime = 7200

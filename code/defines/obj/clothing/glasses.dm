@@ -66,6 +66,12 @@
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 
+/obj/item/clothing/glasses/thermal/eyepatch
+	name = "Optical Thermal Eyepatch"
+	desc = "An eyepatch with built-in thermal optics"
+	icon_state = "eyepatch"
+	item_state = "eyepatch"
+
 /obj/item/clothing/glasses/hud
 	name = "HUD"
 	desc = "A heads-up display that provides important info in (almost) real time."

@@ -372,6 +372,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"death commando",
 		"centcom official",
 		"centcom commander",
+		"special ops officer",
+		"blue wizard",
+		"red wizard",
+		"marisa wizard",
 		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
@@ -597,6 +601,64 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.assignment = "CentCom Commanding Officer"
 			W.registered = M.real_name
 			M.equip_if_possible(W, M.slot_wear_id)
+
+		if("special ops officer")
+			M.equip_if_possible(new /obj/item/clothing/under/syndicate/combat(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/suit/armor/swat/officer(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/shoes/combat(M), M.slot_shoes)
+			M.equip_if_possible(new /obj/item/clothing/gloves/combat(M), M.slot_gloves)
+			M.equip_if_possible(new /obj/item/device/radio/headset/heads/captain(M), M.slot_ears)
+			M.equip_if_possible(new /obj/item/clothing/glasses/thermal/eyepatch(M), M.slot_glasses)
+			M.equip_if_possible(new /obj/item/clothing/mask/cigarette/cigar/havanian(M), M.slot_wear_mask)
+			M.equip_if_possible(new /obj/item/clothing/head/helmet/space/deathsquad/beret(M), M.slot_head)
+			M.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle/m1911(M), M.slot_belt)
+			M.equip_if_possible(new /obj/item/weapon/zippo(M), M.slot_r_store)
+			M.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(M), M.slot_back)
+
+			var/obj/item/weapon/card/id/W = new(M)
+			W.name = "[M.real_name]'s ID Card"
+			W.icon_state = "centcom"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.assignment = "Special Operations Officer"
+			W.registered = M.real_name
+			M.equip_if_possible(W, M.slot_wear_id)
+
+		if("blue wizard")
+			M.equip_if_possible(new /obj/item/clothing/under/lightpurple(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/suit/wizrobe(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/shoes/sandal(M), M.slot_shoes)
+			M.equip_if_possible(new /obj/item/device/radio/headset(M), M.slot_ears)
+			M.equip_if_possible(new /obj/item/clothing/head/wizard(M), M.slot_head)
+			M.equip_if_possible(new /obj/item/weapon/teleportation_scroll(M), M.slot_r_store)
+			M.equip_if_possible(new /obj/item/weapon/spellbook(M), M.slot_r_hand)
+			M.equip_if_possible(new /obj/item/weapon/staff(M), M.slot_l_hand)
+			M.equip_if_possible(new /obj/item/weapon/storage/backpack(M), M.slot_back)
+			M.equip_if_possible(new /obj/item/weapon/storage/survival_kit(M), M.slot_in_backpack)
+
+		if("red wizard")
+			M.equip_if_possible(new /obj/item/clothing/under/lightpurple(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/suit/wizrobe/red(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/shoes/sandal(M), M.slot_shoes)
+			M.equip_if_possible(new /obj/item/device/radio/headset(M), M.slot_ears)
+			M.equip_if_possible(new /obj/item/clothing/head/wizard/red(M), M.slot_head)
+			M.equip_if_possible(new /obj/item/weapon/teleportation_scroll(M), M.slot_r_store)
+			M.equip_if_possible(new /obj/item/weapon/spellbook(M), M.slot_r_hand)
+			M.equip_if_possible(new /obj/item/weapon/staff(M), M.slot_l_hand)
+			M.equip_if_possible(new /obj/item/weapon/storage/backpack(M), M.slot_back)
+			M.equip_if_possible(new /obj/item/weapon/storage/survival_kit(M), M.slot_in_backpack)
+
+		if("marisa wizard")
+			M.equip_if_possible(new /obj/item/clothing/under/lightpurple(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/suit/wizrobe/marisa(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/shoes/sandal/marisa(M), M.slot_shoes)
+			M.equip_if_possible(new /obj/item/device/radio/headset(M), M.slot_ears)
+			M.equip_if_possible(new /obj/item/clothing/head/wizard/marisa(M), M.slot_head)
+			M.equip_if_possible(new /obj/item/weapon/teleportation_scroll(M), M.slot_r_store)
+			M.equip_if_possible(new /obj/item/weapon/spellbook(M), M.slot_r_hand)
+			M.equip_if_possible(new /obj/item/weapon/staff(M), M.slot_l_hand)
+			M.equip_if_possible(new /obj/item/weapon/storage/backpack(M), M.slot_back)
+			M.equip_if_possible(new /obj/item/weapon/storage/survival_kit(M), M.slot_in_backpack)
 
 	M.update_clothing()
 	return
