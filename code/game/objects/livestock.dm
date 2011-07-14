@@ -447,7 +447,6 @@
 	cowardly = 1
 	health = 75
 	maxhealth = 75
-	strength = 1
 	cycle_pause = 10
 	patience = 10
 	view_range = 14
@@ -458,9 +457,6 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/tomatomeat(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/tomatomeat(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/tomatomeat(src)
-	special_attack()
-		if (prob(stun_chance))
-			target:stunned = max(target:stunned, (strength / 2))
 
 /obj/livestock/walkingmushroom
 	name = "Walking Mushroom"
