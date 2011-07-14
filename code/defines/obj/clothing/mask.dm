@@ -30,6 +30,18 @@
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.10
 
+/obj/item/clothing/mask/spiderman
+	desc = "A reinforced mask of Spiderman!"
+	name = "Spiderman mask"
+	icon_state = "spiderman"
+	item_state = "spiderman"
+	flags = FPRINT|TABLEPASS|SUITSPACE|HEADSPACE|MASKCOVERSMOUTH
+	w_class = 3
+	protective_temperature = 420
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	armor = list(melee = 40, bullet = 2, laser = 2, taser = 40, bomb = 0, bio = 50, rad = 0)
+
 /obj/item/clothing/mask/muzzle
 	name = "muzzle"
 	desc = "To stop that awful noise."

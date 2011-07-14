@@ -439,6 +439,29 @@
 	stun_chance = 40
 	intelligence = "Assistant"
 
+/obj/livestock/killertomato
+	name = "Killer Tomato"
+	desc = "Oh shit, you're really fucked now."
+	icon_state = "killertomato"
+	species = "killertomato"
+	aggressive = 1
+	health = 75
+	maxhealth = 75
+	strength = 19
+	cycle_pause = 10
+	patience = 10
+	view_range = 14
+	intelligence = "Captain"
+	var/stun_chance = 10					// determines the prob of a stun
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/food/snacks/tomatomeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/tomatomeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/tomatomeat(src)
+	special_attack()
+		if (prob(stun_chance))
+			target:stunned = max(target:stunned, (strength / 1))
+
 /obj/livestock/walkingmushroom
 	name = "Walking Mushroom"
 	desc = "A...huge...mushroom...with legs!?"
@@ -467,6 +490,19 @@
 	cowardly = 1
 	health = 10
 	maxhealth = 10
+	strength = 2
+	cycle_pause = 10
+	patience = 50
+	view_range = 7
+
+/obj/livestock/roach
+	name = "Roach"
+	desc = "A cute large roach."
+	icon_state = "roach"
+	species = "roach"
+	aggressive = 1
+	health = 15
+	maxhealth = 15
 	strength = 2
 	cycle_pause = 10
 	patience = 50
