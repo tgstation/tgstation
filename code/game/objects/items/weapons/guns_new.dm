@@ -115,7 +115,7 @@ var/const/PROJECTILE_DART = 8
 				if(istype(src, /obj/item/projectile/freeze))
 					var/obj/item/projectile/freeze/F = src
 					F.Freeze(A)
-				if(istype(src, /obj/item/projectile/plasma))
+				else if(istype(src, /obj/item/projectile/plasma))
 					var/obj/item/projectile/plasma/P = src
 					P.Heat(A)
 				else
@@ -864,7 +864,7 @@ var/const/PROJECTILE_DART = 8
 			name = "plasma gun"
 			icon_state = "plasmagun"
 			fire_sound = 'pulse3.ogg'
-			desc = "A gun that fires super heated plasma at targets, thus increasing their overal body temparature and also harming them."
+			desc = "A gun that fires super heated plasma at targets, thus increasing their overall body temparature and also harming them."
 			var/temperature = T20C
 			var/current_temperature = T20C
 			charge_cost = 100

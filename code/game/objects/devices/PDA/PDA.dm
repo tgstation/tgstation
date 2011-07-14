@@ -691,7 +691,8 @@
 				user.show_message("\blue \t Key: Suffocation/Toxin/Burns/Brute", 1)
 				user.show_message("\blue \t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
 				for(var/datum/disease/D in C.viruses)
-					user.show_message(text("\red <b>Warning Virus Detected.</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
+					if(!D.hidden[SCANNER])
+						user.show_message(text("\red <b>Warning Virus Detected.</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
 
 			if(2)
 				if (!istype(C:dna, /datum/dna) || !isnull(C:gloves))

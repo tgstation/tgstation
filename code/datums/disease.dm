@@ -6,6 +6,9 @@
 #define AIRBORNE 4
 #define BLOOD 5
 
+#define SCANNER 1
+#define PANDEMIC 2
+
 /*
 
 IMPORTANT NOTE: Please delete the diseases by using cure() proc or del() instruction.
@@ -38,6 +41,10 @@ to null does not delete the object itself. Thank you.
 	var/desc = null//description. Leave it null and this disease won't show in med records.
 	var/severity = null//severity descr
 	var/longevity = 250//time in "ticks" the virus stays in inanimate object (blood stains, corpses, etc). In syringes, bottles and beakers it stays infinitely.
+	var/list/hidden = list(0, 0)
+	// if hidden[1] is true, then virus is hidden from medical scanners
+	// if hidden[2] is true, then virus is hidden from PANDEMIC machine
+
 
 /datum/disease/proc/stage_act()
 	var/cure_present = has_cure()
@@ -274,7 +281,7 @@ to null does not delete the object itself. Thank you.
 /datum/disease/proc/spread(var/atom/source=null)
 	//world << "Disease [src] proc spread was called from holder [source]"
 
-	if(spread_type == SPECIAL)//does not spread
+	if(spread_type == SPECIAL || spread_type == NON_CONTAGIOUS)//does not spread
 		return
 
 	if(stage < contagious_period) //the disease is not contagious at this stage
@@ -318,15 +325,6 @@ to null does not delete the object itself. Thank you.
 			affected_mob = null
 	if(!affected_mob) //the virus is in inanimate obj
 //		world << "[src] longevity = [longevity]"
-		/*
-		if(holder)
-
-			// spreads the love. Why hasn't anyone coded this in yet?!?!?!?
-			for(var/mob/living/M in view(1, holder))
-				if(M.stat != 2)
-					if(prob(90))
-						M.contract_disease(src)
-		*/
 
 		if(prob(70))
 			if(--longevity<=0)

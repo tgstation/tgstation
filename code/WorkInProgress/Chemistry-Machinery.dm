@@ -422,10 +422,12 @@
 					var/list/vir = Blood.data["viruses"]
 					if(vir.len)
 						for(var/datum/disease/D in Blood.data["viruses"])
+							if(!D.hidden[PANDEMIC])
 
-							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[D.type]'>Create virus culture bottle</A>":"none"]<BR>"
-							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
-							dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"
+								dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[D.type]'>Create virus culture bottle</A>":"none"]<BR>"
+								dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
+								dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
+								dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"
 
 				dat += "<b>Contains antibodies to:</b> "
 				if(Blood.data["resistances"])

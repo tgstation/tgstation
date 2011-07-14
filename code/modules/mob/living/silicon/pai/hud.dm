@@ -36,7 +36,9 @@
 		for(var/mob/living/carbon/human/patient in view(T))
 
 			var/foundVirus = 0
-			for(var/datum/disease/D in patient.viruses) foundVirus = 1
+			for(var/datum/disease/D in patient.viruses)
+				if(!D.hidden[SCANNER])
+					foundVirus = 1
 
 			client.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
 			if(patient.stat == 2)
