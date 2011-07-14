@@ -611,7 +611,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/glasses/thermal/eyepatch(M), M.slot_glasses)
 			M.equip_if_possible(new /obj/item/clothing/mask/cigarette/cigar/havanian(M), M.slot_wear_mask)
 			M.equip_if_possible(new /obj/item/clothing/head/helmet/space/deathsquad/beret(M), M.slot_head)
-			M.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle/m1911(M), M.slot_belt)
+			M.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle/M1911(M), M.slot_belt)
 			M.equip_if_possible(new /obj/item/weapon/zippo(M), M.slot_r_store)
 			M.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(M), M.slot_back)
 

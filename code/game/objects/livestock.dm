@@ -444,10 +444,10 @@
 	desc = "Oh shit, you're really fucked now."
 	icon_state = "killertomato"
 	species = "killertomato"
-	aggressive = 1
+	cowardly = 1
 	health = 75
 	maxhealth = 75
-	strength = 19
+	strength = 0
 	cycle_pause = 10
 	patience = 10
 	view_range = 14
@@ -460,7 +460,7 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/tomatomeat(src)
 	special_attack()
 		if (prob(stun_chance))
-			target:stunned = max(target:stunned, (strength / 1))
+			target:stunned = max(target:stunned, (strength / 2))
 
 /obj/livestock/walkingmushroom
 	name = "Walking Mushroom"
