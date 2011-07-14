@@ -108,6 +108,11 @@
 		survive_objective.owner = traitor
 		traitor.objectives += survive_objective
 
+		if(prob(10))
+			var/datum/objective/block/block_objective = new
+			block_objective.owner = traitor
+			traitor.objectives += block_objective
+
 	else
 		switch(rand(1,100))
 			if(1 to 50)

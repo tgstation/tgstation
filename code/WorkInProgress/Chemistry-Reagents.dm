@@ -2005,6 +2005,18 @@ datum
 				..()
 				return
 
+		lemon_lime
+			name = "Lemon Lime"
+			description = "A tangy substance made of 0.5% natural citrus!"
+			id = "lemon_lime"
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if (M.bodytemperature > 310)
+					M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
+				M:nutrition += 1
+				..()
+				return
+
 		beer
 			name = "Beer"
 			id = "beer"
