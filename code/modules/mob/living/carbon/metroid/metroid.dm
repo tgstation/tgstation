@@ -162,6 +162,33 @@
 
 				updatehealth()
 			return
+		if(PROJECTILE_BULLETBURST)
+			var/d = 1
+
+			attacked += 10
+			if (stat != 2)
+				bruteloss += d
+
+				updatehealth()
+			return
+		if(PROJECTILE_WEAKBULLETBURST)
+			var/d = 1
+
+			attacked += 10
+			if (stat != 2)
+				bruteloss += d
+
+				updatehealth()
+			return
+		if(PROJECTILE_WEAKERBULLETBURST)
+			var/d = 0.5
+
+			attacked += 10
+			if (stat != 2)
+				bruteloss += d
+
+				updatehealth()
+			return
 		if(PROJECTILE_TASER)
 			if (prob(70))
 				powerlevel++

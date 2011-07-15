@@ -269,6 +269,11 @@
 			bruteloss += 60
 			updatehealth()
 			weakened = 10
+	else if (flag == PROJECTILE_BULLETBURST)
+		if (stat != 2)
+			bruteloss += 21
+			updatehealth()
+			weakened = 4
 	else if (flag == PROJECTILE_TASER)
 		if (prob(75))
 			stunned = 15

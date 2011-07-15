@@ -231,6 +231,8 @@
 /obj/machinery/turret/bullet_act(flag)
 	if (flag == PROJECTILE_BULLET)
 		src.health -= 17
+	else if (flag == PROJECTILE_BULLETBURST)
+		src.health -= 7
 	else if (flag == PROJECTILE_TASER) //taser
 		src.health -= 1
 	else if(flag == PROJECTILE_PULSE)
@@ -444,8 +446,14 @@
 				damage = 8
 			if(PROJECTILE_WEAKBULLET)
 				damage = 8
+			if(PROJECTILE_WEAKBULLETBURST)
+				damage = 4
+			if(PROJECTILE_WEAKERBULLETBURST)
+				damage = 2
 			if(PROJECTILE_BULLET)
 				damage = 10
+			if(PROJECTILE_BULLETBURST)
+				damage = 4
 			if(PROJECTILE_BOLT)
 				damage = 5
 			if(PROJECTILE_DART)

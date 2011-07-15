@@ -104,6 +104,9 @@
 	if (flag == PROJECTILE_BULLET)
 		health -= 10
 		update()
+	if (flag == PROJECTILE_BULLETBURST)
+		health -= 4
+		update()
 	else if (flag == PROJECTILE_BOLT)
 		poisoned(1)
 	else

@@ -136,12 +136,18 @@
 		switch(flag)
 			if(PROJECTILE_BULLET)
 				src.health -= 15
+			if(PROJECTILE_BULLETBURST)
+				src.health -= 6
 			if(PROJECTILE_TASER)
 				src.health -= 5
 			if(PROJECTILE_DART)
 				src.health -= 10
 			if(PROJECTILE_WEAKBULLET)
 				src.health -= 8
+			if(PROJECTILE_WEAKBULLETBURST)
+				src.health -= 4
+			if(PROJECTILE_WEAKERBULLETBURST)
+				src.health -= 2
 			if(PROJECTILE_LASER)
 				src.health -= 10
 			if(PROJECTILE_SHOCK)

@@ -174,8 +174,14 @@ field_generator power level display
 	bullet_act(flag)
 		if (flag == PROJECTILE_BULLET)
 			src.power -= 50
+		else if (flag == PROJECTILE_BULLETBURST)
+			src.power -= 20
 		else if (flag == PROJECTILE_WEAKBULLET)
 			src.power -= 25
+		else if (flag == PROJECTILE_WEAKBULLETBURST)
+			src.power -= 13
+		else if (flag == PROJECTILE_WEAKERBULLETBURST)
+			src.power -= 7
 		else if (flag == PROJECTILE_LASER)
 			src.power += 20
 		else if (flag == PROJECTILE_SHOCK)

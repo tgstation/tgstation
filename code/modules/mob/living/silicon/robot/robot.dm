@@ -257,6 +257,11 @@
 				bruteloss += 60
 				updatehealth()
 			return
+		if(PROJECTILE_BULLETBURST)
+			if (stat != 2)
+				bruteloss += 21
+				updatehealth()
+			return
 	/*
 		if(PROJECTILE_MEDBULLET)
 			if (stat != 2)
@@ -266,6 +271,16 @@
 		if(PROJECTILE_WEAKBULLET)
 			if (stat != 2)
 				bruteloss += 15
+				updatehealth()
+			return
+		if(PROJECTILE_WEAKBULLETBURST)
+			if (stat != 2)
+				bruteloss += 7
+				updatehealth()
+			return
+		if(PROJECTILE_WEAKERBULLETBURST)
+			if (stat != 2)
+				bruteloss += 5
 				updatehealth()
 			return
 	/*

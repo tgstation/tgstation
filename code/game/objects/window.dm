@@ -15,6 +15,22 @@
 				del(src)
 
 		return
+	if (flag == PROJECTILE_BULLETBURST)
+		if(!reinf)
+			new /obj/item/weapon/shard( src.loc )
+			//SN src = null
+			src.density = 0
+
+			del(src)
+		else
+			health -= 13
+			if(health <=0)
+				new /obj/item/weapon/shard( src.loc )
+				new /obj/item/stack/rods( src.loc )
+				src.density = 0
+				del(src)
+
+		return
 	return
 
 /obj/window/ex_act(severity)

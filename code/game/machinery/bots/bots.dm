@@ -77,6 +77,8 @@
 	switch(flag)
 		if (PROJECTILE_BULLET)
 			src.health -= 20
+		if (PROJECTILE_BULLETBURST)
+			src.health -= 8
 		//if (PROJECTILE_WEAKBULLET || PROJECTILE_BEANBAG) //Detective's revolver fires marshmallows
 		//	src.health -= 2
 		if (PROJECTILE_LASER)

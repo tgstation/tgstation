@@ -29,6 +29,26 @@
 				src.stunned = 10
 			else
 				src.weakened = 10
+		if(PROJECTILE_BULLETBURST)
+			if (istype(src, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = src
+				var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
+				if (H.organs[text("[]", dam_zone)])
+					var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
+					if (affecting.take_damage(18, 0))
+						H.UpdateDamageIcon()
+					else
+						H.UpdateDamage()
+			else
+				src.take_organ_damage(18)
+			src.updatehealth()
+			if (prob(80) && src.weakened <= 2)
+				src.weakened = 2
+		if(PROJECTILE_TASER)
+			if (prob(75) && src.stunned <= 10)
+				src.stunned = 10
+			else
+				src.weakened = 10
 		if(PROJECTILE_DART)
 			src.weakened += 5
 			src.toxloss += 10

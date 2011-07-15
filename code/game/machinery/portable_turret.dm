@@ -236,6 +236,8 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	// handles how much damage each type of projectile deals
 	if (flag == PROJECTILE_BULLET)
 		src.health -= 5
+	else if (flag == PROJECTILE_BULLETBURST)
+		src.health -= 2
 	else if (flag == PROJECTILE_TASER)
 		src.health -= 1
 	else if(flag == PROJECTILE_PULSE)

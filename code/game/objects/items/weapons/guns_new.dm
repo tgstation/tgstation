@@ -7,6 +7,9 @@ var/const/PROJECTILE_WEAKBULLET = 6
 var/const/PROJECTILE_TELEGUN = 7
 var/const/PROJECTILE_DART = 8
 var/const/PROJECTILE_SHOCK = 9
+var/const/PROJECTILE_BULLETBURST = 10
+var/const/PROJECTILE_WEAKBULLETBURST = 11
+var/const/PROJECTILE_WEAKERBULLETBURST = 12
 
 ///////////////////////////////////////////////
 ////////////////AMMO SECTION///////////////////
@@ -33,9 +36,17 @@ var/const/PROJECTILE_SHOCK = 9
 
 		bumped = 0
 
-
 	weakbullet
 		damage_type = PROJECTILE_WEAKBULLET
+
+	bulletburst
+		damage_type = PROJECTILE_BULLETBURST
+
+	weakbulletburst
+		damage_type = PROJECTILE_WEAKBULLETBURST
+
+	weakerbulletburst
+		damage_type = PROJECTILE_WEAKERBULLETBURST
 
 	beam
 		name = "laser"

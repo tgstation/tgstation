@@ -125,6 +125,12 @@
 			updatehealth()
 			if (prob(50))
 				if(weakened <= 5)	weakened = 5
+	else if (flag == PROJECTILE_BULLETBURST)
+		if (stat != 2)
+			take_organ_damage(21, 0)
+			updatehealth()
+			if (prob(50))
+				if(weakened <= 2)	weakened = 2
 	else if (flag == PROJECTILE_TASER)
 		if (prob(75) && stunned <= 10)
 			stunned = 10
@@ -170,6 +176,16 @@
 			take_organ_damage(10, 0)
 			updatehealth()
 			if(weakened <= 5)	weakened = 5
+	else if (flag == PROJECTILE_WEAKBULLETBURST)
+		if (stat != 2)
+			take_organ_damage(5, 0)
+			updatehealth()
+			if(weakened <= 2)	weakened = 2
+	else if (flag == PROJECTILE_WEAKERBULLETBURST)
+		if (stat != 2)
+			take_organ_damage(3, 0)
+			updatehealth()
+			if(weakened <= 2)	weakened = 2
 	return
 
 /mob/living/carbon/monkey/hand_p(mob/M as mob)

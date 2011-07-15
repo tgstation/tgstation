@@ -484,8 +484,14 @@
 				damage = 25
 			if(PROJECTILE_WEAKBULLET)
 				damage = 8
+			if(PROJECTILE_WEAKBULLETBURST)
+				damage = 4
+			if(PROJECTILE_WEAKERBULLETBURST)
+				damage = 2
 			if(PROJECTILE_BULLET)
 				damage = 10
+			if(PROJECTILE_BULLETBURST)
+				damage = 4
 			if(PROJECTILE_BOLT)
 				damage = 5
 			if(PROJECTILE_DART)
