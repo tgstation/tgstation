@@ -751,6 +751,7 @@ var/const/PROJECTILE_SHOCK = 9
 
 		taser
 			name = "taser gun"
+			desc = "A small, low capacity gun used for non-lethal takedowns."
 			icon_state = "taser"
 			fire_sound = 'Taser.ogg'
 			charge_cost = 100
@@ -786,7 +787,7 @@ var/const/PROJECTILE_SHOCK = 9
 			name = "shock gun"
 			icon_state = "shockgun"
 			fire_sound = 'Laser.ogg'
-			charge_cost = 50
+			charge_cost = 250
 
 			load_into_chamber()
 				if(in_chamber)
@@ -801,14 +802,14 @@ var/const/PROJECTILE_SHOCK = 9
 				return
 
 			New()
-				power_supply = new /obj/item/weapon/cell/super(src)
+				power_supply = new /obj/item/weapon/cell(src)
 				power_supply.give(power_supply.maxcharge)
 
 		stunrevolver
 			name = "stun revolver"
 			icon_state = "stunrevolver"
 			fire_sound = 'Gunshot.ogg'
-			charge_cost = 25
+			charge_cost = 125
 
 			load_into_chamber()
 				if(in_chamber)
@@ -823,7 +824,7 @@ var/const/PROJECTILE_SHOCK = 9
 				return
 
 			New()
-				power_supply = new /obj/item/weapon/cell/crap(src)
+				power_supply = new /obj/item/weapon/cell(src)
 				power_supply.give(power_supply.maxcharge)
 
 		freeze

@@ -933,21 +933,19 @@ datum
 		stunrevolver
 			name = "Stun Revolver"
 			desc = "The prize of the Head of Security."
-			id = "nuclear_gun"
-			req_tech = list("combat" = 2, "materials" = 2)
+			id = "stunrevolver"
+			req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 2)
 			build_type = PROTOLATHE
-			materials = list("$metal" = 4000)
-			reliability_base = 76
+			materials = list("$metal" = 4000, "$gold" = 500)
 			build_path = "/obj/item/weapon/gun/energy/stunrevolver"
 
 		shockgun
 			name = "Shock Gun"
 			desc = "Your opponent has just lost THE GAME."
 			id = "shockgun"
-			req_tech = list("combat" = 4, "materials" = 4, "powerstorage" = 3)
+			req_tech = list("combat" = 6, "materials" = 4, "powerstorage" = 3)
 			build_type = PROTOLATHE
-			materials = list("$metal" = 8000, "$silver" = 3000)
-			reliability_base = 76
+			materials = list("$metal" = 8000, "$silver" = 3000, "$gold" = 500)
 			build_path = "/obj/item/weapon/gun/energy/shockgun"
 
 		chemsprayer
