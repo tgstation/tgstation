@@ -844,7 +844,8 @@
 
 						var/foundVirus = 0
 						for(var/datum/disease/D in patient.viruses)
-							foundVirus++
+							if(!D.hidden[SCANNER])
+								foundVirus++
 
 						client.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
 						if(patient.stat == 2)

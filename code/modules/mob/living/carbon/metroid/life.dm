@@ -99,8 +99,9 @@
 
 		if(starving && !client) // if a metroid is starving, it starts losing its friends
 			if(prob(45))
-				var/mob/nofriend = pick(Friends)
-				Friends -= nofriend
+				if(Friends.len > 0)
+					var/mob/nofriend = pick(Friends)
+					Friends -= nofriend
 
 		if(!Target)
 			var/list/targets = list()
