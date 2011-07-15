@@ -438,6 +438,8 @@
 				damage = 40
 			if(PROJECTILE_LASER)
 				damage = 20
+			if(PROJECTILE_SHOCK)
+				damage = 25
 			if(PROJECTILE_TASER)
 				damage = 8
 			if(PROJECTILE_WEAKBULLET)

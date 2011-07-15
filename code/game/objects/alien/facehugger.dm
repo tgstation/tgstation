@@ -93,6 +93,8 @@
 				health -= 4
 			if (PROJECTILE_LASER)
 				health -= 10
+			if (PROJECTILE_SHOCK)
+				health -= 20
 			if (PROJECTILE_PULSE)
 				health -= 35
 		healthcheck()

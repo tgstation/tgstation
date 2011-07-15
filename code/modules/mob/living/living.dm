@@ -47,6 +47,23 @@
 				src.take_organ_damage(20)
 			if (prob(25) && src.stunned <= 2)
 				src.stunned = 2
+		if(PROJECTILE_SHOCK)
+			if (istype(src, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = src
+				var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
+				if (H.organs[text("[]", dam_zone)])
+					var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
+					if (affecting.take_damage(20, 0))
+						H.UpdateDamageIcon()
+					else
+						H.UpdateDamage()
+					src.updatehealth()
+			else
+				src.take_organ_damage(20)
+			if (prob(25) && src.stunned <= 2)
+				src.stunned = 10
+			else
+				src.weakened = 10
 		if(PROJECTILE_PULSE)
 			if (istype(src, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = src

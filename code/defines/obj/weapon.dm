@@ -492,6 +492,19 @@
 	throw_speed = 2
 	throw_range = 10
 
+/obj/item/weapon/chemsprayer
+	desc = "Chem Sprayer"
+	icon = 'gun.dmi'
+	name = "chem sprayer"
+	icon_state = "chemsprayer"
+	item_state = "chemsprayer"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 3
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 10
+	origin_tech = "combat=3;materials=3;engineering=3"
+
 /obj/item/weapon/clipboard
 	name = "clipboard"
 	desc = "Apply paper to this to write better. Can also hold pens."

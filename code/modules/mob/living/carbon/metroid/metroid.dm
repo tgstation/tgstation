@@ -177,6 +177,20 @@
 				bruteloss += d
 
 				updatehealth()
+		if(PROJECTILE_SHOCK)
+			var/d = 30
+
+			attacked += 10
+			if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff./ It really doesn't make any sense. /N
+
+			if (stat != 2)
+				bruteloss += d
+
+				updatehealth()
+
+			if (prob(70))
+				powerlevel++
+				if(powerlevel > 10) powerlevel = 10
 		if(PROJECTILE_PULSE)
 			var/d = 100
 

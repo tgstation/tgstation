@@ -359,6 +359,41 @@
 				updatehealth()
 				if (prob(25))
 					stunned = 1
+		if(PROJECTILE_SHOCK)
+			armor = getarmor(affecting, "laser")
+			var/d = 20
+			if (prob(armor["armor"]))
+				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
+				return
+			else
+				if (prob(armor["armor"])/2)
+					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
+					if (prob(20))
+						d = d / 2
+					d = d / 2
+			/*else
+				if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
+					if (prob(70))
+						show_message("\red Your armor absorbs the blow!", 4)
+						return
+					else
+						if (prob(90))
+							show_message("\red Your armor only softens the blow!", 4)
+							if (prob(60))
+								d = d / 2
+							d = d / 2*/
+
+			if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff.
+			if (prob(25)) stunned++
+
+			if (stat != 2)
+				affecting.take_damage(0, d)
+				UpdateDamageIcon()
+				updatehealth()
+				if (prob(25))
+					stunned = 10
+				else
+					weakened = 10
 		if(PROJECTILE_PULSE)
 			armor = getarmor(affecting, "laser")
 			var/d = 40

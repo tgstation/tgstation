@@ -307,6 +307,12 @@
 			if (stat != 2)
 				bruteloss += 20
 				updatehealth()
+		if(PROJECTILE_SHOCK)
+			if (stat != 2)
+				bruteloss += 20
+				updatehealth()
+				fireloss += rand(0,10)
+				stunned += rand(0,3)
 		if(PROJECTILE_PULSE)
 			if (stat != 2)
 				bruteloss += 40

@@ -144,6 +144,8 @@
 				src.health -= 8
 			if(PROJECTILE_LASER)
 				src.health -= 10
+			if(PROJECTILE_SHOCK)
+				src.health -= 15
 			if(PROJECTILE_PULSE)
 				src.health -= 25
 				if(prob(30))

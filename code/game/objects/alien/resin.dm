@@ -25,6 +25,8 @@
 			health -= 50
 		if (PROJECTILE_LASER)
 			health -= 10
+		if (PROJECTILE_SHOCK)
+			health -= 15
 	healthcheck()
 	return
 

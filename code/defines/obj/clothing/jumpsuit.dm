@@ -283,6 +283,13 @@
 	item_state = "lb_suit"
 	color = "cargo"
 
+/obj/item/clothing/under/sexyclown
+	name = "Sexyclown suit"
+	desc = "What can I do for you?"
+	icon_state = "sexyclown"
+	item_state = "sexyclown"
+	color = "sexyclown"
+
 /obj/item/clothing/under/rank/bartender
 	desc = "It looks like it could use more flair."
 	name = "Bartender's Uniform"

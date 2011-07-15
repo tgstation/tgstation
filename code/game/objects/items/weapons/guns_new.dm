@@ -6,6 +6,7 @@ var/const/PROJECTILE_BOLT = 5
 var/const/PROJECTILE_WEAKBULLET = 6
 var/const/PROJECTILE_TELEGUN = 7
 var/const/PROJECTILE_DART = 8
+var/const/PROJECTILE_SHOCK = 9
 
 ///////////////////////////////////////////////
 ////////////////AMMO SECTION///////////////////
@@ -46,6 +47,12 @@ var/const/PROJECTILE_DART = 8
 			name = "pulse"
 			damage_type = PROJECTILE_PULSE
 			icon_state = "u_laser"
+
+	fireball
+		name = "shock"
+		damage_type = PROJECTILE_SHOCK
+		icon_state = "fireball"
+		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
 	dart
 		name = "dart"
@@ -774,6 +781,50 @@ var/const/PROJECTILE_DART = 8
 						in_chamber = new /obj/item/projectile/electrode(src)
 						return 1
 					return 0
+
+		shockgun
+			name = "shock gun"
+			icon_state = "shockgun"
+			fire_sound = 'Laser.ogg'
+			charge_cost = 50
+
+			load_into_chamber()
+				if(in_chamber)
+					return 1
+				if(power_supply.charge <= charge_cost)
+					return 0
+				in_chamber = new /obj/item/projectile/fireball(src)
+				power_supply.use(charge_cost)
+				return 1
+
+			attack_self(mob/living/user as mob)
+				return
+
+			New()
+				power_supply = new /obj/item/weapon/cell/super(src)
+				power_supply.give(power_supply.maxcharge)
+
+		stunrevolver
+			name = "stun revolver"
+			icon_state = "stunrevolver"
+			fire_sound = 'Gunshot.ogg'
+			charge_cost = 25
+
+			load_into_chamber()
+				if(in_chamber)
+					return 1
+				if(power_supply.charge <= charge_cost)
+					return 0
+				in_chamber = new /obj/item/projectile/electrode(src)
+				power_supply.use(charge_cost)
+				return 1
+
+			attack_self(mob/living/user as mob)
+				return
+
+			New()
+				power_supply = new /obj/item/weapon/cell/crap(src)
+				power_supply.give(power_supply.maxcharge)
 
 		freeze
 			name = "freeze gun"

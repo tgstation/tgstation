@@ -22,7 +22,7 @@
 
 /obj/machinery/bot/proc/explode()
 	del(src)
-		
+
 /obj/machinery/bot/proc/healthcheck()
 	if (src.health <= 0)
 		src.explode()
@@ -81,6 +81,8 @@
 		//	src.health -= 2
 		if (PROJECTILE_LASER)
 			src.health -= 10
+		if (PROJECTILE_SHOCK)
+			src.health -= 15
 		if (PROJECTILE_PULSE)
 			src.health -= 40
 	healthcheck()

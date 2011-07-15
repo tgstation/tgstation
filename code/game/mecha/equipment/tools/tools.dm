@@ -480,6 +480,8 @@
 				damage = 30
 			if(PROJECTILE_LASER)
 				damage = 20
+			if(PROJECTILE_SHOCK)
+				damage = 25
 			if(PROJECTILE_WEAKBULLET)
 				damage = 8
 			if(PROJECTILE_BULLET)

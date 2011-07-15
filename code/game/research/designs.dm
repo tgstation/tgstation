@@ -930,6 +930,36 @@ datum
 			reliability_base = 76
 			build_path = "/obj/item/weapon/gun/energy/nuclear"
 
+		stunrevolver
+			name = "Stun Revolver"
+			desc = "The prize of the Head of Security."
+			id = "nuclear_gun"
+			req_tech = list("combat" = 2, "materials" = 2)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 4000)
+			reliability_base = 76
+			build_path = "/obj/item/weapon/gun/energy/stunrevolver"
+
+		shockgun
+			name = "Shock Gun"
+			desc = "Your opponent has just lost THE GAME."
+			id = "shockgun"
+			req_tech = list("combat" = 4, "materials" = 4, "powerstorage" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 8000, "$silver" = 3000)
+			reliability_base = 76
+			build_path = "/obj/item/weapon/gun/energy/shockgun"
+
+		chemsprayer
+			name = "Chem Sprayer"
+			desc = "An advanced chem spraying device."
+			id = "chemsprayer"
+			req_tech = list("combat" = 3, "materials" = 3, "engineering" = 3, "biotech" = 2)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 5000, "$glass" = 1000)
+			reliability_base = 100
+			build_path = "/obj/item/weapon/chemsprayer"
+
 		freeze_gun
 			name = "Freeze Gun"
 			desc = "A gun that shoots supercooled hydrogen particles to drastically chill a target's body temperature."

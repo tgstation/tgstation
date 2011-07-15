@@ -241,6 +241,9 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	else if(flag == PROJECTILE_PULSE)
 		if(prob(25)) src.spark_system.start() // creates some sparks
 		src.health -= 30
+	else if(flag == PROJECTILE_SHOCK)
+		if(prob(25)) src.spark_system.start()
+		src.health -= 15
 	else if(flag == PROJECTILE_LASER)
 		if(prob(25)) src.spark_system.start()
 		src.health -= 10
@@ -489,6 +492,12 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		// All energy-based weapons are applicable
 		if (istype(E, /obj/item/weapon/gun/energy/laser))
 			A = new /obj/item/projectile/beam( loc )
+			A.original = target.loc
+			icon_state = "orange_target_prism"
+			if(!emagged) use_power(500)
+			else use_power(1000)
+		else if (istype(E, /obj/item/weapon/gun/energy/shockgun))
+			A = new /obj/item/projectile/fireball( loc )
 			A.original = target.loc
 			icon_state = "orange_target_prism"
 			if(!emagged) use_power(500)

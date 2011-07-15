@@ -25,6 +25,10 @@
 		src.health -= 2
 		src.healthcheck()
 		return
+	if (flag != PROJECTILE_SHOCK)
+		src.health -= 4
+		src.healthcheck()
+		return
 	else
 		src.health -= 5
 		src.healthcheck()

@@ -115,6 +115,12 @@
 	icon_state = "clown"
 	item_state = "clown_hat"
 
+/obj/item/clothing/mask/gas/sexyclown
+	name = "sexy clown mask"
+	desc = "That face...."
+	icon_state = "sexyclown"
+	item_state = "sexyclown"
+
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "It looks a little creepy"

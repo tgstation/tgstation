@@ -143,6 +143,16 @@
 			updatehealth()
 			if (prob(25))
 				stunned = 1
+	else if(flag == PROJECTILE_SHOCK)
+		if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff.
+		if (prob(25)) stunned++
+		if (stat != 2)
+			take_organ_damage(0, 20)
+			updatehealth()
+			if (prob(25))
+				stunned = 10
+			else
+				weakened = 10
 	else if(flag == PROJECTILE_PULSE)
 		if (stat != 2)
 			take_organ_damage(0, 40)

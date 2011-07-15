@@ -282,6 +282,14 @@
 			updatehealth()
 			if (prob(25))
 				stunned = 1
+	else if(flag == PROJECTILE_SHOCK)
+		if (stat != 2)
+			bruteloss += 20
+			updatehealth()
+			if (prob(25))
+				stunned = 10
+			else
+				weakened = 10
 	else if(flag == PROJECTILE_PULSE)
 		if (stat != 2)
 			bruteloss += 40

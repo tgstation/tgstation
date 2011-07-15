@@ -378,6 +378,8 @@
 			dam_type = "Pulse"
 		if(PROJECTILE_LASER)
 			dam_type = "Laser"
+		if(PROJECTILE_SHOCK)
+			dam_type = "Shock"
 		if(PROJECTILE_TASER)
 			dam_type = "Taser"
 		else
@@ -400,6 +402,9 @@
 			ignore_threshold = 1
 		if(PROJECTILE_LASER)
 			damage = 20
+		if(PROJECTILE_SHOCK)
+			damage = 25
+			use_power(500)
 		if(PROJECTILE_TASER)
 			use_power(500)
 		if(PROJECTILE_WEAKBULLET)

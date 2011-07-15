@@ -385,6 +385,8 @@
 			src.storedpower -= 1
 		if (PROJECTILE_LASER)
 			src.storedpower +=20
+		if (PROJECTILE_SHOCK)
+			src.storedpower +=25
 		if (PROJECTILE_TASER)
 			src.storedpower +=3
 		if (PROJECTILE_PULSE)
@@ -513,6 +515,8 @@
 				G.storedpower -=1
 			if (PROJECTILE_LASER)
 				G.storedpower +=20
+			if (PROJECTILE_SHOCK)
+				G.storedpower +=25
 			if (PROJECTILE_TASER)
 				G.storedpower +=3
 			if (PROJECTILE_PULSE)

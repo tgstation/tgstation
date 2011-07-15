@@ -178,6 +178,8 @@ field_generator power level display
 			src.power -= 25
 		else if (flag == PROJECTILE_LASER)
 			src.power += 20
+		else if (flag == PROJECTILE_LASER)
+			src.power += 25
 		else if (flag == PROJECTILE_TASER)
 			src.power += 5
 		else
