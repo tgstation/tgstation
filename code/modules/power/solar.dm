@@ -253,6 +253,8 @@
 			if(T)
 				cdir = T.sun_angle
 
+	set_panels(cdir)
+	updateicon()
 	src.updateUsrDialog()
 	return
 
