@@ -432,7 +432,7 @@
 	containertype = "/obj/crate/secure/gear"
 	containername = "Secruity Barriers crate"
 
-datum/supply_packs/hats/
+/datum/supply_packs/hats/
 	contains = list("/obj/item/clothing/head/collectable/chef",
 	"/obj/item/clothing/head/collectable/paper",
 	"/obj/item/clothing/head/collectable/tophat",
@@ -461,5 +461,12 @@ datum/supply_packs/hats/
 	cost = 200
 	containertype = "/obj/crate/hat"
 	containername = "Collectable Hats Crate! Brought to you by Bass.inc!"
+
+/datum/supply_packs/hats/New()
+	var/list/tempContains = list()
+	for(var/i = 0,i<min(3,contains.len),i++)
+		tempContains += pick(contains)
+	contains = tempContains
+	..()
 
 //SUPPLY PACKS

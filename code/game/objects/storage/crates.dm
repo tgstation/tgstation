@@ -35,10 +35,10 @@
 	desc = "A crate filled with Valuable Collector's Hats!."
 	name = "Hat Crate"
 	icon = 'storage.dmi'
-	icon_state = "hat"
+	icon_state = "crate"
 	density = 1
-	openicon = "hatopen"
-	closedicon = "hat"
+	openicon = "crateopen"
+	closedicon = "crate"
 
 /obj/crate/medical
 	desc = "A medical crate."
