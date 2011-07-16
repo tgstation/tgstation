@@ -120,6 +120,7 @@ obj/machinery/atmospherics/valve
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
+		src.add_fingerprint(usr)
 		update_icon(1)
 		sleep(10)
 		if (src.open)
