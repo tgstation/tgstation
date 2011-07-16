@@ -430,10 +430,7 @@
 	cost = 20
 	containertype = "/obj/crate/secure/gear"
 	containername = "Secruity Barriers crate"
-	access = access_security
 
-//HATS
-/*
 datum/supply_packs/hats/New()
 	var/list/tempContains = list("/obj/item/clothing/head/collectable/chef",
 	"/obj/item/clothing/head/collectable/chef",
@@ -444,45 +441,60 @@ datum/supply_packs/hats/New()
 	"/obj/item/clothing/head/collectable/tophat",
 	"/obj/item/clothing/head/collectable/tophat",
 	"/obj/item/clothing/head/collectable/tophat",
-	"/obj/item/clothing/head/collectable/swat",
-	"/obj/item/clothing/head/collectable/swat",
-	"/obj/item/clothing/head/collectable/swat",
 	"/obj/item/clothing/head/collectable/captain",
 	"/obj/item/clothing/head/collectable/captain",
 	"/obj/item/clothing/head/collectable/captain",
-	"/obj/item/clothing/head/collectable/centcom",
-	"/obj/item/clothing/head/collectable/centcom",
-	"/obj/item/clothing/head/collectable/centcom",
-	"/obj/item/clothing/head/collectable/police",
-	"/obj/item/clothing/head/collectable/police",
-	"/obj/item/clothing/head/collectable/police",
 	"/obj/item/clothing/head/collectable/beret",
 	"/obj/item/clothing/head/collectable/beret",
 	"/obj/item/clothing/head/collectable/beret",
 	"/obj/item/clothing/head/collectable/welding",
 	"/obj/item/clothing/head/collectable/welding",
 	"/obj/item/clothing/head/collectable/welding",
-	"hat10",
-	"hat11",
-	"hat12",
-	"hat13",
-	"hat14",
-	"hat15",
-	"hat16",
-	"hat17",
-	"hat18",
-	"hat19",
-	"hat20",)
+	"/obj/item/clothing/head/collectable/flatcap",
+	"/obj/item/clothing/head/collectable/flatcap",
+	"/obj/item/clothing/head/collectable/flatcap",
+	"/obj/item/clothing/head/collectable/pirate",
+	"/obj/item/clothing/head/collectable/pirate",
+	"/obj/item/clothing/head/collectable/pirate",
+	"/obj/item/clothing/head/collectable/kitty",
+	"/obj/item/clothing/head/collectable/kitty",
+	"/obj/item/clothing/head/collectable/kitty",
+	"/obj/item/clothing/head/collectable/rabbitears",
+	"/obj/item/clothing/head/collectable/rabbitears",
+	"/obj/item/clothing/head/collectable/rabbitears",
+	"/obj/item/clothing/head/collectable/wizard",
+	"/obj/item/clothing/head/collectable/wizard",
+	"/obj/item/clothing/head/collectable/wizard",
+	"/obj/item/clothing/head/collectable/hardhat",
+	"/obj/item/clothing/head/collectable/hardhat",
+	"/obj/item/clothing/head/collectable/hardhat",
+	"/obj/item/clothing/head/collectable/HoS",
+	"/obj/item/clothing/head/collectable/HoS",
+	"/obj/item/clothing/head/collectable/HoS",
+	"/obj/item/clothing/head/collectable/thunderdome",
+	"/obj/item/clothing/head/collectable/thunderdome",
+	"/obj/item/clothing/head/collectable/thunderdome",
+	"/obj/item/clothing/head/collectable/swat",
+	"/obj/item/clothing/head/collectable/swat",
+	"/obj/item/clothing/head/collectable/swat",
+	"/obj/item/clothing/head/collectable/metroid",
+	"/obj/item/clothing/head/collectable/metroid",
+	"/obj/item/clothing/head/collectable/police",
+	"/obj/item/clothing/head/collectable/police",
+	"/obj/item/clothing/head/collectable/slime",
+	"/obj/item/clothing/head/collectable/slime",
+	"/obj/item/clothing/head/collectable/xenom",
+	"/obj/item/clothing/head/collectable/xenom",
+	"/obj/item/clothing/head/collectable/petehat",)
 	for(var/i = 0,i<min(3,contains.len),i++)
 		tempContains += pick(contains)
 	contains = tempContains
 	..()
 
-	name = "Collectible Hat Crate!"
+	name = "Collectable Hat Crate!"
 	cost = 150
 	containertype = "/obj/crate/secure/gear"
-	containername = "Collectible Hats Crate! Brought to you by Bass.inc!"
+	containername = "Collectable Hats Crate! Brought to you by Bass.inc!"
 	access = access_crate_cash
-*/
 
 //SUPPLY PACKS
