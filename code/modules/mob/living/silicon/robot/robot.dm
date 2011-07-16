@@ -61,7 +61,7 @@
 	if(module)
 		return
 	//var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Janitor", "Service", "Brobot")
-	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Miner", "Janitor","Service", "Security")
+	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
 	if(module)
 		return
 	switch(mod)
@@ -91,13 +91,18 @@
 			icon_state = "Miner"
 			modtype = "Miner"
 
-/*
+
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Kent")
 //			icon_state = "MedBot"
+			if(icontype == "Kent")
+				icon_state = "toiletbot"
+			else
+				icon_state = "robot"
 			modtype = "Med"
-*/
+
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"

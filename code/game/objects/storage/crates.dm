@@ -31,6 +31,15 @@
 	openicon = "trashcartopen"
 	closedicon = "trashcart"
 
+/obj/crate/hat
+	desc = "A crate filled with Valuable Collector's Hats!."
+	name = "Hat Crate"
+	icon = 'storage.dmi'
+	icon_state = "hat"
+	density = 1
+	openicon = "hatopen"
+	closedicon = "hat"
+
 /obj/crate/medical
 	desc = "A medical crate."
 	name = "Medical crate"

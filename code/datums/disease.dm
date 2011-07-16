@@ -19,6 +19,7 @@ to null does not delete the object itself. Thank you.
 
 
 /datum/disease
+	var/form = "Virus" //During medscans, what the disease is referred to as
 	var/name = "No disease"
 	var/stage = 1 //all diseases start at stage 1
 	var/max_stages = 0.0

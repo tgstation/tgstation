@@ -255,20 +255,6 @@
 	var/status = 1
 	origin_tech = "combat=2"
 
-/obj/item/weapon/melee/chainofcommand
-	name = "Chain of Command"
-	desc = "The Captain is first and all other heads are last."
-	icon_state = "chainofcommand"
-	item_state = "chainofcommand"
-	flags = FPRINT | ONBELT | TABLEPASS
-	force = 10
-	throwforce = 7
-	w_class = 3
-	var/charges = 50.0
-	var/maximum_charges = 50.0
-	var/status = 1
-	origin_tech = "combat=4"
-
 /obj/item/weapon/melee/energy
 	var/active = 0
 
@@ -444,6 +430,14 @@
 	level = 2
 	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
 
+/obj/item/weapon/card/data/spacehulk
+	name = "Unlabelled Coordinates"
+	icon_state = "data"
+	item_state = "card-id"
+	layer = 3
+	level = 2
+	desc = "This card contains mysterious coordinates. Time to suit up and get ready to rock it hardcore."
+
 /obj/item/weapon/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
@@ -505,19 +499,6 @@
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
-
-/obj/item/weapon/chemsprayer
-	desc = "Chem Sprayer"
-	icon = 'gun.dmi'
-	name = "chem sprayer"
-	icon_state = "chemsprayer"
-	item_state = "chemsprayer"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
-	throwforce = 3
-	w_class = 2.0
-	throw_speed = 2
-	throw_range = 10
-	origin_tech = "combat=3;materials=3;engineering=3"
 
 /obj/item/weapon/clipboard
 	name = "clipboard"
@@ -1945,7 +1926,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/cigpacket
 	name = "Cigarette packet"
-	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
+	desc = "A pack of Yeheyuans. Many people smoke them, perhaps hoping for a natural death."
 	icon = 'cigarettes.dmi'
 	icon_state = "cigpacket"
 	item_state = "cigpacket"
@@ -1984,7 +1965,7 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/zippo
 	name = "Zippo lighter"
-	desc = "The detective's zippo."
+	desc = "The etching on the bottom reads: \"SIPPO HIGH QUALITY GENUINE IMITATION\"."
 	icon = 'items.dmi'
 	icon_state = "zippo"
 	item_state = "zippo"
@@ -2019,14 +2000,13 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 
 /obj/item/weapon/dice/d20 // -- TLE
 	name = "d20"
-	desc = "A dice with...hell that is many sides."
+	desc = "A dice with twenty sides. What sort of batshit game needs that many sides?"
 	sides = 20
 	icon_state = "d20"
 	item_state = "dice"
 
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
-	desc = "Some spacey cable."
 	name = "data cable"
 	icon = 'power.dmi'
 	icon_state = "wire1"

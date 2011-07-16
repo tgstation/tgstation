@@ -105,6 +105,24 @@
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/appendix //yes, this is the same as meat. I might do something different in future
+	name = "Appendix"
+	desc = "An appendix which looks perfectly healthy."
+	icon_state = "appendix"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		src.bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/appendixinflamed
+	name = "Inflamed Appendix"
+	desc = "An appendix which appears to be inflamed."
+	icon_state = "appendixinflamed"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		src.bitesize = 1
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/human
 	name = "-meat"
 	var/subjectname = ""

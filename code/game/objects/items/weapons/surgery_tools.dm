@@ -19,6 +19,18 @@ CIRCULAR SAW
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/table/, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(50))))
 		return ..()
 
+	if(user.zone_sel.selecting == "groin")
+		if(istype(M, /mob/living/carbon/human))
+			switch(M:appendix_op_stage)
+				if(2.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [user] retracts the flap in [M]'s abdomen cut open with [src].", 1)
+						M << "\red [user] begins to retract the flap in your abdomen with [src]!"
+						user << "\red You retract the flap in [M]'s abdomen with [src]!"
+						M:appendix_op_stage = 3.0
+		return
+
 	if (user.zone_sel.selecting == "eyes")
 
 		var/mob/living/carbon/human/H = M
@@ -80,6 +92,31 @@ CIRCULAR SAW
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/table/, M.loc) && M.lying && prob(50))))
 		return ..()
 
+	if(user.zone_sel.selecting == "groin")
+		if(istype(M, /mob/living/carbon/human))
+			switch(M:appendix_op_stage)
+				if(1.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [user] is beginning to clamp bleeders in [M]'s abdomen cut open with [src].", 1)
+						M << "\red [user] begins to clamp bleeders in your abdomen with [src]!"
+						user << "\red You clamp bleeders in [M]'s abdomen with [src]!"
+						M:appendix_op_stage = 2.0
+				if(4.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [user] is removing [M]'s appendix with [src].", 1)
+						M << "\red [user] begins to remove your appendix with [src]!"
+						user << "\red You remove [M]'s appendix with [src]!"
+						for(var/datum/disease/D in M.viruses)
+							if(istype(D, /datum/disease/appendicitis))
+								new /obj/item/weapon/reagent_containers/food/snacks/appendixinflamed(get_turf(M))
+								M:appendix_op_stage = 5.0
+								return
+						new /obj/item/weapon/reagent_containers/food/snacks/appendix(get_turf(M))
+						M:appendix_op_stage = 5.0
+		return
+
 	if (user.zone_sel.selecting == "eyes")
 
 		var/mob/living/carbon/human/H = M
@@ -139,6 +176,21 @@ CIRCULAR SAW
 
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/table/, M.loc) && M.lying && prob(50))))
 		return ..()
+
+	if(user.zone_sel.selecting == "groin")
+		if(istype(M, /mob/living/carbon/human))
+			switch(M:appendix_op_stage)
+				if(5.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [user] is beginning to cauterize the incision in [M]'s abdomen with [src].", 1)
+						M << "\red [user] begins to cauterize the incision in your abdomen with [src]!"
+						user << "\red You cauterize the incision in [M]'s abdomen with [src]!"
+						M:appendix_op_stage = 6.0
+						for(var/datum/disease/appendicitis in M.viruses)
+							appendicitis.cure()
+							M.resistances += appendicitis
+		return
 
 	if (user.zone_sel.selecting == "eyes")
 
@@ -209,6 +261,25 @@ CIRCULAR SAW
 		return ..()
 
 	src.add_fingerprint(user)
+
+	if(user.zone_sel.selecting == "groin")
+		if(istype(M, /mob/living/carbon/human))
+			switch(M:appendix_op_stage)
+				if(0.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [M] is beginning to have his abdomen cut open with [src] by [user].", 1)
+						M << "\red [user] begins to cut open your abdomen with [src]!"
+						user << "\red You cut [M]'s abdomen open with [src]!"
+						M:appendix_op_stage = 1.0
+				if(3.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [M] is beginning to have his appendix seperated with [src] by [user].", 1)
+						M << "\red [user] begins to seperate your appendix with [src]!"
+						user << "\red You seperate [M]'s appendix with [src]!"
+						M:appendix_op_stage = 4.0
+		return
 
 	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/metroid))
 

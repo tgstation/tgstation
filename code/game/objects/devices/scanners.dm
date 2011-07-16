@@ -175,7 +175,7 @@ MASS SPECTROMETER
 		user.show_message(text("\red Subject appears to have been imperfectly cloned."), 1)
 	for(var/datum/disease/D in M.viruses)
 		if(!D.hidden[SCANNER])
-			user.show_message(text("\red <b>Warning: Virus Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
+			user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
 	if (M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		user.show_message(text("\blue Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals."), 1)
 	if (M.brainloss >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)

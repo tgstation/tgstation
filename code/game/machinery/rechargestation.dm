@@ -106,6 +106,18 @@
 						if(istype(O,/obj/item/weapon/melee/baton))
 							if(O:charges < 10)
 								O:charges += 1
+						//Service
+						if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
+							if(O.reagents.get_reagent_amount("enzyme") < 50)
+								O.reagents.add_reagent("enzyme", 1)
+						//Medical
+						if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline))
+							if(O.reagents.get_reagent_amount("inaprovaline") < 30)
+								O.reagents.add_reagent("inaprovaline", 1)
+						if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/antitoxin))
+							if(O.reagents.get_reagent_amount("anti_toxin") < 30)
+								O.reagents.add_reagent("anti_toxin", 1)
+
 					R.module.respawn_consumable(R)
 
 

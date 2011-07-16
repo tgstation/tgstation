@@ -432,51 +432,21 @@
 	containertype = "/obj/crate/secure/gear"
 	containername = "Secruity Barriers crate"
 
-datum/supply_packs/hats/New()
-	var/list/tempContains = list("/obj/item/clothing/head/collectable/chef",
-	"/obj/item/clothing/head/collectable/chef",
-	"/obj/item/clothing/head/collectable/chef",
-	"/obj/item/clothing/head/collectable/paper",
-	"/obj/item/clothing/head/collectable/paper",
+datum/supply_packs/hats/
+	contains = list("/obj/item/clothing/head/collectable/chef",
 	"/obj/item/clothing/head/collectable/paper",
 	"/obj/item/clothing/head/collectable/tophat",
-	"/obj/item/clothing/head/collectable/tophat",
-	"/obj/item/clothing/head/collectable/tophat",
-	"/obj/item/clothing/head/collectable/captain",
-	"/obj/item/clothing/head/collectable/captain",
 	"/obj/item/clothing/head/collectable/captain",
 	"/obj/item/clothing/head/collectable/beret",
-	"/obj/item/clothing/head/collectable/beret",
-	"/obj/item/clothing/head/collectable/beret",
-	"/obj/item/clothing/head/collectable/welding",
-	"/obj/item/clothing/head/collectable/welding",
 	"/obj/item/clothing/head/collectable/welding",
 	"/obj/item/clothing/head/collectable/flatcap",
-	"/obj/item/clothing/head/collectable/flatcap",
-	"/obj/item/clothing/head/collectable/flatcap",
-	"/obj/item/clothing/head/collectable/pirate",
-	"/obj/item/clothing/head/collectable/pirate",
 	"/obj/item/clothing/head/collectable/pirate",
 	"/obj/item/clothing/head/collectable/kitty",
-	"/obj/item/clothing/head/collectable/kitty",
-	"/obj/item/clothing/head/collectable/kitty",
-	"/obj/item/clothing/head/collectable/rabbitears",
-	"/obj/item/clothing/head/collectable/rabbitears",
 	"/obj/item/clothing/head/collectable/rabbitears",
 	"/obj/item/clothing/head/collectable/wizard",
-	"/obj/item/clothing/head/collectable/wizard",
-	"/obj/item/clothing/head/collectable/wizard",
-	"/obj/item/clothing/head/collectable/hardhat",
-	"/obj/item/clothing/head/collectable/hardhat",
 	"/obj/item/clothing/head/collectable/hardhat",
 	"/obj/item/clothing/head/collectable/HoS",
-	"/obj/item/clothing/head/collectable/HoS",
-	"/obj/item/clothing/head/collectable/HoS",
 	"/obj/item/clothing/head/collectable/thunderdome",
-	"/obj/item/clothing/head/collectable/thunderdome",
-	"/obj/item/clothing/head/collectable/thunderdome",
-	"/obj/item/clothing/head/collectable/swat",
-	"/obj/item/clothing/head/collectable/swat",
 	"/obj/item/clothing/head/collectable/swat",
 	"/obj/item/clothing/head/collectable/metroid",
 	"/obj/item/clothing/head/collectable/metroid",
@@ -487,15 +457,9 @@ datum/supply_packs/hats/New()
 	"/obj/item/clothing/head/collectable/xenom",
 	"/obj/item/clothing/head/collectable/xenom",
 	"/obj/item/clothing/head/collectable/petehat",)
-	for(var/i = 0,i<min(3,contains.len),i++)
-		tempContains += pick(contains)
-	contains = tempContains
-	..()
-
 	name = "Collectable Hat Crate!"
-	cost = 150
-	containertype = "/obj/crate/secure/gear"
+	cost = 200
+	containertype = "/obj/crate/hat"
 	containername = "Collectable Hats Crate! Brought to you by Bass.inc!"
-	access = access_crate_cash
 
 //SUPPLY PACKS

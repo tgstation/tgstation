@@ -48,7 +48,7 @@
 			if ((O.client && !( O.blinded )))
 				O << text("\red [src] has been scanned by [user] with the [W]")
 	else
-		if (!( istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) &&!(istype(W, /obj/item/weapon/cleaner)) &&!(istype(W, /obj/item/weapon/chemsprayer)) && !(istype(W, /obj/item/weapon/plantbgone)) )
+		if (!( istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) &&!(istype(W, /obj/item/weapon/cleaner)) && !(istype(W, /obj/item/weapon/plantbgone)) )
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O << text("\red <B>[] has been hit by [] with []</B>", src, user, W)
@@ -136,6 +136,13 @@
 		src.blood_DNA = list2params(L)
 	return
 
+/atom/proc/add_vomit_floor(mob/living/carbon/M as mob)
+	if( istype(src, /turf/simulated) )
+		var/obj/decal/cleanable/vomit/this = new /obj/decal/cleanable/vomit(src)
+		for(var/datum/disease/D in M.viruses)
+			var/datum/disease/newDisease = new D.type
+			this.viruses += newDisease
+			newDisease.holder = this
 
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M as mob)

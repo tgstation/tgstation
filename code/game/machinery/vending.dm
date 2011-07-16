@@ -180,7 +180,7 @@
 	if(usr.stat || usr.restrained())
 		return
 
-	if(istype(usr,/mob/living/silicon))
+	if(istype(usr,/mob/living/silicon) && !(usr:module && istype(usr:module,/obj/item/weapon/robot_module/butler)) )
 		usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
 		return
 

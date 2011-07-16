@@ -13,7 +13,7 @@
 /proc/event()
 	event = 1
 
-	switch(rand(1,11))
+	switch(rand(1,12))
 		if(1)
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			world << sound('meteors.ogg')
@@ -88,6 +88,9 @@
 			immovablerod()
 		if(11)
 			lightsout(1,2)
+
+		if(12)
+			appendicitis()
 
 /proc/dotheblobbaby()
 	if (blobevent)
@@ -212,6 +215,20 @@
 			A.power_equip = 1
 			A.power_environ = 1
 			A.power_change()
+
+/proc/appendicitis()
+	for(var/mob/living/carbon/human/H in world)
+		var/foundAlready = 0 // don't infect someone that already has the virus
+		for(var/datum/disease/D in H.viruses)
+			foundAlready = 1
+		if(H.stat == 2 || foundAlready)
+			continue
+
+		var/datum/disease/D = new /datum/disease/appendicitis
+		D.holder = H
+		D.affected_mob = H
+		H.viruses += D
+		break
 
 /proc/viral_outbreak(var/virus = null)
 	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
