@@ -2482,7 +2482,7 @@
 "aVL" = (/obj/machinery/atmospherics/pipe/simple,/turf/simulated/wall/r_wall,/area/crew_quarters/captain)
 "aVM" = (/obj/table,/obj/item/weapon/pinpointer,/obj/item/weapon/disk/nuclear,/turf/simulated/floor,/area/crew_quarters/captain)
 "aVN" = (/obj/table,/obj/item/weapon/camera_test,/obj/item/weapon/storage/photo_album{pixel_y = -10},/turf/simulated/floor,/area/crew_quarters/captain)
-"aVO" = (/obj/table,/obj/machinery/recharger{pixel_y = 4},/turf/simulated/floor,/area/crew_quarters/captain)
+"aVO" = (/obj/table,/obj/machinery/recharger{pixel_y = 4},/obj/item/weapon/melee/chainofcommand,/turf/simulated/floor,/area/crew_quarters/captain)
 "aVP" = (/obj/machinery/light{dir = 1},/turf/simulated/floor,/area/crew_quarters/captain)
 "aVQ" = (/obj/machinery/requests_console{department = "Captain's Quarters"; departmentType = 5; pixel_y = 30},/turf/simulated/floor,/area/crew_quarters/captain)
 "aVR" = (/turf/simulated/floor,/area/crew_quarters/captain)

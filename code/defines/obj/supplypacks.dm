@@ -135,7 +135,8 @@
 					"/obj/item/clothing/gloves/white",
 					"/obj/item/clothing/mask/gas/mime",
 					"/obj/item/clothing/head/beret",
-					"/obj/item/clothing/suit/suspenders",)
+					"/obj/item/clothing/suit/suspenders",
+					"/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing")
 	cost = 10
 	containertype = "/obj/crate/secure"
 	containername = "Standard Costumes"

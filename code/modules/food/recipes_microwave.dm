@@ -852,6 +852,17 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
 
+/datum/recipe/spesslaw
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spagetti,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/spesslaw
+
 /datum/recipe/superbiteburger
 	reagents = list("sodiumchloride" = 5, "blackpepper" = 5)
 	items = list(
@@ -904,3 +915,115 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/applecake
+
+/datum/recipe/metroidburger
+	reagents = list("metroid" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/metroidburger
+
+/datum/recipe/twobread
+	reagents = list("wine" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/twobread
+
+/datum/recipe/metroidsandwich
+	reagents = list("metroid" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/metroidsandwich
+
+/datum/recipe/orangecake
+	reagents = list("milk" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/orange,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/orange,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/orangecake
+
+/datum/recipe/limecake
+	reagents = list("milk" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lime,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lime,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/limecake
+
+/datum/recipe/lemoncake
+	reagents = list("milk" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/lemoncake
+
+/datum/recipe/chocolatecake
+	reagents = list("milk" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/chocolatecake
+
+/datum/recipe/bloodsoup
+	reagents = list("blood" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
+
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
+
+
+/datum/recipe/metroidsoup
+	reagents = list("water" = 10, "metroid" = 5)
+	items = list(
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/metroidsoup
+
+/datum/recipe/clownstears
+	reagents = list("water" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+		/obj/item/weapon/ore/clown,
+
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/clownstears
+
+/datum/recipe/boiledmetroidcore
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/metroid_core,
+
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledmetroidcore

@@ -1799,6 +1799,20 @@ datum
 					return
 				..()
 
+		nothing
+			name = "Nothing"
+			id = "nothing"
+			description = "Absolutely nothing."
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
+					if(!M) M = holder.my_atom
+					M:heal_organ_damage(1,1)
+					..()
+					return
+				..()
+
 		potato_juice
 			name = "Potato Juice"
 			id = "potato"
@@ -3102,6 +3116,27 @@ datum
 					..()
 					return
 				if(istype(M, /mob/living/carbon/monkey))
+					if(!M) M = holder.my_atom
+					M:heal_organ_damage(1,1)
+					M.dizziness +=5
+					if(data >= 55 && data <165)
+						if (!M.stuttering) M.stuttering = 1
+						M.stuttering += 5
+					else if(data >= 165 && prob(33))
+						M.confused = max(M:confused+5,0)
+					..()
+					return
+
+		silencer
+			name = "Silencer"
+			id = "silencer"
+			description = "A drink from Mime Heaven."
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
+				if(!data) data = 1
+				data++
+				if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
 					if(!M) M = holder.my_atom
 					M:heal_organ_damage(1,1)
 					M.dizziness +=5

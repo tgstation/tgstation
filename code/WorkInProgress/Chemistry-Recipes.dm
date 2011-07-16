@@ -1127,9 +1127,16 @@ datum
 			required_reagents = list("banana" = 1, "cream" = 1, "sugar" = 1)
 			result_amount = 3
 
+		silencer
+			name = "Silencer"
+			id = "silencer"
+			result = "silencer"
+			required_reagents = list("nothing" = 1, "cream" = 1, "sugar" = 1)
+			result_amount = 3
+
 		singulo
 			name = "Singulo"
 			id = "singulo"
 			result = "singulo"
-			required_reagents = list("vodka" = 5, "radium" = 1, "plasma" = 1, "wine" = 5)
+			required_reagents = list("vodka" = 5, "radium" = 1, "acid" = 1, "wine" = 5)
 			result_amount = 10

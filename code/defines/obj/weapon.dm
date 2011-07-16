@@ -255,6 +255,20 @@
 	var/status = 1
 	origin_tech = "combat=2"
 
+/obj/item/weapon/melee/chainofcommand
+	name = "Chain of Command"
+	desc = "The Captain is first and all other heads are last."
+	icon_state = "chainofcommand"
+	item_state = "chainofcommand"
+	flags = FPRINT | ONBELT | TABLEPASS
+	force = 10
+	throwforce = 7
+	w_class = 3
+	var/charges = 50.0
+	var/maximum_charges = 50.0
+	var/status = 1
+	origin_tech = "combat=4"
+
 /obj/item/weapon/melee/energy
 	var/active = 0
 

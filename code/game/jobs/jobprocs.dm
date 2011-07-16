@@ -298,6 +298,7 @@
 			src.equip_if_possible(new /obj/item/clothing/head/beret(src), slot_head)
 			src.equip_if_possible(new /obj/item/clothing/suit/suspenders(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/toy/crayon/mime(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(src), slot_in_backpack)
 			src.verbs += /client/proc/mimespeak
 			src.verbs += /client/proc/mimewall
 			src.mind.special_verbs += /client/proc/mimespeak

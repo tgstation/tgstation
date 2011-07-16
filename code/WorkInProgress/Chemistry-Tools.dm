@@ -2206,6 +2206,14 @@
 		..()
 		reagents.add_reagent("tequilla", 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing
+	name = "Bottle of Nothing"
+	desc = "A bottle filled with nothing"
+	icon_state = "bottleofnothing"
+	New()
+		..()
+		reagents.add_reagent("nothing", 100)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
 	desc = "Silver laced tequilla, served in space night clubs across the galaxy."
@@ -2803,6 +2811,14 @@
 					icon_state = "bananahonkglass"
 					name = "Banana Honk"
 					desc = "A drink from Clown Heaven."
+				if("silencer")
+					icon_state = "silencerglass"
+					name = "Silencer"
+					desc = "A drink from mime Heaven."
+				if("nothing")
+					icon_state = "nothing"
+					name = "Nothing"
+					desc = "Absolutely nothing."
 				if("singulo")
 					icon_state = "singulo"
 					name = "Singulo"
