@@ -796,8 +796,10 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 
 		shockgun
 			name = "shock gun"
+			desc = "A high tech energy weapon that stuns and burns a target."
 			icon_state = "shockgun"
 			fire_sound = 'Laser.ogg'
+			origin_tech = "combat=5;materials=4;powerstorage=3"
 			charge_cost = 250
 
 			load_into_chamber()
@@ -818,8 +820,10 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 
 		stunrevolver
 			name = "stun revolver"
+			desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
 			icon_state = "stunrevolver"
 			fire_sound = 'Gunshot.ogg'
+			origin_tech = "combat=3;materials=3;powerstorage=2"
 			charge_cost = 125
 
 			load_into_chamber()
