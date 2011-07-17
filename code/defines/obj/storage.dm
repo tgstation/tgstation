@@ -206,7 +206,7 @@
 
 /obj/item/weapon/storage/emp_kit
 	desc = "A box with 5 emp grenades."
-	name = "Emp grenades"
+	name = "emp grenades"
 	icon_state = "flashbang"
 	item_state = "syringe_kit"
 

@@ -641,7 +641,6 @@
 #include "code\modules\admin\verbs\deadsay.dm"
 #include "code\modules\admin\verbs\debug.dm"
 #include "code\modules\admin\verbs\diagnostics.dm"
-#include "code\modules\admin\verbs\grillify.dm"
 #include "code\modules\admin\verbs\mapping.dm"
 #include "code\modules\admin\verbs\massmodvar.dm"
 #include "code\modules\admin\verbs\MC.dm"

@@ -220,7 +220,7 @@ FLASHBANG
 				prime()
 				return
 		else
-			user << "\red You prime the flashbang! [det_time/10] seconds!"
+			user << "\red You prime the EMP grenade! [det_time/10] seconds!"
 			src.state = 1
 			src.icon_state = "empar"
 			add_fingerprint(user)
