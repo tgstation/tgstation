@@ -18,16 +18,6 @@
 	density = 1
 	anchored = 0
 
-/obj/closet/bodybag
-	desc = "It's a bodybag!"
-	name = "Bodybag"
-	icon = 'closet.dmi'
-	icon_state = "bodybag"
-	icon_closed = "bodybag"
-	icon_opened = "bodybag"
-	opened = 0
-	flags = FPRINT
-
 /obj/closet/gmcloset
 	desc = "A bulky (yet mobile) closet. Comes with formal clothes"
 	name = "Formal closet"
