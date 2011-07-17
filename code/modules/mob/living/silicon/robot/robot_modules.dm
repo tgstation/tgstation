@@ -22,6 +22,9 @@
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
 
+/obj/item/weapon/robot_module/hydroborg
+	name = "hydroponics robot module"
+
 /obj/item/weapon/robot_module/medical
 	name = "medical robot module"
 
@@ -61,7 +64,18 @@ obj/item/weapon/robot_module/syndicate
 	src.modules += new /obj/item/weapon/crowbar(src)
 	src.modules += new /obj/item/device/healthanalyzer(src)
 	src.emag = new /obj/item/weapon/melee/energy/sword(src)
-
+/*
+/obj/item/weapon/robot_module/hydroborg/New()
+	..()
+	src.modules += new /obj/item/weapon/minihoe(src)
+	src.modules += new /obj/item/weapon/pestspray(src)
+	src.modules += new /obj/item/weapon/plantbgone(src)
+	src.modules += new /obj/item/nutrient/rh(src)
+	src.modules += new /obj/item/nutrient/l4z(src)
+	src.modules += new /obj/item/weapon/rsp(src)
+	src.modules += new /obj/item/device/analyzer/plant_analyzer(src)
+	src.emag = new /obj/item/weapon/grown/deathnettle(src)
+*/
 /obj/item/weapon/robot_module/engineering/New()
 	..()
 	src.modules += new /obj/item/weapon/extinguisher(src)

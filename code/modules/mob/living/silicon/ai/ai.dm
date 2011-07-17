@@ -82,6 +82,8 @@
 		icon_state = "ai-u"
 	else if(icontype == "Firewall")
 		icon_state = "ai-magma"
+	else if(icontype == "Funny")
+		icon_state = "ai-yesman"
 	else//(icontype == "Green")
 		icon_state = "ai-wierd"
 

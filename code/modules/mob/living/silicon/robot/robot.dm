@@ -71,6 +71,16 @@
 			icon_state = "robot"
 			modtype = "Stand"
 
+/*		if("Hydroborg")
+			module = new /obj/item/weapon/robot_module/hydroborg(src)
+			hands.icon_state = "hydroborg"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Hydroborg")
+			if(icontype== "Hydroborg")
+				icon_state = "hydroborg"
+			else if(icontype == "Kent")
+				icon_state = "toiletbot"
+			modtype = "Hydroborg"*/
+
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
@@ -99,6 +109,8 @@
 //			icon_state = "MedBot"
 			if(icontype == "Kent")
 				icon_state = "toiletbot"
+			else if(icontype == "Medbot")
+				icon_state = "Medbot"
 			else
 				icon_state = "robot"
 			modtype = "Med"
@@ -113,6 +125,8 @@
 				icon_state = "Security2"
 			else if(icontype == "Robocop Red")
 				icon_state = "Security3"
+			else if(icontype == "Heavy Duty")
+				icon_state = "secborg"
 			else
 				icon_state = "robot"
 			modtype = "Sec"
