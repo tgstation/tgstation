@@ -943,7 +943,7 @@ datum
 			name = "Shock Gun"
 			desc = "Your opponent has just lost THE GAME."
 			id = "shockgun"
-			req_tech = list("combat" = 6, "materials" = 4, "powerstorage" = 3)
+			req_tech = list("combat" = 5, "materials" = 4, "powerstorage" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 8000, "$silver" = 3000, "$gold" = 500)
 			build_path = "/obj/item/weapon/gun/energy/shockgun"
@@ -981,7 +981,7 @@ datum
 			name = "Submachine Gun"
 			desc = "A lightweight, fast firing gun."
 			id = "smg"
-			req_tech = list("combat" = 5, "materials" = 2)
+			req_tech = list("combat" = 4, "materials" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 8000, "$silver" = 2000, "$diamond" = 1000)
 			build_path = "/obj/item/weapon/gun/projectile/automatic"
