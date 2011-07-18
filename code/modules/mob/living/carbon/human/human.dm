@@ -192,21 +192,31 @@
 		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
-/mob/living/carbon/human/bullet_act(flag, A as obj, var/datum/organ/external/def_zone)
+/mob/living/carbon/human/bullet_act(A as obj, var/datum/organ/external/def_zone)
 	var/shielded = 0
-	var/list/armor
 	//Preparing the var for grabbing the armor information, can't grab the values yet because we don't know what kind of bullet was used. --NEO
 
-	if(prob(50))
+	var/obj/item/projectile/P = A
+	if(prob(80))
 		for(var/mob/living/carbon/metroid/M in view(1,src))
 			if(M.Victim == src)
-				M.bullet_act(flag, A) // the bullet hits them, not src!
+				M.bullet_act(A) // the bullet hits them, not src!
 				return
+
+	if (istype(l_hand, /obj/item/weapon/shield/riot))
+		if (prob(50 + round(P.damage / 3))) // the more damage a projectile does, the more likely to block it
+			show_message("\red Your shield blocks the blow!", 4)
+			return
+
+	if (istype(r_hand, /obj/item/weapon/shield/riot))
+		if (prob(50 + round(P.damage / 3)))
+			show_message("\red Your shield blocks the blow!", 4)
+			return
 
 
 	for(var/obj/item/device/shield/S in src)
 		if (S.active)
-			if (flag == "bullet")
+			if (P.flag == "bullet")
 				return
 			shielded = 1
 			S.active = 0
@@ -216,8 +226,8 @@
 			shielded = 1
 			S.active = 0
 			S.icon_state = "shield0"
-	if ((shielded && flag != "bullet"))
-		if (!flag)
+	if ((shielded && P.flag != "bullet"))
+		if (P.flag)
 			src << "\blue Your shield was disturbed by a laser!"
 			if(paralysis <= 120)	paralysis = 120
 			updatehealth()
@@ -243,398 +253,216 @@
 			if ((G.state == 3 && get_dir(src, A) == dir))
 				safe = G.affecting
 		if (safe)
-			return safe.bullet_act(flag, A)
+			return safe.bullet_act(A)
 
+	var/absorb
+	var/soften
 
-	switch(flag)
-		if(PROJECTILE_BULLET)
-			armor = getarmor(affecting, "bullet")
-			var/d = 51
-			if (prob(armor["armor"]))
-				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-				return
-			else
-				if (prob(armor["armor"]/2))
-					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
-					if (prob(20))
-						d = d / 2
-					d = d / 4
-				/*
-			else
-				if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
-					if (prob(90))
-						show_message("\red Your armor absorbs the blow!", 4)
-						return
+	for(var/i = 1, i<= P.mobdamage.len, i++)
+
+		switch(i)
+			if(1)
+				var/d = P.mobdamage[BRUTE]
+				if(d)
+					var/list/armor = getarmor(affecting, P.flag)
+					if (prob(armor["armor"]))
+						absorb = 1
 					else
-						if (prob(90))
-							show_message("\red Your armor only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 5*/
-			if (istype(r_hand, /obj/item/weapon/shield/riot))
-				if (prob(90))
-					show_message("\red Your shield absorbs the blow!", 4)
-					return
-				else
-					if (prob(40))
-						show_message("\red Your shield only softens the blow!", 4)
-						if (prob(60))
+						if (prob(armor["armor"])/2)
+							soften = 1
 							d = d / 2
-						d = d / 5
-			else
-				if (istype(l_hand, /obj/item/weapon/shield/riot))
-					if (prob(90))
-						show_message("\red Your shield absorbs the blow!", 4)
-						return
-					else
-						if (prob(40))
-							show_message("\red Your shield only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 5
-			if (stat != 2)
-				affecting.take_damage(d, 0)
-				UpdateDamageIcon()
-				updatehealth()
-				if (prob(50))
-					if(weakened <= 5)	weakened = 5
-			return
-		if(PROJECTILE_BULLETBURST)
-			armor = getarmor(affecting, "bullet")
-			var/d = 18
-			if (prob(armor["armor"]))
-				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-				return
-			else
-				if (prob(armor["armor"]/2))
-					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
-					if (prob(20))
-						d = d / 2
-					d = d / 4
-				/*
-			else
-				if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
-					if (prob(90))
-						show_message("\red Your armor absorbs the blow!", 4)
-						return
-					else
-						if (prob(90))
-							show_message("\red Your armor only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 5*/
-			if (istype(r_hand, /obj/item/weapon/shield/riot))
-				if (prob(90))
-					show_message("\red Your shield absorbs the blow!", 4)
-					return
-				else
-					if (prob(40))
-						show_message("\red Your shield only softens the blow!", 4)
-						if (prob(60))
-							d = d / 2
-						d = d / 5
-			else
-				if (istype(l_hand, /obj/item/weapon/shield/riot))
-					if (prob(90))
-						show_message("\red Your shield absorbs the blow!", 4)
-						return
-					else
-						if (prob(40))
-							show_message("\red Your shield only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 5
-			if (stat != 2)
-				affecting.take_damage(d, 0)
-				UpdateDamageIcon()
-				updatehealth()
-				if (prob(50))
-					if(weakened <= 2)	weakened = 2
-			return
-		if(PROJECTILE_TASER)
-			armor = getarmor(affecting, "taser")
-			if (prob(armor["armor"]))
-				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-				return
-			/*else
-				if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
-					if (prob(70))
-						show_message("\red Your armor absorbs the hit!", 4)
-						return*/
-			if (prob(75) && stunned <= 10)
-				stunned = 10
-			else
-				weakened = 10
-			if (stuttering < 10)
-				stuttering = 10
-		if(PROJECTILE_DART)
-			armor = getarmor(affecting, "bio")
-			if (prob(armor["armor"]))
-				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-				return
-			if (istype(l_hand, /obj/item/weapon/shield/riot)||istype(r_hand, /obj/item/weapon/shield/riot))
-				if (prob(50))
-					show_message("\red Your shield absorbs the hit!", 4)
-			else
-				weakened += 5
-				toxloss += 10
-		if(PROJECTILE_LASER)
-			armor = getarmor(affecting, "laser")
-			var/d = 20
-			if (prob(armor["armor"]))
-				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-				return
-			else
-				if (prob(armor["armor"])/2)
-					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
-					if (prob(20))
-						d = d / 2
-					d = d / 2
-			/*else
-				if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
-					if (prob(70))
-						show_message("\red Your armor absorbs the blow!", 4)
-						return
-					else
-						if (prob(90))
-							show_message("\red Your armor only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 2*/
 
-			if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff.
-			if (prob(25)) stunned++
 
-			if (stat != 2)
-				affecting.take_damage(0, d)
-				UpdateDamageIcon()
-				updatehealth()
-				if (prob(25))
-					stunned = 1
-		if(PROJECTILE_SHOCK)
-			armor = getarmor(affecting, "laser")
-			var/d = 20
-			if (prob(armor["armor"]))
-				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-				return
-			else
-				if (prob(armor["armor"])/2)
-					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
-					if (prob(20))
-						d = d / 2
-					d = d / 2
-			/*else
-				if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
-					if (prob(70))
-						show_message("\red Your armor absorbs the blow!", 4)
-						return
+						if(!P.nodamage) affecting.take_damage(d, 0)
+						UpdateDamageIcon()
+						updatehealth()
+			if(2)
+				var/d = P.mobdamage[BURN]
+				if(d)
+					var/list/armor = getarmor(affecting, P.flag)
+					if (prob(armor["armor"]))
+						absorb = 1
 					else
-						if (prob(90))
-							show_message("\red Your armor only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 2*/
+						if (prob(armor["armor"])/2)
+							soften = 1
+							d = d / 2
 
-			if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff.
-			if (prob(25)) stunned++
 
-			if (stat != 2)
-				affecting.take_damage(0, d)
-				UpdateDamageIcon()
-				updatehealth()
-				if (prob(25))
-					stunned = 10
-				else
-					weakened = 10
-		if(PROJECTILE_PULSE)
-			armor = getarmor(affecting, "laser")
-			var/d = 40
-			if (prob(armor["armor"]/2))
-				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-				return
-			else
-				if (prob(armor["armor"])/2)
-					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
-					if (prob(20))
-						d = d / 2
-					d = d / 2
-			/*else
-				if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
-					if (prob(50))
-						show_message("\red Your armor absorbs the blow!", 4)
-						return
+						if(!P.nodamage) affecting.take_damage(0, d)
+						UpdateDamageIcon()
+						updatehealth()
+			if(3)
+				var/d = P.mobdamage[TOX]
+				if(d)
+					var/list/armor = getarmor(affecting, P.flag)
+					if (prob(armor["armor"]))
+						absorb = 1
 					else
-						if (prob(50))
-							show_message("\red Your armor only softens the blow!", 4)
-							if (prob(50))
-								d = d / 2
-							d = d / 2*/
-			if (stat != 2)
-				affecting.take_damage(0, d)
-				UpdateDamageIcon()
-				updatehealth()
-				if (prob(50))
-					stunned = min(stunned, 5)
-		if(PROJECTILE_BOLT)
-			armor = getarmor(affecting, "rad")
-			if (prob(getarmor(affecting, "bio")))
-				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-				return
-			toxloss += 3
-			radiation += 100
-			updatehealth()
-			stuttering += 5
-			drowsyness += 5
-		if(PROJECTILE_WEAKBULLET)
-			armor = getarmor(affecting, "bullet")
-			var/d = 14
-			if (prob(armor["armor"]))
-				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-				return
-			else
-				if (prob(armor["armor"]/2))
-					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
-					if (prob(20))
-						d = d / 2
-					d = d / 4
-			/*else
-				if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
-					if (prob(90))
-						show_message("\red Your armor absorbs the blow!", 4)
-						return
-					else
-						if (prob(90))
-							show_message("\red Your armor only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 5*/
-			if (istype(r_hand, /obj/item/weapon/shield/riot))
-				if (prob(90))
-					show_message("\red Your shield absorbs the blow!", 4)
-					return
-				else
-					if (prob(40))
-						show_message("\red Your shield only softens the blow!", 4)
-						if (prob(60))
+						if (prob(armor["armor"])/2)
+							soften = 1
 							d = d / 2
-						d = d / 5
-			else
-				if (istype(l_hand, /obj/item/weapon/shield/riot))
-					if (prob(90))
-						show_message("\red Your shield absorbs the blow!", 4)
-						return
+
+
+						if(!P.nodamage) toxloss += d
+						UpdateDamageIcon()
+						updatehealth()
+			if(4)
+				var/d = P.mobdamage[OXY]
+				if(d)
+					var/list/armor = getarmor(affecting, P.flag)
+					if (prob(armor["armor"]))
+						absorb = 1
 					else
-						if (prob(40))
-							show_message("\red Your shield only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 5
-			if (stat != 2)
-				affecting.take_damage(d, 0)
-				UpdateDamageIcon()
-				updatehealth()
-				if(weakened <= 5)	weakened = 5
-			return
-		if(PROJECTILE_WEAKBULLETBURST)
-			armor = getarmor(affecting, "bullet")
-			var/d = 7
-			if (prob(armor["armor"]))
-				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-				return
-			else
-				if (prob(armor["armor"]/2))
-					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
-					if (prob(20))
-						d = d / 2
-					d = d / 4
-			/*else
-				if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
-					if (prob(90))
-						show_message("\red Your armor absorbs the blow!", 4)
-						return
-					else
-						if (prob(90))
-							show_message("\red Your armor only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 5*/
-			if (istype(r_hand, /obj/item/weapon/shield/riot))
-				if (prob(90))
-					show_message("\red Your shield absorbs the blow!", 4)
-					return
-				else
-					if (prob(40))
-						show_message("\red Your shield only softens the blow!", 4)
-						if (prob(60))
+						if (prob(armor["armor"])/2)
+							soften = 1
 							d = d / 2
-						d = d / 5
-			else
-				if (istype(l_hand, /obj/item/weapon/shield/riot))
-					if (prob(90))
-						show_message("\red Your shield absorbs the blow!", 4)
-						return
+
+
+						if(!P.nodamage) oxyloss += d
+						UpdateDamageIcon()
+						updatehealth()
+			if(5)
+				var/d = P.mobdamage[CLONE]
+				if(d)
+					var/list/armor = getarmor(affecting, P.flag)
+					if (prob(armor["armor"]))
+						absorb = 1
 					else
-						if (prob(40))
-							show_message("\red Your shield only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 5
-			if (stat != 2)
-				affecting.take_damage(d, 0)
-				UpdateDamageIcon()
-				updatehealth()
-				if(weakened <= 2)	weakened = 2
-			return
-		if(PROJECTILE_WEAKERBULLETBURST)
-			armor = getarmor(affecting, "bullet")
-			var/d = 4
-			if (prob(armor["armor"]))
-				show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-				return
-			else
-				if (prob(armor["armor"]/2))
-					show_message("\red Your [armor["clothes"]] only softens the hit!", 4)
-					if (prob(20))
-						d = d / 2
-					d = d / 4
-			/*else
-				if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
-					if (prob(90))
-						show_message("\red Your armor absorbs the blow!", 4)
-						return
-					else
-						if (prob(90))
-							show_message("\red Your armor only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 5*/
-			if (istype(r_hand, /obj/item/weapon/shield/riot))
-				if (prob(90))
-					show_message("\red Your shield absorbs the blow!", 4)
-					return
-				else
-					if (prob(40))
-						show_message("\red Your shield only softens the blow!", 4)
-						if (prob(60))
+						if (prob(armor["armor"])/2)
+							soften = 1
 							d = d / 2
-						d = d / 5
+
+
+						if(!nodamage) cloneloss += d
+						UpdateDamageIcon()
+						updatehealth()
+
+
+
+
+	///////////////////  All the unique projectile stuff goes here ///////////////////
+
+	if(absorb)
+		show_message("\red Your armor absorbs the blow!", 4)
+		return // a projectile can be deflected/absorbed given the right amount of protection
+	if(soften)
+		show_message("\red Your armor only softens the blow!", 4)
+		if(prob(15)) return
+
+	var/nostutter = 0
+
+	if(P.effects["stun"] && prob(P.effectprob["stun"]))
+		var/list/armor = getarmor(affecting, "taser")
+		if (!prob(armor["armor"]))
+			if(P.effectmod["stun"] == SET)
+				stunned = P.effects["stun"]
 			else
-				if (istype(l_hand, /obj/item/weapon/shield/riot))
-					if (prob(90))
-						show_message("\red Your shield absorbs the blow!", 4)
-						return
-					else
-						if (prob(40))
-							show_message("\red Your shield only softens the blow!", 4)
-							if (prob(60))
-								d = d / 2
-							d = d / 5
-			if (stat != 2)
-				affecting.take_damage(d, 0)
-				UpdateDamageIcon()
-				updatehealth()
-				if(weakened <= 2)	weakened = 2
+				stunned += P.effects["stun"]
+		else
+			nostutter = 1
+
+
+	if(P.effects["weak"] && prob(P.effectprob["weak"]))
+		if(P.effectmod["weak"] == SET)
+			weakened = P.effects["weak"]
+		else
+			weakened += P.effects["weak"]
+
+	if(P.effects["paralysis"] && prob(P.effectprob["paralysis"]))
+		if(P.effectmod["paralysis"] == SET)
+			paralysis = P.effects["paralysis"]
+		else
+			paralysis += P.effects["paralysis"]
+
+	if(P.effects["stutter"] && prob(P.effectprob["stutter"]) && !nostutter)
+		if(P.effectmod["stutter"] == SET)
+			stuttering = P.effects["stutter"]
+		else
+			stuttering += P.effects["stutter"]
+
+	if(P.effects["drowsyness"] && prob(P.effectprob["drowsyness"]))
+		if(P.effectmod["drowsyness"] == SET)
+			drowsyness = P.effects["drowsyness"]
+		else
+			drowsyness += P.effects["drowsyness"]
+
+	if(P.effects["radiation"] && prob(P.effectprob["radiation"]))
+		var/list/armor = getarmor(affecting, "rad")
+		if (!prob(armor["armor"]))
+			if(P.effectmod["radiation"] == SET)
+				radiation = P.effects["radiation"]
+			else
+				radiation += P.effects["radiation"]
+
+	if(P.effects["eyeblur"] && prob(P.effectprob["eyeblur"]))
+		if(P.effectmod["eyeblur"] == SET)
+			eye_blurry = P.effects["eyeblur"]
+		else
+			eye_blurry += P.effects["eyeblur"]
+
+
+
+	/*
+	// Bullet shots
+	if(P.flag == "bullet")
+		if (prob(50) && stat != 2)
+			if(weakened <= 5) weakened = 5
+
+	// Taser shots
+	if(P.flag == "taser" && d == P.damage)
+		armor = getarmor(affecting, "taser")
+		if (prob(armor["armor"]))
+			show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
 			return
+
+		if (prob(75) && stunned <= 10)
+			stunned = 10
+		else
+			weakened = 10
+		if (stuttering < 10)
+			stuttering = 10
+
+	// Laser shots
+	if(P.flag == "laser")
+		if (!eye_blurry && prob(50)) eye_blurry = 4
+		if (prob(25)) stunned++
+
+	// Shock shots
+	if(istype(P, /obj/item/projectile/fireball))
+		if (!eye_blurry && prob(50)) eye_blurry = 4
+		if (prob(25))
+			stunned = 10
+		else
+			weakened = 10
+
+	// Dart shots
+	if(istype(P, /obj/item/projectile/dart) && d == P.damage)
+		armor = getarmor(affecting, "bio")
+		if (prob(armor["armor"]))
+			show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
+			return
+		if (istype(l_hand, /obj/item/weapon/shield/riot)||istype(r_hand, /obj/item/weapon/shield/riot))
+			if (prob(50))
+				show_message("\red Your shield absorbs the hit!", 4)
+		else
+			weakened += 5
+			toxloss += 10
+
+	// Pulse shots
+	if(istype(P, /obj/item/projectile/beam/pulse))
+		if (prob(50))
+			stunned = min(stunned, 5)
+
+	// Bolt shots
+	if(istype(P, /obj/item/projectile/bolt) && d == P.damage)
+		toxloss += 3
+		radiation += 100
+		updatehealth()
+		stuttering += 5
+		drowsyness += 5
+
+	*/
+
 	return
 
 /mob/living/carbon/human/emp_act(severity)
@@ -1075,7 +903,7 @@
 				if (emptyHand)
 					l_store.DblClick()
 				return
-			if ((!( istype(W, /obj/item) ) || W.w_class > 2 || !( w_uniform )))
+			if ((!( istype(W, /obj/item) ) || W.w_class >= 2 || !( w_uniform )))
 				return
 			u_equip(W)
 			l_store = W
@@ -1084,7 +912,7 @@
 				if (emptyHand)
 					r_store.DblClick()
 				return
-			if ((!( istype(W, /obj/item) ) || W.w_class > 2 || !( w_uniform )))
+			if ((!( istype(W, /obj/item) ) || W.w_class >= 2 || !( w_uniform )))
 				return
 			u_equip(W)
 			r_store = W

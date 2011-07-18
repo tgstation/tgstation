@@ -265,45 +265,12 @@
 		updatehealth()
 	return
 
-/mob/living/silicon/ai/bullet_act(flag)
-	if (flag == PROJECTILE_BULLET)
-		if (stat != 2)
-			bruteloss += 60
-			updatehealth()
-			weakened = 10
-	else if (flag == PROJECTILE_BULLETBURST)
-		if (stat != 2)
-			bruteloss += 21
-			updatehealth()
-			weakened = 4
-	else if (flag == PROJECTILE_TASER)
-		if (prob(75))
-			stunned = 15
-		else
-			weakened = 15
-	else if (flag == PROJECTILE_DART)
-		return
-	else if(flag == PROJECTILE_LASER)
-		if (stat != 2)
-			bruteloss += 20
-			updatehealth()
-			if (prob(25))
-				stunned = 1
-	else if(flag == PROJECTILE_SHOCK)
-		if (stat != 2)
-			bruteloss += 20
-			updatehealth()
-			if (prob(25))
-				stunned = 10
-			else
-				weakened = 10
-	else if(flag == PROJECTILE_PULSE)
-		if (stat != 2)
-			bruteloss += 40
-			updatehealth()
-			if (prob(50))
-				stunned = min(5, stunned)
-	return
+/mob/living/silicon/ai/bullet_act(var/obj/item/projectile/Proj)
+
+	// AI bullet code is pretty simple. No other effects really need to be added.
+	if(!Proj.nodamage) bruteloss += Proj.damage
+	updatehealth()
+
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)

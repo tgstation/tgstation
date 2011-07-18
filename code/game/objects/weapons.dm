@@ -1052,8 +1052,8 @@
 //PROJECTILE_BOLT = 5			crossbow
 //PROJECTILE_WEAKBULLET = 6		detective's revolver
 
-/atom/proc/bullet_act(flag)
-	if(flag == PROJECTILE_PULSE)
+/atom/proc/bullet_act(var/obj/item/projectile/Proj)
+	if(istype(Proj ,/obj/item/projectile/beam/pulse))
 		src.ex_act(2)
 	return
 

@@ -74,6 +74,9 @@
 			if(attacked <= 0)
 				Target = null
 
+		if(Victim && !Target)
+			Victim = null
+
 		if(Victim) return // if it's eating someone already, continue eating!
 
 
@@ -171,8 +174,13 @@
 
 		if(!Target)
 
-			if(prob(33) && canmove && isturf(loc))
-				step(src, pick(cardinal))
+			if(hungry || starving)
+				if(prob(50) && canmove && isturf(loc))
+					step(src, pick(cardinal))
+
+			else
+				if(prob(33) && canmove && isturf(loc))
+					step(src, pick(cardinal))
 
 
 		else
@@ -200,8 +208,9 @@
 				if(Victim) // can't eat AND have this little process at the same time
 					break
 
-				if(attacked <= 0)
+				if(attacked <= 0 || !Target)
 					break
+
 
 
 				if(Target.health <= -70 || Target.stat == 2)

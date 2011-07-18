@@ -114,44 +114,11 @@
 		src.updatehealth()
 	return
 
-/mob/living/silicon/pai/bullet_act(flag)
-	if (flag == PROJECTILE_BULLET)
-		if (src.stat != 2)
-			src.bruteloss += 60
-			src.updatehealth()
-			src.weakened = 10
-	else if (flag == PROJECTILE_BULLETBURST)
-		if (src.stat != 2)
-			src.bruteloss += 21
-			src.updatehealth()
-			src.weakened = 4
-	else if (flag == PROJECTILE_TASER)
-		if (prob(75))
-			src.stunned = 15
-		else
-			src.weakened = 15
-	else if (flag == PROJECTILE_DART)
-		return
-	else if(flag == PROJECTILE_LASER)
-		if (src.stat != 2)
-			src.bruteloss += 20
-			src.updatehealth()
-			if (prob(25))
-				src.stunned = 1
-	else if(flag == PROJECTILE_SHOCK)
-		if (src.stat != 2)
-			src.bruteloss += 20
-			src.updatehealth()
-			if (prob(25))
-				src.stunned = 10
-			else
-				src.weakened = 15
-	else if(flag == PROJECTILE_PULSE)
-		if (src.stat != 2)
-			src.bruteloss += 40
-			src.updatehealth()
-			if (prob(50))
-				src.stunned = min(5, src.stunned)
+/mob/living/silicon/pai/bullet_act(var/obj/item/projectile/Proj)
+
+	bruteloss += Proj.damage
+	updatehealth()
+
 	return
 
 /mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)

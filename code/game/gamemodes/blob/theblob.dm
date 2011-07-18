@@ -99,18 +99,12 @@
 		return
 	icon_state = "bloba0"
 
-/obj/blob/bullet_act(flag)
+/obj/blob/bullet_act(var/obj/item/projectile/Proj)
 
-	if (flag == PROJECTILE_BULLET)
-		health -= 10
-		update()
-	if (flag == PROJECTILE_BULLETBURST)
-		health -= 4
-		update()
-	else if (flag == PROJECTILE_BOLT)
+	if (istype(Proj, /obj/item/projectile/bolt))
 		poisoned(1)
 	else
-		health -= 20
+		health -= Proj.damage
 		update()
 
 

@@ -137,97 +137,56 @@
 		stat(null,"Power Level: [powerlevel]")
 
 
-/mob/living/carbon/metroid/bullet_act(flag, A as obj)
-	if(A)
+/mob/living/carbon/metroid/bullet_act(var/obj/item/projectile/Proj)
+	if(Proj)
 		if (locate(/obj/item/weapon/grab, src))
 			var/mob/safe = null
 			if (istype(l_hand, /obj/item/weapon/grab))
 				var/obj/item/weapon/grab/G = l_hand
-				if ((G.state == 3 && get_dir(src, A) == dir))
+				if ((G.state == 3 && get_dir(src, Proj) == dir))
 					safe = G.affecting
 			if (istype(r_hand, /obj/item/weapon/grab))
 				var/obj/item/weapon.grab/G = r_hand
-				if ((G.state == 3 && get_dir(src, A) == dir))
+				if ((G.state == 3 && get_dir(src, Proj) == dir))
 					safe = G.affecting
 			if (safe)
-				return safe.bullet_act(flag, A)
+				return safe.bullet_act(Proj)
 
-	switch(flag)
-		if(PROJECTILE_BULLET)
-			var/d = 1
+	attacked += 10
+	for(var/i = 1, i<= Proj.mobdamage.len, i++)
 
-			attacked += 10
-			if (stat != 2)
-				bruteloss += d
-
+		switch(i)
+			if(1)
+				var/d = Proj.mobdamage[BRUTE]
+				if(!Proj.nodamage) bruteloss += d
 				updatehealth()
-			return
-		if(PROJECTILE_BULLETBURST)
-			var/d = 1
-
-			attacked += 10
-			if (stat != 2)
-				bruteloss += d
-
+			if(2)
+				var/d = Proj.mobdamage[BURN]
+				if(!Proj.nodamage) fireloss += d
 				updatehealth()
-			return
-		if(PROJECTILE_WEAKBULLETBURST)
-			var/d = 1
-
-			attacked += 10
-			if (stat != 2)
-				bruteloss += d
-
+			if(3)
+				var/d = Proj.mobdamage[TOX]
+				if(!Proj.nodamage) toxloss += d
 				updatehealth()
-			return
-		if(PROJECTILE_WEAKERBULLETBURST)
-			var/d = 0.5
-
-			attacked += 10
-			if (stat != 2)
-				bruteloss += d
-
+			if(4)
+				var/d = Proj.mobdamage[OXY]
+				if(!Proj.nodamage) oxyloss += d
 				updatehealth()
-			return
-		if(PROJECTILE_TASER)
-			if (prob(70))
-				powerlevel++
-				if(powerlevel > 10) powerlevel = 10
-
-		if(PROJECTILE_LASER)
-			var/d = 30
-
-			attacked += 10
-	//		if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff./ It really doesn't make any sense. /N
-
-			if (stat != 2)
-				bruteloss += d
-
-				updatehealth()
-		if(PROJECTILE_SHOCK)
-			var/d = 30
-
-			attacked += 10
-			if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff./ It really doesn't make any sense. /N
-
-			if (stat != 2)
-				bruteloss += d
-
+			if(5)
+				var/d = Proj.mobdamage[CLONE]
+				if(!Proj.nodamage) cloneloss += d
 				updatehealth()
 
-			if (prob(70))
-				powerlevel++
-				if(powerlevel > 10) powerlevel = 10
-		if(PROJECTILE_PULSE)
-			var/d = 100
 
-			attacked += 10
-			if (stat != 2)
-				bruteloss += d
+	if(Proj.flag == "taser" && prob(35))
+		// Metroids have a small chance of "absorbing" taser shots. Deal /w it
+		powerlevel++
+		src << "<i>I have absorbed the electrode projectile...</i>"
 
-				updatehealth()
-	return
-
+	//																													 K
+	//																											~~~~     N
+	// Metroids aren't effected by extra status effects. DO NOT NERF THIS PLZ THNX - LOVE, DOOHL 3===========D ~~~~     HONK
+	//																											~~~~     H
 
 /mob/living/carbon/metroid/emp_act(severity)
 	powerlevel = 0 // oh no, the power!

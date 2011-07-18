@@ -440,8 +440,8 @@
 		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
 	return
 
-/obj/machinery/bot/medbot/bullet_act(flag, A as obj)
-	if (flag == PROJECTILE_TASER)
+/obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)
+	if (Proj.flag == "taser")
 		src.stunned = min(stunned+10,20)
 	..()
 

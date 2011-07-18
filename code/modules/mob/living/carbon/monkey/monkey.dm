@@ -110,82 +110,80 @@
 		health = 100 - oxyloss - toxloss - fireloss - bruteloss
 	return
 
-/mob/living/carbon/monkey/bullet_act(flag)
+/mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)
 
-	if(prob(50))
+	if(prob(80))
 		for(var/mob/living/carbon/metroid/M in view(1,src))
 			if(M.Victim == src)
-				M.bullet_act(flag)
+				M.bullet_act(Proj)
 				return
 
+	for(var/i = 1, i<= Proj.mobdamage.len, i++)
 
-	if (flag == PROJECTILE_BULLET)
-		if (stat != 2)
-			take_organ_damage(60, 0)
-			updatehealth()
-			if (prob(50))
-				if(weakened <= 5)	weakened = 5
-	else if (flag == PROJECTILE_BULLETBURST)
-		if (stat != 2)
-			take_organ_damage(21, 0)
-			updatehealth()
-			if (prob(50))
-				if(weakened <= 2)	weakened = 2
-	else if (flag == PROJECTILE_TASER)
-		if (prob(75) && stunned <= 10)
-			stunned = 10
+		switch(i)
+			if(1)
+				var/d = Proj.mobdamage[BRUTE]
+				if(!Proj.nodamage) src.take_organ_damage(d)
+				updatehealth()
+			if(2)
+				var/d = Proj.mobdamage[BURN]
+				if(!Proj.nodamage) src.take_organ_damage(0, d)
+				updatehealth()
+			if(3)
+				var/d = Proj.mobdamage[TOX]
+				if(!Proj.nodamage) toxloss += d
+				updatehealth()
+			if(4)
+				var/d = Proj.mobdamage[OXY]
+				if(!Proj.nodamage) oxyloss += d
+				updatehealth()
+			if(5)
+				var/d = Proj.mobdamage[CLONE]
+				if(!Proj.nodamage) cloneloss += d
+				updatehealth()
+
+	if(Proj.effects["stun"] && prob(Proj.effectprob["stun"]))
+		if(Proj.effectmod["stun"] == SET)
+			stunned = Proj.effects["stun"]
 		else
-			weakened = 10
-		if (stuttering < 10)
-			stuttering = 10
-	else if (flag == PROJECTILE_DART)
-		weakened += 5
-		toxloss += 10
-	else if(flag == PROJECTILE_LASER)
-		if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff.
-		if (prob(25)) stunned++
-		if (stat != 2)
-			take_organ_damage(0, 20)
-			updatehealth()
-			if (prob(25))
-				stunned = 1
-	else if(flag == PROJECTILE_SHOCK)
-		if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff.
-		if (prob(25)) stunned++
-		if (stat != 2)
-			take_organ_damage(0, 20)
-			updatehealth()
-			if (prob(25))
-				stunned = 10
-			else
-				weakened = 10
-	else if(flag == PROJECTILE_PULSE)
-		if (stat != 2)
-			take_organ_damage(0, 40)
-			updatehealth()
-			if (prob(50))
-				stunned = min(stunned, 5)
-	else if(flag == PROJECTILE_BOLT)
-		toxloss += 3
-		radiation += 100
-		updatehealth()
-		stuttering += 5
-		drowsyness += 5
-	else if (flag == PROJECTILE_WEAKBULLET)
-		if (stat != 2)
-			take_organ_damage(10, 0)
-			updatehealth()
-			if(weakened <= 5)	weakened = 5
-	else if (flag == PROJECTILE_WEAKBULLETBURST)
-		if (stat != 2)
-			take_organ_damage(5, 0)
-			updatehealth()
-			if(weakened <= 2)	weakened = 2
-	else if (flag == PROJECTILE_WEAKERBULLETBURST)
-		if (stat != 2)
-			take_organ_damage(3, 0)
-			updatehealth()
-			if(weakened <= 2)	weakened = 2
+			stunned += Proj.effects["stun"]
+
+
+	if(Proj.effects["weak"] && prob(Proj.effectprob["weak"]))
+		if(Proj.effectmod["weak"] == SET)
+			weakened = Proj.effects["weak"]
+		else
+			weakened += Proj.effects["weak"]
+
+	if(Proj.effects["paralysis"] && prob(Proj.effectprob["paralysis"]))
+		if(Proj.effectmod["paralysis"] == SET)
+			paralysis = Proj.effects["paralysis"]
+		else
+			paralysis += Proj.effects["paralysis"]
+
+	if(Proj.effects["stutter"] && prob(Proj.effectprob["stutter"]))
+		if(Proj.effectmod["stutter"] == SET)
+			stuttering = Proj.effects["stutter"]
+		else
+			stuttering += Proj.effects["stutter"]
+
+	if(Proj.effects["drowsyness"] && prob(Proj.effectprob["drowsyness"]))
+		if(Proj.effectmod["drowsyness"] == SET)
+			drowsyness = Proj.effects["drowsyness"]
+		else
+			drowsyness += Proj.effects["drowsyness"]
+
+	if(Proj.effects["radiation"] && prob(Proj.effectprob["radiation"]))
+		if(Proj.effectmod["radiation"] == SET)
+			radiation = Proj.effects["radiation"]
+		else
+			radiation += Proj.effects["radiation"]
+
+	if(Proj.effects["eyeblur"] && prob(Proj.effectprob["eyeblur"]))
+		if(Proj.effectmod["eyeblur"] == SET)
+			eye_blurry = Proj.effects["eyeblur"]
+		else
+			eye_blurry += Proj.effects["eyeblur"]
 	return
 
 /mob/living/carbon/monkey/hand_p(mob/M as mob)

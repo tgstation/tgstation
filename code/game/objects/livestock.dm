@@ -138,32 +138,11 @@
 			return
 		..()
 
-	bullet_act(flag, A as obj)
-		switch(flag)
-			if(PROJECTILE_BULLET)
-				src.health -= 15
-			if(PROJECTILE_BULLETBURST)
-				src.health -= 6
-			if(PROJECTILE_TASER)
-				src.health -= 5
-			if(PROJECTILE_DART)
-				src.health -= 10
-			if(PROJECTILE_WEAKBULLET)
-				src.health -= 8
-			if(PROJECTILE_WEAKBULLETBURST)
-				src.health -= 4
-			if(PROJECTILE_WEAKERBULLETBURST)
-				src.health -= 2
-			if(PROJECTILE_LASER)
-				src.health -= 10
-			if(PROJECTILE_SHOCK)
-				src.health -= 15
-			if(PROJECTILE_PULSE)
-				src.health -= 25
-				if(prob(30))
-					src.gib()
-			if(PROJECTILE_BOLT)
-				src.health -= 5
+	bullet_act(var/obj/item/projectile/Proj)
+		health -= Proj.damage
+		if(istype(Proj, /obj/item/projectile/beam/pulse))
+			if(prob(30))
+				gib()
 		if(prob(10)) new /obj/decal/cleanable/blood(src.loc)
 		healthcheck()
 

@@ -82,5 +82,5 @@
 
 /obj/dummy/spell_jaunt/ex_act(blah)
 	return
-/obj/dummy/spell_jaunt/bullet_act(blah,blah)
+/obj/dummy/spell_jaunt/bullet_act(blah)
 	return

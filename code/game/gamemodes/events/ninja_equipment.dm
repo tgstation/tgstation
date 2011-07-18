@@ -1380,16 +1380,8 @@ It is possible to destroy the net by the occupant or someone else.
 				M << "\blue You are free of the net!"
 			return
 
-	bullet_act(flag)
-		switch(flag)
-			if (PROJECTILE_BULLET)
-				health -= 35
-			if (PROJECTILE_BULLETBURST)
-				health -= 13
-			if (PROJECTILE_PULSE)
-				health -= 50
-			if (PROJECTILE_LASER)
-				health -= 10
+	bullet_act(var/obj/item/projectile/Proj)
+		health -= Proj.damage
 		healthcheck()
 		return
 

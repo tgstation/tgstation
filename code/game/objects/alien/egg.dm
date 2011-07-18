@@ -12,24 +12,8 @@
 		src.icon_state = "egg_hatched"
 		new /obj/alien/facehugger(src.loc)
 
-/obj/alien/egg/bullet_act(flag)
-	switch(flag)
-		if (PROJECTILE_BULLET)
-			health -= 35
-		if (PROJECTILE_BULLETBURST)
-			health -= 13
-		if (PROJECTILE_WEAKBULLET)
-			health -= 12
-		if (PROJECTILE_WEAKBULLETBURST)
-			health -= 6
-		if (PROJECTILE_WEAKERBULLETBURST)
-			health -= 3
-		if (PROJECTILE_PULSE)
-			health -= 50
-		if (PROJECTILE_LASER)
-			health -= 10
-		if (PROJECTILE_SHOCK)
-			health -= 15
+/obj/alien/egg/bullet_act(var/obj/item/projectile/Proj)
+	health -= Proj.damage
 	healthcheck()
 	return
 

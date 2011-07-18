@@ -1,3 +1,5 @@
+/* NOPE NOPE SORRY NO DERPFLAGS
+
 var/const/PROJECTILE_TASER = 1
 var/const/PROJECTILE_LASER = 2
 var/const/PROJECTILE_BULLET = 3
@@ -10,6 +12,19 @@ var/const/PROJECTILE_SHOCK = 9
 var/const/PROJECTILE_BULLETBURST = 10
 var/const/PROJECTILE_WEAKBULLETBURST = 11
 var/const/PROJECTILE_WEAKERBULLETBURST = 12
+
+*/
+
+#define BRUTE "brute"
+#define BURN "burn"
+#define TOX "tox"
+#define OXY "oxy"
+#define CLONE "clone"
+
+#define ADD "add"
+#define SET "set"
+
+
 
 ///////////////////////////////////////////////
 ////////////////AMMO SECTION///////////////////
@@ -26,7 +41,7 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT // ONBELT???
 	var
 		def_zone = ""
-		damage_type = PROJECTILE_BULLET
+		//damage_type = PROJECTILE_BULLET
 		mob/firer = null
 		silenced = 0
 		yo = null
@@ -34,51 +49,92 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 		current = null
 		turf/original = null
 
+		damage = 50		// damage dealt by projectile. This is used for machinery, livestock, anything not under /mob heirarchy
+		flag = "bullet" // identifier flag (bullet, laser, bio, rad, taser). This is to identify what kind of armor protects against the shot
+
+
+		nodamage = 0 // determines if the projectile will skip any damage inflictions
+		list/mobdamage = list(BRUTE = 50, BURN = 0, TOX = 0, OXY = 0, CLONE = 0) // determines what kind of damage it does to mobs
+		list/effects = list("stun" = 0, "weak" = 0, "paralysis" = 0, "stutter" = 0, "drowsyness" = 0, "radiation" = 0, "eyeblur" = 0, "emp" = 0) // long list of effects a projectile can inflict on something. !!MUY FLEXIBLE!!~
+		list/effectprob = list("stun" = 100, "weak" = 100, "paralysis" = 100, "stutter" = 100, "drowsyness" = 100, "radiation" = 100, "eyeblur" = 100, "emp" = 100) // Probability for an effect to execute
+		list/effectmod = list("stun" = SET, "weak" = SET, "paralysis" = SET, "stutter" = SET, "drowsyness" = SET, "radiation" = SET, "eyeblur" = SET, "emp" = SET) // determines how the effect modifiers will effect a mob's variable
+
+
 		bumped = 0
 
+
 	weakbullet
-		damage_type = PROJECTILE_WEAKBULLET
-
-	bulletburst
-		damage_type = PROJECTILE_BULLETBURST
-
-	weakbulletburst
-		damage_type = PROJECTILE_WEAKBULLETBURST
-
-	weakerbulletburst
-		damage_type = PROJECTILE_WEAKERBULLETBURST
+		damage = 15
+		mobdamage = list(BRUTE = 15, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
 
 	beam
 		name = "laser"
-		damage_type = PROJECTILE_LASER
+		//damage_type = PROJECTILE_LASER
 		icon_state = "laser"
 		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+		damage = 20
+		mobdamage = list(BRUTE = 0, BURN = 20, TOX = 0, OXY = 0, CLONE = 0)
+		flag = "laser"
+		New()
+			..()
+			effects["eyeblur"] = 5
+			effectprob["eyeblur"] = 50
 
 		pulse
 			name = "pulse"
-			damage_type = PROJECTILE_PULSE
+			//damage_type = PROJECTILE_PULSE
 			icon_state = "u_laser"
+			damage = 50
+			mobdamage = list(BRUTE = 10, BURN = 40, TOX = 0, OXY = 0, CLONE = 0)
 
 	fireball
 		name = "shock"
-		damage_type = PROJECTILE_SHOCK
+		//damage_type = PROJECTILE_SHOCK
 		icon_state = "fireball"
 		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+		damage = 20
+		mobdamage = list(BRUTE = 0, BURN = 20, TOX = 0, OXY = 0, CLONE = 0)
+		flag = "laser"
 
 	dart
 		name = "dart"
-		damage_type = PROJECTILE_DART
+		//damage_type = PROJECTILE_DART
 		icon_state = "toxin"
+		flag = "bio"
+		damage = 0
+		mobdamage = list(BRUTE = 0, BURN = 0, TOX = 10, OXY = 0, CLONE = 0)
+		New()
+			..()
+			effects["weak"] = 5
+			effectmod["weak"] = ADD
 
 	electrode
 		name = "electrode"
-		damage_type = PROJECTILE_TASER
+		//damage_type = PROJECTILE_TASER
 		icon_state = "spark"
+		flag = "taser"
+		damage = 0
+		nodamage = 1
+		New()
+			..()
+			effects["stun"] = 10
+			effects["weak"] = 10
+			effects["stutter"] = 10
+			effectprob["weak"] = 25
 
 	bolt
 		name = "bolt"
-		damage_type = PROJECTILE_BOLT
+		//damage_type = PROJECTILE_BOLT
 		icon_state = "cbbolt"
+		flag = "rad"
+		damage = 0
+		nodamage = 1
+		New()
+			..()
+			effects["radiation"] = 100
+			effects["drowsyness"] = 5
+			effectmod["radiation"] = ADD
+			effectmod["drowsyness"] = ADD
 
 	freeze
 		name = "freeze beam"
@@ -97,7 +153,7 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 		var/temperature = 800
 
 		proc/Heat(atom/A as mob|obj|turf|area)
-			if(istype(A, /mob))
+			if(istype(A, /mob/living/carbon))
 				var/mob/M = A
 				if(M.bodytemperature < temperature)
 					M.bodytemperature = temperature
@@ -138,10 +194,10 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 					P.Heat(A)
 				else
 
-					A.bullet_act(damage_type, src, def_zone)
+					A.bullet_act(src, def_zone)
 					if(istype(A,/turf) && !istype(src, /obj/item/projectile/beam))
 						for(var/obj/O in A)
-							O.bullet_act(damage_type, src, def_zone)
+							O.bullet_act(src, def_zone)
 			del(src)
 		return
 
@@ -373,14 +429,22 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 		throw_range = 10
 		m_amt = 1000
 		force = 24
+
 		var
 			list/loaded = list()
 			max_shells = 7
 			load_method = 0 //0 = Single shells or quick loader, 1 = magazine
 
+			// Shotgun variables
+			pumped = 1
+			maxpump = 1
+
 		load_into_chamber()
 			if(!loaded.len)
 				return 0
+			if(pumped >= maxpump && istype(src, /obj/item/weapon/gun/projectile/shotgun))
+				return 1
+
 			var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
 			loaded -= AC //Remove casing from loaded list.
 			AC.loc = get_turf(src) //Eject casing onto ground.
@@ -482,6 +546,7 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 				for(var/i = 1, i <= max_shells, i++)
 					loaded += new /obj/item/ammo_casing/shotgun/beanbag(src)
 				update_icon()
+				pumped = maxpump
 
 			combat
 				name = "combat shotgun"
@@ -491,10 +556,15 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 				flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 				max_shells = 8
 				origin_tech = "combat=3"
+				maxpump = 2
 				New()
 					for(var/i = 1, i <= max_shells, i++)
 						loaded += new /obj/item/ammo_casing/shotgun(src)
 					update_icon()
+
+			proc/pump(mob/M)
+				playsound(M, 'shotgunpump.ogg', 60, 1)
+				pumped = 0
 
 		automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
 			name = "Submachine Gun"
@@ -957,10 +1027,10 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 			attack_self(mob/living/user as mob)
 				user.machine = src
 				var/temp_text = ""
-				if(temperature > (T0C + 50))
+				if(temperature < (T0C + 50))
 					temp_text = "<FONT color=black>[temperature] ([round(temperature+T0C)]&deg;C) ([round(temperature*1.8+459.67)]&deg;F)</FONT>"
 				else
-					temp_text = "<FONT color=blue>[temperature] ([round(temperature+T0C)]&deg;C) ([round(temperature*1.8+459.67)]&deg;F)</FONT>"
+					temp_text = "<FONT color=red>[temperature] ([round(temperature+T0C)]&deg;C) ([round(temperature*1.8+459.67)]&deg;F)</FONT>"
 
 				var/dat = {"<B>Plasma Gun Configuration: </B><BR>
 				Current output temperature: [temp_text]<BR>
@@ -977,10 +1047,10 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 				src.add_fingerprint(usr)
 				if(href_list["temp"])
 					var/amount = text2num(href_list["temp"])
-					if(amount > 0)
-						src.current_temperature = min(T20C, src.current_temperature+amount)
+					if(amount < 0)
+						src.current_temperature = max(T20C, src.current_temperature+amount)
 					else
-						src.current_temperature = max(800, src.current_temperature+amount)
+						src.current_temperature = min(800, src.current_temperature+amount)
 				if (istype(src.loc, /mob))
 					attack_self(src.loc)
 				src.add_fingerprint(usr)
@@ -1131,6 +1201,12 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 			user << "\red *click* *click*";
 			return
 
+		if(istype(src, /obj/item/weapon/gun/projectile/shotgun))
+			var/obj/item/weapon/gun/projectile/shotgun/S = src
+			if(S.pumped >= S.maxpump)
+				S.pump()
+				return
+
 		update_icon()
 
 		playsound(user, fire_sound, 50, 1)
@@ -1142,7 +1218,7 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 		in_chamber.def_zone = user.get_organ_target()
 
 		if(targloc == curloc)
-			user.bullet_act(in_chamber.damage_type)
+			user.bullet_act(in_chamber)
 			del(in_chamber)
 		else
 			if(istype(src, /obj/item/weapon/gun/energy/freeze))
@@ -1162,3 +1238,7 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 				in_chamber.process()
 			sleep(1)
 			in_chamber = null
+
+			if(istype(src, /obj/item/weapon/gun/projectile/shotgun))
+				var/obj/item/weapon/gun/projectile/shotgun/S = src
+				S.pumped++

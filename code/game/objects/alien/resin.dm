@@ -17,18 +17,8 @@
 		del(src)
 	return
 
-/obj/alien/resin/bullet_act(flag)
-	switch(flag)
-		if (PROJECTILE_BULLET)
-			health -= 35
-		if (PROJECTILE_BULLETBURST)
-			health -= 13
-		if (PROJECTILE_PULSE)
-			health -= 50
-		if (PROJECTILE_LASER)
-			health -= 10
-		if (PROJECTILE_SHOCK)
-			health -= 15
+/obj/alien/resin/bullet_act(var/obj/item/projectile/Proj)
+	health -= Proj.damage
 	healthcheck()
 	return
 

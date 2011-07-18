@@ -136,7 +136,7 @@
 		return
 	return
 
-/obj/secure_closet/bullet_act(flag)
+/obj/secure_closet/bullet_act(var/obj/item/projectile/Proj)
 /* Just in case someone gives closets health
 	if (flag == PROJECTILE_BULLET)
 		src.health -= 1

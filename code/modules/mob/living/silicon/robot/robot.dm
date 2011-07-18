@@ -271,89 +271,10 @@
 		updatehealth()
 	return
 
-/mob/living/silicon/robot/bullet_act(flag)
-	switch(flag)
-		if(PROJECTILE_BULLET)
-			if (stat != 2)
-				bruteloss += 60
-				updatehealth()
-			return
-		if(PROJECTILE_BULLETBURST)
-			if (stat != 2)
-				bruteloss += 21
-				updatehealth()
-			return
-	/*
-		if(PROJECTILE_MEDBULLET)
-			if (stat != 2)
-				bruteloss += 30
-				updatehealth()
-	*/
-		if(PROJECTILE_WEAKBULLET)
-			if (stat != 2)
-				bruteloss += 15
-				updatehealth()
-			return
-		if(PROJECTILE_WEAKBULLETBURST)
-			if (stat != 2)
-				bruteloss += 7
-				updatehealth()
-			return
-		if(PROJECTILE_WEAKERBULLETBURST)
-			if (stat != 2)
-				bruteloss += 5
-				updatehealth()
-			return
-	/*
-		if(PROJECTILE_MPBULLET)
-			if (stat != 2)
-				bruteloss += 20
-				updatehealth()
-
-		if(PROJECTILE_SLUG)
-			if (stat != 2)
-				bruteloss += 40
-				updatehealth()
-
-		if(PROJECTILE_BAG)
-			if (stat != 2)
-				bruteloss += 2
-				updatehealth()
-	*/
-
-		if(PROJECTILE_TASER)
-			if (stat != 2)
-				fireloss += rand(0,10)
-				stunned += rand(0,3)
-			return
-		if(PROJECTILE_DART)
-			if (stat != 2)
-				stunned += 5
-				fireloss += 10
-				updatehealth()
-			return
-	/*
-		if(PROJECTILE_WAVE)
-			if (stat != 2)
-				bruteloss += 25
-				updatehealth()
-			return
-	*/
-		if(PROJECTILE_LASER)
-			if (stat != 2)
-				bruteloss += 20
-				updatehealth()
-		if(PROJECTILE_SHOCK)
-			if (stat != 2)
-				bruteloss += 20
-				updatehealth()
-				fireloss += rand(0,10)
-				stunned += rand(0,3)
-		if(PROJECTILE_PULSE)
-			if (stat != 2)
-				bruteloss += 40
-				updatehealth()
-	spark_system.start()
+/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
+	if(!Proj.nodamage) bruteloss += Proj.damage
+	updatehealth()
+	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return
 
 

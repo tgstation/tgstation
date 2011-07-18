@@ -471,33 +471,10 @@
 		..()
 		return
 
-	proc/dynbulletdamage(flag)
+	proc/dynbulletdamage(var/obj/item/projectile/Proj)
 		if(!action_checks(src))
-			return chassis.dynbulletdamage(flag)
-		var/damage
-		switch(flag)
-			if(PROJECTILE_PULSE)
-				damage = 30
-			if(PROJECTILE_LASER)
-				damage = 20
-			if(PROJECTILE_SHOCK)
-				damage = 25
-			if(PROJECTILE_WEAKBULLET)
-				damage = 8
-			if(PROJECTILE_WEAKBULLETBURST)
-				damage = 4
-			if(PROJECTILE_WEAKERBULLETBURST)
-				damage = 2
-			if(PROJECTILE_BULLET)
-				damage = 10
-			if(PROJECTILE_BULLETBURST)
-				damage = 4
-			if(PROJECTILE_BOLT)
-				damage = 5
-			if(PROJECTILE_DART)
-				damage = 5
-			else
-				return
+			return chassis.dynbulletdamage(Proj)
+		var/damage = Proj.damage
 		chassis.take_damage(round(damage*src.damage_coeff))
 		chassis.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		set_ready_state(0)

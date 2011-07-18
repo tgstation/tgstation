@@ -6,7 +6,7 @@
 	icon = 'mob.dmi'
 	icon_state = "baby metroid"
 	pass_flags = PASSTABLE
-	voice_message = "chatters"
+	voice_message = "skree!"
 	say_message = "says"
 
 	health = 150

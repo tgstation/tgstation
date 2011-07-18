@@ -371,58 +371,27 @@
 	return
 
 
-/obj/mecha/bullet_act(flag)
-	var/dam_type
-	switch(flag)
-		if(PROJECTILE_PULSE)
-			dam_type = "Pulse"
-		if(PROJECTILE_LASER)
-			dam_type = "Laser"
-		if(PROJECTILE_SHOCK)
-			dam_type = "Shock"
-		if(PROJECTILE_TASER)
-			dam_type = "Taser"
-		else
-			dam_type = "Default"
-	src.log_message("Hit by projectile. Type: [dam_type]([flag]).",1)
+/obj/mecha/bullet_act(var/obj/item/projectile/Proj)
+	src.log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).",1)
 	if(prob(src.deflect_chance))
 		src.occupant_message("\blue The armor deflects the incoming projectile.")
 		src.visible_message("The [src.name] armor deflects the projectile")
 		src.log_append_to_last("Armor saved.")
 	else
-		call((proc_res["dynbulletdamage"]||src), "dynbulletdamage")(flag) //calls equipment
+		call((proc_res["dynbulletdamage"]||src), "dynbulletdamage")(Proj) //calls equipment
 	return
 
-/obj/mecha/proc/dynbulletdamage(flag)
+/obj/mecha/proc/dynbulletdamage(var/obj/item/projectile/Proj)
 	var/damage
 	var/ignore_threshold
-	switch(flag)
-		if(PROJECTILE_PULSE)
-			damage = 40
-			ignore_threshold = 1
-		if(PROJECTILE_LASER)
-			damage = 20
-		if(PROJECTILE_SHOCK)
-			damage = 25
-			use_power(500)
-		if(PROJECTILE_TASER)
-			use_power(500)
-		if(PROJECTILE_WEAKBULLET)
-			damage = 8
-		if(PROJECTILE_WEAKBULLETBURST)
-			damage = 4
-		if(PROJECTILE_WEAKERBULLETBURST)
-			damage = 2
-		if(PROJECTILE_BULLET)
-			damage = 10
-		if(PROJECTILE_BULLETBURST)
-			damage = 4
-		if(PROJECTILE_BOLT)
-			damage = 5
-		if(PROJECTILE_DART)
-			damage = 5
-		else
-			return
+
+	if(Proj.flag == "taser")
+		use_power(500)
+		return
+	if(istype(Proj, /obj/item/projectile/beam/pulse))
+		ignore_threshold = 1
+
+	damage = Proj.damage
 	src.take_damage(damage)
 	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),ignore_threshold)
 	return

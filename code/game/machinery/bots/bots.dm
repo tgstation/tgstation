@@ -73,20 +73,9 @@
 		..()
 		healthcheck()
 
-/obj/machinery/bot/bullet_act(flag, A as obj)
-	switch(flag)
-		if (PROJECTILE_BULLET)
-			src.health -= 20
-		if (PROJECTILE_BULLETBURST)
-			src.health -= 8
-		//if (PROJECTILE_WEAKBULLET || PROJECTILE_BEANBAG) //Detective's revolver fires marshmallows
-		//	src.health -= 2
-		if (PROJECTILE_LASER)
-			src.health -= 10
-		if (PROJECTILE_SHOCK)
-			src.health -= 15
-		if (PROJECTILE_PULSE)
-			src.health -= 40
+/obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
+	health -= Proj.damage
+
 	healthcheck()
 
 /obj/machinery/bot/meteorhit()

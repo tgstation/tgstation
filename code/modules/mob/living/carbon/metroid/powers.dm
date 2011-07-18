@@ -5,6 +5,10 @@
 		Feedstop()
 		return
 
+	if(stat)
+		src << "<i>I must be conscious to do this...</i>"
+		return
+
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C!=src && !istype(C,/mob/living/carbon/metroid))
@@ -67,19 +71,19 @@
 			Victim.toxloss += rand(2,4)
 
 		if(toxloss > 0)
-			toxloss -= 5
+			toxloss = max(0, toxloss-10)
 
 		if(oxyloss > 0)
-			oxyloss -= 5
+			oxyloss = max(0, oxyloss-10)
 
 		if(bruteloss > 0)
-			bruteloss -= 5
+			bruteloss = max(0, bruteloss-10)
 
 		if(fireloss > 0)
-			fireloss -= 5
+			fireloss = max(0, fireloss-10)
 
 		if(cloneloss > 0)
-			cloneloss -= 5
+			cloneloss = max(0, cloneloss-10)
 
 		if(Victim)
 			for(var/mob/living/carbon/metroid/Metroid in view(1,M))
@@ -160,6 +164,10 @@
 /mob/living/carbon/metroid/verb/Evolve()
 	set category = "Metroid"
 	set desc = "This will let you evolve from baby to adult metroid."
+
+	if(stat)
+		src << "<i>I must be conscious to do this...</i>"
+		return
 	if(!istype(src, /mob/living/carbon/metroid/adult))
 		if(amount_grown >= 10)
 			var/mob/living/carbon/metroid/adult/new_metroid = new /mob/living/carbon/metroid/adult (loc)
@@ -179,6 +187,11 @@
 /mob/living/carbon/metroid/verb/Reproduce()
 	set category = "Metroid"
 	set desc = "This will make you split into a random number of Metroids (usually 2). NOTE: this will KILL you, but you will be transferred into one of the babies."
+
+	if(stat)
+		src << "<i>I must be conscious to do this...</i>"
+		return
+
 	if(istype(src, /mob/living/carbon/metroid/adult))
 		if(amount_grown >= 10)
 			switch(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced metroid.") in list("Yes","No"))

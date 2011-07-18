@@ -376,29 +376,9 @@
 	src.cleanup(8)
 	..()
 
-/obj/machinery/shieldwallgen/bullet_act(flag)
+/obj/machinery/shieldwallgen/bullet_act(var/obj/item/projectile/Proj)
 
-	switch(flag)
-		if (PROJECTILE_BULLET)
-			src.storedpower -= 10
-		if (PROJECTILE_BULLETBURST)
-			src.storedpower -= 4
-		if (PROJECTILE_WEAKBULLET)
-			src.storedpower -= 1
-		if (PROJECTILE_WEAKBULLETBURST)
-			src.storedpower -= 1
-		if (PROJECTILE_WEAKERBULLETBURST)
-			src.storedpower -= 0.5
-		if (PROJECTILE_LASER)
-			src.storedpower +=20
-		if (PROJECTILE_SHOCK)
-			src.storedpower +=25
-		if (PROJECTILE_TASER)
-			src.storedpower +=3
-		if (PROJECTILE_PULSE)
-			src.storedpower +=50
-		else
-			src.storedpower -=2
+	storedpower -= Proj.damage
 	return
 
 
@@ -506,7 +486,7 @@
 			gen_secondary.storedpower -=10
 
 
-/obj/machinery/shieldwall/bullet_act(flag)
+/obj/machinery/shieldwall/bullet_act(var/obj/item/projectile/Proj)
 
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
@@ -514,27 +494,8 @@
 			G = gen_primary
 		else
 			G = gen_secondary
-		switch(flag)
-			if (PROJECTILE_BULLET)
-				G.storedpower -= 10
-			if (PROJECTILE_BULLETBURST)
-				G.storedpower -= 4
-			if (PROJECTILE_WEAKBULLET)
-				G.storedpower -=1
-			if (PROJECTILE_WEAKBULLETBURST)
-				G.storedpower -=1
-			if (PROJECTILE_WEAKERBULLETBURST)
-				G.storedpower -=0.5
-			if (PROJECTILE_LASER)
-				G.storedpower +=20
-			if (PROJECTILE_SHOCK)
-				G.storedpower +=25
-			if (PROJECTILE_TASER)
-				G.storedpower +=3
-			if (PROJECTILE_PULSE)
-				G.storedpower +=50
-			else
-				G.storedpower -=2
+
+		G.storedpower -= Proj.damage
 	return
 
 

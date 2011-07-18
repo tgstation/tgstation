@@ -67,12 +67,12 @@
 
 
 //This is okay I guess unless we add alien shields or something. Should be cleaned up a bit.
-/mob/living/carbon/alien/larva/bullet_act(flag, A as obj)
+/mob/living/carbon/alien/larva/bullet_act(var/obj/item/projectile/Proj)
 
-	if(prob(50))
+	if(prob(80))
 		for(var/mob/living/carbon/metroid/M in view(1,src))
 			if(M.Victim == src)
-				M.bullet_act(flag, A)
+				M.bullet_act(Proj)
 				return
 
 
@@ -80,105 +80,79 @@
 		var/mob/safe = null
 		if (istype(l_hand, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = l_hand
-			if ((G.state == 3 && get_dir(src, A) == dir))
+			if ((G.state == 3 && get_dir(src, Proj) == dir))
 				safe = G.affecting
 		if (istype(r_hand, /obj/item/weapon/grab))
 			var/obj/item/weapon.grab/G = r_hand
-			if ((G.state == 3 && get_dir(src, A) == dir))
+			if ((G.state == 3 && get_dir(src, Proj) == dir))
 				safe = G.affecting
 		if (safe)
-			return safe.bullet_act(flag, A)
-	switch(flag)
-		if(PROJECTILE_BULLET)
-			var/d = 51
+			return safe.bullet_act(Proj)
 
-			if (stat != 2)
-				bruteloss += d
 
+	for(var/i = 1, i<= Proj.mobdamage.len, i++)
+
+		switch(i)
+			if(1)
+				var/d = Proj.mobdamage[BRUTE]
+				if(!Proj.nodamage) bruteloss += d
 				updatehealth()
-				if (prob(50))
-					if(weakened <= 5)	weakened = 5
-			return
-		if(PROJECTILE_WEAKBULLET)
-			var/d = 14
-
-			if (stat != 2)
-				bruteloss += d
-
+			if(2)
+				var/d = Proj.mobdamage[BURN]
+				if(!Proj.nodamage) fireloss += d
 				updatehealth()
-				if (prob(50))
-					if(weakened <= 2)	weakened = 2
-			return
-		if(PROJECTILE_WEAKBULLETBURST)
-			var/d = 7
-
-			if (stat != 2)
-				bruteloss += d
-
+			if(3)
+				var/d = Proj.mobdamage[TOX]
+				if(!Proj.nodamage) toxloss += d
 				updatehealth()
-				if (prob(50))
-					if(weakened <= 2)	weakened = 2
-			return
-		if(PROJECTILE_BULLETBURST)
-			var/d = 18
-
-			if (stat != 2)
-				bruteloss += d
-
+			if(4)
+				var/d = Proj.mobdamage[OXY]
+				if(!Proj.nodamage) oxyloss += d
 				updatehealth()
-				if (prob(50))
-					if(weakened <= 2)	weakened = 2
-			return
-		if(PROJECTILE_TASER)
-			if (prob(75) && stunned <= 10)
-				stunned = 10
-			else
-				weakened = 10
-			if (stuttering < 10)
-				stuttering = 10
-		if(PROJECTILE_DART)
-			return
-		if(PROJECTILE_LASER)
-			var/d = 20
-
-	//		if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff./ It really doesn't make any sense. /N
-			if (prob(25)) stunned++
-
-			if (stat != 2)
-				bruteloss += d
-
+			if(5)
+				var/d = Proj.mobdamage[CLONE]
+				if(!Proj.nodamage) cloneloss += d
 				updatehealth()
-				if (prob(25))
-					stunned = 1
-		if(PROJECTILE_SHOCK)
-			var/d = 20
 
-			if (!eye_blurry) eye_blurry = 4 //This stuff makes no sense but lasers need a buff./ It really doesn't make any sense. /N
-			if (prob(25)) stunned++
+	if(Proj.effects["stun"] && prob(Proj.effectprob["stun"]))
+		if(Proj.effectmod["stun"] == SET)
+			stunned = Proj.effects["stun"]
+		else
+			stunned += Proj.effects["stun"]
 
-			if (stat != 2)
-				bruteloss += d
 
-				updatehealth()
-				if (prob(25))
-					stunned = 1
-				else
-					weakened = 10
-		if(PROJECTILE_PULSE)
-			var/d = 40
+	if(Proj.effects["weak"] && prob(Proj.effectprob["weak"]))
+		if(Proj.effectmod["weak"] == SET)
+			weakened = Proj.effects["weak"]
+		else
+			weakened += Proj.effects["weak"]
 
-			if (stat != 2)
-				bruteloss += d
+	if(Proj.effects["paralysis"] && prob(Proj.effectprob["paralysis"]))
+		if(Proj.effectmod["paralysis"] == SET)
+			paralysis = Proj.effects["paralysis"]
+		else
+			paralysis += Proj.effects["paralysis"]
 
-				updatehealth()
-				if (prob(50))
-					stunned = min(stunned, 5)
-		if(PROJECTILE_BOLT)
-			toxloss += 3
-			radiation += 100
-			updatehealth()
-			stuttering += 5
-			drowsyness += 5
+	if(Proj.effects["stutter"] && prob(Proj.effectprob["stutter"]))
+		if(Proj.effectmod["stutter"] == SET)
+			stuttering = Proj.effects["stutter"]
+		else
+			stuttering += Proj.effects["stutter"]
+
+	if(Proj.effects["drowsyness"] && prob(Proj.effectprob["drowsyness"]))
+		if(Proj.effectmod["drowsyness"] == SET)
+			drowsyness = Proj.effects["drowsyness"]
+		else
+			drowsyness += Proj.effects["drowsyness"]
+
+	// Aliums not effected by radiation damage
+
+	if(Proj.effects["eyeblur"] && prob(Proj.effectprob["eyeblur"]))
+		if(Proj.effectmod["eyeblur"] == SET)
+			eye_blurry = Proj.effects["eyeblur"]
+		else
+			eye_blurry += Proj.effects["eyeblur"]
+
 	return
 
 /mob/living/carbon/alien/larva/emp_act(severity)

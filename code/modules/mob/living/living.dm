@@ -7,107 +7,85 @@
 		src << "\blue You have given up life and succumbed to death."
 
 
-/mob/living/bullet_act(flag)
-	switch(flag)
-		if(PROJECTILE_BULLET)
-			if (istype(src, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = src
-				var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-				if (H.organs[text("[]", dam_zone)])
-					var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-					if (affecting.take_damage(51, 0))
-						H.UpdateDamageIcon()
-					else
-						H.UpdateDamage()
-			else
-				src.take_organ_damage(51)
-			src.updatehealth()
-			if (prob(80) && src.weakened <= 2)
-				src.weakened = 2
-		if(PROJECTILE_TASER)
-			if (prob(75) && src.stunned <= 10)
-				src.stunned = 10
-			else
-				src.weakened = 10
-		if(PROJECTILE_BULLETBURST)
-			if (istype(src, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = src
-				var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-				if (H.organs[text("[]", dam_zone)])
-					var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-					if (affecting.take_damage(18, 0))
-						H.UpdateDamageIcon()
-					else
-						H.UpdateDamage()
-			else
-				src.take_organ_damage(18)
-			src.updatehealth()
-			if (prob(80) && src.weakened <= 2)
-				src.weakened = 2
-		if(PROJECTILE_TASER)
-			if (prob(75) && src.stunned <= 10)
-				src.stunned = 10
-			else
-				src.weakened = 10
-		if(PROJECTILE_DART)
-			src.weakened += 5
-			src.toxloss += 10
-		if(PROJECTILE_LASER)
-			if (istype(src, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = src
-				var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-				if (H.organs[text("[]", dam_zone)])
-					var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-					if (affecting.take_damage(20, 0))
-						H.UpdateDamageIcon()
-					else
-						H.UpdateDamage()
+/mob/living/bullet_act(var/obj/item/projectile/Proj)
+
+	for(var/i = 1, i<= Proj.mobdamage.len, i++)
+
+		switch(i)
+			if(1)
+				if (istype(src, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = src
+					var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
+					if (H.organs[text("[]", dam_zone)])
+						var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
+						if (affecting.take_damage(Proj.mobdamage[BRUTE], 0))
+							H.UpdateDamageIcon()
+						else
+							H.UpdateDamage()
 					src.updatehealth()
-			else
-				src.take_organ_damage(20)
-			if (prob(25) && src.stunned <= 2)
-				src.stunned = 2
-		if(PROJECTILE_SHOCK)
-			if (istype(src, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = src
-				var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-				if (H.organs[text("[]", dam_zone)])
-					var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-					if (affecting.take_damage(20, 0))
-						H.UpdateDamageIcon()
-					else
-						H.UpdateDamage()
-					src.updatehealth()
-			else
-				src.take_organ_damage(20)
-			if (prob(25) && src.stunned <= 2)
-				src.stunned = 10
-			else
-				src.weakened = 10
-		if(PROJECTILE_PULSE)
-			if (istype(src, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = src
-				var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-				if (H.organs[text("[]", dam_zone)])
-					var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-					if (affecting.take_damage(40, 0))
-						H.UpdateDamageIcon()
-					else
-						H.UpdateDamage()
-					src.updatehealth()
-			else
-				src.take_organ_damage(40)
-			if (prob(50))
-				src.stunned = min(src.stunned, 5)
-		if(PROJECTILE_BOLT)
-			src.toxloss += 3
-			src.radiation += 100
-			src.updatehealth()
-			src.stuttering += 5
-			src.drowsyness += 5
-			if (prob(10))
-				src.weakened = min(src.weakened, 2)
-	return
+
+				else
+					if(!nodamage)  src.take_organ_damage(Proj.mobdamage[BRUTE])
+
+			if(2)
+				var/d = Proj.mobdamage[BURN]
+				if(!Proj.nodamage) fireloss += d
+				updatehealth()
+			if(3)
+				var/d = Proj.mobdamage[TOX]
+				if(!Proj.nodamage) toxloss += d
+				updatehealth()
+			if(4)
+				var/d = Proj.mobdamage[OXY]
+				if(!Proj.nodamage) oxyloss += d
+				updatehealth()
+			if(5)
+				var/d = Proj.mobdamage[CLONE]
+				if(!Proj.nodamage) cloneloss += d
+				updatehealth()
+
+	if(Proj.effects["stun"] && prob(Proj.effectprob["stun"]))
+		if(Proj.effectmod["stun"] == SET)
+			stunned = Proj.effects["stun"]
+		else
+			stunned += Proj.effects["stun"]
+
+
+	if(Proj.effects["weak"] && prob(Proj.effectprob["weak"]))
+		if(Proj.effectmod["weak"] == SET)
+			weakened = Proj.effects["weak"]
+		else
+			weakened += Proj.effects["weak"]
+
+	if(Proj.effects["paralysis"] && prob(Proj.effectprob["paralysis"]))
+		if(Proj.effectmod["paralysis"] == SET)
+			paralysis = Proj.effects["paralysis"]
+		else
+			paralysis += Proj.effects["paralysis"]
+
+	if(Proj.effects["stutter"] && prob(Proj.effectprob["stutter"]))
+		if(Proj.effectmod["stutter"] == SET)
+			stuttering = Proj.effects["stutter"]
+		else
+			stuttering += Proj.effects["stutter"]
+
+	if(Proj.effects["drowsyness"] && prob(Proj.effectprob["drowsyness"]))
+		if(Proj.effectmod["drowsyness"] == SET)
+			drowsyness = Proj.effects["drowsyness"]
+		else
+			drowsyness += Proj.effects["drowsyness"]
+
+	if(Proj.effects["radiation"] && prob(Proj.effectprob["radiation"]))
+		if(Proj.effectmod["radiation"] == SET)
+			radiation = Proj.effects["radiation"]
+		else
+			radiation += Proj.effects["radiation"]
+
+	if(Proj.effects["eyeblur"] && prob(Proj.effectprob["eyeblur"]))
+		if(Proj.effectmod["eyeblur"] == SET)
+			eye_blurry = Proj.effects["eyeblur"]
+		else
+			eye_blurry += Proj.effects["eyeblur"]
 
 
 /mob/living/proc/updatehealth()

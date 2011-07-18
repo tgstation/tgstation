@@ -419,7 +419,7 @@
 			if (prob(50))
 				del(src)
 
-/obj/item/latexballon/bullet_act(severity)
+/obj/item/latexballon/bullet_act()
 	burst()
 
 /obj/item/latexballon/temperature_expose(datum/gas_mixture/air, temperature, volume)

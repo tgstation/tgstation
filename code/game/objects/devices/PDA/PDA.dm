@@ -7,7 +7,7 @@
 	icon = 'pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = 1.0
 	flags = FPRINT | TABLEPASS | ONBELT
 
 	//Main variables

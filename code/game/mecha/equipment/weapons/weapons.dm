@@ -75,7 +75,7 @@
 	var/life = 20
 
 	Bump(atom/A)
-		A.bullet_act(PROJECTILE_PULSE, src, def_zone)
+		A.bullet_act(src, def_zone)
 		src.life -= 10
 		if(life <= 0)
 			del(src)
@@ -133,7 +133,7 @@
 			return 0
 		if(!equip_ready)
 			return 0
-		set_ready_state(0)
+
 		playsound(chassis, 'AirHorn.ogg', 100, 1)
 		chassis.occupant_message("<font color='red' size='5'>HONK</font>")
 		for(var/mob/living/carbon/M in ohearers(6, chassis))
@@ -221,6 +221,7 @@
 			targloc = locate(target_x+GaussRandRound(deviation,1),target_y+GaussRandRound(deviation,1),target_z)
 			if(!targloc || targloc == curloc)
 				break
+
 			playsound(chassis, 'Gunshot.ogg', 80, 1)
 			var/obj/item/projectile/A = new /obj/item/projectile(curloc)
 			src.projectiles--
@@ -260,6 +261,7 @@
 				continue
 			if (targloc == curloc)
 				continue
+
 			playsound(chassis, 'Gunshot.ogg', 50, 1)
 			var/obj/item/projectile/weakbullet/A = new /obj/item/projectile/weakbullet(curloc)
 			src.projectiles--

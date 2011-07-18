@@ -25,7 +25,7 @@
 
 	var/raised = 0			// if the turret cover is "open" and the turret is raised
 	var/raising= 0			// if the turret is currently opening or closing its cover
-	var/health = 60			// the turret's health. can withstand health/10 laser shots
+	var/health = 80			// the turret's health
 	var/locked = 1			// if the turret's behaviour control access is locked
 
 	var/installation		// the type of weapon installed
@@ -225,7 +225,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 
 
-/obj/machinery/porta_turret/bullet_act(flag)
+/obj/machinery/porta_turret/bullet_act(var/obj/item/projectile/Proj)
 	if(on)
 		if(!attacked && !emagged)
 			attacked = 1
@@ -233,24 +233,8 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 				sleep(60)
 				attacked = 0
 
-	// handles how much damage each type of projectile deals
-	if (flag == PROJECTILE_BULLET)
-		src.health -= 5
-	else if (flag == PROJECTILE_BULLETBURST)
-		src.health -= 2
-	else if (flag == PROJECTILE_TASER)
-		src.health -= 1
-	else if(flag == PROJECTILE_PULSE)
-		if(prob(25)) src.spark_system.start() // creates some sparks
-		src.health -= 30
-	else if(flag == PROJECTILE_SHOCK)
-		if(prob(25)) src.spark_system.start()
-		src.health -= 15
-	else if(flag == PROJECTILE_LASER)
-		if(prob(25)) src.spark_system.start()
-		src.health -= 10
-	else
-		src.health -= 2
+	src.health -= Proj.damage
+	if(prob(45) && Proj.damage > 0) src.spark_system.start()
 	if (src.health <= 0)
 		src.die() // the death process :(
 	return
@@ -333,19 +317,19 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 				if (C.stat || C.handcuffed) // if the perp is handcuffed or dead/dying, no need to bother really
 					continue // move onto next potential victim!
 
-				if (C.lying) // if the perp is lying down, it's still a target but a less-important target
-					secondarytargets += C
-
 				if (istype(C, /mob/living/carbon/human)) // if the target is a human, analyze threat level
 					if(src.assess_perp(C)<4)
 						continue // if threat level < 4, keep going
 
-				else if (istype(C, /mob/living/carbon/monkey))
-					continue // WHY WOULD YOU TARGET MONKIES???? Skip all monkies, jesus, don't waste your time bro
+				else if (istype(C, /mob/living/carbon/monkey) || istype(C, /mob/living/silicon))
+					continue // Don't target monkies or borgs/AIs you dumb shit
 
 				var/dst = get_dist(src, C) // if it's too far away, why bother?
 				if (dst > 12)
 					continue
+
+				if (C.lying) // if the perp is lying down, it's still a target but a less-important target
+					secondarytargets += C
 
 				targets += C // if the perp has passed all previous tests, congrats, it is now a "shoot-me!" nominee
 

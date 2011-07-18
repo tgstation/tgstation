@@ -102,7 +102,7 @@
 					ex_act(severity)
 				del(src)
 
-/obj/closet/bullet_act(flag)
+/obj/closet/bullet_act(var/obj/item/projectile/Proj)
 
 /* Just in case someone gives closets health
 	if (flag == PROJECTILE_BULLET)
@@ -118,7 +118,7 @@
 		src.healthcheck()
 		return
 */
-	if(prob(4))
+	if(prob(40) && istype(Proj, /obj/item/projectile/beam/pulse))
 		for (var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		del(src)

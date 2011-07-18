@@ -51,7 +51,7 @@
 	invisibility = 2
 	density = 1
 	var/lasers = 0
-	var/health = 40
+	var/health = 80
 	var/obj/machinery/turretcover/cover = null
 	var/popping = 0
 	var/wasvalid = 0
@@ -228,18 +228,9 @@
 				invisibility = 2
 				popping = 0
 
-/obj/machinery/turret/bullet_act(flag)
-	if (flag == PROJECTILE_BULLET)
-		src.health -= 17
-	else if (flag == PROJECTILE_BULLETBURST)
-		src.health -= 7
-	else if (flag == PROJECTILE_TASER) //taser
-		src.health -= 1
-	else if(flag == PROJECTILE_PULSE)
-		src.health -= 30
-	else
-		src.health -= 2
-	src.spark_system.start()
+/obj/machinery/turret/bullet_act(var/obj/item/projectile/Proj)
+	src.health -= Proj.damage
+	if(prob(45) && Proj.damage > 0) src.spark_system.start()
 	if (src.health <= 0)
 		src.die()
 	return
@@ -433,33 +424,12 @@
 			del src
 		return
 
-	bullet_act(flag)
-		var/damage = 0
-		switch(flag)
-			if(PROJECTILE_PULSE)
-				damage = 40
-			if(PROJECTILE_LASER)
-				damage = 20
-			if(PROJECTILE_SHOCK)
-				damage = 25
-			if(PROJECTILE_TASER)
-				damage = 8
-			if(PROJECTILE_WEAKBULLET)
-				damage = 8
-			if(PROJECTILE_WEAKBULLETBURST)
-				damage = 4
-			if(PROJECTILE_WEAKERBULLETBURST)
-				damage = 2
-			if(PROJECTILE_BULLET)
-				damage = 10
-			if(PROJECTILE_BULLETBURST)
-				damage = 4
-			if(PROJECTILE_BOLT)
-				damage = 5
-			if(PROJECTILE_DART)
-				damage = 5
+
+	bullet_act(var/obj/item/projectile/Proj)
+		var/damage = Proj.damage
 		src.take_damage(damage)
 		return
+
 
 	attack_hand(mob/user as mob)
 		user.machine = src
