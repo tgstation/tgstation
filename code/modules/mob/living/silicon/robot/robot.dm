@@ -84,7 +84,7 @@
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
 			if(icontype== "Waitress")
 				icon_state = "Service"
 			else if(icontype == "Kent")
@@ -107,7 +107,7 @@
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Kent")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Kent", "Medbot")
 //			icon_state = "MedBot"
 			if(icontype == "Kent")
 				icon_state = "toiletbot"
@@ -120,7 +120,7 @@
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Armored", "Robocop", "Robocop Red")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Armored", "Robocop", "Robocop Red", "Heavy Duty")
 			if(icontype == "Armored")
 				icon_state = "Security"
 			else if(icontype == "Robocop")
