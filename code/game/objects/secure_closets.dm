@@ -2,7 +2,7 @@
 	return get_turf(src)
 
 /obj/secure_closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+	if(air_group || (height==0) || wall_mounted) return 1
 
 	return src.opened
 
@@ -69,7 +69,10 @@
 			M.client.eye = src
 
 		M.loc = src
-	src.icon_state = src.icon_closed
+	if(broken)
+		src.icon_state = src.icon_off
+	else
+		src.icon_state = src.icon_closed
 	src.opened = 0
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
 	return 1

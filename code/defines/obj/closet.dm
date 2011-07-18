@@ -8,6 +8,7 @@
 	var/icon_opened = "open"
 	var/opened = 0
 	var/welded = 0
+	var/wall_mounted = 0 //never solid (You can always pass over it)
 	flags = FPRINT
 
 /obj/spresent
@@ -37,11 +38,22 @@
 	icon_opened = "fireclosetopen"
 
 /obj/closet/hydrant //wall mounted fire closet
+	anchored = 1
 	desc = "A wall mounted closet which comes with supplies to fight fire."
 	name = "Fire Closet"
 	icon_state = "hydrant"
 	icon_closed = "hydrant"
 	icon_opened = "hydrant_open"
+	wall_mounted = 1
+
+/obj/closet/medical_wall //wall mounted fire closet
+	anchored = 1
+	desc = "A wall mounted closet which should have some first aid."
+	name = "First Aid Closet"
+	icon_state = "medical_wall"
+	icon_closed = "medical_wall"
+	icon_opened = "medical_wall_open"
+	wall_mounted = 1
 
 /obj/closet/fireaxecabinet
 	name = "Fire Axe Cabinet"
@@ -577,6 +589,7 @@
 	var/icon_opened = "secureopen"
 	var/icon_broken = "securebroken"
 	var/icon_off = "secureoff"
+	var/wall_mounted = 0 //never solid (You can always pass over it)
 
 /obj/secure_closet/courtroom
 	name = "Courtroom Locker"
@@ -643,6 +656,19 @@
 /obj/secure_closet/medical3
 	name = "Medical Doctor's Locker"
 	req_access = list(access_medical)
+
+/obj/secure_closet/medical_wall
+	anchored = 1
+	name = "First Aid Closet"
+	desc = "A wall mounted closet which --should-- contain medical supplies."
+	icon_state = "medical_wall_locked"
+	icon_closed = "medical_wall_unlocked"
+	icon_locked = "medical_wall_locked"
+	icon_opened = "medical_wall_open"
+	icon_broken = "medical_wall_spark"
+	icon_off = "medical_wall_off"
+	req_access = list(access_medical)
+	wall_mounted = 1
 
 /obj/secure_closet/RD
 	name = "Research Director"
