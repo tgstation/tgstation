@@ -298,14 +298,16 @@ datum
 						my_atom.on_reagent_change()
 
 						// mix dem viruses
-						if(R.data && R.data["viruses"] || data &&data["viruses"])
-							var/list/this = R.data["viruses"]
-							var/list/that = data["viruses"]
-							this += that // combine the two
+						if(R.data && data)
+							if(R.data && R.data["viruses"] || data && data["viruses"])
+								var/list/this = R.data["viruses"]
+								var/list/that = data["viruses"]
+								this += that // combine the two
 
-							for(var/datum/disease/D in this) // makes sure no two viruses are in the reagent at the same time
-								for(var/datum/disease/d in this)
-									d.cure(0)
+								for(var/datum/disease/D in this) // makes sure no two viruses are in the reagent at the same time
+									for(var/datum/disease/d in this)
+										if(d != D)
+											D.cure(0)
 
 						return 0
 
