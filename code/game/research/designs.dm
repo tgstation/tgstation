@@ -147,6 +147,15 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/card"
 
+		crewconsole
+			name = "Circuit Design (Crew monitoring computer)"
+			desc = "Allows for the construction of circuit boards used to build an Crew monitoring computer."
+			id = "crewconsole"
+			req_tech = list("programming" = 3, "magnets" = 2, "biotech" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/crew"
+
 		teleconsole
 			name = "Circuit Design (Teleporter Console)"
 			desc = "Allows for the construction of circuit boards used to build a teleporter control console."
@@ -228,6 +237,15 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/powermonitor"
 
+		solarcontrol
+			name = "Circuit Design (Solar Control)"
+			desc = "Allows for the construction of circuit boards used to build a solar control console"
+			id = "solarcontrol"
+			req_tech = list("programming" = 2, "powerstorage" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/solar_control"
+
 		prisonmanage
 			name = "Circuit Design (Prisoner Management Console)"
 			desc = "Allows for the construction of circuit boards used to build a prisoner management console."
@@ -245,6 +263,24 @@ datum
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/mecha_control"
+
+		mechapower
+			name = "Circuit Design (Mech Bay Power Control Console)"
+			desc = "Allows for the construction of circuit boards used to build an mech bay power control console."
+			id = "mechapower"
+			req_tech = list("programming" = 2, "powerstorage" = 3)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/mech_bay_power_console"
+
+		rdconsole
+			name = "Circuit Design (R&D Console)"
+			desc = "Allows for the construction of circuit boards used to build an new R&D console."
+			id = "rdconsole"
+			req_tech = list("programming" = 6)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/rdconsole"
 
 ///////////////////////////////////
 //////////AI Module Disks//////////
@@ -560,7 +596,6 @@ datum
 			build_type = MECHFAB
 			req_tech = list("magnets" = 3, "programming" = 3, "engineering" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/repair_droid"
-
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////

@@ -108,6 +108,7 @@
 /obj/item/weapon/circuitboard/solar_control
 	name = "Circuit board (Solar Control)"  //name fixed 250810
 	build_path = "/obj/machinery/power/solar_control"
+	origin_tech = "programming=2;powerstorage=2"
 /obj/item/weapon/circuitboard/powermonitor
 	name = "Circuit board (Power Monitor)"  //name fixed 250810
 	build_path = "/obj/machinery/power/monitor"
@@ -132,7 +133,14 @@
 /obj/item/weapon/circuitboard/rdservercontrol
 	name = "Circuit Board (R&D Server Control)"
 	build_path = "/obj/machinery/computer/rdservercontrol"
-
+/obj/item/weapon/circuitboard/crew
+	name = "Circuit board (Crew monitoring computer)"
+	build_path = "/obj/machinery/computer/crew"
+	origin_tech = "programming=3;biotech=2;magnets=2"
+/obj/item/weapon/circuitboard/mech_bay_power_console
+	name = "Circuit board (Mech Bay Power Control Console)"
+	build_path = "/obj/machinery/computer/mech_bay_power_console"
+	origin_tech = "programming=2;powerstorage=3"
 
 
 /obj/computerframe/attackby(obj/item/P as obj, mob/user as mob)

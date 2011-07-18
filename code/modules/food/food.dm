@@ -30,6 +30,7 @@
 	name = "candy"
 	desc = "Nougat love it or hate it."
 	icon_state = "candy"
+	trash = "candy"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
@@ -50,6 +51,7 @@
 	name = "chips"
 	desc = "Commander Riker's What-The-Crisps"
 	icon_state = "chips"
+	trash = "chips"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
@@ -87,6 +89,12 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
+
+	throw_impact(atom/hit_atom)
+		..()
+		new/obj/decal/cleanable/egg_smudge(src.loc)
+		src.visible_message("\red [src.name] has been squashed.","\red You hear a smack.")
+		del(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/flour
 	name = "flour"
@@ -381,6 +389,7 @@
 	name = "Berry Clafoutis"
 	desc = "No black birds, this is a good sign."
 	icon_state = "berryclafoutis"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
@@ -391,6 +400,7 @@
 	name = "waffles"
 	desc = "Mmm, waffles"
 	icon_state = "waffles"
+	trash = "waffles"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
@@ -400,6 +410,7 @@
 	name = "Eggplant Parmigiana"
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -446,6 +457,7 @@
 //	var/job = null
 	icon_state = "meatpie"
 	desc = "The best meatpies on station."
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -455,6 +467,7 @@
 	name = "Meat-pie"
 	icon_state = "meatpie"
 	desc = "A delicious meatpie."
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -464,6 +477,7 @@
 	name = "Tofu-pie"
 	icon_state = "meatpie"
 	desc = "A delicious tofu pie."
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -499,6 +513,7 @@
 	name = "Xeno-pie"
 	icon_state = "xenomeatpie"
 	desc = "A delicious meatpie. Probably heretical."
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
@@ -509,6 +524,7 @@
 	name = "Wing Fang Chu"
 	desc = "A savory dish of alien wing wang in soy."
 	icon_state = "wingfangchu"
+	trash = "snack_bowl"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
@@ -578,6 +594,7 @@
 	name = "Cuban Carp"
 	desc = "A grifftastic sandwich that burns your tongue and then leaves it numb!"
 	icon_state = "cubancarp"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -589,6 +606,7 @@
 	name = "Popcorm" //not a typo
 	desc = "Now let's find some cinema."
 	icon_state = "popcorn"
+	trash = "popcorn"
 	var/unpopped = 0
 	New()
 		..()
@@ -599,12 +617,14 @@
 		if(prob(unpopped))
 			usr << "\red You bite down on an un-popped kernel!"
 			unpopped = max(0, unpopped-1)
+		..()
 
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky
 	name = "Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
 	desc = "Beef jerky made from the finest space cows."
+	trash = "sosjerky"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
@@ -614,6 +634,7 @@
 	name = "4no Raisins"
 	icon_state = "4no_raisins"
 	desc = "Best raisins in the universe. Not sure why."
+	trash = "raisins"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -631,6 +652,7 @@
 	name = "Cheesie Honkers"
 	icon_state = "cheesie_honkers"
 	desc = "Bite sized cheesie snacks that will honk all over your mouth"
+	trash = "cheesie"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
@@ -640,6 +662,7 @@
 	name = "Syndi-Cakes"
 	icon_state = "syndi_cakes"
 	desc = "An extremely moist snack cake that tastes just as good after being nuked."
+	trash = "syndi_cakes"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
@@ -650,6 +673,7 @@
 	name = "Loaded Baked Potato"
 	desc = "Totally baked."
 	icon_state = "loadedbakedpotato"
+	trash = "loadedbakedpotato"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -688,6 +712,7 @@
 	name = "Cheesy Fries"
 	desc = "Fries. Covered in cheese. Duh."
 	icon_state = "cheesyfries"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -726,6 +751,7 @@
 	name = "Meat steak"
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatstake"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
@@ -737,6 +763,7 @@
 	name = "Spacy Liberty Duff"
 	desc = "Jello gelatin, if Alfred Hubbard were a confectionist" //TODO
 	icon_state = "spacylibertyduff"
+	trash = "snack_bowl"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -747,6 +774,7 @@
 	name = "Amanita Jelly"
 	desc = "Looks curiously toxic"
 	icon_state = "amanitajelly"
+	trash = "snack_bowl"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -769,6 +797,7 @@
 	name = "Meatball soup"
 	desc = "" //TODO
 	icon_state = "meatballsoup"
+	trash = "snack_bowl"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -811,6 +840,7 @@
 	name = "Vegetable soup"
 	desc = "" //TODO
 	icon_state = "vegetablesoup"
+	trash = "snack_bowl"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -821,6 +851,7 @@
 	name = "Nettle soup"
 	desc = "" //TODO
 	icon_state = "nettlesoup"
+	trash = "snack_bowl"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -842,6 +873,7 @@
 	name = "Hot Chili"
 	desc = "" //TODO
 	icon_state = "hotchili"
+	trash = "snack_bowl"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -854,6 +886,7 @@
 	name = "Cold Chili"
 	desc = "" //TODO
 	icon_state = "coldchili"
+	trash = "snack_bowl"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -1231,6 +1264,7 @@
 	name = "meatbread slice"
 	desc = "A slice of delicious meatbread."
 	icon_state = "meatbreadslice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/xenomeatbread
@@ -1249,6 +1283,7 @@
 	name = "xenomeatbread slice"
 	desc = "A slice of delicious meatbread. Extra Heretical."
 	icon_state = "xenobreadslice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread
@@ -1267,6 +1302,7 @@
 	name = "Banana-nut bread slice"
 	desc = "A slice of delicious banana bread."
 	icon_state = "bananabreadslice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/tofubread
@@ -1284,6 +1320,7 @@
 	name = "Tofubread slice"
 	desc = "A slice of delicious tofubread."
 	icon_state = "tofubreadslice"
+	trash = "plate"
 	bitesize = 2
 
 
@@ -1303,6 +1340,7 @@
 	name = "Carrot Cake slice"
 	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
 	icon_state = "carrotcake_slice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesecake
@@ -1320,6 +1358,7 @@
 	name = "Cheese Cake slice"
 	desc = "Slice of pure cheestisfaction"
 	icon_state = "cheesecake_slice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/plaincake
@@ -1336,6 +1375,7 @@
 	name = "Vanilla Cake slice"
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "plaincake_slice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/orangecake

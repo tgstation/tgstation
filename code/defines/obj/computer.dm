@@ -203,6 +203,44 @@
 	name = "Magix System IV"
 	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
 
+/*/obj/machinery/computer/scan_consolenew    //Coming Soon
+	name = "DNA Modifier Access Console"
+	desc = "Scand DNA."
+	icon = 'computer.dmi'
+	icon_state = "scanner"
+	density = 1
+	var/uniblock = 1.0
+	var/strucblock = 1.0
+	var/subblock = 1.0
+	var/status = null
+	var/radduration = 2.0
+	var/radstrength = 1.0
+	var/radacc = 1.0
+	var/buffer1 = null
+	var/buffer2 = null
+	var/buffer3 = null
+	var/buffer1owner = null
+	var/buffer2owner = null
+	var/buffer3owner = null
+	var/buffer1label = null
+	var/buffer2label = null
+	var/buffer3label = null
+	var/buffer1type = null
+	var/buffer2type = null
+	var/buffer3type = null
+	var/buffer1iue = 0
+	var/buffer2iue = 0
+	var/buffer3iue = 0
+	var/delete = 0
+	var/injectorready = 1
+	var/temphtml = null
+	var/obj/machinery/dna_scanner/connected = null
+	var/obj/item/weapon/disk/data/diskette = null
+	anchored = 1.0
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 400 */
+
 /obj/machinery/computer/secure_data
 	name = "Security Records"
 	desc = "Beepsky. ARREST!!!"
@@ -271,3 +309,11 @@
 	icon_state = "teleport"
 	locked = null
 	id = null
+
+/obj/machinery/computer/crew
+	name = "Crew monitoring computer"
+	icon_state = "crew"
+	use_power = 1
+	idle_power_usage = 250
+	active_power_usage = 500
+	var/list/tracked =	list(  )
