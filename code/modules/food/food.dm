@@ -68,6 +68,17 @@
 		reagents.add_reagent("coco", 2)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/chocolateegg
+	name = "Chocolate Egg"
+	desc = "Such, sweet, fattening food."
+	icon_state = "chocolateegg"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("sugar", 2)
+		reagents.add_reagent("coco", 2)
+		bitesize = 2
+
 /obj/item/weapon/reagent_containers/food/snacks/donut
 	name = "donut"
 	desc = "Goes great with Robust Coffee."
@@ -159,6 +170,16 @@
 		reagents.add_reagent("carpotoxin", 3)
 		src.bitesize = 6
 
+/obj/item/weapon/reagent_containers/food/snacks/fishfingers
+	name = "Fish Fingers"
+	desc = "A finger of fish."
+	icon_state = "fishfingers"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("carpotoxin", 3)
+		bitesize = 3
+
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 	name = "huge mushroom slice"
 	desc = "A slice from a huge mushroom."
@@ -204,6 +225,15 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sausage
+	name = "Sausage"
+	desc = "A piece of mixed, long meat."
+	icon_state = "sausage"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket
@@ -859,6 +889,16 @@
 		reagents.add_reagent("tricordrazine", 3)
 		bitesize = 5
 
+/obj/item/weapon/reagent_containers/food/snacks/mysterysoup
+	name = "Mystery soup"
+	desc = "A....strange, strange soup."
+	icon_state = "mysterysoup"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 12)
+		reagents.add_reagent("water", 7)
+		bitesize = 4
+
 /obj/item/weapon/reagent_containers/food/snacks/wishsoup
 	name = "Wish Soup"
 	desc = "I wish this was soup."
@@ -1244,6 +1284,15 @@
 	New()
 		..()
 		reagents.add_reagent("metroid", 5)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/braincake
+	name = "Brain Cake"
+	desc = "A squishy cake-thing."
+	icon_state = "braincake"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 28)
 		bitesize = 3
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////

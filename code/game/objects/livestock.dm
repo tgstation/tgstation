@@ -130,6 +130,12 @@
 				I.loc = src.loc
 			del(src)
 			return
+		else if(istype(W, /obj/item/weapon/butch))
+			user << "\red You butcher open the [src.name]!"
+			for (var/obj/item/I in src)
+				I.loc = src.loc
+			del(src)
+			return
 		..()
 
 	bullet_act(flag, A as obj)

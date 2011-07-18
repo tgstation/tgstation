@@ -1002,7 +1002,6 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/bloodsoup
 
@@ -1018,7 +1017,6 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 		/obj/item/weapon/ore/clown,
-
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/clownstears
 
@@ -1026,6 +1024,52 @@
 	reagents = list("water" = 5)
 	items = list(
 		/obj/item/metroid_core,
-
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledmetroidcore
+
+/datum/recipe/braincake
+	reagents = list("milk" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/mob/living/carbon/brain,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/braincake
+
+/datum/recipe/chocolateegg
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chocolateegg
+
+/datum/recipe/sausage
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sausage
+
+/datum/recipe/fishfingers
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/fishfingers
+
+/datum/recipe/mysterysoup
+	reagents = list("water" = 10, "blood" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+		/obj/item/weapon/reagent_containers/food/snacks/faggot,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/mysterysoup

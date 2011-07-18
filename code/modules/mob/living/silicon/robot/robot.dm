@@ -91,6 +91,8 @@
 				icon_state = "toiletbot"
 			else if(icontype == "Bro")
 				icon_state = "Brobot"
+			else if(icontype == "Rich")
+				icon_state = "maximillion"
 			else
 				icon_state = "Service2"
 			modtype = "Butler"

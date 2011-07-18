@@ -2138,6 +2138,23 @@ datum
 				..()
 				return
 
+		holywater
+			name = "Holy Water"
+			id = "holywater"
+			description = "The chaplains holy water."
+			reagent_state = LIQUID
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=8
+				if(data >= 45 && data <125)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 8
+				else if(data >= 125 && prob(33))
+					M.confused = max(M:confused+8,8)
+				..()
+				return
+
 		tequilla
 			name = "Tequila"
 			id = "tequilla"

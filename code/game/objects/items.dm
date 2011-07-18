@@ -445,6 +445,7 @@
 		istype(W, /obj/item/weapon/melee/energy/blade)                         || \
 		istype(W, /obj/item/weapon/shovel)                        || \
 		istype(W, /obj/item/weapon/kitchenknife)                  || \
+		istype(W, /obj/item/weapon/butch)						  || \
 		istype(W, /obj/item/weapon/scalpel)                       || \
 		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
 		istype(W, /obj/item/weapon/shard)                         || \

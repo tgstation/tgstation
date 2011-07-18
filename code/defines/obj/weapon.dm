@@ -26,6 +26,21 @@
 	m_amt = 1000
 	origin_tech = "materials=2"
 
+/obj/item/weapon/bodybag
+	name = "body bag"
+	desc = "Bag mixed with a bit of body."
+	icon = 'closet.dmi'
+	icon_state = "bodybag"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	force = 5.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = 1.0
+	g_amt = 7500
+	m_amt = 1000
+	origin_tech = "materials=2"
+
 /obj/item/weapon/match
 	name = "Match"
 	desc = "A simple match stick, used for lighting tobacco"
@@ -1777,6 +1792,20 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	force = 10.0
 	w_class = 3.0
 	throwforce = 6.0
+	throw_speed = 3
+	throw_range = 6
+	m_amt = 12000
+	origin_tech = "materials=1"
+
+/obj/item/weapon/butch
+	name = "Butcher's Cleaver"
+	icon = 'kitchen.dmi'
+	icon_state = "butch"
+	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 15.0
+	w_class = 2.0
+	throwforce = 8.0
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000

@@ -1219,6 +1219,7 @@
 		var/inaccurate = 0
 		if( \
 				istype(W, /obj/item/weapon/kitchenknife) || \
+				istype(W, /obj/item/weapon/butch) || \
 				istype(W, /obj/item/weapon/scalpel) || \
 				istype(W, /obj/item/weapon/kitchen/utensil/knife) \
 			)
@@ -2273,6 +2274,14 @@
 	New()
 		..()
 		reagents.add_reagent("rum", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
+	name = "Flash of Holy Water"
+	desc = "A flask of the chaplains holy water."
+	icon_state = "holyflask"
+	New()
+		..()
+		reagents.add_reagent("holywater", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
