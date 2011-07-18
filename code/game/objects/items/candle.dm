@@ -27,6 +27,8 @@
 		light()
 	else if(istype(W, /obj/item/weapon/match) && W:lit)
 		light()
+	else if(istype(W, /obj/item/candle) && W:lit)
+		light()
 
 
 
@@ -63,6 +65,7 @@
 		lit = 0
 		update_icon()
 		sd_SetLuminosity(0)
+		user.sd_SetLuminosity(user.luminosity - CANDLE_LUM)
 
 /obj/item/candle/pickup(mob/user)
 	if(lit)

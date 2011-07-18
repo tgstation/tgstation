@@ -46,3 +46,61 @@
 		name = "candle"
 		icon = 'candle.dmi'
 		icon_state = "candle4"
+
+
+/obj/item/trash/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if (istype(W, /obj/item/weapon/trashbag))
+		var/obj/item/weapon/trashbag/S = W
+		if (S.mode == 1)
+			for (var/obj/item/trash/O in locate(src.x,src.y,src.z))
+				if (S.contents.len < S.capacity)
+					S.contents += O;
+				else
+					user << "\blue The bag is full."
+					break
+			user << "\blue You pick up all trash."
+		else
+			if (S.contents.len < S.capacity)
+				S.contents += src;
+			else
+				user << "\blue The bag is full."
+		S.update_icon()
+	return
+
+/obj/item/weapon/trashbag
+	icon = 'trash.dmi'
+	icon_state = "trashbag0"
+	item_state = "trashbag"
+	name = "Trash bag"
+	var/mode = 0;  //0 = pick one at a time, 1 = pick all on tile
+	var/capacity = 25; //the number of trash it can carry.
+	flags = FPRINT | TABLEPASS | ONBELT
+	w_class = 1
+
+/obj/item/weapon/trashbag/update_icon()
+	if(contents.len == 0)
+		icon_state = "trashbag0"
+	else if(contents.len < 12)
+		icon_state = "trashbag1"
+	else if(contents.len < 25)
+		icon_state = "trashbag2"
+	else icon_state = "trashbag3"
+
+/obj/item/weapon/trashbag/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if (istype(W, /obj/item/trash))
+		var/obj/item/trash/O = W
+		src.contents += O;
+	return
+
+/obj/item/weapon/trashbag/verb/toggle_mode()
+	set name = "Switch Bag Method"
+	set category = "Object"
+
+	mode = !mode
+	switch (mode)
+		if(1)
+			usr << "The bag now picks up all trash in a tile at once."
+		if(0)
+			usr << "The bag now picks up one trash at a time."

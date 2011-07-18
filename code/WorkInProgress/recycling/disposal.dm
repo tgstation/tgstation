@@ -45,6 +45,14 @@
 			user << "You can't place that item inside the disposal unit."
 			return
 
+		if(istype(I, /obj/item/weapon/trashbag))
+			user << "\blue You empty the bag."
+			for (var/obj/item/trash/O in I.contents)
+				I.contents -= O
+				O.loc = src
+			I.update_icon()
+			return
+
 		var/obj/item/weapon/grab/G = I
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))

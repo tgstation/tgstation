@@ -74,6 +74,7 @@ var/ordernum=0
 	icon = 'computer.dmi'
 	icon_state = "supply"
 	req_access = list(access_cargo)
+	circuit = "/obj/item/weapon/circuitboard/supplycomp"
 	var/temp = null
 	var/hacked = 0
 
@@ -81,6 +82,7 @@ var/ordernum=0
 	name = "Supply ordering console"
 	icon = 'computer.dmi'
 	icon_state = "request"
+	circuit = "/obj/item/weapon/circuitboard/ordercomp"
 	var/temp = null
 
 /obj/marker/supplymarker
@@ -208,16 +210,10 @@ var/ordernum=0
 
 	return
 
-/obj/machinery/computer/ordercomp/attackby(I as obj, user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/ordercomp/attack_ai(var/mob/user as mob)
 	return src.attack_hand(user)
 
 /obj/machinery/computer/ordercomp/attack_paw(var/mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
 	return src.attack_hand(user)
 
 /obj/machinery/computer/supplycomp/attack_ai(var/mob/user as mob)
@@ -225,13 +221,6 @@ var/ordernum=0
 
 /obj/machinery/computer/supplycomp/attack_paw(var/mob/user as mob)
 	return src.attack_hand(user)
-
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
-		user << "\blue Special supplies unlocked."
-		src.hacked = 1
-	else
-		return src.attack_hand(user)
 
 /obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
 	if(..())
@@ -363,6 +352,41 @@ var/ordernum=0
 
 	user << browse(dat, "window=computer;size=575x450")
 	onclose(user, "computer")
+	return
+
+/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
+	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
+		user << "\blue Special supplies unlocked."
+		src.hacked = 1
+		return
+	if(istype(I, /obj/item/weapon/screwdriver))
+		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+		if(do_after(user, 20))
+			if (src.stat & BROKEN)
+				user << "\blue The broken glass falls out."
+				var/obj/computerframe/A = new /obj/computerframe( src.loc )
+				new /obj/item/weapon/shard( src.loc )
+				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
+				for (var/obj/C in src)
+					C.loc = src.loc
+				A.circuit = M
+				A.state = 3
+				A.icon_state = "3"
+				A.anchored = 1
+				del(src)
+			else
+				user << "\blue You disconnect the monitor."
+				var/obj/computerframe/A = new /obj/computerframe( src.loc )
+				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
+				for (var/obj/C in src)
+					C.loc = src.loc
+				A.circuit = M
+				A.state = 4
+				A.icon_state = "4"
+				A.anchored = 1
+				del(src)
+	else
+		src.attack_hand(user)
 	return
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)

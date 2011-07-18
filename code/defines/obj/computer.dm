@@ -3,6 +3,8 @@
 	icon = 'computer.dmi'
 	density = 1
 	anchored = 1.0
+	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassemble
+
 /*
 /obj/machinery/computer/airtunnel
 	name = "Air Tunnel Control"
@@ -16,6 +18,7 @@
 	anchored = 1.0
 	icon = 'computer.dmi'
 	icon_state = "comm"
+	circuit = "/obj/item/weapon/circuitboard/operating"
 
 	var/mob/living/carbon/human/victim = null
 
@@ -31,6 +34,7 @@
 	desc = "Does not support Pin ball."
 	icon = 'computer.dmi'
 	icon_state = "arcade"
+	circuit = "/obj/item/weapon/circuitboard/arcade"
 	var/enemy_name = "Space Villian"
 	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
@@ -44,6 +48,7 @@
 	name = "AI Upload"
 	desc = "It is said that you can upload silly laws to AI's with this."
 	icon_state = "command"
+	circuit = "/obj/item/weapon/circuitboard/aiupload"
 	var/mob/living/silicon/ai/current = null
 	var/opened = 0
 
@@ -61,6 +66,7 @@
 	name = "Station Alert Computer"
 	desc = "Alert. Alert. ALERT!!!"
 	icon_state = "alert:0"
+	circuit = "/obj/item/weapon/circuitboard/stationalert"
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
 
 /obj/machinery/computer/atmos_alert
@@ -86,6 +92,7 @@
 	name = "Identification Computer"
 	desc = "You can use this to change ID's. YOU ARE GOD!"
 	icon_state = "id"
+	circuit = "/obj/item/weapon/circuitboard/card"
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
 	var/authenticated = 0.0
@@ -97,6 +104,7 @@
 /obj/machinery/computer/card/centcom
 	name = "CentCom Identification Computer"
 	desc = "You are the Gods's God."
+	circuit = "/obj/item/weapon/circuitboard/card/centcom"
 	req_access = list(access_cent_captain)
 
 /obj/machinery/computer/communications
@@ -104,6 +112,7 @@
 	desc = "This can be used for various important functions. Still under developement."
 	icon_state = "comm"
 	req_access = list(access_heads)
+	circuit = "/obj/item/weapon/circuitboard/communications"
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -167,6 +176,7 @@
 	desc = "This can be used to check medical records."
 	icon_state = "dna"
 	req_access = list(access_medical)
+	circuit = "/obj/item/weapon/circuitboard/med_data"
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -246,6 +256,7 @@
 	desc = "Beepsky. ARREST!!!"
 	icon_state = "security"
 	req_access = list(access_security)
+	circuit = "/obj/item/weapon/circuitboard/secure_data"
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -265,6 +276,7 @@
 	name = "Security Cameras"
 	desc = "Better than Television."
 	icon_state = "cameras"
+	circuit = "/obj/item/weapon/circuitboard/security"
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
 	var/network = "SS13"
@@ -277,6 +289,7 @@
 	icon_state = "telescreen"
 	network = "thunder"
 	density = 0
+	circuit = null
 
 /obj/machinery/computer/security/wooden_tv
 	name = "Security Cameras"
@@ -288,6 +301,7 @@
 	desc = "It's better than reality TV."
 	icon_state = "miningcameras"
 	network = "MINE"
+	circuit = "/obj/item/weapon/circuitboard/mining"
 
 /obj/machinery/computer/shuttle
 	name = "Shuttle"
@@ -316,4 +330,34 @@
 	use_power = 1
 	idle_power_usage = 250
 	active_power_usage = 500
+	circuit = "/obj/item/weapon/circuitboard/crew"
 	var/list/tracked =	list(  )
+
+/obj/machinery/computer/robotics
+	name = "Robotics Control"
+	icon = 'computer.dmi'
+	icon_state = "robot"
+	req_access = list(access_robotics)
+	circuit = "/obj/item/weapon/circuitboard/robotics"
+
+	var/id = 0.0
+	var/temp = null
+	var/status = 0
+	var/timeleft = 60
+	var/stop = 0.0
+	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
+
+/obj/machinery/computer/prisoner
+	name = "Prisoner Management"
+	icon = 'computer.dmi'
+	icon_state = "explosive"
+	req_access = list(access_armory)
+	circuit = "/obj/item/weapon/circuitboard/prisoner"
+
+	var/id = 0.0
+	var/temp = null
+	var/status = 0
+	var/timeleft = 60
+	var/stop = 0.0
+	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
+	var/malf_access = 0

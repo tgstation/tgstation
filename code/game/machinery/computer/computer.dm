@@ -92,40 +92,34 @@ Pod/Blast Doors computer
 	icon_state += "b"
 	stat |= BROKEN
 
+/obj/machinery/computer/attackby(I as obj, user as mob)
+	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
+		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+		if(do_after(user, 20))
+			var/obj/computerframe/A = new /obj/computerframe( src.loc )
+			var/obj/item/weapon/circuitboard/M = new circuit( A )
+			A.circuit = M
+			A.anchored = 1
+			for (var/obj/C in src)
+				C.loc = src.loc
+			if (src.stat & BROKEN)
+				user << "\blue The broken glass falls out."
+				new /obj/item/weapon/shard( src.loc )
+				A.state = 3
+				A.icon_state = "3"
+			else
+				user << "\blue You disconnect the monitor."
+				A.state = 4
+				A.icon_state = "4"
+			del(src)
+	else
+		src.attack_hand(user)
+	return
+
+
 /obj/machinery/computer/security/New()
 	..()
 	verbs -= /obj/machinery/computer/security/verb/station_map
-
-/obj/machinery/computer/security/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(loc, 'Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/computerframe/A = new /obj/computerframe( loc )
-				new /obj/item/weapon/shard( loc )
-				var/obj/item/weapon/circuitboard/security/M = new /obj/item/weapon/circuitboard/security( A )
-				for (var/obj/C in src)
-					C.loc = loc
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/computerframe/A = new /obj/computerframe( loc )
-				var/obj/item/weapon/circuitboard/security/M = new /obj/item/weapon/circuitboard/security( A )
-				for (var/obj/C in src)
-					C.loc = loc
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	else
-		attack_hand(user)
-	return
 
 /obj/machinery/computer/security/attack_ai(var/mob/user as mob)
 	return attack_hand(user)
@@ -138,8 +132,6 @@ Pod/Blast Doors computer
 		return null
 	user.reset_view(current)
 	return 1
-
-
 
 /obj/machinery/computer/card/attack_ai(var/mob/user as mob)
 	return attack_hand(user)
@@ -293,38 +285,6 @@ Pod/Blast Doors computer
 	if (modify)
 		modify.name = text("[]'s ID Card ([])", modify.registered, modify.assignment)
 	updateUsrDialog()
-	return
-
-/obj/machinery/computer/card/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(loc, 'Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			var/card_path = text2path("/obj/item/weapon/circuitboard/card[istype(src,/obj/machinery/computer/card/centcom)?"/centcom":""]")
-			if (stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/computerframe/A = new /obj/computerframe( loc )
-				new /obj/item/weapon/shard( loc )
-				var/obj/item/weapon/circuitboard/card/M = new card_path( A )
-				for (var/obj/C in src)
-					C.loc = loc
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/computerframe/A = new /obj/computerframe( loc )
-				var/obj/item/weapon/circuitboard/card/M = new card_path( A )
-				for (var/obj/C in src)
-					C.loc = loc
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	else
-		attack_hand(user)
 	return
 
 /obj/datacore/proc/manifest()
