@@ -15,6 +15,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
 
+/*
 /datum/recipe/bananaphone
 	reagents = list("psilocybin" = 5) //Trippin' balls, man.
 	items = list(
@@ -22,6 +23,7 @@
 		/obj/item/device/radio
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/bananaphone
+*/
 
 /datum/recipe/jellydonut
 	reagents = list("berryjuice" = 5)

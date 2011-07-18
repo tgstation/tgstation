@@ -909,7 +909,7 @@
 			baconbeacon.loc = usr
 			baconbeacon.digest_delay()
 
-
+/*
 /obj/item/weapon/reagent_containers/food/snacks/bananaphone
 	name = "Banana Phone"
 	desc = "Ring ring ring ring ring..."
@@ -929,7 +929,7 @@
 			usr << sound('bananaphone.ogg',1)
 	hear_talk(mob/M as mob, msg)
 		if(bananaphone)
-			bananaphone.hear_talk(M, msg)
+			bananaphone.hear_talk(M, msg)*/
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 	name = "monkey cube"

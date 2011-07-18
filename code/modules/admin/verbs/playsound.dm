@@ -38,7 +38,7 @@
 	//else
 	//	alert("Debugging is disabled")
 	//	return
-
+/*
 /client/proc/cuban_pete()
 	set category = "Fun"
 	set name = "Cuban Pete Time"
@@ -92,7 +92,7 @@ client/proc/honk_theme()
 		if(M.client)
 			if(M.client.midis)
 				M << 'honk_theme.ogg'
-
+*/
 
 	/*if(Debug2)
 	if(!src.authenticated || !src.holder)
