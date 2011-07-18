@@ -330,6 +330,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 				if (C.lying) // if the perp is lying down, it's still a target but a less-important target
 					secondarytargets += C
+					continue
 
 				targets += C // if the perp has passed all previous tests, congrats, it is now a "shoot-me!" nominee
 
