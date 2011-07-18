@@ -96,6 +96,15 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 		mobdamage = list(BRUTE = 0, BURN = 20, TOX = 0, OXY = 0, CLONE = 0)
 		flag = "laser"
 
+	declone
+		name = "declown"
+		//damage_type = PROJECTILE_DECLONE
+		icon_state = "declone"
+		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+		damage = 20
+		mobdamage = list(BRUTE = 0, BURN = 0, TOX = 0, OXY = 0, CLONE = 70)
+		flag = "laser"
+
 	dart
 		name = "dart"
 		//damage_type = PROJECTILE_DART
@@ -878,6 +887,30 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 				if(power_supply.charge <= charge_cost)
 					return 0
 				in_chamber = new /obj/item/projectile/fireball(src)
+				power_supply.use(charge_cost)
+				return 1
+
+			attack_self(mob/living/user as mob)
+				return
+
+			New()
+				power_supply = new /obj/item/weapon/cell(src)
+				power_supply.give(power_supply.maxcharge)
+
+		decloner
+			name = "decloner"
+			desc = "A high tech energy weapon that declones a target."
+			icon_state = "decloner"
+			fire_sound = 'pulse3.ogg'
+			origin_tech = "combat=5;materials=4;powerstorage=3"
+			charge_cost = 100
+
+			load_into_chamber()
+				if(in_chamber)
+					return 1
+				if(power_supply.charge <= charge_cost)
+					return 0
+				in_chamber = new /obj/item/projectile/declone(src)
 				power_supply.use(charge_cost)
 				return 1
 

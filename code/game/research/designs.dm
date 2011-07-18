@@ -1019,6 +1019,15 @@ datum
 			materials = list("$metal" = 8000, "$silver" = 3000, "$gold" = 500)
 			build_path = "/obj/item/weapon/gun/energy/shockgun"
 
+		decloner
+			name = "Decloner"
+			desc = "Your opponent will bubble into a messy pile of goop."
+			id = "decloner"
+			req_tech = list("combat" = 8, "materials" = 7, "biotech" = 5, "powerstorage" = 6)
+			build_type = PROTOLATHE
+			materials = list("$gold" = 5000,"$uranium" = 10000, "mutagen" = 40)
+			build_path = "/obj/item/weapon/gun/energy/shockgun"
+
 		chemsprayer
 			name = "Chem Sprayer"
 			desc = "An advanced chem spraying device."
