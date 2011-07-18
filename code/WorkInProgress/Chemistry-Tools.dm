@@ -1074,9 +1074,53 @@
 	icon_state = null
 	var/bitesize = 1
 	var/bitecount = 0
+	var/trash = null
 
 	//Placeholder for effects that trigger on eating that aren't tied to reagents.
 	proc/On_Consume()
+		if (!trash) return
+		if(!reagents.total_volume)
+			var/mob/M = usr
+			switch(trash)
+				if ("raisins")
+					var/obj/item/trash/raisins/T = new /obj/item/trash/raisins/( M )
+					M.put_in_hand(T)
+				if ("candy")
+					var/obj/item/trash/candy/T = new /obj/item/trash/candy/( M )
+					M.put_in_hand(T)
+				if ("cheesie")
+					var/obj/item/trash/cheesie/T = new /obj/item/trash/cheesie/( M )
+					M.put_in_hand(T)
+				if ("chips")
+					var/obj/item/trash/chips/T = new /obj/item/trash/chips/( M )
+					M.put_in_hand(T)
+				if ("popcorn")
+					var/obj/item/trash/popcorn/T = new /obj/item/trash/popcorn/( M )
+					M.put_in_hand(T)
+				if ("sosjerky")
+					var/obj/item/trash/sosjerky/T = new /obj/item/trash/sosjerky/( M )
+					M.put_in_hand(T)
+				if ("syndi_cakes")
+					var/obj/item/trash/syndi_cakes/T = new /obj/item/trash/syndi_cakes/( M )
+					M.put_in_hand(T)
+				if ("waffles")
+					var/obj/item/trash/waffles/T = new /obj/item/trash/waffles/( M )
+					M.put_in_hand(T)
+				if ("plate")
+					var/obj/item/trash/plate/T = new /obj/item/trash/plate/( M )
+					M.put_in_hand(T)
+				if ("snack_bowl")
+					var/obj/item/trash/snack_bowl/T = new /obj/item/trash/snack_bowl/( M )
+					M.put_in_hand(T)
+				if ("pistachios")
+					var/obj/item/trash/pistachios/T = new /obj/item/trash/pistachios/( M )
+					M.put_in_hand(T)
+				if ("semki")
+					var/obj/item/trash/semki/T = new /obj/item/trash/semki/( M )
+					M.put_in_hand(T)
+				if ("tray")
+					var/obj/item/trash/tray/T = new /obj/item/trash/tray/( M )
+					M.put_in_hand(T)
 		return
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)

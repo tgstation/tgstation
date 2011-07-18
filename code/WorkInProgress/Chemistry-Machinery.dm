@@ -57,10 +57,16 @@
 			switch(text2num(href_list["state"]))
 				if(LIQUID)
 					G.icon_state = "liquid"
+					G.pixel_x = rand(-7, 7)  //random position
+					G.pixel_y = rand(-7, 7)
 				if(GAS)
 					G.icon_state = "vapour"
+					G.pixel_x = rand(-7, 7)  //random position
+					G.pixel_y = rand(-7, 7)
 				if(SOLID)
 					G.icon_state = "solid"
+					G.pixel_x = rand(-7, 7)  //random position
+					G.pixel_y = rand(-7, 7)
 			G.name += " ([lowertext(href_list["name"])])"
 			G.reagents.add_reagent(id,30)
 			energy--
@@ -204,10 +210,12 @@
 			reagents.clear_reagents()
 			icon_state = "mixer0"
 		else if (href_list["createpill"])
-			var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 			var/name = input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name())
+			var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 			if(!name || name == " ") name = reagents.get_master_reagent_name()
 			P.name = "[name] pill"
+			P.pixel_x = rand(-7, 7) //random position
+			P.pixel_y = rand(-7, 7)
 			reagents.trans_to(P,50)
 		else if (href_list["createbottle"])
 			if(!condi)
@@ -215,6 +223,8 @@
 				var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 				if(!name || name == " ") name = reagents.get_master_reagent_name()
 				P.name = "[name] bottle"
+				P.pixel_x = rand(-7, 7) //random position
+				P.pixel_y = rand(-7, 7)
 				reagents.trans_to(P,30)
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)

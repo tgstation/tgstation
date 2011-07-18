@@ -323,6 +323,7 @@
 	name = "Omelette Du Fromage"
 	desc = "That's all you can say!"
 	icon_state = "omelette"
+	trash = "plate"
 	//var/herp = 0
 	New()
 		..()
@@ -369,6 +370,7 @@
 	name = "Banana Cream Pie"
 	desc = "Just like back home, on clown planet! HONK!"
 	icon_state = "pie"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
@@ -421,7 +423,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
 	name = "Soylent Green"
 	desc = "Not made of people. Honest." //Totally people.
-	icon_state = "soylent"
+	icon_state = "soylent_green"
+	trash = "waffles"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 14)
@@ -430,7 +433,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
 	name = "Soylen Virdians"
 	desc = "Not made of people. Honest." //Actually honest for once.
-	icon_state = "soylent"
+	icon_state = "soylent_yellow"
+	trash = "waffles"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -655,6 +659,7 @@
 	name = "Space Fries"
 	desc = "AKA: French Fries, Freedom Fries, etc"
 	icon_state = "fries"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
@@ -664,6 +669,7 @@
 	name = "Soy Dope"
 	desc = "Dope from a soy."
 	icon_state = "soydope"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
@@ -954,6 +960,7 @@
 	name = "Enchiladas"
 	desc = "Viva La Mexico!"
 	icon_state = "enchiladas"
+	trash = "tray"
 	New()
 		..()
 		reagents.add_reagent("nutriment",8)
@@ -964,6 +971,7 @@
 	name = "Monkie's Delight"
 	desc = "Eeee Eee!"
 	icon_state = "monkiesdelight"
+	trash = "tray"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 14)
@@ -997,6 +1005,7 @@
 	name = "Sandwich"
 	desc = "A grand creation of meat, cheese, bread and several leafs oflettuce! Arthur Dent would be proud."
 	icon_state = "sandwich"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
@@ -1006,6 +1015,7 @@
 	name = "Toasted Sandwich"
 	desc = "Now if you only had a pepper bar."
 	icon_state = "toastedsandwich"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 9)
@@ -1015,6 +1025,7 @@
 	name = "Tomato Soup"
 	desc = "Drinking this feels like being a vampire! A tomato vampire..."
 	icon_state = "tomatosoup"
+	trash = "snack_bowl"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
@@ -1026,6 +1037,7 @@
 	name = "Roffle Waffles"
 	desc = "Waffles from Roffle. Co."
 	icon_state = "rofflewaffles"
+	trash = "waffles"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
@@ -1048,6 +1060,7 @@
 	name = "Metroid Toast"
 	desc = "A slice of bread covered with delicious jam."
 	icon_state = "metroidtoast"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
@@ -1068,6 +1081,7 @@
 	name = "Milosoup"
 	desc = "The universes best soup! Yum!!!"
 	icon_state = "milosoup"
+	trash = "snack_bowl"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 12)
@@ -1078,6 +1092,7 @@
 	name = "Stewed Soy Meat"
 	desc = "Even non-vegetarians will LOVE this!"
 	icon_state = "stewedsoymeat"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
@@ -1087,6 +1102,7 @@
 	name = "Boiled Spagetti"
 	desc = "A plain dish of noodles, this sucks."
 	icon_state = "spagettiboiled"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
@@ -1096,6 +1112,7 @@
 	name = "Spagetti"
 	desc = "Spaghetti and crushed tomatoes. Just like your abusive father used to make!"
 	icon_state = "pastatomato"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -1106,6 +1123,7 @@
 	name = "Spagetti & Meatballs"
 	desc = "Now thats a nic'e meatball!"
 	icon_state = "meatballspagetti"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 8)
@@ -1133,6 +1151,7 @@
 	name = "Carrot Fries"
 	desc = "Tasty fries from fresh Carrots."
 	icon_state = "carrotfries"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
@@ -1416,6 +1435,7 @@
 	name = "Birthday Cake slice"
 	desc = "A slice of your birthday"
 	icon_state = "birthdaycakeslice"
+	trash = "plate"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread
@@ -1433,7 +1453,28 @@
 	name = "Bread slice"
 	desc = "A slice of home."
 	icon_state = "breadslice"
+	trash = "plate"
 	bitesize = 2
+
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread
+	name = "Cream Cheese Bread"
+	desc = "Yum yum yum!"
+	icon_state = "creamcheesebread"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
+	slices_num = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 20)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
+	name = "Cream Cheese Bread slice"
+	desc = "A slice of yum!"
+	icon_state = "creamcheesebreadslice"
+	trash = "plate"
+	bitesize = 2
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
 	name = "Watermelon"
@@ -1451,6 +1492,7 @@
 	desc = "A slice of watery goodness."
 	icon_state = "watermelonslice"
 	bitesize = 2
+
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/applecake
 	name = "Apple Cake"
@@ -1546,22 +1588,5 @@
 	name = "Vegetable pizza slice"
 	desc = "A slice of the most green pizza of all pizzas not containing green ingredients "
 	icon_state = "vegetablepizzaslice"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread
-	name = "Cream Cheese Bread"
-	desc = "Yum yum yum!"
-	icon_state = "creamcheesebread"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
-	slices_num = 5
-	New()
-		..()
-		reagents.add_reagent("nutriment", 20)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
-	name = "Cream Cheese Bread slice"
-	desc = "A slice of yum!"
-	icon_state = "creamcheesebreadslice"
 	bitesize = 2
 

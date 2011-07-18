@@ -8,13 +8,15 @@
 	return null
 
 /proc/get_area(O)
-	var/location = O
+	var/atom/location = O
 	var/i
 	for(i=1, i<=20, i++)
-		if(!isarea(location))
-			location = location:loc
-		else
+		if(isarea(location))
 			return location
+		else if (istype(location))
+			location = location.loc
+		else
+			return null
 	return 0
 
 /proc/get_area_name(N) //get area by it's name
