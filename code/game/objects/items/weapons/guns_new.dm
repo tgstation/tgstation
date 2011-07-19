@@ -72,15 +72,21 @@
 		name = "shock"
 		icon_state = "fireball"
 		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-		damage = 20
-		mobdamage = list(BRUTE = 0, BURN = 20, TOX = 0, OXY = 0, CLONE = 0)
+		damage = 25
+		mobdamage = list(BRUTE = 0, BURN = 25, TOX = 0, OXY = 0, CLONE = 0)
 		flag = "laser"
+		New()
+			..()
+			effects["stun"] = 10
+			effects["weak"] = 10
+			effects["stutter"] = 10
+			effectprob["weak"] = 25
 
 	declone
 		name = "declown"
 		icon_state = "declone"
 		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-		damage = 20
+		damage = 70
 		mobdamage = list(BRUTE = 0, BURN = 0, TOX = 0, OXY = 0, CLONE = 70)
 		flag = "laser"
 
@@ -304,7 +310,7 @@
 
 		dart
 			desc = "A dart for use in shotguns.."
-			name = "shotgun dart"
+			name = "shotgun daFrt"
 			icon_state = "blshell" //someone, draw the icon, please.
 			m_amt = 50000 //because it's like, instakill.
 

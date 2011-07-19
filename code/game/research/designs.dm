@@ -1038,6 +1038,15 @@ datum
 			reliability_base = 100
 			build_path = "/obj/item/weapon/chemsprayer"
 
+		rapidsyringe
+			name = "Rapid Syringe Gun"
+			desc = "A gun that fires many syringes."
+			id = "rapidsyringe"
+			req_tech = list("combat" = 3, "materials" = 3, "engineering" = 3, "biotech" = 2)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 5000, "$glass" = 1000)
+			build_path = "/obj/item/weapon/gun/rapidsyringe"
+
 		freeze_gun
 			name = "Freeze Gun"
 			desc = "A gun that shoots supercooled hydrogen particles to drastically chill a target's body temperature."
