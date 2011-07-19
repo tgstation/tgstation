@@ -1026,7 +1026,7 @@ datum
 			req_tech = list("combat" = 8, "materials" = 7, "biotech" = 5, "powerstorage" = 6)
 			build_type = PROTOLATHE
 			materials = list("$gold" = 5000,"$uranium" = 10000, "mutagen" = 40)
-			build_path = "/obj/item/weapon/gun/energy/shockgun"
+			build_path = "/obj/item/weapon/gun/energy/decloner"
 
 		chemsprayer
 			name = "Chem Sprayer"
