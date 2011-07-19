@@ -840,7 +840,7 @@
 				if (emptyHand)
 					l_store.DblClick()
 				return
-			if ((!( istype(W, /obj/item) ) || W.w_class >= 2 || !( w_uniform )))
+			if ((!( istype(W, /obj/item) ) || W.w_class > 2 || !( w_uniform )))
 				return
 			u_equip(W)
 			l_store = W
@@ -849,7 +849,7 @@
 				if (emptyHand)
 					r_store.DblClick()
 				return
-			if ((!( istype(W, /obj/item) ) || W.w_class >= 2 || !( w_uniform )))
+			if ((!( istype(W, /obj/item) ) || W.w_class > 2 || !( w_uniform )))
 				return
 			u_equip(W)
 			r_store = W

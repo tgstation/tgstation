@@ -1,20 +1,3 @@
-/* NOPE NOPE SORRY NO DERPFLAGS
-
-var/const/PROJECTILE_TASER = 1
-var/const/PROJECTILE_LASER = 2
-var/const/PROJECTILE_BULLET = 3
-var/const/PROJECTILE_PULSE = 4
-var/const/PROJECTILE_BOLT = 5
-var/const/PROJECTILE_WEAKBULLET = 6
-var/const/PROJECTILE_TELEGUN = 7
-var/const/PROJECTILE_DART = 8
-var/const/PROJECTILE_SHOCK = 9
-var/const/PROJECTILE_BULLETBURST = 10
-var/const/PROJECTILE_WEAKBULLETBURST = 11
-var/const/PROJECTILE_WEAKERBULLETBURST = 12
-
-*/
-
 #define BRUTE "brute"
 #define BURN "burn"
 #define TOX "tox"
@@ -69,7 +52,6 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 
 	beam
 		name = "laser"
-		//damage_type = PROJECTILE_LASER
 		icon_state = "laser"
 		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 		damage = 20
@@ -82,14 +64,12 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 
 		pulse
 			name = "pulse"
-			//damage_type = PROJECTILE_PULSE
 			icon_state = "u_laser"
 			damage = 50
 			mobdamage = list(BRUTE = 10, BURN = 40, TOX = 0, OXY = 0, CLONE = 0)
 
 	fireball
 		name = "shock"
-		//damage_type = PROJECTILE_SHOCK
 		icon_state = "fireball"
 		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 		damage = 20
@@ -98,7 +78,6 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 
 	declone
 		name = "declown"
-		//damage_type = PROJECTILE_DECLONE
 		icon_state = "declone"
 		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 		damage = 20
@@ -107,7 +86,6 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 
 	dart
 		name = "dart"
-		//damage_type = PROJECTILE_DART
 		icon_state = "toxin"
 		flag = "bio"
 		damage = 0
@@ -119,7 +97,6 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 
 	electrode
 		name = "electrode"
-		//damage_type = PROJECTILE_TASER
 		icon_state = "spark"
 		flag = "taser"
 		damage = 0
@@ -133,7 +110,6 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 
 	bolt
 		name = "bolt"
-		//damage_type = PROJECTILE_BOLT
 		icon_state = "cbbolt"
 		flag = "rad"
 		damage = 0
@@ -173,12 +149,21 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 	Bump(atom/A as mob|obj|turf|area)
 		if(A == firer)
 			loc = A.loc
-			return // cannot shoot yourself! NO!
+			return // cannot shoot yourself
+
 		if(bumped) return
 
 		bumped = 1
 		if(firer && istype(A, /mob))
 			var/mob/M = A
+			if(!istype(A, /mob/living))
+				if(prob(98))
+					loc = A.loc
+					return // nope.avi
+				else
+					visible_message("\red [src] vanishes into thin air!")
+					del(src) // ssssshhhhh
+
 			if(!silenced)
 				/*
 				for(var/mob/O in viewers(M))
@@ -413,7 +398,7 @@ var/const/PROJECTILE_WEAKERBULLETBURST = 12
 	item_state = "gun"
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY
 	m_amt = 2000
-	w_class = 2.0
+	w_class = 3.0
 	throw_speed = 4
 	throwforce = 5
 	throw_range = 10
