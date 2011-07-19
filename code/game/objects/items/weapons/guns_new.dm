@@ -157,12 +157,8 @@
 		if(firer && istype(A, /mob))
 			var/mob/M = A
 			if(!istype(A, /mob/living))
-				if(prob(98))
-					loc = A.loc
-					return // nope.avi
-				else
-					visible_message("\red [src] vanishes into thin air!")
-					del(src) // ssssshhhhh
+				loc = A.loc
+				return // nope.avi
 
 			if(!silenced)
 				/*
@@ -217,7 +213,7 @@
 
 			if(!bumped)
 				if(loc == original)
-					for(var/mob/M in original)
+					for(var/mob/living/M in original)
 						Bump(M)
 						sleep( 1 )
 
