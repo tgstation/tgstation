@@ -38,6 +38,9 @@
 	//to find it.
 	blinded = null
 
+	//Update Mind
+	update_mind()
+
 	//Disease Check
 	handle_virus_updates()
 
@@ -133,6 +136,14 @@
 			oxyloss = max(oxyloss, 0)
 			fireloss = max(fireloss, 0)
 
+		update_mind()
+			if(!mind && client)
+				mind = new
+				mind.current = src
+				mind.assigned_role = job
+				if(!mind.assigned_role)
+					mind.assigned_role = "Assistant"
+				mind.key = key
 
 		handle_disabilities()
 			if (disabilities & 2)

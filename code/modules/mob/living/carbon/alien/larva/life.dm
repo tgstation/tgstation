@@ -33,6 +33,9 @@
 	//to find it.
 	blinded = null
 
+	//Mind update
+	update_mind()
+
 	//Disease Check
 	handle_virus_updates()
 
@@ -144,6 +147,12 @@
 						toxloss += 3
 						updatehealth()
 
+		update_mind()
+			if(!mind && client)
+				mind = new
+				mind.current = src
+				mind.assigned_role = "Larva"
+				mind.key = key
 
 		breathe()
 

@@ -15,6 +15,8 @@
 
 		src.updatehealth()
 
+		src.update_mind()
+
 		/*if (istype(T, /turf))
 			var/ficheck = src.firecheck(T)
 			if (ficheck)
@@ -243,3 +245,10 @@
 	else
 		src.health = 100
 		src.stat = 0
+
+/mob/living/silicon/ai/proc/update_mind()
+	if(!mind && client)
+		mind = new
+		mind.current = src
+		mind.assigned_role = "AI"
+		mind.key = key

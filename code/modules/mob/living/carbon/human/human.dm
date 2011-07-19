@@ -400,69 +400,6 @@
 		else
 			eye_blurry += P.effects["eyeblur"]
 
-
-
-	/*
-	// Bullet shots
-	if(P.flag == "bullet")
-		if (prob(50) && stat != 2)
-			if(weakened <= 5) weakened = 5
-
-	// Taser shots
-	if(P.flag == "taser" && d == P.damage)
-		armor = getarmor(affecting, "taser")
-		if (prob(armor["armor"]))
-			show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-			return
-
-		if (prob(75) && stunned <= 10)
-			stunned = 10
-		else
-			weakened = 10
-		if (stuttering < 10)
-			stuttering = 10
-
-	// Laser shots
-	if(P.flag == "laser")
-		if (!eye_blurry && prob(50)) eye_blurry = 4
-		if (prob(25)) stunned++
-
-	// Shock shots
-	if(istype(P, /obj/item/projectile/fireball))
-		if (!eye_blurry && prob(50)) eye_blurry = 4
-		if (prob(25))
-			stunned = 10
-		else
-			weakened = 10
-
-	// Dart shots
-	if(istype(P, /obj/item/projectile/dart) && d == P.damage)
-		armor = getarmor(affecting, "bio")
-		if (prob(armor["armor"]))
-			show_message("\red Your [armor["clothes"]] absorbs the hit!", 4)
-			return
-		if (istype(l_hand, /obj/item/weapon/shield/riot)||istype(r_hand, /obj/item/weapon/shield/riot))
-			if (prob(50))
-				show_message("\red Your shield absorbs the hit!", 4)
-		else
-			weakened += 5
-			toxloss += 10
-
-	// Pulse shots
-	if(istype(P, /obj/item/projectile/beam/pulse))
-		if (prob(50))
-			stunned = min(stunned, 5)
-
-	// Bolt shots
-	if(istype(P, /obj/item/projectile/bolt) && d == P.damage)
-		toxloss += 3
-		radiation += 100
-		updatehealth()
-		stuttering += 5
-		drowsyness += 5
-
-	*/
-
 	return
 
 /mob/living/carbon/human/emp_act(severity)

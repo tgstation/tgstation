@@ -36,6 +36,9 @@
 	//Disease Check
 	handle_virus_updates()
 
+	//Update mind
+	update_mind()
+
 	//Handle temperature/pressure differences between body and environment
 	handle_environment()
 
@@ -108,6 +111,13 @@
 			if (src.disabilities & 16)
 				if (prob(10))
 					src.stuttering = max(10, src.stuttering)
+
+		update_mind()
+			if(!mind && client)
+				mind = new
+				mind.current = src
+				mind.assigned_role = "Hunter"
+				mind.key = key
 
 		handle_mutations_and_radiation()
 

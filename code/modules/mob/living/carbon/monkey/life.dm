@@ -115,6 +115,12 @@
 				if (prob(10))
 					src.stuttering = max(10, src.stuttering)
 
+		update_mind()
+			if(!mind && client)
+				mind = new
+				mind.current = src
+				mind.key = key
+
 		handle_mutations_and_radiation()
 
 			if(src.fireloss)

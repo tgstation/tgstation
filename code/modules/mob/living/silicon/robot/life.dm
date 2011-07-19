@@ -21,6 +21,8 @@
 		process_locks()
 	update_canmove()
 
+	update_mind()
+
 
 
 /mob/living/silicon/robot
@@ -71,6 +73,14 @@
 		update_canmove()
 			if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
 			else canmove = 1
+
+
+		update_mind()
+			if(!mind && client)
+				mind = new
+				mind.current = src
+				mind.assigned_role = "Hunter"
+				mind.key = key
 
 
 		handle_regular_status_updates()
