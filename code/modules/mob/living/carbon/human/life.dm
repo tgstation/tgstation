@@ -1,3 +1,5 @@
+#define HUMAN_MAX_OXYLOSS 12 //Defines how much oxyloss humans can get per tick. No air applies this value.
+
 /mob/living/carbon/human
 	var
 		oxygen_alert = 0
@@ -317,7 +319,7 @@
 			if(!breath || (breath.total_moles() == 0))
 				if(reagents.has_reagent("inaprovaline"))
 					return
-				oxyloss += 7
+				oxyloss += HUMAN_MAX_OXYLOSS
 
 				oxygen_alert = max(oxygen_alert, 1)
 
@@ -345,10 +347,10 @@
 					spawn(0) emote("gasp")
 				if(O2_pp > 0)
 					var/ratio = safe_oxygen_min/O2_pp
-					oxyloss += min(5*ratio, 7) // Don't fuck them up too fast (space only does 7 after all!)
+					oxyloss += min(5*ratio, HUMAN_MAX_OXYLOSS) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
 					oxygen_used = breath.oxygen*ratio/6
 				else
-					oxyloss += 7
+					oxyloss += HUMAN_MAX_OXYLOSS
 				oxygen_alert = max(oxygen_alert, 1)
 			/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
 				spawn(0) emote("cough")
@@ -356,7 +358,7 @@
 				oxyloss += 5*ratio
 				oxygen_used = breath.oxygen*ratio/6
 				oxygen_alert = max(oxygen_alert, 1)*/
-			else 									// We're in safe limits
+			else								// We're in safe limits
 				oxyloss = max(oxyloss-5, 0)
 				oxygen_used = breath.oxygen/6
 				oxygen_alert = 0
@@ -423,6 +425,9 @@
 				loc_temp = environment.temperature
 
 			var/thermal_protection = get_thermal_protection()
+
+			//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [fireloss] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)]"
+
 			if(stat != 2 && abs(bodytemperature - 310.15) < 50)
 				bodytemperature += adjust_body_temperature(bodytemperature, 310.15, thermal_protection)
 			if(loc_temp < 310.15) // a cold place -> add in cold protection
@@ -430,7 +435,6 @@
 			else // a hot place -> add in heat protection
 				thermal_protection += add_fire_protection(loc_temp)
 				bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1/thermal_protection)
-
 
 			// lets give them a fair bit of leeway so they don't just start dying
 			//as that may be realistic but it's no fun
@@ -584,6 +588,8 @@
 
 			if(mutantrace == "plant")
 				discomfort *= 3 //I don't like magic numbers. I'll make mutantraces a datum with vars sometime later. -- Urist
+			else
+				discomfort *= 1.5 //Dangercon 2011 - Upping damage by use of magic numbers - Errorage
 
 			switch(body_part)
 				if(HEAD)

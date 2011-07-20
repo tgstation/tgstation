@@ -399,7 +399,7 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	heat_transfer_coefficient = 0.01
-	protective_temperature = 4500
+	protective_temperature = 10000
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/extinguisher)
 	slowdown = 1.3
