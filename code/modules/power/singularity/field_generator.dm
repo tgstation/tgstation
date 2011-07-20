@@ -172,8 +172,9 @@ field_generator power level display
 
 
 	bullet_act(var/obj/item/projectile/Proj)
-		power -= Proj.damage
-		update_icon()
+		if(Proj.flag != "bullet")
+			power += Proj.damage
+			update_icon()
 		return
 
 

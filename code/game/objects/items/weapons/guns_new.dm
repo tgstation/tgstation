@@ -86,9 +86,9 @@
 		name = "declown"
 		icon_state = "declone"
 		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-		damage = 70
+		damage = 0
 		mobdamage = list(BRUTE = 0, BURN = 0, TOX = 0, OXY = 0, CLONE = 70)
-		flag = "laser"
+		flag = "bio"
 
 	dart
 		name = "dart"

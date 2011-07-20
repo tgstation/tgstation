@@ -69,20 +69,21 @@
 	spawn(1)	// slight delay to prevent infinite propagation due to map order
 		for(var/atom/movable/A in affecting)
 			if(!A.anchored)
-				if(ismob(A))
-					var/mob/M = A
-					if(M.buckled == src)
-						var/obj/machinery/conveyor/C = locate() in get_step(src, dir)
-						M.buckled = null
-						step(M,dir)
-						if(C)
-							M.buckled = C
+				if(isturf(A.loc)) // this is to prevent an ugly bug that forces a player to drop what they're holding if they recently pick it up from the conveyer belt
+					if(ismob(A))
+						var/mob/M = A
+						if(M.buckled == src)
+							var/obj/machinery/conveyor/C = locate() in get_step(src, dir)
+							M.buckled = null
+							step(M,dir)
+							if(C)
+								M.buckled = C
+							else
+								new/obj/item/weapon/cable_coil/cut(M.loc)
 						else
-							new/obj/item/weapon/cable_coil/cut(M.loc)
+							step(M,movedir)
 					else
-						step(M,movedir)
-				else
-					step(A,movedir)
+						step(A,movedir)
 
 // attack with item, place item on conveyor
 
