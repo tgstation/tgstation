@@ -358,6 +358,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	//log_admin("[key_name(src)] has alienized [M.key].")
 	var/list/dresspacks = list(
 		"strip",
+		"standard space gear",
 		"tournament standard red",
 		"tournament standard green",
 		"tournament gangster",
@@ -387,6 +388,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	switch(dresscode)
 		if ("strip")
 			//do nothing
+		if ("standard space gear")
+			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
+
+			M.equip_if_possible(new /obj/item/clothing/under/color/grey(M), M.slot_w_uniform)
+			M.equip_if_possible(new /obj/item/clothing/suit/space(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/head/helmet/space(M), M.slot_head)
+			var /obj/item/weapon/tank/jetpack/J = new /obj/item/weapon/tank/jetpack(M)
+			M.equip_if_possible(J, M.slot_back)
+			J.toggle()
+			M.equip_if_possible(new /obj/item/clothing/mask/breath(M), M.slot_wear_mask)
+			J.Topic(null, list("stat" = 1))
 		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
 			if (dresscode=="tournament standard red")
 				M.equip_if_possible(new /obj/item/clothing/under/color/red(M), M.slot_w_uniform)

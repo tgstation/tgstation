@@ -3,6 +3,8 @@
 //Machine that tracks the sun and reports it's direction to the solar controllers
 //As long as this is working, solar panels on same powernet will track automatically
 
+
+
 /obj/machinery/power/tracker
 	name = "solar tracker"
 	desc = "A solar directional tracker."
@@ -14,6 +16,8 @@
 
 	var/sun_angle = 0		// sun angle as set by sun datum
 
+
+/*
 
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
@@ -34,6 +38,8 @@
 				C.tracker_update(angle)
 
 
+
+
 	// timed process
 	// make sure we can draw power from the powernet
 	process()
@@ -48,3 +54,5 @@
 	// override power change to do nothing since we don't care about area power
 	power_change()
 		return
+
+*/

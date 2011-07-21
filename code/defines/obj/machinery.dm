@@ -515,13 +515,6 @@
 	density = 1
 	directwired = 1
 	var/health = 10.0
-	var/id = 1
-	var/obscured = 0
-	var/sunfrac = 0
-	var/adir = SOUTH
-	var/ndir = SOUTH
-	var/turn_angle = 0
-	var/obj/machinery/power/solar_control/control
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0

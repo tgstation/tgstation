@@ -79,7 +79,7 @@ datum/controller/game_controller
 
 		sleep(1)
 
-		sun.calc_position()
+		//sun.calc_position()
 
 		sleep(-1)
 
