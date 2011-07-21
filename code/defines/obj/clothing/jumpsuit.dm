@@ -156,6 +156,14 @@
 	color = "red"
 	armor = list(melee = 10, bullet = 5, laser = 5, taser = 5, bomb = 5, bio = 0, rad = 0)
 
+/obj/item/clothing/under/rank/vice
+	name = "Vice officer Jumpsuit"
+	desc = "Your standard issue pretty-boy outfit, as seen on TV."
+	icon_state = "vice"
+	item_state = "gy_suit"
+	color = "vice"
+	armor = list(melee = 10, bullet = 5, laser = 5, taser = 5, bomb = 5, bio = 0, rad = 0)
+
 /obj/item/clothing/under/rank/geneticist
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a genetics rank stripe on it."
 	name = "Genetics Jumpsuit"
@@ -282,6 +290,13 @@
 	icon_state = "lightbrown"
 	item_state = "lb_suit"
 	color = "cargo"
+
+/obj/item/clothing/under/rank/mailman
+	name = "Mailman Jumpsuit"
+	desc = "Special delivery!"
+	icon_state = "mailman"
+	item_state = "b_suit"
+	color = "mailman"
 
 /obj/item/clothing/under/sexyclown
 	name = "Sexyclown suit"

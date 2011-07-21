@@ -116,10 +116,16 @@
 	icon_state = "marisa"
 
 /obj/item/clothing/head/chefhat
-	name = "Chef's hat"
+	name = "Chef's Hat"
 	icon_state = "chef"
 	item_state = "chef"
 	desc = "The commander in chef's head wear."
+	flags = FPRINT | TABLEPASS | HEADSPACE
+
+/obj/item/clothing/head/mailman
+	name = "Mailman Hat"
+	icon_state = "mailman"
+	desc = "Right-on-time mail ervice head wear."
 	flags = FPRINT | TABLEPASS | HEADSPACE
 
 /obj/item/clothing/head/plaguedoctorhat
