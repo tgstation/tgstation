@@ -36,37 +36,11 @@ AI MODULES
 
 
 /obj/machinery/computer/aiupload/attackby(obj/item/weapon/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/weapon/screwdriver) && opened)
-		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/aiupload/M = new /obj/item/weapon/circuitboard/aiupload( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/aiupload/M = new /obj/item/weapon/circuitboard/aiupload( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	else if(istype(O, /obj/item/weapon/aiModule))
+	if(istype(O, /obj/item/weapon/aiModule))
 		var/obj/item/weapon/aiModule/M = O
 		M.install(src)
 	else
-		return ..()
+		..()
 
 /obj/machinery/computer/aiupload/attack_hand(var/mob/user as mob)
 	if(src.stat & NOPOWER)

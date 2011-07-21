@@ -85,6 +85,8 @@
 	new /obj/item/clothing/suit/chaplain_hoodie( src )
 	new /obj/item/clothing/head/chaplain_hood( src )
 	new /obj/item/clothing/suit/holidaypriest( src )
+	new /obj/item/weapon/candlepack( src )
+	new /obj/item/weapon/candlepack( src )
 	return
 
 /obj/closet/wardrobe/green/New()

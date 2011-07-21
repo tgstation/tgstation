@@ -56,6 +56,7 @@
 	name = "Cyborg Upload"
 	desc = "Used for uploading responsible laws to Cyborg. Right..."
 	icon_state = "command"
+	circuit = "/obj/item/weapon/circuitboard/borgupload"
 	var/mob/living/silicon/robot/current = null
 
 /obj/machinery/computer/atmosphere
@@ -314,6 +315,7 @@
 	name = "Teleporter"
 	desc = "Use this to set your destination...hopefully..."
 	icon_state = "teleport"
+	circuit = "/obj/item/weapon/circuitboard/teleporter"
 	var/obj/item/locked = null
 	var/id = null
 

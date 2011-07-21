@@ -57,16 +57,12 @@
 			switch(text2num(href_list["state"]))
 				if(LIQUID)
 					G.icon_state = "liquid"
-					G.pixel_x = rand(-7, 7)  //random position
-					G.pixel_y = rand(-7, 7)
 				if(GAS)
 					G.icon_state = "vapour"
-					G.pixel_x = rand(-7, 7)  //random position
-					G.pixel_y = rand(-7, 7)
 				if(SOLID)
 					G.icon_state = "solid"
-					G.pixel_x = rand(-7, 7)  //random position
-					G.pixel_y = rand(-7, 7)
+			G.pixel_x = rand(-7, 7)
+			G.pixel_y = rand(-7, 7)
 			G.name += " ([lowertext(href_list["name"])])"
 			G.reagents.add_reagent(id,30)
 			energy--

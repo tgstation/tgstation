@@ -23,6 +23,7 @@
 	name = "Cloning console"
 	icon = 'computer.dmi'
 	icon_state = "dna"
+	circuit = "/obj/item/weapon/circuitboard/cloning"
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
@@ -87,23 +88,8 @@
 			user << "You insert [W]."
 			src.updateUsrDialog()
 			return
-	else if((istype(W, /obj/item/weapon/screwdriver)) && (src.stat & BROKEN))
-		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			user << "\blue The broken glass falls out."
-			var/obj/computerframe/A = new /obj/computerframe( src.loc )
-			new /obj/item/weapon/shard( src.loc )
-			var/obj/item/weapon/circuitboard/cloning/M = new /obj/item/weapon/circuitboard/cloning( A )
-			for (var/obj/C in src)
-				C.loc = src.loc
-			M.records = src.records
-			A.circuit = M
-			A.state = 3
-			A.icon_state = "3"
-			A.anchored = 1
-			del(src)
 	else
-		src.attack_hand(user)
+		..()
 	return
 
 /obj/machinery/computer/cloning/attack_paw(mob/user as mob)
