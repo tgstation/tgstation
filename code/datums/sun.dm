@@ -1,5 +1,3 @@
-/*
-
 /datum/sun
 	var/angle
 	var/dx
@@ -73,7 +71,6 @@
 	S.obscured = 0		// if hit the edge or stepped 20 times, not obscured
 	S.update_solar_exposure()
 
-*/
 
 //returns the north-zero clockwise angle in degrees, given a direction
 

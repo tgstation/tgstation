@@ -1,19 +1,13 @@
-/obj/machinery/power/solar
-	var/id
-	var/net_set = 0
-
 /obj/machinery/power/solar/New()
 	..()
 	spawn(10)
 		updateicon()
+		update_solar_exposure()
 
 		if(powernet)
-			add_avail(700)
-			net_set = 1
-		else
-			net_set = 0
-
-
+			for(var/obj/machinery/power/solar_control/SC in powernet.nodes)
+				if(SC.id == id)
+					control = SC
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -45,9 +39,9 @@
 		overlays += image('power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
 	else
 		overlays += image('power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
+		src.dir = angle2dir(adir)
 	return
 
-/*
 /obj/machinery/power/solar/proc/update_solar_exposure()
 	if(!sun)
 		return
@@ -64,21 +58,30 @@
 
 #define SOLARGENRATE 1500
 
-*/
-
 /obj/machinery/power/solar/process()
 
 	if(stat & BROKEN)
 		return
 
-	add_avail(700)
+	//return //TODO: FIX
 
+	if(!obscured)
+		var/sgen = SOLARGENRATE * sunfrac
+		add_avail(sgen)
+		if(powernet && control)
+			if(control in powernet.nodes) //this line right here...
+				control.gen += sgen
+
+	if(adir != ndir)
+		spawn(10+rand(0,15))
+			adir = (360+adir+dd_range(-10,10,ndir-adir))%360
+			updateicon()
+			update_solar_exposure()
 
 /obj/machinery/power/solar/proc/broken()
 	stat |= BROKEN
 	updateicon()
 	return
-
 
 /obj/machinery/power/solar/meteorhit()
 	if(stat & !BROKEN)
@@ -90,14 +93,19 @@
 	switch(severity)
 		if(1.0)
 			del(src)
+			if(prob(15))
+				new /obj/item/weapon/shard( src.loc )
 			return
 		if(2.0)
 			if (prob(25))
 				new /obj/item/weapon/shard( src.loc )
 				del(src)
 				return
+			if (prob(50))
+				broken()
 		if(3.0)
-			return
+			if (prob(25))
+				broken()
 	return
 
 /obj/machinery/power/solar/blob_act()
@@ -110,7 +118,7 @@
 
 
 
-/*
+
 /obj/machinery/power/solar_control/New()
 	..()
 	spawn(15)
@@ -323,4 +331,3 @@
 	if (prob(75))
 		broken()
 		src.density = 0
-*/
