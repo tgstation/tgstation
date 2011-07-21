@@ -87,7 +87,7 @@
 
 	makepowernets()
 
-	sun = new /datum/sun()
+	//sun = new /datum/sun() --no, seriously, no sun. It's really retarded to have so many extra calculations take place for something that doesn't even do anything. -Errorage
 
 	vote = new /datum/vote()
 
