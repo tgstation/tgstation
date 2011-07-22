@@ -59,6 +59,15 @@
 		src.updateDialog()
 
 
+	power_change()
+		..()
+		if(stat & NOPOWER)
+			active = 0
+			use_power = 0
+		else if(!stat)
+			use_power = 1
+		return
+
 	process()
 		if(src.active)
 			for(var/obj/particle_accelerator/particle_emitter/PE in connected_parts)
