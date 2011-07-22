@@ -16,6 +16,7 @@ datum
 		var/volume = 0
 		var/nutriment_factor = 0
 		//var/list/viruses = list()
+		var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 
 		proc
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
@@ -58,10 +59,11 @@ datum
 			id = "metroid"
 			description = "A green semi-liquid produced from one of the deadliest lifeforms in existence."
 			reagent_state = LIQUID
+			color = "#005020" // rgb: 0, 50, 20
 			on_mob_life(var/mob/living/M as mob)
 				if(prob(10))
-					M << "You don't feel too good."
-					M.toxloss+=20
+					M << "\red Your insides are burning!"
+					M.toxloss+=rand(20,60)
 				else if(prob(40))
 					M:heal_organ_damage(5,0)
 				..()
@@ -69,10 +71,11 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
+			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
+			color = "#C80000" // rgb: 200, 0, 0
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				var/datum/reagent/blood/self = src
@@ -84,6 +87,13 @@ datum
 
 					else //injected
 						M.contract_disease(virus, 1, 0)
+
+				if(self.data["virus2"])
+					if(method == TOUCH)
+						infect_virus2(M,self.data["virus2"])
+					else
+						infect_virus2(M,self.data["virus2"],1)
+
 				/*
 				if(self.data["virus"])
 					var/datum/disease/V = self.data["virus"]
@@ -112,6 +122,10 @@ datum
 						var/datum/disease/newVirus = new D.type
 						blood_prop.viruses += newVirus
 						newVirus.holder = blood_prop
+
+					var/datum/disease2/disease/v = self.data["virus2"]
+					if(v)
+						blood_prop.virus2 = v.getcopy()
 
 						// this makes it almost impossible for airborne diseases to spread
 						// THIS SHIT HAS TO GO, SORRY!
@@ -169,6 +183,7 @@ datum
 			name = "Vaccine"
 			id = "vaccine"
 			reagent_state = LIQUID
+			color = "#C81040" // rgb: 200, 16, 64
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				var/datum/reagent/vaccine/self = src
@@ -187,6 +202,7 @@ datum
 			id = "water"
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 			reagent_state = LIQUID
+			color = "#0064C8" // rgb: 0, 100, 200
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
@@ -209,7 +225,7 @@ datum
 							T.wet_overlay = null
 
 				for(var/mob/living/carbon/metroid/M in T)
-					M.toxloss+=rand(5,10)
+					M.toxloss+=rand(15,20)
 
 				var/hotspot = (locate(/obj/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
@@ -240,6 +256,7 @@ datum
 			id = "lube"
 			description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 			reagent_state = LIQUID
+			color = "#009CA8" // rgb: 0, 156, 168
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
@@ -259,6 +276,7 @@ datum
 			id = "anti_toxin"
 			description = "Dylovene is a broad-spectrum antitoxin."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -290,6 +308,8 @@ datum
 			id = "toxin"
 			description = "A Toxic chemical."
 			reagent_state = LIQUID
+			color = "#CF3600" // rgb: 207, 54, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss += 1.5
@@ -301,6 +321,8 @@ datum
 			id = "cyanide"
 			description = "A highly toxic chemical."
 			reagent_state = LIQUID
+			color = "#CF3600" // rgb: 207, 54, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss += 3
@@ -314,6 +336,8 @@ datum
 			id = "stoxin"
 			description = "An effective hypnotic used to treat insomnia."
 			reagent_state = LIQUID
+			color = "#E895CC" // rgb: 232, 149, 204
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
@@ -334,6 +358,8 @@ datum
 			id = "stoxin"
 			description = "Put people to sleep, and heals them."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
@@ -365,6 +391,7 @@ datum
 			id = "inaprovaline"
 			description = "Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -378,6 +405,8 @@ datum
 			id = "space_drugs"
 			description = "An illegal chemical compound used as drug."
 			reagent_state = LIQUID
+			color = "#60A584" // rgb: 96, 165, 132
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 15)
@@ -391,6 +420,8 @@ datum
 			id = "silicate"
 			description = "A compound that can be used to reinforce glass."
 			reagent_state = LIQUID
+			color = "#C7FFFF" // rgb: 199, 255, 255
+
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				if(istype(O,/obj/window))
@@ -405,35 +436,41 @@ datum
 			id = "oxygen"
 			description = "A colorless, odorless gas."
 			reagent_state = GAS
+			color = "#808080" // rgb: 128, 128, 128
 
 		copper
 			name = "Copper"
 			id = "copper"
 			description = "A highly ductile metal."
+			color = "#6E3B08" // rgb: 110, 59, 8
 
 		nitrogen
 			name = "Nitrogen"
 			id = "nitrogen"
 			description = "A colorless, odorless, tasteless gas."
 			reagent_state = GAS
+			color = "#808080" // rgb: 128, 128, 128
 
 		hydrogen
 			name = "Hydrogen"
 			id = "hydrogen"
 			description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
 			reagent_state = GAS
+			color = "#808080" // rgb: 128, 128, 128
 
 		potassium
 			name = "Potassium"
 			id = "potassium"
 			description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
 			reagent_state = SOLID
+			color = "#A0A0A0" // rgb: 160, 160, 160
 
 		mercury
 			name = "Mercury"
 			id = "mercury"
 			description = "A chemical element."
 			reagent_state = LIQUID
+			color = "#484848" // rgb: 72, 72, 72
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -447,12 +484,14 @@ datum
 			id = "sulfur"
 			description = "A chemical element."
 			reagent_state = SOLID
+			color = "#BF8C00" // rgb: 191, 140, 0
 
 		carbon
 			name = "Carbon"
 			id = "carbon"
 			description = "A chemical element."
 			reagent_state = SOLID
+			color = "#C77400" // rgb: 199, 116, 0
 
 			reaction_turf(var/turf/T, var/volume)
 				src = null
@@ -464,6 +503,8 @@ datum
 			id = "chlorine"
 			description = "A chemical element."
 			reagent_state = GAS
+			color = "#808080" // rgb: 128, 128, 128
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.take_organ_damage(1, 0)
@@ -475,6 +516,8 @@ datum
 			id = "fluorine"
 			description = "A highly-reactive chemical element."
 			reagent_state = GAS
+			color = "#808080" // rgb: 128, 128, 128
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss++
@@ -486,18 +529,21 @@ datum
 			id = "sodium"
 			description = "A chemical element."
 			reagent_state = SOLID
+			color = "#808080" // rgb: 128, 128, 128
 
 		phosphorus
 			name = "Phosphorus"
 			id = "phosphorus"
 			description = "A chemical element."
 			reagent_state = SOLID
+			color = "#832828" // rgb: 131, 40, 40
 
 		lithium
 			name = "Lithium"
 			id = "lithium"
 			description = "A chemical element."
 			reagent_state = SOLID
+			color = "#808080" // rgb: 128, 128, 128
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -511,6 +557,8 @@ datum
 			id = "sugar"
 			description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 			reagent_state = SOLID
+			color = "#808080" // rgb: 128, 128, 128
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += 1
 				..()
@@ -521,6 +569,8 @@ datum
 			id = "acid"
 			description = "A strong mineral acid with the molecular formula H2SO4."
 			reagent_state = LIQUID
+			color = "#DB5008" // rgb: 219, 80, 8
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss++
@@ -571,6 +621,8 @@ datum
 			id = "pacid"
 			description = "Polytrinic acid is a an extremely corrosive chemical substance."
 			reagent_state = LIQUID
+			color = "#8E18A9" // rgb: 142, 24, 169
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss++
@@ -626,18 +678,22 @@ datum
 			id = "glycerol"
 			description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
 			reagent_state = LIQUID
+			color = "#808080" // rgb: 128, 128, 128
 
 		nitroglycerin
 			name = "Nitroglycerin"
 			id = "nitroglycerin"
 			description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 			reagent_state = LIQUID
+			color = "#808080" // rgb: 128, 128, 128
 
 		radium
 			name = "Radium"
 			id = "radium"
 			description = "Radium is an alkaline earth metal. It is extremely radioactive."
 			reagent_state = SOLID
+			color = "#604838" // rgb: 96, 72, 56
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.radiation += 3
@@ -656,6 +712,8 @@ datum
 			id = "ryetalyn"
 			description = "Ryetalyn can cure all genetic abnomalities."
 			reagent_state = SOLID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.mutations = 0
@@ -669,6 +727,8 @@ datum
 			id = "thermite"
 			description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
 			reagent_state = SOLID
+			color = "#673910" // rgb: 103, 57, 16
+
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if(istype(T, /turf/simulated/wall))
@@ -684,6 +744,8 @@ datum
 			id = "mutagen"
 			description = "Might cause unpredictable mutations. Keep away from children."
 			reagent_state = LIQUID
+			color = "#13BC5E" // rgb: 19, 188, 94
+
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if ( (method==TOUCH && prob(33)) || method==INGEST)
@@ -701,11 +763,26 @@ datum
 				..()
 				return
 
+		virus_food
+			name = "Virus Food"
+			id = "virusfood"
+			description = "A mixture of water, milk, and oxygen. Virus cells can use this mixture to reproduce."
+			reagent_state = LIQUID
+			nutriment_factor = 2 * REAGENTS_METABOLISM
+			color = "#899613" // rgb: 137, 150, 19
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:nutrition += nutriment_factor
+				..()
+				return
+
 		sterilizine
 			name = "Sterilizine"
 			id = "sterilizine"
 			description = "Sterilizes wounds in preparation for surgery."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
 	/*		reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if (method==TOUCH)
@@ -727,6 +804,7 @@ datum
 			id = "iron"
 			description = "Pure iron is a metal."
 			reagent_state = SOLID
+			color = "#C8A5DC" // rgb: 200, 165, 220
 /*
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -746,18 +824,22 @@ datum
 			id = "gold"
 			description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
 			reagent_state = SOLID
+			color = "#F7C430" // rgb: 247, 196, 48
 
 		silver
 			name = "Silver"
 			id = "silver"
 			description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 			reagent_state = SOLID
+			color = "#D0D0D0" // rgb: 208, 208, 208
 
 		uranium
 			name ="Uranium"
 			id = "uranium"
 			description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 			reagent_state = SOLID
+			color = "#B8B8C0" // rgb: 184, 184, 192
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.radiation += 1
@@ -775,18 +857,22 @@ datum
 			id = "aluminum"
 			description = "A silvery white and ductile member of the boron group of chemical elements."
 			reagent_state = SOLID
+			color = "#A8A8A8" // rgb: 168, 168, 168
 
 		silicon
 			name = "Silicon"
 			id = "silicon"
 			description = "A tetravalent metalloid, silicon is less reactive than its chemical analog carbon."
 			reagent_state = SOLID
+			color = "#A8A8A8" // rgb: 168, 168, 168
 
 		fuel
 			name = "Welding fuel"
 			id = "fuel"
 			description = "Required for welders. Flamable."
 			reagent_state = LIQUID
+			color = "#660000" // rgb: 102, 0, 0
+
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				var/turf/the_turf = get_turf(O)
@@ -814,6 +900,8 @@ datum
 			id = "cleaner"
 			description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
 			reagent_state = LIQUID
+			color = "#A5F0EE" // rgb: 165, 240, 238
+
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/decal/cleanable))
 					del(O)
@@ -857,6 +945,7 @@ datum
 			id = "plantbgone"
 			description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 			reagent_state = LIQUID
+			color = "#49002E" // rgb: 73, 0, 46
 			/* Don't know if this is necessary.
 			on_mob_life(var/mob/living/carbon/M)
 				if(!M) M = holder.my_atom
@@ -891,6 +980,8 @@ datum
 			id = "plasma"
 			description = "Plasma in its liquid form."
 			reagent_state = LIQUID
+			color = "#E71B00" // rgb: 231, 27, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(holder.has_reagent("inaprovaline"))
@@ -920,6 +1011,8 @@ datum
 			id = "leporazine"
 			description = "Leporazine can be use to stabilize an individuals body temperature."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature > 310)
@@ -934,6 +1027,8 @@ datum
 			id = "cryptobiolin"
 			description = "Cryptobiolin causes confusion and dizzyness."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.make_dizzy(1)
@@ -948,6 +1043,8 @@ datum
 			id = "lexorin"
 			description = "Lexorin temporarily stops respiration. Causes tissue damage."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
 					return
@@ -964,6 +1061,8 @@ datum
 			id = "kelotane"
 			description = "Kelotane is a drug used to treat burns."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
 					return
@@ -977,6 +1076,8 @@ datum
 			id = "dermaline"
 			description = "Dermaline is the next step in burn medication. Works twice as good as kelotane and enables the body to restore even the direst heat-damaged tissue."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
 					return
@@ -990,6 +1091,8 @@ datum
 			id = "dexalin"
 			description = "Dexalin is used in the treatment of oxygen deprivation."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
 					return  //See above, down and around. --Agouri
@@ -1005,6 +1108,8 @@ datum
 			id = "dexalinp"
 			description = "Dexalin Plus is used in the treatment of oxygen deprivation. Its highly effective."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
 					return
@@ -1020,6 +1125,8 @@ datum
 			id = "tricordrazine"
 			description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
 					return
@@ -1036,6 +1143,8 @@ datum
 			id = "adminordrazine"
 			description = "It's magic. We don't have to explain it."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom ///This can even heal dead people.
 				M:cloneloss = 0
@@ -1095,6 +1204,8 @@ datum
 			id = "synaptizine"
 			description = "Synaptizine is used to treat neuroleptic shock. Can be used to help remove disabling symptoms such as paralysis."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:drowsyness = max(M:drowsyness-5, 0)
@@ -1109,6 +1220,8 @@ datum
 			id = "impedrezene"
 			description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:jitteriness = max(M:jitteriness-5,0)
@@ -1123,6 +1236,8 @@ datum
 			id = "hyronalin"
 			description = "Hyronalin is a medicinal drug used to counter the effects of radiation poisoning."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:radiation = max(M:radiation-3,0)
@@ -1134,6 +1249,8 @@ datum
 			id = "arithrazine"
 			description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
 					return  //See above, down and around. --Agouri
@@ -1150,6 +1267,8 @@ datum
 			id = "alkysine"
 			description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:brainloss = max(M:brainloss-3 , 0)
@@ -1161,6 +1280,8 @@ datum
 			id = "imidazoline"
 			description = "Heals eye damage"
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:eye_blurry = max(M:eye_blurry-5 , 0)
@@ -1175,6 +1296,8 @@ datum
 			id = "bicaridine"
 			description = "Bicaridine is an analgesic medication and can be used to treat blunt trauma."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(M.stat == 2.0)
 					return
@@ -1188,6 +1311,8 @@ datum
 			id = "hyperzine"
 			description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(prob(5)) M:emote(pick("twitch","blink_r","shiver"))
@@ -1200,6 +1325,8 @@ datum
 			id = "cryoxadone"
 			description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
@@ -1215,6 +1342,8 @@ datum
 			id = "clonexadone"
 			description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' clones that get ejected early when used in conjunction with a cryo tube."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < 170)
@@ -1230,6 +1359,7 @@ datum
 			id = "spaceacillin"
 			description = "An all-purpose antiviral agent."
 			reagent_state = LIQUID
+			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)//no more mr. panacea
 				holder.remove_reagent(src.id, 0.2)
@@ -1241,6 +1371,7 @@ datum
 			id = "carpotoxin"
 			description = "A deadly neurotoxin produced by the dreaded spess carp."
 			reagent_state = LIQUID
+			color = "#003333" // rgb: 0, 51, 51
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1252,6 +1383,8 @@ datum
 			name = "Zombie Powder"
 			id = "zombiepowder"
 			description = "A strong neurotoxin that puts the subject into a death-like state."
+			color = "#669900" // rgb: 102, 153, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:oxyloss += 0.5
@@ -1269,6 +1402,8 @@ datum
 			id = "nanites"
 			description = "Microscopic construction robots."
 			reagent_state = LIQUID
+			color = "#535E66" // rgb: 83, 94, 102
+
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
@@ -1279,6 +1414,8 @@ datum
 			id = "xenomicrobes"
 			description = "Microbes with an entirely alien cellular structure."
 			reagent_state = LIQUID
+			color = "#535E66" // rgb: 83, 94, 102
+
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				src = null
 				if( (prob(10) && method==TOUCH) || method==INGEST)
@@ -1291,7 +1428,7 @@ datum
 			id = "fluorosurfactant"
 			description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
 			reagent_state = LIQUID
-
+			color = "#9E6B38" // rgb: 158, 107, 56
 
 // metal foaming agent
 // this is lithium hydride. Add other recipies (e.g. LiH + H2O -> LiOH + H2) eventually
@@ -1301,18 +1438,22 @@ datum
 			id = "foaming_agent"
 			description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
 			reagent_state = SOLID
+			color = "#664B63" // rgb: 102, 75, 99
 
 		nicotine
 			name = "Nicotine"
 			id = "nicotine"
 			description = "A highly addictive stimulant extracted from the tobacco plant."
 			reagent_state = LIQUID
+			color = "#181818" // rgb: 24, 24, 24
 
 		ethanol
 			name = "Ethanol"
 			id = "ethanol"
 			description = "A well-known alcohol with a variety of applications."
 			reagent_state = LIQUID
+			color = "#404030" // rgb: 64, 64, 48
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -1332,18 +1473,22 @@ datum
 			id = "ammonia"
 			description = "A caustic substance commonly used in fertilizer or household cleaners."
 			reagent_state = GAS
+			color = "#404030" // rgb: 64, 64, 48
 
 		diethylamine
 			name = "Diethylamine"
 			id = "diethylamine"
 			description = "A secondary amine, mildly corrosive."
 			reagent_state = LIQUID
+			color = "#604030" // rgb: 96, 64, 48
 
 		ethylredoxrazine						// FUCK YOU, ALCOHOL
 			name = "Ethylredoxrazine"
 			id = "ethylredoxrazine"
 			description = "A powerfuld oxidizer that reacts with ethanol."
 			reagent_state = SOLID
+			color = "#605048" // rgb: 96, 80, 72
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.dizziness = 0
@@ -1358,6 +1503,8 @@ datum
 			id = "chloralhydrate"
 			description = "A powerful sedative."
 			reagent_state = SOLID
+			color = "#000067" // rgb: 0, 0, 103
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
@@ -1379,6 +1526,8 @@ datum
 			id = "beer2"
 			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
@@ -1405,6 +1554,8 @@ datum
 			description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 			reagent_state = SOLID
 			nutriment_factor = 15 * REAGENTS_METABOLISM
+			color = "#664330" // rgb: 102, 67, 48
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(prob(50)) M:heal_organ_damage(1,0)
@@ -1431,6 +1582,7 @@ datum
 			description = "A salty sauce made from the soy plant."
 			reagent_state = LIQUID
 			nutriment_factor = 2 * REAGENTS_METABOLISM
+			color = "#792300" // rgb: 121, 35, 0
 
 		ketchup
 			name = "Ketchup"
@@ -1438,6 +1590,7 @@ datum
 			description = "Ketchup, catsup, whatever. It's tomato paste."
 			reagent_state = LIQUID
 			nutriment_factor = 5 * REAGENTS_METABOLISM
+			color = "#731008" // rgb: 115, 16, 8
 
 
 		capsaicin
@@ -1445,6 +1598,8 @@ datum
 			id = "capsaicin"
 			description = "This is what makes chilis hot."
 			reagent_state = LIQUID
+			color = "#B31008" // rgb: 179, 16, 8
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:bodytemperature += 5
@@ -1461,6 +1616,8 @@ datum
 			id = "frostoil"
 			description = "A special oil that noticably chills the body. Extraced from Icepeppers."
 			reagent_state = LIQUID
+			color = "#B31008" // rgb: 139, 166, 233
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:bodytemperature -= 5
@@ -1481,12 +1638,14 @@ datum
 			id = "sodiumchloride"
 			description = "A salt made of sodium chloride. Commonly used to season food."
 			reagent_state = SOLID
+			color = "#282828" // rgb: 40, 40, 40
 
 		blackpepper
 			name = "Black Pepper"
 			id = "blackpepper"
 			description = "A power ground from peppercorns. *AAAACHOOO*"
 			reagent_state = SOLID
+			// no color (ie, black)
 
 		coco
 			name = "Coco Powder"
@@ -1494,6 +1653,8 @@ datum
 			description = "A fatty, bitter paste made from coco beans."
 			reagent_state = SOLID
 			nutriment_factor = 5 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				..()
@@ -1505,6 +1666,8 @@ datum
 			description = "Made with love! And coco beans."
 			reagent_state = LIQUID
 			nutriment_factor = 2 * REAGENTS_METABOLISM
+			color = "#403010" // rgb: 64, 48, 16
+
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+5)
@@ -1516,6 +1679,8 @@ datum
 			name = "Amatoxin"
 			id = "amatoxin"
 			description = "A powerful poison derived from certain species of mushroom."
+			color = "#792300" // rgb: 121, 35, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:toxloss++
@@ -1526,6 +1691,8 @@ datum
 			name = "Psilocybin"
 			id = "psilocybin"
 			description = "A strong psycotropic derived from certain species of mushroom."
+			color = "#E700E7" // rgb: 231, 0, 231
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 30)
@@ -1557,6 +1724,8 @@ datum
 			id = "sprinkles"
 			description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
@@ -1572,6 +1741,8 @@ datum
 			id = "syndicream"
 			description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#AB7878" // rgb: 171, 120, 120
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(istype(M, /mob/living/carbon/human) && M.mind)
@@ -1589,6 +1760,8 @@ datum
 			description = "An oil derived from various types of corn."
 			reagent_state = LIQUID
 			nutriment_factor = 20 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				..()
@@ -1625,6 +1798,7 @@ datum
 			id = "enzyme"
 			description = "A universal enzyme used in the preperation of certain chemicals and foods."
 			reagent_state = LIQUID
+			color = "#365E30" // rgb: 54, 94, 48
 
 		dry_ramen
 			name = "Dry Ramen"
@@ -1632,6 +1806,8 @@ datum
 			description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
 			reagent_state = SOLID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				..()
@@ -1643,6 +1819,8 @@ datum
 			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 			reagent_state = LIQUID
 			nutriment_factor = 5 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
@@ -1656,6 +1834,8 @@ datum
 			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 			reagent_state = LIQUID
 			nutriment_factor = 5 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				M:bodytemperature += 10
@@ -1673,6 +1853,8 @@ datum
 			description = "Both delicious AND rich in Vitamin C, what more do you need?"
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#E78108" // rgb: 231, 129, 8
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(!M) M = holder.my_atom
@@ -1687,6 +1869,8 @@ datum
 			description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#731008" // rgb: 115, 16, 8
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(!M) M = holder.my_atom
@@ -1701,6 +1885,8 @@ datum
 			description = "The sweet-sour juice of limes."
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#365E30" // rgb: 54, 94, 48
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(!M) M = holder.my_atom
@@ -1715,6 +1901,8 @@ datum
 			description = "It is just like a carrot but without crunching."
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#973800" // rgb: 151, 56, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:nutrition += nutriment_factor
@@ -1737,6 +1925,8 @@ datum
 			description = "A delicious blend of several different kinds of berries."
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#863333" // rgb: 134, 51, 51
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:nutrition += nutriment_factor
@@ -1749,6 +1939,8 @@ datum
 			description = "A tasty juice blended from various kinds of very deadly and toxic berries."
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#863353" // rgb: 134, 51, 83
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:nutrition += nutriment_factor
@@ -1762,6 +1954,8 @@ datum
 			description = "Delicious juice made from watermelon."
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#863333" // rgb: 134, 51, 51
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:nutrition += nutriment_factor
@@ -1774,6 +1968,8 @@ datum
 			description = "This juice is VERY sour."
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#863333" // rgb: 175, 175, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:nutrition += nutriment_factor
@@ -1785,6 +1981,8 @@ datum
 			id = "banana"
 			description = "The raw essence of a banana. HONK"
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#863333" // rgb: 175, 175, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(istype(M, /mob/living/carbon/human) && M.job in list("Clown"))
@@ -1819,6 +2017,8 @@ datum
 			description = "Juice of the potato. Bleh."
 			reagent_state = LIQUID
 			nutriment_factor = 2 * REAGENTS_METABOLISM
+			color = "#302000" // rgb: 48, 32, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				..()
@@ -1829,6 +2029,8 @@ datum
 			id = "milk"
 			description = "An opaque white liquid produced by the mammary glands of mammals."
 			reagent_state = LIQUID
+			color = "#DFDFDF" // rgb: 223, 223, 223
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
@@ -1841,6 +2043,8 @@ datum
 			id = "soymilk"
 			description = "An opaque white liquid made from soybeans."
 			reagent_state = LIQUID
+			color = "#DFDFC7" // rgb: 223, 223, 199
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
@@ -1854,6 +2058,8 @@ datum
 			description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
 			reagent_state = LIQUID
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#DFD7AF" // rgb: 223, 215, 175
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
@@ -1865,6 +2071,8 @@ datum
 			id = "coffee"
 			description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
 			reagent_state = LIQUID
+			color = "#482000" // rgb: 72, 32, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.dizziness = max(0,M.dizziness-5)
@@ -1881,6 +2089,8 @@ datum
 			id = "tea"
 			description = "Tasty black tea, it has antioxidants, it's good for you!"
 			reagent_state = LIQUID
+			color = "#101000" // rgb: 16, 16, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.dizziness = max(0,M.dizziness-2)
@@ -1899,6 +2109,8 @@ datum
 			id = "icecoffee"
 			description = "Coffee and ice, refreshing and cool."
 			reagent_state = LIQUID
+			color = "#102838" // rgb: 16, 40, 56
+
 			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.dizziness = max(0,M.dizziness-5)
@@ -1915,6 +2127,8 @@ datum
 			id = "icetea"
 			description = "No relation to a certain rap artist/ actor."
 			reagent_state = LIQUID
+			color = "#104038" // rgb: 16, 64, 56
+
 			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.dizziness = max(0,M.dizziness-2)
@@ -1931,6 +2145,8 @@ datum
 			id = "cola"
 			description = "A refreshing beverage."
 			reagent_state = LIQUID
+			color = "#100800" // rgb: 16, 8, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-5)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
@@ -1944,6 +2160,8 @@ datum
 			id = "nuka_cola"
 			description = "Cola, cola never changes."
 			reagent_state = LIQUID
+			color = "#100800" // rgb: 16, 8, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M.make_jittery(20)
 				M.druggy = max(M.druggy, 30)
@@ -1961,6 +2179,8 @@ datum
 			id = "spacemountainwind"
 			description = "Blows right through you like a space wind."
 			reagent_state = LIQUID
+			color = "#102000" // rgb: 16, 32, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-7)
 				M:sleeping = 0
@@ -1976,6 +2196,8 @@ datum
 			id = "thirteenloko"
 			description = "A potent mixture of caffeine and alcohol."
 			reagent_state = LIQUID
+			color = "#102000" // rgb: 16, 32, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-7)
 				M:sleeping = 0
@@ -1999,6 +2221,8 @@ datum
 			id = "dr_gibb"
 			description = "A delicious blend of 42 different flavours"
 			reagent_state = LIQUID
+			color = "#102000" // rgb: 16, 32, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-6)
 				if (M.bodytemperature > 310)
@@ -2012,6 +2236,8 @@ datum
 			id = "space_up"
 			description = "Tastes like a hull breach in your mouth."
 			reagent_state = LIQUID
+			color = "#202800" // rgb: 32, 40, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
@@ -2024,6 +2250,8 @@ datum
 			description = "A tangy substance made of 0.5% natural citrus!"
 			id = "lemon_lime"
 			reagent_state = LIQUID
+			color = "#878F00" // rgb: 135, 40, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
@@ -2036,6 +2264,8 @@ datum
 			id = "beer"
 			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2057,6 +2287,8 @@ datum
 			id = "whiskey"
 			description = "A superb and well-aged single-malt whiskey. Damn."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2074,6 +2306,8 @@ datum
 			id = "specialwhiskey"
 			description = "Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2092,6 +2326,8 @@ datum
 			id = "gin"
 			description = "It's gin. In space. I say, good sir."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2109,6 +2345,8 @@ datum
 			id = "rum"
 			description = "Yohoho and all that."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2126,6 +2364,8 @@ datum
 			id = "vodka"
 			description = "Number one drink AND fueling choice for Russians worldwide."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2143,6 +2383,8 @@ datum
 			id = "holywater"
 			description = "The chaplains holy water."
 			reagent_state = LIQUID
+			color = "#E0E8EF" // rgb: 224, 232, 239
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2160,6 +2402,8 @@ datum
 			id = "tequilla"
 			description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 			reagent_state = LIQUID
+			color = "#A8B0B7" // rgb: 168, 176, 183
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2177,6 +2421,8 @@ datum
 			id = "vermouth"
 			description = "You suddenly feel a craving for a martini..."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2194,6 +2440,8 @@ datum
 			id = "wine"
 			description = "An premium alchoholic beverage made from distilled grape juice."
 			reagent_state = LIQUID
+			color = "#7E4043" // rgb: 126, 64, 67
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2211,6 +2459,8 @@ datum
 			id = "tonic"
 			description = "It tastes strange but at least the quinine keeps the Space Malaria at bay."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
@@ -2225,6 +2475,8 @@ datum
 			id = "kahlua"
 			description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
@@ -2239,6 +2491,8 @@ datum
 			id = "cognac"
 			description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2256,6 +2510,8 @@ datum
 			id = "hooch"
 			description = "Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?"
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2273,6 +2529,8 @@ datum
 			id = "ale"
 			description = "A dark alchoholic beverage made by malted barley and yeast."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2290,6 +2548,8 @@ datum
 			id = "sodawater"
 			description = "A can of club soda. Why not make a scotch and soda?"
 			reagent_state = LIQUID
+			color = "#619494" // rgb: 97, 148, 148
+
 			on_mob_life(var/mob/living/M as mob)
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
@@ -2304,6 +2564,8 @@ datum
 			id = "ice"
 			description = "Frozen water, your dentist wouldn't like you chewing this."
 			reagent_state = SOLID
+			color = "#619494" // rgb: 97, 148, 148
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:bodytemperature -= 5
@@ -2317,6 +2579,8 @@ datum
 			id = "bilk"
 			description = "This appears to be beer mixed with milk. Disgusting."
 			reagent_state = LIQUID
+			color = "#895C4C" // rgb: 137, 92, 76
+
 			on_mob_life(var/mob/living/M as mob)
 				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
 				M:nutrition += 2
@@ -2338,6 +2602,8 @@ datum
 			id = "atomicbomb"
 			description = "Nuclear proliferation never tasted so good."
 			reagent_state = LIQUID
+			color = "#666300" // rgb: 102, 99, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M.druggy = max(M.druggy, 50)
 				M.confused = max(M:confused+2,0)
@@ -2357,6 +2623,8 @@ datum
 			id = "threemileisland"
 			description = "Made for a woman, strong enough for a man."
 			reagent_state = LIQUID
+			color = "#666340" // rgb: 102, 99, 64
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2375,6 +2643,8 @@ datum
 			id = "goldschlager"
 			description = "100 proof cinnamon schnapps, made for alcoholic teen girls on spring break."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2392,6 +2662,8 @@ datum
 			id = "patron"
 			description = "Tequila with silver in it, a favorite of alcoholic women in the club scene."
 			reagent_state = LIQUID
+			color = "#585840" // rgb: 88, 88, 64
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2409,6 +2681,8 @@ datum
 			id = "gintonic"
 			description = "An all time classic, mild cocktail."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2426,6 +2700,8 @@ datum
 			id = "cubalibre"
 			description = "Rum, mixed with cola. Viva la revolution."
 			reagent_state = LIQUID
+			color = "#3E1B00" // rgb: 62, 27, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2443,6 +2719,8 @@ datum
 			id = "whiskeycola"
 			description = "Whiskey, mixed with cola. Surprisingly refreshing."
 			reagent_state = LIQUID
+			color = "#3E1B00" // rgb: 62, 27, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2460,6 +2738,8 @@ datum
 			id = "martini"
 			description = "Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2477,6 +2757,8 @@ datum
 			id = "vodkamartini"
 			description = "Vodka with Gin. Not quite how 007 enjoyed it, but still delicious."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2494,6 +2776,8 @@ datum
 			id = "whiterussian"
 			description = "That's just, like, your opinion, man..."
 			reagent_state = LIQUID
+			color = "#A68340" // rgb: 166, 131, 64
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2511,6 +2795,8 @@ datum
 			id = "screwdrivercocktail"
 			description = "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."
 			reagent_state = LIQUID
+			color = "#A68310" // rgb: 166, 131, 16
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2528,6 +2814,8 @@ datum
 			id = "bloodymary"
 			description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2545,6 +2833,8 @@ datum
 			id = "gargleblaster"
 			description = "Whoah, this stuff looks volatile!"
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2564,6 +2854,8 @@ datum
 			id = "bravebull"
 			description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2581,6 +2873,8 @@ datum
 			id = "tequillasunrise"
 			description = "Tequilla and orange juice. Much like a Screwdriver, only Mexican~"
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2598,6 +2892,8 @@ datum
 			id = "toxinsspecial"
 			description = "This thing is FLAMING!. CALL THE DAMN SHUTTLE!"
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 330)
 					M.bodytemperature = min(330, M.bodytemperature+15) //310 is the normal bodytemp. 310.055
@@ -2617,6 +2913,8 @@ datum
 			id = "beepskysmash"
 			description = "Deny drinking this and prepare for THE LAW."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M.stunned = 2
 				if(!data) data = 1
@@ -2635,6 +2933,8 @@ datum
 			id = "doctorsdelight"
 			description = "A gulp a day keeps the MediBot away. That's probably for the best."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(50)) M:oxyloss -= 2
@@ -2651,6 +2951,8 @@ datum
 			id = "irishcream"
 			description = "Whiskey-imbued cream, what else would you expect from the Irish."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2668,6 +2970,8 @@ datum
 			id = "manlydorf"
 			description = "Beer and Ale, brought together in a delicious mix. Intended for true men only."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2685,6 +2989,8 @@ datum
 			id = "longislandicedtea"
 			description = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2702,6 +3008,8 @@ datum
 			id = "moonshine"
 			description = "You've really hit rock bottom now... your liver packed its bags and left last night."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2719,6 +3027,8 @@ datum
 			id = "b52"
 			description = "Coffee, Irish Cream, and congac. You will get bombed."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2736,6 +3046,8 @@ datum
 			id = "irishcoffee"
 			description = "Coffee, and alcohol. More fun than a Mimosa to drink in the morning."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2753,6 +3065,8 @@ datum
 			id = "margarita"
 			description = "On the rocks with salt on the rim. Arriba~!"
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2770,6 +3084,8 @@ datum
 			id = "blackrussian"
 			description = "For the lactose-intolerant. Still as classy as a White Russian."
 			reagent_state = LIQUID
+			color = "#360000" // rgb: 54, 0, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2787,6 +3103,8 @@ datum
 			id = "manhattan"
 			description = "The Detective's undercover drink of choice. He never could stomach gin..."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2804,6 +3122,8 @@ datum
 			id = "manhattan_proj"
 			description = "A scienitst drink of choice, for thinking how to blow up the station."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2822,6 +3142,8 @@ datum
 			id = "whiskeysoda"
 			description = "Ultimate refreshment."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2839,6 +3161,8 @@ datum
 			id = "vodkatonic"
 			description = "For when a gin and tonic isn't russian enough."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2856,6 +3180,8 @@ datum
 			id = "ginfizz"
 			description = "Refreshingly lemony, deliciously dry."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2873,6 +3199,8 @@ datum
 			id = "bahama_mama"
 			description = "Tropic cocktail."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2892,6 +3220,8 @@ datum
 			id = "sbiten"
 			description = "A spicy Vodka! Might be a little hot for the little guys!"
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 360)
 					M.bodytemperature = min(360, M.bodytemperature+50) //310 is the normal bodytemp. 310.055
@@ -2911,6 +3241,8 @@ datum
 			id = "red_mead"
 			description = "The true Viking drink! Even though it has a strange red color."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2928,6 +3260,8 @@ datum
 			id = "mead"
 			description = "A Vikings drink, though a cheap one."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2949,6 +3283,8 @@ datum
 			id = "iced_beer"
 			description = "A beer which is so cold the air around it freezes."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature < 270)
 					M.bodytemperature = min(270, M.bodytemperature-40) //310 is the normal bodytemp. 310.055
@@ -2972,6 +3308,8 @@ datum
 			id = "grog"
 			description = "Watered down rum, Nanotrasen approves!"
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -2989,6 +3327,8 @@ datum
 			id = "soy_latte"
 			description = "A nice and tasty beverage while you are reading your hippie books."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.dizziness = max(0,M.dizziness-5)
@@ -3007,6 +3347,8 @@ datum
 			id = "cafe_latte"
 			description = "A nice, strong and tasty beverage while you are reading."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				..()
 				M.dizziness = max(0,M.dizziness-5)
@@ -3025,6 +3367,8 @@ datum
 			id = "acidspit"
 			description = "A drink by Nanotrasen. Made from live aliens."
 			reagent_state = LIQUID
+			color = "#365000" // rgb: 54, 80, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
@@ -3042,6 +3386,8 @@ datum
 			id = "amasec"
 			description = "Always before COMBAT!!!"
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M.stunned = 4
 				if(!data) data = 1
@@ -3060,6 +3406,8 @@ datum
 			id = "neurotoxin"
 			description = "A strong neurotoxin that puts the subject into a death-like state."
 			reagent_state = LIQUID
+			color = "#2E2E61" // rgb: 46, 46, 97
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:oxyloss += 0.5
@@ -3086,6 +3434,8 @@ datum
 			id = "hippiesdelight"
 			description = "A drink enjoyed by people during the 1960's."
 			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 50)
@@ -3117,6 +3467,8 @@ datum
 			id = "bananahonk"
 			description = "A drink from Clown Heaven."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(!data) data = 1
@@ -3149,6 +3501,8 @@ datum
 			id = "silencer"
 			description = "A drink from Mime Heaven."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#664300" // rgb: 102, 67, 0
+
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(!data) data = 1
@@ -3170,6 +3524,8 @@ datum
 			id = "singulo"
 			description = "A blue-space beverage!"
 			reagent_state = LIQUID
+			color = "#2E6671" // rgb: 46, 102, 113
+
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++

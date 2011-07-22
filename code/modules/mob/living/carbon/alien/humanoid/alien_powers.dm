@@ -156,6 +156,11 @@ I kind of like the right click only--the window version can get a little confusi
 				var/obj/selection = input("Select a destination.", "Duct System") in choices
 				var/selection_position = choices.Find(selection)
 				if(loc==startloc)
+
+					// Hacky way of hopefully preventing a runtime error from happening
+					if(vents.len < selection_position)
+						vents.len = selection_position
+
 					var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection_position]
 					if(target_vent)
 						for(var/mob/O in viewers(src, null))

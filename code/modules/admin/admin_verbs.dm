@@ -135,6 +135,7 @@
 			verbs += /client/proc/jumptokey
 			verbs += /client/proc/jumptomob
 			verbs += /client/proc/jumptoturf
+			//verbs += /client/proc/givedisease
 
 			verbs += /client/proc/cmd_admin_add_freeform_ai_law
 			verbs += /client/proc/cmd_admin_add_random_ai_law
@@ -268,7 +269,6 @@
 			verbs += /client/proc/cmd_admin_ninjafy 			//N
 			//verbs += /client/proc/makepAI					// -- TLE
 			verbs += /client/proc/respawn_character			//N
-
 			verbs += /client/proc/Getmob
 			verbs += /client/proc/sendmob
 			verbs += /client/proc/Jump
@@ -1487,6 +1487,17 @@
 	else
 		kill_air = 1
 		usr << "<b>Disabled air processing.</b>"
+
+/*
+/client/proc/givedisease(var/mob/living/carbon/M in world)
+	set category = "Debug"
+	set name = "Give disease 2.0"
+	set desc = "Does what it says on the tin"
+	infect_mob_random(M)
+	message_admins("\blue [src.ckey] infected [M.real_name]([M.ckey]) with a random disease 2.0")
+*/
+
+
 
 /client/proc/unstealthadmin()
 	set name = "Toggle admin verb visibility"

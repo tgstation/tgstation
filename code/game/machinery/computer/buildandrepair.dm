@@ -158,6 +158,15 @@
 	build_path = "/obj/machinery/computer/security/mining"
 	origin_tech = "programming=2"
 
+/obj/item/weapon/circuitboard/curefab
+	name = "Circuit board (Cure fab)"
+	build_path = "/obj/machinery/computer/curer"
+
+/obj/item/weapon/circuitboard/splicer
+	name = "Circuit board (Disease Splicer)"
+	build_path = "/obj/machinery/computer/diseasesplicer"
+
+
 
 /obj/computerframe/attackby(obj/item/P as obj, mob/user as mob)
 	switch(state)

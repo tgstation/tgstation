@@ -864,6 +864,9 @@
 							if(!D.hidden[SCANNER])
 								foundVirus++
 
+						if(patient.virus2)
+							foundVirus++
+
 						client.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
 						if(patient.stat == 2)
 							client.images += image(tempHud,patient,"huddead")
@@ -1013,6 +1016,20 @@
 			if(bodytemperature > 406)
 				for(var/datum/disease/D in viruses)
 					D.cure()
+
+
+			if(!virus2)
+				for(var/mob/living/carbon/M in oviewers(4,src))
+					if(M.virus2)
+						infect_virus2(src,M.virus2)
+				for(var/obj/decal/cleanable/blood/B in view(4, src))
+					if(B.virus2)
+						infect_virus2(src,B.virus2)
+			else
+				virus2.activate(src)
+
+
+
 			return
 
 

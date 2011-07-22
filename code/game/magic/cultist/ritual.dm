@@ -534,17 +534,18 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return
 
 	attackby(obj/item/weapon/tome/T as obj, mob/living/user as mob)
-		switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
-			if("cancel")
-				return
-//		var/list/nearby = viewers(1,src) //- Fuck this as well. No clue why this doesnt work. -K0000
-//			if (T.loc != user)
-//				return
-//		for(var/mob/M in nearby)
-//			if(M == user)
-		for(var/w in words)
-			words[w] = T.words[w]
-		user << "You copy the translation notes from your tome."
+		if(istype(T, /obj/item/weapon/tome)) // sanity check to prevent a runtime error
+			switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
+				if("cancel")
+					return
+	//		var/list/nearby = viewers(1,src) //- Fuck this as well. No clue why this doesnt work. -K0000
+	//			if (T.loc != user)
+	//				return
+	//		for(var/mob/M in nearby)
+	//			if(M == user)
+			for(var/w in words)
+				words[w] = T.words[w]
+			user << "You copy the translation notes from your tome."
 
 
 	examine()

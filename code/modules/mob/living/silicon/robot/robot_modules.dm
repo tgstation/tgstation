@@ -127,14 +127,15 @@ obj/item/weapon/robot_module/syndicate
 	var/list/what = list (
 		/obj/item/weapon/reagent_containers/pill/kelotane,
 		/obj/item/weapon/reagent_containers/pill/dexalin,
-		/obj/item/weapon/reagent_containers/pill/cyanide,
 	)
 	for (var/T in what)
 		if (!(locate(T) in src.modules))
 			src.modules -= null
 			var/O = new T(src)
 			src.modules += O
-			O:amount = 1
+	if (R.emagged && !src.emag) //thanks to cyborg-900 for uncovering this
+		src.emag = new /obj/item/weapon/reagent_containers/pill/cyanide(src)
+
 
 
 /obj/item/weapon/robot_module/medical/New()

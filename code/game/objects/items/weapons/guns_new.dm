@@ -194,7 +194,16 @@
 					if(istype(A,/turf) && !istype(src, /obj/item/projectile/beam))
 						for(var/obj/O in A)
 							O.bullet_act(src, def_zone)
-			del(src)
+
+			// Okay this code, along with the sleep(10) {del(src)} up ahead is to make
+			// sure the projectile doesn't cut off any procs it's executing. this may seem
+			// incredibly stupid, I know, but it's to workaround pesky runtime error spam
+			invisibility = 101
+			loc = locate(1,1,1)
+
+		sleep(10)
+		del(src) // wait exactly 1 second, then delete itself. See above comments ^
+
 		return
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -432,24 +441,29 @@
 			load_method = 0 //0 = Single shells or quick loader, 1 = magazine
 
 			// Shotgun variables
-			pumped = 1
+			pumped = 0
 			maxpump = 1
+
+			list/Storedshots = list() // a list where "used" shots are stored to be dumped or something
 
 		load_into_chamber()
 			if(!loaded.len)
 				return 0
-			if(pumped >= maxpump && istype(src, /obj/item/weapon/gun/projectile/shotgun))
-				return 1
 
 			var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
 			loaded -= AC //Remove casing from loaded list.
-			AC.loc = get_turf(src) //Eject casing onto ground.
+			if(!istype(src, /obj/item/weapon/gun/projectile/shotgun))
+				AC.loc = get_turf(src) //Eject casing onto ground.
+			else
+				Storedshots += AC
+
 			if(AC.BB)
 				in_chamber = AC.BB //Load projectile into chamber.
 				AC.BB.loc = src //Set projectile loc to gun.
 				return 1
 			else
 				return 0
+
 
 		New()
 			for(var/i = 1, i <= max_shells, i++)
@@ -542,7 +556,10 @@
 				for(var/i = 1, i <= max_shells, i++)
 					loaded += new /obj/item/ammo_casing/shotgun/beanbag(src)
 				update_icon()
-				pumped = maxpump
+
+			attack_self(mob/living/user as mob)
+				pump()
+				return
 
 			combat
 				name = "combat shotgun"
@@ -561,6 +578,9 @@
 			proc/pump(mob/M)
 				playsound(M, 'shotgunpump.ogg', 60, 1)
 				pumped = 0
+				for(var/obj/item/ammo_casing/AC in Storedshots)
+					Storedshots -= AC //Remove casing from loaded list.
+					AC.loc = get_turf(src) //Eject casing onto ground.
 
 		automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
 			name = "Submachine Gun"

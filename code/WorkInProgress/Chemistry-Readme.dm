@@ -165,6 +165,15 @@ About Reagents:
 			toxins to make them work slowly instead of instantly. You could also use this
 			for DNA in a blood reagent or ... well whatever you want.
 
+		color
+			This is a hexadecimal color that represents the reagent outside of containers,
+			you define it as "#RRGGBB", or, red green blue. You can also define it using the
+			rgb() proc, which returns a hexadecimal value too. The color is black by default.
+
+			A good website for color calculations: http://www.psyclops.com/tools/rgb/
+
+
+
 
 About Recipes:
 
@@ -198,6 +207,14 @@ About Recipes:
 		result_amount
 			This is the amount of the resulting reagent this recipe will produce.
 			I recommend you set this to the total volume of all required reagent.
+
+		required_container
+			The container the recipe has to take place in in order to happen. Leave this blank/null
+			if you want the reaction to happen anywhere.
+
+		required_other
+			Basically like a reagent's data variable. You can set extra requirements for a
+			reaction with this.
 
 
 About the Tools:

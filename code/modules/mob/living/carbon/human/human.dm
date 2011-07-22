@@ -252,7 +252,7 @@
 			var/obj/item/weapon.grab/G = r_hand
 			if ((G.state == 3 && get_dir(src, A) == dir))
 				safe = G.affecting
-		if (safe)
+		if (safe && A)
 			return safe.bullet_act(A)
 
 	var/absorb

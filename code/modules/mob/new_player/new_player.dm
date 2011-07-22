@@ -148,7 +148,7 @@ mob/new_player
 			return 1
 
 		if(href_list["ready"])
-			if (!usr.client.authenticated)
+			if (!src.client.authenticated)
 				src << "You are not authorized to enter the game."
 				return
 

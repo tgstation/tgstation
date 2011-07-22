@@ -609,7 +609,10 @@
 		/obj/item/weapon/chem_grenade,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
-		/obj/item/weapon/secstorage/ssafe
+		/obj/item/weapon/secstorage/ssafe,
+		/obj/machinery/disease2/incubator,
+		/obj/machinery/disease2/isolator,
+		/obj/machinery/disease2/biodestroyer
 	)
 
 	examine()
@@ -877,6 +880,8 @@
 
 
 							B.data["viruses"] += new D.type
+
+						B.data["virus2"] = T.virus2.getcopy()
 
 						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
 						if(T.resistances&&T.resistances.len)
@@ -1294,6 +1299,9 @@
 	var/slice_path
 	var/slices_num
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
+
+		if((slices_num <= 0 || !slices_num) || !slice_path)
+			return 1
 		var/inaccurate = 0
 		if( \
 				istype(W, /obj/item/weapon/kitchenknife) || \
@@ -1327,8 +1335,8 @@
 			)
 		else
 			user.visible_message( \
-				"\blue [user] inaccurate slices \the [src] with [W]!", \
-				"\blue You inaccurate slice \the [src] with your [W]!" \
+				"\blue [user] inaccurately slices \the [src] with [W]!", \
+				"\blue You inaccurately slice \the [src] with your [W]!" \
 			)
 			slices_lost = rand(1,min(1,round(slices_num/2)))
 		var/reagents_per_slice = reagents.total_volume/slices_num
