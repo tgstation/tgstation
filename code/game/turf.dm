@@ -106,7 +106,7 @@
 		if(O.level == 1)
 			O.hide(0)
 
-/turf/proc/ReplaceWithFloor()
+/turf/proc/ReplaceWithFloor(explode=0)
 	var/prior_icon = icon_old
 	var/old_dir = dir
 
@@ -115,8 +115,11 @@
 	W.dir = old_dir
 	if(prior_icon) W.icon_state = prior_icon
 	else W.icon_state = "floor"
-	W.opacity = 1
-	W.sd_SetOpacity(0)
+
+	if (!explode)
+		W.opacity = 1
+		W.sd_SetOpacity(0)
+		//This is probably gonna make lighting go a bit wonky in bombed areas, but sd_SetOpacity was the primary reason bombs have been so laggy. --NEO
 	W.levelupdate()
 	return W
 
@@ -230,7 +233,7 @@
 /turf/simulated/wall/New()
 	..()
 
-/turf/simulated/wall/proc/dismantle_wall(devastated=0)
+/turf/simulated/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(istype(src,/turf/simulated/wall/r_wall))
 		if(!devastated)
 			playsound(src.loc, 'Welder.ogg', 100, 1)
@@ -251,7 +254,7 @@
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/metal( src )
 
-	ReplaceWithFloor()
+	ReplaceWithFloor(explode)
 
 /turf/simulated/wall/examine()
 	set src in oview(1)
@@ -269,9 +272,9 @@
 			return
 		if(2.0)
 			if (prob(50))
-				dismantle_wall()
+				dismantle_wall(0,1)
 			else
-				dismantle_wall(devastated=1)
+				dismantle_wall(1,1)
 		if(3.0)
 			var/proba
 			if (istype(src, /turf/simulated/wall/r_wall))
@@ -279,7 +282,7 @@
 			else
 				proba = 40
 			if (prob(proba))
-				dismantle_wall()
+				dismantle_wall(0,1)
 		else
 	return
 
