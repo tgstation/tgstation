@@ -3,6 +3,7 @@
 /obj/item/clothing/shoes
 	name = "shoes"
 	icon = 'shoes.dmi'
+	desc = "Comfortable-looking shoes."
 
 	body_parts_covered = FEET
 
@@ -80,7 +81,7 @@
 //	flags = NOSLIP //disabled by default
 
 /obj/item/clothing/shoes/clown_shoes
-	desc = "Damn, thems some big shoes."
+	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
@@ -88,6 +89,6 @@
 
 /obj/item/clothing/shoes/jackboots
 	name = "Jackboots"
-	desc = "Formerly owned by Officer Jack."
+	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	item_state = "jackboots"

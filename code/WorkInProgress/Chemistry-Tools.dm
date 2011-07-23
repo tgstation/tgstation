@@ -850,7 +850,7 @@
 					return
 
 				if(ismob(target))//Blood!
-					if(istype(src, /mob/living/carbon/metroid))
+					if(istype(target, /mob/living/carbon/metroid))
 						user << "\red You are unable to locate any blood."
 						return
 					if(src.reagents.has_reagent("blood"))
@@ -881,7 +881,9 @@
 
 							B.data["viruses"] += new D.type
 
-						B.data["virus2"] = T.virus2.getcopy()
+						if(B.data["virus2"])
+							if(T.virus2)
+								B.data["virus2"] = T.virus2.getcopy()
 
 						B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
 						if(T.resistances&&T.resistances.len)

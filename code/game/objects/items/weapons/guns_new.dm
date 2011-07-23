@@ -319,7 +319,7 @@
 
 		dart
 			desc = "A dart for use in shotguns.."
-			name = "shotgun daFrt"
+			name = "shotgun darts"
 			icon_state = "blshell" //someone, draw the icon, please.
 			m_amt = 50000 //because it's like, instakill.
 

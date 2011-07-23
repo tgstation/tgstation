@@ -84,7 +84,7 @@
 
 /obj/item/clothing/mask/gas/emergency
 	name = "emergency gas mask"
-	desc = "Gas mask mooks for emergencies."
+	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
 
@@ -111,19 +111,19 @@
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
-	desc = "You're gay for even considering wearing this."
+	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
 	icon_state = "clown"
 	item_state = "clown_hat"
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy clown mask"
-	desc = "That face...."
+	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
-	desc = "It looks a little creepy"
+	desc = "The traditional mime's mask. It has an eerie facial posture."
 	icon_state = "mime"
 	item_state = "mime"
 
@@ -146,7 +146,7 @@
 
 /obj/item/clothing/mask/cigarette
 	name = "Cigarette"
-	desc = "Tasty"
+	desc = "A roll of tobacco and nicotine."
 	icon_state = "cigoff"
 	var/lit = 0
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
@@ -161,7 +161,7 @@
 
 /obj/item/clothing/mask/cigarette/cigar
 	name = "Premium Cigar"
-	desc = "Only for the best of space travelers."
+	desc = "A brown roll of tobacco and... well, you're not quite sure. This thing's huge!"
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
 	icon_off = "cigaroff"
@@ -180,7 +180,7 @@
 
 /obj/item/clothing/mask/cigarette/cigar/havanian
 	name = "Premium Havanian Cigar"
-	desc = "Only the best for the best."
+	desc = "A cigar fit for only the best for the best."
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"

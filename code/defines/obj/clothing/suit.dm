@@ -67,7 +67,7 @@
 
 /obj/item/clothing/suit/det_suit
 	name = "coat"
-	desc = "Someone who wears this means business."
+	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
 	icon_state = "detective"
 	item_state = "det_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -170,7 +170,7 @@
 
 /obj/item/clothing/suit/chef
 	name = "Chef's apron"
-	desc = "An Apron used by a high class chef. The chef unfortunately retired."
+	desc = "An apron used by a high class chef."
 	icon_state = "chef"
 	item_state = "chef"
 	gas_transfer_coefficient = 0.90
@@ -215,7 +215,7 @@
 
 /obj/item/clothing/suit/wizrobe/fake
 	name = "wizard robe"
-	desc = "A rather dull, blue robe one could probably find in Space-Walmart."
+	desc = "A rather dull, blue robe meant to mimick real wizard robes."
 	icon_state = "wizard-fake"
 	item_state = "wizrobe"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS //It's not magic, shit is reasonable. --NEO
@@ -281,7 +281,7 @@
 
 /obj/item/clothing/suit/armor/captain
 	name = "Captain's armor"
-	desc = "Wearing this armor exemplifies who is in charge. You are in charge."
+	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"
 	icon_state = "caparmor"
 	item_state = "caparmor"
 	w_class = 4//bulky item
