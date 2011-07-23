@@ -431,6 +431,13 @@
 	item_state = "mime"
 	color = "mime"
 
+/obj/item/clothing/under/sexymime
+	name = "Sexy Mime Outfit"
+	desc = "It's not very colourful."
+	icon_state = "sexymime"
+	item_state = "sexymime"
+	color = "sexymime"
+
 /obj/item/clothing/under/waiter
 	name = "Waiter Outfit"
 	desc = "There is a special pocket for tip."

@@ -2809,6 +2809,44 @@ datum
 				..()
 				return
 
+		booger
+			name = "Booger"
+			id = "booger"
+			description = "Ewww..."
+			reagent_state = LIQUID
+			color = "#A68310" // rgb: 166, 131, 16
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=4
+				if(data >= 55 && data <165)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 4
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+4,0)
+				..()
+				return
+
+		devilskiss
+			name = "Devils Kiss"
+			id = "devilskiss"
+			description = "Creepy time!"
+			reagent_state = LIQUID
+			color = "#A68310" // rgb: 166, 131, 16
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=4
+				if(data >= 55 && data <165)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 4
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+4,0)
+				..()
+				return
+
 		bloody_mary
 			name = "Bloody Mary"
 			id = "bloodymary"
@@ -3156,6 +3194,82 @@ datum
 				..()
 				return
 
+		antifreeze
+			name = "Anti-freeze"
+			id = "antifreeze"
+			description = "Ultimate refreshment."
+			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=5
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 5
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+5,0)
+				..()
+				return
+
+		barefoot
+			name = "Barefoot"
+			id = "barefoot"
+			description = "Barefoot and pregnant"
+			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=5
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 5
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+5,0)
+				..()
+				return
+
+		snowwhite
+			name = "Snow White"
+			id = "snowwhite"
+			description = "A cold refreshment"
+			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=4
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 4
+				else if(data >= 115 && prob(30))
+					M.confused = max(M:confused+4,0)
+				..()
+				return
+
+		demonsblood
+			name = "Demons Blood"
+			id = "demonsblood"
+			description = "AHHHH!!!!"
+			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=10
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 10
+				else if(data >= 115 && prob(90))
+					M.confused = max(M:confused+10,10)
+				..()
+				return
+
 		vodkatonic
 			name = "Vodka and Tonic"
 			id = "vodkatonic"
@@ -3319,6 +3433,63 @@ datum
 					M.stuttering += 2
 				else if(data >= 250 && prob(33))
 					M.confused = max(M:confused+2,0)
+				..()
+				return
+
+		aloe
+			name = "Aloe"
+			id = "aloe"
+			description = "So very, very, very good."
+			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=2
+				if(data >= 90 && data <250)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 2
+				else if(data >= 250 && prob(33))
+					M.confused = max(M:confused+2,0)
+				..()
+				return
+
+		andalusia
+			name = "Andalusia"
+			id = "andalusia"
+			description = "A nice, strange named drink."
+			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=8
+				if(data >= 90 && data <250)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 1
+				else if(data >= 250 && prob(33))
+					M.confused = max(M:confused+2,0)
+				..()
+				return
+
+		alliescocktail
+			name = "Allies Cocktail"
+			id = "alliescocktail"
+			description = "A drink made from your allies."
+			reagent_state = LIQUID
+			color = "#664300" // rgb: 102, 67, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=4
+				if(data >= 90 && data <250)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 7
+				else if(data >= 250 && prob(60))
+					M.confused = max(M:confused+8,0)
 				..()
 				return
 
@@ -3534,6 +3705,82 @@ datum
 					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 15
 				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+15,15)
+				..()
+				return
+
+		changelingsting
+			name = "Changeling Sting"
+			id = "changelingsting"
+			description = "A stingy drink."
+			reagent_state = LIQUID
+			color = "#2E6671" // rgb: 46, 102, 113
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=5
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 5
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+15,15)
+				..()
+				return
+
+		irishcarbomb
+			name = "Irish Car Bomb"
+			id = "irishcarbomb"
+			description = "An irish car bomb"
+			reagent_state = LIQUID
+			color = "#2E6671" // rgb: 46, 102, 113
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=5
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 5
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+15,15)
+				..()
+				return
+
+		syndicatebomb
+			name = "Syndicate Bomb"
+			id = "syndicatebomb"
+			description = "A Syndicate bomb"
+			reagent_state = LIQUID
+			color = "#2E6671" // rgb: 46, 102, 113
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=10
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 10
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+15,15)
+				..()
+				return
+
+		erikasurprise
+			name = "Erika Surprise"
+			id = "erikasurprise"
+			description = "A surprise of Erika"
+			reagent_state = LIQUID
+			color = "#2E6671" // rgb: 46, 102, 113
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=30
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 30
+				else if(data >= 115 && prob(60))
 					M.confused = max(M:confused+15,15)
 				..()
 				return

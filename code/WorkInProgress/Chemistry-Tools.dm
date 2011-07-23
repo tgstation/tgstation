@@ -2962,6 +2962,58 @@
 					icon_state = "singulo"
 					name = "Singulo"
 					desc = "A blue-space beverage."
+				if("aloe")
+					icon_state = "aloe"
+					name = "Aloe"
+					desc = "Very, very, very good."
+				if("andalusia")
+					icon_state = "andalusia"
+					name = "Andalusia"
+					desc = "A nice, strange named drink."
+				if("alliescocktail")
+					icon_state = "alliescocktail"
+					name = "Allies cocktail"
+					desc = "A drink made from your allies."
+				if("snowwhite")
+					icon_state = "snowwhite"
+					name = "Snow White"
+					desc = "A cold refreshment."
+				if("antifreeze")
+					icon_state = "antifreeze"
+					name = "Anti-freeze"
+					desc = "The ultimate refreshment."
+				if("barefoot")
+					icon_state = "b&p"
+					name = "Barefoot"
+					desc = "Barefoot and pregnant"
+				if("demonsblood")
+					icon_state = "demonsblood"
+					name = "Demons Blood"
+					desc = "Scary....so...scary...AHHH!!!"
+				if("booger")
+					icon_state = "booger"
+					name = "Booger"
+					desc = "Ewww..."
+				if("devilskiss")
+					icon_state = "devilskiss"
+					name = "Devils Kiss"
+					desc = "Creepy time!"
+				if("changelingsting")
+					icon_state = "changelingsting"
+					name = "Changeling sting"
+					desc = "A stingy drink."
+				if("irishcarbomb")
+					icon_state = "irishcarbomb"
+					name = "Irish Car Bomb"
+					desc = "An irish car bomb."
+				if("syndicatebomb")
+					icon_state = "syndicatebomb"
+					name = "Syndicate Bomb"
+					desc = "A syndicate bomb."
+				if("erikasurprise")
+					icon_state = "erikasurprise"
+					name = "Erika Surprise"
+					desc = "A surprise of Erika"
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"

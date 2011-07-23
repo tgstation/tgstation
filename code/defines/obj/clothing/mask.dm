@@ -125,6 +125,19 @@
 	name = "mime mask"
 	desc = "It looks a little creepy"
 	icon_state = "mime"
+	item_state = "mime"
+
+/obj/item/clothing/mask/gas/monkeymask
+	name = "monkey mask"
+	desc = "This looks very strange...."
+	icon_state = "monkeymask"
+	item_state = "monkeymask"
+
+/obj/item/clothing/mask/gas/sexymime
+	name = "sexy mime mask"
+	desc = "Super creepy..."
+	icon_state = "sexymime"
+	item_state = "sexymime"
 
 /obj/item/clothing/mask/gas/fakemoustache
 	name = "fake moustache"

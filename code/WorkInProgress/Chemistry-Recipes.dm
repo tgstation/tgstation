@@ -1140,3 +1140,100 @@ datum
 			result = "singulo"
 			required_reagents = list("vodka" = 5, "radium" = 1, "acid" = 1, "wine" = 5)
 			result_amount = 10
+
+		aloe
+			name = "Aloe"
+			id = "aloe"
+			result = "aloe"
+			required_reagents = list("cream" = 1, "whiskey" = 1)
+			result_amount = 2
+
+		andalusia
+			name = "Andalusia"
+			id = "andalusia"
+			result = "andalusia"
+			required_reagents = list("rum" = 1, "whiskey" = 1, "lemonjuice" = 1)
+			result_amount = 3
+
+		alliescocktail
+			name = "Allies Cocktail"
+			id = "alliescocktail"
+			result = "alliescocktail"
+			required_reagents = list("gin" = 1, "vermouth" = 1)
+			result_amount = 2
+
+		snowwhite
+			name = "Snow White"
+			id = "snowwhite"
+			result = "snowwhite"
+			required_reagents = list("beer" = 1, "lemon_lime" = 1)
+			result_amount = 2
+
+		devilskiss
+			name = "Devils Kiss"
+			id = "devilskiss"
+			result = "devilskiss"
+			required_reagents = list("blood" = 1, "kahlua" = 1, "rum" = 1)
+			result_amount = 3
+
+		demonsblood
+			name = "Demons Blood"
+			id = "demonsblood"
+			result = "demonsblood"
+			required_reagents = list("rum" = 1, "spacemountainwind" = 1, "blood" = 1, "dr_gibb" = 1)
+			result_amount = 4
+
+		changelingsting
+			name = "Changeling Sting"
+			id = "changelingsting"
+			result = "changelingsting"
+			required_reagents = list("orangejuice" = 1, "limejuice" = 1, "lemonjuice" = 1, "vodka" = 1)
+			result_amount = 4
+
+		booger
+			name = "Booger"
+			id = "booger"
+			result = "booger"
+			required_reagents = list("cream" = 1, "banana" = 1, "rum" = 1, "watermelonjuice" = 1)
+			result_amount = 4
+
+		antifreeze
+			name = "Anti-freeze"
+			id = "antifreeze"
+			result = "antifreeze"
+			required_reagents = list("vodka" = 2, "cream" = 1, "ice" = 1)
+			result_amount = 4
+
+		barefoot
+			name = "Barefoot"
+			id = "barefoot"
+			result = "barefoot"
+			required_reagents = list("vodka" = 1, "cream" = 1, "vermouth" = 1, "whiskey" = 1)
+			result_amount = 4
+
+		irishcarbomb
+			name = "Irish Car Bomb"
+			id = "irishcarbomb"
+			result = "irishcarbomb"
+			required_reagents = list("ale" = 1, "cream" = 1, "whiskey" = 1)
+			result_amount = 3
+
+		syndicatebomb
+			name = "Syndicate Bomb"
+			id = "syndicatebomb"
+			result = "syndicatebomb"
+			required_reagents = list("beer" = 1, "cola" = 1, "whiskey" = 1)
+			result_amount = 3
+
+		erikasurprise
+			name = "Erika Surprise"
+			id = "erikasurprise"
+			result = "erikasurprise"
+			required_reagents = list("ale" = 1, "limejuice" = 1, "whiskey" = 1, "banana" = 1, "ice" = 1)
+			result_amount = 5
+
+
+
+
+
+
