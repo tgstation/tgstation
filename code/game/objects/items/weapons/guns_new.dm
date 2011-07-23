@@ -675,12 +675,14 @@
 				icon_state = "mini-uzi"
 				w_class = 3.0
 				force = 16
+				max_shells = 20
 				caliber = ".45"
 				origin_tech = "combat=5;materials=2;syndicate=8"
 
 				New()
 					for(var/i = 1, i <= max_shells, i++)
 						loaded += new /obj/item/ammo_casing/c45(src)
+					update_icon()
 
 		silenced
 			name = "Silenced Pistol"
