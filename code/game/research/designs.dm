@@ -1007,8 +1007,17 @@ datum
 			id = "stunrevolver"
 			req_tech = list("combat" = 3, "materials" = 3, "powerstorage" = 2)
 			build_type = PROTOLATHE
-			materials = list("$metal" = 4000, "$gold" = 500)
+			materials = list("$metal" = 4000)
 			build_path = "/obj/item/weapon/gun/energy/stunrevolver"
+
+		lasercannon
+			name = "Laser Cannon"
+			desc = "A heavy duty laser cannon."
+			id = "lasercannon"
+			req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 10000)
+			build_path = "/obj/item/weapon/gun/energy/lasercannon"
 
 		shockgun
 			name = "Shock Gun"
@@ -1083,6 +1092,15 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 3750, "$silver" = 100)
 			build_path = "obj/item/ammo_magazine/c9mm"
+
+		stunshell
+			name = "Stun Shell"
+			desc = "A stunning shell."
+			id = "stunshell"
+			req_tech = list("combat" = 3, "materials" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 4000)
+			build_path = "/obj/item/projectile/stunshot"
 
 /////////////////////////////////////////
 /////////////////Mining//////////////////

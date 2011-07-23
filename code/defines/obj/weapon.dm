@@ -2035,6 +2035,30 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	var/lit = 0
 	flags = ONBELT | TABLEPASS | CONDUCT
 
+/obj/item/weapon/knifezippo
+	name = "Zippo lighter"
+	desc = "The zippo."
+	icon = 'items.dmi'
+	icon_state = "knifezippo"
+	item_state = "knifezippo"
+	force = 15
+	w_class = 1
+	throwforce = 4
+	var/lit = 0
+	flags = ONBELT | TABLEPASS | CONDUCT
+
+/obj/item/weapon/knifezippo/attack(mob/M as mob, mob/user as mob)
+	if (!( istype(M, /mob) ))
+		return
+		//for(var/mob/O in viewers(M, null))
+		//	O.show_message(text("\red [] has been stabbed with [] by [].", M, src, user), 1)
+		user << "\red You stab [M] with the zippo knife."
+		M << "\red You feel a tiny prick!"
+		M.attack_log += text("<font color='orange'>[world.time] - has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to stab [M.name] ([M.ckey])</font>")
+	return
+
+
 
 /obj/item/weapon/mousetrap
 	name = "mousetrap"

@@ -13,6 +13,19 @@
 	slowdown = SHOES_SLOWDOWN
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
+
+/obj/item/clothing/shoes/syndigaloshes
+	desc = "Strange shoes..."
+	name = "Brown Shoes"
+	icon_state = "brown"
+	item_state = "brown"
+	permeability_coefficient = 0.05
+	flags = NOSLIP
+	origin_tech = "syndicate=3"
+	var/list/clothing_choices = list()
+
+/obj/item/clothing/shoes/syndigaloshes/all
+
 /obj/item/clothing/shoes/black
 	name = "Black Shoes"
 	icon_state = "black"

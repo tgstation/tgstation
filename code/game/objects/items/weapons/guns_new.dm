@@ -45,10 +45,13 @@
 
 		bumped = 0
 
-
 	weakbullet
 		damage = 15
 		mobdamage = list(BRUTE = 15, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
+
+	suffocationbullet
+		damage = 75
+		mobdamage = list(BRUTE = 50, BURN = 0, TOX = 0, OXY = 25, CLONE = 0)
 
 	beam
 		name = "laser"
@@ -67,6 +70,18 @@
 			icon_state = "u_laser"
 			damage = 50
 			mobdamage = list(BRUTE = 10, BURN = 40, TOX = 0, OXY = 0, CLONE = 0)
+
+	heavylaser
+		name = "heavy laser"
+		icon_state = "heavylaser"
+		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+		damage = 40
+		mobdamage = list(BRUTE = 0, BURN = 40, TOX = 0, OXY = 0, CLONE = 0)
+		flag = "heavylaser"
+		New()
+			..()
+			effects["eyeblur"] = 10
+			effectprob["eyeblur"] = 100
 
 	fireball
 		name = "shock"
@@ -113,6 +128,19 @@
 			effects["weak"] = 10
 			effects["stutter"] = 10
 			effectprob["weak"] = 25
+
+	stunshot
+		name = "stunshot"
+		icon_state = "bullet"
+		flag = "stunshot"
+		damage = 5
+		mobdamage = list(BRUTE = 5, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
+		New()
+			..()
+			effects["stun"] = 20
+			effects["weak"] = 20
+			effects["stutter"] = 20
+			effectprob["weak"] = 45
 
 	bolt
 		name = "bolt"
@@ -251,6 +279,17 @@
 		dir = pick(cardinal)
 
 
+	a418
+		name = "bullet casing (.418)"
+		desc = "A .418 bullet casing."
+		caliber = "357"
+
+		New()
+			BB = new /obj/item/projectile/suffocationbullet(src)
+			pixel_x = rand(-10.0, 10)
+			pixel_y = rand(-10.0, 10)
+			dir = pick(cardinal)
+
 	c38
 		name = "bullet casing (.38)"
 		desc = "A .38 bullet casing."
@@ -317,6 +356,17 @@
 				src.pixel_x = rand(-10.0, 10)
 				src.pixel_y = rand(-10.0, 10)
 
+		stunshell
+			desc = "A stunning shell."
+			name = "stun shell"
+			icon_state = "stunshell"
+			m_amt = 10000
+
+			New()
+				BB = new /obj/item/projectile/stunshot
+				src.pixel_x = rand(-10.0, 10)
+				src.pixel_y = rand(-10.0, 10)
+
 		dart
 			desc = "A dart for use in shotguns.."
 			name = "shotgun darts"
@@ -358,6 +408,14 @@
 		New()
 			for(var/i = 1, i <= 7, i++)
 				stored_ammo += new /obj/item/ammo_casing/c38(src)
+			update_icon()
+
+	a418
+		name = "ammo box (.418)"
+		icon_state = "418"
+		New()
+			for(var/i = 1, i <= 7, i++)
+				stored_ammo += new /obj/item/ammo_casing/a418(src)
 			update_icon()
 
 	c9mm
@@ -575,6 +633,20 @@
 						loaded += new /obj/item/ammo_casing/shotgun(src)
 					update_icon()
 
+			combat2
+				name = "security combat shotgun"
+				icon_state = "cshotgun"
+				w_class = 4.0
+				force = 12.0
+				flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+				max_shells = 8
+				origin_tech = "combat=3"
+				maxpump = 2
+				New()
+					for(var/i = 1, i <= max_shells, i++)
+						loaded += new /obj/item/ammo_casing/shotgun/beanbag(src)
+					update_icon()
+
 			proc/pump(mob/M)
 				playsound(M, 'shotgunpump.ogg', 60, 1)
 				pumped = 0
@@ -603,14 +675,12 @@
 				icon_state = "mini-uzi"
 				w_class = 3.0
 				force = 16
-				max_shells = 20
 				caliber = ".45"
 				origin_tech = "combat=5;materials=2;syndicate=8"
 
 				New()
 					for(var/i = 1, i <= max_shells, i++)
 						loaded += new /obj/item/ammo_casing/c45(src)
-					update_icon()
 
 		silenced
 			name = "Silenced Pistol"
@@ -879,6 +949,42 @@
 						in_chamber = new /obj/item/projectile/electrode(src)
 						return 1
 					return 0
+
+		lasercannon
+			name = "laser cannon"
+			desc = "A heavy-duty laser cannon."
+			icon_state = "laser"
+			force = 15
+			fire_sound = 'pulse.ogg'
+			load_into_chamber()
+				if(in_chamber)
+					return 1
+				if(power_supply.charge < charge_cost)
+					return 0
+				switch (mode)
+					if(1)
+						in_chamber = new /obj/item/projectile/beam(src)
+					if(4)
+						in_chamber = new /obj/item/projectile/heavylaser(src)
+				power_supply.use(charge_cost)
+				return 1
+
+			attack_self(mob/living/user as mob)
+				mode++
+				switch(mode)
+					if(1)
+						user << "\red [src.name] is now set to kill."
+						fire_sound = 'Laser.ogg'
+						charge_cost = 50
+					else
+						mode = 4
+						user << "\red [src.name] is now set to slaughter"
+						fire_sound = 'pulse.ogg'
+						charge_cost = 100
+			New()
+				power_supply = new /obj/item/weapon/cell(src)
+				power_supply.give(power_supply.maxcharge)
+				update_icon()
 
 		shockgun
 			name = "shock gun"

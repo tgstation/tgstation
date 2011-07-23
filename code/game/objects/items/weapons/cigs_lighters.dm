@@ -284,3 +284,43 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 	if(lit)
 		user.sd_SetLuminosity(user.luminosity - ZIPPO_LUM)
 		src.sd_SetLuminosity(ZIPPO_LUM)
+
+
+
+
+/obj/item/weapon/knifezippo/attack_self(mob/user)
+	if(user.r_hand == src || user.l_hand == src)
+		if(!src.lit)
+			src.lit = 1
+			src.icon_state = "knifezippoon"
+			src.item_state = "knifezippoon"
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red Without even breaking stride, [] flips open and lights the [] in one smooth movement.", user, src), 1)
+
+		else
+			src.lit = 0
+			src.icon_state = "knifezippo"
+			src.item_state = "knifezippo"
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red You hear a quiet click, as [] shuts off the [] without even looking what they're doing. Wow.", user, src), 1)
+
+	else
+		return ..()
+	return
+
+/obj/item/weapon/knifezippo/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M, /mob))
+		return
+
+/obj/item/weapon/knifezippo/process()
+
+	while(src.lit)
+		var/turf/location = src.loc
+
+		if(istype(location, /mob/))
+			var/mob/M = location
+			if(M.l_hand == src || M.r_hand == src)
+				location = M.loc
+		if (istype(location, /turf))
+			location.hotspot_expose(700, 5)
+		sleep(10)
