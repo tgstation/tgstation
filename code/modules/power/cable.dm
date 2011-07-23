@@ -381,6 +381,7 @@
 			NC.netnum = C.netnum
 			var/datum/powernet/PN = powernets[C.netnum]
 			PN.cables += NC
+			NC.mergeConnectedNetworks(NC.d2)
 			NC.mergeConnectedNetworksOnTurf()
 			use(1)
 			if (NC.shock(user, 50))
@@ -419,6 +420,7 @@
 
 		C.mergeConnectedNetworks(C.d1)
 		C.mergeConnectedNetworks(C.d2)
+		C.mergeConnectedNetworksOnTurf()
 
 		use(1)
 		if (C.shock(user, 50))
