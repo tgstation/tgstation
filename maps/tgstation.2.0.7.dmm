@@ -3165,7 +3165,7 @@
 "biS" = (/obj/crate/internals,/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/turf/simulated/floor,/area/quartermaster/storage)
 "biT" = (/obj/crate/freezer,/turf/simulated/floor,/area/quartermaster/storage)
 "biU" = (/turf/simulated/floor{icon_state = "delivery"},/area/quartermaster/storage)
-"biV" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=8"; location = "QM #1"},/obj/machinery/bot/mulebot{beacon_freq = 1400; home_destination = "QM #1"; suffix = "#1"},/turf/simulated/floor{icon_state = "bot"},/area/quartermaster/storage)
+"biV" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=8"; freq = 1400; location = "QM #1"},/obj/machinery/bot/mulebot{beacon_freq = 1400; home_destination = "QM #1"; suffix = "#1"},/turf/simulated/floor{icon_state = "bot"},/area/quartermaster/storage)
 "biW" = (/obj/grille,/obj/disposalpipe/segment,/obj/window/reinforced{dir = 4},/obj/window/reinforced{dir = 1},/obj/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/quartermaster/storage)
 "biX" = (/obj/table,/obj/item/device/radio,/turf/simulated/floor,/area/quartermaster/office)
 "biY" = (/obj/machinery/camera{c_tag = "Cargo Office"},/turf/simulated/floor,/area/quartermaster/office)

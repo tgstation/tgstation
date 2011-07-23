@@ -204,7 +204,6 @@
 #include "code\datums\diseases\gbs.dm"
 #include "code\datums\diseases\jungle_fever.dm"
 #include "code\datums\diseases\magnitis.dm"
-#include "code\datums\diseases\metroid_transformation.dm"
 #include "code\datums\diseases\pierrot_throat.dm"
 #include "code\datums\diseases\plasmatoid.dm"
 #include "code\datums\diseases\rhumba_beat.dm"
@@ -859,5 +858,6 @@
 #include "code\WorkInProgress\recycling\scrap.dm"
 #include "code\WorkInProgress\recycling\sortingmachinery.dm"
 #include "interface\skin.dmf"
-#include "maps\Ttgstation.2.0.7.dmm"
+#include "maps\TestingMap.dmm"
+#include "maps\tgstation.2.0.7.dmm"
 // END_INCLUDE
