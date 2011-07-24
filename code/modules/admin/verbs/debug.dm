@@ -342,7 +342,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				id = pda.id
 			log_admin("[key_name(src)] has granted [M.key] full access.")
 			id.icon_state = "gold"
-			id:access = get_all_accesses()+get_all_centcom_access()
+			id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 		else
 			alert("Invalid ID card")
 	else
@@ -371,6 +371,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"masked killer",
 		"assassin",
 		"death commando",
+		"syndicate commando",
 		"centcom official",
 		"centcom commander",
 		"special ops officer",
@@ -564,6 +565,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		if("death commando")//Was looking to add this for a while.
 			M.equip_death_commando()
+
+		if("syndicate commando")
+			M.equip_syndicate_commando()
 
 		if("centcom official")
 			M.equip_if_possible(new /obj/item/clothing/under/rank/centcom_officer(M), M.slot_w_uniform)

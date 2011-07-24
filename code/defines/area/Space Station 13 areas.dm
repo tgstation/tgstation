@@ -180,6 +180,14 @@ proc/process_ghost_teleport_locs()
 	name = "Special Ops Shuttle"
 	icon_state = "shuttlered2"
 
+/area/shuttle/syndicate_elite/mothership
+	name = "Syndicate Elite Shuttle"
+	icon_state = "shuttlered"
+
+/area/shuttle/syndicate_elite/station
+	name = "Syndicate Elite Shuttle"
+	icon_state = "shuttlered2"
+
 /area/shuttle/administration/centcom
 	name = "Administration Shuttle Centcom"
 	icon_state = "shuttlered"
@@ -262,6 +270,21 @@ proc/process_ghost_teleport_locs()
 
 /area/centcom/holding
 	name = "Holding Facility"
+
+//SYNDICATES
+
+/area/syndicate_mothership
+	name = "Syndicate Mothership"
+	icon_state = "syndie-ship"
+	requires_power = 0
+
+/area/syndicate_mothership/control
+	name = "Syndicate Control Room"
+	icon_state = "syndie-control"
+
+/area/syndicate_mothership/elite_squad
+	name = "Syndicate Elite Squad"
+	icon_state = "syndie-elite"
 
 //EXTRA
 

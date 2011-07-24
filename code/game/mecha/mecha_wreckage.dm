@@ -95,6 +95,10 @@
 	name = "Marauder wreckage"
 	icon_state = "marauder-broken"
 
+/obj/decal/mecha_wreckage/mauler
+	name = "Mauler Wreckage"
+	icon_state = "mauler-broken"
+	desc = "The syndicate won't be very happy about this..."
 
 /obj/decal/mecha_wreckage/seraph
 	name = "Seraph wreckage"

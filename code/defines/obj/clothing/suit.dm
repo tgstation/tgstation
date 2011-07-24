@@ -179,10 +179,9 @@
 	protective_temperature = 1000 //If you can't stand the heat, get back to the kitchen - Micro
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife)
-	allowed = list (/obj/item/weapon/butch)
+	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
 
-/obj/item/clothing/suit/apronchef
+/obj/item/clothing/suit/chef/classic
 	name = "A classic chef's apron."
 	desc = "A basic, dull, white chef's apron."
 	icon_state = "apronchef"
@@ -471,6 +470,20 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
+
+/obj/item/clothing/suit/space/syndicate/elite
+	name = "black space suit"
+	desc = "A space ready suit with special armor inside designed to allow the wearer to take quite a beating."
+	icon_state = "syndicate-black"
+	item_state = "syndicate-black"
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	slowdown = 1
+	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
+
+/obj/item/clothing/suit/space/syndicate/elite/leader
+	name = "black space suit"
+	icon_state = "syndicate-black-red"
+	item_state = "syndicate-black-red"
 
 /obj/item/clothing/suit/space/syndicate/green
 	name = "Green Space Suit"

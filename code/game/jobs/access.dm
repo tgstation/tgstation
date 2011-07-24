@@ -72,6 +72,9 @@
 	access_cent_creed = 108//Creed's office.
 	access_cent_captain = 109//Captain's office/ID comp/AI.
 
+	//The Syndicate
+	access_syndicate = 150//General Syndicate Access
+
 	//MONEY
 	access_crate_cash = 200
 
@@ -247,6 +250,9 @@
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_creed, access_cent_captain)
+
+/proc/get_all_syndicate_access()
+	return list(access_syndicate)
 
 /proc/get_region_accesses(var/code)
 	switch(code)

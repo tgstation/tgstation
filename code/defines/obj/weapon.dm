@@ -501,6 +501,13 @@
 	access = list(access_maint_tunnels)
 	origin_tech = "syndicate=3"
 
+/obj/item/weapon/card/id/syndicate_command
+	name = "Syndicate ID card"
+	desc = "An ID straight from the Syndicate."
+	registered = "Syndicate"
+	assignment = "Syndicate Overlord"
+	access = list(access_syndicate)
+
 /obj/item/weapon/card/id/captains_spare
 	name = "Captain's spare ID"
 	desc = "The spare ID of the High Lord himself."

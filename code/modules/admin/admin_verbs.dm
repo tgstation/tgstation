@@ -165,6 +165,7 @@
 			verbs += /client/proc/only_one  				// muskets
 //			verbs += /client/proc/space_asshole 			// --Agouri :3
 			verbs += /client/proc/strike_team				//N
+//			verbs += /client/proc/syndicate_strike_team     // Commented out until I can find a way to fix the shuttle timing -- Superxpdude
 			verbs += /client/proc/send_space_ninja			//N
 			verbs += /client/proc/spawn_xeno				//N
 			verbs += /proc/possess

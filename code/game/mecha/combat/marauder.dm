@@ -32,6 +32,13 @@
 	force = 55
 	max_equip = 5
 
+/obj/mecha/combat/marauder/mauler
+	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model."
+	name = "Mauler"
+	icon_state = "mauler"
+	operation_req_access = list(access_syndicate)
+	wreckage = "/obj/decal/mecha_wreckage/mauler"
+
 /obj/mecha/combat/marauder/New()
 	..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/pulse
