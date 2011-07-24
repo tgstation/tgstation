@@ -367,6 +367,24 @@
 		else
 			return 0
 
+/datum/powernet/proc/merge_powernets(var/datum/powernet/P)
+// The powernet that calls this proc will consume the other powernet - Rockdtben
+	if(nodes.len >= P.nodes)
+		nodes += P.nodes
+	else
+		P.nodes += nodes
+		nodes = P.nodes
+	for(var/obj/machinery/power/M in nodes)
+		M.netnum = number
+
+	if(cables.len >= P.cables)
+		cables += P.cables
+	else
+		P.cables += cables
+		cables = P.cables
+	for(var/obj/cable/C in cables)
+		C.netnum = number
+
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
 	var/obj/cable/C = T.get_cable_node()
