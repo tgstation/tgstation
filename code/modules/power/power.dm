@@ -369,7 +369,7 @@
 
 /datum/powernet/proc/merge_powernets(var/datum/powernet/P)
 // The powernet that calls this proc will consume the other powernet - Rockdtben
-	if(nodes.len >= P.nodes)
+	if(nodes.len >= P.nodes.len)
 		nodes += P.nodes
 	else
 		P.nodes += nodes
@@ -377,7 +377,7 @@
 	for(var/obj/machinery/power/M in nodes)
 		M.netnum = number
 
-	if(cables.len >= P.cables)
+	if(cables.len >= P.cables.len)
 		cables += P.cables
 	else
 		P.cables += cables
