@@ -50,8 +50,12 @@
 		mobdamage = list(BRUTE = 15, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
 
 	suffocationbullet
-		damage = 75
-		mobdamage = list(BRUTE = 50, BURN = 0, TOX = 0, OXY = 25, CLONE = 0)
+		damage = 65
+		mobdamage = list(BRUTE = 50, BURN = 0, TOX = 0, OXY = 15, CLONE = 0)
+
+	cyanideround
+		damage = 100
+		mobdamage = list(BRUTE = 50, BURN = 0, TOX = 100, OXY = 15, CLONE = 0)
 
 	beam
 		name = "laser"
@@ -77,10 +81,22 @@
 		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 		damage = 40
 		mobdamage = list(BRUTE = 0, BURN = 40, TOX = 0, OXY = 0, CLONE = 0)
-		flag = "heavylaser"
+		flag = "laser"
 		New()
 			..()
 			effects["eyeblur"] = 10
+			effectprob["eyeblur"] = 100
+
+	deathlaser
+		name = "death laser"
+		icon_state = "heavylaser"
+		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+		damage = 60
+		mobdamage = list(BRUTE = 0, BURN = 60, TOX = 0, OXY = 0, CLONE = 0)
+		flag = "laser"
+		New()
+			..()
+			effects["eyeblur"] = 20
 			effectprob["eyeblur"] = 100
 
 	fireball
@@ -152,6 +168,19 @@
 			..()
 			effects["radiation"] = 100
 			effects["drowsyness"] = 5
+			effectmod["radiation"] = ADD
+			effectmod["drowsyness"] = ADD
+
+	largebolt
+		name = "largebolt"
+		icon_state = "cbbolt"
+		flag = "rad"
+		damage = 20
+		mobdamage = list(BRUTE = 10, BURN = 0, TOX = 10, OXY = 0, CLONE = 0)
+		New()
+			..()
+			effects["radiation"] = 200
+			effects["drowsyness"] = 15
 			effectmod["radiation"] = ADD
 			effectmod["drowsyness"] = ADD
 
@@ -290,6 +319,17 @@
 			pixel_y = rand(-10.0, 10)
 			dir = pick(cardinal)
 
+	a666
+		name = "bullet casing (.666)"
+		desc = "A .666 bullet casing."
+		caliber = "357"
+
+		New()
+			BB = new /obj/item/projectile/cyanideround(src)
+			pixel_x = rand(-10.0, 10)
+			pixel_y = rand(-10.0, 10)
+			dir = pick(cardinal)
+
 	c38
 		name = "bullet casing (.38)"
 		desc = "A .38 bullet casing."
@@ -416,6 +456,14 @@
 		New()
 			for(var/i = 1, i <= 7, i++)
 				stored_ammo += new /obj/item/ammo_casing/a418(src)
+			update_icon()
+
+	a666
+		name = "ammo box (.666)"
+		icon_state = "666"
+		New()
+			for(var/i = 1, i <= 2, i++)
+				stored_ammo += new /obj/item/ammo_casing/a666(src)
 			update_icon()
 
 	c9mm
@@ -988,6 +1036,48 @@
 				power_supply.give(power_supply.maxcharge)
 				update_icon()
 
+		heavylasercannon
+			name = "heavy laser cannon"
+			desc = "A deathly heavy-duty laser cannon."
+			icon_state = "laser"
+			force = 20
+			fire_sound = 'pulse.ogg'
+			load_into_chamber()
+				if(in_chamber)
+					return 1
+				if(power_supply.charge < charge_cost)
+					return 0
+				switch (mode)
+					if(1)
+						in_chamber = new /obj/item/projectile/beam(src)
+					if(4)
+						in_chamber = new /obj/item/projectile/heavylaser(src)
+					if(5)
+						in_chamber = new /obj/item/projectile/deathlaser(src)
+				power_supply.use(charge_cost)
+				return 1
+
+			attack_self(mob/living/user as mob)
+				mode++
+				switch(mode)
+					if(1)
+						user << "\red [src.name] is now set to kill."
+						fire_sound = 'Laser.ogg'
+						charge_cost = 50
+					if(4)
+						user << "\red [src.name] is now set to slaughter."
+						fire_sound = 'pulse.ogg'
+						charge_cost = 100
+					else
+						mode = 5
+						user << "\red [src.name] is now set to masacre."
+						fire_sound = 'pulse.ogg'
+						charge_cost = 150
+			New()
+				power_supply = new /obj/item/weapon/cell(src)
+				power_supply.give(power_supply.maxcharge)
+				update_icon()
+
 		shockgun
 			name = "shock gun"
 			desc = "A high tech energy weapon that stuns and burns a target."
@@ -1269,6 +1359,56 @@
 				if(power_supply.charge <= charge_cost)
 					return 0
 				in_chamber = new /obj/item/projectile/bolt(src)
+				power_supply.use(charge_cost)
+				return 1
+
+			cyborg
+				load_into_chamber()
+					if(in_chamber)
+						return 1
+					if(isrobot(src.loc))
+						var/mob/living/silicon/robot/R = src.loc
+						R.cell.use(20)
+						in_chamber = new /obj/item/projectile/electrode(src)
+						return 1
+					return 0
+
+		largecrossbow
+			name = "Energy Crossbow"
+			desc = "A weapon favored by syndicate infiltration teams."
+			icon_state = "crossbow"
+			w_class = 2.0
+			item_state = "crossbow"
+			force = 9.0
+			throw_speed = 4
+			throw_range = 12
+			m_amt = 2000
+			origin_tech = "combat=2;magnets=2;syndicate=5"
+			silenced = 1
+			fire_sound = 'Genhit.ogg'
+
+			New()
+				power_supply = new /obj/item/weapon/cell/crap(src)
+				power_supply.give(power_supply.maxcharge)
+				charge()
+
+			proc/charge()
+				if(power_supply)
+					if(power_supply.charge < power_supply.maxcharge) power_supply.give(200)
+				spawn(20) charge()
+
+			update_icon()
+				return
+
+			attack_self(mob/living/user as mob)
+				return
+
+			load_into_chamber()
+				if(in_chamber)
+					return 1
+				if(power_supply.charge <= charge_cost)
+					return 0
+				in_chamber = new /obj/item/projectile/largebolt(src)
 				power_supply.use(charge_cost)
 				return 1
 

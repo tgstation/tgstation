@@ -1019,6 +1019,15 @@ datum
 			materials = list("$metal" = 10000)
 			build_path = "/obj/item/weapon/gun/energy/lasercannon"
 
+		heavylasercannon
+			name = "Heavy Laser Cannon"
+			desc = "A heavy duty laser cannon."
+			id = "lasercannon"
+			req_tech = list("combat" = 5, "materials" = 5, "powerstorage" = 5)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 10000)
+			build_path = "/obj/item/weapon/gun/energy/heavy lasercannon"
+
 		shockgun
 			name = "Shock Gun"
 			desc = "Your opponent has just lost THE GAME."
@@ -1055,6 +1064,15 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 1000)
 			build_path = "/obj/item/weapon/gun/rapidsyringe"
+
+		largecrossbow
+			name = "Energy Crossbow"
+			desc = "A weapon favoured by syndicate infiltration teams."
+			id = "largecrossbow"
+			req_tech = list("combat" = 4, "materials" = 5, "engineering" = 3, "biotech" = 4, "syndicate" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 5000, "$glass" = 1000)
+			build_path = "/obj/item/weapon/gun/largecrossbow"
 
 		freeze_gun
 			name = "Freeze Gun"
