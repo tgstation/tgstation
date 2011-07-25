@@ -541,6 +541,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "bridge"
 	music = "signal"
 
+/area/bridge/meeting_room
+	name = "Heads of Staff Meeting Room"
+	icon_state = "bridge"
+	music = null
+
 /area/crew_quarters/captain
 	name = "Captain's Quarters"
 	icon_state = "captain"

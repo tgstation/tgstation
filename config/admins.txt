@@ -8,7 +8,6 @@ neofite - Game Master
 uristmcdorf - Game Master
 cinless - Game Master
 
-
 mport2004 - Game Admin
 lj82 - Game Admin
 fatmanfive - Game Admin
@@ -25,3 +24,5 @@ agouri - Game Master
 errorage - Game Master
 
 uhangi - Trial Admin
+
+superxpdude - Game Master
