@@ -455,6 +455,10 @@
 	TB = get_step(src, direction)
 
 	for(var/obj/cable/TC in TB)
+
+		if(!TC)
+			continue
+
 		if(src == TC)
 			continue
 
@@ -480,6 +484,10 @@
 
 	for(var/obj/cable/C in loc)
 
+
+		if(!C)
+			continue
+
 		if(C == src)
 			continue
 		if(netnum == 0)
@@ -495,13 +503,17 @@
 
 	for(var/obj/machinery/power/M in loc)
 
-		if(M.netnum < 0)
+		if(!M)
 			continue
-		if(M.netnum == 0)
+
+		if(!M.netnum)
 			var/datum/powernet/PN = powernets[netnum]
 			PN.nodes += M
 			M.netnum = netnum
 			M.powernet = powernets[M.netnum]
+
+		if(M.netnum < 0)
+			continue
 
 		var/datum/powernet/PN = powernets[netnum]
 		var/datum/powernet/TPN = powernets[M.netnum]
@@ -509,6 +521,10 @@
 		PN.merge_powernets(TPN)
 
 	for(var/obj/machinery/power/apc/N in loc)
+
+		if(!N)
+			continue
+
 		var/obj/machinery/power/M
 		M = N.terminal
 
