@@ -180,9 +180,15 @@
 	if(usr.stat || usr.restrained())
 		return
 
-	if(istype(usr,/mob/living/silicon) && !(usr:module && istype(usr:module,/obj/item/weapon/robot_module/butler)) )
-		usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
-		return
+	if(istype(usr,/mob/living/silicon))
+		if(istype(usr,/mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = usr
+			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
+				usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
+				return
+		else
+			usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
+			return
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
 		usr.machine = src
