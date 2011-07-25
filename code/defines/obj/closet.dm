@@ -46,7 +46,7 @@
 	icon_opened = "hydrant_open"
 	wall_mounted = 1
 
-/obj/closet/medical_wall //wall mounted fire closet
+/obj/closet/medical_wall //wall mounted medical closet
 	anchored = 1
 	desc = "A wall mounted closet which should have some first aid."
 	name = "First Aid Closet"

@@ -56,7 +56,7 @@
 
 	shower
 		name = "Shower"
-		desc = "Plenty of hot water, owered by radiation! Nothing harmful could come from that right?"
+		desc = "This is dumb."
 
 	kitchen
 		name = "Kitchen Sink"

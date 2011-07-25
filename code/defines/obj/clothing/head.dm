@@ -172,6 +172,14 @@
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 25, rad = 25)
 
+/obj/item/clothing/head/helmet/space/engineering
+	name = "engineering space helmet"
+	desc = "A special helmet designed for work in a hazardous, low-pressure engironment. Painted in Engineering Orange to designate its department of origin."
+	icon_state = "helm-orange"
+	item_state = "helm-orange"
+	radiation_protection = 0.25
+	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
+
 /obj/item/clothing/head/helmet/space/capspace
 	name = "space helmet"
 	icon_state = "capspace"
@@ -220,10 +228,10 @@
 	icon_state = "syndicate-helm-green-dark"
 	item_state = "syndicate-helm-green-dark"
 
-/obj/item/clothing/head/helmet/space/syndicate/orange
+/*/obj/item/clothing/head/helmet/space/syndicate/orange
 	name = "Orange Space Helmet"
 	icon_state = "syndicate-helm-orange"
-	item_state = "syndicate-helm-orange"
+	item_state = "syndicate-helm-orange"*/ //As I said: Best used for engineering suits
 
 /obj/item/clothing/head/helmet/space/syndicate/blue
 	name = "Blue Space Helmet"

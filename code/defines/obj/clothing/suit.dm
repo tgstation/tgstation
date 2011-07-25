@@ -449,7 +449,17 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 3
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 25, rad = 25)
+	armor = list(melee = 20, bullet = 15, laser = 10, taser = 3, bomb = 15, bio = 30, rad = 40)
+
+/obj/item/clothing/suit/space/engineering
+	name = "Engineering space suit"
+	desc = "Much like its generic counterpart, the spacesuit is painted a bright orange color to designate its department of origin."
+	icon_state = "suit-orange"
+	item_state = "suit-orange"
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/satchel,/obj/item/device/t_scanner)
+	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
+	slowdown = 2
+	radiation_protection = 0.50
 
 /obj/item/clothing/suit/space/rig
 	name = "rig suit"
@@ -495,10 +505,10 @@
 	icon_state = "syndicate-green-dark"
 	item_state = "syndicate-green-dark"
 
-/obj/item/clothing/suit/space/syndicate/orange
+/*/obj/item/clothing/suit/space/syndicate/orange
 	name = "Orange Space Suit"
 	icon_state = "syndicate-orange"
-	item_state = "syndicate-orange"
+	item_state = "syndicate-orange"*/ //Best used as an engineering suit, nyoro~n ;3
 
 /obj/item/clothing/suit/space/syndicate/blue
 	name = "Blue Space Suit"

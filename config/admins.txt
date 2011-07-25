@@ -21,7 +21,7 @@ tashdurandel - Game Admin
 mario90900 - Game Admin
 atomictroop - Game Admin
 fateweaver - Game Admin
-agouri - Game Admin
+agouri - Game Master
 errorage - Game Master
 
 uhangi - Trial Admin
