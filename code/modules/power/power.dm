@@ -38,7 +38,6 @@
 
 	A.master.use_power(amount, chan)
 
-
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag
 										// can override if needed
@@ -369,6 +368,10 @@
 
 /datum/powernet/proc/merge_powernets(var/datum/powernet/P)
 // The powernet that calls this proc will consume the other powernet - Rockdtben
+
+	if(src == P)
+		return
+
 	if(nodes.len >= P.nodes.len)
 		nodes += P.nodes
 	else
