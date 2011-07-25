@@ -387,6 +387,7 @@
 		cables = P.cables
 	for(var/obj/cable/C in cables)
 		C.netnum = number
+	del P
 
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
