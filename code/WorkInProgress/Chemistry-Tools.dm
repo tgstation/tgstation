@@ -1652,7 +1652,6 @@
 			var/obj/overlay = new/obj
 			overlay.icon = 'beaker1.dmi'
 			var/percent = round((reagents.total_volume / volume) * 100)
-			world << percent
 			switch(percent)
 				if(0 to 9)		overlay.icon_state = "-10"
 				if(10 to 24) 	overlay.icon_state = "10"
