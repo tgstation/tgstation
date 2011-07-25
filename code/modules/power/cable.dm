@@ -454,14 +454,40 @@
 			if(TC.netnum != netnum)
 				var/datum/powernet/PN = powernets[netnum]
 				var/datum/powernet/TPN = powernets[TC.netnum]
-
-				PN.merge_powernets(TPN)
+				var/kingNetnum = netnum
+				if(PN.cables.len + PN.nodes.len < TPN.cables.len + TPN.nodes.len)
+					kingNetnum = TC.netnum
+					var/datum/powernet/temp = PN
+					PN = TPN
+					TPN = temp
+				for(var/obj/cable/C in TPN.cables)
+					TPN.cables -= C
+					PN.cables += C
+					C.netnum = kingNetnum
+				for(var/obj/machinery/power/M in TPN.nodes)
+					if(M.netnum < 0)		// APCs have netnum=-1 so they don't count as network nodes directly
+						continue
+					TPN.nodes -= M
+					PN.nodes += M
+					M.netnum = kingNetnum
+					M.powernet = powernets[M.netnum]
+				TC.netnum = kingNetnum
+				TPN.cables -= TC
+				PN.cables += TC
+	for(var/obj/machinery/power/M in TB)
+		if(!netnum)
+			if(!M.netnum)
+				continue
+			else
+				netnum = M.netnum
+				var/datum/powernet/PN = powernets[netnum]
+				PN.nodes += src
 
 /obj/cable/proc/mergeConnectedNetworksOnTurf()
+	var/turf/TB
+	TB = loc
 
-
-	for(var/obj/cable/C in loc)
-
+	for(var/obj/cable/C in TB)
 		if(C == src)
 			continue
 		if(netnum == 0)
@@ -469,13 +495,19 @@
 			netnum = C.netnum
 			PN.cables += src
 			continue
-
 		var/datum/powernet/PN = powernets[netnum]
 		var/datum/powernet/TPN = powernets[C.netnum]
+		var/kingNetnum = netnum
+		if(PN.cables.len + PN.nodes.len < TPN.cables.len + TPN.nodes.len)
+			kingNetnum = C.netnum
+			var/datum/powernet/temp = PN
+			PN = TPN
+			TPN = temp
 
-		PN.merge_powernets(TPN)
-
-	for(var/obj/machinery/power/M in loc)
+		TPN.cables -= C
+		PN.cables += C
+		C.netnum = kingNetnum
+	for(var/obj/machinery/power/M in TB)
 
 		if(M.netnum < 0)
 			continue
@@ -487,10 +519,18 @@
 
 		var/datum/powernet/PN = powernets[netnum]
 		var/datum/powernet/TPN = powernets[M.netnum]
+		var/kingNetnum = netnum
+		if(PN.cables.len + PN.nodes.len < TPN.cables.len + TPN.nodes.len)
+			kingNetnum = M.netnum
+			var/datum/powernet/temp = PN
+			PN = TPN
+			TPN = temp
 
-		PN.merge_powernets(TPN)
-
-	for(var/obj/machinery/power/apc/N in loc)
+		TPN.nodes -= M
+		PN.nodes += M
+		M.netnum = kingNetnum
+		M.powernet = powernets[M.netnum]
+	for(var/obj/machinery/power/apc/N in TB)
 		var/obj/machinery/power/M
 		M = N.terminal
 
@@ -505,8 +545,17 @@
 
 		var/datum/powernet/PN = powernets[netnum]
 		var/datum/powernet/TPN = powernets[M.netnum]
+		var/kingNetnum = netnum
+		if(PN.cables.len + PN.nodes.len < TPN.cables.len + TPN.nodes.len)
+			kingNetnum = M.netnum
+			var/datum/powernet/temp = PN
+			PN = TPN
+			TPN = temp
 
-		PN.merge_powernets(TPN)
+		TPN.nodes -= M
+		PN.nodes += M
+		M.netnum = kingNetnum
+		M.powernet = powernets[M.netnum]
 
 obj/cable/proc/cableColor(var/colorC)
 	var/color_n = "red"
