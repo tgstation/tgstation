@@ -379,6 +379,8 @@
 		nodes = P.nodes
 	for(var/obj/machinery/power/M in nodes)
 		M.netnum = number
+		M.powernet = powernets[M.netnum] // Thanks to Derp__
+
 
 	if(cables.len >= P.cables.len)
 		cables += P.cables
