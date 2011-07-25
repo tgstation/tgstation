@@ -63,6 +63,24 @@
 	return
 
 
+/obj/item/clothing/gloves/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/cable_coil))
+		var/obj/item/weapon/cable_coil/C = W
+		if(!istype(src, /obj/item/clothing/gloves/yellow))
+			if(!wired)
+				if(C.amount >= 2)
+					C.amount -= 2
+					wired = 1
+					user << "You wrap some wires around [src]."
+				else
+					user << "There is not enough wire to cover [src]."
+			else
+				user << "[src] is already wired."
+
+	else
+		..()
+	return
+
 // the power cable object
 
 /obj/cable/New()

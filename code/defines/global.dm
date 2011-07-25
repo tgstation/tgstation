@@ -148,6 +148,11 @@ var
 	datum/vote/vote = null
 	datum/sun/sun = null
 
+	list/combatlog = list()
+	list/IClog = list()
+	list/OOClog = list()
+	list/adminlog = list()
+
 
 	list/powernets = null
 

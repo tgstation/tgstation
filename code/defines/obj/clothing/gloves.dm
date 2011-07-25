@@ -9,6 +9,7 @@
 	siemens_coefficient = 0.50
 	var/elecgen = 0
 	var/uses = 0
+	var/wired = 0
 	body_parts_covered = HANDS
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 

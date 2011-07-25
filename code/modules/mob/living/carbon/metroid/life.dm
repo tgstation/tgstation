@@ -203,6 +203,8 @@
 
 		AIprocess()  // the master AI process
 
+			if(AIproc) return
+
 			AIproc = 1
 			while(AIproc && stat != 2 && attacked > 0)
 				if(Victim) // can't eat AND have this little process at the same time

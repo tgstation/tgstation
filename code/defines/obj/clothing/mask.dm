@@ -191,3 +191,5 @@
 	icon_off = "cigar2off"
 	icon_butt = "cigarbutt"
 	smoketime = 7200
+
+

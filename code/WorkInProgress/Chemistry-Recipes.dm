@@ -363,6 +363,7 @@ datum
 					S.start()
 					sleep(10)
 					S.start()
+				holder.clear_reagents()
 				return
 
 		chloralhydrate

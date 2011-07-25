@@ -79,6 +79,11 @@
 	//	s.start()
 	//	if (prob(80+(G.siemens_coefficient*100)) && electrocute_mob(user, src, src))
 	//		return 1
+		if(!istype(src, /obj/item/clothing/gloves/yellow))
+			if(!G.wired)
+				user << "You run an electrical current through the gloves, but nothing happens!"
+				return
+
 		if(charge < 1000)
 			return
 

@@ -138,8 +138,8 @@ var/global/list/cached_icons = list()
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		user << "\red You don't have the dexterity to do this!"
 		return
-	M.attack_log += text("<font color='orange'>[world.time] - has been injected with [name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("<font color='red'>[world.time] - has used the [name] to inject [M.name] ([M.ckey])</font>")
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to inject [M.name] ([M.ckey])</font>")
 
 	if (user)
 		if (istype(M, /mob/living/carbon/human))

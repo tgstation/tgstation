@@ -10,7 +10,7 @@
 		return
 	user << "Planting explosives..."
 	if(ismob(target))
-		user.attack_log += "<font color='red'>[world.time] - [user.real_name] tried planting [name] on [target:real_name] ([target:ckey])</font>"
+		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target:real_name] ([target:ckey])</font>"
 		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
 	if(do_after(user, 50) && in_range(user, target))
 		user.drop_item()
@@ -20,7 +20,7 @@
 		if (isturf(target)) location = target
 		if (isobj(target)) location = target.loc
 		if (ismob(target))
-			target:attack_log += "<font color='orange'>[world.time] - had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
+			target:attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
 		target.overlays += image('assemblies.dmi', "plastic-explosive2")
 		user << "Bomb has been planted. Timer counting down from [timer]."

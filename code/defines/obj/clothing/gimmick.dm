@@ -6,7 +6,7 @@
 
 /obj/item/clothing/head/kitty
 	name = "Kitty Ears"
-	desc = "Meow?"
+	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
 	flags = FPRINT | TABLEPASS | HEADSPACE
 	var/icon/mob
@@ -49,7 +49,7 @@
 
 /obj/item/clothing/under/owl
 	name = "Owl uniform"
-	desc = "Twoooo!"
+	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
 	icon_state = "owl"
 	color = "owl"
 

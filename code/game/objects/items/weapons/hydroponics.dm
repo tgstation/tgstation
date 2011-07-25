@@ -109,8 +109,8 @@ Deathnettle
 	if(!..()) return
 	if(istype(M, /mob/living))
 		M << "\red You are stunned by the powerful acid of the Deathnettle!"
-		M.attack_log += text("<font color='orange'>[world.time] - has had the [src.name] used on them by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] on [M.name] ([M.ckey])</font>")
+		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Had the [src.name] used on them by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] on [M.name] ([M.ckey])</font>")
 
 		M.eye_blurry += force/7
 		if(prob(20))

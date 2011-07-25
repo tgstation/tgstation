@@ -23,8 +23,8 @@
 		return
 
 
-	M.attack_log += text("<font color='orange'>[world.time] - has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to attack [M.name] ([M.ckey])</font>")
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
 	var/t = user:zone_sel.selecting
 	if (t == "head")

@@ -61,7 +61,7 @@
 
 	attack(target as obj, mob/user as mob)
 
-		user.attack_log += text("<font color='blue'>[world.time] - has used [src.name] on \ref[target]</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
 
 		if (istype(target, /obj/item))
 			var/obj/item/O = target

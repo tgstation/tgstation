@@ -187,6 +187,7 @@
 	freeze
 		name = "freeze beam"
 		icon_state = "ice_2"
+		damage = 0
 		var/temperature = 0
 
 		proc/Freeze(atom/A as mob|obj|turf|area)
@@ -198,6 +199,7 @@
 	plasma
 		name = "plasma blast"
 		icon_state = "plasma_2"
+		damage = 0
 		var/temperature = 800
 
 		proc/Heat(atom/A as mob|obj|turf|area)
@@ -232,10 +234,10 @@
 			else
 				M << "\red You've been shot!"
 			if(istype(firer, /mob))
-				M.attack_log += text("[] <b>[]/[]</b> shot <b>[]/[]</b> with a <b>[]</b>", world.time, firer, firer.ckey, M, M.ckey, src)
-				firer.attack_log += text("[] <b>[]/[]</b> shot <b>[]/[]</b> with a <b>[]</b>", world.time, firer, firer.ckey, M, M.ckey, src)
+				M.attack_log += text("\[[]\] <b>[]/[]</b> shot <b>[]/[]</b> with a <b>[]</b>", time_stamp(), firer, firer.ckey, M, M.ckey, src)
+				firer.attack_log += text("\[[]\] <b>[]/[]</b> shot <b>[]/[]</b> with a <b>[]</b>", time_stamp(), firer, firer.ckey, M, M.ckey, src)
 			else
-				M.attack_log += text("[] <b>UNKOWN SUBJECT (No longer exists)</b> shot <b>[]/[]</b> with a <b>[]</b>", world.time, M, M.ckey, src)
+				M.attack_log += text("\[[]\] <b>UNKOWN SUBJECT (No longer exists)</b> shot <b>[]/[]</b> with a <b>[]</b>", time_stamp(), M, M.ckey, src)
 		spawn(0)
 			if(A)
 
@@ -550,11 +552,18 @@
 			pumped = 0
 			maxpump = 1
 
-			list/Storedshots = list() // a list where "used" shots are stored to be dumped or something
+			list/Storedshots = list()
 
 		load_into_chamber()
 			if(!loaded.len)
+				if(Storedshots.len > 0)
+					if(istype(src, /obj/item/weapon/gun/projectile/shotgun))
+						var/obj/item/weapon/gun/projectile/shotgun/S = src
+						S.pump(loc)
 				return 0
+
+			if(istype(src, /obj/item/weapon/gun/projectile/shotgun) && pumped >= maxpump)
+				return 1
 
 			var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
 			loaded -= AC //Remove casing from loaded list.
@@ -657,6 +666,7 @@
 			flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 			caliber = "shotgun"
 			origin_tech = "combat=2;materials=2"
+			var/recentpump = 0 // to prevent spammage
 
 			New()
 				for(var/i = 1, i <= max_shells, i++)
@@ -664,7 +674,11 @@
 				update_icon()
 
 			attack_self(mob/living/user as mob)
+				if(recentpump) return
 				pump()
+				recentpump = 1
+				sleep(10)
+				recentpump = 0
 				return
 
 			combat
@@ -757,6 +771,11 @@
 			var/obj/item/weapon/cell/power_supply
 			mode = 0 //0 = stun, 1 = kill
 			charge_cost = 100 //How much energy is needed to fire.
+
+		emp_act(severity)
+			power_supply.use(round(power_supply.maxcharge / severity))
+			update_icon()
+			..()
 
 		New()
 			power_supply = new(src)
@@ -1497,7 +1516,10 @@
 
 		update_icon()
 
-		playsound(user, fire_sound, 50, 1)
+		if(silenced)
+			playsound(user, fire_sound, 10, 1)
+		else
+			playsound(user, fire_sound, 50, 1)
 
 		if(!in_chamber)
 			return

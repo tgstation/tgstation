@@ -5,8 +5,8 @@
 		usr.drop_item()
 		return
 	if (src.shots > 0)
-		M.attack_log += text("<font color='orange'>[world.time] - has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to flash [M.name] ([M.ckey])</font>")
+		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [user.name] ([user.ckey])</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [M.name] ([M.ckey])</font>")
 
 		var/safety = null
 		if (istype(M, /mob/living/carbon/human))
