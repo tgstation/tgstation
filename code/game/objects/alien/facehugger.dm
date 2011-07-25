@@ -207,7 +207,7 @@
 			else
 				view = viewrange-2
 			for (var/mob/living/carbon/C in range(view,loc))
-				if (C.stat == 2 || isalien(C) || C.alien_egg_flag || !can_see(src,C,viewrange))
+				if (C.stat == 2 || isalien(C) || C.alien_egg_flag || !can_see(src,C,viewrange) || istype(C, /mob/living/carbon/metroid))
 					continue
 				if(C:stunned || C:paralysis || C:weakened)
 					target = C

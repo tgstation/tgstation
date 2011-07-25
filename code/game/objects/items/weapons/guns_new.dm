@@ -22,6 +22,7 @@
 	unacidable = 1 //Just to be sure.
 	anchored = 1 // I'm not sure if it is a good idea. Bullets sucked to space and curve trajectories near singularity could be awesome. --rastaf0
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT // ONBELT???
+	mouse_opacity = 0
 	var
 		def_zone = ""
 		//damage_type = PROJECTILE_BULLET
@@ -48,6 +49,10 @@
 	weakbullet
 		damage = 15
 		mobdamage = list(BRUTE = 15, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
+		New()
+			..()
+			effects["weak"] = 5
+			effectprob["weak"] = 10
 
 	suffocationbullet
 		damage = 65
@@ -56,6 +61,10 @@
 	cyanideround
 		damage = 100
 		mobdamage = list(BRUTE = 50, BURN = 0, TOX = 100, OXY = 15, CLONE = 0)
+
+	burstbullet
+		damage = 20
+		mobdamage = list(BRUTE = 20, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
 
 	beam
 		name = "laser"
@@ -1030,26 +1039,25 @@
 					return 1
 				if(power_supply.charge < charge_cost)
 					return 0
-				switch (mode)
-					if(1)
+				switch(mode)
+					if(0)
 						in_chamber = new /obj/item/projectile/beam(src)
-					if(4)
+					if(1)
 						in_chamber = new /obj/item/projectile/heavylaser(src)
 				power_supply.use(charge_cost)
 				return 1
 
 			attack_self(mob/living/user as mob)
-				mode++
+				mode = !mode
 				switch(mode)
-					if(1)
-						user << "\red [src.name] is now set to kill."
-						fire_sound = 'Laser.ogg'
-						charge_cost = 50
-					else
-						mode = 4
-						user << "\red [src.name] is now set to slaughter"
+					if(0)
+						user << "\red [src.name] is now set to laser cannon."
 						fire_sound = 'pulse.ogg'
 						charge_cost = 100
+					if(1)
+						user << "\red [src.name] is now set to laser."
+						fire_sound = 'Laser.ogg'
+						charge_cost = 50
 			New()
 				power_supply = new /obj/item/weapon/cell(src)
 				power_supply.give(power_supply.maxcharge)
@@ -1066,32 +1074,25 @@
 					return 1
 				if(power_supply.charge < charge_cost)
 					return 0
-				switch (mode)
-					if(1)
+				switch(mode)
+					if(0)
 						in_chamber = new /obj/item/projectile/beam(src)
-					if(4)
+					if(1)
 						in_chamber = new /obj/item/projectile/heavylaser(src)
-					if(5)
-						in_chamber = new /obj/item/projectile/deathlaser(src)
 				power_supply.use(charge_cost)
 				return 1
 
 			attack_self(mob/living/user as mob)
-				mode++
+				mode = !mode
 				switch(mode)
-					if(1)
-						user << "\red [src.name] is now set to kill."
-						fire_sound = 'Laser.ogg'
-						charge_cost = 50
-					if(4)
-						user << "\red [src.name] is now set to slaughter."
-						fire_sound = 'pulse.ogg'
-						charge_cost = 100
-					else
-						mode = 5
-						user << "\red [src.name] is now set to masacre."
+					if(0)
+						user << "\red [src.name] is now set to heavy laser cannon."
 						fire_sound = 'pulse.ogg'
 						charge_cost = 150
+					if(1)
+						user << "\red [src.name] is now set to laser."
+						fire_sound = 'Laser.ogg'
+						charge_cost = 50
 			New()
 				power_supply = new /obj/item/weapon/cell(src)
 				power_supply.give(power_supply.maxcharge)
@@ -1388,7 +1389,7 @@
 					if(isrobot(src.loc))
 						var/mob/living/silicon/robot/R = src.loc
 						R.cell.use(20)
-						in_chamber = new /obj/item/projectile/electrode(src)
+						in_chamber = new /obj/item/projectile/bolt(src)
 						return 1
 					return 0
 
@@ -1438,7 +1439,7 @@
 					if(isrobot(src.loc))
 						var/mob/living/silicon/robot/R = src.loc
 						R.cell.use(20)
-						in_chamber = new /obj/item/projectile/electrode(src)
+						in_chamber = new /obj/item/projectile/largebolt(src)
 						return 1
 					return 0
 
