@@ -48,11 +48,11 @@
 
 	weakbullet
 		damage = 15
-		mobdamage = list(BRUTE = 15, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
+		mobdamage = list(BRUTE = 8, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
 		New()
 			..()
-			effects["weak"] = 5
-			effectprob["weak"] = 10
+			effects["weak"] = 25
+			effectprob["weak"] = 35
 
 	suffocationbullet
 		damage = 65
@@ -380,7 +380,7 @@
 		name = "12 gauge shell"
 		icon_state = "gshell"
 		caliber = "shotgun"
-		m_amt = 25000
+		m_amt = 12500
 
 		New()
 			BB = new /obj/item/projectile
@@ -390,7 +390,7 @@
 			desc = "A blank shell."
 			name = "blank shell"
 			icon_state = "blshell"
-			m_amt = 500
+			m_amt = 250
 
 			New()
 				src.pixel_x = rand(-10.0, 10)
@@ -400,7 +400,7 @@
 			desc = "A weak beanbag shell."
 			name = "beanbag shell"
 			icon_state = "bshell"
-			m_amt = 10000
+			m_amt = 500
 
 			New()
 				BB = new /obj/item/projectile/weakbullet
@@ -411,7 +411,7 @@
 			desc = "A stunning shell."
 			name = "stun shell"
 			icon_state = "stunshell"
-			m_amt = 10000
+			m_amt = 2500
 
 			New()
 				BB = new /obj/item/projectile/stunshot
@@ -698,7 +698,7 @@
 				flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 				max_shells = 8
 				origin_tech = "combat=3"
-				maxpump = 2
+				maxpump = 1
 				New()
 					for(var/i = 1, i <= max_shells, i++)
 						loaded += new /obj/item/ammo_casing/shotgun(src)
@@ -708,11 +708,11 @@
 				name = "security combat shotgun"
 				icon_state = "cshotgun"
 				w_class = 4.0
-				force = 12.0
+				force = 10.0
 				flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-				max_shells = 8
+				max_shells = 4
 				origin_tech = "combat=3"
-				maxpump = 2
+				maxpump = 1
 				New()
 					for(var/i = 1, i <= max_shells, i++)
 						loaded += new /obj/item/ammo_casing/shotgun/beanbag(src)
@@ -1397,7 +1397,7 @@
 			name = "Energy Crossbow"
 			desc = "A weapon favored by syndicate infiltration teams."
 			icon_state = "crossbow"
-			w_class = 2.0
+			w_class = 4.0
 			item_state = "crossbow"
 			force = 9.0
 			throw_speed = 4

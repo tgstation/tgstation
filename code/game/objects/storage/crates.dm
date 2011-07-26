@@ -105,15 +105,6 @@
 	openicon = "plasmacrateopen"
 	closedicon = "plasmacrate"
 
-/obj/crate/secure/gear
-	desc = "A secure gear crate."
-	name = "Gear crate"
-	icon = 'storage.dmi'
-	icon_state = "secgearcrate"
-	density = 1
-	openicon = "secgearcrateopen"
-	closedicon = "secgearcrate"
-
 /obj/crate/secure/bin
 	desc = "A secure bin."
 	name = "Secure bin"

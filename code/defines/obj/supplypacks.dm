@@ -41,6 +41,31 @@
 	containertype = "/obj/crate/freezer"
 	containername = "Monkey crate"
 
+/datum/supply_packs/shotgun
+	name = "Shotgun crate"
+	contains = list("/obj/item/weapon/gun/projectile/shotgun",
+					"/obj/item/ammo_casing/shotgun/beanbag",
+					"/obj/item/ammo_casing/shotgun/beanbag")
+	cost = 25
+	containertype = "/obj/crate"
+	containername = "Shotgun crate"
+
+/datum/supply_packs/beanbagammo
+	name = "Beanbag shells"
+	contains = list("/obj/item/ammo_casing/shotgun/beanbag",
+					"/obj/item/ammo_casing/shotgun/beanbag",
+					"/obj/item/ammo_casing/shotgun/beanbag",
+					"/obj/item/ammo_casing/shotgun/beanbag",
+					"/obj/item/ammo_casing/shotgun/beanbag",
+					"/obj/item/ammo_casing/shotgun/beanbag",
+					"/obj/item/ammo_casing/shotgun/beanbag",
+					"/obj/item/ammo_casing/shotgun/beanbag",
+					"/obj/item/ammo_casing/shotgun/beanbag",
+					"/obj/item/ammo_casing/shotgun/beanbag")
+	cost = 10
+	containertype = "/obj/crate"
+	containername = "Beanbag shells"
+
 /datum/supply_packs/party
 	name = "Party equipment"
 	contains = list("/obj/item/weapon/storage/drinkingglasses",
@@ -245,7 +270,7 @@
 	name = "50 Metal Sheets"
 	contains = list("/obj/item/stack/sheet/metal")
 	amount = 50
-	cost = 15
+	cost = 10
 	containertype = "/obj/crate"
 	containername = "Metal sheets crate"
 
@@ -253,7 +278,7 @@
 	name = "50 Glass Sheets"
 	contains = list("/obj/item/stack/sheet/glass")
 	amount = 50
-	cost = 15
+	cost = 10
 	containertype = "/obj/crate"
 	containername = "Glass sheets crate"
 
@@ -335,7 +360,7 @@
 	"/obj/item/weapon/cell/high",
 	"/obj/item/weapon/cell/high")
 	cost = 10
-	containertype = /obj/crate/secure/gear
+	containertype = "/obj/crate/secure/gear"
 	containername = "Robotics Assembly"
 	access = access_robotics
 
@@ -388,8 +413,19 @@
 	containername = "Experimental weapons crate"
 	access = access_heads
 
+/datum/supply_packs/armor
+	name = "Armor crate"
+	contains = list("/obj/item/clothing/head/helmet",
+					"/obj/item/clothing/head/helmet",
+					"/obj/item/clothing/suit/armor/vest",
+					"/obj/item/clothing/suit/armor/vest")
+	cost = 15
+	containertype = "/obj/crate/secure"
+	containername = "Armor crate"
+	access = access_armory
+
 /datum/supply_packs/riot
-	name = "Riot crate"
+	name = "Riot gear crate"
 	contains = list("/obj/item/weapon/melee/baton",
 					"/obj/item/weapon/melee/baton",
 					"/obj/item/weapon/shield/riot",
@@ -399,28 +435,33 @@
 					"/obj/item/weapon/handcuffs",
 					"/obj/item/weapon/handcuffs",
 					"/obj/item/clothing/head/helmet/riot",
-					"/obj/item/clothing/suit/armor/riot",)
-	cost = 25
-	containertype = "/obj/crate/secure/gear"
-	containername = "Riot crate"
-	access = access_security
+					"/obj/item/clothing/suit/armor/riot")
+	cost = 40
+	containertype = "/obj/crate/secure"
+	containername = "Riot gear crate"
+	access = access_armory
 
-/datum/supply_packs/armor
-	name = "Armor crate"
-	contains = list("/obj/item/clothing/head/helmet",
-					"/obj/item/clothing/head/helmet",
-					"/obj/item/weapon/shield/riot",
-					"/obj/item/weapon/shield/riot",
-					"/obj/item/clothing/suit/armor/vest",
-					"/obj/item/clothing/suit/armor/vest",
-					"/obj/item/clothing/head/helmet/riot",
-					"/obj/item/clothing/suit/armor/riot",
+/datum/supply_packs/ballistic
+	name = "Ballistic gear crate"
+	contains = list("/obj/item/clothing/suit/armor/bulletproof",
 					"/obj/item/clothing/suit/armor/bulletproof",
-					"/obj/item/clothing/suit/armor/laserproof",)
-	cost = 25
-	containertype = "/obj/crate/secure/gear"
-	containername = "Armor crate"
-	access = access_security
+					"/obj/item/weapon/gun/projectile/shotgun/combat2",
+					"/obj/item/weapon/gun/projectile/shotgun/combat2")
+	cost = 35
+	containertype = "/obj/crate/secure"
+	containername = "Ballistic gear crate"
+	access = access_armory
+
+/datum/supply_packs/expenergy
+	name = "Experimental energy gear crate"
+	contains = list("/obj/item/clothing/suit/armor/laserproof",
+					"/obj/item/clothing/suit/armor/laserproof",
+					"/obj/item/weapon/gun/energy",
+					"/obj/item/weapon/gun/energy")
+	cost = 35
+	containertype = "/obj/crate/secure"
+	containername = "Experimental energy gear crate"
+	access = access_armory
 
 /datum/supply_packs/securitybarriers
 	name = "Security Barriers"
