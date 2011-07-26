@@ -55,7 +55,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/pre_setup()
 	var/list/datum/mind/possible_headrevs = get_players_for_role(BE_REV)
-	
+
 	for (var/i=1 to max_headrevs)
 		if (possible_headrevs.len==0)
 			break
@@ -64,7 +64,7 @@
 		head_revolutionaries += lenin
 		var/mob/new_player/player = lenin.current
 		player.jobs_restricted_by_gamemode = list("Security Officer", "Warden", "Detective")+nonhuman_positions+head_positions
-	
+
 	if(head_revolutionaries.len==0)
 		return 0
 
@@ -127,7 +127,7 @@
 	if(!istype(mob))
 		return
 	var/obj/item/device/flash/T = new(mob)
-	
+
 	var/list/slots = list (
 		"backpack" = mob.slot_in_backpack,
 		"left pocket" = mob.slot_l_store,

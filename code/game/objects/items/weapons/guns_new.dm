@@ -101,12 +101,14 @@
 		icon_state = "heavylaser"
 		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 		damage = 60
-		mobdamage = list(BRUTE = 0, BURN = 60, TOX = 0, OXY = 0, CLONE = 0)
+		mobdamage = list(BRUTE = 10, BURN = 60, TOX = 0, OXY = 0, CLONE = 0)
 		flag = "laser"
 		New()
 			..()
 			effects["eyeblur"] = 20
 			effectprob["eyeblur"] = 100
+			effects["weak"] = 5
+			effectprob["weak"] = 15
 
 	fireball
 		name = "shock"
@@ -127,8 +129,12 @@
 		icon_state = "declone"
 		pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 		damage = 0
-		mobdamage = list(BRUTE = 0, BURN = 0, TOX = 0, OXY = 0, CLONE = 70)
+		mobdamage = list(BRUTE = 0, BURN = 0, TOX = 0, OXY = 0, CLONE = 40)
 		flag = "bio"
+		New()
+			..()
+			effects["radiation"] = 70
+			effectmod["radiation"] = ADD
 
 	dart
 		name = "dart"
@@ -1041,9 +1047,9 @@
 					return 0
 				switch(mode)
 					if(0)
-						in_chamber = new /obj/item/projectile/beam(src)
-					if(1)
 						in_chamber = new /obj/item/projectile/heavylaser(src)
+					if(1)
+						in_chamber = new /obj/item/projectile/beam(src)
 				power_supply.use(charge_cost)
 				return 1
 
@@ -1076,9 +1082,9 @@
 					return 0
 				switch(mode)
 					if(0)
-						in_chamber = new /obj/item/projectile/beam(src)
-					if(1)
 						in_chamber = new /obj/item/projectile/heavylaser(src)
+					if(1)
+						in_chamber = new /obj/item/projectile/beam(src)
 				power_supply.use(charge_cost)
 				return 1
 
@@ -1123,8 +1129,8 @@
 				power_supply.give(power_supply.maxcharge)
 
 		decloner
-			name = "decloner"
-			desc = "A high tech energy weapon that declones a target."
+			name = "biological demolecularisor"
+			desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 			icon_state = "decloner"
 			fire_sound = 'pulse3.ogg'
 			origin_tech = "combat=5;materials=4;powerstorage=3"

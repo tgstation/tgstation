@@ -474,7 +474,11 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	else
 		// Shooting Code:
 		var/obj/item/weapon/gun/energy/E=new installation
-		playsound(src.loc, E.fire_sound, 75, 1)
+
+		if(!E.silenced)
+			playsound(src.loc, E.fire_sound, 75, 1)
+		else
+			playsound(src.loc, E.fire_sound, 10, 1)
 
 		// All energy-based weapons are applicable
 		if (istype(E, /obj/item/weapon/gun/energy/laser))
@@ -496,7 +500,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			if(!emagged) use_power(700)
 			else use_power(1400)
 
-		else if(istype(E, /obj/item/weapon/gun/energy/taser))
+		else if(istype(E, /obj/item/weapon/gun/energy/taser) || istype(E, /obj/item/weapon/gun/energy/stunrevolver))
 			A = new /obj/item/projectile/electrode( loc )
 			icon_state = "target_prism"
 			if(!emagged) use_power(200)
@@ -510,6 +514,48 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			icon_state = "target_prism"
 			if(!emagged) use_power(300)
 			else use_power(600)
+
+		else if(istype(E, /obj/item/weapon/gun/energy/lasercannon))
+			A = new /obj/item/projectile/heavylaser( loc )
+			A.original = target.loc
+			icon_state = "orange_target_prism"
+			if(!emagged) use_power(600)
+			else use_power(1200)
+
+		else if(istype(E, /obj/item/weapon/gun/energy/heavylasercannon))
+			A = new /obj/item/projectile/deathlaser( loc )
+			A.original = target.loc
+			icon_state = "orange_target_prism"
+			if(!emagged) use_power(800)
+			else use_power(1600)
+
+		else if(istype(E, /obj/item/weapon/gun/energy/shockgun))
+			A = new /obj/item/projectile/fireball( loc )
+			A.original = target.loc
+			icon_state = "orange_target_prism"
+			if(!emagged) use_power(500)
+			else use_power(1000)
+
+		else if(istype(E, /obj/item/weapon/gun/energy/decloner))
+			A = new /obj/item/projectile/declone( loc )
+			A.original = target.loc
+			icon_state = "orange_target_prism"
+			if(!emagged) use_power(600)
+			else use_power(1200)
+
+		else if(istype(E, /obj/item/weapon/gun/energy/crossbow))
+			A = new /obj/item/projectile/bolt( loc )
+			A.original = target.loc
+			icon_state = "orange_target_prism"
+			if(!emagged) use_power(50)
+			else use_power(100)
+
+		else if(istype(E, /obj/item/weapon/gun/energy/largecrossbow))
+			A = new /obj/item/projectile/largebolt( loc )
+			A.original = target.loc
+			icon_state = "orange_target_prism"
+			if(!emagged) use_power(125)
+			else use_power(250)
 
 		else // Energy gun shots
 

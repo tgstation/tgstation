@@ -13,7 +13,21 @@
 	return
 
 /obj/item/proc/dropped(mob/user as mob)
-	return
+	..()
+
+	// So you can't drop the Offhand
+	if(istype(src, /obj/item/weapon/offhand))
+		user.drop_item(src)
+
+		var/obj/item/O_r = user.r_hand
+		var/obj/item/O_l = user.l_hand
+		if(O_r.twohanded)
+			if(O_r.wielded)
+				user.drop_item(O_r)
+		if(O_l.twohanded)
+			if(O_l.wielded)
+				user.drop_item(O_l)
+		del(src)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)

@@ -240,7 +240,8 @@
 										sleep(10)
 										Atkcool = 0
 
-									Target.attack_metroid(src)
+									if(get_obstacle_ok(Target))
+										Target.attack_metroid(src)
 
 
 								if(prob(30))
@@ -255,7 +256,8 @@
 
 					else
 						if(Target in view(30, src))
-							step_to(src, Target)
+							if(get_obstacle_ok(Target))
+								step_to(src, Target)
 
 						else
 							Target = null

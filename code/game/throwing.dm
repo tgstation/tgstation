@@ -33,6 +33,8 @@
 				else
 					var/obj/item/weapon/offhand/O = l_hand
 					del O
+
+			IT.wielded = 0
 			IT.name = initial(IT.name)
 
 

@@ -97,6 +97,11 @@
 		while (unassigned.len && vacancies.len)
 			var/mob/new_player/candidate = pick_n_take(unassigned)
 			var/occupation = pick_n_take(vacancies)
+
+			if(candidate.jobs_restricted_by_gamemode)
+				if(occupation in candidate.jobs_restricted_by_gamemode)
+					continue
+
 			candidate.mind.assigned_role = occupation
 
 		for (var/mob/new_player/player in unassigned)
