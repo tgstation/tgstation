@@ -23,6 +23,10 @@
 // defaults to equipment channel
 
 /obj/machinery/proc/powered(var/chan = EQUIP)
+
+	if(!src.loc)
+		return 0
+
 	var/area/A = src.loc.loc		// make sure it's in an area
 	if(!A || !isarea(A))
 		return 0					// if not, then not powered
