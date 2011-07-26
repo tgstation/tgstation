@@ -874,7 +874,7 @@ var/showadminmessages = 1
 				if (!paths)
 					return
 				else if (length(paths) > 5)
-					alert("Select less object types, jerko.")
+					alert("Select less object types, (max 5)")
 					return
 				else if (length(removed_paths))
 					alert("Removed:\n" + dd_list2text(removed_paths, "\n"))
@@ -884,17 +884,36 @@ var/showadminmessages = 1
 				var/X = offset.len > 0 ? text2num(offset[1]) : 0
 				var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 				var/Z = offset.len > 2 ? text2num(offset[3]) : 0
+				var/tmp_dir = href_list["object_dir"]
+				var/obj_dir = tmp_dir ? text2num(tmp_dir) : 2
+				if(!obj_dir || !(obj_dir in list(1,2,4,8,5,6,9,10)))
+					obj_dir = 2
+				var/obj_name = sanitize(href_list["object_name"])
 
 				for (var/i = 1 to number)
 					switch (href_list["offset_type"])
 						if ("absolute")
 							for (var/path in paths)
-								new path(locate(0 + X,0 + Y,0 + Z))
+								var/atom/O = new path(locate(0 + X,0 + Y,0 + Z))
+								if(O)
+									O.dir = obj_dir
+									if(obj_name)
+										O.name = obj_name
+										if(istype(O,/mob))
+											var/mob/M = O
+											M.real_name = obj_name
 
 						if ("relative")
 							if (loc)
 								for (var/path in paths)
-									new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
+									var/atom/O = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
+									if(O)
+										O.dir = obj_dir
+										if(obj_name)
+											O.name = obj_name
+											if(istype(O,/mob))
+												var/mob/M = O
+												M.real_name = obj_name
 							else
 								return
 
