@@ -62,7 +62,7 @@ SYNDICATE UPLINK
 			dat += "<A href='byond://?src=\ref[src];buy_item=lawmod'>Hacked AI Module</A> (7)<BR>"
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=toolbox'>Syndicate Toolbox</A> (Includes various tools) (1)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=balloon'>Syndicate Balloon</A> (10)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=balloon'>Syndicate Balloon</A> (Useless) (10)<BR>"
 			dat += "<HR>"
 			if (src.origradio)
 				dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</A><BR>"

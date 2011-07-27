@@ -23,6 +23,6 @@ fateweaver - Game Admin
 agouri - Game Master
 errorage - Game Master
 
-uhangi - Trial Admin
+uhangi - Game Master
 
 superxpdude - Game Master

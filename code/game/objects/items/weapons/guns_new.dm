@@ -47,12 +47,17 @@
 		bumped = 0
 
 	weakbullet
-		damage = 15
+		damage = 8
 		mobdamage = list(BRUTE = 8, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
 		New()
 			..()
 			effects["weak"] = 25
-			effectprob["weak"] = 35
+			effectprob["weak"] = 100
+			effects["stutter"] = 5
+			effectprob["stutter"] = 100
+			effects["eyeblur"] = 5
+			effectprob["eyeblur"] = 100
+
 
 	suffocationbullet
 		damage = 65
@@ -315,6 +320,7 @@
 	icon_state = "s-casing"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	throwforce = 1
+	w_class = 1.0
 	var
 		caliber = "357" //Which kind of guns it can be loaded into
 		obj/item/projectile/BB //The loaded bullet

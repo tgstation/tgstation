@@ -62,7 +62,7 @@
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=singubeacon'>Singularity Beacon</A> (does not include a screwdriver) (3)<BR>"
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=toolbox'>Syndicate Toolbox</A> (Includes various tools) (1)<BR>"
-	menu_message += "<A href='byond://?src=\ref[src];buy_item=balloon'>Syndicate Balloon</A> (10)<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=balloon'>Syndicate Balloon</A> (Useless) (10)<BR>"
 
 
 	menu_message += "<HR>"

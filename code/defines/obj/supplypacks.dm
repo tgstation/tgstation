@@ -41,6 +41,7 @@
 	containertype = "/obj/crate/freezer"
 	containername = "Monkey crate"
 
+/*
 /datum/supply_packs/shotgun
 	name = "Shotgun crate"
 	contains = list("/obj/item/weapon/gun/projectile/shotgun",
@@ -49,6 +50,8 @@
 	cost = 25
 	containertype = "/obj/crate"
 	containername = "Shotgun crate"
+//APPARENTLY OP?
+*/
 
 /datum/supply_packs/beanbagammo
 	name = "Beanbag shells"
@@ -393,7 +396,7 @@
 					"/obj/item/weapon/gun/energy/taser",
 					"/obj/item/weapon/storage/flashbang_kit",
 					"/obj/item/weapon/storage/flashbang_kit")
-	cost = 20
+	cost = 30
 	containertype = "/obj/crate/secure/weapon"
 	containername = "Weapons crate"
 	access = access_security
@@ -422,21 +425,29 @@
 	cost = 15
 	containertype = "/obj/crate/secure"
 	containername = "Armor crate"
-	access = access_armory
+	access = access_security
 
 /datum/supply_packs/riot
 	name = "Riot gear crate"
 	contains = list("/obj/item/weapon/melee/baton",
 					"/obj/item/weapon/melee/baton",
+					"/obj/item/weapon/melee/baton",
+					"/obj/item/weapon/shield/riot",
 					"/obj/item/weapon/shield/riot",
 					"/obj/item/weapon/shield/riot",
 					"/obj/item/weapon/storage/flashbang_kit",
 					"/obj/item/weapon/storage/flashbang_kit",
+					"/obj/item/weapon/storage/flashbang_kit",
+					"/obj/item/weapon/handcuffs",
 					"/obj/item/weapon/handcuffs",
 					"/obj/item/weapon/handcuffs",
 					"/obj/item/clothing/head/helmet/riot",
+					"/obj/item/clothing/suit/armor/riot",
+					"/obj/item/clothing/head/helmet/riot",
+					"/obj/item/clothing/suit/armor/riot",
+					"/obj/item/clothing/head/helmet/riot",
 					"/obj/item/clothing/suit/armor/riot")
-	cost = 40
+	cost = 60
 	containertype = "/obj/crate/secure"
 	containername = "Riot gear crate"
 	access = access_armory
@@ -447,7 +458,7 @@
 					"/obj/item/clothing/suit/armor/bulletproof",
 					"/obj/item/weapon/gun/projectile/shotgun/combat2",
 					"/obj/item/weapon/gun/projectile/shotgun/combat2")
-	cost = 35
+	cost = 50
 	containertype = "/obj/crate/secure"
 	containername = "Ballistic gear crate"
 	access = access_armory
@@ -458,9 +469,20 @@
 					"/obj/item/clothing/suit/armor/laserproof",
 					"/obj/item/weapon/gun/energy",
 					"/obj/item/weapon/gun/energy")
-	cost = 35
+	cost = 50
 	containertype = "/obj/crate/secure"
 	containername = "Experimental energy gear crate"
+	access = access_armory
+
+/datum/supply_packs/exparmor
+	name = "Experimental armor crate"
+	contains = list("/obj/item/clothing/suit/armor/laserproof",
+					"/obj/item/clothing/suit/armor/bulletproof",
+					"/obj/item/clothing/head/helmet/riot",
+					"/obj/item/clothing/suit/armor/riot")
+	cost = 35
+	containertype = "/obj/crate/secure"
+	containername = "Experimental armor crate"
 	access = access_armory
 
 /datum/supply_packs/securitybarriers
