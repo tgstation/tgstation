@@ -775,13 +775,13 @@ var/list/sacrificed = list()
 					if (iscultist(C))
 						continue
 					C.ear_deaf += 50
-					C.show_message("\red World around you suddenly becomes quiet.", 3)
+					C.show_message("\red The world around you suddenly becomes quiet.", 3)
 					affected++
 					if(prob(1))
 						C.disabilities |= 4
 				if(affected)
 					usr.say("Sti' kaliedir!")
-					usr << "\red World becomes quiet as deafening rune dissipates into fine dust."
+					usr << "\red The world becomes quiet as the deafening rune dissipates into fine dust."
 					del(src)
 				else
 					return fizzle()
@@ -792,7 +792,7 @@ var/list/sacrificed = list()
 						continue
 					C.ear_deaf += 30
 					//talismans is weaker.
-					C.show_message("\red World around you suddenly becomes quiet.", 3)
+					C.show_message("\red The world around you suddenly becomes quiet.", 3)
 					affected++
 				if(affected)
 					usr.whisper("Sti' kaliedir!")
@@ -814,11 +814,11 @@ var/list/sacrificed = list()
 						C.disabilities |= 1
 						if(prob(10))
 							C.sdisabilities |= 1
-					C.show_message("\red Suddenly you see red flash, that blinds you.", 3)
+					C.show_message("\red Suddenly you see red flash that blinds you.", 3)
 					affected++
 				if(affected)
 					usr.say("Sti' kaliesin!")
-					usr << "\red Rune flashes, blinding those who not follow the Nar-Sie, and dissipates into fine dust."
+					usr << "\red The rune flashes, blinding those who not follow the Nar-Sie, and dissipates into fine dust."
 					del(src)
 				else
 					return fizzle()
@@ -831,7 +831,7 @@ var/list/sacrificed = list()
 					C.eye_blind += 10
 					//talismans is weaker.
 					affected++
-					C.show_message("\red You feel sharp pain in your eyes, and the world disappears into darkness..", 3)
+					C.show_message("\red You feel a sharp pain in your eyes, and the world disappears into darkness..", 3)
 				if(affected)
 					usr.whisper("Sti' kaliesin!")
 					usr << "\red Your talisman turns into gray dust, blinding those who not follow the Nar-Sie."

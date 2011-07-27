@@ -321,7 +321,7 @@
 			M.mutations |= COLD_RESISTANCE
 	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),11))
 		M.sdisabilities |= 1
-		M << "\red You cant seem to see anything."
+		M << "\red You can't seem to see anything."
 	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),12))
 		if(inj || prob(15))
 			M << "\blue You feel smarter."
@@ -329,7 +329,7 @@
 	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),13))
 		M.sdisabilities |= 4
 		M.ear_deaf = 1
-		M << "\red Its kinda quiet..."
+		M << "\red You can't seem to hear anything..."
 
 //////////////////////////////////////////////////////////// Monkey Block
 	if (isblockon(getblock(M.dna.struc_enzymes, 14,3),14) && istype(M, /mob/living/carbon/human))
@@ -360,9 +360,11 @@
 			del(animation)
 
 		var/mob/living/carbon/monkey/O = new(src)
-		if (M.dna)
-			O.dna = M.dna
-			M.dna = null
+
+		if(M)
+			if (M.dna)
+				O.dna = M.dna
+				M.dna = null
 
 
 		for(var/datum/disease/D in M.viruses)

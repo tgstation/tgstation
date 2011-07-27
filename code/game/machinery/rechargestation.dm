@@ -118,7 +118,9 @@
 							if(O.reagents.get_reagent_amount("anti_toxin") < 30)
 								O.reagents.add_reagent("anti_toxin", 1)
 
-					R.module.respawn_consumable(R)
+					if(R)
+						if(R.module)
+							R.module.respawn_consumable(R)
 
 
 	verb

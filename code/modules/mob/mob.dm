@@ -2037,23 +2037,24 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	else
 		flick("gibbed-r", animation)
 
-	if(key)
-		if (istype(src, /mob/living/silicon))
-			robogibs(loc, viruses)
-		else if (istype(src, /mob/living/carbon/alien))
-			xgibs(loc, viruses)
-		else
-			gibs(loc, viruses)
+	spawn()
+		if(key)
+			if (istype(src, /mob/living/silicon))
+				robogibs(loc, viruses)
+			else if (istype(src, /mob/living/carbon/alien))
+				xgibs(loc, viruses)
+			else
+				gibs(loc, viruses)
 
-	else
-		if (istype(src, /mob/living/silicon))
-			robogibs(loc, viruses)
-		else if (istype(src, /mob/living/carbon/alien))
-			xgibs(loc, viruses)
 		else
-			gibs(loc, viruses)
-	sleep(15)
-	del(src)
+			if (istype(src, /mob/living/silicon))
+				robogibs(loc, viruses)
+			else if (istype(src, /mob/living/carbon/alien))
+				xgibs(loc, viruses)
+			else
+				gibs(loc, viruses)
+		sleep(15)
+		del(src)
 
 /*
 This is the proc for turning a mob into ash. Mostly a copy of gib code (above).

@@ -194,7 +194,7 @@
 		return
 
 	else if (stat == 2 && !client)
-		gibs(loc, viruses)
+		xgibs(loc, viruses)
 		del(src)
 		return
 

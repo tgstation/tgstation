@@ -237,7 +237,9 @@ var/global/list/uneatable = list(
 					if(A:mind)
 						if((A:mind:assigned_role == "Station Engineer") || (A:mind:assigned_role == "Chief Engineer") )
 							gain = 100
-				A:gib()
+				spawn()
+					A:gib()
+				sleep(1)
 			else if(istype(A,/obj/))
 				A:ex_act(1.0)
 				if(A) del(A)

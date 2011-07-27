@@ -365,13 +365,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-being_built.materials[M]))
 								else
 									linked_lathe.reagents.remove_reagent(M, being_built.materials[M])
-						var/obj/new_item = new being_built.build_path(src)
-						new_item.reliability = being_built.reliability
-						if(linked_lathe.hacked) being_built.reliability = max((reliability / 2), 0)
-						new_item.loc = linked_lathe.loc
-						linked_lathe.busy = 0
-						screen = 3.1
-						updateUsrDialog()
+
+						if(being_built.build_path)
+							var/obj/new_item = new being_built.build_path(src)
+							new_item.reliability = being_built.reliability
+							if(linked_lathe.hacked) being_built.reliability = max((reliability / 2), 0)
+							new_item.loc = linked_lathe.loc
+							linked_lathe.busy = 0
+							screen = 3.1
+							updateUsrDialog()
 
 		else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
 			if(linked_imprinter)

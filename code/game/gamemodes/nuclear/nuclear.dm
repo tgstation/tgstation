@@ -226,8 +226,10 @@
 
 /datum/game_mode/proc/is_operatives_are_dead()
 	for(var/datum/mind/operative_mind in syndicates)
-		if (!istype(operative_mind.current,/mob/living/carbon/human) && operative_mind.current.stat!=2)
-			return 0
+		if (!istype(operative_mind.current,/mob/living/carbon/human))
+			if(operative_mind.current)
+				if(operative_mind.current.stat!=2)
+					return 0
 	return 1
 
 /datum/game_mode/nuclear/declare_completion()

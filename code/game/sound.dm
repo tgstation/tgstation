@@ -20,13 +20,15 @@
 		S.frequency = rand(32000, 55000)
 	for (var/mob/M in range(world.view+extrarange, source))
 		if (M.client)
-			if(isturf(source))
-				var/dx = source.x - M.x
-				S.pan = max(-100, min(100, dx/8.0 * 100))
-			M << S
+			if(M.ear_deaf <= 0 || !M.ear_deaf)
+				if(isturf(source))
+					var/dx = source.x - M.x
+					S.pan = max(-100, min(100, dx/8.0 * 100))
+
+				M << S
 
 /mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num)
-	if(!src.client)
+	if(!src.client && ear_deaf > 0)
 		return
 	switch(soundin)
 		if ("shatter") soundin = pick('Glassbr1.ogg','Glassbr2.ogg','Glassbr3.ogg')
@@ -48,6 +50,7 @@
 	if(isturf(source))
 		var/dx = source.x - src.x
 		S.pan = max(-100, min(100, dx/8.0 * 100))
+
 	src << S
 
 client/verb/Toggle_Soundscape()

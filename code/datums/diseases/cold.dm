@@ -16,11 +16,11 @@
 		if(2)
 			if(affected_mob.sleeping && prob(40))
 				affected_mob << "\blue You feel better."
-				affected_mob.virus.cure()
+				cure()
 				return
 			if(prob(1) && prob(10))
 				affected_mob << "\blue You feel better."
-				affected_mob.virus.cure()
+				cure()
 				return
 			if(prob(1))
 				affected_mob.emote("sneeze")
@@ -33,11 +33,11 @@
 		if(3)
 			if(affected_mob.sleeping && prob(25))
 				affected_mob << "\blue You feel better."
-				src.cure()
+				cure()
 				return
 			if(prob(1) && prob(10))
 				affected_mob << "\blue You feel better."
-				affected_mob.virus.cure()
+				cure()
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))

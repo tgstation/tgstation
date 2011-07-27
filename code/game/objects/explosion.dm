@@ -36,14 +36,16 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 				distance = 0
 			if(distance < devastation_range)
 				for(var/atom/object in T.contents)
-					object.ex_act(1)
+					spawn()
+						object.ex_act(1)
 				if(prob(5))
 					T.ex_act(2)
 				else
 					T.ex_act(1)
 			else if(distance < heavy_impact_range)
 				for(var/atom/object in T.contents)
-					object.ex_act(2)
+					spawn()
+						object.ex_act(2)
 				T.ex_act(2)
 			else if (distance == heavy_impact_range)
 				for(var/atom/object in T.contents)
@@ -54,11 +56,13 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 					T.ex_act(2)
 			else if(distance <= light_impact_range)
 				for(var/atom/object in T.contents)
-					object.ex_act(3)
+					spawn()
+						object.ex_act(3)
 				T.ex_act(3)
 			for(var/mob/living/carbon/mob in T)
 				flick("flash", mob:flash)
 
+		sleep(3)
 		defer_powernet_rebuild = 0
 	return 1
 
