@@ -62,7 +62,7 @@ SYNDICATE UPLINK
 			dat += "<A href='byond://?src=\ref[src];buy_item=lawmod'>Hacked AI Module</A> (7)<BR>"
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=toolbox'>Syndicate Toolbox</A> (Includes various tools) (1)<BR>"
-
+			dat += "<A href='byond://?src=\ref[src];buy_item=balloon'>Syndicate Balloon</A> (10)<BR>"
 			dat += "<HR>"
 			if (src.origradio)
 				dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</A><BR>"
@@ -182,6 +182,10 @@ SYNDICATE UPLINK
 					if(uses)
 						uses--
 						new /obj/item/weapon/storage/toolbox/syndicate(get_turf(src))
+				if("balloon")
+					if (src.uses >= 10)
+						uses -= 10
+						new /obj/item/toy/syndicateballoon(get_turf(src))
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
 			shutdown_uplink()
