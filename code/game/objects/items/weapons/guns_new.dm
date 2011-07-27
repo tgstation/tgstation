@@ -33,7 +33,7 @@
 		current = null
 		turf/original = null
 
-		damage = 50		// damage dealt by projectile. This is used for machinery, livestock, anything not under /mob heirarchy
+		damage = 51		// damage dealt by projectile. This is used for machinery, livestock, anything not under /mob heirarchy
 		flag = "bullet" // identifier flag (bullet, laser, bio, rad, taser). This is to identify what kind of armor protects against the shot
 
 
@@ -51,12 +51,10 @@
 		mobdamage = list(BRUTE = 8, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
 		New()
 			..()
-			effects["weak"] = 25
-			effectprob["weak"] = 100
+			effects["weak"] = 15
+			effects["stun"] = 15
 			effects["stutter"] = 5
-			effectprob["stutter"] = 100
 			effects["eyeblur"] = 5
-			effectprob["eyeblur"] = 100
 
 
 	suffocationbullet
