@@ -1150,7 +1150,8 @@
 		if(newname)
 			name = newname
 		else
-			alert(occupant, "nope.avi")
+			if(!newname || newname == "" || newname == " ")
+				alert(occupant, "nope.avi")
 		return
 	if (href_list["repair_int_control_lost"])
 		src.occupant_message("Recalibrating coordination system.")
