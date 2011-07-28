@@ -1146,7 +1146,11 @@
 		onclose(occupant, "exosuit_log")
 		return
 	if (href_list["change_name"])
-		name = strip_html_simple(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)))
+		var/newname = strip_html_simple(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)))
+		if(newname)
+			name = newname
+		else
+			alert(occupant, "nope.avi")
 		return
 	if (href_list["repair_int_control_lost"])
 		src.occupant_message("Recalibrating coordination system.")
