@@ -30,7 +30,7 @@
 			user.show_message("\blue The electric pads have been exposed!")
 		else
 			user.show_message("\blue The electric pads have been reinserted!")
-		src.add_fingerprint(user)
+		//src.add_fingerprint(user)
 	else
 		if (istype(W, /obj/item/clothing/head/helmet))
 			var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
@@ -118,7 +118,9 @@
 			if (M.moved_recently && M.last_move)
 				step(M, M.last_move)
 		M.show_message("\red <B>You feel a sharp shock!</B>")
-
+		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+		s.set_up(3, 1, M)
+		s.start()
 
 		if (M.weakened < 10)
 			M.weakened = 10

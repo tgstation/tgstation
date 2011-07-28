@@ -188,6 +188,9 @@
 
 	flick("e_chairs", src)
 	flick("e_chairos", src.overl)
+	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	s.set_up(12, 1, src)
+	s.start()
 	for(var/mob/living/M in src.loc)
 		M.burn_skin(85)
 		M << "\red <B>You feel a deep shock course through your body!</B>"
