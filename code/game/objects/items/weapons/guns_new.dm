@@ -439,6 +439,27 @@
 				src.pixel_x = rand(-10.0, 10)
 				src.pixel_y = rand(-10.0, 10)
 
+
+/obj/item/ammo_casing/attackby(obj/item/weapon/W as obj, mob/user as mob) //Adding this to the trash list. Nyoro~n --Agouri
+	..()
+	if (istype(W, /obj/item/weapon/trashbag))
+		var/obj/item/weapon/trashbag/S = W
+		if (S.mode == 1)
+			for (var/obj/item/ammo_casing/AC in locate(src.x,src.y,src.z))
+				if (S.contents.len < S.capacity)
+					S.contents += AC;
+				else
+					user << "\blue The bag is full."
+					break
+			user << "\blue You pick up all trash."
+		else
+			if (S.contents.len < S.capacity)
+				S.contents += src;
+			else
+				user << "\blue The bag is full."
+		S.update_icon()
+	return
+
 /obj/item/ammo_magazine
 	name = "ammo box (.357)"
 	desc = "A box of .357 ammo"

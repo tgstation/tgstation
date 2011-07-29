@@ -4,8 +4,6 @@
 	new /obj/item/clothing/suit/bio_suit/janitor(src)
 	new /obj/item/clothing/head/bio_hood/janitor(src)
 	new /obj/item/clothing/under/rank/janitor(src)
-	new /obj/item/clothing/under/rank/janitor(src)
-	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/device/flashlight(src)
 	new /obj/item/clothing/shoes/galoshes(src)

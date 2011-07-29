@@ -151,7 +151,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	opacity = 1
 	doortype = 13
 
-/obj/machinery/door/airlock/glass_command
+/obj/machinery/door/airlock/glass/glass_command
 	name = "Maintenance Hatch"
 	icon = 'Doorcomglass.dmi'
 	opacity = 0

@@ -104,6 +104,23 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 				O.show_message(text("\red [] lights their [] with their []. How poor can you get?", user, src.name, W), 1)
 			spawn() //start fires while it's lit
 				src.process()*/
+	else  if (istype(W, /obj/item/weapon/trashbag))
+		var/obj/item/weapon/trashbag/S = W
+		if (S.mode == 1)
+			for (var/obj/item/clothing/mask/cigarette/C in locate(src.x,src.y,src.z))
+				if (S.contents.len < S.capacity)
+					S.contents += C;
+				else
+					user << "\blue The bag is full."
+					break
+			user << "\blue You pick up all trash."
+		else
+			if (S.contents.len < S.capacity)
+				S.contents += src;
+			else
+				user << "\blue The bag is full."
+		S.update_icon()
+	return
 
 /obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = "[usr] lights the [name].")
 	if(!src.lit)
@@ -216,6 +233,26 @@ obj/item/weapon/matchbox.attackby(obj/item/weapon/match/W as obj, mob/user as mo
 	else
 		return ..()
 	src.update_icon()
+	return
+
+/obj/item/weapon/cigpacket/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if (istype(W, /obj/item/weapon/trashbag))
+		var/obj/item/weapon/trashbag/S = W
+		if (S.mode == 1)
+			for (var/obj/item/weapon/cigpacket/CP in locate(src.x,src.y,src.z))
+				if (S.contents.len < S.capacity)
+					S.contents += CP;
+				else
+					user << "\blue The bag is full."
+					break
+			user << "\blue You pick up all trash."
+		else
+			if (S.contents.len < S.capacity)
+				S.contents += src;
+			else
+				user << "\blue The bag is full."
+		S.update_icon()
 	return
 
 /////////
