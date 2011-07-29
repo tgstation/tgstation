@@ -30,7 +30,7 @@
 			user.show_message("\blue The electric pads have been exposed!")
 		else
 			user.show_message("\blue The electric pads have been reinserted!")
-		//src.add_fingerprint(user)
+		src.add_fingerprint(user)
 	else
 		if (istype(W, /obj/item/clothing/head/helmet))
 			var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )

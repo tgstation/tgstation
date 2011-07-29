@@ -222,7 +222,7 @@ datum
 				"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 				"the station blueprints" = /obj/item/blueprints,
 				"thermal optics" = /obj/item/clothing/glasses/thermal,
-				"a engineers rig suit" = /obj/item/clothing/suit/space/rig,
+				"a mining rig suit" = /obj/item/clothing/suit/space/rig,
 				"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
 				"28 moles of plasma (full tank)" = /obj/item/weapon/tank,
 			)
