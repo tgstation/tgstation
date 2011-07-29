@@ -190,15 +190,15 @@
 
 /obj/item/clothing/head/helmet/space/command/chief_engineer
 	name = "Chief engineer space helmet"
-	desc = "A special helmet designed to work in a hazardous, low-pressure environment. Bears the insignia of the chief medical officer."
-	icon_state = "helm-cmo"
-	item_state = "helm-cmo"
-
-/obj/item/clothing/head/helmet/space/command/chief_medical_officer
-	name = "Chief medical offier space helmet"
 	desc = "A special helmet designed to work in a hazardous, low-pressure environment. Bears the insignia of the chief engineer."
 	icon_state = "helm-ce"
 	item_state = "helm-ce"
+
+/obj/item/clothing/head/helmet/space/command/chief_medical_officer
+	name = "Chief medical offier space helmet"
+	desc = "A special helmet designed to work in a hazardous, low-pressure environment. Bears the insignia of the chief medical officer."
+	icon_state = "helm-cmo"
+	item_state = "helm-cmo"
 
 /obj/item/clothing/head/helmet/space/capspace
 	name = "space helmet"
