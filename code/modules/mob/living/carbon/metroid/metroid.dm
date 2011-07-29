@@ -449,6 +449,11 @@
 				if(prob(90) && !client)
 					Discipline++
 
+				spawn()
+					SStun = 1
+					sleep(rand(25,50))
+					SStun = 0
+
 				Victim = null
 				anchored = 0
 				step_away(src,M)
@@ -628,6 +633,11 @@
 						if(!istype(src, /mob/living/carbon/metroid))
 							if(Discipline == 1)
 								attacked = 0
+
+				spawn()
+					SStun = 1
+					sleep(rand(5,20))
+					SStun = 0
 
 				spawn(0)
 

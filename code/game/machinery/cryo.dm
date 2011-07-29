@@ -123,6 +123,10 @@
 		else if(istype(G, /obj/item/weapon/grab))
 			if(!ismob(G:affecting))
 				return
+			for(var/mob/living/carbon/metroid/M in range(1,G:affecting))
+				if(M.Victim == G:affecting)
+					usr << "[G:affecting:name] will not fit into the cryo because they have a Metroid latched onto their head."
+					return
 			var/mob/M = G:affecting
 			if(put_mob(M))
 				del(G)
@@ -253,6 +257,10 @@
 			set name = "Move Inside"
 			set category = "Object"
 			set src in oview(1)
+			for(var/mob/living/carbon/metroid/M in range(1,usr))
+				if(M.Victim == usr)
+					usr << "You're too busy getting your life sucked out of you."
+					return
 			if (usr.stat != 0 || stat & (NOPOWER|BROKEN))
 				return
 			put_mob(usr)

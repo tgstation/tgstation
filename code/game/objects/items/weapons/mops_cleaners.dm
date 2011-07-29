@@ -17,7 +17,7 @@ MOP
 	if (istype(A, /obj/item/weapon/storage/backpack ))
 		return
 	else if (src.reagents.total_volume < 1)
-		user << "\blue Add more cleaner!"
+		user << "\blue [src] is empty!"
 		return
 
 	var/obj/decal/D = new/obj/decal(get_turf(src))
@@ -92,7 +92,7 @@ MOP
 	if (istype(A, /obj/item/weapon/storage/backpack ))
 		return
 	else if (src.reagents.total_volume < 1)
-		user << "\blue Add more cleaner!"
+		user << "\blue [src] is empty!"
 		return
 
 	playsound(src.loc, 'spray2.ogg', 50, 1, -6)

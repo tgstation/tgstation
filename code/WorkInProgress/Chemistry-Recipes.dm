@@ -12,6 +12,7 @@ datum
 		var/required_other = 0 // an integer required for the reaction to happen
 
 		var/result_amount = 0
+		var/secondary = 0 // set to nonzero if secondary reaction
 
 		proc
 			on_reaction(var/datum/reagents/holder, var/created_volume)
@@ -347,6 +348,7 @@ datum
 			result = null
 			required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1 )
 			result_amount = null
+			secondary = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
 				var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread

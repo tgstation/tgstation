@@ -213,6 +213,8 @@ datum
 
 							C.on_reaction(src, created_volume)
 							reaction_occured = 1
+							break
+
 				while(reaction_occured)
 				update_total()
 				return 0
@@ -373,6 +375,7 @@ datum
 					res += A.name
 
 				return res
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

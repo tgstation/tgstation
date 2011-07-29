@@ -252,6 +252,11 @@
 						if(prob(80) && !Metroid.client)
 							Metroid.Discipline++
 
+						spawn()
+							Metroid.SStun = 1
+							sleep(rand(5,20))
+							Metroid.SStun = 0
+
 						spawn(0)
 							Metroid.canmove = 0
 							step_away(Metroid, user)
@@ -269,6 +274,11 @@
 
 								if(Metroid.Discipline == 1)
 									Metroid.attacked = 0
+
+							spawn()
+								Metroid.SStun = 1
+								sleep(rand(5,20))
+								Metroid.SStun = 0
 
 						Metroid.Victim = null
 						Metroid.anchored = 0

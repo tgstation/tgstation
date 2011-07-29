@@ -74,16 +74,13 @@
 			if(attacked <= 0)
 				Target = null
 
-		if(Victim && !Target)
-			Victim = null
-
 		if(Victim) return // if it's eating someone already, continue eating!
 
 
 		if(prob(5))
 			emote(pick("click","chatter","sway","light","vibrate","chatter","shriek"))
 
-		if(AIproc) return
+		if(AIproc && SStun) return
 
 
 		var/hungry = 0 // determines if the metroid is hungry
@@ -101,8 +98,12 @@
 
 
 		if(starving && !client) // if a metroid is starving, it starts losing its friends
-			if(prob(45))
-				if(Friends.len > 0)
+			if(prob(45) && Friends.len > 0)
+				var/friendnum = 0
+				for(var/mob/M in Friends)
+					friendnum++
+
+				if(friendnum > 0)
 					var/mob/nofriend = pick(Friends)
 					Friends -= nofriend
 
@@ -137,6 +138,22 @@
 
 
 						if(!notarget) targets += C
+
+			for(var/mob/living/silicon/C in view(12,src))
+				if(C.stat != 2)
+					var/notarget = 0
+					if(C in Friends)
+						notarget = 1
+
+					if(!istype(src, /mob/living/carbon/metroid/adult))
+						if(!starving && Discipline > 0)
+							notarget = 1
+							break
+
+					if(tame)
+						notarget = 1
+
+					if(!notarget) targets += C
 
 
 
@@ -199,20 +216,31 @@
 	var/Tempstun = 0 // temporary temperature stuns
 	var/Discipline = 0 // if a metroid has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/turf/Charging = null // turf a metroid is "charging" at
+	var/SStun = 0 // stun variable
 	proc
 
 		AIprocess()  // the master AI process
 
 			if(AIproc) return
 
+			var/hungry = 0
+			var/starving = 0
+			if(istype(src, /mob/living/carbon/metroid/adult))
+				switch(nutrition)
+					if(400 to 800) hungry = 1
+					if(0 to 399)
+						starving = 1
+			else
+				switch(nutrition)
+					if(150 to 500) hungry = 1
+					if(0 to 149) starving = 1
 			AIproc = 1
-			while(AIproc && stat != 2 && attacked > 0)
+			while(AIproc && stat != 2 && (attacked > 0 || starving || hungry))
 				if(Victim) // can't eat AND have this little process at the same time
 					break
 
-				if(attacked <= 0 || !Target)
+				if(!Target)
 					break
-
 
 
 				if(Target.health <= -70 || Target.stat == 2)

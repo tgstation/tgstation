@@ -482,7 +482,18 @@ var/ordernum=0
 		src.temp = "Current approved orders: <BR><BR>"
 		for(var/S in supply_shuttle_shoppinglist)
 			var/datum/supply_order/SO = S
-			src.temp += "[SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]<BR>"
+			src.temp += "[SO.object.name] approved by [SO.orderedby][SO.comment ? " ([SO.comment])":""] <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
+		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+
+	else if (href_list["cancelorder"])
+		var/datum/supply_order/remove_supply = href_list["cancelorder"]
+		supply_shuttle_shoppinglist -= remove_supply
+		supply_shuttle_points += remove_supply.object.cost
+		src.temp += "Canceled: [remove_supply.object.name]<BR><BR><BR>"
+
+		for(var/S in supply_shuttle_shoppinglist)
+			var/datum/supply_order/SO = S
+			src.temp += "[SO.object.name] approved by [SO.orderedby][SO.comment ? " ([SO.comment])":""] <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
 		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
 	else if (href_list["viewrequests"])
