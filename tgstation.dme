@@ -862,6 +862,6 @@
 #include "code\WorkInProgress\recycling\scrap.dm"
 #include "code\WorkInProgress\recycling\sortingmachinery.dm"
 #include "interface\skin.dmf"
-#include "maps\TestingMap.dmm"
+#include "maps\tgstation.2.0.8.dmm"
 // END_INCLUDE
 
