@@ -397,6 +397,7 @@
 #include "code\game\machinery\Sleeper.dm"
 #include "code\game\machinery\spaceheater.dm"
 #include "code\game\machinery\status_display.dm"
+#include "code\game\machinery\suit_storage_unit.dm"
 #include "code\game\machinery\teleporter.dm"
 #include "code\game\machinery\turrets.dm"
 #include "code\game\machinery\vending.dm"
@@ -861,6 +862,6 @@
 #include "code\WorkInProgress\recycling\scrap.dm"
 #include "code\WorkInProgress\recycling\sortingmachinery.dm"
 #include "interface\skin.dmf"
-#include "maps\tgstation.2.0.8.dmm"
+#include "maps\TestingMap.dmm"
 // END_INCLUDE
 
