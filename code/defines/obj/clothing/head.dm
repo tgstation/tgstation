@@ -175,8 +175,10 @@
 /obj/item/clothing/head/helmet/space/engineering
 	name = "Engineering space helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Painted in Engineering Orange to designate its department of origin."
-	icon_state = "helm-orange"
+	icon_state = "helm_engineering0"
 	item_state = "helm-orange"
+	var/brightness_on = 4
+	var/on = 0
 	radiation_protection = 0.25
 	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
 
@@ -191,8 +193,10 @@
 /obj/item/clothing/head/helmet/space/command/chief_engineer
 	name = "Chief engineer space helmet"
 	desc = "A special helmet designed to work in a hazardous, low-pressure environment. Bears the insignia of the chief engineer."
-	icon_state = "helm-ce"
+	icon_state = "helm_ce0"
 	item_state = "helm-ce"
+	var/brightness_on = 4
+	var/on = 0
 
 /obj/item/clothing/head/helmet/space/command/chief_medical_officer
 	name = "Chief medical offier space helmet"

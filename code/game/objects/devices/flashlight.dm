@@ -83,3 +83,67 @@
 	if(on)
 		user.sd_SetLuminosity(user.luminosity - brightness_on)
 		src.sd_SetLuminosity(brightness_on)
+
+/obj/item/clothing/head/helmet/space/engineering/verb/toggle()
+	set name = "Toggle Helmet Light"
+	set category = "Object"
+	on = !on
+	icon_state = "helm_engineering[on]"
+
+	if(on)
+		usr.sd_SetLuminosity(usr.luminosity + brightness_on)
+	else
+		usr.sd_SetLuminosity(usr.luminosity - brightness_on)
+
+/obj/item/clothing/head/helmet/space/engineering/attack_self(mob/user)
+	on = !on
+	icon_state = "helm_engineering[on]"
+
+	if(on)
+		user.sd_SetLuminosity(user.luminosity + brightness_on)
+	else
+		user.sd_SetLuminosity(user.luminosity - brightness_on)
+
+/obj/item/clothing/head/helmet/space/engineering/pickup(mob/user)
+	if(on)
+		src.sd_SetLuminosity(0)
+		usr.sd_SetLuminosity(usr.luminosity + brightness_on)
+
+
+
+/obj/item/clothing/head/helmet/space/engineering/dropped(mob/user)
+	if(on)
+		usr.sd_SetLuminosity(usr.luminosity - brightness_on)
+		src.sd_SetLuminosity(brightness_on)
+
+/obj/item/clothing/head/helmet/space/command/chief_engineer/verb/toggle()
+	set name = "Toggle Helmet Light"
+	set category = "Object"
+	on = !on
+	icon_state = "helm_ce[on]"
+
+	if(on)
+		usr.sd_SetLuminosity(usr.luminosity + brightness_on)
+	else
+		usr.sd_SetLuminosity(usr.luminosity - brightness_on)
+
+/obj/item/clothing/head/helmet/space/command/chief_engineer/attack_self(mob/user)
+	on = !on
+	icon_state = "helm_ce[on]"
+
+	if(on)
+		user.sd_SetLuminosity(user.luminosity + brightness_on)
+	else
+		user.sd_SetLuminosity(user.luminosity - brightness_on)
+
+/obj/item/clothing/head/helmet/space/command/chief_engineer/pickup(mob/user)
+	if(on)
+		src.sd_SetLuminosity(0)
+		usr.sd_SetLuminosity(usr.luminosity + brightness_on)
+
+
+
+/obj/item/clothing/head/helmet/space/command/chief_engineer/dropped(mob/user)
+	if(on)
+		usr.sd_SetLuminosity(usr.luminosity - brightness_on)
+		src.sd_SetLuminosity(brightness_on)
