@@ -6,7 +6,7 @@
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS | ONBELT
 	var/flush = null
-	origin_tech = "programming=4"
+	origin_tech = "programming=4;materials=4"
 
 
 	attack(mob/living/silicon/ai/M as mob, mob/user as mob)

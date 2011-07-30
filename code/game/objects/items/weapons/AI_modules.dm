@@ -294,7 +294,7 @@ AI MODULES
 	var/newFreeFormLaw = "freeform"
 	var/lawpos = 15
 	desc = "A 'freeform' AI module: '<freeform>'"
-	origin_tech = "programming=4;materials=6"
+	origin_tech = "programming=4;materials=4"
 
 /obj/item/weapon/aiModule/freeform/attack_hand(var/mob/user as mob)
 	..()

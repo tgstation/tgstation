@@ -1072,7 +1072,7 @@ datum
 			req_tech = list("combat" = 4, "materials" = 5, "engineering" = 3, "biotech" = 4, "syndicate" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 1000)
-			build_path = "/obj/item/weapon/gun/largecrossbow"
+			build_path = "/obj/item/weapon/gun/energy/largecrossbow"
 
 		freeze_gun
 			name = "Freeze Gun"
@@ -1109,16 +1109,16 @@ datum
 			req_tech = list("combat" = 4, "materials" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 3750, "$silver" = 100)
-			build_path = "obj/item/ammo_magazine/c9mm"
+			build_path = "/obj/item/ammo_magazine/c9mm"
 
 		stunshell
 			name = "Stun Shell"
-			desc = "A stunning shell."
+			desc = "A stunning shell for a shotgun."
 			id = "stunshell"
 			req_tech = list("combat" = 3, "materials" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 4000)
-			build_path = "/obj/item/projectile/stunshot"
+			build_path = "/obj/item/ammo_casing/shotgun/stunshell"
 
 /////////////////////////////////////////
 /////////////////Mining//////////////////
