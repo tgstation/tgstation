@@ -184,7 +184,7 @@
 	w_class = 3.0
 	throw_range = 3
 	origin_tech = "materials=6"
-	perunit = 1000
+	perunit = 3750
 
 /obj/item/stack/sheet/diamond/New(loc,amount)
 	..()
