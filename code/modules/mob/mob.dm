@@ -2257,3 +2257,86 @@ note dizziness decrements automatically in the mob's Life() proc.
 			else
 				boom.icon_state = "loss_general"
 #endif
+
+
+
+
+
+
+// facing verbs
+/mob/verb/eastface()
+	set hidden = 1
+	if(!canmove)
+		return
+	if (client.moving)
+		return 0
+	if (world.time < client.move_delay)
+		return
+	if (stat==2)
+		return
+	if (anchored)
+		return
+	if (monkeyizing)
+		return
+	if (restrained())
+		return
+	dir = EAST
+	client.move_delay += movement_delay()
+
+/mob/verb/westface()
+	set hidden = 1
+	if(!canmove)
+		return
+	if (client.moving)
+		return 0
+	if (world.time < client.move_delay)
+		return
+	if (stat==2)
+		return
+	if (anchored)
+		return
+	if (monkeyizing)
+		return
+	if (restrained())
+		return
+	dir = WEST
+	client.move_delay += movement_delay()
+
+/mob/verb/northface()
+	set hidden = 1
+	if(!canmove)
+		return
+	if (client.moving)
+		return 0
+	if (world.time < client.move_delay)
+		return
+	if (stat==2)
+		return
+	if (anchored)
+		return
+	if (monkeyizing)
+		return
+	if (restrained())
+		return
+	dir = NORTH
+	client.move_delay += movement_delay()
+
+/mob/verb/southface()
+	set hidden = 1
+	if(!canmove)
+		return
+	if (client.moving)
+		return 0
+	if (world.time < client.move_delay)
+		return
+	if (stat==2)
+		return
+	if (anchored)
+		return
+	if (monkeyizing)
+		return
+	if (restrained())
+		return
+	dir = SOUTH
+	client.move_delay += movement_delay()
+

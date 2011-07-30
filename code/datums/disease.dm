@@ -36,7 +36,7 @@ to null does not delete the object itself. Thank you.
 	var/carrier = 0.0 //there will be a small chance that the person will be a carrier
 	var/curable = 0 //can this disease be cured? (By itself...)
 	var/list/strain_data = list() //This is passed on to infectees
-	var/stage_prob = 4		// probability of advancing to next stage, default 5% per check
+	var/stage_prob = 4		// probability of advancing to next stage, default 4% per check
 	var/agent = "some microbes"//name of the disease agent
 	var/permeability_mod = 1//permeability modifier coefficient.
 	var/desc = null//description. Leave it null and this disease won't show in med records.
