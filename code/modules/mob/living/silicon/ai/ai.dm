@@ -32,8 +32,6 @@
 		verbs += /mob/living/silicon/ai/proc/ai_camera_list
 		//Added ai_network_change by Mord_Sith
 		verbs += /mob/living/silicon/ai/proc/ai_network_change
-		verbs += /mob/living/silicon/ai/proc/lockdown
-		verbs += /mob/living/silicon/ai/proc/disablelockdown
 		verbs += /mob/living/silicon/ai/proc/ai_statuschange
 		//Hologram verb./N
 		verbs += /mob/living/silicon/ai/proc/ai_hologram_change
@@ -188,12 +186,10 @@
 
 /mob/living/silicon/ai/emp_act(severity)
 	if (prob(30))
-		switch(pick(1,2,3)) //Add Random laws.
+		switch(pick(1,2))
 			if(1)
 				cancel_camera()
 			if(2)
-				lockdown()
-			if(3)
 				ai_call_shuttle()
 	..()
 

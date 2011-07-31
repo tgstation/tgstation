@@ -126,8 +126,6 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
 	O.verbs += /mob/living/silicon/ai/proc/ai_alerts
 	O.verbs += /mob/living/silicon/ai/proc/ai_camera_list
-	O.verbs += /mob/living/silicon/ai/proc/lockdown
-	O.verbs += /mob/living/silicon/ai/proc/disablelockdown
 	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
 	O.verbs += /mob/living/silicon/ai/proc/ai_roster
 

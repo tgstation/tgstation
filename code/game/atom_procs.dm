@@ -240,7 +240,7 @@
 	var/obj/item/W = usr.equipped()
 
 
-	if(istype(usr, /mob/living/silicon/hivebot)||istype(usr, /mob/living/silicon/robot))
+	if(istype(usr, /mob/living/silicon/robot))
 		if(!isnull(usr:module_active))
 			W = usr:module_active
 		else
@@ -267,7 +267,7 @@
 	if (istype(usr, /mob/living/silicon/ai))
 		t5 = 1
 
-	if ((istype(usr, /mob/living/silicon/robot) || istype(usr, /mob/living/silicon/hivebot)) && W == null)
+	if ((istype(usr, /mob/living/silicon/robot)) && W == null)
 		t5 = 1
 
 	if (istype(src, /datum/organ) && src in usr.contents)
@@ -372,7 +372,7 @@
 						if (istype(usr, /mob/living/carbon/alien/humanoid))
 							src.attack_alien(usr, usr.hand)
 						else
-							if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot)|| istype(usr, /mob/living/silicon/hivebot))
+							if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
 								src.attack_ai(usr, usr.hand)
 
 							else
@@ -388,7 +388,7 @@
 					if (istype(usr, /mob/living/carbon/alien/humanoid))
 						src.hand_al(usr, usr.hand)
 					else
-						if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot)|| istype(usr, /mob/living/silicon/hivebot))
+						if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
 							src.hand_a(usr, usr.hand)
 
 	else

@@ -100,11 +100,11 @@ obj/hud/New(var/type = 0)
 	else if(isrobot(mymob))
 		robot_hud()
 
-	else if(ishivebot(mymob))
-		hivebot_hud()
+//	else if(ishivebot(mymob))
+//		hivebot_hud()
 
-	else if(ishivemainframe(mymob))
-		hive_mainframe_hud()
+//	else if(ishivemainframe(mymob))
+//		hive_mainframe_hud()
 
 	else if(isobserver(mymob))
 		ghost_hud()

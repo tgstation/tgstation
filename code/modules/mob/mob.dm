@@ -57,15 +57,15 @@
 		return 1
 	return 0
 
-/proc/ishivebot(A)
+/*proc/ishivebot(A)
 	if(A && istype(A, /mob/living/silicon/hivebot))
 		return 1
-	return 0
+	return 0*/
 
-/proc/ishivemainframe(A)
+/*proc/ishivemainframe(A)
 	if(A && istype(A, /mob/living/silicon/hive_mainframe))
 		return 1
-	return 0
+	return 0*/
 
 /proc/isAI(A)
 	if(istype(A, /mob/living/silicon/ai))
@@ -974,20 +974,20 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 						usr << "\blue You successfully unbuckle yourself."
 						usr:buckled.manual_unbuckle_all(usr)
 		if("module")
-			if(istype(usr, /mob/living/silicon/robot)||istype(usr, /mob/living/silicon/hivebot))
+			if(istype(usr, /mob/living/silicon/robot))
 				if(usr:module)
 					return
 				usr:pick_module()
 
 		if("radio")
-			if(istype(usr, /mob/living/silicon/robot)||istype(usr, /mob/living/silicon/hivebot))
+			if(istype(usr, /mob/living/silicon/robot))
 				usr:radio_menu()
 		if("panel")
-			if(istype(usr, /mob/living/silicon/robot)||istype(usr, /mob/living/silicon/hivebot))
+			if(istype(usr, /mob/living/silicon/robot))
 				usr:installed_modules()
 
 		if("store")
-			if(istype(usr, /mob/living/silicon/robot)||istype(usr, /mob/living/silicon/hivebot))
+			if(istype(usr, /mob/living/silicon/robot))
 				usr:uneq_active()
 
 		if("module1")
@@ -1254,7 +1254,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/equipped()
 	if(issilicon(src))
-		if(ishivebot(src)||isrobot(src))
+		if(isrobot(src))
 			if(src:module_active)
 				return src:module_active
 	else
@@ -1751,8 +1751,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	if(isAI(mob))
 		return AIMove(n,direct,mob)
-	if(ishivemainframe(mob))
-		return MainframeMove(n,direct,mob)
+//	if(ishivemainframe(mob))
+//		return MainframeMove(n,direct,mob)
 
 	if(mob.anchored)/*If mob is not AI and is anchored. This means most anchored mobs will not be able to move.
 	This is a fix for ninja energy_net to where mobs can not move but can still act to destroy it.

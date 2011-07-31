@@ -59,17 +59,6 @@
 						R.cell.charge += 50
 						return
 
-
-				else if (istype(occupant, /mob/living/silicon/hivebot))
-					var/mob/living/silicon/hivebot/H = occupant
-
-					if(H.energy  >= H.energy_max)
-						H.energy  = H.energy_max
-						return
-					else
-						H.energy += 50
-						return
-
 		go_out()
 			if(!( src.occupant ))
 				return

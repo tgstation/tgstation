@@ -1032,8 +1032,8 @@
 	// for broken pipe, remove and turn into scrap
 
 	welded()
-		var/obj/item/scrap/S = new(src.loc)
-		S.set_components(200,0,0)
+//		var/obj/item/scrap/S = new(src.loc)
+//		S.set_components(200,0,0)
 		del(src)
 
 // the disposal outlet machine

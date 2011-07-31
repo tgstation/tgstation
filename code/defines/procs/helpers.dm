@@ -807,10 +807,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		mob_list.Add(M)
 	for(var/mob/living/carbon/monkey/M in world)
 		mob_list.Add(M)
-	for(var/mob/living/silicon/hivebot/M in world)
-		mob_list.Add(M)
-	for(var/mob/living/silicon/hive_mainframe/M in world)
-		mob_list.Add(M)
+//	for(var/mob/living/silicon/hivebot/M in world)
+//		mob_list.Add(M)
+//	for(var/mob/living/silicon/hive_mainframe/M in world)
+//		mob_list.Add(M)
 	return mob_list
 
 /proc/convert2energy(var/M)

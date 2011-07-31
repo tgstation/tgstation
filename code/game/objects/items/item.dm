@@ -300,7 +300,7 @@
 
 	if (istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		if (ishuman(user) || isrobot(user) || ishivebot(user) || ismonkey(user) || isalien(user))
+		if (ishuman(user) || isrobot(user) || ismonkey(user) || isalien(user))
 			if (!( def_zone ))
 				var/mob/user2 = user
 				var/t = user2:zone_sel.selecting

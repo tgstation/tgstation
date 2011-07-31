@@ -90,6 +90,7 @@
 
 	if (unassigned.len) //unlucky players with preferences and players without preferences
 		var/list/vacancies = list()
+		var/list/failsafe = list()
 		for (var/occ in occupation_eligible)
 			for (var/i = 1 to occupation_eligible[occ])
 				vacancies += occ
@@ -100,11 +101,20 @@
 
 			if(candidate.jobs_restricted_by_gamemode)
 				if(occupation in candidate.jobs_restricted_by_gamemode)
+					vacancies += occupation
+					failsafe += candidate
 					continue
 
 			candidate.mind.assigned_role = occupation
 
 		for (var/mob/new_player/player in unassigned)
+			if (unassigned.len == 0)
+				break
+			player.mind.assigned_role = pick(assistant_occupations)
+
+		for (var/mob/new_player/player in failsafe)
+			if (unassigned.len == 0)
+				break
 			player.mind.assigned_role = pick(assistant_occupations)
 
 	return 1

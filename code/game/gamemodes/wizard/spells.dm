@@ -238,7 +238,7 @@
 
 //DISABLE TECH
 
-/mob/proc/tech()
+/mob/proc/tech()//Shouldnt this just use the emp() proc?
 	set category = "Spells"
 	set name = "Disable Technology"
 	set desc = "This spell disables all weapons, cameras and most other technology in range."
@@ -290,12 +290,10 @@
 			M << "\red Warning: Electromagnetic pulse detected."
 			if(istype(M, /mob/living/silicon/ai))
 				if (prob(30))
-					switch(pick(1,2,3)) //Add Random laws.
+					switch(pick(1,2))
 						if(1)
 							M:cancel_camera()
 						if(2)
-							M:lockdown()
-						if(3)
 							M:ai_call_shuttle()
 			continue
 
