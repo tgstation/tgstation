@@ -41,7 +41,7 @@ obj/machinery/atmospherics/binary/volume_pump
 		return
 
 	process()
-		..()
+//		..()
 		if(!on)
 			return 0
 

@@ -412,8 +412,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 						O.show_message(text("\red [] has temporarily tightened his grip on []!", assailant, affecting), 1)
 						//Foreach goto(97)
 					assailant.next_move = world.time + 10
-					affecting.stunned = max(2, affecting.stunned)
-					affecting.paralysis = max(1, affecting.paralysis)
+					//affecting.stunned = max(2, affecting.stunned)
+					//affecting.paralysis = max(1, affecting.paralysis)
 					affecting.losebreath = min(affecting.losebreath + 1, 3)
 					last_suffocate = world.time
 					flick("disarm/killf", S)
@@ -449,7 +449,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 							assailant << "\blue You can't strangle [affecting] through all that fat!"
 							return
 
-						/*
+						/*Hrm might want to add this back in
 						//we should be able to strangle the Captain if he is wearing a hat
 						for(var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
 							if(C.body_parts_covered & HEAD)
@@ -480,8 +480,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 							affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>")
 							assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
 							assailant.next_move = world.time + 10
-							affecting.stunned = max(2, affecting.stunned)
-							affecting.paralysis = max(1, affecting.paralysis)
 							affecting.losebreath += 1
 							hud1.icon_state = "disarm/kill1"
 						else

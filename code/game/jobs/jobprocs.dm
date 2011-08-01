@@ -351,7 +351,7 @@
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
 			src.equip_if_possible(new /obj/item/weapon/storage/survival_kit(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/det(src), slot_w_uniform)
-			src.equip_if_possible(new /obj/item/device/pda/security(src), slot_belt)
+			src.equip_if_possible(new /obj/item/device/pda/detective(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/head/det_hat(src), slot_head)
 			var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(src)
@@ -398,7 +398,6 @@
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/clothing/head/helmet(src), slot_head)
 			src.equip_if_possible(new /obj/item/clothing/shoes/jackboots(src), slot_shoes)
-//			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_s_store)
 

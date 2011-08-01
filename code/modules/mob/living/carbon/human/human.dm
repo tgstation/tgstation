@@ -1353,13 +1353,13 @@
 					NinjaStealthMalf()
 		else
 			invisibility = 0
-
-	for (var/mob/M in viewers(1, src))
+/*
+	for (var/mob/M in viewers(1, src))//For the love of god DO NOT REFRESH EVERY SECOND - Mport
 		if ((M.client && M.machine == src))
 			spawn (0)
 				show_inv(M)
 				return
-
+*/
 	last_b_state = stat
 
 /mob/living/carbon/human/hand_p(mob/M as mob)
@@ -2770,6 +2770,7 @@ It can still be worn/put on as normal.
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 	<BR><A href='?src=\ref[src];item=h_store'>Empty Hat</A>
+	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
 	user << browse(dat, text("window=mob[name];size=340x480"))
@@ -2994,10 +2995,15 @@ It can still be worn/put on as normal.
 
 
 /mob/living/carbon/human/Topic(href, href_list)
+	if (href_list["refresh"])
+		if((machine)&&(in_range(src, usr)))
+			show_inv(machine)
+
 	if (href_list["mach_close"])
 		var/t1 = text("window=[]", href_list["mach_close"])
 		machine = null
 		src << browse(null, t1)
+
 	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
 		var/obj/equip_e/human/O = new /obj/equip_e/human(  )
 		O.source = usr

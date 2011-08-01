@@ -71,7 +71,7 @@ obj/machinery/atmospherics/pipe
 		var/obj/machinery/atmospherics/node2
 
 		var/minimum_temperature_difference = 300
-		var/thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+		var/thermal_conductivity = 0 //WALL_HEAT_TRANSFER_COEFFICIENT No
 
 		var/maximum_pressure = 70*ONE_ATMOSPHERE
 		var/fatigue_pressure = 55*ONE_ATMOSPHERE
@@ -105,8 +105,10 @@ obj/machinery/atmospherics/pipe
 		process()
 			if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 				..()
+			else
+				machines.Remove(src)
 
-			if(!node1)
+			/*if(!node1)
 				parent.mingle_with_turf(loc, volume)
 				if(!nodealert)
 					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
@@ -138,6 +140,7 @@ obj/machinery/atmospherics/pipe
 
 				if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
 					parent.temperature_interact(loc, volume, thermal_conductivity)
+			*/  //Screw you heat lag
 
 		check_pressure(pressure)
 			var/datum/gas_mixture/environment = loc.return_air()
@@ -381,15 +384,18 @@ obj/machinery/atmospherics/pipe
 			..()
 
 		process()
-			..()
-			if(!node1)
+			if(!parent)
+				..()
+			else
+				machines.Remove(src)
+/*			if(!node1)
 				parent.mingle_with_turf(loc, 200)
 				if(!nodealert)
 					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
 					nodealert = 1
 			else if (nodealert)
 				nodealert = 0
-
+*/
 		carbon_dioxide
 			name = "Pressure Tank (Carbon Dioxide)"
 
@@ -552,23 +558,31 @@ obj/machinery/atmospherics/pipe
 		dir = SOUTH
 		initialize_directions = SOUTH
 
+		var/build_killswitch = 1
+
 		var/obj/machinery/atmospherics/node1
 		New()
 			initialize_directions = dir
 			..()
 
 		process()
-			..()
-			if(parent)
+			if(!parent)
+				if(build_killswitch <= 0)
+					machines.Remove(src)
+				else
+					build_killswitch--
+				..()
+				return
+			else
 				parent.mingle_with_turf(loc, 250)
-
+/*
 			if(!node1)
 				if(!nodealert)
 					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
 					nodealert = 1
 			else if (nodealert)
 				nodealert = 0
-
+*/
 		Del()
 			if(node1)
 				node1.disconnect(src)
@@ -656,8 +670,11 @@ obj/machinery/atmospherics/pipe
 			return list(node1, node2, node3)
 
 		process()
-			..()
-
+			if(!parent)
+				..()
+			else
+				machines.Remove(src)
+/*
 			if(!node1)
 				parent.mingle_with_turf(loc, 70)
 				if(!nodealert)
@@ -675,7 +692,7 @@ obj/machinery/atmospherics/pipe
 					nodealert = 1
 			else if (nodealert)
 				nodealert = 0
-
+*/
 		Del()
 			if(node1)
 				node1.disconnect(src)

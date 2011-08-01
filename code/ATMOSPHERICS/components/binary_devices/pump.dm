@@ -45,7 +45,7 @@ obj/machinery/atmospherics/binary/pump
 		return
 
 	process()
-		..()
+//		..()
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if(!on)

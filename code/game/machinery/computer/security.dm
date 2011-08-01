@@ -154,8 +154,6 @@ What a mess.*/
 				for(var/datum/data/record/R in data_core.general)
 					if (lowertext(R.fields["fingerprint"]) == t1)
 						active1 = R
-					else
-						//Foreach continue //goto(3414)
 				if (!( active1 ))
 					temp = text("Could not locate record [].", t1)
 				else

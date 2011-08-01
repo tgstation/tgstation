@@ -50,6 +50,10 @@
 	default_cartridge = /obj/item/weapon/cartridge/security
 	icon_state = "pda-s"
 
+/obj/item/device/pda/detective
+	default_cartridge = /obj/item/weapon/cartridge/detective
+	icon_state = "pda-s"
+
 /obj/item/device/pda/janitor
 	default_cartridge = /obj/item/weapon/cartridge/janitor
 	icon_state = "pda-j"
@@ -767,9 +771,7 @@
 
 /obj/item/device/pda/Del()
 	if (src.id)
-		if(istype(src.loc, /mob))
-			src.id.loc = src.loc.loc
-		else src.id.loc = src.loc
+		src.id.loc = get_turf(src.loc)
 	..()
 
 /obj/item/device/pda/clown/HasEntered(AM as mob|obj) //Clown PDA is slippery.

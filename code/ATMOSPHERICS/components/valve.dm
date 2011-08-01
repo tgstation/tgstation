@@ -130,7 +130,9 @@ obj/machinery/atmospherics/valve
 
 	process()
 		..()
-		if(open && (!node1 || !node2))
+		machines.Remove(src)
+
+/*		if(open && (!node1 || !node2))
 			close()
 		if(!node1)
 			if(!nodealert)
@@ -142,7 +144,7 @@ obj/machinery/atmospherics/valve
 				nodealert = 1
 		else if (nodealert)
 			nodealert = 0
-
+*/
 
 		return
 

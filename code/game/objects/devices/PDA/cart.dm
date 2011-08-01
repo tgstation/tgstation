@@ -48,6 +48,14 @@
 			spawn(5)
 				radio = new /obj/item/radio/integrated/beepsky(src)
 
+	detective
+		name = "D.E.T.E.C.T. Cartridge"
+		icon_state = "cart-s"
+		access_security = 1
+		access_medical = 1
+		access_manifest = 1
+
+
 	janitor
 		name = "CustodiPRO Cartridge"
 		desc = "The ultimate in clean-room design."
@@ -290,6 +298,7 @@ Code:
 					menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 					menu += "Sex: [active1.fields["sex"]]<br>"
 					menu += "Age: [active1.fields["age"]]<br>"
+					menu += "Rank: [active1.fields["rank"]]<br>"
 					menu += "Fingerprint: [active1.fields["fingerprint"]]<br>"
 					menu += "Physical Status: [active1.fields["p_stat"]]<br>"
 					menu += "Mental Status: [active1.fields["m_stat"]]<br>"
@@ -333,6 +342,7 @@ Code:
 					menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 					menu += "Sex: [active1.fields["sex"]]<br>"
 					menu += "Age: [active1.fields["age"]]<br>"
+					menu += "Rank: [active1.fields["rank"]]<br>"
 					menu += "Fingerprint: [active1.fields["fingerprint"]]<br>"
 					menu += "Physical Status: [active1.fields["p_stat"]]<br>"
 					menu += "Mental Status: [active1.fields["m_stat"]]<br>"
