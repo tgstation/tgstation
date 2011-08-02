@@ -877,6 +877,18 @@
 				force = 10
 				origin_tech = null //forgotten technology of ancients lol
 
+				New()
+					..()
+					charge()
+
+				proc
+					charge()
+						if(power_supply.charge < power_supply.maxcharge)
+							power_supply.give(100)
+						update_icon()
+						spawn(50) charge()
+						//Added this to the cap's laser back before the gun overhaul to make it halfways worth stealing. It's back now. --NEO
+
 			cyborg
 				load_into_chamber()
 					if(in_chamber)

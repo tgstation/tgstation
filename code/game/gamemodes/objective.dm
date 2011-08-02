@@ -201,7 +201,7 @@ datum
 			check_completion()
 				if(issilicon(owner.current) && owner.current != owner.original)
 					return 0
-				if(!owner.current || owner.current.stat == 2)
+				if(!owner.current || owner.current.stat == 2 || isbrain(owner.current)) //Brains no longer win survive objectives. --NEO
 					return 0
 				return 1
 
