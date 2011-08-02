@@ -212,6 +212,14 @@
 			for (var/mob/M in hearers(src, null))
 				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
 
+/obj/closet/Move()
+	..()
+	for(var/mob/M in contents)
+		for(var/obj/speech_bubble/B in range(1, src))
+			if(B.parent == M)
+				B.loc = loc
+
+
 /obj/closet/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 

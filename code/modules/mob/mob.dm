@@ -1926,6 +1926,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					step(mob, pick(cardinal))
 				else
 					. = ..()
+					for(var/obj/speech_bubble/S in range(1, mob))
+						if(S.parent == mob)
+							S.loc = mob.loc
+
 			moving = null
 			return .
 		else

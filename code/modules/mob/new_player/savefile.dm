@@ -46,6 +46,7 @@ datum/preferences/proc/savefile_save(mob/user)
 	//world << "DEBUG: saving UI as [UI]"
 	//F["be_alien"] << src.be_alien // Urist
 	F["midis"] << src.midis // Urist
+	F["bubbles"] << src.bubbles // Doohl
 	F["ooccolor"] << src.ooccolor // Urist
 	F["lastchangelog"] << src.lastchangelog // rastaf0
 
@@ -101,10 +102,11 @@ datum/preferences/proc/savefile_load(mob/user, var/silent = 1)
 	F["name_is_always_random"] >> src.be_random_name
 	//F["be_alien"] >> src.be_alien // Urist
 	F["midis"] >> src.midis // Urist
+	F["bubbles"] >> src.bubbles // Doohl
 	F["ooccolor"] >> src.ooccolor // Urist
 	F["lastchangelog"] >> src.lastchangelog // rastaf0
 
-	
+
 	if (version<=2) // migration from old preferences file format --rastaf0
 		src.UI = 0 // swithing from storing an image file to storing boolean value --rastaf0
 		//world << "DEBUG: loading legacy UI as [UI]"

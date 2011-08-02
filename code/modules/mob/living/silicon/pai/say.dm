@@ -19,7 +19,7 @@
 	if (ending == "?")
 		return "[src.speakQuery], \"[text]\"";
 	else if (ending == "!")
-		return "[src.speakExclamation], \"[copytext(text, 1, length(text))]\"";
+		return "[src.speakExclamation], \"[text]\"";
 
 	return "[src.speakStatement], \"[text]\"";
 

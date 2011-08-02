@@ -40,6 +40,7 @@ datum/preferences
 	var/ooccolor = "#b82e00"
 	var/be_random_name = 0
 	var/underwear = 1
+	var/bubbles = 0 // 0 if the player doesn't want bubbles to appear
 
 	var/occupation[] = list("No Preference", "No Preference", "No Preference")
 	var/datum/jobs/wanted_jobs = list()
@@ -391,6 +392,7 @@ datum/preferences
 		dat += "<br>"
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
+		dat += "<b>Show chat bubbles:</b> <a href=\"byond://?src=\ref[user];preferences=1;bubbles=input\"><b>[bubbles == 1 ? "Yes" : "No"]</b></a><br>"
 
 		if(user.client.holder)
 			if(user.client.holder.rank)
@@ -793,6 +795,9 @@ datum/preferences
 		if (link_tags["midis"])
 			midis = (midis+1)%2
 
+		if (link_tags["bubbles"])
+			bubbles = !bubbles
+
 		if (link_tags["underwear"])
 			if(!IsGuestKey(user.key))
 				switch(link_tags["underwear"])
@@ -848,6 +853,7 @@ datum/preferences
 			b_type = "A+"
 			UI = UI_OLD
 			midis = 1
+			bubbles = 1
 
 
 		ShowChoices(user)
@@ -944,6 +950,7 @@ datum/preferences
 			spawn(10)
 				if(character&&character.client)
 					character.client.midis = midis
+					character.client.bubbles = bubbles
 					character.client.ooccolor = ooccolor
 					character.client.be_alien = be_special&BE_ALIEN
 

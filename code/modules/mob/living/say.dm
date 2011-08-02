@@ -305,6 +305,47 @@
 
 		for (var/mob/M in heard_a)
 			M.show_message(rendered, 2)
+			if(M.client)
+				spawn()
+					var/isbot = ""
+					if(istype(src, /mob/living/silicon))
+						isbot = "bot"
+
+					var/speechtype = "say"
+					var/ending = copytext(message, length(message))
+					if (ending == "?")
+						speechtype = "question"
+					else if (ending == "!")
+						speechtype = "exclamation"
+
+					if(istype(M, /mob/living))
+						if(M:ear_deaf && speechtype == "question")
+							speechtype = "say"
+
+					var/obj/speech_bubble/B = new/obj/speech_bubble
+					B.icon = 'speechbubble.dmi'
+					B.parent = src
+					B.mouse_opacity = 0
+					B.invisibility = invisibility
+					B.layer = 10
+
+					if(!M.client.bubbles || M == src)
+						var/image/I = image('speechbubble.dmi', B, "override")
+						I.override = 1
+						M << I
+
+					flick("[isbot][speechtype]", B)
+
+					if(istype(loc, /turf))
+						B.loc = loc
+					else
+						B.loc = loc.loc
+
+					sleep(11)
+					del(B)
+
+
+
 /*
 			for(var/obj/O in M) // This is terribly costly for such a unique circumstance, should probably do this a different way in the future -- TLE
 				if(istype(O, /obj/item/device/aicard))
@@ -329,5 +370,37 @@
 
 		for (var/mob/M in heard_b)
 			M.show_message(rendered, 2)
+			if(M.client)
+				spawn()
+					var/isbot = ""
+					if(istype(src, /mob/living/silicon))
+						isbot = "bot"
+
+					var/obj/speech_bubble/B = new/obj/speech_bubble
+					B.icon = 'speechbubble.dmi'
+					B.parent = src
+					B.mouse_opacity = 0
+					B.invisibility = invisibility
+					B.layer = 10
+
+					if(!M.client.bubbles || M == src)
+						var/image/I = image('speechbubble.dmi', B, "override")
+						I.override = 1
+						M << I
+
+					flick("[isbot]say", B)
+
+					if(istype(loc, /turf))
+						B.loc = loc
+					else
+						B.loc = loc.loc
+
+					sleep(11)
+					del(B)
 
 	log_say("[name]/[key] : [message]")
+
+
+
+/obj/speech_bubble
+	var/mob/parent

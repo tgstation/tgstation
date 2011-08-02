@@ -572,8 +572,7 @@ datum
 
 				var/virus = pick(/datum/disease/flu, /datum/disease/cold, \
 				 /datum/disease/pierrot_throat, /datum/disease/fake_gbs, \
-				 /datum/disease/brainrot, /datum/disease/wizarditis, \
-				 /datum/disease/magnitis)
+				 /datum/disease/brainrot, /datum/disease/magnitis)
 
 
 				var/datum/disease/F = new virus(0)
@@ -607,14 +606,19 @@ datum
 			result_amount = 2
 			required_container = /obj/item/metroid_core
 			required_other = 5
-		metroidxeno
-			name = "Metroid Xeno"
+		metroidretro
+			name = "Metroid Retro"
 			id = "m_xeno"
-			result = "xenomicrobes"
+			result = null
 			required_reagents = list("sugar" = 1)
 			result_amount = 1
 			required_container = /obj/item/metroid_core
 			required_other = 5
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/datum/disease/F = new /datum/disease/dna_retrovirus(0)
+				var/list/data = list("viruses"= list(F))
+				holder.add_reagent("blood", 20, data)
+
 		metroidfoam
 			name = "Metroid Foam"
 			id = "m_foam"

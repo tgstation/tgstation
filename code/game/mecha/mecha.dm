@@ -192,6 +192,10 @@
 		move_result = 1
 	else
 		move_result	= step(src,direction)
+		if(occupant)
+			for(var/obj/speech_bubble/B in range(1, src))
+				if(B.parent == occupant)
+					B.loc = loc
 	if(move_result)
 		can_move = 0
 		use_power(step_energy_drain)
@@ -201,6 +205,7 @@
 				src.log_message("Movement control lost. Inertial movement started.")
 		if(do_after(step_in))
 			can_move = 1
+
 		return 1
 	return 0
 
