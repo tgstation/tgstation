@@ -93,7 +93,7 @@
 		if(organStructure && organStructure.chest)
 			health = organStructure.chest.maxHealth - oxyloss - toxloss - fireloss - bruteloss
 		else
-			src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
+			src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss - src.cloneloss
 	else
 		src.health = 100
 		src.stat = 0

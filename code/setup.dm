@@ -146,6 +146,8 @@
 #define CLOWN 16
 #define FAT 32
 #define HUSK 64 //changeling-drained
+#define LASER 128
+#define HEAL 256
 
 // channel numbers for power
 
@@ -191,3 +193,6 @@ var/const
 var/list/accessable_z_levels = list("1" = 10, "3" = 15, "4" = 60, "5" = 15) //This list contains the z-level numbers which can be accessed via space travel and the percentual chances to get there. (Exceptions: extended, sandbox and nuke) -Errorage
 
 #define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
+
+
+var/list/global_mutations = list() // list of hidden mutation things

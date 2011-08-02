@@ -364,6 +364,75 @@
 					W.afterattack(src, usr, (t5 ? 1 : 0))
 			else
 				if (istype(usr, /mob/living/carbon/human))
+					if (usr:a_intent == "help")
+						if(istype(src, /mob/living/carbon))
+							var/mob/living/carbon/C = src
+							if(usr:mutations & HEAL)
+
+								if(C.stat != 2)
+									var/t_him = "it"
+									if (src.gender == MALE)
+										t_him = "him"
+									else if (src.gender == FEMALE)
+										t_him = "her"
+									var/u_him = "it"
+									if (usr.gender == MALE)
+										t_him = "him"
+									else if (usr.gender == FEMALE)
+										t_him = "her"
+
+									if(src != usr)
+										usr.visible_message( \
+										"\blue <i>[usr] places [u_him] palms on [src], healing [t_him]!</i>", \
+										"\blue You place your palms on [src] and heal [t_him].", \
+										)
+									else
+										usr.visible_message( \
+										"\blue <i>[usr] places [u_him] palms on [u_him]self and heals.</i>", \
+										"\blue You place your palms on yourself and heal.", \
+										)
+
+									C.oxyloss = max(0, C.oxyloss-25)
+									C.toxloss = max(0, C.toxloss-25)
+
+									if (istype(C, /mob/living/carbon/human))
+										var/mob/living/carbon/human/H = C
+										var/datum/organ/external/affecting = H.organs["chest"]
+
+										var/t = usr:zone_sel:selecting
+
+										if (t in list("eyes", "mouth"))
+											t = "head"
+
+										if (H.organs[t])
+											affecting = H.organs[t]
+
+										if (affecting.heal_damage(25, 25))
+											H.UpdateDamageIcon()
+										else
+											H.UpdateDamage()
+										C.updatehealth()
+									else
+										C.heal_organ_damage(25, 25)
+
+									C.cloneloss = max(0, C.cloneloss-25)
+
+									C.stunned = max(0, C.stunned-5)
+									C.paralysis = max(0, C.paralysis-5)
+									C.stuttering = max(0, C.stuttering-5)
+									C.drowsyness = max(0, C.drowsyness-5)
+									C.weakened = max(0, C.weakened-5)
+
+									if(C.client)
+										C.updatehealth()
+										C:handle_regular_hud_updates()
+									usr:nutrition -= rand(1,10)
+									usr:handle_regular_hud_updates()
+									usr.next_move = world.time + 6
+								else
+									usr << "\red [src] is dead and can't be healed."
+								return
+
 					src.attack_hand(usr, usr.hand)
 				else
 					if (istype(usr, /mob/living/carbon/monkey))
@@ -422,6 +491,34 @@
 					else
 						if (istype(usr, /mob/living/carbon/alien/humanoid))
 							src.hand_al(usr, usr.hand)
+		else
+			if(usr:mutations & LASER && usr:a_intent == "hurt" && world.time >= usr.next_move)
+				var/turf/oloc
+				var/turf/T = get_turf(usr)
+				var/turf/U = get_turf(src)
+				if(istype(src, /turf)) oloc = src
+				else
+					oloc = loc
+
+				if(istype(usr, /mob/living/carbon/human))
+					usr:nutrition -= rand(1,5)
+					usr:handle_regular_hud_updates()
+
+				var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( usr.loc )
+				A.icon = 'genetics.dmi'
+				A.icon_state = "eyelasers"
+				playsound(usr.loc, 'taser2.ogg', 75, 1)
+
+				A.firer = usr
+				A.def_zone = usr:get_organ_target()
+				A.original = oloc
+				A.current = T
+				A.yo = U.y - T.y
+				A.xo = U.x - T.x
+				spawn( 1 )
+					A.process()
+
+				usr.next_move = world.time + 6
 	return
 
 

@@ -543,9 +543,6 @@ datum
 				new /obj/item/weapon/syntiflesh(location)
 				return
 
-
-
-
 		metroidenzyme
 			name = "Metroid Enzyme"
 			id = "m_enzyme"
@@ -601,8 +598,6 @@ datum
 					sleep(10)
 					S.start()
 				return
-
-
 
 		metroidchloral
 			name = "Metroid Chloral"

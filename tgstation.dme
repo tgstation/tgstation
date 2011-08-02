@@ -307,6 +307,7 @@
 #include "code\game\chemistry.dm"
 #include "code\game\communications.dm"
 #include "code\game\dna.dm"
+#include "code\game\dna_mutations.dm"
 #include "code\game\hud.dm"
 #include "code\game\landmarks.dm"
 #include "code\game\master_controller.dm"

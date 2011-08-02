@@ -2299,6 +2299,7 @@ var/showadminmessages = 1
 	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.", 1)
 
 
+
 /obj/admins/proc/view_txt_log()
 	set category = "Admin"
 	set desc="Shows todays server log in new window"

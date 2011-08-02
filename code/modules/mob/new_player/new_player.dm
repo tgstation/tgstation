@@ -287,7 +287,6 @@ mob/new_player
 					else//Adds late joiners to minds so they can be linked to objectives.
 						ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.
 
-					data_core.manifest_inject(character) // add all the necessary stuff into the manifest
 					del(src)
 
 		else

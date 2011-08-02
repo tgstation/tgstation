@@ -1015,6 +1015,9 @@
 	if (mutations & PORTALS)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "telekinesishead[fat][!lying ? "_s" : "_l"]")
 
+	if (mutations & LASER)
+		overlays += image("icon" = 'genetics.dmi', "icon_state" = "lasereyes[!lying ? "_s" : "_l"]")
+
 	if (mutantrace)
 		switch(mutantrace)
 			if("lizard","golem","metroid")

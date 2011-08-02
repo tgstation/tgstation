@@ -98,6 +98,13 @@
 	result = copytext(input ,(blocksize*blocknumber)-(blocksize-1),(blocksize*blocknumber)+1)
 	return result
 
+/proc/getblockbuffer(input,blocknumber,blocksize)
+	var/result[3]
+	var/block = copytext(input ,(blocksize*blocknumber)-(blocksize-1),(blocksize*blocknumber)+1)
+	for(var/i = 1, i <= 3, i++)
+		result[i] = copytext(block, i, i+1)
+	return result
+
 /proc/setblock(istring, blocknumber, replacement, blocksize)
 	var/result
 	result = getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
@@ -343,6 +350,12 @@
 		M.sdisabilities |= 4
 		M.ear_deaf = 1
 		M << "\red You can't seem to hear anything..."
+
+	/* If you want the new mutations to work, UNCOMMENT THIS.
+	if(istype(M, /mob/living/carbon))
+		for (var/datum/mutations/mut in global_mutations)
+			mut.check_mutation(M)
+	*/
 
 //////////////////////////////////////////////////////////// Monkey Block
 	if (isblockon(getblock(M.dna.struc_enzymes, 14,3),14) && istype(M, /mob/living/carbon/human))

@@ -42,6 +42,31 @@
 	avnums.Remove(tempnum)
 	BLINDBLOCK = tempnum
 
+
+	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
+
+	for(var/x in typesof(/datum/mutations) - /datum/mutations)
+		var/datum/mutations/mut = new x
+
+		for(var/i = 1, i <= mut.required, i++)
+			var/datum/mutationreq/require = new/datum/mutationreq
+			require.block = rand(1, 13)
+			require.subblock = rand(1, 3)
+
+			// Create random requirement identification
+			require.reqID = pick("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", \
+							 "B", "C", "D", "E", "F")
+
+			mut.requirements += require
+
+
+		global_mutations += mut// add to global mutations list!
+
+
+
+
+
+
 /* This was used for something before, I think, but is not worth the effort to process now.
 /proc/setupcorpses()
 	for (var/obj/landmark/A in world)
@@ -140,4 +165,3 @@
 			del(A)
 			continue
 */
-

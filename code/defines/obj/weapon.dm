@@ -542,7 +542,7 @@
 	throw_range = 10
 
 /obj/item/weapon/chemsprayer
-	desc = "Chem Sprayer"
+	desc = "A utility used to spray large amounts of reagent in a given area."
 	icon = 'gun.dmi'
 	name = "chem sprayer"
 	icon_state = "chemsprayer"
