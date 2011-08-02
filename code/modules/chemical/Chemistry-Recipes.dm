@@ -1157,12 +1157,12 @@ datum
 			required_reagents = list("rum" = 1, "whiskey" = 1, "lemonjuice" = 1)
 			result_amount = 3
 
-		alliescocktail
+/*		alliescocktail
 			name = "Allies Cocktail"
 			id = "alliescocktail"
 			result = "alliescocktail"
 			required_reagents = list("gin" = 1, "vermouth" = 1)
-			result_amount = 2
+			result_amount = 2*/
 
 		snowwhite
 			name = "Snow White"

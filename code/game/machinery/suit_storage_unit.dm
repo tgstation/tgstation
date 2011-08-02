@@ -283,7 +283,7 @@
 		src.MASK.loc = src.loc
 		src.MASK = null
 	if(src.OCCUPANT)
-		src.eject_occupant(usr)
+		src.eject_occupant(OCCUPANT)
 	return
 
 /obj/machinery/suit_storage_unit/proc/toggle_open(mob/user as mob)
@@ -298,7 +298,7 @@
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user as mob)
 	if(src.OCCUPANT && src.safetieson)
-		user << "<font color='red>The Unit's safety protocol disallow locking when a biological form is detected inside its compartment.</font>"
+		user << "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>"
 		return
 	if(src.isopen)
 		return
@@ -353,6 +353,8 @@
 					V.show_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>", 3)
 				src.isbroken = 1
 				src.isopen = 1
+				src.islocked = 0
+				src.eject_occupant(OCCUPANT) //Mixing up these two lines causes bug. DO NOT DO IT.
 			src.isUV = 0 //Cycle ends
 	src.update_icon()
 	src.updateUsrDialog()
@@ -433,6 +435,9 @@
 	if (!src.isopen)
 		usr << "<font color='red'>The unit's doors are shut.</font>"
 		return
+	if (!src.ispowered || src.isbroken)
+		usr << "<font color='red'>The unit is not operational.</font>"
+		return
 	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) )
 		usr << "<font color='red'>It's too cluttered inside for you to fit in!</font>"
 		return
@@ -473,6 +478,9 @@
 			return
 		if (!src.isopen)
 			usr << "<font color='red'>The unit's doors are shut.</font>"
+			return
+		if (!src.ispowered || src.isbroken)
+			usr << "<font color='red'>The unit is not operational.</font>"
 			return
 		if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) ) //Unit needs to be absolutely empty
 			user << "<font color='red'>The Unit's storage area is too cluttered.</font>"

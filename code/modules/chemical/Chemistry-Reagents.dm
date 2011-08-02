@@ -3474,7 +3474,7 @@ datum
 				..()
 				return
 
-		alliescocktail
+/*		alliescocktail
 			name = "Allies Cocktail"
 			id = "alliescocktail"
 			description = "A drink made from your allies."
@@ -3491,7 +3491,7 @@ datum
 				else if(data >= 250 && prob(60))
 					M.confused = max(M:confused+8,0)
 				..()
-				return
+				return*/
 
 		soy_latte
 			name = "Soy Latte"
