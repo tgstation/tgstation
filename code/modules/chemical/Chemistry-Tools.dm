@@ -2493,7 +2493,7 @@
 		reagents.add_reagent("rum", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
-	name = "Flash of Holy Water"
+	name = "Flask of Holy Water"
 	desc = "A flask of the chaplains holy water."
 	icon_state = "holyflask"
 	New()

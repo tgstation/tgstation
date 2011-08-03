@@ -436,9 +436,11 @@
 			else
 				user << "\red Access denied."
 
-	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)		// trying to unlock with an emag card
+	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
+		if(emagged)//Prevents the X has hit Y with Z message
+			return 0
 		if(opened)
-			user << "You must close the cover to swipe an ID card."
+			user << "You must close the cover to swipe an ID card."//Perhapse we should make them have the door open to emag the bot?
 		else if(wiresexposed)
 			user << "You must close the panel first"
 		else

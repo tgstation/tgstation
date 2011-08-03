@@ -51,7 +51,7 @@ var/global/datum/controller/gameticker/ticker
 		if (!src.mode.can_start())
 			del(mode)
 			current_state = GAME_STATE_PREGAME
-			world << "<B>Unable to start [master_mode].</B> Not enough players. Reverting to pre-game lobby."
+			world << "<B>Unable to start [master_mode].</B> Not enough players, [master_mode.required_players] players needed. Reverting to pre-game lobby."
 			ResetOccupations()
 			return 0
 
