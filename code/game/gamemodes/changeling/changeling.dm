@@ -5,6 +5,8 @@
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"
+	restricted_jobs = list("AI", "Cyborg")
+	required_players = 15
 
 	var
 		const
@@ -52,20 +54,24 @@
 	world << "<B>The current game mode is - Changeling!</B>"
 	world << "<B>There is an alien changeling on the station. Do not let the changeling succeed!</B>"
 
-/datum/game_mode/changeling/can_start()
+/*/datum/game_mode/changeling/can_start()
 	for(var/mob/new_player/P in world)
 		if(P.client && P.ready && !jobban_isbanned(P, "Syndicate"))
 			return 1
-	return 0
+	return 0*/
 
 /datum/game_mode/changeling/pre_setup()
 	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
+
+	for(var/datum/mind/player in possible_changelings)
+		for(var/job in restricted_jobs)//Removing robots from the list
+			if(player.assigned_role == job)
+				possible_changelings -= player
+
 	if(possible_changelings.len>0)
 		var/datum/mind/changeling = pick(possible_changelings)
 		//possible_changelings-=changeling
 		changelings += changeling
-		var/mob/new_player/player = changeling.current
-		player.jobs_restricted_by_gamemode = nonhuman_positions
 		modePlayer += changelings
 		return 1
 	else

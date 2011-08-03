@@ -10,7 +10,7 @@ mob/new_player
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
-	var/list/jobs_restricted_by_gamemode
+//	var/list/jobs_restricted_by_gamemode
 
 	Login()
 		//Next line is commented out because seem it does nothing helpful and on the other hand it calls mob/new_player/Move() to EACH turf in the world. --rastaf0

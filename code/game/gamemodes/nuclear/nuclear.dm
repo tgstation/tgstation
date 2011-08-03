@@ -5,6 +5,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
+	required_players = 15
 
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -20,15 +21,9 @@
 	world << "<B>A [syndicate_name()] Strike Force is approaching [station_name()]!</B>"
 	world << "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!"
 
-/datum/game_mode/nuclear/can_start()
-	if (num_players() < 2)
+/datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
+	if(!..())
 		return 0
-	for(var/mob/new_player/P in world)
-		if(P.client && P.ready && !jobban_isbanned(P, "Syndicate"))
-			return 1
-	return 0
-
-/datum/game_mode/nuclear/pre_setup()
 	var/list/possible_syndicates = get_players_for_role(BE_OPERATIVE)
 	var/agent_number = 0
 
@@ -55,8 +50,13 @@
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_mind.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
-
 	return 1
+
+
+/datum/game_mode/nuclear/pre_setup()
+	return 1
+
+
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/update_all_synd_icons()

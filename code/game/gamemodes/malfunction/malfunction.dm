@@ -4,6 +4,7 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
+	required_players = 20
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 
@@ -19,39 +20,29 @@
 	world << "<B>The AI on the satellite has malfunctioned and must be destroyed.</B>"
 	world << "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [AI_win_timeleft/60] minutes to disable it."
 
-/datum/game_mode/malfunction/can_start()
+/*/datum/game_mode/malfunction/can_start()
 	for(var/mob/new_player/P in world)
 		if(P.client && P.ready && !jobban_isbanned(P, "AI") && !jobban_isbanned(P, "Syndicate"))
 			return 1
+	return 0*/
+
+/datum/game_mode/malfunction/pre_setup()
+	for(var/mob/new_player/player in world)
+		if(player.mind && player.mind.assigned_role == "AI")
+			malf_ai+=player.mind
+	if(malf_ai.len)
+		return 1
 	return 0
 
-/datum/game_mode/malfunction/pre_setup() //sele
-	var/list/candidates = get_players_for_role(BE_MALF, override_jobbans=0)
-	for(var/datum/mind/player in candidates)
-		if (jobban_isbanned(player.current, "AI") )
-			candidates -= player
-	if (candidates.len==0)
-		return 0
-	var/datum/mind/ai_choice = pick(candidates)
-	malf_ai+=ai_choice //only one AI at the moment, but it can change
-	ai_choice.assigned_role = "AI"
-	return 1
-
 /datum/game_mode/malfunction/post_setup()
-/* Obsolete and causes meta --rastaf0
-	for (var/obj/landmark/A in world)
-		if (A.name == "Malf-Gear-Closet")
-			new /obj/closet/malf/suits(A.loc)
-			del(A)
-*/
 
 	for(var/datum/mind/AI_mind in malf_ai)
-	/*if(malf_ai.len < 1)
-		world << "Uh oh, its malfunction and there is no AI! Please report this."
-		world << "Rebooting world in 5 seconds."
-		sleep(50)
-		world.Reboot()
-		return*/
+		if(malf_ai.len < 1)
+			world << "Uh oh, its malfunction and there is no AI! Please report this."
+			world << "Rebooting world in 5 seconds."
+			sleep(50)
+			world.Reboot()
+			return
 		AI_mind.current.verbs += /mob/living/silicon/ai/proc/choose_modules
 		AI_mind.current:laws = new /datum/ai_laws/malfunction
 		AI_mind.current:malf_picker = new /datum/AI_Module/module_picker
@@ -129,7 +120,7 @@
 		if (istype(AI_mind.current,/mob/living/silicon/ai) && AI_mind.current.stat!=2)
 			all_dead = 0
 	return all_dead
-	
+
 /datum/game_mode/malfunction/check_finished()
 	if (station_captured && !to_nuke_or_not_to_nuke)
 		return 1
@@ -210,7 +201,7 @@
 	else if (!station_captured &&                station_was_nuked)
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>Everyone was killed by the nuclear blast!</B>"
-	
+
 	else if (!station_captured &&  malf_dead && !station_was_nuked)
 		world << "<FONT size = 3><B>Human Victory</B></FONT>"
 		world << "<B>The AI has been killed!</B> The staff is victorious."

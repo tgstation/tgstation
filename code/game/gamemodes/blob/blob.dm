@@ -1,9 +1,11 @@
 /datum/game_mode/blob
 	name = "blob"
 	config_tag = "blob"
+	required_players = 0
 
 	var/stage = 0
 	var/next_stage = 0
+
 
 /datum/game_mode/blob/announce()
 	world << "<B>The current game mode is - <font color='green'>Blob</font>!</B>"

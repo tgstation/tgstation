@@ -14,11 +14,13 @@
 /datum/game_mode/revolution
 	name = "revolution"
 	config_tag = "revolution"
+	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	required_players = 20
+
 	var/finished = 0
 	var/const/max_headrevs = 3
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
 ///////////////////////////
 //Announces the game type//
 ///////////////////////////
@@ -26,13 +28,15 @@
 	world << "<B>The current game mode is - Revolution!</B>"
 	world << "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, HoS, CE, RD and CMO. Convert other crewmembers (excluding the heads of staff, and security officers) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>"
 
-
+/*
 /datum/game_mode/revolution/can_start() //this proc can not do its job properly for this gamemode, pre_setup can fail even whe can_start told everything is okay. --rastaf0
 	var/list/mob/new_player/possible_headrevs = new
 	var/list/mob/new_player/possible_heads = new
+	var/players = 0
 	for(var/mob/new_player/P in world)
 		if (!P.client || !P.ready)
 			continue
+		players++
 		if(!jobban_isbanned(P, "Syndicate"))
 			possible_headrevs += P
 		for (var/i in head_positions)
@@ -40,6 +44,8 @@
 				possible_heads += P
 				break
 	//lets do as best as we can
+	if (players < min_players)
+		return 0
 	if (possible_headrevs.len==0)
 		return 0
 	if (possible_heads.len==0)
@@ -48,7 +54,7 @@
 		var/list/rest_heads = possible_heads - possible_headrevs
 		return (rest_heads.len>0)
 	return 1 //read as "maybe"
-
+*/
 
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
@@ -56,29 +62,29 @@
 /datum/game_mode/revolution/pre_setup()
 	var/list/datum/mind/possible_headrevs = get_players_for_role(BE_REV)
 
+	var/head_check = 0
+	for(var/mob/new_player/player in world)
+		if(player.mind.assigned_role in head_positions)
+			head_check = 1
+			break
+
+	for(var/datum/mind/player in possible_headrevs)
+		for(var/job in restricted_jobs)//Removing heads and such from the list
+			if(player.assigned_role == job)
+				possible_headrevs -= player
+
 	for (var/i=1 to max_headrevs)
 		if (possible_headrevs.len==0)
 			break
 		var/datum/mind/lenin = pick(possible_headrevs)
 		possible_headrevs -= lenin
 		head_revolutionaries += lenin
-		var/mob/new_player/player = lenin.current
-		player.jobs_restricted_by_gamemode = list("Security Officer", "Warden", "Detective")+nonhuman_positions+head_positions
 
-	if(head_revolutionaries.len==0)
+	if((head_revolutionaries.len==0)||(!head_check))
 		return 0
 
-	DivideOccupations()
-	var/headless=1
-	for(var/mob/new_player/player in world)
-		if(player.mind && player.mind.assigned_role in head_positions)
-			headless=0
-			break
-	if (headless)
-		head_revolutionaries.len = 0
-		ResetOccupations() //clean up
-		return 0
 	return 1
+
 
 /datum/game_mode/revolution/post_setup()
 	var/list/heads = get_living_heads()

@@ -21,9 +21,9 @@ datum/pipe_network
 			update = 0
 			reconcile_air() //equalize_gases(gases)
 
-		//Give pipelines their process call for pressure checking and what not
-		for(var/datum/pipeline/line_member in line_members)
-			line_member.process()
+		//Give pipelines their process call for pressure checking and what not. Have to remove pressure checks for the time being as pipes dont radiate heat - Mport
+		//for(var/datum/pipeline/line_member in line_members)
+		//	line_member.process()
 
 	proc/build_network(obj/machinery/atmospherics/start_normal, obj/machinery/atmospherics/reference)
 		//Purpose: Generate membership roster

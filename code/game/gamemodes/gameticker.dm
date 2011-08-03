@@ -52,12 +52,12 @@ var/global/datum/controller/gameticker/ticker
 			del(mode)
 			current_state = GAME_STATE_PREGAME
 			world << "<B>Unable to start [master_mode].</B> Not enough players. Reverting to pre-game lobby."
+			ResetOccupations()
 			return 0
 
 	//Configure mode and assign player to special mode stuff
-	var/can_continue
 
-	if (src.mode.config_tag == "revolution")
+/*	if (src.mode.config_tag == "revolution")
 		var/tries=5
 		do
 			can_continue = src.mode.pre_setup()
@@ -67,13 +67,16 @@ var/global/datum/controller/gameticker/ticker
 			current_state = GAME_STATE_PREGAME
 			world << "<B>Error setting up revolution.</B> Not enough players. Reverting to pre-game lobby."
 			return 0
-	else
-		can_continue = src.mode.pre_setup()
-		if(!can_continue)
-			del(mode)
-			current_state = GAME_STATE_PREGAME
-			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
-			return 0
+	else*/
+
+	DivideOccupations() //Distribute jobs
+	var/can_continue = src.mode.pre_setup()//Setup special modes
+	if(!can_continue)
+		del(mode)
+		current_state = GAME_STATE_PREGAME
+		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
+		ResetOccupations()
+		return 0
 
 	if(hide_mode)
 		var/list/modes = new
@@ -85,22 +88,22 @@ var/global/datum/controller/gameticker/ticker
 	else
 		src.mode.announce()
 
-	distribute_jobs() //Distribute jobs and announce the captain
 	create_characters() //Create player characters and transfer them
 	collect_minds()
-	data_core.manifest()
 	equip_characters()
+	data_core.manifest()
 	current_state = GAME_STATE_PLAYING
-	mode.post_setup()
 
-	//Cleanup some stuff
-	for(var/obj/landmark/start/S in world)
-		//Deleting Startpoints but we need the ai point to AI-ize people later
-		if (S.name != "AI")
-			del(S)
-
-	world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
-	world << sound('welcome.ogg') // Skie
+	spawn(0)//Forking here so we dont have to wait for this to finish
+		mode.post_setup()
+		//Cleanup some stuff
+		for(var/obj/landmark/start/S in world)
+			//Deleting Startpoints but we need the ai point to AI-ize people later
+			if (S.name != "AI")
+				del(S)
+		spawn(-1)
+			world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
+			world << sound('welcome.ogg') // Skie
 
 	spawn (3000)
 		start_events()
@@ -116,15 +119,6 @@ var/global/datum/controller/gameticker/ticker
 	return 1
 
 /datum/controller/gameticker
-	proc/distribute_jobs()
-		DivideOccupations() //occupations can be distributes already by gamemode, it is okay. --rastaf0
-		var/captainless=1
-		for(var/mob/new_player/player in world)
-			if(player.mind && player.mind.assigned_role=="Captain")
-				captainless=0
-				break
-		if (captainless)
-			world << "Captainship not forced on anyone."
 
 	proc/create_characters()
 		for(var/mob/new_player/player in world)
@@ -135,16 +129,25 @@ var/global/datum/controller/gameticker/ticker
 				else if(player.mind)
 					player.create_character()
 					del(player)
+
+
 	proc/collect_minds()
 		for(var/mob/living/player in world)
 			if(player.mind)
 				ticker.minds += player.mind
 
+
 	proc/equip_characters()
+		var/captainless=1
 		for(var/mob/living/carbon/human/player in world)
 			if(player.mind && player.mind.assigned_role)
 				if(player.mind.assigned_role != "MODE")
 					player.Equip_Rank(player.mind.assigned_role)
+				if(player.mind.assigned_role == "Captain")
+					captainless=0
+		if (captainless)
+			world << "Captainship not forced on anyone."
+
 
 	proc/process()
 		if(current_state != GAME_STATE_PLAYING)
@@ -170,29 +173,6 @@ var/global/datum/controller/gameticker/ticker
 
 		return 1
 
-/*
-/datum/controller/gameticker/proc/timeup()
-
-	if (shuttle_left) //Shuttle left but its leaving or arriving again
-		check_win()	  //Either way, its not possible
-		return
-
-	if (src.shuttle_location == shuttle_z)
-
-		move_shuttle(locate(/area/shuttle), locate(/area/arrival/shuttle))
-
-		src.timeleft = shuttle_time_in_station
-		src.shuttle_location = 1
-
-		world << "<B>The Emergency Shuttle has docked with the station! You have [ticker.timeleft/600] minutes to board the Emergency Shuttle.</B>"
-
-	else //marker2
-		world << "<B>The Emergency Shuttle is leaving!</B>"
-		shuttle_left = 1
-		shuttlecoming = 0
-		check_win()
-	return
-*/
 
 /datum/controller/gameticker/proc/declare_completion()
 
@@ -225,70 +205,3 @@ var/global/datum/controller/gameticker/ticker
 			call(mode, handler)()
 
 	return 1
-
-/////
-/////SETTING UP THE GAME
-/////
-
-/////
-/////MAIN PROCESS PART
-/////
-/*
-/datum/controller/gameticker/proc/game_process()
-
-	switch(mode.name)
-		if("deathmatch","monkey","nuclear emergency","Corporate Restructuring","revolution","traitor",
-		"wizard","extended")
-			do
-				if (!( shuttle_frozen ))
-					if (src.timing == 1)
-						src.timeleft -= 10
-					else
-						if (src.timing == -1.0)
-							src.timeleft += 10
-							if (src.timeleft >= shuttle_time_to_arrive)
-								src.timeleft = null
-								src.timing = 0
-				if (prob(0.5))
-					spawn_meteors()
-				if (src.timeleft <= 0 && src.timing)
-					src.timeup()
-				sleep(10)
-			while(src.processing)
-			return
-//Standard extended process (incorporates most game modes).
-//Put yours in here if you don't know where else to put it.
-		if("AI malfunction")
-			do
-				check_win()
-				ticker.AItime += 10
-				sleep(10)
-				if (ticker.AItime == 6000)
-					world << "<FONT size = 3><B>Cent. Com. Update</B> AI Malfunction Detected</FONT>"
-					world << "\red It seems we have provided you with a malfunctioning AI. We're very sorry."
-			while(src.processing)
-			return
-//malfunction process
-		if("meteor")
-			do
-				if (!( shuttle_frozen ))
-					if (src.timing == 1)
-						src.timeleft -= 10
-					else
-						if (src.timing == -1.0)
-							src.timeleft += 10
-							if (src.timeleft >= shuttle_time_to_arrive)
-								src.timeleft = null
-								src.timing = 0
-				for(var/i = 0; i < 10; i++)
-					spawn_meteors()
-				if (src.timeleft <= 0 && src.timing)
-					src.timeup()
-				sleep(10)
-			while(src.processing)
-			return
-//meteor mode!!! MORE METEORS!!!
-		else
-			return
-//Anything else, like sandbox, return.
-*/

@@ -1,9 +1,10 @@
 
 
 /datum/game_mode
-	var/list/datum/mind/cult = list()
+	var
+		list/datum/mind/cult = list()
+		list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
 
-var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
 
 /proc/iscultist(mob/living/carbon/M as mob)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
@@ -14,9 +15,12 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 		!(mind.assigned_role in head_positions) && \
 		!(mind.assigned_role in list("Security Officer", "Detective", "Chaplain", "Warden"))
 
+
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
+	restricted_jobs = list("Chaplain", "Security Officer", "Warden", "Detective", "AI", "Cyborg", "Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	required_players = 15
 
 	var/datum/mind/sacrifice_target = null
 	var/finished = 0
@@ -24,7 +28,6 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/list/startwords = list("blood","join","self","hell")
-	//var/list/startwords = list("travel","blood","join","hell","self","see")
 
 	var/list/objectives = list()
 
@@ -35,18 +38,22 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 	var/const/max_cultists_to_start = 4
 	var/acolytes_survived = 0
 
+
 /datum/game_mode/cult/announce()
 	world << "<B>The current game mode is - Cult!</B>"
 	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - complete your objectives. Convert crewmembers to your cause by using the convert rune. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Brainwashing them with the chaplain's bible reverts them to whatever CentCom-allowed faith they had.</B>"
 
-/datum/game_mode/cult/can_start()
+
+/*/datum/game_mode/cult/can_start()
 	var/list/cultists_possible = get_players_for_role(BE_CULTIST)
+
 	if (cultists_possible.len < min_cultists_to_start)
 		return 0
 	var/non_cultists = num_players() - min(max_cultists_to_start,cultists_possible.len)
 	if (non_cultists < 1)
 		return 0
-	return 1
+	return 1*/
+
 
 /datum/game_mode/cult/pre_setup()
 	if(prob(50))
@@ -55,19 +62,23 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 	else
 		objectives += "eldergod"
 		objectives += "sacrifice"
-		
-	
+
 	var/list/cultists_possible = get_players_for_role(BE_CULTIST)
+	for(var/datum/mind/player in cultists_possible)
+		for(var/job in restricted_jobs)//Removing heads and such from the list
+			if(player.assigned_role == job)
+				cultists_possible -= player
+
 	for(var/cultists_number = 1 to max_cultists_to_start)
+		if(!cultists_possible.len)
+			break
 		var/datum/mind/cultist = pick(cultists_possible)
 		cultists_possible -= cultist
 		cult += cultist
-		var/mob/new_player/player = cultist.current
-		player.jobs_restricted_by_gamemode = list("Chaplain", "Security Officer", "Warden", "Detective")+nonhuman_positions+head_positions
 	return (cult.len>0)
 
-/datum/game_mode/cult/post_setup()
 
+/datum/game_mode/cult/post_setup()
 	modePlayer += cult
 	if("sacrifice" in objectives)
 		var/list/possible_targets = get_unconvertables()
@@ -92,6 +103,7 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 		send_intercept()
 	..()
 
+
 /datum/game_mode/cult/proc/memoize_cult_objectives(var/datum/mind/cult_mind)
 	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
 		var/explanation
@@ -109,6 +121,7 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 	cult_mind.current << "The convert rune is join blood self"
 	cult_mind.memory += "The convert rune is join blood self<BR>"
+
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
@@ -128,12 +141,14 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others."
 		return 1
 
+
 /datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
 	if (!word)
 		if(startwords.len > 0)
 			word=pick(startwords)
 			startwords -= word
 	return ..(cult_mob,word)
+
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
 	if(!wordtravel)
@@ -169,6 +184,7 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 	cult_mob << "\red You remember one thing from the dark teachings of your master... [wordexp]"
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
 
+
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
 	if (!istype(cult_mind))
 		return 0
@@ -177,10 +193,12 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 		update_cult_icons_added(cult_mind)
 		return 1
 
+
 /datum/game_mode/cult/add_cultist(datum/mind/cult_mind) //INHERIT
 	if (!..(cult_mind))
 		return
 	memoize_cult_objectives(cult_mind)
+
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind)
 	if(cult_mind in cult)
@@ -190,6 +208,7 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 		update_cult_icons_removed(cult_mind)
 		for(var/mob/M in viewers(cult_mind.current))
 			M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"
+
 
 /datum/game_mode/proc/update_all_cult_icons()
 	spawn(0)
@@ -208,6 +227,7 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 							var/I = image('mob.dmi', loc = cultist_1.current, icon_state = "cult")
 							cultist.current.client.images += I
 
+
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
 	spawn(0)
 		for(var/datum/mind/cultist in cult)
@@ -219,6 +239,7 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 				if(cult_mind.current.client)
 					var/image/J = image('mob.dmi', loc = cultist.current, icon_state = "cult")
 					cult_mind.current.client.images += J
+
 
 /datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
 	spawn(0)
@@ -235,12 +256,14 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 					if(I.icon_state == "cult")
 						del(I)
 
+
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in world)
 		if(!is_convertable_to_cult(player.mind))
 			ucs += player.mind
 	return ucs
+
 
 /datum/game_mode/cult/proc/check_cult_victory()
 	var/cult_fail = 0
@@ -254,6 +277,7 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 
 	return cult_fail //if any objectives aren't met, failure
 
+
 /datum/game_mode/cult/proc/check_survive()
 	acolytes_survived = 0
 	for(var/datum/mind/cult_mind in cult)
@@ -265,6 +289,7 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 		return 0
 	else
 		return 1
+
 
 /datum/game_mode/cult/declare_completion()
 
@@ -302,6 +327,7 @@ var/list/allwords = list("travel","self","see","hell","blood","join","tech","des
 
 	..()
 	return 1
+
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	if (cult.len!=0 || (ticker && istype(ticker.mode,/datum/game_mode/cult)))

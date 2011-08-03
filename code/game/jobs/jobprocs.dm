@@ -6,8 +6,8 @@
 		if (player.preferences.occupation[level] == job)
 			if (jobban_isbanned(player, job))
 				continue
-			if (player.jobs_restricted_by_gamemode && (job in player.jobs_restricted_by_gamemode))
-				continue
+//			if (player.jobs_restricted_by_gamemode && (job in player.jobs_restricted_by_gamemode))
+//				continue
 			candidates += player
 
 	return candidates
@@ -15,7 +15,8 @@
 /proc/ResetOccupations()
 	for (var/mob/new_player/player in world)
 		player.mind.assigned_role = null
-		player.jobs_restricted_by_gamemode = null
+		player.mind.special_role = null
+//		player.jobs_restricted_by_gamemode = null
 	return
 
 /** Proc DivideOccupations
@@ -25,9 +26,6 @@
 /proc/DivideOccupations()
 	var/list/unassigned = list()
 	var/list/occupation_eligible = occupations.Copy()
-
-	if(ticker.mode.name == "AI malfunction")
-		occupation_eligible["AI"] = 0
 
 	for (var/mob/new_player/player in world)
 		if (player.client && player.ready && !player.mind.assigned_role)
@@ -47,27 +45,40 @@
 	if (unassigned.len == 0)
 		return 0
 
+	//Check for a Captain first
 	for (var/level = 1 to 3)
 		var/list/candidates = FindOccupationCandidates(unassigned, "Captain", level)
-
 		if (candidates.len)
 			var/mob/new_player/candidate = pick(candidates)
 			unassigned -= candidate
 			candidate.mind.assigned_role = "Captain"
 			break
-	/*
-	// Not forcing a Captain -- TLE
-	if (captain_choice == null && unassigned.len > 0)
+
+	//Then check for an AI
+	for (var/level = 1 to 3)//Malf is a bit special as it replaces a normal job
+		var/list/candidates = FindOccupationCandidates(unassigned, "AI", level)
+		if(ticker.mode.name == "AI malfunction")
+			for(var/mob/new_player/player in candidates)
+				if(!player.preferences.be_special & BE_MALF)
+					candidates -= player
+		if (candidates.len)
+			var/mob/new_player/candidate = pick(candidates)
+			unassigned -= candidate
+			candidate.mind.assigned_role = "AI"
+			break
+	//Malf NEEDS an AI so force one
+	if((ticker.mode.name == "AI malfunction")&&(occupation_eligible["AI"] > 0))
 		unassigned = shuffle(unassigned)
 		for(var/mob/new_player/player in unassigned)
-			if(jobban_isbanned(player, "Captain"))
+			if(jobban_isbanned(player, "AI"))
 				continue
 			else
-				captain_choice = player
+				player.mind.assigned_role = "AI"
+				unassigned -= player
 				break
-		unassigned -= captain_choice
-		*/
-	for (var/level = 1 to 3) //players with preferences set
+	//Now we can go though the rest of the jobs and players who set prefs
+	for (var/level = 1 to 3)
+		//Assistants are checked first
 		for (var/occupation in assistant_occupations)
 			if (unassigned.len == 0)
 				break
@@ -75,7 +86,7 @@
 			for (var/mob/new_player/candidate in candidates)
 				candidate.mind.assigned_role = occupation
 				unassigned -= candidate
-
+		//Now everyone else
 		for (var/occupation in occupation_eligible)
 			if (unassigned.len == 0)
 				break
@@ -87,10 +98,9 @@
 				var/mob/new_player/candidate = pick_n_take(candidates)
 				candidate.mind.assigned_role = occupation
 				unassigned -= candidate
-
-	if (unassigned.len) //unlucky players with preferences and players without preferences
+	//Last try to fill in any leftover jobs with leftover players
+	if (unassigned.len)
 		var/list/vacancies = list()
-		var/list/failsafe = list()
 		for (var/occ in occupation_eligible)
 			for (var/i = 1 to occupation_eligible[occ])
 				vacancies += occ
@@ -98,13 +108,6 @@
 		while (unassigned.len && vacancies.len)
 			var/mob/new_player/candidate = pick_n_take(unassigned)
 			var/occupation = pick_n_take(vacancies)
-
-			if(candidate.jobs_restricted_by_gamemode)
-				if(occupation in candidate.jobs_restricted_by_gamemode)
-					vacancies += occupation
-					failsafe += candidate
-					continue
-
 			candidate.mind.assigned_role = occupation
 
 		for (var/mob/new_player/player in unassigned)
@@ -112,109 +115,9 @@
 				break
 			player.mind.assigned_role = pick(assistant_occupations)
 
-		for (var/mob/new_player/player in failsafe)
-			if (unassigned.len == 0)
-				break
-			player.mind.assigned_role = pick(assistant_occupations)
-
 	return 1
 
 /mob/living/carbon/human/proc/Equip_Rank(rank, joined_late)
-
-	/*
-	if(rank=="Clown")
-		if(alert("Do you want to be a clown or a mime?",,"Clown","Mime")=="Mime")
-			rank="Mime" //Why no work -- Urist
-	*/
-
-	/*if(joined_late && ticker.mode.name == "ctf")
-		var/red_team
-		var/green_team
-
-		for(var/mob/living/carbon/human/M in world)
-			if(M.client)
-				if(M.client.team == "Red")
-					red_team++
-				if(M.client.team == "Green")
-					green_team++
-
-		if(!src.client.team)
-			if(red_team > green_team)
-				src.client.team = "Green"
-			else
-				src.client.team = "Red"
-
-
-		src << "You are in the [src.client.team] Team!"
-		var/obj/item/device/radio/headset/H = new /obj/item/device/radio/headset(src)
-		src.equip_if_possible(H, slot_w_radio)
-		if(src.client.team == "Red")
-			H.set_frequency(1465)
-			src.equip_if_possible(new /obj/item/clothing/under/color/red(src), src.slot_w_uniform)
-			src.equip_if_possible(new /obj/item/clothing/suit/armor/tdome/red(src), slot_wear_suit)
-		else if(src.client.team == "Green")
-			H.set_frequency(1449)
-			src.equip_if_possible(new /obj/item/clothing/under/color/green(src), src.slot_w_uniform)
-			src.equip_if_possible(new /obj/item/clothing/suit/armor/tdome/green(src), slot_wear_suit)
-		src.equip_if_possible(new /obj/item/clothing/shoes/black(src), src.slot_shoes)
-		src.equip_if_possible(new /obj/item/clothing/mask/gas/emergency(src), src.slot_wear_mask)
-		src.equip_if_possible(new /obj/item/clothing/gloves/swat(src), src.slot_gloves)
-
-		src.equip_if_possible(new /obj/item/clothing/glasses/thermal(src), src.slot_glasses)
-
-		var/obj/item/weapon/tank/air/O = new /obj/item/weapon/tank/air(src)
-		src.equip_if_possible(O, src.slot_back)
-		src.internal = O
-
-		var/obj/item/weapon/card/id/W = new(src)
-		W.name = "[src.real_name]'s ID card ([src.client.team] Team)"
-		if(src.client.team == "Red")
-			W.access = access_red
-		else if(src.client.team == "Green")
-			W.access = access_green
-		else
-			world << "Unspecified team, [src.client.team]"
-
-		W.assignment = "[src.client.team] Team"
-		W.registered = src.real_name
-		src.equip_if_possible(W, src.slot_wear_id)
-
-		return
-
-	if(joined_late && ticker.mode.name == "deathmatch")
-		src.equip_if_possible(new /obj/item/clothing/under/color/black(src), src.slot_w_uniform)
-		src.equip_if_possible(new /obj/item/clothing/shoes/black(src), src.slot_shoes)
-		src.equip_if_possible(new /obj/item/clothing/suit/swat_suit/death_commando(src), src.slot_wear_suit)
-		src.equip_if_possible(new /obj/item/clothing/mask/gas/death_commando(src), src.slot_wear_mask)
-		src.equip_if_possible(new /obj/item/clothing/gloves/swat(src), src.slot_gloves)
-		src.equip_if_possible(new /obj/item/clothing/glasses/thermal(src), src.slot_glasses)
-		src.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle(src), src.slot_l_hand)
-		src.equip_if_possible(new /obj/item/weapon/flashbang(src), src.slot_r_store)
-
-		var/obj/item/weapon/tank/air/O = new /obj/item/weapon/tank/air(src)
-		src.equip_if_possible(O, src.slot_back)
-		src.internal = O
-
-		var/randomname = "Killiam Shakespeare"
-		if(commando_names.len)
-			randomname = pick(commando_names)
-			commando_names -= randomname
-		var/newname = input(src,"You are a death commando. Would you like to change your name?", "Character Creation", randomname)
-		if(!length(newname))
-			newname = randomname
-		newname = strip_html(newname,40)
-
-		src.real_name = newname
-		src.name = newname // there are WAY more things than this to change, I'm almost certain
-
-		var/obj/item/weapon/card/id/W = new(src)
-		W.name = "[newname]'s ID card (Death Commando)"
-		W.access = get_all_accesses()
-		W.assignment = "Death Commando"
-		W.registered = newname
-		src.equip_if_possible(W, src.slot_wear_id)
-		return
-	*/
 
 	switch(rank)
 		if ("Chaplain")

@@ -5,6 +5,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/const/meteordelay = 2000
 	var/nometeors = 1
+	required_players = 0
 
 /datum/game_mode/meteor/announce()
 	world << "<B>The current game mode is - Meteor!</B>"
@@ -16,7 +17,7 @@
 	spawn(meteordelay)
 		nometeors = 0
 
-/datum/game_mode/meteor/can_start()
+/*/datum/game_mode/meteor/can_start()
 	var/num_players = 0
 	for(var/mob/new_player/P in world)
 		if(P.client && P.ready)
@@ -25,7 +26,7 @@
 	if(num_players >= 10)
 		return 1 // needs at least 10 players in order to play this mode
 
-	return 0
+	return 0*/
 
 /datum/game_mode/meteor/process()
 	if (nometeors) return

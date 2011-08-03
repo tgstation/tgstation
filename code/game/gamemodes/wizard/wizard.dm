@@ -5,6 +5,7 @@
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
+	required_players = 0
 
 	var/finished = 0
 
@@ -55,18 +56,13 @@
 	world << "<B>The current game mode is - Wizard!</B>"
 	world << "<B>There is a \red SPACE WIZARD\black on the station. You can't let him achieve his objective!</B>"
 
-/datum/game_mode/wizard/can_start()
-	for(var/mob/new_player/P in world)
-		if(P.client && P.ready && !jobban_isbanned(P, "Syndicate"))
-			return 1
-	return 0
-
-/datum/game_mode/wizard/pre_setup()
+/datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
+	if(!..())
+		return 0
 	var/list/datum/mind/possible_wizards = get_players_for_role(BE_WIZARD)
 	if(possible_wizards.len==0)
 		return 0
 	var/datum/mind/wizard = pick(possible_wizards)
-	//possible_wizards-=wizard
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
@@ -76,6 +72,9 @@
 		wizard.current << "<B>\red A starting location for you could not be found, please report this bug!</B>"
 	else
 		wizard.current.loc = pick(wizardstart)
+	return 1
+
+/datum/game_mode/wizard/pre_setup()
 	return 1
 
 /datum/game_mode/wizard/post_setup()

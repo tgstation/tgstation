@@ -5,7 +5,7 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
-
+	required_players = 0
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
 	var/const/prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
@@ -50,11 +50,11 @@
 	world << "<B>The current game mode is - Traitor!</B>"
 	world << "<B>There is a syndicate traitor on the station. Do not let the traitor succeed!</B>"
 
-/datum/game_mode/traitor/can_start()
+/*/datum/game_mode/traitor/can_start()
 	for(var/mob/new_player/P in world)
 		if(P.client && P.ready && !jobban_isbanned(P, "Syndicate"))
 			return 1
-	return 0
+	return 0*/
 
 /datum/game_mode/traitor/pre_setup()
 	var/list/possible_traitors = get_players_for_role(BE_TRAITOR)
