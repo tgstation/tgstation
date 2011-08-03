@@ -16,6 +16,17 @@
 	spawn(meteordelay)
 		nometeors = 0
 
+/datum/game_mode/meteor/can_start()
+	var/num_players = 0
+	for(var/mob/new_player/P in world)
+		if(P.client && P.ready)
+			num_players++
+
+	if(num_players >= 10)
+		return 1 // needs at least 10 players in order to play this mode
+
+	return 0
+
 /datum/game_mode/meteor/process()
 	if (nometeors) return
 	if (prob(10)) meteor_wave()

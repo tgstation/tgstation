@@ -1077,6 +1077,7 @@
 			icon_state = "laser"
 			force = 15
 			fire_sound = 'pulse.ogg'
+			origin_tech = "combat=4;materials=3;powerstorage=3"
 			load_into_chamber()
 				if(in_chamber)
 					return 1
@@ -1112,6 +1113,7 @@
 			icon_state = "laser"
 			force = 20
 			fire_sound = 'pulse.ogg'
+			origin_tech = "combat=4;materials=4;powerstorage=4"
 			load_into_chamber()
 				if(in_chamber)
 					return 1
