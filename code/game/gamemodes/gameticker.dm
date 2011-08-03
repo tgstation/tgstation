@@ -48,12 +48,13 @@ var/global/datum/controller/gameticker/ticker
 		src.mode = pickweight(runnable_modes)
 	else
 		src.mode = config.pick_mode(master_mode)
-		if (!src.mode.can_start())
-			del(mode)
-			current_state = GAME_STATE_PREGAME
-			world << "<B>Unable to start [master_mode].</B> Not enough players, [master_mode.required_players] players needed. Reverting to pre-game lobby."
-			ResetOccupations()
-			return 0
+
+	if (!src.mode.can_start())
+		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
+		del(mode)
+		current_state = GAME_STATE_PREGAME
+		ResetOccupations()
+		return 0
 
 	//Configure mode and assign player to special mode stuff
 
