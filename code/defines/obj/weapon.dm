@@ -280,7 +280,7 @@
 	w_class = 3
 	var/charges = 10.0
 	var/maximum_charges = 10.0
-	var/status = 1
+	var/status = 0
 	origin_tech = "combat=2"
 
 /obj/item/weapon/melee/chainofcommand
