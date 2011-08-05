@@ -142,11 +142,14 @@ var/global/datum/controller/gameticker/ticker
 	proc/equip_characters()
 		var/captainless=1
 		for(var/mob/living/carbon/human/player in world)
-			if(player.mind && player.mind.assigned_role)
-				if(player.mind.assigned_role != "MODE")
-					player.Equip_Rank(player.mind.assigned_role)
-				if(player.mind.assigned_role == "Captain")
-					captainless=0
+			if(player)
+				if(player.mind)
+					if(player.mind.assigned_role)
+						if(player.mind.assigned_role == "Captain")
+							captainless=0
+						if(player.mind.assigned_role != "MODE")
+							player.Equip_Rank(player.mind.assigned_role)
+
 		if (captainless)
 			world << "Captainship not forced on anyone."
 
