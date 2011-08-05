@@ -305,6 +305,7 @@
 
 		for (var/mob/M in heard_a)
 			M.show_message(rendered, 2)
+			/*
 			if(M.client)
 				spawn()
 					var/isbot = ""
@@ -343,6 +344,7 @@
 
 					sleep(11)
 					del(B)
+			*/
 
 
 
@@ -370,6 +372,7 @@
 
 		for (var/mob/M in heard_b)
 			M.show_message(rendered, 2)
+			/*
 			if(M.client)
 				spawn()
 					var/isbot = ""
@@ -397,6 +400,7 @@
 
 					sleep(11)
 					del(B)
+			*/
 
 	log_say("[name]/[key] : [message]")
 

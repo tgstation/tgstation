@@ -235,7 +235,7 @@
 					if(150 to 500) hungry = 1
 					if(0 to 149) starving = 1
 			AIproc = 1
-			while(AIproc && stat != 2 && (attacked > 0 || starving || hungry))
+			while(AIproc && stat != 2 && (attacked > 0 || starving || hungry || rabid || Victim))
 				if(Victim) // can't eat AND have this little process at the same time
 					break
 
