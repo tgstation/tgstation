@@ -23,6 +23,9 @@
 			return
 	return
 
+/turf/ex_act(severity)
+	return 0
+
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover || !isturf(mover.loc))
 		return 1

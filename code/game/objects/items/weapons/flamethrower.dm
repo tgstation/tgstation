@@ -4,6 +4,39 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 (well not really but it should)
 
 */
+/obj/item/assembly/weld_rod
+	desc = "A welding torch with metal rods attached to the flame tip."
+	name = "Welder/Rods Assembly"
+	icon_state = "welder-rods"
+	item_state = "welder"
+	var/obj/item/weapon/weldingtool/part1 = null
+	var/obj/item/stack/rods/part2 = null
+	var/status = null
+	flags = FPRINT | TABLEPASS| CONDUCT
+	force = 3.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = 2.0
+
+/obj/item/assembly/w_r_ignite
+	desc = "A welding torch and igniter connected by metal rods."
+	name = "Welder/Rods/Igniter Assembly"
+	icon_state = "welder-rods-igniter"
+	item_state = "welder"
+	var/obj/item/weapon/weldingtool/part1 = null
+	var/obj/item/stack/rods/part2 = null
+	var/obj/item/device/igniter/part3 = null
+	var/status = null
+	flags = FPRINT | TABLEPASS| CONDUCT
+	force = 3.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = 2.0
+
+
+//TODO:Change this over to a slightly better build system
 /obj/item/weapon/flamethrower
 	name = "flamethrower"
 	icon_state = "flamethrower"
@@ -79,7 +112,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 
 	if (istype(W, /obj/item/device/igniter))
 		var/obj/item/device/igniter/I = W
-		if (!( I.status ))
+		if (!( I.secured ))
 			return
 		var/obj/item/assembly/weld_rod/S = src
 		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
@@ -127,7 +160,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		src.part3.loc = T
 		src.part1.master = null
 		src.part2.master = null
-		src.part3.master = null
+		src.part3.holder = null
 		src.part1 = null
 		src.part2 = null
 		src.part3 = null
@@ -221,7 +254,7 @@ GETLINEEEEEEEEEEEEEEEEEEEEE
 		S.part2.master = R
 		R.part3 = S.part3
 		S.part3.loc = R
-		S.part3.master = R
+		S.part3.holder = R
 		S.layer = initial(S.layer)
 		if (user.client)
 			user.client.screen -= S

@@ -10,6 +10,11 @@
 	var/valve_open = 0
 	var/toggle = 1
 
+	proc
+		Process_Activation(var/obj/item/device/D)
+
+	IsAssemblyHolder()
+		return 1
 
 	attackby(obj/item/item, mob/user)
 		if(istype(item, /obj/item/weapon/tank))
@@ -29,25 +34,31 @@
 				user << "\blue You attach the tank to the transfer valve!"
 
 			update_icon()
-
-		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/infra) || istype(item, /obj/item/device/prox_sensor))
+//TODO: Have this take an assemblyholder
+		else if(item.IsAssembly())
+			if(item:secured)
+				user << "\red The device is secured!"
+				return
 			if(attached_device)
 				user << "\red There is already an device attached to the valve, remove it first!"
 				return
-
+			user.remove_from_mob(item)
 			attached_device = item
-			user.drop_item()
 			item.loc = src
-			user << "\blue You attach the [item] to the valve controls!"
-			item.master = src
+			user << "\blue You attach the [item] to the valve controls and secure it!"
+			item:holder = src
+			item:Secure()
 
 			bombers += "[key_name(user)] attached a [item] to a transfer valve."
 			message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
 			log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
 			attacher = key_name(user)
+		return
 
 
-
+	HasProximity(atom/movable/AM as mob|obj)
+		if(!attached_device)	return
+		attached_device.HasProximity(AM)
 		return
 
 
@@ -86,7 +97,7 @@
 			if(href_list["rem_device"])
 				if(attached_device)
 					attached_device.loc = get_turf(src)
-					attached_device.master = null
+					attached_device:holder = null
 					attached_device = null
 				update_icon()
 			if(href_list["device"])
@@ -97,7 +108,7 @@
 			src.add_fingerprint(usr)
 			return
 
-	receive_signal(signal)
+	Process_Activation(var/obj/item/device/D)
 		if(toggle)
 			toggle = 0
 			toggle_valve()
@@ -144,7 +155,7 @@
 			var/datum/gas_mixture/temp
 			temp = tank_one.air_contents.remove_ratio(1)
 			tank_two.air_contents.merge(temp)
-			
+
 		split_gases()
 			if (!valve_open || !tank_one || !tank_two)
 				return
@@ -174,7 +185,7 @@
 						src.update_icon()
 						sleep(10)
 					src.update_icon()
-			
+
 			else if(valve_open==1 && (tank_one && tank_two))
 				split_gases()
 				valve_open = 0

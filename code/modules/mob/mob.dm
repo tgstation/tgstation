@@ -1269,6 +1269,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	onclose(user, "mob[name]")
 	return
 
+
+
 /mob/proc/u_equip(W as obj)
 	if (W == r_hand)
 		r_hand = null
@@ -1280,8 +1282,18 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		back = null
 	else if (W == wear_mask)
 		wear_mask = null
-
 	update_clothing()
+	return
+
+
+//Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
+/mob/proc/remove_from_mob(var/obj/O)
+	src.u_equip(O)
+	if (src.client)
+		src.client.screen -= O
+	O.layer = initial(O.layer)
+	O.screen_loc = null
+	return 1
 
 
 /mob/proc/ret_grab(obj/list_container/mobl/L as obj, flag)

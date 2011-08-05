@@ -1,15 +1,91 @@
+/obj/item/device/radio/signaler
+	name = "Remote Signaling Device"
+	desc = "Used to remotely activate devices."
+	icon = 'new_assemblies.dmi'
+	icon_state = "signaller"
+	item_state = "signaler"
+	var/code = 30
+	w_class = 1
+	frequency = 1457
+	var/delay = 0
+	var/airlock_wire = null
 
-/*
-/obj/item/device/radio/signaler/examine()
-	set src in view()
-	..()
-	if ((in_range(src, usr) || src.loc == usr))
-		if (src.b_stat)
-			usr.show_message("\blue The signaler can be attached and modified!")
+	var
+		secured = 1
+		small_icon_state_left = "signaller_left"
+		small_icon_state_right = "signaller_right"
+		list/small_icon_state_overlays = null
+		obj/holder = null
+		cooldown = 0//To prevent spam
+
+	proc
+		Activate()//Called when this assembly is pulsed by another one
+		Secure()//Code that has to happen when the assembly is ready goes here
+		Unsecure()//Code that has to happen when the assembly is taken off of the ready state goes here
+		Attach_Assembly(var/obj/A, var/mob/user)//Called when an assembly is attacked by another
+		Process_cooldown()//Call this via spawn(10) to have it count down the cooldown var
+
+
+	IsAssembly()
+		return 1
+
+
+	Process_cooldown()
+		cooldown--
+		if(cooldown <= 0)	return 0
+		spawn(10)
+			Process_cooldown()
+		return 1
+
+
+	Activate()
+		if((!secured) || (cooldown > 0))
+			return 0
+		cooldown = 2
+		send_signal()
+		spawn(10)
+			Process_cooldown()
+		return 0
+
+
+	Secure()
+		if(secured)
+			return 0
+		secured = 1
+		return 1
+
+
+	Unsecure()
+		if(!secured)
+			return 0
+		secured = 0
+		return 1
+
+
+	Attach_Assembly(var/obj/A, var/mob/user)
+		holder = new/obj/item/device/assembly_holder(get_turf(src))
+		if(holder:attach(A,src,user))
+			user.show_message("\blue You attach the [A.name] to the [src.name]!")
+			return 1
+		return 0
+
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(W.IsAssembly())
+			var/obj/item/device/D = W
+			if((!D:secured) && (!src.secured))
+				Attach_Assembly(D,user)
+		if(isscrewdriver(W))
+			if(src.secured)
+				Unsecure()
+				user.show_message("\blue The [src.name] can now be attached!")
+			else
+				Secure()
+				user.show_message("\blue The [src.name] is ready!")
+			return
 		else
-			usr.show_message("\blue The signaler can not be modified or attached!")
-	return
-*/
+			..()
+		return
 
 /obj/item/device/radio/signaler/attack_self(mob/user as mob, flag1)
 	user.machine = src
@@ -53,22 +129,27 @@ Code:
 
 
 /obj/item/device/radio/signaler/receive_signal(datum/signal/signal)
-	if(!signal || (signal.encryption != code))
-		return
+	if(cooldown > 0)	return 0
+	if(!signal || (signal.encryption != code))	return 0
 
 	if (!( src.wires & 2 ))
 		return
 	if(istype(src.loc, /obj/machinery/door/airlock) && src.airlock_wire && src.wires & 1)
-//		world << "/obj/.../signaler/r_signal([signal]) has master = [src.master] and type [(src.master?src.master.type : "none")]"
-//		world << "[src.airlock_wire] - [src] - [usr] - [signal]"
 		var/obj/machinery/door/airlock/A = src.loc
 		A.pulse(src.airlock_wire)
-//		src.master:r_signal(signal)
-	if(src.master && (src.wires & 1))
-		src.master.receive_signal(signal)
+	if((src.holder) && (holder.IsAssemblyHolder()) && (secured) && (src.wires & 1))
+		spawn(0)
+			holder:Process_Activation(src)
+			return
+//		src.holder.receive_signal(signal)
+
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+	cooldown = 2
+	spawn(10)
+		Process_cooldown()
 	return
+
 
 /obj/item/device/radio/signaler/proc/send_signal(message="ACTIVATE")
 
@@ -79,8 +160,9 @@ Code:
 	if (!( src.wires & 4 ))
 		return
 
-	var/time = time2text(world.realtime,"hh:mm:ss")
-	lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([src.loc.x],[src.loc.y],[src.loc.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+	if((usr)&&(ismob(usr)))
+		var/time = time2text(world.realtime,"hh:mm:ss")
+		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([src.loc.x],[src.loc.y],[src.loc.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 
 	var/datum/signal/signal = new
 	signal.source = src
@@ -95,7 +177,7 @@ Code:
 	//..()
 	if (usr.stat)
 		return
-	if ((usr.contents.Find(src) || (usr.contents.Find(src.master) || (in_range(src, usr) && istype(src.loc, /turf)))))
+	if ((usr.contents.Find(src) || (usr.contents.Find(src.holder) || (in_range(src, usr) && istype(src.loc, /turf)))))
 		usr.machine = src
 		if (href_list["freq"])
 			..()

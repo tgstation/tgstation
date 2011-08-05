@@ -90,19 +90,6 @@
 	var/def_zone
 	pass_flags = PASSTABLE
 
-/obj/beam/i_beam
-	name = "i beam"
-	icon = 'projectiles.dmi'
-	icon_state = "ibeam"
-	var/obj/beam/i_beam/next = null
-	var/obj/item/device/infra/master = null
-	var/limit = null
-	var/visible = 0.0
-	var/left = null
-	anchored = 1.0
-	flags = TABLEPASS
-
-
 /obj/bedsheetbin
 	name = "linen bin"
 	desc = "A bin for containing bedsheets. It looks rather cosy."
@@ -324,21 +311,11 @@
 	flags = FPRINT | TABLEPASS
 	pass_flags = PASSTABLE
 	pressure_resistance = 50
+//	causeerrorheresoifixthis
 	var/obj/item/master = null
 
 /obj/item/device
 	icon = 'device.dmi'
-
-/obj/item/device/detective_scanner
-	name = "Scanner"
-	desc = "Used to scan objects for DNA and fingerprints."
-	icon_state = "forensic0"
-	var/amount = 20.0
-	var/printing = 0.0
-	w_class = 3.0
-	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | USEDELAY
-
 
 /obj/item/device/flash
 	name = "flash"
@@ -379,59 +356,6 @@
 	icon_off = "plight0"
 	brightness_on = 3
 
-/obj/item/device/analyzer
-	desc = "A hand-held environmental scanner which reports current gas levels."
-	name = "analyzer"
-	icon_state = "atmos"
-	item_state = "analyzer"
-	w_class = 2.0
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	throwforce = 5
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 30
-	g_amt = 20
-	origin_tech = "magnets=1;engineering=1"
-
-/obj/item/device/healthanalyzer
-	name = "Health Analyzer"
-	icon_state = "health"
-	item_state = "analyzer"
-	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
-	throwforce = 3
-	w_class = 1.0
-	throw_speed = 5
-	throw_range = 10
-	m_amt = 200
-	origin_tech = "magnets=1;biotech=1"
-
-/obj/item/device/igniter
-	name = "igniter"
-	desc = "A small electronic device able to ignite combustable substances. Does not function well as a lighter."
-	icon_state = "igniter"
-	var/status = 1.0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
-	m_amt = 100
-	throwforce = 5
-	w_class = 1.0
-	throw_speed = 3
-	throw_range = 10
-
-/obj/item/device/infra
-	name = "Infrared Beam (Security)"
-	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
-	icon_state = "infrared0"
-	var/obj/beam/i_beam/first = null
-	var/state = 0.0
-	var/visible = 0.0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 2.0
-	item_state = "electronic"
-	m_amt = 150
-	origin_tech = "magnets=2"
-
 /obj/item/device/infra_sensor
 	name = "Infrared Sensor"
 	desc = "Scans for infrared beams in the vicinity."
@@ -441,18 +365,6 @@
 	item_state = "electronic"
 	m_amt = 150
 	origin_tech = "magnets=2"
-
-/obj/item/device/t_scanner
-	name = "T-ray scanner"
-	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
-	icon_state = "t-ray0"
-	var/on = 0
-	flags = FPRINT|ONBELT|TABLEPASS
-	w_class = 2
-	item_state = "electronic"
-	m_amt = 150
-	origin_tech = "magnets=1;engineering=1"
-
 
 /obj/item/device/multitool
 	name = "multitool"
@@ -469,21 +381,6 @@
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
 
-
-/obj/item/device/prox_sensor
-	name = "Proximity Sensor"
-	desc = "Used for scanning and alerting when someone enters a certain proximity."
-	icon_state = "motion0"
-	var/state = 0.0
-	var/timing = 0.0
-	var/time = null
-	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 2.0
-	item_state = "electronic"
-	m_amt = 300
-	origin_tech = "magnets=1"
-
-
 /obj/item/device/shield
 	name = "shield"
 	desc = "This is an item which is specially crafted to shield you. It is much like a visible version of the outdated cloaking device."
@@ -495,17 +392,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-
-/obj/item/device/timer
-	name = "timer"
-	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
-	icon_state = "timer0"
-	item_state = "electronic"
-	var/timing = 0.0
-	var/time = null
-	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 2.0
-	m_amt = 100
 
 /obj/item/blueprints
 	name = "station blueprints"

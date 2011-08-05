@@ -9,6 +9,16 @@ PLANT ANALYZER
 MASS SPECTROMETER
 
 */
+/obj/item/device/t_scanner
+	name = "T-ray scanner"
+	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
+	icon_state = "t-ray0"
+	var/on = 0
+	flags = FPRINT|ONBELT|TABLEPASS
+	w_class = 2
+	item_state = "electronic"
+	m_amt = 150
+	origin_tech = "magnets=1;engineering=1"
 
 /obj/item/device/t_scanner/attack_self(mob/user)
 
@@ -48,6 +58,17 @@ MASS SPECTROMETER
 			spawn(2)
 				if(M)
 					M.invisibility = 2
+
+/obj/item/device/detective_scanner
+	name = "Scanner"
+	desc = "Used to scan objects for DNA and fingerprints."
+	icon_state = "forensic0"
+	var/amount = 20.0
+	var/printing = 0.0
+	w_class = 3.0
+	item_state = "electronic"
+	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | USEDELAY
+
 
 /obj/item/device/detective_scanner/attackby(obj/item/weapon/f_card/W as obj, mob/user as mob)
 	..()
@@ -142,6 +163,20 @@ MASS SPECTROMETER
 		//Foreach goto(186)
 	return
 
+
+/obj/item/device/healthanalyzer
+	name = "Health Analyzer"
+	icon_state = "health"
+	item_state = "analyzer"
+	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
+	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	throwforce = 3
+	w_class = 1.0
+	throw_speed = 5
+	throw_range = 10
+	m_amt = 200
+	origin_tech = "magnets=1;biotech=1"
+
 /obj/item/device/healthanalyzer/attack(mob/M as mob, mob/user as mob)
 	if ((user.mutations & CLOWN || user.brainloss >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
@@ -186,6 +221,21 @@ MASS SPECTROMETER
 		user.show_message(text("\red Significant brain damage detected. Subject may have had a concussion."), 1)
 	src.add_fingerprint(user)
 	return
+
+
+/obj/item/device/analyzer
+	desc = "A hand-held environmental scanner which reports current gas levels."
+	name = "analyzer"
+	icon_state = "atmos"
+	item_state = "analyzer"
+	w_class = 2.0
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	throwforce = 5
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 30
+	g_amt = 20
+	origin_tech = "magnets=1;engineering=1"
 
 /obj/item/device/analyzer/attack_self(mob/user as mob)
 

@@ -1,3 +1,15 @@
+/obj/item/device/radio/electropack
+	name = "Electropack"
+	desc = "Dance my monkeys! DANCE!!!"
+	icon_state = "electropack0"
+	var/code = 2
+	var/on = 0
+	var/e_pads = 0.0
+	frequency = 1449
+	w_class = 5.0
+	flags = 323
+	item_state = "electropack"
+
 /obj/item/device/radio/electropack/examine()
 	set src in view()
 

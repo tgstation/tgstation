@@ -133,20 +133,24 @@ var/showadminmessages = 1
 			if(jobban_isbanned(M, job))
 				jobs += "<a href='?src=\ref[src];jobban3=[job];jobban4=\ref[M]'><font color=red>[dd_replacetext(job, " ", "&nbsp")]</font></a> "
 			else
-				jobs += "<a href='?src=\ref[src];jobban3=[job];jobban4=\ref[M]'>[dd_replacetext(job, " ", "&nbsp")]</a> " //why doesn't this work the stupid cunt
+				jobs += "<a href='?src=\ref[src];jobban3=[job];jobban4=\ref[M]'>[dd_replacetext(job, " ", "&nbsp")]</a> "
 
 		if(jobban_isbanned(M, "Captain"))
 			jobs += "<a href='?src=\ref[src];jobban3=Captain;jobban4=\ref[M]'><font color=red>Captain</font></a> "
 		else
-			jobs += "<a href='?src=\ref[src];jobban3=Captain;jobban4=\ref[M]'>Captain</a> " //why doesn't this work the stupid cunt
+			jobs += "<a href='?src=\ref[src];jobban3=Captain;jobban4=\ref[M]'>Captain</a> "
 		if(jobban_isbanned(M, "Syndicate"))
 			jobs += "<BR><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'><font color=red>[dd_replacetext("Syndicate", " ", "&nbsp")]</font></a> "
 		else
-			jobs += "<BR><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>[dd_replacetext("Syndicate", " ", "&nbsp")]</a> " //why doesn't this work the stupid cunt
+			jobs += "<BR><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>[dd_replacetext("Syndicate", " ", "&nbsp")]</a> "
+		if(jobban_isbanned(M, "pAI"))
+			jobs += "<BR><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'><font color=red>pAI</font></a> "
+		else
+			jobs += "<BR><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'>pAI</a> "
 
 		body = "<br>[jobs]<br><br>"
 		dat = "<tt>[header][body]</tt>"
-		usr << browse(dat, "window=jobban2;size=600x150")
+		usr << browse(dat, "window=jobban2;size=600x180")
 		return
 
 	if(href_list["jobban3"])
@@ -1317,13 +1321,7 @@ var/showadminmessages = 1
 			var/ok = 0
 			switch(href_list["secretsadmin"])
 				if("clear_bombs")
-					for(var/obj/item/assembly/r_i_ptank/O in world)
-						del(O)
-					for(var/obj/item/assembly/m_i_ptank/O in world)
-						del(O)
-					for(var/obj/item/assembly/t_i_ptank/O in world)
-						del(O)
-					ok = 1
+					//I do nothing
 				if("list_bombers")
 					var/dat = "<B>Bombing List<HR>"
 					for(var/l in bombers)

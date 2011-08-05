@@ -585,9 +585,6 @@ Code:
 				active3 = S
 
 		if("Send Signal")
-			for(var/obj/item/assembly/r_i_ptank/R in world) //Bomblist stuff
-				if((R.part1.code == src/radio:code) && (R.part1.frequency == radio:frequency))
-					bombers += "[key_name(usr)] has activated a radio bomb (Freq: [format_frequency(radio:frequency)], Code: [radio:code]). Temp = [R.part3.air_contents.temperature-T0C]."
 			spawn( 0 )
 				radio:send_signal("ACTIVATE")
 				return

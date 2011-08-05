@@ -364,4 +364,4 @@ var/list/nonhuman_positions = list(
 )
 
 /proc/is_important_job(var/job)
-	return (job in head_positions) || (job in list("AI", "Cyborg", "Warden", "Detective"))
+	return (job in head_positions) || (job in list("AI", "Cyborg", "Warden", "Detective", "pAI"))//pAI is in here to prevent guest pAI's as they can easily ruin rounds
