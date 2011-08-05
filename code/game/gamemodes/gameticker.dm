@@ -45,6 +45,7 @@ var/global/datum/controller/gameticker/ticker
 			current_state = GAME_STATE_PREGAME
 			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
 			return 0
+		ResetOccupations()//Ok this is not the best, but should work as a quickfix
 		src.mode = pickweight(runnable_modes)
 	else
 		src.mode = config.pick_mode(master_mode)
