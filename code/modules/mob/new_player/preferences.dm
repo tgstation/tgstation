@@ -499,6 +499,8 @@ datum/preferences
 			if ((job!="AI" || config.allow_ai) && !jobban_isbanned(user, job))
 				HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=[occ];job=[job]\">[job]</a><br>"
 
+		if(!jobban_isbanned(user, "AI"))
+			HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=[occ];job=AI\">AI</a><br>"
 		if(!jobban_isbanned(user, "Captain"))
 			HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=[occ];job=Captain\">Captain</a><br>"
 		HTML += "<br>"
@@ -511,7 +513,7 @@ datum/preferences
 		return
 
 	proc/SetJob(mob/user, occ=1, job="Captain")
-		if ((!( occupations.Find(job) ) && !( assistant_occupations.Find(job) ) && job != "Captain"))
+		if ((!( occupations.Find(job) ) && !( assistant_occupations.Find(job) ) && (job != "Captain" && job != "AI")))
 			return
 		if (job=="AI" && (!config.allow_ai))
 			return

@@ -335,7 +335,7 @@ var/list/occupations = list(
 
 	//I afraid I can't do that, Dave
 //	"AI" = 1,now picked like the captain
-	"Cyborg" = 1,
+	"Cyborg" = 1
 
 )
 
