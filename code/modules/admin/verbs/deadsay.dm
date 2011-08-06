@@ -21,4 +21,5 @@
 
 	for (var/mob/M in world)
 		if(M.stat == 2 || (M.client && M.client.holder))
-			M.show_message(rendered, 2)
+			if(!istype(/mob/new_player, M))
+				M.show_message(rendered, 2)

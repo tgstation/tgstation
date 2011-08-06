@@ -16,28 +16,29 @@
 
 	var/mob/living/carbon/M = input(src,"Who do you wish to feed on?") in null|choices
 	if(!M) return
+	if(M in view(1, src))
 
-	if(istype(M, /mob/living/carbon) && !istype(src, /mob/living/carbon/brain))
-		if(!istype(M, /mob/living/carbon/metroid))
-			if(stat != 2)
-				if(health > -70)
+		if(istype(M, /mob/living/carbon) && !istype(src, /mob/living/carbon/brain))
+			if(!istype(M, /mob/living/carbon/metroid))
+				if(stat != 2)
+					if(health > -70)
 
-					for(var/mob/living/carbon/metroid/met in view())
-						if(met.Victim == M && met != src)
-							src << "<i>The [met.name] is already feeding on this subject...</i>"
-							return
-					src << "\blue <i>I have latched onto the subject and begun feeding...</i>"
-					M << "\red <b>The [src.name] has latched onto your head!</b>"
-					Feedon(M)
+						for(var/mob/living/carbon/metroid/met in view())
+							if(met.Victim == M && met != src)
+								src << "<i>The [met.name] is already feeding on this subject...</i>"
+								return
+						src << "\blue <i>I have latched onto the subject and begun feeding...</i>"
+						M << "\red <b>The [src.name] has latched onto your head!</b>"
+						Feedon(M)
 
+					else
+						src << "<i>This subject does not have a strong enough life energy...</i>"
 				else
-					src << "<i>This subject does not have a strong enough life energy...</i>"
+					src << "<i>This subject does not have an edible life energy...</i>"
 			else
-				src << "<i>This subject does not have an edible life energy...</i>"
+				src << "<i>I must not feed on my brothers...</i>"
 		else
-			src << "<i>I must not feed on my brothers...</i>"
-	else
-		src << "<i>This subject does not have an edible life energy...</i>"
+			src << "<i>This subject does not have an edible life energy...</i>"
 
 
 
@@ -53,7 +54,7 @@
 	else
 		icon_state = "baby metroid eat"
 
-	while(Victim && M.health > -70)
+	while(Victim && M.health > -70 && stat != 2)
 		// M.canmove = 0
 		canmove = 0
 		if(prob(15) && M.client)
@@ -116,11 +117,15 @@
 
 		sleep(rand(15,45))
 
+	if(stat == 2)
+		if(!istype(src, /mob/living/carbon/metroid/adult))
+			icon_state = "baby metroid dead"
 
-	if(istype(src, /mob/living/carbon/metroid/adult))
-		icon_state = "adult metroid"
 	else
-		icon_state = "baby metroid"
+		if(istype(src, /mob/living/carbon/metroid/adult))
+			icon_state = "adult metroid"
+		else
+			icon_state = "baby metroid"
 
 	Victim = null
 	canmove = 1

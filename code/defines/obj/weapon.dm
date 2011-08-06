@@ -1029,6 +1029,10 @@
 	throw_range = 5
 	m_amt = 500
 	origin_tech = "materials=1"
+	var/dispenser = 0
+
+/obj/item/weapon/handcuffs/cyborg
+	dispenser = 1
 
 
 /obj/item/weapon/implant

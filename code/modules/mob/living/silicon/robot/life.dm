@@ -42,6 +42,7 @@
 
 			if (src.cell)
 				if(src.cell.charge <= 0)
+					uneq_all()
 					src.stat = 1
 				else if (src.cell.charge <= 100)
 					src.module_active = null
@@ -67,6 +68,7 @@
 					src.blinded = 0
 					src.stat = 0
 			else
+				uneq_all()
 				src.stat = 1
 
 
@@ -312,10 +314,7 @@
 
 		process_locks()
 			if(weapon_lock)
-				src.module_active = null
-				src.module_state_1 = null
-				src.module_state_2 = null
-				src.module_state_3 = null
+				uneq_all()
 				weaponlock_time --
 				if(weaponlock_time <= 0)
 					if(src.client)

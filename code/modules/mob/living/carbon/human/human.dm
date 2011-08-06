@@ -2074,6 +2074,9 @@
 
 	var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel")
 	if ((item && !( L.Find(place) )))
+		if(isrobot(source) && place != "handcuff")
+			del(src)
+			return
 		for(var/mob/O in viewers(target, null))
 			O.show_message(text("\red <B>[] is trying to put \a [] on []</B>", source, item, target), 1)
 	else
