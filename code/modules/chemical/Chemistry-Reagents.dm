@@ -20,6 +20,8 @@ datum
 
 		proc
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
+				if(!istype(M, /mob/living))
+					return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
 				var/datum/reagent/self = src
 				src = null										  //of the reagent to the mob on TOUCHING it.
 				if(method == TOUCH)
@@ -45,6 +47,8 @@ datum
 				return
 
 			on_mob_life(var/mob/living/M as mob)
+				if(!istype(M, /mob/living))
+					return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
 				holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
 				return
 
