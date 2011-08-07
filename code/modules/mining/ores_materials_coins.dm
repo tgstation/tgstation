@@ -15,7 +15,7 @@
 					S.contents += O;
 				else
 					user << "\blue The satchel is full."
-					break
+					return
 			user << "\blue You pick up all the ores."
 		else
 			if (S.contents.len < S.capacity)
