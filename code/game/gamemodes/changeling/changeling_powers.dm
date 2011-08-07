@@ -384,172 +384,202 @@
 
 	return
 
-/client/proc/changeling_silence_sting(mob/T as mob in oview(usr.sting_range))
+/client/proc/changeling_silence_sting()
 	set category = "Changeling"
 	set name = "Silence sting (10)"
 	set desc="Sting target"
 
-	if(usr.stat)
-		usr << "\red Not when we are incapacitated."
+	var/list/victims = list()
+	for(var/mob/living/carbon/C in oview(usr:sting_range))
+		victims += C
+	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
+	if(T)
+
+		if(usr.stat)
+			usr << "\red Not when we are incapacitated."
+			return
+
+		if(usr.chem_charges < 10)
+			usr << "\red We don't have enough stored chemicals to do that!"
+			return
+
+		usr.chem_charges -= 10
+		usr.sting_range = 1
+
+		usr << "\blue We stealthily sting [T]."
+		T << "You feel a small prick and a burning sensation in your throat."
+
+		T.silent += 30
+
+		usr.verbs -= /client/proc/changeling_silence_sting
+
+		spawn(5)
+			usr.verbs += /client/proc/changeling_silence_sting
+
 		return
 
-	if(usr.chem_charges < 10)
-		usr << "\red We don't have enough stored chemicals to do that!"
-		return
-
-	usr.chem_charges -= 10
-	usr.sting_range = 1
-
-	usr << "\blue We stealthily sting [T]."
-	T << "You feel a small prick and a burning sensation in your throat."
-
-	T.silent += 30
-
-	usr.verbs -= /client/proc/changeling_silence_sting
-
-	spawn(5)
-		usr.verbs += /client/proc/changeling_silence_sting
-
-	return
-
-/client/proc/changeling_blind_sting(mob/T as mob in oview(usr.sting_range))
+/client/proc/changeling_blind_sting()
 	set category = "Changeling"
 	set name = "Blind sting (20)"
 	set desc="Sting target"
 
-	if(usr.stat)
-		usr << "\red Not when we are incapacitated."
+	var/list/victims = list()
+	for(var/mob/living/carbon/C in oview(usr.sting_range))
+		victims += C
+	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
+	if(T)
+		if(usr.stat)
+			usr << "\red Not when we are incapacitated."
+			return
+
+		if(usr.chem_charges < 20)
+			usr << "\red We don't have enough stored chemicals to do that!"
+			return
+
+		usr.chem_charges -= 20
+		usr.sting_range = 1
+
+		usr << "\blue We stealthily sting [T]."
+
+		var/obj/overlay/B = new /obj/overlay( T.loc )
+		B.icon_state = "blspell"
+		B.icon = 'wizard.dmi'
+		B.name = "spell"
+		B.anchored = 1
+		B.density = 0
+		B.layer = 4
+		T.canmove = 0
+		spawn(5)
+			del(B)
+			T.canmove = 1
+		T << text("\blue Your eyes cry out in pain!")
+		T.disabilities |= 1
+		spawn(300)
+			T.disabilities &= ~1
+		T.eye_blind = 10
+		T.eye_blurry = 20
+
+		usr.verbs -= /client/proc/changeling_blind_sting
+
+		spawn(5)
+			usr.verbs += /client/proc/changeling_blind_sting
+
 		return
 
-	if(usr.chem_charges < 20)
-		usr << "\red We don't have enough stored chemicals to do that!"
-		return
-
-	usr.chem_charges -= 20
-	usr.sting_range = 1
-
-	usr << "\blue We stealthily sting [T]."
-
-	var/obj/overlay/B = new /obj/overlay( T.loc )
-	B.icon_state = "blspell"
-	B.icon = 'wizard.dmi'
-	B.name = "spell"
-	B.anchored = 1
-	B.density = 0
-	B.layer = 4
-	T.canmove = 0
-	spawn(5)
-		del(B)
-		T.canmove = 1
-	T << text("\blue Your eyes cry out in pain!")
-	T.disabilities |= 1
-	spawn(300)
-		T.disabilities &= ~1
-	T.eye_blind = 10
-	T.eye_blurry = 20
-
-	usr.verbs -= /client/proc/changeling_blind_sting
-
-	spawn(5)
-		usr.verbs += /client/proc/changeling_blind_sting
-
-	return
-
-/client/proc/changeling_deaf_sting(mob/T as mob in oview(usr.sting_range))
+/client/proc/changeling_deaf_sting()
 	set category = "Changeling"
 	set name = "Deaf sting (5)"
 	set desc="Sting target:"
 
-	if(usr.stat)
-		usr << "\red Not when we are incapacitated."
+	var/list/victims = list()
+	for(var/mob/living/carbon/C in oview(usr.sting_range))
+		victims += C
+	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
+
+	if(T)
+		if(usr.stat)
+			usr << "\red Not when we are incapacitated."
+			return
+
+		if(usr.chem_charges < 5)
+			usr << "\red We don't have enough stored chemicals to do that!"
+			return
+
+		usr.chem_charges -= 5
+		usr.sting_range = 1
+
+		usr << "\blue We stealthily sting [T]."
+
+		T.sdisabilities |= 4
+		spawn(300)
+			T.sdisabilities &= ~4
+
+		usr.verbs -= /client/proc/changeling_deaf_sting
+
+		spawn(5)
+			usr.verbs += /client/proc/changeling_deaf_sting
+
 		return
 
-	if(usr.chem_charges < 5)
-		usr << "\red We don't have enough stored chemicals to do that!"
-		return
-
-	usr.chem_charges -= 5
-	usr.sting_range = 1
-
-	usr << "\blue We stealthily sting [T]."
-
-	T.sdisabilities |= 4
-	spawn(300)
-		T.sdisabilities &= ~4
-
-	usr.verbs -= /client/proc/changeling_deaf_sting
-
-	spawn(5)
-		usr.verbs += /client/proc/changeling_deaf_sting
-
-	return
-
-/client/proc/changeling_paralysis_sting(mob/T as mob in oview(usr.sting_range))
+/client/proc/changeling_paralysis_sting()
 	set category = "Changeling"
 	set name = "Paralysis sting (30)"
 	set desc="Sting target"
 
-	if(usr.stat)
-		usr << "\red Not when we are incapacitated."
+	var/list/victims = list()
+	for(var/mob/living/carbon/C in oview(usr.sting_range))
+		victims += C
+	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
+
+	if(T)
+
+		if(usr.stat)
+			usr << "\red Not when we are incapacitated."
+			return
+
+		if(usr.chem_charges < 30)
+			usr << "\red We don't have enough stored chemicals to do that!"
+			return
+
+		usr.chem_charges -= 30
+		usr.sting_range = 1
+
+		usr << "\blue We stealthily sting [T]."
+		T << "You feel a small prick and a burning sensation."
+
+		if (T.reagents)
+			T.reagents.add_reagent("zombiepowder", 20)
+
+		usr.verbs -= /client/proc/changeling_paralysis_sting
+
+		spawn(5)
+			usr.verbs += /client/proc/changeling_paralysis_sting
+
 		return
 
-	if(usr.chem_charges < 30)
-		usr << "\red We don't have enough stored chemicals to do that!"
-		return
-
-	usr.chem_charges -= 30
-	usr.sting_range = 1
-
-	usr << "\blue We stealthily sting [T]."
-	T << "You feel a small prick and a burning sensation."
-
-	if (T.reagents)
-		T.reagents.add_reagent("zombiepowder", 20)
-
-	usr.verbs -= /client/proc/changeling_paralysis_sting
-
-	spawn(5)
-		usr.verbs += /client/proc/changeling_paralysis_sting
-
-	return
-
-/client/proc/changeling_transformation_sting(mob/T as mob in oview(usr.sting_range))
+/client/proc/changeling_transformation_sting()
 	set category = "Changeling"
 	set name = "Transformation sting (30)"
 	set desc="Sting target"
 
-	if(usr.stat)
-		usr << "\red Not when we are incapacitated."
+	var/list/victims = list()
+	for(var/mob/living/carbon/C in oview(usr.sting_range))
+		victims += C
+	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
+
+	if(T)
+		if(usr.stat)
+			usr << "\red Not when we are incapacitated."
+			return
+
+		if(usr.chem_charges < 30)
+			usr << "\red We don't have enough stored chemicals to do that!"
+			return
+
+		if(T.stat != 2 || (T.mutations & HUSK) || (!ishuman(T) && !ismonkey(T)))
+			usr << "\red We can't transform that target!"
+			return
+
+		var/S = input("Select the target DNA: ", "Target DNA", null) in usr.absorbed_dna
+
+		if (S == null)
+			return
+
+		usr.chem_charges -= 30
+		usr.sting_range = 1
+
+		usr << "\blue We stealthily sting [T]."
+
+		T.visible_message(text("\red <B>[T] transforms!</B>"))
+
+		T.dna = usr.absorbed_dna[S]
+		T.real_name = S
+		updateappearance(T, T.dna.uni_identity)
+		domutcheck(T, null)
+
+		usr.verbs -= /client/proc/changeling_transformation_sting
+
+		spawn(5)
+			usr.verbs += /client/proc/changeling_transformation_sting
+
 		return
-
-	if(usr.chem_charges < 30)
-		usr << "\red We don't have enough stored chemicals to do that!"
-		return
-
-	if(T.stat != 2 || (T.mutations & HUSK) || (!ishuman(T) && !ismonkey(T)))
-		usr << "\red We can't transform that target!"
-		return
-
-	var/S = input("Select the target DNA: ", "Target DNA", null) in usr.absorbed_dna
-
-	if (S == null)
-		return
-
-	usr.chem_charges -= 30
-	usr.sting_range = 1
-
-	usr << "\blue We stealthily sting [T]."
-
-	T.visible_message(text("\red <B>[T] transforms!</B>"))
-
-	T.dna = usr.absorbed_dna[S]
-	T.real_name = S
-	updateappearance(T, T.dna.uni_identity)
-	domutcheck(T, null)
-
-	usr.verbs -= /client/proc/changeling_transformation_sting
-
-	spawn(5)
-		usr.verbs += /client/proc/changeling_transformation_sting
-
-	return

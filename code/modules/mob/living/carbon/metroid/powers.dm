@@ -10,7 +10,7 @@
 		return
 
 	var/list/choices = list()
-	for(var/mob/living/carbon/C in view(1,src))
+	for(var/mob/living/C in view(1,src))
 		if(C!=src && !istype(C,/mob/living/carbon/metroid))
 			choices += C
 
@@ -18,7 +18,7 @@
 	if(!M) return
 	if(M in view(1, src))
 
-		if(istype(M, /mob/living/carbon) && !istype(src, /mob/living/carbon/brain))
+		if(!istype(src, /mob/living/carbon/brain))
 			if(!istype(M, /mob/living/carbon/metroid))
 				if(stat != 2)
 					if(health > -70)
@@ -57,7 +57,7 @@
 	while(Victim && M.health > -70 && stat != 2)
 		// M.canmove = 0
 		canmove = 0
-		if(prob(15) && M.client)
+		if(prob(15) && M.client && istype(M, /mob/living/carbon))
 			M << "\red [pick("You can feel your body becoming weak!", \
 			"You feel like you're about to die!", \
 			"You feel every part of your body screaming in agony!", \
@@ -66,54 +66,62 @@
 			"You feel extremely weak!", \
 			"A sharp, deep pain bathes every inch of your body!")]"
 
-		Victim.cloneloss += rand(1,10)
-		Victim.toxloss += rand(1,2)
-		if(Victim.health <= 0)
-			Victim.toxloss += rand(2,4)
+		if(istype(M, /mob/living/carbon))
+			Victim.cloneloss += rand(1,10)
+			Victim.toxloss += rand(1,2)
+			if(Victim.health <= 0)
+				Victim.toxloss += rand(2,4)
 
-		if(toxloss > 0)
-			toxloss = max(0, toxloss-10)
+			if(toxloss > 0)
+				toxloss = max(0, toxloss-10)
 
-		if(oxyloss > 0)
-			oxyloss = max(0, oxyloss-10)
+			if(oxyloss > 0)
+				oxyloss = max(0, oxyloss-10)
 
-		if(bruteloss > 0)
-			bruteloss = max(0, bruteloss-10)
+			if(bruteloss > 0)
+				bruteloss = max(0, bruteloss-10)
 
-		if(fireloss > 0)
-			fireloss = max(0, fireloss-10)
+			if(fireloss > 0)
+				fireloss = max(0, fireloss-10)
 
-		if(cloneloss > 0)
-			cloneloss = max(0, cloneloss-10)
+			if(cloneloss > 0)
+				cloneloss = max(0, cloneloss-10)
 
-		if(Victim)
-			for(var/mob/living/carbon/metroid/Metroid in view(1,M))
-				if(Metroid.Victim == M && Metroid != src)
-					Metroid.Feedstop()
+			if(Victim)
+				for(var/mob/living/carbon/metroid/Metroid in view(1,M))
+					if(Metroid.Victim == M && Metroid != src)
+						Metroid.Feedstop()
 
-		if(toxloss<0) toxloss = 0
-		if(oxyloss<0) oxyloss = 0
-		if(bruteloss<0) bruteloss = 0
-		if(fireloss<0) fireloss = 0
-		if(cloneloss<0) cloneloss = 0
+			if(toxloss<0) toxloss = 0
+			if(oxyloss<0) oxyloss = 0
+			if(bruteloss<0) bruteloss = 0
+			if(fireloss<0) fireloss = 0
+			if(cloneloss<0) cloneloss = 0
 
-		nutrition += rand(5,20)
-		if(nutrition >= lastnut + 100)
-			if(prob(20))
-				lastnut = nutrition
-				powerlevel++
-				if(powerlevel > 10)
-					powerlevel = 10
+			nutrition += rand(5,20)
+			if(nutrition >= lastnut + 100)
+				if(prob(20))
+					lastnut = nutrition
+					powerlevel++
+					if(powerlevel > 10)
+						powerlevel = 10
 
-		if(istype(src, /mob/living/carbon/metroid/adult))
-			if(nutrition > 1200)
-				nutrition = 1200
+			if(istype(src, /mob/living/carbon/metroid/adult))
+				if(nutrition > 1200)
+					nutrition = 1200
+			else
+				if(nutrition > 1000)
+					nutrition = 1000
+
+			Victim.updatehealth()
+			updatehealth()
+
 		else
-			if(nutrition > 1000)
-				nutrition = 1000
-
-		Victim.updatehealth()
-		updatehealth()
+			if(prob(25))
+				src << "\red <i>[pick("This subject is incompatable", \
+				"This subject does not have a life energy", "This subject is empty", \
+				"I am not satisified", "I can not feed from this subject", \
+				"I do not feel nurished", "This subject is not food")]...</i>"
 
 		sleep(rand(15,45))
 

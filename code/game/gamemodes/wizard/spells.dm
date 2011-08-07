@@ -1,38 +1,45 @@
 //BLIND
 
-/client/proc/blind(mob/M as mob in oview())
+/client/proc/blind()
 	set category = "Spells"
 	set name = "Blind"
 	set desc = "This spell temporarly blinds a single person and does not require wizard garb."
-	if(usr.stat)
-		src << "Not when you are incapacitated."
+
+	var/list/victims = list()
+	for(var/mob/living/carbon/C in oview(usr.sting_range))
+		victims += C
+	var/mob/M = input(usr, "Who do you wish to sting?") as null | anything in victims
+
+	if(M)
+		if(usr.stat)
+			src << "Not when you are incapacitated."
+			return
+	//	if(!usr.casting()) return
+		usr.verbs -= /client/proc/blind
+		spawn(300)
+			usr.verbs += /client/proc/blind
+
+		usr.whisper("STI KALY")
+	//	usr.spellvoice()
+
+		var/obj/overlay/B = new /obj/overlay( M.loc )
+		B.icon_state = "blspell"
+		B.icon = 'wizard.dmi'
+		B.name = "spell"
+		B.anchored = 1
+		B.density = 0
+		B.layer = 4
+		M.canmove = 0
+		spawn(5)
+			del(B)
+			M.canmove = 1
+		M << text("\blue Your eyes cry out in pain!")
+		M.disabilities |= 1
+		spawn(300)
+			M.disabilities &= ~1
+		M.eye_blind = 10
+		M.eye_blurry = 20
 		return
-//	if(!usr.casting()) return
-	usr.verbs -= /client/proc/blind
-	spawn(300)
-		usr.verbs += /client/proc/blind
-
-	usr.whisper("STI KALY")
-//	usr.spellvoice()
-
-	var/obj/overlay/B = new /obj/overlay( M.loc )
-	B.icon_state = "blspell"
-	B.icon = 'wizard.dmi'
-	B.name = "spell"
-	B.anchored = 1
-	B.density = 0
-	B.layer = 4
-	M.canmove = 0
-	spawn(5)
-		del(B)
-		M.canmove = 1
-	M << text("\blue Your eyes cry out in pain!")
-	M.disabilities |= 1
-	spawn(300)
-		M.disabilities &= ~1
-	M.eye_blind = 10
-	M.eye_blurry = 20
-	return
 
 //MAGIC MISSILE
 
@@ -215,7 +222,7 @@
 
 //KILL
 
-/mob/proc/kill(mob/M as mob in oview(1))
+/mob/proc/kill(mob/living/M as mob in oview(1))
 	set category = "Spells"
 	set name = "Disintegrate"
 	set desc = "This spell instantly kills somebody adjacent to you with the vilest of magick."
@@ -482,7 +489,7 @@
 
 //BODY SWAP /N
 
-/mob/proc/swap(mob/M as mob in oview())
+/mob/proc/swap(mob/living/M as mob in oview())
 	set category = "Spells"
 	set name = "Mind Transfer"
 	set desc = "This spell allows the user to switch bodies with a target."

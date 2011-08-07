@@ -259,13 +259,23 @@
 
 					if(Target in view(1,src))
 
+						if(istype(Target, /mob/living/silicon))
+							if(!Atkcool)
+								spawn()
+									Atkcool = 1
+									sleep(15)
+									Atkcool = 0
+
+								if(get_obstacle_ok(Target))
+									Target.attack_metroid(src)
+							return
 						if(prob(80) && !Target.lying)
 
 							if(Target.client && Target.health >= rand(10,30))
 								if(!Atkcool)
 									spawn()
 										Atkcool = 1
-										sleep(10)
+										sleep(25)
 										Atkcool = 0
 
 									if(get_obstacle_ok(Target))
@@ -276,11 +286,12 @@
 									step_to(src, Target)
 
 							else
-
-								Feedon(Target)
+								if(!Atkcool)
+									Feedon(Target)
 
 						else
-							Feedon(Target)
+							if(!Atkcool)
+								Feedon(Target)
 
 					else
 						if(Target in view(30, src))
