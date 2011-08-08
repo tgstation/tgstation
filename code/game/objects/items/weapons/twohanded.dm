@@ -22,5 +22,7 @@
 
 //welp, all is good, now to see if he's trying do twohandedly wield it or unwield it
 
-
 	..()
+
+/obj/item/weapon/offhand/dropped(mob/user as mob)
+	del(src)

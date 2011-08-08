@@ -59,7 +59,7 @@
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=botchat'>Binary Translator</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=lawmod'>Hacked AI Module</A> (7)<BR>"
 	menu_message += "<BR>"
-	menu_message += "<A href='byond://?src=\ref[src];buy_item=singubeacon'>Singularity Beacon</A> (does not include a screwdriver) (3)<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=singubeacon'>Singularity Beacon</A> (does not include a screwdriver) (7)<BR>"
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=toolbox'>Syndicate Toolbox</A> (Includes various tools) (1)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=balloon'>Syndicate Balloon</A> (Useless) (10)<BR>"
@@ -185,8 +185,8 @@
 					uses -= 3
 					new /obj/item/device/radio/headset/traitor(get_turf(hostpda))
 			if("singubeacon")
-				if(uses >= 3)
-					uses -= 3
+				if(uses >= 7)
+					uses -= 7
 					new /obj/machinery/singularity_beacon/syndicate(get_turf(hostpda))
 			if("toolbox")
 				if(uses)
