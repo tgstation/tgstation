@@ -1078,9 +1078,9 @@
 		lasercannon
 			name = "laser cannon"
 			desc = "A heavy-duty laser cannon."
-			icon_state = "laser"
+			icon_state = "lasercannon"
 			force = 15
-			fire_sound = 'pulse.ogg'
+			fire_sound = 'lasercannonfire.wav'
 			origin_tech = "combat=4;materials=3;powerstorage=3"
 			load_into_chamber()
 				if(in_chamber)
