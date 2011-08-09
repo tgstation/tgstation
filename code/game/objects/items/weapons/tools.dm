@@ -52,7 +52,7 @@ WELDINGTOOOL
 	origin_tech = "engineering=1"
 	var
 		welding = 0
-		status = 0
+		status = 1
 		max_fuel = 20
 
 
@@ -72,41 +72,41 @@ WELDINGTOOOL
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W,/obj/item/weapon/screwdriver))
+		if(istype(W,/obj/item/weapon/screwdriver))
+			if(welding)
+				user << "\red Stop welding first!"
+				return
 			status = !status
-			if (status)
+			if(status)
 				user << "\blue You resecure the welder."
 			else
 				user << "\blue The welder can now be attached and modified."
 			src.add_fingerprint(user)
-		else if (status == 1 && istype(W,/obj/item/stack/rods))
+			return
+
+		if((!status) && (istype(W,/obj/item/stack/rods)))
 			var/obj/item/stack/rods/R = W
 			R.use(1)
-			var/obj/item/assembly/weld_rod/F = new /obj/item/assembly/weld_rod( user )
+			var/obj/item/weapon/flamethrower/F = new/obj/item/weapon/flamethrower(user.loc)
 			src.loc = F
-			F.part1 = src
+			F.weldtool = src
 			if (user.client)
 				user.client.screen -= src
 			if (user.r_hand == src)
 				user.u_equip(src)
-				user.r_hand = F
 			else
 				user.u_equip(src)
-				user.l_hand = F
-			R.master = F
 			src.master = F
 			src.layer = initial(src.layer)
 			user.u_equip(src)
 			if (user.client)
 				user.client.screen -= src
 			src.loc = F
-			F.part2 = W
-			F.layer = 20
-			R.layer = 20
-			F.loc = user
 			src.add_fingerprint(user)
-		else
-			..()
+			return
+
+		..()
+		return
 
 
 	process()
@@ -196,7 +196,7 @@ WELDINGTOOOL
 
 //toggles the welder off and on
 		toggle(var/message = 0)
-			if(status > 1)	return
+			if(!status)	return
 			src.welding = !( src.welding )
 			if (src.welding)
 				if (remove_fuel(1))

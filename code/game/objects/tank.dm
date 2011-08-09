@@ -1,3 +1,98 @@
+
+/obj/item/weapon/tank
+	name = "tank"
+	icon = 'tank.dmi'
+
+	var/datum/gas_mixture/air_contents = null
+	var/distribute_pressure = ONE_ATMOSPHERE
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
+
+	pressure_resistance = ONE_ATMOSPHERE*5
+
+	force = 5.0
+	throwforce = 10.0
+	throw_speed = 1
+	throw_range = 4
+	var/volume = 70
+
+/obj/item/weapon/tank/anesthetic
+	name = "Gas Tank (Sleeping Agent)"
+	desc = "Seriously, who uses this anymore?"
+	icon_state = "anesthetic"
+	item_state = "an_tank"
+
+/obj/item/weapon/tank/jetpack
+	name = "Jetpack (Oxygen)"
+	desc = "A pack of jets it appears."
+	icon_state = "jetpack0"
+	var/on = 0.0
+	w_class = 4.0
+	item_state = "jetpack"
+	var/datum/effects/system/ion_trail_follow/ion_trail
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	//volume = 140 //jetpack sould be larger, but then it will never deplete -rastaf0
+
+/obj/item/weapon/tank/jetpack/void_jetpack
+	name = "Void Jetpack (oxygen)"
+	desc = "It works well in a void."
+	icon_state = "voidjetpack0"
+	item_state =  "jetpack"
+
+/obj/item/weapon/tank/jetpack/black_jetpack
+	name = "Black Jetpack (oxygen)"
+	desc = "A black model of jetpacks."
+	icon_state = "black_jetpack0"
+	item_state =  "black_jetpack"
+
+/obj/item/weapon/tank/oxygen
+	name = "Gas Tank (Oxygen)"
+	desc = "A tank of oxygen"
+	icon_state = "oxygen"
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+
+/obj/item/weapon/tank/oxygen/yellow
+	name = "Gas Tank (Oxygen)"
+	desc = "A tank of oxygen meant for firefighters."
+	icon_state = "oxygen_f"
+
+/obj/item/weapon/tank/oxygen/red
+	name = "Gas Tank (Oxygen)"
+	desc = "A tank of oxygen meant for firefighters."
+	icon_state = "oxygen_fr"
+
+/obj/item/weapon/tank/air
+	name = "Gas Tank (Air Mix)"
+	desc = "Mixed anyone?"
+	icon_state = "oxygen"
+
+/obj/item/weapon/tank/plasma
+	name = "Gas Tank (BIOHAZARD)"
+	desc = "Contains dangerous plasma. Do not inhale."
+	icon_state = "plasma"
+
+/obj/item/weapon/tank/emergency_oxygen
+	name = "Emergency Oxygen Tank"
+	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actualy need it."
+	icon_state = "emergency"
+	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	w_class = 2.0
+	force = 4.0
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
+
+/obj/item/weapon/tank/emergency_oxygen/engi
+	icon_state = "emergency_engi"
+	name = "Engineering Emergency Oxygen Tank"
+	volume = 6 //Engineers are always superior. -errorage (dangercon 2011)
+
+/obj/item/weapon/tank/emergency_oxygen/double
+	icon_state = "emergency_double"
+	name = "Double Emergency Oxygen Tank"
+	volume = 10 //These have the same emoung of gas in them as air tanks, but can be worn on your belt -errorage (dangercon 2011)
+
+
+
+
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))
 		var/turf/location = src.loc
@@ -389,32 +484,11 @@
 
 	..()
 // PantsNote: More flamethrower assembly code. WOO!
-	if (istype(W, /obj/item/assembly/w_r_ignite))
-		var/obj/item/assembly/w_r_ignite/S = W
-		if (!( S.status ))
-			return
-		var/obj/item/weapon/flamethrower/R = new
-		R.part1 = S.part1
-		S.part1.loc = R
-		S.part1.master = R
-
-		R.part2 = S.part2
-		S.part2.loc = R
-		S.part2.master = R
-
-		R.part3 = S.part3
-		S.part3.loc = R
-		S.part3.master = R
-
-		src.master = R
-		R.part4 = src
-
-		user.put_in_hand(R)
+	if (istype(W, /obj/item/weapon/flamethrower))
+		var/obj/item/weapon/flamethrower/F = W
+		if ((!F.status)||(F.ptank))	return
+		src.master = F
+		F.ptank = src
 		user.before_take_item(src)
-		src.loc = R
-
-		S.part1 = null
-		S.part2 = null
-		S.part3 = null
-		del(S)
+		src.loc = F
 	return

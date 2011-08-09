@@ -654,7 +654,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])", 1)
 		del(O)
 
-/client/proc/cmd_admin_list_occ()
+/client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
 	set name = "List free slots"
 

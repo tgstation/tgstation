@@ -286,7 +286,7 @@ field_generator power level display
 					if(ismob(A))
 						continue
 					if(!istype(A,/obj/machinery/field_generator))
-						if(A.density)//Somethin is blocking our path, note downside to this is that you can easily mess up the system by tossin a locker or such in the way and it takes forever to reset it
+						if(istype(A,/obj/machinery/door)&&(A.density))
 							return 0
 				steps += 1
 				G = locate(/obj/machinery/field_generator) in T

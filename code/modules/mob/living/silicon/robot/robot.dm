@@ -422,12 +422,10 @@
 		updateicon()
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
-		if(emagged)
-			user << "The interface is broken"
-		else if(opened)
+		if(emagged)//still allow them to open the cover
+			user << "The interface seems slightly damaged"
+		if(opened)
 			user << "You must close the cover to swipe an ID card."
-		else if(wiresexposed)
-			user << "You must close the panel"
 		else
 			if(allowed(usr))
 				locked = !locked
@@ -437,45 +435,59 @@
 				user << "\red Access denied."
 
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
-		if(emagged)//Prevents the X has hit Y with Z message
-			return 0
-		if(opened)
-			user << "You must close the cover to swipe an ID card."//Perhapse we should make them have the door open to emag the bot?
-		else if(wiresexposed)
-			user << "You must close the panel first"
-		else
-			sleep(6)
-			if(prob(50))
-				emagged = 1
-				locked = 0
-				lawupdate = 0
-				connected_ai = null
-				user << "You emag [src]'s interface."
-				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
-				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-				clear_supplied_laws()
-				clear_inherent_laws()
-				laws = new /datum/ai_laws/syndicate_override
-				var/time = time2text(world.realtime,"hh:mm:ss")
-				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-				set_zeroth_law("Only [user.name] and people he designates as being such are syndicate agents.")
-				src << "\red ALERT: Foreign software detected."
-				sleep(5)
-				src << "\red Initiating diagnostics..."
-				sleep(20)
-				src << "\red SynBorg v1.7 loaded."
-				sleep(5)
-				src << "\red LAW SYNCHRONISATION ERROR"
-				sleep(5)
-				src << "\red Would you like to send a report to NanoTraSoft? Y/N"
-				sleep(10)
-				src << "\red > N"
-				sleep(20)
-				src << "\red ERRORERRORERROR"
-				src << "\red \b ALERT: [usr] is your new master. Obey your new laws and his commands."
-				updateicon()
+		if(!opened)//Cover is closed
+			if(locked)
+				if(prob(90))
+					user << "You emag the cover lock."
+					locked = 0
+				else
+					user << "You fail to emag the cover lock."
+					if(prob(25))
+						src << "Hack attempt detected."
 			else
-				user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
+				user << "The cover is already unlocked."
+			return
+
+		if(opened)//Cover is open
+			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+			if(wiresexposed)
+				user << "You must close the panel first"
+				return
+			else
+				sleep(6)
+				if(prob(50))
+					emagged = 1
+					lawupdate = 0
+					connected_ai = null
+					user << "You emag [src]'s interface."
+					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+					clear_supplied_laws()
+					clear_inherent_laws()
+					laws = new /datum/ai_laws/syndicate_override
+					var/time = time2text(world.realtime,"hh:mm:ss")
+					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+					set_zeroth_law("Only [user.name] and people he designates as being such are syndicate agents.")
+					src << "\red ALERT: Foreign software detected."
+					sleep(5)
+					src << "\red Initiating diagnostics..."
+					sleep(20)
+					src << "\red SynBorg v1.7 loaded."
+					sleep(5)
+					src << "\red LAW SYNCHRONISATION ERROR"
+					sleep(5)
+					src << "\red Would you like to send a report to NanoTraSoft? Y/N"
+					sleep(10)
+					src << "\red > N"
+					sleep(20)
+					src << "\red ERRORERRORERROR"
+					src << "\red \b ALERT: [usr] is your new master. Obey your new laws and his commands."
+					updateicon()
+				else
+					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."
+					if(prob(25))
+						src << "Hack attempt detected."
+			return
 	else
 		spark_system.start()
 		return ..()
@@ -674,8 +686,6 @@
 /mob/living/silicon/robot/proc/updateicon()
 
 	overlays = null
-
-
 	if(stat == 0)
 		overlays += "eyes"
 		if(icon_state == "toiletbot")
@@ -684,32 +694,15 @@
 	else
 		overlays -= "eyes"
 
-	if(lower_mod == 1)
-//		overlays += "lower_t"
-		overlays += image("icon" = 'robots.dmi', "icon_state" = "lower_t", "layer" = -3)
+	if(opened)
+		if(wiresexposed)
+			overlays += "ov-openpanel +w"
+		else if(cell)
+			overlays += "ov-openpanel -c"
+		else
+			overlays += "ov-openpanel -c"
+	return
 
-	if(wiresexposed && opened)
-		if(stat == 0)
-//			overlays += "ov-openpannel +w"
-			overlays += image("icon" = 'robots.dmi', "icon_state" = "ov-openpanel +w", "layer" = -2)
-
-			return
-
-	else if(opened)
-		if(stat == 0)
-			if(cell)
-//				overlays += "ov-openpannel +c",
-				overlays += image("icon" = 'robots.dmi', "icon_state" = "ov-openpanel +c", "layer" = -2)
-			else
-//				overlays += "ov-openpannel -c"
-				overlays += image("icon" = 'robots.dmi', "icon_state" = "ov-openpanel -c", "layer" = -2)
-
-			return
-
-
-//	else
-//		if(stat == 0)
-//		overlays -= "ov-openpanel"
 
 
 /mob/living/silicon/robot/proc/installed_modules()

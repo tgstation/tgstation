@@ -1,7 +1,6 @@
-var/showadminmessages = 1
+
 ////////////////////////////////
 /proc/message_admins(var/text, var/admin_ref = 0)
-	if(!showadminmessages) return
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
 	for (var/mob/M in world)
 		if (M && M.client && M.client.holder && M.client.authenticated)
@@ -9,11 +8,6 @@ var/showadminmessages = 1
 				M << dd_replaceText(rendered, "%admin_ref%", "\ref[M]")
 			else
 				M << rendered
-
-/proc/toggle_adminmsg()
-	set name = "Toggle Admin Messages"
-	set category = "Server"
-	//showadminmessages = !showadminmessages
 
 /obj/admins/Topic(href, href_list)
 	..()
@@ -125,7 +119,6 @@ var/showadminmessages = 1
 		var/dat = ""
 		var/header = "<b>Pick Job to ban this guy from.<br>"
 		var/body
-//		var/list/alljobs = get_all_jobs()
 		var/jobs = ""
 		for(var/job in uniquelist(occupations + assistant_occupations))
 			if(job == "Tourist")
@@ -139,10 +132,17 @@ var/showadminmessages = 1
 			jobs += "<a href='?src=\ref[src];jobban3=Captain;jobban4=\ref[M]'><font color=red>Captain</font></a> "
 		else
 			jobs += "<a href='?src=\ref[src];jobban3=Captain;jobban4=\ref[M]'>Captain</a> "
+
+		if(jobban_isbanned(M, "AI"))
+			jobs += "<a href='?src=\ref[src];jobban3=AI;jobban4=\ref[M]'><font color=red>AI</font></a> "
+		else
+			jobs += "<a href='?src=\ref[src];jobban3=AI;jobban4=\ref[M]'>AI</a> "
+
 		if(jobban_isbanned(M, "Syndicate"))
 			jobs += "<BR><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'><font color=red>[dd_replacetext("Syndicate", " ", "&nbsp")]</font></a> "
 		else
 			jobs += "<BR><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>[dd_replacetext("Syndicate", " ", "&nbsp")]</a> "
+
 		if(jobban_isbanned(M, "pAI"))
 			jobs += "<BR><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'><font color=red>pAI</font></a> "
 		else
@@ -2011,18 +2011,6 @@ var/showadminmessages = 1
 	log_admin("[key_name(usr)] toggled Traitor Scaling to [traitor_scaling].")
 	message_admins("[key_name_admin(usr)] toggled Traitor Scaling [traitor_scaling ? "on" : "off"].", 1)
 
-/obj/admins/proc/togglegoonsay()
-	set category = "Server"
-	set desc = "Toggle dis bitch"
-	set name = "Toggle Goonsay"
-	goonsay_allowed = !( goonsay_allowed )
-	if (goonsay_allowed)
-		world << "<B>The GOONSAY channel has been enabled.</B>"
-	else
-		world << "<B>The GOONSAY channel has been disabled.</B>"
-	log_admin("[key_name(usr)] toggled Goonsay to [goonsay_allowed].")
-	message_admins("[key_name_admin(usr)] toggled GOONSAY [goonsay_allowed ? "on" : "off"]", 1)
-
 /obj/admins/proc/startnow()
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
@@ -2261,15 +2249,14 @@ var/showadminmessages = 1
 		return
 
 
-/obj/admins/proc/edit_memory(var/mob/M in world)
+/obj/admins/proc/show_traitor_panel(var/mob/M in world)
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role"
-	set name = "Edit mind"
+	set name = "Show Traitor Panel"
 
 	if (!M.mind)
-		usr << "Sorry, this mob have no mind!"
+		usr << "Sorry, this mob has no mind!"
 	M.mind.edit_memory()
-
 
 
 /obj/admins/proc/toggletintedweldhelmets()

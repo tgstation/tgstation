@@ -184,10 +184,12 @@
 		nodamage = 1
 		New()
 			..()
-			effects["radiation"] = 100
+			effects["radiation"] = 20
+			effectprob["radiation"] = 95
 			effects["drowsyness"] = 5
+			effectprob["drowsyness"] = 10
 			effectmod["radiation"] = ADD
-			effectmod["drowsyness"] = ADD
+			effectmod["drowsyness"] = SET
 
 	largebolt
 		name = "largebolt"
@@ -197,10 +199,12 @@
 		mobdamage = list(BRUTE = 10, BURN = 0, TOX = 10, OXY = 0, CLONE = 0)
 		New()
 			..()
-			effects["radiation"] = 200
-			effects["drowsyness"] = 15
+			effects["radiation"] = 40
+			effectprob["radiation"] = 95
+			effects["drowsyness"] = 10
+			effectprob["drowsyness"] = 25
 			effectmod["radiation"] = ADD
-			effectmod["drowsyness"] = ADD
+			effectmod["drowsyness"] = SET
 
 	freeze
 		name = "freeze beam"

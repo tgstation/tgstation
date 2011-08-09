@@ -13,25 +13,13 @@ var
 		if (is_important_job(rank))
 			if(config.guest_jobban && IsGuestKey(M.key))
 				return 1
-			if(config.usewhitelist && check_whitelist(M))
+			if(config.usewhitelist && !check_whitelist(M))
 				return 1
 		if (jobban_keylist.Find(text("[M.ckey] - [rank]")))
 			return 1
 		else
 			return 0
 
-/*
-working but not needed
-/proc/jobban_isbanned_for_heads(mob/M)
-	if(config.guest_jobban && IsGuestKey(M.key))
-		return 1
-	if(config.usewhitelist && check_whitelist(M))
-		return 1
-	for (var/rank in head_positions)
-		if (!jobban_keylist.Find(text("[M.ckey] - [rank]")))
-			return 0
-	return 1
-*/
 
 /proc/jobban_loadbanfile()
 	var/savefile/S=new("data/job_full.ban")
@@ -42,13 +30,16 @@ working but not needed
 		jobban_keylist=list()
 		log_admin("jobban_keylist was empty")
 
+
 /proc/jobban_savebanfile()
 	var/savefile/S=new("data/job_full.ban")
 	S["keys[0]"] << jobban_keylist
 
+
 /proc/jobban_unban(mob/M, rank)
 	jobban_keylist.Remove(text("[M.ckey] - [rank]"))
 	jobban_savebanfile()
+
 
 /proc/jobban_updatelegacybans()
 	if(!jobban_runonce)
@@ -57,6 +48,7 @@ working but not needed
 		for(var/T in jobban_keylist)
 			if(!T)	continue
 		jobban_runonce++	//don't run this update again
+
 
 /proc/jobban_remove(X)
 	if(jobban_keylist.Find(X))

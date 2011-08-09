@@ -285,21 +285,37 @@
 	containertype = "/obj/crate"
 	containername = "Glass sheets crate"
 
-
-
 /datum/supply_packs/engineering
 	name = "Engineering crate"
-	contains = list("/obj/item/weapon/storage/toolbox/electrical",
+	contains = list("/obj/item/weapon/storage/toolbox/mechanical",
 					"/obj/item/weapon/storage/toolbox/electrical",
-					"/obj/item/clothing/head/helmet/welding",
-					"/obj/item/clothing/head/helmet/welding",
-					"/obj/item/weapon/cell", // -- TLE
-					"/obj/item/weapon/cell",
 					"/obj/item/clothing/gloves/yellow",
-					"/obj/item/clothing/gloves/yellow")
-	cost = 5
+					"/obj/item/weapon/storage/toolbox/utilitybelt",
+					"/obj/item/clothing/suit/hazardvest",
+					"/obj/item/clothing/head/helmet/hardhat")
+	cost = 10
 	containertype = "/obj/crate"
 	containername = "Engineering crate"
+
+/datum/supply_packs/powercell
+	name = "Power cell crate"
+	contains = list("/obj/item/weapon/storage/toolbox/electrical",
+					"/obj/item/weapon/cable_coil",
+					"/obj/item/weapon/cable_coil",
+					"/obj/item/weapon/cell",
+					"/obj/item/weapon/cell",
+					"/obj/item/weapon/cell/high")
+	cost = 10
+	containertype = "/obj/crate"
+	containername = "Power cell crate"
+
+/datum/supply_packs/waterfueltank
+	name = "Water/Fuel tank crate"
+	contains = list("/obj/reagent_dispensers/watertank",
+					"/obj/reagent_dispensers/fueltank")
+	cost = 15
+	containertype = "/obj/crate"
+	containername = "Water/Fuel tank crate"
 
 /datum/supply_packs/engine
 	name = "Emitter crate"
@@ -403,7 +419,7 @@
 
 /datum/supply_packs/eweapons
 	name = "Experimental weapons crate"
-	contains = list("/obj/item/weapon/flamethrower",
+	contains = list("/obj/item/weapon/flamethrower/full",
 					"/obj/item/weapon/tank/plasma",
 					"/obj/item/weapon/tank/plasma",
 					"/obj/item/weapon/tank/plasma",

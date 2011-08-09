@@ -3,6 +3,7 @@
 	desc = "Holds various devices"//Fix this by adding dynamic desc
 	icon = 'new_assemblies.dmi'
 	icon_state = "holder"
+	item_state = "assembly"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"
 	m_amt = 100

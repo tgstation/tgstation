@@ -78,9 +78,11 @@
 		if(isscrewdriver(W))
 			if(src.secured)
 				Unsecure()
+				b_stat = 1
 				user.show_message("\blue The [src.name] can now be attached!")
 			else
 				Secure()
+				b_stat = 0
 				user.show_message("\blue The [src.name] is ready!")
 			return
 		else
