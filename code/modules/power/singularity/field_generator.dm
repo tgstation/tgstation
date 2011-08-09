@@ -286,7 +286,7 @@ field_generator power level display
 					if(ismob(A))
 						continue
 					if(!istype(A,/obj/machinery/field_generator))
-						if(istype(A,/obj/machinery/door)&&(A.density))
+						if((istype(A,/obj/machinery/door)||istype(A,/obj/machinery/the_singularitygen))&&(A.density))
 							return 0
 				steps += 1
 				G = locate(/obj/machinery/field_generator) in T
