@@ -199,6 +199,7 @@ var/ordernum=0
 			A:req_access = new/list()
 			A:req_access += text2num(SP.access)
 		for(var/B in SP.contains)
+			if(!B)	continue
 			var/thepath = text2path(B)
 			var/atom/B2 = new thepath (A)
 			if(SP.amount && B2:amount) B2:amount = SP.amount

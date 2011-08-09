@@ -7,7 +7,6 @@
 			// Debug
 //			verbs += /client/proc/radio_report //for radio debugging dont think its been used in a very long time
 //			verbs += /client/proc/air_status //does next to nothing
-			verbs += /client/proc/restartcontroller //Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
 //			verbs += /client/proc/fix_next_move //has not been an issue in a very very long time
 //			verbs += /client/proc/Cell //More air things
 
@@ -157,7 +156,7 @@
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/only_one
 			verbs += /client/proc/send_space_ninja
-
+			verbs += /client/proc/restartcontroller //Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
 
 		if (holder.level >= 4)//Badmin********************************************************************
 			verbs += /obj/admins/proc/adrev					//toggle admin revives

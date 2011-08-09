@@ -70,6 +70,7 @@
 	wizard.original = wizard.current
 	if(wizardstart.len == 0)
 		wizard.current << "<B>\red A starting location for you could not be found, please report this bug!</B>"
+		return 0
 	else
 		wizard.current.loc = pick(wizardstart)
 	return 1

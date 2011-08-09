@@ -698,7 +698,7 @@
 		if(wiresexposed)
 			overlays += "ov-openpanel +w"
 		else if(cell)
-			overlays += "ov-openpanel -c"
+			overlays += "ov-openpanel +c"
 		else
 			overlays += "ov-openpanel -c"
 	return

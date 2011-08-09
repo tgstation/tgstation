@@ -290,7 +290,7 @@
 	contains = list("/obj/item/weapon/storage/toolbox/mechanical",
 					"/obj/item/weapon/storage/toolbox/electrical",
 					"/obj/item/clothing/gloves/yellow",
-					"/obj/item/weapon/storage/toolbox/utilitybelt",
+					"/obj/item/weapon/storage/utilitybelt",
 					"/obj/item/clothing/suit/hazardvest",
 					"/obj/item/clothing/head/helmet/hardhat")
 	cost = 10
