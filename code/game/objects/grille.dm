@@ -116,7 +116,8 @@
 				O << text("\red [user] [src.anchored ? "fastens" : "unfastens"] the grille.")
 			return
 	else if(istype(W, /obj/item/weapon/shard))
-		if(ishuman(user)) //Let's check if the guy's wearing electrically insulated gloves --Agourimarkan
+		src.health -= W.force * 0.1
+		/*if(ishuman(user)) //Let's check if the guy's wearing electrically insulated gloves --Agourimarkan
 			var/mob/living/carbon/human/H = user
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
@@ -157,7 +158,7 @@
 						H.take_organ_damage(brutedamagetaken,0)
 						return
 		else //Alright, he's not a human. Can monkeys or aliens even wear gloves?
-			src.health -= W.force *0.1 //10% damage only for non-glorious human master race members
+			src.health -= W.force *0.1*/ //10% damage only for non-glorious human master race members
 
 	else						// anything else, chance of a shock
 		if(!shock(user, 70))
