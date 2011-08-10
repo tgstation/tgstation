@@ -309,6 +309,35 @@
 	containertype = "/obj/crate"
 	containername = "Power cell crate"
 
+/datum/supply_packs/electrical
+	name = "Electrical maintenance crate"
+	contains = list("/obj/item/weapon/storage/toolbox/electrical",
+					"/obj/item/weapon/storage/toolbox/electrical",
+					"/obj/item/clothing/gloves/yellow",
+					"/obj/item/clothing/gloves/yellow",
+					"/obj/item/weapon/cell",
+					"/obj/item/weapon/cell",
+					"/obj/item/weapon/cell/high",
+					"/obj/item/weapon/cell/high")
+	cost = 15
+	containertype = "/obj/crate"
+	containername = "Electrical maintenance crate"
+
+/datum/supply_packs/mechanical
+	name = "Mechanical maintenance crate"
+	contains = list("/obj/item/weapon/storage/utilitybelt/full",
+					"/obj/item/weapon/storage/utilitybelt/full",
+					"/obj/item/weapon/storage/utilitybelt/full",
+					"/obj/item/clothing/suit/hazardvest",
+					"/obj/item/clothing/suit/hazardvest",
+					"/obj/item/clothing/suit/hazardvest",
+					"/obj/item/clothing/head/helmet/welding",
+					"/obj/item/clothing/head/helmet/welding",
+					"/obj/item/clothing/head/helmet/hardhat")
+	cost = 10
+	containertype = "/obj/crate"
+	containername = "Mechanical maintenance crate"
+
 /datum/supply_packs/waterfueltank
 	name = "Water/Fuel tank crate"
 	contains = list("/obj/reagent_dispensers/watertank",

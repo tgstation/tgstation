@@ -327,3 +327,9 @@
 	desc = "A box of empty condiment bottles."
 	icon_state = "box"
 	item_state = "syringe_kit"
+
+/obj/item/weapon/storage/drinkingglasses
+	name = "Drinking Glasses"
+	desc = "A box of clean drinking glasses"
+	icon_state = "box"
+	item_state = "syringe_kit"
