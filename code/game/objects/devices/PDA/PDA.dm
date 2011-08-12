@@ -473,8 +473,11 @@
 					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a>:</b></i><br>[t]<br>"
 
 					if (prob(15)) //Give the AI a chance of intercepting the message
-						for (var/mob/living/silicon/ai/A in world)
-							A.show_message("<i>Intercepted message from <b>[P:owner]</b>: [t]</i>")
+						var/who = src.owner
+						if(prob(50))
+							who = P:owner
+						for(var/mob/living/silicon/ai/ai in world)
+							ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
 
 					if (!P.silent)
 						playsound(P.loc, 'twobeep.ogg', 50, 1)

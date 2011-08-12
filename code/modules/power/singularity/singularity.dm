@@ -426,7 +426,7 @@ var/global/list/uneatable = list(
 
 
 		emp_area()
-			empulse(src, 6, 8, nolog=1)
+			empulse(src, 6, 8)
 			return
 
 

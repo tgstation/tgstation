@@ -714,7 +714,7 @@
 
 	if (href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
-		edit_player(M)
+		show_player_panel(M)
 
 	if (href_list["jumpto"])
 		if(rank in list("Badmin", "Game Admin", "Game Master"))
@@ -1516,9 +1516,9 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
-/obj/admins/proc/edit_player(var/mob/M in world)
+/obj/admins/proc/show_player_panel(var/mob/M in world)
 	set category = "Admin"
-	set name = "Edit player"
+	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
 	if(!M)
 		usr << "You seem to be selecting a mob that doesn't exist anymore."

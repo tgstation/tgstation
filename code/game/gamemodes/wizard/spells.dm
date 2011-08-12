@@ -259,7 +259,7 @@
 
 	usr.say("NEC CANTIO")
 	usr.spellvoice()
-	empulse(src, 6, 10, nolog=1)
+	empulse(src, 6, 10)
 	return
 
 //BLINK

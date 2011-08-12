@@ -1,122 +1,163 @@
+/obj/grille
+	desc = "A piece of metal with evenly spaced gridlike holes in it. Blocks large object but lets small items, gas, or energy beams through. Strangely enough these grilles also lets meteors pass through them, whether they be small or huge station breaking death stones."
+	name = "grille"
+	icon = 'structures.dmi'
+	icon_state = "grille"
+	density = 1
+	anchored = 1.0
+	flags = FPRINT | CONDUCT
+	pressure_resistance = 5*ONE_ATMOSPHERE
+	layer = 2.9
+	var
+		health = 10
+		destroyed = 0
+	proc
+		healthcheck()
+		shock(mob/user, prb)
 
-/obj/grille/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			del(src)
-			return
-		if(2.0)
-			if (prob(50))
-				//SN src = null
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
 				del(src)
 				return
-		if(3.0)
-			if (prob(25))
-				src.health -= 11
-				healthcheck()
+			if(2.0)
+				if(prob(50))
+					del(src)
+					return
+			if(3.0)
+				if(prob(25))
+					src.health -= 11
+					healthcheck()
+		return
+
+
+	blob_act()
+		del(src)
+		return
+
+
+	meteorhit(var/obj/M)
+		if (M.icon_state == "flaming")
+			src.health -= 2
+			healthcheck()
+		return
+
+
+	attack_hand(var/mob/user)
+		playsound(src.loc, 'grillehit.ogg', 80, 1)
+		user.visible_message("[user.name] kicks the [src.name].", \
+							"You kick the [src.name].", \
+							"You hear a noise")
+		if((usr.mutations & HULK))
+			src.health -= 5
+		else if(!shock(user, 70))
+			src.health -= 3
+		healthcheck()
+		return
+
+
+	attack_paw(var/mob/user)
+		attack_hand(user)
+
+
+	attack_alien(var/mob/user)
+		if (istype(usr, /mob/living/carbon/alien/larva))	return
+		playsound(src.loc, 'grillehit.ogg', 80, 1)
+		user.visible_message("[user.name] mangles the [src.name].", \
+							"You mangle the [src.name].", \
+							"You hear a noise")
+		if(!shock(usr, 70))
+			src.health -= 5
+			healthcheck()
+			return
+
+	attack_metroid(var/mob/user)
+		if(!istype(usr, /mob/living/carbon/metroid/adult))	return
+		playsound(src.loc, 'grillehit.ogg', 80, 1)
+		user.visible_message("[user.name] smashes against the [src.name].", \
+							"You smash against the [src.name].", \
+							"You hear a noise")
+		src.health -= rand(2,3)
+		healthcheck()
+		return
+
+
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if(air_group || (height==0)) return 1
+		if(istype(mover) && mover.checkpass(PASSGRILLE))
+			return 1
 		else
-	return
+			if (istype(mover, /obj/item/projectile))
+				return prob(30)
+			else
+				return !src.density
 
-/obj/grille/blob_act()
-	del(src)
 
-/obj/grille/meteorhit(var/obj/M)
-	if (M.icon_state == "flaming")
-		src.health -= 2
-		healthcheck()
-	return
-
-/obj/grille/attack_hand(var/obj/M)
-	if ((usr.mutations & HULK))
-		usr << text("\blue You kick the grille.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("\red [] kicks the grille.", usr)
-		src.health -= 5
-		healthcheck()
-		return
-	else if(!shock(usr, 70))
-		usr << text("\blue You kick the grille.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("\red [] kicks the grille.", usr)
-		playsound(src.loc, 'grillehit.ogg', 80, 1)
-		src.health -= 3
-		healthcheck()
-
-/obj/grille/attack_paw(var/obj/M)
-	if ((usr.mutations & HULK))
-		usr << text("\blue You kick the grille.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("\red [] kicks the grille.", usr)
-		src.health -= 5
-		healthcheck()
-		return
-	else if(!shock(usr, 70))
-		usr << text("\blue You kick the grille.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("\red [] kicks the grille.", usr)
-		playsound(src.loc, 'grillehit.ogg', 80, 1)
-		src.health -= 3
-
-/obj/grille/attack_alien(var/obj/M)
-	if (istype(usr, /mob/living/carbon/alien/larva))//Safety check for larva, in case they get attack_alien in the future. /N
-		return
-	if (!shock(usr, 70))
-		usr << text("\green You mangle the grille.")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << text("\red [] mangles the grille.", usr)
-		playsound(src.loc, 'grillehit.ogg', 80, 1)
-		src.health -= 3
-		healthcheck()
-		return
-
-/obj/grille/attack_metroid(var/obj/M)
-	if(!istype(usr, /mob/living/carbon/metroid/adult))
-		return
-
-	usr<< text("\green You smash against the grille.")
-	for(var/mob/O in oviewers())
-		if ((O.client && !( O.blinded )))
-			O << text("\red [] smashes against the grille.", usr)
-	playsound(src.loc, 'grillehit.ogg', 80, 1)
-	src.health -= rand(2,3)
-	healthcheck()
-	return
-	return
-
-/obj/grille/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
-	if(istype(mover) && mover.checkpass(PASSGRILLE))
-		return 1
-	else
-		if (istype(mover, /obj/item/projectile))
-			return prob(30)
-		else
-			return !src.density
-
-/obj/grille/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wirecutters))
-		if(!(destroyed))
+	attackby(obj/item/weapon/W, mob/user)
+		if(iswirecutter(W))
 			if(!shock(user, 100))
 				playsound(src.loc, 'Wirecutter.ogg', 100, 1)
 				src.health = 0
-		else
-			playsound(src.loc, 'Wirecutter.ogg', 100, 1)
-			src.health = -100
+				if(!destroyed)
+					src.health = -100
+		else if ((isscrewdriver(W)) && (istype(src.loc, /turf/simulated) || src.anchored))
+			if(!shock(user, 90))
+				playsound(src.loc, 'Screwdriver.ogg', 100, 1)
+				src.anchored = !( src.anchored )
+				user << (src.anchored ? "You have fastened the grille to the floor." : "You have unfastened the grill.")
+				for(var/mob/O in oviewers())
+					O << text("\red [user] [src.anchored ? "fastens" : "unfastens"] the grille.")
+				return
+		else if(istype(W, /obj/item/weapon/shard))
+			src.health -= W.force * 0.1
+		else if(!shock(user, 70))
+			playsound(src.loc, 'grillehit.ogg', 80, 1)
+			switch(W.damtype)
+				if("fire")
+					src.health -= W.force
+				if("brute")
+					src.health -= W.force * 0.1
+		src.healthcheck()
+		..()
+		return
 
-	else if ((istype(W, /obj/item/weapon/screwdriver) && (istype(src.loc, /turf/simulated) || src.anchored)))
-		if(!shock(user, 90))
-			playsound(src.loc, 'Screwdriver.ogg', 100, 1)
-			src.anchored = !( src.anchored )
-			user << (src.anchored ? "You have fastened the grille to the floor." : "You have unfastened the grill.")
-			for(var/mob/O in oviewers())
-				O << text("\red [user] [src.anchored ? "fastens" : "unfastens"] the grille.")
-			return
-	else if(istype(W, /obj/item/weapon/shard))
-		src.health -= W.force * 0.1
+
+	healthcheck()
+		if (src.health <= 0)
+			if (!( src.destroyed ))
+				src.icon_state = "brokengrille"
+				src.density = 0
+				src.destroyed = 1
+				new /obj/item/stack/rods( src.loc )
+
+			else
+				if (src.health <= -10.0)
+					new /obj/item/stack/rods( src.loc )
+					//SN src = null
+					del(src)
+					return
+		return
+
+// shock user with probability prb (if all connections & power are working)
+// returns 1 if shocked, 0 otherwise
+
+	shock(mob/user, prb)
+		if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
+			return 0
+		if(!prob(prb))
+			return 0
+		var/turf/T = get_turf(src)
+		if (electrocute_mob(user, T.get_cable_node(), src))
+			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+			s.set_up(5, 1, src)
+			s.start()
+			return 1
+		else
+			return 0
+
+
+
+
 		/*if(ishuman(user)) //Let's check if the guy's wearing electrically insulated gloves --Agourimarkan
 			var/mob/living/carbon/human/H = user
 			if(H.gloves)
@@ -159,52 +200,3 @@
 						return
 		else //Alright, he's not a human. Can monkeys or aliens even wear gloves?
 			src.health -= W.force *0.1*/ //10% damage only for non-glorious human master race members
-
-	else						// anything else, chance of a shock
-		if(!shock(user, 70))
-			playsound(src.loc, 'grillehit.ogg', 80, 1)
-			switch(W.damtype)
-				if("fire")
-					src.health -= W.force
-				if("brute")
-					src.health -= W.force * 0.1
-
-	src.healthcheck()
-	..()
-	return
-
-/obj/grille/proc/healthcheck()
-	if (src.health <= 0)
-		if (!( src.destroyed ))
-			src.icon_state = "brokengrille"
-			src.density = 0
-			src.destroyed = 1
-			new /obj/item/stack/rods( src.loc )
-
-		else
-			if (src.health <= -10.0)
-				new /obj/item/stack/rods( src.loc )
-				//SN src = null
-				del(src)
-				return
-	return
-
-// shock user with probability prb (if all connections & power are working)
-// returns 1 if shocked, 0 otherwise
-
-/obj/grille/proc/shock(mob/user, prb)
-
-	if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
-		return 0
-
-	if(!prob(prb))
-		return 0
-
-	var/turf/T = get_turf(src)
-	if (electrocute_mob(user, T.get_cable_node(), src))
-		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-		return 1
-	else
-		return 0

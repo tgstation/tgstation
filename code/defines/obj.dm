@@ -129,19 +129,6 @@
 	name = "monkey"
 	var/mob/living/carbon/monkey/target = null
 
-/obj/grille
-	desc = "A piece of metal with evenly spaced gridlike holes in it. Blocks large object but lets small items, gas, or energy beams through. Strangely enough these grilles also lets meteors pass through them, whether they be small or huge station breaking death stones."
-	name = "grille"
-	icon = 'structures.dmi'
-	icon_state = "grille"
-	density = 1
-	var/health = 10.0
-	var/destroyed = 0.0
-	anchored = 1.0
-	flags = FPRINT | CONDUCT
-	pressure_resistance = 5*ONE_ATMOSPHERE
-	layer = 2.9
-
 /obj/securearea
 	desc = "A warning sign which reads 'SECURE AREA'. This obviously applies to a nun-Clown."
 	name = "SECURE AREA"

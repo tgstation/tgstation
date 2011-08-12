@@ -160,14 +160,14 @@
 
 				var/t = input(usr, "Please enter message", name, null) as text
 				t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-				if (!t)
+				if(!t)
 					return
 				var/target = locate(href_list["target"])
 
 				// PDA Message
 				if(istype(target, /obj/item/device/pda))
 					var/obj/item/device/pda/P = target
-					if (isnull(P)||P.toff)
+					if(isnull(P)||P.toff)
 						return
 
 					for (var/obj/machinery/message_server/MS in world)
@@ -176,11 +176,14 @@
 					tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
 
-					if (prob(15)) //Give the AI a chance of intercepting the message
-						for (var/mob/living/silicon/ai/ai in world)
-							ai.show_message("<i>Intercepted message from <b>[P:owner]</b>: [t]</i>")
+					if(prob(15)) //Give the AI a chance of intercepting the message
+						var/who = src
+						if(prob(50))
+							who = P:owner
+						for(var/mob/living/silicon/ai/ai in world)
+							ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
 
-					if (!P.silent)
+					if(!P.silent)
 						playsound(P.loc, 'twobeep.ogg', 50, 1)
 						for (var/mob/O in hearers(3, P.loc))
 							O.show_message(text("\icon[P] *[P.ttone]*"))
@@ -200,8 +203,11 @@
 						MS.send_pda_message("[P]","[src]","[t]")
 
 					if (prob(15)) //Give the AI a chance of intercepting the message
+						var/who = src
+						if(prob(50))
+							who = P
 						for (var/mob/living/silicon/ai/ai in world)
-							ai.show_message("<i>Intercepted message from <b>[P]</b>: [t]</i>")
+							ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
 
 					playsound(P.loc, 'twobeep.ogg', 50, 1)
 

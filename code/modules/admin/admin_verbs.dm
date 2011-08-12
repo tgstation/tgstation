@@ -236,7 +236,7 @@
 			verbs += /obj/admins/proc/vmode
 			verbs += /obj/admins/proc/votekill
 			verbs += /client/proc/voting
-			verbs += /obj/admins/proc/edit_player
+			verbs += /obj/admins/proc/show_player_panel
 			verbs += /client/proc/cmd_admin_prison
 			verbs += /obj/admins/proc/unprison
 			verbs += /client/proc/hide_verbs
@@ -353,7 +353,7 @@
 	verbs -= /obj/admins/proc/vmode
 	verbs -= /obj/admins/proc/votekill
 	verbs -= /client/proc/voting
-	verbs -= /obj/admins/proc/edit_player
+	verbs -= /obj/admins/proc/show_player_panel
 	verbs -= /client/proc/cmd_admin_prison
 	verbs -= /obj/admins/proc/unprison
 	verbs -= /client/proc/hide_verbs
@@ -361,6 +361,7 @@
 	verbs -= /client/proc/air_report
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_gib_self
+	verbs -= /client/proc/restartcontroller
 	return
 
 
