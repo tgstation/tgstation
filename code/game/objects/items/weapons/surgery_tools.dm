@@ -540,6 +540,9 @@ CIRCULAR SAW
 						"\red You sever your brain's connection to the spine with [src]!" \
 					)
 
+				user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+
 				var/obj/item/brain/B = new(M.loc)
 				B.transfer_identity(M)
 

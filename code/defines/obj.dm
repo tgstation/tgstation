@@ -317,21 +317,6 @@
 /obj/item/device
 	icon = 'device.dmi'
 
-/obj/item/device/flash
-	name = "flash"
-	desc = "Used for blinding and being an asshole."
-	icon_state = "flash"
-	var/l_time = 1.0
-	var/shots = 5.0
-	throwforce = 5
-	w_class = 1.0
-	throw_speed = 4
-	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
-	var/status = 1
-	origin_tech = "magnets=2;combat=1"
-
 /obj/item/device/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."

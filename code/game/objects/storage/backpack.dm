@@ -51,6 +51,8 @@
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
 			del(W)
 			new /obj/machinery/singularity (get_turf(src))
+			message_admins("[key_name_admin(user)] detonated a bag of holding")
+			log_game("[key_name(user)] detonated a bag of holding")
 			del(src)
 			return
 		..()

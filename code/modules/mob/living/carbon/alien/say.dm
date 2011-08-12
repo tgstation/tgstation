@@ -1,3 +1,6 @@
+/mob/living/carbon/alien/eyecheck()
+	return 2
+
 /mob/living/carbon/alien/say_understands(var/other)
 	if (istype(other, /mob/living/carbon/alien))
 		return 1

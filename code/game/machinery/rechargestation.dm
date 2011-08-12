@@ -87,8 +87,8 @@
 								O:amount += 1
 						// Security
 						if(istype(O,/obj/item/device/flash))
-							if(O:shots < 5)
-								O:shots += 1
+							if(O:broken)
+								O:broken = 0
 						if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
 							if(O:power_supply.charge < O:power_supply.maxcharge)
 								O:power_supply.give(100)

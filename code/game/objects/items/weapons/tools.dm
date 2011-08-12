@@ -8,11 +8,23 @@ WELDINGTOOOL
 
 
 // WRENCH
-/obj/item/weapon/wrench/New()
-	if (prob(75))
-		src.pixel_x = rand(0, 16)
-	return
+/obj/item/weapon/wrench
+	name = "wrench"
+	desc = "A wrench with common uses. Can be found in your hand."
+	icon = 'items.dmi'
+	icon_state = "wrench"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	force = 5.0
+	throwforce = 7.0
+	w_class = 2.0
+	m_amt = 150
+	origin_tech = "materials=1;engineering=1"
 
+
+	New()
+		if (prob(75))
+			src.pixel_x = rand(0, 16)
+		return
 
 
 
@@ -24,15 +36,12 @@ WELDINGTOOOL
 	return
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M))
-		return ..()
-
+	if(!istype(M))	return ..()
 	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
 		return ..()
 	if((user.mutations & CLOWN) && prob(50))
 		M = user
 	return eyestab(M,user)
-
 
 
 
@@ -54,6 +63,12 @@ WELDINGTOOOL
 		welding = 0
 		status = 1
 		max_fuel = 20
+	proc
+		get_fuel()
+		remove_fuel(var/amount = 1, var/mob/M = null)
+		check_status()
+		toggle(var/message = 0)
+		eyecheck(mob/user as mob)
 
 
 	New()
@@ -131,7 +146,6 @@ WELDINGTOOOL
 			location.hotspot_expose(700, 5)
 
 
-
 	afterattack(obj/O as obj, mob/user as mob)
 		if (istype(O, /obj/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
 			O.reagents.trans_to(src, max_fuel)
@@ -159,114 +173,96 @@ WELDINGTOOOL
 		return
 
 
-	proc
-
-
 ///GET prop for fuel
-		get_fuel()
-			return reagents.get_reagent_amount("fuel")
+	get_fuel()
+		return reagents.get_reagent_amount("fuel")
 
 
 ///SET prop for fuel
 ///Will also turn it off if it is out of fuel
 ///The mob argument is not needed but if included will call eyecheck() on it if the welder is on.
-		remove_fuel(var/amount = 1, var/mob/M = null)
-			if(!welding || !check_status())
-				return 0
-			if(get_fuel() >= amount)
-				reagents.remove_reagent("fuel", amount)
-				check_status()
-				if(M)
-					eyecheck(M)//TODO:eyecheck should really be in mob not here
-				return 1
-			else
-				if(M)
-					M << "\blue You need more welding fuel to complete this task."
-				return 0
+	remove_fuel(var/amount = 1, var/mob/M = null)
+		if(!welding || !check_status())
+			return 0
+		if(get_fuel() >= amount)
+			reagents.remove_reagent("fuel", amount)
+			check_status()
+			if(M)
+				eyecheck(M)//TODO:eyecheck should really be in mob not here
+			return 1
+		else
+			if(M)
+				M << "\blue You need more welding fuel to complete this task."
+			return 0
 
 
 ///Quick check to see if we even have any fuel and should shut off
 ///This could use a better name
-		check_status()
-			if((get_fuel() <= 0) && welding)
-				toggle(1)
-				return 0
-			return 1
+	check_status()
+		if((get_fuel() <= 0) && welding)
+			toggle(1)
+			return 0
+		return 1
 
 
 //toggles the welder off and on
-		toggle(var/message = 0)
-			if(!status)	return
-			src.welding = !( src.welding )
-			if (src.welding)
-				if (remove_fuel(1))
-					usr << "\blue You switch the [src] on."
-					src.force = 15
-					src.damtype = "fire"
-					src.icon_state = "welder1"
-					processing_items.Add(src)
-				else
-					usr << "\blue Need more fuel!"
-					src.welding = 0
-					return
+	toggle(var/message = 0)
+		if(!status)	return
+		src.welding = !( src.welding )
+		if (src.welding)
+			if (remove_fuel(1))
+				usr << "\blue You switch the [src] on."
+				src.force = 15
+				src.damtype = "fire"
+				src.icon_state = "welder1"
+				processing_items.Add(src)
 			else
-				if(!message)
-					usr << "\blue You switch the [src] off."
-				else
-					usr << "\blue The [src] shuts off!"
-				src.force = 3
-				src.damtype = "brute"
-				src.icon_state = "welder"
+				usr << "\blue Need more fuel!"
 				src.welding = 0
+				return
+		else
+			if(!message)
+				usr << "\blue You switch the [src] off."
+			else
+				usr << "\blue The [src] shuts off!"
+			src.force = 3
+			src.damtype = "brute"
+			src.icon_state = "welder"
+			src.welding = 0
 
 
-		eyecheck(mob/user as mob)//TODO:Move this over to /mob/ where it should be
-			//check eye protection
-			if(!ishuman(user) && !ismonkey(user))
-				return 1
-			var/safety = 0
-			if (istype(user, /mob/living/carbon/human))
-				if (istype(user:head, /obj/item/clothing/head/helmet/welding))
-					if (!user:head:up)
-						safety = 2
-				else if (istype(user:head, /obj/item/clothing/head/helmet/space))
-					safety = 2
-				else if (istype(user:glasses, /obj/item/clothing/glasses/sunglasses))
-					safety = 1
-
-				else if (istype(user:glasses, /obj/item/clothing/glasses/thermal))
-					safety = -1
-				else
-					safety = 0
-			switch(safety)
-				if(1)
-					usr << "\red Your eyes sting a little."
-					user.eye_stat += rand(1, 2)
-					if(user.eye_stat > 12)
-						user.eye_blurry += rand(3,6)
-				if(0)
-					usr << "\red Your eyes burn."
-					user.eye_stat += rand(2, 4)
-					if(user.eye_stat > 10)
-						user.eye_blurry += rand(4,10)
-				if(-1)
-					usr << "\red Your thermals intensify the welder's glow. Your eyes itch and burn severely."
-					user.eye_blurry += rand(12,20)
-					user.eye_stat += rand(12, 16)
-			if(user.eye_stat > 10 && safety < 2)
-				user << "\red Your eyes are really starting to hurt. This can't be good for you!"
-			if (prob(user.eye_stat - 25 + 1))
-				user << "\red You go blind!"
-				user.sdisabilities |= 1
-			else if (prob(user.eye_stat - 15 + 1))
-				user << "\red You go blind!"
-				user.eye_blind = 5
-				user.eye_blurry = 5
-				user.disabilities |= 1
-				spawn(100)
-					user.disabilities &= ~1
-			return
-
+	eyecheck(mob/user as mob)
+		//check eye protection
+		if(!iscarbon(user))	return 1
+		var/safety = user:eyecheck()
+		switch(safety)
+			if(1)
+				usr << "\red Your eyes sting a little."
+				user.eye_stat += rand(1, 2)
+				if(user.eye_stat > 12)
+					user.eye_blurry += rand(3,6)
+			if(0)
+				usr << "\red Your eyes burn."
+				user.eye_stat += rand(2, 4)
+				if(user.eye_stat > 10)
+					user.eye_blurry += rand(4,10)
+			if(-1)
+				usr << "\red Your thermals intensify the welder's glow. Your eyes itch and burn severely."
+				user.eye_blurry += rand(12,20)
+				user.eye_stat += rand(12, 16)
+		if(user.eye_stat > 10 && safety < 2)
+			user << "\red Your eyes are really starting to hurt. This can't be good for you!"
+		if (prob(user.eye_stat - 25 + 1))
+			user << "\red You go blind!"
+			user.sdisabilities |= 1
+		else if (prob(user.eye_stat - 15 + 1))
+			user << "\red You go blind!"
+			user.eye_blind = 5
+			user.eye_blurry = 5
+			user.disabilities |= 1
+			spawn(100)
+				user.disabilities &= ~1
+		return
 
 
 /obj/item/weapon/weldingtool/largetank
@@ -290,3 +286,22 @@ WELDINGTOOOL
 	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
+
+
+
+/obj/item/weapon/wirecutters
+	name = "wirecutters"
+	desc = "This cuts wires."
+	icon = 'items.dmi'
+	icon_state = "cutters"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	force = 6.0
+	throw_speed = 2
+	throw_range = 9
+	w_class = 2.0
+	m_amt = 80
+	origin_tech = "materials=1;engineering=1"
+
+	New()
+		if(prob(50))
+			icon_state = "cutters-y"

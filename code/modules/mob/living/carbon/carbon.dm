@@ -173,3 +173,6 @@
 			"\blue [M] shakes [src] trying to wake [t_him] up!", \
 			"\blue You shake [src] trying to wake [t_him] up!", \
 			)
+
+/mob/living/carbon/proc/eyecheck()
+	return 0

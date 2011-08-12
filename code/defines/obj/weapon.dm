@@ -1512,41 +1512,12 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	var/old_lay = null
 	m_amt = 40
 
-/obj/item/weapon/wirecutters
-	name = "wirecutters"
-	desc = "This cuts wires."
-	icon = 'items.dmi'
-	icon_state = "cutters"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 6.0
-	throw_speed = 2
-	throw_range = 9
-	w_class = 2.0
-	m_amt = 80
-	origin_tech = "materials=1;engineering=1"
-
-	New()
-		if(prob(50))
-			icon_state = "cutters-y"
-
 /obj/item/weapon/wrapping_paper
 	name = "wrapping paper"
 	desc = "You can use this to wrap items in."
 	icon = 'items.dmi'
 	icon_state = "wrap_paper"
 	var/amount = 20.0
-
-/obj/item/weapon/wrench
-	name = "wrench"
-	desc = "A wrench with common uses. Can be found in your hand."
-	icon = 'items.dmi'
-	icon_state = "wrench"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 5.0
-	throwforce = 7.0
-	w_class = 2.0
-	m_amt = 150
-	origin_tech = "materials=1;engineering=1"
 
 /obj/item/weapon/cell
 	name = "power cell"

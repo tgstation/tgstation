@@ -483,6 +483,9 @@
 		user << "\red You cannot locate any eyes on this creature!"
 		return
 
+	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+
 	src.add_fingerprint(user)
 	//if((user.mutations & CLOWN) && prob(50))
 	//	M = user

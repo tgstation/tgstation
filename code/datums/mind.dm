@@ -74,7 +74,7 @@ datum/mind
 				var/list/L = current.get_contents()
 				var/obj/item/device/flash/flash = locate() in L
 				if (flash)
-					if (flash.status)
+					if(!flash.broken)
 						text += "|<a href='?src=\ref[src];revolution=takeflash'>take</a>."
 					else
 						text += "|<a href='?src=\ref[src];revolution=takeflash'>take</a>|<a href='?src=\ref[src];revolution=repairflash'>repair</a>."
@@ -485,7 +485,7 @@ datum/mind
 					if (!flash)
 						usr << "\red Repairing flash failed!"
 					else
-						flash.status = 1
+						flash.broken = 0
 
 				if("reequip")
 					var/list/L = current.get_contents()
