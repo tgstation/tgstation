@@ -6896,7 +6896,7 @@
 "cCF" = (/obj/bookcase{name = "Forbidden Knowledge"},/turf/unsimulated/floor{icon_state = "chapel"},/area/wizard_station)
 "cCG" = (/obj/machinery/vending/cola,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
 "cCH" = (/obj/machinery/vending/coffee,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
-"cCI" = (/obj/machinery/atmospherics/pipe/simple,/obj/machinery/vending/snack,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
+"cCI" = (/obj/machinery/vending/snack,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
 "cCJ" = (/obj/machinery/vending/cigarette,/turf/unsimulated/floor{icon_state = "grass1"; name = "grass"},/area/planet/clown)
 "cCK" = (/obj/stool,/turf/unsimulated/floor{dir = 8; icon_state = "carpetside"},/area/wizard_station)
 "cCL" = (/obj/table/woodentable,/obj/item/weapon/spacecash/c500,/obj/item/weapon/spacecash/c500,/turf/unsimulated/floor{icon_state = "carpet"; dir = 2},/area/wizard_station)
