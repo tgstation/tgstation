@@ -634,6 +634,8 @@ datum
 				..()
 				return
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				if(!istype(M, /mob/living))
+					return //wooo more runtime fixin
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						if(M:wear_mask)

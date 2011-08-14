@@ -215,9 +215,10 @@
 		if(ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
-				if (connected_ai.mind == malfai)
-					if (malf.apcs >= 3)
-						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
+				if(connected_ai)
+					if(connected_ai.mind == malfai)
+						if(malf.apcs >= 3)
+							stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
 				else if(ticker.mode:malf_mode_declared)
 					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/3), 0)]")
 
@@ -226,8 +227,10 @@
 		else
 			stat(null, text("No Cell Inserted!"))
 
+
 /mob/living/silicon/robot/restrained()
 	return 0
+
 
 /mob/living/silicon/robot/ex_act(severity)
 	flick("flash", flash)
@@ -260,6 +263,7 @@
 	fireloss = f_loss
 	updatehealth()
 
+
 /mob/living/silicon/robot/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [src] has been hit by [O]"), 1)
@@ -271,12 +275,12 @@
 		updatehealth()
 	return
 
+
 /mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj.nodamage) bruteloss += Proj.damage
 	updatehealth()
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return
-
 
 
 /mob/living/silicon/robot/Bump(atom/movable/AM as mob|obj, yes)
@@ -311,15 +315,8 @@
 			now_pushing = null
 		return
 	return
-/*
-/mob/living/silicon/robot/proc/firecheck(turf/T as turf)
 
-	if (T.firelevel < 900000.0)
-		return 0
-	var/total = 0
-	total += 0.25
-	return total
-*/
+
 /mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 	if (stat == 2)
 		return 1
@@ -344,6 +341,7 @@
 	if (viewalerts) robot_alerts()
 	return 1
 
+
 /mob/living/silicon/robot/cancelAlarm(var/class, area/A as area, obj/origin)
 	var/list/L = alarms[class]
 	var/cleared = 0
@@ -361,6 +359,7 @@
 		if (viewalerts) robot_alerts()
 	return !cleared
 
+
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		if (W:remove_fuel(0))
@@ -373,7 +372,6 @@
 		else
 			user << "Need more welding fuel!"
 			return
-
 
 	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
 		var/obj/item/weapon/cable_coil/coil = W

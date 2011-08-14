@@ -1016,17 +1016,8 @@ datum
 			id = "lasercannon"
 			req_tech = list("combat" = 4, "materials" = 3, "powerstorage" = 3)
 			build_type = PROTOLATHE
-			materials = list("$metal" = 10000)
+			materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 2000)
 			build_path = "/obj/item/weapon/gun/energy/lasercannon"
-
-		heavylasercannon
-			name = "Heavy Laser Cannon"
-			desc = "A heavy duty laser cannon."
-			id = "lasercannon"
-			req_tech = list("combat" = 5, "materials" = 5, "powerstorage" = 5)
-			build_type = PROTOLATHE
-			materials = list("$metal" = 10000)
-			build_path = "/obj/item/weapon/gun/energy/heavy lasercannon"
 
 		shockgun
 			name = "Shock Gun"

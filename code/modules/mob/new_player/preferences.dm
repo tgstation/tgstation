@@ -394,11 +394,12 @@ datum/preferences
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Show chat bubbles:</b> <a href=\"byond://?src=\ref[user];preferences=1;bubbles=input\"><b>[bubbles == 1 ? "Yes" : "No"]</b></a><br>"
 
-		if(user.client.holder)
-			if(user.client.holder.rank)
-				if(user.client.holder.rank == "Game Master")
-					dat += "<hr><b>OOC</b><br>"
-					dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font>"
+		if(user.client)
+			if(user.client.holder)
+				if(user.client.holder.rank)
+					if(user.client.holder.rank == "Game Master")
+						dat += "<hr><b>OOC</b><br>"
+						dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font>"
 
 		dat += "<hr><b>Occupation Choices</b><br>"
 		if (destructive.Find(occupation[1]))

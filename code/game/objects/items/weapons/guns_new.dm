@@ -1111,42 +1111,6 @@
 				power_supply.give(power_supply.maxcharge)
 				update_icon()
 
-		heavylasercannon
-			name = "heavy laser cannon"
-			desc = "A deathly heavy-duty laser cannon."
-			icon_state = "laser"
-			force = 20
-			fire_sound = 'pulse.ogg'
-			origin_tech = "combat=4;materials=4;powerstorage=4"
-			load_into_chamber()
-				if(in_chamber)
-					return 1
-				if(power_supply.charge < charge_cost)
-					return 0
-				switch(mode)
-					if(0)
-						in_chamber = new /obj/item/projectile/heavylaser(src)
-					if(1)
-						in_chamber = new /obj/item/projectile/beam(src)
-				power_supply.use(charge_cost)
-				return 1
-
-			attack_self(mob/living/user as mob)
-				mode = !mode
-				switch(mode)
-					if(0)
-						user << "\red [src.name] is now set to heavy laser cannon."
-						fire_sound = 'pulse.ogg'
-						charge_cost = 150
-					if(1)
-						user << "\red [src.name] is now set to laser."
-						fire_sound = 'Laser.ogg'
-						charge_cost = 50
-			New()
-				power_supply = new /obj/item/weapon/cell(src)
-				power_supply.give(power_supply.maxcharge)
-				update_icon()
-
 		shockgun
 			name = "shock gun"
 			desc = "A high tech energy weapon that stuns and burns a target."

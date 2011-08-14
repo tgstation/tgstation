@@ -522,13 +522,6 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			if(!emagged) use_power(600)
 			else use_power(1200)
 
-		else if(istype(E, /obj/item/weapon/gun/energy/heavylasercannon))
-			A = new /obj/item/projectile/deathlaser( loc )
-			A.original = target.loc
-			icon_state = "orange_target_prism"
-			if(!emagged) use_power(800)
-			else use_power(1600)
-
 		else if(istype(E, /obj/item/weapon/gun/energy/shockgun))
 			A = new /obj/item/projectile/fireball( loc )
 			A.original = target.loc
