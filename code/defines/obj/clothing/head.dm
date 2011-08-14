@@ -79,7 +79,7 @@
 	desc = "Someone who wears this will look very smart."
 	icon_state = "detective"
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
-	armor = list(melee = 50, bullet = 40, laser = 30, taser = 10, bomb = 20, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 5, laser = 30, taser = 10, bomb = 20, bio = 0, rad = 0)
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -150,7 +150,7 @@
 	icon_state = "helmet"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
 	item_state = "helmet"
-	armor = list(melee = 75, bullet = 50, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 75, bullet = 10, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 	protective_temperature = 500
 	heat_transfer_coefficient = 0.10

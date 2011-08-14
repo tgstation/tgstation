@@ -19,14 +19,14 @@
 	heat_transfer_coefficient = 0.30
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
-	armor = list(melee = 20, bullet = 10, laser = 10, taser = 5, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 20, bullet = 5, laser = 10, taser = 5, bomb = 100, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/bomb_suit/security
 	desc = "A suit designed for safety when handling explosives. Includes light armoring against non-explosive hazards as well."
 	icon_state = "bombsuitsec"
 	item_state = "bombsuitsec"
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
-	armor = list(melee = 50, bullet = 40, laser = 20, taser = 5, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 5, laser = 20, taser = 5, bomb = 100, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
@@ -50,7 +50,7 @@
 /obj/item/clothing/suit/bio_suit/security
 	icon_state = "bio_security"
 	desc = "A suit that protects against biological contamination. Includes basic armoring against non-bio hazards as well."
-	armor = list(melee = 30, bullet = 20, laser = 10, taser = 5, bomb = 20, bio = 100, rad = 20)
+	armor = list(melee = 30, bullet = 0, laser = 10, taser = 5, bomb = 20, bio = 100, rad = 20)
 
 /obj/item/clothing/suit/bio_suit/janitor
 	icon_state = "bio_janitor"
@@ -72,7 +72,7 @@
 	item_state = "det_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/gun/projectile/detective,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
-	armor = list(melee = 50, bullet = 40, laser = 30, taser = 10, bomb = 20, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 5, laser = 30, taser = 10, bomb = 20, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/det_suit/armor
 	name = "armor"
@@ -81,7 +81,7 @@
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list(/obj/item/weapon/gun/projectile/detective,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
-	armor = list(melee = 75, bullet = 50, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 75, bullet = 25, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
@@ -252,7 +252,7 @@
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-	armor = list(melee = 75, bullet = 50, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 50, bullet = 15, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"
@@ -261,7 +261,7 @@
 	item_state = "hos"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-	armor = list(melee = 80, bullet = 60, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 65, bullet = 30, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/armor/a_i_a_ptank
 	desc = "A wearable bomb with a health analyzer attached"
@@ -276,7 +276,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	canremove = 0
-	armor = list(melee = 75, bullet = 50, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 50, bullet = 15, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/armor/captain
 	name = "Captain's armor"
@@ -293,7 +293,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1.5
-	armor = list(melee = 60, bullet = 50, laser = 50, taser = 25, bomb = 50, bio = 20, rad = 20)
+	armor = list(melee = 65, bullet = 50, laser = 50, taser = 25, bomb = 50, bio = 20, rad = 20)
 
 /obj/item/clothing/suit/armor/centcomm
 	name = "Cent. Com. armor"

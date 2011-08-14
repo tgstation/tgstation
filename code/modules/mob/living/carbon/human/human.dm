@@ -204,12 +204,12 @@
 				return
 
 	if (istype(l_hand, /obj/item/weapon/shield/riot))
-		if (prob(50 + round(P.damage / 3))) // the more damage a projectile does, the more likely to block it
+		if (prob(50 - round(P.damage / 3))) // the less damage a projectile does, the more likely to block it //changed from "the more damage" to "the less", because that makes no sense
 			show_message("\red Your shield blocks the blow!", 4)
 			return
 
 	if (istype(r_hand, /obj/item/weapon/shield/riot))
-		if (prob(50 + round(P.damage / 3)))
+		if (prob(50 - round(P.damage / 3)))
 			show_message("\red Your shield blocks the blow!", 4)
 			return
 
