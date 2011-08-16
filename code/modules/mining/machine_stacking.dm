@@ -2,8 +2,8 @@
 
 /obj/machinery/mineral/stacking_unit_console
 	name = "Stacking machine console"
-	icon = 'terminals.dmi'
-	icon_state = "production_console"
+	icon = 'mining_machines.dmi'
+	icon_state = "console"
 	density = 1
 	anchored = 1
 	var/obj/machinery/mineral/stacking_machine/machine = null
@@ -11,7 +11,7 @@
 /obj/machinery/mineral/stacking_unit_console/New()
 	..()
 	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, SOUTHWEST))
+		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, SOUTHEAST))
 		if (machine)
 			machine.CONSOLE = src
 		else
@@ -132,8 +132,8 @@
 
 /obj/machinery/mineral/stacking_machine
 	name = "Stacking machine"
-	icon = 'stationobjs.dmi'
-	icon_state = "controller"
+	icon = 'mining_machines.dmi'
+	icon_state = "stacker"
 	density = 1
 	anchored = 1.0
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE

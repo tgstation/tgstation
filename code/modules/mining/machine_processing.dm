@@ -2,8 +2,8 @@
 
 /obj/machinery/mineral/processing_unit_console
 	name = "Produciton machine console"
-	icon = 'terminals.dmi'
-	icon_state = "production_console"
+	icon = 'mining_machines.dmi'
+	icon_state = "console"
 	density = 1
 	anchored = 1
 	var/obj/machinery/mineral/processing_unit/machine = null
@@ -11,7 +11,7 @@
 /obj/machinery/mineral/processing_unit_console/New()
 	..()
 	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, SOUTH))
+		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, EAST))
 		if (machine)
 			machine.CONSOLE = src
 		else
@@ -189,8 +189,8 @@
 
 /obj/machinery/mineral/processing_unit
 	name = "Furnace"
-	icon = 'stationobjs.dmi'
-	icon_state = "controller"
+	icon = 'mining_machines.dmi'
+	icon_state = "furnace"
 	density = 1
 	anchored = 1.0
 	var/obj/machinery/mineral/input = null

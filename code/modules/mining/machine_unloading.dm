@@ -3,8 +3,8 @@
 
 /obj/machinery/mineral/unloading_machine
 	name = "Unloading machine"
-	icon = 'stationobjs.dmi'
-	icon_state = "controller"
+	icon = 'mining_machines.dmi'
+	icon_state = "unloader"
 	density = 1
 	anchored = 1.0
 	var/obj/machinery/mineral/input = null

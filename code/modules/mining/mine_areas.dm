@@ -21,12 +21,18 @@
 
 /area/mine/production
 	name = "Mining station Production Area"
+	icon_state = "mining_production"
+
+/area/mine/abandoned
+	name = "Abandoned Mining Station"
 
 /area/mine/living_quarters
-	name = "Abandoned Mining Station"
+	name = "Mining Station Living Quarters"
+	icon_state = "mining_living"
 
 /area/mine/eva
 	name = "Mining station EVA"
+	icon_state = "mining_eva"
 
 /area/mine/maintenance
 	name = "Mining station Maintenance"
@@ -39,3 +45,9 @@
 
 /area/mine/sleeper
 	name = "Mining station Emergency Sleeper"
+
+/area/mine/north_outpost
+	name = "North Mining Outpost"
+
+/area/mine/west_outpost
+	name = "West Mining Outpost"
