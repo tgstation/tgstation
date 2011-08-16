@@ -184,6 +184,7 @@
 
 
 		if (holder.level >= 3)//Trial Admin********************************************************************
+			verbs += /obj/admins/proc/toggleaban			//abandon mob
 			verbs += /client/proc/cmd_admin_remove_plasma
 			verbs += /client/proc/admin_call_shuttle
 			verbs += /client/proc/admin_cancel_shuttle
@@ -290,6 +291,7 @@
 	verbs -= /client/proc/send_space_ninja
 	verbs -= /obj/admins/proc/adrev					//toggle admin revives
 	verbs -= /obj/admins/proc/adspawn				//toggle admin item spawning
+	verbs -= /obj/admins/proc/toggleaban			//abandon mob
 	verbs -= /client/proc/debug_variables
 	verbs -= /client/proc/cmd_modify_object_variables
 	verbs -= /client/proc/cmd_modify_ticker_variables
