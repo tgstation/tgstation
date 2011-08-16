@@ -1,7 +1,7 @@
 /obj/machinery/recharge_station
 	name = "Cyborg Recharging Station"
-	icon = 'cloning.dmi'
-	icon_state = "pod_0"
+	icon = 'objects.dmi'
+	icon_state = "borgcharger0"
 	density = 1
 	anchored = 1.0
 	use_power = 1
@@ -39,11 +39,11 @@
 		build_icon()
 			if(NOPOWER|BROKEN)
 				if(src.occupant)
-					icon_state = "pod_1"
+					icon_state = "borgcharger1"
 				else
-					icon_state = "pod_0"
+					icon_state = "borgcharger0"
 			else
-				icon_state = "pod_0"
+				icon_state = "borgcharger0"
 
 		process_occupant()
 			if(src.occupant)
