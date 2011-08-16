@@ -63,7 +63,7 @@
 	else if (copytext(message, 1, 2) == ";")
 		if (ishuman(src))
 			message_mode = "headset"
-		else if(istype(src, /mob/living/silicon/pai))
+		else if(istype(src, /mob/living/silicon/pai) || istype(src, /mob/living/silicon/robot))
 			message_mode = "pAI"
 		message = copytext(message, 2)
 
