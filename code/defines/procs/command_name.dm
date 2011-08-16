@@ -24,3 +24,8 @@ var/command_name = null
 	command_name = name
 	return name
 
+/proc/change_command_name(var/name)
+
+	command_name = name
+
+	return name
