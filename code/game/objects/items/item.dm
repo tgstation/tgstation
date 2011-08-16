@@ -123,7 +123,11 @@
 		else
 			user.u_equip(src)
 	else
+		if(istype(src.loc, /mob/living))
+			return
 		src.pickup(user)
+		user.lastDblClick = world.time + 2
+		user.next_move = world.time + 2
 
 	if (user.hand)
 		user.l_hand = src
@@ -155,6 +159,13 @@
 			return
 		else
 			user.u_equip(src)
+	else
+		if(istype(src.loc, /mob/living))
+			return
+		src.pickup(user)
+		user.lastDblClick = world.time + 2
+		user.next_move = world.time + 2
+
 	if (user.hand)
 		user.l_hand = src
 	else

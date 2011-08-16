@@ -18,7 +18,11 @@
 				affected_mob << "\blue You feel better."
 				cure()
 				return
-			if(prob(1) && prob(10))
+			if(affected_mob.lying && prob(10))
+				affected_mob << "\blue You feel better."
+				cure()
+				return
+			if(prob(1) && prob(5))
 				affected_mob << "\blue You feel better."
 				cure()
 				return
@@ -35,9 +39,14 @@
 				affected_mob << "\blue You feel better."
 				cure()
 				return
-			if(prob(1) && prob(10))
+			if(affected_mob.lying && prob(5))
 				affected_mob << "\blue You feel better."
 				cure()
+				return
+			if(prob(1) && prob(1))
+				affected_mob << "\blue You feel better."
+				cure()
+				return
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))
@@ -50,3 +59,4 @@
 				if(!affected_mob.resistances.Find(/datum/disease/flu))
 					var/datum/disease/Flu = new /datum/disease/flu(0)
 					affected_mob.contract_disease(Flu,1)
+					cure()

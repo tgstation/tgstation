@@ -372,7 +372,7 @@
 								if(C.stat != 2)
 									var/t_him = "it"
 									if (src.gender == MALE)
-										t_him = "him"
+										t_him = "his"
 									else if (src.gender == FEMALE)
 										t_him = "her"
 									var/u_him = "it"
@@ -463,8 +463,9 @@
 	else
 		if (istype(src, /obj/screen))
 			usr.prev_move = usr.next_move
+			usr:lastDblClick = world.time + 2
 			if (usr.next_move < world.time)
-				usr.next_move = world.time + 10
+				usr.next_move = world.time + 2
 			else
 				return
 			if (!( usr.restrained() ))

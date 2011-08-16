@@ -206,7 +206,7 @@
 	name = "Seeds Crate"
 	contains = list("/obj/item/seeds/chiliseed",
 	"/obj/item/seeds/berryseed",
-	"/obj/item/seeds/corn",
+	"/obj/item/seeds/cornseed",
 	"/obj/item/seeds/eggplantseed",
 	"/obj/item/seeds/tomatoseed",
 	"/obj/item/seeds/soyaseed",

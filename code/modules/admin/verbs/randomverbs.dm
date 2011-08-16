@@ -186,7 +186,7 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 			for(var/mob/living/carbon/human/pos in world)
 				pos_crew += pos.real_name
 			crew = pick(pos_crew)
-			switch(rand(1,12))
+			switch(rand(1,14))
 				if(1)
 					M << "\red THERE ARE [amount] [who2] ON THE STATION...LAWS UPDATED"
 					M.add_ion_law("THERE ARE [amount] [who2] ON THE STATION")
@@ -226,6 +226,9 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 				if(13)
 					M << "\red [crew] is [allergysev] to [allergy]. LAWS UPDATED"
 					M.add_ion_law("[crew] is [allergysev] to [allergy]. LAWS UPDATED")
+				if(14)
+					M << "\ref THE STATION IS [who2pref] [who2]"
+					M.add_ion_law("THE STATION IS [who2pref] [who2]")
 
 
 

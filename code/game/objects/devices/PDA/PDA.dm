@@ -458,34 +458,57 @@
 
 					var/obj/item/device/pda/P = locate(href_list["target"])
 
-					if (isnull(P)||P.toff || toff)
-						return
+					if(istype(P, /obj/item/device/pda))
+						if (isnull(P)||P.toff || toff)
+							return
 
-					if (last_text && world.time < last_text + 5)
-						return
+						if (last_text && world.time < last_text + 5)
+							return
 
-					last_text = world.time
+						last_text = world.time
 
-					for (var/obj/machinery/message_server/MS in world)
-						MS.send_pda_message("[P.owner]","[owner]","[t]")
+						for (var/obj/machinery/message_server/MS in world)
+							MS.send_pda_message("[P.owner]","[owner]","[t]")
 
-					tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
-					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a>:</b></i><br>[t]<br>"
+						tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
+						P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a>:</b></i><br>[t]<br>"
 
-					if (prob(15)) //Give the AI a chance of intercepting the message
-						var/who = src.owner
-						if(prob(50))
-							who = P:owner
-						for(var/mob/living/silicon/ai/ai in world)
-							ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
+						if (prob(15)) //Give the AI a chance of intercepting the message
+							var/who = src.owner
+							if(prob(50))
+								who = P:owner
+							for(var/mob/living/silicon/ai/ai in world)
+								ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
 
-					if (!P.silent)
+						if (!P.silent)
+							playsound(P.loc, 'twobeep.ogg', 50, 1)
+							for (var/mob/O in hearers(3, P.loc))
+								O.show_message(text("\icon[P] *[P.ttone]*"))
+
+						P.overlays = null
+						P.overlays += image('pda.dmi', "pda-r")
+
+					// pAI Message
+					else
+
+						tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
+						P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
+
+
+						for (var/obj/machinery/message_server/MS in world)
+							MS.send_pda_message("[P]","[src]","[t]")
+
+						if (prob(15)) //Give the AI a chance of intercepting the message
+							var/who = src
+							if(prob(50))
+								who = P
+							for (var/mob/living/silicon/ai/ai in world)
+								ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
+
 						playsound(P.loc, 'twobeep.ogg', 50, 1)
-						for (var/mob/O in hearers(3, P.loc))
-							O.show_message(text("\icon[P] *[P.ttone]*"))
 
-					P.overlays = null
-					P.overlays += image('pda.dmi', "pda-r")
+
+
 				if("Send Honk")//Honk virus
 					if(istype(cartridge, /obj/item/weapon/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
 						var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
