@@ -98,6 +98,8 @@
 /obj/item/weapon/storage/survival_kit/engineer
 	name = "Centcom Engineer Kit"
 
+/obj/item/weapon/storage/box/syndicate
+
 /obj/item/weapon/storage/pillbottlebox
 	name = "pill bottles"
 	desc = "A box of pill bottles."

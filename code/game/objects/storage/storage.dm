@@ -215,6 +215,50 @@
 	new /obj/item/weapon/tank/emergency_oxygen/engi( src )
 	return
 
+/obj/item/weapon/storage/box/syndicate/New()
+	..()
+	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1)))
+		if ("bloodyspai")
+			new /obj/item/clothing/under/chameleon(src)
+			new /obj/item/clothing/mask/gas/voice(src)
+			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/clothing/shoes/syndigaloshes(src)
+			return
+
+		if ("stealth")
+			new /obj/item/weapon/gun/energy/crossbow(src)
+			new /obj/item/weapon/pen/sleepypen(src)
+			new /obj/item/device/chameleon(src)
+			return
+
+		if ("screwed")
+			new /obj/spawner/newbomb/timer/syndicate(src)
+			new /obj/spawner/newbomb/timer/syndicate(src)
+			new /obj/item/device/powersink(src)
+			new /obj/item/clothing/suit/space/syndicate(src)
+			new /obj/item/clothing/head/helmet/space/syndicate(src)
+			return
+
+		if ("guns")
+			new /obj/item/weapon/gun/projectile(src)
+			new /obj/item/ammo_magazine(src)
+			new /obj/item/weapon/card/emag(src)
+			new /obj/item/weapon/plastique(src)
+			return
+
+		if ("murder")
+			new /obj/item/weapon/melee/energy/sword(src)
+			new /obj/item/weapon/cloaking_device(src)
+			new /obj/item/weapon/card/emag(src)
+			return
+
+		if("freedom")
+			var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
+			O.imp = new /obj/item/weapon/implant/freedom(O)
+			var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
+			U.imp = new /obj/item/weapon/implant/uplink(U)
+			return
+
 /obj/item/weapon/storage/dice/New()
 	new /obj/item/weapon/dice( src )
 	new /obj/item/weapon/dice/d20( src )

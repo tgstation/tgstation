@@ -63,7 +63,8 @@
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=toolbox'>Syndicate Toolbox</A> (Includes various tools) (1)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=balloon'>Syndicate Balloon</A> (Useless) (10)<BR>"
-
+	menu_message += "<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=bundle'>Syndicate Bundle</A> (Contains an assorted selection of syndicate items)(10)<BR>"
 
 	menu_message += "<HR>"
 	return
@@ -196,6 +197,10 @@
 				if(uses >= 10)
 					uses -= 10
 					new /obj/item/toy/syndicateballoon(get_turf(hostpda))
+			if("bundle")
+				if(uses >= 10)
+					uses -= 10
+					new /obj/item/weapon/storage/box/syndicate(get_turf(hostpda))
 
 		generate_menu()
 		print_to_host(menu_message)
