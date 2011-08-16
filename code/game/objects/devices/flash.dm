@@ -83,7 +83,8 @@
 
 
 	attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
-		if(!clown_check(user) && !emp)	return
+		if(!emp)
+			if (!clown_check(user)) return
 		if(broken)
 			user.show_message("\red The [src.name] is broken", 2)
 			return
