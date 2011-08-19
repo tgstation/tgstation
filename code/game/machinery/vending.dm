@@ -147,6 +147,8 @@
 		pdat += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
 		pdat += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
 
+		pdat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+
 		user << browse(pdat, "window=vendwires")
 		onclose(user, "vendwires")
 
@@ -253,6 +255,9 @@
 			else
 				src.pulse(twire)
 
+		else if ((href_list["togglevoice"]) && (src.panel_open))
+			src.shut_up = !src.shut_up
+
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 	else
@@ -271,7 +276,7 @@
 		src.seconds_electrified--
 
 	//Pitch to the people!  Really sell it!
-	if(prob(5) && ((src.last_slogan + src.slogan_delay) <= world.time) && (src.slogan_list.len > 0))
+	if(prob(5) && ((src.last_slogan + src.slogan_delay) <= world.time) && (src.slogan_list.len > 0) && (!src.shut_up))
 		var/slogan = pick(src.slogan_list)
 		src.speak(slogan)
 		src.last_slogan = world.time

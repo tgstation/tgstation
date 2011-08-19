@@ -47,6 +47,8 @@
 		icon = 'candle.dmi'
 		icon_state = "candle4"
 
+/obj/item/trash/attack(mob/M as mob, mob/living/user as mob)
+	return
 
 /obj/item/trash/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -73,7 +75,7 @@
 	icon_state = "trashbag0"
 	item_state = "trashbag"
 	name = "Trash bag"
-	var/mode = 0;  //0 = pick one at a time, 1 = pick all on tile
+	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 25; //the number of trash it can carry.
 	flags = FPRINT | TABLEPASS | ONBELT
 	w_class = 1

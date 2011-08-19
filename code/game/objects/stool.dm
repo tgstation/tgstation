@@ -93,7 +93,7 @@
 /obj/stool/proc/buckle_mob(mob/M as mob, mob/user as mob)
 	if (!ticker)
 		user << "You can't buckle anyone in before the game starts."
-	if ((!( istype(M, /mob) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
+	if ((!( istype(M, /mob) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat || M.buckled))
 		return
 	if (M == usr)
 		M.visible_message(\

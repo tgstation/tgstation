@@ -4,7 +4,7 @@
 	icon = 'mining.dmi'
 	icon_state = "satchel"
 	name = "Mining Satchel"
-	var/mode = 0;  //0 = pick one at a time, 1 = pick all on tile
+	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 50; //the number of ore pieces it can carry.
 	flags = FPRINT | TABLEPASS | ONBELT
 	w_class = 1

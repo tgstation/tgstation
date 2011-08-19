@@ -103,8 +103,8 @@
 	desc = "Used to set the destination of properly wrapped packages."
 	icon_state = "forensic0"
 	var/currTag = 0
-	var/list/locationList = list("Waste Disposal", "Head of Personnel's Quarters", "Research Director's Office",
-	"Dormitory Toilets", "Locker Room", "Locker Toilets", "Fitness Room", "Kitchen", "Bar", "Bartender's workspace",
+	var/list/locationList = list("Head of Personnel's Quarters", "Research Director's Office",
+	 "Locker Room", "Kitchen", "Bar", "Bartender's workspace",
 	"Theatre", "Library", "Chapel Office", "Assembly Line", "Medbay", "Chemistry", "Surgery", "Exam Room",
 	"Security", "Head of Security", "Cargo Bay", "Quartermaster's Office", "Janitors Closet", "Hydroponics",
 	"Toxin Lab")
