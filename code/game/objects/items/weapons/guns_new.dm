@@ -1100,7 +1100,7 @@
 				switch(mode)
 					if(0)
 						user << "\red [src.name] is now set to laser cannon."
-						fire_sound = 'pulse.ogg'
+						fire_sound = 'lasercannonfire.wav'
 						charge_cost = 100
 					if(1)
 						user << "\red [src.name] is now set to laser."
