@@ -143,6 +143,7 @@ mob/new_player
 					stat("[player.key]", (player.ready)?("(Playing)"):(null))
 
 	Topic(href, href_list[])
+		if(!src.client)	return
 		if(href_list["show_preferences"])
 			preferences.ShowChoices(src)
 			return 1
@@ -252,8 +253,6 @@ mob/new_player
 					AttemptLateSpawn("Shaft Miner", minerMax)
 				if ("30")
 					AttemptLateSpawn("Mime", mimeMax)
-				//if ("31") < Nope. Latejoining cyborgs can fuck a lot of shit up since it's sudden and nobody is near the robotics console etc. -- Urist
-					//AttemptLateSpawn("Cyborg", borgMax)
 
 		if(!ready && href_list["preferences"])
 			preferences.process_link(src, href_list)
@@ -273,10 +272,6 @@ mob/new_player
 			if (character)
 				character.Equip_Rank(rank, joined_late=1)
 
-			//add to manifest -- Commented out in favor of ManifestLateSpawn() -- TLE
-			//for(var/datum/data/record/t in data_core.general)
-			//	if((t.fields["name"] == character.real_name) && (t.fields["rank"] == "Unassigned"))
-			//		t.fields["rank"] = rank
 				if(character.mind.assigned_role != "Cyborg")
 					ManifestLateSpawn(character,char_icon)
 				if(ticker)
@@ -435,22 +430,28 @@ mob/new_player
 
 		if (IsJobAvailable("Botanist",hydroponicsMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=22'>Botanist</a><br>"
+
 		if (IsJobAvailable("Librarian",librarianMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=23'>Librarian</a><br>"
+
 		if (IsJobAvailable("Virologist",viroMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=24'>Virologist</a><br>"
+
 		if (IsJobAvailable("Lawyer",lawyerMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=25'>Lawyer</a><br>"
+
 		if (IsJobAvailable("Cargo Technician",cargotechMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=26'>Cargo Technician</a><br>"
+
 		if (IsJobAvailable("Chief Medical Officer",cmoMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=27'>Chief Medical Officer</a><br>"
+
 		if (IsJobAvailable("Warden", wardenMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=28'>Warden</a><br>"
+
 		if (IsJobAvailable("Shaft Miner",minerMax))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=29'>Shaft Miner</a><br>"
-		//if (IsJobAvailable("Cyborg",borgMax))
-			//dat += "<a href='byond://?src=\ref[src];SelectedJob=31'>Cyborg</a><br>"
+
 		if (!jobban_isbanned(src,"Assistant"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=18'>Assistant</a><br>"
 
@@ -478,118 +479,3 @@ mob/new_player
 	proc/close_spawn_windows()
 		src << browse(null, "window=latechoices") //closes late choices window
 		src << browse(null, "window=playersetup") //closes the player setup window
-
-/*
-/obj/begin/verb/enter()
-	log_game("[usr.key] entered as [usr.real_name]")
-
-	if (ticker)
-		for (var/mob/living/silicon/ai/A in world)
-			if (!A.stat)
-				A.say("[usr.real_name] has arrived on the station!")
-				break
-
-		usr << "<B>Game mode is [master_mode].</B>"
-
-	var/mob/living/carbon/human/H = usr
-
-//find spawn points for normal game modes
-
-	if(!(ticker && ticker.mode.name == "ctf"))
-		var/list/L = list()
-		var/area/A = locate(/area/arrival/start)
-		for(var/turf/T in A)
-			L += T
-
-		while(!L.len)
-			usr << "\blue <B>You were unable to enter because the arrival shuttle has been destroyed! The game will reattempt to spawn you in 30 seconds!</B>"
-			sleep(300)
-			for(var/turf/T in A)
-				L += T
-		H << "\blue Now teleporting."
-		H.loc = pick(L)
-
-//for capture the flag
-
-	else if(ticker && ticker.mode.name == "ctf")
-		if(H.client.team == "Red")
-			var/obj/R = locate("landmark*Red-Spawn")
-			H << "\blue Now teleporting."
-			H.loc = R.loc
-		else if(H.client.team == "Green")
-			var/obj/G = locate("landmark*Green-Spawn")
-			H << "\blue Now teleporting."
-			H.loc = G.loc
-
-//error check
-
-	else
-		usr << "Invalid start please report this to the admins"
-
-//add to manifest
-
-	if(ticker)
-		//add to manifest
-		var/datum/data/record/G = new /datum/data/record(  )
-		var/datum/data/record/M = new /datum/data/record(  )
-		var/datum/data/record/S = new /datum/data/record(  )
-		var/obj/item/weapon/card/id/C = H.wear_id
-		if (C)
-			G.fields["rank"] = C.assignment
-		else
-			G.fields["rank"] = "Unassigned"
-		G.fields["name"] = H.real_name
-		G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
-		M.fields["name"] = G.fields["name"]
-		M.fields["id"] = G.fields["id"]
-		S.fields["name"] = G.fields["name"]
-		S.fields["id"] = G.fields["id"]
-		if (H.gender == "female")
-			G.fields["sex"] = "Female"
-		else
-			G.fields["sex"] = "Male"
-		G.fields["age"] = text("[]", H.age)
-		G.fields["fingerprint"] = text("[]", md5(H.dna.uni_identity))
-		G.fields["p_stat"] = "Active"
-		G.fields["m_stat"] = "Stable"
-		M.fields["b_type"] = text("[]", H.b_type)
-		M.fields["mi_dis"] = "None"
-		M.fields["mi_dis_d"] = "No minor disabilities have been declared."
-		M.fields["ma_dis"] = "None"
-		M.fields["ma_dis_d"] = "No major disabilities have been diagnosed."
-		M.fields["alg"] = "None"
-		M.fields["alg_d"] = "No allergies have been detected in this patient."
-		M.fields["cdi"] = "None"
-		M.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
-		M.fields["notes"] = "No notes."
-		S.fields["criminal"] = "None"
-		S.fields["mi_crim"] = "None"
-		S.fields["mi_crim_d"] = "No minor crime convictions."
-		S.fields["ma_crim"] = "None"
-		S.fields["ma_crim_d"] = "No minor crime convictions."
-		S.fields["notes"] = "No notes."
-		for(var/obj/datacore/D in world)
-			D.general += G
-			D.medical += M
-			D.security += S
-//DNA!
-		reg_dna[H.dna.unique_enzymes] = H.real_name
-//Other Stuff
-		if(ticker.mode.name == "sandbox")
-			H.CanBuild()
-
-*/
-/*
-	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-		if (!message)
-			return
-
-		log_say("[key] : [message]")
-
-		if (muted)
-			return
-
-		. = say_dead(message)
-*/

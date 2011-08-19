@@ -6,16 +6,16 @@
 //Some verbs that are still in the code but not used atm
 			// Debug
 //			verbs += /client/proc/radio_report //for radio debugging dont think its been used in a very long time
-//			verbs += /client/proc/air_status //does next to nothing
 //			verbs += /client/proc/fix_next_move //has not been an issue in a very very long time
-//			verbs += /client/proc/Cell //More air things
 
-			// Mapping helpers
+
+			// Mapping helpers added via enable_mapping_debug verb
 // 			verbs += /client/proc/do_not_use_these
 // 			verbs += /client/proc/camera_view
 // 			verbs += /client/proc/sec_camera_report
 // 			verbs += /client/proc/intercom_view
-//			verbs += /client/proc/enable_mapping_debug
+//			verbs += /client/proc/air_status //Air things
+//			verbs += /client/proc/Cell //More air things
 
 /client/proc/update_admins(var/rank)
 
@@ -120,7 +120,7 @@
 	if (holder)//Slightly easier to edit way of granting powers
 		holder.owner = src
 		if (holder.level >= 6)//Game Master********************************************************************
-
+			verbs += /client/proc/callproc
 			verbs += /client/proc/colorooc
 			verbs += /obj/admins/proc/toggle_aliens			//toggle aliens
 			verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
@@ -132,7 +132,7 @@
 			verbs += /client/proc/cmd_debug_make_powernets
 			verbs += /client/proc/object_talk
 			verbs += /client/proc/strike_team
-
+			verbs += /client/proc/enable_mapping_debug
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log
@@ -140,7 +140,6 @@
 			verbs += /client/proc/cmd_admin_list_open_jobs
 			verbs += /client/proc/cmd_admin_direct_narrate
 			verbs += /client/proc/cmd_admin_world_narrate
-			verbs += /client/proc/callproc
 			verbs += /client/proc/cmd_debug_del_all
 			verbs += /client/proc/cmd_debug_tog_aliens
 			verbs += /client/proc/ticklag
@@ -181,7 +180,6 @@
 			verbs += /proc/togglebuildmode
 			verbs += /client/proc/togglebuildmodeself
 			verbs += /client/proc/hide_most_verbs
-
 
 		if (holder.level >= 3)//Trial Admin********************************************************************
 			verbs += /obj/admins/proc/toggleaban			//abandon mob
@@ -364,6 +362,7 @@
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_gib_self
 	verbs -= /client/proc/restartcontroller
+	verbs -= /client/proc/enable_mapping_debug
 	return
 
 
@@ -616,6 +615,7 @@
 	verbs += /client/proc/game_panel
 	verbs += /client/proc/player_panel
 	verbs += /client/proc/cmd_admin_subtle_message
+	verbs += /client/proc/cmd_admin_pm
 	verbs += /client/proc/cmd_admin_gib_self
 
 	verbs += /client/proc/deadchat					//toggles deadchat

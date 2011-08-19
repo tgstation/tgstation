@@ -57,5 +57,8 @@
 				gibs(T)
 				src.cure(0)
 				gibbed = 1
-				affected_mob:Robotize()
+				if(!jobban_isbanned(src, "Cyborg"))
+					affected_mob:Robotize()
+				else
+					affected_mob.death(1)
 

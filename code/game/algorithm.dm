@@ -11,8 +11,6 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 	jobban_loadbanfile()
 	jobban_updatelegacybans()
-//	goon_loadfile() Somehow I doubt we need this anymore
-//	beta_tester_loadfile()
 	LoadBans()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	process_ghost_teleport_locs() //Sets up ghost teleport locations.
@@ -20,33 +18,19 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 	if (config.kick_inactive)
 		spawn(30)
-			//EXPERIMENTAL
-			Optimize()
-			//EXPERIMENTAL
+			KickInactiveClients()
 
-
-
-/// EXPERIMENTAL STUFF
-var/opt_inactive = null
-/world/proc/Optimize()
-	if(!opt_inactive) opt_inactive  = world.timeofday
-
-	if(world.timeofday - opt_inactive >= 600)
-		KickInactiveClients()
-		opt_inactive = world.timeofday
-
-	spawn(100) Optimize()
 
 /world/proc/KickInactiveClients()
 	for(var/client/C)
-		if(!C.holder && ((C.inactivity/10)/60) >= 10) // Used to be 15 -- TLE
-			//C << "\red You have been inactive for more than 10 minutes and have been disconnected."
+		if(!C.holder && ((C.inactivity/10)/60) >= 10)
 			if(C.mob)
 				if(!istype(C.mob, /mob/dead/))
 					log_access("AFK: [key_name(C)]")
 					C << "\red You have been inactive for more than 10 minutes and have been disconnected."
 					C.mob.logged_in = 0
 			del(C)
+	spawn(3000) KickInactiveClients()//more or less five minutes
 
 /// EXPERIMENTAL STUFF
 

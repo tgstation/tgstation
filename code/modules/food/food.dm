@@ -309,10 +309,8 @@
 	icon_state = "roburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 2)
-		reagents.add_reagent("nanites", 10)
-		bitesize = 3
-
+		reagents.add_reagent("nanites", 2)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/roburgerbig
 	name = "roburger"

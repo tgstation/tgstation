@@ -105,12 +105,15 @@
 			for (var/i = 1 to occupation_eligible[occ])
 				vacancies += occ
 
-		while (unassigned.len && vacancies.len)
-			var/mob/new_player/candidate = pick_n_take(unassigned)
-			var/occupation = pick_n_take(vacancies)
-			candidate.mind.assigned_role = occupation
+		for(var/mob/new_player/candidate in unassigned)
+			if(!unassigned.len || !vacancies.len)	break
+			var/occupation = pick(vacancies)
+			if(!jobban_isbanned(candidate, occupation))
+				candidate.mind.assigned_role = occupation
+				unassigned -= candidate
+				vacancies -= occupation
 
-		for (var/mob/new_player/player in unassigned)
+		for(var/mob/new_player/player in unassigned)
 			if (unassigned.len == 0)
 				break
 			player.mind.assigned_role = pick(assistant_occupations)

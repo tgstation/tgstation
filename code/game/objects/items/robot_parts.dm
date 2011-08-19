@@ -162,6 +162,10 @@
 				user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
 				return
 
+			if(jobban_isbanned(M.brainmob, "Cyborg"))
+				user << "\red This MMI does not seem to fit."
+				return
+
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
 			if(!O)	return
 

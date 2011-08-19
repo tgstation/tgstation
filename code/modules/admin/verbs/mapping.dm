@@ -117,3 +117,5 @@ var/intercom_range_display_status = 0
 		src.verbs += /client/proc/camera_view 				//-errorage
 		src.verbs += /client/proc/sec_camera_report 		//-errorage
 		src.verbs += /client/proc/intercom_view 			//-errorage
+		src.verbs += /client/proc/air_status //Air things
+		src.verbs += /client/proc/Cell //More air things
