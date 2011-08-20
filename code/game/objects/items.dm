@@ -450,7 +450,6 @@
 		istype(W, /obj/item/weapon/pen)                           || \
 		istype(W, /obj/item/weapon/weldingtool)      && W:welding || \
 		istype(W, /obj/item/weapon/zippo)            && W:lit     || \
-		istype(W, /obj/item/weapon/knifezippo)                    || \
 		istype(W, /obj/item/weapon/match)            && W:lit     || \
 		istype(W, /obj/item/clothing/mask/cigarette) && W:lit     || \
 		istype(W, /obj/item/weapon/wirecutters)                   || \

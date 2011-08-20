@@ -217,38 +217,6 @@
 	var/obj/machinery/computer/operating/computer = null
 	var/id = 0.0
 
-/obj/machinery/vehicle
-	name = "Vehicle Pod"
-	icon = 'escapepod.dmi'
-	icon_state = "podfire"
-	density = 1
-	flags = FPRINT
-	anchored = 1.0
-	var/speed = 10.0
-	var/maximum_speed = 10.0
-	var/can_rotate = 1
-	var/can_maximize_speed = 0
-	var/one_person_only = 0
-	use_power = 0
-
-/obj/machinery/vehicle/pod
-	name = "Escape Pod"
-	desc = "A pod, for, moving in space"
-	icon = 'escapepod.dmi'
-	icon_state = "pod"
-	can_rotate = 0
-	var/id = 1.0
-
-/obj/machinery/vehicle/recon
-	name = "Reconaissance Pod"
-	desc = "A fast moving pod."
-	icon = 'escapepod.dmi'
-	icon_state = "recon"
-	speed = 1.0
-	maximum_speed = 30.0
-	can_maximize_speed = 1
-	one_person_only = 1
-
 /obj/machinery/restruct
 	name = "DNA Physical Restructurization Accelerator"
 	desc = "This looks complex."
@@ -322,21 +290,6 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 
-/obj/machinery/sec_lock
-	name = "Security Pad"
-	desc = "A lock, for doors. Used by security."
-	icon = 'stationobjs.dmi'
-	icon_state = "sec_lock"
-	var/obj/item/weapon/card/id/scan = null
-	var/a_type = 0.0
-	var/obj/machinery/door/d1 = null
-	var/obj/machinery/door/d2 = null
-	anchored = 1.0
-	req_access = list(access_brig)
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 4
-
 /obj/machinery/door_control
 	name = "Remote Door Control"
 	desc = "This controls doors."
@@ -374,44 +327,6 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
-
-/obj/machinery/shuttle
-	name = "shuttle"
-	icon = 'shuttle.dmi'
-	use_power = 0
-
-/obj/machinery/shuttle/engine
-	name = "engine"
-	density = 1
-	anchored = 1.0
-
-/obj/machinery/shuttle/engine/heater
-	name = "heater"
-	icon_state = "heater"
-
-/obj/machinery/shuttle/engine/platform
-	name = "platform"
-	icon_state = "platform"
-
-/obj/machinery/shuttle/engine/propulsion
-	name = "propulsion"
-	icon_state = "propulsion"
-	opacity = 1
-
-/obj/machinery/shuttle/engine/propulsion/burst
-	name = "burst"
-
-/obj/machinery/shuttle/engine/propulsion/burst/left
-	name = "left"
-	icon_state = "burst_l"
-
-/obj/machinery/shuttle/engine/propulsion/burst/right
-	name = "right"
-	icon_state = "burst_r"
-
-/obj/machinery/shuttle/engine/router
-	name = "router"
-	icon_state = "router"
 
 /obj/machinery/teleport
 	name = "teleport"
@@ -505,47 +420,6 @@
 	use_power = 2
 	idle_power_usage = 20
 	active_power_usage = 80
-
-/obj/machinery/power/solar
-	name = "solar panel"
-	desc = "A solar electrical generator."
-	icon = 'power.dmi'
-	icon_state = "sp_base"
-	anchored = 1
-	density = 1
-	directwired = 1
-	var/health = 10.0
-	var/id = 1
-	var/obscured = 0
-	var/sunfrac = 0
-	var/adir = SOUTH
-	var/ndir = SOUTH
-	var/turn_angle = 0
-	var/obj/machinery/power/solar_control/control
-	use_power = 0
-	idle_power_usage = 0
-	active_power_usage = 0
-
-/obj/machinery/power/solar_control
-	name = "solar panel control"
-	desc = "A controller for solar panel arrays."
-	icon = 'computer.dmi'
-	icon_state = "solar"
-	anchored = 1
-	density = 1
-	directwired = 1
-	var/id = 1
-	var/cdir = 0
-	var/gen = 0
-	var/lastgen = 0
-	var/track = 2			// 0= off  1=timed  2=auto (tracker)
-	var/trackrate = 600		// 300-900 seconds
-	var/trackdir = 1		// 0 =CCW, 1=CW
-	var/nexttime = 0
-	use_power = 1
-	idle_power_usage = 5
-	active_power_usage = 20
-
 
 /obj/machinery/cell_charger
 	name = "cell charger"

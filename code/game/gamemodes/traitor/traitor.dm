@@ -5,7 +5,10 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
+	restricted_jobs = list("Cyborg")
 	required_players = 0
+	required_enemies = 1
+
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
 	var/const/prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
@@ -70,8 +73,10 @@
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
-//	log_game("Number of traitors: [num_traitors]")
-//	message_admins("Players counted: [num_players]  Number of traitors chosen: [num_traitors]")
+	for(var/datum/mind/player in possible_traitors)
+		for(var/job in restricted_jobs)
+			if(player.assigned_role == job)
+				possible_traitors -= player
 
 	for(var/j = 0, j < num_traitors, j++)
 		if (!possible_traitors.len)

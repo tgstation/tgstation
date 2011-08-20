@@ -41,49 +41,6 @@
 	m_amt = 1000
 	origin_tech = "materials=2"
 
-/obj/item/weapon/match
-	name = "Match"
-	desc = "A simple match stick, used for lighting tobacco"
-	icon = 'cigarettes.dmi'
-	icon_state = "match_unlit"
-	var/lit = 0
-	var/smoketime = 5
-	w_class = 1.0
-	origin_tech = "materials=1"
-
-/obj/item/weapon/matchbox
-	name = "Matchbox"
-	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
-	icon = 'cigarettes.dmi'
-	icon_state = "matchbox"
-	item_state = "zippo"
-	w_class = 1
-	flags = ONBELT | TABLEPASS
-	var/matchcount = 10
-	w_class = 1.0
-
-/obj/item/weapon/rcd
-	name = "rapid-construction-device (RCD)"
-	desc = "A device used to rapidly build walls/floor."
-	icon = 'items.dmi'
-	icon_state = "rcd"
-	opacity = 0
-	density = 0
-	anchored = 0.0
-	var/matter = 0
-	var/working = 0
-	var/mode = 1
-	var/disabled = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 10.0
-	throwforce = 10.0
-	throw_speed = 1
-	throw_range = 5
-	w_class = 3.0
-	m_amt = 50000
-	origin_tech = "engineering=4;materials=2"
-	var/datum/effects/system/spark_spread/spark_system
-
 /obj/item/weapon/rsf
 	name = "Rapid-Service-Fabricator (RSF)"
 	desc = "A device used to rapidly deploy service items."
@@ -1838,17 +1795,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
 
-/obj/item/weapon/cigpacket
-	name = "Cigarette packet"
-	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
-	icon = 'cigarettes.dmi'
-	icon_state = "cigpacket"
-	item_state = "cigpacket"
-	w_class = 1
-	throwforce = 2
-	var/cigcount = 6
-	flags = ONBELT | TABLEPASS
-
 /*
 /obj/item/weapon/cigarpacket
 	name = "Pete's Cuban Cigars"
@@ -1860,57 +1806,6 @@ Total SMES charging rate should not exceed total power generation rate, or an ov
 	throwforce = 2
 	var/cigarcount = 6
 	flags = ONBELT | TABLEPASS */
-
-/obj/item/weapon/cigbutt
-	name = "Cigarette butt"
-	desc = "A manky old cigarette butt."
-	icon = 'cigarettes.dmi'
-	icon_state = "cigbutt"
-	w_class = 1
-	throwforce = 1
-
-/obj/item/weapon/cigarbutt
-	name = "Cigar butt"
-	desc = "A manky old cigar butt."
-	icon = 'cigarettes.dmi'
-	icon_state = "cigarbutt"
-	w_class = 1
-	throwforce = 1
-
-/obj/item/weapon/zippo
-	name = "Zippo lighter"
-	desc = "The detective's zippo."
-	icon = 'items.dmi'
-	icon_state = "zippo"
-	item_state = "zippo"
-	w_class = 1
-	throwforce = 4
-	var/lit = 0
-	flags = ONBELT | TABLEPASS | CONDUCT
-
-/obj/item/weapon/knifezippo
-	name = "Zippo lighter"
-	desc = "The zippo."
-	icon = 'items.dmi'
-	icon_state = "knifezippo"
-	item_state = "knifezippo"
-	force = 15
-	w_class = 1
-	throwforce = 4
-	var/lit = 0
-	flags = ONBELT | TABLEPASS | CONDUCT
-
-/obj/item/weapon/knifezippo/attack(mob/M as mob, mob/user as mob)
-	if (!( istype(M, /mob) ))
-		return
-		//for(var/mob/O in viewers(M, null))
-		//	O.show_message(text("\red [] has been stabbed with [] by [].", M, src, user), 1)
-		user << "\red You stab [M] with the zippo knife."
-		M << "\red You feel a tiny prick!"
-		M.attack_log += text("<font color='orange'>[world.time] - has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("<font color='red'>[world.time] - has used the [src.name] to stab [M.name] ([M.ckey])</font>")
-	return
-
 
 
 /obj/item/weapon/mousetrap

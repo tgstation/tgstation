@@ -1,6 +1,3 @@
-/obj/item/clothing/suit/armor/powered
-/obj/item/clothing/head/helmet/powered
-
 /obj/item/clothing/suit/powered
 	name = "Powered armor"
 	desc = "Not for rookies."

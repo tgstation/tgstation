@@ -22,8 +22,6 @@
 
 			if (M.client.stealth && !usr.client.holder)
 				peeps += "\t[M.client.fakekey]"
-			else if (M.client.goon)				//everyone is authed
-				peeps += "\t\red[M.client] [M.client.stealth ? "<i>(as [M.client.fakekey])</i>" : "([html_encode(M.client.goon)])"]"
 			else
 				peeps += "\t[M.client][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""]"
 

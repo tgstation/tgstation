@@ -955,14 +955,14 @@
 						del(O)
 					for(var/obj/grille/O in world)
 						del(O)
-					for(var/obj/machinery/vehicle/pod/O in world)
+/*					for(var/obj/machinery/vehicle/pod/O in world)
 						for(var/mob/M in src)
 							M.loc = src.loc
 							if (M.client)
 								M.client.perspective = MOB_PERSPECTIVE
 								M.client.eye = M
 						del(O)
-					ok = 1
+					ok = 1*/
 				if("toxic")
 				/*					for(var/obj/machinery/atmoalter/siphs/fullairsiphon/O in world)
 						O.t_status = 3
@@ -1613,7 +1613,7 @@
 					dat += "<td>Monkey</td>"
 				if(istype(M, /mob/living/carbon/alien))
 					dat += "<td>Alien</td>"
-				dat += {"<td>[(M.client ? "[(M.client.goon ? "<font color=red>" : "<font>")][M.client]</font>" : "No client")]</td>
+				dat += {"<td>[M.client]</font>" : "No client")]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
 				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
 				"}
@@ -1658,7 +1658,7 @@
 					dat += "<td>Monkey</td>"
 				if(isalien(M))
 					dat += "<td>Alien</td>"
-				dat += {"<td>[(M.client ? "[(M.client.goon ? "<font color=red>" : "<font>")][M.client]</font>" : "No client")]</td>
+				dat += {"<td>[(M.client ? "[M.client]</font>" : "No client")]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
 				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
 				"}

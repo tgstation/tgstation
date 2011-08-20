@@ -7,8 +7,6 @@
 #define ADD "add"
 #define SET "set"
 
-
-
 ///////////////////////////////////////////////
 ////////////////AMMO SECTION///////////////////
 ///////////////////////////////////////////////
@@ -1528,7 +1526,7 @@
 				S.pump()
 				return
 
-		update_icon()
+
 
 		if(silenced)
 			playsound(user, fire_sound, 10, 1)
@@ -1566,3 +1564,4 @@
 			if(istype(src, /obj/item/weapon/gun/projectile/shotgun))
 				var/obj/item/weapon/gun/projectile/shotgun/S = src
 				S.pumped++
+		update_icon()

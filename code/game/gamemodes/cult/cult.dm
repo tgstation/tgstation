@@ -21,6 +21,7 @@
 	config_tag = "cult"
 	restricted_jobs = list("Chaplain", "Security Officer", "Warden", "Detective", "AI", "Cyborg", "Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 15
+	required_enemies = 3
 
 	var/datum/mind/sacrifice_target = null
 	var/finished = 0

@@ -28,8 +28,12 @@
 				src.authorized -= W:registered
 				src.authorized += W:registered
 				if (src.auth_need - src.authorized.len > 0)
+					message_admins("[key_name_admin(user)] has authorized early shuttle launch")
+					log_game("[user.ckey] has authorized early shuttle launch")
 					world << text("\blue <B>Alert: [] authorizations needed until shuttle is launched early</B>", src.auth_need - src.authorized.len)
 				else
+					message_admins("[key_name_admin(user)] has launched the shuttle")
+					log_game("[user.ckey] has launched the shuttle early")
 					world << "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>"
 					emergency_shuttle.settimeleft(10)
 					//src.authorized = null

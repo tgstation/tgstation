@@ -114,6 +114,10 @@
 				if(P:brainmob.stat == 2)
 					user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
 					return
+				if(jobban_isbanned(P:brainmob, "AI"))
+					user << "\red This MMI does not seem to fit."
+					return
+
 				user.drop_item()
 				P.loc = src
 				brain = P

@@ -7,6 +7,7 @@
 	config_tag = "changeling"
 	restricted_jobs = list("AI", "Cyborg")
 	required_players = 15
+	required_enemies = 1
 
 	var
 		const

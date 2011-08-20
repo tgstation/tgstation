@@ -993,6 +993,9 @@ About the new airlock wires panel:
 		return
 	use_power(50)
 	playsound(src.loc, 'airlock.ogg', 30, 1)
+	var/obj/window/killthis = (locate(/obj/window) in get_turf(src))
+	if(killthis)
+		killthis.ex_act(2)//Smashin windows
 	..()
 	return
 

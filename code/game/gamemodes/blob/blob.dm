@@ -145,14 +145,9 @@
 						var/T = M.loc
 						if (istype(T, /turf/space))
 							numSpace += 1
-						else
-							if (istype(T, /obj/machinery/vehicle/pod))
-								numPod += 1
-							else if (istype(T, /turf))
-								if (M.z!=1)
-									numOffStation += 1
-								else
-									numAlive += 1
+						else if(istype(T, /turf))
+							if (M.z!=1)
+								numOffStation += 1
 							else
 								numAlive += 1
 			if (numSpace==0 && numPod==0 && numOffStation==0)

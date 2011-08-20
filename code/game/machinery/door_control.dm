@@ -70,7 +70,7 @@
 
 	sleep(20)
 
-	for(var/obj/machinery/mass_driver/M in machines)
+	for(var/obj/machinery/mass_driver/M in world)
 		if(M.id == src.id)
 			M.drive()
 

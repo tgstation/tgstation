@@ -44,10 +44,9 @@
 				if (location in escape_zone)
 					survivors[player.real_name] = "shuttle"
 				else
-					if (istype(player.loc, /obj/machinery/vehicle/pod))
-						survivors[player.real_name] = "pod"
-					else
-						survivors[player.real_name] = "alive"
+					survivors[player.real_name] = "alive"
+//					if (istype(player.loc, /obj/machinery/vehicle/pod))
+//						survivors[player.real_name] = "pod"
 
 	if (survivors.len)
 		world << "\blue <B>The following survived the meteor attack!</B>"

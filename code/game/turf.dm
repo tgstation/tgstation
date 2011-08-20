@@ -745,11 +745,11 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	else
 		icon_regular_floor = icon_state
 
-/turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
-		if (!( locate(/obj/machinery/mass_driver, src) ))
-			return 0
-	return ..()
+//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+//	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
+//		if (!( locate(/obj/machinery/mass_driver, src) ))
+//			return 0
+//	return ..()
 
 /turf/simulated/floor/ex_act(severity)
 	//set src in oview(1)

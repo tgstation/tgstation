@@ -22,6 +22,7 @@
 		list/datum/mind/modePlayer = new
 		list/restricted_jobs = list()
 		required_players = 0
+		required_enemies = 0
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
@@ -111,18 +112,18 @@
 /datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1)
 	var/list/candidates = list()
 	for(var/mob/new_player/player in world)
-		if (player.client && player.ready)
+		if(player.client && player.ready)
 			if(player.preferences.be_special & role)
 				if(!jobban_isbanned(player, "Syndicate"))
 					candidates += player.mind
 
-	if(candidates.len == 0)
+	if(candidates.len < required_enemies)
 		for(var/mob/new_player/player in world)
 			if (player.client && player.ready)
 				if(!jobban_isbanned(player, "Syndicate"))
 					candidates += player.mind
 
-	if(candidates.len == 0 && override_jobbans) //just to be safe. Ignored jobbans are better than broken round. Shouldn't happen usually. --rastaf0
+	if(candidates.len < required_enemies && override_jobbans) //just to be safe. Ignored jobbans are better than broken round. Shouldn't happen usually. --rastaf0
 		for(var/mob/new_player/player in world)
 			if (player.client && player.ready)
 				candidates += player.mind

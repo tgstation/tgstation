@@ -149,47 +149,5 @@
 	desc = "For ages 0 and under."
 	icon_state = "fake-moustache"
 
-/obj/item/clothing/mask/cigarette
-	name = "Cigarette"
-	desc = "A roll of tobacco and nicotine."
-	icon_state = "cigoff"
-	var/lit = 0
-	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
-	var/icon_off = "cigoff"
-	var/icon_butt = "cigbutt"
-	throw_speed = 0.5
-	item_state = "cigoff"
-	var/lastHolder = null
-	var/smoketime = 300
-	w_class = 1
-	body_parts_covered = null
-
-/obj/item/clothing/mask/cigarette/cigar
-	name = "Premium Cigar"
-	desc = "A brown roll of tobacco and... well, you're not quite sure. This thing's huge!"
-	icon_state = "cigaroff"
-	icon_on = "cigaron"
-	icon_off = "cigaroff"
-	icon_butt = "cigarbutt"
-	throw_speed = 0.5
-	item_state = "cigaroff"
-	smoketime = 1500
-
-/obj/item/clothing/mask/cigarette/cigar/cohiba
-	name = "Cohiba Cigar"
-	desc = "There's little more you could want from a cigar."
-	icon_state = "cigar2off"
-	icon_on = "cigar2on"
-	icon_off = "cigar2off"
-	icon_butt = "cigarbutt"
-
-/obj/item/clothing/mask/cigarette/cigar/havanian
-	name = "Premium Havanian Cigar"
-	desc = "A cigar fit for only the best for the best."
-	icon_state = "cigar2off"
-	icon_on = "cigar2on"
-	icon_off = "cigar2off"
-	icon_butt = "cigarbutt"
-	smoketime = 7200
 
 
