@@ -143,7 +143,6 @@ mob/new_player
 					stat("[player.key]", (player.ready)?("(Playing)"):(null))
 
 	Topic(href, href_list[])
-		if(!src.client)	return
 		if(href_list["show_preferences"])
 			preferences.ShowChoices(src)
 			return 1
