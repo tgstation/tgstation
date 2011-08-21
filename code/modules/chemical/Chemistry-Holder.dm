@@ -79,6 +79,27 @@ datum
 				src.handle_reactions()
 				return amount
 
+			copy_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)
+				if(!target)
+					return
+				if(!target.reagents || src.total_volume<=0)
+					return
+				var/datum/reagents/R = target.reagents
+				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
+				var/part = amount / src.total_volume
+				var/trans_data = null
+				for (var/datum/reagent/current_reagent in src.reagent_list)
+					var/current_reagent_transfer = current_reagent.volume * part
+					if(preserve_data)
+						trans_data = current_reagent.data
+					R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+
+				src.update_total()
+				R.update_total()
+				R.handle_reactions()
+				src.handle_reactions()
+				return amount
+
 			trans_id_to(var/obj/target, var/reagent, var/amount=1, var/preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 				if (!target)
 					return

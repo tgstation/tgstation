@@ -342,6 +342,7 @@ datum
 				holder.del_reagent("napalm")
 				return
 
+		/*
 		smoke
 			name = "Smoke"
 			id = "smoke"
@@ -362,6 +363,26 @@ datum
 					sleep(10)
 					S.start()
 					sleep(10)
+					S.start()
+					sleep(10)
+					S.start()
+				holder.clear_reagents()
+				return	*/
+
+		chemsmoke
+			name = "Chemsmoke"
+			id = "chemsmoke"
+			result = null
+			required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
+			result_amount = null
+			secondary = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+				var/datum/effects/system/chem_smoke_spread/S = new /datum/effects/system/chem_smoke_spread
+				S.attach(location)
+				S.set_up(holder, 10, 0, location)
+				playsound(location, 'smoke.ogg', 50, 1, -3)
+				spawn(0)
 					S.start()
 					sleep(10)
 					S.start()
