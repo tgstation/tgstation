@@ -680,7 +680,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			user << "\red This plot is completely devoid of weeds. It doesn't need uprooting."
 
-/*				Commented out due to being redundant -Darem
 	else if ( istype(O, /obj/item/weapon/weedspray) )
 		var/obj/item/weedkiller/myWKiller = O
 		user.u_equip(O)
@@ -709,7 +708,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		del(O)
 		src.updateicon()
 	return
-*/
 
 
 /obj/machinery/hydroponics/attack_hand(mob/user as mob)

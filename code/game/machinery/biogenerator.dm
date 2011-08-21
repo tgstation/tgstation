@@ -108,11 +108,10 @@
 		return
 	var/S = 0
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/I in contents)
-		//I.reagents.trans_to(src)
 		S += 5
-		if(I.potency == -1)
-			points += 10
-		else points += I.potency
+		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
+			points += 1
+		else points += I.reagents.get_reagent_amount("nutriment")*10
 		del(I)
 	if(S)
 		processing = 1
@@ -121,8 +120,6 @@
 		playsound(src.loc, 'blender.ogg', 50, 1)
 		use_power(S*30)
 		sleep(S+15)
-		//points += src.reagents.get_reagent_amount("nutriment")
-		//src.reagents.del_reagent("nutriment")
 		processing = 0
 		update_icon()
 	else

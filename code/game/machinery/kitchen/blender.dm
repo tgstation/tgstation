@@ -88,12 +88,15 @@ the blender or the processor: Processor items are solid objects and Blender resu
 	usr << "\blue You turn on the blender."
 	use_power(250)
 	for(var/obj/O in src.contents)
-		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans))
-			src.reagents.add_reagent("soymilk", 5)
-		else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/tomato))
-			src.reagents.add_reagent("ketchup", 5)
-		else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/corn))
-			src.reagents.add_reagent("cornoil", 5)
+		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans))	 //  Mass balance law
+			src.reagents.add_reagent("soymilk", O.reagents.get_reagent_amount("nutriment"))
+			O.reagents.del_reagent("nutriment")
+		else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/tomato)) //  Mass balance law
+			src.reagents.add_reagent("ketchup", O.reagents.get_reagent_amount("nutriment"))
+			O.reagents.del_reagent("nutriment")
+		else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/corn))   //  Mass balance law
+			src.reagents.add_reagent("cornoil", O.reagents.get_reagent_amount("nutriment"))
+			O.reagents.del_reagent("nutriment")
 		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))	//This is intentionally not an "else if"
 			O.reagents.trans_to(src, O.reagents.total_volume)			//Think of it as the "pulp" leftover.
 			del(O)
