@@ -463,6 +463,11 @@ var/list/sacrificed = list()
 					T.imbue = "conceal"
 					imbued_from = R
 					break
+				if(R.word1==wordhell && R.word2==worddestr && R.word3==wordother) //armor
+					T = new(src.loc)
+					T.imbue = "armor"
+					imbued_from = R
+					break
 				if(R.word1==wordblood && R.word2==wordsee && R.word3==wordhide) //reveal
 					T = new(src.loc)
 					T.imbue = "revealrunes"
@@ -930,4 +935,22 @@ var/list/sacrificed = list()
 					T.weakened += 25
 				if (!(T.mutations & HULK))
 					T.stunned += 25
+			return
+
+/////////////////////////////////////////TWENTY-FIFTH RUNE
+
+		armor()
+			var/mob/living/carbon/human/user = usr
+			if(istype(src,/obj/rune))
+				usr.say("N'ath reth sh'yro eth d'raggathnor!")
+			else
+				usr.whisper("N'ath reth sh'yro eth d'raggathnor!")
+			usr.visible_message("\red Rune disappears with a flash of red light, and a set of armor appears on you..", \
+			"\red You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.")
+			user.equip_if_possible(new /obj/item/clothing/shoes/jackboots(user), user.slot_shoes)
+			user.equip_if_possible(new /obj/item/clothing/suit/cultrobes(user), user.slot_wear_suit)
+			user.equip_if_possible(new /obj/item/clothing/head/culthood(user), user.slot_head)
+			user.equip_if_possible(new /obj/item/weapon/melee/cultblade(user), user.slot_r_hand)
+			user.equip_if_possible(new /obj/item/clothing/gloves/black(user), user.slot_gloves)
+			del(src)
 			return

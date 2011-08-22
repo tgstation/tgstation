@@ -832,8 +832,6 @@
 #include "code\WorkInProgress\recycling\disposal-construction.dm"
 #include "code\WorkInProgress\recycling\disposal.dm"
 #include "code\WorkInProgress\recycling\sortingmachinery.dm"
-#include "code\WorkInProgress\thehive\mhivebot.dm"
-#include "code\WorkInProgress\thehive\transport.dm"
 #include "code\WorkInProgress\virus2\Prob.dm"
 #include "code\WorkInProgress\virus2\Disease2\analyser.dm"
 #include "code\WorkInProgress\virus2\Disease2\base.dm"

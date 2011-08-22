@@ -125,6 +125,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return teleport(src.word3)
 		if(word1 == wordsee && word2 == wordblood && word3 == wordhell)
 			return tomesummon()
+		if(word1 == wordhell && word2 == worddestr && word3 == wordother)
+			return armor()
 		if(word1 == wordjoin && word2 == wordblood && word3 == wordself)
 			return convert()
 		if(word1 == wordhell && word2 == wordjoin && word3 == wordself)
@@ -276,7 +278,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	icon_state ="tome"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 	var/notedat = ""
 	var/tomedat = ""
@@ -321,7 +323,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				<b>Blind: </b>Destroy See Other<br>
 				<b>Blood Boil: </b>Destroy See Blood<br>
 				<b>Communicate: </b>Self other technology<br>
-				<b>Stun: </b>join hide technology<br>
+				<b>Stun: </b>Join hide technology<br>
+				<b>Summon Cultist Armor: </b>Hell destroy other<br>
 				</p>
 				<h2>Rune Descriptions</h2>
 				<h3>Teleport self</h3>
@@ -368,6 +371,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				Invoking this rune allows you to relay a message to all cultists on the station and nearby space objects.
 				<h3>Stun</h3>
 				Unlike other runes, this ons is supposed to be used in talisman form. When invoked directly, it simply releases some dark energy, briefly stunning everyone around. When imbued into a talisman, you can force all of its energy into one person, stunning him so hard he cant even speak. However, effect wears off rather fast.<br>
+				<h3>Equip Armor</h3>
+				When this rune is invoked, either from a rune or a talisman, it will equip the user with the armor of the followers of Nar-Sie. To use this rune to it's fullest extent, make sure you are not wearing any form of headgear, armor, gloves or shoes, and make sure you are not holding anything in your hands.<br>
 				</body>
 				</html>
 				"}
@@ -601,6 +606,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					R.word3=wordhell
 					R.loc = user.loc
 					R.check_icon()
+				if("armor")
+					R.word1=wordhell
+					R.word2=worddestr
+					R.word3=wordother
+					R.loc = user.loc
+					R.check_icon()
 				if("convert")
 					R.word1=wordjoin
 					R.word2=wordblood
@@ -752,6 +763,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			switch(imbue)
 				if("newtome")
 					call(/obj/rune/proc/tomesummon)()
+				if("armor")
+					call(/obj/rune/proc/armor)()
 				if("emp")
 					call(/obj/rune/proc/emp)(usr.loc,3)
 				if("conceal")
