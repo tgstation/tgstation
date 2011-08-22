@@ -61,7 +61,7 @@
 				flick("blspell", animation)
 				sleep(5)
 				del(animation)
-				user.weakened = max(user.weakened, 10)
+				M.weakened = max(user.weakened, 10)
 
 
 		if(!flashfail)
