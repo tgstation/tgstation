@@ -277,8 +277,8 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 
 	*/
 
-	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
-	world << sound('ionstorm.ogg')
+//	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
+//	world << sound('ionstorm.ogg')
 
  /*
  Stealth spawns xenos
@@ -587,8 +587,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	log_admin("Admin [key_name(usr)] has added a new AI law - [input]")
 	message_admins("Admin [key_name_admin(usr)] has added a new AI law - [input]", 1)
-	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
-	world << sound('ionstorm.ogg')
+//	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
+//	world << sound('ionstorm.ogg')
 
 /client/proc/cmd_admin_rejuvenate(mob/living/M as mob in world)
 	set category = "Special Verbs"

@@ -270,19 +270,18 @@ mob/new_player
 			var/icon/char_icon = getFlatIcon(character,0)//We're creating out own cache so it's not needed.
 			if (character)
 				character.Equip_Rank(rank, joined_late=1)
-
-				if(character.mind.assigned_role != "Cyborg")
-					ManifestLateSpawn(character,char_icon)
+				if(character.mind)
+					if(character.mind.assigned_role != "Cyborg")
+						ManifestLateSpawn(character,char_icon)
 				if(ticker)
 					character.loc = pick(latejoin)
 					AnnounceArrival(character, rank)
-					if(character.mind.assigned_role == "Cyborg")
-						character.Robotize()
-					else//Adds late joiners to minds so they can be linked to objectives.
-						ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.
-
+					if(character.mind)
+						if(character.mind.assigned_role == "Cyborg")
+							character.Robotize()
+						else//Adds late joiners to minds so they can be linked to objectives.
+							ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.
 					del(src)
-
 		else
 			src << alert("[rank] is not available. Please try another.")
 

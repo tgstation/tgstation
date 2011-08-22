@@ -489,7 +489,8 @@
 		world << "<b>[src] is the captain!</b>"
 	src << "<B>You are the [rank].</B>"
 	src.job = rank
-	src.mind.assigned_role = rank
+	if(src.mind)
+		src.mind.assigned_role = rank
 
 	if (!joined_late && rank != "Tourist")
 		var/obj/S = null

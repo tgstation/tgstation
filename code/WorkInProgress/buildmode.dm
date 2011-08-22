@@ -269,4 +269,6 @@
 
 /proc/blink(atom/A)
 	A.icon += rgb(0,75,75)
-	spawn(10) A.icon = initial(A.icon)
+	spawn(10)
+		if(A)
+			A.icon = initial(A.icon)

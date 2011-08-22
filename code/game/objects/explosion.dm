@@ -71,7 +71,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			for(var/mob/living/carbon/mob in T)
 				flick("flash", mob:flash)
 
-		sleep(3)
+		sleep(-1)
+		sleep(20)
 		defer_powernet_rebuild = 0
 	return 1
 

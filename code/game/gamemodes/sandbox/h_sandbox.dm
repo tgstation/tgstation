@@ -147,6 +147,10 @@ datum/hSB
 							continue
 						if(istype(O, /obj/item/device/shield))
 							continue
+						if(istype(O, /obj/hivebot))
+							continue
+						if(istype(O, /obj/structure))
+							continue
 						selectable += O
 
 					var/hsbitem = input(usr, "Choose an object to spawn.", "Sandbox:") in selectable + "Cancel"

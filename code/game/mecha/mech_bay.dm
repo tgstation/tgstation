@@ -107,7 +107,8 @@
 	check_for_null = 0 //since port.stop_charge() must be called. The checks are made in process()
 
 	process(var/obj/machinery/mech_bay_recharge_port/port, var/obj/mecha/mecha)
-		if(port && mecha && mecha in port.recharge_floor)
+		if((!port) || (!mecha))	return 0
+		if(mecha in port.recharge_floor)
 			if(!mecha.cell)	return
 			var/delta = min(max_charge, mecha.cell.maxcharge - mecha.cell.charge)
 			if(delta>0)

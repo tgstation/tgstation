@@ -2,7 +2,7 @@
 		damage = 5
 		mobdamage = list(BRUTE = 5, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
 
-/obj/minihivebot/
+/obj/hivebot
 	name = "Hivebot"
 	desc = "A small robot"
 	icon = 'Hivebot.dmi'
@@ -29,30 +29,40 @@
 		steps = 0
 		firevuln = 0.5
 		brutevuln = 1
-		seekrange = 7
+		seekrange = 8
 		basic_damage = 2
+		armor = 5
+	proc
+		patrol_step()
+		process()
+		seek_target()
+		Die()
+		ChaseAttack(mob/M)
+		RunAttack(mob/M)
+		Shoot(var/target, var/start, var/user, var/bullet = 0)
+		TakeDamage(var/damage = 0)
 
 
 	attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 		..()
 		if (!src.alive) return
+		var/damage = 0
 		switch(W.damtype)
-			if("fire") src.health -= W.force * src.firevuln
-			if("brute") src.health -= W.force * src.brutevuln
-		if (src.alive && src.health <= 0) src.Die()
+			if("fire") damage = W.force * firevuln
+			if("brute") damage = W.force * brutevuln
+		TakeDamage(damage)
 
 
 	attack_hand(var/mob/user as mob)
 		if (!src.alive) return
 		if (user.a_intent == "hurt")
-			src.health -= 1 * src.brutevuln
+			TakeDamage(2 * brutevuln)
 			for(var/mob/O in viewers(src, null))
 				O.show_message("\red <b>[user]</b> punches [src]!", 1)
 			playsound(src.loc, pick('punch1.ogg','punch2.ogg','punch3.ogg','punch4.ogg'), 100, 1)
-			if (src.alive && src.health <= 0) src.Die()
 
 
-	proc/patrol_step()
+	patrol_step()
 		var/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
 		if (istype(moveto, /turf/simulated/floor) || istype(moveto, /turf/simulated/shuttle/floor) || istype(moveto, /turf/unsimulated/floor)) step_towards(src, moveto)
 		if(src.aggressive) seek_target()
@@ -82,10 +92,7 @@
 
 
 	bullet_act(var/obj/item/projectile/Proj)
-		health -= Proj.damage
-		if(src.health <= 0)
-			src.Die()
-
+		TakeDamage(Proj.damage)
 
 	ex_act(severity)
 		switch(severity)
@@ -93,10 +100,13 @@
 				src.Die()
 				return
 			if(2.0)
-				src.health -= 15
-				if (src.health <= 0)
-					src.Die()
+				TakeDamage(20)
 				return
+		return
+
+
+	emp_act(serverity)
+		src.Die()//Currently why not
 		return
 
 
@@ -111,7 +121,7 @@
 		return
 
 
-	proc/process()
+	process()
 		set background = 1
 		if (!src.alive) return
 		switch(task)
@@ -187,7 +197,7 @@
 		..()
 
 
-	proc/seek_target()
+	seek_target()
 		src.anchored = 0
 		for (var/mob/living/C in view(src.seekrange,src))
 			if (src.target)
@@ -209,7 +219,7 @@
 				continue
 
 
-	proc/Die()
+	Die()
 		if (!src.alive) return
 		src.alive = 0
 		walk_to(src,0)
@@ -222,12 +232,22 @@
 		del(src)
 
 
-	proc/ChaseAttack(mob/M)
+	TakeDamage(var/damage = 0)
+		var/tempdamage = (damage-armor)
+		if(tempdamage > 0)
+			src.health -= tempdamage
+		else
+			src.health--
+		if(src.health <= 0)
+			src.Die()
+
+
+	ChaseAttack(mob/M)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[src]</B> leaps at [src.target]!", 1)
 
 
-	proc/RunAttack(mob/M)
+	RunAttack(mob/M)
 		src.attacking = 1
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[src]</B> claws at [src.target]!", 1)
@@ -235,7 +255,8 @@
 		spawn(25)
 			src.attacking = 0
 
-	proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
+
+	Shoot(var/target, var/start, var/user, var/bullet = 0)
 		if(target == start)
 			return
 
@@ -255,7 +276,7 @@
 		return
 
 
-/obj/minihivebot/range
+/obj/hivebot/range
 	name = "Hivebot"
 	desc = "A smallish robot, this one is armed!"
 	var/rapid = 0
@@ -292,16 +313,17 @@
 				break
 			else continue
 
-/obj/minihivebot/range/rapid
+/obj/hivebot/range/rapid
 	rapid = 1
 
-/obj/minihivebot/range/strong
+/obj/hivebot/range/strong
 	name = "Strong Hivebot"
 	desc = "A robot, this one is armed and looks tough!"
 	health = 50
+	armor = 10
 
-/obj/minihivebot/range/borgkill
-	name = "Strong Hivebot"
-	desc = "A robot, this one is armed and looks tough!"
+/obj/hivebot/range/borgkill
 	health = 20
 	atksilicon = 1
+
+

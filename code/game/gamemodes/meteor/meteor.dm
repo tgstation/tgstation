@@ -29,8 +29,14 @@
 	return 0*/
 
 /datum/game_mode/meteor/process()
-	if (nometeors) return
-	if (prob(10)) meteor_wave()
+	if(nometeors) return
+	if(prob(80))
+		spawn()
+			dust_swarm("norm")
+	else
+		spawn()
+			dust_swarm("strong")
+	if(prob(10)) meteor_wave()
 	else spawn_meteors()
 
 /datum/game_mode/meteor/declare_completion()
@@ -64,7 +70,7 @@
 
 	..()
 	return 1
-
+/* This is dealt with in the parents code
 /datum/game_mode/meteor/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
 	intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
@@ -90,4 +96,4 @@
 			comm.messagetext.Add(intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-	world << sound('intercept.ogg')
+	world << sound('intercept.ogg')*/
