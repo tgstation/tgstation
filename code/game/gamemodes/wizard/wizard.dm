@@ -663,9 +663,9 @@ Made a proc here so it's not repeated several times.*/
 /mob/proc/spellvoice()
 //	if(!usr.miming)No longer necessary.
 	if(usr.gender=="male")
-		playsound(usr.loc, pick('vs_chant_conj_hm.wav','vs_chant_conj_lm.wav','vs_chant_ench_hm.wav','vs_chant_ench_lm.wav','vs_chant_evoc_hm.wav','vs_chant_evoc_lm.wav','vs_chant_illu_hm.wav','vs_chant_illu_lm.wav','vs_chant_necr_hm.wav','vs_chant_necr_lm.wav'), 100, 1)
+		playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
 	else
-		playsound(usr.loc, pick('vs_chant_conj_hf.wav','vs_chant_conj_lf.wav','vs_chant_ench_hf.wav','vs_chant_ench_lf.wav','vs_chant_evoc_hf.wav','vs_chant_evoc_lf.wav','vs_chant_illu_hf.wav','vs_chant_illu_lf.wav','vs_chant_necr_hf.wav','vs_chant_necr_lf.wav'), 100, 1)
+		playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
 
 
 

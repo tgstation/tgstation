@@ -1078,7 +1078,7 @@
 			desc = "A heavy-duty laser cannon."
 			icon_state = "lasercannon"
 			force = 15
-			fire_sound = 'lasercannonfire.wav'
+			fire_sound = 'lasercannonfire.ogg'
 			origin_tech = "combat=4;materials=3;powerstorage=3"
 			load_into_chamber()
 				if(in_chamber)
@@ -1098,7 +1098,7 @@
 				switch(mode)
 					if(0)
 						user << "\red [src.name] is now set to laser cannon."
-						fire_sound = 'lasercannonfire.wav'
+						fire_sound = 'lasercannonfire.ogg'
 						charge_cost = 100
 					if(1)
 						user << "\red [src.name] is now set to laser."

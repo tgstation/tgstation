@@ -79,7 +79,7 @@
 		if (isrobot(usr) || src.locked)
 			if(istype(O, /obj/item/device/multitool))
 				user << "\red Resetting circuitry..."
-				playsound(user, 'lockreset.wav', 50, 1)
+				playsound(user, 'lockreset.ogg', 50, 1)
 				sleep(50) // Sleeping time~
 				src.locked = 0
 				user << "\blue You disable the locking modules."
@@ -137,7 +137,7 @@
 					sleep(50)
 					src.locked = 1
 					user << "\blue You re-enable the locking modules."
-					playsound(user, 'lockenable.wav', 50, 1)
+					playsound(user, 'lockenable.ogg', 50, 1)
 					return
 			else
 				localopened = !localopened

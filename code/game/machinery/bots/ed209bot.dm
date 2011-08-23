@@ -592,7 +592,7 @@ Auto Patrol: []"},
 			src.target = C
 			src.oldtarget_name = C.name
 			src.speak("Level [src.threatlevel] infraction alert!")
-			playsound(src.loc, pick('ed209_20sec.ogg', 'ed209_15sec.ogg'), 50, 0)
+			playsound(src.loc, pick('ed209_20sec.ogg', 'EDPlaceholder.ogg'), 50, 0)
 			src.visible_message("<b>[src]</b> points at [C.name]!")
 			mode = SECBOT_HUNT
 			spawn(0)

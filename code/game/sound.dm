@@ -87,7 +87,7 @@ client/verb/Toggle_Soundscape()
 			if ("Engine Control") sound = pick('ambisin1.ogg','ambisin2.ogg','ambisin3.ogg','ambisin4.ogg')
 			if ("Atmospherics") sound = pick('ambiatm1.ogg')
 			if ("Mine")
-				sound = pick('ambimine1.ogg','ambimine2.ogg')
+				sound = pick('null.ogg','null.ogg')
 				musVolume = 60
 			else sound = pick('ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg')
 
