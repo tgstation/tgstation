@@ -1,25 +1,21 @@
 /obj/secure_closet/security1/New()
 	..()
 	sleep(2)
-	//new /obj/item/weapon/storage/flashbang_kit(src)
-	// Seriously gimping the number of flashes security get, will probably change later -- TLE
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/weapon/flashbang(src)
 	new /obj/item/weapon/handcuffs(src)
 	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/device/flash(src)
-	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/melee/baton(src)
-	new /obj/item/clothing/head/secsoft(src)
 	return
 
 /obj/secure_closet/security1/proc/prison_break()
 	src.locked = 0
 	src.icon_state = src.icon_closed
+
 
 /obj/secure_closet/security2/New()
 	..()
@@ -31,15 +27,9 @@
 	new /obj/item/clothing/suit/det_suit( src )
 	new /obj/item/clothing/suit/det_suit/armor( src )
 	new /obj/item/weapon/storage/fcard_kit( src )
-	new /obj/item/weapon/storage/fcard_kit( src )
-	new /obj/item/weapon/storage/fcard_kit( src )
 	new /obj/item/clothing/gloves/black( src )
 	new /obj/item/weapon/storage/lglo_kit( src )
 	new /obj/item/weapon/fcardholder( src )
-	new /obj/item/weapon/fcardholder( src )
-	new /obj/item/weapon/fcardholder( src )
-	new /obj/item/weapon/fcardholder( src )
-	new /obj/item/device/detective_scanner( src )
 	new /obj/item/device/detective_scanner( src )
 	return
 
@@ -64,13 +54,11 @@
 	new /obj/item/weapon/shield/riot(src)
 	new /obj/item/weapon/gun/energy( src )
 	new /obj/item/device/flash( src )
-	new /obj/item/weapon/storage/id_kit( src )
 	new /obj/item/clothing/under/rank/head_of_security( src )
 	new /obj/item/clothing/shoes/brown( src )
 	new /obj/item/clothing/glasses/sunglasses( src )
 	new /obj/item/clothing/suit/armor/hos( src )
 	new /obj/item/clothing/head/helmet( src )
-	new /obj/item/weapon/storage/id_kit( src )
 	new /obj/item/weapon/storage/flashbang_kit(src)
 	new /obj/item/weapon/handcuffs(src)
 	new /obj/item/weapon/melee/baton(src)

@@ -1,3 +1,15 @@
+/obj/item/weapon/storage
+	icon = 'storage.dmi'
+	name = "storage"
+	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
+	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
+	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
+	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
+	var/storage_slots = 7 //The number of storage slots in this container.
+	var/obj/screen/storage/boxes = null
+	var/obj/screen/close/closer = null
+	w_class = 3.0
+
 /obj/item/weapon/storage/proc/return_inv()
 
 	var/list/L = list(  )
@@ -200,14 +212,14 @@
 	src.master.attackby(W, user)
 	return
 
-/obj/item/weapon/storage/survival_kit/New()
+/obj/item/weapon/storage/box/New()
 	sleep(1)
 	new /obj/item/clothing/mask/breath( src )
 	new /obj/item/weapon/tank/emergency_oxygen( src )
 	..()
 	return
 
-/obj/item/weapon/storage/survival_kit/engineer/New()
+/obj/item/weapon/storage/box/engineer/New()
 	..()
 	contents = list()
 	sleep(1)

@@ -182,8 +182,8 @@
 		nodamage = 1
 		New()
 			..()
-			effects["radiation"] = 20
-			effectprob["radiation"] = 95
+			effects["radiation"] = 30
+			effectprob["radiation"] = 99
 			effects["drowsyness"] = 5
 			effectprob["drowsyness"] = 10
 			effectmod["radiation"] = ADD

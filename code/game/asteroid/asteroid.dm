@@ -146,9 +146,9 @@ proc/admin_spawn_room_at_pos()
 	return
 
 var/global/list/space_surprises = list(/obj/alien/facehugger,
-													/obj/livestock/spesscarp,
-													/obj/livestock/spesscarp/elite,
-													/obj/creature,
+													/obj/critter/spesscarp,
+													/obj/critter/spesscarp/elite,
+//													/obj/creature,
 													/obj/item/weapon/rcd,
 													/obj/item/weapon/rcd_ammo,
 													/obj/item/weapon/spacecash,

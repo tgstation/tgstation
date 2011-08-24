@@ -5,7 +5,7 @@
 // Returns the surrounding cardinal turfs with open links
 // Including through doors openable with the ID
 // Includes spacetiles
-
+/*
 
 
 /obj/creature
@@ -294,3 +294,4 @@
 		if (src.health <= 0)
 			src.death()
 
+*/

@@ -145,7 +145,7 @@
 	invocation_type = "shout"
 	range = 1
 
-	summon_type = list("/obj/livestock/spesscarp/elite")
+	summon_type = list("/obj/critter/spesscarp/elite")
 
 /obj/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"

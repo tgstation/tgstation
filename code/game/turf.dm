@@ -1466,6 +1466,6 @@ turf/simulated/floor/return_siding_icon_state()
 	for(var/obj/alien/facehugger/M in src)//These really need to be mobs.
 		spawn(0)
 			M.death()
-	for(var/obj/livestock/M in src)
+	for(var/obj/critter/M in src)
 		spawn(0)
-			M.gib()
+			M.Die()

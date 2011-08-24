@@ -200,7 +200,7 @@ proc/dress_for_job_default(var/mob/living/carbon/human/employee as mob, var/job_
 
 		/*
 	src.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (src), slot_back)
-	src.equip_if_possible(new /obj/item/weapon/storage/survival_kit/engineer(src), slot_in_backpack)
+	src.equip_if_possible(new /obj/item/weapon/storage/box/engineer(src), slot_in_backpack)
 	src.equip_if_possible(new /obj/item/device/radio/headset/headset_eng (src), slot_ears) // -- TLE
 	src.equip_if_possible(new /obj/item/device/pda/engineering(src), slot_belt)
 	src.equip_if_possible(new /obj/item/clothing/under/rank/engineer(src), slot_w_uniform)

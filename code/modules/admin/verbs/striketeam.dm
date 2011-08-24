@@ -158,7 +158,7 @@ var/global/sent_strike_team = 0
 	equip_if_possible(new /obj/item/clothing/glasses/thermal(src), slot_glasses)
 
 	equip_if_possible(new /obj/item/weapon/storage/backpack/security(src), slot_back)
-	equip_if_possible(new /obj/item/weapon/storage/survival_kit(src), slot_in_backpack)
+	equip_if_possible(new /obj/item/weapon/storage/box(src), slot_in_backpack)
 
 	equip_if_possible(new /obj/item/ammo_magazine(src), slot_in_backpack)
 	equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)

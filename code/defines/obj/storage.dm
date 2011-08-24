@@ -89,14 +89,7 @@
 	icon_state = "box"
 	item_state = "syringe_kit"
 
-/obj/item/weapon/storage/survival_kit
-	name = "Centcom Survival Kit"
-	desc = "How nice of CentCom to provide us with some stuff to make our lives easier."
-	icon_state = "box"
-	item_state = "syringe_kit"
-
-/obj/item/weapon/storage/survival_kit/engineer
-	name = "Centcom Engineer Kit"
+/obj/item/weapon/storage/box/engineer
 
 /obj/item/weapon/storage/box/syndicate
 

@@ -1324,7 +1324,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	new /obj/livestock/killertomato(user.loc)
+	new /obj/critter/killertomato(user.loc)
 
 	del(src)
 
@@ -1481,7 +1481,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	new /obj/livestock/walkingmushroom(user.loc)
+	new /obj/critter/walkingmushroom(user.loc)
 
 	del(src)
 

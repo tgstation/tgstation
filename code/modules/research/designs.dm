@@ -50,6 +50,7 @@ datum
 			build_type = null				//Flag as to what kind machine the design is built in. See defines.
 			list/materials = list()			//List of materials. Format: "id" = amount.
 			build_path = ""					//The file path of the object that gets created
+			locked = 0						//If true it will spawn inside a lockbox with currently sec access
 
 		proc
 			//A proc to calculate the reliability of a design based on tech levels and innate modifiers.
@@ -1000,6 +1001,7 @@ datum
 			materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 500)
 			reliability_base = 76
 			build_path = "/obj/item/weapon/gun/energy/nuclear"
+			locked = 1
 
 		stunrevolver
 			name = "Stun Revolver"
@@ -1009,6 +1011,7 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 4000)
 			build_path = "/obj/item/weapon/gun/energy/stunrevolver"
+			locked = 1
 
 		lasercannon
 			name = "Laser Cannon"
@@ -1018,6 +1021,7 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 10000, "$glass" = 1000, "$diamond" = 2000)
 			build_path = "/obj/item/weapon/gun/energy/lasercannon"
+			locked = 1
 
 		shockgun
 			name = "Shock Gun"
@@ -1027,6 +1031,7 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 8000, "$silver" = 3000, "$gold" = 500)
 			build_path = "/obj/item/weapon/gun/energy/shockgun"
+			locked = 1
 
 		decloner
 			name = "Decloner"
@@ -1036,6 +1041,7 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$gold" = 5000,"$uranium" = 10000, "mutagen" = 40)
 			build_path = "/obj/item/weapon/gun/energy/decloner"
+			locked = 1
 
 		chemsprayer
 			name = "Chem Sprayer"
@@ -1073,6 +1079,7 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 500, "$silver" = 3000)
 			build_path = "/obj/item/weapon/gun/energy/freeze"
+			locked = 1
 
 		large_grenade
 			name = "Large Grenade"
@@ -1092,6 +1099,7 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 8000, "$silver" = 2000, "$diamond" = 1000)
 			build_path = "/obj/item/weapon/gun/projectile/automatic"
+			locked = 1
 
 		ammo_9mm
 			name = "Ammunition Box (9mm)"
@@ -1206,6 +1214,7 @@ datum
 				build_type = PROTOLATHE
 				materials = list("$metal" = 50, "$glass" = 50)
 				build_path = "/obj/item/clothing/glasses/hud/security"
+				locked = 1
 
 /////////////////////////////////////////
 //////////////////Test///////////////////

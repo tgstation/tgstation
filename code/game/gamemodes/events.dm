@@ -341,9 +341,9 @@
 	for(var/obj/landmark/C in world)
 		if(C.name == "carpspawn")
 			if(prob(99))
-				new /obj/livestock/spesscarp(C.loc)
+				new /obj/critter/spesscarp(C.loc)
 			else
-				new /obj/livestock/spesscarp/elite(C.loc)
+				new /obj/critter/spesscarp/elite(C.loc)
 	sleep(100)
 	command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 	world << sound('commandreport.ogg')

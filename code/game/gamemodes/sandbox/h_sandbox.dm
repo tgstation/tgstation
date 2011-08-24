@@ -147,7 +147,7 @@ datum/hSB
 							continue
 						if(istype(O, /obj/item/device/shield))
 							continue
-						if(istype(O, /obj/hivebot))
+						if(istype(O, /obj/critter))
 							continue
 						if(istype(O, /obj/structure))
 							continue

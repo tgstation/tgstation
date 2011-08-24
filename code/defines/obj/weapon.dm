@@ -1118,44 +1118,10 @@
 	throw_range = 15
 	//layer = 4
 
-
-/obj/item/weapon/paper/Internal
-	name = "paper- 'Internal Atmosphere Operating Instructions'"
-	info = "Equipment:<BR>\n\t1+ Tank(s) with appropriate atmosphere<BR>\n\t1 Gas Mask w regulator (standard issue)<BR>\n<BR>\nProcedure:<BR>\n\t1. Wear mask<BR>\n\t2. Attach oxygen tank pipe to regulater (automatic))<BR>\n\t3. Set internal!<BR>\n<BR>\nNotes:<BR>\n\tDon't forget to stop internal when tank is low by<BR>\n\tremoving internal!<BR>\n<BR>\n\tDo not use a tank that has a high concentration of toxins.<BR>\n\tThe filters shut down on internal mode!<BR>\n<BR>\n\tWhen exiting a high danger environment it is advised<BR>\n\tthat you exit through a decontamination zone!<BR>\n<BR>\n\tRefill a tank at a oxygen canister by equiping the tank (Double Click)<BR>\n\tthen 'attacking' the canister (Double Click the canister)."
-
 /obj/item/weapon/paper/Court
 	name = "paper- 'Judgement'"
 	info = "For crimes against the station, the offender is sentenced to:<BR>\n<BR>\n"
 
-/obj/item/weapon/paper/Map
-	name = "paper- 'Station Blueprint'"
-	var/map_graphic = 'map.png'
-	info = {"<IMG SRC="ss13mapd.png">
-<BR>
-CQ: Crew Quarters<BR>
-L: Lounge<BR>
-CH: Chapel<BR>
-ENG: Engine Area<BR>
-EC: Engine Control<BR>
-ES: Engine Storage<BR>
-GR: Generator Room<BR>
-MB: Medical Bay<BR>
-MR: Medical Research<BR>
-TR: Toxin Research<BR>
-TS: Toxin Storage<BR>
-AC: Atmospheric Control<BR>
-SEC: Security<BR>
-SB: Shuttle Bay
-SA: Shuttle Airlock<BR>
-S: Storage<BR>
-CR: Control Room<BR>
-EV: EVA Storage<BR>
-AE: Aux. Engine<BR>
-P: Podbay<BR>
-NA: North Airlock<BR>
-SC: Solar Control<BR>
-ASC: Aux. Solar Control<BR>
-"}
 
 /obj/item/weapon/paper/Toxin
 	name = "paper- 'Chemical Information'"
@@ -1187,38 +1153,6 @@ ASC: Aux. Solar Control<BR>
 /obj/item/weapon/paper/sop
 	name = "paper- 'Standard Operating Procedure'"
 	info = "Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can only be opened by reseting the alarm<BR>\nRed- Ejection/Self Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alrms in front of ship.<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-<BR>\n\t\t\tEvacuate to a nearby safe area!"
-
-/obj/item/weapon/paper/engine
-	name = "paper- 'Generator Startup Procedure'"
-	info = {"<B>Thermo-Electric Generator Startup Procedure for Mark I Plasma-Fired Engines</B>
-<HR>
-<i>Warning!</i> Improper engine and generator operation may cause exposure to hazardous gasses, extremes of heat and cold, and dangerous electrical voltages.<BR>
-Only trained personnel should operate station systems. Follow all procedures carefully. Wear correct personal protective equipment at all times.<BR>
-Refer to your supervisor or Head of Personnel for procedure updates and additional information.
-<HR>
-Standard checklist for engine and generator cold-start.<BR>
-<ol>
-<li>Perform visual inspection of external (cooling) and internal (heating) heat-exchange pipe loops.
-Refer any breaks or cracks in the pipe to Station Maintenance for repair before continuing.
-<li>Connect a CO<sub>2</sub> canister to the external (cooling) loop connector, and release the contents. Check loop pressurization is stable.<BR>
-<i>Note:</i> Observe standard canister safety procedures.<BR>
-<i>Note:</i> Other gasses may be substituted as a medium in the external (cooling) loop in the event that CO<sub>2</sub> is not available.
-<li>Connect a CO<sub>2</sub> canister to the internal (heating) loop connector, and release the contents. Check loop pressurization is stable.<BR>
-<i>Note:</i> Observe standard canister safety procedures.<BR>
-<i>Note:</i> Nitrogen may be substituted as a medium in the internal (heating) loop in the event that CO<sub>2</sub> is not available.
-<i>Do not use plasma in the internal (heating) pipe loop as an unsafe condition may result.</i>
-<li>Using the thermo-electric generator (TEG) master control panel, engage the internal and external loop circulator pumps at 1% maximum rate.<BR>
-<li>Ignite the engine. Refer to document NTRSN-113-H9-12939 for proper engine preparation, ignition, and plasma-oxygen loading procedures.<BR>
-<i>Note:</i> Exceeding recommended plasma-oxygen concentrations can cause engine damage and potential hazards.
-<li>Monitor engine temperatures until stable operation is achieved.
-<li>Increase internal and external circulator pumps to 10% of maximum rate. Monitor the generated power output on the TEG control panel.<BR>
-<i>Note:</i> Consult appendix A for expected electrical generation rates.
-<li>Adjust circulator rates until required electrical demand is met.<BR>
-<i>Note:</i> Generation rate varies with internal and external loop temperatures, exchange media pressure, and engine geometry. Refer to Appendix B or your supervisor for locally determined optimal settings.<BR>
-<i>Note:</i> Do not exceed safety ratings for station power cabling and electrical equipment.
-<li>With the power generation rate stable, engage charging of the superconducting magnetic energy storage (SMES) devices.
-Total SMES charging rate should not exceed total power generation rate, or an overload condition may occur.
-"}
 
 /obj/item/weapon/paper_bin
 	name = "Paper Bin"

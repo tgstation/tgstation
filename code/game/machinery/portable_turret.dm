@@ -297,11 +297,10 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	var/list/targets = list()		   // list of primary targets
 	var/list/secondarytargets = list() // targets that are least important
 
-	if(src.check_anomalies) // if its set to check for xenos/carps, check for non-mob "livestock"
-		for (var/obj/livestock/L in view(12,src))
-			if(istype(L, /obj/livestock/spesscarp)) // git dose fukken space carps
-				if(L.alive)
-					targets += L
+	if(src.check_anomalies) // if its set to check for xenos/carps, check for non-mob "crittersssss"
+		for (var/obj/critter/L in view(12,src))
+			if(L.alive)
+				targets += L
 
 	for (var/mob/living/carbon/C in view(12,src)) // loops through all living carbon-based lifeforms in view(12)
 		if(istype(C, /mob/living/carbon/alien) && src.check_anomalies) // git those fukken xenos
@@ -346,8 +345,8 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 				spawn() shootAt(M) // shoot the target, finally
 		else
 
-			if (istype(t, /obj/livestock)) // shoot other things, same process as above
-				var/obj/livestock/L = t
+			if (istype(t, /obj/critter)) // shoot other things, same process as above
+				var/obj/critter/L = t
 				if (L.alive==1)
 					spawn() popUp()
 					dir=get_dir(src,L)

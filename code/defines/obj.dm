@@ -8,7 +8,7 @@
 	var/crit_fail = 0
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
-	var/throwforce = 0
+	var/throwforce = 1
 	proc
 		handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 			//Return: (NONSTANDARD)
@@ -34,6 +34,7 @@
 	attack_hand(mob/user as mob)
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
+				if(user.z != src.z)	return
 				user.loc.loc.Exited(user)
 				user.loc = pick(latejoin)
 			if("No")
@@ -281,8 +282,8 @@
 	name = "item"
 	icon = 'items.dmi'
 	var/icon_old = null//For when weapons get bloodied this saves their old icon.
-	var/abstract = 0.0
-	var/force = null
+	var/abstract = 0
+	var/force = 0
 	var/item_state = null
 	var/damtype = "brute"
 	var/r_speed = 1.0
@@ -981,18 +982,6 @@
 		..()
 		src.pixel_x = rand(-5, 5)
 		src.pixel_y = rand(-5, 5)
-
-/obj/item/weapon/storage
-	icon = 'storage.dmi'
-	name = "storage"
-	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
-	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
-	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
-	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
-	var/storage_slots = 7 //The number of storage slots in this container.
-	var/obj/screen/storage/boxes = null
-	var/obj/screen/close/closer = null
-	w_class = 3.0
 
 
 /*

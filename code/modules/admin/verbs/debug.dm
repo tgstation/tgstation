@@ -650,7 +650,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/weapon/spellbook(M), M.slot_r_hand)
 			M.equip_if_possible(new /obj/item/weapon/staff(M), M.slot_l_hand)
 			M.equip_if_possible(new /obj/item/weapon/storage/backpack(M), M.slot_back)
-			M.equip_if_possible(new /obj/item/weapon/storage/survival_kit(M), M.slot_in_backpack)
+			M.equip_if_possible(new /obj/item/weapon/storage/box(M), M.slot_in_backpack)
 
 		if("red wizard")
 			M.equip_if_possible(new /obj/item/clothing/under/lightpurple(M), M.slot_w_uniform)
@@ -662,7 +662,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/weapon/spellbook(M), M.slot_r_hand)
 			M.equip_if_possible(new /obj/item/weapon/staff(M), M.slot_l_hand)
 			M.equip_if_possible(new /obj/item/weapon/storage/backpack(M), M.slot_back)
-			M.equip_if_possible(new /obj/item/weapon/storage/survival_kit(M), M.slot_in_backpack)
+			M.equip_if_possible(new /obj/item/weapon/storage/box(M), M.slot_in_backpack)
 
 		if("marisa wizard")
 			M.equip_if_possible(new /obj/item/clothing/under/lightpurple(M), M.slot_w_uniform)
@@ -674,7 +674,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/weapon/spellbook(M), M.slot_r_hand)
 			M.equip_if_possible(new /obj/item/weapon/staff(M), M.slot_l_hand)
 			M.equip_if_possible(new /obj/item/weapon/storage/backpack(M), M.slot_back)
-			M.equip_if_possible(new /obj/item/weapon/storage/survival_kit(M), M.slot_in_backpack)
+			M.equip_if_possible(new /obj/item/weapon/storage/box(M), M.slot_in_backpack)
 
 	M.update_clothing()
 	return
