@@ -414,7 +414,9 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 15)
-				if(M.canmove) step(M, pick(cardinal))
+				if(isturf(M.loc))
+					if(M.canmove)
+						step(M, pick(cardinal))
 				if(prob(7)) M:emote(pick("twitch","drool","moan","giggle"))
 				holder.remove_reagent(src.id, 0.2)
 				return

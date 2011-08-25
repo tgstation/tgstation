@@ -168,7 +168,7 @@ var/global/list/uneatable = list(
 					icon_state = "singularity_s9"
 					pixel_x = -128
 					pixel_y = -128
-					grav_pull = 15//This might cause some lag, dono though
+					grav_pull = 10
 					consume_range = 4
 					dissipate = 0 //It cant go smaller due to e loss
 			if(current_size == allowed_size)
@@ -200,6 +200,7 @@ var/global/list/uneatable = list(
 
 
 		eat()
+			set background = 1
 			for(var/atom/movable/X in orange(consume_range,src))
 				consume(X)
 			for(var/turf/X in orange(consume_range,src))
@@ -362,9 +363,7 @@ var/global/list/uneatable = list(
 
 
 		toxmob()
-			var/toxrange = 8
-			if (src.energy>1000)
-				toxrange += 6
+			var/toxrange = 10
 			var/toxloss = 4
 			var/radiation = 5
 			if (src.energy>200)
@@ -426,7 +425,7 @@ var/global/list/uneatable = list(
 
 
 		emp_area()
-			empulse(src, 6, 8)
+			empulse(src, 8, 10)
 			return
 
 

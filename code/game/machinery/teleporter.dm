@@ -46,8 +46,9 @@
 	var/list/areaindex = list()
 
 	for(var/obj/item/device/radio/beacon/R in world)
-		var/turf/T = find_loc(R)
+		var/turf/T = get_turf(R)
 		if (!T)	continue
+		if(T.z == 2)	continue
 		var/tmpname = T.loc.name
 		if(areaindex[tmpname])
 			tmpname = "[tmpname] ([++areaindex[tmpname]])"
@@ -63,6 +64,9 @@
 			if (M.stat == 2)
 				if (M.timeofdeath + 6000 < world.time)
 					continue
+			var/turf/T = get_turf(M)
+			if(T)	continue
+			if(T.z == 2)	continue
 			var/tmpname = M.real_name
 			if(areaindex[tmpname])
 				tmpname = "[tmpname] ([++areaindex[tmpname]])"
