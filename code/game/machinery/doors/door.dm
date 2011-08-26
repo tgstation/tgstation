@@ -10,11 +10,12 @@
 		if(src.check_access(bot.botcard))
 			if(density)
 				open()
-//	else if(istype(AM, /obj/livestock))currently all access will fix later
-//		var/obj/livestock/ani =AM
-//		if(src.check_access(ani.anicard))
-//			if(density)
-//				open()
+	else if(istype(AM, /obj/critter))
+		var/obj/critter/critter = AM
+		if(critter.opensdoors)	return
+		if(src.check_access_list(critter.access_list))
+			if(density)
+				open()
 	else if(istype(AM, /obj/alien/facehugger))
 		if(src.check_access(null))
 			if(density)

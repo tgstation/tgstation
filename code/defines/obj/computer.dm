@@ -349,17 +349,3 @@
 	var/stop = 0.0
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
 
-/obj/machinery/computer/prisoner
-	name = "Prisoner Management"
-	icon = 'computer.dmi'
-	icon_state = "explosive"
-	req_access = list(access_armory)
-	circuit = "/obj/item/weapon/circuitboard/prisoner"
-
-	var/id = 0.0
-	var/temp = null
-	var/status = 0
-	var/timeleft = 60
-	var/stop = 0.0
-	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
-	var/malf_access = 0

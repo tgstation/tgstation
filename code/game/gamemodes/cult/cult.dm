@@ -10,16 +10,18 @@
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
-	return istype(mind) && \
-		istype(mind.current, /mob/living/carbon/human) && \
-		!(mind.assigned_role in head_positions) && \
-		!(mind.assigned_role in list("Security Officer", "Detective", "Chaplain", "Warden"))
+	if(!istype(mind))	return 0
+	if(istype(mind.current, /mob/living/carbon/human) && !(mind.assigned_role in list("Captain", "Head of Security", "Security Officer", "Detective", "Chaplain", "Warden")))	return 0
+	for(var/obj/item/weapon/implant/loyalty/L in mind.current)
+		if(L && L.implanted)
+			return 0
+	return 1
 
 
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
-	restricted_jobs = list("Chaplain", "Security Officer", "Warden", "Detective", "AI", "Cyborg", "Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	restricted_jobs = list("Chaplain", "Security Officer", "Warden", "Detective", "AI", "Cyborg", "Captain", "Head of Security")
 	required_players = 15
 	required_enemies = 3
 

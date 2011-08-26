@@ -10,7 +10,7 @@
 		alive = 1
 		health = 10
 		max_health = 10
-
+		list/access_list = list()//accesses go here
 //AI things
 		task = "thinking"
 	//Attacks at will
@@ -19,8 +19,8 @@
 		defensive = 0
 	//Will randomly move about
 		wanderer = 1
-	//Will open doors it bumps
-		opensdoors = 1
+	//Will open doors it bumps ignoring access
+		opensdoors = 0
 
 	//Internal tracking ignore
 		frustration = 0

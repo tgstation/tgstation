@@ -1240,7 +1240,7 @@
 	icon = 'beach.dmi'
 	icon_state = "ball"
 	name = "beach ball"
-	item_state = "clown"
+	item_state = "beachball"
 	density = 0
 	anchored = 0
 	w_class = 1.0

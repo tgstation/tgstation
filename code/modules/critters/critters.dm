@@ -31,7 +31,6 @@
 	aggressive = 0
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
 	atkcarbon = 1
 	atksilicon = 0
 	attacktext = "bites"
@@ -49,7 +48,6 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 2
@@ -73,7 +71,6 @@
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 2
@@ -101,7 +98,6 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 1
 	atkcarbon = 1
 	atksilicon = 1
 	atkcritter = 1
@@ -127,6 +123,7 @@
 	max_health = 50
 	melee_damage_lower = 10
 	melee_damage_upper = 20
+//	opensdoors = 1 would give all access dono if want
 
 /obj/critter/walkingmushroom
 	name = "Walking Mushroom"
@@ -137,7 +134,6 @@
 	aggressive = 0
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 2

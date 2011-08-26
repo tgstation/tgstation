@@ -481,10 +481,9 @@
 
 	switch(ticker.mode.name)
 		if ("revolution")
-			if (src.occupant.mind in ticker.mode:revolutionaries)
-				ticker.mode:add_revolutionary(src.occupant.mind)
+			if(src.occupant.mind in ticker.mode:revolutionaries)
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
-			if (src.occupant.mind in ticker.mode:head_revolutionaries)
+			if(src.occupant.mind in ticker.mode:head_revolutionaries)
 				ticker.mode:update_all_rev_icons()
 		if ("nuclear emergency")
 			if (src.occupant.mind in ticker.mode:syndicates)

@@ -842,35 +842,6 @@
 				sight |= SEE_OBJS
 				if (!druggy)
 					see_invisible = 0
-			else if (istype(glasses, /obj/item/clothing/glasses/hud/security))
-				if(client)
-					var/icon/tempHud = 'hud.dmi'
-					for(var/mob/living/carbon/human/perp in view(src))
-						if(perp.wear_id)
-							client.images += image(tempHud,perp,"hud[ckey(perp:wear_id:GetJobName())]")
-							var/perpname = "wot"
-							if(istype(perp.wear_id,/obj/item/weapon/card/id))
-								perpname = perp.wear_id:registered
-							else if(istype(perp.wear_id,/obj/item/device/pda))
-								var/obj/item/device/pda/tempPda = perp.wear_id
-								perpname = tempPda.owner
-							for (var/datum/data/record/E in data_core.general)
-								if (E.fields["name"] == perpname)
-									for (var/datum/data/record/R in data_core.security)
-										if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-											client.images += image(tempHud,perp,"hudwanted")
-											break
-										else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
-											client.images += image(tempHud,perp,"hudprisoner")
-											break
-						else
-							client.images += image(tempHud,perp,"hudunknown")
-						for(var/obj/item/weapon/implant/tracking/tracker in perp)
-							if(tracker.implanted)
-								client.images += image(tempHud,perp,"hudtracking")
-								break
-				if (!druggy)
-					see_invisible = 0
 			else if (istype(glasses, /obj/item/clothing/glasses/hud/health))
 				if(client)
 
@@ -921,6 +892,18 @@
 			else if (istype(head, /obj/item/clothing/head/helmet/welding))
 				if(!head:up && tinted_weldhelh)
 					see_in_dark = 1
+
+			if(istype(glasses, /obj/item/clothing/glasses/hud/security))
+				if(client)
+					glasses:process_hud(src)
+				if(!druggy)
+					see_invisible = 0
+			else if((istype(head, /obj/item/clothing/head/helmet)) && (!istype(head, /obj/item/clothing/head/helmet/space)))
+				if(client)
+					if(head:shud)
+						head:shud:process_hud(src)
+				if(!druggy)
+					see_invisible = 0
 
 			if (sleep) sleep.icon_state = text("sleep[]", sleeping)
 			if (rest) rest.icon_state = text("rest[]", resting)

@@ -163,19 +163,22 @@ FLASHBANG
 				eye_safety = M.eyecheck()
 				if(ishuman(M))
 					if(istype(M:ears, /obj/item/clothing/ears/earmuffs))
-						ear_safety = 1
+						ear_safety += 2
 					if(M.mutations & HULK)
-						ear_safety = 1
+						ear_safety += 1
+					if(istype(M:head, /obj/item/clothing/head/helmet))
+						ear_safety += 1
 
 //Flashing everyone
-			if(!eye_safety)
+			if(eye_safety < 1)
 				flick("e_flash", M.flash)
 				M.eye_stat += rand(1, 3)
+				M.stunned = max(M.stunned,2)
 				M.weakened = max(M.weakened,10)
 
 //Now applying sound
 			if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
-				if(ear_safety)
+				if(ear_safety > 0)
 					M.stunned = max(M.stunned,2)
 					M.weakened = max(M.weakened,1)
 				else

@@ -19,6 +19,7 @@
 	required_enemies = 3
 
 	var/finished = 0
+	var/checkwin_counter = 0
 	var/const/max_headrevs = 3
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -109,10 +110,20 @@
 		send_intercept()
 	..()
 
+
+/datum/game_mode/revolution/process()
+	checkwin_counter++
+	if(checkwin_counter >= 20)
+		if(!finished)
+			ticker.mode.check_win()
+		checkwin_counter = 0
+	return 0
+
+
 /datum/game_mode/proc/forge_revolutionary_objectives(var/datum/mind/rev_mind)
 	var/list/heads = get_living_heads()
 	for(var/datum/mind/head_mind in heads)
-		var/datum/objective/assassinate/rev_obj = new
+		var/datum/objective/mutiny/rev_obj = new
 		rev_obj.owner = rev_mind
 		rev_obj.target = head_mind
 		rev_obj.explanation_text = "Assassinate [head_mind.current.real_name], the [head_mind.assigned_role]."
@@ -314,7 +325,7 @@
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
-		world << "\red <FONT size = 3><B> The heads of staff were killed! The revolutionaries win!</B></FONT>"
+		world << "\red <FONT size = 3><B> The heads of staff were killed or abandoned the station! The revolutionaries win!</B></FONT>"
 	else if(finished == 2)
 		world << "\red <FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT>"
 	..()
@@ -334,7 +345,10 @@
 		var/list/names = new
 		for(var/datum/mind/i in revolutionaries)
 			if(i.current)
-				names += i.current.real_name + ((i.current.stat==2)?" (Dead)":"")
+				var/hstatus = "Dead"
+				if((i.current.z != 1) && (i.current.stat!=2))
+					hstatus = "Abandoned the station"
+				names += i.current.real_name + " [hstatus]"
 			else
 				names += "[i.key] (character destroyed)"
 		if (revolutionaries.len!=0)
@@ -354,7 +368,10 @@
 		var/list/names = new
 		for(var/datum/mind/i in heads)
 			if(i.current)
-				names += i.current.real_name + ((i.current.stat==2)?" (Dead)":"") + ((i in targets)?"(target)":"")
+				var/hstatus = "Dead"
+				if((i.current.z != 1) && (i.current.stat!=2))
+					hstatus = "Abandoned the station"
+				names += i.current.real_name + " [hstatus] " + ((i in targets)?"(target)":"")
 			else
 				names += "[i.key] (character destroyed)" + ((i in targets)?"(target)":"")
 		if (heads.len!=0)
@@ -362,6 +379,7 @@
 			world << english_list(names)
 		else
 			world << "There were no any <FONT size = 2><B>heads of staff</B></FONT> on the station."
+
 
 /proc/is_convertable_to_rev(datum/mind/mind)
 	return istype(mind) && \

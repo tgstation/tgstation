@@ -3029,16 +3029,15 @@ It can still be worn/put on as normal.
 ///eyecheck()
 ///Returns a number between -1 to 2
 /mob/living/carbon/human/eyecheck()
+	var/number = 0
 	if(istype(src.head, /obj/item/clothing/head/helmet/welding))
 		if(!src.head:up)
-			return (2)
+			number += 2
 	if(istype(src.head, /obj/item/clothing/head/helmet/space))
-		return (2)
+		number += 2
 	if(istype(src.glasses, /obj/item/clothing/glasses/sunglasses))
-		return (1)
+		number += 1
 	if(istype(src.glasses, /obj/item/clothing/glasses/thermal))
-		return (-1)
-	if(src.sdisabilities & 1)//Blindness Check
-		return (2)
-	return (0)
+		number -= 1
+	return number
 

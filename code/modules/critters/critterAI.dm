@@ -87,13 +87,12 @@
 
 	Bump(M as mob|obj)//TODO: Add access levels here
 		spawn(0)
-			if ((istype(M, /obj/machinery/door)))
-				var/obj/machinery/door/D = M
-				if (src.opensdoors)
-					D.open()
+			if((istype(M, /obj/machinery/door)))
+				if(src.opensdoors)
+					M:open()
 					src.frustration = 0
-				else src.frustration ++
-			else if ((istype(M, /mob/living/)) && (!src.anchored))
+			else src.frustration ++
+			if((istype(M, /mob/living/)) && (!src.anchored))
 				src.loc = M:loc
 				src.frustration = 0
 			return
@@ -127,9 +126,9 @@
 			for(var/obj/critter/C in view(src.seekrange,src))
 				if(istype(C, /obj/critter) && !src.atkcritter) continue
 				if(istype(C, /obj/mecha) && !src.atkmech) continue
-				if(C.health < 0) continue
+				if(C.health <= 0) continue
 				if(istype(C, /obj/critter) && src.atkcritter)
-					if(istype(C, src.type) && !src.atksame)	continue
+					if((istype(C, src.type) && !src.atksame) || (C == src))	continue
 					src.attack = 1
 				if(istype(C, /obj/mecha) && src.atkmech)	src.attack = 1
 				if(src.attack)

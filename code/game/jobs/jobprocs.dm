@@ -270,6 +270,9 @@
 			src.equip_if_possible(new /obj/item/device/detective_scanner(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/zippo(src), slot_l_store)
 			src.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(src), slot_h_store)
+			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
+			L.imp_in = src
+			L.implanted = 1
 
 		if ("Medical Doctor")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears) // -- TLE
@@ -293,7 +296,9 @@
 			src.equip_if_possible(new /obj/item/clothing/head/caphat(src), slot_head)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/weapon/storage/id_kit(src), slot_in_backpack)
-
+			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
+			L.imp_in = src
+			L.implanted = 1
 
 		if ("Security Officer")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sec (src), slot_ears) // -- TLE
@@ -306,6 +311,9 @@
 			src.equip_if_possible(new /obj/item/clothing/shoes/jackboots(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_s_store)
+			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
+			L.imp_in = src
+			L.implanted = 1
 
 		if ("Warden")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sec (src), slot_ears) // -- TLE
@@ -322,6 +330,9 @@
 			src.equip_if_possible(new /obj/item/weapon/gun/energy/taser(src), slot_s_store)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/device/flash(src), slot_l_store)
+			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
+			L.imp_in = src
+			L.implanted = 1
 
 		if ("Scientist")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sci (src), slot_ears)
@@ -347,6 +358,9 @@
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/gun/energy(src), slot_s_store)
 			src.equip_if_possible(new /obj/item/device/flash(src), slot_l_store)
+			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
+			L.imp_in = src
+			L.implanted = 1
 
 		if ("Head of Personnel")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/hop (src), slot_ears) // -- TLE

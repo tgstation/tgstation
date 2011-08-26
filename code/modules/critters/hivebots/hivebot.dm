@@ -74,9 +74,9 @@
 			for(var/obj/critter/C in view(src.seekrange,src))
 				if(istype(C, /obj/critter) && !src.atkcritter) continue
 				if(istype(C, /obj/mecha) && !src.atkmech) continue
-				if(C.health < 0) continue
+				if(C.health <= 0) continue
 				if(istype(C, /obj/critter) && src.atkcritter)
-					if(istype(C, /obj/critter/hivebot) && !src.atksame)	continue
+					if((istype(C, /obj/critter/hivebot) && !src.atksame) || (C == src))	continue
 					src.attack = 1
 				if(istype(C, /obj/mecha) && src.atkmech) src.attack = 1
 				if(src.attack)
@@ -203,6 +203,7 @@
 		if(auto_spawn)
 			spawn(spawn_delay)
 				turn_on = 1
+				auto_spawn = 0
 
 
 	warpbots()
@@ -224,11 +225,12 @@
 
 
 	process()
-		if(health < (max_health/2))
-			turn_on = 1
-		if(turn_on)
+		if((health < (max_health/2)) && (!turn_on))
+			if(prob(2))//Might be a bit low, will mess with it likely
+				turn_on = 1
+		if(turn_on == 1)
 			warpbots()
-			turn_on = 0
+			turn_on = 2
 		..()
 
 /obj/critter/hivebot/tele/massive

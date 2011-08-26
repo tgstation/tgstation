@@ -60,27 +60,26 @@ Frequency:
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
 				for (var/obj/item/weapon/implant/tracking/W in world)
-					if (W.frequency == src.frequency)
-						if (!W.implanted || !ismob(W.loc))
-							continue
-						else
-							var/mob/M = W.loc
-							if (M.stat == 2)
-								if (M.timeofdeath + 6000 < world.time)
-									continue
+					if (!W.implanted || !ismob(W.loc))
+						continue
+					else
+						var/mob/M = W.loc
+						if (M.stat == 2)
+							if (M.timeofdeath + 6000 < world.time)
+								continue
 
-						var/turf/tr = get_turf(W)
-						if (tr.z == sr.z && tr)
-							var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-							if (direct < 20)
-								if (direct < 5)
-									direct = "very strong"
+					var/turf/tr = get_turf(W)
+					if (tr.z == sr.z && tr)
+						var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
+						if (direct < 20)
+							if (direct < 5)
+								direct = "very strong"
+							else
+								if (direct < 10)
+									direct = "strong"
 								else
-									if (direct < 10)
-										direct = "strong"
-									else
-										direct = "weak"
-								src.temp += "[W.id]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
+									direct = "weak"
+							src.temp += "[W.id]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
 			else

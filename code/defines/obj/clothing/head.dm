@@ -151,9 +151,32 @@
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
 	item_state = "helmet"
 	armor = list(melee = 75, bullet = 10, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
-
 	protective_temperature = 500
 	heat_transfer_coefficient = 0.10
+	var/obj/item/clothing/glasses/hud/security/shud = null
+
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if((istype(W,/obj/item/clothing/glasses/hud/security)) && (!istype(src, /obj/item/clothing/head/helmet/space)) && (!shud))
+			user.remove_from_mob(W)
+			shud = W
+			W.loc = src
+			user << "You attach the [W.name] to the [src.name]."
+			desc = "Standard Security gear. This helmet has a [shud.name] attached to it."
+			return
+		..()
+
+
+	attack_self(mob/user as mob)
+		if(shud)
+			shud.loc = get_turf(src)
+			user << "You take the [shud.name] off of the [src.name]."
+			shud = null
+			desc = "Standard Security gear."
+			return
+		..()
+
+
 
 /obj/item/clothing/head/secsoft
 	name = "Soft Cap"
