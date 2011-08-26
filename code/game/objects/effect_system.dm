@@ -417,7 +417,7 @@ steam.start() -- spawns the effect
 
 /obj/effects/chem_smoke/Move()
 	..()
-	for(var/atom/A in view(2, src))
+	for(var/atom/A in view(1, src))
 		reagents.reaction(A)
 
 	return
@@ -501,7 +501,8 @@ steam.start() -- spawns the effect
 				else
 					direction = pick(alldirs)
 
-			chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume) // copy reagents to each smoke
+			if(chemholder.reagents.total_volume != 1) // can't split 1 very well
+				chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume / number) // copy reagents to each smoke, divide evenly
 
 			if(finalcolor)
 				smoke.icon += finalcolor // give the smoke color, if it has any to begin with

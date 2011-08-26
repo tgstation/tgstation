@@ -283,13 +283,21 @@
 						breath = loc.remove_air(breath_moles)
 
 						// Handle chem smoke effects  -- Doohl
-						for(var/obj/effects/chem_smoke/smoke in view(2, src))
-							if(smoke.reagents.total_volume)
-								smoke.reagents.reaction(src, INGEST)
-								spawn(5)
-									if(smoke)
-										smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
-								break // If they breathe in the nasty stuff once, no need to continue checking
+
+						var/block = 0
+						if(wear_mask)
+							if(istype(wear_mask, /obj/item/clothing/mask/gas))
+								block = 1
+
+						if(!block)
+
+							for(var/obj/effects/chem_smoke/smoke in view(1, src))
+								if(smoke.reagents.total_volume)
+									smoke.reagents.reaction(src, INGEST)
+									spawn(5)
+										if(smoke)
+											smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
+									break // If they breathe in the nasty stuff once, no need to continue checking
 
 				else //Still give containing object the chance to interact
 					if(istype(loc, /obj/))

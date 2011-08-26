@@ -193,7 +193,7 @@
 						breath = loc.remove_air(breath_moles)
 
 						// Handle chem smoke effects  -- Doohl
-						for(var/obj/effects/chem_smoke/smoke in view(2, src))
+						for(var/obj/effects/chem_smoke/smoke in view(1, src))
 							if(smoke.reagents.total_volume)
 								smoke.reagents.reaction(src, INGEST)
 								spawn(5)
