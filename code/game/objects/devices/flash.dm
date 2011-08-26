@@ -60,7 +60,7 @@
 			else
 				flashfail = 1
 
-		else if(isrobot(user))
+		else if(isrobot(M))
 			M.weakened = max(user.weakened, rand(5,10))
 			spawn(0)
 				var/atom/movable/overlay/animation = new(user.loc)
