@@ -218,7 +218,7 @@
 	icon_state = "wizard-fake"
 	item_state = "wizrobe"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS //It's not magic, shit is reasonable. --NEO
-	armor = list(melee = 5, bullet = 5, laser = 5, taser = 5, bomb = 5, bio = 5, rad = 5)
+	armor = list(melee = 5, bullet = 0, laser = 5, taser = 5, bomb = 5, bio = 5, rad = 5)
 
 /obj/item/clothing/suit/wizrobe/marisa
 	name = "Witch Robe"
@@ -449,7 +449,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 3
-	armor = list(melee = 20, bullet = 15, laser = 10, taser = 3, bomb = 15, bio = 30, rad = 40)
+	armor = list(melee = 20, bullet = 5, laser = 10, taser = 3, bomb = 15, bio = 30, rad = 40)
 
 
 /obj/item/clothing/head/helmet/space/rig
@@ -457,7 +457,7 @@
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
 	icon_state = "rig-engineering"
 	item_state = "rig_helm"
-	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
+	armor = list(melee = 40, bullet = 5, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
 	allowed = list(/obj/item/device/flashlight)
 
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -471,7 +471,7 @@
 	item_state = "rig_suit"
 	radiation_protection = 0.50
 	slowdown = 2
-	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
+	armor = list(melee = 40, bullet = 5, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/satchel,/obj/item/device/t_scanner)
 
 /obj/item/clothing/suit/space/rig/mining

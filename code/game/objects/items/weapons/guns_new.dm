@@ -54,6 +54,14 @@
 			effects["stutter"] = 5
 			effects["eyeblur"] = 5
 
+	midbullet
+		damage = 8
+		mobdamage = list(BRUTE = 32, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
+		New()
+			..()
+			effects["weak"] = 10
+			effects["stun"] = 10
+
 
 	suffocationbullet
 		damage = 65
@@ -381,7 +389,7 @@
 		caliber = ".45"
 
 		New()
-			BB = new /obj/item/projectile(src)
+			BB = new /obj/item/projectile/midbullet(src)
 			pixel_x = rand(-10.0, 10)
 			pixel_y = rand(-10.0, 10)
 			dir = pick(cardinal)
