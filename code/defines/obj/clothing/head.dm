@@ -13,7 +13,7 @@
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
 	radiation_protection = 0.35
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 100)
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 60, rad = 100)
 
 /obj/item/clothing/head/bomb_hood
 	name = "bomb hood"
@@ -153,30 +153,6 @@
 	armor = list(melee = 75, bullet = 10, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 	protective_temperature = 500
 	heat_transfer_coefficient = 0.10
-	var/obj/item/clothing/glasses/hud/security/shud = null
-
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if((istype(W,/obj/item/clothing/glasses/hud/security)) && (!istype(src, /obj/item/clothing/head/helmet/space)) && (!shud))
-			user.remove_from_mob(W)
-			shud = W
-			W.loc = src
-			user << "You attach the [W.name] to the [src.name]."
-			desc = "Standard Security gear. This helmet has a [shud.name] attached to it."
-			return
-		..()
-
-
-	attack_self(mob/user as mob)
-		if(shud)
-			shud.loc = get_turf(src)
-			user << "You take the [shud.name] off of the [src.name]."
-			shud = null
-			desc = "Standard Security gear."
-			return
-		..()
-
-
 
 /obj/item/clothing/head/secsoft
 	name = "Soft Cap"
@@ -195,38 +171,6 @@
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 25, rad = 25)
 
-/obj/item/clothing/head/helmet/space/engineering
-	name = "Engineering space helmet"
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Painted in Engineering Orange to designate its department of origin."
-	icon_state = "helm_engineering0"
-	item_state = "helm-orange"
-	var/brightness_on = 4
-	var/on = 0
-	radiation_protection = 0.25
-	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
-
-/obj/item/clothing/head/helmet/space/command
-	name = "Command space helmet"
-	desc = "A special helmet designed to work in a hazardous, low-pressure environment. Painted in Command Blue to designate its department of origin."
-	icon_state = "helm-command"
-	item_state = "helm-command"
-	radiation_protection = 0.25
-	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
-
-/obj/item/clothing/head/helmet/space/command/chief_engineer
-	name = "Chief engineer space helmet"
-	desc = "A special helmet designed to work in a hazardous, low-pressure environment. Bears the insignia of the chief engineer."
-	icon_state = "helm_ce0"
-	item_state = "helm-ce"
-	var/brightness_on = 4
-	var/on = 0
-
-/obj/item/clothing/head/helmet/space/command/chief_medical_officer
-	name = "Chief medical offier space helmet"
-	desc = "A special helmet designed to work in a hazardous, low-pressure environment. Bears the insignia of the chief medical officer."
-	icon_state = "helm-cmo"
-	item_state = "helm-cmo"
-
 /obj/item/clothing/head/helmet/space/capspace
 	name = "space helmet"
 	icon_state = "capspace"
@@ -237,13 +181,6 @@
 	permeability_coefficient = 0.01
 	armor = list(melee = 60, bullet = 50, laser = 50, taser = 25, bomb = 50, bio = 20, rad = 20)
 
-/obj/item/clothing/head/helmet/space/rig
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
-	name = "rig helmet"
-	icon_state = "rig"
-	item_state = "rig_helm"
-	radiation_protection = 0.25
-	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
@@ -275,15 +212,15 @@
 	icon_state = "syndicate-helm-green-dark"
 	item_state = "syndicate-helm-green-dark"
 
-/*/obj/item/clothing/head/helmet/space/syndicate/orange
+/obj/item/clothing/head/helmet/space/syndicate/orange
 	name = "Orange Space Helmet"
 	icon_state = "syndicate-helm-orange"
-	item_state = "syndicate-helm-orange"*/ //As I said: Best used for engineering suits
+	item_state = "syndicate-helm-orange"
 
-/*/obj/item/clothing/head/helmet/space/syndicate/blue
+/obj/item/clothing/head/helmet/space/syndicate/blue
 	name = "Blue Space Helmet"
 	icon_state = "syndicate-helm-blue"
-	item_state = "syndicate-helm-blue"*/
+	item_state = "syndicate-helm-blue"
 
 /obj/item/clothing/head/helmet/space/syndicate/black
 	name = "Black Space Helmet"
@@ -300,10 +237,10 @@
 	icon_state = "syndicate-helm-black-blue"
 	item_state = "syndicate-helm-black-blue"
 
-/*/obj/item/clothing/head/helmet/space/syndicate/black/med
+/obj/item/clothing/head/helmet/space/syndicate/black/med
 	name = "Black Space Helmet"
 	icon_state = "syndicate-helm-black-med"
-	item_state = "syndicate-helm-black"*/
+	item_state = "syndicate-helm-black"
 
 /obj/item/clothing/head/helmet/space/syndicate/black/orange
 	name = "Black Space Helmet"
@@ -315,10 +252,10 @@
 	icon_state = "syndicate-helm-black-red"
 	item_state = "syndicate-helm-black-red"
 
-/*/obj/item/clothing/head/helmet/space/syndicate/black/engie
+obj/item/clothing/head/helmet/space/syndicate/black/engie
 	name = "Black Space Helmet"
 	icon_state = "syndicate-helm-black-engie"
-	item_state = "syndicate-helm-black"*/
+	item_state = "syndicate-helm-black"
 
 /obj/item/clothing/head/syndicatefake
 	name = "red space helmet replica"

@@ -9,18 +9,17 @@
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
 	var/throwforce = 1
-	proc
-		handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
-			//Return: (NONSTANDARD)
-			//		null if object handles breathing logic for lifeform
-			//		datum/air_group to tell lifeform to process using that breath return
-			//DEFAULT: Take air from turf to give to have mob process
-			if(breath_request>0)
-				return remove_air(breath_request)
-			else
-				return null
+	proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+		//Return: (NONSTANDARD)
+		//		null if object handles breathing logic for lifeform
+		//		datum/air_group to tell lifeform to process using that breath return
+		//DEFAULT: Take air from turf to give to have mob process
+		if(breath_request>0)
+			return remove_air(breath_request)
+		else
+			return null
 
-		initialize()
+	proc/initialize()
 
 /obj/signpost
 	icon = 'stationobjs.dmi'

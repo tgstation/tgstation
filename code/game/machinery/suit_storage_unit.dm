@@ -32,28 +32,10 @@
 	HELMET = new /obj/item/clothing/head/helmet/space/
 	MASK = new /obj/item/clothing/mask/breath
 
-/obj/machinery/suit_storage_unit/engineering_unit
-	SUIT = new /obj/item/clothing/suit/space/engineering
-	HELMET = new /obj/item/clothing/head/helmet/space/engineering
-	MASK = new /obj/item/clothing/mask/breath
-
-/obj/machinery/suit_storage_unit/chief_engineer_unit
-	SUIT = new /obj/item/clothing/suit/space/command/chief_engineer
-	HELMET = new /obj/item/clothing/head/helmet/space/command/chief_engineer
-	MASK = new /obj/item/clothing/mask/breath
-
-/obj/machinery/suit_storage_unit/chief_medical_officer_unit
-	SUIT = new /obj/item/clothing/suit/space/command/chief_medical_officer
-	HELMET = new /obj/item/clothing/head/helmet/space/command/chief_medical_officer
-	MASK = new /obj/item/clothing/mask/breath
-
-/obj/machinery/suit_storage_unit/command_unit
-	SUIT = new /obj/item/clothing/suit/space/command
-	HELMET = new /obj/item/clothing/head/helmet/space/command
-	MASK = new /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/New()
 	src.update_icon()
+
 
 /obj/machinery/suit_storage_unit/update_icon()
 	var/hashelmet = 0
@@ -66,6 +48,7 @@
 	if(OCCUPANT)
 		hashuman = 1
 	icon_state = text("suitstorage[][][][][][][][][]",hashelmet,hassuit,hashuman,src.isopen,src.islocked,src.isUV,src.ispowered,src.isbroken,src.issuperUV)
+
 
 /obj/machinery/suit_storage_unit/power_change()
 	if( powered() )
@@ -81,6 +64,7 @@
 			src.dump_everything()
 			src.update_icon()
 
+
 /obj/machinery/suit_storage_unit/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -89,12 +73,13 @@
 			del(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				src.dump_everything()
 				del(src)
 				return
 		else
 	return
+
 
 /obj/machinery/suit_storage_unit/attack_hand(mob/user as mob)
 	var/dat
@@ -156,6 +141,7 @@
 	onclose(user, "suit_storage_unit")
 	return
 
+
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
 	if(..())
 		return
@@ -202,6 +188,7 @@
 	src.add_fingerprint(usr)
 	return
 
+
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user as mob)
 	var/protected = 0
 	var/mob/living/carbon/human/H = user
@@ -227,6 +214,7 @@
 			src.issuperUV = 1
 		return
 
+
 /obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user as mob)
 	var/protected = 0
 	var/mob/living/carbon/human/H = user
@@ -247,6 +235,7 @@
 		user << "You push the button. The coloured LED next to it changes."
 		src.safetieson = !src.safetieson
 
+
 /obj/machinery/suit_storage_unit/proc/dispense_helmet(mob/user as mob)
 	if(!src.HELMET)
 		return //Do I even need this sanity check? Nyoro~n
@@ -254,6 +243,7 @@
 		src.HELMET.loc = src.loc
 		src.HELMET = null
 		return
+
 
 /obj/machinery/suit_storage_unit/proc/dispense_suit(mob/user as mob)
 	if(!src.SUIT)
@@ -263,6 +253,7 @@
 		src.SUIT = null
 		return
 
+
 /obj/machinery/suit_storage_unit/proc/dispense_mask(mob/user as mob)
 	if(!src.MASK)
 		return
@@ -270,6 +261,7 @@
 		src.MASK.loc = src.loc
 		src.MASK = null
 		return
+
 
 /obj/machinery/suit_storage_unit/proc/dump_everything()
 	src.islocked = 0 //locks go free
@@ -286,6 +278,7 @@
 		src.eject_occupant(OCCUPANT)
 	return
 
+
 /obj/machinery/suit_storage_unit/proc/toggle_open(mob/user as mob)
 	if(src.islocked || src.isUV)
 		user << "<font color='red'>Unable to open unit.</font>"
@@ -296,6 +289,7 @@
 	src.isopen = !src.isopen
 	return
 
+
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user as mob)
 	if(src.OCCUPANT && src.safetieson)
 		user << "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>"
@@ -304,6 +298,7 @@
 		return
 	src.islocked = !src.islocked
 	return
+
 
 /obj/machinery/suit_storage_unit/proc/start_UV(mob/user as mob)
 	if(src.isUV || src.isopen) //I'm bored of all these sanity checks
@@ -383,10 +378,12 @@
 					user << "Test. You gave him 8 damage"
 	return*/
 
+
 /obj/machinery/suit_storage_unit/proc/cycletimeleft()
 	if(src.cycletime_left >= 1)
 		src.cycletime_left--
 	return src.cycletime_left
+
 
 /obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user as mob)
 	if (src.islocked)
@@ -412,6 +409,7 @@
 	src.update_icon()
 	return
 
+
 /obj/machinery/suit_storage_unit/verb/get_out()
 	set name = "Eject Suit Storage Unit"
 	set category = "Object"
@@ -424,6 +422,7 @@
 	src.updateUsrDialog()
 	src.update_icon()
 	return
+
 
 /obj/machinery/suit_storage_unit/verb/move_inside()
 	set name = "Hide in Suit Storage Unit"
@@ -462,6 +461,7 @@
 	else
 		src.OCCUPANT = null //Testing this as a backup sanity test
 	return
+
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
 	if(!src.ispowered)
@@ -551,8 +551,10 @@
 	src.updateUsrDialog()
 	return
 
+
 /obj/machinery/suit_storage_unit/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
+
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user as mob)
 	user << "<font color='blue'>The console controls are far too complicated for your tiny brain!</font>"

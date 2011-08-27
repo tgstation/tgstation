@@ -54,7 +54,7 @@
 	invocation_type = "shout"
 	range = 1
 
-	destroys = "disintegrate"
+	destroys = "gib"
 
 	sparks_spread = 1
 	sparks_amt = 4

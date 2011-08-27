@@ -36,13 +36,13 @@
 	name = "Void Jetpack (oxygen)"
 	desc = "It works well in a void."
 	icon_state = "voidjetpack0"
-	item_state =  "jetpack"
+	item_state =  "jetpack-void"
 
 /obj/item/weapon/tank/jetpack/black_jetpack
 	name = "Black Jetpack (oxygen)"
 	desc = "A black model of jetpacks."
 	icon_state = "black_jetpack0"
-	item_state =  "black_jetpack"
+	item_state =  "jetpack-black"
 
 /obj/item/weapon/tank/oxygen
 	name = "Gas Tank (Oxygen)"

@@ -8,7 +8,7 @@
 	new /obj/item/device/flash(src)
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/clothing/head/helmet(src)
-	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/clothing/glasses/sunglasses/sechud(src)
 	new /obj/item/weapon/melee/baton(src)
 	return
 
@@ -30,6 +30,7 @@
 	new /obj/item/clothing/gloves/black( src )
 	new /obj/item/weapon/storage/lglo_kit( src )
 	new /obj/item/weapon/fcardholder( src )
+	new /obj/item/weapon/clipboard( src )
 	new /obj/item/device/detective_scanner( src )
 	return
 
@@ -56,7 +57,7 @@
 	new /obj/item/device/flash( src )
 	new /obj/item/clothing/under/rank/head_of_security( src )
 	new /obj/item/clothing/shoes/brown( src )
-	new /obj/item/clothing/glasses/sunglasses( src )
+	new /obj/item/clothing/glasses/sunglasses/sechud( src )
 	new /obj/item/clothing/suit/armor/hos( src )
 	new /obj/item/clothing/head/helmet( src )
 	new /obj/item/weapon/storage/flashbang_kit(src)

@@ -35,8 +35,3 @@
 /obj/structure/shuttle/engine/router
 	name = "router"
 	icon_state = "router"
-/obj/machinery/shuttle/engine/heater
-/obj/machinery/shuttle/engine/propulsion
-/obj/item/clothing/suit/armor/powered
-/obj/item/clothing/head/helmet/powered
-/obj/machinery/shuttle/engine/propulsion/burst

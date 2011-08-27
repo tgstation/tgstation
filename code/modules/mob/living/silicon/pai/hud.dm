@@ -49,3 +49,25 @@
 				client.images += image(tempHud,patient,"hudill")
 			else
 				client.images += image(tempHud,patient,"hudhealthy")
+
+/mob/living/silicon/pai/proc/RoundHealth(health)
+	switch(health)
+		if(100 to INFINITY)
+			return "health100"
+		if(70 to 100)
+			return "health80"
+		if(50 to 70)
+			return "health60"
+		if(30 to 50)
+			return "health40"
+		if(20 to 30)
+			return "health25"
+		if(5 to 15)
+			return "health10"
+		if(1 to 5)
+			return "health1"
+		if(-99 to 0)
+			return "health0"
+		else
+			return "health-100"
+	return "0"

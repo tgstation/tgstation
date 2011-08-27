@@ -4,10 +4,10 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 1
+	clothes_req = 0
 	invocation = "GIN'YU CAPAN"
 	invocation_type = "whisper"
-	range = 7
+	range = 1
 	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
 	var/list/compatible_mobs = list(/mob/living/carbon/human,/mob/living/carbon/monkey) //which types of mobs are affected by the spell. NOTE: change at your own risk
 	var/base_spell_loss_chance = 20 //base probability of the wizard losing a spell in the process

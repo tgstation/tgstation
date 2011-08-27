@@ -41,11 +41,12 @@
 			else
 				health_text = "[round(src.occupant.health,0.1)]"
 
-		var/dat = {"<B>Implanter Status</B><BR>
-			<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>" : "<FONT color=red>None</FONT>"]<BR>
-			<B>Implants:</B> [src.implant_list.len ? "[implant_list.len]" : "<A href='?src=\ref[src];replenish=1'>Replenish</A>"]<BR>
-			[src.ready ? "<A href='?src=\ref[src];implant=1'>Implant</A>" : "Recharging"]<BR>
-		"}
+		var/dat ="<B>Implanter Status</B><BR>"
+
+		dat +="<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>" : "<FONT color=red>None</FONT>"]<BR>"
+		dat += "<B>Implants:</B> [src.implant_list.len ? "[implant_list.len]" : "<A href='?src=\ref[src];replenish=1'>Replenish</A>"]<BR>"
+		if(src.occupant)
+			dat += "[src.ready ? "<A href='?src=\ref[src];implant=1'>Implant</A>" : "Recharging"]<BR>"
 		user.machine = src
 		user << browse(dat, "window=implant")
 		onclose(user, "implant")
@@ -54,11 +55,12 @@
 	Topic(href, href_list)
 		if((get_dist(src, usr) <= 1) || istype(usr, /mob/living/silicon/ai))
 			if(href_list["implant"])
-				injecting = 1
-				go_out()
-				ready = 0
-				spawn(injection_cooldown)
-					ready = 1
+				if(src.occupant)
+					injecting = 1
+					go_out()
+					ready = 0
+					spawn(injection_cooldown)
+						ready = 1
 
 			if(href_list["replenish"])
 				ready = 0

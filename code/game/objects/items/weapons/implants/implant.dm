@@ -7,11 +7,16 @@
 		allow_reagents = 0
 	proc
 		trigger(emote, source as mob)
+		activate()
 		implanted(source as mob)
 		get_data()
 
 
-	trigger()
+	trigger(emote, source as mob)
+		return
+
+
+	activate()
 		return
 
 
@@ -81,30 +86,6 @@ ID (1-100):
 <A href='byond://?src=\ref[src];tracking_id=10'>+</A><BR>"}
 		return dat
 
-	Topic(href, href_list)
-		..()
-		if (usr.stat)
-			return
-		var/obj/item/weapon/implantpad/IP = (locate(/obj/item/weapon/implantpad) in usr)
-		if(IP)
-			if(IP.case)
-				if(IP.case.imp == src)
-					usr.machine = src
-					if (href_list["id"])
-						src.id += text2num(href_list["id"])
-						src.id = min(100, src.id)
-						src.id = max(1, src.id)
-					if (istype(src.loc, /mob))
-						attack_self(src.loc)
-					else
-						for(var/mob/M in viewers(1, src))
-							if (M.client)
-								src.attack_self(M)
-					src.add_fingerprint(usr)
-					return
-		usr << browse(null, "window=implantpad")
-		return
-
 
 
 /obj/item/weapon/implant/explosive
@@ -124,6 +105,11 @@ ID (1-100):
 <b>Special Features:</b> Explodes<BR>
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 		return dat
+
+
+	activate(var/cause)
+		if((!cause) || (!src.imp_in))	return 0
+		//explode here
 
 
 
@@ -158,10 +144,10 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		R.my_atom = src
 
 
-	trigger(var/number = 0)
-		if((!number) || (!src.imp_in))	return 0
+	activate(var/cause)
+		if((!cause) || (!src.imp_in))	return 0
 		var/mob/living/carbon/R = src.imp_in
-		src.reagents.trans_to(R, number)
+		src.reagents.trans_to(R, cause)
 		R << "You hear a faint *beep*."
 		if(!src.reagents.total_volume)
 			R << "You hear a faint click from your chest."

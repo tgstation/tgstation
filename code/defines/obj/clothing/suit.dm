@@ -451,51 +451,33 @@
 	slowdown = 3
 	armor = list(melee = 20, bullet = 15, laser = 10, taser = 3, bomb = 15, bio = 30, rad = 40)
 
-/obj/item/clothing/suit/space/engineering
-	name = "Engineering space suit"
-	desc = "Much like its generic counterpart, the spacesuit is painted a bright orange color to designate its department of origin."
-	icon_state = "suit-orange"
-	item_state = "suit-orange"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/satchel,/obj/item/device/t_scanner)
+
+/obj/item/clothing/head/helmet/space/rig
+	name = "Rig helmet"
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
+	icon_state = "rig-engineering"
+	item_state = "rig_helm"
 	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
-	slowdown = 2
-	radiation_protection = 0.50
+	allowed = list(/obj/item/device/flashlight)
 
-/obj/item/clothing/suit/space/command
-	name = "Command space suit"
-	desc = "Much like its generic counterpart, the spacesuit is painted a dark blue color to designate its department of origin."
-	icon_state = "suit-command"
-	item_state = "suit-command"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/gun/energy)
-	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
-	slowdown = 2
-	radiation_protection = 0.25
-
-/obj/item/clothing/suit/space/command/chief_engineer
-	name = "Chief engineer suit"
-	desc = "Much like its generic counterpart, the spacesuit is painted a black and dark yellow color to designate its department of origin."
-	icon_state = "suit-ce"
-	item_state = "syndicate-black"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/satchel,/obj/item/device/t_scanner,/obj/item/weapon/gun/energy)
-	radiation_protection = 0.50
-
-/obj/item/clothing/suit/space/command/chief_medical_officer
-	name = "Chief medical officer suit"
-	desc = "Much like its generic counterpart, the spacesuit is marked with the red cross to designate its department of origin."
-	icon_state = "suit-cmo"
-	item_state = "syndicate-black"
-	radiation_protection = 0.25
-
+/obj/item/clothing/head/helmet/space/rig/mining
+	icon_state = "rig-mining"
+	item_state = "rig_helm"
 
 /obj/item/clothing/suit/space/rig
 	name = "Rig suit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
-	icon_state = "rig"
+	icon_state = "rig-engineering"
 	item_state = "rig_suit"
 	radiation_protection = 0.50
 	slowdown = 2
 	armor = list(melee = 40, bullet = 30, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/satchel)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/satchel,/obj/item/device/t_scanner)
+
+/obj/item/clothing/suit/space/rig/mining
+	icon_state = "rig-mining"
+	item_state = "rig_suit"
+
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
@@ -531,15 +513,15 @@
 	icon_state = "syndicate-green-dark"
 	item_state = "syndicate-green-dark"
 
-/*/obj/item/clothing/suit/space/syndicate/orange
+/obj/item/clothing/suit/space/syndicate/orange
 	name = "Orange Space Suit"
 	icon_state = "syndicate-orange"
-	item_state = "syndicate-orange"*/ //Best used as an engineering suit, nyoro~n ;3 As is the other stuff below
+	item_state = "syndicate-orange"
 
-/*/obj/item/clothing/suit/space/syndicate/blue
+/obj/item/clothing/suit/space/syndicate/blue
 	name = "Blue Space Suit"
 	icon_state = "syndicate-blue"
-	item_state = "syndicate-blue"*/
+	item_state = "syndicate-blue"
 
 /obj/item/clothing/suit/space/syndicate/black
 	name = "Black Space Suit"
@@ -556,10 +538,10 @@
 	icon_state = "syndicate-black-blue"
 	item_state = "syndicate-black-blue"
 
-/*/obj/item/clothing/suit/space/syndicate/black/med
+/obj/item/clothing/suit/space/syndicate/black/med
 	name = "Green Space Suit"
 	icon_state = "syndicate-black-med"
-	item_state = "syndicate-black"*/
+	item_state = "syndicate-black"
 
 /obj/item/clothing/suit/space/syndicate/black/orange
 	name = "Black and Orange Space Suit"
@@ -571,10 +553,10 @@
 	icon_state = "syndicate-black-red"
 	item_state = "syndicate-black-red"
 
-/*/obj/item/clothing/suit/space/syndicate/black/engie
+/obj/item/clothing/suit/space/syndicate/black/engie
 	name = "Black Engineering Space Suit"
 	icon_state = "syndicate-black-engie"
-	item_state = "syndicate-black"*/
+	item_state = "syndicate-black"
 
 /obj/item/clothing/suit/syndicatefake
 	name = "red space suit replica"

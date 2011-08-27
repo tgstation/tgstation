@@ -104,6 +104,7 @@
 		user.sd_SetLuminosity(user.luminosity - brightness_on)
 		src.sd_SetLuminosity(brightness_on)
 
+/*
 /obj/item/clothing/head/helmet/space/engineering/verb/toggle()
 	set name = "Toggle Helmet Light"
 	set category = "Object"
@@ -164,3 +165,4 @@
 		usr.sd_SetLuminosity(usr.luminosity - brightness_on)
 		src.sd_SetLuminosity(brightness_on)
 
+*/

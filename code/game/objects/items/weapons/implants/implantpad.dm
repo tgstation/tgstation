@@ -74,17 +74,17 @@
 		onclose(user, "implantpad")
 		return
 
-/*
+
 	Topic(href, href_list)
 		..()
 		if (usr.stat)
 			return
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src)) || ((in_range(src, usr) && istype(src.loc, /turf))))
 			usr.machine = src
-			if (href_list["id"])
+			if (href_list["tracking_id"])
 				if ((istype(src.case, /obj/item/weapon/implantcase) && istype(src.case.imp, /obj/item/weapon/implant/tracking)))
 					var/obj/item/weapon/implant/tracking/T = src.case.imp
-					T.id += text2num(href_list["id"])
+					T.id += text2num(href_list["tracking_id"])
 					T.id = min(100, T.id)
 					T.id = max(1, T.id)
 			if (istype(src.loc, /mob))
@@ -98,4 +98,4 @@
 		else
 			usr << browse(null, "window=implantpad")
 			return
-		return*/
+		return
