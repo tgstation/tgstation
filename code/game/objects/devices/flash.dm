@@ -137,6 +137,7 @@
 		if (prob(2))
 			broken = 1
 			user << "\red The bulb has burnt out!"
+			return
 
 		spawn(60)
 			recharge()

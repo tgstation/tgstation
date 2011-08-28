@@ -421,7 +421,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1.3
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 100)
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 60, rad = 100)
 
 /obj/item/clothing/suit/fire/heavy
 	name = "firesuit"
@@ -432,132 +432,6 @@
 	protective_temperature = 10000
 	slowdown = 1.7
 
-// SPACE SUITS
-
-/obj/item/clothing/suit/space
-	name = "Space suit"
-	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
-	icon_state = "space"
-	item_state = "s_suit"
-	w_class = 4//bulky item
-	gas_transfer_coefficient = 0.01
-	permeability_coefficient = 0.02
-	heat_transfer_coefficient = 0.02
-	radiation_protection = 0.25
-	protective_temperature = 1000
-	flags = FPRINT | TABLEPASS | SUITSPACE
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 3
-	armor = list(melee = 20, bullet = 5, laser = 10, taser = 3, bomb = 15, bio = 30, rad = 40)
-
-
-/obj/item/clothing/head/helmet/space/rig
-	name = "Rig helmet"
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
-	icon_state = "rig-engineering"
-	item_state = "rig_helm"
-	armor = list(melee = 40, bullet = 5, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
-	allowed = list(/obj/item/device/flashlight)
-
-/obj/item/clothing/head/helmet/space/rig/mining
-	icon_state = "rig-mining"
-	item_state = "rig_helm"
-
-/obj/item/clothing/suit/space/rig
-	name = "Rig suit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
-	icon_state = "rig-engineering"
-	item_state = "rig_suit"
-	radiation_protection = 0.50
-	slowdown = 2
-	armor = list(melee = 40, bullet = 5, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/satchel,/obj/item/device/t_scanner)
-
-/obj/item/clothing/suit/space/rig/mining
-	icon_state = "rig-mining"
-	item_state = "rig_suit"
-
-
-/obj/item/clothing/suit/space/syndicate
-	name = "red space suit"
-	icon_state = "syndicate"
-	item_state = "space_suit_syndicate"
-	desc = "Has a tag on it: Totally not property of of a hostile corporation, honest!"
-	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 1
-	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
-
-/obj/item/clothing/suit/space/syndicate/elite
-	name = "black space suit"
-	desc = "A space ready suit with special armor inside designed to allow the wearer to take quite a beating."
-	icon_state = "syndicate-black"
-	item_state = "syndicate-black"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 1
-	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
-
-/obj/item/clothing/suit/space/syndicate/elite/leader
-	name = "black space suit"
-	icon_state = "syndicate-black-red"
-	item_state = "syndicate-black-red"
-
-/obj/item/clothing/suit/space/syndicate/green
-	name = "Green Space Suit"
-	icon_state = "syndicate-green"
-	item_state = "syndicate-green"
-
-/obj/item/clothing/suit/space/syndicate/green/dark
-	name = "Dark Green Space Suit"
-	icon_state = "syndicate-green-dark"
-	item_state = "syndicate-green-dark"
-
-/obj/item/clothing/suit/space/syndicate/orange
-	name = "Orange Space Suit"
-	icon_state = "syndicate-orange"
-	item_state = "syndicate-orange"
-
-/obj/item/clothing/suit/space/syndicate/blue
-	name = "Blue Space Suit"
-	icon_state = "syndicate-blue"
-	item_state = "syndicate-blue"
-
-/obj/item/clothing/suit/space/syndicate/black
-	name = "Black Space Suit"
-	icon_state = "syndicate-black"
-	item_state = "syndicate-black"
-
-/obj/item/clothing/suit/space/syndicate/black/green
-	name = "Black and Green Space Suit"
-	icon_state = "syndicate-black-green"
-	item_state = "syndicate-black-green"
-
-/obj/item/clothing/suit/space/syndicate/black/blue
-	name = "Black and Blue Space Suit"
-	icon_state = "syndicate-black-blue"
-	item_state = "syndicate-black-blue"
-
-/obj/item/clothing/suit/space/syndicate/black/med
-	name = "Green Space Suit"
-	icon_state = "syndicate-black-med"
-	item_state = "syndicate-black"
-
-/obj/item/clothing/suit/space/syndicate/black/orange
-	name = "Black and Orange Space Suit"
-	icon_state = "syndicate-black-orange"
-	item_state = "syndicate-black"
-
-/obj/item/clothing/suit/space/syndicate/black/red
-	name = "Black and Red Space Suit"
-	icon_state = "syndicate-black-red"
-	item_state = "syndicate-black-red"
-
-/obj/item/clothing/suit/space/syndicate/black/engie
-	name = "Black Engineering Space Suit"
-	icon_state = "syndicate-black-engie"
-	item_state = "syndicate-black"
-
 /obj/item/clothing/suit/syndicatefake
 	name = "red space suit replica"
 	icon_state = "syndicate"
@@ -566,77 +440,6 @@
 	w_class = 3
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
-
-/obj/item/clothing/suit/space/nasavoid
-	name = "NASA Voidsuit"
-	icon_state = "void"
-	item_state = "void"
-	desc = "A high tech, NASA Centcom branch designed, dark red Space suit. Used for AI satellite maintenance."
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 1.5
-
-/obj/item/clothing/suit/space/space_ninja
-	name = "ninja suit"
-	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
-	icon_state = "s-ninja"
-	item_state = "s-ninja_suit"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/cell)
-	radiation_protection = 0.75
-	slowdown = 1
-	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
-
-	var
-		//Important parts of the suit.
-		mob/living/carbon/affecting = null//The wearer.
-		obj/item/weapon/cell/cell//Starts out with a high-capacity cell using New().
-		datum/effects/system/spark_spread/spark_system//To create sparks.
-		reagent_list[] = list("tricordrazine","dexalinp","spaceacillin","anti_toxin","nutriment","radium","hyronalin")//The reagents ids which are added to the suit at New().
-		stored_research[]//For stealing station research.
-		obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
-
-		//Other articles of ninja gear worn together, used to easily reference them after initializing.
-		obj/item/clothing/head/helmet/space/space_ninja/n_hood
-		obj/item/clothing/shoes/space_ninja/n_shoes
-		obj/item/clothing/gloves/space_ninja/n_gloves
-
-		//Main function variables.
-		s_initialized = 0//Suit starts off.
-		s_coold = 0//If the suit is on cooldown. Can be used to attach different cooldowns to abilities. Ticks down every second based on suit ntick().
-		s_cost = 5.0//Base energy cost each ntick.
-		s_acost = 25.0//Additional cost for additional powers active.
-		k_cost = 200.0//Kamikaze energy cost each ntick.
-		k_damage = 1.0//Brute damage potentially done by Kamikaze each ntick.
-		s_delay = 40.0//How fast the suit does certain things, lower is faster. Can be overridden in specific procs. Also determines adverse probability.
-		a_transfer = 20.0//How much reagent is transferred when injecting.
-		r_maxamount = 80.0//How much reagent in total there is.
-
-		//Support function variables.
-		spideros = 0//Mode of SpiderOS. This can change so I won't bother listing the modes here (0 is hub). Check ninja_equipment.dm for how it all works.
-		s_active = 0//Stealth off.
-		s_busy = 0//Is the suit busy with a process? Like AI hacking. Used for safety functions.
-		kamikaze = 0//Kamikaze on or off.
-		k_unlock = 0//To unlock Kamikaze.
-
-		//Ability function variables.
-		s_bombs = 10.0//Number of starting ninja smoke bombs.
-		a_boost = 3.0//Number of adrenaline boosters.
-
-		//Onboard AI related variables.
-		mob/living/silicon/ai/AI//If there is an AI inside the suit.
-		obj/item/device/paicard/pai//A slot for a pAI device
-		obj/overlay/hologram//Is the AI hologram on or off? Visible only to the wearer of the suit. This works by attaching an image to a blank overlay.
-		flush = 0//If an AI purge is in progress.
-		s_control = 1//If user in control of the suit.
-
-/obj/item/clothing/suit/space/pirate
-	name = "pirate coat"
-	desc = "Yarr."
-	icon_state = "pirate"
-	item_state = "pirate"
-	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 0
-	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/captunic
 	name = "captain's parade tunic"

@@ -66,6 +66,12 @@
 			if(src.case.imp)
 				if(istype(src.case.imp, /obj/item/weapon/implant))
 					dat += src.case.imp.get_data()
+					if(istype(src.case.imp, /obj/item/weapon/implant/tracking))
+						dat += {"ID (1-100):
+						<A href='byond://?src=\ref[src];tracking_id=-10'>-</A>
+						<A href='byond://?src=\ref[src];tracking_id=-1'>-</A> [case.imp:id]
+						<A href='byond://?src=\ref[src];tracking_id=1'>+</A>
+						<A href='byond://?src=\ref[src];tracking_id=10'>+</A><BR>"}
 			else
 				dat += "The implant casing is empty."
 		else
@@ -82,18 +88,17 @@
 		if ((usr.contents.Find(src)) || ((in_range(src, usr) && istype(src.loc, /turf))))
 			usr.machine = src
 			if (href_list["tracking_id"])
-				if ((istype(src.case, /obj/item/weapon/implantcase) && istype(src.case.imp, /obj/item/weapon/implant/tracking)))
-					var/obj/item/weapon/implant/tracking/T = src.case.imp
-					T.id += text2num(href_list["tracking_id"])
-					T.id = min(100, T.id)
-					T.id = max(1, T.id)
+				var/obj/item/weapon/implant/tracking/T = src.case.imp
+				T.id += text2num(href_list["tracking_id"])
+				T.id = min(100, T.id)
+				T.id = max(1, T.id)
+
 			if (istype(src.loc, /mob))
 				attack_self(src.loc)
 			else
 				for(var/mob/M in viewers(1, src))
 					if (M.client)
 						src.attack_self(M)
-					//Foreach goto(290)
 			src.add_fingerprint(usr)
 		else
 			usr << browse(null, "window=implantpad")

@@ -24,19 +24,6 @@
 		mob.Blend(earbit, ICON_OVERLAY)
 		mob2.Blend(earbit2, ICON_OVERLAY)
 
-/obj/item/clothing/head/helmet/space/santahat
-	name = "Santa's hat"
-	desc = "Ho ho ho. Merrry X-mas!"
-	icon_state = "santahat"
-
-/obj/item/clothing/suit/space/santa
-	name = "Santa's suit"
-	desc = "Festive!"
-	icon_state = "santa"
-	item_state = "santa"
-	slowdown = 1
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | SUITSPACE
-
 /obj/item/clothing/shoes/red
 	name = "red shoes"
 	desc = "Stylish red shoes."

@@ -349,7 +349,7 @@
 	icon = 'items.dmi'
 	icon_state = "sheet"
 	layer = 4.0
-	item_state = "w_suit"
+	item_state = "bedsheet"
 	throwforce = 1
 	w_class = 1.0
 	throw_speed = 2

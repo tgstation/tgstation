@@ -78,12 +78,7 @@ a malfunction occurs thereby securing safety of subject. The implant will melt a
 disintegrate into bio-safe elements.<BR>
 <b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
 circuitry. As a result neurotoxins can cause massive damage.<HR>
-Implant Specifics:<BR>
-ID (1-100):
-<A href='byond://?src=\ref[src];tracking_id=-10'>-</A>
-<A href='byond://?src=\ref[src];tracking_id=-1'>-</A> [id]
-<A href='byond://?src=\ref[src];tracking_id=1'>+</A>
-<A href='byond://?src=\ref[src];tracking_id=10'>+</A><BR>"}
+Implant Specifics:<BR>"}
 		return dat
 
 

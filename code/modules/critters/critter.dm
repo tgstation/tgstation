@@ -70,6 +70,7 @@
 		RunAttack()
 		TakeDamage(var/damage = 0)
 		Target_Attacker(var/target)
+		Harvest(var/obj/item/weapon/W, var/mob/living/user)//Controls havesting things from dead critters
 
 
 

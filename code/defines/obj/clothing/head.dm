@@ -13,7 +13,7 @@
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
 	radiation_protection = 0.35
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 100)
+	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 60, rad = 100)
 
 /obj/item/clothing/head/bomb_hood
 	name = "bomb hood"
@@ -162,177 +162,12 @@
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
 	item_state = "helmet"
 
-/obj/item/clothing/head/helmet/space
-	name = "Space helmet"
-	icon_state = "space"
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES | HEADCOVERSMOUTH
-	see_face = 0.0
-	item_state = "space"
-	permeability_coefficient = 0.01
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 25, rad = 25)
-
-/obj/item/clothing/head/helmet/space/engineering
-	name = "Engineering space helmet"
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Painted in Engineering Orange to designate its department of origin."
-	icon_state = "helm_engineering0"
-	item_state = "helm-orange"
-	var/brightness_on = 4
-	var/on = 0
-	radiation_protection = 0.25
-	armor = list(melee = 40, bullet = 5, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
-
-/obj/item/clothing/head/helmet/space/command
-	name = "Command space helmet"
-	desc = "A special helmet designed to work in a hazardous, low-pressure environment. Painted in Command Blue to designate its department of origin."
-	icon_state = "helm-command"
-	item_state = "helm-command"
-	radiation_protection = 0.25
-	armor = list(melee = 40, bullet = 20, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
-
-/obj/item/clothing/head/helmet/space/command/chief_engineer
-	name = "Chief engineer space helmet"
-	desc = "A special helmet designed to work in a hazardous, low-pressure environment. Bears the insignia of the chief engineer."
-	icon_state = "helm_ce0"
-	item_state = "helm-ce"
-	var/brightness_on = 4
-	var/on = 0
-
-/obj/item/clothing/head/helmet/space/command/chief_medical_officer
-	name = "Chief medical offier space helmet"
-	desc = "A special helmet designed to work in a hazardous, low-pressure environment. Bears the insignia of the chief medical officer."
-	icon_state = "helm-cmo"
-	item_state = "helm-cmo"
-
-/obj/item/clothing/head/helmet/space/capspace
-	name = "space helmet"
-	icon_state = "capspace"
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Only for the most fashionable of military figureheads."
-	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES
-	see_face = 0.0
-	item_state = "capspace"
-	permeability_coefficient = 0.01
-	armor = list(melee = 60, bullet = 50, laser = 50, taser = 25, bomb = 50, bio = 20, rad = 20)
-
-/obj/item/clothing/head/helmet/space/rig
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
-	name = "rig helmet"
-	icon_state = "rig"
-	item_state = "rig_helm"
-	radiation_protection = 0.25
-	armor = list(melee = 40, bullet = 5, laser = 20, taser = 5, bomb = 35, bio = 50, rad = 50)
-
-/obj/item/clothing/head/helmet/space/syndicate
-	name = "red space helmet"
-	desc = "Top secret Spess Helmet."
-	icon_state = "syndicate"
-	item_state = "syndicate"
-	desc = "Has a tag: Totally not property of an enemy corporation, honest."
-	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
-
-/obj/item/clothing/head/helmet/space/syndicate/elite
-	name = "black space helmet"
-	desc = "Professionals Have Standards, Be Polite, Be Efficient, Have a plan to kill everyone you meet."
-	icon_state = "syndicate-helm-black"
-	item_state = "syndicate-helm-black"
-	armor = list(melee = 65, bullet = 55, laser = 35, taser = 20, bomb = 30, bio = 30, rad = 30)
-
-/obj/item/clothing/head/helmet/space/syndicate/elite/leader
-	name = "black space helmet"
-	icon_state = "syndicate-helm-black-red"
-	item_state = "syndicate-helm-black-red"
-
-/obj/item/clothing/head/helmet/space/syndicate/green
-	name = "Green Space Helmet"
-	icon_state = "syndicate-helm-green"
-	item_state = "syndicate-helm-green"
-
-/obj/item/clothing/head/helmet/space/syndicate/green/dark
-	name = "Dark Green Space Helmet"
-	icon_state = "syndicate-helm-green-dark"
-	item_state = "syndicate-helm-green-dark"
-
-/*/obj/item/clothing/head/helmet/space/syndicate/orange
-	name = "Orange Space Helmet"
-	icon_state = "syndicate-helm-orange"
-	item_state = "syndicate-helm-orange"*/ //As I said: Best used for engineering suits
-
-/*/obj/item/clothing/head/helmet/space/syndicate/blue
-	name = "Blue Space Helmet"
-	icon_state = "syndicate-helm-blue"
-	item_state = "syndicate-helm-blue"*/
-
-/obj/item/clothing/head/helmet/space/syndicate/black
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black"
-	item_state = "syndicate-helm-black"
-
-/obj/item/clothing/head/helmet/space/syndicate/black/green
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-green"
-	item_state = "syndicate-helm-black-green"
-
-/obj/item/clothing/head/helmet/space/syndicate/black/blue
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-blue"
-	item_state = "syndicate-helm-black-blue"
-
-/*/obj/item/clothing/head/helmet/space/syndicate/black/med
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-med"
-	item_state = "syndicate-helm-black"*/
-
-/obj/item/clothing/head/helmet/space/syndicate/black/orange
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-orange"
-	item_state = "syndicate-helm-black"
-
-/obj/item/clothing/head/helmet/space/syndicate/black/red
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-red"
-	item_state = "syndicate-helm-black-red"
-
-/*/obj/item/clothing/head/helmet/space/syndicate/black/engie
-	name = "Black Space Helmet"
-	icon_state = "syndicate-helm-black-engie"
-	item_state = "syndicate-helm-black"*/
-
 /obj/item/clothing/head/syndicatefake
 	name = "red space helmet replica"
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	see_face = 0.0
-
-/obj/item/clothing/head/helmet/space/nasavoid
-	name = "NASA Void Helmet"
-	desc = "A high tech, NASA Centcom branch designed, dark red space suit helmet. Used for AI satellite maintenance."
-	icon_state = "void"
-	item_state = "void"
-	see_face = 1
-
-/obj/item/clothing/head/helmet/space/space_ninja
-	desc = "What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear."
-	name = "ninja hood"
-	icon_state = "s-ninja"
-	item_state = "s-ninja_mask"
-	radiation_protection = 0.25
-	see_face = 1
-	allowed = list(/obj/item/weapon/cell)
-	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
-
-/obj/item/clothing/head/helmet/space/deathsquad
-	name = "deathsquad helmet"
-	desc = "That's not red paint. That's real blood."
-	icon_state = "deathsquad"
-	item_state = "deathsquad"
-	armor = list(melee = 65, bullet = 55, laser = 35, taser = 20, bomb = 30, bio = 30, rad = 30)
-
-/obj/item/clothing/head/helmet/space/deathsquad/beret
-	name = "officer's beret"
-	desc = "An armored beret commonly used by special operations officers."
-	icon_state = "beret_badge"
-	armor = list(melee = 65, bullet = 55, laser = 35, taser = 20, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"
@@ -433,22 +268,6 @@
 	item_state = "helmet"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
 	armor = list(melee = 82, bullet = 15, laser = 5, taser = 5, bomb = 5, bio = 2, rad = 0)
-
-
-
-
-
-
-
-//Themed space suits for different nuke rounds (WIP)
-
-/obj/item/clothing/head/helmet/space/pirate
-	name = "pirate hat"
-	desc = "Yarr."
-	icon_state = "pirate"
-	item_state = "pirate"
-	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
-
 
 /obj/item/clothing/head/helmet/cap
 	name = "Captain's cap"

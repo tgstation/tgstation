@@ -5,7 +5,9 @@ Contains the procs that control attacking critters
 
 	attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 		..()
-		if (!src.alive) return
+		if(!src.alive)
+			Harvest(W,user)
+			return
 		var/damage = 0
 		switch(W.damtype)
 			if("fire") damage = W.force * firevuln
@@ -48,7 +50,7 @@ Contains the procs that control attacking critters
 			src.Die()
 
 
-	Die()//Might be more effective to del them and create a dummy item of some sorts
+	Die()
 		if (!src.alive) return
 		src.icon_state += "-dead"
 		src.alive = 0
@@ -56,6 +58,12 @@ Contains the procs that control attacking critters
 		src.density = 0
 		walk_to(src,0)
 		src.visible_message("<b>[src]</b> dies!")
+
+
+	Harvest(var/obj/item/weapon/W, var/mob/living/user)
+		if((!W) || (!user))	return 0
+		if(src.alive)	return 0
+		return 1
 
 
 	bullet_act(var/obj/item/projectile/Proj)
