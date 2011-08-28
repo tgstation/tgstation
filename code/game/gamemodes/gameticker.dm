@@ -17,6 +17,11 @@ var/global/datum/controller/gameticker/ticker
 
 	var/list/datum/mind/minds = list()//The people in the game. Used for objective tracking.
 
+	var/Bible_icon_state	// icon_state the chaplain has chosen for his bible
+	var/Bible_item_state	// item_state the chaplain has chosen for his bible
+	var/Bible_name			// name of the bible
+
+
 	var/pregame_timeleft = 0
 
 /datum/controller/gameticker/proc/pregame()

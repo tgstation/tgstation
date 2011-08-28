@@ -581,6 +581,8 @@
 		silenced = 0
 		badmin = 0
 
+		recoil = 0
+
 	projectile
 		desc = "A classic revolver. Uses 357 ammo"
 		name = "revolver"
@@ -1556,6 +1558,10 @@
 				var/obj/item/weapon/gun/energy/freeze/Fgun = src
 
 				F.temperature = Fgun.temperature
+
+			if(recoil)
+				spawn()
+					shake_camera(user, recoil + 1, recoil)
 
 			in_chamber.original = targloc
 			in_chamber.loc = get_turf(user)

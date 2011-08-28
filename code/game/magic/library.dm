@@ -417,6 +417,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		checkoutperiod = 5 // In minutes
 		obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
+		bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+
 /obj/machinery/librarycomp/attack_hand(var/mob/user as mob)
 	usr.machine = src
 	var/dat = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
@@ -553,7 +555,26 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if("5")
 				screenstate = 5
 			if("6")
-				new /obj/item/weapon/storage/bible(src.loc)
+				if(!bibledelay)
+
+					var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(src.loc)
+					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
+						B.icon_state = ticker.Bible_icon_state
+						B.item_state = ticker.Bible_item_state
+						B.name = ticker.Bible_name
+
+					bibledelay = 60
+					spawn(0)
+						while(bibledelay >= 1 && src)
+							sleep(10)
+							bibledelay -- // subtract one second to countdown
+
+						bibledelay = 0
+
+				else
+					for (var/mob/V in hearers(src))
+						V.show_message("<b>[src]</b>'s monitor flashes, \"[bibledelay] seconds remaining until the bible printer is ready for use.\"")
+
 			if("7")
 				screenstate = 7
 	if(href_list["arccheckout"])

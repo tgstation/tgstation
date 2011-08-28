@@ -149,13 +149,28 @@
 						if("satanism")
 							B.name = pick("The Unholy Bible","The Necronomicon")
 						if("islam")
-							B.name = "Quaran"
+							B.name = "Quran"
 						if("scientology")
 							B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
 						if("chaos")
 							B.name = "Space Station 13: The Musical"
 						if("imperium")
 							B.name = "Uplifting Primer"
+						if("toolboxia")
+							B.name = "Toolbox Manifesto"
+						if("nazism")
+							B.name = "Mein Kampf"
+							if(prob(50)) brainloss = 60 // probably starts off retarded?
+						if("homosexuality")
+							B.name = "Guys Gone Wild"
+						if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
+							B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
+							brainloss = 100 // starts off retarded as fuck
+						if("science")
+							B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
+						if("metroidism")
+							B.name = "Skreeee!: The Happening"
+							src:mutantrace = "metroid" // fucking lol (if this is too extreme, comment this thing out) -- Doohl
 						else
 							B.name = "The Holy Book of [new_religion]"
 
@@ -171,6 +186,65 @@
 						new_deity = copytext(new_deity, 1, 26)
 						new_deity = dd_replacetext(new_deity, ">", "'")
 				B.deity_name = new_deity
+
+				var/accepted = 0
+				var/outoftime = 0
+				spawn(200) // 20 seconds to choose
+					outoftime = 1
+				while(!accepted)
+					if(!B) break // prevents possible runtime errors
+
+					switch(input(src,"Which bible style would you like?") in list("Normal (Christianity)", "Koran", "Scrapbook", "Daederic Scroll", "Creeper", "White", "Banana", "Holy Light", "Athiest", "Necromancer", "Tome"))
+						if("Koran")
+							B.icon_state = "koran"
+							B.item_state = "koran"
+						if("Scrapbook")
+							B.icon_state = "scrapbook"
+							B.item_state = "scrapbook"
+						if("Daederic Scroll")
+							B.icon_state = "daederic_scroll"
+							B.item_state = "daederic"
+						if("Creeper")
+							B.icon_state = "creeper"
+							B.item_state = "syringe_kit"
+						if("White")
+							B.icon_state = "white"
+							B.item_state = "syringe_kit"
+						if("Banana")
+							B.icon_state = "banana"
+							B.item_state = "syringe_kit"
+						if("Holy Light")
+							B.icon_state = "holylight"
+							B.item_state = "syringe_kit"
+						if("Athiest")
+							B.icon_state = "athiest"
+							B.item_state = "syringe_kit"
+						if("Necromancer")
+							B.icon_state = "necro"
+							B.item_state = "syringe_kit"
+						if("Tome")
+							B.icon_state = "tome"
+							B.item_state = "syringe_kit"
+						else
+							// if christian bible, revert to default
+							B.icon_state = "bible"
+							B.item_state = "bible"
+
+					src:update_clothing() // so that it updates the bible's item_state in his hand
+
+					switch(input(src,"Look at your bible - is this what you want?") in list("Yes","No"))
+						if("Yes")
+							accepted = 1
+						if("No")
+							if(outoftime)
+								src << "Welp, out of time, buddy. You're stuck. Next time choose faster."
+								accepted = 1
+
+				if(ticker)
+					ticker.Bible_icon_state = B.icon_state
+					ticker.Bible_item_state = B.item_state
+					ticker.Bible_name = B.name
+
 
 		if ("Geneticist")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_medsci (src), slot_ears) // -- TLE

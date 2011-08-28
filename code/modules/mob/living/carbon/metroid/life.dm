@@ -87,7 +87,7 @@
 		var/starving = 0 // determines if the metroid is starving-hungry
 		if(istype(src, /mob/living/carbon/metroid/adult))
 			switch(nutrition)
-				if(400 to 800) hungry = 1
+				if(400 to 900) hungry = 1
 				if(0 to 399)
 					starving = 1
 
@@ -135,8 +135,6 @@
 						if(tame && istype(C, /mob/living/carbon/human))
 							notarget = 1
 
-
-
 						if(!notarget) targets += C
 
 			for(var/mob/living/silicon/C in view(12,src))
@@ -177,16 +175,14 @@
 								break
 
 					else
-						Target = pick(targets)
+						Target = targets[1]
 
 				else
-					Target = pick(targets)
+					Target = targets[1] // closest target
 
 			if(targets.len > 0)
 				if(attacked > 0 || rabid)
-					Target = targets[1] // should be the closest target
-
-
+					Target = targets[1]
 
 
 		if(!Target)
@@ -306,7 +302,7 @@
 				var/sleeptime = movement_delay()
 				if(sleeptime <= 0) sleeptime = 1
 
-				sleep(sleeptime + 1) // this is about as fast as a player Metroid can go
+				sleep(sleeptime + 2) // this is about as fast as a player Metroid can go
 
 			AIproc = 0
 
@@ -481,9 +477,9 @@
 
 
 		handle_nutrition()
-			if(prob(30))
-				if(istype(src, /mob/living/carbon/metroid/adult)) nutrition-=rand(4,7)
-				else nutrition-=rand(1,4)
+			if(prob(40))
+				if(istype(src, /mob/living/carbon/metroid/adult)) nutrition-=rand(6,10)
+				else nutrition-=rand(4,9)
 
 			if(nutrition <= 0)
 				nutrition = 0
