@@ -589,6 +589,7 @@
 #include "code\game\objects\items\weapons\paint.dm"
 #include "code\game\objects\items\weapons\paiwire.dm"
 #include "code\game\objects\items\weapons\papers_bins.dm"
+#include "code\game\objects\items\weapons\plant_bag.dm"
 #include "code\game\objects\items\weapons\RCD.dm"
 #include "code\game\objects\items\weapons\RSF.dm"
 #include "code\game\objects\items\weapons\surgery_tools.dm"
