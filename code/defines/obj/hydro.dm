@@ -670,9 +670,9 @@
 	desc = "A plant grown by and from medicine."
 	icon_state = "seed-ambrosiavulgaris"
 	mypath = "/obj/item/seeds/ambrosiavulgarisseed"
-	species = "athelas-ambrosiavulgaris"
+	species = "ambrosiavulgaris"
 	plantname = "Ambrosia Vulgaris"
-	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/Ambrosiavulgaris"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris"
 	lifespan = 60
 	endurance = 25
 	maturation = 6
