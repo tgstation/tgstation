@@ -9,6 +9,7 @@
 	var/maxhealth = 0
 	var/fire_dam_coeff = 1.0
 	var/brute_dam_coeff = 1.0
+	var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
 
 
 /obj/machinery/bot/proc/turn_on()
@@ -26,6 +27,9 @@
 /obj/machinery/bot/proc/healthcheck()
 	if (src.health <= 0)
 		src.explode()
+
+/obj/machinery/bot/proc/Emag(mob/user as mob)
+	if(!emagged) emagged = 1
 
 /obj/machinery/bot/examine()
 	set src in view()
@@ -64,6 +68,8 @@
 			)
 		else
 			user << "\blue [src] does not need a repair!"
+	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
+		Emag(user)
 	else
 		switch(W.damtype)
 			if("fire")

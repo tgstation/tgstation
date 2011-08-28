@@ -25,7 +25,7 @@
 	var/target_lastloc //Loc of target when arrested.
 	var/last_found //There's a delay
 	var/frustration = 0
-	var/emagged = 0 //Emagged Secbots view everyone as a criminal
+//var/emagged = 0 //Emagged Secbots view everyone as a criminal
 	var/idcheck = 1 //If false, all station IDs are authorized for weapons.
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
@@ -157,20 +157,7 @@ Auto Patrol: []"},
 			updateUsrDialog()
 
 /obj/machinery/bot/ed209/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if ((istype(W, /obj/item/weapon/card/emag)) && (!src.emagged))
-		user << "\red You short out [src]'s target assessment circuits."
-		spawn(0)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
-		src.target = null
-		src.oldtarget_name = user.name
-		src.last_found = world.time
-		src.anchored = 0
-		src.emagged = 1
-		src.on = 1
-		src.icon_state = "ed209[src.on]"
-		mode = SECBOT_IDLE
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
@@ -182,6 +169,20 @@ Auto Patrol: []"},
 			src.target = user
 			src.mode = SECBOT_HUNT
 
+/obj/machinery/bot/ed209/Emag(mob/user as mob)
+	..()
+	if(user) user << "\red You short out [src]'s target assessment circuits."
+	spawn(0)
+		for(var/mob/O in hearers(src, null))
+			O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
+	src.target = null
+	if(user) src.oldtarget_name = user.name
+	src.last_found = world.time
+	src.anchored = 0
+	src.emagged = 1
+	src.on = 1
+	src.icon_state = "ed209[src.on]"
+	mode = SECBOT_IDLE
 
 /obj/machinery/bot/ed209/process()
 	set background = 1

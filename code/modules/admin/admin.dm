@@ -1310,6 +1310,13 @@
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
 						return
+				if("ionstorm")
+					if (src.rank in list("Badmin","Game Admin", "Game Master"))
+						IonStorm()
+						message_admins("[key_name_admin(usr)] triggered an ion storm")
+					else
+						alert("You cannot perform this action. You must be of a higher administrative rank!")
+						return
 			if (usr)
 				log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 				if (ok)
@@ -1792,6 +1799,7 @@
 <A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
 <A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
 <A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
+<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
 <BR>
 <B>Fun Secrets</B><BR>
 <BR>

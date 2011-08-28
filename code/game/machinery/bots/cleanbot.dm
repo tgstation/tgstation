@@ -122,14 +122,16 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		if(!src.locked)
 			src.panelopen = !src.panelopen
 			user << "You [ src.panelopen ? "open" : "close"] the hidden panel on [src]."
-	/*if (istype(W, /obj/item/weapon/card/cryptographic_sequencer))
-		user << "The [src] buzzes and beeps."
-		src.oddbutton = 1
-		src.screwloose = 1
-		src.panelopen = 0
-		src.locked = 1*/
 	else
 		return ..()
+
+/obj/machinery/bot/cleanbot/Emag(mob/user as mob)
+	..()
+	if(user) user << "The [src] buzzes and beeps."
+	src.oddbutton = 1
+	src.screwloose = 1
+	src.panelopen = 0
+	src.locked = 1
 
 /obj/machinery/bot/cleanbot/process()
 	set background = 1
@@ -151,12 +153,21 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(src.screwloose && prob(5))
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("[src] leaks a drop of water. How strange."), 1)
-		var/turf/U = src.loc
-		U:wet = 1
-		//U.overlays += /obj/effects/wet_floor
-		spawn(800)
-			U:wet = 0
-			U.overlays = null
+		if(istype(loc,/turf/simulated))
+			var/turf/simulated/T = src.loc
+			if(T.wet < 1)
+				T.wet = 1
+				if(T.wet_overlay)
+					T.overlays -= T.wet_overlay
+					T.wet_overlay = null
+				T.wet_overlay = image('water.dmi',T,"wet_floor")
+				T.overlays += T.wet_overlay
+				spawn(800)
+					if (istype(T) && T.wet < 2)
+						T.wet = 0
+						if(T.wet_overlay)
+							T.overlays -= T.wet_overlay
+							T.wet_overlay = null
 	if(src.oddbutton && prob(5))
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("Something flies out of [src]. He seems to be acting oddly."), 1)
