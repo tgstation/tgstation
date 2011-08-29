@@ -49,15 +49,15 @@
 /obj/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null)
 	if(!invocation_area || !chosenarea)
 		..()
-//	else
-//		switch(invocation_type)
-//			if("shout")
-//				usr.say("[invocation] [uppertext(chosenarea.name)]")
-//				if(usr.gender=="male")
-//					playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
-//				else
-//					playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
-//			if("whisper")
-//				usr.whisper("[invocation] [uppertext(chosenarea.name)]")
-//
-//	return
+	else
+		switch(invocation_type)
+			if("shout")
+				usr.say("[invocation] [uppertext(chosenarea.name)]")
+				if(usr.gender=="male")
+					playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
+				else
+					playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
+			if("whisper")
+				usr.whisper("[invocation] [uppertext(chosenarea.name)]")
+
+	return

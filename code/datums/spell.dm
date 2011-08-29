@@ -76,15 +76,15 @@ var/list/spells = typesof(/obj/proc_holder/spell) //needed for the badmin verb f
 
 /obj/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 
-//	switch(invocation_type)
-//		if("shout")
-//			usr.say(invocation)
-//			if(usr.gender=="male")
-//				playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
-//			else
-//				playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
-//		if("whisper")
-//			usr.whisper(invocation)
+	switch(invocation_type)
+		if("shout")
+			usr.say(invocation)
+			if(usr.gender=="male")
+				playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
+			else
+				playsound(usr.loc, pick('null.ogg','null.ogg'), 100, 1)
+		if("whisper")
+			usr.whisper(invocation)
 
 /obj/proc_holder/spell/New()
 	..()
