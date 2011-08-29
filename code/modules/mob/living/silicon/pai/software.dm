@@ -9,15 +9,15 @@
 /mob/living/silicon/pai/var/list/available_software = list(
 															"crew manifest" = 5,
 															"digital messenger" = 5,
-															"medical records" = 5,
-															"security records" = 5,
+															"medical records" = 15,
+															"security records" = 15,
 															//"camera jack" = 10,
-															"door jack" = 10,
-															"atmosphere sensor" = 10,
+															"door jack" = 30,
+															"atmosphere sensor" = 5,
 															//"heartbeat sensor" = 10,
-															"security HUD" = 10,
-															"medical HUD" = 10,
-															"universal translator" = 10,
+															"security HUD" = 20,
+															"medical HUD" = 20,
+															"universal translator" = 35,
 															//"projection array" = 15
 															)
 

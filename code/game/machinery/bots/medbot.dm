@@ -38,6 +38,7 @@
 	var/treatment_fire = "kelotane"
 	var/treatment_tox = "anti_toxin"
 	var/treatment_virus = "spaceacillin"
+	var/shut_up = 0 //self explanatory :)
 
 /obj/machinery/bot/medbot/mysterious
 	name = "Mysterious Medibot"
@@ -129,6 +130,8 @@
 		dat += "Reagent Source: "
 		dat += "<a href='?src=\ref[src];use_beaker=1'>[src.use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
 
+		dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+
 	user << browse("<HEAD><TITLE>Medibot v1.0 controls</TITLE></HEAD>[dat]", "window=automed")
 	onclose(user, "automed")
 	return
@@ -169,6 +172,9 @@
 			src.reagent_glass = null
 		else
 			usr << "You cannot eject the beaker because the panel is locked!"
+
+	else if ((href_list["togglevoice"]) && (!src.locked))
+		src.shut_up = !src.shut_up
 
 	src.updateUsrDialog()
 	return
@@ -246,7 +252,7 @@
 		src.path = new()
 
 	if(!src.patient)
-		if(prob(1))
+		if(prob(1) && (!src.shut_up))
 			var/message = pick("Radar, put a mask on!","There's always a catch, and it's the best there is.","I knew it, I should've been a plastic surgeon.","What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
 			src.speak(message)
 

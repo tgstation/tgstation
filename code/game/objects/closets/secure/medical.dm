@@ -49,7 +49,7 @@
 	sleep(2)
 	new /obj/item/clothing/suit/labcoat/cmo( src )
 	new /obj/item/clothing/under/rank/chief_medical_officer( src )
-	new /obj/item/clothing/suit/bio_suit/general( src )
+	new /obj/item/clothing/suit/bio_suit/cmo( src )
 	new /obj/item/clothing/shoes/brown	( src )
 	new /obj/item/clothing/gloves/latex( src )
 	new /obj/item/clothing/head/bio_hood/general( src )

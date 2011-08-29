@@ -147,7 +147,8 @@
 		pdat += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
 		pdat += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
 
-		pdat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+		if (product_slogans != "")
+			pdat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
 
 		user << browse(pdat, "window=vendwires")
 		onclose(user, "vendwires")
