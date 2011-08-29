@@ -155,6 +155,14 @@
 	protective_temperature = 500
 	heat_transfer_coefficient = 0.10
 
+/obj/item/clothing/head/helmet/cueball
+	name = "cueball helmet"
+	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
+	icon_state = "cueball"
+	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	item_state="cueball"
+	armor = list(melee = 75, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 0, rad = 0)
+
 /obj/item/clothing/head/secsoft
 	name = "Soft Cap"
 	desc = "A baseball hat in tasteful red."

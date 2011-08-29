@@ -285,7 +285,7 @@
 	name = "Captain's armor"
 	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"
 	icon_state = "caparmor"
-	item_state = "caparmor"
+	item_state = "capspacesuit"
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02

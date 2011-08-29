@@ -16,7 +16,7 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon = 'weapons.dmi'
 	icon_state = "riot"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS| CONDUCT| ONBACK
 	force = 5.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -600,6 +600,7 @@
 	desc = "Truly, the tool of a madman. Who would possibly think to fight fire with an axe?"
 	force = 5
 	w_class = 4.0
+	flags = ONBACK
 	twohanded = 1
 	force_unwielded = 5
 	force_wielded = 30

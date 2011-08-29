@@ -390,6 +390,14 @@
 	item_state = "lawyer_blue"
 	color = "lawyer_blue"
 
+/obj/item/clothing/under/scratch
+	desc = "White Suit"
+	name = "A white suit, suitable for an excellent host"
+	flags = FPRINT | TABLEPASS
+	icon_state = "scratch"
+	item_state = "scratch"
+	color = "scratch"
+
 
 /obj/item/clothing/under/sl_suit
 	desc = "A very amish looking suit."
