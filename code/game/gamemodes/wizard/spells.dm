@@ -5,10 +5,7 @@
 	set name = "Blind"
 	set desc = "This spell temporarly blinds a single person and does not require wizard garb."
 
-	var/list/victims = list()
-	for(var/mob/living/carbon/C in oview(usr.sting_range))
-		victims += C
-	var/mob/M = input(usr, "Who do you wish to sting?") as null | anything in victims
+	var/mob/M = input(usr, "Who do you wish to blind?") as mob in oview()
 
 	if(M)
 		if(usr.stat)

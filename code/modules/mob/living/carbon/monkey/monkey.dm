@@ -461,8 +461,8 @@
 	stat(null, text("Move Mode: []", m_intent))
 	if(client && mind)
 		if (client.statpanel == "Status")
-			if (mind.special_role == "Changeling")
-				stat("Chemical Storage", chem_charges)
+			if (mind.special_role == "Changeling" && changeling)
+				stat("Chemical Storage", changeling.chem_charges)
 	return
 
 /mob/living/carbon/monkey/update_clothing()

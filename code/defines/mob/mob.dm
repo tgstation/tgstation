@@ -197,13 +197,15 @@
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
+/*
 //Changeling mode stuff//Carbon
 	var/changeling_level = 0
 	var/list/absorbed_dna = list()
 	var/changeling_fakedeath = 0
 	var/chem_charges = 20.00
 	var/sting_range = 1
-
+*/
+	var/datum/changeling/changeling = null
 
 	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
 	var/obj/control_object // Hacking in to control objects -- TLE

@@ -432,7 +432,7 @@
 				src.stat = 2
 
 			else
-				if (src.paralysis || src.stunned || src.weakened || changeling_fakedeath) //Stunned etc.
+				if (src.paralysis || src.stunned || src.weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
 					if (src.stunned > 0)
 						src.stunned = 0
 						src.stat = 0

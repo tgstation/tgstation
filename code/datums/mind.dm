@@ -136,13 +136,13 @@ datum/mind
 				text += "<b>YES</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
 				if (objectives.len==0)
 					text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-				if (current.absorbed_dna.len>0 && current.real_name != current.absorbed_dna[1])
+				if (current.changeling && (current.changeling.absorbed_dna.len>0 && current.real_name != current.changeling.absorbed_dna[1]))
 					text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
 			else
 				text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
-			var/datum/game_mode/changeling/changeling = ticker.mode
-			if (istype(changeling) && changeling.changelingdeath)
-				text += "<br>All the changelings are dead! Restart in [round((changeling.TIME_TO_GET_REVIVED-(world.time-changeling.changelingdeathtime))/10)] seconds."
+//			var/datum/game_mode/changeling/changeling = ticker.mode
+//			if (istype(changeling) && changeling.changelingdeath)
+//				text += "<br>All the changelings are dead! Restart in [round((changeling.TIME_TO_GET_REVIVED-(world.time-changeling.changelingdeathtime))/10)] seconds."
 			sections["changeling"] = text
 
 			/** NUCLEAR ***/
@@ -576,11 +576,8 @@ datum/mind
 						ticker.mode.changelings -= src
 						special_role = null
 						current.remove_changeling_powers()
-						current.absorbed_dna = null
-						current.chem_charges = 0
-						current.changeling_fakedeath = 0
-						current.sting_range = 1
-						current.changeling_level = 0
+						if(current.changeling)
+							del(current.changeling)
 						current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a changeling!</B></FONT>"
 				if("changeling")
 					if(!(src in ticker.mode.changelings))
@@ -593,11 +590,11 @@ datum/mind
 					usr << "\blue The objectives for changeling [key] have been generated. You can edit them and anounce manually."
 
 				if("initialdna")
-					if (!usr.absorbed_dna[1])
+					if (!usr.changeling || !usr.changeling.absorbed_dna[1])
 						usr << "\red Resetting DNA failed!"
 					else
-						usr.dna = usr.absorbed_dna[usr.absorbed_dna[1]]
-						usr.real_name = usr.absorbed_dna[1]
+						usr.dna = usr.changeling.absorbed_dna[usr.changeling.absorbed_dna[1]]
+						usr.real_name = usr.changeling.absorbed_dna[1]
 						updateappearance(usr, usr.dna.uni_identity)
 						domutcheck(usr, null)
 

@@ -1620,7 +1620,7 @@
 					dat += "<td>Monkey</td>"
 				if(istype(M, /mob/living/carbon/alien))
 					dat += "<td>Alien</td>"
-				dat += {"<td>[M.client]</font>" : "No client")]</td>
+				dat += {"<td>[M.client?"[M.client]":"No client"]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
 				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
 				"}
@@ -1665,7 +1665,7 @@
 					dat += "<td>Monkey</td>"
 				if(isalien(M))
 					dat += "<td>Alien</td>"
-				dat += {"<td>[(M.client ? "[M.client]</font>" : "No client")]</td>
+				dat += {"<td>[(M.client ? "[M.client]" : "No client")]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
 				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
 				"}

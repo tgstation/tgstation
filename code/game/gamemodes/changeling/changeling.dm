@@ -47,13 +47,11 @@
 			waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 			waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-		changelingdeathtime //timestamp when last changeling was killed
-		const/TIME_TO_GET_REVIVED = 3000
-		changelingdeath = 0
+			const/changeling_amount = 4
 
 /datum/game_mode/changeling/announce()
 	world << "<B>The current game mode is - Changeling!</B>"
-	world << "<B>There is an alien changeling on the station. Do not let the changeling succeed!</B>"
+	world << "<B>There are alien changelings on the station. Do not let the changelings succeed!</B>"
 
 /*/datum/game_mode/changeling/can_start()
 	for(var/mob/new_player/P in world)
@@ -70,10 +68,12 @@
 				possible_changelings -= player
 
 	if(possible_changelings.len>0)
-		var/datum/mind/changeling = pick(possible_changelings)
-		//possible_changelings-=changeling
-		changelings += changeling
-		modePlayer += changelings
+		for(var/i = 0, i < changeling_amount, i++)
+			if(!possible_changelings.len) break
+			var/datum/mind/changeling = pick(possible_changelings)
+			possible_changelings -= changeling
+			changelings += changeling
+			modePlayer += changelings
 		return 1
 	else
 		return 0
@@ -148,6 +148,7 @@
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
 	if (you_are)
 		changeling.current << "<B>\red You are a changeling!</B>"
+	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>"
 	changeling.current << "<B>You must complete the following tasks:</B>"
 
 	var/obj_count = 1
@@ -157,7 +158,7 @@
 	return
 
 /datum/game_mode/changeling/check_finished()
-	var/changelings_alive = 0
+/*	var/changelings_alive = 0
 	for(var/datum/mind/changeling in changelings)
 		if(!istype(changeling.current,/mob/living/carbon))
 			continue
@@ -175,7 +176,8 @@
 		if(world.time-changelingdeathtime > TIME_TO_GET_REVIVED)
 			return 1
 		else
-			return ..()
+			return ..()*/
+	return 0
 
 /datum/game_mode/proc/grant_changeling_powers(mob/living/carbon/human/changeling_mob)
 	if (!istype(changeling_mob))
@@ -188,7 +190,7 @@
 		var/changeling_name
 		var/totalabsorbed = 0
 		if (changeling.current)
-			totalabsorbed = changeling.current.absorbed_dna.len - 1
+			totalabsorbed = changeling.current.changeling.absorbed_dna.len - 1
 
 		if(changeling.current)
 			changeling_name = "[changeling.current.real_name] (played by [changeling.key])"
@@ -212,3 +214,25 @@
 		else
 			world << "<B>The changeling has failed!<B>"
 	return 1
+
+/datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
+	var/changeling_level = 0
+	var/list/absorbed_dna = list()
+	var/changeling_fakedeath = 0
+	var/chem_charges = 20.00
+	var/sting_range = 1
+	var/changelingID = null
+	var/mob/living/host = null
+
+/datum/changeling/New()
+	..()
+	var/list/possibleIDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
+
+	for(var/mob/living/carbon/aChangeling in world)
+		if(aChangeling.changeling)
+			possibleIDs -= aChangeling.changeling.changelingID
+
+	if(possibleIDs.len)
+		changelingID = pick(possibleIDs)
+	else
+		changelingID = "[rand(1,1000)]"

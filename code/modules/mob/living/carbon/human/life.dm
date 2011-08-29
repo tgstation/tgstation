@@ -290,7 +290,7 @@
 			return null
 
 		update_canmove()
-			if(paralysis || stunned || weakened || buckled || changeling_fakedeath) canmove = 0
+			if(paralysis || stunned || weakened || buckled || (changeling && changeling.changeling_fakedeath)) canmove = 0
 			else canmove = 1
 
 		handle_breath(datum/gas_mixture/breath)
@@ -685,7 +685,7 @@
 				if (silent)
 					silent--
 
-				if (paralysis || stunned || weakened || changeling_fakedeath) //Stunned etc.
+				if (paralysis || stunned || weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
 					if (stunned > 0)
 						stunned--
 						stat = 0
@@ -1021,8 +1021,8 @@
 
 		handle_changeling()
 			if (mind)
-				if (mind.special_role == "Changeling")
-					chem_charges = between(0, (max((0.9 - (chem_charges / 50)), 0.1) + chem_charges), 50)
+				if (mind.special_role == "Changeling" && changeling)
+					changeling.chem_charges = between(0, (max((0.9 - (changeling.chem_charges / 50)), 0.1) + changeling.chem_charges), 50)
 
 
 /*

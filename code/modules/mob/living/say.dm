@@ -86,6 +86,7 @@
 			  ":t" = "Syndicate",
 			  ":d" = "Mining",
 			  ":q" = "Cargo",
+			  ":g" = "changeling",
 
 			  //kinda localization -- rastaf0
 			  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -104,6 +105,7 @@
 			  ":å" = "Syndicate",
 			  ":â" = "Mining",
 			  ":é" = "Cargo",
+			  ":ï" = "changeling",
 		)
 
 		message_mode = keys[channel_prefix]
@@ -145,6 +147,7 @@
 					message += "Z"
 */
 	var/list/obj/item/used_radios = new
+
 	switch (message_mode)
 		if ("headset")
 			if (src:ears)
@@ -215,7 +218,13 @@
 				used_radios += src:radio
 			message_range = 1
 			italics = 1
-/////SPECIAL HEADSETS START
+		if("changeling")
+			if(src.changeling)
+				for(var/mob/living/carbon/aChangeling in world)
+					if(aChangeling.changeling)
+						aChangeling << "<i><font color=#800080><b>[gender=="male"?"Mr.":"Mrs."] [changeling.changelingID]:</b> [message]</font></i>"
+				return
+////SPECIAL HEADSETS START
 		else
 			//world << "SPECIAL HEADSETS"
 			if (message_mode in radiochannels)
