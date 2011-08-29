@@ -20,6 +20,7 @@
 			usr.verbs += /client/proc/blind
 
 		usr.whisper("STI KALY")
+		playsound(usr.loc,'stikaly.ogg', 100,1)
 	//	usr.spellvoice()
 
 		var/obj/overlay/B = new /obj/overlay( M.loc )
@@ -53,6 +54,7 @@
 	if(!usr.casting()) return
 
 	usr.say("FORTI GY AMA")
+	playsound(usr.loc,'fortigyama.ogg', 100.1)
 	usr.spellvoice()
 
 	for (var/mob/living/M as mob in oview())
@@ -155,6 +157,7 @@
 	var/forcefield
 
 	usr.whisper("TARCOL MINTI ZHERI")
+	playsound(usr.loc,'tarcolminti.ogg', 100,1)
 //	usr.spellvoice()
 
 	forcefield =  new /obj/forcefield(locate(usr.x,usr.y,usr.z))
@@ -178,6 +181,7 @@
 		usr.verbs += /client/proc/fireball
 
 	usr.say("ONI SOMA")
+	playsound(usr.loc,'onisoma.ogg', 100,1)
 //	usr.spellvoice()
 
 	var/obj/overlay/A = new /obj/overlay( usr.loc )
@@ -235,6 +239,7 @@
 		usr.verbs += /mob/proc/kill
 
 	usr.say("EI NATH")
+	playsound('einath.ogg')
 	usr.spellvoice()
 
 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
@@ -258,6 +263,7 @@
 		usr.verbs += /mob/proc/tech
 
 	usr.say("NEC CANTIO")
+	playsound(usr.loc,'neccantio.ogg', 100,1)
 	usr.spellvoice()
 	empulse(src, 6, 10)
 	return
@@ -321,6 +327,7 @@
 	var/area/thearea = teleportlocs[A]
 
 	usr.say("SCYAR NILA [uppertext(A)]")
+	playsound(usr.loc,'scyarnila.ogg', 100,1)
 	usr.spellvoice()
 
 	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -475,6 +482,7 @@
 		usr.verbs += /client/proc/mutate
 
 	usr.say("BIRUZ BENNAR")
+	playsound(usr.loc,'brucebanner.ogg', 100,1)
 	usr.spellvoice()
 
 	usr << text("\blue You feel strong! Your mind expands!")

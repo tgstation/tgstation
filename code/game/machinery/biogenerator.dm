@@ -40,10 +40,27 @@
 			O.loc = src
 			beaker = O
 			updateUsrDialog()
-	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
-		user << "\red You cannot put this in [src.name]"
 	else if(processing)
 		user << "\red The biogenerator is currently processing."
+	else if(istype(O, /obj/item/weapon/plantbag))
+		var/i = 0
+		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
+			i++
+		if(i >= 10)
+			user << "\red The biogenerator is already full! Activate it."
+		else
+			for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+				G.loc = src
+				i++
+				if(i >= 10)
+					user << "\blue You fill the biogenerator to its capacity."
+					break
+			if(i<10)
+				user << "\blue You empty the plant bag into the biogenerator."
+
+
+	else if(!istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
+		user << "\red You cannot put this in [src.name]"
 	else
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)

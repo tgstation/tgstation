@@ -151,6 +151,7 @@
 #define FILE_DIR "sound/machines"
 #define FILE_DIR "sound/misc"
 #define FILE_DIR "sound/piano"
+#define FILE_DIR "sound/spells"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/weapons"
 // END_FILE_DIR
