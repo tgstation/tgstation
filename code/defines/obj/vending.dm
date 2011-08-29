@@ -112,6 +112,7 @@
 	product_amounts = "2;2;4;1"
 	product_hidden = "/obj/item/weapon/reagent_containers/syringe/antitoxin;/obj/item/weapon/reagent_containers/syringe/antiviral;/obj/item/weapon/reagent_containers/pill/tox"
 	product_hideamt = "4;4;1"
+	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 
 /obj/machinery/vending/wallmed2
 	name = "NanoMed"
@@ -123,6 +124,7 @@
 	product_amounts = "5;3;3;3;3"
 	product_hidden = "/obj/item/weapon/reagent_containers/pill/tox"
 	product_hideamt = "3"
+	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 
 /obj/machinery/vending/security
 	name = "SecTech"
