@@ -38,9 +38,9 @@
 	desc = "Festive!"
 	icon_state = "santa"
 	item_state = "santa"
-	slowdown = 1
+	slowdown = 0
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL | SUITSPACE
-
+	allowed = list(/obj/item) //for stuffing exta special presents
 
 
 /obj/item/clothing/head/helmet/space/pirate

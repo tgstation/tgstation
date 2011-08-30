@@ -1,12 +1,9 @@
-
-
 /obj/item/clothing/glasses/blindfold
 	name = "blindfold"
 	desc = "Makes you like...blind."
 	icon_state = "blindfold"
 	item_state = "blindfold"
 	vision_flags = BLIND
-
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
@@ -15,8 +12,6 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2;engineering=2"
 	vision_flags = SEE_TURFS
-	darkness_view = -2
-
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
@@ -27,7 +22,6 @@
 	vision_flags = SEE_TURFS
 	darkness_view = 3
 
-
 /obj/item/clothing/glasses/material
 	name = "Optical Material Scanner"
 	desc = "Very confusing glasses."
@@ -36,20 +30,17 @@
 	origin_tech = "magnets=3;engineering=3"
 	vision_flags = SEE_OBJS
 
-
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
 	item_state = "glasses"
 
-
 /obj/item/clothing/glasses/gglasses
 	name = "Green Glasses"
 	desc = "Forest green glasses, like the kind you'd wear when hatching a nasty scheme."
 	icon_state = "gglasses"
 	item_state = "gglasses"
-
 
 /obj/item/clothing/glasses/sunglasses
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
@@ -70,7 +61,6 @@
 		src.hud = new/obj/item/clothing/glasses/hud/security(src)
 		return
 
-
 /obj/item/clothing/glasses/thermal
 	name = "Optical Thermal Scanner"
 	desc = "Thermals in the shape of glasses."
@@ -86,12 +76,8 @@
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 
-
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "Optical Thermal Eyepatch"
 	desc = "An eyepatch with built-in thermal optics"
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
-
-
-
