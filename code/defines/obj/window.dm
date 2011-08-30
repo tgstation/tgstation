@@ -7,6 +7,8 @@
 	var/ini_dir = null
 	var/state = 0
 	var/reinf = 0
+	var/silicate = 0 // number of units of silicate
+	var/icon/silicateIcon = null // the silicated icon
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1.0
 	flags = ON_BORDER

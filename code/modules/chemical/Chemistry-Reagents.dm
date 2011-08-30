@@ -453,10 +453,30 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				if(istype(O,/obj/window))
-					O:health = O:health * 2
-					var/icon/I = icon(O.icon,O.icon_state,O.dir)
-					I.SetIntensity(1.15,1.50,1.75)
-					O.icon = I
+					if(O:silicate <= 200)
+
+						O:silicate += volume
+						O:health += volume * 3
+
+						if(!O:silicateIcon)
+							var/icon/I = icon(O.icon,O.icon_state,O.dir)
+
+							var/r = (volume / 100) + 1
+							var/g = (volume / 70) + 1
+							var/b = (volume / 50) + 1
+							I.SetIntensity(r,g,b)
+							O.icon = I
+							O:silicateIcon = I
+						else
+							var/icon/I = O:silicateIcon
+
+							var/r = (volume / 100) + 1
+							var/g = (volume / 70) + 1
+							var/b = (volume / 50) + 1
+							I.SetIntensity(r,g,b)
+							O.icon = I
+							O:silicateIcon = I
+
 				return
 
 		oxygen

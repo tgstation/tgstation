@@ -228,6 +228,8 @@
 
 	src.dir = turn(src.dir, 90)
 
+	updateSilicate()
+
 	update_nearby_tiles(need_rebuild=1)
 
 	src.ini_dir = src.dir
@@ -246,10 +248,25 @@
 
 	src.dir = turn(src.dir, 270)
 
+	updateSilicate()
+
 	update_nearby_tiles(need_rebuild=1)
 
 	src.ini_dir = src.dir
 	return
+
+/obj/window/proc/updateSilicate()
+	if(silicateIcon && silicate)
+		src.icon = initial(icon)
+
+		var/icon/I = icon(icon,icon_state,dir)
+
+		var/r = (silicate / 100) + 1
+		var/g = (silicate / 70) + 1
+		var/b = (silicate / 50) + 1
+		I.SetIntensity(r,g,b)
+		icon = I
+		silicateIcon = I
 
 /obj/window/New(Loc,re=0)
 	..()
