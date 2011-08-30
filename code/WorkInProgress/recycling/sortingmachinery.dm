@@ -103,11 +103,15 @@
 	desc = "Used to set the destination of properly wrapped packages."
 	icon_state = "forensic0"
 	var/currTag = 0
-	var/list/locationList = list("Head of Personnel's Quarters", "Research Director's Office",
-	 "Locker Room", "Kitchen", "Bar", "Bartender's workspace",
-	"Theatre", "Library", "Chapel Office", "Assembly Line", "Medbay", "Chemistry", "Surgery", "Exam Room",
-	"Security", "Head of Security", "Cargo Bay", "Quartermaster's Office", "Janitors Closet", "Hydroponics",
-	"Toxin Lab")
+	var/list/locationList = list(
+	"Disposals", "Bartender's Workspace", "Cafeteria", "Cargo Bay", "Chapel Office",
+	"Chemistry", "Chief Medical Officer's Office", "Crew Quarters Toilets", "Fitness",
+	"Head of Personnel's Office", "Head of Security's Office", "Hydroponics",
+	"Janitor's Closet", "Kitchen", "Library", "Locker Room", "Locker Toilets", "Medbay",
+	"Quartermaster's Office", "Research Director's Office", "Research Lab", "Robotics",
+	"Security", "Surgery", "Theatre", "Tool Storage")
+	//The whole system for the sorttype var is determined based on the order of this list,
+	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
 	w_class = 1
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
