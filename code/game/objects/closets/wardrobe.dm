@@ -64,13 +64,15 @@
 /obj/closet/wardrobe/chaplain_black/New()
 	//new /obj/item/clothing/suit/imperium_monk( src ) //No. -- Urist
 	new /obj/item/clothing/under/rank/chaplain( src )
-	new /obj/item/clothing/under/rank/chaplain( src )
-	new /obj/item/clothing/shoes/black( src )
 	new /obj/item/clothing/shoes/black( src )
 	new /obj/item/clothing/suit/nun( src )
 	new /obj/item/clothing/suit/chaplain_hoodie( src )
 	new /obj/item/clothing/head/chaplain_hood( src )
 	new /obj/item/clothing/suit/holidaypriest( src )
+	new /obj/item/clothing/under/scratch( src )
+	new /obj/item/clothing/head/helmet/cueball( src )
+	new /obj/item/clothing/shoes/white( src )
+	new /obj/item/clothing/gloves/white( src )
 	new /obj/item/weapon/candlepack( src )
 	new /obj/item/weapon/candlepack( src )
 	return

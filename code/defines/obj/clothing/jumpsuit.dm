@@ -391,8 +391,8 @@
 	color = "lawyer_blue"
 
 /obj/item/clothing/under/scratch
-	desc = "White Suit"
-	name = "A white suit, suitable for an excellent host"
+	name = "White Suit"
+	desc = "A white suit, suitable for an excellent host"
 	flags = FPRINT | TABLEPASS
 	icon_state = "scratch"
 	item_state = "scratch"
