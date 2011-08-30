@@ -153,6 +153,7 @@
 			verbs += /client/proc/cmd_admin_emp
 			verbs += /client/proc/cmd_admin_drop_everything
 			verbs += /client/proc/make_sound
+			verbs += /client/proc/play_local_sound
 			verbs += /client/proc/only_one
 			verbs += /client/proc/send_space_ninja
 			verbs += /client/proc/restartcontroller //Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
@@ -362,6 +363,7 @@
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_gib_self
 	verbs -= /client/proc/restartcontroller
+	verbs -= /client/proc/play_local_sound
 	verbs -= /client/proc/enable_mapping_debug
 	return
 

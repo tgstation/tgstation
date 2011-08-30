@@ -34,6 +34,7 @@
 			else
 				src.name = "Glass Case"
 		else if(istype(I, /obj/item/weapon/reagent_containers/syringe))
+			if(!src.imp)	return
 			if(!src.imp.allow_reagents)	return
 			if(src.imp.reagents.total_volume >= 10)
 				user << "\red [src] is full."

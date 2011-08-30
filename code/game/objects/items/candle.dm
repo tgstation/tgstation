@@ -7,75 +7,79 @@
 	icon_state = "candle1"
 	item_state = "candle1"
 
-	var/wax = 100
-	var/lit = 0
-
-/obj/item/candle/update_icon()
-	var/i
-	if(wax>75)
-		i = 1
-	else if(wax>40)
-		i = 2
-	else i = 3
-	icon_state = "candle[i][lit ? "_lit" : ""]"
-
-/obj/item/candle/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W, /obj/item/weapon/weldingtool)  && W:welding)
-		light("\red [user] casually lights the [name] with [W], what a badass.")
-	else if(istype(W, /obj/item/weapon/zippo) && W:lit)
-		light()
-	else if(istype(W, /obj/item/weapon/match) && W:lit)
-		light()
-	else if(istype(W, /obj/item/candle) && W:lit)
-		light()
-
-
-
-/obj/item/candle/proc/light(var/flavor_text = "\red [usr] lights the [name].")
-	if(!lit)
-		lit = 1
-		//src.damtype = "fire"
-		for(var/mob/O in viewers(usr, null))
-			O.show_message(flavor_text, 1)
-		sd_SetLuminosity(CANDLE_LUM)
-		spawn()
-			src.process()
-
-/obj/item/candle/process()
-	if(!lit)
-		return
-	wax--
-	if(!wax)
-		new/obj/item/trash/candle(src.loc)
-		if(istype(src.loc, /mob))
-			src.dropped()
-		del(src)
-	update_icon()
-
-	if(istype(loc, /turf)) //start a fire if possible
-		var/turf/T = loc
-		T.hotspot_expose(700, 5)
-
-	spawn(60)
-		process()
-
-/obj/item/candle/attack_self(mob/user as mob)
-	if(lit)
+	var
+		wax = 100
 		lit = 0
+	proc
+		light(var/flavor_text = "\red [usr] lights the [name].")
+
+
+	update_icon()
+		var/i
+		if(wax>75)
+			i = 1
+		else if(wax>40)
+			i = 2
+		else i = 3
+		icon_state = "candle[i][lit ? "_lit" : ""]"
+
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		..()
+		if(istype(W, /obj/item/weapon/weldingtool)  && W:welding)
+			light("\red [user] casually lights the [name] with [W], what a badass.")
+		else if(istype(W, /obj/item/weapon/zippo) && W:lit)
+			light()
+		else if(istype(W, /obj/item/weapon/match) && W:lit)
+			light()
+		else if(istype(W, /obj/item/candle) && W:lit)
+			light()
+
+
+	light(var/flavor_text = "\red [usr] lights the [name].")
+		if(!src.lit)
+			src.lit = 1
+			//src.damtype = "fire"
+			for(var/mob/O in viewers(usr, null))
+				O.show_message(flavor_text, 1)
+			sd_SetLuminosity(CANDLE_LUM)
+			processing_items.Add(src)
+
+
+	process()
+		if(!lit)
+			return
+		wax--
+		if(!wax)
+			new/obj/item/trash/candle(src.loc)
+			if(istype(src.loc, /mob))
+				src.dropped()
+			del(src)
 		update_icon()
-		sd_SetLuminosity(0)
-		user.sd_SetLuminosity(user.luminosity - CANDLE_LUM)
+		if(istype(loc, /turf)) //start a fire if possible
+			var/turf/T = loc
+			T.hotspot_expose(700, 5)
 
-/obj/item/candle/pickup(mob/user)
-	if(lit)
-		src.sd_SetLuminosity(0)
-		user.sd_SetLuminosity(user.luminosity + CANDLE_LUM)
 
-/obj/item/candle/dropped(mob/user)
-	if(lit)
-		user.sd_SetLuminosity(user.luminosity - CANDLE_LUM)
-		src.sd_SetLuminosity(CANDLE_LUM)
+	attack_self(mob/user as mob)
+		if(lit)
+			lit = 0
+			update_icon()
+			sd_SetLuminosity(0)
+			user.sd_SetLuminosity(user.luminosity - CANDLE_LUM)
+
+
+	pickup(mob/user)
+		if(lit)
+			src.sd_SetLuminosity(0)
+			user.sd_SetLuminosity(user.luminosity + CANDLE_LUM)
+
+
+	dropped(mob/user)
+		if(lit)
+			user.sd_SetLuminosity(user.luminosity - CANDLE_LUM)
+			src.sd_SetLuminosity(CANDLE_LUM)
+
 
 
 ///////////////

@@ -28,8 +28,7 @@
 				M << S
 
 /mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num)
-	if(!src.client && ear_deaf > 0)
-		return
+	if(!src.client || ear_deaf > 0)	return
 	switch(soundin)
 		if ("shatter") soundin = pick('Glassbr1.ogg','Glassbr2.ogg','Glassbr3.ogg')
 		if ("explosion") soundin = pick('Explosion1.ogg','Explosion2.ogg')

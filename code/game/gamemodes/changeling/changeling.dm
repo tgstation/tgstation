@@ -157,8 +157,8 @@
 		obj_count++
 	return
 
-/datum/game_mode/changeling/check_finished()
-/*	var/changelings_alive = 0
+/*/datum/game_mode/changeling/check_finished()
+	var/changelings_alive = 0
 	for(var/datum/mind/changeling in changelings)
 		if(!istype(changeling.current,/mob/living/carbon))
 			continue
@@ -176,8 +176,8 @@
 		if(world.time-changelingdeathtime > TIME_TO_GET_REVIVED)
 			return 1
 		else
-			return ..()*/
-	return 0
+			return ..()
+	return 0*/
 
 /datum/game_mode/proc/grant_changeling_powers(mob/living/carbon/human/changeling_mob)
 	if (!istype(changeling_mob))

@@ -27,9 +27,6 @@
 		drop_item()
 		hand = h
 		//This is where the suicide assemblies checks would go
-		for (var/obj/item/weapon/implant/I in src)
-			if (I.implanted)
-				I.activate(10)
 
 		if (client)
 			spawn(10)

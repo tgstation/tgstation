@@ -102,9 +102,17 @@ Implant Specifics:<BR>"}
 		return dat
 
 
+	trigger(emote, source as mob)
+		if(emote == "deathgasp")
+			src.activate("death")
+		return
+
+
 	activate(var/cause)
 		if((!cause) || (!src.imp_in))	return 0
-		//explode here
+		explosion(src, -1, 0, 1, 3, 0)//This might be a bit much, dono will have to see.
+		if(src.imp_in)
+			src.imp_in.gib()
 
 
 
@@ -137,6 +145,12 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		var/datum/reagents/R = new/datum/reagents(10)
 		reagents = R
 		R.my_atom = src
+
+
+	trigger(emote, source as mob)
+		if(emote == "deathgasp")
+			src.activate(10)
+		return
 
 
 	activate(var/cause)

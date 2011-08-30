@@ -40,6 +40,7 @@
 				dat += "<A href='?src=\ref[src];inject1=\ref[C]'>(<font color=red>(1)</font>)</A>"
 				dat += "<A href='?src=\ref[src];inject5=\ref[C]'>(<font color=red>(5)</font>)</A>"
 				dat += "<A href='?src=\ref[src];inject10=\ref[C]'>(<font color=red>(10)</font>)</A><BR>"
+				dat += "********************************<BR>"
 			dat += "<HR>Tracking Implants<BR>"
 			for(var/obj/item/weapon/implant/tracking/T in world)
 				Tr = get_turf(T)
@@ -51,6 +52,8 @@
 					var/turf/mob_loc = get_turf_loc(M)
 					loc_display = mob_loc.loc
 				dat += "ID: [T.id] | Location: [loc_display]<BR>"
+				dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"
+				dat += "********************************<BR>"
 			dat += "<HR><A href='?src=\ref[src];lock=1'>Lock Console</A>"
 
 		user << browse(dat, "window=computer;size=400x500")
@@ -93,8 +96,9 @@
 			else if(href_list["warn"])
 				var/warning = input(usr,"Message:","Enter your message here!","")
 				var/obj/item/weapon/implant/I = locate(href_list["warn"])
-				var/mob/living/carbon/R = I.imp_in
-				R << "\green You hear a voice in your head saying: '[warning]'"
+				if((I)&&(I.imp_in))
+					var/mob/living/carbon/R = I.imp_in
+					R << "\green You hear a voice in your head saying: '[warning]'"
 
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()

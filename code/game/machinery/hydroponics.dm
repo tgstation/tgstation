@@ -441,13 +441,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		del(O)
 		src.updateicon()
 
-
-
-	else if ( istype(O, /obj/item/weapon/reagent_containers/syringe))  // Syringe stuff
+	else if(istype(O, /obj/item/weapon/reagent_containers/syringe))  // Syringe stuff
 		var/obj/item/weapon/reagent_containers/syringe/S = O
 		if (src.planted)
 			if (S.mode == 1)
-				if(!reagents.total_volume)
+				if(!S.reagents.total_volume)
 					user << "\red The syringe is empty."
 					return
 				user << "\red You inject the [src.myseed.plantname] with a chemical solution."
