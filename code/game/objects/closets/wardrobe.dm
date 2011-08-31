@@ -70,7 +70,6 @@
 	new /obj/item/clothing/head/chaplain_hood( src )
 	new /obj/item/clothing/suit/holidaypriest( src )
 	new /obj/item/clothing/under/scratch( src )
-	new /obj/item/clothing/head/helmet/cueball( src )
 	new /obj/item/clothing/shoes/white( src )
 	new /obj/item/clothing/gloves/white( src )
 	new /obj/item/weapon/candlepack( src )
