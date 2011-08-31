@@ -298,9 +298,6 @@ var/list/occupations = list(
 	//soul
 	"Clown"                  = 1,
 	"Mime"                   = 1,
-	"Chaplain"               = 1,
-	"Librarian"              = 1,
-	"Lawyer"                 = 1,
 	//body
 	"Bartender"              = 1,
 	"Chef"                   = 1,
@@ -312,7 +309,6 @@ var/list/occupations = list(
 	//engineering
 	"Chief Engineer"         = 1,
 	"Station Engineer"       = 5,
-	"Atmospheric Technician" = 4,
 	"Roboticist"             = 1,
 
 	//red shirts
@@ -340,7 +336,11 @@ var/list/occupations = list(
 )
 
 var/list/assistant_occupations = list(
-	"Assistant",
+	"Assistant" = -1, //infinite assistants
+	"Chaplain" = 1,
+	"Librarian" = 1,
+	"Lawyer" = 1,
+	"Atmospheric Technician" = 4,
 	//"Tourist", //I am not going to implement these jobs at the moment. Just listed it as examples. --rastaf0
 	//"Monkey",
 	//"Prisoneer",

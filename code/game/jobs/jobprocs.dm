@@ -83,7 +83,9 @@
 			if (unassigned.len == 0)
 				break
 			var/list/candidates = FindOccupationCandidates(unassigned, occupation, level)
-			for (var/mob/new_player/candidate in candidates)
+			while (candidates.len && assistant_occupations[occupation])
+				assistant_occupations[occupation]--
+				var/mob/new_player/candidate = pick_n_take(candidates)
 				candidate.mind.assigned_role = occupation
 				unassigned -= candidate
 		//Now everyone else
@@ -116,7 +118,12 @@
 		for(var/mob/new_player/player in unassigned)
 			if (unassigned.len == 0)
 				break
-			player.mind.assigned_role = pick(assistant_occupations)
+			var/list/occupationsPossible = list()
+			for(var/occ in assistant_occupations)
+				if(assistant_occupations[occ])
+					occupationsPossible += assistant_occupations[occ]
+			player.mind.assigned_role = pick(occupationsPossible)
+			assistant_occupations[player.mind.assigned_role]--
 
 	return 1
 
@@ -158,9 +165,6 @@
 							B.name = "Uplifting Primer"
 						if("toolboxia")
 							B.name = "Toolbox Manifesto"
-						if("nazism")
-							B.name = "Mein Kampf"
-							if(prob(50)) brainloss = 60 // probably starts off retarded?
 						if("homosexuality")
 							B.name = "Guys Gone Wild"
 						if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
