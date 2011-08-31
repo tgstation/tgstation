@@ -49,6 +49,11 @@
 	new /obj/item/clothing/head/powdered_wig(src.loc)
 	del(src)
 
+/obj/landmark/costume/highlander/New()
+	new /obj/item/clothing/under/kilt(src.loc)
+	new /obj/item/clothing/head/beret(src.loc)
+	del(src)
+
 /obj/landmark/costume/prig/New()
 	new /obj/item/clothing/suit/wcoat(src.loc)
 	new /obj/item/clothing/glasses/monocle(src.loc)
@@ -70,9 +75,21 @@
 	new /obj/item/clothing/head/wizard/fake(src.loc)
 	del(src)
 
+/obj/landmark/costume/marisawizard/New()
+	new /obj/item/clothing/head/wizard/marisa(src.loc)
+	new/obj/item/clothing/suit/wizrobe/marisa(src.loc)
+	del(src)
+
 /obj/landmark/costume/nightowl/New()
 	new /obj/item/clothing/under/owl(src.loc)
 	new /obj/item/clothing/mask/owl_mask(src.loc)
+	del(src)
+
+/obj/landmark/costume/waiter/New()
+	new /obj/item/clothing/under/waiter(src.loc)
+	var/CHOICE= pick( /obj/item/clothing/head/kitty, /obj/item/clothing/head/rabbitears)
+	new CHOICE(src.loc)
+	new /obj/item/clothing/suit/apron(src.loc)
 	del(src)
 
 /obj/landmark/costume/pirate/New()
@@ -111,6 +128,65 @@
 	new /obj/item/clothing/under/spiderman(src.loc)
 	new /obj/item/clothing/mask/spiderman(src.loc)
 	del(src)
+
+/obj/landmark/costume/hats1/New()
+	new /obj/item/clothing/head/collectable/petehat(src.loc)
+	new /obj/item/clothing/head/collectable/metroid(src.loc)
+	new /obj/item/clothing/head/collectable/chef(src.loc)
+	new /obj/item/clothing/head/collectable/xenom(src.loc)
+	del(src)
+
+/obj/landmark/costume/hats2/New()
+	new /obj/item/clothing/head/collectable/petehat(src.loc)
+	new /obj/item/clothing/head/collectable/beret(src.loc)
+	new /obj/item/clothing/head/collectable/police(src.loc)
+	new /obj/item/clothing/head/collectable/slime(src.loc)
+	del(src)
+
+/obj/landmark/costume/hats3/New()
+	new /obj/item/clothing/head/collectable/beret(src.loc)
+	new /obj/item/clothing/head/collectable/tophat(src.loc)
+	new /obj/item/clothing/head/collectable/paper(src.loc)
+	new /obj/item/clothing/head/collectable/captain(src.loc)
+	del(src)
+
+/obj/landmark/costume/hats4/New()
+	new /obj/item/clothing/head/collectable/paper(src.loc)
+	new /obj/item/clothing/head/collectable/police(src.loc)
+	new /obj/item/clothing/head/collectable/welding(src.loc)
+	new /obj/item/clothing/head/collectable/hardhat(src.loc)
+	del(src)
+
+/obj/landmark/costume/hats5/New()
+	new /obj/item/clothing/head/collectable/flatcap(src.loc)
+	new /obj/item/clothing/head/collectable/pirate(src.loc)
+	new /obj/item/clothing/head/collectable/kitty(src.loc)
+	new /obj/item/clothing/head/collectable/hardhat(src.loc)
+	del(src)
+
+/obj/landmark/costume/hats6/New()
+	new /obj/item/clothing/head/collectable/captain(src.loc)
+	new /obj/item/clothing/head/collectable/police(src.loc)
+	new /obj/item/clothing/head/collectable/HoS(src.loc)
+	new /obj/item/clothing/head/collectable/swat(src.loc)
+	del(src)
+
+/obj/landmark/costume/hats7/New()
+	new /obj/item/clothing/head/collectable/thunderdome(src.loc)
+	new /obj/item/clothing/head/collectable/rabbitears(src.loc)
+	new /obj/item/clothing/head/collectable/kitty(src.loc)
+	new /obj/item/clothing/head/collectable/chef(src.loc)
+	del(src)
+
+/obj/landmark/costume/hats8/New()
+	new /obj/item/clothing/head/collectable/paper(src.loc)
+	new /obj/item/clothing/head/collectable/police(src.loc)
+	new /obj/item/clothing/head/collectable/welding(src.loc)
+	new /obj/item/clothing/head/collectable/hardhat(src.loc)
+	del(src)
+
+
+
 
 /*
 /obj/landmark/costume/cyborg/New()
