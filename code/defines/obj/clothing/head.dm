@@ -12,14 +12,14 @@
 	icon_state = "rad"
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
 	radiation_protection = 0.35
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 60, rad = 100)
 
 /obj/item/clothing/head/bomb_hood
 	name = "bomb hood"
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH
 	armor = list(melee = 20, bullet = 5, laser = 10, taser = 5, bomb = 100, bio = 0, rad = 0)
 
 /obj/item/clothing/head/bomb_hood/security
@@ -32,7 +32,7 @@
 	icon_state = "bio"
 	desc = "Keeps the germs from flying on your face."
 	permeability_coefficient = 0.01
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 100, rad = 20)
 
 /obj/item/clothing/head/bio_hood/general
@@ -57,21 +57,21 @@
 	icon_state = "cake0"
 	var/onfire = 0.0
 	var/status = 0
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
 
 /obj/item/clothing/head/caphat
 	name = "Captain's hat"
 	icon_state = "captain"
 	desc = "It's good being the king."
-	flags = FPRINT|TABLEPASS|SUITSPACE
+	flags = FPRINT|TABLEPASS
 	item_state = "caphat"
 
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
 	desc = "It's even better to be the emperor."
-	flags = FPRINT|TABLEPASS|SUITSPACE
+	flags = FPRINT|TABLEPASS
 	item_state = "centhat"
 
 /obj/item/clothing/head/det_hat
@@ -92,7 +92,7 @@
 	desc = "An amish looking hat."
 	icon_state = "tophat"
 	item_state = "that"
-	flags = FPRINT|TABLEPASS|HEADSPACE
+	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/wizard
 	name = "wizard hat"
@@ -120,26 +120,26 @@
 	icon_state = "chef"
 	item_state = "chef"
 	desc = "The commander in chef's head wear."
-	flags = FPRINT | TABLEPASS | HEADSPACE
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/mailman
 	name = "Mailman Hat"
 	icon_state = "mailman"
 	desc = "Right-on-time mail ervice head wear."
-	flags = FPRINT | TABLEPASS | HEADSPACE
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/plaguedoctorhat
 	name = "Plague doctor's hat"
 	desc = "Once used by Plague doctors. Now useless."
 	icon_state = "plaguedoctor"
-	flags = FPRINT | TABLEPASS | HEADSPACE
+	flags = FPRINT | TABLEPASS
 	permeability_coefficient = 0.01
 
 /obj/item/clothing/head/beret
 	name = "beret"
 	desc = "A beret, a mime's favorite headwear."
 	icon_state = "beret"
-	flags = FPRINT | TABLEPASS | HEADSPACE
+	flags = FPRINT | TABLEPASS
 
 
 // CHUMP HELMETS: COOKING THEM DESTROYS THE CHUMP HELMET SPAWN.
@@ -148,7 +148,7 @@
 	name = "helmet"
 	desc = "Standard Security gear."
 	icon_state = "helmet"
-	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	item_state = "helmet"
 	armor = list(melee = 75, bullet = 10, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
@@ -159,15 +159,15 @@
 	name = "cueball helmet"
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
-	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES|HEADCOVERSMOUTH
 	item_state="cueball"
-	armor = list(melee = 75, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/secsoft
 	name = "Soft Cap"
 	desc = "A baseball hat in tasteful red."
 	icon_state = "secsoft"
-	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	item_state = "helmet"
 
 /obj/item/clothing/head/syndicatefake
@@ -181,7 +181,7 @@
 	name = "swat helmet"
 	desc = "Used by highly trained Swat Members."
 	icon_state = "swat"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
 
@@ -189,7 +189,7 @@
 	name = "Thunderdome helmet"
 	desc = "Let the battle commence!"
 	icon_state = "thunderdome"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES
 	item_state = "thunderdome"
 	armor = list(melee = 80, bullet = 60, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
@@ -197,7 +197,7 @@
 	name = "hard hat"
 	desc = "A hat which appears to be very hard."
 	icon_state = "hardhat0_yellow"
-	flags = FPRINT | TABLEPASS | SUITSPACE
+	flags = FPRINT | TABLEPASS
 	item_state = "hardhat0_yellow"
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
@@ -229,7 +229,7 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES
 	see_face = 0.0
 	item_state = "welding"
 	protective_temperature = 1300
@@ -243,14 +243,14 @@
 	desc = "The hat of the HoS. Very secure, for he always gets assassinated."
 	icon_state = "hoscap"
 	desc = "A hat that shows the security grunts who's in charge!"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES
 	armor = list(melee = 80, bullet = 60, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/head/helmet/warden
 	name = "Warden Hat"
 	desc = "Stop right there, criminal scum!"
 	icon_state = "policehelm"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES
 	armor = list(melee = 70, bullet = 10, laser = 40, taser = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/head/helmet/that
@@ -258,7 +258,7 @@
 	desc = "An amish looking helmet"
 	icon_state = "tophat"
 	item_state = "that"
-	flags = FPRINT|TABLEPASS|HEADSPACE
+	flags = FPRINT|TABLEPASS
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/greenbandana
@@ -266,7 +266,7 @@
 	desc = "A green bandana with some fine nanotech lining."
 	icon_state = "greenbandana"
 	item_state = "greenbandana"
-	flags = FPRINT|TABLEPASS|HEADSPACE
+	flags = FPRINT|TABLEPASS
 	armor = list(melee = 5, bullet = 5, laser = 5, taser = 5, bomb = 15, bio = 15, rad = 15)
 
 /obj/item/clothing/head/helmet/riot
@@ -274,24 +274,24 @@
 	desc = "A helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	item_state = "helmet"
-	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	armor = list(melee = 82, bullet = 15, laser = 5, taser = 5, bomb = 5, bio = 2, rad = 0)
 
 /obj/item/clothing/head/helmet/cap
 	name = "Captain's cap"
 	desc = "For irresponsible Captains."
 	icon_state = "capcap"
-	flags = FPRINT|TABLEPASS|SUITSPACE
+	flags = FPRINT|TABLEPASS
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/chaplain_hood
 	name = "Chaplain's hood"
 	desc = "A hoodie for the chaplain!!!"
 	icon_state = "chaplain_hood"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 
 /obj/item/clothing/head/nursehat
 	name = "Nurse Hat"
 	desc = "Smokin'"
 	icon_state = "nursehat"
-	flags = FPRINT|TABLEPASS|HEADSPACE
+	flags = FPRINT|TABLEPASS
