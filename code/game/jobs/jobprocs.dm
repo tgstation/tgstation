@@ -194,7 +194,7 @@
 				while(!accepted)
 					if(!B) break // prevents possible runtime errors
 
-					switch(input(src,"Which bible style would you like?") in list("Normal (Christianity)", "Koran", "Scrapbook", "Daederic Scroll", "Creeper", "White", "Banana", "Holy Light", "Athiest", "Necromancer", "Tome"))
+					switch(input(src,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Daederic Scroll", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology"))
 						if("Koran")
 							B.icon_state = "koran"
 							B.item_state = "koran"
@@ -207,11 +207,8 @@
 						if("Creeper")
 							B.icon_state = "creeper"
 							B.item_state = "syringe_kit"
-						if("White")
+						if("White Bible")
 							B.icon_state = "white"
-							B.item_state = "syringe_kit"
-						if("Banana")
-							B.icon_state = "banana"
 							B.item_state = "syringe_kit"
 						if("Holy Light")
 							B.icon_state = "holylight"
@@ -219,12 +216,18 @@
 						if("Athiest")
 							B.icon_state = "athiest"
 							B.item_state = "syringe_kit"
-						if("Necromancer")
-							B.icon_state = "necro"
-							B.item_state = "syringe_kit"
 						if("Tome")
 							B.icon_state = "tome"
 							B.item_state = "syringe_kit"
+						if("The King in Yellow")
+							B.icon_state = "kingyellow"
+							B.item_state = "kingyellow"
+						if("Ithaqua")
+							B.icon_state = "ithaqua"
+							B.item_state = "ithaqua"
+						if("Scientology")
+							B.icon_state = "scientology"
+							B.item_state = "scientology"
 						else
 							// if christian bible, revert to default
 							B.icon_state = "bible"
