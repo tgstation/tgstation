@@ -101,29 +101,26 @@
 	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
 		src.gameover = 1
 		src.temp = "[src.enemy_name] has fallen! Rejoice!"
-		var/obj/item/prize
 		var/prizeselect = pick(1,2,3,4,5,6,7,8)
 		switch(prizeselect)
 			if(1)
-				prize = new /obj/item/weapon/spacecash(src.loc)
-				prize.name = "space ticket"
-				prize.desc = "It's almost like actual currency!"
+				new /obj/item/toy/snappopbox(src.loc)
 			if(2)
-				prize = new /obj/item/toy/blink(src.loc)
+				new /obj/item/toy/blink(src.loc)
 			if(3)
-				prize = new /obj/item/clothing/under/syndicate/tacticool(src.loc)
+				new /obj/item/clothing/under/syndicate/tacticool(src.loc)
 			if(4)
-				prize = new /obj/item/toy/sword(src.loc)
+				new /obj/item/toy/sword(src.loc)
 			if(5)
-				prize = new /obj/item/toy/ammo/gun(src.loc)
-				prize = new /obj/item/toy/gun(src.loc)
+				new /obj/item/toy/ammo/gun(src.loc)
+				new /obj/item/toy/gun(src.loc)
 			if(6)
-				prize = new /obj/item/toy/crossbow(src.loc)
+				new /obj/item/toy/crossbow(src.loc)
 			if(7)
-				prize = new /obj/item/clothing/suit/syndicatefake(src.loc)
-				prize = new /obj/item/clothing/head/syndicatefake(src.loc)
+				new /obj/item/clothing/suit/syndicatefake(src.loc)
+				new /obj/item/clothing/head/syndicatefake(src.loc)
 			if(8)
-				prize = new /obj/item/toy/crayonbox(loc)
+				new /obj/item/toy/crayonbox(loc)
 
 
 	else if ((src.enemy_mp <= 5) && (prob(70)))
