@@ -172,9 +172,6 @@
 							brainloss = 100 // starts off retarded as fuck
 						if("science")
 							B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
-						if("metroidism")
-							B.name = "Skreeee!: The Happening"
-							src:mutantrace = "metroid" // fucking lol (if this is too extreme, comment this thing out) -- Doohl
 						else
 							B.name = "The Holy Book of [new_religion]"
 
@@ -198,7 +195,7 @@
 				while(!accepted)
 					if(!B) break // prevents possible runtime errors
 
-					switch(input(src,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Daederic Scroll", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology"))
+					switch(input(src,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Daederic Scroll", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts"))
 						if("Koran")
 							B.icon_state = "koran"
 							B.item_state = "koran"
@@ -232,6 +229,9 @@
 						if("Scientology")
 							B.icon_state = "scientology"
 							B.item_state = "scientology"
+						if("the bible melts")
+							B.icon_state = "melted"
+							B.icon_state = "melted"
 						else
 							// if christian bible, revert to default
 							B.icon_state = "bible"
