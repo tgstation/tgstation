@@ -10,6 +10,7 @@
 	return
 
 /obj/alien/weeds/proc/Life()
+	set background = 1
 	var/turf/U = get_turf(src)
 /*
 	if (locate(/obj/movable, U))
