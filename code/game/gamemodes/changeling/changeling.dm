@@ -197,7 +197,8 @@
 		else
 			changeling_name = "[changeling.key] (character destroyed)"
 
-		world << "<B>The changeling was [changeling_name]</B>"
+		world << "<B>The changeling was [changeling_name].</B>"
+		if(changeling.current) world << "<b>[changeling.current.gender=="male"?"His":"Her"] changeling ID was [changeling.current.gender=="male"?"Mr.":"Mrs."] [changeling.current.changeling.changelingID]."
 		world << "<B>Genomes absorbed: [totalabsorbed]</B>"
 
 		var/count = 1

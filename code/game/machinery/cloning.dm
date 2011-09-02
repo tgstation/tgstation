@@ -282,7 +282,7 @@
 //Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
 			if ((!selected) || (!src.pod1) || (src.pod1.occupant) || (src.pod1.mess))
 				src.temp = "Unable to initiate cloning cycle." // most helpful error message in THE HISTORY OF THE WORLD
-			else if (src.pod1.growclone(selected, C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"]))
+			else if (src.pod1.growclone(selected, C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"],C.fields["changeling"]))
 				src.temp = "Cloning cycle activated."
 				src.records.Remove(C)
 				del(C)
@@ -321,6 +321,7 @@
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)
 	R.fields["UI"] = subject.dna.uni_identity
 	R.fields["SE"] = subject.dna.struc_enzymes
+	R.fields["changeling"] = subject.changeling
 
 	// Preferences stuff
 	R.fields["interface"] = subject.UI
@@ -431,7 +432,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI)
+/obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI, var/datum/changeling/changelingClone)
 	if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 		return 0
 
@@ -492,9 +493,10 @@
 			if (src.occupant.mind in ticker.mode:cult)
 				ticker.mode:add_cultist(src.occupant.mind)
 				ticker.mode:update_all_cult_icons() //So the icon actually appears
-		if ("changeling")
-			if (src.occupant.mind in ticker.mode:changelings)
-				src.occupant.make_changeling()
+
+	if (changelingClone)
+		occupant.changeling = changelingClone
+		src.occupant.make_changeling()
 
 	// -- End mode specific stuff
 
