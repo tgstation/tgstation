@@ -72,15 +72,15 @@
 /datum/supply_packs/party
 	name = "Party equipment"
 	contains = list("/obj/item/weapon/storage/drinkingglasses",
-	"/obj/item/weapon/reagent_containers/food/drinks/shaker",
-	"/obj/item/weapon/reagent_containers/food/drinks/bottle/patron",
-	"/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager",
-	"/obj/item/weapon/reagent_containers/food/drinks/ale",
-	"/obj/item/weapon/reagent_containers/food/drinks/ale",
-	"/obj/item/weapon/reagent_containers/food/drinks/beer",
-	"/obj/item/weapon/reagent_containers/food/drinks/beer",
-	"/obj/item/weapon/reagent_containers/food/drinks/beer",
-	"/obj/item/weapon/reagent_containers/food/drinks/beer")
+					"/obj/item/weapon/reagent_containers/food/drinks/shaker",
+					"/obj/item/weapon/reagent_containers/food/drinks/bottle/patron",
+					"/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager",
+					"/obj/item/weapon/reagent_containers/food/drinks/ale",
+					"/obj/item/weapon/reagent_containers/food/drinks/ale",
+					"/obj/item/weapon/reagent_containers/food/drinks/beer",
+					"/obj/item/weapon/reagent_containers/food/drinks/beer",
+					"/obj/item/weapon/reagent_containers/food/drinks/beer",
+					"/obj/item/weapon/reagent_containers/food/drinks/beer")
 	cost = 20
 	containertype = "/obj/crate"
 	containername = "Party equipment"
@@ -100,19 +100,19 @@
 /datum/supply_packs/evacuation
 	name = "Emergency equipment"
 	contains = list("/obj/machinery/bot/floorbot",
-	"/obj/machinery/bot/floorbot",
-	"/obj/machinery/bot/medbot",
-	"/obj/machinery/bot/medbot",
-	"/obj/item/weapon/tank/air",
-	"/obj/item/weapon/tank/air",
-	"/obj/item/weapon/tank/air",
-	"/obj/item/weapon/tank/air",
-	"/obj/item/weapon/tank/air",
-	"/obj/item/clothing/mask/gas",
-	"/obj/item/clothing/mask/gas",
-	"/obj/item/clothing/mask/gas",
-	"/obj/item/clothing/mask/gas",
-	"/obj/item/clothing/mask/gas")
+					"/obj/machinery/bot/floorbot",
+					"/obj/machinery/bot/medbot",
+					"/obj/machinery/bot/medbot",
+					"/obj/item/weapon/tank/air",
+					"/obj/item/weapon/tank/air",
+					"/obj/item/weapon/tank/air",
+					"/obj/item/weapon/tank/air",
+					"/obj/item/weapon/tank/air",
+					"/obj/item/clothing/mask/gas",
+					"/obj/item/clothing/mask/gas",
+					"/obj/item/clothing/mask/gas",
+					"/obj/item/clothing/mask/gas",
+					"/obj/item/clothing/mask/gas")
 	cost = 35
 	containertype = "/obj/crate/internals"
 	containername = "Emergency Crate"
@@ -190,13 +190,13 @@
 /datum/supply_packs/hydroponics // -- Skie
 	name = "Hydroponics Supply Crate"
 	contains = list("/obj/item/weapon/plantbgone",
-	"/obj/item/weapon/plantbgone",
-	"/obj/item/weapon/plantbgone",
-	"/obj/item/weapon/plantbgone",
-	"/obj/item/weapon/minihoe",
-	"/obj/item/device/analyzer/plant_analyzer",
-	"/obj/item/clothing/gloves/botanic_leather",
-	"/obj/item/clothing/suit/apron") // Updated with new things
+					"/obj/item/weapon/plantbgone",
+					"/obj/item/weapon/plantbgone",
+					"/obj/item/weapon/plantbgone",
+					"/obj/item/weapon/minihoe",
+					"/obj/item/device/analyzer/plant_analyzer",
+					"/obj/item/clothing/gloves/botanic_leather",
+					"/obj/item/clothing/suit/apron") // Updated with new things
 	cost = 10
 	containertype = /obj/crate/hydroponics
 	containername = "Hydroponics crate"
@@ -205,16 +205,16 @@
 /datum/supply_packs/seeds
 	name = "Seeds Crate"
 	contains = list("/obj/item/seeds/chiliseed",
-	"/obj/item/seeds/berryseed",
-	"/obj/item/seeds/cornseed",
-	"/obj/item/seeds/eggplantseed",
-	"/obj/item/seeds/tomatoseed",
-	"/obj/item/seeds/soyaseed",
-	"/obj/item/seeds/wheatseed",
-	"/obj/item/seeds/carrotseed",
-	"/obj/item/seeds/sunflowerseed",
-	"/obj/item/seeds/chantermycelium",
-	"/obj/item/seeds/potatoseed")
+					"/obj/item/seeds/berryseed",
+					"/obj/item/seeds/cornseed",
+					"/obj/item/seeds/eggplantseed",
+					"/obj/item/seeds/tomatoseed",
+					"/obj/item/seeds/soyaseed",
+					"/obj/item/seeds/wheatseed",
+					"/obj/item/seeds/carrotseed",
+					"/obj/item/seeds/sunflowerseed",
+					"/obj/item/seeds/chantermycelium",
+					"/obj/item/seeds/potatoseed")
 	cost = 10
 	containertype = /obj/crate/hydroponics
 	containername = "Seeds crate"
@@ -224,14 +224,14 @@
 /datum/supply_packs/exoticseeds
 	name = "Exotic Seeds Crate"
 	contains = list("/obj/item/seeds/nettleseed",
-	"/obj/item/seeds/replicapod",
-	"/obj/item/seeds/replicapod",
-	"/obj/item/seeds/replicapod",
-	"/obj/item/seeds/plumpmycelium",
-	"/obj/item/seeds/libertymycelium",
-	"/obj/item/seeds/amanitamycelium",
-	"/obj/item/seeds/bananaseed",
-	"/obj/item/seeds/eggyseed")
+					"/obj/item/seeds/replicapod",
+					"/obj/item/seeds/replicapod",
+					"/obj/item/seeds/replicapod",
+					"/obj/item/seeds/plumpmycelium",
+					"/obj/item/seeds/libertymycelium",
+					"/obj/item/seeds/amanitamycelium",
+					"/obj/item/seeds/bananaseed",
+					"/obj/item/seeds/eggyseed")
 	cost = 15
 	containertype = /obj/crate/hydroponics
 	containername = "Exotic Seeds crate"
@@ -284,30 +284,6 @@
 	cost = 10
 	containertype = "/obj/crate"
 	containername = "Glass sheets crate"
-
-/datum/supply_packs/engineering
-	name = "Engineering crate"
-	contains = list("/obj/item/weapon/storage/toolbox/mechanical",
-					"/obj/item/weapon/storage/toolbox/electrical",
-					"/obj/item/clothing/gloves/yellow",
-					"/obj/item/weapon/storage/utilitybelt",
-					"/obj/item/clothing/suit/hazardvest",
-					"/obj/item/clothing/head/helmet/hardhat")
-	cost = 10
-	containertype = "/obj/crate"
-	containername = "Engineering crate"
-
-/datum/supply_packs/powercell
-	name = "Power cell crate"
-	contains = list("/obj/item/weapon/storage/toolbox/electrical",
-					"/obj/item/weapon/cable_coil",
-					"/obj/item/weapon/cable_coil",
-					"/obj/item/weapon/cell",
-					"/obj/item/weapon/cell",
-					"/obj/item/weapon/cell/high")
-	cost = 10
-	containertype = "/obj/crate"
-	containername = "Power cell crate"
 
 /datum/supply_packs/electrical
 	name = "Electrical maintenance crate"
@@ -388,8 +364,8 @@
 /datum/supply_packs/mecha_ripley
 	name = "Circuit Crate (\"Ripley\" APLU)"
 	contains = list("/obj/item/weapon/book/manual/ripley_build_and_repair",
-	"/obj/item/mecha_parts/circuitboard/ripley/peripherals", //TEMPORARY due to lack of circuitboard printer
-	"/obj/item/mecha_parts/circuitboard/ripley/main") //TEMPORARY due to lack of circuitboard printer
+					"/obj/item/mecha_parts/circuitboard/ripley/peripherals", //TEMPORARY due to lack of circuitboard printer
+					"/obj/item/mecha_parts/circuitboard/ripley/main") //TEMPORARY due to lack of circuitboard printer
 	cost = 40
 	containertype = "/obj/crate/secure"
 	containername = "APLU \"Ripley\" Circuit Crate"
@@ -398,15 +374,15 @@
 /datum/supply_packs/robotics
 	name = "Robotics Assembly Crate"
 	contains = list("/obj/item/device/prox_sensor",
-	"/obj/item/device/prox_sensor",
-	"/obj/item/device/prox_sensor",
-	"/obj/item/weapon/storage/toolbox/electrical",
-	"/obj/item/device/flash",
-	"/obj/item/device/flash",
-	"/obj/item/device/flash",
-	"/obj/item/device/flash",
-	"/obj/item/weapon/cell/high",
-	"/obj/item/weapon/cell/high")
+					"/obj/item/device/prox_sensor",
+					"/obj/item/device/prox_sensor",
+					"/obj/item/weapon/storage/toolbox/electrical",
+					"/obj/item/device/flash",
+					"/obj/item/device/flash",
+					"/obj/item/device/flash",
+					"/obj/item/device/flash",
+					"/obj/item/weapon/cell/high",
+					"/obj/item/weapon/cell/high")
 	cost = 10
 	containertype = "/obj/crate/secure/gear"
 	containername = "Robotics Assembly"
@@ -533,38 +509,38 @@
 /datum/supply_packs/securitybarriers
 	name = "Security Barriers"
 	contains = list("/obj/machinery/deployable/barrier",
-	"/obj/machinery/deployable/barrier",
-	"/obj/machinery/deployable/barrier",
-	"/obj/machinery/deployable/barrier")
+					"/obj/machinery/deployable/barrier",
+					"/obj/machinery/deployable/barrier",
+					"/obj/machinery/deployable/barrier")
 	cost = 20
 	containertype = "/obj/crate/secure/gear"
 	containername = "Secruity Barriers crate"
 
 /datum/supply_packs/hats/
 	contains = list("/obj/item/clothing/head/collectable/chef",
-	"/obj/item/clothing/head/collectable/paper",
-	"/obj/item/clothing/head/collectable/tophat",
-	"/obj/item/clothing/head/collectable/captain",
-	"/obj/item/clothing/head/collectable/beret",
-	"/obj/item/clothing/head/collectable/welding",
-	"/obj/item/clothing/head/collectable/flatcap",
-	"/obj/item/clothing/head/collectable/pirate",
-	"/obj/item/clothing/head/collectable/kitty",
-	"/obj/item/clothing/head/collectable/rabbitears",
-	"/obj/item/clothing/head/collectable/wizard",
-	"/obj/item/clothing/head/collectable/hardhat",
-	"/obj/item/clothing/head/collectable/HoS",
-	"/obj/item/clothing/head/collectable/thunderdome",
-	"/obj/item/clothing/head/collectable/swat",
-	"/obj/item/clothing/head/collectable/metroid",
-	"/obj/item/clothing/head/collectable/metroid",
-	"/obj/item/clothing/head/collectable/police",
-	"/obj/item/clothing/head/collectable/police",
-	"/obj/item/clothing/head/collectable/slime",
-	"/obj/item/clothing/head/collectable/slime",
-	"/obj/item/clothing/head/collectable/xenom",
-	"/obj/item/clothing/head/collectable/xenom",
-	"/obj/item/clothing/head/collectable/petehat",)
+					"/obj/item/clothing/head/collectable/paper",
+					"/obj/item/clothing/head/collectable/tophat",
+					"/obj/item/clothing/head/collectable/captain",
+					"/obj/item/clothing/head/collectable/beret",
+					"/obj/item/clothing/head/collectable/welding",
+					"/obj/item/clothing/head/collectable/flatcap",
+					"/obj/item/clothing/head/collectable/pirate",
+					"/obj/item/clothing/head/collectable/kitty",
+					"/obj/item/clothing/head/collectable/rabbitears",
+					"/obj/item/clothing/head/collectable/wizard",
+					"/obj/item/clothing/head/collectable/hardhat",
+					"/obj/item/clothing/head/collectable/HoS",
+					"/obj/item/clothing/head/collectable/thunderdome",
+					"/obj/item/clothing/head/collectable/swat",
+					"/obj/item/clothing/head/collectable/metroid",
+					"/obj/item/clothing/head/collectable/metroid",
+					"/obj/item/clothing/head/collectable/police",
+					"/obj/item/clothing/head/collectable/police",
+					"/obj/item/clothing/head/collectable/slime",
+					"/obj/item/clothing/head/collectable/slime",
+					"/obj/item/clothing/head/collectable/xenom",
+					"/obj/item/clothing/head/collectable/xenom",
+					"/obj/item/clothing/head/collectable/petehat",)
 	name = "Collectable Hat Crate!"
 	cost = 200
 	containertype = "/obj/crate/hat"
