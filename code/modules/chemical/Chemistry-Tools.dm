@@ -604,6 +604,7 @@
 		/obj/table,
 		/obj/secure_closet,
 		/obj/closet,
+		/obj/machinery/sink,
 		/obj/item/weapon/storage,
 		/obj/machinery/atmospherics/unary/cryo_cell,
 		/obj/item/weapon/chem_grenade,

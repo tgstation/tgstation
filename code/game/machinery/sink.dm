@@ -33,7 +33,13 @@
 
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if (istype(O, /obj/item/weapon/melee/baton))
+		if (istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks))
+			O:reagents.add_reagent("water", 10)
+			user.visible_message( \
+				"\blue [user] fills the [O] using the [src].", \
+				"\blue You fill the [O] using the [src].")
+			return
+		else if (istype(O, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = O
 			if (B.charges > 0 && B.status == 1)
 				flick("baton_active", src)
