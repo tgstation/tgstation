@@ -61,10 +61,9 @@
 				if(prob(spreadIntoAdjacentChance))
 					spreadsIntoAdjacent = 1
 
-				for(var/turf/turf in view(3,src))
-					if(!turf.density && !istype(turf,/turf/space))
-						if(spreadsIntoAdjacent || !locate(/obj/glowshroom) in view(1,turf))
-							possibleLocs += turf
+				for(var/turf/simulated/floor/plating/airless/asteroid/earth in view(3,src))
+					if(spreadsIntoAdjacent || !locate(/obj/glowshroom) in view(1,earth))
+						possibleLocs += earth
 
 				if(!possibleLocs.len)
 					break

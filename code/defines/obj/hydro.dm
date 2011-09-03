@@ -536,7 +536,7 @@
 	endurance = 30
 	maturation = 5
 	production = 1
-	yield = 4
+	yield = 1
 	potency = 0
 	oneharvest = 1
 	growthstages = 3

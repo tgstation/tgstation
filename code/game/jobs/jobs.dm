@@ -295,9 +295,14 @@ proc/assignment_algorithm(var/list/mob/new_player/players)
 var/list/occupations = list(
 	//Civilian jobs
 	"Head of Personnel"      = 1,
+
 	//soul
 	"Clown"                  = 1,
 	"Mime"                   = 1,
+	"Chaplain"               = 1,
+	"Librarian"              = 1,
+	"Lawyer"                 = 1,
+
 	//body
 	"Bartender"              = 1,
 	"Chef"                   = 1,
@@ -310,6 +315,7 @@ var/list/occupations = list(
 	"Chief Engineer"         = 1,
 	"Station Engineer"       = 5,
 	"Roboticist"             = 1,
+	"Atmospheric Technician" = 4,
 
 	//red shirts
 	"Head of Security"       = 1,
