@@ -108,6 +108,7 @@
 	M.anchored = 1
 	M.buckled = src
 	M.loc = src.loc
+	M.dir = src.dir
 	src:buckled_mobs += M
 	src.add_fingerprint(user)
 	return
