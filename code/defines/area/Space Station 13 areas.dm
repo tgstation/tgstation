@@ -163,6 +163,20 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/transport2/centcom
 	icon_state = "shuttle"
 
+/area/shuttle/alien/base
+	icon_state = "shuttle"
+	name = "Alien Shuttle Base"
+	requires_power = 1
+	luminosity = 0
+	sd_lighting = 1
+
+/area/shuttle/alien/mine
+	icon_state = "shuttle"
+	name = "Alien Shuttle Mine"
+	requires_power = 1
+	luminosity = 0
+	sd_lighting = 1
+
 /area/shuttle/prison/
 	name = "Prison Shuttle"
 
@@ -233,6 +247,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "start"
 
 // === end remove
+
+/area/alien
+	name = "Alien base"
+	icon_state = "yellow"
+	requires_power = 0
 
 // CENTCOM
 

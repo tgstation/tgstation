@@ -660,6 +660,12 @@
 	anchored = 1.0
 	var/list/buckled_mobs = list(  )
 
+/obj/stool/bed/alien
+	name = "Resting contraption"
+	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
+	icon_state = "abed"
+
+
 /obj/stool/chair
 	name = "chair"
 	desc = "You sit in this. Either by will or force."

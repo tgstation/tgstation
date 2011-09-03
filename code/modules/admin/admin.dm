@@ -1107,6 +1107,13 @@
 						log_admin("[key_name(usr)] moved the centcom ferry")
 					else
 						alert("You're not of a high enough rank to do this")
+				if("movealienship")
+					if ((src.rank in list( "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+						move_alien_ship()
+						message_admins("\blue [key_name_admin(usr)] moved the alien dinghy", 1)
+						log_admin("[key_name(usr)] moved the alien dinghy")
+					else
+						alert("You're not of a high enough rank to do this")
 				if("flicklights")
 					while(!usr.stat)
 	//knock yourself out to stop the ghosts
@@ -1821,6 +1828,7 @@
 <A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
 <A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
+<A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
 <A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR><BR>"}
 //<A href='?src=\ref[src];secretsfun=shockwave'>Station Shockwave</A><BR>
@@ -2367,4 +2375,24 @@ proc/move_ferry()
 		ferry_location = 0
 	else
 		ferry_location = 1
+	return
+
+/**********************Alien ship**************************/
+
+var/alien_ship_location = 1 // 0 = base , 1 = mine
+
+proc/move_alien_ship()
+	var/area/fromArea
+	var/area/toArea
+	if (alien_ship_location == 1)
+		fromArea = locate(/area/shuttle/alien/mine)
+		toArea = locate(/area/shuttle/alien/base)
+	else
+		fromArea = locate(/area/shuttle/alien/base)
+		toArea = locate(/area/shuttle/alien/mine)
+	fromArea.move_contents_to(toArea)
+	if (alien_ship_location)
+		alien_ship_location = 0
+	else
+		alien_ship_location = 1
 	return

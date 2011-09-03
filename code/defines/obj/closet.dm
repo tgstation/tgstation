@@ -11,6 +11,13 @@
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	flags = FPRINT
 
+/obj/closet/acloset
+	desc = "It looks alien!"
+	name = "Strange closet"
+	icon_state = "acloset"
+	icon_closed = "acloset"
+	icon_opened = "aclosetopen"
+
 /obj/spresent
 	desc = "It's a ... present?"
 	name = "strange present"
