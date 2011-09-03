@@ -8,6 +8,7 @@
 	src.verbs += /client/proc/changeling_blind_sting
 	src.verbs += /client/proc/changeling_deaf_sting
 	src.verbs += /client/proc/changeling_silence_sting
+	src.verbs += /client/proc/changeling_unfat_sting
 
 	changeling.changeling_level = 1
 	return
@@ -26,6 +27,7 @@
 	src.verbs += /client/proc/changeling_paralysis_sting
 	src.verbs += /client/proc/changeling_silence_sting
 	src.verbs += /client/proc/changeling_transformation_sting
+	src.verbs += /client/proc/changeling_unfat_sting
 	src.verbs += /client/proc/changeling_boost_range
 
 	changeling.changeling_level = 2
@@ -51,7 +53,8 @@
 	src.verbs -= /client/proc/changeling_paralysis_sting
 	src.verbs -= /client/proc/changeling_silence_sting
 	src.verbs -= /client/proc/changeling_boost_range
-	usr.verbs -= /client/proc/changeling_transformation_sting
+	src.verbs -= /client/proc/changeling_transformation_sting
+	src.verbs -= /client/proc/changeling_unfat_sting
 
 /client/proc/changeling_absorb_dna()
 	set category = "Changeling"
@@ -652,3 +655,45 @@
 			usr.verbs += /client/proc/changeling_transformation_sting
 
 		return
+
+/client/proc/changeling_unfat_sting()
+	set category = "Changeling"
+	set name = "Unfat sting (5)"
+	set desc = "Sting target"
+
+	if(!usr.changeling)
+		usr << "\red You're not a changeling, something's wrong!"
+		return
+
+	var/list/victims = list()
+	for(var/mob/living/carbon/C in oview(usr.changeling.sting_range))
+		victims += C
+	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
+
+	if(T)
+		if(usr.stat)
+			usr << "\red Not when we are incapacitated."
+			return
+
+		if(usr.changeling.chem_charges < 5)
+			usr << "\red We don't have enough stored chemicals to do that!"
+			return
+
+		usr.changeling.chem_charges -= 5
+		usr.changeling.sting_range = 1
+
+		usr << "\blue We stealthily sting [T]."
+
+		if(!T.changeling)
+			T << "You feel a small prick and a burning sensation."
+			T.overeatduration = 0
+			T.nutrition -= 100
+		else
+			T << "You feel a small prick."
+
+		usr.verbs -= /client/proc/changeling_unfat_sting
+
+		spawn(5)
+			usr.verbs += /client/proc/changeling_unfat_sting
+
+	return
