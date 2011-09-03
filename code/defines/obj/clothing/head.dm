@@ -161,7 +161,6 @@
 	icon_state = "cueball"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
 	item_state="cueball"
-	armor = list(melee = 75, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/secsoft
 	name = "Soft Cap"

@@ -497,19 +497,11 @@
 	desc = "A classy suit and tie"
 
 /obj/item/clothing/under/spiderman
-	name = "Spiderman Suit"
-	desc = "A reinforced suit of Spiderman!"
+	name = "Deadpool Suit"
+	desc = "A suit of Deadpool!"
 	icon_state = "spiderman"
 	item_state = "spiderman"
 	color = "spiderman"
-	gas_transfer_coefficient = 0.01
-	permeability_coefficient = 0.02
-	heat_transfer_coefficient = 0.02
-	radiation_protection = 0.25
-	protective_temperature = 1000
-	flags = FPRINT | TABLEPASS | SUITSPACE
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 40, bullet = 5, laser = 5, taser = 40, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/nursesuit
 	desc = "Now THIS is hot."

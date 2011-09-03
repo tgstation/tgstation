@@ -44,9 +44,12 @@
 	new /obj/item/clothing/head/that(src.loc)
 	del(src)
 
-/obj/landmark/costume/judge/New()
-	new /obj/item/clothing/suit/judgerobe(src.loc)
-	new /obj/item/clothing/head/powdered_wig(src.loc)
+/obj/landmark/costume/scratch/New()
+	new /obj/item/clothing/gloves/white(src.loc)
+	new /obj/item/clothing/shoes/white(src.loc)
+	new /obj/item/clothing/under/scratch(src.loc)
+	if (prob(30))
+		new /obj/item/clothing/head/helmet/cueball(src.loc)
 	del(src)
 
 /obj/landmark/costume/highlander/New()
@@ -68,16 +71,6 @@
 /obj/landmark/costume/plaguedoctor/New()
 	new /obj/item/clothing/suit/bio_suit/plaguedoctorsuit(src.loc)
 	new /obj/item/clothing/head/plaguedoctorhat(src.loc)
-	del(src)
-
-/obj/landmark/costume/fakewizard/New()
-	new /obj/item/clothing/suit/wizrobe/fake(src.loc)
-	new /obj/item/clothing/head/wizard/fake(src.loc)
-	del(src)
-
-/obj/landmark/costume/marisawizard/New()
-	new /obj/item/clothing/head/wizard/marisa(src.loc)
-	new/obj/item/clothing/suit/wizrobe/marisa(src.loc)
 	del(src)
 
 /obj/landmark/costume/nightowl/New()
@@ -127,6 +120,16 @@
 /obj/landmark/costume/spiderman/New()
 	new /obj/item/clothing/under/spiderman(src.loc)
 	new /obj/item/clothing/mask/spiderman(src.loc)
+	del(src)
+
+/obj/landmark/costume/marisawizard/New()
+	new /obj/item/clothing/head/wizard/marisa(src.loc)
+	new/obj/item/clothing/suit/wizrobe/marisa(src.loc)
+	del(src)
+
+/obj/landmark/costume/fakewizard/New()
+	new /obj/item/clothing/suit/wizrobe/fake(src.loc)
+	new /obj/item/clothing/head/wizard/fake(src.loc)
 	del(src)
 
 /obj/landmark/costume/hats1/New()

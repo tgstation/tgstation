@@ -69,9 +69,6 @@
 	new /obj/item/clothing/suit/chaplain_hoodie( src )
 	new /obj/item/clothing/head/chaplain_hood( src )
 	new /obj/item/clothing/suit/holidaypriest( src )
-	new /obj/item/clothing/under/scratch( src )
-	new /obj/item/clothing/shoes/white( src )
-	new /obj/item/clothing/gloves/white( src )
 	new /obj/item/weapon/candlepack( src )
 	new /obj/item/weapon/candlepack( src )
 	return

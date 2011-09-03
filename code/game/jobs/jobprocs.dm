@@ -154,13 +154,15 @@
 						if("christianity")
 							B.name = pick("The Holy Bible","The Dead Sea Scrolls")
 						if("satanism")
-							B.name = pick("The Unholy Bible","The Necronomicon")
+							B.name = "The Unholy Bible"
+						if("cthulu")
+							B.name = "The Necronomicon"
 						if("islam")
 							B.name = "Quran"
 						if("scientology")
 							B.name = pick("The Biography of L. Ron Hubbard","Dianetics")
 						if("chaos")
-							B.name = "Space Station 13: The Musical"
+							B.name = "The Book of Lorgar"
 						if("imperium")
 							B.name = "Uplifting Primer"
 						if("toolboxia")
@@ -195,7 +197,7 @@
 				while(!accepted)
 					if(!B) break // prevents possible runtime errors
 
-					switch(input(src,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Daederic Scroll", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts"))
+					switch(input(src,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Daederic Scroll", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts", "Necronomicon"))
 						if("Koran")
 							B.icon_state = "koran"
 							B.item_state = "koran"
@@ -232,6 +234,9 @@
 						if("the bible melts")
 							B.icon_state = "melted"
 							B.icon_state = "melted"
+						if("Necronomicon")
+							B.icon_state = "necronomicon"
+							B.icon_state = "necronomicon"
 						else
 							// if christian bible, revert to default
 							B.icon_state = "bible"
@@ -321,7 +326,7 @@
 
 		if ("Shaft Miner")
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/engineer(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_mine (src), slot_ears)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/miner(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
