@@ -65,6 +65,49 @@
 
 
 
+/datum/feedback_variable
+	var/variable
+	var/value
+
+	New(var/param_variable,var/param_value = 0)
+		variable = param_variable
+		value = param_value
+
+	proc/inc(var/num = 1)
+		if(isnum(value))
+			value += num
+		else
+			value = text2num(value)
+			if(isnum(value))
+				value += num
+			else
+				value = num
+
+	proc/dec(var/num = 1)
+		if(isnum(value))
+			value -= num
+		else
+			value = text2num(value)
+			if(isnum(value))
+				value -= num
+			else
+				value = -num
+
+	proc/set_value(var/num)
+		if(isnum(num))
+			value = num
+
+	proc/get_value()
+		return value
+
+	proc/get_variable()
+		return variable
+
+	proc/get_parsed()
+		return list(variable,value)
+
+var/obj/machinery/blackbox_recorder/blackbox
+
 /obj/machinery/blackbox_recorder
 	icon = 'stationobjs.dmi'
 	icon_state = "blackbox"
@@ -87,3 +130,50 @@
 	var/msg_syndicate = list()
 	var/msg_mining = list()
 	var/msg_cargo = list()
+
+	var/list/datum/feedback_variable/feedback = new()
+
+	//Only one can exsist in the world!
+	New()
+		for(var/obj/machinery/blackbox_recorder/BR in world)
+			if(BR != src)
+				del(src)
+		blackbox = src
+
+	proc/find_feedback_datum(var/variable)
+		for(var/datum/feedback_variable/FV in feedback)
+			if(FV.get_variable() == variable)
+				return FV
+		var/datum/feedback_variable/FV = new(variable)
+		feedback += FV
+		return FV
+
+	proc/get_round_feedback()
+		return feedback
+
+proc/feedback_set(var/variable,var/value)
+	if(!blackbox) return
+
+	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+
+	if(!FV) return
+
+	FV.set_value(value)
+
+proc/feedback_inc(var/variable,var/value)
+	if(!blackbox) return
+
+	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+
+	if(!FV) return
+
+	FV.inc(value)
+
+proc/feedback_dec(var/variable,var/value)
+	if(!blackbox) return
+
+	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
+
+	if(!FV) return
+
+	FV.dec(value)
