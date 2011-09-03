@@ -294,7 +294,9 @@ mob/new_player
 			if (ailist.len)
 				var/mob/living/silicon/ai/announcer = pick(ailist)
 				if(character.mind.assigned_role != "Cyborg"&&character.mind.special_role != "MODE")
-					announcer.say("[character.real_name], the [rank], has awoken from cryo sleep.")
+					announcer.say("[character.real_name] has been sent from Centcom to fill the job of [rank] on [station_name].")
+					//announcer.say("[character.real_name], the [rank], has awoken from cryo sleep.") -Old Message
+
 
 	proc/ManifestLateSpawn(var/mob/living/carbon/human/H, icon/H_icon) // Attempted fix to add late joiners to various databases -- TLE
 		// This is basically ripped wholesale from the normal code for adding people to the databases during a fresh round
