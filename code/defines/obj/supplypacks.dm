@@ -540,7 +540,7 @@
 					"/obj/item/clothing/head/collectable/slime",
 					"/obj/item/clothing/head/collectable/xenom",
 					"/obj/item/clothing/head/collectable/xenom",
-					"/obj/item/clothing/head/collectable/petehat",)
+					"/obj/item/clothing/head/collectable/petehat")
 	name = "Collectable Hat Crate!"
 	cost = 200
 	containertype = "/obj/crate/hat"
