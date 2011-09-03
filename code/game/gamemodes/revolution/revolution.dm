@@ -345,9 +345,11 @@
 		var/list/names = new
 		for(var/datum/mind/i in revolutionaries)
 			if(i.current)
-				var/hstatus = "Dead"
-				if((i.current.z != 1) && (i.current.stat!=2))
-					hstatus = "Abandoned the station"
+				var/hstatus = ""
+				if(i.current.stat == 2)
+					hstatus = " Dead"
+				else if(i.current.z != 1)
+					hstatus = " Abandoned the station"
 				names += i.current.real_name + " [hstatus]"
 			else
 				names += "[i.key] (character destroyed)"
@@ -368,10 +370,12 @@
 		var/list/names = new
 		for(var/datum/mind/i in heads)
 			if(i.current)
-				var/hstatus = "Dead"
-				if((i.current.z != 1) && (i.current.stat!=2))
-					hstatus = "Abandoned the station"
-				names += i.current.real_name + " [hstatus] " + ((i in targets)?"(target)":"")
+				var/hstatus = ""
+				if(i.current.stat == 2)
+					hstatus = " Dead"
+				else if(i.current.z != 1)
+					hstatus = " Abandoned the station"
+				names += i.current.real_name + " [hstatus]" + ((i in targets)?"(target)":"")
 			else
 				names += "[i.key] (character destroyed)" + ((i in targets)?"(target)":"")
 		if (heads.len!=0)

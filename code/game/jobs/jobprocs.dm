@@ -83,9 +83,7 @@
 			if (unassigned.len == 0)
 				break
 			var/list/candidates = FindOccupationCandidates(unassigned, occupation, level)
-			while (candidates.len && assistant_occupations[occupation])
-				assistant_occupations[occupation]--
-				var/mob/new_player/candidate = pick_n_take(candidates)
+			for (var/mob/new_player/candidate in candidates)
 				candidate.mind.assigned_role = occupation
 				unassigned -= candidate
 		//Now everyone else
@@ -118,12 +116,7 @@
 		for(var/mob/new_player/player in unassigned)
 			if (unassigned.len == 0)
 				break
-			var/list/occupationsPossible = list()
-			for(var/occ in assistant_occupations)
-				if(assistant_occupations[occ])
-					occupationsPossible += assistant_occupations[occ]
-			player.mind.assigned_role = pick(occupationsPossible)
-			assistant_occupations[player.mind.assigned_role]--
+			player.mind.assigned_role = pick(assistant_occupations)
 
 	return 1
 

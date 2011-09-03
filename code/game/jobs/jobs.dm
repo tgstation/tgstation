@@ -336,11 +336,7 @@ var/list/occupations = list(
 )
 
 var/list/assistant_occupations = list(
-	"Assistant" = -1, //infinite assistants
-	"Chaplain" = 1,
-	"Librarian" = 1,
-	"Lawyer" = 1,
-	"Atmospheric Technician" = 4,
+	"Assistant",
 	//"Tourist", //I am not going to implement these jobs at the moment. Just listed it as examples. --rastaf0
 	//"Monkey",
 	//"Prisoneer",
