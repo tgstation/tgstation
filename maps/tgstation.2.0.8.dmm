@@ -2888,7 +2888,7 @@
 "bdB" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/airlock/medical{name = "Research Division Access"; req_access_txt = "47"},/turf/simulated/floor,/area/medical/research{name = "Research Division"})
 "bdC" = (/turf/simulated/wall,/area/toxins/lab)
 "bdD" = (/obj/grille,/obj/window/reinforced,/obj/window/reinforced{dir = 4},/obj/window/reinforced{dir = 1},/obj/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/toxins/lab)
-"bdE" = (/obj/table/reinforced,/obj/machinery/door/window/northleft{name = "Research and development"; req_access = "7"},/turf/simulated/floor{icon_state = "white"},/area/toxins/lab)
+"bdE" = (/obj/table/reinforced,/obj/machinery/door/window/northleft{name = "Research and development"; req_access = null; req_access_txt = "7"},/turf/simulated/floor{icon_state = "white"},/area/toxins/lab)
 "bdF" = (/obj/table/reinforced,/obj/machinery/door/window/northright{name = "Research and development"; req_access_txt = "7"},/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/item/weapon/hand_labeler,/obj/item/weapon/pen,/obj/item/weapon/pen,/turf/simulated/floor{icon_state = "white"},/area/toxins/lab)
 "bdG" = (/turf/simulated/wall/r_wall,/area/toxins/lab)
 "bdH" = (/turf/simulated/floor/plating,/area/maintenance/asmaint2)
