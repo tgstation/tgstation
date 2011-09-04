@@ -13,10 +13,11 @@
 	return candidates
 
 /proc/ResetOccupations()
-	for (var/mob/new_player/player in world)
-		player.mind.assigned_role = null
-		player.mind.special_role = null
-//		player.jobs_restricted_by_gamemode = null
+	for(var/mob/new_player/player in world)
+		if(player)
+			if(player.mind)
+				player.mind.assigned_role = null
+				player.mind.special_role = null
 	return
 
 /** Proc DivideOccupations
