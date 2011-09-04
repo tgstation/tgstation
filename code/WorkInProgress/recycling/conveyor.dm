@@ -67,6 +67,7 @@
 
 	affecting = loc.contents - src		// moved items will be all in loc
 	spawn(1)	// slight delay to prevent infinite propagation due to map order
+		var/items_moved = 0
 		for(var/atom/movable/A in affecting)
 			if(!A.anchored)
 				if(isturf(A.loc)) // this is to prevent an ugly bug that forces a player to drop what they're holding if they recently pick it up from the conveyer belt
@@ -84,6 +85,9 @@
 							step(M,movedir)
 					else
 						step(A,movedir)
+						items_moved++
+			if(items_moved >= 10)
+				break
 
 // attack with item, place item on conveyor
 
