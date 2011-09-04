@@ -87,13 +87,13 @@
 		var/starving = 0 // determines if the metroid is starving-hungry
 		if(istype(src, /mob/living/carbon/metroid/adult))
 			switch(nutrition)
-				if(400 to 900) hungry = 1
+				if(400 to 1100) hungry = 1
 				if(0 to 399)
 					starving = 1
 
 		else
 			switch(nutrition)
-				if(150 to 500) hungry = 1
+				if(150 to 800) hungry = 1
 				if(0 to 149) starving = 1
 
 
@@ -282,11 +282,11 @@
 									step_to(src, Target)
 
 							else
-								if(!Atkcool)
+								if(!Atkcool && get_obstacle_ok(Target))
 									Feedon(Target)
 
 						else
-							if(!Atkcool)
+							if(!Atkcool && get_obstacle_ok(Target))
 								Feedon(Target)
 
 					else
@@ -477,9 +477,9 @@
 
 
 		handle_nutrition()
-			if(prob(40))
-				if(istype(src, /mob/living/carbon/metroid/adult)) nutrition-=rand(6,10)
-				else nutrition-=rand(4,9)
+			if(prob(20))
+				if(istype(src, /mob/living/carbon/metroid/adult)) nutrition-=rand(4,6)
+				else nutrition-=rand(2,3)
 
 			if(nutrition <= 0)
 				nutrition = 0
@@ -489,11 +489,11 @@
 
 			else
 				if(istype(src, /mob/living/carbon/metroid/adult))
-					if(nutrition >= 1100)
+					if(nutrition >= 1000)
 						if(prob(40)) amount_grown++
 
 				else
-					if(nutrition >= 900)
+					if(nutrition >= 800)
 						if(prob(40)) amount_grown++
 
 			if(amount_grown >= 10 && !Victim && !Target)
