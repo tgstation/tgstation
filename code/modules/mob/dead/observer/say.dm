@@ -14,7 +14,7 @@
 
 	. = src.say_dead(message)
 
-	for (var/mob/M in hearers(null, null))
+/*	for (var/mob/M in hearers(null, null))
 		if (!M.stat)
 			if(M.job == "Chaplain")
 				if (prob (49))
@@ -34,4 +34,4 @@
 						playsound(src.loc, pick('ghost.ogg','ghost2.ogg'), 10, 1)
 				else
 					M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
-					playsound(src.loc, pick('ghost.ogg','ghost2.ogg'), 10, 1)
+					playsound(src.loc, pick('ghost.ogg','ghost2.ogg'), 10, 1) */
