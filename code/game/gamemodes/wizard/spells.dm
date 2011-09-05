@@ -462,7 +462,7 @@
 /client/proc/mutate()
 	set category = "Spells"
 	set name = "Mutate"
-	set desc = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
+	set desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
 	if(usr.stat)
 		src << "Not when you are incapacitated."
 		return
@@ -474,13 +474,13 @@
 	usr.say("BIRUZ BENNAR")
 	usr.spellvoice()
 
-	usr << text("\blue You feel strong! Your mind expands!")
+	usr << text("\blue You feel strong! You feel pressure building behind your eyes!")
 	if (!(usr.mutations & HULK))
 		usr.mutations |= HULK
-	if (!(usr.mutations & PORTALS))
-		usr.mutations |= PORTALS
+	if (!(usr.mutations & LASER))
+		usr.mutations |= LASER
 	spawn (300)
-		if (usr.mutations & PORTALS) usr.mutations &= ~PORTALS
+		if (usr.mutations & LASER) usr.mutations &= ~LASER
 		if (usr.mutations & HULK) usr.mutations &= ~HULK
 	return
 

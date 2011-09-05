@@ -351,7 +351,7 @@
 						if ("11")
 							usr.verbs += /client/proc/mutate
 							usr.mind.special_verbs += /client/proc/mutate
-							src.temp = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
+							src.temp = "This spell causes you to turn into a hulk and gain laser vision for a short while."
 						if ("12")
 							usr.verbs += /client/proc/jaunt
 							usr.mind.special_verbs += /client/proc/jaunt
