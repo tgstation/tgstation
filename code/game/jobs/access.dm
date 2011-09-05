@@ -178,7 +178,7 @@
 			return list(access_medical, access_morgue, access_tox, access_tox_storage, access_chemistry, access_medlab, access_court,
 			            access_teleporter, access_heads, access_tech_storage, access_security, access_brig, access_atmospherics,
 			            access_maint_tunnels, access_bar, access_janitor, access_kitchen, access_robotics, access_armory, access_hydroponics,
-			            access_theatre, access_research, access_hos, access_RC_announce)
+			            access_theatre, access_research, access_hos, access_RC_announce, access_forensics_lockers)
 		if("Head of Personnel")
 			return list(access_security, access_brig, access_court, access_forensics_lockers,
 			            access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab, access_engine,

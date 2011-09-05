@@ -175,7 +175,7 @@
 /obj/machinery/computer/med_data
 	name = "Medical Records"
 	desc = "This can be used to check medical records."
-	icon_state = "dna"
+	icon_state = "medcomp"
 	req_access = list(access_medical)
 	circuit = "/obj/item/weapon/circuitboard/med_data"
 	var/obj/item/weapon/card/id/scan = null
