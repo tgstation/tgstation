@@ -122,6 +122,12 @@
 	desc = "The commander in chef's head wear."
 	flags = FPRINT | TABLEPASS | HEADSPACE
 
+/obj/item/clothing/head/redcoat
+	name = "Redcoat hat"
+	icon_state = "redcoat"
+	desc = "I guess it's a redhad."
+	flags = FPRINT | TABLEPASS | HEADSPACE
+
 /obj/item/clothing/head/mailman
 	name = "Mailman Hat"
 	icon_state = "mailman"

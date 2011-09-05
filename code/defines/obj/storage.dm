@@ -125,6 +125,11 @@
 	desc = "A very robust satchel to wear on your back."
 	icon_state = "satchel"
 
+/obj/item/weapon/storage/backpack/bandolier
+	name = "Bandolier"
+	desc = "A very old bandolier to wear on your back."
+	icon_state = "bandolier"
+
 /obj/item/weapon/storage/backpack/industrial
 	name = "industrial backpack"
 	desc = "A tough backpack for the daily grind"

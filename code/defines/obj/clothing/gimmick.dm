@@ -316,6 +316,13 @@
 	item_state = "soviet"
 	color = "soviet"
 
+/obj/item/clothing/under/redcoat
+	name = "redcoat uniform"
+	desc = "Looks old."
+	icon_state = "redcoat"
+	item_state = "redcoat"
+	color = "redcoat"
+
 /obj/item/clothing/head/ushanka
 	name = "ushanka"
 	desc = "Perfect for winter in Siberia, da?"
