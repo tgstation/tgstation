@@ -6377,7 +6377,7 @@
 "csG" = (/obj/grille,/obj/window/reinforced{dir = 1},/obj/window/reinforced,/obj/window/reinforced{dir = 8},/turf/unsimulated/floor{name = "plating"},/area/centcom/evac)
 "csH" = (/obj/grille,/obj/window/reinforced{dir = 1},/obj/window/reinforced,/turf/unsimulated/floor{name = "plating"},/area/centcom/evac)
 "csI" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/shuttle/escape/centcom)
-"csJ" = (/obj{anchored = 1; icon = 'shuttle.dmi'; icon_state = "floor"; layer = 2; name = "floor"},/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 3; tag = "icon-swall_f10"},/area/shuttle/escape/centcom)
+"csJ" = (/obj{anchored = 1; icon = 'shuttle.dmi'; icon_state = "floor"; layer = 1; name = "floor"},/turf/simulated/shuttle/wall{dir = 3; icon_state = "swall_f10"; layer = 2; tag = "icon-swall_f10"},/area/shuttle/escape/centcom)
 "csK" = (/obj/closet/emcloset,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/shuttle/escape/centcom)
 "csL" = (/obj/rack,/obj/item/clothing/under/schoolgirl,/obj/item/clothing/head/rabbitears,/obj/item/clothing/under/blackskirt,/obj/item/clothing/glasses/blindfold,/obj/item/clothing/head/beret,/obj/item/clothing/head/kitty,/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
 "csM" = (/obj/item/toy/crayonbox,/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
