@@ -1,5 +1,5 @@
 /client/proc/atmosscan()
-	set category = "Debug"
+	set category = "Mapping"
 	set name = "Check Plumbing"
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
