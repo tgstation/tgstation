@@ -2207,7 +2207,7 @@ datum
 				..()
 				return
 
-		nuka_cola
+/*		nuka_cola
 			name = "Nuka Cola"
 			id = "nuka_cola"
 			description = "Cola, cola never changes."
@@ -2224,7 +2224,7 @@ datum
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				M:nutrition += 1
 				..()
-				return
+				return*/
 
 		spacemountainwind
 			name = "Space Mountain Wind"
@@ -2884,25 +2884,6 @@ datum
 				..()
 				return
 
-		devilskiss
-			name = "Devils Kiss"
-			id = "devilskiss"
-			description = "Creepy time!"
-			reagent_state = LIQUID
-			color = "#A68310" // rgb: 166, 131, 16
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 55 && data <165)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 4
-				else if(data >= 165 && prob(33))
-					M.confused = max(M:confused+4,0)
-				..()
-				return
-
 		bloody_mary
 			name = "Bloody Mary"
 			id = "bloodymary"
@@ -3385,7 +3366,28 @@ datum
 				..()
 				return
 
-		sbiten
+		singulo
+			name = "Singulo"
+			id = "singulo"
+			description = "A blue-space beverage!"
+			reagent_state = LIQUID
+			color = "#2E6671" // rgb: 46, 102, 113
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=15
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 15
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+15,15)
+				..()
+				return
+
+////////////////////////// REMOVED COCKTAIL REAGENTS BELOW:: RE-ENABLE THEM IF THEY EVER GET SPRITES THAT DON'T LOOK FUCKING STUPID --Agouri ///////////////////////////
+
+/*		sbiten
 			name = "Sbiten"
 			id = "sbiten"
 			description = "A spicy Vodka! Might be a little hot for the little guys!"
@@ -3403,6 +3405,25 @@ datum
 					M.stuttering += 6
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+5,5)
+				..()
+				return
+
+		devilskiss
+			name = "Devils Kiss"
+			id = "devilskiss"
+			description = "Creepy time!"
+			reagent_state = LIQUID
+			color = "#A68310" // rgb: 166, 131, 16
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=4
+				if(data >= 55 && data <165)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 4
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+4,0)
 				..()
 				return
 
@@ -3530,7 +3551,7 @@ datum
 				..()
 				return
 
-/*		alliescocktail
+		alliescocktail
 			name = "Allies Cocktail"
 			id = "alliescocktail"
 			description = "A drink made from your allies."
@@ -3547,7 +3568,7 @@ datum
 				else if(data >= 250 && prob(60))
 					M.confused = max(M:confused+8,0)
 				..()
-				return*/
+				return
 
 		soy_latte
 			name = "Soy Latte"
@@ -3746,24 +3767,7 @@ datum
 					..()
 					return
 
-		singulo
-			name = "Singulo"
-			id = "singulo"
-			description = "A blue-space beverage!"
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
 
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=15
-				if(data >= 55 && data <115)
-					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 15
-				else if(data >= 115 && prob(33))
-					M.confused = max(M:confused+15,15)
-				..()
-				return
 
 		changelingsting
 			name = "Changeling Sting"
@@ -3839,6 +3843,6 @@ datum
 				else if(data >= 115 && prob(60))
 					M.confused = max(M:confused+15,15)
 				..()
-				return
+				return*/
 
 

@@ -1051,7 +1051,52 @@ datum
 			required_reagents = list("rum" = 2, "orangejuice" = 2, "limejuice" = 1, "ice" = 1)
 			result_amount = 6
 
-		sbiten
+		singulo
+			name = "Singulo"
+			id = "singulo"
+			result = "singulo"
+			required_reagents = list("vodka" = 5, "radium" = 1, "acid" = 1, "wine" = 5)
+			result_amount = 10
+
+/*		alliescocktail
+			name = "Allies Cocktail"
+			id = "alliescocktail"
+			result = "alliescocktail"
+			required_reagents = list("gin" = 1, "vermouth" = 1)
+			result_amount = 2*/
+
+		demonsblood
+			name = "Demons Blood"
+			id = "demonsblood"
+			result = "demonsblood"
+			required_reagents = list("rum" = 1, "spacemountainwind" = 1, "blood" = 1, "dr_gibb" = 1)
+			result_amount = 4
+
+		booger
+			name = "Booger"
+			id = "booger"
+			result = "booger"
+			required_reagents = list("cream" = 1, "banana" = 1, "rum" = 1, "watermelonjuice" = 1)
+			result_amount = 4
+
+		antifreeze
+			name = "Anti-freeze"
+			id = "antifreeze"
+			result = "antifreeze"
+			required_reagents = list("vodka" = 2, "cream" = 1, "ice" = 1)
+			result_amount = 4
+
+		barefoot
+			name = "Barefoot"
+			id = "barefoot"
+			result = "barefoot"
+			required_reagents = list("vodka" = 1, "cream" = 1, "vermouth" = 1, "whiskey" = 1)
+			result_amount = 4
+
+
+////DRINKS THAT REQUIRE IMPROVED SPRITES BELOW:: -Agouri/////
+
+/*		sbiten
 			name = "Sbiten"
 			id = "sbiten"
 			result = "sbiten"
@@ -1129,40 +1174,12 @@ datum
 			required_reagents = list("iron" = 1, "wine" = 5, "vodka" = 5)
 			result_amount = 10
 
-		neurotoxin
-			name = "Neurotoxin"
-			id = "neurotoxin"
-			result = "neurotoxin"
-			required_reagents = list("gargleblaster" = 1, "stoxin" = 1)
-			result_amount = 2
-
-		hippiesdelight
-			name = "Hippies Delight"
-			id = "hippiesdelight"
-			result = "hippiesdelight"
-			required_reagents = list("psilocybin" = 1, "gargleblaster" = 1)
-			result_amount = 2
-
-		bananahonk
-			name = "Banana Honk"
-			id = "bananahonk"
-			result = "bananahonk"
-			required_reagents = list("banana" = 1, "cream" = 1, "sugar" = 1)
-			result_amount = 3
-
-		silencer
-			name = "Silencer"
-			id = "silencer"
-			result = "silencer"
-			required_reagents = list("nothing" = 1, "cream" = 1, "sugar" = 1)
-			result_amount = 3
-
-		singulo
-			name = "Singulo"
-			id = "singulo"
-			result = "singulo"
-			required_reagents = list("vodka" = 5, "radium" = 1, "acid" = 1, "wine" = 5)
-			result_amount = 10
+		changelingsting
+			name = "Changeling Sting"
+			id = "changelingsting"
+			result = "changelingsting"
+			required_reagents = list("orangejuice" = 1, "limejuice" = 1, "lemonjuice" = 1, "vodka" = 1)
+			result_amount = 4
 
 		aloe
 			name = "Aloe"
@@ -1178,12 +1195,12 @@ datum
 			required_reagents = list("rum" = 1, "whiskey" = 1, "lemonjuice" = 1)
 			result_amount = 3
 
-/*		alliescocktail
-			name = "Allies Cocktail"
-			id = "alliescocktail"
-			result = "alliescocktail"
-			required_reagents = list("gin" = 1, "vermouth" = 1)
-			result_amount = 2*/
+		neurotoxin
+			name = "Neurotoxin"
+			id = "neurotoxin"
+			result = "neurotoxin"
+			required_reagents = list("gargleblaster" = 1, "stoxin" = 1)
+			result_amount = 2
 
 		snowwhite
 			name = "Snow White"
@@ -1191,48 +1208,6 @@ datum
 			result = "snowwhite"
 			required_reagents = list("beer" = 1, "lemon_lime" = 1)
 			result_amount = 2
-
-		devilskiss
-			name = "Devils Kiss"
-			id = "devilskiss"
-			result = "devilskiss"
-			required_reagents = list("blood" = 1, "kahlua" = 1, "rum" = 1)
-			result_amount = 3
-
-		demonsblood
-			name = "Demons Blood"
-			id = "demonsblood"
-			result = "demonsblood"
-			required_reagents = list("rum" = 1, "spacemountainwind" = 1, "blood" = 1, "dr_gibb" = 1)
-			result_amount = 4
-
-		changelingsting
-			name = "Changeling Sting"
-			id = "changelingsting"
-			result = "changelingsting"
-			required_reagents = list("orangejuice" = 1, "limejuice" = 1, "lemonjuice" = 1, "vodka" = 1)
-			result_amount = 4
-
-		booger
-			name = "Booger"
-			id = "booger"
-			result = "booger"
-			required_reagents = list("cream" = 1, "banana" = 1, "rum" = 1, "watermelonjuice" = 1)
-			result_amount = 4
-
-		antifreeze
-			name = "Anti-freeze"
-			id = "antifreeze"
-			result = "antifreeze"
-			required_reagents = list("vodka" = 2, "cream" = 1, "ice" = 1)
-			result_amount = 4
-
-		barefoot
-			name = "Barefoot"
-			id = "barefoot"
-			result = "barefoot"
-			required_reagents = list("vodka" = 1, "cream" = 1, "vermouth" = 1, "whiskey" = 1)
-			result_amount = 4
 
 		irishcarbomb
 			name = "Irish Car Bomb"
@@ -1256,6 +1231,33 @@ datum
 			result_amount = 5
 
 
+		devilskiss
+			name = "Devils Kiss"
+			id = "devilskiss"
+			result = "devilskiss"
+			required_reagents = list("blood" = 1, "kahlua" = 1, "rum" = 1)
+			result_amount = 3
+
+		hippiesdelight
+			name = "Hippies Delight"
+			id = "hippiesdelight"
+			result = "hippiesdelight"
+			required_reagents = list("psilocybin" = 1, "gargleblaster" = 1)
+			result_amount = 2
+
+		bananahonk
+			name = "Banana Honk"
+			id = "bananahonk"
+			result = "bananahonk"
+			required_reagents = list("banana" = 1, "cream" = 1, "sugar" = 1)
+			result_amount = 3
+
+		silencer
+			name = "Silencer"
+			id = "silencer"
+			result = "silencer"
+			required_reagents = list("nothing" = 1, "cream" = 1, "sugar" = 1)
+			result_amount = 3*/
 
 
 

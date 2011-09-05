@@ -2748,14 +2748,14 @@
 	volume = 50
 
 	on_reagent_change()
-/*		if(reagents.reagent_list.len > 1 )
+		if(reagents.reagent_list.len > 1 )
 			icon_state = "glass_brown"
 			name = "Glass of Hooch"
 			desc = "Two or more drinks, mixed together."
-		else if(reagents.reagent_list.len == 1)
+		/*else if(reagents.reagent_list.len == 1)
 			for(var/datum/reagent/R in reagents.reagent_list)
 				switch(R.id)*/
-		if (reagents.reagent_list.len > 0)
+		else if (reagents.reagent_list.len == 1)
 			//mrid = R.get_master_reagent_id()
 			switch(reagents.get_master_reagent_id())
 				if("beer")
@@ -2937,7 +2937,7 @@
 				if("threemileisland")
 					icon_state = "threemileislandglass"
 					name = "Three Mile Island Ice Tea"
-					desc = "A glass of this is sure to prevent a melt down."
+					desc = "A glass of this is sure to prevent a meltdown."
 				if("margarita")
 					icon_state = "margaritaglass"
 					name = "Margarita"
@@ -2985,7 +2985,7 @@
 				if("water")
 					icon_state = "glass_clear"
 					name = "Glass of Water"
-					desc = "Are you really that boring?"
+					desc = "The father of all refreshments."
 				if("spacemountainwind")
 					icon_state = "Space_mountain_wind_glass"
 					name = "Glass of Space Mountain Wind"
@@ -3030,6 +3030,43 @@
 					icon_state = "bahama_mama"
 					name = "Bahama Mama"
 					desc = "Tropic cocktail"
+				if("singulo")
+					icon_state = "singulo"
+					name = "Singulo"
+					desc = "A blue-space beverage."
+				if("alliescocktail")
+					icon_state = "alliescocktail"
+					name = "Allies cocktail"
+					desc = "A drink made from your allies."
+				if("antifreeze")
+					icon_state = "antifreeze"
+					name = "Anti-freeze"
+					desc = "The ultimate refreshment."
+				if("barefoot")
+					icon_state = "b&p"
+					name = "Barefoot"
+					desc = "Barefoot and pregnant"
+				if("demonsblood")
+					icon_state = "demonsblood"
+					name = "Demons Blood"
+					desc = "Just looking at this thing makes the hair at the back of your neck stand up."
+				if("booger")
+					icon_state = "booger"
+					name = "Booger"
+					desc = "Ewww..."
+
+				/*if("snowwhite")  /// Dumbly-sprited drinks below. If your drink is on the list, shame on you --Agouri
+					icon_state = "snowwhite"
+					name = "Snow White"
+					desc = "A cold refreshment."
+				if("aloe")
+					icon_state = "aloe"
+					name = "Aloe"
+					desc = "Very, very, very good."
+				if("andalusia")
+					icon_state = "andalusia"
+					name = "Andalusia"
+					desc = "A nice, strange named drink."
 				if("sbiten")
 					icon_state = "sbitenglass"
 					name = "Sbiten"
@@ -3090,42 +3127,6 @@
 					icon_state = "nothing"
 					name = "Nothing"
 					desc = "Absolutely nothing."
-				if("singulo")
-					icon_state = "singulo"
-					name = "Singulo"
-					desc = "A blue-space beverage."
-				if("aloe")
-					icon_state = "aloe"
-					name = "Aloe"
-					desc = "Very, very, very good."
-				if("andalusia")
-					icon_state = "andalusia"
-					name = "Andalusia"
-					desc = "A nice, strange named drink."
-				if("alliescocktail")
-					icon_state = "alliescocktail"
-					name = "Allies cocktail"
-					desc = "A drink made from your allies."
-				if("snowwhite")
-					icon_state = "snowwhite"
-					name = "Snow White"
-					desc = "A cold refreshment."
-				if("antifreeze")
-					icon_state = "antifreeze"
-					name = "Anti-freeze"
-					desc = "The ultimate refreshment."
-				if("barefoot")
-					icon_state = "b&p"
-					name = "Barefoot"
-					desc = "Barefoot and pregnant"
-				if("demonsblood")
-					icon_state = "demonsblood"
-					name = "Demons Blood"
-					desc = "Scary....so...scary...AHHH!!!"
-				if("booger")
-					icon_state = "booger"
-					name = "Booger"
-					desc = "Ewww..."
 				if("devilskiss")
 					icon_state = "devilskiss"
 					name = "Devils Kiss"
@@ -3145,7 +3146,7 @@
 				if("erikasurprise")
 					icon_state = "erikasurprise"
 					name = "Erika Surprise"
-					desc = "A surprise of Erika"
+					desc = "A surprise of Erika"*/
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"
