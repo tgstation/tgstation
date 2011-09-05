@@ -133,6 +133,26 @@ Pod/Blast Doors computer
 	user.reset_view(current)
 	return 1
 
+/obj/machinery/computer/card/attackby(O as obj, user as mob)
+	if(istype(O, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/idcard = O
+		if(access_change_ids in idcard.access)
+			if(!scan)
+				usr.drop_item()
+				idcard.loc = src
+				scan = idcard
+			else if(!modify)
+				usr.drop_item()
+				idcard.loc = src
+				modify = idcard
+		else
+			if(!modify)
+				usr.drop_item()
+				idcard.loc = src
+				modify = idcard
+	else
+		..()
+
 /obj/machinery/computer/card/attack_ai(var/mob/user as mob)
 	return attack_hand(user)
 
@@ -153,7 +173,7 @@ Pod/Blast Doors computer
 			crew += "[t.fields["name"]] - [t.fields["rank"]]<br>"
 		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 	else
-		var/header = "<b>Identification Card Modifier</b><br><i>Please insert the cards into the slots</i><br>"
+		var/header = "<div align='center'><b>Identification Card Modifier</b></div>"
 
 		var/target_name
 		var/target_owner
@@ -170,22 +190,62 @@ Pod/Blast Doors computer
 			target_rank = modify.assignment
 		else
 			target_rank = "Unassigned"
-		header += "Target: <a href='?src=\ref[src];choice=modify'>[target_name]</a><br>"
 
 		var/scan_name
 		if(scan)
 			scan_name = scan.name
 		else
 			scan_name = "--------"
-		header += "Confirm Identity: <a href='?src=\ref[src];choice=scan'>[scan_name]</a><br>"
+
+		if(!authenticated)
+			header += "<br><i>Please insert the cards into the slots</i><br>"
+			header += "Target: <a href='?src=\ref[src];choice=modify'>[target_name]</a><br>"
+			header += "Confirm Identity: <a href='?src=\ref[src];choice=scan'>[scan_name]</a><br>"
+		else
+			header += "<div align='center'><br>"
+			header += "<a href='?src=\ref[src];choice=modify'>Remove [target_name]</a> || "
+			header += "<a href='?src=\ref[src];choice=scan'>Remove [scan_name]</a> <br> "
+			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> || "
+			header += "<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"
+
 		header += "<hr>"
+
+		var/jobs_all = ""
+		var/list/alljobs = (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
+		for(var/job in alljobs)
+			jobs_all += "<a href='?src=\ref[src];choice=assign;assign_target=[job]'>[dd_replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
+
+
 		var/body
 		if (authenticated && modify)
-			var/carddesc = "Registered: <a href='?src=\ref[src];choice=reg'>[target_owner]</a><br>Assignment: [target_rank]"
-			var/jobs = ""
-			var/list/alljobs = (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
-			for(var/job in alljobs)
-				jobs += "<a href='?src=\ref[src];choice=assign;assign_target=[job]'>[dd_replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
+			var/carddesc = {"<script type="text/javascript">
+								function markRed(){
+									var nameField = document.getElementById('namefield');
+									nameField.style.backgroundColor = "#FFDDDD";
+								}
+								function markGreen(){
+									var nameField = document.getElementById('namefield');
+									nameField.style.backgroundColor = "#DDFFDD";
+								}
+								function showAll(){
+									var allJobsSlot = document.getElementById('alljobsslot');
+									allJobsSlot.innerHTML = "<a href='#' onclick='hideAll()'>hide</a><br>"+ "[jobs_all]";
+								}
+								function hideAll(){
+									var allJobsSlot = document.getElementById('alljobsslot');
+									allJobsSlot.innerHTML = "<a href='#' onclick='showAll()'>show</a>";
+								}
+							</script>"}
+			carddesc += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
+			carddesc += "<input type='hidden' name='src' value='\ref[src]'>"
+			carddesc += "<input type='hidden' name='choice' value='reg'>"
+			carddesc += "<b>Registered:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
+			carddesc += "<input type='submit' value='Rename' onclick='markGreen()'>"
+			carddesc += "</form>"
+			carddesc += "<b>Assignment:</b> "
+
+			jobs = "<span id='alljobsslot'><a href='#' onclick='showAll()'>[target_rank]</a></span>"
+
 			var/accesses = ""
 			if(istype(src,/obj/machinery/computer/card/centcom))
 				accesses += "<h5>Central Command:</h5>"
@@ -195,19 +255,28 @@ Pod/Blast Doors computer
 					else
 						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[dd_replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</a> "
 			else
+				accesses += "<div align='center'><b>Access</b></div>"
+				accesses += "<table style='width:100%'>"
+				accesses += "<tr>"
 				for(var/i = 1; i <= 7; i++)
-					accesses += "<b>[get_region_accesses_name(i)]:</b> "
+					accesses += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
+				accesses += "</tr><tr>"
+				for(var/i = 1; i <= 7; i++)
+					accesses += "<td style='width:14%' valign='top'>"
 					for(var/A in get_region_accesses(i))
 						if(A in modify.access)
 							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[dd_replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
 						else
 							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[dd_replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
-					accesses += "<br>"
+						accesses += "<br>"
+					accesses += "</td>"
+				accesses += "</tr></table>"
 			body = "[carddesc]<br>[jobs]<br><br>[accesses]"
 		else
-			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a>"
-		dat = "<tt>[header][body]<hr><a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a><br></tt>"
-	user << browse(dat, "window=id_com;size=700x520")
+			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
+			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"
+		dat = "<tt>[header][body]<hr><br></tt>"
+	user << browse(dat, "window=id_com;size=900x520")
 	onclose(user, "id_com")
 	return
 
@@ -219,9 +288,15 @@ Pod/Blast Doors computer
 		if ("modify")
 			if (modify)
 				data_core.manifest_modify(modify.registered, modify.assignment)
-				modify.name = text("[]'s ID Card ([])", modify.registered, modify.assignment)
-				modify.loc = loc
-				modify = null
+				modify.name = text("[modify.registered]'s ID Card ([modify.assignment])")
+				if(ishuman(usr))
+					modify.loc = usr.loc
+					if(!usr.get_active_hand())
+						usr.put_in_hand(modify)
+					modify = null
+				else
+					modify.loc = loc
+					modify = null
 			else
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -232,8 +307,14 @@ Pod/Blast Doors computer
 
 		if ("scan")
 			if (scan)
-				scan.loc = loc
-				scan = null
+				if(ishuman(usr))
+					scan.loc = usr.loc
+					if(!usr.get_active_hand())
+						usr.put_in_hand(scan)
+					scan = null
+				else
+					scan.loc = src.loc
+					scan = null
 			else
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -247,6 +328,8 @@ Pod/Blast Doors computer
 					authenticated = 1
 			else if ((!( authenticated ) && (istype(usr, /mob/living/silicon))) && (!modify))
 				usr << "You can't modify an ID without an ID inserted to modify. Once one is in the modify slot on the computer, you can log in."
+		if ("logout")
+			authenticated = 0
 		if("access")
 			if(href_list["allowed"])
 				if(authenticated)
@@ -268,9 +351,9 @@ Pod/Blast Doors computer
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
-				var/t1 = input(usr, "What name?", "ID computer", null)  as text
+				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
-					modify.registered = t1
+					modify.registered = href_list["reg"]
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 		if ("print")
@@ -285,7 +368,7 @@ Pod/Blast Doors computer
 				P.name = "paper- 'Crew Manifest'"
 				printing = null
 	if (modify)
-		modify.name = text("[]'s ID Card ([])", modify.registered, modify.assignment)
+		modify.name = text("[modify.registered]'s ID Card ([modify.assignment])")
 	updateUsrDialog()
 	return
 

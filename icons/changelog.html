@@ -5,6 +5,15 @@
   <style type="text/css">
 
   </style>
+  <script type='text/javascript'>
+	function changeText(tagID, newText, linkTagID){
+		var tag = document.getElementById(tagID);
+		tag.innerHTML = newText;
+		var linkTag = document.getElementById(linkTagID);
+		linkTag.removeAttribute("href");
+		linkTag.removeAttribute("onclick");
+	}
+  </script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
 
 <body>
@@ -44,6 +53,14 @@
 Stuff which is in development and not yet visible to players or just code related 
 (is. code improvements for expandability, etc.) should not be listed here. They 
 should be listed in the changelog upon commit tho. Thanks. -->
+
+<b><font color='blue'>5 September 2011.</font color><b>
+<ul>
+  <li><b><a href='#' id='rageroro_link' onclick="changeText('rageroro_tag','Errorage', 'rageroro_link')"><span id='rageroro_tag'>Rageroro</span></a> updated:</b>
+  <ul>
+    <li>Updates made to the HoP's ID computer. New interface and removing a card will now put it directly in your hand, if it's empty. Using your card on the computer will place it in the appropriate spot. If it has access to edit cards it will put it as the authentication card, otherwise as the card to be modified. If you have two cards with ID computer access first insert the authentication card, then the one you wish to midify, or do it manually like before.</li>
+  </ul>
+</ul>
 
 <b><font color='blue'>4 September 2011.</font color><b>
 <ul>
