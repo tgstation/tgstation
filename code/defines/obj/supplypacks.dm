@@ -267,7 +267,7 @@
 	cost = 20
 	containertype = "/obj/crate/secure/weapon"
 	containername = "Virus crate"
-	access = access_heads
+	access = access_cmo
 
 /datum/supply_packs/metal50
 	name = "50 Metal Sheets"
