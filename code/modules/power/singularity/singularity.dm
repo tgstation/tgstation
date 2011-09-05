@@ -97,8 +97,10 @@ var/global/list/uneatable = list(
 						event()
 		return
 
+
 	attack_ai() //to prevent ais from gibbing themselves when they click on one.
 		return
+
 
 	proc
 		dissipate()
@@ -201,6 +203,8 @@ var/global/list/uneatable = list(
 
 		eat()
 			set background = 1
+			if(defer_powernet_rebuild != 2)
+				defer_powernet_rebuild = 1
 			for(var/atom/movable/X in orange(consume_range,src))
 				consume(X)
 			for(var/turf/X in orange(consume_range,src))
@@ -217,6 +221,8 @@ var/global/list/uneatable = list(
 						if(M.magpulse)
 							continue
 					step_towards(H,src)
+			if(defer_powernet_rebuild != 2)
+				defer_powernet_rebuild = 0
 			return
 
 
@@ -229,6 +235,7 @@ var/global/list/uneatable = list(
 				explosion(src.loc,10,15,20,40)
 				if(src) del(src)
 				return
+
 			var/gain = 0
 			if(is_type_in_list(A, uneatable))
 				return 0
@@ -262,9 +269,9 @@ var/global/list/uneatable = list(
 		move(var/movement_dir = 0)
 			if(!move_self)
 				return 0
-			if(!target && !(movement_dir in cardinal))
+			if(!(movement_dir in cardinal))
 				movement_dir = pick(NORTH, SOUTH, EAST, WEST)
-			else if(target)
+			if(target && prob(80))
 				movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 			if(current_size >= 9)//The superlarge one does not care about things in its way
 				spawn(0)

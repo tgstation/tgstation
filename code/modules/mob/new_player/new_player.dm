@@ -293,8 +293,9 @@ mob/new_player
 					ailist += A
 			if (ailist.len)
 				var/mob/living/silicon/ai/announcer = pick(ailist)
-				if(character.mind.assigned_role != "Cyborg"&&character.mind.special_role != "MODE")
-					announcer.say("[character.real_name] has been sent from Centcom to fill the job of [rank] on [station_name].")
+				if(character.mind)
+					if((character.mind.assigned_role != "Cyborg") && (character.mind.special_role != "MODE"))
+						announcer.say("[character.real_name] has been sent from Centcom to fill the job of [rank] on [station_name].")
 					//announcer.say("[character.real_name], the [rank], has awoken from cryo sleep.") -Old Message
 
 

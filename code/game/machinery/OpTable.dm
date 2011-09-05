@@ -1,3 +1,19 @@
+/obj/machinery/optable
+	name = "Operating Table"
+	desc = "Used for advanced medical procedures. Apparently this includes the clown."
+	icon = 'surgery.dmi'
+	icon_state = "table2-idle"
+	density = 1
+	anchored = 1.0
+	use_power = 1
+	idle_power_usage = 1
+	active_power_usage = 5
+	var/mob/living/carbon/human/victim = null
+	var/strapped = 0.0
+
+	var/obj/machinery/computer/operating/computer = null
+	var/id = 0.0
+
 /obj/machinery/optable/New()
 	..()
 	for(var/obj/machinery/computer/operating/O in world)
@@ -60,10 +76,14 @@
 		del(src)
 	return
 
+/obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(air_group || (height==0)) return 1
 
+	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return 1
+	else
+		return 0
 
-/obj/machinery/optable/CanPass(atom/movable/O as mob|obj, target as turf)
-	return (istype(O) && O.checkpass(PASSTABLE))
 
 /obj/machinery/optable/MouseDrop_T(obj/O as obj, mob/user as mob)
 

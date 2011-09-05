@@ -3,7 +3,8 @@ var/roundExplosions = 1
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
 	if(!epicenter) return
 	spawn(0)
-		defer_powernet_rebuild = 1
+		if(defer_powernet_rebuild != 2)
+			defer_powernet_rebuild = 1
 		if (!istype(epicenter, /turf))
 			epicenter = get_turf(epicenter.loc)
 		playsound(epicenter.loc, 'explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
@@ -73,7 +74,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 		sleep(-1)
 		sleep(20)
-		defer_powernet_rebuild = 0
+		if(defer_powernet_rebuild != 2)
+			defer_powernet_rebuild = 0
 	return 1
 
 

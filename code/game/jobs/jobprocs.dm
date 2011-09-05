@@ -628,16 +628,15 @@
 					NL += T
 		src.loc = pick(NL)
 		*/
-	if(src.mind.assigned_role == "Cyborg")
-		src << "YOU ARE GETTING BORGED NOW"
-		src.Robotize()
-	else
-		src.equip_if_possible(new /obj/item/device/radio/headset(src), slot_ears)
-		var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(src)
-		new /obj/item/weapon/storage/box(BPK)
-		src.equip_if_possible(BPK, slot_back,1)
-
-
+	if(src.mind)
+		if(src.mind.assigned_role == "Cyborg")
+			src << "YOU ARE GETTING BORGED NOW"
+			src.Robotize()
+			return
+	src.equip_if_possible(new /obj/item/device/radio/headset(src), slot_ears)
+	var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(src)
+	new /obj/item/weapon/storage/box(BPK)
+	src.equip_if_possible(BPK, slot_back,1)
 	/*
 	spawn(10)
 		var/obj/item/weapon/camera_test/CT = new/obj/item/weapon/camera_test(src.loc)

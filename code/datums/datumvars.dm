@@ -8,7 +8,8 @@ client
 		var/title = ""
 		var/body = ""
 
-		if (istype(D, /atom))
+		if(!D)	return
+		if(istype(D, /atom))
 			var/atom/A = D
 			title = "[A.name] (\ref[A]) = [A.type]"
 
