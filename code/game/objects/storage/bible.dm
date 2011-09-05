@@ -76,6 +76,11 @@
 		user << "\blue You hit the floor with the bible."
 		if(user.mind && (user.mind.assigned_role == "Chaplain"))
 			call(/obj/rune/proc/revealrunes)(src)
+	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
+			user << "\blue You bless [A]."
+			A.reagents.add_reagent("holywater",A.reagents.get_reagent_amount("water"))
+			A.reagents.del_reagent("water")
 
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	playsound(src.loc, "rustle", 50, 1, -5)

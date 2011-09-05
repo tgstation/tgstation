@@ -1469,3 +1469,7 @@ turf/simulated/floor/return_siding_icon_state()
 	for(var/obj/critter/M in src)
 		spawn(0)
 			M.Die()
+
+/turf/proc/Bless()
+	flags |= NOJAUNT
+	overlays += image('water.dmi',src,"holywater")

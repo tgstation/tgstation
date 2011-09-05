@@ -56,6 +56,10 @@
 
 /obj/dummy/spell_jaunt/relaymove(var/mob/user, direction)
 	if (!src.canmove) return
+	var/turf/newLoc = get_step(src,direction)
+	if(!(newLoc.flags & NOJAUNT))
+		loc = newLoc
+/*
 	switch(direction)
 		if(NORTH)
 			src.y++
@@ -76,7 +80,7 @@
 			src.x++
 		if(SOUTHWEST)
 			src.y--
-			src.x--
+			src.x-- */
 	src.canmove = 0
 	spawn(2) src.canmove = 1
 

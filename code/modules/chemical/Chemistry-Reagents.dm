@@ -2433,7 +2433,7 @@ datum
 		holywater
 			name = "Holy Water"
 			id = "holywater"
-			description = "The chaplains holy water."
+			description = "Water blessed by some deity."
 			reagent_state = LIQUID
 			color = "#E0E8EF" // rgb: 224, 232, 239
 
@@ -2448,6 +2448,10 @@ datum
 					M.confused = max(M:confused+8,8)
 				..()
 				return
+
+			reaction_turf(var/turf/simulated/T, var/volume)
+				if(!istype(T)) return
+				T.Bless()
 
 		tequilla
 			name = "Tequila"

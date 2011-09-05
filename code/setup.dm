@@ -118,6 +118,8 @@
 #define PASSGLASS 2
 #define PASSGRILLE 4
 
+//turf-only flags
+#define NOJAUNT 1
 
 // bitflags for clothing parts
 #define HEAD			1
