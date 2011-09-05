@@ -16,8 +16,7 @@
 	name = "Operating Computer"
 	density = 1
 	anchored = 1.0
-	icon = 'computer.dmi'
-	icon_state = "comm"
+	icon_state = "operating"
 	circuit = "/obj/item/weapon/circuitboard/operating"
 
 	var/mob/living/carbon/human/victim = null
