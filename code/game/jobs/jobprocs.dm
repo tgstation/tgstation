@@ -235,10 +235,10 @@
 							B.item_state = "scientology"
 						if("the bible melts")
 							B.icon_state = "melted"
-							B.icon_state = "melted"
+							B.item_state = "melted"
 						if("Necronomicon")
 							B.icon_state = "necronomicon"
-							B.icon_state = "necronomicon"
+							B.item_state = "necronomicon"
 						else
 							// if christian bible, revert to default
 							B.icon_state = "bible"
