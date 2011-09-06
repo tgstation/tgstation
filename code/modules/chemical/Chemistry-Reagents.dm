@@ -1260,10 +1260,11 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:drowsyness = max(M:drowsyness-5, 0)
-				if(M:paralysis) M:paralysis--
-				if(M:stunned) M:stunned--
-				if(M:weakened) M:weakened--
+				M:silent = 0
+				M:drowsyness = 0
+				M:paralysis = 0
+				M:stunned = 0
+				M:weakened = 0
 				..()
 				return
 
@@ -2207,7 +2208,7 @@ datum
 				..()
 				return
 
-/*		nuka_cola
+		nuka_cola
 			name = "Nuka Cola"
 			id = "nuka_cola"
 			description = "Cola, cola never changes."
@@ -2224,7 +2225,7 @@ datum
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				M:nutrition += 1
 				..()
-				return*/
+				return
 
 		spacemountainwind
 			name = "Space Mountain Wind"

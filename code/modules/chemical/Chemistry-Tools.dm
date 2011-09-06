@@ -2790,6 +2790,10 @@
 					icon_state  = "glass_brown"
 					name = "Glass of Space Cola"
 					desc = "A glass of refreshing Space Cola"
+				if("nuka_cola")
+					icon_state = "nuka_colaglass"
+					name = "Nuka Cola"
+					desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland"
 				if("orangejuice")
 					icon_state = "glass_orange"
 					name = "Glass of Orange juice"
@@ -3087,10 +3091,6 @@
 					icon_state = "grogglass"
 					name = "Grog"
 					desc = "A fine and cepa drink for Space."
-				if("nuka_cola")
-					icon_state = "nuka_colaglass"
-					name = "Nuka Cola"
-					desc = "A high quality Cola promised to make you jitter."
 				if("soy_latte")
 					icon_state = "soy_latte"
 					name = "Soy Latte"

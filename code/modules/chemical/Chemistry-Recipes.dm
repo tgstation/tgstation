@@ -772,6 +772,7 @@ datum
 
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////
 
+
 		goldschlager
 			name = "Goldschlager"
 			id = "goldschlager"
@@ -806,6 +807,13 @@ datum
 			result = "icecoffee"
 			required_reagents = list("ice" = 1, "coffee" = 3)
 			result_amount = 4
+
+		nuka_cola
+			name = "Nuka Cola"
+			id = "nuka_cola"
+			result = "nuka_cola"
+			required_reagents = list("uranium" = 1, "cola" = 6)
+			result_amount = 6
 
 		moonshine
 			name = "Moonshine"
@@ -1138,13 +1146,6 @@ datum
 			result = "grog"
 			required_reagents = list("rum" = 1, "water" = 1)
 			result_amount = 2
-
-		nuka_cola
-			name = "Nuka Cola"
-			id = "nuka_cola"
-			result = "nuka_cola"
-			required_reagents = list("uranium" = 1, "cola" = 5)
-			result_amount = 5
 
 		soy_latte
 			name = "Soy Latte"
