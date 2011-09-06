@@ -5,6 +5,8 @@
 	var/code = 2
 	var/on = 0
 	var/e_pads = 0.0
+	g_amt = 2500
+	m_amt = 10000
 	frequency = 1449
 	w_class = 5.0
 	flags = 323
@@ -43,6 +45,7 @@
 		else
 			user.show_message("\blue The electric pads have been reinserted!")
 		src.add_fingerprint(user)
+		return
 	else
 		if (istype(W, /obj/item/clothing/head/helmet))
 			var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )

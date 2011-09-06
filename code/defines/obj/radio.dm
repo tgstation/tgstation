@@ -21,6 +21,8 @@
 	throw_speed = 2
 	throw_range = 9
 	w_class = 2
+	g_amt = 25
+	m_amt = 75
 	var/const
 		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
 		WIRE_RECEIVE = 2
@@ -58,6 +60,8 @@
 	desc = "An intercom that fits over the head."
 	icon_state = "headset"
 	item_state = "headset"
+	g_amt = 0
+	m_amt = 75
 	var
 		protective_temperature = 0
 		translate_binary = 0

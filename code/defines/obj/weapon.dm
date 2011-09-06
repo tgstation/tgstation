@@ -1160,6 +1160,8 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
+	g_amt = 0
+	m_amt = 75
 
 /obj/item/weapon/shard
 	name = "shard"

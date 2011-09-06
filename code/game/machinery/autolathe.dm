@@ -230,6 +230,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/device/multitool(), \
 		new /obj/item/device/t_scanner(), \
 		new /obj/item/weapon/weldingtool(), \
+		new /obj/item/weapon/screwdriver(), \
 		new /obj/item/weapon/wirecutters(), \
 		new /obj/item/weapon/wrench(), \
 		new /obj/item/clothing/head/helmet/welding(), \
@@ -248,15 +249,19 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_magazine/c38(), \
 		new /obj/item/device/taperecorder(), \
+		new /obj/item/device/igniter(), \
+		new /obj/item/device/infra_sensor(), \
+		new /obj/item/device/radio/signaler(), \
+		new /obj/item/device/radio/headset(), \
+		new /obj/item/device/radio(), \
+		new /obj/item/device/infra(), \
+		new /obj/item/device/timer(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \
 		new /obj/item/weapon/flamethrower/full(), \
-		new /obj/item/device/igniter(), \
-		new /obj/item/device/timer(), \
-		new /obj/item/device/infra_sensor(), \
-		new /obj/item/device/infra(), \
 		new /obj/item/weapon/rcd(), \
+		new /obj/item/device/radio/electropack(), \
 		new /obj/item/weapon/weldingtool/largetank(), \
 		new /obj/item/weapon/handcuffs(), \
 		new /obj/item/ammo_magazine(), \
