@@ -177,8 +177,10 @@ var/list/karma_spenders = list()
 		usr << "\red You can't spend karma on yourself!"
 		return
 	var/choice = input("Give [M.name] good karma or bad karma?", "Karma") in list("Good", "Bad", "Cancel")
+	client.karma_spent = 1
 	if(!choice || choice == "Cancel")
 		return
+	client.karma_spent = 0
 	if(choice == "Good")
 		M.client.karma += 1
 	if(choice == "Bad")

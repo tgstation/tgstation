@@ -82,12 +82,12 @@ client/verb/Toggle_Soundscape()
 		switch(src.name)
 			if ("Chapel") sound = pick('ambicha1.ogg','ambicha2.ogg','ambicha3.ogg','ambicha4.ogg')
 			if ("Morgue") sound = pick('ambimo1.ogg','ambimo2.ogg')
-//			if ("Engine Control") sound = pick('ambieng1.ogg') Commenting out in favor of a new, more applicable sound./N
+			if ("Space") sound = pick('ambispace.ogg')
 			if ("Engine Control") sound = pick('ambisin1.ogg','ambisin2.ogg','ambisin3.ogg','ambisin4.ogg')
 			if ("Atmospherics") sound = pick('ambiatm1.ogg')
 			if ("Mine")
-				sound = pick('null.ogg','null.ogg')
-				musVolume = 60
+				sound = pick('ambimine.ogg')
+				musVolume = 25
 			else sound = pick('ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg')
 
 		if (prob(35))
