@@ -87,6 +87,16 @@ var/intercom_range_display_status = 0
 						output += "<li><font color='red'>FULLY overlapping sec. cameras at \[[C1.x], [C1.y], [C1.z]\] ([C1.loc.loc]) Networks: [C1.network] and [C2.network]</font></li>"
 					if(C1.loc == C2.loc)
 						output += "<li>overlapping sec. cameras at \[[C1.x], [C1.y], [C1.z]\] ([C1.loc.loc]) Networks: [C1.network] and [C2.network]</font></li>"
+			var/turf/T = get_step(C1,turn(C1.dir,180))
+			if(!T || !isturf(T) || !T.density )
+				if(!(locate(/obj/grille,T)))
+					var/window_check = 0
+					for(var/obj/window/W in T)
+						if (W.dir == turn(C1.dir,180) || W.dir in list(5,6,9,10) )
+							window_check = 1
+							break
+					if(!window_check)
+						output += "<li><font color='red'>Camera not connected to wall at \[[C1.x], [C1.y], [C1.z]\] ([C1.loc.loc]) Network: [C1.network]</color></li>"
 
 		output += "</ul>"
 		usr << browse(output,"window=airreport;size=1000x500")
