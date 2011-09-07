@@ -602,21 +602,6 @@ datum
 
 				holder.add_reagent("cyanide", rand(1,10))
 
-				var/location = get_turf(holder.my_atom)
-				var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread
-				S.attach(location)
-				S.set_up(10, 0, location)
-				playsound(location, 'smoke.ogg', 50, 1, -3)
-				spawn(0)
-					S.start()
-					sleep(10)
-					S.start()
-					sleep(10)
-					S.start()
-					sleep(10)
-					S.start()
-					sleep(10)
-					S.start()
 				return
 
 		metroidchloral
@@ -639,7 +624,6 @@ datum
 				var/datum/disease/F = new /datum/disease/dna_retrovirus(0)
 				var/list/data = list("viruses"= list(F))
 				holder.add_reagent("blood", 20, data)
-
 		metroidfoam
 			name = "Metroid Foam"
 			id = "m_foam"
