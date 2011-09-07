@@ -62,7 +62,6 @@
 			effects["weak"] = 10
 			effects["stun"] = 10
 
-
 	suffocationbullet
 		damage = 65
 		mobdamage = list(BRUTE = 50, BURN = 0, TOX = 0, OXY = 15, CLONE = 0)
@@ -132,6 +131,17 @@
 			effects["weak"] = 10
 			effects["stutter"] = 10
 			effectprob["weak"] = 25
+	gyro
+		name ="gyro"
+		icon_state= "bolter"
+		pass_flags = PASSTABLE
+		damage = 50
+		mobdamage = list(BRUTE = 50, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
+		flag = "bullet"
+		New()
+			..()
+			effects["weak"] = 10
+			effects["stun"] = 10
 
 	declone
 		name = "declown"
@@ -350,6 +360,16 @@
 			pixel_y = rand(-10.0, 10)
 			dir = pick(cardinal)
 
+	a75
+		name = "bullet casing (.75)"
+		desc = "A .75 bullet casing."
+		caliber = "75"
+
+		New()
+			BB = new /obj/item/projectile/gyro(src)
+			pixel_x = rand(-10.0, 10)
+			pixel_y = rand(-10.0, 10)
+			dir = pick(cardinal)
 	a666
 		name = "bullet casing (.666)"
 		desc = "A .666 bullet casing."
@@ -493,6 +513,14 @@
 	update_icon()
 		icon_state = text("[initial(icon_state)]-[]", stored_ammo.len)
 		desc = text("There are [] shell\s left!", stored_ammo.len)
+
+	a75
+		name = "ammo magazine (.75)"
+		icon_state = "gyro"
+		New()
+			for(var/i = 1, i <= 8, i++)
+				stored_ammo += new /obj/item/ammo_casing/a75(src)
+			update_icon()
 
 	c38
 		name = "speed loader (.38)"
@@ -812,6 +840,22 @@
 			New()
 				for(var/i = 1, i <= max_shells, i++)
 					loaded += new /obj/item/ammo_casing/c45(src)
+				update_icon()
+
+		gyropistol
+			name = "Gyrojet Pistol"
+			desc = "A bulky pistol designed to fire self propelled rounds"
+			icon_state = "gyropistol"
+			w_class = 3.0
+			force = 15
+			max_shells = 8
+			caliber = "a75"
+			fire_sound = 'Explosion1.ogg'
+			origin_tech = "combat=3"
+
+			New()
+				for(var/i = 1, i <= max_shells, i++)
+					loaded += new /obj/item/ammo_casing/a75(src)
 				update_icon()
 
 	energy
