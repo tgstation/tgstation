@@ -1254,11 +1254,11 @@ datum
 		synaptizine
 			name = "Synaptizine"
 			id = "synaptizine"
-			description = "Synaptizine is used to treat neuroleptic shock. Can be used to help remove disabling symptoms such as paralysis."
+			description = "Synaptizine is used to treat various diseases."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
-			on_mob_life(var/mob/living/M as mob)
+/*			on_mob_life(var/mob/living/M as mob)         Commented out with authorization of muskets and Urist. If you have a problem with this, take it up with them.
 				if(!M) M = holder.my_atom
 				M:silent = 0
 				M:drowsyness = 0
@@ -1266,7 +1266,7 @@ datum
 				M:stunned = 0
 				M:weakened = 0
 				..()
-				return
+				return */
 
 		impedrezene
 			name = "Impedrezene"
