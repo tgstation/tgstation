@@ -517,6 +517,7 @@
 	src.occupant:update_face()
 	src.occupant:update_body()
 	src.occupant:mutantrace = mrace
+	src.occupant:suiciding = 0
 	src.attempting = 0
 	return 1
 

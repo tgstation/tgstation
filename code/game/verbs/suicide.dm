@@ -24,11 +24,9 @@
 	if(confirm == "Yes")
 		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		viewers(src) << "\red <b>[src] is holding \his breath. It looks like \he's trying to commit suicide.</b>"
+		viewers(src) << "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>"
 		oxyloss = max(175 - toxloss - fireloss - bruteloss, oxyloss)
 		updatehealth()
-		spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
-			suiciding = 0
 
 /mob/living/carbon/brain/verb/suicide()
 	set hidden = 1
@@ -75,11 +73,9 @@
 	if(confirm == "Yes")
 		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		viewers(src) << "\red <b>[src] is holding \his breath. It looks like \he's trying to commit suicide.</b>"
+		viewers(src) << "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>"
 		oxyloss = max(175 - toxloss - fireloss - bruteloss, oxyloss)
 		updatehealth()
-		spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
-			suiciding = 0
 
 /mob/living/silicon/ai/verb/suicide()
 	set hidden = 1

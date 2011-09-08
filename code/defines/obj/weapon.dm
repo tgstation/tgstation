@@ -516,7 +516,7 @@
 	item_state = "chemsprayer"
 	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
 	throwforce = 3
-	w_class = 2.0
+	w_class = 3.0
 	throw_speed = 2
 	throw_range = 10
 	origin_tech = "combat=3;materials=3;engineering=3"

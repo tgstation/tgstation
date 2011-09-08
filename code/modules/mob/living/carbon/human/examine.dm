@@ -97,6 +97,7 @@
 			else
 				usr << "\blue [src.name] is wearing \icon[src.wear_id] [src.wear_id.name]."
 
+
 	if (src.is_jittery)
 		switch(src.jitteriness)
 			if(300 to INFINITY)
@@ -105,6 +106,11 @@
 				usr << "\red [src] looks extremely jittery."
 			if(100 to 200)
 				usr << "\red [src] is twitching ever so slightly."
+
+	if (src.suiciding)
+		switch(src.suiciding)
+			if(1)
+				usr << "\red [src.name] appears to have bitten [t_his] tongue off!"
 
 	if (src.stat == 2 || (changeling && changeling.changeling_fakedeath == 1))
 		usr << "\red [src] is limp and unresponsive, a dull lifeless look in [t_his] eyes."
@@ -142,4 +148,6 @@
 		if (!src.client)
 			usr << "\red [src.name] doesn't seem as though they want to talk."
 
+
 	usr << "\blue *---------*"
+
