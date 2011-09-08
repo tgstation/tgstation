@@ -1,0 +1,100 @@
+Index: code/defines/obj/clothing/jumpsuit.dm
+===================================================================
+--- code/defines/obj/clothing/jumpsuit.dm	(revision 2158)
++++ code/defines/obj/clothing/jumpsuit.dm	(working copy)
+@@ -291,6 +291,13 @@
+ 	item_state = "lb_suit"
+ 	color = "cargo"
+ 
++/obj/item/clothing/under/rank/cargo
++	name = "Cargotech's Jumpsuit"
++	desc = "Shooooorts! They're comfy and easy to wear!"
++	icon_state = "cargotech"
++	item_state = "cargotech"
++	color = "cargotech"
++
+ /obj/item/clothing/under/rank/mailman
+ 	name = "Mailman Jumpsuit"
+ 	desc = "Special delivery!"
+Index: code/game/jobs/jobprocs.dm
+===================================================================
+--- code/game/jobs/jobprocs.dm	(revision 2158)
++++ code/game/jobs/jobprocs.dm	(working copy)
+@@ -411,7 +411,7 @@
+ 			src.equip_if_possible(new /obj/item/device/pda/security(src), slot_belt)
+ 			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
+ 			src.equip_if_possible(new /obj/item/clothing/head/helmet/warden(src), slot_head)
+-			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
++			src.equip_if_possible(new /obj/item/clothing/shoes/jackboots(src), slot_shoes)
+ 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
+ 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(src), slot_glasses)
+ 			src.equip_if_possible(new /obj/item/clothing/mask/gas/emergency(src), slot_wear_mask)
+@@ -436,7 +436,7 @@
+ 			src.equip_if_possible(new /obj/item/clothing/under/rank/head_of_security(src), slot_w_uniform)
+ 			src.equip_if_possible(new /obj/item/device/pda/heads/hos(src), slot_belt)
+ 			src.equip_if_possible(new /obj/item/clothing/suit/armor/hos(src), slot_wear_suit)
+-			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
++			src.equip_if_possible(new /obj/item/clothing/shoes/jackboots(src), slot_shoes)
+ 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
+ 			src.equip_if_possible(new /obj/item/clothing/head/helmet/HoS(src), slot_head)
+ 			src.equip_if_possible(new /obj/item/clothing/mask/gas/emergency(src), slot_wear_mask)
+@@ -516,6 +516,7 @@
+ 			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+ 			src.equip_if_possible(new /obj/item/device/detective_scanner(src), slot_in_backpack)
+ 			src.equip_if_possible(new /obj/item/weapon/storage/briefcase(src), slot_l_hand)
++			src.equip_if_possible(new /obj/item/device/pda/lawyer(src), slot_belt)
+ 
+ 		if ("Quartermaster")
+ 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/qm (src), slot_ears)
+Index: code/game/objects/devices/PDA/PDA.dm
+===================================================================
+--- code/game/objects/devices/PDA/PDA.dm	(revision 2158)
++++ code/game/objects/devices/PDA/PDA.dm	(working copy)
+@@ -120,6 +120,10 @@
+ 	icon_state = "pda-holy"
+ 	ttone = "holy"
+ 
++/obj/item/device/pda/lawyer
++	icon_state = "pda-lawyer"
++	ttone = "objection"
++
+ /*
+  *	The Actual PDA
+  */
+Index: config/admins.txt
+===================================================================
+--- config/admins.txt	(revision 2158)
++++ config/admins.txt	(working copy)
+@@ -25,4 +25,5 @@
+ 
+ uhangi - Game Master
+ 
+-superxpdude - Game Master
+\ No newline at end of file
++superxpdude - Game Master
++petethegoat - Game Master
+\ No newline at end of file
+Index: icons/mob/uniform.dmi
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
+Index: icons/obj/clothing/uniforms.dmi
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
+Index: icons/obj/items.dmi
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
+Index: icons/obj/library.dmi
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
+Index: icons/obj/pda.dmi
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
+Index: icons/obj/pipes/disposal.dmi
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
