@@ -195,17 +195,13 @@
 	bolt
 		name = "bolt"
 		icon_state = "cbbolt"
-		flag = "rad"
+		flag = "taser"
 		damage = 0
 		nodamage = 1
 		New()
 			..()
-			effects["radiation"] = 30
-			effectprob["radiation"] = 99
-			effects["drowsyness"] = 5
-			effectprob["drowsyness"] = 10
-			effectmod["radiation"] = ADD
-			effectmod["drowsyness"] = SET
+			effects["weak"] = 10
+			effects["stutter"] = 10
 
 	largebolt
 		name = "largebolt"

@@ -16,12 +16,18 @@
 	item_state = "syndballoon"
 	w_class = 4.0
 
-obj/item/toy/blink
+/obj/item/toy/blink
 	name = "electronic blink toy game"
 	desc = "Blink.  Blink.  Blink. Ages 8 and up."
 	icon = 'radio.dmi'
 	icon_state = "beacon"
 	item_state = "signaler"
+
+/obj/item/toy/spinningtoy
+	name = "Gravitational Singularity"
+	desc = "\"Singulo\" brand spinning toy."
+	icon = 'singularity.dmi'
+	icon_state = "singularity_s1"
 
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"

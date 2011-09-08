@@ -79,6 +79,10 @@
 		usr << "\red This creature is not compatible with our biology."
 		return
 
+	if (M.mutations & HUSK)
+		usr << "\red This creature has already been drained!"
+		return
+
 	if (!G.killing)
 		usr << "\red We must have a tighter grip to absorb this creature."
 		return
