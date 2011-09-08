@@ -12,8 +12,11 @@
 	density = 1
 	var/mob/living/carbon/human/OCCUPANT = null
 	var/obj/item/clothing/suit/space/SUIT = null
+	var/SUIT_TYPE = null
 	var/obj/item/clothing/head/helmet/space/HELMET = null
+	var/HELMET_TYPE = null
 	var/obj/item/clothing/mask/MASK = null  //All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
+	var/MASK_TYPE = null //Erro's idea on standarising SSUs whle keeping creation of other SSU types easy: Make a child SSU, name it something then set the TYPE vars to your desired suit output. New() should take it from there by itself.
 	var/isopen = 0
 	var/islocked = 0
 	var/isUV = 0
@@ -28,14 +31,19 @@
 //The units themselves/////////////////
 
 /obj/machinery/suit_storage_unit/standard_unit
-	SUIT = new /obj/item/clothing/suit/space/
-	HELMET = new /obj/item/clothing/head/helmet/space/
-	MASK = new /obj/item/clothing/mask/breath
+	SUIT_TYPE = /obj/item/clothing/suit/space
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space
+	MASK_TYPE = /obj/item/clothing/mask/breath
 
 
 /obj/machinery/suit_storage_unit/New()
 	src.update_icon()
-
+	if(SUIT_TYPE)
+		SUIT = new SUIT_TYPE(src)
+	if(HELMET_TYPE)
+		HELMET = new HELMET_TYPE(src)
+	if(MASK_TYPE)
+		MASK = new MASK_TYPE(src)
 
 /obj/machinery/suit_storage_unit/update_icon()
 	var/hashelmet = 0
