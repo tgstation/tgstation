@@ -120,6 +120,10 @@
 	icon_state = "pda-holy"
 	ttone = "holy"
 
+/obj/item/device/pda/lawyer
+	icon_state = "pda-lawyer"
+	ttone = "objection"
+
 /*
  *	The Actual PDA
  */
