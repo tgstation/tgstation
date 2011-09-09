@@ -35,6 +35,7 @@
 	var/midis = 1 //Check if midis should be played for someone -- Urist
 	var/bubbles = 1 //Check if bubbles should be displayed for someone -- Doohl
 	var/be_alien = 0 //Check if that guy wants to be an alien -- Urist
+	var/be_pai = 1 //Consider client when searching for players to recruit as a pAI -- TLE
 
 
 	var/vote = null

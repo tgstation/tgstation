@@ -10,6 +10,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"malf AI" = IS_MODE_COMPILED("malfunction"),
 	"revolutionary" = IS_MODE_COMPILED("revolution"),
 	"alien candidate" = 1, //always show
+	"pai candidate" = 1, // -- TLE
 	"cultist" = IS_MODE_COMPILED("cult"),
 	"infested monkey" = IS_MODE_COMPILED("monkey"),
 )
@@ -956,6 +957,7 @@ datum/preferences
 					character.client.bubbles = bubbles
 					character.client.ooccolor = ooccolor
 					character.client.be_alien = be_special&BE_ALIEN
+					character.client.be_pai = be_special&BE_PAI
 
 /*
 

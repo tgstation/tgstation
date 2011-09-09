@@ -50,6 +50,7 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["ooccolor"] << src.ooccolor // Urist
 	F["lastchangelog"] << src.lastchangelog // rastaf0
 
+
 	return 1
 
 // loads the savefile corresponding to the mob's ckey
@@ -120,8 +121,10 @@ datum/preferences/proc/savefile_load(mob/user, var/silent = 1)
 			be_special |= BE_MALF
 			be_special |= BE_REV
 		F["be_alien"] >> tmp
+		F["be_pai"] >> tmp
 		if (tmp)
 			be_special |= BE_ALIEN
+			be_special |= BE_PAI
 		del(F)
 		fdel(path)
 		savefile_save(user)

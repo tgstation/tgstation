@@ -216,6 +216,17 @@ var/list/karma_spenders = list()
 		client.be_alien = 1
 		src << "You are now included in alien candidate lists until end of round."
 
+/mob/dead/observer/verb/toggle_pai_candidate()
+	set name = "Toggle Be pAI Candidate"
+	set category = "Ghost"
+	set desc = "Receive a pop-up request when a pAI device requests a new personality. (toggle)"
+	if(client.be_pai)
+		client.be_pai = 0
+		src << "You will no longer receive pAI recruitment pop-ups this round."
+	else
+		client.be_pai = 1
+		src << "You will now be considered a viable candidate when a pAI device requests a new personality, effective until the end of this round."
+
 /mob/dead/observer/memory()
 	set hidden = 1
 	src << "\red You are dead! You have no mind to store memory!"

@@ -17,7 +17,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 	var/list/pai_candidates = list()
 	var/list/asked = list()
 
-	var/askDelay = 10 * 60 * 5	// Five minutes
+	var/askDelay = 10 * 60 * 1	// One minute [ms * sec * min]
 
 	Topic(href, href_list[])
 		if(href_list["download"])
@@ -173,12 +173,14 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				for(var/datum/paiCandidate/c in paiController.pai_candidates)
 					if(c.key == O.key)
 						hasSubmitted = 1
-				if(!hasSubmitted)
+				if(!hasSubmitted && O.client.be_pai)
 					spawn question(O.client)
 
 	proc/question(var/client/C)
 		asked.Add(C.key)
 		asked[C.key] = world.time
-		var/response = input(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request") in list ("Yes", "No")
+		var/response = alert(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "Yes", "No", "Never for this round")
 		if(response == "Yes")
 			recruitWindow(C.mob)
+		else if (response == "Never for this round")
+			C.be_pai = 0
