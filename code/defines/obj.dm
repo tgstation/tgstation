@@ -39,20 +39,6 @@
 			if("No")
 				return
 
-/obj/blob
-		name = "magma"
-		icon = 'blob.dmi'
-		icon_state = "bloba0"
-		var/health = 40
-		density = 1
-		opacity = 0
-		anchored = 1
-
-/obj/blob/idle
-		name = "magma"
-		desc = "it looks... tasty"
-		icon_state = "blobidle0"
-
 /obj/mark
 		var/mark = ""
 		icon = 'mark.dmi'

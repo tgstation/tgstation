@@ -30,33 +30,6 @@
 	world << "<B>The current game mode is - Revolution!</B>"
 	world << "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, HoS, CE, RD and CMO. Convert other crewmembers (excluding the heads of staff, and security officers) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>"
 
-/*
-/datum/game_mode/revolution/can_start() //this proc can not do its job properly for this gamemode, pre_setup can fail even whe can_start told everything is okay. --rastaf0
-	var/list/mob/new_player/possible_headrevs = new
-	var/list/mob/new_player/possible_heads = new
-	var/players = 0
-	for(var/mob/new_player/P in world)
-		if (!P.client || !P.ready)
-			continue
-		players++
-		if(!jobban_isbanned(P, "Syndicate"))
-			possible_headrevs += P
-		for (var/i in head_positions)
-			if(!jobban_isbanned(P, i))
-				possible_heads += P
-				break
-	//lets do as best as we can
-	if (players < min_players)
-		return 0
-	if (possible_headrevs.len==0)
-		return 0
-	if (possible_heads.len==0)
-		return 0
-	if (possible_headrevs.len<=max_headrevs)
-		var/list/rest_heads = possible_heads - possible_headrevs
-		return (rest_heads.len>0)
-	return 1 //read as "maybe"
-*/
 
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
@@ -198,6 +171,7 @@
 /datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind)
 	if(rev_mind in revolutionaries)
 		revolutionaries -= rev_mind
+		rev_mind.special_role = null
 		rev_mind.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT>"
 		update_rev_icons_removed(rev_mind)
 		for(var/mob/living/M in view(rev_mind.current))
@@ -285,15 +259,16 @@
 			if(head_rev_mind.current)
 				if(head_rev_mind.current.client)
 					for(var/image/I in head_rev_mind.current.client.images)
-						if((I.icon_state == "cult"|| I.icon_state == "rev_head") && I.loc == rev_mind.current)
+						if((I.icon_state == "rev" || I.icon_state == "rev_head") && I.loc == rev_mind.current)
 							del(I)
 
 		for(var/datum/mind/rev_mind_1 in revolutionaries)
 			if(rev_mind_1.current)
 				if(rev_mind_1.current.client)
 					for(var/image/I in rev_mind_1.current.client.images)
-						if((I.icon_state == "cult"|| I.icon_state == "rev_head") && I.loc == rev_mind.current)
+						if((I.icon_state == "rev" || I.icon_state == "rev_head") && I.loc == rev_mind.current)
 							del(I)
+
 		if(rev_mind.current)
 			if(rev_mind.current.client)
 				for(var/image/I in rev_mind.current.client.images)

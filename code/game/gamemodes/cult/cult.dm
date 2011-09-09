@@ -45,17 +45,6 @@
 	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - complete your objectives. Convert crewmembers to your cause by using the convert rune. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Brainwashing them with the chaplain's bible reverts them to whatever CentCom-allowed faith they had.</B>"
 
 
-/*/datum/game_mode/cult/can_start()
-	var/list/cultists_possible = get_players_for_role(BE_CULTIST)
-
-	if (cultists_possible.len < min_cultists_to_start)
-		return 0
-	var/non_cultists = num_players() - min(max_cultists_to_start,cultists_possible.len)
-	if (non_cultists < 1)
-		return 0
-	return 1*/
-
-
 /datum/game_mode/cult/pre_setup()
 	if(prob(50))
 		objectives += "survive"

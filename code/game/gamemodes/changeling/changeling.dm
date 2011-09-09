@@ -27,23 +27,7 @@
 			prob_right_killer_h = 50 //upper bound on probability of naming the right operative
 			prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
 			prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
-/*
-			laser = 1
-			hand_tele = 2
-			plasma_bomb = 3
-			jetpack = 4
-			captain_card = 5
-			captain_suit = 6
 
-			destroy_plasma = 1
-			destroy_ai = 2
-			kill_monkeys = 3
-			cut_power = 4
-
-			percentage_plasma_destroy = 70 // what percentage of the plasma tanks you gotta destroy
-			percentage_station_cut_power = 80 // what percentage of the tiles have to have power cut
-			percentage_station_evacuate = 80 // what percentage of people gotta leave - you also gotta change the objective in the traitor menu
-*/
 			waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 			waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
@@ -52,12 +36,6 @@
 /datum/game_mode/changeling/announce()
 	world << "<B>The current game mode is - Changeling!</B>"
 	world << "<B>There are alien changelings on the station. Do not let the changelings succeed!</B>"
-
-/*/datum/game_mode/changeling/can_start()
-	for(var/mob/new_player/P in world)
-		if(P.client && P.ready && !jobban_isbanned(P, "Syndicate"))
-			return 1
-	return 0*/
 
 /datum/game_mode/changeling/pre_setup()
 	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)

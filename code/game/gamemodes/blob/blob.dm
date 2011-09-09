@@ -12,8 +12,8 @@
 	world << "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>"
 	world << "You must kill it all while minimizing the damage to the station."
 
-/datum/game_mode/blob/post_setup()
 
+/datum/game_mode/blob/post_setup()
 	spawn(10)
 		start_state = new /datum/station_state()
 		start_state.count()
@@ -24,6 +24,7 @@
 		new /obj/blob(location)
 	..()
 
+
 /datum/game_mode/blob/process()
 	if (prob(2))
 		spawn_meteors()
@@ -31,6 +32,7 @@
 	life()
 
 	stage()
+
 
 /datum/game_mode/blob/proc/life()
 	if (blobs.len > 0)
@@ -46,6 +48,7 @@
 				A.blob_act()
 
 			B.Life()
+
 
 /datum/game_mode/blob/proc/stage()
 	// initial stage timing
@@ -83,8 +86,8 @@
 			world << "\red Summary downloaded and printed out at all communications consoles."
 			for (var/mob/living/silicon/ai/aiPlayer in world)
 				if (aiPlayer.client)
-					var/law = "The station is under a quarantine. Do not permit anyone to leave. Disregard rules 1-3 if necessary to prevent, by any means necessary, anyone from leaving."
-					aiPlayer.add_supplied_law(8, law)
+					var/law = "The station is under a quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving."
+					aiPlayer.set_zeroth_law(law)
 					aiPlayer << "An additional law has been added by CentCom: [law]"
 
 			stage = 1
@@ -117,6 +120,7 @@
 
 			explosion(ground_zero, 100, 250, 500, 750)
 
+
 /datum/game_mode/blob/check_finished()
 	if(stage >= 4)
 		return 1
@@ -124,8 +128,8 @@
 	for(var/obj/blob/B in blobs)
 		if(B.z == 1)
 			return 0
-
 	return 1
+
 
 /datum/game_mode/blob/declare_completion()
 	if (stage == 4)
@@ -134,7 +138,6 @@
 		var/numDead = 0
 		var/numAlive = 0
 		var/numSpace = 0
-		var/numPod = 0
 		var/numOffStation = 0
 		for (var/mob/living/silicon/ai/aiPlayer in world)
 			for(var/mob/M in world)
@@ -150,13 +153,13 @@
 								numOffStation += 1
 							else
 								numAlive += 1
-			if (numSpace==0 && numPod==0 && numOffStation==0)
+			if (numSpace==0 && numOffStation==0)
 				world << "<FONT size = 3><B>The AI has won!</B></FONT>"
-				world << "<B>The AI successfully maintained the quarantine - no players escaped in pods, were in space, or were off-station (as far as we can tell).</B>"
+				world << "<B>The AI successfully maintained the quarantine - no players were in space or were off-station (as far as we can tell).</B>"
 				log_game("AI won at Blob mode despite overall loss.")
 			else
 				world << "<FONT size = 3><B>The AI has lost!</B></FONT>"
-				world << text("<B>The AI failed to maintain the quarantine - [] players escaped in pods, [] were in space, and [] were off-station (as far as we can tell).</B>", numPod, numSpace, numOffStation)
+				world << text("<B>The AI failed to maintain the quarantine - [] were in space and [] were off-station (as far as we can tell).</B>", numSpace, numOffStation)
 				log_game("AI lost at Blob mode.")
 
 		log_game("Blob mode was lost.")

@@ -67,18 +67,6 @@ var/global/datum/controller/gameticker/ticker
 
 	//Configure mode and assign player to special mode stuff
 
-/*	if (src.mode.config_tag == "revolution")
-		var/tries=5
-		do
-			can_continue = src.mode.pre_setup()
-		while (tries-- && !can_continue)
-		if (!can_continue)
-			del(mode)
-			current_state = GAME_STATE_PREGAME
-			world << "<B>Error setting up revolution.</B> Not enough players. Reverting to pre-game lobby."
-			return 0
-	else*/
-
 	DivideOccupations() //Distribute jobs
 	var/can_continue = src.mode.pre_setup()//Setup special modes
 	if(!can_continue)

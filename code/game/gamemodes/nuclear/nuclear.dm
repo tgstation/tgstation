@@ -17,6 +17,7 @@
 	var/herp = 0 //Used for tracking if the syndies got the shuttle off of the z-level
 	//It is so hillarious so I wont rename those two variables --rastaf0
 
+
 /datum/game_mode/nuclear/announce()
 	world << "<B>The current game mode is - Nuclear Emergency!</B>"
 	world << "<B>A [syndicate_name()] Strike Force is approaching [station_name()]!</B>"
@@ -153,6 +154,7 @@
 
 	return ..()
 
+
 /datum/game_mode/proc/prepare_syndicate_leader(var/datum/mind/synd_mind, var/nuke_code)
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
 	spawn(1)
@@ -184,10 +186,12 @@
 	synd_mind.current << "Nuclear Explosives 101:\n\tHello and thank you for choosing the Syndicate for your nuclear information needs.\nToday's crash course will deal with the operation of a Fusion Class Nanotrasen made Nuclear Device.\nFirst and foremost, DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE.\nPressing any button on the compacted bomb will cause it to extend and bolt itself into place.\nIf this is done to unbolt it one must compeltely log in which at this time may not be possible.\nTo make the device functional:\n1. Place bomb in designated detonation zone\n2. Extend and anchor bomb (attack with hand).\n3. Insert Nuclear Auth. Disk into slot.\n4. Type numeric code into keypad ([nuke_code]).\n\tNote: If you make a mistake press R to reset the device.\n5. Press the E button to log onto the device\nYou now have activated the device. To deactivate the buttons at anytime for example when\nyou've already prepped the bomb for detonation remove the auth disk OR press the R ont he keypad.\nNow the bomb CAN ONLY be detonated using the timer. A manual det. is not an option.\n\tNote: Nanotrasen is a pain in the neck.\nToggle off the SAFETY.\n\tNote: You wouldn't believe how many Syndicate Operatives with doctorates have forgotten this step\nSo use the - - and + + to set a det time between 5 seconds and 10 minutes.\nThen press the timer toggle button to start the countdown.\nNow remove the auth. disk so that the buttons deactivate.\n\tNote: THE BOMB IS STILL SET AND WILL DETONATE\nNow before you remove the disk if you need to move the bomb you can:\nToggle off the anchor, move it, and re-anchor.\n\nGood luck. Remember the order:\nDisk, Code, Safety, Timer, Disk, RUN!\nIntelligence Analysts believe that they are hiding the disk in the bridge. Your space ship will not leave until the bomb is armed and timing.\nGood luck!"
 	return
 
+
 /datum/game_mode/proc/forge_syndicate_objectives(var/datum/mind/syndicate)
 	var/datum/objective/nuclear/syndobj = new
 	syndobj.owner = syndicate
 	syndicate.objectives += syndobj
+
 
 /datum/game_mode/proc/greet_syndicate(var/datum/mind/syndicate, var/you_are=1)
 	if (you_are)
@@ -198,8 +202,10 @@
 		obj_count++
 	return
 
+
 /datum/game_mode/proc/random_radio_frequency()
 	return 1337
+
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
 	var/radio_freq = random_radio_frequency()
@@ -220,10 +226,12 @@
 	synd_mob.equip_if_possible(new /obj/item/weapon/gun/projectile/automatic/mini_uzi(synd_mob), synd_mob.slot_belt)
 	return 1
 
+
 /datum/game_mode/nuclear/check_win()
 	if (nukes_left == 0)
 		return 1
 	return ..()
+
 
 /datum/game_mode/proc/is_operatives_are_dead()
 	for(var/datum/mind/operative_mind in syndicates)
@@ -232,6 +240,7 @@
 				if(operative_mind.current.stat!=2)
 					return 0
 	return 1
+
 
 /datum/game_mode/nuclear/declare_completion()
 	var/disk_rescued = 1
@@ -297,6 +306,7 @@
 			else
 				text += "[mind.key] (character destroyed)"
 			world << text
+
 
 /proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
 	var/randomname = pick(last_names)

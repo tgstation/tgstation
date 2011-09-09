@@ -5,59 +5,21 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
-	restricted_jobs = list("Cyborg")
+	restricted_jobs = list("Cyborg", "Security Officer", "Warden", "Detective", "Head of Security")//Approved by headmins for a week test
 	required_players = 0
 	required_enemies = 1
 
-
-	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
-	var/const/prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
-	var/const/prob_right_murder_target_h = 50 // upper bound on probability of naimg the right assassination target
-
-	var/const/prob_int_item = 50 // intercept names the theft target half the time
-	var/const/prob_right_item_l = 25 // lower bound on probability of naming right theft target
-	var/const/prob_right_item_h = 50 // upper bound on probability of naming the right theft target
-
-	var/const/prob_int_sab_target = 50 // intercept names the sabotage target half the time
-	var/const/prob_right_sab_target_l = 25 // lower bound on probability of naming right sabotage target
-	var/const/prob_right_sab_target_h = 50 // upper bound on probability of naming right sabotage target
-
-	var/const/prob_right_killer_l = 25 //lower bound on probability of naming the right operative
-	var/const/prob_right_killer_h = 50 //upper bound on probability of naming the right operative
-	var/const/prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
-	var/const/prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
-/*
-	var/const/laser = 1
-	var/const/hand_tele = 2
-	var/const/plasma_bomb = 3
-	var/const/jetpack = 4
-	var/const/captain_card = 5
-	var/const/captain_suit = 6
-
-	var/const/destroy_plasma = 1
-	var/const/destroy_ai = 2
-	var/const/kill_monkeys = 3
-	var/const/cut_power = 4
-
-	var/const/percentage_plasma_destroy = 70 // what percentage of the plasma tanks you gotta destroy
-	var/const/percentage_station_cut_power = 80 // what percentage of the tiles have to have power cut
-	var/const/percentage_station_evacuate = 80 // what percentage of people gotta leave - you also gotta change the objective in the traitor menu
-*/
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/const/traitor_scaling_coeff = 5.0 //how much does the amount of players get divided by to determine traitors
 
+
 /datum/game_mode/traitor/announce()
 	world << "<B>The current game mode is - Traitor!</B>"
 	world << "<B>There is a syndicate traitor on the station. Do not let the traitor succeed!</B>"
 
-/*/datum/game_mode/traitor/can_start()
-	for(var/mob/new_player/P in world)
-		if(P.client && P.ready && !jobban_isbanned(P, "Syndicate"))
-			return 1
-	return 0*/
 
 /datum/game_mode/traitor/pre_setup()
 	var/list/possible_traitors = get_players_for_role(BE_TRAITOR)
@@ -90,6 +52,7 @@
 		return 0
 	return 1
 
+
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
 		forge_traitor_objectives(traitor)
@@ -101,6 +64,7 @@
 		send_intercept()
 	..()
 	return 1
+
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
 	if(istype(traitor.current, /mob/living/silicon))
@@ -144,6 +108,7 @@
 					traitor.objectives += hijack_objective
 	return
 
+
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
 	traitor.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
 	var/obj_count = 1
@@ -152,6 +117,7 @@
 		obj_count++
 	return
 
+
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
 	if (istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
@@ -159,8 +125,10 @@
 		equip_traitor(traitor.current)
 	return
 
+
 /datum/game_mode/traitor/declare_completion()
 	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
+
 
 /datum/game_mode/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
@@ -182,6 +150,7 @@
 		killer << "Unfortunetly, the Syndicate did not provide you with a code response."
 	killer << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 	//End code phrase.
+
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	for(var/datum/mind/traitor in traitors)
@@ -214,7 +183,6 @@
 			else
 				world << "<B>The [special_role_text] has failed!<B>"
 	return 1
-
 
 
 /datum/game_mode/proc/equip_traitor(mob/living/carbon/human/traitor_mob, var/safety = 0)

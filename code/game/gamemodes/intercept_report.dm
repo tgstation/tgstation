@@ -51,6 +51,7 @@
 		"Species 3157"
 	)
 
+
 /datum/intercept_text/proc/build(var/mode_type, datum/mind/correct_person)
 	switch(mode_type)
 		if("revolution")
@@ -84,23 +85,26 @@
 		else
 			return null
 
+
 /datum/intercept_text/proc/pick_mob()
 	var/list/dudes = list()
 	for(var/mob/living/carbon/human/man in world)
 		if (!man.mind) continue
 		if (man.mind.assigned_role=="MODE") continue
 		dudes += man
-	if (dudes.len==0)
+	if(dudes.len==0)
 		return null
 	return pick(dudes)
+
 
 /datum/intercept_text/proc/pick_fingerprints()
 	var/mob/living/carbon/human/dude = src.pick_mob()
 	//if (!dude) return pick_fingerprints() //who coded that is totally crasy or just a traitor. -- rastaf0
-	if (dude)
+	if(dude)
 		return num2text(md5(dude.dna.uni_identity))
 	else
 		return num2text(md5(num2text(rand(1,10000))))
+
 
 /datum/intercept_text/proc/build_traitor(datum/mind/correct_person)
 	var/name_1 = pick(src.org_names_1)
@@ -126,6 +130,7 @@
 	else
 		src.text += "discovered the following set of fingerprints ([fingerprints]) on sensitive materials, and their owner should be closely observed."
 		src.text += "However, these could also belong to a current Cent. Com employee, so do not act on this without reason."
+
 
 /datum/intercept_text/proc/build_cult(datum/mind/correct_person)
 	var/name_1 = pick(src.org_names_1)
@@ -159,6 +164,7 @@
 		src.text += "<BR> In addition, we are [prob_right_dude]% sure that [traitor_name] may have also some in to contact with this "
 		src.text += "organisation."
 	src.text += "<BR>However, if this information is acted on without substantial evidence, those responsible will face severe repercussions."
+
 
 /datum/intercept_text/proc/build_rev(datum/mind/correct_person)
 	var/name_1 = pick(src.org_names_1)

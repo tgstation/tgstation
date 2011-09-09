@@ -10,14 +10,6 @@
 	world << "<B>The current game mode is - Traitor+Changeling!</B>"
 	world << "<B>There is an alien creature on the station along with some syndicate operatives out for their own gain! Do not let the changeling and the traitors succeed!</B>"
 
-/*/datum/game_mode/traitor/changeling/can_start()
-	var/count = 0
-	for(var/mob/new_player/P in world)
-		if(P.client && P.ready && !jobban_isbanned(P, "Syndicate"))
-			count++
-			if (count==2)
-				return 1
-	return 0*/
 
 /datum/game_mode/traitor/changeling/pre_setup()
 	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)

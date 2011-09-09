@@ -25,6 +25,7 @@
 		Unsecure()//Code that has to happen when the assembly is taken off of the ready state goes here
 		Attach_Assembly(var/obj/A, var/mob/user)//Called when an assembly is attacked by another
 		Process_cooldown()//Call this via spawn(10) to have it count down the cooldown var
+		Holder_Movement()//Called when the holder is moved
 		beam_trigger()
 
 
@@ -144,6 +145,12 @@
 		src.dir = t
 		del(src.first)
 		return
+
+
+	Holder_Movement()
+		if(!holder)	return 0
+		src.dir = holder.dir
+		del(src.first)
 
 
 	beam_trigger()
