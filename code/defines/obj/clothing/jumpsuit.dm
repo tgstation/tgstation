@@ -291,7 +291,7 @@
 	item_state = "lb_suit"
 	color = "cargo"
 
-/obj/item/clothing/under/rank/cargo
+/obj/item/clothing/under/rank/cargotech
 	name = "Cargotech's Jumpsuit"
 	desc = "Shooooorts! They're comfy and easy to wear!"
 	icon_state = "cargotech"
