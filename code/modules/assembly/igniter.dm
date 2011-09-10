@@ -25,6 +25,7 @@
 		Unsecure()
 		Attach_Assembly(var/obj/A, var/mob/user)
 		Process_cooldown()
+		Holder_Movement()
 
 
 	IsAssembly()

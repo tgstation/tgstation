@@ -19,18 +19,18 @@
 		start_state.count()
 	spawn (20)
 		var/turf/location = pick(blobstart)
-
 		blobs = list()
 		new /obj/blob(location)
+		location = pick(blobstart)
+//		if(!locate(/obj/blob in location))
+//			new/obj/blob(location)
 	..()
 
 
 /datum/game_mode/blob/process()
-	if (prob(2))
+	if(prob(2))
 		spawn_meteors()
-
 	life()
-
 	stage()
 
 
@@ -122,7 +122,7 @@
 
 
 /datum/game_mode/blob/check_finished()
-	if(stage >= 4)
+	if((stage >= 4)||(stage <= 1))
 		return 1
 
 	for(var/obj/blob/B in blobs)
