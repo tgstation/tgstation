@@ -142,11 +142,6 @@
 	new /obj/item/clothing/under/sexymime(src.loc)
 	del(src)
 
-/obj/landmark/costume/brits/New()
-	new /obj/item/clothing/head/redcoat(src.loc)
-	new /obj/item/clothing/under/redocat(src.loc)
-	del(src)
-
 
 /*
 /obj/landmark/costume/cyborg/New()

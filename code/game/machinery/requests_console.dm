@@ -181,7 +181,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			if (announceAuth && message)
 				dat += text("<A href='?src=\ref[src];sendAnnouncement=[1]'>Announce</A><BR>");
 			dat += text("<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A><BR>")
-		user << browse("[dat]", "window=req_console")
+		user << browse("[dat]", "")
 		onclose(user, "req_console")
 	return
 

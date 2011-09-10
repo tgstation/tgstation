@@ -123,36 +123,6 @@
 		if(src.shock(user, 100))
 			return
 
-	if(panel_open)
-		var/list/vendwires = list(
-			"Violet" = 1,
-			"Orange" = 2,
-			"Goldenrod" = 3,
-			"Green" = 4,
-		)
-		var/pdat = "<B>Access Panel</B><br>"
-		for(var/wiredesc in vendwires)
-			var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
-			pdat += "[wiredesc] wire: "
-			if(!is_uncut)
-				pdat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
-			else
-				pdat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
-				pdat += "<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "
-			pdat += "<br>"
-
-		pdat += "<br>"
-		pdat += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
-		pdat += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
-		pdat += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
-		pdat += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
-
-		if (product_slogans != "")
-			pdat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
-
-		user << browse(pdat, "window=vendwires")
-		onclose(user, "vendwires")
-
 	var/dat = "<TT><b>Select an item:</b><br>"
 
 	if (src.product_records.len == 0)
@@ -173,8 +143,35 @@
 
 		dat += "</TT>"
 
-	user << browse(dat, "window=vending")
-	onclose(user, "vending")
+	if(panel_open)
+		var/list/vendwires = list(
+			"Violet" = 1,
+			"Orange" = 2,
+			"Goldenrod" = 3,
+			"Green" = 4,
+		)
+		dat += "<br><hr><br><B>Access Panel</B><br>"
+		for(var/wiredesc in vendwires)
+			var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
+			dat += "[wiredesc] wire: "
+			if(!is_uncut)
+				dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
+			else
+				dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
+				dat += "<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "
+			dat += "<br>"
+
+		dat += "<br>"
+		dat += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
+		dat += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
+		dat += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
+		dat += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
+
+		if (product_slogans != "")
+			dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+
+	user << browse(dat, "")
+	onclose(user, "")
 	return
 
 /obj/machinery/vending/Topic(href, href_list)

@@ -51,6 +51,10 @@ macro "macro"
 		name = "SOUTH+REP"
 		command = ".south"
 		is-disabled = false
+	elem "drop_item_v"
+		name = "CTRL+D"
+		command = "drop_item_v"
+		is-disabled = false
 	elem 
 		name = "F1"
 		command = "adminhelp"
@@ -367,7 +371,7 @@ window "mainwindow"
 window "mapwindow"
 	elem "mapwindow"
 		type = MAIN
-		pos = none
+		pos = 281,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -407,7 +411,7 @@ window "mapwindow"
 	elem "map"
 		type = MAP
 		pos = 0,0
-		size = 0x0
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
@@ -432,7 +436,7 @@ window "mapwindow"
 window "outputwindow"
 	elem "outputwindow"
 		type = MAIN
-		pos = none
+		pos = 281,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -472,7 +476,7 @@ window "outputwindow"
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
-		size = 0x0
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
@@ -499,7 +503,7 @@ window "outputwindow"
 window "rpane"
 	elem "rpane"
 		type = MAIN
-		pos = none
+		pos = 559,121
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -539,7 +543,7 @@ window "rpane"
 	elem "rpanewindow"
 		type = CHILD
 		pos = 0,0
-		size = 0x0
+		size = 640x499
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
@@ -571,7 +575,7 @@ window "rpane"
 		font-family = ""
 		font-size = 0
 		font-style = ""
-		text-color = none
+		text-color = #000000
 		background-color = none
 		is-visible = false
 		is-disabled = false
@@ -599,9 +603,9 @@ window "rpane"
 		font-family = ""
 		font-size = 0
 		font-style = ""
-		text-color = none
+		text-color = #000000
 		background-color = none
-		is-visible = false
+		is-visible = true
 		is-disabled = false
 		is-transparent = false
 		is-default = false
@@ -627,7 +631,7 @@ window "rpane"
 		font-family = ""
 		font-size = 0
 		font-style = ""
-		text-color = none
+		text-color = #000000
 		background-color = none
 		is-visible = false
 		is-disabled = false
@@ -650,7 +654,7 @@ window "rpane"
 window "browserwindow"
 	elem "browserwindow"
 		type = MAIN
-		pos = none
+		pos = 281,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -669,11 +673,11 @@ window "browserwindow"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		on-size = ""
 		title = "Browser"
-		titlebar = true
-		statusbar = true
-		can-close = true
-		can-minimize = true
-		can-resize = true
+		titlebar = false
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
 		is-pane = true
 		is-minimized = false
 		is-maximized = false
@@ -690,7 +694,7 @@ window "browserwindow"
 	elem "browser"
 		type = BROWSER
 		pos = 0,0
-		size = 0x0
+		size = 638x475
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
@@ -712,12 +716,12 @@ window "browserwindow"
 		auto-format = true
 		use-title = false
 		on-show = ".winset\"rpane.infob.is-visible=true?rpane.infob.pos=130,0;rpane.textb.is-visible=true;rpane.browseb.is-visible=true;rpane.browseb.is-checked=true;rpane.rpanewindow.pos=0,30;rpane.rpanewindow.size=0x0;rpane.rpanewindow.left=browserwindow\""
-		on-hide = ".winset\"rpane.browseb.is-visible=false;rpane.infob.is-visible=true?rpane.infob.is-checked=true rpane.infob.pos=65,0 rpane.rpanewindow.left=infowindow:rpane.rpanewindow.left=textwindow rpane.textb.is-visible=false rpane.rpanewindow.pos=0,0 rpane.rpanewindow.size=0x0\""
+		on-hide = ".winset\"rpane.infob.is-visible=true?rpane.infob.is-checked=true rpane.infob.pos=65,0 rpane.rpanewindow.left=infowindow:rpane.rpanewindow.left=textwindow rpane.textb.is-visible=false rpane.rpanewindow.pos=0,0 rpane.rpanewindow.size=0x0\""
 
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
-		pos = none
+		pos = 281,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -757,7 +761,7 @@ window "infowindow"
 	elem "info"
 		type = INFO
 		pos = 0,0
-		size = 0x0
+		size = 640x499
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
