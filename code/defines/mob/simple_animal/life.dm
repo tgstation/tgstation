@@ -1,4 +1,5 @@
 /mob/living/simple_animal
+	name = "animal"
 	var/icon_living = ""
 	var/icon_dead = ""
 	var/max_health = 20
@@ -54,20 +55,24 @@
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	meat_amount = 3
-	response_help  = "pats the"
+	response_help  = "pets the"
 	response_disarm = "getnly pushes aside the"
 	response_harm   = "kicks the"
 
 /mob/living/simple_animal/corgi/Ian
 	name = "Ian"
 	desc = "It's Ian, what else do you need to know?"
-	response_help  = "pats"
+	response_help  = "pets"
 	response_disarm = "getnly pushes aside"
 	response_harm   = "kicks"
 
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
+
+/mob/living/simple_animal/Login()
+	if(src && src.client)
+		src.client.screen = null
 
 /mob/living/simple_animal/Life()
 
@@ -76,11 +81,13 @@
 		if(health > 0)
 			icon_state = icon_living
 			alive = 1
+			stat = 0 		//Alive - conscious
 		return
 
 	if(health < 1)
 		alive = 0
 		icon_state = icon_dead
+		stat = 2 			//Dead
 		return
 
 	if(health > max_health)
@@ -88,10 +95,11 @@
 
 	//Movement
 	if(!ckey)
-		turns_since_move++
-		if(turns_since_move >= turns_per_move)
-			Move(get_step(src,pick(cardinal)))
-			turns_since_move = 0
+		if(isturf(src.loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+			turns_since_move++
+			if(turns_since_move >= turns_per_move)
+				Move(get_step(src,pick(cardinal)))
+				turns_since_move = 0
 
 	//Speaking
 	if(speak_chance)
@@ -182,12 +190,14 @@
 		health -= unsuitable_atoms_damage
 
 /mob/living/simple_animal/Bumped(AM as mob|obj)
-	if(ismob(AM))
-		//var/newamloc = src.loc
-		src.loc = AM:loc
-		//AM:loc = newamloc
-	else
-		..()
+	if(!AM) return
+	if(isturf(src.loc) && !resting && !buckled)
+		if(ismob(AM))
+			var/newamloc = src.loc
+			src.loc = AM:loc
+			AM:loc = newamloc
+		else
+			..()
 
 /mob/living/simple_animal/gib()
 	if(meat_amount && meat_type)
@@ -242,7 +252,7 @@
 			health -= harm_intent_damage
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O.show_message("\blue [M] [response_harm] [src]")
+					O.show_message("\red [M] [response_harm] [src]")
 
 		if ("disarm")
 			for(var/mob/O in viewers(src, null))
