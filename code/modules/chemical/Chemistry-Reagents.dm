@@ -1258,15 +1258,16 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
-/*			on_mob_life(var/mob/living/M as mob)         Commented out with authorization of muskets and Urist. If you have a problem with this, take it up with them.
+			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:silent = 0
-				M:drowsyness = 0
-				M:paralysis = 0
-				M:stunned = 0
-				M:weakened = 0
+				M:drowsyness = max(M:drowsyness-5, 0)
+				if(M:paralysis) M:paralysis--
+				if(M:stunned) M:stunned--
+				if(M:weakened) M:weakened--
+				if(prob(60))	M:toxloss++
 				..()
-				return */
+				return
+
 
 		impedrezene
 			name = "Impedrezene"

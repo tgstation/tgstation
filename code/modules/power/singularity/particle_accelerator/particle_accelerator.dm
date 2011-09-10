@@ -197,7 +197,6 @@ PE|PE|PE
 
 
 	examine()
-		set src in usr
 		switch(src.construction_state)
 			if(0)
 				src.desc = text("Part of a Particle Accelerator, looks like its not attached to the flooring")
