@@ -98,7 +98,7 @@
 
 
 		if(starving && !client) // if a metroid is starving, it starts losing its friends
-			if(prob(45) && Friends.len > 0)
+			if(prob(15) && Friends.len > 0)
 				var/friendnum = 0
 				for(var/mob/M in Friends)
 					friendnum++
@@ -223,12 +223,12 @@
 			var/starving = 0
 			if(istype(src, /mob/living/carbon/metroid/adult))
 				switch(nutrition)
-					if(400 to 800) hungry = 1
+					if(400 to 1100) hungry = 1
 					if(0 to 399)
 						starving = 1
 			else
 				switch(nutrition)
-					if(150 to 500) hungry = 1
+					if(150 to 800) hungry = 1
 					if(0 to 149) starving = 1
 			AIproc = 1
 			while(AIproc && stat != 2 && (attacked > 0 || starving || hungry || rabid || Victim))
