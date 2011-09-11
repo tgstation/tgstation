@@ -227,99 +227,162 @@
 			variable = input("Pick icon:","Icon",variable) \
 				as icon
 
-
-/client/proc/modify_variables(var/atom/O)
+/client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "urine", "poo", "icon", "icon_state")
 
 	if(!src.authenticated || !src.holder)
 		src << "Only administrators may use this command."
 		return
 
-	var/list/names = list()
-	for (var/V in O.vars)
-		names += V
+	var/class
+	var/variable
+	var/var_value
 
-	names = sortList(names)
+	if(param_var_name)
+		if(!param_var_name in O.vars)
+			src << "A variable with this name ([param_var_name]) doesn't exist in this atom ([O])"
+			return
 
-	var/variable = input("Which var?","Var") as null|anything in names
-	if(!variable)
-		return
-	var/default
-	var/var_value = O.vars[variable]
-	var/dir
+		if (param_var_name == "holder" && holder.rank != "Game Master")
+			src << "No. Stop being stupid."
+			return
 
-	if (locked.Find(variable) && !(src.holder.rank in list("Game Master", "Game Admin")))
-		return
+		if (locked.Find(param_var_name) && !(src.holder.rank in list("Game Master", "Game Admin")))
+			src << "Editing this variable requires you to be a game master or game admin."
+			return
 
-	if (variable == "holder" && holder.rank != "Game Master") //Hotfix, a bit ugly but that exploit has been there for ages and now somebody just had to go and tell everyone of it bluh bluh - U
-		return
+		variable = param_var_name
 
-	if(isnull(var_value))
-		usr << "Unable to determine variable type."
+		var_value = O.vars[variable]
 
-	else if(isnum(var_value))
-		usr << "Variable appears to be <b>NUM</b>."
-		default = "num"
-		dir = 1
+		if(autodetect_class)
+			if(isnull(var_value))
+				usr << "Unable to determine variable type."
+				class = null
+				autodetect_class = null
+			else if(isnum(var_value))
+				usr << "Variable appears to be <b>NUM</b>."
+				class = "num"
+				dir = 1
 
-	else if(istext(var_value))
-		usr << "Variable appears to be <b>TEXT</b>."
-		default = "text"
+			else if(istext(var_value))
+				usr << "Variable appears to be <b>TEXT</b>."
+				class = "text"
 
-	else if(isloc(var_value))
-		usr << "Variable appears to be <b>REFERENCE</b>."
-		default = "reference"
+			else if(isloc(var_value))
+				usr << "Variable appears to be <b>REFERENCE</b>."
+				class = "reference"
 
-	else if(isicon(var_value))
-		usr << "Variable appears to be <b>ICON</b>."
-		var_value = "\icon[var_value]"
-		default = "icon"
+			else if(isicon(var_value))
+				usr << "Variable appears to be <b>ICON</b>."
+				var_value = "\icon[var_value]"
+				class = "icon"
 
-	else if(istype(var_value,/atom) || istype(var_value,/datum))
-		usr << "Variable appears to be <b>TYPE</b>."
-		default = "type"
+			else if(istype(var_value,/atom) || istype(var_value,/datum))
+				usr << "Variable appears to be <b>TYPE</b>."
+				class = "type"
 
-	else if(istype(var_value,/list))
-		usr << "Variable appears to be <b>LIST</b>."
-		default = "list"
+			else if(istype(var_value,/list))
+				usr << "Variable appears to be <b>LIST</b>."
+				class = "list"
 
-	else if(istype(var_value,/client))
-		usr << "Variable appears to be <b>CLIENT</b>."
-		default = "cancel"
+			else if(istype(var_value,/client))
+				usr << "Variable appears to be <b>CLIENT</b>."
+				class = "cancel"
+
+			else
+				usr << "Variable appears to be <b>FILE</b>."
+				class = "file"
 
 	else
-		usr << "Variable appears to be <b>FILE</b>."
-		default = "file"
 
-	usr << "Variable contains: [var_value]"
-	if(dir)
-		switch(var_value)
-			if(1)
-				dir = "NORTH"
-			if(2)
-				dir = "SOUTH"
-			if(4)
-				dir = "EAST"
-			if(8)
-				dir = "WEST"
-			if(5)
-				dir = "NORTHEAST"
-			if(6)
-				dir = "SOUTHEAST"
-			if(9)
-				dir = "NORTHWEST"
-			if(10)
-				dir = "SOUTHWEST"
-			else
-				dir = null
+		var/list/names = list()
+		for (var/V in O.vars)
+			names += V
+
+		names = sortList(names)
+
+		variable = input("Which var?","Var") as null|anything in names
+		if(!variable)
+			return
+		var_value = O.vars[variable]
+
+		if (locked.Find(variable) && !(src.holder.rank in list("Game Master", "Game Admin")))
+			return
+
+		if (variable == "holder" && holder.rank != "Game Master") //Hotfix, a bit ugly but that exploit has been there for ages and now somebody just had to go and tell everyone of it bluh bluh - U
+			return
+
+	if(!autodetect_class)
+
+		var/dir
+		var/default
+		if(isnull(var_value))
+			usr << "Unable to determine variable type."
+
+		else if(isnum(var_value))
+			usr << "Variable appears to be <b>NUM</b>."
+			default = "num"
+			dir = 1
+
+		else if(istext(var_value))
+			usr << "Variable appears to be <b>TEXT</b>."
+			default = "text"
+
+		else if(isloc(var_value))
+			usr << "Variable appears to be <b>REFERENCE</b>."
+			default = "reference"
+
+		else if(isicon(var_value))
+			usr << "Variable appears to be <b>ICON</b>."
+			var_value = "\icon[var_value]"
+			default = "icon"
+
+		else if(istype(var_value,/atom) || istype(var_value,/datum))
+			usr << "Variable appears to be <b>TYPE</b>."
+			default = "type"
+
+		else if(istype(var_value,/list))
+			usr << "Variable appears to be <b>LIST</b>."
+			default = "list"
+
+		else if(istype(var_value,/client))
+			usr << "Variable appears to be <b>CLIENT</b>."
+			default = "cancel"
+
+		else
+			usr << "Variable appears to be <b>FILE</b>."
+			default = "file"
+
+		usr << "Variable contains: [var_value]"
 		if(dir)
-			usr << "If a direction, direction is: [dir]"
+			switch(var_value)
+				if(1)
+					dir = "NORTH"
+				if(2)
+					dir = "SOUTH"
+				if(4)
+					dir = "EAST"
+				if(8)
+					dir = "WEST"
+				if(5)
+					dir = "NORTHEAST"
+				if(6)
+					dir = "SOUTHEAST"
+				if(9)
+					dir = "NORTHWEST"
+				if(10)
+					dir = "SOUTHWEST"
+				else
+					dir = null
+			if(dir)
+				usr << "If a direction, direction is: [dir]"
 
-	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
+		class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
 
-	if(!class)
-		return
+		if(!class)
+			return
 
 	var/original_name
 
