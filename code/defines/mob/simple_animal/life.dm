@@ -82,12 +82,14 @@
 			icon_state = icon_living
 			alive = 1
 			stat = 0 		//Alive - conscious
+			density = 1
 		return
 
 	if(health < 1)
 		alive = 0
 		icon_state = icon_dead
 		stat = 2 			//Dead
+		density = 0
 		return
 
 	if(health > max_health)
@@ -260,6 +262,34 @@
 					O.show_message("\blue [M] [response_disarm] [src]")
 
 	return
+
+/mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
+	if(istype(O, /obj/item/stack/medical))
+		if(alive)
+			var/obj/item/stack/medical/MED = O
+			if(health < max_health)
+				if(MED.amount >= 1)
+					health = min(max_health, health + MED.heal_brute)
+					MED.amount -= 1
+					if(MED.amount <= 0)
+						del(MED)
+					for(var/mob/M in viewers(src, null))
+						if ((M.client && !( M.blinded )))
+							M.show_message("\blue [M] applies the [MED] on [src]")
+		else
+			user << "\blue this [src] is dead, medical items won't bring it back to life."
+	else
+		if(O.force)
+			health -= O.force
+			for(var/mob/M in viewers(src, null))
+				if ((M.client && !( M.blinded )))
+					M.show_message("\red \b [src] has been attacked with the [O] by [M]. ")
+		else
+			usr << "\red This weapon is ineffective, it does no damage."
+			for(var/mob/M in viewers(src, null))
+				if ((M.client && !( M.blinded )))
+					M.show_message("\red [M] gently taps [src] with the [O]. ")
+
 
 //MEAT
 
