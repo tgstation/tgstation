@@ -81,7 +81,7 @@
 
 /obj/machinery/bot/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
-
+	..()
 	healthcheck()
 
 /obj/machinery/bot/meteorhit()

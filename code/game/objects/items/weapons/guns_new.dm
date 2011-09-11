@@ -180,7 +180,7 @@
 			effectprob["weak"] = 25
 
 	ion
-		name = "electrode"
+		name = "ion bolt"
 		icon_state = "ice_2"
 		flag = "taser"
 		damage = 0
@@ -188,6 +188,7 @@
 		New()
 			..()
 			effects["emp"] = 1
+			effectprob["emp"] = 80
 
 	stunshot
 		name = "stunshot"
@@ -1249,7 +1250,7 @@
 			desc = "A man portable anti-armor weapon designed to disable mechanical threats"
 			icon_state = "ionrifle"
 			fire_sound = 'Laser.ogg'
-			origin_tech = null
+			origin_tech = "combat=3;magnets=2"//This could likely be changed up a bit
 			charge_cost = 100
 
 			load_into_chamber()

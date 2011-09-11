@@ -341,7 +341,7 @@ var/list/assistant_occupations = list(
 	"Assistant" = -1,
 	"Chaplain" = 1,
 	"Librarian" = 1,
-	"Lawyer" = 1,
+	"Lawyer" = 2,
 	"Atmospheric Technician" = 4
 	//"Tourist", //I am not going to implement these jobs at the moment. Just listed it as examples. --rastaf0
 	//"Monkey",

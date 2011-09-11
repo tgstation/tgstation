@@ -102,8 +102,6 @@
 // RANKS
 /obj/item/clothing/under/rank
 
-
-
 /obj/item/clothing/under/rank/atmospheric_technician
 	desc = "It has an Atmospherics rank stripe on it."
 	name = "Atmospherics Jumpsuit"
@@ -377,26 +375,6 @@
 	color = "detective"
 	armor = list(melee = 10, bullet = 5, laser = 5, taser = 5, bomb = 5, bio = 0, rad = 0)
 
-/obj/item/clothing/under/lawyer
-	desc = "Slick threads."
-	name = "Lawyer suit"
-	flags = FPRINT | TABLEPASS
-
-/obj/item/clothing/under/lawyer/black
-	icon_state = "lawyer_black"
-	item_state = "lawyer_black"
-	color = "lawyer_black"
-
-/obj/item/clothing/under/lawyer/red
-	icon_state = "lawyer_red"
-	item_state = "lawyer_red"
-	color = "lawyer_red"
-
-/obj/item/clothing/under/lawyer/blue
-	icon_state = "lawyer_blue"
-	item_state = "lawyer_blue"
-	color = "lawyer_blue"
-
 /obj/item/clothing/under/scratch
 	name = "White Suit"
 	desc = "A white suit, suitable for an excellent host"
@@ -495,13 +473,6 @@
 	protective_temperature = 1000
 	flags = FPRINT | TABLEPASS | SUITSPACE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-
-/obj/item/clothing/under/bluesuit
-	name = "Blue Suit"
-	icon_state = "bluesuit"
-	item_state = "bluesuit"
-	color = "bluesuit"
-	desc = "A classy suit and tie"
 
 /obj/item/clothing/under/spiderman
 	name = "Deadpool Suit"

@@ -80,6 +80,18 @@ obj
 /atom/proc/emp_act(var/severity)
 	return
 
+/atom/proc/bullet_act(var/obj/item/projectile/Proj)
+	if(Proj.effects["emp"])
+		var/emppulse = Proj.effects["emp"]
+		if(prob(Proj.effectprob["emp"]))
+			empulse(src, emppulse, emppulse)
+		else
+			empulse(src, 0, emppulse)
+
+//	if(istype(Proj ,/obj/item/projectile/beam/pulse))
+//		src.ex_act(2)
+	return
+
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
 		if(istype(src.loc, container))

@@ -410,8 +410,8 @@ datum/objective/capture
 
 
 datum/objective/absorb
-	proc/gen_amount_goal()  //this doesn't work -- should work now, changed it a bit -- Urist
-		target_amount = rand (4,6)
+	proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
+		target_amount = rand (lowbound,highbound)
 		if (ticker)
 			var/n_p = 1 //autowin
 			if (ticker.current_state == GAME_STATE_SETTING_UP)
@@ -432,6 +432,8 @@ datum/objective/absorb
 			return 1
 		else
 			return 0
+
+
 
 /* Isn't suited for global objectives
 /*---------CULTIST----------*/

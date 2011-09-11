@@ -184,6 +184,14 @@
 			eye_blurry = Proj.effects["eyeblur"]
 		else
 			eye_blurry += Proj.effects["eyeblur"]
+
+	if(Proj.effects["emp"])
+		var/emppulse = Proj.effects["emp"]
+		if(prob(Proj.effectprob["emp"]))
+			empulse(src, emppulse, emppulse)
+		else
+			empulse(src, 0, emppulse)
+
 	return
 
 /mob/living/carbon/monkey/hand_p(mob/M as mob)

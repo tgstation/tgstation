@@ -87,6 +87,8 @@
 		else
 			eye_blurry += Proj.effects["eyeblur"]
 
+	..()
+
 
 /mob/living/proc/updatehealth()
 	if (!src.nodamage)

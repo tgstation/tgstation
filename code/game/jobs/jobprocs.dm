@@ -503,20 +503,25 @@
 			src.equip_if_possible(new /obj/item/device/analyzer/plant_analyzer(src), slot_s_store)
 
 		if ("Librarian")
-
 			src.equip_if_possible(new /obj/item/clothing/under/suit_jacket/red(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/weapon/barcodescanner(src), slot_l_hand)
 
-		if ("Lawyer")  //muskets 160910
-			src.equip_if_possible(new /obj/item/clothing/under/bluesuit(src), slot_w_uniform)
+		if ("Lawyer")
+			if(!lawyer)
+				lawyer = 1
+				src.equip_if_possible(new /obj/item/clothing/under/lawyer/bluesuit(src), slot_w_uniform)
+				src.equip_if_possible(new /obj/item/clothing/suit/lawyer/bluejacket(src), slot_wear_suit)
+				src.equip_if_possible(new /obj/item/device/pda/lawyer(src), slot_belt)
+			else
+				src.equip_if_possible(new /obj/item/clothing/under/lawyer/purpsuit(src), slot_w_uniform)
+				src.equip_if_possible(new /obj/item/clothing/suit/lawyer/purpjacket(src), slot_wear_suit)
+				src.equip_if_possible(new /obj/item/device/pda/lawyer(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
-			src.equip_if_possible(new /obj/item/clothing/suit/suit(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
 			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
-			src.equip_if_possible(new /obj/item/device/detective_scanner(src), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/device/detective_scanner(src), slot_in_backpack)//Why do they even get this?
 			src.equip_if_possible(new /obj/item/weapon/storage/briefcase(src), slot_l_hand)
-			src.equip_if_possible(new /obj/item/device/pda/lawyer(src), slot_belt)
 
 		if ("Quartermaster")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/qm (src), slot_ears)

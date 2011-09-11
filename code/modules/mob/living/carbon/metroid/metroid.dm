@@ -187,6 +187,14 @@
 	//																											~~~~     N
 	// Metroids aren't effected by extra status effects. DO NOT NERF THIS PLZ THNX - LOVE, DOOHL 3===========D ~~~~     HONK
 	//																											~~~~     H
+	//EMP is special and yes they are because emp
+	if(Proj.effects["emp"])
+		var/emppulse = Proj.effects["emp"]
+		if(prob(Proj.effectprob["emp"]))
+			empulse(src, emppulse, emppulse)
+		else
+			empulse(src, 0, emppulse)
+
 
 /mob/living/carbon/metroid/emp_act(severity)
 	powerlevel = 0 // oh no, the power!

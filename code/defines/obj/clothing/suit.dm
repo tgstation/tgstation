@@ -6,7 +6,7 @@
 	var/fire_resist = T0C+100
 	flags = FPRINT | TABLEPASS
 	var/list/allowed = list(/obj/item/weapon/tank/emergency_oxygen)
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/bomb_suit
 	name = "bomb suit"
@@ -85,15 +85,6 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list(/obj/item/weapon/gun/projectile/detective,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/cigpacket,/obj/item/weapon/zippo,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	armor = list(melee = 75, bullet = 25, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
-
-/obj/item/clothing/suit/judgerobe
-	name = "judge's robe"
-	desc = "This robe commands authority."
-	icon_state = "judge"
-	item_state = "judge"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	allowed = list(/obj/item/weapon/cigpacket,/obj/item/weapon/spacecash)
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
@@ -479,14 +470,6 @@
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-
-/obj/item/clothing/suit/suit
-	name = "Blue Suit Jacket"
-	desc = "A snappy dress jacket."
-	icon_state = "suitjacket_blue_open"
-	item_state = "suitjacket_blue_open"
-	body_parts_covered = UPPER_TORSO|ARMS
-	armor = list(melee = 5, bullet = 2, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/chickensuit
 	name = "Chicken Suit"

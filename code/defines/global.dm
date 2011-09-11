@@ -73,6 +73,7 @@ var
 	shuttle_frozen = 0
 	shuttle_left = 0
 	tinted_weldhelh = 1 //as soon as the thing is sprited, we'll code in the toggle verb, bot for now, it should stay on by default. -errorage //Until you have the actual functionality for it, don't set this on by default. You're putting the cart before the horse. --DH
+	lawyer = 0//Checks for a lawyer
 
 	captainMax = 1
 	engineerMax = 5
@@ -98,7 +99,7 @@ var
 	cargotechMax = 2
 	hydroponicsMax = 3
 	librarianMax = 1
-	lawyerMax = 1
+	lawyerMax = 2
 	viroMax = 1
 	wardenMax = 1
 	cmoMax = 1

@@ -234,6 +234,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 				attacked = 0
 
 	src.health -= Proj.damage
+	..()
 	if(prob(45) && Proj.damage > 0) src.spark_system.start()
 	if (src.health <= 0)
 		src.die() // the death process :(

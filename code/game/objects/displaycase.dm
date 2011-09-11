@@ -15,16 +15,12 @@
 				src.health -= 5
 				src.healthcheck()
 
-/obj/displaycase/bullet_act(var/obj/item/projectile/Proj)
 
-	if (Proj.flag == "bullet")
-		src.health -= 10
-		src.healthcheck()
-		return
-	else
-		src.health -= 4
-		src.healthcheck()
-		return
+/obj/displaycase/bullet_act(var/obj/item/projectile/Proj)
+	health -= Proj.damage
+	..()
+	src.healthcheck()
+	return
 
 
 /obj/displaycase/blob_act()

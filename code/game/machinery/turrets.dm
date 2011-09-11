@@ -230,6 +230,7 @@
 
 /obj/machinery/turret/bullet_act(var/obj/item/projectile/Proj)
 	src.health -= Proj.damage
+	..()
 	if(prob(45) && Proj.damage > 0) src.spark_system.start()
 	if (src.health <= 0)
 		src.die()
@@ -428,6 +429,7 @@
 	bullet_act(var/obj/item/projectile/Proj)
 		var/damage = Proj.damage
 		src.take_damage(damage)
+		..()
 		return
 
 

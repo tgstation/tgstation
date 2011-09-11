@@ -278,6 +278,14 @@
 
 /mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj.nodamage) bruteloss += Proj.damage
+
+	if(Proj.effects["emp"])
+		var/emppulse = Proj.effects["emp"]
+		if(prob(Proj.effectprob["emp"]))
+			empulse(src, emppulse, emppulse)
+		else
+			empulse(src, 0, emppulse)
+
 	updatehealth()
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return

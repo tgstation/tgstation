@@ -10,6 +10,7 @@
 	var/welded = 0
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	flags = FPRINT
+	var/health = 200//Might be a bit much, dono can always change later
 
 /obj/closet/acloset
 	desc = "It looks alien!"
@@ -597,6 +598,7 @@
 	var/icon_broken = "securebroken"
 	var/icon_off = "secureoff"
 	var/wall_mounted = 0 //never solid (You can always pass over it)
+	var/health = 300
 
 /obj/secure_closet/courtroom
 	name = "Courtroom Locker"

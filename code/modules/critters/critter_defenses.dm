@@ -68,6 +68,7 @@ Contains the procs that control attacking critters
 
 	bullet_act(var/obj/item/projectile/Proj)
 		TakeDamage(Proj.damage)
+		..()
 
 
 	ex_act(severity)

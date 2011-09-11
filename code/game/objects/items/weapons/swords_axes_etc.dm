@@ -124,18 +124,13 @@ STUN BATON
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey]) (INTENT: [uppertext(user.a_intent)])</font>")
 
+	if(isrobot(M))
+		..()
+		return
 
 	if (status == 0 || (status == 1 && charges ==0))
 		if(user.a_intent == "hurt")
 			if(!..()) return
-		/*	if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(40))
-				for(var/mob/O in viewers(M, null))
-					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
-				return
-			if (!istype(H:l_hand, /obj/item/weapon/shield/riot) && prob(40))
-				for(var/mob/O in viewers(M, null))
-					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
-				return*/
 			if (M.weakened < 5 && (!(M.mutations & HULK))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.weakened = 5
 			for(var/mob/O in viewers(M))
@@ -153,14 +148,6 @@ STUN BATON
 		flick("baton_active", src)
 		if (user.a_intent == "hurt")
 			if(!..()) return
-		/*	if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(40))
-				for(var/mob/O in viewers(M, null))
-					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
-				return
-			if (!istype(H:l_hand, /obj/item/weapon/shield/riot) && prob(40))
-				for(var/mob/O in viewers(M, null))
-					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
-				return*/
 			playsound(src.loc, 'Genhit.ogg', 50, 1, -1)
 			if(isrobot(user))
 				var/mob/living/silicon/robot/R = user
@@ -174,14 +161,6 @@ STUN BATON
 			if (M.stunned < 1 && (!(M.mutations & HULK))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stunned = 1
 		else
-		/*	if (!istype(H:r_hand, /obj/item/weapon/shield/riot) && prob(40))
-				for(var/mob/O in viewers(M, null))
-					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
-				return
-			if (!istype(H:l_hand, /obj/item/weapon/shield/riot) && prob(40))
-				for(var/mob/O in viewers(M, null))
-					if (O.client)	O.show_message(text("\red <B>[] has blocked []'s stun baton with the riot shield!</B>", M, user), 1, "\red You hear a cracking sound", 2)
-				return*/
 			playsound(src.loc, 'Egloves.ogg', 50, 1, -1)
 			if(isrobot(user))
 				var/mob/living/silicon/robot/R = user

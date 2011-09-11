@@ -105,6 +105,7 @@
 
 	bullet_act(var/obj/item/projectile/Proj)
 		health -= Proj.damage
+		..()
 		update()
 
 

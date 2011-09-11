@@ -377,8 +377,8 @@
 	..()
 
 /obj/machinery/shieldwallgen/bullet_act(var/obj/item/projectile/Proj)
-
 	storedpower -= Proj.damage
+	..()
 	return
 
 
@@ -487,15 +487,14 @@
 
 
 /obj/machinery/shieldwall/bullet_act(var/obj/item/projectile/Proj)
-
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		if(prob(50))
 			G = gen_primary
 		else
 			G = gen_secondary
-
 		G.storedpower -= Proj.damage
+	..()
 	return
 
 

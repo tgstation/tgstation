@@ -384,6 +384,7 @@
 		src.log_append_to_last("Armor saved.")
 	else
 		call((proc_res["dynbulletdamage"]||src), "dynbulletdamage")(Proj) //calls equipment
+	..()
 	return
 
 /obj/mecha/proc/dynbulletdamage(var/obj/item/projectile/Proj)

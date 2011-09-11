@@ -1,19 +1,11 @@
 /obj/window/bullet_act(var/obj/item/projectile/Proj)
-	if(Proj.flag == "bullet")
-		if(!reinf)
-			new /obj/item/weapon/shard( src.loc )
-			//SN src = null
-			src.density = 0
-
-			del(src)
-		else
-			health -= Proj.damage
-			if(health <=0)
-				new /obj/item/weapon/shard( src.loc )
-				new /obj/item/stack/rods( src.loc )
-				src.density = 0
-				del(src)
-
+	health -= Proj.damage
+	..()
+	if(health <=0)
+		new /obj/item/weapon/shard( src.loc )
+		new /obj/item/stack/rods( src.loc )
+		src.density = 0
+		del(src)
 	return
 
 /obj/window/ex_act(severity)

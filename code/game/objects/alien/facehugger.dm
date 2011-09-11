@@ -87,6 +87,7 @@
 
 	bullet_act(var/obj/item/projectile/Proj)
 		health -= round(Proj.damage / 2)
+		..()
 		healthcheck()
 
 	ex_act(severity)

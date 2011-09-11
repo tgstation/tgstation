@@ -122,7 +122,9 @@
 
 
 /datum/game_mode/blob/check_finished()
-	if((stage >= 4)||(stage <= 1))
+	if(stage <= 1)
+		return 0
+	if(stage >= 4)
 		return 1
 
 	for(var/obj/blob/B in blobs)

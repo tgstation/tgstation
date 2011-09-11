@@ -175,6 +175,12 @@ field_generator power level display
 		if(Proj.flag != "bullet")
 			power += Proj.damage
 			update_icon()
+		if(Proj.effects["emp"])
+			var/emppulse = Proj.effects["emp"]
+			if(prob(Proj.effectprob["emp"]))
+				empulse(src, emppulse, emppulse)
+			else
+				empulse(src, 0, emppulse)
 		return
 
 

@@ -400,6 +400,13 @@
 		else
 			eye_blurry += P.effects["eyeblur"]
 
+	if(P.effects["emp"])
+		var/emppulse = P.effects["emp"]
+		if(prob(P.effectprob["emp"]))
+			empulse(src, emppulse, emppulse)
+		else
+			empulse(src, 0, emppulse)
+
 	return
 
 /mob/living/carbon/human/emp_act(severity)
