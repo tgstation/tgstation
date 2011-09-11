@@ -179,6 +179,16 @@
 			effects["stutter"] = 10
 			effectprob["weak"] = 25
 
+	ion
+		name = "electrode"
+		icon_state = "ice_2"
+		flag = "taser"
+		damage = 0
+		nodamage = 1
+		New()
+			..()
+			effects["emp"] = 1
+
 	stunshot
 		name = "stunshot"
 		icon_state = "bullet"
@@ -838,12 +848,60 @@
 					loaded += new /obj/item/ammo_casing/c45(src)
 				update_icon()
 
+
+		deagle
+			name = "Desert Eagle"
+			desc = "A robust handgun that uses 357 magnum ammo"
+			icon_state = "deagle"
+			w_class = 3.0
+			force = 14.0
+			max_shells = 9
+			caliber = "357"
+			origin_tech = "combat=2;materials=2"
+
+			New()
+				for(var/i = 1, i <= max_shells, i++)
+					loaded += new /obj/item/ammo_casing(src)
+				update_icon()
+
+		deagleg
+			name = "Desert Eagle"
+			desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses 357 ammo."
+			icon_state = "deagleg"
+			item_state = "deagleg"
+			w_class = 3.0
+			force = 14.0
+			max_shells = 9
+			caliber = "357"
+			origin_tech = "combat=2;materials=2"
+
+			New()
+				for(var/i = 1, i <= max_shells, i++)
+					loaded += new /obj/item/ammo_casing(src)
+				update_icon()
+
+		deaglecamo
+			name = "Desert Eagle"
+			desc = "A Deagle brand Deagle for operators operating operationally. Uses 357 ammo."
+			icon_state = "deaglecamo"
+			item_state = "deagleg"
+			w_class = 3.0
+			force = 14.0
+			max_shells = 9
+			caliber = "357"
+			origin_tech = "combat=2;materials=2"
+
+			New()
+				for(var/i = 1, i <= max_shells, i++)
+					loaded += new /obj/item/ammo_casing(src)
+				update_icon()
+
 		gyropistol
 			name = "Gyrojet Pistol"
 			desc = "A bulky pistol designed to fire self propelled rounds"
 			icon_state = "gyropistol"
 			w_class = 3.0
-			force = 15
+			force = 15.0
 			max_shells = 8
 			caliber = "a75"
 			fire_sound = 'Explosion1.ogg'
@@ -947,7 +1005,7 @@
 						return 1
 					if(isrobot(src.loc))
 						var/mob/living/silicon/robot/R = src.loc
-						R.cell.use(20)
+						R.cell.use(40)
 						in_chamber = new /obj/item/projectile/beam(src)
 						return 1
 					return 0
@@ -1118,7 +1176,7 @@
 						return 1
 					if(isrobot(src.loc))
 						var/mob/living/silicon/robot/R = src.loc
-						R.cell.use(20)
+						R.cell.use(40)
 						in_chamber = new /obj/item/projectile/electrode(src)
 						return 1
 					return 0
@@ -1182,6 +1240,34 @@
 			New()
 				power_supply = new /obj/item/weapon/cell(src)
 				power_supply.give(power_supply.maxcharge)
+
+
+
+
+		ionrifle
+			name = "ion rifle"
+			desc = "A man portable anti-armor weapon designed to disable mechanical threats"
+			icon_state = "ionrifle"
+			fire_sound = 'Laser.ogg'
+			origin_tech = null
+			charge_cost = 100
+
+			load_into_chamber()
+				if(in_chamber)
+					return 1
+				if(power_supply.charge <= charge_cost)
+					return 0
+				in_chamber = new /obj/item/projectile/ion(src)
+				power_supply.use(charge_cost)
+				return 1
+
+			attack_self(mob/living/user as mob)
+				return
+
+			New()
+				power_supply = new /obj/item/weapon/cell(src)
+				power_supply.give(power_supply.maxcharge)
+
 
 		decloner
 			name = "biological demolecularisor"

@@ -29,18 +29,18 @@
 
 /obj/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
-	desc = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
+	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
 
 	school = "transmutation"
 	charge_max = 400
 	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
-	message = "\blue You feel strong! Your mind expands!"
+	message = "\blue You feel strong! You feel a pressure building behind your eyes!"
 	range = -1
 	include_user = 1
 
-	mutations = 9
+	mutations = 136
 	duration = 300
 
 /obj/proc_holder/spell/targeted/inflict_handler/disintegrate
