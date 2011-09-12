@@ -10,8 +10,9 @@
 	var/health = 40
 
 
-	New(loc, var/h = 30)
+	New(loc, var/h = 40)
 		blobs += src
+		active_blobs += src
 		src.health = h
 		src.dir = pick(1,2,4,8)
 		src.update()
@@ -20,6 +21,8 @@
 
 	Del()
 		blobs -= src
+		if(active)
+			active_blobs -= src
 		..()
 
 /*
@@ -35,6 +38,7 @@
 
 
 	proc/Life()
+		set background = 1
 		if(!active)	return
 
 		var/turf/U = src.loc
@@ -48,20 +52,27 @@
 			src.update()
 			return
 	*/
-		//Bad blob you can not into space
+		//Spaceblobs will harden and become inactive
 		if(istype(U, /turf/space))
-			src.health -= 15
-			src.update()
+			src.active = 0
+			src.health += 40
+			src.name = "strong blob"
+			src.icon_state = "blob_idle"//needs a new sprite
+			active_blobs -= src
+			return
 
 		var/p = health //TODO: DEFERRED * (U.n2/11376000 + U.oxygen/1008000 + U.co2/200)
 
 		if(!prob(p))	return
 
 		for(var/dirn in cardinal)
-			sleep(3) // -- Skie
+			sleep(3)
 			var/turf/T = get_step(src, dirn)
 
-			if (istype(T.loc, /area/arrival))
+			if(istype(T.loc, /area/arrival))
+				continue
+
+			if((locate(/obj/blob) in T))
 				continue
 
 			var/obj/blob/B = new /obj/blob(U, src.health)
@@ -69,13 +80,14 @@
 			if(T.Enter(B,src) && !(locate(/obj/blob) in T))
 				B.loc = T							// open cell, so expand
 			else
-				if(prob(60))						// closed cell, 40% chance to not expand
+				if(prob(90))						// closed cell, 10% chance to not expand
 					if(!locate(/obj/blob) in T)
 						for(var/atom/A in T)			// otherwise explode contents of turf
 							A.blob_act()
 
 						T.blob_act()
 				del(B)
+		return
 
 
 	ex_act(severity)
@@ -170,13 +182,13 @@
 
 
 /datum/station_state/proc/score(var/datum/station_state/result)
-	var/r1a = min( result.floor / floor, 1.0)
-	var/r1b = min(result.r_wall/ r_wall, 1.0)
-	var/r1c = min(result.wall / wall, 1.0)
-	var/r2a = min(result.window / window, 1.0)
-	var/r2b = min(result.door / door, 1.0)
-	var/r2c = min(result.grille / grille, 1.0)
-	var/r3 = min(result.mach / mach, 1.0)
+	var/r1a = min( result.floor / max(floor,1), 1.0)
+	var/r1b = min(result.r_wall/ max(r_wall,1), 1.0)
+	var/r1c = min(result.wall / max(wall,1), 1.0)
+	var/r2a = min(result.window / max(window,1), 1.0)
+	var/r2b = min(result.door / max(door,1), 1.0)
+	var/r2c = min(result.grille / max(grille,1), 1.0)
+	var/r3 = min(result.mach / max(mach,1), 1.0)
 	//diary << "Blob scores:[r1b] [r1c] / [r2a] [r2b] [r2c] / [r3] [r1a]"
 	return (4*(r1b+r1c) + 2*(r2a+r2b+r2c) + r3+r1a)/16.0
 

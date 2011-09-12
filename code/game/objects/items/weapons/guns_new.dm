@@ -1251,6 +1251,9 @@
 			icon_state = "ionrifle"
 			fire_sound = 'Laser.ogg'
 			origin_tech = "combat=3;magnets=2"//This could likely be changed up a bit
+			w_class = 4.0
+			flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+			force = 5.0
 			charge_cost = 100
 
 			load_into_chamber()

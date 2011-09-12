@@ -387,10 +387,9 @@
 			user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
 			return
 
-//	if(ticker.mode.name == "blob" || ticker.mode.name == "Corporate Restructuring" || ticker.mode.name == "sandbox")
-//		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
-//		return
-//	These modes are no longer used so I am commenting them out. N
+	if(ticker.mode.name == "blob" || ticker.mode.name == "sandbox")
+		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
+		return
 
 	emergency_shuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")

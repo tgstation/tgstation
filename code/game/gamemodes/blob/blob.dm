@@ -3,8 +3,13 @@
 	config_tag = "blob"
 	required_players = 0
 
-	var/stage = 0
-	var/next_stage = 0
+	var/const/waittime_l = 2000 //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_h = 3000 //upper bound on time before intercept arrives (in tenths of seconds)
+
+	var
+		stage = 0
+		next_stage = 0
+		modestart = 0
 
 
 /datum/game_mode/blob/announce()
@@ -17,86 +22,65 @@
 	spawn(10)
 		start_state = new /datum/station_state()
 		start_state.count()
-	spawn (20)
-		var/turf/location = pick(blobstart)
+//	spawn(100)
+	spawn(rand(waittime_l, waittime_h))
+		message_admins("Blob spawned and expanding, report created")
 		blobs = list()
-		new /obj/blob(location)
-		location = pick(blobstart)
-//		if(!locate(/obj/blob in location))
-//			new/obj/blob(location)
+		active_blobs = list()
+		for (var/i = 1 to 4)
+			var/turf/location = pick(blobstart)
+			if(location)
+				if(!locate(/obj/blob in location))
+					new/obj/blob(location)
+		spawn(40)
+			modestart = 1
 	..()
 
 
 /datum/game_mode/blob/process()
-	if(prob(2))
-		spawn_meteors()
-	life()
-	stage()
+	if(modestart)
+		spawn(0)
+			life()
+			stage()
+	return
 
 
 /datum/game_mode/blob/proc/life()
 	if (blobs.len > 0)
 		for (var/i = 1 to 25)
+			sleep(-1)
 			if (blobs.len == 0)
 				break
 
-			var/obj/blob/B = pick(blobs)
+			var/obj/blob/B = pick(active_blobs)
 			if(B.z != 1)
 				continue
 
-			for (var/atom/A in B.loc)
-				A.blob_act()
-
-			B.Life()
+//			for (var/atom/A in B.loc)
+//				A.blob_act()
+			spawn(0)
+				B.Life()
 
 
 /datum/game_mode/blob/proc/stage()
-	// initial stage timing
-	if (!next_stage)
-		// sometime between 20s to 1m30s after round start
-		next_stage = world.timeofday + rand(200, 900)
-
+	send_intercept()
 	if (world.timeofday < next_stage)
 		return
 
-	switch (stage)
+	switch(stage)
 		if (0)
-			var/dat = ""
-			dat += "<FONT size = 3><B>Cent. Com. Update</B>: Biohazard Alert.</FONT><HR>"
-			dat += "Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>"
-			dat += "Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.<BR>"
-			dat += "Cent. Com. has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.<BR>"
-			dat += "Orders for all [station_name()] personnel follows:<BR>"
-			dat += " 1. Do not leave the quarantine area.<BR>"
-			dat += " 2. Locate any outbreaks of the organism on the station.<BR>"
-			dat += " 3. If found, use any neccesary means to contain the organism.<BR>"
-			dat += " 4. Avoid damage to the capital infrastructure of the station.<BR>"
-			dat += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12 without further notice.<BR>"
-			dat += "Message ends."
-
-			for (var/obj/machinery/computer/communications/C in machines)
-				if(! (C.stat & (BROKEN|NOPOWER) ) )
-					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
-					P.name = "paper- 'Cent. Com. Biohazard Alert.'"
-					P.info = dat
-					C.messagetitle.Add("Cent. Com. Biohazard Alert")
-					C.messagetext.Add(P.info)
-
-			world << "<FONT size = 3><B>Cent. Com. Update</B>: Biohazard Alert.</FONT>"
-			world << "\red Summary downloaded and printed out at all communications consoles."
 			for (var/mob/living/silicon/ai/aiPlayer in world)
 				if (aiPlayer.client)
 					var/law = "The station is under a quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving."
 					aiPlayer.set_zeroth_law(law)
 					aiPlayer << "An additional law has been added by CentCom: [law]"
-
 			stage = 1
 			// next stage 5-10 minutes later
 			next_stage = world.timeofday + 600*rand(5,10)
 
 		if (1)
 			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-
+			world << sound('outbreak5.ogg')
 			stage = 2
 			// now check every minute
 			next_stage = world.timeofday + 600
@@ -122,11 +106,10 @@
 
 
 /datum/game_mode/blob/check_finished()
-	if(stage <= 1)
+	if(!modestart)
 		return 0
 	if(stage >= 4)
 		return 1
-
 	for(var/obj/blob/B in blobs)
 		if(B.z == 1)
 			return 0
@@ -134,7 +117,7 @@
 
 
 /datum/game_mode/blob/declare_completion()
-	if (stage == 4)
+	if (stage >= 4)
 		world << "<FONT size = 3><B>The staff has lost!</B></FONT>"
 		world << "<B>The station was destroyed by Cent. Com.</B>"
 		var/numDead = 0
@@ -185,3 +168,31 @@
 
 	..()
 	return 1
+
+
+/datum/game_mode/blob/send_intercept()
+	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B>: Biohazard Alert.</FONT><HR>"
+	intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>"
+	intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.<BR>"
+	intercepttext += "Cent. Com. has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.<BR>"
+	intercepttext += "Orders for all [station_name()] personnel follows:<BR>"
+	intercepttext += " 1. Do not leave the quarantine area.<BR>"
+	intercepttext += " 2. Locate any outbreaks of the organism on the station.<BR>"
+	intercepttext += " 3. If found, use any neccesary means to contain the organism.<BR>"
+	intercepttext += " 4. Avoid damage to the capital infrastructure of the station.<BR>"
+	intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12 without further notice.<BR>"
+	intercepttext += "Message ends."
+
+	for (var/obj/machinery/computer/communications/comm in world)
+		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
+			intercept.name = "paper- 'Biohazard Alert'"
+			intercept.info = intercepttext
+
+			comm.messagetitle.Add("Biohazard Alert")
+			comm.messagetext.Add(intercepttext)
+
+//	world << sound('outbreak5.ogg')Quiet printout for now
+
+//	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
+//	world << sound('intercept.ogg')

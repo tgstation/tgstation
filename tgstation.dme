@@ -132,7 +132,6 @@
 #define FILE_DIR "icons/effects"
 #define FILE_DIR "icons/misc"
 #define FILE_DIR "icons/mob"
-#define FILE_DIR "icons/mob/huds"
 #define FILE_DIR "icons/obj"
 #define FILE_DIR "icons/obj/assemblies"
 #define FILE_DIR "icons/obj/atmospherics"

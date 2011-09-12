@@ -141,6 +141,7 @@ var
 	list/prisonwarped = list()	//list of players already warped
 	list/blobstart = list()
 	list/blobs = list()
+	list/active_blobs = list()
 //	list/traitors = list()	//traitor list
 	list/cardinal = list( NORTH, SOUTH, EAST, WEST )
 	list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)

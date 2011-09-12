@@ -1824,7 +1824,7 @@
 <A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors</A><BR>
 <A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes (Untested)</A><BR>
-<A href='?src=\ref[src];secretsfun=goblob'>Spawn magma(Untested)</A><BR>
+<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob(Untested)</A><BR>
 <A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
 <A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
 <A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>

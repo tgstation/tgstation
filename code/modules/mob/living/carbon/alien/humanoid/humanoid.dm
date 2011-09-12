@@ -255,7 +255,7 @@
 		damage /= 4
 
 
-	show_message("\red The magma splashes on you!")
+	show_message("\red The blob attacks!")
 
 	fireloss += damage
 
