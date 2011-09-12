@@ -5,6 +5,7 @@
 	var/buildmode = 0
 	var/stealth = 0
 	var/fakekey = null
+	var/seeprayers = 0
 	//Hosts can change their color
 	var/ooccolor = "#b82e00"
 

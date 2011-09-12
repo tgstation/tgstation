@@ -41,21 +41,25 @@
 	switch (rank)
 		if ("Game Master")
 			deadchat = 1
+			seeprayers = 1
 			holder.level = 6
 
 
 		if ("Game Admin")
 			deadchat = 1
+			seeprayers = 1
 			holder.level = 5
 
 
 		if ("Badmin")
 			deadchat = 1
+			seeprayers = 1
 			holder.level = 4
 
 
 		if ("Trial Admin")
 			deadchat = 1
+			seeprayers = 1
 			holder.level = 3
 
 			if(holder.state == 2) // if observing
@@ -193,6 +197,7 @@
 			verbs += /client/proc/spawn_xeno
 			verbs += /proc/possess
 			verbs += /proc/release
+			verbs += /client/proc/toggleprayers
 
 
 		if (holder.level >= 2)//Admin Candidate********************************************************************

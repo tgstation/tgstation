@@ -2153,6 +2153,17 @@
 		deadchat = 0
 		usr << "Deadchat turned off"
 
+/client/proc/toggleprayers()
+	set category = "Admin"
+	set desc="Toggles Prayer Visibility"
+	set name="Prayer Visibility"
+	if(seeprayers == 0)
+		seeprayers = 1
+		usr << "Prayer visibility turned on"
+	else
+		seeprayers = 0
+		usr << "Prayer visibility turned off"
+
 /obj/admins/proc/unprison(var/mob/M in world)
 	set category = "Admin"
 	set name = "Unprison"
