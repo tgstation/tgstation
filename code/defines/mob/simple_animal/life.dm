@@ -15,6 +15,7 @@
 	universal_speak = 1
 	var/meat_amount = 0
 	var/meat_type
+	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
 
 	//Interaction
 	var/response_help   = "You try to help"
@@ -47,7 +48,7 @@
 	icon_state = "corgi"
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
-	speak = list("YAP","Woof!","Hoot!","AUUUUUU")
+	speak = list("YAP","Woof!","Bark!","AUUUUUU")
 	speak_emote = list("barks", "woofs")
 	emote_hear = list("barks","woofs","yaps")
 	emote_see = list("shakes it's head", "shivers")
@@ -56,15 +57,61 @@
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	meat_amount = 3
 	response_help  = "pets the"
-	response_disarm = "getnly pushes aside the"
+	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
 
 /mob/living/simple_animal/corgi/Ian
 	name = "Ian"
 	desc = "It's Ian, what else do you need to know?"
 	response_help  = "pets"
-	response_disarm = "getnly pushes aside"
+	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
+	var/turns_since_scan = 0
+	var/obj/movement_target
+
+/mob/living/simple_animal/corgi/Ian/Life()
+	..()
+
+	//Feeding, chasing food, FOOOOODDDD
+	if(alive && !resting && !buckled)
+		turns_since_scan++
+		if(turns_since_scan > 5)
+			turns_since_scan = 0
+			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
+				movement_target = null
+				stop_automated_movement = 0
+			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
+				movement_target = null
+				stop_automated_movement = 0
+				for(var/obj/item/weapon/reagent_containers/food/snacks/S in oview(src,3))
+					if(isturf(S.loc) || ishuman(S.loc))
+						movement_target = S
+						break
+			if(movement_target)
+				stop_automated_movement = 1
+				step_to(src,movement_target,1)
+				sleep(3)
+				step_to(src,movement_target,1)
+				sleep(3)
+				step_to(src,movement_target,1)
+
+				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+					if (movement_target.loc.x < src.x)
+						dir = WEST
+					else if (movement_target.loc.x > src.x)
+						dir = EAST
+					else if (movement_target.loc.y < src.y)
+						dir = SOUTH
+					else if (movement_target.loc.y > src.y)
+						dir = NORTH
+					else
+						dir = SOUTH
+
+				if(isturf(movement_target.loc) )
+					movement_target.attack_animal(src)
+				else if(ishuman(movement_target.loc) )
+					if(prob(20))
+						emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
 
 /mob/living/simple_animal/New()
 	..()
@@ -96,7 +143,7 @@
 		health = max_health
 
 	//Movement
-	if(!ckey)
+	if(!ckey && !stop_automated_movement)
 		if(isturf(src.loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)

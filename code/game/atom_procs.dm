@@ -12,6 +12,9 @@
 /atom/proc/attack_ai(mob/user as mob)
 	return
 
+/atom/proc/attack_animal(mob/user as mob)
+	return
+
 //for aliens, it works the same as monkeys except for alien-> mob interactions which will be defined in the
 //appropiate mob files
 /atom/proc/attack_alien(mob/user as mob)
@@ -218,7 +221,7 @@
 
 /atom/DblClick() //TODO: DEFERRED: REWRITE
 //	world << "checking if this shit gets called at all"
-	if (world.time <= usr:lastDblClick+2)
+	if (world.time <= usr:lastDblClick+1)
 //		world << "BLOCKED atom.DblClick() on [src] by [usr] : src.type is [src.type]"
 		return
 	else
@@ -447,6 +450,9 @@
 							else
 								if(istype(usr, /mob/living/carbon/metroid))
 									src.attack_metroid(usr)
+								else
+									if(istype(usr, /mob/living/simple_animal))
+										src.attack_animal(usr)
 		else
 			if (istype(usr, /mob/living/carbon/human))
 				src.hand_h(usr, usr.hand)

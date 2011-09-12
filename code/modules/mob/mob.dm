@@ -57,6 +57,16 @@
 		return 1
 	return 0
 
+/proc/isanimal(A)
+	if(istype(A, /mob/living/simple_animal))
+		return 1
+	return 0
+
+/proc/iscorgi(A)
+	if(istype(A, /mob/living/simple_animal/corgi))
+		return 1
+	return 0
+
 /*proc/ishivebot(A)
 	if(A && istype(A, /mob/living/silicon/hivebot))
 		return 1
