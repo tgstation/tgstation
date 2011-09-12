@@ -381,6 +381,18 @@
 			dat += {"Now: [master_mode]"}
 			usr << browse(dat, "window=c_mode")
 
+	if (href_list["f_secret"])
+		if ((src.rank in list( "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+			if (ticker && ticker.mode)
+				return alert(usr, "The game has already started.", null, null, null, null)
+			if (master_mode != "secret")
+				return alert(usr, "The game mode has to be secret!", null, null, null, null)
+			var/dat = {"<B>What game mode do you want to force secret to be? Use this if you want to change the game mode, but want the players to believe it's secret. This will only work if the current game mode is secret.</B><HR>"}
+			for (var/mode in config.modes)
+				dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
+			dat += {"<A href='?src=\ref[src];f_secret2=secret'>Random (default)</A><br>"}
+			dat += {"Now: [secret_force_mode]"}
+			usr << browse(dat, "window=f_secret")
 
 	if (href_list["c_mode2"])
 		if ((src.rank in list( "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
@@ -390,9 +402,21 @@
 			log_admin("[key_name(usr)] set the mode as [master_mode].")
 			message_admins("\blue [key_name_admin(usr)] set the mode as [master_mode].", 1)
 			world << "\blue <b>The mode is now: [master_mode]</b>"
-
+			Game() // updates the main game menu
 			world.save_mode(master_mode)
 			.(href, list("c_mode"=1))
+
+	if (href_list["f_secret2"])
+		if ((src.rank in list( "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+			if (ticker && ticker.mode)
+				return alert(usr, "The game has already started.", null, null, null, null)
+			if (master_mode != "secret")
+				return alert(usr, "The game mode has to be secret!", null, null, null, null)
+			secret_force_mode = href_list["f_secret2"]
+			log_admin("[key_name(usr)] set the forced secret mode as [secret_force_mode].")
+			message_admins("\blue [key_name_admin(usr)] set the forced secret mode as [secret_force_mode].", 1)
+			Game() // updates the main game menu
+			.(href, list("f_secret"=1))
 /*
 	if (href_list["monkeyone"])
 		if ((src.rank in list( "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
@@ -1728,6 +1752,9 @@
 
 //			if(lvl >= 2 )
 		dat += "<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>"
+
+	if(lvl > 0 && master_mode == "secret")
+		dat += "<A href='?src=\ref[src];f_secret=1'>(Force Secret Mode)</A><br>"
 
 	dat += "<BR>"
 

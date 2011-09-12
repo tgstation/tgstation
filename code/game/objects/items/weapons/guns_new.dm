@@ -63,11 +63,11 @@
 			effects["stun"] = 10
 
 	suffocationbullet
-		damage = 65
+		damage = 50
 		mobdamage = list(BRUTE = 50, BURN = 0, TOX = 0, OXY = 15, CLONE = 0)
 
 	cyanideround
-		damage = 100
+		damage = 50
 		mobdamage = list(BRUTE = 50, BURN = 0, TOX = 100, OXY = 15, CLONE = 0)
 
 	burstbullet

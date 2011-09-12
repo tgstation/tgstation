@@ -45,16 +45,21 @@ var/global/datum/controller/gameticker/ticker
 		src.hide_mode = 1
 	var/list/datum/game_mode/runnable_modes
 	if((master_mode=="random") || (master_mode=="secret"))
-		runnable_modes = config.get_runnable_modes()
-		if (runnable_modes.len==0)
-			current_state = GAME_STATE_PREGAME
-			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
-			return 0
-		ResetOccupations()
-		src.mode = pickweight(runnable_modes)
-		if(src.mode)
-			var/mtype = src.mode.type
-			src.mode = new mtype
+		if(secret_force_mode != "secret")
+			src.mode = config.pick_mode(secret_force_mode)
+
+		else
+
+			runnable_modes = config.get_runnable_modes()
+			if (runnable_modes.len==0)
+				current_state = GAME_STATE_PREGAME
+				world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
+				return 0
+			ResetOccupations()
+			src.mode = pickweight(runnable_modes)
+			if(src.mode)
+				var/mtype = src.mode.type
+				src.mode = new mtype
 	else
 		src.mode = config.pick_mode(master_mode)
 

@@ -61,8 +61,8 @@
 					if(7 to 8) probab = 60
 					if(9) 	   probab = 70
 					if(10) 	   probab = 95
-				if(prob(probab) || Charging)
-					if(Charging) Charging = null
+				if(prob(probab))
+
 
 					if(istype(AM, /obj/window) || istype(AM, /obj/grille))
 						if(istype(src, /mob/living/carbon/metroid/adult))
@@ -75,12 +75,11 @@
 						else
 							if(nutrition <= 500 && !Atkcool)
 								if(prob(5))
-									if(prob(50))
-										AM.attack_metroid(src)
-										spawn()
-											Atkcool = 1
-											sleep(15)
-											Atkcool = 0
+									AM.attack_metroid(src)
+									spawn()
+										Atkcool = 1
+										sleep(15)
+										Atkcool = 0
 
 		if(ismob(AM))
 			var/mob/tmob = AM

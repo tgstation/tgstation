@@ -904,7 +904,7 @@
 // Basically this Metroid Core catalyzes reactions that normally wouldn't happen anywhere
 /obj/item/metroid_core
 	name = "metroid core"
-	desc = "A very slimy and tender part of a Metroid. They also legended to have \"magical powers\"."
+	desc = "A very slimy and tender part of a Metroid. They also legend to have \"magical powers\"."
 	icon = 'surgery.dmi'
 	icon_state = "metroid core"
 	flags = TABLEPASS

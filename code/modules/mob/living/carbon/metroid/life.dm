@@ -211,7 +211,6 @@
 	var/Atkcool = 0 // attack cooldown
 	var/Tempstun = 0 // temporary temperature stuns
 	var/Discipline = 0 // if a metroid has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
-	var/turf/Charging = null // turf a metroid is "charging" at
 	var/SStun = 0 // stun variable
 	proc
 
