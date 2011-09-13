@@ -463,6 +463,10 @@ proc/process_ghost_teleport_locs()
 
 //Maintenance
 
+/area/maintenance/atmos_control
+	name = "Atmospherics Maintenance"
+	icon_state = "fpmaint"
+
 /area/maintenance/fpmaint
 	name = "Fore Port Maintenance"
 	icon_state = "fpmaint"
