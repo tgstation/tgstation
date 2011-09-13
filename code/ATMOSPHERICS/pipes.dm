@@ -191,6 +191,7 @@ obj/machinery/atmospherics/pipe
 					if ("cyan") C = "-c"
 					if ("green") C = "-g"
 					if ("yellow") C = "-y"
+					if ("purple") C = "-p"
 				icon_state = "intact[C][invisibility ? "-f" : "" ]"
 
 				//var/node1_direction = get_dir(src, node1)
@@ -258,6 +259,11 @@ obj/machinery/atmospherics/pipe
 		color="blue"
 		icon_state = ""
 
+	simple/supplymain
+		name="Main air supply pipe"
+		color="purple"
+		icon_state = ""
+
 	simple/general
 		name="Pipe"
 		color=""
@@ -278,6 +284,14 @@ obj/machinery/atmospherics/pipe
 	simple/supply/hidden
 		level = 1
 		icon_state = "intact-b-f"
+
+	simple/supplymain/visible
+		level = 2
+		icon_state = "intact-p"
+
+	simple/supplymain/hidden
+		level = 1
+		icon_state = "intact-p-f"
 
 	simple/general/visible
 		level = 2
@@ -670,6 +684,7 @@ obj/machinery/atmospherics/pipe
 					if ("cyan") C = "-c"
 					if ("green") C = "-g"
 					if ("yellow") C = "-y"
+					if ("purple") C = "-p"
 				icon_state = "manifold[C][invisibility ? "-f" : ""]"
 
 			else
@@ -743,6 +758,11 @@ obj/machinery/atmospherics/pipe
 		color="blue"
 		icon_state = ""
 
+	manifold/supplymain
+		name="Main air supply pipe"
+		color="purple"
+		icon_state = ""
+
 	manifold/general
 		name="Air supply pipe"
 		color="gray"
@@ -763,6 +783,14 @@ obj/machinery/atmospherics/pipe
 	manifold/supply/hidden
 		level = 1
 		icon_state = "manifold-b-f"
+
+	manifold/supplymain/visible
+		level = 2
+		icon_state = "manifold-p"
+
+	manifold/supplymain/hidden
+		level = 1
+		icon_state = "manifold-p-f"
 
 	manifold/general/visible
 		level = 2
