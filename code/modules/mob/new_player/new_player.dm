@@ -24,7 +24,6 @@ mob/new_player
 			mind.key = key
 			mind.current = src
 
-		new_player_panel()
 		var/starting_loc = pick(newplayer_start)
 		loc = starting_loc
 		sight |= SEE_TURFS
@@ -46,6 +45,8 @@ mob/new_player
 				changes()
 				preferences.lastchangelog = lastchangelog
 				preferences.savefile_save(src)
+
+		new_player_panel()
 		//PDA Resource Initialisation =======================================================>
 		/*
 		Quick note: local dream daemon instances don't seem to cache images right. Might be
@@ -105,15 +106,29 @@ mob/new_player
 	verb
 		new_player_panel()
 			set src = usr
+			new_player_panel_proc()
 
-			var/output = "<HR><B>New Player Options</B><BR>"
-			output += "<HR><br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><BR><BR>"
-			//if(istester(key))
+	proc
+		new_player_panel_proc()
+
+			var/output = "<B>New Player Options</B>"
+			/*output += " | <a href='byond://?src=\ref[src];refresh=1'>Refresh</A><hr>"
+
+			output += "<b>Name:</b> [preferences.be_random_name ? "Random" :preferences.real_name]"*/
+
+			output +="<hr>"
+
+			/*output += "<b>Preferred jobs:</b><br>"
+			output += "[preferences.occupation[1]]<br>"
+			output += "[preferences.occupation[2]]<br>"
+			output += "[preferences.occupation[3]]<hr>"*/
+
+			output += "<br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><BR><BR>"
 			if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
 				if(!ready)
 					output += "<a href='byond://?src=\ref[src];ready=1'>Declare Ready</A><BR>"
 				else
-					output += "You are ready.<BR>"
+					output += "<b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)<BR>"
 			else
 				output += "<a href='byond://?src=\ref[src];late_join=1'>Join Game!</A><BR>"
 
@@ -153,8 +168,13 @@ mob/new_player
 				return
 
 			if(!ready)
-				if(alert(src,"Are you sure you are ready? This will lock-in your preferences.","Player Setup","Yes","No") == "Yes")
-					ready = 1
+				ready = 1
+			else
+				ready = 0
+
+		if(href_list["refresh"])
+			src << browse(null, "window=playersetup") //closes the player setup window
+			new_player_panel_proc()
 
 		if(href_list["observe"])
 			if (!usr.client.authenticated)
