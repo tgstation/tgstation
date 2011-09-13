@@ -194,6 +194,7 @@
 
 /mob/living/carbon/human/bullet_act(A as obj, var/datum/organ/external/def_zone)
 	var/shielded = 0
+	var/parry = 0
 	//Preparing the var for grabbing the armor information, can't grab the values yet because we don't know what kind of bullet was used. --NEO
 
 	var/obj/item/projectile/P = A
@@ -213,6 +214,14 @@
 			show_message("\red Your shield blocks the blow!", 4)
 			return
 
+	for(var/obj/item/weapon/melee/energy/sword/B in src)
+		if (B.active)
+			parry = 1
+			B.active = 1
+	if ((parry))
+		if (prob(50 - round(P.damage / 3)))
+			visible_message("\red [src] deflects the shot with their blade!", 4)
+			return
 
 	for(var/obj/item/device/shield/S in src)
 		if (S.active)
