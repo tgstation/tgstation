@@ -214,9 +214,9 @@
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_ai_upload, access_construction, access_robotics,
 			            access_mint, access_ce, access_RC_announce)
-		if("Research Director") // removed hydroponics access, they are a supply field, not science
+		if("Research Director")
 			return list(access_medlab, access_rd,
-			            access_tech_storage, access_maint_tunnels, access_heads, access_tox,
+			            access_maint_tunnels, access_heads, access_tox,
 			            access_tox_storage, access_chemistry, access_teleporter,
 			            access_research, access_robotics, access_xenobiology, access_RC_announce)
 		if("Virologist")

@@ -6,15 +6,12 @@ TABLE AND RACK OBJECT INTERATIONS
 
 //TABLE
 /obj/table/ex_act(severity)
-
 	switch(severity)
 		if(1.0)
-			//SN src = null
 			del(src)
 			return
 		if(2.0)
 			if (prob(50))
-				//SN src = null
 				del(src)
 				return
 		if(3.0)
@@ -23,20 +20,22 @@ TABLE AND RACK OBJECT INTERATIONS
 		else
 	return
 
-/obj/table/blob_act()
 
+/obj/table/blob_act()
 	if(prob(75))
 		if(istype(src, /obj/table/woodentable))
 			new /obj/item/weapon/table_parts/wood( src.loc )
 			del(src)
-
+			return
 		new /obj/item/weapon/table_parts( src.loc )
 		del(src)
+		return
+
 
 /obj/table/hand_p(mob/user as mob)
-
 	return src.attack_paw(user)
 	return
+
 
 /obj/table/attack_paw(mob/user as mob)
 	if ((usr.mutations & HULK))
@@ -62,6 +61,7 @@ TABLE AND RACK OBJECT INTERATIONS
 				//Foreach goto(69)
 	return
 
+
 /obj/table/attack_alien(mob/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
 	usr << text("\green You destroy the table.")
 	for(var/mob/O in oviewers())
@@ -76,6 +76,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	src.density = 0
 	del(src)
 	return
+
 
 /obj/table/attack_hand(mob/user as mob)
 	if ((usr.mutations & HULK))
@@ -94,7 +95,6 @@ TABLE AND RACK OBJECT INTERATIONS
 	return
 
 
-
 /obj/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
@@ -102,6 +102,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		return 1
 	else
 		return 0
+
 
 /obj/table/MouseDrop_T(obj/O as obj, mob/user as mob)
 
@@ -114,8 +115,8 @@ TABLE AND RACK OBJECT INTERATIONS
 		step(O, get_dir(O, src))
 	return
 
-/obj/table/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
+/obj/table/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
@@ -158,6 +159,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	if(W && W.loc)	W.loc = src.loc
 	return
 
+
 //WOODEN TABLES
 /obj/table/woodentable/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
@@ -198,6 +200,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc
 	return
+
 
 //REINFORCED TABLES
 /obj/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)

@@ -3,11 +3,20 @@
 	name = "blob"
 	icon = 'blob.dmi'
 	icon_state = "blob"
-	density = 1
+	density = 0//Whoooo this could end badly
 	opacity = 0
 	anchored = 1
-	var/active = 1
-	var/health = 40
+	var
+		active = 1
+		health = 40
+		blobtype = "Blob"
+		blobdebug = 0
+		/*Types
+		Blob
+		Node
+		Factory
+		Shield
+		*/
 
 
 	New(loc, var/h = 40)
@@ -23,60 +32,84 @@
 		blobs -= src
 		if(active)
 			active_blobs -= src
+		if(blobtype == "Node")
+			processing_items.Remove(src)
 		..()
 
-/*
-	proc/poisoned(iteration)
-		src.health -= 20
-		src.update()
-		for(var/obj/blob/B in orange(1,src))
-			if(prob(100/(iteration/2)))
-				spawn(rand(10,100))
-					if(B)
-						B.poisoned(iteration+1)
-*/
+
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+		if( (air_group && blobtype != "Shield") || (height==0))	return 1
+		if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
+		return 0
 
 
-	proc/Life()
-		set background = 1
-		if(!active)	return
-
-		var/turf/U = src.loc
-
-	/*	if (locate(/obj/movable, U))
-			U = locate(/obj/movable, U)
-			if(U.density == 1)
-				del(src)
-		if(U.poison> 200000)
-			src.health -= round(U.poison/200000)
-			src.update()
-			return
-	*/
-		//Spaceblobs will harden and become inactive
-		if(istype(U, /turf/space))
-			src.active = 0
-			src.health += 40
-			src.name = "strong blob"
-			src.icon_state = "blob_idle"//needs a new sprite
+	proc/check_mutations()
+		if(blobtype != "Blob")	return
+		//Spaceeeeeeblobbb
+		if(istype(src.loc, /turf/space))
+			active = 0
+			health += 40
+			name = "strong blob"
+			icon_state = "blob_idle"//needs a new sprite
+			blobtype = "Shield"
 			active_blobs -= src
+			return 1
+		//Commandblob
+		if((blobdebug == 1))
+			active = 0
+			health += 80
+			name = "odd blob"
+			icon_state = "blob_node"//needs a new sprite
+			blobtype = "Node"
+			active_blobs -= src
+			processing_items.Add(src)
+			return 1
+		if((blobdebug == 2))
+			//active = 0
+			health += 20
+			name = "very odd blob"
+			icon_state = "blob_factory"//needs a new sprite
+			blobtype = "Factory"
+			//active_blobs -= src
+			//processing_items.Add(src)
+			return 1
+		return 0
+
+
+	proc/process()
+		spawn(-1)
+			Life()
+		return
+
+
+	proc/Life(var/pulse = 0)
+		set background = 1
+
+		if(blobtype == "Factory")
+			for(var/i = 1 to 2)
+				new/obj/critter/blob(src.loc)
+				return
+
+		if(check_mutations())
 			return
 
-		var/p = health //TODO: DEFERRED * (U.n2/11376000 + U.oxygen/1008000 + U.co2/200)
-
-		if(!prob(p))	return
+		if(!prob(health))	return//Does not do much unless its healthy it seems, might want to change this later
 
 		for(var/dirn in cardinal)
-			sleep(3)
+//			sleep(3) Due to the background we might not need this dono though
 			var/turf/T = get_step(src, dirn)
 
-			if(istype(T.loc, /area/arrival))
-				continue
-
 			if((locate(/obj/blob) in T))
+				if((src.blobtype == "Node") || (pulse > 0))
+					var/obj/blob/E = (locate(/obj/blob) in T)
+					if(pulse < 12)//No inf loops here
+						var/npulse = pulse + 1
+						E.Life(npulse)
+					return//Pass it along and end
 				continue
 
-			var/obj/blob/B = new /obj/blob(U, src.health)
 
+			var/obj/blob/B = new /obj/blob(src.loc, src.health)
 			if(T.Enter(B,src) && !(locate(/obj/blob) in T))
 				B.loc = T							// open cell, so expand
 			else
@@ -93,7 +126,7 @@
 	ex_act(severity)
 		switch(severity)
 			if(1)
-				del(src)
+				src.health -= rand(90,150)
 			if(2)
 				src.health -= rand(60,90)
 				src.update()
@@ -102,11 +135,12 @@
 				src.update()
 
 
-	proc/update()
+	proc/update()//Needs to be updated with the types
 		if(health <= 0)
 			playsound(src.loc, 'splat.ogg', 50, 1)
 			del(src)
 			return
+		if(blobtype != "Blob")	return
 		if(health<10)
 			icon_state = "blob_damaged"
 			return
@@ -123,7 +157,7 @@
 
 	attackby(var/obj/item/weapon/W, var/mob/user)
 		playsound(src.loc, 'attackblob.ogg', 50, 1)
-		src.visible_message("\red <B>The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
+		src.visible_message("\red <B>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 		var/damage = W.force / 4.0
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W

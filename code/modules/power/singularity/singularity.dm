@@ -1,10 +1,9 @@
 var/global/list/uneatable = list(
-	/obj/machinery/singularity,
 	/turf/space,
 	/obj/effects,
 	/obj/overlay,
 	/obj/decal/cleanable,
-	/obj/rune,
+	/obj/rune
 	)
 
 /obj/machinery/singularity/
@@ -32,7 +31,7 @@ var/global/list/uneatable = list(
 		event_chance = 15 //Prob for event each tick
 		target = null //its target. moves towards the target if it has one
 		last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
-
+		teleport_del = 0
 
 	New(loc, var/starting_energy = 50, var/temp = 0)
 		src.energy = starting_energy
@@ -250,8 +249,21 @@ var/global/list/uneatable = list(
 					A:gib()
 				sleep(1)
 			else if(istype(A,/obj/))
-				A:ex_act(1.0)
-				if(A) del(A)
+				if(istype(A, /obj/machinery/singularity))//Welp now you did it
+					var/obj/machinery/singularity/S = A
+					src.energy += S.energy
+					del(S)
+					explosion(src.loc,20,25,30,40,1)
+					return//Quits here, the obj should be gone, hell we might be
+
+				if((teleport_del) && (!istype(A, /obj/machinery)))//Going to see if it does not lag less to tele items over to Z 2
+					var/obj/O = A
+					O.x = 2
+					O.y = 2
+					O.z = 2
+				else
+					A:ex_act(1.0)
+					if(A) del(A)
 				gain = 2
 			else if(isturf(A))
 				var/turf/T = A

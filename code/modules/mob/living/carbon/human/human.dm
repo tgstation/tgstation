@@ -1106,7 +1106,7 @@
 			overlays += face_standing
 
 	// Uniform
-	if (w_uniform)
+	if(w_uniform)
 		if (mutations & FAT && !(w_uniform.flags & ONESIZEFITSALL))
 			src << "\red You burst out of the [w_uniform.name]!"
 			var/obj/item/clothing/c = w_uniform
@@ -1117,8 +1117,9 @@
 				c:loc = loc
 				c:dropped(src)
 				c:layer = initial(c:layer)
-		w_uniform.screen_loc = ui_iclothing
-		if (istype(w_uniform, /obj/item/clothing/under))
+		if(w_uniform)//I should really not need these
+			w_uniform.screen_loc = ui_iclothing
+		if(istype(w_uniform, /obj/item/clothing/under))
 			var/t1 = w_uniform.color
 			if (!t1)
 				t1 = icon_state

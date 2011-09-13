@@ -187,9 +187,9 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	implanted(M as mob)
 		if(!istype(M, /mob/living/carbon/human))	return
 		var/mob/living/carbon/human/H = M
-		if(H.mind in ticker.mode:head_revolutionaries)
-			for (var/mob/O in viewers(H, null))
-				O.show_message("\red [H] seems to resist the implant.", 1)
+		if(H.mind in ticker.mode.head_revolutionaries)
+			for(var/mob/O in viewers(H, null))
+				O.show_message(text("\red [] seems to resist the implant.", H), 1)
 				return
 		else if(H.mind in ticker.mode:revolutionaries)
 			ticker.mode:remove_revolutionary(H.mind)

@@ -117,6 +117,7 @@
 #define PASSTABLE 1
 #define PASSGLASS 2
 #define PASSGRILLE 4
+#define PASSBLOB 8
 
 //turf-only flags
 #define NOJAUNT 1

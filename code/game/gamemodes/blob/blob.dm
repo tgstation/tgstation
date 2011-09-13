@@ -27,11 +27,15 @@
 		message_admins("Blob spawned and expanding, report created")
 		blobs = list()
 		active_blobs = list()
-		for (var/i = 1 to 4)
+		for(var/i = 1 to 3)
 			var/turf/location = pick(blobstart)
 			if(location)
 				if(!locate(/obj/blob in location))
-					new/obj/blob(location)
+					var/obj/blob/blob = new/obj/blob(location)
+					spawn(100)
+						if(blob)
+							if(blob.blobtype == "Blob")
+								blob.blobdebug = 1
 		spawn(40)
 			modestart = 1
 	..()
@@ -47,7 +51,7 @@
 
 /datum/game_mode/blob/proc/life()
 	if (blobs.len > 0)
-		for (var/i = 1 to 25)
+		for (var/i = 1 to 20)
 			sleep(-1)
 			if (blobs.len == 0)
 				break
@@ -63,12 +67,12 @@
 
 
 /datum/game_mode/blob/proc/stage()
-	send_intercept()
 	if (world.timeofday < next_stage)
 		return
 
 	switch(stage)
 		if (0)
+			send_intercept()
 			for (var/mob/living/silicon/ai/aiPlayer in world)
 				if (aiPlayer.client)
 					var/law = "The station is under a quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving."
@@ -76,7 +80,7 @@
 					aiPlayer << "An additional law has been added by CentCom: [law]"
 			stage = 1
 			// next stage 5-10 minutes later
-			next_stage = world.timeofday + 600*rand(5,10)
+			next_stage = world.timeofday + 600*rand(2,8)
 
 		if (1)
 			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
@@ -86,29 +90,18 @@
 			next_stage = world.timeofday + 600
 
 		if (2)
-			if (blobs.len > 500)
+			if (blobs.len > 800)//Dono if this should be more or less yet
 				command_alert("Uncontrolled spread of the biohazard onboard the station. We have issued directive 7-12 for [station_name()]. Estimated time until directive implementation: 60 seconds.", "Biohazard Alert")
 				stage = 3
 				next_stage = world.timeofday + 600
 			else
 				next_stage = world.timeofday + 600
 
-		if (3)
-			stage = 4
-			var/turf/ground_zero = locate("landmark*blob-directive")
-
-			if (ground_zero)
-				ground_zero = get_turf(ground_zero)
-			else
-				ground_zero = locate(45,45,1)
-
-			explosion(ground_zero, 100, 250, 500, 750)
-
 
 /datum/game_mode/blob/check_finished()
 	if(!modestart)
 		return 0
-	if(stage >= 4)
+	if(stage >= 3)
 		return 1
 	for(var/obj/blob/B in blobs)
 		if(B.z == 1)
@@ -119,7 +112,7 @@
 /datum/game_mode/blob/declare_completion()
 	if (stage >= 4)
 		world << "<FONT size = 3><B>The staff has lost!</B></FONT>"
-		world << "<B>The station was destroyed by Cent. Com.</B>"
+		world << "<B>The station was destroyed by NanoTrasen</B>"
 		var/numDead = 0
 		var/numAlive = 0
 		var/numSpace = 0

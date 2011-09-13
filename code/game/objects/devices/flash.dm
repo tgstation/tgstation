@@ -102,11 +102,13 @@
 		if(!emp)
 			if (!clown_check(user)) return
 		if(broken)
-			user.show_message("\red The [src.name] is broken", 2)
+			if(user)
+				user.show_message("\red The [src.name] is broken", 2)
 			return
 
 		if(shots_left <= 0)
-			user.show_message("\red *click* *click*", 2)
+			if(user)
+				user.show_message("\red *click* *click*", 2)
 			return
 
 		playsound(src.loc, 'flash.ogg', 100, 1)
@@ -136,7 +138,8 @@
 
 		if (prob(2))
 			broken = 1
-			user << "\red The bulb has burnt out!"
+			if(user)
+				user << "\red The bulb has burnt out!"
 			return
 
 		spawn(60)

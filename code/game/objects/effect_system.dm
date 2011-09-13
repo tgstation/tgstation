@@ -326,6 +326,16 @@ steam.start() -- spawns the effect
 					M.coughedtime = 0
 	return
 
+
+/obj/effects/bad_smoke/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(air_group || (height==0)) return 1
+	if(istype(mover, /obj/item/projectile/beam))
+		var/obj/item/projectile/beam/B = mover
+		B.damage = 10//testing, will just hardcode for now
+		B.mobdamage = new/list(BRUTE = 0 , BURN = 10, TOX = 0, OXY = 0, CLONE = 0)
+	return 1
+
+
 /obj/effects/bad_smoke/HasEntered(mob/living/carbon/M as mob )
 	..()
 	if(istype(M, /mob/living/carbon))
