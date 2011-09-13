@@ -181,7 +181,7 @@
 
 	ion
 		name = "ion bolt"
-		icon_state = "ice_2"
+		icon_state = "ion"
 		flag = "taser"
 		damage = 0
 		nodamage = 1
