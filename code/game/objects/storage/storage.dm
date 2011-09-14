@@ -212,11 +212,14 @@
 	src.master.attackby(W, user)
 	return
 
-/obj/item/weapon/storage/box/New()
+/obj/item/weapon/storage/box/
+
+/obj/item/weapon/storage/box/survival/New()
+	..()
+	contents = list()
 	sleep(1)
 	new /obj/item/clothing/mask/breath( src )
 	new /obj/item/weapon/tank/emergency_oxygen( src )
-	..()
 	return
 
 /obj/item/weapon/storage/box/engineer/New()

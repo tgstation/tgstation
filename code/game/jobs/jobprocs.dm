@@ -265,7 +265,7 @@
 			src.equip_if_possible(new /obj/item/clothing/under/rank/geneticist(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat/genetics(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/device/flashlight/pen(src), slot_s_store)
@@ -284,7 +284,7 @@
 
 		if ("Clown")
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/clown (src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/clown(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/clown(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/clown_shoes(src), slot_shoes)
@@ -298,7 +298,7 @@
 
 		if ("Mime")
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/mime(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/mime(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
@@ -343,7 +343,7 @@
 		if ("Detective")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sec (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/det(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/detective(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
@@ -365,7 +365,7 @@
 		if ("Medical Doctor")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_med (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/medical(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/clothing/shoes/white(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
@@ -376,7 +376,7 @@
 		if ("Captain")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/captain (src), slot_ears)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/captain(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/captain(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/captain(src), slot_wear_suit)
@@ -391,7 +391,7 @@
 		if ("Security Officer")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sec (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/security (src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/security(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/security(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
@@ -406,7 +406,7 @@
 		if ("Warden")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_sec (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/security (src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/warden(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/security(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
@@ -441,7 +441,7 @@
 			src.equip_if_possible(new /obj/item/clothing/head/helmet/HoS(src), slot_head)
 			src.equip_if_possible(new /obj/item/clothing/mask/gas/emergency(src), slot_wear_mask)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/security (src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(src), slot_glasses)
 			src.equip_if_possible(new /obj/item/weapon/handcuffs(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/weapon/gun/energy(src), slot_s_store)
@@ -453,7 +453,7 @@
 		if ("Head of Personnel")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/hop (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/head_of_personnel(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/heads/hop(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
@@ -472,7 +472,7 @@
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/suit/armor/vest(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(src), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(src), slot_in_backpack)
@@ -490,7 +490,7 @@
 			src.equip_if_possible(new /obj/item/device/pda/engineering(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/black(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/suit/labcoat(src), slot_wear_suit)
 			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/weapon/storage/toolbox/mechanical(src), slot_l_hand)
@@ -519,7 +519,7 @@
 				src.equip_if_possible(new /obj/item/device/pda/lawyer(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack(src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/device/detective_scanner(src), slot_in_backpack)//Why do they even get this?
 			src.equip_if_possible(new /obj/item/weapon/storage/briefcase(src), slot_l_hand)
 
@@ -567,7 +567,7 @@
 		if ("Chief Medical Officer")
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/cmo (src), slot_ears)
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chief_medical_officer(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/heads/cmo(src), slot_belt)
@@ -578,7 +578,7 @@
 		if ("Virologist")
 			src.equip_if_possible(new /obj/item/device/radio/headset/headset_medsci (src), slot_ears) // -- TLE
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (src), slot_back)
-			src.equip_if_possible(new /obj/item/weapon/storage/box(src.back), slot_in_backpack)
+			src.equip_if_possible(new /obj/item/weapon/storage/box/survival(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/medical(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/medical(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/mask/surgical(src), slot_wear_mask)
@@ -641,7 +641,7 @@
 			return
 	src.equip_if_possible(new /obj/item/device/radio/headset(src), slot_ears)
 	var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(src)
-	new /obj/item/weapon/storage/box(BPK)
+	new /obj/item/weapon/storage/box/survival(BPK)
 	src.equip_if_possible(BPK, slot_back,1)
 	/*
 	spawn(10)

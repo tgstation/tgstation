@@ -143,10 +143,10 @@
 					"/obj/item/weapon/storage/lightbox/tubes",
 					"/obj/item/weapon/storage/lightbox/tubes",
 					"/obj/item/weapon/storage/lightbox/tubes",
-					"/obj/item/weapon/storage/lightbox",
-					"/obj/item/weapon/storage/lightbox",
-					"/obj/item/weapon/storage/lightbox",
-					"/obj/item/weapon/storage/lightbox")
+					"/obj/item/weapon/storage/lightbox/tubes",
+					"/obj/item/weapon/storage/lightbox/tubes",
+					"/obj/item/weapon/storage/lightbox/bulbs",
+					"/obj/item/weapon/storage/lightbox/bulbs")
 	cost = 5
 	containertype = "/obj/crate"
 	containername = "Replacement lights"

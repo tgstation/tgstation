@@ -523,20 +523,24 @@
 // a box of replacement light items
 
 /obj/item/weapon/storage/lightbox
-	name = "replacement lights"
+	name = "replacement bulbs"
 	icon = 'storage.dmi'
 	icon_state = "light"
 	item_state = "syringe_kit"
 
-/obj/item/weapon/storage/lightbox/New()
+/obj/item/weapon/storage/lightbox/bulbs/New()
 	..()
-	new /obj/item/weapon/light/tube(src)
-	new /obj/item/weapon/light/tube(src)
-	new /obj/item/weapon/light/tube(src)
+	new /obj/item/weapon/light/bulb(src)
+	new /obj/item/weapon/light/bulb(src)
+	new /obj/item/weapon/light/bulb(src)
 
 	new /obj/item/weapon/light/bulb(src)
 	new /obj/item/weapon/light/bulb(src)
 	new /obj/item/weapon/light/bulb(src)
+
+/obj/item/weapon/storage/lightbox/tubes
+	name = "replacement tubes"
+	icon_state = "lighttube"
 
 /obj/item/weapon/storage/lightbox/tubes/New()
 	..()

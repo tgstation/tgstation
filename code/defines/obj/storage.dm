@@ -85,7 +85,6 @@
 
 /obj/item/weapon/storage/box
 	name = "Box"
-	desc = "A nice looking box."
 	icon_state = "box"
 	item_state = "syringe_kit"
 
@@ -188,7 +187,7 @@
 
 /obj/item/weapon/storage/firstaid/toxin
 	name = "Toxin First Aid"
-	desc = "Used to treat when you have a high amoutn of toxins in your body. Or atleast the box containing those things."
+	desc = "Used to treat when you have a high amoutn of toxins in your body."
 	icon_state = "antitoxin"
 	item_state = "firstaid-toxin"
 
@@ -213,7 +212,7 @@
 /obj/item/weapon/storage/gl_kit
 	name = "Prescription Glasses"
 	desc = "This box contains nerd glasses."
-	icon_state = "id"
+	icon_state = "glasses"
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/handcuff_kit
@@ -224,7 +223,7 @@
 
 /obj/item/weapon/storage/id_kit
 	name = "Spare IDs"
-	desc = "Has so many empty ID's."
+	desc = "Has so many empty IDs."
 	icon_state = "id"
 	item_state = "syringe_kit"
 

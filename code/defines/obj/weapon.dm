@@ -1022,7 +1022,6 @@
 
 /obj/item/weapon/paper
 	name = "Paper"
-	desc = "It is made from wood."
 	icon = 'items.dmi'
 	icon_state = "paper"
 	var/info = null
