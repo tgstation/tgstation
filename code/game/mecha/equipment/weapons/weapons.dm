@@ -37,6 +37,32 @@
 		do_after_cooldown()
 		return
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ion
+	equip_cooldown = 7
+	name = "mkIV Ion Heavy Repeater"
+	icon_state = "mecha_laser"
+	energy_drain = 120
+
+	action(target)
+		if(!action_checks(target)) return
+		var/turf/curloc = chassis.loc
+		var/atom/targloc = get_turf(target)
+		if (!targloc || !istype(targloc, /turf) || !curloc)
+			return
+		if (targloc == curloc)
+			return
+		set_ready_state(0)
+		playsound(chassis, 'Laser.ogg', 50, 1)
+		var/obj/item/projectile/beam/A = new /obj/item/projectile/ion(curloc)
+		A.original = targloc
+		A.current = curloc
+		A.yo = targloc.y - curloc.y
+		A.xo = targloc.x - curloc.x
+		chassis.use_power(energy_drain)
+		A.process()
+		chassis.log_message("Fired from [src.name], targeting [target].")
+		do_after_cooldown()
+		return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/pulse
 	equip_cooldown = 30

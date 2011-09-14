@@ -220,7 +220,7 @@
 			B.active = 1
 	if ((parry))
 		if (prob(50 - round(P.damage / 3)))
-			visible_message("\red [src] deflects the shot with their blade!", 4)
+			visible_message("\red [src] deflects the shot with their blade!")
 			return
 
 	for(var/obj/item/device/shield/S in src)
