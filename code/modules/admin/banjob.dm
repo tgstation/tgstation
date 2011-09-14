@@ -35,10 +35,13 @@ var
 	var/savefile/S=new("data/job_full.ban")
 	S["keys[0]"] << jobban_keylist
 
-
 /proc/jobban_unban(mob/M, rank)
 	jobban_keylist.Remove(text("[M.ckey] - [rank]"))
 	jobban_savebanfile()
+
+
+/proc/ban_unban_log_save(var/formatted_log)
+	text2file(formatted_log,"data/ban_unban_log.txt")
 
 
 /proc/jobban_updatelegacybans()

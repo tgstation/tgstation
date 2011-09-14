@@ -39,6 +39,7 @@
 	var/min_n2 = 0
 	var/max_n2 = 0
 	var/unsuitable_atoms_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above.
+
 //Cat
 
 /mob/living/simple_animal/cat
@@ -66,8 +67,6 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
-	var/turns_since_scan = 0
-	var/obj/movement_target
 
 //Corgi
 /mob/living/simple_animal/corgi

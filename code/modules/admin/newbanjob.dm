@@ -177,6 +177,7 @@ var/savefile/Banlistjob
 	else
 		log_admin("[key_name_admin(usr)] unjobbanned [key] from [rank]")
 		message_admins("[key_name_admin(usr)] unjobbanned:[key] from [rank]")
+		ban_unban_log_save("[key_name_admin(usr)] unjobbanned [key] from [rank]")
 
 	for (var/A in Banlistjob.dir)
 		Banlistjob.cd = "/base/[A]"
