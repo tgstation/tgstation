@@ -1664,10 +1664,10 @@
 
 		var/damage = rand(1, 3)
 
-		if(istype(src, /mob/living/carbon/metroid/adult))
-			damage = rand(20, 40)
+		if(istype(M, /mob/living/carbon/metroid/adult))
+			damage = rand(10, 35)
 		else
-			damage = rand(5, 35)
+			damage = rand(5, 25)
 
 
 		var/dam_zone = pick("head", "chest", "l_hand", "r_hand", "l_leg", "r_leg", "groin")

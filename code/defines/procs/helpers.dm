@@ -937,7 +937,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		output += A
 	return output
 
-/proc/get_turf_loc(var/mob/M) //gets the location of the turf that the mob is on, or what the mob is in is on, etc
+/proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the atom is on, or what the atom is in is on, etc
 	//in case they're in a closet or sleeper or something
 	var/atom/loc = M.loc
 	while(!istype(loc, /turf/))

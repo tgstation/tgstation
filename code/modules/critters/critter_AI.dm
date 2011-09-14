@@ -153,13 +153,40 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[src]</B> [src.attacktext] [src.target]!", 1)
 		if(ismob(src.target))
-			src.target:bruteloss += rand(melee_damage_lower,melee_damage_upper)
+
+
+			var/damage = rand(melee_damage_lower, melee_damage_upper)
+
+			if(istype(target, /mob/living/carbon/human))
+				var/dam_zone = pick("head", "chest", "l_hand", "r_hand", "l_leg", "r_leg", "groin")
+				if (dam_zone == "chest")
+					if ((((target:wear_suit && target:wear_suit.body_parts_covered & UPPER_TORSO) || (target:w_uniform && target:w_uniform.body_parts_covered & LOWER_TORSO)) && prob(10)))
+						if(prob(20))
+							target:show_message("\blue You have been protected from a hit to the chest.")
+							return
+				if (istype(target:organs[text("[]", dam_zone)], /datum/organ/external))
+					var/datum/organ/external/temp = target:organs[text("[]", dam_zone)]
+					if (temp.take_damage(damage, 0))
+						target:UpdateDamageIcon()
+					else
+						target:UpdateDamage()
+				target:updatehealth()
+
+			else
+				target:bruteloss += damage
+
+			if(attack_sound)
+				playsound(loc, attack_sound, 50, 1, -1)
+
+			AfterAttack(target)
+
+
 		if(isobj(src.target))
 			if(istype(target, /obj/mecha))
 				src.target:take_damage(rand(melee_damage_lower,melee_damage_upper))
 			else
 				src.target:TakeDamage(rand(melee_damage_lower,melee_damage_upper))
-		spawn(25)
+		spawn(attack_speed)
 			src.attacking = 0
 		return
 

@@ -635,8 +635,8 @@
 
 		var/damage = rand(1, 3)
 
-		if(istype(src, /mob/living/carbon/metroid/adult))
-			damage = rand(20, 40)
+		if(istype(M, /mob/living/carbon/metroid/adult))
+			damage = rand(10, 40)
 		else
 			damage = rand(5, 35)
 

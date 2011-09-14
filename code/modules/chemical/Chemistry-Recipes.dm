@@ -604,6 +604,65 @@ datum
 
 				return
 
+		metroidteleport
+			name = "Metroid Teleport"
+			id = "m_tele"
+			result = null
+			required_reagents = list("plasma" = 1, "acid" = 1)
+			result_amount = 1
+			required_container = /obj/item/metroid_core
+			required_other = 4
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+
+				// Calculate new position (searches through beacons in world)
+				var/obj/item/device/radio/beacon/chosen
+				var/list/possible = list()
+				for(var/obj/item/device/radio/beacon/W in world)
+					possible += W
+
+				if(possible.len > 0)
+					chosen = pick(possible)
+
+				if(chosen)
+				// Calculate previous position for transition
+
+					var/turf/FROM = get_turf_loc(holder.my_atom) // the turf of origin we're travelling FROM
+					var/turf/TO = get_turf_loc(chosen)			 // the turf of origin we're travelling TO
+
+					playsound(TO, 'phasein.ogg', 100, 1)
+
+					var/list/flashers = list()
+					for(var/mob/living/carbon/M in viewers(TO, null))
+						flick("e_flash", M.flash) // flash dose faggots
+						flashers += M
+
+					var/y_distance = TO.y - FROM.y
+					var/x_distance = TO.x - FROM.x
+					for (var/atom/movable/A in range(3, FROM )) // iterate thru list of mobs in the area
+						if(A == chosen) continue // don't teleport the actual beacon that's just stupid as fukkkkk
+
+						var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
+						if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
+							A.loc = locate(A.x + x_distance, A.y + y_distance, TO.z)
+
+						spawn()
+							if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
+								var/mob/M = A
+								if(M.client)
+									var/obj/blueeffect = new /obj(src)
+									blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
+									blueeffect.icon = 'effects.dmi'
+									blueeffect.icon_state = "shieldsparkles"
+									blueeffect.layer = 17
+									blueeffect.mouse_opacity = 0
+									M.client.screen += blueeffect
+									sleep(20)
+									M.client.screen -= blueeffect
+									del(blueeffect)
+
+
+
+
 		metroidchloral
 			name = "Metroid Chloral"
 			id = "m_bunch"

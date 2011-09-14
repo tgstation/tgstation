@@ -34,8 +34,9 @@ Contains the procs that control attacking critters
 		if(!target)	return
 		src.target = target
 		src.oldtarget_name = target:name
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <b>[src]</b> [src.angertext] [target:name]!", 1)
+		if(task != "chasing")
+			for(var/mob/O in viewers(src, null))
+				O.show_message("\red <b>[src]</b> [src.angertext] [target:name]!", 1)
 		src.task = "chasing"
 		return
 

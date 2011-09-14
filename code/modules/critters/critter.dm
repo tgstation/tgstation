@@ -60,6 +60,10 @@
 		angertext = "charges at"
 		attacktext = "attacks"
 
+		attack_sound = null // the sound it makes when it attacks!
+
+		attack_speed = 25 // delay of attack
+
 
 	proc
 		patrol_step()
@@ -71,6 +75,7 @@
 		TakeDamage(var/damage = 0)
 		Target_Attacker(var/target)
 		Harvest(var/obj/item/weapon/W, var/mob/living/user)//Controls havesting things from dead critters
+		AfterAttack(var/mob/living/target)
 
 
 
