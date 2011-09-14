@@ -14,7 +14,7 @@
 <B>General Processing Data</B><BR>
 <B># of Machines:</B> [machines.len]<BR>
 <B># of Pipe Networks:</B> [pipe_networks.len]<BR>
-<B># of Processing Items:</B> [processing_items.len]<BR>
+<B># of Processing Items:</B> [processing_objects.len]<BR>
 <B># of Power Nets:</B> [powernets.len]<BR>
 <B># of Mobs:</B> [mobs]<BR>
 "}
@@ -150,7 +150,7 @@
 	reload_admins()
 		set name = "Reload Admins"
 		set category = "Debug"
-		
+
 		if(!(usr.client.holder && usr.client.holder.level >= 6)) // protect and prevent
 			usr << "\red Not a good cop"
 			return

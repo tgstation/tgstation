@@ -127,7 +127,7 @@ WELDINGTOOOL
 	process()
 		switch(welding)
 			if(0)
-				processing_items.Remove(src)
+				processing_objects.Remove(src)
 				return
 			if(1)
 				if(prob(5))//Welders left on now use up fuel, but lets not have them run out quite that fast
@@ -215,7 +215,7 @@ WELDINGTOOOL
 				src.force = 15
 				src.damtype = "fire"
 				src.icon_state = "welder1"
-				processing_items.Add(src)
+				processing_objects.Add(src)
 			else
 				usr << "\blue Need more fuel!"
 				src.welding = 0

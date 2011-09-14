@@ -1043,7 +1043,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	user.db_click(name, using)
 	return
 
-/obj/equip_e/proc/process()
+/obj/equip_e/process()
 	return
 
 /obj/equip_e/proc/done()
@@ -1613,6 +1613,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				return
 			if (!ismob(M))
 				return
+			//This should have a check to prevent the player to player chat but I am too tired atm to add it.
 			var/t = input("Message:", text("Private message to [M.key]"))  as text|null
 			if (!t || !usr || !M)
 				return
@@ -1639,6 +1640,14 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/get_damage()
 	return health
+
+
+/mob/proc/UpdateLuminosity()
+	if(src.total_luminosity == src.last_luminosity)	return 0//nothing to do here
+	src.last_luminosity = src.total_luminosity
+	sd_SetLuminosity(min(src.total_luminosity,7))//Current hardcode max at 7, should likely be a const somewhere else
+	return 1
+
 
 /mob/MouseDrop(mob/M as mob)
 	..()

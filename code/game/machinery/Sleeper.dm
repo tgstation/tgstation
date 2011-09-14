@@ -278,7 +278,7 @@
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
 	src.occupant.loc = src.loc
-	src.occupant.metabslow = 0
+//	src.occupant.metabslow = 0
 	src.occupant = null
 
 	if(orient == "RIGHT")
@@ -402,7 +402,7 @@
 		usr.client.perspective = EYE_PERSPECTIVE
 		usr.client.eye = src
 		usr.loc = src
-		usr.metabslow = 1
+//		usr.metabslow = 1
 		src.occupant = usr
 		src.icon_state = "sleeper_1"
 		if(orient == "RIGHT")

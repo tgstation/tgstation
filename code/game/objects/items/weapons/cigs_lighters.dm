@@ -28,7 +28,7 @@ ZIPPO
 			if(src.smoketime < 1)
 				src.icon_state = "match_burnt"
 				src.lit = -1
-				processing_items.Remove(src)
+				processing_objects.Remove(src)
 				return
 
 
@@ -90,7 +90,7 @@ ZIPPO
 		if(istype(W, /obj/item/weapon/match) && W.lit == 0)
 			W.lit = 1
 			W.icon_state = "match_lit"
-			processing_items.Add(W)
+			processing_objects.Add(W)
 		W.update_icon()
 		return
 
@@ -157,7 +157,7 @@ ZIPPO
 			src.item_state = icon_on
 			for(var/mob/O in viewers(usr, null))
 				O.show_message(flavor_text, 1)
-			processing_items.Add(src)
+			processing_objects.Add(src)
 
 
 	process()
@@ -173,7 +173,7 @@ ZIPPO
 			if(ismob(src.loc))
 				var/mob/living/M = src.loc
 				M << "\red Your [src.name] goes out."
-			processing_items.Remove(src)
+			processing_objects.Remove(src)
 			del(src)
 			return
 		if(location)
@@ -332,8 +332,8 @@ ZIPPO
 				for(var/mob/O in viewers(user, null))
 					O.show_message(text("\red Without even breaking stride, [] flips open and lights the [] in one smooth movement.", user, src), 1)
 
-				user.sd_SetLuminosity(user.luminosity + 2)
-				processing_items.Add(src)
+				user.total_luminosity += 2
+				processing_objects.Add(src)
 			else
 				src.lit = 0
 				src.icon_state = "zippo"
@@ -341,8 +341,8 @@ ZIPPO
 				for(var/mob/O in viewers(user, null))
 					O.show_message(text("\red You hear a quiet click, as [] shuts off the [] without even looking what they're doing. Wow.", user, src), 1)
 
-				user.sd_SetLuminosity(user.luminosity - 2)
-				processing_items.Remove(src)
+				user.total_luminosity -= 2
+				processing_objects.Remove(src)
 		else
 			return ..()
 		return
@@ -371,12 +371,12 @@ ZIPPO
 	pickup(mob/user)
 		if(lit)
 			src.sd_SetLuminosity(0)
-			user.sd_SetLuminosity(user.luminosity + 2)
+			user.total_luminosity += 2
 		return
 
 
 	dropped(mob/user)
 		if(lit)
-			user.sd_SetLuminosity(user.luminosity - 2)
+			user.total_luminosity -= 2
 			src.sd_SetLuminosity(2)
 		return

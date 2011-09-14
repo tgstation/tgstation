@@ -66,7 +66,7 @@
 				B.Life()
 
 
-/datum/game_mode/blob/proc/stage()
+/datum/game_mode/blob/proc/stage()//Still needs worrrrrk
 	if (world.timeofday < next_stage)
 		return
 
@@ -77,7 +77,7 @@
 				if (aiPlayer.client)
 					var/law = "The station is under a quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving."
 					aiPlayer.set_zeroth_law(law)
-					aiPlayer << "An additional law has been added by CentCom: [law]"
+					aiPlayer << "Laws Updated: [law]"
 			stage = 1
 			// next stage 5-10 minutes later
 			next_stage = world.timeofday + 600*rand(2,8)
@@ -91,7 +91,7 @@
 
 		if (2)
 			if (blobs.len > 800)//Dono if this should be more or less yet
-				command_alert("Uncontrolled spread of the biohazard onboard the station. We have issued directive 7-12 for [station_name()]. Estimated time until directive implementation: 60 seconds.", "Biohazard Alert")
+				command_alert("Uncontrolled spread of the biohazard onboard the station. We have issued directive 7-12 for [station_name()].", "Biohazard Alert")
 				stage = 3
 				next_stage = world.timeofday + 600
 			else
@@ -110,7 +110,7 @@
 
 
 /datum/game_mode/blob/declare_completion()
-	if (stage >= 4)
+	if (stage >= 3)
 		world << "<FONT size = 3><B>The staff has lost!</B></FONT>"
 		world << "<B>The station was destroyed by NanoTrasen</B>"
 		var/numDead = 0
@@ -163,27 +163,37 @@
 	return 1
 
 
-/datum/game_mode/blob/send_intercept()
-	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B>: Biohazard Alert.</FONT><HR>"
-	intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>"
-	intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.<BR>"
-	intercepttext += "Cent. Com. has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.<BR>"
-	intercepttext += "Orders for all [station_name()] personnel follows:<BR>"
-	intercepttext += " 1. Do not leave the quarantine area.<BR>"
-	intercepttext += " 2. Locate any outbreaks of the organism on the station.<BR>"
-	intercepttext += " 3. If found, use any neccesary means to contain the organism.<BR>"
-	intercepttext += " 4. Avoid damage to the capital infrastructure of the station.<BR>"
-	intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12 without further notice.<BR>"
-	intercepttext += "Message ends."
+/datum/game_mode/blob/send_intercept(var/orders = 1)
+	var/intercepttext = ""
+	var/interceptname = "Error"
+	switch(orders)
+		if(1)
+			interceptname = "Biohazard Alert"
+			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
+			intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>"
+			intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.<BR>"
+			intercepttext += "NanoTrasen has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.<BR>"
+			intercepttext += "Orders for all [station_name()] personnel follows:<BR>"
+			intercepttext += " 1. Do not leave the quarantine area.<BR>"
+			intercepttext += " 2. Locate any outbreaks of the organism on the station.<BR>"
+			intercepttext += " 3. If found, use any neccesary means to contain the organism.<BR>"
+			intercepttext += " 4. Avoid damage to the capital infrastructure of the station.<BR>"
+			intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12 without further notice.<BR>"
+			intercepttext += "Message ends."
+		if(2)
+			//Bomb code goes here
+			return
 
-	for (var/obj/machinery/computer/communications/comm in world)
+
+	for(var/obj/machinery/computer/communications/comm in world)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
-			intercept.name = "paper- 'Biohazard Alert'"
+			intercept.name = "paper- [interceptname]"
 			intercept.info = intercepttext
 
-			comm.messagetitle.Add("Biohazard Alert")
+			comm.messagetitle.Add(interceptname)
 			comm.messagetext.Add(intercepttext)
+
 
 //	world << sound('outbreak5.ogg')Quiet printout for now
 

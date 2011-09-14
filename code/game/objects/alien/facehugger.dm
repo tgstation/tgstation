@@ -191,7 +191,7 @@
 		trg_idle = null
 		frustration = 0
 
-	proc/process()
+	process()
 		set background = 1
 		var/quick_move = 0
 

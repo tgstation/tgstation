@@ -5,7 +5,7 @@
 		return 1
 
 	else
-		processing_items.Remove(src)
+		processing_objects.Remove(src)
 		return null
 
 /obj/item/device/infra_sensor/proc/burst()
@@ -41,7 +41,7 @@
 		if (href_list["passive"])
 			src.passive = !( src.passive )
 			if(passive)
-				processing_items.Add(src)
+				processing_objects.Add(src)
 		if (href_list["active"])
 			spawn( 0 )
 				src.burst()

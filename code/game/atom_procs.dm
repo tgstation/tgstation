@@ -547,3 +547,9 @@
 
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
+
+
+//Could not find object proc defines and this could almost be an atom level one.
+/obj/proc/process()
+	processing_objects.Remove(src)
+	return 0

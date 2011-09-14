@@ -84,11 +84,7 @@ datum/controller/game_controller
 		sleep(-1)
 
 		for(var/mob/M in world)
-			if (M.metabslow)
-				if (air_master.current_cycle%10==1) // For everyone who has their metabolism slowed, make updates not so frequently
-					M.Life()
-			else
-				M.Life()
+			M.Life()
 
 		sleep(-1)
 
@@ -105,8 +101,9 @@ datum/controller/game_controller
 		sleep(-1)
 		sleep(1)
 
-		for(var/obj/item/item in processing_items)
-			item.process()
+		for(var/obj/object in processing_objects)
+//			spawn(0)Still need to test the spawn ticker
+			object.process()
 
 		for(var/datum/pipe_network/network in pipe_networks)
 			network.process()

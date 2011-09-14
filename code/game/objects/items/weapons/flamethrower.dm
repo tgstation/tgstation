@@ -48,7 +48,7 @@
 
 	process()
 		if(!lit)
-			processing_items.Remove(src)
+			processing_objects.Remove(src)
 			return null
 		var/turf/location = src.loc
 		if(istype(location, /mob/))
@@ -185,7 +185,7 @@
 			if(lit)
 				force = 17
 				damtype = "fire"
-				processing_items.Add(src)
+				processing_objects.Add(src)
 			else
 				force = 3
 				damtype = "brute"

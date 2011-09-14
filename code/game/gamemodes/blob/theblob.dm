@@ -3,7 +3,8 @@
 	name = "blob"
 	icon = 'blob.dmi'
 	icon_state = "blob"
-	density = 0//Whoooo this could end badly
+	desc = "Some blob creature thingy"
+	density = 0
 	opacity = 0
 	anchored = 1
 	var
@@ -33,7 +34,7 @@
 		if(active)
 			active_blobs -= src
 		if(blobtype == "Node")
-			processing_items.Remove(src)
+			processing_objects.Remove(src)
 		..()
 
 
@@ -45,6 +46,7 @@
 
 	proc/check_mutations()
 		if(blobtype != "Blob")	return
+		desc = "This really needs a better sprite"
 		//Spaceeeeeeblobbb
 		if(istype(src.loc, /turf/space))
 			active = 0
@@ -58,25 +60,22 @@
 		if((blobdebug == 1))
 			active = 0
 			health += 80
-			name = "odd blob"
+			name = "solid blob"
 			icon_state = "blob_node"//needs a new sprite
 			blobtype = "Node"
 			active_blobs -= src
-			processing_items.Add(src)
+			processing_objects.Add(src)
 			return 1
 		if((blobdebug == 2))
-			//active = 0
 			health += 20
-			name = "very odd blob"
+			name = "odd blob"
 			icon_state = "blob_factory"//needs a new sprite
 			blobtype = "Factory"
-			//active_blobs -= src
-			//processing_items.Add(src)
 			return 1
 		return 0
 
 
-	proc/process()
+	process()
 		spawn(-1)
 			Life()
 		return
@@ -100,11 +99,9 @@
 			var/turf/T = get_step(src, dirn)
 
 			if((locate(/obj/blob) in T))
-				if((src.blobtype == "Node") || (pulse > 0))
+				if(((src.blobtype == "Node") || (pulse > 0))&& (pulse < 12))
 					var/obj/blob/E = (locate(/obj/blob) in T)
-					if(pulse < 12)//No inf loops here
-						var/npulse = pulse + 1
-						E.Life(npulse)
+					E.Life((pulse+1))
 					return//Pass it along and end
 				continue
 

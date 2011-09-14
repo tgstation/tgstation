@@ -100,7 +100,7 @@ Class Procs:
 	machines.Remove(src)
 	..()
 
-/obj/machinery/proc/process()//If you dont use process or power why are you here
+/obj/machinery/process()//If you dont use process or power why are you here
 //	machines.Remove(src)Not going to do this till I test it a bit more
 	return
 

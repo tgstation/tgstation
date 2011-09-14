@@ -44,10 +44,10 @@
 
 /*/obj/item/weapon/pinpointer/New()
 	. = ..()
-	processing_items.Add(src)
+	processing_objects.Add(src)
 
 /obj/item/weapon/pinpointer/Del()
-	processing_items.Remove(src)
+	processing_objects.Remove(src)
 	. = ..()
 
 /obj/item/weapon/pinpointer/attack_self(mob/user as mob)

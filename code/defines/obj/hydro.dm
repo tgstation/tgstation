@@ -1075,10 +1075,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
 	src.sd_SetLuminosity(0)
-	user.sd_SetLuminosity(user.luminosity + potency/5)
+	user.total_luminosity += potency/5
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	user.sd_SetLuminosity(user.luminosity - potency/5)
+	user.total_luminosity -= potency/5
 	src.sd_SetLuminosity(potency/5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
@@ -1538,10 +1538,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
 	src.sd_SetLuminosity(0)
-	user.sd_SetLuminosity(user.luminosity + potency/10)
+	user.total_luminosity += potency/10
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	user.sd_SetLuminosity(user.luminosity - potency/10)
+	user.total_luminosity -= potency/10
 	src.sd_SetLuminosity(potency/10)
 
 // **********************

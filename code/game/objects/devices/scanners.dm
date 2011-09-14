@@ -26,12 +26,12 @@ MASS SPECTROMETER
 	icon_state = "t-ray[on]"
 
 	if(on)
-		processing_items.Add(src)
+		processing_objects.Add(src)
 
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		processing_items.Remove(src)
+		processing_objects.Remove(src)
 		return null
 
 	for(var/turf/T in range(1, src.loc) )

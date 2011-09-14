@@ -57,6 +57,7 @@
 	handle_disabilities()
 
 	//Status updates, death etc.
+	UpdateLuminosity()
 	handle_regular_status_updates()
 
 	if(client)

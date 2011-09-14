@@ -92,7 +92,7 @@ obj
 				for(var/atom/item in loc)
 					item.temperature_expose(null, temperature, volume)
 
-		proc/process(turf/simulated/list/possible_spread)
+		process(turf/simulated/list/possible_spread)
 			if(just_spawned)
 				just_spawned = 0
 				return 0

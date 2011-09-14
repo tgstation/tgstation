@@ -56,7 +56,7 @@
 		if(secured)
 			return 0
 		secured = 1
-		processing_items.Add(src)//removal is taken care of it process()
+		processing_objects.Add(src)//removal is taken care of it process()
 		return 1
 
 
@@ -129,7 +129,7 @@
 					return
 
 		if(!secured)
-			processing_items.Remove(src)
+			processing_objects.Remove(src)
 		return
 
 
@@ -266,7 +266,7 @@
 		return
 	return
 
-/obj/beam/i_beam/proc/process()
+/obj/beam/i_beam/process()
 	//world << "i_beam \ref[src] : process"
 
 	if ((src.loc.density || !( src.master )))

@@ -487,7 +487,7 @@
 		return 0
 
 
-	proc/process()
+	process()
 		spawn while(on)
 			if(projectiles<=0)
 				on = 0

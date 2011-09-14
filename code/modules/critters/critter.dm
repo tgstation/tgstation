@@ -67,7 +67,6 @@
 
 	proc
 		patrol_step()
-		process()
 		seek_target()
 		Die()
 		ChaseAttack()

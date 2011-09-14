@@ -6,7 +6,7 @@ var/global
 	//obj/hud/main_hud1 = null
 
 	list/machines = list()
-	list/processing_items = list()
+	list/processing_objects = list()
 	list/active_diseases = list()
 		//items that ask to be called every cycle
 

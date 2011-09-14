@@ -118,7 +118,7 @@
 	..()
 	return
 
-/obj/alien/resin/proc/process()
+/obj/alien/resin/process()
 	if(affecting)
 		var/mob/living/carbon/M = affecting
 		var/check = 0

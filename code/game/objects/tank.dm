@@ -339,7 +339,7 @@
 	src.air_contents.volume = volume //liters
 	src.air_contents.temperature = T20C
 
-	processing_items.Add(src)
+	processing_objects.Add(src)
 
 	return
 
@@ -347,7 +347,7 @@
 	if(air_contents)
 		del(air_contents)
 
-	processing_items.Remove(src)
+	processing_objects.Remove(src)
 
 	..()
 

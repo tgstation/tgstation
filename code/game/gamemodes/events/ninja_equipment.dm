@@ -1326,59 +1326,59 @@ It is possible to destroy the net by the occupant or someone else.
 				del(src)
 			return
 
-		process(var/mob/living/carbon/M as mob)
-			var/check = 30//30 seconds before teleportation. Could be extended I guess.
-			var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
-			//The person can still try and attack the net when inside.
-			while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 30 seconds have not passed.
-				check--
-				sleep(10)
+	process(var/mob/living/carbon/M as mob)
+		var/check = 30//30 seconds before teleportation. Could be extended I guess.
+		var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
+		//The person can still try and attack the net when inside.
+		while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 30 seconds have not passed.
+			check--
+			sleep(10)
 
-			if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
-				if(!isnull(master))//As long as they still exist.
-					master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
-				del(src)//Get rid of the net.
-				return
-
-			if(!isnull(src))//As long as both net and person exist.
-				//No need to check for countdown here since while() broke, it's implicit that it finished.
-
-				density = 0//Make the net pass-through.
-				invisibility = 101//Make the net invisible so all the animations can play out.
-				health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
-				for(var/obj/item/W in M)
-					if(istype(M,/mob/living/carbon/human))
-						if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
-						if(W==M:shoes)	continue
-					M.drop_from_slot(W)
-
-				spawn(0)
-					playsound(M.loc, 'sparks4.ogg', 50, 1)
-					anim(M.loc,M,'mob.dmi',,"phaseout",,M.dir)
-
-				M.loc = pick(holdingfacility)//Throw mob in to the holding facility.
-				M << "\red You appear in a strange place!"
-
-				spawn(0)
-					var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
-					spark_system.set_up(5, 0, M.loc)
-					spark_system.start()
-					playsound(M.loc, 'phasein.ogg', 25, 1)
-					playsound(M.loc, 'sparks2.ogg', 50, 1)
-					anim(M.loc,M,'mob.dmi',,"phasein",,M.dir)
-					del(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
-
-				for(var/mob/O in viewers(src, 3))
-					O.show_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
-
-				if(!isnull(master))//As long as they still exist.
-					master << "\blue <b>SUCCESS</b>: \black transport procedure of \the [affecting] complete."
-
-				M.anchored = 0//Important.
-
-			else//And they are free.
-				M << "\blue You are free of the net!"
+		if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
+			if(!isnull(master))//As long as they still exist.
+				master << "\red <b>ERROR</b>: \black unable to locate \the [mob_name]. Procedure terminated."
+			del(src)//Get rid of the net.
 			return
+
+		if(!isnull(src))//As long as both net and person exist.
+			//No need to check for countdown here since while() broke, it's implicit that it finished.
+
+			density = 0//Make the net pass-through.
+			invisibility = 101//Make the net invisible so all the animations can play out.
+			health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
+			for(var/obj/item/W in M)
+				if(istype(M,/mob/living/carbon/human))
+					if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
+					if(W==M:shoes)	continue
+				M.drop_from_slot(W)
+
+			spawn(0)
+				playsound(M.loc, 'sparks4.ogg', 50, 1)
+				anim(M.loc,M,'mob.dmi',,"phaseout",,M.dir)
+
+			M.loc = pick(holdingfacility)//Throw mob in to the holding facility.
+			M << "\red You appear in a strange place!"
+
+			spawn(0)
+				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+				spark_system.set_up(5, 0, M.loc)
+				spark_system.start()
+				playsound(M.loc, 'phasein.ogg', 25, 1)
+				playsound(M.loc, 'sparks2.ogg', 50, 1)
+				anim(M.loc,M,'mob.dmi',,"phasein",,M.dir)
+				del(src)//Wait for everything to finish, delete the net. Else it will stop everything once net is deleted, including the spawn(0).
+
+			for(var/mob/O in viewers(src, 3))
+				O.show_message(text("[] vanished!", M), 1, text("You hear sparks flying!"), 2)
+
+			if(!isnull(master))//As long as they still exist.
+				master << "\blue <b>SUCCESS</b>: \black transport procedure of \the [affecting] complete."
+
+			M.anchored = 0//Important.
+
+		else//And they are free.
+			M << "\blue You are free of the net!"
+		return
 
 	bullet_act(var/obj/item/projectile/Proj)
 		health -= Proj.damage

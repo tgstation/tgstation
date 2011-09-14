@@ -52,7 +52,7 @@
 	Secure()
 		if(secured)
 			return 0
-		processing_items.Add(src)//removal is taken care of it process()
+		processing_objects.Add(src)//removal is taken care of it process()
 		secured = 1
 		return 1
 
@@ -115,7 +115,7 @@
 
 		if(!secured)
 			src.timing = 0
-			processing_items.Remove(src)
+			processing_objects.Remove(src)
 			update_icon()
 		return
 

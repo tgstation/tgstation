@@ -76,7 +76,7 @@ THERMAL GLASSES
 
 /obj/item/clothing/head/cakehat/process()
 	if(!onfire)
-		processing_items.Remove(src)
+		processing_objects.Remove(src)
 		return
 
 	var/turf/location = src.loc
@@ -97,7 +97,7 @@ THERMAL GLASSES
 		src.damtype = "fire"
 		src.icon_state = "cake1"
 
-		processing_items.Add(src)
+		processing_objects.Add(src)
 
 	else
 		src.force = null

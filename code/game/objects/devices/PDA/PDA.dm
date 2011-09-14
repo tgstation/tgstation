@@ -130,11 +130,11 @@
 /obj/item/device/pda/pickup(mob/user)
 	if (fon)
 		sd_SetLuminosity(0)
-		user.sd_SetLuminosity(user.luminosity + f_lum)
+		user.total_luminosity += f_lum
 
 /obj/item/device/pda/dropped(mob/user)
 	if (fon)
-		user.sd_SetLuminosity(user.luminosity - f_lum)
+		user.total_luminosity -= f_lum
 		sd_SetLuminosity(f_lum)
 
 /obj/item/device/pda/New()
@@ -388,9 +388,9 @@
 					fon = (!fon)
 					if (src in U.contents)
 						if (fon)
-							U.sd_SetLuminosity(U.luminosity + f_lum)
+							U.total_luminosity += f_lum
 						else
-							U.sd_SetLuminosity(U.luminosity - f_lum)
+							U.total_luminosity -= f_lum
 					else
 						sd_SetLuminosity(fon * f_lum)
 				if("Medical Scan")

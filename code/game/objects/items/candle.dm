@@ -43,7 +43,7 @@
 			for(var/mob/O in viewers(usr, null))
 				O.show_message(flavor_text, 1)
 			sd_SetLuminosity(CANDLE_LUM)
-			processing_items.Add(src)
+			processing_objects.Add(src)
 
 
 	process()
@@ -66,18 +66,18 @@
 			lit = 0
 			update_icon()
 			sd_SetLuminosity(0)
-			user.sd_SetLuminosity(user.luminosity - CANDLE_LUM)
+			user.total_luminosity -= CANDLE_LUM
 
 
 	pickup(mob/user)
 		if(lit)
 			src.sd_SetLuminosity(0)
-			user.sd_SetLuminosity(user.luminosity + CANDLE_LUM)
+			user.total_luminosity += CANDLE_LUM
 
 
 	dropped(mob/user)
 		if(lit)
-			user.sd_SetLuminosity(user.luminosity - CANDLE_LUM)
+			user.total_luminosity -= CANDLE_LUM
 			src.sd_SetLuminosity(CANDLE_LUM)
 
 

@@ -63,7 +63,7 @@ var/global/list/uneatable = list(
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				if(prob(10))
+				if(prob(25))
 					del(src)
 					return
 				else
@@ -227,15 +227,6 @@ var/global/list/uneatable = list(
 
 
 		consume(var/atom/A)
-			if (istype(A,/obj/item/weapon/storage/backpack/holding))
-				var/log_str = "\The [src] was exploded in [get_area(src)] due to consumption of [A], last touched by: [A.fingerprintslast]"
-				message_admins(log_str)
-				log_game(log_str)
-				del(A)
-				explosion(src.loc,10,15,20,40)
-				if(src) del(src)
-				return
-
 			var/gain = 0
 			if(is_type_in_list(A, uneatable))
 				return 0
@@ -249,11 +240,18 @@ var/global/list/uneatable = list(
 					A:gib()
 				sleep(1)
 			else if(istype(A,/obj/))
+
+				if (istype(A,/obj/item/weapon/storage/backpack/holding))
+					var/dist = max((current_size - 2),1)
+					explosion(src.loc,(dist/4),(dist/2),(dist))
+					return
+
 				if(istype(A, /obj/machinery/singularity))//Welp now you did it
 					var/obj/machinery/singularity/S = A
-					src.energy += S.energy
+					src.energy += (S.energy/2)//Absorb most of it
 					del(S)
-					explosion(src.loc,20,25,30,40,1)
+					var/dist = max((current_size - 2),1)
+					explosion(src.loc,(dist/4),(dist/2),(dist))
 					return//Quits here, the obj should be gone, hell we might be
 
 				if((teleport_del) && (!istype(A, /obj/machinery)))//Going to see if it does not lag less to tele items over to Z 2

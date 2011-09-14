@@ -494,7 +494,7 @@
 		return
 
 	// movement process, persists while holder is moving through pipes
-	proc/process()
+	process()
 		var/obj/disposalpipe/last
 		while(active)
 			if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
