@@ -39,6 +39,35 @@
 	var/min_n2 = 0
 	var/max_n2 = 0
 	var/unsuitable_atoms_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above.
+//Cat
+
+/mob/living/simple_animal/cat
+	name = "Cat"
+	desc = "Kitty!!"
+	icon = 'mob.dmi'
+	icon_state = "tempcat"
+	icon_living = "tempcat"
+	icon_dead = "gibbed-h"
+	speak = list("Meow!","Esp!","Purr!","HSSSSS")
+	speak_emote = list("meows", "purrs:")
+	emote_hear = list("meows","mews")
+	emote_see = list("shakes it's head", "shivers")
+	speak_chance = 1
+	turns_per_move = 5
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+	meat_amount = 3
+	response_help  = "pets the"
+	response_disarm = "gently pushes aside the"
+	response_harm   = "kicks the"
+
+/mob/living/simple_animal/cat/Runtime
+	name = "Runtime"
+	desc = "It's Runtime, what else do you need to know?"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
+	var/turns_since_scan = 0
+	var/obj/movement_target
 
 //Corgi
 /mob/living/simple_animal/corgi
