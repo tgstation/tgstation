@@ -35,9 +35,8 @@
 
 /datum/supply_packs/monkey
 	name = "Monkey crate"
-	contains = list ("/obj/item/weapon/monkeycube_box",
-					 "/obj/item/weapon/monkeycube_box")
-	cost = 10
+	contains = list ("/obj/item/weapon/monkeycube_box")
+	cost = 20
 	containertype = "/obj/crate/freezer"
 	containername = "Monkey crate"
 

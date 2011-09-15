@@ -3,6 +3,7 @@
 	icon = 'structures.dmi'
 	desc = "A window."
 	density = 1
+	layer = 3.2//Just above doors
 	var/health = 14.0
 	var/ini_dir = null
 	var/state = 0

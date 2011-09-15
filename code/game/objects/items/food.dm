@@ -170,7 +170,7 @@ MONKEY CUBE BOX
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon = 'food.dmi'
 	icon_state = "monkeycubebox"
-	var/amount = 5
+	var/amount = 2
 
 	attack_hand(mob/user as mob, unused, flag)
 		add_fingerprint(user)

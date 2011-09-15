@@ -959,27 +959,6 @@
 			baconbeacon.loc = usr
 			baconbeacon.digest_delay()
 
-/*
-/obj/item/weapon/reagent_containers/food/snacks/bananaphone
-	name = "Banana Phone"
-	desc = "Ring ring ring ring ring..."
-	icon = 'items.dmi'
-	icon_state = "banana" //needs a new icon.
-	bitesize = 5
-	var/obj/item/device/radio/banana/bananaphone
-	New()
-		..()
-		reagents.add_reagent("banana", 5)
-		bananaphone = new /obj/item/device/radio/banana(src)
-		bananaphone.listening = 1
-		bananaphone.broadcasting = 1
-
-	On_Consume()
-		if(!reagents.total_volume)
-			usr << sound('bananaphone.ogg',1)
-	hear_talk(mob/M as mob, msg)
-		if(bananaphone)
-			bananaphone.hear_talk(M, msg)*/
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 	name = "monkey cube"
@@ -1020,6 +999,7 @@
 		desc = "Still wrapped in some paper."
 		icon_state = "monkeycubewrap"
 		wrapped = 1
+
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger
 	name = "Spell Burger"
