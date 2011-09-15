@@ -200,6 +200,7 @@
 			usr << "[G.affecting.name] will not fit into the sleeper because they have a Metroid latched onto their head."
 			return
 	for (var/mob/V in viewers(user))
+		occupied = 1
 		V.show_message("[user] starts putting [G.affecting.name] into the sleeper.", 3)
 	if(do_after(user, 20))
 		if(!G || !G.affecting) return
@@ -218,6 +219,8 @@
 		src.add_fingerprint(user)
 		del(G)
 		return
+	else
+		occupied = 0
 	return
 
 /obj/machinery/sleeper/dummy/attackby()

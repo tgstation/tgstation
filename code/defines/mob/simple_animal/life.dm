@@ -50,20 +50,20 @@
 	icon_living = "tempcat"
 	icon_dead = "gibbed-h"
 	speak = list("Meow!","Esp!","Purr!","HSSSSS")
-	speak_emote = list("meows", "purrs:")
+	speak_emote = list("purrs", "meows")
 	emote_hear = list("meows","mews")
 	emote_see = list("shakes it's head", "shivers")
 	speak_chance = 1
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
-	meat_amount = 3
+	meat_amount = 1
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
 
 /mob/living/simple_animal/cat/Runtime
 	name = "Runtime"
-	desc = "It's Runtime, what else do you need to know?"
+	desc = ""
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
