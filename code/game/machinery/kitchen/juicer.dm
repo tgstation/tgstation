@@ -96,7 +96,7 @@
 	if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
 		dat += "<A href='?src=\ref[src];action=juice'>Turn on!<BR>"
 	if (beaker)
-		dat += "<A href='?src=\ref[src];action=detach'>Detach a beacker!<BR>"
+		dat += "<A href='?src=\ref[src];action=detach'>Detach a beaker!<BR>"
 	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[dat]</TT>", "window=juicer")
 	onclose(user, "juicer")
 	return
@@ -117,7 +117,7 @@
 
 /obj/machinery/juicer/verb/detach()
 	set category = "Object"
-	set name = "Detach Beacker from the juicer"
+	set name = "Detach Beaker from the juicer"
 	set src in oview(1)
 	if (usr.stat != 0)
 		return

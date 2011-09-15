@@ -1042,7 +1042,7 @@
 
 /obj/item/weapon/book/manual/chef_recipes
 	name = "Chef Recipes"
-	icon_state = "chefbook"
+	icon_state = "cooked_book"
 	author = "Lord Frenrir Cageth"
 
 	dat = {"<html>

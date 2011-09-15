@@ -603,7 +603,7 @@
 	if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
 		dat += "<A href='?src=\ref[src];action=grind'>Turn on!<BR>"
 	if (beaker)
-		dat += "<A href='?src=\ref[src];action=detach'>Detach a beacker!<BR>"
+		dat += "<A href='?src=\ref[src];action=detach'>Detach a beaker!<BR>"
 	user << browse("<HEAD><TITLE>Reagent Grinder</TITLE></HEAD><TT>[dat]</TT>", "window=reagentgrinder")
 	onclose(user, "reagentgrinder")
 	return
