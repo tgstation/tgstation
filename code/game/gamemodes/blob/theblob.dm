@@ -97,8 +97,9 @@
 
 		if(!prob(health))	return//Does not do much unless its healthy it seems, might want to change this later
 
-		var/list/dirs = new/list(cardinal)
+		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
+
 			var/dirn = pick(dirs)
 			dirs.Remove(dirn)
 			var/turf/T = get_step(src, dirn)
@@ -258,3 +259,14 @@
 			B.Life()
 		..()
 
+/obj/blob/node/New()
+	..()
+	spawn()
+		src.blobdebug = 1
+		src.Life()
+
+/obj/blob/factory/New()
+	..()
+	spawn()
+		src.blobdebug = 2
+		src.Life()
