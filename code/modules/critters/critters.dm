@@ -18,7 +18,7 @@
 	brutevuln = 1
 	melee_damage_lower = 25
 	melee_damage_upper = 50
-	angertext = "runs at"
+	angertext = "runs"
 	attacktext = "chomps"
 
 
@@ -120,7 +120,7 @@
 	brutevuln = 0.5
 	melee_damage_lower = 2
 	melee_damage_upper = 8
-	angertext = "charges at"
+	angertext = "charges"
 	attacktext = "hits"
 
 	Die()
@@ -146,7 +146,7 @@
 	brutevuln = 1
 	melee_damage_lower = 5
 	melee_damage_upper = 15
-	angertext = "lunges at"
+	angertext = "lunges"
 	attacktext = "bites"
 	attack_sound = 'bite.ogg'
 	attack_speed = 10
