@@ -409,12 +409,13 @@ var/list/sacrificed = list()
 			while(this_rune && user && user.stat==0 && user.client && user.loc==this_rune.loc)
 				user.take_organ_damage(1, 0)
 				sleep(30)
-			D.visible_message("\red [D] slowly dissipates into dust and bones.", \
-			"\red You feel pain, as bonds formed between your soul and this homunculus break.", \
-			"\red You hear faint rustle.")
-			ghost.invisibility = 10
-			ghost.key = D.key
-			D.dust(1)
+			if(D)
+				D.visible_message("\red [D] slowly dissipates into dust and bones.", \
+				"\red You feel pain, as bonds formed between your soul and this homunculus break.", \
+				"\red You hear faint rustle.")
+				ghost.invisibility = 10
+				ghost.key = D.key
+				D.dust(1)
 			return
 
 

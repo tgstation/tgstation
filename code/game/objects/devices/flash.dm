@@ -45,7 +45,7 @@
 					M.weakened = 10
 					flick("e_flash", M.flash)
 
-				if(ishuman(M))
+				if(ishuman(M) && ishuman(user))
 					if(user.mind in ticker.mode.head_revolutionaries)
 						var/revsafe = 0
 						for(var/obj/item/weapon/implant/loyalty/L in M)

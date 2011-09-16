@@ -354,6 +354,7 @@
 #include "code\game\gamemodes\cult\cult_items.dm"
 #include "code\game\gamemodes\events\clang.dm"
 #include "code\game\gamemodes\events\dust.dm"
+#include "code\game\gamemodes\events\miniblob.dm"
 #include "code\game\gamemodes\events\ninja_abilities.dm"
 #include "code\game\gamemodes\events\ninja_equipment.dm"
 #include "code\game\gamemodes\events\space_ninja.dm"

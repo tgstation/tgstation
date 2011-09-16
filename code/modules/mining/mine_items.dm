@@ -40,8 +40,7 @@ var/mining_shuttle_moving = 0
 var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 proc/move_mining_shuttle()
-	if (mining_shuttle_moving)
-		return
+	if(mining_shuttle_moving)	return
 	mining_shuttle_moving = 1
 	spawn(mining_shuttle_tickstomove*10)
 		var/area/fromArea
@@ -80,6 +79,11 @@ proc/move_mining_shuttle()
 	usr.machine = src
 	src.add_fingerprint(usr)
 	if(href_list["move"])
+		if(ticker.mode.name == "blob")
+			if(ticker.mode:declared)
+				usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
+				return
+
 		if (!mining_shuttle_moving)
 			usr << "\blue shuttle called and will arrive shortly"
 			move_mining_shuttle()

@@ -35,6 +35,8 @@
 		var/obj/item/weapon/cell/C = new(src)
 		C.charge = 1500
 		cell = C
+	if(src.mind)
+		ticker.mode.remove_revolutionary(src.mind)
 	..()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO

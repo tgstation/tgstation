@@ -60,12 +60,16 @@
 			spawn(0)
 				ainame(src)
 
+	if(src.mind)
+		ticker.mode.remove_revolutionary(src.mind)
+	return
+
+
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
 	set name = "Change AI Core Display"
 	if(stat || aiRestorePowerRoutine)
 		return
-
 
 		//if(icon_state == initial(icon_state))
 	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "HAL9000", "Monochrome", "Blue", "HAL9000 Mark2", "Inverted", "Firewall", "Green")

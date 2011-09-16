@@ -2245,8 +2245,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 					if("nuclear emergency")
 						if (!derp) boom.icon_state = "loss_nuke"
 						else boom.icon_state = "loss_nuke2"
-					if("AI malfunction")
+					if("malfunction")
 						boom.icon_state = "loss_malf"
+					if("blob")
+						return//Nothin here yet and the general one does not fit.
 					else
 						boom.icon_state = "loss_general"
 #elif

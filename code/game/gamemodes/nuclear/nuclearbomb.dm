@@ -1,3 +1,21 @@
+/obj/machinery/nuclearbomb
+	desc = "Uh oh. RUN!!!!"
+	name = "Nuclear Fission Explosive"
+	icon = 'stationobjs.dmi'
+	icon_state = "nuclearbomb0"
+	density = 1
+	var/deployable = 0.0
+	var/extended = 0.0
+	var/timeleft = 60.0
+	var/timing = 0.0
+	var/r_code = "ADMIN"
+	var/code = ""
+	var/yes_code = 0.0
+	var/safety = 1.0
+	var/obj/item/weapon/disk/nuclear/auth = null
+	flags = FPRINT
+	use_power = 0
+
 /obj/machinery/nuclearbomb/New()
 	..()
 	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
@@ -58,9 +76,7 @@
 	..()
 	if (usr.stat || usr.restrained())
 		return
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+	if (!ishuman(usr))
 		usr << "\red You don't have the dexterity to do this!"
 		return 1
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
@@ -121,10 +137,10 @@
 		return
 	return
 
-//this whole thing is retarded???
 
 /obj/machinery/nuclearbomb/ex_act(severity)
 	return
+
 
 /obj/machinery/nuclearbomb/blob_act()
 	if (src.timing == -1.0)
@@ -132,6 +148,7 @@
 	else
 		return ..()
 	return
+
 
 /obj/machinery/nuclearbomb/proc/explode()
 	if (src.safety)
@@ -152,6 +169,9 @@
 
 */
 	enter_allowed = 0
+
+
+
 	var/derp = 0
 	for (var/turf/T in range(1,src))
 		if (!is_type_in_list(T.loc, the_station_areas))
@@ -184,7 +204,12 @@
 			as it will return null). Leaving this for you since you apparently plan to work this further. /N
 			*/
 
-		ticker.mode.check_win()
+		if(!ticker.mode.check_win())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
+			world << "<B>Resetting in 30 seconds!</B>"
+			sleep(300)
+			log_game("Rebooting due to nuclear detonation")
+			world.Reboot()
+			return
 
 
 /obj/item/weapon/disk/nuclear/Del()

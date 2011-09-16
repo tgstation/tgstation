@@ -1,9 +1,38 @@
 // The communications computer
+/obj/machinery/computer/communications
+	name = "Communications Console"
+	desc = "This can be used for various important functions. Still under developement."
+	icon_state = "comm"
+	req_access = list(access_heads)
+	circuit = "/obj/item/weapon/circuitboard/communications"
+	var/prints_intercept = 1
+	var/authenticated = 0
+	var/list/messagetitle = list()
+	var/list/messagetext = list()
+	var/currmsg = 0
+	var/aicurrmsg = 0
+	var/state = STATE_DEFAULT
+	var/aistate = STATE_DEFAULT
+	var/message_cooldown = 0
+	var/const
+		STATE_DEFAULT = 1
+		STATE_CALLSHUTTLE = 2
+		STATE_CANCELSHUTTLE = 3
+		STATE_MESSAGELIST = 4
+		STATE_VIEWMESSAGE = 5
+		STATE_DELMESSAGE = 6
+		STATE_STATUSDISPLAY = 7
+
+	var/status_display_freq = "1435"
+	var/stat_msg1
+	var/stat_msg2
+
 
 /obj/machinery/computer/communications/process()
 	..()
 	if(state != STATE_STATUSDISPLAY)
 		src.updateDialog()
+
 
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
@@ -29,19 +58,20 @@
 					authenticated = 2
 		if("logout")
 			authenticated = 0
-		if("nolockdown")
-			disablelockdown(usr)
-			post_status("alert", "default")
+
 		if("announce")
 			if(src.authenticated==2)
+				if(message_cooldown)	return
 				var/input = input(usr, "Please choose a message to announce to the station crew.", "What?", "")
 				if(!input)
 					return
-				captain_announce(input)
+				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement.", 1)
-		if("call-prison")
-			call_prison_shuttle(usr)
+				message_cooldown = 1
+				spawn(600)//One minute cooldown
+					message_cooldown = 0
+
 		if("callshuttle")
 			src.state = STATE_DEFAULT
 			if(src.authenticated)
@@ -49,10 +79,8 @@
 		if("callshuttle2")
 			if(src.authenticated)
 				call_shuttle_proc(usr)
-
 				if(emergency_shuttle.online)
 					post_status("shuttle")
-
 			src.state = STATE_DEFAULT
 		if("cancelshuttle")
 			src.state = STATE_DEFAULT
@@ -142,25 +170,14 @@
 			src.aistate = STATE_STATUSDISPLAY
 	src.updateUsrDialog()
 
-/proc/disablelockdown(var/mob/usr)
-	world << "\red Lockdown cancelled by [usr.name]!"
-
-	for(var/obj/machinery/firealarm/FA in world) //deactivate firealarms
-		spawn( 0 )
-			if(FA.lockdownbyai == 1)
-				FA.lockdownbyai = 0
-				FA.reset()
-	for(var/obj/machinery/door/airlock/AL in world) //open airlocks
-		spawn ( 0 )
-			if(AL.canAIControl() && AL.lockdownbyai == 1)
-				AL.open()
-				AL.lockdownbyai = 0
 
 /obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
 	return src.attack_hand(user)
 
+
 /obj/machinery/computer/communications/attack_paw(var/mob/user as mob)
 	return src.attack_hand(user)
+
 
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())
@@ -184,8 +201,6 @@
 		if(STATE_DEFAULT)
 			if (src.authenticated)
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]"
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=call-prison'>Send Prison Shutle</A> \]"
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nolockdown'>Disable Lockdown</A> \]"
 				if (src.authenticated==2)
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make An Announcement</A> \]"
 				if(emergency_shuttle.location==0)
@@ -245,9 +260,7 @@
 		if(STATE_DEFAULT)
 			if(emergency_shuttle.location==0 && !emergency_shuttle.online)
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
-			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=call-prison'>Send Prison Shutle</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A> \]"
-			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nolockdown'>Disable Lockdown</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A> \]"
 		if(STATE_CALLSHUTTLE)
 			dat += "Are you sure you want to call the shuttle? \[ <A HREF='?src=\ref[src];operation=ai-callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-main'>Cancel</A> \]"
@@ -303,53 +316,6 @@
 
 	return
 
-/proc/call_prison_shuttle(var/mob/usr)
-	if ((!( ticker ) || emergency_shuttle.location == 1))
-		return
-	if(ticker.mode.name == "blob" || ticker.mode.name == "Corporate Restructuring" || ticker.mode.name == "sandbox")
-		usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
-		return
-	if(ticker.mode.name == "revolution")
-		usr << "Centcom will not allow the shuttle to be called, due to the possibility of sabotage by revolutionaries."
-		return
-	if(ticker.mode.name == "AI malfunction")
-		usr << "Centcom will not allow the shuttle to be called."
-		return
-	for(var/obj/machinery/computer/prison_shuttle/PS in world)
-		if(!PS.allowedtocall)
-			usr << "\red Centcom will not allow the shuttle to be called"
-			return
-		if(PS.z == 3)
-			usr << "\red Already in transit! Please wait!"
-			return
-		var/A = locate(/area/shuttle/prison/)
-		for(var/mob/M in A)
-			M.show_message("\red Launch sequence initiated!")
-			spawn(0)	shake_camera(M, 10, 1)
-		sleep(10)
-
-		if(PS.z == 2)	//This is the laziest proc ever
-			for(var/atom/movable/AM as mob|obj in A)
-				AM.z = 3
-				AM.Move()
-			sleep(rand(600,1800))
-			for(var/atom/movable/AM as mob|obj in A)
-				AM.z = 1
-				AM.Move()
-		else
-			for(var/atom/movable/AM as mob|obj in A)
-				AM.z = 3
-				AM.Move()
-			sleep(rand(600,1800))
-			for(var/atom/movable/AM as mob|obj in A)
-				AM.z = 2
-				AM.Move()
-		for(var/mob/M in A)
-			M.show_message("\red Prison shuttle has arrived at destination!")
-		return
-	return
-
-
 /proc/enable_prison_shuttle(var/mob/user)
 	for(var/obj/machinery/computer/prison_shuttle/PS in world)
 		PS.allowedtocall = !(PS.allowedtocall)
@@ -358,38 +324,26 @@
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
 
+	if(sent_strike_team == 1)
+		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
+		return
+
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
-		if(sent_strike_team == 1)
-			user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
-			return
-		else
-			user << "The emergency shuttle is refueling. Please wait another [(6000-world.time)/10] seconds before trying again."
-			return
+		user << "The emergency shuttle is refueling. Please wait another [(6000-world.time)/10] seconds before trying again."
+		return
 
 	if(emergency_shuttle.direction == -1)
 		user << "Shuttle may not be called while returning to CentCom."
 		return
 
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
-		//user << "Centcom will not allow the shuttle to be called." //Old code
-		//if(sent_strike_team == 1)
-		//	user << "Consider all contracts terminated."
-		//return
-
-		if(sent_strike_team == 1)
-			user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
-			return
+	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
 		//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
 		emergency_shuttle.fake_recall = rand(300,500)
 
-	if(sent_strike_team == 1)
-		if(ticker.mode.name != "revolution" || ticker.mode.name != "AI malfunction")
-			user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
+	if(ticker.mode.name == "blob")
+		if(ticker.mode:declared)
+			user << "Under directive 7-10, [station_name()] is quarantined until further notice."
 			return
-
-	if(ticker.mode.name == "blob" || ticker.mode.name == "sandbox")
-		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
-		return
 
 	emergency_shuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
@@ -398,6 +352,7 @@
 	world << sound('shuttlecalled.ogg')
 
 	return
+
 
 /proc/cancel_call_proc(var/mob/user)
 	if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0 || emergency_shuttle.timeleft() < 300))
@@ -417,8 +372,6 @@
 
 	if(!frequency) return
 
-
-
 	var/datum/signal/status_signal = new
 	status_signal.source = src
 	status_signal.transmission_method = 1
@@ -433,24 +386,6 @@
 
 	frequency.post_signal(src, status_signal)
 
-
-
-	/*
-		receive_signal(datum/signal/signal)
-
-		switch(signal.data["command"])
-			if("blank")
-				mode = 0
-
-			if("shuttle")
-				mode = 1
-
-			if("message")
-				set_message(signal.data["msg1"], signal.data["msg2"])
-
-			if("alert")
-				set_picture(signal.data["picture_state"])
-*/
 
 /obj/machinery/computer/communications/Del()
 

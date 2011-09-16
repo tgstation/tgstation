@@ -107,32 +107,6 @@
 	circuit = "/obj/item/weapon/circuitboard/card/centcom"
 	req_access = list(access_cent_captain)
 
-/obj/machinery/computer/communications
-	name = "Communications Console"
-	desc = "This can be used for various important functions. Still under developement."
-	icon_state = "comm"
-	req_access = list(access_heads)
-	circuit = "/obj/item/weapon/circuitboard/communications"
-	var/prints_intercept = 1
-	var/authenticated = 0
-	var/list/messagetitle = list()
-	var/list/messagetext = list()
-	var/currmsg = 0
-	var/aicurrmsg = 0
-	var/state = STATE_DEFAULT
-	var/aistate = STATE_DEFAULT
-	var/const
-		STATE_DEFAULT = 1
-		STATE_CALLSHUTTLE = 2
-		STATE_CANCELSHUTTLE = 3
-		STATE_MESSAGELIST = 4
-		STATE_VIEWMESSAGE = 5
-		STATE_DELMESSAGE = 6
-		STATE_STATUSDISPLAY = 7
-
-	var/status_display_freq = "1435"
-	var/stat_msg1
-	var/stat_msg2
 
 /obj/machinery/computer/data
 	name = "data"

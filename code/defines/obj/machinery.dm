@@ -183,24 +183,6 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 
-/obj/machinery/nuclearbomb
-	desc = "Uh oh. RUN!!!!"
-	name = "Nuclear Fission Explosive"
-	icon = 'stationobjs.dmi'
-	icon_state = "nuclearbomb0"
-	density = 1
-	var/deployable = 0.0
-	var/extended = 0.0
-	var/timeleft = 60.0
-	var/timing = 0.0
-	var/r_code = "ADMIN"
-	var/code = ""
-	var/yes_code = 0.0
-	var/safety = 1.0
-	var/obj/item/weapon/disk/nuclear/auth = null
-	flags = FPRINT
-	use_power = 0
-
 /obj/machinery/restruct
 	name = "DNA Physical Restructurization Accelerator"
 	desc = "This looks complex."

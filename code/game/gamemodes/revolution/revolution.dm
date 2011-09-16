@@ -177,6 +177,7 @@
 		for(var/mob/living/M in view(rev_mind.current))
 			M << "[rev_mind.current] looks like they just remembered their real allegiance!"
 
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //Keeps track of players having the correct icons////////////////////////////////////////////////
 //CURRENTLY CONTAINS BUGS:///////////////////////////////////////////////////////////////////////
@@ -291,8 +292,9 @@
 /////////////////////////////
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		if(rev_mind && rev_mind.current && rev_mind.current.stat != 2)
-			return 0
+		if((rev_mind) && (rev_mind.current) && ((rev_mind.current.stat != 2) || (rev_mind.current.z != 1)))
+			if(ishuman(rev_mind.current))
+				return 0
 	return 1
 
 //////////////////////////////////////////////////////////////////////
@@ -311,7 +313,12 @@
 		var/list/names = new
 		for(var/datum/mind/i in head_revolutionaries)
 			if(i.current)
-				names += i.current.real_name + ((i.current.stat==2)?" (Dead)":"")
+				var/hstatus = ""
+				if(i.current.stat == 2)
+					hstatus = " Dead"
+				else if(i.current.z != 1)
+					hstatus = " Abandoned the station"
+				names += i.current.real_name + " ([hstatus])"
 			else
 				names += "[i.key] (character destroyed)"
 		world << "<FONT size = 2><B>The head revolutionaries were: </B></FONT>"
@@ -325,7 +332,7 @@
 					hstatus = " Dead"
 				else if(i.current.z != 1)
 					hstatus = " Abandoned the station"
-				names += i.current.real_name + " [hstatus]"
+				names += i.current.real_name + " ([hstatus])"
 			else
 				names += "[i.key] (character destroyed)"
 		if (revolutionaries.len!=0)
@@ -350,7 +357,7 @@
 					hstatus = " Dead"
 				else if(i.current.z != 1)
 					hstatus = " Abandoned the station"
-				names += i.current.real_name + " [hstatus]" + ((i in targets)?"(target)":"")
+				names += i.current.real_name + " ([hstatus])" + ((i in targets)?"(target)":"")
 			else
 				names += "[i.key] (character destroyed)" + ((i in targets)?"(target)":"")
 		if (heads.len!=0)

@@ -260,9 +260,10 @@
 							Metroid.Discipline++
 
 						spawn()
-							Metroid.SStun = 1
-							sleep(rand(5,20))
-							Metroid.SStun = 0
+							if(Metroid)
+								Metroid.SStun = 1
+								sleep(rand(5,20))
+								Metroid.SStun = 0
 
 						spawn(0)
 							Metroid.canmove = 0

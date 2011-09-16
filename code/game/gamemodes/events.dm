@@ -63,21 +63,7 @@
 			if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
 				space_ninja_arrival()//Handled in space_ninja.dm. Doesn't announce arrival, all sneaky-like.
 		if(4)
-			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-			world << sound('outbreak5.ogg')
-			var/turf/T = pick(blobstart)
-			var/obj/blob/bl = new /obj/blob( T.loc, 30 )
-			spawn(0)
-				bl.Life()
-				bl.Life()
-				bl.Life()
-				bl.Life()
-				bl.Life()
-			blobevent = 1
-			dotheblobbaby()
-			spawn(3000)
-				blobevent = 0
-			//start loop here
+			mini_blob_event()
 
 		if(5)
 			high_radiation_event()
@@ -98,13 +84,6 @@
 		if(13)
 			IonStorm()
 
-/proc/dotheblobbaby()
-	if (blobevent)
-		for(var/obj/blob/B in world)
-			if (prob (40))
-				B.Life()
-		spawn(30)
-			dotheblobbaby()
 
 /obj/bhole/New()
 	src.smoke = new /datum/effects/system/harmless_smoke_spread()

@@ -9,7 +9,8 @@
 	anchored = 1
 	var
 		active = 1
-		health = 40
+		health = 30
+		brute_resist = 4
 		blobtype = "Blob"
 		blobdebug = 0
 		/*Types
@@ -20,7 +21,7 @@
 		*/
 
 
-	New(loc, var/h = 40)
+	New(loc, var/h = 30)
 		blobs += src
 		active_blobs += src
 		src.health = h
@@ -44,13 +45,14 @@
 		return 0
 
 
-	proc/check_mutations()
+	proc/check_mutations()//These could be their own objects I guess
 		if(blobtype != "Blob")	return
-		desc = "This really needs a better sprite"
+		desc = "This really needs a better sprite."
 		//Spaceeeeeeblobbb
 		if(istype(src.loc, /turf/space))
 			active = 0
 			health += 40
+			brute_resist = 2
 			name = "strong blob"
 			icon_state = "blob_idle"//needs a new sprite
 			blobtype = "Shield"
@@ -84,29 +86,32 @@
 	proc/Life(var/pulse = 0)
 		set background = 1
 
-		if(blobtype == "Factory")
-			for(var/i = 1 to 2)
-				new/obj/critter/blob(src.loc)
-				return
-
 		if(check_mutations())
 			return
 
+		if(blobtype == "Factory")
+			for(var/i = 1 to 2)
+				new/obj/critter/blob(src.loc)
+				if(!pulse)
+					return
+
 		if(!prob(health))	return//Does not do much unless its healthy it seems, might want to change this later
 
-		for(var/dirn in cardinal)
-//			sleep(3) Due to the background we might not need this dono though
+		var/list/dirs = new/list(cardinal)
+		for(var/i = 1 to 4)
+			var/dirn = pick(dirs)
+			dirs.Remove(dirn)
 			var/turf/T = get_step(src, dirn)
 
 			if((locate(/obj/blob) in T))
-				if(((src.blobtype == "Node") || (pulse > 0))&& (pulse < 12))
+				if(((src.blobtype == "Node") || (pulse > 0))&& (pulse < 15))
 					var/obj/blob/E = (locate(/obj/blob) in T)
 					E.Life((pulse+1))
 					return//Pass it along and end
 				continue
 
 
-			var/obj/blob/B = new /obj/blob(src.loc, src.health)
+			var/obj/blob/B = new /obj/blob(src.loc, min(src.health, 40))//Currently capping blob health at 40 because thats very strong
 			if(T.Enter(B,src) && !(locate(/obj/blob) in T))
 				B.loc = T							// open cell, so expand
 			else
@@ -138,10 +143,10 @@
 			del(src)
 			return
 		if(blobtype != "Blob")	return
-		if(health<10)
+		if(health <= 10)
 			icon_state = "blob_damaged"
 			return
-		if(health<20)
+		if(health <= 20)
 			icon_state = "blob_damaged2"
 			return
 
@@ -155,20 +160,18 @@
 	attackby(var/obj/item/weapon/W, var/mob/user)
 		playsound(src.loc, 'attackblob.ogg', 50, 1)
 		src.visible_message("\red <B>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]")
-		var/damage = W.force / 4.0
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.welding)
-				damage = 15
-				playsound(src.loc, 'Welder.ogg', 100, 1)
+		var/damage = 0
+		switch(W.damtype)
+			if("fire")
+				damage = (W.force)
+				if(istype(W, /obj/item/weapon/weldingtool))
+					playsound(src.loc, 'Welder.ogg', 100, 1)
+			if("brute")
+				damage = (W.force / max(src.brute_resist,1))
 
 		src.health -= damage
 		src.update()
 
-
-	examine()
-		set src in oview(1)
-		usr << "Some blob thing."
 
 
 /datum/station_state/proc/count()

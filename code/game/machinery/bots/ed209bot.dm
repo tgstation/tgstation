@@ -748,9 +748,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/ed209/emp_act(severity)
 	if (cam)
 		cam.emp_act(severity)
-	if (severity > 2)
-		..(severity-1)
-	else if (severity==2 && prob(70))
+	if(severity==2 && prob(70))
 		..(severity-1)
 	else
 		var/obj/overlay/pulse2 = new/obj/overlay ( src.loc )
@@ -766,22 +764,23 @@ Auto Patrol: []"},
 			if (C.stat==2)
 				continue
 			targets += C
-		if (prob(50))
-			var/mob/toshoot = pick(targets)
-			if (toshoot)
-				targets-=toshoot
-				if (prob(50) && !emagged)
-					emagged = 1
-					shootAt(toshoot)
-					emagged = 0
-				else
-					shootAt(toshoot)
-		if (/*prob(50)*/ 1 )
-			var/mob/toarrest = pick(targets)
-			if (toarrest)
-				//targets-=toarrest
-				src.target = toarrest
-				src.mode = SECBOT_HUNT
+		if(targets.len)
+			if(prob(50))
+				var/mob/toshoot = pick(targets)
+				if (toshoot)
+					targets-=toshoot
+					if (prob(50) && !emagged)
+						emagged = 1
+						shootAt(toshoot)
+						emagged = 0
+					else
+						shootAt(toshoot)
+			else if(prob(50))
+				if(targets.len)
+					var/mob/toarrest = pick(targets)
+					if (toarrest)
+						src.target = toarrest
+						src.mode = SECBOT_HUNT
 
 
 
