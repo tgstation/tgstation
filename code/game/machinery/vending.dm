@@ -245,7 +245,17 @@
 				return
 
 			if (R in coin_records)
-				del(coin)
+				if(!coin)
+					usr << "\blue You need to insert a coin to get this item."
+					return
+				if(coin.string_attached)
+					if(prob(50))
+						usr << "\blue You successfully pull the coin out before the [src] could swallow it."
+					else
+						usr << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
+						del(coin)
+				else
+					del(coin)
 
 			R.amount--
 
