@@ -58,7 +58,7 @@
 		if(Discipline >= 5 && rabid)
 			if(prob(60)) rabid = 0
 
-		if(prob(20))
+		if(prob(10))
 			Discipline--
 
 

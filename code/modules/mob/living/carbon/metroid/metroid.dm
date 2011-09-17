@@ -458,8 +458,9 @@
 
 				spawn()
 					SStun = 1
-					sleep(rand(25,50))
-					SStun = 0
+					sleep(rand(45,60))
+					if(src)
+						SStun = 0
 
 				Victim = null
 				anchored = 0
@@ -487,6 +488,11 @@
 						if(Discipline == 1)
 							attacked = 0
 
+				spawn()
+					SStun = 1
+					sleep(rand(55,65))
+					if(src)
+						SStun = 0
 
 				Victim = null
 				anchored = 0

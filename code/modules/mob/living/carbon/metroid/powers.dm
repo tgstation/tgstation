@@ -142,7 +142,6 @@
 		else
 			icon_state = "baby metroid"
 
-	Victim = null
 	canmove = 1
 	anchored = 0
 
@@ -169,6 +168,8 @@
 		M.canmove = 1
 
 		if(client) src << "<i>I have stopped feeding...</i>"
+
+	Victim = null
 
 /mob/living/carbon/metroid/proc/Feedstop()
 	if(Victim)
