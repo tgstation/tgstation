@@ -19,6 +19,8 @@
 		var/list/temp_amounts = dd_text2List(src.product_amounts, ";")
 		var/list/temp_hidden = dd_text2List(src.product_hidden, ";")
 		var/list/temp_hideamt = dd_text2List(src.product_hideamt, ";")
+		var/list/temp_coin = dd_text2List(src.product_coin, ";")
+		var/list/temp_coin_amt = dd_text2List(src.product_coin_amt, ";")
 		//Little sanity check here
 		if ((isnull(temp_paths)) || (isnull(temp_amounts)) || (temp_paths.len != temp_amounts.len) || (temp_hidden.len != temp_hideamt.len))
 			stat |= BROKEN
@@ -28,6 +30,7 @@
 		src.build_inventory(temp_paths,temp_amounts)
 		 //Add hidden inventory
 		src.build_inventory(temp_hidden,temp_hideamt, 1)
+		src.build_inventory(temp_coin,temp_coin_amt, 0, 1)
 		power_change()
 		return
 
@@ -60,7 +63,7 @@
 
 	return
 
-/obj/machinery/vending/proc/build_inventory(var/list/path_list,var/list/amt_list,hidden=0)
+/obj/machinery/vending/proc/build_inventory(var/list/path_list,var/list/amt_list,hidden=0,req_coin=0)
 
 	for(var/p=1, p <= path_list.len ,p++)
 		var/checkpath = text2path(path_list[p])
@@ -77,6 +80,9 @@
 		if(hidden)
 			R.amount = text2num(amt_list[p])
 			src.hidden_records += R
+		else if(req_coin)
+			R.amount = text2num(amt_list[p])
+			src.coin_records += R
 		else
 			R.amount = text2num(amt_list[p])
 			src.product_records += R
@@ -105,6 +111,12 @@
 		if(src.panel_open)
 			attack_hand(user)
 		return
+	else if(istype(W, /obj/item/weapon/coin))
+		user.drop_item()
+		W.loc = src
+		coin = W
+		user << "\blue You insert the [W] into the [src]"
+		return
 	else
 		..()
 
@@ -125,12 +137,18 @@
 
 	var/dat = "<TT><b>Select an item:</b><br>"
 
+	dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] (<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>)<br><br>"
+
 	if (src.product_records.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
 		var/list/display_records = src.product_records
 		if(src.extended_inventory)
-			display_records = (src.product_records + src.hidden_records)
+			display_records = src.product_records + src.hidden_records
+		if(src.coin)
+			display_records = src.product_records + src.coin_records
+		if(src.coin && src.extended_inventory)
+			display_records = src.product_records + src.hidden_records + src.coin_records
 
 		for (var/datum/data/vending_product/R in display_records)
 			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:"
@@ -190,6 +208,18 @@
 			usr << "\red The vending machine refuses to interface with you, as you are not in its target demographic!"
 			return
 
+	if(href_list["remove_coin"])
+		if(!coin)
+			usr << "There is no coin in this machine."
+			return
+
+		coin.loc = src.loc
+		if(!usr.get_active_hand())
+			usr.put_in_hand(coin)
+		usr << "\blue You remove the [coin] from the [src]"
+		coin = null
+
+
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
 		usr.machine = src
 		if ((href_list["vend"]) && (src.vend_ready))
@@ -213,6 +243,9 @@
 			if (R.amount <= 0)
 				src.vend_ready = 1
 				return
+
+			if (R in coin_records)
+				del(coin)
 
 			R.amount--
 

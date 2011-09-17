@@ -243,6 +243,12 @@ ZIPPO
 	throwforce = 1
 
 
+/obj/item/clothing/mask/cigarette/cigar/havanian/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/match) && (W:lit > 0))
+		user << "\red The [src] straight out REFUSES to be lit by such uncivilized means."
+	else
+		..()
+
 
 ////////////
 //CIG PACK//

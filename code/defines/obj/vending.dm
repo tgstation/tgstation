@@ -14,8 +14,11 @@
 	var/product_slogans = "" //String of slogans separated by semicolons, optional
 	var/product_hidden = "" //String of products that are hidden unless hacked.
 	var/product_hideamt = "" //String of hidden product amounts, separated by semicolons. Exact same as amounts. Must be left blank if hidden is.
+	var/product_coin = ""
+	var/product_coin_amt = ""
 	var/list/product_records = list()
 	var/list/hidden_records = list()
+	var/list/coin_records = list()
 	var/list/slogan_list = list()
 	var/vend_reply //Thank you for shopping!
 	var/last_reply = 0
@@ -30,6 +33,7 @@
 	var/extended_inventory = 0 //can we access the hidden inventory?
 	var/panel_open = 0 //Hacking that vending machine. Gonna get a free candy bar.
 	var/wires = 15
+	var/obj/item/weapon/coin/coin
 
 /obj/machinery/vending/boozeomat
 	name = "Booze-O-Mat"
@@ -90,6 +94,8 @@
 	vend_delay = 34
 	product_hidden = "/obj/item/weapon/zippo"
 	product_hideamt = "4"
+	product_coin = "/obj/item/clothing/mask/cigarette/cigar/havanian"
+	product_coin_amt = "2"
 
 /obj/machinery/vending/medical
 	name = "NanoMed Plus"
