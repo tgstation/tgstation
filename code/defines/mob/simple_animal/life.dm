@@ -139,7 +139,7 @@
 					movement_target.attack_animal(src)
 				else if(ishuman(movement_target.loc) )
 					if(prob(20))
-						emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
+						emote("", 0, "stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
 
 /mob/living/simple_animal/New()
 	..()
