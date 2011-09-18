@@ -18,13 +18,14 @@
 	desc = "These look pretty fancy."
 	icon_state = "latex"
 	item_state = "lgloves"
+	color="mime"
 
 /obj/item/clothing/gloves/black
 	desc = "These gloves are fire-resistant."
 	name = "Black Gloves"
 	icon_state = "black"
 	item_state = "bgloves"
-
+	color="brown"
 	protective_temperature = 1500
 	heat_transfer_coefficient = 0.01
 
@@ -46,6 +47,7 @@
 	protective_temperature = 310
 	heat_transfer_coefficient = 0.90
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 20, rad = 20)
+	color="white"
 
 /obj/item/clothing/gloves/swat
 	desc = "These tactical gloves are somewhat fire and impact-resistant."
@@ -103,6 +105,7 @@
 	protective_temperature = 1000
 	heat_transfer_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 30, bomb = 0, bio = 0, rad = 0)
+	color="yellow"
 
 /obj/item/clothing/gloves/captain
 	desc = "Regal blue gloves, with a nice gold trim. Swanky."
@@ -125,45 +128,60 @@
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "orange"
 	item_state = "orangegloves"
+	color="orange"
 
 /obj/item/clothing/gloves/red
 	name = "Red Gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "red"
 	item_state = "redgloves"
+	color = "red"
+
+/obj/item/clothing/gloves/rainbow
+	name = "Rainbow Gloves"
+	desc = "A pair of gloves, they don't look special in any way."
+	icon_state = "rainbow"
+	item_state = "rainbowgloves"
+	color = "rainbow"
 
 /obj/item/clothing/gloves/blue
 	name = "Blue Gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "blue"
 	item_state = "bluegloves"
+	color="blue"
 
 /obj/item/clothing/gloves/purple
 	name = "Purple Gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "purple"
 	item_state = "purplegloves"
+	color="purple"
 
 /obj/item/clothing/gloves/green
 	name = "Green Gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "green"
 	item_state = "greengloves"
+	color="green"
 
-/obj/item/clothing/gloves/gray
-	name = "Gray Gloves"
+/obj/item/clothing/gloves/grey
+	name = "Grey Gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "gray"
 	item_state = "graygloves"
+	color="grey"
 
 /obj/item/clothing/gloves/light_brown
 	name = "Light Brown Gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "lightbrown"
 	item_state = "lightbrowngloves"
+	color="light brown"
 
 /obj/item/clothing/gloves/brown
 	name = "Brown Gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "brown"
 	item_state = "browngloves"
+	color="brown"

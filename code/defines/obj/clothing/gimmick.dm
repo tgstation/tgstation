@@ -28,6 +28,13 @@
 	name = "red shoes"
 	desc = "Stylish red shoes."
 	icon_state = "red"
+	color = "red"
+
+/obj/item/clothing/shoes/rainbow
+	name = "rainbow shoes"
+	desc = "Very gay shoes."
+	icon_state = "rain_bow"
+	color = "rainbow"
 
 /obj/item/clothing/mask/owl_mask
 	name = "Owl mask"
@@ -96,6 +103,7 @@
 	name = "rainbow"
 	desc = "rainbow"
 	icon_state = "rainbow"
+	item_state = "rainbow"
 	color = "rainbow"
 
 /obj/item/clothing/under/cloud
@@ -141,6 +149,7 @@
 	name = "purple"
 	desc = "purple"
 	icon_state = "purple"
+	item_state = "p_suit"
 	color = "purple"
 
 /obj/item/clothing/under/lightpurple

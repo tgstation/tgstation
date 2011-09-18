@@ -270,6 +270,39 @@
 	w_class = 1.0
 	throw_speed = 2
 	throw_range = 10
+	var/color = "white"
+
+/obj/item/weapon/bedsheet/blue
+	icon_state = "sheetblue"
+	color = "blue"
+
+/obj/item/weapon/bedsheet/green
+	icon_state = "sheetgreen"
+	color = "green"
+
+/obj/item/weapon/bedsheet/orange
+	icon_state = "sheetorange"
+	color = "orange"
+
+/obj/item/weapon/bedsheet/purple
+	icon_state = "sheetpurple"
+	color = "purple"
+
+/obj/item/weapon/bedsheet/rainbow
+	icon_state = "sheetrainbow"
+	color = "rainbow"
+
+/obj/item/weapon/bedsheet/red
+	icon_state = "sheetred"
+	color = "red"
+
+/obj/item/weapon/bedsheet/yellow
+	icon_state = "sheetyellow"
+	color = "yellow"
+
+/obj/item/weapon/bedsheet/mime
+	icon_state = "sheetmime"
+	color = "mime"
 
 /obj/item/weapon/bikehorn
 	name = "Bike Horn"

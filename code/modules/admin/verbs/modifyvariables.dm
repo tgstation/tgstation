@@ -15,11 +15,19 @@
 
 /client/proc/mod_list_add_ass() //haha
 
-	var/class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-	"num","type","reference","mob reference", "icon","file")
+	var/class = "text"
+	if(src.holder && src.holder.marked_datum)
+		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+	else
+		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
 
 	if(!class)
 		return
+
+	if(class == "marked datum ([holder.marked_datum.type])")
+		class = "marked datum"
 
 	var/var_value = null
 
@@ -45,6 +53,9 @@
 
 		if("icon")
 			var_value = input("Pick icon:","Icon") as icon
+
+		if("marked datum")
+			var_value = holder.marked_datum
 
 	if(!var_value) return
 
@@ -53,11 +64,19 @@
 
 /client/proc/mod_list_add(var/list/L)
 
-	var/class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-	"num","type","reference","mob reference", "icon","file")
+	var/class = "text"
+	if(src.holder && src.holder.marked_datum)
+		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+	else
+		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
 
 	if(!class)
 		return
+
+	if(class == "marked datum ([holder.marked_datum.type])")
+		class = "marked datum"
 
 	var/var_value = null
 
@@ -83,6 +102,9 @@
 
 		if("icon")
 			var_value = input("Pick icon:","Icon") as icon
+
+		if("marked datum")
+			var_value = holder.marked_datum
 
 	if(!var_value) return
 
@@ -178,11 +200,19 @@
 		if(dir)
 			usr << "If a direction, direction is: [dir]"
 
-	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference", "icon","file","list","edit referenced object", "(DELETE FROM LIST)","restore to default")
+	var/class = "text"
+	if(src.holder && src.holder.marked_datum)
+		class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+	else
+		class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
 
 	if(!class)
 		return
+
+	if(class == "marked datum ([holder.marked_datum.type])")
+		class = "marked datum"
 
 	switch(class)
 
@@ -226,6 +256,9 @@
 		if("icon")
 			variable = input("Pick icon:","Icon",variable) \
 				as icon
+
+		if("marked datum")
+			variable = holder.marked_datum
 
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "urine", "poo", "icon", "icon_state")
@@ -378,8 +411,12 @@
 			if(dir)
 				usr << "If a direction, direction is: [dir]"
 
-		class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
+		if(src.holder && src.holder.marked_datum)
+			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
+				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+		else
+			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
+				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
 
 		if(!class)
 			return
@@ -390,6 +427,9 @@
 		original_name = "\ref[O] ([O])"
 	else
 		original_name = O:name
+
+	if(class == "marked datum ([holder.marked_datum.type])")
+		class = "marked datum"
 
 	switch(class)
 
@@ -435,6 +475,9 @@
 		if("icon")
 			O.vars[variable] = input("Pick icon:","Icon",O.vars[variable]) \
 				as icon
+
+		if("marked datum")
+			O.vars[variable] = holder.marked_datum
 
 	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]", 1)

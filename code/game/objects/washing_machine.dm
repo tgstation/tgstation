@@ -20,6 +20,7 @@
 	//0 = not hacked
 	//1 = hacked
 	var/gibs_ready = 0
+	var/obj/item/toy/crayon/crayon
 
 /obj/machinery/washing_machine/verb/start()
 	set name = "Start Washing"
@@ -38,6 +39,97 @@
 	sleep(200)
 	for(var/atom/A in contents)
 		A.clean_blood()
+
+	if(crayon)
+		var/color = crayon.colourName
+		if(color)
+			var/new_jumpsuit_icon_state = ""
+			var/new_jumpsuit_item_state = ""
+			var/new_jumpsuit_name = ""
+			var/new_glove_icon_state = ""
+			var/new_glove_item_state = ""
+			var/new_glove_name = ""
+			var/new_shoe_icon_state = ""
+			var/new_shoe_name = ""
+			var/new_sheet_icon_state = ""
+			var/new_sheet_name = ""
+			var/new_desc = "The colors are a bit dodgy."
+			for(var/T in typesof(/obj/item/clothing/under))
+				var/obj/item/clothing/under/J = new T
+				//world << "DEBUG: [color] == [J.color]"
+				if(color == J.color)
+					new_jumpsuit_icon_state = J.icon_state
+					new_jumpsuit_item_state = J.item_state
+					new_jumpsuit_name = J.name
+					del(J)
+					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					break
+				del(J)
+			for(var/T in typesof(/obj/item/clothing/gloves))
+				var/obj/item/clothing/gloves/G = new T
+				//world << "DEBUG: [color] == [J.color]"
+				if(color == G.color)
+					new_glove_icon_state = G.icon_state
+					new_glove_item_state = G.item_state
+					new_glove_name = G.name
+					del(G)
+					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					break
+				del(G)
+			for(var/T in typesof(/obj/item/clothing/shoes))
+				var/obj/item/clothing/shoes/S = new T
+				//world << "DEBUG: [color] == [J.color]"
+				if(color == S.color)
+					new_shoe_icon_state = S.icon_state
+					new_shoe_name = S.name
+					del(S)
+					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					break
+				del(S)
+			for(var/T in typesof(/obj/item/weapon/bedsheet))
+				var/obj/item/weapon/bedsheet/B = new T
+				//world << "DEBUG: [color] == [J.color]"
+				if(color == B.color)
+					new_sheet_icon_state = B.icon_state
+					new_sheet_name = B.name
+					del(B)
+					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					break
+				del(B)
+			if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
+				for(var/obj/item/clothing/under/J in contents)
+					//world << "DEBUG: YUP! FOUND IT!"
+					J.item_state = new_jumpsuit_item_state
+					J.icon_state = new_jumpsuit_icon_state
+					J.color = color
+					J.name = new_jumpsuit_name
+					J.desc = new_desc
+			if(new_glove_icon_state && new_glove_item_state && new_glove_name)
+				for(var/obj/item/clothing/gloves/G in contents)
+					//world << "DEBUG: YUP! FOUND IT!"
+					G.item_state = new_glove_item_state
+					G.icon_state = new_glove_icon_state
+					G.color = color
+					G.name = new_glove_name
+					G.desc = new_desc
+			if(new_shoe_icon_state && new_shoe_name)
+				for(var/obj/item/clothing/shoes/S in contents)
+					//world << "DEBUG: YUP! FOUND IT!"
+					S.icon_state = new_shoe_icon_state
+					S.color = color
+					S.name = new_shoe_name
+					S.desc = new_desc
+			if(new_sheet_icon_state && new_sheet_name)
+				for(var/obj/item/weapon/bedsheet/B in contents)
+					//world << "DEBUG: YUP! FOUND IT!"
+					B.icon_state = new_sheet_icon_state
+					B.color = color
+					B.name = new_sheet_name
+					B.desc = new_desc
+		del(crayon)
+		crayon = null
+
+
 	if( locate(/mob,contents) )
 		state = 7
 		gibs_ready = 1
@@ -62,7 +154,17 @@
 	/*if(istype(W,/obj/item/weapon/screwdriver))
 		panel = !panel
 		user << "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel"*/
-	if(istype(W,/obj/item/weapon/grab))
+	if(istype(W,/obj/item/toy/crayon))
+		if( state in list(	1, 3, 6 ) )
+			if(!crayon)
+				user.drop_item()
+				crayon = W
+				crayon.loc = src
+			else
+				..()
+		else
+			..()
+	else if(istype(W,/obj/item/weapon/grab))
 		if( (state == 1) && hacked)
 			var/obj/item/weapon/grab/G = W
 			if(ishuman(G.assailant) && iscorgi(G.affecting))
@@ -71,7 +173,7 @@
 				state = 3
 		else
 			..()
-	if(istype(W,/obj/item/clothing/under) || istype(W,/obj/item/clothing/mask) || istype(W,/obj/item/clothing/head) || istype(W,/obj/item/clothing/gloves) || istype(W,/obj/item/clothing/shoes) || istype(W,/obj/item/clothing/suit))
+	else if(istype(W,/obj/item/clothing/under) || istype(W,/obj/item/clothing/mask) || istype(W,/obj/item/clothing/head) || istype(W,/obj/item/clothing/gloves) || istype(W,/obj/item/clothing/shoes) || istype(W,/obj/item/clothing/suit) || istype(W,/obj/item/weapon/bedsheet))
 
 		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
 		if ( istype(W,/obj/item/clothing/suit/space ) )

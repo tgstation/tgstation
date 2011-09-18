@@ -54,13 +54,49 @@ client
 						filter_text.select();
 
 					}
+
+					function loadPage(list) {
+
+						if(list.options\[list.selectedIndex\].value == ""){
+							return;
+						}
+
+						location.href=list.options\[list.selectedIndex\].value;
+
+					}
 				</script> "}
 
 		body += "<body onload='selectTextField()'>"
 
 		body += "<div align='center'><table width='100%'><tr><td width='50%'><div align='center'><b>[D]<br><font size='1'>[D.type]</font></b></div></td>"
 
-		body += "<td width='50%'><div align='center'><a href='byond://?src=\ref[src];datumrefresh=\ref[D];refresh=1'>Refresh</a></div></td></tr></table></div><hr>"
+		body += "<td width='50%'><div align='center'><a href='byond://?src=\ref[src];datumrefresh=\ref[D];refresh=1'>Refresh</a>"
+
+		//if(ismob(D))
+		//	body += "<br><a href='byond://?src=\ref[src];mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
+
+		body += {"	<form>
+					<select name="file" size="1"
+					onchange="loadPage(this.form.elements\[0\])"
+					target="_parent._top"
+					onmouseclick="this.focus()"
+					style="background-color:#ffffff">
+				"}
+
+		body += {"	<option value>Select option</option>
+  					<option value> </option>
+				"}
+
+
+		body += "<option value='byond://?src=\ref[src];mark_object=\ref[D]'>Mark Object</option>"
+
+		body += "<option value>---</option>"
+		if(ismob(D))
+			body += "<option value='byond://?src=\ref[src];mob_player_panel=\ref[D]'>Show player panel</option>"
+
+		body += "</select></form>"
+
+		body += "</div></td></tr></table></div><hr>"
 
 		body += "<font size='1'><b>E</b> - Edit, tries to determine the variable type by itself.<br>"
 		body += "<b>C</b> - Change, asks you for the var type first.</font><br>"
@@ -210,6 +246,26 @@ client
 			if(!istype(DAT,/datum))
 				return
 			src.debug_variables(DAT)
+		else if (href_list["mob_player_panel"])
+			if(!href_list["mob_player_panel"])
+				return
+			var/mob/MOB = locate(href_list["mob_player_panel"])
+			if(!MOB)
+				return
+			if(!ismob(MOB))
+				return
+			if(!src.holder)
+				return
+			src.holder.show_player_panel(MOB)
+		else if (href_list["mark_object"])
+			if(!href_list["mark_object"])
+				return
+			var/datum/D = locate(href_list["mark_object"])
+			if(!D)
+				return
+			if(!src.holder)
+				return
+			src.holder.marked_datum = D
 		else
 			..()
 

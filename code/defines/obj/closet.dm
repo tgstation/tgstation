@@ -19,6 +19,20 @@
 	icon_closed = "acloset"
 	icon_opened = "aclosetopen"
 
+/obj/closet/cabinet
+	desc = "Old will forever be in fashion."
+	name = "Cabinet"
+	icon_state = "cabinet_closed"
+	icon_closed = "cabinet_closed"
+	icon_opened = "cabinet_open"
+
+/obj/closet/cabinet2
+	desc = "Old will forever be in fashion."
+	name = "Cabinet"
+	icon_state = "cabinetdet_closed"
+	icon_closed = "cabinetdet_closed"
+	icon_opened = "cabinetdet_open"
+
 /obj/spresent
 	desc = "It's a ... present?"
 	name = "strange present"

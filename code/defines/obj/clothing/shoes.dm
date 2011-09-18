@@ -29,15 +29,48 @@
 /obj/item/clothing/shoes/black
 	name = "Black Shoes"
 	icon_state = "black"
+	color = "black"
 
 /obj/item/clothing/shoes/brown
 	name = "Brown Shoes"
 	icon_state = "brown"
+	color = "brown"
+
+/obj/item/clothing/shoes/blue
+	name = "Blue Shoes"
+	icon_state = "blue"
+	color = "blue"
+
+/obj/item/clothing/shoes/green
+	name = "Green Shoes"
+	icon_state = "green"
+	color = "green"
+
+/obj/item/clothing/shoes/yellow
+	name = "Yellow Shoes"
+	icon_state = "yellow"
+	color = "yellow"
+
+/obj/item/clothing/shoes/mime
+	name = "Mime Shoes"
+	icon_state = "mime"
+	color = "mime"
+
+/obj/item/clothing/shoes/purple
+	name = "Purple Shoes"
+	icon_state = "purple"
+	color = "purple"
+
+/obj/item/clothing/shoes/brown
+	name = "Brown Shoes"
+	icon_state = "brown"
+	color = "brown"
 
 /obj/item/clothing/shoes/orange
 	name = "Orange Shoes"
 	icon_state = "orange"
 	var/chained = 0
+	color = "orange"
 
 /obj/item/clothing/shoes/swat
 	name = "SWAT shoes"
@@ -66,6 +99,7 @@
 	name = "White Shoes"
 	icon_state = "white"
 	permeability_coefficient = 0.25
+	color = "white"
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
