@@ -21,23 +21,35 @@ Contains the procs that control attacking critters
 		if (!src.alive)	..()
 		if (user.a_intent == "hurt")
 			TakeDamage(rand(1,2) * brutevuln)
-			for(var/mob/O in viewers(src, null))
-				O.show_message("\red <b>[user]</b> punches [src]!", 1)
-			playsound(src.loc, pick('punch1.ogg','punch2.ogg','punch3.ogg','punch4.ogg'), 100, 1)
+
+			if(istype(user, /mob/living/carbon/human))
+				for(var/mob/O in viewers(src, null))
+					O.show_message("\red <B>[user] has punched [src]!</B>", 1)
+				playsound(src.loc, pick('punch1.ogg','punch2.ogg','punch3.ogg','punch4.ogg'), 100, 1)
+
+			else if(istype(user, /mob/living/carbon/alien/humanoid))
+				for(var/mob/O in viewers(src, null))
+					O.show_message("\red <B>[user] has slashed at [src]!</B>", 1)
+				playsound(src.loc, 'slice.ogg', 25, 1, -1)
+
+			else
+				for(var/mob/O in viewers(src, null))
+					O.show_message("\red <B>[user] has bit [src]!</B>", 1)
+
 			if(src.defensive)	Target_Attacker(user)
 		else
 			for(var/mob/O in viewers(src, null))
-				O.show_message("\red <b>[user]</b> touches [src]!", 1)
+				O.show_message("\blue [user] touches [src]!", 1)
 
 
 	Target_Attacker(var/target)
 		if(!target)	return
 		src.target = target
 		src.oldtarget_name = target:name
-		if(task != "chasing")
+		if(task != "chasing" || task != "attacking")
 			for(var/mob/O in viewers(src, null))
-				O.show_message("\red <b>[src]</b> [src.angertext] [target:name]!", 1)
-		src.task = "chasing"
+				O.show_message("\red <b>[src]</b> [src.angertext] at [target:name]!", 1)
+			src.task = "chasing"
 		return
 
 

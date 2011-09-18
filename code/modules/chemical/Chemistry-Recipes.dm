@@ -608,7 +608,7 @@ datum
 			name = "Metroid Teleport"
 			id = "m_tele"
 			result = null
-			required_reagents = list("plasma" = 1, "acid" = 1)
+			required_reagents = list("plasma" = 1, "pacid" = 2, "mutagen" = 3)
 			result_amount = 1
 			required_container = /obj/item/metroid_core
 			required_other = 4
@@ -638,8 +638,9 @@ datum
 
 					var/y_distance = TO.y - FROM.y
 					var/x_distance = TO.x - FROM.x
-					for (var/atom/movable/A in range(3, FROM )) // iterate thru list of mobs in the area
-						if(A == chosen) continue // don't teleport the actual beacon that's just stupid as fukkkkk
+					for (var/atom/movable/A in range(2, FROM )) // iterate thru list of mobs in the area
+						if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
+						if(A.anchored) continue // don't teleport anchored things (computers, tables, windows, grilles, etc) because this causes problems!
 
 						var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
 						if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
@@ -659,6 +660,8 @@ datum
 									sleep(20)
 									M.client.screen -= blueeffect
 									del(blueeffect)
+
+
 
 
 
