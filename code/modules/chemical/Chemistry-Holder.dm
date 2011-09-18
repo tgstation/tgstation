@@ -328,10 +328,12 @@ datum
 									var/list/that = data["viruses"]
 									this += that // combine the two
 
+									/* -- Turns out this code was buggy and unnecessary ---- Doohl
 									for(var/datum/disease/D in this) // makes sure no two viruses are in the reagent at the same time
 										for(var/datum/disease/d in this)
 											if(d != D)
 												D.cure(0)
+									*/
 
 						return 0
 

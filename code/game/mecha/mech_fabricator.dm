@@ -189,7 +189,7 @@
 		var/output = ""
 		var/list/part_set = listgetindex(part_sets, set_name)
 		if(istype(part_set))
-			for(var/atom/part in part_set)
+			for(var/obj/item/mecha_parts/part in part_set)
 				var/resources_available = check_resources(part)
 				output += "<div class='part'>[output_part_info(part)]<br>\[[resources_available?"<a href='?src=\ref[src];part=\ref[part]'>Build</a> | ":null]<a href='?src=\ref[src];add_to_queue=\ref[part]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=\ref[part]'>?</a>\]</div>"
 		return output
@@ -220,10 +220,11 @@
 		return
 
 	proc/check_resources(var/obj/item/mecha_parts/part)
-		for(var/resource in part.construction_cost)
-			if(resource in src.resources)
-				if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
-					return 0
+		if(istype(part, /obj/item/mecha_parts))
+			for(var/resource in part.construction_cost)
+				if(resource in src.resources)
+					if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
+						return 0
 		return 1
 
 	proc/build_part(var/obj/item/mecha_parts/part)
