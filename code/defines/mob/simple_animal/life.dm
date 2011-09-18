@@ -68,6 +68,8 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 
+
+
 //Corgi
 /mob/living/simple_animal/corgi
 	name = "Corgi"

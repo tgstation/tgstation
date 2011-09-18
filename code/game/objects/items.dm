@@ -239,7 +239,7 @@
 	return
 
 
-
+//What the fuck is this code
 /mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (user.intent != "harm")
 		if (istype(src.l_hand,/obj/item/latexballon) && src.l_hand:air_contents && is_sharp(W))
@@ -247,10 +247,6 @@
 		if (istype(src.r_hand,/obj/item/latexballon) && src.r_hand:air_contents && is_sharp(W))
 			return src.r_hand.attackby(W)
 	var/shielded = 0
-	for(var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
-		else
 	if (locate(/obj/item/weapon/grab, src))
 		var/mob/safe = null
 		if (istype(src.l_hand, /obj/item/weapon/grab))

@@ -49,9 +49,9 @@
 		if(blobtype != "Blob")	return
 		desc = "This really needs a better sprite."
 		//Spaceeeeeeblobbb
-		if(istype(src.loc, /turf/space))
+		if((istype(src.loc, /turf/space)) || (blobdebug == 3))
 			active = 0
-			health += 40
+			health = 60
 			brute_resist = 2
 			name = "strong blob"
 			icon_state = "blob_idle"//needs a new sprite
@@ -61,7 +61,7 @@
 		//Commandblob
 		if((blobdebug == 1))
 			active = 0
-			health += 80
+			health = 100
 			name = "solid blob"
 			icon_state = "blob_node"//needs a new sprite
 			blobtype = "Node"
@@ -83,45 +83,80 @@
 		return
 
 
-	proc/Life(var/pulse = 0)
+	proc/Pulse(var/pulse = 0, var/origin_dir = 0)
 		set background = 1
+		if(blobtype != "Node")
+			if(special_action())//If we can do something here then we dont need to pulse more
+				return
+			if(check_mutations())
+				return
 
-		if(check_mutations())
+		if((blobtype == "Blob") && (pulse <= 2))
+			blobdebug = 3
+			check_mutations()
 			return
 
-		if(blobtype == "Factory")
-			for(var/i = 1 to 2)
-				new/obj/critter/blob(src.loc)
-				if(!pulse)
-					return
-
-		if(!prob(health))	return//Does not do much unless its healthy it seems, might want to change this later
-
+		if(pulse > 20)	return//Inf loop check
+		//Looking for another blob to pulse
 		var/list/dirs = list(1,2,4,8)
+		dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
 		for(var/i = 1 to 4)
-
+			if(!dirs.len)	break
 			var/dirn = pick(dirs)
 			dirs.Remove(dirn)
 			var/turf/T = get_step(src, dirn)
+			var/obj/blob/B = (locate(/obj/blob) in T)
+			if(!B)
+				expand(T)//No blob here so try and expand
+				return
+			B.Pulse((pulse+1),get_dir(src.loc,T))
+			return
+		return
 
-			if((locate(/obj/blob) in T))
-				if(((src.blobtype == "Node") || (pulse > 0))&& (pulse < 15))
-					var/obj/blob/E = (locate(/obj/blob) in T)
-					E.Life((pulse+1))
-					return//Pass it along and end
-				continue
 
 
-			var/obj/blob/B = new /obj/blob(src.loc, min(src.health, 40))//Currently capping blob health at 40 because thats very strong
-			if(T.Enter(B,src) && !(locate(/obj/blob) in T))
-				B.loc = T							// open cell, so expand
+	proc/special_action()//For things like the
+		set background = 1
+		switch(blobtype)
+			if("Factory")
+				new/obj/critter/blob(src.loc)
+				return 1
+			if("Node")
+				spawn(0)
+					Pulse(0,0)
+				return 1
+			if("Blob")
+				if(expand())
+					return 1
+		return 0
+
+
+	proc/Life()
+		if(check_mutations())
+			return 1
+		if(special_action())
+			return 1
+		return 0
+
+
+	proc/expand(var/turf/T = null)
+		if(!prob(health))	return
+		if(!T)
+			var/list/dirs = list(1,2,4,8)
+			for(var/i = 1 to 4)
+				var/dirn = pick(dirs)
+				dirs.Remove(dirn)
+				T = get_step(src, dirn)
+				if((locate(/obj/blob) in T))	continue
+				else 	break
+		if(T)
+			var/obj/blob/B = new /obj/blob(src.loc, min(src.health, 30))
+			if(T.Enter(B,src))
+				B.loc = T
 			else
-				if(prob(90))						// closed cell, 10% chance to not expand
-					if(!locate(/obj/blob) in T)
-						for(var/atom/A in T)			// otherwise explode contents of turf
-							A.blob_act()
-
-						T.blob_act()
+				for(var/atom/A in T)//This might be killing the spores
+					A.blob_act()
+				T.blob_act()
 				del(B)
 		return
 
@@ -147,9 +182,9 @@
 		if(health <= 10)
 			icon_state = "blob_damaged"
 			return
-		if(health <= 20)
-			icon_state = "blob_damaged2"
-			return
+//		if(health <= 20)
+//			icon_state = "blob_damaged2"
+//			return
 
 
 	bullet_act(var/obj/item/projectile/Proj)

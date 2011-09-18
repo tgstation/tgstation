@@ -84,13 +84,6 @@
 				return
 
 
-	for(var/obj/item/device/shield/S in src)
-		if (S.active)
-			if (Proj.flag == "bullet")
-				return
-			shielded = 1
-			S.active = 0
-			S.icon_state = "shield0"
 	for(var/obj/item/weapon/cloaking_device/S in src)
 		if (S.active)
 			shielded = 1
@@ -206,10 +199,6 @@
 		return
 
 	var/shielded = 0
-	for(var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
-			break
 
 	var/b_loss = null
 	var/f_loss = null
@@ -244,9 +233,6 @@
 	if (stat == 2)
 		return
 	var/shielded = 0
-	for(var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
 	var/damage = null
 	if (stat != 2)
 		damage = rand(30,40)
@@ -548,11 +534,6 @@
 
 
 	var/shielded = 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
-			break
-
 	for (var/obj/item/weapon/cloaking_device/S in src)
 		if (S.active)
 			shielded = 2

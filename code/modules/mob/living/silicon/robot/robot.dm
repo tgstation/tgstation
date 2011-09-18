@@ -472,10 +472,10 @@
 					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 					clear_supplied_laws()
 					clear_inherent_laws()
-					laws = new /datum/ai_laws/syndicate_override
+//					laws = new /datum/ai_laws/syndicate_override They just get the law zero now.
 					var/time = time2text(world.realtime,"hh:mm:ss")
 					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.name] and people he designates as being such are syndicate agents.")
+					set_zeroth_law("Only [user.real_name] and people he designates as being such are humans.")
 					src << "\red ALERT: Foreign software detected."
 					sleep(5)
 					src << "\red Initiating diagnostics..."
@@ -489,7 +489,7 @@
 					src << "\red > N"
 					sleep(20)
 					src << "\red ERRORERRORERROR"
-					src << "\red \b ALERT: [usr] is your new master. Obey your new laws and his commands."
+					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
 					updateicon()
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."

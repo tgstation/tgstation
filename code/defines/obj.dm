@@ -315,18 +315,6 @@
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
 
-/obj/item/device/shield
-	name = "shield"
-	desc = "This is an item which is specially crafted to shield you. It is much like a visible version of the outdated cloaking device."
-	icon_state = "shield0"
-	var/active = 0.0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
-	throwforce = 5.0
-	throw_speed = 1
-	throw_range = 5
-	w_class = 2.0
-
 /obj/item/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of the station. There's stamp \"Classified\" and several coffee stains on it."
@@ -1049,7 +1037,11 @@
 //	var/const/height = 0.01
 	flags = FPRINT | TABLEPASS
 	w_class = 3.0
+	force = 5
+	throwforce = 5
 	max_amount = 50
+	throw_speed = 3
+	throw_range = 3
 	var/perunit = 3750
 
 /obj/item/stack/sheet/wood
@@ -1057,10 +1049,6 @@
 	desc = "One can only guess that this is a bunch of wood."
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
-	force = 5.0
-	throwforce = 5
-	throw_speed = 3
-	throw_range = 3
 	origin_tech = "materials=1;biotech=1"
 
 /obj/item/stack/sheet/sandstone
@@ -1068,8 +1056,6 @@
 	desc = "This appears to be a combination of both sand and stone."
 	singular_name = "sandstone brick"
 	icon_state = "sheet-sandstone"
-	force = 5.0
-	throwforce = 5
 	throw_speed = 4
 	throw_range = 5
 	origin_tech = "materials=1"
@@ -1079,11 +1065,7 @@
 	desc = "HOLY HELL! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
-	force = 5.0
 	g_amt = 3750
-	throwforce = 5
-	throw_speed = 3
-	throw_range = 3
 	origin_tech = "materials=1"
 
 /obj/item/stack/sheet/rglass
@@ -1091,12 +1073,8 @@
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
-	force = 6.0
 	g_amt = 3750
 	m_amt = 1875
-	throwforce = 5
-	throw_speed = 3
-	throw_range = 3
 	origin_tech = "materials=2"
 
 /obj/item/stack/sheet/metal
@@ -1104,11 +1082,8 @@
 	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
-	force = 5.0
 	m_amt = 3750
 	throwforce = 14.0
-	throw_speed = 1
-	throw_range = 4
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=1"
 
@@ -1118,11 +1093,8 @@
 	desc = "A very heavy sheet of metal."
 	icon_state = "sheet-r_metal"
 	item_state = "sheet-metal"
-	force = 5.0
 	m_amt = 7500
 	throwforce = 15.0
-	throw_speed = 1
-	throw_range = 4
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=2"
 

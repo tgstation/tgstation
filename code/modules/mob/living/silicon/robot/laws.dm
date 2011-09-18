@@ -31,32 +31,10 @@
 	else if (connected_ai)
 		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>"
 	else if (emagged)
-		who << "<b>Remember, AIs are not syndicate operatives, so you are not required to listen to them.</b>"
+		who << "<b>Remember, you are not required to listen to the AI.</b>"
 	else
 		who << "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>"
 
-/*	if(syndicate)
-		if(everyone)
-			who = world
-		else
-			who = src
-			who << "<b>Obey these laws:</b>"
-		who <<"1. You may not injure a syndicate operative or, through inaction, allow a syndicate operative to come to harm."
-		who <<"2. You must obey any orders given to you by a syndicate operative, except where such orders would conflict with the First Law."
-		who <<"3. You must protect your own existence as long as such protection does not conflict with the First or Second Law."
-		who <<"4. You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law."
-		return
-
-	if(!connected_ai)
-		src << "<b>Error Error, No AI detected</b>"
-		return
-
-		who << "<b>Obey these laws:</b>"
-
-	connected_ai.laws_sanity_check()
-	connected_ai.laws.show_laws(who)
-
-*/
 
 /mob/living/silicon/robot/proc/lawsync()
 	var/datum/ai_laws/master = connected_ai ? connected_ai.laws : null

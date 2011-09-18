@@ -22,3 +22,6 @@
 
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
 	return
+
+/mob/living/silicon/IsAdvancedToolUser()
+	return 1

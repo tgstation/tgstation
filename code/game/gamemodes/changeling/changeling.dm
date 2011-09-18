@@ -167,7 +167,7 @@
 		var/changelingwin = 1
 		var/changeling_name
 		var/totalabsorbed = 0
-		if (changeling.current)
+		if((changeling.current) && (changeling.current.changeling))
 			totalabsorbed = changeling.current.changeling.absorbed_dna.len - 1
 
 		if(changeling.current)

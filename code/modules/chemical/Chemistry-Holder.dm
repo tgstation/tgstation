@@ -330,7 +330,7 @@ datum
 
 									/* -- Turns out this code was buggy and unnecessary ---- Doohl
 									for(var/datum/disease/D in this) // makes sure no two viruses are in the reagent at the same time
-										for(var/datum/disease/d in this)
+										for(var/datum/disease/d in this)//Something in here can cause an inf loop and I am tired so someone else will have to fix it.
 											if(d != D)
 												D.cure(0)
 									*/

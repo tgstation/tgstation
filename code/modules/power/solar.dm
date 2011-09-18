@@ -11,14 +11,14 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	var
-		health = 10.0
+		health = 10
 		id = 1
 		obscured = 0
 		sunfrac = 0
 		adir = SOUTH
 		ndir = SOUTH
 		turn_angle = 0
-		obj/machinery/power/solar_control/control
+		obj/machinery/power/solar_control/control = null
 	proc
 		healthcheck()
 		updateicon()
@@ -185,7 +185,8 @@
 			if(!powernet) return
 			for(var/obj/machinery/power/solar/S in powernet.nodes)
 				if(S.id != id) continue
-				cdir = S.adir
+				cdir = S.adir//The hell is this even doing?
+				S.control = src
 				updateicon()
 
 
@@ -351,7 +352,8 @@
 		if(!powernet) return
 		for(var/obj/machinery/power/solar/S in powernet.nodes)
 			if(S.id != id) continue
-			S.control = src
+			if(!S.control)
+				S.control = src
 			S.ndir = cdir
 
 

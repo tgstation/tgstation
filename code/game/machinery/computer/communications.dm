@@ -357,7 +357,7 @@
 /proc/cancel_call_proc(var/mob/user)
 	if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0 || emergency_shuttle.timeleft() < 300))
 		return
-	if( ticker.mode.name == "blob" )
+	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))
 		return
 
 	emergency_shuttle.recall()

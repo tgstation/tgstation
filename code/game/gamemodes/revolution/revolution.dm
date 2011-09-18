@@ -292,7 +292,7 @@
 /////////////////////////////
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		if((rev_mind) && (rev_mind.current) && ((rev_mind.current.stat != 2) || (rev_mind.current.z != 1)))
+		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != 2) && (rev_mind.current.z == 1))
 			if(ishuman(rev_mind.current))
 				return 0
 	return 1
@@ -309,15 +309,15 @@
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
-	if (head_revolutionaries.len!=0 || istype(ticker.mode,/datum/game_mode/revolution))
+	if(head_revolutionaries.len!=0 || istype(ticker.mode,/datum/game_mode/revolution))
 		var/list/names = new
 		for(var/datum/mind/i in head_revolutionaries)
 			if(i.current)
 				var/hstatus = ""
 				if(i.current.stat == 2)
-					hstatus = " Dead"
+					hstatus = "Dead"
 				else if(i.current.z != 1)
-					hstatus = " Abandoned the station"
+					hstatus = "Abandoned the station"
 				names += i.current.real_name + " ([hstatus])"
 			else
 				names += "[i.key] (character destroyed)"
@@ -329,9 +329,9 @@
 			if(i.current)
 				var/hstatus = ""
 				if(i.current.stat == 2)
-					hstatus = " Dead"
+					hstatus = "Dead"
 				else if(i.current.z != 1)
-					hstatus = " Abandoned the station"
+					hstatus = "Abandoned the station"
 				names += i.current.real_name + " ([hstatus])"
 			else
 				names += "[i.key] (character destroyed)"
@@ -354,9 +354,9 @@
 			if(i.current)
 				var/hstatus = ""
 				if(i.current.stat == 2)
-					hstatus = " Dead"
+					hstatus = "Dead"
 				else if(i.current.z != 1)
-					hstatus = " Abandoned the station"
+					hstatus = "Abandoned the station"
 				names += i.current.real_name + " ([hstatus])" + ((i in targets)?"(target)":"")
 			else
 				names += "[i.key] (character destroyed)" + ((i in targets)?"(target)":"")

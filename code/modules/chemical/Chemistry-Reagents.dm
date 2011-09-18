@@ -626,6 +626,8 @@ datum
 				..()
 				return
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				if(!istype(M, /mob/living))
+					return
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						if(M:wear_mask)
@@ -1042,6 +1044,7 @@ datum
 				..()
 				return
 			reaction_obj(var/obj/O, var/volume)
+				if((!O) || (!volume))	return 0
 				src = null
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new

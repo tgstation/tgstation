@@ -551,17 +551,6 @@ CLIPBOARDS
 			//SN src = null
 			del(src)
 			return
-		if("shield")
-			var/obj/item/device/shield/W = new /obj/item/device/shield( M )
-			if (M.hand)
-				M.l_hand = W
-			else
-				M.r_hand = W
-			W.layer = 20
-			W.add_fingerprint(M)
-			//SN src = null
-			del(src)
-			return
 		if("sword")
 			var/obj/item/weapon/melee/energy/sword/W = new /obj/item/weapon/melee/energy/sword( M )
 			if (M.hand)

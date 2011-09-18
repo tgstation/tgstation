@@ -89,8 +89,9 @@
 		handle_regular_status_updates()
 
 			//Stop AI using us as a camera
+			src.camera.status = 1//bluh bluh ugly fix but it will work till this whole thing gets recoded
 			if(src.stat)
-				src.camera.status = 0.0
+				src.camera.status = 0
 
 			health = 300 - (oxyloss + fireloss + bruteloss)
 
@@ -103,16 +104,10 @@
 			if(src.resting)
 				src.weakened = max(src.weakened, 5)
 
-	//		if(emagged && prob(10))
-	//			src.overlays += "emag"		//Causes the emag pulse to activate again at random. Causes metagaming to activate constantly.
-	//		else
-	//			src.overlays -= "emag"
-
 			if(health < 0 && src.stat != 2) //die only once
 				death()
 
 			if (src.stat != 2) //Alive.
-
 				if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
 					src.stat = 1
 					if (src.stunned > 0)

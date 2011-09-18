@@ -55,7 +55,7 @@
 
 /datum/game_mode/blob/proc/life()
 	if (blobs.len > 0)
-		for (var/i = 1 to 20)
+		for(var/i = 1 to 10)
 			sleep(-1)
 			if (blobs.len == 0)
 				break
@@ -64,8 +64,8 @@
 			if(B.z != 1)
 				continue
 
-			spawn(0)
-				B.Life()
+//			spawn(0)
+			B.Life()
 
 
 /datum/game_mode/blob/proc/stage()//Still needs worrrrrk

@@ -192,248 +192,6 @@
 		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
 			stat("Energy Charge", round(wear_suit:cell:charge/100))
 
-/mob/living/carbon/human/bullet_act(A as obj, var/datum/organ/external/def_zone)
-	var/shielded = 0
-	var/parry = 0
-	//Preparing the var for grabbing the armor information, can't grab the values yet because we don't know what kind of bullet was used. --NEO
-
-	var/obj/item/projectile/P = A
-	if(prob(80))
-		for(var/mob/living/carbon/metroid/M in view(1,src))
-			if(M.Victim == src)
-				M.bullet_act(A) // the bullet hits them, not src!
-				return
-
-	if (istype(l_hand, /obj/item/weapon/shield/riot))
-		if (prob(50 - round(P.damage / 3))) // the less damage a projectile does, the more likely to block it //changed from "the more damage" to "the less", because that makes no sense
-			show_message("\red Your shield blocks the blow!", 4)
-			return
-
-	if (istype(r_hand, /obj/item/weapon/shield/riot))
-		if (prob(50 - round(P.damage / 3)))
-			show_message("\red Your shield blocks the blow!", 4)
-			return
-
-	for(var/obj/item/weapon/melee/energy/sword/B in src)
-		if (B.active)
-			parry = 1
-			B.active = 1
-	if ((parry))
-		if (prob(50 - round(P.damage / 3)))
-			visible_message("\red [src] deflects the shot with their blade!")
-			return
-
-	for(var/obj/item/device/shield/S in src)
-		if (S.active)
-			if (P.flag == "bullet")
-				return
-			shielded = 1
-			S.active = 0
-			S.icon_state = "shield0"
-	for(var/obj/item/weapon/cloaking_device/S in src)
-		if (S.active)
-			shielded = 1
-			S.active = 0
-			S.icon_state = "shield0"
-	if ((shielded && P.flag != "bullet"))
-		if (P.flag)
-			src << "\blue Your shield was disturbed by a laser!"
-			if(paralysis <= 120)	paralysis = 120
-			updatehealth()
-
-	var/datum/organ/external/affecting
-	if(!def_zone)
-		var/organ = organs[ran_zone("chest")]
-		if (istype(organ, /datum/organ/external))
-			affecting = organ
-	else
-		affecting = organs["[def_zone]"]
-
-	if(!affecting)
-		return
-	if (locate(/obj/item/weapon/grab, src))
-		var/mob/safe = null
-		if (istype(l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = l_hand
-			if ((G.state == 3 && get_dir(src, A) == dir))
-				safe = G.affecting
-		if (istype(r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon.grab/G = r_hand
-			if ((G.state == 3 && get_dir(src, A) == dir))
-				safe = G.affecting
-		if (safe && A)
-			return safe.bullet_act(A)
-
-	var/absorb
-	var/soften
-
-	for(var/i = 1, i<= P.mobdamage.len, i++)
-
-		switch(i)
-			if(1)
-				var/d = P.mobdamage[BRUTE]
-				if(d)
-					var/list/armor = getarmor(affecting, P.flag)
-					if (prob(armor["armor"]))
-						absorb = 1
-					else
-						if (prob(armor["armor"])/2)
-							soften = 1
-							d = d / 2
-
-
-						if(!P.nodamage) affecting.take_damage(d, 0)
-						UpdateDamageIcon()
-						updatehealth()
-			if(2)
-				var/d = P.mobdamage[BURN]
-				if(d)
-					var/list/armor = getarmor(affecting, P.flag)
-					if (prob(armor["armor"]))
-						absorb = 1
-					else
-						if (prob(armor["armor"])/2)
-							soften = 1
-							d = d / 2
-
-
-						if(!P.nodamage) affecting.take_damage(0, d)
-						UpdateDamageIcon()
-						updatehealth()
-			if(3)
-				var/d = P.mobdamage[TOX]
-				if(d)
-					var/list/armor = getarmor(affecting, P.flag)
-					if (prob(armor["armor"]))
-						absorb = 1
-					else
-						if (prob(armor["armor"])/2)
-							soften = 1
-							d = d / 2
-
-
-						if(!P.nodamage) toxloss += d
-						UpdateDamageIcon()
-						updatehealth()
-			if(4)
-				var/d = P.mobdamage[OXY]
-				if(d)
-					var/list/armor = getarmor(affecting, P.flag)
-					if (prob(armor["armor"]))
-						absorb = 1
-					else
-						if (prob(armor["armor"])/2)
-							soften = 1
-							d = d / 2
-
-
-						if(!P.nodamage) oxyloss += d
-						UpdateDamageIcon()
-						updatehealth()
-			if(5)
-				var/d = P.mobdamage[CLONE]
-				if(d)
-					var/list/armor = getarmor(affecting, P.flag)
-					if (prob(armor["armor"]))
-						absorb = 1
-					else
-						if (prob(armor["armor"])/2)
-							soften = 1
-							d = d / 2
-
-
-						if(!nodamage) cloneloss += d
-						UpdateDamageIcon()
-						updatehealth()
-
-
-
-
-	///////////////////  All the unique projectile stuff goes here ///////////////////
-
-	if(absorb)
-		show_message("\red Your armor absorbs the blow!", 4)
-		return // a projectile can be deflected/absorbed given the right amount of protection
-	if(soften)
-		show_message("\red Your armor only softens the blow!", 4)
-		if(prob(15)) return
-
-	var/nostutter = 0
-
-	if(P.effects["stun"] && prob(P.effectprob["stun"]))
-		var/list/armor = getarmor(affecting, "taser")
-		if (!prob(armor["armor"]))
-			if(P.effectmod["stun"] == SET)
-				stunned = P.effects["stun"]
-			else
-				stunned += P.effects["stun"]
-		else
-			nostutter = 1
-
-
-	if(P.effects["weak"] && prob(P.effectprob["weak"]))
-		if(P.effectmod["weak"] == SET)
-			weakened = P.effects["weak"]
-		else
-			weakened += P.effects["weak"]
-
-	if(P.effects["paralysis"] && prob(P.effectprob["paralysis"]))
-		if(P.effectmod["paralysis"] == SET)
-			paralysis = P.effects["paralysis"]
-		else
-			paralysis += P.effects["paralysis"]
-
-	if(P.effects["stutter"] && prob(P.effectprob["stutter"]) && !nostutter)
-		if(P.effectmod["stutter"] == SET)
-			stuttering = P.effects["stutter"]
-		else
-			stuttering += P.effects["stutter"]
-
-	if(P.effects["drowsyness"] && prob(P.effectprob["drowsyness"]))
-		if(P.effectmod["drowsyness"] == SET)
-			drowsyness = P.effects["drowsyness"]
-		else
-			drowsyness += P.effects["drowsyness"]
-
-	if(P.effects["radiation"] && prob(P.effectprob["radiation"]))
-		var/list/armor = getarmor(affecting, "rad")
-		if (!prob(armor["armor"]))
-			if(P.effectmod["radiation"] == SET)
-				radiation = P.effects["radiation"]
-			else
-				radiation += P.effects["radiation"]
-
-	if(P.effects["eyeblur"] && prob(P.effectprob["eyeblur"]))
-		if(P.effectmod["eyeblur"] == SET)
-			eye_blurry = P.effects["eyeblur"]
-		else
-			eye_blurry += P.effects["eyeblur"]
-
-	if(P.effects["emp"])
-		var/emppulse = P.effects["emp"]
-		if(prob(P.effectprob["emp"]))
-			empulse(src, emppulse, emppulse)
-		else
-			empulse(src, 0, emppulse)
-
-	return
-
-/mob/living/carbon/human/emp_act(severity)
-	if(wear_suit) wear_suit.emp_act(severity)
-	if(w_uniform) w_uniform.emp_act(severity)
-	if(shoes) shoes.emp_act(severity)
-	if(belt) belt.emp_act(severity)
-	if(gloves) gloves.emp_act(severity)
-	if(glasses) glasses.emp_act(severity)
-	if(head) head.emp_act(severity)
-	if(ears) ears.emp_act(severity)
-	if(wear_id) wear_id.emp_act(severity)
-	if(r_store) r_store.emp_act(severity)
-	if(l_store) l_store.emp_act(severity)
-	if(s_store) s_store.emp_act(severity)
-	if(h_store) h_store.emp_act(severity)
-	..()
-
 /mob/living/carbon/human/ex_act(severity)
 	flick("flash", flash)
 
@@ -450,12 +208,6 @@
 		return
 
 	var/shielded = 0
-
-	for(var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
-			break
-
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
@@ -528,18 +280,9 @@
 /mob/living/carbon/human/blob_act()
 	if (stat == 2)
 		return
-	var/shielded = 0
-	for(var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
 	var/damage = null
 	if (stat != 2)
 		damage = rand(30,40)
-
-	if(shielded)
-		damage /= 4
-
-		//paralysis += 1
 
 	show_message("\red The blob attacks you!")
 
@@ -1343,11 +1086,6 @@
 		l_hand.screen_loc = ui_lhand
 
 	var/shielded = 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
-			break
-
 	for (var/obj/item/weapon/cloaking_device/S in src)
 		if (S.active)
 			shielded = 2
@@ -2946,77 +2684,6 @@ It can still be worn/put on as normal.
 	updatehealth()
 	UpdateDamageIcon()
 
-/mob/living/carbon/human/proc/getarmor(var/datum/organ/external/def_zone, var/type)
-	var/armorval = 0
-	var/organnum = 0
-
-
-	if(istype(def_zone))
-		return checkarmor(def_zone, type)
-		//If a specific bodypart is targetted, check how that bodypart is protected and return the value. --NEO
-
-	else
-		//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-		for(var/organ_name in organs)
-			var/datum/organ/external/organ = organs[organ_name]
-			if (istype(organ))
-				var/list/organarmor = checkarmor(organ, type)
-				armorval += organarmor["armor"]
-				organnum++
-				//world << "Debug text: full body armor check in progress, [organ.name] is best protected against [type] damage by [organarmor["clothes"]], with a value of [organarmor["armor"]]"
-		//world << "Debug text: full body armor check complete, average of [armorval/organnum] protection against [type] damage."
-		return armorval/organnum
-
-	return 0
-
-/mob/living/carbon/human/proc/checkarmor(var/datum/organ/external/def_zone, var/type)
-	if (!type)
-		return
-	var/obj/item/clothing/best
-	var/armorval = 0
-
-	//I don't really like the way this is coded, but I can't think of a better way to check what they're actually wearing as opposed to something they're holding. --NEO
-
-	if(head && istype(head,/obj/item/clothing))
-		if(def_zone.body_part & head.body_parts_covered)
-			if(head.armor[type] > armorval)
-				armorval = head.armor[type]
-				best = head
-
-	if(wear_mask && istype(wear_mask,/obj/item/clothing))
-		if(def_zone.body_part & wear_mask.body_parts_covered)
-			if(wear_mask.armor[type] > armorval)
-				armorval = wear_mask.armor[type]
-				best = wear_mask
-
-	if(wear_suit && istype(wear_suit,/obj/item/clothing))
-		if(def_zone.body_part & wear_suit.body_parts_covered)
-			if(wear_suit.armor[type] > armorval)
-				armorval = wear_suit.armor[type]
-				best = wear_suit
-
-	if(w_uniform && istype(w_uniform,/obj/item/clothing))
-		if(def_zone.body_part & w_uniform.body_parts_covered)
-			if(w_uniform.armor[type] > armorval)
-				armorval = w_uniform.armor[type]
-				best = w_uniform
-
-	if(shoes && istype(shoes,/obj/item/clothing))
-		if(def_zone.body_part & shoes.body_parts_covered)
-			if(shoes.armor[type] > armorval)
-				armorval = shoes.armor[type]
-				best = shoes
-
-	if(gloves && istype(gloves,/obj/item/clothing))
-		if(def_zone.body_part & gloves.body_parts_covered)
-			if(gloves.armor[type] > armorval)
-				armorval = gloves.armor[type]
-				best = gloves
-
-	var/list/result = list(clothes = best, armor = armorval)
-	return result
-
-
 /mob/living/carbon/human/Topic(href, href_list)
 	if (href_list["refresh"])
 		if((machine)&&(in_range(src, usr)))
@@ -3057,4 +2724,8 @@ It can still be worn/put on as normal.
 	if(istype(src.glasses, /obj/item/clothing/glasses/thermal))
 		number -= 1
 	return number
+
+
+/mob/living/carbon/human/IsAdvancedToolUser()
+	return 1//Humans can use guns and such
 

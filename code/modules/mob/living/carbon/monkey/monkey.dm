@@ -100,10 +100,6 @@
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
 		var/shielded = 0
-		for(var/obj/item/device/shield/S in src)
-			if (S.active)
-				shielded = 1
-			else
 		bruteloss += 30
 		if ((O.icon_state == "flaming" && !( shielded )))
 			fireloss += 40
@@ -824,4 +820,9 @@
 	target.update_clothing()
 	del(src)
 	return
+
+/mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
+	if(!ticker)	return 0
+	if(!ticker.mode.name == "monkey")	return 0
+	return 1
 

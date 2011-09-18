@@ -128,91 +128,7 @@
 	icon_state = "spacecash1000"
 	access = access_crate_cash
 
-/*
-/obj/item/weapon/ammo
-	name = "ammo"
-	icon = 'ammo.dmi'
-	var/amount_left = 0.0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "syringe_kit"
-	m_amt = 50000
-	throwforce = 2
-	w_class = 1.0
-	throw_speed = 4
-	throw_range = 20
-	origin_tech = "materials=2;combat=1"
 
-/obj/item/weapon/ammo/a357
-	desc = "There are 7 rounds left!"
-	name = "ammo-357"
-	icon_state = "357-7"
-	amount_left = 7.0
-
-/obj/item/weapon/ammo/a45
-	desc = "There are 10 rounds left!"
-	name = "ammo-45"
-	icon_state = "45-10"
-	amount_left = 10.0
-
-/obj/item/weapon/ammo/a763m
-	desc = "There are 9 rounds left!"
-	name = "ammo-7.63x25"
-	icon_state = "7.63x25m-9"
-	amount_left = 9.0
-
-/obj/item/weapon/ammo/a9x19p
-	desc = "There are 8 rounds left!"
-	name = "ammo-9x19"
-	icon_state = "9x19p-8"
-	amount_left = 8.0
-
-/obj/item/weapon/ammo/assaultmag
-	desc = "There are 30 rounds left!"
-	name = "5.56x45mm NATO"
-	icon_state = "5.56"
-	amount_left = 30.0
-
-/obj/item/weapon/ammo/shell //easier to add new shell types. Like badmin laser/taser/pulse shells.
-	desc = "Generic shell description."
-	name = "Generic shell."
-	icon_state = "blshell"
-	m_amt = 9000
-	New()
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
-
-/obj/item/weapon/ammo/shell/beanbag
-	desc = "A weak beanbag shell."
-	name = "beanbag shell"
-	icon_state = "bshell"
-	m_amt = 10000
-
-/obj/item/weapon/ammo/shell/gauge
-	desc = "A 12gauge shell."
-	name = "12 gauge shell"
-	icon_state = "gshell"
-	m_amt = 25000
-
-/obj/item/weapon/ammo/shell/blank
-	desc = "A blank shell."
-	name = "blank shell"
-	icon_state = "blshell"
-	m_amt = 500
-
-/obj/item/weapon/ammo/shell/dart
-	desc = "A dart for use in shotguns.."
-	name = "shotgun dart"
-	icon_state = "blshell" //someone, draw the icon, please.
-	m_amt = 50000 //because it's like, instakill.
-
-
-/obj/item/weapon/ammo/a38
-	desc = "A speedloader that contains 7 .38 Special rounds."
-	name = "38-Special ammo"
-	icon_state = "38-7"
-	amount_left = 7.0
-	m_amt = 10000
-*/
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
 	name = "mass-spectrometer"
@@ -532,20 +448,6 @@
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 10
-
-/obj/item/weapon/cloaking_device
-	name = "cloaking device"
-	desc = "Use this to become invisible to the human eyesocket."
-	icon = 'device.dmi'
-	icon_state = "shield0"
-	var/active = 0.0
-	flags = FPRINT | TABLEPASS| CONDUCT
-	item_state = "electronic"
-	throwforce = 10.0
-	throw_speed = 2
-	throw_range = 10
-	w_class = 2.0
-	origin_tech = "magnets=3;syndicate=4"
 
 #define MAXCOIL 30
 /obj/item/weapon/cable_coil

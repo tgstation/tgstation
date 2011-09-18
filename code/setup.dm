@@ -200,3 +200,14 @@ var/list/accessable_z_levels = list("1" = 10, "3" = 15, "4" = 60, "5" = 15) //Th
 
 
 var/list/global_mutations = list() // list of hidden mutation things
+
+
+//Bullet things
+#define BRUTE "brute"
+#define BURN "burn"
+#define TOX "tox"
+#define OXY "oxy"
+#define CLONE "clone"
+
+#define ADD "add"
+#define SET "set"

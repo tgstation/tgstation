@@ -145,8 +145,6 @@ datum/hSB
 							continue
 						if(istype(O, /obj/item/weapon/melee/energy/sword))
 							continue
-						if(istype(O, /obj/item/device/shield))
-							continue
 						if(istype(O, /obj/critter))
 							continue
 						if(istype(O, /obj/structure))
