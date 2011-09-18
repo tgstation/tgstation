@@ -155,8 +155,6 @@
 
 
 
-
-
 			if((hungry || starving) && targets.len > 0)
 				if(!istype(src, /mob/living/carbon/metroid/adult))
 					if(!starving)
@@ -216,7 +214,7 @@
 
 		AIprocess()  // the master AI process
 
-			if(AIproc) return
+			if(AIproc || stat == 2) return
 
 			var/hungry = 0
 			var/starving = 0
@@ -476,6 +474,9 @@
 
 
 		handle_nutrition()
+
+			if(stat == 2) return // haha wow
+
 			if(prob(20))
 				if(istype(src, /mob/living/carbon/metroid/adult)) nutrition-=rand(4,6)
 				else nutrition-=rand(2,3)

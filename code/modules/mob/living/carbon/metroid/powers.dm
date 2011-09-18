@@ -217,6 +217,11 @@
 		if(amount_grown >= 10)
 			switch(input("Are you absolutely sure you want to reproduce? Your current body will cease to be, but your consciousness will be transferred into a produced metroid.") in list("Yes","No"))
 				if("Yes")
+
+					if(stat)
+						src << "<i>I must be conscious to do this...</i>"
+						return
+
 					var/number = pick(2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4)
 					var/list/babies = list()
 					for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
