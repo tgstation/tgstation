@@ -86,7 +86,7 @@
 	icon_state = "plasma"
 
 /obj/item/weapon/tank/emergency_oxygen
-	name = "Emergency Oxygen Tank"
+	name = "emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actualy need it."
 	icon_state = "emergency"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
@@ -97,7 +97,7 @@
 
 /obj/item/weapon/tank/emergency_oxygen/engi
 	icon_state = "emergency_engi"
-	name = "Engineering Emergency Oxygen Tank"
+	name = "extended-capacity emergency oxygen tank"
 	volume = 6 //Engineers are always superior. -errorage (dangercon 2011)
 
 /obj/item/weapon/tank/emergency_oxygen/double

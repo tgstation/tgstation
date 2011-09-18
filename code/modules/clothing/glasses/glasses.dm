@@ -14,9 +14,9 @@
 	vision_flags = SEE_TURFS
 
 /obj/item/clothing/glasses/science
-	name = "SCIENCE GOGGLES"
-	desc = "nothing"
-	icon_state = "lasty"
+	name = "Protective Goggles"
+	desc = "Protects your eyes against harmful chemicals."
+	icon_state = "purple"
 	item_state = "glasses"
 
 /obj/item/clothing/glasses/night
@@ -50,7 +50,7 @@
 
 /obj/item/clothing/glasses/sunglasses
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
-	name = "Sunglasses"
+	name = "sunglasses"
 	icon_state = "sun"
 	item_state = "sunglasses"
 	protective_temperature = 1300
