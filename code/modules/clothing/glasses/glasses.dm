@@ -13,6 +13,12 @@
 	origin_tech = "magnets=2;engineering=2"
 	vision_flags = SEE_TURFS
 
+/obj/item/clothing/glasses/science
+	name = "SCIENCE GOGGLES"
+	desc = "nothing"
+	icon_state = "lasty"
+	item_state = "glasses"
+
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
 	desc = "You can totally see in the dark now!."
