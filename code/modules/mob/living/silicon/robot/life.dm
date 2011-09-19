@@ -88,10 +88,10 @@
 
 		handle_regular_status_updates()
 
-			//Stop AI using us as a camera
-			src.camera.status = 1//bluh bluh ugly fix but it will work till this whole thing gets recoded
-			if(src.stat)
-				src.camera.status = 0
+			if(camera)
+				src.camera.status = 1//bluh bluh ugly fix but it will work till this whole thing gets recoded
+				if(src.stat)
+					src.camera.status = 0
 
 			health = 300 - (oxyloss + fireloss + bruteloss)
 

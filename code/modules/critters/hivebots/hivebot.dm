@@ -73,14 +73,18 @@
 		if(!src.attack)
 			for(var/obj/critter/C in view(src.seekrange,src))
 				if(istype(C, /obj/critter) && !src.atkcritter) continue
-				if(istype(C, /obj/mecha) && !src.atkmech) continue
 				if(C.health <= 0) continue
 				if(istype(C, /obj/critter) && src.atkcritter)
 					if((istype(C, /obj/critter/hivebot) && !src.atksame) || (C == src))	continue
-					src.attack = 1
-				if(istype(C, /obj/mecha) && src.atkmech) src.attack = 1
-				if(src.attack)
 					T = C
+					break
+
+			for(var/obj/mecha/M in view(src.seekrange,src))
+				if(istype(M, /obj/mecha) && !src.atkmech) continue
+				if(M.health <= 0) continue
+				if(istype(M, /obj/mecha) && src.atkmech) src.attack = 1
+				if(src.attack)
+					T = M
 					break
 
 		if(src.attack)

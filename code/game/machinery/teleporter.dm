@@ -101,30 +101,6 @@
 		if(!T || istype(T, /area))	return null
 	return T
 
-/obj/machinery/computer/teleporter/security/attack_hand()
-	if(stat & (NOPOWER|BROKEN))
-		return
-
-	var/list/L = list()
-	var/list/areaindex = list()
-
-	for(var/obj/item/device/radio/courtroom_beacon/R in world)
-		var/turf/T = find_loc(R)
-		if (!T)	continue
-		var/tmpname = T.loc.name
-		if(areaindex[tmpname])
-			tmpname = "[tmpname] ([++areaindex[tmpname]])"
-		else
-			areaindex[tmpname] = 1
-		L[tmpname] = R
-
-	var/desc = input("Please select a location to lock in.", "Locking Computer") in L
-	src.locked = L[desc]
-	for(var/mob/O in hearers(src, null))
-		O.show_message("\blue Locked In", 2)
-	src.add_fingerprint(usr)
-	return
-
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn( 0 )
 		if (src.icon_state == "tele1")

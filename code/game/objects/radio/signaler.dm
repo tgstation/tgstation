@@ -143,7 +143,7 @@ Code:
 		spawn(0)
 			holder:Process_Activation(src)
 			return
-//		src.holder.receive_signal(signal)
+
 
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)

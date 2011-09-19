@@ -1,3 +1,49 @@
+/obj/item/device/radio
+	icon = 'radio.dmi'
+	name = "station bounced radio"
+	suffix = "\[3\]"
+	icon_state = "walkietalkie"
+	item_state = "walkietalkie"
+	var
+		last_transmission
+		frequency = 1459 //common chat
+		traitor_frequency = 0 //tune to frequency to unlock traitor supplies
+		obj/item/device/radio/patch_link = null
+		obj/item/weapon/syndicate_uplink/traitorradio = null
+		wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
+		b_stat = 0
+		broadcasting = 0
+		listening = 1
+		freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
+		list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
+//			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
+	flags = 450
+	throw_speed = 2
+	throw_range = 9
+	w_class = 2
+	g_amt = 25
+	m_amt = 75
+	var/const
+		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
+		WIRE_RECEIVE = 2
+		WIRE_TRANSMIT = 4
+		TRANSMISSION_DELAY = 5 // only 2/second/radio
+		FREQ_LISTENING = 1
+		//FREQ_BROADCASTING = 2
+
+
+/obj/item/device/radio
+	var
+		datum/radio_frequency/radio_connection
+		list/datum/radio_frequency/secure_radio_connections = new
+	proc
+		set_frequency(new_frequency)
+			radio_controller.remove_object(src, frequency)
+			frequency = new_frequency
+			radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+
+
+
 /obj/item/device/radio/New()
 	..()
 	if(radio_controller)
@@ -16,15 +62,6 @@
 	for (var/ch_name in channels)
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
 
-/obj/item/device/radio
-	var
-		datum/radio_frequency/radio_connection
-		list/datum/radio_frequency/secure_radio_connections = new
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, frequency)
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
 
 /obj/item/device/radio/attack_self(mob/user as mob)
 	user.machine = src
@@ -62,11 +99,7 @@
 
 
 /obj/item/device/radio/proc/text_sec_channel(var/chan_name, var/chan_stat)
-	//var/broad = (chan_stat&FREQ_BROADCASTING)!=0
 	var/list = !!(chan_stat&FREQ_LISTENING)!=0
-/*
-Microphone:"<A href='byond://?src=\ref[src];ch_name=[chan_name];talk=[!broad]'> [broad ? "Engaged" : "Disengaged"]</A>"
-*/
 	return {"
 			<B>[chan_name]</B><br>
 			Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
@@ -406,8 +439,3 @@ Microphone:"<A href='byond://?src=\ref[src];ch_name=[chan_name];talk=[!broad]'> 
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
 	..()
-
-/obj/item/device/radio/banana //Why is this even needed? So that it shows up as a banana in the chat log.
-	name = "Banana Phone"
-	icon = 'items.dmi'
-	icon_state = "banana" //needs a new icon.

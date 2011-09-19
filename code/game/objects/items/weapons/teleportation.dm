@@ -103,7 +103,7 @@ Frequency:
 
 /obj/item/weapon/hand_tele/attack_self(mob/user as mob)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
-	if(!current_location||current_location.z==2)//If turf was not found or they're on z level 2.
+	if(!current_location||current_location.z==2||current_location.z>=7)//If turf was not found or they're on z level 2 or >7 which does not currently exist.
 		user << "The [src] is malfunctioning."
 		return
 	var/list/L = list(  )
@@ -119,7 +119,8 @@ Frequency:
 		if(T.x>world.maxx-4 || T.x<4)	continue	//putting them at the edge is dumb
 		if(T.y>world.maxy-4 || T.y<4)	continue
 		turfs += T
-	L["None (Dangerous)"] = pick(turfs)
+	if(turfs.len)
+		L["None (Dangerous)"] = pick(turfs)
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") in L
 	if ((user.equipped() != src || user.stat || user.restrained()))
 		return

@@ -204,7 +204,7 @@
 			as it will return null). Leaving this for you since you apparently plan to work this further. /N
 			*/
 
-		if(!ticker.mode.check_win())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
+		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
 			world << "<B>Resetting in 30 seconds!</B>"
 			sleep(300)
 			log_game("Rebooting due to nuclear detonation")

@@ -154,7 +154,7 @@
 			if(T.Enter(B,src))
 				B.loc = T
 			else
-				for(var/atom/A in T)//This might be killing the spores
+				for(var/atom/A in T)//This might be killing the spores, it IS killing the spores
 					A.blob_act()
 				T.blob_act()
 				del(B)

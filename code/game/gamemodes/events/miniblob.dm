@@ -8,16 +8,24 @@
 		bl.Life()
 		bl.Life()
 		bl.Life()
+		bl.blobdebug = 1
 		bl.Life()
 	blobevent = 1
-	dotheblobbaby()
+	spawn(0)
+		dotheblobbaby()
 	spawn(3000)
 		blobevent = 0
 
 /proc/dotheblobbaby()
 	if (blobevent)
-		for(var/obj/blob/B in world)
-			if (prob (40))
+		if (blobs.len > 0)
+			for(var/i = 1 to 10)
+				sleep(-1)
+				if (blobs.len == 0)
+					break
+				var/obj/blob/B = pick(active_blobs)
+				if(B.z != 1)
+					continue
 				B.Life()
 		spawn(30)
 			dotheblobbaby()

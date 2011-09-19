@@ -87,7 +87,7 @@
 		if (1)
 			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 			world << sound('outbreak5.ogg')
-			autoexpand = 0//The blob now has to live on its own
+//			autoexpand = 0//The blob now has to live on its own
 			stage = 2
 			// now check every minute
 			next_stage = world.timeofday + 600
@@ -169,17 +169,17 @@
 			intercepttext += "Your orders are as follows:<BR>"
 			intercepttext += "1. Secure the Nuclear Authentication Disk.<BR>"
 			intercepttext += "2. Detonate the Nuke located in the Station's Vault.<BR>"
-			intercepttext += "Nuclear Authentication Code: [nukecode]"
+			intercepttext += "Nuclear Authentication Code: [nukecode] <BR>"
 			intercepttext += "Message ends."
 
 	for(var/obj/machinery/computer/communications/comm in world)
-		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+		comm.messagetitle.Add(interceptname)
+		comm.messagetext.Add(intercepttext)
+		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
 			intercept.name = "paper- [interceptname]"
 			intercept.info = intercepttext
 
-			comm.messagetitle.Add(interceptname)
-			comm.messagetext.Add(intercepttext)
 
 
 
