@@ -79,6 +79,33 @@
 	else
 		alert("Admin jumping disabled")
 
+/client/proc/Getkey()
+	set category = "Admin"
+	set name = "Get Key"
+	set desc = "Key to teleport"
+
+	if(!src.authenticated || !src.holder)
+		src << "Only administrators may use this command."
+		return
+
+	if(config.allow_admin_jump)
+		var/list/keys = list()
+		for(var/mob/M in world)
+			keys += M.client
+		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in keys
+		if(!selection)
+			return
+		var/mob/M = selection:mob
+
+		if(!M)
+			return
+		log_admin("[key_name(usr)] teleported [key_name(M)]")
+		message_admins("[key_name_admin(usr)] teleported [key_name(M)]", 1)
+		if(M)
+			M.loc = get_turf(usr)
+	else
+		alert("Admin jumping disabled")
+
 /client/proc/sendmob(var/mob/M in world, var/area/A in world)
 	set category = "Admin"
 	set name = "Send Mob"

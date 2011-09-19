@@ -73,6 +73,7 @@
 
 				// Admin game intrusion
 				verbs += /client/proc/Getmob
+				verbs += /client/proc/Getkey
 				verbs += /client/proc/sendmob
 				verbs += /client/proc/Jump
 				verbs += /client/proc/jumptokey
@@ -172,6 +173,7 @@
 			verbs += /client/proc/Debug2					//debug toggle switch
 			verbs += /client/proc/toggle_view_range
 			verbs += /client/proc/Getmob
+			verbs += /client/proc/Getkey
 			verbs += /client/proc/sendmob
 			verbs += /client/proc/Jump
 			verbs += /client/proc/jumptokey
@@ -304,6 +306,7 @@
 	verbs -= /client/proc/Debug2					//debug toggle switch
 	verbs -= /client/proc/toggle_view_range
 	verbs -= /client/proc/Getmob
+	verbs -= /client/proc/Getkey
 	verbs -= /client/proc/sendmob
 	verbs -= /client/proc/Jump
 	verbs -= /client/proc/jumptokey

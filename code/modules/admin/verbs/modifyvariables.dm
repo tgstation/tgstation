@@ -26,7 +26,7 @@
 	if(!class)
 		return
 
-	if(class == "marked datum ([holder.marked_datum.type])")
+	if(holder.marked_datum && class == "marked datum ([holder.marked_datum.type])")
 		class = "marked datum"
 
 	var/var_value = null
@@ -75,7 +75,7 @@
 	if(!class)
 		return
 
-	if(class == "marked datum ([holder.marked_datum.type])")
+	if(holder.marked_datum && class == "marked datum ([holder.marked_datum.type])")
 		class = "marked datum"
 
 	var/var_value = null
@@ -211,7 +211,7 @@
 	if(!class)
 		return
 
-	if(class == "marked datum ([holder.marked_datum.type])")
+	if(holder.marked_datum && class == "marked datum ([holder.marked_datum.type])")
 		class = "marked datum"
 
 	switch(class)
@@ -428,7 +428,7 @@
 	else
 		original_name = O:name
 
-	if(class == "marked datum ([holder.marked_datum.type])")
+	if(holder.marked_datum && class == "marked datum ([holder.marked_datum.type])")
 		class = "marked datum"
 
 	switch(class)
