@@ -53,6 +53,7 @@
 	new /obj/item/clothing/suit/holidaypriest(src)
 	new /obj/item/clothing/suit/hastur (src)
 	new /obj/item/clothing/head/hasturhood (src)
+	new /obj/item/weapon/storage/backpack/cultpack (src)
 	new /obj/item/weapon/candlepack(src)
 	new /obj/item/weapon/candlepack(src)
 	return

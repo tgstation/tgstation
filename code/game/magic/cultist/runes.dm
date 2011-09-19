@@ -953,5 +953,6 @@ var/list/sacrificed = list()
 			user.equip_if_possible(new /obj/item/clothing/head/culthood(user), user.slot_head)
 			user.equip_if_possible(new /obj/item/weapon/melee/cultblade(user), user.slot_r_hand)
 			user.equip_if_possible(new /obj/item/clothing/gloves/black(user), user.slot_gloves)
+			user.equip_if_possible(new /obj/item/weapon/storage/backpack/cultpack(user), user.slot_back)
 			del(src)
 			return

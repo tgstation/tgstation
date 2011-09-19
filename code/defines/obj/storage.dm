@@ -57,6 +57,12 @@
 	flags = 259.0
 	max_w_class = 3
 	max_combined_w_class = 20
+
+/obj/item/weapon/storage/backpack/cultpack
+	name = "Trophy Rack"
+	desc = "A backpack and trophy rack, useful for both carrying extra gear and proudly declaring your insanity "
+	icon_state = "cultpack"
+
 /*
 /obj/item/weapon/storage/lbe
 	name = "Load Bearing Equipment"
