@@ -41,7 +41,7 @@
 	icon_state = "bulb1"
 	base_state = "bulb"
 	fitting = "bulb"
-	brightness = 5
+	brightness = 3
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
 
@@ -78,7 +78,7 @@
 		if("tube")
 			brightness = rand(6,9)
 		if("bulb")
-			brightness = rand(3,6)
+			brightness = 3
 	spawn(1)
 		update()
 
