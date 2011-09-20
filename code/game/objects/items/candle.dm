@@ -8,7 +8,7 @@
 	item_state = "candle1"
 
 	var
-		wax = 100
+		wax = 200
 		lit = 0
 	proc
 		light(var/flavor_text = "\red [usr] lights the [name].")
@@ -16,9 +16,9 @@
 
 	update_icon()
 		var/i
-		if(wax>75)
+		if(wax>150)
 			i = 1
-		else if(wax>40)
+		else if(wax>80)
 			i = 2
 		else i = 3
 		icon_state = "candle[i][lit ? "_lit" : ""]"
