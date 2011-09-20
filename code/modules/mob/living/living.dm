@@ -151,8 +151,9 @@
 //		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 
+/mob/proc/get_contents()
 
-/mob/living/proc/get_contents()
+/mob/living/get_contents()
 	var/list/L = list()
 	L += src.contents
 	for(var/obj/item/weapon/storage/S in src.contents)

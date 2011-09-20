@@ -358,6 +358,10 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	if(!toggle_space_ninja)
 		alert("Space Ninjas spawning is disabled.")
 		return
+
+	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	if(confirm != "Yes") return
+
 	if(ishuman(M))
 		log_admin("[key_name(src)] turned [M.key] into a Space Ninja.")
 		spawn(10)

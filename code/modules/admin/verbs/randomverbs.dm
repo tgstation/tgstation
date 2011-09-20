@@ -562,10 +562,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 
-	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num
-	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num
-	var/light = input("Range of light impact. -1 to none", text("Input"))  as num
-	var/flash = input("Range of flash. -1 to none", text("Input"))  as num
+	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
+	if(devastation == null) return
+	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num|null
+	if(heavy == null) return
+	var/light = input("Range of light impact. -1 to none", text("Input"))  as num|null
+	if(light == null) return
+	var/flash = input("Range of flash. -1 to none", text("Input"))  as num|null
+	if(flash == null) return
 
 	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1))
 		if ((devastation > 20) || (heavy > 20) || (light > 20))
@@ -588,8 +592,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 
-	var/heavy = input("Range of heavy pulse.", text("Input"))  as num
-	var/light = input("Range of light pulse.", text("Input"))  as num
+	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
+	if(heavy == null) return
+	var/light = input("Range of light pulse.", text("Input"))  as num|null
+	if(light == null) return
 
 	if (heavy || light)
 
@@ -608,6 +614,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if (!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return
+
+	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	if(confirm != "Yes") return
 
 	if(usr.key != M.key && M.client)
 		log_admin("[key_name(usr)] has gibbed [key_name(M)]")

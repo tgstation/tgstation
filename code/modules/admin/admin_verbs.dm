@@ -93,7 +93,7 @@
 				verbs += /obj/admins/proc/toggleaban			//abandon mob
 				verbs += /client/proc/deadchat					//toggles deadchat
 				// Admin helpers
-				verbs += /client/proc/cmd_admin_attack_log
+				//verbs += /client/proc/cmd_admin_attack_log	//Use view variables
 				verbs += /client/proc/cmd_admin_check_contents
 				// Admin game intrusion
 				verbs += /client/proc/Jump
@@ -152,8 +152,8 @@
 			verbs += /obj/admins/proc/spawn_atom
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
-			verbs += /client/proc/give_spell
-			verbs += /client/proc/cmd_admin_ninjafy
+			//verbs += /client/proc/give_spell --moved to view variables
+			//verbs += /client/proc/cmd_admin_ninjafy		--now in view vars
 			verbs += /client/proc/cmd_admin_grantfullaccess
 			//verbs += /client/proc/cmd_admin_explosion		--now in view vars
 			//verbs += /client/proc/cmd_admin_emp			--now in view vars
@@ -181,11 +181,11 @@
 			verbs += /client/proc/jumptoturf
 			verbs += /client/proc/cmd_admin_add_freeform_ai_law
 			verbs += /client/proc/cmd_admin_add_random_ai_law
-			verbs += /client/proc/cmd_admin_godmode
+			//verbs += /client/proc/cmd_admin_godmode		--now in view variables
 			verbs += /client/proc/cmd_admin_rejuvenate
-			verbs += /client/proc/cmd_admin_gib
+			//verbs += /client/proc/cmd_admin_gib --View vars menu
 			verbs += /client/proc/cmd_admin_delete
-			verbs += /proc/togglebuildmode
+			//verbs += /proc/togglebuildmode --now in view vars
 			verbs += /client/proc/togglebuildmodeself
 			verbs += /client/proc/hide_most_verbs
 
@@ -211,7 +211,7 @@
 
 
 		if (holder.level >= 1)//Temp Admin********************************************************************
-			verbs += /client/proc/cmd_admin_attack_log
+			//verbs += /client/proc/cmd_admin_attack_log	//use view variables
 			verbs += /client/proc/cmd_admin_check_contents
 			verbs += /obj/admins/proc/delay					//game start delay
 			verbs += /obj/admins/proc/immreboot				//immediate reboot
@@ -288,8 +288,8 @@
 	verbs -= /obj/admins/proc/spawn_atom
 	verbs -= /client/proc/check_words
 	verbs -= /client/proc/drop_bomb
-	verbs -= /client/proc/give_spell
-	verbs -= /client/proc/cmd_admin_ninjafy
+	//verbs -= /client/proc/give_spell --moved to view variables
+	//verbs -= /client/proc/cmd_admin_ninjafy --now in view vars
 	verbs -= /client/proc/cmd_admin_grantfullaccess
 	//verbs -= /client/proc/cmd_admin_explosion		--now in view vars
 	//verbs -= /client/proc/cmd_admin_emp			--now in view vars
@@ -314,11 +314,11 @@
 	verbs -= /client/proc/jumptoturf
 	verbs -= /client/proc/cmd_admin_add_freeform_ai_law
 	verbs -= /client/proc/cmd_admin_add_random_ai_law
-	verbs -= /client/proc/cmd_admin_godmode
+	//verbs -= /client/proc/cmd_admin_godmode		--now in view variables
 	verbs -= /client/proc/cmd_admin_rejuvenate
-	verbs -= /client/proc/cmd_admin_gib
+	//verbs -= /client/proc/cmd_admin_gib --view vars menu
 	verbs -= /client/proc/cmd_admin_delete
-	verbs -= /proc/togglebuildmode
+	//verbs -= /proc/togglebuildmode --now in view vars
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/cmd_admin_remove_plasma
 	verbs -= /client/proc/admin_call_shuttle
@@ -333,7 +333,7 @@
 	verbs -= /client/proc/secrets
 	verbs -= /client/proc/play_sound
 	verbs -= /client/proc/stealth
-	verbs -= /client/proc/cmd_admin_attack_log
+	//verbs -= /client/proc/cmd_admin_attack_log	//use view variables
 	verbs -= /client/proc/cmd_admin_check_contents
 	verbs -= /obj/admins/proc/delay					//game start delay
 	verbs -= /obj/admins/proc/immreboot				//immediate reboot
@@ -550,7 +550,8 @@
 	set category = "Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
-	var/obj/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") in spells
+	var/obj/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spells
+	if(!S) return
 	T.spell_list += new S
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
