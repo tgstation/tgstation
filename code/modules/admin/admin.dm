@@ -749,6 +749,31 @@
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
 
+	if (href_list["adminplayervars"])
+		var/mob/M = locate(href_list["adminplayervars"])
+		if(src && src.owner)
+			if(istype(src.owner,/client))
+				var/client/cl = src.owner
+				cl.debug_variables(M)
+			else if(ismob(src.owner))
+				var/mob/MO = src.owner
+				if(MO.client)
+					var/client/cl = MO.client
+					cl.debug_variables(M)
+
+	if (href_list["adminplayersubtlemessage"])
+		var/mob/M = locate(href_list["adminplayersubtlemessage"])
+		if(src && src.owner)
+			if(istype(src.owner,/client))
+				var/client/cl = src.owner
+				cl.cmd_admin_subtle_message(M)
+			else if(ismob(src.owner))
+				var/mob/MO = src.owner
+				if(MO.client)
+					var/client/cl = MO.client
+					cl.cmd_admin_subtle_message(M)
+
+
 	if (href_list["jumpto"])
 		if(rank in list("Badmin", "Game Admin", "Game Master"))
 			var/mob/M = locate(href_list["jumpto"])

@@ -15,7 +15,7 @@
 
 	for (var/mob/M in world)
 		if (M.client && M.client.holder)
-			M << "\blue <b><font color=red>HELP: </font>[key_name(src, M)](<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[src]'>X</A>):</b> [msg]"
+			M << "\blue <b><font color=red>HELP: </font>[key_name(src, M)] (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[src]'>SM</A>):</b> [msg]"
 
 	usr << "Your message has been broadcast to administrators."
 	log_admin("HELP: [key_name(src)]: [msg]")
