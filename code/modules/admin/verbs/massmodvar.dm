@@ -1,11 +1,24 @@
-/client/proc/cmd_mass_modify_object_variables(obj/O as obj|mob|turf|area in world)
+/client/proc/cmd_mass_modify_object_variables(atom/A, var/var_name)
 	set category = "Debug"
 	set name = "Mass Edit Variables"
 	set desc="(target) Edit all instances of a target item's variables"
-	src.massmodify_variables(O)
+
+	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL itms)
+
+	if(A && A.type)
+		if(typesof(A.type))
+			switch(input("Strict object type detection?") in list("Strictly this type","This type and subtypes", "Cancel"))
+				if("Strictly this type")
+					method = 0
+				if("This type and subtypes")
+					method = 1
+				if("Cancel")
+					return
+
+	src.massmodify_variables(A, var_name, method)
 
 
-/client/proc/massmodify_variables(var/atom/O)
+/client/proc/massmodify_variables(var/atom/O, var/var_name = "", var/method = 0)
 	var/list/locked = list("vars", "key", "ckey", "client")
 
 	if(!src.authenticated || !src.holder)
@@ -18,7 +31,13 @@
 
 	names = sortList(names)
 
-	var/variable = input("Which var?","Var") as null|anything in names
+	var/variable = ""
+
+	if(!var_name)
+		variable = input("Which var?","Var") as null|anything in names
+	else
+		variable = var_name
+
 	if(!variable)
 		return
 	var/default
@@ -109,21 +128,37 @@
 
 		if("restore to default")
 			O.vars[variable] = initial(O.vars[variable])
+			if(method)
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if ( istype(M , O.type) )
+							M.vars[variable] = O.vars[variable]
 
-			if(istype(O, /mob))
-				for(var/mob/M in world)
-					if (M.type == O.type)
-						M.vars[variable] = O.vars[variable]
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
 
-			else if(istype(O, /obj))
-				for(var/obj/A in world)
-					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
 
-			else if(istype(O, /turf))
-				for(var/turf/A in world)
-					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+			else
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if (M.type == O.type)
+							M.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
 
 		if("edit referenced object")
 			return .(O.vars[variable])
@@ -132,20 +167,36 @@
 			O.vars[variable] = input("Enter new text:","Text",\
 				O.vars[variable]) as text
 
-			if(istype(O, /mob))
-				for(var/mob/M in world)
-					if (M.type == O.type)
-						M.vars[variable] = O.vars[variable]
+			if(method)
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if ( istype(M , O.type) )
+							M.vars[variable] = O.vars[variable]
 
-			else if(istype(O, /obj))
-				for(var/obj/A in world)
-					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
 
-			else if(istype(O, /turf))
-				for(var/turf/A in world)
-					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
+			else
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if (M.type == O.type)
+							M.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
 
 		if("num")
 			var/new_value = input("Enter new number:","Num",\
@@ -156,85 +207,159 @@
 			else
 				O.vars[variable] = new_value
 
-			if(istype(O, /mob))
-				for(var/mob/M in world)
-					if (M.type == O.type)
-						if(variable=="luminosity")
-							M.sd_SetLuminosity(new_value)
-						else
-							M.vars[variable] = O.vars[variable]
+			if(method)
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if ( istype(M , O.type) )
+							if(variable=="luminosity")
+								M.sd_SetLuminosity(new_value)
+							else
+								M.vars[variable] = O.vars[variable]
 
-			else if(istype(O, /obj))
-				for(var/obj/A in world)
-					if (A.type == O.type)
-						if(variable=="luminosity")
-							A.sd_SetLuminosity(new_value)
-						else
-							A.vars[variable] = O.vars[variable]
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if ( istype(A , O.type) )
+							if(variable=="luminosity")
+								A.sd_SetLuminosity(new_value)
+							else
+								A.vars[variable] = O.vars[variable]
 
-			else if(istype(O, /turf))
-				for(var/turf/A in world)
-					if (A.type == O.type)
-						if(variable=="luminosity")
-							A.sd_SetLuminosity(new_value)
-						else
-							A.vars[variable] = O.vars[variable]
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if ( istype(A , O.type) )
+							if(variable=="luminosity")
+								A.sd_SetLuminosity(new_value)
+							else
+								A.vars[variable] = O.vars[variable]
+
+			else
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if (M.type == O.type)
+							if(variable=="luminosity")
+								M.sd_SetLuminosity(new_value)
+							else
+								M.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if (A.type == O.type)
+							if(variable=="luminosity")
+								A.sd_SetLuminosity(new_value)
+							else
+								A.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if (A.type == O.type)
+							if(variable=="luminosity")
+								A.sd_SetLuminosity(new_value)
+							else
+								A.vars[variable] = O.vars[variable]
 
 		if("type")
 			O.vars[variable] = input("Enter type:","Type",O.vars[variable]) \
 				in typesof(/obj,/mob,/area,/turf)
+			if(method)
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if ( istype(M , O.type) )
+							M.vars[variable] = O.vars[variable]
 
-			if(istype(O, /mob))
-				for(var/mob/M in world)
-					if (M.type == O.type)
-						M.vars[variable] = O.vars[variable]
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
 
-			else if(istype(O, /obj))
-				for(var/obj/A in world)
-					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
+			else
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if (M.type == O.type)
+							M.vars[variable] = O.vars[variable]
 
-			else if(istype(O, /turf))
-				for(var/turf/A in world)
-					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
 
 		if("file")
 			O.vars[variable] = input("Pick file:","File",O.vars[variable]) \
 				as file
 
-			if(istype(O, /mob))
-				for(var/mob/M in world)
-					if (M.type == O.type)
-						M.vars[variable] = O.vars[variable]
+			if(method)
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if ( istype(M , O.type) )
+							M.vars[variable] = O.vars[variable]
 
-			else if(istype(O.type, /obj))
-				for(var/obj/A in world)
-					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+				else if(istype(O.type, /obj))
+					for(var/obj/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
 
-			else if(istype(O.type, /turf))
-				for(var/turf/A in world)
-					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+				else if(istype(O.type, /turf))
+					for(var/turf/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
+			else
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if (M.type == O.type)
+							M.vars[variable] = O.vars[variable]
+
+				else if(istype(O.type, /obj))
+					for(var/obj/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
+
+				else if(istype(O.type, /turf))
+					for(var/turf/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
 
 		if("icon")
 			O.vars[variable] = input("Pick icon:","Icon",O.vars[variable]) \
 				as icon
-			if(istype(O, /mob))
-				for(var/mob/M in world)
-					if (M.type == O.type)
-						M.vars[variable] = O.vars[variable]
+			if(method)
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if ( istype(M , O.type) )
+							M.vars[variable] = O.vars[variable]
 
-			else if(istype(O, /obj))
-				for(var/obj/A in world)
-					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
 
-			else if(istype(O, /turf))
-				for(var/turf/A in world)
-					if (A.type == O.type)
-						A.vars[variable] = O.vars[variable]
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if ( istype(A , O.type) )
+							A.vars[variable] = O.vars[variable]
+
+			else
+				if(istype(O, /mob))
+					for(var/mob/M in world)
+						if (M.type == O.type)
+							M.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /obj))
+					for(var/obj/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
+
+				else if(istype(O, /turf))
+					for(var/turf/A in world)
+						if (A.type == O.type)
+							A.vars[variable] = O.vars[variable]
 
 	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")
 	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]", 1)

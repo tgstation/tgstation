@@ -65,7 +65,7 @@
 			if(holder.state == 2) // if observing
 				// Debug
 				verbs += /client/proc/debug_variables
-				verbs += /client/proc/cmd_modify_object_variables
+				//verbs += /client/proc/cmd_modify_object_variables --Merged with view variables
 				verbs += /client/proc/cmd_modify_ticker_variables
 
 				// Admin helpers
@@ -141,7 +141,7 @@
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log
-			verbs += /client/proc/cmd_mass_modify_object_variables
+			//verbs += /client/proc/cmd_mass_modify_object_variables --Merged with view variables
 			verbs += /client/proc/cmd_admin_list_open_jobs
 			verbs += /client/proc/cmd_admin_direct_narrate
 			verbs += /client/proc/cmd_admin_world_narrate
@@ -155,8 +155,8 @@
 			verbs += /client/proc/give_spell
 			verbs += /client/proc/cmd_admin_ninjafy
 			verbs += /client/proc/cmd_admin_grantfullaccess
-			verbs += /client/proc/cmd_admin_explosion
-			verbs += /client/proc/cmd_admin_emp
+			//verbs += /client/proc/cmd_admin_explosion		--now in view vars
+			//verbs += /client/proc/cmd_admin_emp			--now in view vars
 			verbs += /client/proc/cmd_admin_drop_everything
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
@@ -168,7 +168,7 @@
 			verbs += /obj/admins/proc/adrev					//toggle admin revives
 			verbs += /obj/admins/proc/adspawn				//toggle admin item spawning
 			verbs += /client/proc/debug_variables
-			verbs += /client/proc/cmd_modify_object_variables
+			//verbs += /client/proc/cmd_modify_object_variables --Merged with view variables
 			verbs += /client/proc/cmd_modify_ticker_variables
 			verbs += /client/proc/Debug2					//debug toggle switch
 			verbs += /client/proc/toggle_view_range
@@ -230,7 +230,7 @@
 			verbs += /client/proc/cmd_admin_mute
 			verbs += /client/proc/cmd_admin_pm
 			verbs += /client/proc/cmd_admin_subtle_message
-			verbs += /client/proc/warn
+			//verbs += 	 --useless
 			verbs += /obj/admins/proc/announce
 			verbs += /obj/admins/proc/startnow
 			verbs += /client/proc/dsay
@@ -245,8 +245,8 @@
 			verbs += /obj/admins/proc/votekill
 			verbs += /client/proc/voting
 			verbs += /obj/admins/proc/show_player_panel
-			verbs += /client/proc/cmd_admin_prison
-			verbs += /obj/admins/proc/unprison
+			//verbs += /client/proc/cmd_admin_prison --in player panel
+			//verbs += /obj/admins/proc/unprison  --in player panel
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/general_report
 			verbs += /client/proc/air_report
@@ -275,7 +275,7 @@
 	verbs -= /client/proc/object_talk
 	verbs -= /client/proc/strike_team
 	verbs -= /obj/admins/proc/view_txt_log
-	verbs -= /client/proc/cmd_mass_modify_object_variables
+	//verbs -= /client/proc/cmd_mass_modify_object_variables  --Merged with view variables
 	verbs -= /client/proc/cmd_admin_list_open_jobs
 	verbs -= /client/proc/cmd_admin_direct_narrate
 	verbs -= /client/proc/cmd_admin_world_narrate
@@ -291,8 +291,8 @@
 	verbs -= /client/proc/give_spell
 	verbs -= /client/proc/cmd_admin_ninjafy
 	verbs -= /client/proc/cmd_admin_grantfullaccess
-	verbs -= /client/proc/cmd_admin_explosion
-	verbs -= /client/proc/cmd_admin_emp
+	//verbs -= /client/proc/cmd_admin_explosion		--now in view vars
+	//verbs -= /client/proc/cmd_admin_emp			--now in view vars
 	verbs -= /client/proc/cmd_admin_drop_everything
 	verbs -= /client/proc/make_sound
 	verbs -= /client/proc/only_one
@@ -301,7 +301,7 @@
 	verbs -= /obj/admins/proc/adspawn				//toggle admin item spawning
 	verbs -= /obj/admins/proc/toggleaban			//abandon mob
 	verbs -= /client/proc/debug_variables
-	verbs -= /client/proc/cmd_modify_object_variables
+	//verbs -= /client/proc/cmd_modify_object_variables --merged with view variables
 	verbs -= /client/proc/cmd_modify_ticker_variables
 	verbs -= /client/proc/Debug2					//debug toggle switch
 	verbs -= /client/proc/toggle_view_range
@@ -350,7 +350,7 @@
 	verbs -= /client/proc/cmd_admin_pm
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_subtle_message
-	verbs -= /client/proc/warn
+	//verbs -= /client/proc/warn --uselesss
 	verbs -= /obj/admins/proc/announce
 	verbs -= /obj/admins/proc/startnow
 	verbs -= /client/proc/dsay
@@ -365,8 +365,8 @@
 	verbs -= /obj/admins/proc/votekill
 	verbs -= /client/proc/voting
 	verbs -= /obj/admins/proc/show_player_panel
-	verbs -= /client/proc/cmd_admin_prison
-	verbs -= /obj/admins/proc/unprison
+	//verbs -= /client/proc/cmd_admin_prison --in player panel
+	//verbs -= /obj/admins/proc/unprison --in player panel
 	verbs -= /client/proc/hide_verbs
 	verbs -= /client/proc/general_report
 	verbs -= /client/proc/air_report
@@ -618,7 +618,7 @@
 
 	if(holder.level >= 4)//Badmin********************************************************************
 		verbs += /client/proc/debug_variables
-		verbs += /client/proc/cmd_modify_object_variables
+		//verbs += /client/proc/cmd_modify_object_variables --merged with view vairiables
 		verbs += /client/proc/Jump
 		verbs += /client/proc/jumptoturf
 		verbs += /client/proc/togglebuildmodeself

@@ -68,9 +68,21 @@ client
 
 		body += "<body onload='selectTextField()'>"
 
-		body += "<div align='center'><table width='100%'><tr><td width='50%'><div align='center'><b>[D]<br><font size='1'>[D.type]</font></b></div></td>"
+		body += "<div align='center'><table width='100%'><tr><td width='50%'><div align='center'><b>"
 
-		body += "<td width='50%'><div align='center'><a href='byond://?src=\ref[src];datumrefresh=\ref[D];refresh=1'>Refresh</a>"
+		if(istype(D,/atom))
+			body += "<a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=name'>[D]</a>"
+		else
+			body += "[D]"
+
+		body += "<br><font size='1'>[D.type]</font></b>"
+
+		if(src.holder && src.holder.marked_datum && src.holder.marked_datum == D)
+			body += "<br><font size='1' color='red'><b>Marked Object</b></font>"
+
+		body += "</div></td>"
+
+		body += "<td width='50%'><div align='center'><a href='byond://?src=\ref[src];datumrefresh=\ref[D]'>Refresh</a>"
 
 		//if(ismob(D))
 		//	body += "<br><a href='byond://?src=\ref[src];mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
@@ -93,13 +105,17 @@ client
 		body += "<option value>---</option>"
 		if(ismob(D))
 			body += "<option value='byond://?src=\ref[src];mob_player_panel=\ref[D]'>Show player panel</option>"
+		if(isobj(D) || ismob(D) || isturf(D))
+			body += "<option value='byond://?src=\ref[src];explode=\ref[D]'>Trigger explosion</option>"
+			body += "<option value='byond://?src=\ref[src];emp=\ref[D]'>Trigger EM pulse</option>"
 
 		body += "</select></form>"
 
 		body += "</div></td></tr></table></div><hr>"
 
 		body += "<font size='1'><b>E</b> - Edit, tries to determine the variable type by itself.<br>"
-		body += "<b>C</b> - Change, asks you for the var type first.</font><br>"
+		body += "<b>C</b> - Change, asks you for the var type first.<br>"
+		body += "<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>"
 
 		body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' onkeyup='updateSearch()' id='filter' name='filter_text' value='' style='width:100%;'></td></tr></table><hr>"
 
@@ -143,7 +159,7 @@ client
 		var/html = ""
 
 		if(DA)
-			html += "<li>(<a href='byond://?src=\ref[src];datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='byond://?src=\ref[src];datumchange=\ref[DA];varnamechange=[name]'>C</a>) "
+			html += "<li>(<a href='byond://?src=\ref[src];datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='byond://?src=\ref[src];datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='byond://?src=\ref[src];datummass=\ref[DA];varnamemass=[name]'>M</a>) "
 		else
 			html += "<li>"
 
@@ -237,15 +253,18 @@ client
 				usr << "Can't edit an item of this type. Type must be /datum, so anything except simple variables. [DAT]"
 				return
 			modify_variables(DAT, href_list["varnamechange"], 0)
-		else if (href_list["refresh"])
-			if(!href_list["datumrefresh"])
+		else if (href_list["varnamemass"])
+			if(!href_list["datummass"] || !href_list["varnamemass"])
+				usr << "Varedit error: Not all information has been sent. Contact a coder."
 				return
-			var/datum/DAT = locate(href_list["datumrefresh"])
-			if(!DAT)
+			var/atom/A = locate(href_list["datummass"])
+			if(!A)
+				usr << "Item not found"
 				return
-			if(!istype(DAT,/datum))
+			if(!istype(A,/atom))
+				usr << "Can't edit an item of this type. Type must be /atom, so an object, turf, mob or area. [A]"
 				return
-			src.debug_variables(DAT)
+			cmd_mass_modify_object_variables(A, href_list["varnamemass"])
 		else if (href_list["mob_player_panel"])
 			if(!href_list["mob_player_panel"])
 				return
@@ -257,6 +276,27 @@ client
 			if(!src.holder)
 				return
 			src.holder.show_player_panel(MOB)
+			href_list["datumrefresh"] = href_list["mob_player_panel"]
+		else if (href_list["explode"])
+			if(!href_list["explode"])
+				return
+			var/atom/A = locate(href_list["explode"])
+			if(!A)
+				return
+			if(!isobj(A) && !ismob(A) && !isturf(A))
+				return
+			src.cmd_admin_explosion(A)
+			href_list["datumrefresh"] = href_list["explode"]
+		else if (href_list["emp"])
+			if(!href_list["emp"])
+				return
+			var/atom/A = locate(href_list["emp"])
+			if(!A)
+				return
+			if(!isobj(A) && !ismob(A) && !isturf(A))
+				return
+			src.cmd_admin_emp(A)
+			href_list["datumrefresh"] = href_list["emp"]
 		else if (href_list["mark_object"])
 			if(!href_list["mark_object"])
 				return
@@ -266,9 +306,20 @@ client
 			if(!src.holder)
 				return
 			src.holder.marked_datum = D
+			href_list["datumrefresh"] = href_list["mark_object"]
 		else
 			..()
 
+
+		if (href_list["datumrefresh"])
+			if(!href_list["datumrefresh"])
+				return
+			var/datum/DAT = locate(href_list["datumrefresh"])
+			if(!DAT)
+				return
+			if(!istype(DAT,/datum))
+				return
+			src.debug_variables(DAT)
 
 
 /mob/proc/Delete(atom/A in view())

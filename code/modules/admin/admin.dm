@@ -210,11 +210,11 @@
 				return
 			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 				if("Yes")
-					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num
+					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
 					if(mins >= 525600) mins = 525599
-					var/reason = input(usr,"Reason?","reason","Griefer") as text
+					var/reason = input(usr,"Reason?","reason","Griefer") as text|null
 					if(!reason)
 						return
 					AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
@@ -231,7 +231,7 @@
 					del(M.client)
 					//del(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 				if("No")
-					var/reason = input(usr,"Reason?","reason","Griefer") as text
+					var/reason = input(usr,"Reason?","reason","Griefer") as text|null
 					if(!reason)
 						return
 					AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
