@@ -140,7 +140,14 @@
 					movement_target.attack_animal(src)
 				else if(ishuman(movement_target.loc) )
 					if(prob(20))
-						emote("", 0, "stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
+						emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
+
+		if(prob(1))
+			emote("dances around")
+			spawn(0)
+				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
+					dir = i
+					sleep(1)
 
 /mob/living/simple_animal/New()
 	..()
