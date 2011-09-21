@@ -27,6 +27,18 @@ client
 						var filter_text = document.getElementById('filter');
 						var filter = filter_text.value;
 
+						if(event.keyCode == 13){
+							var vars_ol = document.getElementById('vars');
+							var lis = vars_ol.getElementsByTagName("li");
+							if(lis.length > 0){
+								alist = lis\[0\].getElementsByTagName("a")
+								if(alist.length > 0){
+									location.href=alist\[0\].href;
+								}
+							}
+							return
+						}
+
 						if(filter.value == ""){
 							return;
 						}else{
