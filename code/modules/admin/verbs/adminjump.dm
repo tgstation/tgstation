@@ -39,7 +39,13 @@
 	if(config.allow_admin_jump)
 		log_admin("[key_name(usr)] jumped to [key_name(M)]")
 		message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]", 1)
-		usr.loc = get_turf(M)
+		if(src.mob)
+			var/mob/A = src.mob
+			var/turf/T = get_turf(M)
+			if(T && isturf(T))
+				A.loc = T
+			else
+				A << "This mob is not located in the game world."
 	else
 		alert("Admin jumping disabled")
 

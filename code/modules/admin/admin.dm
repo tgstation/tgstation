@@ -773,6 +773,22 @@
 					var/client/cl = MO.client
 					cl.cmd_admin_subtle_message(M)
 
+	if (href_list["adminplayerobservejump"])
+		var/mob/M = locate(href_list["adminplayerobservejump"])
+		if(src && src.owner)
+			if(istype(src.owner,/client))
+				var/client/cl = src.owner
+				cl.admin_observe()
+				sleep(2)
+				cl.jumptomob(M)
+			else if(ismob(src.owner))
+				var/mob/MO = src.owner
+				if(MO.client)
+					var/client/cl = MO.client
+					cl.admin_observe()
+					sleep(2)
+					cl.jumptomob(M)
+
 
 	if (href_list["jumpto"])
 		if(rank in list("Badmin", "Game Admin", "Game Master"))
@@ -1367,6 +1383,10 @@
 					if (src.rank in list("Badmin","Game Admin", "Game Master"))
 						IonStorm()
 						message_admins("[key_name_admin(usr)] triggered an ion storm")
+						var/show_log = alert(usr, "Show ion message?", "Message", "Yes", "No")
+						if(show_log == "Yes")
+							command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
+							world << sound('ionstorm.ogg')
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
 						return

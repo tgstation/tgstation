@@ -486,6 +486,3 @@ Would like to add a law like "Law x is _______" where x = a number, and _____ is
 	world << "Ion Storm Main Done"
 
 	*/
-
-//	command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
-//	world << sound('ionstorm.ogg')
