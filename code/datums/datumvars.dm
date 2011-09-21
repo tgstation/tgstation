@@ -27,14 +27,63 @@ client
 						var filter_text = document.getElementById('filter');
 						var filter = filter_text.value;
 
-						if(event.keyCode == 13){
+						if(event.keyCode == 13){	//Enter / return
 							var vars_ol = document.getElementById('vars');
 							var lis = vars_ol.getElementsByTagName("li");
-							if(lis.length > 0){
-								alist = lis\[0\].getElementsByTagName("a")
-								if(alist.length > 0){
-									location.href=alist\[0\].href;
-								}
+							for ( var i = 0; i < lis.length; ++i )
+							{
+								try{
+									var li = lis\[i\];
+									if ( li.style.backgroundColor == "#ffee88" )
+									{
+										alist = lis\[i\].getElementsByTagName("a")
+										if(alist.length > 0){
+											location.href=alist\[0\].href;
+										}
+									}
+								}catch(err) {   }
+							}
+							return
+						}
+
+						if(event.keyCode == 38){	//Up arrow
+							var vars_ol = document.getElementById('vars');
+							var lis = vars_ol.getElementsByTagName("li");
+							for ( var i = 0; i < lis.length; ++i )
+							{
+								try{
+									var li = lis\[i\];
+									if ( li.style.backgroundColor == "#ffee88" )
+									{
+										if( (i-1) >= 0){
+											var li_new = lis\[i-1\];
+											li.style.backgroundColor = "white";
+											li_new.style.backgroundColor = "#ffee88";
+											return
+										}
+									}
+								}catch(err) {  }
+							}
+							return
+						}
+
+						if(event.keyCode == 40){	//Down arrow
+							var vars_ol = document.getElementById('vars');
+							var lis = vars_ol.getElementsByTagName("li");
+							for ( var i = 0; i < lis.length; ++i )
+							{
+								try{
+									var li = lis\[i\];
+									if ( li.style.backgroundColor == "#ffee88" )
+									{
+										if( (i+1) < lis.length){
+											var li_new = lis\[i+1\];
+											li.style.backgroundColor = "white";
+											li_new.style.backgroundColor = "#ffee88";
+											return
+										}
+									}
+								}catch(err) {  }
 							}
 							return
 						}
@@ -44,6 +93,7 @@ client
 						}else{
 							var vars_ol = document.getElementById('vars');
 							var lis = vars_ol.getElementsByTagName("li");
+
 							for ( var i = 0; i < lis.length; ++i )
 							{
 								try{
@@ -52,13 +102,23 @@ client
 									{
 										vars_ol.removeChild(li);
 										i--;
-										//return
 									}
 								}catch(err) {   }
 							}
 						}
-
+						var lis_new = vars_ol.getElementsByTagName("li");
+						for ( var j = 0; j < lis_new.length; ++j )
+						{
+							var li1 = lis\[j\];
+							if (j == 0){
+								li1.style.backgroundColor = "#ffee88";
+							}else{
+								li1.style.backgroundColor = "white";
+							}
+						}
 					}
+
+
 
 					function selectTextField(){
 						var filter_text = document.getElementById('filter');
@@ -78,7 +138,7 @@ client
 					}
 				</script> "}
 
-		body += "<body onload='selectTextField()'>"
+		body += "<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>"
 
 		body += "<div align='center'><table width='100%'><tr><td width='50%'><div align='center'><b>"
 
@@ -137,7 +197,7 @@ client
 		body += "<b>C</b> - Change, asks you for the var type first.<br>"
 		body += "<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>"
 
-		body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' onkeyup='updateSearch()' id='filter' name='filter_text' value='' style='width:100%;'></td></tr></table><hr>"
+		body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='' style='width:100%;'></td></tr></table><hr>"
 
 		body += "<ol id='vars'>"
 
@@ -179,7 +239,7 @@ client
 		var/html = ""
 
 		if(DA)
-			html += "<li>(<a href='byond://?src=\ref[src];datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='byond://?src=\ref[src];datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='byond://?src=\ref[src];datummass=\ref[DA];varnamemass=[name]'>M</a>) "
+			html += "<li style='backgroundColor:white'>(<a href='byond://?src=\ref[src];datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='byond://?src=\ref[src];datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='byond://?src=\ref[src];datummass=\ref[DA];varnamemass=[name]'>M</a>) "
 		else
 			html += "<li>"
 
