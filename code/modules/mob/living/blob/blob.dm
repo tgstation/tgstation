@@ -32,7 +32,7 @@
 	clamp_values()
 	UpdateDamage()
 	if(health < 0)
-		src.death(1)
+		src.gib()
 
 
 /mob/living/blob
@@ -65,10 +65,7 @@
 		ghost.key = key
 		if (ghost.client)
 			ghost.client.eye = ghost
-//	spawn(10)
-//		del(src)
-	src.gib()
-//		return ..(gibbed)
+		return ..(gibbed)
 
 
 /mob/living/blob/bullet_act(var/obj/item/projectile/Proj)
@@ -114,7 +111,7 @@
 	B.blobdebug = 2
 	spawn(0)
 		B.Life()
-	death(1)
+	src.gib()
 	return
 
 
@@ -149,7 +146,7 @@
 	B.blobdebug = 3
 	spawn(0)
 		B.Life()
-	death(1)
+	src.gib()
 	return
 
 
@@ -205,3 +202,5 @@
 	B << "You have the power to create a new blob node that will help expand the blob."
 	B << "To create this node you will have to be on a normal blob tile and far enough away from any other node."
 	B << "Check your Blob verbs and hit Create Node to build a node."
+	spawn(10)
+		del(G_found)
