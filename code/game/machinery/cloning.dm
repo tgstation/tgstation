@@ -332,7 +332,7 @@
 
 
 	//Add an implant if needed
-	var/obj/item/weapon/implant/health/imp =locate(/obj/item/weapon/implant/health, subject)
+	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
 	if (isnull(imp))
 		imp = new /obj/item/weapon/implant/health(subject)
 		imp.implanted = subject
@@ -436,7 +436,7 @@
 
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI, var/datum/changeling/changelingClone)
-	if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
+	if(((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 		return 0
 
 	src.attempting = 1 //One at a time!!
@@ -462,7 +462,7 @@
 	src.occupant << "\blue <b>Clone generation process initiated.</b>"
 	src.occupant << "\blue This will take a moment, please hold."
 
-	if (clonename)
+	if(clonename)
 		src.occupant.real_name = clonename
 	else
 		src.occupant.real_name = "clone"  //No null names!!
@@ -484,15 +484,15 @@
 	// -- Mode/mind specific stuff goes here
 
 	switch(ticker.mode.name)
-		if ("revolution")
+		if("revolution")
 			if(src.occupant.mind in ticker.mode:revolutionaries)
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 			if(src.occupant.mind in ticker.mode:head_revolutionaries)
 				ticker.mode:update_all_rev_icons()
-		if ("nuclear emergency")
+		if("nuclear emergency")
 			if (src.occupant.mind in ticker.mode:syndicates)
 				ticker.mode:update_all_synd_icons()
-		if ("cult")
+		if("cult")
 			if (src.occupant.mind in ticker.mode:cult)
 				ticker.mode:add_cultist(src.occupant.mind)
 				ticker.mode:update_all_cult_icons() //So the icon actually appears
@@ -506,15 +506,15 @@
 	occupant:UI = UI
 
 
-	if (istype(ghost, /mob/dead/observer))
+	if(istype(ghost, /mob/dead/observer))
 		del(ghost) //Don't leave ghosts everywhere!!
 
-	if (!src.occupant.dna)
+	if(!src.occupant.dna)
 		src.occupant.dna = new /datum/dna(  )
-	if (ui)
+	if(ui)
 		src.occupant.dna.uni_identity = ui
 		updateappearance(src.occupant, ui)
-	if (se)
+	if(se)
 		src.occupant.dna.struc_enzymes = se
 		randmutb(src.occupant) //Sometimes the clones come out wrong.
 	src.occupant:update_face()
@@ -527,13 +527,13 @@
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
 
-	if (stat & NOPOWER) //Autoeject if power is lost
+	if(stat & NOPOWER) //Autoeject if power is lost
 		if (src.occupant)
 			src.locked = 0
 			src.go_out()
 		return
 
-	if ((src.occupant) && (src.occupant.loc == src))
+	if((src.occupant) && (src.occupant.loc == src))
 		if((src.occupant.stat == 2) || (src.occupant.suiciding))  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			src.go_out()
@@ -650,7 +650,7 @@
 	return
 
 /obj/machinery/clonepod/proc/malfunction()
-	if (src.occupant)
+	if(src.occupant)
 		src.connected_message("Critical Error!")
 		src.mess = 1
 		src.icon_state = "pod_g"

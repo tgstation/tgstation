@@ -18,11 +18,10 @@
 
 /proc/dotheblobbaby()
 	if (blobevent)
-		if (blobs.len > 0)
+		if(active_blobs.len)
 			for(var/i = 1 to 10)
 				sleep(-1)
-				if (blobs.len == 0)
-					break
+				if(!active_blobs.len)	break
 				var/obj/blob/B = pick(active_blobs)
 				if(B.z != 1)
 					continue
