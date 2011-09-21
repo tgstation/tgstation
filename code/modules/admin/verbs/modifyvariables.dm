@@ -34,25 +34,25 @@
 	switch(class)
 
 		if("text")
-			var_value = input("Enter new text:","Text") as text
+			var_value = input("Enter new text:","Text") as null|text
 
 		if("num")
-			var_value = input("Enter new number:","Num") as num
+			var_value = input("Enter new number:","Num") as null|num
 
 		if("type")
-			var_value = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
+			var_value = input("Enter type:","Type") as null|anything in typesof(/obj,/mob,/area,/turf)
 
 		if("reference")
-			var_value = input("Select reference:","Reference") as mob|obj|turf|area in world
+			var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
 
 		if("mob reference")
-			var_value = input("Select reference:","Reference") as mob in world
+			var_value = input("Select reference:","Reference") as null|mob in world
 
 		if("file")
-			var_value = input("Pick file:","File") as file
+			var_value = input("Pick file:","File") as null|file
 
 		if("icon")
-			var_value = input("Pick icon:","Icon") as icon
+			var_value = input("Pick icon:","Icon") as null|icon
 
 		if("marked datum")
 			var_value = holder.marked_datum
@@ -444,37 +444,44 @@
 			return .(O.vars[variable])
 
 		if("text")
-			O.vars[variable] = input("Enter new text:","Text",\
-				O.vars[variable]) as text
+			var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|text
+			if(var_new==null) return
+			O.vars[variable] = var_new
 
 		if("num")
 			if(variable=="luminosity")
-				var/new_value = input("Enter new number:","Num",\
-					O.vars[variable]) as num
-				O.sd_SetLuminosity(new_value)
+				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
+				if(var_new == null) return
+				O.sd_SetLuminosity(var_new)
 			else
-				O.vars[variable] = input("Enter new number:","Num",\
-					O.vars[variable]) as num
+				var/var_new =  input("Enter new number:","Num",O.vars[variable]) as null|num
+				if(var_new==null) return
+				O.vars[variable] = var_new
 
 		if("type")
-			O.vars[variable] = input("Enter type:","Type",O.vars[variable]) \
-				in typesof(/obj,/mob,/area,/turf)
+			var/var_new = input("Enter type:","Type",O.vars[variable]) as null|anything in typesof(/obj,/mob,/area,/turf)
+			if(var_new==null) return
+			O.vars[variable] = var_new
 
 		if("reference")
-			O.vars[variable] = input("Select reference:","Reference",\
-				O.vars[variable]) as mob|obj|turf|area in world
+			var/var_new = input("Select reference:","Reference",O.vars[variable]) as null|mob|obj|turf|area in world
+			if(var_new==null) return
+			O.vars[variable] = var_new
 
 		if("mob reference")
-			O.vars[variable] = input("Select reference:","Reference",\
-				O.vars[variable]) as mob in world
+			var/var_new = input("Select reference:","Reference",O.vars[variable]) as null|mob in world
+			if(var_new==null) return
+			O.vars[variable] = var_new
 
 		if("file")
-			O.vars[variable] = input("Pick file:","File",O.vars[variable]) \
-				as file
+			var/var_new = input("Pick file:","File",O.vars[variable]) as null|file
+			if(var_new==null) return
+			O.vars[variable] = var_new
 
 		if("icon")
-			O.vars[variable] = input("Pick icon:","Icon",O.vars[variable]) \
-				as icon
+			var/var_new = input("Pick icon:","Icon",O.vars[variable]) as null|icon
+			if(var_new==null) return
+			O.vars[variable] = var_new
 
 		if("marked datum")
 			O.vars[variable] = holder.marked_datum

@@ -7,12 +7,14 @@
 
 	if(A && A.type)
 		if(typesof(A.type))
-			switch(input("Strict object type detection?") in list("Strictly this type","This type and subtypes", "Cancel"))
+			switch(input("Strict object type detection?") as null|anything in list("Strictly this type","This type and subtypes", "Cancel"))
 				if("Strictly this type")
 					method = 0
 				if("This type and subtypes")
 					method = 1
 				if("Cancel")
+					return
+				if(null)
 					return
 
 	src.massmodify_variables(A, var_name, method)
@@ -164,8 +166,9 @@
 			return .(O.vars[variable])
 
 		if("text")
-			O.vars[variable] = input("Enter new text:","Text",\
-				O.vars[variable]) as text
+			var/new_value = input("Enter new text:","Text",O.vars[variable]) as text|null
+			if(new_value == null) return
+			O.vars[variable] = new_value
 
 			if(method)
 				if(istype(O, /mob))
@@ -200,7 +203,8 @@
 
 		if("num")
 			var/new_value = input("Enter new number:","Num",\
-					O.vars[variable]) as num
+					O.vars[variable]) as num|null
+			if(new_value == null) return
 
 			if(variable=="luminosity")
 				O.sd_SetLuminosity(new_value)
@@ -258,8 +262,10 @@
 								A.vars[variable] = O.vars[variable]
 
 		if("type")
-			O.vars[variable] = input("Enter type:","Type",O.vars[variable]) \
-				in typesof(/obj,/mob,/area,/turf)
+			var/new_value
+			new_value = input("Enter type:","Type",O.vars[variable]) as null|anything in typesof(/obj,/mob,/area,/turf)
+			if(new_value == null) return
+			O.vars[variable] = new_value
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in world)
@@ -292,8 +298,9 @@
 							A.vars[variable] = O.vars[variable]
 
 		if("file")
-			O.vars[variable] = input("Pick file:","File",O.vars[variable]) \
-				as file
+			var/new_value = input("Pick file:","File",O.vars[variable]) as null|file
+			if(new_value == null) return
+			O.vars[variable] = new_value
 
 			if(method)
 				if(istype(O, /mob))
@@ -327,8 +334,9 @@
 							A.vars[variable] = O.vars[variable]
 
 		if("icon")
-			O.vars[variable] = input("Pick icon:","Icon",O.vars[variable]) \
-				as icon
+			var/new_value = input("Pick icon:","Icon",O.vars[variable]) as null|icon
+			if(new_value == null) return
+			O.vars[variable] = new_value
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in world)
