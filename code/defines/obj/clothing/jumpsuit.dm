@@ -321,6 +321,7 @@
 	name = "clown suit"
 	desc = "Wearing this, all the children love you, for all the wrong reasons."
 	icon_state = "clown"
+	item_state = "clown"
 	color = "clown"
 
 /obj/item/clothing/under/rank/chef

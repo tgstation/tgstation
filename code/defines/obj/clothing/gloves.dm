@@ -20,6 +20,9 @@
 	item_state = "lgloves"
 	color="mime"
 
+	redcoat
+		color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.
+
 /obj/item/clothing/gloves/black
 	desc = "These gloves are fire-resistant."
 	name = "Black Gloves"
@@ -28,6 +31,12 @@
 	color="brown"
 	protective_temperature = 1500
 	heat_transfer_coefficient = 0.01
+
+	hos
+		color = "hosred"		//Exists for washing machines. Is not different from black gloves in any way.
+
+	ce
+		color = "chief"			//Exists for washing machines. Is not different from black gloves in any way.
 
 
 /obj/item/clothing/gloves/cyborg
@@ -48,6 +57,9 @@
 	heat_transfer_coefficient = 0.90
 	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 20, rad = 20)
 	color="white"
+
+	cmo
+		color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
 
 /obj/item/clothing/gloves/swat
 	desc = "These tactical gloves are somewhat fire and impact-resistant."
@@ -112,6 +124,7 @@
 	name = "Captain Gloves"
 	icon_state = "captain"
 	item_state = "egloves"
+	color = "captain"
 
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
@@ -144,6 +157,9 @@
 	item_state = "rainbowgloves"
 	color = "rainbow"
 
+	clown
+		color = "clown"
+
 /obj/item/clothing/gloves/blue
 	name = "Blue Gloves"
 	desc = "A pair of gloves, they don't look special in any way."
@@ -172,6 +188,12 @@
 	item_state = "graygloves"
 	color="grey"
 
+	rd
+		color = "director"			//Exists for washing machines. Is not different from gray gloves in any way.
+
+	hop
+		color = "hop"				//Exists for washing machines. Is not different from gray gloves in any way.
+
 /obj/item/clothing/gloves/light_brown
 	name = "Light Brown Gloves"
 	desc = "A pair of gloves, they don't look special in any way."
@@ -185,3 +207,6 @@
 	icon_state = "brown"
 	item_state = "browngloves"
 	color="brown"
+
+	cargo
+		color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.

@@ -304,6 +304,38 @@
 	icon_state = "sheetmime"
 	color = "mime"
 
+/obj/item/weapon/bedsheet/clown
+	icon_state = "sheetclown"
+	color = "clown"
+
+/obj/item/weapon/bedsheet/captain
+	icon_state = "sheetcaptain"
+	color = "captain"
+
+/obj/item/weapon/bedsheet/rd
+	icon_state = "sheetrd"
+	color = "director"
+
+/obj/item/weapon/bedsheet/medical
+	icon_state = "sheetmedical"
+	color = "medical"
+
+/obj/item/weapon/bedsheet/hos
+	icon_state = "sheethos"
+	color = "hosred"
+
+/obj/item/weapon/bedsheet/hop
+	icon_state = "sheethop"
+	color = "hop"
+
+/obj/item/weapon/bedsheet/ce
+	icon_state = "sheetce"
+	color = "chief"
+
+/obj/item/weapon/bedsheet/brown
+	icon_state = "sheetbrown"
+	color = "brown"
+
 /obj/item/weapon/bikehorn
 	name = "Bike Horn"
 	desc = "A horn off of a bicycle."
@@ -1565,38 +1597,47 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
+	var/color = "cargo"
 
 /obj/item/weapon/stamp/captain
 	name = "captain's rubber stamp"
 	icon_state = "stamp-cap"
+	color = "captain"
 
 /obj/item/weapon/stamp/hop
 	name = "head of personnel's rubber stamp"
 	icon_state = "stamp-hop"
+	color = "hop"
 
 /obj/item/weapon/stamp/hos
 	name = "head of security's rubber stamp"
 	icon_state = "stamp-hos"
+	color = "hosred"
 
 /obj/item/weapon/stamp/ce
 	name = "chief engineer's rubber stamp"
 	icon_state = "stamp-ce"
+	color = "chief"
 
 /obj/item/weapon/stamp/rd
 	name = "research director's rubber stamp"
 	icon_state = "stamp-rd"
+	color = "director"
 
 /obj/item/weapon/stamp/cmo
 	name = "chief medical officer's rubber stamp"
 	icon_state = "stamp-cmo"
+	color = "medical"
 
 /obj/item/weapon/stamp/denied
 	name = "DENIED rubber stamp"
 	icon_state = "stamp-qm"
+	color = "redcoat"
 
 /obj/item/weapon/stamp/clown
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
+	color = "clown"
 
 /*
 /obj/item/weapon/cigarpacket

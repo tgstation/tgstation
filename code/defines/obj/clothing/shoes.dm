@@ -31,10 +31,26 @@
 	icon_state = "black"
 	color = "black"
 
+	redcoat
+		color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
+
 /obj/item/clothing/shoes/brown
 	name = "Brown Shoes"
 	icon_state = "brown"
 	color = "brown"
+
+	captain
+		color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
+	hop
+		color = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
+	ce
+		color = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
+	rd
+		color = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
+	cmo
+		color = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
+	cmo
+		color = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
 
 /obj/item/clothing/shoes/blue
 	name = "Blue Shoes"
@@ -134,9 +150,11 @@
 	icon_state = "clown"
 	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
+	color = "clown"
 
 /obj/item/clothing/shoes/jackboots
 	name = "Jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	item_state = "jackboots"
+	color = "hosred"

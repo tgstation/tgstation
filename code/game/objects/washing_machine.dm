@@ -20,7 +20,7 @@
 	//0 = not hacked
 	//1 = hacked
 	var/gibs_ready = 0
-	var/obj/item/toy/crayon/crayon
+	var/obj/crayon
 
 /obj/machinery/washing_machine/verb/start()
 	set name = "Start Washing"
@@ -41,7 +41,14 @@
 		A.clean_blood()
 
 	if(crayon)
-		var/color = crayon.colourName
+		var/color
+		if(istype(crayon,/obj/item/toy/crayon))
+			var/obj/item/toy/crayon/CR = crayon
+			color = CR.colourName
+		else if(istype(crayon,/obj/item/weapon/stamp))
+			var/obj/item/weapon/stamp/ST = crayon
+			color = ST.color
+
 		if(color)
 			var/new_jumpsuit_icon_state = ""
 			var/new_jumpsuit_item_state = ""
@@ -154,7 +161,7 @@
 	/*if(istype(W,/obj/item/weapon/screwdriver))
 		panel = !panel
 		user << "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel"*/
-	if(istype(W,/obj/item/toy/crayon))
+	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
 				user.drop_item()
@@ -240,6 +247,7 @@
 			state = 3
 			for(var/atom/movable/O in contents)
 				O.loc = src.loc
+			crayon = null
 			state = 1
 		if(5)
 			user << "\red The [src] is busy."
@@ -253,6 +261,7 @@
 					M.gib()
 			for(var/atom/movable/O in contents)
 				O.loc = src.loc
+			crayon = null
 			state = 1
 
 
