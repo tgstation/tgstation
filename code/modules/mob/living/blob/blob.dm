@@ -68,19 +68,19 @@
 		return ..(gibbed)
 
 
-/mob/living/blob/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/blob/bullet_act(var/obj/item/projectile/Proj, var/datum/organ/external/def_zone)
 	for(var/i = 1, i<= Proj.mobdamage.len, i++)
 		switch(i)
 			if(1)
-				bruteloss = Proj.mobdamage[BRUTE]
+				bruteloss += Proj.mobdamage[BRUTE]
 			if(2)
-				fireloss = Proj.mobdamage[BURN]
+				fireloss += Proj.mobdamage[BURN]
 	return
 
 
 /mob/living/blob/blob_act()
 	src << "The blob attempts to reabsorb you."
-	toxloss += 10
+	toxloss += 20
 	return
 
 
@@ -108,6 +108,10 @@
 			usr << "There is another node nearby, move away from it!"
 			creating_blob = 0
 			return
+	for(var/obj/blob/blob in orange(2))
+		if(blob.blobtype == "Factory")
+			usr << "There is a porus blob nearby, move away from it!"
+			creating_blob = 0
 	B.blobdebug = 2
 	spawn(0)
 		B.Life()
@@ -134,7 +138,7 @@
 		usr << "Unable to use this blob, find another one."
 		creating_blob = 0
 		return
-	for(var/obj/blob/blob in orange(1))//Not right next to nodes/cores
+	for(var/obj/blob/blob in orange(2))//Not right next to nodes/cores
 		if(blob.blobtype == "Node")
 			usr << "There is a node nearby, move away from it!"
 			creating_blob = 0
@@ -143,9 +147,61 @@
 			usr << "There is a core nearby, move away from it!"
 			creating_blob = 0
 			return
+		if(blob.blobtype == "Factory")
+			usr << "There is another porous blob nearby, move away from it!"
+			creating_blob = 0
+			return
 	B.blobdebug = 3
 	spawn(0)
 		B.Life()
+	src.gib()
+	return
+
+
+/mob/living/blob/verb/revert()
+	set category = "Blob"
+	set name = "Purge Defense"
+	set desc = "Removes a porous blob."
+	if(creating_blob)	return
+	var/turf/T = get_turf(src)
+	creating_blob = 1
+	if(!T)
+		creating_blob = 0
+		return
+	var/obj/blob/B = (locate(/obj/blob) in T)
+	if(!B)
+		usr << "There is no blob here!"
+		creating_blob = 0
+		return
+	if(B.blobtype != "Factory")
+		usr << "Unable to use this blob, find another one."
+		creating_blob = 0
+		return
+	B.revert()
+	src.gib()
+	return
+
+
+/mob/living/blob/verb/spawn_blob()
+	set category = "Blob"
+	set name = "Create new blob"
+	set desc = "Attempts to create a new blob in this tile, note might not work."
+	if(creating_blob)	return
+	var/turf/T = get_turf(src)
+	creating_blob = 1
+	if(!T)
+		creating_blob = 0
+		return
+	var/obj/blob/B = (locate(/obj/blob) in T)
+	if(B)
+		usr << "There is a blob here!"
+		creating_blob = 0
+		return
+	if(prob(50))
+		new/obj/blob(src.loc)
+		src << "\blue Success."
+	else
+		src << "\red Creation failed."
 	src.gib()
 	return
 
@@ -161,11 +217,9 @@
 		src << "Only administrators may use this command."
 		return
 	var/input = input(src, "Please specify which key will be turned into a bloby.", "Key", "")
-	if(!input)
-		return
 
 	var/mob/dead/observer/G_found
-	if(input == "Random")
+	if(!input)
 		var/list/ghosts = list()
 		for(var/mob/dead/observer/G in world)
 			if(G.client)

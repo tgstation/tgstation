@@ -85,27 +85,8 @@
 			for(var/mob/living/carbon/metroid/Metroid in view(1,tmob))
 				if(Metroid.Victim == tmob)
 					Metroid.UpdateFeed()
-
 			return
-		if(istype(equipped(), /obj/item/weapon/melee/baton)) // add any other item paths you think are necessary
-			if(loc:sd_lumcount < 3 || blinded)
-				var/obj/item/weapon/W = equipped()
-				if (world.time > lastDblClick+2)
-					lastDblClick = world.time
-					if((prob(40)) || (prob(95) && mutations & CLOWN))
-						//src << "\red You accidentally stun yourself with the [W.name]."
-						visible_message("\red [src] accidentally stun \himself with the [W.name].", \
-							"\red You accidentally stun yourself with the [W.name].")
-						weakened = max(12, weakened)
-					else
-						visible_message("\red[src] accidentally bumps into [tmob] with the [W.name].", \
-							"\red You accidentally bumps into [tmob] with the [W.name].")
-						tmob.weakened = max(4, tmob.weakened)
-						tmob.stunned = max(4, tmob.stunned)
-					playsound(loc, 'Egloves.ogg', 50, 1, -1)
-					W:charges--
-					now_pushing = 0
-					return
+
 		if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 			if(prob(40) && !(mutations & FAT))
 				visible_message("\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>", \

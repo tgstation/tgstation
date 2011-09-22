@@ -49,7 +49,6 @@
 
 	proc/check_mutations()//These could be their own objects I guess
 		if(blobtype != "Blob")	return
-		desc = "This really needs a better sprite."
 		//Spaceeeeeeblobbb
 		if((istype(src.loc, /turf/space)) || (blobdebug == 4))
 			active = 0
@@ -68,7 +67,7 @@
 			brute_resist = 2
 			fire_resist = 2
 			name = "blob core"
-			icon_state = "blob_node"//needs a new sprite
+			icon_state = "blob_core"
 			blobtype = "Core"
 			active_blobs -= src
 			processing_objects.Add(src)
@@ -108,7 +107,7 @@
 			if(check_mutations())
 				return
 
-		if((blobtype == "Blob") && (pulse <= 2))
+		if((blobtype == "Blob") && (pulse <= 2) && (prob(30)))
 			blobdebug = 4
 			check_mutations()
 			return
@@ -181,7 +180,7 @@
 			else
 				T.blob_act()
 				del(B)
-			for(var/atom/A in T)//This might be killing the spores, it IS killing the spores and come to think of it I am ok with this
+			for(var/atom/A in T)
 				A.blob_act()
 		return
 
@@ -240,6 +239,18 @@
 		src.health -= damage
 		src.update()
 
+
+	proc/revert()
+		name = "blob"
+		icon_state = "blob"
+		brute_resist = 4
+		fire_resist = 1
+		blobtype = "Blob"
+		blobdebug = 0
+		health = (health/2)
+		active_blobs += src
+		src.update()
+		return 1
 
 
 /datum/station_state/proc/count()

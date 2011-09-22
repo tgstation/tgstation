@@ -1,4 +1,3 @@
-
 dmm_suite/load_map(var/dmm_file as file, var/z_offset as num)
 	if(!z_offset)
 		z_offset = world.maxz+1
@@ -44,6 +43,7 @@ dmm_suite/load_map(var/dmm_file as file, var/z_offset as num)
 
 		if(findtext(tfile,quote+"}",zpos,0)+2==tfile_len)	break
 		sleep(-1)
+
 
 dmm_suite/proc/parse_grid(var/model as text,var/xcrd as num,var/ycrd as num,var/zcrd as num)
 	set background = 1
@@ -104,19 +104,19 @@ dmm_suite/proc/parse_grid(var/model as text,var/xcrd as num,var/ycrd as num,var/
 		var/atom/instance
 		var/dmm_suite/preloader/_preloader = new(fields)
 		if(ispath(atom_def,/area))
-
 			var/turf/A = locate(xcrd,ycrd,zcrd)
-			if(A.loc.name == "space")
+			if(A.loc.name == "Space")
 				instance = locate(atom_def)
-				instance.contents.Add(locate(xcrd,ycrd,zcrd))
+				if(instance)
+					instance.contents.Add(locate(xcrd,ycrd,zcrd))
 
 		else
+			//global.current_preloader = _preloader
 			instance = new atom_def(locate(xcrd,ycrd,zcrd))
 			if(_preloader)
 				_preloader.load(instance)
 			//End Instanciation
 		if(!findtext(copytext(model,dpos,0),","))	break
-
 
 
 dmm_suite/proc/trim_text(var/what as text)
@@ -126,6 +126,13 @@ dmm_suite/proc/trim_text(var/what as text)
 		what=copytext(what,1,length(what))
 	return what
 
+/*
+var/global/dmm_suite/preloader/current_preloader = null
+atom/New()
+	if(global.current_preloader)
+		global.current_preloader.load(src)
+	..()
+*/
 
 
 dmm_suite/preloader

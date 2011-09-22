@@ -66,7 +66,7 @@
 			B.Life()
 
 
-/datum/game_mode/blob/proc/stage()//Still needs worrrrrk
+/datum/game_mode/blob/proc/stage()
 	if (world.timeofday < next_stage)
 		return
 
@@ -75,7 +75,8 @@
 			send_intercept(1)
 			for (var/mob/living/silicon/ai/aiPlayer in world)
 				if (aiPlayer.client)
-					var/law = "The station is under a quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving."
+//					var/law = "The station is under a quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving."
+					var/law = "The station is under quarantine. The biohazard must be destroyed at all costs and must not be allowed to spread. Anyone using a space suit for any reason other than to destroy the biohazard is to be terminated."
 					aiPlayer.set_zeroth_law(law)
 					aiPlayer << "Laws Updated: [law]"
 			stage = 1
@@ -85,7 +86,7 @@
 		if (1)
 			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 			world << sound('outbreak5.ogg')
-//			autoexpand = 0//The blob now has to live on its own
+			autoexpand = 0//The blob now has to live on its own
 			stage = 2
 			// now check every minute
 			next_stage = world.timeofday + 600
@@ -95,7 +96,7 @@
 				command_alert("Uncontrolled spread of the biohazard onboard the station. We have issued directive 7-12 for [station_name()].  Any living Heads of Staff are ordered to enact directive 7-12 at any cost, a print out with detailed instructions has been sent to your communications computers.", "Biohazard Alert")
 				send_intercept(2)
 				declared = 2
-			if(blobs.len > 700)
+			if(blobs.len > 700)//This might need work
 				stage = 3
 			next_stage = world.timeofday + 600
 

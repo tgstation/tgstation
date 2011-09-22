@@ -449,7 +449,7 @@ obj/indicator
 	var/measure = "temperature"
 	anchored = 1
 
-	proc/process()
+	process()
 		icon_state = measurement()
 
 	proc/measurement()
