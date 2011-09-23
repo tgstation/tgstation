@@ -15,6 +15,9 @@
 /atom/proc/attack_animal(mob/user as mob)
 	return
 
+/atom/proc/attack_ghost(mob/user as mob)
+	return
+
 //for aliens, it works the same as monkeys except for alien-> mob interactions which will be defined in the
 //appropiate mob files
 /atom/proc/attack_alien(mob/user as mob)
@@ -218,6 +221,180 @@
 		return
 
 	return DblClick()
+
+/atom/proc/DblClickNew()
+
+	//Spamclick server-overloading prevention delay... THING
+	if (world.time <= usr:lastDblClick+1)
+		return
+	else
+		usr:lastDblClick = world.time
+
+	//paralysis and critical condition
+	if(usr.stat == 1)	//Death is handled in attack_ghost()
+		return
+
+	if(!istype(usr, /mob/living/silicon/ai))
+		if (usr.paralysis || usr.stunned || usr.weakened)
+			return
+
+	//handle the hud separately
+	if(istype(src,/obj/screen))
+		if( usr.restrained() )
+			if(ishuman(usr))
+				src.attack_hand(usr)
+			else if(isAI(usr))
+				src.attack_ai(usr)
+			else if(isrobot(usr))
+				src.attack_ai(usr)
+			else if(istype(usr,/mob/dead/observer))
+				src.attack_ghost(usr)
+			else if(ismonkey(usr))
+				src.attack_paw(usr)
+			else if(isalienadult(usr))
+				src.attack_alien(usr)
+			else if(istype(usr,/mob/living/carbon/metroid))
+				src.attack_metroid(usr)
+			else if(isanimal(usr))
+				src.attack_animal(usr)
+			else
+				usr << "This mob type does not support clicks to the HUD. Contact a coder."
+		else
+			if(ishuman(usr))
+				src.hand_h(usr, usr.hand)
+			else if(isAI(usr))
+				src.hand_a(usr, usr.hand)
+			else if(isrobot(usr))
+				src.hand_a(usr, usr.hand)
+			else if(istype(usr,/mob/dead/observer))
+				return
+			else if(ismonkey(usr))
+				src.hand_p(usr, usr.hand)
+			else if(isalienadult(usr))
+				src.hand_al(usr, usr.hand)
+			else if(istype(usr,/mob/living/carbon/metroid))
+				return
+			else if(isanimal(usr))
+				return
+			else
+				usr << "This mob type does not support restrained clicks to the HUD. Contact a coder."
+		return
+
+	//Gets equipped item or used module of robots
+	var/obj/item/W = usr.equipped()
+
+	//Attack self
+	if (W == src && usr.stat == 0)
+		spawn (0)
+			W.attack_self(usr)
+		return
+
+	if ( W && (W.flags & USEDELAY) )
+		if (usr.next_move < world.time)
+			usr.prev_move = usr.next_move
+			usr.next_move = world.time + 10
+		else
+			return	//An item with the USEDELAY flag's already been used this tick
+
+
+	//Is the object in a valid place?
+	var/valid_place = 0
+	if ( isturf(src) || ( src.loc && isturf(src.loc) ) || ( src.loc.loc && isturf(src.loc.loc) ) )
+		//Object is either a turf of placed on a turf, thus valid.
+		//The third one is that it is in a container, which is on a turf, like a box,
+		//which you mouse-drag opened. Also a valid location.
+		valid_place = 1
+
+	if ( ( src.loc && (src.loc == usr) ) || ( src.loc.loc && (src.loc.loc == usr) ) )
+		//User has the object on them (in their inventory) and it is thus valid
+		valid_place = 1
+
+	if(!valid_place)
+		return
+
+
+
+	if(ishuman(usr))
+		var/mob/living/carbon/human/human = usr
+		//-human stuff-
+
+		if(human.in_throw_mode)
+			return human.throw_item(src)
+
+		var/in_range = in_range(src, human) || src.loc == human
+
+		if(in_range)
+			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
+
+	else if(istype(usr,/mob/living/silicon/ai))
+		var/mob/living/silicon/ai/ai = usr
+		//-ai stuff-
+
+		if (ai.control_disabled)
+			return
+
+	else if(isrobot(usr))
+		var/mob/living/silicon/robot/robot = usr
+		//-cyborg stuff-
+
+		if (robot.lockcharge)
+			return
+
+		var/in_range = in_range(src, robot) || src.loc == robot
+
+		if(in_range)
+			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
+
+	else if(istype(usr,/mob/dead/observer))
+		var/mob/dead/observer/ghost = usr
+		//-chost stuff-
+
+		if(ghost)
+			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
+
+
+	else if(ismonkey(usr))
+		var/mob/living/carbon/monkey/monkey = usr
+		//-monkey stuff-
+
+		if(monkey.in_throw_mode)
+			return monkey.throw_item(src)
+
+		var/in_range = in_range(src, monkey) || src.loc == monkey
+
+		if(in_range)
+			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
+
+
+
+	else if(isalienadult(usr))
+		var/mob/living/carbon/alien/humanoid/alien = usr
+		//-alien stuff-
+
+		var/in_range = in_range(src, alien) || src.loc == alien
+
+		if(in_range)
+			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
+
+
+	else if(istype(usr,/mob/living/carbon/metroid))
+		var/mob/living/carbon/metroid/metroid = usr
+		//-metroid stuff-
+
+		var/in_range = in_range(src, metroid) || src.loc == metroid
+
+		if(in_range)
+			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
+
+
+	else if(isanimal(usr))
+		var/mob/living/simple_animal/animal = usr
+		//-simple animal stuff-
+
+		var/in_range = in_range(src, animal) || src.loc == animal
+
+		if(in_range)
+			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
 
 /atom/DblClick() //TODO: DEFERRED: REWRITE
 //	world << "checking if this shit gets called at all"

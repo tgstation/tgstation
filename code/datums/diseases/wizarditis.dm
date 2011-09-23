@@ -23,6 +23,7 @@ STI KALY - blind
 
 /datum/disease/wizarditis/stage_act()
 	..()
+	/*
 	switch(stage)
 		if(2)
 			if(prob(4))
@@ -47,12 +48,13 @@ STI KALY - blind
 				affected_mob << "\red You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")]."
 			if(prob(2))
 				teleport()
-
+	*/
 	return
 
 
 
 /datum/disease/wizarditis/proc/spawn_wizard_clothes(var/chance=5)
+	/*
 	if(istype(affected_mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = affected_mob
 		if(prob(chance))
@@ -84,7 +86,7 @@ STI KALY - blind
 					H.drop_from_slot(H.r_hand)
 				H.r_hand = new /obj/item/weapon/staff(H)
 				H.r_hand.layer = 20
-			return
+			return*/
 	return
 
 
@@ -100,7 +102,7 @@ STI KALY - blind
 
 	var/area/thearea = pick(theareas)
 */
-
+/*
 	var/list/theareas = new/list()
 	for(var/area/AR in orange(80, affected_mob))
 		if(theareas.Find(AR) || AR.name == "Space") continue
@@ -136,4 +138,5 @@ STI KALY - blind
 	affected_mob.loc = pick(L)
 	smoke.start()
 //Apparently it created a lagspike every time it was called -- Urist
+	*/
 	return
