@@ -582,23 +582,16 @@ mob
 			set category = "Debug"
 			getbrokeninhands()
 
-/*
-			for(var/obj/movable/floor/S in world)
-				S.icon = 'turf_analysis.dmi'
-				if(S.parent)
-					if(S.parent.group_processing)
-						if(S.parent.marker == 0)
-							S.parent.marker = rand(1,5)
-						if(S.parent.borders && S.parent.borders.Find(S))
-							S.icon_state = "on[S.parent.marker]_border"
-						else
-							S.icon_state = "on[S.parent.marker]"
 
-					else
-						S.icon_state = "suspended"
-				else
-					if(S.processing)
-						S.icon_state = "individual_on"
-					else
-						S.icon_state = "individual_off"
-*/
+/*		jump_to_dead_group() Currently in the normal admin commands but fits here
+			set category = "Debug"
+			if(!air_master)
+				usr << "Cannot find air_system"
+				return
+
+			var/datum/air_group/dead_groups = list()
+			for(var/datum/air_group/group in air_master.air_groups)
+				if (!group.group_processing)
+					dead_groups += group
+			var/datum/air_group/dest_group = pick(dead_groups)
+			usr.loc = pick(dest_group.members)*/

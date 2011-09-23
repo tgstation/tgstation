@@ -157,6 +157,7 @@
 			verbs += /client/proc/cmd_admin_grantfullaccess
 			//verbs += /client/proc/cmd_admin_explosion		--now in view vars
 			//verbs += /client/proc/cmd_admin_emp			--now in view vars
+			verbs += /client/proc/jump_to_dead_group
 			verbs += /client/proc/cmd_admin_drop_everything
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
@@ -231,7 +232,7 @@
 			verbs += /client/proc/cmd_admin_mute
 			verbs += /client/proc/cmd_admin_pm
 			verbs += /client/proc/cmd_admin_subtle_message
-			//verbs += 	 --useless
+			verbs += /client/proc/warn
 			verbs += /obj/admins/proc/announce
 			verbs += /obj/admins/proc/startnow
 			verbs += /client/proc/dsay
@@ -351,7 +352,7 @@
 	verbs -= /client/proc/cmd_admin_pm
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_subtle_message
-	//verbs -= /client/proc/warn --uselesss
+	verbs -= /client/proc/warn
 	verbs -= /obj/admins/proc/announce
 	verbs -= /obj/admins/proc/startnow
 	verbs -= /client/proc/dsay
@@ -377,6 +378,7 @@
 	verbs -= /client/proc/play_local_sound
 	verbs -= /client/proc/enable_mapping_debug
 	verbs -= /client/proc/toggleprayers
+	verbs -= /client/proc/jump_to_dead_group
 	verbs -= /client/proc/Blobize
 	return
 

@@ -175,3 +175,22 @@
 					var/a_lev = copytext(line, pos + 3, length(line) + 1)
 					admins[m_key] = a_lev
 					diary << ("ADMIN: [m_key] = [a_lev]")
+
+
+	jump_to_dead_group()
+		set name = "Jump to dead group"
+		set category = "Debug"
+		if(!authenticated || !holder)
+			src << "Only administrators may use this command."
+			return
+
+		if(!air_master)
+			usr << "Cannot find air_system"
+			return
+		var/datum/air_group/dead_groups = list()
+		for(var/datum/air_group/group in air_master.air_groups)
+			if (!group.group_processing)
+				dead_groups += group
+		var/datum/air_group/dest_group = pick(dead_groups)
+		usr.loc = pick(dest_group.members)
+		return
