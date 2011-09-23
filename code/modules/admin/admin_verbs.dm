@@ -220,6 +220,8 @@
 			verbs += /obj/admins/proc/immreboot				//immediate reboot
 			verbs += /obj/admins/proc/restart				//restart
 			verbs += /client/proc/cmd_admin_create_centcom_report
+			verbs += /client/proc/toggle_hear_deadcast
+			verbs += /client/proc/toggle_hear_radio
 
 
 		if (holder.level >= 0)//Mod********************************************************************
@@ -381,6 +383,9 @@
 	verbs -= /client/proc/toggleprayers
 	verbs -= /client/proc/jump_to_dead_group
 	verbs -= /client/proc/Blobize
+	verbs += /client/proc/toggle_clickproc //TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
+	verbs -= /client/proc/toggle_hear_deadcast
+	verbs -= /client/proc/toggle_hear_radio
 	return
 
 
@@ -614,6 +619,22 @@
 	if(!holder) return
 	using_new_click_proc = !using_new_click_proc
 	world << "Testing of new click proc [using_new_click_proc ? "enabled" : "disabled"]"
+
+/client/proc/toggle_hear_deadcast()
+	set name = "Toggle Hear Deadcast"
+	set category = "Admin"
+
+	if(!holder) return
+	STFU_ghosts = !STFU_ghosts
+	usr << "You will now [STFU_ghosts ? "hear" : "not hear"] ghsots"
+
+/client/proc/toggle_hear_radio()
+	set name = "Toggle Hear Radio"
+	set category = "Admin"
+
+	if(!holder) return
+	STFU_radio = !STFU_radio
+	usr << "You will now [STFU_radio ? "hear" : "not hear"] radio chatter from nearby radios or speakers"
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Toggle most admin verb visibility"

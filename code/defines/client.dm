@@ -32,6 +32,8 @@
 	var/karma = 0
 	var/karma_spent = 0
 
+	var/STFU_ghosts		//80+ rounds are fun to admin when text flies faster than airport security
+	var/STFU_radio		//80+ rounds are fun to admin when text flies faster than airport security
 
 	var/midis = 1 //Check if midis should be played for someone -- Urist
 	var/bubbles = 1 //Check if bubbles should be displayed for someone -- Doohl

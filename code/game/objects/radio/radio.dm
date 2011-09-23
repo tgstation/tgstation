@@ -233,6 +233,8 @@
 	var/list/heard_garbled = list() // garbled message
 
 	for (var/mob/R in receive)
+		if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+			continue
 		if (R.say_understands(M))
 			if (!ishuman(M) || istype(M.wear_mask, /obj/item/clothing/mask/gas/voice))
 				heard_masked += R
@@ -282,7 +284,7 @@
 
 		var/quotedmsg = M.say_quote(message)
 
-		//This following recording is intended for research and feedback in the use of department radio channels. It was added on 30.3.2011 by errorage.
+		//This following recording is intended for research and feedback in the use of department radio channels.
 
 		var/part_blackbox_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/blackbox_msg = "[part_a][M.name][part_blackbox_b][quotedmsg][part_c]"
