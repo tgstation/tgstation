@@ -46,7 +46,7 @@ BIKE HORN
 /obj/item/weapon/soap/afterattack(atom/target, mob/user as mob)
 	if(istype(target,/obj/decal/cleanable))
 		del(target)
-		user << "\blue You scrub the [name] out."
+		user << "\blue You scrub the [target.name] out."
 	else
 		target.clean_blood()
 		user << "\blue You clean the [target.name]."

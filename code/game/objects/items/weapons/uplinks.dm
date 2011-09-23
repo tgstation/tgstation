@@ -62,6 +62,7 @@ SYNDICATE UPLINK
 			dat += "<A href='byond://?src=\ref[src];buy_item=lawmod'>Hacked AI Module</A> (7)<BR>"
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=toolbox'>Syndicate Toolbox</A> (Includes various tools) (1)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=soap'>Syndicate Soap</A> (1)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=balloon'>Syndicate Balloon</A> (Useless) (10)<BR>"
 			dat += "<HR>"
 			if (src.origradio)
@@ -182,6 +183,10 @@ SYNDICATE UPLINK
 					if(uses)
 						uses--
 						new /obj/item/weapon/storage/toolbox/syndicate(get_turf(src))
+				if("soap")
+					if(uses)
+						uses--
+						new /obj/item/weapon/soap/syndie(get_turf(src))
 				if("balloon")
 					if (src.uses >= 10)
 						uses -= 10

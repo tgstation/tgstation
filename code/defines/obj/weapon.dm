@@ -259,6 +259,10 @@
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of comdoms."
 	icon_state = "soapdeluxe"
 
+/obj/item/weapon/soap/syndie
+	desc = "An untrustworthy bar of soap. Smells of fear."
+	icon_state = "soapsyndie"
+
 /obj/item/weapon/bedsheet
 	name = "bedsheet"
 	desc = "Nice, linen, bedsheet. Perfect to put on."

@@ -62,6 +62,7 @@
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=singubeacon'>Singularity Beacon</A> (does not include a screwdriver) (7)<BR>"
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=toolbox'>Syndicate Toolbox</A> (Includes various tools) (1)<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=soap'>Syndicate Soap</A> (1)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=balloon'>Syndicate Balloon</A> (Useless) (10)<BR>"
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=bundle'>Syndicate Bundle</A> (Contains an assorted selection of syndicate items)(10)<BR>"
@@ -193,6 +194,10 @@
 				if(uses)
 					uses--
 					new /obj/item/weapon/storage/toolbox/syndicate(get_turf(hostpda))
+			if("soap")
+				if(uses)
+					uses--
+					new /obj/item/weapon/soap/syndie(get_turf(src))
 			if("balloon")
 				if(uses >= 10)
 					uses -= 10
