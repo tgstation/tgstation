@@ -88,15 +88,15 @@
 
 		var/msg
 		for (var/mob/V in viewers(usr))
-			if(target == user && !user.stat)
+			if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 				V.show_message("[usr] starts climbing into the disposal.", 3)
 			if(target != user && !user.restrained())
 				if(target.anchored) return
 				V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
 		if(!do_after(usr, 20))
 			return
-		if(target == user && !user.stat)	// if drop self, then climbed in
-												// must be awake
+		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
+												// must be awake, not stunned or whatever
 			msg = "[user.name] climbs into the [src]."
 			user << "You climb into the [src]."
 		else if(target != user && !user.restrained())

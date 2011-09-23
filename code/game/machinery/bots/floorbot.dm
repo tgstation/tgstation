@@ -344,7 +344,8 @@
 	src.visible_message("\red <B>[src] blows apart!</B>", 1)
 	var/turf/Tsec = get_turf(src)
 
-	new /obj/item/weapon/storage/toolbox/mechanical(Tsec)
+	var/obj/item/weapon/storage/toolbox/mechanical/N = new /obj/item/weapon/storage/toolbox/mechanical(Tsec)
+	N.contents = list()
 
 	new /obj/item/device/prox_sensor(Tsec)
 
