@@ -224,3 +224,10 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/UI = 'screen1_old.dmi' // For changing the UI from preferences
 
 	var/obj/organstructure/organStructure = null //for dem organs
+
+
+/mob/proc/Delete(atom/A in view())
+	set category = "Debug"
+	switch (alert("Are you sure you wish to delete \the [A.name] at ([A.x],[A.y],[A.z]) ?", "Admin Delete Object","Yes","No"))
+		if("Yes")
+			log_admin("[usr.key] deleted [A.name] at ([A.x],[A.y],[A.z])")

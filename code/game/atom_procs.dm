@@ -12,11 +12,21 @@
 /atom/proc/attack_ai(mob/user as mob)
 	return
 
+/atom/proc/attack_robot(mob/user as mob)
+	attack_ai(user)
+	return
+
 /atom/proc/attack_animal(mob/user as mob)
 	return
 
 /atom/proc/attack_ghost(mob/user as mob)
+	src.examine()
 	return
+
+/atom/proc/attack_admin(mob/user as mob)
+	if(!user || !user.client || !user.client.holder)
+		return
+	attack_hand(user)
 
 //for aliens, it works the same as monkeys except for alien-> mob interactions which will be defined in the
 //appropiate mob files
@@ -31,17 +41,24 @@
 
 
 
-/atom/proc/hand_h(mob/user as mob)
+/atom/proc/hand_h(mob/user as mob)			//human (hand) - restrained
 	return
 
-/atom/proc/hand_p(mob/user as mob)
+/atom/proc/hand_p(mob/user as mob)			//monkey (paw) - restrained
 	return
 
-/atom/proc/hand_a(mob/user as mob)
+/atom/proc/hand_a(mob/user as mob)			//AI - restrained
 	return
 
-/atom/proc/hand_al(mob/user as mob)
+/atom/proc/hand_r(mob/user as mob)			//Cyborg (robot) - restrained
+	src.hand_a(user)
+	return
+
+/atom/proc/hand_al(mob/user as mob)			//alien - restrained
 	src.hand_p(user)
+	return
+
+/atom/proc/hand_m(mob/user as mob)			//metroid - restrained
 	return
 
 
@@ -219,8 +236,11 @@
 	if(usr.client.buildmode)
 		build_click(usr, usr.client.buildmode, location, control, params, src)
 		return
-
+	if(using_new_click_proc)  //TODO ERRORAGE (see message below)
+		return DblClickNew()
 	return DblClick()
+
+var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblClickNew() proc is being tested)
 
 /atom/proc/DblClickNew()
 
@@ -247,13 +267,13 @@
 				src.attack_ai(usr)
 			else if(isrobot(usr))
 				src.attack_ai(usr)
-			else if(istype(usr,/mob/dead/observer))
+			else if(isobserver(usr))
 				src.attack_ghost(usr)
 			else if(ismonkey(usr))
 				src.attack_paw(usr)
 			else if(isalienadult(usr))
 				src.attack_alien(usr)
-			else if(istype(usr,/mob/living/carbon/metroid))
+			else if(ismetroid(usr))
 				src.attack_metroid(usr)
 			else if(isanimal(usr))
 				src.attack_animal(usr)
@@ -266,13 +286,13 @@
 				src.hand_a(usr, usr.hand)
 			else if(isrobot(usr))
 				src.hand_a(usr, usr.hand)
-			else if(istype(usr,/mob/dead/observer))
+			else if(isobserver(usr))
 				return
 			else if(ismonkey(usr))
 				src.hand_p(usr, usr.hand)
 			else if(isalienadult(usr))
 				src.hand_al(usr, usr.hand)
-			else if(istype(usr,/mob/living/carbon/metroid))
+			else if(ismetroid(usr))
 				return
 			else if(isanimal(usr))
 				return
@@ -296,7 +316,6 @@
 		else
 			return	//An item with the USEDELAY flag's already been used this tick
 
-
 	//Is the object in a valid place?
 	var/valid_place = 0
 	if ( isturf(src) || ( src.loc && isturf(src.loc) ) || ( src.loc.loc && isturf(src.loc.loc) ) )
@@ -309,92 +328,186 @@
 		//User has the object on them (in their inventory) and it is thus valid
 		valid_place = 1
 
-	if(!valid_place)
+	//Afterattack gets performed every time you click, no matter if it's in range or not. It's used when
+	//clicking targets for guns and such. If you are clicking on a target that's not in range
+	//with an item in your hands only afterattack() needs to be performed.
+	//If the range is valid, afterattack() will be handled in the separate mob-type
+	//sections below, just after attackby(). Attack_hand and simmilar procs are handled
+	//in the mob-type sections below, as some require you to be in range to work (human, monkey..) while others don't (ai, cyborg)
+	//Also note that afterattack does not differentiate between mob-types.
+	if( W && !valid_place)
+		W.afterattack(src, usr, (valid_place ? 1 : 0))
 		return
-
-
 
 	if(ishuman(usr))
 		var/mob/living/carbon/human/human = usr
 		//-human stuff-
+
+		if(human.stat)
+			return
 
 		if(human.in_throw_mode)
 			return human.throw_item(src)
 
 		var/in_range = in_range(src, human) || src.loc == human
 
-		if(in_range)
-			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
+		if (in_range)
+			if ( !human.restrained() )
+				if (W)
+					attackby(W,human)
+					if (W)
+						W.afterattack(src, human)
+				else
+					attack_hand(human)
+			else
+				hand_h(human, human.hand)
+		else
+			if ( (W) && !human.restrained() )
+				W.afterattack(src, human)
 
-	else if(istype(usr,/mob/living/silicon/ai))
+
+	else if(isAI(usr))
 		var/mob/living/silicon/ai/ai = usr
 		//-ai stuff-
 
+		if(ai.stat)
+			return
+
 		if (ai.control_disabled)
 			return
+
+		if( !ai.restrained() )
+			attack_ai(ai)
+		else
+			hand_a(ai, ai.hand)
 
 	else if(isrobot(usr))
 		var/mob/living/silicon/robot/robot = usr
 		//-cyborg stuff-
 
+		if(robot.stat)
+			return
+
 		if (robot.lockcharge)
 			return
 
-		var/in_range = in_range(src, robot) || src.loc == robot
 
-		if(in_range)
-			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
 
-	else if(istype(usr,/mob/dead/observer))
+		if(W)
+			var/in_range = in_range(src, robot) || src.loc == robot
+			if(in_range)
+				attackby(W,robot)
+			if (W)
+				W.afterattack(src, robot)
+		else
+			if( !robot.restrained() )
+				attack_robot(robot)
+			else
+				hand_r(robot, robot.hand)
+
+	else if(isobserver(usr))
 		var/mob/dead/observer/ghost = usr
-		//-chost stuff-
+		//-ghost stuff-
 
 		if(ghost)
-			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
+			if(W)
+				if(usr.client && usr.client.holder)
+					src.attackby(W, ghost)				//This is so admins can interact with things ingame.
+				else
+					src.attack_ghost(ghost)				//Something's gone wrong, non-admin ghosts shouldn't be able to hold things.
+			else
+				if(usr.client && usr.client.holder)
+					src.attack_admin(ghost)				//This is so admins can interact with things ingame.
+				else
+					src.attack_ghost(ghost)				//Standard click as ghost
 
 
 	else if(ismonkey(usr))
 		var/mob/living/carbon/monkey/monkey = usr
 		//-monkey stuff-
 
+		if(monkey.stat)
+			return
+
 		if(monkey.in_throw_mode)
 			return monkey.throw_item(src)
 
 		var/in_range = in_range(src, monkey) || src.loc == monkey
 
-		if(in_range)
-			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
-
-
+		if (in_range)
+			if ( !monkey.restrained() )
+				if (W)
+					attackby(W,monkey)
+					if (W)
+						W.afterattack(src, monkey)
+				else
+					attack_paw(monkey)
+			else
+				hand_p(monkey, monkey.hand)
+		else
+			if ( (W) && !monkey.restrained() )
+				W.afterattack(src, monkey)
 
 	else if(isalienadult(usr))
 		var/mob/living/carbon/alien/humanoid/alien = usr
 		//-alien stuff-
 
+		if(alien.stat)
+			return
+
 		var/in_range = in_range(src, alien) || src.loc == alien
 
-		if(in_range)
-			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
+		if (in_range)
+			if ( !alien.restrained() )
+				if (W)
+					attackby(W,alien)
+					if (W)
+						W.afterattack(src, alien)
+				else
+					attack_alien(alien)
+			else
+				hand_al(alien, alien.hand)
+		else
+			if ( (W) && !alien.restrained() )
+				W.afterattack(src, alien)
 
 
-	else if(istype(usr,/mob/living/carbon/metroid))
+	else if(ismetroid(usr))
 		var/mob/living/carbon/metroid/metroid = usr
 		//-metroid stuff-
 
+		if(metroid.stat)
+			return
+
 		var/in_range = in_range(src, metroid) || src.loc == metroid
 
-		if(in_range)
-			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
+		if (in_range)
+			if ( !metroid.restrained() )
+				if (W)
+					attackby(W,metroid)
+					if (W)
+						W.afterattack(src, metroid)
+				else
+					attack_metroid(metroid)
+			else
+				hand_m(metroid, metroid.hand)
+		else
+			if ( (W) && !metroid.restrained() )
+				W.afterattack(src, metroid)
 
 
 	else if(isanimal(usr))
 		var/mob/living/simple_animal/animal = usr
 		//-simple animal stuff-
 
+		if(animal.stat)
+			return
+
 		var/in_range = in_range(src, animal) || src.loc == animal
 
-		if(in_range)
-			usr << "this is just to stop warnings in WIP code TODO ERRORAGE"
+		if (in_range)
+			if ( !animal.restrained() )
+				attack_animal(animal)
 
 /atom/DblClick() //TODO: DEFERRED: REWRITE
 //	world << "checking if this shit gets called at all"

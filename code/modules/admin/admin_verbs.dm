@@ -165,6 +165,7 @@
 			verbs += /client/proc/send_space_ninja
 			verbs += /client/proc/restartcontroller //Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
 			verbs += /client/proc/Blobize//I need to remember to move/remove this later
+			verbs += /client/proc/toggle_clickproc //TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 
 		if (holder.level >= 4)//Badmin********************************************************************
 			verbs += /obj/admins/proc/adrev					//toggle admin revives
@@ -605,6 +606,14 @@
 	clear_admin_verbs()
 	update_admins(holder.rank)
 	deadchat = temp
+
+/client/proc/toggle_clickproc() //TODO ERRORAGE (This is a temporary verb here while I test the new clicking proc)
+	set name = "Toggle NewClickProc"
+	set category = "Admin"
+
+	if(!holder) return
+	using_new_click_proc = !using_new_click_proc
+	world << "Testing of new click proc [using_new_click_proc ? "enabled" : "disabled"]"
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Toggle most admin verb visibility"

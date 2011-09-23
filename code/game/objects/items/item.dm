@@ -101,7 +101,8 @@
 		else
 	if ((usr.mutations & CLOWN) && prob(50)) t = "funny-looking"
 	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA ? "" : "bloody ",src, src.name, t)
-	usr << src.desc
+	if(src.desc)
+		usr << src.desc
 	return
 
 /obj/item/attack_hand(mob/user as mob)
