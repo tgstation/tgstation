@@ -46,4 +46,4 @@
 	desc = "A special suit that protects against hazardous, low pressure battlefield enviroments. Designed to hold larger oxygen tanks and advanced Nanotrasen tools."
 	protective_temperature = 10000
 	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 40, bio = 50, rad = 30)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/satchel,/obj/item/device/t_scanner,/obj/item/weapon/satchel/pickaxe, /obj/item/weapon/rcd)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/satchel,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)

@@ -357,7 +357,16 @@ CLIPBOARDS
 	else
 		if (src.amount >= 1)
 			src.amount--
-			new /obj/item/weapon/paper( usr.loc )
+			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper
+			P.loc = usr.loc
+			if(ishuman(usr))
+				if(!usr.get_active_hand())
+					usr.put_in_hand(P)
+					usr << "You take a paper out of the bin."
+			else
+				P.loc = get_turf_loc(src)
+				usr << "You take a paper out of the bin."
+
 	src.update()
 	return
 

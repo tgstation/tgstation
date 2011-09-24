@@ -74,8 +74,16 @@ MONKEY CUBE BOX
 	else
 		if (src.amount >= 1)
 			src.amount--
-			new /obj/item/weapon/reagent_containers/food/snacks/donut( src.loc )
-			usr << "You take a donut out of the box."
+			var/obj/item/weapon/reagent_containers/food/snacks/donut/D = new /obj/item/weapon/reagent_containers/food/snacks/donut
+			D.loc = usr.loc
+			if(ishuman(usr))
+				if(!usr.get_active_hand())
+					usr.put_in_hand(D)
+					usr << "You take a donut out of the box."
+			else
+				D.loc = get_turf_loc(src)
+				usr << "You take a donut out of the box."
+
 	src.update()
 	return
 
