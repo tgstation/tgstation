@@ -31,6 +31,7 @@
 			sd_lighting = 0			// *DAL*
 		else
 			luminosity = 0
+			area_lights_luminosity = rand(6,9)
 			//sd_SetLuminosity(0)		// *DAL*
 
 

@@ -74,13 +74,22 @@
 /obj/machinery/light/New()
 	..()
 
-	switch(fitting)
-		if("tube")
-			brightness = rand(6,9)
-		if("bulb")
-			brightness = 3
-	spawn(1)
-		update()
+	spawn(2)
+		switch(fitting)
+			if("tube")
+				if(src.loc && src.loc.loc && isarea(src.loc.loc))
+					var/area/A = src.loc.loc
+					brightness = A.area_lights_luminosity
+				else
+					brightness = rand(6,9)
+				if(prob(10))
+					broken(1)
+			if("bulb")
+				brightness = 3
+				if(prob(25))
+					broken(1)
+		spawn(1)
+			update()
 
 /obj/machinery/light/Del()
 	var/area/A = get_area(src)
@@ -307,16 +316,17 @@
 
 // break the light and make sparks if was on
 
-/obj/machinery/light/proc/broken()
+/obj/machinery/light/proc/broken(var/skip_sound_and_sparks = 0)
 	if(status == LIGHT_EMPTY)
 		return
 
-	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		playsound(src.loc, 'Glasshit.ogg', 75, 1)
-	if(on)
-		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
+	if(!skip_sound_and_sparks)
+		if(status == LIGHT_OK || status == LIGHT_BURNED)
+			playsound(src.loc, 'Glasshit.ogg', 75, 1)
+		if(on)
+			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+			s.set_up(3, 1, src)
+			s.start()
 	status = LIGHT_BROKEN
 	update()
 
