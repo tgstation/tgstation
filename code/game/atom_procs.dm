@@ -309,12 +309,24 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			W.attack_self(usr)
 		return
 
-	if ( W && (W.flags & USEDELAY) )
-		if (usr.next_move < world.time)
-			usr.prev_move = usr.next_move
-			usr.next_move = world.time + 10
+	//Attackby can only be done once every 1 second, unless an object has the NODELAY flag
+	if ( W && !(W.flags & NODELAY) )
+		if(W.flags & USEDELAY)
+			//Objects that use the USEDELAY flag can only attack once every 2 seconds
+			if (usr.next_move < world.time)
+				usr.prev_move = usr.next_move
+				usr.next_move = world.time + 20
+			else
+				return	//An item with the USEDELAY flag's already been used this tick
 		else
-			return	//An item with the USEDELAY flag's already been used this tick
+			//Objects that don't have NODELAY and don't have USEDELAY flags set, can attack once every 1 second, which is the standard.
+			if (usr.next_move < world.time)
+				usr.prev_move = usr.next_move
+				usr.next_move = world.time + 10
+			else
+				return	//An item with the USEDELAY flag's already been used this tick
+
+
 
 	//Is the object in a valid place?
 	var/valid_place = 0
