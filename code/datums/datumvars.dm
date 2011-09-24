@@ -185,6 +185,8 @@ client
 			body += "<option value='byond://?src=\ref[src];build_mode=\ref[D]'>Toggle Build Mode</option>"
 			body += "<option value>---</option>"
 			body += "<option value='byond://?src=\ref[src];gib=\ref[D]'>Gib</option>"
+		if(isobj(D))
+			body += "<option value='byond://?src=\ref[src];delall=\ref[D]'>Delete all of type</option>"
 		if(isobj(D) || ismob(D) || isturf(D))
 			body += "<option value='byond://?src=\ref[src];explode=\ref[D]'>Trigger explosion</option>"
 			body += "<option value='byond://?src=\ref[src];emp=\ref[D]'>Trigger EM pulse</option>"
@@ -416,6 +418,48 @@ client
 				return
 			togglebuildmode(MOB)
 			href_list["datumrefresh"] = href_list["build_mode"]
+		else if (href_list["delall"])
+			if(!href_list["delall"])
+				return
+			var/atom/A = locate(href_list["delall"])
+			if(!A)
+				return
+			if(!isobj(A))
+				usr << "This can only be used on objects (of type /obj)"
+				return
+			if(!A.type)
+				return
+			var/action_type = alert("Strict type ([A.type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
+			if(!action_type || action_type == "Cancel")
+				return
+			if(alert("Are you really sure you want to delete all objects of type [A.type]?",,"Yes","No") != "Yes")
+				return
+			if(alert("Second confirmation required. Delete?",,"Yes","No") != "Yes")
+				return
+			var/a_type = A.type
+			if(action_type == "Strict type")
+				var/i = 0
+				for(var/obj/O in world)
+					if(O.type == a_type)
+						i++
+						del(O)
+				if(!i)
+					usr << "No objects of this type exist"
+					return
+				log_admin("[key_name(usr)] deleted all objects of scrict type [a_type] ([i] objects deleted) ")
+				message_admins("\blue [key_name(usr)] deleted all objects of scrict type [a_type] ([i] objects deleted) ", 1)
+			else if(action_type == "Type and subtypes")
+				var/i = 0
+				for(var/obj/O in world)
+					if(istype(O,a_type))
+						i++
+						del(O)
+				if(!i)
+					usr << "No objects of this type exist"
+					return
+				log_admin("[key_name(usr)] deleted all objects of scrict type with subtypes [a_type] ([i] objects deleted) ")
+				message_admins("\blue [key_name(usr)] deleted all objects of type with subtypes [a_type] ([i] objects deleted) ", 1)
+
 		else if (href_list["explode"])
 			if(!href_list["explode"])
 				return
