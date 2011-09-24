@@ -39,6 +39,9 @@ turf
 				active_hotspot.just_spawned = (current_cycle < air_master.current_cycle)
 					//remove just_spawned protection if no longer processing this cell
 
+				//start processing quickly if we aren't already
+				reset_delay()
+
 			return igniting
 
 obj

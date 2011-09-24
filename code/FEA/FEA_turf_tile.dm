@@ -61,6 +61,10 @@ turf
 	var/pressure_difference = 0
 	var/pressure_direction = 0
 
+	//optimization vars
+	var/next_check = 0  //number of ticks before this tile updates
+	var/check_delay = 0  //number of ticks between updates
+
 	proc
 		high_pressure_movements()
 
@@ -80,6 +84,18 @@ turf
 				pressure_difference = connection_difference
 				pressure_direction = connection_direction
 
+			if (istype(src,/turf/simulated))
+				//P=nRT/V
+				var/turf/simulated/me = src
+				var/min_pressure = MINIMUM_AIR_TO_SUSPEND*me.air.temperature*R_IDEAL_GAS_EQUATION/CELL_VOLUME
+				if (connection_difference > min_pressure)
+					//enough air moved, reset wait
+					me.reset_delay()
+					//reset neighbor too
+					var/turf/simulated/enemy_tile = get_step(src, connection_direction)
+					if(istype(enemy_tile))
+						enemy_tile.reset_delay()
+
 	simulated
 		proc
 			consider_pressure_difference_space(connection_difference)
@@ -90,7 +106,10 @@ turf
 								air_master.high_pressure_delta += src
 							pressure_direction = direction
 							pressure_difference = connection_difference
+
+
 							return 1
+
 
 turf
 	simulated
@@ -126,6 +145,7 @@ turf
 
 			mimic_temperature_with_tile(turf/model)
 			share_temperature_with_tile(turf/simulated/sharer)
+
 
 			super_conduct()
 
@@ -194,6 +214,9 @@ turf
 						parent.suspend_group_processing()
 						air.merge(giver)
 				else
+					if (giver.total_moles() > MINIMUM_AIR_TO_SUSPEND)
+						reset_delay()
+
 					air.merge(giver)
 
 					if(!processing)
@@ -297,6 +320,13 @@ turf
 				processing = 0
 
 		process_cell()
+			//check if we're skipping this tick
+			if (next_check > 0)
+				next_check--
+				return 1
+			next_check += check_delay + rand(0,check_delay/2)
+			check_delay++
+
 			var/turf/simulated/list/possible_fire_spreads = list()
 			if(processing)
 				if(archived_cycle < air_master.current_cycle) //archive self if not already done
@@ -542,3 +572,8 @@ turf
 			being_superconductive = 1
 
 			air_master.active_super_conductivity += src
+
+		proc/reset_delay()
+			//sets this turf to process quickly again
+			next_check=0
+			check_delay=0
