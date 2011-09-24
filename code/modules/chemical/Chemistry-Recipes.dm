@@ -561,7 +561,7 @@ datum
 			required_other = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				new /obj/item/weapon/syntiflesh(location)
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(location)
 				return
 
 		metroidenzyme
@@ -608,7 +608,8 @@ datum
 			name = "Metroid Teleport"
 			id = "m_tele"
 			result = null
-			required_reagents = list("plasma" = 1, "pacid" = 2, "mutagen" = 3)
+			required_reagents = list("pacid" = 2, "mutagen" = 2)
+			required_catalysts = list("plasma" = 1)
 			result_amount = 1
 			required_container = /obj/item/metroid_core
 			required_other = 4
@@ -664,7 +665,8 @@ datum
 			name = "Metroid Crit"
 			id = "m_tele"
 			result = null
-			required_reagents = list("cryoxadone" = 1, "plasma" = 1, "mutagen" = 1, "uranium" = 1, "blood" = 1)
+			required_reagents = list("acid" = 1, "blood" = 1)
+			required_catalysts = list("plasma" = 1, "mutagen" = 1)
 			result_amount = 1
 			required_container = /obj/item/metroid_core
 			required_other = 4
@@ -844,7 +846,7 @@ datum
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				new /obj/item/weapon/syntiflesh(location)
+				new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(location)
 				return
 
 		hot_ramen

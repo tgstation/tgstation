@@ -574,6 +574,15 @@
 		//Foreach goto(154)
 	src.add_fingerprint(user)
 	//G = null
+
+	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
+	if(locate(/obj/machinery/computer/cloning, get_step(src, EAST)))
+
+		if (!M.client)
+			for(var/mob/dead/observer/ghost in world)
+				if(ghost.corpse == M && ghost.client)
+					ghost << "<b><font color = #330033>Your corpse has been placed into a cloning scanner. Return to your body if you want to be ressurected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+					break
 	del(G)
 	return
 
