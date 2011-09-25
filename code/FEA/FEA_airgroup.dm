@@ -41,8 +41,8 @@ datum
 		var/length_space_border = 0
 
 		suspend_group_processing()
-			update_tiles_from_group()
 			group_processing = 0
+			update_tiles_from_group()
 			check_delay=0
 			next_check=0
 

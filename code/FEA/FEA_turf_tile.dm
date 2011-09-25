@@ -341,6 +341,11 @@ turf
 						if(istype(enemy_tile))
 							if(enemy_tile.archived_cycle < archived_cycle) //archive bordering tile information if not already done
 								enemy_tile.archive()
+
+							//check temperature difference to possibly refresh processing
+							//var/temperature_delta = abs(air.temperature-enemy_tile.air.temperature)
+							//var/temperature_trigger = (temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+
 							if(enemy_tile.parent && enemy_tile.parent.group_processing) //apply tile to group sharing
 								if(enemy_tile.parent.current_cycle < current_cycle)
 									if(enemy_tile.parent.air.check_gas_mixture(air))
@@ -349,9 +354,18 @@ turf
 										enemy_tile.parent.suspend_group_processing()
 										connection_difference = air.share(enemy_tile.air)
 										//group processing failed so interact with individual tile
+
 							else
 								if(enemy_tile.current_cycle < current_cycle)
 									connection_difference = air.share(enemy_tile.air)
+
+								//I've commented out temp resetting for now.
+								//In low-pressure situations, the temp fluctuates too much, leading to hull breaches causing massive reupdate checks
+								//We can replace this with a heat capacity comparison if it proves to be necessary
+								//if (temperature_trigger)
+								//	reset_delay()
+								//	enemy_tile.reset_delay()
+
 							if(active_hotspot)
 								possible_fire_spreads += enemy_tile
 						else
@@ -576,4 +590,8 @@ turf
 		proc/reset_delay()
 			//sets this turf to process quickly again
 			next_check=0
-			check_delay=0
+			check_delay= -5 //negative numbers mean a mandatory quick-update period
+
+			//if this turf has a parent air group, suspend its processing
+			if (parent && parent.group_processing)
+				parent.suspend_group_processing()
