@@ -216,8 +216,8 @@
 		break
 
 /proc/viral_outbreak(var/virus = null)
-	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-	world << sound('outbreak7.ogg')
+//	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+//	world << sound('outbreak7.ogg')
 	var/virus_type
 	if(!virus)
 		virus_type = pick(/datum/disease/dnaspread,/datum/disease/flu,/datum/disease/cold,/datum/disease/brainrot,/datum/disease/magnitis,/datum/disease/pierrot_throat)
@@ -270,10 +270,13 @@
 			D.affected_mob = H
 			H.viruses += D
 			break
+	spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
+		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+		world << sound('outbreak7.ogg')
 
 /proc/alien_infestation() // -- TLE
-	command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-	world << sound('aliens.ogg')
+	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
+	//world << sound('aliens.ogg')
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
 		if(temp_vent.loc.z == 1 && !temp_vent.welded)
@@ -289,6 +292,9 @@
 			new /obj/alien/egg (vent.loc)
 		vents.Remove(vent)
 		spawncount -= 1
+	spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
+		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
+		world << sound('aliens.ogg')
 
 /proc/high_radiation_event()
 	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
@@ -329,9 +335,10 @@
 				new /obj/critter/spesscarp(C.loc)
 			else
 				new /obj/critter/spesscarp/elite(C.loc)
-	sleep(100)
-	command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
-	world << sound('commandreport.ogg')
+	//sleep(100)
+	spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
+		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
+		world << sound('commandreport.ogg')
 
 /proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 25) //leave lightsoutAmount as 0 to break ALL lights
 	if(isEvent)
