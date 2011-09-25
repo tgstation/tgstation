@@ -84,18 +84,6 @@ turf
 				pressure_difference = connection_difference
 				pressure_direction = connection_direction
 
-			if (istype(src,/turf/simulated))
-				//P=nRT/V
-				var/turf/simulated/me = src
-				var/min_pressure = MINIMUM_AIR_TO_SUSPEND*me.air.temperature*R_IDEAL_GAS_EQUATION/CELL_VOLUME
-				if (connection_difference > min_pressure)
-					//enough air moved, reset wait
-					me.reset_delay()
-					//reset neighbor too
-					var/turf/simulated/enemy_tile = get_step(src, connection_direction)
-					if(istype(enemy_tile))
-						enemy_tile.reset_delay()
-
 	simulated
 		proc
 			consider_pressure_difference_space(connection_difference)
@@ -320,6 +308,10 @@ turf
 				processing = 0
 
 		process_cell()
+			//this proc does all the heavy lifting for individual tile processing
+			//it shares with all of its neighbors, spreads fire, calls superconduction
+			//and doesn't afraid of anything
+
 			//check if we're skipping this tick
 			if (next_check > 0)
 				next_check--
@@ -338,16 +330,17 @@ turf
 						var/turf/simulated/enemy_tile = get_step(src, direction)
 						var/connection_difference = 0
 
-						if(istype(enemy_tile))
+						if(istype(enemy_tile))  //enemy_tile == neighbor, btw
 							if(enemy_tile.archived_cycle < archived_cycle) //archive bordering tile information if not already done
 								enemy_tile.archive()
 
-							//check temperature difference to possibly refresh processing
-							//var/temperature_delta = abs(air.temperature-enemy_tile.air.temperature)
-							//var/temperature_trigger = (temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+							var/delay_trigger = air.compare(enemy_tile.air)
+							if (!delay_trigger) //if compare() didn't return 1, air is different enough to trigger processing
+								reset_delay()
+								enemy_tile.reset_delay()
 
 							if(enemy_tile.parent && enemy_tile.parent.group_processing) //apply tile to group sharing
-								if(enemy_tile.parent.current_cycle < current_cycle)
+								if(enemy_tile.parent.current_cycle < current_cycle) //if the group hasn't been archived, it could just be out of date
 									if(enemy_tile.parent.air.check_gas_mixture(air))
 										connection_difference = air.share(enemy_tile.parent.air)
 									else
@@ -358,13 +351,6 @@ turf
 							else
 								if(enemy_tile.current_cycle < current_cycle)
 									connection_difference = air.share(enemy_tile.air)
-
-								//I've commented out temp resetting for now.
-								//In low-pressure situations, the temp fluctuates too much, leading to hull breaches causing massive reupdate checks
-								//We can replace this with a heat capacity comparison if it proves to be necessary
-								//if (temperature_trigger)
-								//	reset_delay()
-								//	enemy_tile.reset_delay()
 
 							if(active_hotspot)
 								possible_fire_spreads += enemy_tile
@@ -416,6 +402,7 @@ turf
 				update_visuals(air)
 
 			if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+				reset_delay() //hotspots always process quickly
 				hotspot_expose(air.temperature, CELL_VOLUME)
 				for(var/atom/movable/item in src)
 					item.temperature_expose(air, air.temperature, CELL_VOLUME)
