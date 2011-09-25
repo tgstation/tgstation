@@ -5,6 +5,10 @@
 
 	return 1
 
+/obj/machinery/meter/initialize()
+	if (!target)
+		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
+
 /obj/machinery/meter/process()
 	if(!target)
 		icon_state = "meterX"
@@ -89,7 +93,7 @@
 
 	usr << t
 	return 1
-	
+
 /obj/machinery/meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
