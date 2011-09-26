@@ -2,7 +2,7 @@
 	name = "Airlock Electronics"
 	icon = 'door_assembly.dmi'
 	icon_state = "door_electronics"
-
+	w_class = 2.0 //It should be tiny! -Agouri
 	m_amt = 50
 	g_amt = 50
 

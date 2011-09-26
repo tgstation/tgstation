@@ -235,6 +235,13 @@
 	item_state = "bl_suit"
 	color = "black_suit"
 
+/obj/item/clothing/under/suit_jacket/really_black
+	name = "Executive Suit"
+	desc = "A formal black suit and red tie, intended for the station's finest."
+	icon_state = "really_black_suit"
+	item_state = "bl_suit"
+	color = "black_suit"
+
 /obj/item/clothing/under/suit_jacket/red
 	name = "Red Suit"
 	desc = "A red suit and blue tie. Somewhat formal."
