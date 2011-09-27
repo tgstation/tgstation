@@ -136,6 +136,19 @@
 	density = 1
 	unacidable = 1
 
+
+	bullet_act(var/obj/item/projectile/Proj, var/def_zone)
+		var/turf/T = get_turf(src.loc)
+		if(T)
+			for(var/obj/O in T)
+				if(O != src)
+					O.bullet_act(Proj,def_zone)
+			for(var/mob/M in T)
+				M.bullet_act(Proj, def_zone)
+		..()
+
+
+
 /client/proc/forcewall()
 
 	set category = "Spells"

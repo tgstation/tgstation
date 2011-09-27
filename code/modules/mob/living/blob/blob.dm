@@ -256,5 +256,6 @@
 	B << "You have the power to create a new blob node that will help expand the blob."
 	B << "To create this node you will have to be on a normal blob tile and far enough away from any other node."
 	B << "Check your Blob verbs and hit Create Node to build a node."
+	B << "NOTE: Create new blob will only work 50% of the time."
 	spawn(10)
 		del(G_found)

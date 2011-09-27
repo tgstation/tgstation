@@ -714,7 +714,7 @@
 		usr << "You still haven't atoned for your speaking transgression. Wait."
 		return
 	usr.verbs -= /client/proc/mimewall
-	spawn(100)
+	spawn(300)
 		usr.verbs += /client/proc/mimewall
 	for (var/mob/V in viewers(usr))
 		if(V!=usr)
