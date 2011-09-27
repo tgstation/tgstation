@@ -177,7 +177,7 @@ proc/setup_jobs()
 	JOB.equipment_shoes = list(/obj/item/clothing/shoes/orange,/obj/item/clothing/shoes/brown,/obj/item/clothing/shoes/black)
 	JOB.equipment_suit = list(/obj/item/clothing/suit/hazardvest)
 	JOB.equipment_under = list(/obj/item/clothing/under/rank/engineer,/obj/item/clothing/under/color/yellow)
-	JOB.equipment_belt = list(/obj/item/weapon/storage/utilitybelt/full)
+	JOB.equipment_belt = list(/obj/item/weapon/storage/belt/utility/full)
 	JOB.equipment_back = list(/obj/item/weapon/storage/backpack/industrial,/obj/item/weapon/storage/backpack)
 	JOB.equipment_pda = /obj/item/device/pda/engineering
 	JOB.equipment_id = /obj/item/weapon/card/id

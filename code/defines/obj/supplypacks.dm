@@ -300,9 +300,9 @@
 
 /datum/supply_packs/mechanical
 	name = "Mechanical maintenance crate"
-	contains = list("/obj/item/weapon/storage/utilitybelt/full",
-					"/obj/item/weapon/storage/utilitybelt/full",
-					"/obj/item/weapon/storage/utilitybelt/full",
+	contains = list("/obj/item/weapon/storage/belt/utility/full",
+					"/obj/item/weapon/storage/belt/utility/full",
+					"/obj/item/weapon/storage/belt/utility/full",
 					"/obj/item/clothing/suit/hazardvest",
 					"/obj/item/clothing/suit/hazardvest",
 					"/obj/item/clothing/suit/hazardvest",

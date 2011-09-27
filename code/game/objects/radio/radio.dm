@@ -109,15 +109,7 @@
 	//..()
 	if (usr.stat)
 		return
-	if (\
-			!(\
-				issilicon(usr) || \
-				(\
-					usr.contents.Find(src) || \
-						( in_range(src, usr) && istype(loc, /turf) )\
-				)\
-			)\
-		)
+	if (!(issilicon(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
 		usr << browse(null, "window=radio")
 		return
 	usr.machine = src
@@ -186,7 +178,7 @@
 	add_fingerprint(usr)
 
 /obj/item/device/radio/talk_into(mob/M as mob, message, channel)
-	var/datum/radio_frequency/connection = null // Code shared by Mport2004 for Security Headsets -- TLE
+	var/datum/radio_frequency/connection = null
 	if(channel && channels && channels.len > 0)
 		if (channel == "department")
 			//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""

@@ -1,7 +1,3 @@
-/obj/closet/gimmick/New()
-	..()
-	sleep(2)
-
 /obj/closet/gimmick/russian/New()
 	..()
 	sleep(2)

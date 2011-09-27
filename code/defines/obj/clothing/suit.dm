@@ -6,7 +6,7 @@
 	var/fire_resist = T0C+100
 	flags = FPRINT | TABLEPASS
 	var/list/allowed = list(/obj/item/weapon/tank/emergency_oxygen)
-	armor = list(melee = 0, bullet = 0, laser = 0, taser = 2, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/bomb_suit
 	name = "bomb suit"
@@ -39,7 +39,7 @@
 	heat_transfer_coefficient = 0.30
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 1.3
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 100, rad = 20)
+	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 100, rad = 20)
 
 /obj/item/clothing/suit/bio_suit/general
 	icon_state = "bio_general"
@@ -96,7 +96,7 @@
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen)
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 50, rad = 5)
+	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 50, rad = 5)
 
 /obj/item/clothing/suit/labcoat/cmo
 	name = "chief medical officer's labcoat"
@@ -104,7 +104,7 @@
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen)
 	icon_state = "labcoat_cmo_open"
 	item_state = "labcoat_cmo"
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 55, rad = 5)
+	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 55, rad = 5)
 
 /obj/item/clothing/suit/labcoat/mad
 	name = "The Mad's labcoat"
@@ -130,7 +130,7 @@
 	desc = "A suit that protects against minor chemical spills. Offers slightly more protection against biohazards than the standard model. Has a green stripe on the shoulder."
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen)
 	icon_state = "labcoat_vir_open"
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 55, rad = 5)
+	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 55, rad = 5)
 
 /obj/item/clothing/suit/labcoat/science
 	name = "Scientist Labcoat"
@@ -212,7 +212,7 @@
 	icon_state = "wizard-fake"
 	item_state = "wizrobe"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS //It's not magic, shit is reasonable. --NEO
-	armor = list(melee = 5, bullet = 0, laser = 5, taser = 5, bomb = 5, bio = 5, rad = 5)
+	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/wizrobe/marisa
 	name = "Witch Robe"
@@ -362,8 +362,8 @@
 	icon_state = "riot"
 	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	slowdown = 2.5
-	armor = list(melee = 82, bullet = 5, laser = 2, taser = 2, bomb = 5, bio = 0, rad = 0)
+	slowdown = 1
+	armor = list(melee = 80, bullet = 5, laser = 5, taser = 0, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "Bulletproof Vest"
@@ -415,7 +415,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1.3
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 60, rad = 100)
+	armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 60, rad = 100)
 
 /obj/item/clothing/suit/fire/heavy
 	name = "firesuit"
@@ -477,7 +477,7 @@
 	icon_state = "chickensuit"
 	item_state = "chickensuit"
 	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HEAD
-	armor = list(melee = 5, bullet = 2, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 5, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/monkeysuit
 	name = "Monkey Suit"
@@ -485,7 +485,7 @@
 	icon_state = "monkeysuit"
 	item_state = "monkeysuit"
 	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HANDS
-	armor = list(melee = 5, bullet = 2, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 5, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/holidaypriest
 	name = "Holiday Priest"

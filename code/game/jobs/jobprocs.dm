@@ -338,8 +338,7 @@
 			src.equip_if_possible(new /obj/item/device/pda/engineering(src), slot_belt)
 			src.equip_if_possible(new /obj/item/clothing/shoes/orange(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/head/helmet/hardhat(src), slot_head)
-			src.equip_if_possible(new /obj/item/weapon/storage/utilitybelt/full(src), slot_l_hand) //currently spawns in hand due to traitor assignment requiring a PDA to be on the belt. --Errorage
-			//src.equip_if_possible(new /obj/item/clothing/gloves/yellow(src), slot_gloves) removed as part of Dangercon 2011, approved by Urist_McDorf --Errorage
+			src.equip_if_possible(new /obj/item/weapon/storage/belt/utility/full(src), slot_l_hand)
 			src.equip_if_possible(new /obj/item/device/t_scanner(src), slot_r_store)
 
 		if ("Shaft Miner")
@@ -559,14 +558,13 @@
 			src.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (src), slot_back)
 			src.equip_if_possible(new /obj/item/weapon/storage/box/engineer(src.back), slot_in_backpack)
 			src.equip_if_possible(new /obj/item/device/radio/headset/heads/ce (src), slot_ears)
-			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves) //changed to black as part of dangercon 2011, approved by Urist_McDorf --Errorage
+			src.equip_if_possible(new /obj/item/clothing/gloves/black(src), slot_gloves)
 			src.equip_if_possible(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			src.equip_if_possible(new /obj/item/clothing/head/helmet/hardhat/white(src), slot_head)
-			src.equip_if_possible(new /obj/item/weapon/storage/utilitybelt/full(src), slot_l_hand) //currently spawns in hand due to traitor assignment requiring a PDA to be on the belt. --Errorage
+			src.equip_if_possible(new /obj/item/weapon/storage/belt/utility/full(src), slot_l_hand)
 			var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(src)
 			CIG.light("")
-			src.equip_if_possible(CIG, slot_wear_mask) // sorry, no more cigar
-			//src.equip_if_possible(new /obj/item/clothing/glasses/meson(src), slot_glasses) Removed as part of DangerCon 2011, approved by Urist_McDorf, --Errorage
+			src.equip_if_possible(CIG, slot_wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/under/rank/chief_engineer(src), slot_w_uniform)
 			src.equip_if_possible(new /obj/item/device/pda/heads/ce(src), slot_belt)
 

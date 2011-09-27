@@ -58,7 +58,7 @@
 	if(prob(70))
 		new /obj/item/device/t_scanner(src)
 	if(prob(20))
-		new /obj/item/weapon/storage/utilitybelt(src)
+		new /obj/item/weapon/storage/belt/utility(src)
 	if(prob(30))
 		new /obj/item/weapon/cable_coil(src)
 	if(prob(30))

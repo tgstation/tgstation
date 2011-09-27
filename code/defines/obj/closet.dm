@@ -26,13 +26,6 @@
 	icon_closed = "cabinet_closed"
 	icon_opened = "cabinet_open"
 
-/obj/closet/cabinet2
-	desc = "Old will forever be in fashion."
-	name = "Cabinet"
-	icon_state = "cabinetdet_closed"
-	icon_closed = "cabinetdet_closed"
-	icon_opened = "cabinetdet_open"
-
 /obj/spresent
 	desc = "It's a ... present?"
 	name = "strange present"
@@ -363,7 +356,7 @@
 	icon_closed = "extinguisher10"
 	opened = 1
 	var/localopened = 1
-	desc = "Sure was nice of CentCom to install these everywhere. Foam in them would have been nicer."
+	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
 	anchored = 1
 
 	open()
@@ -373,8 +366,6 @@
 		return
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		//..() don't want it to behave like a normal closet.
-
 		if (isrobot(usr))
 			return
 		if (istype(O, /obj/item/weapon/extinguisher))
@@ -466,8 +457,6 @@
 	icon_opened = "syndicate1open"
 	desc = "Tacticool Gear Closet"
 
-	// Ending of my edit. ~Sillazi
-
 /obj/closet/thunderdome
 	desc = "Everything you need!"
 	icon_state = "syndicate"
@@ -504,96 +493,88 @@
 
 /obj/closet/wardrobe/black
 	name = "Black Wardrobe"
-	desc = "This contains clothes which appears to be black."
+	desc = "Contains black jumpsuits."
 	icon_state = "black"
 	icon_closed = "black"
 
 /obj/closet/wardrobe/chaplain_black
 	name = "Chaplain Wardrobe"
-	desc = "Closet of chaplain clothes. Looks meh."
+	desc = "Closet of basic chaplain clothes."
 	icon_state = "black"
 	icon_closed = "black"
 
 /obj/closet/wardrobe/green
 	name = "Green Wardrobe"
-	desc = "Green is the new green."
+	desc = "Contains green jumpsuits."
 	icon_state = "green"
 	icon_closed = "green"
 
 /obj/closet/wardrobe/mixed
 	name = "Mixed Wardrobe"
-	desc = "This appears to contain two different sets of clothing."
+	desc = "This appears to contain several different sets of clothing."
 	icon_state = "mixed"
 	icon_closed = "mixed"
 
 /obj/closet/wardrobe/orange
 	name = "Prisoners Wardrobe"
-	desc = "Prisoners now wear orange. The Security Officers kept thinking the Mime was an escapee."
+	desc = "Contains orange jumpsuits."
 	icon_state = "orange"
 	icon_closed = "orange"
 
 /obj/closet/wardrobe/pink
 	name = "Pink Wardrobe"
-	desc = "Closet of of soft clothing."
+	desc = "Contains pink jumpsuits."
 	icon_state = "pink"
 	icon_closed = "pink"
 
 /obj/closet/wardrobe/red
 	name = "Red Wardrobe"
-	desc = "This closer appears to contain clothing which are red."
+	desc = "Contains red jumpsuits."
 	icon_state = "red"
 	icon_closed = "red"
-
-/obj/closet/wardrobe/forensics_red
-	name = "Forensics Wardrobe"
-	desc = "Used by your local Forensics."
-	icon_state = "red"
-	icon_closed = "red"
-
 
 /obj/closet/wardrobe/white
 	name = "White Wardrobe"
-	desc = "Basic plain white clothing. Boring..."
+	desc = "Contains white jumpsuits."
 	icon_state = "white"
 	icon_closed = "white"
 
 /obj/closet/wardrobe/toxins_white
 	name = "Toxins Wardrobe"
-	desc = "Clothes for toxins."
+	desc = "Contains toxins jumpsuits."
 	icon_state = "white"
 	icon_closed = "white"
 
 /obj/closet/wardrobe/genetics_white
 	name = "Genetics Wardrobe"
-	desc = "Clothes for genetics. They will need this when they are human."
+	desc = "Contains genetics jumpsuits."
 	icon_state = "white"
 	icon_closed = "white"
 
-
 /obj/closet/wardrobe/yellow
 	name = "Yellow Wardrobe"
-	desc = "Basic yellow clothing."
+	desc = "Contains yellow jumpsuits."
 	icon_state = "wardrobe-y"
 	icon_closed = "wardrobe-y"
 
 /obj/closet/wardrobe/engineering_yellow
 	name = "Engineering Wardrobe"
-	desc = "The yellow Engineers loves."
+	desc = "Contains engineering jumpsuits."
 	icon_state = "yellow"
 	icon_closed = "yellow"
 
 /obj/closet/wardrobe/atmospherics_yellow
 	name = "Atmospherics Wardrobe"
-	desc = "Clothing for the most dangerous job."
+	desc = "Contains atmospheric jumpsuits."
 	icon_state = "yellow"
 	icon_closed = "yellow"
 
-
 /obj/closet/wardrobe/grey
 	name = "Grey Wardrobe"
-	desc = "This contains the clothing of the Grey Shirts."
+	desc = "Contains grey jumpsuits."
 	icon_state = "grey"
 	icon_closed = "grey"
+
 
 
 /obj/secure_closet
@@ -614,72 +595,6 @@
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 300
 
-/obj/secure_closet/courtroom
-	name = "Courtroom Locker"
-	req_access = list(access_court)
-
-/obj/secure_closet/animal
-	name = "Animal Control"
-	req_access = list(access_medical)
-
-/obj/secure_closet/brig
-	name = "Brig Locker"
-	req_access = list(access_brig)
-	var/id = null
-
-/obj/secure_closet/highsec
-	name = "Head of Personnel"
-	req_access = list(access_hop)
-
-/obj/secure_closet/hos
-	name = "Head Of Security"
-	req_access = list(access_hos)
-
-/obj/secure_closet/injection
-	name = "Lethal Injections"
-	req_access = list(access_hos)
-
-/obj/secure_closet/captains
-	name = "Captain's Closet"
-	req_access = list(access_captain)
-
-/obj/secure_closet/medical1
-	name = "Medicine Closet"
-	desc = "Filled with medical junk."
-	icon_state = "medical1"
-	icon_closed = "medical"
-	icon_locked = "medical1"
-	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
-	icon_off = "medical1"
-	req_access = list(access_medical)
-
-/obj/secure_closet/chemical
-	name = "Chemical Closet"
-	desc = "Store dangerous chemicals in here. This closet is full of cobwebs."
-	icon_state = "medical1"
-	icon_closed = "medical"
-	icon_locked = "medical1"
-	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
-	icon_off = "medical1"
-	req_access = list(access_medical)
-
-/obj/secure_closet/medical2
-	name = "Anesthetic"
-	desc = "Used to knock people out, but who uses this trash?"
-	icon_state = "medical1"
-	icon_closed = "medical"
-	icon_locked = "medical1"
-	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
-	icon_off = "medical1"
-	req_access = list(access_medical)
-
-/obj/secure_closet/medical3
-	name = "Medical Doctor's Locker"
-	req_access = list(access_medical)
-
 /obj/secure_closet/medical_wall
 	anchored = 1
 	name = "First Aid Closet"
@@ -693,40 +608,12 @@
 	req_access = list(access_medical)
 	wall_mounted = 1
 
-/obj/secure_closet/RD
-	name = "Research Director"
-	req_access = list(access_rd)
-
-/obj/secure_closet/CMO
-	name = "Chief Medical Officer"
-	req_access = list(access_cmo)
-
 /obj/secure_closet/personal
 	desc = "The first card swiped gains control."
 	name = "Personal Closet"
 
 /obj/secure_closet/personal/patient
 	name = "Patient's closet"
-
-/obj/secure_closet/security1
-	name = "Security Equipment"
-	req_access = list(access_security)
-
-/obj/secure_closet/security2
-	name = "Forensics Locker"
-	req_access = list(access_forensics_lockers)
-
-/obj/secure_closet/scientist
-	name = "Scientist Locker"
-
-	req_access = list(access_tox_storage)
-/obj/secure_closet/chemtoxin
-	name = "Chemistry Locker"
-
-	req_access = list(access_medical)
-/obj/secure_closet/bar
-	name = "Booze"
-	req_access = list(access_bar)
 
 /obj/secure_closet/kitchen
 	name = "Kitchen Cabinet"
@@ -762,22 +649,6 @@
 	icon_broken = "fridgebroken"
 	icon_off = "fridge1"
 	req_access = list(access_heads_vault)
-
-/obj/secure_closet/engineering_chief
-	name = "Chief Engineer's Locker"
-	req_access = list(access_ce)
-
-/obj/secure_closet/engineering_electrical
-	name = "Electrical Supplies"
-	req_access = list(access_engine)
-
-/obj/secure_closet/engineering_welding
-	name = "Welding Supplies"
-	req_access = list(access_engine)
-
-/obj/secure_closet/engineering_personal
-	name = "Engineer's Locker"
-	req_access = list(access_engine)
 
 /obj/secure_closet/wall
 	name = "wall locker"
