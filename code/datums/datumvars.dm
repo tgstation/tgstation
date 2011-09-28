@@ -20,6 +20,15 @@ client
 			if (A.icon)
 				body += debug_variable("icon", new/icon(A.icon, A.icon_state, A.dir), 0)
 			#endif
+
+		var/icon/sprite
+
+		if(istype(D,/atom))
+			var/atom/AT = D
+			if(AT.icon && AT.icon_state)
+				sprite = new /icon(AT.icon, AT.icon_state)
+				usr << browse_rsc(sprite, "view_vars_sprite.png")
+
 		title = "[D] (\ref[D]) = [D.type]"
 
 		body += {"<script type="text/javascript">
@@ -140,17 +149,45 @@ client
 
 		body += "<body onload='selectTextField(); updateSearch()' onkeyup='updateSearch()'>"
 
-		body += "<div align='center'><table width='100%'><tr><td width='50%'><div align='center'><b>"
+		body += "<div align='center'><table width='100%'><tr><td width='50%'>"
+
+		if(sprite)
+			body += "<table align='center' width='100%'><tr><td><img src='view_vars_sprite.png'></td><td>"
+		else
+			body += "<table align='center' width='100%'><tr><td>"
+
+		body += "<div align='center'>"
 
 		if(istype(D,/atom))
-			body += "<a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=name'>[D]</a>"
+			var/atom/A = D
+			body += "<a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
+			if(A.dir)
+				body += "<br><font size='1'><a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
+			if(istype(A,/mob))
+				var/mob/M = A
+				body += "<br><font size='1'><a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 		else
-			body += "[D]"
+			body += "<b>[D]</b>"
 
-		body += "<br><font size='1'>[D.type]</font></b>"
+		body += "</div>"
+
+		body += "</tr></td></table>"
+
+		var/formatted_type = text("[D.type]")
+		if(length(formatted_type) > 25)
+			var/middle_point = length(formatted_type) / 2
+			var/splitpoint = findtext(formatted_type,"/",middle_point)
+			if(splitpoint)
+				formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
+			else
+				formatted_type = "Type too long" //No suitable splitpoint (/) found.
+
+		body += "<div align='center'><b><font size='1'>[formatted_type]</font></b>"
 
 		if(src.holder && src.holder.marked_datum && src.holder.marked_datum == D)
 			body += "<br><font size='1' color='red'><b>Marked Object</b></font>"
+
+		body += "</div>"
 
 		body += "</div></td>"
 
@@ -315,24 +352,24 @@ client
 			if(!href_list["datumedit"] || !href_list["varnameedit"])
 				usr << "Varedit error: Not all information has been sent Contact a coder."
 				return
-			var/datum/DAT = locate(href_list["datumedit"])
+			var/DAT = locate(href_list["datumedit"])
 			if(!DAT)
 				usr << "Item not found"
 				return
-			if(!istype(DAT,/datum))
-				usr << "Can't edit an item of this type. Type must be /datum, so anything except simple variables. [DAT]"
+			if(!istype(DAT,/datum) && !istype(DAT,/client))
+				usr << "Can't edit an item of this type. Type must be /datum or /client, so anything except simple variables."
 				return
 			modify_variables(DAT, href_list["varnameedit"], 1)
 		else if (href_list["varnamechange"])
 			if(!href_list["datumchange"] || !href_list["varnamechange"])
 				usr << "Varedit error: Not all information has been sent. Contact a coder."
 				return
-			var/datum/DAT = locate(href_list["datumchange"])
+			var/DAT = locate(href_list["datumchange"])
 			if(!DAT)
 				usr << "Item not found"
 				return
-			if(!istype(DAT,/datum))
-				usr << "Can't edit an item of this type. Type must be /datum, so anything except simple variables. [DAT]"
+			if(!istype(DAT,/datum) && !istype(DAT,/client))
+				usr << "Can't edit an item of this type. Type must be /datum or /client, so anything except simple variables."
 				return
 			modify_variables(DAT, href_list["varnamechange"], 0)
 		else if (href_list["varnamemass"])
@@ -344,7 +381,7 @@ client
 				usr << "Item not found"
 				return
 			if(!istype(A,/atom))
-				usr << "Can't edit an item of this type. Type must be /atom, so an object, turf, mob or area. [A]"
+				usr << "Can't mass edit an item of this type. Type must be /atom, so an object, turf, mob or area. You cannot mass edit clients!"
 				return
 			cmd_mass_modify_object_variables(A, href_list["varnamemass"])
 		else if (href_list["mob_player_panel"])
@@ -490,6 +527,23 @@ client
 				return
 			src.holder.marked_datum = D
 			href_list["datumrefresh"] = href_list["mark_object"]
+		else if (href_list["rotatedatum"])
+			if(!href_list["rotatedir"])
+				return
+			var/atom/A = locate(href_list["rotatedatum"])
+			if(!A)
+				return
+			if(!istype(A,/atom))
+				usr << "This can only be done to objects of type /atom"
+				return
+			if(!src.holder)
+				return
+			switch(href_list["rotatedir"])
+				if("right")
+					A.dir = turn(A.dir, -45)
+				if("left")
+					A.dir = turn(A.dir, 45)
+			href_list["datumrefresh"] = href_list["rotatedatum"]
 		else
 			..()
 

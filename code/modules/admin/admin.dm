@@ -967,33 +967,59 @@
 				if(!obj_dir || !(obj_dir in list(1,2,4,8,5,6,9,10)))
 					obj_dir = 2
 				var/obj_name = sanitize(href_list["object_name"])
+				var/where = href_list["object_where"]
+				if (!( where in list("onfloor","inhand","inmarked") ))
+					where = "onfloor"
 
-				for (var/i = 1 to number)
-					switch (href_list["offset_type"])
-						if ("absolute")
-							for (var/path in paths)
-								var/atom/O = new path(locate(0 + X,0 + Y,0 + Z))
-								if(O)
-									O.dir = obj_dir
-									if(obj_name)
-										O.name = obj_name
-										if(istype(O,/mob))
-											var/mob/M = O
-											M.real_name = obj_name
+				//TODO ERRORAGE
+				if( where == "inhand" )
+					usr << "Support for inhand not available yet. Will spawn on floor."
+					where = "onfloor"
+				//END TODO ERRORAGE
 
-						if ("relative")
-							if (loc)
-								for (var/path in paths)
-									var/atom/O = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
-									if(O)
-										O.dir = obj_dir
-										if(obj_name)
-											O.name = obj_name
-											if(istype(O,/mob))
-												var/mob/M = O
-												M.real_name = obj_name
-							else
-								return
+				if ( where == "inhand" )	//Can only give when human or monkey
+					if ( !( ishuman(usr) || ismonkey(usr) ) )
+						usr << "Can only spawn in hand when you're a human or a monkey."
+						where = "onfloor"
+					else if ( usr.get_active_hand() )
+						usr << "Your active hand is full. Spawning on floor."
+						where = "onfloor"
+				if ( where == "inmarked" )
+					if ( !marked_datum )
+						usr << "You don't have any object marked. Abandoning spawn."
+						return
+					else
+						if ( !istype(marked_datum,/atom) )
+							usr << "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn."
+							return
+
+				var/atom/target //Where the object will be spawned
+				switch ( where )
+					if ( "onfloor" )
+						switch (href_list["offset_type"])
+							if ("absolute")
+								target = locate(0 + X,0 + Y,0 + Z)
+							if ("relative")
+								target = locate(loc.x + X,loc.y + Y,loc.z + Z)
+					if ( "inmarked" )
+						target = marked_datum
+
+
+				//TODO ERRORAGE - Give support for "inhand"
+
+				if(target)
+					for (var/path in paths)
+						for (var/i = 0; i < number; i++)
+							var/atom/O = new path(target)
+							if(O)
+								O.dir = obj_dir
+								if(obj_name)
+									O.name = obj_name
+									if(istype(O,/mob))
+										var/mob/M = O
+										M.real_name = obj_name
+
+
 
 				if (number == 1)
 					log_admin("[key_name(usr)] created a [english_list(paths)]")
