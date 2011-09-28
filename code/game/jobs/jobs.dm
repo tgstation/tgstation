@@ -293,16 +293,20 @@ proc/assignment_algorithm(var/list/mob/new_player/players)
 
 
 var/list/occupations = list(
+	"Captain"				 = 1,
 	//Civilian jobs
 	"Head of Personnel"      = 1,
 
 	//soul
 	"Clown"                  = 1,
 	"Mime"                   = 1,
+	"Chaplain" 				 = 1,
+	"Librarian"				 = 1,
 
 	//body
 	"Bartender"              = 1,
 	"Chef"                   = 1,
+	"Botanist"               = 2,
 	"Janitor"                = 1,
 	"Quartermaster"          = 1,
 	"Cargo Technician"       = 3,
@@ -318,22 +322,24 @@ var/list/occupations = list(
 	"Warden"                 = 1,
 	"Detective"              = 1,
 	"Security Officer"       = 5,
+	"Lawyer" 				 = 2,
 
 	//medbay
 	"Chief Medical Officer"  = 1,
 	"Medical Doctor"         = 5,
+	"Geneticist"             = 2,
 	"Chemist"                = 2,
 
 	//science dept
 	"Research Director"      = 1,
-	"Geneticist"             = 2,
 	"Scientist"              = 3,
-	"Botanist"               = 2,
 	"Virologist"             = 1,
 
 	//I afraid I can't do that, Dave
-//	"AI" = 1,now picked like the captain
-	"Cyborg" = 1
+	"AI" = 1,
+	"Cyborg" = 1,
+
+	"Assistant" 			= -1
 
 )
 
@@ -351,11 +357,11 @@ var/list/assistant_occupations = list(
 
 var/list/head_positions = list(
 	"Captain",
-	"Head of Personnel",
-	"Head of Security",
+	"Chief Medical Officer",
 	"Chief Engineer",
+	"Head of Personnel",
 	"Research Director",
-	"Chief Medical Officer"
+	"Head of Security"
 )
 
 var/list/nonhuman_positions = list(

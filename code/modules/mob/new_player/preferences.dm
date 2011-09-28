@@ -43,7 +43,7 @@ datum/preferences
 	var/underwear = 1
 	var/bubbles = 0 // 0 if the player doesn't want bubbles to appear
 
-	var/occupation[] = list("No Preference", "No Preference", "No Preference")
+	var/occupation[length(occupations)]
 	var/datum/jobs/wanted_jobs = list()
 
 	var/h_style = "Short Hair"
@@ -68,6 +68,8 @@ datum/preferences
 
 	New()
 		randomize_name()
+		for(var/n in occupation)
+			n=1
 		..()
 
 	//The mob should have a gender you want before running this proc.
@@ -379,7 +381,7 @@ datum/preferences
 		update_preview_icon()
 		user << browse_rsc(preview_icon, "previewicon.png")
 
-		var/list/destructive = list("Assistant") //only the actual assistants should terminate the list
+//		var/list/destructive = list("Assistant") //only the actual assistants should terminate the list
 		var/dat = "<html><body>"
 		dat += "<b>Name:</b> "
 		dat += "<a href=\"byond://?src=\ref[user];preferences=1;real_name=input\"><b>[real_name]</b></a> "
@@ -403,30 +405,8 @@ datum/preferences
 						dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font>"
 
 		dat += "<hr><b>Occupation Choices</b><br>"
-		if (destructive.Find(occupation[1]))
-			dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>[occupation[1]]</b></a><br>"
-		else
-			if (jobban_isbanned(user, occupation[1]))
-				occupation[1] = "Assistant"
-			if (jobban_isbanned(user, occupation[2]))
-				occupation[2] = "Assistant"
-			if (jobban_isbanned(user, occupation[3]))
-				occupation[3] = "Assistant"
-			if (occupation[1] != "No Preference")
-				dat += "\tFirst Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>[occupation[1]]</b></a><br>"
+		dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>Set Preferences</b></a><br>"
 
-				if (destructive.Find(occupation[2]))
-					dat += "\tSecond Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=2\"><b>[occupation[2]]</b></a><BR>"
-
-				else
-					if (occupation[2] != "No Preference")
-						dat += "\tSecond Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=2\"><b>[occupation[2]]</b></a><BR>"
-						dat += "\tLast Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=3\"><b>[occupation[3]]</b></a><BR>"
-
-					else
-						dat += "\tSecond Choice: <a href=\"byond://?src=\ref[user];preferences=1;occ=2\">No Preference</a><br>"
-			else
-				dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\">No Preference</a><br>"
 
 		dat += "<hr><table><tr><td><b>Body</b> "
 		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
@@ -486,118 +466,62 @@ datum/preferences
 
 		user << browse(dat, "window=preferences;size=300x710")
 
-	proc/SetChoices(mob/user, occ=1)
+	proc/SetChoices(mob/user, changedjob)
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
-		switch(occ)
-			if(1.0)
-				HTML += "<b>Which occupation would you like most?</b><br><br>"
-			if(2.0)
-				HTML += "<b>Which occupation would you like if you couldn't have your first?</b><br><br>"
-			if(3.0)
-				HTML += "<b>Which occupation would you like if you couldn't have the others?</b><br><br>"
-			else
-		for(var/job in uniquelist(occupations + assistant_occupations) )
-			if ((job!="AI" || config.allow_ai) && !jobban_isbanned(user, job))
-				HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=[occ];job=[job]\">[job]</a><br>"
+		HTML += "<b>Choose occupations</b><br>Unavailable occupations are in red.<br>"
+		for(var/job in occupations )
+			if ((job!="AI" || config.allow_ai))
+				if(jobban_isbanned(user, job))
+					HTML += "<font color=red>"
+				if(job in head_positions || job=="AI")
+					HTML += "<b>[job]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[job]\"></b>"
+				else
+					HTML += "[job]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[job]\">"
+				if(jobban_isbanned(user, job))
+					HTML += "</font>"
+				if (!occupation[job])
+					occupation[job]=0
+				switch(occupation[job])
+					if(0)
+						if(job=="Assistant")
+							HTML += "<font color=red>\[PleaseNo]</font>"
+						else
+							HTML += "<font color=red>\[NEVER]</font>"
+					if(1)
+						HTML += "<font color=orange>\[Okay]</font>"
+					if(2)
+						HTML += "<font color=green>\[Good]</font>"
+					if(3)
+						HTML += "<font color=blue>\[Best!]</font>"
+					else HTML += "*"+occupation[job]+"*"
+				HTML += "</a><br>"
 
-		if(!jobban_isbanned(user, "AI"))
-			HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=[occ];job=AI\">AI</a><br>"
-		if(!jobban_isbanned(user, "Captain"))
-			HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=[occ];job=Captain\">Captain</a><br>"
 		HTML += "<br>"
-		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=[occ];job=No Preference\">\[No Preference\]</a><br>"
-		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=[occ];cancel\">\[Cancel\]</a>"
+		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=0;job=cancel\">\[Done\]</a>"
 		HTML += "</center></tt>"
 
 		user << browse(null, "window=preferences")
 		user << browse(HTML, "window=mob_occupation;size=320x600")
 		return
 
-	proc/SetJob(mob/user, occ=1, job="Captain")
-		if ((!( occupations.Find(job) ) && !( assistant_occupations.Find(job) ) && (job != "Captain" && job != "AI" && job != "No Preference")))
-			return
-		if (job=="AI" && (!config.allow_ai))
-			return
-		if (jobban_isbanned(user, job))
+	proc/SetJob(mob/user, job="Captain")
+		if ((!( occupations.Find(job) ) && !( assistant_occupations.Find(job) ) && (job != "No Preference")))
+			user << browse(null, "window=mob_occupation")
+			ShowChoices(user)
 			return
 
-		switch(occ)
-			if(1.0)
-				if (job == occupation[1])
-					user << browse(null, "window=mob_occupation")
-					return
-				else
-					if (job == "No Preference")
-						occupation[1] = "No Preference"
-					else
-						if (job == occupation[2])
-							job = occupation[1]
-							occupation[1] = occupation[2]
-							occupation[2] = job
-						else
-							if (job == occupation[3])
-								job = occupation[1]
-								occupation[1] = occupation[3]
-								occupation[3] = job
-							else
-								occupation[1] = job
-			if(2.0)
-				if (job == occupation[2])
-					user << browse(null, "window=mob_occupation")
-					return
-				else
-					if (job == "No Preference")
-						if (occupation[3] != "No Preference")
-							occupation[2] = occupation[3]
-							occupation[3] = "No Preference"
-						else
-							occupation[2] = "No Preference"
-					else
-						if (job == occupation[1])
-							if (occupation[2] == "No Preference")
-								user << browse(null, "window=mob_occupation")
-								return
-							job = occupation[2]
-							occupation[2] = occupation[1]
-							occupation[1] = job
-						else
-							if (job == occupation[3])
-								job = occupation[2]
-								occupation[2] = occupation[3]
-								occupation[3] = job
-							else
-								occupation[2] = job
-			if(3.0)
-				if (job == occupation[3])
-					user << browse(null, "window=mob_occupation")
-					return
-				else
-					if (job == "No Preference")
-						occupation[3] = "No Preference"
-					else
-						if (job == occupation[1])
-							if (occupation[3] == "No Preference")
-								user << browse(null, "window=mob_occupation")
-								return
-							job = occupation[3]
-							occupation[3] = occupation[1]
-							occupation[1] = job
-						else
-							if (job == occupation[2])
-								if (occupation[3] == "No Preference")
-									user << browse(null, "window=mob_occupation")
-									return
-								job = occupation[3]
-								occupation[3] = occupation[2]
-								occupation[2] = job
-							else
-								occupation[3] = job
+		if(occupation[job] == 2) // If it's going from good to best
+			for(var/j in occupation)
+				if(occupation[j] == 3)
+					occupation[j] = 2
 
-		user << browse(null, "window=mob_occupation")
-		ShowChoices(user)
+		occupation[job] = (occupation[job]+1)%4
 
-		return 1
+
+		SetChoices(user)
+
+		return
 
 	proc/process_link(mob/user, list/link_tags)
 
@@ -606,9 +530,9 @@ datum/preferences
 				user << browse(null, "window=\ref[user]occupation")
 				return
 			else if(link_tags["job"])
-				SetJob(user, text2num(link_tags["occ"]), link_tags["job"])
+				SetJob(user, link_tags["job"])
 			else
-				SetChoices(user, text2num(link_tags["occ"]))
+				SetChoices(user)
 
 			return 1
 
@@ -835,9 +759,8 @@ datum/preferences
 			randomize_name()
 
 			age = 30
-			occupation[1] = "No Preference"
-			occupation[2] = "No Preference"
-			occupation[3] = "No Preference"
+			for(var/o in occupation)
+				occupation[o] = 1
 			underwear = 1
 			//be_syndicate = 0
 			be_special = 0

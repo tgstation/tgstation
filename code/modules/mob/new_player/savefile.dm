@@ -22,9 +22,12 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["real_name"] << src.real_name
 	F["gender"] << src.gender
 	F["age"] << src.age
-	F["occupation_1"] << src.occupation[1]
-	F["occupation_2"] << src.occupation[2]
-	F["occupation_3"] << src.occupation[3]
+	for(var/job in uniquelist(occupations + assistant_occupations))
+		//world << src.occupation[job]
+		F["occupation_"+job] << src.occupation[job]
+	//F["occupation_1"] << src.occupation[1]
+	//F["occupation_2"] << src.occupation[2]
+	//F["occupation_3"] << src.occupation[3]
 	F["hair_red"] << src.r_hair
 	F["hair_green"] << src.g_hair
 	F["hair_blue"] << src.b_hair
@@ -83,9 +86,11 @@ datum/preferences/proc/savefile_load(mob/user, var/silent = 1)
 	F["real_name"] >> src.real_name
 	F["gender"] >> src.gender
 	F["age"] >> src.age
-	F["occupation_1"] >> src.occupation[1]
-	F["occupation_2"] >> src.occupation[2]
-	F["occupation_3"] >> src.occupation[3]
+	for(var/job in uniquelist(occupations + assistant_occupations))
+		F["occupation_"+job] >> src.occupation[job]
+	//F["occupation_1"] >> src.occupation[1]
+	//F["occupation_2"] >> src.occupation[2]
+	//F["occupation_3"] >> src.occupation[3]
 	F["hair_red"] >> src.r_hair
 	F["hair_green"] >> src.g_hair
 	F["hair_blue"] >> src.b_hair

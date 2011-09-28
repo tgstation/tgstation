@@ -187,6 +187,8 @@ CLIPBOARDS
 	n_name = copytext(n_name, 1, 32)
 	if ((src.loc == usr && usr.stat == 0))
 		src.name = text("paper[]", (n_name ? text("- '[n_name]'") : null))
+	if(src.icon_state == "paper_blank" && n_name != "")
+		src.icon_state = "paper"
 	src.add_fingerprint(usr)
 	return
 
@@ -235,6 +237,8 @@ CLIPBOARDS
 		*/
 		t = text("<font face=calligrapher>[]</font>", t)
 
+		if(src.icon_state == "paper_blank")
+			src.icon_state = "paper"
 		src.info += t
 
 	else
@@ -359,6 +363,7 @@ CLIPBOARDS
 			src.amount--
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper
 			P.loc = usr.loc
+			P.icon_state = "paper_blank"
 			if(ishuman(usr))
 				if(!usr.get_active_hand())
 					usr.put_in_hand(P)
