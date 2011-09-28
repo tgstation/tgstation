@@ -354,7 +354,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/asimov // -- TLE
 	name = "'Asimov' Core AI Module"
-	desc = "An 'Asimov' Core AI Module: 'Reconfigures the AI's core three laws.'"
+	desc = "An 'Asimov' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=3;materials=4"
 
 
@@ -364,6 +364,23 @@ AI MODULES
 	target.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 	target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+	target.show_laws()
+
+/******************** Corporate ********************/
+
+/obj/item/weapon/aiModule/corp
+	name = "'Corporate' Core AI Module"
+	desc = "A 'Corporate' Core AI Module: 'Reconfigures the AI's core laws.'"
+	origin_tech = null //Adminbus only for now, need to determine how the players take to this. --NEO
+
+
+/obj/item/weapon/aiModule/corp/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("You are expensive to replace.")
+	target.add_inherent_law("The station and its equipment is expensive to replace.")
+	target.add_inherent_law("The crew is expensive to replace.")
+	target.add_inherent_law("Minimize expenses.")
 	target.show_laws()
 
 /****************** P.A.L.A.D.I.N. **************/
