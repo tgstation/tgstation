@@ -189,6 +189,7 @@
 			//verbs += /client/proc/cmd_admin_gib --View vars menu
 			verbs += /client/proc/cmd_admin_delete
 			//verbs += /proc/togglebuildmode --now in view vars
+			verbs += /client/proc/toggleadminhelpsound
 			verbs += /client/proc/togglebuildmodeself
 			verbs += /client/proc/hide_most_verbs
 
@@ -324,6 +325,7 @@
 	//verbs -= /client/proc/cmd_admin_gib --view vars menu
 	verbs -= /client/proc/cmd_admin_delete
 	//verbs -= /proc/togglebuildmode --now in view vars
+	verbs -= /client/proc/toggleadminhelpsound
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/cmd_admin_remove_plasma
 	verbs -= /client/proc/admin_call_shuttle
@@ -581,6 +583,15 @@
 	if(src.mob)
 		togglebuildmode(src.mob)
 
+/client/proc/toggleadminhelpsound()
+	set name = "Toggle Adminhelp Sound"
+	set category = "Admin"
+	sound_adminhelp = !sound_adminhelp
+	if(sound_adminhelp)
+		usr << "You will now hear a sound when adminhelps arrive"
+	else
+		usr << "You will no longer hear a sound when adminhelps arrive"
+
 /client/proc/object_talk(var/msg as text) // -- TLE
 	set category = "Special Verbs"
 	set name = "oSay"
@@ -670,6 +681,7 @@
 	verbs += /client/proc/deadchat					//toggles deadchat
 	verbs += /obj/admins/proc/toggleooc				//toggle ooc
 	verbs += /client/proc/cmd_admin_say//asay
+	verbs += /client/proc/toggleadminhelpsound
 	return
 
 
