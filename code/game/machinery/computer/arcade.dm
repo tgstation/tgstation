@@ -1,3 +1,7 @@
+/obj/machinery/computer/arcade
+	var/emagged
+	var/turtle = 0
+
 /obj/machinery/computer/arcade/New()
 	..()
 	var/name_action
@@ -52,6 +56,7 @@
 			var/attackamt = rand(2,6)
 			src.temp = "You attack for [attackamt] damage!"
 			src.updateUsrDialog()
+			turtle = 0
 
 			sleep(10)
 			src.enemy_hp -= attackamt
@@ -63,6 +68,7 @@
 			var/healamt = rand(6,8)
 			src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
 			src.updateUsrDialog()
+			turtle++
 
 			sleep(10)
 			src.player_mp -= pointamt
@@ -76,6 +82,7 @@
 			var/chargeamt = rand(4,7)
 			src.temp = "You regain [chargeamt] points"
 			src.player_mp += chargeamt
+			turtle = 0
 
 			src.updateUsrDialog()
 			sleep(10)
@@ -93,6 +100,10 @@
 		enemy_mp = 20
 		gameover = 0
 
+		if(emagged)
+			src.New()
+			emagged = 0
+
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
@@ -102,7 +113,10 @@
 		src.gameover = 1
 		src.temp = "[src.enemy_name] has fallen! Rejoice!"
 
-		if(!contents.len)
+		if(emagged)
+			new /obj/spawner/newbomb/timer/syndicate(src.loc)
+
+		else if(!contents.len)
 			var/prizeselect = pick(1,2,3,4,5,6,7,8,9)
 			switch(prizeselect)
 				if(1)
@@ -129,6 +143,10 @@
 			var/atom/movable/Prize = pick(contents)
 			Prize.loc = src.loc
 
+	else if (emagged && (turtle >= 4))
+		var/boomamt = rand(5,10)
+		src.temp = "[src.enemy_name] throws a bomb, exploding you for [boomamt] damage!"
+		src.player_hp -= boomamt
 
 	else if ((src.enemy_mp <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
@@ -140,6 +158,8 @@
 			src.gameover = 1
 			sleep(10)
 			src.temp = "You have been drained! GAME OVER"
+			if(emagged)
+				usr.gib()
 
 	else if ((src.enemy_hp <= 10) && (src.enemy_mp > 4))
 		src.temp = "[src.enemy_name] heals for 4 health!"
@@ -154,6 +174,8 @@
 	if ((src.player_mp <= 0) || (src.player_hp <= 0))
 		src.gameover = 1
 		src.temp = "You have been crushed! GAME OVER"
+		if(emagged)
+			usr.gib()
 
 	src.blocked = 0
 	return
@@ -170,3 +192,21 @@
 			spawn(rand(0, 15))
 				src.icon_state = "arcade0"
 				stat |= NOPOWER
+
+/obj/machinery/computer/arcade/attackby(I as obj, user as mob)
+	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
+		temp = "If you die in the game, you die for real!"
+		player_hp = 30
+		player_mp = 10
+		enemy_hp = 45
+		enemy_mp = 20
+		gameover = 0
+		blocked = 0
+
+		emagged = 1
+
+		enemy_name = "Cuban Pete"
+		name = "Outbomb Cuban Pete"
+
+
+		src.updateUsrDialog()
