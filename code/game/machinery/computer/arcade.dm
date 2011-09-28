@@ -56,7 +56,7 @@
 			var/attackamt = rand(2,6)
 			src.temp = "You attack for [attackamt] damage!"
 			src.updateUsrDialog()
-			turtle = 0
+			turtle--
 
 			sleep(10)
 			src.enemy_hp -= attackamt
@@ -82,7 +82,7 @@
 			var/chargeamt = rand(4,7)
 			src.temp = "You regain [chargeamt] points"
 			src.player_mp += chargeamt
-			turtle = 0
+			turtle--
 
 			src.updateUsrDialog()
 			sleep(10)
@@ -99,6 +99,7 @@
 		enemy_hp = 45
 		enemy_mp = 20
 		gameover = 0
+		turtle = 0
 
 		if(emagged)
 			src.New()
@@ -115,6 +116,8 @@
 
 		if(emagged)
 			new /obj/spawner/newbomb/timer/syndicate(src.loc)
+			message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+			log_game("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 
 		else if(!contents.len)
 			var/prizeselect = pick(1,2,3,4,5,6,7,8,9)
