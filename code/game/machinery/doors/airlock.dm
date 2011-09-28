@@ -923,7 +923,7 @@ About the new airlock wires panel:
 						if (!istype(src, /obj/machinery/door/airlock/glass))
 							src.sd_SetOpacity(0)
 						src.operating = 0
-						return
+					return
 				user << "\red You need to be wielding the Fire axe to do that."
 				return
 			else
