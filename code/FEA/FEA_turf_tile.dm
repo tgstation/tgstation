@@ -196,6 +196,7 @@ turf
 			..()
 
 		assume_air(datum/gas_mixture/giver)
+			if(!giver)	return 0
 			var/datum/gas_mixture/receiver = air
 			if(istype(receiver))
 				if(parent&&parent.group_processing)

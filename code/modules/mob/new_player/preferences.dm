@@ -504,6 +504,7 @@ datum/preferences
 				occupation[job] = 4
 			else
 				occupation[job] = 0
+			SetChoices(user)
 			return 1
 
 		if(occupation[job] == 0)//Only one job may be set to "High"
@@ -756,7 +757,7 @@ datum/preferences
 
 			age = 30
 			for(var/o in occupation)
-				occupation[o] = 1
+				occupation[o] = 0
 			underwear = 1
 			//be_syndicate = 0
 			be_special = 0
