@@ -507,7 +507,7 @@ datum/preferences
 			SetChoices(user)
 			return 1
 
-		if(occupation[job] == 0)//Only one job may be set to "High"
+		if(occupation[job] == 2)//Only one job may be set to "High"
 			for(var/j in occupation)
 				if(occupation[j] == 1)
 					occupation[j] = 2
