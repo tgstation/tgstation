@@ -56,7 +56,8 @@
 			var/attackamt = rand(2,6)
 			src.temp = "You attack for [attackamt] damage!"
 			src.updateUsrDialog()
-			turtle--
+			if(turtle > 0)
+				turtle--
 
 			sleep(10)
 			src.enemy_hp -= attackamt
@@ -82,7 +83,8 @@
 			var/chargeamt = rand(4,7)
 			src.temp = "You regain [chargeamt] points"
 			src.player_mp += chargeamt
-			turtle--
+			if(turtle > 0)
+				turtle--
 
 			src.updateUsrDialog()
 			sleep(10)
@@ -116,8 +118,11 @@
 
 		if(emagged)
 			new /obj/spawner/newbomb/timer/syndicate(src.loc)
+			new /obj/item/clothing/head/collectable/petehat(src.loc)
 			message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 			log_game("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+			src.New()
+			emagged = 0
 
 		else if(!contents.len)
 			var/prizeselect = pick(1,2,3,4,5,6,7,8,9)
