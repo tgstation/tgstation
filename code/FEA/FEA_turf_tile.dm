@@ -196,7 +196,8 @@ turf
 			..()
 
 		assume_air(datum/gas_mixture/giver)
-			if(air)
+			var/datum/gas_mixture/receiver = air
+			if(istype(receiver))
 				if(parent&&parent.group_processing)
 					if(!parent.air.check_then_merge(giver))
 						parent.suspend_group_processing()
