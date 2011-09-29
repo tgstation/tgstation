@@ -11,241 +11,18 @@
 	icon_state ="bookEngineering"
 	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
 
-//big pile of shit below.
+	dat = {"
 
-	dat = {"<html>
-				<head>
-				<style>
-				h1 {font-size: 18px; margin: 15px 0px 5px;}
-				h2 {font-size: 15px; margin: 15px 0px 5px;}
-				li {margin: 2px 0px 2px 15px;}
-				ul {list-style: none; margin: 5px; padding: 0px;}
-				ol {margin: 5px; padding: 0px 15px;}
-				</style>
-				</head>
-				<body>
-				<h2> Construction </h2>
+		<html><head>
+		</head>
 
-				<h3>  Advanced Materials </h3>
+		<body>
+		<iframe width='100%' height='97%' src="http://nanotrasen.com/wiki/index.php?title=Guide_to_construction&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		</body>
 
-				<h4>   Rods </h4>
+		</html>
 
-				Use <font color='gray'><b>metal</b></font> and click "2x metal rods" (makes two sets of rods)
-
-				<h4>   Floor tiles </h4>
-
-				Use <font color='gray'><b>metal</b></font> and click "4x floor tiles" (makes 4 floor tiles)
-
-
-				<h4>   Reinforced Glass </h4>
-
-				Use <font color='gray'><b>rods</b></font> on <font color='blue'><b>glass</b></font>
-
-				<h4>   Reinforced Metal </h4>
-
-				Click the <font color='gray'></b>metal<b></font> in your hand to open the construction panel,
-				<br>Choose 'Reinforced sheets' form the list
-
-				<h3>  Floor </h3>
-
-				Use the <font color="gray"><b>rods</b></font> on <b>space</b>
-				<br>Use the <font color="gray"><b>floor tile</b></font> on <b>space</b> with lattice
-				<br>Use another <font color="gray"><b>floor tile</b></font> on the plating
-				<br>Alternate method - Click on <font color="gray"></b>floor tile</b></font> in hand while on top of an area of <b>space</b>. No need for <font color="gray"><b>rods</b></font> with this method.
-
-				<h3>  Walls </h3>
-
-				Click the <font color='gray'><b>metal</b></font> in your hand to open the construction panel,
-				<br>Choose 'Build wall girders' form the list
-				<br>Use the remaining 2 sheets of <font color='gray'><b>metal</b></font> on the girders
-
-				<h3>  Reinforced walls </h3>
-
-				Click the <font color='gray'><b>metal</b></font> in your hand to open the construction panel,
-				<br>Choose 'Build wall girders' form the list
-				<br>Use the <font color='gray'><b>reinforced metal</b></font> on the girders to reinforce them
-				<br>Use the last <font color='gray'><b>reinforced metal</b></font> sheet reinforced girders to finish the wall
-
-
-				<h3>  Grille </h3>
-
-				Stand where you wish the grille to be placed
-				<br>Click on the stack of 2 <font color="gray"><b>rods</b></font> with the hand you have them in
-
-				<h3>  Glass panels </h3>
-
-				<h4>   One directional </h4>
-
-				Click the <font color="blue"><b>glass</b></font> pane
-				<br>Click the "one direct" button
-				<br>Right-click the new pane and rotate it
-				<br>Use the screwdriver to fasten it down
-
-				<h4>   Full </h4>
-
-				Click the <font color="blue"><b>glass</b></font> pane
-				<br>Click the "full" button
-				<br>Use the screwdriver to fasten it down
-
-				<h3>  Reinforced glass panels </h3>
-
-				<h4>   One directional </h4>
-
-				Click the <font color="blue"><b>reinforced glass</b></font> pane
-				<br>Click the "one direct" button
-				<br>Right-click the new pane and rotate it
-				<br>Screwdriver (Unsecure pane.)
-				<br>Crowbar (Pane out of frame.)
-				<br>Screwdriver (Secure frame to floor.)
-				<br>Crowbar (Pop pane in.)
-				<br>Screwdriver (Secure pane.)
-
-				<h4>   Full </h4>
-
-				Click the <font color="blue"><b>reinforced glass</b></font> pane
-				<br>Click the "full" button
-				<br>Screwdriver
-				<br>Crowbar
-				<br>Screwdriver
-
-				<h3>  Hidden Door </h3>
-
-				Click the <font color='gray'><b>metal</b></font> in your hand to open the construction panel,
-				<br>Choose 'Build wall girders' form the list
-				<br>Use crowbar on girders and wait a few seconds for the girders to dislodge.
-				<br>Use the remaining 2 sheets of <font color='gray'><b>metal</b></font> on the girders
-
-				To turn a wall into a hidden door, follow the deconstruction guide for the wall type until the final wrenching, and instead proceed from the "Use crowbar on girders" line above.
-
-				<h4>   Reinforced </h4>
-
-				Click the <font color='gray'><b>metal</b></font> in your hand to open the construction panel,
-				<br>Choose 'Build wall girders' form the list
-				<br>Use crowbar on girders and wait a few seconds for the girders to dislodge.
-				<br>Use the <font color='gray'><b>reinforced metal</b></font> on the dislodged girders twice to finish it
-
-				<h3>  APC </h3>
-
-				Use the <font color='gray'><b>metal</b></font> and make an APC Assembly
-				<br>Use the assembly on the wall you want the APC on.
-				<br>Fit it with the wire coil.
-				<br>Fit it with the Power Control Module.
-				<br>Screwdriver the electronics into place.
-				<br>Add the Power Cell.
-				<br>Crowbar shut. It starts ID locked, with the cover engaged and the main switch turned off.
-
-				<h3>  Airlock </h3>
-
-				Use the <font color='gray'><b>metal</b></font> and make an Airlock Assembly
-				<br>Wrench it inplace
-				<br>Add reinforced glass (Only if you wish to make a glass airlock)
-				<br>Add wires
-				<br>Unlock the airlock electronic board with an ID
-				<br>Use the airlock electronic board and set the access level
-				<br>Add the airlock electronic board to the airlock frame.
-				<br>Screwdriver to finish
-
-				<h3>  Computers </h3>
-
-				Use the <font color='gray'><b>metal</b></font> to open the construction panel
-				<br>Choose Computer frame
-				<br>Wrench it inplace
-				<br>Insert Circuitboard
-				<br>Screwdriver
-				<br>Wires
-				<br><font color='blue'><b>glass</b></font>
-				<br>Screwdriver to finish
-
-				<h3>  AI Core </h3>
-
-				Build Frame from 4 <font color='fray'><b>reinforced sheets</b></font>
-				<br>Wrench into place
-				<br>Add Circuit board
-				<br>Screwdriver
-				<br>Add wires
-				<br>Add brain (only if you want a NEW AI)
-				<br>Add <font color='blue'><b>reinforced glass</b></font>
-				<br>Screwdriver
-
-				<h2> Deconstruction </h2>
-
-				<h3>  Walls </h3>
-
-				Wdlder
-				<br>Wrench
-
-				<h3>  Reinforced walls </h3>
-
-				Wirecutters.
-				<br>Screwdriver.
-				<br>Welder.
-				<br>Crowbar.
-				<br>Wrench.
-				<br>Welder.
-				<br>Crowbar.
-				<br>Screwdriver.
-				<br>Wirecutters.
-				<br>Wrench.
-
-				<h3>  Grille </h3>
-
-				Wirecutters
-				<br>Welder (to destroy it)
-				<br>or
-				<br>screwdriver (to unfasten it)
-
-				<h3>  Glass panels </h3>
-
-				The first method destroys it, the second gives a pullable pane of glass.
-
-				<br>Welding glass shards creates a pane of glass.
-
-				<h3>  Reinforced glass panels </h3>
-
-				Screwdriver to loosen the pane.
-				<br>Crowbar to pop it out.
-				<br>Screwdriver to unscrew the frame.
-				<br>Crowbar to pop the pane in.
-				<br>Screwdriver to secure it.
-
-				Hitting the pane repeatedly with a blunt item will smash it into one set of metal rods and a glass shard.
-
-				<h3>  Hidden Door (Regular or Reinforced) </h3>
-
-				Screwdriver
-				<br>Welder
-				<br>Wrench
-
-				<h3>APC </h3>
-
-				Swipe Card to unlock APC.
-				<br>Remove Power Cell.
-				<br>Screwdriver to unsecure electronics.
-				<br>Wirecutters to remove cables.
-				<br>Crowbar to remove Power Control Board.
-				<br>Welder to remover from wall.
-				<br>Wrenching the frame that is now detached from the wall de-constructs it to two metal sheets.
-
-				<h3>  Airlock </h3>
-
-				Screwdriver the door.
-				<br>Use multitool and wirecutters to disable everything except the doorbolts as detailed in books on hacking. Doorbolts must be up for this to work.
-				<br>Weld the door shut.
-				<br>Crowbar the electronics out.
-				<br>Wirecut the wires out.
-				<br>Unsecure it with a wrench.
-				<br>Weld it to deconstruct to metal plates.
-
-				Cannot be done to emagged airlock. RCD deconstruction must be used for that.
-
-				<h3>  Computers </h3>
-
-				Screwdriver.
-				<br>Crowbar.
-				<br>Wirecutters.
-				<br>Screwdriver.
-				<br>Wrench.
-				<br>Welder.	"}
+		"}
 
 /obj/item/weapon/book/manual/engineering_particle_accelerator
 	name = "Particle Accelerator User's Guide"
@@ -297,266 +74,18 @@
 
 //big pile of shit below.
 
-	dat = {"<html>
-				<head>
-				<style>
-				h1 {font-size: 18px; margin: 15px 0px 5px;}
-				h2 {font-size: 15px; margin: 15px 0px 5px;}
-				li {margin: 2px 0px 2px 15px;}
-				ul {list-style: none; margin: 5px; padding: 0px;}
-				ol {margin: 5px; padding: 0px 15px;}
-				</style>
-				</head>
-				<body>
-				<h2>What you'll need</h2>
-				<ul>
-				<li><b>Insulated gloves</b> Hackables have power lines, and cutting/pulsing these without gloves can harm you.</li>
-				<li><b>Screwdriver</b> for opening up panels and the like. A necessary tool</li>
-				<li><b>Wirecutters</b> for cutting and mending wires. Also a necessary tool</li>
-				<li><b>Multitool</b> for pulsing wires; not necessary for most hacking, but makes life a lot easier.</li>
-				</ul>
+	dat = {"
 
-				<h2>Important Hackables</h2>
+		<html><head>
+		</head>
 
-				<h3>Airlocks</h3>
-				Both internal and external access airlocks are hackable, despite the fact that external ones look a lot like firelocks, which are not hackable. Wires are randomized at the start of each round, but are standardized throughout the station, e.g., every orange wire might toggle the bolts. This is probably where you'll be doing the most of your hacking. Remember, cutting power to the door will stop everything else from working.
-				<ol>
-				<li> Screwdriver in hand, click on the airlock to open the panel and expose the wiring</li>
-				<li> With multitool, wirecutters, or an empty hand, click on the airlock to access the wiring.</li>
-				<li> Fiddle with the wires by pulsing to test each one and cutting what you need to.</li>
-				<ul>
-					<li><b>ID wire</b>: <i>Pulsing</i> will flash the 'access denied' red light; <i>cutting</i> will prevent anyone from opening the door if it's a restricted door; otherwise, it does nothing.</li>
-					<li><b>AI control wire</b>: <i>Pulsing</i> will flash the 'AI control light' off and on quickly; <i>cutting</i> will prevent the AI from accessing the door unless s/he hacks the power wires</li>
-					<li><b>Main power wire</b>: <i>Pulsing</i> will turn off the 'test light' and kill the power for 1 minute; <i>cutting</i> will kill the power for 10 seconds before backup power kicks in.</li>
-					<li><b>Backup power wire</b>: <i>Pulsing</i> will turn off the 'test light' kill the power for 1 minute of the main power is out, otherwise, nothing. <i>Cutting</i> will obviously disable the backup power.</li>
-					<li><b>Bolt control wire</b>: <i>Pulsing</i> will toggle the bolts; <i>cutting</i> will drop the bolts.</li>
-					<li><b>Door control wire</b>: If the door is ID restricted, this is pretty much useless. If not, <i>Pulsing</i> will open/close the door and <i>cutting</i> will keep it that way, sortof like bolting.</li>
-					<li><b>Electrifying wire</b>: <i>Pulsing</i> will electrify the door for 30 seconds; <i>cutting</i> will permanently electrify it until mended. I haven't a clue how to find this wire out except through trial and painful error. Obviously useless if there is no power to the door.</li>
-				</ul>
-				<li> Screwdriver the door again to shut the panel. Otherwise, trying to open the door will always give you the wiring popup.</li>
-				</ol>
+		<body>
+		<iframe width='100%' height='97%' src="http://nanotrasen.com/wiki/index.php?title=Hacking&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		</body>
 
-				<h4>Airlock Strategies</h4>
-				<ul>
-					<li><b>Ghetto hacking</b> involves accessing a useless airlock and cutting all of the wires in order until the bolts drop, making a note of the wire you just cut. Keeping this in mind, you can now open restricted doors by cutting all the wires except the bolt control and then crowbarring that fucker open. Useful if you don't have a multi-tool. Note that this is a bad idea if you lack gloves.</li>
-					<li><b>Open ID restricted doors</b> by pulsing a main power wire and then crowbarring it open. If it's bolted, be sure to pulse the bolt wire before you kill the power or you're shit outta luck for a minute. (You can shorten this by cutting and mending the power wire, but by then the power would probably have reset anyway. Still, taking 20 seconds less to unhack the Escape shuttle doors is always good)</li>
-					<li><b>Create a pain in the ass obstacle</b> by dropping the bolts, cutting all the wires, and then welding the door shut. This is especially effective if you happen to have the only pair of insulated gloves on the station.</li>
-					<li><b>Remotely pulse an airlock</b> by attaching a signaler, which when signaled pulses the wire it's attached to. This allows you to remotely bolt and unbolt a door, for instance. Be sure to turn off the speaker so no one can hear it being toggled.</li>
-					<li><b>Use multitools for bolted </b> as they are awesome. First find two wires of importance. The bolts wire, and the main power wire. Pulse a random door to find out the wires. If you hear sparks, see your health going down or see the message "You feel a powerful shock coursing through your body!", close that hacking window and move onto another door. Once you got the main power wire, head to an unbolted door, pulse the wire, crowbar it open. You get a larger window of time to crowbar, and you can do it without gloves. If a door is bolted, pulse the bolts wires, and go and cut the power then crowbar it.</li>
-				</ul>
+		</html>
 
-				<h3>APCs</h3>
-				Used to control power to a certain room. Nice to know when a rogue AI or douchebag engineers keep turning off your power. All APC breakers can be accessed via Power Monitoring Computers regardless of the lock status, so hope that whoever's fucking with the power isn't paying attention
-				<ol>
-				<li>Screwdriver in hand, click on APC to open the panel and expose the wiring</li>
-				<li>Click with an empty hand to access the wiring</li>
-				<li>Fiddle with the wires by pulsing to test each one and cutting what you need to.</li>
-				<ul>
-					<li><b>Power wires (2)</b>: <i>Pulse</i> will short out the APC. You must <i>cut and mend</i> the wire to restore power. Not repairing the short will render the main breaker moot, even if accessed remotely.</li>
-					<li><b>AI control wire</b>: Like the airlock, <i>pulsing</i> will flash the light off and on quickly; <i>cutting</i> will disable AI control</li>
-				</ul>
-				<li>Screwdriver it back up to toggle lighting, equipment, and atmospherics as you see fit (unless you've killed the power)</li>
-				</ol>
-
-				<h3>Autolathe</h3>
-				<ol>
-				<li>Click on the autolathe to open it</li>
-				<li>Click on the autolathe with an empty hand to access the wiring, then get a tool in your hand</li>
-				<li>The window is glitched and won't show what wires are cut, so you better track what wires you modify. There are three important wires, which are randomized. Cutting them toggles their light permanently, pulsing does so temporarily(30 secs or something). Red light is power, green light is electrocution and blue is hacked options.</li>
-				<li>Have fun accessing some new options</li>
-				<ul>
-				<li>RCD supplies</li>
-				<li>Infrared beam (security)</li>
-				<li>Infrared sensor</li>
-				<li>Bullets</li>
-				<li>Other shit</li>
-				</ul>
-				</ol>
-
-				<h3>Air alarm/Fire alarm/Cameras</h3>
-				Use wirecutters to enable/disable. Disabled <i>air alarms</i> will show no lights, <i>fire alarms</i> will not automatically trigger firelocks, and <i>cameras</i> will show a red light and prevent anyone from viewing the room through a console (including AI).
-
-
-				<h3>MULE</h3>
-				No better way to get away from it all with a joyride on a MULE! And run over some people with it too.
-				<ol>
-				<li>Unlock the controls with a Quartermaster's ID.</li>
-				<li>Unscrew the maintenance panel with the screwdriver.</li>
-				<li>Pulse various wires with a multitool. Pay attention to the reaction the MULE gives.</li>
-				<ol>
-					<li>Cutting the wire that causes the loading bay to thunk will remove cargo restrictions.</li>
-					<li>Cutting the wire that leads to the safety light will awaken its thirst for blood and cause it to run over people in its path. DO NOT DO THIS UNLESS YOU ARE A TRAITOR OR LOVE GETTING THE SHIT ROBUSTED OUT OF YOU.</li>
-					<li>Cutting <i>one</i> of the wires that makes the motor whine will safely speed up the MULE. Cutting both will immobilize it.</li>
-				</ol>
-				<li>Screw the panel back on.</li>
-				</ol>
-
-				<h2>Minor Hackables</h2>
-				I haven't a clue why you'd ever want to hack any of these things, but you can!
-
-				<h3>Radio/Signaler</h3>
-				<ol>
-				<li>Screwdriver in hand, click on the offending radio so it can be modified or attached
-				<li>The usual radio use panel will pop up, but now with access to the wiring. If you've closed it by accident, just click on the radio as if you were going to change the settings on it.
-				<li>There are three wires. Two have apparent uses; the third is pretty much useless.
-				<ul>
-					<li><b>Output wire</b> will disengage the speakers (or signal-receiving on a signaler)
-					<li><b>Input wire</b> will permanently disengage the microphone (or signal-sending on a signaler)
-				</ul>
-				</ol>
-				Interestingly, tracking beacons and station intercoms also count as radios.
-
-				<h3>Secure Briefcase, Safes</h3>
-				<i>seriously who is dumb enough to use these things anyway god damn</i>
-				<ol>
-				<li>Screwdriver in hand, click on the (briefcase/safe) to open the panel and expose the wiring</li>
-				<li>Multi-tool-spam the (briefcase/safe) until you get a confirmation that the memory is reset.</li>
-				<li>The memory is now reset. Punch in your favorite code and hit E to set it.</li>
-				<li>Screwdriver the panel shut.</li>
-				</ol>
-
-				<h3> Vending machines </h3>
-				The only thing worth hacking!
-
-				Four wires
-				<ol>
-				<li><b>Firing wire</b> when cut fires stuff at people. When pulsed will do so. Controlled by the blinking light.</li>
-				<li><b>Contraband wire</b> does nothing when cut, when pulsed unlocks illegal or rare goods. Wire is unknown. </li>
-				<li><b>Access wire</b> when cut it turns on a yellow light, allowing for ID restricted machines(med machines, sec machines, possibly botany machines) to be used by anyone.</li>
-				<li><b>Shock wire</b> Like the firing wire in effects from hacking, except it shocks instead of shoots.</li>
-				</ol>
-"}
-
-
-
-/obj/item/weapon/book/manual/engineering_guide
-	name = "Engineering Textbook"
-	icon_state ="bookEngineering2"
-	author = "Engineering Encyclopedia"		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-
-//big pile of shit below.
-
-	dat = {"<html>
-				<head>
-				<style>
-				h1 {font-size: 18px; margin: 15px 0px 5px;}
-				h2 {font-size: 15px; margin: 15px 0px 5px;}
-				li {margin: 2px 0px 2px 15px;}
-				ul {list-style: none; margin: 5px; padding: 0px;}
-				ol {margin: 5px; padding: 0px 15px;}
-				</style>
-				</head>
-				<body>
-				So, you're an Engineer, fresh from the academy, eh? Well here is a guide for you, then. Engineering, the Space station 13 way!
-
-				<h2> How much game experience do i need to be a good engineer? </h2>
-
-				Engineering is rather complex, but in itself teaches you many of the station's core mechanics. Even someone with very little experience, who can pick up and empty a toolbox is able to become a good engineer.
-
-				<h2> Before we start </h2>
-
-				<h3> Engineering equipment </h3>
-
-				This is an image of the tools every engineer should be trusted to have on him at all times:
-
-				<p><img src='http://tgstation13.servehttp.com/wiki/images/7/72/Engineers_loadout.png'>
-
-				<p><table cellpadding=3 cellspacing=0 border=1>
-				<tr bgcolor='#ddaa77'>
-				<td><b>Container picture</b></td>
-				<td><b>Container name</b></td>
-				<td><b>Contents</b></td>
-				<tr bgcolor='#eeccaa' align='center'>
-				<td><img src='http://tgstation13.servehttp.com/wiki/images/1/17/Eng_toolbelt.PNG'></td>
-				<td><b>Utility belt</b></td>
-				<td><img src='http://tgstation13.servehttp.com/wiki/images/e/e2/Toolbelt.png'></td>
-				</tr>
-				<tr bgcolor='#eeccaa' align='center'>
-				<td><img src='http://tgstation13.servehttp.com/wiki/images/e/eb/Eng_backpack.PNG'></td>
-				<td><b>Backpack</b></td>
-				<td><img src='http://tgstation13.servehttp.com/wiki/images/9/97/Engineers_backpack_contents.png'></td>
-				</tr>
-				<tr bgcolor='#eeccaa' align='center'>
-				<td><img src='http://tgstation13.servehttp.com/wiki/images/f/fc/Eng_box.PNG'></td>
-				<td><b>Box</b></td>
-				<td><img src='http://tgstation13.servehttp.com/wiki/images/b/b1/Engineers_box_contents.PNG'></td>
-				</tr>
-				</table>
-
-				<p>Note that some of these are for roleplay reasons only. Although you can wear a welding mask all the time it makes little to no sense to do that from a roleplay standpoint. Same applies to keeping a pen (but you will not start with a pen). You'll need it very rarely, but a time will come when you'll actually need it. Roleplay too determines if you're a good engineer or not.
-
-				<h2> The engine, solars and power </h2>
-
-				<h3> Generating power </h3>
-
-				The primary purpose of engineering is to maintain the station's power. To do this, you will need to start the Singularity Engine. Please read the book entitled: 'Singularity engine' for details on this.
-
-				<p>The solars are the next thing you need to worry about. As starting the singularity can be a bit risky, you should watch others do it before you attempt it alone. In the mean time, you can do the wiring of the solars. To do this you will need the RIG suit as well as internals (oxygen tank and gas mask), all of which can be found in engineering. Note that it is a good idea to return the RIG suit once you're done. More on wiring solars can be found in the book entitled 'Solar Panels on Space Stations'
-
-				<h3> Wiring </h3>
-
-				If a part of the station looses power it is likely wires have been cut somewhere. To search for cut wires under floors you will need a T-Ray Scanner. To cut wires, use the wirecutters and to place new ones click on the floor where you'd like them to be placed. The wire will be placed on the targeted tile from the tile you're standing on. You can also place wires on the tile you're currently on by clicking the tile. the wire will be placed in the direction you're currently facing. To place smooth wires, click on the red dot (end point) of an existing wire with more wire in your hand.
-
-				<p>Wiring intersections demand special mention. Making an intersection requires all the wire pieces to be end-points. If you make a smooth wire going south to north and place a half-wire going east, they will not be connected. To connect them you have to remove the smooth wire and replace it with two half-wires. Once all of them are placed, if you right click the tile you should see three wire pieces, all of which meet in the center.
-
-				<h3> Power monitoring and distribution </h3>
-
-				an APC or Area Power Controller is located in every room. It is usually locked, but you can unlock it by swiping your ID on it. It contains a power cell. You can shut off a room's power or disable or enable lighting, equipment or atmospheric systems with it. Every room can have only one APC. The guide to their construction and deconstruction can be found in the book entitled 'Station repairs and construction'. APC's can also be hacked (More on that in the book entitled 'Hacking'). It's also a good idea to know how to do that. DO NOT PRACTICE ON THE ENGINE APCs! If you mess up, you can destroy it through hacking which can set the singularity free if you do it in engineering! You know this warning is here because it happened before.
-
-				<h2> Station structural integrity </h2>
-
-				An educated word which basically means wall repairs.
-
-				<h3> The secrets surrounding walls </h3>
-
-				Walls come in two forms: Regular and reinforced. Building a regular wall is a two step process: constructing girders and adding plating. To construct a girder have a stack of two or more sheets of metal on you (right click the metal and examine it to see how many sheets are in the stack). Left click the metal for a construction window to appear. choose "Construct wall girders" from the list and wait a few seconds while they're built. Once they're built, click on the girders with another stack of two or more metal to add the plating. Note that only fully built walls will prevent air from escaping freely through them. Reinforced walls share the first step: the building of the girders. after this, you'll need 4 sheets of metal. In the same way as you built the girders, create two reinforced sheets. Use one of them on the girders to create reinforced girders and the other on the reinforced girders to finalize them. Reinforced walls are much stronger than regular walls and take much longer to get through using regular tools.
-
-				<p>For more on construction read the book entitled 'Station Repairs and Construction'
-
-				<h3> Pretty glass </h3>
-
-				Notice how most of the glass around the station is built as a double pane, which surrounds a grille. Making this by hand can be a bit tricky at first, but is simple once you get the hang of it. To build such a wall, you'll need 4 sheets of glass and 3 sheets of metal, alternatively you can have 6 sets of rods. You'll also need a screwdriver and crowbar, tho having wirecutters and a welder with you is a good idea, as you'll likely get it wrong the first time and will need those to dismantle the grille. First you have to prepare your materials. Use the metal on itself and create 6 sets of rods (2 are made each time). Now pick the rods up (you can stack them, but don't click too quickly or the game might think you wanted to build a grille). After this, use 4 of the rods on 4 sheets of glass to create 4 sheets of reinforced glass. Now pick up all your tools (put them on your utility belt if you have one or in your backpack) and pick up the remaining two rods in one hand and the 4 sheets of reinforced glass in your other (remember, you can stack glass too). Now stand where you'd like the glass to be. Use the rods on themselves and this will create a grille. DO NOT MOVE! Now use the glass on itself 4 times and create a single paned glass every time. Right click on the glass to rotate it until you have 3 of the 4 sides covered. The remaining side is your escape route. use the combination of screwdriver - crowbar - screwdriver on each of the 3 panes which are already in place to secure them. Now move out of the grille and rotate the last window so it covers the last side. Fasten that with the same screwdriver - crowbar - screwdriver combination. Congratulations. You've just made a proper window. You're already better at construction than most.
-
-				<p>For more on construction read the book entitled 'Station Repairs and Construction'
-
-				<h2> Robots, Artificial Intelligence and Computers </h2>
-
-				As an engineer, it is required of you to understand how most computers are operated, how they work, how they're created, dismantled and repaired. You're also the best equipped station employee to prevent the AI from taking a life of it's own.
-
-				<h3> Computers </h3>
-
-				Computers are everywhere on SS13. Engineering has a power monitoring computer, several solar computers and a general alerts computer. Almost everything you can control is done through a computer. Making them is described in the book entitled 'Station Repairs and Construction', as is their dissasembly (for those which can be deconstructed). To learn how to operate different computer you'll need to start using them and find out how they work while doing so. There are too many to explain them all here.
-
-				<h3> Artificial int... stupidity </h3>
-
-				More often than not, the AI will be rogue. This means it has laws which are harmful. It will try it's best to kill any crew members by flooding the halls with toxic plasma, sparking fires, overloading APC's, electrifying doors, etc. At such a time you have two choices: Destroy it or reset it. As said, the AI works on a principle of laws. People can upload new ones to it and if these are harmful, you'll first want to try to reset it. In technical storage (in the maintenance hallway between assistant's storage and EVA) you have an AI upload card and an AI reset module. To reset the AI, first create an AI upload computer and once it is created, click on it to choose the rogue AI and use the module on it to reset it. If the person has uploaded a core law, then it's a bit harder. A core law cannot be reset with the AI reset module. You'll need to override it with another AI core module. These can be found in the AI upload area under lock and key. But if the person who uploaded the traitorous law got in, you can get in too, right? The often preferred alternative is to simply kill the AI. Tear down the walls and shoot it, blow it up, use the chemist to prepare something. There are many ways of doing this. Note that if hostile runtimes are reported, you'll have to get to the AI satellite, as the rogue AI is there.
-
-				<p>Blowing up cyborgs is normally done by the roboticist or Research Director, but you may need to help them create a robotics console at some point. One of these can be found in tech storage, but is usually stolen quickly.
-
-				<p>The alternative methods to being helpful included hacking APCs and doors, usually to disable the AI control. This is especially important anywhere near a robotics control, engine, or any of the SMES rooms. The AI has no reason to have control over these anyway.
-
-				<h2> Getting the man out of danger... alive! </h2>
-
-				It's your job to save lives when they cry out for help.
-
-				<h3> Firefighting </h3>
-
-				Engineers get access to maintenance hallways, which contain several firesuits and extinguishers. If a fire breaks out somewhere, put it out. Firesuits allow you to walk in almost any fire. Extinguishers have a limited capacity. Refill them with water tanks, which can be found all around the station.
-
-				<h3> Physical rescue </h3>
-
-				If someone cries that he can't get out of somewhere and no one can get him out, then it's your job to do so. Hacking airlocks, deconstructing walls, basically whatever it takes to get to them. I don't need to point out that you should never put others or yourself at risk in doing so!
-
-				<h3> Space recovery </h3>
-
-				A body's been spaced? Well now it's your job to recover it. Ask the AI or captain to get a jetpack and space suit from EVA and go after the body. You'll most frequently find bodies either somewhere near the derelict or the AI satellite. Drag them to a teleporter and get them back to the station. The use of lockers will help greatly, as lockers do not drift like bodies do, but cannot travel across Z-levels. ALWAYS have tools, glass and metal with you when doing this! Some teleporters need to be rebuilt and some bodies float around randomly and need floor tiles to be build in their path to actually stop
-
-				<h2> Space exploration </h2>
-
-				Space exploration can be fun. Although there are not too many things to see in space at the moment, but things change sometimes. You may also get some things which could come in handy.
-
-
-				"}
+		"}
 
 /obj/item/weapon/book/manual/engineering_singularity_safety
 	name = "Singularity Safety in Special Circumstances"
@@ -1037,6 +566,42 @@
 
         </body>
 		</html>
+		"}
+
+/obj/item/weapon/book/manual/security_space_law
+	name = "Spce Law"
+	icon_state = "bookSpaceLaw"
+	author = "Nanotrasen Inc."
+
+	dat = {"
+
+		<html><head>
+		</head>
+
+		<body>
+		<iframe width='100%' height='97%' src="http://nanotrasen.com/wiki/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		</body>
+
+		</html>
+
+		"}
+
+/obj/item/weapon/book/manual/engineering_guide
+	name = "Engineering Textbook"
+	icon_state ="bookEngineering2"
+	author = "Engineering Encyclopedia"
+
+	dat = {"
+
+		<html><head>
+		</head>
+
+		<body>
+		<iframe width='100%' height='97%' src="http://nanotrasen.com/wiki/index.php?title=Guide_to_engineering&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		</body>
+
+		</html>
+
 		"}
 
 
