@@ -111,7 +111,7 @@
 		if(src.panel_open)
 			attack_hand(user)
 		return
-	else if(istype(W, /obj/item/weapon/coin))
+	else if(istype(W, /obj/item/weapon/coin) && product_coin != "")
 		user.drop_item()
 		W.loc = src
 		coin = W
@@ -137,7 +137,8 @@
 
 	var/dat = "<TT><b>Select an item:</b><br>"
 
-	dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] (<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>)<br><br>"
+	if (product_coin != "")
+		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] (<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>)<br><br>"
 
 	if (src.product_records.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"
