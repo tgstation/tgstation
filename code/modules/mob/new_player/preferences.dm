@@ -504,6 +504,7 @@ datum/preferences
 				occupation[job] = 4
 			else
 				occupation[job] = 0
+			return 1
 
 		if(occupation[job] == 0)//Only one job may be set to "High"
 			for(var/j in occupation)
@@ -516,7 +517,7 @@ datum/preferences
 
 		SetChoices(user)
 
-		return
+		return 1
 
 	proc/process_link(mob/user, list/link_tags)
 
