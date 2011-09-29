@@ -889,6 +889,7 @@
 #include "code\modules\research\server.dm"
 #include "code\WorkInProgress\buildmode.dm"
 #include "code\WorkInProgress\explosion_particles.dm"
+#include "code\WorkInProgress\jobs.dm"
 #include "code\WorkInProgress\mapload\dmm_suite.dm"
 #include "code\WorkInProgress\mapload\reader.dm"
 #include "code\WorkInProgress\organs\organs.dm"

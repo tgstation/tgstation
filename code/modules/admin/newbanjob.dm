@@ -6,7 +6,7 @@ var/savefile/Banlistjob
 	ClearTempbansjob()
 	var/id = clientvar.computer_id
 	var/key = clientvar.ckey
-	if (is_important_job(rank))
+	if (guest_jobbans(rank))
 		if(config.guest_jobban && IsGuestKey(key))
 			return 1
 	Banlistjob.cd = "/base"

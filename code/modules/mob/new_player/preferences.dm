@@ -381,7 +381,6 @@ datum/preferences
 		update_preview_icon()
 		user << browse_rsc(preview_icon, "previewicon.png")
 
-//		var/list/destructive = list("Assistant") //only the actual assistants should terminate the list
 		var/dat = "<html><body>"
 		dat += "<b>Name:</b> "
 		dat += "<a href=\"byond://?src=\ref[user];preferences=1;real_name=input\"><b>[real_name]</b></a> "
@@ -397,16 +396,12 @@ datum/preferences
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Show chat bubbles:</b> <a href=\"byond://?src=\ref[user];preferences=1;bubbles=input\"><b>[bubbles == 1 ? "Yes" : "No"]</b></a><br>"
 
-		if(user.client)
-			if(user.client.holder)
-				if(user.client.holder.rank)
-					if(user.client.holder.rank == "Game Master")
-						dat += "<hr><b>OOC</b><br>"
-						dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font>"
+		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.rank == "Game Master"))
+			dat += "<hr><b>OOC</b><br>"
+			dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font>"
 
 		dat += "<hr><b>Occupation Choices</b><br>"
 		dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>Set Preferences</b></a><br>"
-
 
 		dat += "<hr><table><tr><td><b>Body</b> "
 		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
@@ -414,42 +409,30 @@ datum/preferences
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preferences=1;b_type=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[user];preferences=1;s_tone=input'>[-s_tone + 35]/220<br></a>"
 
-		if (!IsGuestKey(user.key))
+		if(!IsGuestKey(user.key))
 			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=1\"><b>[underwear == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64></td></tr></table>"
 
 		dat += "<hr><b>Hair</b><br>"
 
 		dat += "<a href='byond://?src=\ref[user];preferences=1;hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]\"><table style='display:inline;' bgcolor=\"#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]\"><tr><td>__</td></tr></table></font> "
-/*
-		dat += " <font color=\"#[num2hex(r_hair, 2)]0000\">Red</font> - <a href='byond://?src=\ref[user];preferences=1;r_hair=input'>[r_hair]</a>"
-		dat += " <font color=\"#00[num2hex(g_hair, 2)]00\">Green</font> - <a href='byond://?src=\ref[user];preferences=1;g_hair=input'>[g_hair]</a>"
-		dat += " <font color=\"#0000[num2hex(b_hair, 2)]\">Blue</font> - <a href='byond://?src=\ref[user];preferences=1;b_hair=input'>[b_hair]</a><br>"
-*/
+
 		dat += "Style: <a href='byond://?src=\ref[user];preferences=1;h_style=input'>[h_style]</a>"
 
 		dat += "<hr><b>Facial</b><br>"
 
 		dat += "<a href='byond://?src=\ref[user];preferences=1;facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]\"><tr><td>__</td></tr></table></font> "
-/*
-		dat += " <font color=\"#[num2hex(r_facial, 2)]0000\">Red</font> - <a href='byond://?src=\ref[user];preferences=1;r_facial=input'>[r_facial]</a>"
-		dat += " <font color=\"#00[num2hex(g_facial, 2)]00\">Green</font> - <a href='byond://?src=\ref[user];preferences=1;g_facial=input'>[g_facial]</a>"
-		dat += " <font color=\"#0000[num2hex(b_facial, 2)]\">Blue</font> - <a href='byond://?src=\ref[user];preferences=1;b_facial=input'>[b_facial]</a><br>"
-*/
+
 		dat += "Style: <a href='byond://?src=\ref[user];preferences=1;f_style=input'>[f_style]</a>"
 
 		dat += "<hr><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preferences=1;eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>__</td></tr></table></font>"
-/*
-		dat += " <font color=\"#[num2hex(r_eyes, 2)]0000\">Red</font> - <a href='byond://?src=\ref[user];preferences=1;r_eyes=input'>[r_eyes]</a>"
-		dat += " <font color=\"#00[num2hex(g_eyes, 2)]00\">Green</font> - <a href='byond://?src=\ref[user];preferences=1;g_eyes=input'>[g_eyes]</a>"
-		dat += " <font color=\"#0000[num2hex(b_eyes, 2)]\">Blue</font> - <a href='byond://?src=\ref[user];preferences=1;b_eyes=input'>[b_eyes]</a>"
-*/
+
 		dat += "<hr>"
 		if(!jobban_isbanned(user, "Syndicate"))
 			var/n = 0
 			for (var/i in special_roles)
-				if (special_roles[i]) //if mode is available on the server
+				if(special_roles[i]) //if mode is available on the server
 					dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preferences=1;be_special=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
 				n++
 		else
@@ -469,33 +452,38 @@ datum/preferences
 	proc/SetChoices(mob/user, changedjob)
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
-		HTML += "<b>Choose occupations</b><br>Unavailable occupations are in red.<br>"
-		for(var/job in occupations )
-			if ((job!="AI" || config.allow_ai))
-				if(jobban_isbanned(user, job))
-					HTML += "<font color=red>"
-				if(job in head_positions || job=="AI")
-					HTML += "<b>[job]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[job]\"></b>"
+		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br>"
+		for(var/job in occupations)
+			if(jobban_isbanned(user, job))
+				HTML += "<font color=red>[job]</font><br>"
+				continue
+			if((job in command_positions) || (job=="AI"))//Bold head jobs
+				HTML += "<b>[job]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[job]\"></b>"
+			else
+				HTML += "[job]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[job]\">"
+
+			if(!occupation[job])
+				occupation[job] = 0
+
+			if(job=="Assistant")//Assistant is special
+				if(occupation[job] != 0)
+					HTML += "<font color=green>\[Yes]</font>"
 				else
-					HTML += "[job]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[job]\">"
-				if(jobban_isbanned(user, job))
-					HTML += "</font>"
-				if (!occupation[job])
-					occupation[job]=0
-				switch(occupation[job])
-					if(0)
-						if(job=="Assistant")
-							HTML += "<font color=red>\[PleaseNo]</font>"
-						else
-							HTML += "<font color=red>\[NEVER]</font>"
-					if(1)
-						HTML += "<font color=orange>\[Okay]</font>"
-					if(2)
-						HTML += "<font color=green>\[Good]</font>"
-					if(3)
-						HTML += "<font color=blue>\[Best!]</font>"
-					else HTML += "*"+occupation[job]+"*"
+					HTML += "<font color=red>\[No]</font>"
 				HTML += "</a><br>"
+				continue
+
+			switch(occupation[job])
+				if(0)
+					HTML += "<font color=red>\[NEVER]</font>"
+				if(1)
+					HTML += "<font color=blue>\[High]</font>"
+				if(2)
+					HTML += "<font color=green>\[Medium]</font>"
+				if(3)
+					HTML += "<font color=orange>\[Low]</font>"
+				else HTML += "*"+occupation[job]+"*"
+			HTML += "</a><br>"
 
 		HTML += "<br>"
 		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=0;job=cancel\">\[Done\]</a>"
@@ -506,18 +494,25 @@ datum/preferences
 		return
 
 	proc/SetJob(mob/user, job="Captain")
-		if ((!( occupations.Find(job) ) && !( assistant_occupations.Find(job) ) && (job != "No Preference")))
+		if((!(occupations.Find(job)) && !(assistant_occupations.Find(job)) && (job != "No Preference")))
 			user << browse(null, "window=mob_occupation")
 			ShowChoices(user)
 			return
 
-		if(occupation[job] == 2) // If it's going from good to best
+		if(job == "Assistant")
+			if(occupation[job] == 0)
+				occupation[job] = 4
+			else
+				occupation[job] = 0
+
+		if(occupation[job] == 0)//Only one job may be set to "High"
 			for(var/j in occupation)
-				if(occupation[j] == 3)
+				if(occupation[j] == 1)
 					occupation[j] = 2
 
-		occupation[job] = (occupation[job]+1)%4
-
+		occupation[job] = (occupation[job]-1)
+		if(occupation[job] < 0)
+			occupation[job] = 3
 
 		SetChoices(user)
 
@@ -545,7 +540,7 @@ datum/preferences
 					var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\")
 					for(var/c in bad_characters)
 						new_name = dd_replacetext(new_name, c, "")
-					if(!new_name || (new_name == "Unknown"))
+					if(!new_name || (new_name == "Unknown") || (new_name == "floor") || (new_name == "wall") || (new_name == "r-wall"))
 						alert("Don't do this")
 						return
 

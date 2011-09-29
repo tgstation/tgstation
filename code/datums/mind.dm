@@ -66,7 +66,7 @@ datum/mind
 			if (ticker.mode.config_tag=="revolution")
 				text = uppertext(text)
 			text = "<i><b>[text]</b></i>: "
-			if (assigned_role in head_positions)
+			if (assigned_role in command_positions)
 				text += "<b>HEAD</b>|officer|employee|headrev|rev"
 			else if (assigned_role in list("Security Officer", "Detective", "Warden"))
 				text += "head|<b>OFFICER</b>|employee|headre|rev"
@@ -98,7 +98,7 @@ datum/mind
 			if (ticker.mode.config_tag=="cult")
 				text = uppertext(text)
 			text = "<i><b>[text]</b></i>: "
-			if (assigned_role in head_positions)
+			if (assigned_role in command_positions)
 				text += "<b>HEAD</b>|officer|employee|cultist"
 			else if (assigned_role in list("Security Officer", "Detective", "Warden"))
 				text += "head|<b>OFFICER</b>|employee|cultist"

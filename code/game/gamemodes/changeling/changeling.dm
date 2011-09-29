@@ -168,25 +168,24 @@
 		var/changeling_name
 		var/totalabsorbed = 0
 		if((changeling.current) && (changeling.current.changeling))
-			totalabsorbed = changeling.current.changeling.absorbed_dna.len - 1
-
-		if(changeling.current)
+			totalabsorbed = ((changeling.current.changeling.absorbed_dna.len) - 1)
 			changeling_name = "[changeling.current.real_name] (played by [changeling.key])"
+			world << "<B>The changeling was [changeling_name].</B>"
+			world << "<b>[changeling.current.gender=="male"?"His":"Her"] changeling ID was [changeling.current.gender=="male"?"Mr.":"Mrs."] [changeling.current.changeling.changelingID]."
+			world << "<B>Genomes absorbed: [totalabsorbed]</B>"
+
+			var/count = 1
+			for(var/datum/objective/objective in changeling.objectives)
+				if(objective.check_completion())
+					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+				else
+					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+					changelingwin = 0
+				count++
+
 		else
 			changeling_name = "[changeling.key] (character destroyed)"
-
-		world << "<B>The changeling was [changeling_name].</B>"
-		if(changeling.current) world << "<b>[changeling.current.gender=="male"?"His":"Her"] changeling ID was [changeling.current.gender=="male"?"Mr.":"Mrs."] [changeling.current.changeling.changelingID]."
-		world << "<B>Genomes absorbed: [totalabsorbed]</B>"
-
-		var/count = 1
-		for(var/datum/objective/objective in changeling.objectives)
-			if(objective.check_completion())
-				world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
-			else
-				world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
-				changelingwin = 0
-			count++
+			changelingwin = 0
 
 		if(changelingwin)
 			world << "<B>The changeling was successful!<B>"
@@ -200,7 +199,7 @@
 	var/changeling_fakedeath = 0
 	var/chem_charges = 20.00
 	var/sting_range = 1
-	var/changelingID = null
+	var/changelingID = "none"
 	var/mob/living/host = null
 
 /datum/changeling/New()

@@ -149,7 +149,7 @@
 /datum/game_mode/proc/get_living_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player in world)
-		if(player.stat!=2 && player.mind && (player.mind.assigned_role in head_positions))
+		if(player.stat!=2 && player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads
 
@@ -160,6 +160,6 @@
 /datum/game_mode/proc/get_all_heads()
 	var/list/heads = list()
 	for(var/mob/player in world)
-		if(player.mind && (player.mind.assigned_role in head_positions))
+		if(player.mind && (player.mind.assigned_role in command_positions))
 			heads += player.mind
 	return heads

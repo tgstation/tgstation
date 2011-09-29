@@ -182,7 +182,7 @@
 	else
 		var/list/job_tmp = get_all_jobs()
 		job_tmp-=nonhuman_positions
-		job_tmp-=head_positions
+		job_tmp-=command_positions
 		job_tmp.Remove("Security Officer", "Detective", "Warden", "MODE")
 		traitor_job = pick(job_tmp)
 	if(prob(prob_right_dude) && ticker.mode.config_tag == "revolution")

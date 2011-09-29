@@ -1,160 +1,141 @@
 
 /proc/FindOccupationCandidates(list/unassigned, job, level)
 	var/list/candidates = list()
-
-	for (var/mob/new_player/player in unassigned)
-		if (player.preferences.occupation[job] == level)
-			if (jobban_isbanned(player, job))
+	if((job == "AI") && (config) && (!config.allow_ai))	return candidates
+	for(var/mob/new_player/player in unassigned)
+		if(player.preferences.occupation[job] == level)
+			if(jobban_isbanned(player, job))
 				continue
-//			if (player.jobs_restricted_by_gamemode && (job in player.jobs_restricted_by_gamemode))
-//				continue
 			candidates += player
-
 	return candidates
+
 
 /proc/ResetOccupations()
 	for(var/mob/new_player/player in world)
-		if(player)
-			if(player.mind)
-				player.mind.assigned_role = null
-				player.mind.special_role = null
+		if((player) && (player.mind))
+			player.mind.assigned_role = null
+			player.mind.special_role = null
 	return
 
-/proc/FillHeadPosition(list/unassigned, job)
-	for (var/level = 1 to 3)
-		var/list/candidates = FindOccupationCandidates(unassigned, job, 4-level)
-		if (candidates.len)
+
+/proc/Assign_Role(var/mob/new_player/player, var/job)
+	if((player) && (player.mind) && (job))
+		player.mind.assigned_role = job
+		return 1
+	return 0
+
+
+/proc/FillHeadPosition(list/unassigned, list/jobs)
+	for(var/level = 1 to 3)
+		for(var/command_position in command_positions)
+			var/list/candidates = FindOccupationCandidates(unassigned, command_position, level)
+			if(!candidates.len)	continue
 			var/mob/new_player/candidate = pick(candidates)
 			unassigned -= candidate
-			candidate.mind.assigned_role = job
-			return
+			if(Assign_Role(candidate, command_position))
+				jobs[command_position]--
+				return 1
+	return 0
+
+
+/proc/FillAIPosition(list/unassigned, list/jobs)
+	var/ai_selected = 0
+	for(var/level = 1 to 3)
+		var/list/candidates = FindOccupationCandidates(unassigned, "AI", level)
+		if(ticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
+			for(var/mob/new_player/player in candidates)
+				if(!player.preferences.be_special & BE_MALF)
+					candidates -= player
+		if(candidates.len)
+			var/mob/new_player/candidate = pick(candidates)
+			unassigned -= candidate
+			if(Assign_Role(candidate, "AI"))
+				jobs["AI"]--
+				ai_selected++
+				break
+	//Malf NEEDS an AI so force one if we didn't get a player who wanted it
+	if((ticker.mode.name == "AI malfunction")&&(!ai_selected))
+		unassigned = shuffle(unassigned)
+		for(var/mob/new_player/player in unassigned)
+			if(jobban_isbanned(player, "AI"))
+				continue
+			unassigned -= player
+			if(Assign_Role(player, "AI"))
+				jobs["AI"]--
+				ai_selected++
+				break
+	if(ai_selected)	return 1
+	return 0
+
 
 /** Proc DivideOccupations
  *  fills var "assigned_role" for all ready players.
  *  This proc must not have any side effects besides of modifying "assigned_role".
  **/
 /proc/DivideOccupations()
+	//Setup new player list and get the jobs list
 	var/list/unassigned = list()
-	var/list/occupation_eligible = occupations.Copy()
+	var/list/occupations_available = occupations.Copy()
 
-	for (var/mob/new_player/player in world)
-		if (player.client && player.ready && !player.mind.assigned_role)
+	//Get the players who are ready
+	for(var/mob/new_player/player in world)
+		if((player) && (player.client) && (player.ready) && (player.mind) && (!player.mind.assigned_role))
 			unassigned += player
-//			for (var/level = 1 to 3)
-//				if (jobban_isbanned(player, player.preferences.occupation[4-level]))
-//					player.preferences.occupation[level] = "Assistant"
 
-			// If someone picked AI before it was disabled, or has a saved profile with it
-			// on a game that now lacks it, this will make sure they don't become the AI,
-			// by changing that choice to Captain.
-//			if (!config.allow_ai)
-//				for (var/level = 1 to 3)
-//					if (player.preferences.occupation[level] == "AI")
-//						player.preferences.occupation[level] = "Captain"
+	if(unassigned.len == 0)	return 0
+	//Shuffle players and jobs
+	unassigned = shuffle(unassigned)
+//	occupations_available = shuffle(occupations_available)
 
-	if (unassigned.len == 0)
-		return 0
+	//Select one head
+	FillHeadPosition(unassigned, occupations_available)
 
-	//Fill head positions, first Captain than heads from least to most popular
-	for(var/occ in head_positions)
-		FillHeadPosition(unassigned, occ)
+	//Check for an AI
+	FillAIPosition(unassigned, occupations_available)
 
-	//Then check for an AI
-	for (var/level = 1 to 3)//Malf is a bit special as it replaces a normal job
-		var/list/candidates = FindOccupationCandidates(unassigned, "AI", 4-level)
-		if(ticker.mode.name == "AI malfunction")
-			for(var/mob/new_player/player in candidates)
-				if(!player.preferences.be_special & BE_MALF)
-					candidates -= player
-		if (candidates.len)
-			var/mob/new_player/candidate = pick(candidates)
-			unassigned -= candidate
-			candidate.mind.assigned_role = "AI"
-			break
-	//Malf NEEDS an AI so force one
-	if((ticker.mode.name == "AI malfunction")&&(occupation_eligible["AI"] > 0))
-		unassigned = shuffle(unassigned)
-		for(var/mob/new_player/player in unassigned)
-			if(jobban_isbanned(player, "AI"))
-				continue
-			else
-				player.mind.assigned_role = "AI"
-				unassigned -= player
-				break
+	//Assistants are checked first
+	for(var/mob/new_player/player in unassigned)
+		if(player.preferences.occupation["Assistant"] == 0)	continue
+		unassigned -= player
+		Assign_Role(player, "Assistant")
 
-	// Now for most positions.  Shuffle the list of unassigned players and go through it, giving them
-	// what they want.  Easy for "best", more complicated for "okay" and "good" because we have to
-	// select randomly from their list of okay or good jobs.
-	for (var/level = 1 to 3) // Wish this could be from 3 to 1, but whatever.  "Good" to "okay".
-		unassigned = shuffle(unassigned) // Maybe unnecessary to shuffle each time, but it's cheap.
-		for(var/mob/new_player/player in unassigned)
-			var/list/wantedJobs = list()
-			for(var/job in player.preferences.occupation)
-				if(player.preferences.occupation[job] == 4-level)
-					if(!(job in head_positions) && job != "AI" && occupation_eligible[job] != 0 && !jobban_isbanned(player,job))
-						wantedJobs += job
-			if(length(wantedJobs) > 0)
-				player.mind.assigned_role = pick(wantedJobs)
-				occupation_eligible[player.mind.assigned_role]--
-				unassigned -= player
-			else
-				player.mind.assigned_role = "Assistant"
-
-
-/*	//Now we can go though the rest of the jobs and players who set prefs
-	for (var/level = 1 to 3)
-		//Assistants are checked first
-		for (var/occupation in assistant_occupations)
-			if (unassigned.len == 0)
-				break
-			var/list/candidates = FindOccupationCandidates(unassigned, occupation, 4-level)
-			while(candidates.len && assistant_occupations[occupation])
-				assistant_occupations[occupation]--
-				var/mob/new_player/candidate = pick_n_take(candidates)
-				candidate.mind.assigned_role = occupation
+	//Other jobs are now checked
+	for(var/level = 1 to 3)
+		for(var/occupation in occupations_available)
+			if(!unassigned.len)	break
+			if(occupations_available[occupation] == 0)	continue
+			var/list/candidates = FindOccupationCandidates(unassigned, occupation, level)
+			while(candidates.len && occupations_available[occupation])
+				var/mob/new_player/candidate = pick(candidates)
 				unassigned -= candidate
-		//Now everyone else
-		for (var/occupation in occupation_eligible)
-			if (unassigned.len == 0)
-				break
-			if (occupation_eligible[occupation] == 0)
-				continue
-			var/list/candidates = FindOccupationCandidates(unassigned, occupation, 4-level)
-			while (candidates.len && occupation_eligible[occupation])
-				occupation_eligible[occupation]--
-				var/mob/new_player/candidate = pick_n_take(candidates)
-				candidate.mind.assigned_role = occupation
-				unassigned -= candidate
-	//Last try to fill in any leftover jobs with leftover players
-	if (unassigned.len)
-		var/list/vacancies = list()
-		for (var/occ in occupation_eligible)
-			for (var/i = 1 to occupation_eligible[occ])
-				vacancies += occ
+				if(Assign_Role(candidate, occupation))
+					occupations_available[occupation]--
 
-		for(var/mob/new_player/candidate in unassigned)
-			if(!unassigned.len || !vacancies.len)	break
-			var/occupation = pick(vacancies)
-			if(!jobban_isbanned(candidate, occupation))
-				candidate.mind.assigned_role = occupation
-				unassigned -= candidate
-				vacancies -= occupation
+	if(!unassigned.len)	return 1
 
+	//Set all remaining players to an assistant job
+	var/list/vacancies = list()
+	for(var/assist_job in assistant_occupations)
+		if(!occupations_available[assist_job] > 0)	continue
+		for(var/i = 1 to occupations_available[assist_job])
+			vacancies += assist_job
+
+	for(var/mob/new_player/player in unassigned)
+		if((!unassigned.len) || (!vacancies.len))	break
+		unassigned -= player
+		var/assist_job = pick(vacancies)
+		if(Assign_Role(player, assist_job))
+			vacancies -= assist_job
+
+	if(unassigned.len)
 		for(var/mob/new_player/player in unassigned)
-			if (unassigned.len == 0)
-				break
-			var/list/occupationsPossible = list()
-			for(var/occ in assistant_occupations)
-				if(assistant_occupations[occ])
-					occupationsPossible += occ
-				player.mind.assigned_role = pick(occupationsPossible)
-				assistant_occupations[player.mind.assigned_role]--
-//			player.mind.assigned_role = pick(assistant_occupations)
-*/
+			if(!unassigned.len)	break
+			Assign_Role(player, "Assistant")
+	//If anyone still has no job then something is fucked up with their mob and they will currently spawn at spawn but the runtimes should no longer dump several people here
 	return 1
 
-/mob/living/carbon/human/proc/Equip_Rank(rank, joined_late)
 
+/mob/living/carbon/human/proc/Equip_Rank(rank, joined_late)
 	switch(rank)
 		if ("Chaplain")
 			var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(src)

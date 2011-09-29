@@ -1,9 +1,9 @@
 datum/objective
 	var
-		datum/mind/owner//Who owns the objective.
-		explanation_text//What that person is supposed to do.
-		datum/mind/target//If they are focused on a particular person.
-		target_amount//If they are focused on a particular number. Steal objectives have their own counter.
+		datum/mind/owner = null			//Who owns the objective.
+		explanation_text = "Nothing"	//What that person is supposed to do.
+		datum/mind/target = null		//If they are focused on a particular person.
+		target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 
 	New(var/text)
 		if(text)

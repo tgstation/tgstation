@@ -39,7 +39,7 @@
 
 	var/head_check = 0
 	for(var/mob/new_player/player in world)
-		if(player.mind.assigned_role in head_positions)
+		if(player.mind.assigned_role in command_positions)
 			head_check = 1
 			break
 
@@ -156,7 +156,7 @@
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
-	if((rev_mind.assigned_role in head_positions) || (rev_mind.assigned_role in list("Security Officer", "Detective", "Warden")))
+	if((rev_mind.assigned_role in command_positions) || (rev_mind.assigned_role in list("Security Officer", "Detective", "Warden")))
 		return 0
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
@@ -371,5 +371,5 @@
 /proc/is_convertable_to_rev(datum/mind/mind)
 	return istype(mind) && \
 		istype(mind.current, /mob/living/carbon/human) && \
-		!(mind.assigned_role in head_positions) && \
+		!(mind.assigned_role in command_positions) && \
 		!(mind.assigned_role in list("Security Officer", "Detective", "Warden"))

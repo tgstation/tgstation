@@ -10,7 +10,7 @@ var
 /proc/jobban_isbanned(mob/M, rank)
 	if(_jobban_isbanned(M, rank)) return 1//for old jobban
 	if(M)
-		if (is_important_job(rank))
+		if (guest_jobbans(rank))
 			if(config.guest_jobban && IsGuestKey(M.key))
 				return 1
 			if(config.usewhitelist && !check_whitelist(M))
