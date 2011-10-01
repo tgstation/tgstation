@@ -336,10 +336,11 @@ turf
 							if(enemy_tile.archived_cycle < archived_cycle) //archive bordering tile information if not already done
 								enemy_tile.archive()
 
-							var/delay_trigger = air.compare(enemy_tile.air)
-							if (!delay_trigger) //if compare() didn't return 1, air is different enough to trigger processing
-								reset_delay()
-								enemy_tile.reset_delay()
+							if (air && enemy_tile.air)
+								var/delay_trigger = air.compare(enemy_tile.air)
+								if (!delay_trigger) //if compare() didn't return 1, air is different enough to trigger processing
+									reset_delay()
+									enemy_tile.reset_delay()
 
 							if(enemy_tile.parent && enemy_tile.parent.group_processing) //apply tile to group sharing
 								if(enemy_tile.parent.current_cycle < current_cycle) //if the group hasn't been archived, it could just be out of date
