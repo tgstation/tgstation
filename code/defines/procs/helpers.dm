@@ -1071,7 +1071,7 @@ proc/islist(list/list)
 	return 0
 
 proc/isemptylist(list/list)
-	if(istype(list) && !list.len)
+	if(!list.len)
 		return 1
 	return 0
 
@@ -1432,4 +1432,10 @@ proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
 	var/dy = abs(B.y - A.y)
 	return get_dir(A, B) & (rand() * (dx+dy) < dy ? 3 : 12)
+
+//return either pick(list) or null if list is not of type /list or empty
+proc/safepick(list/list)
+	if(!islist(list) || !list.len)
+		return
+	return pick(list)
 

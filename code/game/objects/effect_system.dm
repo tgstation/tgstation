@@ -59,6 +59,10 @@ would spawn and follow the beaker, even if it is carried or thrown.
 		return 0
 	.=..()
 
+/obj/effects/water/Bump(atom/A)
+	if(reagents)
+		reagents.reaction(A)
+	return ..()
 
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM

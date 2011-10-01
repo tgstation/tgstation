@@ -17,7 +17,7 @@
 	anchored = 1 //no pulling around.
 	unacidable = 1 //and no deleting hoomans inside
 	layer = MOB_LAYER //icon draw layer
-	infra_luminosity = 15
+	infra_luminosity = 15 //byond implementation is bugged.
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
@@ -129,7 +129,9 @@
 	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
 		return
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
-		target = pick(view(3,target))
+		target = safepick(view(3,target))
+		if(!target)
+			return
 	if(get_dist(src, target)>1)
 		if(selected && selected.is_ranged())
 			selected.action(target)
@@ -171,6 +173,7 @@
 /obj/mecha/relaymove(mob/user,direction)
 	if(user != src.occupant) //While not "realistic", this piece is player friendly.
 		user.loc = get_turf(src)
+		user.loc.Entered(user)
 		user << "You climb out from [src]"
 		return 0
 	if(!can_move)
@@ -271,34 +274,23 @@
 	return
 
 /obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
-	if(!src) return
+	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
 	if(prob(20))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
-			if(possible_int_damage.len)
-				var/int_dam_flag = pick(possible_int_damage)
-				if(int_dam_flag)
-					src.internal_damage |= int_dam_flag
-					src.pr_internal_damage.start()
-					src.log_append_to_last("Internal damage of type [int_dam_flag].[ignore_threshold?"Ignoring damage threshold.":null]",1)
-					src.occupant << sound('warning-buzzer.ogg',wait=0)
+			var/int_dam_flag = pick(possible_int_damage)
+			if(int_dam_flag)
+				src.internal_damage |= int_dam_flag
+				src.pr_internal_damage.start()
+				src.log_append_to_last("Internal damage of type [int_dam_flag].[ignore_threshold?"Ignoring damage threshold.":null]",1)
+				src.occupant << sound('warning-buzzer.ogg',wait=0)
 	if(prob(5))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
-			if(equipment.len)
-				var/obj/item/mecha_parts/mecha_equipment/destr = pick(equipment)
-				if(destr)
-					equipment -= destr
-					while(null in equipment)
-						equipment -= null
-					destr.destroy()
-					src.occupant_message("<font color='red'>The [destr] is destroyed!</font>")
-					src.log_append_to_last("[destr] is destroyed.",1)
-					if(istype(destr, /obj/item/mecha_parts/mecha_equipment/weapon))
-						src.occupant << sound('weapdestr.ogg',volume=50)
-					else
-						src.occupant << sound('critdestr.ogg',volume=50)
+			var/obj/item/mecha_parts/mecha_equipment/destr = safepick(equipment)
+			if(destr)
+				destr.destroy()
 	return
 
 
@@ -351,7 +343,7 @@
 	return
 
 
-/obj/mecha/hitby(atom/movable/A as mob|obj)
+/obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
 	src.log_message("Hit by [A].",1)
 	call((proc_res["dynhitby"]||src), "dynhitby")(A)
 	return
@@ -376,29 +368,25 @@
 	return
 
 
-/obj/mecha/bullet_act(var/obj/item/projectile/Proj)
+/obj/mecha/bullet_act(var/obj/item/projectile/Proj) //wrapper
 	src.log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).",1)
-	if(prob(src.deflect_chance))
-		src.occupant_message("\blue The armor deflects the incoming projectile.")
-		src.visible_message("The [src.name] armor deflects the projectile")
-		src.log_append_to_last("Armor saved.")
-	else
-		call((proc_res["dynbulletdamage"]||src), "dynbulletdamage")(Proj) //calls equipment
+	call((proc_res["dynbulletdamage"]||src), "dynbulletdamage")(Proj) //calls equipment
 	..()
 	return
 
 /obj/mecha/proc/dynbulletdamage(var/obj/item/projectile/Proj)
-	var/damage
+	if(prob(src.deflect_chance))
+		src.occupant_message("\blue The armor deflects incoming projectile.")
+		src.visible_message("The [src.name] armor deflects the projectile")
+		src.log_append_to_last("Armor saved.")
+		return
 	var/ignore_threshold
-
 	if(Proj.flag == "taser")
 		use_power(500)
 		return
 	if(istype(Proj, /obj/item/projectile/beam/pulse))
 		ignore_threshold = 1
-
-	damage = Proj.damage
-	src.take_damage(damage)
+	src.take_damage(Proj.damage)
 	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),ignore_threshold)
 	return
 
@@ -473,6 +461,7 @@
 
 /obj/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature>src.max_temperature)
+		src.log_message("Exposed to dangerous temperature.",1)
 		src.take_damage(5,"fire")
 		src.check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
 	return
@@ -574,7 +563,7 @@
 	var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 	if(possible_port)
 		if(connect(possible_port))
-			src.occupant << "\blue [name] connects to the port."
+			src.occupant_message("\blue [name] connects to the port.")
 			src.verbs += /obj/mecha/verb/disconnect_from_port
 			src.verbs -= /obj/mecha/verb/connect_to_port
 			return
@@ -593,7 +582,7 @@
 	if(usr!=src.occupant)
 		return
 	if(disconnect())
-		src.occupant << "\blue [name] disconnects from the port."
+		src.occupant_message("\blue [name] disconnects from the port.")
 		src.verbs -= /obj/mecha/verb/disconnect_from_port
 		src.verbs += /obj/mecha/verb/connect_to_port
 	else
@@ -693,6 +682,7 @@
 		user << "Beta-rhythm below acceptable level."
 		return 0
 	else if(occupant)
+		user << "Occupant detected."
 		return 0
 	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
 		user << "Stop it!"
@@ -1026,7 +1016,7 @@
 	var/output = {"<html>
 						<head><title>[src.name] data</title>
 						<style>
-						body {color: #00ff00; background: #000000; font: 13px 'Courier', monospace;}
+						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
 						.wr {margin-bottom: 5px;}
 						.header {cursor:pointer;}
@@ -1078,7 +1068,7 @@
 						<b>Airtank pressure: </b>[src.return_pressure()]kPa<br>
 						<b>Internal temperature: </b> [src.return_temperature()]&deg;K|[src.return_temperature() - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
-						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:5px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
+						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
 	return output
 
@@ -1134,6 +1124,8 @@
 	if(href_list["update_content"])
 		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())
 		return
+	if(usr==occupant && occupant.stat>0)
+		return
 	if (href_list["close"])
 		return
 	if (href_list["toggle_lights"])
@@ -1156,12 +1148,11 @@
 		onclose(occupant, "exosuit_log")
 		return
 	if (href_list["change_name"])
-		var/newname = strip_html_simple(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)))
-		if(newname)
+		var/newname = strip_html_simple(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)) as text)
+		if(newname && trim(newname))
 			name = newname
 		else
-			if(!newname || newname == "" || newname == " ")
-				alert(occupant, "nope.avi")
+			alert(occupant, "nope.avi")
 		return
 	if (href_list["repair_int_control_lost"])
 		src.occupant_message("Recalibrating coordination system.")
@@ -1361,7 +1352,7 @@
 			mecha.pr_int_temp_processor.stop()
 		if(mecha.internal_damage & MECHA_INT_TANK_BREACH) //remove some air from internal tank
 			if(int_tank_air)
-				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.25)
+				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.10)
 				if(mecha.loc && hascall(mecha.loc,"assume_air"))
 					mecha.loc.assume_air(leaked_gas)
 				else

@@ -125,6 +125,8 @@
 			for(var/i=1;i<=parts.len;i++)
 				var/path = parts[i]
 				parts[i] = new path(src)
+				//debug below
+				ASSERT(istype(parts[i],/obj/item))
 		return
 
 
@@ -210,7 +212,11 @@
 	proc/output_available_resources()
 		var/output
 		for(var/resource in resources)
-			output += "<span class=\"res_name\">[resource]: </span>[min(res_max_amount, resources[resource])] cm&sup3;<br>"
+			var/amount = min(res_max_amount, resources[resource])
+			output += "<span class=\"res_name\">[resource]: </span>[amount] cm&sup3;"
+			if(amount>0)
+				output += "<span style='font-size:80%;'> - Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[res_max_amount];material=[resource]'>All</a>\]</span>"
+			output += "<br/>"
 		return output
 
 	proc/remove_resources(var/obj/item/mecha_parts/part)
@@ -225,7 +231,8 @@
 				if(resource in src.resources)
 					if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
 						return 0
-		return 1
+			return 1
+		return 0
 
 	proc/build_part(var/obj/item/mecha_parts/part)
 		if(!part) return
@@ -255,7 +262,7 @@
 		if(set_name in part_sets)
 			var/list/part_set = part_sets[set_name]
 			if(islist(part_set))
-				for(var/part in part_set)
+				for(var/obj/item/part in part_set)
 					add_to_queue(part)
 		return
 
@@ -485,6 +492,8 @@
 						[part.desc]<br>
 						<a href='?src=\ref[src];clear_temp=1'>Return</a>
 						"}
+		if(href_list["remove_mat"] && href_list["material"])
+			temp = "Ejected [remove_material(href_list["material"],text2num(href_list["remove_mat"]))] of [href_list["material"]]<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 		src.updateUsrDialog()
 		return
 
@@ -538,4 +547,36 @@
 		else
 			user << "The fabricator cannot hold more [name]."
 		return
+
+	proc/remove_material(var/mat_string, var/amount)
+		var/type
+		switch(mat_string)
+			if("metal")
+				type = /obj/item/stack/sheet/metal
+			if("glass")
+				type = /obj/item/stack/sheet/glass
+			if("gold")
+				type = /obj/item/stack/sheet/gold
+			if("silver")
+				type = /obj/item/stack/sheet/silver
+			if("diamond")
+				type = /obj/item/stack/sheet/diamond
+			if("plasma")
+				type = /obj/item/stack/sheet/plasma
+			if("uranium")
+				type = /obj/item/stack/sheet/uranium
+			if("bananium")
+				type = /obj/item/stack/sheet/clown
+			else
+				return 0
+		var/obj/item/stack/sheet/res = new type(src)
+		var/total_amount = round(resources[mat_string]/res.perunit)
+		res.amount = min(total_amount,amount)
+		if(res.amount>0)
+			resources[mat_string] -= res.amount*res.perunit
+			res.Move(src.loc)
+		else
+			del res
+		return res.amount
+
 

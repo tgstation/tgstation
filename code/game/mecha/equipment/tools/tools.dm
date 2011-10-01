@@ -178,6 +178,8 @@
 	var/disabled = 0 //malf
 
 	action(atom/target)
+		if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock))
+			target = get_turf(target)
 		if(!action_checks(target) || disabled || get_dist(chassis, target)>3) return
 		playsound(chassis, 'click.ogg', 50, 1)
 		//meh
@@ -450,6 +452,7 @@
 	energy_drain = 50
 	range = 0
 	construction_cost = list("metal"=20000,"gold"=5000)
+	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
 
 	can_attach(obj/mecha/M as obj)
@@ -474,9 +477,13 @@
 	proc/dynbulletdamage(var/obj/item/projectile/Proj)
 		if(!action_checks(src))
 			return chassis.dynbulletdamage(Proj)
-		var/damage = Proj.damage
-		chassis.take_damage(round(damage*src.damage_coeff))
-		chassis.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+		if(prob(chassis.deflect_chance*deflect_coeff))
+			chassis.occupant_message("\blue The armor deflects incoming projectile.")
+			chassis.visible_message("The [chassis.name] armor deflects the projectile")
+			chassis.log_append_to_last("Armor saved.")
+		else
+			chassis.take_damage(round(Proj.damage*src.damage_coeff))
+			chassis.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		set_ready_state(0)
 		chassis.use_power(energy_drain)
 		do_after_cooldown()
@@ -485,7 +492,7 @@
 	proc/dynhitby(atom/movable/A)
 		if(!action_checks(A))
 			return chassis.dynhitby(A)
-		if(prob(chassis.deflect_chance) || istype(A, /mob/living) || istype(A, /obj/item/mecha_tracking))
+		if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_tracking))
 			chassis.occupant_message("\blue The [A] bounces off the armor.")
 			chassis.visible_message("The [A] bounces off the [chassis] armor")
 			chassis.log_append_to_last("Armor saved.")
