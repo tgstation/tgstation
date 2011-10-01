@@ -92,6 +92,14 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 // self other technology - Communication rune  //was other hear blood
 // join hide technology - stun rune. Rune color: bright pink.
+	New()
+		..()
+		for(var/mob/living/silicon/ai/AI in world)
+			if(AI.client)
+				var/image/blood = image('blood.dmi', loc = src, icon_state = "floor[rand(1,7)]")
+				blood.override = 1
+				AI.client.images += blood
+
 	examine()
 		if(!iscultist(usr))
 			usr << "A strange collection of symbols drawn in blood."

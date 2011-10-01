@@ -40,7 +40,7 @@
 	range = -1
 	include_user = 1
 
-	mutations = 136
+	mutations = LASER | HULK
 	duration = 300
 
 /obj/proc_holder/spell/targeted/inflict_handler/disintegrate

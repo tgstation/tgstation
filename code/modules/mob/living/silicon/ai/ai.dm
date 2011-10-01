@@ -62,6 +62,13 @@
 
 	if(src.mind)
 		ticker.mode.remove_revolutionary(src.mind)
+
+	if(client)
+		for(var/obj/rune/rune in world)
+			var/image/blood = image('blood.dmi', loc = rune, icon_state = "floor[rand(1,7)]")
+			blood.override = 1
+			client.images += blood
+
 	return
 
 

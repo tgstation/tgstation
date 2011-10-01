@@ -35,14 +35,19 @@
 	return
 
 /mob/living/carbon/alien/humanoid/drone/verb/resinwall() // -- TLE
-	set name = "Shape Resin Wall (100)"
+	set name = "Shape Resin (100)"
 	set desc = "Produce a wall of resin that blocks entry and line of sight"
 	set category = "Alien"
 
 	if(powerc(100))
 		toxloss -= 100
-		src << "\green You begin to shape a wall of resin."
+		var/choice = input("Choose what you wish to shape.","Resin building") as anything in list("resin wall","resin membrane") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
+		src << "\green You shape a [choice]."
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\red <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
-		new /obj/alien/resin(loc)
+		switch(choice)
+			if("resin wall")
+				new /obj/alien/resin/wall(loc)
+			if("resin membrane")
+				new /obj/alien/resin/membrane(loc)
 	return

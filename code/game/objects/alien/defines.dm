@@ -31,7 +31,19 @@
 	opacity = 1
 	anchored = 1
 	var/health = 50
-	var/mob/living/affecting = null
+	//var/mob/living/affecting = null
+
+	wall
+		name = "resin wall"
+		desc = "Purple slime solidified into a wall."
+		icon_state = "resinwall" //same as resin, but consistency ho!
+
+	membrane
+		name = "resin membrane"
+		desc = "Purple slime just thin enough to let light pass through."
+		icon_state = "resinmembrane"
+		opacity = 0
+		health = 20
 
 /obj/alien/weeds
 	name = "weeds"
