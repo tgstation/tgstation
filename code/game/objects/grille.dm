@@ -147,13 +147,16 @@
 		if(!prob(prb))
 			return 0
 		var/turf/T = get_turf(src)
-		if (electrocute_mob(user, T.get_cable_node(), src))
-			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-			s.set_up(5, 1, src)
-			s.start()
-			return 1
-		else
-			return 0
+		var/obj/cable/C = T.get_cable_node()
+		if(C)
+			if (electrocute_mob(user, C, src))
+				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				s.set_up(5, 1, src)
+				s.start()
+				return 1
+			else
+				return 0
+		return 0
 
 
 
