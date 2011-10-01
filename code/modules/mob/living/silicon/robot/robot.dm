@@ -62,7 +62,6 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	//var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Janitor", "Service", "Brobot")
 	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
 	if(module)
 		return
@@ -72,16 +71,6 @@
 			hands.icon_state = "standard"
 			icon_state = "robot"
 			modtype = "Stand"
-
-/*		if("Hydroborg")
-			module = new /obj/item/weapon/robot_module/hydroborg(src)
-			hands.icon_state = "hydroborg"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Hydroborg")
-			if(icontype== "Hydroborg")
-				icon_state = "hydroborg"
-			else if(icontype == "Kent")
-				icon_state = "toiletbot"
-			modtype = "Hydroborg"*/
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
@@ -105,24 +94,20 @@
 			icon_state = "Miner"
 			modtype = "Miner"
 
-
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Kent", "Medbot")
-//			icon_state = "MedBot"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Kent", "Medbot")
 			if(icontype == "Kent")
 				icon_state = "toiletbot"
 			else if(icontype == "Medbot")
 				icon_state = "Medbot"
-			else
-				icon_state = "robot"
 			modtype = "Med"
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Armored", "Robocop", "Robocop Red", "Heavy Duty")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Armored", "Robocop", "Robocop Red", "Heavy Duty")
 			if(icontype == "Armored")
 				icon_state = "Security"
 			else if(icontype == "Robocop")
@@ -131,18 +116,14 @@
 				icon_state = "Security3"
 			else if(icontype == "Heavy Duty")
 				icon_state = "secborg"
-			else
-				icon_state = "robot"
 			modtype = "Sec"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
 
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Engineer", "Engiseer")
-			if(icontype == "Standard")
-				icon_state = "robot"
-			else if(icontype == "Engineer")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Engineer", "Engiseer")
+			if(icontype == "Engineer")
 				icon_state = "Engineering"
 			else
 				icon_state = "Engineering2"
@@ -151,22 +132,9 @@
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Chryssalid")
-			if(icontype == "Standard")
-				icon_state = "robot"
-			else
-				icon_state = "Janbot"
+			icon_state = "Janbot"
 			modtype = "Jan"
 
-/*		if("Brobot")
-			module = new /obj/item/weapon/robot_module/brobot(src)
-			hands.icon_state = "brobot"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Standard", "Bro",)
-			if(icontype == "Bro")
-				icon_state = "Brobot"
-			else
-				icon_state = "robot"
-			modtype = "Bro"*/
 	overlays -= "eyes" //Takes off the eyes that it started with
 	updateicon()
 
@@ -976,6 +944,15 @@ Frequency:
 	gib(1)
 
 
+/mob/living/silicon/robot/Process_Spacemove()
+	if(..())	return 1
+	if(!module)	return 0
+	for(var/obj/item/weapon/tank/jetpack/J in module.modules)
+		if(J && istype(J, /obj/item/weapon/tank/jetpack))
+			if(J.allow_thrust(0.01))
+				inertia_dir = 0
+				return 1
+	return 0
 
 ///mob/living/silicon/robot/proc/eyecheck()
 //	return

@@ -74,24 +74,13 @@
 
 
 /turf/Entered(atom/movable/M as mob|obj)
+	if((ismob(M)) && (M.flags & NOGRAV))
+		AntiGrav(M)
+		return
 	if(ismob(M) && !istype(src, /turf/space))
 		var/mob/tmob = M
 		tmob.inertia_dir = 0
 	..()
-	// Clowns have it rough enough, disabling their slipping -- TLE
-	/*
-	if(prob(1) && ishuman(M))
-		var/mob/living/carbon/human/tmob = M
-		if (!tmob.lying && istype(tmob.shoes, /obj/item/clothing/shoes/clown_shoes))
-			if(istype(tmob.head, /obj/item/clothing/head/helmet))
-				tmob << "\red You stumble and fall to the ground. Thankfully, that helmet protected you."
-				tmob.weakened = max(rand(1,2), tmob.weakened)
-			else
-				tmob << "\red You stumble and hit your head."
-				tmob.weakened = max(rand(3,10), tmob.weakened)
-				tmob.stuttering = max(rand(0,3), tmob.stuttering)
-				tmob.make_dizzy(150)
-	*/
 	for(var/atom/A as mob|obj|turf|area in src)
 		spawn( 0 )
 			if ((A && M))
@@ -104,6 +93,40 @@
 			return
 	return
 
+/turf/proc/AntiGrav(atom/movable/A as mob|obj)//Could be better right now I just want to get it done
+	if (!(A.last_move))	return
+	if ((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1)))
+		var/mob/M = A
+		var/spacemove = M.Process_Spacemove(0)
+		if(spacemove)
+			var/prob_slip = 5
+			if(M.stat)	prob_slip = 50
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && H.shoes.flags&NOSLIP) || (spacemove == 2))
+					prob_slip = 0
+				if(!M.l_hand)	prob_slip -= 2
+				else if(M.l_hand.w_class <= 2)	prob_slip -= 1
+				if (!M.r_hand)	prob_slip -= 2
+				else if(M.r_hand.w_class <= 2)	prob_slip -= 1
+			prob_slip = round(prob_slip)
+
+			if(prob(prob_slip))
+				M << "\blue <B>You slipped!</B>"
+				M.inertia_dir = M.last_move
+				step(M, M.inertia_dir)
+				return
+			else
+				M.inertia_dir = 0 //no inertia
+		else
+			spawn(5)
+				if((A && !( A.anchored ) && A.loc == src))
+					if(M.inertia_dir) //they keep moving the same direction
+						step(M, M.inertia_dir)
+					else
+						M.inertia_dir = M.last_move
+						step(M, M.inertia_dir) //TODO: DEFERRED
+	return
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
@@ -158,8 +181,7 @@
 /turf/simulated/Entered(atom/A, atom/OL)
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
-		if(M.lying)
-			return
+		if(M.lying)	return
 		if(istype(M, /mob/living/carbon/human))			// Split this into two seperate if checks, when non-humans were being checked it would throw a null error -- TLE
 			if(istype(M:shoes, /obj/item/clothing/shoes/clown_shoes))
 				if(M.m_intent == "run")
@@ -173,7 +195,7 @@
 					playsound(src, "clownstep", 20, 1)
 		switch (src.wet)
 			if(1)
-				if (istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
+				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
 					if ((M.m_intent == "run") && !(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP))
 						M.pulling = null
 						step(M, M.dir)
@@ -273,7 +295,6 @@
 	return
 
 /turf/simulated/wall/ex_act(severity)
-
 	switch(severity)
 		if(1.0)
 			//SN src = null
@@ -1176,194 +1197,48 @@ turf/simulated/floor/return_siding_icon_state()
 
 /turf/space/Entered(atom/movable/A as mob|obj)
 	..()
-	if ((!(A) || src != A.loc || istype(null, /obj/beam)))
-		return
+	if ((!(A) || src != A.loc || istype(null, /obj/beam)))	return
 
-	if (!(A.last_move))
-		return
-
-//	if (locate(/obj/movable, src))
-//		return 1
+	if (!(A.last_move))	return
 
 	if ((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1)))
 		var/mob/M = A
-		if ((!( M.handcuffed) && M.canmove))
+		var/spacemove = M.Process_Spacemove(0)
+		if(spacemove)
 			var/prob_slip = 5
-			var/mag_eq = 0
+			if(M.stat)	prob_slip = 50
 			if(istype(M, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(istype(H.shoes, /obj/item/clothing/shoes/magboots) && H.shoes.flags&NOSLIP)
-					mag_eq = 1
-
-			if (locate(/obj/grille, oview(1, M)) || locate(/obj/lattice, oview(1, M)) )
-				if(mag_eq)
+				if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && H.shoes.flags&NOSLIP) || (spacemove == 2))
 					prob_slip = 0
-				else
-					if (!( M.l_hand ))
-						prob_slip -= 2
-					else if (M.l_hand.w_class <= 2)
-						prob_slip -= 1
-
-					if (!( M.r_hand ))
-						prob_slip -= 2
-					else if (M.r_hand.w_class <= 2)
-						prob_slip -= 1
-			else if (locate(/turf/unsimulated, oview(1, M)) || locate(/turf/simulated, oview(1, M)))
-				if(mag_eq)
-					prob_slip = 0
-				else
-					if (!( M.l_hand ))
-						prob_slip -= 1
-					else if (M.l_hand.w_class <= 2)
-						prob_slip -= 0.5
-
-					if (!( M.r_hand ))
-						prob_slip -= 1
-					else if (M.r_hand.w_class <= 2)
-						prob_slip -= 0.5
+				if(!M.l_hand)	prob_slip -= 2
+				else if(M.l_hand.w_class <= 2)	prob_slip -= 1
+				if (!M.r_hand)	prob_slip -= 2
+				else if(M.r_hand.w_class <= 2)	prob_slip -= 1
 			prob_slip = round(prob_slip)
 
-			if (prob_slip < 5) //next to something, but they might slip off
-				if (prob(prob_slip) )
-					M << "\blue <B>You slipped!</B>"
-					M.inertia_dir = M.last_move
-					step(M, M.inertia_dir)
-					return
-				else
-					M.inertia_dir = 0 //no inertia
-			else //not by a wall or anything, they just keep going
-				spawn(5)
-					if ((A && !( A.anchored ) && A.loc == src))
-						if(M.inertia_dir) //they keep moving the same direction
-							step(M, M.inertia_dir)
-						else
-							M.inertia_dir = M.last_move
-							step(M, M.inertia_dir)
-		else //can't move, they just keep going (COPY PASTED CODE WOO)
+			if(prob(prob_slip))
+				M << "\blue <B>You slipped!</B>"
+				M.inertia_dir = M.last_move
+				step(M, M.inertia_dir)
+				return
+			else
+				M.inertia_dir = 0 //no inertia
+		else
 			spawn(5)
-				if ((A && !( A.anchored ) && A.loc == src))
+				if((A && !( A.anchored ) && A.loc == src))
 					if(M.inertia_dir) //they keep moving the same direction
 						step(M, M.inertia_dir)
 					else
 						M.inertia_dir = M.last_move
 						step(M, M.inertia_dir) //TODO: DEFERRED
+
 	if(ticker && ticker.mode)
-		if(ticker.mode.name == "nuclear emergency")
-			return
+		if(ticker.mode.name == "nuclear emergency")	return
 
-		else if(ticker.mode.name == "extended"||ticker.mode.name == "sandbox")
-
-			var/cur_x
-			var/cur_y
-			var/next_x
-			var/next_y
-			var/target_z
-			var/list/y_arr
-
-			if(src.x <= 1)
-				if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
-					del(A)
-					return
-
-				var/list/cur_pos = src.get_global_map_pos()
-				if(!cur_pos) return
-				cur_x = cur_pos["x"]
-				cur_y = cur_pos["y"]
-				next_x = (--cur_x||global_map.len)
-				y_arr = global_map[next_x]
-				target_z = y_arr[cur_y]
-/*
-				//debug
-				world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-				world << "Target Z = [target_z]"
-				world << "Next X = [next_x]"
-				//debug
-*/
-				if(target_z)
-					A.z = target_z
-					A.x = world.maxx - 2
-					spawn (0)
-						if ((A && A.loc))
-							A.loc.Entered(A)
-			else if (src.x >= world.maxx)
-				if(istype(A, /obj/meteor))
-					del(A)
-					return
-
-				var/list/cur_pos = src.get_global_map_pos()
-				if(!cur_pos) return
-				cur_x = cur_pos["x"]
-				cur_y = cur_pos["y"]
-				next_x = (++cur_x > global_map.len ? 1 : cur_x)
-				y_arr = global_map[next_x]
-				target_z = y_arr[cur_y]
-/*
-				//debug
-				world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-				world << "Target Z = [target_z]"
-				world << "Next X = [next_x]"
-				//debug
-*/
-				if(target_z)
-					A.z = target_z
-					A.x = 3
-					spawn (0)
-						if ((A && A.loc))
-							A.loc.Entered(A)
-			else if (src.y <= 1)
-				if(istype(A, /obj/meteor))
-					del(A)
-					return
-				var/list/cur_pos = src.get_global_map_pos()
-				if(!cur_pos) return
-				cur_x = cur_pos["x"]
-				cur_y = cur_pos["y"]
-				y_arr = global_map[cur_x]
-				next_y = (--cur_y||y_arr.len)
-				target_z = y_arr[next_y]
-/*
-				//debug
-				world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-				world << "Next Y = [next_y]"
-				world << "Target Z = [target_z]"
-				//debug
-*/
-				if(target_z)
-					A.z = target_z
-					A.y = world.maxy - 2
-					spawn (0)
-						if ((A && A.loc))
-							A.loc.Entered(A)
-
-			else if (src.y >= world.maxy)
-				if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
-					del(A)
-					return
-				var/list/cur_pos = src.get_global_map_pos()
-				if(!cur_pos) return
-				cur_x = cur_pos["x"]
-				cur_y = cur_pos["y"]
-				y_arr = global_map[cur_x]
-				next_y = (++cur_y > y_arr.len ? 1 : cur_y)
-				target_z = y_arr[next_y]
-/*
-				//debug
-				world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
-				world << "Next Y = [next_y]"
-				world << "Target Z = [target_z]"
-				//debug
-*/
-				if(target_z)
-					A.z = target_z
-					A.y = 3
-					spawn (0)
-						if ((A && A.loc))
-							A.loc.Entered(A)
-			return
-
+		else if(ticker.mode.name == "extended"||ticker.mode.name == "sandbox")	Sandbox_Spacemove(A)
 
 		else
-
 			if (src.x <= 2)
 				if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
 					del(A)
@@ -1433,6 +1308,116 @@ turf/simulated/floor/return_siding_icon_state()
 				spawn (0)
 					if ((A && A.loc))
 						A.loc.Entered(A)
+
+
+/turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)
+	var/cur_x
+	var/cur_y
+	var/next_x
+	var/next_y
+	var/target_z
+	var/list/y_arr
+
+	if(src.x <= 1)
+		if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
+			del(A)
+			return
+
+		var/list/cur_pos = src.get_global_map_pos()
+		if(!cur_pos) return
+		cur_x = cur_pos["x"]
+		cur_y = cur_pos["y"]
+		next_x = (--cur_x||global_map.len)
+		y_arr = global_map[next_x]
+		target_z = y_arr[cur_y]
+/*
+		//debug
+		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
+		world << "Target Z = [target_z]"
+		world << "Next X = [next_x]"
+		//debug
+*/
+		if(target_z)
+			A.z = target_z
+			A.x = world.maxx - 2
+			spawn (0)
+				if ((A && A.loc))
+					A.loc.Entered(A)
+	else if (src.x >= world.maxx)
+		if(istype(A, /obj/meteor))
+			del(A)
+			return
+
+		var/list/cur_pos = src.get_global_map_pos()
+		if(!cur_pos) return
+		cur_x = cur_pos["x"]
+		cur_y = cur_pos["y"]
+		next_x = (++cur_x > global_map.len ? 1 : cur_x)
+		y_arr = global_map[next_x]
+		target_z = y_arr[cur_y]
+/*
+		//debug
+		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
+		world << "Target Z = [target_z]"
+		world << "Next X = [next_x]"
+		//debug
+*/
+		if(target_z)
+			A.z = target_z
+			A.x = 3
+			spawn (0)
+				if ((A && A.loc))
+					A.loc.Entered(A)
+	else if (src.y <= 1)
+		if(istype(A, /obj/meteor))
+			del(A)
+			return
+		var/list/cur_pos = src.get_global_map_pos()
+		if(!cur_pos) return
+		cur_x = cur_pos["x"]
+		cur_y = cur_pos["y"]
+		y_arr = global_map[cur_x]
+		next_y = (--cur_y||y_arr.len)
+		target_z = y_arr[next_y]
+/*
+		//debug
+		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
+		world << "Next Y = [next_y]"
+		world << "Target Z = [target_z]"
+		//debug
+*/
+		if(target_z)
+			A.z = target_z
+			A.y = world.maxy - 2
+			spawn (0)
+				if ((A && A.loc))
+					A.loc.Entered(A)
+
+	else if (src.y >= world.maxy)
+		if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
+			del(A)
+			return
+		var/list/cur_pos = src.get_global_map_pos()
+		if(!cur_pos) return
+		cur_x = cur_pos["x"]
+		cur_y = cur_pos["y"]
+		y_arr = global_map[cur_x]
+		next_y = (++cur_y > y_arr.len ? 1 : cur_y)
+		target_z = y_arr[next_y]
+/*
+		//debug
+		world << "Src.z = [src.z] in global map X = [cur_x], Y = [cur_y]"
+		world << "Next Y = [next_y]"
+		world << "Target Z = [target_z]"
+		//debug
+*/
+		if(target_z)
+			A.z = target_z
+			A.y = 3
+			spawn (0)
+				if ((A && A.loc))
+					A.loc.Entered(A)
+	return
 
 /obj/vaultspawner
 	var/maxX = 6

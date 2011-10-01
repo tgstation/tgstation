@@ -1758,6 +1758,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		W.attack_self(mob)
 	return
 
+/client/Southwest()
+	if(!istype(mob, /mob/living/carbon))	return
+	if((mob.stat || mob.restrained()) || !(isturf(mob.loc)))	return
+	mob:toggle_throw_mode()
+	return
+
 /client/Northwest()
 	if(!isrobot(mob))
 		mob.drop_item_v()
@@ -1770,217 +1776,212 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return O.relaymove(mob, 16)
 	return
 
+
+/client/proc/Move_object(direct)
+	if(mob.control_object.density)
+		step(mob.control_object,direct)
+		mob.control_object.dir = direct
+	else
+		mob.control_object.loc = get_step(mob.control_object,direct)
+	return
+
 /client/Move(n, direct)
-	if(mob.control_object)					// Hacking in something to control objects -- TLE
-		if(mob.control_object.density)
-			step(mob.control_object,direct)
-			mob.control_object.dir = direct
-		else
-			mob.control_object.loc = get_step(mob.control_object,direct)
-	if(isobserver(mob))
-		return mob.Move(n,direct)
-	if (moving)
-		return 0
-	if (world.time < move_delay)
-		return
-	if (!( mob ))
-		return
-	if (mob.stat==2)
+	if(mob.control_object)	Move_object(direct)
+
+	if(isobserver(mob))	return mob.Move(n,direct)
+
+	if(moving)	return 0
+
+	if(world.time < move_delay)	return
+
+	if(!mob)	return
+
+	if(mob.stat==2)	return
+
+	if(isAI(mob))	return AIMove(n,direct,mob)
+
+	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
+
+	if(mob.incorporeal_move)//Move though walls
+		Process_Incorpmove(direct)
 		return
 
-	if(isAI(mob))
-		return AIMove(n,direct,mob)
-//	if(ishivemainframe(mob))
-//		return MainframeMove(n,direct,mob)
+	if(Process_Grab())	return
+	if(!mob.canmove)	return
 
-	if(mob.anchored)/*If mob is not AI and is anchored. This means most anchored mobs will not be able to move.
-	This is a fix for ninja energy_net to where mobs can not move but can still act to destroy it.
-	If needed, this should be changed in the appropriate manner. I think the only time you would need to anchor a mob
-	is when they are not meant to move.*/
-		return
 
-	if (mob.incorporeal_move)
-		var/turf/mobloc = get_turf(mob.loc)
-		switch(mob.incorporeal_move)//1 is for all mobs. 2 is for ninjas only.
-			if(1)
-				mob.loc = get_step(mob, direct)
-				mob.dir = direct
-			if(2)
-				//For Ninja crazy porting powers. Moves either 1 or 2 tiles.
-				if(prob(50))
-					var/locx
-					var/locy
-					switch(direct)
-						if(NORTH)
-							locx = mobloc.x
-							locy = (mobloc.y+2)
-							if(locy>world.maxy)
-								return
-						if(SOUTH)
-							locx = mobloc.x
-							locy = (mobloc.y-2)
-							if(locy<1)
-								return
-						if(EAST)
-							locy = mobloc.y
-							locx = (mobloc.x+2)
-							if(locx>world.maxx)
-								return
-						if(WEST)
-							locy = mobloc.y
-							locx = (mobloc.x-2)
-							if(locx<1)
-								return
-						else
-							return
-					mob.loc = locate(locx,locy,mobloc.z)
-					spawn(0)
-						var/limit = 2//For only two trailing shadows.
-						for(var/turf/T in getline(mobloc, mob.loc))
-							spawn(0)
-								anim(T,mob,'mob.dmi',,"shadow",,mob.dir)
-							limit--
-							if(limit<=0)	break
+	if(istype(mob.loc, /turf/space))
+		if(!mob.Process_Spacemove(1))	return 0
+	else if(mob.flags & NOGRAV)
+		if(!mob.Process_Spacemove(0))	return 0
+
+	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
+		var/atom/O = mob.loc
+		return O.relaymove(mob, direct)
+
+	if(isturf(mob.loc))
+
+		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
+			for(var/mob/M in range(mob, 1))
+				if(((M.pulling == mob && (!( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
+					src << "\blue You're restrained! You can't move!"
+					return 0
+
+		move_delay = world.time//set move delay
+		switch(mob.m_intent)
+			if("run")
+				if(mob.drowsyness > 0)
+					move_delay += 6
+				if(mob.organStructure && mob.organStructure.legs)
+					move_delay += mob.organStructure.legs.moveRunDelay
 				else
-					spawn(0)
-						anim(mobloc,mob,'mob.dmi',,"shadow",,mob.dir)
-					mob.loc = get_step(mob, direct)
-				mob.dir = direct
-		return
+					move_delay += 1
+			if("walk")
+				if(mob.organStructure && mob.organStructure.legs)
+					move_delay += mob.organStructure.legs.moveWalkDelay
+				else
+					move_delay += 7
+		move_delay += mob.movement_delay()
 
-	if (mob.monkeyizing)
-		return
+		//We are now going to move
+		moving = 1
+		//Something with pulling things
+		if(locate(/obj/item/weapon/grab, mob))
+			move_delay = max(move_delay, world.time + 7)
+			var/list/L = mob.ret_grab()
+			if(istype(L, /list))
+				if(L.len == 2)
+					L -= mob
+					var/mob/M = L[1]
+					if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
+						var/turf/T = mob.loc
+						. = ..()
+						if (isturf(M.loc))
+							var/diag = get_dir(mob, M)
+							if ((diag - 1) & diag)
+							else
+								diag = null
+							if ((get_dist(mob, M) > 1 || diag))
+								step(M, get_dir(M.loc, T))
+				else
+					for(var/mob/M in L)
+						M.other_mobs = 1
+						if(mob != M)
+							M.animate_movement = 3
+					for(var/mob/M in L)
+						spawn( 0 )
+							step(M, direct)
+							return
+						spawn( 1 )
+							M.other_mobs = null
+							M.animate_movement = 2
+							return
 
-	var/is_monkey = ismonkey(mob)
-	if (locate(/obj/item/weapon/grab, locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
-		var/list/grabbing = list(  )
-		if (istype(mob.l_hand, /obj/item/weapon/grab))
+		else
+			if(mob.confused)
+				step(mob, pick(cardinal))
+			else
+				. = ..()
+				for(var/obj/speech_bubble/S in range(1, mob))
+					if(S.parent == mob)
+						S.loc = mob.loc
+		moving = 0
+		return .
+
+	return
+
+//Called by Move()
+/client/proc/Process_Grab()
+	if(locate(/obj/item/weapon/grab, locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
+		var/list/grabbing = list()
+		if(istype(mob.l_hand, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = mob.l_hand
 			grabbing += G.affecting
-		if (istype(mob.r_hand, /obj/item/weapon/grab))
+		if(istype(mob.r_hand, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = mob.r_hand
 			grabbing += G.affecting
 		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
-			if (G.state == 1)
-				if (!( grabbing.Find(G.assailant) ))
-					del(G)
-			else
-				if (G.state == 2)
-					move_delay = world.time + 10
-					if ((prob(25) && (!( is_monkey ) || prob(25))))
-						mob.visible_message("\red [mob] has broken free of [G.assailant]'s grip!")
-						del(G)
+			if((G.state == 1)&&(!grabbing.Find(G.assailant)))	del(G)
+			if(G.state == 2)
+				move_delay = world.time + 10
+				if(!prob(25))	return 1
+				mob.visible_message("\red [mob] has broken free of [G.assailant]'s grip!")
+				del(G)
+			if(G.state == 3)
+				move_delay = world.time + 10
+				if(!prob(5))	return 1
+				mob.visible_message("\red [mob] has broken free of [G.assailant]'s headlock!")
+				del(G)
+	return 0
+
+/client/proc/Process_Incorpmove(direct)
+	var/turf/mobloc = get_turf(mob)
+	switch(mob.incorporeal_move)
+		if(1)
+			mob.loc = get_step(mob, direct)
+			mob.dir = direct
+		if(2)
+			if(prob(50))
+				var/locx
+				var/locy
+				switch(direct)
+					if(NORTH)
+						locx = mobloc.x
+						locy = (mobloc.y+2)
+						if(locy>world.maxy)
+							return
+					if(SOUTH)
+						locx = mobloc.x
+						locy = (mobloc.y-2)
+						if(locy<1)
+							return
+					if(EAST)
+						locy = mobloc.y
+						locx = (mobloc.x+2)
+						if(locx>world.maxx)
+							return
+					if(WEST)
+						locy = mobloc.y
+						locx = (mobloc.x-2)
+						if(locx<1)
+							return
 					else
 						return
-				else
-					if (G.state == 3)
-						move_delay = world.time + 10
-						if ((prob(5) && !( is_monkey ) || prob(25)))
-							mob.visible_message("\red [mob] has broken free of [G.assailant]'s headlock!")
-							del(G)
-						else
-							return
-	if (mob.canmove)
-
-		if(mob.m_intent == "face")
+				mob.loc = locate(locx,locy,mobloc.z)
+				spawn(0)
+					var/limit = 2//For only two trailing shadows.
+					for(var/turf/T in getline(mobloc, mob.loc))
+						spawn(0)
+							anim(T,mob,'mob.dmi',,"shadow",,mob.dir)
+						limit--
+						if(limit<=0)	break
+			else
+				spawn(0)
+					anim(mobloc,mob,'mob.dmi',,"shadow",,mob.dir)
+				mob.loc = get_step(mob, direct)
 			mob.dir = direct
+	return 1
 
-		var/j_pack = 0
-		if ((istype(mob.loc, /turf/space) && !istype(mob, /mob/living/carbon/metroid)))
-			if (!( mob.restrained() ))
-				if (!( (locate(/obj/grille) in oview(1, mob)) || (locate(/turf/simulated) in oview(1, mob)) || (locate(/obj/lattice) in oview(1, mob)) ))
-					if (istype(mob.back, /obj/item/weapon/tank/jetpack))
-						var/obj/item/weapon/tank/jetpack/J = mob.back
-						j_pack = J.allow_thrust(0.01, mob)
-						if(j_pack)
-							mob.inertia_dir = 0
-						if (!( j_pack ))
-							return 0
-					else
-						return 0
-			else
-				return 0
+//For moving in space
+//Called by /client/Move
+//Return 1 for movement 0 for none
+/mob/proc/Process_Spacemove(var/gravity = 1)
+	if(restrained())	return 0
 
+//	if(locate(/obj/grille) in oview(1, mob))
+	if(((locate(/turf/simulated) in oview(1, src)) && gravity) || (locate(/turf/simulated/wall) in oview(1, src)))
+		inertia_dir = 0
+		return 1
 
-		if (isturf(mob.loc))
-			move_delay = world.time
-			if ((j_pack && j_pack < 1))
-				move_delay += 5
-			switch(mob.m_intent)
-				if("run")
-					if (mob.drowsyness > 0)
-						move_delay += 6
-					if(mob.organStructure && mob.organStructure.legs)
-						move_delay += mob.organStructure.legs.moveRunDelay
-					else
-						move_delay += 1
-				if("face")
-					mob.dir = direct
-					return
-				if("walk")
-					if(mob.organStructure && mob.organStructure.legs)
-						move_delay += mob.organStructure.legs.moveWalkDelay
-					else
-						move_delay += 7
+	if(locate(/obj/lattice) in oview(1, src))
+		inertia_dir = 0
+		return 1
+	for(var/obj/O in oview(1, src))
+		if((O) && (O.density))
+			inertia_dir = 0
+			return 1
+	return 0
 
-
-			move_delay += mob.movement_delay()
-
-			if (mob.restrained())
-				for(var/mob/M in range(mob, 1))
-					if (((M.pulling == mob && (!( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
-						src << "\blue You're restrained! You can't move!"
-						return 0
-			moving = 1
-			if (locate(/obj/item/weapon/grab, mob))
-				move_delay = max(move_delay, world.time + 7)
-				var/list/L = mob.ret_grab()
-				if (istype(L, /list))
-					if (L.len == 2)
-						L -= mob
-						var/mob/M = L[1]
-						if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
-							var/turf/T = mob.loc
-							. = ..()
-							if (isturf(M.loc))
-								var/diag = get_dir(mob, M)
-								if ((diag - 1) & diag)
-								else
-									diag = null
-								if ((get_dist(mob, M) > 1 || diag))
-									step(M, get_dir(M.loc, T))
-					else
-						for(var/mob/M in L)
-							M.other_mobs = 1
-							if (mob != M)
-								M.animate_movement = 3
-						for(var/mob/M in L)
-							spawn( 0 )
-								step(M, direct)
-								return
-							spawn( 1 )
-								M.other_mobs = null
-								M.animate_movement = 2
-								return
-			else
-				if(mob.confused)
-					step(mob, pick(cardinal))
-				else
-					. = ..()
-					for(var/obj/speech_bubble/S in range(1, mob))
-						if(S.parent == mob)
-							S.loc = mob.loc
-
-			moving = null
-			return .
-		else
-			if (isobj(mob.loc) || ismob(mob.loc))
-				var/atom/O = mob.loc
-				if (mob.canmove)
-					return O.relaymove(mob, direct)
-	else
-		return
-	return
 
 /client/New()
 	if(findtextEx(key, "Telnet @"))
@@ -2009,22 +2010,14 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		src << "<div class=\"motd\">[join_motd]</div>"
 
 	authorize()
-	//goonauth() -- Skie, commented out because not goons anymore.
-	///beta_tester_auth()
 
-	update_world()
-
-//new admin bit - Nannek
-
-	if (admins.Find(ckey))
+	if(admins.Find(ckey))
 		holder = new /obj/admins(src)
 		holder.rank = admins[ckey]
 		update_admins(admins[ckey])
 
-	if (ticker && ticker.mode && ticker.mode.name =="sandbox" && authenticated)
+	if(ticker && ticker.mode && ticker.mode.name =="sandbox" && authenticated)
 		mob.CanBuild()
-		if(holder  && (holder.level >= 3))
-			verbs += /mob/proc/Delete
 
 /client/Del()
 	spawn(0)
@@ -2082,7 +2075,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	spawn()
 		if(key)
-			if (istype(src, /mob/living/silicon))
+			if(istype(src, /mob/living/silicon))
 				robogibs(loc, viruses)
 			else if (istype(src, /mob/living/carbon/alien))
 				xgibs(loc, viruses)
@@ -2090,9 +2083,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				gibs(loc, viruses)
 
 		else
-			if (istype(src, /mob/living/silicon))
+			if(istype(src, /mob/living/silicon))
 				robogibs(loc, viruses)
-			else if (istype(src, /mob/living/carbon/alien))
+			else if(istype(src, /mob/living/carbon/alien))
 				xgibs(loc, viruses)
 			else
 				gibs(loc, viruses)

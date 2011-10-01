@@ -210,9 +210,8 @@ var/global/list/uneatable = list(
 			for(var/turf/X in orange(consume_range,src))
 				consume(X)
 			for(var/atom/movable/X in orange(grav_pull,src))
-				if(is_type_in_list(X, uneatable))
-					continue
-				if((!X:anchored && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
+				if(is_type_in_list(X, uneatable))	continue
+				if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
 					step_towards(X,src)
 				else if(istype(X,/mob/living/carbon/human))
 					var/mob/living/carbon/human/H = X

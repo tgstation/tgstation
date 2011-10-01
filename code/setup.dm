@@ -123,6 +123,10 @@
 //turf-only flags
 #define NOJAUNT 1
 
+//Cant seem to find a mob bitflags area other than the powers one
+#define NOGRAV 1
+
+
 // bitflags for clothing parts
 #define HEAD			1
 #define UPPER_TORSO		2

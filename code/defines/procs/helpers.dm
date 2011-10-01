@@ -692,14 +692,23 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		newname = randomname
 
 	if (newname)
-		if (newname == "Unknown")
+		var/badname = 0
+		switch(newname)
+			if("Unknown")	badname = 1
+			if("floor")	badname = 1
+			if("wall")	badname = 1
+			if("r-wall")	badname = 1
+			if("space")	badname = 1
+			if("_")	badname = 1
+
+		if(badname)
 			M << "That name is reserved."
 			return clname(M)
-		for (var/mob/living/carbon/A in world)
-			if (A.real_name == newname)
-				M << "There's already a clown with that name."
+		for (var/mob/A in world)
+			if(A.real_name == newname)
+				M << "That name is reserved."
 				return clname(M)
-		if (length(newname) >= 26)
+		if(length(newname) >= 26)
 			newname = copytext(newname, 1, 26)
 		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname

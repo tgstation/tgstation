@@ -454,18 +454,20 @@ datum/preferences
 		HTML += "<tt><center>"
 		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br>"
 		for(var/job in occupations)
+			if(!occupation[job])
+				occupation[job] = 0
 			if(jobban_isbanned(user, job))
 				HTML += "<font color=red>[job]</font><br>"
 				continue
-			if((job in command_positions) || (job=="AI"))//Bold head jobs
+			if((occupation["Assistant"] != 0) && (job != "Assistant"))
+				HTML += "<font color=orange>[job]</font><br>"
+				continue
+			if((job in command_positions) || (job == "AI"))//Bold head jobs
 				HTML += "<b>[job]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[job]\"></b>"
 			else
 				HTML += "[job]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[job]\">"
 
-			if(!occupation[job])
-				occupation[job] = 0
-
-			if(job=="Assistant")//Assistant is special
+			if(job == "Assistant")//Assistant is special
 				if(occupation[job] != 0)
 					HTML += "<font color=green>\[Yes]</font>"
 				else

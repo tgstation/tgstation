@@ -112,6 +112,9 @@
 		return
 	return
 
+/mob/living/carbon/metroid/Process_Spacemove()
+	return 2
+
 
 /mob/living/carbon/metroid/Stat()
 	..()
