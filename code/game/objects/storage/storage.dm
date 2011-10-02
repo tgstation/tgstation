@@ -80,7 +80,7 @@
 /obj/item/weapon/storage/proc/orient2hud(mob/user as mob)
 	var/mob/living/carbon/human/H = user
 	var/col_num = 0
-	var/row_count = min(7,storage_slots) -1
+	var/row_count = min(7,storage_slots) -1 //For belts, the meanings of the two variables are inverted, so we don't have to declare new ones
 	if (contents.len > 7)
 		if(contents.len % 7) //So having 14 items keeps them in 2 wors instead of 3
 			col_num = round(contents.len / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
@@ -91,9 +91,9 @@
 	else if(src == user.back)
 		src.orient_objs(4-col_num, 3+row_count, 4, 3)
 	else if(istype(user, /mob/living/carbon/human) && src == H.belt)//only humans have belts
-		src.orient_objs(1, 3, 8, 3)
+		src.orient_objs(1, 3+col_num, 1+row_count, 3)
 	else
-		src.orient_objs(5, 10, 11, 10)
+		src.orient_objs(5, 10+col_num, 5 + row_count, 10)
 	return
 
 //This proc is called when you want to place an item into the storage item.
@@ -155,7 +155,12 @@
 	return
 
 /obj/item/weapon/storage/dropped(mob/user as mob)
-	src.orient_objs(5,10,12,10)
+	var/col_num = 0
+	var/row_count = min(7,storage_slots) -1
+	if (contents.len > 7)
+		if(contents.len % 7)
+			col_num = round(contents.len / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
+	src.orient_objs(5, 10+col_num, 5 + row_count, 10)
 	return
 
 /obj/item/weapon/storage/MouseDrop(over_object, src_location, over_location)
@@ -198,7 +203,12 @@
 	src.closer.icon_state = "x"
 	src.closer.layer = 20
 	spawn( 5 )
-		src.orient_objs(5, 10, 12, 10)
+		var/col_num = 0
+		var/row_count = min(7,storage_slots) -1
+		if (contents.len > 7)
+			if(contents.len % 7)
+				col_num = round(contents.len / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
+		src.orient_objs(5, 10+col_num, 5 + row_count, 10)
 		return
 	return
 
