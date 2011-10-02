@@ -112,5 +112,6 @@
 		"/obj/item/clothing/glasses",
 		"/obj/item/ammo_casing/shotgun",
 		"/obj/item/ammo_magazine",
-		"/obj/item/weapon/reagent_containers/food/snacks/donut"
+		"/obj/item/weapon/reagent_containers/food/snacks/donut",
+		"/obj/item/weapon/reagent_containers/food/snacks/jellydonut"
 		)
