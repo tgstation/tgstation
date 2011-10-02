@@ -77,7 +77,9 @@
 			if(src.occupant)
 				if (istype(occupant, /mob/living/silicon/robot))
 					var/mob/living/silicon/robot/R = occupant
-					for(var/obj/O in R)
+					var/list/um = R.contents|R.module.modules
+					// ^ makes sinle list of active (R.contents) and inactive modules (R.module.modules)
+					for(var/obj/O in um)
 						// Engineering
 						if(istype(O,/obj/item/weapon/rcd))
 							if(O:matter < 30)
