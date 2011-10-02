@@ -97,6 +97,12 @@ client
 							return
 						}
 
+						//This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
+						if(complete_list != null && complete_list != ""){
+							var vars_ol1 = document.getElementById("vars");
+							vars_ol1.innerHTML = complete_list
+						}
+
 						if(filter.value == ""){
 							return;
 						}else{
@@ -268,6 +274,14 @@ client
 	</style>"}
 		html += "</head><body>"
 		html += body
+
+		html += {"
+			<script type='text/javascript'>
+				var vars_ol = document.getElementById("vars");
+				var complete_list = vars_ol.innerHTML;
+			</script>
+		"}
+
 		html += "</body></html>"
 
 		usr << browse(html, "window=variables\ref[D];size=475x650")
