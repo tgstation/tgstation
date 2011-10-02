@@ -123,6 +123,12 @@
 	return
 
 /obj/m_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if (istype(O, /obj/item/bodybag) || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src))
+		O.loc = src.loc
+		for(var/mob/B in viewers(user, 3))
+			if ((B.client && !( B.blinded )))
+				B << text("\red [] stuffs the bodybag into []!", user, src)
+				return
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
 		return
 	if (!ismob(O))

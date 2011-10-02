@@ -68,6 +68,18 @@
 	..()
 	return
 
+/obj/item/weapon/storage/bb_kit/New()
+
+	new /obj/item/bodybag( src )
+	new /obj/item/bodybag( src )
+	new /obj/item/bodybag( src )
+	new /obj/item/bodybag( src )
+	new /obj/item/bodybag( src )
+	new /obj/item/bodybag( src )
+	new /obj/item/bodybag( src )
+	..()
+	return
+
 /obj/item/weapon/storage/trackimp_kit/New()
 
 	new /obj/item/weapon/implantcase/tracking( src )

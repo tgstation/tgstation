@@ -170,6 +170,12 @@
 	icon_state = "glasses"
 	item_state = "syringe_kit"
 
+/obj/item/weapon/storage/bb_kit
+	name = "Body Bags"
+	desc = "This box contains body bags."
+	icon_state = "bodybags"
+	item_state = "syringe_kit"
+
 /obj/item/weapon/storage/handcuff_kit
 	name = "Spare Handcuffs"
 	desc = "A box full of handcuffs."
