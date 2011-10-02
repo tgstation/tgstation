@@ -2710,14 +2710,3 @@ It can still be worn/put on as normal.
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
 
-
-/mob/living/carbon/human/Process_Spacemove()
-	if(..())	return 1
-	if(restrained())	return 0
-	if(istype(back, /obj/item/weapon/tank/jetpack))
-		var/obj/item/weapon/tank/jetpack/J = back
-		if(J.allow_thrust(0.01, src))
-			inertia_dir = 0
-			return 2
-	return 0
-

@@ -943,16 +943,3 @@ Frequency:
 /mob/living/silicon/robot/proc/self_destruct()
 	gib(1)
 
-
-/mob/living/silicon/robot/Process_Spacemove()
-	if(..())	return 1
-	if(!module)	return 0
-	for(var/obj/item/weapon/tank/jetpack/J in module.modules)
-		if(J && istype(J, /obj/item/weapon/tank/jetpack))
-			if(J.allow_thrust(0.01))
-				inertia_dir = 0
-				return 1
-	return 0
-
-///mob/living/silicon/robot/proc/eyecheck()
-//	return

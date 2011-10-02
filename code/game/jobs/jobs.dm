@@ -1,4 +1,5 @@
 var/list/occupations = list(
+	"Assistant"				= -1,
 	"Captain"				= 1,
 
 	//civilian
@@ -50,9 +51,7 @@ var/list/occupations = list(
 
 	//silicon
 	"AI"					= 1,
-	"Cyborg"				= 1,
-
-	"Assistant"				= -1
+	"Cyborg"				= 1
 )
 
 

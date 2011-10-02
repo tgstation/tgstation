@@ -74,12 +74,12 @@
 
 
 /turf/Entered(atom/movable/M as mob|obj)
-	if((ismob(M)) && (M.flags & NOGRAV))
-		AntiGrav(M)
-		return
-	if(ismob(M) && !istype(src, /turf/space))
-		var/mob/tmob = M
-		tmob.inertia_dir = 0
+	if(ismob(M))
+		if(M.flags & NOGRAV)
+			inertial_drift(M)
+			return
+		if(!istype(src, /turf/space))
+			M:inertia_dir = 0
 	..()
 	for(var/atom/A as mob|obj|turf|area in src)
 		spawn( 0 )
@@ -93,39 +93,18 @@
 			return
 	return
 
-/turf/proc/AntiGrav(atom/movable/A as mob|obj)//Could be better right now I just want to get it done
+/turf/proc/inertial_drift(atom/movable/A as mob|obj)
 	if (!(A.last_move))	return
 	if ((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1)))
 		var/mob/M = A
-		var/spacemove = M.Process_Spacemove(0)
-		if(spacemove)
-			var/prob_slip = 5
-			if(M.stat)	prob_slip = 50
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && H.shoes.flags&NOSLIP) || (spacemove == 2))
-					prob_slip = 0
-				if(!M.l_hand)	prob_slip -= 2
-				else if(M.l_hand.w_class <= 2)	prob_slip -= 1
-				if (!M.r_hand)	prob_slip -= 2
-				else if(M.r_hand.w_class <= 2)	prob_slip -= 1
-			prob_slip = round(prob_slip)
-
-			if(prob(prob_slip))
-				M << "\blue <B>You slipped!</B>"
-				M.inertia_dir = M.last_move
-				step(M, M.inertia_dir)
-				return
-			else
-				M.inertia_dir = 0 //no inertia
-		else
-			spawn(5)
-				if((A && !( A.anchored ) && A.loc == src))
-					if(M.inertia_dir) //they keep moving the same direction
-						step(M, M.inertia_dir)
-					else
-						M.inertia_dir = M.last_move
-						step(M, M.inertia_dir) //TODO: DEFERRED
+		if(M.Process_Spacemove())	return
+		spawn(5)
+			if((M && !(M.anchored) && (M.loc == src)))
+				if(M.inertia_dir)
+					step(M, M.inertia_dir)
+				else
+					M.inertia_dir = M.last_move
+					step(M, M.inertia_dir)
 	return
 
 /turf/proc/levelupdate()
@@ -1199,39 +1178,7 @@ turf/simulated/floor/return_siding_icon_state()
 	..()
 	if ((!(A) || src != A.loc || istype(null, /obj/beam)))	return
 
-	if (!(A.last_move))	return
-
-	if ((istype(A, /mob/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1)))
-		var/mob/M = A
-		var/spacemove = M.Process_Spacemove(0)
-		if(spacemove)
-			var/prob_slip = 5
-			if(M.stat)	prob_slip = 50
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && H.shoes.flags&NOSLIP) || (spacemove == 2))
-					prob_slip = 0
-				if(!M.l_hand)	prob_slip -= 2
-				else if(M.l_hand.w_class <= 2)	prob_slip -= 1
-				if (!M.r_hand)	prob_slip -= 2
-				else if(M.r_hand.w_class <= 2)	prob_slip -= 1
-			prob_slip = round(prob_slip)
-
-			if(prob(prob_slip))
-				M << "\blue <B>You slipped!</B>"
-				M.inertia_dir = M.last_move
-				step(M, M.inertia_dir)
-				return
-			else
-				M.inertia_dir = 0 //no inertia
-		else
-			spawn(5)
-				if((A && !( A.anchored ) && A.loc == src))
-					if(M.inertia_dir) //they keep moving the same direction
-						step(M, M.inertia_dir)
-					else
-						M.inertia_dir = M.last_move
-						step(M, M.inertia_dir) //TODO: DEFERRED
+	inertial_drift(A)
 
 	if(ticker && ticker.mode)
 		if(ticker.mode.name == "nuclear emergency")	return
