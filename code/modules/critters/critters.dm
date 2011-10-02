@@ -131,7 +131,7 @@
 
 /obj/critter/spesscarp
 	name = "Spess Carp"
-	desc = "Oh shit, you're really fucked now."
+	desc = "A ferocious, fang-bearing creature that resembles a fish."
 	icon_state = "spesscarp"
 	health = 25
 	max_health = 25

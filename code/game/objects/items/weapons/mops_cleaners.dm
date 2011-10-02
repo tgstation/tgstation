@@ -16,6 +16,8 @@ MOP
 /obj/item/weapon/cleaner/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (istype(A, /obj/item/weapon/storage/backpack ))
 		return
+	if (istype(A, /obj/proc_holder/spell ))
+		return
 	else if (src.reagents.total_volume < 1)
 		user << "\blue [src] is empty!"
 		return

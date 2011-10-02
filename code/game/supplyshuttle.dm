@@ -49,7 +49,7 @@ var/ordernum=0
 		return prob(60)
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(!M.lying)			// unless you're lying down
+		if(!M.lying || istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/metroid))	// unless you're lying down, or a small creature
 			return 0
 	return ..()
 
