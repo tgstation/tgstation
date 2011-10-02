@@ -34,7 +34,7 @@ client
 		body += {"<script type="text/javascript">
 					function updateSearch(){
 						var filter_text = document.getElementById('filter');
-						var filter = filter_text.value;
+						var filter = filter_text.value.toLowerCase();
 
 						if(event.keyCode == 13){	//Enter / return
 							var vars_ol = document.getElementById('vars');
@@ -107,7 +107,7 @@ client
 							{
 								try{
 									var li = lis\[i\];
-									if ( li.innerHTML.indexOf(filter) == -1 )
+									if ( li.innerHTML.toLowerCase().indexOf(filter) == -1 )
 									{
 										vars_ol.removeChild(li);
 										i--;
