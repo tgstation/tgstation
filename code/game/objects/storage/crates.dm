@@ -1,4 +1,4 @@
-/obj/crate
+/obj/station_objects/crate
 	desc = "A crate."
 	name = "Crate"
 	icon = 'storage.dmi'
@@ -13,7 +13,7 @@
 	m_amt = 7500
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-/obj/crate/internals
+/obj/station_objects/crate/internals
 	desc = "A internals crate."
 	name = "Internals crate"
 	icon = 'storage.dmi'
@@ -22,7 +22,7 @@
 	openicon = "o2crateopen"
 	closedicon = "o2crate"
 
-/obj/crate/trashcart
+/obj/station_objects/crate/trashcart
 	desc = "A heavy, metal trashcart with wheels."
 	name = "Trash Cart"
 	icon = 'storage.dmi'
@@ -31,7 +31,7 @@
 	openicon = "trashcartopen"
 	closedicon = "trashcart"
 
-/obj/crate/hat
+/obj/station_objects/crate/hat
 	desc = "A crate filled with Valuable Collector's Hats!."
 	name = "Hat Crate"
 	icon = 'storage.dmi'
@@ -40,7 +40,7 @@
 	openicon = "crateopen"
 	closedicon = "crate"
 
-/obj/crate/medical
+/obj/station_objects/crate/medical
 	desc = "A medical crate."
 	name = "Medical crate"
 	icon = 'storage.dmi'
@@ -49,7 +49,7 @@
 	openicon = "medicalcrateopen"
 	closedicon = "medicalcrate"
 
-/obj/crate/rcd
+/obj/station_objects/crate/rcd
 	desc = "A crate for the storage of the RCD."
 	name = "RCD crate"
 	icon = 'storage.dmi'
@@ -58,7 +58,7 @@
 	openicon = "crateopen"
 	closedicon = "crate"
 
-/obj/crate/freezer
+/obj/station_objects/crate/freezer
 	desc = "A freezer."
 	name = "Freezer"
 	icon = 'storage.dmi'
@@ -67,7 +67,7 @@
 	openicon = "freezeropen"
 	closedicon = "freezer"
 
-/obj/crate/bin
+/obj/station_objects/crate/bin
 	desc = "A large bin."
 	name = "Large bin"
 	icon = 'storage.dmi'
@@ -76,7 +76,7 @@
 	openicon = "largebinopen"
 	closedicon = "largebin"
 
-/obj/crate/radiation
+/obj/station_objects/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "Radioactive gear crate"
 	icon = 'storage.dmi'
@@ -87,7 +87,7 @@
 
 /obj/item/clothing/suit/radiation
 
-/obj/crate/secure/weapon
+/obj/station_objects/crate/secure/weapon
 	desc = "A secure weapons crate."
 	name = "Weapons crate"
 	icon = 'storage.dmi'
@@ -96,7 +96,7 @@
 	openicon = "weaponcrateopen"
 	closedicon = "weaponcrate"
 
-/obj/crate/secure/plasma
+/obj/station_objects/crate/secure/plasma
 	desc = "A secure plasma crate."
 	name = "Plasma crate"
 	icon = 'storage.dmi'
@@ -105,7 +105,7 @@
 	openicon = "plasmacrateopen"
 	closedicon = "plasmacrate"
 
-/obj/crate/secure/gear
+/obj/station_objects/crate/secure/gear
 	desc = "A secure gear crate."
 	name = "Gear crate"
 	icon = 'storage.dmi'
@@ -114,7 +114,7 @@
 	openicon = "secgearcrateopen"
 	closedicon = "secgearcrate"
 
-/obj/crate/secure/bin
+/obj/station_objects/crate/secure/bin
 	desc = "A secure bin."
 	name = "Secure bin"
 	icon_state = "largebins"
@@ -125,7 +125,7 @@
 	sparks = "largebinsparks"
 	emag = "largebinemag"
 
-/obj/crate/secure
+/obj/station_objects/crate/secure
 	desc = "A secure crate."
 	name = "Secure crate"
 	icon_state = "securecrate"
@@ -138,7 +138,7 @@
 	var/broken = 0
 	locked = 1
 
-/obj/crate/hydroponics
+/obj/station_objects/crate/hydroponics
 	name = "Hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
 	icon = 'storage.dmi'
@@ -158,7 +158,7 @@
 		new /obj/item/weapon/pestspray(src)
 		new /obj/item/weapon/pestspray(src) */
 
-/obj/crate/hydroponics/prespawned
+/obj/station_objects/crate/hydroponics/prespawned
 	//This exists so the prespawned hydro crates spawn with their contents.
 /*	name = "Hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
@@ -179,7 +179,7 @@
 //		new /obj/item/weapon/pestspray(src)
 //		new /obj/item/weapon/pestspray(src)
 
-/obj/crate/New()
+/obj/station_objects/crate/New()
 	..()
 	spawn(1)
 		if(!opened)		// if closed, any item at the crate's loc is put in the contents
@@ -187,7 +187,7 @@
 				if(I.density || I.anchored || I == src) continue
 				I.loc = src
 
-/obj/crate/secure/New()
+/obj/station_objects/crate/secure/New()
 	..()
 	if(locked)
 		overlays = null
@@ -196,14 +196,14 @@
 		overlays = null
 		overlays += greenlight
 
-/obj/crate/rcd/New()
+/obj/station_objects/crate/rcd/New()
 	..()
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd(src)
 
-/obj/crate/radiation/New()
+/obj/station_objects/crate/radiation/New()
 	..()
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/head/radiation(src)
@@ -214,7 +214,7 @@
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/head/radiation(src)
 
-/obj/crate/proc/open()
+/obj/station_objects/crate/proc/open()
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
 
 	for(var/obj/O in src)
@@ -225,7 +225,7 @@
 	icon_state = openicon
 	src.opened = 1
 
-/obj/crate/proc/close()
+/obj/station_objects/crate/proc/close()
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
 	for(var/obj/O in get_turf(src))
 		if(O.density || O.anchored || O == src) continue
@@ -233,7 +233,7 @@
 	icon_state = closedicon
 	src.opened = 0
 
-/obj/crate/attack_hand(mob/user as mob)
+/obj/station_objects/crate/attack_hand(mob/user as mob)
 	if(!locked)
 		if(opened) close()
 		else open()
@@ -241,7 +241,7 @@
 		user << "\red It's locked."
 	return
 
-/obj/crate/secure/attack_hand(mob/user as mob)
+/obj/station_objects/crate/secure/attack_hand(mob/user as mob)
 	if(locked && allowed(user) && !broken)
 		user << "\blue You unlock the [src]."
 		src.locked = 0
@@ -249,7 +249,7 @@
 		overlays += greenlight
 	return ..()
 
-/obj/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/station_objects/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
 		user << "\red You lock the [src]."
 		src.locked = 1
@@ -269,14 +269,14 @@
 
 	return ..()
 
-/obj/crate/attack_paw(mob/user as mob)
+/obj/station_objects/crate/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
-/obj/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/station_objects/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/packageWrap))
 		var/obj/item/weapon/packageWrap/O = W
 		if (O.amount > 3)
-			var/obj/bigDelivery/P = new /obj/bigDelivery(get_turf(src.loc))
+			var/obj/effects/bigDelivery/P = new /obj/effects/bigDelivery(get_turf(src.loc))
 			P.wrapped = src
 			src.loc = P
 			O.amount -= 3
@@ -288,7 +288,7 @@
 			W.loc = src.loc
 	else return attack_hand(user)
 
-/obj/crate/secure/emp_act(severity)
+/obj/station_objects/crate/secure/emp_act(severity)
 	for(var/obj/O in src)
 		O.emp_act(severity)
 	if(!broken && !opened  && prob(50/severity))
@@ -312,7 +312,7 @@
 	..()
 
 
-/obj/crate/ex_act(severity)
+/obj/station_objects/crate/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			for(var/obj/O in src.contents)

@@ -196,7 +196,7 @@
 	else
 		move_result	= step(src,direction)
 		if(occupant)
-			for(var/obj/speech_bubble/B in range(1, src))
+			for(var/obj/effects/speech_bubble/B in range(1, src))
 				if(B.parent == occupant)
 					B.loc = loc
 	if(move_result)
@@ -233,7 +233,7 @@
 	return
 */
 /obj/mecha/proc/check_for_support()
-	if(locate(/obj/grille, orange(1, src)) || locate(/obj/lattice, orange(1, src)) || locate(/turf/simulated, orange(1, src)) || locate(/turf/unsimulated, orange(1, src)))
+	if(locate(/obj/station_objects/grille, orange(1, src)) || locate(/obj/station_objects/lattice, orange(1, src)) || locate(/turf/simulated, orange(1, src)) || locate(/turf/unsimulated, orange(1, src)))
 		return 1
 	else
 		return 0
@@ -242,7 +242,7 @@
 //	src.inertia_dir = null
 	if(istype(obstacle, /obj))
 		var/obj/O = obstacle
-		if(istype(O, /obj/portal)) //derpfix
+		if(istype(O, /obj/effects/portal)) //derpfix
 			src.anchored = 0
 			O.HasEntered(src)
 			spawn(0)//countering portal teleport spawn(0), hurr
@@ -402,7 +402,7 @@
 			if(prob(40))
 				explosion(T, 0, 0, 1, 3)
 			if(wreckage)
-				var/obj/decal/mecha_wreckage/WR = new wreckage(T)
+				var/obj/effects/decal/mecha_wreckage/WR = new wreckage(T)
 				for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 					if(prob(30))
 						WR.crowbar_salvage += E

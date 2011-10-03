@@ -1,4 +1,4 @@
-/obj/closet/gimmick/russian/New()
+/obj/station_objects/closet/gimmick/russian/New()
 	..()
 	sleep(2)
 	new /obj/item/clothing/head/ushanka(src)
@@ -12,7 +12,7 @@
 	new /obj/item/clothing/under/soviet(src)
 	new /obj/item/clothing/under/soviet(src)
 
-/obj/closet/gimmick/tacticool/New()
+/obj/station_objects/closet/gimmick/tacticool/New()
 	..()
 	sleep(2)
 	new /obj/item/clothing/glasses/eyepatch(src)

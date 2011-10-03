@@ -1074,7 +1074,7 @@ ________________________________________________________________________________
 			U << "\blue Data analyzed. Process finished."
 
 		if("WIRE")
-			var/obj/cable/A = target
+			var/obj/station_objects/cable/A = target
 			var/datum/powernet/PN = A.get_powernet()
 			while(G.candrain&&!maxcapacity&&!isnull(A))
 				drain = (round((rand(G.mindrain,G.maxdrain))/2))

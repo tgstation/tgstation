@@ -1,4 +1,4 @@
-/obj/bigDelivery
+/obj/effects/bigDelivery
 	desc = "A big wrapped package."
 	name = "large parcel"
 	icon = 'storage.dmi'
@@ -13,8 +13,8 @@
 	attack_hand(mob/user as mob)
 		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 			src.wrapped.loc = (get_turf(src.loc))
-			if (istype(src.wrapped,/obj/closet))
-				var/obj/closet/O = src.wrapped
+			if (istype(src.wrapped,/obj/station_objects/closet))
+				var/obj/station_objects/closet/O = src.wrapped
 				O.welded = 0
 		del(src)
 		return
@@ -70,19 +70,19 @@
 				P.wrapped = O
 				O.loc = P
 				src.amount -= 1
-		else if (istype(target, /obj/crate))
-			var/obj/crate/O = target
+		else if (istype(target, /obj/station_objects/crate))
+			var/obj/station_objects/crate/O = target
 			if (src.amount > 3)
-				var/obj/bigDelivery/P = new /obj/bigDelivery(get_turf(O.loc))
+				var/obj/effects/bigDelivery/P = new /obj/effects/bigDelivery(get_turf(O.loc))
 				P.wrapped = O
 				O.loc = P
 				src.amount -= 3
 			else
 				user << "\blue You need more paper."
-		else if (istype (target, /obj/closet))
-			var/obj/closet/O = target
+		else if (istype (target, /obj/station_objects/closet))
+			var/obj/station_objects/closet/O = target
 			if (src.amount > 3)
-				var/obj/bigDelivery/P = new /obj/bigDelivery(get_turf(O.loc))
+				var/obj/effects/bigDelivery/P = new /obj/effects/bigDelivery(get_turf(O.loc))
 				P.wrapped = O
 				O.close()
 				O.welded = 1
@@ -149,9 +149,9 @@
 		user << "/blue You can only tag properly wrapped delivery packages!"
 */
 	attack(target as obj, mob/user as mob)
-		if (istype(target, /obj/bigDelivery))
+		if (istype(target, /obj/effects/bigDelivery))
 			user << "\blue *TAGGED*"
-			var/obj/bigDelivery/O = target
+			var/obj/effects/bigDelivery/O = target
 			O.sortTag = src.currTag
 		else if (istype(target, /obj/item/smallDelivery))
 			user << "\blue *TAGGED*"
@@ -183,9 +183,9 @@
 		flushing = 1
 		flick("intake-closing", src)
 		var/deliveryCheck = 0
-		var/obj/disposalholder/H = new()	// virtual holder object which actually
+		var/obj/station_objects/disposalholder/H = new()	// virtual holder object which actually
 											// travels through the pipes.
-		for(var/obj/bigDelivery/O in src)
+		for(var/obj/effects/bigDelivery/O in src)
 			deliveryCheck = 1
 			if(O.sortTag == 0)
 				O.sortTag = 1

@@ -1,4 +1,4 @@
-/obj/secure_closet/captains
+/obj/station_objects/secure_closet/captains
 	name = "Captain's Closet"
 	req_access = list(access_captain)
 
@@ -20,7 +20,7 @@
 
 
 
-/obj/secure_closet/hop
+/obj/station_objects/secure_closet/hop
 	name = "Head of Personnel"
 	req_access = list(access_hop)
 
@@ -42,7 +42,7 @@
 
 
 
-/obj/secure_closet/hos
+/obj/station_objects/secure_closet/hos
 	name = "Head Of Security"
 	req_access = list(access_hos)
 
@@ -64,7 +64,7 @@
 
 
 
-/obj/secure_closet/warden
+/obj/station_objects/secure_closet/warden
 	name = "Warden's Locker"
 	req_access = list(access_armory)
 
@@ -85,7 +85,7 @@
 
 
 
-/obj/secure_closet/security
+/obj/station_objects/secure_closet/security
 	name = "Security Locker"
 	req_access = list(access_security)
 
@@ -106,7 +106,7 @@
 
 
 
-/obj/secure_closet/detective
+/obj/station_objects/secure_closet/detective
 	name = "Detective"
 	req_access = list(access_forensics_lockers)
 	icon_state = "cabinetdetective"
@@ -135,7 +135,7 @@
 
 
 
-/obj/secure_closet/injection
+/obj/station_objects/secure_closet/injection
 	name = "Lethal Injections"
 	req_access = list(access_hos)
 
@@ -149,7 +149,7 @@
 
 
 
-/obj/secure_closet/brig
+/obj/station_objects/secure_closet/brig
 	name = "Brig Locker"
 	req_access = list(access_brig)
 	var/id = null
@@ -163,7 +163,7 @@
 
 
 
-/obj/secure_closet/courtroom
+/obj/station_objects/secure_closet/courtroom
 	name = "Courtroom Locker"
 	req_access = list(access_court)
 

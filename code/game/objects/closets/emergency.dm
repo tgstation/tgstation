@@ -1,4 +1,4 @@
-/obj/closet/emcloset/New()
+/obj/station_objects/closet/emcloset/New()
 	..()
 
 	if (prob(40))
@@ -29,5 +29,5 @@
 
 		//If you want to re-add fire, just add "fire" = 15 to the pick list.
 		/*if ("fire")
-			new /obj/closet/firecloset(src.loc)
+			new /obj/station_objects/closet/firecloset(src.loc)
 			del(src)*/

@@ -1,6 +1,6 @@
 // Resin walls improved. /N
 
-/obj/alien/resin/proc/healthcheck()
+/obj/effects/alien/resin/proc/healthcheck()
 	if(health <=0)
 		density = 0
 	/*	if(affecting)
@@ -17,13 +17,13 @@
 		del(src)
 	return
 
-/obj/alien/resin/bullet_act(var/obj/item/projectile/Proj)
+/obj/effects/alien/resin/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
 	return
 
-/obj/alien/resin/ex_act(severity)
+/obj/effects/alien/resin/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			health-=50
@@ -37,17 +37,17 @@
 	healthcheck()
 	return
 
-/obj/alien/resin/blob_act()
+/obj/effects/alien/resin/blob_act()
 	health-=50
 	healthcheck()
 	return
 
-/obj/alien/resin/meteorhit()
+/obj/effects/alien/resin/meteorhit()
 	health-=50
 	healthcheck()
 	return
 
-/obj/alien/resin/hitby(AM as mob|obj)
+/obj/effects/alien/resin/hitby(AM as mob|obj)
 	..()
 	for(var/mob/O in viewers(src, null))
 		O.show_message(text("\red <B>[src] was hit by [AM].</B>"), 1)
@@ -62,7 +62,7 @@
 	..()
 	return
 
-/obj/alien/resin/attack_hand()
+/obj/effects/alien/resin/attack_hand()
 	if ((usr.mutations & HULK))
 		usr << text("\blue You easily destroy the [name].")
 		for(var/mob/O in oviewers(src))
@@ -71,10 +71,10 @@
 	healthcheck()
 	return
 
-/obj/alien/resin/attack_paw()
+/obj/effects/alien/resin/attack_paw()
 	return attack_hand()
 
-/obj/alien/resin/attack_alien()
+/obj/effects/alien/resin/attack_alien()
 	if (islarva(usr))//Safety check for larva. /N
 		return
 	usr << text("\green You claw at the [name].")
@@ -89,7 +89,7 @@
 	healthcheck()
 	return
 
-/obj/alien/resin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/effects/alien/resin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	/*if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(isalien(user)&&(ishuman(G.affecting)||ismonkey(G.affecting)))
@@ -118,7 +118,7 @@
 	..()
 	return
 
-/obj/alien/resin/process() //Buggy and irrelevant now that you're able to just make nice little infection chambers - Urist
+/obj/effects/alien/resin/process() //Buggy and irrelevant now that you're able to just make nice little infection chambers - Urist
 	/*if(affecting)
 		var/mob/living/carbon/M = affecting
 		var/check = 0
@@ -159,7 +159,7 @@
 				O.show_message(text("\red An alien larva bursts from the resin wall!"), 1, text("\red You hear a high, alien screech nearby!"), 2)*/
 	return
 
-/obj/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/effects/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return 0
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity

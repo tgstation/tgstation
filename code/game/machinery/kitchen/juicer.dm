@@ -155,7 +155,7 @@
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 
-/obj/crate/juice
+/obj/station_objects/crate/juice
 	New()
 		..()
 		new/obj/machinery/juicer(src)

@@ -11,23 +11,23 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 		if("weak")
 		 numbers = rand(2,4)
 		 for(var/i = 0 to numbers)
-		 	new/obj/space_dust/weak()
+		 	new/obj/effects/space_dust/weak()
 		if("norm")
 		 numbers = rand(5,10)
 		 for(var/i = 0 to numbers)
-		 	new/obj/space_dust()
+		 	new/obj/effects/space_dust()
 		if("strong")
 		 numbers = rand(10,15)
 		 for(var/i = 0 to numbers)
-		 	new/obj/space_dust/strong()
+		 	new/obj/effects/space_dust/strong()
 		if("super")
 		 numbers = rand(15,25)
 		 for(var/i = 0 to numbers)
-		 	new/obj/space_dust/super()
+		 	new/obj/effects/space_dust/super()
 	return
 
 
-/obj/space_dust
+/obj/effects/space_dust
 	name = "Space Dust"
 	desc = "Dust in space."
 	icon = 'meteor.dmi'

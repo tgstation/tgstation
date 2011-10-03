@@ -17,7 +17,7 @@
 			src.attack_hand()
 
 		var/obj/S = null
-		for(var/obj/landmark/sloc in world)
+		for(var/obj/effects/landmark/sloc in world)
 			if (sloc.name != "Clown Land")
 				continue
 			if (locate(/mob) in sloc.loc)
@@ -26,7 +26,7 @@
 			break
 		if (!S)
 			S = locate("landmark*["Clown Land"]") // use old stype
-		if (istype(S, /obj/landmark/) && istype(S.loc, /turf))
+		if (istype(S, /obj/effects/landmark/) && istype(S.loc, /turf))
 			usr.loc = S.loc
 			del(I)
 		return
@@ -210,7 +210,7 @@
 	else
 		tmploc = locate(tx, ty, destination.z)
 
-	if(tx == destturf.x && ty == destturf.y && (istype(destination.loc, /obj/closet) || istype(destination.loc, /obj/secure_closet)))
+	if(tx == destturf.x && ty == destturf.y && (istype(destination.loc, /obj/station_objects/closet) || istype(destination.loc, /obj/station_objects/secure_closet)))
 		tmploc = destination.loc
 
 	if(tmploc==null)
@@ -302,11 +302,11 @@
 		icon_state = "controller"
 
 
-/obj/laser/Bump()
+/obj/effects/laser/Bump()
 	src.range--
 	return
 
-/obj/laser/Move()
+/obj/effects/laser/Move()
 	src.range--
 	return
 

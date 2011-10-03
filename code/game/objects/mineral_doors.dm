@@ -1,7 +1,7 @@
 //NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly based on its
 //machineryness
 
-/obj/mineral_door
+/obj/station_objects/mineral_door
 	name = "mineral door"
 	density = 1
 	anchored = 1
@@ -47,7 +47,7 @@
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if(air_group) return 0
-		if(istype(mover, /obj/beam))
+		if(istype(mover, /obj/effects/beam))
 			return !opacity
 		return !density
 
@@ -180,18 +180,18 @@
 
 		return 1
 
-/obj/mineral_door/iron
+/obj/station_objects/mineral_door/iron
 	mineralType = "iron"
 	hardness = 3
 
-/obj/mineral_door/silver
+/obj/station_objects/mineral_door/silver
 	mineralType = "silver"
 	hardness = 3
 
-/obj/mineral_door/gold
+/obj/station_objects/mineral_door/gold
 	mineralType = "gold"
 
-/obj/mineral_door/uranium
+/obj/station_objects/mineral_door/uranium
 	mineralType = "uranium"
 	hardness = 3
 
@@ -199,18 +199,18 @@
 		..()
 		sd_SetLuminosity(3)
 
-/obj/mineral_door/sandstone
+/obj/station_objects/mineral_door/sandstone
 	mineralType = "sandstone"
 	hardness = 0.5
 
-/obj/mineral_door/transparent
+/obj/station_objects/mineral_door/transparent
 	opacity = 0
 
 	Close()
 		..()
 		opacity = 0
 
-/obj/mineral_door/transparent/plasma
+/obj/station_objects/mineral_door/transparent/plasma
 	mineralType = "plasma"
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -241,6 +241,6 @@
 			hardness -= toxinsToDeduce/100
 			CheckHardness()
 
-/obj/mineral_door/transparent/diamond
+/obj/station_objects/mineral_door/transparent/diamond
 	mineralType = "diamond"
 	hardness = 10

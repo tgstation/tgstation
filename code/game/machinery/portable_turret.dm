@@ -299,7 +299,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	var/list/secondarytargets = list() // targets that are least important
 
 	if(src.check_anomalies) // if its set to check for xenos/carps, check for non-mob "crittersssss"
-		for (var/obj/critter/L in view(12,src))
+		for (var/obj/effects/critter/L in view(12,src))
 			if(L.alive)
 				targets += L
 
@@ -346,8 +346,8 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 				spawn() shootAt(M) // shoot the target, finally
 		else
 
-			if (istype(t, /obj/critter)) // shoot other things, same process as above
-				var/obj/critter/L = t
+			if (istype(t, /obj/effects/critter)) // shoot other things, same process as above
+				var/obj/effects/critter/L = t
 				if (L.alive==1)
 					spawn() popUp()
 					dir=get_dir(src,L)

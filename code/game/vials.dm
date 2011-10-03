@@ -3,7 +3,7 @@
 //I dont fucking care. It looks pretty awesome.
 
 //////////////////////////////////////////////////////////
-/obj/dummy/liquid
+/obj/effects/dummy/liquid
 	name = "water"
 	icon = 'effects.dmi'
 	icon_state = "nothing"
@@ -77,8 +77,8 @@
 	var/atom/sourceloc = get_turf(src.loc)
 	src = null
 	del(A)
-	var/obj/overlay/O = new /obj/overlay( sourceloc )
-	var/obj/overlay/O2 = new /obj/overlay( sourceloc )
+	var/obj/effects/overlay/O = new /obj/effects/overlay( sourceloc )
+	var/obj/effects/overlay/O2 = new /obj/effects/overlay( sourceloc )
 	O.name = "green liquid"
 	O.density = 0
 	O.anchored = 1
@@ -109,8 +109,8 @@
 	src = null
 	del(A)
 
-	var/obj/overlay/O = new /obj/overlay( sourceloc )
-	var/obj/overlay/O2 = new /obj/overlay( sourceloc )
+	var/obj/effects/overlay/O = new /obj/effects/overlay( sourceloc )
+	var/obj/effects/overlay/O2 = new /obj/effects/overlay( sourceloc )
 
 	O.name = "green liquid"
 	O.density = 0
@@ -138,8 +138,8 @@
 	src = null
 	del(A)
 
-	var/obj/overlay/O = new /obj/overlay( sourceloc )
-	var/obj/overlay/O2 = new /obj/overlay( sourceloc )
+	var/obj/effects/overlay/O = new /obj/effects/overlay( sourceloc )
+	var/obj/effects/overlay/O2 = new /obj/effects/overlay( sourceloc )
 
 	O.name = "green liquid"
 	O.density = 0
@@ -167,7 +167,7 @@
 	if(H.stat) return
 	spawn(0)
 		var/mobloc = get_turf(H.loc)
-		var/obj/dummy/liquid/holder = new /obj/dummy/liquid( mobloc )
+		var/obj/effects/dummy/liquid/holder = new /obj/effects/dummy/liquid( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 		animation.name = "water"
 		animation.density = 0
@@ -228,7 +228,7 @@
 		del(holder)
 
 
-/obj/dummy/liquid/relaymove(var/mob/user, direction)
+/obj/effects/dummy/liquid/relaymove(var/mob/user, direction)
 	if (!src.canmove) return
 	//writing my own movement because step is broken.
 	switch(direction)
@@ -255,9 +255,9 @@
 	src.canmove = 0
 	spawn(20) canmove = 1
 
-/obj/dummy/liquid/ex_act(blah)
+/obj/effects/dummy/liquid/ex_act(blah)
 	return
-/obj/dummy/liquid/bullet_act(blah,blah)
+/obj/effects/dummy/liquid/bullet_act(blah,blah)
 	return
 
 

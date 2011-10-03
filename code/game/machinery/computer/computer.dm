@@ -96,7 +96,7 @@ Pod/Blast Doors computer
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
 		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
-			var/obj/computerframe/A = new /obj/computerframe( src.loc )
+			var/obj/station_objects/computerframe/A = new /obj/station_objects/computerframe( src.loc )
 			var/obj/item/weapon/circuitboard/M = new circuit( A )
 			A.circuit = M
 			A.anchored = 1
@@ -563,7 +563,7 @@ Pod/Blast Doors computer
 		if(do_after(user, 20))
 			if (stat & BROKEN)
 				user << "\blue The broken glass falls out."
-				var/obj/computerframe/A = new /obj/computerframe( loc )
+				var/obj/station_objects/computerframe/A = new /obj/station_objects/computerframe( loc )
 				new /obj/item/weapon/shard( loc )
 
 				//generate appropriate circuitboard. Accounts for /pod/old computer types
@@ -587,7 +587,7 @@ Pod/Blast Doors computer
 				del(src)
 			else
 				user << "\blue You disconnect the monitor."
-				var/obj/computerframe/A = new /obj/computerframe( loc )
+				var/obj/station_objects/computerframe/A = new /obj/station_objects/computerframe( loc )
 
 				//generate appropriate circuitboard. Accounts for /pod/old computer types
 				var/obj/item/weapon/circuitboard/pod/M = null

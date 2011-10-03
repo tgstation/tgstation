@@ -38,7 +38,7 @@
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
-			new/obj/AIcore/deactivated(loc)//New empty terminal.
+			new/obj/station_objects/AIcore/deactivated(loc)//New empty terminal.
 			del(src)//Delete AI.
 			return
 		else
@@ -64,7 +64,7 @@
 		ticker.mode.remove_revolutionary(src.mind)
 
 	if(client)
-		for(var/obj/rune/rune in world)
+		for(var/obj/effects/rune/rune in world)
 			var/image/blood = image('blood.dmi', loc = rune, icon_state = "floor[rand(1,7)]")
 			blood.override = 1
 			client.images += blood

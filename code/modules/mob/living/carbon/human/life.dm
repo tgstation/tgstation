@@ -760,7 +760,7 @@
 					see_invisible = 2
 
 			else if (seer)
-				var/obj/rune/R = locate() in loc
+				var/obj/effects/rune/R = locate() in loc
 				if (istype(R) && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
 					see_invisible = 15
 				else
@@ -841,7 +841,7 @@
 				else
 					see_in_dark = 2
 					var/seer = 0
-					for(var/obj/rune/R in world)
+					for(var/obj/effects/rune/R in world)
 						if(loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
 							seer = 1
 					if(!seer)
@@ -983,7 +983,7 @@
 				for(var/mob/living/carbon/M in oviewers(4,src))
 					if(M.virus2)
 						infect_virus2(src,M.virus2)
-				for(var/obj/decal/cleanable/blood/B in view(4, src))
+				for(var/obj/effects/decal/cleanable/blood/B in view(4, src))
 					if(B.virus2)
 						infect_virus2(src,B.virus2)
 			else
@@ -996,7 +996,7 @@
 
 		check_if_buckled()
 			if (buckled)
-				lying = istype(buckled, /obj/stool/bed) || istype(buckled, /obj/machinery/conveyor)
+				lying = istype(buckled, /obj/station_objects/stool/bed) || istype(buckled, /obj/machinery/conveyor)
 				if(lying)
 					drop_item()
 				density = 1

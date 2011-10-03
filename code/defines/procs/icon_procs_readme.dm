@@ -152,7 +152,7 @@ mob
 		overlays+=I
 
 		// Testing object types (and layers)
-		overlays+=/obj/overlayTest
+		overlays+=/obj/effects/overlayTest
 
 		loc = locate (10,10,1)
 	verb
@@ -199,7 +199,7 @@ mob
 				getFlatIcon(src)
 			Browse_Icon()
 
-obj/overlayTest
+obj/effects/overlayTest
 	icon = 'old_or_unused.dmi'
 	icon_state = "blue"
 	pixel_x = -24

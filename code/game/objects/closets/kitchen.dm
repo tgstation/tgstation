@@ -1,4 +1,4 @@
-/obj/secure_closet/kitchen/New()
+/obj/station_objects/secure_closet/kitchen/New()
 	..()
 	sleep(2)
 	/*new /obj/item/clothing/head/chefhat(src)
@@ -38,7 +38,7 @@
 	new /obj/item/weapon/kitchen/utensil/spoon(src)
 	new /obj/item/weapon/kitchen/rollingpin(src)*/
 
-/obj/secure_closet/meat/New()
+/obj/station_objects/secure_closet/meat/New()
 	..()
 	sleep(2)
 	new /obj/item/kitchen/egg_box(src)
@@ -48,7 +48,7 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
 
-/obj/secure_closet/fridge/New()
+/obj/station_objects/secure_closet/fridge/New()
 	..()
 	sleep(2)
 	new /obj/item/weapon/reagent_containers/food/drinks/milk(src)
@@ -62,7 +62,7 @@
 	new /obj/item/weapon/reagent_containers/food/drinks/soymilk(src)
 	new /obj/item/weapon/reagent_containers/food/drinks/soymilk(src)
 
-/obj/secure_closet/money_freezer/New()
+/obj/station_objects/secure_closet/money_freezer/New()
 	..()
 	sleep(2)
 	new /obj/item/weapon/spacecash/c1000(src)

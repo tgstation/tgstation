@@ -865,7 +865,7 @@ steam.start() -- spawns the effect
 		sleep(30)
 
 		if(metal)
-			var/obj/foamedmetal/M = new(src.loc)
+			var/obj/station_objects/foamedmetal/M = new(src.loc)
 			M.metal = metal
 			M.updateicon()
 
@@ -990,7 +990,7 @@ steam.start() -- spawns the effect
 // wall formed by metal foams
 // dense and opaque, but easy to break
 
-/obj/foamedmetal
+/obj/station_objects/foamedmetal
 	icon = 'effects.dmi'
 	icon_state = "metalfoam"
 	density = 1

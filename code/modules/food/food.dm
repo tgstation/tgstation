@@ -115,7 +115,7 @@
 
 	throw_impact(atom/hit_atom)
 		..()
-		new/obj/decal/cleanable/egg_smudge(src.loc)
+		new/obj/effects/decal/cleanable/egg_smudge(src.loc)
 		src.visible_message("\red [src.name] has been squashed.","\red You hear a smack.")
 		del(src)
 

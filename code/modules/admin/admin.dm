@@ -658,7 +658,7 @@
 //					M.buckled = null
 //				else
 //					var/obj/S = locate(text("start*AI"))
-//					if ((istype(S, /obj/landmark/start) && istype(S.loc, /turf)))
+//					if ((istype(S, /obj/effects/landmark/start) && istype(S.loc, /turf)))
 //						M << "\blue <B>You have been teleported to your new starting location!</B>"
 //						M.loc = S.loc
 //						M.buckled = null
@@ -941,7 +941,7 @@
 						removed_paths += dirty_path
 					else if (ispath(path, /obj/item/weapon/melee/energy/blade))//Not an item one should be able to spawn./N
 						removed_paths += dirty_path
-					else if (ispath(path, /obj/bhole) && !(src.rank in list("Game Admin", "Game Master")))
+					else if (ispath(path, /obj/effects/bhole) && !(src.rank in list("Game Admin", "Game Master")))
 						removed_paths += dirty_path
 					else if (ispath(path, /mob) && !(src.rank in list("Badmin", "Game Admin", "Game Master")))
 						removed_paths += dirty_path
@@ -1053,7 +1053,7 @@
 				if("sec_classic1")
 					for(var/obj/item/clothing/suit/fire/O in world)
 						del(O)
-					for(var/obj/grille/O in world)
+					for(var/obj/station_objects/grille/O in world)
 						del(O)
 /*					for(var/obj/machinery/vehicle/pod/O in world)
 						for(var/mob/M in src)
@@ -1253,11 +1253,11 @@
 					sleep(40)
 					for(var/mob/M in world)
 						shake_camera(M, 400, 1)
-					for(var/obj/window/W in world)
+					for(var/obj/station_objects/window/W in world)
 						spawn(0)
 							sleep(rand(10,400))
 							W.ex_act(rand(2,1))
-					for(var/obj/grille/G in world)
+					for(var/obj/station_objects/grille/G in world)
 						spawn(0)
 							sleep(rand(20,400))
 							G.ex_act(rand(2,1))
@@ -1269,11 +1269,11 @@
 						spawn(0)
 							sleep(rand(30,400))
 							Floor.ex_act(rand(2,1))
-					for(var/obj/cable/Cable in world)
+					for(var/obj/station_objects/cable/Cable in world)
 						spawn(0)
 							sleep(rand(30,400))
 							Cable.ex_act(rand(2,1))
-					for(var/obj/closet/Closet in world)
+					for(var/obj/station_objects/closet/Closet in world)
 						spawn(0)
 							sleep(rand(30,400))
 							Closet.ex_act(rand(2,1))
@@ -1298,7 +1298,7 @@
 					command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 					world << sound('granomalies.ogg')
 					var/turf/T = pick(blobstart)
-					var/obj/bhole/bh = new /obj/bhole( T.loc, 30 )
+					var/obj/effects/bhole/bh = new /obj/effects/bhole( T.loc, 30 )
 					spawn(rand(50, 300))
 						del(bh)
 				if("timeanomalies")
@@ -1314,7 +1314,7 @@
 						if(prob(20) && T.z == 1 && istype(T,/turf/simulated/floor))
 							spawn(50+rand(0,3000))
 								picked = pick(turfs)
-								var/obj/portal/P = new /obj/portal( T )
+								var/obj/effects/portal/P = new /obj/effects/portal( T )
 								P.target = picked
 								P.creator = null
 								P.icon = 'objects.dmi'

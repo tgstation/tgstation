@@ -1,4 +1,4 @@
-obj/door_assembly
+obj/station_objects/door_assembly
 	icon = 'door_assembly.dmi'
 
 	name = "Airlock Assembly"
@@ -129,7 +129,7 @@ obj/door_assembly
 		state = 1
 		glass = 1
 
-/obj/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
+/obj/station_objects/door_assembly/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool) && W:welding && !anchored )
 		if (W:remove_fuel(0,user))
 			W:welding = 2

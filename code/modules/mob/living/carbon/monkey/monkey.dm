@@ -64,9 +64,9 @@
 			now_pushing = 1
 			if (!( AM.anchored ))
 				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/window))
+				if (istype(AM, /obj/station_objects/window))
 					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/window/win in get_step(AM,t))
+						for(var/obj/station_objects/window/win in get_step(AM,t))
 							now_pushing = 0
 							return
 				step(AM, t)
@@ -81,7 +81,7 @@
 		machine = null
 		src << browse(null, t1)
 	if ((href_list["item"] && !( usr.stat ) && !( usr.restrained() ) && in_range(src, usr) ))
-		var/obj/equip_e/monkey/O = new /obj/equip_e/monkey(  )
+		var/obj/effects/equip_e/monkey/O = new /obj/effects/equip_e/monkey(  )
 		O.source = usr
 		O.target = src
 		O.item = usr.equipped()
@@ -471,7 +471,7 @@
 
 /mob/living/carbon/monkey/update_clothing()
 	if(buckled)
-		if(istype(buckled, /obj/stool/bed))
+		if(istype(buckled, /obj/station_objects/stool/bed))
 			lying = 1
 		else
 			lying = 0
@@ -580,9 +580,9 @@
 					M.pulling = t
 			else
 				if (pulling)
-					if (istype(pulling, /obj/window))
+					if (istype(pulling, /obj/station_objects/window))
 						if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-							for(var/obj/window/win in get_step(pulling,get_dir(pulling.loc, T)))
+							for(var/obj/station_objects/window/win in get_step(pulling,get_dir(pulling.loc, T)))
 								pulling = null
 				if (pulling)
 					step(pulling, get_dir(pulling.loc, T))
@@ -638,7 +638,7 @@
 	if (prob(50))
 		paralysis += 10
 
-/obj/equip_e/monkey/process()
+/obj/effects/equip_e/monkey/process()
 	if (item)
 		item.add_fingerprint(source)
 	if (!( item ))
@@ -701,7 +701,7 @@
 		return
 	return
 
-/obj/equip_e/monkey/done()
+/obj/effects/equip_e/monkey/done()
 	if(!source || !target)						return
 	if(source.loc != s_loc)						return
 	if(target.loc != t_loc)						return

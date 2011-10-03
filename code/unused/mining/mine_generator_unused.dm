@@ -1,7 +1,7 @@
 /**********************Random mine generator************************/
 
 //this item is intended to give the effect of entering the mine, so that light gradually fades
-/obj/mine_generator
+/obj/effects/mine_generator
 	name = "Random mine generator"
 	anchored = 1
 	unacidable = 1
@@ -31,7 +31,7 @@
 		16 = NNE
 	*/
 
-/obj/mine_generator/New()
+/obj/effects/mine_generator/New()
 	last_loc = src.loc
 	var/i
 	for(i = 0; i < 50; i++)
@@ -42,7 +42,7 @@
 	return
 
 
-/obj/mine_generator/proc/gererateTargetLoc()  //this proc determines where the next square-room will end.
+/obj/effects/mine_generator/proc/gererateTargetLoc()  //this proc determines where the next square-room will end.
 	switch(mineDirection)
 		if(1)
 			randXParam = 0
@@ -119,7 +119,7 @@
 	return
 
 
-/obj/mine_generator/proc/fillWithAsteroids()
+/obj/effects/mine_generator/proc/fillWithAsteroids()
 
 	if(last_loc)
 		start_loc = last_loc

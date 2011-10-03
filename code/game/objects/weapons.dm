@@ -4,7 +4,7 @@
 	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
 	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
 
-/obj/mine/proc/triggerrad(obj)
+/obj/effects/mine/proc/triggerrad(obj)
 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -14,7 +14,7 @@
 	spawn(0)
 		del(src)
 
-/obj/mine/proc/triggerstun(obj)
+/obj/effects/mine/proc/triggerstun(obj)
 	obj:stunned += 30
 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 	s.set_up(3, 1, src)
@@ -22,7 +22,7 @@
 	spawn(0)
 		del(src)
 
-/obj/mine/proc/triggern2o(obj)
+/obj/effects/mine/proc/triggern2o(obj)
 	//example: n2o triggerproc
 	//note: im lazy
 
@@ -42,7 +42,7 @@
 	spawn(0)
 		del(src)
 
-/obj/mine/proc/triggerplasma(obj)
+/obj/effects/mine/proc/triggerplasma(obj)
 	for (var/turf/simulated/floor/target in range(1,src))
 		if(!target.blocks_air)
 			if(target.parent)
@@ -59,7 +59,7 @@
 	spawn(0)
 		del(src)
 
-/obj/mine/proc/triggerkick(obj)
+/obj/effects/mine/proc/triggerkick(obj)
 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -67,16 +67,16 @@
 	spawn(0)
 		del(src)
 
-/obj/mine/proc/explode(obj)
+/obj/effects/mine/proc/explode(obj)
 	explosion(loc, 0, 1, 2, 3)
 	spawn(0)
 		del(src)
 
 
-/obj/mine/HasEntered(AM as mob|obj)
+/obj/effects/mine/HasEntered(AM as mob|obj)
 	Bumped(AM)
 
-/obj/mine/Bumped(mob/M as mob|obj)
+/obj/effects/mine/Bumped(mob/M as mob|obj)
 
 	if(triggered) return
 
@@ -86,7 +86,7 @@
 		triggered = 1
 		call(src,triggerproc)(M)
 
-/obj/mine/New()
+/obj/effects/mine/New()
 	icon_state = "uglyminearmed"
 
 /atom/proc/ex_act()
@@ -106,8 +106,8 @@
 
 /turf/Entered(atom/A as mob|obj)
 	..()
-	if ((A && A.density && !( istype(A, /obj/beam) )))
-		for(var/obj/beam/i_beam/I in src)
+	if ((A && A.density && !( istype(A, /obj/effects/beam) )))
+		for(var/obj/effects/beam/i_beam/I in src)
 			spawn( 0 )
 				if (I)
 					I.hit()

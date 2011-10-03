@@ -1,15 +1,15 @@
 //HUMANS
 
 /proc/gibs(atom/location, var/list/viruses)
-	new /obj/gibspawner/human(get_turf(location),viruses)
+	new /obj/effects/gibspawner/human(get_turf(location),viruses)
 
 /proc/xgibs(atom/location, var/list/viruses)
-	new /obj/gibspawner/xeno(get_turf(location),viruses)
+	new /obj/effects/gibspawner/xeno(get_turf(location),viruses)
 
 /proc/robogibs(atom/location, var/list/viruses)
-	new /obj/gibspawner/robot(get_turf(location),viruses)
+	new /obj/effects/gibspawner/robot(get_turf(location),viruses)
 
-/obj/gibspawner
+/obj/effects/gibspawner
 	var/sparks = 0 //whether sparks spread on Gib()
 	var/virusProb = 20 //the chance for viruses to spread on the gibs
 	var/list/gibtypes = list()
@@ -27,7 +27,7 @@
 			world << "\red Gib list length mismatch!"
 			return
 
-		var/obj/decal/cleanable/blood/gibs/gib = null
+		var/obj/effects/decal/cleanable/blood/gibs/gib = null
 		for(var/datum/disease/D in viruses)
 			if(D.spread_type == SPECIAL)
 				del(D)
@@ -56,9 +56,9 @@
 
 		del(src)
 
-/obj/gibspawner
+/obj/effects/gibspawner
 	human
-		gibtypes = list(/obj/decal/cleanable/blood/gibs/up,/obj/decal/cleanable/blood/gibs/down,/obj/decal/cleanable/blood/gibs,/obj/decal/cleanable/blood/gibs,/obj/decal/cleanable/blood/gibs/body,/obj/decal/cleanable/blood/gibs/limb,/obj/decal/cleanable/blood/gibs/core)
+		gibtypes = list(/obj/effects/decal/cleanable/blood/gibs/up,/obj/effects/decal/cleanable/blood/gibs/down,/obj/effects/decal/cleanable/blood/gibs,/obj/effects/decal/cleanable/blood/gibs,/obj/effects/decal/cleanable/blood/gibs/body,/obj/effects/decal/cleanable/blood/gibs/limb,/obj/effects/decal/cleanable/blood/gibs/core)
 		gibamounts = list(1,1,1,1,1,1,1)
 
 		New()
@@ -67,7 +67,7 @@
 			..()
 
 	xeno
-		gibtypes = list(/obj/decal/cleanable/xenoblood/xgibs/up,/obj/decal/cleanable/xenoblood/xgibs/down,/obj/decal/cleanable/xenoblood/xgibs,/obj/decal/cleanable/xenoblood/xgibs,/obj/decal/cleanable/xenoblood/xgibs/body,/obj/decal/cleanable/xenoblood/xgibs/limb,/obj/decal/cleanable/xenoblood/xgibs/core)
+		gibtypes = list(/obj/effects/decal/cleanable/xenoblood/xgibs/up,/obj/effects/decal/cleanable/xenoblood/xgibs/down,/obj/effects/decal/cleanable/xenoblood/xgibs,/obj/effects/decal/cleanable/xenoblood/xgibs,/obj/effects/decal/cleanable/xenoblood/xgibs/body,/obj/effects/decal/cleanable/xenoblood/xgibs/limb,/obj/effects/decal/cleanable/xenoblood/xgibs/core)
 		gibamounts = list(1,1,1,1,1,1,1)
 
 		New()
@@ -77,7 +77,7 @@
 
 	robot
 		sparks = 1
-		gibtypes = list(/obj/decal/cleanable/robot_debris/up,/obj/decal/cleanable/robot_debris/down,/obj/decal/cleanable/robot_debris,/obj/decal/cleanable/robot_debris,/obj/decal/cleanable/robot_debris,/obj/decal/cleanable/robot_debris/limb)
+		gibtypes = list(/obj/effects/decal/cleanable/robot_debris/up,/obj/effects/decal/cleanable/robot_debris/down,/obj/effects/decal/cleanable/robot_debris,/obj/effects/decal/cleanable/robot_debris,/obj/effects/decal/cleanable/robot_debris,/obj/effects/decal/cleanable/robot_debris/limb)
 		gibamounts = list(1,1,1,1,1,1)
 
 		New()

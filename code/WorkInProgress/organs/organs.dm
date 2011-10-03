@@ -4,15 +4,15 @@
 #define CYBER 1
 #define SPELL 2
 
-/obj/organstructure //used obj for the "contents" var
+/obj/effects/organstructure //used obj for the "contents" var
 	name = "organs"
 
 	var/obj/item/weapon/cell/mainPowerCell = null //for ease of refernce for installed c. implants
 	var/species = "mob" //for speaking in unknown languages purposes
 
-	var/obj/organ/limb/arms/arms = null
-	var/obj/organ/limb/legs/legs = null
-	var/obj/organ/chest/chest = null
+	var/obj/effects/organ/limb/arms/arms = null
+	var/obj/effects/organ/limb/legs/legs = null
+	var/obj/effects/organ/chest/chest = null
 
 	proc/FindMainPowercell()
 		if(chest) //priority goes to chest implant, if there is one
@@ -20,7 +20,7 @@
 				mainPowerCell = chest.cell
 				return
 		var/list/organs = GetAllContents()
-		for(var/obj/organ/otherOrgan in organs) //otherwise, maybe some other organ fits the criteria?
+		for(var/obj/effects/organ/otherOrgan in organs) //otherwise, maybe some other organ fits the criteria?
 			if((otherOrgan.organType & CYBER) && otherOrgan.canExportPower && otherOrgan.cell)
 				mainPowerCell = otherOrgan:cell
 				return
@@ -30,7 +30,7 @@
 	proc/GetSpeciesName()
 		var/list/speciesPresent = list()
 
-		for(var/obj/organ/organ in src) //only external organs count, since it's judging by the appearance
+		for(var/obj/effects/organ/organ in src) //only external organs count, since it's judging by the appearance
 			if(speciesPresent[organ.species])
 				speciesPresent[organ.species]++
 			else
@@ -57,9 +57,9 @@
 	proc/RecalculateStructure()
 		var/list/organs = GetAllContents()
 
-		arms = locate(/obj/organ/limb/arms) in organs
-		legs = locate(/obj/organ/limb/legs) in organs
-		chest = locate(/obj/organ/chest) in organs
+		arms = locate(/obj/effects/organ/limb/arms) in organs
+		legs = locate(/obj/effects/organ/limb/legs) in organs
+		chest = locate(/obj/effects/organ/chest) in organs
 
 		GetSpeciesName()
 		FindMainPowercell()
@@ -70,7 +70,7 @@
 		set background = 1
 
 		var/list/organs = GetAllContents()
-		for(var/obj/organ/organ in organs)
+		for(var/obj/effects/organ/organ in organs)
 			organ.ProcessOrgan()
 
 		return
@@ -79,31 +79,31 @@
 		..()
 		RecalculateStructure()
 
-/obj/organstructure/human
+/obj/effects/organstructure/human
 	name = "human organs"
 
 	New()
-		//new /obj/organ/limb/arms/human(src)
-		//new /obj/organ/limb/legs/human(src)
-		new /obj/organ/chest/human(src)
+		//new /obj/effects/organ/limb/arms/human(src)
+		//new /obj/effects/organ/limb/legs/human(src)
+		new /obj/effects/organ/chest/human(src)
 		..()
 
-/obj/organstructure/cyber
+/obj/effects/organstructure/cyber
 	name = "cyborg organs"
 
 	New()
-		//new /obj/organ/limb/arms/cyber(src)
-		//new /obj/organ/limb/legs/cyber(src)
-		new /obj/organ/chest/cyber(src)
+		//new /obj/effects/organ/limb/arms/cyber(src)
+		//new /obj/effects/organ/limb/legs/cyber(src)
+		new /obj/effects/organ/chest/cyber(src)
 		..()
 
-/obj/organ
+/obj/effects/organ
 	name = "organ"
 
 	//All types
 	var/organType = 0 //CYBER and SPELL go here
 	var/species = "mob"
-	var/obj/organstructure/rootOrganStructure = null
+	var/obj/effects/organstructure/rootOrganStructure = null
 
 	New(location)
 		..()
@@ -111,10 +111,10 @@
 		rootOrganStructure = FindRootStructure()
 
 	proc/FindRootStructure()
-		if(istype(loc,/obj/organ))
-			var/obj/organ/parent = loc
+		if(istype(loc,/obj/effects/organ))
+			var/obj/effects/organ/parent = loc
 			return parent.FindRootStructure()
-		else if(istype(loc,/obj/organstructure))
+		else if(istype(loc,/obj/effects/organstructure))
 			return loc
 		return null
 
@@ -159,23 +159,23 @@
 		active = 0
 		return
 
-/obj/organ/limb
+/obj/effects/organ/limb
 	name = "limb"
 
-/obj/organ/limb/arms
+/obj/effects/organ/limb/arms
 	name = "arms"
 
 	var/minDamage = 5 //punching damage
 	var/maxDamage = 5
 //	var/strangleDelay = 1 //The code is a bit too complicated for that right now
 
-/obj/organ/limb/arms/human
+/obj/effects/organ/limb/arms/human
 	name = "human arms"
 	species = "human"
 	minDamage = 1
 	maxDamage = 9
 
-/obj/organ/limb/arms/cyber
+/obj/effects/organ/limb/arms/cyber
 	name = "cyborg arms"
 	species = "cyborg"
 	organType = CYBER
@@ -192,18 +192,18 @@
 		maxDamage = 3
 
 
-/obj/organ/limb/legs
+/obj/effects/organ/limb/legs
 	name = "legs"
 
 	var/moveRunDelay = 1 //not sure about how that works
 	var/moveWalkDelay = 7
 	//var/knockdownResist = 0
 
-/obj/organ/limb/legs/human
+/obj/effects/organ/limb/legs/human
 	name = "human legs"
 	species = "human"
 
-/obj/organ/limb/legs/cyber
+/obj/effects/organ/limb/legs/cyber
 	name = "cyborg legs"
 	species = "cyborg"
 	organType = CYBER
@@ -220,21 +220,21 @@
 		moveWalkDelay = 10
 
 
-/obj/organ/chest
+/obj/effects/organ/chest
 	name = "chest"
 	var/maxHealth = 50 //right now, the mob's (only humans for now) health depends only on it. Will be fixed later
 
-/obj/organ/chest/human
+/obj/effects/organ/chest/human
 	name = "human chest"
 	species = "human"
 	maxHealth = 100
 
 	New()
 		..()
-		new /obj/organ/limb/arms/human(src)
-		new /obj/organ/limb/legs/human(src)
+		new /obj/effects/organ/limb/arms/human(src)
+		new /obj/effects/organ/limb/legs/human(src)
 
-/obj/organ/chest/cyber
+/obj/effects/organ/chest/cyber
 	name = "cyborg chest"
 	species = "cyborg"
 	organType = CYBER
@@ -245,8 +245,8 @@
 		..()
 		cell = new /obj/item/weapon/cell/high(src)
 		cell.charge = cell.maxcharge
-		new /obj/organ/limb/arms/cyber(src)
-		new /obj/organ/limb/legs/cyber(src)
+		new /obj/effects/organ/limb/arms/cyber(src)
+		new /obj/effects/organ/limb/legs/cyber(src)
 
 	Activate()
 		..()

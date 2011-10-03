@@ -83,12 +83,12 @@ var/syndicate_elite_shuttle_timeleft = 0
 		sleep(10)
 
 		var/spawn_marauder[] = new()
-		for(var/obj/landmark/L in world)
+		for(var/obj/effects/landmark/L in world)
 			if(L.name == "Marauder Entry")
 				spawn_marauder.Add(L)
-		for(var/obj/landmark/L in world)
+		for(var/obj/effects/landmark/L in world)
 			if(L.name == "Marauder Exit")
-				var/obj/portal/P = new(L.loc)
+				var/obj/effects/portal/P = new(L.loc)
 				P.invisibility = 101//So it is not seen by anyone.
 				P.failchance = 0//So it has no fail chance when teleporting.
 				P.target = pick(spawn_marauder)//Where the marauder will arrive.

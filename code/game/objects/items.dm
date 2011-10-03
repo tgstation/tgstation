@@ -30,7 +30,7 @@
 		if ((usr.mutations & CLOWN) && prob(50))
 			usr << "\red Uh ... how do those things work?!"
 			if (istype(M, /mob/living/carbon/human))
-				var/obj/equip_e/human/O = new /obj/equip_e/human(  )
+				var/obj/effects/equip_e/human/O = new /obj/effects/equip_e/human(  )
 				O.source = user
 				O.target = user
 				O.item = user.equipped()
@@ -48,7 +48,7 @@
 		if (istype(M, /mob/living/carbon/human))
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [M.name] ([M.ckey])</font>")
-			var/obj/equip_e/human/O = new /obj/equip_e/human(  )
+			var/obj/effects/equip_e/human/O = new /obj/effects/equip_e/human(  )
 			O.source = user
 			O.target = M
 			O.item = user.equipped()
@@ -61,7 +61,7 @@
 				O.process()
 				return
 		else
-			var/obj/equip_e/monkey/O = new /obj/equip_e/monkey(  )
+			var/obj/effects/equip_e/monkey/O = new /obj/effects/equip_e/monkey(  )
 			O.source = user
 			O.target = M
 			O.item = user.equipped()
@@ -95,7 +95,7 @@
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
 
-	if( istype(target, /obj/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
+	if( istype(target, /obj/station_objects/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
 		var/obj/o = target
 		o.reagents.trans_to(src, 50)
 		user << "\blue Extinguisher refilled"
@@ -217,12 +217,12 @@
 		..()
 	return
 
-/obj/manifest/New()
+/obj/effects/manifest/New()
 
 	src.invisibility = 101
 	return
 
-/obj/manifest/proc/manifest()
+/obj/effects/manifest/proc/manifest()
 	var/dat = "<B>Crew Manifest</B>:<BR>"
 	for(var/mob/living/carbon/human/M in world)
 		dat += text("    <B>[]</B> -  []<BR>", M.name, M.get_assignment())

@@ -428,7 +428,7 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	var
-		obj/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
+		obj/effects/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
 
 /obj/machinery/hologram/holopad
 	name = "AI holopad"

@@ -538,7 +538,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 /proc/DirBlocked(turf/loc,var/dir)
-	for(var/obj/window/D in loc)
+	for(var/obj/station_objects/window/D in loc)
 		if(!D.density)			continue
 		if(D.dir == SOUTHWEST)	return 1
 		if(D.dir == dir)		return 1
@@ -553,7 +553,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 /proc/TurfBlockedNonWindow(turf/loc)
 	for(var/obj/O in loc)
-		if(O.density && !istype(O, /obj/window))
+		if(O.density && !istype(O, /obj/station_objects/window))
 			return 1
 	return 0
 

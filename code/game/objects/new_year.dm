@@ -1,5 +1,5 @@
 
-/obj/new_year_tree
+/obj/effects/new_year_tree
 	name = "The fir"
 	desc = "This is a fir. Real fir on dammit spess station. You smell pine-needles."
 	icon = '160x160.dmi'
@@ -11,7 +11,7 @@
 	pixel_x = -64
 	//pixel_y = -64
 
-/obj/new_year_tree/attackby(obj/item/W, mob/user)
+/obj/effects/new_year_tree/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/grab))
 		return
 	W.loc = src
@@ -101,7 +101,7 @@
 		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		new /obj/new_year_tree(T)
+		new /obj/effects/new_year_tree(T)
 	del(src)
 	return
 
@@ -132,6 +132,6 @@
 					"/obj/item/weapon/wrapping_paper",
 					"/obj/item/weapon/wrapping_paper")
 	cost = 20
-	containertype = "/obj/crate"
+	containertype = "/obj/station_objects/crate"
 	containername = "New Year Celebration crate"
 */

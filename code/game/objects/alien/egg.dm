@@ -1,4 +1,4 @@
-/obj/alien/egg/New()
+/obj/effects/alien/egg/New()
 	if(aliens_allowed)
 		src.density = 0 // Aliens use resin walls to block paths now. I am lazy and didn't feel like going to the define. -- TLE
 		spawn(1800)
@@ -6,19 +6,19 @@
 	else
 		del(src)
 
-/obj/alien/egg/proc/open()
+/obj/effects/alien/egg/proc/open()
 	spawn(10)
 		src.density = 0
 		src.icon_state = "egg_hatched"
-		new /obj/alien/facehugger(src.loc)
+		new /obj/effects/alien/facehugger(src.loc)
 
-/obj/alien/egg/bullet_act(var/obj/item/projectile/Proj)
+/obj/effects/alien/egg/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
 	return
 
-/obj/alien/egg/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/effects/alien/egg/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(health <= 0)
 		return
 	src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
@@ -35,7 +35,7 @@
 	src.healthcheck()
 
 
-/obj/alien/egg/proc/healthcheck()
+/obj/effects/alien/egg/proc/healthcheck()
 	if(health <= 0)
 		if(prob(15))
 			open()
@@ -43,7 +43,7 @@
 			src.icon_state = "egg_hatched"
 
 
-/obj/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effects/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)
 		health -= 5
 		healthcheck()

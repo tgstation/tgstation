@@ -9,7 +9,7 @@
 	deflect_chance = 30
 	max_temperature = 1000
 	infra_luminosity = 3
-	wreckage = "/obj/decal/mecha_wreckage/phazon"
+	wreckage = "/obj/effects/decal/mecha_wreckage/phazon"
 	add_req_access = 1
 	internal_damage_threshold = 25
 	force = 15

@@ -39,7 +39,7 @@ PE|PE|PE
 
 */
 
-/obj/particle_accelerator
+/obj/station_objects/particle_accelerator
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
 	icon = 'particle_accelerator.dmi'

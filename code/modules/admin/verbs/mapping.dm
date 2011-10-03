@@ -22,7 +22,7 @@
 var/camera_range_display_status = 0
 var/intercom_range_display_status = 0
 
-/obj/debugging/camera_range
+/obj/effects/debugging/camera_range
 	icon = '480x480.dmi'
 	icon_state = "25percent"
 
@@ -30,7 +30,7 @@ var/intercom_range_display_status = 0
 		src.pixel_x = -224
 		src.pixel_y = -224
 
-/obj/debugging/marker
+/obj/effects/debugging/marker
 	icon = 'areas.dmi'
 	icon_state = "yellow"
 
@@ -53,12 +53,12 @@ var/intercom_range_display_status = 0
 
 
 
-		for(var/obj/debugging/camera_range/C in world)
+		for(var/obj/effects/debugging/camera_range/C in world)
 			del(C)
 
 		if(camera_range_display_status)
 			for(var/obj/machinery/camera/C in world)
-				new/obj/debugging/camera_range(C.loc)
+				new/obj/effects/debugging/camera_range(C.loc)
 
 
 
@@ -89,9 +89,9 @@ var/intercom_range_display_status = 0
 						output += "<li>overlapping sec. cameras at \[[C1.x], [C1.y], [C1.z]\] ([C1.loc.loc]) Networks: [C1.network] and [C2.network]</font></li>"
 			var/turf/T = get_step(C1,turn(C1.dir,180))
 			if(!T || !isturf(T) || !T.density )
-				if(!(locate(/obj/grille,T)))
+				if(!(locate(/obj/station_objects/grille,T)))
 					var/window_check = 0
-					for(var/obj/window/W in T)
+					for(var/obj/station_objects/window/W in T)
 						if (W.dir == turn(C1.dir,180) || W.dir in list(5,6,9,10) )
 							window_check = 1
 							break
@@ -110,13 +110,13 @@ var/intercom_range_display_status = 0
 		else
 			intercom_range_display_status = 1
 
-		for(var/obj/debugging/marker/M in world)
+		for(var/obj/effects/debugging/marker/M in world)
 			del(M)
 
 		if(intercom_range_display_status)
 			for(var/obj/item/device/radio/intercom/I in world)
 				for(var/turf/T in orange(7,I))
-					var/obj/debugging/marker/F = new/obj/debugging/marker(T)
+					var/obj/effects/debugging/marker/F = new/obj/effects/debugging/marker(T)
 					if (!(F in view(7,I.loc)))
 						del(F)
 

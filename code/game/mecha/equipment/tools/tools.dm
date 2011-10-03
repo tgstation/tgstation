@@ -88,7 +88,7 @@
 							M.gets_drilled()
 					chassis.log_message("Drilled through [target]")
 					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
-						var/obj/ore_box/ore_box = locate(/obj/ore_box) in chassis:cargo
+						var/obj/station_objects/ore_box/ore_box = locate(/obj/station_objects/ore_box) in chassis:cargo
 						if(ore_box)
 							for(var/obj/item/weapon/ore/ore in range(chassis,1))
 								if(get_dir(chassis,ore)&chassis.dir)
@@ -118,7 +118,7 @@
 		if(get_dist(chassis, target)>2) return
 		set_ready_state(0)
 		if(do_after_cooldown(target))
-			if(istype(target, /obj/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
+			if(istype(target, /obj/station_objects/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
 				var/obj/o = target
 				o.reagents.trans_to(src, 200)
 				chassis.occupant_message("\blue Extinguisher refilled")
@@ -321,7 +321,7 @@
 			return
 		chassis.use_power(energy_drain)
 		set_ready_state(0)
-		var/obj/portal/P = new /obj/portal(get_turf(target))
+		var/obj/effects/portal/P = new /obj/effects/portal(get_turf(target))
 		P.target = target_turf
 		P.creator = null
 		P.icon = 'objects.dmi'

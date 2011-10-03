@@ -3,7 +3,7 @@
 		name = "Untitled"
 		lines[] = list()
 
-/obj/device/piano
+/obj/station_objects/device/piano
 	name = "space piano"
 	icon = 'musician.dmi'
 	icon_state = "piano"

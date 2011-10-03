@@ -192,7 +192,7 @@
 				step(mob, pick(cardinal))
 			else
 				. = ..()
-				for(var/obj/speech_bubble/S in range(1, mob))
+				for(var/obj/effects/speech_bubble/S in range(1, mob))
 					if(S.parent == mob)
 						S.loc = mob.loc
 		moving = 0
@@ -297,7 +297,7 @@
 			dense_object++
 			break
 
-	if(!dense_object && (locate(/obj/lattice) in oview(1, src)))
+	if(!dense_object && (locate(/obj/station_objects/lattice) in oview(1, src)))
 		dense_object++
 
 	//Lastly attempt to locate any dense objects we could push off of

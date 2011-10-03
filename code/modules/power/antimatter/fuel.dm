@@ -83,7 +83,7 @@
 
 /obj/item/weapon/fuel/attack(mob/M as mob, mob/user as mob)
 	if (user != M)
-		var/obj/equip_e/human/O = new /obj/equip_e/human(  )
+		var/obj/effects/equip_e/human/O = new /obj/effects/equip_e/human(  )
 		O.source = user
 		O.target = M
 		O.item = src

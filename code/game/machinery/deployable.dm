@@ -55,7 +55,7 @@ for reference:
 
 
 //Barricades, maybe there will be a metal one later...
-/obj/barricade/wooden
+/obj/station_objects/barricade/wooden
 	name = "wooden barricade"
 	desc = "This space is blocked off by a wooden barricade."
 	icon = 'structures.dmi'

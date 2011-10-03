@@ -37,14 +37,14 @@
 
 /**********************Ore box**************************/
 
-/obj/ore_box
+/obj/station_objects/ore_box
 	icon = 'mining.dmi'
 	icon_state = "orebox"
 	name = "Ore Box"
 	desc = "It's heavy"
 	density = 1
 
-/obj/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/station_objects/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/ore))
 		src.contents += W;
 	if (istype(W, /obj/item/weapon/satchel))
@@ -52,7 +52,7 @@
 		user << "\blue You empty the satchel into the box."
 	return
 
-/obj/ore_box/attack_hand(obj, mob/user as mob)
+/obj/station_objects/ore_box/attack_hand(obj, mob/user as mob)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0
@@ -107,7 +107,7 @@
 	user << browse("[dat]", "window=orebox")
 	return
 
-/obj/ore_box/Topic(href, href_list)
+/obj/station_objects/ore_box/Topic(href, href_list)
 	if(..())
 		return
 	usr.machine = src

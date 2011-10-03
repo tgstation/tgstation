@@ -222,7 +222,7 @@
 	var/old_dir = dir
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
 	S.dir = old_dir
-	new /obj/lattice( locate(src.x, src.y, src.z) )
+	new /obj/station_objects/lattice( locate(src.x, src.y, src.z) )
 	return S
 
 /turf/proc/ReplaceWithWall()
@@ -248,7 +248,7 @@
 	if(istype(src,/turf/simulated/wall/r_wall))
 		if(!devastated)
 			playsound(src.loc, 'Welder.ogg', 100, 1)
-			new /obj/structure/girder/reinforced(src)
+			new /obj/station_objects/structure/girder/reinforced(src)
 			new /obj/item/stack/sheet/r_metal( src )
 		else
 			new /obj/item/stack/sheet/metal( src )
@@ -257,7 +257,7 @@
 	else
 		if(!devastated)
 			playsound(src.loc, 'Welder.ogg', 100, 1)
-			new /obj/structure/girder(src)
+			new /obj/station_objects/structure/girder(src)
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/metal( src )
 		else
@@ -339,7 +339,7 @@
 			return
 
 		if (thermite)
-			var/obj/overlay/O = new/obj/overlay( src )
+			var/obj/effects/overlay/O = new/obj/effects/overlay( src )
 			O.name = "Thermite"
 			O.desc = "Looks hot."
 			O.icon = 'fire.dmi'
@@ -375,7 +375,7 @@
 			return
 
 		if (thermite)
-			var/obj/overlay/O = new/obj/overlay( src )
+			var/obj/effects/overlay/O = new/obj/effects/overlay( src )
 			O.name = "Thermite"
 			O.desc = "Looks hot."
 			O.icon = 'fire.dmi'
@@ -449,7 +449,7 @@
 			return
 
 		if (thermite)
-			var/obj/overlay/O = new/obj/overlay( src )
+			var/obj/effects/overlay/O = new/obj/effects/overlay( src )
 			O.name = "Thermite"
 			O.desc = "Looks hot."
 			O.icon = 'fire.dmi'
@@ -492,7 +492,7 @@
 			return
 
 		if (thermite)
-			var/obj/overlay/O = new/obj/overlay( src )
+			var/obj/effects/overlay/O = new/obj/effects/overlay( src )
 			O.name = "Thermite"
 			O.desc = "Looks hot."
 			O.icon = 'fire.dmi'
@@ -1160,7 +1160,7 @@ turf/simulated/floor/return_siding_icon_state()
 		return
 
 	if (istype(C, /obj/item/stack/tile/steel))
-		var/obj/lattice/L = locate(/obj/lattice, src)
+		var/obj/station_objects/lattice/L = locate(/obj/station_objects/lattice, src)
 		if(L)
 			del(L)
 			playsound(src.loc, 'Genhit.ogg', 50, 1)
@@ -1176,7 +1176,7 @@ turf/simulated/floor/return_siding_icon_state()
 
 /turf/space/Entered(atom/movable/A as mob|obj)
 	..()
-	if ((!(A) || src != A.loc || istype(null, /obj/beam)))	return
+	if ((!(A) || src != A.loc || istype(null, /obj/effects/beam)))	return
 
 	inertial_drift(A)
 
@@ -1187,7 +1187,7 @@ turf/simulated/floor/return_siding_icon_state()
 
 		else
 			if (src.x <= 2)
-				if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
+				if(istype(A, /obj/effects/meteor)||istype(A, /obj/effects/space_dust))
 					del(A)
 					return
 
@@ -1204,7 +1204,7 @@ turf/simulated/floor/return_siding_icon_state()
 					if ((A && A.loc))
 						A.loc.Entered(A)
 			else if (A.x >= (world.maxx - 1))
-				if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
+				if(istype(A, /obj/effects/meteor)||istype(A, /obj/effects/space_dust))
 					del(A)
 					return
 
@@ -1221,7 +1221,7 @@ turf/simulated/floor/return_siding_icon_state()
 					if ((A && A.loc))
 						A.loc.Entered(A)
 			else if (src.y <= 2)
-				if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
+				if(istype(A, /obj/effects/meteor)||istype(A, /obj/effects/space_dust))
 					del(A)
 					return
 
@@ -1239,7 +1239,7 @@ turf/simulated/floor/return_siding_icon_state()
 						A.loc.Entered(A)
 
 			else if (A.y >= (world.maxy - 1))
-				if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
+				if(istype(A, /obj/effects/meteor)||istype(A, /obj/effects/space_dust))
 					del(A)
 					return
 
@@ -1266,7 +1266,7 @@ turf/simulated/floor/return_siding_icon_state()
 	var/list/y_arr
 
 	if(src.x <= 1)
-		if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
+		if(istype(A, /obj/effects/meteor)||istype(A, /obj/effects/space_dust))
 			del(A)
 			return
 
@@ -1291,7 +1291,7 @@ turf/simulated/floor/return_siding_icon_state()
 				if ((A && A.loc))
 					A.loc.Entered(A)
 	else if (src.x >= world.maxx)
-		if(istype(A, /obj/meteor))
+		if(istype(A, /obj/effects/meteor))
 			del(A)
 			return
 
@@ -1316,7 +1316,7 @@ turf/simulated/floor/return_siding_icon_state()
 				if ((A && A.loc))
 					A.loc.Entered(A)
 	else if (src.y <= 1)
-		if(istype(A, /obj/meteor))
+		if(istype(A, /obj/effects/meteor))
 			del(A)
 			return
 		var/list/cur_pos = src.get_global_map_pos()
@@ -1341,7 +1341,7 @@ turf/simulated/floor/return_siding_icon_state()
 					A.loc.Entered(A)
 
 	else if (src.y >= world.maxy)
-		if(istype(A, /obj/meteor)||istype(A, /obj/space_dust))
+		if(istype(A, /obj/effects/meteor)||istype(A, /obj/effects/space_dust))
 			del(A)
 			return
 		var/list/cur_pos = src.get_global_map_pos()
@@ -1366,13 +1366,13 @@ turf/simulated/floor/return_siding_icon_state()
 					A.loc.Entered(A)
 	return
 
-/obj/vaultspawner
+/obj/effects/vaultspawner
 	var/maxX = 6
 	var/maxY = 6
 	var/minX = 2
 	var/minY = 2
 
-/obj/vaultspawner/New(turf/location as turf,lX = minX,uX = maxX,lY = minY,uY = maxY,var/type = null)
+/obj/effects/vaultspawner/New(turf/location as turf,lX = minX,uX = maxX,lY = minY,uY = maxY,var/type = null)
 	if(!type)
 		type = pick("sandstone","rock","alien")
 
@@ -1402,10 +1402,10 @@ turf/simulated/floor/return_siding_icon_state()
 	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
 		spawn(0)
 			M.take_damage(100, "brute")
-	for(var/obj/alien/facehugger/M in src)//These really need to be mobs.
+	for(var/obj/effects/alien/facehugger/M in src)//These really need to be mobs.
 		spawn(0)
 			M.death()
-	for(var/obj/critter/M in src)
+	for(var/obj/effects/critter/M in src)
 		spawn(0)
 			M.Die()
 

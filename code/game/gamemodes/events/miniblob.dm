@@ -2,7 +2,7 @@
 	//command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 	//world << sound('outbreak5.ogg')
 	var/turf/T = pick(blobstart)
-	var/obj/blob/bl = new /obj/blob( T.loc, 30 )
+	var/obj/effects/blob/bl = new /obj/effects/blob( T.loc, 30 )
 	spawn(0)
 		bl.Life()
 		bl.Life()
@@ -25,7 +25,7 @@
 			for(var/i = 1 to 10)
 				sleep(-1)
 				if(!active_blobs.len)	break
-				var/obj/blob/B = pick(active_blobs)
+				var/obj/effects/blob/B = pick(active_blobs)
 				if(B.z != 1)
 					continue
 				B.Life()

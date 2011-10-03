@@ -1,6 +1,6 @@
 // SPACE VINE OR KUDZU
 
-/obj/spacevine
+/obj/effects/spacevine
 	name = "Space Kudzu"
 	desc = "An extremely expansionistic species of vine."
 	icon = 'kudzu.dmi'
@@ -8,7 +8,7 @@
 	anchored = 1
 	density = 0
 	var/energy = 0		//Energy sounds like an arbitrary-enough variable name.
-	var/obj/spacevine_controller/master = null
+	var/obj/effects/spacevine_controller/master = null
 
 	New()
 		if(istype(src.loc, /turf/space))
@@ -33,8 +33,8 @@
 		if (istype(W, /obj/item/weapon/wirecutters)) del src
 		..()
 
-/obj/spacevine_controller
-	var/list/obj/spacevine/vines = list()
+/obj/effects/spacevine_controller
+	var/list/obj/effects/spacevine/vines = list()
 	var/list/growth_queue = list()
 	var/reached_collapse_size
 	var/reached_slowdown_size
@@ -53,7 +53,7 @@
 		..()
 
 	proc/spawn_kudzu_piece(var/turf/location)
-		var/obj/spacevine/SV = new(location)
+		var/obj/effects/spacevine/SV = new(location)
 		growth_queue += SV
 		vines += SV
 		SV.master = src
@@ -82,9 +82,9 @@
 			length = 1
 		length = min( 30 , max( length , vines.len / 5 ) )
 		var/i = 0
-		var/list/obj/spacevine/queue_end = list()
+		var/list/obj/effects/spacevine/queue_end = list()
 
-		for( var/obj/spacevine/SV in growth_queue )
+		for( var/obj/effects/spacevine/SV in growth_queue )
 			i++
 			queue_end += SV
 			growth_queue -= SV
@@ -101,7 +101,7 @@
 		//sleep(5)
 		//src.process()
 
-/obj/spacevine/proc/grow()
+/obj/effects/spacevine/proc/grow()
 	switch(energy)
 		if (0)
 			src.icon_state = pick("Med1", "Med2", "Med3")
@@ -112,18 +112,18 @@
 			energy = 2
 			src.density = 1
 
-/obj/spacevine/proc/spread()
+/obj/effects/spacevine/proc/spread()
 	var/direction = pick(cardinal)
 	if(istype(get_step(src,direction),/turf/simulated/floor))
 		var/turf/simulated/floor/F = get_step(src,direction)
-		if(!locate(/obj/spacevine,F))
+		if(!locate(/obj/effects/spacevine,F))
 			if(F.Enter(src))
 				if(master)
 					master.spawn_kudzu_piece( F )
 
 
 /*
-/obj/spacevine/proc/Life()
+/obj/effects/spacevine/proc/Life()
 	if (!src) return
 	var/Vspread
 	if (prob(50)) Vspread = locate(src.x + rand(-1,1),src.y,src.z)
@@ -131,12 +131,12 @@
 	var/dogrowth = 1
 	if (!istype(Vspread, /turf/simulated/floor)) dogrowth = 0
 	for(var/obj/O in Vspread)
-		if (istype(O, /obj/window) || istype(O, /obj/forcefield) || istype(O, /obj/blob) || istype(O, /obj/alien/weeds) || istype(O, /obj/spacevine)) dogrowth = 0
+		if (istype(O, /obj/station_objects/window) || istype(O, /obj/effects/forcefield) || istype(O, /obj/effects/blob) || istype(O, /obj/effects/alien/weeds) || istype(O, /obj/effects/spacevine)) dogrowth = 0
 		if (istype(O, /obj/machinery/door/))
 			if(O:p_open == 0 && prob(50)) O:open()
 			else dogrowth = 0
 	if (dogrowth == 1)
-		var/obj/spacevine/B = new /obj/spacevine(Vspread)
+		var/obj/effects/spacevine/B = new /obj/effects/spacevine(Vspread)
 		B.icon_state = pick("vine-light1", "vine-light2", "vine-light3")
 		spawn(20)
 			if(B)
@@ -156,7 +156,7 @@
 
 */
 
-/obj/spacevine/ex_act(severity)
+/obj/effects/spacevine/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			del(src)
@@ -172,5 +172,5 @@
 		else
 	return
 
-/obj/spacevine/temperature_expose(null, temp, volume)
+/obj/effects/spacevine/temperature_expose(null, temp, volume)
 	del src

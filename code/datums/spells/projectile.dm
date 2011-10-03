@@ -1,4 +1,4 @@
-/obj/proc_holder/spell/targeted/projectile
+/obj/effects/proc_holder/spell/targeted/projectile
 	name = "Projectile"
 	desc = "This spell summons projectiles which try to hit the targets."
 
@@ -11,7 +11,7 @@
 	var/proj_trail_icon = 'wizard.dmi'
 	var/proj_trail_icon_state = "trail"
 
-	var/proj_type = "/obj/proc_holder/spell/targeted" //IMPORTANT use only subtypes of this
+	var/proj_type = "/obj/effects/proc_holder/spell/targeted" //IMPORTANT use only subtypes of this
 
 	var/proj_lingering = 0 //if it lingers or disappears upon hitting an obstacle
 	var/proj_homing = 1 //if it follows the target
@@ -21,16 +21,16 @@
 	var/proj_lifespan = 15 //in deciseconds * proj_step_delay
 	var/proj_step_delay = 1 //lower = faster
 
-/obj/proc_holder/spell/targeted/projectile/cast(list/targets, mob/user = usr)
+/obj/effects/proc_holder/spell/targeted/projectile/cast(list/targets, mob/user = usr)
 
 	for(var/mob/target in targets)
 		spawn(0)
-			var/obj/proc_holder/spell/targeted/projectile
+			var/obj/effects/proc_holder/spell/targeted/projectile
 			if(istext(proj_type))
 				var/projectile_type = text2path(proj_type)
 				projectile = new projectile_type(user)
-			if(istype(proj_type,/obj/proc_holder/spell))
-				projectile = new /obj/proc_holder/spell/targeted/trigger(user)
+			if(istype(proj_type,/obj/effects/proc_holder/spell))
+				projectile = new /obj/effects/proc_holder/spell/targeted/trigger(user)
 				projectile:linked_spells += proj_type
 			projectile.icon = proj_icon
 			projectile.icon_state = proj_icon_state
@@ -62,7 +62,7 @@
 				if(proj_trail && projectile)
 					spawn(0)
 						if(projectile)
-							var/obj/overlay/trail = new /obj/overlay(projectile.loc)
+							var/obj/effects/overlay/trail = new /obj/effects/overlay(projectile.loc)
 							trail.icon = proj_trail_icon
 							trail.icon_state = proj_trail_icon_state
 							trail.density = 0

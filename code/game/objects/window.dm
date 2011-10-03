@@ -1,4 +1,4 @@
-/obj/window/bullet_act(var/obj/item/projectile/Proj)
+/obj/station_objects/window/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	if(health <=0)
@@ -8,7 +8,7 @@
 		del(src)
 	return
 
-/obj/window/ex_act(severity)
+/obj/station_objects/window/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			del(src)
@@ -28,12 +28,12 @@
 				return
 	return
 
-/obj/window/blob_act()
+/obj/station_objects/window/blob_act()
 	if(reinf) new /obj/item/stack/rods( src.loc)
 	density = 0
 	del(src)
 
-/obj/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/station_objects/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
@@ -43,14 +43,14 @@
 	else
 		return 1
 
-/obj/window/CheckExit(atom/movable/O as mob|obj, target as turf)
+/obj/station_objects/window/CheckExit(atom/movable/O as mob|obj, target as turf)
 	if(istype(O) && O.checkpass(PASSGLASS))
 		return 1
 	if (get_dir(O.loc, target) == dir)
 		return 0
 	return 1
 
-/obj/window/meteorhit()
+/obj/station_objects/window/meteorhit()
 
 	//*****RM
 	//world << "glass at [x],[y],[z] Mhit"
@@ -64,7 +64,7 @@
 	return
 
 
-/obj/window/hitby(AM as mob|obj)
+/obj/station_objects/window/hitby(AM as mob|obj)
 
 	..()
 	for(var/mob/O in viewers(src, null))
@@ -89,7 +89,7 @@
 	..()
 	return
 
-/obj/window/attack_hand()
+/obj/station_objects/window/attack_hand()
 	if ((usr.mutations & HULK))
 		usr << text("\blue You smash through the window.")
 		for(var/mob/O in oviewers())
@@ -102,7 +102,7 @@
 		del(src)
 	return
 
-/obj/window/attack_paw()
+/obj/station_objects/window/attack_paw()
 	if ((usr.mutations & HULK))
 		usr << text("\blue You smash through the window.")
 		for(var/mob/O in oviewers())
@@ -115,7 +115,7 @@
 		del(src)
 	return
 
-/obj/window/attack_alien()
+/obj/station_objects/window/attack_alien()
 	if (istype(usr, /mob/living/carbon/alien/larva))//Safety check for larva. /N
 		return
 	usr << text("\green You smash against the window.")
@@ -138,7 +138,7 @@
 		return
 	return
 
-/obj/window/attack_metroid()
+/obj/station_objects/window/attack_metroid()
 	if(!istype(usr, /mob/living/carbon/metroid/adult))
 		return
 
@@ -162,7 +162,7 @@
 		return
 	return
 
-/obj/window/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/station_objects/window/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/screwdriver))
 		if(reinf && state >= 1)
 			state = 3 - state
@@ -207,7 +207,7 @@
 	return
 
 
-/obj/window/verb/rotate()
+/obj/station_objects/window/verb/rotate()
 	set name = "Rotate Window Counter-Clockwise"
 	set category = "Object"
 	set src in oview(1)
@@ -227,7 +227,7 @@
 	src.ini_dir = src.dir
 	return
 
-/obj/window/verb/revrotate()
+/obj/station_objects/window/verb/revrotate()
 	set name = "Rotate Window Clockwise"
 	set category = "Object"
 	set src in oview(1)
@@ -247,7 +247,7 @@
 	src.ini_dir = src.dir
 	return
 
-/obj/window/proc/updateSilicate()
+/obj/station_objects/window/proc/updateSilicate()
 	if(silicateIcon && silicate)
 		src.icon = initial(icon)
 
@@ -260,7 +260,7 @@
 		icon = I
 		silicateIcon = I
 
-/obj/window/New(Loc,re=0)
+/obj/station_objects/window/New(Loc,re=0)
 	..()
 
 	if(re)	reinf = re
@@ -279,7 +279,7 @@
 
 	return
 
-/obj/window/Del()
+/obj/station_objects/window/Del()
 	density = 0
 
 	update_nearby_tiles()
@@ -287,7 +287,7 @@
 	playsound(src, "shatter", 70, 1)
 	..()
 
-/obj/window/Move()
+/obj/station_objects/window/Move()
 	update_nearby_tiles(need_rebuild=1)
 
 	..()
@@ -297,7 +297,7 @@
 
 	return
 
-/obj/window/proc/update_nearby_tiles(need_rebuild)
+/obj/station_objects/window/proc/update_nearby_tiles(need_rebuild)
 	if(!air_master) return 0
 
 	var/turf/simulated/source = loc

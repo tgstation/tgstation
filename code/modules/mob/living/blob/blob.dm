@@ -94,7 +94,7 @@
 	if(!T)
 		creating_blob = 0
 		return
-	var/obj/blob/B = (locate(/obj/blob) in T)
+	var/obj/effects/blob/B = (locate(/obj/effects/blob) in T)
 	if(!B)//We are on a blob
 		usr << "There is no blob here!"
 		creating_blob = 0
@@ -103,12 +103,12 @@
 		usr << "Unable to use this blob, find another one."
 		creating_blob = 0
 		return
-	for(var/obj/blob/blob in orange(5))
+	for(var/obj/effects/blob/blob in orange(5))
 		if(blob.blobtype == "Node")
 			usr << "There is another node nearby, move away from it!"
 			creating_blob = 0
 			return
-	for(var/obj/blob/blob in orange(2))
+	for(var/obj/effects/blob/blob in orange(2))
 		if(blob.blobtype == "Factory")
 			usr << "There is a porus blob nearby, move away from it!"
 			creating_blob = 0
@@ -129,7 +129,7 @@
 	if(!T)
 		creating_blob = 0
 		return
-	var/obj/blob/B = (locate(/obj/blob) in T)
+	var/obj/effects/blob/B = (locate(/obj/effects/blob) in T)
 	if(!B)
 		usr << "There is no blob here!"
 		creating_blob = 0
@@ -138,7 +138,7 @@
 		usr << "Unable to use this blob, find another one."
 		creating_blob = 0
 		return
-	for(var/obj/blob/blob in orange(2))//Not right next to nodes/cores
+	for(var/obj/effects/blob/blob in orange(2))//Not right next to nodes/cores
 		if(blob.blobtype == "Node")
 			usr << "There is a node nearby, move away from it!"
 			creating_blob = 0
@@ -168,7 +168,7 @@
 	if(!T)
 		creating_blob = 0
 		return
-	var/obj/blob/B = (locate(/obj/blob) in T)
+	var/obj/effects/blob/B = (locate(/obj/effects/blob) in T)
 	if(!B)
 		usr << "There is no blob here!"
 		creating_blob = 0
@@ -192,13 +192,13 @@
 	if(!T)
 		creating_blob = 0
 		return
-	var/obj/blob/B = (locate(/obj/blob) in T)
+	var/obj/effects/blob/B = (locate(/obj/effects/blob) in T)
 	if(B)
 		usr << "There is a blob here!"
 		creating_blob = 0
 		return
 	if(prob(50))
-		new/obj/blob(src.loc)
+		new/obj/effects/blob(src.loc)
 		src << "\blue Success."
 	else
 		src << "\red Creation failed."
@@ -240,7 +240,7 @@
 	if(G_found.client)
 		G_found.client.screen.len = null
 	var/mob/living/blob/B = new/mob/living/blob(locate(0,0,1))//temp area also just in case should do this better but tired
-	for(var/obj/blob/core in world)
+	for(var/obj/effects/blob/core in world)
 		if(core)
 			if(core.blobtype == "Core")
 				B.loc = core.loc

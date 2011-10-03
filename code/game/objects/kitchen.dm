@@ -1,6 +1,6 @@
 //////Kitchen Spike
 
-/obj/kitchenspike
+/obj/station_objects/kitchenspike
 	attack_paw(mob/user as mob)
 		return src.attack_hand(usr)
 

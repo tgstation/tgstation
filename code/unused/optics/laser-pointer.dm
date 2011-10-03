@@ -19,7 +19,7 @@
 	g_amt = 100
 	w_amt = 200
 
-	var/obj/beam/laser/beam 	// the created beam
+	var/obj/effects/beam/laser/beam 	// the created beam
 
 	flags = FPRINT | CONDUCT | TABLEPASS
 

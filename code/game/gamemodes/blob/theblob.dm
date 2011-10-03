@@ -1,5 +1,5 @@
 //I will need to recode parts of this but I am way too tired atm
-/obj/blob
+/obj/effects/blob
 	name = "blob"
 	icon = 'blob.dmi'
 	icon_state = "blob"
@@ -121,7 +121,7 @@
 			var/dirn = pick(dirs)
 			dirs.Remove(dirn)
 			var/turf/T = get_step(src, dirn)
-			var/obj/blob/B = (locate(/obj/blob) in T)
+			var/obj/effects/blob/B = (locate(/obj/effects/blob) in T)
 			if(!B)
 				expand(T)//No blob here so try and expand
 				return
@@ -134,7 +134,7 @@
 		set background = 1
 		switch(blobtype)
 			if("Factory")
-				new/obj/critter/blob(src.loc)
+				new/obj/effects/critter/blob(src.loc)
 				return 1
 			if("Core")
 				spawn(0)//Needs to be changed
@@ -169,12 +169,12 @@
 				var/dirn = pick(dirs)
 				dirs.Remove(dirn)
 				T = get_step(src, dirn)
-				if((locate(/obj/blob) in T))
+				if((locate(/obj/effects/blob) in T))
 					T = null
 					continue
 				else 	break
 		if(T)
-			var/obj/blob/B = new /obj/blob(src.loc, min(src.health, 30))
+			var/obj/effects/blob/B = new /obj/effects/blob(src.loc, min(src.health, 30))
 			if(T.Enter(B,src))
 				B.loc = T
 			else
@@ -283,9 +283,9 @@
 		if(O.z != 1)
 			continue
 
-		if(istype(O, /obj/window))
+		if(istype(O, /obj/station_objects/window))
 			src.window++
-		else if(istype(O, /obj/grille))
+		else if(istype(O, /obj/station_objects/grille))
 			if(!O:destroyed)
 				src.grille++
 		else if(istype(O, /obj/machinery/door))
@@ -308,7 +308,7 @@
 
 //////////////////////////////****IDLE BLOB***/////////////////////////////////////
 
-/obj/blob/idle
+/obj/effects/blob/idle
 	name = "blob"
 	desc = "it looks... tasty"
 	icon_state = "blobidle0"
@@ -334,26 +334,26 @@
 
 
 	Del()		//idle blob that spawns a normal blob when killed.
-		var/obj/blob/B = new /obj/blob( src.loc )
+		var/obj/effects/blob/B = new /obj/effects/blob( src.loc )
 		spawn(30)
 			B.Life()
 		..()
 
 
 
-/obj/blob/core/New()
+/obj/effects/blob/core/New()
 	..()
 	spawn()
 		src.blobdebug = 1
 		src.Life()
 
-/obj/blob/node/New()
+/obj/effects/blob/node/New()
 	..()
 	spawn()
 		src.blobdebug = 2
 		src.Life()
 
-/obj/blob/factory/New()
+/obj/effects/blob/factory/New()
 	..()
 	spawn()
 		src.blobdebug = 3

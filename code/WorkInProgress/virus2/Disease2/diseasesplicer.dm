@@ -22,7 +22,7 @@
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
+				var/obj/station_objects/computerframe/A = new /obj/station_objects/computerframe( src.loc )
 				new /obj/item/weapon/shard( src.loc )
 				var/obj/item/weapon/circuitboard/diseasesplicer/M = new /obj/item/weapon/circuitboard/diseasesplicer( A )
 				for (var/obj/C in src)
@@ -34,7 +34,7 @@
 				del(src)
 			else
 				user << "\blue You disconnect the monitor."
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
+				var/obj/station_objects/computerframe/A = new /obj/station_objects/computerframe( src.loc )
 				var/obj/item/weapon/circuitboard/diseasesplicer/M = new /obj/item/weapon/circuitboard/diseasesplicer( A )
 				for (var/obj/C in src)
 					C.loc = src.loc

@@ -284,9 +284,9 @@
 			now_pushing = 1
 			if (!AM.anchored)
 				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/window))
+				if (istype(AM, /obj/station_objects/window))
 					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/window/win in get_step(AM,t))
+						for(var/obj/station_objects/window/win in get_step(AM,t))
 							now_pushing = 0
 							return
 				step(AM, t)
@@ -927,9 +927,9 @@ Frequency:
 						M.pulling = t
 				else
 					if (pulling)
-						if (istype(pulling, /obj/window))
+						if (istype(pulling, /obj/station_objects/window))
 							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-								for(var/obj/window/win in get_step(pulling,get_dir(pulling.loc, T)))
+								for(var/obj/station_objects/window/win in get_step(pulling,get_dir(pulling.loc, T)))
 									pulling = null
 					if (pulling)
 						step(pulling, get_dir(pulling.loc, T))

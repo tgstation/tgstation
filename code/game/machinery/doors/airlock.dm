@@ -882,14 +882,14 @@ About the new airlock wires panel:
 			if(do_after(user,40))
 				user << "\blue You removed the airlock electronics!"
 				switch(src.doortype)
-					if(0) new/obj/door_assembly/door_assembly_0( src.loc )
-					if(1) new/obj/door_assembly/door_assembly_com( src.loc )
-					if(2) new/obj/door_assembly/door_assembly_sec( src.loc )
-					if(3) new/obj/door_assembly/door_assembly_eng( src.loc )
-					if(4) new/obj/door_assembly/door_assembly_med( src.loc )
-					if(5) new/obj/door_assembly/door_assembly_mai( src.loc )
-					if(6) new/obj/door_assembly/door_assembly_ext( src.loc )
-					if(7) new/obj/door_assembly/door_assembly_g( src.loc )
+					if(0) new/obj/station_objects/door_assembly/door_assembly_0( src.loc )
+					if(1) new/obj/station_objects/door_assembly/door_assembly_com( src.loc )
+					if(2) new/obj/station_objects/door_assembly/door_assembly_sec( src.loc )
+					if(3) new/obj/station_objects/door_assembly/door_assembly_eng( src.loc )
+					if(4) new/obj/station_objects/door_assembly/door_assembly_med( src.loc )
+					if(5) new/obj/station_objects/door_assembly/door_assembly_mai( src.loc )
+					if(6) new/obj/station_objects/door_assembly/door_assembly_ext( src.loc )
+					if(7) new/obj/station_objects/door_assembly/door_assembly_g( src.loc )
 				var/obj/item/weapon/airlock_electronics/ae
 				if (!electronics)
 					ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -993,7 +993,7 @@ About the new airlock wires panel:
 		return
 	use_power(50)
 	playsound(src.loc, 'airlock.ogg', 30, 1)
-	var/obj/window/killthis = (locate(/obj/window) in get_turf(src))
+	var/obj/station_objects/window/killthis = (locate(/obj/station_objects/window) in get_turf(src))
 	if(killthis)
 		killthis.ex_act(2)//Smashin windows
 	..()

@@ -274,7 +274,7 @@
 		handle_environment()
 
 			//If there are alien weeds on the ground then heal if needed or give some toxins
-			if(locate(/obj/alien/weeds) in loc)
+			if(locate(/obj/effects/alien/weeds) in loc)
 				if(health >= 25)
 					toxloss += 5
 				else
@@ -491,7 +491,7 @@
 
 		check_if_buckled()
 			if (buckled)
-				lying = (istype(buckled, /obj/stool/bed) ? 1 : 0)
+				lying = (istype(buckled, /obj/station_objects/stool/bed) ? 1 : 0)
 				if(lying)
 					drop_item()
 				density = 1

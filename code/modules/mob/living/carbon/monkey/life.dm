@@ -591,7 +591,7 @@
 				for(var/mob/living/carbon/M in oviewers(4,src))
 					if(M.virus2)
 						infect_virus2(src,M.virus2)
-				for(var/obj/decal/cleanable/blood/B in view(4, src))
+				for(var/obj/effects/decal/cleanable/blood/B in view(4, src))
 					if(B.virus2)
 						infect_virus2(src,B.virus2)
 			else
@@ -600,7 +600,7 @@
 
 		check_if_buckled()
 			if (src.buckled)
-				src.lying = istype(src.buckled, /obj/stool/bed) || istype(src.buckled, /obj/machinery/conveyor)
+				src.lying = istype(src.buckled, /obj/station_objects/stool/bed) || istype(src.buckled, /obj/machinery/conveyor)
 				if(src.lying)
 					src.drop_item()
 				src.density = 1

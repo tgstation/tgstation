@@ -1,7 +1,7 @@
 /*
 Contains the procs that control attacking critters
 */
-/obj/critter
+/obj/effects/critter
 
 	attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 		..()

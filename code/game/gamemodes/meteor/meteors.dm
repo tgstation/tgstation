@@ -64,15 +64,15 @@
 	while (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space" ) //FUUUCK, should never happen.
 
 
-	var/obj/meteor/M
+	var/obj/effects/meteor/M
 	switch(rand(1, 100))
 
 		if(1 to 10)
-			M = new /obj/meteor/big( pickedstart )
+			M = new /obj/effects/meteor/big( pickedstart )
 		if(11 to 75)
-			M = new /obj/meteor( pickedstart )
+			M = new /obj/effects/meteor( pickedstart )
 		if(76 to 100)
-			M = new /obj/meteor/small( pickedstart )
+			M = new /obj/effects/meteor/small( pickedstart )
 
 	M.dest = pickedgoal
 	spawn(0)
@@ -80,7 +80,7 @@
 
 	return
 
-/obj/meteor
+/obj/effects/meteor
 	name = "meteor"
 	icon = 'meteor.dmi'
 	icon_state = "flaming"
@@ -90,19 +90,19 @@
 	var/dest
 	pass_flags = PASSTABLE
 
-/obj/meteor/small
+/obj/effects/meteor/small
 	name = "small meteor"
 	icon_state = "smallf"
 	pass_flags = PASSTABLE | PASSGRILLE
 
-/obj/meteor/Move()
+/obj/effects/meteor/Move()
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(METEOR_TEMPERATURE, 1000)
 	..()
 	return
 
-/obj/meteor/Bump(atom/A)
+/obj/effects/meteor/Bump(atom/A)
 	spawn(0)
 		for(var/mob/M in range(10, src))
 			if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
@@ -111,20 +111,20 @@
 			A.meteorhit(src)
 			playsound(src.loc, 'meteorimpact.ogg', 40, 1)
 		if (--src.hits <= 0)
-			if(prob(15))// && !istype(A, /obj/grille))
+			if(prob(15))// && !istype(A, /obj/station_objects/grille))
 				explosion(src.loc, 4, 5, 6, 7, 0)
 				playsound(src.loc, "explosion", 50, 1)
 			del(src)
 	return
 
 
-/obj/meteor/ex_act(severity)
+/obj/effects/meteor/ex_act(severity)
 
 	if (severity < 4)
 		del(src)
 	return
 
-/obj/meteor/big
+/obj/effects/meteor/big
 	name = "big meteor"
 	hits = 5
 
@@ -140,7 +140,7 @@
 				explosion(src.loc, 0, 1, 2, 3, 0)
 				playsound(src.loc, 'meteorimpact.ogg', 40, 1)
 			if (--src.hits <= 0)
-				if(prob(15) && !istype(A, /obj/grille))
+				if(prob(15) && !istype(A, /obj/station_objects/grille))
 					explosion(src.loc, 1, 2, 3, 4, 0)
 					playsound(src.loc, "explosion", 50, 1)
 				del(src)

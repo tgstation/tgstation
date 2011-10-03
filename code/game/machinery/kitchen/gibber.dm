@@ -122,7 +122,7 @@
 		newmeat.subjectname = sourcename
 		newmeat.subjectjob = sourcejob
 		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
-		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the 
+		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 
 	src.occupant.death(1)
@@ -132,12 +132,12 @@
 		playsound(src.loc, 'splat.ogg', 50, 1)
 		operating = 0
 		for (var/i=1 to totalslabs)
-			var/obj/item/meatslab = allmeat[i] 
+			var/obj/item/meatslab = allmeat[i]
 			var/turf/Tx = locate(src.x - i, src.y, src.z)
 			meatslab.loc = src.loc
 			meatslab.throw_at(Tx,i,3)
 			if (!Tx.density)
-				new /obj/decal/cleanable/blood/gibs(Tx,i)
+				new /obj/effects/decal/cleanable/blood/gibs(Tx,i)
 		src.operating = 0
 		update_icon()
 

@@ -1,4 +1,4 @@
-/obj/landmark/New()
+/obj/effects/landmark/New()
 
 	..()
 	tag = text("landmark*[]", name)
@@ -63,7 +63,7 @@
 
 	return 1
 
-/obj/landmark/start/New()
+/obj/effects/landmark/start/New()
 	..()
 	tag = "start*[name]"
 	invisibility = 101

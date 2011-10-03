@@ -325,7 +325,7 @@
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20) && C.amount >= 10)
 			var/turf/T = get_turf_loc(src)
-			var/obj/cable/N = T.get_cable_node()
+			var/obj/station_objects/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
 				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 				s.set_up(5, 1, src)

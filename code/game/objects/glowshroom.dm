@@ -1,6 +1,6 @@
 //separate dm since hydro is getting bloated already
 
-/obj/glowshroom
+/obj/effects/glowshroom
 	name = "glowshroom"
 	anchored = 1
 	opacity = 0
@@ -17,10 +17,10 @@
 	var/spreadIntoAdjacentChance = 60
 	var/evolveChance = 2
 
-/obj/glowshroom/single
+/obj/effects/glowshroom/single
 	spreadChance = 0
 
-/obj/glowshroom/New()
+/obj/effects/glowshroom/New()
 	set background = 1
 	..()
 
@@ -46,7 +46,7 @@
 			if(src)
 				Spread()
 
-/obj/glowshroom/proc/Spread()
+/obj/effects/glowshroom/proc/Spread()
 	set background = 1
 	var/spreaded = 1
 
@@ -62,7 +62,7 @@
 					spreadsIntoAdjacent = 1
 
 				for(var/turf/simulated/floor/plating/airless/asteroid/earth in view(3,src))
-					if(spreadsIntoAdjacent || !locate(/obj/glowshroom) in view(1,earth))
+					if(spreadsIntoAdjacent || !locate(/obj/effects/glowshroom) in view(1,earth))
 						possibleLocs += earth
 
 				if(!possibleLocs.len)
@@ -72,7 +72,7 @@
 
 				var/shroomCount = 0 //hacky
 				var/placeCount = 1
-				for(var/obj/glowshroom/shroom in newLoc)
+				for(var/obj/effects/glowshroom/shroom in newLoc)
 					shroomCount++
 				for(var/wallDir in cardinal)
 					var/turf/isWall = get_step(newLoc,wallDir)
@@ -81,7 +81,7 @@
 				if(shroomCount >= placeCount)
 					continue
 
-				var/obj/glowshroom/child = new /obj/glowshroom(newLoc)
+				var/obj/effects/glowshroom/child = new /obj/effects/glowshroom(newLoc)
 				child.potency = potency
 				child.yield = yield
 				child.delay = delay
@@ -94,7 +94,7 @@
 
 		sleep(delay)
 
-/obj/glowshroom/proc/CalcDir(turf/location = loc)
+/obj/effects/glowshroom/proc/CalcDir(turf/location = loc)
 	set background = 1
 	var/direction = 16
 
@@ -103,7 +103,7 @@
 		if(newTurf.density)
 			direction |= wallDir
 
-	for(var/obj/glowshroom/shroom in location)
+	for(var/obj/effects/glowshroom/shroom in location)
 		if(shroom == src)
 			continue
 		if(shroom.floor) //special
@@ -127,14 +127,14 @@
 	floor = 1
 	return 1
 
-/obj/glowshroom/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/effects/glowshroom/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 
 	endurance -= W.force
 
 	CheckEndurance()
 
-/obj/glowshroom/ex_act(severity)
+/obj/effects/glowshroom/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			del(src)
@@ -150,11 +150,11 @@
 		else
 	return
 
-/obj/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effects/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		endurance -= 5
 		CheckEndurance()
 
-/obj/glowshroom/proc/CheckEndurance()
+/obj/effects/glowshroom/proc/CheckEndurance()
 	if(endurance <= 0)
 		del(src)

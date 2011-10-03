@@ -53,7 +53,7 @@
 	flags = FPRINT | TABLEPASS
 	w_class = 1.0
 
-/obj/foam_dart_dummy
+/obj/effects/foam_dart_dummy
 	name = ""
 	desc = ""
 	icon = 'toy.dmi'
@@ -174,11 +174,11 @@
 		if(!isturf(target.loc) || target == user) return
 		if(flag) return
 
-		if (locate (/obj/table, src.loc))
+		if (locate (/obj/station_objects/table, src.loc))
 			return
 		else if (bullets)
 			var/turf/trg = get_turf(target)
-			var/obj/foam_dart_dummy/D = new/obj/foam_dart_dummy(get_turf(src))
+			var/obj/effects/foam_dart_dummy/D = new/obj/effects/foam_dart_dummy(get_turf(src))
 			bullets--
 			D.icon_state = "foamdart"
 			D.name = "foam dart"
@@ -269,7 +269,7 @@
 		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		new /obj/decal/ash(src.loc)
+		new /obj/effects/decal/ash(src.loc)
 		src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
 		playsound(src, 'snap.ogg', 50, 1)
 		del(src)
@@ -283,7 +283,7 @@
 			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			s.set_up(2, 0, src)
 			s.start()
-			new /obj/decal/ash(src.loc)
+			new /obj/effects/decal/ash(src.loc)
 			src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
 			playsound(src, 'snap.ogg', 50, 1)
 			del(src)

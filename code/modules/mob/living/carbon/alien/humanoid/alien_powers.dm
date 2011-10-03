@@ -27,7 +27,7 @@ Doesn't work on other aliens/AI.*/
 		toxloss -= 100
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
-		var/obj/alien/weeds/W = new (loc)
+		var/obj/effects/alien/weeds/W = new (loc)
 		W.Life()
 	return
 
@@ -38,7 +38,7 @@ Doesn't work on other aliens/AI.*/
 
 	if(powerc(5))
 		toxloss -= 5
-		for(var/obj/alien/facehugger/F in range(8,src))
+		for(var/obj/effects/alien/facehugger/F in range(8,src))
 			F.call_to(src)
 		emote("roar")
 	return
@@ -80,7 +80,7 @@ The first proc defines the acid throw function while the other two work in the g
 I kind of like the right click only--the window version can get a little confusing. Perhaps something telling the alien they need to right click?
 /N*/
 /obj/proc/acid()
-	var/obj/alien/acid/A = new(src.loc)
+	var/obj/effects/alien/acid/A = new(src.loc)
 	A.target = src
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\green <B>[src] vomits globs of vile stuff all over [src]!</B>"), 1)
@@ -167,12 +167,12 @@ I kind of like the right click only--the window version can get a little confusi
 						for(var/mob/O in viewers(src, null))
 							O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
 						var/list/huggers = list()
-						for(var/obj/alien/facehugger/F in view(3, src))
-							if(istype(F, /obj/alien/facehugger))
+						for(var/obj/effects/alien/facehugger/F in view(3, src))
+							if(istype(F, /obj/effects/alien/facehugger))
 								huggers.Add(F)
 						loc = vent_found
 
-						for(var/obj/alien/facehugger/F in huggers)
+						for(var/obj/effects/alien/facehugger/F in huggers)
 							F.loc = vent_found
 						var/travel_time = get_dist(loc, target_vent.loc)
 
@@ -186,7 +186,7 @@ I kind of like the right click only--the window version can get a little confusi
 								target_vent = vent_found //travel back. No additional time required.
 								src << "\red The vent you were heading to appears to be welded."
 							loc = target_vent.loc
-							for(var/obj/alien/facehugger/F in huggers)
+							for(var/obj/effects/alien/facehugger/F in huggers)
 								F.loc = loc
 
 				else

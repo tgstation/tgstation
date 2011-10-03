@@ -19,7 +19,7 @@
 		usr.whisper("STI KALY")
 	//	usr.spellvoice()
 
-		var/obj/overlay/B = new /obj/overlay( M.loc )
+		var/obj/effects/overlay/B = new /obj/effects/overlay( M.loc )
 		B.icon_state = "blspell"
 		B.icon = 'wizard.dmi'
 		B.name = "spell"
@@ -54,7 +54,7 @@
 
 	for (var/mob/living/M as mob in oview())
 		spawn(0)
-			var/obj/overlay/A = new /obj/overlay( usr.loc )
+			var/obj/effects/overlay/A = new /obj/effects/overlay( usr.loc )
 			A.icon_state = "magicm"
 			A.icon = 'wizard.dmi'
 			A.name = "a magic missile"
@@ -65,7 +65,7 @@
 			for(i=0, i<20, i++)
 				if (!istype(M)) //it happens sometimes --rastaf0
 					break
-				var/obj/overlay/B = new /obj/overlay( A.loc )
+				var/obj/effects/overlay/B = new /obj/effects/overlay( A.loc )
 				B.icon_state = "magicmd"
 				B.icon = 'wizard.dmi'
 				B.name = "trail"
@@ -126,7 +126,7 @@
 
 //FORCE WALL
 
-/obj/forcefield
+/obj/effects/forcefield
 	desc = "A space wizard's magic wall."
 	name = "FORCEWALL"
 	icon = 'effects.dmi'
@@ -167,7 +167,7 @@
 	usr.whisper("TARCOL MINTI ZHERI")
 //	usr.spellvoice()
 
-	forcefield =  new /obj/forcefield(locate(usr.x,usr.y,usr.z))
+	forcefield =  new /obj/effects/forcefield(locate(usr.x,usr.y,usr.z))
 	spawn (300)
 		del (forcefield)
 	return
@@ -190,7 +190,7 @@
 	usr.say("ONI SOMA")
 	//	usr.spellvoice()
 
-	var/obj/overlay/A = new /obj/overlay( usr.loc )
+	var/obj/effects/overlay/A = new /obj/effects/overlay( usr.loc )
 	A.icon_state = "fireball"
 	A.icon = 'wizard.dmi'
 	A.name = "a fireball"
@@ -401,7 +401,7 @@
 	if(H.stat) return
 	spawn(0)
 		var/mobloc = get_turf(H.loc)
-		var/obj/dummy/spell_jaunt/holder = new /obj/dummy/spell_jaunt( mobloc )
+		var/obj/effects/dummy/spell_jaunt/holder = new /obj/effects/dummy/spell_jaunt( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 		animation.name = "water"
 		animation.density = 0
@@ -431,7 +431,7 @@
 		del(animation)
 		del(holder)
 /*
-/obj/dummy/spell_jaunt
+/obj/effects/dummy/spell_jaunt
 	name = "water"
 	icon = 'effects.dmi'
 	icon_state = "nothing"
@@ -439,7 +439,7 @@
 	density = 0
 	anchored = 1
 
-/obj/dummy/spell_jaunt/relaymove(var/mob/user, direction)
+/obj/effects/dummy/spell_jaunt/relaymove(var/mob/user, direction)
 	if (!src.canmove) return
 	switch(direction)
 		if(NORTH)
@@ -465,9 +465,9 @@
 	src.canmove = 0
 	spawn(2) src.canmove = 1
 
-/obj/dummy/spell_jaunt/ex_act(blah)
+/obj/effects/dummy/spell_jaunt/ex_act(blah)
 	return
-/obj/dummy/spell_jaunt/bullet_act(blah,blah)
+/obj/effects/dummy/spell_jaunt/bullet_act(blah,blah)
 	return
 */
 //MUTATE

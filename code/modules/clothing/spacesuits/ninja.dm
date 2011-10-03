@@ -59,6 +59,6 @@
 		//Onboard AI related variables.
 		mob/living/silicon/ai/AI//If there is an AI inside the suit.
 		obj/item/device/paicard/pai//A slot for a pAI device
-		obj/overlay/hologram//Is the AI hologram on or off? Visible only to the wearer of the suit. This works by attaching an image to a blank overlay.
+		obj/effects/overlay/hologram//Is the AI hologram on or off? Visible only to the wearer of the suit. This works by attaching an image to a blank overlay.
 		flush = 0//If an AI purge is in progress.
 		s_control = 1//If user in control of the suit.

@@ -1,4 +1,4 @@
-/obj/pressure_plate
+/obj/effects/pressure_plate
 	name = "pressure plate"
 	desc = "A pressure plate that triggers a trap or a few of them."
 	density = 0
@@ -6,32 +6,32 @@
 	var/list/connected_traps = list() //actual references to the connected traps. leave empty, it is generated at runtime from connected_traps_names
 	var/trigger_type = "mob and obj" //can be "mob", "obj" or "mob and obj", the only moveable types
 
-/obj/pressure_plate/New()
+/obj/effects/pressure_plate/New()
 	..()
 	src:visibility = 0
 	refresh()
 
-/obj/pressure_plate/verb/refresh()
+/obj/effects/pressure_plate/verb/refresh()
 	set name = "Refresh Pressure Plate Links"
 	set category = "Object"
 	set src in view()
 	connected_traps = list() //emptying the list first
 	for(var/trap_name in connected_traps_names)
-		for(var/obj/trap/the_trap in world)
+		for(var/obj/effects/trap/the_trap in world)
 			if(the_trap.name == trap_name)
 				connected_traps += the_trap //adding the trap with the matching name
 
-/obj/pressure_plate/HasEntered(atom/victim as mob|obj)
+/obj/effects/pressure_plate/HasEntered(atom/victim as mob|obj)
 	if(victim.density && (trigger_type == "mob and obj" || (trigger_type == "mob" && istype(victim,/mob)) || (trigger_type == "obj" && istype(victim,/obj))))
-		for(var/obj/trap/T in connected_traps)
+		for(var/obj/effects/trap/T in connected_traps)
 			T.trigger(victim)
 
-/obj/pressure_plate/Bumped(atom/victim as mob|obj)
+/obj/effects/pressure_plate/Bumped(atom/victim as mob|obj)
 	if(victim.density && (trigger_type == "mob and obj" || (trigger_type == "mob" && istype(victim,/mob)) || (trigger_type == "obj" && istype(victim,/obj))))
-		for(var/obj/trap/T in connected_traps)
+		for(var/obj/effects/trap/T in connected_traps)
 			T.trigger(victim)
 
-/obj/trap //has three subtypes - /aoe, /area (ie affects an entire area), /single (only the victim is affected)
+/obj/effects/trap //has three subtypes - /aoe, /area (ie affects an entire area), /single (only the victim is affected)
 	name = "trap"
 	desc = "It's a trap!"
 	density = 0
@@ -40,33 +40,33 @@
 	var/target_type = "mob" //if it targets mobs, turfs or objs
 	var/include_dense = 1 //if it includes dense targets in the aoe (may be important for some reason). you'll probably want to change it to 1 if you target mobs or objs
 
-/obj/trap/New()
+/obj/effects/trap/New()
 	..()
 	src:visibility = 0 //seriously, it keeps saying "undefined var" when I try to do it in the define
 
-/obj/trap/HasEntered(victim as mob|obj)
+/obj/effects/trap/HasEntered(victim as mob|obj)
 	if(trigger_type == "mob and obj" || (trigger_type == "mob" && istype(victim,/mob)) || (trigger_type == "obj" && istype(victim,/obj)))
 		trigger(victim)
 
-/obj/trap/Bumped(victim as mob|obj)
+/obj/effects/trap/Bumped(victim as mob|obj)
 	if(trigger_type == "mob and obj" || (trigger_type == "mob" && istype(victim,/mob)) || (trigger_type == "obj" && istype(victim,/obj)))
 		trigger(victim)
 
-/obj/trap/proc/trigger(victim)
+/obj/effects/trap/proc/trigger(victim)
 	if(!uses)
 		return
 	uses--
 	activate(victim)
 
-/obj/trap/proc/activate()
+/obj/effects/trap/proc/activate()
 
-/obj/trap/aoe
+/obj/effects/trap/aoe
 	name = "aoe trap"
 	desc = "This trap affects a number of mobs, turfs or objs in an aoe"
 	var/aoe_radius = 3 //radius of aoe
 	var/aoe_range_or_view = "view" //if it includes all tiles in [radius] range or view
 
-/obj/trap/aoe/proc/picktargets()
+/obj/effects/trap/aoe/proc/picktargets()
 
 	var/list/targets = list()
 
@@ -104,7 +104,7 @@
 
 	return targets
 
-/obj/trap/aoe/rocksfall
+/obj/effects/trap/aoe/rocksfall
 	name = "rocks fall trap"
 	desc = "Your DM must really hate you."
 	target_type = "turf"
@@ -115,13 +115,13 @@
 	var/rocks_hit_chance = 100 //the chance for a rock to hit you
 	var/list/rocks_type = list() //what rocks might it drop on the target. with var editing, not even limited to rocks.
 
-/obj/trap/aoe/rocksfall/New()
+/obj/effects/trap/aoe/rocksfall/New()
 
 	..()
 
 	rocks_type = pick_rock_types()
 
-/obj/trap/aoe/rocksfall/proc/pick_rock_types() //since we may want subtypes of the trap with completely different rock types, which is best done this way
+/obj/effects/trap/aoe/rocksfall/proc/pick_rock_types() //since we may want subtypes of the trap with completely different rock types, which is best done this way
 
 	var/list/varieties = list()
 
@@ -132,7 +132,7 @@
 
 	return varieties
 
-/obj/trap/aoe/rocksfall/activate()
+/obj/effects/trap/aoe/rocksfall/activate()
 
 	var/list/targets = list()
 	targets = picktargets()
@@ -156,11 +156,11 @@
 				hit_loc.take_organ_damage(rand(rocks_min_dmg,rocks_max_dmg))
 				hit_loc << "A chunk of [lowertext(rock.name)] hits you in the head!"
 
-/obj/trap/single
+/obj/effects/trap/single
 	name = "single-target trap"
 	desc = "This trap targets a single movable atom, usually the one who triggered it" //usually as in I will code only those ones. if you want to add a different type of targeting, go ahead.
 
-/obj/trap/single/rockfalls
+/obj/effects/trap/single/rockfalls
 	name = "rock falls trap"
 	desc = "Your DM must really hate <b>YOU</b>."
 	trigger_type = "mob"
@@ -169,13 +169,13 @@
 	var/rock_hit_chance = 100 //the chance for the rock to hit you
 	var/list/rocks_type = list() //what rocks might it drop on the target. with var editing, not even limited to rocks.
 
-/obj/trap/single/rockfalls/New()
+/obj/effects/trap/single/rockfalls/New()
 
 	..()
 
 	rocks_type = pick_rock_types()
 
-/obj/trap/single/rockfalls/proc/pick_rock_types() //since we may want subtypes of the trap with completely different rock types, which is best done this way
+/obj/effects/trap/single/rockfalls/proc/pick_rock_types() //since we may want subtypes of the trap with completely different rock types, which is best done this way
 
 	var/list/varieties = list()
 
@@ -186,7 +186,7 @@
 
 	return varieties
 
-/obj/trap/single/rockfalls/activate(mob/living/victim)
+/obj/effects/trap/single/rockfalls/activate(mob/living/victim)
 	var/rock_type = pick(rocks_type)
 	var/obj/item/weapon/ore/rock = new rock_type(victim:loc)
 	if (istype(victim) && prob(rock_hit_chance))
@@ -200,11 +200,11 @@
 			victim.take_organ_damage(dmg)
 		victim << "A chunk of [lowertext(rock.name)] hits you in the head!"
 
-/obj/trap/area
+/obj/effects/trap/area
 	name = "area trap"
 	desc = "This trap targets all atoms of the target_type in its area"
 
-/obj/trap/area/proc/pick_targets() //src.loc.loc should be the area
+/obj/effects/trap/area/proc/pick_targets() //src.loc.loc should be the area
 
 	var/list/targets = list()
 

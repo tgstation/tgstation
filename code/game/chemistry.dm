@@ -90,7 +90,7 @@
 		sleep(10)
 		src.smoke.start()
 
-	for(var/obj/blob/B in view(8,src))
+	for(var/obj/effects/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))
 		B.health -= damage
 		B.update()
@@ -159,7 +159,7 @@
 		sleep(10)
 		src.mustard_gas.start()
 
-	for(var/obj/blob/B in view(8,src))
+	for(var/obj/effects/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))
 		B.health -= damage
 		B.update()

@@ -108,7 +108,7 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		var/obj/overlay/pulse2 = new/obj/overlay ( src.loc )
+		var/obj/effects/overlay/pulse2 = new/obj/effects/overlay ( src.loc )
 		pulse2.icon = 'effects.dmi'
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"

@@ -1,4 +1,4 @@
-/obj/closet/firecloset/full/New()
+/obj/station_objects/closet/firecloset/full/New()
 	..()
 	sleep(4)
 	contents = list()
@@ -10,7 +10,7 @@
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/head/helmet/hardhat/red(src)
 
-/obj/closet/firecloset/New()
+/obj/station_objects/closet/firecloset/New()
 	..()
 
 	new /obj/item/clothing/suit/fire/firefighter(src)
@@ -40,7 +40,7 @@
 			new /obj/item/clothing/suit/fire/firefighter(src)
 			new /obj/item/clothing/head/helmet/hardhat/red(src)*/
 
-/obj/closet/toolcloset/New()
+/obj/station_objects/closet/toolcloset/New()
 	if(prob(40))
 		new /obj/item/clothing/suit/hazardvest(src)
 	if(prob(70))

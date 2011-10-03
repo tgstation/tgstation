@@ -33,7 +33,7 @@
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('granomalies.ogg')
 			var/turf/T = pick(blobstart)
-			var/obj/bhole/bh = new /obj/bhole( T.loc, 30 )
+			var/obj/effects/bhole/bh = new /obj/effects/bhole( T.loc, 30 )
 			spawn(rand(50, 300))
 				del(bh)
 		/*
@@ -49,7 +49,7 @@
 				if(prob(20))
 					spawn(50+rand(0,3000))
 						picked = pick(turfs)
-						var/obj/portal/P = new /obj/portal( T )
+						var/obj/effects/portal/P = new /obj/effects/portal( T )
 						P.target = picked
 						P.creator = null
 						P.icon = 'objects.dmi'
@@ -85,19 +85,19 @@
 			IonStorm()
 
 
-/obj/bhole/New()
+/obj/effects/bhole/New()
 	src.smoke = new /datum/effects/system/harmless_smoke_spread()
 	src.smoke.set_up(5, 0, src)
 	src.smoke.attach(src)
 	src:life()
 
-/obj/bhole/Bumped(atom/A)
+/obj/effects/bhole/Bumped(atom/A)
 	if (istype(A,/mob/living))
 		del(A)
 	else
 		A:ex_act(1.0)
 
-/obj/bhole/proc/life() //Oh man , this will LAG
+/obj/effects/bhole/proc/life() //Oh man , this will LAG
 
 	if (prob(10))
 		src.anchored = 0
@@ -285,11 +285,11 @@
 	while(spawncount > 1)
 		var/obj/vent = pick(vents)
 		if(prob(50))
-			new /obj/alien/facehugger (vent.loc)
+			new /obj/effects/alien/facehugger (vent.loc)
 		if(prob(50))
-			new /obj/alien/facehugger (vent.loc)
+			new /obj/effects/alien/facehugger (vent.loc)
 		if(prob(75))
-			new /obj/alien/egg (vent.loc)
+			new /obj/effects/alien/egg (vent.loc)
 		vents.Remove(vent)
 		spawncount -= 1
 	spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
@@ -319,7 +319,7 @@
 			temp_apc.overload_lighting()
 	for (var/obj/machinery/computer/prison_shuttle/temp_shuttle in world)
 		temp_shuttle.prison_break()
-	for (var/obj/secure_closet/security/temp_closet in world)
+	for (var/obj/station_objects/secure_closet/security/temp_closet in world)
 		if(istype(get_area(temp_closet), /area/prison))
 			temp_closet.locked = 0
 			temp_closet.icon_state = temp_closet.icon_closed
@@ -330,12 +330,12 @@
 	command_alert("Prison station VI is not accepting commands. Recommend station AI involvement.", "VI Alert")
 
 /proc/carp_migration() // -- Darem
-	for(var/obj/landmark/C in world)
+	for(var/obj/effects/landmark/C in world)
 		if(C.name == "carpspawn")
 			if(prob(99))
-				new /obj/critter/spesscarp(C.loc)
+				new /obj/effects/critter/spesscarp(C.loc)
 			else
-				new /obj/critter/spesscarp/elite(C.loc)
+				new /obj/effects/critter/spesscarp/elite(C.loc)
 	//sleep(100)
 	spawn(rand(3000, 6000)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
@@ -350,7 +350,7 @@
 
 		for(var/i=1,i<=lightsoutAmount,i++)
 			var/list/possibleEpicentres = list()
-			for(var/obj/landmark/newEpicentre in world)
+			for(var/obj/effects/landmark/newEpicentre in world)
 				if(newEpicentre.name == "lightsout" && !(newEpicentre in epicentreList))
 					possibleEpicentres += newEpicentre
 			if(possibleEpicentres.len)
@@ -361,7 +361,7 @@
 		if(!epicentreList.len)
 			return
 
-		for(var/obj/landmark/epicentre in epicentreList)
+		for(var/obj/effects/landmark/epicentre in epicentreList)
 			for(var/obj/machinery/power/apc/apc in range(epicentre,lightsoutRange))
 				apc.overload_lighting()
 

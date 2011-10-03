@@ -1,4 +1,4 @@
-/obj/particle_accelerator/particle_emitter
+/obj/station_objects/particle_accelerator/particle_emitter
 	name = "Particle Accelerator Emitter"
 	desc = "Part of a Particle Accelerator, might not want to stand near this end."
 	icon = 'particle_accelerator.dmi'
@@ -32,15 +32,15 @@
 		emit_particle(var/strength = 0)
 			if((src.last_shot + src.fire_delay) <= world.time)
 				src.last_shot = world.time
-				var/obj/accelerated_particle/A = null
+				var/obj/effects/accelerated_particle/A = null
 				var/turf/T = get_step(src,dir)
 				switch(strength)
 					if(0)
-						A = new/obj/accelerated_particle/weak(T, dir)
+						A = new/obj/effects/accelerated_particle/weak(T, dir)
 					if(1)
-						A = new/obj/accelerated_particle(T, dir)
+						A = new/obj/effects/accelerated_particle(T, dir)
 					if(2)
-						A = new/obj/accelerated_particle/strong(T, dir)
+						A = new/obj/effects/accelerated_particle/strong(T, dir)
 				if(A)
 					A.dir = src.dir
 					return 1

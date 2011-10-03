@@ -123,7 +123,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		client.update_admins(rank)
 	if(iscultist(corpse) && corpse.ajourn==1 && corpse.stat!=2) //checks if it's an astral-journeying cultistm if it is and he's not on an astral journey rune, re-entering won't work
 		var/S=0
-		for(var/obj/rune/R in world)
+		for(var/obj/effects/rune/R in world)
 			if(corpse.loc==R.loc && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself)
 				S=1
 		if(!S)

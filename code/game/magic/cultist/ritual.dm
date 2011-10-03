@@ -50,7 +50,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	wordhide=pick(runewords)
 	runewords-=wordhide
 
-/obj/rune
+/obj/effects/rune
 	anchored = 1
 	icon = 'rune.dmi'
 	icon_state = "1"
@@ -183,7 +183,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 	proc
 		fizzle()
-			if(istype(src,/obj/rune))
+			if(istype(src,/obj/effects/rune))
 				usr.say(pick("B'ADMINES SP'WNIN SH'T","IC'IN O'OC","RO'SHA'M I'SA GRI'FF'N ME'AI","TOX'IN'S O'NM FI'RAH","IA BL'AME TOX'IN'S","FIR'A NON'AN RE'SONA","A'OI I'RS ROUA'GE","LE'OAN JU'STA SP'A'C Z'EE SH'EF","IA PT'WOBEA'RD, IA A'DMI'NEH'LP"))
 			else
 				usr.whisper(pick("B'ADMINES SP'WNIN SH'T","IC'IN O'OC","RO'SHA'M I'SA GRI'FF'N ME'AI","TOX'IN'S O'NM FI'RAH","IA BL'AME TOX'IN'S","FIR'A NON'AN RE'SONA","A'OI I'RS ROUA'GE","LE'OAN JU'STA SP'A'C Z'EE SH'EF","IA PT'WOBEA'RD, IA A'DMI'NEH'LP"))
@@ -467,7 +467,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			runerandom()
 		if(iscultist(user))
 			var/C = 0
-			for(var/obj/rune/N in world)
+			for(var/obj/effects/rune/N in world)
 				C++
 			if (!istype(user.loc,/turf))
 				user << "\red You do not have enough space to write a proper rune."
@@ -533,7 +533,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			user.take_overall_damage(1)
 			if(do_after(user, 50))
 				var/mob/living/carbon/human/H = user
-				var/obj/rune/R = new /obj/rune(user.loc)
+				var/obj/effects/rune/R = new /obj/effects/rune(user.loc)
 				user << "\red You finish drawing the arcane markings of the Geometer."
 				R.word1 = w1
 				R.word2 = w2
@@ -582,7 +582,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				user << "\red You do not have enough space to write a proper rune."
 			var/list/runes = list("teleport", "itemport", "tome", "convert", "tear in reality", "emp", "drain", "seer", "raise", "obscure", "reveal", "astral journey", "manifest", "imbue talisman", "sacrifice", "wall", "freedom", "cultsummon", "deafen", "blind", "bloodboil", "communicate", "stun")
 			r = input("Choose a rune to scribe", "Rune Scribing") in runes //not cancellable.
-			var/obj/rune/R = new /obj/rune
+			var/obj/effects/rune/R = new /obj/effects/rune
 			if(istype(user, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = user
 				R.blood_DNA = H.dna.unique_enzymes
@@ -770,23 +770,23 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if(iscultist(user))
 			switch(imbue)
 				if("newtome")
-					call(/obj/rune/proc/tomesummon)()
+					call(/obj/effects/rune/proc/tomesummon)()
 				if("armor")
-					call(/obj/rune/proc/armor)()
+					call(/obj/effects/rune/proc/armor)()
 				if("emp")
-					call(/obj/rune/proc/emp)(usr.loc,3)
+					call(/obj/effects/rune/proc/emp)(usr.loc,3)
 				if("conceal")
-					call(/obj/rune/proc/obscure)(2)
+					call(/obj/effects/rune/proc/obscure)(2)
 				if("revealrunes")
-					call(/obj/rune/proc/revealrunes)(src)
+					call(/obj/effects/rune/proc/revealrunes)(src)
 				if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
-					call(/obj/rune/proc/teleport)(imbue)
+					call(/obj/effects/rune/proc/teleport)(imbue)
 				if("communicate")
-					call(/obj/rune/proc/communicate)()
+					call(/obj/effects/rune/proc/communicate)()
 				if("deafen")
-					call(/obj/rune/proc/deafen)()
+					call(/obj/effects/rune/proc/deafen)()
 				if("blind")
-					call(/obj/rune/proc/blind)()
+					call(/obj/effects/rune/proc/blind)()
 				if("runestun")
 					user << "\red To use this talisman, attack your target directly."
 					return
@@ -804,7 +804,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if(iscultist(user))
 			if(imbue == "runestun")
 				user.take_organ_damage(5, 0)
-				call(/obj/rune/proc/runestun)(T)
+				call(/obj/effects/rune/proc/runestun)(T)
 				del(src)
 			else
 				..()   ///If its some other talisman, use the generic attack code, is this supposed to work this way?

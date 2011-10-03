@@ -1,29 +1,29 @@
-/obj/closet/alter_health()
+/obj/station_objects/closet/alter_health()
 	return get_turf(src)
 
-/obj/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/station_objects/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0 || wall_mounted)) return 1
 
 	return opened
 
-/obj/closet/proc/can_open()
+/obj/station_objects/closet/proc/can_open()
 	if (src.welded)
 		return 0
 	return 1
 
-/obj/closet/proc/can_close()
-	for(var/obj/closet/closet in get_turf(src))
+/obj/station_objects/closet/proc/can_close()
+	for(var/obj/station_objects/closet/closet in get_turf(src))
 		if(closet != src)
 			return 0
-	for(var/obj/secure_closet/closet in get_turf(src))
+	for(var/obj/station_objects/secure_closet/closet in get_turf(src))
 		return 0
 	return 1
 
-/obj/closet/proc/dump_contents()
+/obj/station_objects/closet/proc/dump_contents()
 	for (var/obj/item/I in src)
 		I.loc = src.loc
 
-	for (var/obj/overlay/o in src) //REMOVE THIS
+	for (var/obj/effects/overlay/o in src) //REMOVE THIS
 		o.loc = src.loc
 
 	for(var/mob/M in src)
@@ -32,7 +32,7 @@
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
 
-/obj/closet/proc/open()
+/obj/station_objects/closet/proc/open()
 	if (src.opened)
 		return 0
 
@@ -46,7 +46,7 @@
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
 	return 1
 
-/obj/closet/proc/close()
+/obj/station_objects/closet/proc/close()
 	if (!src.opened)
 		return 0
 	if (!src.can_close())
@@ -56,7 +56,7 @@
 		if (!I.anchored)
 			I.loc = src
 
-	for (var/obj/overlay/o in src.loc) //REMOVE THIS
+	for (var/obj/effects/overlay/o in src.loc) //REMOVE THIS
 		if (!o.anchored)
 			o.loc = src
 
@@ -76,13 +76,13 @@
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
 	return 1
 
-/obj/closet/proc/toggle()
+/obj/station_objects/closet/proc/toggle()
 	if (src.opened)
 		return src.close()
 	return src.open()
 
 // this should probably use dump_contents()
-/obj/closet/ex_act(severity)
+/obj/station_objects/closet/ex_act(severity)
 	switch(severity)
 		if (1)
 			for (var/atom/movable/A as mob|obj in src)
@@ -102,7 +102,7 @@
 					ex_act(severity)
 				del(src)
 
-/obj/closet/bullet_act(var/obj/item/projectile/Proj)
+/obj/station_objects/closet/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	if(health <= 0)
@@ -113,22 +113,22 @@
 	return
 
 // this should probably use dump_contents()
-/obj/closet/blob_act()
+/obj/station_objects/closet/blob_act()
 	if (prob(75))
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		del(src)
 
-/obj/closet/meteorhit(obj/O as obj)
+/obj/station_objects/closet/meteorhit(obj/O as obj)
 	if (O.icon_state == "flaming")
 		src.dump_contents()
 		del(src)
 
-/obj/closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/station_objects/closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/packageWrap))
 		var/obj/item/weapon/packageWrap/O = W
 		if (O.amount > 3)
-			var/obj/bigDelivery/P = new /obj/bigDelivery(get_turf(src.loc))
+			var/obj/effects/bigDelivery/P = new /obj/effects/bigDelivery(get_turf(src.loc))
 			P.wrapped = src
 			src.close()
 			src.welded = 1
@@ -167,7 +167,7 @@
 		src.attack_hand(user)
 	return
 
-/obj/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+/obj/station_objects/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!user.can_use_hands())
 		return
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
@@ -178,7 +178,7 @@
 		return
 	if(!src.opened)
 		return
-	if(istype(O, /obj/secure_closet) || istype(O, /obj/closet))
+	if(istype(O, /obj/station_objects/secure_closet) || istype(O, /obj/station_objects/closet))
 		return
 	if(isrobot(user))
 		return
@@ -187,9 +187,9 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/closet
+/obj/station_objects/closet
 	var/lastbang
-/obj/closet/relaymove(mob/user as mob)
+/obj/station_objects/closet/relaymove(mob/user as mob)
 	if (user.stat)
 		return
 
@@ -200,18 +200,18 @@
 			for (var/mob/M in hearers(src, null))
 				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
 
-/obj/closet/Move()
+/obj/station_objects/closet/Move()
 	..()
 	for(var/mob/M in contents)
-		for(var/obj/speech_bubble/B in range(1, src))
+		for(var/obj/effects/speech_bubble/B in range(1, src))
 			if(B.parent == M)
 				B.loc = loc
 
 
-/obj/closet/attack_paw(mob/user as mob)
+/obj/station_objects/closet/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/closet/attack_hand(mob/user as mob)
+/obj/station_objects/closet/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 
 	if (!src.toggle())

@@ -23,7 +23,7 @@ Deathnettle
 	if (istype(A, /obj/item/weapon/storage/backpack ))
 		return
 
-	else if (locate (/obj/table, src.loc))
+	else if (locate (/obj/station_objects/table, src.loc))
 		return
 
 	else if (src.reagents.total_volume < 1)
@@ -37,11 +37,11 @@ Deathnettle
 		if (istype(A, /obj/machinery/hydroponics)) // We are targeting hydrotray
 			return
 
-		else if (istype(A, /obj/blob)) // blob damage in blob code
+		else if (istype(A, /obj/effects/blob)) // blob damage in blob code
 			return
 
 		else
-			var/obj/decal/D = new/obj/decal/(get_turf(src)) // Targeting elsewhere
+			var/obj/effects/decal/D = new/obj/effects/decal/(get_turf(src)) // Targeting elsewhere
 			D.name = "chemicals"
 			D.icon = 'chemical.dmi'
 			D.icon_state = "weedpuff"

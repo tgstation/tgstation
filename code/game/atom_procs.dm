@@ -136,9 +136,9 @@
 			var/list/objsonturf = range(0,src)
 			var/i
 			for(i=1, i<=objsonturf.len, i++)
-				if(istype(objsonturf[i],/obj/decal/cleanable/blood))
+				if(istype(objsonturf[i],/obj/effects/decal/cleanable/blood))
 					return
-			var/obj/decal/cleanable/blood/this = new /obj/decal/cleanable/blood(source2)
+			var/obj/effects/decal/cleanable/blood/this = new /obj/effects/decal/cleanable/blood(source2)
 			this.blood_DNA = M.dna.unique_enzymes
 			this.blood_type = M.b_type
 			for(var/datum/disease/D in M.viruses)
@@ -161,7 +161,7 @@
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob)
 	if( istype(src, /turf/simulated) )
-		var/obj/decal/cleanable/vomit/this = new /obj/decal/cleanable/vomit(src)
+		var/obj/effects/decal/cleanable/vomit/this = new /obj/effects/decal/cleanable/vomit(src)
 		for(var/datum/disease/D in M.viruses)
 			var/datum/disease/newDisease = new D.type
 			this.viruses += newDisease
@@ -172,7 +172,7 @@
 	if( istype(M, /mob/living/carbon/monkey) )
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source1 = src
-			var/obj/decal/cleanable/blood/this = new /obj/decal/cleanable/blood(source1)
+			var/obj/effects/decal/cleanable/blood/this = new /obj/effects/decal/cleanable/blood(source1)
 			this.blood_DNA = M.dna.unique_enzymes
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
@@ -182,7 +182,7 @@
 	else if( istype(M, /mob/living/carbon/alien ))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
-			var/obj/decal/cleanable/xenoblood/this = new /obj/decal/cleanable/xenoblood(source2)
+			var/obj/effects/decal/cleanable/xenoblood/this = new /obj/effects/decal/cleanable/xenoblood(source2)
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
@@ -191,7 +191,7 @@
 	else if( istype(M, /mob/living/silicon/robot ))
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
-			var/obj/decal/cleanable/oil/this = new /obj/decal/cleanable/oil(source2)
+			var/obj/effects/decal/cleanable/oil/this = new /obj/effects/decal/cleanable/oil(source2)
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease

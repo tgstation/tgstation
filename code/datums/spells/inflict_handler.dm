@@ -1,4 +1,4 @@
-/obj/proc_holder/spell/targeted/inflict_handler
+/obj/effects/proc_holder/spell/targeted/inflict_handler
 	name = "Inflict Handler"
 	desc = "This spell blinds and/or destroys/damages/heals and/or weakens/stuns the target."
 
@@ -16,7 +16,7 @@
 
 	var/destroys = "none" //can be "none", "gib" or "disintegrate"
 
-/obj/proc_holder/spell/targeted/inflict_handler/cast(list/targets)
+/obj/effects/proc_holder/spell/targeted/inflict_handler/cast(list/targets)
 
 	for(var/mob/living/target in targets)
 		switch(destroys)

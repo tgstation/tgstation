@@ -672,7 +672,7 @@ datum
 			required_other = 4
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 
-				var/list/critters = typesof(/obj/critter) - /obj/critter // list of possible critters
+				var/list/critters = typesof(/obj/effects/critter) - /obj/effects/critter // list of possible critters
 
 				playsound(get_turf_loc(holder.my_atom), 'phasein.ogg', 100, 1)
 
@@ -681,7 +681,7 @@ datum
 
 				for(var/i = 1, i <= created_volume, i++)
 					var/chosen = pick(critters)
-					var/obj/critter/C = new chosen
+					var/obj/effects/critter/C = new chosen
 					C.loc = get_turf_loc(holder.my_atom)
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)

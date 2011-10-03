@@ -1,4 +1,4 @@
-/obj/grille
+/obj/station_objects/grille
 	desc = "A piece of metal with evenly spaced gridlike holes in it. Blocks large object but lets small items, gas, or energy beams through. Strangely enough these grilles also lets meteors pass through them, whether they be small or huge station breaking death stones."
 	name = "grille"
 	icon = 'structures.dmi'
@@ -147,7 +147,7 @@
 		if(!prob(prb))
 			return 0
 		var/turf/T = get_turf(src)
-		var/obj/cable/C = T.get_cable_node()
+		var/obj/station_objects/cable/C = T.get_cable_node()
 		if(C)
 			if (electrocute_mob(user, C, src))
 				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread

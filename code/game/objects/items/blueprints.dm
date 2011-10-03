@@ -3,13 +3,13 @@
 	var/const/AREA_STATION = 1
 	var/const/AREA_SPACE =   2
 	var/const/AREA_SPECIAL = 3
-	
+
 	var/const/BORDER_ERROR = 0
 	var/const/BORDER_NONE = 1
 	var/const/BORDER_BETWEEN =   2
 	var/const/BORDER_2NDTILE = 3
 	var/const/BORDER_SPACE = 4
-	
+
 	var/const/ROOM_ERR_LOLWAT = 0
 	var/const/ROOM_ERR_SPACE = -1
 	var/const/ROOM_ERR_TOOLARGE = -2
@@ -20,7 +20,7 @@
 		return
 	interact()
 	return
-	
+
 /obj/item/blueprints/Topic(href, href_list)
 	..()
 	if ((usr.restrained() || usr.stat || usr.equipped() != src))
@@ -93,7 +93,7 @@ move an amendment</a> to the drawing.</p>
 		if ( istype(A,type) )
 			return AREA_SPECIAL
 	return AREA_STATION
-	
+
 /obj/item/blueprints/proc/create_area()
 	//world << "DEBUG: create_area"
 	var/res = detect_room(get_turf_loc(usr))
@@ -184,8 +184,8 @@ move an amendment</a> to the drawing.</p>
 		return BORDER_2NDTILE
 	if (!istype(T2, /turf/simulated))
 		return BORDER_BETWEEN
-		
-	for (var/obj/window/W in T2)
+
+	for (var/obj/station_objects/window/W in T2)
 		if(turn(dir,180) == W.dir)
 			return BORDER_BETWEEN
 		if (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
@@ -195,11 +195,11 @@ move an amendment</a> to the drawing.</p>
 			return BORDER_BETWEEN
 	if (locate(/obj/machinery/door) in T2)
 		return BORDER_2NDTILE
-	if (locate(/obj/falsewall) in T2)
+	if (locate(/obj/station_objects/falsewall) in T2)
 		return BORDER_2NDTILE
-	if (locate(/obj/falserwall) in T2)
+	if (locate(/obj/station_objects/falserwall) in T2)
 		return BORDER_2NDTILE
-	
+
 	return BORDER_NONE
 
 /obj/item/blueprints/proc/detect_room(var/turf/first)
@@ -212,7 +212,7 @@ move an amendment</a> to the drawing.</p>
 		pending -= T
 		for (var/dir in cardinal)
 			var/skip = 0
-			for (var/obj/window/W in T)
+			for (var/obj/station_objects/window/W in T)
 				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
 					skip = 1; break
 			if (skip) continue
@@ -263,5 +263,5 @@ move an amendment</a> to the drawing.</p>
 		if (!check_apc(A))
 			world << "DEBUG: @[machine.x],[machine.y],[machine.z] ([A.name]) machine \"[machine.name]\" ([machine.type]) work without APC!"
 	world << "\red END ====="
- 
+
 */

@@ -1053,13 +1053,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	user.db_click(name, using)
 	return
 
-/obj/equip_e/process()
+/obj/effects/equip_e/process()
 	return
 
-/obj/equip_e/proc/done()
+/obj/effects/equip_e/proc/done()
 	return
 
-/obj/equip_e/New()
+/obj/effects/equip_e/New()
 	if (!ticker)
 		del(src)
 		return
@@ -1316,7 +1316,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return 1
 
 
-/mob/proc/ret_grab(obj/list_container/mobl/L as obj, flag)
+/mob/proc/ret_grab(obj/effects/list_container/mobl/L as obj, flag)
 	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
 		if (!( L ))
 			return null
@@ -1324,7 +1324,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return L.container
 	else
 		if (!( L ))
-			L = new /obj/list_container/mobl( null )
+			L = new /obj/effects/list_container/mobl( null )
 			L.container += src
 			L.master = src
 		if (istype(l_hand, /obj/item/weapon/grab))
@@ -1727,7 +1727,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/can_use_hands()
 	if(handcuffed)
 		return 0
-	if(buckled && istype(buckled, /obj/stool/bed)) // buckling does not restrict hands
+	if(buckled && istype(buckled, /obj/station_objects/stool/bed)) // buckling does not restrict hands
 		return 0
 	return ..()
 
@@ -1810,16 +1810,16 @@ Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
 	animation.master = src
 	if(ishuman(src))
 		flick("dust-h", animation)
-		new /obj/decal/remains/human(loc)
+		new /obj/effects/decal/remains/human(loc)
 	else if(ismonkey(src))
 		flick("dust-m", animation)
-		new /obj/decal/remains/human(loc)
+		new /obj/effects/decal/remains/human(loc)
 	else if(isalien(src))
 		flick("dust-a", animation)
-		new /obj/decal/remains/xeno(loc)
+		new /obj/effects/decal/remains/xeno(loc)
 	else
 		flick("dust-r", animation)
-		new /obj/decal/remains/robot(loc)
+		new /obj/effects/decal/remains/robot(loc)
 
 	sleep(15)
 	if(isrobot(src)&&src:mmi)//Is a robot and it has an mmi.
@@ -1913,7 +1913,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if (spell_list.len)
 
-		for(var/obj/proc_holder/spell/S in spell_list)
+		for(var/obj/effects/proc_holder/spell/S in spell_list)
 			switch(S.charge_type)
 				if("recharge")
 					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)

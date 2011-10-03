@@ -19,7 +19,7 @@
 	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
 
 
-	var/obj/cable/attached		// the attached cable
+	var/obj/station_objects/cable/attached		// the attached cable
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(istype(I, /obj/item/weapon/screwdriver))

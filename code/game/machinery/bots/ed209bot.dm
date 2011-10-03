@@ -700,7 +700,7 @@ Auto Patrol: []"},
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/decal/cleanable/oil(src.loc)
+	new /obj/effects/decal/cleanable/oil(src.loc)
 	del(src)
 
 
@@ -751,7 +751,7 @@ Auto Patrol: []"},
 	if(severity==2 && prob(70))
 		..(severity-1)
 	else
-		var/obj/overlay/pulse2 = new/obj/overlay ( src.loc )
+		var/obj/effects/overlay/pulse2 = new/obj/effects/overlay ( src.loc )
 		pulse2.icon = 'effects.dmi'
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"

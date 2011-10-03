@@ -19,12 +19,12 @@
 
 		var/dirn = get_dir(user, src)
 
-		for(var/obj/cable/LC in T)
+		for(var/obj/station_objects/cable/LC in T)
 			if( (LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0) )
 				user << "There's already a cable at that position."
 				return
 
-		var/obj/cable/NC = new(T)
+		var/obj/station_objects/cable/NC = new(T)
 
 		NC.cableColor(coil.color)
 
@@ -83,7 +83,7 @@
 
 // the power cable object
 
-/obj/cable/New()
+/obj/station_objects/cable/New()
 	..()
 
 
@@ -100,7 +100,7 @@
 	if(level==1) hide(T.intact)
 
 
-/obj/cable/Del()		// called when a cable is deleted
+/obj/station_objects/cable/Del()		// called when a cable is deleted
 
 	if(!defer_powernet_rebuild)	// set if network will be rebuilt manually
 
@@ -111,13 +111,13 @@
 		if(Debug) diary << "Defered cable deletion at [x],[y]: #[netnum]"
 	..()													// then go ahead and delete the cable
 
-/obj/cable/hide(var/i)
+/obj/station_objects/cable/hide(var/i)
 
 	if(level == 1 && istype(loc, /turf))
 		invisibility = i ? 101 : 0
 	updateicon()
 
-/obj/cable/proc/updateicon()
+/obj/station_objects/cable/proc/updateicon()
 	if(invisibility)
 		icon_state = "[d1]-[d2]-f"
 	else
@@ -125,19 +125,19 @@
 
 
 // returns the powernet this cable belongs to
-/obj/cable/proc/get_powernet()
+/obj/station_objects/cable/proc/get_powernet()
 	var/datum/powernet/PN			// find the powernet
 	if(netnum && powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
 	return PN
 
-/obj/cable/attack_hand(mob/user)
+/obj/station_objects/cable/attack_hand(mob/user)
 	if(ishuman(user))
 		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
 			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("WIRE",src,user:wear_suit)
 	return
 
-/obj/cable/attackby(obj/item/W, mob/user)
+/obj/station_objects/cable/attackby(obj/item/W, mob/user)
 
 	var/turf/T = src.loc
 	if(T.intact)
@@ -189,7 +189,7 @@
 
 // shock the user with probability prb
 
-/obj/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
+/obj/station_objects/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
 	if(!prob(prb))
 		return 0
 	if (electrocute_mob(user, powernets[src.netnum], src, siemens_coeff))
@@ -200,7 +200,7 @@
 	else
 		return 0
 
-/obj/cable/ex_act(severity)
+/obj/station_objects/cable/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			del(src)
@@ -320,12 +320,12 @@
 		else
 			dirn = get_dir(F, user)
 
-		for(var/obj/cable/LC in F)
+		for(var/obj/station_objects/cable/LC in F)
 			if((LC.d1 == dirn && LC.d2 == 0 ) || ( LC.d2 == dirn && LC.d1 == 0))
 				user << "There's already a cable at that position."
 				return
 
-		var/obj/cable/C = new(F)
+		var/obj/station_objects/cable/C = new(F)
 
 		C.cableColor(color)
 
@@ -355,7 +355,7 @@
 
 // called when cable_coil is click on an installed obj/cable
 
-/obj/item/weapon/cable_coil/proc/cable_join(obj/cable/C, mob/user)
+/obj/item/weapon/cable_coil/proc/cable_join(obj/station_objects/cable/C, mob/user)
 
 	var/turf/U = user.loc
 	if(!isturf(U))
@@ -386,12 +386,12 @@
 
 			var/fdirn = turn(dirn, 180)		// the opposite direction
 
-			for(var/obj/cable/LC in U)		// check to make sure there's not a cable there already
+			for(var/obj/station_objects/cable/LC in U)		// check to make sure there's not a cable there already
 				if(LC.d1 == fdirn || LC.d2 == fdirn)
 					user << "There's already a cable at that position."
 					return
 
-			var/obj/cable/NC = new(U)
+			var/obj/station_objects/cable/NC = new(U)
 			NC.cableColor(color)
 
 			NC.d1 = 0
@@ -422,7 +422,7 @@
 			nd2 = C.d2
 
 
-		for(var/obj/cable/LC in T)		// check to make sure there's no matching cable
+		for(var/obj/station_objects/cable/LC in T)		// check to make sure there's no matching cable
 			if(LC == C)			// skip the cable we're interacting with
 				continue
 			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no cable matches either direction
@@ -451,13 +451,13 @@
 
 		return
 
-/obj/cable/proc/mergeConnectedNetworks(var/direction)
+/obj/station_objects/cable/proc/mergeConnectedNetworks(var/direction)
 	var/turf/TB
 	if((d1 == direction || d2 == direction) != 1)
 		return
 	TB = get_step(src, direction)
 
-	for(var/obj/cable/TC in TB)
+	for(var/obj/station_objects/cable/TC in TB)
 
 		if(!TC)
 			continue
@@ -482,10 +482,10 @@
 
 				PN.merge_powernets(TPN)
 
-/obj/cable/proc/mergeConnectedNetworksOnTurf()
+/obj/station_objects/cable/proc/mergeConnectedNetworksOnTurf()
 
 
-	for(var/obj/cable/C in loc)
+	for(var/obj/station_objects/cable/C in loc)
 
 
 		if(!C)
@@ -545,7 +545,7 @@
 
 		PN.merge_powernets(TPN)
 
-obj/cable/proc/cableColor(var/colorC)
+obj/station_objects/cable/proc/cableColor(var/colorC)
 	var/color_n = "red"
 	if(colorC)
 		color_n = colorC

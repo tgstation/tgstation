@@ -1,5 +1,5 @@
 
-/obj/critter
+/obj/effects/critter
 
 	New()
 		spawn(0) process()//I really dont like this much but it seems to work well
@@ -123,11 +123,11 @@
 				break
 
 		if(!src.attack)
-			for(var/obj/critter/C in view(src.seekrange,src))
-				if(istype(C, /obj/critter) && !src.atkcritter) continue
+			for(var/obj/effects/critter/C in view(src.seekrange,src))
+				if(istype(C, /obj/effects/critter) && !src.atkcritter) continue
 				if(istype(C, /obj/mecha) && !src.atkmech) continue
 				if(C.health <= 0) continue
-				if(istype(C, /obj/critter) && src.atkcritter)
+				if(istype(C, /obj/effects/critter) && src.atkcritter)
 					if((istype(C, src.type) && !src.atksame) || (C == src))	continue
 					src.attack = 1
 				if(istype(C, /obj/mecha) && src.atkmech)	src.attack = 1
@@ -193,7 +193,7 @@
 
 
 /*TODO: Figure out how to handle special things like this dont really want to give it to every critter
-/obj/critter/proc/CritterTeleport(var/telerange, var/dospark, var/dosmoke)
+/obj/effects/critter/proc/CritterTeleport(var/telerange, var/dospark, var/dosmoke)
 	if (!src.alive) return
 	var/list/randomturfs = new/list()
 	for(var/turf/T in orange(src, telerange))

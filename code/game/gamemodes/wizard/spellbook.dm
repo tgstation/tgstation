@@ -100,7 +100,7 @@
 				else if(spell_type == "object")
 					var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock")
 					var/already_knows = 0
-					for(var/obj/proc_holder/spell/aspell in usr.spell_list)
+					for(var/obj/effects/proc_holder/spell/aspell in usr.spell_list)
 						if(available_spells[text2num(href_list["spell_choice"])] == aspell.name)
 							already_knows = 1
 							src.temp = "You already know that spell."
@@ -109,43 +109,43 @@
 					if(!already_knows)
 						switch(href_list["spell_choice"])
 							if ("1")
-								usr.spell_list += new /obj/proc_holder/spell/targeted/projectile/magic_missile(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/targeted/projectile/magic_missile(usr)
 								src.temp = "This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage."
 							if ("2")
-								usr.spell_list += new /obj/proc_holder/spell/targeted/projectile/fireball(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/targeted/projectile/fireball(usr)
 								src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
 							if ("3")
-								usr.spell_list += new /obj/proc_holder/spell/targeted/inflict_handler/disintegrate(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/targeted/inflict_handler/disintegrate(usr)
 								src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
 							if ("4")
-								usr.spell_list += new /obj/proc_holder/spell/targeted/emplosion/disable_tech(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/targeted/emplosion/disable_tech(usr)
 								src.temp = "This spell disables all weapons, cameras and most other technology in range."
 							if ("5")
-								usr.spell_list += new /obj/proc_holder/spell/targeted/smoke(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/targeted/smoke(usr)
 								src.temp = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
 							if ("6")
-								usr.spell_list += new /obj/proc_holder/spell/targeted/trigger/blind(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/targeted/trigger/blind(usr)
 								src.temp = "This spell temporarly blinds a single person and does not require wizard garb."
 							if ("7")
-								usr.spell_list += new /obj/proc_holder/spell/targeted/mind_transfer(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/targeted/mind_transfer(usr)
 								src.temp = "This spell allows the user to switch bodies with a target. Careful to not lose your memory in the process."
 							if ("8")
-								usr.spell_list += new /obj/proc_holder/spell/aoe_turf/conjure/forcewall(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/aoe_turf/conjure/forcewall(usr)
 								src.temp = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
 							if ("9")
-								usr.spell_list += new /obj/proc_holder/spell/targeted/turf_teleport/blink(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/targeted/turf_teleport/blink(usr)
 								src.temp = "This spell randomly teleports you a short distance. Useful for evasion or getting into areas if you have patience."
 							if ("10")
-								usr.spell_list += new /obj/proc_holder/spell/targeted/area_teleport/teleport(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/targeted/area_teleport/teleport(usr)
 								src.temp = "This spell teleports you to a type of area of your selection. Very useful if you are in danger, but has a decent cooldown, and is unpredictable."
 							if ("11")
-								usr.spell_list += new /obj/proc_holder/spell/targeted/genetic/mutate(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/targeted/genetic/mutate(usr)
 								src.temp = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
 							if ("12")
-								usr.spell_list += new /obj/proc_holder/spell/targeted/ethereal_jaunt(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/targeted/ethereal_jaunt(usr)
 								src.temp = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
 							if ("13")
-								usr.spell_list += new /obj/proc_holder/spell/aoe_turf/knock(usr)
+								usr.spell_list += new /obj/effects/proc_holder/spell/aoe_turf/knock(usr)
 								src.temp = "This spell opens nearby doors and does not require wizard garb."
 			if (href_list["spell_choice"] == "14")
 				var/area/wizard_station/A = locate()

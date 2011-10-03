@@ -140,7 +140,7 @@
 	src.part2.Activate()
 	return
 
-/obj/decal/ash/attack_hand(mob/user as mob)
+/obj/effects/decal/ash/attack_hand(mob/user as mob)
 	usr << "\blue The ashes slip through your fingers."
 	del(src)
 	return
@@ -370,7 +370,7 @@
 	return
 
 /obj/item/assembly/rad_prox/HasProximity(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/beam))
+	if (istype(AM, /obj/effects/beam))
 		return
 	if (AM.move_speed < 12)
 		src.part2.sense()
@@ -504,7 +504,7 @@
 
 /obj/item/assembly/prox_ignite/HasProximity(atom/movable/AM as mob|obj)
 
-	if (istype(AM, /obj/beam))
+	if (istype(AM, /obj/effects/beam))
 		return
 	if (AM.move_speed < 12 && src.part1)
 		src.part1.sense()
@@ -619,7 +619,7 @@
 	return
 
 /obj/item/assembly/m_i_ptank/HasProximity(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/beam))
+	if (istype(AM, /obj/effects/beam))
 		return
 	if (AM.move_speed < 12 && src.part1)
 		src.part1.sense()

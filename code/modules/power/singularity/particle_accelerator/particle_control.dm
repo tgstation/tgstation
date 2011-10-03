@@ -11,7 +11,7 @@
 	construction_state = 0
 	active = 0
 	var
-		list/obj/particle_accelerator/connected_parts
+		list/obj/station_objects/particle_accelerator/connected_parts
 		assembled = 0
 		strength = 0
 
@@ -70,12 +70,12 @@
 
 	process()
 		if(src.active)
-			for(var/obj/particle_accelerator/particle_emitter/PE in connected_parts)
+			for(var/obj/station_objects/particle_accelerator/particle_emitter/PE in connected_parts)
 				if(PE)
 					PE.emit_particle(src.strength)
-//			for(var/obj/particle_accelerator/fuel_chamber/PF in connected_parts)
+//			for(var/obj/station_objects/particle_accelerator/fuel_chamber/PF in connected_parts)
 //				PF.doshit()
-//			for(var/obj/particle_accelerator/power_box/PB in connected_parts)
+//			for(var/obj/station_objects/particle_accelerator/power_box/PB in connected_parts)
 //				PB.doshit()
 			//finish up putting the fuel run and power use things in here
 		return
@@ -107,24 +107,24 @@
 					odir = 4
 			var/turf/T = src.loc
 			T = get_step(T,rdir)
-			if(check_part(T,/obj/particle_accelerator/fuel_chamber))
+			if(check_part(T,/obj/station_objects/particle_accelerator/fuel_chamber))
 				tally++
 			T = get_step(T,odir)
-			if(check_part(T,/obj/particle_accelerator/end_cap))
+			if(check_part(T,/obj/station_objects/particle_accelerator/end_cap))
 				tally++
 			T = get_step(T,dir)
 			T = get_step(T,dir)
-			if(check_part(T,/obj/particle_accelerator/power_box))
+			if(check_part(T,/obj/station_objects/particle_accelerator/power_box))
 				tally++
 			T = get_step(T,dir)
-			if(check_part(T,/obj/particle_accelerator/particle_emitter/center))
+			if(check_part(T,/obj/station_objects/particle_accelerator/particle_emitter/center))
 				tally++
 			T = get_step(T,ldir)
-			if(check_part(T,/obj/particle_accelerator/particle_emitter/left))
+			if(check_part(T,/obj/station_objects/particle_accelerator/particle_emitter/left))
 				tally++
 			T = get_step(T,rdir)
 			T = get_step(T,rdir)
-			if(check_part(T,/obj/particle_accelerator/particle_emitter/right))
+			if(check_part(T,/obj/station_objects/particle_accelerator/particle_emitter/right))
 				tally++
 			if(tally >= 6)
 				assembled = 1
@@ -137,7 +137,7 @@
 		check_part(var/turf/T, var/type)
 			if(!(T)||!(type))
 				return 0
-			var/obj/particle_accelerator/PA = locate(/obj/particle_accelerator) in T
+			var/obj/station_objects/particle_accelerator/PA = locate(/obj/station_objects/particle_accelerator) in T
 			if(istype(PA, type))
 				if(PA.connect_master(src))
 					if(PA.report_ready(src))

@@ -29,7 +29,7 @@
 */
 
 ///obj/machinery/the_singularitygen/Bumped(atom/A)
-//	if(istype(A,/obj/accelerated_particle))
+//	if(istype(A,/obj/effects/accelerated_particle))
 //		src.energy += A:energy
 //		return
 //	..()

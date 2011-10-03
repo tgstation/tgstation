@@ -293,7 +293,7 @@
 		handle_environment()
 
 			//If there are alien weeds on the ground then heal if needed or give some toxins
-			if(locate(/obj/alien/weeds) in loc)
+			if(locate(/obj/effects/alien/weeds) in loc)
 				if(health >= 100)
 					toxloss += 15
 					if(toxloss > max_plasma)
@@ -560,7 +560,7 @@
 
 		check_if_buckled()
 			if (src.buckled)
-				src.lying = (istype(src.buckled, /obj/stool/bed) ? 1 : 0)
+				src.lying = (istype(src.buckled, /obj/station_objects/stool/bed) ? 1 : 0)
 				if(src.lying)
 					src.drop_item()
 				src.density = 1

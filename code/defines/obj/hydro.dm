@@ -1296,7 +1296,7 @@
 
 	throw_impact(atom/hit_atom)
 		..()
-		new/obj/decal/cleanable/tomato_smudge(src.loc)
+		new/obj/effects/decal/cleanable/tomato_smudge(src.loc)
 		src.visible_message("\red [src.name] has been squashed.","\red You hear a smack.")
 		del(src)
 		return
@@ -1324,7 +1324,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	new /obj/critter/killertomato(user.loc)
+	new /obj/effects/critter/killertomato(user.loc)
 
 	del(src)
 
@@ -1481,7 +1481,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	new /obj/critter/walkingmushroom(user.loc)
+	new /obj/effects/critter/walkingmushroom(user.loc)
 
 	del(src)
 
@@ -1520,7 +1520,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user as mob)
 	if(istype(user.loc,/turf/space))
 		return
-	var/obj/glowshroom/planted = new /obj/glowshroom(user.loc)
+	var/obj/effects/glowshroom/planted = new /obj/effects/glowshroom(user.loc)
 
 	planted.delay = lifespan * 50
 	planted.endurance = endurance
@@ -1625,7 +1625,7 @@
 
 /obj/item/weapon/grown/gibtomato/New()
 	..()
-	src.gibs = new /obj/gibspawner/human(get_turf(src))
+	src.gibs = new /obj/effects/gibspawner/human(get_turf(src))
 	src.gibs.attach(src)
 	src.smoke.set_up(10, 0, usr.loc)
 */

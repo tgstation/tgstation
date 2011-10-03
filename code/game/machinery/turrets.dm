@@ -384,7 +384,7 @@
 
 
 
-/obj/turret/gun_turret
+/obj/station_objects/turret/gun_turret
 	name = "Gun Turret"
 	density = 1
 	anchored = 1

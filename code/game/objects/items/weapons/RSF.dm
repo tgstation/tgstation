@@ -49,11 +49,11 @@ RSF
 	// Change mode
 
 /obj/item/weapon/rsf/afterattack(atom/A, mob/user as mob)
-	if (!(istype(A, /obj/table) || istype(A, /turf/simulated/floor)))
+	if (!(istype(A, /obj/station_objects/table) || istype(A, /turf/simulated/floor)))
 		return
 
-	if (istype(A, /obj/table) && mode == 1)
-		if (istype(A, /obj/table) && matter >= 1)
+	if (istype(A, /obj/station_objects/table) && mode == 1)
+		if (istype(A, /obj/station_objects/table) && matter >= 1)
 			user << "Dispensing Dosh..."
 			playsound(src.loc, 'click.ogg', 10, 1)
 			new /obj/item/weapon/spacecash/c10( A.loc )
@@ -80,8 +80,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (istype(A, /obj/table) && mode == 2)
-		if (istype(A, /obj/table) && matter >= 1)
+	else if (istype(A, /obj/station_objects/table) && mode == 2)
+		if (istype(A, /obj/station_objects/table) && matter >= 1)
 			user << "Dispensing Drinking Glass..."
 			playsound(src.loc, 'click.ogg', 10, 1)
 			new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( A.loc )
@@ -108,8 +108,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (istype(A, /obj/table) && mode == 3)
-		if (istype(A, /obj/table) && matter >= 1)
+	else if (istype(A, /obj/station_objects/table) && mode == 3)
+		if (istype(A, /obj/station_objects/table) && matter >= 1)
 			user << "Dispensing Paper Sheet..."
 			playsound(src.loc, 'click.ogg', 10, 1)
 			new /obj/item/weapon/paper( A.loc )
@@ -136,8 +136,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (istype(A, /obj/table) && mode == 4)
-		if (istype(A, /obj/table) && matter >= 1)
+	else if (istype(A, /obj/station_objects/table) && mode == 4)
+		if (istype(A, /obj/station_objects/table) && matter >= 1)
 			user << "Dispensing Pen..."
 			playsound(src.loc, 'click.ogg', 10, 1)
 			new /obj/item/weapon/pen( A.loc )
@@ -164,8 +164,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (istype(A, /obj/table) && mode == 5)
-		if (istype(A, /obj/table) && matter >= 1)
+	else if (istype(A, /obj/station_objects/table) && mode == 5)
+		if (istype(A, /obj/station_objects/table) && matter >= 1)
 			user << "Dispensing Dice Pack..."
 			playsound(src.loc, 'click.ogg', 10, 1)
 			new /obj/item/weapon/storage/dice( A.loc )
@@ -192,8 +192,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (istype(A, /obj/table) && mode == 6)
-		if (istype(A, /obj/table) && matter >= 1)
+	else if (istype(A, /obj/station_objects/table) && mode == 6)
+		if (istype(A, /obj/station_objects/table) && matter >= 1)
 			user << "Dispensing Cigarette..."
 			playsound(src.loc, 'click.ogg', 10, 1)
 			new /obj/item/clothing/mask/cigarette( A.loc )

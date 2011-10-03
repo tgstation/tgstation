@@ -147,12 +147,12 @@ WELDINGTOOOL
 
 
 	afterattack(obj/O as obj, mob/user as mob)
-		if (istype(O, /obj/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
+		if (istype(O, /obj/station_objects/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
 			O.reagents.trans_to(src, max_fuel)
 			user << "\blue Welder refueled"
 			playsound(src.loc, 'refill.ogg', 50, 1, -6)
 			return
-		else if (istype(O, /obj/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
+		else if (istype(O, /obj/station_objects/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
 			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
 			user << "\red That was stupid of you."

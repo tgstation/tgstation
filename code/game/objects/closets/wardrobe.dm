@@ -1,4 +1,4 @@
-/obj/closet/wardrobe/New()
+/obj/station_objects/closet/wardrobe/New()
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/under/color/blue(src)
@@ -7,7 +7,7 @@
 	new /obj/item/clothing/shoes/brown(src)
 	return
 
-/obj/closet/wardrobe/red/New()
+/obj/station_objects/closet/wardrobe/red/New()
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
@@ -22,7 +22,7 @@
 	new /obj/item/clothing/head/secsoft(src)
 	return
 
-/obj/closet/wardrobe/pink/New()
+/obj/station_objects/closet/wardrobe/pink/New()
 	new /obj/item/clothing/under/color/pink(src)
 	new /obj/item/clothing/under/color/pink(src)
 	new /obj/item/clothing/under/color/pink(src)
@@ -31,7 +31,7 @@
 	new /obj/item/clothing/shoes/brown(src)
 	return
 
-/obj/closet/wardrobe/black/New()
+/obj/station_objects/closet/wardrobe/black/New()
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/under/color/black(src)
 	new /obj/item/clothing/under/color/black(src)
@@ -43,7 +43,7 @@
 	new /obj/item/clothing/head/that(src)
 	return
 
-/obj/closet/wardrobe/chaplain_black/New()
+/obj/station_objects/closet/wardrobe/chaplain_black/New()
 	//new /obj/item/clothing/suit/imperium_monk(src) //No. -- Urist
 	new /obj/item/clothing/under/rank/chaplain(src)
 	new /obj/item/clothing/shoes/black(src)
@@ -58,7 +58,7 @@
 	new /obj/item/weapon/candlepack(src)
 	return
 
-/obj/closet/wardrobe/green/New()
+/obj/station_objects/closet/wardrobe/green/New()
 	new /obj/item/clothing/under/color/green(src)
 	new /obj/item/clothing/under/color/green(src)
 	new /obj/item/clothing/under/color/green(src)
@@ -67,7 +67,7 @@
 	new /obj/item/clothing/shoes/black(src)
 	return
 
-/obj/closet/wardrobe/orange/New()
+/obj/station_objects/closet/wardrobe/orange/New()
 	new /obj/item/clothing/under/color/orange(src)
 	new /obj/item/clothing/under/color/orange(src)
 	new /obj/item/clothing/under/color/orange(src)
@@ -76,7 +76,7 @@
 	new /obj/item/clothing/shoes/orange(src)
 	return
 
-/obj/closet/wardrobe/yellow/New()
+/obj/station_objects/closet/wardrobe/yellow/New()
 	new /obj/item/clothing/under/color/yellow(src)
 	new /obj/item/clothing/under/color/yellow(src)
 	new /obj/item/clothing/under/color/yellow(src)
@@ -85,7 +85,7 @@
 	new /obj/item/clothing/shoes/orange(src)
 	return
 
-/obj/closet/wardrobe/atmospherics_yellow/New()
+/obj/station_objects/closet/wardrobe/atmospherics_yellow/New()
 	new /obj/item/clothing/under/rank/atmospheric_technician(src)
 	new /obj/item/clothing/under/rank/atmospheric_technician(src)
 	new /obj/item/clothing/under/rank/atmospheric_technician(src)
@@ -94,7 +94,7 @@
 	new /obj/item/clothing/shoes/black(src)
 	return
 
-/obj/closet/wardrobe/engineering_yellow/New()
+/obj/station_objects/closet/wardrobe/engineering_yellow/New()
 	new /obj/item/clothing/under/rank/engineer(src)
 	new /obj/item/clothing/under/rank/engineer(src)
 	new /obj/item/clothing/under/rank/engineer(src)
@@ -103,7 +103,7 @@
 	new /obj/item/clothing/shoes/orange(src)
 	return
 
-/obj/closet/wardrobe/white/New()
+/obj/station_objects/closet/wardrobe/white/New()
 	new /obj/item/clothing/under/color/white(src)
 	new /obj/item/clothing/under/color/white(src)
 	new /obj/item/clothing/under/color/white(src)
@@ -112,7 +112,7 @@
 	new /obj/item/clothing/shoes/white(src)
 	return
 
-/obj/closet/wardrobe/toxins_white/New()
+/obj/station_objects/closet/wardrobe/toxins_white/New()
 	new /obj/item/clothing/under/rank/scientist(src)
 	new /obj/item/clothing/under/rank/scientist(src)
 	new /obj/item/clothing/under/rank/scientist(src)
@@ -124,7 +124,7 @@
 	new /obj/item/clothing/shoes/white(src)
 	return
 
-/obj/closet/wardrobe/genetics_white/New()
+/obj/station_objects/closet/wardrobe/genetics_white/New()
 	new /obj/item/clothing/under/rank/geneticist(src)
 	new /obj/item/clothing/under/rank/geneticist(src)
 	new /obj/item/clothing/under/rank/geneticist(src)
@@ -138,7 +138,7 @@
 	new /obj/item/clothing/suit/labcoat(src)
 	return
 
-/obj/closet/wardrobe/grey/New()
+/obj/station_objects/closet/wardrobe/grey/New()
 	new /obj/item/clothing/under/color/grey(src)
 	new /obj/item/clothing/under/color/grey(src)
 	new /obj/item/clothing/under/color/grey(src)
@@ -147,7 +147,7 @@
 	new /obj/item/clothing/shoes/black(src)
 	return
 
-/obj/closet/wardrobe/mixed/New()
+/obj/station_objects/closet/wardrobe/mixed/New()
 	new /obj/item/clothing/under/color/white(src)
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/under/color/yellow(src)
@@ -159,7 +159,7 @@
 	new /obj/item/clothing/shoes/white(src)
 	return
 
-/obj/closet/lawcloset/New()
+/obj/station_objects/closet/lawcloset/New()
 	new /obj/item/clothing/under/lawyer/black(src)
 	new /obj/item/clothing/under/lawyer/red(src)
 	new /obj/item/clothing/under/lawyer/bluesuit(src)

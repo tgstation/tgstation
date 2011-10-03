@@ -186,7 +186,7 @@
 	var/old_dir = dir
 
 	for(var/direction in cardinal)
-		for(var/obj/glowshroom/shroom in get_step(src,direction))
+		for(var/obj/effects/glowshroom/shroom in get_step(src,direction))
 			if(!shroom.floor) //shrooms drop to the floor
 				shroom.floor = 1
 				shroom.icon_state = "glowshroomf"

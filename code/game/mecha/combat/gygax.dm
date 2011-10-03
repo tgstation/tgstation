@@ -9,7 +9,7 @@
 	max_temperature = 3500
 	infra_luminosity = 6
 	var/overload = 0
-	wreckage = "/obj/decal/mecha_wreckage/gygax"
+	wreckage = "/obj/effects/decal/mecha_wreckage/gygax"
 	internal_damage_threshold = 35
 	max_equip = 4
 

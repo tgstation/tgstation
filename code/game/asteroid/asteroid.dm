@@ -90,7 +90,7 @@ proc/spawn_asteroid(var/turf/start_loc,var/type,var/size,var/richness)//type: 0 
 	return
 
 /datum/game_mode/proc/spawn_exporation_packs()
-	for (var/obj/landmark/L in world)
+	for (var/obj/effects/landmark/L in world)
 		if (L.tag == "landmark*ExplorationPack")
 			new /obj/item/weapon/storage/explorers_box(L.loc)
 			del(L)
@@ -102,7 +102,7 @@ proc/spawn_room(var/atom/start_loc,var/x_size,var/y_size,var/wall,var/floor)
 
 	//world << "Room spawned at [start_loc.x],[start_loc.y],[start_loc.z]"
 	if(!wall)
-		wall = pick(/turf/simulated/wall/r_wall,/turf/simulated/wall,/obj/alien/resin)
+		wall = pick(/turf/simulated/wall/r_wall,/turf/simulated/wall,/obj/effects/alien/resin)
 	if(!floor)
 		floor = pick(/turf/simulated/floor,/turf/simulated/floor/engine)
 
@@ -135,7 +135,7 @@ proc/admin_spawn_room_at_pos()
 		if("Asteroid wall")
 			wall=/turf/simulated/wall/asteroid
 		if("Resin wall")
-			wall=/obj/alien/resin
+			wall=/obj/effects/alien/resin
 	switch(alert("Floor type",null,"Regular floor","Reinforced floor"))
 		if("Regular floor")
 			floor=/turf/simulated/floor
@@ -145,9 +145,9 @@ proc/admin_spawn_room_at_pos()
 		spawn_room(locate(x,y,z),x_len,y_len,wall,floor)
 	return
 
-var/global/list/space_surprises = list(/obj/alien/facehugger,
-													/obj/critter/spesscarp,
-													/obj/critter/spesscarp/elite,
+var/global/list/space_surprises = list(/obj/effects/alien/facehugger,
+													/obj/effects/critter/spesscarp,
+													/obj/effects/critter/spesscarp/elite,
 //													/obj/creature,
 													/obj/item/weapon/rcd,
 													/obj/item/weapon/rcd_ammo,

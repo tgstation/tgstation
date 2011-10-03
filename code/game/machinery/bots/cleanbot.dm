@@ -32,8 +32,8 @@
 	var/blood = 1
 	var/panelopen = 0
 	var/list/target_types = list()
-	var/obj/decal/cleanable/target
-	var/obj/decal/cleanable/oldtarget
+	var/obj/effects/decal/cleanable/target
+	var/obj/effects/decal/cleanable/oldtarget
 	var/oldloc = null
 	req_access = list(access_janitor)
 	var/path[] = new()
@@ -171,11 +171,11 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(src.oddbutton && prob(5))
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("Something flies out of [src]. He seems to be acting oddly."), 1)
-		var/obj/decal/cleanable/blood/gibs/gib = new /obj/decal/cleanable/blood/gibs(src.loc)
+		var/obj/effects/decal/cleanable/blood/gibs/gib = new /obj/effects/decal/cleanable/blood/gibs(src.loc)
 		//gib.streak(list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 		src.oldtarget = gib
 	if(!src.target || src.target == null)
-		for (var/obj/decal/cleanable/D in view(7,src))
+		for (var/obj/effects/decal/cleanable/D in view(7,src))
 			for(var/T in src.target_types)
 				if(!(D in cleanbottargets) && (D.type == T || D.parent_type == T) && D != src.oldtarget)
 					src.oldtarget = D
@@ -214,15 +214,15 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	src.target_types = new/list()
 	if(src.blood)
 
-		target_types += /obj/decal/cleanable/xenoblood/
-		target_types += /obj/decal/cleanable/xenoblood/xgibs
-		target_types += /obj/decal/cleanable/blood/
-		target_types += /obj/decal/cleanable/blood/gibs/
-		target_types += /obj/decal/cleanable/oil
-		target_types += /obj/decal/cleanable/robot_debris
-		target_types += /obj/decal/cleanable/crayon
+		target_types += /obj/effects/decal/cleanable/xenoblood/
+		target_types += /obj/effects/decal/cleanable/xenoblood/xgibs
+		target_types += /obj/effects/decal/cleanable/blood/
+		target_types += /obj/effects/decal/cleanable/blood/gibs/
+		target_types += /obj/effects/decal/cleanable/oil
+		target_types += /obj/effects/decal/cleanable/robot_debris
+		target_types += /obj/effects/decal/cleanable/crayon
 
-/obj/machinery/bot/cleanbot/proc/clean(var/obj/decal/cleanable/target)
+/obj/machinery/bot/cleanbot/proc/clean(var/obj/effects/decal/cleanable/target)
 	src.anchored = 1
 	src.icon_state = "cleanbot-c"
 	for(var/mob/O in viewers(src, null))

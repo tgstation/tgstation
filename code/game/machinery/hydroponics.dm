@@ -400,7 +400,7 @@ obj/machinery/hydroponics/proc/mutatepest()  // Until someone makes a spaceworm,
 //	if ( src.pestlevel > 5 )
 //  	user << "The worms seem to behave oddly..."
 //		spawn(10)
-//		new /obj/alien/spaceworm(src.loc)
+//		new /obj/effects/alien/spaceworm(src.loc)
 //	else
 	//user << "Nothing happens..."
 	return

@@ -11,7 +11,7 @@
 	force = 40
 	var/defence = 0
 	var/defence_deflect = 35
-	wreckage = "/obj/decal/mecha_wreckage/durand"
+	wreckage = "/obj/effects/decal/mecha_wreckage/durand"
 
 /*
 /obj/mecha/combat/durand/New()

@@ -1,4 +1,4 @@
-/obj/stool/ex_act(severity)
+/obj/station_objects/stool/ex_act(severity)
 
 	switch(severity)
 		if(1.0)
@@ -18,12 +18,12 @@
 		else
 	return
 
-/obj/stool/blob_act()
+/obj/station_objects/stool/blob_act()
 	if(prob(75))
 		new /obj/item/stack/sheet/metal( src.loc )
 		del(src)
 
-/obj/stool/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/station_objects/stool/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/metal( src.loc )
@@ -32,7 +32,7 @@
 	return
 
 
-/obj/stool/bed/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/station_objects/stool/bed/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
@@ -40,10 +40,10 @@
 		del(src)
 	return
 
-/obj/stool/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/station_objects/stool/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if (istype(W, /obj/item/assembly/shock_kit))
-		var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair( src.loc )
+		var/obj/station_objects/stool/chair/e_chair/E = new /obj/station_objects/stool/chair/e_chair( src.loc )
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 		E.dir = src.dir
 		E.part1 = W
@@ -56,7 +56,7 @@
 		return
 	return
 
-/obj/stool/bed/Del()
+/obj/station_objects/stool/bed/Del()
 	for(var/mob/M in src.buckled_mobs)
 		if (M.buckled == src)
 			M.lying = 0
@@ -64,13 +64,13 @@
 	..()
 	return
 
-/obj/stool/proc/unbuckle_all()
+/obj/station_objects/stool/proc/unbuckle_all()
 	for(var/mob/M in src:buckled_mobs)
 		if (M.buckled == src)
 			M.buckled = null
 			M.anchored = 0
 
-/obj/stool/proc/manual_unbuckle_all(mob/user as mob)
+/obj/station_objects/stool/proc/manual_unbuckle_all(mob/user as mob)
 	var/N = 0;
 	for(var/mob/M in src:buckled_mobs)
 		if (M.buckled == src)
@@ -90,7 +90,7 @@
 			N++
 	return N
 
-/obj/stool/proc/buckle_mob(mob/M as mob, mob/user as mob)
+/obj/station_objects/stool/proc/buckle_mob(mob/M as mob, mob/user as mob)
 	if (!ticker)
 		user << "You can't buckle anyone in before the game starts."
 	if ((!( istype(M, /mob) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat || M.buckled))
@@ -113,13 +113,13 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
+/obj/station_objects/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if (!istype(M)) return
 	buckle_mob(M, user)
 	M.lying = 1
 	return
 
-/obj/stool/bed/attack_hand(mob/user as mob)
+/obj/station_objects/stool/bed/attack_hand(mob/user as mob)
 	for(var/mob/M in src.buckled_mobs)
 		if (M.buckled == src)
 			M.lying = 0
@@ -127,7 +127,7 @@
 		src.add_fingerprint(user)
 	return
 
-/obj/stool/chair/e_chair/New()
+/obj/station_objects/stool/chair/e_chair/New()
 
 	src.overl = new /atom/movable/overlay( src.loc )
 	src.overl.icon = 'objects.dmi'
@@ -137,17 +137,17 @@
 	src.overl.master = src
 	return
 
-/obj/stool/chair/e_chair/Del()
+/obj/station_objects/stool/chair/e_chair/Del()
 
 	//src.overl = null
 	del(src.overl)
 	..()
 	return
 
-/obj/stool/chair/e_chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/station_objects/stool/chair/e_chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (istype(W, /obj/item/weapon/wrench))
-		var/obj/stool/chair/C = new /obj/stool/chair( src.loc )
+		var/obj/station_objects/stool/chair/C = new /obj/station_objects/stool/chair( src.loc )
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
 		C.dir = src.dir
 		src.part1.loc = src.loc
@@ -158,7 +158,7 @@
 		return
 	return
 
-/obj/stool/chair/e_chair/verb/toggle_power()
+/obj/station_objects/stool/chair/e_chair/verb/toggle_power()
 	set name = "Toggle Electric Chair"
 	set category = "Object"
 	set src in oview(1)
@@ -170,7 +170,7 @@
 	src.overl.icon_state = text("e_chairo[]", src.on)
 	return
 
-/obj/stool/chair/e_chair/proc/shock()
+/obj/station_objects/stool/chair/e_chair/proc/shock()
 	if (!( src.on ))
 		return
 	if ( (src.last_time + 50) > world.time)
@@ -206,7 +206,7 @@
 	A.updateicon()
 	return
 
-/obj/stool/chair/ex_act(severity)
+/obj/station_objects/stool/chair/ex_act(severity)
 	unbuckle_all()
 	switch(severity)
 		if(1.0)
@@ -222,24 +222,24 @@
 				return
 	return
 
-/obj/stool/chair/blob_act()
+/obj/station_objects/stool/chair/blob_act()
 	if(prob(75))
 		unbuckle_all()
 		del(src)
 
-/obj/stool/chair/New()
+/obj/station_objects/stool/chair/New()
 	src.verbs -= /atom/movable/verb/pull
 	if (src.dir == NORTH)
 		src.layer = FLY_LAYER
 	..()
 	return
 
-/obj/stool/chair/Del()
+/obj/station_objects/stool/chair/Del()
 	unbuckle_all()
 	..()
 	return
 
-/obj/stool/chair/verb/rotate()
+/obj/station_objects/stool/chair/verb/rotate()
 	set name = "Rotate Chair"
 	set category = "Object"
 	set src in oview(1)
@@ -251,21 +251,21 @@
 		src.layer = OBJ_LAYER
 	return
 
-/obj/stool/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
+/obj/station_objects/stool/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
 	buckle_mob(M, user)
 	return
 
-/obj/stool/chair/attack_paw(mob/user as mob)
+/obj/station_objects/stool/chair/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/stool/chair/attack_hand(mob/user as mob)
+/obj/station_objects/stool/chair/attack_hand(mob/user as mob)
 	if (manual_unbuckle_all(user))
 		src.add_fingerprint(user)
 	return
 
 //roller bed
 
-/obj/stool/bed/roller
+/obj/station_objects/stool/bed/roller
 	name = "roller bed"
 	icon = 'rollerbed.dmi'
 	icon_state = "down"

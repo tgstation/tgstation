@@ -1,4 +1,4 @@
-/obj/proc_holder/spell/targeted/ethereal_jaunt
+/obj/effects/proc_holder/spell/targeted/ethereal_jaunt
 	name = "Ethereal Jaunt"
 	desc = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
 
@@ -12,11 +12,11 @@
 
 	var/jaunt_duration = 50 //in deciseconds
 
-/obj/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
+/obj/effects/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
 	for(var/mob/target in targets)
 		spawn(0)
 			var/mobloc = get_turf(target.loc)
-			var/obj/dummy/spell_jaunt/holder = new /obj/dummy/spell_jaunt( mobloc )
+			var/obj/effects/dummy/spell_jaunt/holder = new /obj/effects/dummy/spell_jaunt( mobloc )
 			var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 			animation.name = "water"
 			animation.density = 0
@@ -46,7 +46,7 @@
 			del(animation)
 			del(holder)
 
-/obj/dummy/spell_jaunt
+/obj/effects/dummy/spell_jaunt
 	name = "water"
 	icon = 'effects.dmi'
 	icon_state = "nothing"
@@ -54,7 +54,7 @@
 	density = 0
 	anchored = 1
 
-/obj/dummy/spell_jaunt/relaymove(var/mob/user, direction)
+/obj/effects/dummy/spell_jaunt/relaymove(var/mob/user, direction)
 	if (!src.canmove) return
 	var/turf/newLoc = get_step(src,direction)
 	if(!(newLoc.flags & NOJAUNT))
@@ -84,7 +84,7 @@
 	src.canmove = 0
 	spawn(2) src.canmove = 1
 
-/obj/dummy/spell_jaunt/ex_act(blah)
+/obj/effects/dummy/spell_jaunt/ex_act(blah)
 	return
-/obj/dummy/spell_jaunt/bullet_act(blah)
+/obj/effects/dummy/spell_jaunt/bullet_act(blah)
 	return

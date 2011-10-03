@@ -220,7 +220,7 @@ FLASHBANG
 					M << "\red Your ears start to ring!"
 
 //Blob damage here
-		for(var/obj/blob/B in view(8,T))
+		for(var/obj/effects/blob/B in view(8,T))
 			var/damage = round(30/(get_dist(B,T)+1))
 			B.health -= damage
 			B.update()

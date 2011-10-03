@@ -116,7 +116,7 @@ RCD
 					src.spark_system.start()
 					if(locate(/obj/machinery/door) in get_turf(src))	return
 					var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock( A )
-					var/obj/window/killthis = (locate(/obj/window) in get_turf(src))
+					var/obj/station_objects/window/killthis = (locate(/obj/station_objects/window) in get_turf(src))
 					if(killthis)
 						killthis.ex_act(2)//Smashin windows
 					T.autoclose = 1

@@ -1,4 +1,4 @@
-/obj/closet/malf/suits/New()
+/obj/station_objects/closet/malf/suits/New()
 	..()
 	sleep(2)
 	new /obj/item/weapon/tank/jetpack/void_jetpack(src)

@@ -1,6 +1,6 @@
 var/list/sacrificed = list()
 
-/obj/rune
+/obj/effects/rune
 /////////////////////////////////////////FIRST RUNE
 	proc
 		teleport(var/key)
@@ -9,7 +9,7 @@ var/list/sacrificed = list()
 			allrunesloc = new/list()
 			var/index = 0
 		//	var/tempnum = 0
-			for(var/obj/rune/R in world)
+			for(var/obj/effects/rune/R in world)
 				if(R == src)
 					continue
 				if(R.word1 == wordtravel && R.word2 == wordself && R.word3 == key)
@@ -22,7 +22,7 @@ var/list/sacrificed = list()
 					user.take_overall_damage(5, 0)
 				del(src)
 			if(allrunesloc && index != 0)
-				if(istype(src,/obj/rune))
+				if(istype(src,/obj/effects/rune))
 					user.say("Sas'so c'arta forbici!")
 				else
 					user.whisper("Sas'so c'arta forbici!")
@@ -31,10 +31,10 @@ var/list/sacrificed = list()
 				"\red You hear a sickening crunch and sloshing of viscera.")
 				user.loc = allrunesloc[rand(1,index)]
 				return
-			if(istype(src,/obj/rune))
+			if(istype(src,/obj/effects/rune))
 				return	fizzle() //Use friggin manuals, Dorf, your list was of zero length.
 			else
-				call(/obj/rune/proc/fizzle)()
+				call(/obj/effects/rune/proc/fizzle)()
 				return
 
 
@@ -45,9 +45,9 @@ var/list/sacrificed = list()
 		//	var/tempnum = 0
 			var/culcount = 0
 			var/runecount = 0
-			var/obj/rune/IP = null
+			var/obj/effects/rune/IP = null
 			var/mob/living/user = usr
-			for(var/obj/rune/R in world)
+			for(var/obj/effects/rune/R in world)
 				if(R == src)
 					continue
 				if(R.word1 == wordtravel && R.word2 == wordother && R.word3 == key)
@@ -79,14 +79,14 @@ var/list/sacrificed = list()
 /////////////////////////////////////////SECOND RUNE
 
 		tomesummon()
-			if(istype(src,/obj/rune))
+			if(istype(src,/obj/effects/rune))
 				usr.say("N'ath reth sh'yro eth d'raggathnor!")
 			else
 				usr.whisper("N'ath reth sh'yro eth d'raggathnor!")
 			usr.visible_message("\red Rune disappears with a flash of red light, and in it's place now a book lies.", \
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a book.", \
 			"\red You hear a pop and smell ozone.")
-			if(istype(src,/obj/rune))
+			if(istype(src,/obj/effects/rune))
 				new /obj/item/weapon/tome(src.loc)
 			else
 				new /obj/item/weapon/tome(usr.loc)
@@ -140,7 +140,7 @@ var/list/sacrificed = list()
 /////////////////////////////////////////FIFTH RUNE
 
 		emp(var/U,var/range_red) //range_red - var which determines by which number to reduce the default emp range, U is the source loc, needed because of talisman emps which are held in hand at the moment of using and that apparently messes things up -- Urist
-			if(istype(src,/obj/rune))
+			if(istype(src,/obj/effects/rune))
 				usr.say("Ta'gh fara'qha fel d'amar det!")
 			else
 				usr.whisper("Ta'gh fara'qha fel d'amar det!")
@@ -157,7 +157,7 @@ var/list/sacrificed = list()
 
 		drain()
 			var/drain = 0
-			for(var/obj/rune/R in world)
+			for(var/obj/effects/rune/R in world)
 				if(R.word1==wordtravel && R.word2==wordblood && R.word3==wordself)
 					for(var/mob/living/carbon/D in R.loc)
 						if(D.stat!=2)
@@ -238,7 +238,7 @@ var/list/sacrificed = list()
 
 			var/sacrifice_is_target = 0
 			find_sacrifice:
-				for(var/obj/rune/R in world)
+				for(var/obj/effects/rune/R in world)
 					if(R.word1==wordblood && R.word2==wordjoin && R.word3==wordhell)
 						for(var/mob/living/carbon/human/N in R.loc)
 							if (ticker.mode.name == "cult" && N.mind && N.mind == ticker.mode:sacrifice_target)
@@ -314,12 +314,12 @@ var/list/sacrificed = list()
 
 		obscure(var/rad)
 			var/S=0
-			for(var/obj/rune/R in orange(rad,src))
+			for(var/obj/effects/rune/R in orange(rad,src))
 				if(R!=src)
 					R:visibility=0
 				S=1
 			if(S)
-				if(istype(src,/obj/rune))
+				if(istype(src,/obj/effects/rune))
 					usr.say("Kla'atu barada nikt'o!")
 					for (var/mob/V in viewers(src))
 						V.show_message("\red The rune turns into gray dust, veiling the surrounding runes.", 3)
@@ -332,10 +332,10 @@ var/list/sacrificed = list()
 							V.show_message("\red Dust emanates from [usr]'s hands for a moment.", 3)
 
 				return
-			if(istype(src,/obj/rune))
+			if(istype(src,/obj/effects/rune))
 				return	fizzle()
 			else
-				call(/obj/rune/proc/fizzle)()
+				call(/obj/effects/rune/proc/fizzle)()
 				return
 
 /////////////////////////////////////////TENTH RUNE
@@ -363,7 +363,7 @@ var/list/sacrificed = list()
 /////////////////////////////////////////ELEVENTH RUNE
 
 		manifest()
-			var/obj/rune/this_rune = src
+			var/obj/effects/rune/this_rune = src
 			src = null
 			if(usr.loc!=this_rune.loc)
 				return this_rune.fizzle()
@@ -438,9 +438,9 @@ var/list/sacrificed = list()
 					usr << "\red The blank is tainted. It is unsuitable."
 				return fizzle()
 
-			var/obj/rune/imbued_from
+			var/obj/effects/rune/imbued_from
 			var/obj/item/weapon/paper/talisman/T
-			for(var/obj/rune/R in orange(1,src))
+			for(var/obj/effects/rune/R in orange(1,src))
 				if(R==src)
 					continue
 				if(R.word1==wordtravel && R.word2==wordself)  //teleport
@@ -531,12 +531,12 @@ var/list/sacrificed = list()
 					return fizzle()
 				else
 					return
-			if(istype(src,/obj/rune))
+			if(istype(src,/obj/effects/rune))
 				usr.say("O bidai nabora se'sma!")
 			else
 				usr.whisper("O bidai nabora se'sma!")
 			var/input_s = sanitize(input)
-			if(istype(src,/obj/rune))
+			if(istype(src,/obj/effects/rune))
 				usr.say("[input]")
 			else
 				usr.whisper("[input]")
@@ -647,7 +647,7 @@ var/list/sacrificed = list()
 			var/go=0
 			var/rad
 			var/S=0
-			if(istype(W,/obj/rune))
+			if(istype(W,/obj/effects/rune))
 				rad = 6
 				go = 1
 			if (istype(W,/obj/item/weapon/paper/talisman))
@@ -657,7 +657,7 @@ var/list/sacrificed = list()
 				rad = 1
 				go = 1
 			if(go)
-				for(var/obj/rune/R in orange(rad,src))
+				for(var/obj/effects/rune/R in orange(rad,src))
 					if(R!=src)
 						R:visibility=15
 					S=1
@@ -665,7 +665,7 @@ var/list/sacrificed = list()
 				if(istype(W,/obj/item/weapon/storage/bible))
 					usr << "\red Arcane markings suddenly glow from underneath a thin layer of dust!"
 					return
-				if(istype(W,/obj/rune))
+				if(istype(W,/obj/effects/rune))
 					usr.say("Nikt'o barada kla'atu!")
 					for (var/mob/V in viewers(src))
 						V.show_message("\red The rune turns into red dust, reveaing the surrounding runes.", 3)
@@ -679,10 +679,10 @@ var/list/sacrificed = list()
 							V.show_message("\red Red dust emanates from [usr]'s hands for a moment.", 3)
 					return
 				return
-			if(istype(W,/obj/rune))
+			if(istype(W,/obj/effects/rune))
 				return	fizzle()
 			if(istype(W,/obj/item/weapon/paper/talisman))
-				call(/obj/rune/proc/fizzle)()
+				call(/obj/effects/rune/proc/fizzle)()
 				return
 
 /////////////////////////////////////////SEVENTEENTH RUNE
@@ -719,8 +719,8 @@ var/list/sacrificed = list()
 				if(!(cultist.buckled || \
 					cultist.handcuffed || \
 					istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle) || \
-					(istype(cultist.loc, /obj/closet)&&cultist.loc:welded) || \
-					(istype(cultist.loc, /obj/secure_closet)&&cultist.loc:locked) || \
+					(istype(cultist.loc, /obj/station_objects/closet)&&cultist.loc:welded) || \
+					(istype(cultist.loc, /obj/station_objects/secure_closet)&&cultist.loc:locked) || \
 					(istype(cultist.loc, /obj/machinery/dna_scannernew)&&cultist.loc:locked) \
 				))
 					user << "\red The [cultist] is already free."
@@ -731,9 +731,9 @@ var/list/sacrificed = list()
 					cultist.handcuffed = null
 				if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
 					cultist.u_equip(cultist.wear_mask)
-				if(istype(cultist.loc, /obj/closet)&&cultist.loc:welded)
+				if(istype(cultist.loc, /obj/station_objects/closet)&&cultist.loc:welded)
 					cultist.loc:welded = 0
-				if(istype(cultist.loc, /obj/secure_closet)&&cultist.loc:locked)
+				if(istype(cultist.loc, /obj/station_objects/secure_closet)&&cultist.loc:locked)
 					cultist.loc:locked = 0
 				if(istype(cultist.loc, /obj/machinery/dna_scannernew)&&cultist.loc:locked)
 					cultist.loc:locked = 0
@@ -761,7 +761,7 @@ var/list/sacrificed = list()
 					return fizzle()
 				if (cultist == user) //just to be sure.
 					return
-				if(cultist.buckled || cultist.handcuffed || (!isturf(cultist.loc) && !istype(cultist.loc, /obj/closet)))
+				if(cultist.buckled || cultist.handcuffed || (!isturf(cultist.loc) && !istype(cultist.loc, /obj/station_objects/closet)))
 					user << "\red You cannot summon the [cultist], for him shackles of blood are strong"
 					return fizzle()
 				cultist.loc = src.loc
@@ -780,7 +780,7 @@ var/list/sacrificed = list()
 /////////////////////////////////////////TWENTIETH RUNES
 
 		deafen()
-			if(istype(src,/obj/rune))
+			if(istype(src,/obj/effects/rune))
 				var/affected = 0
 				for(var/mob/living/carbon/C in range(7,src))
 					if (iscultist(C))
@@ -814,7 +814,7 @@ var/list/sacrificed = list()
 			return
 
 		blind()
-			if(istype(src,/obj/rune))
+			if(istype(src,/obj/effects/rune))
 				var/affected = 0
 				for(var/mob/living/carbon/C in viewers(src))
 					if (iscultist(C))
@@ -870,7 +870,7 @@ var/list/sacrificed = list()
 					if(prob(5))
 						spawn(5)
 							M.gib(1)
-				for(var/obj/rune/R in view(src))
+				for(var/obj/effects/rune/R in view(src))
 					if(prob(10))
 						explosion(R.loc, -1, 0, 1, 5)
 				for(var/mob/living/carbon/human/C in orange(1,src))
@@ -890,7 +890,7 @@ var/list/sacrificed = list()
 				if(iscultist(C))
 					culcount++
 			if(culcount >= 5)
-				for(var/obj/rune/R in world)
+				for(var/obj/effects/rune/R in world)
 					if(R.blood_DNA == src.blood_DNA && R.blood_type == src.blood_type)
 						for(var/mob/living/M in orange(2,R))
 							M.take_overall_damage(0,15)
@@ -900,7 +900,7 @@ var/list/sacrificed = list()
 								M << "\red Rune suddenly ignites, burning you!"
 							var/turf/T = get_turf(R)
 							T.hotspot_expose(700,125)
-				for(var/obj/decal/cleanable/blood/B in world)
+				for(var/obj/effects/decal/cleanable/blood/B in world)
 					if(B.blood_DNA == src.blood_DNA && B.blood_type == src.blood_type)
 						for(var/mob/living/M in orange(1,B))
 							M.take_overall_damage(0,5)
@@ -913,7 +913,7 @@ var/list/sacrificed = list()
 //////////             Rune 24 (counting burningblood, which kinda doesnt work yet.)
 
 		runestun(var/mob/living/carbon/T as mob)
-			if(istype(src,/obj/rune))   ///When invoked as rune, flash and stun everyone around.
+			if(istype(src,/obj/effects/rune))   ///When invoked as rune, flash and stun everyone around.
 				usr.say("Fuu ma'jin!")
 				for(var/mob/living/carbon/C in viewers(src))
 					flick("e_flash", C.flash)
@@ -942,7 +942,7 @@ var/list/sacrificed = list()
 
 		armor()
 			var/mob/living/carbon/human/user = usr
-			if(istype(src,/obj/rune))
+			if(istype(src,/obj/effects/rune))
 				usr.say("N'ath reth sh'yro eth d'raggathnor!")
 			else
 				usr.whisper("N'ath reth sh'yro eth d'raggathnor!")

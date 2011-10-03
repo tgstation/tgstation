@@ -1,29 +1,29 @@
-/obj/secure_closet/alter_health()
+/obj/station_objects/secure_closet/alter_health()
 	return get_turf(src)
 
-/obj/secure_closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/station_objects/secure_closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0) || wall_mounted) return 1
 
 	return src.opened
 
-/obj/secure_closet/proc/can_close()
-	for(var/obj/closet/closet in get_turf(src))
+/obj/station_objects/secure_closet/proc/can_close()
+	for(var/obj/station_objects/closet/closet in get_turf(src))
 		return 0
-	for(var/obj/secure_closet/closet in get_turf(src))
+	for(var/obj/station_objects/secure_closet/closet in get_turf(src))
 		if(closet != src)
 			return 0
 	return 1
 
-/obj/secure_closet/proc/can_open()
+/obj/station_objects/secure_closet/proc/can_open()
 	if (src.locked)
 		return 0
 	return 1
 
-/obj/secure_closet/proc/dump_contents()
+/obj/station_objects/secure_closet/proc/dump_contents()
 	for (var/obj/item/I in src)
 		I.loc = src.loc
 
-	for (var/obj/overlay/o in src) //REMOVE THIS
+	for (var/obj/effects/overlay/o in src) //REMOVE THIS
 		o.loc = src.loc
 
 	for(var/mob/M in src)
@@ -31,7 +31,7 @@
 		if (M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
-/obj/secure_closet/proc/open()
+/obj/station_objects/secure_closet/proc/open()
 	if (src.opened)
 		return 0
 
@@ -45,7 +45,7 @@
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
 	return 1
 
-/obj/secure_closet/proc/close()
+/obj/station_objects/secure_closet/proc/close()
 	if (!src.opened)
 		return 0
 
@@ -56,7 +56,7 @@
 		if (!I.anchored)
 			I.loc = src
 
-	for (var/obj/overlay/o in src.loc) //REMOVE THIS
+	for (var/obj/effects/overlay/o in src.loc) //REMOVE THIS
 		if (!o.anchored)
 			o.loc = src
 
@@ -77,12 +77,12 @@
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
 	return 1
 
-/obj/secure_closet/proc/toggle()
+/obj/station_objects/secure_closet/proc/toggle()
 	if (src.opened)
 		return src.close()
 	return src.open()
 
-/obj/secure_closet/emp_act(severity)
+/obj/station_objects/secure_closet/emp_act(severity)
 	for(var/obj/O in src)
 		O.emp_act(severity)
 	if(!broken)
@@ -96,7 +96,7 @@
 				src.req_access += pick(get_all_accesses())
 	..()
 
-/obj/secure_closet/ex_act(severity)
+/obj/station_objects/secure_closet/ex_act(severity)
 	switch(severity)
 		if (1)
 			for (var/atom/movable/A as mob|obj in src)
@@ -116,13 +116,13 @@
 					ex_act(severity)
 				del(src)
 
-/obj/secure_closet/blob_act()
+/obj/station_objects/secure_closet/blob_act()
 	if (prob(75))
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		del(src)
 
-/obj/secure_closet/meteorhit(obj/O as obj)
+/obj/station_objects/secure_closet/meteorhit(obj/O as obj)
 	if (O.icon_state == "flaming")
 		for(var/obj/item/I in src)
 			I.loc = src.loc
@@ -136,7 +136,7 @@
 		return
 	return
 
-/obj/secure_closet/bullet_act(var/obj/item/projectile/Proj)
+/obj/station_objects/secure_closet/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	if(health <= 0)
@@ -145,7 +145,7 @@
 		del(src)
 	return
 
-/obj/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/station_objects/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (src.opened)
 		if (istype(W, /obj/item/weapon/grab))
 			if (src.large)
@@ -188,9 +188,9 @@
 		user << "\red Access Denied"
 	return
 
-/obj/secure_closet
+/obj/station_objects/secure_closet
 	var/lastbang
-/obj/secure_closet/relaymove(mob/user as mob)
+/obj/station_objects/secure_closet/relaymove(mob/user as mob)
 	if (user.stat)
 		return
 	if (!( src.locked ))
@@ -211,14 +211,14 @@
 				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
 	return
 
-/obj/secure_closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+/obj/station_objects/secure_closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if ((user.restrained() || user.stat))
 		return
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
 		return
 	if(!src.opened)
 		return
-	if(istype(O, /obj/secure_closet) || istype(O, /obj/closet))
+	if(istype(O, /obj/station_objects/secure_closet) || istype(O, /obj/station_objects/closet))
 		return
 	step_towards(O, src.loc)
 	if (user != O)
@@ -228,7 +228,7 @@
 	src.add_fingerprint(user)
 	return
 /*
-/obj/secure_closet/attack_hand(mob/user as mob)
+/obj/station_objects/secure_closet/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	if (!src.opened && !src.locked)
 		if(!src.can_open())
@@ -265,11 +265,11 @@
 		return src.attackby(null, user)
 	return*/
 
-/obj/secure_closet/attack_hand(mob/user as mob)
+/obj/station_objects/secure_closet/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 
 	if (!src.toggle())
 		return src.attackby(null, user)
 
-/obj/secure_closet/attack_paw(mob/user as mob)
+/obj/station_objects/secure_closet/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
