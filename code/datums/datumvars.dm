@@ -32,6 +32,7 @@ client
 		title = "[D] (\ref[D]) = [D.type]"
 
 		body += {"<script type="text/javascript">
+
 					function updateSearch(){
 						var filter_text = document.getElementById('filter');
 						var filter = filter_text.value.toLowerCase();
@@ -113,7 +114,7 @@ client
 							{
 								try{
 									var li = lis\[i\];
-									if ( li.innerHTML.toLowerCase().indexOf(filter) == -1 )
+									if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
 									{
 										vars_ol.removeChild(li);
 										i--;
