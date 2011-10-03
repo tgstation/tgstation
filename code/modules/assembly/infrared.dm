@@ -17,7 +17,7 @@
 		cooldown = 0//To prevent spam
 		scanning = 0
 		visible = 0
-		obj/effects/beam/i_beam/first = null
+		obj/effect/beam/i_beam/first = null
 
 	proc
 		Activate()//Called when this assembly is pulsed by another one
@@ -111,7 +111,7 @@
 				del(src.first)
 
 		if ((!( src.first ) && (src.secured && (istype(src.loc, /turf) || (src.holder && istype(src.holder.loc, /turf))))))
-			var/obj/effects/beam/i_beam/I = new /obj/effects/beam/i_beam( (src.holder ? src.holder.loc : src.loc) )
+			var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam( (src.holder ? src.holder.loc : src.loc) )
 			I.master = src
 			I.density = 1
 			I.dir = src.dir
@@ -233,11 +233,11 @@
 
 /***************************IBeam*********************************/
 
-/obj/effects/beam/i_beam
+/obj/effect/beam/i_beam
 	name = "i beam"
 	icon = 'projectiles.dmi'
 	icon_state = "ibeam"
-	var/obj/effects/beam/i_beam/next = null
+	var/obj/effect/beam/i_beam/next = null
 	var/obj/item/device/infra/master = null
 	var/limit = null
 	var/visible = 0.0
@@ -247,7 +247,7 @@
 	flags = TABLEPASS
 
 
-/obj/effects/beam/i_beam/proc/hit()
+/obj/effect/beam/i_beam/proc/hit()
 	//world << "beam \ref[src]: hit"
 	if (src.master)
 		//world << "beam hit \ref[src]: calling master \ref[master].hit"
@@ -256,7 +256,7 @@
 	del(src)
 	return
 
-/obj/effects/beam/i_beam/proc/vis_spread(v)
+/obj/effect/beam/i_beam/proc/vis_spread(v)
 	//world << "i_beam \ref[src] : vis_spread"
 	src.visible = v
 	spawn( 0 )
@@ -266,7 +266,7 @@
 		return
 	return
 
-/obj/effects/beam/i_beam/process()
+/obj/effect/beam/i_beam/process()
 	//world << "i_beam \ref[src] : process"
 
 	if ((src.loc.density || !( src.master )))
@@ -288,7 +288,7 @@
 
 
 	//world << "now [src.left] left"
-	var/obj/effects/beam/i_beam/I = new /obj/effects/beam/i_beam( src.loc )
+	var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam( src.loc )
 	I.master = src.master
 	I.density = 1
 	I.dir = src.dir
@@ -323,23 +323,23 @@
 		return
 	return
 
-/obj/effects/beam/i_beam/Bump()
+/obj/effect/beam/i_beam/Bump()
 	del(src)
 	return
 
-/obj/effects/beam/i_beam/Bumped()
+/obj/effect/beam/i_beam/Bumped()
 	src.hit()
 	return
 
-/obj/effects/beam/i_beam/HasEntered(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/effects/beam))
+/obj/effect/beam/i_beam/HasEntered(atom/movable/AM as mob|obj)
+	if (istype(AM, /obj/effect/beam))
 		return
 	spawn( 0 )
 		src.hit()
 		return
 	return
 
-/obj/effects/beam/i_beam/Del()
+/obj/effect/beam/i_beam/Del()
 	del(src.next)
 	..()
 	return

@@ -55,7 +55,7 @@
 				del(src)
 				return 0
 			if(iscarbon(user))
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(5, 1, user.loc)
 				s.start()
 				var/shock_damage = min(rand(30,40),rand(30,40))
@@ -72,7 +72,7 @@
 				user.throw_at(target, 200, 4)
 				return
 			else if(issilicon(user))
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(5, 1, user.loc)
 				s.start()
 				var/shock_damage = rand(15,30)

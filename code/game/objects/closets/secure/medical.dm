@@ -1,4 +1,4 @@
-/obj/station_objects/secure_closet/medical1
+/obj/structure/secure_closet/medical1
 	name = "Medicine Closet"
 	desc = "Filled with medical junk."
 	icon_state = "medical1"
@@ -26,7 +26,7 @@
 
 
 
-/obj/station_objects/secure_closet/medical2
+/obj/structure/secure_closet/medical2
 	name = "Anesthetic"
 	desc = "Used to knock people out."
 	icon_state = "medical1"
@@ -51,7 +51,7 @@
 
 
 
-/obj/station_objects/secure_closet/medical3
+/obj/structure/secure_closet/medical3
 	name = "Medical Doctor's Locker"
 	req_access = list(access_medical)
 
@@ -71,7 +71,7 @@
 
 
 
-/obj/station_objects/secure_closet/CMO
+/obj/structure/secure_closet/CMO
 	name = "Chief Medical Officer"
 	req_access = list(access_cmo)
 
@@ -90,7 +90,7 @@
 
 
 
-/obj/station_objects/secure_closet/animal
+/obj/structure/secure_closet/animal
 	name = "Animal Control"
 	req_access = list(access_medical)
 
@@ -106,7 +106,7 @@
 
 
 
-/obj/station_objects/secure_closet/chemical
+/obj/structure/secure_closet/chemical
 	name = "Chemical Closet"
 	desc = "Store dangerous chemicals in here."
 	icon_state = "medical1"

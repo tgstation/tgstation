@@ -101,13 +101,13 @@
 
 	sleep(50)
 
-	plmaster = new /obj/effects/overlay(  )
+	plmaster = new /obj/effect/overlay(  )
 	plmaster.icon = 'tile_effects.dmi'
 	plmaster.icon_state = "plasma"
 	plmaster.layer = FLY_LAYER
 	plmaster.mouse_opacity = 0
 
-	slmaster = new /obj/effects/overlay(  )
+	slmaster = new /obj/effect/overlay(  )
 	slmaster.icon = 'tile_effects.dmi'
 	slmaster.icon_state = "sleeping_agent"
 	slmaster.layer = FLY_LAYER
@@ -179,13 +179,13 @@
 	if (!tile)
 		return
 
-	var/P = new /obj/effects/decal/point(tile)
+	var/P = new /obj/effect/decal/point(tile)
 	spawn (20)
 		del(P)
 
 	usr.visible_message("<b>[usr]</b> points to [this]")
 
-/obj/effects/decal/point/point()
+/obj/effect/decal/point/point()
 	set src in oview()
 	set hidden = 1
 	return

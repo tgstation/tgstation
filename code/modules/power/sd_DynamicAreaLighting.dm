@@ -53,8 +53,8 @@ Using sd_DynamicAreaLighting
 	1)	Luminosity changes at run time.
 		If your program makes changes in luminosity while it is
 		running, you need to use sd_SetLuminosity(new_luminosity)
-		so the library can remove the effects of the old luminosity
-		and apply the new effects.
+		so the library can remove the effect of the old luminosity
+		and apply the new effect.
 
 	2)	Opacity changes at run time.
 		As with luminosity changes, you need to use
@@ -64,15 +64,15 @@ Using sd_DynamicAreaLighting
 	3)	New atoms that change the opacity of a location.
 		This is somewhat more complex, and the library doesn't
 		have a simple proc to take care of it yet. You should use
-		sd_StripLocalLum() to strip the luminosity effects of
+		sd_StripLocalLum() to strip the luminosity effect of
 		anything shining on that space, create the new atom, then
-		use sd_ApplyLocalLum() to reapply the luminosity effects.
+		use sd_ApplyLocalLum() to reapply the luminosity effect.
 		Examine the sd_SetOpacity() proc for an example of the
 		procedure.
 
 	All areas will automatically use the sd_DynamicAreaLighting
 	library when it is included in your project. You may disable
-	lighting effects in an area by specifically setting the area's
+	lighting effect in an area by specifically setting the area's
 	sd_lighting var to 0. For example:
 
 	area/always_lit
@@ -80,13 +80,13 @@ Using sd_DynamicAreaLighting
 		sd_lighting = 0
 
 	This library chops areas into 5 separate areas of differing
-	light effects, so you may want to modify area Enter(), Exit(),
+	light effect, so you may want to modify area Enter(), Exit(),
 	Entered(), and Exited() procs to make sure the atom has moved
 	from a different area instead of a different light zone of the
 	same area.
 
 	IMPORTANT NOTE: Since sd_DynamicAreaLighting uses the view()
-	proc, large luminosity settings may cause strange effects. You
+	proc, large luminosity settings may cause strange effect. You
 	should limit luminosity to (world.view * 2) or less.
 
 ----------------------------------------------------------------------
@@ -173,7 +173,7 @@ DAY/NIGHT CYCLES
 
 	The sd_OutsideLight() proc does not automatically detect a
 	range out of bounds in case you want to use nonstandard values
-	for interesting effects. For instance, you could use a negative
+	for interesting effect. For instance, you could use a negative
 	value to dampen light sources.
 
 If you want daylight to spill indoors:
@@ -240,18 +240,18 @@ All atoms have the following procs:
 
 	sd_StripLum(list/V = view(luminosity,src), center = src)
 		The reverse of sd_ApplyLum(), sd_StripLum removes luminosity
-		effects.
+		effect.
 
 	sd_ApplyLocalLum(list/affected = viewers(20,src))
-		Applies the lighting effects of all atoms in affected. This
-		proc is used with sd_StripLocalLum() for effects that may
+		Applies the lighting effect of all atoms in affected. This
+		proc is used with sd_StripLocalLum() for effect that may
 		change the opacity of a turf.
 
 	sd_StripLocalLum()
-		Strips effects of all local luminous atoms.
+		Strips effect of all local luminous atoms.
 		RETURNS: list of all the luminous atoms stripped
 		IMPORTANT! Each sd_StripLocalLum() call should have a matching
-			sd_ApplyLocalLum() to restore the local effects.
+			sd_ApplyLocalLum() to restore the local effect.
 
 	sd_SetLuminosity(new_luminosity as num)
 		Sets the atom's luminosity, making adjustments to the
@@ -309,11 +309,11 @@ Turfs have these additional procs and vars:
 			zeroing the lumcount, then reapplying local luminosity.
 
 		sd_ApplySpill()
-			Applies to effects of daylight spilling into inside
+			Applies to effect of daylight spilling into inside
 			areas in view of this turf.
 
 		sd_StripSpill()
-			Removes to effects of daylight spilling into inside
+			Removes to effect of daylight spilling into inside
 			areas in view of this turf.
 
 \********************************************************************/
@@ -321,7 +321,7 @@ Turfs have these additional procs and vars:
 var
 	sd_dark_icon = 'ss13_dark_alpha7.dmi'	// icon used for darkness
 	sd_dark_shades = 7					// number of icon state in sd_dark_icon
-	sd_light_layer = 10		// graphics layer for light effects
+	sd_light_layer = 10		// graphics layer for light effect
 	sd_light_outside = 0	// how bright it is outside
 	sd_top_luminosity = 0
 
@@ -409,7 +409,7 @@ atom
 				T.sd_LumUpdate()
 
 		sd_ApplyLocalLum(list/affected = view(sd_top_luminosity,src))
-			// Reapplies the lighting effects of all atoms in affected.
+			// Reapplies the lighting effect of all atoms in affected.
 			for(var/atom/A in affected)
 				if(A.luminosity) A.sd_ApplyLum()
 
@@ -422,7 +422,7 @@ atom
 				RETURNS: list of all the luminous atoms stripped
 
 				IMPORTANT! Each sd_StripLocalLum() call should have a matching
-					sd_ApplyLocalLum() to restore the local effects. */
+					sd_ApplyLocalLum() to restore the local effect. */
 			var/list/affected = list()
 			for(var/atom/A in view(sd_top_luminosity,src))
 				var/turfflag = (isturf(src)?1:0)

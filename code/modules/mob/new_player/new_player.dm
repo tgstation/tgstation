@@ -28,7 +28,7 @@ mob/new_player
 		loc = starting_loc
 		sight |= SEE_TURFS
 		var/list/watch_locations = list()
-		for(var/obj/effects/landmark/landmark in world)
+		for(var/obj/effect/landmark/landmark in world)
 			if(landmark.tag == "landmark*new_player")
 				watch_locations += landmark.loc
 

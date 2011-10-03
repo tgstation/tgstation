@@ -62,14 +62,14 @@
 
 	..()
 
-	organStructure = new /obj/effects/organstructure/human(src)
+	organStructure = new /obj/effect/organstructure/human(src)
 
 /mob/living/carbon/human/cyborg
 	New()
 		..()
 		if(organStructure) //hacky, but it's not supposed to be in for a long time anyway
 			del(organStructure)
-		organStructure = new /obj/effects/organstructure/cyber(src)
+		organStructure = new /obj/effect/organstructure/cyber(src)
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
@@ -106,9 +106,9 @@
 
 			if (!AM.anchored)
 				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/station_objects/window))
+				if (istype(AM, /obj/structure/window))
 					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/station_objects/window/win in get_step(AM,t))
+						for(var/obj/structure/window/win in get_step(AM,t))
 							now_pushing = 0
 							return
 				step(AM, t)
@@ -640,10 +640,10 @@
 		var/dam_zone = pick("chest", "chest", "chest", "head", "groin")
 		if (istype(organs[dam_zone], /datum/organ/external))
 			var/datum/organ/external/temp = organs[dam_zone]
-			if (istype(O, /obj/effects/immovablerod))
+			if (istype(O, /obj/effect/immovablerod))
 				temp.take_damage(101, 0)
 			else
-				temp.take_damage((istype(O, /obj/effects/meteor/small) ? 10 : 25), 30)
+				temp.take_damage((istype(O, /obj/effect/meteor/small) ? 10 : 25), 30)
 			UpdateDamageIcon()
 		updatehealth()
 	return
@@ -716,9 +716,9 @@
 						M.pulling = t
 				else
 					if (pulling)
-						if (istype(pulling, /obj/station_objects/window))
+						if (istype(pulling, /obj/structure/window))
 							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-								for(var/obj/station_objects/window/win in get_step(pulling,get_dir(pulling.loc, T)))
+								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
 									pulling = null
 					if (pulling)
 						step(pulling, get_dir(pulling.loc, T))
@@ -790,7 +790,7 @@
 			update_body()
 
 	if(buckled)
-		if(istype(buckled, /obj/station_objects/stool/bed))
+		if(istype(buckled, /obj/structure/stool/bed))
 			lying = 1
 		else
 			lying = 0
@@ -1436,7 +1436,7 @@
 				if (stunned < power)
 					stunned = power
 
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
 
@@ -1484,7 +1484,7 @@
 				if (((M.head && M.head.flags & 4) || ((M.wear_mask && !( M.wear_mask.flags & 32 )) || ((head && head.flags & 4) || (wear_mask && !( wear_mask.flags & 32 ))))))
 					M << "\blue <B>Remove that mask!</B>"
 					return
-				var/obj/effects/equip_e/human/O = new /obj/effects/equip_e/human(  )
+				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 				O.source = M
 				O.target = src
 				O.s_loc = M.loc
@@ -1742,7 +1742,7 @@
 /mob/living/carbon/human/var/co2overloadtime = null
 /mob/living/carbon/human/var/temperature_resistance = T0C+75
 
-/obj/effects/equip_e/human/process()
+/obj/effect/equip_e/human/process()
 	if (item)
 		item.add_fingerprint(source)
 	if (!item)
@@ -1942,7 +1942,7 @@ The else statement is for equipping stuff to empty slots.
 !canremove refers to variable of /obj/item/clothing which either allows or disallows that item to be removed.
 It can still be worn/put on as normal.
 */
-/obj/effects/equip_e/human/done()
+/obj/effect/equip_e/human/done()
 	if(!source || !target)						return
 	if(source.loc != s_loc)						return
 	if(target.loc != t_loc)						return
@@ -2676,7 +2676,7 @@ It can still be worn/put on as normal.
 		src << browse(null, t1)
 
 	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
-		var/obj/effects/equip_e/human/O = new /obj/effects/equip_e/human(  )
+		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 		O.source = usr
 		O.target = src
 		O.item = usr.equipped()

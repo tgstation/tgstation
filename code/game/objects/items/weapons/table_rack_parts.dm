@@ -18,7 +18,7 @@ RACK PARTS
 		del(src)
 
 /obj/item/weapon/table_parts/attack_self(mob/user as mob)
-	new /obj/station_objects/table( user.loc )
+	new /obj/structure/table( user.loc )
 	del(src)
 	return
 
@@ -31,7 +31,7 @@ RACK PARTS
 		del(src)
 
 /obj/item/weapon/table_parts/wood/attack_self(mob/user as mob)
-	new /obj/station_objects/table/woodentable( user.loc )
+	new /obj/structure/table/woodentable( user.loc )
 	del(src)
 	return
 
@@ -45,7 +45,7 @@ RACK PARTS
 		del(src)
 
 /obj/item/weapon/table_parts/reinforced/attack_self(mob/user as mob)
-	new /obj/station_objects/table/reinforced( user.loc )
+	new /obj/structure/table/reinforced( user.loc )
 	del(src)
 	return
 
@@ -63,7 +63,7 @@ RACK PARTS
 	return
 
 /obj/item/weapon/rack_parts/attack_self(mob/user as mob)
-	var/obj/station_objects/rack/R = new /obj/station_objects/rack( user.loc )
+	var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
 	R.add_fingerprint(user)
 	del(src)
 	return

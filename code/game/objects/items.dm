@@ -30,7 +30,7 @@
 		if ((usr.mutations & CLOWN) && prob(50))
 			usr << "\red Uh ... how do those things work?!"
 			if (istype(M, /mob/living/carbon/human))
-				var/obj/effects/equip_e/human/O = new /obj/effects/equip_e/human(  )
+				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 				O.source = user
 				O.target = user
 				O.item = user.equipped()
@@ -48,7 +48,7 @@
 		if (istype(M, /mob/living/carbon/human))
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [M.name] ([M.ckey])</font>")
-			var/obj/effects/equip_e/human/O = new /obj/effects/equip_e/human(  )
+			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 			O.source = user
 			O.target = M
 			O.item = user.equipped()
@@ -61,7 +61,7 @@
 				O.process()
 				return
 		else
-			var/obj/effects/equip_e/monkey/O = new /obj/effects/equip_e/monkey(  )
+			var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
 			O.source = user
 			O.target = M
 			O.item = user.equipped()
@@ -95,7 +95,7 @@
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
 
-	if( istype(target, /obj/station_objects/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
+	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
 		var/obj/o = target
 		o.reagents.trans_to(src, 50)
 		user << "\blue Extinguisher refilled"
@@ -123,7 +123,7 @@
 
 		for(var/a=0, a<5, a++)
 			spawn(0)
-				var/obj/effects/water/W = new /obj/effects/water( get_turf(src) )
+				var/obj/effect/water/W = new /obj/effect/water( get_turf(src) )
 				var/turf/my_target = pick(the_targets)
 				var/datum/reagents/R = new/datum/reagents(5)
 				if(!W) return
@@ -217,12 +217,12 @@
 		..()
 	return
 
-/obj/effects/manifest/New()
+/obj/effect/manifest/New()
 
 	src.invisibility = 101
 	return
 
-/obj/effects/manifest/proc/manifest()
+/obj/effect/manifest/proc/manifest()
 	var/dat = "<B>Crew Manifest</B>:<BR>"
 	for(var/mob/living/carbon/human/M in world)
 		dat += text("    <B>[]</B> -  []<BR>", M.name, M.get_assignment())

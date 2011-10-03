@@ -64,7 +64,7 @@
 				if(prob(probab))
 
 
-					if(istype(AM, /obj/station_objects/window) || istype(AM, /obj/station_objects/grille))
+					if(istype(AM, /obj/structure/window) || istype(AM, /obj/structure/grille))
 						if(istype(src, /mob/living/carbon/metroid/adult))
 							if(nutrition <= 600 && !Atkcool)
 								AM.attack_metroid(src)
@@ -102,9 +102,9 @@
 			now_pushing = 1
 			if (!( AM.anchored ))
 				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/station_objects/window))
+				if (istype(AM, /obj/structure/window))
 					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/station_objects/window/win in get_step(AM,t))
+						for(var/obj/structure/window/win in get_step(AM,t))
 							now_pushing = 0
 							return
 				step(AM, t)
@@ -187,7 +187,7 @@
 
 	//																													 K
 	//																											~~~~     N
-	// Metroids aren't effected by extra status effects. DO NOT NERF THIS PLZ THNX - LOVE, DOOHL 3===========D ~~~~     HONK
+	// Metroids aren't effected by extra status effect. DO NOT NERF THIS PLZ THNX - LOVE, DOOHL 3===========D ~~~~     HONK
 	//																											~~~~     H
 	//EMP is special and yes they are because emp
 	if(Proj.effects["emp"])
@@ -267,7 +267,7 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
-		bruteloss += (istype(O, /obj/effects/meteor/small) ? 10 : 25)
+		bruteloss += (istype(O, /obj/effect/meteor/small) ? 10 : 25)
 		fireloss += 30
 
 		updatehealth()

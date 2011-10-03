@@ -132,7 +132,7 @@
 			tank_two_icon = tank_two.icon_state
 		if(tank_one)
 			var/icon/I = new(src.icon, icon_state = "[tank_one_icon]")
-			//var/obj/effects/overlay/tank_one_overlay = new
+			//var/obj/effect/overlay/tank_one_overlay = new
 			//tank_one_overlay.icon = src.icon
 			//tank_one_overlay.icon_state = tank_one_icon
 			src.underlays += I
@@ -145,7 +145,7 @@
 			src.underlays += J
 		if(attached_device)
 			var/icon/K = new(src.icon, icon_state = "device")
-			//var/obj/effects/overlay/device_overlay = new
+			//var/obj/effect/overlay/device_overlay = new
 			//device_overlay.icon = src.icon
 			//device_overlay.icon_state = device_icon
 			src.overlays += K
@@ -198,7 +198,7 @@
 
 
 
-/obj/station_objects/falsewall/
+/obj/structure/falsewall/
 	attack_hand(mob/user as mob)
 		if(density)
 			// Open wall
@@ -242,7 +242,7 @@
 
 	*/
 
-/obj/station_objects/falserwall/
+/obj/structure/falserwall/
 	attack_hand(mob/user as mob)
 		if(density)
 			// Open wall

@@ -16,7 +16,7 @@
 				L.Add(T)
 	return L
 
-/obj/effects/alien/facehugger
+/obj/effect/alien/facehugger
 	name = "alien"
 	desc = "An alien, looks pretty scary!"
 	icon_state = "facehugger"
@@ -297,7 +297,7 @@
 
 		if(state != 2 || !alive || target) return
 
-		if(locate(/obj/effects/alien/weeds) in loc && health < maxhealth)
+		if(locate(/obj/effect/alien/weeds) in loc && health < maxhealth)
 			health++
 			spawn(cycle_pause) idle()
 			return
@@ -315,12 +315,12 @@
 						spawn(cycle_pause) idle()
 						return
 			else
-				var/obj/effects/alien/weeds/W = null
+				var/obj/effect/alien/weeds/W = null
 				if(health < maxhealth)
 					var/list/the_weeds = new/list()
 
 					find_weeds:
-						for(var/obj/effects/alien/weeds/weed in range(viewrange,loc))
+						for(var/obj/effect/alien/weeds/weed in range(viewrange,loc))
 							if(!can_see(src,weed,viewrange)) continue
 							for(var/atom/A in get_turf(weed))
 								if(A.density) continue find_weeds
@@ -345,7 +345,7 @@
 			if(can_see(src,trg_idle,viewrange))
 				switch(get_dist(src, trg_idle))
 					if(1)
-						if(istype(trg_idle,/obj/effects/alien/weeds))
+						if(istype(trg_idle,/obj/effect/alien/weeds))
 							step_towards(src,get_step_towards2(src , trg_idle))
 					if(2 to INFINITY)
 						step_towards(src,get_step_towards2(src , trg_idle))

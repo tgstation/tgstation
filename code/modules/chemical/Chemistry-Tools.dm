@@ -225,7 +225,7 @@
 					G.reagents.trans_to(src, G.reagents.total_volume)
 
 				if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
-					var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread()
+					var/datum/effect/system/steam_spread/steam = new /datum/effect/system/steam_spread()
 					steam.set_up(10, 0, get_turf(src))
 					steam.attach(src)
 					steam.start()
@@ -309,7 +309,7 @@
 		beakers += B2
 		icon_state = "chemg_locked"
 
-/obj/effects/syringe_gun_dummy
+/obj/effect/syringe_gun_dummy
 	name = ""
 	desc = ""
 	icon = 'chemical.dmi'
@@ -363,11 +363,11 @@
 
 	proc
 		fire_syringe(atom/target, mob/user)
-			if (locate (/obj/station_objects/table, src.loc))
+			if (locate (/obj/structure/table, src.loc))
 				return
 			else
 				var/turf/trg = get_turf(target)
-				var/obj/effects/syringe_gun_dummy/D = new/obj/effects/syringe_gun_dummy(get_turf(src))
+				var/obj/effect/syringe_gun_dummy/D = new/obj/effect/syringe_gun_dummy(get_turf(src))
 				var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
 				S.reagents.trans_to(D, S.reagents.total_volume)
 				syringes -= S
@@ -441,11 +441,11 @@
 
 	proc
 		fire_syringe(atom/target, mob/user)
-			if (locate (/obj/station_objects/table, src.loc))
+			if (locate (/obj/structure/table, src.loc))
 				return
 			else
 				var/turf/trg = get_turf(target)
-				var/obj/effects/syringe_gun_dummy/D = new/obj/effects/syringe_gun_dummy(get_turf(src))
+				var/obj/effect/syringe_gun_dummy/D = new/obj/effect/syringe_gun_dummy(get_turf(src))
 				var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
 				S.reagents.trans_to(D, S.reagents.total_volume)
 				syringes -= S
@@ -480,7 +480,7 @@
 				return
 
 
-/obj/station_objects/reagent_dispensers
+/obj/structure/reagent_dispensers
 	name = "Dispenser"
 	desc = "..."
 	icon = 'objects.dmi'
@@ -501,7 +501,7 @@
 		reagents = R
 		R.my_atom = src
 		if (!possible_transfer_amounts)
-			src.verbs -= /obj/station_objects/reagent_dispensers/verb/set_APTFT
+			src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 		..()
 
 	examine()
@@ -530,12 +530,12 @@
 				return
 			if(2.0)
 				if (prob(50))
-					new /obj/effects/water(src.loc)
+					new /obj/effect/water(src.loc)
 					del(src)
 					return
 			if(3.0)
 				if (prob(5))
-					new /obj/effects/water(src.loc)
+					new /obj/effect/water(src.loc)
 					del(src)
 					return
 			else
@@ -543,7 +543,7 @@
 
 	blob_act()
 		if(prob(50))
-			new /obj/effects/water(src.loc)
+			new /obj/effect/water(src.loc)
 			del(src)
 
 
@@ -601,9 +601,9 @@
 
 	var/list/can_be_placed_into = list(
 		/obj/machinery/chem_master/,
-		/obj/station_objects/table,
-		/obj/station_objects/secure_closet,
-		/obj/station_objects/closet,
+		/obj/structure/table,
+		/obj/structure/secure_closet,
+		/obj/structure/closet,
 		/obj/machinery/sink,
 		/obj/item/weapon/storage,
 		/obj/machinery/atmospherics/unary/cryo_cell,
@@ -639,7 +639,7 @@
 			src.reagents.reaction(target, TOUCH)
 			spawn(5) src.reagents.clear_reagents()
 			return
-		else if(istype(target, /obj/station_objects/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+		else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 			if(!target.reagents.total_volume && target.reagents)
 				user << "\red [target] is empty."
@@ -717,7 +717,7 @@
 
 		else
 
-			if(!target.is_open_container() && !istype(target,/obj/station_objects/reagent_dispensers))
+			if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
 				user << "\red You cannot directly remove reagents from [target]."
 				return
 
@@ -770,7 +770,7 @@
 
 		else
 
-			if(!target.is_open_container() && !istype(target,/obj/station_objects/reagent_dispensers))
+			if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
 				user << "\red You cannot directly remove reagents from [target]."
 				return
 
@@ -917,7 +917,7 @@
 						user << "\red [target] is empty."
 						return
 
-					if(!target.is_open_container() && !istype(target,/obj/station_objects/reagent_dispensers) && !istype(target,/obj/item/metroid_core))
+					if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/metroid_core))
 						user << "\red You cannot directly remove reagents from this object."
 						return
 
@@ -1041,7 +1041,7 @@
 						user << "\red [target] is empty."
 						return
 
-					if(!target.is_open_container() && !istype(target,/obj/station_objects/reagent_dispensers))
+					if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
 						user << "\red You cannot directly remove reagents from this object."
 						return
 
@@ -1165,7 +1165,7 @@
 	var/bitecount = 0
 	var/trash = null
 
-	//Placeholder for effects that trigger on eating that aren't tied to reagents.
+	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 	proc/On_Consume()
 		if (!trash) return
 		if(!reagents.total_volume)
@@ -1327,7 +1327,7 @@
 			return 1
 		if ( \
 				!isturf(src.loc) || \
-				!(locate(/obj/station_objects/table) in src.loc) && \
+				!(locate(/obj/structure/table) in src.loc) && \
 				!(locate(/obj/machinery/optable) in src.loc) && \
 				!(locate(/obj/item/weapon/tray) in src.loc) \
 			)
@@ -1448,7 +1448,7 @@
 
 	afterattack(obj/target, mob/user , flag)
 
-		if(istype(target, /obj/station_objects/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+		if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 			if(!target.reagents.total_volume)
 				user << "\red [target] is empty."
@@ -1670,7 +1670,7 @@
 		overlays = null
 
 		if(reagents.total_volume)
-			var/obj/effects/overlay = new/obj
+			var/obj/effect/overlay = new/obj
 			overlay.icon = 'beaker1.dmi'
 			var/percent = round((reagents.total_volume / volume) * 100)
 			switch(percent)
@@ -1749,7 +1749,7 @@
 
 		if(reagents.total_volume)
 
-			var/obj/effects/overlay = new/obj
+			var/obj/effect/overlay = new/obj
 			overlay.icon = 'beaker2.dmi'
 			var/percent = round((reagents.total_volume / volume) * 100)
 			switch(percent)
@@ -1928,7 +1928,7 @@
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
-/*
+
 /obj/item/weapon/reagent_containers/glass/bottle/gbs
 	name = "GBS culture bottle"
 	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS+ culture in synthblood medium."//Or simply - General BullShit
@@ -1942,8 +1942,8 @@
 		R.my_atom = src
 		var/datum/disease/F = new /datum/disease/gbs
 		var/list/data = list("virus"= F)
-		R.add_reagent("blood", 20, data) -- No.
-*/
+		R.add_reagent("blood", 20, data)
+
 /obj/item/weapon/reagent_containers/glass/bottle/fake_gbs
 	name = "GBS culture bottle"
 	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS- culture in synthblood medium."//Or simply - General BullShit
@@ -2138,7 +2138,7 @@
 		return
 
 	afterattack(obj/target, mob/user , flag)
-		if(istype(target, /obj/station_objects/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+		if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 			if(!target.reagents.total_volume)
 				user << "\red [target] is empty."
@@ -2661,7 +2661,7 @@
 		reagents.add_reagent("dexalin", 30)
 
 //Dispensers
-/obj/station_objects/reagent_dispensers/watertank
+/obj/structure/reagent_dispensers/watertank
 	name = "watertank"
 	desc = "A watertank"
 	icon = 'objects.dmi'
@@ -2671,7 +2671,7 @@
 		..()
 		reagents.add_reagent("water",1000)
 
-/obj/station_objects/reagent_dispensers/fueltank
+/obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
 	desc = "A fueltank"
 	icon = 'objects.dmi'
@@ -2681,17 +2681,17 @@
 		..()
 		reagents.add_reagent("fuel",1000)
 
-/obj/station_objects/reagent_dispensers/fueltank/blob_act()
+/obj/structure/reagent_dispensers/fueltank/blob_act()
 	explosion(src.loc,0,1,5,7,10)
 	if(src)
 		del(src)
 
-/obj/station_objects/reagent_dispensers/fueltank/ex_act()
+/obj/structure/reagent_dispensers/fueltank/ex_act()
 	explosion(src.loc,-1,0,2)
 	if(src)
 		del(src)
 
-/obj/station_objects/reagent_dispensers/water_cooler
+/obj/structure/reagent_dispensers/water_cooler
 	name = "Water-Cooler"
 	desc = "A machine that dispenses water to drink"
 	amount_per_transfer_from_this = 5
@@ -2704,7 +2704,7 @@
 		reagents.add_reagent("water",500)
 
 
-/obj/station_objects/reagent_dispensers/beerkeg
+/obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
 	desc = "A beer keg"
 	icon = 'objects.dmi'
@@ -2714,7 +2714,7 @@
 		..()
 		reagents.add_reagent("beer",1000)
 
-/obj/station_objects/reagent_dispensers/beerkeg/blob_act()
+/obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
 	del(src)
 

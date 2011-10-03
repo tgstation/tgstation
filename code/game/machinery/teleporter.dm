@@ -17,7 +17,7 @@
 			src.attack_hand()
 
 		var/obj/S = null
-		for(var/obj/effects/landmark/sloc in world)
+		for(var/obj/effect/landmark/sloc in world)
 			if (sloc.name != "Clown Land")
 				continue
 			if (locate(/mob) in sloc.loc)
@@ -26,7 +26,7 @@
 			break
 		if (!S)
 			S = locate("landmark*["Clown Land"]") // use old stype
-		if (istype(S, /obj/effects/landmark/) && istype(S.loc, /turf))
+		if (istype(S, /obj/effect/landmark/) && istype(S.loc, /turf))
 			usr.loc = S.loc
 			del(I)
 		return
@@ -132,7 +132,7 @@
 		else
 			do_teleport(M, com.locked, 0) //dead-on precision
 	else
-		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+		var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
 		for(var/mob/B in hearers(src, null))
@@ -140,7 +140,7 @@
 	return
 
 /proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision)
-	if(istype(M, /obj/effects))
+	if(istype(M, /obj/effect))
 		del(M)
 		return
 	if (istype(M, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
@@ -210,7 +210,7 @@
 	else
 		tmploc = locate(tx, ty, destination.z)
 
-	if(tx == destturf.x && ty == destturf.y && (istype(destination.loc, /obj/station_objects/closet) || istype(destination.loc, /obj/station_objects/secure_closet)))
+	if(tx == destturf.x && ty == destturf.y && (istype(destination.loc, /obj/structure/closet) || istype(destination.loc, /obj/structure/secure_closet)))
 		tmploc = destination.loc
 
 	if(tmploc==null)
@@ -219,7 +219,7 @@
 	M.loc = tmploc
 	sleep(2)
 
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 	s.set_up(5, 1, M)
 	s.start()
 	return
@@ -302,11 +302,11 @@
 		icon_state = "controller"
 
 
-/obj/effects/laser/Bump()
+/obj/effect/laser/Bump()
 	src.range--
 	return
 
-/obj/effects/laser/Move()
+/obj/effect/laser/Move()
 	src.range--
 	return
 

@@ -55,7 +55,7 @@ for reference:
 
 
 //Barricades, maybe there will be a metal one later...
-/obj/station_objects/barricade/wooden
+/obj/structure/barricade/wooden
 	name = "wooden barricade"
 	desc = "This space is blocked off by a wooden barricade."
 	icon = 'structures.dmi'
@@ -192,7 +192,7 @@ These should not block bullets/N */
 						user << "Barrier lock toggled off."
 						return
 				else
-					var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+					var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 					s.set_up(2, 1, src)
 					s.start()
 					for(var/mob/O in viewers(src, null))
@@ -204,7 +204,7 @@ These should not block bullets/N */
 				src.emagged = 1
 				src.req_access = null
 				user << "You break the ID authentication lock on the [src]."
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
 				for(var/mob/O in viewers(src, null))
@@ -213,7 +213,7 @@ These should not block bullets/N */
 			else if (src.emagged == 1)
 				src.emagged = 2
 				user << "You short out the anchoring mechanism on the [src]."
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
 				for(var/mob/O in viewers(src, null))
@@ -298,7 +298,7 @@ These should not block bullets/N */
 	/*	var/obj/item/stack/rods/ =*/
 		new /obj/item/stack/rods(Tsec)
 
-		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+		var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
 

@@ -39,7 +39,7 @@
 			desc = "It appears to be broken."
 			icon_state = src.icon_broken
 			if(istype(W, /obj/item/weapon/melee/energy/blade))
-				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+				var/datum/effect/system/spark_spread/spark_system = new /datum/effect/system/spark_spread()
 				spark_system.set_up(5, 0, src.loc)
 				spark_system.start()
 				playsound(src.loc, 'blade1.ogg', 50, 1)

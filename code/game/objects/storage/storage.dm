@@ -257,8 +257,8 @@
 			return
 
 		if ("screwed")
-			new /obj/effects/spawner/newbomb/timer/syndicate(src)
-			new /obj/effects/spawner/newbomb/timer/syndicate(src)
+			new /obj/effect/spawner/newbomb/timer/syndicate(src)
+			new /obj/effect/spawner/newbomb/timer/syndicate(src)
 			new /obj/item/device/powersink(src)
 			new /obj/item/clothing/suit/space/syndicate(src)
 			new /obj/item/clothing/head/helmet/space/syndicate(src)

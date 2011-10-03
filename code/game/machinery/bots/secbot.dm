@@ -677,11 +677,11 @@ Auto Patrol: []"},
 	if (prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/effects/decal/cleanable/oil(src.loc)
+	new /obj/effect/decal/cleanable/oil(src.loc)
 	del(src)
 
 /obj/machinery/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)

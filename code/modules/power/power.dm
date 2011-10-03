@@ -64,14 +64,14 @@
 	var/netcount = 0
 	powernets = list()
 
-	for(var/obj/station_objects/cable/PC in world)
+	for(var/obj/structure/cable/PC in world)
 		PC.netnum = 0
 	for(var/obj/machinery/power/M in machines)
 		if(M.netnum >=0)
 			M.netnum = 0
 
 
-	for(var/obj/station_objects/cable/PC in world)
+	for(var/obj/structure/cable/PC in world)
 		if(!PC.netnum)
 			PC.netnum = ++netcount
 
@@ -87,7 +87,7 @@
 		PN.number = L
 
 
-	for(var/obj/station_objects/cable/C in world)
+	for(var/obj/structure/cable/C in world)
 		var/datum/powernet/PN = powernets[C.netnum]
 		PN.cables += C
 
@@ -119,7 +119,7 @@
 				result += P
 
 
-	for(var/obj/station_objects/cable/C in T)
+	for(var/obj/structure/cable/C in T)
 		if(C.d1 == fdir || C.d2 == fdir)
 			if(!unmarked || !C.netnum)
 				result += C
@@ -129,7 +129,7 @@
 	return result
 
 
-/obj/station_objects/cable/proc/get_connections()
+/obj/structure/cable/proc/get_connections()
 
 	var/list/res = list()	// this will be a list of all connected power objects
 
@@ -160,7 +160,7 @@
 
 		cdir = get_dir(T, src)
 
-		for(var/obj/station_objects/cable/C in T)
+		for(var/obj/structure/cable/C in T)
 
 			if(C.netnum)
 				continue
@@ -174,7 +174,7 @@
 
 	var/list/res = list()
 
-	for(var/obj/station_objects/cable/C in src.loc)
+	for(var/obj/structure/cable/C in src.loc)
 
 		if(C.netnum)
 			continue
@@ -194,8 +194,8 @@
 
 	while(1)
 
-		if( istype(O, /obj/station_objects/cable) )
-			var/obj/station_objects/cable/C = O
+		if( istype(O, /obj/structure/cable) )
+			var/obj/structure/cable/C = O
 
 			C.netnum = num
 			P = C.get_connections()
@@ -223,7 +223,7 @@
 
 // cut a powernet at this cable object
 
-/datum/powernet/proc/cut_cable(var/obj/station_objects/cable/C)
+/datum/powernet/proc/cut_cable(var/obj/structure/cable/C)
 
 	var/turf/T1 = C.loc
 	if(C.d1)
@@ -237,9 +237,9 @@
 
 	if(Debug)
 		for(var/obj/O in P1)
-			world.log << "P1: [O] at [O.x] [O.y] : [istype(O, /obj/station_objects/cable) ? "[O:d1]/[O:d2]" : null] "
+			world.log << "P1: [O] at [O.x] [O.y] : [istype(O, /obj/structure/cable) ? "[O:d1]/[O:d2]" : null] "
 		for(var/obj/O in P2)
-			world.log << "P2: [O] at [O.x] [O.y] : [istype(O, /obj/station_objects/cable) ? "[O:d1]/[O:d2]" : null] "
+			world.log << "P2: [O] at [O.x] [O.y] : [istype(O, /obj/structure/cable) ? "[O:d1]/[O:d2]" : null] "
 
 
 
@@ -251,7 +251,7 @@
 
 	// zero the netnum of all cables & nodes in this powernet
 
-	for(var/obj/station_objects/cable/OC in cables)
+	for(var/obj/structure/cable/OC in cables)
 		OC.netnum = 0
 	for(var/obj/machinery/power/OM in nodes)
 		OM.netnum = 0
@@ -276,8 +276,8 @@
 			if(OM.netnum != number)
 				notlooped = 1
 				break
-		else if( istype(O, /obj/station_objects/cable) )
-			var/obj/station_objects/cable/OC = O
+		else if( istype(O, /obj/structure/cable) )
+			var/obj/structure/cable/OC = O
 			if(OC.netnum != number)
 				notlooped = 1
 				break
@@ -293,7 +293,7 @@
 
 		if(Debug) world.log << "Was not looped: spliting PN#[number] ([cables.len];[nodes.len])"
 
-		for(var/obj/station_objects/cable/OC in cables)
+		for(var/obj/structure/cable/OC in cables)
 
 			if(!OC.netnum)		// non-connected cables will have netnum==0, since they weren't reached by propagation
 
@@ -401,13 +401,13 @@
 	else
 		P.cables += cables
 		cables = P.cables
-	for(var/obj/station_objects/cable/C in cables)
+	for(var/obj/structure/cable/C in cables)
 		C.netnum = number
 	del P
 
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
-	var/obj/station_objects/cable/C = T.get_cable_node()
+	var/obj/structure/cable/C = T.get_cable_node()
 	if (!C || !C.netnum)
 		return
 	makepowernets() //TODO: find fast way
@@ -419,7 +419,7 @@
 /turf/proc/get_cable_node()
 	if(!istype(src, /turf/simulated/floor))
 		return null
-	for(var/obj/station_objects/cable/C in src)
+	for(var/obj/structure/cable/C in src)
 		if(C.d1 == 0)
 			return C
 	return null
@@ -448,8 +448,8 @@
 	if (istype(power_source,/area))
 		source_area = power_source
 		power_source = source_area.get_apc()
-	if (istype(power_source,/obj/station_objects/cable))
-		var/obj/station_objects/cable/tmp = power_source
+	if (istype(power_source,/obj/structure/cable))
+		var/obj/structure/cable/tmp = power_source
 		power_source = powernets[tmp.netnum]
 
 	var/datum/powernet/PN

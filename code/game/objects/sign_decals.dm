@@ -1,4 +1,4 @@
-/obj/effects/securearea/ex_act(severity)
+/obj/effect/securearea/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			del(src)
@@ -11,14 +11,14 @@
 		else
 	return
 
-/obj/effects/securearea/blob_act()
+/obj/effect/securearea/blob_act()
 	if (prob(75))
 		del(src)
 		return
 	return
 
 
-/obj/effects/sign/ex_act(severity)
+/obj/effect/sign/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			del(src)
@@ -31,7 +31,7 @@
 		else
 	return
 
-/obj/effects/sign/blob_act()
+/obj/effect/sign/blob_act()
 	if (prob(75))
 		del(src)
 		return

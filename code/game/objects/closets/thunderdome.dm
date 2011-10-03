@@ -1,8 +1,8 @@
-/obj/station_objects/closet/thunderdome/New()
+/obj/structure/closet/thunderdome/New()
 	..()
 	sleep(2)
 
-/obj/station_objects/closet/thunderdome/tdred/New()
+/obj/structure/closet/thunderdome/tdred/New()
 	..()
 	sleep(2)
 	new /obj/item/clothing/suit/armor/tdome/red(src)
@@ -24,7 +24,7 @@
 	new /obj/item/clothing/head/helmet/thunderdome(src)
 	new /obj/item/clothing/head/helmet/thunderdome(src)
 
-/obj/station_objects/closet/thunderdome/tdgreen/New()
+/obj/structure/closet/thunderdome/tdgreen/New()
 	..()
 	sleep(2)
 	new /obj/item/clothing/suit/armor/tdome/green(src)

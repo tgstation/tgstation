@@ -55,7 +55,7 @@ STUN BATON
 //Most of the other special functions are handled in their own files.
 
 /obj/item/weapon/melee/energy/blade/New()
-	spark_system = new /datum/effects/system/spark_spread()
+	spark_system = new /datum/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	return

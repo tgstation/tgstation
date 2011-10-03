@@ -696,11 +696,11 @@ Auto Patrol: []"},
 	if (prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/effects/decal/cleanable/oil(src.loc)
+	new /obj/effect/decal/cleanable/oil(src.loc)
 	del(src)
 
 
@@ -751,7 +751,7 @@ Auto Patrol: []"},
 	if(severity==2 && prob(70))
 		..(severity-1)
 	else
-		var/obj/effects/overlay/pulse2 = new/obj/effects/overlay ( src.loc )
+		var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
 		pulse2.icon = 'effects.dmi'
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"

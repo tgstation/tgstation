@@ -38,7 +38,7 @@
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
-			new/obj/station_objects/AIcore/deactivated(loc)//New empty terminal.
+			new/obj/structure/AIcore/deactivated(loc)//New empty terminal.
 			del(src)//Delete AI.
 			return
 		else
@@ -64,7 +64,7 @@
 		ticker.mode.remove_revolutionary(src.mind)
 
 	if(client)
-		for(var/obj/effects/rune/rune in world)
+		for(var/obj/effect/rune/rune in world)
 			var/image/blood = image('blood.dmi', loc = rune, icon_state = "floor[rand(1,7)]")
 			blood.override = 1
 			client.images += blood
@@ -277,7 +277,7 @@
 
 /mob/living/silicon/ai/bullet_act(var/obj/item/projectile/Proj)
 
-	// AI bullet code is pretty simple. No other effects really need to be added.
+	// AI bullet code is pretty simple. No other effect really need to be added.
 	if(!Proj.nodamage) bruteloss += Proj.damage
 
 	if(Proj.effects["emp"])

@@ -1,4 +1,4 @@
-/obj/station_objects/closet/syndicate/personal/New()
+/obj/structure/closet/syndicate/personal/New()
 	..()
 	sleep(2)
 	new /obj/item/weapon/tank/jetpack(src)

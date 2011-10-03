@@ -6,9 +6,9 @@
 //	already filled with reagents and are destroyed when empty. Additionally, they make a "munching" noise when eaten.
 
 //Notes by Darem: Food in the "snacks" subtype can hold a maximum of 50 units Generally speaking, you don't want to go over 40
-//	total for the item because you want to leave space for extra condiments. If you want effects besides healing, add a reagent for
+//	total for the item because you want to leave space for extra condiments. If you want effect besides healing, add a reagent for
 //	it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use Tricordrazine). On use
-//	effects (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).
+//	effect (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).
 
 //The nutriment reagent and bitesize variable replace the old heal_amt and amount variables. Each unit of nutriment is equal to
 //	2 of the old heal_amt variable. Bitesize is the rate at which the reagents are consumed. So if you have 6 nutriment and a
@@ -115,7 +115,7 @@
 
 	throw_impact(atom/hit_atom)
 		..()
-		new/obj/effects/decal/cleanable/egg_smudge(src.loc)
+		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
 		src.visible_message("\red [src.name] has been squashed.","\red You hear a smack.")
 		del(src)
 

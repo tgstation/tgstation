@@ -139,7 +139,7 @@ CRAYONS
 			if("rune")
 				user << "You start drawing a rune on the [target.name]."
 		if(instant || do_after(user, 50))
-			new /obj/effects/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+			new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 			user << "You finish drawing."
 			if(uses)
 				uses--
@@ -160,14 +160,14 @@ CRAYONS
 	else
 		..()
 
-/obj/effects/decal/cleanable/crayon
+/obj/effect/decal/cleanable/crayon
 	name = "rune"
 	desc = "A rune drawn in crayon."
 	icon = 'rune.dmi'
 	layer = 2.1
 	anchored = 1
 
-/obj/effects/decal/cleanable/crayon/New(location,main = "#FFFFFF",shade = "#000000",var/type = "rune")
+/obj/effect/decal/cleanable/crayon/New(location,main = "#FFFFFF",shade = "#000000",var/type = "rune")
 	..()
 	loc = location
 

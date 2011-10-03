@@ -5,7 +5,7 @@ TABLE AND RACK OBJECT INTERATIONS
 
 
 //TABLE
-/obj/station_objects/table/ex_act(severity)
+/obj/structure/table/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			del(src)
@@ -21,9 +21,9 @@ TABLE AND RACK OBJECT INTERATIONS
 	return
 
 
-/obj/station_objects/table/blob_act()
+/obj/structure/table/blob_act()
 	if(prob(75))
-		if(istype(src, /obj/station_objects/table/woodentable))
+		if(istype(src, /obj/structure/table/woodentable))
 			new /obj/item/weapon/table_parts/wood( src.loc )
 			del(src)
 			return
@@ -32,26 +32,26 @@ TABLE AND RACK OBJECT INTERATIONS
 		return
 
 
-/obj/station_objects/table/hand_p(mob/user as mob)
+/obj/structure/table/hand_p(mob/user as mob)
 	return src.attack_paw(user)
 	return
 
 
-/obj/station_objects/table/attack_paw(mob/user as mob)
+/obj/structure/table/attack_paw(mob/user as mob)
 	if ((usr.mutations & HULK))
 		usr << text("\blue You destroy the table.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
 				O << text("\red [] smashes the table apart!", usr)
-		if(istype(src, /obj/station_objects/table/reinforced))
+		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
-		else if(istype(src, /obj/station_objects/table/woodentable))
+		else if(istype(src, /obj/structure/table/woodentable))
 			new/obj/item/weapon/table_parts/wood( src.loc )
 		else
 			new /obj/item/weapon/table_parts( src.loc )
 		src.density = 0
 		del(src)
-	if (!( locate(/obj/station_objects/table, user.loc) ))
+	if (!( locate(/obj/structure/table, user.loc) ))
 		step(user, get_dir(user, src))
 		if (user.loc == src.loc)
 			user.layer = TURF_LAYER
@@ -62,14 +62,14 @@ TABLE AND RACK OBJECT INTERATIONS
 	return
 
 
-/obj/station_objects/table/attack_alien(mob/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
+/obj/structure/table/attack_alien(mob/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
 	usr << text("\green You destroy the table.")
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
 			O << text("\red [] slices the table apart!", user)
-	if(istype(src, /obj/station_objects/table/reinforced))
+	if(istype(src, /obj/structure/table/reinforced))
 		new /obj/item/weapon/table_parts/reinforced( src.loc )
-	else if(istype(src, /obj/station_objects/table/woodentable))
+	else if(istype(src, /obj/structure/table/woodentable))
 		new/obj/item/weapon/table_parts/wood( src.loc )
 	else
 		new /obj/item/weapon/table_parts( src.loc )
@@ -78,15 +78,15 @@ TABLE AND RACK OBJECT INTERATIONS
 	return
 
 
-/obj/station_objects/table/attack_hand(mob/user as mob)
+/obj/structure/table/attack_hand(mob/user as mob)
 	if ((usr.mutations & HULK))
 		usr << text("\blue You destroy the table.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
 				O << text("\red [] smashes the table apart!", usr)
-		if(istype(src, /obj/station_objects/table/reinforced))
+		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
-		else if(istype(src, /obj/station_objects/table/woodentable))
+		else if(istype(src, /obj/structure/table/woodentable))
 			new/obj/item/weapon/table_parts/wood( src.loc )
 		else
 			new /obj/item/weapon/table_parts( src.loc )
@@ -95,7 +95,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	return
 
 
-/obj/station_objects/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -104,7 +104,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		return 0
 
 
-/obj/station_objects/table/MouseDrop_T(obj/O as obj, mob/user as mob)
+/obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
 
 	if ((!( istype(O, /obj/item/weapon) ) || user.equipped() != O))
 		return
@@ -116,7 +116,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	return
 
 
-/obj/station_objects/table/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/table/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
@@ -144,7 +144,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		return
 
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
-		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+		var/datum/effect/system/spark_spread/spark_system = new /datum/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
 		playsound(src.loc, 'blade1.ogg', 50, 1)
@@ -161,7 +161,7 @@ TABLE AND RACK OBJECT INTERATIONS
 
 
 //WOODEN TABLES
-/obj/station_objects/table/woodentable/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/table/woodentable/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
@@ -186,7 +186,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	if(isrobot(user))
 		return
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
-		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+		var/datum/effect/system/spark_spread/spark_system = new /datum/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
 		playsound(src.loc, 'blade1.ogg', 50, 1)
@@ -203,7 +203,7 @@ TABLE AND RACK OBJECT INTERATIONS
 
 
 //REINFORCED TABLES
-/obj/station_objects/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/table/reinforced/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (istype(W, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = W
@@ -256,7 +256,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		return
 
 	if(istype(W, /obj/item/weapon/melee/energy/blade))
-		var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+		var/datum/effect/system/spark_spread/spark_system = new /datum/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
 		playsound(src.loc, 'blade1.ogg', 50, 1)
@@ -273,7 +273,7 @@ TABLE AND RACK OBJECT INTERATIONS
 
 //RACKS
 
-/obj/station_objects/rack/ex_act(severity)
+/obj/structure/rack/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			del(src)
@@ -289,7 +289,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		else
 	return
 
-/obj/station_objects/rack/blob_act()
+/obj/structure/rack/blob_act()
 	if(prob(75))
 		del(src)
 		return
@@ -298,14 +298,14 @@ TABLE AND RACK OBJECT INTERATIONS
 		src.density = 0
 		return
 
-/obj/station_objects/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
 		return 0
 
-/obj/station_objects/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
+/obj/structure/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
 	if ((!( istype(O, /obj/item/weapon) ) || user.equipped() != O))
 		return
 	if(isrobot(user))
@@ -315,7 +315,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		step(O, get_dir(O, src))
 	return
 
-/obj/station_objects/rack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/rack/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/weapon/rack_parts( src.loc )
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
@@ -328,7 +328,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	if(W && W.loc)	W.loc = src.loc
 	return
 
-/obj/station_objects/rack/meteorhit(obj/O as obj)
+/obj/structure/rack/meteorhit(obj/O as obj)
 	if(prob(75))
 		del(src)
 		return

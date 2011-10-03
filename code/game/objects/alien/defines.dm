@@ -1,10 +1,10 @@
-/obj/effects/alien
+/obj/effect/alien
 	name = "alien thing"
 	desc = "theres something alien about this"
 	icon = 'alien.dmi'
 	unacidable = 1 //Aliens won't ment their own.
 
-/obj/effects/alien/egg
+/obj/effect/alien/egg
 	desc = "It looks like a weird egg"
 	name = "egg"
 	icon_state = "egg"
@@ -14,7 +14,7 @@
 	var/health = 100
 
 
-/obj/effects/alien/head
+/obj/effect/alien/head
 	name = "severed head"
 	desc = "a severed head..."
 	icon_state = "weeds"
@@ -22,7 +22,7 @@
 	density = 0
 	anchored = 0
 
-/obj/effects/alien/resin
+/obj/effect/alien/resin
 	name = "resin"
 	desc = "Looks like some kind of slimy growth."
 	icon_state = "resin"
@@ -45,7 +45,7 @@
 		opacity = 0
 		health = 20
 
-/obj/effects/alien/weeds
+/obj/effect/alien/weeds
 	name = "weeds"
 	desc = "Weird purple weeds."
 	icon_state = "weeds"
@@ -54,7 +54,7 @@
 	density = 0
 	var/health = 50
 
-/obj/effects/alien/acid
+/obj/effect/alien/acid
 	name = "acid"
 	desc = "Burbling corrossive stuff. I wouldn't want to touch it."
 	icon_state = "acid"

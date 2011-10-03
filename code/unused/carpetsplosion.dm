@@ -1,10 +1,10 @@
 /proc/carpetsplosion(turf/location as turf,range = 10)
-	var/obj/effects/spreader/spreadEpicentre = new /obj/effects/spreader(location,range)
+	var/obj/effect/spreader/spreadEpicentre = new /obj/effect/spreader(location,range)
 	var/list/turf/spreadTurfs = list()
 
 	sleep(5)
 
-	for(var/obj/effects/spreader/spread in spreadEpicentre.spreadList)
+	for(var/obj/effect/spreader/spread in spreadEpicentre.spreadList)
 		spreadTurfs += get_turf(spread)
 
 	del(spreadEpicentre)
@@ -18,16 +18,16 @@
 
 //DEBUG END
 
-/obj/effects/spreader
-	var/list/obj/effects/spreader/spreadList = list()
+/obj/effect/spreader
+	var/list/obj/effect/spreader/spreadList = list()
 
-/obj/effects/spreader/Del()
-	for(var/obj/effects/spreader/spread in spreadList)
+/obj/effect/spreader/Del()
+	for(var/obj/effect/spreader/spread in spreadList)
 		if(spread != src)
 			del(spread)
 	..()
 
-/obj/effects/spreader/New(location,var/amount = 1,obj/effects/spreader/source = src) //just a copypaste job from foam
+/obj/effect/spreader/New(location,var/amount = 1,obj/effects/spreader/source = src) //just a copypaste job from foam
 	if(amount <= 0)
 		del(src)
 		return
@@ -42,16 +42,16 @@
 			if(!T.Enter(src))
 				continue
 
-			var/obj/effects/spreader/S = locate() in T
+			var/obj/effect/spreader/S = locate() in T
 			if(S)
 				continue
 
-			new /obj/effects/spreader(T,amount-1,source)
+			new /obj/effect/spreader(T,amount-1,source)
 
 		source.spreadList += src
 
 /*
-/obj/effects/foam/proc/process()
+/obj/effect/foam/proc/process()
 	if(--amount < 0)
 		return
 
@@ -68,7 +68,7 @@
 			if(!T.Enter(src))
 				continue
 
-			var/obj/effects/foam/F = locate() in T
+			var/obj/effect/foam/F = locate() in T
 			if(F)
 				continue
 

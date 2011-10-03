@@ -1,4 +1,4 @@
-/obj/effects/alien/acid/proc/tick()
+/obj/effect/alien/acid/proc/tick()
 	ticks += 1
 	for(var/mob/O in hearers(src, null))
 		O.show_message("\green <B>[src.target] sizzles and begins to melt under the bubbling mess of acid!</B>", 1)

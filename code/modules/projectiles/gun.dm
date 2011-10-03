@@ -66,7 +66,7 @@
 			return //we're placing gun on a table or in backpack --rastaf0
 		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))
 			return
-		if(istype(target, /obj/effects/proc_holder/spell))
+		if(istype(target, /obj/effect/proc_holder/spell))
 			return
 		if(istype(user, /mob/living))
 			var/mob/living/M = user

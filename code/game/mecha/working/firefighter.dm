@@ -6,7 +6,7 @@
 	max_temperature = 6000
 	health = 250
 	internal_damage_threshold = 40
-	wreckage = "/obj/effects/decal/mecha_wreckage/ripley"
+	wreckage = "/obj/effect/decal/mecha_wreckage/ripley"
 	infra_luminosity = 5
 
 /*

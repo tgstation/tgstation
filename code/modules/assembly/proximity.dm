@@ -94,7 +94,7 @@
 
 
 	HasProximity(atom/movable/AM as mob|obj)
-		if (istype(AM, /obj/effects/beam))
+		if (istype(AM, /obj/effect/beam))
 			return
 		if (AM.move_speed < 12)
 			src.sense()

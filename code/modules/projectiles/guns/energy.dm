@@ -222,9 +222,10 @@
 		return 1
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
-		R.cell.use(40)
-		in_chamber = new /obj/item/projectile/electrode(src)
-		return 1
+		if(R && R.cell)
+			R.cell.use(40)
+			in_chamber = new /obj/item/projectile/electrode(src)
+			return 1
 	return 0
 
 

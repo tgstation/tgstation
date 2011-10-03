@@ -1,4 +1,4 @@
-/obj/effects/dummy/chameleon
+/obj/effect/dummy/chameleon
 	name = ""
 	desc = ""
 	density = 0
@@ -40,7 +40,7 @@
 	w_class = 2.0
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = 1
-	var/obj/effects/dummy/chameleon/active_dummy = null
+	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_item = "/obj/item/weapon/shard"
 
 	dropped()
@@ -67,7 +67,7 @@
 			del(active_dummy)
 			active_dummy = null
 			usr << "\blue You deactivate the [src]."
-			var/obj/effects/overlay/T = new/obj/effects/overlay(get_turf(src))
+			var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
 			T.icon = 'effects.dmi'
 			flick("emppulse",T)
 			spawn(8) del(T)
@@ -75,7 +75,7 @@
 			playsound(src, 'pop.ogg', 100, 1, 1)
 			var/obj/O = new saved_item (src)
 			if(!O) return
-			var/obj/effects/dummy/chameleon/C = new/obj/effects/dummy/chameleon(get_turf(src))
+			var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(get_turf(src))
 			C.name = O.name
 			C.desc = O.desc
 			C.icon = O.icon
@@ -86,14 +86,14 @@
 			src.active_dummy = C
 			del(O)
 			usr << "\blue You activate the [src]."
-			var/obj/effects/overlay/T = new/obj/effects/overlay(get_turf(src))
+			var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
 			T.icon = 'effects.dmi'
 			flick("emppulse",T)
 			spawn(8) del(T)
 
 	proc/disrupt()
 		if(active_dummy)
-			var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread
+			var/datum/effect/system/spark_spread/spark_system = new /datum/effect/system/spark_spread
 			spark_system.set_up(5, 0, src)
 			spark_system.attach(src)
 			spark_system.start()

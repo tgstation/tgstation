@@ -27,7 +27,7 @@ icon/GrayScale()
     Converts the icon to grayscale instead of a fully colored icon. Alpha values are left intact.
 icon/ColorTone(tone)
     Similar to GrayScale(), this proc converts the icon to a range of black -> tone -> white, where tone is an
-    RGB color (its alpha is ignored). This can be used to create a sepia tone or similar effects.
+    RGB color (its alpha is ignored). This can be used to create a sepia tone or similar effect.
     See also the global ColorTone() proc.
 icon/MinColors(icon)
     The icon is blended with a second icon where the minimum of each RGB pixel is the result.
@@ -152,7 +152,7 @@ mob
 		overlays+=I
 
 		// Testing object types (and layers)
-		overlays+=/obj/effects/overlayTest
+		overlays+=/obj/effect/overlayTest
 
 		loc = locate (10,10,1)
 	verb
@@ -199,7 +199,7 @@ mob
 				getFlatIcon(src)
 			Browse_Icon()
 
-obj/effects/overlayTest
+obj/effect/overlayTest
 	icon = 'old_or_unused.dmi'
 	icon_state = "blue"
 	pixel_x = -24

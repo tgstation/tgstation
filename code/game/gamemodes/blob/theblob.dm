@@ -1,5 +1,5 @@
 //I will need to recode parts of this but I am way too tired atm
-/obj/effects/blob
+/obj/effect/blob
 	name = "blob"
 	icon = 'blob.dmi'
 	icon_state = "blob"
@@ -121,7 +121,7 @@
 			var/dirn = pick(dirs)
 			dirs.Remove(dirn)
 			var/turf/T = get_step(src, dirn)
-			var/obj/effects/blob/B = (locate(/obj/effects/blob) in T)
+			var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 			if(!B)
 				expand(T)//No blob here so try and expand
 				return
@@ -130,14 +130,14 @@
 		return
 
 
-	proc/special_action()//For things like the
+	proc/special_action()
 		set background = 1
 		switch(blobtype)
 			if("Factory")
-				new/obj/effects/critter/blob(src.loc)
+				new/obj/effect/critter/blob(src.loc)
 				return 1
 			if("Core")
-				spawn(0)//Needs to be changed
+				spawn(0)
 					Pulse(0,1)
 					Pulse(0,2)
 					Pulse(0,4)
@@ -169,12 +169,12 @@
 				var/dirn = pick(dirs)
 				dirs.Remove(dirn)
 				T = get_step(src, dirn)
-				if((locate(/obj/effects/blob) in T))
+				if((locate(/obj/effect/blob) in T))
 					T = null
 					continue
 				else 	break
 		if(T)
-			var/obj/effects/blob/B = new /obj/effects/blob(src.loc, min(src.health, 30))
+			var/obj/effect/blob/B = new /obj/effect/blob(src.loc, min(src.health, 30))
 			if(T.Enter(B,src))
 				B.loc = T
 			else
@@ -202,7 +202,7 @@
 			del(src)
 			return
 		if(blobtype != "Blob")	return
-		if(health <= 10)
+		if(health <= 15)
 			icon_state = "blob_damaged"
 			return
 //		if(health <= 20)
@@ -283,9 +283,9 @@
 		if(O.z != 1)
 			continue
 
-		if(istype(O, /obj/station_objects/window))
+		if(istype(O, /obj/structure/window))
 			src.window++
-		else if(istype(O, /obj/station_objects/grille))
+		else if(istype(O, /obj/structure/grille))
 			if(!O:destroyed)
 				src.grille++
 		else if(istype(O, /obj/machinery/door))
@@ -308,7 +308,7 @@
 
 //////////////////////////////****IDLE BLOB***/////////////////////////////////////
 
-/obj/effects/blob/idle
+/obj/effect/blob/idle
 	name = "blob"
 	desc = "it looks... tasty"
 	icon_state = "blobidle0"
@@ -334,27 +334,48 @@
 
 
 	Del()		//idle blob that spawns a normal blob when killed.
-		var/obj/effects/blob/B = new /obj/effects/blob( src.loc )
+		var/obj/effect/blob/B = new /obj/effect/blob( src.loc )
 		spawn(30)
 			B.Life()
 		..()
 
 
 
-/obj/effects/blob/core/New()
+/obj/effect/blob/core/New()
 	..()
 	spawn()
 		src.blobdebug = 1
 		src.Life()
 
-/obj/effects/blob/node/New()
+/obj/effect/blob/node/New()
 	..()
 	spawn()
 		src.blobdebug = 2
 		src.Life()
 
-/obj/effects/blob/factory/New()
+/obj/effect/blob/factory/New()
 	..()
 	spawn()
 		src.blobdebug = 3
 		src.Life()
+
+
+/obj/effect/blob/proc/create_fragments(var/wave_size = 1)
+	var/list/candidates = list()
+	for(var/mob/dead/observer/G in world)
+		if(G.client && G.client.be_alien)
+			if(G.corpse)
+				if(G.corpse.stat==2)
+					candidates.Add(G)
+			else
+				candidates.Add(G)
+
+	for(var/i = 0 to wave_size)
+		if(!candidates.len)	break
+		var/mob/dead/observer/G = pick(candidates)
+		var/mob/living/blob/B = new/mob/living/blob(src.loc)
+		if(G.client)
+			G.client.screen.len = null
+			B.ghost_name = G.real_name
+			G.client.mob = B
+			del(G)

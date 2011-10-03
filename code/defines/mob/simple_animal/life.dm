@@ -23,13 +23,13 @@
 	var/response_harm   = "You try to hurt"
 	var/harm_intent_damage = 3
 
-	//Temperature effects
+	//Temperature effect
 	var/minbodytemp = 270
 	var/maxbodytemp = 370
 	var/heat_damage_per_tick = 3	//amount of damage applied if animal's body temperature is higher than maxbodytemp
 	var/cold_damage_per_tick = 2	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
 
-	//Atmos effects - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
+	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	var/min_oxy = 5
 	var/max_oxy = 0					//Leaving something at 0 means it's off - has no maximum
 	var/min_tox = 0
@@ -265,7 +265,7 @@
 					if(co2 > max_co2)
 						atmos_suitable = 0
 
-	//Atmos effects
+	//Atmos effect
 	if(bodytemperature < minbodytemp)
 		health -= cold_damage_per_tick
 	else if(bodytemperature > maxbodytemp)

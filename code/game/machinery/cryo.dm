@@ -8,7 +8,7 @@
 
 	var/on = 0
 	var/temperature_archived
-	var/obj/effects/overlay/O1 = null
+	var/obj/effect/overlay/O1 = null
 	var/mob/living/carbon/occupant = null
 	var/beaker = null
 	var/next_trans = 0
@@ -145,7 +145,7 @@
 					icon_state = "celltop"
 			else
 				icon_state = "celltop-p"
-			O1 = new /obj/effects/overlay(  )
+			O1 = new /obj/effect/overlay(  )
 			O1.icon = 'Cryogenic2.dmi'
 			if(src.node)
 				O1.icon_state = "cryo_bottom_[src.on]"

@@ -1,4 +1,4 @@
-/obj/station_objects/secure_closet/bar
+/obj/structure/secure_closet/bar
 	name = "Booze"
 	req_access = list(access_bar)
 

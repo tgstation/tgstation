@@ -423,7 +423,7 @@ CLIPBOARDS
 
 /obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (!( locate(/obj/station_objects/table, src.loc) ))
+	if (!( locate(/obj/structure/table, src.loc) ))
 		user << "\blue You MUST put the paper on a table!"
 	if (W.w_class < 4)
 		if ((istype(user.l_hand, /obj/item/weapon/wirecutters) || istype(user.r_hand, /obj/item/weapon/wirecutters)))
@@ -466,7 +466,7 @@ CLIPBOARDS
 	if (!istype(target, /mob/living/carbon/human)) return
 	if (istype(target:wear_suit, /obj/item/clothing/suit/straight_jacket) || target:stat)
 		if (src.amount > 2)
-			var/obj/effects/spresent/present = new /obj/effects/spresent (target:loc)
+			var/obj/effect/spresent/present = new /obj/effect/spresent (target:loc)
 			src.amount -= 2
 
 			if (target:client)
@@ -507,12 +507,12 @@ CLIPBOARDS
 	return
 
 
-/obj/effects/spresent/relaymove(mob/user as mob)
+/obj/effect/spresent/relaymove(mob/user as mob)
 	if (user.stat)
 		return
 	user << "\blue You cant move."
 
-/obj/effects/spresent/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/effect/spresent/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 
 	if (!istype(W, /obj/item/weapon/wirecutters))
@@ -598,23 +598,23 @@ CLIPBOARDS
 
 // BEDSHEET BIN
 
-/obj/station_objects/bedsheetbin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/bedsheetbin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/bedsheet))
 		//W = null
 		del(W)
 		src.amount++
 	return
 
-/obj/station_objects/bedsheetbin/attack_paw(mob/user as mob)
+/obj/structure/bedsheetbin/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/station_objects/bedsheetbin/attack_hand(mob/user as mob)
+/obj/structure/bedsheetbin/attack_hand(mob/user as mob)
 	if (src.amount >= 1)
 		src.amount--
 		new /obj/item/weapon/bedsheet( src.loc )
 		add_fingerprint(user)
 
-/obj/station_objects/bedsheetbin/examine()
+/obj/structure/bedsheetbin/examine()
 	set src in oview(1)
 
 	src.amount = round(src.amount)

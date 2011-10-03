@@ -1,4 +1,4 @@
-/obj/station_objects/particle_accelerator/fuel_chamber
+/obj/structure/particle_accelerator/fuel_chamber
 	name = "Particle Accelerator Fuel Control"
 	desc = "Part of a Particle Accelerator."
 	icon = 'particle_accelerator.dmi'

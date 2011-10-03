@@ -63,7 +63,7 @@
 
 	if (user)
 		if (istype(M, /mob/living/carbon/human))
-			var/obj/effects/equip_e/human/O = new /obj/effects/equip_e/human(  )
+			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 			O.source = user
 			O.target = M
 			O.item = src

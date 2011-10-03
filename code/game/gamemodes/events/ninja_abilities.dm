@@ -57,7 +57,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 	if(!ninjacost(,2))
 		var/mob/living/carbon/human/U = affecting
 		U << "\blue There are <B>[s_bombs]</B> smoke bombs remaining."
-		var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
+		var/datum/effect/system/bad_smoke_spread/smoke = new /datum/effect/system/bad_smoke_spread()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
 		playsound(U.loc, 'bamf.ogg', 50, 2)
@@ -232,7 +232,7 @@ Must right click on a mob to activate.*/
 		var/mob/living/carbon/human/U = affecting
 		if(M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
 		//if(M)//DEBUG
-			if(!locate(/obj/effects/energy_net) in M.loc)//Check if they are already being affected by an energy net.
+			if(!locate(/obj/effect/energy_net) in M.loc)//Check if they are already being affected by an energy net.
 				for(var/turf/T in getline(U.loc, M.loc))
 					if(T.density)//Don't want them shooting nets through walls. It's kind of cheesy.
 						U << "You may not use an energy net through solid obstacles!"
@@ -241,7 +241,7 @@ Must right click on a mob to activate.*/
 					U.Beam(M,"n_beam",,15)
 				M.anchored = 1//Anchors them so they can't move.
 				U.say("Get over here!")
-				var/obj/effects/energy_net/E = new /obj/effects/energy_net(M.loc)
+				var/obj/effect/energy_net/E = new /obj/effect/energy_net(M.loc)
 				E.layer = M.layer+1//To have it appear one layer above the mob.
 				for(var/mob/O in viewers(U, 3))
 					O.show_message(text("\red [] caught [] with an energy net!", U, M), 1)
@@ -261,7 +261,7 @@ Must right click on a mob to activate.*/
 Movement impairing would indicate drugs and the like.*/
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
 	set name = "Adrenaline Boost"
-	set desc = "Inject a secret chemical that will counteract all movement-impairing effects."
+	set desc = "Inject a secret chemical that will counteract all movement-impairing effect."
 	set category = "Ninja Ability"
 	set popup_menu = 0
 
@@ -284,7 +284,7 @@ Movement impairing would indicate drugs and the like.*/
 		spawn(70)
 			reagents.reaction(U, 2)
 			reagents.trans_id_to(U, "radium", a_transfer)
-			U << "\red You are beginning to feel the after-effects of the injection."
+			U << "\red You are beginning to feel the after-effect of the injection."
 		a_boost--
 		s_coold = 3
 	return

@@ -2,7 +2,7 @@
 		damage = 5
 		mobdamage = list(BRUTE = 5, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
 
-/obj/effects/critter/hivebot
+/obj/effect/critter/hivebot
 	name = "Hivebot"
 	desc = "A small robot"
 	icon = 'hivebot.dmi'
@@ -39,8 +39,8 @@
 		walk_to(src,0)
 		src.visible_message("<b>[src]</b> blows apart!")
 		var/turf/Ts = get_turf(src)
-		new /obj/effects/decal/cleanable/robot_debris(Ts)
-		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+		new /obj/effect/decal/cleanable/robot_debris(Ts)
+		var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
 		del(src)
@@ -71,11 +71,11 @@
 				break
 
 		if(!src.attack)
-			for(var/obj/effects/critter/C in view(src.seekrange,src))
-				if(istype(C, /obj/effects/critter) && !src.atkcritter) continue
+			for(var/obj/effect/critter/C in view(src.seekrange,src))
+				if(istype(C, /obj/effect/critter) && !src.atkcritter) continue
 				if(C.health <= 0) continue
-				if(istype(C, /obj/effects/critter) && src.atkcritter)
-					if((istype(C, /obj/effects/critter/hivebot) && !src.atksame) || (C == src))	continue
+				if(istype(C, /obj/effect/critter) && src.atkcritter)
+					if((istype(C, /obj/effect/critter/hivebot) && !src.atksame) || (C == src))	continue
 					T = C
 					break
 
@@ -142,23 +142,23 @@
 
 
 
-/obj/effects/critter/hivebot/range
+/obj/effect/critter/hivebot/range
 	name = "Hivebot"
 	desc = "A smallish robot, this one is armed!"
 	ranged = 1
 
-/obj/effects/critter/hivebot/rapid
+/obj/effect/critter/hivebot/rapid
 	ranged = 1
 	rapid = 1
 
-/obj/effects/critter/hivebot/strong
+/obj/effect/critter/hivebot/strong
 	name = "Strong Hivebot"
 	desc = "A robot, this one is armed and looks tough!"
 	health = 50
 	armor = 10
 	ranged = 1
 
-/obj/effects/critter/hivebot/borg
+/obj/effect/critter/hivebot/borg
 	health = 20
 	atksilicon = 1
 	ranged = 1
@@ -166,7 +166,7 @@
 
 
 
-/obj/effects/critter/hivebot/tele//this still needs work
+/obj/effect/critter/hivebot/tele//this still needs work
 	name = "Beacon"
 	desc = "Some odd beacon thing"
 	icon = 'Hivebot.dmi'
@@ -198,7 +198,7 @@
 
 	New()
 		..()
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+		var/datum/effect/system/harmless_smoke_spread/smoke = new /datum/effect/system/harmless_smoke_spread()
 		smoke.set_up(5, 0, src.loc)
 		smoke.start()
 		for(var/mob/O in viewers(src, null))
@@ -218,11 +218,11 @@
 			bot_amt--
 			switch(bot_type)
 				if("norm")
-					new /obj/effects/critter/hivebot(get_turf(src))
+					new /obj/effect/critter/hivebot(get_turf(src))
 				if("range")
-					new /obj/effects/critter/hivebot/range(get_turf(src))
+					new /obj/effect/critter/hivebot/range(get_turf(src))
 				if("rapid")
-					new /obj/effects/critter/hivebot/rapid(get_turf(src))
+					new /obj/effect/critter/hivebot/rapid(get_turf(src))
 		spawn(100)
 			del(src)
 		return
@@ -237,14 +237,14 @@
 			turn_on = 2
 		..()
 
-/obj/effects/critter/hivebot/tele/massive
+/obj/effect/critter/hivebot/tele/massive
 	bot_type = "norm"
 	bot_amt = 30
 	auto_spawn = 0
 
-/obj/effects/critter/hivebot/tele/ranged
+/obj/effect/critter/hivebot/tele/ranged
 	bot_type = "range"
 
-/obj/effects/critter/hivebot/tele/rapid
+/obj/effect/critter/hivebot/tele/rapid
 	bot_type = "rapid"
 	spawn_delay = 800

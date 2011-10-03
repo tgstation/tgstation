@@ -24,7 +24,7 @@
 		//Important parts of the suit.
 		mob/living/carbon/affecting = null//The wearer.
 		obj/item/weapon/cell/cell//Starts out with a high-capacity cell using New().
-		datum/effects/system/spark_spread/spark_system//To create sparks.
+		datum/effect/system/spark_spread/spark_system//To create sparks.
 		reagent_list[] = list("tricordrazine","dexalinp","spaceacillin","anti_toxin","nutriment","radium","hyronalin")//The reagents ids which are added to the suit at New().
 		stored_research[]//For stealing station research.
 		obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
@@ -59,6 +59,6 @@
 		//Onboard AI related variables.
 		mob/living/silicon/ai/AI//If there is an AI inside the suit.
 		obj/item/device/paicard/pai//A slot for a pAI device
-		obj/effects/overlay/hologram//Is the AI hologram on or off? Visible only to the wearer of the suit. This works by attaching an image to a blank overlay.
+		obj/effect/overlay/hologram//Is the AI hologram on or off? Visible only to the wearer of the suit. This works by attaching an image to a blank overlay.
 		flush = 0//If an AI purge is in progress.
 		s_control = 1//If user in control of the suit.

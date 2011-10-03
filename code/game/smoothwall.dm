@@ -12,7 +12,7 @@
 		for(var/turf/simulated/wall/W in orange(src,1))
 			if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
 				junction |= get_dir(src,W)
-		for(var/obj/station_objects/falsewall/W in orange(src,1))
+		for(var/obj/structure/falsewall/W in orange(src,1))
 			if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
 				junction |= get_dir(src,W)
 
@@ -28,16 +28,16 @@
 		for(var/obj/machinery/door/W in orange(src,1)) //doors should not result in diagonal walls, it just looks ugly. checking if area is shuttle so it won't merge with the station
 			if((abs(src.x-W.x)-abs(src.y-W.y)) && (istype(W.loc.loc,/area/shuttle) || istype(W.loc.loc,/area/supply)))
 				junction |= get_dir(src,W)
-		for(var/obj/station_objects/grille/W in orange(src,1)) //same for grilles. checking if area is shuttle so it won't merge with the station
+		for(var/obj/structure/grille/W in orange(src,1)) //same for grilles. checking if area is shuttle so it won't merge with the station
 			if((abs(src.x-W.x)-abs(src.y-W.y)) && (istype(W.loc.loc,/area/shuttle) || istype(W.loc.loc,/area/supply)))
 				junction |= get_dir(src,W)*/
 
 	if(istype(src,/turf/simulated/wall))
 		var/turf/simulated/wall/wall = src
 		wall.icon_state = "[wall.walltype][junction]"
-	else if (istype(src,/obj/station_objects/falserwall))
+	else if (istype(src,/obj/structure/falserwall))
 		src.icon_state = "rwall[junction]"
-	else if (istype(src,/obj/station_objects/falsewall))
+	else if (istype(src,/obj/structure/falsewall))
 		src.icon_state = "wall[junction]"
 /*	else if(istype(src,/turf/simulated/shuttle/wall))
 		var/newicon = icon;
@@ -78,17 +78,17 @@
 	for(var/turf/simulated/wall/W in range(src,1))
 		W.relativewall()
 
-	for(var/obj/station_objects/falsewall/W in range(src,1))
+	for(var/obj/structure/falsewall/W in range(src,1))
 		W.relativewall()
 
 	..()
 
-/obj/station_objects/falsewall/New()
+/obj/structure/falsewall/New()
 
 	for(var/turf/simulated/wall/W in range(src,1))
 		W.relativewall()
 
-	for(var/obj/station_objects/falsewall/W in range(src,1))
+	for(var/obj/structure/falsewall/W in range(src,1))
 		W.relativewall()
 
 	..()
@@ -110,11 +110,11 @@
 		for(var/turf/simulated/wall/W in range(temploc,1))
 			W.relativewall()
 
-		for(var/obj/station_objects/falsewall/W in range(temploc,1))
+		for(var/obj/structure/falsewall/W in range(temploc,1))
 			W.relativewall()
 
 	for(var/direction in cardinal)
-		for(var/obj/effects/glowshroom/shroom in get_step(src,direction))
+		for(var/obj/effect/glowshroom/shroom in get_step(src,direction))
 			if(!shroom.floor) //shrooms drop to the floor
 				shroom.floor = 1
 				shroom.icon_state = "glowshroomf"
@@ -123,7 +123,7 @@
 
 	..()
 
-/obj/station_objects/falsewall/Del()
+/obj/structure/falsewall/Del()
 
 	var/temploc = src.loc
 
@@ -131,7 +131,7 @@
 		for(var/turf/simulated/wall/W in range(temploc,1))
 			W.relativewall()
 
-		for(var/obj/station_objects/falsewall/W in range(temploc,1))
+		for(var/obj/structure/falsewall/W in range(temploc,1))
 			W.relativewall()
 
 	..()

@@ -497,7 +497,7 @@
 
 		usr << "\blue We stealthily sting [T]."
 
-		var/obj/effects/overlay/B = new /obj/effects/overlay( T.loc )
+		var/obj/effect/overlay/B = new /obj/effect/overlay( T.loc )
 		B.icon_state = "blspell"
 		B.icon = 'wizard.dmi'
 		B.name = "spell"

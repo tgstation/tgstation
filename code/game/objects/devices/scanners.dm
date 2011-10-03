@@ -132,7 +132,7 @@ MASS SPECTROMETER
 /obj/item/device/detective_scanner/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 
 	src.add_fingerprint(user)
-	if (istype(A, /obj/effects/decal/cleanable/blood) || istype(A, /obj/effects/rune))
+	if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune))
 		if(A.blood_DNA)
 			user << "\blue Blood type: [A.blood_type]\nDNA: [A.blood_DNA]"
 	else if (A.blood_DNA)

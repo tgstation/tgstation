@@ -239,7 +239,7 @@
 			if(can_see(src,trg_idle,viewrange))
 				switch(get_dist(src, trg_idle))
 					if(1)
-						if(istype(trg_idle,/obj/effects/alien/weeds))
+						if(istype(trg_idle,/obj/effect/alien/weeds))
 							step_towards(src,get_step_towards2(src , trg_idle))
 					if(2 to INFINITY)
 						step_towards(src,get_step_towards2(src , trg_idle))

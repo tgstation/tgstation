@@ -47,7 +47,7 @@
 			O.show_message(text("\red <B>[src] vomits up a thick purple substance and begins to shape it!</B>"), 1)
 		switch(choice)
 			if("resin wall")
-				new /obj/effects/alien/resin/wall(loc)
+				new /obj/effect/alien/resin/wall(loc)
 			if("resin membrane")
-				new /obj/effects/alien/resin/membrane(loc)
+				new /obj/effect/alien/resin/membrane(loc)
 	return

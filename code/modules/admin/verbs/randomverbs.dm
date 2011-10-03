@@ -187,7 +187,7 @@
 /proc/create_xeno(mob/dead/observer/G)
 	var/alien_caste = alert(src, "Please choose which caste to spawn.",,"Hunter","Sentinel","Drone")
 
-	var/obj/effects/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
+	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
 
 	var/mob/living/carbon/alien/humanoid/new_xeno
 	switch(alien_caste)
@@ -402,20 +402,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			ticker.mode.learn_basic_spells(new_character)
 			ticker.mode.equip_wizard(new_character)
 		if("Syndicate")
-			var/obj/effects/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
+			var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
 			if(synd_spawn)
 				new_character.loc = get_turf(synd_spawn)
 			call(/datum/game_mode/proc/equip_syndicate)(new_character)
 		if("Space Ninja")
 			var/ninja_spawn[] = list()
-			for(var/obj/effects/landmark/L in world)
+			for(var/obj/effect/landmark/L in world)
 				if(L.name=="carpspawn")
 					ninja_spawn += L
 			new_character.equip_space_ninja()
 			new_character.internal = new_character.s_store
 			new_character.internals.icon_state = "internal1"
 			if(ninja_spawn.len)
-				var/obj/effects/landmark/ninja_spawn_here = pick(ninja_spawn)
+				var/obj/effect/landmark/ninja_spawn_here = pick(ninja_spawn)
 				new_character.loc = ninja_spawn_here.loc
 		if("Death Commando")//Leaves them at late-join spawn.
 			new_character.equip_death_commando()

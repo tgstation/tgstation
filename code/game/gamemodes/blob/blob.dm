@@ -32,8 +32,8 @@
 		for(var/i = 1 to 3)
 			var/turf/location = pick(blobstart)
 			if(location)
-				if(!locate(/obj/effects/blob in location))
-					var/obj/effects/blob/blob = new/obj/effects/blob(location)
+				if(!locate(/obj/effect/blob in location))
+					var/obj/effect/blob/blob = new/obj/effect/blob(location)
 					spawn(200)
 						if(blob)
 							if(blob.blobtype == "Blob")
@@ -58,7 +58,7 @@
 		for(var/i = 1 to 10)
 			sleep(-1)
 			if(!active_blobs.len)	break
-			var/obj/effects/blob/B = pick(active_blobs)
+			var/obj/effect/blob/B = pick(active_blobs)
 			if(B.z != 1)
 				continue
 
@@ -108,7 +108,7 @@
 		return 1
 	if(station_was_nuked)
 		return 1
-	for(var/obj/effects/blob/B in blobs)
+	for(var/obj/effect/blob/B in blobs)
 		if(B.z == 1)
 			return 0
 	return 1

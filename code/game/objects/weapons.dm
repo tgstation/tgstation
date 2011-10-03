@@ -4,8 +4,8 @@
 	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
 	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
 
-/obj/effects/mine/proc/triggerrad(obj)
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+/obj/effect/mine/proc/triggerrad(obj)
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	obj:radiation += 50
@@ -14,15 +14,15 @@
 	spawn(0)
 		del(src)
 
-/obj/effects/mine/proc/triggerstun(obj)
+/obj/effect/mine/proc/triggerstun(obj)
 	obj:stunned += 30
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	spawn(0)
 		del(src)
 
-/obj/effects/mine/proc/triggern2o(obj)
+/obj/effect/mine/proc/triggern2o(obj)
 	//example: n2o triggerproc
 	//note: im lazy
 
@@ -42,7 +42,7 @@
 	spawn(0)
 		del(src)
 
-/obj/effects/mine/proc/triggerplasma(obj)
+/obj/effect/mine/proc/triggerplasma(obj)
 	for (var/turf/simulated/floor/target in range(1,src))
 		if(!target.blocks_air)
 			if(target.parent)
@@ -59,24 +59,24 @@
 	spawn(0)
 		del(src)
 
-/obj/effects/mine/proc/triggerkick(obj)
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+/obj/effect/mine/proc/triggerkick(obj)
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	del(obj:client)
 	spawn(0)
 		del(src)
 
-/obj/effects/mine/proc/explode(obj)
+/obj/effect/mine/proc/explode(obj)
 	explosion(loc, 0, 1, 2, 3)
 	spawn(0)
 		del(src)
 
 
-/obj/effects/mine/HasEntered(AM as mob|obj)
+/obj/effect/mine/HasEntered(AM as mob|obj)
 	Bumped(AM)
 
-/obj/effects/mine/Bumped(mob/M as mob|obj)
+/obj/effect/mine/Bumped(mob/M as mob|obj)
 
 	if(triggered) return
 
@@ -86,7 +86,7 @@
 		triggered = 1
 		call(src,triggerproc)(M)
 
-/obj/effects/mine/New()
+/obj/effect/mine/New()
 	icon_state = "uglyminearmed"
 
 /atom/proc/ex_act()
@@ -106,8 +106,8 @@
 
 /turf/Entered(atom/A as mob|obj)
 	..()
-	if ((A && A.density && !( istype(A, /obj/effects/beam) )))
-		for(var/obj/effects/beam/i_beam/I in src)
+	if ((A && A.density && !( istype(A, /obj/effect/beam) )))
+		for(var/obj/effect/beam/i_beam/I in src)
 			spawn( 0 )
 				if (I)
 					I.hit()

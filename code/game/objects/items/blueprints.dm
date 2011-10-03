@@ -185,7 +185,7 @@ move an amendment</a> to the drawing.</p>
 	if (!istype(T2, /turf/simulated))
 		return BORDER_BETWEEN
 
-	for (var/obj/station_objects/window/W in T2)
+	for (var/obj/structure/window/W in T2)
 		if(turn(dir,180) == W.dir)
 			return BORDER_BETWEEN
 		if (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
@@ -195,9 +195,9 @@ move an amendment</a> to the drawing.</p>
 			return BORDER_BETWEEN
 	if (locate(/obj/machinery/door) in T2)
 		return BORDER_2NDTILE
-	if (locate(/obj/station_objects/falsewall) in T2)
+	if (locate(/obj/structure/falsewall) in T2)
 		return BORDER_2NDTILE
-	if (locate(/obj/station_objects/falserwall) in T2)
+	if (locate(/obj/structure/falserwall) in T2)
 		return BORDER_2NDTILE
 
 	return BORDER_NONE
@@ -212,7 +212,7 @@ move an amendment</a> to the drawing.</p>
 		pending -= T
 		for (var/dir in cardinal)
 			var/skip = 0
-			for (var/obj/station_objects/window/W in T)
+			for (var/obj/structure/window/W in T)
 				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
 					skip = 1; break
 			if (skip) continue

@@ -1,4 +1,4 @@
-/obj/effects/proc_holder/spell/targeted/genetic
+/obj/effect/proc_holder/spell/targeted/genetic
 	name = "Genetic"
 	desc = "This spell inflicts a set of mutations and disabilities upon the target."
 
@@ -22,7 +22,7 @@
 			6th bit - fat
 	*/
 
-/obj/effects/proc_holder/spell/targeted/genetic/cast(list/targets)
+/obj/effect/proc_holder/spell/targeted/genetic/cast(list/targets)
 
 	for(var/mob/target in targets)
 		target.mutations |= mutations

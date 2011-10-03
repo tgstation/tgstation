@@ -63,7 +63,7 @@
 
 
 
-/obj/station_objects/bookcase
+/obj/structure/bookcase
 	name = "bookcase"
 	icon = 'library.dmi'
 	icon_state = "bookcase"
@@ -124,7 +124,7 @@
 		return
 
 
-/obj/station_objects/bookcase/manuals/medical
+/obj/structure/bookcase/manuals/medical
 	name = "Medical Manuals bookcase"
 
 	New()
@@ -132,7 +132,7 @@
 		new /obj/item/weapon/book/manual/medical_cloning(src)
 
 
-/obj/station_objects/bookcase/manuals/engineering
+/obj/structure/bookcase/manuals/engineering
 	name = "Engineering Manuals bookcase"
 
 	New()
@@ -144,7 +144,7 @@
 		new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
 		new /obj/item/weapon/book/manual/robotics_cyborgs(src)
 
-/obj/station_objects/bookcase/manuals/research_and_development
+/obj/structure/bookcase/manuals/research_and_development
 	name = "R&D Manuals bookcase"
 
 	New()

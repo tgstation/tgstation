@@ -1,9 +1,9 @@
-/obj/effects/proc_holder
+/obj/effect/proc_holder
 	var/panel = "Debug"//What panel the proc holder needs to go on.
 
-var/list/spells = typesof(/obj/effects/proc_holder/spell) //needed for the badmin verb for now
+var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
-/obj/effects/proc_holder/spell
+/obj/effect/proc_holder/spell
 	name = "Spell"
 	desc = "A wizard spell"
 	density = 0
@@ -33,7 +33,7 @@ var/list/spells = typesof(/obj/effects/proc_holder/spell) //needed for the badmi
 
 	var/critfailchance = 0
 
-/obj/effects/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
 	if(!(src in usr.spell_list))
 		usr << "\red You shouldn't have this spell! Something's wrong."
@@ -74,7 +74,7 @@ var/list/spells = typesof(/obj/effects/proc_holder/spell) //needed for the badmi
 
 	return 1
 
-/obj/effects/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
+/obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 
 	switch(invocation_type)
 		if("shout")
@@ -86,12 +86,12 @@ var/list/spells = typesof(/obj/effects/proc_holder/spell) //needed for the badmi
 		if("whisper")
 			usr.whisper(invocation)
 
-/obj/effects/proc_holder/spell/New()
+/obj/effect/proc_holder/spell/New()
 	..()
 
 	charge_counter = charge_max
 
-/obj/effects/proc_holder/spell/Click()
+/obj/effect/proc_holder/spell/Click()
 	..()
 
 	if(!cast_check())
@@ -99,15 +99,15 @@ var/list/spells = typesof(/obj/effects/proc_holder/spell) //needed for the badmi
 
 	choose_targets()
 
-/obj/effects/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
+/obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
-/obj/effects/proc_holder/spell/proc/start_recharge()
+/obj/effect/proc_holder/spell/proc/start_recharge()
 	while(charge_counter < charge_max)
 		sleep(1)
 		charge_counter++
 
-/obj/effects/proc_holder/spell/proc/perform(list/targets, recharge = 1) //if recharge is started is important for the trigger spells
+/obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation()
 	spawn(0)
@@ -119,7 +119,7 @@ var/list/spells = typesof(/obj/effects/proc_holder/spell) //needed for the badmi
 		cast(targets)
 	after_cast(targets)
 
-/obj/effects/proc_holder/spell/proc/before_cast(list/targets)
+/obj/effect/proc_holder/spell/proc/before_cast(list/targets)
 	if(overlay)
 		for(var/atom/target in targets)
 			var/location
@@ -127,7 +127,7 @@ var/list/spells = typesof(/obj/effects/proc_holder/spell) //needed for the badmi
 				location = target.loc
 			else if(istype(target,/turf))
 				location = target
-			var/obj/effects/overlay/spell = new /obj/effects/overlay(location)
+			var/obj/effect/overlay/spell = new /obj/effect/overlay(location)
 			spell.icon = overlay_icon
 			spell.icon_state = overlay_icon_state
 			spell.anchored = 1
@@ -135,7 +135,7 @@ var/list/spells = typesof(/obj/effects/proc_holder/spell) //needed for the badmi
 			spawn(overlay_lifespan)
 				del(spell)
 
-/obj/effects/proc_holder/spell/proc/after_cast(list/targets)
+/obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)
 		var/location
 		if(istype(target,/mob))
@@ -145,26 +145,26 @@ var/list/spells = typesof(/obj/effects/proc_holder/spell) //needed for the badmi
 		if(istype(target,/mob) && message)
 			target << text("[message]")
 		if(sparks_spread)
-			var/datum/effects/system/spark_spread/sparks = new /datum/effects/system/spark_spread()
+			var/datum/effect/system/spark_spread/sparks = new /datum/effect/system/spark_spread()
 			sparks.set_up(sparks_amt, 0, location) //no idea what the 0 is
 			sparks.start()
 		if(smoke_spread)
 			if(smoke_spread == 1)
-				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+				var/datum/effect/system/harmless_smoke_spread/smoke = new /datum/effect/system/harmless_smoke_spread()
 				smoke.set_up(smoke_amt, 0, location) //no idea what the 0 is
 				smoke.start()
 			else if(smoke_spread == 2)
-				var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
+				var/datum/effect/system/bad_smoke_spread/smoke = new /datum/effect/system/bad_smoke_spread()
 				smoke.set_up(smoke_amt, 0, location) //no idea what the 0 is
 				smoke.start()
 
-/obj/effects/proc_holder/spell/proc/cast(list/targets)
+/obj/effect/proc_holder/spell/proc/cast(list/targets)
 	return
 
-/obj/effects/proc_holder/spell/proc/critfail(list/targets)
+/obj/effect/proc_holder/spell/proc/critfail(list/targets)
 	return
 
-/obj/effects/proc_holder/spell/proc/revert_cast() //resets recharge or readds a charge
+/obj/effect/proc_holder/spell/proc/revert_cast() //resets recharge or readds a charge
 	switch(charge_type)
 		if("recharge")
 			charge_counter = charge_max
@@ -174,15 +174,15 @@ var/list/spells = typesof(/obj/effects/proc_holder/spell) //needed for the badmi
 	return
 
 
-/obj/effects/proc_holder/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
+/obj/effect/proc_holder/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
 	var/max_targets = 1 //leave 0 for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
 	var/target_ignore_prev = 1 //only important if max_targets > 1, affects if the spell can be cast multiple times at one person from one cast
 	var/include_user = 0 //if it includes usr in the target list
 
-/obj/effects/proc_holder/spell/aoe_turf //affects all turfs in view or range (depends)
+/obj/effect/proc_holder/spell/aoe_turf //affects all turfs in view or range (depends)
 	var/inner_radius = -1 //for all your ring spell needs
 
-/obj/effects/proc_holder/spell/targeted/choose_targets(mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/choose_targets(mob/user = usr)
 	var/list/targets = list()
 
 	switch(selection_type)
@@ -250,7 +250,7 @@ var/list/spells = typesof(/obj/effects/proc_holder/spell) //needed for the badmi
 
 	return
 
-/obj/effects/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
 	var/list/targets = list()
 
 	switch(selection_type)

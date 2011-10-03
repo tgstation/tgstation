@@ -9,7 +9,7 @@ proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
 		log_game("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
 
 	if(heavy_range > 1)
-		var/obj/effects/overlay/pulse = new/obj/effects/overlay ( epicenter )
+		var/obj/effect/overlay/pulse = new/obj/effect/overlay ( epicenter )
 		pulse.icon = 'effects.dmi'
 		pulse.icon_state = "emppulse"
 		pulse.name = "emp pulse"

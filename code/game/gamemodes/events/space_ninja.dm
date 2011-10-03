@@ -133,7 +133,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 	//Here we pick a location and spawn the ninja.
 	var/list/spawn_list = list()
-	for(var/obj/effects/landmark/L in world)
+	for(var/obj/effect/landmark/L in world)
 		if (L.name == "carpspawn")
 			spawn_list.Add(L)
 
@@ -402,7 +402,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 				return
 
 	var/list/spawn_list = list()
-	for(var/obj/effects/landmark/L in world)
+	for(var/obj/effect/landmark/L in world)
 		if (L.name == "carpspawn")
 			spawn_list.Add(L)
 
@@ -737,7 +737,7 @@ spideros = text2num(return_to)//Maximum length here is 6. Use (return_to, X) to 
 	set desc = "Drain energy directly from an exposed wire."
 	set category = "Ninja Equip"
 
-	var/obj/station_objects/cable/attached
+	var/obj/structure/cable/attached
 	var/mob/living/carbon/human/U = loc
 	if(candrain&&!draining)
 		var/turf/T = U.loc
@@ -760,10 +760,10 @@ Can be added on to pretty easily.
 BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 
 /obj/item/clothing/suit/space/space_ninja/proc/grant_AI_verbs()
-	var/obj/effects/proc_holder/ai_return_control/A_C = new(AI)
-	var/obj/effects/proc_holder/ai_hack_ninja/B_C = new(AI)
-	var/obj/effects/proc_holder/ai_instruction/C_C = new(AI)
-	new/obj/effects/proc_holder/ai_holo_clear(AI)
+	var/obj/effect/proc_holder/ai_return_control/A_C = new(AI)
+	var/obj/effect/proc_holder/ai_hack_ninja/B_C = new(AI)
+	var/obj/effect/proc_holder/ai_instruction/C_C = new(AI)
+	new/obj/effect/proc_holder/ai_holo_clear(AI)
 	AI.proc_holder_list += A_C
 	AI.proc_holder_list += B_C
 	AI.proc_holder_list += C_C
@@ -771,10 +771,10 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 	s_control = 0
 
 /obj/item/clothing/suit/space/space_ninja/proc/remove_AI_verbs()
-	var/obj/effects/proc_holder/ai_return_control/A_C = locate() in AI
-	var/obj/effects/proc_holder/ai_hack_ninja/B_C = locate() in AI
-	var/obj/effects/proc_holder/ai_instruction/C_C = locate() in AI
-	var/obj/effects/proc_holder/ai_holo_clear/D_C = locate() in AI
+	var/obj/effect/proc_holder/ai_return_control/A_C = locate() in AI
+	var/obj/effect/proc_holder/ai_hack_ninja/B_C = locate() in AI
+	var/obj/effect/proc_holder/ai_instruction/C_C = locate() in AI
+	var/obj/effect/proc_holder/ai_holo_clear/D_C = locate() in AI
 	del(A_C)
 	del(B_C)
 	del(C_C)
@@ -787,7 +787,7 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 	s_control = 1
 
 //Workaround
-/obj/effects/proc_holder/ai_holo_clear
+/obj/effect/proc_holder/ai_holo_clear
 	name = "Clear Hologram"
 	desc = "Stops projecting the current holographic image."
 	panel = "AI Ninja Equip"
@@ -795,44 +795,44 @@ BYOND fixed the verb bugs so this is no longer necessary. I prefer verb panels.
 	opacity = 0
 
 
-/obj/effects/proc_holder/ai_holo_clear/Click()
+/obj/effect/proc_holder/ai_holo_clear/Click()
 	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc//This is so stupid but makes sure certain things work. AI.SUIT
 	del(S.hologram.i_attached)
 	del(S.hologram)
-	var/obj/effects/proc_holder/ai_holo_clear/D_C = locate() in S.AI
+	var/obj/effect/proc_holder/ai_holo_clear/D_C = locate() in S.AI
 	S.AI.proc_holder_list -= D_C
 	return
 
-/obj/effects/proc_holder/ai_instruction//Let's the AI know what they can do.
+/obj/effect/proc_holder/ai_instruction//Let's the AI know what they can do.
 	name = "Instructions"
 	desc = "Displays a list of helpful information."
 	panel = "AI Ninja Equip"
 	density = 0
 	opacity = 0
 
-/obj/effects/proc_holder/ai_instruction/Click()
+/obj/effect/proc_holder/ai_instruction/Click()
 	loc << "The menu you are seeing will contain other commands if they become available.\nRight click a nearby turf to display an AI Hologram. It will only be visible to you and your host. You can move it freely using normal movement keys--it will disappear if placed too far away."
 
-/obj/effects/proc_holder/ai_hack_ninja//Generic proc holder to make sure the two verbs below work propely.
+/obj/effect/proc_holder/ai_hack_ninja//Generic proc holder to make sure the two verbs below work propely.
 	name = "Hack SpiderOS"
 	desc = "Hack directly into the Black Widow(tm) neuro-interface."
 	panel = "AI Ninja Equip"
 	density = 0
 	opacity = 0
 
-/obj/effects/proc_holder/ai_hack_ninja/Click()//When you click on it.
+/obj/effect/proc_holder/ai_hack_ninja/Click()//When you click on it.
 	var/obj/item/clothing/suit/space/space_ninja/S = loc.loc
 	S.hack_spideros()
 	return
 
-/obj/effects/proc_holder/ai_return_control
+/obj/effect/proc_holder/ai_return_control
 	name = "Relinquish Control"
 	desc = "Return control to the user."
 	panel = "AI Ninja Equip"
 	density = 0
 	opacity = 0
 
-/obj/effects/proc_holder/ai_return_control/Click()
+/obj/effect/proc_holder/ai_return_control/Click()
 	var/mob/living/silicon/ai/A = loc
 	var/obj/item/clothing/suit/space/space_ninja/S = A.loc
 	A << browse(null, "window=hack spideros")//Close window
@@ -858,16 +858,16 @@ Most of these are at various points of incomplete.
 /mob/verb/grant_object_panel()
 	set name = "Grant AI Ninja Verbs Debug"
 	set category = "Ninja Debug"
-	var/obj/effects/proc_holder/ai_return_control/A_C = new(src)
-	var/obj/effects/proc_holder/ai_hack_ninja/B_C = new(src)
+	var/obj/effect/proc_holder/ai_return_control/A_C = new(src)
+	var/obj/effect/proc_holder/ai_hack_ninja/B_C = new(src)
 	usr:proc_holder_list += A_C
 	usr:proc_holder_list += B_C
 
 mob/verb/remove_object_panel()
 	set name = "Remove AI Ninja Verbs Debug"
 	set category = "Ninja Debug"
-	var/obj/effects/proc_holder/ai_return_control/A = locate() in src
-	var/obj/effects/proc_holder/ai_hack_ninja/B = locate() in src
+	var/obj/effect/proc_holder/ai_return_control/A = locate() in src
+	var/obj/effect/proc_holder/ai_hack_ninja/B = locate() in src
 	usr:proc_holder_list -= A
 	usr:proc_holder_list -= B
 	del(A)//First.
@@ -963,7 +963,7 @@ mob/verb/remove_object_panel()
 	set name = "Energy Net Debug"
 	set category = "Ninja Debug"
 
-	var/obj/effects/energy_net/E = new /obj/effects/energy_net(loc)
+	var/obj/effect/energy_net/E = new /obj/effect/energy_net(loc)
 	E.layer = layer+1//To have it appear one layer above the mob.
 	stunned = 10//So they are stunned initially but conscious.
 	anchored = 1//Anchors them so they can't move.

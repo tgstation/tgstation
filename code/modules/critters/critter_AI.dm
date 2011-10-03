@@ -1,5 +1,5 @@
 
-/obj/effects/critter
+/obj/effect/critter
 
 	New()
 		spawn(0) process()//I really dont like this much but it seems to work well
@@ -123,11 +123,11 @@
 				break
 
 		if(!src.attack)
-			for(var/obj/effects/critter/C in view(src.seekrange,src))
-				if(istype(C, /obj/effects/critter) && !src.atkcritter) continue
+			for(var/obj/effect/critter/C in view(src.seekrange,src))
+				if(istype(C, /obj/effect/critter) && !src.atkcritter) continue
 				if(istype(C, /obj/mecha) && !src.atkmech) continue
 				if(C.health <= 0) continue
-				if(istype(C, /obj/effects/critter) && src.atkcritter)
+				if(istype(C, /obj/effect/critter) && src.atkcritter)
 					if((istype(C, src.type) && !src.atksame) || (C == src))	continue
 					src.attack = 1
 				if(istype(C, /obj/mecha) && src.atkmech)	src.attack = 1
@@ -193,7 +193,7 @@
 
 
 /*TODO: Figure out how to handle special things like this dont really want to give it to every critter
-/obj/effects/critter/proc/CritterTeleport(var/telerange, var/dospark, var/dosmoke)
+/obj/effect/critter/proc/CritterTeleport(var/telerange, var/dospark, var/dosmoke)
 	if (!src.alive) return
 	var/list/randomturfs = new/list()
 	for(var/turf/T in orange(src, telerange))
@@ -201,11 +201,11 @@
 		randomturfs.Add(T)
 	src.loc = pick(randomturfs)
 	if (dospark)
-		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+		var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
 	if (dosmoke)
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+		var/datum/effect/system/harmless_smoke_spread/smoke = new /datum/effect/system/harmless_smoke_spread()
 		smoke.set_up(10, 0, src.loc)
 		smoke.start()
 	src.task = "thinking"

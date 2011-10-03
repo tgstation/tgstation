@@ -23,10 +23,10 @@
 	if(Debug)
 		for(var/turf/T in range(5))
 
-			var/obj/effects/mark/O = locate(/obj/effects/mark/, T)
+			var/obj/effect/mark/O = locate(/obj/effect/mark/, T)
 
 			if(!O)
-				O = new /obj/effects/mark(T)
+				O = new /obj/effect/mark(T)
 			else
 				O.overlays = null
 
@@ -90,7 +90,7 @@ Doing this because FindTurfs() isn't even used
 	set category = "Debug"
 	//set hidden = 1
 	if(Debug)
-		for(var/obj/effects/mark/O in world)
+		for(var/obj/effect/mark/O in world)
 			del(O)
 	else
 		alert("Debugging off")
@@ -132,10 +132,10 @@ Doing this because FindTurfs() isn't even used
 	set category = "Debug"
 	for(var/turf/T in range(5))
 
-		var/obj/effects/mark/O = locate(/obj/effects/mark/, T)
+		var/obj/effect/mark/O = locate(/obj/effect/mark/, T)
 
 		if(!O)
-			O = new /obj/effects/mark(T)
+			O = new /obj/effect/mark(T)
 		else
 			O.overlays = null
 
@@ -163,10 +163,10 @@ Doing this because FindTurfs() isn't even used
 			if(M && M.p_dir)
 
 				//world << "Accepted"
-				var/obj/effects/mark/O = locate(/obj/effects/mark/, T)
+				var/obj/effect/mark/O = locate(/obj/effect/mark/, T)
 
 				if(!O)
-					O = new /obj/effects/mark(T)
+					O = new /obj/effect/mark(T)
 				else
 					O.overlays = null
 
@@ -194,10 +194,10 @@ Doing this because FindTurfs() isn't even used
 
 			//world << "Turf [T] at ([T.x],[T.y])"
 
-			var/obj/effects/mark/O = locate(/obj/effects/mark/, T)
+			var/obj/effect/mark/O = locate(/obj/effect/mark/, T)
 
 			if(!O)
-				O = new /obj/effects/mark(T)
+				O = new /obj/effect/mark(T)
 			else
 				O.overlays = null
 
@@ -206,10 +206,10 @@ Doing this because FindTurfs() isn't even used
 				//world <<" Mach [M] with pdir=[M.p_dir]"
 
 
-				if(M && istype(M, /obj/station_objects/cable/))
+				if(M && istype(M, /obj/structure/cable/))
 
 
-					var/obj/station_objects/cable/C = M
+					var/obj/structure/cable/C = M
 					//world << "Accepted"
 
 					O.overlays += numbericon("[C.netnum]  " ,  marked)
@@ -237,10 +237,10 @@ Doing this because FindTurfs() isn't even used
 
 			//world << "Turf [T] at ([T.x],[T.y])"
 
-			var/obj/effects/mark/O = locate(/obj/effects/mark/, T)
+			var/obj/effect/mark/O = locate(/obj/effect/mark/, T)
 
 			if(!O)
-				O = new /obj/effects/mark(T)
+				O = new /obj/effect/mark(T)
 			else
 				O.overlays = null
 
@@ -277,7 +277,7 @@ Doing this because FindTurfs() isn't even used
 
 			T = get_step(P, ndirs[1])
 
-			var/obj/effects/mark/O = new(T)
+			var/obj/effect/mark/O = new(T)
 
 			O.overlays += numbericon("[num] * 1  ", -4)
 			O.overlays += numbericon("[ndirs[1]] - [ndirs[2]]",-16)
@@ -497,7 +497,7 @@ Doing this because FindTurfs() isn't even used
 /mob/verb/Smoke()
 	set category = "Debug"
 	if(Debug)
-		var/obj/effects/smoke/O = new /obj/effects/smoke( src.loc )
+		var/obj/effect/smoke/O = new /obj/effect/smoke( src.loc )
 		O.dir = pick(NORTH, SOUTH, EAST, WEST)
 		spawn( 0 )
 			O.Life()

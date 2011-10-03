@@ -203,7 +203,7 @@
 						var/breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 						breath = loc.remove_air(breath_moles)
 
-						// Handle chem smoke effects  -- Doohl
+						// Handle chem smoke effect  -- Doohl
 						var/block = 0
 						if(wear_mask)
 							if(istype(wear_mask, /obj/item/clothing/mask/gas))
@@ -211,7 +211,7 @@
 
 						if(!block)
 
-							for(var/obj/effects/chem_smoke/smoke in view(1, src))
+							for(var/obj/effect/chem_smoke/smoke in view(1, src))
 								if(smoke.reagents.total_volume)
 									smoke.reagents.reaction(src, INGEST)
 									spawn(5)
@@ -591,7 +591,7 @@
 				for(var/mob/living/carbon/M in oviewers(4,src))
 					if(M.virus2)
 						infect_virus2(src,M.virus2)
-				for(var/obj/effects/decal/cleanable/blood/B in view(4, src))
+				for(var/obj/effect/decal/cleanable/blood/B in view(4, src))
 					if(B.virus2)
 						infect_virus2(src,B.virus2)
 			else
@@ -600,7 +600,7 @@
 
 		check_if_buckled()
 			if (src.buckled)
-				src.lying = istype(src.buckled, /obj/station_objects/stool/bed) || istype(src.buckled, /obj/machinery/conveyor)
+				src.lying = istype(src.buckled, /obj/structure/stool/bed) || istype(src.buckled, /obj/machinery/conveyor)
 				if(src.lying)
 					src.drop_item()
 				src.density = 1

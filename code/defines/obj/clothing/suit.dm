@@ -340,7 +340,7 @@
 	slowdown = 1
 	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
 
-/obj/item/clothing/suit/armor/swat/officer //Combined effects of the bomb suit and the SWAT suit.
+/obj/item/clothing/suit/armor/swat/officer //Combined effect of the bomb suit and the SWAT suit.
 	name = "officer jacket"
 	desc = "An armored jacket used in special operations."
 	icon_state = "detective"

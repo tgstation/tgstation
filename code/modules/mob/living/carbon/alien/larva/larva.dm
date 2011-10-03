@@ -243,7 +243,7 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
-		bruteloss += (istype(O, /obj/effects/meteor/small) ? 10 : 25)
+		bruteloss += (istype(O, /obj/effect/meteor/small) ? 10 : 25)
 		fireloss += 30
 
 		updatehealth()
@@ -467,7 +467,7 @@
 					if ((M.head && M.head.flags & 4) || (M.wear_mask && !( M.wear_mask.flags & 32 )) )
 						M << "\blue <B>Remove that mask!</B>"
 						return
-					var/obj/effects/equip_e/human/O = new /obj/effects/equip_e/human(  )
+					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 					O.source = M
 					O.target = src
 					O.s_loc = M.loc

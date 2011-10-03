@@ -72,7 +72,7 @@
 	heat_transfer_coefficient = 0.01
 	armor = list(melee = 80, bullet = 60, laser = 50, taser = 30, bomb = 50, bio = 10, rad = 0)
 
-/obj/item/clothing/gloves/combat //Combined effects of SWAT gloves and insulated gloves
+/obj/item/clothing/gloves/combat //Combined effect of SWAT gloves and insulated gloves
 	desc = "These tactical gloves are somewhat fire and impact resistant."
 	name = "combat gloves"
 	icon_state = "black"

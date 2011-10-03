@@ -45,7 +45,7 @@ turf
 			return igniting
 
 obj
-	effects/hotspot
+	effect/hotspot
 		//Icon for fire on turfs, also helps for nurturing small fires until they are full tile
 
 		anchored = 1

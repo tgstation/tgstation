@@ -19,7 +19,7 @@ RCD
 	m_amt = 50000
 	origin_tech = "engineering=4;materials=2"
 	var
-		datum/effects/system/spark_spread/spark_system
+		datum/effect/system/spark_spread/spark_system
 		matter = 0
 		working = 0
 		mode = 1
@@ -28,7 +28,7 @@ RCD
 
 	New()
 		desc = "A RCD. It currently holds [matter]/30 matter-units."
-		src.spark_system = new /datum/effects/system/spark_spread
+		src.spark_system = new /datum/effect/system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
 		return
@@ -116,7 +116,7 @@ RCD
 					src.spark_system.start()
 					if(locate(/obj/machinery/door) in get_turf(src))	return
 					var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock( A )
-					var/obj/station_objects/window/killthis = (locate(/obj/station_objects/window) in get_turf(src))
+					var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 					if(killthis)
 						killthis.ex_act(2)//Smashin windows
 					T.autoclose = 1

@@ -67,7 +67,7 @@
 	handle_environment()
 
 		//If there are alien weeds on the ground then heal if needed or give some toxins
-		if(locate(/obj/effects/alien/weeds) in loc)
+		if(locate(/obj/effect/alien/weeds) in loc)
 			if(health >= 250)
 				toxloss += 20
 				if(toxloss > max_plasma)
@@ -171,5 +171,5 @@
 		toxloss -= 200
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
-		new /obj/effects/alien/egg(loc)
+		new /obj/effect/alien/egg(loc)
 	return

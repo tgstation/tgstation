@@ -1,4 +1,4 @@
-/obj/station_objects/secure_closet/scientist
+/obj/structure/secure_closet/scientist
 	name = "Scientist Locker"
 	req_access = list(access_tox_storage)
 
@@ -16,7 +16,7 @@
 
 
 
-/obj/station_objects/secure_closet/RD
+/obj/structure/secure_closet/RD
 	name = "Research Director"
 	req_access = list(access_rd)
 

@@ -1,4 +1,4 @@
-/obj/effects/alien/weeds/New()
+/obj/effect/alien/weeds/New()
 	..()
 	if(istype(loc, /turf/space))
 		del(src)
@@ -9,7 +9,7 @@
 			Life()
 	return
 
-/obj/effects/alien/weeds/proc/Life()
+/obj/effect/alien/weeds/proc/Life()
 	set background = 1
 	var/turf/U = get_turf(src)
 /*
@@ -33,7 +33,7 @@ Alien plants should do something if theres a lot of poison
 		for(var/dirn in cardinal)
 			var/turf/T = get_step(src, dirn)
 
-			if (!istype(T) || T.density || locate(/obj/effects/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
+			if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
 				continue
 
 	//		if (locate(/obj/movable, T)) // don't propogate into movables
@@ -43,10 +43,10 @@ Alien plants should do something if theres a lot of poison
 				if(O.density)
 					continue direction_loop
 
-			new /obj/effects/alien/weeds(T)
+			new /obj/effect/alien/weeds(T)
 
 
-/obj/effects/alien/weeds/ex_act(severity)
+/obj/effect/alien/weeds/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			del(src)
@@ -58,7 +58,7 @@ Alien plants should do something if theres a lot of poison
 				del(src)
 	return
 
-/obj/effects/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/effect/alien/weeds/attackby(var/obj/item/weapon/W, var/mob/user)
 	visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
 
 	var/damage = W.force / 4.0
@@ -73,17 +73,17 @@ Alien plants should do something if theres a lot of poison
 	health -= damage
 	healthcheck()
 
-/obj/effects/alien/weeds/proc/healthcheck()
+/obj/effect/alien/weeds/proc/healthcheck()
 	if(health <= 0)
 		del(src)
 
 
-/obj/effects/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effect/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		health -= 5
 		healthcheck()
 
-/*/obj/effects/alien/weeds/burn(fi_amount)
+/*/obj/effect/alien/weeds/burn(fi_amount)
 	if (fi_amount > 18000)
 		spawn( 0 )
 			del(src)

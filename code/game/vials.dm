@@ -3,7 +3,7 @@
 //I dont fucking care. It looks pretty awesome.
 
 //////////////////////////////////////////////////////////
-/obj/effects/dummy/liquid
+/obj/effect/dummy/liquid
 	name = "water"
 	icon = 'effects.dmi'
 	icon_state = "nothing"
@@ -77,8 +77,8 @@
 	var/atom/sourceloc = get_turf(src.loc)
 	src = null
 	del(A)
-	var/obj/effects/overlay/O = new /obj/effects/overlay( sourceloc )
-	var/obj/effects/overlay/O2 = new /obj/effects/overlay( sourceloc )
+	var/obj/effect/overlay/O = new /obj/effect/overlay( sourceloc )
+	var/obj/effect/overlay/O2 = new /obj/effect/overlay( sourceloc )
 	O.name = "green liquid"
 	O.density = 0
 	O.anchored = 1
@@ -109,8 +109,8 @@
 	src = null
 	del(A)
 
-	var/obj/effects/overlay/O = new /obj/effects/overlay( sourceloc )
-	var/obj/effects/overlay/O2 = new /obj/effects/overlay( sourceloc )
+	var/obj/effect/overlay/O = new /obj/effect/overlay( sourceloc )
+	var/obj/effect/overlay/O2 = new /obj/effect/overlay( sourceloc )
 
 	O.name = "green liquid"
 	O.density = 0
@@ -138,8 +138,8 @@
 	src = null
 	del(A)
 
-	var/obj/effects/overlay/O = new /obj/effects/overlay( sourceloc )
-	var/obj/effects/overlay/O2 = new /obj/effects/overlay( sourceloc )
+	var/obj/effect/overlay/O = new /obj/effect/overlay( sourceloc )
+	var/obj/effect/overlay/O2 = new /obj/effect/overlay( sourceloc )
 
 	O.name = "green liquid"
 	O.density = 0
@@ -167,7 +167,7 @@
 	if(H.stat) return
 	spawn(0)
 		var/mobloc = get_turf(H.loc)
-		var/obj/effects/dummy/liquid/holder = new /obj/effects/dummy/liquid( mobloc )
+		var/obj/effect/dummy/liquid/holder = new /obj/effect/dummy/liquid( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 		animation.name = "water"
 		animation.density = 0
@@ -186,7 +186,7 @@
 			var/i
 			for(i=0, i<10, i++)
 				spawn(0)
-					var/obj/effects/water/water1 = new /obj/effects/water( mobloc )
+					var/obj/effect/water/water1 = new /obj/effect/water( mobloc )
 					var/direction = pick(alldirs)
 					water1.name = "water"
 					water1.density = 0
@@ -210,7 +210,7 @@
 				var/c
 				for(c=0, c<pick(1,2,3), c++)
 					turf = get_step(turf,direction)
-				var/obj/effects/water/water2 = new /obj/effects/water( turf )
+				var/obj/effect/water/water2 = new /obj/effect/water( turf )
 				water2.name = "water"
 				water2.icon = 'water.dmi'
 				water2.icon_state = "extinguish"
@@ -228,7 +228,7 @@
 		del(holder)
 
 
-/obj/effects/dummy/liquid/relaymove(var/mob/user, direction)
+/obj/effect/dummy/liquid/relaymove(var/mob/user, direction)
 	if (!src.canmove) return
 	//writing my own movement because step is broken.
 	switch(direction)
@@ -255,9 +255,9 @@
 	src.canmove = 0
 	spawn(20) canmove = 1
 
-/obj/effects/dummy/liquid/ex_act(blah)
+/obj/effect/dummy/liquid/ex_act(blah)
 	return
-/obj/effects/dummy/liquid/bullet_act(blah,blah)
+/obj/effect/dummy/liquid/bullet_act(blah,blah)
 	return
 
 

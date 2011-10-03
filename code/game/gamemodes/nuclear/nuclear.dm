@@ -104,9 +104,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/game_mode/nuclear/post_setup()
-	var/obj/effects/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
-	var/obj/effects/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
-	var/obj/effects/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
+	var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
+	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
+	var/obj/effect/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
 
 	var/nuke_code = "[rand(10000, 99999)]"
 	var/leader_selected = 0
@@ -136,16 +136,16 @@
 		the_bomb.r_code = nuke_code
 
 	if(closet_spawn)
-		new /obj/station_objects/closet/syndicate/nuclear(closet_spawn.loc)
+		new /obj/structure/closet/syndicate/nuclear(closet_spawn.loc)
 
-	for (var/obj/effects/landmark/A in world)
+	for (var/obj/effect/landmark/A in world)
 		if (A.name == "Syndicate-Gear-Closet")
-			new /obj/station_objects/closet/syndicate/personal(A.loc)
+			new /obj/structure/closet/syndicate/personal(A.loc)
 			del(A)
 			continue
 
 		if (A.name == "Syndicate-Bomb")
-			new /obj/effects/spawner/newbomb/timer/syndicate(A.loc)
+			new /obj/effect/spawner/newbomb/timer/syndicate(A.loc)
 			del(A)
 			continue
 

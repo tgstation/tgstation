@@ -20,10 +20,10 @@
 	arePowerSystemsOn - 1 if the main or backup power are functioning, 0 if not. Does not check whether the power grid is charged or an APC has equipment on or anything like that. (Check (stat & NOPOWER) for that)
 	requiresIDs - 1 if the airlock is requiring IDs, 0 if not
 	isAllPowerCut - 1 if the main and backup power both have cut wires.
-	regainMainPower - handles the effects of main power coming back on.
-	loseMainPower - handles the effects of main power going offline. Usually (if one isn't already running) spawn a thread to count down how long it will be offline - counting down won't happen if main power was completely cut along with backup power, though, the thread will just sleep.
-	loseBackupPower - handles the effects of backup power going offline.
-	regainBackupPower - handles the effects of main power coming back on.
+	regainMainPower - handles the effect of main power coming back on.
+	loseMainPower - handles the effect of main power going offline. Usually (if one isn't already running) spawn a thread to count down how long it will be offline - counting down won't happen if main power was completely cut along with backup power, though, the thread will just sleep.
+	loseBackupPower - handles the effect of backup power going offline.
+	regainBackupPower - handles the effect of main power coming back on.
 	shock - has a chance of electrocuting its target.
 */
 
@@ -404,7 +404,7 @@ About the new airlock wires panel:
 		return 0
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src))
@@ -882,14 +882,14 @@ About the new airlock wires panel:
 			if(do_after(user,40))
 				user << "\blue You removed the airlock electronics!"
 				switch(src.doortype)
-					if(0) new/obj/station_objects/door_assembly/door_assembly_0( src.loc )
-					if(1) new/obj/station_objects/door_assembly/door_assembly_com( src.loc )
-					if(2) new/obj/station_objects/door_assembly/door_assembly_sec( src.loc )
-					if(3) new/obj/station_objects/door_assembly/door_assembly_eng( src.loc )
-					if(4) new/obj/station_objects/door_assembly/door_assembly_med( src.loc )
-					if(5) new/obj/station_objects/door_assembly/door_assembly_mai( src.loc )
-					if(6) new/obj/station_objects/door_assembly/door_assembly_ext( src.loc )
-					if(7) new/obj/station_objects/door_assembly/door_assembly_g( src.loc )
+					if(0) new/obj/structure/door_assembly/door_assembly_0( src.loc )
+					if(1) new/obj/structure/door_assembly/door_assembly_com( src.loc )
+					if(2) new/obj/structure/door_assembly/door_assembly_sec( src.loc )
+					if(3) new/obj/structure/door_assembly/door_assembly_eng( src.loc )
+					if(4) new/obj/structure/door_assembly/door_assembly_med( src.loc )
+					if(5) new/obj/structure/door_assembly/door_assembly_mai( src.loc )
+					if(6) new/obj/structure/door_assembly/door_assembly_ext( src.loc )
+					if(7) new/obj/structure/door_assembly/door_assembly_g( src.loc )
 				var/obj/item/weapon/airlock_electronics/ae
 				if (!electronics)
 					ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -993,7 +993,7 @@ About the new airlock wires panel:
 		return
 	use_power(50)
 	playsound(src.loc, 'airlock.ogg', 30, 1)
-	var/obj/station_objects/window/killthis = (locate(/obj/station_objects/window) in get_turf(src))
+	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
 		killthis.ex_act(2)//Smashin windows
 	..()

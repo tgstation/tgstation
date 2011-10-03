@@ -22,7 +22,7 @@
 
 	proc/initialize()
 
-/obj/station_objects/signpost
+/obj/structure/signpost
 	icon = 'stationobjs.dmi'
 	icon_state = "signpost"
 	anchored = 1
@@ -40,7 +40,7 @@
 			if("No")
 				return
 
-/obj/effects/mark
+/obj/effect/mark
 		var/mark = ""
 		icon = 'mark.dmi'
 		icon_state = "blank"
@@ -57,7 +57,7 @@
 	//state = 1 for playing : default
 	//state = 2 for observing
 
-/obj/effects/bhole
+/obj/effect/bhole
 	name = "black hole"
 	icon = 'objects.dmi'
 	desc = "FUCK FUCK FUCK AAAHHH"
@@ -66,18 +66,18 @@
 	unacidable = 1
 	density = 0
 	anchored = 1
-	var/datum/effects/system/harmless_smoke_spread/smoke
+	var/datum/effect/system/harmless_smoke_spread/smoke
 
 
 
 
-/obj/effects/beam
+/obj/effect/beam
 	name = "beam"
 	unacidable = 1//Just to be sure.
 	var/def_zone
 	pass_flags = PASSTABLE
 
-/obj/station_objects/bedsheetbin
+/obj/structure/bedsheetbin
 	name = "linen bin"
 	desc = "A bin for containing bedsheets. It looks rather cosy."
 	icon = 'items.dmi'
@@ -85,7 +85,7 @@
 	var/amount = 23.0
 	anchored = 1.0
 
-/obj/effects/begin
+/obj/effect/begin
 	name = "begin"
 	icon = 'stationobjs.dmi'
 	icon_state = "begin"
@@ -100,7 +100,7 @@
 	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
 	var/locked[] = list()
 
-/obj/effects/equip_e
+/obj/effect/equip_e
 	name = "equip e"
 	var/mob/source = null
 	var/s_loc = null
@@ -108,15 +108,15 @@
 	var/obj/item/item = null
 	var/place = null
 
-/obj/effects/equip_e/human
+/obj/effect/equip_e/human
 	name = "human"
 	var/mob/living/carbon/human/target = null
 
-/obj/effects/equip_e/monkey
+/obj/effect/equip_e/monkey
 	name = "monkey"
 	var/mob/living/carbon/monkey/target = null
 
-/obj/effects/securearea
+/obj/effect/securearea
 	desc = "A warning sign which reads 'SECURE AREA'. This obviously applies to a nun-Clown."
 	name = "SECURE AREA"
 	icon = 'decals.dmi'
@@ -125,7 +125,7 @@
 	opacity = 0
 	density = 0
 
-/obj/effects/sign/biohazard
+/obj/effect/sign/biohazard
 	desc = "A warning sign which reads 'BIOHAZARD'"
 	name = "BIOHAZARD"
 	icon = 'decals.dmi'
@@ -134,7 +134,7 @@
 	opacity = 0
 	density = 0
 
-/obj/effects/sign/electricshock
+/obj/effect/sign/electricshock
 	desc = "A warning sign which reads 'HIGH VOLTAGE'"
 	name = "HIGH VOLTAGE"
 	icon = 'decals.dmi'
@@ -143,7 +143,7 @@
 	opacity = 0
 	density = 0
 
-/obj/effects/sign/examroom
+/obj/effect/sign/examroom
 	desc = "A guidance sign which reads 'EXAM ROOM'"
 	name = "EXAM"
 	icon = 'decals.dmi'
@@ -152,7 +152,7 @@
 	opacity = 0
 	density = 0
 
-/obj/effects/sign/vacuum
+/obj/effect/sign/vacuum
 	desc = "A warning sign which reads 'HARD VACUUM AHEAD'"
 	name = "HARD VACUUM AHEAD"
 	icon = 'decals.dmi'
@@ -163,7 +163,7 @@
 	pixel_x = -1
 	pixel_y = -1
 
-/obj/effects/sign/fire
+/obj/effect/sign/fire
 	desc = "A warning sign which reads 'HOT! HOT! AAAH! I'M BURNING!'"
 	name = "HOT! HOT! AAAH! I'M BURNING!"
 	icon = 'decals.dmi'
@@ -173,7 +173,7 @@
 	density = 0
 
 
-/obj/effects/sign/nosmoking_1
+/obj/effect/sign/nosmoking_1
 	desc = "A warning sign which reads 'NO SMOKING'"
 	name = "NO SMOKING"
 	icon = 'decals.dmi'
@@ -183,7 +183,7 @@
 	density = 0
 
 
-/obj/effects/sign/nosmoking_2
+/obj/effect/sign/nosmoking_2
 	desc = "A warning sign which reads 'NO SMOKING'"
 	name = "NO SMOKING"
 	icon = 'decals.dmi'
@@ -192,7 +192,7 @@
 	opacity = 0
 	density = 0
 
-/obj/effects/sign/redcross
+/obj/effect/sign/redcross
 	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here.'"
 	name = "Med-Bay"
 	icon = 'decals.dmi'
@@ -201,7 +201,7 @@
 	opacity = 0
 	density = 0
 
-/obj/effects/sign/goldenplaque
+/obj/effect/sign/goldenplaque
 	desc = "To be Robust is not an action or a way of life, but a mental state. Only those with the force of Will strong enough to act during a crisis, saving friend from foe, are truly Robust. Stay Robust my friends."
 	name = "The Most Robust Men Award for Robustness"
 	icon = 'decals.dmi'
@@ -220,12 +220,12 @@
 	if(istype(A,/turf/simulated/wall) || istype(A,/turf/simulated/shuttle/wall) || istype(A,/turf/unsimulated/wall))
 		var/epitaph = input("What would you like to engrave", null)
 		if(epitaph)
-			var/obj/effects/sign/goldenplaque/gp = new/obj/effects/sign/goldenplaque(A)
+			var/obj/effect/sign/goldenplaque/gp = new/obj/effect/sign/goldenplaque(A)
 			gp.name = epitaph
 			gp.layer = 2.9
 			del(src)*/
 
-/obj/effects/sign/maltesefalcon1         //The sign is 64x32, so it needs two tiles. ;3
+/obj/effect/sign/maltesefalcon1         //The sign is 64x32, so it needs two tiles. ;3
 	desc = "The Maltese Falcon, Space Bar and Grill. Now with added monkey."
 	name = "The Maltese Falcon"
 	icon = 'decals.dmi'
@@ -234,7 +234,7 @@
 	opacity = 0
 	density = 0
 
-/obj/effects/sign/maltesefalcon2
+/obj/effect/sign/maltesefalcon2
 	desc = "The Maltese Falcon, Space Bar and Grill. Now with added monkey."
 	name = "The Maltese Falcon"
 	icon = 'decals.dmi'
@@ -329,24 +329,24 @@
 	icon_state = "apc_frame"
 	flags = FPRINT | TABLEPASS| CONDUCT
 
-/obj/effects/landmark
+/obj/effect/landmark
 	name = "landmark"
 	icon = 'screen1.dmi'
 	icon_state = "x2"
 	anchored = 1.0
 	unacidable = 1
 
-/obj/effects/landmark/alterations
+/obj/effect/landmark/alterations
 	name = "alterations"
 
-/obj/effects/laser
+/obj/effect/laser
 	name = "laser"
 	desc = "IT BURNS!!!"
 	icon = 'projectiles.dmi'
 	var/damage = 0.0
 	var/range = 10.0
 
-/obj/station_objects/lattice
+/obj/structure/lattice
 	desc = "A lightweight support lattice."
 	name = "lattice"
 	icon = 'structures.dmi'
@@ -356,31 +356,31 @@
 	layer = 2.3 //under pipes
 	//	flags = 64.0
 
-/obj/station_objects/lattice/New()
+/obj/structure/lattice/New()
 	..()
 	if(!(istype(src.loc, /turf/space)))
 		del(src)
-	for(var/obj/station_objects/lattice/LAT in src.loc)
+	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
 			del(LAT)
 	icon = 'smoothlattice.dmi'
 	icon_state = "latticeblank"
 	updateOverlays()
 	for (var/dir in cardinal)
-		var/obj/station_objects/lattice/L
-		if(locate(/obj/station_objects/lattice, get_step(src, dir)))
-			L = locate(/obj/station_objects/lattice, get_step(src, dir))
+		var/obj/structure/lattice/L
+		if(locate(/obj/structure/lattice, get_step(src, dir)))
+			L = locate(/obj/structure/lattice, get_step(src, dir))
 			L.updateOverlays()
 
-/obj/station_objects/lattice/Del()
+/obj/structure/lattice/Del()
 	for (var/dir in cardinal)
-		var/obj/station_objects/lattice/L
-		if(locate(/obj/station_objects/lattice, get_step(src, dir)))
-			L = locate(/obj/station_objects/lattice, get_step(src, dir))
+		var/obj/structure/lattice/L
+		if(locate(/obj/structure/lattice, get_step(src, dir)))
+			L = locate(/obj/structure/lattice, get_step(src, dir))
 			L.updateOverlays(src.loc)
 	..()
 
-/obj/station_objects/lattice/proc/updateOverlays()
+/obj/structure/lattice/proc/updateOverlays()
 	//if(!(istype(src.loc, /turf/space)))
 	//	del(src)
 	spawn(1)
@@ -389,7 +389,7 @@
 		var/dir_sum = 0
 
 		for (var/direction in cardinal)
-			if(locate(/obj/station_objects/lattice, get_step(src, direction)))
+			if(locate(/obj/structure/lattice, get_step(src, direction)))
 				dir_sum += direction
 			else
 				if(!(istype(get_step(src, direction), /turf/space)))
@@ -401,60 +401,60 @@
 		/*
 		overlays += icon(icon,"lattice-middlebar") //the nw-se bar in the cneter
 		for (var/dir in cardinal)
-			if(locate(/obj/station_objects/lattice, get_step(src, dir)))
+			if(locate(/obj/structure/lattice, get_step(src, dir)))
 				src.overlays += icon(icon,"lattice-[dir2text(dir)]")
 			else
 				src.overlays += icon(icon,"lattice-nc-[dir2text(dir)]") //t for turf
 				if(!(istype(get_step(src, dir), /turf/space)))
 					src.overlays += icon(icon,"lattice-t-[dir2text(dir)]") //t for turf
 
-		//if ( !( (locate(/obj/station_objects/lattice, get_step(src, SOUTH))) || (locate(/obj/station_objects/lattice, get_step(src, EAST))) ))
+		//if ( !( (locate(/obj/structure/lattice, get_step(src, SOUTH))) || (locate(/obj/structure/lattice, get_step(src, EAST))) ))
 		//	src.overlays += icon(icon,"lattice-c-se")
-		if ( !( (locate(/obj/station_objects/lattice, get_step(src, NORTH))) || (locate(/obj/station_objects/lattice, get_step(src, WEST))) ))
+		if ( !( (locate(/obj/structure/lattice, get_step(src, NORTH))) || (locate(/obj/structure/lattice, get_step(src, WEST))) ))
 			src.overlays += icon(icon,"lattice-c-nw")
-		if ( !( (locate(/obj/station_objects/lattice, get_step(src, NORTH))) || (locate(/obj/station_objects/lattice, get_step(src, EAST))) ))
+		if ( !( (locate(/obj/structure/lattice, get_step(src, NORTH))) || (locate(/obj/structure/lattice, get_step(src, EAST))) ))
 			src.overlays += icon(icon,"lattice-c-ne")
-		if ( !( (locate(/obj/station_objects/lattice, get_step(src, SOUTH))) || (locate(/obj/station_objects/lattice, get_step(src, WEST))) ))
+		if ( !( (locate(/obj/structure/lattice, get_step(src, SOUTH))) || (locate(/obj/structure/lattice, get_step(src, WEST))) ))
 			src.overlays += icon(icon,"lattice-c-sw")
 
 		if(!(overlays))
 			icon_state = "latticefull"
 		*/
 
-/obj/effects/list_container
+/obj/effect/list_container
 	name = "list container"
 
-/obj/effects/list_container/mobl
+/obj/effect/list_container/mobl
 	name = "mobl"
 	var/master = null
 
 	var/list/container = list(  )
 
-/obj/station_objects/m_tray
+/obj/structure/m_tray
 	name = "morgue tray"
 	desc = "Apply corpse before closing."
 	icon = 'stationobjs.dmi'
 	icon_state = "morguet"
 	density = 1
 	layer = 2.0
-	var/obj/station_objects/morgue/connected = null
+	var/obj/structure/morgue/connected = null
 	anchored = 1.0
 
-/obj/station_objects/c_tray
+/obj/structure/c_tray
 	name = "crematorium tray"
 	desc = "Apply body before burning."
 	icon = 'stationobjs.dmi'
 	icon_state = "cremat"
 	density = 1
 	layer = 2.0
-	var/obj/station_objects/crematorium/connected = null
+	var/obj/structure/crematorium/connected = null
 	anchored = 1.0
 
 
 
 
 
-/obj/station_objects/cable
+/obj/structure/cable
 	level = 1
 	anchored =1
 	var/netnum = 0
@@ -467,46 +467,46 @@
 	layer = 2.5
 	var/color="red"
 
-/obj/station_objects/cable/yellow
+/obj/structure/cable/yellow
 	color="yellow"
 	icon = 'power_cond_yellow.dmi'
 
-/obj/station_objects/cable/green
+/obj/structure/cable/green
 	color="green"
 	icon = 'power_cond_green.dmi'
 
-/obj/station_objects/cable/blue
+/obj/structure/cable/blue
 	color="blue"
 	icon = 'power_cond_blue.dmi'
 
-/obj/effects/manifest
+/obj/effect/manifest
 	name = "manifest"
 	icon = 'screen1.dmi'
 	icon_state = "x"
 	unacidable = 1//Just to be sure.
 
-/obj/station_objects/morgue
+/obj/structure/morgue
 	name = "morgue"
 	desc = "Used to keep bodies in untill someone fetches them."
 	icon = 'stationobjs.dmi'
 	icon_state = "morgue1"
 	density = 1
-	var/obj/station_objects/m_tray/connected = null
+	var/obj/structure/m_tray/connected = null
 	anchored = 1.0
 
-/obj/station_objects/crematorium
+/obj/structure/crematorium
 	name = "crematorium"
 	desc = "A human incinerator. Works well on barbeque nights."
 	icon = 'stationobjs.dmi'
 	icon_state = "crema1"
 	density = 1
-	var/obj/station_objects/c_tray/connected = null
+	var/obj/structure/c_tray/connected = null
 	anchored = 1.0
 	var/cremating = 0
 	var/id = 1
 	var/locked = 0
 
-/obj/effects/mine
+/obj/effect/mine
 	name = "Mine"
 	desc = "I Better stay away from that thing."
 	density = 1
@@ -517,37 +517,37 @@
 	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
-/obj/effects/mine/dnascramble
+/obj/effect/mine/dnascramble
 	name = "Radiation Mine"
 	icon_state = "uglymine"
 	triggerproc = "triggerrad"
 
-/obj/effects/mine/plasma
+/obj/effect/mine/plasma
 	name = "Plasma Mine"
 	icon_state = "uglymine"
 	triggerproc = "triggerplasma"
 
-/obj/effects/mine/kick
+/obj/effect/mine/kick
 	name = "Kick Mine"
 	icon_state = "uglymine"
 	triggerproc = "triggerkick"
 
-/obj/effects/mine/n2o
+/obj/effect/mine/n2o
 	name = "N2O Mine"
 	icon_state = "uglymine"
 	triggerproc = "triggern2o"
 
-/obj/effects/mine/stun
+/obj/effect/mine/stun
 	name = "Stun Mine"
 	icon_state = "uglymine"
 	triggerproc = "triggerstun"
 
-/obj/effects/overlay
+/obj/effect/overlay
 	name = "overlay"
 	unacidable = 1
 	var/i_attached//Added for possible image attachments to objects. For hallucinations and the like.
 
-/obj/effects/overlay/beam//Not actually a projectile, just an effect.
+/obj/effect/overlay/beam//Not actually a projectile, just an effect.
 	name="beam"
 	icon='beam.dmi'
 	icon_state="b_beam"
@@ -556,7 +556,7 @@
 		..()
 		spawn(10) del src
 
-/obj/effects/portal
+/obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."
 	icon = 'stationobjs.dmi'
@@ -568,12 +568,12 @@
 	var/creator = null
 	anchored = 1.0
 
-/obj/effects/projection
+/obj/effect/projection
 	name = "Projection"
 	desc = "This looks like a projection of something."
 	anchored = 1.0
 
-/obj/station_objects/rack
+/obj/structure/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
 	icon = 'objects.dmi'
@@ -609,18 +609,18 @@
 	var/selecting = "chest"
 	screen_loc = "EAST+1,NORTH"
 
-/obj/effects/shut_controller
+/obj/effect/shut_controller
 	name = "shut controller"
 	var/moving = null
 	var/list/parts = list(  )
 
-/obj/effects/landmark/start
+/obj/effect/landmark/start
 	name = "start"
 	icon = 'screen1.dmi'
 	icon_state = "x"
 	anchored = 1.0
 
-/obj/station_objects/stool
+/obj/structure/stool
 	name = "stool"
 	desc = "Apply butt."
 	icon = 'objects.dmi'
@@ -628,20 +628,20 @@
 	flags = FPRINT
 	pressure_resistance = 3*ONE_ATMOSPHERE
 
-/obj/station_objects/stool/bed
+/obj/structure/stool/bed
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
 	icon_state = "bed"
 	anchored = 1.0
 	var/list/buckled_mobs = list(  )
 
-/obj/station_objects/stool/bed/alien
+/obj/structure/stool/bed/alien
 	name = "Resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
 
 
-/obj/station_objects/stool/chair
+/obj/structure/stool/chair
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
@@ -649,7 +649,7 @@
 	anchored = 1.0
 	var/list/buckled_mobs = list(  )
 
-/obj/station_objects/stool/chair/e_chair
+/obj/structure/stool/chair/e_chair
 	name = "electrified chair"
 	desc = "Looks absolutely SHOCKING!"
 	icon_state = "e_chair0"
@@ -658,7 +658,7 @@
 	var/obj/item/assembly/shock_kit/part1 = null
 	var/last_time = 1.0
 
-/obj/station_objects/table
+/obj/structure/table
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
 	icon = 'structures.dmi'
@@ -669,19 +669,19 @@
 
 	New()
 		..()
-		for(var/obj/station_objects/table/T in src.loc)
+		for(var/obj/structure/table/T in src.loc)
 			if(T != src)
 				del(T)
 		update_icon()
 		for(var/direction in list(1,2,4,8,5,6,9,10))
-			if(locate(/obj/station_objects/table,get_step(src,direction)))
-				var/obj/station_objects/table/T = locate(/obj/station_objects/table,get_step(src,direction))
+			if(locate(/obj/structure/table,get_step(src,direction)))
+				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 				T.update_icon()
 
 	Del()
 		for(var/direction in list(1,2,4,8,5,6,9,10))
-			if(locate(/obj/station_objects/table,get_step(src,direction)))
-				var/obj/station_objects/table/T = locate(/obj/station_objects/table,get_step(src,direction))
+			if(locate(/obj/structure/table,get_step(src,direction)))
+				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 				T.update_icon()
 		..()
 
@@ -690,7 +690,7 @@
 			var/dir_sum = 0
 			for(var/direction in cardinal)
 				var/skip_sum = 0
-				for(var/obj/station_objects/window/W in src.loc)
+				for(var/obj/structure/window/W in src.loc)
 					if(W.dir == direction) //So smooth tables don't go smooth through windows
 						skip_sum = 1
 						continue
@@ -704,12 +704,12 @@
 						inv_direction = 8
 					if(8)
 						inv_direction = 4
-				for(var/obj/station_objects/window/W in get_step(src,direction))
+				for(var/obj/structure/window/W in get_step(src,direction))
 					if(W.dir == inv_direction) //So smooth tables don't go smooth through windows when the window is on the other table's tile
 						skip_sum = 1
 						continue
 				if(!skip_sum) //means there is a window between the two tiles in this direction
-					if(locate(/obj/station_objects/table,get_step(src,direction)))
+					if(locate(/obj/structure/table,get_step(src,direction)))
 						dir_sum += direction
 
 			//dir_sum:
@@ -736,7 +736,7 @@
 				if(dir_sum == 12) //12 doesn't exist as a dir.
 					dir_sum = 4
 			if(dir_sum in list(5,6,9,10))
-				if(locate(/obj/station_objects/table,get_step(src.loc,dir_sum)))
+				if(locate(/obj/structure/table,get_step(src.loc,dir_sum)))
 					table_type = 3 //full table (not the 1 tile thick one, but one of the 'tabledir' tables)
 				else
 					table_type = 2 //1 tile thick, corner table (treated the same as streight tables in code later on)
@@ -754,7 +754,7 @@
 			if(dir_sum == 15)
 				table_type = 4 //4-way intersection, the 'middle' table sprites will be used.
 
-			if(istype(src,/obj/station_objects/table/reinforced))
+			if(istype(src,/obj/structure/table/reinforced))
 				switch(table_type)
 					if(0)
 						icon_state = "reinf_table"
@@ -766,7 +766,7 @@
 						icon_state = "reinf_tabledir"
 					if(4)
 						icon_state = "reinf_middle"
-			else if(istype(src,/obj/station_objects/table/woodentable))
+			else if(istype(src,/obj/structure/table/woodentable))
 				switch(table_type)
 					if(0)
 						icon_state = "wood_table"
@@ -795,18 +795,18 @@
 			else
 				dir = 2
 
-/obj/station_objects/table/reinforced
+/obj/structure/table/reinforced
 	name = "reinforced table"
 	desc = "A version of the four legged table. It is stronger."
 	icon_state = "reinf_table"
 	var/status = 2
 
-/obj/station_objects/table/woodentable
+/obj/structure/table/woodentable
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
 	icon_state = "wood_table"
 
-/obj/station_objects/mopbucket
+/obj/structure/mopbucket
 	desc = "Fill it with water, but don't forget a mop!"
 	name = "mop bucket"
 	icon = 'janitor.dmi'
@@ -817,7 +817,7 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 
-/obj/station_objects/kitchenspike
+/obj/structure/kitchenspike
 	name = "a meat spike"
 	icon = 'kitchen.dmi'
 	icon_state = "spike"
@@ -828,7 +828,7 @@
 	var/occupied = 0
 	var/meattype = 0 // 0 - Nothing, 1 - Monkey, 2 - Xeno
 
-/obj/station_objects/displaycase
+/obj/structure/displaycase
 	name = "Display Case"
 	icon = 'stationobjs.dmi'
 	icon_state = "glassbox1"
@@ -840,7 +840,7 @@
 	var/occupied = 1
 	var/destroyed = 0
 
-/obj/effects/showcase
+/obj/effect/showcase
 	name = "Showcase"
 	icon = 'stationobjs.dmi'
 	icon_state = "showcase_1"
@@ -928,7 +928,7 @@
 
 
 
-/obj/station_objects/noticeboard
+/obj/structure/noticeboard
 	name = "Notice Board"
 	icon = 'stationobjs.dmi'
 	icon_state = "nboard00"
@@ -938,7 +938,7 @@
 	anchored = 1
 	var/notices = 0
 
-/obj/effects/deskclutter
+/obj/effect/deskclutter
 	name = "desk clutter"
 	icon = 'items.dmi'
 	icon_state = "deskclutter"
@@ -994,7 +994,7 @@
 		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
 		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
 
-/obj/station_objects/falsewall
+/obj/structure/falsewall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
 	icon = 'walls.dmi'
@@ -1003,7 +1003,7 @@
 	opacity = 1
 	anchored = 1
 
-/obj/station_objects/falserwall
+/obj/structure/falserwall
 	name = "r wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
 	icon = 'walls.dmi'

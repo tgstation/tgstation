@@ -19,7 +19,7 @@
 		usr.whisper("STI KALY")
 	//	usr.spellvoice()
 
-		var/obj/effects/overlay/B = new /obj/effects/overlay( M.loc )
+		var/obj/effect/overlay/B = new /obj/effect/overlay( M.loc )
 		B.icon_state = "blspell"
 		B.icon = 'wizard.dmi'
 		B.name = "spell"
@@ -54,7 +54,7 @@
 
 	for (var/mob/living/M as mob in oview())
 		spawn(0)
-			var/obj/effects/overlay/A = new /obj/effects/overlay( usr.loc )
+			var/obj/effect/overlay/A = new /obj/effect/overlay( usr.loc )
 			A.icon_state = "magicm"
 			A.icon = 'wizard.dmi'
 			A.name = "a magic missile"
@@ -65,7 +65,7 @@
 			for(i=0, i<20, i++)
 				if (!istype(M)) //it happens sometimes --rastaf0
 					break
-				var/obj/effects/overlay/B = new /obj/effects/overlay( A.loc )
+				var/obj/effect/overlay/B = new /obj/effect/overlay( A.loc )
 				B.icon_state = "magicmd"
 				B.icon = 'wizard.dmi'
 				B.name = "trail"
@@ -101,7 +101,7 @@
 	usr.verbs -= /client/proc/smokecloud
 	spawn(120)
 		usr.verbs += /client/proc/smokecloud
-	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
+	var/datum/effect/system/bad_smoke_spread/smoke = new /datum/effect/system/bad_smoke_spread()
 	smoke.set_up(10, 0, usr.loc)
 	smoke.start()
 
@@ -120,13 +120,13 @@
 //	usr.verbs -= /client/proc/smokecloud
 //	spawn(120)
 //		usr.verbs += /client/proc/smokecloud
-//	var/datum/effects/system/sleep_smoke_spread/smoke = new /datum/effects/system/sleep_smoke_spread()
+//	var/datum/effect/system/sleep_smoke_spread/smoke = new /datum/effect/system/sleep_smoke_spread()
 //	smoke.set_up(10, 0, usr.loc)
 //	smoke.start()
 
 //FORCE WALL
 
-/obj/effects/forcefield
+/obj/effect/forcefield
 	desc = "A space wizard's magic wall."
 	name = "FORCEWALL"
 	icon = 'effects.dmi'
@@ -140,9 +140,6 @@
 	bullet_act(var/obj/item/projectile/Proj, var/def_zone)
 		var/turf/T = get_turf(src.loc)
 		if(T)
-			for(var/obj/O in T)
-				if(O != src)
-					O.bullet_act(Proj,def_zone)
 			for(var/mob/M in T)
 				M.bullet_act(Proj, def_zone)
 		..()
@@ -167,7 +164,7 @@
 	usr.whisper("TARCOL MINTI ZHERI")
 //	usr.spellvoice()
 
-	forcefield =  new /obj/effects/forcefield(locate(usr.x,usr.y,usr.z))
+	forcefield =  new /obj/effect/forcefield(locate(usr.x,usr.y,usr.z))
 	spawn (300)
 		del (forcefield)
 	return
@@ -190,7 +187,7 @@
 	usr.say("ONI SOMA")
 	//	usr.spellvoice()
 
-	var/obj/effects/overlay/A = new /obj/effects/overlay( usr.loc )
+	var/obj/effect/overlay/A = new /obj/effect/overlay( usr.loc )
 	A.icon_state = "fireball"
 	A.icon = 'wizard.dmi'
 	A.name = "a fireball"
@@ -247,7 +244,7 @@
 	usr.say("EI NATH")
 	usr.spellvoice()
 
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 	s.set_up(4, 1, M)
 	s.start()
 
@@ -290,7 +287,7 @@
 		if(T.y>world.maxy-4 || T.y<4)	continue
 		turfs += T
 	if(!turfs.len) turfs += pick(/turf in orange(6))
-	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+	var/datum/effect/system/harmless_smoke_spread/smoke = new /datum/effect/system/harmless_smoke_spread()
 	smoke.set_up(10, 0, usr.loc)
 	smoke.start()
 	var/turf/picked = pick(turfs)
@@ -333,7 +330,7 @@
 	usr.say("SCYAR NILA [uppertext(A)]")
 	usr.spellvoice()
 
-	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+	var/datum/effect/system/harmless_smoke_spread/smoke = new /datum/effect/system/harmless_smoke_spread()
 	smoke.set_up(5, 0, usr.loc)
 	smoke.attach(usr)
 	smoke.start()
@@ -363,7 +360,7 @@
 	A = input("Area to jump to", "BOOYEA", A) in teleportlocs
 	var/area/thearea = teleportlocs[A]
 
-	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+	var/datum/effect/system/harmless_smoke_spread/smoke = new /datum/effect/system/harmless_smoke_spread()
 	smoke.set_up(5, 0, usr.loc)
 	smoke.attach(usr)
 	smoke.start()
@@ -401,7 +398,7 @@
 	if(H.stat) return
 	spawn(0)
 		var/mobloc = get_turf(H.loc)
-		var/obj/effects/dummy/spell_jaunt/holder = new /obj/effects/dummy/spell_jaunt( mobloc )
+		var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 		animation.name = "water"
 		animation.density = 0
@@ -413,7 +410,7 @@
 		flick("liquify",animation)
 		H.loc = holder
 		H.client.eye = holder
-		var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread()
+		var/datum/effect/system/steam_spread/steam = new /datum/effect/system/steam_spread()
 		steam.set_up(10, 0, mobloc)
 		steam.start()
 		sleep(time)
@@ -431,7 +428,7 @@
 		del(animation)
 		del(holder)
 /*
-/obj/effects/dummy/spell_jaunt
+/obj/effect/dummy/spell_jaunt
 	name = "water"
 	icon = 'effects.dmi'
 	icon_state = "nothing"
@@ -439,7 +436,7 @@
 	density = 0
 	anchored = 1
 
-/obj/effects/dummy/spell_jaunt/relaymove(var/mob/user, direction)
+/obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
 	if (!src.canmove) return
 	switch(direction)
 		if(NORTH)
@@ -465,9 +462,9 @@
 	src.canmove = 0
 	spawn(2) src.canmove = 1
 
-/obj/effects/dummy/spell_jaunt/ex_act(blah)
+/obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return
-/obj/effects/dummy/spell_jaunt/bullet_act(blah,blah)
+/obj/effect/dummy/spell_jaunt/bullet_act(blah,blah)
 	return
 */
 //MUTATE

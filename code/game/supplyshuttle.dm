@@ -35,7 +35,7 @@ var/ordernum=0
 
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
 
-/obj/station_objects/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
+/obj/structure/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
 	name = "Plastic flaps"
 	desc = "I definitely cant get past those. no way."
 	icon = 'stationobjs.dmi' //Change this.
@@ -44,7 +44,7 @@ var/ordernum=0
 	anchored = 1
 	layer = 4
 
-/obj/station_objects/plasticflaps/CanPass(atom/A, turf/T)
+/obj/structure/plasticflaps/CanPass(atom/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
 		return prob(60)
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
@@ -53,7 +53,7 @@ var/ordernum=0
 			return 0
 	return ..()
 
-/obj/station_objects/plasticflaps/ex_act(severity)
+/obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
 		if (1)
 			del(src)
@@ -85,7 +85,7 @@ var/ordernum=0
 	circuit = "/obj/item/weapon/circuitboard/ordercomp"
 	var/temp = null
 
-/obj/effects/marker/supplymarker
+/obj/effect/marker/supplymarker
 	icon_state = "X"
 	icon = 'mark.dmi'
 	name = "X"
@@ -146,7 +146,7 @@ var/ordernum=0
 	var/shuttleat = supply_shuttle_at_station ? SUPPLY_STATION_AREATYPE : SUPPLY_DOCK_AREATYPE
 
 	for(var/turf/T in get_area_turfs(shuttleat) )
-		var/crate = locate(/obj/station_objects/crate) in T
+		var/crate = locate(/obj/structure/crate) in T
 		if (crate)
 			del(crate)
 			supply_shuttle_points += SUPPLY_POINTSPERCRATE
@@ -162,14 +162,14 @@ var/ordernum=0
 	if(!supply_shuttle_shoppinglist.len) return
 
 	for(var/turf/T in get_area_turfs(shuttleat))
-		for(var/obj/effects/marker/supplymarker/D in T)
+		for(var/obj/effect/marker/supplymarker/D in T)
 			markers += D
 
 	for(var/S in supply_shuttle_shoppinglist)
 		var/pickedloc = 0
 		var/found = 0
 		for(var/C in markers)
-			if (locate(/obj/station_objects/crate) in get_turf(C)) continue
+			if (locate(/obj/structure/crate) in get_turf(C)) continue
 			found = 1
 			pickedloc = get_turf(C)
 		if (!found) pickedloc = get_turf(pick(markers))
@@ -365,7 +365,7 @@ var/ordernum=0
 		if(do_after(user, 20))
 			if (src.stat & BROKEN)
 				user << "\blue The broken glass falls out."
-				var/obj/station_objects/computerframe/A = new /obj/station_objects/computerframe( src.loc )
+				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				new /obj/item/weapon/shard( src.loc )
 				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
 				for (var/obj/C in src)
@@ -377,7 +377,7 @@ var/ordernum=0
 				del(src)
 			else
 				user << "\blue You disconnect the monitor."
-				var/obj/station_objects/computerframe/A = new /obj/station_objects/computerframe( src.loc )
+				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
 				for (var/obj/C in src)
 					C.loc = src.loc

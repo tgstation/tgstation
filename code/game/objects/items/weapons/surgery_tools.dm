@@ -16,7 +16,7 @@ CIRCULAR SAW
 	if(!istype(M))
 		return
 
-	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/station_objects/table/, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(50))))
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(50))))
 		return ..()
 
 	if(user.zone_sel.selecting == "groin")
@@ -89,7 +89,7 @@ CIRCULAR SAW
 	if(!istype(M))
 		return
 
-	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/station_objects/table/, M.loc) && M.lying && prob(50))))
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && M.lying && prob(50))))
 		return ..()
 
 	if(user.zone_sel.selecting == "groin")
@@ -174,7 +174,7 @@ CIRCULAR SAW
 	if(!istype(M))
 		return
 
-	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/station_objects/table/, M.loc) && M.lying && prob(50))))
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && M.lying && prob(50))))
 		return ..()
 
 	if(user.zone_sel.selecting == "groin")
@@ -257,7 +257,7 @@ CIRCULAR SAW
 		M = user
 		return eyestab(M,user)
 
-	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/station_objects/table/, M.loc) && M.lying && prob(50))))
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && M.lying && prob(50))))
 		return ..()
 
 	src.add_fingerprint(user)
@@ -454,7 +454,7 @@ CIRCULAR SAW
 		M = user
 		return eyestab(M,user)
 
-	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/station_objects/table/, M.loc) && M.lying && prob(50))))
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && M.lying && prob(50))))
 		return ..()
 
 	src.add_fingerprint(user)

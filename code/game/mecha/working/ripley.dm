@@ -5,7 +5,7 @@
 	step_in = 6
 	max_temperature = 1000
 	health = 200
-	wreckage = "/obj/effects/decal/mecha_wreckage/ripley"
+	wreckage = "/obj/effect/decal/mecha_wreckage/ripley"
 	var/list/cargo = new
 	var/cargo_capacity = 15
 

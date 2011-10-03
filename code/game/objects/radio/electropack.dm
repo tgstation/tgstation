@@ -134,7 +134,7 @@
 			if (M.moved_recently && M.last_move)
 				step(M, M.last_move)
 		M.show_message("\red <B>You feel a sharp shock!</B>")
-		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+		var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 		s.set_up(3, 1, M)
 		s.start()
 

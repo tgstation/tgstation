@@ -145,7 +145,7 @@
 		wizard_mob.verbs += /client/proc/jaunt
 		wizard_mob.mind.special_verbs += /client/proc/jaunt
 	else
-		wizard_mob.spell_list += new /obj/effects/proc_holder/spell/targeted/ethereal_jaunt(usr)
+		wizard_mob.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(usr)
 
 
 /datum/game_mode/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
@@ -267,7 +267,7 @@
 			M.mind.special_verbs -= /mob/proc/swap
 			M.mind.special_verbs -= /client/proc/blink
 	else if(spell_type == "object")
-		for(var/obj/effects/proc_holder/spell/spell_to_remove in src.spell_list)
+		for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
 			del(spell_to_remove)
 
 /*Checks if the wizard can cast spells.
@@ -315,7 +315,7 @@ Made a proc here so it's not repeated several times.*/
 
 //UNUSED/OLD CODE
 
-//	for (var/obj/effects/landmark/A in world)
+//	for (var/obj/effect/landmark/A in world)
 //		if (A.name == "Teleport-Scroll")
 //			new /obj/item/weapon/teleportation_scroll(A.loc)
 //			del(A)

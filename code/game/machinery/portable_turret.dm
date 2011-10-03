@@ -46,12 +46,12 @@
 	var/emagged = 0			// 1: emagged, 0: not emagged
 	var/on = 1				// determines if the turret is on
 
-	var/datum/effects/system/spark_spread/spark_system // the spark system, used for generating... sparks?
+	var/datum/effect/system/spark_spread/spark_system // the spark system, used for generating... sparks?
 
 	New()
 		..()
 		// Sets up a spark system
-		spark_system = new /datum/effects/system/spark_spread
+		spark_system = new /datum/effect/system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
 	Del()
@@ -299,7 +299,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	var/list/secondarytargets = list() // targets that are least important
 
 	if(src.check_anomalies) // if its set to check for xenos/carps, check for non-mob "crittersssss"
-		for (var/obj/effects/critter/L in view(12,src))
+		for (var/obj/effect/critter/L in view(12,src))
 			if(L.alive)
 				targets += L
 
@@ -346,8 +346,8 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 				spawn() shootAt(M) // shoot the target, finally
 		else
 
-			if (istype(t, /obj/effects/critter)) // shoot other things, same process as above
-				var/obj/effects/critter/L = t
+			if (istype(t, /obj/effect/critter)) // shoot other things, same process as above
+				var/obj/effect/critter/L = t
 				if (L.alive==1)
 					spawn() popUp()
 					dir=get_dir(src,L)

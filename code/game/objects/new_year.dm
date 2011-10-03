@@ -1,5 +1,5 @@
 
-/obj/effects/new_year_tree
+/obj/effect/new_year_tree
 	name = "The fir"
 	desc = "This is a fir. Real fir on dammit spess station. You smell pine-needles."
 	icon = '160x160.dmi'
@@ -11,7 +11,7 @@
 	pixel_x = -64
 	//pixel_y = -64
 
-/obj/effects/new_year_tree/attackby(obj/item/W, mob/user)
+/obj/effect/new_year_tree/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/grab))
 		return
 	W.loc = src
@@ -94,14 +94,14 @@
 	playsound(src.loc, 'bang.ogg', 25, 1)
 	var/turf/T = get_turf(src)
 	if(T)
-		var/datum/effects/system/harmless_smoke_spread/smoke = new
+		var/datum/effect/system/harmless_smoke_spread/smoke = new
 		smoke.set_up(3, 0, src.loc)
 		smoke.attach(src)
 		smoke.start()
-		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+		var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		new /obj/effects/new_year_tree(T)
+		new /obj/effect/new_year_tree(T)
 	del(src)
 	return
 
@@ -132,6 +132,6 @@
 					"/obj/item/weapon/wrapping_paper",
 					"/obj/item/weapon/wrapping_paper")
 	cost = 20
-	containertype = "/obj/station_objects/crate"
+	containertype = "/obj/structure/crate"
 	containername = "New Year Celebration crate"
 */

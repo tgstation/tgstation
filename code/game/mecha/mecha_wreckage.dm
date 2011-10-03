@@ -3,7 +3,7 @@
 ///////////////////////////////////
 
 
-/obj/effects/decal/mecha_wreckage
+/obj/effect/decal/mecha_wreckage
 	name = "Exosuit wreckage"
 	desc = "Remains of some unfortunate mecha. Completely unrepairable."
 	icon = 'mecha.dmi'
@@ -20,13 +20,13 @@
 		crowbar_salvage = new
 		return
 
-/obj/effects/decal/mecha_wreckage/ex_act(severity)
+/obj/effect/decal/mecha_wreckage/ex_act(severity)
 	if(severity < 3)
 		spawn
 			del src
 	return
 
-/obj/effects/decal/mecha_wreckage/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		if(salvage_num <= 0)
 			user << "You don't see anything that can be cut with [W]."
@@ -71,7 +71,7 @@
 	return
 
 
-/obj/effects/decal/mecha_wreckage/gygax
+/obj/effect/decal/mecha_wreckage/gygax
 	name = "Gygax wreckage"
 	icon_state = "gygax-broken"
 
@@ -91,20 +91,20 @@
 		return
 
 
-/obj/effects/decal/mecha_wreckage/marauder
+/obj/effect/decal/mecha_wreckage/marauder
 	name = "Marauder wreckage"
 	icon_state = "marauder-broken"
 
-/obj/effects/decal/mecha_wreckage/mauler
+/obj/effect/decal/mecha_wreckage/mauler
 	name = "Mauler Wreckage"
 	icon_state = "mauler-broken"
 	desc = "The syndicate won't be very happy about this..."
 
-/obj/effects/decal/mecha_wreckage/seraph
+/obj/effect/decal/mecha_wreckage/seraph
 	name = "Seraph wreckage"
 	icon_state = "seraph-broken"
 
-/obj/effects/decal/mecha_wreckage/ripley
+/obj/effect/decal/mecha_wreckage/ripley
 	name = "Ripley wreckage"
 	icon_state = "ripley-broken"
 
@@ -122,7 +122,7 @@
 				parts -= part
 		return
 
-/obj/effects/decal/mecha_wreckage/honker
+/obj/effect/decal/mecha_wreckage/honker
 	name = "Honker wreckage"
 	icon_state = "honker-broken"
 
@@ -143,7 +143,7 @@
 				parts -= part
 		return
 
-/obj/effects/decal/mecha_wreckage/durand
+/obj/effect/decal/mecha_wreckage/durand
 	name = "Durand wreckage"
 	icon_state = "durand-broken"
 
@@ -163,6 +163,6 @@
 				parts -= part
 		return
 
-/obj/effects/decal/mecha_wreckage/phazon
+/obj/effect/decal/mecha_wreckage/phazon
 	name = "Phazon wreckage"
 	icon_state = "phazon-broken"

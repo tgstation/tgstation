@@ -102,7 +102,7 @@
 	var/m_intent = "run"//Living
 	var/lastDblClick = 0
 	var/lastKnownIP = null
-	var/obj/station_objects/stool/buckled = null//Living
+	var/obj/structure/stool/buckled = null//Living
 	var/obj/item/weapon/handcuffs/handcuffed = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
@@ -175,7 +175,7 @@
 	This requires creating a verb for the object proc holder.
 
 	if (proc_holder_list.len)//Generic list for proc_holder objects.
-		for(var/obj/effects/proc_holder/P in proc_holder_list)
+		for(var/obj/effect/proc_holder/P in proc_holder_list)
 			statpanel("[P.panel]","",P)
 	*/
 
@@ -183,7 +183,7 @@
 	var/mob/living/carbon/LAssailant = null
 
 //Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button
-	var/obj/effects/proc_holder/spell/list/spell_list = list()
+	var/obj/effect/proc_holder/spell/list/spell_list = list()
 
 //List of active diseases
 
@@ -223,7 +223,7 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 	var/UI = 'screen1_old.dmi' // For changing the UI from preferences
 
-	var/obj/effects/organstructure/organStructure = null //for dem organs
+	var/obj/effect/organstructure/organStructure = null //for dem organs
 
 
 /mob/proc/Delete(atom/A in view())

@@ -219,7 +219,7 @@
 /datum/intercept_text/proc/build_malf(datum/mind/correct_person)
 	var/a_name = pick(src.anomalies)
 	src.text += "<BR><BR>A [a_name] was recently picked up by a nearby stations sensors in your sector. If it came into contact with your ship or "
-	src.text += "electrical equipment, it may have had hazardarous and unpredictable effects. Closely observe any non carbon based life forms "
+	src.text += "electrical equipment, it may have had hazardarous and unpredictable effect. Closely observe any non carbon based life forms "
 	src.text += "for signs of unusual behaviour, but keep this information discreet at all times due to this possibly dangerous scenario."
 
 /datum/intercept_text/proc/build_changeling(datum/mind/correct_person)

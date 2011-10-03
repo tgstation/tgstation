@@ -1,7 +1,7 @@
 // the laser beam
 
 
-/obj/effects/beam/laser
+/obj/effect/beam/laser
 	name = "laser beam"
 	icon = 'beam.dmi'
 	icon_state = "full"
@@ -12,8 +12,8 @@
 	var/wavelength 		// the (vaccuum) wavelength of the beam
 	var/width = 1		// 1=thin, 2=medium, 3=wide
 
-	var/obj/effects/beam/laser/next
-	var/obj/effects/beam/laser/prev
+	var/obj/effect/beam/laser/next
+	var/obj/effect/beam/laser/prev
 	var/obj/master
 
 	New(var/atom/newloc, var/dirn, var/lambda, var/omega=1, var/half=0)
@@ -97,7 +97,7 @@
 
 
 	HasEntered(var/atom/movable/AM)
-		if(istype(AM, /obj/effects/beam))
+		if(istype(AM, /obj/effect/beam))
 			return
 		if(blocked(AM))
 			remove(src)

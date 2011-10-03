@@ -96,7 +96,7 @@
 		if(cooldown_on || disabled)
 			return
 		else
-			new /obj/effects/foam(src.loc)
+			new /obj/effect/foam(src.loc)
 			src.uses--
 			cooldown_on = 1
 			cooldown_time = world.timeofday + 100

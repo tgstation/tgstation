@@ -33,8 +33,8 @@ FLOOR TILES
 
 /obj/item/stack/rods/attack_self(mob/user as mob)
 	src.add_fingerprint(user)
-	if (locate(/obj/station_objects/grille, usr.loc))
-		for(var/obj/station_objects/grille/G in usr.loc)
+	if (locate(/obj/structure/grille, usr.loc))
+		for(var/obj/structure/grille/G in usr.loc)
 			if (G.destroyed)
 				G.health = 10
 				G.density = 1
@@ -47,7 +47,7 @@ FLOOR TILES
 		if(amount < 2)
 			user << "\blue You need at least two rods to do this."
 			return
-		new /obj/station_objects/grille( usr.loc )
+		new /obj/structure/grille( usr.loc )
 		use(2)
 	return
 
@@ -57,12 +57,12 @@ FLOOR TILES
 
 // /datum/stack_recipe/New(title, result_type, req_amount, res_amount, max_res_amount, time, one_per_turf, on_floor = 0)
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
-	new/datum/stack_recipe("stool", /obj/station_objects/stool), \
-	new/datum/stack_recipe("chair", /obj/station_objects/stool/chair, one_per_turf = 1), \
-	new/datum/stack_recipe("bed", /obj/station_objects/stool/bed, 2, one_per_turf = 1), \
+	new/datum/stack_recipe("stool", /obj/structure/stool), \
+	new/datum/stack_recipe("chair", /obj/structure/stool/chair, one_per_turf = 1), \
+	new/datum/stack_recipe("bed", /obj/structure/stool/bed, 2, one_per_turf = 1), \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2), \
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts), \
-	new/datum/stack_recipe("closet", /obj/station_objects/closet, 2, one_per_turf = 1), \
+	new/datum/stack_recipe("closet", /obj/structure/closet, 2, one_per_turf = 1), \
 	null, \
 	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 2, one_per_turf = 1), \
 	null, \
@@ -70,16 +70,16 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
 	new/datum/stack_recipe("reinforced sheet", /obj/item/stack/sheet/r_metal, 2, 1, 50), \
 	null, \
-	new/datum/stack_recipe("computer frame", /obj/station_objects/computerframe, 5, one_per_turf = 1), \
-	new/datum/stack_recipe("wall girders", /obj/station_objects/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("airlock assembly", /obj/station_objects/door_assembly, 4, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, one_per_turf = 1), \
+	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("airlock assembly", /obj/structure/door_assembly, 4, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, one_per_turf = 1), \
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, one_per_turf = 1), \
 	null, \
 	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2), \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/chem_grenade), \
 	null, \
-	new/datum/stack_recipe("iron door", /obj/station_objects/mineral_door/iron, 20), \
+	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20), \
 )
 
 /obj/item/stack/sheet/metal
@@ -93,7 +93,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 var/global/list/datum/stack_recipe/r_metal_recipes = list ( \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/reinforced, 2), \
 	new/datum/stack_recipe("metal sheet", /obj/item/stack/sheet/metal, 1, 2, 50), \
-	new/datum/stack_recipe("AI core", /obj/station_objects/AIcore, 4, one_per_turf = 1), \
+	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, one_per_turf = 1), \
 	)
 
 /obj/item/stack/sheet/r_metal

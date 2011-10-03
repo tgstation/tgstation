@@ -113,7 +113,7 @@ STI KALY - blind
 
 	var/area/thearea = pick(theareas)
 
-	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+	var/datum/effect/system/harmless_smoke_spread/smoke = new /datum/effect/system/harmless_smoke_spread()
 	smoke.set_up(5, 0, affected_mob.loc)
 	smoke.attach(affected_mob)
 	smoke.start()

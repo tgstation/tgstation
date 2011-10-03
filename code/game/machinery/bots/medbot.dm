@@ -474,7 +474,7 @@
 	if (prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	del(src)
@@ -518,7 +518,7 @@
 //It isn't blocked if we can open it, man.
 /proc/TurfBlockedNonWindowNonDoor(turf/loc, var/list/access)
 	for(var/obj/O in loc)
-		if(O.density && !istype(O, /obj/station_objects/window) && !istype(O, /obj/machinery/door))
+		if(O.density && !istype(O, /obj/structure/window) && !istype(O, /obj/machinery/door))
 			return 1
 
 		if (O.density && (istype(O, /obj/machinery/door)) && (access.len))

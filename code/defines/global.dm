@@ -1,7 +1,7 @@
 var/global
 	obj/datacore/data_core = null
-	obj/effects/overlay/plmaster = null
-	obj/effects/overlay/slmaster = null
+	obj/effect/overlay/plmaster = null
+	obj/effect/overlay/slmaster = null
 
 	//obj/hud/main_hud1 = null
 

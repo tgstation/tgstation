@@ -32,7 +32,7 @@
 	var/add_req_access = 1
 	var/dna	//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
-	var/datum/effects/system/spark_spread/spark_system = new
+	var/datum/effect/system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_power = 6
 
@@ -196,7 +196,7 @@
 	else
 		move_result	= step(src,direction)
 		if(occupant)
-			for(var/obj/effects/speech_bubble/B in range(1, src))
+			for(var/obj/effect/speech_bubble/B in range(1, src))
 				if(B.parent == occupant)
 					B.loc = loc
 	if(move_result)
@@ -233,7 +233,7 @@
 	return
 */
 /obj/mecha/proc/check_for_support()
-	if(locate(/obj/station_objects/grille, orange(1, src)) || locate(/obj/station_objects/lattice, orange(1, src)) || locate(/turf/simulated, orange(1, src)) || locate(/turf/unsimulated, orange(1, src)))
+	if(locate(/obj/structure/grille, orange(1, src)) || locate(/obj/structure/lattice, orange(1, src)) || locate(/turf/simulated, orange(1, src)) || locate(/turf/unsimulated, orange(1, src)))
 		return 1
 	else
 		return 0
@@ -242,7 +242,7 @@
 //	src.inertia_dir = null
 	if(istype(obstacle, /obj))
 		var/obj/O = obstacle
-		if(istype(O, /obj/effects/portal)) //derpfix
+		if(istype(O, /obj/effect/portal)) //derpfix
 			src.anchored = 0
 			O.HasEntered(src)
 			spawn(0)//countering portal teleport spawn(0), hurr
@@ -402,7 +402,7 @@
 			if(prob(40))
 				explosion(T, 0, 0, 1, 3)
 			if(wreckage)
-				var/obj/effects/decal/mecha_wreckage/WR = new wreckage(T)
+				var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
 				for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 					if(prob(30))
 						WR.crowbar_salvage += E

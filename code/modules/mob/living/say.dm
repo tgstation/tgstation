@@ -314,7 +314,7 @@
 
 /*
 		// Create speech bubble
-		var/obj/effects/speech_bubble/B = new/obj/effects/speech_bubble
+		var/obj/effect/speech_bubble/B = new/obj/effect/speech_bubble
 		B.icon = 'speechbubble.dmi'
 		B.parent = src
 		B.mouse_opacity = 0
@@ -384,7 +384,7 @@
 
 		/*
 		// Create speech bubble
-		var/obj/effects/speech_bubble/B = new/obj/effects/speech_bubble
+		var/obj/effect/speech_bubble/B = new/obj/effect/speech_bubble
 		B.icon = 'speechbubble.dmi'
 		B.parent = src
 		B.mouse_opacity = 0
@@ -430,5 +430,5 @@
 
 
 
-/obj/effects/speech_bubble
+/obj/effect/speech_bubble
 	var/mob/parent

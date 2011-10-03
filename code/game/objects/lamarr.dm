@@ -1,4 +1,4 @@
-/obj/station_objects/lamarr
+/obj/structure/lamarr
 	name = "Lab Cage"
 	icon = 'stationobjs.dmi'
 	icon_state = "labcage1"
@@ -10,12 +10,12 @@
 	var/occupied = 1
 	var/destroyed = 0
 
-/obj/station_objects/lamarr/ex_act(severity)
+/obj/structure/lamarr/ex_act(severity)
 	switch(severity)
 		if (1)
 			new /obj/item/weapon/shard( src.loc )
 			if (occupied)
-				var/obj/effects/alien/facehugger/A = new /obj/effects/alien/facehugger( src.loc )
+				var/obj/effect/alien/facehugger/A = new /obj/effect/alien/facehugger( src.loc )
 				A.lamarr = 1
 				A.name = "Lamarr"
 				occupied = 0
@@ -30,40 +30,40 @@
 				src.healthcheck()
 
 
-/obj/station_objects/lamarr/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/lamarr/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	src.healthcheck()
 	return
 
 
-/obj/station_objects/lamarr/blob_act()
+/obj/structure/lamarr/blob_act()
 	if (prob(75))
 		new /obj/item/weapon/shard( src.loc )
 		if (occupied)
-			var/obj/effects/alien/facehugger/A = new /obj/effects/alien/facehugger( src.loc )
+			var/obj/effect/alien/facehugger/A = new /obj/effect/alien/facehugger( src.loc )
 			A.lamarr = 1
 			A.name = "Lamarr"
 			occupied = 0
 		del(src)
 
 
-/obj/station_objects/lamarr/meteorhit(obj/O as obj)
+/obj/structure/lamarr/meteorhit(obj/O as obj)
 		new /obj/item/weapon/shard( src.loc )
-		var/obj/effects/alien/facehugger/A = new /obj/effects/alien/facehugger( src.loc )
+		var/obj/effect/alien/facehugger/A = new /obj/effect/alien/facehugger( src.loc )
 		A.lamarr = 1
 		A.name = "Lamarr"
 		del(src)
 
 
-/obj/station_objects/lamarr/proc/healthcheck()
+/obj/structure/lamarr/proc/healthcheck()
 	if (src.health <= 0)
 		if (!( src.destroyed ))
 			src.density = 0
 			src.destroyed = 1
 			new /obj/item/weapon/shard( src.loc )
 			playsound(src, "shatter", 70, 1)
-			var/obj/effects/alien/facehugger/A = new /obj/effects/alien/facehugger( src.loc )
+			var/obj/effect/alien/facehugger/A = new /obj/effect/alien/facehugger( src.loc )
 			A.lamarr = 1
 			A.name = "Lamarr"
 			occupied = 0
@@ -72,7 +72,7 @@
 		playsound(src.loc, 'Glasshit.ogg', 75, 1)
 	return
 
-/obj/station_objects/lamarr/update_icon()
+/obj/structure/lamarr/update_icon()
 	if(src.destroyed)
 		src.icon_state = "labcageb[src.occupied]"
 	else
@@ -80,16 +80,16 @@
 	return
 
 
-/obj/station_objects/lamarr/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/lamarr/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	src.health -= W.force
 	src.healthcheck()
 	..()
 	return
 
-/obj/station_objects/lamarr/attack_paw(mob/user as mob)
+/obj/structure/lamarr/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/station_objects/lamarr/attack_hand(mob/user as mob)
+/obj/structure/lamarr/attack_hand(mob/user as mob)
 	if (src.destroyed)
 		return
 	else

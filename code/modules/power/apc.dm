@@ -325,9 +325,9 @@
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20) && C.amount >= 10)
 			var/turf/T = get_turf_loc(src)
-			var/obj/station_objects/cable/N = T.get_cable_node()
+			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
 				return
@@ -345,7 +345,7 @@
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 		if(do_after(user, 50))
 			if (prob(50) && electrocute_mob(usr, terminal.powernet, terminal))
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
 				return
@@ -851,11 +851,11 @@
 						malfai << "Hack complete. The APC is now under your exclusive control. Discharging cell to fuse interface."
 						updateicon()
 
-						var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+						var/datum/effect/system/harmless_smoke_spread/smoke = new /datum/effect/system/harmless_smoke_spread()
 						smoke.set_up(3, 0, src.loc)
 						smoke.attach(src)
 						smoke.start()
-						var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+						var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 						s.set_up(3, 1, src)
 						s.start()
 						for(var/mob/M in viewers(src))
@@ -880,11 +880,11 @@
 				cell.corrupt()
 				src.malfhack = 1
 				updateicon()
-				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+				var/datum/effect/system/harmless_smoke_spread/smoke = new /datum/effect/system/harmless_smoke_spread()
 				smoke.set_up(3, 0, src.loc)
 				smoke.attach(src)
 				smoke.start()
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
 				for(var/mob/M in viewers(src))
@@ -1160,7 +1160,7 @@
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))
 		return 0
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 	if (electrocute_mob(user, src, src))

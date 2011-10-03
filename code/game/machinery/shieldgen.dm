@@ -31,7 +31,7 @@
 		var/destroyed = 0
 		var/directwired = 1
 //		var/maxshieldload = 200
-		var/obj/station_objects/cable/attached		// the attached cable
+		var/obj/structure/cable/attached		// the attached cable
 		var/storedpower = 0
 		flags = FPRINT | CONDUCT
 		use_power = 0
@@ -179,7 +179,7 @@
 		power = 0
 		return 0
 	var/turf/T = src.loc
-	var/obj/station_objects/cable/C = T.get_cable_node()
+	var/obj/structure/cable/C = T.get_cable_node()
 	var/net
 	if (C)
 		net = C.netnum		// find the powernet of the connected cable

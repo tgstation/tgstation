@@ -1,6 +1,6 @@
 /obj/item/device/infra_sensor/process()
 	if (src.passive)
-		for(var/obj/effects/beam/i_beam/I in range(2, src.loc))
+		for(var/obj/effect/beam/i_beam/I in range(2, src.loc))
 			I.left = 2
 		return 1
 
@@ -9,7 +9,7 @@
 		return null
 
 /obj/item/device/infra_sensor/proc/burst()
-	for(var/obj/effects/beam/i_beam/I in range(src.loc))
+	for(var/obj/effect/beam/i_beam/I in range(src.loc))
 		I.left = 8
 /*	for(var/obj/item/device/infra/I in range(src.loc))ugh will have to fix this
 		I.visible = 1

@@ -8,7 +8,7 @@
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
-	var/obj/effects/ship_landing_beacon/beacon = null
+	var/obj/effect/ship_landing_beacon/beacon = null
 	var/active = 0
 
 	attack_self()
@@ -24,7 +24,7 @@
 	proc/work()
 		while(active)
 			if(!beacon)
-				for(var/obj/effects/ship_landing_beacon/B in world)
+				for(var/obj/effect/ship_landing_beacon/B in world)
 					if(B.name == "Beacon - SS13")
 						beacon = B
 						break
@@ -85,7 +85,7 @@
 	P.name = "Cyanide pill"
 	return
 
-/obj/effects/ship_landing_beacon
+/obj/effect/ship_landing_beacon
 	icon = 'craft.dmi'
 	icon_state = "beacon"
 	name = "Beacon"

@@ -1,4 +1,4 @@
-/obj/station_objects/closet/syndicate/nuclear/New()
+/obj/structure/closet/syndicate/nuclear/New()
 	..()
 	sleep(2)
 	new /obj/item/ammo_magazine/c45( src )

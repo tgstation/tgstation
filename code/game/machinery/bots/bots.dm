@@ -53,7 +53,7 @@
 	src.visible_message("\red <B>[user] has slashed [src]!</B>")
 	playsound(src.loc, 'slice.ogg', 25, 1, -1)
 	if(prob(10))
-		new /obj/effects/decal/cleanable/oil(src.loc)
+		new /obj/effect/decal/cleanable/oil(src.loc)
 	healthcheck()
 
 
@@ -114,7 +114,7 @@
 /obj/machinery/bot/emp_act(severity)
 	var/was_on = on
 	stat |= EMPED
-	var/obj/effects/overlay/pulse2 = new/obj/effects/overlay ( src.loc )
+	var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
 	pulse2.icon = 'effects.dmi'
 	pulse2.icon_state = "empdisable"
 	pulse2.name = "emp sparks"
@@ -189,7 +189,7 @@
 // Returns true if direction is blocked from loc
 // Checks doors against access with given ID
 /proc/DirBlockedWithAccess(turf/loc,var/dir,var/obj/item/weapon/card/id/ID)
-	for(var/obj/station_objects/window/D in loc)
+	for(var/obj/structure/window/D in loc)
 		if(!D.density)			continue
 		if(D.dir == SOUTHWEST)	return 1
 		if(D.dir == dir)		return 1

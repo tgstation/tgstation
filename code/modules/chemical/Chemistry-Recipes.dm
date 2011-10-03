@@ -28,7 +28,7 @@ datum
 			result_amount = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				var/datum/effects/system/reagents_explosion/e = new()
+				var/datum/effect/system/reagents_explosion/e = new()
 				e.set_up(round (created_volume/10, 1), location, 0, 0)
 				e.start()
 
@@ -277,7 +277,7 @@ datum
 			result_amount = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				var/datum/effects/system/reagents_explosion/e = new()
+				var/datum/effect/system/reagents_explosion/e = new()
 				e.set_up(round (created_volume/2, 1), location, 0, 0)
 				e.start()
 
@@ -299,7 +299,7 @@ datum
 			result_amount = null
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(2, 1, location)
 				s.start()
 				for(var/mob/living/carbon/M in viewers(world.view, location))
@@ -352,7 +352,7 @@ datum
 			secondary = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread
+				var/datum/effect/system/bad_smoke_spread/S = new /datum/effect/system/bad_smoke_spread
 				S.attach(location)
 				S.set_up(10, 0, location)
 				playsound(location, 'smoke.ogg', 50, 1, -3)
@@ -378,7 +378,7 @@ datum
 			secondary = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				var/datum/effects/system/chem_smoke_spread/S = new /datum/effects/system/chem_smoke_spread
+				var/datum/effect/system/chem_smoke_spread/S = new /datum/effect/system/chem_smoke_spread
 				S.attach(location)
 				S.set_up(holder, 10, 0, location)
 				playsound(location, 'smoke.ogg', 50, 1, -3)
@@ -438,7 +438,7 @@ datum
 				//for(var/datum/reagent/R in holder.reagent_list)
 				//	world << "[R.name] = [R.volume]"
 
-				var/datum/effects/system/foam_spread/s = new()
+				var/datum/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
 				s.start()
 				holder.clear_reagents()
@@ -460,7 +460,7 @@ datum
 				for(var/mob/M in viewers(5, location))
 					M << "\red The solution spews out a metalic foam!"
 
-				var/datum/effects/system/foam_spread/s = new()
+				var/datum/effect/system/foam_spread/s = new()
 				s.set_up(created_volume/2, location, holder, 1)
 				s.start()
 				return
@@ -480,7 +480,7 @@ datum
 				for(var/mob/M in viewers(5, location))
 					M << "\red The solution spews out a metalic foam!"
 
-				var/datum/effects/system/foam_spread/s = new()
+				var/datum/effect/system/foam_spread/s = new()
 				s.set_up(created_volume/2, location, holder, 2)
 				s.start()
 				return
@@ -537,7 +537,7 @@ datum
 			required_other = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				var/datum/effects/system/reagents_explosion/e = new()
+				var/datum/effect/system/reagents_explosion/e = new()
 				e.set_up(round (created_volume/10, 1), location, 0, 0)
 				e.start()
 
@@ -672,7 +672,7 @@ datum
 			required_other = 4
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 
-				var/list/critters = typesof(/obj/effects/critter) - /obj/effects/critter // list of possible critters
+				var/list/critters = typesof(/obj/effect/critter) - /obj/effect/critter // list of possible critters
 
 				playsound(get_turf_loc(holder.my_atom), 'phasein.ogg', 100, 1)
 
@@ -681,7 +681,7 @@ datum
 
 				for(var/i = 1, i <= created_volume, i++)
 					var/chosen = pick(critters)
-					var/obj/effects/critter/C = new chosen
+					var/obj/effect/critter/C = new chosen
 					C.loc = get_turf_loc(holder.my_atom)
 					if(prob(50))
 						for(var/j = 1, j <= rand(1, 3), j++)
@@ -759,7 +759,7 @@ datum
 				//for(var/datum/reagent/R in holder.reagent_list)
 				//	world << "[R.name] = [R.volume]"
 
-				var/datum/effects/system/foam_spread/s = new()
+				var/datum/effect/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
 				s.start()
 				holder.clear_reagents()

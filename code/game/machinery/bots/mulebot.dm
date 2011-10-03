@@ -469,7 +469,7 @@
 
 // called to load a crate
 /obj/machinery/bot/mulebot/proc/load(var/atom/movable/C)
-	if((wires & wire_loadcheck) && !istype(C,/obj/station_objects/crate))
+	if((wires & wire_loadcheck) && !istype(C,/obj/structure/crate))
 		src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
 		playsound(src.loc, 'buzz-sigh.ogg', 50, 0)
 		return		// if not emagged, only allow crates to be loaded
@@ -479,7 +479,7 @@
 	mode = 1
 
 	// if a create, close before loading
-	var/obj/station_objects/crate/crate = C
+	var/obj/structure/crate/crate = C
 	if(istype(crate))
 		crate.close()
 
@@ -598,7 +598,7 @@
 
 
 					if(bloodiness)
-						var/obj/effects/decal/cleanable/blood/tracks/B = new(loc)
+						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
 							B.dir = newdir
@@ -743,7 +743,7 @@
 							AM = A
 							break
 				else			// otherwise, look for crates only
-					AM = locate(/obj/station_objects/crate) in get_step(loc,loaddir)
+					AM = locate(/obj/structure/crate) in get_step(loc,loaddir)
 				if(AM)
 					load(AM)
 		// whatever happened, check to see if we return home
@@ -802,7 +802,7 @@
 	H.TakeDamage("l_arm",0.5*damage, 0)
 	H.TakeDamage("r_arm",0.5*damage, 0)
 
-	var/obj/effects/decal/cleanable/blood/B = new(src.loc)
+	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
 	B.blood_DNA = H.dna.unique_enzymes
 	B.blood_type = H.b_type
 
@@ -959,10 +959,10 @@
 		cell.update_icon()
 		cell = null
 
-	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 
-	new /obj/effects/decal/cleanable/oil(src.loc)
+	new /obj/effect/decal/cleanable/oil(src.loc)
 	unload(0)
 	del(src)

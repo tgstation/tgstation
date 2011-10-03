@@ -40,9 +40,9 @@
 			now_pushing = 1
 			if (!AM.anchored)
 				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/station_objects/window))
+				if (istype(AM, /obj/structure/window))
 					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/station_objects/window/win in get_step(AM,t))
+						for(var/obj/structure/window/win in get_step(AM,t))
 							now_pushing = 0
 							return
 				step(AM, t)
@@ -290,7 +290,7 @@
 				if (emptyHand)
 					head.DblClick()
 				return
-			if (( istype(W, /obj/effects/alien/head) ))
+			if (( istype(W, /obj/effect/alien/head) ))
 				u_equip(W)
 				head = W
 				return
@@ -327,7 +327,7 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
-		bruteloss += (istype(O, /obj/effects/meteor/small) ? 10 : 25)
+		bruteloss += (istype(O, /obj/effect/meteor/small) ? 10 : 25)
 		fireloss += 30
 
 		updatehealth()
@@ -392,9 +392,9 @@
 						M.pulling = t
 				else
 					if (pulling)
-						if (istype(pulling, /obj/station_objects/window))
+						if (istype(pulling, /obj/structure/window))
 							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-								for(var/obj/station_objects/window/win in get_step(pulling,get_dir(pulling.loc, T)))
+								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
 									pulling = null
 					if (pulling)
 						step(pulling, get_dir(pulling.loc, T))
@@ -418,7 +418,7 @@
 	overlays = null
 
 	if(buckled)
-		if(istype(buckled, /obj/station_objects/stool/bed))
+		if(istype(buckled, /obj/structure/stool/bed))
 			lying = 1
 		else
 			lying = 0
@@ -651,7 +651,7 @@
 				if (stunned < power)
 					stunned = power
 
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
 
@@ -697,7 +697,7 @@
 					if (((M.head && M.head.flags & 4) || ((M.wear_mask && !( M.wear_mask.flags & 32 )) || ((head && head.flags & 4) || (wear_mask && !( wear_mask.flags & 32 ))))))
 						M << "\blue <B>Remove that mask!</B>"
 						return
-					var/obj/effects/equip_e/human/O = new /obj/effects/equip_e/human(  )
+					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 					O.source = M
 					O.target = src
 					O.s_loc = M.loc

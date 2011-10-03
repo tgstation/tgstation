@@ -94,7 +94,7 @@
 		for(var/turf/T in src.turfs)
 
 			for(var/obj/O in T)
-				if(istype(O, /obj/effects/ship_landing_beacon)) // Leave beacons where they are, we don't want to take them with us.
+				if(istype(O, /obj/effect/ship_landing_beacon)) // Leave beacons where they are, we don't want to take them with us.
 					continue
 				var/
 					_x = Center.x + O.x - xsav
@@ -172,8 +172,8 @@ obj/machinery/shipcore/Topic(href, href_list)
 		src.group_self()
 	if (href_list["move"])
 		var/list/beacons = list()
-		for(var/obj/effects/ship_landing_beacon/b in world)
-			if(istype(b, /obj/effects/ship_landing_beacon))
+		for(var/obj/effect/ship_landing_beacon/b in world)
+			if(istype(b, /obj/effect/ship_landing_beacon))
 				if(b.active)
 					beacons.Add(b)
 		if(!beacons.len)
@@ -330,7 +330,7 @@ obj/machinery/ship_component/control_panel
 	icon = 'craft.dmi'
 	icon_state = "ship_overlay"
 
-/obj/effects/ship_landing_beacon
+/obj/effect/ship_landing_beacon
 	icon = 'craft.dmi'
 	icon_state = "beacon"
 	name = "Beacon"

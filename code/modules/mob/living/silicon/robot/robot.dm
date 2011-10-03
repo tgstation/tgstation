@@ -1,6 +1,6 @@
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
-	spark_system = new /datum/effects/system/spark_spread()
+	spark_system = new /datum/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	spawn (1)
@@ -284,9 +284,9 @@
 			now_pushing = 1
 			if (!AM.anchored)
 				var/t = get_dir(src, AM)
-				if (istype(AM, /obj/station_objects/window))
+				if (istype(AM, /obj/structure/window))
 					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-						for(var/obj/station_objects/window/win in get_step(AM,t))
+						for(var/obj/structure/window/win in get_step(AM,t))
 							now_pushing = 0
 							return
 				step(AM, t)
@@ -592,7 +592,7 @@
 
 				flick("noise", flash)
 
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
 
@@ -927,9 +927,9 @@ Frequency:
 						M.pulling = t
 				else
 					if (pulling)
-						if (istype(pulling, /obj/station_objects/window))
+						if (istype(pulling, /obj/structure/window))
 							if(pulling:ini_dir == NORTHWEST || pulling:ini_dir == NORTHEAST || pulling:ini_dir == SOUTHWEST || pulling:ini_dir == SOUTHEAST)
-								for(var/obj/station_objects/window/win in get_step(pulling,get_dir(pulling.loc, T)))
+								for(var/obj/structure/window/win in get_step(pulling,get_dir(pulling.loc, T)))
 									pulling = null
 					if (pulling)
 						step(pulling, get_dir(pulling.loc, T))

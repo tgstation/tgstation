@@ -18,7 +18,7 @@ This system could be expanded to migrate all of our current mutations to. Maybe.
 	var/list/requirements = list() // list of randomly-genned requirements
 	var/required = 1 // the number of requirements to generate
 
-	var/list/races = list("human") // list of races the mutation effects
+	var/list/races = list("human") // list of races the mutation effect
 
 	proc/get_mutation(var/mob/living/carbon/M) // Called when check_mutation() is successful
 		..()

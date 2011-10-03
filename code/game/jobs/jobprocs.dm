@@ -70,7 +70,7 @@
 
 /** Proc DivideOccupations
  *  fills var "assigned_role" for all ready players.
- *  This proc must not have any side effects besides of modifying "assigned_role".
+ *  This proc must not have any side effect besides of modifying "assigned_role".
  **/
 /proc/DivideOccupations()
 	//Setup new player list and get the jobs list
@@ -602,7 +602,7 @@
 
 	if (!joined_late && rank != "Tourist")
 		var/obj/S = null
-		for(var/obj/effects/landmark/start/sloc in world)
+		for(var/obj/effect/landmark/start/sloc in world)
 			if (sloc.name != rank)
 				continue
 			if (locate(/mob) in sloc.loc)
@@ -611,7 +611,7 @@
 			break
 		if (!S)
 			S = locate("start*[rank]") // use old stype
-		if (istype(S, /obj/effects/landmark/start) && istype(S.loc, /turf))
+		if (istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
 			src.loc = S.loc
 //			if(S.name == "Cyborg")
 //				src.Robotize()
@@ -706,7 +706,7 @@
 		if(V!=usr)
 			V.show_message("[usr] looks as if a wall is in front of them.", 3, "", 2)
 	usr << "You form a wall in front of yourself."
-	var/obj/effects/forcefield/F =  new /obj/effects/forcefield(locate(usr.x,usr.y,usr.z))
+	var/obj/effect/forcefield/F =  new /obj/effect/forcefield(locate(usr.x,usr.y,usr.z))
 	F.icon_state = "empty"
 	F.name = "invisible wall"
 	F.desc = "You have a bad feeling about this."

@@ -57,7 +57,7 @@
 	var/wasvalid = 0
 	var/lastfired = 0
 	var/shot_delay = 30 //3 seconds between shots
-	var/datum/effects/system/spark_spread/spark_system
+	var/datum/effect/system/spark_spread/spark_system
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
@@ -68,7 +68,7 @@
 
 
 /obj/machinery/turret/New()
-	spark_system = new /datum/effects/system/spark_spread
+	spark_system = new /datum/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 //	targets = new
@@ -384,7 +384,7 @@
 
 
 
-/obj/station_objects/turret/gun_turret
+/obj/structure/turret/gun_turret
 	name = "Gun Turret"
 	density = 1
 	anchored = 1

@@ -196,7 +196,7 @@
 			if (R.id == "frostoil")
 				display_name = "Coldsauce"
 			dat += {"<B>[display_name]:</B> [R.volume] unit\s<BR>"}
-			
+
 		if (items_counts.len==0 && reagents.reagent_list.len==0)
 			dat = {"<B>The microwave is empty</B><BR>"}
 		else
@@ -226,7 +226,7 @@
 			return
 		stop()
 		return
-		
+
 	var/datum/recipe/recipe = select_recipe(available_recipes,src)
 	var/obj/cooked
 	if (!recipe)
@@ -249,7 +249,7 @@
 			cooked = fail()
 			cooked.loc = src.loc
 			return
-		else 
+		else
 			if (!wzhzhzh(10))
 				abort()
 				return
@@ -329,7 +329,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/broke()
-	var/datum/effects/system/spark_spread/s = new
+	var/datum/effect/system/spark_spread/s = new
 	s.set_up(2, 1, src)
 	s.start()
 	src.icon_state = "mwb" // Make it look all busted up and shit
@@ -366,7 +366,7 @@
 	switch(href_list["action"])
 		if ("cook")
 			cook()
-		
+
 		if ("dispose")
 			dispose()
 	return

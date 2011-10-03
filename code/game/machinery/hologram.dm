@@ -9,7 +9,7 @@ AI may cancel the hologram at any time by clicking on the holopad once more.
 
 Possible to do for anyone motivated enough:
 	Give an AI variable for different hologram icons.
-	Itegrate EMP effects to disable the unit.
+	Itegrate EMP effect to disable the unit.
 */
 /obj/machinery/hologram/holopad/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
@@ -122,11 +122,11 @@ Holographic project of everything else.
 	set name = "Hologram Debug New"
 	set category = "CURRENT DEBUG"
 
-	var/obj/effects/overlay/hologram = new(loc)//Spawn a blank effect at the location.
+	var/obj/effect/overlay/hologram = new(loc)//Spawn a blank effect at the location.
 	var/icon/flat_icon = icon(getFlatIcon(src,0))//Need to make sure it's a new icon so the old one is not reused.
 	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
 	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
-	var/input = input("Select what icon state to use in effects.",,"")
+	var/input = input("Select what icon state to use in effect.",,"")
 	if(input)
 		var/icon/alpha_mask = new('effects.dmi', "[input]")
 		flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.

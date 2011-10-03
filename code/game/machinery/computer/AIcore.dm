@@ -1,4 +1,4 @@
-/obj/station_objects/AIcore
+/obj/structure/AIcore
 	density = 1
 	anchored = 0
 	name = "AI core"
@@ -10,7 +10,7 @@
 	var/obj/item/device/mmi/brain = null
 
 
-/obj/station_objects/AIcore/attackby(obj/item/P as obj, mob/user as mob)
+/obj/structure/AIcore/attackby(obj/item/P as obj, mob/user as mob)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
@@ -148,7 +148,7 @@
 				new /mob/living/silicon/ai ( loc, laws, brain )
 				del(src)
 
-/obj/station_objects/AIcore/deactivated
+/obj/structure/AIcore/deactivated
 	name = "Inactive AI"
 	icon = 'AI.dmi'
 	icon_state = "ai-empty"
@@ -192,7 +192,7 @@ That prevents a few funky behaviors.
 									if (T.mind == malfai)
 										U << "\red <b>ERROR</b>: \black Remote transfer interface disabled."//Do ho ho ho~
 										return
-							new /obj/station_objects/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
+							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
 							T.aiRestorePowerRoutine = 0//So the AI initially has power.
 							T.control_disabled = 1//Can't control things remotely if you're stuck in a card!
 							T.loc = C//Throw AI into the card.
@@ -218,7 +218,7 @@ That prevents a few funky behaviors.
 							if(T.stat)//If the ai is dead/dying.
 								U << "\red <b>ERROR</b>: \black [T.name] data core is corrupted. Unable to install."
 							else
-								new /obj/station_objects/AIcore/deactivated(T.loc)
+								new /obj/structure/AIcore/deactivated(T.loc)
 								T.aiRestorePowerRoutine = 0
 								T.control_disabled = 1
 								T.loc = C
@@ -228,7 +228,7 @@ That prevents a few funky behaviors.
 								U << "\blue <b>Transfer successful</b>: \black [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 
 			if("INACTIVE")//Inactive AI object.
-				var/obj/station_objects/AIcore/deactivated/T = target
+				var/obj/structure/AIcore/deactivated/T = target
 				switch(interaction)
 					if("AICARD")
 						var/obj/item/device/aicard/C = src

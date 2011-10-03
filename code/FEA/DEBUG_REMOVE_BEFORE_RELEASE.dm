@@ -33,7 +33,7 @@ turf/space
 		create_meteor(direction as num)
 			set src in world
 
-			var/obj/effects/meteor/M = new( src )
+			var/obj/effect/meteor/M = new( src )
 			walk(M, direction,10)
 
 
@@ -515,7 +515,7 @@ mob
 		fire_report()
 			set category = "Debug"
 			usr << "\b \red Fire Report"
-			for(var/obj/effects/hotspot/flame in world)
+			for(var/obj/effect/hotspot/flame in world)
 				usr << "[flame.x],[flame.y]: [flame.temperature]K, [flame.volume] L - [flame.loc:air:temperature]"
 
 		process_cycle()

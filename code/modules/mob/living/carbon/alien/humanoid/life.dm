@@ -203,7 +203,7 @@
 					else if(istype(loc, /turf/))
 						var/breath_moles = 0
 						/*if(environment.return_pressure() > ONE_ATMOSPHERE)
-							// Loads of air around (pressure effects will be handled elsewhere), so lets just take a enough to fill our lungs at normal atmos pressure (using n = Pv/RT)
+							// Loads of air around (pressure effect will be handled elsewhere), so lets just take a enough to fill our lungs at normal atmos pressure (using n = Pv/RT)
 							breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
 						else*/
 							// Not enough air around, take a percentage of what's there to model this properly
@@ -211,8 +211,8 @@
 
 						breath = loc.remove_air(breath_moles)
 
-						// Handle chem smoke effects  -- Doohl
-						for(var/obj/effects/chem_smoke/smoke in view(1, src))
+						// Handle chem smoke effect  -- Doohl
+						for(var/obj/effect/chem_smoke/smoke in view(1, src))
 							if(smoke.reagents.total_volume)
 								smoke.reagents.reaction(src, INGEST)
 								spawn(5)
@@ -293,7 +293,7 @@
 		handle_environment()
 
 			//If there are alien weeds on the ground then heal if needed or give some toxins
-			if(locate(/obj/effects/alien/weeds) in loc)
+			if(locate(/obj/effect/alien/weeds) in loc)
 				if(health >= 100)
 					toxloss += 15
 					if(toxloss > max_plasma)
@@ -560,7 +560,7 @@
 
 		check_if_buckled()
 			if (src.buckled)
-				src.lying = (istype(src.buckled, /obj/station_objects/stool/bed) ? 1 : 0)
+				src.lying = (istype(src.buckled, /obj/structure/stool/bed) ? 1 : 0)
 				if(src.lying)
 					src.drop_item()
 				src.density = 1

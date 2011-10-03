@@ -127,7 +127,7 @@
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
 		var/p_type = text2num(href_list["dmake"])
-		var/obj/station_objects/disposalconstruct/C = new (src.loc)
+		var/obj/structure/disposalconstruct/C = new (src.loc)
 		switch(p_type)
 			if(0)
 				C.ptype = 0

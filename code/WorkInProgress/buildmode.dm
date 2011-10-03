@@ -6,7 +6,7 @@
 			log_admin("[key_name(usr)] has left build mode.")
 			M.client.buildmode = 0
 			M.client.show_popup_menus = 1
-			for(var/obj/effects/bmode/buildholder/H)
+			for(var/obj/effect/bmode/buildholder/H)
 				if(H.cl == M.client)
 					del(H)
 		else
@@ -14,14 +14,14 @@
 			M.client.buildmode = 1
 			M.client.show_popup_menus = 0
 
-			var/obj/effects/bmode/buildholder/H = new/obj/effects/bmode/buildholder()
-			var/obj/effects/bmode/builddir/A = new/obj/effects/bmode/builddir(H)
+			var/obj/effect/bmode/buildholder/H = new/obj/effect/bmode/buildholder()
+			var/obj/effect/bmode/builddir/A = new/obj/effect/bmode/builddir(H)
 			A.master = H
-			var/obj/effects/bmode/buildhelp/B = new/obj/effects/bmode/buildhelp(H)
+			var/obj/effect/bmode/buildhelp/B = new/obj/effect/bmode/buildhelp(H)
 			B.master = H
-			var/obj/effects/bmode/buildmode/C = new/obj/effects/bmode/buildmode(H)
+			var/obj/effect/bmode/buildmode/C = new/obj/effect/bmode/buildmode(H)
 			C.master = H
-			var/obj/effects/bmode/buildquit/D = new/obj/effects/bmode/buildquit(H)
+			var/obj/effect/bmode/buildquit/D = new/obj/effect/bmode/buildquit(H)
 			D.master = H
 
 			H.builddir = A
@@ -34,15 +34,15 @@
 			M.client.screen += D
 			H.cl = M.client
 
-/obj/effects/bmode//Cleaning up the tree a bit
+/obj/effect/bmode//Cleaning up the tree a bit
 	density = 1
 	anchored = 1
 	layer = 20
 	dir = NORTH
 	icon = 'buildmode.dmi'
-	var/obj/effects/bmode/buildholder/master = null
+	var/obj/effect/bmode/buildholder/master = null
 
-/obj/effects/bmode/builddir
+/obj/effect/bmode/builddir
 	icon_state = "build"
 	screen_loc = "NORTH,WEST"
 	Click()
@@ -59,7 +59,7 @@
 				dir = NORTH
 		return
 
-/obj/effects/bmode/buildhelp
+/obj/effect/bmode/buildhelp
 	icon = 'buildmode.dmi'
 	icon_state = "buildhelp"
 	screen_loc = "NORTH,WEST+1"
@@ -97,29 +97,29 @@
 				usr << "\blue ***********************************************************"
 		return
 
-/obj/effects/bmode/buildquit
+/obj/effect/bmode/buildquit
 	icon_state = "buildquit"
 	screen_loc = "NORTH,WEST+3"
 
 	Click()
 		togglebuildmode(master.cl.mob)
 
-/obj/effects/bmode/buildholder
+/obj/effect/bmode/buildholder
 	density = 0
 	anchored = 1
 	var/client/cl = null
-	var/obj/effects/bmode/builddir/builddir = null
-	var/obj/effects/bmode/buildhelp/buildhelp = null
-	var/obj/effects/bmode/buildmode/buildmode = null
-	var/obj/effects/bmode/buildquit/buildquit = null
+	var/obj/effect/bmode/builddir/builddir = null
+	var/obj/effect/bmode/buildhelp/buildhelp = null
+	var/obj/effect/bmode/buildmode/buildmode = null
+	var/obj/effect/bmode/buildquit/buildquit = null
 	var/atom/movable/throw_atom = null
 
-/obj/effects/bmode/buildmode
+/obj/effect/bmode/buildmode
 	icon_state = "buildmode1"
 	screen_loc = "NORTH,WEST+2"
 	var/varholder = "name"
 	var/valueholder = "derp"
-	var/objholder = "/obj/station_objects/closet"
+	var/objholder = "/obj/structure/closet"
 
 	Click(location, control, params)
 		var/list/pa = params2list(params)
@@ -144,13 +144,13 @@
 				if(1)
 					return
 				if(2)
-					objholder = input(usr,"Enter typepath:" ,"Typepath","/obj/station_objects/closet")
-					var/list/removed_paths = list("/obj/effects/bhole")
+					objholder = input(usr,"Enter typepath:" ,"Typepath","/obj/structure/closet")
+					var/list/removed_paths = list("/obj/effect/bhole")
 					if(objholder in removed_paths)
 						alert("That path is not allowed.")
-						objholder = "/obj/station_objects/closet"
+						objholder = "/obj/structure/closet"
 					else if (dd_hasprefix(objholder, "/mob") && !(usr.client.holder.rank in list("Game Master", "Game Admin", "Badmin")))
-						objholder = "/obj/station_objects/closet"
+						objholder = "/obj/structure/closet"
 				if(3)
 					var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
 
@@ -173,8 +173,8 @@
 
 
 /proc/build_click(var/mob/user, buildmode, location, control, params, var/obj/object)
-	var/obj/effects/bmode/buildholder/holder = null
-	for(var/obj/effects/bmode/buildholder/H)
+	var/obj/effect/bmode/buildholder/holder = null
+	for(var/obj/effect/bmode/buildholder/H)
 		if(H.cl == user.client)
 			holder = H
 			break
@@ -217,19 +217,19 @@
 			else if(istype(object,/turf) && pa.Find("ctrl") && pa.Find("left"))
 				switch(holder.builddir.dir)
 					if(NORTH)
-						var/obj/station_objects/window/reinforced/WIN = new/obj/station_objects/window/reinforced(get_turf(object))
+						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = NORTH
 					if(SOUTH)
-						var/obj/station_objects/window/reinforced/WIN = new/obj/station_objects/window/reinforced(get_turf(object))
+						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = SOUTH
 					if(EAST)
-						var/obj/station_objects/window/reinforced/WIN = new/obj/station_objects/window/reinforced(get_turf(object))
+						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = EAST
 					if(WEST)
-						var/obj/station_objects/window/reinforced/WIN = new/obj/station_objects/window/reinforced(get_turf(object))
+						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = WEST
 					if(NORTHWEST)
-						var/obj/station_objects/window/reinforced/WIN = new/obj/station_objects/window/reinforced(get_turf(object))
+						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.dir = NORTHWEST
 		if(2)
 			if(pa.Find("left"))

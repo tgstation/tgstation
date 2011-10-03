@@ -36,7 +36,7 @@
 				var/Z = source:z
 				spawn(0)
 					//I really shouldnt put this here but i dont have a better idea
-					var/obj/effects/overlay/O = new /obj/effects/overlay ( locate(X,Y,Z) )
+					var/obj/effect/overlay/O = new /obj/effect/overlay ( locate(X,Y,Z) )
 					O.name = "sparkles"
 					O.anchored = 1
 					O.density = 0

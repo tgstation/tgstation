@@ -1,4 +1,4 @@
-/obj/station_objects/computerframe
+/obj/structure/computerframe
 	density = 1
 	anchored = 0
 	name = "Computer-frame"
@@ -168,7 +168,7 @@
 
 
 
-/obj/station_objects/computerframe/attackby(obj/item/P as obj, mob/user as mob)
+/obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))

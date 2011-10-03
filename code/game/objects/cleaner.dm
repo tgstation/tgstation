@@ -1,15 +1,15 @@
-/obj/station_objects/mopbucket/New()
+/obj/structure/mopbucket/New()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
 
 
-/obj/station_objects/mopbucket/examine()
+/obj/structure/mopbucket/examine()
 	set src in usr
 	usr << text("\icon[] [] contains [] units of water left!", src, src.name, src.reagents.total_volume)
 	..()
 
-/obj/station_objects/mopbucket/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/mopbucket/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/mop))
 		if (src.reagents.total_volume >= 2)
 			src.reagents.trans_to(W, 2)
@@ -19,7 +19,7 @@
 			user << "\blue Out of water!"
 	return
 
-/obj/station_objects/mopbucket/ex_act(severity)
+/obj/structure/mopbucket/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			del(src)

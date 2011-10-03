@@ -1,3 +1,3 @@
-/obj/effects/spawner
+/obj/effect/spawner
 	name = "object spawner"
 

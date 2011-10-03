@@ -12,7 +12,7 @@
 	throw_speed = 4
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | ONBELT | USEDELAY
-	var/datum/effects/system/bad_smoke_spread/smoke
+	var/datum/effect/system/bad_smoke_spread/smoke
 
 /obj/item/weapon/mustardbomb
 	desc = "It is set to detonate in 4 seconds."
@@ -26,17 +26,17 @@
 	throw_speed = 4
 	throw_range = 20
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT
-	var/datum/effects/system/mustard_gas_spread/mustard_gas
+	var/datum/effect/system/mustard_gas_spread/mustard_gas
 
 /obj/item/weapon/smokebomb/New()
 	..()
-	src.smoke = new /datum/effects/system/bad_smoke_spread/
+	src.smoke = new /datum/effect/system/bad_smoke_spread/
 	src.smoke.attach(src)
 	src.smoke.set_up(10, 0, usr.loc)
 
 /obj/item/weapon/mustardbomb/New()
 	..()
-	src.mustard_gas = new /datum/effects/system/mustard_gas_spread/
+	src.mustard_gas = new /datum/effect/system/mustard_gas_spread/
 	src.mustard_gas.attach(src)
 	src.mustard_gas.set_up(5, 0, usr.loc)
 
@@ -90,7 +90,7 @@
 		sleep(10)
 		src.smoke.start()
 
-	for(var/obj/effects/blob/B in view(8,src))
+	for(var/obj/effect/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))
 		B.health -= damage
 		B.update()
@@ -159,7 +159,7 @@
 		sleep(10)
 		src.mustard_gas.start()
 
-	for(var/obj/effects/blob/B in view(8,src))
+	for(var/obj/effect/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))
 		B.health -= damage
 		B.update()

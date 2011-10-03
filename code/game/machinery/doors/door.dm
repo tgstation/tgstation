@@ -10,13 +10,13 @@
 		if(src.check_access(bot.botcard))
 			if(density)
 				open()
-	else if(istype(AM, /obj/effects/critter))
-		var/obj/effects/critter/critter = AM
+	else if(istype(AM, /obj/effect/critter))
+		var/obj/effect/critter/critter = AM
 		if(critter.opensdoors)	return
 		if(src.check_access_list(critter.access_list))
 			if(density)
 				open()
-	else if(istype(AM, /obj/effects/alien/facehugger))
+	else if(istype(AM, /obj/effect/alien/facehugger))
 		if(src.check_access(null))
 			if(density)
 				open()
@@ -139,7 +139,7 @@
 		src.operating = -1
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			if(istype(src, /obj/machinery/door/airlock))
-				var/datum/effects/system/spark_spread/spark_system = new /datum/effects/system/spark_spread()
+				var/datum/effect/system/spark_spread/spark_system = new /datum/effect/system/spark_spread()
 				spark_system.set_up(5, 0, src.loc)
 				spark_system.start()
 				playsound(src.loc, 'blade1.ogg', 50, 1)
@@ -147,17 +147,17 @@
 				for(var/mob/O in viewers(user, 3))
 					O.show_message(text("\blue The door has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 				if((!src:arePowerSystemsOn()) || (stat & NOPOWER) || src:isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-					var/obj/station_objects/door_assembly/temp
+					var/obj/structure/door_assembly/temp
 					var/failsafe=0
 					switch(src:doortype)
-						if(0) temp=new/obj/station_objects/door_assembly/door_assembly_0(src.loc)
-						if(1) temp=new/obj/station_objects/door_assembly/door_assembly_com(src.loc)
-						if(2) temp=new/obj/station_objects/door_assembly/door_assembly_sec(src.loc)
-						if(3) temp=new/obj/station_objects/door_assembly/door_assembly_eng(src.loc)
-						if(4) temp=new/obj/station_objects/door_assembly/door_assembly_med(src.loc)
-						if(5) temp=new/obj/station_objects/door_assembly/door_assembly_mai(src.loc)
-						if(6) temp=new/obj/station_objects/door_assembly/door_assembly_ext(src.loc)
-						if(7) temp=new/obj/station_objects/door_assembly/door_assembly_g(src.loc)
+						if(0) temp=new/obj/structure/door_assembly/door_assembly_0(src.loc)
+						if(1) temp=new/obj/structure/door_assembly/door_assembly_com(src.loc)
+						if(2) temp=new/obj/structure/door_assembly/door_assembly_sec(src.loc)
+						if(3) temp=new/obj/structure/door_assembly/door_assembly_eng(src.loc)
+						if(4) temp=new/obj/structure/door_assembly/door_assembly_med(src.loc)
+						if(5) temp=new/obj/structure/door_assembly/door_assembly_mai(src.loc)
+						if(6) temp=new/obj/structure/door_assembly/door_assembly_ext(src.loc)
+						if(7) temp=new/obj/structure/door_assembly/door_assembly_g(src.loc)
 						else	failsafe=1
 					if(!failsafe)
 						temp.anchored=0
@@ -232,7 +232,7 @@
 				del(src)
 		if(3.0)
 			if(prob(80))
-				var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
 
@@ -327,7 +327,7 @@
 		if(src.check_access(bot.botcard))
 			if(density)
 				open()
-	else if(istype(AM, /obj/effects/alien/facehugger))
+	else if(istype(AM, /obj/effect/alien/facehugger))
 		if(src.check_access(null))
 			if(density)
 				open()

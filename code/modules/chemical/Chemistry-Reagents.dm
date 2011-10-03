@@ -25,7 +25,7 @@ datum
 				var/datum/reagent/self = src
 				src = null										  //of the reagent to the mob on TOUCHING it.
 
-				if(!istype(self.holder.my_atom, /obj/effects/chem_smoke))
+				if(!istype(self.holder.my_atom, /obj/effect/chem_smoke))
 					// If the chemicals are in a smoke cloud, do not try to let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
 
 					if(method == TOUCH)
@@ -138,7 +138,7 @@ datum
 				src = null
 				//var/datum/disease/D = self.data["virus"]
 				if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
-					var/obj/effects/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
+					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
 					if(!blood_prop) //first blood!
 						blood_prop = new(T)
 						blood_prop.blood_DNA = self.data["blood_DNA"]
@@ -163,7 +163,7 @@ datum
 						*/
 
 				else if(istype(self.data["donor"], /mob/living/carbon/monkey))
-					var/obj/effects/decal/cleanable/blood/blood_prop = locate() in T
+					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 					if(!blood_prop)
 						blood_prop = new(T)
 						blood_prop.blood_DNA = self.data["blood_DNA"]
@@ -180,7 +180,7 @@ datum
 						*/
 
 				else if(istype(self.data["donor"], /mob/living/carbon/alien))
-					var/obj/effects/decal/cleanable/xenoblood/blood_prop = locate() in T
+					var/obj/effect/decal/cleanable/xenoblood/blood_prop = locate() in T
 					if(!blood_prop)
 						blood_prop = new(T)
 						blood_prop.blood_DNA = self.data["blood_DNA"]
@@ -253,7 +253,7 @@ datum
 				for(var/mob/living/carbon/metroid/M in T)
 					M.toxloss+=rand(15,20)
 
-				var/hotspot = (locate(/obj/effects/hotspot) in T)
+				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
@@ -264,7 +264,7 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				var/turf/T = get_turf(O)
-				var/hotspot = (locate(/obj/effects/hotspot) in T)
+				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
@@ -452,7 +452,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				src = null
-				if(istype(O,/obj/station_objects/window))
+				if(istype(O,/obj/structure/window))
 					if(O:silicate <= 200)
 
 						O:silicate += volume
@@ -544,7 +544,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if(!istype(T, /turf/space))
-					new /obj/effects/decal/cleanable/dirt(T)
+					new /obj/effect/decal/cleanable/dirt(T)
 
 		chlorine
 			name = "Chlorine"
@@ -659,8 +659,8 @@ datum
 					M.take_organ_damage(min(15, volume * 2))
 
 			reaction_obj(var/obj/O, var/volume)
-				if((istype(O,/obj/item) || istype(O,/obj/effects/glowshroom)) && prob(10))
-					var/obj/effects/decal/cleanable/molten_item/I = new/obj/effects/decal/cleanable/molten_item(O.loc)
+				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(10))
+					var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 					I.desc = "Looks like this was \an [O] some time ago."
 					for(var/mob/M in viewers(5, O))
 						M << "\red \the [O] melts."
@@ -718,8 +718,8 @@ datum
 						M.take_organ_damage(min(15, volume * 4))
 
 			reaction_obj(var/obj/O, var/volume)
-				if((istype(O,/obj/item) || istype(O,/obj/effects/glowshroom)))
-					var/obj/effects/decal/cleanable/molten_item/I = new/obj/effects/decal/cleanable/molten_item(O.loc)
+				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)))
+					var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 					I.desc = "Looks like this was \an [O] some time ago."
 					for(var/mob/M in viewers(5, O))
 						M << "\red \the [O] melts."
@@ -756,7 +756,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if(!istype(T, /turf/space))
-					new /obj/effects/decal/cleanable/greenglow(T)
+					new /obj/effect/decal/cleanable/greenglow(T)
 
 
 		ryetalyn
@@ -902,7 +902,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if(!istype(T, /turf/space))
-					new /obj/effects/decal/cleanable/greenglow(T)
+					new /obj/effect/decal/cleanable/greenglow(T)
 
 		aluminum
 			name = "Aluminum"
@@ -957,7 +957,7 @@ datum
 			color = "#A5F0EE" // rgb: 165, 240, 238
 
 			reaction_obj(var/obj/O, var/volume)
-				if(istype(O,/obj/effects/decal/cleanable))
+				if(istype(O,/obj/effect/decal/cleanable))
 					del(O)
 				else
 					if (O)
@@ -965,7 +965,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				T.overlays = null
 				T.clean_blood()
-				for(var/obj/effects/decal/cleanable/C in src)
+				for(var/obj/effect/decal/cleanable/C in src)
 					del(C)
 
 				for(var/mob/living/carbon/metroid/M in T)
@@ -1010,10 +1010,10 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 		//		if(istype(O,/obj/plant/vine/))
 		//			O:life -= rand(15,35) // Kills vines nicely // Not tested as vines don't work in R41
-				if(istype(O,/obj/effects/alien/weeds/))
+				if(istype(O,/obj/effect/alien/weeds/))
 					O:health -= rand(15,35) // Kills alien weeds pretty fast
 					O:healthcheck()
-				else if(istype(O,/obj/effects/glowshroom)) //even a small amount is enough to kill it
+				else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
 					del(O)
 				// Damage that is done to growing plants is separately
 				// at code/game/machinery/hydroponics at obj/item/hydroponics
@@ -1291,7 +1291,7 @@ datum
 		hyronalin
 			name = "Hyronalin"
 			id = "hyronalin"
-			description = "Hyronalin is a medicinal drug used to counter the effects of radiation poisoning."
+			description = "Hyronalin is a medicinal drug used to counter the effect of radiation poisoning."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -1619,7 +1619,7 @@ datum
 				M:nutrition += nutriment_factor	// For hunger and fatness
 /*
 				// If overeaten - vomit and fall down
-				// Makes you feel bad but removes reagents and some effects
+				// Makes you feel bad but removes reagents and some effect
 				// from your body
 				if (M.nutrition > 650)
 					M.nutrition = rand (250, 400)
@@ -1842,7 +1842,7 @@ datum
 						if(T.wet_overlay)
 							T.overlays -= T.wet_overlay
 							T.wet_overlay = null
-				var/hotspot = (locate(/obj/effects/hotspot) in T)
+				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot)
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
