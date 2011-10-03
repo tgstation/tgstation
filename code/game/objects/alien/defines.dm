@@ -54,6 +54,13 @@
 	density = 0
 	var/health = 50
 
+	bush
+		icon_state = "weedbush"
+		name = "purple sac"
+		desc = "Weird purple octopus-like thing."
+
+		density = 1
+
 /obj/effect/alien/acid
 	name = "acid"
 	desc = "Burbling corrossive stuff. I wouldn't want to touch it."

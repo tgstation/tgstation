@@ -19,16 +19,15 @@ Doesn't work on other aliens/AI.*/
 	else	return 1
 
 /mob/living/carbon/alien/humanoid/verb/plant()
-	set name = "Plant Weeds (100)"
+	set name = "Plant Weeds (50)"
 	set desc = "Plants some alien weeds"
 	set category = "Alien"
 
-	if(powerc(100,1))
-		toxloss -= 100
+	if(powerc(50,1))
+		toxloss -= 50
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
-		var/obj/effect/alien/weeds/W = new (loc)
-		W.Life()
+		new /obj/effect/alien/weeds/bush(loc)
 	return
 
 /mob/living/carbon/alien/humanoid/verb/call_to()

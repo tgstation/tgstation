@@ -1,9 +1,11 @@
+#define BUSHRANGE 3
+
 /obj/effect/alien/weeds/New()
 	..()
 	if(istype(loc, /turf/space))
 		del(src)
 		return
-	icon_state = pick("weeds", "weeds1", "weeds2")
+	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
 	spawn(rand(150,300))
 		if(src)
 			Life()
@@ -34,6 +36,9 @@ Alien plants should do something if theres a lot of poison
 			var/turf/T = get_step(src, dirn)
 
 			if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
+				continue
+
+			if(!(locate(/obj/effect/alien/weeds/bush) in view(BUSHRANGE,T)))
 				continue
 
 	//		if (locate(/obj/movable, T)) // don't propogate into movables
@@ -91,3 +96,5 @@ Alien plants should do something if theres a lot of poison
 		return 0
 	return 1
 */
+
+#undef BUSHRANGE
