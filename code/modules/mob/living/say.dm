@@ -312,8 +312,60 @@
 		else
 			rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 
+/*
+		// Create speech bubble
+		var/obj/speech_bubble/B = new/obj/speech_bubble
+		B.icon = 'speechbubble.dmi'
+		B.parent = src
+		B.mouse_opacity = 0
+		B.invisibility = invisibility
+		B.layer = 10
+
+		// Determine if the speech bubble's going to have a special look
+		var/presay = ""
+		if(istype(src, /mob/living/silicon))
+			presay = "bot"
+		if(istype(src, /mob/living/carbon/alien))
+			presay = "xeno"
+		if(istype(src, /mob/living/carbon/metroid))
+			presay = "metroid"
+*/
 		for (var/mob/M in heard_a)
+
 			M.show_message(rendered, 2)
+			/*
+			if(M.client)
+
+				// If this client has bubbles disabled, obscure the bubble
+				if(!M.client.bubbles || M == src)
+					var/image/I = image('speechbubble.dmi', B, "override")
+					I.override = 1
+					M << I
+			*/
+		/*
+		// find the suffix, if bot, human or monkey
+		var/punctuation = ""
+		if(presay == "bot" || presay == "")
+			var/ending = copytext(text, length(text))
+			if (ending == "?")
+				punctuation = "question"
+			else if (ending == "!")
+				punctuation = "exclamation"
+			else
+				punctuation = ""
+
+		// flick the bubble
+		flick("[presay]say[punctuation]", B)
+
+		if(istype(loc, /turf))
+			B.loc = loc
+		else
+			B.loc = loc.loc
+
+		spawn()
+			sleep(11)
+			del(B)
+		*/
 
 	if (length(heard_b))
 		var/message_b
@@ -329,37 +381,50 @@
 
 		rendered = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
 
+
+		/*
+		// Create speech bubble
+		var/obj/speech_bubble/B = new/obj/speech_bubble
+		B.icon = 'speechbubble.dmi'
+		B.parent = src
+		B.mouse_opacity = 0
+		B.invisibility = invisibility
+		B.layer = 10
+
+		// Determine if the speech bubble's going to have a special look
+		var/presay = ""
+		if(istype(src, /mob/living/silicon))
+			presay = "bot"
+		if(istype(src, /mob/living/carbon/alien))
+			presay = "xeno"
+		if(istype(src, /mob/living/carbon/metroid))
+			presay = "metroid"
+		*/
+
 		for (var/mob/M in heard_b)
 			M.show_message(rendered, 2)
+
 			/*
 			if(M.client)
-				spawn()
-					var/isbot = ""
-					if(istype(src, /mob/living/silicon))
-						isbot = "bot"
 
-					var/obj/speech_bubble/B = new/obj/speech_bubble
-					B.icon = 'speechbubble.dmi'
-					B.parent = src
-					B.mouse_opacity = 0
-					B.invisibility = invisibility
-					B.layer = 10
+				if(!M.client.bubbles || M == src)
+					var/image/I = image('speechbubble.dmi', B, "override")
+					I.override = 1
+					M << I
+			*/ /*
 
-					if(!M.client.bubbles || M == src)
-						var/image/I = image('speechbubble.dmi', B, "override")
-						I.override = 1
-						M << I
+		flick("[presay]say", B)
 
-					flick("[isbot]say", B)
+		if(istype(loc, /turf))
+			B.loc = loc
+		else
+			B.loc = loc.loc
 
-					if(istype(loc, /turf))
-						B.loc = loc
-					else
-						B.loc = loc.loc
+		spawn()
+			sleep(11)
+			del(B)
+		*/
 
-					sleep(11)
-					del(B)
-			*/
 
 	log_say("[name]/[key] : [message]")
 

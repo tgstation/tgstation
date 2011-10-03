@@ -43,7 +43,8 @@
 	handle_nutrition()
 
 	if(Tempstun)
-		canmove = 0
+		if(!Victim) // not while they're eating!
+			canmove = 0
 	else
 		canmove = 1
 

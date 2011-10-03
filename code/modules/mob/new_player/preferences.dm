@@ -394,7 +394,7 @@ datum/preferences
 		dat += "<br>"
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
-		dat += "<b>Show chat bubbles:</b> <a href=\"byond://?src=\ref[user];preferences=1;bubbles=input\"><b>[bubbles == 1 ? "Yes" : "No"]</b></a><br>"
+		//dat += "<b>Show chat bubbles:</b> <a href=\"byond://?src=\ref[user];preferences=1;bubbles=input\"><b>[bubbles == 1 ? "Yes" : "No"]</b></a><br>"
 
 		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.rank == "Game Master"))
 			dat += "<hr><b>OOC</b><br>"

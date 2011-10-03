@@ -103,8 +103,8 @@
 				if(cloneloss<0) cloneloss = 0
 
 				nutrition += rand(10,25)
-				if(nutrition >= lastnut + 100)
-					if(prob(60))
+				if(nutrition >= lastnut + 50)
+					if(prob(80))
 						lastnut = nutrition
 						powerlevel++
 						if(powerlevel > 10)

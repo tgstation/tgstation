@@ -7,7 +7,7 @@
 	icon_state = "baby metroid"
 	pass_flags = PASSTABLE
 	voice_message = "skree!"
-	say_message = "says"
+	say_message = "hums"
 
 	health = 150
 	gender = NEUTER
