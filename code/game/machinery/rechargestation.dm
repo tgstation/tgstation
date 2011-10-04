@@ -75,43 +75,44 @@
 
 		restock_modules()
 			if(src.occupant)
-				if (istype(occupant, /mob/living/silicon/robot))
+				if(istype(occupant, /mob/living/silicon/robot))
 					var/mob/living/silicon/robot/R = occupant
-					var/list/um = R.contents|R.module.modules
-					// ^ makes sinle list of active (R.contents) and inactive modules (R.module.modules)
-					for(var/obj/O in um)
-						// Engineering
-						if(istype(O,/obj/item/weapon/rcd))
-							if(O:matter < 30)
-								O:matter += 1
-						if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/weapon/cable_coil))
-							if(O:amount < 50)
-								O:amount += 1
-						// Security
-						if(istype(O,/obj/item/device/flash))
-							if(O:broken)
-								O:broken = 0
-						if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
-							if(O:power_supply.charge < O:power_supply.maxcharge)
-								O:power_supply.give(100)
-						if(istype(O,/obj/item/weapon/melee/baton))
-							if(O:charges < 10)
-								O:charges += 1
-						//Service
-						if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
-							if(O.reagents.get_reagent_amount("enzyme") < 50)
-								O.reagents.add_reagent("enzyme", 1)
-						//Medical
-						if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline))
-							if(O.reagents.get_reagent_amount("inaprovaline") < 30)
-								O.reagents.add_reagent("inaprovaline", 1)
-						if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/antitoxin))
-							if(O.reagents.get_reagent_amount("anti_toxin") < 30)
-								O.reagents.add_reagent("anti_toxin", 1)
+					if(R.module && R.module.modules)
+						var/list/um = R.contents|R.module.modules
+						// ^ makes sinle list of active (R.contents) and inactive modules (R.module.modules)
+						for(var/obj/O in um)
+							// Engineering
+							if(istype(O,/obj/item/weapon/rcd))
+								if(O:matter < 30)
+									O:matter += 1
+							if(istype(O,/obj/item/stack/sheet/metal) || istype(O,/obj/item/stack/sheet/rglass) || istype(O,/obj/item/weapon/cable_coil))
+								if(O:amount < 50)
+									O:amount += 1
+							// Security
+							if(istype(O,/obj/item/device/flash))
+								if(O:broken)
+									O:broken = 0
+							if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
+								if(O:power_supply.charge < O:power_supply.maxcharge)
+									O:power_supply.give(100)
+							if(istype(O,/obj/item/weapon/melee/baton))
+								if(O:charges < 10)
+									O:charges += 1
+							//Service
+							if(istype(O,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
+								if(O.reagents.get_reagent_amount("enzyme") < 50)
+									O.reagents.add_reagent("enzyme", 1)
+							//Medical
+							if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline))
+								if(O.reagents.get_reagent_amount("inaprovaline") < 30)
+									O.reagents.add_reagent("inaprovaline", 1)
+							if(istype(O,/obj/item/weapon/reagent_containers/glass/bottle/antitoxin))
+								if(O.reagents.get_reagent_amount("anti_toxin") < 30)
+									O.reagents.add_reagent("anti_toxin", 1)
 
-					if(R)
-						if(R.module)
-							R.module.respawn_consumable(R)
+						if(R)
+							if(R.module)
+								R.module.respawn_consumable(R)
 
 
 	verb

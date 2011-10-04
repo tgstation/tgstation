@@ -1167,6 +1167,33 @@ proc/process_ghost_teleport_locs()
 	name = "AI Main New"
 	icon_state = "storage"
 
+
+
+//Misc
+
+
+
+/area/wreck/ai
+	name = "AI Chamber"
+	icon_state = "ai"
+
+/area/wreck/main
+	name = "Wreck"
+	icon_state = "storage"
+
+/area/wreck/engineering
+	name = "Power Room"
+	icon_state = "engine"
+
+/area/wreck/bridge
+	name = "Bridge"
+	icon_state = "bridge"
+
+/area/generic
+	name = "Unknown"
+	icon_state = "storage"
+
+
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.

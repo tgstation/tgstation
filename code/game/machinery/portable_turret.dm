@@ -924,3 +924,13 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 					sleep(30)
 					Parent_Turret.attacked = 0
 		..()
+
+
+
+
+/obj/machinery/porta_turret/stationary
+	emagged = 1
+
+	New()
+		installation = new/obj/item/weapon/gun/energy/laser(src.loc)
+		..()

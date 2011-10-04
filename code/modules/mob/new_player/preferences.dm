@@ -69,7 +69,7 @@ datum/preferences
 	New()
 		randomize_name()
 		for(var/n in occupation)
-			n=1
+			n=0
 		..()
 
 	//The mob should have a gender you want before running this proc.
@@ -586,26 +586,6 @@ datum/preferences
 				if ("random")
 					randomize_hair_color("hair")
 
-/*
-		if (link_tags["r_hair"])
-			var/new_component = input(user, "Please select red hair component: 1-255", "Character Generation")  as text
-
-			if (new_component)
-				r_hair = max(min(round(text2num(new_component)), 255), 1)
-
-		if (link_tags["g_hair"])
-			var/new_component = input(user, "Please select green hair component: 1-255", "Character Generation")  as text
-
-			if (new_component)
-				g_hair = max(min(round(text2num(new_component)), 255), 1)
-
-		if (link_tags["b_hair"])
-			var/new_component = input(user, "Please select blue hair component: 1-255", "Character Generation")  as text
-
-			if (new_component)
-				b_hair = max(min(round(text2num(new_component)), 255), 1)
-*/
-
 		if (link_tags["facial"])
 			switch(link_tags["facial"])
 				if ("input")
@@ -617,25 +597,6 @@ datum/preferences
 				if ("random")
 					randomize_hair_color("facial")
 
-/*
-		if (link_tags["r_facial"])
-			var/new_component = input(user, "Please select red facial component: 1-255", "Character Generation")  as text
-
-			if (new_component)
-				r_facial = max(min(round(text2num(new_component)), 255), 1)
-
-		if (link_tags["g_facial"])
-			var/new_component = input(user, "Please select green facial component: 1-255", "Character Generation")  as text
-
-			if (new_component)
-				g_facial = max(min(round(text2num(new_component)), 255), 1)
-
-		if (link_tags["b_facial"])
-			var/new_component = input(user, "Please select blue facial component: 1-255", "Character Generation")  as text
-
-			if (new_component)
-				b_facial = max(min(round(text2num(new_component)), 255), 1)
-*/
 		if (link_tags["eyes"])
 			switch(link_tags["eyes"])
 				if ("input")
@@ -647,25 +608,6 @@ datum/preferences
 				if ("random")
 					randomize_eyes_color()
 
-/*
-		if (link_tags["r_eyes"])
-			var/new_component = input(user, "Please select red eyes component: 1-255", "Character Generation")  as text
-
-			if (new_component)
-				r_eyes = max(min(round(text2num(new_component)), 255), 1)
-
-		if (link_tags["g_eyes"])
-			var/new_component = input(user, "Please select green eyes component: 1-255", "Character Generation")  as text
-
-			if (new_component)
-				g_eyes = max(min(round(text2num(new_component)), 255), 1)
-
-		if (link_tags["b_eyes"])
-			var/new_component = input(user, "Please select blue eyes component: 1-255", "Character Generation")  as text
-
-			if (new_component)
-				b_eyes = max(min(round(text2num(new_component)), 255), 1)
-*/
 		if (link_tags["s_tone"])
 			switch(link_tags["s_tone"])
 				if ("random")

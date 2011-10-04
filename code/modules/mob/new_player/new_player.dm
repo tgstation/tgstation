@@ -37,11 +37,11 @@ mob/new_player
 
 		if(!preferences.savefile_load(src, 0))
 			preferences.ShowChoices(src)
-			if (!client.changes)
+			if(!client.changes)
 				changes()
 		else
 			var/lastchangelog = length('changelog.html')
-			if (!client.changes && preferences.lastchangelog!=lastchangelog)
+			if(!client.changes && preferences.lastchangelog!=lastchangelog)
 				changes()
 				preferences.lastchangelog = lastchangelog
 				preferences.savefile_save(src)
@@ -52,7 +52,7 @@ mob/new_player
 		Quick note: local dream daemon instances don't seem to cache images right. Might be
 		a local problem with my machine but it's annoying nontheless.
 		*/
-		if (client)
+		if(client)
 			//load the PDA iconset into the client
 			src << browse_rsc('pda_atmos.png')
 			src << browse_rsc('pda_back.png')
