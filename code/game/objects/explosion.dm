@@ -13,6 +13,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
 			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
 
+		tension_master.explosion()
+
 		if(heavy_impact_range > 1)
 			var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
 			E.set_up(epicenter)

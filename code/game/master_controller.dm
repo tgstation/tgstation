@@ -19,6 +19,9 @@ datum/controller/game_controller
 			air_master = new /datum/controller/air_system()
 			air_master.setup()
 
+		if(!tension_master)
+			tension_master = new /datum/tension()
+
 		world.tick_lag = 0.9
 
 		setup_objects()
@@ -76,6 +79,8 @@ datum/controller/game_controller
 		var/start_time = world.timeofday
 
 		air_master.process()
+
+		tension_master.process()
 
 		sleep(1)
 

@@ -192,6 +192,7 @@
 			verbs += /client/proc/toggleadminhelpsound
 			verbs += /client/proc/togglebuildmodeself
 			verbs += /client/proc/hide_most_verbs
+			verbs += /client/proc/tension_report
 
 		if (holder.level >= 3)//Trial Admin********************************************************************
 			verbs += /obj/admins/proc/toggleaban			//abandon mob

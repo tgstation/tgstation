@@ -194,3 +194,29 @@
 		var/datum/air_group/dest_group = pick(dead_groups)
 		usr.loc = pick(dest_group.members)
 		return
+
+	tension_report()
+		set category = "Debug"
+		set name = "Show Tension Report"
+
+		if(!master_controller || !tension_master)
+			alert(usr,"Master_controller or tension_master not found.","Tension Report")
+			return 0
+
+		if (!tension_master.get_num_players())
+			alert(usr,"No players found.  How the fuck are you calling this?","Tension Report")
+			return 0
+
+		var/output = {"<B>TENSION REPORT</B><HR>
+<B>General Statistics</B><BR>
+<B>Deaths:</B> [tension_master.deaths]<BR>
+---- <I>Humans:</I> [tension_master.human_deaths]<BR>
+<B>Explosions:</B> [tension_master.explosions]<BR>
+<BR>
+<B>Current Status</B><BR>
+<B>Tension:</B> [tension_master.score]<BR>
+<B>Tension per player:</B> [tension_master.score/tension_master.get_num_players()]<BR>
+<B>Recommendations:</B> not yet implemented<BR>
+"}
+
+		usr << browse(output,"window=tensionreport")
