@@ -213,73 +213,73 @@ mob/new_player
 
 			switch(href_list["SelectedJob"])
 				if ("1")
-					AttemptLateSpawn("Captain", captainMax)
+					AttemptLateSpawn("Captain")
 				if ("2")
-					AttemptLateSpawn("Head of Security", hosMax)
+					AttemptLateSpawn("Head of Security")
 				if ("3")
-					AttemptLateSpawn("Head of Personnel", hopMax)
+					AttemptLateSpawn("Head of Personnel")
 				if ("4")
-					AttemptLateSpawn("Station Engineer", engineerMax)
+					AttemptLateSpawn("Station Engineer")
 				if ("5")
-					AttemptLateSpawn("Bartender", barmanMax)
+					AttemptLateSpawn("Bartender")
 				if ("6")
-					AttemptLateSpawn("Scientist", scientistMax)
+					AttemptLateSpawn("Scientist")
 				if ("7")
-					AttemptLateSpawn("Chemist", chemistMax)
+					AttemptLateSpawn("Chemist")
 				if ("8")
-					AttemptLateSpawn("Geneticist", geneticistMax)
+					AttemptLateSpawn("Geneticist")
 				if ("9")
-					AttemptLateSpawn("Security Officer", securityMax)
+					AttemptLateSpawn("Security Officer")
 				if ("10")
-					AttemptLateSpawn("Medical Doctor", doctorMax)
+					AttemptLateSpawn("Medical Doctor")
 				if ("11")
-					AttemptLateSpawn("Atmospheric Technician", atmosMax)
+					AttemptLateSpawn("Atmospheric Technician")
 				if ("12")
-					AttemptLateSpawn("Detective", detectiveMax)
+					AttemptLateSpawn("Detective")
 				if ("13")
-					AttemptLateSpawn("Chaplain", chaplainMax)
+					AttemptLateSpawn("Chaplain")
 				if ("14")
-					AttemptLateSpawn("Janitor", janitorMax)
+					AttemptLateSpawn("Janitor")
 				if ("15")
-					AttemptLateSpawn("Clown", clownMax)
+					AttemptLateSpawn("Clown")
 				if ("16")
-					AttemptLateSpawn("Chef", chefMax)
+					AttemptLateSpawn("Chef")
 				if ("17")
-					AttemptLateSpawn("Roboticist", roboticsMax)
+					AttemptLateSpawn("Roboticist")
 				if ("18")
-					AttemptLateSpawn("Assistant", 10000)
+					AttemptLateSpawn("Assistant")
 				if ("19")
-					AttemptLateSpawn("Quartermaster", cargoMax)
+					AttemptLateSpawn("Quartermaster")
 				if ("20")
-					AttemptLateSpawn("Research Director", directorMax)
+					AttemptLateSpawn("Research Director")
 				if ("21")
-					AttemptLateSpawn("Chief Engineer", chiefMax)
+					AttemptLateSpawn("Chief Engineer")
 				if ("22")
-					AttemptLateSpawn("Botanist", hydroponicsMax)
+					AttemptLateSpawn("Botanist")
 				if ("23")
-					AttemptLateSpawn("Librarian", librarianMax)
+					AttemptLateSpawn("Librarian")
 				if ("24")
-					AttemptLateSpawn("Virologist", viroMax)
+					AttemptLateSpawn("Virologist")
 				if ("25")
-					AttemptLateSpawn("Lawyer", lawyerMax)
+					AttemptLateSpawn("Lawyer")
 				if ("26")
-					AttemptLateSpawn("Cargo Technician", cargotechMax)
+					AttemptLateSpawn("Cargo Technician")
 				if ("27")
-					AttemptLateSpawn("Chief Medical Officer", cmoMax)
+					AttemptLateSpawn("Chief Medical Officer")
 				if ("28")
-					AttemptLateSpawn("Warden", wardenMax)
+					AttemptLateSpawn("Warden")
 				if ("29")
-					AttemptLateSpawn("Shaft Miner", minerMax)
+					AttemptLateSpawn("Shaft Miner")
 				if ("30")
-					AttemptLateSpawn("Mime", mimeMax)
+					AttemptLateSpawn("Mime")
 
 		if(!ready && href_list["preferences"])
 			preferences.process_link(src, href_list)
 		else if(!href_list["late_join"])
 			new_player_panel()
 
-	proc/IsJobAvailable(rank, maxAllowed)
-		if(countJob(rank) < maxAllowed && !jobban_isbanned(src,rank))
+	proc/IsJobAvailable(rank)
+		if(((jobMax[rank] < 0) || (countJob(rank) < jobMax[rank])) && !jobban_isbanned(src,rank))
 			return 1
 		else
 			return 0
@@ -385,91 +385,91 @@ mob/new_player
 	proc/LateChoices()
 		var/dat = "<html><body>"
 		dat += "Choose from the following open positions:<br>"
-		if (IsJobAvailable("Captain",captainMax))
+		if (IsJobAvailable("Captain"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=1'>Captain</a><br>"
 
-		if (IsJobAvailable("Head of Security",hosMax))
+		if (IsJobAvailable("Head of Security"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=2'>Head of Security</a><br>"
 
-		if (IsJobAvailable("Head of Personnel",hopMax))
+		if (IsJobAvailable("Head of Personnel"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=3'>Head of Personnel</a><br>"
 
-		if (IsJobAvailable("Research Director",directorMax))
+		if (IsJobAvailable("Research Director"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=20'>Research Director</a><br>"
 
-		if (IsJobAvailable("Chief Engineer",chiefMax))
+		if (IsJobAvailable("Chief Engineer"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=21'>Chief Engineer</a><br>"
 
-		if (IsJobAvailable("Station Engineer",engineerMax))
+		if (IsJobAvailable("Station Engineer"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=4'>Station Engineer</a><br>"
 
-		if (IsJobAvailable("Bartender",barmanMax))
+		if (IsJobAvailable("Bartender"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=5'>Bartender</a><br>"
 
-		if (IsJobAvailable("Scientist",scientistMax))
+		if (IsJobAvailable("Scientist"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=6'>Scientist</a><br>"
 
-		if (IsJobAvailable("Chemist",chemistMax))
+		if (IsJobAvailable("Chemist"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=7'>Chemist</a><br>"
 
-		if (IsJobAvailable("Geneticist",geneticistMax))
+		if (IsJobAvailable("Geneticist"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=8'>Geneticist</a><br>"
 
-		if (IsJobAvailable("Security Officer",securityMax))
+		if (IsJobAvailable("Security Officer"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=9'>Security Officer</a><br>"
 
-		if (IsJobAvailable("Medical Doctor",doctorMax))
+		if (IsJobAvailable("Medical Doctor"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=10'>Medical Doctor</a><br>"
 
-		if (IsJobAvailable("Atmospheric Technician",atmosMax))
+		if (IsJobAvailable("Atmospheric Technician"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=11'>Atmospheric Technician</a><br>"
 
-		if (IsJobAvailable("Detective",detectiveMax))
+		if (IsJobAvailable("Detective"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=12'>Detective</a><br>"
 
-		if (IsJobAvailable("Chaplain",chaplainMax))
+		if (IsJobAvailable("Chaplain"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=13'>Chaplain</a><br>"
 
-		if (IsJobAvailable("Janitor",janitorMax))
+		if (IsJobAvailable("Janitor"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=14'>Janitor</a><br>"
 
-		if (IsJobAvailable("Clown",clownMax))
+		if (IsJobAvailable("Clown"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=15'>Clown</a><br>"
 
-		if (IsJobAvailable("Mime",mimeMax))
+		if (IsJobAvailable("Mime"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=30'>Mime</a><br>"
 
-		if (IsJobAvailable("Chef",chefMax))
+		if (IsJobAvailable("Chef"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=16'>Chef</a><br>"
 
-		if (IsJobAvailable("Roboticist",roboticsMax))
+		if (IsJobAvailable("Roboticist"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=17'>Roboticist</a><br>"
 
-		if (IsJobAvailable("Quartermaster",cargoMax))
+		if (IsJobAvailable("Quartermaster"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=19'>Quartermaster</a><br>"
 
-		if (IsJobAvailable("Botanist",hydroponicsMax))
+		if (IsJobAvailable("Botanist"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=22'>Botanist</a><br>"
 
-		if (IsJobAvailable("Librarian",librarianMax))
+		if (IsJobAvailable("Librarian"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=23'>Librarian</a><br>"
 
-		if (IsJobAvailable("Virologist",viroMax))
+		if (IsJobAvailable("Virologist"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=24'>Virologist</a><br>"
 
-		if (IsJobAvailable("Lawyer",lawyerMax))
+		if (IsJobAvailable("Lawyer"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=25'>Lawyer</a><br>"
 
-		if (IsJobAvailable("Cargo Technician",cargotechMax))
+		if (IsJobAvailable("Cargo Technician"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=26'>Cargo Technician</a><br>"
 
-		if (IsJobAvailable("Chief Medical Officer",cmoMax))
+		if (IsJobAvailable("Chief Medical Officer"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=27'>Chief Medical Officer</a><br>"
 
-		if (IsJobAvailable("Warden", wardenMax))
+		if (IsJobAvailable("Warden"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=28'>Warden</a><br>"
 
-		if (IsJobAvailable("Shaft Miner",minerMax))
+		if (IsJobAvailable("Shaft Miner"))
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=29'>Shaft Miner</a><br>"
 
 		if (!jobban_isbanned(src,"Assistant"))

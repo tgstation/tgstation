@@ -28,6 +28,8 @@ datum/controller/game_controller
 
 		setupgenetics()
 
+		SetupJobs("config/jobs.txt")
+
 		//setupcorpses() Not used any more.
 		syndicate_code_phrase = generate_code_phrase()//Sets up code phrase for traitors, for the round.
 		syndicate_code_response = generate_code_phrase()
