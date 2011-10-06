@@ -20,8 +20,16 @@ var/global/datum/tension/tension_master
 	var/deaths
 	var/human_deaths
 	var/explosions
+	var/adminhelps
+	var/air_alarms
 
-
+	New()
+		score = 0
+		deaths=0
+		human_deaths=0
+		explosions=0
+		adminhelps=0
+		air_alarms=0
 
 	proc/process()
 		score += get_num_players()*PLAYER_WEIGHT
@@ -50,8 +58,8 @@ var/global/datum/tension/tension_master
 		score += EXPLO_SCORE
 		explosions++
 
-	New()
-		score = 0
-		deaths=0
-		human_deaths=0
-		explosions=0
+	proc/new_adminhelp()
+		adminhelps++
+
+	proc/new_air_alarm()
+		air_alarms++

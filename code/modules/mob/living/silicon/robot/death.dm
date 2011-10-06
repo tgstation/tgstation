@@ -5,6 +5,8 @@
 	src.stat = 2
 	src.canmove = 0
 
+	tension_master.death(src)
+
 	src.camera.status = 0.0
 
 	if(src.in_contents_of(/obj/machinery/recharge_station))//exit the recharge station

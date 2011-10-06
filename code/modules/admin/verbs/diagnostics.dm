@@ -212,11 +212,15 @@
 <B>Deaths:</B> [tension_master.deaths]<BR>
 ---- <I>Humans:</I> [tension_master.human_deaths]<BR>
 <B>Explosions:</B> [tension_master.explosions]<BR>
+<B>Air alarms:</B> [tension_master.air_alarms]<BR>
+<B>Adminhelps:</B> [tension_master.adminhelps]<BR>
 <BR>
 <B>Current Status</B><BR>
 <B>Tension:</B> [tension_master.score]<BR>
 <B>Tension per player:</B> [tension_master.score/tension_master.get_num_players()]<BR>
 <B>Recommendations:</B> not yet implemented<BR>
+<BR>
+
 "}
 
 		usr << browse(output,"window=tensionreport")
