@@ -46,22 +46,14 @@ MEDICAL
 
 	if (istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/affecting = H.organs["chest"]
+		var/datum/organ/external/affecting = H.get_organ("chest")
 
-		if (istype(user, /mob/living/carbon/human))
+		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/user2 = user
-			var/t = user2.zone_sel.selecting
-
-			if (t in list("eyes", "mouth"))
-				t = "head"
-
-			if (H.organs[t])
-				affecting = H.organs[t]
+			affecting = H.get_organ(check_zone(user2.zone_sel.selecting))
 		else
-			if (!istype(affecting, /datum/organ/external) || affecting:burn_dam <= 0)
-				affecting = H.organs["head"]
-				if (!istype(affecting, /datum/organ/external) || affecting:burn_dam <= 0)
-					affecting = H.organs["groin"]
+			if(!istype(affecting, /datum/organ/external) || affecting:burn_dam <= 0)
+				affecting = H.get_organ("head")
 
 		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
 			H.UpdateDamageIcon()
