@@ -576,23 +576,15 @@
 
 			switch(body_part)
 				if(HEAD)
-					TakeDamage("head", 0, 2.5*discomfort)
+					apply_damage(2.5*discomfort, BURN, "head")
 				if(UPPER_TORSO)
-					TakeDamage("chest", 0, 2.5*discomfort)
-				if(LOWER_TORSO)
-					TakeDamage("groin", 0, 2.0*discomfort)
+					apply_damage(2.5*discomfort, BURN, "chest")
 				if(LEGS)
-					TakeDamage("l_leg", 0, 0.6*discomfort)
-					TakeDamage("r_leg", 0, 0.6*discomfort)
+					apply_damage(0.6*discomfort, BURN, "l_leg")
+					apply_damage(0.6*discomfort, BURN, "r_leg")
 				if(ARMS)
-					TakeDamage("l_arm", 0, 0.4*discomfort)
-					TakeDamage("r_arm", 0, 0.4*discomfort)
-				if(FEET)
-					TakeDamage("l_foot", 0, 0.25*discomfort)
-					TakeDamage("r_foot", 0, 0.25*discomfort)
-				if(HANDS)
-					TakeDamage("l_hand", 0, 0.25*discomfort)
-					TakeDamage("r_hand", 0, 0.25*discomfort)
+					apply_damage(0.4*discomfort, BURN, "l_arm")
+					apply_damage(0.4*discomfort, BURN, "r_arm")
 
 		handle_chemicals_in_body()
 			if(reagents) reagents.metabolize(src)
@@ -659,7 +651,7 @@
 
 		handle_regular_status_updates()
 
-			health = 100 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
+		//	health = 100 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
 
 			if(oxyloss > 50) paralysis = max(paralysis, 3)
 
@@ -669,7 +661,7 @@
 				sleeping--
 
 			if(resting)
-				weakened = max(weakened, 5)
+				weakened = max(weakened, 3)
 
 			if(health < -100 || brain_op_stage == 4.0)
 				death()

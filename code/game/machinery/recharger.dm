@@ -15,7 +15,7 @@ obj/machinery/recharger
 	if (src.charging || src.charging2)
 		return
 	if (istype(G, /obj/item/weapon/gun/energy))
-		if (istype(G, /obj/item/weapon/gun/energy/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
+		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
 			user << "Your gun's recharge port was removed to make room for a miniaturized reactor."
 			return
 		user.drop_item()

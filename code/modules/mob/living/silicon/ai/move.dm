@@ -26,7 +26,7 @@
 			T.hologram.dir = direct
 			return//Relay move and then return if that's the case.
 
-	if(!old) return
+	if(!old)	return
 
 	var/dx = 0
 	var/dy = 0
@@ -43,16 +43,8 @@
 	var/list/old_types = dd_text2list("[A.type]", "/")
 
 	for(var/obj/machinery/camera/current in world)
-		if(user.network != current.network)
-			continue	//	different network (syndicate)
-		if(ticker.mode.name == "AI malfunction")
-			if(current.z != user.z && (user.network != "Prison") && (user.network != "SS13"))
-				continue
-		else
-			if(current.z != user.z && (user.network != "Prison") && (user.network != "AI Satellite"))
-				continue	//	different viewing plane
-		if(!current.status)
-			continue	//	ignore disabled cameras
+		if(user.network != current.network)	continue
+		if(!current.status)	continue	//	ignore disabled cameras
 
 		//make sure it's the right direction
 		if(dx && (current.x * dx <= old.x * dx))

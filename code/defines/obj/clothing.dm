@@ -15,10 +15,9 @@
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
-	var/radiation_protection = 0.0 //percentage of radiation it will absorb
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
 
-	var/armor = list(melee = 0, bullet = 0, laser = 0, taser = 0, bomb = 0, bio = 0, rad = 0)
+	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 
 

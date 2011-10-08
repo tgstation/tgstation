@@ -669,7 +669,7 @@ Auto Patrol: []"},
 	Sa.build_step = 1
 	Sa.overlays += image('aibots.dmi', "hs_hole")
 	Sa.created_name = src.name
-	new /obj/item/device/prox_sensor(Tsec)
+	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	var/obj/item/weapon/melee/baton/B = new /obj/item/weapon/melee/baton(Tsec)
 	B.charges = 0
@@ -697,16 +697,16 @@ Auto Patrol: []"},
 
 //Secbot Construction
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/device/radio/signaler/S, mob/user as mob)
+/obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob)
 	..()
-	if (!istype(S, /obj/item/device/radio/signaler))
+	if (!issignaler(S))
 		..()
 		return
 
 	if (src.type != /obj/item/clothing/head/helmet) //Eh, but we don't want people making secbots out of space helmets.
 		return
 
-	if (!S.b_stat)
+	if (!S.secured)
 		return
 	else
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
@@ -731,21 +731,21 @@ Auto Patrol: []"},
 			src.overlays += image('aibots.dmi', "hs_hole")
 			user << "You weld a hole in [src]!"
 
-	else if ((istype(W, /obj/item/device/prox_sensor)) && (src.build_step == 1))
+	else if(isprox(W) && (src.build_step == 1))
 		src.build_step++
 		user << "You add the prox sensor to [src]!"
 		src.overlays += image('aibots.dmi', "hs_eye")
 		src.name = "helmet/signaler/prox sensor assembly"
 		del(W)
 
-	else if (((istype(W, /obj/item/robot_parts/l_arm)) || (istype(W, /obj/item/robot_parts/r_arm))) && (src.build_step == 2))
+	else if(((istype(W, /obj/item/robot_parts/l_arm)) || (istype(W, /obj/item/robot_parts/r_arm))) && (src.build_step == 2))
 		src.build_step++
 		user << "You add the robot arm to [src]!"
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
 		src.overlays += image('aibots.dmi', "hs_arm")
 		del(W)
 
-	else if ((istype(W, /obj/item/weapon/melee/baton)) && (src.build_step >= 3))
+	else if((istype(W, /obj/item/weapon/melee/baton)) && (src.build_step >= 3))
 		src.build_step++
 		user << "You complete the Securitron! Beep boop."
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
@@ -754,7 +754,7 @@ Auto Patrol: []"},
 		del(W)
 		del(src)
 
-	else if (istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
 		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 		if (!t)

@@ -638,7 +638,7 @@
 
 	if(!holder) return
 	STFU_ghosts = !STFU_ghosts
-	usr << "You will now [STFU_ghosts ? "hear" : "not hear"] ghsots"
+	usr << "You will now [STFU_ghosts ? "hear" : "not hear"] ghosts"
 
 /client/proc/toggle_hear_radio()
 	set name = "Toggle Hear Radio"

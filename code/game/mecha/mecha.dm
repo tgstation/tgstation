@@ -280,12 +280,13 @@
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
-			var/int_dam_flag = pick(possible_int_damage)
-			if(int_dam_flag)
-				src.internal_damage |= int_dam_flag
-				src.pr_internal_damage.start()
-				src.log_append_to_last("Internal damage of type [int_dam_flag].[ignore_threshold?"Ignoring damage threshold.":null]",1)
-				src.occupant << sound('warning-buzzer.ogg',wait=0)
+			if(possible_int_damage)
+				var/int_dam_flag = pick(possible_int_damage)
+				if(int_dam_flag)
+					src.internal_damage |= int_dam_flag
+					src.pr_internal_damage.start()
+					src.log_append_to_last("Internal damage of type [int_dam_flag].[ignore_threshold?"Ignoring damage threshold.":null]",1)
+					src.occupant << sound('warning-buzzer.ogg',wait=0)
 	if(prob(5))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/destr = safepick(equipment)

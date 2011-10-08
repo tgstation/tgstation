@@ -97,6 +97,7 @@
 		mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
+
 /client/Move(n, direct)
 	if(mob.control_object)	Move_object(direct)
 
@@ -142,15 +143,13 @@
 			if("run")
 				if(mob.drowsyness > 0)
 					move_delay += 6
-				if(mob.organStructure && mob.organStructure.legs)
-					move_delay += mob.organStructure.legs.moveRunDelay
-				else
-					move_delay += 1
+//				if(mob.organStructure && mob.organStructure.legs)
+//					move_delay += mob.organStructure.legs.moveRunDelay
+				move_delay += 1
 			if("walk")
-				if(mob.organStructure && mob.organStructure.legs)
-					move_delay += mob.organStructure.legs.moveWalkDelay
-				else
-					move_delay += 7
+//				if(mob.organStructure && mob.organStructure.legs)
+//					move_delay += mob.organStructure.legs.moveWalkDelay
+				move_delay += 7
 		move_delay += mob.movement_delay()
 
 		//We are now going to move

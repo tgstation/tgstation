@@ -687,14 +687,14 @@ About the new airlock wires panel:
 					src.pulse(t1)
 			else if(href_list["signaler"])
 				var/wirenum = text2num(href_list["signaler"])
-				if(!istype(usr.equipped(), /obj/item/device/radio/signaler))
+				if(!istype(usr.equipped(), /obj/item/device/assembly/signaler))
 					usr << "You need a signaller!"
 					return
 				if(src.isWireColorCut(wirenum))
 					usr << "You can't attach a signaller to a cut wire."
 					return
-				var/obj/item/device/radio/signaler/R = usr.equipped()
-				if(!R.b_stat)
+				var/obj/item/device/assembly/signaler/R = usr.equipped()
+				if(R.secured)
 					usr << "This radio can't be attached!"
 					return
 				var/mob/M = usr
@@ -707,7 +707,7 @@ About the new airlock wires panel:
 				if(!(src.signalers[wirenum]))
 					usr << "There's no signaller attached to that wire!"
 					return
-				var/obj/item/device/radio/signaler/R = src.signalers[wirenum]
+				var/obj/item/device/assembly/signaler/R = src.signalers[wirenum]
 				R.loc = usr.loc
 				R.airlock_wire = null
 				src.signalers[wirenum] = null
@@ -865,7 +865,7 @@ About the new airlock wires panel:
 		return src.attack_hand(user)
 	else if (istype(C, /obj/item/device/multitool))
 		return src.attack_hand(user)
-	else if (istype(C, /obj/item/device/radio/signaler))
+	else if (istype(C, /obj/item/device/assembly/signaler))
 		return src.attack_hand(user)
 	else if (istype(C, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = C

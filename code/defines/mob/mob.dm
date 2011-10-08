@@ -223,7 +223,7 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 	var/UI = 'screen1_old.dmi' // For changing the UI from preferences
 
-	var/obj/effect/organstructure/organStructure = null //for dem organs
+//	var/obj/effect/organstructure/organStructure = null //for dem organs
 
 
 /mob/proc/Delete(atom/A in view())

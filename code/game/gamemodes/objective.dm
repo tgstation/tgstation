@@ -265,7 +265,7 @@ datum/objective/steal
 
 	var/global/possible_items_special[] = list(
 		"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,
-		"nuclear gun" = /obj/item/weapon/gun/energy/nuclear,
+		"nuclear gun" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"diamond drill" = /obj/item/weapon/pickaxe/diamonddrill,
 		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
 		"hyper-capacity cell" = /obj/item/weapon/cell/hyper,

@@ -1,96 +1,42 @@
-/obj/item/device/infra
+/obj/item/device/assembly/infra
 	name = "Infrared Beam"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
-	icon = 'new_assemblies.dmi'
 	icon_state = "infrared_old"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 2.0
-	item_state = "electronic"
-	m_amt = 150
+	m_amt = 1000
+	g_amt = 500
+	w_amt = 100
 	origin_tech = "magnets=2"
+
+	secured = 0
+	small_icon_state_left = "infrared_left"
+	small_icon_state_right = "infrared_right"
+
 	var
-		secured = 0
-		small_icon_state_left = "infrared_left"
-		small_icon_state_right = "infrared_right"
-		list/small_icon_state_overlays = null
-		obj/holder = null
-		cooldown = 0//To prevent spam
 		scanning = 0
 		visible = 0
 		obj/effect/beam/i_beam/first = null
 
 	proc
-		Activate()//Called when this assembly is pulsed by another one
-		Secure()//Code that has to happen when the assembly is ready goes here
-		Unsecure()//Code that has to happen when the assembly is taken off of the ready state goes here
-		Attach_Assembly(var/obj/A, var/mob/user)//Called when an assembly is attacked by another
-		Process_cooldown()//Call this via spawn(10) to have it count down the cooldown var
-		Holder_Movement()//Called when the holder is moved
-		beam_trigger()
+		trigger_beam()
 
 
-	IsAssembly()
-		return 1
-
-
-	Process_cooldown()
-		cooldown--
-		if(cooldown <= 0)	return 0
-		spawn(10)
-			Process_cooldown()
-		return 1
-
-
-	Activate()
-		if((!secured) || (cooldown > 0))
-			return 0
-		cooldown = 2
+	activate()
+		if(!..())	return 0//Cooldown check
 		src.scanning = !src.scanning
 		update_icon()
-		spawn(10)
-			Process_cooldown()
-		return 0
+		return 1
 
 
-	Secure()
+	toggle_secure()
+		secured = !secured
 		if(secured)
-			return 0
-		secured = 1
-		processing_objects.Add(src)//removal is taken care of it process()
-		return 1
-
-
-	Unsecure()
-		if(!secured)
-			return 0
-		secured = 0
-		return 1
-
-
-	Attach_Assembly(var/obj/A, var/mob/user)
-		holder = new/obj/item/device/assembly_holder(get_turf(src))
-		if(holder:attach(A,src,user))
-			user.show_message("\blue You attach the [A.name] to the [src.name]!")
-			return 1
-		return 0
-
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(W.IsAssembly())
-			var/obj/item/device/D = W
-			if((!D:secured) && (!src.secured))
-				Attach_Assembly(D,user)
-		if(isscrewdriver(W))
-			if(src.secured)
-				Unsecure()
-				user.show_message("\blue The [src.name] can now be attached!")
-			else
-				Secure()
-				user.show_message("\blue The [src.name] is ready!")
-			return
+			processing_objects.Add(src)
 		else
-			..()
-		return
+			scanning = 0
+			if(src.first)	del(src.first)
+			processing_objects.Remove(src)
+		update_icon()
+		return secured
 
 
 	update_icon()
@@ -105,12 +51,13 @@
 		return
 
 
-	process()
+	process()//Old code
 		if(!scanning)
-			if(!src.first)
+			if(src.first)
 				del(src.first)
+				return
 
-		if ((!( src.first ) && (src.secured && (istype(src.loc, /turf) || (src.holder && istype(src.holder.loc, /turf))))))
+		if((!( src.first ) && (src.secured && (istype(src.loc, /turf) || (src.holder && istype(src.holder.loc, /turf))))))
 			var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam( (src.holder ? src.holder.loc : src.loc) )
 			I.master = src
 			I.density = 1
@@ -127,9 +74,6 @@
 						//world << "infra: processing beam \ref[I]"
 						I.process()
 					return
-
-		if(!secured)
-			processing_objects.Remove(src)
 		return
 
 
@@ -147,27 +91,25 @@
 		return
 
 
-	Holder_Movement()
+	holder_movement()
 		if(!holder)	return 0
-		src.dir = holder.dir
+//		src.dir = holder.dir
 		del(src.first)
+		return 1
 
 
-	beam_trigger()
+	trigger_beam()
 		if((!secured)||(!scanning)||(cooldown > 0))	return 0
-		if((holder)&&(holder.IsAssemblyHolder()))
-			spawn(0)
-				holder:Process_Activation(src)
-				return
+		pulse(0)
 		for(var/mob/O in hearers(null, null))
 			O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
 		cooldown = 2
 		spawn(10)
-			Process_cooldown()
+			process_cooldown()
 		return
 
 
-	attack_self(mob/user as mob)
+	interact(mob/user as mob)//TODO: change this this to the wire control panel
 		if(!secured)	return
 		user.machine = src
 		var/dat = text("<TT><B>Infrared Laser</B>\n<B>Status</B>: []<BR>\n<B>Visibility</B>: []<BR>\n</TT>", (src.scanning ? text("<A href='?src=\ref[];state=0'>On</A>", src) : text("<A href='?src=\ref[];state=1'>Off</A>", src)), (src.visible ? text("<A href='?src=\ref[];visible=0'>Visible</A>", src) : text("<A href='?src=\ref[];visible=1'>Invisible</A>", src)))
@@ -180,54 +122,38 @@
 
 	Topic(href, href_list)
 		..()
-		if(get_dist(src, usr) <= 1)
-			if (href_list["state"])
-				src.scanning = !(src.scanning)
-				update_icon()
-
-			if (href_list["visible"])
-				src.visible = !(src.visible)
-				spawn( 0 )
-					if (src.first)
-						src.first.vis_spread(src.visible)
-
-			if (href_list["close"])
-				usr << browse(null, "window=infra")
-				return
-
-			if(usr)
-				src.attack_self(usr)
-
-		else
+		if(get_dist(src, usr) > 1)
 			usr << browse(null, "window=infra")
 			onclose(usr, "infra")
 			return
+
+		if (href_list["state"])
+			src.scanning = !(src.scanning)
+			update_icon()
+
+		if (href_list["visible"])
+			src.visible = !(src.visible)
+			spawn( 0 )
+				if(src.first)
+					src.first.vis_spread(src.visible)
+
+		if (href_list["close"])
+			usr << browse(null, "window=infra")
+			return
+
+		if(usr)
+			src.attack_self(usr)
+
 		return
 
 
-	verb/rotate()//This really could be better but I dont want to redo it right now
+	verb/rotate()//This could likely be better
 		set name = "Rotate Infrared Laser"
 		set category = "Object"
 		set src in usr
 
 		src.dir = turn(src.dir, 90)
 		return
-
-
-	examine()
-		set src in view()
-		..()
-		if ((in_range(src, usr) || src.loc == usr))
-			if (src.secured)
-				usr.show_message("The [src.name] is ready!")
-			else
-				usr.show_message("The [src.name] can be attached!")
-		return
-
-
-
-
-
 
 
 
@@ -238,29 +164,27 @@
 	icon = 'projectiles.dmi'
 	icon_state = "ibeam"
 	var/obj/effect/beam/i_beam/next = null
-	var/obj/item/device/infra/master = null
+	var/obj/item/device/assembly/infra/master = null
 	var/limit = null
 	var/visible = 0.0
 	var/left = null
-//	var/master = null
 	anchored = 1.0
 	flags = TABLEPASS
 
 
 /obj/effect/beam/i_beam/proc/hit()
 	//world << "beam \ref[src]: hit"
-	if (src.master)
+	if(src.master)
 		//world << "beam hit \ref[src]: calling master \ref[master].hit"
-		src.master.beam_trigger()
-	//SN src = null
+		src.master.trigger_beam()
 	del(src)
 	return
 
 /obj/effect/beam/i_beam/proc/vis_spread(v)
 	//world << "i_beam \ref[src] : vis_spread"
 	src.visible = v
-	spawn( 0 )
-		if (src.next)
+	spawn(0)
+		if(src.next)
 			//world << "i_beam \ref[src] : is next [next.type] \ref[next], calling spread"
 			src.next.vis_spread(v)
 		return
@@ -269,17 +193,17 @@
 /obj/effect/beam/i_beam/process()
 	//world << "i_beam \ref[src] : process"
 
-	if ((src.loc.density || !( src.master )))
+	if((src.loc.density || !( src.master )))
 		//SN src = null
 	//	world << "beam hit loc [loc] or no master [master], deleting"
 		del(src)
 		return
 	//world << "proccess: [src.left] left"
 
-	if (src.left > 0)
+	if(src.left > 0)
 		src.left--
-	if (src.left < 1)
-		if (!( src.visible ))
+	if(src.left < 1)
+		if(!( src.visible ))
 			src.invisibility = 101
 		else
 			src.invisibility = 0
@@ -295,7 +219,7 @@
 	//world << "created new beam \ref[I] at [I.x] [I.y] [I.z]"
 	step(I, I.dir)
 
-	if (I)
+	if(I)
 		//world << "step worked, now at [I.x] [I.y] [I.z]"
 		if (!( src.next ))
 			//world << "no src.next"
@@ -312,13 +236,11 @@
 				return
 		else
 			//world << "is a next: \ref[next], deleting beam \ref[I]"
-			//I = null
 			del(I)
 	else
-		//src.next = null
 		//world << "step failed, deleting \ref[src.next]"
 		del(src.next)
-	spawn( 10 )
+	spawn(10)
 		src.process()
 		return
 	return
@@ -332,7 +254,7 @@
 	return
 
 /obj/effect/beam/i_beam/HasEntered(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/effect/beam))
+	if(istype(AM, /obj/effect/beam))
 		return
 	spawn( 0 )
 		src.hit()

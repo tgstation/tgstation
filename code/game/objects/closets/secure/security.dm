@@ -15,7 +15,7 @@
 		new /obj/item/clothing/shoes/brown( src )
 		new /obj/item/device/radio/headset/heads/captain( src )
 		new /obj/item/weapon/reagent_containers/food/drinks/flask(src)
-		new /obj/item/weapon/gun/energy( src )
+		new /obj/item/weapon/gun/energy/gun( src )
 		return
 
 
@@ -35,7 +35,7 @@
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/weapon/storage/id_kit(src)
 		new /obj/item/weapon/storage/id_kit( src )
-		new /obj/item/weapon/gun/energy(src)
+		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		return
@@ -55,10 +55,11 @@
 		new /obj/item/clothing/head/helmet(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
 		new /obj/item/weapon/shield/riot(src)
-		new /obj/item/weapon/gun/energy(src)
+		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/weapon/storage/flashbang_kit(src)
+		new /obj/item/weapon/storage/lockbox/loyalty()
 		new /obj/item/weapon/melee/baton(src)
 		return
 

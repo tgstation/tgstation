@@ -31,7 +31,7 @@
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
 		src.ex_act(2)
 	..()
-	return
+	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover || !isturf(mover.loc))

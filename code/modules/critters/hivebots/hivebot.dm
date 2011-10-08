@@ -1,6 +1,6 @@
 /obj/item/projectile/hivebotbullet
-		damage = 5
-		mobdamage = list(BRUTE = 5, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
+	damage = 5
+	damage_type = BRUTE
 
 /obj/effect/critter/hivebot
 	name = "Hivebot"

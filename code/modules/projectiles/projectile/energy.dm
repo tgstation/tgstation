@@ -1,27 +1,51 @@
-/obj/item/projectile/electrode
+/obj/item/projectile/energy
+	name = "energy"
+	icon_state = "spark"
+
+	damage = 0
+	damage_type = BURN
+	nodamage = 1
+	flag = "energy"
+
+
+/obj/item/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
-	flag = "taser"
-	damage = 0
-	nodamage = 1
-	New()
-		..()
-		effects["stun"] = 10
-		effects["weak"] = 10
-		effects["stutter"] = 10
-		effectprob["weak"] = 25
+	stun = 10
+	weaken = 10
+	stutter = 10
 
 
+/obj/item/projectile/energy/declone
+	name = "declown"
+	icon_state = "declone"
+	damage_type = CLONE
+	irradiate = 40
 
-/obj/item/projectile/bolt
+
+/obj/item/projectile/energy/dart
+	name = "dart"
+	icon_state = "toxin"
+	damage = 5
+	damage_type = TOX
+	weaken = 5
+
+
+/obj/item/projectile/energy/bolt
 	name = "bolt"
 	icon_state = "cbbolt"
-	flag = "taser"
-	damage = 0
-	nodamage = 1
-	New()
-		..()
-		effects["weak"] = 10
-		effects["stutter"] = 10
+	damage = 10
+	damage_type = TOX
+	nodamage = 0
+	weaken = 10
+	stutter = 10
+
+
+/obj/item/projectile/energy/bolt/large
+	name = "largebolt"
+	damage = 20
+
+
+
 
 

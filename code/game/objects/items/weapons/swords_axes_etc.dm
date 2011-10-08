@@ -191,7 +191,7 @@ STUN BATON
 		user.weakened = max(3 * force, user.weakened)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.TakeDamage("head", 2 * force, 0)
+			H.apply_damage(2*force, BRUTE, "head")
 		else
 			user.take_organ_damage(2*force)
 		return

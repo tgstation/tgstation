@@ -247,18 +247,10 @@
 
 
 /mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj.nodamage) bruteloss += Proj.damage
-
-	if(Proj.effects["emp"])
-		var/emppulse = Proj.effects["emp"]
-		if(prob(Proj.effectprob["emp"]))
-			empulse(src, emppulse, emppulse)
-		else
-			empulse(src, 0, emppulse)
-
+	..(Proj)
 	updatehealth()
 	if(prob(75) && Proj.damage > 0) spark_system.start()
-	return
+	return 2
 
 
 /mob/living/silicon/robot/Bump(atom/movable/AM as mob|obj, yes)
@@ -316,7 +308,7 @@
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	src << text("--- [class] alarm detected in [A.name]!")
-	if (viewalerts) robot_alerts()
+//	if (viewalerts) robot_alerts()
 	return 1
 
 
@@ -334,7 +326,7 @@
 				L -= I
 	if (cleared)
 		src << text("--- [class] alarm in [A.name] has been cleared.")
-		if (viewalerts) robot_alerts()
+//		if (viewalerts) robot_alerts()
 	return !cleared
 
 

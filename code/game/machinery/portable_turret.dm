@@ -165,7 +165,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 					Gun.power_supply.charge=gun_charge
 					Gun.update_icon()
 				if(prob(50)) new /obj/item/stack/sheet/metal( loc, rand(1,4))
-				if(prob(50)) new /obj/item/device/prox_sensor(locate(x,y,z))
+				if(prob(50)) new /obj/item/device/assembly/prox_sensor(locate(x,y,z))
 			else
 				user << "You remove the turret but did not manage to salvage anything."
 			del(src)
@@ -466,7 +466,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 	var/obj/item/projectile/A
 	if(!installation) // if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
-		A = new /obj/item/projectile/electrode( loc )
+		A = new /obj/item/projectile/energy/electrode( loc )
 		if(!emagged) use_power(200)
 		else use_power(400)
 		playsound(src.loc, 'Taser.ogg', 75, 1)
@@ -481,18 +481,13 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			playsound(src.loc, E.fire_sound, 10, 1)
 
 		// All energy-based weapons are applicable
-		if (istype(E, /obj/item/weapon/gun/energy/laser))
+		if(istype(E, /obj/item/weapon/gun/energy/laser))
 			A = new /obj/item/projectile/beam( loc )
 			A.original = target.loc
 			icon_state = "orange_target_prism"
 			if(!emagged) use_power(500)
 			else use_power(1000)
-		else if (istype(E, /obj/item/weapon/gun/energy/shockgun))
-			A = new /obj/item/projectile/beam/fireball( loc )
-			A.original = target.loc
-			icon_state = "orange_target_prism"
-			if(!emagged) use_power(500)
-			else use_power(1000)
+
 		else if(istype(E, /obj/item/weapon/gun/energy/pulse_rifle))
 			A = new /obj/item/projectile/beam/pulse( loc )
 			A.original = target.loc
@@ -501,19 +496,10 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			else use_power(1400)
 
 		else if(istype(E, /obj/item/weapon/gun/energy/taser) || istype(E, /obj/item/weapon/gun/energy/stunrevolver))
-			A = new /obj/item/projectile/electrode( loc )
+			A = new /obj/item/projectile/energy/electrode( loc )
 			icon_state = "target_prism"
 			if(!emagged) use_power(200)
 			else use_power(400)
-
-		else if(istype(E, /obj/item/weapon/gun/energy/freeze))
-			A = new /obj/item/projectile/freeze( loc )
-			A.original = target.loc
-			var/obj/item/projectile/freeze/F = A
-			F.temperature = rand(0, 200)
-			icon_state = "target_prism"
-			if(!emagged) use_power(300)
-			else use_power(600)
 
 		else if(istype(E, /obj/item/weapon/gun/energy/lasercannon))
 			A = new /obj/item/projectile/beam/heavylaser( loc )
@@ -522,29 +508,22 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			if(!emagged) use_power(600)
 			else use_power(1200)
 
-		else if(istype(E, /obj/item/weapon/gun/energy/shockgun))
-			A = new /obj/item/projectile/beam/fireball( loc )
-			A.original = target.loc
-			icon_state = "orange_target_prism"
-			if(!emagged) use_power(500)
-			else use_power(1000)
-
 		else if(istype(E, /obj/item/weapon/gun/energy/decloner))
-			A = new /obj/item/projectile/declone( loc )
+			A = new /obj/item/projectile/energy/declone( loc )
 			A.original = target.loc
 			icon_state = "orange_target_prism"
 			if(!emagged) use_power(600)
 			else use_power(1200)
 
 		else if(istype(E, /obj/item/weapon/gun/energy/crossbow))
-			A = new /obj/item/projectile/bolt( loc )
+			A = new /obj/item/projectile/energy/bolt( loc )
 			A.original = target.loc
 			icon_state = "orange_target_prism"
 			if(!emagged) use_power(50)
 			else use_power(100)
 
 		else if(istype(E, /obj/item/weapon/gun/energy/crossbow/largecrossbow))
-			A = new /obj/item/projectile/largebolt( loc )
+			A = new /obj/item/projectile/energy/bolt/large( loc )
 			A.original = target.loc
 			icon_state = "orange_target_prism"
 			if(!emagged) use_power(125)
@@ -553,7 +532,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		else // Energy gun shots
 
 			if(!emagged) // if it hasn't been emagged, it uses normal taser shots
-				A = new /obj/item/projectile/electrode( loc )
+				A = new /obj/item/projectile/energy/electrode( loc )
 				icon_state = "target_prism"
 				use_power(200)
 
@@ -666,7 +645,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 				return
 
 		if(4)
-			if(istype(W, /obj/item/device/prox_sensor))
+			if(isprox(W))
 				build_step = 5
 				user << "\blue You add the prox sensor to the turret."
 				del(W)
@@ -753,7 +732,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 		if(5)
 			user << "You remove the prox sensor from the turret frame."
-			new/obj/item/device/prox_sensor(locate(x,y,z))
+			new/obj/item/device/assembly/prox_sensor(locate(x,y,z))
 			build_step = 4
 
 

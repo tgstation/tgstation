@@ -51,6 +51,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	runewords-=wordhide
 
 /obj/effect/rune
+	desc = ""
 	anchored = 1
 	icon = 'rune.dmi'
 	icon_state = "1"
@@ -101,10 +102,24 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				AI.client.images += blood
 
 	examine()
+		set src in view(2)
+
 		if(!iscultist(usr))
 			usr << "A strange collection of symbols drawn in blood."
-		else
+			if(desc && !usr.stat)
+				usr << "It reads: <i>[desc]</i>."
+				sleep(30)
+				explosion(src.loc, 0, 2, 5, 5)
+				if(src)
+					del(src)
+		return
+
+		if(!desc)
 			usr << "A spell circle drawn in blood. It reads: <i>[word1] [word2] [word3]</i>."
+		else
+			usr << "Explosive Runes inscription in blood. It reads: <i>[desc]</i>."
+		return
+
 
 	attackby(I as obj, user as mob)
 		if(istype(I, /obj/item/weapon/tome) && iscultist(user))
@@ -117,6 +132,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			del(src)
 			return
 		return
+
 
 	attack_hand(mob/user as mob)
 		if(!iscultist(user))
@@ -740,6 +756,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					R.word3=wordtech
 					R.loc = user.loc
 					R.check_icon()
+
+
 /obj/item/weapon/paperscrap
 	name = "scrap of paper"
 	icon_state = "scrap"
@@ -760,59 +778,3 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 	proc/view_scrap(var/viewer)
 		viewer << browse(data)
-
-/obj/item/weapon/paper/talisman
-	icon_state = "papertalisman"
-	var/imbue = null
-	var/uses = 0
-
-	attack_self(mob/living/user as mob)
-		if(iscultist(user))
-			switch(imbue)
-				if("newtome")
-					call(/obj/effect/rune/proc/tomesummon)()
-				if("armor")
-					call(/obj/effect/rune/proc/armor)()
-				if("emp")
-					call(/obj/effect/rune/proc/emp)(usr.loc,3)
-				if("conceal")
-					call(/obj/effect/rune/proc/obscure)(2)
-				if("revealrunes")
-					call(/obj/effect/rune/proc/revealrunes)(src)
-				if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
-					call(/obj/effect/rune/proc/teleport)(imbue)
-				if("communicate")
-					call(/obj/effect/rune/proc/communicate)()
-				if("deafen")
-					call(/obj/effect/rune/proc/deafen)()
-				if("blind")
-					call(/obj/effect/rune/proc/blind)()
-				if("runestun")
-					user << "\red To use this talisman, attack your target directly."
-					return
-				if("supply")
-					supply()
-			user.take_organ_damage(5, 0)
-			if(src && src.imbue!="supply" && src.imbue!="runestun")
-				del(src)
-			return
-		else
-			user << "You see strange symbols on the paper. Are they supposed to mean something?"
-			return
-
-	attack(mob/living/carbon/T as mob, mob/living/user as mob)
-		if(iscultist(user))
-			if(imbue == "runestun")
-				user.take_organ_damage(5, 0)
-				call(/obj/effect/rune/proc/runestun)(T)
-				del(src)
-			else
-				..()   ///If its some other talisman, use the generic attack code, is this supposed to work this way?
-		else
-			..()
-
-
-
-/obj/item/weapon/paper/talisman/supply
-	imbue = "supply"
-	uses = 3

@@ -48,8 +48,8 @@
 
 /obj/machinery/vending/assist
 	product_amounts = "5;3;4;1;4"
-	product_hidden = "/obj/item/device/flashlight;obj/item/device/timer"
-	product_paths = "/obj/item/device/prox_sensor;/obj/item/device/igniter;/obj/item/device/radio/signaler;/obj/item/weapon/wirecutters;/obj/item/weapon/cartridge/signal"
+	product_hidden = "/obj/item/device/flashlight;obj/item/device/assembly/timer"
+	product_paths = "/obj/item/device/assembly/prox_sensor;/obj/item/device/assembly/igniter;/obj/item/device/assembly/signaler;/obj/item/weapon/wirecutters;/obj/item/weapon/cartridge/signal"
 	product_hideamt = "5;2"
 
 /obj/machinery/vending/coffee
@@ -139,8 +139,7 @@
 	icon_deny = "sec-deny"
 	req_access_txt = "1"
 	product_paths = "/obj/item/weapon/handcuffs;/obj/item/weapon/flashbang;/obj/item/device/flash;/obj/item/weapon/reagent_containers/food/snacks/donut"
-	product_amounts = "8;2;5;12"
-	//product_amounts = "8;5;4" Old totals
+	product_amounts = "8;4;5;12"
 	product_hidden = "/obj/item/clothing/glasses/sunglasses;/obj/item/kitchen/donut_box"
 	product_hideamt = "2;2"
 

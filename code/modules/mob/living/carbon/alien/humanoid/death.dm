@@ -21,13 +21,6 @@
 		src.hand = 1
 		drop_item()
 		src.hand = h
-		if (istype(src.wear_suit, /obj/item/clothing/suit/armor/a_i_a_ptank))
-			var/obj/item/clothing/suit/armor/a_i_a_ptank/A = src.wear_suit
-			bombers += "[src.key] has detonated a suicide bomb. Temp = [A.part4.air_contents.temperature-T0C]."
-	//		world << "Detected that [src.key] is wearing a bomb" debug stuff
-			if(A.status && prob(90))
-	//			world << "Bomb has ignited?"
-				A.part4.ignite()
 
 		if (src.key)
 			spawn(10)

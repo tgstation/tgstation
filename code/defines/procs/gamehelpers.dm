@@ -29,8 +29,9 @@
 	if(get_dist(source, user) <= 1)
 		return 1
 	else
-		if (istype(user, /mob/living/carbon))
-			if (user:mutations & PORTALS && get_dist(source, user) <= 7)
+		if(istype(user, /mob/living/carbon))
+			if(user:mutations & PORTALS && get_dist(source, user) <= 7)
+				if(user:equipped())	return 0
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z

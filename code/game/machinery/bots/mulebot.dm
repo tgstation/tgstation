@@ -182,7 +182,6 @@
 
 /obj/machinery/bot/mulebot/bullet_act()
 	if(prob(50) && !isnull(load))
-		load.bullet_act()
 		unload(0)
 	if(prob(25))
 		src.visible_message("\red Something shorts out inside [src]!")
@@ -794,13 +793,12 @@
 	*/
 
 	var/damage = rand(5,15)
-
-	H.TakeDamage("head", 2*damage, 0)
-	H.TakeDamage("chest",2*damage, 0)
-	H.TakeDamage("l_leg",0.5*damage, 0)
-	H.TakeDamage("r_leg",0.5*damage, 0)
-	H.TakeDamage("l_arm",0.5*damage, 0)
-	H.TakeDamage("r_arm",0.5*damage, 0)
+	H.apply_damage(2*damage, BRUTE, "head")
+	H.apply_damage(2*damage, BRUTE, "chest")
+	H.apply_damage(0.5*damage, BRUTE, "l_leg")
+	H.apply_damage(0.5*damage, BRUTE, "r_leg")
+	H.apply_damage(0.5*damage, BRUTE, "l_arm")
+	H.apply_damage(0.5*damage, BRUTE, "r_arm")
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
 	B.blood_DNA = H.dna.unique_enzymes
@@ -950,7 +948,7 @@
 	src.visible_message("\red <B>[src] blows apart!</B>", 1)
 	var/turf/Tsec = get_turf(src)
 
-	new /obj/item/device/prox_sensor(Tsec)
+	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/weapon/cable_coil/cut(Tsec)

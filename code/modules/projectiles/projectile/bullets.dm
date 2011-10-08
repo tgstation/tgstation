@@ -1,63 +1,49 @@
-/obj/item/projectile/weakbullet
-	damage = 8
-	mobdamage = list(BRUTE = 8, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
-	New()
-		..()
-		effects["stun"] = 10
-		effects["weak"] = 10
-		effects["stutter"] = 2
-		effectprob["weak"] = 25
+/obj/item/projectile/bullet
+	name = "bullet"
+	icon_state = "bullet"
+
+	damage = 60
+	damage_type = BRUTE
+	nodamage = 0
+	flag = "bullet"
 
 
-
-/obj/item/projectile/midbullet
-	damage = 16
-	mobdamage = list(BRUTE = 32, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
-	New()
-		..()
-		effects["weak"] = 10
-		effects["stun"] = 10
+/obj/item/projectile/bullet/weakbullet
+	damage = 10
+	stun = 5
+	weaken = 5
 
 
-
-/obj/item/projectile/suffocationbullet//How does this even work?
-	mobdamage = list(BRUTE = 5, BURN = 0, TOX = 0, OXY = 15, CLONE = 0)
-
+/obj/item/projectile/bullet/midbullet
+	damage = 30
 
 
-/obj/item/projectile/cyanideround//Instakill guns are not a good thing, make them hit a few times
-	mobdamage = list(BRUTE = 5, BURN = 0, TOX = 40, OXY = 0, CLONE = 0)
-
-
-
-/obj/item/projectile/burstbullet
+/obj/item/projectile/bullet/suffocationbullet//How does this even work?
+	name = "co bullet"
 	damage = 20
-	mobdamage = list(BRUTE = 20, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
+	damage_type = OXY
 
 
+/obj/item/projectile/bullet/cyanideround
+	name = "poison bullet"
+	damage = 40
+	damage_type = TOX
 
-/obj/item/projectile/gyro
+
+/obj/item/projectile/bullet/burstbullet//I think this one needs something for the on hit
+	name = "exploding bullet"
+	damage = 20
+
+
+/obj/item/projectile/bullet/gyro
 	name ="gyro"
 	icon_state= "bolter"
 	damage = 50
-	mobdamage = list(BRUTE = 50, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
-	flag = "bullet"
-	New()
-		..()
-		effects["weak"] = 10
-		effects["stun"] = 10
 
 
-
-/obj/item/projectile/stunshot
+/obj/item/projectile/bullet/stunshot
 	name = "stunshot"
-	icon_state = "bullet"
-	flag = "bullet"
 	damage = 5
-	mobdamage = list(BRUTE = 5, BURN = 0, TOX = 0, OXY = 0, CLONE = 0)
-	New()
-		..()
-		effects["stun"] = 20
-		effects["weak"] = 20
-		effectprob["weak"] = 45
-		effects["stutter"] = 20
+	stun = 10
+	weaken = 10
+	stutter = 10

@@ -140,62 +140,9 @@
 
 
 /mob/living/carbon/metroid/bullet_act(var/obj/item/projectile/Proj)
-	if(Proj)
-		if (locate(/obj/item/weapon/grab, src))
-			var/mob/safe = null
-			if (istype(l_hand, /obj/item/weapon/grab))
-				var/obj/item/weapon/grab/G = l_hand
-				if ((G.state == 3 && get_dir(src, Proj) == dir))
-					safe = G.affecting
-			if (istype(r_hand, /obj/item/weapon/grab))
-				var/obj/item/weapon.grab/G = r_hand
-				if ((G.state == 3 && get_dir(src, Proj) == dir))
-					safe = G.affecting
-			if (safe)
-				return safe.bullet_act(Proj)
-
 	attacked += 10
-	for(var/i = 1, i<= Proj.mobdamage.len, i++)
-
-		switch(i)
-			if(1)
-				var/d = Proj.mobdamage[BRUTE]
-				if(!Proj.nodamage) bruteloss += d
-				updatehealth()
-			if(2)
-				var/d = Proj.mobdamage[BURN]
-				if(!Proj.nodamage) fireloss += d
-				updatehealth()
-			if(3)
-				var/d = Proj.mobdamage[TOX]
-				if(!Proj.nodamage) toxloss += d
-				updatehealth()
-			if(4)
-				var/d = Proj.mobdamage[OXY]
-				if(!Proj.nodamage) oxyloss += d
-				updatehealth()
-			if(5)
-				var/d = Proj.mobdamage[CLONE]
-				if(!Proj.nodamage) cloneloss += d
-				updatehealth()
-
-
-	if(Proj.flag == "taser" && prob(35))
-		// Metroids have a small chance of "absorbing" taser shots. Deal /w it
-		powerlevel++
-		src << "<i>I have absorbed the electrode projectile...</i>"
-
-	//																													 K
-	//																											~~~~     N
-	// Metroids aren't effected by extra status effect. DO NOT NERF THIS PLZ THNX - LOVE, DOOHL 3===========D ~~~~     HONK
-	//																											~~~~     H
-	//EMP is special and yes they are because emp
-	if(Proj.effects["emp"])
-		var/emppulse = Proj.effects["emp"]
-		if(prob(Proj.effectprob["emp"]))
-			empulse(src, emppulse, emppulse)
-		else
-			empulse(src, 0, emppulse)
+	..(Proj)
+	return 0
 
 
 /mob/living/carbon/metroid/emp_act(severity)

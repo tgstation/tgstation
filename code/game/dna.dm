@@ -106,8 +106,8 @@
 	return result
 
 /proc/setblock(istring, blocknumber, replacement, blocksize)
-	var/result
-	result = getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
+	if(!istring || !blocknumber || !replacement || !blocksize)	return 0
+	var/result = getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 	return result
 
 /proc/add_zero2(t, u)

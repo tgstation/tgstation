@@ -194,7 +194,7 @@
 		A.original = target.loc
 		use_power(500)
 	else
-		A = new /obj/item/projectile/electrode( loc )
+		A = new /obj/item/projectile/energy/electrode( loc )
 		use_power(200)
 	A.current = T
 	A.yo = U.y - T.y

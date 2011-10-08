@@ -4,7 +4,7 @@
 	name = "mask"
 	icon = 'masks.dmi'
 	body_parts_covered = HEAD
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
 
 
 /obj/item/clothing/mask/breath
@@ -12,7 +12,7 @@
 	name = "Breath Mask"
 	icon_state = "breath"
 	item_state = "breath"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | MASKCOVERSMOUTH
+	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | MASKCOVERSMOUTH | HALFMASK
 	w_class = 2
 	protective_temperature = 420
 	heat_transfer_coefficient = 0.90
@@ -59,7 +59,7 @@
 	flags = FPRINT|TABLEPASS|HEADSPACE|MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.05
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 75, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
 
 /obj/item/clothing/mask/gas
 	name = "gas mask"
@@ -79,7 +79,7 @@
 	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
 	item_state = "gas_mask"
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 75, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
 
 /obj/item/clothing/mask/gas/emergency
 	name = "emergency gas mask"

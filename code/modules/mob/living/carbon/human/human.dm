@@ -1,46 +1,89 @@
+/mob/living/carbon/human
+	name = "human"
+	real_name = "human"
+	voice_name = "human"
+	icon = 'mob.dmi'
+	icon_state = "m-none"
+
+
+	var/r_hair = 0.0
+	var/g_hair = 0.0
+	var/b_hair = 0.0
+	var/h_style = "Short Hair"
+	var/r_facial = 0.0
+	var/g_facial = 0.0
+	var/b_facial = 0.0
+	var/f_style = "Shaved"
+	var/r_eyes = 0.0
+	var/g_eyes = 0.0
+	var/b_eyes = 0.0
+	var/s_tone = 0.0
+	var/age = 30.0
+	var/b_type = "A+"
+
+	var/obj/item/clothing/suit/wear_suit = null
+	var/obj/item/clothing/under/w_uniform = null
+	var/obj/item/clothing/shoes/shoes = null
+	var/obj/item/weapon/belt = null
+	var/obj/item/clothing/gloves/gloves = null
+	var/obj/item/clothing/glasses/glasses = null
+	var/obj/item/clothing/head/head = null
+	var/obj/item/clothing/ears/ears = null
+	var/obj/item/weapon/card/id/wear_id = null
+	var/obj/item/weapon/r_store = null
+	var/obj/item/weapon/l_store = null
+	var/obj/item/weapon/s_store = null
+	var/obj/item/weapon/h_store = null
+
+	var/icon/stand_icon = null
+	var/icon/lying_icon = null
+
+	var/last_b_state = 1.0
+
+	var/image/face_standing = null
+	var/image/face_lying = null
+
+	var/hair_icon_state = "hair_a"
+	var/face_icon_state = "bald"
+
+	var/list/body_standing = list()
+	var/list/body_lying = list()
+
+	var/mutantrace = null
+
+	var/list/organs = list()
+
+/mob/living/carbon/human/dummy
+	real_name = "Test Dummy"
+	nodamage = 1
+
+
 
 /mob/living/carbon/human/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
 
-	if (!dna)
-		dna = new /datum/dna( null )
+	if(!dna)	dna = new /datum/dna(null)
 
-	var/datum/organ/external/chest/chest = new /datum/organ/external/chest( src )
+	var/datum/organ/external/chest/chest = new /datum/organ/external/chest(src)
+	var/datum/organ/external/head/head = new /datum/organ/external/head(src)
+	var/datum/organ/external/l_arm/l_arm = new /datum/organ/external/l_arm(src)
+	var/datum/organ/external/r_arm/r_arm = new /datum/organ/external/r_arm(src)
+	var/datum/organ/external/r_leg/r_leg = new /datum/organ/external/r_leg(src)
+	var/datum/organ/external/l_leg/l_leg = new /datum/organ/external/l_leg(src)
 	chest.owner = src
-	var/datum/organ/external/groin/groin = new /datum/organ/external/groin( src )
-	groin.owner = src
-	var/datum/organ/external/head/head = new /datum/organ/external/head( src )
 	head.owner = src
-	var/datum/organ/external/l_arm/l_arm = new /datum/organ/external/l_arm( src )
-	l_arm.owner = src
-	var/datum/organ/external/r_arm/r_arm = new /datum/organ/external/r_arm( src )
 	r_arm.owner = src
-	var/datum/organ/external/l_hand/l_hand = new /datum/organ/external/l_hand( src )
-	l_hand.owner = src
-	var/datum/organ/external/r_hand/r_hand = new /datum/organ/external/r_hand( src )
-	r_hand.owner = src
-	var/datum/organ/external/l_leg/l_leg = new /datum/organ/external/l_leg( src )
-	l_leg.owner = src
-	var/datum/organ/external/r_leg/r_leg = new /datum/organ/external/r_leg( src )
+	l_arm.owner = src
 	r_leg.owner = src
-	var/datum/organ/external/l_foot/l_foot = new /datum/organ/external/l_foot( src )
-	l_foot.owner = src
-	var/datum/organ/external/r_foot/r_foot = new /datum/organ/external/r_foot( src )
-	r_foot.owner = src
-
-	organs["chest"] = chest
-	organs["groin"] = groin
-	organs["head"] = head
-	organs["l_arm"] = l_arm
-	organs["r_arm"] = r_arm
-	organs["l_hand"] = l_hand
-	organs["r_hand"] = r_hand
-	organs["l_leg"] = l_leg
-	organs["r_leg"] = r_leg
-	organs["l_foot"] = l_foot
-	organs["r_foot"] = r_foot
+	l_leg.owner = src
+	organs += chest
+	organs += head
+	organs += r_arm
+	organs += l_arm
+	organs += r_leg
+	organs += l_leg
 
 	var/g = "m"
 	if (gender == MALE)
@@ -62,14 +105,7 @@
 
 	..()
 
-	organStructure = new /obj/effect/organstructure/human(src)
-
-/mob/living/carbon/human/cyborg
-	New()
-		..()
-		if(organStructure) //hacky, but it's not supposed to be in for a long time anyway
-			del(organStructure)
-		organStructure = new /obj/effect/organstructure/cyber(src)
+//	organStructure = new /obj/effect/organstructure/human(src)
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
@@ -176,8 +212,8 @@
 /mob/living/carbon/human/ex_act(severity)
 	flick("flash", flash)
 
-// /obj/item/clothing/suit/bomb_suit( src )
-// /obj/item/clothing/head/bomb_hood( src )
+// /obj/item/clothing/suit/bomb_suit(src)
+// /obj/item/clothing/head/bomb_hood(src)
 
 	if (stat == 2 && client)
 		gib(1)
@@ -242,18 +278,18 @@
 					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 				if("r_arm")
 					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-				if("l_hand")
-					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)
+/*				if("l_hand")
+/					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)
 				if("r_hand")
-					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)
+					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)*/
 				if("l_leg")
 					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 				if("r_leg")
 					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-				if("l_foot")
+/*				if("l_foot")
 					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)
 				if("r_foot")
-					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)
+					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)*/
 
 	UpdateDamageIcon()
 
@@ -267,13 +303,13 @@
 
 	show_message("\red The blob attacks you!")
 
-	var/list/zones = list("head","chest","chest", "groin", "l_arm", "r_arm", "l_hand", "r_hand", "l_leg", "r_leg", "l_foot", "r_foot")
+	var/list/zones = list("head","chest","chest", "groin", "l_arm", "r_arm", "l_leg", "r_leg")
 
 	var/zone = pick(zones)
 
 	var/datum/organ/external/temp = organs["[zone]"]
 
-	switch(zone)
+	switch(zone)//This really needs an update badly
 		if ("head")
 			if ((((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD)) && prob(99)))
 				if (prob(20))
@@ -958,7 +994,7 @@
 		if (wear_suit)
 			if (wear_suit.blood_DNA)
 				var/icon/stain_icon = null
-				if (istype(wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/wcoat || /obj/item/clothing/suit/armor/a_i_a_ptank))
+				if (istype(wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/wcoat))
 					stain_icon = icon('blood.dmi', "armorblood[!lying ? "" : "2"]")
 				else if (istype(wear_suit, /obj/item/clothing/suit/det_suit || /obj/item/clothing/suit/labcoat))
 					stain_icon = icon('blood.dmi', "coatblood[!lying ? "" : "2"]")
@@ -1101,11 +1137,7 @@
 */
 	last_b_state = stat
 
-/mob/living/carbon/human/hand_p(mob/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
+/mob/living/carbon/human/hand_p(mob/M as mob)//update needed
 	if (M.a_intent == "hurt")
 		if (istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
 			return
@@ -1130,11 +1162,6 @@
 					for(var/mob/O in viewers(src, null))
 						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
 					return
-			/*else if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
-				if (prob(25))
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return*/
 			else
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
@@ -1155,224 +1182,12 @@
 						src = null
 						src = H.monkeyize()
 						contract_disease(D,1,0)
-
 	return
 
-/mob/living/carbon/human/attack_paw(mob/M as mob)
-	..()
-	if (M.a_intent == "help")
-		help_shake_act(M)
-	else
-		if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
-			return
-		if (health > 0)
-			if (istype(wear_suit, /obj/item/clothing/suit/space))
-				if (prob(25))
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return
-			else if (istype(wear_suit, /obj/item/clothing/suit/space/santa))
-				if (prob(25))
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return
-			else if (istype(wear_suit, /obj/item/clothing/suit/bio_suit))
-				if (prob(25))
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return
-			else if (istype(wear_suit, /obj/item/clothing/suit/armor))
-				if (prob(25))
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return
-			/*else if (istype(wear_suit, /obj/item/clothing/suit/swat_suit))
-				if (prob(25))
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return*/
-			else
-				for(var/mob/O in viewers(src, null))
-					O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-				var/damage = rand(1, 3)
-				var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg", "groin")
-				if (istype(organs[text("[]", dam_zone)], /datum/organ/external))
-					var/datum/organ/external/temp = organs[text("[]", dam_zone)]
-					if (temp.take_damage(damage, 0))
-						UpdateDamageIcon()
-					else
-						UpdateDamage()
-				updatehealth()
 
-				for(var/datum/disease/D in M.viruses)
-					if(istype(D, /datum/disease/jungle_fever))
-						var/mob/living/carbon/human/H = src
-						src = null
-						src = H.monkeyize()
-						contract_disease(D,1,0)
-	return
-
-/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
-	switch(M.a_intent)
-
-		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
-		if ("grab")
-			//This will be changed to skin, where we can skin a dead human corpse//Actually, that sounds kind of impractical./N
-			if (M == src)
-				return
-			if (w_uniform)
-				w_uniform.add_fingerprint(M)
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
-			G.assailant = M
-			if (M.hand)
-				M.l_hand = G
-			else
-				M.r_hand = G
-			G.layer = 20
-			G.affecting = src
-			grabbed_by += G
-			G.synch()
-
-			LAssailant = M
-
-			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
-
-		if ("hurt")
-			if (w_uniform)
-				w_uniform.add_fingerprint(M)
-			var/damage = rand(15, 30) // How much damage aliens do to humans? Increasing -- TLE
-									  // I've decreased the chance of humans being protected by uniforms. Now aliens can actually damage them.
-			var/datum/organ/external/affecting = organs["chest"]
-			var/t = M.zone_sel.selecting
-			if ((t in list( "eyes", "mouth" )))
-				t = "head"
-			var/def_zone = ran_zone(t)
-			if (organs[def_zone])
-				affecting = organs[def_zone]
-			if ((istype(affecting, /datum/organ/external) && prob(95)))
-				playsound(loc, 'slice.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
-				if (def_zone == "head")
-					if ((((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD)) && prob(5)))
-						if (prob(20))
-							affecting.take_damage(damage, 0)
-						else
-							show_message("\red You have been protected from a hit to the head.")
-						return
-					if (damage >= 25)
-						if (weakened < 10)
-							weakened = rand(10, 15)
-						for(var/mob/O in viewers(M, null))
-							if ((O.client && !( O.blinded )))
-								O.show_message(text("\red <B>[] has wounded []!</B>", M, src), 1, "\red You hear someone fall.", 2)
-					affecting.take_damage(damage)
-				else
-					if (def_zone == "chest")
-						if ((((wear_suit && wear_suit.body_parts_covered & UPPER_TORSO) || (w_uniform && w_uniform.body_parts_covered & LOWER_TORSO)) && prob(10)))
-							show_message("\blue You have been protected from a hit to the chest.")
-							return
-						if (damage >= 25)
-							if (prob(50))
-								if (weakened < 5)
-									weakened = 5
-								playsound(loc, 'slashmiss.ogg', 50, 1, -1)
-								for(var/mob/O in viewers(src, null))
-									if ((O.client && !( O.blinded )))
-										O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1, "\red You hear someone fall.", 2)
-							else
-								if (stunned < 5)
-									stunned = 5
-								for(var/mob/O in viewers(src, null))
-									if ((O.client && !( O.blinded )))
-										O.show_message(text("\red <B>[] has stunned []!</B>", M, src), 1)
-							if(stat != 2)	stat = 1
-						affecting.take_damage(damage)
-					else
-						if (def_zone == "groin")
-							if ((((wear_suit && wear_suit.body_parts_covered & LOWER_TORSO) || (w_uniform && w_uniform.body_parts_covered & LOWER_TORSO)) && prob(1)))
-								show_message("\blue You have been protected from a hit to the lower chest.")
-								return
-							if (damage >= 25)
-								if (prob(50))
-									if (weakened < 3)
-										weakened = 3
-									for(var/mob/O in viewers(src, null))
-										if ((O.client && !( O.blinded )))
-											O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1, "\red You hear someone fall.", 2)
-								else
-									if (stunned < 3)
-										stunned = 3
-									for(var/mob/O in viewers(src, null))
-										if ((O.client && !( O.blinded )))
-											O.show_message(text("\red <B>[] has stunned []!</B>", M, src), 1)
-								if(stat != 2)	stat = 1
-							affecting.take_damage(damage)
-						else
-							affecting.take_damage(damage)
-				UpdateDamageIcon()
-				updatehealth()
-			else
-				playsound(loc, 'slashmiss.ogg', 50, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M] has lunged at [src] but missed!</B>"), 1)
-		if ("disarm")
-			var/damage = 5
-			var/datum/organ/external/affecting = organs["chest"]
-			var/t = M.zone_sel.selecting
-			if ((t in list( "eyes", "mouth" )))
-				t = "head"
-			var/def_zone = ran_zone(t)
-			if (organs[def_zone])
-				affecting = organs[def_zone]
-			if (w_uniform)
-				w_uniform.add_fingerprint(M)
-			var/randn = rand(1, 100)
-			if (randn <= 90)
-				playsound(loc, 'pierce.ogg', 25, 1, -1)
-				if (weakened < 15)
-					weakened = rand(10, 15)
-				affecting.take_damage(damage)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1)
-			else
-				if (randn <= 99)
-					playsound(loc, 'slash.ogg', 25, 1, -1)
-					drop_item()
-					affecting.take_damage(damage)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] disarmed []!</B>", M, src), 1)
-				else
-					playsound(loc, 'slashmiss.ogg', 50, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has tried to disarm []!</B>", M, src), 1)
-	return
 
 
 /mob/living/carbon/human/attack_metroid(mob/living/carbon/metroid/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
 	if(M.Victim) return // can't attack while eating!
 
 	if (health > -100)
@@ -1389,23 +1204,12 @@
 			damage = rand(5, 25)
 
 
-		var/dam_zone = pick("head", "chest", "l_hand", "r_hand", "l_leg", "r_leg", "groin")
+		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
 
-
-		if (dam_zone == "chest")
-			if ((((wear_suit && wear_suit.body_parts_covered & UPPER_TORSO) || (w_uniform && w_uniform.body_parts_covered & LOWER_TORSO)) && prob(10)))
-				if(prob(20))
-					show_message("\blue You have been protected from a hit to the chest.")
-					return
-
-
-
-		if (istype(organs[text("[]", dam_zone)], /datum/organ/external))
-			var/datum/organ/external/temp = organs[text("[]", dam_zone)]
-			if (temp.take_damage(damage, 0))
-				UpdateDamageIcon()
-			else
-				UpdateDamage()
+		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+		var/armor_block = run_armor_check(affecting, "melee")
+		apply_damage(damage, CLONE, affecting, armor_block)
+		UpdateDamageIcon()
 
 
 		if(M.powerlevel > 0)
@@ -1448,186 +1252,6 @@
 
 	return
 
-/mob/living/carbon/human/attack_hand(mob/living/carbon/human/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		M << "No attacking people at spawn, you jackass."
-		return
-
-	..()
-
-	if ((M.gloves && M.gloves.elecgen == 1 && M.a_intent == "hurt") /*&& (!istype(src:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
-		if(M.gloves.uses > 0)
-			M.gloves.uses--
-			if (weakened < 5)
-				weakened = 5
-			if (stuttering < 5)
-				stuttering = 5
-			if (stunned < 5)
-				stunned = 5
-			for(var/mob/O in viewers(src, null))
-				if (O.client)
-					O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
-		else
-			M.gloves.elecgen = 0
-			M << "\red Not enough charge! "
-			return
-
-	if (M.a_intent == "help")
-		if (health > 0)
-			help_shake_act(M)
-		else
-			if (M.health >= -75.0)
-				if (((M.head && M.head.flags & 4) || ((M.wear_mask && !( M.wear_mask.flags & 32 )) || ((head && head.flags & 4) || (wear_mask && !( wear_mask.flags & 32 ))))))
-					M << "\blue <B>Remove that mask!</B>"
-					return
-				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-				O.source = M
-				O.target = src
-				O.s_loc = M.loc
-				O.t_loc = loc
-				O.place = "CPR"
-				requests += O
-				spawn( 0 )
-					O.process()
-					return
-	else
-		if (M.a_intent == "grab")
-			if (M == src)
-				return
-			if (w_uniform)
-				w_uniform.add_fingerprint(M)
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
-			G.assailant = M
-			if (M.hand)
-				M.l_hand = G
-			else
-				M.r_hand = G
-			G.layer = 20
-			G.affecting = src
-			grabbed_by += G
-			G.synch()
-
-			LAssailant = M
-
-			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
-		else
-			if (M.a_intent == "hurt" && !(M.gloves && M.gloves.elecgen == 1))
-				if (w_uniform)
-					w_uniform.add_fingerprint(M)
-				var/damage = 0
-				if(organStructure && organStructure.arms)
-					damage = rand(organStructure.arms.minDamage,organStructure.arms.maxDamage)
-				else
-					damage = rand(1, 9) //oh boy
-				var/datum/organ/external/affecting = organs["chest"]
-				var/t = M.zone_sel.selecting
-				if ((t in list( "eyes", "mouth" )))
-					t = "head"
-				var/def_zone = ran_zone(t)
-				if (organs[text("[]", def_zone)])
-					affecting = organs[text("[]", def_zone)]
-				if ((istype(affecting, /datum/organ/external) && prob(90)))
-					if (M.mutations & HULK)
-						damage += 5
-						spawn(0)
-							paralysis += 1
-							step_away(src,M,15)
-							sleep(3)
-							step_away(src,M,15)
-					playsound(loc, "punch", 25, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
-					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
-					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
-
-					if (def_zone == "head")
-						if ((((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD)) && prob(99)))
-							if (prob(20))
-								affecting.take_damage(damage, 0)
-							else
-								show_message("\red You have been protected from a hit to the head.")
-							return
-						if (damage > 4.9)
-							if (weakened < 10)
-								weakened = rand(10, 15)
-							for(var/mob/O in viewers(M, null))
-								O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
-						affecting.take_damage(damage)
-					else
-						if (def_zone == "chest")
-							if ((((wear_suit && wear_suit.body_parts_covered & UPPER_TORSO) || (w_uniform && w_uniform.body_parts_covered & LOWER_TORSO)) && prob(85)))
-								show_message("\red You have been protected from a hit to the chest.")
-								return
-							if (damage > 4.9)
-								if (prob(50))
-									if (weakened < 5)
-										weakened = 5
-									playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
-									for(var/mob/O in viewers(src, null))
-										O.show_message(text("\red <B>[] has knocked down []!</B>", M, src), 1, "\red You hear someone fall.", 2)
-								else
-									if (stunned < 5)
-										stunned = 5
-									for(var/mob/O in viewers(src, null))
-										O.show_message(text("\red <B>[] has stunned []!</B>", M, src), 1)
-								if(stat != 2)	stat = 1
-							affecting.take_damage(damage)
-						else
-							if (def_zone == "groin")
-								if ((((wear_suit && wear_suit.body_parts_covered & LOWER_TORSO) || (w_uniform && w_uniform.body_parts_covered & LOWER_TORSO)) && prob(75)))
-									show_message("\red You have been protected from a hit to the lower chest.")
-									return
-								if (damage > 4.9)
-									if (prob(50))
-										if (weakened < 3)
-											weakened = 3
-										for(var/mob/O in viewers(src, null))
-											O.show_message(text("\red <B>[] has knocked down []!</B>", M, src), 1, "\red You hear someone fall.", 2)
-									else
-										if (stunned < 3)
-											stunned = 3
-										for(var/mob/O in viewers(src, null))
-											O.show_message(text("\red <B>[] has stunned []!</B>", M, src), 1)
-									if(stat != 2)	stat = 1
-								affecting.take_damage(damage)
-							else
-								affecting.take_damage(damage)
-
-					UpdateDamageIcon()
-
-					updatehealth()
-				else
-					playsound(loc, 'punchmiss.ogg', 25, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
-					return
-			else
-				if (!( lying ) && !(M.gloves && M.gloves.elecgen == 1))
-					if (w_uniform)
-						w_uniform.add_fingerprint(M)
-					var/randn = rand(1, 100)
-					if (randn <= 25)
-						weakened = 2
-						playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
-						for(var/mob/O in viewers(src, null))
-							O.show_message(text("\red <B>[] has pushed down []!</B>", M, src), 1)
-					else
-						if (randn <= 60)
-							drop_item()
-							playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
-							for(var/mob/O in viewers(src, null))
-								O.show_message(text("\red <B>[] has disarmed []!</B>", M, src), 1)
-						else
-							playsound(loc, 'punchmiss.ogg', 25, 1, -1)
-							for(var/mob/O in viewers(src, null))
-								O.show_message(text("\red <B>[] has attempted to disarm []!</B>", M, src), 1)
-	return
 
 /mob/living/carbon/human/restrained()
 	if (handcuffed)
@@ -1877,9 +1501,7 @@
 								if("belt")
 									message = text("\red <B>[] is trying to take off the [] from []'s belt!</B>", source, target.belt, target)
 								if("suit")
-									if(istype(target.wear_suit, /obj/item/clothing/suit/armor/a_i_a_ptank))//Exception for suicide vests.
-										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.wear_suit, target)
-									else if(istype(target.wear_suit, /obj/item/clothing)&&!target.wear_suit:canremove)
+									if(istype(target.wear_suit, /obj/item/clothing)&&!target.wear_suit:canremove)
 										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.wear_suit, target)
 									else
 										message = text("\red <B>[] is trying to take off \a [] from []'s body!</B>", source, target.wear_suit, target)
@@ -2153,13 +1775,14 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
-				if (istype(item, /obj/item))
+				if(istype(item, /obj/item))
 					source.drop_item()
-					loc = target
-					item.layer = 20
-					target.l_hand = item
-					item.loc = target
-					item.add_fingerprint(target)
+					if(item)
+						loc = target
+						item.layer = 20
+						target.l_hand = item
+						item.loc = target
+						item.add_fingerprint(target)
 		if("r_hand")
 			if (istype(target, /obj/item/clothing/suit/straight_jacket))
 				//SN src = null
@@ -2232,15 +1855,7 @@ It can still be worn/put on as normal.
 					target.w_uniform = item
 					item.loc = target
 		if("suit")
-			if (target.wear_suit)
-				if(istype(target.wear_suit, /obj/item/clothing/suit/armor/a_i_a_ptank))//triggers suicide vest if someone else tries to take it off/N
-					var/obj/item/clothing/suit/armor/a_i_a_ptank/A = target.wear_suit//mostly a copy from death.dm code.
-					bombers += "[target.key] has detonated a suicide bomb. Temp = [A.part4.air_contents.temperature-T0C]."
-					if(A.status && prob(90))
-						A.part4.ignite()
-						return
-				if(istype(target.wear_suit, /obj/item/clothing)&& !target.wear_suit:canremove)
-					if(!istype(target.wear_suit, /obj/item/clothing/suit/armor/a_i_a_ptank))	return//Can remove the suicide vest if it didn't trigger.
+			if(target.wear_suit)
 				var/obj/item/W = target.wear_suit
 				target.u_equip(W)
 				if (target.client)
@@ -2419,75 +2034,6 @@ It can still be worn/put on as normal.
 	del(src)
 	return
 
-/mob/living/carbon/human/proc/TakeDamage(zone, brute, burn)
-	var/datum/organ/external/E = organs[text("[]", zone)]
-	if (istype(E, /datum/organ/external))
-		if (E.take_damage(brute, burn))
-			UpdateDamageIcon()
-		else
-			UpdateDamage()
-	else
-		return 0
-	return
-
-/mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
-
-	var/datum/organ/external/E = organs[text("[]", zone)]
-	if (istype(E, /datum/organ/external))
-		if (E.heal_damage(brute, burn))
-			UpdateDamageIcon()
-		else
-			UpdateDamage()
-	else
-		return 0
-	return
-
-/mob/living/carbon/human/proc/UpdateDamage()
-
-	bruteloss = 0
-	fireloss = 0
-	var/datum/organ/external/O
-	for(var/t in organs)
-		O = organs[t]
-		if (istype(O, /datum/organ/external))
-			bruteloss += O.brute_dam
-			fireloss += O.burn_dam
-	return
-
-// new damage icon system
-// now constructs damage icon for each organ from mask * damage field
-
-/mob/living/carbon/human/proc/UpdateDamageIcon()
-	del(body_standing)
-	body_standing = list()
-	del(body_lying)
-	body_lying = list()
-	bruteloss = 0
-	fireloss = 0
-	var/datum/organ/external/O
-	for(var/t in organs)
-		O = organs[t]
-		if (istype(O, /datum/organ/external))
-			bruteloss += O.brute_dam
-			fireloss += O.burn_dam
-
-			var/icon/DI = new /icon('dam_human.dmi', O.damage_state)			// the damage icon for whole human
-			DI.Blend(new /icon('dam_mask.dmi', O.icon_name), ICON_MULTIPLY)		// mask with this organ's pixels
-
-	//		world << "[O.icon_name] [O.damage_state] \icon[DI]"
-
-			body_standing += DI
-
-			DI = new /icon('dam_human.dmi', "[O.damage_state]-2")				// repeat for lying icons
-			DI.Blend(new /icon('dam_mask.dmi', "[O.icon_name]2"), ICON_MULTIPLY)
-
-	//		world << "[O.r_name]2 [O.d_i_state]-2 \icon[DI]"
-
-			body_lying += DI
-
-			//body_standing += new /icon( 'dam_zones.dmi', text("[]", O.d_i_state) )
-			//body_lying += new /icon( 'dam_zones.dmi', text("[]2", O.d_i_state) )
-
 /mob/living/carbon/human/show_inv(mob/user as mob)
 
 	user.machine = src
@@ -2593,16 +2139,14 @@ It can still be worn/put on as normal.
 
 /mob/living/carbon/human/proc/get_damaged_organs(var/brute, var/burn)
 	var/list/datum/organ/external/parts = list()
-	for(var/organ_name in organs)
-		var/datum/organ/external/organ = organs[organ_name]
+	for(var/datum/organ/external/organ in organs)
 		if((brute && organ.brute_dam) || (burn && organ.burn_dam))
 			parts += organ
 	return parts
 
 /mob/living/carbon/human/proc/get_damageable_organs()
 	var/list/datum/organ/external/parts = list()
-	for(var/organ_name in organs)
-		var/datum/organ/external/organ = organs[organ_name]
+	for(var/datum/organ/external/organ in organs)
 		if(organ.brute_dam + organ.burn_dam < organ.max_damage)
 			parts += organ
 	return parts
@@ -2709,4 +2253,18 @@ It can still be worn/put on as normal.
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
+
+
+/mob/living/carbon/human/updatehealth()
+	if(src.nodamage)
+		src.health = 100
+		src.stat = 0
+		return
+	bruteloss = 0
+	fireloss = 0
+	for(var/datum/organ/external/O in organs)
+		src.bruteloss += O.brute_dam
+		src.fireloss += O.burn_dam
+	src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss - src.cloneloss
+
 

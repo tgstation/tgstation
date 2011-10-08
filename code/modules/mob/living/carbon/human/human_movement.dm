@@ -6,7 +6,7 @@
 	//Do we have a working jetpack
 	if(istype(back, /obj/item/weapon/tank/jetpack))
 		var/obj/item/weapon/tank/jetpack/J = back
-		if(J.allow_thrust(0.01, src))
+		if(J.allow_thrust(0.005, src))
 			inertia_dir = 0
 			return 1
 

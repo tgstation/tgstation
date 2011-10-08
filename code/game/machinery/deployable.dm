@@ -138,19 +138,6 @@ for reference:
 		else
 			return 0
 
-/*	bullet_act(flag, A as obj)
-		switch(flag)
-			if (PROJECTILE_BULLET)
-				src.health -= 20
-			if (PROJECTILE_WEAKBULLET) //Detective's revolver fires marshmallows
-				src.health -= 2
-			if (PROJECTILE_LASER)
-				src.health -= 20
-			if (PROJECTILE_PULSE)
-				src.health -=50
-		if (src.health <= 0)
-			src.explode()
-These should not block bullets/N */
 
 //Actual Deployable machinery stuff
 
@@ -273,21 +260,6 @@ These should not block bullets/N */
 			return 1
 		else
 			return 0
-
-/*	bullet_act(flag, A as obj)
-		switch(flag)
-			if (PROJECTILE_BULLET)
-				src.health -= 20
-			if (PROJECTILE_WEAKBULLET) //Detective's revolver fires marshmallows
-				src.health -= 2
-			if (PROJECTILE_LASER)
-				src.health -= 20
-			if (PROJECTILE_PULSE)
-				src.health -=50
-		if (src.health <= 0)
-			src.explode()
-These should not block bullets/N */
-
 
 	proc/explode()
 

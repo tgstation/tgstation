@@ -1,104 +1,18 @@
 /mob/living/verb/succumb()
 	set hidden = 1
-
 	if ((src.health < 0 && src.health > -95.0))
 		src.oxyloss += src.health + 200
 		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
 		src << "\blue You have given up life and succumbed to death."
 
 
-/mob/living/bullet_act(var/obj/item/projectile/Proj)
-
-	for(var/i = 1, i<= Proj.mobdamage.len, i++)
-
-		switch(i)
-			if(1)
-				if (istype(src, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = src
-					var/dam_zone = pick("chest", "chest", "chest", "groin", "head")
-					if (H.organs[text("[]", dam_zone)])
-						var/datum/organ/external/affecting = H.organs[text("[]", dam_zone)]
-						if (affecting.take_damage(Proj.mobdamage[BRUTE], 0))
-							H.UpdateDamageIcon()
-						else
-							H.UpdateDamage()
-					src.updatehealth()
-
-				else
-					if(!nodamage)  src.take_organ_damage(Proj.mobdamage[BRUTE])
-
-			if(2)
-				var/d = Proj.mobdamage[BURN]
-				if(!Proj.nodamage) fireloss += d
-				updatehealth()
-			if(3)
-				var/d = Proj.mobdamage[TOX]
-				if(!Proj.nodamage) toxloss += d
-				updatehealth()
-			if(4)
-				var/d = Proj.mobdamage[OXY]
-				if(!Proj.nodamage) oxyloss += d
-				updatehealth()
-			if(5)
-				var/d = Proj.mobdamage[CLONE]
-				if(!Proj.nodamage) cloneloss += d
-				updatehealth()
-
-	if(Proj.effects["stun"] && prob(Proj.effectprob["stun"]))
-		if(Proj.effectmod["stun"] == SET)
-			stunned = Proj.effects["stun"]
-		else
-			stunned += Proj.effects["stun"]
-
-
-	if(Proj.effects["weak"] && prob(Proj.effectprob["weak"]))
-		if(Proj.effectmod["weak"] == SET)
-			weakened = Proj.effects["weak"]
-		else
-			weakened += Proj.effects["weak"]
-
-	if(Proj.effects["paralysis"] && prob(Proj.effectprob["paralysis"]))
-		if(Proj.effectmod["paralysis"] == SET)
-			paralysis = Proj.effects["paralysis"]
-		else
-			paralysis += Proj.effects["paralysis"]
-
-	if(Proj.effects["stutter"] && prob(Proj.effectprob["stutter"]))
-		if(Proj.effectmod["stutter"] == SET)
-			stuttering = Proj.effects["stutter"]
-		else
-			stuttering += Proj.effects["stutter"]
-
-	if(Proj.effects["drowsyness"] && prob(Proj.effectprob["drowsyness"]))
-		if(Proj.effectmod["drowsyness"] == SET)
-			drowsyness = Proj.effects["drowsyness"]
-		else
-			drowsyness += Proj.effects["drowsyness"]
-
-	if(Proj.effects["radiation"] && prob(Proj.effectprob["radiation"]))
-		if(Proj.effectmod["radiation"] == SET)
-			radiation = Proj.effects["radiation"]
-		else
-			radiation += Proj.effects["radiation"]
-
-	if(Proj.effects["eyeblur"] && prob(Proj.effectprob["eyeblur"]))
-		if(Proj.effectmod["eyeblur"] == SET)
-			eye_blurry = Proj.effects["eyeblur"]
-		else
-			eye_blurry += Proj.effects["eyeblur"]
-
-	..()
-
-
 /mob/living/proc/updatehealth()
-	if (!src.nodamage)
-		if(organStructure && organStructure.chest)
-			health = organStructure.chest.maxHealth - oxyloss - toxloss - fireloss - bruteloss
-		else
-			src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss - src.cloneloss
+	if(!src.nodamage)
+		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss - src.cloneloss
 	else
 		src.health = 100
 		src.stat = 0
+
 
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount)
@@ -237,3 +151,6 @@
 	if(src.stat > 1) src.stat=0
 	..()
 	return
+
+/mob/living/proc/UpdateDamageIcon()
+		return

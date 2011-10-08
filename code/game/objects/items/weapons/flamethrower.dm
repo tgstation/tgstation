@@ -2,7 +2,7 @@
 	..()
 	weldtool = new/obj/item/weapon/weldingtool(src)
 	weldtool.status = 0
-	igniter = new/obj/item/device/igniter(src)
+	igniter = new/obj/item/device/assembly/igniter(src)
 	igniter.secured = 0
 	src.status = 1
 	update_icon()
@@ -31,7 +31,7 @@
 		operating = 0//cooldown
 		turf/previousturf = null
 		obj/item/weapon/weldingtool/weldtool = null
-		obj/item/device/igniter/igniter = null
+		obj/item/device/assembly/igniter/igniter = null
 		obj/item/weapon/tank/plasma/ptank = null
 
 
@@ -103,8 +103,8 @@
 			update_icon()
 			return
 
-		if(istype(W, /obj/item/device/igniter))
-			var/obj/item/device/igniter/I = W
+		if(isigniter(W))
+			var/obj/item/device/assembly/igniter/I = W
 			if(I.secured)	return 0
 			user.remove_from_mob(I)
 			I.loc = src

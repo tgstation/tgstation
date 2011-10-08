@@ -114,18 +114,7 @@
 		src.updatehealth()
 	return
 
-/mob/living/silicon/pai/bullet_act(var/obj/item/projectile/Proj)
-
-	bruteloss += Proj.damage
-	if(Proj.effects["emp"])
-		var/emppulse = Proj.effects["emp"]
-		if(prob(Proj.effectprob["emp"]))
-			empulse(src, emppulse, emppulse)
-		else
-			empulse(src, 0, emppulse)
-	updatehealth()
-
-	return
+//mob/living/silicon/pai/bullet_act(var/obj/item/projectile/Proj)
 
 /mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)

@@ -211,17 +211,10 @@
 
 
 	bullet_act(var/obj/item/projectile/Proj)
-		for(var/i = 1, i<= Proj.mobdamage.len, i++)
-			switch(i)
-				if(1)
-					var/d = Proj.mobdamage[BRUTE]
-					health -= (d / max(src.brute_resist,1))
-				if(2)
-					var/d = Proj.mobdamage[BURN]
-					health -= (d / max(src.fire_resist,1))
-		//health -= Proj.damage
-		..()
+		if(!Proj)	return
+		src.health -= Proj.damage
 		update()
+		return 0
 
 
 	attackby(var/obj/item/weapon/W, var/mob/user)

@@ -11,7 +11,7 @@
 	heat_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
 
 
 /obj/item/clothing/shoes/syndigaloshes
@@ -92,14 +92,14 @@
 	name = "SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "swat"
-	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
 
 /obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
 	name = "combat boots"
 	desc = "When you REALLY want to turn up the heat"
 	icon_state = "swat"
-	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
 
 /obj/item/clothing/shoes/space_ninja
@@ -109,7 +109,7 @@
 	protective_temperature = 700
 	permeability_coefficient = 0.01
 	flags = NOSLIP
-	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/shoes/white
 	name = "White Shoes"

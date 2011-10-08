@@ -12,12 +12,8 @@
 	var/best_dist = INFINITY //infinity
 	var/best_cam = null
 	for(var/obj/machinery/camera/C in A)
-		if(usr:network != C.network)
-			continue	//	different network (syndicate)
-		if(C.z != usr.z)
-			continue	//	different viewing plane
-		if(!C.status)
-			continue	//	ignore disabled cameras
+		if(usr:network != C.network)	continue
+		if(!C.status)	continue	//	ignore disabled cameras
 		var/dist = get_dist(src, C)
 		if(dist < best_dist)
 			best_dist = dist

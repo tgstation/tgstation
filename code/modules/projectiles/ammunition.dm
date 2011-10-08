@@ -58,11 +58,13 @@
 	throw_range = 10
 	var
 		list/stored_ammo = list()
+		ammo_type = "/obj/item/ammo_casing"
+		max_ammo = 7
 
 
 	New()
-		for(var/i = 1, i <= 7, i++)
-			stored_ammo += new /obj/item/ammo_casing(src)
+		for(var/i = 1, i <= max_ammo, i++)
+			stored_ammo += new ammo_type(src)
 		update_icon()
 
 

@@ -31,7 +31,7 @@ var/global/list/uneatable = list(
 		event_chance = 15 //Prob for event each tick
 		target = null //its target. moves towards the target if it has one
 		last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
-		teleport_del = 0
+		teleport_del = 1
 
 	New(loc, var/starting_energy = 50, var/temp = 0)
 		src.energy = starting_energy
@@ -280,7 +280,7 @@ var/global/list/uneatable = list(
 			if(!move_self)
 				return 0
 
-			if(target && prob(80))
+			if(target && prob(60))
 				movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 			else if(!(movement_dir in cardinal))
 				movement_dir = pick(NORTH, SOUTH, EAST, WEST)
@@ -396,44 +396,11 @@ var/global/list/uneatable = list(
 			if (src.energy>200)
 				toxloss = round(((src.energy-150)/50)*4,1)
 				radiation = round(((src.energy-150)/50)*5,1)
-			for(var/mob/living/carbon/M in view(toxrange, src.loc))
-				if(istype(M,/mob/living/carbon/human))
-					var/P = 0
-					if(M:wear_suit)
-						P += M:wear_suit.radiation_protection
-					if(M:head)
-						P += M:head.radiation_protection
-					if (P > 0)
-						if (P >= 1)
-							if(M:wear_suit)
-								M << "The [M:wear_suit] beeps, indicating it just received a burst of radiation. Good thing you had it on."
-							else if (M:head)
-								M << "The [M:head] beeps, indicating it just received a burst of radiation. Good thing you had it on."
-							else
-								M << "Your body deflects all the radiation"
-							return
-						if (toxloss >= 100)
-							toxloss = 100 - (P * 100) //a suit and/or headgear which protects you from 10% radiation will make you only receive 90 damage even if you're showered with a MILLION points of toxloss
-						else
-							toxloss = toxloss - (P * toxloss)
-						if (radiation > 15)
-							radiation = 15 - (15 * P)
-						else
-							radiation = radiation - (P * radiation)
-						if(M:wear_suit)
-							M << "\red The [M:wear_suit] absorbs some of the radiation from the singularity."
-						else if (M:head)
-							M << "\red The [M:head] absorbs some of the radiation from the singularity."
-						else
-							M << "\red Your body protects you from some of the radiation."
-					else
-						if(prob(50))
-							M << "\red <b>You feel odd.</b>"
-						else
-							M << "\red <b>You feel sick.</b>"
-				M.toxloss += toxloss
-				M.radiation += radiation
-				M.updatehealth()
+			for(var/mob/living/M in view(toxrange, src.loc))
+				if(istype(M,/mob/living/))
+					M.apply_effect(rand(radiation), IRRADIATE)
+					toxloss = (toxloss - (toxloss*M.getarmor(null, "rad")))
+					M.apply_effect(toxloss, TOX)
 			return
 
 
@@ -444,8 +411,7 @@ var/global/list/uneatable = list(
 						M << "\blue You look directly into The [src.name], good thing you had your protective eyewear on!"
 						return
 				M << "\red You look directly into The [src.name] and feel weak."
-				if (M:stunned < 3)
-					M.stunned = 3
+				M.apply_effect(3, STUN)
 				for(var/mob/O in viewers(M, null))
 					O.show_message(text("\red <B>[] stares blankly at The []!</B>", M, src), 1)
 			return

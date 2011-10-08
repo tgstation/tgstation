@@ -120,7 +120,7 @@
 							src.state = 2
 							var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
 							A.amount = 1
-						if(istype(W, /obj/item/device/radio/signaler))
+						if(issignaler(W))
 							playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 							user << "\blue You attach the wireless signaller unit to the circutry."
 							user.drop_item()
@@ -131,8 +131,8 @@
 							playsound(src.loc, 'Crowbar.ogg', 50, 1)
 							user << "\blue You remove the remote signalling device."
 							src.state = 3
-							new /obj/item/device/radio/signaler( src.loc, 1 )
-						if(istype(W, /obj/item/device/prox_sensor) && motion == 0)
+							new /obj/item/device/assembly/signaler( src.loc, 1 )
+						if(isprox(W) && motion == 0)
 //							if(W:amount >= 1)
 							playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 //								W:use(1)
@@ -141,7 +141,7 @@
 						if(istype(W, /obj/item/weapon/crowbar) && motion)
 							playsound(src.loc, 'Crowbar.ogg', 50, 1)
 							user << "\blue You remove the proximity sensor."
-							new /obj/item/device/prox_sensor( src.loc, 1 )
+							new /obj/item/device/assembly/prox_sensor( src.loc, 1 )
 							motion = 0
 						if(istype(W, /obj/item/stack/sheet/glass))
 							if(W:amount >= 1)
@@ -1601,7 +1601,7 @@
 	flags = FPRINT | OPENCONTAINER
 
 	attackby(var/obj/D, mob/user as mob)
-		if(istype(D, /obj/item/device/prox_sensor))
+		if(isprox(D))
 			var/obj/item/weapon/bucket_sensor/B = new /obj/item/weapon/bucket_sensor
 			B.loc = user
 			if (user.r_hand == D)

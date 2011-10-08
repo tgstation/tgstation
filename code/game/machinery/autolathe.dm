@@ -249,13 +249,13 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_magazine/c38(), \
 		new /obj/item/device/taperecorder(), \
-		new /obj/item/device/igniter(), \
+		new /obj/item/device/assembly/igniter(), \
 		new /obj/item/device/infra_sensor(), \
-		new /obj/item/device/radio/signaler(), \
+		new /obj/item/device/assembly/signaler(), \
 		new /obj/item/device/radio/headset(), \
 		new /obj/item/device/radio(), \
-		new /obj/item/device/infra(), \
-		new /obj/item/device/timer(), \
+		new /obj/item/device/assembly/infra(), \
+		new /obj/item/device/assembly/timer(), \
 	)
 
 var/global/list/autolathe_recipes_hidden = list( \

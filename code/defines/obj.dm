@@ -582,33 +582,6 @@
 	flags = FPRINT
 	anchored = 1.0
 
-/obj/screen
-	name = "screen"
-	icon = 'screen1.dmi'
-	layer = 20.0
-	unacidable = 1
-	var/id = 0.0
-	var/obj/master
-
-/obj/screen/close
-	name = "close"
-	master = null
-
-/obj/screen/grab
-	name = "grab"
-	master = null
-
-/obj/screen/storage
-	name = "storage"
-	master = null
-
-/obj/screen/zone_sel
-	name = "Damage Zone"
-	icon = 'zone_sel.dmi'
-	icon_state = "blank"
-	var/selecting = "chest"
-	screen_loc = "EAST+1,NORTH"
-
 /obj/effect/shut_controller
 	name = "shut controller"
 	var/moving = null

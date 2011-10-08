@@ -31,24 +31,29 @@
 
 // use power from a cell
 /obj/item/weapon/cell/proc/use(var/amount)
-	charge = max(0, charge-amount)
 	if(rigged && amount > 0)
 		explode()
+		return 0
+
+	if(charge < amount)	return 0
+	charge = (charge - amount)
+	return 1
 
 // recharge the cell
 /obj/item/weapon/cell/proc/give(var/amount)
+	if(rigged && amount > 0)
+		explode()
+		return 0
+
+	if(maxcharge < amount)	return 0
 	var/power_used = min(maxcharge-charge,amount)
-	if(crit_fail)
-		power_used = 0
-	else if(prob(reliability))
-		charge += power_used
-	else
+	if(crit_fail)	return 0
+	if(!prob(reliability))
 		minor_fault++
 		if(prob(minor_fault))
 			crit_fail = 1
-			power_used = 0
-	if(rigged && amount > 0)
-		explode()
+			return 0
+	charge += power_used
 	return power_used
 
 

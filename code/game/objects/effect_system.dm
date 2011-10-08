@@ -335,8 +335,7 @@ steam.start() -- spawns the effect
 	if(air_group || (height==0)) return 1
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
-		B.damage = 10//testing, will just hardcode for now
-		B.mobdamage = new/list(BRUTE = 0 , BURN = 10, TOX = 0, OXY = 0, CLONE = 0)
+		B.damage = (B.damage/2)
 	return 1
 
 

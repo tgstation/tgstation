@@ -688,7 +688,7 @@ Auto Patrol: []"},
 	Sa.build_step = 1
 	Sa.overlays += image('aibots.dmi', "hs_hole")
 	Sa.created_name = src.name
-	new /obj/item/device/prox_sensor(Tsec)
+	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	var/obj/item/weapon/melee/baton/B = new /obj/item/weapon/melee/baton(Tsec)
 	B.charges = 0
@@ -724,7 +724,7 @@ Auto Patrol: []"},
 	if (src.emagged)
 		A = new /obj/item/projectile/beam( loc )
 	else
-		A = new /obj/item/projectile/electrode( loc )
+		A = new /obj/item/projectile/energy/electrode( loc )
 
 	if (!( istype(U, /turf) ))
 		//A = null
@@ -786,7 +786,7 @@ Auto Patrol: []"},
 
 /obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if (((istype(W, /obj/item/robot_parts/l_leg)) || (istype(W, /obj/item/robot_parts/r_leg))) && (src.build_step == 0 || src.build_step == 1))
+	if(((istype(W, /obj/item/robot_parts/l_leg)) || (istype(W, /obj/item/robot_parts/r_leg))) && (src.build_step == 0 || src.build_step == 1))
 		src.build_step++
 		user << "You add the robot leg to [src]!"
 		src.name = "legs/frame assembly"
@@ -799,26 +799,26 @@ Auto Patrol: []"},
 
 		del(W)
 
-	else if (istype(W, /obj/item/clothing/suit/armor/vest) && (src.build_step == 2))
+	else if(istype(W, /obj/item/clothing/suit/armor/vest) && (src.build_step == 2))
 		src.build_step++
 		user << "You add the armor to [src]!"
 		src.name = "vest/legs/frame assembly"
 		src.item_state = "ed209_shell"
 		src.icon_state = "ed209_shell"
 		del(W)
-	else if ((istype(W, /obj/item/weapon/weldingtool) && W:welding) && (src.build_step == 3))
+	else if((istype(W, /obj/item/weapon/weldingtool) && W:welding) && (src.build_step == 3))
 		if (W:remove_fuel(0,user))
 			src.build_step++
 			src.name = "shielded frame assembly"
 			user << "You welded the vest to [src]!"
-	else if (istype(W, /obj/item/clothing/head/helmet) && (src.build_step == 4))
+	else if(istype(W, /obj/item/clothing/head/helmet) && (src.build_step == 4))
 		src.build_step++
 		user << "You add the helmet to [src]!"
 		src.name = "covered and shielded frame assembly"
 		src.item_state = "ed209_hat"
 		src.icon_state = "ed209_hat"
 		del(W)
-	else if (istype(W, /obj/item/device/prox_sensor) && (src.build_step == 5))
+	else if(isprox(W) && (src.build_step == 5))
 		src.build_step++
 		user << "You add the prox sensor to [src]!"
 		src.name = "prox/covered and armed the frame assembly"
@@ -835,7 +835,7 @@ Auto Patrol: []"},
 			src.build_step++
 			user << "\blue You wire the ED-209 assembly!"
 			src.name = "Wired ED-209 Assembly"
-	else if (istype(W, /obj/item/weapon/gun/energy/taser) && (src.build_step == 7))
+	else if(istype(W, /obj/item/weapon/gun/energy/taser) && (src.build_step == 7))
 		src.build_step++
 		user << "You add the taser gun to [src]!"
 		src.name = "Taser/Wired ED-209 Assembly"
@@ -851,7 +851,7 @@ Auto Patrol: []"},
 			src.build_step++
 			src.name = "Armed ED-209 Assembly"
 			user << "\blue Taser gun attached!"
-	else if ((istype(W, /obj/item/weapon/cell)) && (src.build_step >= 9))
+	else if((istype(W, /obj/item/weapon/cell)) && (src.build_step >= 9))
 		src.build_step++
 		user << "You complete the ED-209!"
 		var/obj/machinery/bot/ed209/S = new /obj/machinery/bot/ed209
@@ -860,7 +860,7 @@ Auto Patrol: []"},
 		del(W)
 		del(src)
 
-	else if (istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
 		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 		if (!t)

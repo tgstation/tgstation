@@ -372,9 +372,9 @@
 
 /datum/supply_packs/robotics
 	name = "Robotics Assembly Crate"
-	contains = list("/obj/item/device/prox_sensor",
-					"/obj/item/device/prox_sensor",
-					"/obj/item/device/prox_sensor",
+	contains = list("/obj/item/device/assembly/prox_sensor",
+					"/obj/item/device/assembly/prox_sensor",
+					"/obj/item/device/assembly/prox_sensor",
 					"/obj/item/weapon/storage/toolbox/electrical",
 					"/obj/item/device/flash",
 					"/obj/item/device/flash",
@@ -392,15 +392,15 @@
 	contains = list("/obj/item/weapon/tank/plasma",
 					"/obj/item/weapon/tank/plasma",
 					"/obj/item/weapon/tank/plasma",
-					"/obj/item/device/igniter",
-					"/obj/item/device/igniter",
-					"/obj/item/device/igniter",
-					"/obj/item/device/prox_sensor",
-					"/obj/item/device/prox_sensor",
-					"/obj/item/device/prox_sensor",
-					"/obj/item/device/timer",
-					"/obj/item/device/timer",
-					"/obj/item/device/timer")
+					"/obj/item/device/assembly/igniter",
+					"/obj/item/device/assembly/igniter",
+					"/obj/item/device/assembly/igniter",
+					"/obj/item/device/assembly/prox_sensor",
+					"/obj/item/device/assembly/prox_sensor",
+					"/obj/item/device/assembly/prox_sensor",
+					"/obj/item/device/assembly/timer",
+					"/obj/item/device/assembly/timer",
+					"/obj/item/device/assembly/timer")
 	cost = 10
 	containertype = "/obj/structure/crate/secure/plasma"
 	containername = "Plasma assembly crate"
@@ -487,8 +487,8 @@
 	name = "Experimental energy gear crate"
 	contains = list("/obj/item/clothing/suit/armor/laserproof",
 					"/obj/item/clothing/suit/armor/laserproof",
-					"/obj/item/weapon/gun/energy",
-					"/obj/item/weapon/gun/energy")
+					"/obj/item/weapon/gun/energy/gun",
+					"/obj/item/weapon/gun/energy/gun")
 	cost = 50
 	containertype = "/obj/structure/crate/secure"
 	containername = "Experimental energy gear crate"

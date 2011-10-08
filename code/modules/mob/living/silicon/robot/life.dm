@@ -59,12 +59,6 @@
 						src.cell.use(5)
 					if(src.module_state_3)
 						src.cell.use(5)
-					if (sight_mode & BORGMESON)
-						src.cell.use(50)
-					if (sight_mode & BORGTHERM)
-						src.cell.use(100)
-					if (sight_mode & BORGXRAY)
-						src.cell.use(200)
 					src.cell.use(1)
 					src.blinded = 0
 					src.stat = 0

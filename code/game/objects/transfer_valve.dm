@@ -35,19 +35,20 @@
 
 			update_icon()
 //TODO: Have this take an assemblyholder
-		else if(item.IsAssembly())
-			if(item:secured)
+		else if(isassembly(item))
+			var/obj/item/device/assembly/A = item
+			if(A.secured)
 				user << "\red The device is secured!"
 				return
 			if(attached_device)
 				user << "\red There is already an device attached to the valve, remove it first!"
 				return
 			user.remove_from_mob(item)
-			attached_device = item
-			item.loc = src
+			attached_device = A
+			A.loc = src
 			user << "\blue You attach the [item] to the valve controls and secure it!"
-			item:holder = src
-			item:Secure()
+			A.holder = src
+			A.toggle_secure()
 
 			bombers += "[key_name(user)] attached a [item] to a transfer valve."
 			message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")

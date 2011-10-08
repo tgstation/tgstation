@@ -138,18 +138,16 @@
 			var/obj/item/weapon/tank/plasma/PT = new(V)
 			var/obj/item/weapon/tank/oxygen/OT = new(V)
 
-			var/obj/item/device/radio/signaler/S = new(V)
+			var/obj/item/device/assembly/signaler/S = new(V)
 
 			V.tank_one = PT
 			V.tank_two = OT
 			V.attached_device = S
 
 			S.holder = V
-			S.Secure()
+			S.toggle_secure()
 			PT.master = V
 			OT.master = V
-
-			S.b_stat = 0
 
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
@@ -163,14 +161,14 @@
 			var/obj/item/weapon/tank/plasma/PT = new(V)
 			var/obj/item/weapon/tank/oxygen/OT = new(V)
 
-			var/obj/item/device/prox_sensor/P = new(V)
+			var/obj/item/device/assembly/prox_sensor/P = new(V)
 
 			V.tank_one = PT
 			V.tank_two = OT
 			V.attached_device = P
 
 			P.holder = V
-			P.Secure()
+			P.toggle_secure()
 			PT.master = V
 			OT.master = V
 
@@ -187,14 +185,14 @@
 			var/obj/item/weapon/tank/plasma/PT = new(V)
 			var/obj/item/weapon/tank/oxygen/OT = new(V)
 
-			var/obj/item/device/timer/T = new(V)
+			var/obj/item/device/assembly/timer/T = new(V)
 
 			V.tank_one = PT
 			V.tank_two = OT
 			V.attached_device = T
 
 			T.holder = V
-			T.Secure()
+			T.toggle_secure()
 			PT.master = V
 			OT.master = V
 			T.time = 30

@@ -5,27 +5,25 @@
 	icon = 'hats.dmi'
 	body_parts_covered = HEAD
 	var/list/allowed = list(/obj/item/weapon/pen)
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/radiation
 	name = "Radiation Hood"
 	icon_state = "rad"
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
-	radiation_protection = 0.35
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 60, rad = 100)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
 
 /obj/item/clothing/head/bomb_hood
 	name = "bomb hood"
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
-	armor = list(melee = 20, bullet = 5, laser = 10, taser = 5, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 20, bullet = 5, laser = 10,energy = 5, bomb = 100, bio = 0, rad = 0)
 
 /obj/item/clothing/head/bomb_hood/security
 	icon_state = "bombsuitsec"
 	item_state = "bombsuitsec"
-	armor = list(melee = 50, bullet = 5, laser = 20, taser = 5, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
 
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
@@ -33,7 +31,7 @@
 	desc = "Keeps the germs from flying on your face."
 	permeability_coefficient = 0.01
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 100, rad = 20)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
 
 /obj/item/clothing/head/bio_hood/general
 	icon_state = "bio_general"
@@ -43,7 +41,7 @@
 
 /obj/item/clothing/head/bio_hood/security
 	icon_state = "bio_security"
-	armor = list(melee = 30, bullet = 5, laser = 10, taser = 5, bomb = 20, bio = 100, rad = 20)
+	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 20, bio = 100, rad = 20)
 
 /obj/item/clothing/head/bio_hood/janitor
 	icon_state = "bio_janitor"
@@ -79,7 +77,7 @@
 	desc = "Someone who wears this will look very smart."
 	icon_state = "detective"
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
-	armor = list(melee = 50, bullet = 5, laser = 30, taser = 10, bomb = 20, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 5, laser = 30,energy = 10, bomb = 20, bio = 0, rad = 0)
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -156,7 +154,7 @@
 	icon_state = "helmet"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
 	item_state = "helmet"
-	armor = list(melee = 75, bullet = 10, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 75, bullet = 10, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 
 	protective_temperature = 500
 	heat_transfer_coefficient = 0.10
@@ -188,7 +186,7 @@
 	icon_state = "swat"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES
 	item_state = "swat"
-	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "Thunderdome helmet"
@@ -196,7 +194,7 @@
 	icon_state = "thunderdome"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES
 	item_state = "thunderdome"
-	armor = list(melee = 80, bullet = 60, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/head/helmet/hardhat
 	name = "hard hat"
@@ -207,7 +205,7 @@
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	color = "yellow" //Determines used sprites: hardhat[on]_[color] and hardhat[on]_[color]2 (lying down sprite)
-	armor = list(melee = 30, bullet = 5, laser = 20, taser = 10, bomb = 20, bio = 10, rad = 20)
+	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
 
 /obj/item/clothing/head/helmet/hardhat/orange
 	icon_state = "hardhat0_orange"
@@ -241,7 +239,7 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = 0
-	armor = list(melee = 10, bullet = 5, laser = 10, taser = 5, bomb = 10, bio = 5, rad = 10)
+	armor = list(melee = 10, bullet = 5, laser = 10,energy = 5, bomb = 10, bio = 5, rad = 10)
 
 /obj/item/clothing/head/helmet/HoS
 	name = "HoS Hat"
@@ -249,14 +247,14 @@
 	icon_state = "hoscap"
 	desc = "A hat that shows the security grunts who's in charge!"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
-	armor = list(melee = 80, bullet = 60, laser = 50, taser = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/head/helmet/warden
 	name = "Warden Hat"
 	desc = "Stop right there, criminal scum!"
 	icon_state = "policehelm"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
-	armor = list(melee = 70, bullet = 10, laser = 40, taser = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 70, bullet = 10, laser = 40,energy = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/head/helmet/that
 	name = "Sturdy Top hat"
@@ -264,7 +262,7 @@
 	icon_state = "tophat"
 	item_state = "that"
 	flags = FPRINT|TABLEPASS|HEADSPACE
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/greenbandana
 	name = "Green Bandana"
@@ -272,7 +270,7 @@
 	icon_state = "greenbandana"
 	item_state = "greenbandana"
 	flags = FPRINT|TABLEPASS|HEADSPACE
-	armor = list(melee = 5, bullet = 5, laser = 5, taser = 5, bomb = 15, bio = 15, rad = 15)
+	armor = list(melee = 5, bullet = 5, laser = 5,energy = 5, bomb = 15, bio = 15, rad = 15)
 
 /obj/item/clothing/head/helmet/riot
 	name = "Riot Helmet"
@@ -280,14 +278,14 @@
 	icon_state = "riot"
 	item_state = "helmet"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
-	armor = list(melee = 82, bullet = 15, laser = 5, taser = 5, bomb = 5, bio = 2, rad = 0)
+	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 
 /obj/item/clothing/head/helmet/cap
 	name = "Captain's cap"
 	desc = "For irresponsible Captains."
 	icon_state = "capcap"
 	flags = FPRINT|TABLEPASS|SUITSPACE
-	armor = list(melee = 0, bullet = 0, laser = 2, taser = 2, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/chaplain_hood
 	name = "Chaplain's hood"

@@ -1,35 +1,30 @@
-//These could likely use an Onhit proc
 /obj/item/projectile/ion
 	name = "ion bolt"
 	icon_state = "ion"
-	flag = "taser"//Need to check this
 	damage = 0
+	damage_type = BURN
 	nodamage = 1
-	New()
-		..()
-		effects["emp"] = 1
-		effectprob["emp"] = 80
+	flag = "energy"
 
-/obj/item/projectile/freeze
+
+	on_hit(var/atom/target, var/blocked = 0)
+		empulse(target, 1, 1)
+		return 1
+
+
+
+/obj/item/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
 	damage = 0
-	var/temperature = 0
+	damage_type = BURN
+	nodamage = 1
+	flag = "energy"
+	var/temperature = 300
 
-	proc/Freeze(atom/A as mob|obj|turf|area)
-		if(istype(A, /mob))
-			var/mob/M = A
-			if(M.bodytemperature > temperature)
-				M.bodytemperature = temperature
 
-/obj/item/projectile/plasma
-	name = "plasma blast"
-	icon_state = "plasma_2"
-	damage = 0
-	var/temperature = 800
-
-	proc/Heat(atom/A as mob|obj|turf|area)
-		if(istype(A, /mob/living/carbon))
-			var/mob/M = A
-			if(M.bodytemperature < temperature)
-				M.bodytemperature = temperature
+	on_hit(var/atom/target, var/blocked = 0)//These two could likely check temp protection on the mob
+		if(istype(target, /mob/living))
+			var/mob/M = target
+			M.bodytemperature = temperature
+		return 1

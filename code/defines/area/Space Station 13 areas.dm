@@ -247,6 +247,9 @@ proc/process_ghost_teleport_locs()
 /area/start            // will be unused once kurper gets his login interface patch done
 	name = "start area"
 	icon_state = "start"
+	requires_power = 0
+	luminosity = 1
+	sd_lighting = 0
 
 // === end remove
 

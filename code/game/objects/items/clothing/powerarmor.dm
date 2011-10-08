@@ -8,12 +8,12 @@
 	protective_temperature = 1000
 	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
-	armor = list(melee = 40, bullet = 30, laser = 20, taser = 15, bomb = 25, bio = 10, rad = 10)
+	armor = list(melee = 40, bullet = 30, laser = 20,energy = 15, bomb = 25, bio = 10, rad = 10)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/gun,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 9
 	var/fuel = 0
 
-	var/list/togglearmor = list(melee = 90, bullet = 70, laser = 60, taser = 40, bomb = 75, bio = 75, rad = 75)
+	var/list/togglearmor = list(melee = 90, bullet = 70, laser = 60,energy = 40, bomb = 75, bio = 75, rad = 75)
 	var/active = 0
 
 	var/helmrequired = 1
@@ -199,7 +199,7 @@
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH
 	see_face = 0.0
 	item_state = "swat"
-	armor = list(melee = 40, bullet = 30, laser = 20, taser = 15, bomb = 25, bio = 10, rad = 10)
+	armor = list(melee = 40, bullet = 30, laser = 20,energy = 15, bomb = 25, bio = 10, rad = 10)
 	var/obj/item/clothing/suit/powered/parent
 
 	proc/atmotoggle()
@@ -237,7 +237,7 @@
 	desc = "Not for rookies."
 	flags = FPRINT | TABLEPASS
 	item_state = "swat"
-	armor = list(melee = 40, bullet = 30, laser = 20, taser = 15, bomb = 25, bio = 10, rad = 10)
+	armor = list(melee = 40, bullet = 30, laser = 20,energy = 15, bomb = 25, bio = 10, rad = 10)
 
 /obj/item/clothing/shoes/powered
 	name = "Powered armor"
@@ -245,7 +245,7 @@
 	desc = "Not for rookies."
 	flags = FPRINT | TABLEPASS
 	item_state = "swat"
-	armor = list(melee = 40, bullet = 30, laser = 20, taser = 15, bomb = 25, bio = 10, rad = 10)
+	armor = list(melee = 40, bullet = 30, laser = 20,energy = 15, bomb = 25, bio = 10, rad = 10)
 
 
 obj/item/clothing/suit/powered/spawnable/badmin

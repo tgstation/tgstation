@@ -141,8 +141,8 @@
 		var/turf/T = get_turf(src.loc)
 		if(T)
 			for(var/mob/M in T)
-				M.bullet_act(Proj, def_zone)
-		..()
+				Proj.on_hit(M,M.bullet_act(Proj, def_zone))
+		return
 
 
 

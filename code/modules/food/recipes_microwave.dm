@@ -4,14 +4,14 @@
 /datum/recipe/telebacon
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
-		/obj/item/device/radio/signaler
+		/obj/item/device/assembly/signaler
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
 
 /datum/recipe/syntitelebacon
 	items = list(
 		/obj/item/weapon/syntiflesh,
-		/obj/item/device/radio/signaler
+		/obj/item/device/assembly/signaler
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
 

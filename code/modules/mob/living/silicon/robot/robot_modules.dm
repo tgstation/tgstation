@@ -226,7 +226,6 @@ obj/item/weapon/robot_module/syndicate
 */ //Merged with Service borg, not a death, just a transformation
 
 obj/item/weapon/robot_module/syndicate/New()
-	src.modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 	src.modules += new /obj/item/weapon/card/emag(src)
 
 

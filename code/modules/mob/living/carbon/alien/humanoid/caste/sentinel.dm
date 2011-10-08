@@ -167,35 +167,34 @@
 	set category = "Alien"
 
 	if(powerc(50))
-		if(!isalien(target))
-			toxloss -= 50
-			src << "\green You spit neurotoxin at [target]."
-			for(var/mob/O in oviewers())
-				if ((O.client && !( O.blinded )))
-					O << "\red [src] spits neurotoxin at [target]!"
-			//I'm not motivated enough to revise this. Prjectile code in general needs update.
-			var/turf/T = loc
-			var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
-
-			if(!U || !T)
-				return
-			while(U && !istype(U,/turf))
-				U = U.loc
-			if(!istype(T, /turf))
-				return
-			if (U == T)
-				usr.bullet_act(src, src.get_organ_target())
-				return
-			if(!istype(U, /turf))
-				return
-
-			var/obj/item/projectile/dart/A = new /obj/item/projectile/dart(usr.loc)
-
-			A.current = U
-			A.yo = U.y - T.y
-			A.xo = U.x - T.x
-			//
-			A.process()
-		else
+		if(isalien(target))
 			src << "\green Your allies are not a valid target."
+			return
+		toxloss -= 50
+		src << "\green You spit neurotoxin at [target]."
+		for(var/mob/O in oviewers())
+			if ((O.client && !( O.blinded )))
+				O << "\red [src] spits neurotoxin at [target]!"
+		//I'm not motivated enough to revise this. Prjectile code in general needs update.
+		var/turf/T = loc
+		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+
+		if(!U || !T)
+			return
+		while(U && !istype(U,/turf))
+			U = U.loc
+		if(!istype(T, /turf))
+			return
+		if (U == T)
+			usr.bullet_act(src, src.get_organ_target())
+			return
+		if(!istype(U, /turf))
+			return
+
+		var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(usr.loc)
+
+		A.current = U
+		A.yo = U.y - T.y
+		A.xo = U.x - T.x
+		A.process()
 	return

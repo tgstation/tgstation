@@ -90,7 +90,7 @@
 /obj/item/powerarmor/reactive
 	name = "Adminbus power armor reactive plating"
 	desc = "Made with the rare Badminium molecule."
-	var/list/togglearmor = list(melee = 250, bullet = 100, laser = 100, taser = 100, bomb = 100, bio = 100, rad = 100)
+	var/list/togglearmor = list(melee = 250, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
 	 //Good lord an active energy axe does 150 damage a swing? Anyway, barring var editing, this armor loadout should be impervious to anything. Enjoy, badmins~ --NEO
 
 	toggle(sudden = 0)
@@ -116,7 +116,7 @@
 	centcomm
 		name = "CentComm power armor reactive plating"
 		desc = "Pretty effective against everything, not perfect though."
-		togglearmor = list(melee = 90, bullet = 70, laser = 60, taser = 40, bomb = 75, bio = 75, rad = 75)
+		togglearmor = list(melee = 90, bullet = 70, laser = 60,energy = 40, bomb = 75, bio = 75, rad = 75)
 		slowdown = 2
 
 
@@ -149,24 +149,20 @@
 				parent.gas_transfer_coefficient = 1
 				parent.permeability_coefficient = 1
 				parent.heat_transfer_coefficient = 1
-				parent.radiation_protection = 0
 				parent.flags &= ~SUITSPACE
 				if(parent.helmrequired)
 					parent.helm.gas_transfer_coefficient = 1
 					parent.helm.permeability_coefficient = 1
 					parent.helm.heat_transfer_coefficient = 1
-					parent.helm.radiation_protection = 0
 					parent.helm.flags &= ~HEADSPACE
 				if(parent.glovesrequired)
 					parent.gloves.gas_transfer_coefficient = 1
 					parent.gloves.permeability_coefficient = 1
 					parent.gloves.heat_transfer_coefficient = 1
-					parent.gloves.radiation_protection = 0
 				if(parent.shoesrequired)
 					parent.shoes.gas_transfer_coefficient = 1
 					parent.shoes.permeability_coefficient = 1
 					parent.shoes.heat_transfer_coefficient = 1
-					parent.shoes.radiation_protection = 0
 				sealed = 0
 
 			if(0)
@@ -174,24 +170,20 @@
 				parent.gas_transfer_coefficient = 0.01
 				parent.permeability_coefficient = 0.02
 				parent.heat_transfer_coefficient = 0.02
-				parent.radiation_protection = 0.75
 				parent.flags |= SUITSPACE
 				if(parent.helmrequired)
 					parent.helm.gas_transfer_coefficient = 0.01
 					parent.helm.permeability_coefficient = 0.02
 					parent.helm.heat_transfer_coefficient = 0.02
-					parent.helm.radiation_protection = 0.75
 					parent.helm.flags |= HEADSPACE
 				if(parent.glovesrequired)
 					parent.gloves.gas_transfer_coefficient = 0.01
 					parent.gloves.permeability_coefficient = 0.02
 					parent.gloves.heat_transfer_coefficient = 0.02
-					parent.gloves.radiation_protection = 0.75
 				if(parent.shoesrequired)
 					parent.shoes.gas_transfer_coefficient = 0.01
 					parent.shoes.permeability_coefficient = 0.02
 					parent.shoes.heat_transfer_coefficient = 0.02
-					parent.shoes.radiation_protection = 0.75
 				sealed = 1
 
 	adminbus
@@ -221,7 +213,6 @@
 					parent.helm.gas_transfer_coefficient = 0.01
 					parent.helm.permeability_coefficient = 0.02
 					parent.helm.heat_transfer_coefficient = 0.02
-					parent.helm.radiation_protection = 0.75
 					parent.helm.flags |= HEADSPACE
 					user << "\blue Helmet atmospheric seals engaged."
 					if(manual)
@@ -234,7 +225,6 @@
 					parent.helm.gas_transfer_coefficient = 1
 					parent.helm.permeability_coefficient = 1
 					parent.helm.heat_transfer_coefficient = 1
-					parent.helm.radiation_protection = 0
 					parent.helm.flags &= ~HEADSPACE
 					if(manual)
 						for (var/armorvar in helm.armor)

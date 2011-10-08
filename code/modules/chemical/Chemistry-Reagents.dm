@@ -20,8 +20,7 @@ datum
 
 		proc
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume) //By default we have a chance to transfer some
-				if(!istype(M, /mob/living))
-					return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
+				if(!istype(M, /mob/living))	return 0
 				var/datum/reagent/self = src
 				src = null										  //of the reagent to the mob on TOUCHING it.
 
@@ -56,7 +55,7 @@ datum
 						if(prob(chance) && !block)
 							if(M.reagents)
 								M.reagents.add_reagent(self.id,self.volume/2)
-				return
+				return 1
 
 			reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
 				src = null						//if it can hold reagents. nope!
@@ -799,8 +798,9 @@ datum
 			color = "#13BC5E" // rgb: 19, 188, 94
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				if(!..())	return
 				src = null
-				if ( (method==TOUCH && prob(33)) || method==INGEST)
+				if((method==TOUCH && prob(33)) || method==INGEST)
 					randmuti(M)
 					if(prob(98))
 						randmutb(M)

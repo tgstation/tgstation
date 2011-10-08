@@ -124,7 +124,7 @@
 			return
 
 		playsound(chassis, 'Laser.ogg', 50, 1)
-		var/obj/item/projectile/electrode/A = new /obj/item/projectile/electrode(curloc)
+		var/obj/item/projectile/energy/electrode/A = new /obj/item/projectile/energy/electrode(curloc)
 		A.original = targloc
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
@@ -289,7 +289,7 @@
 				continue
 
 			playsound(chassis, 'Gunshot.ogg', 50, 1)
-			var/obj/item/projectile/weakbullet/A = new /obj/item/projectile/weakbullet(curloc)
+			var/obj/item/projectile/bullet/weakbullet/A = new /obj/item/projectile/bullet/weakbullet(curloc)
 			src.projectiles--
 			A.original = targloc
 			A.current = curloc

@@ -11,9 +11,9 @@
 		back = jetpack
 		return
 
-	bullet_act(flags)
-		take_overall_damage(15,0)
-		return
+//	bullet_act(flags)
+//		take_overall_damage(15,0)
+//		return
 
 	movement_delay()
 		return -5

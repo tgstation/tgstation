@@ -6,7 +6,7 @@
 	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES
 	see_face = 0.0
 	permeability_coefficient = 0.01
-	armor = list(melee = 60, bullet = 50, laser = 50, taser = 25, bomb = 50, bio = 20, rad = 20)
+	armor = list(melee = 60, bullet = 50, laser = 50,energy = 25, bomb = 50, bio = 20, rad = 20)
 
 
 
@@ -15,7 +15,7 @@
 	desc = "That's not red paint. That's real blood."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
-	armor = list(melee = 65, bullet = 55, laser = 35, taser = 20, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 65, bullet = 55, laser = 35,energy = 20, bomb = 30, bio = 30, rad = 30)
 
 
 
@@ -23,7 +23,7 @@
 	name = "officer's beret"
 	desc = "An armored beret commonly used by special operations officers."
 	icon_state = "beret_badge"
-	armor = list(melee = 65, bullet = 55, laser = 35, taser = 20, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 65, bullet = 55, laser = 35,energy = 20, bomb = 30, bio = 30, rad = 30)
 
 
 
@@ -48,7 +48,7 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
 
 /obj/item/clothing/suit/space/pirate
@@ -59,4 +59,4 @@
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 0
-	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)

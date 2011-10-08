@@ -276,19 +276,9 @@
 	return
 
 /mob/living/silicon/ai/bullet_act(var/obj/item/projectile/Proj)
-
-	// AI bullet code is pretty simple. No other effect really need to be added.
-	if(!Proj.nodamage) bruteloss += Proj.damage
-
-	if(Proj.effects["emp"])
-		var/emppulse = Proj.effects["emp"]
-		if(prob(Proj.effectprob["emp"]))
-			empulse(src, emppulse, emppulse)
-		else
-			empulse(src, 0, emppulse)
-
+	..(Proj)
 	updatehealth()
-
+	return 2
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)

@@ -68,16 +68,6 @@
 		return ..(gibbed)
 
 
-/mob/living/blob/bullet_act(var/obj/item/projectile/Proj, var/datum/organ/external/def_zone)
-	for(var/i = 1, i<= Proj.mobdamage.len, i++)
-		switch(i)
-			if(1)
-				bruteloss += Proj.mobdamage[BRUTE]
-			if(2)
-				fireloss += Proj.mobdamage[BURN]
-	return
-
-
 /mob/living/blob/blob_act()
 	src << "The blob attempts to reabsorb you."
 	toxloss += 20

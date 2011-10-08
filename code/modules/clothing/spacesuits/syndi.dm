@@ -4,7 +4,7 @@
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."
-	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
 
 /obj/item/clothing/suit/space/syndicate
@@ -15,7 +15,7 @@
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
-	armor = list(melee = 60, bullet = 50, laser = 30, taser = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
 
 
@@ -165,7 +165,7 @@
 	desc = "Professionals Have Standards, Be Polite, Be Efficient, Have a plan to kill everyone you meet."
 	icon_state = "syndicate-helm-black"
 	item_state = "syndicate-helm-black"
-	armor = list(melee = 65, bullet = 55, laser = 35, taser = 20, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 65, bullet = 55, laser = 35,energy = 20, bomb = 30, bio = 30, rad = 30)
 
 
 /obj/item/clothing/suit/space/syndicate/elite
@@ -174,7 +174,7 @@
 	icon_state = "syndicate-black"
 	item_state = "syndicate-black"
 	slowdown = 1
-	armor = list(melee = 80, bullet = 60, laser = 50, taser = 25, bomb = 50, bio = 10, rad = 0)
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 
 
 
