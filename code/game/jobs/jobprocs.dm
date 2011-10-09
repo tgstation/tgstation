@@ -17,7 +17,7 @@
 		if (!length(job))
 			continue
 
-		var/pos = findtext(job, " ")
+		var/pos = findtext(job, "=")
 		var/name = null
 		var/value = null
 
