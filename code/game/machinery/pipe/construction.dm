@@ -15,6 +15,8 @@ Buildable meters
 #define PIPE_SCRUBBER			10
 #define PIPE_INSULATED_STRAIGHT	11
 #define PIPE_INSULATED_BENT		12
+#define PIPE_GAS_FILTER			13
+#define PIPE_GAS_MIXER			14
 
 /obj/item/pipe
 	name = "pipe"
@@ -57,6 +59,10 @@ Buildable meters
 			src.pipe_type = PIPE_MVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/binary/pump))
 			src.pipe_type = PIPE_PUMP
+		else if(istype(make_from, /obj/machinery/atmospherics/trinary/filter))
+			src.pipe_type = PIPE_GAS_FILTER
+		else if(istype(make_from, /obj/machinery/atmospherics/trinary/mixer))
+			src.pipe_type = PIPE_GAS_MIXER
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_scrubber))
 			src.pipe_type = PIPE_SCRUBBER
 	else
@@ -84,6 +90,8 @@ Buildable meters
 		"scrubber", \
 		"insulated pipe", \
 		"bent insulated pipe", \
+		"gas filter", \
+		"gas mixer", \
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	var/list/islist = list( \
@@ -100,6 +108,8 @@ Buildable meters
 		"scrubber", \
 		"insulated", \
 		"insulated", \
+		"filter", \
+		"mixer", \
 	)
 	icon_state = islist[pipe_type + 1]
 
@@ -162,6 +172,8 @@ Buildable meters
 			return dir
 		if(PIPE_MANIFOLD)
 			return flip|cw|acw
+		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER)
+			return dir|flip|cw
 	return 0
 
 /obj/item/pipe/proc/get_pdir() //endpoints for regular pipes
@@ -366,6 +378,45 @@ Buildable meters
 				P.node2.initialize()
 				P.node2.build_network()
 
+		if(PIPE_GAS_FILTER)		//gas filter
+			var/obj/machinery/atmospherics/trinary/filter/P = new(src.loc)
+			P.dir = dir
+			P.initialize_directions = pipe_dir
+			if (pipename)
+				P.name = pipename
+			var/turf/T = P.loc
+			P.level = T.intact ? 2 : 1
+			P.initialize()
+			P.build_network()
+			if (P.node1)
+				P.node1.initialize()
+				P.node1.build_network()
+			if (P.node2)
+				P.node2.initialize()
+				P.node2.build_network()
+			if (P.node3)
+				P.node3.initialize()
+				P.node3.build_network()
+
+		if(PIPE_GAS_MIXER)		//gas filter
+			var/obj/machinery/atmospherics/trinary/mixer/P = new(src.loc)
+			P.dir = dir
+			P.initialize_directions = pipe_dir
+			if (pipename)
+				P.name = pipename
+			var/turf/T = P.loc
+			P.level = T.intact ? 2 : 1
+			P.initialize()
+			P.build_network()
+			if (P.node1)
+				P.node1.initialize()
+				P.node1.build_network()
+			if (P.node2)
+				P.node2.initialize()
+				P.node2.build_network()
+			if (P.node3)
+				P.node3.initialize()
+				P.node3.build_network()
 
 		if(PIPE_SCRUBBER)		//scrubber
 			var/obj/machinery/atmospherics/unary/vent_scrubber/S = new(src.loc)
@@ -448,3 +499,5 @@ Buildable meters
 #undef PIPE_SCRUBBER
 #undef PIPE_INSULATED_STRAIGHT
 #undef PIPE_INSULATED_BENT
+#undef PIPE_GAS_FILTER
+#undef PIPE_GAS_MIXER
