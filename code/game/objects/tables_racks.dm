@@ -155,8 +155,8 @@ TABLE AND RACK OBJECT INTERATIONS
 		del(src)
 		return
 
-	user.drop_item()
-	if(W && W.loc)	W.loc = src.loc
+	user.drop_item(src)
+	//if(W && W.loc)	W.loc = src.loc // Unnecessary -  see: mob/proc/drop_item(atom)    - Doohl
 	return
 
 
@@ -197,8 +197,8 @@ TABLE AND RACK OBJECT INTERATIONS
 		del(src)
 		return
 
-	user.drop_item()
-	if(W && W.loc)	W.loc = src.loc
+	user.drop_item(src)
+	//if(W && W.loc)	W.loc = src.loc
 	return
 
 
@@ -239,8 +239,8 @@ TABLE AND RACK OBJECT INTERATIONS
 			return
 		if(isrobot(user))
 			return
-		user.drop_item()
-		if(W && W.loc)	W.loc = src.loc
+		user.drop_item(src)
+		//if(W && W.loc)	W.loc = src.loc
 		return
 
 	if (istype(W, /obj/item/weapon/wrench))
@@ -267,8 +267,8 @@ TABLE AND RACK OBJECT INTERATIONS
 		del(src)
 		return
 
-	user.drop_item()
-	if(W && W.loc)	W.loc = src.loc
+	user.drop_item(src)
+	//if(W && W.loc)	W.loc = src.loc
 	return
 
 //RACKS

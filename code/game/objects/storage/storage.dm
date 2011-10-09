@@ -129,6 +129,20 @@
 		user << "\red This [W] is too big for this [src]"
 		return
 
+	if(istype(W, /obj/item/weapon/tray))
+		var/obj/item/weapon/tray/T = W
+		if(T.calc_carry() > 0)
+			if(prob(85))
+				user << "\red The tray won't fit in [src]."
+				return
+			else
+
+				W.loc = user.loc
+				if ((user.client && user.s_active != src))
+					user.client.screen -= W
+				W.dropped(user)
+				user << "\red God damnit!"
+
 	var/sum_w_class = W.w_class
 	for(var/obj/item/I in contents)
 		sum_w_class += I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
@@ -138,7 +152,7 @@
 		return
 
 	if ( W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
-		user << "\red The [src] cannot hold  [W] as it's a storage item of the same size."
+		user << "\red The [src] cannot hold [W] as it's a storage item of the same size."
 		return //To prevent the stacking of the same sized items.
 
 	user.u_equip(W)

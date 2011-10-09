@@ -62,6 +62,10 @@
 			message = "<B>[src]</B> [input]"
 
 		if ("me")
+			if (muted || silent)
+				return
+			if (stat)
+				return
 			if(!(message))
 				return
 			else

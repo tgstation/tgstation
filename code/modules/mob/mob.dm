@@ -159,7 +159,7 @@
 			T.Entered(item)
 	return
 
-/mob/proc/drop_item()
+/mob/proc/drop_item(var/atom/target)
 	var/obj/item/W = equipped()
 
 	if (W)
@@ -178,7 +178,10 @@
 		if (client)
 			client.screen -= W
 		if (W)
-			W.loc = loc
+			if(target)
+				W.loc = target.loc
+			else
+				W.loc = loc
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)

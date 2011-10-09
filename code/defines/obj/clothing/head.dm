@@ -261,7 +261,7 @@
 	desc = "An amish looking helmet"
 	icon_state = "tophat"
 	item_state = "that"
-	flags = FPRINT|TABLEPASS|HEADSPACE
+	flags = FPRINT|TABLEPASS
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/greenbandana
@@ -269,7 +269,7 @@
 	desc = "A green bandana with some fine nanotech lining."
 	icon_state = "greenbandana"
 	item_state = "greenbandana"
-	flags = FPRINT|TABLEPASS|HEADSPACE
+	flags = FPRINT|TABLEPASS
 	armor = list(melee = 5, bullet = 5, laser = 5,energy = 5, bomb = 15, bio = 15, rad = 15)
 
 /obj/item/clothing/head/helmet/riot
@@ -303,4 +303,4 @@
 	name = "Nurse Hat"
 	desc = "Smokin'"
 	icon_state = "nursehat"
-	flags = FPRINT|TABLEPASS|HEADSPACE
+	flags = FPRINT|TABLEPASS

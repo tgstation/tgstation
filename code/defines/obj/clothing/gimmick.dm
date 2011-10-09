@@ -2,13 +2,13 @@
 	name = "Rabbit Ears"
 	desc = "Wearing these makes you looks useless, and only good for your sex appeal."
 	icon_state = "bunny"
-	flags = FPRINT | TABLEPASS | HEADSPACE
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/kitty
 	name = "Kitty Ears"
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
-	flags = FPRINT | TABLEPASS | HEADSPACE
+	flags = FPRINT | TABLEPASS
 	var/icon/mob
 	var/icon/mob2
 

@@ -93,6 +93,20 @@ KNIFE
 ///////////////////////////////// TRAY -Agouri :3   ///////////////////////////////////////////////
 
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+
+	// Drop all the things. All of them.
+	overlays = null
+	for(var/obj/item/I in carrying)
+		I.loc = M.loc
+		carrying.Remove(I)
+		if(isturf(I.loc))
+			spawn()
+				for(var/i = 1, i <= rand(1,2), i++)
+					if(I)
+						step(I, pick(NORTH,SOUTH,EAST,WEST))
+						sleep(rand(2,4))
+
+
 	if((user.mutations & CLOWN) && prob(50))              //What if he's a clown?
 		M << "\red You accidentally slam yourself with the [src]!"
 		M.weakened += 1
@@ -123,12 +137,12 @@ KNIFE
 		else
 			M.take_organ_damage(5)
 		if(prob(50))
-			//playsound(M, 'trayhit1.wav', 50, 1)
+			playsound(M, 'trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 			return
 		else
-			//playsound(M, 'trayhit2.wav', 50, 1)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
+			playsound(M, 'trayhit2.ogg', 50, 1)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 			return
@@ -151,11 +165,11 @@ KNIFE
 				location.add_blood(H)
 
 		if(prob(50))
-			//playsound(M, 'trayhit1.wav', 50, 1)
+			playsound(M, 'trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		else
-			//playsound(M, 'trayhit2.wav', 50, 1)  //sound playin'
+			playsound(M, 'trayhit2.ogg', 50, 1)  //sound playin'
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		if(prob(10))
@@ -175,11 +189,11 @@ KNIFE
 				location.add_blood(H)
 
 		if(prob(50))
-		//	playsound(M, 'trayhit1.ogg', 50, 1)
+			playsound(M, 'trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		else
-			//playsound(M, 'trayhit2.ogg', 50, 1)  //sound playin' again
+			playsound(M, 'trayhit2.ogg', 50, 1)  //sound playin' again
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		if(prob(30))
@@ -192,6 +206,73 @@ KNIFE
 				M.weakened+=2
 				return
 			return
+
+
+/*
+===============~~~~~================================~~~~~====================
+=																			=
+=  Code for trays carrying things. By Doohl for Doohl erryday Doohl Doohl~  =
+=																			=
+===============~~~~~================================~~~~~====================
+*/
+/obj/item/weapon/tray/proc/calc_carry()
+	// calculate the weight of the items on the tray
+	var/val = 0 // value to return
+
+	for(var/obj/item/I in carrying)
+		if(I.w_class == 1.0)
+			val ++
+		else if(I.w_class == 2.0)
+			val += 3
+		else
+			val += 5
+
+	return val
+
+/obj/item/weapon/tray/pickup(mob/user)
+	overlays = null
+
+	if(!isturf(loc))
+		return
+
+	for(var/obj/item/I in loc)
+		if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
+			var/add = 0
+			if(I.w_class == 1.0)
+				add = 1
+			else if(I.w_class == 2.0)
+				add = 3
+			else
+				add = 5
+			if(calc_carry() + add >= max_carry)
+				break
+
+			I.loc = src
+			carrying.Add(I)
+			overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
+
+/obj/item/weapon/tray/dropped(mob/user)
+	var/foundtable = 0
+	for(var/obj/structure/table/T in loc)
+		foundtable = 1
+		break
+
+	overlays = null
+
+	for(var/obj/item/I in carrying)
+		I.loc = loc
+		carrying.Remove(I)
+		if(!foundtable && isturf(loc))
+			// if no table, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
+			spawn()
+				for(var/i = 1, i <= rand(1,2), i++)
+					if(I)
+						step(I, pick(NORTH,SOUTH,EAST,WEST))
+						sleep(rand(2,4))
+
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //Enough with the violent stuff, here's what happens if you try putting food on it

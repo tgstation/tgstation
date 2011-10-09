@@ -16,8 +16,8 @@ BIKE HORN
 		M.pulling = null
 		M << "\blue You slipped on the [name]!"
 		playsound(src.loc, 'slip.ogg', 50, 1, -3)
-		M.stunned = 8
-		M.weakened = 5
+		M.stunned = 4
+		M.weakened = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/HasEntered(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
@@ -28,8 +28,8 @@ BIKE HORN
 		M.pulling = null
 		M << "\blue You slipped on the [name]!"
 		playsound(src.loc, 'slip.ogg', 50, 1, -3)
-		M.stunned = 10
-		M.weakened = 7
+		M.stunned = 8
+		M.weakened = 5
 
 /obj/item/weapon/soap/HasEntered(AM as mob|obj) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
 	if (istype(AM, /mob/living/carbon))
@@ -40,8 +40,8 @@ BIKE HORN
 		M.pulling = null
 		M << "\blue You slipped on the [name]!"
 		playsound(src.loc, 'slip.ogg', 50, 1, -3)
-		M.stunned = 8
-		M.weakened = 5
+		M.stunned = 3
+		M.weakened = 2
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user as mob)
 	if(istype(target,/obj/effect/decal/cleanable))
