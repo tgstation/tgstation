@@ -166,14 +166,14 @@ datum/objective/hijack
 			return 0
 		if(emergency_shuttle.location<2)
 			return 0
-		if(!owner.current || owner.current.stat ==2)
+		if(!owner.current || owner.current.stat)
 			return 0
 		var/area/shuttle = locate(/area/shuttle/escape/centcom)
 		var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
 		for(var/mob/living/player in world)
 			if(player.type in protected_mobs)	continue
 			if (player.mind && (player.mind != owner))
-				if (player.stat != 2) //they're not dead
+				if (!player.stat) //they're not dead or in crit
 					if (get_turf(player) in shuttle)
 						return 0
 		return 1

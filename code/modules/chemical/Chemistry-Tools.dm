@@ -1304,6 +1304,7 @@
 /obj/item/weapon/reagent_containers/food/snacks
 	var/slice_path
 	var/slices_num
+
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 		if((slices_num <= 0 || !slices_num) || !slice_path)
@@ -1322,6 +1323,14 @@
 				istype(W, /obj/item/weapon/shovel) \
 			)
 			inaccurate = 1
+		else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
+			user << "\red You slip [W] inside [src]."
+			user.u_equip(W)
+			if ((user.client && user.s_active != src))
+				user.client.screen -= W
+			W.dropped(user)
+			add_fingerprint(user)
+			contents += W
 			return
 		else
 			return 1
@@ -1351,6 +1360,12 @@
 			reagents.trans_to(slice,reagents_per_slice)
 		del(src)
 		return
+
+	Del()
+		if(contents)
+			for(var/atom/movable/something in contents)
+				something.loc = get_turf(src)
+		..()
 
 
 ////////////////////////////////////////////////////////////////////////////////
