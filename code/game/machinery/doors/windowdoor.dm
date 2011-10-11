@@ -123,7 +123,7 @@
 	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		src.operating = -1
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
-			var/datum/effect/system/spark_spread/spark_system = new /datum/effect/system/spark_spread()
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)

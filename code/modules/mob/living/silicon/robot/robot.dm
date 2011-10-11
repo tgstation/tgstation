@@ -1,6 +1,6 @@
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
-	spark_system = new /datum/effect/system/spark_spread()
+	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	spawn (1)
@@ -584,7 +584,7 @@
 
 				flick("noise", flash)
 
-				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
 

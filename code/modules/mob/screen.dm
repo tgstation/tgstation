@@ -399,7 +399,7 @@
 		if("hand")
 			usr:swap_hand()
 		if("resist")
-			if (usr.next_move < world.time)
+			if(usr.next_move < world.time)
 				return
 			usr.next_move = world.time + 20
 			if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))

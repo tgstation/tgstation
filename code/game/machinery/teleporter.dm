@@ -132,7 +132,7 @@
 		else
 			do_teleport(M, com.locked, 0) //dead-on precision
 	else
-		var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
 		for(var/mob/B in hearers(src, null))
@@ -219,7 +219,7 @@
 	M.loc = tmploc
 	sleep(2)
 
-	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, M)
 	s.start()
 	return

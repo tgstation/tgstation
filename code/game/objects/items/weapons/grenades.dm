@@ -65,7 +65,7 @@ FLASHBANG
 
 
 	clown_check(var/mob/living/user)
-		if((user.mutations & CLOWN) && prob(50))
+		if((user.mutations & CLUMSY) && prob(50))
 			user << "\red Huh? How does this thing work?!"
 			src.active = 1
 			src.icon_state = "empar"
@@ -242,7 +242,7 @@ FLASHBANG
 
 
 	clown_check(var/mob/living/user)
-		if ((user.mutations & CLOWN) && prob(50))
+		if ((user.mutations & CLUMSY) && prob(50))
 			user << "\red Huh? How does this thing work?!"
 			src.active = 1
 			src.icon_state = "flashbang1"

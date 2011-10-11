@@ -134,7 +134,7 @@
 					var/list/the_targets = list(T,T1,T2)
 					spawn(0)
 						for(var/a=0, a<5, a++)
-							var/obj/effect/water/W = new /obj/effect/water(get_turf(chassis))
+							var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(chassis))
 							if(!W)
 								return
 							var/turf/my_target = pick(the_targets)

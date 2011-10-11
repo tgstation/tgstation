@@ -54,7 +54,7 @@ var/global/datum/controller/gameticker/ticker
 			var/datum/game_mode/M = config.pick_mode(secret_force_mode)
 			if(M.can_start())
 				src.mode = config.pick_mode(secret_force_mode)
-		ResetOccupations()
+		job_master.ResetOccupations()
 		if(!src.mode)
 			src.mode = pickweight(runnable_modes)
 		if(src.mode)
@@ -67,18 +67,18 @@ var/global/datum/controller/gameticker/ticker
 		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
 		del(mode)
 		current_state = GAME_STATE_PREGAME
-		ResetOccupations()
+		job_master.ResetOccupations()
 		return 0
 
 	//Configure mode and assign player to special mode stuff
 
-	DivideOccupations() //Distribute jobs
+	job_master.DivideOccupations() //Distribute jobs
 	var/can_continue = src.mode.pre_setup()//Setup special modes
 	if(!can_continue)
 		del(mode)
 		current_state = GAME_STATE_PREGAME
 		world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
-		ResetOccupations()
+		job_master.ResetOccupations()
 		return 0
 
 	if(hide_mode)
@@ -143,15 +143,12 @@ var/global/datum/controller/gameticker/ticker
 	proc/equip_characters()
 		var/captainless=1
 		for(var/mob/living/carbon/human/player in world)
-			if(player)
-				if(player.mind)
-					if(player.mind.assigned_role)
-						if(player.mind.assigned_role == "Captain")
-							captainless=0
-						if(player.mind.assigned_role != "MODE")
-							player.Equip_Rank(player.mind.assigned_role)
-
-		if (captainless)
+			if(player && player.mind && player.mind.assigned_role)
+				if(player.mind.assigned_role == "Captain")
+					captainless=0
+				if(player.mind.assigned_role != "MODE")
+					job_master.EquipRank(player, player.mind.assigned_role, 0)
+		if(captainless)
 			world << "Captainship not forced on anyone."
 
 

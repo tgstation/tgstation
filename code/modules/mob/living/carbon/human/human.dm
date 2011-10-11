@@ -264,107 +264,29 @@
 			if (prob(50) && !shielded)
 				paralysis += 10
 
-	for(var/organ in organs)
-		var/datum/organ/external/temp = organs[text("[]", organ)]
-		if (istype(temp, /datum/organ/external))
-			switch(temp.name)
-				if("head")
-					temp.take_damage(b_loss * 0.2, f_loss * 0.2)
-				if("chest")
-					temp.take_damage(b_loss * 0.4, f_loss * 0.4)
-				if("groin")
-					temp.take_damage(b_loss * 0.1, f_loss * 0.1)
-				if("l_arm")
-					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-				if("r_arm")
-					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-/*				if("l_hand")
-/					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)
-				if("r_hand")
-					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)*/
-				if("l_leg")
-					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-				if("r_leg")
-					temp.take_damage(b_loss * 0.05, f_loss * 0.05)
-/*				if("l_foot")
-					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)
-				if("r_foot")
-					temp.take_damage(b_loss * 0.0225, f_loss * 0.0225)*/
-
+	for(var/datum/organ/external/temp in organs)
+		switch(temp.name)
+			if("head")
+				temp.take_damage(b_loss * 0.2, f_loss * 0.2)
+			if("chest")
+				temp.take_damage(b_loss * 0.4, f_loss * 0.4)
+			if("l_arm")
+				temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+			if("r_arm")
+				temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+			if("l_leg")
+				temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+			if("r_leg")
+				temp.take_damage(b_loss * 0.05, f_loss * 0.05)
 	UpdateDamageIcon()
 
 
 /mob/living/carbon/human/blob_act()
-	if (stat == 2)
-		return
-	var/damage = null
-	if (stat != 2)
-		damage = rand(30,40)
-
+	if(stat == 2)	return
 	show_message("\red The blob attacks you!")
-
-	var/list/zones = list("head","chest","chest", "groin", "l_arm", "r_arm", "l_leg", "r_leg")
-
-	var/zone = pick(zones)
-
-	var/datum/organ/external/temp = organs["[zone]"]
-
-	switch(zone)//This really needs an update badly
-		if ("head")
-			if ((((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD)) && prob(99)))
-				if (prob(20))
-					temp.take_damage(damage, 0)
-				else
-					show_message("\red You have been protected from a hit to the head.")
-				return
-			if (damage > 4.9)
-				if (weakened < 10)
-					weakened = rand(10, 15)
-				for(var/mob/O in viewers(src, null))
-					O.show_message(text("\red <B>The blob has weakened []!</B>", src), 1, "\red You hear someone fall.", 2)
-			temp.take_damage(damage)
-		if ("chest")
-			if ((((wear_suit && wear_suit.body_parts_covered & UPPER_TORSO) || (w_uniform && w_uniform.body_parts_covered & UPPER_TORSO)) && prob(85)))
-				show_message("\red You have been protected from a hit to the chest.")
-				return
-			if (damage > 4.9)
-				if (prob(50))
-					if (weakened < 5)
-						weakened = 5
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>The blob has knocked down []!</B>", src), 1, "\red You hear someone fall.", 2)
-				else
-					if (stunned < 5)
-						stunned = 5
-					for(var/mob/O in viewers(src, null))
-						if(O.client)	O.show_message(text("\red <B>The blob has stunned []!</B>", src), 1)
-				if(stat != 2)	stat = 1
-			temp.take_damage(damage)
-		if ("groin")
-			if ((((wear_suit && wear_suit.body_parts_covered & LOWER_TORSO) || (w_uniform && w_uniform.body_parts_covered & LOWER_TORSO)) && prob(75)))
-				show_message("\red You have been protected from a hit to the lower chest.")
-				return
-			else
-				temp.take_damage(damage, 0)
-
-
-		if("l_arm")
-			temp.take_damage(damage, 0)
-		if("r_arm")
-			temp.take_damage(damage, 0)
-		if("l_hand")
-			temp.take_damage(damage, 0)
-		if("r_hand")
-			temp.take_damage(damage, 0)
-		if("l_leg")
-			temp.take_damage(damage, 0)
-		if("r_leg")
-			temp.take_damage(damage, 0)
-		if("l_foot")
-			temp.take_damage(damage, 0)
-		if("r_foot")
-			temp.take_damage(damage, 0)
-
+	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
 	UpdateDamageIcon()
 	return
 
@@ -1137,51 +1059,19 @@
 */
 	last_b_state = stat
 
-/mob/living/carbon/human/hand_p(mob/M as mob)//update needed
-	if (M.a_intent == "hurt")
-		if (istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
-			return
-		if (health > 0)
-			if (istype(wear_suit, /obj/item/clothing/suit/space))
-				if (prob(25))
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return
-			else if (istype(wear_suit, /obj/item/clothing/suit/space/santa))
-				if (prob(25))
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return
-			else if (istype(wear_suit, /obj/item/clothing/suit/bio_suit))
-				if (prob(25))
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return
-			else if (istype(wear_suit, /obj/item/clothing/suit/armor))
-				if (prob(25))
-					for(var/mob/O in viewers(src, null))
-						O.show_message(text("\red <B>[M.name] has attempted to bite []!</B>", src), 1)
-					return
-			else
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-				var/damage = rand(1, 3)
-				var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg", "groin")
-				if (istype(organs[text("[]", dam_zone)], /datum/organ/external))
-					var/datum/organ/external/temp = organs[text("[]", dam_zone)]
-					if (temp.take_damage(damage, 0))
-						UpdateDamageIcon()
-					else
-						UpdateDamage()
-				updatehealth()
+/mob/living/carbon/human/hand_p(mob/M as mob)
+	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+	var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+	var/armor = run_armor_check(affecting, "melee")
+	apply_damage(rand(1,2), BRUTE, affecting, armor)
+	if(armor >= 2)	return
 
-				for(var/datum/disease/D in M.viruses)
-					if(istype(D, /datum/disease/jungle_fever))
-						var/mob/living/carbon/human/H = src
-						src = null
-						src = H.monkeyize()
-						contract_disease(D,1,0)
+	for(var/datum/disease/D in M.viruses)
+		if(istype(D, /datum/disease/jungle_fever))
+			var/mob/living/carbon/human/H = src
+			src = null
+			src = H.monkeyize()
+			contract_disease(D,1,0)
 	return
 
 
@@ -1240,7 +1130,7 @@
 				if (stunned < power)
 					stunned = power
 
-				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
 

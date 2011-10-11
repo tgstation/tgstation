@@ -29,7 +29,7 @@
 	var/on = 0.0
 	w_class = 4.0
 	item_state = "jetpack"
-	var/datum/effect/system/ion_trail_follow/ion_trail
+	var/datum/effect/effect/system/ion_trail_follow/ion_trail
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 	//volume = 140 //jetpack sould be larger, but then it will never deplete -rastaf0
 
@@ -400,7 +400,7 @@
 
 /obj/item/weapon/tank/jetpack/New()
 	..()
-	src.ion_trail = new /datum/effect/system/ion_trail_follow()
+	src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
 	src.ion_trail.set_up(src)
 	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
@@ -424,7 +424,7 @@
 /obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user as mob)
 	if (!( src.on ))
 		return 0
-	if ((num < 0.01 || src.air_contents.total_moles() < num))
+	if ((num < 0.005 || src.air_contents.total_moles() < num))
 		src.ion_trail.stop()
 		return 0
 

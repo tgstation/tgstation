@@ -28,354 +28,83 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"infested monkey" = ispath(text2path("/datum/game_mode/monkey")),
 )
 */
+var/const
+	BE_TRAITOR   =(1<<0)
+	BE_OPERATIVE =(1<<1)
+	BE_CHANGELING=(1<<2)
+	BE_WIZARD    =(1<<3)
+	BE_MALF      =(1<<4)
+	BE_REV       =(1<<5)
+	BE_ALIEN     =(1<<6)
+	BE_CULTIST   =(1<<7)
+	BE_MONKEY    =(1<<8)
+	BE_PAI       =(1<<9)
 
 datum/preferences
-	var/real_name
-	var/gender = MALE
-	var/age = 30.0
-	var/b_type = "A+"
+	var
+		real_name
+		be_random_name = 0
+		gender = MALE
+		age = 30.0
+		b_type = "A+"
 
-	var/be_special //bitfields. See defines in setup.dm. --rastaf0
-	var/midis = 1
-	var/lastchangelog = 0 // size of last seen changelog file -- rastaf0
-	var/ooccolor = "#b82e00"
-	var/be_random_name = 0
-	var/underwear = 1
-	var/bubbles = 0 // 0 if the player doesn't want bubbles to appear
+		//Special role selection
+		be_special = 0
+		//Play admin midis
+		midis = 1
+		//Saved changlog filesize to detect if there was a change
+		lastchangelog = 0
 
-	var/occupation[length(occupations)]
-	var/datum/jobs/wanted_jobs = list()
+		//Just like it sounds
+		ooccolor = "#b82e00"
+		underwear = 1
 
-	var/h_style = "Short Hair"
-	var/f_style = "Shaved"
+		//Hair type
+		h_style = "Short Hair"
+		//Hair color
+		r_hair = 0
+		g_hair = 0
+		b_hair = 0
 
-	var/r_hair = 0
-	var/g_hair = 0
-	var/b_hair = 0
+		//Face hair type
+		f_style = "Shaved"
+		//Face hair color
+		r_facial = 0
+		g_facial = 0
+		b_facial = 0
 
-	var/r_facial = 0
-	var/g_facial = 0
-	var/b_facial = 0
+		//Skin color
+		s_tone = 0
 
-	var/s_tone = 0
-	var/r_eyes = 0
-	var/g_eyes = 0
-	var/b_eyes = 0
+		//Eye color
+		r_eyes = 0
+		g_eyes = 0
+		b_eyes = 0
 
-	var/UI = UI_OLD // saving the whole .DMI in preferences is not a good idea. --rastaf0 //'screen1_old.dmi' // Skie
+		//UI style
+		UI = UI_OLD
 
-	var/icon/preview_icon = null
+		//Mob preview
+		icon/preview_icon = null
+
+		//Jobs, uses bitflags
+		job_civilian_high = 0
+		job_civilian_med = 0
+		job_civilian_low = 0
+
+		job_medsci_high = 0
+		job_medsci_med = 0
+		job_medsci_low = 0
+
+		job_engsec_high = 0
+		job_engsec_med = 0
+		job_engsec_low = 0
+
 
 	New()
 		randomize_name()
-		for(var/n in occupation)
-			n=0
 		..()
 
-	//The mob should have a gender you want before running this proc.
-	proc/randomize_appearance_for(var/mob/living/carbon/human/H)
-		if(H.gender == MALE)
-			gender = MALE
-		else
-			gender = FEMALE
-		randomize_skin_tone()
-		randomize_hair(gender)
-		randomize_hair_color("hair")
-		if(gender == MALE)//only for dudes.
-			randomize_facial()
-			randomize_hair_color("facial")
-		randomize_eyes_color()
-		underwear = pick(0,1)
-		b_type = pick("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
-		age = rand(19,35)
-		copy_to(H,1)
-
-	proc/randomize_name()
-		if (gender == MALE)
-			real_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
-		else
-			real_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
-
-	proc/randomize_hair(var/gender)
-		//Women are more likely to have longer hair.
-		var/temp = gender==FEMALE&&prob(80) ? pick(2,6,8) : rand(1,9)
-		switch(temp)
-			if(1)
-				h_style = "Short Hair"
-			if(2)
-				h_style = "Long Hair"
-			if(3)
-				h_style = "Cut Hair"
-			if(4)
-				h_style = "Mohawk"
-			if(5)
-				h_style = "Balding"
-			if(6)
-				h_style = "Fag"
-			if(7)
-				h_style = "Bedhead"
-			if(8)
-				h_style = "Dreadlocks"
-			else
-				h_style = "bald"
-
-	proc/randomize_facial()
-		var/temp = prob(50) ? 14 : rand(1,13)//50% of not having a beard. Otherwise get a random one.
-		switch(temp)
-			if(1)
-				f_style = "Watson"
-			if(2)
-				f_style = "Chaplin"
-			if(3)
-				f_style = "Selleck"
-			if(4)
-				f_style = "Neckbeard"
-			if(5)
-				f_style = "Full Beard"
-			if(6)
-				f_style = "Long Beard"
-			if(7)
-				f_style = "Van Dyke"
-			if(8)
-				f_style = "Elvis"
-			if(9)
-				f_style = "Abe"
-			if(10)
-				f_style = "Chinstrap"
-			if(11)
-				f_style = "Hipster"
-			if(12)
-				f_style = "Goatee"
-			if(13)
-				f_style = "Hogan"
-			else
-				f_style = "bald"
-
-	proc/randomize_skin_tone()
-		var/tone
-
-		var/tmp = pickweight ( list ("caucasian" = 55, "afroamerican" = 15, "african" = 10, "latino" = 10, "albino" = 5, "weird" = 5))
-		switch (tmp)
-			if ("caucasian")
-				tone = -45 + 35
-			if ("afroamerican")
-				tone = -150 + 35
-			if ("african")
-				tone = -200 + 35
-			if ("latino")
-				tone = -90 + 35
-			if ("albino")
-				tone = -1 + 35
-			if ("weird")
-				tone = -(rand (1, 220)) + 35
-
-		s_tone = min(max(tone + rand (-25, 25), -185), 34)
-
-	proc/randomize_hair_color(var/target = "hair")
-		if (prob (75) && target == "facial") // Chance to inherit hair color
-			r_facial = r_hair
-			g_facial = g_hair
-			b_facial = b_hair
-			return
-
-		var/red
-		var/green
-		var/blue
-
-		var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
-		switch (col)
-			if ("blonde")
-				red = 255
-				green = 255
-				blue = 0
-			if ("black")
-				red = 0
-				green = 0
-				blue = 0
-			if ("chestnut")
-				red = 153
-				green = 102
-				blue = 51
-			if ("copper")
-				red = 255
-				green = 153
-				blue = 0
-			if ("brown")
-				red = 102
-				green = 51
-				blue = 0
-			if ("wheat")
-				red = 255
-				green = 255
-				blue = 153
-			if ("old")
-				red = rand (100, 255)
-				green = red
-				blue = red
-			if ("punk")
-				red = rand (0, 255)
-				green = rand (0, 255)
-				blue = rand (0, 255)
-
-		red = max(min(red + rand (-25, 25), 255), 0)
-		green = max(min(green + rand (-25, 25), 255), 0)
-		blue = max(min(blue + rand (-25, 25), 255), 0)
-
-		switch (target)
-			if ("hair")
-				r_hair = red
-				g_hair = green
-				b_hair = blue
-			if ("facial")
-				r_facial = red
-				g_facial = green
-				b_facial = blue
-
-	proc/randomize_eyes_color()
-		var/red
-		var/green
-		var/blue
-
-		var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino", "weird")
-		switch (col)
-			if ("black")
-				red = 0
-				green = 0
-				blue = 0
-			if ("grey")
-				red = rand (100, 200)
-				green = red
-				blue = red
-			if ("brown")
-				red = 102
-				green = 51
-				blue = 0
-			if ("chestnut")
-				red = 153
-				green = 102
-				blue = 0
-			if ("blue")
-				red = 51
-				green = 102
-				blue = 204
-			if ("lightblue")
-				red = 102
-				green = 204
-				blue = 255
-			if ("green")
-				red = 0
-				green = 102
-				blue = 0
-			if ("albino")
-				red = rand (200, 255)
-				green = rand (0, 150)
-				blue = rand (0, 150)
-			if ("weird")
-				red = rand (0, 255)
-				green = rand (0, 255)
-				blue = rand (0, 255)
-
-		red = max(min(red + rand (-25, 25), 255), 0)
-		green = max(min(green + rand (-25, 25), 255), 0)
-		blue = max(min(blue + rand (-25, 25), 255), 0)
-
-		r_eyes = red
-		g_eyes = green
-		b_eyes = blue
-
-	proc/update_preview_icon()
-		del(preview_icon)
-
-		var/g = "m"
-		if (gender == MALE)
-			g = "m"
-		else if (gender == FEMALE)
-			g = "f"
-
-		preview_icon = new /icon('human.dmi', "body_[g]_s")
-
-		// Skin tone
-		if (s_tone >= 0)
-			preview_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
-		else
-			preview_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
-
-		if (underwear > 0)
-			preview_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
-
-		var/icon/eyes_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_s")
-		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
-
-		var/h_style_r = null
-		switch(h_style)
-			if("Short Hair")
-				h_style_r = "hair_a"
-			if("Long Hair")
-				h_style_r = "hair_b"
-			if("Cut Hair")
-				h_style_r = "hair_c"
-			if("Mohawk")
-				h_style_r = "hair_d"
-			if("Balding")
-				h_style_r = "hair_e"
-			if("Fag")
-				h_style_r = "hair_f"
-			if("Bedhead")
-				h_style_r = "hair_bedhead"
-			if("Dreadlocks")
-				h_style_r = "hair_dreads"
-			else
-				h_style_r = "bald"
-
-		var/f_style_r = null
-		switch(f_style)
-			if ("Watson")
-				f_style_r = "facial_watson"
-			if ("Chaplin")
-				f_style_r = "facial_chaplin"
-			if ("Selleck")
-				f_style_r = "facial_selleck"
-			if ("Neckbeard")
-				f_style_r = "facial_neckbeard"
-			if ("Full Beard")
-				f_style_r = "facial_fullbeard"
-			if ("Long Beard")
-				f_style_r = "facial_longbeard"
-			if ("Van Dyke")
-				f_style_r = "facial_vandyke"
-			if ("Elvis")
-				f_style_r = "facial_elvis"
-			if ("Abe")
-				f_style_r = "facial_abe"
-			if ("Chinstrap")
-				f_style_r = "facial_chin"
-			if ("Hipster")
-				f_style_r = "facial_hip"
-			if ("Goatee")
-				f_style_r = "facial_gt"
-			if ("Hogan")
-				f_style_r = "facial_hogan"
-			else
-				f_style_r = "bald"
-
-		var/icon/hair_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "[h_style_r]_s")
-		hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
-
-		var/icon/facial_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "[f_style_r]_s")
-		facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
-
-		var/icon/mouth_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "mouth_[g]_s")
-
-		eyes_s.Blend(hair_s, ICON_OVERLAY)
-		eyes_s.Blend(mouth_s, ICON_OVERLAY)
-		eyes_s.Blend(facial_s, ICON_OVERLAY)
-
-		preview_icon.Blend(eyes_s, ICON_OVERLAY)
-
-		del(mouth_s)
-		del(facial_s)
-		del(hair_s)
-		del(eyes_s)
 
 	proc/ShowChoices(mob/user)
 		update_preview_icon()
@@ -394,7 +123,6 @@ datum/preferences
 		dat += "<br>"
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
-		//dat += "<b>Show chat bubbles:</b> <a href=\"byond://?src=\ref[user];preferences=1;bubbles=input\"><b>[bubbles == 1 ? "Yes" : "No"]</b></a><br>"
 
 		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.rank == "Game Master"))
 			dat += "<hr><b>OOC</b><br>"
@@ -440,7 +168,7 @@ datum/preferences
 			src.be_special = 0
 		dat += "<hr>"
 
-		if (!IsGuestKey(user.key))
+		if(!IsGuestKey(user.key))
 			dat += "<a href='byond://?src=\ref[user];preferences=1;load=1'>Load Setup</a><br>"
 			dat += "<a href='byond://?src=\ref[user];preferences=1;save=1'>Save Setup</a><br>"
 
@@ -453,38 +181,35 @@ datum/preferences
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
 		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br>"
-		for(var/job in occupations)
-			if(!occupation[job])
-				occupation[job] = 0
-			if(jobban_isbanned(user, job))
-				HTML += "<font color=red>[job]</font><br>"
+		for(var/datum/job/job in job_master.occupations)
+			var/rank = job.title
+			if(jobban_isbanned(user, rank))
+				HTML += "<font color=red>[rank]</font><br>"
 				continue
-			if((occupation["Assistant"] != 0) && (job != "Assistant"))
-				HTML += "<font color=orange>[job]</font><br>"
+			if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
+				HTML += "<font color=orange>[rank]</font><br>"
 				continue
-			if((job in command_positions) || (job == "AI"))//Bold head jobs
-				HTML += "<b>[job]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[job]\"></b>"
+			if((rank in command_positions) || (rank == "AI"))//Bold head jobs
+				HTML += "<b>[rank]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[rank]\"></b>"
 			else
-				HTML += "[job]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[job]\">"
+				HTML += "[rank]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[rank]\">"
 
-			if(job == "Assistant")//Assistant is special
-				if(occupation[job] != 0)
+			if(rank == "Assistant")//Assistant is special
+				if(job_civilian_low & ASSISTANT)
 					HTML += "<font color=green>\[Yes]</font>"
 				else
 					HTML += "<font color=red>\[No]</font>"
 				HTML += "</a><br>"
 				continue
 
-			switch(occupation[job])
-				if(0)
-					HTML += "<font color=red>\[NEVER]</font>"
-				if(1)
-					HTML += "<font color=blue>\[High]</font>"
-				if(2)
-					HTML += "<font color=green>\[Medium]</font>"
-				if(3)
-					HTML += "<font color=orange>\[Low]</font>"
-				else HTML += "*"+occupation[job]+"*"
+			if(GetJobDepartment(job, 1) & job.flag)
+				HTML += "<font color=blue>\[High]</font>"
+			else if(GetJobDepartment(job, 2) & job.flag)
+				HTML += "<font color=green>\[Medium]</font>"
+			else if(GetJobDepartment(job, 3) & job.flag)
+				HTML += "<font color=orange>\[Low]</font>"
+			else
+				HTML += "<font color=red>\[NEVER]</font>"
 			HTML += "</a><br>"
 
 		HTML += "<br>"
@@ -495,37 +220,118 @@ datum/preferences
 		user << browse(HTML, "window=mob_occupation;size=320x600")
 		return
 
-	proc/SetJob(mob/user, job="Captain")
-		if((!(occupations.Find(job)) && !(assistant_occupations.Find(job)) && (job != "No Preference")))
+
+	proc/SetJob(mob/user, role)
+		var/datum/job/job = job_master.GetJob(role)
+		if(!job)
 			user << browse(null, "window=mob_occupation")
 			ShowChoices(user)
 			return
 
-		if(job == "Assistant")
-			if(occupation[job] == 0)
-				occupation[job] = 4
+		if(role == "Assistant")
+			if(job_civilian_low & job.flag)
+				job_civilian_low &= ~job.flag
 			else
-				occupation[job] = 0
+				job_civilian_low |= job.flag
 			SetChoices(user)
 			return 1
 
-		if(occupation[job] == 2)//Only one job may be set to "High"
-			for(var/j in occupation)
-				if(occupation[j] == 1)
-					occupation[j] = 2
-
-		occupation[job] = (occupation[job]-1)
-		if(occupation[job] < 0)
-			occupation[job] = 3
+		if(GetJobDepartment(job, 1) & job.flag)
+			SetJobDepartment(job, 1)
+		else if(GetJobDepartment(job, 2) & job.flag)
+			SetJobDepartment(job, 2)
+		else if(GetJobDepartment(job, 3) & job.flag)
+			SetJobDepartment(job, 3)
+		else//job = Never
+			SetJobDepartment(job, 4)
 
 		SetChoices(user)
-
 		return 1
 
-	proc/process_link(mob/user, list/link_tags)
 
-		if (link_tags["occ"])
-			if (link_tags["cancel"])
+	proc/GetJobDepartment(var/datum/job/job, var/level)
+		if(!job || !level)	return 0
+		switch(job.department_flag)
+			if(CIVILIAN)
+				switch(level)
+					if(1)
+						return job_civilian_high
+					if(2)
+						return job_civilian_med
+					if(3)
+						return job_civilian_low
+			if(MEDSCI)
+				switch(level)
+					if(1)
+						return job_medsci_high
+					if(2)
+						return job_medsci_med
+					if(3)
+						return job_medsci_low
+			if(ENGSEC)
+				switch(level)
+					if(1)
+						return job_engsec_high
+					if(2)
+						return job_engsec_med
+					if(3)
+						return job_engsec_low
+		return 0
+
+
+	proc/SetJobDepartment(var/datum/job/job, var/level)
+		if(!job || !level)	return 0
+		switch(level)
+			if(1)//Only one of these should ever be active at once so clear them all here
+				job_civilian_high = 0
+				job_medsci_high = 0
+				job_engsec_high = 0
+				return 1
+			if(2)//Set current highs to med, then reset them
+				job_civilian_med |= job_civilian_high
+				job_medsci_med |= job_medsci_high
+				job_engsec_med |= job_engsec_high
+				job_civilian_high = 0
+				job_medsci_high = 0
+				job_engsec_high = 0
+
+		switch(job.department_flag)
+			if(CIVILIAN)
+				switch(level)
+					if(2)
+						job_civilian_high = job.flag
+						job_civilian_med &= ~job.flag
+					if(3)
+						job_civilian_med |= job.flag
+						job_civilian_low &= ~job.flag
+					else
+						job_civilian_low |= job.flag
+			if(MEDSCI)
+				switch(level)
+					if(2)
+						job_medsci_high = job.flag
+						job_medsci_med &= ~job.flag
+					if(3)
+						job_medsci_med |= job.flag
+						job_medsci_low &= ~job.flag
+					else
+						job_medsci_low |= job.flag
+			if(ENGSEC)
+				switch(level)
+					if(2)
+						job_engsec_high = job.flag
+						job_engsec_med &= ~job.flag
+					if(3)
+						job_engsec_med |= job.flag
+						job_engsec_low &= ~job.flag
+					else
+						job_engsec_low |= job.flag
+		return 1
+
+
+	proc/process_link(mob/user, list/link_tags)
+		if(link_tags["occ"])
+			if(link_tags["cancel"])
 				user << browse(null, "window=\ref[user]occupation")
 				return
 			else if(link_tags["job"])
@@ -535,7 +341,7 @@ datum/preferences
 
 			return 1
 
-		if (link_tags["real_name"])
+		if(link_tags["real_name"])
 			var/new_name
 
 			switch(link_tags["real_name"])
@@ -556,135 +362,132 @@ datum/preferences
 					new_name = copytext(new_name, 1, 26)
 				real_name = new_name
 
-		if (link_tags["age"])
+		if(link_tags["age"])
 			switch(link_tags["age"])
-				if ("input")
+				if("input")
 					var/new_age = input(user, "Please select type in age: 20-45", "Character Generation")  as num
 					if(new_age)
 						age = max(min(round(text2num(new_age)), 45), 20)
-				if ("random")
+				if("random")
 					age = rand (20, 45)
 
-		if (link_tags["b_type"])
+		if(link_tags["b_type"])
 			switch(link_tags["b_type"])
-				if ("input")
+				if("input")
 					var/new_b_type = input(user, "Please select a blood type:", "Character Generation")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
-					if (new_b_type)
+					if(new_b_type)
 						b_type = new_b_type
-				if ("random")
+				if("random")
 					b_type = pickweight ( list ("A+" = 31, "A-" = 7, "B+" = 8, "B-" = 2, "AB+" = 2, "AB-" = 1, "O+" = 40, "O-" = 9))
 
 
-		if (link_tags["hair"])
+		if(link_tags["hair"])
 			switch(link_tags["hair"])
-				if ("input")
+				if("input")
 					var/new_hair = input(user, "Please select hair color.", "Character Generation") as color
 					if(new_hair)
 						r_hair = hex2num(copytext(new_hair, 2, 4))
 						g_hair = hex2num(copytext(new_hair, 4, 6))
 						b_hair = hex2num(copytext(new_hair, 6, 8))
-				if ("random")
+				if("random")
 					randomize_hair_color("hair")
 
-		if (link_tags["facial"])
+		if(link_tags["facial"])
 			switch(link_tags["facial"])
-				if ("input")
+				if("input")
 					var/new_facial = input(user, "Please select facial hair color.", "Character Generation") as color
 					if(new_facial)
 						r_facial = hex2num(copytext(new_facial, 2, 4))
 						g_facial = hex2num(copytext(new_facial, 4, 6))
 						b_facial = hex2num(copytext(new_facial, 6, 8))
-				if ("random")
+				if("random")
 					randomize_hair_color("facial")
 
-		if (link_tags["eyes"])
+		if(link_tags["eyes"])
 			switch(link_tags["eyes"])
-				if ("input")
+				if("input")
 					var/new_eyes = input(user, "Please select eye color.", "Character Generation") as color
 					if(new_eyes)
 						r_eyes = hex2num(copytext(new_eyes, 2, 4))
 						g_eyes = hex2num(copytext(new_eyes, 4, 6))
 						b_eyes = hex2num(copytext(new_eyes, 6, 8))
-				if ("random")
+				if("random")
 					randomize_eyes_color()
 
-		if (link_tags["s_tone"])
+		if(link_tags["s_tone"])
 			switch(link_tags["s_tone"])
-				if ("random")
+				if("random")
 					randomize_skin_tone()
 				if("input")
 					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
-					if (new_tone)
+					if(new_tone)
 						s_tone = max(min(round(text2num(new_tone)), 220), 1)
 						s_tone = -s_tone + 35
 
-		if (link_tags["h_style"])
+		if(link_tags["h_style"])
 			switch(link_tags["h_style"])
-				if ("random")
-					if (gender == FEMALE)
+				if("random")
+					if(gender == FEMALE)
 						h_style = pickweight ( list ("Cut Hair" = 5, "Short Hair" = 5, "Long Hair" = 5, "Mohawk" = 5, "Balding" = 1, "Fag" = 5, "Bedhead" = 5, "Dreadlocks" = 5, "Bald" = 5))
 					else
 						h_style = pickweight ( list ("Cut Hair" = 5, "Short Hair" = 5, "Long Hair" = 5, "Mohawk" = 5, "Balding" = 5, "Fag" = 5, "Bedhead" = 5, "Dreadlocks" = 5, "Bald" = 5))
 
 				if("input")
 					var/new_style = input(user, "Please select hair style", "Character Generation")  as null|anything in list( "Cut Hair", "Short Hair", "Long Hair", "Mohawk", "Balding", "Fag", "Bedhead", "Dreadlocks", "Bald" )
-					if (new_style)
+					if(new_style)
 						h_style = new_style
 
-		if (link_tags["ooccolor"])
+		if(link_tags["ooccolor"])
 			var/ooccolor = input(user, "Please select OOC colour.", "OOC colour") as color
 
 			if(ooccolor)
 				src.ooccolor = ooccolor
 
-		if (link_tags["f_style"])
+		if(link_tags["f_style"])
 			switch(link_tags["f_style"])
-				if ("random")
-					if (gender == FEMALE)
+				if("random")
+					if(gender == FEMALE)
 						f_style = pickweight ( list("Watson" = 1, "Chaplin" = 1, "Selleck" = 1, "Full Beard" = 1, "Long Beard" = 1, "Neckbeard" = 1, "Van Dyke" = 1, "Elvis" = 1, "Abe" = 1, "Chinstrap" = 1, "Hipster" = 1, "Goatee" = 1, "Hogan" = 1, "Shaved" = 100))
 					else
 						f_style = pickweight ( list("Watson" = 1, "Chaplin" = 1, "Selleck" = 1, "Full Beard" = 1, "Long Beard" = 1, "Neckbeard" = 1, "Van Dyke" = 1, "Elvis" = 1, "Abe" = 1, "Chinstrap" = 1, "Hipster" = 1, "Goatee" = 1, "Hogan" = 1, "Shaved" = 10))
 				if("input")
 					var/new_style = input(user, "Please select facial style", "Character Generation")  as null|anything in list("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Hogan", "Shaved")
-					if (new_style)
+					if(new_style)
 						f_style = new_style
 
-		if (link_tags["gender"])
-			if (gender == MALE)
+		if(link_tags["gender"])
+			if(gender == MALE)
 				gender = FEMALE
 			else
 				gender = MALE
 
-		if (link_tags["UI"])
-			if (UI == UI_OLD)
+		if(link_tags["UI"])
+			if(UI == UI_OLD)
 				UI = UI_NEW
 			else
 				UI = UI_OLD
 
-		if (link_tags["midis"])
+		if(link_tags["midis"])
 			midis = (midis+1)%2
 
-		if (link_tags["bubbles"])
-			bubbles = !bubbles
-
-		if (link_tags["underwear"])
+		if(link_tags["underwear"])
 			if(!IsGuestKey(user.key))
 				switch(link_tags["underwear"])
-					if ("random")
-						if (prob (75))
+					if("random")
+						if(prob (75))
 							underwear = 1
 						else
 							underwear = 0
 					if("input")
-						if (underwear == 1)
+						if(underwear == 1)
 							underwear = 0
 						else
 							underwear = 1
 
-		if (link_tags["be_special"])
+		if(link_tags["be_special"])
 			src.be_special^=(1<<text2num(link_tags["be_special"])) //bitwize magic, sorry for that. --rastaf0
 
-		if (link_tags["b_random_name"])
+		if(link_tags["b_random_name"])
 			be_random_name = !be_random_name
 
 		if(!IsGuestKey(user.key))
@@ -692,18 +495,24 @@ datum/preferences
 				savefile_save(user)
 
 			else if(link_tags["load"])
-				if (!savefile_load(user, 0))
+				if(!savefile_load(user, 0))
 					alert(user, "You do not have a savefile.")
 
-		if (link_tags["reset_all"])
+		if(link_tags["reset_all"])
 			gender = MALE
 			randomize_name()
 
 			age = 30
-			for(var/o in occupation)
-				occupation[o] = 0
+			job_civilian_high = 0
+			job_civilian_med = 0
+			job_civilian_low = 0
+			job_medsci_high = 0
+			job_medsci_med = 0
+			job_medsci_low = 0
+			job_engsec_high = 0
+			job_engsec_med = 0
+			job_engsec_low = 0
 			underwear = 1
-			//be_syndicate = 0
 			be_special = 0
 			be_random_name = 0
 			r_hair = 0.0
@@ -721,10 +530,9 @@ datum/preferences
 			b_type = "A+"
 			UI = UI_OLD
 			midis = 1
-			bubbles = 1
-
 
 		ShowChoices(user)
+
 
 	proc/copy_to(mob/living/carbon/human/character, safety = 0)
 		if(be_random_name)
@@ -754,9 +562,9 @@ datum/preferences
 		character.f_style = f_style
 
 		switch (UI)
-			if (UI_OLD)
+			if(UI_OLD)
 				character.UI = 'screen1_old.dmi'
-			if (UI_NEW)
+			if(UI_NEW)
 				character.UI = 'screen1.dmi'
 
 		switch(h_style)
@@ -780,31 +588,31 @@ datum/preferences
 				character.hair_icon_state = "bald"
 
 		switch(f_style)
-			if ("Watson")
+			if("Watson")
 				character.face_icon_state = "facial_watson"
-			if ("Chaplin")
+			if("Chaplin")
 				character.face_icon_state = "facial_chaplin"
-			if ("Selleck")
+			if("Selleck")
 				character.face_icon_state = "facial_selleck"
-			if ("Neckbeard")
+			if("Neckbeard")
 				character.face_icon_state = "facial_neckbeard"
-			if ("Full Beard")
+			if("Full Beard")
 				character.face_icon_state = "facial_fullbeard"
-			if ("Long Beard")
+			if("Long Beard")
 				character.face_icon_state = "facial_longbeard"
-			if ("Van Dyke")
+			if("Van Dyke")
 				character.face_icon_state = "facial_vandyke"
-			if ("Elvis")
+			if("Elvis")
 				character.face_icon_state = "facial_elvis"
-			if ("Abe")
+			if("Abe")
 				character.face_icon_state = "facial_abe"
-			if ("Chinstrap")
+			if("Chinstrap")
 				character.face_icon_state = "facial_chin"
-			if ("Hipster")
+			if("Hipster")
 				character.face_icon_state = "facial_hip"
-			if ("Goatee")
+			if("Goatee")
 				character.face_icon_state = "facial_gt"
-			if ("Hogan")
+			if("Hogan")
 				character.face_icon_state = "facial_hogan"
 			else
 				character.face_icon_state = "bald"
@@ -818,26 +626,9 @@ datum/preferences
 			spawn(10)
 				if(character&&character.client)
 					character.client.midis = midis
-					character.client.bubbles = bubbles
 					character.client.ooccolor = ooccolor
 					character.client.be_alien = be_special&BE_ALIEN
 					character.client.be_pai = be_special&BE_PAI
 
-/*
-
-	if (!M.real_name || M.be_random_name)
-		if (M.gender == "male")
-			M.real_name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
-		else
-			M.real_name = capitalize(pick(first_names_female) + " " + capitalize(pick(last_names)))
-	for(var/mob/living/carbon/human/H in world)
-		if(cmptext(H.real_name,M.real_name))
-			usr << "You are using a name that is very similar to a currently used name, please choose another one using Character Setup."
-			return
-	if(cmptext("Unknown",M.real_name))
-		usr << "This name is reserved for use by the game, please choose another one using Character Setup."
-		return
-
-*/
 #undef UI_OLD
 #undef UI_NEW

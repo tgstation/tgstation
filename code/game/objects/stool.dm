@@ -189,7 +189,7 @@
 
 	flick("e_chairs", src)
 	flick("e_chairos", src.overl)
-	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(12, 1, src)
 	s.start()
 	for(var/mob/living/M in src.loc)

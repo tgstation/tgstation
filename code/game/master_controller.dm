@@ -19,6 +19,11 @@ datum/controller/game_controller
 			air_master = new /datum/controller/air_system()
 			air_master.setup()
 
+		if(!job_master)
+			job_master = new /datum/controller/occupations()
+			if(job_master.SetupOccupations())
+				world << "\red \b Job setup complete"
+
 		if(!tension_master)
 			tension_master = new /datum/tension()
 
@@ -28,9 +33,8 @@ datum/controller/game_controller
 
 		setupgenetics()
 
-		SetupJobs("config/jobs.txt")
+//		SetupJobs("config/jobs.txt")
 
-		//setupcorpses() Not used any more.
 		syndicate_code_phrase = generate_code_phrase()//Sets up code phrase for traitors, for the round.
 		syndicate_code_response = generate_code_phrase()
 
@@ -61,11 +65,6 @@ datum/controller/game_controller
 			T.broadcast_status()
 		for(var/obj/machinery/atmospherics/unary/vent_scrubber/T in world)
 			T.broadcast_status()
-
-		/*world << "\red \b Initializing atmos machinery"
-		sleep(-1)
-
-		find_air_alarms()*/
 
 		world << "\red \b Initializations complete."
 

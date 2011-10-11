@@ -93,7 +93,7 @@
 
 	proc/disrupt()
 		if(active_dummy)
-			var/datum/effect/system/spark_spread/spark_system = new /datum/effect/system/spark_spread
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
 			spark_system.set_up(5, 0, src)
 			spark_system.attach(src)
 			spark_system.start()

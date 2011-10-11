@@ -225,7 +225,7 @@
 					G.reagents.trans_to(src, G.reagents.total_volume)
 
 				if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
-					var/datum/effect/system/steam_spread/steam = new /datum/effect/system/steam_spread()
+					var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 					steam.set_up(10, 0, get_turf(src))
 					steam.attach(src)
 					steam.start()
@@ -530,12 +530,12 @@
 				return
 			if(2.0)
 				if (prob(50))
-					new /obj/effect/water(src.loc)
+					new /obj/effect/effect/water(src.loc)
 					del(src)
 					return
 			if(3.0)
 				if (prob(5))
-					new /obj/effect/water(src.loc)
+					new /obj/effect/effect/water(src.loc)
 					del(src)
 					return
 			else
@@ -543,7 +543,7 @@
 
 	blob_act()
 		if(prob(50))
-			new /obj/effect/water(src.loc)
+			new /obj/effect/effect/water(src.loc)
 			del(src)
 
 

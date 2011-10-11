@@ -77,8 +77,8 @@ Deathnettle
 	if(!user.gloves)
 		user << "\red The nettle burns your bare hand!"
 		if(istype(user, /mob/living/carbon/human))
-			var/organ = (user.hand ? "l_":"r_") + pick("hand","hand","arm")
-			var/datum/organ/external/affecting = user.organs[organ]
+			var/organ = ((user.hand ? "l_":"r_") + "arm")
+			var/datum/organ/external/affecting = user.get_organ(organ)
 			affecting.take_damage(0,force)
 		else
 			user.take_organ_damage(0,force)
@@ -96,8 +96,8 @@ Deathnettle
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)
 		if(istype(user, /mob/living/carbon/human))
-			var/organ = (user.hand ? "l_":"r_") + pick("hand","hand","arm")
-			var/datum/organ/external/affecting = user.organs[organ]
+			var/organ = ((user.hand ? "l_":"r_") + "arm")
+			var/datum/organ/external/affecting = user.get_organ(organ)
 			affecting.take_damage(0,force)
 		else
 			user.take_organ_damage(0,force)

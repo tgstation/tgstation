@@ -3,8 +3,7 @@
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0 || wall_mounted)) return 1
-
-	return opened
+	return (!density)
 
 /obj/structure/closet/proc/can_open()
 	if (src.welded)
@@ -44,6 +43,7 @@
 	src.icon_state = src.icon_opened
 	src.opened = 1
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
+	density = 0
 	return 1
 
 /obj/structure/closet/proc/close()
@@ -74,6 +74,7 @@
 	src.icon_state = src.icon_closed
 	src.opened = 0
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
+	density = 1
 	return 1
 
 /obj/structure/closet/proc/toggle()
@@ -188,17 +189,19 @@
 	return
 
 /obj/structure/closet
-	var/lastbang
+	var/lastbang = 0
 /obj/structure/closet/relaymove(mob/user as mob)
 	if (user.stat)
 		return
 
 	if (!src.open())
 		user << "\blue It won't budge!"
-		if (world.time > lastbang+5)
-			lastbang = world.time
+		if(!lastbang)
+			lastbang = 1
 			for (var/mob/M in hearers(src, null))
 				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
+			spawn(30)
+				lastbang = 0
 
 /obj/structure/closet/Move()
 	..()

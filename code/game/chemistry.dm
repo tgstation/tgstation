@@ -12,7 +12,7 @@
 	throw_speed = 4
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | ONBELT | USEDELAY
-	var/datum/effect/system/bad_smoke_spread/smoke
+	var/datum/effect/effect/system/bad_smoke_spread/smoke
 
 /obj/item/weapon/mustardbomb
 	desc = "It is set to detonate in 4 seconds."
@@ -26,17 +26,17 @@
 	throw_speed = 4
 	throw_range = 20
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT
-	var/datum/effect/system/mustard_gas_spread/mustard_gas
+	var/datum/effect/effect/system/mustard_gas_spread/mustard_gas
 
 /obj/item/weapon/smokebomb/New()
 	..()
-	src.smoke = new /datum/effect/system/bad_smoke_spread/
+	src.smoke = new /datum/effect/effect/system/bad_smoke_spread/
 	src.smoke.attach(src)
 	src.smoke.set_up(10, 0, usr.loc)
 
 /obj/item/weapon/mustardbomb/New()
 	..()
-	src.mustard_gas = new /datum/effect/system/mustard_gas_spread/
+	src.mustard_gas = new /datum/effect/effect/system/mustard_gas_spread/
 	src.mustard_gas.attach(src)
 	src.mustard_gas.set_up(5, 0, usr.loc)
 

@@ -90,7 +90,6 @@
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(4, WEAKEN, armor_block)
 			UpdateDamageIcon()
-			updatehealth()
 
 
 		if("disarm")
@@ -99,7 +98,7 @@
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/datum/organ/external/affecting = organs[ran_zone(M.zone_sel.selecting)]
+			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/randn = rand(1, 100)
 			if (randn <= 25)
 				apply_effect(2, WEAKEN, run_armor_check(affecting, "melee"))

@@ -22,12 +22,9 @@
 			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = (burn_amount)/(H.organs.len)
-		var/datum/organ/external/affecting = null
 		var/extradam = 0	//added to when organ is at max dam
-		for(var/A in H.organs)
-			if(!H.organs[A])	continue
-			affecting = H.organs[A]
-			if(!istype(affecting, /datum/organ/external))	continue
+		for(var/datum/organ/external/affecting in H.organs)
+			if(!affecting)	continue
 			if(affecting.take_damage(0, divided_damage+extradam))
 				extradam = 0
 			else

@@ -19,7 +19,7 @@
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
-					var/organ = H.organs["chest"]
+					var/organ = H.get_organ("chest")
 					if (istype(organ, /datum/organ/external))
 						var/datum/organ/external/temp = organ
 						temp.take_damage(d, 0)

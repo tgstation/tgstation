@@ -1,16 +1,15 @@
 /obj/item/projectile/energy
 	name = "energy"
 	icon_state = "spark"
-
 	damage = 0
 	damage_type = BURN
-	nodamage = 1
 	flag = "energy"
 
 
 /obj/item/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
+	nodamage = 1
 	stun = 10
 	weaken = 10
 	stutter = 10
@@ -19,6 +18,7 @@
 /obj/item/projectile/energy/declone
 	name = "declown"
 	icon_state = "declone"
+	nodamage = 1
 	damage_type = CLONE
 	irradiate = 40
 

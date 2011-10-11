@@ -154,24 +154,13 @@
 			O.show_message("\red <B>[src]</B> [src.attacktext] [src.target]!", 1)
 		if(ismob(src.target))
 
-
 			var/damage = rand(melee_damage_lower, melee_damage_upper)
 
 			if(istype(target, /mob/living/carbon/human))
-				var/dam_zone = pick("head", "chest", "l_hand", "r_hand", "l_leg", "r_leg", "groin")
-				if (dam_zone == "chest")
-					if ((((target:wear_suit && target:wear_suit.body_parts_covered & UPPER_TORSO) || (target:w_uniform && target:w_uniform.body_parts_covered & LOWER_TORSO)) && prob(10)))
-						if(prob(20))
-							target:show_message("\blue You have been protected from a hit to the chest.")
-							return
-				if (istype(target:organs[text("[]", dam_zone)], /datum/organ/external))
-					var/datum/organ/external/temp = target:organs[text("[]", dam_zone)]
-					if (temp.take_damage(damage, 0))
-						target:UpdateDamageIcon()
-					else
-						target:UpdateDamage()
-				target:updatehealth()
-
+				var/mob/living/carbon/human/H = target
+				var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+				var/datum/organ/external/affecting = H.get_organ(ran_zone(dam_zone))
+				H.apply_damage(damage, BRUTE, affecting, H.run_armor_check(affecting, "melee"))
 			else
 				target:bruteloss += damage
 

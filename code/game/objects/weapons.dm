@@ -5,7 +5,7 @@
 	user << "<font color='red'> You have <b>BANNED</b> [M]</font>"
 
 /obj/effect/mine/proc/triggerrad(obj)
-	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	obj:radiation += 50
@@ -16,7 +16,7 @@
 
 /obj/effect/mine/proc/triggerstun(obj)
 	obj:stunned += 30
-	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	spawn(0)
@@ -60,7 +60,7 @@
 		del(src)
 
 /obj/effect/mine/proc/triggerkick(obj)
-	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	del(obj:client)
@@ -129,11 +129,11 @@
 		switch(type)
 			if("feet")
 				if(!H.shoes)
-					affecting = H.organs[pick("l_foot", "r_foot")]
+					affecting = H.get_organ(pick("l_leg", "r_leg"))
 					H.weakened = max(3, H.weakened)
 			if("l_hand", "r_hand")
 				if(!H.gloves)
-					affecting = H.organs[type]
+					affecting = H.get_organ(type)
 					H.stunned = max(3, H.stunned)
 		if(affecting)
 			affecting.take_damage(1, 0)
@@ -153,7 +153,7 @@
 		user << "\blue You arm the mousetrap."
 	else
 		icon_state = "mousetrap"
-		if((user.brainloss >= 60 || user.mutations & CLOWN) && prob(50))
+		if((user.brainloss >= 60 || user.mutations & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"
@@ -170,7 +170,7 @@
 
 /obj/item/weapon/mousetrap/attack_hand(mob/user as mob)
 	if(armed)
-		if((user.brainloss >= 60 || user.mutations & CLOWN) && prob(50))
+		if((user.brainloss >= 60 || user.mutations & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"

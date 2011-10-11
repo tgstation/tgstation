@@ -226,14 +226,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 //	var/obj/effect/organstructure/organStructure = null //for dem organs
 
 
-/mob/proc/Delete(atom/A in view())
-	set category = "Debug"
-	switch (alert("Are you sure you wish to delete \the [A.name] at ([A.x],[A.y],[A.z]) ?", "Admin Delete Object","Yes","No"))
-		if("Yes")
-			log_admin("[usr.key] deleted [A.name] at ([A.x],[A.y],[A.z])")
-
-
-
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)
 //	world << "Contract_disease called by [src] with virus [virus]"
 	if(stat >=2) return

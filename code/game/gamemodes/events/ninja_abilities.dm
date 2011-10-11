@@ -57,7 +57,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 	if(!ninjacost(,2))
 		var/mob/living/carbon/human/U = affecting
 		U << "\blue There are <B>[s_bombs]</B> smoke bombs remaining."
-		var/datum/effect/system/bad_smoke_spread/smoke = new /datum/effect/system/bad_smoke_spread()
+		var/datum/effect/effect/system/bad_smoke_spread/smoke = new /datum/effect/effect/system/bad_smoke_spread()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
 		playsound(U.loc, 'bamf.ogg', 50, 2)

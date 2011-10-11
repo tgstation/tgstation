@@ -26,6 +26,9 @@
 	m_amt = 1000
 	origin_tech = "materials=2"
 
+	IsShield()
+		return 1
+
 /obj/item/weapon/sord
 	name = "SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
@@ -228,7 +231,7 @@
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
 	flags = FPRINT | TABLEPASS | NOSHIELD
-	var/datum/effect/system/spark_spread/spark_system
+	var/datum/effect/effect/system/spark_spread/spark_system
 
 /obj/item/weapon/bananapeel
 	name = "Banana Peel"

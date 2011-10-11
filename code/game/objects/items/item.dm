@@ -99,7 +99,7 @@
 		if(5.0)
 			t = "huge"
 		else
-	if ((usr.mutations & CLOWN) && prob(50)) t = "funny-looking"
+	if ((usr.mutations & CLUMSY) && prob(50)) t = "funny-looking"
 	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA ? "" : "bloody ",src, src.name, t)
 	if(src.desc)
 		usr << src.desc
@@ -330,6 +330,12 @@
 	src.add_fingerprint(user)
 	return 1
 
+
+/obj/item/proc/IsShield()
+	return 0
+
+
+
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	var/mob/living/carbon/human/H = M
@@ -358,7 +364,7 @@
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 
 	src.add_fingerprint(user)
-	//if((user.mutations & CLOWN) && prob(50))
+	//if((user.mutations & CLUMSY) && prob(50))
 	//	M = user
 		/*
 		M << "\red You stab yourself in the eye."
@@ -377,7 +383,7 @@
 			"\red You stab yourself in the eyes with [src]!" \
 		)
 	if(istype(M, /mob/living/carbon/human))
-		var/datum/organ/external/affecting = M:organs["head"]
+		var/datum/organ/external/affecting = M:get_organ("head")
 		affecting.take_damage(7)
 	else
 		M.take_organ_damage(7)

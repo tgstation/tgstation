@@ -180,7 +180,7 @@ CLIPBOARDS
 	set category = "Object"
 	set src in usr
 
-	if ((usr.mutations & CLOWN) && prob(50))
+	if ((usr.mutations & CLUMSY) && prob(50))
 		usr << text("\red You cut yourself on the paper.")
 		return
 	var/n_name = input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text

@@ -27,7 +27,7 @@
 					M.handcuffed = new /obj/item/weapon/handcuffs(M)
 
 	else
-		if ((usr.mutations & CLOWN) && prob(50))
+		if ((usr.mutations & CLUMSY) && prob(50))
 			usr << "\red Uh ... how do those things work?!"
 			if (istype(M, /mob/living/carbon/human))
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
@@ -123,7 +123,7 @@
 
 		for(var/a=0, a<5, a++)
 			spawn(0)
-				var/obj/effect/water/W = new /obj/effect/water( get_turf(src) )
+				var/obj/effect/effect/water/W = new /obj/effect/effect/water( get_turf(src) )
 				var/turf/my_target = pick(the_targets)
 				var/datum/reagents/R = new/datum/reagents(5)
 				if(!W) return

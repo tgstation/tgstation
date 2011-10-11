@@ -139,7 +139,7 @@
 		src.operating = -1
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			if(istype(src, /obj/machinery/door/airlock))
-				var/datum/effect/system/spark_spread/spark_system = new /datum/effect/system/spark_spread()
+				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, src.loc)
 				spark_system.start()
 				playsound(src.loc, 'blade1.ogg', 50, 1)
@@ -232,7 +232,7 @@
 				del(src)
 		if(3.0)
 			if(prob(80))
-				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
 

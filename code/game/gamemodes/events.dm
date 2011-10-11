@@ -86,7 +86,7 @@
 
 
 /obj/effect/bhole/New()
-	src.smoke = new /datum/effect/system/harmless_smoke_spread()
+	src.smoke = new /datum/effect/effect/system/harmless_smoke_spread()
 	src.smoke.set_up(5, 0, src)
 	src.smoke.attach(src)
 	src:life()

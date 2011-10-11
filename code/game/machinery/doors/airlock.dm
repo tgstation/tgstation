@@ -404,7 +404,7 @@ About the new airlock wires panel:
 		return 0
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you
-	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src))
@@ -599,7 +599,7 @@ About the new airlock wires panel:
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				for(var/mob/M in viewers(src, null))
 					M << "\red [user] headbutts the airlock."
-				var/datum/organ/external/affecting = H.organs["head"]
+				var/datum/organ/external/affecting = H.get_organ("head")
 				affecting.take_damage(10, 0)
 				H.stunned = 8
 				H.weakened = 5

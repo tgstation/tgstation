@@ -765,40 +765,21 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 									C.oxyloss = max(0, C.oxyloss-25)
 									C.toxloss = max(0, C.toxloss-25)
 
-									if (istype(C, /mob/living/carbon/human))
+									if(istype(C, /mob/living/carbon/human))
 										// ------- YOUR TARGET IS HUMAN -------
 										var/mob/living/carbon/human/H = C
-										var/datum/organ/external/affecting = H.organs["chest"]
-
-										var/t = usr:zone_sel:selecting
-
-										if (t in list("eyes", "mouth"))
-											t = "head"
-
-										if (H.organs[t])
-											affecting = H.organs[t]
-
-										if (affecting.heal_damage(25, 25))
+										var/datum/organ/external/affecting = H.get_organ(check_zone(usr:zone_sel:selecting))
+										if(affecting && affecting.heal_damage(25, 25))
 											H.UpdateDamageIcon()
-										else
-											H.UpdateDamage()
-										C.updatehealth()
 									else
 										C.heal_organ_damage(25, 25)
-
 									C.cloneloss = max(0, C.cloneloss-25)
-
 									C.stunned = max(0, C.stunned-5)
 									C.paralysis = max(0, C.paralysis-5)
 									C.stuttering = max(0, C.stuttering-5)
 									C.drowsyness = max(0, C.drowsyness-5)
 									C.weakened = max(0, C.weakened-5)
-
-									if(C.client)
-										C.updatehealth()
-										C:handle_regular_hud_updates()
 									usr:nutrition -= rand(1,10)
-									usr:handle_regular_hud_updates()
 									usr.next_move = world.time + 6
 								else
 									// ------- PERSON YOU'RE TOUCHING IS ALREADY DEAD -------

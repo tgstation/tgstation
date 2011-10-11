@@ -1,5 +1,5 @@
-#define SAVEFILE_VERSION_MIN	2
-#define SAVEFILE_VERSION_MAX	3
+#define SAVEFILE_VERSION_MIN	3
+#define SAVEFILE_VERSION_MAX	4
 
 datum/preferences/proc/savefile_path(mob/user)
 	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences.sav"
@@ -9,25 +9,31 @@ datum/preferences/proc/savefile_save(mob/user)
 		return 0
 
 	var/savefile/F = new /savefile(src.savefile_path(user))
-	var/version
-	F["version"] >> version
-
-	if (!isnull(version) && version<=2)
-		F["be_syndicate"] << null
-		F["be_alien"] << null
-		F["UI"] << null
+//	var/version
+//	F["version"] >> version
 
 	F["version"] << SAVEFILE_VERSION_MAX
 
 	F["real_name"] << src.real_name
+	F["name_is_always_random"] << src.be_random_name
+
 	F["gender"] << src.gender
 	F["age"] << src.age
-	for(var/job in uniquelist(occupations + assistant_occupations))
-		//world << src.occupation[job]
-		F["occupation_"+job] << src.occupation[job]
-	//F["occupation_1"] << src.occupation[1]
-	//F["occupation_2"] << src.occupation[2]
-	//F["occupation_3"] << src.occupation[3]
+
+	//Job data
+	F["job_civilian_high"] << src.job_civilian_high
+	F["job_civilian_med"] << src.job_civilian_med
+	F["job_civilian_low"] << src.job_civilian_low
+
+	F["job_medsci_high"] << src.job_medsci_high
+	F["job_medsci_med"] << src.job_medsci_med
+	F["job_medsci_low"] << src.job_medsci_low
+
+	F["job_engsec_high"] << src.job_engsec_high
+	F["job_engsec_med"] << src.job_engsec_med
+	F["job_engsec_low"] << src.job_engsec_low
+
+	//Body data
 	F["hair_red"] << src.r_hair
 	F["hair_green"] << src.g_hair
 	F["hair_blue"] << src.b_hair
@@ -41,17 +47,13 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["eyes_green"] << src.g_eyes
 	F["eyes_blue"] << src.b_eyes
 	F["blood_type"] << src.b_type
-	//F["be_syndicate"] << src.be_syndicate
-	F["be_special"] << src.be_special
 	F["underwear"] << src.underwear
-	F["name_is_always_random"] << src.be_random_name
-	F["UI"] << src.UI // Skie
-	//world << "DEBUG: saving UI as [UI]"
-	//F["be_alien"] << src.be_alien // Urist
-	F["midis"] << src.midis // Urist
-	F["bubbles"] << src.bubbles // Doohl
-	F["ooccolor"] << src.ooccolor // Urist
-	F["lastchangelog"] << src.lastchangelog // rastaf0
+
+	F["be_special"] << src.be_special
+	F["UI"] << src.UI
+	F["midis"] << src.midis
+	F["ooccolor"] << src.ooccolor
+	F["lastchangelog"] << src.lastchangelog
 
 
 	return 1
@@ -61,14 +63,11 @@ datum/preferences/proc/savefile_save(mob/user)
 // returns 1 if loaded (or file was incompatible)
 // returns 0 if savefile did not exist
 
-datum/preferences/proc/savefile_load(mob/user, var/silent = 1)
-	if (IsGuestKey(user.key))
-		return 0
+datum/preferences/proc/savefile_load(mob/user)
+	if(IsGuestKey(user.key))	return 0
 
 	var/path = savefile_path(user)
-
-	if (!fexists(path))
-		return 0
+	if(!fexists(path))	return 0
 
 	var/savefile/F = new /savefile(path)
 
@@ -77,20 +76,13 @@ datum/preferences/proc/savefile_load(mob/user, var/silent = 1)
 
 	if (isnull(version) || version < SAVEFILE_VERSION_MIN || version > SAVEFILE_VERSION_MAX)
 		fdel(path)
-
-//		if (!silent)
-//			alert(user, "Your savefile was incompatible with this version and was deleted.")
-
+		alert(user, "Your savefile was incompatible with this version and was deleted.")
 		return 0
 
 	F["real_name"] >> src.real_name
 	F["gender"] >> src.gender
 	F["age"] >> src.age
-	for(var/job in uniquelist(occupations + assistant_occupations))
-		F["occupation_"+job] >> src.occupation[job]
-	//F["occupation_1"] >> src.occupation[1]
-	//F["occupation_2"] >> src.occupation[2]
-	//F["occupation_3"] >> src.occupation[3]
+
 	F["hair_red"] >> src.r_hair
 	F["hair_green"] >> src.g_hair
 	F["hair_blue"] >> src.b_hair
@@ -106,37 +98,25 @@ datum/preferences/proc/savefile_load(mob/user, var/silent = 1)
 	F["blood_type"] >> src.b_type
 	F["underwear"] >> src.underwear
 	F["name_is_always_random"] >> src.be_random_name
-	//F["be_alien"] >> src.be_alien // Urist
-	F["midis"] >> src.midis // Urist
-	F["bubbles"] >> src.bubbles // Doohl
-	F["ooccolor"] >> src.ooccolor // Urist
-	F["lastchangelog"] >> src.lastchangelog // rastaf0
+	F["midis"] >> src.midis
+	F["ooccolor"] >> src.ooccolor
+	F["lastchangelog"] >> src.lastchangelog
+	F["UI"] >> src.UI
+	F["be_special"] >> src.be_special
 
+	if(version && (version >= SAVEFILE_VERSION_MAX))
+		F["job_civilian_high"] >> src.job_civilian_high
+		F["job_civilian_med"] >> src.job_civilian_med
+		F["job_civilian_low"] >> src.job_civilian_low
 
-	if (version<=2) // migration from old preferences file format --rastaf0
-		src.UI = 0 // swithing from storing an image file to storing boolean value --rastaf0
-		//world << "DEBUG: loading legacy UI as [UI]"
-		var/tmp
-		F["be_syndicate"] >> tmp
-		if (tmp)
-			be_special |= BE_TRAITOR
-			be_special |= BE_OPERATIVE
-			be_special |= BE_CHANGELING
-			be_special |= BE_WIZARD
-			be_special |= BE_MALF
-			be_special |= BE_REV
-		F["be_alien"] >> tmp
-		F["be_pai"] >> tmp
-		if (tmp)
-			be_special |= BE_ALIEN
-			be_special |= BE_PAI
-		del(F)
-		fdel(path)
-		savefile_save(user)
-	else // /migration end
-		F["UI"] >> src.UI
-		F["be_special"] >> src.be_special
-		//world << "DEBUG: loading new UI as [UI]"
+		F["job_medsci_high"] >> src.job_medsci_high
+		F["job_medsci_med"] >> src.job_medsci_med
+		F["job_medsci_low"] >> src.job_medsci_low
+
+		F["job_engsec_high"] >> src.job_engsec_high
+		F["job_engsec_med"] >> src.job_engsec_med
+		F["job_engsec_low"] >> src.job_engsec_low
+
 
 	return 1
 

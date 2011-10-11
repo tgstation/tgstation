@@ -66,7 +66,7 @@
 	unacidable = 1
 	density = 0
 	anchored = 1
-	var/datum/effect/system/harmless_smoke_spread/smoke
+	var/datum/effect/effect/system/harmless_smoke_spread/smoke
 
 
 

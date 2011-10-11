@@ -1,58 +1,48 @@
-var/list/occupations = list(
-	"Assistant"				= -1,
-	"Captain"				= 1,
+var/const
+	ENGSEC	=(1<<0)
 
-	//civilian
-	"Head of Personnel"		= 1,
-
-	"Bartender"				= 1,
-	"Botanist"				= 2,
-	"Chef"					= 1,
-	"Janitor"				= 1,
-	"Librarian"				= 1,
-	"Quartermaster"			= 1,
-	"Cargo Technician"		= 3,
-	"Shaft Miner"			= 3,
-	"Lawyer" 				= 2,
-	"Chaplain" 				= 1,
-	"Clown"					= 1,
-	"Mime"					= 1,
+	CAPTAIN			=(1<<0)
+	HOS				=(1<<1)
+	WARDEN			=(1<<2)
+	DETECTIVE		=(1<<3)
+	OFFICER			=(1<<4)
+	CHIEF			=(1<<5)
+	ENGINEER		=(1<<6)
+	ATMOSTECH		=(1<<7)
+	ROBOTICIST		=(1<<8)
+	AI				=(1<<9)
+	CYBORG			=(1<<10)
 
 
-	//engineering
-	"Chief Engineer"		= 1,
+	MEDSCI		=(1<<1)
 
-	"Station Engineer"		= 5,
-	"Atmospheric Technician"= 4,
-	"Roboticist"			= 1,
-
-	//medical
-	"Chief Medical Officer"	= 1,
-
-	"Medical Doctor"		= 5,
-	"Geneticist"			= 2,
-	"Virologist"			= 1,
+	RD				=(1<<0)
+	SCIENTIST		=(1<<1)
+	CHEMIST			=(1<<2)
+	CMO				=(1<<3)
+	DOCTOR			=(1<<4)
+	GENETICIST		=(1<<5)
+	VIROLOGIST		=(1<<6)
 
 
-	//science
-	"Research Director"		= 1,
+	CIVILIAN	=(1<<2)
 
-	"Scientist"				= 3,
-	"Chemist"				= 2,
+	HOP				=(1<<0)
+	BARTENDER		=(1<<1)
+	BOTANIST		=(1<<2)
+	CHEF			=(1<<3)
+	JANITOR			=(1<<4)
+	LIBRARIAN		=(1<<5)
+	QUARTERMASTER	=(1<<6)
+	CARGOTECH		=(1<<7)
+	MINER			=(1<<8)
+	LAWYER			=(1<<9)
+	CHAPLAIN		=(1<<10)
+	CLOWN			=(1<<11)
+	MIME			=(1<<12)
+	ASSISTANT		=(1<<13)
 
-
-	//security
-	"Head of Security"		= 1,
-
-	"Warden"				= 1,
-	"Detective"				= 1,
-	"Security Officer"		= 5,
-
-
-	//silicon
-	"AI"					= 1,
-	"Cyborg"				= 1
-)
+var/list/occupations = list()
 
 
 var/list/assistant_occupations = list(

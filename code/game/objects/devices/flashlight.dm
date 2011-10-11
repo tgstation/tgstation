@@ -28,7 +28,7 @@
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
 		if(src.on && user.zone_sel.selecting == "eyes")
-			if ((user.mutations & CLOWN || user.brainloss >= 60) && prob(50))//too dumb to use flashlight properly
+			if ((user.mutations & CLUMSY || user.brainloss >= 60) && prob(50))//too dumb to use flashlight properly
 				return ..()//just hit them in the head
 
 			if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")//don't have dexterity

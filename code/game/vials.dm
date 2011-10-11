@@ -186,7 +186,7 @@
 			var/i
 			for(i=0, i<10, i++)
 				spawn(0)
-					var/obj/effect/water/water1 = new /obj/effect/water( mobloc )
+					var/obj/effect/effect/water/water1 = new /obj/effect/effect/water( mobloc )
 					var/direction = pick(alldirs)
 					water1.name = "water"
 					water1.density = 0
@@ -210,7 +210,7 @@
 				var/c
 				for(c=0, c<pick(1,2,3), c++)
 					turf = get_step(turf,direction)
-				var/obj/effect/water/water2 = new /obj/effect/water( turf )
+				var/obj/effect/effect/water/water2 = new /obj/effect/effect/water( turf )
 				water2.name = "water"
 				water2.icon = 'water.dmi'
 				water2.icon_state = "extinguish"

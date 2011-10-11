@@ -10,6 +10,11 @@ STUN BATON
 
 
 // SWORD
+/obj/item/weapon/melee/energy/sword/IsShield()
+	if(active)
+		return 1
+	return 0
+
 /obj/item/weapon/melee/energy/sword/attack(target as mob, mob/user as mob)
 	..()
 
@@ -17,7 +22,7 @@ STUN BATON
 	color = pick("red","blue","green","purple")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user as mob)
-	if ((user.mutations & CLOWN) && prob(50))
+	if ((user.mutations & CLUMSY) && prob(50))
 		user << "\red You accidentally cut yourself with [src]."
 		user.take_organ_damage(5,5)
 	active = !active
@@ -55,7 +60,7 @@ STUN BATON
 //Most of the other special functions are handled in their own files.
 
 /obj/item/weapon/melee/energy/blade/New()
-	spark_system = new /datum/effect/system/spark_spread()
+	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	return
@@ -98,7 +103,7 @@ STUN BATON
 
 /obj/item/weapon/melee/baton/attack_self(mob/user as mob)
 	src.status = !( src.status )
-	if ((usr.mutations & CLOWN) && prob(50))
+	if ((usr.mutations & CLUMSY) && prob(50))
 		usr << "\red You grab the stunbaton on the wrong side."
 		usr.paralysis += 60
 		return
@@ -114,7 +119,7 @@ STUN BATON
 	return
 
 /obj/item/weapon/melee/baton/attack(mob/M as mob, mob/user as mob)
-	if ((usr.mutations & CLOWN) && prob(50))
+	if ((usr.mutations & CLUMSY) && prob(50))
 		usr << "\red You grab the stunbaton on the wrong side."
 		usr.weakened += 30
 		return
@@ -186,7 +191,7 @@ STUN BATON
 			charges -= 5
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M as mob, mob/living/user as mob)
-	if ((user.mutations & CLOWN) && prob(50))
+	if ((user.mutations & CLUMSY) && prob(50))
 		user << "\red You club yourself over the head."
 		user.weakened = max(3 * force, user.weakened)
 		if(ishuman(user))

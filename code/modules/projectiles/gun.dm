@@ -44,7 +44,7 @@
 
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
-			if ((M.mutations & CLOWN) && prob(50))
+			if ((M.mutations & CLUMSY) && prob(50))
 				M << "\red The [src.name] blows up in your face."
 				M.take_organ_damage(0,20)
 				M.drop_item()

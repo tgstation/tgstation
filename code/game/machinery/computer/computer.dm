@@ -15,7 +15,7 @@ Pod/Blast Doors computer
 	for(var/x in verbs)
 		verbs -= x
 	set_broken()
-	var/datum/effect/system/harmless_smoke_spread/smoke = new /datum/effect/system/harmless_smoke_spread()
+	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
 	smoke.set_up(5, 0, src)
 	smoke.start()
 	return
@@ -244,7 +244,7 @@ Pod/Blast Doors computer
 			carddesc += "</form>"
 			carddesc += "<b>Assignment:</b> "
 
-			jobs = "<span id='alljobsslot'><a href='#' onclick='showAll()'>[target_rank]</a></span>"
+			jobs = "<span id='alljobsslot'><a href='#' onclick='showAll()'>[target_rank]</a></span>" //CHECK THIS
 
 			var/accesses = ""
 			if(istype(src,/obj/machinery/computer/card/centcom))
@@ -271,7 +271,7 @@ Pod/Blast Doors computer
 						accesses += "<br>"
 					accesses += "</td>"
 				accesses += "</tr></table>"
-			body = "[carddesc]<br>[jobs]<br><br>[accesses]"
+			body = "[carddesc]<br>[jobs]<br><br>[accesses]" //CHECK THIS
 		else
 			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
 			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"

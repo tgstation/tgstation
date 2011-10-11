@@ -677,7 +677,7 @@ Auto Patrol: []"},
 	if (prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 

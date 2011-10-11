@@ -321,7 +321,7 @@
 		M << "\red You start coughing."
 	if (isblockon(getblock(M.dna.struc_enzymes, CLUMSYBLOCK,3),6))
 		M << "\red You feel lightheaded."
-		M.mutations |= CLOWN
+		M.mutations |= CLUMSY
 	if (isblockon(getblock(M.dna.struc_enzymes, 7,3),7))
 		M.disabilities |= 8
 		M << "\red You twitch."

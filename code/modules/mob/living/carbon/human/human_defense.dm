@@ -28,9 +28,8 @@ emp_act
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
 	for(var/datum/organ/external/organ in organs)
-		if(istype(organ))
-			armorval += checkarmor(organ, type)
-			organnum++
+		armorval += checkarmor(organ, type)
+		organnum++
 	return armorval/max(organnum, 1)
 
 
@@ -48,14 +47,15 @@ emp_act
 
 
 /mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
-	var/list/hand_held_shields = list("/obj/item/weapon/shield/riot","/obj/item/weapon/melee/energy/sword")
-	if(l_hand && is_type_in_list(l_hand, hand_held_shields))//Current base is the prob(50-d/3)
-		if(prob(50 - round(damage / 3)))
-			show_message("\red You block [attack_text] with your [l_hand.name]!", 4)
+	if(l_hand && istype(l_hand, /obj/item))//Current base is the prob(50-d/3)
+		var/obj/item/I = l_hand
+		if(I.IsShield() && (prob(50 - round(damage / 3))))
+			visible_message("\red <B>[src] blocks [attack_text] with the [l_hand.name]!</B>")
 			return 1
-	if(r_hand && is_type_in_list(r_hand, hand_held_shields))
-		if(prob(50 - round(damage / 3)))
-			show_message("\red You block [attack_text] with your [l_hand.name]!", 4)
+	if(r_hand && istype(r_hand, /obj/item))
+		var/obj/item/I = r_hand
+		if(I.IsShield() && (prob(50 - round(damage / 3))))
+			visible_message("\red <B>[src] blocks [attack_text] with the [r_hand.name]!</B>")
 			return 1
 	return 0
 

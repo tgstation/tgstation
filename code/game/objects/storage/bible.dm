@@ -7,17 +7,14 @@
 	new /obj/item/weapon/spacecash(src)
 
 /obj/item/weapon/storage/bible/proc/bless(mob/living/carbon/M as mob)
-	var/mob/living/carbon/human/H = M
-	var/heal_amt = 10
-	for(var/A in H.organs)
-		var/datum/organ/external/affecting = null
-		if(!H.organs[A])	continue
-		affecting = H.organs[A]
-		if(!istype(affecting, /datum/organ/external))	continue
-		if(affecting.heal_damage(heal_amt, heal_amt))
-			H.UpdateDamageIcon()
-		else
-			H.UpdateDamage()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/heal_amt = 10
+		for(var/datum/organ/external/affecting in H.organs)
+			if(affecting.heal_damage(heal_amt, heal_amt))
+				H.UpdateDamageIcon()
+			else
+				H.UpdateDamage()
 	return
 
 /obj/item/weapon/storage/bible/attack(mob/M as mob, mob/living/user as mob)
@@ -38,7 +35,7 @@
 		user.take_organ_damage(0,10)
 		return
 
-	if ((user.mutations & CLOWN) && prob(50))
+	if ((user.mutations & CLUMSY) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
 		user.paralysis += 20

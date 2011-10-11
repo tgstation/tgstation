@@ -22,7 +22,7 @@
 		//Important parts of the suit.
 		mob/living/carbon/affecting = null//The wearer.
 		obj/item/weapon/cell/cell//Starts out with a high-capacity cell using New().
-		datum/effect/system/spark_spread/spark_system//To create sparks.
+		datum/effect/effect/system/spark_spread/spark_system//To create sparks.
 		reagent_list[] = list("tricordrazine","dexalinp","spaceacillin","anti_toxin","nutriment","radium","hyronalin")//The reagents ids which are added to the suit at New().
 		stored_research[]//For stealing station research.
 		obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.

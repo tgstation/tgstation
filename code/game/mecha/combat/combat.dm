@@ -55,9 +55,8 @@
 				var/mob/living/carbon/human/H = target
 	//			if (M.health <= 0) return
 
-				var/dam_zone = pick("chest", "chest", "chest", "head", "groin")
-				if (istype(H.organs[dam_zone], /datum/organ/external))
-					var/datum/organ/external/temp = H.organs[dam_zone]
+				var/datum/organ/external/temp = H.get_organ(pick("chest", "chest", "chest", "head"))
+				if(temp)
 					switch(damtype)
 						if("brute")
 							H.paralysis += 1

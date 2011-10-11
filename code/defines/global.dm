@@ -73,8 +73,7 @@ var
 	guests_allowed = 1
 	shuttle_frozen = 0
 	shuttle_left = 0
-	tinted_weldhelh = 1 //as soon as the thing is sprited, we'll code in the toggle verb, bot for now, it should stay on by default. -errorage //Until you have the actual functionality for it, don't set this on by default. You're putting the cart before the horse. --DH
-	lawyer = 0//Checks for a lawyer
+	tinted_weldhelh = 1
 
 	list/jobMax = list()
 	list/bombers = list(  )

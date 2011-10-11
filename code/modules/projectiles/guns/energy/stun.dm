@@ -5,7 +5,7 @@
 	icon_state = "taser"
 	fire_sound = 'Taser.ogg'
 	charge_cost = 100
-	projectile_type = "/obj/item/projectile/electrode"
+	projectile_type = "/obj/item/projectile/energy/electrode"
 	cell_type = "/obj/item/weapon/cell/crap"
 
 
@@ -30,7 +30,7 @@
 	fire_sound = 'Gunshot.ogg'
 	origin_tech = "combat=3;materials=3;powerstorage=2"
 	charge_cost = 125
-	projectile_type = "/obj/item/projectile/electrode"
+	projectile_type = "/obj/item/projectile/energy/electrode"
 	cell_type = "/obj/item/weapon/cell"
 
 
@@ -80,6 +80,6 @@
 	w_class = 4.0
 	force = 10
 	m_amt = 200000
-	projectile_type = "/obj/item/projectile/largebolt"
+	projectile_type = "/obj/item/projectile/energy/bolt/large"
 
 

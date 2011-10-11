@@ -19,7 +19,7 @@ RCD
 	m_amt = 50000
 	origin_tech = "engineering=4;materials=2"
 	var
-		datum/effect/system/spark_spread/spark_system
+		datum/effect/effect/system/spark_spread/spark_system
 		matter = 0
 		working = 0
 		mode = 1
@@ -28,7 +28,7 @@ RCD
 
 	New()
 		desc = "A RCD. It currently holds [matter]/30 matter-units."
-		src.spark_system = new /datum/effect/system/spark_spread
+		src.spark_system = new /datum/effect/effect/system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
 		return

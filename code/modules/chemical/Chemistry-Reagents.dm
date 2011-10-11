@@ -24,7 +24,7 @@ datum
 				var/datum/reagent/self = src
 				src = null										  //of the reagent to the mob on TOUCHING it.
 
-				if(!istype(self.holder.my_atom, /obj/effect/chem_smoke))
+				if(!istype(self.holder.my_atom, /obj/effect/effect/chem_smoke))
 					// If the chemicals are in a smoke cloud, do not try to let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
 
 					if(method == TOUCH)
@@ -644,7 +644,7 @@ datum
 							return
 
 					if(prob(15) && istype(M, /mob/living/carbon/human) && volume >= 30)
-						var/datum/organ/external/affecting = M:organs["head"]
+						var/datum/organ/external/affecting = M:get_organ("head")
 						if(affecting)
 							affecting.take_damage(25, 0)
 							M:UpdateDamage()
@@ -691,7 +691,7 @@ datum
 							del (M:head)
 							M << "\red Your helmet melts into uselessness!"
 							return
-						var/datum/organ/external/affecting = M:organs["head"]
+						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(35, 0)
 						M:UpdateDamage()
 						M:UpdateDamageIcon()
@@ -706,7 +706,7 @@ datum
 						M.take_organ_damage(min(15, volume * 4)) // same deal as sulphuric acid
 				else
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:organs["head"]
+						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(30, 0)
 						M:UpdateDamage()
 						M:UpdateDamageIcon()

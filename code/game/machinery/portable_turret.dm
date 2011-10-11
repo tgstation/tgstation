@@ -46,12 +46,12 @@
 	var/emagged = 0			// 1: emagged, 0: not emagged
 	var/on = 1				// determines if the turret is on
 
-	var/datum/effect/system/spark_spread/spark_system // the spark system, used for generating... sparks?
+	var/datum/effect/effect/system/spark_spread/spark_system // the spark system, used for generating... sparks?
 
 	New()
 		..()
 		// Sets up a spark system
-		spark_system = new /datum/effect/system/spark_spread
+		spark_system = new /datum/effect/effect/system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
 	Del()

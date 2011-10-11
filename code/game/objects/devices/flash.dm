@@ -154,7 +154,7 @@
 
 
 	clown_check(var/mob/user)
-		if((user.mutations & CLOWN) && prob(50))
+		if((user.mutations & CLUMSY) && prob(50))
 			user << "\red The Flash slips out of your hand."
 			user.drop_item()
 			return 0

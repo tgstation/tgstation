@@ -68,7 +68,7 @@ CIRCULAR SAW
 				if(M == user && prob(25))
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:organs["head"]
+						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(15)
 						M.updatehealth()
 					else
@@ -154,7 +154,7 @@ CIRCULAR SAW
 				if(M == user && prob(25))
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:organs["head"]
+						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(15)
 						M.updatehealth()
 					else
@@ -229,7 +229,7 @@ CIRCULAR SAW
 				if(M == user && prob(25))
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:organs["head"]
+						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(15)
 						M.updatehealth()
 					else
@@ -253,7 +253,7 @@ CIRCULAR SAW
 	if(!istype(M))
 		return ..()
 
-	if((user.mutations & CLOWN) && prob(50))
+	if((user.mutations & CLUMSY) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -325,13 +325,13 @@ CIRCULAR SAW
 				if(M == user && prob(25))
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:organs["head"]
+						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(15)
 					else
 						M.take_organ_damage(15)
 
 				if(istype(M, /mob/living/carbon/human))
-					var/datum/organ/external/affecting = M:organs["head"]
+					var/datum/organ/external/affecting = M:get_organ("head")
 					affecting.take_damage(7)
 				else
 					M.take_organ_damage(7)
@@ -370,13 +370,13 @@ CIRCULAR SAW
 				if(M == user && prob(25))
 					user << "\red You nick an artery!"
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:organs["head"]
+						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(75)
 					else
 						M.take_organ_damage(75)
 
 				if(istype(M, /mob/living/carbon/human))
-					var/datum/organ/external/affecting = M:organs["head"]
+					var/datum/organ/external/affecting = M:get_organ("head")
 					affecting.take_damage(7)
 				else
 					M.take_organ_damage(7)
@@ -425,7 +425,7 @@ CIRCULAR SAW
 				if(M == user && prob(25))
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:organs["head"]
+						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(15)
 					else
 						M.take_organ_damage(15)
@@ -450,7 +450,7 @@ CIRCULAR SAW
 	if(!istype(M))
 		return ..()
 
-	if((user.mutations & CLOWN) && prob(50))
+	if((user.mutations & CLUMSY) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -494,14 +494,14 @@ CIRCULAR SAW
 				if(M == user && prob(25))
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:organs["head"]
+						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(40)
 						M.updatehealth()
 					else
 						M.take_organ_damage(40)
 
 				if(istype(M, /mob/living/carbon/human))
-					var/datum/organ/external/affecting = M:organs["head"]
+					var/datum/organ/external/affecting = M:get_organ("head")
 					affecting.take_damage(7)
 				else
 					M.take_organ_damage(7)

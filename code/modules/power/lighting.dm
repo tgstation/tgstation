@@ -222,7 +222,7 @@
 	else if(status == LIGHT_EMPTY)
 		user << "You stick \the [W] into the light socket!"
 		if(has_power() && (W.flags & CONDUCT))
-			var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
 			//if(!user.mutations & COLD_RESISTANCE)
@@ -282,7 +282,7 @@
 		else
 			user << "You try to remove the light [fitting], but you burn your hand on it!"
 
-			var/datum/organ/external/affecting = H.organs["[user.hand ? "l" : "r" ]_hand"]
+			var/datum/organ/external/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
 
 			affecting.take_damage( 0, 5 )		// 5 burn damage
 
@@ -324,7 +324,7 @@
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
 			playsound(src.loc, 'Glasshit.ogg', 75, 1)
 		if(on)
-			var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
 	status = LIGHT_BROKEN

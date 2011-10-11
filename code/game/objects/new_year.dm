@@ -59,7 +59,7 @@
 
 /obj/item/weapon/firbang/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 	if (user.equipped() == src)
-		if ((user.mutations & CLOWN) && prob(50))
+		if ((user.mutations & CLUMSY) && prob(50))
 			user << "\red Huh? How does this thing work?!"
 			src.state = 1
 			src.icon_state = "flashbang1"
@@ -94,11 +94,11 @@
 	playsound(src.loc, 'bang.ogg', 25, 1)
 	var/turf/T = get_turf(src)
 	if(T)
-		var/datum/effect/system/harmless_smoke_spread/smoke = new
+		var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
 		smoke.set_up(3, 0, src.loc)
 		smoke.attach(src)
 		smoke.start()
-		var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
 		new /obj/effect/new_year_tree(T)
@@ -107,7 +107,7 @@
 
 /obj/item/weapon/firbang/attack_self(mob/user as mob)
 	if (!src.state)
-		if (user.mutations & CLOWN)
+		if (user.mutations & CLUMSY)
 			user << "\red Huh? How does this thing work?!"
 			spawn( 5 )
 				prime()

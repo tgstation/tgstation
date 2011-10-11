@@ -8,7 +8,7 @@
 		obj/item/weapon/cell/power_supply //What type of power cell this uses
 		charge_cost = 100 //How much energy is needed to fire.
 		cell_type = "/obj/item/weapon/cell"
-		projectile_type = "/obj/item/projectile"
+		projectile_type = "/obj/item/projectile/energy"
 
 	emp_act(severity)
 		power_supply.use(round(power_supply.maxcharge / severity))

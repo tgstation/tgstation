@@ -1,7 +1,8 @@
-mob/new_player
-	var/datum/preferences/preferences
-	var/ready = 0
-	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
+/mob/new_player
+	var
+		datum/preferences/preferences = null
+		ready = 0
+		spawning = 0//Referenced when you want to delete the new_player later on in the code.
 
 	invisibility = 101
 
@@ -10,12 +11,8 @@ mob/new_player
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
-//	var/list/jobs_restricted_by_gamemode
 
 	Login()
-		//Next line is commented out because seem it does nothing helpful and on the other hand it calls mob/new_player/Move() to EACH turf in the world. --rastaf0
-		//..()
-
 		if(!preferences)
 			preferences = new
 
@@ -25,8 +22,10 @@ mob/new_player
 			mind.current = src
 
 		var/starting_loc = pick(newplayer_start)
+		if(!starting_loc)	starting_loc = locate(1,1,1)
 		loc = starting_loc
 		sight |= SEE_TURFS
+
 		var/list/watch_locations = list()
 		for(var/obj/effect/landmark/landmark in world)
 			if(landmark.tag == "landmark*new_player")
@@ -103,38 +102,27 @@ mob/new_player
 			del(src)
 		return
 
-	verb
-		new_player_panel()
-			set src = usr
-			new_player_panel_proc()
-
-	proc
+	verb/new_player_panel()
+		set src = usr
 		new_player_panel_proc()
 
-			var/output = "<B>New Player Options</B>"
-			/*output += " | <a href='byond://?src=\ref[src];refresh=1'>Refresh</A><hr>"
 
-			output += "<b>Name:</b> [preferences.be_random_name ? "Random" :preferences.real_name]"*/
+	proc/new_player_panel_proc()
+		var/output = "<B>New Player Options</B>"
+		output +="<hr>"
+		output += "<br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><BR><BR>"
 
-			output +="<hr>"
+		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
+			if(!ready)	output += "<a href='byond://?src=\ref[src];ready=1'>Declare Ready</A><BR>"
+			else	output += "<b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)<BR>"
 
-			/*output += "<b>Preferred jobs:</b><br>"
-			output += "[preferences.occupation[1]]<br>"
-			output += "[preferences.occupation[2]]<br>"
-			output += "[preferences.occupation[3]]<hr>"*/
+		else
+			output += "<a href='byond://?src=\ref[src];late_join=1'>Join Game!</A><BR>"
 
-			output += "<br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><BR><BR>"
-			if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
-				if(!ready)
-					output += "<a href='byond://?src=\ref[src];ready=1'>Declare Ready</A><BR>"
-				else
-					output += "<b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)<BR>"
-			else
-				output += "<a href='byond://?src=\ref[src];late_join=1'>Join Game!</A><BR>"
+		output += "<BR><a href='byond://?src=\ref[src];observe=1'>Observe</A><BR>"
 
-			output += "<BR><a href='byond://?src=\ref[src];observe=1'>Observe</A><BR>"
-
-			src << browse(output,"window=playersetup;size=250x210;can_close=0")
+		src << browse(output,"window=playersetup;size=250x210;can_close=0")
+		return
 
 	Stat()
 		..()
@@ -203,93 +191,37 @@ mob/new_player
 			LateChoices()
 
 		if(href_list["SelectedJob"])
-			if (!usr.client.authenticated)
+			if(!usr.client.authenticated)
 				src << "You are not authorized to enter the game."
 				return
 
-			if (!enter_allowed)
+			if(!enter_allowed)
 				usr << "\blue There is an administrative lock on entering the game!"
 				return
 
-			switch(href_list["SelectedJob"])
-				if ("1")
-					AttemptLateSpawn("Captain")
-				if ("2")
-					AttemptLateSpawn("Head of Security")
-				if ("3")
-					AttemptLateSpawn("Head of Personnel")
-				if ("4")
-					AttemptLateSpawn("Station Engineer")
-				if ("5")
-					AttemptLateSpawn("Bartender")
-				if ("6")
-					AttemptLateSpawn("Scientist")
-				if ("7")
-					AttemptLateSpawn("Chemist")
-				if ("8")
-					AttemptLateSpawn("Geneticist")
-				if ("9")
-					AttemptLateSpawn("Security Officer")
-				if ("10")
-					AttemptLateSpawn("Medical Doctor")
-				if ("11")
-					AttemptLateSpawn("Atmospheric Technician")
-				if ("12")
-					AttemptLateSpawn("Detective")
-				if ("13")
-					AttemptLateSpawn("Chaplain")
-				if ("14")
-					AttemptLateSpawn("Janitor")
-				if ("15")
-					AttemptLateSpawn("Clown")
-				if ("16")
-					AttemptLateSpawn("Chef")
-				if ("17")
-					AttemptLateSpawn("Roboticist")
-				if ("18")
-					AttemptLateSpawn("Assistant")
-				if ("19")
-					AttemptLateSpawn("Quartermaster")
-				if ("20")
-					AttemptLateSpawn("Research Director")
-				if ("21")
-					AttemptLateSpawn("Chief Engineer")
-				if ("22")
-					AttemptLateSpawn("Botanist")
-				if ("23")
-					AttemptLateSpawn("Librarian")
-				if ("24")
-					AttemptLateSpawn("Virologist")
-				if ("25")
-					AttemptLateSpawn("Lawyer")
-				if ("26")
-					AttemptLateSpawn("Cargo Technician")
-				if ("27")
-					AttemptLateSpawn("Chief Medical Officer")
-				if ("28")
-					AttemptLateSpawn("Warden")
-				if ("29")
-					AttemptLateSpawn("Shaft Miner")
-				if ("30")
-					AttemptLateSpawn("Mime")
+			AttemptLateSpawn(href_list["SelectedJob"])
+			return
 
 		if(!ready && href_list["preferences"])
 			preferences.process_link(src, href_list)
 		else if(!href_list["late_join"])
 			new_player_panel()
 
-	proc/IsJobAvailable(rank)
-		if(((jobMax[rank] < 0) || (countJob(rank) < jobMax[rank])) && !jobban_isbanned(src,rank))
+
+/*	proc/IsJobAvailable(rank)
+		if(((occupations[rank] < 0) || (countJob(rank) < occupations[rank])) && !jobban_isbanned(src,rank))
 			return 1
 		else
-			return 0
+			return 0*/
 
-	proc/AttemptLateSpawn(rank, maxAllowed)
-		if(IsJobAvailable(rank, maxAllowed))
+
+	proc/AttemptLateSpawn(rank)
+		var/datum/job/job = job_master.GetJob(rank)
+		if(job && ((job.title == "Assistant") || (job.current_positions < job.total_positions)))
 			var/mob/living/carbon/human/character = create_character()
 			var/icon/char_icon = getFlatIcon(character,0)//We're creating out own cache so it's not needed.
-			if (character)
-				character.Equip_Rank(rank, joined_late=1)
+			if(job_master.AssignRole(character, rank, 1))
+				job_master.EquipRank(character, rank, 1)
 				if(character.mind)
 					if(character.mind.assigned_role != "Cyborg")
 						ManifestLateSpawn(character,char_icon)
@@ -304,6 +236,7 @@ mob/new_player
 					del(src)
 		else
 			src << alert("[rank] is not available. Please try another.")
+
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
@@ -336,7 +269,7 @@ mob/new_player
 			M.fields["id"] = G.fields["id"]
 			S.fields["name"] = G.fields["name"]
 			S.fields["id"] = G.fields["id"]
-			if (H.gender == FEMALE)
+			if(H.gender == FEMALE)
 				G.fields["sex"] = "Female"
 			else
 				G.fields["sex"] = "Male"
@@ -381,101 +314,16 @@ mob/new_player
 			data_core.locked += L
 		return
 
-// This fxn creates positions for assistants based on existing positions. This could be more elegant.
+
 	proc/LateChoices()
 		var/dat = "<html><body>"
 		dat += "Choose from the following open positions:<br>"
-		if (IsJobAvailable("Captain"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=1'>Captain</a><br>"
-
-		if (IsJobAvailable("Head of Security"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=2'>Head of Security</a><br>"
-
-		if (IsJobAvailable("Head of Personnel"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=3'>Head of Personnel</a><br>"
-
-		if (IsJobAvailable("Research Director"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=20'>Research Director</a><br>"
-
-		if (IsJobAvailable("Chief Engineer"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=21'>Chief Engineer</a><br>"
-
-		if (IsJobAvailable("Station Engineer"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=4'>Station Engineer</a><br>"
-
-		if (IsJobAvailable("Bartender"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=5'>Bartender</a><br>"
-
-		if (IsJobAvailable("Scientist"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=6'>Scientist</a><br>"
-
-		if (IsJobAvailable("Chemist"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=7'>Chemist</a><br>"
-
-		if (IsJobAvailable("Geneticist"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=8'>Geneticist</a><br>"
-
-		if (IsJobAvailable("Security Officer"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=9'>Security Officer</a><br>"
-
-		if (IsJobAvailable("Medical Doctor"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=10'>Medical Doctor</a><br>"
-
-		if (IsJobAvailable("Atmospheric Technician"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=11'>Atmospheric Technician</a><br>"
-
-		if (IsJobAvailable("Detective"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=12'>Detective</a><br>"
-
-		if (IsJobAvailable("Chaplain"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=13'>Chaplain</a><br>"
-
-		if (IsJobAvailable("Janitor"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=14'>Janitor</a><br>"
-
-		if (IsJobAvailable("Clown"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=15'>Clown</a><br>"
-
-		if (IsJobAvailable("Mime"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=30'>Mime</a><br>"
-
-		if (IsJobAvailable("Chef"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=16'>Chef</a><br>"
-
-		if (IsJobAvailable("Roboticist"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=17'>Roboticist</a><br>"
-
-		if (IsJobAvailable("Quartermaster"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=19'>Quartermaster</a><br>"
-
-		if (IsJobAvailable("Botanist"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=22'>Botanist</a><br>"
-
-		if (IsJobAvailable("Librarian"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=23'>Librarian</a><br>"
-
-		if (IsJobAvailable("Virologist"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=24'>Virologist</a><br>"
-
-		if (IsJobAvailable("Lawyer"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=25'>Lawyer</a><br>"
-
-		if (IsJobAvailable("Cargo Technician"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=26'>Cargo Technician</a><br>"
-
-		if (IsJobAvailable("Chief Medical Officer"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=27'>Chief Medical Officer</a><br>"
-
-		if (IsJobAvailable("Warden"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=28'>Warden</a><br>"
-
-		if (IsJobAvailable("Shaft Miner"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=29'>Shaft Miner</a><br>"
-
-		if (!jobban_isbanned(src,"Assistant"))
-			dat += "<a href='byond://?src=\ref[src];SelectedJob=18'>Assistant</a><br>"
+		for(var/datum/job/job in job_master.occupations)
+			if(job && ((job.title == "Assistant") || (job.current_positions < job.total_positions)))
+				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title]</a><br>"
 
 		src << browse(dat, "window=latechoices;size=300x640;can_close=0")
+
 
 	proc/create_character()
 		spawning = 1
@@ -489,8 +337,8 @@ mob/new_player
 			mind.transfer_to(new_character)
 			mind.original = new_character
 
-
 		return new_character
+
 
 	Move()
 		return 0
