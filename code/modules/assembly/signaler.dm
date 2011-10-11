@@ -110,6 +110,6 @@
 		if(istype(src.loc, /obj/machinery/door/airlock) && src.airlock_wire && src.wires)
 			var/obj/machinery/door/airlock/A = src.loc
 			A.pulse(src.airlock_wire)
-		else
+		else if(holder)
 			holder.process_activation(src, 1, 0)
 		return 1
