@@ -3,8 +3,8 @@
 	flag = ASSISTANT
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = -1
-	spawn_positions = -1
+	total_positions = 1000
+	spawn_positions = 1000
 
 
 	equip(var/mob/living/carbon/human/H)

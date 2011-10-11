@@ -24,13 +24,13 @@
 
 
 	activate()
-		if(!..())	return 0//Cooldown check
+		if(cooldown > 0)	return 0
+		cooldown = 2
+		spawn(10)
+			process_cooldown()
+
 		signal()
-		pulse(0)
-		if(istype(src.loc, /obj/machinery/door/airlock) && src.airlock_wire && src.wires)
-			var/obj/machinery/door/airlock/A = src.loc
-			A.pulse(src.airlock_wire)
-//		pulse(1)//?
+
 		return 1
 
 
@@ -67,34 +67,32 @@
 
 
 	Topic(href, href_list)
-		//..()
-		if(usr.stat)
+		..()
+
+		if(get_dist(src, usr) > 1)
+			usr << browse(null, "window=signal")
+			onclose(usr, "signal")
 			return
-		if ((usr.contents.Find(src) || (usr.contents.Find(src.holder) || (in_range(src, usr) && istype(src.loc, /turf)))))
-			usr.machine = src
-			if (href_list["freq"])
-				src.frequency += text2num(href_list["freq"])
-				src.frequency = round(src.frequency)
-				src.frequency = min(100, src.frequency)
-				src.frequency = max(1, src.frequency)
-				return
 
-			if(href_list["code"])
-				src.code += text2num(href_list["code"])
-				src.code = round(src.code)
-				src.code = min(100, src.code)
-				src.code = max(1, src.code)
+		if (href_list["freq"])
+			src.frequency += text2num(href_list["freq"])
+			src.frequency = round(src.frequency)
+			src.frequency = min(100, src.frequency)
+			src.frequency = max(1, src.frequency)
 
-			if(href_list["send"])
-				spawn( 0 )
-					send_signal()
-					return
+		if(href_list["code"])
+			src.code += text2num(href_list["code"])
+			src.code = round(src.code)
+			src.code = min(100, src.code)
+			src.code = max(1, src.code)
 
-//					if(href_list["listen"])
-//						src.listening = text2num(href_list["listen"])
-		else
-			usr << browse(null, "window=radio")
-			return
+		if(href_list["send"])
+			spawn( 0 )
+				signal()
+
+		if(usr)
+			attack_self(usr)
+
 		return
 
 	proc/signal()//will have to do for now
@@ -102,6 +100,16 @@
 			if(!S)	continue
 			if(S == src)	continue
 			if((S.frequency == src.frequency) && (S.code == src.code))
-				S.pulsed(1)
+				spawn(0)
+					S.pulse(0)
 				return 1
 		return 0
+
+
+	pulse(var/radio = 0)
+		if(istype(src.loc, /obj/machinery/door/airlock) && src.airlock_wire && src.wires)
+			var/obj/machinery/door/airlock/A = src.loc
+			A.pulse(src.airlock_wire)
+		else
+			holder.process_activation(src, 1, 0)
+		return 1

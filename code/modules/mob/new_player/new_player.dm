@@ -217,7 +217,7 @@
 
 	proc/AttemptLateSpawn(rank)
 		var/datum/job/job = job_master.GetJob(rank)
-		if(job && ((job.title == "Assistant") || (job.current_positions < job.total_positions)))
+		if(job && (job.current_positions < job.total_positions))
 			var/mob/living/carbon/human/character = create_character()
 			var/icon/char_icon = getFlatIcon(character,0)//We're creating out own cache so it's not needed.
 			if(job_master.AssignRole(character, rank, 1))

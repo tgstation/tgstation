@@ -22,7 +22,7 @@
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 		L.imp_in = H
 		L.implanted = 1
-		world << "<b>[src] is the captain!</b>"
+		world << "<b>[H.real_name] is the captain!</b>"
 		return 1
 
 

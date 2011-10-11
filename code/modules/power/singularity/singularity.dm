@@ -31,7 +31,7 @@ var/global/list/uneatable = list(
 		event_chance = 15 //Prob for event each tick
 		target = null //its target. moves towards the target if it has one
 		last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
-		teleport_del = 1
+		teleport_del = 0
 
 	New(loc, var/starting_energy = 50, var/temp = 0)
 		src.energy = starting_energy
