@@ -25,11 +25,12 @@
 	var/step_energy_drain = 10
 	var/health = 300 //health is health
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
-	var/obj/item/weapon/cell/cell = new
+	var/obj/item/weapon/cell/cell
 	var/state = 0
 	var/list/log = new
 	var/last_message = 0
 	var/add_req_access = 1
+	var/maint_access = 1
 	var/dna	//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect/effect/system/spark_spread/spark_system = new
@@ -39,13 +40,7 @@
 	//inner atmos machinery. Air tank mostly
 	var/use_internal_tank = 0
 
-	//TODO: replace with common airtank
-	/*
-	var/datum/gas_mixture/air_contents = new
-
-	var/filled = 0.5
-	var/gas_tank_volume = 500
-	*/
+	var/obj/item/device/radio/radio = null
 	var/obj/machinery/atmospherics/portables_connector/connected_port = null //filling the air tanks
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 
@@ -69,15 +64,21 @@
 
 /obj/mecha/New()
 	..()
+	radio = new(src)
+	radio.name = "[src] radio"
+	radio.icon = icon
+	radio.icon_state = icon_state
 	src.icon_state += "-open"
 	/*
 	src.air_contents.volume = gas_tank_volume //liters
 	src.air_contents.temperature = T20C
 	src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	*/
+
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	src.spark_system.set_up(2, 0, src)
 	src.spark_system.attach(src)
+	cell = new(src)
 	src.cell.charge = 15000
 	src.cell.maxcharge = 15000
 
@@ -123,7 +124,10 @@
 /obj/mecha/proc/click_action(atom/target,mob/user)
 	if(!src.occupant || src.occupant != user ) return
 	if(user.stat) return
-	if(state || !get_charge()) return
+	if(state)
+		occupant_message("<font color='red'>Maintenance protocols in effect</font>")
+		return
+	if(!get_charge()) return
 	if(src == target) return
 	var/dir_to_target = get_dir(src,target)
 	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
@@ -185,7 +189,10 @@
 		return 0
 	if(src.pr_inertial_movement.active())
 		return 0
-	if(state || !get_charge())
+	if(state)
+		occupant_message("<font color='red'>Maintenance protocols in effect</font>")
+		return
+	if(!get_charge())
 		return 0
 	var/move_result = 0
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
@@ -263,14 +270,15 @@
 ////////////////////////////////////////
 
 /obj/mecha/proc/take_damage(amount, type="brute")
-	switch(type)
-		if("brute")
-			src.health -= amount
-		if("fire")
-			amount *= 1.2
-			src.health -= amount
-	src.update_health()
-	src.log_append_to_last("Took [amount] points of damage. Damage type: \"[type]\".",1)
+	if(amount)
+		switch(type)
+			if("brute")
+				src.health -= amount
+			if("fire")
+				amount *= 1.2
+				src.health -= amount
+		src.update_health()
+		src.log_append_to_last("Took [amount] points of damage. Damage type: \"[type]\".",1)
 	return
 
 /obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
@@ -454,9 +462,9 @@
 
 /obj/mecha/emp_act(severity)
 	if(get_charge())
-		use_power(min(cell.charge, cell.maxcharge/severity))
+		use_power(min(cell.charge, (cell.maxcharge/2)/severity))
 	src.log_message("EMP detected")
-	take_damage(100 / severity)
+	take_damage(50 / severity)
 	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST),1)
 	return
 
@@ -558,6 +566,7 @@
 	set name = "Connect to port"
 	set category = "Exosuit Interface"
 	set src in view(0)
+	set popup_menu = 0
 	if(!src.occupant) return
 	if(usr!=src.occupant)
 		return
@@ -579,6 +588,7 @@
 	set name = "Disconnect from port"
 	set category = "Exosuit Interface"
 	set src in view(0)
+	set popup_menu = 0
 	if(!src.occupant) return
 	if(usr!=src.occupant)
 		return
@@ -594,6 +604,7 @@
 	set name = "Toggle Lights"
 	set category = "Exosuit Interface"
 	set src in view(0)
+	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
 	lights = !lights
@@ -609,6 +620,7 @@
 	set name = "Toggle internal airtank usage."
 	set category = "Exosuit Interface"
 	set src in view(0)
+	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
 	use_internal_tank = !use_internal_tank
@@ -730,6 +742,7 @@
 	set name = "View Stats"
 	set category = "Exosuit Interface"
 	set src in view(0)
+	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
 	//pr_update_stats.start()
@@ -749,6 +762,7 @@
 	set name = "Eject"
 	set category = "Exosuit Interface"
 	set src in view(0)
+	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
 	src.go_out()
@@ -907,29 +921,20 @@
 				user << "You were unable to attach [W] to [src]"
 		return
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if(src.occupant)
-			user << "Unable to initiate maintenance protocol."
-			return
-		if(add_req_access)
-			var/obj/item/weapon/card/id/id_card
-			if(istype(W, /obj/item/weapon/card/id))
-				id_card = W
+		if(add_req_access || maint_access)
+			if(internals_access_allowed(usr))
+				var/obj/item/weapon/card/id/id_card
+				if(istype(W, /obj/item/weapon/card/id))
+					id_card = W
+				else
+					var/obj/item/device/pda/pda = W
+					id_card = pda.id
+				output_maintenance_dialog(id_card, user)
+				return
 			else
-				var/obj/item/device/pda/pda = W
-				id_card = pda.id
-			output_access_dialog(id_card, user)
-			return
-		if(src.internals_access_allowed(usr))
-			if(state==0)
-				state = 1
-				user << "The securing bolts are now exposed."
-			else if(state==1)
-				state = 0
-				user << "The securing bolts are now hidden."
+				user << "\red Invalid ID: Access denied."
 		else
-			user << "\red Access denied."
-		return
-
+			user << "\red Maintenance protocols disabled by operator."
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(state==1)
 			state = 2
@@ -1019,6 +1024,7 @@
 						<style>
 						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
+						a {padding:2px 5px;;color:#0f0;}
 						.wr {margin-bottom: 5px;}
 						.header {cursor:pointer;}
 						.open, .closed {background: #32CD32; color:#000; padding:1px 2px;}
@@ -1049,7 +1055,9 @@
 						[src.get_equipment_list()]
 						</div>
 						<hr>
+						<div id='commands'>
 						[src.get_commands()]
+						</div>
 						</body>
 						</html>
 					 "}
@@ -1075,9 +1083,23 @@
 
 /obj/mecha/proc/get_commands()
 	var/output = {"<div class='wr'>
-						<div class='header'>Lights & Airtank</div>
+						<div class='header'>Electronics</div>
 						<div class='links'>
 						<a href='?src=\ref[src];toggle_lights=1'>Toggle Lights</a><br>
+						<b>Radio settings:</b><br>
+						Microphone: <a href='?src=\ref[src];rmictoggle=1'><span id="rmicstate">[radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
+						Speaker: <a href='?src=\ref[src];rspktoggle=1'><span id="rspkstate">[radio.listening?"Engaged":"Disengaged"]</span></a><br>
+						Frequency:
+						<a href='?src=\ref[src];rfreq=-10'>-</a>
+						<a href='?src=\ref[src];rfreq=-2'>-</a>
+						<span id="rfreq">[format_frequency(radio.frequency)]</span>
+						<a href='?src=\ref[src];rfreq=2'>+</a>
+						<a href='?src=\ref[src];rfreq=10'>+</a><br>
+						</div>
+						</div>
+						<div class='wr'>
+						<div class='header'>Airtank</div>
+						<div class='links'>
 						<a href='?src=\ref[src];toggle_airtank=1'>Toggle Internal Airtank Usage</a><br>
 						[(/obj/mecha/verb/disconnect_from_port in src.verbs)?"<a href='?src=\ref[src];port_disconnect=1'>Disconnect from port</a><br>":null]
 						[(/obj/mecha/verb/connect_to_port in src.verbs)?"<a href='?src=\ref[src];port_connect=1'>Connect to port</a><br>":null]
@@ -1086,7 +1108,8 @@
 						<div class='wr'>
 						<div class='header'>Permissions & Logging</div>
 						<div class='links'>
-						<a href='?src=\ref[src];unlock_id_upload=1'>Unlock ID upload panel</a><br>
+						<a href='?src=\ref[src];toggle_id_upload=1'><span id='t_id_upload'>[add_req_access?"L":"Unl"]ock ID upload panel</span></a><br>
+						<a href='?src=\ref[src];toggle_maint_access=1'><span id='t_maint_access'>[maint_access?"Forbid":"Permit"] maintenance protocols</span></a><br>
 						<a href='?src=\ref[src];dna_lock=1'>DNA-lock</a><br>
 						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
 						<a href='?src=\ref[src];change_name=1'>Change exosuit name</a><br>
@@ -1125,24 +1148,48 @@
 	if(href_list["update_content"])
 		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())
 		return
-	if(usr==occupant && occupant.stat>0)
-		return
 	if (href_list["close"])
 		return
-	if (href_list["toggle_lights"])
+	if(usr.stat>0)
+		return
+	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+	if(href_list["select_equip"])
+		var/obj/item/mecha_parts/mecha_equipment/equip = filter.getObj("select_equip")
+		if(equip)
+			src.selected = equip
+			src.occupant_message("You switch to [equip]")
+			src.visible_message("[src] raises [equip]")
+			send_byjax(src.occupant,"exosuit.browser","eq_list",src.get_equipment_list())
+		return
+	if (href_list["eject"])
+		src.eject()
+		return
+	if(href_list["toggle_lights"])
 		src.toggle_lights()
 		return
-	if (href_list["toggle_airtank"])
+	if(href_list["toggle_airtank"])
 		src.toggle_internal_tank()
 		return
-	if (href_list["port_disconnect"])
+	if(href_list["rmictoggle"])
+		radio.broadcasting = !radio.broadcasting
+		send_byjax(src.occupant,"exosuit.browser","rmicstate",(radio.broadcasting?"Engaged":"Disengaged"))
+		return
+	if(href_list["rspktoggle"])
+		radio.listening = !radio.listening
+		send_byjax(src.occupant,"exosuit.browser","rspkstate",(radio.listening?"Engaged":"Disengaged"))
+		return
+	if(href_list["rfreq"])
+		var/new_frequency = (radio.frequency + filter.getNum("rfreq"))
+		if (!radio.freerange || (radio.frequency < 1200 || radio.frequency > 1600))
+			new_frequency = sanitize_frequency(new_frequency)
+		radio.set_frequency(new_frequency)
+		send_byjax(src.occupant,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
+		return
+	if(href_list["port_disconnect"])
 		src.disconnect_from_port()
 		return
 	if (href_list["port_connect"])
 		src.connect_to_port()
-		return
-	if (href_list["eject"])
-		src.eject()
 		return
 	if (href_list["view_log"])
 		src.occupant << browse(src.get_log_html(), "window=exosuit_log")
@@ -1155,6 +1202,50 @@
 		else
 			alert(occupant, "nope.avi")
 		return
+	if (href_list["toggle_id_upload"])
+		add_req_access = !add_req_access
+		send_byjax(src.occupant,"exosuit.browser","t_id_upload","[add_req_access?"L":"Unl"]ock ID upload panel")
+		return
+	if(href_list["toggle_maint_access"])
+		if(state)
+			occupant_message("<font color='red'>Maintenance protocols in effect</font>")
+			return
+		maint_access = !maint_access
+		send_byjax(src.occupant,"exosuit.browser","t_maint_access","[maint_access?"Forbid":"Permit"] maintenance protocols")
+		return
+	if(href_list["req_access"] && add_req_access)
+		output_access_dialog(filter.getObj("id_card"),filter.getMob("user"))
+		return
+	if(href_list["maint_access"] && maint_access)
+		var/mob/user = filter.getMob("user")
+		if(user)
+			if(state==0)
+				state = 1
+				user << "The securing bolts are now exposed."
+			else if(state==1)
+				state = 0
+				user << "The securing bolts are now hidden."
+		return
+	if (href_list["add_req_access"] && add_req_access)
+		operation_req_access += filter.getNum("add_req_access")
+		output_access_dialog(filter.getObj("id_card"),filter.getMob("user"))
+		return
+	if (href_list["del_req_access"] && add_req_access)
+		operation_req_access -= filter.getNum("del_req_access")
+		output_access_dialog(filter.getObj("id_card"),filter.getMob("user"))
+		return
+	if (href_list["finish_req_access"])
+		add_req_access = 0
+		var/mob/user = filter.getMob("user")
+		user << browse(null,"window=exosuit_add_access")
+		return
+	if(href_list["dna_lock"])
+		if(src.occupant)
+			src.dna = src.occupant.dna.unique_enzymes
+			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
+		return
+	if(href_list["reset_dna"])
+		src.dna = null
 	if (href_list["repair_int_control_lost"])
 		src.occupant_message("Recalibrating coordination system.")
 		src.log_message("Recalibration of coordination system started.")
@@ -1167,33 +1258,7 @@
 			else
 				src.occupant_message("<font color='red'>Recalibration failed.</font>")
 				src.log_message("Recalibration of coordination system failed with 1 error.",1)
-	if(href_list["select_equip"])
-		var/obj/item/mecha_parts/mecha_equipment/equip = locate(href_list["select_equip"])
-		if(equip)
-			src.selected = equip
-			src.occupant_message("You switch to [equip]")
-			src.visible_message("[src] raises [equip]")
-			send_byjax(src.occupant,"exosuit.browser","eq_list",src.get_equipment_list())
-	if (href_list["unlock_id_upload"])
-		add_req_access = 1
-	if (href_list["add_req_access"])
-		if(!add_req_access) return
-		var/access = text2num(href_list["add_req_access"])
-		operation_req_access += access
-		output_access_dialog(locate(href_list["id_card"]),locate(href_list["user"]))
-	if (href_list["del_req_access"])
-		operation_req_access -= text2num(href_list["del_req_access"])
-		output_access_dialog(locate(href_list["id_card"]),locate(href_list["user"]))
-	if (href_list["finish_req_access"])
-		add_req_access = 0
-		var/mob/user = locate(href_list["user"])
-		user << browse(null,"window=exosuit_add_access")
-	if(href_list["dna_lock"])
-		if(src.occupant)
-			src.dna = src.occupant.dna.unique_enzymes
-			src.occupant_message("You feel a prick as the needle takes your DNA sample.")
-	if(href_list["reset_dna"])
-		src.dna = null
+		return
 
 
 /*
@@ -1258,16 +1323,12 @@
 	user << browse(output, "window=mecha_attack_ai")
 	return
 */
-/* //it seems this is not needed anymore...
+
 /obj/mecha/hear_talk(mob/M as mob, text)
-	src.log_message("Heard talk from [M]")
-	if(occupant && M)
-		if(!occupant.say_understands(M))
-			text = stars(text)
-		var/rendered = "<span class='game say'><span class='name'>[M.name]</span> <span class='message'>[M.say_quote(text)]</span></span>"
-		occupant.show_message(rendered, 2)
+	if(M==occupant && radio.broadcasting)
+		radio.talk_into(M, text)
 	return
-*/
+
 /obj/mecha/proc/get_charge()//returns null if no powercell, else returns cell.charge
 	if(!src.cell) return
 	return max(0, src.cell.charge)
@@ -1288,13 +1349,20 @@
 	return 0
 
 
-
 /obj/mecha/proc/output_access_dialog(obj/item/weapon/card/id/id_card, mob/user)
 	if(!id_card || !user) return
-	var/output = "<html><head></head><body><b>Following keycodes are present in this system:</b><br>"
+	var/output = {"<html>
+						<head><style>
+						h1 {font-size:15px;margin-bottom:4px;}
+						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
+						a {color:#0f0;}
+						</style>
+						</head>
+						<body>
+						<h1>Following keycodes are present in this system:</h1>"}
 	for(var/a in operation_req_access)
 		output += "[get_access_desc(a)] - <a href='?src=\ref[src];del_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Delete</a><br>"
-	output += "<hr><b>Following keycodes were detected on portable device:</b><br>"
+	output += "<hr><h1>Following keycodes were detected on portable device:</h1>"
 	for(var/a in id_card.access)
 		if(a in operation_req_access) continue
 		var/a_name = get_access_desc(a)
@@ -1304,6 +1372,24 @@
 	output += "</body></html>"
 	user << browse(output, "window=exosuit_add_access")
 	onclose(user, "exosuit_add_access")
+	return
+
+/obj/mecha/proc/output_maintenance_dialog(obj/item/weapon/card/id/id_card,mob/user)
+	if(!id_card || !user) return
+	var/output = {"<html>
+						<head>
+						<style>
+						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
+						a {padding:2px 5px; background:#32CD32;color:#000;display:block;margin:2px;text-align:center;text-decoration:none;}
+						</style>
+						</head>
+						<body>
+						[add_req_access?"<a href='?src=\ref[src];req_access=1;id_card=\ref[id_card];user=\ref[user]'>Edit operation keycodes</a>":null]
+						[maint_access?"<a href='?src=\ref[src];maint_access=1;user=\ref[user]'>Initiate maintenance protocol</a>":null]
+						</body>
+						</html>"}
+	user << browse(output, "window=exosuit_maint_console")
+	onclose(user, "exosuit_maint_console")
 	return
 
 

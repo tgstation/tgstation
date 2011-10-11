@@ -5,6 +5,7 @@
 	var/melee_can_hit = 1
 	var/list/destroyable_obj = list(/obj/mecha, /obj/structure/window, /obj/structure/grille, /turf/simulated/wall)
 	internal_damage_threshold = 50
+	maint_access = 0
 
 /*
 /obj/mecha/combat/verb/switch_weapon()
@@ -37,7 +38,7 @@
 
 /obj/mecha/combat/melee_action(target as obj|mob|turf)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
-		target = pick(oview(1,src))
+		target = safepick(oview(1,src))
 	if(!melee_can_hit || !istype(target, /atom)) return
 	if(istype(target, /mob/living))
 		var/mob/living/M = target

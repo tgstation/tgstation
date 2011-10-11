@@ -356,17 +356,20 @@
 						return
 					locked = target
 					chassis.occupant_message("Locked on [target]")
+					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 					return
 				else if(target!=locked)
 					if(locked in view(chassis))
 						locked.throw_at(target, 14, 1.5)
 						locked = null
+						send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 						set_ready_state(0)
 						chassis.use_power(energy_drain)
 						do_after_cooldown()
 					else
-						chassis.occupant_message("Lock on [locked] disengaged.")
 						locked = null
+						chassis.occupant_message("Lock on [locked] disengaged.")
+						send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
 			if(2)
 				if(!action_checks(target)) return
 				var/list/atoms = list()
@@ -425,6 +428,10 @@
 		..()
 		return
 
+	get_equip_info()
+		if(!chassis) return
+		return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name]"
+
 	proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(!action_checks(user))
 			return chassis.dynattackby(W,user)
@@ -473,6 +480,10 @@
 		chassis.proc_res["dynhitby"] = null
 		..()
 		return
+
+	get_equip_info()
+		if(!chassis) return
+		return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name]"
 
 	proc/dynbulletdamage(var/obj/item/projectile/Proj)
 		if(!action_checks(src))

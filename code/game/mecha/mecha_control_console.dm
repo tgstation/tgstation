@@ -98,7 +98,7 @@
 	proc/shock()
 		if(src.in_mecha())
 			var/obj/mecha/M = src.loc
-			M.emp_act(3)
+			M.emp_act(2)
 		del(src)
 
 	proc/get_mecha_log()

@@ -200,7 +200,7 @@ datum
 			req_tech = list("programming" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/weapon/circuitboard/general_air_control"
+			build_path = "/obj/item/weapon/circuitboard/air_management"
 
 		general_alert
 			name = "Circuit Design (General Alert Console)"

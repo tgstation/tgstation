@@ -122,6 +122,7 @@
 	set category = "Exosuit Interface"
 	set name = "Toggle thrusters"
 	set src in view(0)
+	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
 	if(src.occupant)
@@ -136,6 +137,7 @@
 	set category = "Exosuit Interface"
 	set name = "Smoke"
 	set src in view(0)
+	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
 	if(smoke_ready && smoke>0)
@@ -150,6 +152,7 @@
 	set category = "Exosuit Interface"
 	set name = "Zoom"
 	set src in view(0)
+	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
 	if(src.occupant.client)

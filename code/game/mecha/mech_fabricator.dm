@@ -124,7 +124,9 @@
 		if(istype(parts, /list))
 			for(var/i=1;i<=parts.len;i++)
 				var/path = parts[i]
-				parts[i] = new path(src)
+				var/part = new path(src)
+				if(part)
+					parts[i] = part
 				//debug below
 				ASSERT(istype(parts[i],/obj/item))
 		return
@@ -234,7 +236,7 @@
 			return 1
 		return 0
 
-	proc/build_part(var/obj/item/mecha_parts/part)
+	proc/build_part(var/obj/item/part)
 		if(!part) return
 		src.being_built = new part.type(src)
 		src.desc = "It's building [src.being_built]."
@@ -243,7 +245,6 @@
 		src.use_power = 2
 		src.updateUsrDialog()
 		sleep(get_construction_time_w_coeff(part))
-		//if(!src) return // you do not need to check it, all sleeping procedires will be terminated when src dies. -- rastaf0
 		src.use_power = 1
 		src.overlays -= "fab-active"
 		src.desc = initial(src.desc)
@@ -431,6 +432,7 @@
 
 	Topic(href, href_list)
 		..()
+		var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 		if(href_list["part_set"])
 			if(href_list["part_set"]=="clear")
 				src.part_set = null
@@ -438,28 +440,24 @@
 				src.part_set = href_list["part_set"]
 				screen = "parts"
 		if(href_list["part"])
-			var/list/part = locate(href_list["part"])
+			var/list/part = filter.getObj("part")
 			if(!processing_queue)
 				build_part(part)
 			else
 				add_to_queue(part)
 		if(href_list["add_to_queue"])
-			var/part = locate(href_list["add_to_queue"])
-			add_to_queue(part)
+			add_to_queue(filter.getObj("add_to_queue"))
 			return update_queue_on_page()
 		if(href_list["remove_from_queue"])
-			var/index = text2num(href_list["remove_from_queue"])
-			if(isnum(index))
-				remove_from_queue(index)
+			remove_from_queue(filter.getNum("remove_from_queue"))
 			return update_queue_on_page()
 		if(href_list["partset_to_queue"])
-			var/part_set = href_list["partset_to_queue"]
-			add_part_set_to_queue(part_set)
+			add_part_set_to_queue(filter.get("partset_to_queue"))
 			return update_queue_on_page()
 		if(href_list["process_queue"])
-			if(processing_queue || being_built)
-				return 0
-			spawn(-1) //don't wait for process_queue() to finish
+			spawn(-1)
+				if(processing_queue || being_built)
+					return 0
 				processing_queue = 1
 				process_queue()
 				processing_queue = 0
@@ -472,8 +470,8 @@
 		if(href_list["screen"])
 			src.screen = href_list["screen"]
 		if(href_list["queue_move"] && href_list["index"])
-			var/index = text2num(href_list["index"])
-			var/new_index = index + text2num(href_list["queue_move"])
+			var/index = filter.getNum("index")
+			var/new_index = index + filter.getNum("queue_move")
 			if(isnum(index) && isnum(new_index))
 				if(InRange(new_index,1,queue.len))
 					queue.Swap(index,new_index)
@@ -487,11 +485,12 @@
 			src.sync = !src.sync
 			//pr_auto_sync.toggle()
 		if(href_list["part_desc"])
-			var/obj/part = locate(href_list["part_desc"])
-			temp = {"<h1>[part] description:</h1>
-						[part.desc]<br>
-						<a href='?src=\ref[src];clear_temp=1'>Return</a>
-						"}
+			var/obj/part = filter.getObj("part_desc")
+			if(part)
+				temp = {"<h1>[part] description:</h1>
+							[part.desc]<br>
+							<a href='?src=\ref[src];clear_temp=1'>Return</a>
+							"}
 		if(href_list["remove_mat"] && href_list["material"])
 			temp = "Ejected [remove_material(href_list["material"],text2num(href_list["remove_mat"]))] of [href_list["material"]]<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 		src.updateUsrDialog()
@@ -569,14 +568,16 @@
 				type = /obj/item/stack/sheet/clown
 			else
 				return 0
+		var/result = 0
 		var/obj/item/stack/sheet/res = new type(src)
 		var/total_amount = round(resources[mat_string]/res.perunit)
 		res.amount = min(total_amount,amount)
 		if(res.amount>0)
 			resources[mat_string] -= res.amount*res.perunit
 			res.Move(src.loc)
+			result = res.amount
 		else
 			del res
-		return res.amount
+		return result
 
 

@@ -36,6 +36,7 @@
 	set category = "Exosuit Interface"
 	set name = "Toggle defence mode"
 	set src in view(0)
+	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
 	defence = !defence
