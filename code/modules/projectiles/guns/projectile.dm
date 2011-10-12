@@ -8,7 +8,7 @@
 	m_amt = 1000
 
 	var
-		ammo_type = "/obj/item/ammo_casing"
+		ammo_type = "/obj/item/ammo_casing/a357"
 		list/loaded = list()
 		max_shells = 7
 		load_method = 0 //0 = Single shells or quick loader, 1 = magazine

@@ -1443,6 +1443,16 @@
 					for(var/sig in lawchanges)
 						dat += "[sig]<BR>"
 					usr << browse(dat, "window=lawchanges;size=800x500")
+				if("list_job_debug")
+					var/dat = "<B>Job Debug info.</B><HR>"
+					if(job_master)
+						for(var/line in job_master.job_debug)
+							dat += "[line]<BR>"
+						dat+= "*******<BR><BR>"
+						for(var/datum/job/job in job_master.occupations)
+							if(!job)	continue
+							dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
+						usr << browse(dat, "window=jobdebug;size=600x500")
 				if("check_antagonist")
 					if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 						var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
@@ -1932,6 +1942,7 @@
 		dat += {"
 <B>Coder Secrets</B><BR>
 <BR>
+<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
 <A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
 "}
 	usr << browse(dat, "window=secrets")

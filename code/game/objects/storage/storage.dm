@@ -280,7 +280,7 @@
 
 		if ("guns")
 			new /obj/item/weapon/gun/projectile(src)
-			new /obj/item/ammo_magazine(src)
+			new /obj/item/ammo_magazine/a357(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/weapon/plastique(src)
 			return

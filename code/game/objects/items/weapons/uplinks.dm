@@ -92,7 +92,7 @@ SYNDICATE UPLINK
 				if("revolver_ammo")
 					if (src.uses >= 2)
 						src.uses -= 2
-						new /obj/item/ammo_magazine(get_turf(src))
+						new /obj/item/ammo_magazine/a357(get_turf(src))
 				if("suffocation_revolver_ammo")
 					if (uses >= 3)
 						uses -= 3

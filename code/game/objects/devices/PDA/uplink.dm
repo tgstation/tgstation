@@ -98,7 +98,7 @@
 			if("revolver_ammo")
 				if (uses >= 2)
 					uses -= 2
-					new /obj/item/ammo_magazine(get_turf(hostpda))
+					new /obj/item/ammo_magazine/a357(get_turf(hostpda))
 			if("suffocation_revolver_ammo")
 				if (uses >= 3)
 					uses -= 3

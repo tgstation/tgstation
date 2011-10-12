@@ -1,3 +1,12 @@
+/obj/item/ammo_magazine/a357
+	name = "ammo box (.357)"
+	desc = "A box of .357 ammo"
+	icon_state = "357"
+	ammo_type = "/obj/item/ammo_casing/a357"
+	max_ammo = 8
+
+
+
 /obj/item/ammo_magazine/a75
 	name = "ammo magazine (.75)"
 	icon_state = "gyro"

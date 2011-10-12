@@ -6,6 +6,8 @@ var/global/datum/controller/occupations/job_master
 		list/occupations = list()
 		//Players who need jobs
 		list/unassigned = list()
+		//Debug info
+		list/job_debug = list()
 
 
 	proc/SetupOccupations(var/faction = "Station")
@@ -22,38 +24,53 @@ var/global/datum/controller/occupations/job_master
 		return 1
 
 
-	proc/GetJob(var/name)
-		if(!name)	return null
+	proc/Debug(var/text)
+		if(!Debug2)	return 0
+		job_debug.Add(text)
+//		world << text
+		return 1
+
+
+	proc/GetJob(var/rank)
+		if(!rank)	return null
 		for(var/datum/job/J in occupations)
 			if(!J)	continue
-			if(J.title == name)	return J
+			if(J.title == rank)	return J
 		return null
 
 
-	proc/AssignRole(var/mob/new_player/player, var/job, var/latejoin = 0)
-		if((player) && (player.mind) && (job))
-			var/datum/job/J = GetJob(job)
-			if(jobban_isbanned(player, job))	return 0
-			if( J && ( (J.current_positions < J.total_positions) || ((J.current_positions < J.spawn_positions) && !latejoin)) )
-				player.mind.assigned_role = J.title
+	proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
+		Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
+		if((player) && (player.mind) && (rank))
+			var/datum/job/job = GetJob(rank)
+			if(!job)	return 0
+			if(jobban_isbanned(player, rank))	return 0
+			var/position_limit = job.total_positions
+			if(!latejoin)
+				position_limit = job.spawn_positions
+			if(job.current_positions < position_limit)
+				Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
+				player.mind.assigned_role = rank
 				unassigned -= player
-				J.current_positions++
+				job.current_positions++
 				return 1
+		Debug("AR has failed, Player: [player], Rank: [rank]")
 		return 0
 
 
 	proc/FindOccupationCandidates(datum/job/job, level, flag)
+		Debug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
 		var/list/candidates = list()
 		for(var/mob/new_player/player in unassigned)
-			if(jobban_isbanned(player, job.title))	continue
-			if(flag && (!player.preferences.be_special & flag))	continue
-			switch(level)
-				if(1)
-					if(job.flag == player.preferences.GetJobDepartment(job, level))	candidates += player
-				if(2)
-					if(job.flag == player.preferences.GetJobDepartment(job, level))	candidates += player
-				if(3)
-					if(job.flag == player.preferences.GetJobDepartment(job, level))	candidates += player
+			if(jobban_isbanned(player, job.title))
+				Debug("FOC isbanned failed, Player: [player]")
+				continue
+			if(flag && (!player.preferences.be_special & flag))
+				Debug("FOC flag failed, Player: [player], Flag: [flag], ")
+				continue
+			if(player.preferences.GetJobDepartment(job, level) & job.flag)
+				Debug("FOC pass, Player: [player], Level:[level]")
+				candidates += player
 		return candidates
 
 
@@ -115,6 +132,7 @@ var/global/datum/controller/occupations/job_master
  **/
 	proc/DivideOccupations()
 		//Setup new player list and get the jobs list
+		Debug("Running DO")
 		SetupOccupations()
 
 		//Get the players who are ready
@@ -122,41 +140,57 @@ var/global/datum/controller/occupations/job_master
 			if((player) && (player.client) && (player.ready) && (player.mind) && (!player.mind.assigned_role))
 				unassigned += player
 
+		Debug("DO, Len: [unassigned.len]")
 		if(unassigned.len == 0)	return 0
 		//Shuffle players and jobs
 		unassigned = shuffle(unassigned)
 	//	occupations = shuffle(occupations) check and see if we can do this one
 
-		//Select one head
-		FillHeadPosition()
-
-		//Check for an AI
-		FillAIPosition()
-
 		//Assistants are checked first
+		Debug("DO, Running Assistant Check 1")
 		var/datum/job/assist = new /datum/job/assistant()
 		var/list/assistant_candidates = FindOccupationCandidates(assist, 3)
+		Debug("AC1, Candidates: [assistant_candidates.len]")
 		for(var/mob/new_player/player in assistant_candidates)
+			Debug("AC1 pass, Player: [player]")
 			AssignRole(player, "Assistant")
+			assistant_candidates -= player
+		Debug("DO, AC1 end")
+
+		//Select one head
+		Debug("DO, Running Head Check")
+		FillHeadPosition()
+		Debug("DO, Head Check end")
+
+		//Check for an AI
+		Debug("DO, Running AI Check")
+		FillAIPosition()
+		Debug("DO, AI Check end")
 
 		//Other jobs are now checked
+		Debug("DO, Running Standard Check")
 		for(var/level = 1 to 3)
 			for(var/datum/job/job in occupations)
+				Debug("Checking job: [job]")
 				if(!job)	continue
 				if(!unassigned.len)	break
 				if(job.current_positions >= job.spawn_positions)	continue
 				var/list/candidates = FindOccupationCandidates(job, level)
 				while(candidates.len && (job.current_positions < job.spawn_positions))
 					var/mob/new_player/candidate = pick(candidates)
-					if(!AssignRole(candidate, job.title))
-						candidates -= candidate
+					Debug("Selcted: [candidate], for: [job.title]")
+					AssignRole(candidate, job.title)
+					candidates -= candidate
+		Debug("DO, Standard Check end")
 
+		Debug("DO, Running AC2")
 		for(var/mob/new_player/player in unassigned)
+			Debug("AC2 Assistant located, Player: [player]")
 			AssignRole(player, "Assistant")
 		return 1
 
 
-	proc/EquipRank(var/mob/living/carbon/human/H, var/rank, var/joined_late)
+	proc/EquipRank(var/mob/living/carbon/human/H, var/rank, var/joined_late = 0)
 		if(!H)	return 0
 		var/datum/job/job = GetJob(rank)
 		if(job)

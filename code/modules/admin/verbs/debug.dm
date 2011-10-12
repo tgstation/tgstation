@@ -426,7 +426,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/weapon/cloaking_device(M), M.slot_r_store)
 
 			M.equip_if_possible(new /obj/item/weapon/gun/projectile(M), M.slot_r_hand)
-			M.equip_if_possible(new /obj/item/ammo_magazine(M), M.slot_l_store)
+			M.equip_if_possible(new /obj/item/ammo_magazine/a357(M), M.slot_l_store)
 
 		if ("tournament chef") //Steven Seagal FTW
 			M.equip_if_possible(new /obj/item/clothing/under/rank/chef(M), M.slot_w_uniform)
@@ -545,7 +545,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				sec_briefcase.contents += new /obj/item/weapon/spacecash/c1000
 			sec_briefcase.contents += new /obj/item/weapon/gun/energy/crossbow
 			sec_briefcase.contents += new /obj/item/weapon/gun/projectile/mateba
-			sec_briefcase.contents += new /obj/item/ammo_magazine
+			sec_briefcase.contents += new /obj/item/ammo_magazine/a357
 			sec_briefcase.contents += new /obj/item/weapon/plastique
 			M.equip_if_possible(sec_briefcase, M.slot_l_hand)
 
@@ -607,7 +607,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/head/centhat(M), M.slot_head)
 			M.equip_if_possible(new /obj/item/weapon/gun/projectile/mateba(M), M.slot_belt)
 			M.equip_if_possible(new /obj/item/weapon/zippo(M), M.slot_r_store)
-			M.equip_if_possible(new /obj/item/ammo_magazine(M), M.slot_l_store)
+			M.equip_if_possible(new /obj/item/ammo_magazine/a357(M), M.slot_l_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"

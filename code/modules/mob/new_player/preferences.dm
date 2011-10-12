@@ -337,7 +337,8 @@ datum/preferences
 			else if(link_tags["job"])
 				SetJob(user, link_tags["job"])
 			else
-				SetChoices(user)
+				if(job_master)
+					SetChoices(user)
 
 			return 1
 

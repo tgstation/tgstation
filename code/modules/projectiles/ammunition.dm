@@ -1,14 +1,14 @@
 /obj/item/ammo_casing
 	name = "bullet casing"
-	desc = "A .357 bullet casing."
+	desc = "A bullet casing."
 	icon = 'ammo.dmi'
 	icon_state = "s-casing"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	throwforce = 1
 	w_class = 1.0
 	var
-		caliber = "357"							//Which kind of guns it can be loaded into
-		projectile_type = "/obj/item/projectile"//The bullet type to create when New() is called
+		caliber = ""							//Which kind of guns it can be loaded into
+		projectile_type = ""//The bullet type to create when New() is called
 		obj/item/projectile/BB = null 			//The loaded bullet
 
 
@@ -46,7 +46,7 @@
 //Boxes of ammo
 /obj/item/ammo_magazine
 	name = "ammo box (.357)"
-	desc = "A box of .357 ammo"
+	desc = "A box of ammo"
 	icon_state = "357"
 	icon = 'ammo.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT

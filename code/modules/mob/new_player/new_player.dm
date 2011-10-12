@@ -208,34 +208,32 @@
 			new_player_panel()
 
 
-/*	proc/IsJobAvailable(rank)
-		if(((occupations[rank] < 0) || (countJob(rank) < occupations[rank])) && !jobban_isbanned(src,rank))
-			return 1
-		else
-			return 0*/
+	proc/IsJobAvailable(rank)
+		var/datum/job/job = job_master.GetJob(rank)
+		if(!job)	return 0
+		if(job.current_positions >= job.total_positions)	return 0
+		if(jobban_isbanned(src,rank))	return 0
+		return 1
 
 
 	proc/AttemptLateSpawn(rank)
-		var/datum/job/job = job_master.GetJob(rank)
-		if(job && (job.current_positions < job.total_positions))
-			var/mob/living/carbon/human/character = create_character()
-			var/icon/char_icon = getFlatIcon(character,0)//We're creating out own cache so it's not needed.
-			if(job_master.AssignRole(character, rank, 1))
-				job_master.EquipRank(character, rank, 1)
-				if(character.mind)
-					if(character.mind.assigned_role != "Cyborg")
-						ManifestLateSpawn(character,char_icon)
-				if(ticker)
-					character.loc = pick(latejoin)
-					AnnounceArrival(character, rank)
-					if(character.mind)
-						if(character.mind.assigned_role == "Cyborg")
-							character.Robotize()
-						else//Adds late joiners to minds so they can be linked to objectives.
-							ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.
-					del(src)
-		else
+		if(!IsJobAvailable(rank))
 			src << alert("[rank] is not available. Please try another.")
+			return 0
+
+		var/mob/living/carbon/human/character = create_character()
+		var/icon/char_icon = getFlatIcon(character,0)//We're creating out own cache so it's not needed.
+		job_master.AssignRole(character, rank, 1)
+		job_master.EquipRank(character, rank, 1)
+		character.loc = pick(latejoin)
+		AnnounceArrival(character, rank)
+
+		if(character.mind.assigned_role != "Cyborg")
+			ManifestLateSpawn(character,char_icon)
+			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.
+		else
+			character.Robotize()
+		del(src)
 
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
@@ -319,7 +317,7 @@
 		var/dat = "<html><body>"
 		dat += "Choose from the following open positions:<br>"
 		for(var/datum/job/job in job_master.occupations)
-			if(job && ((job.title == "Assistant") || (job.current_positions < job.total_positions)))
+			if(job && IsJobAvailable(job.title))
 				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title]</a><br>"
 
 		src << browse(dat, "window=latechoices;size=300x640;can_close=0")
