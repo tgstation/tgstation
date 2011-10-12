@@ -15,6 +15,7 @@
 	icon_state = "bullet"
 	density = 1
 	unacidable = 1
+	anchored = 1
 	flags = FPRINT | TABLEPASS
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
