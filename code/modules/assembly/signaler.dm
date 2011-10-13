@@ -102,7 +102,6 @@
 			if((S.frequency == src.frequency) && (S.code == src.code))
 				spawn(0)
 					S.pulse(0)
-				return 1
 		return 0
 
 

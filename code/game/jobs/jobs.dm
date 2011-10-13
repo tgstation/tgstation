@@ -42,8 +42,6 @@ var/const
 	MIME			=(1<<12)
 	ASSISTANT		=(1<<13)
 
-var/list/occupations = list()
-
 
 var/list/assistant_occupations = list(
 	"Assistant",

@@ -122,15 +122,18 @@
 		var/header = "<b>Pick Job to ban this guy from.<br>"
 		var/body
 		var/jobs = ""
-		for(var/job in uniquelist(occupations + assistant_occupations))
-			if(job == "Tourist")
+		if(!job_master)
+			usr << "Job Master has not been setup!"
+			return
+		for(var/datum/job/job in job_master.occupations)
+			if(job.title == "Tourist")
 				continue
-			if(jobban_isbanned(M, job))
-				jobs += "<a href='?src=\ref[src];jobban3=[job];jobban4=\ref[M]'><font color=red>[dd_replacetext(job, " ", "&nbsp")]</font></a> "
+			if(jobban_isbanned(M, job.title))
+				jobs += "<a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[dd_replacetext(job.title, " ", "&nbsp")]</font></a> "
 			else
-				jobs += "<a href='?src=\ref[src];jobban3=[job];jobban4=\ref[M]'>[dd_replacetext(job, " ", "&nbsp")]</a> "
+				jobs += "<a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[dd_replacetext(job.title, " ", "&nbsp")]</a> "
 
-		if(jobban_isbanned(M, "Captain"))
+/*		if(jobban_isbanned(M, "Captain")) These two are now jobs in the datums and should show up in the above code
 			jobs += "<a href='?src=\ref[src];jobban3=Captain;jobban4=\ref[M]'><font color=red>Captain</font></a> "
 		else
 			jobs += "<a href='?src=\ref[src];jobban3=Captain;jobban4=\ref[M]'>Captain</a> "
@@ -139,7 +142,7 @@
 			jobs += "<a href='?src=\ref[src];jobban3=AI;jobban4=\ref[M]'><font color=red>AI</font></a> "
 		else
 			jobs += "<a href='?src=\ref[src];jobban3=AI;jobban4=\ref[M]'>AI</a> "
-
+*/
 		if(jobban_isbanned(M, "Syndicate"))
 			jobs += "<BR><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'><font color=red>[dd_replacetext("Syndicate", " ", "&nbsp")]</font></a> "
 		else
@@ -272,18 +275,19 @@
 		jobs += "<a href='?src=\ref[src];newjobban2=Scientist_RD;jobban4=\ref[M]'>Scientist+RD</a> <br>"
 		jobs += "<a href='?src=\ref[src];newjobban2=AI_Cyborg;jobban4=\ref[M]'>AI+Cyborg</a> <br>"
 		jobs += "<a href='?src=\ref[src];newjobban2=Detective_HoS;jobban4=\ref[M]'>Detective+HoS</a> <br><br>"
-		for(var/job in uniquelist(occupations + assistant_occupations))
-			if(job == "Tourist")
+		for(var/datum/job/job in job_master.occupations)
+			if(job.title == "Tourist")
 				continue
-			if(jobban_isbanned(M, job))
-				jobs += "<a href='?src=\ref[src];newjobban2=[job];jobban4=\ref[M]'><font color=red>[dd_replacetext(job, " ", "&nbsp")]</font></a> "
+			if(jobban_isbanned(M, job.title))
+				jobs += "<a href='?src=\ref[src];newjobban2=[job.title];jobban4=\ref[M]'><font color=red>[dd_replacetext(job.title, " ", "&nbsp")]</font></a> "
 			else
-				jobs += "<a href='?src=\ref[src];newjobban2=[job];jobban4=\ref[M]'>[dd_replacetext(job, " ", "&nbsp")]</a> " //why doesn't this work the stupid cunt
+				jobs += "<a href='?src=\ref[src];newjobban2=[job.title];jobban4=\ref[M]'>[dd_replacetext(job.title, " ", "&nbsp")]</a> " //why doesn't this work the stupid cunt
 
-		if(jobban_isbanned(M, "Captain"))
+/*		if(jobban_isbanned(M, "Captain"))
 			jobs += "<a href='?src=\ref[src];newjobban2=Captain;jobban4=\ref[M]'><font color=red>Captain</font></a> "
 		else
 			jobs += "<a href='?src=\ref[src];newjobban2=Captain;jobban4=\ref[M]'>Captain</a> " //why doesn't this work the stupid cunt
+*/
 		if(jobban_isbanned(M, "Syndicate"))
 			jobs += "<BR><a href='?src=\ref[src];newjobban2=Syndicate;jobban4=\ref[M]'><font color=red>[dd_replacetext("Syndicate", " ", "&nbsp")]</font></a> "
 		else

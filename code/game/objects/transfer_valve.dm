@@ -11,7 +11,7 @@
 	var/toggle = 1
 
 	proc
-		Process_Activation(var/obj/item/device/D)
+		process_activation(var/obj/item/device/D)
 
 	IsAssemblyHolder()
 		return 1
@@ -109,7 +109,7 @@
 			src.add_fingerprint(usr)
 			return
 
-	Process_Activation(var/obj/item/device/D)
+	process_activation(var/obj/item/device/D)
 		if(toggle)
 			toggle = 0
 			toggle_valve()

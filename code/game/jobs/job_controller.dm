@@ -10,6 +10,12 @@ var/global/datum/controller/occupations/job_master
 		list/job_debug = list()
 
 
+	New()
+		spawn(1)
+			SetupOccupations()
+		return
+
+
 	proc/SetupOccupations(var/faction = "Station")
 		occupations = list()
 		var/list/all_jobs = typesof(/datum/job)
@@ -27,7 +33,6 @@ var/global/datum/controller/occupations/job_master
 	proc/Debug(var/text)
 		if(!Debug2)	return 0
 		job_debug.Add(text)
-//		world << text
 		return 1
 
 

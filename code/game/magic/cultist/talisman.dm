@@ -75,7 +75,7 @@
 		return
 
 
-	talisman/Topic(href, href_list)
+	Topic(href, href_list)
 		if(!src)	return
 		if (usr.stat || usr.restrained() || !in_range(src, usr))	return
 

@@ -163,7 +163,7 @@ datum/controller/radio
 
 datum/radio_frequency
 	var/frequency as num
-	var/list/list/obj/structure/devices = list()
+	var/list/list/obj/devices = list()
 
 	proc
 		post_signal(obj/source as obj|null, datum/signal/signal, var/filter = null as text|null, var/range = null as num|null)
@@ -178,7 +178,7 @@ datum/radio_frequency
 					del(signal)
 					return 0
 			if (filter) //here goes some copypasta. It is for optimisation. -rastaf0
-				for(var/obj/structure/device in devices[filter])
+				for(var/obj/device in devices[filter])
 					if(device == source)
 						continue
 					if(range)
@@ -189,7 +189,7 @@ datum/radio_frequency
 						if(start_point.z!=end_point.z || get_dist(start_point, end_point) > range)
 							continue
 					device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
-				for(var/obj/structure/device in devices["_default"])
+				for(var/obj/device in devices["_default"])
 					if(device == source)
 						continue
 					if(range)
@@ -205,7 +205,7 @@ datum/radio_frequency
 				for (var/next_filter in devices)
 //					var/list/obj/DDD = devices[next_filter]
 //					Nt+=DDD.len
-					for(var/obj/structure/device in devices[next_filter])
+					for(var/obj/device in devices[next_filter])
 						if(device == source)
 							continue
 						if(range)
@@ -227,12 +227,12 @@ datum/radio_frequency
 			if (!filter)
 				filter = "_default"
 			//log_admin("add_listener(device=[device],filter=[filter]) frequency=[frequency]")
-			var/list/obj/structure/devices_line = devices[filter]
+			var/list/obj/devices_line = devices[filter]
 			if (!devices_line)
 				devices_line = new
 				devices[filter] = devices_line
 			devices_line+=device
-//			var/list/obj/structure/devices_line___ = devices[filter_str]
+//			var/list/obj/devices_line___ = devices[filter_str]
 //			var/l = devices_line___.len
 			//log_admin("DEBUG: devices_line.len=[devices_line.len]")
 			//log_admin("DEBUG: devices(filter_str).len=[l]")

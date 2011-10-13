@@ -558,9 +558,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if (!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return
-
-	for(var/t in occupations)
-		src << "[t]: [occupations[t]]"
+	if(job_master)
+		for(var/datum/job/job in job_master.occupations)
+			src << "[job.title]: [job.total_positions]"
 
 /client/proc/cmd_admin_explosion(atom/O as obj|mob|turf in world)
 	set category = "Special Verbs"

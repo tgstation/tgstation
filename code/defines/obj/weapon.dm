@@ -1109,7 +1109,7 @@
 	maxcharge = 30000
 	g_amt = 80
 	use()
-		return
+		return 1
 
 /*/obj/item/weapon/cell/potato
 	name = "Potato Battery"

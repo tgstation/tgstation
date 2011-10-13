@@ -8,81 +8,14 @@
 	w_class = 1
 	frequency = 1457
 	var/delay = 0
-	var/airlock_wire = null
-
-	var
-		secured = 1
-		small_icon_state_left = "signaller_left"
-		small_icon_state_right = "signaller_right"
-		list/small_icon_state_overlays = null
-		obj/holder = null
-		cooldown = 0//To prevent spam
-
-	proc
-		Activate()//Called when this assembly is pulsed by another one
-		Secure()//Code that has to happen when the assembly is ready goes here
-		Unsecure()//Code that has to happen when the assembly is taken off of the ready state goes here
-		Attach_Assembly(var/obj/A, var/mob/user)//Called when an assembly is attacked by another
-		Process_cooldown()//Call this via spawn(10) to have it count down the cooldown var
-		Holder_Movement()
-
-	IsAssembly()
-		return 1
-
-
-	Process_cooldown()
-		cooldown--
-		if(cooldown <= 0)	return 0
-		spawn(10)
-			Process_cooldown()
-		return 1
-
-
-	Activate()
-		if((!secured) || (cooldown > 0))
-			return 0
-		cooldown = 2
-		send_signal()
-		spawn(10)
-			Process_cooldown()
-		return 0
-
-
-	Secure()
-		if(secured)
-			return 0
-		secured = 1
-		return 1
-
-
-	Unsecure()
-		if(!secured)
-			return 0
-		secured = 0
-		return 1
-
-
-	Attach_Assembly(var/obj/A, var/mob/user)
-		holder = new/obj/item/device/assembly_holder(get_turf(src))
-		if(holder:attach(A,src,user))
-			user.show_message("\blue You attach the [A.name] to the [src.name]!")
-			return 1
-		return 0
 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(W.IsAssembly())
-			var/obj/item/device/D = W
-			if((!D:secured) && (!src.secured))
-				Attach_Assembly(D,user)
 		if(isscrewdriver(W))
-			if(src.secured)
-				Unsecure()
-				b_stat = 1
+			b_stat = !b_stat
+			if(b_stat)
 				user.show_message("\blue The [src.name] can now be attached!")
 			else
-				Secure()
-				b_stat = 0
 				user.show_message("\blue The [src.name] is ready!")
 			return
 		else
@@ -131,25 +64,13 @@ Code:
 
 
 /obj/item/device/radio/signaler/receive_signal(datum/signal/signal)
-	if(cooldown > 0)	return 0
 	if(!signal || (signal.encryption != code))	return 0
 
 	if (!( src.wires & 2 ))
 		return
-	if(istype(src.loc, /obj/machinery/door/airlock) && src.airlock_wire && src.wires & 1)
-		var/obj/machinery/door/airlock/A = src.loc
-		A.pulse(src.airlock_wire)
-	if((src.holder) && (holder.IsAssemblyHolder()) && (secured) && (src.wires & 1))
-		spawn(0)
-			holder:Process_Activation(src)
-			return
-
 
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
-	cooldown = 2
-	spawn(10)
-		Process_cooldown()
 	return
 
 
@@ -179,7 +100,7 @@ Code:
 	//..()
 	if (usr.stat)
 		return
-	if ((usr.contents.Find(src) || (usr.contents.Find(src.holder) || (in_range(src, usr) && istype(src.loc, /turf)))))
+	if (usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf)))
 		usr.machine = src
 		if (href_list["freq"])
 			..()
