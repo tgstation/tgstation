@@ -91,6 +91,7 @@
 		if (prob(2))
 			broken = 1
 			user << "\red The bulb has burnt out!"
+			icon_state = "flashburnt"
 
 		spawn(60)
 			recharge()
@@ -138,6 +139,7 @@
 
 		if (prob(2))
 			broken = 1
+			icon_state = "flashburnt"
 			if(user)
 				user << "\red The bulb has burnt out!"
 			return

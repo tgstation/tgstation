@@ -626,7 +626,6 @@
 #include "code\game\objects\items\weapons\tiles_wires.dm"
 #include "code\game\objects\items\weapons\toilets.dm"
 #include "code\game\objects\items\weapons\tools.dm"
-#include "code\game\objects\items\weapons\twohanded.dm"
 #include "code\game\objects\items\weapons\uplinks.dm"
 #include "code\game\objects\items\weapons\implants\implant.dm"
 #include "code\game\objects\items\weapons\implants\implantcase.dm"
