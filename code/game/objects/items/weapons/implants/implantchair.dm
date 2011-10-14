@@ -88,8 +88,10 @@
 		return
 
 
-	go_out()
+	go_out(var/mob/M)
 		if(!( src.occupant ))
+			return
+		if(M == occupant) // so that the guy inside can't eject himself -Agouri
 			return
 		if (src.occupant.client)
 			src.occupant.client.eye = src.occupant.client.mob
@@ -152,7 +154,7 @@
 			set src in oview(1)
 			if(usr.stat != 0)
 				return
-			src.go_out()
+			src.go_out(usr)
 			add_fingerprint(usr)
 			return
 
