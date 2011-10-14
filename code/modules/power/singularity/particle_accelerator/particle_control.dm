@@ -85,26 +85,9 @@
 		part_scan()
 			connected_parts = list()
 			var/tally = 0
-			var/ldir = 0
-			var/rdir = 0
-			var/odir = 0
-			switch(src.dir)
-				if(1)
-					ldir = 4
-					rdir = 8
-					odir = 2
-				if(2)
-					ldir = 8
-					rdir = 4
-					odir = 1
-				if(4)
-					ldir = 1
-					rdir = 2
-					odir = 8
-				if(8)
-					ldir = 2
-					rdir = 1
-					odir = 4
+			var/ldir = turn(dir,-90)
+			var/rdir = turn(dir,90)
+			var/odir = turn(dir,180)
 			var/turf/T = src.loc
 			T = get_step(T,rdir)
 			if(check_part(T,/obj/structure/particle_accelerator/fuel_chamber))
