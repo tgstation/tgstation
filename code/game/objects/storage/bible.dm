@@ -76,8 +76,9 @@
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
 			user << "\blue You bless [A]."
-			A.reagents.add_reagent("holywater",A.reagents.get_reagent_amount("water"))
+			var/water2holy = A.reagents.get_reagent_amount("water")
 			A.reagents.del_reagent("water")
+			A.reagents.add_reagent("holywater",water2holy)
 
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	playsound(src.loc, "rustle", 50, 1, -5)
