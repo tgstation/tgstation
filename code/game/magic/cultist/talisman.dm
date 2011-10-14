@@ -1,5 +1,5 @@
 /obj/item/weapon/paper/talisman
-	icon_state = "papertalisman"
+	icon_state = "paper_talisman"
 	var/imbue = null
 	var/uses = 0
 

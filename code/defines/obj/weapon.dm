@@ -773,7 +773,7 @@
 
 /obj/item/weapon/paper
 	name = "Paper"
-	icon = 'items.dmi'
+	icon = 'paper.dmi'
 	icon_state = "paper"
 	var/info = null
 	throwforce = 0
@@ -804,7 +804,6 @@
 /obj/item/weapon/paper/Court
 	name = "paper- 'Judgement'"
 	info = "For crimes against the station, the offender is sentenced to:<BR>\n<BR>\n"
-
 
 /obj/item/weapon/paper/Toxin
 	name = "paper- 'Chemical Information'"
@@ -840,7 +839,7 @@
 /obj/item/weapon/paper_bin
 	name = "Paper Bin"
 	desc = "This contains many papers."
-	icon = 'items.dmi'
+	icon = 'paper.dmi'
 	icon_state = "paper_bin1"
 	var/amount = 30.0
 	item_state = "sheet-metal"
@@ -852,7 +851,7 @@
 /obj/item/weapon/pen
 	desc = "It's a normal black ink pen."
 	name = "pen"
-	icon = 'items.dmi'
+	icon = 'paper.dmi'
 	icon_state = "pen"
 	flags = FPRINT | ONBELT | TABLEPASS
 	throwforce = 0
@@ -1378,7 +1377,7 @@
 /obj/item/weapon/stamp
 	desc = "A rubber stamp for stamping important documents."
 	name = "rubber stamp"
-	icon = 'items.dmi'
+	icon = 'paper.dmi'
 	icon_state = "stamp-qm"
 	item_state = "stamp"
 	flags = FPRINT | TABLEPASS

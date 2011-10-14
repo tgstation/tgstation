@@ -18,6 +18,8 @@ CLIPBOARDS
 	..()
 	src.pixel_y = rand(-8, 8)
 	src.pixel_x = rand(-9, 9)
+	if(src.info)
+		src.overlays += "paper_words"
 	return
 
 
@@ -187,8 +189,6 @@ CLIPBOARDS
 	n_name = copytext(n_name, 1, 32)
 	if ((src.loc == usr && usr.stat == 0))
 		src.name = text("paper[]", (n_name ? text("- '[n_name]'") : null))
-	if(src.icon_state == "paper_blank" && n_name != "")
-		src.icon_state = "paper"
 	src.add_fingerprint(usr)
 	return
 
@@ -237,8 +237,8 @@ CLIPBOARDS
 		*/
 		t = text("<font face=calligrapher>[]</font>", t)
 
-		if(src.icon_state == "paper_blank")
-			src.icon_state = "paper"
+		if(!overlays.Find("paper_words"))
+			src.overlays += "paper_words"
 		src.info += t
 
 	else
@@ -248,27 +248,27 @@ CLIPBOARDS
 			src.info += text("<BR><i>This paper has been stamped with the [].</i><BR>", P.name)
 			switch(P.type)
 				if(/obj/item/weapon/stamp/captain)
-					src.icon_state = "paper_stamped_cap"
+					src.overlays += "paper_stamped_cap"
 				if(/obj/item/weapon/stamp/hop)
-					src.icon_state = "paper_stamped_hop"
+					src.overlays += "paper_stamped_hop"
 				if(/obj/item/weapon/stamp/hos)
-					src.icon_state = "paper_stamped_hos"
+					src.overlays += "paper_stamped_hos"
 				if(/obj/item/weapon/stamp/ce)
-					src.icon_state = "paper_stamped_ce"
+					src.overlays += "paper_stamped_ce"
 				if(/obj/item/weapon/stamp/rd)
-					src.icon_state = "paper_stamped_rd"
+					src.overlays += "paper_stamped_rd"
 				if(/obj/item/weapon/stamp/cmo)
-					src.icon_state = "paper_stamped_cmo"
+					src.overlays += "paper_stamped_cmo"
 				if(/obj/item/weapon/stamp/denied)
-					src.icon_state = "paper_stamped_denied"
+					src.overlays += "paper_stamped_denied"
 				if(/obj/item/weapon/stamp/clown)
 					if (!clown)
 						usr << "\red You are totally unable to use the stamp. HONK!"
 						return
 					else
-						src.icon_state = "paper_stamped_clown"
+						src.overlays += "paper_stamped_clown"
 				else
-					src.icon_state = "paper_stamped"
+					src.overlays += "paper_stamped"
 			if(!stamped)
 				stamped = new
 			stamped += P.type
@@ -363,7 +363,6 @@ CLIPBOARDS
 			src.amount--
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper
 			P.loc = usr.loc
-			P.icon_state = "paper_blank"
 			if(ishuman(usr))
 				if(!usr.get_active_hand())
 					usr.put_in_hand(P)
