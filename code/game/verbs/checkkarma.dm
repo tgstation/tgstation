@@ -1,4 +1,4 @@
-mob/verb/check_karma()
+/mob/verb/check_karma()
 	set name = "Check Karma"
 	set category = "Special Verbs"
 	set desc = "Reports how much karma you have accrued"
@@ -10,6 +10,9 @@ mob/verb/check_karma()
 			usr << "\red Unable to connect to karma database. This error can occur if your host has failed to set up an SQL database or improperly configured its login credentials.<br>"
 			return
 		else
+			usr.verbs -= /mob/verb/check_karma
+			spawn(300)
+				usr.verbs += /mob/verb/check_karma
 			var/DBQuery/query = dbcon.NewQuery("SELECT karma FROM karmatotals WHERE byondkey='[src.key]'")
 			query.Execute()
 
