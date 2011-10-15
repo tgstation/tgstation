@@ -41,6 +41,15 @@
 	var/server
 	var/banappeals
 
+	//game_options.txt configs
+
+	var/health_threshold_crit = 0
+	var/health_threshold_dead = 0
+
+	var/revival_pod_plants = 1
+	var/revival_cloning = 1
+	var/revival_brain_life = -1
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -59,11 +68,11 @@
 		del(M)
 	src.votable_modes += "secret"
 
-/datum/configuration/proc/load(filename)
+/datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
 	var/text = file2text(filename)
 
 	if (!text)
-		diary << "No config.txt file found, setting defaults"
+		diary << "No [filename] file found, setting defaults"
 		src = new /datum/configuration()
 		return
 
@@ -94,118 +103,140 @@
 		if (!name)
 			continue
 
-		switch (name)
-			if ("log_ooc")
-				config.log_ooc = 1
+		if(type == "config")
+			switch (name)
+				if ("log_ooc")
+					config.log_ooc = 1
 
-			if ("log_access")
-				config.log_access = 1
+				if ("log_access")
+					config.log_access = 1
 
-			if ("sql_enabled")
-				config.sql_enabled = text2num(value)
+				if ("sql_enabled")
+					config.sql_enabled = text2num(value)
 
-			if ("log_say")
-				config.log_say = 1
+				if ("log_say")
+					config.log_say = 1
 
-			if ("log_admin")
-				config.log_admin = 1
+				if ("log_admin")
+					config.log_admin = 1
 
-			if ("log_game")
-				config.log_game = 1
+				if ("log_game")
+					config.log_game = 1
 
-			if ("log_vote")
-				config.log_vote = 1
+				if ("log_vote")
+					config.log_vote = 1
 
-			if ("log_whisper")
-				config.log_whisper = 1
+				if ("log_whisper")
+					config.log_whisper = 1
 
-			if ("allow_vote_restart")
-				config.allow_vote_restart = 1
+				if ("allow_vote_restart")
+					config.allow_vote_restart = 1
 
-			if ("allow_vote_mode")
-				config.allow_vote_mode = 1
+				if ("allow_vote_mode")
+					config.allow_vote_mode = 1
 
-			if ("allow_admin_jump")
-				config.allow_admin_jump = 1
+				if ("allow_admin_jump")
+					config.allow_admin_jump = 1
 
-			if("allow_admin_rev")
-				config.allow_admin_rev = 1
+				if("allow_admin_rev")
+					config.allow_admin_rev = 1
 
-			if ("allow_admin_spawning")
-				config.allow_admin_spawning = 1
+				if ("allow_admin_spawning")
+					config.allow_admin_spawning = 1
 
-			if ("no_dead_vote")
-				config.vote_no_dead = 1
+				if ("no_dead_vote")
+					config.vote_no_dead = 1
 
-			if ("default_no_vote")
-				config.vote_no_default = 1
+				if ("default_no_vote")
+					config.vote_no_default = 1
 
-			if ("vote_delay")
-				config.vote_delay = text2num(value)
+				if ("vote_delay")
+					config.vote_delay = text2num(value)
 
-			if ("vote_period")
-				config.vote_period = text2num(value)
+				if ("vote_period")
+					config.vote_period = text2num(value)
 
-			if ("allow_ai")
-				config.allow_ai = 1
+				if ("allow_ai")
+					config.allow_ai = 1
 
-			if ("authentication")
-				config.enable_authentication = 1
+				if ("authentication")
+					config.enable_authentication = 1
 
-			if ("norespawn")
-				config.respawn = 0
+				if ("norespawn")
+					config.respawn = 0
 
-			if ("servername")
-				config.server_name = value
+				if ("servername")
+					config.server_name = value
 
-			if ("serversuffix")
-				config.server_suffix = 1
+				if ("serversuffix")
+					config.server_suffix = 1
 
-			if ("medalhub")
-				config.medal_hub = value
+				if ("medalhub")
+					config.medal_hub = value
 
-			if ("medalpass")
-				config.medal_password = value
+				if ("medalpass")
+					config.medal_password = value
 
-			if ("hostedby")
-				config.hostedby = value
+				if ("hostedby")
+					config.hostedby = value
 
-			if ("server")
-				config.server = value
+				if ("server")
+					config.server = value
 
-			if ("banappeals")
-				config.banappeals = value
+				if ("banappeals")
+					config.banappeals = value
 
-			if ("guest_jobban")
-				config.guest_jobban = text2num(value)
+				if ("guest_jobban")
+					config.guest_jobban = text2num(value)
 
-			if ("usewhitelist")
-				config.usewhitelist = 1
+				if ("usewhitelist")
+					config.usewhitelist = 1
 
-			if ("feature_object_spell_system")
-				config.feature_object_spell_system = 1
+				if ("feature_object_spell_system")
+					config.feature_object_spell_system = 1
 
-			if ("traitor_scaling")
-				config.traitor_scaling = 1
+				if ("traitor_scaling")
+					config.traitor_scaling = 1
 
-			if ("probability")
-				var/prob_pos = findtext(value, " ")
-				var/prob_name = null
-				var/prob_value = null
+				if ("probability")
+					var/prob_pos = findtext(value, " ")
+					var/prob_name = null
+					var/prob_value = null
 
-				if (prob_pos)
-					prob_name = lowertext(copytext(value, 1, prob_pos))
-					prob_value = copytext(value, prob_pos + 1)
-					if (prob_name in config.modes)
-						config.probabilities[prob_name] = text2num(prob_value)
+					if (prob_pos)
+						prob_name = lowertext(copytext(value, 1, prob_pos))
+						prob_value = copytext(value, prob_pos + 1)
+						if (prob_name in config.modes)
+							config.probabilities[prob_name] = text2num(prob_value)
+						else
+							diary << "Unknown game mode probability configuration definition: [prob_name]."
 					else
-						diary << "Unknown game mode probability configuration definition: [prob_name]."
+						diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
+
+				if ("kick_inactive")
+					config.kick_inactive = text2num(value)
+
 				else
-					diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
-			if ("kick_inactive")
-				config.kick_inactive = text2num(value)
-			else
-				diary << "Unknown setting in configuration: '[name]'"
+					diary << "Unknown setting in configuration: '[name]'"
+
+		else if(type == "game_options")
+			if(!value)
+				diary << "Unknown value for setting [name] in [filename]."
+			value = text2num(value)
+
+			switch(name)
+				if("health_threshold_crit")
+					config.health_threshold_crit = value
+				if("health_threshold_dead")
+					config.health_threshold_dead = value
+				if("revival_pod_plants")
+					config.revival_pod_plants = value
+				if("revival_cloning")
+					config.revival_cloning = value
+				if("revival_brain_life")
+					config.revival_brain_life = value
+				else
+					diary << "Unknown setting in configuration: '[name]'"
 
 /datum/configuration/proc/loadsql(filename)  // -- TLE
 	var/text = file2text(filename)

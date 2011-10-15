@@ -1,6 +1,7 @@
 /mob/living/carbon/brain
 	var
 		obj/item/device/mmi/container = null
+		timeofhostdeath = 0
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(1000)

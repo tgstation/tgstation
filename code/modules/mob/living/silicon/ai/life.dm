@@ -36,10 +36,10 @@
 
 
 
-		if (src.health <= -100.0)
+		if (src.health <= config.health_threshold_dead)
 			death()
 			return
-//		else if (src.health < 0 && !istype(src.loc, /obj/machinery/computer/aifixer)) //Removing this for now, as it's bloody annoying. We'll see how it works -- Urist
+//		else if (src.health < config.health_threshold_crit && !istype(src.loc, /obj/machinery/computer/aifixer)) //Removing this for now, as it's bloody annoying. We'll see how it works -- Urist
 //			src.oxyloss++
 
 		if (src.machine)

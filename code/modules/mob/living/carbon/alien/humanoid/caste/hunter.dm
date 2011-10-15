@@ -88,9 +88,9 @@
 		if(src.resting)
 			src.weakened = max(src.weakened, 5)
 
-		if(health < -100 || src.brain_op_stage == 4.0)
+		if(health < config.health_threshold_dead || src.brain_op_stage == 4.0)
 			death()
-		else if(src.health < 0)
+		else if(src.health < config.health_threshold_crit)
 			if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 			//if(!src.rejuv) src.oxyloss++

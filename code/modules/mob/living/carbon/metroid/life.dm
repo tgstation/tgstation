@@ -403,11 +403,11 @@
 
 
 
-			if(health < -100)
+			if(health < config.health_threshold_dead && stat != 2)
 				death()
 				return
 
-			else if(src.health < -50)
+			else if(src.health < config.health_threshold_crit)
 				// if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 				//if(!src.rejuv) src.oxyloss++

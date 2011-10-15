@@ -87,7 +87,7 @@
 				if(src.stat)
 					src.camera.status = 0
 
-			health = 300 - (oxyloss + fireloss + bruteloss)
+			health = 200 - (oxyloss + fireloss + bruteloss)
 
 			if(oxyloss > 50) paralysis = max(paralysis, 3)
 
@@ -98,7 +98,7 @@
 			if(src.resting)
 				src.weakened = max(src.weakened, 5)
 
-			if(health < 0 && src.stat != 2) //die only once
+			if(health < config.health_threshold_dead && src.stat != 2) //die only once
 				death()
 
 			if (src.stat != 2) //Alive.

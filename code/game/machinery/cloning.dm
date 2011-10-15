@@ -280,7 +280,7 @@
 			var/mob/selected = find_dead_player("[C.fields["ckey"]]")
 
 //Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
-			if ((!selected) || (!src.pod1) || (src.pod1.occupant) || (src.pod1.mess))
+			if ((!selected) || (!src.pod1) || (src.pod1.occupant) || (src.pod1.mess) || !config.revival_cloning)
 				src.temp = "Unable to initiate cloning cycle." // most helpful error message in THE HISTORY OF THE WORLD
 			else if (src.pod1.growclone(selected, C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"],C.fields["changeling"]))
 				src.temp = "Cloning cycle activated."

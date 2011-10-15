@@ -835,7 +835,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 /obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
 
-	if(ckey) //if there's human data stored in it, make a human
+	if(ckey && config.revival_pod_plants) //if there's human data stored in it, make a human
 		var/mob/ghost = find_dead_player("[ckey]")
 
 		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)

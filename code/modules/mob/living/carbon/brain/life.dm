@@ -155,9 +155,9 @@
 			if(resting)
 				weakened = max(weakened, 5)
 
-			if(health < -100 && stat != 2)
+			if(stat != 2 && (!container && (health < config.health_threshold_dead || (config.revival_brain_life >= 0 && ((world.time - timeofhostdeath) > config.revival_brain_life )))))
 				death()
-			else if(health < 0)
+			else if(health < config.health_threshold_crit)
 				if(health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 				//if(!rejuv) oxyloss++

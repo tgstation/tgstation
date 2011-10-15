@@ -844,7 +844,7 @@
 		//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
 		//WASSSSSUUUPPPP /N
 		spawn(5)
-			if(brainmob&&brainmob.client)
+			if(brainmob && brainmob.client)
 				brainmob.client.screen.len = null //clear the hud
 
 	proc
@@ -854,6 +854,7 @@
 			brainmob.name = H.real_name
 			brainmob.real_name = H.real_name
 			brainmob.dna = H.dna
+			brainmob.timeofhostdeath = H.timeofdeath
 			if(H.mind)
 				H.mind.transfer_to(brainmob)
 			brainmob << "\blue You might feel slightly disoriented. That's normal when your brain gets cut out."
