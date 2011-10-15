@@ -132,6 +132,23 @@
 	onclose(user, "mob[name]")
 	return
 
+/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(inventory_head && inventory_back)
+		//helmet and armor = 100% protection
+		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
+			if( O.force )
+				usr << "\red This animal is wearing too much armor. You can't cause it any damage."
+				for (var/mob/M in viewers(src, null))
+					M.show_message("\red \b [user] hits [src] with the [O], however [src] is too armored.")
+			else
+				usr << "\red This animal is wearing too much armor. You can't reach it's skin."
+				for (var/mob/M in viewers(src, null))
+					M.show_message("\red [user] gently taps [src] with the [O]. ")
+			if(prob(15))
+				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression on it's face")
+			return
+	..()
+
 /mob/living/simple_animal/corgi/Topic(href, href_list)
 	//Removing from inventory
 	if(href_list["remove_inv"])
@@ -178,7 +195,8 @@
 					//to be compatible with them. The objects are below.
 
 					var/list/allowed_types = list(
-						/obj/item/clothing/head/helmet
+						/obj/item/clothing/head/helmet,
+						/obj/item/clothing/glasses/sunglasses
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
