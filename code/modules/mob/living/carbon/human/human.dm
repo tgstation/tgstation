@@ -886,18 +886,6 @@
 
 	if(client) hud_used.other_update() //Update the screenloc of the items on the 'other' inventory bar
 											   //to hide / show them.
-
-	if (wear_mask)
-		if (istype(wear_mask, /obj/item/clothing/mask))
-			var/t1 = wear_mask.icon_state
-			overlays += image("icon" = 'mask.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
-			if (!istype(wear_mask, /obj/item/clothing/mask/cigarette))
-				if (wear_mask.blood_DNA)
-					var/icon/stain_icon = icon('blood.dmi', "maskblood[!lying ? "" : "2"]")
-					overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
-			wear_mask.screen_loc = ui_mask
-
-
 	if (client)
 		if (i_select)
 			if (intent)
@@ -964,6 +952,16 @@
 	else
 		if (face_standing)
 			overlays += face_standing
+
+	if (wear_mask)
+		if (istype(wear_mask, /obj/item/clothing/mask))
+			var/t1 = wear_mask.icon_state
+			overlays += image("icon" = 'mask.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
+			if (!istype(wear_mask, /obj/item/clothing/mask/cigarette))
+				if (wear_mask.blood_DNA)
+					var/icon/stain_icon = icon('blood.dmi', "maskblood[!lying ? "" : "2"]")
+					overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
+			wear_mask.screen_loc = ui_mask
 
 	// Head
 	if (head)
