@@ -431,7 +431,7 @@
 
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = ui_style
-	mymob.blind.icon_state = "blackalimatex"
+	mymob.blind.icon_state = "blackanimate"
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "1,1 to 15,15"
 	mymob.blind.layer = 0
