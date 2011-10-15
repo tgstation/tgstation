@@ -10,14 +10,14 @@
 	name = "Radiation Hood"
 	icon_state = "rad"
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
 
 /obj/item/clothing/head/bomb_hood
 	name = "bomb hood"
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	armor = list(melee = 20, bullet = 5, laser = 10,energy = 5, bomb = 100, bio = 0, rad = 0)
 
 /obj/item/clothing/head/bomb_hood/security
@@ -30,7 +30,7 @@
 	icon_state = "bio"
 	desc = "Keeps the germs from flying on your face."
 	permeability_coefficient = 0.01
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
 
 /obj/item/clothing/head/bio_hood/general
@@ -90,7 +90,7 @@
 	desc = "An amish looking hat."
 	icon_state = "tophat"
 	item_state = "that"
-	flags = FPRINT|TABLEPASS|HEADSPACE
+	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/wizard
 	name = "wizard hat"
@@ -118,32 +118,32 @@
 	icon_state = "chef"
 	item_state = "chef"
 	desc = "The commander in chef's head wear."
-	flags = FPRINT | TABLEPASS | HEADSPACE
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/redcoat
 	name = "Redcoat hat"
 	icon_state = "redcoat"
 	desc = "I guess it's a redhad."
-	flags = FPRINT | TABLEPASS | HEADSPACE
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/mailman
 	name = "Mailman Hat"
 	icon_state = "mailman"
 	desc = "Right-on-time mail ervice head wear."
-	flags = FPRINT | TABLEPASS | HEADSPACE
+	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/plaguedoctorhat
 	name = "Plague doctor's hat"
 	desc = "Once used by Plague doctors. Now useless."
 	icon_state = "plaguedoctor"
-	flags = FPRINT | TABLEPASS | HEADSPACE
+	flags = FPRINT | TABLEPASS
 	permeability_coefficient = 0.01
 
 /obj/item/clothing/head/beret
 	name = "beret"
 	desc = "A beret, a mime's favorite headwear."
 	icon_state = "beret"
-	flags = FPRINT | TABLEPASS | HEADSPACE
+	flags = FPRINT | TABLEPASS
 
 
 // CHUMP HELMETS: COOKING THEM DESTROYS THE CHUMP HELMET SPAWN.
@@ -163,14 +163,14 @@
 	name = "cueball helmet"
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
-	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH
+	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state="cueball"
 
 /obj/item/clothing/head/secsoft
 	name = "Soft Cap"
 	desc = "A baseball hat in tasteful red."
 	icon_state = "secsoft"
-	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	item_state = "helmet"
 
 /obj/item/clothing/head/syndicatefake
@@ -179,12 +179,13 @@
 	item_state = "syndicate"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	see_face = 0.0
+	flags = FPRINT | TABLEPASS | BLOCKHAIR
 
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"
 	desc = "Used by highly trained Swat Members."
 	icon_state = "swat"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES
+	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 
@@ -192,7 +193,7 @@
 	name = "Thunderdome helmet"
 	desc = "Let the battle commence!"
 	icon_state = "thunderdome"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES
+	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
 	item_state = "thunderdome"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 
@@ -291,13 +292,13 @@
 	name = "Chaplain's hood"
 	desc = "A hoodie for the chaplain!!!"
 	icon_state = "chaplain_hood"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
 
 /obj/item/clothing/head/hasturhood
 	name = "Hastur's Hood"
 	desc = "This hood is unspeakably stylish"
 	icon_state = "hasturhood"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
 
 /obj/item/clothing/head/nursehat
 	name = "Nurse Hat"

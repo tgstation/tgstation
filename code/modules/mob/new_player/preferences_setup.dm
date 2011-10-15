@@ -26,7 +26,7 @@ datum/preferences
 
 	proc/randomize_hair(var/gender)
 		//Women are more likely to have longer hair.
-		var/temp = gender==FEMALE&&prob(80) ? pick(2,6,8) : rand(1,9)
+		var/temp = gender==FEMALE&&prob(80) ? pick(2,6,8,9) : rand(1,12)
 		switch(temp)
 			if(1)
 				h_style = "Short Hair"
@@ -44,11 +44,17 @@ datum/preferences
 				h_style = "Bedhead"
 			if(8)
 				h_style = "Dreadlocks"
+			if(9)
+				h_style = "Longer Hair"
+			if(10)
+				h_style = "Jensen Hair"
+			if(11)
+				h_style = "Skinhead"
 			else
 				h_style = "bald"
 
 	proc/randomize_facial()
-		var/temp = prob(50) ? 14 : rand(1,13)//50% of not having a beard. Otherwise get a random one.
+		var/temp = prob(50) ? 15 : rand(1,14)//50% of not having a beard. Otherwise get a random one.
 		switch(temp)
 			if(1)
 				f_style = "Watson"
@@ -76,6 +82,8 @@ datum/preferences
 				f_style = "Goatee"
 			if(13)
 				f_style = "Hogan"
+			if(14)
+				f_style = "Jensen Goatee"
 			else
 				f_style = "bald"
 
@@ -252,6 +260,10 @@ datum/preferences
 				h_style_r = "hair_bedhead"
 			if("Dreadlocks")
 				h_style_r = "hair_dreads"
+			if("Longer Hair")
+				h_style_r = "hair_vlong"
+			if("Jensen Hair")
+				h_style_r = "hair_jensen"
 			else
 				h_style_r = "bald"
 
@@ -283,6 +295,8 @@ datum/preferences
 				f_style_r = "facial_gt"
 			if ("Hogan")
 				f_style_r = "facial_hogan"
+			if ("Jensen Goatee")
+				f_style_r = "facial_jensen"
 			else
 				f_style_r = "bald"
 

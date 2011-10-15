@@ -431,10 +431,10 @@ datum/preferences
 					if(gender == FEMALE)
 						h_style = pickweight ( list ("Cut Hair" = 5, "Short Hair" = 5, "Long Hair" = 5, "Mohawk" = 5, "Balding" = 1, "Fag" = 5, "Bedhead" = 5, "Dreadlocks" = 5, "Bald" = 5))
 					else
-						h_style = pickweight ( list ("Cut Hair" = 5, "Short Hair" = 5, "Long Hair" = 5, "Mohawk" = 5, "Balding" = 5, "Fag" = 5, "Bedhead" = 5, "Dreadlocks" = 5, "Bald" = 5))
+						h_style = pickweight ( list ("Cut Hair" = 5, "Short Hair" = 5, "Long Hair" = 5, "Mohawk" = 5, "Balding" = 5, "Fag" = 5, "Bedhead" = 5, "Dreadlocks" = 5, "Jensen Hair" = 5, "Skinhead" = 5, "Bald" = 5))
 
 				if("input")
-					var/new_style = input(user, "Please select hair style", "Character Generation")  as null|anything in list( "Cut Hair", "Short Hair", "Long Hair", "Mohawk", "Balding", "Fag", "Bedhead", "Dreadlocks", "Bald" )
+					var/new_style = input(user, "Please select hair style", "Character Generation")  as null|anything in list( "Cut Hair", "Short Hair", "Long Hair", "Longer Hair", "Mohawk", "Balding", "Fag", "Bedhead", "Dreadlocks", "Jensen Hair", "Skinhead", "Bald" )
 					if(new_style)
 						h_style = new_style
 
@@ -450,9 +450,9 @@ datum/preferences
 					if(gender == FEMALE)
 						f_style = pickweight ( list("Watson" = 1, "Chaplin" = 1, "Selleck" = 1, "Full Beard" = 1, "Long Beard" = 1, "Neckbeard" = 1, "Van Dyke" = 1, "Elvis" = 1, "Abe" = 1, "Chinstrap" = 1, "Hipster" = 1, "Goatee" = 1, "Hogan" = 1, "Shaved" = 100))
 					else
-						f_style = pickweight ( list("Watson" = 1, "Chaplin" = 1, "Selleck" = 1, "Full Beard" = 1, "Long Beard" = 1, "Neckbeard" = 1, "Van Dyke" = 1, "Elvis" = 1, "Abe" = 1, "Chinstrap" = 1, "Hipster" = 1, "Goatee" = 1, "Hogan" = 1, "Shaved" = 10))
+						f_style = pickweight ( list("Watson" = 1, "Chaplin" = 1, "Selleck" = 1, "Full Beard" = 1, "Long Beard" = 1, "Neckbeard" = 1, "Van Dyke" = 1, "Elvis" = 1, "Abe" = 1, "Chinstrap" = 1, "Hipster" = 1, "Goatee" = 1, "Hogan" = 1, "Jensen Goatee" = 1, "Shaved" = 10))
 				if("input")
-					var/new_style = input(user, "Please select facial style", "Character Generation")  as null|anything in list("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Hogan", "Shaved")
+					var/new_style = input(user, "Please select facial style", "Character Generation")  as null|anything in list("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Jensen Goatee", "Hogan", "Shaved")
 					if(new_style)
 						f_style = new_style
 
@@ -585,6 +585,12 @@ datum/preferences
 				character.hair_icon_state = "hair_bedhead"
 			if("Dreadlocks")
 				character.hair_icon_state = "hair_dreads"
+			if("Longer Hair")
+				character.hair_icon_state = "hair_vlong"
+			if("Jensen Hair")
+				character.hair_icon_state = "hair_jensen"
+			if("Skinhead")
+				character.hair_icon_state = "hair_skinhead"
 			else
 				character.hair_icon_state = "bald"
 
@@ -615,6 +621,8 @@ datum/preferences
 				character.face_icon_state = "facial_gt"
 			if("Hogan")
 				character.face_icon_state = "facial_hogan"
+			if("Jensen Goatee")
+				character.face_icon_state = "facial_jensen"
 			else
 				character.face_icon_state = "bald"
 

@@ -345,6 +345,7 @@
 	else if (W == glasses)
 		glasses = null
 	else if (W == head)
+		var/obj/item/prev_head = W
 		W = h_store
 		if (W)
 			u_equip(W)
@@ -355,6 +356,11 @@
 				W.dropped(src)
 				W.layer = initial(W.layer)
 		head = null
+		if(prev_head && (prev_head.flags & BLOCKHAIR))
+			// rebuild face
+			del(face_standing)
+			del(face_lying)
+
 	else if (W == ears)
 		ears = null
 	else if (W == shoes)
@@ -362,11 +368,17 @@
 	else if (W == belt)
 		belt = null
 	else if (W == wear_mask)
+		var/obj/item/prev_mask = W
 		if(internal)
 			if (internals)
 				internals.icon_state = "internal0"
 			internal = null
 		wear_mask = null
+		if(prev_mask && (prev_mask.flags & BLOCKHAIR))
+			// rebuild face
+			del(face_standing)
+			del(face_lying)
+
 	else if (W == wear_id)
 		wear_id = null
 	else if (W == r_store)
@@ -406,6 +418,10 @@
 				return
 			u_equip(W)
 			wear_mask = W
+			if(wear_mask && (wear_mask.flags & BLOCKHAIR))
+				del(face_standing)
+				del(face_lying)
+
 			W.equipped(src, text)
 		if("back")
 			if (back)
@@ -495,6 +511,10 @@
 				return
 			u_equip(W)
 			head = W
+			if(head && (head.flags & BLOCKHAIR))
+				del(face_standing)
+				del(face_lying)
+
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
 			W.equipped(src, text)
@@ -937,6 +957,14 @@
 				drop_item()
 				hand = h
 
+
+	if (lying)
+		if (face_lying)
+			overlays += face_lying
+	else
+		if (face_standing)
+			overlays += face_standing
+
 	// Head
 	if (head)
 		var/t1 = head.icon_state
@@ -1232,17 +1260,26 @@
 	var/icon/mouth_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "mouth_[g]_s")
 	var/icon/mouth_l = new/icon("icon" = 'human_face.dmi', "icon_state" = "mouth_[g]_l")
 
-	eyes_s.Blend(hair_s, ICON_OVERLAY)
-	eyes_l.Blend(hair_l, ICON_OVERLAY)
+	// if the head or mask has the flag BLOCKHAIR (equal to 5), then do not apply hair
+	if((!(head && (head.flags & BLOCKHAIR))) && !(wear_mask && (wear_mask.flags & BLOCKHAIR)))
+		eyes_s.Blend(hair_s, ICON_OVERLAY)
+		eyes_l.Blend(hair_l, ICON_OVERLAY)
+
 	eyes_s.Blend(mouth_s, ICON_OVERLAY)
 	eyes_l.Blend(mouth_l, ICON_OVERLAY)
-	eyes_s.Blend(facial_s, ICON_OVERLAY)
-	eyes_l.Blend(facial_l, ICON_OVERLAY)
+
+	// if BLOCKHAIR, do not apply facial hair
+	if((!(head && (head.flags & BLOCKHAIR))) && !(wear_mask && (wear_mask.flags & BLOCKHAIR)))
+		eyes_s.Blend(facial_s, ICON_OVERLAY)
+		eyes_l.Blend(facial_l, ICON_OVERLAY)
+
 
 	face_standing = new /image()
 	face_lying = new /image()
 	face_standing.icon = eyes_s
+	face_standing.layer = MOB_LAYER
 	face_lying.icon = eyes_l
+	face_lying.layer = MOB_LAYER
 
 	del(mouth_l)
 	del(mouth_s)

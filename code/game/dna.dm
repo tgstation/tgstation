@@ -18,7 +18,7 @@
 	// determine DNA fragment from hairstyle
 	// :wtc:
 
-	var/list/styles = list("bald", "hair_a", "hair_b", "hair_c", "hair_d", "hair_e", "hair_f", "hair_bedhead", "hair_dreads" )
+	var/list/styles = list("bald", "hair_a", "hair_b", "hair_c", "hair_d", "hair_e", "hair_f", "hair_bedhead", "hair_dreads", "hair_vlong", "hair_jensen", "hair_skinhead" )
 	var/hrange = round(4095 / styles.len)
 
 	var/style = styles.Find(character.hair_icon_state)
@@ -27,6 +27,17 @@
 	else
 		hair = 0
 
+	// Beard dna code - mostly copypasted from hair code to allow for more dynamic facial hair style additions
+	var/list/face_styles = list("bald", "facial_elvis", "facial_vandyke", "facial_neckbeard", "facial_chaplin", "facial_watson", "facial_abe", "facial_chin", "facial_hip", "facial_gt", "facial_hogan", "facial_selleck", "facial_fullbeard", "facial_longbeard", "facial_jensen" )
+	var/f_hrange = round(4095 / face_styles.len)
+
+	var/f_style = face_styles.Find(character.face_icon_state)
+	if(f_style)
+		beard = f_style * f_hrange + f_hrange - rand(1,f_hrange-1)
+	else
+		beard = 0
+
+	/* // Deprecated code -- Doohl
 	switch(character.face_icon_state)
 		if("bald") beard = rand(1,350)
 		if("facial_elvis") beard = rand(351,650)
@@ -42,6 +53,7 @@
 		if("facial_selleck") beard = rand(3351,3650)
 		if("facial_fullbeard") beard = rand(3651,3950)
 		if("facial_longbeard") beard = rand(3951,4095)
+	*/
 
 	temp = add_zero2(num2hex((character.r_hair),1), 3)
 	temp += add_zero2(num2hex((character.b_hair),1), 3)

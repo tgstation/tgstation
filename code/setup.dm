@@ -89,6 +89,8 @@
 
 #define HEADSPACE 4			// head wear protects against space
 
+#define BLOCKHAIR 5			// temporarily removes the user's hair icon
+
 #define MASKINTERNALS 8		// mask allows internals
 #define SUITSPACE 8			// suit protects against space
 

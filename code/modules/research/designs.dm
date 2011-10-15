@@ -229,6 +229,24 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/cloning"
 
+		clonepod
+			name = "Circuit Design (Clone Pod)"
+			desc = "Allows for the construction of circuit boards used to build a Cloning Pod."
+			id = "clonepod"
+			req_tech = list("programming" = 3, "biotech" = 3)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/clonepod"
+
+		clonescanner
+			name = "Circuit Design (Cloning Scanner)"
+			desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
+			id = "clonescanner"
+			req_tech = list("programming" = 3, "biotech" = 3)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/clonescanner"
+
 		arcademachine
 			name = "Circuit Design (Arcade Machine)"
 			desc = "Allows for the construction of circuit boards used to build a new arcade machine."

@@ -9,6 +9,8 @@
 	voice_message = "skree!"
 	say_message = "hums"
 
+	layer = 5
+
 	health = 150
 	gender = NEUTER
 
