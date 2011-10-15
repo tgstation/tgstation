@@ -67,8 +67,6 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 
-
-
 //Corgi
 /mob/living/simple_animal/corgi
 	name = "Corgi"
@@ -88,6 +86,136 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
+	var/obj/item/inventory_head
+	var/obj/item/inventory_back
+
+/mob/living/simple_animal/corgi/update_clothing()
+	overlays = list()
+
+	if(inventory_head)
+		var/head_icon_state = inventory_head.icon_state
+		if(health <= 0)
+			head_icon_state += "2"
+
+		var/icon/head_icon = icon('corgi_head.dmi',head_icon_state)
+		if(head_icon)
+			overlays += head_icon
+
+	if(inventory_back)
+		var/back_icon_state = inventory_back.icon_state
+		if(health <= 0)
+			back_icon_state += "2"
+
+		var/icon/back_icon = icon('corgi_back.dmi',back_icon_state)
+		if(back_icon)
+			overlays += back_icon
+	return
+
+/mob/living/simple_animal/corgi/Life()
+	..()
+	update_clothing()
+
+/mob/living/simple_animal/corgi/show_inv(mob/user as mob)
+	user.machine = src
+
+	var/dat = 	"<div align='center'><b>Inventory of [src]</b></div><p>"
+	if(inventory_head)
+		dat +=	"<br><b>Head:</b> [inventory_head] (<a href='?src=\ref[src];remove_inv=head'>Remove</a>)"
+	else
+		dat +=	"<br><b>Head:</b> <a href='?src=\ref[src];add_inv=head'>Nothing</a>"
+	if(inventory_back)
+		dat +=	"<br><b>Back:</b> [inventory_back] (<a href='?src=\ref[src];remove_inv=back'>Remove</a>)"
+	else
+		dat +=	"<br><b>Back:</b> <a href='?src=\ref[src];add_inv=back'>Nothing</a>"
+
+	user << browse(dat, text("window=mob[];size=325x500", name))
+	onclose(user, "mob[name]")
+	return
+
+/mob/living/simple_animal/corgi/Topic(href, href_list)
+	//Removing from inventory
+	if(href_list["remove_inv"])
+		if(get_dist(src,usr) > 1)
+			return
+		var/remove_from = href_list["remove_inv"]
+		switch(remove_from)
+			if("head")
+				if(inventory_head)
+					inventory_head.loc = src.loc
+					inventory_head = null
+				else
+					usr << "\red There is nothing on this slot."
+					return
+			if("back")
+				if(inventory_back)
+					inventory_back.loc = src.loc
+					inventory_back = null
+				else
+					usr << "\red There is nothing on this slot."
+					return
+
+		show_inv(usr)
+
+	//Adding things to inventory
+	else if(href_list["add_inv"])
+		if(get_dist(src,usr) > 1)
+			return
+		if(!usr.get_active_hand())
+			usr << "\red You have nothing in your active hand to put in the slot."
+			return
+		var/add_to = href_list["add_inv"]
+		switch(add_to)
+			if("head")
+				if(inventory_head)
+					usr << "\red The [inventory_head] is alraedy in this slot."
+					return
+				else
+					var/obj/item/item_to_add = usr.get_active_hand()
+					if(!item_to_add)
+						return
+
+					//Corgis are supposed to be simpler, so only a select few objects can actually be put
+					//to be compatible with them. The objects are below.
+
+					var/list/allowed_types = list(
+						/obj/item/clothing/head/helmet
+					)
+
+					if( ! ( item_to_add.type in allowed_types ) )
+						usr << "\red The object cannot fit on this animal."
+						return
+
+					usr.drop_item()
+					item_to_add.loc = src
+					src.inventory_head = item_to_add
+
+			if("back")
+				if(inventory_back)
+					usr << "\red The [inventory_back] is alraedy in this slot."
+					return
+				else
+					var/obj/item/item_to_add = usr.get_active_hand()
+					if(!item_to_add)
+						return
+
+					//Corgis are supposed to be simpler, so only a select few objects can actually be put
+					//to be compatible with them. The objects are below.
+
+					var/list/allowed_types = list(
+						/obj/item/clothing/suit/armor/vest
+					)
+
+					if( ! ( item_to_add.type in allowed_types ) )
+						usr << "\red The object cannot fit on this animal."
+						return
+
+					usr.drop_item()
+					item_to_add.loc = src
+					src.inventory_back = item_to_add
+
+		show_inv(usr)
+	else
+		..()
 
 /mob/living/simple_animal/corgi/Ian
 	name = "Ian"
