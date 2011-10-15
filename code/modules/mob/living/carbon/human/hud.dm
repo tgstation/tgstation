@@ -388,6 +388,7 @@
 	using.mouse_opacity = 0
 	src.vimpaired += using
 
+	//welding mask dither
 	using = new src.h_type( src )
 	using.name = null
 	using.icon = ui_style
@@ -420,6 +421,8 @@
 	using.layer = 17
 	using.mouse_opacity = 0
 	src.darkMask += using
+
+	//welding mask blackness
 	using = new src.h_type( src )
 	using.name = null
 	using.icon = ui_style
@@ -521,7 +524,7 @@
 
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = ui_style
-	mymob.blind.icon_state = "black"
+	mymob.blind.icon_state = "blackanimatex"
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "1,1 to 15,15"
 	mymob.blind.layer = 0
