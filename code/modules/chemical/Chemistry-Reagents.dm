@@ -437,9 +437,22 @@ datum
 				M.druggy = max(M.druggy, 15)
 				if(isturf(M.loc))
 					if(M.canmove)
-						step(M, pick(cardinal))
+						if(prob(10)) step(M, pick(cardinal))
 				if(prob(7)) M:emote(pick("twitch","drool","moan","giggle"))
 				holder.remove_reagent(src.id, 0.2)
+				return
+
+		serotrotium
+			name = "Serotrotium"
+			id = "serotrotium"
+			description = "A chemical compound that promotes concentrated production of the serotonin neurotransmitter in humans."
+			reagent_state = LIQUID
+			color = "#202040" // rgb: 20, 20, 40
+
+			on_mob_life(var/mob/living/M as mob)
+				if(ishuman(M))
+					if(prob(7)) M:emote(pick("twitch","drool","moan","gasp"))
+					holder.remove_reagent(src.id, 0.1)
 				return
 
 		silicate

@@ -89,8 +89,6 @@
 
 #define HEADSPACE 4			// head wear protects against space
 
-#define BLOCKHAIR 5			// temporarily removes the user's hair icon
-
 #define MASKINTERNALS 8		// mask allows internals
 #define SUITSPACE 8			// suit protects against space
 
@@ -115,6 +113,8 @@
 #define ONESIZEFITSALL	8192	// can be worn by fatties (or children? ugh)
 
 #define	NOREACT	16384 //Reagents dont' react inside this container.
+
+#define BLOCKHAIR 32768			// temporarily removes the user's hair icon
 
 //flags for pass_flags
 #define PASSTABLE 1
