@@ -574,7 +574,7 @@
 	desc = "Truly, the tool of a madman. Who would possibly think to fight fire with an axe?"
 	force = 5
 	w_class = 4.0
-	//flags = ONBACK
+	flags = ONBACK
 	twohanded = 1
 	force_unwielded = 5
 	force_wielded = 30

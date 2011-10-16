@@ -203,7 +203,7 @@
 			force = force_wielded
 			src.name = "[initial(name)] (Wielded)"
 			src.update_icon() //If needed by the particular item
-			user << "\blue You grab the [initial(name)] with both hands, It is ready for use."
+			user << "\blue You grab the [initial(name)] with both hands."
 
 			var/obj/item/weapon/offhand/O = new /obj/item/weapon/offhand(user) ////Let's reserve his other hand~
 			O.name = text("[initial(src.name)] - Offhand")

@@ -432,6 +432,9 @@
 				return
 			if (!( W.flags & ONBACK ))
 				return
+			if(W.twohanded && W.wielded)
+				usr << "Unwield the [initial(W.name)] first!"
+				return
 			u_equip(W)
 			back = W
 			W.equipped(src, text)
