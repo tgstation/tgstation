@@ -3,7 +3,7 @@
 	desc = "A box of .357 ammo"
 	icon_state = "357"
 	ammo_type = "/obj/item/ammo_casing/a357"
-	max_ammo = 8
+	max_ammo = 7
 
 
 
