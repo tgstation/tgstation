@@ -27,7 +27,7 @@ Doesn't work on other aliens/AI.*/
 		toxloss -= 50
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
-		new /obj/effect/alien/weeds/bush(loc)
+		new /obj/effect/alien/weeds/node(loc)
 	return
 
 /mob/living/carbon/alien/humanoid/verb/call_to()

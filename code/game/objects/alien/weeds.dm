@@ -1,4 +1,4 @@
-#define BUSHRANGE 3
+#define NODERANGE 3
 
 /obj/effect/alien/weeds/New()
 	..()
@@ -9,6 +9,11 @@
 	spawn(rand(150,300))
 		if(src)
 			Life()
+	return
+
+/obj/effect/alien/weeds/node/New()
+	..()
+	sd_SetLuminosity(NODERANGE)
 	return
 
 /obj/effect/alien/weeds/proc/Life()
@@ -38,7 +43,7 @@ Alien plants should do something if theres a lot of poison
 			if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
 				continue
 
-			if(!(locate(/obj/effect/alien/weeds/bush) in view(BUSHRANGE,T)))
+			if(!(locate(/obj/effect/alien/weeds/node) in view(NODERANGE,T)))
 				continue
 
 	//		if (locate(/obj/movable, T)) // don't propogate into movables
@@ -97,4 +102,4 @@ Alien plants should do something if theres a lot of poison
 	return 1
 */
 
-#undef BUSHRANGE
+#undef NODRANGE

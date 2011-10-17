@@ -54,8 +54,8 @@
 	density = 0
 	var/health = 50
 
-	bush
-		icon_state = "weedbush"
+	node
+		icon_state = "weednode"
 		name = "purple sac"
 		desc = "Weird purple octopus-like thing."
 

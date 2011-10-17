@@ -167,6 +167,10 @@
 	set desc = "Plants an egg"
 	set category = "Alien"
 
+	if(locate(/obj/effect/alien/egg) in get_turf(src))
+		src << "There's already an egg here."
+		return
+
 	if(powerc(50,1))//Can't plant eggs on spess tiles. That's silly.
 		toxloss -= 200
 		for(var/mob/O in viewers(src, null))
