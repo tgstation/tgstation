@@ -497,7 +497,7 @@
 				ticker.mode:add_cultist(src.occupant.mind)
 				ticker.mode:update_all_cult_icons() //So the icon actually appears
 
-	if (changelingClone)
+	if (changelingClone && occupant.mind in ticker.mode.changelings)
 		occupant.changeling = changelingClone
 		src.occupant.make_changeling()
 
