@@ -37,11 +37,27 @@
 	var/oldloc = null
 	req_access = list(access_janitor)
 	var/path[] = new()
+	var/patrol_path[] = null
+	var/beacon_freq = 1445		// navigation beacon frequency
+	var/closest_dist
+	var/closest_loc
+	var/failed_steps
+	var/should_patrol
+	var/next_dest
+	var/next_dest_loc
 
 /obj/machinery/bot/cleanbot/New()
 	..()
 	src.get_targets()
 	src.icon_state = "cleanbot[src.on]"
+
+	should_patrol = 0
+
+	src.botcard = new /obj/item/weapon/card/id(src)
+	src.botcard.access = get_access("Detective")
+
+	if(radio_controller)
+		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
 
 /obj/machinery/bot/cleanbot/turn_on()
@@ -70,12 +86,12 @@
 	dat += text({"
 <TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
 Status: []<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]""},
+Behaviour controls are [src.locked ? "locked" : "unlocked"]"},
 text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
 	if(!src.locked)
-		dat += text({"<BR>
-Cleans Blood: []<BR>"},
-text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
+		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
+		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[src.should_patrol ? "Yes" : "No"]</A>"))
+	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[src.beacon_freq]</A>"))
 	if(src.panelopen && !src.locked)
 		dat += text({"
 Odd looking screw twiddled: []<BR>
@@ -101,6 +117,15 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		if("blood")
 			src.blood =!src.blood
 			src.get_targets()
+			src.updateUsrDialog()
+		if("patrol")
+			src.should_patrol =!src.should_patrol
+			src.patrol_path = null
+			src.updateUsrDialog()
+		if("freq")
+			var/freq = text2num(input("Select frequency for  navigation beacons", "Frequnecy", num2text(beacon_freq / 10))) * 10
+			if (freq > 0)
+				src.beacon_freq = freq
 			src.updateUsrDialog()
 		if("screw")
 			src.screwloose = !src.screwloose
@@ -185,6 +210,35 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(!src.target || src.target == null)
 		if(src.loc != src.oldloc)
 			src.oldtarget = null
+
+		if (!should_patrol)
+			return
+
+		if (!patrol_path || patrol_path.len < 1)
+			var/datum/radio_frequency/frequency = radio_controller.return_frequency(beacon_freq)
+
+			if(!frequency) return
+
+			closest_dist = 9999
+			closest_loc = null
+			next_dest_loc = null
+
+			var/datum/signal/signal = new()
+			signal.source = src
+			signal.transmission_method = 1
+			signal.data = list("findbeacon" = "patrol")
+			frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
+			spawn(5)
+				if (!next_dest_loc)
+					next_dest_loc = closest_loc
+				if (next_dest_loc)
+					src.patrol_path = AStar(src.loc, next_dest_loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=null)
+					src.patrol_path = reverselist(src.patrol_path)
+		else
+			patrol_move()
+			spawn(5)
+				patrol_move()
+
 		return
 
 	if(src.target && (src.target != null) && src.path.len == 0)
@@ -202,6 +256,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		step_to(src, target)
 
 	if(src.target && (src.target != null))
+		patrol_path = null
 		if(src.loc == src.target.loc)
 			clean(src.target)
 			src.path = new()
@@ -210,17 +265,54 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 	src.oldloc = src.loc
 
+/obj/machinery/bot/cleanbot/proc/patrol_move()
+	if (src.patrol_path.len <= 0)
+		return
+
+	var/next = src.patrol_path[1]
+	src.patrol_path -= next
+	if (next == src.loc)
+		return
+
+	var/moved = step_towards(src, next)
+	if (!moved)
+		failed_steps++
+	if (failed_steps > 4)
+		patrol_path = null
+		next_dest = null
+		failed_steps = 0
+	else
+		failed_steps = 0
+
+/obj/machinery/bot/cleanbot/receive_signal(datum/signal/signal)
+	var/recv = signal.data["beacon"]
+	var/valid = signal.data["patrol"]
+	if(!recv || !valid)
+		return
+
+	var/dist = get_dist(src, signal.source.loc)
+	if (dist < closest_dist && signal.source.loc != src.loc)
+		closest_dist = dist
+		closest_loc = signal.source.loc
+		next_dest = signal.data["next_patrol"]
+
+	if (recv == next_dest)
+		next_dest_loc = signal.source.loc
+		next_dest = signal.data["next_patrol"]
+
 /obj/machinery/bot/cleanbot/proc/get_targets()
 	src.target_types = new/list()
-	if(src.blood)
 
+	target_types += /obj/effect/decal/cleanable/oil
+	target_types += /obj/effect/decal/cleanable/vomit
+	target_types += /obj/effect/decal/cleanable/robot_debris
+	target_types += /obj/effect/decal/cleanable/crayon
+
+	if(src.blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood/
 		target_types += /obj/effect/decal/cleanable/xenoblood/xgibs
 		target_types += /obj/effect/decal/cleanable/blood/
 		target_types += /obj/effect/decal/cleanable/blood/gibs/
-		target_types += /obj/effect/decal/cleanable/oil
-		target_types += /obj/effect/decal/cleanable/robot_debris
-		target_types += /obj/effect/decal/cleanable/crayon
 
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
 	src.anchored = 1
@@ -275,9 +367,3 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			return
 
 		src.created_name = t
-
-
-
-
-
-
