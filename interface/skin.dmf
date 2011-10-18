@@ -52,6 +52,38 @@ macro "macro"
 		command = ".south"
 		is-disabled = false
 	elem 
+		name = "CTRL+A"
+		command = "toggle-throw-mode"
+		is-disabled = false
+	elem 
+		name = "CTRL+D"
+		command = "drop-item"
+		is-disabled = false
+	elem 
+		name = "CTRL+S"
+		command = "swap-hand"
+		is-disabled = false
+	elem 
+		name = "CTRL+W"
+		command = "attack-self"
+		is-disabled = false
+	elem 
+		name = "MULTIPLY"
+		command = "swap-hand"
+		is-disabled = false
+	elem 
+		name = "ADD"
+		command = "attack-self"
+		is-disabled = false
+	elem 
+		name = "SUBTRACT"
+		command = "drop-item"
+		is-disabled = false
+	elem 
+		name = "DIVIDE"
+		command = "toggle-throw-mode"
+		is-disabled = false
+	elem 
 		name = "F1"
 		command = "adminhelp"
 		is-disabled = false

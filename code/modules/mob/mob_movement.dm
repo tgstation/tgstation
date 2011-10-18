@@ -24,23 +24,39 @@
 	..()
 
 /client/Northeast()
+	..()
+
+/client/Southeast()
+	..()
+
+/client/Southwest()
+	..()
+
+/client/Northwest()
+	..()
+
+/client/verb/swap_hand()
+	set hidden = 1
 	if(istype(mob, /mob/living/carbon))
 		mob:swap_hand()
 	return
 
-/client/Southeast()
+/client/verb/attack_self()
+	set hidden = 1
 	var/obj/item/weapon/W = mob.equipped()
 	if (W)
 		W.attack_self(mob)
 	return
 
-/client/Southwest()
+/client/verb/toggle_throw_mode()
+	set hidden = 1
 	if(!istype(mob, /mob/living/carbon))	return
 	if((mob.stat || mob.restrained()) || !(isturf(mob.loc)))	return
 	mob:toggle_throw_mode()
 	return
 
-/client/Northwest()
+/client/verb/drop_item()
+	set hidden = 1
 	if(!isrobot(mob))
 		mob.drop_item_v()
 	return
