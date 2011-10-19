@@ -25,7 +25,7 @@
 	else if (!dooc_allowed && !src.client.holder && (src.client.deadchat != 0))
 		usr << "OOC for dead mobs has been turned off."
 		return
-	else if (src.muted || src.muted_complete)
+	else if (src.client && (src.client.muted || src.client.muted_complete))
 		src << "You are muted."
 		return
 	else if (findtext(msg, "byond://") && !src.client.holder)

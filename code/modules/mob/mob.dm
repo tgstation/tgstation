@@ -578,7 +578,7 @@
 	if(href_list["priv_msg"])
 		var/mob/M = locate(href_list["priv_msg"])
 		if(M)
-			if(muted_complete)
+			if(src.client && client.muted_complete)
 				src << "You are muted have a nice day"
 				return
 			if (!ismob(M))

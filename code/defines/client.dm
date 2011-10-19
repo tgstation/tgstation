@@ -8,6 +8,9 @@
 	var/seeprayers = 0
 	//Hosts can change their color
 	var/ooccolor = "#b82e00"
+	var/muted = null //Can't talk in OOC, say, whisper, emote... anything except for adminhelp and admin-pm. An admin punishment
+	var/muted_complete = null //Can't talk in any way shape or form (muted + can't adminhelp or respond to admin pm-s). An admin punishment
+
 
 //END Admin Things
 

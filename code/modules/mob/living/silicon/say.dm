@@ -2,7 +2,7 @@
 	if (!message)
 		return
 
-	if (muted || src.muted_complete)
+	if (src.client && (client.muted || src.client.muted_complete))
 		src << "You are muted."
 		return
 

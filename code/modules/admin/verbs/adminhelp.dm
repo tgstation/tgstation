@@ -10,7 +10,7 @@
 	if (!msg)
 		return
 
-	if (usr.muted_complete)
+	if (usr.client && usr.client.muted_complete)
 		return
 
 	for (var/mob/M in world)

@@ -8,7 +8,7 @@
 		return
 	if(!src.mob)
 		return
-	if(src.mob.muted || src.mob.muted_complete)
+	if(src.muted || src.muted_complete)
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)

@@ -91,7 +91,7 @@
 		src << "Only administrators may use this command."
 		return
 	if(M)
-		if(src.mob.muted_complete)
+		if(src.muted_complete)
 			src << "You are muted have a nice day"
 			return
 		if (!( ismob(M) ))
@@ -142,12 +142,15 @@
 	if (M.client && M.client.holder && (M.client.holder.level >= holder.level))
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
-	M.muted = !M.muted
+	if(!M.client)
+		src << "This mob doesn't have a client tied to it."
+		return
+	M.client.muted = !M.client.muted
 
-	log_admin("[key_name(src)] has [(M.muted ? "muted" : "voiced")] [key_name(M)].")
-	message_admins("[key_name_admin(src)] has [(M.muted ? "muted" : "voiced")] [key_name_admin(M)].", 1)
+	log_admin("[key_name(src)] has [(M.client.muted ? "muted" : "voiced")] [key_name(M)].")
+	message_admins("[key_name_admin(src)] has [(M.client.muted ? "muted" : "voiced")] [key_name_admin(M)].", 1)
 
-	M << "You have been [(M.muted ? "muted" : "voiced")]."
+	M << "You have been [(M.client.muted ? "muted" : "voiced")]."
 
 
 /client/proc/cmd_admin_add_random_ai_law()

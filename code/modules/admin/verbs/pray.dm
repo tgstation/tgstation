@@ -10,7 +10,7 @@
 	if (!msg)
 		return
 
-	if (usr.muted || src.muted_complete)
+	if (usr.client && (usr.client.muted || usr.client.muted_complete))
 		return
 
 	var/icon/cross = icon('storage.dmi',"bible")
