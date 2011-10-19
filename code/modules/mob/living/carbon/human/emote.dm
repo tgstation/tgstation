@@ -62,7 +62,8 @@
 			message = "<B>[src]</B> [input]"
 
 		if ("me")
-			if (muted || silent)
+			if (muted || silent || muted_complete)
+				src << "You are muted."
 				return
 			if (stat)
 				return

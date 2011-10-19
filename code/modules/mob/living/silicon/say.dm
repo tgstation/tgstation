@@ -2,7 +2,8 @@
 	if (!message)
 		return
 
-	if (muted)
+	if (muted || src.muted_complete)
+		src << "You are muted."
 		return
 
 	if (stat == 2)

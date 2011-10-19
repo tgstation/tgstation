@@ -9,7 +9,7 @@
 		src << "Only administrators may use this command."
 		return
 
-	if (!src.mob || src.mob.muted)
+	if (!src.mob || src.mob.muted || src.mob.muted_complete)
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)

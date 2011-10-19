@@ -118,7 +118,8 @@
 
 	var/miming = null //checks if the guy is a mime//Human
 	var/silent = null //Can't talk. Value goes down every life proc.//Human
-	var/muted = null //Can't talk in any way shape or form (Even OOC or emote). An admin punishment
+	var/muted = null //Can't talk in OOC, say, whisper, emote... anything except for adminhelp and admin-pm. An admin punishment
+	var/muted_complete = null //Can't talk in any way shape or form (muted + can't adminhelp or respond to admin pm-s). An admin punishment
 
 	var/obj/hud/hud_used = null
 

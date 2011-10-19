@@ -91,7 +91,7 @@
 		src << "Only administrators may use this command."
 		return
 	if(M)
-		if(mob.muted)
+		if(src.mob.muted_complete)
 			src << "You are muted have a nice day"
 			return
 		if (!( ismob(M) ))

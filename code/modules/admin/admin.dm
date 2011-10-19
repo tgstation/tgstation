@@ -380,7 +380,18 @@
 				M.muted = !M.muted
 				log_admin("[key_name(usr)] has [(M.muted ? "muted" : "voiced")] [key_name(M)].")
 				message_admins("\blue [key_name_admin(usr)] has [(M.muted ? "muted" : "voiced")] [key_name_admin(M)].", 1)
-				M << "You have been [(M.muted ? "muted" : "voiced")]."
+				M << "You have been [(M.muted ? "muted" : "voiced")]. Please resolve this in adminhelp."
+	if (href_list["mute_complete"])
+		if ((src.rank in list( "Moderator", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+			var/mob/M = locate(href_list["mute_complete"])
+			if (ismob(M))
+				if ((M.client && M.client.holder && (M.client.holder.level >= src.level)))
+					alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+					return
+				M.muted_complete = !M.muted_complete
+				log_admin("[key_name(usr)] has [(M.muted_complete ? "completely muted" : "voiced (complete)")] [key_name(M)].")
+				message_admins("\blue [key_name_admin(usr)] has [(M.muted_complete ? "completely muted" : "voiced (complete)")] [key_name_admin(M)].", 1)
+				M << "You have been [(M.muted_complete ? "completely muted" : "voiced (complete)")]. You are unable to speak or even adminhelp"
 
 	if (href_list["c_mode"])
 		if ((src.rank in list( "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
@@ -1679,6 +1690,7 @@
 			foo += text("<B>Hasn't Entered Game</B> | ")
 		foo += text("<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> | ")
 		foo += text("<A href='?src=\ref[src];mute2=\ref[M]'>Mute: [(M.muted ? "Muted" : "Voiced")]</A> | ")
+		foo += text("<A href='?src=\ref[src];mute_complete=\ref[M]'>Complete mute: [(M.muted ? "Completely Muted" : "Voiced")]</A> | ")
 		foo += text("<A href='?src=\ref[src];boot2=\ref[M]'>Boot</A>")
 	foo += text("<br>")
 	foo += text("<A href='?src=\ref[src];jumpto=\ref[M]'>Jump to</A> | ")

@@ -9,7 +9,8 @@
 
 	log_say("Ghost/[src.key] : [message]")
 
-	if (src.muted)
+	if (src.muted || src.muted_complete)
+		src << "You are muted."
 		return
 
 	. = src.say_dead(message)
