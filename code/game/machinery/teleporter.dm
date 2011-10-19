@@ -13,19 +13,20 @@
 
 /obj/machinery/computer/teleporter/attackby(I as obj, user as mob)
 	if (istype(I, /obj/item/weapon/card/data/))
-		if(stat & (NOPOWER|BROKEN))
+		var/obj/item/weapon/card/data/M = I
+		if(stat & (NOPOWER|BROKEN) & (M.function != "teleporter"))
 			src.attack_hand()
 
 		var/obj/S = null
 		for(var/obj/effect/landmark/sloc in world)
-			if (sloc.name != "Clown Land")
+			if (sloc.name != M.data)
 				continue
 			if (locate(/mob) in sloc.loc)
 				continue
 			S = sloc
 			break
 		if (!S)
-			S = locate("landmark*["Clown Land"]") // use old stype
+			S = locate("landmark*[M.data]") // use old stype
 		if (istype(S, /obj/effect/landmark/) && istype(S.loc, /turf))
 			usr.loc = S.loc
 			del(I)
