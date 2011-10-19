@@ -162,6 +162,15 @@
 		safety = 1
 	return
 
+/obj/item/weapon/pen/attack(mob/M as mob, mob/user as mob)
+	if(!ismob(M))
+		return
+	user << "\red You stab [M] with the pen."
+	M << "\red You feel a tiny prick!"
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
+	return
+
 /obj/item/weapon/pen/sleepypen
 	origin_tech = "syndicate=5"
 
@@ -182,14 +191,19 @@
 /obj/item/weapon/pen/sleepypen/attack(mob/M as mob, mob/user as mob)
 	if (!( istype(M, /mob) ))
 		return
+	..()
 	if (reagents.total_volume)
-		//for(var/mob/O in viewers(M, null))
-		//	O.show_message(text("\red [] has been stabbed with [] by [].", M, src, user), 1)
-		user << "\red You stab [M] with the pen."
-		M << "\red You feel a tiny prick!"
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
 		if(M.reagents) reagents.trans_to(M, 50) //used to be 150
+	return
+
+/obj/item/device/flashlight/pen/paralysis/attack(mob/M as mob, mob/user as mob)
+	if(!ismob(M))
+		return
+	user << "\red You stab [M] with the pen."
+	M << "\red You feel a tiny prick!"
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
+	..()
 	return
 
 /obj/item/device/flashlight/pen/paralysis/New()
@@ -203,13 +217,9 @@
 /obj/item/device/flashlight/pen/paralysis/attack(mob/M as mob, mob/user as mob)
 	if (!( istype(M, /mob) ))
 		return
-	if (reagents.total_volume)
-		user << "\red You stab [M] with the penlight."
-		M << "\red You feel a tiny prick!"
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
-		if(M.reagents) reagents.trans_to(M, 15)
 	..()
+	if (reagents.total_volume)
+		if(M.reagents) reagents.trans_to(M, 15)
 	return
 
 /obj/item/weapon/Bump(mob/M as mob)
