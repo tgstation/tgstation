@@ -54,7 +54,7 @@
 	should_patrol = 0
 
 	src.botcard = new /obj/item/weapon/card/id(src)
-	src.botcard.access = get_access("Detective")
+	src.botcard.access = get_access("Janitor")
 
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
