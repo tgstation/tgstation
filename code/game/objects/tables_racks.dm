@@ -279,15 +279,19 @@ TABLE AND RACK OBJECT INTERATIONS
 			del(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				del(src)
 				return
+			return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				src.icon_state = "rackbroken"
 				src.density = 0
+				return
+			return
 		else
-	return
+			return
+		return
 
 /obj/structure/rack/blob_act()
 	if(prob(75))
@@ -300,6 +304,8 @@ TABLE AND RACK OBJECT INTERATIONS
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
+	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
+		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
