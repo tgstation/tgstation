@@ -169,11 +169,12 @@
 		due_date = 0 // Game time in 1/10th seconds
 		author		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
 		unique = 0   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
+		title		 // The real name of the book.
 
 	attack_self(var/mob/user as mob)
 		if(src.dat)
 			user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
-			user.visible_message("[user] opens a book titled \"[src.name]\" and begins reading intently.")
+			user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 			onclose(user, "book")
 		else
 			user << "This book is completely blank!"
@@ -654,7 +655,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				var/title = query.item[3]
 				var/content = query.item[4]
 				var/obj/item/weapon/book/B = new(src.loc)
-				B.name = title
+				B.name = "Book: [title]"
+				B.title = title
 				B.author = author
 				B.dat = content
 				B.icon_state = "book[rand(1,7)]"
