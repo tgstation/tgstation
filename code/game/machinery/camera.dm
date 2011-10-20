@@ -303,13 +303,15 @@
 			if(do_after(user, 20))
 				var/obj/item/weapon/chem_grenade/case = new /obj/item/weapon/chem_grenade(src.loc)
 				case.name = "Camera Assembly"
+				case.icon = 'monitors.dmi'
+//JESUS WHAT THE FUCK EVERYTHING TO DO WITH CAMERAS IS TERRIBLE FUCK
+				case.icon_state = "cameracase"
 				case.path = 2
 				case.state = 5
-				case.anchored = 1
 				case.circuit = new /obj/item/device/multitool
 				if (istype(src, /obj/machinery/camera/motion))
 					case.motion = 1
-			del(src)
+				del(src)
 	else if (istype(W, /obj/item/weapon/camera_bug))
 		if (!src.status)
 			user << "\blue Camera non-functional"
@@ -330,9 +332,10 @@
 
 		var/obj/item/weapon/chem_grenade/case = new /obj/item/weapon/chem_grenade(loc)
 		case.name = "Camera Assembly"
+		case.icon = 'monitors.dmi'
+		case.icon_state = "cameracase"
 		case.path = 2
 		case.state = 5
-		case.anchored = 1
 		case.circuit = new /obj/item/device/multitool
 		if (istype(src, /obj/machinery/camera/motion))
 			case.motion = 1

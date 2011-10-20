@@ -277,29 +277,22 @@ TABLE AND RACK OBJECT INTERATIONS
 	switch(severity)
 		if(1.0)
 			del(src)
-			return
 		if(2.0)
+			del(src)
 			if(prob(50))
-				del(src)
-				return
-			return
+				new /obj/item/weapon/rack_parts(src.loc)
 		if(3.0)
 			if(prob(25))
-				src.icon_state = "rackbroken"
-				src.density = 0
-				return
-			return
-		else
-			return
-		return
+				del(src)
+				new /obj/item/weapon/rack_parts(src.loc)
 
 /obj/structure/rack/blob_act()
 	if(prob(75))
 		del(src)
 		return
 	else if(prob(50))
-		src.icon_state = "rackbroken"
-		src.density = 0
+		new /obj/item/weapon/rack_parts(src.loc)
+		del(src)
 		return
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -335,10 +328,4 @@ TABLE AND RACK OBJECT INTERATIONS
 	return
 
 /obj/structure/rack/meteorhit(obj/O as obj)
-	if(prob(75))
-		del(src)
-		return
-	else
-		src.icon_state = "rackbroken"
-		src.density = 0
-	return
+	del(src)
