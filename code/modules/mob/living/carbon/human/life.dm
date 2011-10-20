@@ -86,6 +86,11 @@
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
+	if(isturf(loc) && rand(1,1000) == 1) //0.1% chance of playing a scary sound to someone who's in complete darkness
+		var/turf/currentTurf = loc
+		if(!currentTurf.sd_lumcount)
+			playsound_local(src,pick(scarySounds),50, 1, -1)
+
 	..() //for organs
 
 

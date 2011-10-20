@@ -213,4 +213,4 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define EYE_BLUR "eye_blur"
 #define DROWSY "drowsy"
 
-
+var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg','hiss5.ogg','hiss6.ogg','Glassbr1.ogg','Glassbr2.ogg','Glassbr3.ogg','Welder.ogg','Welder2.ogg','airlock.ogg','clownstep1.ogg','clownstep2.ogg')
