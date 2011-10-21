@@ -54,3 +54,7 @@
 		if(t)
 			t = text2path(t)
 		return ispath(t) ? t : null
+
+	proc/getList(i)
+		var/t = getAndLocate(i)
+		return islist(t) ? t : null

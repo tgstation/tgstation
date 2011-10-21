@@ -1018,7 +1018,7 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 500)
 			reliability_base = 76
-			build_path = "/obj/item/weapon/gun/energy/nuclear"
+			build_path = "/obj/item/weapon/gun/energy/gun/nuclear"
 			locked = 1
 
 		stunrevolver
