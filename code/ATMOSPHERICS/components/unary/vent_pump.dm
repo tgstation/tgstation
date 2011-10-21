@@ -51,6 +51,9 @@
 			air_contents.volume = 1000
 
 	update_icon()
+		if(welded)
+			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]weld"
+			return
 		if(on && !(stat & (NOPOWER|BROKEN)))
 			if(pump_direction)
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
@@ -236,6 +239,9 @@
 		return
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.
+		if(welded)
+			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]weld"
+			return
 		if(on&&node)
 			if(pump_direction)
 				icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
@@ -256,9 +262,11 @@
 					if(!welded)
 						user.visible_message("[user] welds the vent shut.", "You weld the vent shut.", "You hear welding.")
 						welded = 1
+						update_icon()
 					else
 						user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
 						welded = 0
+						update_icon()
 				W:welding = 1
 			else
 				user << "\blue You need more welding fuel to complete this task."

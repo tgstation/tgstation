@@ -9,15 +9,15 @@ macro "macro"
 		is-disabled = false
 	elem 
 		name = "SOUTHEAST"
-		command = "drop-item"
-		is-disabled = false
-	elem 
-		name = "SOUTHWEST"
 		command = "attack-self"
 		is-disabled = false
 	elem 
-		name = "NORTHWEST"
+		name = "SOUTHWEST"
 		command = "toggle-throw-mode"
+		is-disabled = false
+	elem 
+		name = "NORTHWEST"
+		command = "drop-item"
 		is-disabled = false
 	elem 
 		name = "CTRL+WEST"

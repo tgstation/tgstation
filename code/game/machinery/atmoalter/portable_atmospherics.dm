@@ -89,12 +89,14 @@
 		if(connected_port)
 			disconnect()
 			user << "\blue You disconnect [name] from the port."
+			update_icon()
 			return
 		else
 			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 			if(possible_port)
 				if(connect(possible_port))
 					user << "\blue You connect [name] to the port."
+					update_icon()
 					return
 				else
 					user << "\blue [name] failed to connect to the port."
