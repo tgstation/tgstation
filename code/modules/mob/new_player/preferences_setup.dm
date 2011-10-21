@@ -264,6 +264,8 @@ datum/preferences
 				h_style_r = "hair_vlong"
 			if("Jensen Hair")
 				h_style_r = "hair_jensen"
+			if("Skinhead")
+				h_style_r = "hair_skinhead"
 			else
 				h_style_r = "bald"
 

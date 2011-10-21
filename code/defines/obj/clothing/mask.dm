@@ -35,7 +35,7 @@
 	name = "Deadpool mask"
 	icon_state = "spiderman"
 	item_state = "spiderman"
-	flags = FPRINT|TABLEPASS|SUITSPACE|HEADSPACE|MASKCOVERSMOUTH
+	flags = FPRINT|TABLEPASS|SUITSPACE|HEADSPACE|MASKCOVERSMOUTH|BLOCKHAIR
 	w_class = 3
 	protective_temperature = 420
 	gas_transfer_coefficient = 0.01

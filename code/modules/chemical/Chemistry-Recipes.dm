@@ -641,7 +641,8 @@ datum
 					var/x_distance = TO.x - FROM.x
 					for (var/atom/movable/A in range(2, FROM )) // iterate thru list of mobs in the area
 						if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
-						if(A.anchored) continue // don't teleport anchored things (computers, tables, windows, grilles, etc) because this causes problems!
+						if( A.anchored && !istype(A, /mob/dead/observer) ) continue // don't teleport anchored things (computers, tables, windows, grilles, etc) because this causes problems!
+						// do teleport ghosts however because hell why not
 
 						var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
 						if(!A.Move(newloc)) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
