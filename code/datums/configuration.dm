@@ -44,7 +44,7 @@
 	//game_options.txt configs
 
 	var/health_threshold_crit = 0
-	var/health_threshold_dead = 0
+	var/health_threshold_dead = -100
 
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
