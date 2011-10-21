@@ -4,20 +4,20 @@ macro "macro"
 		command = ".center"
 		is-disabled = false
 	elem 
-		name = "NORTHEAST+REP"
-		command = ".northeast"
+		name = "NORTHEAST"
+		command = "swap-hand"
 		is-disabled = false
 	elem 
-		name = "SOUTHEAST+REP"
-		command = ".southeast"
+		name = "SOUTHEAST"
+		command = "drop-item"
 		is-disabled = false
 	elem 
-		name = "SOUTHWEST+REP"
-		command = ".southwest"
+		name = "SOUTHWEST"
+		command = "attack-self"
 		is-disabled = false
 	elem 
-		name = "NORTHWEST+REP"
-		command = ".northwest"
+		name = "NORTHWEST"
+		command = "toggle-throw-mode"
 		is-disabled = false
 	elem 
 		name = "CTRL+WEST"
@@ -66,6 +66,42 @@ macro "macro"
 	elem 
 		name = "CTRL+W"
 		command = "attack-self"
+		is-disabled = false
+	elem 
+		name = "NUMPAD1+REP"
+		command = ".southwest"
+		is-disabled = false
+	elem 
+		name = "NUMPAD2+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "NUMPAD3+REP"
+		command = ".southeast"
+		is-disabled = false
+	elem 
+		name = "NUMPAD4+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "NUMPAD5+REP"
+		command = ".center"
+		is-disabled = false
+	elem 
+		name = "NUMPAD6+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "NUMPAD7+REP"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "NUMPAD8+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "NUMPAD9+REP"
+		command = ".northeast"
 		is-disabled = false
 	elem 
 		name = "MULTIPLY"
