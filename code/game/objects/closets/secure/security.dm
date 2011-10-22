@@ -55,6 +55,7 @@
 		new /obj/item/clothing/head/helmet(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
 		new /obj/item/weapon/shield/riot(src)
+		new /obj/item/weapon/storage/lockbox/loyalty(src)
 		new /obj/item/weapon/storage/flashbang_kit(src)
 		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/weapon/melee/baton(src)
