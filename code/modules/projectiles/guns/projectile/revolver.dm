@@ -25,13 +25,13 @@
 			M << "\red You don't feel cool enough to name this gun, chump."
 			return 0
 
-			var/input = input("What do you want to name the gun?",,"")
-			input = sanitize(input)
+		var/input = input("What do you want to name the gun?",,"")
+		input = sanitize(input)
 
-			if(src && input && !M.stat && in_range(M,src))
-				name = input
-				M << "You name the gun [input]. Say hello to your new friend."
-				return 1
+		if(src && input && !M.stat && in_range(M,src))
+			name = input
+			M << "You name the gun [input]. Say hello to your new friend."
+			return 1
 
 
 
