@@ -91,7 +91,7 @@
 	if(!query.Execute())
 		src << "Unable to modify default group for account. This error should never occur, contact an administrator for help. Authentication failed."
 	else
-		src << "Authentication succeeded. You may now start posting on the <a href=http://tgstation13.servehttp.com/phpBB3/>tgstation forums</a>."
+		src << "Authentication succeeded. You may now start posting on the <a href=http://nanotrasen.com/phpBB3/>tgstation forums</a>."
 	dbcon.Disconnect()
 
 

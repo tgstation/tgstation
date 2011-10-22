@@ -29,7 +29,7 @@
 
    Written by TLE for /tg/station 13
    Feel free to use this as you like. Some credit would be cool.
-   Check us out at http://tgstation13.servehttp.com if you're so inclined.
+   Check us out at http://nanotrasen.com/ if you're so inclined.
 */
 
 // CONTAINS:

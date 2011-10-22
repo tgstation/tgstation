@@ -90,7 +90,7 @@
 "abL" = (/obj/machinery/firealarm{dir = 8; pixel_x = -24},/turf/simulated/floor,/area/security/main)
 "abM" = (/obj/structure/table,/obj/item/device/assembly/timer,/turf/simulated/floor,/area/security/main)
 "abN" = (/obj/structure/table,/obj/item/device/radio,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor,/area/security/main)
-"abO" = (/obj/machinery/door/airlock/maintenance{name = "Security Maintenance"; req_access_txt = "1;12"},/turf/simulated/floor/plating,/area/security/main)
+"abO" = (/obj/machinery/door/airlock/maintenance{name = "Security Maintenance"; req_access_txt = "1"},/turf/simulated/floor/plating,/area/security/main)
 "abP" = (/obj/machinery/door/airlock/glass_security{name = "Contraband Items"; req_access_txt = "3"},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/structure/cable,/turf/simulated/floor/plating,/area/security/warden)
 "abQ" = (/obj/machinery/atmospherics/unary/vent_pump{on = 1},/turf/simulated/floor,/area/security/warden)
 "abR" = (/obj/machinery/atmospherics/unary/vent_scrubber,/turf/simulated/floor,/area/security/warden)
