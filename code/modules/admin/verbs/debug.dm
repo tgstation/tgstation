@@ -344,7 +344,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			id.icon_state = "gold"
 			id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 		else
-			alert("Invalid ID card")
+			var/obj/item/weapon/card/id/id = new/obj/item/weapon/card/id(M);
+			log_admin("[key_name(src)] has granted [M.key] full access.")
+			id.icon_state = "gold"
+			id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+			id.registered = H.real_name
+			id.assignment = "Captain"
+			id.name = "[id.registered]'s ID Card ([id.assignment])"
+			H.equip_if_possible(id, H.slot_wear_id)
+			H.update_clothing()
 	else
 		alert("Invalid mob")
 
