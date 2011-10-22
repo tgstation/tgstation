@@ -34,13 +34,15 @@
 		pumped = 0
 		if(current_shell)//We have a shell in the chamber
 			current_shell.loc = get_turf(src)//Eject casing
+			current_shell = null
+			if(in_chamber)
+				in_chamber = null
 		if(!loaded.len)	return 0
 		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
 		loaded -= AC //Remove casing from loaded list.
 		current_shell = AC
 		if(AC.BB)
 			in_chamber = AC.BB //Load projectile into chamber.
-			AC.BB.loc = src //Set projectile loc to gun.
 		return 1
 
 

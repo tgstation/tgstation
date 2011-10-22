@@ -39,10 +39,10 @@
 	var/STFU_radio		//80+ people rounds are fun to admin when text flies faster than airport security
 	var/sound_adminhelp = 0 //If set to 1 this will play a sound when adminhelps are received.
 
-	var/midis = 1 //Check if midis should be played for someone -- Urist
-	var/bubbles = 1 //Check if bubbles should be displayed for someone -- Doohl
-	var/be_alien = 0 //Check if that guy wants to be an alien -- Urist
-	var/be_pai = 1 //Consider client when searching for players to recruit as a pAI -- TLE
+	var/midis = 1 //Check if midis should be played for someone
+	var/bubbles = 1 //Check if bubbles should be displayed for someone
+	var/be_alien = 0 //Check if that guy wants to be an alien
+	var/be_pai = 1 //Consider client when searching for players to recruit as a pAI
 
 
 	var/vote = null

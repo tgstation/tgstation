@@ -37,6 +37,7 @@
 	var/guest_jobban = 1
 	var/usewhitelist = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
+	var/load_jobs_from_txt = 0
 
 	var/server
 	var/banappeals
@@ -187,7 +188,7 @@
 					config.banappeals = value
 
 				if ("guest_jobban")
-					config.guest_jobban = text2num(value)
+					config.guest_jobban = 1
 
 				if ("usewhitelist")
 					config.usewhitelist = 1
@@ -214,7 +215,10 @@
 						diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
 
 				if ("kick_inactive")
-					config.kick_inactive = text2num(value)
+					config.kick_inactive = 1
+
+				if("load_jobs_from_txt")
+					load_jobs_from_txt = 1
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

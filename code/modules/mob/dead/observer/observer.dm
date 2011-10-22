@@ -11,11 +11,13 @@
 			loc = location
 		else//Safety, in case a turf cannot be found.
 			loc = pick(latejoin)
+		if(!istype(body,/mob))	return//This needs to be recoded sometime so it has loc as its first arg
 		real_name = body.real_name
 		name = body.real_name
 		if(!safety)
 			corpse = body
 			verbs += /mob/dead/observer/proc/reenter_corpse
+		return
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1

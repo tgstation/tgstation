@@ -743,10 +743,11 @@
 
 		handle_regular_hud_updates()
 
-			if(client)
-				for(var/image/hud in client.images)
-					if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-						del(hud)
+			if(!client)	return 0
+
+			for(var/image/hud in client.images)
+				if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
+					del(hud)
 
 			if (stat == 2 || mutations & XRAY)
 				sight |= SEE_TURFS

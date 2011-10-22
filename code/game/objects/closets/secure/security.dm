@@ -55,7 +55,6 @@
 		new /obj/item/clothing/head/helmet(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
 		new /obj/item/weapon/shield/riot(src)
-		new /obj/item/weapon/storage/lockbox/loyalty(src)
 		new /obj/item/weapon/storage/flashbang_kit(src)
 		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/weapon/melee/baton(src)
@@ -154,6 +153,7 @@
 /obj/structure/secure_closet/brig
 	name = "Brig Locker"
 	req_access = list(access_brig)
+	anchored = 1
 	var/id = null
 
 	New()

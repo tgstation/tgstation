@@ -1,45 +1,4 @@
-/*
-/proc/SetupJobs(jobsfile) //ran during round setup, reads info from jobs.txt -- Urist
-	return 1
 
-	var/text = file2text(jobsfile)
-
-	if(!text)
-		world << "No jobs.txt found, using defaults."
-		return
-
-	var/list/jobEntries = dd_text2list(text, "\n")
-
-	world << "\red \b Setting up jobs..."
-
-	for(var/job in jobEntries)
-		if (!job)
-			continue
-
-		job = trim(job)
-		if (!length(job))
-			continue
-
-		var/pos = findtext(job, "=")
-		var/name = null
-		var/value = null
-
-		if (pos)
-			name = copytext(job, 1, pos)
-			value = copytext(job, pos + 1)
-		else
-			continue
-
-		if(name && value)
-			occupations[name] = text2num(value)
-
-		if(name && value)
-			jobMax[name] = text2num(value)
-
-	world << "\red \b Jobs set up!"
-
-	return
-*/
 
 //TODO: put these somewhere else
 /client/proc/mimewall()

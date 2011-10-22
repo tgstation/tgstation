@@ -260,3 +260,42 @@ var/global/datum/controller/occupations/job_master
 			spawn(1)
 				clname(H)
 		return 1
+
+
+	proc/LoadJobs(jobsfile) //ran during round setup, reads info from jobs.txt -- Urist
+		if(!config.load_jobs_from_txt)
+			return 0
+
+		var/text = file2text(jobsfile)
+
+		if(!text)
+			world << "No jobs.txt found, using defaults."
+			return
+
+		var/list/jobEntries = dd_text2list(text, "\n")
+
+		for(var/job in jobEntries)
+			if(!job)
+				continue
+
+			job = trim(job)
+			if (!length(job))
+				continue
+
+			var/pos = findtext(job, "=")
+			var/name = null
+			var/value = null
+
+			if(pos)
+				name = copytext(job, 1, pos)
+				value = copytext(job, pos + 1)
+			else
+				continue
+
+			if(name && value)
+				var/datum/job/J = GetJob(name)
+				if(!J)	continue
+				J.total_positions = text2num(value)
+				J.spawn_positions = text2num(value)
+
+		return 1
