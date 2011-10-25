@@ -60,6 +60,7 @@
 		list/stored_ammo = list()
 		ammo_type = "/obj/item/ammo_casing"
 		max_ammo = 7
+		multiple_sprites = 0
 
 
 	New()
@@ -69,5 +70,6 @@
 
 
 	update_icon()
-		icon_state = text("[initial(icon_state)]-[]", stored_ammo.len)
+		if(multiple_sprites)
+			icon_state = text("[initial(icon_state)]-[]", stored_ammo.len)
 		desc = text("There are [] shell\s left!", stored_ammo.len)

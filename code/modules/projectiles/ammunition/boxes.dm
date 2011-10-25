@@ -4,6 +4,7 @@
 	icon_state = "357"
 	ammo_type = "/obj/item/ammo_casing/a357"
 	max_ammo = 7
+	multiple_sprites = 1
 
 
 
@@ -20,6 +21,7 @@
 	icon_state = "38"
 	ammo_type = "/obj/item/ammo_casing/c38"
 	max_ammo = 7
+	multiple_sprites = 1
 
 
 
@@ -28,6 +30,7 @@
 	icon_state = "418"
 	ammo_type = "/obj/item/ammo_casing/a418"
 	max_ammo = 7
+	multiple_sprites = 1
 
 
 
@@ -36,6 +39,7 @@
 	icon_state = "666"
 	ammo_type = "/obj/item/ammo_casing/a666"
 	max_ammo = 4
+	multiple_sprites = 1
 
 
 
