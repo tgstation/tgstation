@@ -120,7 +120,7 @@
 		switch(add_to)
 			if("head")
 				if(inventory_head)
-					usr << "\red The [inventory_head] is alraedy in this slot."
+					usr << "\red The [inventory_head] is already in this slot."
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
@@ -150,7 +150,7 @@
 
 			if("back")
 				if(inventory_back)
-					usr << "\red The [inventory_back] is alraedy in this slot."
+					usr << "\red The [inventory_back] is already in this slot."
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
