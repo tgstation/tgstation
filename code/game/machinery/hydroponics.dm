@@ -847,7 +847,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		else
 			podman.real_name = "pod person"  //No null names!!
 
-		if(mind && istype(mind,/datum/mind) && mind.current.stat == 2) //only transfer dead people's minds
+		if(mind && istype(mind,/datum/mind) && mind.current && mind.current.stat == 2) //only transfer dead people's minds
 			mind:transfer_to(podman)
 			mind:original = podman
 		else //welp

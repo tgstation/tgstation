@@ -1041,16 +1041,6 @@ datum
 			build_path = "/obj/item/weapon/gun/energy/lasercannon"
 			locked = 1
 
-		shockgun
-			name = "Shock Gun"
-			desc = "Your opponent has just lost THE GAME."
-			id = "shockgun"
-			req_tech = list("combat" = 5, "materials" = 4, "powerstorage" = 3)
-			build_type = PROTOLATHE
-			materials = list("$metal" = 8000, "$silver" = 3000, "$gold" = 500)
-			build_path = "/obj/item/weapon/gun/energy/shockgun"
-			locked = 1
-
 		decloner
 			name = "Decloner"
 			desc = "Your opponent will bubble into a messy pile of goop."
@@ -1089,14 +1079,14 @@ datum
 			materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 1000, "$silver" = 1000)
 			build_path = "/obj/item/weapon/gun/energy/largecrossbow"
 
-		freeze_gun
-			name = "Freeze Gun"
-			desc = "A gun that shoots supercooled hydrogen particles to drastically chill a target's body temperature."
-			id = "freeze_gun"
+		temp_gun
+			name = "Temperature Gun"
+			desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
+			id = "temp_gun"
 			req_tech = list("combat" = 3, "materials" = 4, "powerstorage" = 3, "magnets" = 2)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 500, "$silver" = 3000)
-			build_path = "/obj/item/weapon/gun/energy/freeze"
+			build_path = "/obj/item/weapon/gun/energy/temperature"
 			locked = 1
 
 		large_grenade

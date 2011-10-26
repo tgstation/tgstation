@@ -28,7 +28,7 @@
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
 		return 1
-	else
+	else//TK TODO: remove this
 		if(istype(user, /mob/living/carbon))
 			if(user:mutations & PORTALS && get_dist(source, user) <= 7)
 				if(user:equipped())	return 0

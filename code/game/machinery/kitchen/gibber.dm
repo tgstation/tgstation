@@ -55,7 +55,7 @@
 	if (!( istype(G, /obj/item/weapon/grab)) || !(istype(G.affecting, /mob/living/carbon/human)))
 		user << "\red This item is not suitable for the gibber!"
 		return
-	if(G.affecting.abiotic())
+	if(G.affecting.abiotic(1))
 		user << "\red Subject may not have abiotic items on."
 		return
 

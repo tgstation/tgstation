@@ -101,7 +101,7 @@
 			if(S == src)	continue
 			if((S.frequency == src.frequency) && (S.code == src.code))
 				spawn(0)
-					S.pulse(0)
+					if(S)	S.pulse(0)
 		return 0
 
 
