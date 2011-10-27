@@ -87,3 +87,9 @@
 	desc = "An eyepatch with built-in thermal optics"
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
+
+/obj/item/clothing/glasses/thermal/jensen
+	name = "Optical Thermal Implants"
+	desc = "A set of implantable lenses designed to augment your vision"
+	icon_state = "thermalimplants"
+	item_state = "syringe_kit"

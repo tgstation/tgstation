@@ -257,6 +257,15 @@
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	armor = list(melee = 65, bullet = 30, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/armor/jensen
+	name = "armored trenchoat"
+	desc = "A trenchoat augmented with a special alloy for some protection and style"
+	icon_state = "jensencoat"
+	item_state = "jensencoat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	armor = list(melee = 65, bullet = 30, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
+
 /obj/item/clothing/suit/armor/captain
 	name = "Captain's armor"
 	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"

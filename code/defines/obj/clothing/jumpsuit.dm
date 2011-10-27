@@ -385,6 +385,14 @@
 	color = "scratch"
 
 
+/obj/item/clothing/under/jensen
+	desc = "You never asked for anything this stylish."
+	name = "Head of Security Jumpsuit"
+	icon_state = "jensen"
+	item_state = "jensen"
+	color = "jensen"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
 /obj/item/clothing/under/sl_suit
 	desc = "A very amish looking suit."
 	name = "Amish Suit"

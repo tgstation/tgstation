@@ -250,6 +250,15 @@
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 
+/obj/item/clothing/head/helmet/dermal
+	name = "Dermal Armour Patch"
+	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
+	icon_state = "dermal"
+	item_state = "dermal"
+	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
+
+
 /obj/item/clothing/head/helmet/warden
 	name = "Warden Hat"
 	desc = "Stop right there, criminal scum!"

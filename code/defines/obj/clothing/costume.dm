@@ -97,14 +97,14 @@
 	new /obj/item/clothing/under/soviet(src.loc)
 	new /obj/item/clothing/head/ushanka(src.loc)
 	del(src)
-
+/*
 /obj/effect/landmark/costume/nurse/New()
 	new /obj/item/clothing/under/rank/nursesuit(src.loc)
 	new /obj/item/clothing/head/nursehat(src.loc)
 	new /obj/item/clothing/glasses/regular(src.loc)
 	new /obj/item/clothing/gloves/latex(src.loc)
 	new /obj/item/clothing/mask/surgical(src.loc)
-	del(src)
+	del(src)*/
 
 
 /obj/effect/landmark/costume/imperium_monk/New()
