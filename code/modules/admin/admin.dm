@@ -447,7 +447,7 @@
 			message_admins("\blue [key_name_admin(usr)] set the forced secret mode as [secret_force_mode].", 1)
 			Game() // updates the main game menu
 			.(href, list("f_secret"=1))
-/*
+
 	if (href_list["monkeyone"])
 		if ((src.rank in list( "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			var/mob/M = locate(href_list["monkeyone"])
@@ -461,7 +461,7 @@
 			if(istype(M, /mob/living/silicon))
 				alert("The AI can't be monkeyized!", null, null, null, null, null)
 				return
-*/
+
 	if (href_list["forcespeech"])
 		if ((src.rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			var/mob/M = locate(href_list["forcespeech"])
