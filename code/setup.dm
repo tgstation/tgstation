@@ -149,18 +149,25 @@
 #define FULL_BODY		2047
 
 //bitflags for mutations
-#define PORTALS 1
-#define COLD_RESISTANCE 2
-#define XRAY 4
-#define HULK 8
-#define CLUMSY 16
-#define FAT 32
-#define HUSK 64 //changeling-drained
-#define LASER 128
-#define HEAL 256
+var/const
+	TK				=(1<<0)
+	COLD_RESISTANCE	=(1<<1)
+	XRAY			=(1<<2)
+	HULK			=(1<<3)
+	CLUMSY			=(1<<4)
+	FAT				=(1<<5)
+	HUSK			=(1<<6)
+	LASER			=(1<<7)
+	HEAL			=(1<<8)
+
+
+//mob/var/stat things
+var/const
+	CONSCIOUS = 0
+	UNCONSCIOUS = 1
+	DEAD = 2
 
 // channel numbers for power
-
 #define EQUIP 1
 #define LIGHT 2
 #define ENVIRON 3

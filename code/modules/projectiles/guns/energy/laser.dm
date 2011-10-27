@@ -9,7 +9,6 @@
 
 
 
-
 /obj/item/weapon/gun/energy/laser/captain
 	icon_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
@@ -30,7 +29,7 @@
 
 	process()
 		charge_tick++
-		if(!charge_tick >= 5)	return 0
+		if(!charge_tick >= 10)	return 0
 		charge_tick = 0
 		if(!power_supply)	return 0
 		power_supply.give(100)
@@ -38,12 +37,13 @@
 		return 1
 
 
+
 /obj/item/weapon/gun/energy/laser/cyborg/load_into_chamber()
 	if(in_chamber)	return 1
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
-			R.cell.use(40)
+			R.cell.use(100)
 			in_chamber = new/obj/item/projectile/beam(src)
 			return 1
 	return 0

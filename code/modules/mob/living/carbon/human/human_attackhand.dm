@@ -5,7 +5,7 @@
 
 	..()
 
-	if(check_shields(0, M.name))
+	if((M != src) && check_shields(0, M.name))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 

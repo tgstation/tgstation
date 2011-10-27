@@ -733,7 +733,7 @@
 	if (mutations & COLD_RESISTANCE)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "fire[fat][!lying ? "_s" : "_l"]")
 
-	if (mutations & PORTALS)
+	if (mutations & TK)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "telekinesishead[fat][!lying ? "_s" : "_l"]")
 
 	if (mutations & LASER)

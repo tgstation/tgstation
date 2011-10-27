@@ -82,8 +82,7 @@
 	var/col_num = 0
 	var/row_count = min(7,storage_slots) -1 //For belts, the meanings of the two variables are inverted, so we don't have to declare new ones
 	if (contents.len > 7)
-		if(contents.len % 7) //So having 14 items keeps them in 2 wors instead of 3
-			col_num = round(contents.len / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
+		col_num = round((contents.len-1) / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
 	if (src == user.l_hand)
 		src.orient_objs(3-col_num, 3+row_count, 3, 3)
 	else if(src == user.r_hand)
@@ -148,7 +147,7 @@
 		sum_w_class += I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 
 	if(sum_w_class > max_combined_w_class)
-		user << "\red The [W] cannot fit in the [src]. Remove some items or add a smaller one.."
+		user << "\red The [src] is full, make some space."
 		return
 
 	if ( W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
@@ -172,8 +171,7 @@
 	var/col_num = 0
 	var/row_count = min(7,storage_slots) -1
 	if (contents.len > 7)
-		if(contents.len % 7)
-			col_num = round(contents.len / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
+		col_num = round((contents.len-1) / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
 	src.orient_objs(5, 10+col_num, 5 + row_count, 10)
 	return
 

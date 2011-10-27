@@ -11,13 +11,16 @@
 		ammo_type = "/obj/item/ammo_casing/a357"
 		list/loaded = list()
 		max_shells = 7
-		load_method = 0 //0 = Single shells or quick loader, 1 = magazine
+		load_method = 0 //0 = Single shells or quick loader, 1 = box, 2 = magazine
+		obj/item/ammo_magazine/empty_mag = null
 
 
 	New()
+		..()
 		for(var/i = 1, i <= max_shells, i++)
 			loaded += new ammo_type(src)
 		update_icon()
+		return
 
 
 	load_into_chamber()
@@ -37,6 +40,7 @@
 	attackby(var/obj/item/A as obj, mob/user as mob)
 		var/num_loaded = 0
 		if(istype(A, /obj/item/ammo_magazine))
+			if((load_method == 2) && loaded.len)	return
 			var/obj/item/ammo_magazine/AM = A
 			for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
 				if(loaded.len >= max_shells)
@@ -46,7 +50,11 @@
 					AM.stored_ammo -= AC
 					loaded += AC
 					num_loaded++
-		else if(istype(A, /obj/item/ammo_casing) && !load_method)
+			if(load_method == 2)
+				user.remove_from_mob(AM)
+				empty_mag = AM
+				empty_mag.loc = src
+		if(istype(A, /obj/item/ammo_casing) && !load_method)
 			var/obj/item/ammo_casing/AC = A
 			if(AC.caliber == caliber && loaded.len < max_shells)
 				user.drop_item()
@@ -56,8 +64,11 @@
 		if(num_loaded)
 			user << text("\blue You load [] shell\s into the gun!", num_loaded)
 		A.update_icon()
+		update_icon()
 		return
+
 
 	update_icon()
 		desc = initial(desc) + text(" Has [] rounds remaining.", loaded.len)
+		return
 

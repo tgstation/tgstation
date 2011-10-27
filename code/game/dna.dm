@@ -357,7 +357,7 @@
 	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),12))
 		if(inj || prob(15))
 			M << "\blue You feel smarter."
-			M.mutations |= PORTALS
+			M.mutations |= TK
 	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),13))
 		M.sdisabilities |= 4
 		M.ear_deaf = 1

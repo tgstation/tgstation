@@ -33,7 +33,7 @@
 			stunned = max(min(stunned, 30),0)
 			paralysis = max(min(paralysis, 30), 0)
 			weakened = max(min(weakened, 20), 0)
-			sleeping = max(min(sleeping, 5), 0)
+			sleeping = 0
 			bruteloss = max(bruteloss, 0)
 			toxloss = max(toxloss, 0)
 			oxyloss = max(oxyloss, 0)
@@ -176,6 +176,10 @@
 				src.sight &= ~SEE_OBJS
 				src.see_in_dark = 8
 				src.see_invisible = 2
+
+			var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
+			if(hud && hud.hud)	hud.hud.process_hud(src)
+
 
 			if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
 			if (src.rest) src.rest.icon_state = text("rest[]", src.resting)

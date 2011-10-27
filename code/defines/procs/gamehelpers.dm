@@ -28,9 +28,10 @@
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
 		return 1
+	/*
 	else//TK TODO: remove this
 		if(istype(user, /mob/living/carbon))
-			if(user:mutations & PORTALS && get_dist(source, user) <= 7)
+			if(user:mutations & TK && get_dist(source, user) <= 7)
 				if(user:equipped())	return 0
 				var/X = source:x
 				var/Y = source:y
@@ -48,9 +49,7 @@
 					flick("empdisable",O)
 					spawn(5)
 						del(O)
-
-
-				return 1
+				return 1*/
 
 	return 0 //not in range and not telekinetic
 

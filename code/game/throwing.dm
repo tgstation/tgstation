@@ -1,4 +1,14 @@
 /mob/living/carbon/proc/toggle_throw_mode()
+	if(!equipped())//Not holding anything
+		if(mutations & TK)
+			if (hand)
+				l_hand = new/obj/item/tk_grab(src)
+				l_hand:host = src
+			else
+				r_hand = new/obj/item/tk_grab(src)
+				r_hand:host = src
+		return
+
 	if (src.in_throw_mode)
 		throw_mode_off()
 	else

@@ -114,6 +114,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon = 'Doorglass.dmi'
 	opacity = 0
 	doortype = 7
+	glass = 1
 
 /obj/machinery/door/airlock/centcom
 	name = "Airlock"
@@ -132,6 +133,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon = 'Door2x1glassfull.dmi'
 	opacity = 0
 	doortype = 10
+	glass = 1
 
 /obj/machinery/door/airlock/freezer
 	name = "Freezer Airlock"
@@ -156,24 +158,28 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon = 'Doorcomglass.dmi'
 	opacity = 0
 	doortype = 14
+	glass = 1
 
 /obj/machinery/door/airlock/glass_engineering
 	name = "Maintenance Hatch"
 	icon = 'Doorengglass.dmi'
 	opacity = 0
 	doortype = 15
+	glass = 1
 
 /obj/machinery/door/airlock/glass_security
 	name = "Maintenance Hatch"
 	icon = 'Doorsecglass.dmi'
 	opacity = 0
 	doortype = 16
+	glass = 1
 
 /obj/machinery/door/airlock/glass_medical
 	name = "Maintenance Hatch"
 	icon = 'doormedglass.dmi'
 	opacity = 0
 	doortype = 17
+	glass = 1
 
 /*
 About the new airlock wires panel:

@@ -12,7 +12,7 @@
 	var/operating = 0
 	anchored = 1
 	var/autoclose = 0
-
+	var/glass = 0
 
 
 /obj/machinery/door/firedoor

@@ -289,7 +289,7 @@
 /obj/machinery/door/proc/close()
 	if(density)
 		return 1
-	if (src.operating)
+	if(src.operating)
 		return
 	src.operating = 1
 
@@ -299,7 +299,7 @@
 	sleep(10)
 	update_icon()
 
-	if (src.visible && (!istype(src, /obj/machinery/door/airlock/glass)))
+	if(src.visible && (!src.glass))
 		src.sd_SetOpacity(1)
 	if(operating == 1)
 		operating = 0

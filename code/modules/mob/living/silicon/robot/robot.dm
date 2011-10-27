@@ -736,19 +736,19 @@
 			module_state_1 = O
 			O.layer = 20
 			contents += O
-			if(istype(module_state_1,/obj/item/weapon/borg/sight))
+			if(istype(module_state_1,/obj/item/borg/sight))
 				sight_mode |= module_state_1:sight_mode
 		else if(!module_state_2)
 			module_state_2 = O
 			O.layer = 20
 			contents += O
-			if(istype(module_state_2,/obj/item/weapon/borg/sight))
+			if(istype(module_state_2,/obj/item/borg/sight))
 				sight_mode |= module_state_2:sight_mode
 		else if(!module_state_3)
 			module_state_3 = O
 			O.layer = 20
 			contents += O
-			if(istype(module_state_3,/obj/item/weapon/borg/sight))
+			if(istype(module_state_3,/obj/item/borg/sight))
 				sight_mode |= module_state_3:sight_mode
 		else
 			src << "You need to disable a module first!"
@@ -777,7 +777,7 @@
 	if(isnull(module_active))
 		return
 	if(module_state_1 == module_active)
-		if(istype(module_state_1,/obj/item/weapon/borg/sight))
+		if(istype(module_state_1,/obj/item/borg/sight))
 			sight_mode &= ~module_state_1:sight_mode
 		if (client)
 			client.screen -= module_state_1
@@ -786,7 +786,7 @@
 		module_state_1 = null
 		inv1.icon_state = "inv1"
 	else if(module_state_2 == module_active)
-		if(istype(module_state_2,/obj/item/weapon/borg/sight))
+		if(istype(module_state_2,/obj/item/borg/sight))
 			sight_mode &= ~module_state_2:sight_mode
 		if (client)
 			client.screen -= module_state_2
@@ -795,7 +795,7 @@
 		module_state_2 = null
 		inv2.icon_state = "inv2"
 	else if(module_state_3 == module_active)
-		if(istype(module_state_3,/obj/item/weapon/borg/sight))
+		if(istype(module_state_3,/obj/item/borg/sight))
 			sight_mode &= ~module_state_3:sight_mode
 		if (client)
 			client.screen -= module_state_3
@@ -808,7 +808,7 @@
 	module_active = null
 
 	if(module_state_1)
-		if(istype(module_state_1,/obj/item/weapon/borg/sight))
+		if(istype(module_state_1,/obj/item/borg/sight))
 			sight_mode &= ~module_state_1:sight_mode
 		if (client)
 			client.screen -= module_state_1
@@ -816,7 +816,7 @@
 		module_state_1 = null
 		inv1.icon_state = "inv1"
 	if(module_state_2)
-		if(istype(module_state_2,/obj/item/weapon/borg/sight))
+		if(istype(module_state_2,/obj/item/borg/sight))
 			sight_mode &= ~module_state_2:sight_mode
 		if (client)
 			client.screen -= module_state_2
@@ -824,7 +824,7 @@
 		module_state_2 = null
 		inv2.icon_state = "inv2"
 	if(module_state_3)
-		if(istype(module_state_3,/obj/item/weapon/borg/sight))
+		if(istype(module_state_3,/obj/item/borg/sight))
 			sight_mode &= ~module_state_3:sight_mode
 		if (client)
 			client.screen -= module_state_3
