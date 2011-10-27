@@ -118,6 +118,9 @@
 
 /obj/machinery/turret/proc/check_target(var/atom/movable/T as mob|obj)
 	if(T && T in protected_area.turretTargets)
+		if(!T in protected_area)
+			protected_area.Exited(T)
+			return 0 //If the guy is somehow not in the turret's area (teleportation), get them out the damn list. --NEO
 		if(istype(T, /mob/living/carbon))
 			var/mob/living/carbon/MC = T
 			if(!MC.stat)
