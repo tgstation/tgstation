@@ -12,11 +12,6 @@ var/global
 
 	defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 
-	powerreport = null //muskets 250810 these four are needed for the new engineering pda to work
-	powerreportnodes = null //might be a better way to do it but w/e
-	powerreportavail = null
-	powerreportviewload = null
-
 	list/global_map = null
 	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
 	//Resulting sector map looks like

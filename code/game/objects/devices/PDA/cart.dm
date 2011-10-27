@@ -25,6 +25,8 @@
 	var/datum/data/record/active1 = null //General
 	var/datum/data/record/active2 = null //Medical
 	var/datum/data/record/active3 = null //Security
+	var/obj/machinery/power/monitor/powmonitor = null // Power Monitor
+	var/list/powermonitors = list()
 	var/message1	// used for status_displays
 	var/message2
 
@@ -258,19 +260,45 @@ Code:
 				menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=lockdown'>Lockdown</A> |"
 				menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"
 
-			if (43) //Muskets' power monitor
-				menu = "<h4><img src=pda_power.png> Power Monitor</h4>"
+			if (43) //Muskets' and Rockdtben's power monitor :D
+				menu = "<h4><img src=pda_power.png> Power Monitors - Please select one</h4><BR>"
+				powmonitor = null
+				powermonitors = null
+				powermonitors = list()
+				var/powercount = 0
 
-				if(!powerreport)
-					menu += "\red No connection"
+
+
+				for(var/obj/machinery/power/monitor/pMon in world)
+					if(!(pMon.stat & (NOPOWER|BROKEN)) )
+						powercount++
+						powermonitors += pMon
+
+
+				if(!powercount)
+					menu += "\red No connection<BR>"
+				else
+
+					menu += "<FONT SIZE=-1>"
+					var/count = 0
+					for(var/obj/machinery/power/monitor/pMon in powermonitors)
+						count++
+						menu += "<a href='byond://?src=\ref[src];choice=Power Select;target=[count]'> [pMon] </a><BR>"
+
+					menu += "</FONT>"
+
+			if (433) //Muskets' and Rockdtben's power monitor :D
+				menu = "<h4><img src=pda_power.png> Power Monitor </h4><BR>"
+				if(!powmonitor)
+					menu += "\red No connection<BR>"
 				else
 					var/list/L = list()
-					for(var/obj/machinery/power/terminal/term in powerreportnodes)
+					for(var/obj/machinery/power/terminal/term in powmonitor.powernet.nodes)
 						if(istype(term.master, /obj/machinery/power/apc))
 							var/obj/machinery/power/apc/A = term.master
 							L += A
 
-					menu += "<PRE>Total power: [powerreportavail] W<BR>Total load:  [num2text(powerreportviewload,10)] W<BR>"
+					menu += "<PRE>Total power: [powmonitor.powernet.avail] W<BR>Total load:  [num2text(powmonitor.powernet.viewload,10)] W<BR>"
 
 					menu += "<FONT SIZE=-1>"
 
@@ -613,6 +641,11 @@ Code:
 					updateSelfDialog()
 				else
 					post_status(href_list["statdisp"])
+		if("Power Select")
+			var/pnum = text2num(href_list["target"])
+			powmonitor = powermonitors[pnum]
+			loc:mode = 433
+			mode = 433
 
 	generate_menu()
 	print_to_host(menu)
