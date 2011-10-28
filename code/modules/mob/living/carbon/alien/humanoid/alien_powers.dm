@@ -30,6 +30,7 @@ Doesn't work on other aliens/AI.*/
 		new /obj/effect/alien/weeds/node(loc)
 	return
 
+/*
 /mob/living/carbon/alien/humanoid/verb/call_to()
 	set name = "Call facehuggers (5)"
 	set desc = "Makes all nearby facehuggers follow you"
@@ -41,7 +42,7 @@ Doesn't work on other aliens/AI.*/
 			F.call_to(src)
 		emote("roar")
 	return
-
+*/
 /mob/living/carbon/alien/humanoid/verb/whisp(mob/M as mob in oview())
 	set name = "Whisper (10)"
 	set desc = "Whisper to someone"
@@ -165,14 +166,14 @@ I kind of like the right click only--the window version can get a little confusi
 					if(target_vent)
 						for(var/mob/O in viewers(src, null))
 							O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
-						var/list/huggers = list()
-						for(var/obj/effect/alien/facehugger/F in view(3, src))
-							if(istype(F, /obj/effect/alien/facehugger))
-								huggers.Add(F)
+		//				var/list/huggers = list()
+			//			for(var/obj/effect/alien/facehugger/F in view(3, src))
+			//				if(istype(F, /obj/effect/alien/facehugger))
+			//					huggers.Add(F)
 						loc = vent_found
 
-						for(var/obj/effect/alien/facehugger/F in huggers)
-							F.loc = vent_found
+			//			for(var/obj/effect/alien/facehugger/F in huggers)
+			//			F.loc = vent_found
 						var/travel_time = get_dist(loc, target_vent.loc)
 
 						spawn(round(travel_time/2))//give sound warning to anyone near the target vent
@@ -185,8 +186,8 @@ I kind of like the right click only--the window version can get a little confusi
 								target_vent = vent_found //travel back. No additional time required.
 								src << "\red The vent you were heading to appears to be welded."
 							loc = target_vent.loc
-							for(var/obj/effect/alien/facehugger/F in huggers)
-								F.loc = loc
+//							for(var/obj/effect/alien/facehugger/F in huggers)
+//								F.loc = loc
 
 				else
 					src << "\green You need to remain still while entering a vent."

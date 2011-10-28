@@ -16,10 +16,10 @@
 		if(src.check_access_list(critter.access_list))
 			if(density)
 				open()
-	else if(istype(AM, /obj/effect/alien/facehugger))
-		if(src.check_access(null))
-			if(density)
-				open()
+//	else if(istype(AM, /obj/effect/alien/facehugger))
+//		if(src.check_access(null))
+//			if(density)
+//				open()
 	else if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density)
@@ -327,10 +327,10 @@
 		if(src.check_access(bot.botcard))
 			if(density)
 				open()
-	else if(istype(AM, /obj/effect/alien/facehugger))
-		if(src.check_access(null))
-			if(density)
-				open()
+//	else if(istype(AM, /obj/effect/alien/facehugger))
+//		if(src.check_access(null))
+//			if(density)
+//				open()
 
 /obj/machinery/door/unpowered
 	autoclose = 0

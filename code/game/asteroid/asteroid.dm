@@ -145,7 +145,7 @@ proc/admin_spawn_room_at_pos()
 		spawn_room(locate(x,y,z),x_len,y_len,wall,floor)
 	return
 
-var/global/list/space_surprises = list(/obj/effect/alien/facehugger,
+var/global/list/space_surprises = list(/obj/item/clothing/mask/facehugger,
 													/obj/effect/critter/spesscarp,
 													/obj/effect/critter/spesscarp/elite,
 //													/obj/creature,

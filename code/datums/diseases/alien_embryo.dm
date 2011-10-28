@@ -64,10 +64,10 @@
 					if(G.client)
 						if(G.client.be_alien)
 							if(((G.client.inactivity/10)/60) <= 5)
-								if(G.corpse) //hopefully will make adminaliums possible --Urist
+								if(G.corpse)
 									if(G.corpse.stat==2)
 										candidates.Add(G)
-								if(!G.corpse) //hopefully will make adminaliums possible --Urist
+								if(!G.corpse)
 									candidates.Add(G)
 				if(candidates.len)
 					var/mob/dead/observer/G = pick(candidates)

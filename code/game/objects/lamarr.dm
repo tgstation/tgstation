@@ -14,11 +14,7 @@
 	switch(severity)
 		if (1)
 			new /obj/item/weapon/shard( src.loc )
-			if (occupied)
-				var/obj/effect/alien/facehugger/A = new /obj/effect/alien/facehugger( src.loc )
-				A.lamarr = 1
-				A.name = "Lamarr"
-				occupied = 0
+			Break()
 			del(src)
 		if (2)
 			if (prob(50))
@@ -40,19 +36,13 @@
 /obj/structure/lamarr/blob_act()
 	if (prob(75))
 		new /obj/item/weapon/shard( src.loc )
-		if (occupied)
-			var/obj/effect/alien/facehugger/A = new /obj/effect/alien/facehugger( src.loc )
-			A.lamarr = 1
-			A.name = "Lamarr"
-			occupied = 0
+		Break()
 		del(src)
 
 
 /obj/structure/lamarr/meteorhit(obj/O as obj)
 		new /obj/item/weapon/shard( src.loc )
-		var/obj/effect/alien/facehugger/A = new /obj/effect/alien/facehugger( src.loc )
-		A.lamarr = 1
-		A.name = "Lamarr"
+		Break()
 		del(src)
 
 
@@ -63,11 +53,7 @@
 			src.destroyed = 1
 			new /obj/item/weapon/shard( src.loc )
 			playsound(src, "shatter", 70, 1)
-			var/obj/effect/alien/facehugger/A = new /obj/effect/alien/facehugger( src.loc )
-			A.lamarr = 1
-			A.name = "Lamarr"
-			occupied = 0
-			update_icon()
+			Break()
 	else
 		playsound(src.loc, 'Glasshit.ogg', 75, 1)
 	return
@@ -100,3 +86,12 @@
 		src.health -= 2
 		healthcheck()
 		return
+
+/obj/structure/lamarr/proc/Break()
+	if(occupied)
+		var/obj/item/clothing/mask/facehugger/A = new /obj/item/clothing/mask/facehugger( src.loc )
+		A.sterile = 1
+		A.name = "Lamarr"
+		occupied = 0
+	update_icon()
+	return

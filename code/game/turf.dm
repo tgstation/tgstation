@@ -1402,9 +1402,6 @@ turf/simulated/floor/return_siding_icon_state()
 	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
 		spawn(0)
 			M.take_damage(100, "brute")
-	for(var/obj/effect/alien/facehugger/M in src)//These really need to be mobs.
-		spawn(0)
-			M.death()
 	for(var/obj/effect/critter/M in src)
 		spawn(0)
 			M.Die()

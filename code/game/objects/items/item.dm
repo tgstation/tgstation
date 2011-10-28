@@ -140,7 +140,9 @@
 /obj/item/attack_paw(mob/user as mob)
 
 	if(isalien(user)) // -- TLE
-		if(!user:has_fine_manipulation) // -- defaults to 0, only changes due to badminnery -- Urist
+		var/mob/living/carbon/alien/A = user
+
+		if(!A.has_fine_manipulation || w_class >= 4)
 			user << "Your claws aren't capable of such fine manipulation."
 			return
 

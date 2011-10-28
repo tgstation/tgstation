@@ -2,17 +2,7 @@
 	name = "alien thing"
 	desc = "theres something alien about this"
 	icon = 'alien.dmi'
-	unacidable = 1 //Aliens won't ment their own.
-
-/obj/effect/alien/egg
-	desc = "It looks like a weird egg"
-	name = "egg"
-	icon_state = "egg"
-	density = 0
-	anchored = 0
-
-	var/health = 100
-
+//	unacidable = 1 //Aliens won't ment their own.
 
 /obj/effect/alien/head
 	name = "severed head"

@@ -211,6 +211,7 @@
 					if(S.parent == mob)
 						S.loc = mob.loc
 		moving = 0
+
 		return .
 
 	return

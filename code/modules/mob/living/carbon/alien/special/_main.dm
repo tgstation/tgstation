@@ -64,7 +64,7 @@
 
 /mob/living/carbon/alien/humanoid/special/proc/remove_special_verbs()
 	verbs -= /mob/living/carbon/alien/humanoid/verb/plant
-	verbs -= /mob/living/carbon/alien/humanoid/verb/call_to
+//	verbs -= /mob/living/carbon/alien/humanoid/verb/call_to
 	verbs -= /mob/living/carbon/alien/humanoid/verb/whisp
 	verbs -= /mob/living/carbon/alien/humanoid/verb/transfer_plasma
 	verbs -= /mob/living/carbon/alien/humanoid/verb/corrode
