@@ -189,15 +189,38 @@
 	return
 
 /obj/item/weapon/pen/sleepypen/attack(mob/M as mob, mob/user as mob)
-	if (!( istype(M, /mob) ))
+	if(!(istype(M,/mob)))
 		return
 	..()
-	if (reagents.total_volume)
+	if(reagents.total_volume)
 		if(M.reagents) reagents.trans_to(M, 50) //used to be 150
 	return
 
+//NEW STYLE PARAPEN
+/obj/item/weapon/pen/paralysis/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
+	return
+
+/obj/item/weapon/pen/paralysis/attack(mob/M as mob, mob/user as mob)
+	if(!(istype(M,/mob)))
+		return
+	..()
+	if(reagents.total_volume)
+		if(M.reagents) reagents.trans_to(M, 50)
+	return
+
+/obj/item/weapon/pen/paralysis/New()
+	var/datum/reagents/R = new/datum/reagents(50)
+	reagents = R
+	R.my_atom = src
+	R.add_reagent("zombiepowder", 10)
+	R.add_reagent("impedrezene", 25)
+	R.add_reagent("cryptobiolin", 15)
+	..()
+	return
+
 /obj/item/weapon/Bump(mob/M as mob)
-	spawn( 0 )
+	spawn(0)
 		..()
 	return
 

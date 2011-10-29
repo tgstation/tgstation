@@ -7,13 +7,10 @@
 	protective_temperature = 400
 	heat_transfer_coefficient = 0.25
 	siemens_coefficient = 0.50
-//	var/elecgen = 0 //WHAT THE FUCK IS THIS SHIT OH GOD WHY ;-;
-//	var/uses = 0 //NOPE NOPE NOPE NOPE
+	var/siemens_coefficient_archived = 0
 	var/wired = 0
 	var/obj/item/weapon/cell/cell = 0
 	body_parts_covered = HANDS
-
-//(CAPS IS CRUISE CONTROL FOR COOL AS WE ALL KNOW)
 
 /obj/item/clothing/gloves/white
 	name = "White Gloves"
@@ -95,7 +92,7 @@
 	var/mindrain = 200
 	var/maxdrain = 400
 
-//BEEP BEEP IT'S THE COMMENT BRIGADE -Pete
+//BEEP BEEP IT'S THE COMMENT BRIGADE -Pete (gloves overhaul)
 /*
 /obj/item/clothing/gloves/stungloves/
 	name = "Stungloves"

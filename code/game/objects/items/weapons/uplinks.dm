@@ -4,7 +4,7 @@ SYNDICATE UPLINK
 */
 
 /obj/item/weapon/syndicate_uplink/implanted
-	uses = 4
+	uses = 5
 
 /obj/item/weapon/syndicate_uplink/proc/explode()
 	var/turf/location = get_turf(src.loc)
@@ -27,15 +27,12 @@ SYNDICATE UPLINK
 		if (src.temp)
 			dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
 		else
-			dat = "<B>Syndicate Uplink Console:</B><BR>"
+			dat = "<B>Syndicate Uplink Access:</B><BR>"
 			dat += "Tele-Crystals left: [src.uses]<BR>"
 			dat += "<HR>"
 			dat += "<B>Request item:</B><BR>"
 			dat += "<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><BR>"
 			dat += "<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=revolver'>Revolver</A> (6)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=revolver_ammo'>Ammo-357</A> for use with Revolver (2)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=suffocation_revolver_ammo'>Ammo-418</A> for use with Revolver (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=xbow'>Energy Crossbow</A> (5)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=sword'>Energy Sword</A> (4)<BR>"
 			dat += "<BR>"
@@ -45,8 +42,8 @@ SYNDICATE UPLINK
 			dat += "<A href='byond://?src=\ref[src];buy_item=voice'>Voice-Changer</A> (4)<BR>"
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=imp_freedom'>Freedom Implant (with injector)</A> (3)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (3)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (3)<BR>" //Note that this goes to the updated sleepypen now.
+//			dat += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>" //Terrible -Pete.
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=detomatix'>Detomatix Cartridge</A> (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=bomb'>Plastic Explosives</A> (2)<BR>"
@@ -59,11 +56,9 @@ SYNDICATE UPLINK
 			dat += "<A href='byond://?src=\ref[src];buy_item=empbox'>5 EMP Grenades</A> (4)<BR>"
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=botchat'>Binary Translator</A> (3)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=lawmod'>Hacked AI Module</A> (7)<BR>"
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=toolbox'>Syndicate Toolbox</A> (Includes various tools) (1)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=soap'>Syndicate Soap</A> (1)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=balloon'>Syndicate Balloon</A> (Useless) (10)<BR>"
 			dat += "<HR>"
 			if (src.origradio)
 				dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</A><BR>"
@@ -85,18 +80,6 @@ SYNDICATE UPLINK
 		currentUser.machine = src
 		if (href_list["buy_item"])
 			switch(href_list["buy_item"])
-				if("revolver")
-					if (src.uses >= 6)
-						src.uses -= 6
-						new /obj/item/weapon/gun/projectile(get_turf(src))
-				if("revolver_ammo")
-					if (src.uses >= 2)
-						src.uses -= 2
-						new /obj/item/ammo_magazine/a357(get_turf(src))
-				if("suffocation_revolver_ammo")
-					if (uses >= 3)
-						uses -= 3
-						new /obj/item/ammo_magazine/a418(get_turf(src))
 				if("xbow")
 					if (src.uses >= 5)
 						src.uses -= 5
@@ -137,7 +120,7 @@ SYNDICATE UPLINK
 				if("paralysispen")
 					if (src.uses >= 3)
 						src.uses -= 3
-						new /obj/item/device/flashlight/pen/paralysis(get_turf(src))
+						new /obj/item/weapon/pen/paralysis(get_turf(src))
 				if("projector")
 					if (src.uses >= 4)
 						src.uses -= 4
@@ -171,10 +154,6 @@ SYNDICATE UPLINK
 					 src.uses -= 3
 					 new /obj/item/clothing/suit/space/syndicate(get_turf(src))
 					 new /obj/item/clothing/head/helmet/space/syndicate(get_turf(src))
-				if("lawmod")
-					if (src.uses >= 7)
-						src.uses -= 7
-						new /obj/item/weapon/aiModule/syndicate(get_turf(src))
 				if("botchat")
 					if (src.uses >= 3)
 						src.uses -= 3
@@ -187,10 +166,6 @@ SYNDICATE UPLINK
 					if(uses)
 						uses--
 						new /obj/item/weapon/soap/syndie(get_turf(src))
-				if("balloon")
-					if (src.uses >= 10)
-						uses -= 10
-						new /obj/item/toy/syndicateballoon(get_turf(src))
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
 			shutdown_uplink()

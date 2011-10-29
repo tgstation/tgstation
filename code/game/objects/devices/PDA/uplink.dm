@@ -42,9 +42,9 @@
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=voice'>Voice-Changer</A> (4)<BR>"
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_freedom'>Freedom Implant (with injector)</A> (3)<BR>"
-	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_uplink'>Uplink Implant (4 crystals inside)</A> (10)<BR>"
-	menu_message += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (3)<BR>"
-	menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_uplink'>Uplink Implant (5 crystals inside)</A> (10)<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (3)<BR>" //Note that this goes to the updated sleepypen now.
+//	menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>" //Terrible -Pete.
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=detomatix'>Detomatix Cartridge</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=bomb'>Plastic Explosives</A> (2)<BR>"
@@ -148,7 +148,7 @@
 			if("paralysispen")
 				if (uses >= 3)
 					uses -= 3
-					new /obj/item/device/flashlight/pen/paralysis(get_turf(hostpda))
+					new /obj/item/weapon/pen/paralysis(get_turf(src))
 			if("projector")
 				if (uses >= 4)
 					uses -= 4

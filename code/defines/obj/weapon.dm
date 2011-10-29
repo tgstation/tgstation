@@ -880,6 +880,11 @@
 	throw_range = 15
 
 /obj/item/weapon/pen/sleepypen
+	desc = "It's a normal black ink pen with a sharp point and a carefully engraved \"Waffle Co.\""
+	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
+	origin_tech = "materials=2;biotech=1;syndicate=7"
+
+/obj/item/weapon/pen/paralysis
 	desc = "It's a normal black ink pen with a sharp point."
 	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
 	origin_tech = "materials=2;biotech=1;syndicate=5"
