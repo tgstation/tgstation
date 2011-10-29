@@ -264,7 +264,7 @@
 
 		if ("stealth")
 			new /obj/item/weapon/gun/energy/crossbow(src)
-			new /obj/item/weapon/pen/sleepypen(src)
+			new /obj/item/weapon/pen/paralysis(src)
 			new /obj/item/device/chameleon(src)
 			return
 

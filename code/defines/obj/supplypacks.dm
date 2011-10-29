@@ -8,7 +8,7 @@
 					"/obj/item/weapon/smokebomb",
 					"/obj/item/weapon/smokebomb",
 					"/obj/item/weapon/smokebomb",
-					"/obj/item/weapon/pen/sleepypen",
+					"/obj/item/weapon/pen/paralysis",
 					"/obj/item/weapon/chem_grenade/incendiary")
 	cost = 20
 	containertype = "/obj/structure/crate"
