@@ -10,10 +10,12 @@
 	var/g_hair = 0.0
 	var/b_hair = 0.0
 	var/h_style = "Short Hair"
+	var/datum/sprite_accessory/hair/hair_style
 	var/r_facial = 0.0
 	var/g_facial = 0.0
 	var/b_facial = 0.0
 	var/f_style = "Shaved"
+	var/datum/sprite_accessory/facial_hair/facial_hair_style
 	var/r_eyes = 0.0
 	var/g_eyes = 0.0
 	var/b_eyes = 0.0
@@ -1247,13 +1249,13 @@
 	eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 	eyes_l.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 
-	var/icon/hair_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "[hair_icon_state]_s")
-	var/icon/hair_l = new/icon("icon" = 'human_face.dmi', "icon_state" = "[hair_icon_state]_l")
+	var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+	var/icon/hair_l = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_l")
 	hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 	hair_l.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 
-	var/icon/facial_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "[face_icon_state]_s")
-	var/icon/facial_l = new/icon("icon" = 'human_face.dmi', "icon_state" = "[face_icon_state]_l")
+	var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
+	var/icon/facial_l = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_l")
 	facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
 	facial_l.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
 

@@ -25,67 +25,47 @@ datum/preferences
 		return
 
 	proc/randomize_hair(var/gender)
-		//Women are more likely to have longer hair.
-		var/temp = gender==FEMALE&&prob(80) ? pick(2,6,8,9) : rand(1,12)
-		switch(temp)
-			if(1)
-				h_style = "Short Hair"
-			if(2)
-				h_style = "Long Hair"
-			if(3)
-				h_style = "Cut Hair"
-			if(4)
-				h_style = "Mohawk"
-			if(5)
-				h_style = "Balding"
-			if(6)
-				h_style = "Fag"
-			if(7)
-				h_style = "Bedhead"
-			if(8)
-				h_style = "Dreadlocks"
-			if(9)
-				h_style = "Longer Hair"
-			if(10)
-				h_style = "Jensen Hair"
-			if(11)
-				h_style = "Skinhead"
-			else
-				h_style = "bald"
+		// Generate list of all possible hairs via typesof(), subtract the parent type however
+		var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
 
-	proc/randomize_facial()
-		var/temp = prob(50) ? 15 : rand(1,14)//50% of not having a beard. Otherwise get a random one.
-		switch(temp)
-			if(1)
-				f_style = "Watson"
-			if(2)
-				f_style = "Chaplin"
-			if(3)
-				f_style = "Selleck"
-			if(4)
-				f_style = "Neckbeard"
-			if(5)
-				f_style = "Full Beard"
-			if(6)
-				f_style = "Long Beard"
-			if(7)
-				f_style = "Van Dyke"
-			if(8)
-				f_style = "Elvis"
-			if(9)
-				f_style = "Abe"
-			if(10)
-				f_style = "Chinstrap"
-			if(11)
-				f_style = "Hipster"
-			if(12)
-				f_style = "Goatee"
-			if(13)
-				f_style = "Hogan"
-			if(14)
-				f_style = "Jensen Goatee"
+		// List of hair datums. Used in pick() to select random hair
+		var/list/hairs = list()
+
+		// Loop through potential hairs
+		for(var/x in all_hairs)
+			var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
+
+			if(gender == FEMALE && H.choose_female) // if female and hair is female-suitable, add to possible hairs
+				hairs.Add(H)
+
+			else if(gender != FEMALE && H.choose_male) // if male and hair is male-suitable, add to hairs
+				hairs.Add(H)
+
 			else
-				f_style = "bald"
+				del(H) // delete if incompatible
+
+		if(hairs.len > 0) // if hairs could be generated
+			hair_style = pick(hairs) // assign random hair
+			h_style = hair_style.name
+
+	proc/randomize_facial() // uncommented, see randomize_hair() for commentation
+		var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+
+		var/list/fhairs = list()
+
+		for(var/x in all_fhairs)
+			var/datum/sprite_accessory/facial_hair/H = new x
+
+			if(gender == FEMALE && H.choose_female)
+				fhairs.Add(H)
+			else if(gender != FEMALE && H.choose_male)
+				fhairs.Add(H)
+			else
+				del(H)
+
+		if(fhairs.len > 0)
+			facial_hair_style = pick(fhairs)
+			f_style = facial_hair_style.name
 
 	proc/randomize_skin_tone()
 		var/tone
@@ -242,71 +222,14 @@ datum/preferences
 		var/icon/eyes_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_s")
 		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 
-		var/h_style_r = null
-		switch(h_style)
-			if("Short Hair")
-				h_style_r = "hair_a"
-			if("Long Hair")
-				h_style_r = "hair_b"
-			if("Cut Hair")
-				h_style_r = "hair_c"
-			if("Mohawk")
-				h_style_r = "hair_d"
-			if("Balding")
-				h_style_r = "hair_e"
-			if("Fag")
-				h_style_r = "hair_f"
-			if("Bedhead")
-				h_style_r = "hair_bedhead"
-			if("Dreadlocks")
-				h_style_r = "hair_dreads"
-			if("Longer Hair")
-				h_style_r = "hair_vlong"
-			if("Jensen Hair")
-				h_style_r = "hair_jensen"
-			if("Skinhead")
-				h_style_r = "hair_skinhead"
-			else
-				h_style_r = "bald"
 
-		var/f_style_r = null
-		switch(f_style)
-			if ("Watson")
-				f_style_r = "facial_watson"
-			if ("Chaplin")
-				f_style_r = "facial_chaplin"
-			if ("Selleck")
-				f_style_r = "facial_selleck"
-			if ("Neckbeard")
-				f_style_r = "facial_neckbeard"
-			if ("Full Beard")
-				f_style_r = "facial_fullbeard"
-			if ("Long Beard")
-				f_style_r = "facial_longbeard"
-			if ("Van Dyke")
-				f_style_r = "facial_vandyke"
-			if ("Elvis")
-				f_style_r = "facial_elvis"
-			if ("Abe")
-				f_style_r = "facial_abe"
-			if ("Chinstrap")
-				f_style_r = "facial_chin"
-			if ("Hipster")
-				f_style_r = "facial_hip"
-			if ("Goatee")
-				f_style_r = "facial_gt"
-			if ("Hogan")
-				f_style_r = "facial_hogan"
-			if ("Jensen Goatee")
-				f_style_r = "facial_jensen"
-			else
-				f_style_r = "bald"
-
-		var/icon/hair_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "[h_style_r]_s")
+		// Hair and facial hair, improved by Doohl
+		var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 		hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 
-		var/icon/facial_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "[f_style_r]_s")
+		var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
 		facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
+
 
 		var/icon/mouth_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "mouth_[g]_s")
 
@@ -320,3 +243,23 @@ datum/preferences
 		del(facial_s)
 		del(hair_s)
 		del(eyes_s)
+
+
+	proc/style_to_datum()
+		// use h_style and f_style to load /datum hairs
+
+		// hairs
+		for(var/x in typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair)
+			var/datum/sprite_accessory/hair/H = new x
+			if(H.name == h_style)
+				hair_style = H
+			else
+				del(H)
+
+		// facial hairs
+		for(var/x in typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair)
+			var/datum/sprite_accessory/facial_hair/H = new x
+			if(H.name == f_style)
+				facial_hair_style = H
+			else
+				del(H)

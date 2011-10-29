@@ -146,6 +146,11 @@
 							assailant << "\blue You can't strangle [affecting] through their suit collar!"
 							return
 						*/
+
+					if(istype(affecting, /mob/living/carbon/metroid))
+						assailant << "\blue You squeeze [affecting], but nothing interesting happens."
+						return
+
 					for(var/mob/O in viewers(assailant, null))
 						O.show_message(text("\red [] has reinforced his grip on [] (now neck)!", assailant, affecting), 1)
 

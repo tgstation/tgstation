@@ -1,5 +1,5 @@
 #define SAVEFILE_VERSION_MIN	3
-#define SAVEFILE_VERSION_MAX	4
+#define SAVEFILE_VERSION_MAX	5
 
 datum/preferences/proc/savefile_path(mob/user)
 	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences.sav"
@@ -104,6 +104,9 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["UI"] >> src.UI
 	F["be_special"] >> src.be_special
 
+	if(version && version < 5)
+		convert_hairstyles_four() // convert version 4 hairstyles to version 5
+
 	if(version && (version >= SAVEFILE_VERSION_MAX))
 		F["job_civilian_high"] >> src.job_civilian_high
 		F["job_civilian_med"] >> src.job_civilian_med
@@ -118,7 +121,43 @@ datum/preferences/proc/savefile_load(mob/user)
 		F["job_engsec_low"] >> src.job_engsec_low
 
 
+	style_to_datum() // convert f_style and h_style to /datum
+
+
 	return 1
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
+
+
+
+datum/preferences/proc/convert_hairstyles_four()
+	// convert hairstyle names from savefile version 4 to version 5.
+	switch(h_style)
+		if("Balding")
+			h_style = "Balding Hair"
+		if("Fag")
+			h_style = "Flow Hair"
+		if("Jensen Hair")
+			h_style = "Adam Jensen Hair"
+
+	switch(f_style)
+		if("Watson")
+			f_style = "Watson Mustache"
+		if("Chaplin")
+			f_style = "Square Mustache"
+		if("Selleck")
+			f_style = "Selleck Mustache"
+		if("Van Dyke")
+			f_style = "Van Dyke Mustache"
+		if("Elvis")
+			f_style = "Elvis Sideburns"
+		if("Abe")
+			f_style = "Abraham Lincoln Beard"
+		if("Hipster")
+			f_style = "Hipster Beard"
+		if("Hogan")
+			f_style = "Hulk Hogan Mustache"
+		if("Jensen Goatee")
+			f_style = "Adam Jensen Beard"
+

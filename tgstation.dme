@@ -871,6 +871,7 @@
 #include "code\modules\mob\new_player\preferences.dm"
 #include "code\modules\mob\new_player\preferences_setup.dm"
 #include "code\modules\mob\new_player\savefile.dm"
+#include "code\modules\mob\new_player\sprite_accessories.dm"
 #include "code\modules\mob\organ\organ.dm"
 #include "code\modules\mob\organ\organ_external.dm"
 #include "code\modules\mob\organ\organ_internal.dm"

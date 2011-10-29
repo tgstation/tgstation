@@ -18,42 +18,24 @@
 	// determine DNA fragment from hairstyle
 	// :wtc:
 
-	var/list/styles = list("bald", "hair_a", "hair_b", "hair_c", "hair_d", "hair_e", "hair_f", "hair_bedhead", "hair_dreads", "hair_vlong", "hair_jensen", "hair_skinhead" )
+	var/list/styles = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
 	var/hrange = round(4095 / styles.len)
 
-	var/style = styles.Find(character.hair_icon_state)
+	var/style = styles.Find(character.hair_style.type)
 	if(style)
 		hair = style * hrange + hrange - rand(1,hrange-1)
 	else
 		hair = 0
 
 	// Beard dna code - mostly copypasted from hair code to allow for more dynamic facial hair style additions
-	var/list/face_styles = list("bald", "facial_elvis", "facial_vandyke", "facial_neckbeard", "facial_chaplin", "facial_watson", "facial_abe", "facial_chin", "facial_hip", "facial_gt", "facial_hogan", "facial_selleck", "facial_fullbeard", "facial_longbeard", "facial_jensen" )
+	var/list/face_styles = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
 	var/f_hrange = round(4095 / face_styles.len)
 
-	var/f_style = face_styles.Find(character.face_icon_state)
+	var/f_style = face_styles.Find(character.facial_hair_style.type)
 	if(f_style)
 		beard = f_style * f_hrange + f_hrange - rand(1,f_hrange-1)
 	else
 		beard = 0
-
-	/* // Deprecated code -- Doohl
-	switch(character.face_icon_state)
-		if("bald") beard = rand(1,350)
-		if("facial_elvis") beard = rand(351,650)
-		if("facial_vandyke") beard = rand(651,950)
-		if("facial_neckbeard") beard = rand(951,1250)
-		if("facial_chaplin") beard = rand(1251,1550)
-		if("facial_watson") beard = rand(1551,1850)
-		if("facial_abe") beard = rand(1851,2150)
-		if("facial_chin") beard = rand(2151,2450)
-		if("facial_hip") beard = rand(2451,2750)
-		if("facial_gt") beard = rand(2751,3050)
-		if("facial_hogan") beard = rand(3051,3350)
-		if("facial_selleck") beard = rand(3351,3650)
-		if("facial_fullbeard") beard = rand(3651,3950)
-		if("facial_longbeard") beard = rand(3951,4095)
-	*/
 
 	temp = add_zero2(num2hex((character.r_hair),1), 3)
 	temp += add_zero2(num2hex((character.b_hair),1), 3)

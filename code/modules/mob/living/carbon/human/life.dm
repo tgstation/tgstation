@@ -805,26 +805,6 @@
 				sight |= SEE_OBJS
 				if (!druggy)
 					see_invisible = 0
-			else if(istype(glasses, /obj/item/clothing/glasses/hud/health))
-				if(client)
-					glasses:process_hud(src)
-				if (!druggy)
-					see_invisible = 0
-
-			else if(istype(glasses, /obj/item/clothing/glasses/hud/security))
-				if(client)
-					glasses:process_hud(src)
-				if (!druggy)
-					see_invisible = 0
-
-			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
-				see_in_dark = 1
-				if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-					if(client)
-						if(glasses:hud)
-							glasses:hud:process_hud(src)
-				if (!druggy)
-					see_invisible = 0
 
 			else if(stat != 2)
 				sight &= ~SEE_TURFS
@@ -848,6 +828,29 @@
 			else if(istype(head, /obj/item/clothing/head/helmet/welding))
 				if(!head:up && tinted_weldhelh)
 					see_in_dark = 1
+
+		/* HUD shit goes here, as long as it doesn't modify src.sight flags */
+		// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
+			if(istype(glasses, /obj/item/clothing/glasses/hud/health))
+				if(client)
+					glasses:process_hud(src)
+				if (!druggy)
+					see_invisible = 0
+
+			if(istype(glasses, /obj/item/clothing/glasses/hud/security))
+				if(client)
+					glasses:process_hud(src)
+				if (!druggy)
+					see_invisible = 0
+
+			if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
+				see_in_dark = 1
+				if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+					if(client)
+						if(glasses:hud)
+							glasses:hud:process_hud(src)
+				if (!druggy)
+					see_invisible = 0
 
 /*
 			if (istype(glasses, /obj/item/clothing/glasses))

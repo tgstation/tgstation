@@ -61,6 +61,7 @@ datum/preferences
 
 		//Hair type
 		h_style = "Short Hair"
+		datum/sprite_accessory/hair/hair_style
 		//Hair color
 		r_hair = 0
 		g_hair = 0
@@ -68,6 +69,7 @@ datum/preferences
 
 		//Face hair type
 		f_style = "Shaved"
+		datum/sprite_accessory/facial_hair/facial_hair_style
 		//Face hair color
 		r_facial = 0
 		g_facial = 0
@@ -102,6 +104,8 @@ datum/preferences
 
 
 	New()
+		hair_style = new/datum/sprite_accessory/hair/short
+		facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
 		randomize_name()
 		..()
 
@@ -427,16 +431,41 @@ datum/preferences
 
 		if(link_tags["h_style"])
 			switch(link_tags["h_style"])
-				if("random")
-					if(gender == FEMALE)
-						h_style = pickweight ( list ("Cut Hair" = 5, "Short Hair" = 5, "Long Hair" = 5, "Mohawk" = 5, "Balding" = 1, "Fag" = 5, "Bedhead" = 5, "Dreadlocks" = 5, "Bald" = 5))
-					else
-						h_style = pickweight ( list ("Cut Hair" = 5, "Short Hair" = 5, "Long Hair" = 5, "Mohawk" = 5, "Balding" = 5, "Fag" = 5, "Bedhead" = 5, "Dreadlocks" = 5, "Jensen Hair" = 5, "Skinhead" = 5, "Bald" = 5))
 
-				if("input")
-					var/new_style = input(user, "Please select hair style", "Character Generation")  as null|anything in list( "Cut Hair", "Short Hair", "Long Hair", "Longer Hair", "Mohawk", "Balding", "Fag", "Bedhead", "Dreadlocks", "Jensen Hair", "Skinhead", "Bald" )
+				// New and improved hair selection code, by Doohl
+				if("random") // random hair selection
+
+					randomize_hair(gender) // call randomize_hair() proc with var/gender parameter
+					// see preferences_setup.dm for proc
+
+				if("input") // input hair selection
+
+					// Generate list of hairs via typesof()
+					var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+
+					// List of hair names
+					var/list/hairs = list()
+
+					// loop through potential hairs
+					for(var/x in all_hairs)
+						var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
+						hairs.Add(H.name) // add hair name to hairs
+						del(H) // delete the hair after it's all done
+
+					// prompt the user for a hair selection, the selection being anything in list hairs
+					var/new_style = input(user, "Select a hair style", "Character Generation")  as null|anything in hairs
+
+					// if new style selected (not cancel)
 					if(new_style)
 						h_style = new_style
+
+						for(var/x in all_hairs) // loop through all_hairs again. Might be slightly CPU expensive, but not significantly.
+							var/datum/sprite_accessory/hair/H = new x // create new hair datum
+							if(H.name == new_style)
+								hair_style = H // assign the hair_style variable a new hair datum
+								break
+							else
+								del(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
 
 		if(link_tags["ooccolor"])
 			var/ooccolor = input(user, "Please select OOC colour.", "OOC colour") as color
@@ -446,15 +475,31 @@ datum/preferences
 
 		if(link_tags["f_style"])
 			switch(link_tags["f_style"])
+
+				// see above for commentation. This is just a slight modification of the hair code for facial hairs
 				if("random")
-					if(gender == FEMALE)
-						f_style = pickweight ( list("Watson" = 1, "Chaplin" = 1, "Selleck" = 1, "Full Beard" = 1, "Long Beard" = 1, "Neckbeard" = 1, "Van Dyke" = 1, "Elvis" = 1, "Abe" = 1, "Chinstrap" = 1, "Hipster" = 1, "Goatee" = 1, "Hogan" = 1, "Shaved" = 100))
-					else
-						f_style = pickweight ( list("Watson" = 1, "Chaplin" = 1, "Selleck" = 1, "Full Beard" = 1, "Long Beard" = 1, "Neckbeard" = 1, "Van Dyke" = 1, "Elvis" = 1, "Abe" = 1, "Chinstrap" = 1, "Hipster" = 1, "Goatee" = 1, "Hogan" = 1, "Jensen Goatee" = 1, "Shaved" = 10))
+
+					randomize_facial(gender)
+
 				if("input")
-					var/new_style = input(user, "Please select facial style", "Character Generation")  as null|anything in list("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Jensen Goatee", "Hogan", "Shaved")
+
+					var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+					var/list/fhairs = list()
+					for(var/x in all_fhairs)
+						var/datum/sprite_accessory/facial_hair/H = new x
+						fhairs.Add(H.name)
+						del(H)
+
+					var/new_style = input(user, "Select a facial hair style", "Character Generation")  as null|anything in fhairs
 					if(new_style)
 						f_style = new_style
+						for(var/x in all_fhairs)
+							var/datum/sprite_accessory/facial_hair/H = new x
+							if(H.name == new_style)
+								facial_hair_style = H
+								break
+							else
+								del(H)
 
 		if(link_tags["gender"])
 			if(gender == MALE)
@@ -568,63 +613,8 @@ datum/preferences
 			if(UI_NEW)
 				character.UI = 'screen1.dmi'
 
-		switch(h_style)
-			if("Short Hair")
-				character.hair_icon_state = "hair_a"
-			if("Long Hair")
-				character.hair_icon_state = "hair_b"
-			if("Cut Hair")
-				character.hair_icon_state = "hair_c"
-			if("Mohawk")
-				character.hair_icon_state = "hair_d"
-			if("Balding")
-				character.hair_icon_state = "hair_e"
-			if("Fag")
-				character.hair_icon_state = "hair_f"
-			if("Bedhead")
-				character.hair_icon_state = "hair_bedhead"
-			if("Dreadlocks")
-				character.hair_icon_state = "hair_dreads"
-			if("Longer Hair")
-				character.hair_icon_state = "hair_vlong"
-			if("Jensen Hair")
-				character.hair_icon_state = "hair_jensen"
-			if("Skinhead")
-				character.hair_icon_state = "hair_skinhead"
-			else
-				character.hair_icon_state = "bald"
-
-		switch(f_style)
-			if("Watson")
-				character.face_icon_state = "facial_watson"
-			if("Chaplin")
-				character.face_icon_state = "facial_chaplin"
-			if("Selleck")
-				character.face_icon_state = "facial_selleck"
-			if("Neckbeard")
-				character.face_icon_state = "facial_neckbeard"
-			if("Full Beard")
-				character.face_icon_state = "facial_fullbeard"
-			if("Long Beard")
-				character.face_icon_state = "facial_longbeard"
-			if("Van Dyke")
-				character.face_icon_state = "facial_vandyke"
-			if("Elvis")
-				character.face_icon_state = "facial_elvis"
-			if("Abe")
-				character.face_icon_state = "facial_abe"
-			if("Chinstrap")
-				character.face_icon_state = "facial_chin"
-			if("Hipster")
-				character.face_icon_state = "facial_hip"
-			if("Goatee")
-				character.face_icon_state = "facial_gt"
-			if("Hogan")
-				character.face_icon_state = "facial_hogan"
-			if("Jensen Goatee")
-				character.face_icon_state = "facial_jensen"
-			else
-				character.face_icon_state = "bald"
+		character.hair_style = hair_style
+		character.facial_hair_style = facial_hair_style
 
 		character.underwear = underwear == 1 ? pick(1,2,3,4,5) : 0
 
