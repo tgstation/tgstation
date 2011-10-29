@@ -694,6 +694,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 						Turret.cover=new/obj/machinery/porta_turret_cover(src.loc)
 						Turret.cover.Parent_Turret=Turret
+						Turret.cover.name = finish_name
 						del(src)
 
 			else if(istype(W, /obj/item/weapon/crowbar))

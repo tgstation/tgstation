@@ -207,7 +207,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			screen = 0
 			priority = -1
 	if(href_list["writeAnnouncement"])
-		src.message = strip_html(input(usr, "Write your message", "Messanger", ""))
+		src.message = input(usr, "Write your message", "Messanger", "")
 		src.priority = href_list["priority"]
 		while (findtext(src.message," ") == 1)
 			src.message = copytext(src.message,2,lentext(src.message)+1)
@@ -217,8 +217,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			announceAuth = 0;
 			screen = 0
 	if(href_list["sendAnnouncement"])
-		src.message = strip_html(message)
-		world << "<b><font color='red' size='3'>[department] announcement:</font> <font color='black' size='3'>[sanitize(message)]</font></b>"
+		world << "<b><font size = 3> <font color = red>[department] announcement:</font color> [html_encode(message)]</font size></b>"
 		announceAuth = 0
 		message = ""
 		screen = 0
