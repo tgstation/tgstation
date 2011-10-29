@@ -7,7 +7,7 @@
 	src.real_name = src.name
 	spawn (1)
 		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
-//		src.verbs -= /mob/living/carbon/alien/humanoid/verb/call_to
+		src.verbs -= /mob/living/carbon/alien/humanoid/verb/ActivateHuggers
 		src.stand_icon = new /icon('alien.dmi', "aliend_s")
 		src.lying_icon = new /icon('alien.dmi', "aliend_l")
 		src.icon = src.stand_icon

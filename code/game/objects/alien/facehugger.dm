@@ -86,7 +86,9 @@ var/const
 		if(stat != CONSCIOUS)
 			return
 
-		L.take_organ_damage(strength,0) //done here so that even borgs and humans take damage
+		L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
+
+		loc = L.loc
 
 		if(issilicon(L))
 			for(var/mob/O in viewers(src, null))
@@ -110,15 +112,17 @@ var/const
 		if(target.wear_mask)
 			var/obj/item/clothing/W = target.wear_mask
 
-			if(W.canremove)
-				target.u_equip(W)
-				if (target.client)
-					target.client.screen -= W
-				W.loc = target.loc
-				W.dropped(target)
-				W.layer = initial(W.layer)
-				for(var/mob/O in viewers(target, null))
-					O.show_message("\red \b [src] tears [W] off of [target]'s face!", 1)
+			if(!W.canremove)
+				return
+
+			target.u_equip(W)
+			if (target.client)
+				target.client.screen -= W
+			W.loc = target.loc
+			W.dropped(target)
+			W.layer = initial(W.layer)
+			for(var/mob/O in viewers(target, null))
+				O.show_message("\red \b [src] tears [W] off of [target]'s face!", 1)
 
 		if(istype(loc,/mob/living/carbon/alien)) //just taking it off from the alien's UI
 			var/mob/living/carbon/alien/host = loc
