@@ -156,22 +156,24 @@
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
-	if ((M:gloves && M:gloves.elecgen == 1 && M.a_intent == "hurt") /*&& (!istype(src:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
-		if(M:gloves.uses > 0)
-			M:gloves.uses--
-			if (weakened < 5)
-				weakened = 5
-			if (stuttering < 5)
-				stuttering = 5
-			if (stunned < 5)
-				stunned = 5
-			for(var/mob/O in viewers(src, null))
-				if (O.client)
-					O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
-		else
-			M:gloves.elecgen = 0
-			M << "\red Not enough charge! "
-			return
+	if(M.gloves)
+		if(M.gloves.cell)
+			if(M.a_intent == "hurt")
+				if(M.gloves.cell.charge >= 2500)
+					M.gloves.cell.charge -= 2500
+					if (weakened < 5)
+						weakened = 5
+					if (stuttering < 5)
+						stuttering = 5
+					if (stunned < 5)
+						stunned = 5
+					for(var/mob/O in viewers(src, null))
+						if (O.client)
+							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
+					return
+				else
+					M << "\red Not enough charge! "
+					return
 
 	if (M.a_intent == "help")
 		help_shake_act(M)

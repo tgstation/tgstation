@@ -77,6 +77,8 @@
 //Just because someone gets you occasionally with stun gloves doesn't mean you can put in code to kill everyone who tries to make some.
 /obj/item/weapon/cell/attackby(obj/item/W, mob/user)
 	..()
+//HONK HONK GLOVES NERF -Pete
+/*
 	var/obj/item/clothing/gloves/G = W
 	if(istype(G))
 	//	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
@@ -98,8 +100,9 @@
 		use(G.uses*1000)
 		updateicon()
 		user << "\red These gloves are now electrically charged!"
+*/
 
-	else if(istype(W, /obj/item/weapon/reagent_containers/syringe))
+	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
 
 		user << "You inject the solution into the power cell."

@@ -9,20 +9,21 @@
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
-	if((M.gloves && M.gloves.elecgen == 1))
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
-
-		if(M.gloves.uses <= 0)
-			M.gloves.elecgen = 0
-			visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
-			M << "\red Not enough charge! "
-			return
-		M.gloves.uses--
-		var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
-		apply_effects(5,5,0,0,5,0,0,armorblock)
-		visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
-		return 1
+	if(M.gloves)
+		if(M.gloves.cell)
+			if(M.a_intent == "hurt")
+				if(M.gloves.cell.charge >= 2500)
+					M.gloves.cell.charge -= 2500
+					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
+					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
+					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
+					var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
+					apply_effects(5,5,0,0,5,0,0,armorblock)
+					return 1
+				else
+					M << "\red Not enough charge! "
+					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
+				return
 
 	switch(M.a_intent)
 		if("help")

@@ -452,12 +452,18 @@
 
 
 
-	if(M.gloves && M.gloves.elecgen == 1)//Stungloves. Any contact will stun the alien.
-		if(M.gloves.uses > 0)
-			M.gloves.uses--
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall.", 2)
+	if(M.gloves)
+		if(M.gloves.cell)
+			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+				if(M.gloves.cell.charge >= 2500)
+					M.gloves.cell.charge -= 2500
+					for(var/mob/O in viewers(src, null))
+						if ((O.client && !( O.blinded )))
+							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall.", 2)
+					return
+				else
+					M << "\red Not enough charge! "
+					return
 
 	switch(M.a_intent)
 
