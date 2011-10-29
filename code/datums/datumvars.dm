@@ -227,6 +227,13 @@ client
 			body += "<option value='byond://?src=\ref[src];ninja=\ref[D]'>Make Space Ninja</option>"
 			body += "<option value='byond://?src=\ref[src];godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='byond://?src=\ref[src];build_mode=\ref[D]'>Toggle Build Mode</option>"
+			if(ishuman(D))
+				body += "<option value>---</option>"
+				body += "<option value='byond://?src=\ref[src];makeai=\ref[D]'>Make AI</option>"
+				body += "<option value='byond://?src=\ref[src];makerobot=\ref[D]'>Make cyborg</option>"
+				body += "<option value='byond://?src=\ref[src];makemonkey=\ref[D]'>Make monkey</option>"
+				body += "<option value='byond://?src=\ref[src];makealien=\ref[D]'>Make alien</option>"
+				body += "<option value='byond://?src=\ref[src];makemetroid=\ref[D]'>Make metroid</option>"
 			body += "<option value>---</option>"
 			body += "<option value='byond://?src=\ref[src];gib=\ref[D]'>Gib</option>"
 		if(isobj(D))
@@ -559,6 +566,91 @@ client
 				if("left")
 					A.dir = turn(A.dir, 45)
 			href_list["datumrefresh"] = href_list["rotatedatum"]
+		else if (href_list["makemonkey"])
+			var/mob/M = locate(href_list["makemonkey"])
+			if(!M)
+				return
+			if(!ishuman(M))
+				usr << "This can only be done to objects of type /mob/living/carbon/human"
+				return
+			if(!src.holder)
+				usr << "You are not an administrator."
+				return
+			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
+			if(!action_type || action_type == "Cancel")
+				return
+			if(!M)
+				usr << "Mob doesn't exist anymore"
+				return
+			holder.Topic(href, list("monkeyone"=href_list["makemonkey"]))
+		else if (href_list["makerobot"])
+			var/mob/M = locate(href_list["makerobot"])
+			if(!M)
+				return
+			if(!ishuman(M))
+				usr << "This can only be done to objects of type /mob/living/carbon/human"
+				return
+			if(!src.holder)
+				usr << "You are not an administrator."
+				return
+			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
+			if(!action_type || action_type == "Cancel")
+				return
+			if(!M)
+				usr << "Mob doesn't exist anymore"
+				return
+			holder.Topic(href, list("makerobot"=href_list["makerobot"]))
+		else if (href_list["makealien"])
+			var/mob/M = locate(href_list["makealien"])
+			if(!M)
+				return
+			if(!ishuman(M))
+				usr << "This can only be done to objects of type /mob/living/carbon/human"
+				return
+			if(!src.holder)
+				usr << "You are not an administrator."
+				return
+			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
+			if(!action_type || action_type == "Cancel")
+				return
+			if(!M)
+				usr << "Mob doesn't exist anymore"
+				return
+			holder.Topic(href, list("makealien"=href_list["makealien"]))
+		else if (href_list["makemetroid"])
+			var/mob/M = locate(href_list["makemetroid"])
+			if(!M)
+				return
+			if(!ishuman(M))
+				usr << "This can only be done to objects of type /mob/living/carbon/human"
+				return
+			if(!src.holder)
+				usr << "You are not an administrator."
+				return
+			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
+			if(!action_type || action_type == "Cancel")
+				return
+			if(!M)
+				usr << "Mob doesn't exist anymore"
+				return
+			holder.Topic(href, list("makemetroid"=href_list["makemetroid"]))
+		else if (href_list["makeai"])
+			var/mob/M = locate(href_list["makeai"])
+			if(!M)
+				return
+			if(!ishuman(M))
+				usr << "This can only be done to objects of type /mob/living/carbon/human"
+				return
+			if(!src.holder)
+				usr << "You are not an administrator."
+				return
+			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
+			if(!action_type || action_type == "Cancel")
+				return
+			if(!M)
+				usr << "Mob doesn't exist anymore"
+				return
+			holder.Topic(href, list("makeai"=href_list["makeai"]))
 		else
 			..()
 
