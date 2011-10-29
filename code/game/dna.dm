@@ -214,60 +214,30 @@
 			H.gender = FEMALE
 		else
 			H.gender = MALE
-		///
+
+
+		/// BEARDS
 		var/beardnum = hex2num(getblock(structure,12,3))
-		if (beardnum >= 1 && beardnum <= 350)
-			H.face_icon_state = "bald"
-			H.f_style = "bald"
-		else if (beardnum >= 351 && beardnum <= 650)
-			H.face_icon_state = "facial_elvis"
-			H.f_style = "facial_elvis"
-		else if (beardnum >= 651 && beardnum <= 950)
-			H.face_icon_state = "facial_vandyke"
-			H.f_style = "facial_vandyke"
-		else if (beardnum >= 951 && beardnum <= 1250)
-			H.face_icon_state = "facial_neckbeard"
-			H.f_style = "facial_neckbeard"
-		else if (beardnum >= 1251 && beardnum <= 1550)
-			H.face_icon_state = "facial_chaplin"
-			H.f_style = "facial_chaplin"
-		else if (beardnum >= 1551 && beardnum <= 1850)
-			H.face_icon_state = "facial_watson"
-			H.f_style = "facial_watson"
-		else if (beardnum >= 1851 && beardnum <= 2150)
-			H.face_icon_state = "facial_abe"
-			H.f_style = "facial_abe"
-		else if (beardnum >= 2151 && beardnum <= 2450)
-			H.face_icon_state = "facial_chin"
-			H.f_style = "facial_chin"
-		else if (beardnum >= 2451 && beardnum <= 2750)
-			H.face_icon_state = "facial_hip"
-			H.f_style = "facial_hip"
-		else if (beardnum >= 2751 && beardnum <= 3050)
-			H.face_icon_state = "facial_gt"
-			H.f_style = "facial_gt"
-		else if (beardnum >= 3051 && beardnum <= 3350)
-			H.face_icon_state = "facial_hogan"
-			H.f_style = "facial_hogan"
-		else if (beardnum >= 3351 && beardnum <= 3650)
-			H.face_icon_state = "facial_selleck"
-			H.f_style = "facial_selleck"
-		else if (beardnum >= 3651 && beardnum <= 3950)
-			H.face_icon_state = "facial_fullbeard"
-			H.f_style = "facial_fullbeard"
-		else if (beardnum >= 3951 && beardnum <= 4095)
-			H.face_icon_state = "facial_longbeard"
-			H.f_style = "facial_longbeard"
+		var/list/facial_styles = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+		var/fstyle = round(1 +(beardnum / 4096)*facial_styles.len)
+
+		var/datum/sprite_accessory/facial_hair/fhair = new facial_styles[fstyle]
+
+		H.face_icon_state = fhair.icon_state
+		H.f_style = fhair.icon_state
+		H.facial_hair_style = fhair
 
 
+		// HAIR
 		var/hairnum = hex2num(getblock(structure,13,3))
-
-		var/list/styles = list("bald", "hair_a", "hair_b", "hair_c", "hair_d", "hair_e", "hair_f", "hair_bedhead", "hair_dreads" )
-
+		var/list/styles = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
 		var/style = round(1 +(hairnum / 4096)*styles.len)
 
-		H.hair_icon_state = styles[style]
-		H.h_style = H.hair_icon_state
+		var/datum/sprite_accessory/hair/hair = new styles[style]
+
+		H.hair_icon_state = hair.icon_state
+		H.h_style = hair.icon_state
+		H.hair_style = hair
 
 		H.update_face()
 		H.update_body()
