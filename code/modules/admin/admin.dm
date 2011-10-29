@@ -1648,6 +1648,20 @@
 					if(!admin_log.len)
 						dat += "No-one has done anything this round!"
 					usr << browse(dat, "window=admin_log")
+				if("maint_access_brig")
+					for(var/obj/machinery/door/airlock/maintenance/M in world)
+						M.req_access = list(access_brig)
+					message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
+				if("maint_access_engiebrig")
+					for(var/obj/machinery/door/airlock/maintenance/M in world)
+						M.req_access = list(access_brig,access_engine)
+					message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
+				if("infinite_sec")
+					var/datum/job/J = job_master.GetJob("Security Officer")
+					if(!J) return
+					J.total_positions = -1
+					J.spawn_positions = -1
+					message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		return
 		//hahaha
 
@@ -1969,6 +1983,13 @@
 <BR>
 <A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
 <A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
+<BR>
+<B>Security Level Elevated</B><BR>
+<BR>
+<A href='?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
+<A href='?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
+<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
+<BR>
 "}
 	usr << browse(dat, "window=secrets")
 	return
