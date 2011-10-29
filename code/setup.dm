@@ -93,7 +93,7 @@
 #define SUITSPACE 8			// suit protects against space
 
 #define USEDELAY 16			// 1 second extra delay on use (Can be used once every 2s)
-#define NODELAY 32768	// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
+#define NODELAY 32768		// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
 #define NOSHIELD 32			// weapon not affected by shield
 #define CONDUCT 64			// conducts electricity (metal etc.)
 #define ONBELT 128			// can be put in belt slot
