@@ -211,7 +211,7 @@
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)
 		if(!job)	return 0
-		if(job.current_positions >= job.total_positions)	return 0
+		if((job.current_positions >= job.total_positions) && job.total_positions != -1)	return 0
 		if(jobban_isbanned(src,rank))	return 0
 		return 1
 

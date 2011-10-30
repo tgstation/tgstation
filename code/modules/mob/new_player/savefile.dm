@@ -1,4 +1,4 @@
-#define SAVEFILE_VERSION_MIN	3
+#define SAVEFILE_VERSION_MIN	4
 #define SAVEFILE_VERSION_MAX	5
 
 datum/preferences/proc/savefile_path(mob/user)
@@ -55,7 +55,6 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["ooccolor"] << src.ooccolor
 	F["lastchangelog"] << src.lastchangelog
 
-
 	return 1
 
 // loads the savefile corresponding to the mob's ckey
@@ -104,21 +103,20 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["UI"] >> src.UI
 	F["be_special"] >> src.be_special
 
+	F["job_civilian_high"] >> src.job_civilian_high
+	F["job_civilian_med"] >> src.job_civilian_med
+	F["job_civilian_low"] >> src.job_civilian_low
+
+	F["job_medsci_high"] >> src.job_medsci_high
+	F["job_medsci_med"] >> src.job_medsci_med
+	F["job_medsci_low"] >> src.job_medsci_low
+
+	F["job_engsec_high"] >> src.job_engsec_high
+	F["job_engsec_med"] >> src.job_engsec_med
+	F["job_engsec_low"] >> src.job_engsec_low
+
 	if(version && version < 5)
 		convert_hairstyles_four() // convert version 4 hairstyles to version 5
-
-	if(version && (version >= SAVEFILE_VERSION_MAX))
-		F["job_civilian_high"] >> src.job_civilian_high
-		F["job_civilian_med"] >> src.job_civilian_med
-		F["job_civilian_low"] >> src.job_civilian_low
-
-		F["job_medsci_high"] >> src.job_medsci_high
-		F["job_medsci_med"] >> src.job_medsci_med
-		F["job_medsci_low"] >> src.job_medsci_low
-
-		F["job_engsec_high"] >> src.job_engsec_high
-		F["job_engsec_med"] >> src.job_engsec_med
-		F["job_engsec_low"] >> src.job_engsec_low
 
 
 	style_to_datum() // convert f_style and h_style to /datum
