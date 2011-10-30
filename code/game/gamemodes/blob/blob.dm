@@ -116,15 +116,18 @@
 
 /datum/game_mode/blob/declare_completion()
 	if(stage >= 3)
+		feedback_set_details("round_end_result","loss - blob took over")
 		world << "<FONT size = 3><B>The blob has taken over the station!</B></FONT>"
 		world << "<B>The entire station was eaten by the Blob</B>"
 		check_quarantine()
 
 	else if(station_was_nuked)
+		feedback_set_details("round_end_result","halfwin - nuke")
 		world << "<FONT size = 3><B>Partial Win: The station has been destroyed!</B></FONT>"
 		world << "<B>Directive 7-12 has been successfully carried out preventing the Blob from spreading.</B>"
 
 	else
+		feedback_set_details("round_end_result","win - blob eliminated")
 		world << "<FONT size = 3><B>The staff has won!</B></FONT>"
 		world << "<B>The alien organism has been eradicated from the station</B>"
 

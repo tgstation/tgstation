@@ -2133,8 +2133,13 @@
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		world << "\red <b>Restarting world!</b> \blue Initiated by [usr.client.stealth ? "Admin Candidate" : usr.key]!"
+		world << "\red <b>Restarting world!</b> \blue Initiated by [usr.client.stealth ? "Admin" : usr.key]!"
 		log_admin("[key_name(usr)] initiated a reboot.")
+
+		feedback_set_details("end_error","admin reboot - by [usr.key] [usr.client.stealth ? "(stealth)" : ""]")
+		feedback_set_details("round_end","[time2text(world.realtime)]")
+		if(blackbox)
+			blackbox.save_all_data_to_sql()
 
 		sleep(50)
 		world.Reboot()
@@ -2290,8 +2295,14 @@
 	set name="Immediate Reboot"
 	if( alert("Reboot server?",,"Yes","No") == "No")
 		return
-	world << "\red <b>Rebooting world!</b> \blue Initiated by [usr.client.stealth ? "Admin Candidate" : usr.key]!"
+	world << "\red <b>Rebooting world!</b> \blue Initiated by [usr.client.stealth ? "Admin" : usr.key]!"
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
+
+	feedback_set_details("end_error","immediate admin reboot - by [usr.key] [usr.client.stealth ? "(stealth)" : ""]")
+	feedback_set_details("round_end","[time2text(world.realtime)]")
+	if(blackbox)
+		blackbox.save_all_data_to_sql()
+
 	world.Reboot()
 
 /client/proc/deadchat()

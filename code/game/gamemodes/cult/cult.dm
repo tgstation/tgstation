@@ -284,8 +284,12 @@
 /datum/game_mode/cult/declare_completion()
 
 	if(!check_cult_victory())
+		feedback_set_details("round_end_result","win - cult win")
+		feedback_set("round_end_result",acolytes_survived)
 		world << "\red <FONT size = 3><B> The cult wins! It has succeeded in serving its dark masters!</B></FONT>"
 	else
+		feedback_set_details("round_end_result","loss - staff stopped the cult")
+		feedback_set("round_end_result",acolytes_survived)
 		world << "\red <FONT size = 3><B> The staff managed to stop the cult!</B></FONT>"
 
 	world << "\b Cultists escaped: [acolytes_survived]"

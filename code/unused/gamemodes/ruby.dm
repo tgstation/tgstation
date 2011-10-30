@@ -49,8 +49,10 @@
 
 /datum/game_mode/ruby/declare_completion()
 	if(abominationwins)
+		feedback_set_details("round_end_result","win - abomination win")
 		world << "<B>The Abomination has murdered the station and sacrificed himself to Cjopaze!</B> (played by [winnerkey])"
 	else
+		feedback_set_details("round_end_result","loss - abomination killed")
 		world << "<B>The Abomination has been stopped and Cjopaze's influence resisted! The station lives another day,</B>"
 		if(killed.len > 0)
 			world << "Those who were sacrificed shall be remembered: "

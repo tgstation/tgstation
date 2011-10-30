@@ -105,6 +105,7 @@
 						break
 
 	if (monkeywin)
+		feedback_set_details("round_end_result","win - monkey win")
 		world << "<FONT size=3 color=red><B>The monkeys have won! Humanity is doomed!</B></FONT>"
 		for (var/mob/living/carbon/human/player in world)
 			if (player.client)
@@ -112,6 +113,7 @@
 					player.monkeyize()
 		sleep(200)
 	else
+		feedback_set_details("round_end_result","loss - crew win")
 		world << "<FONT size=3 color=red><B>The Research Staff has stopped the monkey invasion!</B></FONT>"
 	..()
 	return 1
