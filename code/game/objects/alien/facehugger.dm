@@ -64,6 +64,12 @@ var/const
 		Die()
 		return
 
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		if(exposed_temperature > 300)
+			Die()
+		return
+
+
 	HasEntered(atom/target)
 		Attach(target)
 		return
@@ -86,7 +92,7 @@ var/const
 		if(stat != CONSCIOUS)
 			return
 
-		L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
+		if(!sterile) L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
 
 		loc = L.loc
 
@@ -139,7 +145,7 @@ var/const
 
 		GoIdle() //so it doesn't jump the people that tear it off
 
-		target.paralysis = max(target.paralysis,MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
+		if(!sterile) target.paralysis = max(target.paralysis,MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 
 		spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
 			Impregnate(target)
@@ -150,14 +156,18 @@ var/const
 		if(target.wear_mask != src) //was taken off or something
 			return
 
-		target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
-		for(var/datum/disease/alien_embryo/A in target.viruses)
-			target.alien_egg_flag = max(1,target.alien_egg_flag)
+		if(!sterile)
+			target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
+			for(var/datum/disease/alien_embryo/A in target.viruses)
+				target.alien_egg_flag = max(1,target.alien_egg_flag)
 
-		for(var/mob/O in viewers(target,null))
-			O.show_message("\red \b [src] falls limp after violating [target]'s face!", 1)
+			for(var/mob/O in viewers(target,null))
+				O.show_message("\red \b [src] falls limp after violating [target]'s face!", 1)
 
-		Die()
+			Die()
+		else
+			for(var/mob/O in viewers(target,null))
+				O.show_message("\red \b [src] violates [target]'s face!", 1)
 
 		return
 
