@@ -1979,16 +1979,16 @@
 
 	if(lvl >= 5)
 		dat += {"
-<B>Coder Secrets</B><BR>
-<BR>
-<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
-<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
-<BR>
 <B>Security Level Elevated</B><BR>
 <BR>
 <A href='?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
 <A href='?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
 <A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
+<BR>
+<B>Coder Secrets</B><BR>
+<BR>
+<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
+<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
 <BR>
 "}
 	usr << browse(dat, "window=secrets")
