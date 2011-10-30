@@ -49,6 +49,9 @@
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup()
+	feedback_set_details("round_start","[time2text(world.realtime)]")
+	if(ticker && ticker.mode)
+		feedback_set_details("game_mode","[ticker.mode]")
 	return 1
 
 

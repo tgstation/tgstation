@@ -207,4 +207,8 @@ var/global/datum/controller/gameticker/ticker
 		if (findtext("[handler]","auto_declare_completion_"))
 			call(mode, handler)()
 
+	feedback_set_details("round_end","[time2text(world.realtime)]")
+	if(blackbox)
+		blackbox.save_all_data_to_sql()
+
 	return 1

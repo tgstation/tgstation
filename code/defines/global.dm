@@ -177,6 +177,12 @@ var
 	sqllogin = "root"
 	sqlpass = ""
 
+	// Feedback gathering sql connection
+
+	sqlfdbkdb = "test"
+	sqlfdbklogin = "root"
+	sqlfdbkpass = ""
+
 	sqllogging = 0 // Should we log deaths, population stats, etc?
 
 
