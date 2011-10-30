@@ -151,7 +151,7 @@
 			return 1
 
 		if(href_list["ready"])
-			if (!src.client.authenticated)
+			if (!client.authenticated)
 				src << "You are not authorized to enter the game."
 				return
 
@@ -165,7 +165,7 @@
 			new_player_panel_proc()
 
 		if(href_list["observe"])
-			if (!usr.client.authenticated)
+			if (!client.authenticated)
 				src << "You are not authorized to enter the game."
 				return
 
@@ -191,7 +191,7 @@
 			LateChoices()
 
 		if(href_list["SelectedJob"])
-			if(!usr.client.authenticated)
+			if(!client.authenticated)
 				src << "You are not authorized to enter the game."
 				return
 

@@ -654,7 +654,7 @@
 	if (href_list["revive"])
 		if ((src.rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			var/mob/living/M = locate(href_list["revive"])
-			if (ismob(M))
+			if (isliving(M))
 				if(config.allow_admin_rev)
 					M.revive()
 					message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!", 1)

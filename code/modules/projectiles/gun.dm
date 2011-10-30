@@ -95,7 +95,7 @@
 		in_chamber.yo = targloc.y - curloc.y
 		in_chamber.xo = targloc.x - curloc.x
 		spawn()
-			in_chamber.process()
+			if(in_chamber)	in_chamber.process()
 		sleep(1)
 		in_chamber = null
 

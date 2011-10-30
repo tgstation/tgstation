@@ -53,7 +53,7 @@ var/global/datum/controller/occupations/job_master
 			var/position_limit = job.total_positions
 			if(!latejoin)
 				position_limit = job.spawn_positions
-			if(job.current_positions < position_limit)
+			if((job.current_positions < position_limit) || position_limit == -1)
 				Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
 				player.mind.assigned_role = rank
 				unassigned -= player
@@ -179,9 +179,9 @@ var/global/datum/controller/occupations/job_master
 				Debug("Checking job: [job]")
 				if(!job)	continue
 				if(!unassigned.len)	break
-				if(job.current_positions >= job.spawn_positions)	continue
+				if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)	continue
 				var/list/candidates = FindOccupationCandidates(job, level)
-				while(candidates.len && (job.current_positions < job.spawn_positions))
+				while(candidates.len && ((job.current_positions < job.spawn_positions) || job.spawn_positions == -1))
 					var/mob/new_player/candidate = pick(candidates)
 					Debug("Selcted: [candidate], for: [job.title]")
 					AssignRole(candidate, job.title)
@@ -297,5 +297,7 @@ var/global/datum/controller/occupations/job_master
 				if(!J)	continue
 				J.total_positions = text2num(value)
 				J.spawn_positions = text2num(value)
+				if(name == "AI" || name == "Cyborg")//I dont like this here but it will do for now
+					J.total_positions = 0
 
 		return 1

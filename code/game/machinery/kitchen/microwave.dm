@@ -269,7 +269,8 @@
 			return
 		cooked = recipe.make_food(src)
 		stop()
-		cooked.loc = src.loc
+		if(cooked)
+			cooked.loc = src.loc
 		return
 
 /obj/machinery/microwave/proc/wzhzhzh(var/seconds as num)

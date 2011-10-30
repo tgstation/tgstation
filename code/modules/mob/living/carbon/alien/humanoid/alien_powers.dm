@@ -159,7 +159,7 @@ I kind of like the right click only--the window version can get a little confusi
 
 					// Hacky way of hopefully preventing a runtime error from happening
 					if(vents.len < selection_position)
-						vents.len = selection_position
+						vents.len = selection_position//What the fuck is this I dont even,  Right will likely have to fix this later
 
 					var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection_position]
 					if(target_vent)

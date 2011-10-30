@@ -306,8 +306,10 @@
 				else
 					if(sacrificed.Find(sacrifice_target))
 						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. \green <b>Success!</b>"
-					else
+					else if(sacrifice_target && sacrifice_target.current)
 						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. \red Failed."
+					else
+						explanation = "Sacrifice Unknown, the Unknown whos body was likely gibbed. \red Failed."
 			if("eldergod")
 				if(!eldergod)
 					explanation = "Summon Nar-Sie. \green <b>Success!</b>"

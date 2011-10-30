@@ -202,6 +202,7 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/air_management"
 
+/* Uncomment if someone makes these buildable
 		general_alert
 			name = "Circuit Design (General Alert Console)"
 			desc = "Allows for the construction of circuit boards used to build a General Alert console."
@@ -210,6 +211,7 @@ datum
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/general_alert"
+*/
 
 		robocontrol
 			name = "Circuit Design (Robotics Control Console)"

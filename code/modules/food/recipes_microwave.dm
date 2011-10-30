@@ -182,7 +182,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
 	make_food(var/obj/container as obj)
 		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = locate() in container
-		if (!being_cooked.warm)
+		if(being_cooked && !being_cooked.warm)
 			warm_up(being_cooked)
 		return being_cooked
 
