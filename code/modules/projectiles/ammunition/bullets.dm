@@ -59,6 +59,7 @@
 	name = "shotgun shell"
 	desc = "A blank shell."
 	icon_state = "blshell"
+	projectile_type = ""
 	m_amt = 250
 
 
