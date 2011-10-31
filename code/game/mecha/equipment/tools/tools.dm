@@ -401,7 +401,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster //what is that noise? A BAWWW from TK mutants.
 	name = "Armor Booster Module (Close Combat Weaponry)"
-	desc = "Boosts exosuit armor against armed melee attacks."
+	desc = "Boosts exosuit armor against armed melee attacks. Requires energy to operate."
 	icon_state = "mecha_abooster_ccw"
 	origin_tech = "materials=3"
 	equip_cooldown = 10
@@ -452,7 +452,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
 	name = "Armor Booster Module (Ranged Weaponry)"
-	desc = "Boosts exosuit armor against ranged attacks. Completely blocks taser shots."
+	desc = "Boosts exosuit armor against ranged attacks. Completely blocks taser shots. Requires energy to operate."
 	icon_state = "mecha_abooster_proj"
 	origin_tech = "materials=4"
 	equip_cooldown = 10
@@ -493,7 +493,7 @@
 			chassis.visible_message("The [chassis.name] armor deflects the projectile")
 			chassis.log_append_to_last("Armor saved.")
 		else
-			chassis.take_damage(round(Proj.damage*src.damage_coeff))
+			chassis.take_damage(round(Proj.damage*src.damage_coeff),Proj.flag)
 			chassis.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		set_ready_state(0)
 		chassis.use_power(energy_drain)
@@ -558,9 +558,9 @@
 		return
 
 	get_equip_info()
-		var/output = ..()
-		output += " - <a href='?src=\ref[src];toggle_repairs=1'>[pr_repair_droid.active()?"Dea":"A"]ctivate</a>"
-		return output
+		if(!chassis) return
+		return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_repairs=1'>[pr_repair_droid.active()?"Dea":"A"]ctivate</a>"
+
 
 	Topic(href, href_list)
 		..()
@@ -656,9 +656,8 @@
 		return
 
 	get_equip_info()
-		var/output = ..()
-		output += " - <a href='?src=\ref[src];toggle_relay=1'>[pr_energy_relay.active()?"Dea":"A"]ctivate</a>"
-		return output
+		if(!chassis) return
+		return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_relay=1'>[pr_energy_relay.active()?"Dea":"A"]ctivate</a>"
 
 	proc/dynusepower(amount)
 		if(!equip_ready) //enabled
@@ -698,6 +697,139 @@
 					ER.chassis.give_power(delta)
 					A.master.use_power(delta*ER.coeff, pow_chan)
 		return
+
+
+
+/obj/item/mecha_parts/mecha_equipment/plasma_generator
+	name = "Plasma Converter"
+	desc = "Generates power using solid plasma as fuel. Pollutes the environment."
+	icon_state = "tesla"
+	origin_tech = "plasmatech=2;powerstorage=2;engineering"
+	equip_cooldown = 10
+	energy_drain = 0
+	range = MELEE
+	construction_cost = list("metal"=10000,"silver"=500,"glass"=1000)
+	var/datum/global_iterator/pr_mech_plasma_generator
+	var/coeff = 100
+	var/fuel = 0
+	var/max_fuel = 150000
+	var/fuel_per_cycle_idle = 100
+	var/fuel_per_cycle_active = 500
+	var/power_per_cycle = 10
+	reliability = 999
+
+	New()
+		..()
+		pr_mech_plasma_generator = new /datum/global_iterator/mecha_plasma_generator(list(src),0)
+		pr_mech_plasma_generator.set_delay(equip_cooldown)
+		return
+
+	detach()
+		pr_mech_plasma_generator.stop()
+		..()
+		return
+
+
+	Topic(href, href_list)
+		..()
+		if(href_list["toggle"])
+			if(pr_mech_plasma_generator.toggle())
+				set_ready_state(0)
+				chassis.log_message("[src] activated.")
+			else
+				set_ready_state(1)
+				chassis.log_message("[src] deactivated.")
+		return
+
+	get_equip_info()
+		var/output = ..()
+		if(output)
+			return "[output] \[Plasma: [fuel] cm<sup>3</sup>\] - <a href='?src=\ref[src];toggle=1'>[pr_mech_plasma_generator.active()?"Dea":"A"]ctivate</a>"
+		return
+
+	action(target)
+		if(chassis)
+			var/result = load_fuel(target)
+			var/message
+			if(isnull(result))
+				message = "<font color='red'>Plasma traces in target minimal. [target] cannot be used as fuel.</font>"
+			else if(!result)
+				message = "Unit is full."
+			else
+				message = "[result] units of plasma successfully loaded."
+				send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+			chassis.occupant_message(message)
+		return
+
+	proc/load_fuel(var/obj/item/stack/sheet/plasma/P)
+		if(istype(P) && P.amount)
+			var/to_load = max(max_fuel - fuel,0)
+			if(to_load)
+				var/units = min(max(round(to_load / P.perunit),1),P.amount)
+				if(units)
+					fuel += units * P.perunit
+					P.use(units)
+					return units
+			else
+				return 0
+		return
+
+	attackby(weapon,mob/user)
+		var/result = load_fuel(weapon)
+		if(isnull(result))
+			user.visible_message("[user] tries to shove [weapon] into [src]. What a dumb-ass.","<font color='red'>Plasma traces minimal. [weapon] cannot be used as fuel.</font>")
+		else if(!result)
+			user << "Unit is full."
+		else
+			user.visible_message("[user] loads [src] with plasma.","[result] units of plasma successfully loaded.")
+		return
+
+	critfail()
+		..()
+		var/turf/simulated/T = get_turf(src)
+		var/datum/gas_mixture/GM = new
+		if(prob(10))
+			GM.toxins += 100
+			GM.temperature = 1500+T0C //should be enough to start a fire
+			T.visible_message("The [src] suddenly disgorges a cloud of heated plasma.")
+			destroy()
+		else
+			GM.toxins += 5
+			GM.temperature = istype(T) ? T.air.return_temperature() : T20C
+			T.assume_air(GM)
+			T.visible_message("The [src] suddenly disgorges a cloud of plasma.")
+		T.assume_air(GM)
+		return
+
+/datum/global_iterator/mecha_plasma_generator
+
+	process(var/obj/item/mecha_parts/mecha_equipment/plasma_generator/EG)
+		if(!EG.chassis)
+			EG.set_ready_state(1)
+			return stop()
+		if(EG.fuel<=0)
+			EG.set_ready_state(1)
+			stop()
+			EG.chassis.log_message("[src] deactivated.")
+			send_byjax(EG.chassis.occupant,"exosuit.browser","\ref[EG]",EG.get_equip_info())
+			return
+		if(rand(0,1000)>EG.reliability)
+			EG.critfail()
+			return stop()
+		var/cur_charge = EG.chassis.get_charge()
+		if(isnull(cur_charge))
+			EG.set_ready_state(1)
+			EG.chassis.occupant_message("No powercell detected.")
+			EG.chassis.log_message("[src] deactivated.")
+			return stop()
+		var/use_fuel = EG.fuel_per_cycle_idle
+		if(cur_charge<EG.chassis.cell.maxcharge)
+			use_fuel = EG.fuel_per_cycle_active
+			EG.chassis.give_power(EG.power_per_cycle)
+			send_byjax(EG.chassis.occupant,"exosuit.browser","\ref[EG]",EG.get_equip_info())
+		EG.fuel -= use_fuel
+		return
+
 
 
 /*

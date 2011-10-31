@@ -21,10 +21,14 @@
 		return
 
 /obj/effect/decal/mecha_wreckage/ex_act(severity)
-	if(severity < 3)
+	if(severity < 2)
 		spawn
 			del src
 	return
+
+/obj/effect/decal/mecha_wreckage/bullet_act(var/obj/item/projectile/Proj)
+	return
+
 
 /obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/weldingtool) && W:welding)

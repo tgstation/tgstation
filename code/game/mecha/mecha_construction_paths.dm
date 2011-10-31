@@ -62,11 +62,11 @@
 
 
 /datum/construction/mecha/ripley_chassis
-	steps = list(list("key"="/obj/item/mecha_parts/part/ripley_torso"),//1
-					 list("key"="/obj/item/mecha_parts/part/ripley_left_arm"),//2
-					 list("key"="/obj/item/mecha_parts/part/ripley_right_arm"),//3
-					 list("key"="/obj/item/mecha_parts/part/ripley_left_leg"),//4
-					 list("key"="/obj/item/mecha_parts/part/ripley_right_leg")//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_arm),//2
+					 list("key"=/obj/item/mecha_parts/part/ripley_right_arm),//3
+					 list("key"=/obj/item/mecha_parts/part/ripley_left_leg),//4
+					 list("key"=/obj/item/mecha_parts/part/ripley_right_leg)//5
 					)
 
 	custom_action(step, atom/used_atom, mob/user)
@@ -238,12 +238,12 @@
 
 
 /datum/construction/mecha/gygax_chassis
-	steps = list(list("key"="/obj/item/mecha_parts/part/gygax_torso"),//1
-					 list("key"="/obj/item/mecha_parts/part/gygax_left_arm"),//2
-					 list("key"="/obj/item/mecha_parts/part/gygax_right_arm"),//3
-					 list("key"="/obj/item/mecha_parts/part/gygax_left_leg"),//4
-					 list("key"="/obj/item/mecha_parts/part/gygax_right_leg"),//5
-					 list("key"="/obj/item/mecha_parts/part/gygax_head")
+	steps = list(list("key"=/obj/item/mecha_parts/part/gygax_torso),//1
+					 list("key"=/obj/item/mecha_parts/part/gygax_left_arm),//2
+					 list("key"=/obj/item/mecha_parts/part/gygax_right_arm),//3
+					 list("key"=/obj/item/mecha_parts/part/gygax_left_leg),//4
+					 list("key"=/obj/item/mecha_parts/part/gygax_right_leg),//5
+					 list("key"=/obj/item/mecha_parts/part/gygax_head)
 					)
 
 	custom_action(step, atom/used_atom, mob/user)
@@ -475,11 +475,11 @@
 
 
 /datum/construction/mecha/firefighter_chassis
-	steps = list(list("key"="/obj/item/mecha_parts/part/firefighter_torso"),//1
-					 list("key"="/obj/item/mecha_parts/part/firefighter_left_arm"),//2
-					 list("key"="/obj/item/mecha_parts/part/firefighter_right_arm"),//3
-					 list("key"="/obj/item/mecha_parts/part/firefighter_left_leg"),//4
-					 list("key"="/obj/item/mecha_parts/part/firefighter_right_leg")//5
+	steps = list(list("key"=/obj/item/mecha_parts/part/firefighter_torso),//1
+					 list("key"=/obj/item/mecha_parts/part/firefighter_left_arm),//2
+					 list("key"=/obj/item/mecha_parts/part/firefighter_right_arm),//3
+					 list("key"=/obj/item/mecha_parts/part/firefighter_left_leg),//4
+					 list("key"=/obj/item/mecha_parts/part/firefighter_right_leg)//5
 					)
 
 	custom_action(step, atom/used_atom, mob/user)
@@ -502,20 +502,20 @@
 
 /datum/construction/mecha/firefighter
 	result = "/obj/mecha/working/firefighter"
-	steps = list(list("key"="/obj/item/weapon/weldingtool"),//1
-					 list("key"="/obj/item/weapon/wrench"),//2
-					 list("key"="/obj/item/stack/sheet/r_metal"),//3
-					 list("key"="/obj/item/weapon/weldingtool"),//4
-					 list("key"="/obj/item/weapon/wrench"),//5
-					 list("key"="/obj/item/stack/sheet/metal"),//6
-					 list("key"="/obj/item/weapon/screwdriver"),//7
-					 list("key"="/obj/item/mecha_parts/circuitboard/firefighter/peripherals"),//8
-					 list("key"="/obj/item/weapon/screwdriver"),//9
-					 list("key"="/obj/item/mecha_parts/circuitboard/ripley/main"),//10
-					 list("key"="/obj/item/weapon/wirecutters"),//11
-					 list("key"="/obj/item/weapon/cable_coil"),//12
-					 list("key"="/obj/item/weapon/screwdriver"),//13
-					 list("key"="/obj/item/weapon/wrench")//14
+	steps = list(list("key"=/obj/item/weapon/weldingtool),//1
+					 list("key"=/obj/item/weapon/wrench),//2
+					 list("key"=/obj/item/stack/sheet/r_metal),//3
+					 list("key"=/obj/item/weapon/weldingtool),//4
+					 list("key"=/obj/item/weapon/wrench),//5
+					 list("key"=/obj/item/stack/sheet/metal),//6
+					 list("key"=/obj/item/weapon/screwdriver),//7
+					 list("key"=/obj/item/mecha_parts/circuitboard/firefighter/peripherals),//8
+					 list("key"=/obj/item/weapon/screwdriver),//9
+					 list("key"=/obj/item/mecha_parts/circuitboard/ripley/main),//10
+					 list("key"=/obj/item/weapon/wirecutters),//11
+					 list("key"=/obj/item/weapon/cable_coil),//12
+					 list("key"=/obj/item/weapon/screwdriver),//13
+					 list("key"=/obj/item/weapon/wrench)//14
 					)
 
 	action(atom/used_atom,mob/user as mob)
@@ -563,12 +563,12 @@
 
 
 /datum/construction/mecha/honker_chassis
-	steps = list(list("key"="/obj/item/mecha_parts/part/honker_torso"),//1
-					 list("key"="/obj/item/mecha_parts/part/honker_left_arm"),//2
-					 list("key"="/obj/item/mecha_parts/part/honker_right_arm"),//3
-					 list("key"="/obj/item/mecha_parts/part/honker_left_leg"),//4
-					 list("key"="/obj/item/mecha_parts/part/honker_right_leg"),//5
-					 list("key"="/obj/item/mecha_parts/part/honker_head")
+	steps = list(list("key"=/obj/item/mecha_parts/part/honker_torso),//1
+					 list("key"=/obj/item/mecha_parts/part/honker_left_arm),//2
+					 list("key"=/obj/item/mecha_parts/part/honker_right_arm),//3
+					 list("key"=/obj/item/mecha_parts/part/honker_left_leg),//4
+					 list("key"=/obj/item/mecha_parts/part/honker_right_leg),//5
+					 list("key"=/obj/item/mecha_parts/part/honker_head)
 					)
 
 	action(atom/used_atom,mob/user as mob)
@@ -591,17 +591,17 @@
 
 /datum/construction/mecha/honker
 	result = "/obj/mecha/combat/honker"
-	steps = list(list("key"="/obj/item/weapon/bikehorn"),//1
-					 list("key"="/obj/item/clothing/shoes/clown_shoes"),//2
-					 list("key"="/obj/item/weapon/bikehorn"),//3
-					 list("key"="/obj/item/clothing/mask/gas/clown_hat"),//4
-					 list("key"="/obj/item/weapon/bikehorn"),//5
-					 list("key"="/obj/item/mecha_parts/circuitboard/honker/targeting"),//6
-					 list("key"="/obj/item/weapon/bikehorn"),//7
-					 list("key"="/obj/item/mecha_parts/circuitboard/honker/peripherals"),//8
-					 list("key"="/obj/item/weapon/bikehorn"),//9
-					 list("key"="/obj/item/mecha_parts/circuitboard/honker/main"),//10
-					 list("key"="/obj/item/weapon/bikehorn"),//11
+	steps = list(list("key"=/obj/item/weapon/bikehorn),//1
+					 list("key"=/obj/item/clothing/shoes/clown_shoes),//2
+					 list("key"=/obj/item/weapon/bikehorn),//3
+					 list("key"=/obj/item/clothing/mask/gas/clown_hat),//4
+					 list("key"=/obj/item/weapon/bikehorn),//5
+					 list("key"=/obj/item/mecha_parts/circuitboard/honker/targeting),//6
+					 list("key"=/obj/item/weapon/bikehorn),//7
+					 list("key"=/obj/item/mecha_parts/circuitboard/honker/peripherals),//8
+					 list("key"=/obj/item/weapon/bikehorn),//9
+					 list("key"=/obj/item/mecha_parts/circuitboard/honker/main),//10
+					 list("key"=/obj/item/weapon/bikehorn),//11
 					 )
 
 	action(atom/used_atom,mob/user as mob)
@@ -638,12 +638,12 @@
 
 
 /datum/construction/mecha/durand_chassis
-	steps = list(list("key"="/obj/item/mecha_parts/part/durand_torso"),//1
-					 list("key"="/obj/item/mecha_parts/part/durand_left_arm"),//2
-					 list("key"="/obj/item/mecha_parts/part/durand_right_arm"),//3
-					 list("key"="/obj/item/mecha_parts/part/durand_left_leg"),//4
-					 list("key"="/obj/item/mecha_parts/part/durand_right_leg"),//5
-					 list("key"="/obj/item/mecha_parts/part/durand_head")
+	steps = list(list("key"=/obj/item/mecha_parts/part/durand_torso),//1
+					 list("key"=/obj/item/mecha_parts/part/durand_left_arm),//2
+					 list("key"=/obj/item/mecha_parts/part/durand_right_arm),//3
+					 list("key"=/obj/item/mecha_parts/part/durand_left_leg),//4
+					 list("key"=/obj/item/mecha_parts/part/durand_right_leg),//5
+					 list("key"=/obj/item/mecha_parts/part/durand_head)
 					)
 
 	custom_action(step, atom/used_atom, mob/user)
@@ -665,26 +665,26 @@
 
 /datum/construction/mecha/durand
 	result = "/obj/mecha/combat/durand"
-	steps = list(list("key"="/obj/item/weapon/weldingtool"),//1
-					 list("key"="/obj/item/weapon/wrench"),//2
-					 list("key"="/obj/item/mecha_parts/part/durand_armour"),//3
-					 list("key"="/obj/item/weapon/weldingtool"),//4
-					 list("key"="/obj/item/weapon/wrench"),//5
-					 list("key"="/obj/item/stack/sheet/metal"),//6
-					 list("key"="/obj/item/weapon/screwdriver"),//7
-					 list("key"="/obj/item/weapon/stock_parts/capacitor/adv"),//8
-					 list("key"="/obj/item/weapon/screwdriver"),//9
-					 list("key"="/obj/item/weapon/stock_parts/scanning_module/adv"),//10
-					 list("key"="/obj/item/weapon/screwdriver"),//11
-					 list("key"="/obj/item/mecha_parts/circuitboard/durand/targeting"),//12
-					 list("key"="/obj/item/weapon/screwdriver"),//13
-					 list("key"="/obj/item/mecha_parts/circuitboard/durand/peripherals"),//14
-					 list("key"="/obj/item/weapon/screwdriver"),//15
-					 list("key"="/obj/item/mecha_parts/circuitboard/durand/main"),//16
-					 list("key"="/obj/item/weapon/wirecutters"),//17
-					 list("key"="/obj/item/weapon/cable_coil"),//18
-					 list("key"="/obj/item/weapon/screwdriver"),//19
-					 list("key"="/obj/item/weapon/wrench")//20
+	steps = list(list("key"=/obj/item/weapon/weldingtool),//1
+					 list("key"=/obj/item/weapon/wrench),//2
+					 list("key"=/obj/item/mecha_parts/part/durand_armour),//3
+					 list("key"=/obj/item/weapon/weldingtool),//4
+					 list("key"=/obj/item/weapon/wrench),//5
+					 list("key"=/obj/item/stack/sheet/metal),//6
+					 list("key"=/obj/item/weapon/screwdriver),//7
+					 list("key"=/obj/item/weapon/stock_parts/capacitor/adv),//8
+					 list("key"=/obj/item/weapon/screwdriver),//9
+					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv),//10
+					 list("key"=/obj/item/weapon/screwdriver),//11
+					 list("key"=/obj/item/mecha_parts/circuitboard/durand/targeting),//12
+					 list("key"=/obj/item/weapon/screwdriver),//13
+					 list("key"=/obj/item/mecha_parts/circuitboard/durand/peripherals),//14
+					 list("key"=/obj/item/weapon/screwdriver),//15
+					 list("key"=/obj/item/mecha_parts/circuitboard/durand/main),//16
+					 list("key"=/obj/item/weapon/wirecutters),//17
+					 list("key"=/obj/item/weapon/cable_coil),//18
+					 list("key"=/obj/item/weapon/screwdriver),//19
+					 list("key"=/obj/item/weapon/wrench)//20
 					)
 
 	action(atom/used_atom,mob/user as mob)
@@ -748,12 +748,12 @@
 
 /datum/construction/mecha/phazon_chassis
 	result = "/obj/mecha/combat/phazon"
-	steps = list(list("key"="/obj/item/mecha_parts/part/phazon_torso"),//1
-					 list("key"="/obj/item/mecha_parts/part/phazon_left_arm"),//2
-					 list("key"="/obj/item/mecha_parts/part/phazon_right_arm"),//3
-					 list("key"="/obj/item/mecha_parts/part/phazon_left_leg"),//4
-					 list("key"="/obj/item/mecha_parts/part/phazon_right_leg"),//5
-					 list("key"="/obj/item/mecha_parts/part/phazon_head")
+	steps = list(list("key"=/obj/item/mecha_parts/part/phazon_torso),//1
+					 list("key"=/obj/item/mecha_parts/part/phazon_left_arm),//2
+					 list("key"=/obj/item/mecha_parts/part/phazon_right_arm),//3
+					 list("key"=/obj/item/mecha_parts/part/phazon_left_leg),//4
+					 list("key"=/obj/item/mecha_parts/part/phazon_right_leg),//5
+					 list("key"=/obj/item/mecha_parts/part/phazon_head)
 					)
 
 	custom_action(step, atom/used_atom, mob/user)

@@ -27,7 +27,7 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 			diary << "Unable to get [filename] contents, aborting"
 			return abort()
 
-		var/list/CL = dd_text2list(text, "\n")
+		var/list/CL = tg_text2list(text, "\n")
 		for (var/t in CL)
 			if (!t)
 				continue

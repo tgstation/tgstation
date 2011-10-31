@@ -7,9 +7,10 @@
 	step_energy_drain = 3
 	health = 200
 	deflect_chance = 30
+	damage_absorption = list("brute"=0.7,"fire"=0.7,"bullet"=0.7,"laser"=0.7,"energy"=0.7,"bomb"=0.7)
 	max_temperature = 1000
 	infra_luminosity = 3
-	wreckage = "/obj/effect/decal/mecha_wreckage/phazon"
+	wreckage = /obj/effect/decal/mecha_wreckage/phazon
 	add_req_access = 1
 	internal_damage_threshold = 25
 	force = 15
@@ -50,7 +51,7 @@
 /obj/mecha/combat/phazon/verb/switch_damtype()
 	set category = "Exosuit Interface"
 	set name = "Change melee damage type"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return

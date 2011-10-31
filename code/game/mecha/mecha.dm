@@ -25,6 +25,7 @@
 	var/step_energy_drain = 10
 	var/health = 300 //health is health
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
+	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
 	var/obj/item/weapon/cell/cell
 	var/state = 0
 	var/list/log = new
@@ -151,6 +152,7 @@
 
 /obj/mecha/proc/range_action(atom/target)
 	return
+
 /*
 /obj/mecha/verb/test_int_damage()
 	set name = "Test internal damage"
@@ -196,12 +198,11 @@
 		return 0
 	var/move_result = 0
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
-		move_result = step_rand(src)
+		move_result = mechsteprand()
 	else if(src.dir!=direction)
-		src.dir=direction
-		move_result = 1
+		move_result = mechturn(direction)
 	else
-		move_result	= step(src,direction)
+		move_result	= mechstep(direction)
 		if(occupant)
 			for(var/obj/effect/speech_bubble/B in range(1, src))
 				if(B.parent == occupant)
@@ -218,6 +219,24 @@
 
 		return 1
 	return 0
+
+/obj/mecha/proc/mechturn(direction)
+	dir = direction
+	playsound(src,'mechturn.ogg',40,1)
+	return 1
+
+/obj/mecha/proc/mechstep(direction)
+	var/result = step(src,direction)
+	if(result)
+		playsound(src,'mechstep.ogg',40,1)
+	return result
+
+/obj/mecha/proc/mechsteprand()
+	var/result = step_rand(src)
+	if(result)
+		playsound(src,'mechstep.ogg',40,1)
+	return result
+
 
 /*
 /obj/mecha/proc/inertial_movement(direction)
@@ -271,15 +290,14 @@
 
 /obj/mecha/proc/take_damage(amount, type="brute")
 	if(amount)
-		switch(type)
-			if("brute")
-				src.health -= amount
-			if("fire")
-				amount *= 1.2
-				src.health -= amount
+		var/damage = absorbDamage(amount,type)
+		src.health -= damage
 		src.update_health()
-		src.log_append_to_last("Took [amount] points of damage. Damage type: \"[type]\".",1)
+		src.log_append_to_last("Took [damage] points of damage. Damage type: \"[type]\".",1)
 	return
+
+/obj/mecha/proc/absorbDamage(damage,damage_type)
+	return damage*(listgetindex(damage_absorption,damage_type) || 1)
 
 /obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
@@ -288,13 +306,12 @@
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
-			if(possible_int_damage)
-				var/int_dam_flag = pick(possible_int_damage)
-				if(int_dam_flag)
-					src.internal_damage |= int_dam_flag
-					src.pr_internal_damage.start()
-					src.log_append_to_last("Internal damage of type [int_dam_flag].[ignore_threshold?"Ignoring damage threshold.":null]",1)
-					src.occupant << sound('warning-buzzer.ogg',wait=0)
+			var/int_dam_flag = safepick(possible_int_damage)
+			if(int_dam_flag)
+				src.internal_damage |= int_dam_flag
+				src.pr_internal_damage.start()
+				src.log_append_to_last("Internal damage of type [int_dam_flag].[ignore_threshold?"Ignoring damage threshold.":null]",1)
+				src.occupant << sound('warning-buzzer.ogg',wait=0)
 	if(prob(5))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/destr = safepick(equipment)
@@ -395,10 +412,9 @@
 		return
 	if(istype(Proj, /obj/item/projectile/beam/pulse))
 		ignore_threshold = 1
-	src.take_damage(Proj.damage)
+	src.take_damage(Proj.damage,Proj.flag)
 	src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST),ignore_threshold)
 	return
-
 
 /obj/mecha/proc/destroy()
 	spawn()
@@ -408,27 +424,29 @@
 		loc.Exited(src)
 		loc = null
 		if(T)
-			if(prob(40))
+			if(prob(30))
 				explosion(T, 0, 0, 1, 3)
-			if(wreckage)
-				var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
-				for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-					if(prob(30))
-						WR.crowbar_salvage += E
-						E.loc = WR
-						E.equip_ready = 1
-						E.reliability = rand(30,100)
-					else
-						E.loc = T
-						E.destroy()
-				if(cell)
-					WR.crowbar_salvage += cell
-					cell.loc = WR
-					cell.charge = rand(0, cell.charge)
-				if(internal_tank)
-					WR.crowbar_salvage += internal_tank
-					internal_tank.loc = WR
-		del(src)
+			spawn(0)
+				if(wreckage)
+					var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
+					for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+						if(prob(30))
+							WR.crowbar_salvage += E
+							E.loc = WR
+							E.equip_ready = 1
+							E.reliability = rand(30,100)
+						else
+							E.loc = T
+							E.destroy()
+					if(cell)
+						WR.crowbar_salvage += cell
+						cell.loc = WR
+						cell.charge = rand(0, cell.charge)
+					if(internal_tank)
+						WR.crowbar_salvage += internal_tank
+						internal_tank.loc = WR
+		spawn(0)
+			del(src)
 	return
 
 /obj/mecha/ex_act(severity)
@@ -565,7 +583,7 @@
 /obj/mecha/verb/connect_to_port()
 	set name = "Connect to port"
 	set category = "Exosuit Interface"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(!src.occupant) return
 	if(usr!=src.occupant)
@@ -587,7 +605,7 @@
 /obj/mecha/verb/disconnect_from_port()
 	set name = "Disconnect from port"
 	set category = "Exosuit Interface"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(!src.occupant) return
 	if(usr!=src.occupant)
@@ -599,11 +617,10 @@
 	else
 		src.occupant_message("\red [name] is not connected to the port at the moment.")
 
-
 /obj/mecha/verb/toggle_lights()
 	set name = "Toggle Lights"
 	set category = "Exosuit Interface"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
@@ -619,7 +636,7 @@
 /obj/mecha/verb/toggle_internal_tank()
 	set name = "Toggle internal airtank usage."
 	set category = "Exosuit Interface"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
@@ -741,7 +758,7 @@
 /obj/mecha/verb/view_stats()
 	set name = "View Stats"
 	set category = "Exosuit Interface"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
@@ -761,7 +778,7 @@
 /obj/mecha/verb/eject()
 	set name = "Eject"
 	set category = "Exosuit Interface"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return

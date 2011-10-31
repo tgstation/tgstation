@@ -37,7 +37,7 @@
 
 	proc/is_right_key(atom/used_atom) // returns current step num if used_atom is of the right type.
 		var/list/L = steps[steps.len]
-		if(istype(used_atom, text2path(L["key"])))
+		if(istype(used_atom, L["key"]))
 			return steps.len
 		return 0
 
@@ -47,7 +47,7 @@
 	proc/check_all_steps(atom/used_atom,mob/user as mob) //check all steps, remove matching one.
 		for(var/i=1;i<=steps.len;i++)
 			var/list/L = steps[i];
-			if(istype(used_atom, text2path(L["key"])))
+			if(istype(used_atom, L["key"]))
 				if(custom_action(i, used_atom, user))
 					steps[i]=null;//stupid byond list from list removal...
 					listclearnulls(steps);

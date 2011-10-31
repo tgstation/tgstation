@@ -6,10 +6,11 @@
 	dir_in = 1 //Facing North.
 	health = 300
 	deflect_chance = 15
+	damage_absorption = list("brute"=0.6,"fire"=1,"bullet"=0.8,"laser"=0.6,"energy"=0.7,"bomb"=1)
 	max_temperature = 3500
 	infra_luminosity = 6
 	var/overload = 0
-	wreckage = "/obj/effect/decal/mecha_wreckage/gygax"
+	wreckage = /obj/effect/decal/mecha_wreckage/gygax
 	internal_damage_threshold = 35
 	max_equip = 4
 
@@ -27,7 +28,7 @@
 /obj/mecha/combat/gygax/verb/overload()
 	set category = "Exosuit Interface"
 	set name = "Toggle leg actuators overload"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return

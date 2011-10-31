@@ -50,6 +50,11 @@
 		del src
 	return
 
+/obj/item/mecha_parts/mecha_equipment/proc/critfail()
+	if(chassis)
+		chassis.log_message("Critical failure of component: [src]",1)
+	return
+
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
 	if(!chassis) return
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[chassis.selected==src?"<b>":"<a href='?src=\ref[chassis];select_equip=\ref[src]'>"][src.name][chassis.selected==src?"</b>":"</a>"]"
@@ -69,6 +74,8 @@
 	if(energy_drain && chassis.get_charge() < energy_drain)
 		return 0
 	if(!equip_ready)
+		return 0
+	if(crit_fail)
 		return 0
 	return 1
 

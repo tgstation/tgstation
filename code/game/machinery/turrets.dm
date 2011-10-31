@@ -12,7 +12,10 @@
 
 /area/turret_protected/Entered(O)
 	..()
+	if(master && master != src)
+		return master.Entered(O)
 //	world << "[O] entered[src.x],[src.y],[src.z]"
+
 	if (istype(O, /mob/living/carbon))
 		if (!(O in turretTargets))
 			turretTargets += O
@@ -24,6 +27,8 @@
 	return 1
 
 /area/turret_protected/Exited(O)
+	if(master && master != src)
+		return master.Exited(O)
 //	world << "[O] exited [src.x],[src.y],[src.z]"
 	if (istype(O, /mob))
 		if (!istype(O, /mob/living/silicon))
@@ -113,6 +118,8 @@
 /obj/machinery/turret/proc/get_protected_area()
 	var/area/turret_protected/TP = get_area(src)
 	if(istype(TP))
+		if(TP.master && TP.master != TP)
+			TP = TP.master
 		return TP
 	return
 
@@ -189,7 +196,7 @@
 /obj/machinery/turret/proc/shootAt(var/atom/movable/target)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
-	if (!istype(T) || !istype(U))
+	if (!T || !U)
 		return
 	var/obj/item/projectile/A
 	if (src.lasers)
@@ -287,7 +294,11 @@
 /obj/machinery/turretid/New()
 	..()
 	if(!control_area)
-		control_area = get_area(src)
+		var/area/CA = get_area(src)
+		if(CA.master && CA.master != CA)
+			control_area = CA.master
+		else
+			control_area = CA
 	else if(istext(control_area))
 		for(var/area/A in world)
 			if(A.name && A.name==control_area)
@@ -395,7 +406,7 @@
 	var/projectiles = 100
 	var/projectiles_per_shot = 2
 	var/deviation = 0.3
-	var/list/snapshot = list()
+	var/list/exclude = list()
 	var/atom/cur_target
 	var/scan_range = 7
 	var/health = 40
@@ -430,8 +441,7 @@
 
 
 	bullet_act(var/obj/item/projectile/Proj)
-		var/damage = Proj.damage
-		src.take_damage(damage)
+		src.take_damage(Proj.damage)
 		..()
 		return
 
@@ -468,7 +478,8 @@
 			src.on = !src.on
 			if(src.on)
 				spawn(50)
-					src.process()
+					if(src)
+						src.process()
 		if(href_list["scan_range"])
 			src.scan_range = between(1,src.scan_range+text2num(href_list["scan_range"]),8)
 		if(href_list["scan_for"])
@@ -508,19 +519,24 @@
 		var/target = null
 		if(scan_for["human"])
 			for(var/mob/living/carbon/human/M in oview(scan_range,src))
-				if(!M.stat && !M.lying)
-					pos_targets += M
+				if(M.stat || M.lying || M in exclude)
+					continue
+				pos_targets += M
 		if(scan_for["cyborg"])
 			for(var/mob/living/silicon/M in oview(scan_range,src))
-				if(!M.stat && !M.lying)
-					pos_targets += M
+				if(M.stat || M.lying || M in exclude)
+					continue
+				pos_targets += M
 		if(scan_for["mecha"])
 			for(var/obj/mecha/M in oview(scan_range, src))
+				if(M in exclude)
+					continue
 				pos_targets += M
 		if(scan_for["alien"])
 			for(var/mob/living/carbon/alien/M in oview(scan_range,src))
-				if(!M.stat && !M.lying)
-					pos_targets += M
+				if(M.stat || M.lying || M in exclude)
+					continue
+				pos_targets += M
 		if(pos_targets.len)
 			target = pick(pos_targets)
 		return target

@@ -6,10 +6,11 @@
 	health = 140
 	deflect_chance = 60
 	internal_damage_threshold = 60
+	damage_absorption = list("brute"=1.2,"fire"=1.5,"bullet"=1,"laser"=1,"energy"=1,"bomb"=1)
 	max_temperature = 3500
 	infra_luminosity = 5
 	operation_req_access = list(access_clown)
-	wreckage = "/obj/effect/decal/mecha_wreckage/honker"
+	wreckage = /obj/effect/decal/mecha_wreckage/honker
 	add_req_access = 0
 	max_equip = 3
 	var/squeak = 0
@@ -123,8 +124,8 @@
 
 
 
-/obj/mecha/combat/honker/relaymove(mob/user,direction)
-	var/result = ..()
+/obj/mecha/combat/honker/mechstep(direction)
+	var/result = step(src,direction)
 	if(result)
 		if(!squeak)
 			playsound(src, "clownstep", 70, 1)
@@ -132,7 +133,6 @@
 		else
 			squeak = 0
 	return result
-
 
 obj/mecha/combat/honker/Topic(href, href_list)
 	..()

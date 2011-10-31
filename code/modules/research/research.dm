@@ -83,6 +83,23 @@ research holder datum.
 			if(D.req_tech.len == 0)
 				return 1
 			var/matches = 0
+			var/list/k_tech = list()
+			for(var/datum/tech/known in known_tech)
+				k_tech[known.id] = known.level
+			for(var/req in D.req_tech)
+				if(!isnull(k_tech[req]) && k_tech[req] >= D.req_tech[req])
+					matches++
+			if(matches == D.req_tech.len)
+				return 1
+			else
+				return 0
+/*
+		//Checks to see if design has all the required pre-reqs.
+		//Input: datum/design; Output: 0/1 (false/true)
+		DesignHasReqs(var/datum/design/D)
+			if(D.req_tech.len == 0)
+				return 1
+			var/matches = 0
 			for(var/req in D.req_tech)
 				for(var/datum/tech/known in known_tech)
 					if((req == known.id) && (known.level >= D.req_tech[req]))
@@ -92,7 +109,7 @@ research holder datum.
 				return 1
 			else
 				return 0
-
+*/
 		//Adds a tech to known_tech list. Checks to make sure there aren't duplicates and updates existing tech's levels if needed.
 		//Input: datum/tech; Output: Null
 		AddTech2Known(var/datum/tech/T)

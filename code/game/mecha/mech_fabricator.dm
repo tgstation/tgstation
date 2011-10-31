@@ -85,7 +85,7 @@
 						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 						/obj/item/mecha_parts/mecha_equipment/tool/drill,
 						/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
-						/obj/item/mecha_parts/mecha_equipment/weapon/taser,
+						/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,
@@ -93,7 +93,8 @@
 						/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
 						/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
 						/obj/item/mecha_parts/mecha_equipment/repair_droid,
-						/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
+						/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+						/obj/item/mecha_parts/mecha_equipment/plasma_generator
 						),
 
 	"Misc"=list(/obj/item/mecha_tracking)
@@ -287,14 +288,14 @@
 			if(stat&(NOPOWER|BROKEN))
 				return 0
 			if(!check_resources(part))
-				src.visible_message("<b>[src]</b> beeps, \"Not enough resources. Queue processing stopped\".")
+				src.visible_message("\icon[src] <b>[src]</b> beeps, \"Not enough resources. Queue processing stopped\".")
 				temp = {"<font color='red'>Not enough resources to build next part.</font><br>
 							<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
 				return 0
 			remove_from_queue(1)
 			build_part(part)
 			part = listgetindex(src.queue, 1)
-		src.visible_message("<b>[src]</b> beeps, \"Queue processing finished successfully\".")
+		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Queue processing finished successfully\".")
 		return 1
 
 	proc/list_queue()
@@ -361,7 +362,7 @@
 				temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
 				src.updateUsrDialog()
 			if(i || tech_output)
-				src.visible_message("<b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
+				src.visible_message("\icon[src] <b>[src]</b> beeps, \"Succesfully synchronized with R&D server. New data processed.\"")
 		return
 
 	proc/get_resource_cost_w_coeff(var/obj/item/mecha_parts/part as obj,var/resource as text, var/roundto=1)
@@ -434,11 +435,13 @@
 		..()
 		var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 		if(href_list["part_set"])
-			if(href_list["part_set"]=="clear")
-				src.part_set = null
-			else
-				src.part_set = href_list["part_set"]
-				screen = "parts"
+			var/tpart_set = filter.getStr("part_set")
+			if(tpart_set)
+				if(tpart_set=="clear")
+					src.part_set = null
+				else
+					src.part_set = tpart_set
+					screen = "parts"
 		if(href_list["part"])
 			var/list/part = filter.getObj("part")
 			if(!processing_queue)

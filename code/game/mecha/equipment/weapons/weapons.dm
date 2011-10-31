@@ -2,6 +2,8 @@
 	name = "mecha weapon"
 	range = RANGED
 	origin_tech = "materials=3;combat=3"
+	var/projectile
+	var/fire_sound
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(var/obj/mecha/combat/M as obj)
@@ -10,11 +12,9 @@
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/weapon/laser
-	equip_cooldown = 7
-	name = "CH-PS \"Immolator\" Laser"
-	icon_state = "mecha_laser"
-	energy_drain = 30
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy
+	name = "General Energy Weapon"
 
 	action(target)
 		if(!action_checks(target)) return
@@ -25,8 +25,8 @@
 		if (targloc == curloc)
 			return
 		set_ready_state(0)
-		playsound(chassis, 'Laser.ogg', 50, 1)
-		var/obj/item/projectile/beam/A = new /obj/item/projectile/beam(curloc)
+		playsound(chassis, fire_sound, 50, 1)
+		var/obj/item/projectile/A = new projectile(curloc)
 		A.original = targloc
 		A.current = curloc
 		A.yo = targloc.y - curloc.y
@@ -37,62 +37,40 @@
 		do_after_cooldown()
 		return
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ion
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
+	equip_cooldown = 5
+	name = "CH-PS \"Immolator\" Laser"
+	icon_state = "mecha_laser"
+	energy_drain = 30
+	projectile = /obj/item/projectile/beam
+	fire_sound = 'Laser.ogg'
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
+	equip_cooldown = 10
+	name = "CH-LC \"Solaris\" Laser Cannon"
+	icon_state = "mecha_laser"
+	energy_drain = 60
+	projectile = /obj/item/projectile/beam/heavylaser
+	fire_sound = 'lasercannonfire.ogg'
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 7
 	name = "mkIV Ion Heavy Repeater"
 	icon_state = "mecha_laser"
 	energy_drain = 120
+	projectile = /obj/item/projectile/ion
+	fire_sound = 'Laser.ogg'
 
-	action(target)
-		if(!action_checks(target)) return
-		var/turf/curloc = chassis.loc
-		var/atom/targloc = get_turf(target)
-		if (!targloc || !istype(targloc, /turf) || !curloc)
-			return
-		if (targloc == curloc)
-			return
-		set_ready_state(0)
-		playsound(chassis, 'Laser.ogg', 50, 1)
-		var/obj/item/projectile/beam/A = new /obj/item/projectile/ion(curloc)
-		A.original = targloc
-		A.current = curloc
-		A.yo = targloc.y - curloc.y
-		A.xo = targloc.x - curloc.x
-		chassis.use_power(energy_drain)
-		A.process()
-		chassis.log_message("Fired from [src.name], targeting [target].")
-		do_after_cooldown()
-		return
 
-/obj/item/mecha_parts/mecha_equipment/weapon/pulse
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
 	name = "eZ-13 mk2 Heavy pulse rifle"
 	icon_state = "mecha_pulse"
 	energy_drain = 120
 	origin_tech = "materials=3;combat=6;powerstorage=4"
-
-	action(target)
-		if(!action_checks(target)) return
-
-		var/turf/curloc = chassis.loc
-		var/atom/targloc = get_turf(target)
-		if (!targloc || !istype(targloc, /turf) || !curloc)
-			return
-		if (targloc == curloc)
-			return
-
-		playsound(chassis, 'marauder.ogg', 50, 1)
-		var/obj/item/projectile/beam/pulse/A = new /obj/item/projectile/beam/pulse/heavy(curloc)
-		A.original = targloc
-		A.current = curloc
-		A.yo = targloc.y - curloc.y
-		A.xo = targloc.x - curloc.x
-		set_ready_state(0)
-		chassis.use_power(energy_drain)
-		A.process()
-		chassis.log_message("Fired from [src.name], targeting [target].")
-		do_after_cooldown()
-		return
+	projectile = /obj/item/projectile/beam/pulse/heavy
+	fire_sound = 'marauder.ogg'
 
 
 /obj/item/projectile/beam/pulse/heavy
@@ -107,35 +85,14 @@
 			del(src)
 		return
 
-/obj/item/mecha_parts/mecha_equipment/weapon/taser
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "PBT \"Pacifier\" Mounted Taser"
 	icon_state = "mecha_taser"
 	energy_drain = 20
 	equip_cooldown = 6
+	projectile = /obj/item/projectile/energy/electrode
+	fire_sound = 'Laser.ogg'
 
-	action(target)
-		if(!action_checks(target)) return
-
-		var/turf/curloc = chassis.loc
-		var/atom/targloc = get_turf(target)
-		if (!targloc || !istype(targloc, /turf) || !curloc)
-			return
-		if (targloc == curloc)
-			return
-
-		playsound(chassis, 'Laser.ogg', 50, 1)
-		var/obj/item/projectile/energy/electrode/A = new /obj/item/projectile/energy/electrode(curloc)
-		A.original = targloc
-		A.current = curloc
-		A.yo = targloc.y - curloc.y
-		A.xo = targloc.x - curloc.x
-		set_ready_state(0)
-		chassis.use_power(energy_drain)
-		spawn()
-			A.process()
-		chassis.log_message("Fired from [src.name], targeting [target].")
-		do_after_cooldown()
-		return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker
 	name = "HoNkER BlAsT 5000"
@@ -229,7 +186,7 @@
 	name = "LBX AC 10 \"Scattershot\""
 	icon_state = "mecha_scatter"
 	equip_cooldown = 20
-	projectiles = 100
+	projectiles = 40
 	projectile_energy_cost = 25
 	var/projectiles_per_shot = 4
 	var/deviation = 0.7
@@ -247,9 +204,8 @@
 			targloc = locate(target_x+GaussRandRound(deviation,1),target_y+GaussRandRound(deviation,1),target_z)
 			if(!targloc || targloc == curloc)
 				break
-
 			playsound(chassis, 'Gunshot.ogg', 80, 1)
-			var/obj/item/projectile/A = new /obj/item/projectile(curloc)
+			var/obj/item/projectile/bullet/A = new /obj/item/projectile/bullet(curloc)
 			src.projectiles--
 			A.original = targloc
 			A.current = curloc

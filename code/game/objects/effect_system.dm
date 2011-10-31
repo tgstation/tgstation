@@ -64,6 +64,28 @@ would spawn and follow the beaker, even if it is carried or thrown.
 		reagents.reaction(A)
 	return ..()
 
+
+/datum/effect/effect/system
+	var/number = 3
+	var/cardinals = 0
+	var/turf/location
+	var/atom/holder
+	var/setup = 0
+
+	proc/set_up(n = 3, c = 0, turf/loc)
+		if(n > 10)
+			n = 10
+		number = n
+		cardinals = c
+		location = loc
+		setup = 1
+
+	proc/attach(atom/atom)
+		holder = atom
+
+	proc/start()
+
+
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM
 
@@ -86,44 +108,31 @@ steam.start() -- spawns the effect
 	density = 0
 
 /datum/effect/effect/system/steam_spread
-	var/number = 3
-	var/cardinals = 0
-	var/turf/location
-	var/atom/holder
 
-/datum/effect/effect/system/steam_spread/proc/set_up(n = 3, c = 0, turf/loc)
-	if(n > 10)
-		n = 10
-	number = n
-	cardinals = c
-	location = loc
+	set_up(n = 3, c = 0, turf/loc)
+		if(n > 10)
+			n = 10
+		number = n
+		cardinals = c
+		location = loc
 
-/datum/effect/effect/system/steam_spread/proc/attach(atom/atom)
-	holder = atom
-
-/datum/effect/effect/system/steam_spread/proc/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/steam/steam = new /obj/effect/effect/steam(src.location)
-			var/direction
-			if(src.cardinals)
-				direction = pick(cardinal)
-			else
-				direction = pick(alldirs)
-			for(i=0, i<pick(1,2,3), i++)
-				sleep(5)
-				step(steam,direction)
-			spawn(20)
-				del(steam)
-
-
-
-
-
-
+	start()
+		var/i = 0
+		for(i=0, i<src.number, i++)
+			spawn(0)
+				if(holder)
+					src.location = get_turf(holder)
+				var/obj/effect/effect/steam/steam = new /obj/effect/effect/steam(src.location)
+				var/direction
+				if(src.cardinals)
+					direction = pick(cardinal)
+				else
+					direction = pick(alldirs)
+				for(i=0, i<pick(1,2,3), i++)
+					sleep(5)
+					step(steam,direction)
+				spawn(20)
+					del(steam)
 
 /////////////////////////////////////////////
 //SPARK SYSTEM (like steam system)
@@ -164,51 +173,39 @@ steam.start() -- spawns the effect
 	return
 
 /datum/effect/effect/system/spark_spread
-	var/number = 3
-	var/cardinals = 0
-	var/turf/location
-	var/atom/holder
 	var/total_sparks = 0 // To stop it being spammed and lagging!
 
-/datum/effect/effect/system/spark_spread/proc/set_up(n = 3, c = 0, loca)
-	if(n > 10)
-		n = 10
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
+	set_up(n = 3, c = 0, loca)
+		if(n > 10)
+			n = 10
+		number = n
+		cardinals = c
+		if(istype(loca, /turf/))
+			location = loca
+		else
+			location = get_turf(loca)
 
-/datum/effect/effect/system/spark_spread/proc/attach(atom/atom)
-	holder = atom
-
-/datum/effect/effect/system/spark_spread/proc/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_sparks > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/sparks/sparks = new /obj/effect/effect/sparks(src.location)
-			src.total_sparks++
-			var/direction
-			if(src.cardinals)
-				direction = pick(cardinal)
-			else
-				direction = pick(alldirs)
-			for(i=0, i<pick(1,2,3), i++)
-				sleep(5)
-				step(sparks,direction)
-			spawn(20)
-				del(sparks)
-				src.total_sparks--
-
-
-
-
-
+	start()
+		var/i = 0
+		for(i=0, i<src.number, i++)
+			if(src.total_sparks > 20)
+				return
+			spawn(0)
+				if(holder)
+					src.location = get_turf(holder)
+				var/obj/effect/effect/sparks/sparks = new /obj/effect/effect/sparks(src.location)
+				src.total_sparks++
+				var/direction
+				if(src.cardinals)
+					direction = pick(cardinal)
+				else
+					direction = pick(alldirs)
+				for(i=0, i<pick(1,2,3), i++)
+					sleep(5)
+					step(sparks,direction)
+				spawn(20)
+					del(sparks)
+					src.total_sparks--
 
 
 
@@ -242,56 +239,44 @@ steam.start() -- spawns the effect
 	return
 
 /datum/effect/effect/system/harmless_smoke_spread
-	var/number = 3
-	var/cardinals = 0
-	var/turf/location
-	var/atom/holder
 	var/total_smoke = 0 // To stop it being spammed and lagging!
 	var/direction
 
-/datum/effect/effect/system/harmless_smoke_spread/proc/set_up(n = 5, c = 0, loca, direct)
-	if(n > 10)
-		n = 10
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
-	if(direct)
-		direction = direct
+	set_up(n = 5, c = 0, loca, direct)
+		if(n > 10)
+			n = 10
+		number = n
+		cardinals = c
+		if(istype(loca, /turf/))
+			location = loca
+		else
+			location = get_turf(loca)
+		if(direct)
+			direction = direct
 
 
-/datum/effect/effect/system/harmless_smoke_spread/proc/attach(atom/atom)
-	holder = atom
-
-/datum/effect/effect/system/harmless_smoke_spread/proc/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_smoke > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/harmless_smoke/smoke = new /obj/effect/effect/harmless_smoke(src.location)
-			src.total_smoke++
-			var/direction = src.direction
-			if(!direction)
-				if(src.cardinals)
-					direction = pick(cardinal)
-				else
-					direction = pick(alldirs)
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
-				sleep(10)
-				step(smoke,direction)
-			spawn(75+rand(10,30))
-				del(smoke)
-				src.total_smoke--
-
-
-
-
-
+	start()
+		var/i = 0
+		for(i=0, i<src.number, i++)
+			if(src.total_smoke > 20)
+				return
+			spawn(0)
+				if(holder)
+					src.location = get_turf(holder)
+				var/obj/effect/effect/harmless_smoke/smoke = new /obj/effect/effect/harmless_smoke(src.location)
+				src.total_smoke++
+				var/direction = src.direction
+				if(!direction)
+					if(src.cardinals)
+						direction = pick(cardinal)
+					else
+						direction = pick(alldirs)
+				for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
+					sleep(10)
+					step(smoke,direction)
+				spawn(75+rand(10,30))
+					del(smoke)
+					src.total_smoke--
 
 
 /////////////////////////////////////////////
@@ -355,51 +340,43 @@ steam.start() -- spawns the effect
 	return
 
 /datum/effect/effect/system/bad_smoke_spread
-	var/number = 3
-	var/cardinals = 0
-	var/turf/location
-	var/atom/holder
 	var/total_smoke = 0 // To stop it being spammed and lagging!
 	var/direction
 
-/datum/effect/effect/system/bad_smoke_spread/proc/set_up(n = 5, c = 0, loca, direct)
-	if(n > 20)
-		n = 20
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
-	if(direct)
-		direction = direct
+	set_up(n = 5, c = 0, loca, direct)
+		if(n > 20)
+			n = 20
+		number = n
+		cardinals = c
+		if(istype(loca, /turf/))
+			location = loca
+		else
+			location = get_turf(loca)
+		if(direct)
+			direction = direct
 
-
-/datum/effect/effect/system/bad_smoke_spread/proc/attach(atom/atom)
-	holder = atom
-
-/datum/effect/effect/system/bad_smoke_spread/proc/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_smoke > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/bad_smoke/smoke = new /obj/effect/effect/bad_smoke(src.location)
-			src.total_smoke++
-			var/direction = src.direction
-			if(!direction)
-				if(src.cardinals)
-					direction = pick(cardinal)
-				else
-					direction = pick(alldirs)
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
-				sleep(10)
-				step(smoke,direction)
-			spawn(150+rand(10,30))
-				del(smoke)
-				src.total_smoke--
+	start()
+		var/i = 0
+		for(i=0, i<src.number, i++)
+			if(src.total_smoke > 20)
+				return
+			spawn(0)
+				if(holder)
+					src.location = get_turf(holder)
+				var/obj/effect/effect/bad_smoke/smoke = new /obj/effect/effect/bad_smoke(src.location)
+				src.total_smoke++
+				var/direction = src.direction
+				if(!direction)
+					if(src.cardinals)
+						direction = pick(cardinal)
+					else
+						direction = pick(alldirs)
+				for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
+					sleep(10)
+					step(smoke,direction)
+				spawn(150+rand(10,30))
+					del(smoke)
+					src.total_smoke--
 
 
 /////////////////////////////////////////////
@@ -442,13 +419,10 @@ steam.start() -- spawns the effect
 	return
 
 /datum/effect/effect/system/chem_smoke_spread
-	var/number = 3
-	var/cardinals = 0
-	var/turf/location
-	var/atom/holder
 	var/total_smoke = 0 // To stop it being spammed and lagging!
 	var/direction
 	var/obj/chemholder
+
 	New()
 		..()
 		chemholder = new/obj()
@@ -456,80 +430,76 @@ steam.start() -- spawns the effect
 		chemholder.reagents = R
 		R.my_atom = chemholder
 
-/datum/effect/effect/system/chem_smoke_spread/proc/set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct)
-	if(n > 20)
-		n = 20
-	number = n
-	cardinals = c
-	carry.copy_to(chemholder, carry.total_volume)
+	set_up(var/datum/reagents/carry = null, n = 5, c = 0, loca, direct)
+		if(n > 20)
+			n = 20
+		number = n
+		cardinals = c
+		carry.copy_to(chemholder, carry.total_volume)
 
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
-	if(direct)
-		direction = direct
-
-
-/datum/effect/effect/system/chem_smoke_spread/proc/attach(atom/atom)
-	holder = atom
-
-/datum/effect/effect/system/chem_smoke_spread/proc/start()
-	var/i = 0
-
-	// Calculate the smokes' color
-	var/list/rgbcolor = list(0,0,0)
-	var/finalcolor
-	for(var/datum/reagent/re in chemholder.reagents.reagent_list)
-		if(!finalcolor)
-			rgbcolor = GetColors(re.color)
-			finalcolor = re.color
+		if(istype(loca, /turf/))
+			location = loca
 		else
-			var/newcolor[3]
-			var/prergbcolor[3]
-			prergbcolor = rgbcolor
-			newcolor = GetColors(re.color)
+			location = get_turf(loca)
+		if(direct)
+			direction = direct
 
-			rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
-			rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
-			rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
+	start()
+		var/i = 0
 
-			finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
-
-	if(finalcolor)
-		finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3]) // slightly darker color
-
-	for(i=0, i<src.number, i++)
-		if(src.total_smoke > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/chem_smoke/smoke = new /obj/effect/effect/chem_smoke(src.location)
-			src.total_smoke++
-			var/direction = src.direction
-			if(!direction)
-				if(src.cardinals)
-					direction = pick(cardinal)
-				else
-					direction = pick(alldirs)
-
-			if(chemholder.reagents.total_volume != 1) // can't split 1 very well
-				chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume / number) // copy reagents to each smoke, divide evenly
-
-			if(finalcolor)
-				smoke.icon += finalcolor // give the smoke color, if it has any to begin with
+		// Calculate the smokes' color
+		var/list/rgbcolor = list(0,0,0)
+		var/finalcolor
+		for(var/datum/reagent/re in chemholder.reagents.reagent_list)
+			if(!finalcolor)
+				rgbcolor = GetColors(re.color)
+				finalcolor = re.color
 			else
-				// if no color, just use the old smoke icon
-				smoke.icon = '96x96.dmi'
-				smoke.icon_state = "smoke"
+				var/newcolor[3]
+				var/prergbcolor[3]
+				prergbcolor = rgbcolor
+				newcolor = GetColors(re.color)
 
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
-				sleep(10)
-				step(smoke,direction)
-			spawn(150+rand(10,30))
-				del(smoke)
-				src.total_smoke--
+				rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
+				rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
+				rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
+
+				finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
+
+		if(finalcolor)
+			finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3]) // slightly darker color
+
+		for(i=0, i<src.number, i++)
+			if(src.total_smoke > 20)
+				return
+			spawn(0)
+				if(holder)
+					src.location = get_turf(holder)
+				var/obj/effect/effect/chem_smoke/smoke = new /obj/effect/effect/chem_smoke(src.location)
+				src.total_smoke++
+				var/direction = src.direction
+				if(!direction)
+					if(src.cardinals)
+						direction = pick(cardinal)
+					else
+						direction = pick(alldirs)
+
+				if(chemholder.reagents.total_volume != 1) // can't split 1 very well
+					chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume / number) // copy reagents to each smoke, divide evenly
+
+				if(finalcolor)
+					smoke.icon += finalcolor // give the smoke color, if it has any to begin with
+				else
+					// if no color, just use the old smoke icon
+					smoke.icon = '96x96.dmi'
+					smoke.icon_state = "smoke"
+
+				for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
+					sleep(10)
+					step(smoke,direction)
+				spawn(150+rand(10,30))
+					del(smoke)
+					src.total_smoke--
 
 
 
@@ -587,51 +557,44 @@ steam.start() -- spawns the effect
 	return
 
 /datum/effect/effect/system/sleep_smoke_spread
-	var/number = 3
-	var/cardinals = 0
-	var/turf/location
-	var/atom/holder
 	var/total_smoke = 0 // To stop it being spammed and lagging!
 	var/direction
 
-/datum/effect/effect/system/sleep_smoke_spread/proc/set_up(n = 5, c = 0, loca, direct)
-	if(n > 20)
-		n = 20
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
-	if(direct)
-		direction = direct
+	set_up(n = 5, c = 0, loca, direct)
+		if(n > 20)
+			n = 20
+		number = n
+		cardinals = c
+		if(istype(loca, /turf/))
+			location = loca
+		else
+			location = get_turf(loca)
+		if(direct)
+			direction = direct
 
 
-/datum/effect/effect/system/sleep_smoke_spread/proc/attach(atom/atom)
-	holder = atom
-
-/datum/effect/effect/system/sleep_smoke_spread/proc/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_smoke > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/sleep_smoke/smoke = new /obj/effect/effect/sleep_smoke(src.location)
-			src.total_smoke++
-			var/direction = src.direction
-			if(!direction)
-				if(src.cardinals)
-					direction = pick(cardinal)
-				else
-					direction = pick(alldirs)
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
-				sleep(10)
-				step(smoke,direction)
-			spawn(150+rand(10,30))
-				del(smoke)
-				src.total_smoke--
+	start()
+		var/i = 0
+		for(i=0, i<src.number, i++)
+			if(src.total_smoke > 20)
+				return
+			spawn(0)
+				if(holder)
+					src.location = get_turf(holder)
+				var/obj/effect/effect/sleep_smoke/smoke = new /obj/effect/effect/sleep_smoke(src.location)
+				src.total_smoke++
+				var/direction = src.direction
+				if(!direction)
+					if(src.cardinals)
+						direction = pick(cardinal)
+					else
+						direction = pick(alldirs)
+				for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
+					sleep(10)
+					step(smoke,direction)
+				spawn(150+rand(10,30))
+					del(smoke)
+					src.total_smoke--
 
 /////////////////////////////////////////////
 // Mustard Gas
@@ -681,52 +644,43 @@ steam.start() -- spawns the effect
 	return
 
 /datum/effect/effect/system/mustard_gas_spread
-	var/number = 3
-	var/cardinals = 0
-	var/turf/location
-	var/atom/holder
 	var/total_smoke = 0 // To stop it being spammed and lagging!
 	var/direction
 
-/datum/effect/effect/system/mustard_gas_spread/proc/set_up(n = 5, c = 0, loca, direct)
-	if(n > 20)
-		n = 20
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
-	if(direct)
-		direction = direct
+	set_up(n = 5, c = 0, loca, direct)
+		if(n > 20)
+			n = 20
+		number = n
+		cardinals = c
+		if(istype(loca, /turf/))
+			location = loca
+		else
+			location = get_turf(loca)
+		if(direct)
+			direction = direct
 
-/datum/effect/effect/system/mustard_gas_spread/proc/attach(atom/atom)
-	holder = atom
-
-/datum/effect/effect/system/mustard_gas_spread/proc/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_smoke > 20)
-			return
-		spawn(0)
-			if(holder)
-				src.location = get_turf(holder)
-			var/obj/effect/effect/mustard_gas/smoke = new /obj/effect/effect/mustard_gas(src.location)
-			src.total_smoke++
-			var/direction = src.direction
-			if(!direction)
-				if(src.cardinals)
-					direction = pick(cardinal)
-				else
-					direction = pick(alldirs)
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
-				sleep(10)
-				step(smoke,direction)
-			spawn(100)
-				del(smoke)
-				src.total_smoke--
-
-
+	start()
+		var/i = 0
+		for(i=0, i<src.number, i++)
+			if(src.total_smoke > 20)
+				return
+			spawn(0)
+				if(holder)
+					src.location = get_turf(holder)
+				var/obj/effect/effect/mustard_gas/smoke = new /obj/effect/effect/mustard_gas(src.location)
+				src.total_smoke++
+				var/direction = src.direction
+				if(!direction)
+					if(src.cardinals)
+						direction = pick(cardinal)
+					else
+						direction = pick(alldirs)
+				for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
+					sleep(10)
+					step(smoke,direction)
+				spawn(100)
+					del(smoke)
+					src.total_smoke--
 
 
 
@@ -743,46 +697,44 @@ steam.start() -- spawns the effect
 	anchored = 1.0
 
 /datum/effect/effect/system/ion_trail_follow
-	var/atom/holder
 	var/turf/oldposition
 	var/processing = 1
 	var/on = 1
 
-/datum/effect/effect/system/ion_trail_follow/proc/set_up(atom/atom)
-	holder = atom
-	oldposition = get_turf(atom)
+	set_up(atom/atom)
+		attach(atom)
+		oldposition = get_turf(atom)
 
-/datum/effect/effect/system/ion_trail_follow/proc/start()
-	if(!src.on)
-		src.on = 1
-		src.processing = 1
-	if(src.processing)
+	start()
+		if(!src.on)
+			src.on = 1
+			src.processing = 1
+		if(src.processing)
+			src.processing = 0
+			spawn(0)
+				var/turf/T = get_turf(src.holder)
+				if(T != src.oldposition)
+					if(istype(T, /turf/space))
+						var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
+						src.oldposition = T
+						I.dir = src.holder.dir
+						flick("ion_fade", I)
+						I.icon_state = "blank"
+						spawn( 20 )
+							del(I)
+					spawn(2)
+						if(src.on)
+							src.processing = 1
+							src.start()
+				else
+					spawn(2)
+						if(src.on)
+							src.processing = 1
+							src.start()
+
+	proc/stop()
 		src.processing = 0
-		spawn(0)
-			var/turf/T = get_turf(src.holder)
-			if(T != src.oldposition)
-				if(istype(T, /turf/space))
-					var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
-					src.oldposition = T
-					I.dir = src.holder.dir
-					flick("ion_fade", I)
-					I.icon_state = "blank"
-					spawn( 20 )
-						del(I)
-				spawn(2)
-					if(src.on)
-						src.processing = 1
-						src.start()
-			else
-				spawn(2)
-					if(src.on)
-						src.processing = 1
-						src.start()
-
-/datum/effect/effect/system/ion_trail_follow/proc/stop()
-	src.processing = 0
-	src.on = 0
-
+		src.on = 0
 
 
 
@@ -793,44 +745,42 @@ steam.start() -- spawns the effect
 /////////////////////////////////////////////
 
 /datum/effect/effect/system/steam_trail_follow
-	var/atom/holder
 	var/turf/oldposition
 	var/processing = 1
 	var/on = 1
-	var/number
 
-/datum/effect/effect/system/steam_trail_follow/proc/set_up(atom/atom)
-	holder = atom
-	oldposition = get_turf(atom)
+	set_up(atom/atom)
+		attach(atom)
+		oldposition = get_turf(atom)
 
-/datum/effect/effect/system/steam_trail_follow/proc/start()
-	if(!src.on)
-		src.on = 1
-		src.processing = 1
-	if(src.processing)
+	start()
+		if(!src.on)
+			src.on = 1
+			src.processing = 1
+		if(src.processing)
+			src.processing = 0
+			spawn(0)
+				if(src.number < 3)
+					var/obj/effect/effect/steam/I = new /obj/effect/effect/steam(src.oldposition)
+					src.number++
+					src.oldposition = get_turf(holder)
+					I.dir = src.holder.dir
+					spawn(10)
+						del(I)
+						src.number--
+					spawn(2)
+						if(src.on)
+							src.processing = 1
+							src.start()
+				else
+					spawn(2)
+						if(src.on)
+							src.processing = 1
+							src.start()
+
+	proc/stop()
 		src.processing = 0
-		spawn(0)
-			if(src.number < 3)
-				var/obj/effect/effect/steam/I = new /obj/effect/effect/steam(src.oldposition)
-				src.number++
-				src.oldposition = get_turf(holder)
-				I.dir = src.holder.dir
-				spawn(10)
-					del(I)
-					src.number--
-				spawn(2)
-					if(src.on)
-						src.processing = 1
-						src.start()
-			else
-				spawn(2)
-					if(src.on)
-						src.processing = 1
-						src.start()
-
-/datum/effect/effect/system/steam_trail_follow/proc/stop()
-	src.processing = 0
-	src.on = 0
+		src.on = 0
 
 
 
@@ -940,51 +890,50 @@ steam.start() -- spawns the effect
 
 /datum/effect/effect/system/foam_spread
 	var/amount = 5				// the size of the foam spread.
-	var/turf/location
 	var/list/carried_reagents	// the IDs of reagents present when the foam was mixed
 	var/metal = 0				// 0=foam, 1=metalfoam, 2=ironfoam
 
 
 
 
-/datum/effect/effect/system/foam_spread/proc/set_up(amt=5, loca, var/datum/reagents/carry = null, var/metalfoam = 0)
-	amount = round(amt/5, 1)
-	if(istype(loca, /turf/))
-		location = loca
-	else
-		location = get_turf(loca)
+	set_up(amt=5, loca, var/datum/reagents/carry = null, var/metalfoam = 0)
+		amount = round(amt/5, 1)
+		if(istype(loca, /turf/))
+			location = loca
+		else
+			location = get_turf(loca)
 
-	carried_reagents = list()
-	metal = metalfoam
-
-
-	// bit of a hack here. Foam carries along any reagent also present in the glass it is mixed
-	// with (defaults to water if none is present). Rather than actually transfer the reagents,
-	// this makes a list of the reagent ids and spawns 1 unit of that reagent when the foam disolves.
+		carried_reagents = list()
+		metal = metalfoam
 
 
-	if(carry && !metal)
-		for(var/datum/reagent/R in carry.reagent_list)
-			carried_reagents += R.id
+		// bit of a hack here. Foam carries along any reagent also present in the glass it is mixed
+		// with (defaults to water if none is present). Rather than actually transfer the reagents,
+		// this makes a list of the reagent ids and spawns 1 unit of that reagent when the foam disolves.
 
-/datum/effect/effect/system/foam_spread/proc/start()
-	spawn(0)
-		var/obj/effect/effect/foam/F = locate() in location
-		if(F)
-			F.amount += amount
-			return
 
-		F = new(src.location, metal)
-		F.amount = amount
+		if(carry && !metal)
+			for(var/datum/reagent/R in carry.reagent_list)
+				carried_reagents += R.id
 
-		if(!metal)			// don't carry other chemicals if a metal foam
-			F.create_reagents(10)
+	start()
+		spawn(0)
+			var/obj/effect/effect/foam/F = locate() in location
+			if(F)
+				F.amount += amount
+				return
 
-			if(carried_reagents)
-				for(var/id in carried_reagents)
-					F.reagents.add_reagent(id,1)
-			else
-				F.reagents.add_reagent("water", 1)
+			F = new(src.location, metal)
+			F.amount = amount
+
+			if(!metal)			// don't carry other chemicals if a metal foam
+				F.create_reagents(10)
+
+				if(carried_reagents)
+					for(var/id in carried_reagents)
+						F.reagents.add_reagent(id,1)
+				else
+					F.reagents.add_reagent("water", 1)
 
 // wall formed by metal foams
 // dense and opaque, but easy to break
@@ -1066,9 +1015,9 @@ steam.start() -- spawns the effect
 		else
 			user << "\blue You hit the metal foam to no effect."
 
-	// only air group geometry can pass
 	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-		return air_group
+		if(air_group) return 0
+		return !density
 
 
 	// shouldn't this be a general procedure?
@@ -1118,56 +1067,55 @@ steam.start() -- spawns the effect
 		return 1
 
 /datum/effect/effect/system/reagents_explosion
-	var/amount					// TNT equivalent
-	var/turf/location
+	var/amount 						// TNT equivalent
 	var/flashing = 0			// does explosion creates flash effect?
 	var/flashing_factor = 0		// factor of how powerful the flash effect relatively to the explosion
 
-/datum/effect/effect/system/reagents_explosion/proc/set_up (amt, loc, flash = 0, flash_fact = 0)
-	amount = amt
-	if(istype(loc, /turf/))
-		location = loc
-	else
-		location = get_turf(loc)
+	set_up (amt, loc, flash = 0, flash_fact = 0)
+		amount = amt
+		if(istype(loc, /turf/))
+			location = loc
+		else
+			location = get_turf(loc)
 
-	flashing = flash
-	flashing_factor = flash_fact
+		flashing = flash
+		flashing_factor = flash_fact
 
-	return
-
-/datum/effect/effect/system/reagents_explosion/proc/start()
-	if (amount <= 2)
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(2, 1, location)
-		s.start()
-
-		for(var/mob/M in viewers(5, location))
-			M << "\red The solution violently explodes."
-		for(var/mob/M in viewers(1, location))
-			if (prob (50 * amount))
-				M << "\red The explosion knocks you down."
-				M.weakened += rand (1, 5)
 		return
-	else
-		var/devastation = -1
-		var/heavy = -1
-		var/light = -1
-		var/flash = -1
 
-		// Clamp all values to MAX_EXPLOSION_RANGE
-		if (round(amount/12) > 0)
-			devastation = min (MAX_EXPLOSION_RANGE, devastation + round(amount/12))
+	start()
+		if (amount <= 2)
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(2, 1, location)
+			s.start()
 
-		if (round(amount/6) > 0)
-			heavy = min (MAX_EXPLOSION_RANGE, heavy + round(amount/6))
+			for(var/mob/M in viewers(5, location))
+				M << "\red The solution violently explodes."
+			for(var/mob/M in viewers(1, location))
+				if (prob (50 * amount))
+					M << "\red The explosion knocks you down."
+					M.weakened += rand (1, 5)
+			return
+		else
+			var/devastation = -1
+			var/heavy = -1
+			var/light = -1
+			var/flash = -1
 
-		if (round(amount/3) > 0)
-			light = min (MAX_EXPLOSION_RANGE, light + round(amount/3))
+			// Clamp all values to MAX_EXPLOSION_RANGE
+			if (round(amount/12) > 0)
+				devastation = min (MAX_EXPLOSION_RANGE, devastation + round(amount/12))
 
-		if (flash && flashing_factor)
-			flash += (round(amount/4) * flashing_factor)
+			if (round(amount/6) > 0)
+				heavy = min (MAX_EXPLOSION_RANGE, heavy + round(amount/6))
 
-		for(var/mob/M in viewers(8, location))
-			M << "\red The solution violently explodes."
+			if (round(amount/3) > 0)
+				light = min (MAX_EXPLOSION_RANGE, light + round(amount/3))
 
-		explosion(location, devastation, heavy, light, flash)
+			if (flash && flashing_factor)
+				flash += (round(amount/4) * flashing_factor)
+
+			for(var/mob/M in viewers(8, location))
+				M << "\red The solution violently explodes."
+
+			explosion(location, devastation, heavy, light, flash)

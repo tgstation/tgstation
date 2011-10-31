@@ -111,11 +111,10 @@
 	return T
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
-	spawn( 0 )
+	spawn()
 		if (src.icon_state == "tele1")
 			teleport(M)
 			use_power(5000)
-		return
 	return
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj)
@@ -131,7 +130,7 @@
 		if(prob(5) && !accurate) //oh dear a problem, put em in deep space
 			do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy - 5), 3), 2)
 		else
-			do_teleport(M, com.locked, 0) //dead-on precision
+			do_teleport(M, com.locked) //dead-on precision
 	else
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
@@ -139,7 +138,7 @@
 		for(var/mob/B in hearers(src, null))
 			B.show_message("\blue Test fire completed.")
 	return
-
+/*
 /proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision)
 	if(istype(M, /obj/effect))
 		del(M)
@@ -224,7 +223,7 @@
 	s.set_up(5, 1, M)
 	s.start()
 	return
-
+*/
 /obj/machinery/teleport/station/attackby(var/obj/item/weapon/W)
 	src.attack_hand()
 

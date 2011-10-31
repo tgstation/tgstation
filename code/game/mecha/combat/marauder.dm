@@ -5,6 +5,7 @@
 	step_in = 5
 	health = 500
 	deflect_chance = 25
+	damage_absorption = list("brute"=0.4,"fire"=0.7,"bullet"=0.45,"laser"=0.6,"energy"=0.7,"bomb"=0.7)
 	max_temperature = 5000
 	infra_luminosity = 3
 	var/zoom = 0
@@ -14,7 +15,7 @@
 	var/smoke_cooldown = 100
 	var/datum/effect/effect/system/harmless_smoke_spread/smoke_system = new
 	operation_req_access = list(access_cent_specops)
-	wreckage = "/obj/effect/decal/mecha_wreckage/marauder"
+	wreckage = /obj/effect/decal/mecha_wreckage/marauder
 	add_req_access = 0
 	internal_damage_threshold = 25
 	force = 45
@@ -27,7 +28,7 @@
 	operation_req_access = list(access_cent_creed)
 	step_in = 3
 	health = 550
-	wreckage = "/obj/effect/decal/mecha_wreckage/seraph"
+	wreckage = /obj/effect/decal/mecha_wreckage/seraph
 	internal_damage_threshold = 20
 	force = 55
 	max_equip = 5
@@ -37,11 +38,11 @@
 	name = "Mauler"
 	icon_state = "mauler"
 	operation_req_access = list(access_syndicate)
-	wreckage = "/obj/effect/decal/mecha_wreckage/mauler"
+	wreckage = /obj/effect/decal/mecha_wreckage/mauler
 
 /obj/mecha/combat/marauder/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/pulse
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	ME.attach(src)
@@ -97,12 +98,11 @@
 	var/tmp_step_energy_drain = step_energy_drain
 	var/move_result = 0
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
-		move_result = step_rand(src)
+		move_result = mechsteprand()
 	else if(src.dir!=direction)
-		src.dir=direction
-		move_result = 1
+		move_result = mechturn(direction)
 	else
-		move_result	= step(src,direction)
+		move_result	= mechstep(direction)
 	if(move_result)
 		if(istype(src.loc, /turf/space))
 			if(!src.check_for_support())
@@ -121,7 +121,7 @@
 /obj/mecha/combat/marauder/verb/toggle_thrusters()
 	set category = "Exosuit Interface"
 	set name = "Toggle thrusters"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
@@ -136,7 +136,7 @@
 /obj/mecha/combat/marauder/verb/smoke()
 	set category = "Exosuit Interface"
 	set name = "Smoke"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return
@@ -151,7 +151,7 @@
 /obj/mecha/combat/marauder/verb/zoom()
 	set category = "Exosuit Interface"
 	set name = "Zoom"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return

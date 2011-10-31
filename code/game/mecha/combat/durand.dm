@@ -6,12 +6,13 @@
 	dir_in = 1 //Facing North.
 	health = 400
 	deflect_chance = 20
+	damage_absorption = list("brute"=0.4,"fire"=1.1,"bullet"=0.6,"laser"=0.85,"energy"=0.9,"bomb"=0.8)
 	max_temperature = 3000
 	infra_luminosity = 8
 	force = 40
 	var/defence = 0
 	var/defence_deflect = 35
-	wreckage = "/obj/effect/decal/mecha_wreckage/durand"
+	wreckage = /obj/effect/decal/mecha_wreckage/durand
 
 /*
 /obj/mecha/combat/durand/New()
@@ -35,7 +36,7 @@
 /obj/mecha/combat/durand/verb/defence_mode()
 	set category = "Exosuit Interface"
 	set name = "Toggle defence mode"
-	set src in view(0)
+	set src = usr.loc
 	set popup_menu = 0
 	if(usr!=src.occupant)
 		return

@@ -604,7 +604,15 @@ datum
 			id = "mech_laser"
 			build_type = MECHFAB
 			req_tech = list("combat" = 3, "magnets" = 3)
-			build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/laser"
+			build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser"
+
+		mech_laser_heavy
+			name = "Exosuit Weapon Design (CH-LC \"Solaris\" Laser Cannon)"
+			desc = "Allows for the construction of CH-LC Laser Cannon."
+			id = "mech_laser_heavy"
+			build_type = MECHFAB
+			req_tech = list("combat" = 4, "magnets" = 4)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy"
 
 		mech_grenade_launcher
 			name = "Exosuit Weapon Design (SGL-6 Grenade Launcher)"
@@ -653,6 +661,14 @@ datum
 			build_type = MECHFAB
 			req_tech = list("magnets" = 3, "programming" = 3, "engineering" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/repair_droid"
+
+		mech_plasma_generator
+			name = "Exosuit Module Design (Plasma Converter Module)"
+			desc = "Exosuit-mounted plasma converter."
+			id = "mech_plasma_generator"
+			build_type = MECHFAB
+			req_tech = list("plasmatech" = 2, "powerstorage"= 2, "engineering" = 2)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/plasma_generator"
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
