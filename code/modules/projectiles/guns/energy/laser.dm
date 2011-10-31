@@ -1,11 +1,17 @@
 /obj/item/weapon/gun/energy/laser
 	name = "laser gun"
+	desc = "a basic weapon designed kill with concentrated energy bolts"
 	icon_state = "laser"
 	fire_sound = 'Laser.ogg'
 	w_class = 3.0
 	m_amt = 2000
 	origin_tech = "combat=3;magnets=2"
 	projectile_type = "/obj/item/projectile/beam"
+
+obj/item/weapon/gun/energy/laser/retro
+	name ="retro laser"
+	icon_state = "retro"
+	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 
 
 

@@ -107,7 +107,7 @@
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Armored", "Robocop", "Robocop Red", "Heavy Duty")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Armored", "Robocop", "Robocop Red", "Heavy Duty", "Bloodhound")
 			if(icontype == "Armored")
 				icon_state = "Security"
 			else if(icontype == "Robocop")
@@ -116,6 +116,8 @@
 				icon_state = "Security3"
 			else if(icontype == "Heavy Duty")
 				icon_state = "secborg"
+			else if(icontype == "Bloodhound")
+				icon_state = "bloodhound"
 			modtype = "Sec"
 
 		if("Engineering")
@@ -659,6 +661,9 @@
 		if(icon_state == "toiletbot")
 			overlays = null
 			overlays += "eyes-toiletbot"
+		if(icon_state == "bloodhound")
+			overlays = null
+			overlays += "eyes-bloodhound"
 	else
 		overlays -= "eyes"
 
