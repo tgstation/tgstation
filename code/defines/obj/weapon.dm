@@ -39,6 +39,19 @@
 	throwforce = 1
 	w_class = 3
 
+/obj/item/weapon/claymore
+	name = "claymore"
+	desc = "what are you standing around staring at this for? get to killing!"
+	icon_state = "claymore"
+	item_state = "claymore"
+	flags = FPRINT | ONBELT | TABLEPASS
+	force = 40
+	throwforce = 10
+	w_class = 3
+
+	IsShield()
+		return 1
+
 /obj/item/weapon/bodybag
 	name = "body bag"
 	desc = "Bag mixed with a bit of body."
