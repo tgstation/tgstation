@@ -60,6 +60,7 @@
 					W.assignment = "Death Commando"
 					W.registered = newname
 					M.equip_if_possible(W, M.slot_wear_id)
+		..()
 
 	check_win()
 		return 1

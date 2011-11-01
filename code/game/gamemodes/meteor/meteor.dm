@@ -19,6 +19,7 @@
 		send_intercept()
 	spawn(meteordelay)
 		nometeors = 0
+	..()
 
 
 /datum/game_mode/meteor/process()

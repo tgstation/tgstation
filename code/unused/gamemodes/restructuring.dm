@@ -15,6 +15,7 @@
 		mobs = get_mob_list()
 	spawn (120)
 		pick_target()
+	..()
 
 /datum/game_mode/restructuring/proc/pick_target(who)
 	var/mob/target

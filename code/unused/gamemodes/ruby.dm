@@ -40,6 +40,7 @@
 			del(A)
 			continue
 	*/
+	..()
 
 /datum/game_mode/ruby/check_finished()
 	if(!macguffin || abominationwins)

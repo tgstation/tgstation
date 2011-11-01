@@ -136,5 +136,6 @@
 			new /obj/machinery/green_injector(L.loc)
 		else
 			world << "No green team injector spawn point detected"
+	..()
 
 */
