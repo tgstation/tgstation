@@ -54,9 +54,10 @@
 		if(!charge_tick >= 10)	return 0
 		charge_tick = 0
 		if(!power_supply)	return 0
-		if(!failcheck())	return 0
-		power_supply.give(100)
-		update_icon()
+		if((power_supply.charge / power_supply.maxcharge) != 1)
+			if(!failcheck())	return 0
+			power_supply.give(100)
+			update_icon()
 		return 1
 
 
@@ -106,7 +107,7 @@
 
 
 		update_mode()
-			if (mode == 2)
+			if (mode == 0)
 				overlays += "nucgun-stun"
 			else if (mode == 1)
 				overlays += "nucgun-kill"

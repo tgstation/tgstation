@@ -80,7 +80,9 @@
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
-/obj/var/req_all_accesses = 1
+/obj/var/list/req_one_access = null
+/obj/var/req_one_access_txt = "0"
+
 /obj/New()
 	//NOTE: If a room requires more than one access (IE: Morgue + medbay) set the req_acesss_txt to "5;6" if it requires 5 and 6
 	if(src.req_access_txt)
@@ -91,6 +93,16 @@
 			var/n = text2num(x)
 			if(n)
 				req_access += n
+
+	if(src.req_one_access_txt)
+		var/list/req_one_access_str = dd_text2list(req_one_access_txt,";")
+		if(!req_one_access)
+			req_one_access = list()
+		for(var/x in req_one_access_str)
+			var/n = text2num(x)
+			if(n)
+				req_one_access += n
+
 	..()
 
 //returns 1 if this mob has sufficient access to use this object
@@ -119,35 +131,41 @@
 		var/obj/item/device/pda/pda = I
 		I = pda.id
 
-	if(!src.req_access) //no requirements
+	if(!src.req_access && !src.req_one_access) //no requirements
 		return 1
 	if(!istype(src.req_access, /list)) //something's very wrong
 		return 1
 
 	var/list/L = src.req_access
-	if(!L.len) //no requirements
+	if(!L.len && (!src.req_one_access || !src.req_one_access.len)) //no requirements
 		return 1
 	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
 		return 0
 	for(var/req in src.req_access)
-		if((req in L) && !src.req_all_accesses)
-			return 1 //If the object only requires one of the accesses, let it pass after a match.
 		if(!(req in I.access)) //doesn't have this access
 			return 0
+	if(src.req_one_access && src.req_one_access.len)
+		for(var/req in src.req_one_access)
+			if(req in I.access) //has an access from the single access list
+				return 1
+		return 0
 	return 1
 
 
 /obj/proc/check_access_list(var/list/L)
-	if(!src.req_access)	return 1
+	if(!src.req_access  && !src.req_one_access)	return 1
 	if(!istype(src.req_access, /list))	return 1
-	if(!src.req_access.len)	return 1
+	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))	return 1
 	if(!L)	return 0
 	if(!istype(L, /list))	return 0
 	for(var/req in src.req_access)
-		if((req in L) && !src.req_all_accesses)
-			return 1 //If the object only requires one of the accesses, let it pass after a match.
 		if(!(req in L)) //doesn't have this access
 			return 0
+	if(src.req_one_access && src.req_one_access.len)
+		for(var/req in src.req_one_access)
+			if(req in L) //has an access from the single access list
+				return 1
+		return 0
 	return 1
 
 
