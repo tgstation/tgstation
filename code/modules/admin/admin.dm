@@ -1654,6 +1654,7 @@
 					message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 				if("maint_access_engiebrig")
 					for(var/obj/machinery/door/airlock/maintenance/M in world)
+						M.req_all_accesses = 0
 						M.req_access = list(access_brig,access_engine)
 					message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
 				if("infinite_sec")

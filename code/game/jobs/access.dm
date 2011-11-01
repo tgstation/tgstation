@@ -80,6 +80,7 @@
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
+/obj/var/req_all_accesses = 1
 /obj/New()
 	//NOTE: If a room requires more than one access (IE: Morgue + medbay) set the req_acesss_txt to "5;6" if it requires 5 and 6
 	if(src.req_access_txt)
@@ -129,6 +130,8 @@
 	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
 		return 0
 	for(var/req in src.req_access)
+		if((req in L) && !src.req_all_accesses)
+			return 1 //If the object only requires one of the accesses, let it pass after a match.
 		if(!(req in I.access)) //doesn't have this access
 			return 0
 	return 1
@@ -141,6 +144,8 @@
 	if(!L)	return 0
 	if(!istype(L, /list))	return 0
 	for(var/req in src.req_access)
+		if((req in L) && !src.req_all_accesses)
+			return 1 //If the object only requires one of the accesses, let it pass after a match.
 		if(!(req in L)) //doesn't have this access
 			return 0
 	return 1
