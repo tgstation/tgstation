@@ -98,6 +98,8 @@
 		selfdestructing = 1
 		spawn() explosion(src.loc, rand(3,8), rand(1,3), 1, 10)
 
+
+
 #define SCREWED 32
 
 /obj/machinery/singularity_beacon //not the best place for it but it's a hack job anyway -- Urist
@@ -108,13 +110,14 @@
 
 	anchored = 0
 	density = 1
-
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
-
 	stat = 0
 
-	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
-	var/icontype = "beacon"
+	var
+		active = 0 //It doesn't use up power, so use_power wouldn't really suit it
+		icontype = "beacon"
+		obj/structure/cable/attached = null
+
 
 	proc/Activate(mob/user = null)
 		for(var/obj/machinery/singularity/singulo in world)
@@ -124,6 +127,7 @@
 		active = 1
 		if(user) user << "\blue You activate the beacon."
 
+
 	proc/Deactivate(mob/user = null)
 		for(var/obj/machinery/singularity/singulo in world)
 			if(singulo.target == src)
@@ -132,8 +136,10 @@
 		active = 0
 		if(user) user << "\blue You deactivate the beacon."
 
+
 	attack_ai(mob/user as mob)
 		return
+
 
 	attack_hand(var/mob/user as mob)
 		if(stat & SCREWED)
@@ -142,31 +148,61 @@
 			user << "\red You need to screw the beacon to the floor first!"
 			return
 
+
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/weapon/screwdriver))
-			if(stat & SCREWED)
-				if(active)
-					user << "\red You need to deactivate the beacon first!"
-					return
-				else
-					stat &= ~SCREWED
-					anchored = 0
-					user << "\blue You unscrew the beacon from the floor."
-					return
-			else
-				stat |= SCREWED
-				anchored = 1
-				user << "\blue You screw the beacon to the floor."
+			if(active)
+				user << "\red You need to deactivate the beacon first!"
 				return
 
+			if(stat & SCREWED)
+				stat &= ~SCREWED
+				anchored = 0
+				user << "\blue You unscrew the beacon from the floor."
+				attached = null
+				return
+			else
+				var/turf/T = loc
+				if(isturf(T) && !T.intact)
+					attached = locate() in T
+				if(!attached)
+					user << "This device must be placed over an exposed cable."
+					return
+				stat |= SCREWED
+				anchored = 1
+				user << "\blue You screw the beacon to the floor and attach the cable."
+				return
 		..()
+		return
+
 
 	Del()
 		if(active) Deactivate()
 		..()
+
+
+	process()
+		if(stat & NOPOWER)
+			if(active)
+				Deactivate()
+			return
+
+		if(!active)
+			return
+
+		if(attached)
+			if(!attached.get_powernet())
+				Deactivate()
+				return
+			use_power(1500)
+		else
+			Deactivate()
+		return
+
 
 /obj/machinery/singularity_beacon/syndicate
 	icontype = "beaconsynd"
 	icon_state = "beaconsynd0"
 
 #undef SCREWED
+
