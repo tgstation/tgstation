@@ -163,8 +163,15 @@ var/obj/machinery/blackbox_recorder/blackbox
 	proc/save_all_data_to_sql()
 		if(!feedback) return
 
+		var/user = sqlfdbklogin
+		var/pass = sqlfdbkpass
+		var/db = sqlfdbkdb
+		var/address = sqladdress
+		var/port = sqlport
+
 		var/DBConnection/dbcon = new()
-		dbcon.Connect("dbi:mysql:test:fornoreason.servehttp.com:3306","erro","3rr0HatesGlov3s")
+
+		dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
 		if(!dbcon.IsConnected()) return
 		var/round_id
 
