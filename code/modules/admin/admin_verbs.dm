@@ -531,6 +531,7 @@
 		log_admin("[ckey] warned [M.ckey], resulting in a [AUTOBATIME] minute autoban.")
 		ban_unban_log_save("[ckey] warned [M.ckey], resulting in a [AUTOBATIME] minute autoban.")
 		message_admins("\blue [ckey] warned [M.ckey], resulting in a [AUTOBATIME] minute autoban.")
+		feedback_inc("ban_warn",1)
 
 		del(M.client)
 

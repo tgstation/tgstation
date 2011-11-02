@@ -112,6 +112,7 @@
 		Banlist["minutes"] << (mins + CMinutes)
 		Banlist["bannedby"] << usr.ckey
 		Banlist.cd = "/base"
+		feedback_inc("ban_edit",1)
 		unbanpanel()
 
 	/////////////////////////////////////new ban stuff
@@ -169,12 +170,14 @@
 				log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
 				ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 				M << "\red<BIG><B>You have been un-jobbanned by [usr.client.ckey] from [job].</B></BIG>"
+				feedback_inc("ban_job_unban",1)
 				message_admins("\blue [key_name_admin(usr)] unbanned [key_name_admin(M)] from [job]", 1)
 				jobban_unban(M, job)
 				href_list["jobban2"] = 1
 			else
 				ban_unban_log_save("[key_name(usr)] jobbanned [key_name(M)] from [job]")
 				log_admin("[key_name(usr)] banned [key_name(M)] from [job]")
+				feedback_inc("ban_job",1)
 				M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from [job].</B></BIG>"
 				M << "\red Jooban can be lifted only on demand."
 				message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [job]", 1)
@@ -224,6 +227,7 @@
 					ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
 					M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
 					M << "\red This is a temporary ban, it will be removed in [mins] minutes."
+					feedback_inc("ban_tmp",1)
 					if(config.banappeals)
 						M << "\red To try to resolve this matter head to [config.banappeals]"
 					else
@@ -247,6 +251,7 @@
 					ban_unban_log_save("[usr.client.ckey] has permabanned [M.ckey]. - Reason: [reason] - This is a permanent ban.")
 					log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 					message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
+					feedback_inc("ban_perma",1)
 
 					del(M.client)
 					//del(M)
@@ -323,6 +328,7 @@
 						else
 							M << "\red No ban appeals URL has been set."
 						ban_unban_log_save("[usr.client.ckey] has jobbanned [M.ckey] from [job]. - Reason: [reason] - This will be removed in [mins] minutes.")
+						feedback_inc("ban_job",1)
 						log_admin("[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 						message_admins("\blue[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
@@ -340,6 +346,7 @@
 						else
 							M << "\red No ban appeals URL has been set."
 						ban_unban_log_save("[usr.client.ckey] has banned [M.ckey] from [job]. - Reason: [reason] - This is a permanent ban.")
+						feedback_inc("ban_job_tmp",1)
 						log_admin("[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis is a permanent ban.")
 						message_admins("\blue[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis is a permanent ban.")
 
