@@ -7,14 +7,13 @@
 			del(src)
 			return
 		if(3.0)
+			del(src)
 			return
 		else
 	return
 
 /obj/effect/sign/securearea/blob_act()
-	if (prob(75))
-		del(src)
-		return
+	del(src)
 	return
 
 
@@ -27,12 +26,11 @@
 			del(src)
 			return
 		if(3.0)
+			del(src)
 			return
 		else
 	return
 
 /obj/effect/sign/blob_act()
-	if (prob(75))
-		del(src)
-		return
+	del(src)
 	return
