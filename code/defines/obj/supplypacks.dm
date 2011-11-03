@@ -429,8 +429,7 @@
 					"/obj/item/weapon/tank/plasma",
 					"/obj/item/weapon/chem_grenade/incendiary",
 					"/obj/item/weapon/chem_grenade/incendiary",
-					"/obj/item/weapon/chem_grenade/incendiary",
-					"/obj/item/clothing/gloves/stungloves")
+					"/obj/item/weapon/chem_grenade/incendiary")
 	cost = 25
 	containertype = "/obj/structure/crate/secure/weapon"
 	containername = "Experimental weapons crate"
