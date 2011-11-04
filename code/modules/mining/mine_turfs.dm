@@ -288,7 +288,9 @@
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 
 /turf/simulated/floor/plating/airless/asteroid/New()
+	var/proper_name = name
 	..()
+	name = proper_name
 	//if (prob(50))
 	//	seedName = pick(list("1","2","3","4"))
 	//	seedAmt = rand(1,4)
