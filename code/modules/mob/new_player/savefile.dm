@@ -1,5 +1,5 @@
-#define SAVEFILE_VERSION_MIN	4
-#define SAVEFILE_VERSION_MAX	5
+#define SAVEFILE_VERSION_MIN	5
+#define SAVEFILE_VERSION_MAX	6
 
 datum/preferences/proc/savefile_path(mob/user)
 	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences.sav"
@@ -115,12 +115,13 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["job_engsec_med"] >> src.job_engsec_med
 	F["job_engsec_low"] >> src.job_engsec_low
 
-	if(version && version < 5)
-		convert_hairstyles_four() // convert version 4 hairstyles to version 5
-
+	//NOTE: Conversion things go inside this if statement
+	//When updating the save file remember to add 1 to BOTH the savefile constants
+	//Also take the old conversion things that no longer apply out of this if
+	if(version && version < SAVEFILE_VERSION_MAX)
+		convert_hairstyles() // convert version 4 hairstyles to version 5
 
 	style_to_datum() // convert f_style and h_style to /datum
-
 
 	return 1
 
@@ -129,8 +130,8 @@ datum/preferences/proc/savefile_load(mob/user)
 
 
 
-datum/preferences/proc/convert_hairstyles_four()
-	// convert hairstyle names from savefile version 4 to version 5.
+datum/preferences/proc/convert_hairstyles()
+	// convert hairstyle names from old savefiles
 	switch(h_style)
 		if("Balding")
 			h_style = "Balding Hair"
@@ -160,4 +161,5 @@ datum/preferences/proc/convert_hairstyles_four()
 			f_style = "Hulk Hogan Mustache"
 		if("Jensen Goatee")
 			f_style = "Adam Jensen Beard"
+	return
 

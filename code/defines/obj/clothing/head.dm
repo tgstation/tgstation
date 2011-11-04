@@ -1,53 +1,9 @@
 // HATS. OH MY WHAT A FINE CHAPEAU, GOOD SIR.
-
 /obj/item/clothing/head
 	name = "head"
 	icon = 'hats.dmi'
 	body_parts_covered = HEAD
-	var/list/allowed = list(/obj/item/weapon/pen)
-
-/obj/item/clothing/head/radiation
-	name = "Radiation Hood"
-	icon_state = "rad"
-	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
-
-/obj/item/clothing/head/bomb_hood
-	name = "bomb hood"
-	desc = "Use in case of bomb."
-	icon_state = "bombsuit"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	armor = list(melee = 20, bullet = 5, laser = 10,energy = 5, bomb = 100, bio = 0, rad = 0)
-
-/obj/item/clothing/head/bomb_hood/security
-	icon_state = "bombsuitsec"
-	item_state = "bombsuitsec"
-	armor = list(melee = 50, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
-
-/obj/item/clothing/head/bio_hood
-	name = "bio hood"
-	icon_state = "bio"
-	desc = "Keeps the germs from flying on your face."
-	permeability_coefficient = 0.01
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
-
-/obj/item/clothing/head/bio_hood/general
-	icon_state = "bio_general"
-
-/obj/item/clothing/head/bio_hood/virology
-	icon_state = "bio_virology"
-
-/obj/item/clothing/head/bio_hood/security
-	icon_state = "bio_security"
-	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 20, bio = 100, rad = 20)
-
-/obj/item/clothing/head/bio_hood/janitor
-	icon_state = "bio_janitor"
-
-/obj/item/clothing/head/bio_hood/scientist
-	icon_state = "bio_scientist"
+	var/list/allowed = list()
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
@@ -72,12 +28,6 @@
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	item_state = "centhat"
 
-/obj/item/clothing/head/det_hat
-	name = "hat"
-	desc = "Someone who wears this will look very smart."
-	icon_state = "detective"
-	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
-	armor = list(melee = 50, bullet = 5, laser = 30,energy = 10, bomb = 20, bio = 0, rad = 0)
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -92,26 +42,6 @@
 	item_state = "that"
 	flags = FPRINT|TABLEPASS
 
-/obj/item/clothing/head/wizard
-	name = "wizard hat"
-	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
-	icon_state = "wizard"
-	//Not given any special protective value since the magic robes are full-body protection --NEO
-
-/obj/item/clothing/head/wizard/red
-	name = "red wizard hat"
-	desc = "Strange-looking, red, hat-wear that most certainly belongs to a real magic user."
-	icon_state = "redwizard"
-
-/obj/item/clothing/head/wizard/fake
-	name = "wizard hat"
-	desc = "It has WIZZARD written across it in sequins. Comes with a cool beard."
-	icon_state = "wizard-fake"
-
-/obj/item/clothing/head/wizard/marisa
-	name = "Witch Hat"
-	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
-	icon_state = "marisa"
 
 /obj/item/clothing/head/chefhat
 	name = "Chef's Hat"
@@ -147,17 +77,6 @@
 
 
 // CHUMP HELMETS: COOKING THEM DESTROYS THE CHUMP HELMET SPAWN.
-
-/obj/item/clothing/head/helmet
-	name = "helmet"
-	desc = "Standard Security gear."
-	icon_state = "helmet"
-	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
-	item_state = "helmet"
-	armor = list(melee = 75, bullet = 10, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-
-	protective_temperature = 500
-	heat_transfer_coefficient = 0.10
 
 /obj/item/clothing/head/helmet/cueball
 	name = "cueball helmet"
@@ -197,36 +116,6 @@
 	item_state = "thunderdome"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 
-/obj/item/clothing/head/helmet/hardhat
-	name = "hard hat"
-	desc = "A hat which appears to be very hard."
-	icon_state = "hardhat0_yellow"
-	flags = FPRINT | TABLEPASS | SUITSPACE
-	item_state = "hardhat0_yellow"
-	var/brightness_on = 4 //luminosity when on
-	var/on = 0
-	color = "yellow" //Determines used sprites: hardhat[on]_[color] and hardhat[on]_[color]2 (lying down sprite)
-	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
-
-/obj/item/clothing/head/helmet/hardhat/orange
-	icon_state = "hardhat0_orange"
-	item_state = "hardhat0_orange"
-	color = "orange"
-
-/obj/item/clothing/head/helmet/hardhat/red
-	icon_state = "hardhat0_red"
-	item_state = "hardhat0_red"
-	color = "red"
-
-/obj/item/clothing/head/helmet/hardhat/white
-	icon_state = "hardhat0_white"
-	item_state = "hardhat0_white"
-	color = "white"
-
-/obj/item/clothing/head/helmet/hardhat/dblue
-	icon_state = "hardhat0_dblue"
-	item_state = "hardhat0_dblue"
-	color = "dblue"
 
 
 /obj/item/clothing/head/helmet/welding
@@ -242,29 +131,7 @@
 	var/up = 0
 	armor = list(melee = 10, bullet = 5, laser = 10,energy = 5, bomb = 10, bio = 5, rad = 10)
 
-/obj/item/clothing/head/helmet/HoS
-	name = "HoS Hat"
-	desc = "The hat of the HoS. Very secure, for he always gets assassinated."
-	icon_state = "hoscap"
-	desc = "A hat that shows the security grunts who's in charge!"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 
-/obj/item/clothing/head/helmet/dermal
-	name = "Dermal Armour Patch"
-	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
-	icon_state = "dermal"
-	item_state = "dermal"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-
-
-/obj/item/clothing/head/helmet/warden
-	name = "Warden Hat"
-	desc = "Stop right there, criminal scum!"
-	icon_state = "policehelm"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
-	armor = list(melee = 70, bullet = 10, laser = 40,energy = 10, bomb = 25, bio = 10, rad = 0)
 
 /obj/item/clothing/head/helmet/that
 	name = "Sturdy Top hat"

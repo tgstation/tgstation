@@ -192,12 +192,12 @@ datum
 						var/list/multipliers = new/list()
 
 						for(var/B in C.required_reagents)
-							if(has_reagent(B, C.required_reagents[B]))
-								total_matching_reagents++
-								multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
+							if(!has_reagent(B, C.required_reagents[B]))	break
+							total_matching_reagents++
+							multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
 						for(var/B in C.required_catalysts)
-							if(has_reagent(B, C.required_catalysts[B]))
-								total_matching_catalysts++
+							if(!has_reagent(B, C.required_catalysts[B]))	break
+							total_matching_catalysts++
 
 						if(!C.required_container)
 							matching_container = 1

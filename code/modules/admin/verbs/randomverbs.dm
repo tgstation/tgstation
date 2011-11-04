@@ -40,6 +40,7 @@
 	set category = "Special Verbs"
 	set name = "Subtle Message"
 
+	if(!ismob(M))	return
 	if (!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return

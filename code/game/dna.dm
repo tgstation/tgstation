@@ -146,22 +146,28 @@
 		return 0
 
 /proc/randmutb(mob/M as mob)
+	if(!M)	return
 	var/num
 	var/newdna
 	num = pick(1,3,FAKEBLOCK,5,CLUMSYBLOCK,7,9,BLINDBLOCK,DEAFBLOCK)
+	M.dna.check_integrity()
 	newdna = setblock(M.dna.struc_enzymes,num,toggledblock(getblock(M.dna.struc_enzymes,num,3)),3)
 	M.dna.struc_enzymes = newdna
 	return
 
 /proc/randmutg(mob/M as mob)
+	if(!M)	return
 	var/num
 	var/newdna
 	num = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK)
+	M.dna.check_integrity()
 	newdna = setblock(M.dna.struc_enzymes,num,toggledblock(getblock(M.dna.struc_enzymes,num,3)),3)
 	M.dna.struc_enzymes = newdna
 	return
 
 /proc/scramble(var/type, mob/M as mob, var/p)
+	if(!M)	return
+	M.dna.check_integrity()
 	if(type)
 		for(var/i = 1, i <= 13, i++)
 			if(prob(p))
@@ -173,11 +179,14 @@
 			if(prob(p))
 				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes, i, add_zero2(num2hex(rand(1,4095), 1), 3), 3)
 		domutcheck(M, null)
+	return
 
 /proc/randmuti(mob/M as mob)
+	if(!M)	return
 	var/num
 	var/newdna
 	num = pick(1,2,3,4,5,6,7,8,9,10,11,12,13)
+	M.dna.check_integrity()
 	newdna = setblock(M.dna.uni_identity,num,add_zero2(num2hex(rand(1,4095),1),3),3)
 	M.dna.uni_identity = newdna
 	return
@@ -217,6 +226,7 @@
 
 
 		/// BEARDS
+		/*
 		var/beardnum = hex2num(getblock(structure,12,3))
 		var/list/facial_styles = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
 		var/fstyle = round(1 +(beardnum / 4096)*facial_styles.len)
@@ -238,7 +248,7 @@
 		H.hair_icon_state = hair.icon_state
 		H.h_style = hair.icon_state
 		H.hair_style = hair
-
+		*/
 		H.update_face()
 		H.update_body()
 

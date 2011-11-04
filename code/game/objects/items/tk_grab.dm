@@ -1,5 +1,6 @@
 /obj/item/tk_grab
 	name = "Telekinetic Grab"
+	desc = "Magic"
 	icon = 'magic.dmi'//Needs sprites
 	icon_state = "2"
 	flags = USEDELAY
@@ -22,6 +23,23 @@
 		del(src)
 		return
 
+/*
+	attack_self(mob/user as mob)
+		if(!istype(focus,/obj/item))	return
+		if(!check_path())	return//No clear path
+
+		if(user.hand == src)
+			user.l_hand = focus
+		else
+			user.r_hand = focus
+		focus.loc = user
+		focus.layer = 20
+		add_fingerprint(user)
+		user.update_clothing()
+		spawn(0)
+			del(src)
+		return
+*/
 
 	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)//TODO: go over this
 		if(!target || !user)	return
@@ -70,9 +88,22 @@
 
 	update_icon()
 		overlays = null
-		if(focus)
-			overlays += "[focus.icon_state]"
+		if(focus && focus.icon && focus.icon_state)
+			overlays += icon(focus.icon,focus.icon_state)
 		return
+
+/*Not quite done likely needs to use something thats not get_step_to
+	proc/check_path()
+		var/turf/ref = get_turf(src.loc)
+		var/turf/target = get_turf(focus.loc)
+		if(!ref || !target)	return 0
+		var/distance = get_dist(ref, target)
+		if(distance >= 10)	return 0
+		for(var/i = 1 to distance)
+			ref = get_step_to(ref, target, 0)
+		if(ref != target)	return 0
+		return 1
+*/
 
 //equip_if_possible(obj/item/W, slot, del_on_fail = 1)
 /*
@@ -82,7 +113,6 @@
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z
-				spawn(0)
-					//I really shouldnt put this here but i dont have a better idea
 
 */
+

@@ -22,7 +22,6 @@
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/gun/energy/gun(H), H.slot_s_store)
-		H.equip_if_possible(new /obj/item/device/flash(H), H.slot_l_store)
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 		L.imp_in = H
 		L.implanted = 1
@@ -52,7 +51,6 @@
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/clothing/mask/gas/emergency(H), H.slot_wear_mask)
-		H.equip_if_possible(new /obj/item/weapon/gun/energy/taser(H), H.slot_s_store)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/device/flash(H), H.slot_l_store)
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
@@ -118,6 +116,7 @@
 		H.equip_if_possible(new /obj/item/clothing/head/helmet(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_s_store)
+		H.equip_if_possible(new /obj/item/device/flash(H), H.slot_l_store)
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 		L.imp_in = H
 		L.implanted = 1

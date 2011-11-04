@@ -255,7 +255,7 @@ datum/objective/steal
 		"an RCD" = /obj/item/weapon/rcd,
 		"a jetpack" = /obj/item/weapon/tank/jetpack,
 		"a captains jumpsuit" = /obj/item/clothing/under/rank/captain,
-		"functional ai" = /obj/item/device/aicard,
+		"a functional AI" = /obj/item/device/aicard,
 		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 		"the station blueprints" = /obj/item/blueprints,
 		"thermal optics" = /obj/item/clothing/glasses/thermal,
@@ -328,7 +328,7 @@ datum/objective/steal
 					for(var/obj/item/weapon/coin/C in B)
 						found_amount++
 					return found_amount>=target
-			if("functional ai")
+			if("a functional AI")
 //						world << "dude's after an AI, time to check for one."
 				for(var/obj/item/device/aicard/C in all_items)
 //							world << "Found an intelicard, checking it for an AI"

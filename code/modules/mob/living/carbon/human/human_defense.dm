@@ -30,7 +30,7 @@ emp_act
 	for(var/datum/organ/external/organ in organs)
 		armorval += checkarmor(organ, type)
 		organnum++
-	return armorval/max(organnum, 1)
+	return (armorval/max(organnum, 1))
 
 
 /mob/living/carbon/human/proc/checkarmor(var/datum/organ/external/def_zone, var/type)
@@ -79,6 +79,7 @@ emp_act
 		return 0
 	var/armor = run_armor_check(affecting, "melee", "Your armor has protected you from a hit to the [hit_area].", "Your armor has softened hit to your [hit_area].")
 	if(armor >= 2)	return 0
+	if(!I.force)	return 0
 	apply_damage(I.force, I.damtype, affecting, armor)
 
 	var/bloody = 0
