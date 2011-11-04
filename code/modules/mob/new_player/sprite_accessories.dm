@@ -58,9 +58,13 @@
 		name = "Half-banged Hair"
 		icon_state = "hair_halfbang"
 
+	halfbangalt
+		name = "Half-banged Hair Alt"
+		icon_state = "hair_halfbang_alt"
+
 	kusangi
-		name = "Kusangi Hair"
-		icon_state = "hair_kusangi"
+		name = "Kusanagi Hair"
+		icon_state = "hair_kusanagi"
 
 	ponytail
 		name = "Ponytail"

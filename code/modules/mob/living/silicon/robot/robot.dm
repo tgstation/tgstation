@@ -97,11 +97,13 @@
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Kent", "Medbot")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Kent", "Medbot", "Surgeon")
 			if(icontype == "Kent")
 				icon_state = "toiletbot"
 			else if(icontype == "Medbot")
 				icon_state = "Medbot"
+			else if(icontype == "Surgeon")
+				icon_state = "surgeon"
 			modtype = "Med"
 
 		if("Security")

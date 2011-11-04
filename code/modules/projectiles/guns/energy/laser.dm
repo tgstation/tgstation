@@ -2,6 +2,7 @@
 	name = "laser gun"
 	desc = "a basic weapon designed kill with concentrated energy bolts"
 	icon_state = "laser"
+	item_state = "laser"
 	fire_sound = 'Laser.ogg'
 	w_class = 3.0
 	m_amt = 2000
@@ -58,7 +59,7 @@ obj/item/weapon/gun/energy/laser/retro
 
 /obj/item/weapon/gun/energy/lasercannon
 	name = "laser cannon"
-	desc = "A heavy-duty laser cannon."
+	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
 	fire_sound = 'lasercannonfire.ogg'
 	origin_tech = "combat=4;materials=3;powerstorage=3"
