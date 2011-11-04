@@ -138,6 +138,8 @@ datum/preferences/proc/convert_hairstyles_four()
 			h_style = "Flow Hair"
 		if("Jensen Hair")
 			h_style = "Adam Jensen Hair"
+		if("Kusangi Hair")
+			h_style = "Kusanagi Hair"
 
 	switch(f_style)
 		if("Watson")
