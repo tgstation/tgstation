@@ -139,7 +139,7 @@
 	color = "forensicsred"
 
 /obj/item/clothing/under/rank/warden
-	desc = "Made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. This one has the word \"Warden\" written on the shoulders.""
+	desc = "Made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. This one has the word \"Warden\" written on the shoulders."
 	name = "Warden Jumpsuit"
 	icon_state = "darkred"
 	item_state = "r_suit"
