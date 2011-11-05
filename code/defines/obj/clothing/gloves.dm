@@ -47,7 +47,7 @@
 
 /obj/item/clothing/gloves/latex
 	name = "Latex Gloves"
-	desc = "Gloves of the Latex nature."
+	desc = "Sterile latex gloves."
 	icon_state = "latex"
 	item_state = "lgloves"
 	siemens_coefficient = 0.30
@@ -105,7 +105,7 @@
 */
 
 /obj/item/clothing/gloves/yellow
-	desc = "These gloves are electrically insulated."
+	desc = "These gloves will protect the wearer from electric shock."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"

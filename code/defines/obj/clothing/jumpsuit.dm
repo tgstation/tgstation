@@ -26,7 +26,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	color = "black"
-	desc = "Changes colors."
+	desc = "A plain jumpsuit. It seems to have a small dial on the wrist."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
@@ -103,28 +103,28 @@
 /obj/item/clothing/under/rank
 
 /obj/item/clothing/under/rank/atmospheric_technician
-	desc = "It has an Atmospherics rank stripe on it."
+	desc = "A jumpsuit used by atmospheric technicians."
 	name = "Atmospherics Jumpsuit"
 	icon_state = "atmos"
 	item_state = "y_suit"
 	color = "atmos"
 
 /obj/item/clothing/under/rank/captain
-	desc = "It has a Captains rank stripe on it."
+	desc = "A blue jumpsuit with gold marking denoting the rank of \"Captain\"."
 	name = "Captain Jumpsuit"
 	icon_state = "captain"
 	item_state = "caparmor"
 	color = "captain"
 
 /obj/item/clothing/under/rank/chaplain
-	desc = "It has a Chaplain rank stripe on it."
+	desc = "A black jumpsuit, worn by religious folk."
 	name = "Chaplain Jumpsuit"
 	icon_state = "chaplain"
 	item_state = "bl_suit"
 	color = "chapblack"
 
 /obj/item/clothing/under/rank/engineer
-	desc = "It has an Engineering rank stripe on it."
+	desc = "An orange high visibility jumpsuit. Used by Nanotrasen Engineers, has minor radiation shielding."
 	name = "Engineering Jumpsuit"
 	icon_state = "engine"
 	item_state = "y_suit"
@@ -139,7 +139,7 @@
 	color = "forensicsred"
 
 /obj/item/clothing/under/rank/warden
-	desc = "It has a Warden rank stripe on it."
+	desc = "Made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. This one has the word \"Warden\" written on the shoulders.""
 	name = "Warden Jumpsuit"
 	icon_state = "darkred"
 	item_state = "r_suit"
@@ -202,7 +202,7 @@
 	color = "centcom"
 
 /obj/item/clothing/under/rank/miner
-	desc = "A snappy jumpsuit with a sturdy set of overalls. It is very dirty. It has a shaft miner rank stripe on it."
+	desc = "A snappy jumpsuit with a sturdy set of overalls. It is very dirty."
 	name = "Shaft Miner Jumpsuit"
 	icon_state = "miner"
 	item_state = "miner"
@@ -224,7 +224,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/chief_engineer
-	desc = "It has a Chief Engineer rank stripe on it."
+	desc = "A high visibility jumpsuit given to those engineers committed enough to their jobs to achieve the rank of \"Chief engineer\". Has minor radiation shielding."
 	name = "Chief Engineer Jumpsuit"
 	icon_state = "chiefengineer"
 	item_state = "g_suit"
@@ -240,7 +240,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/janitor
-	desc = "Official clothing of the station's poopscooper. It has a janitor rank stripe on it"
+	desc = "Official clothing of the station's janitor. Has minor protection from biohazards."
 	name = "Janitor's Jumpsuit"
 	icon_state = "janitor"
 	color = "janitor"
@@ -490,7 +490,7 @@
 	color = "spiderman"
 
 /obj/item/clothing/under/rank/nursesuit
-	desc = "Now THIS is hot."
+	desc = "A jumpsuit commonly worn by nursing staff in the medical department."
 	name = "Nurse Suit"
 	icon_state = "nursesuit"
 	item_state = "nursesuit"

@@ -8,7 +8,7 @@
 
 
 /obj/item/clothing/mask/breath
-	desc = "A close-fitting mask that can be connected to an air supply but does not work very well in hard vacuum."
+	desc = "A close-fitting mask that can be connected to an air supply."
 	name = "Breath Mask"
 	icon_state = "breath"
 	item_state = "breath"
@@ -20,7 +20,7 @@
 	permeability_coefficient = 0.50
 
 /obj/item/clothing/mask/medical
-	desc = "This mask does not work very well in low pressure environments."
+	desc = "A close-fitting sterile mask that can be connected to an air supply."
 	name = "Medical Mask"
 	icon_state = "medical"
 	item_state = "medical"
@@ -52,7 +52,7 @@
 
 /obj/item/clothing/mask/surgical
 	name = "Sterile Mask"
-	desc = "These masks are unable to mate."
+	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
 	item_state = "sterile"
 	w_class = 1
@@ -63,7 +63,7 @@
 
 /obj/item/clothing/mask/gas
 	name = "gas mask"
-	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
+	desc = "A face-covering mask that can be connected to an air supply."
 	icon_state = "gas_mask"
 	flags = FPRINT|TABLEPASS|SUITSPACE|MASKCOVERSMOUTH|MASKCOVERSEYES
 	w_class = 3.0
@@ -83,23 +83,23 @@
 
 /obj/item/clothing/mask/gas/emergency
 	name = "emergency gas mask"
-	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
+	desc = "A face-covering mask that can be connected to an air supply. For use in emergencies."
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
 
 /obj/item/clothing/mask/gas/swat
 	name = "SWAT Mask"
-	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
+	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
-	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
+	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
-	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
+	desc = "A face-covering mask that can be connected to an air supply. It seems to house some odd electronics."
 	icon_state = "gas_mask"
 	var/mode = 0// 0==Scouter | 1==Night Vision | 2==Thermal | 3==Meson
 	var/voice = "Unknown"
@@ -133,17 +133,17 @@
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
-	desc = "This looks very strange...."
+	desc = "A mask used when acting as a monkey."
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
-	desc = "Super creepy..."
+	desc = "A traditional female mime's mask."
 	icon_state = "sexymime"
 	item_state = "sexymime"
 
 /obj/item/clothing/mask/gas/fakemoustache
 	name = "fake moustache"
-	desc = "For ages 0 and under."
+	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"

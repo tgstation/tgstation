@@ -7,7 +7,7 @@
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
-	desc = "Blocks out sound and is very cosy."
+	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon_state = "earmuffs"
 	protective_temperature = 500
 	item_state = "earmuffs"

@@ -15,7 +15,7 @@
 
 
 /obj/item/clothing/shoes/syndigaloshes
-	desc = "Strange shoes..."
+	desc = "A pair of brown shoes. They seem to have extra grip."
 	name = "Brown Shoes"
 	icon_state = "brown"
 	item_state = "brown"
@@ -30,12 +30,14 @@
 	name = "Black Shoes"
 	icon_state = "black"
 	color = "black"
+	desc = "A pair of black shoes."
 
 	redcoat
 		color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
 
 /obj/item/clothing/shoes/brown
 	name = "Brown Shoes"
+	desc = "A pair of brown shoes."
 	icon_state = "brown"
 	color = "brown"
 

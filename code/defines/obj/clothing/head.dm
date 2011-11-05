@@ -135,7 +135,7 @@
 
 /obj/item/clothing/head/helmet/that
 	name = "Sturdy Top hat"
-	desc = "An amish looking helmet"
+	desc = "An amish looking armored top hat."
 	icon_state = "tophat"
 	item_state = "that"
 	flags = FPRINT|TABLEPASS
@@ -166,7 +166,7 @@
 
 /obj/item/clothing/head/chaplain_hood
 	name = "Chaplain's hood"
-	desc = "A hoodie for the chaplain!!!"
+	desc = "A hood that covers the head. Keeps you warm during the space winters."
 	icon_state = "chaplain_hood"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
 
@@ -178,6 +178,6 @@
 
 /obj/item/clothing/head/nursehat
 	name = "Nurse Hat"
-	desc = "Smokin'"
+	desc = "For quick identification of trained medical personnel."
 	icon_state = "nursehat"
 	flags = FPRINT|TABLEPASS
