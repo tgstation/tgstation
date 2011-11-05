@@ -226,12 +226,13 @@
 
 
 		/// BEARDS
-		/*
+
 		var/beardnum = hex2num(getblock(structure,12,3))
 		var/list/facial_styles = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
 		var/fstyle = round(1 +(beardnum / 4096)*facial_styles.len)
 
-		var/datum/sprite_accessory/facial_hair/fhair = new facial_styles[fstyle]
+		var/fpath = text2path("[facial_styles[fstyle]]")
+		var/datum/sprite_accessory/facial_hair/fhair = new fpath
 
 		H.face_icon_state = fhair.icon_state
 		H.f_style = fhair.icon_state
@@ -243,12 +244,13 @@
 		var/list/styles = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
 		var/style = round(1 +(hairnum / 4096)*styles.len)
 
-		var/datum/sprite_accessory/hair/hair = new styles[style]
+		var/hpath = text2path("[styles[style]]")
+		var/datum/sprite_accessory/hair/hair = new hpath
 
 		H.hair_icon_state = hair.icon_state
 		H.h_style = hair.icon_state
 		H.hair_style = hair
-		*/
+
 		H.update_face()
 		H.update_body()
 
