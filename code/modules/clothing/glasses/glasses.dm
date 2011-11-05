@@ -1,6 +1,6 @@
 /obj/item/clothing/glasses/blindfold
 	name = "blindfold"
-	desc = "Makes you like...blind."
+	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
 	vision_flags = BLIND

@@ -181,21 +181,21 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/head_of_personnel
-	desc = "It has a Head of Personnel rank stripe on it."
+	desc = "A jumpsuit worn by someone who works in the position of \"Head of Personnel\"."
 	name = "Head of Personnel Jumpsuit"
 	icon_state = "hop"
 	item_state = "b_suit"
 	color = "hop"
 
 /obj/item/clothing/under/rank/centcom_officer
-	desc = "It has a CentCom officer rank stripe on it."
+	desc = "A jumpsuit worn by Centcom Officers."
 	name = "CentCom Officer Jumpsuit"
 	icon_state = "officer"
 	item_state = "g_suit"
 	color = "officer"
 
 /obj/item/clothing/under/rank/centcom_commander
-	desc = "It has a CentCom commander rank stripe on it."
+	desc = "A jumpsuit worn by Centcom's highest level Commanders."
 	name = "CentCom Officer Jumpsuit"
 	icon_state = "centcom"
 	item_state = "dg_suit"
@@ -216,7 +216,7 @@
 	color = "robotics"
 
 /obj/item/clothing/under/rank/head_of_security
-	desc = "It has a Head of Security rank stripe on it."
+	desc = "A jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". Has slight armor to protect the wearer."
 	name = "Head of Security Jumpsuit"
 	icon_state = "hos"
 	item_state = "r_suit"
@@ -232,7 +232,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 10)
 
 /obj/item/clothing/under/rank/research_director
-	desc = "It has a Research Director rank stripe on it."
+	desc = "A jumpsuit worn by those dedicated to all that is science and have achieved the position of \"Research Director\". Has minor biological anomaly protection."
 	name = "Research Director Jumpsuit"
 	icon_state = "director"
 	item_state = "g_suit"
@@ -247,7 +247,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/scientist
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a toxins rank stripe on it."
+	desc = "Made of a special fiber that gives special protection against biohazards. Has markings denoting the wearer as a scientist."
 	name = "Scientist's Jumpsuit"
 	icon_state = "toxins"
 	item_state = "w_suit"
@@ -256,7 +256,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/medical
-	desc = "Made of a special fiber that gives special protection against biohazards. It has a medical rank stripe on it."
+	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel."
 	name = "Medical Doctor's Jumpsuit"
 	icon_state = "medical"
 	item_state = "w_suit"
@@ -265,7 +265,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/chief_medical_officer
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a Chief Medical Officer rank stripe on it."
+	desc = "A jumpsuit worn by those with the dedication to the medical profession who have achieved the position of \"Chief Medical Officer\". Has minor biological protection."
 	name = "Chief Medical Officer's Jumpsuit"
 	icon_state = "medical"
 	item_state = "w_suit"
@@ -274,7 +274,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/hydroponics
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a Hydroponics rank stripe on it."
+	desc = "A jumpsuit designed to protect against minor plant-related hazards."
 	name = "Hydroponics Jumpsuit"
 	icon_state = "hydroponics"
 	item_state = "g_suit"

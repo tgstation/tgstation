@@ -66,7 +66,7 @@
 
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status."
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
 
 

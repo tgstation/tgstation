@@ -6,7 +6,7 @@
 
 /obj/item/clothing/head/helmet
 	name = "helmet"
-	desc = "Standard Security gear."
+	desc = "Standard Security gear. Protects the head from impacts."
 	icon_state = "helmet"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
 	item_state = "helmet"
@@ -17,7 +17,7 @@
 
 /obj/item/clothing/head/helmet/warden
 	name = "Warden Hat"
-	desc = "Stop right there, criminal scum!"
+	desc = "A special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "policehelm"
 
 

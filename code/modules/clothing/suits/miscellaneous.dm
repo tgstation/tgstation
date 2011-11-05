@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/straight_jacket
 	name = "straight jacket"
-	desc = "A suit that totally restrains an individual"
+	desc = "A suit that completely restrains the wearer."
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
@@ -46,7 +46,7 @@
 
 /obj/item/clothing/suit/hazardvest
 	name = "hazard vest"
-	desc = "A vest designed to make one more noticable. It's not very good at it though"
+	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard"
 	item_state = "hazard"
 
@@ -70,7 +70,7 @@
 
 /obj/item/clothing/suit/captunic
 	name = "captain's parade tunic"
-	desc = "Used by irresponsible captains."
+	desc = "Worn by a Captain to show their class."
 	icon_state = "captunic"
 	item_state = "bio_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -86,7 +86,7 @@
 
 /obj/item/clothing/suit/chaplain_hoodie
 	name = "chaplain hoodie"
-	desc = "This suit says you 'hush'!"
+	desc = "This suit says to you 'hush'!"
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS

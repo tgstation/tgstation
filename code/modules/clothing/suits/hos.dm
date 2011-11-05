@@ -1,9 +1,8 @@
 
 /obj/item/clothing/head/helmet/HoS
-	name = "HoS Hat"
-	desc = "The hat of the HoS. Very secure, for he always gets assassinated."
+	name = "Head of Security Hat"
+	desc = "The hat of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
-	desc = "A hat that shows the security grunts who's in charge!"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 

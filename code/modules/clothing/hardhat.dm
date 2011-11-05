@@ -1,6 +1,6 @@
 /obj/item/clothing/head/helmet/hardhat
 	name = "hard hat"
-	desc = "A hat which appears to be very hard."
+	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat0_yellow"
 	flags = FPRINT | TABLEPASS | SUITSPACE
 	item_state = "hardhat0_yellow"
