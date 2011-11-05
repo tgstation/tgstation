@@ -51,7 +51,7 @@
 	process()
 		if(timing && (time >= 0))
 			time--
-		if(time <= 0)
+		if(timing && time <= 0)
 			timing = 0
 			timer_end()
 			time = 10

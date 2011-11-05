@@ -140,7 +140,7 @@
 
 
 	if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
-		if(!mob.Process_Spacemove())	return 0
+		if(!mob.Process_Spacemove(0))	return 0
 
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
 		var/atom/O = mob.loc
@@ -202,14 +202,13 @@
 							M.animate_movement = 2
 							return
 
+		else if(mob.confused)
+			step(mob, pick(cardinal))
 		else
-			if(mob.confused)
-				step(mob, pick(cardinal))
-			else
-				. = ..()
-				for(var/obj/effect/speech_bubble/S in range(1, mob))
-					if(S.parent == mob)
-						S.loc = mob.loc
+			. = ..()
+			for(var/obj/effect/speech_bubble/S in range(1, mob))
+				if(S.parent == mob)
+					S.loc = mob.loc
 		moving = 0
 
 		return .
@@ -300,7 +299,7 @@
 ///Called by /client/Move()
 ///For moving in space
 ///Return 1 for movement 0 for none
-/mob/proc/Process_Spacemove()
+/mob/proc/Process_Spacemove(var/check_drift = 0)
 	//First check to see if we can do things
 	if(restrained())	return 0
 
@@ -310,6 +309,12 @@
 			dense_object++
 			break
 		if((istype(turf,/turf/simulated)) && !(istype(turf,/turf/simulated/floor)))
+			dense_object++
+			break
+		if(istype(turf,/turf/unsimulated/floor) && !(src.flags & NOGRAV))
+			dense_object++
+			break
+		if((istype(turf,/turf/unsimulated)) && !(istype(turf,/turf/unsimulated/floor)))
 			dense_object++
 			break
 

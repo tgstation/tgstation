@@ -18,99 +18,30 @@
 
 /obj/item/weapon/tank/anesthetic
 	name = "Gas Tank (Sleeping Agent)"
-	desc = "Seriously, who uses this anymore?"
+	desc = "A N2O/O2 gas mix"
 	icon_state = "anesthetic"
 	item_state = "an_tank"
 
-/obj/item/weapon/tank/jetpack
-	name = "Jetpack (Oxygen)"
-	desc = "A pack of jets it appears."
-	icon_state = "jetpack0"
-	var/on = 0.0
-	w_class = 4.0
-	item_state = "jetpack"
-	var/datum/effect/effect/system/ion_trail_follow/ion_trail
-	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
-	//volume = 140 //jetpack sould be larger, but then it will never deplete -rastaf0
 
-/obj/item/weapon/tank/jetpack/void_jetpack
-	name = "Void Jetpack (oxygen)"
-	desc = "It works well in a void."
-	icon_state = "voidjetpack0"
-	item_state =  "jetpack-void"
-
-/obj/item/weapon/tank/jetpack/black_jetpack
-	name = "Black Jetpack (oxygen)"
-	desc = "A black model of jetpacks."
-	icon_state = "black_jetpack0"
-	item_state =  "jetpack-black"
-
-/obj/item/weapon/tank/oxygen
-	name = "Gas Tank (Oxygen)"
-	desc = "A tank of oxygen"
-	icon_state = "oxygen"
-	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
-
-/obj/item/weapon/tank/oxygen/yellow
-	name = "Gas Tank (Oxygen)"
-	desc = "A tank of oxygen meant for firefighters."
-	icon_state = "oxygen_f"
-
-/obj/item/weapon/tank/oxygen/red
-	name = "Gas Tank (Oxygen)"
-	desc = "A tank of oxygen meant for firefighters."
-	icon_state = "oxygen_fr"
-
-/obj/item/weapon/tank/oxygen/examine()
-	set src in usr
-	..()
-	if(air_contents.oxygen < 10)
-		usr << text("\red <B>The meter on the tank indicates you are almost out of air!</B>")
-		playsound(usr, 'alert.ogg', 50, 1)
 
 /obj/item/weapon/tank/air
 	name = "Gas Tank (Air Mix)"
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
 
-/obj/item/weapon/tank/air/examine()
-	set src in usr
-	..()
-	if(air_contents.oxygen < 1)
-		usr << text("\red <B>The meter on the tank indicates you are almost out of air!</B>")
-		playsound(usr, 'alert.ogg', 50, 1)
+
+	examine()
+		set src in usr
+		..()
+		if(air_contents.oxygen < 1)
+			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
+			playsound(usr, 'alert.ogg', 50, 1)
+
 
 /obj/item/weapon/tank/plasma
 	name = "Gas Tank (BIOHAZARD)"
 	desc = "Contains dangerous plasma. Do not inhale."
 	icon_state = "plasma"
-
-/obj/item/weapon/tank/emergency_oxygen
-	name = "emergency oxygen tank"
-	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actualy need it."
-	icon_state = "emergency"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
-	w_class = 2.0
-	force = 4.0
-	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
-	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
-
-/obj/item/weapon/tank/emergency_oxygen/engi
-	icon_state = "emergency_engi"
-	name = "extended-capacity emergency oxygen tank"
-	volume = 6 //Engineers are always superior. -errorage (dangercon 2011)
-
-/obj/item/weapon/tank/emergency_oxygen/double
-	icon_state = "emergency_double"
-	name = "Double Emergency Oxygen Tank"
-	volume = 10 //These have the same emoung of gas in them as air tanks, but can be worn on your belt -errorage (dangercon 2011)
-
-/obj/item/weapon/tank/emergency_oxygen/examine()
-	set src in usr
-	..()
-	if(air_contents.oxygen < 0.4)
-		usr << text("\red <B>The meter on the tank indicates you are almost out of air!</B>")
-		playsound(usr, 'alert.ogg', 50, 1)
 
 
 /obj/item/weapon/tank/blob_act()
@@ -265,32 +196,7 @@
 
 		else if(integrity < 3)
 			integrity++
-/* redundant. --rastaf0
-/obj/item/weapon/tank/attack(mob/M as mob, mob/user as mob)
-	..()
-*/
-	/*
-	if ((prob(30) && M.stat < 2))
-		var/mob/living/carbon/human/H = M
 
-// ******* Check
-
-		if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
-			M << "\red The helmet protects you from being hit hard in the head!"
-			return
-		var/time = rand(2, 6)
-		if (prob(90))
-			if (M.paralysis < time)
-				M.paralysis = time
-		else
-			if (M.stunned < time)
-				M.stunned = time
-		if(M.stat != 2)	M.stat = 1
-		for(var/mob/O in viewers(M, null))
-			if ((O.client && !( O.blinded )))
-				O << text("\red <B>[] has been knocked unconscious!</B>", M)
-	return
-	*/
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -386,66 +292,6 @@
 	src.air_contents.nitrogen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 	return
 
-/obj/item/weapon/tank/oxygen/New()
-	..()
-
-	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-	return
-
-/obj/item/weapon/tank/emergency_oxygen/New()
-	..()
-
-	src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-	return
-
-/obj/item/weapon/tank/jetpack/New()
-	..()
-	src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
-	src.ion_trail.set_up(src)
-	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-	return
-
-/obj/item/weapon/tank/jetpack/verb/toggle()
-	set name = "Toggle Jetpack"
-	set category = "Object"
-	src.on = !( src.on )
-	if(src.name == "Void Jetpack (oxygen)")         //Slight change added by me. i didn't make it an if-elseif because some of you might want to add other types of resprited packs :3 -Agouri
-		src.icon_state = text("voidjetpack[]", src.on)
-	else if(src.name == "Black Jetpack (oxygen)")
-		src.icon_state = text("black_jetpack[]", src.on)
-	else
-		src.icon_state = text("jetpack[]", src.on)
-	if(src.on)
-		src.ion_trail.start()
-	else
-		src.ion_trail.stop()
-	return
-
-/obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user as mob)
-	if (!( src.on ))
-		return 0
-	if ((num < 0.005 || src.air_contents.total_moles() < num))
-		src.ion_trail.stop()
-		return 0
-
-	var/datum/gas_mixture/G = src.air_contents.remove(num)
-
-	if (G.oxygen >= 0.005)
-		return 1
-	if (G.toxins > 0.001)
-		if (user)
-			var/d = G.toxins / 2
-			d = min(abs(user.health + 100), d, 25)
-			user.take_organ_damage(0,d)
-		return (G.oxygen >= 0.0025 ? 0.5 : 0)
-	else
-		if (G.oxygen >= 0.0025)
-			return 0.5
-		else
-			return 0
-	//G = null
-	del(G)
-	return
 
 /obj/item/weapon/tank/anesthetic/New()
 	..()

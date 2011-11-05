@@ -141,7 +141,7 @@
 					if(W.loc == my_target) break
 					sleep(2)
 
-		if(istype(usr.loc, /turf/space))
+		if(istype(usr.loc, /turf/space)|| (user.flags & NOGRAV))
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
 
