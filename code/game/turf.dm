@@ -101,6 +101,9 @@
 			return
 		spawn(5)
 			if((M && !(M.anchored) && (M.loc == src)))
+				if(M.inertia_dir)
+					step(M, M.inertia_dir)
+					return
 				M.inertia_dir = M.last_move
 				step(M, M.inertia_dir)
 	return

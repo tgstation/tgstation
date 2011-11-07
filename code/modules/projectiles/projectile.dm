@@ -67,7 +67,7 @@
 				return // nope.avi
 
 			if(!silenced)
-				visible_message("\red [A.name] has been shot by [firer.name]!", "\blue You hear a [istype(src, /obj/item/projectile/beam) ? "gunshot" : "laser blast"]!")
+				visible_message("\red [A.name] has been shot by the [src.name]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 			else
 				M << "\red You've been shot!"
 			if(istype(firer, /mob))

@@ -592,7 +592,7 @@
 	flags = ONBACK
 	twohanded = 1
 	force_unwielded = 5
-	force_wielded = 30
+	force_wielded = 18
 
 /obj/item/weapon/cane
 	name = "cane"

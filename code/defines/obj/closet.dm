@@ -75,7 +75,7 @@
 /obj/structure/closet/fireaxecabinet
 	name = "Fire Axe Cabinet"
 	desc = "There is small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
-	var/obj/item/weapon/fireaxe/FIREAXE = new/obj/item/weapon/fireaxe
+	var/obj/item/weapon/fireaxe/fireaxe = new/obj/item/weapon/fireaxe
 	icon_state = "fireaxe1000"
 	icon_closed = "fireaxe1000"
 	icon_opened = "fireaxe1100"
@@ -91,7 +91,7 @@
 		//..() //That's very useful, Erro
 
 		var/hasaxe = 0       //gonna come in handy later~
-		if(FIREAXE)
+		if(fireaxe)
 			hasaxe = 1
 
 		if (isrobot(usr) || src.locked)
@@ -121,11 +121,11 @@
 				update_icon()
 			return
 		if (istype(O, /obj/item/weapon/fireaxe) && src.localopened)
-			if(!FIREAXE)
+			if(!fireaxe)
 				if(O.wielded)
 					user << "\red Unwield the axe first."
 					return
-				FIREAXE = O
+				fireaxe = O
 				user.drop_item(O)
 				src.contents += O
 				user << "\blue You place the fire axe back in the [src.name]."
@@ -172,16 +172,16 @@
 	attack_hand(mob/user as mob)
 
 		var/hasaxe = 0
-		if(FIREAXE)
+		if(fireaxe)
 			hasaxe = 1
 
 		if(src.locked)
 			user <<"\red The cabinet won't budge!"
 			return
 		if(localopened)
-			if(FIREAXE)
-				user.put_in_hand(FIREAXE)
-				FIREAXE = null
+			if(fireaxe)
+				user.put_in_hand(fireaxe)
+				fireaxe = null
 				user << "\blue You take the fire axe from the [name]."
 				src.add_fingerprint(user)
 				update_icon()
@@ -228,9 +228,9 @@
 			return
 
 		if (localopened)
-			if(FIREAXE)
-				usr.put_in_hand(FIREAXE)
-				FIREAXE = null
+			if(fireaxe)
+				usr.put_in_hand(fireaxe)
+				fireaxe = null
 				usr << "\blue You take the Fire axe from the [name]."
 			else
 				usr << "\blue The [src.name] is empty."
@@ -256,7 +256,7 @@
 
 	update_icon() //Template: fireaxe[has fireaxe][is opened][hits taken][is smashed]. If you want the opening or closing animations, add "opening" or "closing" right after the numbers
 		var/hasaxe = 0
-		if(FIREAXE)
+		if(fireaxe)
 			hasaxe = 1
 		icon_state = text("fireaxe[][][][]",hasaxe,src.localopened,src.hitstaken,src.smashed)
 
