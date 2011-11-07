@@ -106,11 +106,13 @@
 
 
 /client/proc/Move_object(direct)
-	if(mob.control_object.density)
-		step(mob.control_object,direct)
-		mob.control_object.dir = direct
-	else
-		mob.control_object.loc = get_step(mob.control_object,direct)
+	if(mob && mob.control_object)
+		if(mob.control_object.density)
+			step(mob.control_object,direct)
+			if(!mob.control_object)	return
+			mob.control_object.dir = direct
+		else
+			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
 
@@ -304,28 +306,23 @@
 	if(restrained())	return 0
 
 	var/dense_object = 0
-	for(var/turf/simulated/turf in oview(1,src))
-		if(istype(turf,/turf/simulated/floor) && !(src.flags & NOGRAV))
-			dense_object++
-			break
-		if((istype(turf,/turf/simulated)) && !(istype(turf,/turf/simulated/floor)))
-			dense_object++
-			break
-		if(istype(turf,/turf/unsimulated/floor) && !(src.flags & NOGRAV))
-			dense_object++
-			break
-		if((istype(turf,/turf/unsimulated)) && !(istype(turf,/turf/unsimulated/floor)))
-			dense_object++
-			break
+	for(var/turf/turf in oview(1,src))
+		if(istype(turf,/turf/space))
+			continue
+		if(istype(turf,/turf/simulated/floor) && (src.flags & NOGRAV))
+			continue
+		dense_object++
+		break
 
 	if(!dense_object && (locate(/obj/structure/lattice) in oview(1, src)))
 		dense_object++
 
 	//Lastly attempt to locate any dense objects we could push off of
 	//TODO: If we implement objects drifing in space this needs to really push them
+	//Due to a few issues only anchored and dense objects will now work.
 	if(!dense_object)
 		for(var/obj/O in oview(1, src))
-			if((O) && (O.density))
+			if((O) && (O.density) && (O.anchored))
 				dense_object++
 				break
 

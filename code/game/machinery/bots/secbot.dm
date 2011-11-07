@@ -20,7 +20,7 @@
 	var/last_found //There's a delay
 	var/frustration = 0
 //	var/emagged = 0 //Emagged Secbots view everyone as a criminal
-	var/idcheck = 1 //If false, all station IDs are authorized for weapons.
+	var/idcheck = 0 //If false, all station IDs are authorized for weapons.
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
 
@@ -103,7 +103,7 @@
 
 /obj/machinery/bot/secbot/attack_hand(mob/user as mob)
 	. = ..()
-	if (.)
+	if(.)
 		return
 	usr.machine = src
 	interact(user)
@@ -138,21 +138,21 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/Topic(href, href_list)
 	usr.machine = src
 	src.add_fingerprint(usr)
-	if ((href_list["power"]) && (src.allowed(usr)))
-		if (src.on)
+	if((href_list["power"]) && (src.allowed(usr)))
+		if(src.on)
 			turn_off()
 		else
 			turn_on()
 		return
 
 	switch(href_list["operation"])
-		if ("idcheck")
+		if("idcheck")
 			src.idcheck = !src.idcheck
 			src.updateUsrDialog()
-		if ("ignorerec")
+		if("ignorerec")
 			src.check_records = !src.check_records
 			src.updateUsrDialog()
-		if ("switchmode")
+		if("switchmode")
 			src.arrest_type = !src.arrest_type
 			src.updateUsrDialog()
 		if("patrol")
@@ -161,15 +161,15 @@ Auto Patrol: []"},
 			updateUsrDialog()
 
 /obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if(src.allowed(user))
 			src.locked = !src.locked
 			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 		else
 			user << "\red Access denied."
 	else
 		..()
-		if (!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
+		if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
 			src.target = user
 			src.mode = SECBOT_HUNT
 
@@ -190,7 +190,7 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/process()
 	set background = 1
 
-	if (!src.on)
+	if(!src.on)
 		return
 
 	switch(mode)
@@ -205,7 +205,7 @@ Auto Patrol: []"},
 		if(SECBOT_HUNT)		// hunting for perp
 
 			// if can't reach perp for long enough, go idle
-			if (src.frustration >= 8)
+			if(src.frustration >= 8)
 		//		for(var/mob/O in hearers(src, null))
 		//			O << "<span class='game say'><span class='name'>[src]</span> beeps, \"Backup requested! Suspect has evaded arrest.\""
 				src.target = null
@@ -214,27 +214,27 @@ Auto Patrol: []"},
 				src.mode = 0
 				walk_to(src,0)
 
-			if (target)		// make sure target exists
-				if (get_dist(src, src.target) <= 1)		// if right next to perp
+			if(target)		// make sure target exists
+				if(get_dist(src, src.target) <= 1)		// if right next to perp
 					playsound(src.loc, 'Egloves.ogg', 50, 1, -1)
 					src.icon_state = "secbot-c"
 					spawn(2)
 						src.icon_state = "secbot[src.on]"
 					var/mob/living/carbon/M = src.target
 					var/maxstuns = 4
-					if (istype(M, /mob/living/carbon/human))
-						if (M.weakened < 10 && (!(M.mutations & HULK))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+					if(istype(M, /mob/living/carbon/human))
+						if(M.weakened < 10 && (!(M.mutations & HULK))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 							M.weakened = 10
-						if (M.stuttering < 10 && (!(M.mutations & HULK))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+						if(M.stuttering < 10 && (!(M.mutations & HULK))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 							M.stuttering = 10
-						if (M.stunned < 10 && (!(M.mutations & HULK))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+						if(M.stunned < 10 && (!(M.mutations & HULK))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 							M.stunned = 10
 					else
 						M.weakened = 10
 						M.stuttering = 10
 						M.stunned = 10
 					maxstuns--
-					if (maxstuns <= 0)
+					if(maxstuns <= 0)
 						target = null
 					for(var/mob/O in viewers(src, null))
 						O.show_message("\red <B>[src.target] has been stunned by [src]!</B>", 1, "\red You hear someone fall", 2)
@@ -247,7 +247,7 @@ Auto Patrol: []"},
 				else								// not next to perp
 					var/turf/olddist = get_dist(src, src.target)
 					walk_to(src, src.target,1,4)
-					if ((get_dist(src, src.target)) >= (olddist))
+					if((get_dist(src, src.target)) >= (olddist))
 						src.frustration++
 					else
 						src.frustration = 0
@@ -255,20 +255,20 @@ Auto Patrol: []"},
 		if(SECBOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away
-			if ((get_dist(src, src.target) > 1) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2))
+			if((get_dist(src, src.target) > 1) || ((src.target:loc != src.target_lastloc) && src.target:weakened < 2))
 				src.anchored = 0
 				mode = SECBOT_HUNT
 				return
 
-			if (!src.target.handcuffed && !src.arrest_type)
+			if(!src.target.handcuffed && !src.arrest_type)
 				playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
 				mode = SECBOT_ARREST
 				for(var/mob/O in viewers(src, null))
 					O.show_message("\red <B>[src] is trying to put handcuffs on [src.target]!</B>", 1)
 
 				spawn(60)
-					if (get_dist(src, src.target) <= 1)
-						if (src.target.handcuffed)
+					if(get_dist(src, src.target) <= 1)
+						if(src.target.handcuffed)
 							return
 
 						if(istype(src.target,/mob/living/carbon))
@@ -286,7 +286,7 @@ Auto Patrol: []"},
 
 		if(SECBOT_ARREST)		// arresting
 
-			if (src.target.handcuffed)
+			if(!target || target.handcuffed)
 				src.anchored = 0
 				mode = SECBOT_IDLE
 				return
@@ -523,9 +523,9 @@ Auto Patrol: []"},
 	//	signal.data[key] = keyval[key]
 	signal.data = keyval
 		//world << "sent [key],[keyval[key]] on [freq]"
-	if (signal.data["findbeacon"])
+	if(signal.data["findbeacon"])
 		frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-	else if (signal.data["type"] == "secbot")
+	else if(signal.data["type"] == "secbot")
 		frequency.post_signal(src, signal, filter = RADIO_SECBOT)
 	else
 		frequency.post_signal(src, signal)
@@ -554,21 +554,21 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/proc/look_for_perp()
 	src.anchored = 0
 	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
-		if ((C.stat) || (C.handcuffed))
+		if((C.stat) || (C.handcuffed))
 			continue
 
-		if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
+		if((C.name == src.oldtarget_name) && (world.time < src.last_found + 100))
 			continue
 
-		if (istype(C, /mob/living/carbon/human))
+		if(istype(C, /mob/living/carbon/human))
 			src.threatlevel = src.assess_perp(C)
-		else if ((istype(C, /mob/living/carbon/monkey)) && (C.client) && (ticker.mode.name == "monkey"))
+		else if((src.idcheck) && (istype(C, /mob/living/carbon/monkey)))
 			src.threatlevel = 4
 
-		if (!src.threatlevel)
+		if(!src.threatlevel)
 			continue
 
-		else if (src.threatlevel >= 4)
+		else if(src.threatlevel >= 4)
 			src.target = C
 			src.oldtarget_name = C.name
 			src.speak("Level [src.threatlevel] infraction alert!")
@@ -589,17 +589,14 @@ Auto Patrol: []"},
 
 	if(src.emagged) return 10 //Everyone is a criminal!
 
-	if((src.idcheck) || (isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/weapon/card/id/syndicate)))
-		if(src.allowed(perp)) //Corrupt cops cannot exist beep boop
-			return 0
-
-		if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
+	if(src.idcheck && !src.allowed(perp))
+		if(istype(perp.l_hand, /obj/item/weapon/gun) || istype(perp.l_hand, /obj/item/weapon/melee))
 			threatcount += 4
 
-		if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.r_hand, /obj/item/weapon/melee/baton))
+		if(istype(perp.r_hand, /obj/item/weapon/gun) || istype(perp.r_hand, /obj/item/weapon/melee))
 			threatcount += 4
 
-		if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee/baton))
+		if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
 			threatcount += 2
 
 		if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
@@ -608,26 +605,26 @@ Auto Patrol: []"},
 		if(perp.mutantrace && perp.mutantrace != "none")
 			threatcount += 2
 
-//Agent cards lower threatlevel when normal idchecking is off.
-		if((istype(perp:wear_id, /obj/item/weapon/card/id/syndicate)) && src.idcheck)
+		//Agent cards lower threatlevel.
+		if(istype(perp:wear_id, /obj/item/weapon/card/id/syndicate))
 			threatcount -= 2
 
-	if (src.check_records)
+	if(src.check_records)
 		for (var/datum/data/record/E in data_core.general)
 			var/perpname = perp.name
-			if (perp:wear_id)
+			if(perp:wear_id)
 				var/obj/item/weapon/card/id/id = perp:wear_id
 				if(istype(perp:wear_id, /obj/item/device/pda))
 					var/obj/item/device/pda/pda = perp:wear_id
 					id = pda.id
-				if (id)
+				if(id)
 					perpname = id.registered
 				else
 					var/obj/item/device/pda/pda = perp:wear_id
 					perpname = pda.owner
-			if (E.fields["name"] == perpname)
+			if(E.fields["name"] == perpname)
 				for (var/datum/data/record/R in data_core.security)
-					if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
+					if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 						threatcount = 4
 						break
 
@@ -635,12 +632,12 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/secbot/Bump(M as mob|obj) //Leave no door unopened!
 	spawn(0)
-		if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
+		if((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
 			var/obj/machinery/door/D = M
-			if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
+			if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
 				D.open()
 				src.frustration = 0
-		else if ((istype(M, /mob/living/)) && (!src.anchored))
+		else if((istype(M, /mob/living/)) && (!src.anchored))
 			src.loc = M:loc
 			src.frustration = 0
 
@@ -649,7 +646,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/secbot/Bumped(atom/movable/M as mob|obj)
 	spawn(0)
-		if (M)
+		if(M)
 			var/turf/T = get_turf(src)
 			M:loc = T
 
@@ -674,7 +671,7 @@ Auto Patrol: []"},
 	var/obj/item/weapon/melee/baton/B = new /obj/item/weapon/melee/baton(Tsec)
 	B.charges = 0
 
-	if (prob(50))
+	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -686,12 +683,12 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	..()
-	if (!isalien(target))
+	if(!isalien(target))
 		src.target = user
 		src.mode = SECBOT_HUNT
 
 /obj/machinery/bot/secbot/emp_act(severity)
-	if (cam)
+	if(cam)
 		cam.emp_act(severity)
 	..()
 
@@ -699,19 +696,19 @@ Auto Patrol: []"},
 
 /obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob)
 	..()
-	if (!issignaler(S))
+	if(!issignaler(S))
 		..()
 		return
 
-	if (src.type != /obj/item/clothing/head/helmet) //Eh, but we don't want people making secbots out of space helmets.
+	if(src.type != /obj/item/clothing/head/helmet) //Eh, but we don't want people making secbots out of space helmets.
 		return
 
-	if (!S.secured)
+	if(!S.secured)
 		return
 	else
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 		A.loc = user
-		if (user.r_hand == S)
+		if(user.r_hand == S)
 			user.u_equip(S)
 			user.r_hand = A
 		else
@@ -725,7 +722,7 @@ Auto Patrol: []"},
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ((istype(W, /obj/item/weapon/weldingtool) && W:welding) && (!src.build_step))
+	if((istype(W, /obj/item/weapon/weldingtool) && W:welding) && (!src.build_step))
 		if(W:remove_fuel(0,user))
 			src.build_step++
 			src.overlays += image('aibots.dmi', "hs_hole")
@@ -757,9 +754,9 @@ Auto Patrol: []"},
 	else if(istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
 		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if(!in_range(src, usr) && src.loc != usr)
 			return
 
 		src.created_name = t

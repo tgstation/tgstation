@@ -57,6 +57,7 @@
 		//whereas area/A/B and /area/A/C would have it as 3
 
 		var/area/cur_area = get_area(current)
+		if(!cur_area)	continue
 		var/list/new_types = dd_text2list("[cur_area.type]", "/")
 		for(var/i = 1; i <= old_types.len && i <= new_types.len; i++)
 			if(old_types[i] == new_types[i])
