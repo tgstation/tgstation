@@ -830,6 +830,10 @@ proc/process_ghost_teleport_locs()
 	name = "Detectives Office"
 	icon_state = "detective"
 
+/area/security/range
+	name = "Firing Range"
+	icon_state = "firingrange"
+
 /*
 	New()
 		..()

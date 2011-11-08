@@ -55,9 +55,9 @@
 	fire_sound = 'lasercannonfire.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
-	equip_cooldown = 7
-	name = "mkIV Ion Heavy Repeater"
-	icon_state = "mecha_laser"
+	equip_cooldown = 40
+	name = "mkIV Ion Heavy Cannon"
+	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'Laser.ogg'

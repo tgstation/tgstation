@@ -306,11 +306,25 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 
-/obj/item/clothing/suit/pirate
-	name = "pirate coat"
+/obj/item/clothing/head/piratecaptain
+	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
+
+/obj/item/clothing/suit/pirate
+	name = "pirate coat"
+	desc = "Yarr."
+	icon_state = "hoscap"
+	item_state = "pirate_cap"
+	flags = FPRINT | TABLEPASS
+
+
+/obj/item/clothing/suit/piratecaptain
+	name = "pirate captain coat"
+	desc = "Yarr."
+	icon_state = "jensencoat"
+	item_state = "piratecap"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/glasses/eyepatch
