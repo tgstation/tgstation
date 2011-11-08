@@ -441,6 +441,7 @@
 #include "code\game\machinery\rechargestation.dm"
 #include "code\game\machinery\requests_console.dm"
 #include "code\game\machinery\robot_fabricator.dm"
+#include "code\game\machinery\scanner.dm"
 #include "code\game\machinery\seed_extractor.dm"
 #include "code\game\machinery\shieldgen.dm"
 #include "code\game\machinery\sink.dm"
