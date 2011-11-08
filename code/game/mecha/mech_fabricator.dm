@@ -92,7 +92,6 @@
 						/obj/item/mecha_parts/mecha_equipment/weapon/honker,
 						/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
 						/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
-						/obj/item/mecha_parts/mecha_equipment/repair_droid,
 						/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
 						/obj/item/mecha_parts/mecha_equipment/plasma_generator
 						),

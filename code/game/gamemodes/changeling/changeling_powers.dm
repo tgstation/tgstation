@@ -353,10 +353,6 @@
 		usr << "\red You're not a changeling, something's wrong!"
 		return
 
-	if(usr.stat == 2)
-		usr << "\red We are dead."
-		return
-
 	if(usr.changeling.chem_charges < 20)
 		usr << "\red We don't have enough stored chemicals to do that!"
 		return
@@ -372,25 +368,25 @@
 
 	usr.emote("gasp")
 
-	spawn(550)
-		if (usr.stat != 2)
-			//usr.fireloss = 0
-			usr.toxloss = 0
-			//usr.bruteloss = 0
-			usr.oxyloss = 0
-			usr.paralysis = 0
-			usr.stunned = 0
-			usr.weakened = 0
-			usr.radiation = 0
-			//usr.health = 100
-			//usr.updatehealth()
-			var/mob/living/M = src
-			M.heal_overall_damage(1000, 1000)
-			usr.reagents.clear_reagents()
-			usr.lying = 0
-			usr.canmove = 1
-			usr << "\blue We have regenerated."
-			usr.visible_message(text("\red <B>[usr] appears to wake from the dead, having healed all wounds.</B>"))
+	spawn(1200)
+		usr.stat = 0
+		//usr.fireloss = 0
+		usr.toxloss = 0
+		//usr.bruteloss = 0
+		usr.oxyloss = 0
+		usr.paralysis = 0
+		usr.stunned = 0
+		usr.weakened = 0
+		usr.radiation = 0
+		//usr.health = 100
+		//usr.updatehealth()
+		var/mob/living/M = src
+		M.heal_overall_damage(1000, 1000)
+		usr.reagents.clear_reagents()
+		usr.lying = 0
+		usr.canmove = 1
+		usr << "\blue We have regenerated."
+		usr.visible_message(text("\red <B>[usr] appears to wake from the dead, having healed all wounds.</B>"))
 
 		usr.changeling.changeling_fakedeath = 0
 		if (usr.changeling.changeling_level == 1)

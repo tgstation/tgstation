@@ -471,6 +471,14 @@
 	containername = "Riot gear crate"
 	access = access_armory
 
+/datum/supply_packs/loyalty
+	name = "Loyalty implant crate"
+	contains = list ("obj/item/storage/lockbox/loyalty")
+	cost = 60
+	containertype = "/obj/structure/crate/secure"
+	containername = "Loyalty implant crate"
+	access = access_armory
+
 /datum/supply_packs/ballistic
 	name = "Ballistic gear crate"
 	contains = list("/obj/item/clothing/suit/armor/bulletproof",
