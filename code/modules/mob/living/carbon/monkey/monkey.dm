@@ -103,7 +103,7 @@
 		bruteloss += 30
 		if ((O.icon_state == "flaming" && !( shielded )))
 			fireloss += 40
-		health = 100 - oxyloss - toxloss - fireloss - bruteloss
+		health = 100 - oxyloss - toxloss - fireloss - getBruteLoss()
 	return
 
 //mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
@@ -139,7 +139,7 @@
 					O.show_message("\red <B>[M.name] has bit [name]!</B>", 1)
 				var/damage = rand(1, 5)
 				bruteloss += damage
-				health = 100 - oxyloss - toxloss - fireloss - bruteloss
+				health = 100 - oxyloss - toxloss - fireloss - getBruteLoss()
 				for(var/datum/disease/D in M.viruses)
 					if(istype(D, /datum/disease/jungle_fever))
 						contract_disease(D,1,0)
@@ -536,16 +536,16 @@
 		if(1.0)
 			if (stat != 2)
 				bruteloss += 200
-				health = 100 - oxyloss - toxloss - fireloss - bruteloss
+				health = 100 - oxyloss - toxloss - fireloss - getBruteLoss()
 		if(2.0)
 			if (stat != 2)
 				bruteloss += 60
 				fireloss += 60
-				health = 100 - oxyloss - toxloss - fireloss - bruteloss
+				health = 100 - oxyloss - toxloss - fireloss - getBruteLoss()
 		if(3.0)
 			if (stat != 2)
 				bruteloss += 30
-				health = 100 - oxyloss - toxloss - fireloss - bruteloss
+				health = 100 - oxyloss - toxloss - fireloss - getBruteLoss()
 			if (prob(50))
 				paralysis += 10
 		else
@@ -554,7 +554,7 @@
 /mob/living/carbon/monkey/blob_act()
 	if (stat != 2)
 		fireloss += 60
-		health = 100 - oxyloss - toxloss - fireloss - bruteloss
+		health = 100 - oxyloss - toxloss - fireloss - getBruteLoss()
 	if (prob(50))
 		paralysis += 10
 

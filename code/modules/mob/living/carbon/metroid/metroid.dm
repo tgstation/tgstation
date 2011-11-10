@@ -648,9 +648,9 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 	if (nodamage == 0)
 		// metroids can't suffocate unless they suicide. They are also not harmed by fire
 		if(istype(src, /mob/living/carbon/metroid/adult))
-			health = 200 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
+			health = 200 - (oxyloss + toxloss + fireloss + getBruteLoss() + cloneloss)
 		else
-			health = 150 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
+			health = 150 - (oxyloss + toxloss + fireloss + getBruteLoss() + cloneloss)
 	else
 		if(istype(src, /mob/living/carbon/metroid/adult))
 			health = 200

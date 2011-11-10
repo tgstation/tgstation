@@ -176,6 +176,18 @@
 	else
 		..()
 
+
+/mob/living/simple_animal/corgi/attack_animal(var/mob/M)
+	health = health - 8
+	if(health > 0)
+		for(var/mob/O in viewers(src, null))
+			if ((O.client && !( O.blinded )))
+				O.show_message(text("\red <B>[] has bitten []!</B>", M, src), 1)
+	else
+		for(var/mob/O in viewers(src, null))
+			if ((O.client && !( O.blinded )))
+				O.show_message(text("\red <B>[] is gnawing on []'s bones!</B>", M, src), 1)
+
 //IAN! SQUEEEEEEEEE~
 /mob/living/simple_animal/corgi/Ian
 	name = "Ian"
@@ -198,12 +210,84 @@
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
 				stop_automated_movement = 0
+			if( !movement_target || !(movement_target.loc in oview(src, 5)) )
+				movement_target = null
+				stop_automated_movement = 0
+				for(var/obj/item/weapon/reagent_containers/food/snacks/S in oview(src,5))
+					if(isturf(S.loc) || ishuman(S.loc))
+						movement_target = S
+						break
+			if(movement_target)
+				stop_automated_movement = 1
+				step_to(src,movement_target,1)
+				sleep(3)
+				step_to(src,movement_target,1)
+				sleep(3)
+				step_to(src,movement_target,1)
+
+				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+					if (movement_target.loc.x < src.x)
+						dir = WEST
+					else if (movement_target.loc.x > src.x)
+						dir = EAST
+					else if (movement_target.loc.y < src.y)
+						dir = SOUTH
+					else if (movement_target.loc.y > src.y)
+						dir = NORTH
+					else
+						dir = SOUTH
+
+				if(isturf(movement_target.loc) )
+					movement_target.attack_animal(src)
+				else if(ishuman(movement_target.loc) )
+					if(prob(20))
+						emote("stares at the [movement_target] that [movement_target.loc] has with an angry dog-face")
+
+		if(prob(1))
+			emote("dances around")
+			spawn(0)
+				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
+					dir = i
+					sleep(1)
+
+/mob/living/simple_animal/corgi/AdmiralPoof
+	name = "Poof"
+	real_name = "Poof"	//Intended to hold the name without altering it.
+	desc = "It's Poof, what else do you need to know?"
+	var/turns_since_scan = 0
+	var/obj/movement_target
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
+	icon_state = "poof"
+	icon_living = "poof"
+	icon_dead = "poof_dead"
+	speak = list("YAP","Woof!","Bark!","AUUUUUU")
+	speak_emote = list("barks", "woofs", "growls")
+	emote_hear = list("barks","woofs","yaps")
+	emote_see = list("shakes it's head", "shivers")
+	speak_chance = 1
+	turns_per_move = 5
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi/poof
+	meat_amount = 2
+
+/mob/living/simple_animal/corgi/AdmiralPoof/Life()
+	..()
+
+	//Feeding, chasing food, FOOOOODDDD
+	if(alive && !resting && !buckled)
+		turns_since_scan++
+		if(turns_since_scan > 5)
+			turns_since_scan = 0
+			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
+				movement_target = null
+				stop_automated_movement = 0
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
 				stop_automated_movement = 0
-				for(var/obj/item/weapon/reagent_containers/food/snacks/S in oview(src,3))
-					if(isturf(S.loc) || ishuman(S.loc))
-						movement_target = S
+				for(var/mob/living/simple_animal/corgi/Ian/I in oview(src,3))
+					if(isturf(I.loc) || ishuman(I.loc))
+						movement_target = I
 						break
 			if(movement_target)
 				stop_automated_movement = 1
@@ -232,7 +316,7 @@
 						emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
 
 		if(prob(1))
-			emote("dances around")
+			emote("dances around authoritatively")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
@@ -240,4 +324,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "Corgi meat"
+	desc = "Tastes like... well you know..."
+/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/poof
+	name = "Dachshund meat"
 	desc = "Tastes like... well you know..."

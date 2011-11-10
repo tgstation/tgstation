@@ -326,14 +326,14 @@
 		return 1
 
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
-	if((src.reagent_glass) && (src.use_beaker) && ((C.bruteloss >= heal_threshold) || (C.toxloss >= heal_threshold) || (C.toxloss >= heal_threshold) || (C.oxyloss >= (heal_threshold + 15))))
+	if((src.reagent_glass) && (src.use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.toxloss >= heal_threshold) || (C.toxloss >= heal_threshold) || (C.oxyloss >= (heal_threshold + 15))))
 		for(var/datum/reagent/R in src.reagent_glass.reagents.reagent_list)
 			if(!C.reagents.has_reagent(R))
 				return 1
 			continue
 
 	//They're injured enough for it!
-	if((C.bruteloss >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_brute)))
+	if((C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_brute)))
 		return 1 //If they're already medicated don't bother!
 
 	if((C.oxyloss >= (15 + heal_threshold)) && (!C.reagents.has_reagent(src.treatment_oxy)))
@@ -391,7 +391,7 @@
 		if(!C.reagents.has_reagent(src.treatment_virus))
 			reagent_id = src.treatment_virus
 
-	if (!reagent_id && (C.bruteloss >= heal_threshold))
+	if (!reagent_id && (C.getBruteLoss() >= heal_threshold))
 		if(!C.reagents.has_reagent(src.treatment_brute))
 			reagent_id = src.treatment_brute
 

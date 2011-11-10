@@ -5,7 +5,18 @@
 	flags = NOREACT
 	var/datum/mind/mind
 
-	var/uses_hud = 0
+
+
+
+	//MOB overhaul
+	var/obj/organstructure/organStructure = null
+
+	//Vars that have been relocated.
+
+//	var/uses_hud = 0
+	var/bruteloss = 0.0//Living
+
+
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null
@@ -79,7 +90,7 @@
 	var/oxyloss = 0.0//Living
 	var/toxloss = 0.0//Living
 	var/fireloss = 0.0//Living
-	var/bruteloss = 0.0//Living
+
 	var/timeofdeath = 0.0//Living
 	var/cpr_time = 1.0//Carbon
 	var/health = 100//Living
@@ -412,3 +423,77 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 			v.carrier = 1
 		return
 	return
+
+
+
+
+
+// ++++ROCKDTBEN++++ MOB PROCS
+
+
+
+/mob/proc/getBruteLoss()
+	return bruteloss
+
+// Standard for setting hasn't been agreed upon yet.
+
+/*
+
+/mob/proc/setBruteLoss(var/T)
+	bruteloss = T
+
+/mob/proc/setOxyLoss(var/T)
+	oxyloss = T
+
+/mob/proc/getOxyLoss()
+	return oxyloss
+
+/mob/proc/setToxLoss(var/T)
+	toxloss = T
+
+/mob/proc/getToxLoss()
+	return toxloss
+
+/mob/proc/setFireLoss(var/T)
+	fireloss = T
+
+/mob/proc/getFireLoss()
+	return fireloss
+
+/mob/proc/setCloneLoss(var/T)
+	cloneloss = T
+
+/mob/proc/getCloneLoss()
+	return cloneloss
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

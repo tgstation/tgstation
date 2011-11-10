@@ -688,7 +688,7 @@
 						M.pulling = null
 
 						//this is the gay blood on floor shit -- Added back -- Skie
-						if (M.lying && (prob(M.bruteloss / 6)))
+						if (M.lying && (prob(M.getBruteLoss() / 6)))
 							var/turf/location = M.loc
 							if (istype(location, /turf/simulated))
 								location.add_blood(M)
@@ -2195,7 +2195,7 @@ It can still be worn/put on as normal.
 	for(var/datum/organ/external/O in organs)
 		src.bruteloss += O.brute_dam
 		src.fireloss += O.burn_dam
-	src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss - src.cloneloss
+	src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.getBruteLoss() - src.cloneloss
 
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)

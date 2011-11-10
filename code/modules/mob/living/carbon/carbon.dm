@@ -32,7 +32,7 @@
 						M.show_message(text("\red <B>[user] attacks [src]'s stomach wall with the [I.name]!"), 2)
 				playsound(user.loc, 'attackblob.ogg', 50, 1)
 
-				if(prob(src.bruteloss - 50))
+				if(prob(src.getBruteLoss() - 50))
 					src.gib()
 
 /mob/living/carbon/gib(give_medal)

@@ -217,7 +217,7 @@
 		del(src)
 		return
 
-	var/b_loss = bruteloss
+	var/b_loss = getBruteLoss()
 	var/f_loss = fireloss
 	switch(severity)
 		if(1.0)
@@ -338,7 +338,7 @@
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		if (W:remove_fuel(0))
 			bruteloss -= 30
-			if(bruteloss < 0) bruteloss = 0
+			if(getBruteLoss() < 0) bruteloss = 0
 			updatehealth()
 			add_fingerprint(user)
 			for(var/mob/O in viewers(user, null))

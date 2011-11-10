@@ -472,7 +472,7 @@
 		Respiratory: [M.oxyloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.oxyloss]</font><br>
 		Toxicology: [M.toxloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.toxloss]</font><br>
 		Burns: [M.fireloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.fireloss]</font><br>
-		Structural Integrity: [M.bruteloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.bruteloss]</font><br>
+		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
 		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
 		"}
 		for(var/datum/disease/D in M.viruses)

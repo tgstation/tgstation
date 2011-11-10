@@ -102,7 +102,7 @@
 			paralysis = max(min(paralysis, 20), 0)
 			weakened = max(min(weakened, 20), 0)
 			sleeping = max(min(sleeping, 20), 0)
-			bruteloss = max(bruteloss, 0)
+			bruteloss = max(getBruteLoss(), 0)
 			toxloss = max(toxloss, 0)
 			oxyloss = max(oxyloss, 0)
 			fireloss = max(fireloss, 0)
@@ -603,7 +603,7 @@
 				if(light_amount > 0) //if there's enough light, heal
 					if(fireloss)
 						heal_overall_damage(0,1)
-					if(bruteloss)
+					if(getBruteLoss())
 						heal_overall_damage(1,0)
 					if(toxloss)
 						toxloss--

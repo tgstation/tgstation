@@ -1200,7 +1200,7 @@ datum
 					return
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(40)) M:oxyloss--
-				if(M:bruteloss && prob(40)) M:heal_organ_damage(1,0)
+				if(M:getBruteLoss() && prob(40)) M:heal_organ_damage(1,0)
 				if(M:fireloss && prob(40)) M:heal_organ_damage(0,1)
 				if(M:toxloss && prob(40)) M:toxloss--
 				..()
@@ -2103,7 +2103,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
+				if(M:getBruteLoss() && prob(20)) M:heal_organ_damage(1,0)
 				M:nutrition++
 				..()
 				return
@@ -2117,7 +2117,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
+				if(M:getBruteLoss() && prob(20)) M:heal_organ_damage(1,0)
 				M:nutrition++
 				..()
 				return
@@ -2132,7 +2132,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
-				if(M:bruteloss && prob(20)) M:heal_organ_damage(1,0)
+				if(M:getBruteLoss() && prob(20)) M:heal_organ_damage(1,0)
 				..()
 				return
 
@@ -2656,7 +2656,7 @@ datum
 			color = "#895C4C" // rgb: 137, 92, 76
 
 			on_mob_life(var/mob/living/M as mob)
-				if(M:bruteloss && prob(10)) M:heal_organ_damage(1,0)
+				if(M:getBruteLoss() && prob(10)) M:heal_organ_damage(1,0)
 				M:nutrition += 2
 				if(!data) data = 1
 				data++
@@ -3031,7 +3031,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:oxyloss && prob(50)) M:oxyloss -= 2
-				if(M:bruteloss && prob(60)) M:heal_organ_damage(2,0)
+				if(M:getBruteLoss() && prob(60)) M:heal_organ_damage(2,0)
 				if(M:fireloss && prob(50)) M:heal_organ_damage(0,2)
 				if(M:toxloss && prob(50)) M:toxloss -= 2
 				if(M.dizziness !=0) M.dizziness = max(0,M.dizziness-15)

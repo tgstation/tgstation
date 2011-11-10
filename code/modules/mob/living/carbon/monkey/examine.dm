@@ -16,8 +16,8 @@
 	if (src.stat == 2)
 		usr << text("\red [] is limp and unresponsive, a dull lifeless look in their eyes.", src.name)
 	else
-		if (src.bruteloss)
-			if (src.bruteloss < 30)
+		if (src.getBruteLoss())
+			if (src.getBruteLoss() < 30)
 				usr << text("\red [] looks slightly bruised!", src.name)
 			else
 				usr << text("\red <B>[] looks severely bruised!</B>", src.name)

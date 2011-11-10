@@ -1296,7 +1296,7 @@
 		O.stat = AI.stat
 		O.oxyloss = AI.oxyloss
 		O.fireloss = AI.fireloss
-		O.bruteloss = AI.bruteloss
+		O.bruteloss = AI.getBruteLoss()
 		O.toxloss = AI.toxloss
 		O.updatehealth()
 		src.occupant = O
@@ -1314,7 +1314,7 @@
 			AI.laws = O.laws
 			AI.oxyloss = O.oxyloss
 			AI.fireloss = O.fireloss
-			AI.bruteloss = O.bruteloss
+			AI.bruteloss = O.getBruteLoss()
 			AI.toxloss = O.toxloss
 			AI.updatehealth()
 			del(O)

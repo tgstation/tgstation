@@ -32,7 +32,7 @@
 			paralysis = max(min(paralysis, 1), 0)
 			weakened = max(min(weakened, 15), 0)
 			sleeping = max(min(sleeping, 1), 0)
-			bruteloss = max(bruteloss, 0)
+			bruteloss = max(getBruteLoss(), 0)
 			toxloss = 0
 			oxyloss = 0
 			fireloss = max(fireloss, 0)
@@ -70,7 +70,7 @@
 
 		handle_regular_status_updates()
 
-			health = src.health_max - (fireloss + bruteloss)
+			health = src.health_max - (fireloss + getBruteLoss())
 
 			if(health <= 0)
 				death()

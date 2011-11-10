@@ -20,7 +20,7 @@
 
 	handle_regular_status_updates()
 
-		health = 200 - (oxyloss + fireloss + bruteloss)
+		health = 200 - (oxyloss + fireloss + getBruteLoss())
 
 		weakened = 0
 		stunned = 0
@@ -43,7 +43,7 @@
 		return 1
 
 	updatehealth()
-		src.health = 200 - src.oxyloss - src.fireloss - src.bruteloss
+		src.health = 200 - src.oxyloss - src.fireloss - src.getBruteLoss()
 
 	xcom_attack(mob/living/carbon/human/target as mob)
 		if(!ishuman(target))

@@ -391,7 +391,7 @@
 			C.occupant = O
 			connected = null
 		O.name = text("monkey ([])",copytext(md5(M.real_name), 2, 6))
-		O.take_overall_damage(M.bruteloss + 40, M.fireloss)
+		O.take_overall_damage(M.getBruteLoss() + 40, M.fireloss)
 		O.toxloss += (M.toxloss + 20)
 		O.oxyloss += M.oxyloss
 		O.stat = M.stat
@@ -466,7 +466,7 @@
 				O.real_name = randomname
 				i++
 		updateappearance(O,O.dna.uni_identity)
-		O.take_overall_damage(M.bruteloss, M.fireloss)
+		O.take_overall_damage(M.getBruteLoss(), M.fireloss)
 		O.toxloss += M.toxloss
 		O.oxyloss += M.oxyloss
 		O.stat = M.stat

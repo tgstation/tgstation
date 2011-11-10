@@ -290,7 +290,7 @@ ________________________________________________________________________________
 			dat += "Oxygen loss: [U.oxyloss]"
 			dat += " | Toxin levels: [U.toxloss]<br>"
 			dat += "Burn severity: [U.fireloss]"
-			dat += " | Brute trauma: [U.bruteloss]<br>"
+			dat += " | Brute trauma: [U.getBruteLoss()]<br>"
 			dat += "Radiation Level: [U.radiation] rad<br>"
 			dat += "Body Temperature: [U.bodytemperature-T0C]&deg;C ([U.bodytemperature*1.8-459.67]&deg;F)<br>"
 

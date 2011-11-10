@@ -5,8 +5,8 @@
 	usr << text("\blue This is \icon[src] <B>[src.name]</B>!")
 	if (src.stat == 2)
 		usr << text("\red [src.name] is powered-down.")
-	if (src.bruteloss)
-		if (src.bruteloss < 75)
+	if (src.getBruteLoss())
+		if (src.getBruteLoss() < 75)
 			usr << text("\red [src.name] looks slightly dented")
 		else
 			usr << text("\red <B>[src.name] looks severely dented!</B>")

@@ -20,7 +20,7 @@
 		if (src.nodamage == 0)
 		//oxyloss is only used for suicide
 		//toxloss isn't used for aliens, its actually used as alien powers!!
-			src.health = 150 - src.oxyloss - src.fireloss - src.bruteloss
+			src.health = 150 - src.oxyloss - src.fireloss - src.getBruteLoss()
 		else
 			src.health = 150
 			src.stat = 0
@@ -76,7 +76,7 @@
 
 	handle_regular_status_updates()
 
-		health = 150 - (oxyloss + fireloss + bruteloss + cloneloss)
+		health = 150 - (oxyloss + fireloss + getBruteLoss() + cloneloss)
 
 		if(oxyloss > 50) paralysis = max(paralysis, 3)
 

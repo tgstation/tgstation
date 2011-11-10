@@ -125,7 +125,7 @@
 			src.occupant.oxyloss = max (src.occupant.oxyloss-1, 0)
 			src.occupant.fireloss = max (src.occupant.fireloss-1, 0)
 			src.occupant.toxloss = max (src.occupant.toxloss-1, 0)
-			src.occupant.bruteloss = max (src.occupant.bruteloss-1, 0)
+			src.occupant.bruteloss = max (src.occupant.getBruteLoss()-1, 0)
 			src.occupant.updatehealth()
 			if (src.occupant.health >= 0 && src.occupant.stat == 2)
 				src.occupant.stat = 0

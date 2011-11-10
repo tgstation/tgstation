@@ -64,7 +64,7 @@
 						var/dam1 = round(H.oxyloss,1)
 						var/dam2 = round(H.toxloss,1)
 						var/dam3 = round(H.fireloss,1)
-						var/dam4 = round(H.bruteloss,1)
+						var/dam4 = round(H.getBruteLoss(),1)
 						switch(C.sensor_mode)
 							if(1)
 								if(H.wear_id)
