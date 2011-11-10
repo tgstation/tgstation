@@ -9,7 +9,9 @@
 
 
 	//MOB overhaul
-	var/obj/organstructure/organStructure = null
+
+	//Not in use yet
+//	var/obj/organstructure/organStructure = null
 
 	//Vars that have been relocated.
 
