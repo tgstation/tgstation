@@ -84,7 +84,7 @@ SHARDS
 			user << "\b There is not enough wire in this coil. You need 5 lengths."
 		CC.amount -= 5
 		amount -= 1
-		user << "\blue You attack wire to the [name]."
+		user << "\blue You attach wire to the [name]."
 		new/obj/item/stack/light_w(user.loc)
 		if(CC.amount <= 0)
 			user.u_equip(CC)
