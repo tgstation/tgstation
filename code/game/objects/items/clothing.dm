@@ -245,6 +245,9 @@ THERMAL GLASSES
 			usr << "Its vital tracker and tracking beacon appear to be enabled."
 
 
+/obj/item/clothing/head/helmet/welding/attack_self()
+	toggle()
+
 /obj/item/clothing/head/helmet/welding/verb/toggle()
 	set category = "Object"
 	set name = "Adjust welding mask"
