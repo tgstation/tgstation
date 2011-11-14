@@ -104,7 +104,7 @@
 			sleeping = max(min(sleeping, 20), 0)
 			bruteloss = max(getBruteLoss(), 0)
 			toxloss = max(toxloss, 0)
-			oxyloss = max(oxyloss, 0)
+			oxyloss = max(getOxyLoss(), 0)
 			fireloss = max(fireloss, 0)
 
 
@@ -346,7 +346,7 @@
 				oxygen_used = breath.oxygen*ratio/6
 				oxygen_alert = max(oxygen_alert, 1)*/
 			else								// We're in safe limits
-				oxyloss = max(oxyloss-5, 0)
+				oxyloss = max(getOxyLoss()-5, 0)
 				oxygen_used = breath.oxygen/6
 				oxygen_alert = 0
 
@@ -607,7 +607,7 @@
 						heal_overall_damage(1,0)
 					if(toxloss)
 						toxloss--
-					if(oxyloss)
+					if(getOxyLoss())
 						oxyloss--
 
 			if(overeatduration > 500 && !(mutations & FAT))
@@ -656,9 +656,9 @@
 
 		handle_regular_status_updates()
 
-		//	health = 100 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
+		//	health = 100 - (getOxyLoss() + toxloss + fireloss + bruteloss + cloneloss)
 
-			if(oxyloss > 50) paralysis = max(paralysis, 3)
+			if(getOxyLoss() > 50) paralysis = max(paralysis, 3)
 
 			if(sleeping)
 				paralysis = max(paralysis, 3)

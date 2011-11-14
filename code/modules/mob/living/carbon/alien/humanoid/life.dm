@@ -86,7 +86,7 @@
 			sleeping = max(min(sleeping, 20), 0)
 			bruteloss = max(getBruteLoss(), 0)
 			toxloss = max(toxloss, 0)
-			oxyloss = max(oxyloss, 0)
+			oxyloss = max(getOxyLoss(), 0)
 			fireloss = max(fireloss, 0)
 
 
@@ -396,9 +396,9 @@
 
 		handle_regular_status_updates()
 
-			health = 100 - (oxyloss + fireloss + getBruteLoss() + cloneloss)
+			health = 100 - (getOxyLoss() + fireloss + getBruteLoss() + cloneloss)
 
-			if(oxyloss > 50) paralysis = max(paralysis, 3)
+			if(getOxyLoss() > 50) paralysis = max(paralysis, 3)
 
 			if(src.sleeping)
 				src.paralysis = max(src.paralysis, 3)

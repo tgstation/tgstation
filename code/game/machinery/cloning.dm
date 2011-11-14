@@ -415,7 +415,7 @@
 	if (!src.implanted)
 		return "ERROR"
 	else
-		src.healthstring = "[round(src.implanted:oxyloss)] - [round(src.implanted:fireloss)] - [round(src.implanted:toxloss)] - [round(src.implanted:getBruteLoss())]"
+		src.healthstring = "[round(src.implanted:getOxyLoss())] - [round(src.implanted:fireloss)] - [round(src.implanted:toxloss)] - [round(src.implanted:getBruteLoss())]"
 		if (!src.healthstring)
 			src.healthstring = "ERROR"
 		return src.healthstring
@@ -457,7 +457,7 @@
 	src.occupant.paralysis += 4
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
-	src.occupant.health = (src.occupant.getBruteLoss() + src.occupant.toxloss + src.occupant.oxyloss + src.occupant.cloneloss)
+	src.occupant.health = (src.occupant.getBruteLoss() + src.occupant.toxloss + src.occupant.getOxyLoss() + src.occupant.cloneloss)
 
 	src.occupant << "\blue <b>Clone generation process initiated.</b>"
 	src.occupant << "\blue This will take a moment, please hold."
@@ -554,7 +554,7 @@
 				src.occupant.reagents.add_reagent("inaprovaline", 60)
 
 			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
-			src.occupant.oxyloss = max(src.occupant.oxyloss-4, 0)
+			src.occupant.oxyloss = max(src.occupant.getOxyLoss()-4, 0)
 
 			use_power(7500) //This might need tweaking.
 			return

@@ -79,8 +79,8 @@
 				if(toxloss > 0)
 					toxloss = max(0, toxloss-10)
 
-				if(oxyloss > 0)
-					oxyloss = max(0, oxyloss-10)
+				if(getOxyLoss() > 0)
+					oxyloss = max(0, getOxyLoss()-10)
 
 				if(getBruteLoss() > 0)
 					bruteloss = max(0, getBruteLoss()-10)
@@ -97,7 +97,7 @@
 							Metroid.Feedstop()
 
 				if(toxloss<0) toxloss = 0
-				if(oxyloss<0) oxyloss = 0
+				if(getOxyLoss()<0) oxyloss = 0
 				if(getBruteLoss()<0) bruteloss = 0
 				if(fireloss<0) fireloss = 0
 				if(cloneloss<0) cloneloss = 0

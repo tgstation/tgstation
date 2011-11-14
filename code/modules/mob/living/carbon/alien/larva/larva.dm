@@ -503,7 +503,7 @@
 	if (nodamage == 0)
 	//oxyloss is only used for suicide
 	//toxloss isn't used for aliens, its actually used as alien powers!!
-		health = 25 - oxyloss - fireloss - getBruteLoss()
+		health = 25 - getOxyLoss() - fireloss - getBruteLoss()
 	else
 		health = 25
 		stat = 0

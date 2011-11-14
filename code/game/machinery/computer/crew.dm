@@ -61,7 +61,7 @@
 				if((C) && (C.has_sensor) && (C.loc) && (C.loc.z == 1))
 					if(istype(C.loc, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = C.loc
-						var/dam1 = round(H.oxyloss,1)
+						var/dam1 = round(H.getOxyLoss(),1)
 						var/dam2 = round(H.toxloss,1)
 						var/dam3 = round(H.fireloss,1)
 						var/dam4 = round(H.getBruteLoss(),1)

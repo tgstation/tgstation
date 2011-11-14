@@ -293,7 +293,7 @@
 				oxygen_used = breath.oxygen*ratio/6
 				oxygen_alert = max(oxygen_alert, 1)*/
 			else 									// We're in safe limits
-				oxyloss = max(oxyloss-5, 0)
+				oxyloss = max(getOxyLoss()-5, 0)
 				oxygen_used = breath.oxygen/6
 				oxygen_alert = 0
 
@@ -397,9 +397,9 @@
 
 		handle_regular_status_updates()
 
-			health = 100 - (oxyloss + toxloss + fireloss + getBruteLoss() + cloneloss)
+			health = 100 - (getOxyLoss() + toxloss + fireloss + getBruteLoss() + cloneloss)
 
-			if(oxyloss > 25) paralysis = max(paralysis, 3)
+			if(getOxyLoss() > 25) paralysis = max(paralysis, 3)
 
 			if(src.sleeping)
 				src.paralysis = max(src.paralysis, 5)

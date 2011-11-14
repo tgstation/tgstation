@@ -287,7 +287,7 @@ ________________________________________________________________________________
 				dat += "<b>Unique identity</b>: <i>[U.dna.unique_enzymes]</i><br>"
 			dat += "<h4>Overall Status: [U.stat > 1 ? "dead" : "[U.health]% healthy"]</h4>"
 			dat += "<h4>Nutrition Status: [U.nutrition]</h4>"
-			dat += "Oxygen loss: [U.oxyloss]"
+			dat += "Oxygen loss: [U.getOxyLoss()]"
 			dat += " | Toxin levels: [U.toxloss]<br>"
 			dat += "Burn severity: [U.fireloss]"
 			dat += " | Brute trauma: [U.getBruteLoss()]<br>"

@@ -469,7 +469,7 @@
 		dat += {"Bioscan Results for [M]: <br>"
 		Overall Status: [M.stat > 1 ? "dead" : "[M.health]% healthy"] <br>
 		Scan Breakdown: <br>
-		Respiratory: [M.oxyloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.oxyloss]</font><br>
+		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getOxyLoss()]</font><br>
 		Toxicology: [M.toxloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.toxloss]</font><br>
 		Burns: [M.fireloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.fireloss]</font><br>
 		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>

@@ -234,7 +234,7 @@
 	O.name = text("monkey ([])",copytext(md5(usr.real_name), 2, 6))
 	O.toxloss = usr.toxloss
 	O.bruteloss = usr.getBruteLoss()
-	O.oxyloss = usr.oxyloss
+	O.oxyloss = usr.getOxyLoss()
 	O.fireloss = usr.fireloss
 	O.stat = usr.stat
 	O.a_intent = "hurt"
@@ -329,7 +329,7 @@
 	domutcheck(O, null)
 	O.toxloss = usr.toxloss
 	O.bruteloss = usr.getBruteLoss()
-	O.oxyloss = usr.oxyloss
+	O.oxyloss = usr.getOxyLoss()
 	O.fireloss = usr.fireloss
 	O.stat = usr.stat
 	for (var/obj/item/weapon/implant/I in implants)

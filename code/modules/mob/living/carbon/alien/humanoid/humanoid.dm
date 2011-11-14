@@ -755,7 +755,7 @@ In all, this is a lot like the monkey code. /N
 	if (nodamage == 0)
 	//oxyloss is only used for suicide
 	//toxloss isn't used for aliens, its actually used as alien powers!!
-		health = 100 - oxyloss - fireloss - getBruteLoss()
+		health = 100 - getOxyLoss() - fireloss - getBruteLoss()
 	else
 		health = 100
 		stat = 0

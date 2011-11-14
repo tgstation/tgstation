@@ -437,6 +437,19 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 /mob/proc/getBruteLoss()
 	return bruteloss
 
+/mob/proc/getOxyLoss()
+	return oxyloss
+
+/mob/proc/getToxLoss()
+	return toxloss
+
+/mob/proc/getFireLoss()
+	return fireloss
+
+/mob/proc/getCloneLoss()
+	return cloneloss
+
+
 // Standard for setting hasn't been agreed upon yet.
 
 /*
@@ -447,26 +460,22 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 /mob/proc/setOxyLoss(var/T)
 	oxyloss = T
 
-/mob/proc/getOxyLoss()
-	return oxyloss
+
 
 /mob/proc/setToxLoss(var/T)
 	toxloss = T
 
-/mob/proc/getToxLoss()
-	return toxloss
+
 
 /mob/proc/setFireLoss(var/T)
 	fireloss = T
 
-/mob/proc/getFireLoss()
-	return fireloss
+
 
 /mob/proc/setCloneLoss(var/T)
 	cloneloss = T
 
-/mob/proc/getCloneLoss()
-	return cloneloss
+
 
 */
 

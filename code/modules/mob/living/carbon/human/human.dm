@@ -1874,7 +1874,7 @@ It can still be worn/put on as normal.
 				return
 			if ((target.health >= -99.0 && target.health < 0))
 				target.cpr_time = world.time
-				var/suff = min(target.oxyloss, 7)
+				var/suff = min(target.getOxyLoss(), 7)
 				target.oxyloss -= suff
 				target.updatehealth()
 				for(var/mob/O in viewers(source, null))
@@ -2195,7 +2195,7 @@ It can still be worn/put on as normal.
 	for(var/datum/organ/external/O in organs)
 		src.bruteloss += O.brute_dam
 		src.fireloss += O.burn_dam
-	src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.getBruteLoss() - src.cloneloss
+	src.health = 100 - src.getOxyLoss() - src.toxloss - src.fireloss - src.getBruteLoss() - src.cloneloss
 
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)
