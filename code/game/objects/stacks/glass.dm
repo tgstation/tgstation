@@ -139,14 +139,14 @@ SHARDS
 	src.icon_state = pick("large", "medium", "small")
 	switch(src.icon_state)
 		if("small")
-			src.pixel_x = rand(1, 18)
-			src.pixel_y = rand(1, 18)
+			src.pixel_x = rand(-12, 12)
+			src.pixel_y = rand(-12, 12)
 		if("medium")
-			src.pixel_x = rand(1, 16)
-			src.pixel_y = rand(1, 16)
+			src.pixel_x = rand(-8, 8)
+			src.pixel_y = rand(-8, 8)
 		if("large")
-			src.pixel_x = rand(1, 10)
-			src.pixel_y = rand(1, 5)
+			src.pixel_x = rand(-5, 5)
+			src.pixel_y = rand(-5, 5)
 		else
 	return
 

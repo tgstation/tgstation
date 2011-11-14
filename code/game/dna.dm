@@ -691,27 +691,32 @@
 			var/mob/occupant = src.connected.occupant
 			dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>" //Blah obvious
 			if (occupant) //is there REALLY someone in there?
-				if (!istype(occupant,/mob/living/carbon/human))
-					sleep(1)
-				var/t1
-				switch(occupant.stat) // obvious, see what their status is
-					if(0)
-						t1 = "Conscious"
-					if(1)
-						t1 = "Unconscious"
-					else
-						t1 = "*dead*"
-				dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
-				dat += text("<font color='green'>Radiation Level: []%</FONT><BR><BR>", occupant.radiation)
-				dat += text("Unique Enzymes : <font color='blue'>[]</FONT><BR>", uppertext(occupant.dna.unique_enzymes))
-				dat += text("Unique Identifier: <font color='blue'>[]</FONT><BR>", occupant.dna.uni_identity)
-				dat += text("Structural Enzymes: <font color='blue'>[]</FONT><BR><BR>", occupant.dna.struc_enzymes)
-				dat += text("<A href='?src=\ref[];unimenu=1'>Modify Unique Identifier</A><BR>", src)
-				dat += text("<A href='?src=\ref[];strucmenu=1'>Modify Structural Enzymes</A><BR><BR>", src)
-				dat += text("<A href='?src=\ref[];buffermenu=1'>View/Edit/Transfer Buffer</A><BR><BR>", src)
-				dat += text("<A href='?src=\ref[];genpulse=1'>Pulse Radiation</A><BR>", src)
-				dat += text("<A href='?src=\ref[];radset=1'>Radiation Emitter Settings</A><BR><BR>", src)
-				dat += text("<A href='?src=\ref[];rejuv=1'>Inject Rejuvenators</A><BR><BR>", src)
+				if(occupant.mutations & HUSK)
+					dat += "The occupant's DNA structure is of an unknown configuration, please insert a subject with a standard DNA structure.<BR><BR>" //NOPE. -Pete
+					dat += text("<A href='?src=\ref[];buffermenu=1'>View/Edit/Transfer Buffer</A><BR><BR>", src)
+					dat += text("<A href='?src=\ref[];radset=1'>Radiation Emitter Settings</A><BR><BR>", src)
+				else
+					if (!istype(occupant,/mob/living/carbon/human))
+						sleep(1)
+					var/t1
+					switch(occupant.stat) // obvious, see what their status is
+						if(0)
+							t1 = "Conscious"
+						if(1)
+							t1 = "Unconscious"
+						else
+							t1 = "*dead*"
+					dat += text("[]\tHealth %: [] ([])</FONT><BR>", (occupant.health > 50 ? "<font color='blue'>" : "<font color='red'>"), occupant.health, t1)
+					dat += text("<font color='green'>Radiation Level: []%</FONT><BR><BR>", occupant.radiation)
+					dat += text("Unique Enzymes : <font color='blue'>[]</FONT><BR>", uppertext(occupant.dna.unique_enzymes))
+					dat += text("Unique Identifier: <font color='blue'>[]</FONT><BR>", occupant.dna.uni_identity)
+					dat += text("Structural Enzymes: <font color='blue'>[]</FONT><BR><BR>", occupant.dna.struc_enzymes)
+					dat += text("<A href='?src=\ref[];unimenu=1'>Modify Unique Identifier</A><BR>", src)
+					dat += text("<A href='?src=\ref[];strucmenu=1'>Modify Structural Enzymes</A><BR><BR>", src)
+					dat += text("<A href='?src=\ref[];buffermenu=1'>View/Edit/Transfer Buffer</A><BR><BR>", src)
+					dat += text("<A href='?src=\ref[];genpulse=1'>Pulse Radiation</A><BR>", src)
+					dat += text("<A href='?src=\ref[];radset=1'>Radiation Emitter Settings</A><BR><BR>", src)
+					dat += text("<A href='?src=\ref[];rejuv=1'>Inject Rejuvenators</A><BR><BR>", src)
 			else
 				dat += "The scanner is empty.<BR><BR>"
 				dat += text("<A href='?src=\ref[];buffermenu=1'>View/Edit/Transfer Buffer</A><BR><BR>", src)
