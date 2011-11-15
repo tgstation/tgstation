@@ -48,7 +48,7 @@ var
 
 	diary = null
 	station_name = null
-	game_version = "/tg/ Station 13"
+	game_version = "Baystation 12"
 
 	datum/air_tunnel/air_tunnel1/SS13_airtunnel = null
 	going = 1.0
