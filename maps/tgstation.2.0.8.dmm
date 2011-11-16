@@ -2374,7 +2374,7 @@
 "aTH" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/simulated/wall,/area/hydroponics)
 "aTI" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/simulated/wall,/area/storage/auxillary)
 "aTJ" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/wall,/area/storage/auxillary)
-"aTK" = (/obj/machinery/door/airlock/maintenance{name = "Emergency Storage"; req_access_txt = "14"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plating,/area/storage/auxillary)
+"aTK" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/door/airlock/maintenance{name = "Emergency Storage"; req_one_access_txt = "10;24"},/turf/simulated/floor/plating,/area/storage/auxillary)
 "aTL" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/wall,/area/storage/auxillary)
 "aTM" = (/turf/simulated/wall,/area/hallway/primary/starboard)
 "aTN" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall,/area/hallway/primary/starboard)
