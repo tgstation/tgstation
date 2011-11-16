@@ -601,6 +601,7 @@
 
 	var/list/can_be_placed_into = list(
 		/obj/machinery/chem_master/,
+		/obj/machinery/reagentgrinder,
 		/obj/structure/table,
 		/obj/structure/secure_closet,
 		/obj/structure/closet,
@@ -611,6 +612,7 @@
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/secstorage/ssafe,
+		/obj/machinery/disposal,
 		/obj/machinery/disease2/incubator,
 		/obj/machinery/disease2/isolator,
 		/obj/machinery/disease2/biodestroyer
