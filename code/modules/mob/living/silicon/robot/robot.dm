@@ -97,46 +97,25 @@
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Kent", "Medbot", "Surgeon")
-			if(icontype == "Kent")
-				icon_state = "toiletbot"
-			else if(icontype == "Medbot")
-				icon_state = "Medbot"
-			else if(icontype == "Surgeon")
-				icon_state = "surgeon"
+			icon_state = "surgeon"
 			modtype = "Med"
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Armored", "Robocop", "Robocop Red", "Heavy Duty", "Bloodhound")
-			if(icontype == "Armored")
-				icon_state = "Security"
-			else if(icontype == "Robocop")
-				icon_state = "Security2"
-			else if(icontype == "Robocop Red")
-				icon_state = "Security3"
-			else if(icontype == "Heavy Duty")
-				icon_state = "secborg"
-			else if(icontype == "Bloodhound")
-				icon_state = "bloodhound"
+			icon_state = "bloodhound"
 			modtype = "Sec"
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
-
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Engineer", "Engiseer")
-			if(icontype == "Engineer")
-				icon_state = "Engineering"
-			else
-				icon_state = "Engineering2"
+			icon_state = "landmate"
 			modtype = "Eng"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
-			icon_state = "Janbot"
+			icon_state = "mopgearrex"
 			modtype = "Jan"
 
 	overlays -= "eyes" //Takes off the eyes that it started with
@@ -666,6 +645,12 @@
 		if(icon_state == "bloodhound")
 			overlays = null
 			overlays += "eyes-bloodhound"
+		if(icon_state =="landmate")
+			overlays = null
+			overlays += "eyes-landmate"
+		if(icon_state =="mopgearrex")
+			overlays = null
+			overlays += "eyes-mopgearrex"
 	else
 		overlays -= "eyes"
 
