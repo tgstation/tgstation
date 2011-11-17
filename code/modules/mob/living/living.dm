@@ -2,13 +2,13 @@
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
 		src.oxyloss += src.health + 200
-		src.health = 100 - src.getOxyLoss() - src.toxloss - src.fireloss - src.getBruteLoss()
+		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.fireloss - src.getBruteLoss()
 		src << "\blue You have given up life and succumbed to death."
 
 
 /mob/living/proc/updatehealth()
 	if(!src.nodamage)
-		src.health = 100 - src.getOxyLoss() - src.toxloss - src.fireloss - src.getBruteLoss() - src.cloneloss
+		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.fireloss - src.getBruteLoss() - src.cloneloss
 	else
 		src.health = 100
 		src.stat = 0

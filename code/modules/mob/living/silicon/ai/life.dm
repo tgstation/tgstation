@@ -239,9 +239,9 @@
 /mob/living/silicon/ai/updatehealth()
 	if (src.nodamage == 0)
 		if(src.fire_res_on_core)
-			src.health = 100 - src.getOxyLoss() - src.toxloss - src.getBruteLoss()
+			src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getBruteLoss()
 		else
-			src.health = 100 - src.getOxyLoss() - src.toxloss - src.fireloss - src.getBruteLoss()
+			src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.fireloss - src.getBruteLoss()
 	else
 		src.health = 100
 		src.stat = 0

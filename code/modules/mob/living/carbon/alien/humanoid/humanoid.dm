@@ -72,7 +72,7 @@
 	stat(null, "Move Mode: [m_intent]")
 
 	if (client.statpanel == "Status")
-		stat(null, "Plasma Stored: [toxloss]")
+		stat(null, "Plasma Stored: [getToxLoss()]")
 
 ///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 

@@ -397,7 +397,7 @@
 
 		handle_regular_status_updates()
 
-			health = 100 - (getOxyLoss() + toxloss + fireloss + getBruteLoss() + cloneloss)
+			health = 100 - (getOxyLoss() + getToxLoss() + fireloss + getBruteLoss() + cloneloss)
 
 			if(getOxyLoss() > 25) paralysis = max(paralysis, 3)
 

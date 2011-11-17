@@ -288,7 +288,7 @@ ________________________________________________________________________________
 			dat += "<h4>Overall Status: [U.stat > 1 ? "dead" : "[U.health]% healthy"]</h4>"
 			dat += "<h4>Nutrition Status: [U.nutrition]</h4>"
 			dat += "Oxygen loss: [U.getOxyLoss()]"
-			dat += " | Toxin levels: [U.toxloss]<br>"
+			dat += " | Toxin levels: [U.getToxLoss()]<br>"
 			dat += "Burn severity: [U.fireloss]"
 			dat += " | Brute trauma: [U.getBruteLoss()]<br>"
 			dat += "Radiation Level: [U.radiation] rad<br>"

@@ -17,6 +17,8 @@
 
 //	var/uses_hud = 0
 	var/bruteloss = 0.0//Living
+	var/oxyloss = 0.0//Living
+	var/toxloss = 0.0//Living
 
 
 	var/obj/screen/flash = null
@@ -89,8 +91,7 @@
 	var/lying = 0.0
 	var/canmove = 1.0
 	var/eye_stat = null//Living, potentially Carbon
-	var/oxyloss = 0.0//Living
-	var/toxloss = 0.0//Living
+
 	var/fireloss = 0.0//Living
 
 	var/timeofdeath = 0.0//Living

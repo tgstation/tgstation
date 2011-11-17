@@ -83,7 +83,7 @@
 			weakened = max(min(weakened, 20), 0)
 			sleeping = max(min(sleeping, 20), 0)
 			bruteloss = max(getBruteLoss(), 0)
-			toxloss = max(toxloss, 0)
+			toxloss = max(getToxLoss(), 0)
 			oxyloss = max(getOxyLoss(), 0)
 			fireloss = max(fireloss, 0)
 

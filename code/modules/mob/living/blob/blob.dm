@@ -41,7 +41,7 @@
 		weakened = 0
 		sleeping = 0
 		bruteloss = max(getBruteLoss(), 0)
-		toxloss = max(toxloss, 0)
+		toxloss = max(getToxLoss(), 0)
 		oxyloss = max(getOxyLoss(), 0)
 		fireloss = max(fireloss, 0)
 		if(stat)
@@ -50,7 +50,7 @@
 
 
 	proc/UpdateDamage()
-		health = 60 - (getOxyLoss() + toxloss + fireloss + getBruteLoss() + cloneloss)
+		health = 60 - (getOxyLoss() + getToxLoss() + fireloss + getBruteLoss() + cloneloss)
 		return
 
 

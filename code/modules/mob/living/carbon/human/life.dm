@@ -103,7 +103,7 @@
 			weakened = max(min(weakened, 20), 0)
 			sleeping = max(min(sleeping, 20), 0)
 			bruteloss = max(getBruteLoss(), 0)
-			toxloss = max(toxloss, 0)
+			toxloss = max(getToxLoss(), 0)
 			oxyloss = max(getOxyLoss(), 0)
 			fireloss = max(fireloss, 0)
 
@@ -605,7 +605,7 @@
 						heal_overall_damage(0,1)
 					if(getBruteLoss())
 						heal_overall_damage(1,0)
-					if(toxloss)
+					if(getToxLoss())
 						toxloss--
 					if(getOxyLoss())
 						oxyloss--
@@ -656,7 +656,7 @@
 
 		handle_regular_status_updates()
 
-		//	health = 100 - (getOxyLoss() + toxloss + fireloss + bruteloss + cloneloss)
+		//	health = 100 - (getOxyLoss() + getToxLoss() + fireloss + bruteloss + cloneloss)
 
 			if(getOxyLoss() > 50) paralysis = max(paralysis, 3)
 

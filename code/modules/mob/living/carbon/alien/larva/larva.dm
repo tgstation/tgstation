@@ -63,7 +63,7 @@
 
 	if (client.statpanel == "Status")
 		stat(null, "Progress: [amount_grown]/200")
-		stat(null, "Plasma Stored: [toxloss]")
+		stat(null, "Plasma Stored: [getToxLoss()]")
 
 
 ///mob/living/carbon/alien/larva/bullet_act(var/obj/item/projectile/Proj) taken care of in living

@@ -232,7 +232,7 @@
 	O.loc = usr.loc
 
 	O.name = text("monkey ([])",copytext(md5(usr.real_name), 2, 6))
-	O.toxloss = usr.toxloss
+	O.toxloss = usr.getToxLoss()
 	O.bruteloss = usr.getBruteLoss()
 	O.oxyloss = usr.getOxyLoss()
 	O.fireloss = usr.fireloss
@@ -327,7 +327,7 @@
 
 	updateappearance(O,O.dna.uni_identity)
 	domutcheck(O, null)
-	O.toxloss = usr.toxloss
+	O.toxloss = usr.getToxLoss()
 	O.bruteloss = usr.getBruteLoss()
 	O.oxyloss = usr.getOxyLoss()
 	O.fireloss = usr.fireloss

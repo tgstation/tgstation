@@ -2195,7 +2195,7 @@ It can still be worn/put on as normal.
 	for(var/datum/organ/external/O in organs)
 		src.bruteloss += O.brute_dam
 		src.fireloss += O.burn_dam
-	src.health = 100 - src.getOxyLoss() - src.toxloss - src.fireloss - src.getBruteLoss() - src.cloneloss
+	src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.fireloss - src.getBruteLoss() - src.cloneloss
 
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)

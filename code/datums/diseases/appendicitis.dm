@@ -32,7 +32,7 @@
 					if (istype(location, /turf/simulated))
 						location.add_vomit_floor(affected_mob)
 					affected_mob.nutrition -= 95
-					affected_mob:toxloss = max(affected_mob:toxloss-1,0)
+					affected_mob:toxloss = max(affected_mob:getToxLoss()-1,0)
 				else
 					affected_mob << "\red You gag as you want to throw up, but there's nothing in your stomach!"
 					affected_mob.weakened += 10
