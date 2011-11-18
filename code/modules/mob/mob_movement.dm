@@ -160,14 +160,14 @@
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
-					move_delay += 6
+					move_delay += 5
 //				if(mob.organStructure && mob.organStructure.legs)
 //					move_delay += mob.organStructure.legs.moveRunDelay
-				move_delay += 1
+				move_delay += 2
 			if("walk")
 //				if(mob.organStructure && mob.organStructure.legs)
 //					move_delay += mob.organStructure.legs.moveWalkDelay
-				move_delay += 7
+				move_delay += 5
 		move_delay += mob.movement_delay()
 
 		//We are now going to move
