@@ -68,16 +68,8 @@ macro "macro"
 		command = "attack-self"
 		is-disabled = false
 	elem 
-		name = "NUMPAD1+REP"
-		command = ".southwest"
-		is-disabled = false
-	elem 
 		name = "NUMPAD2+REP"
 		command = ".south"
-		is-disabled = false
-	elem 
-		name = "NUMPAD3+REP"
-		command = ".southeast"
 		is-disabled = false
 	elem 
 		name = "NUMPAD4+REP"
@@ -92,16 +84,8 @@ macro "macro"
 		command = ".east"
 		is-disabled = false
 	elem 
-		name = "NUMPAD7+REP"
-		command = ".northwest"
-		is-disabled = false
-	elem 
 		name = "NUMPAD8+REP"
 		command = ".north"
-		is-disabled = false
-	elem 
-		name = "NUMPAD9+REP"
-		command = ".northeast"
 		is-disabled = false
 	elem 
 		name = "MULTIPLY"
