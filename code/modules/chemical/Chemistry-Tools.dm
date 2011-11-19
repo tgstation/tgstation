@@ -601,6 +601,7 @@
 
 	var/list/can_be_placed_into = list(
 		/obj/machinery/chem_master/,
+		/obj/machinery/chem_dispenser/,
 		/obj/machinery/reagentgrinder,
 		/obj/structure/table,
 		/obj/structure/secure_closet,

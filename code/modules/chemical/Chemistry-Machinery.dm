@@ -9,15 +9,17 @@
 	icon = 'chemical.dmi'
 	icon_state = "dispenser"
 	var/energy = 25
-	var/max_energy = 25
+	var/max_energy = 75
+	var/amount = 30
+	var/beaker = null
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine","sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron","copper","mercury","radium","water","ethanol","sugar","acid",)
 	proc
 		recharge()
 			if(stat & BROKEN) return
 			if(energy != max_energy)
 				energy++
-				use_power(50)
-			spawn(600) recharge()
+				use_power(2000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
+			spawn(200) recharge()
 
 	New()
 		recharge()
@@ -40,40 +42,90 @@
 		del(src)
 		return
 
-	Topic(href, href_list)
+	proc/updateWindow(mob/user as mob)
+		winset(user, "chemdispenser.energy", "text=\"Energy: [src.energy]\"")
+		winset(user, "chemdispenser.amount", "text=\"Amount: [src.amount]\"")
+		if (beaker)
+			winset(user, "chemdispenser.eject", "text=\"Eject beaker\"")
+		else
+			winset(user, "chemdispenser.eject", "text=\"\[Insert beaker\]\"")
+	proc/initWindow(mob/user as mob)
+		var/i = 0
+		var list/nameparams = params2list(winget(user, "chemdispenser_reagents.template_name", "pos;size;type;image;image-mode"))
+		var list/buttonparams = params2list(winget(user, "chemdispenser_reagents.template_dispense", "pos;size;type;image;image-mode;text;is-flat"))
+		for(var/re in dispensable_reagents)
+			for(var/da in typesof(/datum/reagent) - /datum/reagent)
+				var/datum/reagent/temp = new da()
+				if(temp.id == re)
+					var list/newparams1 = nameparams.Copy()
+					var list/newparams2 = buttonparams.Copy()
+					var/posy = 8 + 40 * i
+					newparams1["pos"] = text("8,[posy]")
+					newparams2["pos"] = text("248,[posy]")
+					newparams1["parent"] = "chemdispenser_reagents"
+					newparams2["parent"] = "chemdispenser_reagents"
+					newparams1["text"] = temp.name
+					newparams2["command"] = text("skincmd \"chemdispenser;[temp.id]\"")
+					winset(user, "chemdispenser_reagent_name[i]", list2params(newparams1))
+					winset(user, "chemdispenser_reagent_dispense[i]", list2params(newparams2))
+					i++
+		winset(user, "chemdispenser_reagents", "size=340x[8 + 40 * i]")
+
+	SkinCmd(mob/user as mob, var/data as text)
 		if(stat & BROKEN) return
 		if(usr.stat || usr.restrained()) return
 		if(!in_range(src, usr)) return
 
 		usr.machine = src
 
-		if (href_list["dispense"])
-			if(!energy)
-				var/dat = "Not enough energy.<BR><A href='?src=\ref[src];ok=1'>OK</A>"
-				usr << browse("<TITLE>Chemical Dispenser</TITLE>Chemical dispenser:<BR>Energy = [energy]/[max_energy]<BR><BR>[dat]", "window=chem_dispenser")
-				return
-			var/id = href_list["dispense"]
-			var/obj/item/weapon/reagent_containers/glass/dispenser/G = new/obj/item/weapon/reagent_containers/glass/dispenser(src.loc)
-			switch(text2num(href_list["state"]))
-				if(LIQUID)
-					G.icon_state = "liquid"
-				if(GAS)
-					G.icon_state = "vapour"
-				if(SOLID)
-					G.icon_state = "solid"
-			G.pixel_x = rand(-7, 7)
-			G.pixel_y = rand(-7, 7)
-			G.name += " ([lowertext(href_list["name"])])"
-			G.reagents.add_reagent(id,30)
-			energy--
-			src.updateUsrDialog()
-			return
+		if (data == "amountc")
+			var/num = text2num(input("Enter desired output amount", "Amount", "30"))
+			if (num)
+				amount = text2num(num)
+		else if (data == "eject")
+			if (src.beaker)
+				var/obj/item/weapon/reagent_containers/glass/B = src.beaker
+				B.loc = src.loc
+				src.beaker = null
+		else if (copytext(data, 1, 7) == "amount")
+			if (text2num(copytext(data, 7)))
+				amount = text2num(copytext(data, 7))
 		else
-			usr << browse(null, "window=chem_dispenser")
-			return
+			if (dispensable_reagents.Find(data) && beaker != null)
+				var/obj/item/weapon/reagent_containers/glass/B = src.beaker
+				var/datum/reagents/R = B.reagents
+				var/space = R.maximum_volume - R.total_volume
+				R.add_reagent(data, min(amount, energy * 10, space))
+				energy = max(energy - min(amount, space) / 10, 0)
+
+		amount = round(amount, 10) // Chem dispenser doesnt really have that much prescion
+		if (amount < 0) // Since the user can actually type the commands himself, some sanity checking
+			amount = 0
+		if (amount > 100)
+			amount = 100
+
+		for(var/mob/player)
+			if (player.machine == src && player.client)
+				updateWindow(player)
 
 		src.add_fingerprint(usr)
 		return
+
+	attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
+		if(!istype(B, /obj/item/weapon/reagent_containers/glass))
+			return
+
+		if(src.beaker)
+			user << "A beaker is already loaded into the machine."
+			return
+
+		src.beaker =  B
+		user.drop_item()
+		B.loc = src
+		user << "You add the beaker to the machine!"
+		for(var/mob/player)
+			if (player.machine == src && player.client)
+				updateWindow(player)
 
 	attack_ai(mob/user as mob)
 		return src.attack_hand(user)
@@ -85,16 +137,11 @@
 		if(stat & BROKEN)
 			return
 		user.machine = src
-		var/dat = ""
-		for(var/re in dispensable_reagents)
-			for(var/da in typesof(/datum/reagent) - /datum/reagent)
-				var/datum/reagent/temp = new da()
-				if(temp.id == re)
-					dat += "<A href='?src=\ref[src];dispense=[temp.id];state=[temp.reagent_state];name=[temp.name]'>[temp.name]</A><BR>"
-					dat += "[temp.description]<BR><BR>"
-		user << browse("<TITLE>Chemical Dispenser</TITLE>Chemical dispenser:<BR>Energy = [energy]/[max_energy]<BR><BR>[dat]", "window=chem_dispenser")
 
-		onclose(user, "chem_dispenser")
+		initWindow(user)
+		updateWindow(user)
+		winshow(user, "chemdispenser", 1)
+		user.skincmds["chemdispenser"] = src
 		return
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
