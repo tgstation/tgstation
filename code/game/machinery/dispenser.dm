@@ -1,3 +1,7 @@
+/obj/machinery/dispenser/New()
+	..()
+	update_icon()
+
 /obj/machinery/dispenser/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -14,9 +18,11 @@
 				while(src.o2tanks > 0)
 					new /obj/item/weapon/tank/oxygen( src.loc )
 					src.o2tanks--
+					update_icon()
 				while(src.pltanks > 0)
 					new /obj/item/weapon/tank/plasma( src.loc )
 					src.pltanks--
+					update_icon()
 		else
 	return
 
@@ -25,18 +31,22 @@
 		while(src.o2tanks > 0)
 			new /obj/item/weapon/tank/oxygen( src.loc )
 			src.o2tanks--
+			update_icon()
 		while(src.pltanks > 0)
 			new /obj/item/weapon/tank/plasma( src.loc )
 			src.pltanks--
+			update_icon()
 		del(src)
 
 /obj/machinery/dispenser/meteorhit()
 	while(src.o2tanks > 0)
 		new /obj/item/weapon/tank/oxygen( src.loc )
 		src.o2tanks--
+		update_icon()
 	while(src.pltanks > 0)
 		new /obj/item/weapon/tank/plasma( src.loc )
 		src.pltanks--
+		update_icon()
 	del(src)
 	return
 
@@ -78,6 +88,7 @@
 					use_power(5)
 					new /obj/item/weapon/tank/oxygen( src.loc )
 					src.o2tanks--
+					update_icon()
 			if (istype(src.loc, /mob))
 				attack_hand(src.loc)
 		else
@@ -87,6 +98,7 @@
 						use_power(5)
 						new /obj/item/weapon/tank/plasma( src.loc )
 						src.pltanks--
+						update_icon()
 				if (istype(src.loc, /mob))
 					attack_hand(src.loc)
 		src.add_fingerprint(usr)
@@ -98,3 +110,11 @@
 		return
 	return
 
+/obj/machinery/dispenser/update_icon()
+	overlays = null
+	switch(o2tanks)
+		if(1 to 3)	overlays += "oxygen-[o2tanks]"
+		if(4 to INFINITY) overlays += "oxygen-4"
+	switch(pltanks)
+		if(1 to 4)	overlays += "plasma-[pltanks]"
+		if(5 to INFINITY) overlays += "plasma-5"

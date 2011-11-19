@@ -115,8 +115,8 @@
 	if (src.stat == 2 || (changeling && changeling.changeling_fakedeath == 1))
 		usr << "\red [src] is limp and unresponsive, a dull lifeless look in [t_his] eyes."
 	else
-		if (src.bruteloss)
-			if (src.bruteloss < 30)
+		if (src.getBruteLoss())
+			if (src.getBruteLoss() < 30)
 				usr << "\red [src.name] looks slightly injured!"
 			else
 				usr << "\red <B>[src.name] looks severely injured!</B>"

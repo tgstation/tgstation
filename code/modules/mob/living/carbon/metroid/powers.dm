@@ -76,14 +76,14 @@
 				if(Victim.health <= 0)
 					Victim.toxloss += rand(2,4)
 
-				if(toxloss > 0)
-					toxloss = max(0, toxloss-10)
+				if(getToxLoss() > 0)
+					toxloss = max(0, getToxLoss()-10)
 
-				if(oxyloss > 0)
-					oxyloss = max(0, oxyloss-10)
+				if(getOxyLoss() > 0)
+					oxyloss = max(0, getOxyLoss()-10)
 
-				if(bruteloss > 0)
-					bruteloss = max(0, bruteloss-10)
+				if(getBruteLoss() > 0)
+					bruteloss = max(0, getBruteLoss()-10)
 
 				if(fireloss > 0)
 					fireloss = max(0, fireloss-10)
@@ -96,9 +96,9 @@
 						if(Metroid.Victim == M && Metroid != src)
 							Metroid.Feedstop()
 
-				if(toxloss<0) toxloss = 0
-				if(oxyloss<0) oxyloss = 0
-				if(bruteloss<0) bruteloss = 0
+				if(getToxLoss()<0) toxloss = 0
+				if(getOxyLoss()<0) oxyloss = 0
+				if(getBruteLoss()<0) bruteloss = 0
 				if(fireloss<0) fireloss = 0
 				if(cloneloss<0) cloneloss = 0
 

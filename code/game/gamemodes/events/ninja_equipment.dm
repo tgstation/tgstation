@@ -287,10 +287,10 @@ ________________________________________________________________________________
 				dat += "<b>Unique identity</b>: <i>[U.dna.unique_enzymes]</i><br>"
 			dat += "<h4>Overall Status: [U.stat > 1 ? "dead" : "[U.health]% healthy"]</h4>"
 			dat += "<h4>Nutrition Status: [U.nutrition]</h4>"
-			dat += "Oxygen loss: [U.oxyloss]"
-			dat += " | Toxin levels: [U.toxloss]<br>"
+			dat += "Oxygen loss: [U.getOxyLoss()]"
+			dat += " | Toxin levels: [U.getToxLoss()]<br>"
 			dat += "Burn severity: [U.fireloss]"
-			dat += " | Brute trauma: [U.bruteloss]<br>"
+			dat += " | Brute trauma: [U.getBruteLoss()]<br>"
 			dat += "Radiation Level: [U.radiation] rad<br>"
 			dat += "Body Temperature: [U.bodytemperature-T0C]&deg;C ([U.bodytemperature*1.8-459.67]&deg;F)<br>"
 

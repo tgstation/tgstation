@@ -83,7 +83,7 @@
 /mob/living/silicon/pai/ex_act(severity)
 	flick("flash", src.flash)
 
-	var/b_loss = src.bruteloss
+	var/b_loss = src.getBruteLoss()
 	var/f_loss = src.fireloss
 	switch(severity)
 		if(1.0)

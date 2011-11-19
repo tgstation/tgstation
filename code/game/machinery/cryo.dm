@@ -90,7 +90,7 @@
 			<B>Current cell temperature:</B> [temp_text]K<BR>
 			<B>Cryo status:</B> [ src.on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
 			[beaker_text]<BR><BR>
-			<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [round(src.occupant.oxyloss,0.1)]<BR>Brute damage: [round(src.occupant.bruteloss,0.1)]<BR>Fire damage: [round(src.occupant.fireloss,0.1)]<BR>Toxin damage: [round(src.occupant.toxloss,0.1)]<BR>Body temperature: [src.occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
+			<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [round(src.occupant.getOxyLoss(),0.1)]<BR>Brute damage: [round(src.occupant.getBruteLoss(),0.1)]<BR>Fire damage: [round(src.occupant.fireloss,0.1)]<BR>Toxin damage: [round(src.occupant.getToxLoss(),0.1)]<BR>Body temperature: [src.occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
 
 		"}
 		user.machine = src
@@ -168,14 +168,14 @@
 					occupant.sleeping = max(5, (1/occupant.bodytemperature)*2000)
 					occupant.paralysis = max(5, (1/occupant.bodytemperature)*3000)
 					if(air_contents.oxygen > 2)
-						if(occupant.oxyloss) occupant.oxyloss = max(0, occupant.oxyloss - 1)
+						if(occupant.getOxyLoss()) occupant.oxyloss = max(0, occupant.getOxyLoss() - 1)
 					else
 						occupant.oxyloss -= 1
 					//severe damage should heal waaay slower without proper chemicals
 					if(occupant.bodytemperature < 225)
-						if (occupant.toxloss)
-							occupant.toxloss = max(0, occupant.toxloss - min(1, 20/occupant.toxloss))
-						var/heal_brute = occupant.bruteloss ? min(1, 20/occupant.bruteloss) : 0
+						if (occupant.getToxLoss())
+							occupant.toxloss = max(0, occupant.getToxLoss() - min(1, 20/occupant.getToxLoss()))
+						var/heal_brute = occupant.getBruteLoss() ? min(1, 20/occupant.getBruteLoss()) : 0
 						var/heal_fire = occupant.fireloss ? min(1, 20/occupant.fireloss) : 0
 						occupant.heal_organ_damage(heal_brute,heal_fire)
 				if(beaker && (next_trans == 0))

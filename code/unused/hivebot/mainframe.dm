@@ -34,7 +34,7 @@
 
 /mob/living/silicon/hive_mainframe/updatehealth()
 	if (src.nodamage == 0)
-		src.health = 100 - src.fireloss - src.bruteloss
+		src.health = 100 - src.fireloss - src.getBruteLoss()
 	else
 		src.health = 100
 		src.stat = 0

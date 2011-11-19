@@ -473,7 +473,7 @@
 
 /datum/supply_packs/loyalty
 	name = "Loyalty implant crate"
-	contains = list ("obj/item/storage/lockbox/loyalty")
+	contains = list ("/obj/item/weapon/storage/lockbox/loyalty")
 	cost = 60
 	containertype = "/obj/structure/crate/secure"
 	containername = "Loyalty implant crate"

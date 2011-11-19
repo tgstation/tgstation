@@ -72,7 +72,7 @@
 	stat(null, "Move Mode: [m_intent]")
 
 	if (client.statpanel == "Status")
-		stat(null, "Plasma Stored: [toxloss]")
+		stat(null, "Plasma Stored: [getToxLoss()]")
 
 ///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 
@@ -755,7 +755,7 @@ In all, this is a lot like the monkey code. /N
 	if (nodamage == 0)
 	//oxyloss is only used for suicide
 	//toxloss isn't used for aliens, its actually used as alien powers!!
-		health = 100 - oxyloss - fireloss - bruteloss
+		health = 100 - getOxyLoss() - fireloss - getBruteLoss()
 	else
 		health = 100
 		stat = 0

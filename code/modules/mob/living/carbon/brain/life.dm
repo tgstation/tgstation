@@ -45,10 +45,10 @@
 			stunned = max(stunned,0)
 			paralysis = max(paralysis, 0)
 			weakened = max(weakened, 0)
-			bruteloss = max(bruteloss, 0)
+			bruteloss = max(getBruteLoss(), 0)
 			fireloss = max(fireloss, 0)
-			oxyloss = max(oxyloss, 0)
-			toxloss = max(toxloss, 0)
+			oxyloss = max(getOxyLoss(), 0)
+			toxloss = max(getToxLoss(), 0)
 
 		handle_mutations_and_radiation()
 
@@ -144,9 +144,9 @@
 
 		handle_regular_status_updates()
 
-			health = 100 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
+			health = 100 - (getOxyLoss() + getToxLoss() + fireloss + getBruteLoss() + cloneloss)
 
-			if(oxyloss > 25) paralysis = max(paralysis, 3)
+			if(getOxyLoss() > 25) paralysis = max(paralysis, 3)
 
 			if(sleeping)
 				paralysis = max(paralysis, 5)
