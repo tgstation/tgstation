@@ -6,12 +6,23 @@
 	icon_state = "console"
 	density = 1
 	anchored = 1
+	var/id = ""
 	var/obj/machinery/mineral/stacking_machine/machine = null
 
 /obj/machinery/mineral/stacking_unit_console/New()
 	..()
 	spawn(7)
+		/**
 		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, SOUTHEAST))
+		if (machine)
+			machine.CONSOLE = src
+		else
+			del(src)
+			*/
+		//Commented out for being horrible for mappers. -Fastler
+		for(var/obj/machinery/mineral/stacking_machine/M in world)
+			if(M.id == src.id)
+				src.machine = M
 		if (machine)
 			machine.CONSOLE = src
 		else
@@ -136,6 +147,7 @@
 	icon_state = "stacker"
 	density = 1
 	anchored = 1.0
+	var/id = ""
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()
 	var/stk_amt   = list()
