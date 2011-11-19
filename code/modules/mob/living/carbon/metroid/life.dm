@@ -215,7 +215,7 @@
 
 		AIprocess()  // the master AI process
 
-			if(AIproc || stat == 2) return
+			if(AIproc || stat == 2 || client) return
 
 			var/hungry = 0
 			var/starving = 0
@@ -233,7 +233,7 @@
 				if(Victim) // can't eat AND have this little process at the same time
 					break
 
-				if(!Target)
+				if(!Target || client)
 					break
 
 
