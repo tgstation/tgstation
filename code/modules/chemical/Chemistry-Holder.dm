@@ -336,6 +336,7 @@ datum
 												D.cure(0)
 									*/
 
+						handle_reactions()
 						return 0
 
 				for(var/A in typesof(/datum/reagent) - /datum/reagent)
@@ -352,7 +353,10 @@ datum
 						//debug
 						update_total()
 						my_atom.on_reagent_change()
+						handle_reactions()
 						return 0
+
+				handle_reactions()
 
 				return 1
 
