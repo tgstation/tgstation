@@ -601,6 +601,7 @@
 
 	var/list/can_be_placed_into = list(
 		/obj/machinery/chem_master/,
+		/obj/machinery/reagentgrinder,
 		/obj/structure/table,
 		/obj/structure/secure_closet,
 		/obj/structure/closet,
@@ -611,6 +612,7 @@
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/secstorage/ssafe,
+		/obj/machinery/disposal,
 		/obj/machinery/disease2/incubator,
 		/obj/machinery/disease2/isolator,
 		/obj/machinery/disease2/biodestroyer
@@ -1970,7 +1972,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 	name = "beaker"
-	desc = "A beaker. Can hold up to 30 units."
+	desc = "A beaker. Can hold up to 50 units."
 	icon = 'chemical.dmi'
 	icon_state = "beaker0"
 	item_state = "beaker"

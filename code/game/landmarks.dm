@@ -36,8 +36,8 @@
 	if (name == "prisonwarp")
 		prisonwarp += loc
 		del(src)
-	if (name == "mazewarp")
-		mazewarp += loc
+//	if (name == "mazewarp")
+//		mazewarp += loc
 	if (name == "Holding Facility")
 		holdingfacility += loc
 	if (name == "tdome1")

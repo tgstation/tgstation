@@ -23,4 +23,4 @@
 		src.health = 100
 		src.stat = 0
 	else
-		src.health = 100 - src.bruteloss - src.fireloss
+		src.health = 100 - src.getBruteLoss() - src.fireloss

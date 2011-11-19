@@ -1294,9 +1294,9 @@
 		O.control_disabled = 1 // Can't control things remotely if you're stuck in a card!
 		O.laws = AI.laws
 		O.stat = AI.stat
-		O.oxyloss = AI.oxyloss
+		O.oxyloss = AI.getOxyLoss()
 		O.fireloss = AI.fireloss
-		O.bruteloss = AI.bruteloss
+		O.bruteloss = AI.getBruteLoss()
 		O.toxloss = AI.toxloss
 		O.updatehealth()
 		src.occupant = O
@@ -1312,9 +1312,9 @@
 				O.mind.transfer_to(AI)
 			AI.control_disabled = 0
 			AI.laws = O.laws
-			AI.oxyloss = O.oxyloss
+			AI.oxyloss = O.getOxyLoss()
 			AI.fireloss = O.fireloss
-			AI.bruteloss = O.bruteloss
+			AI.bruteloss = O.getBruteLoss()
 			AI.toxloss = O.toxloss
 			AI.updatehealth()
 			del(O)

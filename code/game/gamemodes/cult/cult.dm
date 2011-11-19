@@ -193,7 +193,7 @@
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind)
 	if(cult_mind in cult)
 		cult -= cult_mind
-		cult_mind.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT>"
+		cult_mind.current << "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
 		for(var/mob/M in viewers(cult_mind.current))

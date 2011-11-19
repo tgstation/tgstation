@@ -127,6 +127,10 @@
 			else
 				src.visible_message("\blue [M] had been cut free from the conveyor by [user].")
 			return
+
+	if(isrobot(user))
+		return
+
 	// otherwise drop and place on conveyor
 	user.drop_item()
 	if(I && I.loc)	I.loc = src.loc

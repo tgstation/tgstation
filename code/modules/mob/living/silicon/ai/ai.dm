@@ -210,7 +210,7 @@
 /mob/living/silicon/ai/ex_act(severity)
 	flick("flash", flash)
 
-	var/b_loss = bruteloss
+	var/b_loss = getBruteLoss()
 	var/f_loss = fireloss
 	switch(severity)
 		if(1.0)

@@ -9,7 +9,7 @@
 
 /mob/living/silicon/decoy/updatehealth()
 	if (src.nodamage == 0)
-		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
+		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.fireloss - src.getBruteLoss()
 	else
 		src.health = 100
 		src.stat = 0

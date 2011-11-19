@@ -176,11 +176,10 @@
 			src.anchored = !( src.anchored )
 			playsound(src.loc, 'Screwdriver.ogg', 75, 1)
 			user << (src.anchored ? "You have fastened the window to the floor." : "You have unfastened the window.")
-	else if(istype(W, /obj/item/weapon/crowbar) && reinf)
-		if(state <=1)
-			state = 1-state;
-			playsound(src.loc, 'Crowbar.ogg', 75, 1)
-			user << (state ? "You have pried the window into the frame." : "You have pried the window out of the frame.")
+	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <=1)
+		state = 1-state;
+		playsound(src.loc, 'Crowbar.ogg', 75, 1)
+		user << (state ? "You have pried the window into the frame." : "You have pried the window out of the frame.")
 	else
 		var/aforce = W.force
 		if(reinf) aforce /= 2.0

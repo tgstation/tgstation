@@ -396,9 +396,9 @@
 		handle_regular_status_updates()
 
 			if(istype(src, /mob/living/carbon/metroid/adult))
-				health = 200 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
+				health = 200 - (getOxyLoss() + getToxLoss() + fireloss + getBruteLoss() + cloneloss)
 			else
-				health = 150 - (oxyloss + toxloss + fireloss + bruteloss + cloneloss)
+				health = 150 - (getOxyLoss() + getToxLoss() + fireloss + getBruteLoss() + cloneloss)
 
 
 
@@ -416,11 +416,11 @@
 				if(src.stat != 2)	src.stat = 1
 
 			if(prob(30))
-				if(oxyloss>0) oxyloss = max(oxyloss-1, 0)
-				if(toxloss>0) toxloss = max(toxloss-1, 0)
+				if(getOxyLoss()>0) oxyloss = max(getOxyLoss()-1, 0)
+				if(getToxLoss()>0) toxloss = max(getToxLoss()-1, 0)
 				if(fireloss>0) fireloss = max(fireloss-1,0)
 				if(cloneloss>0) cloneloss = max(cloneloss-1,0)
-				if(bruteloss>0) bruteloss = max(bruteloss-1,0)
+				if(getBruteLoss()>0) bruteloss = max(getBruteLoss()-1,0)
 
 
 			if (src.stat == 2)

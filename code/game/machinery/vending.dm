@@ -4,6 +4,7 @@
 		WIRE_SCANID = 2
 		WIRE_SHOCK = 3
 		WIRE_SHOOTINV = 4
+	var/page
 
 /datum/data/vending_product
 	var/product_name = "generic"
@@ -13,6 +14,7 @@
 
 /obj/machinery/vending/New()
 	..()
+	page = 1
 	spawn(4)
 		src.slogan_list = dd_text2List(src.product_slogans, ";")
 		var/list/temp_paths = dd_text2List(src.product_paths, ";")
@@ -93,6 +95,80 @@
 		continue
 
 	return
+/obj/machinery/vending/proc/updateWindow(mob/user as mob)
+	var/i
+	for (i = 1, i <= 6, i++)
+		winclone(user, "vendingslot", "vendingslot[i]")
+		winset(user, "vendingwindow.slot[i]", "left=vendingslot[i]")
+		winset(user, "vendingslot[i].buy", "command=\"skincmd vending;buy[i-1]\"")
+	winset(user, "vendingwindow.title", "text=\"[src.name]\"")
+	var/list/products = src.product_records
+	var/pages = -round(-products.len / 6)
+	if (page > pages)
+		page = pages
+	winset(user, "vendingwindow.page", "text=[page]/[pages]")
+
+	var/base = (page-1)*6+1
+	for (i = 0, i < 6, i++)
+		if (products.len >= base + i)
+			var/datum/data/vending_product/product = products[base + i]
+			winset(user, "vendingslot[i+1].name", "text=\"[product.product_name]\"")
+			if (product.amount > 0)
+				winset(user, "vendingslot[i+1].stock", "text=\"Left in stock: [product.amount]\"")
+				winset(user, "vendingslot[i+1].stock", "text-color=\"#000000\"")
+				winshow(user, "vendingslot[i+1].buy", 1)
+			else
+				winset(user, "vendingslot[i+1].stock", "text=\"OUT OF STOCK\"")
+				winset(user, "vendingslot[i+1].stock", "text-color=\"#FF0000\"")
+				winshow(user, "vendingslot[i+1].buy", 0)
+			winshow(user, "vendingwindow.slot[i+1]", 1)
+		else
+			winshow(user, "vendingwindow.slot[i+1]", 0)
+
+/obj/machinery/vending/SkinCmd(mob/user as mob, var/data as text)
+	if (get_dist(user, src) > 1)
+		return
+	var/list/products = src.product_records
+	var/pages = -round(-products.len / 6)
+	switch(data)
+		if ("pagen")
+			page++
+			if (page > pages)
+				page = pages
+		if ("pagep")
+			page--
+			if (page < 1)
+				page = 1
+	if (copytext(data, 1, 4) == "buy")
+		var/base = (page-1)*6+1
+		var/num = text2num(copytext(data, 4))
+		if (products.len < base + num)
+			return
+		var/datum/data/vending_product/R = products[base + num]
+		var/product_path = text2path(R.product_path)
+
+		if (R.amount <= 0)
+			return
+		if (!src.vend_ready)
+			return
+
+		R.amount--
+		src.vend_ready = 0
+
+		if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
+			spawn(0)
+				src.speak(src.vend_reply)
+				src.last_reply = world.time
+
+		use_power(5)
+		if (src.icon_vend) //Show the vending animation if needed
+			flick(src.icon_vend,src)
+		spawn(src.vend_delay)
+			new product_path(get_turf(src))
+			src.vend_ready = 1
+
+	updateWindow(user)
+
 
 /obj/machinery/vending/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/emag))
@@ -135,32 +211,9 @@
 		if(src.shock(user, 100))
 			return
 
-	var/dat = "<TT><b>Select an item:</b><br>"
-
-	if (product_coin != "")
-		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] (<a href='byond://?src=\ref[src];remove_coin=1'>Remove</A>)<br><br>"
-
-	if (src.product_records.len == 0)
-		dat += "<font color = 'red'>No product loaded!</font>"
-	else
-		var/list/display_records = src.product_records
-		if(src.extended_inventory)
-			display_records = src.product_records + src.hidden_records
-		if(src.coin)
-			display_records = src.product_records + src.coin_records
-		if(src.coin && src.extended_inventory)
-			display_records = src.product_records + src.hidden_records + src.coin_records
-
-		for (var/datum/data/vending_product/R in display_records)
-			dat += "<FONT color = '[R.display_color]'><B>[R.product_name]</B>:"
-			dat += " [R.amount] </font>"
-			if (R.amount > 0)
-				dat += "<a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
-			else
-				dat += "<font color = 'red'>SOLD OUT</font>"
-			dat += "<br>"
-
-		dat += "</TT>"
+	updateWindow(user)
+	winshow(user, "vendingwindow", 1)
+	user.skincmds["vending"] = src
 
 	if(panel_open)
 		var/list/vendwires = list(
@@ -169,7 +222,7 @@
 			"Goldenrod" = 3,
 			"Green" = 4,
 		)
-		dat += "<br><hr><br><B>Access Panel</B><br>"
+		var/dat = "<br><hr><br><B>Access Panel</B><br>"
 		for(var/wiredesc in vendwires)
 			var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
 			dat += "[wiredesc] wire: "
@@ -188,9 +241,9 @@
 
 		if (product_slogans != "")
 			dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+		user << browse(dat, "")
+		onclose(user, "")
 
-	user << browse(dat, "")
-	onclose(user, "")
 	return
 
 /obj/machinery/vending/Topic(href, href_list)

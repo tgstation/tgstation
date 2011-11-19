@@ -68,6 +68,9 @@
 						C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
 					del(G)
 
+		if(isrobot(user))
+			return
+
 		else
 			user.drop_item()
 

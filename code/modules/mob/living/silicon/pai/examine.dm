@@ -6,8 +6,8 @@
 	if (src.stat == 2)
 		usr << text("\red [] appears disabled.", src.name)
 	else
-		if (src.bruteloss)
-			if (src.bruteloss < 30)
+		if (src.getBruteLoss())
+			if (src.getBruteLoss() < 30)
 				usr << text("\red [] looks slightly dented", src.name)
 			else
 				usr << text("\red <B>[]'s casing appears cracked and broken!</B>", src.name)

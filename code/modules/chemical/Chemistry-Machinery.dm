@@ -519,20 +519,24 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	var/obj/item/weapon/reagent_containers/beaker = null
-	var/global/list/allowed_items = list (
-		/obj/item/stack/sheet/plasma = "plasma",
-		/obj/item/stack/sheet/uranium = "uranium",
-		/obj/item/stack/sheet/clown = "banana",
-		/obj/item/stack/sheet/silver = "silver",
-		/obj/item/stack/sheet/gold = "gold",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = "banana",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = "imidazoline",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = "cornoil",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap = "psilocybin",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/chili = "capsaicin",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper = "frostoil",
-		/obj/item/weapon/grown/nettle = "acid",
-		/obj/item/weapon/grown/deathnettle = "pacid",
+	var/global/list/allowed_items = list ( // reagent = amount, amount of 0 indicate to determine the amount from the reagents list, only implemented on plants for now
+		/obj/item/stack/sheet/plasma = list("plasma" = 20),
+		/obj/item/stack/sheet/uranium = list("uranium" = 20),
+		/obj/item/stack/sheet/clown = list("banana" = 20),
+		/obj/item/stack/sheet/silver = list("silver" = 20),
+		/obj/item/stack/sheet/gold = list("gold" = 20),
+/*
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list("banana" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("imidazoline" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap = list("psilocybin" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita = list("amatoxin" = 0, "psilocybin" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel = list("amatoxin" = 0, "psilocybin" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chili = list("capsaicin" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper = list("frostoil" = 0),
+*/
+		/obj/item/weapon/grown/nettle = list("acid" = 0),
+		/obj/item/weapon/grown/deathnettle = list("pacid" = 0),
 	)
 
 /obj/machinery/reagentgrinder/New()
@@ -551,9 +555,9 @@
 		if (beaker)
 			return 1
 		else
-			user.before_take_item(O)
+			src.beaker =  O
+			user.drop_item()
 			O.loc = src
-			beaker = O
 			src.verbs += /obj/machinery/reagentgrinder/verb/detach
 			update_icon()
 			src.updateUsrDialog()
@@ -642,20 +646,7 @@
 	beaker = null
 	update_icon()
 
-/obj/machinery/reagentgrinder/proc/get_juice_id(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
-	for (var/i in allowed_items)
-		if (istype(O, i))
-			return allowed_items[i]
-
-/obj/machinery/reagentgrinder/proc/get_juice_amount(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
-	if (!istype(O))
-		return 5
-	else if (O.potency == -1)
-		return 5
-	else
-		return round(O.potency / 5)
-
-/obj/machinery/reagentgrinder/proc/get_grownweapon_id(var/obj/item/weapon/grown/O)
+/obj/machinery/reagentgrinder/proc/get_allowed_by_id(var/obj/item/weapon/grown/O)
 	for (var/i in allowed_items)
 		if (istype(O, i))
 			return allowed_items[i]
@@ -684,20 +675,48 @@
 		return
 	playsound(src.loc, 'juicer.ogg', 20, 1)
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in src.contents)
-		var/r_id = get_juice_id(O)
-		beaker.reagents.add_reagent(r_id,get_juice_amount(O))
-		del(O)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
+		var/allowed = get_allowed_by_id(O)
+		for (var/r_id in allowed)
+			var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+			var/amount = allowed[r_id]
+			if (amount == 0)
+				if (O.reagents != null && O.reagents.has_reagent(r_id))
+					beaker.reagents.add_reagent(r_id,min(O.reagents.get_reagent_amount(r_id), space))
+			else
+				beaker.reagents.add_reagent(r_id,min(amount, space))
+
+			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				break
+		del(O)
 	for (var/obj/item/stack/sheet/O in src.contents)
-		var/g_id = get_grind_id(O)
-		beaker.reagents.add_reagent(g_id,get_grind_amount(O))
-		del(O)
+		var/allowed = get_allowed_by_id(O)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
+		for(var/i = 1; i <= round(O.amount, 1); i++)
+			for (var/r_id in allowed)
+				var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+				var/amount = allowed[r_id]
+				beaker.reagents.add_reagent(r_id,min(amount, space))
+				if (space < amount)
+					break
+			if (i == round(O.amount, 1))
+				del(O)
+				break
 	for (var/obj/item/weapon/grown/O in src.contents)
-		var/g_id = get_grownweapon_id(O)
-		beaker.reagents.add_reagent(g_id,get_grownweapon_amount(O))
-		del(O)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
+		var/allowed = get_allowed_by_id(O)
+		for (var/r_id in allowed)
+			var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+			var/amount = allowed[r_id]
+			if (amount == 0)
+				if (O.reagents != null && O.reagents.has_reagent(r_id))
+					beaker.reagents.add_reagent(r_id,min(O.reagents.get_reagent_amount(r_id), space))
+			else
+				beaker.reagents.add_reagent(r_id,min(amount, space))
+
+			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+				break
+		del(O)

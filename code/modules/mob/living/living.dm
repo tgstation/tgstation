@@ -2,13 +2,13 @@
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
 		src.oxyloss += src.health + 200
-		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
+		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.fireloss - src.getBruteLoss()
 		src << "\blue You have given up life and succumbed to death."
 
 
 /mob/living/proc/updatehealth()
 	if(!src.nodamage)
-		src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss - src.cloneloss
+		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.fireloss - src.getBruteLoss() - src.cloneloss
 	else
 		src.health = 100
 		src.stat = 0
@@ -111,7 +111,7 @@
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/heal_organ_damage(var/brute, var/burn)
-	bruteloss = max(0, bruteloss-brute)
+	bruteloss = max(0, getBruteLoss()-brute)
 	fireloss = max(0, fireloss-burn)
 	src.updatehealth()
 
@@ -123,7 +123,7 @@
 
 // heal MANY external organs, in random order
 /mob/living/proc/heal_overall_damage(var/brute, var/burn)
-	bruteloss = max(0, bruteloss-brute)
+	bruteloss = max(0, getBruteLoss()-brute)
 	fireloss = max(0, fireloss-burn)
 	src.updatehealth()
 

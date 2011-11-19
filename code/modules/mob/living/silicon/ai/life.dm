@@ -76,7 +76,7 @@
 						src << "Alert cancelled. Power has been restored without our assistance."
 						src:aiRestorePowerRoutine = 0
 						spawn(1)
-							while (src.oxyloss>0 && stat!=2)
+							while (src.getOxyLoss()>0 && stat!=2)
 								sleep(50)
 								src.oxyloss-=1
 							src.oxyloss = 0
@@ -85,7 +85,7 @@
 						src << "Alert cancelled. Power has been restored."
 						src:aiRestorePowerRoutine = 0
 						spawn(1)
-							while (src.oxyloss>0 && stat!=2)
+							while (src.getOxyLoss()>0 && stat!=2)
 								sleep(50)
 								src.oxyloss-=1
 							src.oxyloss = 0
@@ -239,9 +239,9 @@
 /mob/living/silicon/ai/updatehealth()
 	if (src.nodamage == 0)
 		if(src.fire_res_on_core)
-			src.health = 100 - src.oxyloss - src.toxloss - src.bruteloss
+			src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getBruteLoss()
 		else
-			src.health = 100 - src.oxyloss - src.toxloss - src.fireloss - src.bruteloss
+			src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.fireloss - src.getBruteLoss()
 	else
 		src.health = 100
 		src.stat = 0

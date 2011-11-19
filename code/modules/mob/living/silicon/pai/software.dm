@@ -469,10 +469,10 @@
 		dat += {"Bioscan Results for [M]: <br>"
 		Overall Status: [M.stat > 1 ? "dead" : "[M.health]% healthy"] <br>
 		Scan Breakdown: <br>
-		Respiratory: [M.oxyloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.oxyloss]</font><br>
-		Toxicology: [M.toxloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.toxloss]</font><br>
+		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getOxyLoss()]</font><br>
+		Toxicology: [M.getToxLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getToxLoss()]</font><br>
 		Burns: [M.fireloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.fireloss]</font><br>
-		Structural Integrity: [M.bruteloss > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.bruteloss]</font><br>
+		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
 		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
 		"}
 		for(var/datum/disease/D in M.viruses)
