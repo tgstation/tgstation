@@ -190,12 +190,12 @@
 					if(1 to 49)
 						radiation--
 						if(prob(25))
-							toxloss++
+							adjustToxLoss(1)
 							updatehealth()
 
 					if(50 to 74)
 						radiation -= 2
-						toxloss++
+						adjustToxLoss(1)
 						if(prob(5))
 							radiation -= 5
 							weakened = 3
@@ -205,7 +205,7 @@
 
 					if(75 to 100)
 						radiation -= 3
-						toxloss += 3
+						adjustToxLoss(3)
 						if(prob(1))
 							src << "\red You mutate!"
 							randmutb(src)
@@ -369,7 +369,7 @@
 
 			if(Toxins_pp > safe_toxins_max) // Too much toxins
 				var/ratio = breath.toxins/safe_toxins_max
-				toxloss += min(ratio, 10)	//Limit amount of damage toxin exposure can do per second
+				adjustToxLoss(min(ratio, 10))	//Limit amount of damage toxin exposure can do per second
 				toxins_alert = max(toxins_alert, 1)
 			else
 				toxins_alert = 0
@@ -605,8 +605,8 @@
 						heal_overall_damage(0,1)
 					if(getBruteLoss())
 						heal_overall_damage(1,0)
-					if(getToxLoss())
-						toxloss--
+					adjustToxLoss(-1)
+
 					if(getOxyLoss())
 						oxyloss--
 

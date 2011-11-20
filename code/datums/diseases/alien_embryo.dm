@@ -51,11 +51,11 @@
 			if(prob(2))
 				affected_mob << "\red Your stomach hurts."
 				if(prob(20))
-					affected_mob.toxloss += 1
+					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 		if(5)
 			affected_mob << "\red You feel something tearing its way out of your stomach..."
-			affected_mob.toxloss += 10
+			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(40))
 				ASSERT(gibbed == 0)

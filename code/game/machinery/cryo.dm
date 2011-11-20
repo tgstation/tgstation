@@ -174,7 +174,7 @@
 					//severe damage should heal waaay slower without proper chemicals
 					if(occupant.bodytemperature < 225)
 						if (occupant.getToxLoss())
-							occupant.toxloss = max(0, occupant.getToxLoss() - min(1, 20/occupant.getToxLoss()))
+							occupant.adjustToxLoss(max(-1, -20/occupant.getToxLoss()))
 						var/heal_brute = occupant.getBruteLoss() ? min(1, 20/occupant.getBruteLoss()) : 0
 						var/heal_fire = occupant.fireloss ? min(1, 20/occupant.fireloss) : 0
 						occupant.heal_organ_damage(heal_brute,heal_fire)
