@@ -300,10 +300,12 @@
 		else
 			heard_b += M
 
+	var/speech_bubble_test = say_test(message)
+	var/image/speech_bubble = image('talk.dmi',src,"h[speech_bubble_test]")
+
 	var/rendered = null
 	if (length(heard_a))
 		var/message_a = say_quote(message)
-
 		if (italics)
 			message_a = "<i>[message_a]</i>"
 		if (!istype(src, /mob/living/carbon/human))
@@ -337,6 +339,9 @@
 		for (var/mob/M in heard_a)
 
 			M.show_message(rendered, 2)
+			M << speech_bubble
+		spawn(30) del(speech_bubble)
+		//spawn(30) del(speech_bubble)
 			/*
 			if(M.client)
 
@@ -407,6 +412,8 @@
 
 		for (var/mob/M in heard_b)
 			M.show_message(rendered, 2)
+			M << speech_bubble
+		spawn(30) del(speech_bubble)
 
 			/*
 			if(M.client)
@@ -415,7 +422,7 @@
 					var/image/I = image('speechbubble.dmi', B, "override")
 					I.override = 1
 					M << I
-			*/ /*
+
 
 		flick("[presay]say", B)
 
