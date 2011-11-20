@@ -62,12 +62,12 @@
 					if(1 to 49)
 						radiation--
 						if(prob(25))
-							toxloss++
+							adjustToxLoss(1)
 							updatehealth()
 
 					if(50 to 74)
 						radiation -= 2
-						toxloss++
+						adjustToxLoss(1)
 						if(prob(5))
 							radiation -= 5
 							weakened = 3
@@ -77,7 +77,7 @@
 
 					if(75 to 100)
 						radiation -= 3
-						toxloss += 3
+						adjustToxLoss(3)
 						if(prob(1))
 							src << "\red You mutate!"
 							randmutb(src)

@@ -29,7 +29,7 @@
 			if(prob(1))
 				affected_mob << "\red Your stomach hurts."
 				if(prob(20))
-					affected_mob.toxloss += 2
+					affected_mob.adjustToxLoss(2)
 					affected_mob.updatehealth()
 		if(4)
 			if(!src.transformed)

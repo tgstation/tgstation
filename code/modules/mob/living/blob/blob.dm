@@ -67,7 +67,7 @@
 
 	blob_act()
 		src << "The blob attempts to reabsorb you."
-		toxloss += 20
+		adjustToxLoss(20)
 		return
 
 

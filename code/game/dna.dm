@@ -392,7 +392,7 @@
 			connected = null
 		O.name = text("monkey ([])",copytext(md5(M.real_name), 2, 6))
 		O.take_overall_damage(M.getBruteLoss() + 40, M.fireloss)
-		O.toxloss += (M.getToxLoss() + 20)
+		O.adjustToxLoss(M.getToxLoss() + 20)
 		O.oxyloss += M.getOxyLoss()
 		O.stat = M.stat
 		O.a_intent = "hurt"
@@ -467,7 +467,7 @@
 				i++
 		updateappearance(O,O.dna.uni_identity)
 		O.take_overall_damage(M.getBruteLoss(), M.fireloss)
-		O.toxloss += M.getToxLoss()
+		O.adjustToxLoss(M.getToxLoss())
 		O.oxyloss += M.getOxyLoss()
 		O.stat = M.stat
 		for (var/obj/item/weapon/implant/I in implants)

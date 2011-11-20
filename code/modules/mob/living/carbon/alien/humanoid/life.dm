@@ -149,12 +149,12 @@
 					if(1 to 49)
 						src.radiation--
 						if(prob(25))
-							src.toxloss++
+							src.adjustToxLoss(1)
 							src.updatehealth()
 
 					if(50 to 74)
 						src.radiation -= 2
-						src.toxloss++
+						src.adjustToxLoss(1)
 						if(prob(5))
 							src.radiation -= 5
 							src.weakened = 3
@@ -164,7 +164,7 @@
 
 					if(75 to 100)
 						src.radiation -= 3
-						src.toxloss += 3
+						src.adjustToxLoss(3)
 						if(prob(1))
 							src << "\red You mutate!"
 							randmutb(src)
@@ -267,7 +267,7 @@
 
 			if(Toxins_pp) // Detect toxins in air
 
-				toxloss += breath.toxins*250
+				adjustToxLoss(breath.toxins*250)
 				toxins_alert = max(toxins_alert, 1)
 
 				toxins_used = breath.toxins
@@ -295,7 +295,7 @@
 			//If there are alien weeds on the ground then heal if needed or give some toxins
 			if(locate(/obj/effect/alien/weeds) in loc)
 				if(health >= 100)
-					toxloss += 15
+					adjustToxLoss(15)
 					if(getToxLoss() > max_plasma)
 						toxloss = max_plasma
 

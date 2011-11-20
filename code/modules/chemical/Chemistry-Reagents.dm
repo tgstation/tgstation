@@ -88,7 +88,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(prob(10))
 					M << "\red Your insides are burning!"
-					M.toxloss+=rand(20,60)
+					M.adjustToxLoss(rand(20,60))
 				else if(prob(40))
 					M:heal_organ_damage(5,0)
 				..()
@@ -250,7 +250,7 @@ datum
 							T.wet_overlay = null
 
 				for(var/mob/living/carbon/metroid/M in T)
-					M.toxloss+=rand(15,20)
+					M.adjustToxLoss(rand(15,20))
 
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
@@ -324,7 +324,7 @@ datum
 					holder.remove_reagent("carpotoxin", 1)
 				if(holder.has_reagent("zombiepowder"))
 					holder.remove_reagent("zombiepowder", 0.5)
-				M:toxloss = max(M:getToxLoss()-2,0)
+				M:adjustToxLoss(-2)
 				..()
 				return
 
@@ -337,7 +337,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:toxloss += 1.5
+				M:adjustToxLoss(1.5)
 				..()
 				return
 
@@ -350,7 +350,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:toxloss += 3
+				M:adjustToxLoss(3)
 				M:oxyloss += 3
 				M:sleeping += 1
 				..()
@@ -580,7 +580,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:toxloss++
+				M:adjustToxLoss(1)
 				..()
 				return
 
@@ -633,7 +633,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:toxloss++
+				M:adjustToxLoss(1)
 				M.take_organ_damage(0, 1)
 				..()
 				return
@@ -687,7 +687,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:toxloss++
+				M:adjustToxLoss(1)
 				M.take_organ_damage(0, 1)
 				..()
 				return
@@ -856,7 +856,7 @@ datum
 							M.crit_op_stage = 0.0
 				if (method==INGEST)
 					usr << "Well, that was stupid."
-					M:toxloss += 3
+					M:adjustToxLoss(3)
 				return
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -958,7 +958,7 @@ datum
 				return
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:toxloss += 1
+				M:adjustToxLoss(1)
 				..()
 				return
 
@@ -982,7 +982,7 @@ datum
 					del(C)
 
 				for(var/mob/living/carbon/metroid/M in T)
-					M.toxloss+=rand(5,10)
+					M.adjustToxLoss(rand(5,10))
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				M.clean_blood()
@@ -1016,7 +1016,7 @@ datum
 			/* Don't know if this is necessary.
 			on_mob_life(var/mob/living/carbon/M)
 				if(!M) M = holder.my_atom
-				M:toxloss += 3.0
+				M:adjustToxLoss(3.0)
 				..()
 				return
 			*/
@@ -1035,9 +1035,9 @@ datum
 				src = null
 				if(istype(M, /mob/living/carbon))
 					if(!M.wear_mask) // If not wearing a mask
-						M:toxloss += 2 // 4 toxic damage per application, doubled for some reason
+						M:adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
 					if(istype(M,/mob/living/carbon/human) && M:mutantrace == "plant") //plantmen take a LOT of damage
-						M:toxloss += 10
+						M:adjustToxLoss(10)
 						//if(prob(10))
 							//M.make_dizzy(1) doesn't seem to do anything
 
@@ -1053,7 +1053,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(holder.has_reagent("inaprovaline"))
 					holder.remove_reagent("inaprovaline", 2)
-				M:toxloss++
+				M:adjustToxLoss(1)
 				..()
 				return
 			reaction_obj(var/obj/O, var/volume)
@@ -1202,7 +1202,7 @@ datum
 				if(M:getOxyLoss() && prob(40)) M:oxyloss--
 				if(M:getBruteLoss() && prob(40)) M:heal_organ_damage(1,0)
 				if(M:fireloss && prob(40)) M:heal_organ_damage(0,1)
-				if(M:getToxLoss() && prob(40)) M:toxloss--
+				if(M:getToxLoss() && prob(40)) M:adjustToxLoss(-1)
 				..()
 				return
 
@@ -1219,7 +1219,7 @@ datum
 				M:oxyloss = 0
 				M:radiation = 0
 				M:heal_organ_damage(5,5)
-				if(M:getToxLoss()) M:toxloss = max(0, M:getToxLoss()-5)
+				if(M:getToxLoss()) M:adjustToxLoss(-5)
 				if(holder.has_reagent("toxin"))
 					holder.remove_reagent("toxin", 5)
 				if(holder.has_reagent("stoxin"))
@@ -1280,7 +1280,7 @@ datum
 				if(M:paralysis) M:paralysis--
 				if(M:stunned) M:stunned--
 				if(M:weakened) M:weakened--
-				if(prob(60))	M:toxloss++
+				if(prob(60))	M:adjustToxLoss(1)
 				..()
 				return
 
@@ -1326,7 +1326,7 @@ datum
 					return  //See above, down and around. --Agouri
 				if(!M) M = holder.my_atom
 				M:radiation = max(M:radiation-7,0)
-				if(M:getToxLoss()) M:toxloss--
+				if(M:getToxLoss()) M:adjustToxLoss(-1)
 				if(prob(15))
 					M.take_organ_damage(1, 0)
 				..()
@@ -1403,7 +1403,7 @@ datum
 					if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-1)
 					if(M:getOxyLoss()) M:oxyloss = max(0, M:getOxyLoss()-3)
 					M:heal_organ_damage(3,3)
-					if(M:getToxLoss()) M:toxloss = max(0, M:getToxLoss()-3)
+					if(M:getToxLoss()) M:adjustToxLoss(-3)
 				..()
 				return
 
@@ -1420,7 +1420,7 @@ datum
 					if(M:cloneloss) M:cloneloss = max(0, M:cloneloss-3)
 					if(M:getOxyLoss()) M:oxyloss = max(0, M:getOxyLoss()-3)
 					M:heal_organ_damage(3,3)
-					if(M:getToxLoss()) M:toxloss = max(0, M:getToxLoss()-3)
+					if(M:getToxLoss()) M:adjustToxLoss(-3)
 				..()
 				return
 
@@ -1445,7 +1445,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:toxloss += 2
+				M:adjustToxLoss(2)
 				..()
 				return
 
@@ -1458,7 +1458,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:oxyloss += 0.5
-				M:toxloss += 0.5
+				M:adjustToxLoss(0.5)
 				M:weakened = max(M:weakened, 10)
 				M:silent = max(M:silent, 10)
 				..()
@@ -1587,7 +1587,7 @@ datum
 						M:sleeping += 1
 					if(51 to INFINITY)
 						M:sleeping += 1
-						M:toxloss += (data - 50)
+						M:adjustToxLoss(data - 50)
 				..()
 				return
 
@@ -1609,7 +1609,7 @@ datum
 						M:sleeping += 1
 					if(51 to INFINITY)
 						M:sleeping += 1
-						M:toxloss += (data - 50)
+						M:adjustToxLoss(data - 50)
 				data++
 				..()
 				return
@@ -1640,7 +1640,7 @@ datum
 					M.jitteriness += rand(0, 5)
 					M.dizziness = max (0, (M.dizziness - rand(0, 15)))
 					M.druggy = max (0, (M.druggy - rand(0, 15)))
-					M.toxloss = max (0, (M.getToxLoss() - rand(5, 15)))
+					M.adjustToxLoss(rand(-15, -5)))
 					M.updatehealth()
 */
 				..()
@@ -1701,7 +1701,7 @@ datum
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				for(var/mob/living/carbon/metroid/M in T)
-					M.toxloss+=rand(15,30)
+					M.adjustToxLoss(rand(15,30))
 
 		sodiumchloride
 			name = "Table Salt"
@@ -1753,7 +1753,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:toxloss++
+				M:adjustToxLoss(1)
 				..()
 				return
 
@@ -1960,7 +1960,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(!M) M = holder.my_atom
-				if(M:getToxLoss() && prob(20)) M:toxloss--
+				if(M:getToxLoss() && prob(20)) M:adjustToxLoss(-1)
 				M:nutrition++
 				..()
 				return
@@ -2014,7 +2014,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:nutrition += nutriment_factor
-				M:toxloss += 1
+				M:adjustToxLoss(1)
 				..()
 				return
 
@@ -2168,7 +2168,7 @@ datum
 				M:jitteriness = max(0,M:jitteriness-3)
 				M:sleeping = 0
 				if(M:getToxLoss() && prob(20))
-					M:toxloss--
+					M:adjustToxLoss(-1)
 				if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+5)
 				..()
@@ -2205,7 +2205,7 @@ datum
 				M:drowsyness = max(0,M:drowsyness-1)
 				M:sleeping = 0
 				if(M:getToxLoss() && prob(20))
-					M:toxloss--
+					M:adjustToxLoss(-1)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature-5)
 				return
@@ -3033,7 +3033,7 @@ datum
 				if(M:getOxyLoss() && prob(50)) M:oxyloss -= 2
 				if(M:getBruteLoss() && prob(60)) M:heal_organ_damage(2,0)
 				if(M:fireloss && prob(50)) M:heal_organ_damage(0,2)
-				if(M:getToxLoss() && prob(50)) M:toxloss -= 2
+				if(M:getToxLoss() && prob(50)) M:adjustToxLoss(-2)
 				if(M.dizziness !=0) M.dizziness = max(0,M.dizziness-15)
 				if(M.confused !=0) M.confused = max(0,M.confused - 5)
 				..()

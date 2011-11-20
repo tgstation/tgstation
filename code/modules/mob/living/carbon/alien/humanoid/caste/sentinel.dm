@@ -66,7 +66,7 @@
 		//If there are alien weeds on the ground then heal if needed or give some toxins
 		if(locate(/obj/effect/alien/weeds) in loc)
 			if(health >= 125)
-				toxloss += 10
+				adjustToxLoss(10)
 				if(getToxLoss() > max_plasma)
 					toxloss = max_plasma
 
@@ -170,7 +170,7 @@
 		if(isalien(target))
 			src << "\green Your allies are not a valid target."
 			return
-		toxloss -= 50
+		adjustToxLoss(-50)
 		src << "\green You spit neurotoxin at [target]."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))

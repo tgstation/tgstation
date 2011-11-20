@@ -894,7 +894,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 										)
 
 									C.oxyloss = max(0, C.oxyloss-25)
-									C.toxloss = max(0, C.toxloss-25)
+									C.adjustToxLoss(-25)
 
 									if(istype(C, /mob/living/carbon/human))
 										// ------- YOUR TARGET IS HUMAN -------

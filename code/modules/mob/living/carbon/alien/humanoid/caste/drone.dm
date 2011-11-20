@@ -23,7 +23,7 @@
 	set category = "Alien"
 
 	if(powerc(500))
-		toxloss -= 500
+		adjustToxLoss(-500)
 		src << "\green You begin to evolve!"
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] begins to twist and contort!</B>"), 1)
@@ -40,7 +40,7 @@
 	set category = "Alien"
 
 	if(powerc(100))
-		toxloss -= 100
+		adjustToxLoss(-100)
 		var/choice = input("Choose what you wish to shape.","Resin building") as anything in list("resin wall","resin membrane") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
 		src << "\green You shape a [choice]."
 		for(var/mob/O in viewers(src, null))
