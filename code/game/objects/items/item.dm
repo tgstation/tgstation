@@ -217,6 +217,9 @@
 			O.layer = 20
 			return
 
+mob/proc/flash_weak_pain()
+	flick("weak_pain",pain)
+
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 
 	if (!istype(M)) // not sure if this is the right thing...
@@ -227,6 +230,7 @@
 		messagesource = M:container
 	if (src.hitsound)
 		playsound(src.loc, hitsound, 50, 1, -1)
+	M.flash_weak_pain()
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user

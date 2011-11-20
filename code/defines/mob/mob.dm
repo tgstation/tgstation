@@ -20,7 +20,7 @@
 	var/oxyloss = 0.0//Living
 	var/toxloss = 0.0//Living
 
-
+	var/obj/screen/pain = null
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null
