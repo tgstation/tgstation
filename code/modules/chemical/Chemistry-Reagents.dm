@@ -1201,7 +1201,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(M:getOxyLoss() && prob(40)) M:oxyloss--
 				if(M:getBruteLoss() && prob(40)) M:heal_organ_damage(1,0)
-				if(M:fireloss && prob(40)) M:heal_organ_damage(0,1)
+				if(M:getFireLoss() && prob(40)) M:heal_organ_damage(0,1)
 				if(M:getToxLoss() && prob(40)) M:adjustToxLoss(-1)
 				..()
 				return
@@ -1694,7 +1694,7 @@ datum
 				if(prob(40))
 					M.take_organ_damage(0, 1)
 				if(prob(80) && istype(M, /mob/living/carbon/metroid))
-					M.fireloss += rand(5,20)
+					M.adjustFireLoss(rand(5,20))
 					M << "\red You feel a terrible chill inside your body!"
 				..()
 				return
@@ -1944,7 +1944,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor
 				if(!M) M = holder.my_atom
-				if(M:fireloss && prob(20)) M:heal_organ_damage(0,1)
+				if(M:getFireLoss() && prob(20)) M:heal_organ_damage(0,1)
 				M:nutrition++
 				..()
 				return
@@ -3032,7 +3032,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(M:getOxyLoss() && prob(50)) M:oxyloss -= 2
 				if(M:getBruteLoss() && prob(60)) M:heal_organ_damage(2,0)
-				if(M:fireloss && prob(50)) M:heal_organ_damage(0,2)
+				if(M:getFireLoss() && prob(50)) M:heal_organ_damage(0,2)
 				if(M:getToxLoss() && prob(50)) M:adjustToxLoss(-2)
 				if(M.dizziness !=0) M.dizziness = max(0,M.dizziness-15)
 				if(M.confused !=0) M.confused = max(0,M.confused - 5)

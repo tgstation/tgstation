@@ -314,7 +314,7 @@
 
 		handle_environment(datum/gas_mixture/environment)
 			if(!environment)
-				fireloss += rand(10,20)
+				adjustFireLoss(rand(10,20))
 				return
 
 			//var/environment_heat_capacity = environment.heat_capacity()
@@ -356,7 +356,7 @@
 					Tempstun = 1
 
 				if(bodytemperature <= (T0C - 50)) // hurt temperature
-					fireloss += round(sqrt(bodytemperature)) * 2
+					adjustFireLoss(round(sqrt(bodytemperature)) * 2)
 
 			else
 				Tempstun = 0
@@ -396,9 +396,9 @@
 		handle_regular_status_updates()
 
 			if(istype(src, /mob/living/carbon/metroid/adult))
-				health = 200 - (getOxyLoss() + getToxLoss() + fireloss + getBruteLoss() + cloneloss)
+				health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 			else
-				health = 150 - (getOxyLoss() + getToxLoss() + fireloss + getBruteLoss() + cloneloss)
+				health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
 
 
@@ -418,7 +418,7 @@
 			if(prob(30))
 				if(getOxyLoss()>0) oxyloss = max(getOxyLoss()-1, 0)
 				if(getToxLoss()>0) adjustToxLoss(-1)
-				if(fireloss>0) fireloss = max(fireloss-1,0)
+				if(getFireLoss()>0) adjustFireLoss(-1)
 				if(cloneloss>0) cloneloss = max(cloneloss-1,0)
 				if(getBruteLoss()>0) bruteloss = max(getBruteLoss()-1,0)
 

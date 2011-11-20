@@ -415,7 +415,7 @@
 	if (!src.implanted)
 		return "ERROR"
 	else
-		src.healthstring = "[round(src.implanted:getOxyLoss())] - [round(src.implanted:fireloss)] - [round(src.implanted:getToxLoss())] - [round(src.implanted:getBruteLoss())]"
+		src.healthstring = "[round(src.implanted:getOxyLoss())] - [round(src.implanted:getFireLoss())] - [round(src.implanted:getToxLoss())] - [round(src.implanted:getBruteLoss())]"
 		if (!src.healthstring)
 			src.healthstring = "ERROR"
 		return src.healthstring

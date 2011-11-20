@@ -83,22 +83,19 @@
 /mob/living/silicon/pai/ex_act(severity)
 	flick("flash", src.flash)
 
-	var/b_loss = src.getBruteLoss()
-	var/f_loss = src.fireloss
 	switch(severity)
 		if(1.0)
 			if (src.stat != 2)
-				b_loss += 100
-				f_loss += 100
+				adjustBruteLoss(100)
+				adjustFireLoss(100)
 		if(2.0)
 			if (src.stat != 2)
-				b_loss += 60
-				f_loss += 60
+				adjustBruteLoss(60)
+				adjustFireLoss(60)
 		if(3.0)
 			if (src.stat != 2)
-				b_loss += 30
-	src.bruteloss = b_loss
-	src.fireloss = f_loss
+				adjustBruteLoss(30)
+
 	src.updatehealth()
 
 
@@ -108,9 +105,9 @@
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (src.health > 0)
-		src.bruteloss += 30
+		src.adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
-			src.fireloss += 40
+			src.adjustFireLoss(40)
 		src.updatehealth()
 	return
 

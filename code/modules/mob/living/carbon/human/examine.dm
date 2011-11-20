@@ -127,8 +127,8 @@
 			else
 				usr << "\red <B>[src.name] looks very... unfinished?</B>"
 
-		if (src.fireloss)
-			if (src.fireloss < 30)
+		if (src.getFireLoss())
+			if (src.getFireLoss() < 30)
 				usr << "\red [src.name] looks slightly burned!"
 			else
 				usr << "\red <B>[src.name] looks severely burned!</B>"

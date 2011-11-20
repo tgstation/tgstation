@@ -11,8 +11,8 @@
 				usr << text("\red [] looks slightly dented", src.name)
 			else
 				usr << text("\red <B>[] looks severely dented!</B>", src.name)
-			if (src.fireloss)
-				if (src.fireloss < 30)
+			if (src.getFireLoss())
+				if (src.getFireLoss() < 30)
 					usr << text("\red [] looks slightly burnt!", src.name)
 				else
 					usr << text("\red <B>[] looks severely burnt!</B>", src.name)

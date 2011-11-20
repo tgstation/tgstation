@@ -68,24 +68,21 @@
 		del(src)
 		return
 
-	var/b_loss = src.getBruteLoss()
-	var/f_loss = src.fireloss
 	switch(severity)
 		if(1.0)
 			if (src.stat != 2)
-				b_loss += 100
-				f_loss += 100
+				adjustBruteLoss(100)
+				adjustFireLoss(100)
 				src.gib(1)
 				return
 		if(2.0)
 			if (src.stat != 2)
-				b_loss += 60
-				f_loss += 60
+				adjustBruteLoss(60)
+				adjustFireLoss(60)
 		if(3.0)
 			if (src.stat != 2)
-				b_loss += 30
-	src.bruteloss = b_loss
-	src.fireloss = f_loss
+				adjustBruteLoss(30)
+
 	src.updatehealth()
 
 /mob/living/silicon/hivebot/meteorhit(obj/O as obj)
@@ -93,9 +90,9 @@
 		M.show_message(text("\red [src] has been hit by [O]"), 1)
 		//Foreach goto(19)
 	if (src.health > 0)
-		src.bruteloss += 30
+		src.adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
-			src.fireloss += 40
+			src.adjustFireLoss(40)
 		src.updatehealth()
 	return
 

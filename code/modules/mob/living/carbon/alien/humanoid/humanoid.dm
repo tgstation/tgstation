@@ -122,7 +122,7 @@
 			ear_deaf += 60
 
 	bruteloss += b_loss
-	fireloss += f_loss
+	adjustFireLoss(f_loss)
 
 	updatehealth()
 
@@ -140,7 +140,7 @@
 
 	show_message("\red The blob attacks!")
 
-	fireloss += damage
+	adjustFireLoss(damage)
 
 	return
 
@@ -225,7 +225,7 @@
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
 		bruteloss += (istype(O, /obj/effect/meteor/small) ? 10 : 25)
-		fireloss += 30
+		adjustFireLoss(30)
 
 		updatehealth()
 	return
@@ -553,7 +553,7 @@
 				s.start()
 
 				if (prob(stunprob) && M.powerlevel >= 8)
-					fireloss += M.powerlevel * rand(6,10)
+					adjustFireLoss(M.powerlevel * rand(6,10))
 
 
 		updatehealth()
@@ -755,7 +755,7 @@ In all, this is a lot like the monkey code. /N
 	if (nodamage == 0)
 	//oxyloss is only used for suicide
 	//toxloss isn't used for aliens, its actually used as alien powers!!
-		health = 100 - getOxyLoss() - fireloss - getBruteLoss()
+		health = 100 - getOxyLoss() - getFireLoss() - getBruteLoss()
 	else
 		health = 100
 		stat = 0

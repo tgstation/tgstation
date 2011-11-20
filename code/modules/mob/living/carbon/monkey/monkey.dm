@@ -102,8 +102,8 @@
 		var/shielded = 0
 		bruteloss += 30
 		if ((O.icon_state == "flaming" && !( shielded )))
-			fireloss += 40
-		health = 100 - getOxyLoss() - getToxLoss() - fireloss - getBruteLoss()
+			adjustFireLoss(40)
+		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	return
 
 //mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
@@ -139,7 +139,7 @@
 					O.show_message("\red <B>[M.name] has bit [name]!</B>", 1)
 				var/damage = rand(1, 5)
 				bruteloss += damage
-				health = 100 - getOxyLoss() - getToxLoss() - fireloss - getBruteLoss()
+				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 				for(var/datum/disease/D in M.viruses)
 					if(istype(D, /datum/disease/jungle_fever))
 						contract_disease(D,1,0)
@@ -371,7 +371,7 @@
 				s.start()
 
 				if (prob(stunprob) && M.powerlevel >= 8)
-					fireloss += M.powerlevel * rand(6,10)
+					adjustFireLoss(M.powerlevel * rand(6,10))
 
 
 		updatehealth()
@@ -535,17 +535,17 @@
 	switch(severity)
 		if(1.0)
 			if (stat != 2)
-				bruteloss += 200
-				health = 100 - getOxyLoss() - getToxLoss() - fireloss - getBruteLoss()
+				adjustBruteLoss(200)
+				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 		if(2.0)
 			if (stat != 2)
 				bruteloss += 60
-				fireloss += 60
-				health = 100 - getOxyLoss() - getToxLoss() - fireloss - getBruteLoss()
+				adjustFireLoss(60)
+				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 		if(3.0)
 			if (stat != 2)
-				bruteloss += 30
-				health = 100 - getOxyLoss() - getToxLoss() - fireloss - getBruteLoss()
+				adjustBruteLoss(30)
+				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 			if (prob(50))
 				paralysis += 10
 		else
@@ -553,8 +553,8 @@
 
 /mob/living/carbon/monkey/blob_act()
 	if (stat != 2)
-		fireloss += 60
-		health = 100 - getOxyLoss() - getToxLoss() - fireloss - getBruteLoss()
+		adjustFireLoss(60)
+		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	if (prob(50))
 		paralysis += 10
 

@@ -2,13 +2,13 @@
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
 		src.oxyloss += src.health + 200
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.fireloss - src.getBruteLoss()
+		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
 		src << "\blue You have given up life and succumbed to death."
 
 
 /mob/living/proc/updatehealth()
 	if(!src.nodamage)
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.fireloss - src.getBruteLoss() - src.cloneloss
+		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.cloneloss
 	else
 		src.health = 100
 		src.stat = 0
@@ -36,7 +36,7 @@
 		if (src.mutations & COLD_RESISTANCE) //fireproof
 			return 0
 		var/mob/living/carbon/monkey/M = src
-		M.fireloss += burn_amount
+		M.adjustFireLoss(burn_amount)
 		M.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/silicon/ai))
@@ -112,25 +112,25 @@
 // heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/heal_organ_damage(var/brute, var/burn)
 	bruteloss = max(0, getBruteLoss()-brute)
-	fireloss = max(0, fireloss-burn)
+	adjustFireLoss(-burn)
 	src.updatehealth()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/take_organ_damage(var/brute, var/burn)
 	bruteloss += brute
-	fireloss += burn
+	adjustFireLoss(burn)
 	src.updatehealth()
 
 // heal MANY external organs, in random order
 /mob/living/proc/heal_overall_damage(var/brute, var/burn)
 	bruteloss = max(0, getBruteLoss()-brute)
-	fireloss = max(0, fireloss-burn)
+	adjustFireLoss(-burn)
 	src.updatehealth()
 
 // damage MANY external organs, in random order
 /mob/living/proc/take_overall_damage(var/brute, var/burn)
 	bruteloss += brute
-	fireloss += burn
+	adjustFireLoss(burn)
 	src.updatehealth()
 
 /mob/living/proc/revive()
