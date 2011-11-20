@@ -17,7 +17,7 @@
 			if(mutations & COLD_RESISTANCE)	damage = 0
 			fireloss += (damage/(blocked+1))
 		if(TOX)
-			toxloss += (damage/(blocked+1))
+			adjustToxLoss(damage/(blocked+1))
 		if(OXY)
 			oxyloss += (damage/(blocked+1))
 		if(CLONE)

@@ -72,12 +72,12 @@
 
 			if(istype(M, /mob/living/carbon))
 				Victim.cloneloss += rand(1,10)
-				Victim.toxloss += rand(1,2)
+				Victim.adjustToxLoss(rand(1,2))
 				if(Victim.health <= 0)
-					Victim.toxloss += rand(2,4)
+					Victim.adjustToxLoss(rand(2,4))
 
 				if(getToxLoss() > 0)
-					toxloss = max(0, getToxLoss()-10)
+					adjustToxLoss(-10)
 
 				if(getOxyLoss() > 0)
 					oxyloss = max(0, getOxyLoss()-10)

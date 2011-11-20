@@ -69,7 +69,7 @@
 		//If there are alien weeds on the ground then heal if needed or give some toxins
 		if(locate(/obj/effect/alien/weeds) in loc)
 			if(health >= 250)
-				toxloss += 20
+				adjustToxLoss(20)
 				if(getToxLoss() > max_plasma)
 					toxloss = max_plasma
 			else
@@ -172,7 +172,7 @@
 		return
 
 	if(powerc(50,1))//Can't plant eggs on spess tiles. That's silly.
-		toxloss -= 200
+		adjustToxLoss(-200)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has laid an egg!</B>"), 1)
 		new /obj/effect/alien/egg(loc)

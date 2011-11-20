@@ -450,6 +450,10 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 /mob/proc/getCloneLoss()
 	return cloneloss
 
+/mob/proc/adjustToxLoss(var/amount)
+	toxloss = max(toxloss + amount, 0)
+
+
 
 // Standard for setting hasn't been agreed upon yet.
 
@@ -460,13 +464,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 /mob/proc/setOxyLoss(var/T)
 	oxyloss = T
-
-
-
-/mob/proc/setToxLoss(var/T)
-	toxloss = T
-
-
 
 /mob/proc/setFireLoss(var/T)
 	fireloss = T

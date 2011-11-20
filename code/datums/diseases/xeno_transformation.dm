@@ -49,7 +49,7 @@
 				affected_mob << "\red You can feel... something...inside you."
 		if(5)
 			affected_mob <<"\red Your skin feels impossibly calloused..."
-			affected_mob.toxloss += 10
+			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(40))
 				ASSERT(gibbed == 0)

@@ -192,7 +192,7 @@
 	stage = 3
 	maxm = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.toxloss += (2*multiplier)
+		mob.adjustToxLoss(2*multiplier)
 
 /datum/disease2/effect/scream
 	name = "Random screaming syndrome"
@@ -261,7 +261,7 @@
 	name = "Toxification syndrome"
 	stage = 4
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.toxloss += 15
+		mob.adjustToxLoss(15)
 /*
 /datum/disease2/effect/hallucinations
 	name = "Hallucinational Syndrome"

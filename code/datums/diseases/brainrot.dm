@@ -36,7 +36,7 @@
 				if(prob(2))
 					affected_mob << "\red Your try to remember something important...but can't."
 /*			if(prob(10))
-				affected_mob.toxloss +=3
+				affected_mob.adjustToxLoss(3)
 				affected_mob.updatehealth()
 				if(prob(2))
 					affected_mob << "\red Your head hurts." */
@@ -46,7 +46,7 @@
 			if(prob(2))
 				affected_mob.emote("drool")
 /*			if(prob(15))
-				affected_mob.toxloss +=4
+				affected_mob.adjustToxLoss(4)
 				affected_mob.updatehealth()
 				if(prob(2))
 					affected_mob << "\red Your head hurts." */

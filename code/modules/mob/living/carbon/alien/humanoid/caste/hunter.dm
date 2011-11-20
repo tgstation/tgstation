@@ -66,7 +66,7 @@
 		//If there are alien weeds on the ground then heal if needed or give some toxins
 		if(locate(/obj/effect/alien/weeds) in loc)
 			if(health >= 150)
-				toxloss += 5
+				adjustToxLoss(5)
 				if(getToxLoss() > max_plasma)
 					toxloss = max_plasma
 
@@ -166,7 +166,7 @@
 	set category = "Alien"
 
 	if(powerc(50))
-		toxloss -= 50
+		adjustToxLoss(-50)
 		alien_invis = 1.0
 		src << "\green You are now invisible."
 		for(var/mob/O in oviewers(src, null))

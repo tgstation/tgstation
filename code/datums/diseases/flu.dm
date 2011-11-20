@@ -30,7 +30,7 @@
 			if(prob(1))
 				affected_mob << "\red Your stomach hurts."
 				if(prob(20))
-					affected_mob.toxloss += 1
+					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 
 		if(3)
@@ -49,6 +49,6 @@
 			if(prob(1))
 				affected_mob << "\red Your stomach hurts."
 				if(prob(20))
-					affected_mob.toxloss += 1
+					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
 	return

@@ -24,7 +24,7 @@ Doesn't work on other aliens/AI.*/
 	set category = "Alien"
 
 	if(powerc(50,1))
-		toxloss -= 50
+		adjustToxLoss(-50)
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
 		new /obj/effect/alien/weeds/node(loc)
@@ -36,7 +36,7 @@ Doesn't work on other aliens/AI.*/
 	set category = "Alien"
 
 	if(powerc(5))
-		toxloss -= 5
+		adjustToxLoss(-5)
 		for(var/obj/item/clothing/mask/facehugger/F in range(8,src))
 			F.GoActive()
 		emote("roar")
@@ -48,7 +48,7 @@ Doesn't work on other aliens/AI.*/
 	set category = "Alien"
 
 	if(powerc(10))
-		toxloss -= 10
+		adjustToxLoss(-10)
 		var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 		if(msg)
 			log_say("AlienWhisper: [key_name(src)]->[M.key] : [msg]")
@@ -66,8 +66,8 @@ Doesn't work on other aliens/AI.*/
 		if (amount)
 			if(powerc(amount))
 				if (get_dist(src,M) <= 1)
-					M.toxloss += amount
-					toxloss -= amount
+					M.adjustToxLoss(amount)
+					adjustToxLoss(-amount)
 					M << "\green [src] has transfered [amount] plasma to you."
 					src << {"\green You have trasferred [amount] plasma to [M]"}
 				else
@@ -101,7 +101,7 @@ I kind of like the right click only--the window version can get a little confusi
 		if(!A == "Abort Command")
 			if(powerc(200))//Check 2.
 				if(A in view(1))//Check 3.
-					toxloss -= 200
+					adjustToxLoss(-200)
 					A.acid(src)
 				else
 					src << "\green Target is too far away."
@@ -115,7 +115,7 @@ I kind of like the right click only--the window version can get a little confusi
 	if(istype(O, /obj))
 		if(powerc(200))
 			if(!O.unacidable)
-				toxloss -= 200
+				adjustToxLoss(-200)
 				O.acid()
 			else//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
 				src << "\green You cannot destroy this object."
