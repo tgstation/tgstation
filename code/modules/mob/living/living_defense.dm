@@ -43,6 +43,8 @@
 		src << "\blue Your [C.name] was disrupted!"
 		stunned = max(stunned, 2)
 
+	flash_weak_pain()
+
 	var/absorb = run_armor_check(def_zone, P.flag)
 	if(absorb >= 2)
 		P.on_hit(src,2)
