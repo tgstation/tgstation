@@ -314,7 +314,6 @@
 #include "code\defines\procs\command_alert.dm"
 #include "code\defines\procs\command_name.dm"
 #include "code\defines\procs\dbcore.dm"
-#include "code\defines\procs\forum_activation.dm"
 #include "code\defines\procs\gamehelpers.dm"
 #include "code\defines\procs\helpers.dm"
 #include "code\defines\procs\icon_procs.dm"
