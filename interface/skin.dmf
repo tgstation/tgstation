@@ -4,20 +4,20 @@ macro "macro"
 		command = ".center"
 		is-disabled = false
 	elem 
-		name = "NORTHEAST"
-		command = "swap-hand"
+		name = "NORTHEAST+REP"
+		command = ".northeast"
 		is-disabled = false
 	elem 
-		name = "SOUTHEAST"
-		command = "attack-self"
+		name = "SOUTHEAST+REP"
+		command = ".southeast"
 		is-disabled = false
 	elem 
-		name = "SOUTHWEST"
-		command = "toggle-throw-mode"
+		name = "SOUTHWEST+REP"
+		command = ".southwest"
 		is-disabled = false
 	elem 
-		name = "NORTHWEST"
-		command = "drop-item"
+		name = "NORTHWEST+REP"
+		command = ".northwest"
 		is-disabled = false
 	elem 
 		name = "CTRL+WEST"
@@ -66,42 +66,6 @@ macro "macro"
 	elem 
 		name = "CTRL+W"
 		command = "attack-self"
-		is-disabled = false
-	elem 
-		name = "NUMPAD2+REP"
-		command = ".south"
-		is-disabled = false
-	elem 
-		name = "NUMPAD4+REP"
-		command = ".west"
-		is-disabled = false
-	elem 
-		name = "NUMPAD5+REP"
-		command = ".center"
-		is-disabled = false
-	elem 
-		name = "NUMPAD6+REP"
-		command = ".east"
-		is-disabled = false
-	elem 
-		name = "NUMPAD8+REP"
-		command = ".north"
-		is-disabled = false
-	elem 
-		name = "MULTIPLY"
-		command = "swap-hand"
-		is-disabled = false
-	elem 
-		name = "ADD"
-		command = "attack-self"
-		is-disabled = false
-	elem 
-		name = "SUBTRACT"
-		command = "drop-item"
-		is-disabled = false
-	elem 
-		name = "DIVIDE"
-		command = "toggle-throw-mode"
 		is-disabled = false
 	elem 
 		name = "F1"
