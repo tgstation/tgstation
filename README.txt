@@ -1,8 +1,11 @@
-tgstation13 v1.0 - 6 October 2010
+baystation 12
 
-Website: http://tgstation13.servehttp.com
-Code: http://code.google.com/p/tgstation13
-IRC: irc://irc.rizon.net/tgstation13
+Website: http://whoopshop.com
+Code: https://github.com/Baystation12/Baystation12
+IRC: irc://irc.sorcery.net/bs12
+
+based on the code of tgstation13, itself based on the code of goonstation13.
+tgstation13 - http://code.google.com/p/tgstation13
 
 ================================================================================
 INSTALLATION
