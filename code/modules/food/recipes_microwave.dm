@@ -15,6 +15,20 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
 
+/datum/recipe/friedegg
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/friedegg
+
+/datum/recipe/boiledegg
+	reagents = list("water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
+
 /*
 /datum/recipe/bananaphone
 	reagents = list("psilocybin" = 5) //Trippin' balls, man.

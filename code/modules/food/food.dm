@@ -50,8 +50,8 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
-	name = "candy corm" //Not a typo
-	desc = "It's a handful of candy corm. Can be stored in a detective's hat."
+	name = "candy corn"
+	desc = "It's a handful of candy corn. Can be stored in a detective's hat."
 	icon_state = "candy_corn"
 	New()
 		..()
@@ -118,6 +118,25 @@
 		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
 		src.visible_message("\red [src.name] has been squashed.","\red You hear a smack.")
 		del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/friedegg
+	name = "Fried egg"
+	desc = "A fried egg, with a touch of salt and pepper!"
+	icon_state = "friedegg"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("sodiumchloride", 1)
+		reagents.add_reagent("blackpepper", 1)
+		bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledegg
+	name = "Boiled egg"
+	desc = "A hard boiled egg!"
+	icon_state = "egg"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/flour
 	name = "flour"
@@ -644,7 +663,7 @@
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn
-	name = "Popcorm" //not a typo
+	name = "Popcorn"
 	desc = "Now let's find some cinema."
 	icon_state = "popcorn"
 	trash = "popcorn"
