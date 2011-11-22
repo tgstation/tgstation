@@ -371,7 +371,7 @@ AI MODULES
 /obj/item/weapon/aiModule/corp
 	name = "'Corporate' Core AI Module"
 	desc = "A 'Corporate' Core AI Module: 'Reconfigures the AI's core laws.'"
-	origin_tech = null //Adminbus only for now, need to determine how the players take to this. --NEO
+	origin_tech = "programming=3;materials=4"
 
 
 /obj/item/weapon/aiModule/corp/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
