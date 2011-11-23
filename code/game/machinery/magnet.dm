@@ -230,11 +230,7 @@
 
 		spawn(15)	// must wait for map loading to finish
 			if(radio_controller)
-				world << "test"
 				radio_connection = radio_controller.add_object(src, frequency, RADIO_MAGNETS)
-
-				if(!radio_connection)
-					world << "oh no!"
 
 
 	attack_ai(mob/user as mob)
