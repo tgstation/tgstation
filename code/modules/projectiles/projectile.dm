@@ -29,6 +29,9 @@
 		current = null
 		turf/original = null
 
+		p_x = 16
+		p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
+
 		damage = 10
 		damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 		nodamage = 0 //Determines if the projectile will skip any damage inflictions
@@ -78,7 +81,15 @@
 
 		spawn(0)
 			if(A)
-				A.bullet_act(src, def_zone)
+				var/permutation = A.bullet_act(src, def_zone) // searches for return value
+				if(permutation == -1) // the bullet passes through a dense object!
+					bumped = 0 // reset bumped variable!
+					if(istype(A, /turf))
+						loc = A
+					else
+						loc = A.loc
+					return
+
 				if(istype(A,/turf))
 					for(var/obj/O in A)
 						O.bullet_act(src)

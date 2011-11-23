@@ -238,11 +238,13 @@
 		return
 	if(using_new_click_proc)  //TODO ERRORAGE (see message below)
 		return DblClickNew()
-	return DblClick()
+	return DblClick(location, control, params)
 
 var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblClickNew() proc is being tested)
 
 /atom/proc/DblClickNew()
+
+// TODO DOOHL: Intergrate params to new proc. Saved for another time because var/valid_place is a fucking brainfuck
 
 	//Spamclick server-overloading prevention delay... THING
 	if (world.time <= usr:lastDblClick+1)
@@ -530,7 +532,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			if ( !animal.restrained() )
 				attack_animal(animal)
 
-/atom/DblClick() //TODO: DEFERRED: REWRITE
+/atom/DblClick(location, control, params) //TODO: DEFERRED: REWRITE
 //	world << "checking if this shit gets called at all"
 
 
@@ -732,7 +734,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				if (t5)
 					src.attackby(W, usr)
 				if (W)
-					W.afterattack(src, usr, (t5 ? 1 : 0))
+					W.afterattack(src, usr, (t5 ? 1 : 0), params)
 
 			else
 				// ------- YOU DO NOT HAVE AN ITEM IN YOUR HAND -------
@@ -782,7 +784,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					// ------- IT SHOULD NEVER GET TO HERE, DUE TO THE ISTYPE(SRC, /OBJ/SCREEN) FROM PREVIOUS IF-S - I TESTED IT WITH A DEBUG OUTPUT AND I COULDN'T GET THIST TO SHOW UP. -------
 					src.attackby(W, usr)
 					if (W)
-						W.afterattack(src, usr)
+						W.afterattack(src, usr,, params)
 				else
 					// ------- YOU ARE NOT RESTRAINED, AND ARE CLICKING A HUD OBJECT -------
 					if (istype(usr, /mob/living/carbon/human))
