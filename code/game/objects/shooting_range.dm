@@ -29,6 +29,8 @@
 		if(istype(W, /obj/item/target))
 			density = 0
 			W.density = 1
+			user.drop_item(src)
+			W.loc = loc
 			W.layer = 3.1
 			pinned_target = W
 			user << "You slide the target into the stake."
