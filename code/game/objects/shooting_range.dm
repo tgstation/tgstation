@@ -153,8 +153,8 @@
 		hp -= Proj.damage
 		if(hp <= 0)
 			for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				O << "\red [src] breaks into tiny pieces and collapses!"
+				if ((O.client && !( O.blinded )))
+					O << "\red [src] breaks into tiny pieces and collapses!"
 			del(src)
 
 		// Create a temporary object to represent the damage
