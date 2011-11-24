@@ -224,13 +224,21 @@
 
 		if(autolink)
 			for(var/obj/machinery/magnetic_module/M in world)
-				if(M.freq == frequency && code == code)
+				if(M.freq == frequency && M.code == code)
 					magnets.Add(M)
 
 
-		spawn(15)	// must wait for map loading to finish
+		spawn(45)	// must wait for map loading to finish
 			if(radio_controller)
 				radio_connection = radio_controller.add_object(src, frequency, RADIO_MAGNETS)
+
+
+	process()
+		..()
+		if(magnets.len == 0 && autolink)
+			for(var/obj/machinery/magnetic_module/M in world)
+				if(M.freq == frequency && M.code == code)
+					magnets.Add(M)
 
 
 	attack_ai(mob/user as mob)
