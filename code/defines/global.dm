@@ -170,7 +170,7 @@ var
 
 
 
-	// MySQL configuration
+	// MySQL configuration. You can also use the config/dbconfig.txt file.
 
 	sqladdress = "localhost"
 	sqlport = "3306"
@@ -192,10 +192,10 @@ var
 	// These are all default values that will load should the forumdbconfig.txt
 	// file fail to read for whatever reason.
 
-	forumsqladdress = "localhost"
+	/*forumsqladdress = "localhost"
 	forumsqlport = "3306"
 	forumsqldb = "tgstation"
 	forumsqllogin = "root"
 	forumsqlpass = ""
 	forum_activated_group = "2"
-	forum_authenticated_group = "10"
+	forum_authenticated_group = "10"*/
