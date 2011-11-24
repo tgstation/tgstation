@@ -555,7 +555,7 @@
 	icon_state = null
 	w_class = 1
 	var/amount_per_transfer_from_this = 5
-	var/possible_transfer_amounts = list(5,10,25)
+	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/volume = 30
 
 	verb/set_APTFT() //set amount_per_transfer_from_this
@@ -595,7 +595,7 @@
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,25)
+	possible_transfer_amounts = list(5,10,15,25,50)
 	volume = 50
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
@@ -1699,7 +1699,7 @@
 	item_state = "beaker"
 	volume = 100
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,30,50)
+	possible_transfer_amounts = list(5,10,15,25,30,50,100)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 
