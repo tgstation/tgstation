@@ -299,7 +299,7 @@
 			else
 				diary << "Unknown setting in configuration: '[name]'"
 
-/datum/configuration/proc/loadforumsql(filename)  // -- TLE
+/*/datum/configuration/proc/loadforumsql(filename)  // -- TLE
 	var/text = file2text(filename)
 
 	if (!text)
@@ -350,7 +350,7 @@
 			if ("authenticatedgroup")
 				forum_authenticated_group = value
 			else
-				diary << "Unknown setting in configuration: '[name]'"
+				diary << "Unknown setting in configuration: '[name]'"*/
 
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
