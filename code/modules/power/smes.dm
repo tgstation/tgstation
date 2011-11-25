@@ -21,8 +21,8 @@
 	var/output = 50000
 	var/lastout = 0
 	var/loaddemand = 0
-	var/capacity = 5e6
-	var/charge = 1e6
+	var/capacity = 10e6
+	var/charge = 3e6
 	var/charging = 0
 	var/chargemode = 0
 	var/chargecount = 0
