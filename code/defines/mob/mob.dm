@@ -19,7 +19,9 @@
 	var/bruteloss = 0.0//Living
 	var/oxyloss = 0.0//Living
 	var/toxloss = 0.0//Living
-
+	var/fireloss = 0.0//Living
+	var/cloneloss = 0//Carbon
+	var/brainloss = 0//Carbon
 
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
@@ -92,7 +94,7 @@
 	var/canmove = 1.0
 	var/eye_stat = null//Living, potentially Carbon
 
-	var/fireloss = 0.0//Living
+
 
 	var/timeofdeath = 0.0//Living
 	var/cpr_time = 1.0//Carbon
@@ -128,7 +130,7 @@
 	var/r_epil = 0
 	var/r_ch_cou = 0
 	var/r_Tourette = 0//Carbon
-	var/cloneloss = 0//Carbon
+
 	var/seer = 0 //for cult//Carbon, probably Human
 
 	var/miming = null //checks if the guy is a mime//Human
@@ -162,7 +164,7 @@
 	var/const/blindness = 1//Carbon
 	var/const/deafness = 2//Carbon
 	var/const/muteness = 4//Carbon
-	var/brainloss = 0//Carbon
+
 
 	var/datum/dna/dna = null//Carbon
 	var/radiation = 0.0//Carbon
@@ -464,6 +466,12 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 /mob/proc/adjustCloneLoss(var/amount)
 	cloneloss = max(cloneloss + amount, 0)
+
+/mob/proc/getBrainLoss()
+	return brainloss
+
+/mob/proc/adjustBrainLoss(var/amount)
+	brainloss = max(brainloss + amount, 0)
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
 

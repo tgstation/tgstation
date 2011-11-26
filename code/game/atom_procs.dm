@@ -895,7 +895,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 										"\blue You place your palms on yourself and heal.", \
 										)
 
-									C.oxyloss = max(0, C.oxyloss-25)
+									C.adjustOxyLoss(-25)
 									C.adjustToxLoss(-25)
 
 									if(istype(C, /mob/living/carbon/human))
@@ -906,7 +906,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 											H.UpdateDamageIcon()
 									else
 										C.heal_organ_damage(25, 25)
-									C.cloneloss = max(0, C.cloneloss-25)
+									C.adjustCloneLoss(-25)
 									C.stunned = max(0, C.stunned-5)
 									C.paralysis = max(0, C.paralysis-5)
 									C.stuttering = max(0, C.stuttering-5)

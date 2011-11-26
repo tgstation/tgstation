@@ -168,9 +168,9 @@
 					occupant.sleeping = max(5, (1/occupant.bodytemperature)*2000)
 					occupant.paralysis = max(5, (1/occupant.bodytemperature)*3000)
 					if(air_contents.oxygen > 2)
-						if(occupant.getOxyLoss()) occupant.oxyloss = max(0, occupant.getOxyLoss() - 1)
+						if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 					else
-						occupant.oxyloss -= 1
+						occupant.adjustOxyLoss(-1)
 					//severe damage should heal waaay slower without proper chemicals
 					if(occupant.bodytemperature < 225)
 						if (occupant.getToxLoss())
