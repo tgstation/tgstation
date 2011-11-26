@@ -233,6 +233,10 @@
 				radio_connection = radio_controller.add_object(src, frequency, RADIO_MAGNETS)
 
 
+		if(path) // check for default path
+			filter_path() // renders rpath
+
+
 	process()
 		..()
 		if(magnets.len == 0 && autolink)
