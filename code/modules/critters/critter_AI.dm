@@ -162,7 +162,7 @@
 				var/datum/organ/external/affecting = H.get_organ(ran_zone(dam_zone))
 				H.apply_damage(damage, BRUTE, affecting, H.run_armor_check(affecting, "melee"))
 			else
-				target:bruteloss += damage
+				target:adjustBruteLoss(damage)
 
 			if(attack_sound)
 				playsound(loc, attack_sound, 50, 1, -1)

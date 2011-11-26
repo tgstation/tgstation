@@ -50,7 +50,7 @@
 			if(M.stat>1) return
 			if(chassis.occupant.a_intent == "hurt")
 				M.take_overall_damage(dam_force)
-				M.oxyloss += round(dam_force/2)
+				M.adjustOxyLoss(round(dam_force/2))
 				M.updatehealth()
 				chassis.occupant_message("\red You squeese [target] with [src.name]. Something cracks.")
 				chassis.visible_message("\red [chassis] squeeses [target].")

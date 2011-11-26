@@ -234,7 +234,7 @@
 		if (M.health > 0)
 			if (M.getOxyLoss() >= 10)
 				var/amount = max(0.15, 1)
-				M.oxyloss -= amount
+				M.adjustOxyLoss(-amount)
 			else
 				M.oxyloss = 0
 			M.updatehealth()

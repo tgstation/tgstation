@@ -180,7 +180,7 @@ MASS SPECTROMETER
 	origin_tech = "magnets=1;biotech=1"
 
 /obj/item/device/healthanalyzer/attack(mob/M as mob, mob/user as mob)
-	if ((user.mutations & CLUMSY || user.brainloss >= 60) && prob(50))
+	if ((user.mutations & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)
@@ -208,18 +208,18 @@ MASS SPECTROMETER
 		user.show_message(text("\blue [] | [] | [] | []", fake_oxy > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", M.getToxLoss() > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", M.getFireLoss() > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", M.getBruteLoss() > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
 	else
 		user.show_message(text("\blue [] | [] | [] | []", M.getOxyLoss() > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", M.getToxLoss() > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", M.getFireLoss() > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", M.getBruteLoss() > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
-	if (M.cloneloss)
+	if (M.getCloneLoss())
 		user.show_message(text("\red Subject appears to have been imperfectly cloned."), 1)
 	for(var/datum/disease/D in M.viruses)
 		if(!D.hidden[SCANNER])
 			user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
 	if (M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		user.show_message(text("\blue Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals."), 1)
-	if (M.brainloss >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
+	if (M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
 		user.show_message(text("\red Subject is brain dead."), 1)
-	else if (M.brainloss >= 60)
+	else if (M.getBrainLoss() >= 60)
 		user.show_message(text("\red Severe brain damage detected. Subject likely to have mental retardation."), 1)
-	else if (M.brainloss >= 10)
+	else if (M.getBrainLoss() >= 10)
 		user.show_message(text("\red Significant brain damage detected. Subject may have had a concussion."), 1)
 	src.add_fingerprint(user)
 	return

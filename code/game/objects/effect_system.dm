@@ -307,7 +307,7 @@ steam.start() -- spawns the effect
 		if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
 		else
 			M.drop_item()
-			M.oxyloss += 1
+			M.adjustOxyLoss(1)
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
@@ -331,7 +331,7 @@ steam.start() -- spawns the effect
 			return
 		else
 			M.drop_item()
-			M.oxyloss += 1
+			M.adjustOxyLoss(1)
 			if (M.coughedtime != 1)
 				M.coughedtime = 1
 				M.emote("cough")
