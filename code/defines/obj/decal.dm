@@ -267,10 +267,18 @@
 
 /obj/effect/decal/cleanable/egg_smudge
 	name = "Smashed egg"
-	desc = ""
+	desc = "Seems like this one won't hatch"
 	density = 0
 	anchored = 1
 	layer = 2
 	icon = 'tomatodecal.dmi'
 	random_icon_states = list("smashed_egg1", "smashed_egg2", "smashed_egg3")
 
+/obj/effect/decal/cleanable/pie_smudge //honk
+	name = "Smashed pie"
+	desc = "Pie cream from a cream pie"
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'tomatodecal.dmi'
+	random_icon_states = list("smashed_pie")
