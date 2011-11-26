@@ -937,7 +937,7 @@
 	icon = 'shards.dmi'
 	icon_state = "large"
 	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = 3.0
+	w_class = 1.0
 	force = 5.0
 	throwforce = 15.0
 	item_state = "shard-glass"

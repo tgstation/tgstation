@@ -47,10 +47,11 @@
 
 		if(istype(I, /obj/item/weapon/trashbag))
 			user << "\blue You empty the bag."
-			for (var/obj/item/trash/O in I.contents)
+			for(var/obj/item/O in I.contents)
 				I.contents -= O
 				O.loc = src
 			I.update_icon()
+			update()
 			return
 
 		var/obj/item/weapon/grab/G = I

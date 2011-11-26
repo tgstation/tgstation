@@ -178,6 +178,21 @@ MOP
 	reagents = R
 	R.my_atom = src
 
+obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
+	src.reagents.reaction(A,1,10)
+	A.clean_blood()
+	for(var/obj/effect/rune/R in A)
+		del(R)
+	for(var/obj/effect/decal/cleanable/R in A)
+		del(R)
+	for(var/obj/effect/overlay/R in A)
+		del(R)
+
+/obj/effect/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/mop))
+		return
+	..()
+
 /obj/item/weapon/mop/afterattack(atom/A, mob/user as mob)
 	if (src.reagents.total_volume < 1 || mopcount >= 5)
 		user << "\blue Your mop is dry!"
@@ -185,25 +200,17 @@ MOP
 
 	if (istype(A, /turf/simulated))
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red <B>[] begins to clean []</B>", user, A), 1)
+			O.show_message("\red <B>[user] begins to clean \the [A]</B>", 1)
 		sleep(40)
+		clean(A)
 		user << "\blue You have finished mopping!"
-		src.reagents.reaction(A,1,10)
-		A.clean_blood()
-		for(var/obj/effect/rune/R in A)
-			del(R)
-		for(var/obj/effect/decal/cleanable/crayon/R in A)
-			del(R)
 		mopcount++
-	else if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/overlay) || istype(A, /obj/effect/decal/cleanable/xenoblood) || istype(A, /obj/effect/rune) || istype(A,/obj/effect/decal/cleanable/crayon) || istype(A,/obj/effect/decal/cleanable/vomit) )
+	else if (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay) || istype(A, /obj/effect/rune))
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red <B>[user] begins to clean [A]</B>"), 1)
-		sleep(20)
-		if(A)
-			user << "\blue You have finished mopping!"
-			var/turf/U = A.loc
-			src.reagents.reaction(U)
-		if(A) del(A)
+			O.show_message("\red <B>[user] begins to clean \the [get_turf(A)]</B>", 1)
+		sleep(40)
+		clean(get_turf(A))
+		user << "\blue You have finished mopping!"
 		mopcount++
 
 	if(mopcount >= 5) //Okay this stuff is an ugly hack and i feel bad about it.

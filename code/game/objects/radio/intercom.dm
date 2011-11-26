@@ -3,6 +3,7 @@
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
+	w_class = 4.0
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
