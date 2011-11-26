@@ -483,6 +483,18 @@
 
 
 /////////////////////////// DNA MACHINES
+/obj/machinery/dna_scannernew/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/clonescanner(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/cable_coil(src)
+	RefreshParts()
+
 /obj/machinery/dna_scannernew/allow_drop()
 	return 0
 
@@ -569,8 +581,12 @@
 /obj/machinery/dna_scannernew/proc/go_out()
 	if ((!( src.occupant ) || src.locked))
 		return
-	for(var/obj/O in src)
-		O.loc = src.loc
+/*
+//	it's like this was -just- here to break constructed dna scanners -Pete
+//	if that's not the case, slap my shit and uncomment this.
+//	for(var/obj/O in src)
+//		O.loc = src.loc
+*/
 		//Foreach goto(30)
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob

@@ -250,6 +250,9 @@
 					return
 		now_pushing = 0
 		..()
+		if (istype(AM, /obj/machinery/recharge_station))
+			var/obj/machinery/recharge_station/F = AM
+			F.move_inside()
 		if (!istype(AM, /atom/movable))
 			return
 		if (!now_pushing)
