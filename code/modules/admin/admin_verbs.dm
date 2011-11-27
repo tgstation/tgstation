@@ -138,6 +138,8 @@
 			verbs += /client/proc/object_talk
 			verbs += /client/proc/strike_team
 			verbs += /client/proc/enable_mapping_debug
+			verbs += /client/proc/everyone_random
+			verbs += /client/proc/only_one // Fateweaver suggested I do this - Doohl
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log
@@ -161,7 +163,6 @@
 			verbs += /client/proc/cmd_admin_drop_everything
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
-			verbs += /client/proc/only_one
 			verbs += /client/proc/send_space_ninja
 			verbs += /client/proc/restartcontroller //Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
 			verbs += /client/proc/Blobize//I need to remember to move/remove this later
