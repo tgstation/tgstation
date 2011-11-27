@@ -253,7 +253,7 @@ CIRCULAR SAW
 	if(!istype(M))
 		return ..()
 
-	if(M.mutations & HUSK)	return ..()
+	//if(M.mutations & HUSK)	return ..()
 
 	if((user.mutations & CLUMSY) && prob(50))
 		M = user

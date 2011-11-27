@@ -374,6 +374,7 @@
 		usr.toxloss = 0
 		//usr.bruteloss = 0
 		usr.oxyloss = 0
+		usr.cloneloss = 0
 		usr.paralysis = 0
 		usr.stunned = 0
 		usr.weakened = 0
