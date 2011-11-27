@@ -655,15 +655,16 @@
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.equipped()
-		if(id)//Get id and replace it.
-			user.drop_item()
-			I.loc = src
-			user.put_in_hand(id)
-			id = I
-		else//Insert id.
-			user.drop_item()
-			I.loc = src
-			id = I
+		if (istype(I, /obj/item/weapon/card/id) && I:registered)
+			if(id)//Get id and replace it.
+				user.drop_item()
+				I.loc = src
+				user.put_in_hand(id)
+				id = I
+			else//Insert id.
+				user.drop_item()
+				I.loc = src
+				id = I
 	return
 
 // access to status display signals
