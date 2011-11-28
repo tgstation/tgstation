@@ -78,6 +78,7 @@
 		chassis.occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
 		chassis.use_power(energy_drain)
 		var/T = chassis.loc
+		var/C = target.loc	//why are these backwards? we may never know -Pete
 		if(do_after_cooldown(target))
 			if(T == chassis.loc && src == chassis.selected)
 				if(istype(target, /turf/simulated/wall/r_wall))
@@ -93,7 +94,7 @@
 							for(var/obj/item/weapon/ore/ore in range(chassis,1))
 								if(get_dir(chassis,ore)&chassis.dir)
 									ore.Move(ore_box)
-				else
+				else if(target.loc == C)
 					chassis.log_message("Drilled through [target]")
 					target.ex_act(2)
 		return 1

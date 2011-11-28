@@ -112,6 +112,9 @@
 		return
 
 	attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
+		if(isrobot(user))
+			return
+
 		if(!istype(B, /obj/item/weapon/reagent_containers/glass))
 			return
 
