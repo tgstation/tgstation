@@ -630,14 +630,20 @@
 		src.mess = 0
 		gibs(src.loc)
 		src.icon_state = "pod_0"
+
+		/*
 		for(var/obj/O in src)
 			O.loc = src.loc
+		*/
 		return
 
 	if (!(src.occupant))
 		return
+
+	/*
 	for(var/obj/O in src)
 		O.loc = src.loc
+	*/
 
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob

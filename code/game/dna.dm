@@ -982,7 +982,7 @@
 				src.temphtml += text("Data: <font color='blue'>[]</FONT><BR>", src.buffer1)
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer1owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer1label)
-			if (src.connected.occupant) src.temphtml += text("Save : <A href='?src=\ref[];b1addui=1'>UI</A> - <A href='?src=\ref[];b1adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b1addse=1'>SE</A><BR>", src, src, src)
+			if (src.connected.occupant && !(src.connected.occupant.mutations & HUSK)) src.temphtml += text("Save : <A href='?src=\ref[];b1addui=1'>UI</A> - <A href='?src=\ref[];b1adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b1addse=1'>SE</A><BR>", src, src, src)
 			if (src.buffer1) src.temphtml += text("Transfer to: <A href='?src=\ref[];b1transfer=1'>Occupant</A> - <A href='?src=\ref[];b1injector=1'>Injector</A><BR>", src, src)
 			//if (src.buffer1) src.temphtml += text("<A href='?src=\ref[];b1iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer1) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=1'>Save To</a> | <A href='?src=\ref[src];load_disk=1'>Load From</a><br>"
@@ -996,7 +996,7 @@
 				src.temphtml += text("Data: <font color='blue'>[]</FONT><BR>", src.buffer2)
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer2owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer2label)
-			if (src.connected.occupant) src.temphtml += text("Save : <A href='?src=\ref[];b2addui=1'>UI</A> - <A href='?src=\ref[];b2adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b2addse=1'>SE</A><BR>", src, src, src)
+			if (src.connected.occupant && !(src.connected.occupant.mutations & HUSK)) src.temphtml += text("Save : <A href='?src=\ref[];b2addui=1'>UI</A> - <A href='?src=\ref[];b2adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b2addse=1'>SE</A><BR>", src, src, src)
 			if (src.buffer2) src.temphtml += text("Transfer to: <A href='?src=\ref[];b2transfer=1'>Occupant</A> - <A href='?src=\ref[];b2injector=1'>Injector</A><BR>", src, src)
 			//if (src.buffer2) src.temphtml += text("<A href='?src=\ref[];b2iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer2) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=2'>Save To</a> | <A href='?src=\ref[src];load_disk=2'>Load From</a><br>"
@@ -1010,7 +1010,7 @@
 				src.temphtml += text("Data: <font color='blue'>[]</FONT><BR>", src.buffer3)
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer3owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer3label)
-			if (src.connected.occupant) src.temphtml += text("Save : <A href='?src=\ref[];b3addui=1'>UI</A> - <A href='?src=\ref[];b3adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b3addse=1'>SE</A><BR>", src, src, src)
+			if (src.connected.occupant && !(src.connected.occupant.mutations & HUSK)) src.temphtml += text("Save : <A href='?src=\ref[];b3addui=1'>UI</A> - <A href='?src=\ref[];b3adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b3addse=1'>SE</A><BR>", src, src, src)
 			if (src.buffer3) src.temphtml += text("Transfer to: <A href='?src=\ref[];b3transfer=1'>Occupant</A> - <A href='?src=\ref[];b3injector=1'>Injector</A><BR>", src, src)
 			//if (src.buffer3) src.temphtml += text("<A href='?src=\ref[];b3iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer3) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=3'>Save To</a> | <A href='?src=\ref[src];load_disk=3'>Load From</a><br>"
@@ -1135,7 +1135,7 @@
 			src.buffer3label = sanitize(input("New Label:","Edit Label","Infos here"))
 			dopage(src,"buffermenu")
 		if (href_list["b1transfer"])
-			if (!src.connected.occupant)
+			if (!src.connected.occupant || src.connected.occupant.mutations & HUSK)
 				return
 			if (src.buffer1type == "ui")
 				if (src.buffer1iue)
@@ -1150,7 +1150,7 @@
 			src.connected.occupant.radiation += rand(20,50)
 			src.delete = 0
 		if (href_list["b2transfer"])
-			if (!src.connected.occupant)
+			if (!src.connected.occupant || src.connected.occupant.mutations & HUSK)
 				return
 			if (src.buffer2type == "ui")
 				if (src.buffer2iue)
@@ -1165,7 +1165,7 @@
 			src.connected.occupant.radiation += rand(20,50)
 			src.delete = 0
 		if (href_list["b3transfer"])
-			if (!src.connected.occupant)
+			if (!src.connected.occupant || src.connected.occupant.mutations & HUSK)
 				return
 			if (src.buffer3type == "ui")
 				if (src.buffer3iue)
@@ -1190,7 +1190,7 @@
 				src.temphtml = "Injector created."
 				src.delete = 0
 				src.injectorready = 0
-				spawn(1200)
+				spawn(300)
 					src.injectorready = 1
 			else
 				src.temphtml = "Replicator not ready yet."
@@ -1206,7 +1206,7 @@
 				src.temphtml = "Injector created."
 				src.delete = 0
 				src.injectorready = 0
-				spawn(1200)
+				spawn(300)
 					src.injectorready = 1
 			else
 				src.temphtml = "Replicator not ready yet."
@@ -1222,7 +1222,7 @@
 				src.temphtml = "Injector created."
 				src.delete = 0
 				src.injectorready = 0
-				spawn(1200)
+				spawn(300)
 					src.injectorready = 1
 			else
 				src.temphtml = "Replicator not ready yet."
