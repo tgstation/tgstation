@@ -3,7 +3,7 @@
 //	if (src.loc != usr)
 //		return
 //	if ((istype(usr, /mob/living/carbon/human) || (ticker && ticker.mode.name == "monkey")))
-	if (ishuman(usr) || ismonkey(usr)) //so monkies can take off their backpacks -- Urist
+	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 		if (!( istype(over_object, /obj/screen) ))
 			return ..()

@@ -1106,10 +1106,10 @@
 		reagents.add_reagent("capsaicin", 6)
 		bitesize = 4
 
-/obj/item/weapon/reagent_containers/food/snacks/monkiesdelight
-	name = "Monkie's Delight"
+/obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
+	name = "monkey's Delight"
 	desc = "Eeee Eee!"
-	icon_state = "monkiesdelight"
+	icon_state = "monkeysdelight"
 	trash = "tray"
 	New()
 		..()

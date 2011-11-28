@@ -1969,7 +1969,7 @@
 <A href='?src=\ref[src];secretsfun=sec_clothes'>Remove 'internal' clothing</A><BR>
 <A href='?src=\ref[src];secretsfun=sec_all_clothes'>Remove ALL clothing</A><BR>
 <A href='?src=\ref[src];secretsfun=toxic'>Toxic Air (WARNING: dangerous)</A><BR>
-<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkies</A><BR>
+<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
 <A href='?src=\ref[src];secretsfun=sec_classic1'>Remove firesuits, grilles, and pods</A><BR>
 <A href='?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
 <A href='?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>

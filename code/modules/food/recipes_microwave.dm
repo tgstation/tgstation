@@ -703,14 +703,14 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/creamcheesebread
 
-/datum/recipe/monkiesdelight
+/datum/recipe/monkeysdelight
 	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/monkeycube,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/monkiesdelight
+	result = /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
 
 /datum/recipe/baguette
 	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
