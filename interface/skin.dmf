@@ -20,7 +20,7 @@ macro "macro"
 		command = "drop-item"
 		is-disabled = false
 	elem 
-		name = "CTRL+WEST"
+		name = "SHIFT+WEST"
 		command = "westface"
 		is-disabled = false
 	elem 
@@ -28,7 +28,7 @@ macro "macro"
 		command = ".west"
 		is-disabled = false
 	elem 
-		name = "CTRL+NORTH"
+		name = "SHIFT+NORTH"
 		command = "northface"
 		is-disabled = false
 	elem 
@@ -36,7 +36,7 @@ macro "macro"
 		command = ".north"
 		is-disabled = false
 	elem 
-		name = "CTRL+EAST"
+		name = "SHIFT+EAST"
 		command = "eastface"
 		is-disabled = false
 	elem 
@@ -44,7 +44,7 @@ macro "macro"
 		command = ".east"
 		is-disabled = false
 	elem 
-		name = "CTRL+SOUTH"
+		name = "SHIFT+SOUTH"
 		command = "southface"
 		is-disabled = false
 	elem 
@@ -112,12 +112,20 @@ macro "macro"
 		command = ".options"
 		is-disabled = false
 	elem 
-		name = "F2+REP"
-		command = ".screenshot auto"
+		name = "F2"
+		command = "ooc"
 		is-disabled = false
 	elem 
 		name = "SHIFT+F2+REP"
 		command = ".screenshot"
+		is-disabled = false
+	elem 
+		name = "F3"
+		command = "say"
+		is-disabled = false
+	elem 
+		name = "F5"
+		command = "asay"
 		is-disabled = false
 
 macro "vending"
@@ -1258,7 +1266,7 @@ window "vendingslot"
 		is-maximized = false
 		can-scroll = none
 		icon = ""
-		image = 'icons\\vendingslot_bg.png'
+		image = ""
 		image-mode = stretch
 		keep-aspect = false
 		transparent-color = none
