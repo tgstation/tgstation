@@ -2152,7 +2152,7 @@
 		feedback_set_details("round_end","[time2text(world.realtime)]")
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
-
+		//send2irc(world.url,"Server Rebooting!")
 		sleep(50)
 		world.Reboot()
 
