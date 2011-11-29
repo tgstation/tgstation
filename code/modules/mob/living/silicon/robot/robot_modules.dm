@@ -67,11 +67,10 @@
 		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 		src.modules += new /obj/item/weapon/reagent_containers/glass/bottle/robot/inaprovaline(src)
 		src.modules += new /obj/item/weapon/reagent_containers/glass/bottle/robot/antitoxin(src)
-		for(var/i = 1 to 2)
-			src.modules += new /obj/item/weapon/reagent_containers/pill/kelotane(src)
-		for(var/i = 1 to 2)
-			src.modules += new /obj/item/weapon/reagent_containers/pill/dexalin(src)
-
+		src.modules += new /obj/item/weapon/reagent_containers/pill/dexalin(src)
+		src.modules += new /obj/item/weapon/reagent_containers/pill/antitox(src)
+		src.modules += new /obj/item/weapon/reagent_containers/pill/kelotane(src)
+		src.modules += new /obj/item/weapon/reagent_containers/pill/bicardine(src)
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 		src.modules += new /obj/item/weapon/reagent_containers/glass/beaker(src)
 		src.modules += new /obj/item/borg/sight/hud/med(src)
@@ -81,10 +80,10 @@
 
 	respawn_consumable(var/mob/living/silicon/robot/R)
 		var/list/what = list (
-			/obj/item/weapon/reagent_containers/pill/kelotane,
-			/obj/item/weapon/reagent_containers/pill/kelotane,
 			/obj/item/weapon/reagent_containers/pill/dexalin,
-			/obj/item/weapon/reagent_containers/pill/dexalin
+			/obj/item/weapon/reagent_containers/pill/antitox,
+			/obj/item/weapon/reagent_containers/pill/kelotane,
+			/obj/item/weapon/reagent_containers/pill/bicardine
 		)
 		for (var/T in what)
 			if (!(locate(T) in src.modules))
