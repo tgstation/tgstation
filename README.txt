@@ -1,6 +1,6 @@
 baystation 12
 
-Website: http://whoopshop.com
+Website: http://baystation12.net/
 Code: https://github.com/Baystation12/Baystation12
 IRC: irc://irc.sorcery.net/bs12
 
