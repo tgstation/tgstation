@@ -1,11 +1,13 @@
+//not a computer
 obj/machinery/scanner
-	name = "Scanner"
+	name = "Identity Analyser"
 	var/outputdir = 0
-	icon = 'computer.dmi'
-	icon_state = "aiupload"
+	icon = 'stationobjs.dmi'
+	icon_state = "scanner_idle"
 	density = 1
 	anchored = 1
 	var/lastuser = null
+
 obj/machinery/scanner/New()
 	if(!outputdir)
 		switch(dir)
@@ -19,9 +21,28 @@ obj/machinery/scanner/New()
 				outputdir = 4
 		if(!outputdir)
 			outputdir = 8
+
+/obj/machinery/scanner/process()
+	if(stat & NOPOWER)
+		return
+	use_power(50)
+
+/obj/machinery/scanner/power_change()
+	if(!powered())
+		spawn(rand(0, 15))
+			icon_state = "scanner_off"
+			stat |= NOPOWER
+	else
+		icon_state = "scanner_idle"
+		stat &= ~NOPOWER
+
 obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
+	if(stat & NOPOWER)
+		return
 	if(!ishuman(user) || lastuser == user.real_name)
 		return
+	use_power(500)
+	flick("scanner_on",src)
 	lastuser = user.real_name
 	var/mname = user.real_name
 	var/dna = user.dna.unique_enzymes
