@@ -2,7 +2,7 @@
 var/jsonpath = "/home/bay12/public_html"
 var/dmepath = "/home/bay12/git/baystation12.dme"
 var/makejson = 1 //temp
-world/proc/makejson()
+proc/makejson()
 
 	if(!makejson)
 		return
