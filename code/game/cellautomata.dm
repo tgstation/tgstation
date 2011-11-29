@@ -123,7 +123,7 @@
 //Crispy fullban
 /world/Reboot(var/reason)
 	spawn(0)
-		world << sound(pick('newroundsexy.ogg','apcdestroyed.ogg','bangindonk.ogg')) // random end sounds!! - LastyBatsy
+		//world << sound(pick('newroundsexy.ogg','apcdestroyed.ogg','bangindonk.ogg')) // random end sounds!! - LastyBatsy No, no random end sounds. - Miniature
 		//if(prob(40))
 		//	for(var/mob/M in world)
 		//		if(M.client)
