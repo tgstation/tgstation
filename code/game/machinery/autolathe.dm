@@ -236,14 +236,10 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/clothing/head/helmet/welding(), \
 		new /obj/item/weapon/stock_parts/console_screen(), \
 		new /obj/item/weapon/airlock_electronics(), \
-		new	/obj/machinery/power/terminal(), \
-		new /obj/item/weapon/light/tube(), \
-		new /obj/item/weapon/light/bulb(), \
 		new /obj/item/stack/sheet/metal(), \
 		new /obj/item/stack/sheet/glass(), \
 		new /obj/item/stack/sheet/r_metal(), \
 		new /obj/item/stack/sheet/rglass(), \
-		new /obj/item/weapon/cable_coil(), \
 		new /obj/item/stack/rods(), \
 		new /obj/item/weapon/rcd_ammo(), \
 		new /obj/item/weapon/kitchenknife(), \
