@@ -20,7 +20,7 @@
 	name = "cult"
 	config_tag = "cult"
 	restricted_jobs = list("Chaplain", "Security Officer", "Warden", "Detective", "AI", "Cyborg", "Captain", "Head of Security")
-	required_players = 15
+	required_players = 3
 	required_enemies = 3
 
 	var/datum/mind/sacrifice_target = null
