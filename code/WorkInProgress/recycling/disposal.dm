@@ -18,6 +18,7 @@
 	var/flush = 0	// true if flush handle is pulled
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
 	var/flushing = 0	// true if flushing in progress
+	var/timeleft = 0	//used to give a delay after the last item was put in before flushing
 
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
@@ -80,7 +81,7 @@
 				if(M == user)
 					continue
 				M.show_message("[user.name] places \the [I] into the [src].", 3)
-
+		timeleft = 5
 		update()
 
 	// mouse drop another mob or self
@@ -117,6 +118,7 @@
 				continue
 			C.show_message(msg, 3)
 
+		timeleft = 5
 		update()
 		return
 
@@ -268,6 +270,12 @@
 	process()
 		if(stat & BROKEN)			// nothing can happen if broken
 			return
+			
+		if(length(src.contents) > 0)
+			if(timeleft == 0)
+				flush = 1
+			else
+				timeleft--
 
 		src.updateDialog()
 
