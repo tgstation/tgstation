@@ -370,11 +370,11 @@
 	if(src.seconds_electrified > 0)
 		src.seconds_electrified--
 
-	//Pitch to the people!  Really sell it!
+	/*Pitch to the people!  Really sell it!
 	if(prob(5) && ((src.last_slogan + src.slogan_delay) <= world.time) && (src.slogan_list.len > 0) && (!src.shut_up))
 		var/slogan = pick(src.slogan_list)
 		src.speak(slogan)
-		src.last_slogan = world.time
+		src.last_slogan = world.time*/
 
 	if((prob(2)) && (src.shoot_inventory))
 		src.throw_item()
