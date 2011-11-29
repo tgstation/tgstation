@@ -66,7 +66,7 @@
 
 	for(var/obj/machinery/camera/c in cameras)
 		var/lum = c.luminosity
-		c.luminosity = 6
+		c.luminosity = 7
 		for(var/turf/t in view(7, c))
 			if(t in turfs)
 				newDimTurfs += t
@@ -153,7 +153,7 @@
 
 	for(var/obj/machinery/camera/c in cameras)
 		var/lum = c.luminosity
-		c.luminosity = 6
+		c.luminosity = 7
 		for(var/turf/t in view(7, c))
 			if(t in turfs)
 				dimTurfs += t
@@ -177,6 +177,7 @@
 		if(!(t in visibleTurfs))
 			if(!t.dim)
 				t.dim = image('cameravis.dmi', t, "dim", TURF_LAYER)
+				t.dim.mouse_opacity = 0
 
 			dim += t.dim
 
@@ -308,3 +309,10 @@ var/datum/cameranet/cameranet = new()
 /obj/machinery/camera/New()
 	..()
 	cameranet.addCamera(src)
+
+/proc/checkcameravis(atom/A)
+	for(var/obj/machinery/camera/C in view(A,7))
+		if(!C.status)
+			continue
+		return 1
+	return 0
