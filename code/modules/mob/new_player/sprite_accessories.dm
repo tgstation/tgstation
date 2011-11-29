@@ -52,6 +52,10 @@
 
 	longer
 		name = "Longer Hair"
+		icon_state = "hair_b2"
+
+	longest
+		name = "Longest Hair"
 		icon_state = "hair_vlong"
 
 	halfbang
@@ -66,9 +70,17 @@
 		name = "Kusanagi Hair"
 		icon_state = "hair_kusanagi"
 
-	ponytail
-		name = "Ponytail"
+	ponytail1
+		name = "Ponytail 1"
 		icon_state = "hair_ponytail"
+
+	ponytail2
+		name = "Ponytail 2"
+		icon_state = "hair_pa"
+
+	ponytail3
+		name = "Ponytail 3"
+		icon_state = "hair_ponytail3"
 
 	cut
 		name = "Cut Hair"
@@ -77,7 +89,6 @@
 	mohawk
 		name = "Mohawk"
 		icon_state = "hair_d"
-		choose_female = 0 // gross
 
 	balding
 		name = "Balding Hair"
@@ -88,14 +99,17 @@
 		name = "Flow Hair"
 		icon_state = "hair_f"
 
-	bedhead
-		name = "Bedhead"
+	bedhead1
+		name = "Bedhead 1"
+		icon_state = "hair_bedheadold"
+
+	bedhead2
+		name = "Bedhead 2"
 		icon_state = "hair_bedhead"
 
 	dreadlocks
 		name = "Dreadlocks"
 		icon_state = "hair_dreads"
-		choose_female = 0 // okay.jpg
 
 	jensen
 		name = "Adam Jensen Hair"
