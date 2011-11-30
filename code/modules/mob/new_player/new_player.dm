@@ -117,11 +117,12 @@
 			else	output += "<b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)<BR>"
 
 		else
+			output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><BR><BR>"
 			output += "<a href='byond://?src=\ref[src];late_join=1'>Join Game!</A><BR>"
 
 		output += "<BR><a href='byond://?src=\ref[src];observe=1'>Observe</A><BR>"
 
-		src << browse(output,"window=playersetup;size=250x210;can_close=0")
+		src << browse(output,"window=playersetup;size=250x233;can_close=0")
 		return
 
 	Stat()
@@ -191,6 +192,9 @@
 
 		if(href_list["late_join"])
 			LateChoices()
+
+		if(href_list["manifest"])
+			ViewManifest()
 
 		if(href_list["SelectedJob"])
 			if(!client.authenticated)
@@ -339,6 +343,14 @@
 
 		return new_character
 
+	proc/ViewManifest()
+		var/dat = "<html><body>"
+		dat += "<h4>Crew Manifest</h4>"
+		for(var/datum/data/record/t in data_core.general)
+			dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+		dat += "<br>"
+
+		src << browse(dat, "window=manifest;size=300x420;can_close=1")
 
 	Move()
 		return 0
