@@ -15,6 +15,89 @@
 	containername = "Special Ops crate"
 	hidden = 1
 
+/datum/supply_packs/charge
+	cost = 10
+	containertype = "/obj/structure/crate"
+
+/datum/supply_packs/charge/medical
+	name = "Medical Charge"
+	contains = list("/obj/item/weapon/vending_charge/medical")
+	containername = "Medical charge crate"
+
+/datum/supply_packs/charge/chemistry
+	name = "Chemistry Charge"
+	contains = list("/obj/item/weapon/vending_charge/chemistry")
+	containername = "Chemistry charge crate"
+
+/* removed these for now, as to not confuse people (the machines are in the tg map)
+/datum/supply_packs/charge/toxins
+	name = "Toxins Research Charge"
+	contains = list("/obj/item/weapon/vending_charge/toxins")
+	containername = "Toxins Reasearch charge crate"
+
+/datum/supply_packs/charge/genetics
+	name = "Genetics Research Charge"
+	contains = list("/obj/item/weapon/vending_charge/genetics")
+	containername = "Genetics charge crate"
+
+/datum/supply_packs/charge/robotics
+	name = "Robotics Charge"
+	contains = list("/obj/item/weapon/vending_charge/robotics")
+	containername = "Robotics charge crate"
+*/
+
+/datum/supply_packs/charge/bar
+	name = "Bar Charge"
+	contains = list("/obj/item/weapon/vending_charge/bar")
+	containername = "Bar charge crate"
+
+/datum/supply_packs/charge/kitchen
+	name = "Kitchen Charge"
+	contains = list("/obj/item/weapon/vending_charge/kitchen")
+	containername = "Kitchen charge crate"
+
+/datum/supply_packs/charge/engineering
+	name = "Engineering Charge"
+	contains = list("/obj/item/weapon/vending_charge/engineering")
+	containername = "Engineering charge crate"
+
+/datum/supply_packs/charge/security
+	name = "Security Charge"
+	contains = list("/obj/item/weapon/vending_charge/security")
+	containername = "Security charge crate"
+
+/datum/supply_packs/charge/coffee
+	name = "Coffee Charge"
+	contains = list("/obj/item/weapon/vending_charge/coffee")
+	containername = "Coffee charge crate"
+
+/datum/supply_packs/charge/snack
+	name = "Snack Charge"
+	contains = list("/obj/item/weapon/vending_charge/snack")
+	containername = "Snack charge crate"
+
+/*
+/datum/supply_packs/charge/cart
+	name = "PDA Cart Charge"
+	contains = list("/obj/item/weapon/vending_charge/cart")
+	containername = "PDA Cart charge crate"
+*/
+
+/datum/supply_packs/charge/cigarette
+	name = "Cigarette Charge"
+	contains = list("/obj/item/weapon/vending_charge/cigarette")
+	containername = "Cigarette charge crate"
+
+/datum/supply_packs/charge/soda
+	name = "Soda Charge"
+	contains = list("/obj/item/weapon/vending_charge/soda")
+	containername = "Soda machine charge crate"
+
+/datum/supply_packs/charge/hydroponics
+	name = "Hydroponics Charge"
+	contains = list("/obj/item/weapon/vending_charge/hydroponics")
+	containername = "Hydroponics charge crate"
+
 /datum/supply_packs/food
 	name = "Food crate"
 	contains = list("/obj/item/weapon/reagent_containers/food/snacks/flour",
@@ -558,5 +641,7 @@
 		tempContains += pick(contains)
 	contains = tempContains
 	..()
+
+
 
 //SUPPLY PACKS

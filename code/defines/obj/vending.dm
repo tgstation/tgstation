@@ -34,17 +34,19 @@
 	var/panel_open = 0 //Hacking that vending machine. Gonna get a free candy bar.
 	var/wires = 15
 	var/obj/item/weapon/coin/coin
+	var/charge_type
 
 /obj/machinery/vending/boozeomat
 	name = "Booze-O-Mat"
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	icon_state = "boozeomat"        //////////////18 drink entities below, plus the glasses, in case someone wants to edit the number of bottles
 	product_paths = "/obj/item/weapon/reagent_containers/food/drinks/bottle/gin;/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey;/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla;/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka;/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth;/obj/item/weapon/reagent_containers/food/drinks/bottle/rum;/obj/item/weapon/reagent_containers/food/drinks/bottle/wine;/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac;/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua;/obj/item/weapon/reagent_containers/food/drinks/beer;/obj/item/weapon/reagent_containers/food/drinks/ale;/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/cream;/obj/item/weapon/reagent_containers/food/drinks/tonic;/obj/item/weapon/reagent_containers/food/drinks/cola;/obj/item/weapon/reagent_containers/food/drinks/sodawater;/obj/item/weapon/reagent_containers/food/drinks/drinkingglass;/obj/item/weapon/reagent_containers/food/drinks/ice"
-	product_amounts = "5;5;5;5;5;5;5;5;5;6;6;4;4;4;4;8;8;8;30;"
+	product_amounts = "5;5;5;5;5;5;5;5;5;6;6;4;4;4;4;8;8;8;30;10"
 	vend_delay = 15
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/tea"
 	product_hideamt = "10"
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
+	charge_type = "bar"
 
 /obj/machinery/vending/assist
 	product_amounts = "5;3;4;1;4"
@@ -62,6 +64,7 @@
 	vend_delay = 34
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/ice"
 	product_hideamt = "10"
+	charge_type = "coffee"
 
 /obj/machinery/vending/snack
 	name = "Getmore Chocolate Corp"
@@ -72,7 +75,7 @@
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_hidden = "/obj/item/weapon/reagent_containers/food/snacks/syndicake"
 	product_hideamt = "10"
-
+	charge_type = "snack"
 
 /obj/machinery/vending/cola
 	name = "Robust Softdrinks"
@@ -83,6 +86,19 @@
 	product_slogans = "Robust Softdrinks: More robust then a toolbox to the head!"
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/thirteenloko"
 	product_hideamt = "5"
+	charge_type = "soda"
+
+/obj/machinery/vending/cart
+	name = "PTech"
+	desc = "Cartridges for PDAs"
+	icon_state = "cart"
+	icon_deny = "cart-deny"
+	product_paths = "/obj/item/weapon/cartridge/medical;/obj/item/weapon/cartridge/engineering;/obj/item/weapon/cartridge/security;/obj/item/weapon/cartridge/janitor;/obj/item/weapon/cartridge/signal/toxins;/obj/item/device/pda/heads;/obj/item/weapon/cartridge/captain;/obj/item/weapon/cartridge/quartermaster"
+	product_amounts = "10;10;10;10;10;10;3;10"
+	product_slogans = ""
+	product_hidden = ""
+	product_hideamt = ""
+	charge_type = "cart"
 
 /obj/machinery/vending/cigarette
 	name = "cigarette machine"
@@ -96,6 +112,7 @@
 	product_hideamt = "4"
 	product_coin = "/obj/item/clothing/mask/cigarette/cigar/havanian"
 	product_coin_amt = "2"
+	charge_type = "cigarette"
 
 /obj/machinery/vending/medical
 	name = "NanoMed Plus"
@@ -107,6 +124,7 @@
 	product_amounts = "4;4;4;4;4;12;5;4;2"
 	product_hidden = "/obj/item/weapon/reagent_containers/pill/tox;/obj/item/weapon/reagent_containers/pill/stox;/obj/item/weapon/reagent_containers/pill/antitox"
 	product_hideamt = "3;4;6"
+	charge_type = "medical"
 
 /obj/machinery/vending/wallmed1
 	name = "NanoMed"
@@ -119,6 +137,7 @@
 	product_hidden = "/obj/item/weapon/reagent_containers/syringe/antitoxin;/obj/item/weapon/reagent_containers/syringe/antiviral;/obj/item/weapon/reagent_containers/pill/tox"
 	product_hideamt = "4;4;1"
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
+	charge_type = "medical"
 
 /obj/machinery/vending/wallmed2
 	name = "NanoMed"
@@ -131,6 +150,7 @@
 	product_hidden = "/obj/item/weapon/reagent_containers/pill/tox"
 	product_hideamt = "3"
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
+	charge_type = "medical"
 
 /obj/machinery/vending/security
 	name = "SecTech"
@@ -142,6 +162,7 @@
 	product_amounts = "8;4;5;12"
 	product_hidden = "/obj/item/clothing/glasses/sunglasses;/obj/item/kitchen/donut_box"
 	product_hideamt = "2;2"
+	charge_type = "security"
 
 /obj/machinery/vending/hydronutrients
 	name = "NutriMax"
@@ -153,6 +174,7 @@
 	product_slogans = "Aren't you glad you don't have to fertilize the natural way?;Now with 50% less stink!;Plants are people too!"
 	product_hidden = "/obj/item/weapon/reagent_containers/glass/bottle/ammonia;/obj/item/weapon/reagent_containers/glass/bottle/diethylamine"
 	product_hideamt = "10;5"
+	charge_type = "hydroponics"
 
 /obj/machinery/vending/hydroseeds
 	name = "MegaSeed Servitor"
@@ -163,6 +185,7 @@
 	product_slogans = "THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!;Hands down the best seed selection on the station!;Also certain mushroom varieties available, more for experts! Get certified today!"
 	product_hidden = "/obj/item/seeds/amanitamycelium;/obj/item/seeds/glowshroom;/obj/item/seeds/libertymycelium;/obj/item/seeds/nettleseed;/obj/item/seeds/plumpmycelium"
 	product_hideamt = "2;2;2;2;2"
+	charge_type = "hydroponics"
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
@@ -185,7 +208,7 @@
 	//product_amounts = "8;5;4" Old totals
 	product_hidden = "/obj/item/weapon/kitchen/utensil/spoon;/obj/item/weapon/kitchen/utensil/knife;/obj/item/weapon/kitchen/rollingpin;/obj/item/weapon/butch"
 	product_hideamt = "2;2;2;2"
-
+	charge_type = "kitchen"
 
 /obj/machinery/vending/sovietsoda
 	name = "BODA"
@@ -196,3 +219,127 @@
 	//product_amounts = "8;5;4" Old totals
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola"
 	product_hideamt = "20"
+	charge_type = "soda"
+
+/obj/machinery/vending/genetics
+	name = "Genetics Dispenser"
+	desc = "Medical drug dispenser."
+	icon_state = "med"
+	icon_deny = "med-deny"
+	req_access_txt = "5"
+	product_paths = "/obj/item/clothing/suit/storage/labcoat;/obj/item/clothing/under/rank/geneticist;/obj/item/weapon/reagent_containers/glass/bottle/antitoxin;/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline;/obj/item/weapon/reagent_containers/glass/bottle/stoxin;/obj/item/weapon/reagent_containers/glass/bottle/toxin;/obj/item/weapon/reagent_containers/syringe"
+	product_amounts = "4;4;6;6;6;6;4"
+	//product_prices = "1;1;2;2;2;2;1"
+	product_hidden = ""
+	product_hideamt = ""
+	charge_type = "genetics"
+
+/obj/machinery/vending/toxins
+	name = "Toxins dispenser"
+	desc = "Medical drug dispenser."
+	icon = 'objects.dmi'
+	icon_state = "dispenser"
+	//icon_deny = "med-deny"
+	req_access_txt = "7"
+	product_paths = "/obj/item/clothing/under/rank/scientist;/obj/item/clothing/suit/bio_suit;/obj/item/clothing/head/bio_hood;/obj/item/weapon/screwdriver;/obj/item/weapon/wrench;/obj/item/weapon/tank/oxygen;/obj/item/weapon/tank/plasma;/obj/item/device/transfer_valve;/obj/item/device/igniter;/obj/item/device/timer;/obj/item/device/prox_sensor;/obj/item/device/radio/signaler;/obj/item/weapon/chem_grenade"
+	product_amounts = "4;4;4;6;6;4;4;8;8;8;8;8;8"
+	//product_prices = "1;2;2;1;1;1;2;3;2;2;2;2;2"
+	product_hidden = ""
+	product_hideamt = ""
+	charge_type = "toxins"
+
+/obj/machinery/vending/engineering
+	name = "Robco Tool Maker"
+	desc = "Everything you need for do-it-yourself ship repair."
+	icon_state = "engi"
+	icon_deny = "engi-deny"
+	req_access_txt = "10"
+	product_paths = "/obj/item/clothing/under/rank/chief_engineer;/obj/item/clothing/under/rank/engineer;/obj/item/clothing/shoes/orange;/obj/item/clothing/head/helmet/hardhat;/obj/item/weapon/storage/belt/utility;/obj/item/clothing/glasses/meson;/obj/item/clothing/gloves/yellow;/obj/item/weapon/screwdriver;/obj/item/weapon/crowbar;/obj/item/weapon/wirecutters;/obj/item/device/multitool;/obj/item/weapon/wrench;/obj/item/device/t_scanner;/obj/item/weapon/CableCoil/power;/obj/item/weapon/circuitry;/obj/item/weapon/cell;/obj/item/weapon/weldingtool;/obj/item/clothing/head/helmet/welding;/obj/item/weapon/light/tube;/obj/item/clothing/suit/fire"
+	product_amounts = "4;4;4;4;4;4;4;12;12;12;12;12;12;8;4;8;8;8;10;4"
+	//product_prices = "1;1;1;2;2;1;2;1;1;2;2;1;1;1;2;2;1;1;1;2"
+	product_hidden = ""
+	product_hideamt = ""
+	charge_type = "engineering"
+
+
+/obj/item/weapon/vending_charge
+	name = "Vending Charge"
+	var/charge_type = "generic"
+	icon = 'vending.dmi'
+	icon_state = "generic-charge"
+
+/obj/item/weapon/vending_charge/medical
+	name = "Medical Charge"
+	charge_type = "medical"
+	icon_state = "medical-charge"
+
+/obj/item/weapon/vending_charge/chemistry
+	name = "Chemistry Charge"
+	charge_type = "chemistry"
+	icon_state = "chemistry-charge"
+	var/charge_amt = 25 // only used by chemistry now
+
+/obj/item/weapon/vending_charge/genetics
+	name = "Genetics Charge"
+	charge_type = "genetics"
+	icon_state = "generic-charge"
+
+/obj/item/weapon/vending_charge/toxins
+	name = "Toxins Charge"
+	charge_type = "toxins"
+	icon_state = "toxins-charge"
+
+/obj/item/weapon/vending_charge/robotics
+	name = "Robotics Charge"
+	charge_type = "robotics"
+	icon_state = "robotics-charge"
+
+/obj/item/weapon/vending_charge/bar
+	name = "Bar Charge"
+	charge_type = "bar"
+	icon_state = "bar-charge"
+
+/obj/item/weapon/vending_charge/kitchen
+	name = "Kitchen Charge"
+	charge_type = "kitchen"
+	icon_state = "kitchen-charge"
+
+/obj/item/weapon/vending_charge/engineering
+	name = "Engineering Charge"
+	charge_type = "engineering"
+	icon_state = "engineering-charge"
+
+/obj/item/weapon/vending_charge/security
+	name = "Security Charge"
+	charge_type = "security"
+	icon_state = "security-charge"
+
+/obj/item/weapon/vending_charge/coffee
+	name = "Coffee Charge"
+	charge_type = "coffee"
+	icon_state = "coffee-charge"
+
+/obj/item/weapon/vending_charge/snack
+	name = "Snack Charge"
+	charge_type = "snack"
+	icon_state = "snack-charge"
+
+/obj/item/weapon/vending_charge/cart
+	name = "Cart Charge"
+	charge_type = "cart"
+	icon_state = "cart-charge"
+
+/obj/item/weapon/vending_charge/cigarette
+	name = "Cigarette Charge"
+	charge_type = "cigarette"
+	icon_state = "cigarette-charge"
+
+/obj/item/weapon/vending_charge/hydroponics
+	name = "Hydroponics Charge"
+	charge_type = "hydroponics"
+	icon_state = "hydroponics-charge"
+
+/obj/item/weapon/vending_charge/soda
+	name = "Soda Charge"
+	charge_type = "soda"
+	icon_state = "soda-charge"
