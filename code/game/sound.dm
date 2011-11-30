@@ -75,16 +75,26 @@ client/verb/Toggle_Soundscape()
 		if (!A:client) return
 		//if (A:ear_deaf) return
 
-		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Constant background noises
+		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! - LastyScratch
 			A:client:ambience_playing = 1
 			A << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
 		switch(src.name)
 			if ("Chapel") sound = pick('ambicha1.ogg','ambicha2.ogg','ambicha3.ogg','ambicha4.ogg')
-			if ("Morgue") sound = pick('ambimo1.ogg','ambimo2.ogg')
-			if ("Space") sound = pick('ambispace.ogg')
+			if ("Morgue") sound = pick('ambimo1.ogg','ambimo2.ogg','ambistat.ogg')
+			if ("Space") sound = pick('ambispace.ogg','ambistat.ogg',)
 			if ("Engine Control") sound = pick('ambisin1.ogg','ambisin2.ogg','ambisin3.ogg','ambisin4.ogg')
 			if ("Atmospherics") sound = pick('ambiatm1.ogg')
+			if ("Medbay") sound = pick('ambistat.ogg')
+			if ("Bridge") sound = pick('ambistat.ogg')
+			if ("Arrival Shuttle Hallway") sound = pick('ambistat.ogg', 'ambiruntime.ogg')
+			if ("AI Sat Ext") sound = pick('ambiruntime.ogg', 'ambimalf.ogg')
+			if ("AI Satellite") sound = pick('ambimalf.ogg')
+			if ("AI Satellite Teleporter Room") sound = pick('ambiruntime.ogg', 'ambimalf.ogg')
+			if ("Central Primary Hallway") sound = pick('ambiruntime.ogg')
+			if ("Aft Primary Hallway") sound = pick('ambiruntime.ogg')
+			if ("AI Upload Foyer") sound = pick('ambimalf.ogg')
+			if ("AI Upload Chamber") sound = pick('ambimalf.ogg')
 			if ("Mine")
 				sound = pick('ambimine.ogg')
 				musVolume = 25
