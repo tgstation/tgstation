@@ -102,6 +102,9 @@ datum/preferences
 		job_engsec_med = 0
 		job_engsec_low = 0
 
+		// slot stuff
+		var/slotname
+		var/curslot = 0
 
 	New()
 		hair_style = new/datum/sprite_accessory/hair/short
@@ -172,14 +175,32 @@ datum/preferences
 			src.be_special = 0
 		dat += "<hr>"
 
-		if(!IsGuestKey(user.key))
-			dat += "<a href='byond://?src=\ref[user];preferences=1;load=1'>Load Setup</a><br>"
-			dat += "<a href='byond://?src=\ref[user];preferences=1;save=1'>Save Setup</a><br>"
+		// slot options
+		if (!IsGuestKey(user.key))
+			if(!curslot)
+				dat += "<a href='byond://?src=\ref[user];preferences=1;saveslot=1'>Save Slot 1</a><br>"
+			else
+				dat += "<a href='byond://?src=\ref[user];preferences=1;saveslot=[curslot]'>Save Slot [curslot]</a><br>"
+			dat += "<a href='byond://?src=\ref[user];preferences=1;loadslot2=1'>Load</a><br>"
+		dat += "<a href='byond://?src=\ref[user];preferences=1;createslot=1'>Create New Slot</a><br>"
 
 		dat += "<a href='byond://?src=\ref[user];preferences=1;reset_all=1'>Reset Setup</a><br>"
 		dat += "</body></html>"
 
 		user << browse(dat, "window=preferences;size=300x710")
+	proc/loadsave(mob/user)
+		var/dat = "<body>"
+		dat += "<tt><center>"
+
+		var/list/slots = savefile_getslots(user)
+		for(var/slot=1, slot<=slots.len, slot++)
+			dat += "<a href='byond://?src=\ref[user];preferences=1;loadslot=[slot]'>Load Slot [slot] ([slots[slot]]) </a><a href='byond://?src=\ref[user];preferences=1;removeslot=[slot]'>(R)</a><br><br>"
+
+		dat += "<a href='byond://?src=\ref[user];preferences=1;loadslot=CLOSE'>Close</a><br>"
+		dat += "</center></tt>"
+		user << browse(dat, "window=saves;size=300x640")
+	proc/closesave(mob/user)
+		user << browse(null, "window=saves;size=300x640")
 
 	proc/SetChoices(mob/user, changedjob)
 		var/HTML = "<body>"
@@ -536,13 +557,51 @@ datum/preferences
 		if(link_tags["b_random_name"])
 			be_random_name = !be_random_name
 
+		// slot links
 		if(!IsGuestKey(user.key))
-			if(link_tags["save"])
-				savefile_save(user)
+			if(link_tags["saveslot"])
+				var/slot = text2num(link_tags["saveslot"])
 
-			else if(link_tags["load"])
-				if(!savefile_load(user, 0))
+				savefile_save(user, slot)
+
+			else if(link_tags["loadslot"])
+				var/slot = text2num(link_tags["loadslot"])
+				if(slot == "CLOSE")
+					closesave(user)
+					return
+				if(!savefile_load(user, slot))
 					alert(user, "You do not have a savefile.")
+				else
+					curslot = slot
+					loadsave(user)
+		if(link_tags["removeslot"])
+			var/slot = text2num(link_tags["removeslot"])
+			if(!slot)
+				return
+
+			savefile_removeslot(user, slot)
+
+			usr << "Slot [slot] Deleted."
+			slot = 1
+			loadsave(usr)
+		if(link_tags["loadslot2"])
+			loadsave(user)
+		if(link_tags["createslot"])
+			var/list/slots = savefile_getslots(user)
+			var/count = slots.len
+			count++
+			if(count > 10)
+				usr << "You have reached the character limit."
+				return
+			var/slotname = input(usr,"Choose a name for your slot","Name","Default")
+
+			savefile_createslot(user, slotname)
+
+			if(!savefile_load(user, count))
+				alert(user, "You do not have a savefile.")
+			else
+				curslot = count
+				closesave(user)
 
 		if(link_tags["reset_all"])
 			gender = MALE

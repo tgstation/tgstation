@@ -4,15 +4,93 @@
 datum/preferences/proc/savefile_path(mob/user)
 	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/preferences.sav"
 
-datum/preferences/proc/savefile_save(mob/user)
+datum/preferences/proc/savefile_getslots(mob/user)
+	if(IsGuestKey(user.key))
+		return new/list()
+
+	var/path = savefile_path(user)
+	if(!fexists(path))
+		return new/list()
+
+	var/list/slots = new()
+	var/savefile/F = new(path)
+
+	// slot 1
+	slots.Add(F["slotname"] ? F["slotname"] : "Default") // allow old prefs saves to be loaded as slot 1
+
+	// slots 2 - len
+	for(var/slot=2, slot<=F.dir.len, slot++)
+		var/dname = F.dir[slot]
+		if(copytext(dname, 1, 6) == "slot.")
+			slots.Add(copytext(dname, 6))
+
+	return slots
+
+datum/preferences/proc/savefile_createslot(mob/user, slotname)
+	if(IsGuestKey(user.key))
+		return
+
+	var/path = savefile_path(user)
+	if(!fexists(path))
+		return
+
+	var/savefile/F = new(path)
+
+	// 1st?
+	if(!F["real_name"])
+		F["slotname"] = "Default"
+		randomize_name()
+	else
+		F.dir.Add("slot." + slotname)
+
+	var/list/slots = savefile_getslots(user)
+	savefile_save(user, slots.len)
+
+datum/preferences/proc/savefile_removeslot(mob/user, slot)
+	if(IsGuestKey(user.key))
+		return
+
+	var/path = savefile_path(user)
+	if(!fexists(path))
+		return
+
+	var/list/slots = savefile_getslots(user)
+
+	if(slot > 1)
+		var/savefile/F = new(path)
+		F.dir.Remove("slot." + slots[slot])
+	else if(slots.len >= 2)
+		// otherwise, we're deleting slot 1, and must move slot 2 to slot 1
+		savefile_load(user, 2)
+		savefile_save(user, 1)
+
+		var/savefile/F = new(path)
+		F["slotname"] = slots[2] // slot 1's name <- slot 2's name
+		F.dir.Remove("slot." + slots[2])
+	else
+		// otherwise, we're wiping the last save (slot 1)
+		// actually no, that makes unintuitive, weird things happen
+		//F["slotname"] = null
+		//F["real_name"] = null
+		user << "You must have at least one slot!"
+
+datum/preferences/proc/savefile_save(mob/user, slot)
 	if (IsGuestKey(user.key))
 		return 0
 
-	var/savefile/F = new /savefile(src.savefile_path(user))
-//	var/version
-//	F["version"] >> version
+	var/list/slots = savefile_getslots(user)
+	var/savefile/F = new(savefile_path(user))
+
+	//	var/version
+	//	F["version"] >> version
 
 	F["version"] << SAVEFILE_VERSION_MAX
+
+	// make this compatible with old single-slot system, making slot 1 be in root
+	if(slot != 1)
+		if(slots.len < slot)
+			return 0
+		F.cd = "slot." + slots[slot]
 
 	F["real_name"] << src.real_name
 	F["name_is_always_random"] << src.be_random_name
@@ -62,13 +140,15 @@ datum/preferences/proc/savefile_save(mob/user)
 // returns 1 if loaded (or file was incompatible)
 // returns 0 if savefile did not exist
 
-datum/preferences/proc/savefile_load(mob/user)
+datum/preferences/proc/savefile_load(mob/user, slot)
 	if(IsGuestKey(user.key))	return 0
 
 	var/path = savefile_path(user)
-	if(!fexists(path))	return 0
+	if(!fexists(path))
+		// make it then!
+		savefile_save(user, slot)
 
-	var/savefile/F = new /savefile(path)
+	var/savefile/F = new(path)
 
 	var/version = null
 	F["version"] >> version
@@ -77,6 +157,15 @@ datum/preferences/proc/savefile_load(mob/user)
 		fdel(path)
 		alert(user, "Your savefile was incompatible with this version and was deleted.")
 		return 0
+
+	// make this compatible with old single-slot system, making slot 1 be in root
+	if(slot == 0)
+		return 0
+	if(slot != 1)
+		var/list/slots = savefile_getslots(user)
+		if(slots.len < slot)
+			return 0
+		F.cd = "slot." + slots[slot]
 
 	F["real_name"] >> src.real_name
 	F["gender"] >> src.gender

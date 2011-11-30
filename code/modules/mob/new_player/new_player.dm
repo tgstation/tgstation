@@ -34,7 +34,7 @@
 		if(watch_locations.len>0)
 			loc = pick(watch_locations)
 
-		if(!preferences.savefile_load(src, 0))
+		if(!preferences.savefile_load(src, 1))
 			preferences.ShowChoices(src)
 			if(!client.changes)
 				changes()
@@ -43,7 +43,7 @@
 			if(!client.changes && preferences.lastchangelog!=lastchangelog)
 				changes()
 				preferences.lastchangelog = lastchangelog
-				preferences.savefile_save(src)
+				preferences.savefile_save(src, 1)
 
 		new_player_panel()
 		//PDA Resource Initialisation =======================================================>
