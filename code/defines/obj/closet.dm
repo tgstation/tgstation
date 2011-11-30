@@ -277,7 +277,7 @@
 
 /obj/structure/closet/jcloset
 	name = "Custodial Closet"
-	desc = "A bulky (yet mobile) closet. Comes with janitor's clothes and biohazard gear."
+	desc = "A bulky (yet mobile) closet. Comes with janitor's clothes and gear."
 
 /obj/structure/closet/lawcloset
 	name = "Legal Closet"
