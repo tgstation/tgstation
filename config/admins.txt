@@ -3,7 +3,7 @@ arcalane - Game Admin
 cacophony - Game Admin
 cajoes - Game Admin
 cib - Game Master
-compactninja - Game Admin
+compactninja - Game Master
 headswe - Game Master
 iaryni - Game Master
 masterofapples - Game Admin
