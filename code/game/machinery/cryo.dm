@@ -20,11 +20,11 @@
 	New()
 		..()
 		build_icon()
-		initialize_directions = SOUTH
+		initialize_directions = dir
 
 	initialize()
 		if(node) return
-		var/node_connect = SOUTH
+		var/node_connect = dir
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
 			if(target.initialize_directions & get_dir(target,src))
 				node = target
