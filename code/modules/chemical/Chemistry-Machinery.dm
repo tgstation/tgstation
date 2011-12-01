@@ -13,16 +13,6 @@
 	var/amount = 30
 	var/beaker = null
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine","sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron","copper","mercury","radium","water","ethanol","sugar","acid",)
-	proc
-		recharge()
-			if(stat & BROKEN) return
-			if(energy != max_energy)
-				energy++
-				use_power(2000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
-			spawn(200) recharge()
-
-	New()
-		recharge()
 
 	ex_act(severity)
 		switch(severity)
@@ -111,9 +101,18 @@
 		src.add_fingerprint(usr)
 		return
 
-	attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
-		if(!istype(B, /obj/item/weapon/reagent_containers/glass))
+	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+		if (istype(W,/obj/item/weapon/vending_charge/chemistry))
+			var/obj/item/weapon/vending_charge/chemistry/C = W
+			energy += C.charge_amt
+			del(C)
+			user << "You load the charge into the machine."
 			return
+
+		if(!istype(W, /obj/item/weapon/reagent_containers/glass))
+			return
+
+		var/obj/item/weapon/reagent_containers/glass/B = W
 
 		if(src.beaker)
 			user << "A beaker is already loaded into the machine."
