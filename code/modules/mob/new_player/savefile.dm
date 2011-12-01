@@ -19,8 +19,8 @@ datum/preferences/proc/savefile_getslots(mob/user)
 	slots.Add(F["slotname"] ? F["slotname"] : "Default") // allow old prefs saves to be loaded as slot 1
 
 	// slots 2 - len
-	for(var/slot=2, slot<=F.dir.len, slot++)
-		var/dname = F.dir[slot]
+	for(var/i=1, i<=F.dir.len, i++)
+		var/dname = F.dir[i]
 		if(copytext(dname, 1, 6) == "slot.")
 			slots.Add(copytext(dname, 6))
 
@@ -44,7 +44,9 @@ datum/preferences/proc/savefile_createslot(mob/user, slotname)
 		F.dir.Add("slot." + slotname)
 
 	var/list/slots = savefile_getslots(user)
-	savefile_save(user, slots.len)
+	var/slot = slots.Find(slotname)
+	savefile_save(user, slot)
+	return slot
 
 datum/preferences/proc/savefile_removeslot(mob/user, slot)
 	if(IsGuestKey(user.key))
