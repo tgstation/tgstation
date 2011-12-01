@@ -582,7 +582,7 @@ datum/preferences
 			savefile_removeslot(user, slot)
 
 			usr << "Slot [slot] Deleted."
-			slot = 1
+			curslot = 1
 			loadsave(usr)
 		if(link_tags["loadslot2"])
 			loadsave(user)
@@ -595,12 +595,11 @@ datum/preferences
 				return
 			var/slotname = input(usr,"Choose a name for your slot","Name","Default")
 
-			savefile_createslot(user, slotname)
+			curslot = savefile_createslot(user, slotname)
 
 			if(!savefile_load(user, count))
 				alert(user, "You do not have a savefile.")
 			else
-				curslot = count
 				closesave(user)
 
 		if(link_tags["reset_all"])
