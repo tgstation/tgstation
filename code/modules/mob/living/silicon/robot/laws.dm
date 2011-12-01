@@ -65,7 +65,7 @@
 
 /mob/living/silicon/robot/proc/laws_sanity_check()
 	if (!laws)
-		laws = new /datum/ai_laws/asimov
+		laws = new /datum/ai_laws/nanotrasen
 
 /mob/living/silicon/robot/proc/set_zeroth_law(var/law)
 	laws_sanity_check()
