@@ -717,7 +717,7 @@ var/list/sacrificed = list()
 					cultist.handcuffed || \
 					istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle) || \
 					(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded) || \
-					(istype(cultist.loc, /obj/structure/secure_closet)&&cultist.loc:locked) || \
+					(istype(cultist.loc, /obj/structure/closet/secure_closet)&&cultist.loc:locked) || \
 					(istype(cultist.loc, /obj/machinery/dna_scannernew)&&cultist.loc:locked) \
 				))
 					user << "\red The [cultist] is already free."
@@ -730,7 +730,7 @@ var/list/sacrificed = list()
 					cultist.u_equip(cultist.wear_mask)
 				if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)
 					cultist.loc:welded = 0
-				if(istype(cultist.loc, /obj/structure/secure_closet)&&cultist.loc:locked)
+				if(istype(cultist.loc, /obj/structure/closet/secure_closet)&&cultist.loc:locked)
 					cultist.loc:locked = 0
 				if(istype(cultist.loc, /obj/machinery/dna_scannernew)&&cultist.loc:locked)
 					cultist.loc:locked = 0

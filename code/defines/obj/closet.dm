@@ -10,7 +10,8 @@
 	var/welded = 0
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	flags = FPRINT
-	var/health = 200//Might be a bit much, dono can always change later
+	var/health = 100	//Might be a bit much, dono can always change later	//Nerfed -Pete
+	var/lastbang	//
 
 /obj/structure/closet/acloset
 	name = "Strange closet"
@@ -581,25 +582,25 @@
 
 
 
-/obj/structure/secure_closet
+/obj/structure/closet/secure_closet
 	desc = "An immobile card-locked storage closet."
 	name = "Security Locker"
 	icon = 'closet.dmi'
 	icon_state = "secure1"
 	density = 1
-	var/opened = 0
+	opened = 0
 	var/locked = 1
 	var/broken = 0
 	var/large = 1
-	var/icon_closed = "secure"
+	icon_closed = "secure"
 	var/icon_locked = "secure1"
-	var/icon_opened = "secureopen"
+	icon_opened = "secureopen"
 	var/icon_broken = "securebroken"
 	var/icon_off = "secureoff"
-	var/wall_mounted = 0 //never solid (You can always pass over it)
-	var/health = 300
+	wall_mounted = 0 //never solid (You can always pass over it)
+	health = 200
 
-/obj/structure/secure_closet/medical_wall
+/obj/structure/closet/secure_closet/medical_wall
 	name = "First Aid Closet"
 	desc = "A wall mounted closet which --should-- contain medical supplies."
 	icon_state = "medical_wall_locked"
@@ -613,21 +614,21 @@
 	wall_mounted = 1
 	req_access = list(access_medical)
 
-/obj/structure/secure_closet/personal
+/obj/structure/closet/secure_closet/personal
 	desc = "The first card swiped gains control."
 	name = "Personal Closet"
 
-/obj/structure/secure_closet/personal/patient
+/obj/structure/closet/secure_closet/personal/patient
 	name = "Patient's closet"
 
-/obj/structure/secure_closet/kitchen
+/obj/structure/closet/secure_closet/kitchen
 	name = "Kitchen Cabinet"
 	req_access = list(access_kitchen)
 
-/obj/structure/secure_closet/kitchen/mining
+/obj/structure/closet/secure_closet/kitchen/mining
 	req_access = list()
 
-/obj/structure/secure_closet/meat
+/obj/structure/closet/secure_closet/meat
 	name = "Meat Fridge"
 	icon_state = "fridge1"
 	icon_closed = "fridge"
@@ -636,7 +637,7 @@
 	icon_broken = "fridgebroken"
 	icon_off = "fridge1"
 
-/obj/structure/secure_closet/fridge
+/obj/structure/closet/secure_closet/fridge
 	name = "Refrigerator"
 	icon_state = "fridge1"
 	icon_closed = "fridge"
@@ -645,7 +646,7 @@
 	icon_broken = "fridgebroken"
 	icon_off = "fridge1"
 
-/obj/structure/secure_closet/money_freezer
+/obj/structure/closet/secure_closet/money_freezer
 	name = "Freezer"
 	icon_state = "fridge1"
 	icon_closed = "fridge"
@@ -655,7 +656,7 @@
 	icon_off = "fridge1"
 	req_access = list(access_heads_vault)
 
-/obj/structure/secure_closet/wall
+/obj/structure/closet/secure_closet/wall
 	name = "wall locker"
 	req_access = list(access_security)
 	icon_state = "wall-locker1"

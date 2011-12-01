@@ -1,14 +1,14 @@
-/obj/structure/secure_closet/personal/var/registered = null
-/obj/structure/secure_closet/personal/req_access = list(access_all_personal_lockers)
+/obj/structure/closet/secure_closet/personal/var/registered = null
+/obj/structure/closet/secure_closet/personal/req_access = list(access_all_personal_lockers)
 
-/obj/structure/secure_closet/personal/New()
+/obj/structure/closet/secure_closet/personal/New()
 	..()
 	spawn(2)
 		new /obj/item/weapon/storage/backpack( src )
 		new /obj/item/device/radio/headset( src )
 	return
 
-/obj/structure/secure_closet/personal/patient/New()
+/obj/structure/closet/secure_closet/personal/patient/New()
 	..()
 	contents = list()
 	spawn(4)
@@ -16,7 +16,7 @@
 		new /obj/item/clothing/shoes/white( src )
 	return
 
-/obj/structure/secure_closet/personal/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/secure_closet/personal/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (src.opened)
 		if (istype(W, /obj/item/weapon/grab))
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet

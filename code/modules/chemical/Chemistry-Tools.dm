@@ -604,7 +604,7 @@
 		/obj/machinery/chem_dispenser/,
 		/obj/machinery/reagentgrinder,
 		/obj/structure/table,
-		/obj/structure/secure_closet,
+		/obj/structure/closet/secure_closet,
 		/obj/structure/closet,
 		/obj/machinery/sink,
 		/obj/item/weapon/storage,

@@ -2,7 +2,7 @@
 	name = "secure safe"
 	icon = 'storage.dmi'
 	icon_state = "safe"
-	icon_open = "safe0"
+	icon_opened = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
 	flags = FPRINT | TABLEPASS

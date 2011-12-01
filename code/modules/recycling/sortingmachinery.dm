@@ -70,8 +70,8 @@
 				P.wrapped = O
 				O.loc = P
 				src.amount -= 1
-		else if (istype(target, /obj/structure/crate))
-			var/obj/structure/crate/O = target
+		else if (istype(target, /obj/structure/closet/crate))
+			var/obj/structure/closet/crate/O = target
 			if (src.amount > 3)
 				var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(O.loc))
 				P.wrapped = O

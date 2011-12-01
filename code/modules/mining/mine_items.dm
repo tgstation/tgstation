@@ -9,7 +9,7 @@
 
 /**********************Miner Lockers**************************/
 
-/obj/structure/secure_closet/miner
+/obj/structure/closet/secure_closet/miner
 	name = "Miner's Equipment"
 	icon_state = "miningsec1"
 	icon_closed = "miningsec"
@@ -18,7 +18,7 @@
 	icon_off = "miningsecoff"
 	req_access = list(access_mining)
 
-/obj/structure/secure_closet/miner/New()
+/obj/structure/closet/secure_closet/miner/New()
 	..()
 	sleep(2)
 	new /obj/item/device/analyzer(src)
@@ -220,14 +220,14 @@ proc/move_mining_shuttle()
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 
-/obj/structure/crate/miningcar
+/obj/structure/closet/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
 	icon = 'storage.dmi'
 	icon_state = "miningcar"
 	density = 1
-	openicon = "miningcaropen"
-	closedicon = "miningcar"
+	icon_opened = "miningcaropen"
+	icon_closed = "miningcar"
 
 
 

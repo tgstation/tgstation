@@ -262,7 +262,7 @@
 			temp_apc.overload_lighting()
 //	for (var/obj/machinery/computer/prison_shuttle/temp_shuttle in world)
 //		temp_shuttle.prison_break()
-	for (var/obj/structure/secure_closet/security/temp_closet in world)
+	for (var/obj/structure/closet/secure_closet/security/temp_closet in world)
 		if(istype(get_area(temp_closet), /area/security/brig))
 			temp_closet.locked = 0
 			temp_closet.icon_state = temp_closet.icon_closed
