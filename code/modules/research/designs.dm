@@ -441,6 +441,15 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
 			build_path = "/obj/item/weapon/aiModule/asimov"
 
+		nanotrasen
+			name = "Core Module Design (Nanotrasen)"
+			desc = "Allows for the construction of a NanoTrasen AI Core Module."
+			id = "nanotrasen_module"
+			req_tech = list("programming" = 3, "materials" = 6)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20, "$diamond" = 100)
+			build_path = "/obj/item/weapon/aiModule/nanotrasen"
+
 		paladin_module
 			name = "Core Module Design (P.A.L.A.D.I.N.)"
 			desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."

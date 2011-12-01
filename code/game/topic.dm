@@ -30,4 +30,5 @@
 				s["player[n]"] = M.client.key
 				n++
 		s["players"] = n
+		s["end"] = "#end"
 		return list2params(s)

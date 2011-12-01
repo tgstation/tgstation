@@ -70,7 +70,7 @@
 /mob/proc/AIize()
 	if(client)
 		client.screen.len = null
-	var/mob/living/silicon/ai/O = new (loc, /datum/ai_laws/asimov,,1)//No MMI but safety is in effect.
+	var/mob/living/silicon/ai/O = new (loc, /datum/ai_laws/nanotrasen,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0
 	O.lastKnownIP = client.address

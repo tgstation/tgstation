@@ -10,6 +10,7 @@
 	var/product_name = "generic"
 	var/product_path = null
 	var/amount = 0
+	var/charge_amount = 0
 	var/display_color = "blue"
 
 /obj/machinery/vending/New()
@@ -33,6 +34,7 @@
 		 //Add hidden inventory
 		src.build_inventory(temp_hidden,temp_hideamt, 1)
 		src.build_inventory(temp_coin,temp_coin_amt, 0, 1)
+
 		power_change()
 		return
 
@@ -76,17 +78,14 @@
 		R.product_name = capitalize(temp.name)
 		R.product_path = path_list[p]
 		R.display_color = pick("red","blue","green")
-//		R.amount = text2num(amt_list[p])
-//		src.product_records += R
+		R.amount = text2num(amt_list[p])
+		R.charge_amount = R.amount
 
 		if(hidden)
-			R.amount = text2num(amt_list[p])
 			src.hidden_records += R
 		else if(req_coin)
-			R.amount = text2num(amt_list[p])
 			src.coin_records += R
 		else
-			R.amount = text2num(amt_list[p])
 			src.product_records += R
 
 		del(temp)
@@ -193,8 +192,20 @@
 		coin = W
 		user << "\blue You insert the [W] into the [src]"
 		return
+	else if(istype(W,/obj/item/weapon/vending_charge/))
+		DoCharge(W,user)
 	else
 		..()
+
+/obj/machinery/vending/proc/DoCharge(obj/item/weapon/vending_charge/V as obj, mob/user as mob)
+	if(charge_type == V.charge_type)
+		var/datum/data/vending_product/R
+		for(var/i=1, i<=product_records.len, i++)
+			R = product_records[i]
+			R.amount += R.charge_amount
+			product_records[i] = R
+		del(V)
+		user << "You insert the charge into the machine."
 
 /obj/machinery/vending/attack_paw(mob/user as mob)
 	return attack_hand(user)
