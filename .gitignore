@@ -2,3 +2,5 @@
 *.int
 *.rsc
 *.dmb
+*.lk
+info.json
