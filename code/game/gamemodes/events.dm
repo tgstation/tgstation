@@ -324,7 +324,7 @@
 
 /*Deuryn's current project, notes here for those who care.
 Revamping the random laws so they don't suck.
-Would like to add a law like "Law x is _______" where x = a number, and _____ is something that may redefine a law, (Won't be aimed at asimov)
+Would like to add a law like "Law x is _______" where x = a number, and _____ is something that may redefine a law, (Won't be aimed at nanotrasen)
 */
 
 	//AI laws

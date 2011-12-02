@@ -5,7 +5,8 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	flags = FPRINT | TABLEPASS | ONBELT
-
+	max_w_class = 3
+	max_combined_w_class = 21
 
 	proc/can_use()
 		if(!ismob(loc)) return 0
@@ -104,7 +105,7 @@
 	desc = "Can hold security gear like handcuffs and flashes."
 	icon_state = "securitybelt"
 	item_state = "security"//Could likely use a better one.
-	storage_slots = 4
+	//storage_slots = 6
 	can_hold = list(
 		"/obj/item/weapon/flashbang",
 		"/obj/item/weapon/handcuffs",
@@ -113,5 +114,21 @@
 		"/obj/item/ammo_casing/shotgun",
 		"/obj/item/ammo_magazine",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut",
-		"/obj/item/weapon/reagent_containers/food/snacks/jellydonut"
+		"/obj/item/weapon/reagent_containers/food/snacks/jellydonut",
+
+		"/obj/item/device/radio",
+		"/obj/item/device/detective_scanner",
+		"/obj/item/device/pda",
+		"/obj/item/weapon/gun/projectile/revolver",
+		"/obj/item/weapon/gun/energy/taser",
+		"/obj/item/weapon/gun/energy/stunrevolver",
+		"/obj/item/weapon/gun/energy/laser",
+		"/obj/item/weapon/gun/energy",
+		"/obj/item/weapon/gun/projectile",
+		"/obj/item/weapon/melee/baton",
+		"/obj/item/weapon/melee/classic_baton",
+		"/obj/item/weapon/camera_test",
+		"/obj/item/weapon/cigpacket",
+		"/obj/item/weapon/zippo",
+		"/obj/item/device/taperecorder"
 		)

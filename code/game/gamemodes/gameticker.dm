@@ -173,6 +173,7 @@ var/global/datum/controller/gameticker/ticker
 				else
 					feedback_set_details("end_proper","proper completion")
 					world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
+			//	send2irc(world.url,"Server Rebooting!")
 
 				feedback_set_details("round_end","[time2text(world.realtime)]")
 				if(blackbox)

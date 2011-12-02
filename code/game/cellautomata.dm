@@ -132,7 +132,7 @@
 		//	for(var/mob/M in world)
 		//		if(M.client)
 		//			M << sound('apcdestroyed.ogg')
-
+	send2irc(world.url,"Server Rebooting!")
 	for(var/client/C)
 		if (config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
