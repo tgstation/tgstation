@@ -75,7 +75,7 @@ client/verb/Toggle_Soundscape()
 		if (!A:client) return
 		//if (A:ear_deaf) return
 
-		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! - LastyScratch
+		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas next to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 			A:client:ambience_playing = 1
 			A << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
@@ -91,15 +91,17 @@ client/verb/Toggle_Soundscape()
 			if ("AI Sat Ext") sound = pick('ambiruntime.ogg','ambimalf.ogg')
 			if ("AI Satellite") sound = pick('ambimalf.ogg')
 			if ("AI Satellite Teleporter Room") sound = pick('ambiruntime.ogg','ambimalf.ogg')
-			if ("Central Primary Hallway") sound = pick('ambiruntime.ogg')
-			if ("Aft Primary Hallway") sound = pick('ambiruntime.ogg')
-			if ("AI Upload Foyer") sound = pick('ambimalf.ogg', 'null.ogg', 'null.ogg')
-			if ("AI Upload Chamber") sound = pick('ambimalf.ogg','null.ogg','null.ogg')
+			if ("Port Primary Hallway") sound = pick('ambiruntime.ogg, ambistat.ogg')
+			if ("Bar") sound = pick('ambibar.ogg')
+			if ("Locker Room") sound = pick('ambiruntime.ogg','ambistat.ogg')
+			if ("Primary Tool Storage") sound = pick('ambiruntime.ogg','ambistat.ogg')
+			if ("AI Upload Foyer") sound = pick('ambimalf.ogg', 'null.ogg')
+			if ("AI Upload Chamber") sound = pick('ambimalf.ogg','null.ogg')
 			if ("Mine")
 				sound = pick('ambimine.ogg')
 				musVolume = 25
 			else
-				sound = pick('ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg')
+				sound = pick('ambiruntime.ogg','ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg')
 
 
 		if (prob(35))
