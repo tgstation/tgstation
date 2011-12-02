@@ -1080,7 +1080,7 @@
 
 /obj/item/stack/tile/steel
 	name = "Steel floor tile"
-	singular_name = "S	teel floor tile"
+	singular_name = "Steel floor tile"
 	desc = "Those could work as a pretty decent throwing weapon"
 	icon_state = "tile"
 	w_class = 3.0
