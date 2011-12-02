@@ -225,7 +225,7 @@
 			verbs += /client/proc/cmd_admin_create_centcom_report
 			verbs += /client/proc/toggle_hear_deadcast
 			verbs += /client/proc/toggle_hear_radio
-
+			verbs += /client/proc/cmd_admin_change_custom_event
 
 		if (holder.level >= 0)//Mod********************************************************************
 			verbs += /obj/admins/proc/toggleAI				//Toggle the AI
@@ -391,6 +391,7 @@
 	verbs -= /client/proc/toggle_hear_deadcast
 	verbs -= /client/proc/toggle_hear_radio
 	verbs -= /client/proc/tension_report
+	verbs -= /client/proc/cmd_admin_change_custom_event
 	return
 
 

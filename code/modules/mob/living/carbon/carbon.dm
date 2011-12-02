@@ -164,7 +164,8 @@
 		if (istype(src,/mob/living/carbon/human) && src:w_uniform)
 			var/mob/living/carbon/human/H = src
 			H.w_uniform.add_fingerprint(M)
-		src.sleeping = 0
+		if(!src.sleeping_willingly)
+			src.sleeping = 0
 		src.resting = 0
 		if (src.paralysis >= 3) src.paralysis -= 3
 		if (src.stunned >= 3) src.stunned -= 3
@@ -177,3 +178,18 @@
 
 /mob/living/carbon/proc/eyecheck()
 	return 0
+
+// in a coma from logitis!
+/mob/living/carbon/Logout()
+	..()
+
+	if(!src.sleeping) // would be exploited by stoxin'd people otherwise ;)
+		src.sleeping = 1
+		src.sleeping_willingly = 1
+
+/mob/living/carbon/Login()
+	..()
+
+	if(src.sleeping_willingly)
+		src.sleeping = 0
+		src.sleeping_willingly = 0

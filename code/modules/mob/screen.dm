@@ -386,7 +386,12 @@
 		if("pull")
 			usr.pulling = null
 		if("sleep")
-			usr.sleeping = !( usr.sleeping )
+			if(usr.sleeping && usr.sleeping_willingly)
+				usr.sleeping = 0
+				usr.sleeping_willingly = 0
+			else if(!usr.sleeping)
+				usr.sleeping = 1
+				usr.sleeping_willingly = 1
 		if("rest")
 			usr.resting = !( usr.resting )
 		if("throw")
