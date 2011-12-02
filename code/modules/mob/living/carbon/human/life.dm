@@ -663,7 +663,8 @@
 			if(sleeping)
 				paralysis = max(paralysis, 3)
 				if (prob(10) && health) spawn(0) emote("snore")
-				sleeping--
+				if(!src.sleeping_willingly)
+					src.sleeping--
 
 			if(resting)
 				weakened = max(weakened, 3)
@@ -866,7 +867,11 @@
 
 
 
-			if (sleep) sleep.icon_state = text("sleep[]", sleeping)
+			if (src.sleep)
+				src.sleep.icon_state = text("sleep[]", src.sleeping > 0 ? 1 : 0)
+				src.sleep.overlays = null
+				if(src.sleeping_willingly)
+					src.sleep.overlays += icon(src.sleep.icon, "sleep_willing")
 			if (rest) rest.icon_state = text("rest[]", resting)
 
 			if (healths)

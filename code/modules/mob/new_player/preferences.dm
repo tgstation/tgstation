@@ -178,9 +178,9 @@ datum/preferences
 		// slot options
 		if (!IsGuestKey(user.key))
 			if(!curslot)
-				dat += "<a href='byond://?src=\ref[user];preferences=1;saveslot=1'>Save Slot 1</a><br>"
-			else
-				dat += "<a href='byond://?src=\ref[user];preferences=1;saveslot=[curslot]'>Save Slot [curslot]</a><br>"
+				curslot = 1
+				slotname = savefile_getslots(user)[1]
+			dat += "<a href='byond://?src=\ref[user];preferences=1;saveslot=[curslot]'>Save Slot [curslot] ([slotname])</a><br>"
 			dat += "<a href='byond://?src=\ref[user];preferences=1;loadslot2=1'>Load</a><br>"
 		dat += "<a href='byond://?src=\ref[user];preferences=1;createslot=1'>Create New Slot</a><br>"
 
@@ -573,6 +573,7 @@ datum/preferences
 					alert(user, "You do not have a savefile.")
 				else
 					curslot = slot
+					slotname = savefile_getslots(user)[curslot]
 					loadsave(user)
 		if(link_tags["removeslot"])
 			var/slot = text2num(link_tags["removeslot"])
@@ -583,6 +584,7 @@ datum/preferences
 
 			usr << "Slot [slot] Deleted."
 			curslot = 1
+			slotname = savefile_getslots(user)[curslot]
 			loadsave(usr)
 		if(link_tags["loadslot2"])
 			loadsave(user)
@@ -593,7 +595,7 @@ datum/preferences
 			if(count > 10)
 				usr << "You have reached the character limit."
 				return
-			var/slotname = input(usr,"Choose a name for your slot","Name","Default")
+			slotname = input(usr,"Choose a name for your slot","Name","Default")
 
 			curslot = savefile_createslot(user, slotname)
 

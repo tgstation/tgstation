@@ -22,7 +22,7 @@ datum/preferences/proc/savefile_getslots(mob/user)
 	for(var/i=1, i<=F.dir.len, i++)
 		var/dname = F.dir[i]
 		if(copytext(dname, 1, 6) == "slot.")
-			slots.Add(copytext(dname, 6))
+			slots.Insert(2, copytext(dname, 6)) // reverse order so it's oldest->newest, like old system
 
 	return slots
 
