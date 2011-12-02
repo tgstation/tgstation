@@ -63,7 +63,7 @@ VOTE_PERIOD 60
 # NO_DEAD_VOTE
 
 ## players' votes default to "No vote" (otherwise,  default to "No change")
-# DEFAULT_NO_VOTE
+DEFAULT_NO_VOTE
 
 ## allow AI job
 ALLOW_AI
