@@ -95,27 +95,43 @@
 			modtype = "Miner"
 
 		if("Medical")
+			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
-			icon_state = "surgeon"
+			if (sprite == "Humanoid")
+				src.icon_state = "medicalrobot"
+			if (sprite == "Non-Humanoid")
+				src.icon_state = "surgeon"
 			modtype = "Med"
 
 		if("Security")
+			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
-			icon_state = "bloodhound"
+			if (sprite == "Humanoid")
+				src.icon_state = "securityrobot"
+			if (sprite == "Non-Humanoid")
+				src.icon_state = "bloodhound"
 			modtype = "Sec"
 
 		if("Engineering")
+			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
-			icon_state = "landmate"
+			if (sprite == "Humanoid")
+				src.icon_state = "engineerrobot"
+			if (sprite == "Non-Humanoid")
+				src.icon_state = "landmate"
 			modtype = "Eng"
 
 		if("Janitor")
+			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
-			icon_state = "mopgearrex"
+			if (sprite == "Humanoid")
+				src.icon_state = "janitorrobot"
+			if (sprite == "Non-Humanoid")
+				src.icon_state = "mopgearrex"
 			modtype = "Jan"
 
 	overlays -= "eyes" //Takes off the eyes that it started with
