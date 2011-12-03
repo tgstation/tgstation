@@ -59,7 +59,7 @@
 	calcwin()
 
 	if(mode)
-		if(ticker.current_state == GAME_STATE_PREGAME)
+		if(ticker.current_state == 1)
 			if(!going)
 				world << "<B>The game will start soon.</B>"
 				going = 1
@@ -263,8 +263,8 @@
 		if(!vote.canvote())		// not time to vote yet
 			if(config.allow_vote_restart) text+="Voting to restart is enabled.<BR>"
 			if(config.allow_vote_mode)
-				if(ticker.current_state == GAME_STATE_PREGAME) text+="Voting to change mode is enabled.<BR>"
-				else text =+ "Change mode votes are disabled while a round is in progress, vote to restart first.<BR>"
+				if(ticker.current_state == 1) text+="Voting to change mode is enabled.<BR>"
+				else text += "Change mode votes are disabled while a round is in progress, vote to restart first.<BR>"
 
 			text+="<BR><P>Next vote can begin in [vote.nextwait()]."
 			text+=footer
@@ -275,10 +275,10 @@
 			if(config.allow_vote_restart)
 				text += "<A href='?src=\ref[vote];voter=\ref[src];vmode=1'>Begin restart vote.</A><BR>"
 			if(config.allow_vote_mode)
-				if(ticker.current_state == GAME_STATE_PREGAME)
+				if(ticker.current_state == 1)
 					text += "<A href='?src=\ref[vote];voter=\ref[src];vmode=2'>Begin change mode vote.</A><BR>"
 				else
-					text =+ "Change mode votes are disabled while a round is in progress, vote to restart first.<BR>"
+					text += "Change mode votes are disabled while a round is in progress, vote to restart first.<BR>"
 
 			text += footer
 			usr << browse(text, "window=vote")

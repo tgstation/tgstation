@@ -125,7 +125,8 @@
 				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 					continue
 			M << "<font color='red' size='7'>HONK</font>"
-			M.sleeping = 0
+			if(!M.sleeping_willingly)
+				M.sleeping = 0
 			M.stuttering += 20
 			M.ear_deaf += 30
 			M.weakened = 3

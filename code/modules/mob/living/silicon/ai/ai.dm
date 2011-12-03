@@ -79,15 +79,19 @@
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "HAL9000", "Monochrome", "Blue", "HAL9000 Mark2", "Inverted", "Firewall", "Green")
-	if(icontype == "Clown")
-		icon_state = "ai-clown2"
+	var/icontype = ""
+	if (src.name == "B.A.N.N.E.D." && src.ckey == "Spaceman96")
+		icontype = input("Please, select a display!", "AI", null/*, null*/) in list("B.A.N.N.E.D.", "Blue", "HAL9000", "Monochrome", "Rainbow", "HAL9000 Mark2", "Inverted", "Firewall", "Green", "Text", "Smiley", "Angry", "Dorf", "Matrix")
+	else
+		icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Blue", "HAL9000", "Monochrome", "Rainbow", "HAL9000 Mark2", "Inverted", "Firewall", "Green", "Text", "Smiley", "Angry", "Dorf", "Matrix")
+	if(icontype == "Blue")
+		icon_state = "ai"
 	else if(icontype == "HAL9000")
 		icon_state = "ai-hal9000-2"
 	else if(icontype == "Monochrome")
 		icon_state = "ai-mono"
-	else if(icontype == "Blue")
-		icon_state = "ai"
+	else if(icontype == "Rainbow")
+		icon_state = "ai-clown"
 	else if(icontype == "HAL9000 Mark2")
 		icon_state = "ai-hal9000-3"
 	else if(icontype == "Inverted")
@@ -96,8 +100,20 @@
 		icon_state = "ai-magma"
 	else if(icontype == "Funny")
 		icon_state = "ai-yesman"
-	else//(icontype == "Green")
+	else if(icontype == "Green")
 		icon_state = "ai-wierd"
+	else if(icontype == "Text")
+		icon_state = "ai-text"
+	else if(icontype == "Smiley")
+		icon_state = "ai-smiley"
+	else if(icontype == "Angry")
+		icon_state = "ai-angryface"
+	else if(icontype == "Dorf")
+		icon_state = "ai-dorf"
+	else if(icontype == "B.A.N.N.E.D.")
+		icon_state = "ai-banned"
+	else//(icontype == "Matrix")
+		icon_state = "ai-matrix"
 
 	//else
 			//usr <<"You can only change your display once!"

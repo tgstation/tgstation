@@ -40,7 +40,11 @@
 			src.see_in_dark = 7
 			src.see_invisible = 3
 
-		if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
+		if (src.sleep)
+			src.sleep.icon_state = text("sleep[]", src.sleeping > 0 ? 1 : 0)
+			src.sleep.overlays = null
+			if(src.sleeping_willingly)
+				src.sleep.overlays += icon(src.sleep.icon, "sleep_willing")
 		if (src.rest) src.rest.icon_state = text("rest[]", src.resting)
 
 		if (src.healths)
@@ -84,7 +88,8 @@
 		if(src.sleeping)
 			src.paralysis = max(src.paralysis, 3)
 			if (prob(10) && health) spawn(0) emote("snore")
-			src.sleeping--
+			if(!src.sleeping_willingly)
+				src.sleeping--
 
 		if(src.resting)
 			src.weakened = max(src.weakened, 5)

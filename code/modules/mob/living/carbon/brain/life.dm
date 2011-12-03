@@ -240,7 +240,11 @@
 				see_in_dark = 2
 				see_invisible = 0
 
-			if (sleep) sleep.icon_state = text("sleep[]", sleeping)
+			if (src.sleep)
+				src.sleep.icon_state = text("sleep[]", src.sleeping > 0 ? 1 : 0)
+				src.sleep.overlays = null
+				if(src.sleeping_willingly)
+					src.sleep.overlays += icon(src.sleep.icon, "sleep_willing")
 			if (rest) rest.icon_state = text("rest[]", resting)
 
 			if (healths)

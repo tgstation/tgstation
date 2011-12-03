@@ -702,7 +702,8 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 
 		if ("help")
-			sleeping = 0
+			if(!sleeping_willingly)
+				sleeping = 0
 			resting = 0
 			if (paralysis >= 3) paralysis -= 3
 			if (stunned >= 3) stunned -= 3
