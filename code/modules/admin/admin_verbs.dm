@@ -410,6 +410,7 @@
 	holder.state = 2
 	update_admins(rank)
 	if(!istype(mob, /mob/dead/observer))
+		mob.admin_observing = 1
 		mob.adminghostize(1)
 	src << "\blue You are now observing"
 
