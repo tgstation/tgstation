@@ -63,7 +63,7 @@
 						var/mob/living/carbon/human/H = C.loc
 						var/dam1 = round(H.getOxyLoss(),1)
 						var/dam2 = round(H.getToxLoss(),1)
-						var/dam3 = round(H.fireloss,1)
+						var/dam3 = round(H.getFireLoss(),1)
 						var/dam4 = round(H.getBruteLoss(),1)
 						switch(C.sensor_mode)
 							if(1)

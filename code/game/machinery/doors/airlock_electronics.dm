@@ -18,7 +18,7 @@
 			return ..(user)
 
 		var/mob/living/carbon/human/H = user
-		if(H.brainloss >= 60)
+		if(H.getBrainLoss() >= 60)
 			return
 
 		var/t1 = text("<B>Access control</B><br>\n")

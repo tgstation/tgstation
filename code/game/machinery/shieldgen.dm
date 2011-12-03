@@ -458,11 +458,11 @@
 
 /*	for(var/mob/M as mob in src.loc) //does not work for some reason.
 	 	if(istype(M,/mob/living/carbon))
-			M.bruteloss += 100
+			M.adjustBruteLoss(100)
 	 		M.updatehealth()
 			M << "\red <B>You feel as the very atoms of your body divide!</B>"
 		else
-			M.bruteloss += 50
+			M.adjustBruteLoss(50)
 	 		M.updatehealth()
 			M << "\red <B>Strong energy field detected. Damage from field dampened.</B>"
 */

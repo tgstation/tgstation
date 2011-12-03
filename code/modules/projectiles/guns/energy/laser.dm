@@ -36,9 +36,9 @@ obj/item/weapon/gun/energy/laser/retro
 
 	process()
 		charge_tick++
-		if(!charge_tick >= 10)	return 0
+		if(charge_tick < 4) return 0
 		charge_tick = 0
-		if(!power_supply)	return 0
+		if(!power_supply) return 0
 		power_supply.give(100)
 		update_icon()
 		return 1

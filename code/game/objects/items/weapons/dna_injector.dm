@@ -22,31 +22,33 @@
 
 /obj/item/weapon/dnainjector/proc/inject(mob/M as mob)
 	M.radiation += rand(20,50)
-	if (dnatype == "ui")
-		if (!block) //isolated block?
-			if (ue) //unique enzymes? yes
-				M.dna.uni_identity = dna
+
+	if (!(M.mutations & HUSK)) // prevents husks from having their DNA changed
+		if (dnatype == "ui")
+			if (!block) //isolated block?
+				if (ue) //unique enzymes? yes
+					M.dna.uni_identity = dna
+					updateappearance(M, M.dna.uni_identity)
+					M.real_name = ue
+					M.name = ue
+					uses--
+				else //unique enzymes? no
+					M.dna.uni_identity = dna
+					updateappearance(M, M.dna.uni_identity)
+					uses--
+			else
+				M.dna.uni_identity = setblock(M.dna.uni_identity,block,dna,3)
 				updateappearance(M, M.dna.uni_identity)
-				M.real_name = ue
-				M.name = ue
 				uses--
-			else //unique enzymes? no
-				M.dna.uni_identity = dna
-				updateappearance(M, M.dna.uni_identity)
+		if (dnatype == "se")
+			if (!block) //isolated block?
+				M.dna.struc_enzymes = dna
+				domutcheck(M, null)
 				uses--
-		else
-			M.dna.uni_identity = setblock(M.dna.uni_identity,block,dna,3)
-			updateappearance(M, M.dna.uni_identity)
-			uses--
-	if (dnatype == "se")
-		if (!block) //isolated block?
-			M.dna.struc_enzymes = dna
-			domutcheck(M, null)
-			uses--
-		else
-			M.dna.struc_enzymes = setblock(M.dna.struc_enzymes,block,dna,3)
-			domutcheck(M, null,1)
-			uses--
+			else
+				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes,block,dna,3)
+				domutcheck(M, null,1)
+				uses--
 
 	spawn(0)//this prevents the collapse of space-time continuum
 		del(src)

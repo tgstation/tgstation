@@ -38,7 +38,7 @@
 			O.emp_act(severity)
 
 
-	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)//TODO: go over this
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)//TODO: go over this
 		if(flag)	return //we're placing gun on a table or in backpack
 		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 
@@ -95,6 +95,14 @@
 		in_chamber.current = curloc
 		in_chamber.yo = targloc.y - curloc.y
 		in_chamber.xo = targloc.x - curloc.x
+
+		if(params)
+			var/list/mouse_control = params2list(params)
+			if(mouse_control["icon-x"])
+				in_chamber.p_x = text2num(mouse_control["icon-x"])
+			if(mouse_control["icon-y"])
+				in_chamber.p_y = text2num(mouse_control["icon-y"])
+
 		spawn()
 			if(in_chamber)	in_chamber.process()
 		sleep(1)

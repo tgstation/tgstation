@@ -144,6 +144,7 @@
 					usr.drop_item()
 					item_to_add.loc = src
 					src.inventory_head = item_to_add
+					update_clothing()
 
 					if(inventory_head && inventory_head.type == /obj/item/clothing/head/caphat)
 						name = "Captain "+real_name
@@ -171,6 +172,7 @@
 					usr.drop_item()
 					item_to_add.loc = src
 					src.inventory_back = item_to_add
+					update_clothing()
 
 		show_inv(usr)
 	else

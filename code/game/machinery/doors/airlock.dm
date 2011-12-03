@@ -600,7 +600,7 @@ About the new airlock wires panel:
 
 	if (ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
-		if(H.brainloss >= 60)
+		if(H.getBrainLoss() >= 60)
 			playsound(src.loc, 'bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				for(var/mob/M in viewers(src, null))

@@ -1,4 +1,4 @@
-/obj/structure/secure_closet/engineering_chief
+/obj/structure/closet/secure_closet/engineering_chief
 	name = "Chief Engineer's Locker"
 	req_access = list(access_ce)
 
@@ -22,7 +22,7 @@
 
 
 
-/obj/structure/secure_closet/engineering_electrical
+/obj/structure/closet/secure_closet/engineering_electrical
 	name = "Electrical Supplies"
 	req_access = list(access_engine)
 
@@ -42,7 +42,7 @@
 
 
 
-/obj/structure/secure_closet/engineering_welding
+/obj/structure/closet/secure_closet/engineering_welding
 	name = "Welding Supplies"
 	req_access = list(access_engine)
 
@@ -60,7 +60,7 @@
 
 
 
-/obj/structure/secure_closet/engineering_personal
+/obj/structure/closet/secure_closet/engineering_personal
 	name = "Engineer's Locker"
 	req_access = list(access_engine)
 

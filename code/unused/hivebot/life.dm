@@ -35,7 +35,7 @@
 			bruteloss = max(getBruteLoss(), 0)
 			toxloss = 0
 			oxyloss = 0
-			fireloss = max(fireloss, 0)
+			adjustFireLoss(0)
 
 		use_power()
 
@@ -70,7 +70,7 @@
 
 		handle_regular_status_updates()
 
-			health = src.health_max - (fireloss + getBruteLoss())
+			health = src.health_max - (getFireLoss() + getBruteLoss())
 
 			if(health <= 0)
 				death()

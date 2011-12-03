@@ -147,6 +147,20 @@
 
 	summon_type = list("/obj/effect/critter/spesscarp/elite")
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/creature
+	name = "Summon Creature Swarm"
+	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth"
+
+	school = "conjuration"
+	charge_max = 1200
+	clothes_req = 0
+	invocation = "IA IA"
+	invocation_type = "shout"
+	summon_amt = 10
+	range = 3
+
+	summon_type = list("/obj/effect/critter/creature")
+
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
 	desc = "This spell temporarily blinds a single person and does not require wizard garb."

@@ -235,7 +235,7 @@
 	O.toxloss = usr.getToxLoss()
 	O.bruteloss = usr.getBruteLoss()
 	O.oxyloss = usr.getOxyLoss()
-	O.fireloss = usr.fireloss
+	O.fireloss = usr.getFireLoss()
 	O.stat = usr.stat
 	O.a_intent = "hurt"
 	for (var/obj/item/weapon/implant/I in implants)
@@ -330,7 +330,7 @@
 	O.toxloss = usr.getToxLoss()
 	O.bruteloss = usr.getBruteLoss()
 	O.oxyloss = usr.getOxyLoss()
-	O.fireloss = usr.fireloss
+	O.fireloss = usr.getFireLoss()
 	O.stat = usr.stat
 	for (var/obj/item/weapon/implant/I in implants)
 		I.loc = O
@@ -374,6 +374,7 @@
 		usr.toxloss = 0
 		//usr.bruteloss = 0
 		usr.oxyloss = 0
+		usr.cloneloss = 0
 		usr.paralysis = 0
 		usr.stunned = 0
 		usr.weakened = 0

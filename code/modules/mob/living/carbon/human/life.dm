@@ -102,10 +102,10 @@
 			paralysis = max(min(paralysis, 20), 0)
 			weakened = max(min(weakened, 20), 0)
 			sleeping = max(min(sleeping, 20), 0)
-			bruteloss = max(getBruteLoss(), 0)
-			toxloss = max(getToxLoss(), 0)
-			oxyloss = max(getOxyLoss(), 0)
-			fireloss = max(fireloss, 0)
+			adjustBruteLoss(0)
+			adjustToxLoss(0)
+			adjustOxyLoss(0)
+			adjustFireLoss(0)
 
 
 		update_mind()
@@ -158,7 +158,7 @@
 				if (prob(7))
 					switch(pick(1,2,3))
 						if(1)
-							say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH MONKIES", "stop grifing me!!!!", "SOTP IT#"))
+							say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
 						if(2)
 							say(pick("fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom"))
 						if(3)
@@ -166,7 +166,7 @@
 
 
 		handle_mutations_and_radiation()
-			if(fireloss)
+			if(getFireLoss())
 				if(mutations & COLD_RESISTANCE || (prob(1) && prob(75)))
 					heal_organ_damage(0,1)
 
@@ -414,7 +414,7 @@
 
 			var/thermal_protection = get_thermal_protection()
 
-			//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [fireloss] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)]"
+			//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Thermal protection: [get_thermal_protection()] - Fire protection: [thermal_protection + add_fire_protection(loc_temp)]"
 
 			if(stat != 2 && abs(bodytemperature - 310.15) < 50)
 				bodytemperature += adjust_body_temperature(bodytemperature, 310.15, thermal_protection)
@@ -601,7 +601,7 @@
 				if(nutrition < 500) //so they can't store nutrition to survive without light forever
 					nutrition += light_amount
 				if(light_amount > 0) //if there's enough light, heal
-					if(fireloss)
+					if(getFireLoss())
 						heal_overall_damage(0,1)
 					if(getBruteLoss())
 						heal_overall_damage(1,0)
@@ -656,7 +656,7 @@
 
 		handle_regular_status_updates()
 
-		//	health = 100 - (getOxyLoss() + getToxLoss() + fireloss + bruteloss + cloneloss)
+		//	health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
 			if(getOxyLoss() > 50) paralysis = max(paralysis, 3)
 
@@ -1069,7 +1069,7 @@ snippets
 
 				if(bodytemperature < 282.591 && (!firemut))
 					if(bodytemperature < 250)
-						fireloss += 4
+						adjustFireLoss(4)
 						updatehealth()
 						if(paralysis <= 2)	paralysis += 2
 					else if(prob(1) && !paralysis)
@@ -1080,7 +1080,7 @@ snippets
 					if(bodytemperature > 345.444)
 						if(!eye_blurry)	src << "\red The heat blurs your vision!"
 						eye_blurry = max(4, eye_blurry)
-						if(prob(3))	fireloss += rand(1,2)
+						if(prob(3))	adjustFireLoss(rand(1,2))
 					else if(prob(3) && !paralysis)
 						paralysis += 2
 						emote("collapse")

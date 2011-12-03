@@ -129,23 +129,6 @@ ZIPPO
 
 		else if(istype(W, /obj/item/weapon/match) && (W:lit > 0))
 			light("\red [user] lights their [name] with their [W]. How poor can you get?")
-
-		else  if (istype(W, /obj/item/weapon/trashbag))
-			var/obj/item/weapon/trashbag/S = W
-			if (S.mode == 1)
-				for (var/obj/item/clothing/mask/cigarette/C in locate(src.x,src.y,src.z))
-					if (S.contents.len < S.capacity)
-						S.contents += C;
-					else
-						user << "\blue The bag is full."
-						break
-				user << "\blue You pick up all trash."
-			else
-				if (S.contents.len < S.capacity)
-					S.contents += src;
-				else
-					user << "\blue The bag is full."
-			S.update_icon()
 		return
 
 
@@ -288,27 +271,6 @@ ZIPPO
 		else
 			return ..()
 		src.update_icon()
-		return
-
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		..()
-		if (istype(W, /obj/item/weapon/trashbag))
-			var/obj/item/weapon/trashbag/S = W
-			if (S.mode == 1)
-				for (var/obj/item/weapon/cigpacket/CP in locate(src.x,src.y,src.z))
-					if (S.contents.len < S.capacity)
-						S.contents += CP;
-					else
-						user << "\blue The bag is full."
-						break
-				user << "\blue You pick up all trash."
-			else
-				if (S.contents.len < S.capacity)
-					S.contents += src;
-				else
-					user << "\blue The bag is full."
-			S.update_icon()
 		return
 
 

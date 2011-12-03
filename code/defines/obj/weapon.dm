@@ -548,6 +548,8 @@
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 5
+	m_amt = 50
+	g_amt = 20
 	flags = TABLEPASS|USEDELAY|FPRINT|CONDUCT
 	item_state = "coil_red"
 
@@ -782,7 +784,7 @@
 	throwforce = 3.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 
 
@@ -937,7 +939,7 @@
 	icon = 'shards.dmi'
 	icon_state = "large"
 	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = 3.0
+	w_class = 1.0
 	force = 5.0
 	throwforce = 15.0
 	item_state = "shard-glass"

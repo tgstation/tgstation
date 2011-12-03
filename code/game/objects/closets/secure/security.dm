@@ -1,4 +1,4 @@
-/obj/structure/secure_closet/captains
+/obj/structure/closet/secure_closet/captains
 	name = "Captain's Closet"
 	req_access = list(access_captain)
 
@@ -20,7 +20,7 @@
 
 
 
-/obj/structure/secure_closet/hop
+/obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel"
 	req_access = list(access_hop)
 
@@ -42,7 +42,7 @@
 
 
 
-/obj/structure/secure_closet/hos
+/obj/structure/closet/secure_closet/hos
 	name = "Head Of Security"
 	req_access = list(access_hos)
 
@@ -66,7 +66,7 @@
 
 
 
-/obj/structure/secure_closet/warden
+/obj/structure/closet/secure_closet/warden
 	name = "Warden's Locker"
 	req_access = list(access_armory)
 
@@ -87,7 +87,7 @@
 
 
 
-/obj/structure/secure_closet/security
+/obj/structure/closet/secure_closet/security
 	name = "Security Locker"
 	req_access = list(access_security)
 
@@ -108,7 +108,7 @@
 
 
 
-/obj/structure/secure_closet/detective
+/obj/structure/closet/secure_closet/detective
 	name = "Detective"
 	req_access = list(access_forensics_lockers)
 	icon_state = "cabinetdetective"
@@ -137,7 +137,7 @@
 
 
 
-/obj/structure/secure_closet/injection
+/obj/structure/closet/secure_closet/injection
 	name = "Lethal Injections"
 	req_access = list(access_hos)
 
@@ -151,7 +151,7 @@
 
 
 
-/obj/structure/secure_closet/brig
+/obj/structure/closet/secure_closet/brig
 	name = "Brig Locker"
 	req_access = list(access_brig)
 	anchored = 1
@@ -164,7 +164,7 @@
 
 
 
-/obj/structure/secure_closet/courtroom
+/obj/structure/closet/secure_closet/courtroom
 	name = "Courtroom Locker"
 	req_access = list(access_court)
 

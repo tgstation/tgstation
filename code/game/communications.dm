@@ -91,7 +91,7 @@ On the map:
 1443 for atmospherics - distribution loop/mixed air tank
 1445 for bot nav beacons
 1447 for mulebot, secbot and ed209 control
-1449 for airlock controls, electropack
+1449 for airlock controls, electropack, magnets
 1451 for toxin lab access
 1453 for engineering access
 1455 for AI access
@@ -126,6 +126,7 @@ var/const/RADIO_NAVBEACONS = "5"
 var/const/RADIO_AIRLOCK = "6"
 var/const/RADIO_SECBOT = "7"
 var/const/RADIO_MULEBOT = "8"
+var/const/RADIO_MAGNETS = "9"
 
 var/global/datum/controller/radio/radio_controller
 
@@ -258,9 +259,12 @@ datum/signal
 	var/transmission_method = 0
 	//0 = wire
 	//1 = radio transmission
+	//2 = subspace transmission
 
 	var/data = list()
 	var/encryption
+
+	var/frequency = 0
 
 	proc/copy_from(datum/signal/model)
 		source = model.source

@@ -1295,7 +1295,7 @@
 		O.laws = AI.laws
 		O.stat = AI.stat
 		O.oxyloss = AI.getOxyLoss()
-		O.fireloss = AI.fireloss
+		O.fireloss = AI.getFireLoss()
 		O.bruteloss = AI.getBruteLoss()
 		O.toxloss = AI.toxloss
 		O.updatehealth()
@@ -1313,7 +1313,7 @@
 			AI.control_disabled = 0
 			AI.laws = O.laws
 			AI.oxyloss = O.getOxyLoss()
-			AI.fireloss = O.fireloss
+			AI.fireloss = O.getFireLoss()
 			AI.bruteloss = O.getBruteLoss()
 			AI.toxloss = O.toxloss
 			AI.updatehealth()

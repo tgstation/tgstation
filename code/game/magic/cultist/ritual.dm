@@ -141,7 +141,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle) || user.ear_deaf)
 			user << "You need to be able to both speak and hear to use runes."
 			return
-		if(!word1 || !word2 || !word3 || prob(usr.brainloss))
+		if(!word1 || !word2 || !word3 || prob(usr.getBrainLoss()))
 			return fizzle()
 //		if(!src.visibility)
 //			src.visibility=1

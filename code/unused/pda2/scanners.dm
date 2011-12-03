@@ -38,7 +38,7 @@
 
 			var/dat = "\blue Analyzing Results for [C]:\n"
 			dat += "\blue \t Overall Status: [C.stat > 1 ? "dead" : "[C.health]% healthy"]\n"
-			dat += "\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.fireloss > 50 ? "\red" : "\blue"][C.fireloss]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]\n"
+			dat += "\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]\n"
 			dat += "\blue \t Key: Suffocation/Toxin/Burns/Brute\n"
 			dat += "\blue \t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)"
 			if(C.virus)

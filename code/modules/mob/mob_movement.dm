@@ -14,32 +14,45 @@
 /client/North()
 	..()
 
+
 /client/South()
 	..()
+
 
 /client/West()
 	..()
 
+
 /client/East()
 	..()
 
+
 /client/Northeast()
-	..()
+	swap_hand()
+	return
+
 
 /client/Southeast()
-	..()
+	attack_self()
+	return
+
 
 /client/Southwest()
-	..()
+	toggle_throw_mode()
+	return
+
 
 /client/Northwest()
-	..()
+	drop_item()
+	return
+
 
 /client/verb/swap_hand()
 	set hidden = 1
 	if(istype(mob, /mob/living/carbon))
 		mob:swap_hand()
 	return
+
 
 /client/verb/attack_self()
 	set hidden = 1
@@ -48,6 +61,7 @@
 		W.attack_self(mob)
 	return
 
+
 /client/verb/toggle_throw_mode()
 	set hidden = 1
 	if(!istype(mob, /mob/living/carbon))	return
@@ -55,11 +69,13 @@
 	mob:toggle_throw_mode()
 	return
 
+
 /client/verb/drop_item()
 	set hidden = 1
 	if(!isrobot(mob))
 		mob.drop_item_v()
 	return
+
 
 /client/Center()
 	if (isobj(mob.loc))

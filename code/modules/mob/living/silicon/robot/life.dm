@@ -34,10 +34,10 @@
 			paralysis = max(min(paralysis, 30), 0)
 			weakened = max(min(weakened, 20), 0)
 			sleeping = 0
-			bruteloss = max(getBruteLoss(), 0)
-			toxloss = max(getToxLoss(), 0)
-			oxyloss = max(getOxyLoss(), 0)
-			fireloss = max(fireloss, 0)
+			adjustBruteLoss(0)
+			adjustToxLoss(0)
+			adjustOxyLoss(0)
+			adjustFireLoss(0)
 
 		use_power()
 
@@ -87,7 +87,7 @@
 				if(src.stat)
 					src.camera.status = 0
 
-			health = 200 - (getOxyLoss() + fireloss + getBruteLoss())
+			health = 200 - (getOxyLoss() + getFireLoss() + getBruteLoss())
 
 			if(getOxyLoss() > 50) paralysis = max(paralysis, 3)
 

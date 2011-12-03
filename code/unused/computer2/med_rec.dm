@@ -171,7 +171,7 @@
 <BR><b>Possible Cure:</b> None
 <BR><b>Affected Species:</b> Monkey
 <BR>
-<BR><b>Notes:</b> Monkies with this disease will bite humans, causing humans to spontaneously to mutate into a monkey.
+<BR><b>Notes:</b> monkeys with this disease will bite humans, causing humans to spontaneously to mutate into a monkey.
 <BR>
 <BR><b>Severity:</b> Medium"}
 				if("ca")

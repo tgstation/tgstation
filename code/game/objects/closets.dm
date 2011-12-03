@@ -6,7 +6,7 @@
 	return (!density)
 
 /obj/structure/closet/proc/can_open()
-	if (src.welded)
+	if(src.welded)
 		return 0
 	return 1
 
@@ -14,28 +14,23 @@
 	for(var/obj/structure/closet/closet in get_turf(src))
 		if(closet != src)
 			return 0
-	for(var/obj/structure/secure_closet/closet in get_turf(src))
-		return 0
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
-	for (var/obj/item/I in src)
+	for(var/obj/item/I in src)
 		I.loc = src.loc
-
-	for (var/obj/effect/overlay/o in src) //REMOVE THIS
-		o.loc = src.loc
 
 	for(var/mob/M in src)
 		M.loc = src.loc
-		if (M.client)
+		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
 
 /obj/structure/closet/proc/open()
-	if (src.opened)
+	if(src.opened)
 		return 0
 
-	if (!src.can_open())
+	if(!src.can_open())
 		return 0
 
 	src.dump_contents()
@@ -47,26 +42,22 @@
 	return 1
 
 /obj/structure/closet/proc/close()
-	if (!src.opened)
+	if(!src.opened)
 		return 0
-	if (!src.can_close())
+	if(!src.can_close())
 		return 0
 
-	for (var/obj/item/I in src.loc)
-		if (!I.anchored)
+	for(var/obj/item/I in src.loc)
+		if(!I.anchored)
 			I.loc = src
 
-	for (var/obj/effect/overlay/o in src.loc) //REMOVE THIS
-		if (!o.anchored)
-			o.loc = src
-
-	for (var/mob/M in src.loc)
-		if (istype (M, /mob/dead/observer))
+	for(var/mob/M in src.loc)
+		if(istype (M, /mob/dead/observer))
 			continue
-		if (M.buckled)
+		if(M.buckled)
 			continue
 
-		if (M.client)
+		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE
 			M.client.eye = src
 
@@ -78,27 +69,27 @@
 	return 1
 
 /obj/structure/closet/proc/toggle()
-	if (src.opened)
+	if(src.opened)
 		return src.close()
 	return src.open()
 
 // this should probably use dump_contents()
 /obj/structure/closet/ex_act(severity)
 	switch(severity)
-		if (1)
-			for (var/atom/movable/A as mob|obj in src)
+		if(1)
+			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
 				ex_act(severity)
 			del(src)
-		if (2)
-			if (prob(50))
+		if(2)
+			if(prob(50))
 				for (var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
 				del(src)
-		if (3)
-			if (prob(5))
-				for (var/atom/movable/A as mob|obj in src)
+		if(3)
+			if(prob(5))
+				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
 					ex_act(severity)
 				del(src)
@@ -107,7 +98,7 @@
 	health -= Proj.damage
 	..()
 	if(health <= 0)
-		for (var/atom/movable/A as mob|obj in src)
+		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		del(src)
 
@@ -115,18 +106,18 @@
 
 // this should probably use dump_contents()
 /obj/structure/closet/blob_act()
-	if (prob(75))
+	if(prob(75))
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 		del(src)
 
 /obj/structure/closet/meteorhit(obj/O as obj)
-	if (O.icon_state == "flaming")
+	if(O.icon_state == "flaming")
 		src.dump_contents()
 		del(src)
 
 /obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/packageWrap))
+	if(istype(W, /obj/item/weapon/packageWrap))
 		var/obj/item/weapon/packageWrap/O = W
 		if (O.amount > 3)
 			var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(src.loc))
@@ -135,16 +126,16 @@
 			src.welded = 1
 			src.loc = P
 			O.amount -= 3
-	else if (src.opened)
-		if (istype(W, /obj/item/weapon/grab))
+	else if(src.opened)
+		if(istype(W, /obj/item/weapon/grab))
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
 
-		if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
-			if (!W:remove_fuel(0,user))
+		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+			if(!W:remove_fuel(0,user))
 				user << "\blue You need more welding fuel to complete this task."
 				return
 			new /obj/item/stack/sheet/metal(src.loc)
-			for (var/mob/M in viewers(src))
+			for(var/mob/M in viewers(src))
 				M.show_message("\red [src] has been cut apart by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
 			del(src)
 			return
@@ -154,11 +145,11 @@
 
 		usr.drop_item()
 
-		if (W)
+		if(W)
 			W.loc = src.loc
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
-		if (!W:remove_fuel(0,user))
+		if(!W:remove_fuel(0,user))
 			user << "\blue You need more welding fuel to complete this task."
 			return
 		src.welded =! src.welded
@@ -169,32 +160,29 @@
 	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!user.can_use_hands())
+	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis)
 		return
-	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
+	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
 		return
-	if (user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
+	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
 		return
-	if (!istype(user.loc, /turf)) // are you in a container/closet/pod/etc?
+	if(!istype(user.loc, /turf)) // are you in a container/closet/pod/etc?
 		return
 	if(!src.opened)
 		return
-	if(istype(O, /obj/structure/secure_closet) || istype(O, /obj/structure/closet))
-		return
-	if(isrobot(user))
+	if(istype(O, /obj/structure/closet))
 		return
 	step_towards(O, src.loc)
-	user.show_viewers(text("\red [] stuffs [] into []!", user, O, src))
+	if(user != O)
+		user.show_viewers(text("\red [] stuffs [] into []!", user, O, src))
 	src.add_fingerprint(user)
 	return
 
-/obj/structure/closet
-	var/lastbang = 0
 /obj/structure/closet/relaymove(mob/user as mob)
-	if (user.stat)
+	if(user.stat)
 		return
 
-	if (!src.open())
+	if(!src.open())
 		user << "\blue It won't budge!"
 		if(!lastbang)
 			lastbang = 1
@@ -217,5 +205,5 @@
 /obj/structure/closet/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 
-	if (!src.toggle())
+	if(!src.toggle())
 		usr << "\blue It won't budge!"

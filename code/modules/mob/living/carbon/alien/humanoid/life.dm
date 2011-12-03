@@ -84,10 +84,10 @@
 			paralysis = max(min(paralysis, 20), 0)
 			weakened = max(min(weakened, 20), 0)
 			sleeping = max(min(sleeping, 20), 0)
-			bruteloss = max(getBruteLoss(), 0)
-			toxloss = max(getToxLoss(), 0)
-			oxyloss = max(getOxyLoss(), 0)
-			fireloss = max(fireloss, 0)
+			adjustBruteLoss(0)
+			adjustToxLoss(0)
+			adjustOxyLoss(0)
+			adjustFireLoss(0)
 
 
 		handle_disabilities()
@@ -121,13 +121,13 @@
 
 		handle_mutations_and_radiation()
 
-			if(src.fireloss)
+			if(src.getFireLoss())
 				if(src.mutations & COLD_RESISTANCE || prob(50))
-					switch(src.fireloss)
+					switch(src.getFireLoss())
 						if(1 to 50)
-							src.fireloss--
+							src.adjustFireLoss(-1)
 						if(51 to 100)
-							src.fireloss -= 5
+							src.adjustFireLoss(-5)
 
 			if (src.mutations & HULK && src.health <= 25)
 				src.mutations &= ~HULK
@@ -300,8 +300,8 @@
 						toxloss = max_plasma
 
 				else
-					bruteloss -= 15
-					fireloss -= 15
+					adjustBruteLoss(-15)
+					adjustFireLoss(-15)
 
 
 
@@ -396,7 +396,7 @@
 
 		handle_regular_status_updates()
 
-			health = 100 - (getOxyLoss() + fireloss + getBruteLoss() + cloneloss)
+			health = 100 - (getOxyLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
 			if(getOxyLoss() > 50) paralysis = max(paralysis, 3)
 

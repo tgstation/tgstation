@@ -14,8 +14,8 @@
 	vision_flags = SEE_TURFS
 
 /obj/item/clothing/glasses/science
-	name = "Protective Goggles"
-	desc = "Protects your eyes against harmful chemicals."
+	name = "Science Goggles"
+	desc = "nothing"
 	icon_state = "purple"
 	item_state = "glasses"
 

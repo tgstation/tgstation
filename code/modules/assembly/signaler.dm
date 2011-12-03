@@ -15,12 +15,20 @@
 
 	var
 		code = 30
-		frequency = 100
+		frequency = 1457
 		delay = 0
 		airlock_wire = null
+		datum/radio_frequency/radio_connection
 
 	proc
-		send_signal()
+		signal()
+
+
+	New()
+		..()
+		spawn(40)
+			set_frequency(frequency)
+		return
 
 
 	activate()
@@ -30,12 +38,10 @@
 			process_cooldown()
 
 		signal()
-
 		return 1
 
 
 	interact(mob/user as mob, flag1)
-
 		var/t1 = "-------"
 //		if ((src.b_stat && !( flag1 )))
 //			t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (src.wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (src.wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
@@ -49,7 +55,7 @@
 	Frequency:
 	<A href='byond://?src=\ref[src];freq=-10'>-</A>
 	<A href='byond://?src=\ref[src];freq=-2'>-</A>
-	[src.frequency]
+	[format_frequency(src.frequency)]
 	<A href='byond://?src=\ref[src];freq=2'>+</A>
 	<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
@@ -75,10 +81,10 @@
 			return
 
 		if (href_list["freq"])
-			src.frequency += text2num(href_list["freq"])
-			src.frequency = round(src.frequency)
-			src.frequency = min(100, src.frequency)
-			src.frequency = max(1, src.frequency)
+			var/new_frequency = (frequency + text2num(href_list["freq"]))
+			if(new_frequency < 1200 || new_frequency > 1600)
+				new_frequency = sanitize_frequency(new_frequency)
+			set_frequency(new_frequency)
 
 		if(href_list["code"])
 			src.code += text2num(href_list["code"])
@@ -95,14 +101,22 @@
 
 		return
 
-	proc/signal()//will have to do for now
+
+	signal()
+		var/datum/signal/signal = new
+		signal.source = src
+		signal.encryption = code
+		signal.data["message"] = "ACTIVATE"
+		radio_connection.post_signal(src, signal)
+		return
+/*
 		for(var/obj/item/device/assembly/signaler/S in world)
 			if(!S)	continue
 			if(S == src)	continue
 			if((S.frequency == src.frequency) && (S.code == src.code))
 				spawn(0)
 					if(S)	S.pulse(0)
-		return 0
+		return 0*/
 
 
 	pulse(var/radio = 0)
@@ -112,3 +126,21 @@
 		else if(holder)
 			holder.process_activation(src, 1, 0)
 		return 1
+
+
+	receive_signal(datum/signal/signal)
+		if(!signal)	return 0
+		if(signal.encryption != code)	return 0
+		if(!(src.wires & WIRE_RADIO_RECEIVE))	return 0
+		pulse(1)
+
+		for(var/mob/O in hearers(1, src.loc))
+			O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+		return
+
+
+	proc/set_frequency(new_frequency)
+		radio_controller.remove_object(src, frequency)
+		frequency = new_frequency
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+		return

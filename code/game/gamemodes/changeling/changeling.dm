@@ -77,7 +77,7 @@
 
 	var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
-	absorb_objective.gen_amount_goal(8,12)
+	absorb_objective.gen_amount_goal(6,8)
 	changeling.objectives += absorb_objective
 
 	switch(rand(1,100))
