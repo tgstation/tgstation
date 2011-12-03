@@ -27,7 +27,7 @@
 		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
 		WIRE_RECEIVE = 2
 		WIRE_TRANSMIT = 4
-		TRANSMISSION_DELAY = 5 // only 2/second/radio
+		TRANSMISSION_DELAY = 0 // only 2/second/radio
 		FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
 
