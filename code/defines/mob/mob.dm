@@ -91,6 +91,7 @@
 	var/plasma = null
 	var/sleeping = 0.0//Carbon
 	var/sleeping_willingly = 0.0 //Carbon, allows people to sleep forever if desired
+	var/admin_observing = 0.0
 	var/resting = 0.0//Carbon
 	var/lying = 0.0
 	var/canmove = 1.0
